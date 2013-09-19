@@ -192,7 +192,7 @@ SPConnEndPair::getAttachedItems(SPItem *h2attItem[2]) const {
         // selected through the XML editor, it makes sense just to detach
         // connectors from them.
         if (SP_IS_GROUP(h2attItem[h])) {
-            if (SP_GROUP(h2attItem[h])->group->getItemCount() == 0) {
+            if (SP_GROUP(h2attItem[h])->getItemCount() == 0) {
                 // This group is empty, so detach.
                 sp_conn_end_detach(_path, h);
                 h2attItem[h] = NULL;

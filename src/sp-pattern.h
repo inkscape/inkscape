@@ -16,15 +16,11 @@
 #include <gtk/gtk.h>
 
 #include "sp-item.h"
-#define SP_TYPE_PATTERN (sp_pattern_get_type ())
-#define SP_PATTERN(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), SP_TYPE_PATTERN, SPPattern))
-#define SP_PATTERN_CLASS(k) (G_TYPE_CHECK_CLASS_CAST ((k), SP_TYPE_PATTERN, SPPatternClass))
-#define SP_IS_PATTERN(o) (G_TYPE_CHECK_INSTANCE_TYPE ((o), SP_TYPE_PATTERN))
-#define SP_IS_PATTERN_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE ((k), SP_TYPE_PATTERN))
 
-GType sp_pattern_get_type (void);
+#define SP_PATTERN(obj) (dynamic_cast<SPPattern*>((SPObject*)obj))
+#define SP_IS_PATTERN(obj) (dynamic_cast<const SPPattern*>((SPObject*)obj) != NULL)
 
-struct SPPattern;
+class SPPatternReference;
 
 #include "svg/svg-length.h"
 #include "sp-paint-server.h"
@@ -34,25 +30,11 @@ struct SPPattern;
 #include <sigc++/connection.h>
 
 
-class SPPatternReference : public Inkscape::URIReference {
+class SPPattern : public SPPaintServer {
 public:
-    SPPatternReference (SPObject *obj) : URIReference(obj) {}
-    SPPattern *getObject() const {
-        return reinterpret_cast<SPPattern *>(URIReference::getObject());
-    }
+	SPPattern();
+	virtual ~SPPattern();
 
-protected:
-    virtual bool _acceptObject(SPObject *obj) const {
-        return SP_IS_PATTERN (obj);
-    }
-};
-
-enum {
-    SP_PATTERN_UNITS_USERSPACEONUSE,
-    SP_PATTERN_UNITS_OBJECTBOUNDINGBOX
-};
-
-struct SPPattern : public SPPaintServer {
     /* Reference (href) */
     gchar *href;
     SPPatternReference *ref;
@@ -75,10 +57,34 @@ struct SPPattern : public SPPaintServer {
     guint viewBox_set : 1;
 
     sigc::connection modified_connection;
+
+	virtual cairo_pattern_t* pattern_new(cairo_t *ct, Geom::OptRect const &bbox, double opacity);
+
+protected:
+	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
+	virtual void release();
+	virtual void set(unsigned int key, const gchar* value);
+	virtual void update(SPCtx* ctx, unsigned int flags);
+	virtual void modified(unsigned int flags);
 };
 
-struct SPPatternClass {
-    SPPaintServerClass parent_class;
+
+class SPPatternReference : public Inkscape::URIReference {
+public:
+    SPPatternReference (SPObject *obj) : URIReference(obj) {}
+    SPPattern *getObject() const {
+        return reinterpret_cast<SPPattern *>(URIReference::getObject());
+    }
+
+protected:
+    virtual bool _acceptObject(SPObject *obj) const {
+        return SP_IS_PATTERN (obj);
+    }
+};
+
+enum {
+    SP_PATTERN_UNITS_USERSPACEONUSE,
+    SP_PATTERN_UNITS_OBJECTBOUNDINGBOX
 };
 
 guint pattern_users (SPPattern *pattern);

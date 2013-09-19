@@ -23,7 +23,7 @@
 #define TOOLBAR_SLIDER_HINT "full"
 
 class SPDesktop;
-struct SPEventContext;
+class SPEventContext;
 
 namespace Inkscape {
 namespace UI {

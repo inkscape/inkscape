@@ -32,7 +32,6 @@
 #include "io/sys.h"
 #include "preferences.h"
 #include "sp-namedview.h"
-#include "sp-object-repr.h"
 #include "sp-root.h"
 #include "sp-script.h"
 #include "ui/widget/color-picker.h"

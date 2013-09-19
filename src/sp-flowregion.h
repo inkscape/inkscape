@@ -6,45 +6,49 @@
 
 #include "sp-item.h"
 
-#define SP_TYPE_FLOWREGION            (sp_flowregion_get_type ())
-#define SP_FLOWREGION(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_FLOWREGION, SPFlowregion))
-#define SP_FLOWREGION_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_FLOWREGION, SPFlowregionClass))
-#define SP_IS_FLOWREGION(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_FLOWREGION))
-#define SP_IS_FLOWREGION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_FLOWREGION))
+#define SP_FLOWREGION(obj) (dynamic_cast<SPFlowregion*>((SPObject*)obj))
+#define SP_IS_FLOWREGION(obj) (dynamic_cast<const SPFlowregion*>((SPObject*)obj) != NULL)
 
-#define SP_TYPE_FLOWREGIONEXCLUDE            (sp_flowregionexclude_get_type ())
-#define SP_FLOWREGIONEXCLUDE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_FLOWREGIONEXCLUDE, SPFlowregionExclude))
-#define SP_FLOWREGIONEXCLUDE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_FLOWREGIONEXCLUDE, SPFlowregionExcludeClass))
-#define SP_IS_FLOWREGIONEXCLUDE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_FLOWREGIONEXCLUDE))
-#define SP_IS_FLOWREGIONEXCLUDE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_FLOWREGIONEXCLUDE))
+#define SP_FLOWREGIONEXCLUDE(obj) (dynamic_cast<SPFlowregionExclude*>((SPObject*)obj))
+#define SP_IS_FLOWREGIONEXCLUDE(obj) (dynamic_cast<const SPFlowregionExclude*>((SPObject*)obj) != NULL)
 
 class Path;
 class Shape;
 class flow_dest;
 class FloatLigne;
 
-struct SPFlowregion : public SPItem {
+class SPFlowregion : public SPItem {
+public:
+	SPFlowregion();
+	virtual ~SPFlowregion();
+
 	std::vector<Shape*>     computed;
 	
 	void             UpdateComputed(void);
+
+	virtual void child_added(Inkscape::XML::Node* child, Inkscape::XML::Node* ref);
+	virtual void remove_child(Inkscape::XML::Node *child);
+	virtual void update(SPCtx *ctx, unsigned int flags);
+	virtual void modified(guint flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+	virtual gchar *description();
 };
 
-struct SPFlowregionClass {
-	SPItemClass parent_class;
-};
+class SPFlowregionExclude : public SPItem {
+public:
+	SPFlowregionExclude();
+	virtual ~SPFlowregionExclude();
 
-GType sp_flowregion_get_type (void);
-
-struct SPFlowregionExclude : public SPItem {
 	Shape            *computed;
 	
 	void             UpdateComputed(void);
-};
 
-struct SPFlowregionExcludeClass {
-	SPItemClass parent_class;
+	virtual void child_added(Inkscape::XML::Node* child, Inkscape::XML::Node* ref);
+	virtual void remove_child(Inkscape::XML::Node *child);
+	virtual void update(SPCtx *ctx, unsigned int flags);
+	virtual void modified(guint flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+	virtual gchar *description();
 };
-
-GType sp_flowregionexclude_get_type (void);
 
 #endif

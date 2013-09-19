@@ -13,27 +13,36 @@
 
 #include "sp-filter-primitive.h"
 
-#define SP_TYPE_FECOMPONENTTRANSFER (sp_feComponentTransfer_get_type())
-#define SP_FECOMPONENTTRANSFER(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_FECOMPONENTTRANSFER, SPFeComponentTransfer))
-#define SP_FECOMPONENTTRANSFER_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_FECOMPONENTTRANSFER, SPFeComponentTransferClass))
-#define SP_IS_FECOMPONENTTRANSFER(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_FECOMPONENTTRANSFER))
-#define SP_IS_FECOMPONENTTRANSFER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_FECOMPONENTTRANSFER))
+#define SP_FECOMPONENTTRANSFER(obj) (dynamic_cast<SPFeComponentTransfer*>((SPObject*)obj))
+#define SP_IS_FECOMPONENTTRANSFER(obj) (dynamic_cast<const SPFeComponentTransfer*>((SPObject*)obj) != NULL)
 
 namespace Inkscape {
 namespace Filters {
 class FilterComponentTransfer;
 } }
 
-struct SPFeComponentTransfer : public SPFilterPrimitive {
+class SPFeComponentTransfer : public SPFilterPrimitive {
+public:
+	SPFeComponentTransfer();
+	virtual ~SPFeComponentTransfer();
+
     Inkscape::Filters::FilterComponentTransfer *renderer;
+
+protected:
+	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
+	virtual void release();
+
+	virtual void child_added(Inkscape::XML::Node* child, Inkscape::XML::Node* ref);
+	virtual void remove_child(Inkscape::XML::Node* child);
+
+	virtual void set(unsigned int key, const gchar* value);
+
+	virtual void update(SPCtx* ctx, unsigned int flags);
+
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
+
+	virtual void build_renderer(Inkscape::Filters::Filter* filter);
 };
-
-struct SPFeComponentTransferClass {
-    SPFilterPrimitiveClass parent_class;
-};
-
-GType sp_feComponentTransfer_get_type();
-
 
 #endif /* !SP_FECOMPONENTTRANSFER_H_SEEN */
 

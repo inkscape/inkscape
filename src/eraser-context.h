@@ -21,14 +21,6 @@
 
 #include "common-context.h"
 
-G_BEGIN_DECLS
-
-#define SP_TYPE_ERASER_CONTEXT (sp_eraser_context_get_type())
-#define SP_ERASER_CONTEXT(o) (G_TYPE_CHECK_INSTANCE_CAST((o), SP_TYPE_ERASER_CONTEXT, SPEraserContext))
-#define SP_ERASER_CONTEXT_CLASS(k) (G_TYPE_CHECK_CLASS_CAST((k), SP_TYPE_ERASER_CONTEXT, SPEraserContextClass))
-#define SP_IS_ERASER_CONTEXT(o) (G_TYPE_CHECK_INSTANCE_TYPE((o), SP_TYPE_ERASER_CONTEXT))
-#define SP_IS_ERASER_CONTEXT_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE((k), SP_TYPE_ERASER_CONTEXT))
-
 #define ERC_MIN_PRESSURE      0.0
 #define ERC_MAX_PRESSURE      1.0
 #define ERC_DEFAULT_PRESSURE  1.0
@@ -37,14 +29,30 @@ G_BEGIN_DECLS
 #define ERC_MAX_TILT          1.0
 #define ERC_DEFAULT_TILT      0.0
 
-struct SPEraserContext : public SPCommonContext {
+class SPEraserContext : public SPCommonContext {
+public:
+	SPEraserContext();
+	virtual ~SPEraserContext();
+
+	static const std::string prefsPath;
+
+	virtual void setup();
+	virtual bool root_handler(GdkEvent* event);
+
+	virtual const std::string& getPrefsPath();
+
+private:
+	void reset(Geom::Point p);
+	void extinput(GdkEvent *event);
+	bool apply(Geom::Point p);
+	void brush();
+	void cancel();
+	void clear_current();
+	void set_to_accumulated();
+	void accumulate();
+	void fit_and_split(bool release);
+	void draw_temporary_box();
 };
-
-struct SPEraserContextClass : public SPEventContextClass{};
-
-GType sp_eraser_context_get_type(void);
-
-G_END_DECLS
 
 #endif // SP_ERASER_CONTEXT_H_SEEN
 

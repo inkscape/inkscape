@@ -18,51 +18,61 @@
 #include "sp-shape.h"
 #include <2geom/forward.h>
 
-G_BEGIN_DECLS
 
-#define SP_TYPE_RECT            (sp_rect_get_type ())
-#define SP_RECT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_RECT, SPRect))
-#define SP_RECT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_RECT, SPRectClass))
-#define SP_IS_RECT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_RECT))
-#define SP_IS_RECT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_RECT))
+#define SP_RECT(obj) (dynamic_cast<SPRect*>((SPObject*)obj))
+#define SP_IS_RECT(obj) (dynamic_cast<const SPRect*>((SPObject*)obj) != NULL)
 
-struct SPRect : public SPShape {
+class SPRect : public SPShape {
+public:
+	SPRect();
+	virtual ~SPRect();
+
+	void setPosition(gdouble x, gdouble y, gdouble width, gdouble height);
+
+	/* If SET if FALSE, VALUE is just ignored */
+	void setRx(bool set, gdouble value);
+	void setRy(bool set, gdouble value);
+
+	gdouble getVisibleRx() const;
+	void setVisibleRx(gdouble rx);
+
+	gdouble getVisibleRy() const;
+	void setVisibleRy(gdouble ry);
+
+	Geom::Rect getRect() const;
+
+	gdouble getVisibleWidth() const;
+	void setVisibleWidth(gdouble rx);
+
+	gdouble getVisibleHeight() const;
+	void setVisibleHeight(gdouble ry);
+
+	void compensateRxRy(Geom::Affine xform);
+
+	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
+
+	virtual void set(unsigned key, gchar const *value);
+	virtual void update(SPCtx* ctx, unsigned int flags);
+
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+	virtual gchar* description();
+
+	virtual void set_shape();
+	virtual Geom::Affine set_transform(Geom::Affine const& xform);
+
+	virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
+	virtual void convert_to_guides();
+
 	SVGLength x;
 	SVGLength y;
 	SVGLength width;
 	SVGLength height;
 	SVGLength rx;
 	SVGLength ry;
+
+private:
+	static gdouble vectorStretch(Geom::Point p0, Geom::Point p1, Geom::Affine xform);
 };
-
-struct SPRectClass {
-	SPShapeClass parent_class;
-};
-
-
-/* Standard GType function */
-GType sp_rect_get_type (void) G_GNUC_CONST;
-
-void sp_rect_position_set (SPRect * rect, gdouble x, gdouble y, gdouble width, gdouble height);
-
-/* If SET if FALSE, VALUE is just ignored */
-void sp_rect_set_rx(SPRect * rect, gboolean set, gdouble value);
-void sp_rect_set_ry(SPRect * rect, gboolean set, gdouble value);
-
-void sp_rect_set_visible_rx (SPRect *rect, gdouble rx);
-void sp_rect_set_visible_ry (SPRect *rect, gdouble ry);
-gdouble sp_rect_get_visible_rx (SPRect *rect);
-gdouble sp_rect_get_visible_ry (SPRect *rect);
-Geom::Rect sp_rect_get_rect (SPRect *rect);
-
-void sp_rect_set_visible_width (SPRect *rect, gdouble rx);
-void sp_rect_set_visible_height (SPRect *rect, gdouble ry);
-gdouble sp_rect_get_visible_width (SPRect *rect);
-gdouble sp_rect_get_visible_height (SPRect *rect);
-
-void sp_rect_compensate_rxry (SPRect *rect, Geom::Affine xform);
-
-G_END_DECLS
 
 #endif // SEEN_SP_RECT_H
 

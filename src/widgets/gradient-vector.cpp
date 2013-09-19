@@ -369,7 +369,7 @@ static void sp_gvs_rebuild_gui_full(SPGradientVectorSelector *gvs)
 unsigned long sp_gradient_to_hhssll(SPGradient *gr)
 {
     SPStop *stop = gr->getFirstStop();
-    unsigned long rgba = sp_stop_get_rgba32(stop);
+    unsigned long rgba = stop->get_rgba32();
     float hsl[3];
     sp_color_rgb_to_hsl_floatv (hsl, SP_RGBA32_R_F(rgba), SP_RGBA32_G_F(rgba), SP_RGBA32_B_F(rgba));
 
@@ -635,7 +635,7 @@ static void update_stop_list( GtkWidget *vb, SPGradient *gradient, SPStop *new_s
             if (SP_IS_STOP(sl->data)){
                 SPStop *stop = SP_STOP(sl->data);
                 Inkscape::XML::Node *repr = reinterpret_cast<SPItem *>(sl->data)->getRepr();
-                Inkscape::UI::Widget::ColorPreview *cpv = Gtk::manage(new Inkscape::UI::Widget::ColorPreview(sp_stop_get_rgba32(stop)));
+                Inkscape::UI::Widget::ColorPreview *cpv = Gtk::manage(new Inkscape::UI::Widget::ColorPreview(stop->get_rgba32()));
                 GdkPixbuf *pb = cpv->toPixbuf(64, 16);
 
                 gtk_list_store_append (store, &iter);
@@ -791,8 +791,8 @@ static void sp_grd_ed_add_stop(GtkWidget */*widget*/,  GtkWidget *vb)
 
     newstop->offset = (stop->offset + next->offset) * 0.5 ;
 
-    guint32 const c1 = sp_stop_get_rgba32(stop);
-    guint32 const c2 = sp_stop_get_rgba32(next);
+    guint32 const c1 = stop->get_rgba32();
+    guint32 const c2 = next->get_rgba32();
     guint32 cnew = sp_average_color(c1, c2);
 
     Inkscape::CSSOStringStream os;
@@ -1315,7 +1315,7 @@ static void sp_gradient_vector_color_changed(SPColorSelector *csel, GObject *obj
         if (gtk_combo_box_get_active_iter (GTK_COMBO_BOX(combo_box), &iter)) {
             GtkListStore *store = GTK_LIST_STORE(gtk_combo_box_get_model(GTK_COMBO_BOX(combo_box)));
 
-            Inkscape::UI::Widget::ColorPreview *cp = Gtk::manage(new Inkscape::UI::Widget::ColorPreview(sp_stop_get_rgba32(stop)));
+            Inkscape::UI::Widget::ColorPreview *cp = Gtk::manage(new Inkscape::UI::Widget::ColorPreview(stop->get_rgba32()));
             GdkPixbuf *pb = cp->toPixbuf(64, 16);
 
             gtk_list_store_set (store, &iter, 0, pb, /*1, repr->attribute("id"),*/ 2, stop, -1);

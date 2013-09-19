@@ -211,8 +211,10 @@ bool NRStyle::prepareFill(Inkscape::DrawingContext &ct, Geom::OptRect const &pai
     if (!fill_pattern) {
         switch (fill.type) {
         case PAINT_SERVER: {
-            fill_pattern = sp_paint_server_create_pattern(fill.server, ct.raw(), paintbox, fill.opacity);
-            } break;
+            //fill_pattern = sp_paint_server_create_pattern(fill.server, ct.raw(), paintbox, fill.opacity);
+        	fill_pattern = fill.server->pattern_new(ct.raw(), paintbox, fill.opacity);
+
+		} break;
         case PAINT_COLOR: {
             SPColor const &c = fill.color;
             fill_pattern = cairo_pattern_create_rgba(
@@ -236,8 +238,10 @@ bool NRStyle::prepareStroke(Inkscape::DrawingContext &ct, Geom::OptRect const &p
     if (!stroke_pattern) {
         switch (stroke.type) {
         case PAINT_SERVER: {
-            stroke_pattern = sp_paint_server_create_pattern(stroke.server, ct.raw(), paintbox, stroke.opacity);
-            } break;
+            //stroke_pattern = sp_paint_server_create_pattern(stroke.server, ct.raw(), paintbox, stroke.opacity);
+        	stroke_pattern = stroke.server->pattern_new(ct.raw(), paintbox, stroke.opacity);
+
+		} break;
         case PAINT_COLOR: {
             SPColor const &c = stroke.color;
             stroke_pattern = cairo_pattern_create_rgba(

@@ -8,22 +8,29 @@
 #include <glib.h>
 #include "sp-gradient.h"
 #include "svg/svg-length.h"
-#include "sp-radial-gradient-fns.h"
+
+#define SP_RADIALGRADIENT(obj) (dynamic_cast<SPRadialGradient*>((SPObject*)obj))
+#define SP_IS_RADIALGRADIENT(obj) (dynamic_cast<const SPRadialGradient*>((SPObject*)obj) != NULL)
 
 /** Radial gradient. */
-struct SPRadialGradient : public SPGradient {
+class SPRadialGradient : public SPGradient {
+public:
+	SPRadialGradient();
+	virtual ~SPRadialGradient();
+
     SVGLength cx;
     SVGLength cy;
     SVGLength r;
     SVGLength fx;
     SVGLength fy;
-};
 
-/// The SPRadialGradient vtable.
-struct SPRadialGradientClass {
-    SPGradientClass parent_class;
-};
+    virtual cairo_pattern_t* pattern_new(cairo_t *ct, Geom::OptRect const &bbox, double opacity);
 
+protected:
+	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
+	virtual void set(unsigned key, gchar const *value);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+};
 
 #endif /* !SP_RADIAL_GRADIENT_H */
 

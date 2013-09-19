@@ -13,7 +13,7 @@
 #include "line-snapper.h"
 
 class  SPDesktop;
-struct SPNamedView;
+class SPNamedView;
 struct SPCanvasBuf;
 class  SPDocument;
 

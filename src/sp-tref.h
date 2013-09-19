@@ -22,13 +22,14 @@
 
 /* tref base class */
 
-#define SP_TYPE_TREF (sp_tref_get_type())
-#define SP_TREF(o) (G_TYPE_CHECK_INSTANCE_CAST((o), SP_TYPE_TREF, SPTRef))
-#define SP_TREF_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_TREF, SPTSpanClass))
-#define SP_IS_TREF(o) (G_TYPE_CHECK_INSTANCE_TYPE((o), SP_TYPE_TREF))
-#define SP_IS_TREF_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_TREF))
+#define SP_TREF(obj) (dynamic_cast<SPTRef*>((SPObject*)obj))
+#define SP_IS_TREF(obj) (dynamic_cast<const SPTRef*>((SPObject*)obj) != NULL)
 
-struct SPTRef : public SPItem {
+class SPTRef : public SPItem {
+public:
+	SPTRef();
+	virtual ~SPTRef();
+
     // Attributes that are used in the same way they would be in a tspan
     TextTagAttributes attributes;
     
@@ -48,13 +49,17 @@ struct SPTRef : public SPItem {
     sigc::connection _changed_connection;
     
     SPObject * getObjectReferredTo();
-};
 
-struct SPTRefClass {
-    SPItemClass parent_class;
-};
+	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
+	virtual void release();
+	virtual void set(unsigned int key, const gchar* value);
+	virtual void update(SPCtx* ctx, unsigned int flags);
+	virtual void modified(unsigned int flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
 
-GType sp_tref_get_type();
+	virtual Geom::OptRect bbox(Geom::Affine const &transform, SPItem::BBoxType type);
+	virtual gchar* description();
+};
 
 void sp_tref_update_text(SPTRef *tref);
 bool sp_tref_reference_allowed(SPTRef *tref, SPObject *possible_ref);

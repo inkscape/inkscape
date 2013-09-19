@@ -78,7 +78,6 @@
 
 #include "sp-namedview.h"
 #include "sp-guide.h"
-#include "sp-object-repr.h"
 #include "xml/repr.h"
 
 #include "io/sys.h"
@@ -854,8 +853,8 @@ static GSList *fixupFilenameEncoding( GSList* fl )
 static int sp_common_main( int argc, char const **argv, GSList **flDest )
 {
     /// \todo fixme: Move these to some centralized location (Lauris)
-    sp_object_type_register("sodipodi:namedview", SP_TYPE_NAMEDVIEW);
-    sp_object_type_register("sodipodi:guide", SP_TYPE_GUIDE);
+    //sp_object_type_register("sodipodi:namedview", SP_TYPE_NAMEDVIEW);
+    //sp_object_type_register("sodipodi:guide", SP_TYPE_GUIDE);
 
 
     // temporarily switch gettext encoding to locale, so that help messages can be output properly

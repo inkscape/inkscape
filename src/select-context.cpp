@@ -52,44 +52,28 @@
 
 using Inkscape::DocumentUndo;
 
-static void sp_select_context_dispose(GObject *object);
-
-static void sp_select_context_setup(SPEventContext *ec);
-static void sp_select_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val);
-static gint sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event);
-static gint sp_select_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event);
-static void sp_select_context_reset_opacities(SPEventContext *event_context);
-
 static GdkCursor *CursorSelectMouseover = NULL;
 static GdkCursor *CursorSelectDragging = NULL;
 GdkPixbuf *handles[13];
 
 static gint rb_escaped = 0; // if non-zero, rubberband was canceled by esc, so the next button release should not deselect
 static gint drag_escaped = 0; // if non-zero, drag was canceled by esc
+#include "tool-factory.h"
 
-static gint xp = 0, yp = 0; // where drag started
-static gint tolerance = 0;
-static bool within_tolerance = false;
-static bool is_cycling = false;
-static bool moved_while_cycling = false;
-SPEventContext *prev_event_context = NULL;
+namespace {
+	SPEventContext* createSelectContext() {
+		return new SPSelectContext();
+	}
 
-
-G_DEFINE_TYPE(SPSelectContext, sp_select_context, SP_TYPE_EVENT_CONTEXT);
-
-static void
-sp_select_context_class_init(SPSelectContextClass *klass)
-{
-    GObjectClass *object_class = G_OBJECT_CLASS(klass);
-    SPEventContextClass *event_context_class = SP_EVENT_CONTEXT_CLASS(klass);
-
-    object_class->dispose = sp_select_context_dispose;
-
-    event_context_class->setup = sp_select_context_setup;
-    event_context_class->set = sp_select_context_set;
-    event_context_class->root_handler = sp_select_context_root_handler;
-    event_context_class->item_handler = sp_select_context_item_handler;
+	bool selectContextRegistered = ToolFactory::instance().registerObject("/tools/select", createSelectContext);
 }
+
+const std::string& SPSelectContext::getPrefsPath() {
+	return SPSelectContext::prefsPath;
+}
+
+const std::string SPSelectContext::prefsPath = "/tools/select";
+
 
 //Creates rotated variations for handles
 static void
@@ -101,25 +85,28 @@ sp_load_handles(int start, int count, char const **xpm) {
     }
 }
 
-static void
-sp_select_context_init(SPSelectContext *sc)
-{
-    sc->dragging = FALSE;
-    sc->moved = FALSE;
-    sc->button_press_shift = false;
-    sc->button_press_ctrl = false;
-    sc->button_press_alt = false;
-    sc->cycling_items = NULL;
-    sc->cycling_items_cmp = NULL;
-    sc->cycling_items_selected_before = NULL;
-    sc->cycling_cur_item = NULL;
-    sc->cycling_wrap = true;
-    sc->_seltrans = NULL;
-    sc->_describer = NULL;
+SPSelectContext::SPSelectContext() : SPEventContext() {
+	this->grabbed = 0;
+	this->item = 0;
+
+    this->dragging = FALSE;
+    this->moved = FALSE;
+    this->button_press_shift = false;
+    this->button_press_ctrl = false;
+    this->button_press_alt = false;
+    this->cycling_items = NULL;
+    this->cycling_items_cmp = NULL;
+    this->cycling_items_selected_before = NULL;
+    this->cycling_cur_item = NULL;
+    this->cycling_wrap = true;
+    this->_seltrans = NULL;
+    this->_describer = NULL;
+
 
     // cursors in select context
     CursorSelectMouseover = sp_cursor_new_from_xpm(cursor_select_m_xpm , 1, 1);
     CursorSelectDragging = sp_cursor_new_from_xpm(cursor_select_d_xpm , 1, 1);
+    
     // selection handles
     sp_load_handles(0, 2, handle_scale_xpm);
     sp_load_handles(2, 2, handle_stretch_xpm);
@@ -128,23 +115,27 @@ sp_select_context_init(SPSelectContext *sc)
     sp_load_handles(12, 1, handle_center_xpm);
 }
 
-static void
-sp_select_context_dispose(GObject *object)
-{
-    SPSelectContext *sc = SP_SELECT_CONTEXT(object);
-    SPEventContext * ec = SP_EVENT_CONTEXT (object);
+//static gint xp = 0, yp = 0; // where drag started
+//static gint tolerance = 0;
+//static bool within_tolerance = false;
+static bool is_cycling = false;
+static bool moved_while_cycling = false;
+SPEventContext *prev_event_context = NULL;
 
-    ec->enableGrDrag(false);
 
-    if (sc->grabbed) {
-        sp_canvas_item_ungrab(sc->grabbed, GDK_CURRENT_TIME);
-        sc->grabbed = NULL;
+SPSelectContext::~SPSelectContext() {
+    this->enableGrDrag(false);
+
+    if (this->grabbed) {
+        sp_canvas_item_ungrab(this->grabbed, GDK_CURRENT_TIME);
+        this->grabbed = NULL;
     }
 
-    delete sc->_seltrans;
-    sc->_seltrans = NULL;
-    delete sc->_describer;
-    sc->_describer = NULL;
+    delete this->_seltrans;
+    this->_seltrans = NULL;
+
+    delete this->_describer;
+    this->_describer = NULL;
 
     if (CursorSelectDragging) {
 #if GTK_CHECK_VERSION(3,0,0)
@@ -154,6 +145,7 @@ sp_select_context_dispose(GObject *object)
 #endif
         CursorSelectDragging = NULL;
     }
+    
     if (CursorSelectMouseover) {
 #if GTK_CHECK_VERSION(3,0,0)
         g_object_unref(CursorSelectMouseover);
@@ -162,93 +154,77 @@ sp_select_context_dispose(GObject *object)
 #endif
         CursorSelectMouseover = NULL;
     }
-
-    G_OBJECT_CLASS(sp_select_context_parent_class)->dispose(object);
 }
 
-static void
-sp_select_context_setup(SPEventContext *ec)
-{
-    SPSelectContext *select_context = SP_SELECT_CONTEXT(ec);
+void SPSelectContext::setup() {
+    SPEventContext::setup();
 
-    if ((SP_EVENT_CONTEXT_CLASS(sp_select_context_parent_class))->setup) {
-        (SP_EVENT_CONTEXT_CLASS(sp_select_context_parent_class))->setup(ec);
-    }
-
-    SPDesktop *desktop = ec->desktop;
-
-    select_context->_describer = new Inkscape::SelectionDescriber(
+    this->_describer = new Inkscape::SelectionDescriber(
                 desktop->selection, 
                 desktop->messageStack(),
                 _("Click selection to toggle scale/rotation handles"),
                 _("No objects selected. Click, Shift+click, Alt+scroll mouse on top of objects, or drag around objects to select.")
-        );
+    );
 
-    select_context->_seltrans = new Inkscape::SelTrans(desktop);
+    this->_seltrans = new Inkscape::SelTrans(desktop);
 
-    sp_event_context_read(ec, "show");
-    sp_event_context_read(ec, "transform");
+    sp_event_context_read(this, "show");
+    sp_event_context_read(this, "transform");
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+
     if (prefs->getBool("/tools/select/gradientdrag")) {
-        ec->enableGrDrag();
+        this->enableGrDrag();
     }
 }
 
-static void
-sp_select_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val)
-{
-    SPSelectContext *sc = SP_SELECT_CONTEXT(ec);
-    Glib::ustring path = val->getEntryName();
+void SPSelectContext::set(const Inkscape::Preferences::Entry& val) {
+    Glib::ustring path = val.getEntryName();
 
     if (path == "show") {
-        if (val->getString() == "outline") {
-            sc->_seltrans->setShow(Inkscape::SelTrans::SHOW_OUTLINE);
+        if (val.getString() == "outline") {
+            this->_seltrans->setShow(Inkscape::SelTrans::SHOW_OUTLINE);
         } else {
-            sc->_seltrans->setShow(Inkscape::SelTrans::SHOW_CONTENT);
+            this->_seltrans->setShow(Inkscape::SelTrans::SHOW_CONTENT);
         }
     }
 }
 
-static bool
-sp_select_context_abort(SPEventContext *event_context)
-{
-    SPDesktop *desktop = event_context->desktop;
-    SPSelectContext *sc = SP_SELECT_CONTEXT(event_context);
-    Inkscape::SelTrans *seltrans = sc->_seltrans;
+bool SPSelectContext::sp_select_context_abort() {
+    Inkscape::SelTrans *seltrans = this->_seltrans;
 
-    if (sc->dragging) {
-        if (sc->moved) { // cancel dragging an object
+    if (this->dragging) {
+        if (this->moved) { // cancel dragging an object
             seltrans->ungrab();
-            sc->moved = FALSE;
-            sc->dragging = FALSE;
-            sp_event_context_discard_delayed_snap_event(event_context);
+            this->moved = FALSE;
+            this->dragging = FALSE;
+            sp_event_context_discard_delayed_snap_event(this);
             drag_escaped = 1;
 
-            if (sc->item) {
+            if (this->item) {
                 // only undo if the item is still valid
-                if (sc->item->document) {
+                if (this->item->document) {
                     DocumentUndo::undo(sp_desktop_document(desktop));
                 }
 
-                sp_object_unref( sc->item, NULL);
-            } else if (sc->button_press_ctrl) {
+                sp_object_unref( this->item, NULL);
+            } else if (this->button_press_ctrl) {
                 // NOTE:  This is a workaround to a bug.
                 // When the ctrl key is held, sc->item is not defined
                 // so in this case (only), we skip the object doc check
                 DocumentUndo::undo(sp_desktop_document(desktop));
             }
-            sc->item = NULL;
+            this->item = NULL;
 
-            SP_EVENT_CONTEXT(sc)->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Move canceled."));
+            SP_EVENT_CONTEXT(this)->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Move canceled."));
             return true;
         }
     } else {
         if (Inkscape::Rubberband::get(desktop)->is_started()) {
             Inkscape::Rubberband::get(desktop)->stop();
             rb_escaped = 1;
-            SP_EVENT_CONTEXT(sc)->defaultMessageContext()->clear();
-            SP_EVENT_CONTEXT(sc)->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Selection canceled."));
+            SP_EVENT_CONTEXT(this)->defaultMessageContext()->clear();
+            SP_EVENT_CONTEXT(this)->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Selection canceled."));
             return true;
         }
     }
@@ -297,26 +273,20 @@ sp_select_context_up_one_layer(SPDesktop *desktop)
     }
 }
 
-static gint
-sp_select_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event)
-{
+bool SPSelectContext::item_handler(SPItem* item, GdkEvent* event) {
     gint ret = FALSE;
-
-    SPDesktop *desktop = event_context->desktop;
-    SPSelectContext *sc = SP_SELECT_CONTEXT(event_context);
-    Inkscape::SelTrans *seltrans = sc->_seltrans;
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
 
     // make sure we still have valid objects to move around
-    if (sc->item && sc->item->document == NULL) {
-        sp_select_context_abort(event_context);
+    if (this->item && this->item->document == NULL) {
+        this->sp_select_context_abort();
     }
 
     switch (event->type) {
         case GDK_BUTTON_PRESS:
-            if (event->button.button == 1 && !event_context->space_panning) {
+            if (event->button.button == 1 && !this->space_panning) {
                 /* Left mousebutton */
 
                 // save drag origin
@@ -325,42 +295,46 @@ sp_select_context_item_handler(SPEventContext *event_context, SPItem *item, GdkE
                 within_tolerance = true;
 
                 // remember what modifiers were on before button press
-                sc->button_press_shift = (event->button.state & GDK_SHIFT_MASK) ? true : false;
-                sc->button_press_ctrl = (event->button.state & GDK_CONTROL_MASK) ? true : false;
-                sc->button_press_alt = (event->button.state & GDK_MOD1_MASK) ? true : false;
+                this->button_press_shift = (event->button.state & GDK_SHIFT_MASK) ? true : false;
+                this->button_press_ctrl = (event->button.state & GDK_CONTROL_MASK) ? true : false;
+                this->button_press_alt = (event->button.state & GDK_MOD1_MASK) ? true : false;
 
                 if (event->button.state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK)) {
                     // if shift or ctrl was pressed, do not move objects;
                     // pass the event to root handler which will perform rubberband, shift-click, ctrl-click, ctrl-drag
                 } else {
-            GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
+                    GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
                    
-            sc->dragging = TRUE;
-                    sc->moved = FALSE;
+                	this->dragging = TRUE;
+                    this->moved = FALSE;
+
                     gdk_window_set_cursor(window, CursorSelectDragging);
 
                     desktop->canvas->forceFullRedrawAfterInterruptions(5);
 
-                    // remember the clicked item in sc->item:
-                    if (sc->item) {
-                        sp_object_unref(sc->item, NULL);
-                        sc->item = NULL;
+                    // remember the clicked item in this->item:
+                    if (this->item) {
+                        sp_object_unref(this->item, NULL);
+                        this->item = NULL;
                     }
-                    sc->item = sp_event_context_find_item (desktop,
+
+                    this->item = sp_event_context_find_item (desktop,
                                               Geom::Point(event->button.x, event->button.y), event->button.state & GDK_MOD1_MASK, FALSE);
-                    sp_object_ref(sc->item, NULL);
+                    sp_object_ref(this->item, NULL);
 
                     rb_escaped = drag_escaped = 0;
 
-                    if (sc->grabbed) {
-                        sp_canvas_item_ungrab(sc->grabbed, event->button.time);
-                        sc->grabbed = NULL;
+                    if (this->grabbed) {
+                        sp_canvas_item_ungrab(this->grabbed, event->button.time);
+                        this->grabbed = NULL;
                     }
+
                     sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->drawing),
                                         GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK | GDK_BUTTON_RELEASE_MASK | GDK_BUTTON_PRESS_MASK |
                                         GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK,
                                         NULL, event->button.time);
-                    sc->grabbed = SP_CANVAS_ITEM(desktop->drawing);
+
+                    this->grabbed = SP_CANVAS_ITEM(desktop->drawing);
 
                     desktop->canvas->forceFullRedrawAfterInterruptions(5);
 
@@ -368,43 +342,41 @@ sp_select_context_item_handler(SPEventContext *event_context, SPItem *item, GdkE
                 }
             } else if (event->button.button == 3) {
                 // right click; do not eat it so that right-click menu can appear, but cancel dragging & rubberband
-                sp_select_context_abort(event_context);
+                this->sp_select_context_abort();
             }
             break;
 
-        case GDK_ENTER_NOTIFY:
-        {
-            if (!desktop->isWaitingCursor() && !sc->dragging) {
+        case GDK_ENTER_NOTIFY: {
+            if (!desktop->isWaitingCursor() && !this->dragging) {
                 GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
 
                 gdk_window_set_cursor(window, CursorSelectMouseover);
             }
             break;
         }
-
         case GDK_LEAVE_NOTIFY:
-            if (!desktop->isWaitingCursor() && !sc->dragging) {
+        	if (!desktop->isWaitingCursor() && !this->dragging) {
                 GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
 
-                gdk_window_set_cursor(window, event_context->cursor);
-        }
+                gdk_window_set_cursor(window, this->cursor);
+        	}
             break;
 
         case GDK_KEY_PRESS:
             if (get_group0_keyval (&event->key) == GDK_KEY_space) {
-                if (sc->dragging && sc->grabbed) {
+                if (this->dragging && this->grabbed) {
                     /* stamping mode: show content mode moving */
-                    seltrans->stamp();
+                    _seltrans->stamp();
                     ret = TRUE;
                 }
             } else if (get_group0_keyval (&event->key) == GDK_KEY_Tab) {
-                if (sc->dragging && sc->grabbed) {
-                    seltrans->getNextClosestPoint(false);
+                if (this->dragging && this->grabbed) {
+                    _seltrans->getNextClosestPoint(false);
                     ret = TRUE;
                 }
             } else if (get_group0_keyval (&event->key) == GDK_KEY_ISO_Left_Tab) {
-                if (sc->dragging && sc->grabbed) {
-                    seltrans->getNextClosestPoint(true);
+                if (this->dragging && this->grabbed) {
+                    _seltrans->getNextClosestPoint(true);
                     ret = TRUE;
                 }
             }
@@ -415,66 +387,86 @@ sp_select_context_item_handler(SPEventContext *event_context, SPItem *item, GdkE
     }
 
     if (!ret) {
-        if ((SP_EVENT_CONTEXT_CLASS(sp_select_context_parent_class))->item_handler)
-            ret = (SP_EVENT_CONTEXT_CLASS(sp_select_context_parent_class))->item_handler(event_context, item, event);
+    	ret = SPEventContext::item_handler(item, event);
     }
 
     return ret;
 }
 
-static void
-sp_select_context_cycle_through_items(SPSelectContext *sc, Inkscape::Selection *selection, GdkEventScroll *scroll_event, bool shift_pressed) {
-    if (!sc->cycling_cur_item)
+void SPSelectContext::sp_select_context_cycle_through_items(Inkscape::Selection *selection, GdkEventScroll *scroll_event, bool shift_pressed) {
+    if (!this->cycling_cur_item) {
         return;
+    }
 
     Inkscape::DrawingItem *arenaitem;
-    SPDesktop *desktop = SP_EVENT_CONTEXT(sc)->desktop;
-    SPItem *item = SP_ITEM(sc->cycling_cur_item->data);
+    SPItem *item = SP_ITEM(this->cycling_cur_item->data);
 
     // Deactivate current item
-    if (!g_list_find(sc->cycling_items_selected_before, item) && selection->includes(item))
+    if (!g_list_find(this->cycling_items_selected_before, item) && selection->includes(item)) {
         selection->remove(item);
+    }
+
     arenaitem = item->get_arenaitem(desktop->dkey);
     arenaitem->setOpacity(0.3);
 
     // Find next item and activate it
     GList *next;
     if (scroll_event->direction == GDK_SCROLL_UP) {
-        next = sc->cycling_cur_item->next;
-        if (next == NULL && sc->cycling_wrap)
-            next = sc->cycling_items;
+        next = this->cycling_cur_item->next;
+        if (next == NULL && this->cycling_wrap)
+            next = this->cycling_items;
     } else {
-        next = sc->cycling_cur_item->prev;
-        if (next == NULL && sc->cycling_wrap)
-            next = g_list_last(sc->cycling_items);
+        next = this->cycling_cur_item->prev;
+        if (next == NULL && this->cycling_wrap)
+            next = g_list_last(this->cycling_items);
     }
+
     if (next) {
-        sc->cycling_cur_item = next;
-        item = SP_ITEM(sc->cycling_cur_item->data);
+        this->cycling_cur_item = next;
+        item = SP_ITEM(this->cycling_cur_item->data);
     }
+
     arenaitem = item->get_arenaitem(desktop->dkey);
     arenaitem->setOpacity(1.0);
 
-    if (shift_pressed)
+    if (shift_pressed) {
         selection->add(item);
-    else
+    } else {
         selection->set(item);
+    }
 }
 
-static gint
-sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
+
+static void
+sp_select_context_reset_opacities(SPEventContext *event_context)
 {
+    // SPDesktop *desktop = event_context->desktop;
+	SPSelectContext *sc = SP_SELECT_CONTEXT(event_context);
+	Inkscape::DrawingItem *arenaitem;
+	for (GList *l = sc->cycling_items; l != NULL; l = g_list_next(l)) {
+		arenaitem = SP_ITEM(l->data)->get_arenaitem(event_context->desktop->dkey);
+		arenaitem->setOpacity(SP_SCALE24_TO_FLOAT(SP_ITEM(l->data)->style->opacity.value));
+		}
+	g_list_free(sc->cycling_items);
+	g_list_free(sc->cycling_items_selected_before);
+	g_list_free(sc->cycling_items_cmp);
+	sc->cycling_items = NULL;
+	sc->cycling_items_selected_before = NULL;
+	sc->cycling_cur_item = NULL;
+	sc->cycling_items_cmp = NULL;
+}
+
+bool SPSelectContext::root_handler(GdkEvent* event) {
+    SPItem *item = NULL;
+    SPItem *item_at_point = NULL, *group_at_point = NULL, *item_in_group = NULL;
     gint ret = FALSE;
 
-    SPDesktop *desktop = event_context->desktop;
-    SPSelectContext *sc = SP_SELECT_CONTEXT(event_context);
-    Inkscape::SelTrans *seltrans = sc->_seltrans;
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     // make sure we still have valid objects to move around
-    if (sc->item && sc->item->document == NULL) {
-        sp_select_context_abort(event_context);
+    if (this->item && this->item->document == NULL) {
+        this->sp_select_context_abort();
     }
 
     switch (event->type) {
@@ -482,11 +474,12 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             if (event->button.button == 1) {
                 if (!selection->isEmpty()) {
                     SPItem *clicked_item = static_cast<SPItem *>(selection->itemList()->data);
+
                     if (SP_IS_GROUP(clicked_item) && !SP_IS_BOX3D(clicked_item)) { // enter group if it's not a 3D box
                         desktop->setCurrentLayer(reinterpret_cast<SPObject *>(clicked_item));
                         sp_desktop_selection(desktop)->clear();
-                        sc->dragging = false;
-                        sp_event_context_discard_delayed_snap_event(event_context);
+                        this->dragging = false;
+                        sp_event_context_discard_delayed_snap_event(this);
 
                         desktop->canvas->endForcedFullRedraws();
                     } else { // switch tool
@@ -497,12 +490,13 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 } else {
                     sp_select_context_up_one_layer(desktop);
                 }
+
                 ret = TRUE;
             }
             break;
-        case GDK_BUTTON_PRESS:
-            if (event->button.button == 1 && !event_context->space_panning) {
 
+        case GDK_BUTTON_PRESS:
+            if (event->button.button == 1 && !this->space_panning) {
                 // save drag origin
                 xp = (gint) event->button.x;
                 yp = (gint) event->button.y;
@@ -510,43 +504,51 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
                 Geom::Point const button_pt(event->button.x, event->button.y);
                 Geom::Point const p(desktop->w2d(button_pt));
-                if (event->button.state & GDK_MOD1_MASK)
+
+                if (event->button.state & GDK_MOD1_MASK) {
                     Inkscape::Rubberband::get(desktop)->setMode(RUBBERBAND_MODE_TOUCHPATH);
-                Inkscape::Rubberband::get(desktop)->start(desktop, p);
-                if (sc->grabbed) {
-                    sp_canvas_item_ungrab(sc->grabbed, event->button.time);
-                    sc->grabbed = NULL;
                 }
+
+                Inkscape::Rubberband::get(desktop)->start(desktop, p);
+
+                if (this->grabbed) {
+                    sp_canvas_item_ungrab(this->grabbed, event->button.time);
+                    this->grabbed = NULL;
+                }
+
                 sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                                     GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK | GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK,
                                     NULL, event->button.time);
-                sc->grabbed = SP_CANVAS_ITEM(desktop->acetate);
+
+                this->grabbed = SP_CANVAS_ITEM(desktop->acetate);
 
                 // remember what modifiers were on before button press
-                sc->button_press_shift = (event->button.state & GDK_SHIFT_MASK) ? true : false;
-                sc->button_press_ctrl = (event->button.state & GDK_CONTROL_MASK) ? true : false;
-                sc->button_press_alt = (event->button.state & GDK_MOD1_MASK) ? true : false;
+                this->button_press_shift = (event->button.state & GDK_SHIFT_MASK) ? true : false;
+                this->button_press_ctrl = (event->button.state & GDK_CONTROL_MASK) ? true : false;
+                this->button_press_alt = (event->button.state & GDK_MOD1_MASK) ? true : false;
 
-                sc->moved = FALSE;
+                this->moved = FALSE;
 
                 rb_escaped = drag_escaped = 0;
 
                 ret = TRUE;
             } else if (event->button.button == 3) {
                 // right click; do not eat it so that right-click menu can appear, but cancel dragging & rubberband
-                sp_select_context_abort(event_context);
+                this->sp_select_context_abort();
             }
             break;
 
         case GDK_MOTION_NOTIFY:
         {
-        if (is_cycling)
-            {
-            moved_while_cycling = true;
-            prev_event_context = event_context;
-            }
-            tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
-            if ((event->motion.state & GDK_BUTTON1_MASK) && !event_context->space_panning) {
+		if (is_cycling)
+			{
+			moved_while_cycling = true;
+			prev_event_context = this;
+			}
+            
+			tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
+
+            if ((event->motion.state & GDK_BUTTON1_MASK) && !this->space_panning) {
                 Geom::Point const motion_pt(event->motion.x, event->motion.y);
                 Geom::Point const p(desktop->w2d(motion_pt));
 
@@ -560,73 +562,90 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 // motion notify coordinates as given (no snapping back to origin)
                 within_tolerance = false;
 
-                if (sc->button_press_ctrl || (sc->button_press_alt && !sc->button_press_shift && !selection->isEmpty())) {
+                if (this->button_press_ctrl || (this->button_press_alt && !this->button_press_shift && !selection->isEmpty())) {
                     // if it's not click and ctrl or alt was pressed (the latter with some selection
                     // but not with shift) we want to drag rather than rubberband
-                    sc->dragging = TRUE;
-            GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
+                    this->dragging = TRUE;
+
+                    GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
+
                     gdk_window_set_cursor(window, CursorSelectDragging);
 
                     desktop->canvas->forceFullRedrawAfterInterruptions(5);
                 }
 
-                if (sc->dragging) {
+                if (this->dragging) {
                     /* User has dragged fast, so we get events on root (lauris)*/
                     // not only that; we will end up here when ctrl-dragging as well
                     // and also when we started within tolerance, but trespassed tolerance outside of item
                     Inkscape::Rubberband::get(desktop)->stop();
-                    SP_EVENT_CONTEXT(sc)->defaultMessageContext()->clear();
-                    SPItem *item_at_point = desktop->getItemAtPoint(Geom::Point(event->button.x, event->button.y), FALSE);
-                    if (!item_at_point) // if no item at this point, try at the click point (bug 1012200)
+                    this->defaultMessageContext()->clear();
+
+                    item_at_point = desktop->getItemAtPoint(Geom::Point(event->button.x, event->button.y), FALSE);
+
+                    if (!item_at_point) { // if no item at this point, try at the click point (bug 1012200)
                         item_at_point = desktop->getItemAtPoint(Geom::Point(xp, yp), FALSE);
-                    if (item_at_point || sc->moved || sc->button_press_alt) {
+                    }
+
+                    if (item_at_point || this->moved || this->button_press_alt) {
                         // drag only if starting from an item, or if something is already grabbed, or if alt-dragging
-                        if (!sc->moved) {
-                            SPItem *item_in_group = desktop->getItemAtPoint(Geom::Point(event->button.x, event->button.y), TRUE);
-                            SPItem *group_at_point = desktop->getGroupAtPoint(Geom::Point(event->button.x, event->button.y));
-                            if (SP_IS_LAYER(selection->single()))
+                        if (!this->moved) {
+                            item_in_group = desktop->getItemAtPoint(Geom::Point(event->button.x, event->button.y), TRUE);
+                            group_at_point = desktop->getGroupAtPoint(Geom::Point(event->button.x, event->button.y));
+
+                            if (SP_IS_LAYER(selection->single())) {
                                 group_at_point = SP_GROUP(selection->single());
+                            }
 
                             // group-at-point is meant to be topmost item if it's a group,
                             // not topmost group of all items at point
                             if (group_at_point != item_in_group &&
                                 !(group_at_point && item_at_point &&
-                                  group_at_point->isAncestorOf(item_at_point)))
+                                  group_at_point->isAncestorOf(item_at_point))) {
                                 group_at_point = NULL;
+                            }
 
                             // if neither a group nor an item (possibly in a group) at point are selected, set selection to the item at point
                             if ((!item_in_group || !selection->includes(item_in_group)) &&
                                 (!group_at_point || !selection->includes(group_at_point))
-                                && !sc->button_press_alt) {
+                                && !this->button_press_alt) {
                                 // select what is under cursor
-                                if (!seltrans->isEmpty()) {
-                                    seltrans->resetState();
+                                if (!_seltrans->isEmpty()) {
+                                    _seltrans->resetState();
                                 }
+
                                 // when simply ctrl-dragging, we don't want to go into groups
-                                if (item_at_point && !selection->includes(item_at_point))
+                                if (item_at_point && !selection->includes(item_at_point)) {
                                     selection->set(item_at_point);
+                                }
                             } // otherwise, do not change selection so that dragging selected-within-group items, as well as alt-dragging, is possible
-                            seltrans->grab(p, -1, -1, FALSE, TRUE);
-                            sc->moved = TRUE;
+
+                            _seltrans->grab(p, -1, -1, FALSE, TRUE);
+                            this->moved = TRUE;
                         }
-                        if (!seltrans->isEmpty())
-                            seltrans->moveTo(p, event->button.state);
+
+                        if (!_seltrans->isEmpty()) {
+                            _seltrans->moveTo(p, event->button.state);
+                        }
+
                         desktop->scroll_to_point(p);
                         gobble_motion_events(GDK_BUTTON1_MASK);
                         ret = TRUE;
                     } else {
-                        sc->dragging = FALSE;
-                        sp_event_context_discard_delayed_snap_event(event_context);
+                        this->dragging = FALSE;
+                        sp_event_context_discard_delayed_snap_event(this);
                         desktop->canvas->endForcedFullRedraws();
                     }
                 } else {
                     if (Inkscape::Rubberband::get(desktop)->is_started()) {
                         Inkscape::Rubberband::get(desktop)->move(p);
+
                         if (Inkscape::Rubberband::get(desktop)->getMode() == RUBBERBAND_MODE_TOUCHPATH) {
-                            event_context->defaultMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Draw over</b> objects to select them; release <b>Alt</b> to switch to rubberband selection"));
+                            this->defaultMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Draw over</b> objects to select them; release <b>Alt</b> to switch to rubberband selection"));
                         } else {
-                            event_context->defaultMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Drag around</b> objects to select them; press <b>Alt</b> to switch to touch selection"));
+                            this->defaultMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Drag around</b> objects to select them; press <b>Alt</b> to switch to touch selection"));
                         }
+
                         gobble_motion_events(GDK_BUTTON1_MASK);
                     }
                 }
@@ -635,55 +654,62 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
         }
         case GDK_BUTTON_RELEASE:
             xp = yp = 0;
-            if ((event->button.button == 1) && (sc->grabbed) && !event_context->space_panning) {
-                if (sc->dragging) {
+
+            if ((event->button.button == 1) && (this->grabbed) && !this->space_panning) {
+                if (this->dragging) {
                     GdkWindow* window;
-            if (sc->moved) {
+
+                    if (this->moved) {
                         // item has been moved
-                        seltrans->ungrab();
-                        sc->moved = FALSE;
+                        _seltrans->ungrab();
+                        this->moved = FALSE;
 #ifdef WITH_DBUS
-                        dbus_send_ping(desktop, sc->item);
+                        dbus_send_ping(desktop, this->item);
 #endif
-                    } else if (sc->item && !drag_escaped) {
+                    } else if (this->item && !drag_escaped) {
                         // item has not been moved -> simply a click, do selecting
                         if (!selection->isEmpty()) {
                             if (event->button.state & GDK_SHIFT_MASK) {
                                 // with shift, toggle selection
-                                seltrans->resetState();
-                                selection->toggle(sc->item);
+                                _seltrans->resetState();
+                                selection->toggle(this->item);
                             } else {
                                 SPObject* single = selection->single();
                                 // without shift, increase state (i.e. toggle scale/rotation handles)
-                                if (selection->includes(sc->item)) {
-                                    seltrans->increaseState();
-                                } else if (SP_IS_LAYER(single) && single->isAncestorOf(sc->item)) {
-                                    seltrans->increaseState();
+                                if (selection->includes(this->item)) {
+                                    _seltrans->increaseState();
+                                } else if (SP_IS_LAYER(single) && single->isAncestorOf(this->item)) {
+                                    _seltrans->increaseState();
                                 } else {
-                                    seltrans->resetState();
-                                    selection->set(sc->item);
+                                    _seltrans->resetState();
+                                    selection->set(this->item);
                                 }
                             }
                         } else { // simple or shift click, no previous selection
-                            seltrans->resetState();
-                            selection->set(sc->item);
+                            _seltrans->resetState();
+                            selection->set(this->item);
                         }
                     }
-                    sc->dragging = FALSE;
-            window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
+
+                    this->dragging = FALSE;
+                    window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
+
                     gdk_window_set_cursor(window, CursorSelectMouseover);
-                    sp_event_context_discard_delayed_snap_event(event_context);
+                    sp_event_context_discard_delayed_snap_event(this);
                     desktop->canvas->endForcedFullRedraws();
 
-                    if (sc->item) {
-                        sp_object_unref( sc->item, NULL);
+                    if (this->item) {
+                        sp_object_unref( this->item, NULL);
                     }
-                    sc->item = NULL;
+
+                    this->item = NULL;
                 } else {
                     Inkscape::Rubberband *r = Inkscape::Rubberband::get(desktop);
+
                     if (r->is_started() && !within_tolerance) {
                         // this was a rubberband drag
                         GSList *items = NULL;
+
                         if (r->getMode() == RUBBERBAND_MODE_RECT) {
                             Geom::OptRect const b = r->getRectangle();
                             items = sp_desktop_document(desktop)->getItemsInBox(desktop->dkey, *b);
@@ -691,9 +717,9 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                             items = sp_desktop_document(desktop)->getItemsAtPoints(desktop->dkey, r->getPoints());
                         }
 
-                        seltrans->resetState();
+                        _seltrans->resetState();
                         r->stop();
-                        SP_EVENT_CONTEXT(sc)->defaultMessageContext()->clear();
+                        this->defaultMessageContext()->clear();
 
                         if (event->button.state & GDK_SHIFT_MASK) {
                             // with shift, add to selection
@@ -702,20 +728,20 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                             // without shift, simply select anew
                             selection->setList (items);
                         }
+
                         g_slist_free (items);
                     } else { // it was just a click, or a too small rubberband
                         r->stop();
-                        if (sc->button_press_shift && !rb_escaped && !drag_escaped) {
+
+                        if (this->button_press_shift && !rb_escaped && !drag_escaped) {
                             // this was a shift+click or alt+shift+click, select what was clicked upon
+                            this->button_press_shift = false;
 
-                            sc->button_press_shift = false;
-
-                            SPItem *item = NULL;
-                            if (sc->button_press_ctrl) {
+                            if (this->button_press_ctrl) {
                                 // go into groups, honoring Alt
                                 item = sp_event_context_find_item (desktop,
                                                    Geom::Point(event->button.x, event->button.y), event->button.state & GDK_MOD1_MASK, TRUE);
-                                sc->button_press_ctrl = FALSE;
+                                this->button_press_ctrl = FALSE;
                             } else {
                                 // don't go into groups, honoring Alt
                                 item = sp_event_context_find_item (desktop,
@@ -727,53 +753,56 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                                 item = NULL;
                             }
 
-                        } else if ((sc->button_press_ctrl || sc->button_press_alt) && !rb_escaped && !drag_escaped) { // ctrl+click, alt+click
+                        } else if ((this->button_press_ctrl || this->button_press_alt) && !rb_escaped && !drag_escaped) { // ctrl+click, alt+click
+                            item = sp_event_context_find_item (desktop,
+                                         Geom::Point(event->button.x, event->button.y), this->button_press_alt, this->button_press_ctrl);
 
-                            SPItem *item = sp_event_context_find_item (desktop,
-                                         Geom::Point(event->button.x, event->button.y), sc->button_press_alt, sc->button_press_ctrl);
-
-                            sc->button_press_ctrl = FALSE;
-                            sc->button_press_alt = FALSE;
+                            this->button_press_ctrl = FALSE;
+                            this->button_press_alt = FALSE;
 
                             if (item) {
                                 if (selection->includes(item)) {
-                                    seltrans->increaseState();
+                                    _seltrans->increaseState();
                                 } else {
-                                    seltrans->resetState();
+                                    _seltrans->resetState();
                                     selection->set(item);
                                 }
+
                                 item = NULL;
                             }
-
                         } else { // click without shift, simply deselect, unless with Alt or something was cancelled
                             if (!selection->isEmpty()) {
-                                if (!(rb_escaped) && !(drag_escaped) && !(event->button.state & GDK_MOD1_MASK))
+                                if (!(rb_escaped) && !(drag_escaped) && !(event->button.state & GDK_MOD1_MASK)) {
                                     selection->clear();
+                                }
+
                                 rb_escaped = 0;
                                 ret = TRUE;
                             }
                         }
                     }
+
                     ret = TRUE;
                 }
-                if (sc->grabbed) {
-                    sp_canvas_item_ungrab(sc->grabbed, event->button.time);
-                    sc->grabbed = NULL;
+
+                if (this->grabbed) {
+                    sp_canvas_item_ungrab(this->grabbed, event->button.time);
+                    this->grabbed = NULL;
                 }
 
                 desktop->updateNow();
             }
+
             if (event->button.button == 1) {
                 Inkscape::Rubberband::get(desktop)->stop(); // might have been started in another tool!
             }
-            sc->button_press_shift = false;
-            sc->button_press_ctrl = false;
-            sc->button_press_alt = false;
+
+            this->button_press_shift = false;
+            this->button_press_ctrl = false;
+            this->button_press_alt = false;
             break;
 
-        case GDK_SCROLL:
-        {
-            SPSelectContext *sc = SP_SELECT_CONTEXT(event_context);
+        case GDK_SCROLL: {
             GdkEventScroll *scroll_event = (GdkEventScroll*) event;
 
             if (scroll_event->state & GDK_MOD1_MASK) { // alt modified pressed
@@ -793,21 +822,22 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 SPItem *item = desktop->getItemAtPoint(p, true, NULL);
 
                 // Save pointer to current cycle-item so that we can find it again later, in the freshly built list
-                SPItem *tmp_cur_item = sc->cycling_cur_item ? SP_ITEM(sc->cycling_cur_item->data) : NULL;
-                g_list_free(sc->cycling_items);
-                sc->cycling_items = NULL;
-                sc->cycling_cur_item = NULL;
+                SPItem *tmp_cur_item = this->cycling_cur_item ? SP_ITEM(this->cycling_cur_item->data) : NULL;
+                g_list_free(this->cycling_items);
+                this->cycling_items = NULL;
+                this->cycling_cur_item = NULL;
 
                 while(item != NULL) {
-                    sc->cycling_items = g_list_append(sc->cycling_items, item);
+                    this->cycling_items = g_list_append(this->cycling_items, item);
                     item = desktop->getItemAtPoint(p, true, item);
                 }
 
                 /* Compare current item list with item list during previous scroll ... */
                 GList *l1, *l2;
                 bool item_lists_differ = false;
+
                 // Note that we can do an 'or' comparison in the loop because it is safe to call g_list_next with a NULL pointer.
-                for (l1 = sc->cycling_items, l2 = sc->cycling_items_cmp; l1 != NULL || l2 != NULL; l1 = g_list_next(l1), l2 = g_list_next(l2)) {
+                for (l1 = this->cycling_items, l2 = this->cycling_items_cmp; l1 != NULL || l2 != NULL; l1 = g_list_next(l1), l2 = g_list_next(l2)) {
                     if ((l1 !=NULL && l2 == NULL) || (l1 == NULL && l2 != NULL) || (l1->data != l2->data)) {
                         item_lists_differ = true;
                         break;
@@ -818,46 +848,52 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 if (!item_lists_differ) {
                     // ... find current item in the freshly built list and continue cycling ...
                     // TODO: This wouldn't be necessary if cycling_cur_item pointed to an element of cycling_items_cmp instead
-                    sc->cycling_cur_item = g_list_find(sc->cycling_items, tmp_cur_item);
-                    g_assert(sc->cycling_cur_item != NULL || sc->cycling_items == NULL);
+                    this->cycling_cur_item = g_list_find(this->cycling_items, tmp_cur_item);
+                    g_assert(this->cycling_cur_item != NULL || this->cycling_items == NULL);
                 } else {
                     // ... otherwise reset opacities for outdated items ...
                     Inkscape::DrawingItem *arenaitem;
-                    for(GList *l = sc->cycling_items_cmp; l != NULL; l = l->next) {
+
+                    for(GList *l = this->cycling_items_cmp; l != NULL; l = l->next) {
                         arenaitem = SP_ITEM(l->data)->get_arenaitem(desktop->dkey);
                         arenaitem->setOpacity(1.0);
-                        //if (!shift_pressed && !g_list_find(sc->cycling_items_selected_before, SP_ITEM(l->data)) && selection->includes(SP_ITEM(l->data)))
-                        if (!g_list_find(sc->cycling_items_selected_before, SP_ITEM(l->data)) && selection->includes(SP_ITEM(l->data)))
+                        //if (!shift_pressed && !g_list_find(this->cycling_items_selected_before, SP_ITEM(l->data)) && selection->includes(SP_ITEM(l->data)))
+                        if (!g_list_find(this->cycling_items_selected_before, SP_ITEM(l->data)) && selection->includes(SP_ITEM(l->data))) {
                             selection->remove(SP_ITEM(l->data));
+                        }
                     }
 
                     // ... clear the lists ...
-                    g_list_free(sc->cycling_items_cmp);
-                    g_list_free(sc->cycling_items_selected_before);
-                    sc->cycling_items_cmp = NULL;
-                    sc->cycling_items_selected_before = NULL;
-                    sc->cycling_cur_item = NULL;
+                    g_list_free(this->cycling_items_cmp);
+                    g_list_free(this->cycling_items_selected_before);
+
+                    this->cycling_items_cmp = NULL;
+                    this->cycling_items_selected_before = NULL;
+                    this->cycling_cur_item = NULL;
 
                     // ... and rebuild them with the new items.
-                    sc->cycling_items_cmp = g_list_copy(sc->cycling_items);
-                    for(GList *l = sc->cycling_items; l != NULL; l = l->next) {
-                        SPItem *item = SP_ITEM(l->data);
+                    this->cycling_items_cmp = g_list_copy(this->cycling_items);
+                    SPItem *item;
+
+                    for(GList *l = this->cycling_items; l != NULL; l = l->next) {
+                        item = SP_ITEM(l->data);
                         arenaitem = item->get_arenaitem(desktop->dkey);
                         arenaitem->setOpacity(0.3);
+
                         if (selection->includes(item)) {
                             // already selected items are stored separately, too
-                            sc->cycling_items_selected_before = g_list_append(sc->cycling_items_selected_before, item);
+                            this->cycling_items_selected_before = g_list_append(this->cycling_items_selected_before, item);
                         }
                     }
 
                     // set the current item to the bottommost one so that the cycling step below re-starts at the top
-                    sc->cycling_cur_item = g_list_last(sc->cycling_items);
+                    this->cycling_cur_item = g_list_last(this->cycling_items);
                 }
 
-                sc->cycling_wrap = prefs->getBool("/options/selection/cycleWrap", true);
+                this->cycling_wrap = prefs->getBool("/options/selection/cycleWrap", true);
 
                 // Cycle through the items underneath the mouse pointer, one-by-one
-                sp_select_context_cycle_through_items(sc, selection, scroll_event, shift_pressed);
+                this->sp_select_context_cycle_through_items(selection, scroll_event, shift_pressed);
 
                 ret = TRUE;
 
@@ -872,10 +908,10 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
         }
 
         case GDK_KEY_PRESS: // keybindings for select context
-
-            {
-            {
-            guint keyval = get_group0_keyval(&event->key);
+			{
+			{
+        	guint keyval = get_group0_keyval(&event->key);
+        	
                 bool alt = ( MOD__ALT(event)
                                     || (keyval == GDK_KEY_Alt_L)
                                     || (keyval == GDK_KEY_Alt_R)
@@ -883,8 +919,8 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                                     || (keyval == GDK_KEY_Meta_R));
 
             if (!key_is_a_modifier (keyval)) {
-                    event_context->defaultMessageContext()->clear();
-            } else if (sc->grabbed || seltrans->isGrabbed()) {
+                    this->defaultMessageContext()->clear();
+            } else if (this->grabbed || _seltrans->isGrabbed()) {
                 if (Inkscape::Rubberband::get(desktop)->is_started()) {
                     // if Alt then change cursor to moving cursor:
                     if (alt) {
@@ -896,13 +932,15 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                    break;
                 }
             } else {
-                    sp_event_show_modifier_tip (event_context->defaultMessageContext(), event,
+                    sp_event_show_modifier_tip (this->defaultMessageContext(), event,
                                                 _("<b>Ctrl</b>: click to select in groups; drag to move hor/vert"),
                                                 _("<b>Shift</b>: click to toggle select; drag for rubberband selection"),
                                                 _("<b>Alt</b>: click to select under; scroll mouse-wheel to cycle-select; drag to move selected or select by touch"));
+                    
                     // if Alt and nonempty selection, show moving cursor ("move selected"):
                     if (alt && !selection->isEmpty() && !desktop->isWaitingCursor()) {
-            GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
+                    	GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
+
                         gdk_window_set_cursor(window, CursorSelectDragging);
                     }
                     //*/
@@ -918,70 +956,100 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 case GDK_KEY_Left: // move selection left
                 case GDK_KEY_KP_Left:
                     if (!MOD__CTRL(event)) { // not ctrl
-                        gint mul = 1 + gobble_key_events(
-                            get_group0_keyval(&event->key), 0); // with any mask
+                        gint mul = 1 + gobble_key_events( get_group0_keyval(&event->key), 0); // with any mask
+                        
                         if (MOD__ALT(event)) { // alt
-                            if (MOD__SHIFT(event)) sp_selection_move_screen(sp_desktop_selection(desktop), mul*-10, 0); // shift
-                            else sp_selection_move_screen(sp_desktop_selection(desktop), mul*-1, 0); // no shift
+                            if (MOD__SHIFT(event)) {
+                            	sp_selection_move_screen(sp_desktop_selection(desktop), mul*-10, 0); // shift
+                            } else {
+                            	sp_selection_move_screen(sp_desktop_selection(desktop), mul*-1, 0); // no shift
+                            }
+                        } else { // no alt
+                            if (MOD__SHIFT(event)) {
+                            	sp_selection_move(sp_desktop_selection(desktop), mul*-10*nudge, 0); // shift
+                            } else {
+                            	sp_selection_move(sp_desktop_selection(desktop), mul*-nudge, 0); // no shift
+                            }
                         }
-                        else { // no alt
-                            if (MOD__SHIFT(event)) sp_selection_move(sp_desktop_selection(desktop), mul*-10*nudge, 0); // shift
-                            else sp_selection_move(sp_desktop_selection(desktop), mul*-nudge, 0); // no shift
-                        }
+                        
                         ret = TRUE;
                     }
                     break;
+                    
                 case GDK_KEY_Up: // move selection up
                 case GDK_KEY_KP_Up:
                     if (!MOD__CTRL(event)) { // not ctrl
-                        gint mul = 1 + gobble_key_events(
-                            get_group0_keyval(&event->key), 0); // with any mask
+                        gint mul = 1 + gobble_key_events(get_group0_keyval(&event->key), 0); // with any mask
+                        
                         if (MOD__ALT(event)) { // alt
-                            if (MOD__SHIFT(event)) sp_selection_move_screen(sp_desktop_selection(desktop), 0, mul*10); // shift
-                            else sp_selection_move_screen(sp_desktop_selection(desktop), 0, mul*1); // no shift
+                            if (MOD__SHIFT(event)) {
+                            	sp_selection_move_screen(sp_desktop_selection(desktop), 0, mul*10); // shift
+                            } else {
+                            	sp_selection_move_screen(sp_desktop_selection(desktop), 0, mul*1); // no shift
+                            }
+                        } else { // no alt
+                            if (MOD__SHIFT(event)) {
+                            	sp_selection_move(sp_desktop_selection(desktop), 0, mul*10*nudge); // shift
+                            } else {
+                            	sp_selection_move(sp_desktop_selection(desktop), 0, mul*nudge); // no shift
+                            }
                         }
-                        else { // no alt
-                            if (MOD__SHIFT(event)) sp_selection_move(sp_desktop_selection(desktop), 0, mul*10*nudge); // shift
-                            else sp_selection_move(sp_desktop_selection(desktop), 0, mul*nudge); // no shift
-                        }
+                        
                         ret = TRUE;
                     }
                     break;
+                    
                 case GDK_KEY_Right: // move selection right
                 case GDK_KEY_KP_Right:
                     if (!MOD__CTRL(event)) { // not ctrl
-                        gint mul = 1 + gobble_key_events(
-                            get_group0_keyval(&event->key), 0); // with any mask
+                        gint mul = 1 + gobble_key_events(get_group0_keyval(&event->key), 0); // with any mask
+                        
                         if (MOD__ALT(event)) { // alt
-                            if (MOD__SHIFT(event)) sp_selection_move_screen(sp_desktop_selection(desktop), mul*10, 0); // shift
-                            else sp_selection_move_screen(sp_desktop_selection(desktop), mul*1, 0); // no shift
+                            if (MOD__SHIFT(event)) {
+                            	sp_selection_move_screen(sp_desktop_selection(desktop), mul*10, 0); // shift
+                            } else {
+                            	sp_selection_move_screen(sp_desktop_selection(desktop), mul*1, 0); // no shift
+                            }
+                        } else { // no alt
+                            if (MOD__SHIFT(event)) {
+                            	sp_selection_move(sp_desktop_selection(desktop), mul*10*nudge, 0); // shift
+                            } else {
+                            	sp_selection_move(sp_desktop_selection(desktop), mul*nudge, 0); // no shift
+                            }
                         }
-                        else { // no alt
-                            if (MOD__SHIFT(event)) sp_selection_move(sp_desktop_selection(desktop), mul*10*nudge, 0); // shift
-                            else sp_selection_move(sp_desktop_selection(desktop), mul*nudge, 0); // no shift
-                        }
+                        
                         ret = TRUE;
                     }
                     break;
+                    
                 case GDK_KEY_Down: // move selection down
                 case GDK_KEY_KP_Down:
                     if (!MOD__CTRL(event)) { // not ctrl
-                        gint mul = 1 + gobble_key_events(
-                            get_group0_keyval(&event->key), 0); // with any mask
+                        gint mul = 1 + gobble_key_events(get_group0_keyval(&event->key), 0); // with any mask
+                        
                         if (MOD__ALT(event)) { // alt
-                            if (MOD__SHIFT(event)) sp_selection_move_screen(sp_desktop_selection(desktop), 0, mul*-10); // shift
-                            else sp_selection_move_screen(sp_desktop_selection(desktop), 0, mul*-1); // no shift
+                            if (MOD__SHIFT(event)) {
+                            	sp_selection_move_screen(sp_desktop_selection(desktop), 0, mul*-10); // shift
+                            } else {
+                            	sp_selection_move_screen(sp_desktop_selection(desktop), 0, mul*-1); // no shift
+                            }
+                        } else { // no alt
+                            if (MOD__SHIFT(event)) {
+                            	sp_selection_move(sp_desktop_selection(desktop), 0, mul*-10*nudge); // shift
+                            } else {
+                            	sp_selection_move(sp_desktop_selection(desktop), 0, mul*-nudge); // no shift
+                            }
                         }
-                        else { // no alt
-                            if (MOD__SHIFT(event)) sp_selection_move(sp_desktop_selection(desktop), 0, mul*-10*nudge); // shift
-                            else sp_selection_move(sp_desktop_selection(desktop), 0, mul*-nudge); // no shift
-                        }
+                        
                         ret = TRUE;
                     }
                     break;
+                    
                 case GDK_KEY_Escape:
-                    if (!sp_select_context_abort(event_context))
+                    if (!this->sp_select_context_abort()) {
                         selection->clear();
+                    }
+                    
                     ret = TRUE;
                     break;
 
@@ -992,14 +1060,16 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         ret = TRUE;
                     }
                     break;
+                    
                 case GDK_KEY_space:
                     /* stamping mode: show outline mode moving */
                     /* FIXME: Is next condition ok? (lauris) */
-                    if (sc->dragging && sc->grabbed) {
-                        seltrans->stamp();
+                    if (this->dragging && this->grabbed) {
+                        _seltrans->stamp();
                         ret = TRUE;
                     }
                     break;
+                    
                 case GDK_KEY_x:
                 case GDK_KEY_X:
                     if (MOD__ALT_ONLY(event)) {
@@ -1007,90 +1077,98 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         ret = TRUE;
                     }
                     break;
+                    
                 case GDK_KEY_bracketleft:
                     if (MOD__ALT(event)) {
-                        gint mul = 1 + gobble_key_events(
-                            get_group0_keyval(&event->key), 0); // with any mask
+                        gint mul = 1 + gobble_key_events(get_group0_keyval(&event->key), 0); // with any mask
                         sp_selection_rotate_screen(selection, mul*1);
                     } else if (MOD__CTRL(event)) {
                         sp_selection_rotate(selection, 90);
                     } else if (snaps) {
                         sp_selection_rotate(selection, 180.0/snaps);
                     }
+                    
                     ret = TRUE;
                     break;
+                    
                 case GDK_KEY_bracketright:
                     if (MOD__ALT(event)) {
-                        gint mul = 1 + gobble_key_events(
-                            get_group0_keyval(&event->key), 0); // with any mask
+                        gint mul = 1 + gobble_key_events(get_group0_keyval(&event->key), 0); // with any mask
                         sp_selection_rotate_screen(selection, -1*mul);
                     } else if (MOD__CTRL(event)) {
                         sp_selection_rotate(selection, -90);
                     } else if (snaps) {
                         sp_selection_rotate(selection, -180.0/snaps);
                     }
+                    
                     ret = TRUE;
                     break;
+                    
                 case GDK_KEY_less:
                 case GDK_KEY_comma:
                     if (MOD__ALT(event)) {
-                        gint mul = 1 + gobble_key_events(
-                            get_group0_keyval(&event->key), 0); // with any mask
+                        gint mul = 1 + gobble_key_events(get_group0_keyval(&event->key), 0); // with any mask
                         sp_selection_scale_screen(selection, -2*mul);
                     } else if (MOD__CTRL(event)) {
                         sp_selection_scale_times(selection, 0.5);
                     } else {
-                        gint mul = 1 + gobble_key_events(
-                            get_group0_keyval(&event->key), 0); // with any mask
+                        gint mul = 1 + gobble_key_events(get_group0_keyval(&event->key), 0); // with any mask
                         sp_selection_scale(selection, -offset*mul);
                     }
+                    
                     ret = TRUE;
                     break;
+                    
                 case GDK_KEY_greater:
                 case GDK_KEY_period:
                     if (MOD__ALT(event)) {
-                        gint mul = 1 + gobble_key_events(
-                            get_group0_keyval(&event->key), 0); // with any mask
+                        gint mul = 1 + gobble_key_events(get_group0_keyval(&event->key), 0); // with any mask
                         sp_selection_scale_screen(selection, 2*mul);
                     } else if (MOD__CTRL(event)) {
                         sp_selection_scale_times(selection, 2);
                     } else {
-                        gint mul = 1 + gobble_key_events(
-                            get_group0_keyval(&event->key), 0); // with any mask
+                        gint mul = 1 + gobble_key_events(get_group0_keyval(&event->key), 0); // with any mask
                         sp_selection_scale(selection, offset*mul);
                     }
+                    
                     ret = TRUE;
                     break;
+                    
                 case GDK_KEY_Return:
                     if (MOD__CTRL_ONLY(event)) {
                         if (selection->singleItem()) {
                             SPItem *clicked_item = selection->singleItem();
-                            if ( SP_IS_GROUP(clicked_item) ||
-                                 SP_IS_BOX3D(clicked_item)) { // enter group or a 3D box
+                            
+                            if ( SP_IS_GROUP(clicked_item) || SP_IS_BOX3D(clicked_item)) { // enter group or a 3D box
                                 desktop->setCurrentLayer(reinterpret_cast<SPObject *>(clicked_item));
                                 sp_desktop_selection(desktop)->clear();
                             } else {
-                                SP_EVENT_CONTEXT(sc)->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Selected object is not a group. Cannot enter."));
+                                this->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Selected object is not a group. Cannot enter."));
                             }
                         }
+                        
                         ret = TRUE;
                     }
                     break;
+                    
                 case GDK_KEY_BackSpace:
                     if (MOD__CTRL_ONLY(event)) {
                         sp_select_context_up_one_layer(desktop);
                         ret = TRUE;
                     }
                     break;
+                    
                 case GDK_KEY_s:
                 case GDK_KEY_S:
                     if (MOD__SHIFT_ONLY(event)) {
                         if (!selection->isEmpty()) {
-                            seltrans->increaseState();
+                            _seltrans->increaseState();
                         }
+                        
                         ret = TRUE;
                     }
                     break;
+                    
                 case GDK_KEY_g:
                 case GDK_KEY_G:
                     if (MOD__SHIFT_ONLY(event)) {
@@ -1098,17 +1176,18 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         ret = true;
                     }
                     break;
+                    
                 default:
                     break;
             }
             break;
-            }
-        case GDK_KEY_RELEASE:
-            {
+			}
+        case GDK_KEY_RELEASE: {
             guint keyval = get_group0_keyval(&event->key);
-            if (key_is_a_modifier (keyval))
-                event_context->defaultMessageContext()->clear();
-
+            if (key_is_a_modifier (keyval)) {
+                this->defaultMessageContext()->clear();
+            }
+            
             bool alt = ( MOD__ALT(event)
                          || (keyval == GDK_KEY_Alt_L)
                          || (keyval == GDK_KEY_Alt_R)
@@ -1123,10 +1202,12 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             } else {
                 if (alt) { // TODO: Should we have a variable like is_cycling or is it harmless to run this piece of code each time?
                     // quit cycle-selection and reset opacities
-                    if (is_cycling){
-                        sp_select_context_reset_opacities(event_context);
-                        is_cycling = false;
-                    }
+			if (is_cycling)
+				{
+				sp_select_context_reset_opacities(this);
+				is_cycling = false;	
+				}
+
                 }
             }
 
@@ -1138,35 +1219,17 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 //gdk_window_set_cursor(window, event_context->cursor);
             }
             break;
+
         default:
             break;
     }
 
     if (!ret) {
-        if ((SP_EVENT_CONTEXT_CLASS(sp_select_context_parent_class))->root_handler)
-            ret = (SP_EVENT_CONTEXT_CLASS(sp_select_context_parent_class))->root_handler(event_context, event);
+    	ret = SPEventContext::root_handler(event);
     }
 
     return ret;
 }
-
-static void sp_select_context_reset_opacities(SPEventContext *event_context)
-{
-    // SPDesktop *desktop = event_context->desktop;
-    SPSelectContext *sc = SP_SELECT_CONTEXT(event_context);
-    for (GList *l = sc->cycling_items; l != NULL; l = g_list_next(l)) {
-        Inkscape::DrawingItem *arenaitem = SP_ITEM(l->data)->get_arenaitem(event_context->desktop->dkey);
-        arenaitem->setOpacity(SP_SCALE24_TO_FLOAT(SP_ITEM(l->data)->style->opacity.value));
-        }
-    g_list_free(sc->cycling_items);
-    g_list_free(sc->cycling_items_selected_before);
-    g_list_free(sc->cycling_items_cmp);
-    sc->cycling_items = NULL;
-    sc->cycling_items_selected_before = NULL;
-    sc->cycling_cur_item = NULL;
-    sc->cycling_items_cmp = NULL;
-}
-
 
 /*
   Local Variables:

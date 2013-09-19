@@ -9,27 +9,28 @@ class SPUsePath;
 class Path;
 
 
-#define SP_TYPE_TEXTPATH (sp_textpath_get_type())
-#define SP_TEXTPATH(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_TEXTPATH, SPTextPath))
-#define SP_TEXTPATH_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_TEXTPATH, SPTextPathClass))
-#define SP_IS_TEXTPATH(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_TEXTPATH))
-#define SP_IS_TEXTPATH_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_TEXTPATH))
+#define SP_TEXTPATH(obj) (dynamic_cast<SPTextPath*>((SPObject*)obj))
+#define SP_IS_TEXTPATH(obj) (dynamic_cast<const SPTextPath*>((SPObject*)obj) != NULL)
 
+class SPTextPath : public SPItem {
+public:
+	SPTextPath();
+	virtual ~SPTextPath();
 
-struct SPTextPath : public SPItem {
     TextTagAttributes attributes;
     SVGLength startOffset;
 
     Path *originalPath;
     bool isUpdating;
     SPUsePath *sourcePath;
-};
 
-struct SPTextPathClass {
-    SPItemClass parent_class;
+	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
+	virtual void release();
+	virtual void set(unsigned int key, const gchar* value);
+	virtual void update(SPCtx* ctx, unsigned int flags);
+	virtual void modified(unsigned int flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
 };
-
-GType sp_textpath_get_type();
 
 #define SP_IS_TEXT_TEXTPATH(obj) (SP_IS_TEXT(obj) && obj->firstChild() && SP_IS_TEXTPATH(obj->firstChild()))
 

@@ -11,70 +11,78 @@
 #ifndef SEEN_UI_TOOL_NODE_TOOL_H
 #define SEEN_UI_TOOL_NODE_TOOL_H
 
-#include <memory>
 #include <boost/ptr_container/ptr_map.hpp>
 #include <glib.h>
 #include "event-context.h"
 
-#define INK_TYPE_NODE_TOOL            (ink_node_tool_get_type ())
-#define INK_NODE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), INK_TYPE_NODE_TOOL, InkNodeTool))
-#define INK_NODE_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), INK_TYPE_NODE_TOOL, InkNodeToolClass))
-#define INK_IS_NODE_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), INK_TYPE_NODE_TOOL))
-#define INK_IS_NODE_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), INK_TYPE_NODE_TOOL))
-
 namespace Inkscape {
+	namespace Display {
+		class TemporaryItem;
+	}
 
-namespace Display {
-class TemporaryItem;
-} // namespace Display
-namespace UI {
-class MultiPathManipulator;
-class ControlPointSelection;
-class Selector;
-struct PathSharedData;
-} // namespace UI
-} // namespace Inkscape
+	namespace UI {
+		class MultiPathManipulator;
+		class ControlPointSelection;
+		class Selector;
+		class ControlPoint;
 
-typedef std::auto_ptr<Inkscape::UI::MultiPathManipulator> MultiPathPtr;
-typedef std::auto_ptr<Inkscape::UI::ControlPointSelection> CSelPtr;
-typedef std::auto_ptr<Inkscape::UI::Selector> SelectorPtr;
-typedef std::auto_ptr<Inkscape::UI::PathSharedData> PathSharedDataPtr;
-typedef boost::ptr_map<SPItem*, ShapeEditor> ShapeEditors;
+		struct PathSharedData;
+	}
+}
 
-struct InkNodeTool : public SPEventContext
-{
-    sigc::connection _selection_changed_connection;
+#define INK_NODE_TOOL(obj) (dynamic_cast<InkNodeTool*>((SPEventContext*)obj))
+#define INK_IS_NODE_TOOL(obj) (dynamic_cast<const InkNodeTool*>((const SPEventContext*)obj))
+
+class InkNodeTool : public SPEventContext {
+public:
+	InkNodeTool();
+	virtual ~InkNodeTool();
+
+	Inkscape::UI::ControlPointSelection* _selected_nodes;
+    Inkscape::UI::MultiPathManipulator* _multipath;
+
+    bool edit_clipping_paths;
+    bool edit_masks;
+
+	static const std::string prefsPath;
+
+	virtual void setup();
+	virtual void set(const Inkscape::Preferences::Entry& val);
+	virtual bool root_handler(GdkEvent* event);
+	virtual bool item_handler(SPItem* item, GdkEvent* event);
+
+	virtual const std::string& getPrefsPath();
+
+private:
+	sigc::connection _selection_changed_connection;
     sigc::connection _mouseover_changed_connection;
-    sigc::connection _selection_modified_connection;
     sigc::connection _sizeUpdatedConn;
-    Inkscape::MessageContext *_node_message_context;
+
     SPItem *flashed_item;
     Inkscape::Display::TemporaryItem *flash_tempitem;
-    CSelPtr _selected_nodes;
-    MultiPathPtr _multipath;
-    SelectorPtr _selector;
-    PathSharedDataPtr _path_data;
+    Inkscape::UI::Selector* _selector;
+    Inkscape::UI::PathSharedData* _path_data;
     SPCanvasGroup *_transform_handle_group;
     SPItem *_last_over;
-    ShapeEditors _shape_editors;
+    boost::ptr_map<SPItem*, ShapeEditor> _shape_editors;
 
-    unsigned cursor_drag : 1;
-    unsigned show_handles : 1;
-    unsigned show_outline : 1;
-    unsigned live_outline : 1;
-    unsigned live_objects : 1;
-    unsigned show_path_direction : 1;
-    unsigned show_transform_handles : 1;
-    unsigned single_node_transform_handles : 1;
-    unsigned edit_clipping_paths : 1;
-    unsigned edit_masks : 1;
+    bool cursor_drag;
+    bool show_handles;
+    bool show_outline;
+    bool live_outline;
+    bool live_objects;
+    bool show_path_direction;
+    bool show_transform_handles;
+    bool single_node_transform_handles;
+
+	void selection_changed(Inkscape::Selection *sel);
+
+	void select_area(Geom::Rect const &sel, GdkEventButton *event);
+	void select_point(Geom::Point const &sel, GdkEventButton *event);
+	void mouseover_changed(Inkscape::UI::ControlPoint *p);
+	void update_tip(GdkEvent *event);
+	void handleControlUiStyleChange();
 };
-
-struct InkNodeToolClass {
-    SPEventContextClass parent_class;
-};
-
-GType ink_node_tool_get_type (void);
 
 #endif
 

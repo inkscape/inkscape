@@ -21,11 +21,8 @@
 #include <2geom/point.h>
 #include "event-context.h"
 
-#define SP_TYPE_SPRAY_CONTEXT (sp_spray_context_get_type())
-#define SP_SPRAY_CONTEXT(o) (G_TYPE_CHECK_INSTANCE_CAST((o), SP_TYPE_SPRAY_CONTEXT, SPSprayContext))
-#define SP_SPRAY_CONTEXT_CLASS(k) (G_TYPE_CHECK_CLASS_CAST((k), SP_TYPE_SPRAY_CONTEXT, SPSprayContextClass))
-#define SP_IS_SPRAY_CONTEXT(o) (G_TYPE_CHECK_INSTANCE_TYPE((o), SP_TYPE_SPRAY_CONTEXT))
-#define SP_IS_SPRAY_CONTEXT_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE((k), SP_TYPE_SPRAY_CONTEXT))
+#define SP_SPRAY_CONTEXT(obj) (dynamic_cast<SPSprayContext*>((SPEventContext*)obj))
+#define SP_IS_SPRAY_CONTEXT(obj) (dynamic_cast<const SPSprayContext*>((const SPEventContext*)obj) != NULL)
 
 namespace Inkscape {
   namespace UI {
@@ -49,9 +46,12 @@ enum {
     SPRAY_OPTION,
 };
 
-struct SPSprayContext
-{
-    SPEventContext event_context;
+class SPSprayContext : public SPEventContext {
+public:
+	SPSprayContext();
+	virtual ~SPSprayContext();
+
+    //SPEventContext event_context;
     //Inkscape::UI::Dialog::Dialog *dialog_option;//Attribut de type SprayOptionClass, localisé dans scr/ui/dialog    
     /* extended input data */
     gdouble pressure;
@@ -77,8 +77,6 @@ struct SPSprayContext
 
     gint mode;
 
-    Inkscape::MessageContext *_message_context;
-
     bool is_drawing;
 
     bool is_dilating;
@@ -87,15 +85,18 @@ struct SPSprayContext
     SPCanvasItem *dilate_area;
 
     sigc::connection style_set_connection;
+
+	static const std::string prefsPath;
+
+	virtual void setup();
+	virtual void set(const Inkscape::Preferences::Entry& val);
+	virtual bool root_handler(GdkEvent* event);
+
+	virtual const std::string& getPrefsPath();
+
+
+	void update_cursor(bool /*with_shift*/);
 };
-
-struct SPSprayContextClass
-{
-    SPEventContextClass parent_class;
-};
-
-GType sp_spray_context_get_type(void);
-
 
 #endif
 

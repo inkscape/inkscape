@@ -22,87 +22,86 @@
 #include "document.h"
 #include <cstring>
 
-static void sp_glyph_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
-static void sp_glyph_release(SPObject *object);
-static void sp_glyph_set(SPObject *object, unsigned int key, const gchar *value);
-static Inkscape::XML::Node *sp_glyph_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
-static void sp_glyph_update(SPObject *object, SPCtx *ctx, guint flags);
+#include "sp-factory.h"
 
-G_DEFINE_TYPE(SPGlyph, sp_glyph, SP_TYPE_OBJECT);
+namespace {
+	SPObject* createGlyph() {
+		return new SPGlyph();
+	}
 
-static void sp_glyph_class_init(SPGlyphClass *gc)
-{
-    SPObjectClass *sp_object_class = (SPObjectClass *) gc;
-
-    sp_object_class->build = sp_glyph_build;
-    sp_object_class->release = sp_glyph_release;
-    sp_object_class->set = sp_glyph_set;
-    sp_object_class->write = sp_glyph_write;
-    sp_object_class->update = sp_glyph_update;
+	bool glyphRegistered = SPFactory::instance().registerObject("svg:glyph", createGlyph);
 }
 
-static void sp_glyph_init(SPGlyph *glyph)
-{
+SPGlyph::SPGlyph() : SPObject() {
 //TODO: correct these values:
 
-    new (&glyph->unicode) Glib::ustring();
-    new (&glyph->glyph_name) Glib::ustring();
-    glyph->d = NULL;
-    glyph->orientation = GLYPH_ORIENTATION_BOTH;
-    glyph->arabic_form = GLYPH_ARABIC_FORM_INITIAL;
-    glyph->lang = NULL;
-    glyph->horiz_adv_x = 0;
-    glyph->vert_origin_x = 0;
-    glyph->vert_origin_y = 0;
-    glyph->vert_adv_y = 0;
+    this->d = NULL;
+    this->orientation = GLYPH_ORIENTATION_BOTH;
+    this->arabic_form = GLYPH_ARABIC_FORM_INITIAL;
+    this->lang = NULL;
+    this->horiz_adv_x = 0;
+    this->vert_origin_x = 0;
+    this->vert_origin_y = 0;
+    this->vert_adv_y = 0;
 }
 
-static void sp_glyph_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
-{
-    if (((SPObjectClass *) (sp_glyph_parent_class))->build) {
-        ((SPObjectClass *) (sp_glyph_parent_class))->build(object, document, repr);
-    }
-
-    object->readAttr( "unicode" );
-    object->readAttr( "glyph-name" );
-    object->readAttr( "d" );
-    object->readAttr( "orientation" );
-    object->readAttr( "arabic-form" );
-    object->readAttr( "lang" );
-    object->readAttr( "horiz-adv-x" );
-    object->readAttr( "vert-origin-x" );
-    object->readAttr( "vert-origin-y" );
-    object->readAttr( "vert-adv-y" );
+SPGlyph::~SPGlyph() {
 }
 
-static void sp_glyph_release(SPObject *object)
-{
-    //SPGlyph *glyph = SP_GLYPH(object);
+void SPGlyph::build(SPDocument *document, Inkscape::XML::Node *repr) {
+	SPObject::build(document, repr);
 
-    if (((SPObjectClass *) sp_glyph_parent_class)->release) {
-        ((SPObjectClass *) sp_glyph_parent_class)->release(object);
-    }
+	this->readAttr( "unicode" );
+	this->readAttr( "glyph-name" );
+	this->readAttr( "d" );
+	this->readAttr( "orientation" );
+	this->readAttr( "arabic-form" );
+	this->readAttr( "lang" );
+	this->readAttr( "horiz-adv-x" );
+	this->readAttr( "vert-origin-x" );
+	this->readAttr( "vert-origin-y" );
+	this->readAttr( "vert-adv-y" );
+}
+
+void SPGlyph::release() {
+	SPObject::release();
 }
 
 static glyphArabicForm sp_glyph_read_arabic_form(gchar const *value){
-    if (!value) return GLYPH_ARABIC_FORM_INITIAL; //TODO: verify which is the default default (for me, the spec is not clear)
+    if (!value) {
+    	return GLYPH_ARABIC_FORM_INITIAL; //TODO: verify which is the default default (for me, the spec is not clear)
+    }
+    
     switch(value[0]){
         case 'i':
-            if (strncmp(value, "initial", 7) == 0) return GLYPH_ARABIC_FORM_INITIAL;
-            if (strncmp(value, "isolated", 8) == 0) return GLYPH_ARABIC_FORM_ISOLATED;
+            if (strncmp(value, "initial", 7) == 0) {
+            	return GLYPH_ARABIC_FORM_INITIAL;
+            }
+            
+            if (strncmp(value, "isolated", 8) == 0) {
+            	return GLYPH_ARABIC_FORM_ISOLATED;
+            }
             break;
         case 'm':
-            if (strncmp(value, "medial", 6) == 0) return GLYPH_ARABIC_FORM_MEDIAL;
+            if (strncmp(value, "medial", 6) == 0) {
+            	return GLYPH_ARABIC_FORM_MEDIAL;
+            }
             break;
         case 't':
-            if (strncmp(value, "terminal", 8) == 0) return GLYPH_ARABIC_FORM_TERMINAL;
+            if (strncmp(value, "terminal", 8) == 0) {
+            	return GLYPH_ARABIC_FORM_TERMINAL;
+            }
             break;
     }
+    
     return GLYPH_ARABIC_FORM_INITIAL; //TODO: VERIFY DEFAULT!
 }
 
 static glyphOrientation sp_glyph_read_orientation(gchar const *value){
-    if (!value) return GLYPH_ORIENTATION_BOTH;
+    if (!value) {
+    	return GLYPH_ORIENTATION_BOTH;
+    }
+    
     switch(value[0]){
         case 'h':
             return GLYPH_ORIENTATION_HORIZONTAL;
@@ -111,102 +110,118 @@ static glyphOrientation sp_glyph_read_orientation(gchar const *value){
             return GLYPH_ORIENTATION_VERTICAL;
             break;
     }
+    
 //ERROR? TODO: VERIFY PROPER ERROR HANDLING
     return GLYPH_ORIENTATION_BOTH;
 }
 
-static void sp_glyph_set(SPObject *object, unsigned int key, const gchar *value)
-{
-    SPGlyph *glyph = SP_GLYPH(object);
-
+void SPGlyph::set(unsigned int key, const gchar *value) {
     switch (key) {
         case SP_ATTR_UNICODE:
         {
-            glyph->unicode.clear();
-            if (value) glyph->unicode.append(value);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->unicode.clear();
+            
+            if (value) {
+            	this->unicode.append(value);
+            }
+            
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         }
         case SP_ATTR_GLYPH_NAME:
         {
-            glyph->glyph_name.clear();
-            if (value) glyph->glyph_name.append(value);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->glyph_name.clear();
+            
+            if (value) {
+            	this->glyph_name.append(value);
+            }
+            
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         }
         case SP_ATTR_D:
         {
-            if (glyph->d) g_free(glyph->d);
-            glyph->d = g_strdup(value);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            if (this->d) {
+            	g_free(this->d);
+            }
+            
+            this->d = g_strdup(value);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         }
         case SP_ATTR_ORIENTATION:
         {
             glyphOrientation orient = sp_glyph_read_orientation(value);
-            if (glyph->orientation != orient){
-                glyph->orientation = orient;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            if (this->orientation != orient){
+                this->orientation = orient;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         case SP_ATTR_ARABIC_FORM:
         {
             glyphArabicForm form = sp_glyph_read_arabic_form(value);
-            if (glyph->arabic_form != form){
-                glyph->arabic_form = form;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            if (this->arabic_form != form){
+                this->arabic_form = form;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         case SP_ATTR_LANG:
         {
-            if (glyph->lang) g_free(glyph->lang);
-            glyph->lang = g_strdup(value);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            if (this->lang) {
+            	g_free(this->lang);
+            }
+            
+            this->lang = g_strdup(value);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         }
         case SP_ATTR_HORIZ_ADV_X:
         {
             double number = value ? g_ascii_strtod(value, 0) : 0;
-            if (number != glyph->horiz_adv_x){
-                glyph->horiz_adv_x = number;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            if (number != this->horiz_adv_x){
+                this->horiz_adv_x = number;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         case SP_ATTR_VERT_ORIGIN_X:
         {
             double number = value ? g_ascii_strtod(value, 0) : 0;
-            if (number != glyph->vert_origin_x){
-                glyph->vert_origin_x = number;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            if (number != this->vert_origin_x){
+                this->vert_origin_x = number;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         case SP_ATTR_VERT_ORIGIN_Y:
         {
             double number = value ? g_ascii_strtod(value, 0) : 0;
-            if (number != glyph->vert_origin_y){
-                glyph->vert_origin_y = number;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            if (number != this->vert_origin_y){
+                this->vert_origin_y = number;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         case SP_ATTR_VERT_ADV_Y:
         {
             double number = value ? g_ascii_strtod(value, 0) : 0;
-            if (number != glyph->vert_adv_y){
-                glyph->vert_adv_y = number;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            if (number != this->vert_adv_y){
+                this->vert_adv_y = number;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         default:
         {
-            if (((SPObjectClass *) (sp_glyph_parent_class))->set) {
-                ((SPObjectClass *) (sp_glyph_parent_class))->set(object, key, value);
-            }
+        	SPObject::set(key, value);
             break;
         }
     }
@@ -215,73 +230,61 @@ static void sp_glyph_set(SPObject *object, unsigned int key, const gchar *value)
 /**
  *  * Receives update notifications.
  *   */
-static void
-sp_glyph_update(SPObject *object, SPCtx *ctx, guint flags)
-{
-    SPGlyph *glyph = SP_GLYPH(object);
-    (void)glyph;
-
+void SPGlyph::update(SPCtx *ctx, guint flags) {
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
         /* do something to trigger redisplay, updates? */
-            object->readAttr( "unicode" );
-            object->readAttr( "glyph-name" );
-            object->readAttr( "d" );
-            object->readAttr( "orientation" );
-            object->readAttr( "arabic-form" );
-            object->readAttr( "lang" );
-            object->readAttr( "horiz-adv-x" );
-            object->readAttr( "vert-origin-x" );
-            object->readAttr( "vert-origin-y" );
-            object->readAttr( "vert-adv-y" );
+            this->readAttr( "unicode" );
+            this->readAttr( "glyph-name" );
+            this->readAttr( "d" );
+            this->readAttr( "orientation" );
+            this->readAttr( "arabic-form" );
+            this->readAttr( "lang" );
+            this->readAttr( "horiz-adv-x" );
+            this->readAttr( "vert-origin-x" );
+            this->readAttr( "vert-origin-y" );
+            this->readAttr( "vert-adv-y" );
     }
 
-    if (((SPObjectClass *) sp_glyph_parent_class)->update) {
-        ((SPObjectClass *) sp_glyph_parent_class)->update(object, ctx, flags);
-    }
+    SPObject::update(ctx, flags);
 }
 
 #define COPY_ATTR(rd,rs,key) (rd)->setAttribute((key), rs->attribute(key));
 
-static Inkscape::XML::Node *sp_glyph_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
-{
-//    SPGlyph *glyph = SP_GLYPH(object);
+Inkscape::XML::Node* SPGlyph::write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags) {
+	if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
+		repr = xml_doc->createElement("svg:glyph");
+	}
 
-    if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        repr = xml_doc->createElement("svg:glyph");
-    }
+	/* I am commenting out this part because I am not certain how does it work. I will have to study it later. Juca
+	    repr->setAttribute("unicode", glyph->unicode);
+	    repr->setAttribute("glyph-name", glyph->glyph_name);
+	    repr->setAttribute("d", glyph->d);
+	    sp_repr_set_svg_double(repr, "orientation", (double) glyph->orientation);
+	    sp_repr_set_svg_double(repr, "arabic-form", (double) glyph->arabic_form);
+	    repr->setAttribute("lang", glyph->lang);
+	    sp_repr_set_svg_double(repr, "horiz-adv-x", glyph->horiz_adv_x);
+	    sp_repr_set_svg_double(repr, "vert-origin-x", glyph->vert_origin_x);
+	    sp_repr_set_svg_double(repr, "vert-origin-y", glyph->vert_origin_y);
+	    sp_repr_set_svg_double(repr, "vert-adv-y", glyph->vert_adv_y);
+	*/
+	if (repr != this->getRepr()) {
+		// All the COPY_ATTR functions below use
+		//   XML Tree directly while they shouldn't.
+		COPY_ATTR(repr, this->getRepr(), "unicode");
+		COPY_ATTR(repr, this->getRepr(), "glyph-name");
+		COPY_ATTR(repr, this->getRepr(), "d");
+		COPY_ATTR(repr, this->getRepr(), "orientation");
+		COPY_ATTR(repr, this->getRepr(), "arabic-form");
+		COPY_ATTR(repr, this->getRepr(), "lang");
+		COPY_ATTR(repr, this->getRepr(), "horiz-adv-x");
+		COPY_ATTR(repr, this->getRepr(), "vert-origin-x");
+		COPY_ATTR(repr, this->getRepr(), "vert-origin-y");
+		COPY_ATTR(repr, this->getRepr(), "vert-adv-y");
+	}
 
-/* I am commenting out this part because I am not certain how does it work. I will have to study it later. Juca
-    repr->setAttribute("unicode", glyph->unicode);
-    repr->setAttribute("glyph-name", glyph->glyph_name);
-    repr->setAttribute("d", glyph->d);
-    sp_repr_set_svg_double(repr, "orientation", (double) glyph->orientation);
-    sp_repr_set_svg_double(repr, "arabic-form", (double) glyph->arabic_form);
-    repr->setAttribute("lang", glyph->lang);
-    sp_repr_set_svg_double(repr, "horiz-adv-x", glyph->horiz_adv_x);
-    sp_repr_set_svg_double(repr, "vert-origin-x", glyph->vert_origin_x);
-    sp_repr_set_svg_double(repr, "vert-origin-y", glyph->vert_origin_y);
-    sp_repr_set_svg_double(repr, "vert-adv-y", glyph->vert_adv_y);
-*/
-    if (repr != object->getRepr()) {
-        // All the COPY_ATTR functions below use
-        //   XML Tree directly while they shouldn't.
-        COPY_ATTR(repr, object->getRepr(), "unicode");
-        COPY_ATTR(repr, object->getRepr(), "glyph-name");
-        COPY_ATTR(repr, object->getRepr(), "d");
-        COPY_ATTR(repr, object->getRepr(), "orientation");
-        COPY_ATTR(repr, object->getRepr(), "arabic-form");
-        COPY_ATTR(repr, object->getRepr(), "lang");
-        COPY_ATTR(repr, object->getRepr(), "horiz-adv-x");
-        COPY_ATTR(repr, object->getRepr(), "vert-origin-x");
-        COPY_ATTR(repr, object->getRepr(), "vert-origin-y");
-        COPY_ATTR(repr, object->getRepr(), "vert-adv-y");
-    }
+	SPObject::write(xml_doc, repr, flags);
 
-    if (((SPObjectClass *) (sp_glyph_parent_class))->write) {
-        ((SPObjectClass *) (sp_glyph_parent_class))->write(object, xml_doc, repr, flags);
-    }
-
-    return repr;
+	return repr;
 }
 /*
   Local Variables:

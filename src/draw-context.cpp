@@ -50,14 +50,6 @@
 
 using Inkscape::DocumentUndo;
 
-static void sp_draw_context_dispose(GObject *object);
-
-static void sp_draw_context_setup(SPEventContext *ec);
-static void sp_draw_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val);
-static void sp_draw_context_finish(SPEventContext *ec);
-
-static gint sp_draw_context_root_handler(SPEventContext *event_context, GdkEvent *event);
-
 static void spdc_selection_changed(Inkscape::Selection *sel, SPDrawContext *dc);
 static void spdc_selection_modified(Inkscape::Selection *sel, guint flags, SPDrawContext *dc);
 
@@ -74,146 +66,109 @@ static void spdc_flush_white(SPDrawContext *dc, SPCurve *gc);
 static void spdc_reset_white(SPDrawContext *dc);
 static void spdc_free_colors(SPDrawContext *dc);
 
-G_DEFINE_TYPE(SPDrawContext, sp_draw_context, SP_TYPE_EVENT_CONTEXT);
+SPDrawContext::SPDrawContext() : SPEventContext() {
+	this->selection = 0;
+	this->grab = 0;
+	this->anchor_statusbar = false;
 
-static void sp_draw_context_class_init(SPDrawContextClass *klass)
-{
-    GObjectClass *object_class;
-    SPEventContextClass *ec_class;
+    this->attach = FALSE;
 
-    object_class = (GObjectClass *)klass;
-    ec_class = SP_EVENT_CONTEXT_CLASS(klass);
+    this->red_color = 0xff00007f;
+    this->blue_color = 0x0000ff7f;
+    this->green_color = 0x00ff007f;
+    this->red_curve_is_valid = false;
 
-    object_class->dispose = sp_draw_context_dispose;
+    this->red_bpath = NULL;
+    this->red_curve = NULL;
 
-    ec_class->setup = sp_draw_context_setup;
-    ec_class->set = sp_draw_context_set;
-    ec_class->finish = sp_draw_context_finish;
-    ec_class->root_handler = sp_draw_context_root_handler;
+    this->blue_bpath = NULL;
+    this->blue_curve = NULL;
+
+    this->green_bpaths = NULL;
+    this->green_curve = NULL;
+    this->green_anchor = NULL;
+    this->green_closed = false;
+
+    this->white_item = NULL;
+    this->white_curves = NULL;
+    this->white_anchors = NULL;
+
+    this->sa = NULL;
+    this->ea = NULL;
+
+    this->waiting_LPE_type = Inkscape::LivePathEffect::INVALID_LPE;
 }
 
-static void sp_draw_context_init(SPDrawContext *dc)
-{
-    dc->attach = FALSE;
+SPDrawContext::~SPDrawContext() {
+    if (this->grab) {
+        sp_canvas_item_ungrab(this->grab, GDK_CURRENT_TIME);
+        this->grab = NULL;
+    }
 
-    dc->red_color = 0xff00007f;
-    dc->blue_color = 0x0000ff7f;
-    dc->green_color = 0x00ff007f;
-    dc->red_curve_is_valid = false;
+    if (this->selection) {
+        this->selection = NULL;
+    }
 
-    dc->red_bpath = NULL;
-    dc->red_curve = NULL;
-
-    dc->blue_bpath = NULL;
-    dc->blue_curve = NULL;
-
-    dc->green_bpaths = NULL;
-    dc->green_curve = NULL;
-    dc->green_anchor = NULL;
-    dc->green_closed = false;
-
-    dc->white_item = NULL;
-    dc->white_curves = NULL;
-    dc->white_anchors = NULL;
-
-    dc->sa = NULL;
-    dc->ea = NULL;
-
-    dc->waiting_LPE_type = Inkscape::LivePathEffect::INVALID_LPE;
-
-    new (&dc->sel_changed_connection) sigc::connection();
-    new (&dc->sel_modified_connection) sigc::connection();
+    spdc_free_colors(this);
 }
 
-static void sp_draw_context_dispose(GObject *object)
-{
-    SPDrawContext *dc = SP_DRAW_CONTEXT(object);
+void SPDrawContext::setup() {
+    SPEventContext::setup();
 
-    dc->sel_changed_connection.~connection();
-    dc->sel_modified_connection.~connection();
-
-    if (dc->grab) {
-        sp_canvas_item_ungrab(dc->grab, GDK_CURRENT_TIME);
-        dc->grab = NULL;
-    }
-
-    if (dc->selection) {
-        dc->selection = NULL;
-    }
-
-    spdc_free_colors(dc);
-
-    G_OBJECT_CLASS(sp_draw_context_parent_class)->dispose(object);
-}
-
-static void sp_draw_context_setup(SPEventContext *ec)
-{
-    SPDrawContext *dc = SP_DRAW_CONTEXT(ec);
-    SPDesktop *dt = ec->desktop;
-
-    if ((SP_EVENT_CONTEXT_CLASS(sp_draw_context_parent_class))->setup) {
-        (SP_EVENT_CONTEXT_CLASS(sp_draw_context_parent_class))->setup(ec);
-    }
-
-    dc->selection = sp_desktop_selection(dt);
+    this->selection = sp_desktop_selection(desktop);
 
     // Connect signals to track selection changes
-    dc->sel_changed_connection = dc->selection->connectChanged(
-        sigc::bind(sigc::ptr_fun(&spdc_selection_changed), dc)
+    this->sel_changed_connection = this->selection->connectChanged(
+        sigc::bind(sigc::ptr_fun(&spdc_selection_changed), this)
     );
-    dc->sel_modified_connection = dc->selection->connectModified(
-        sigc::bind(sigc::ptr_fun(&spdc_selection_modified), dc)
+    this->sel_modified_connection = this->selection->connectModified(
+        sigc::bind(sigc::ptr_fun(&spdc_selection_modified), this)
     );
 
     // Create red bpath
-    dc->red_bpath = sp_canvas_bpath_new(sp_desktop_sketch(ec->desktop), NULL);
-    sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->red_bpath), dc->red_color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
+    this->red_bpath = sp_canvas_bpath_new(sp_desktop_sketch(this->desktop), NULL);
+    sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(this->red_bpath), this->red_color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
 
     // Create red curve
-    dc->red_curve = new SPCurve();
+    this->red_curve = new SPCurve();
 
     // Create blue bpath
-    dc->blue_bpath = sp_canvas_bpath_new(sp_desktop_sketch(ec->desktop), NULL);
-    sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->blue_bpath), dc->blue_color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
+    this->blue_bpath = sp_canvas_bpath_new(sp_desktop_sketch(this->desktop), NULL);
+    sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(this->blue_bpath), this->blue_color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
 
     // Create blue curve
-    dc->blue_curve = new SPCurve();
+    this->blue_curve = new SPCurve();
 
     // Create green curve
-    dc->green_curve = new SPCurve();
+    this->green_curve = new SPCurve();
 
     // No green anchor by default
-    dc->green_anchor = NULL;
-    dc->green_closed = FALSE;
+    this->green_anchor = NULL;
+    this->green_closed = FALSE;
 
-    dc->attach = TRUE;
-    spdc_attach_selection(dc, dc->selection);
+    this->attach = TRUE;
+    spdc_attach_selection(this, this->selection);
 }
 
-static void sp_draw_context_finish(SPEventContext *ec)
-{
-    SPDrawContext *dc = SP_DRAW_CONTEXT(ec);
+void SPDrawContext::finish() {
+    this->sel_changed_connection.disconnect();
+    this->sel_modified_connection.disconnect();
 
-    dc->sel_changed_connection.disconnect();
-    dc->sel_modified_connection.disconnect();
-
-    if (dc->grab) {
-        sp_canvas_item_ungrab(dc->grab, GDK_CURRENT_TIME);
+    if (this->grab) {
+        sp_canvas_item_ungrab(this->grab, GDK_CURRENT_TIME);
     }
 
-    if (dc->selection) {
-        dc->selection = NULL;
+    if (this->selection) {
+        this->selection = NULL;
     }
 
-    spdc_free_colors(dc);
+    spdc_free_colors(this);
 }
 
-static void sp_draw_context_set(SPEventContext */*ec*/, Inkscape::Preferences::Entry */*val*/)
-{
+void SPDrawContext::set(const Inkscape::Preferences::Entry& value) {
 }
 
-gint sp_draw_context_root_handler(SPEventContext *ec, GdkEvent *event)
-{
+bool SPDrawContext::root_handler(GdkEvent* event) {
     gint ret = FALSE;
 
     switch (event->type) {
@@ -237,9 +192,7 @@ gint sp_draw_context_root_handler(SPEventContext *ec, GdkEvent *event)
     }
 
     if (!ret) {
-        if ((SP_EVENT_CONTEXT_CLASS(sp_draw_context_parent_class))->root_handler) {
-            ret = (SP_EVENT_CONTEXT_CLASS(sp_draw_context_parent_class))->root_handler(ec, event);
-        }
+    	ret = SPEventContext::root_handler(event);
     }
 
     return ret;

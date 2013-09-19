@@ -24,21 +24,15 @@ class ColorProfileImpl;
 
 
 /**
- * The SPColorProfile vtable.
- */
-struct ColorProfileClass {
-    SPObjectClass parent_class;
-};
-
-/**
  * Color Profile.
  */
-struct ColorProfile : public SPObject {
+class ColorProfile : public SPObject {
+public:
+	ColorProfile();
+	virtual ~ColorProfile();
+
     friend cmsHPROFILE colorprofile_get_handle( SPDocument*, guint*, gchar const* );
     friend class CMSSystem;
-
-    static GType getType();
-    static void classInit( ColorProfileClass *klass );
 
     static std::vector<Glib::ustring> getBaseProfileDirs();
     static std::vector<Glib::ustring> getProfileFiles();
@@ -61,26 +55,22 @@ struct ColorProfile : public SPObject {
     gchar* intentStr;
     guint rendering_intent;
 
-private:
-    static void init( ColorProfile *cprof );
-
-    static void release( SPObject *object );
-    static void build( SPObject *object, SPDocument *document, Inkscape::XML::Node *repr );
-    static void set( SPObject *object, unsigned key, gchar const *value );
-    static Inkscape::XML::Node *write( SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags );
-
+protected:
     ColorProfileImpl *impl;
-};
 
-GType colorprofile_get_type();
+	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
+	virtual void release();
+
+	virtual void set(unsigned int key, const gchar* value);
+
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
+};
 
 } // namespace Inkscape
 
-#define COLORPROFILE_TYPE (Inkscape::colorprofile_get_type())
-#define COLORPROFILE(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), COLORPROFILE_TYPE, Inkscape::ColorProfile))
-#define COLORPROFILE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), COLORPROFILE_TYPE, Inkscape::ColorProfileClass))
-#define IS_COLORPROFILE(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), COLORPROFILE_TYPE))
-#define IS_COLORPROFILE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), COLORPROFILE_TYPE))
+//#define COLORPROFILE_TYPE (Inkscape::colorprofile_get_type())
+#define COLORPROFILE(obj) ((Inkscape::ColorProfile*)obj)
+#define IS_COLORPROFILE(obj) (dynamic_cast<const Inkscape::ColorProfile*>((SPObject*)obj))
 
 #endif // !SEEN_COLOR_PROFILE_H
 

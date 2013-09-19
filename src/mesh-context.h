@@ -21,13 +21,13 @@
 #include <sigc++/sigc++.h>
 #include "event-context.h"
 
-#define SP_TYPE_MESH_CONTEXT            (sp_mesh_context_get_type())
-#define SP_MESH_CONTEXT(obj)            (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_MESH_CONTEXT, SPMeshContext))
-#define SP_MESH_CONTEXT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_MESH_CONTEXT, SPMeshContextClass))
-#define SP_IS_MESH_CONTEXT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_MESH_CONTEXT))
-#define SP_IS_MESH_CONTEXT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_MESH_CONTEXT))
+#define SP_MESH_CONTEXT(obj) (dynamic_cast<SPMeshContext*>((SPEventContext*)obj))
+#define SP_IS_MESH_CONTEXT(obj) (dynamic_cast<const SPMeshContext*>((const SPEventContext*)obj) != NULL)
 
-struct SPMeshContext : public SPEventContext {
+class SPMeshContext : public SPEventContext {
+public:
+	SPMeshContext();
+	virtual ~SPMeshContext();
 
     Geom::Point origin;
 
@@ -37,18 +37,19 @@ struct SPMeshContext : public SPEventContext {
 
     Geom::Point mousepoint_doc; // stores mousepoint when over_line in doc coords
 
-    Inkscape::MessageContext *_message_context;
-
     sigc::connection *selcon;
     sigc::connection *subselcon;
-};
 
-struct SPMeshContextClass {
-    SPEventContextClass parent_class;
-};
+	static const std::string prefsPath;
 
-// Standard Gtk function
-GType sp_mesh_context_get_type();
+	virtual void setup();
+	virtual bool root_handler(GdkEvent* event);
+
+	virtual const std::string& getPrefsPath();
+
+private:
+	void selection_changed(Inkscape::Selection* sel);
+};
 
 void sp_mesh_context_select_next(SPEventContext *event_context);
 void sp_mesh_context_select_prev(SPEventContext *event_context);

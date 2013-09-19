@@ -14,16 +14,16 @@
 
 #include "sp-object.h"
 
-#define SP_TYPE_DESC            (sp_desc_get_type ())
-#define SP_IS_DESC(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_DESC))
+#define SP_DESC(obj) (dynamic_cast<SPDesc*>((SPObject*)obj))
+#define SP_IS_DESC(obj) (dynamic_cast<const SPDesc*>((SPObject*)obj) != NULL)
 
-struct SPDesc : public SPObject {
+class SPDesc : public SPObject {
+public:
+	SPDesc();
+	virtual ~SPDesc();
+
+protected:
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
 };
-
-struct SPDescClass {
-	SPObjectClass parent_class;
-};
-
-GType sp_desc_get_type (void);
 
 #endif

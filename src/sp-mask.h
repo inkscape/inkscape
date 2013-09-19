@@ -18,11 +18,8 @@
 #include "uri-references.h"
 #include "xml/node.h"
 
-#define SP_TYPE_MASK (sp_mask_get_type ())
-#define SP_MASK(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_MASK, SPMask))
-#define SP_MASK_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_MASK, SPMaskClass))
-#define SP_IS_MASK(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_MASK))
-#define SP_IS_MASK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_MASK))
+#define SP_MASK(obj) (dynamic_cast<SPMask*>((SPObject*)obj))
+#define SP_IS_MASK(obj) (dynamic_cast<const SPMask*>((SPObject*)obj) != NULL)
 
 struct SPMaskView;
 
@@ -34,7 +31,11 @@ class DrawingItem;
 } // namespace Inkscape
 
 
-struct SPMask : public SPObjectGroup {
+class SPMask : public SPObjectGroup {
+public:
+	SPMask();
+	virtual ~SPMask();
+
 	unsigned int maskUnits_set : 1;
 	unsigned int maskUnits : 1;
 
@@ -42,13 +43,25 @@ struct SPMask : public SPObjectGroup {
 	unsigned int maskContentUnits : 1;
 
 	SPMaskView *display;
-};
 
-struct SPMaskClass {
-	SPObjectGroupClass parent_class;
-};
+	Inkscape::DrawingItem *sp_mask_show(Inkscape::Drawing &drawing, unsigned int key);
+	void sp_mask_hide(unsigned int key);
 
-GType sp_mask_get_type (void);
+	void sp_mask_set_bbox(unsigned int key, Geom::OptRect const &bbox);
+
+protected:
+	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
+	virtual void release();
+
+	virtual void child_added(Inkscape::XML::Node* child, Inkscape::XML::Node* ref);
+
+	virtual void set(unsigned int key, const gchar* value);
+
+	virtual void update(SPCtx* ctx, unsigned int flags);
+	virtual void modified(unsigned int flags);
+
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
+};
 
 class SPMaskReference : public Inkscape::URIReference {
 public:
@@ -94,11 +107,6 @@ protected:
         return true;
 	}
 };
-
-Inkscape::DrawingItem *sp_mask_show (SPMask *mask, Inkscape::Drawing &drawing, unsigned int key);
-void sp_mask_hide (SPMask *mask, unsigned int key);
-
-void sp_mask_set_bbox (SPMask *mask, unsigned int key, Geom::OptRect const &bbox);
 
 const gchar *sp_mask_create (GSList *reprs, SPDocument *document, Geom::Affine const* applyTransform);
 

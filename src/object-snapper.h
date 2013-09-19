@@ -15,7 +15,7 @@
 #include "splivarot.h"
 #include "snap-candidate.h"
 
-struct SPNamedView;
+class SPNamedView;
 class  SPItem;
 class  SPObject;
 

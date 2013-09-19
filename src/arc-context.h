@@ -21,29 +21,38 @@
 #include <2geom/point.h>
 #include "event-context.h"
 
-#define SP_TYPE_ARC_CONTEXT            (sp_arc_context_get_type())
-#define SP_ARC_CONTEXT(obj)            (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_ARC_CONTEXT, SPArcContext))
-#define SP_ARC_CONTEXT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_ARC_CONTEXT, SPArcContextClass))
-#define SP_IS_ARC_CONTEXT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_ARC_CONTEXT))
-#define SP_IS_ARC_CONTEXT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_ARC_CONTEXT))
+#include "sp-ellipse.h"
 
-struct SPArcContext : public SPEventContext {
-    SPItem *item;
+#define SP_ARC_CONTEXT(obj) (dynamic_cast<SPArcContext*>((SPEventContext*)obj))
+#define SP_IS_ARC_CONTEXT(obj) (dynamic_cast<const SPArcContext*>(const SPEventContext*(obj)) != NULL)
+
+class SPArcContext : public SPEventContext {
+public:
+	SPArcContext();
+	virtual ~SPArcContext();
+
+	static const std::string prefsPath;
+
+	virtual void setup();
+	virtual void finish();
+	virtual bool root_handler(GdkEvent* event);
+	virtual bool item_handler(SPItem* item, GdkEvent* event);
+
+	virtual const std::string& getPrefsPath();
+
+private:
+	SPArc *arc;
+
     Geom::Point center;
 
     sigc::connection sel_changed_connection;
 
-    Inkscape::MessageContext *_message_context;
+	void selection_changed(Inkscape::Selection* selection);
+
+	void drag(Geom::Point pt, guint state);
+	void finishItem();
+	void cancel();
 };
-
-struct SPArcContextClass {
-    SPEventContextClass parent_class;
-};
-
-/* Standard Gtk function */
-
-GType sp_arc_context_get_type(void);
-
 
 #endif /* !SEEN_ARC_CONTEXT_H */
 

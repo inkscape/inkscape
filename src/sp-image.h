@@ -19,17 +19,17 @@
 #include "svg/svg-length.h"
 #include "sp-item.h"
 
-#define SP_TYPE_IMAGE (sp_image_get_type ())
-#define SP_IMAGE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_IMAGE, SPImage))
-#define SP_IMAGE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_IMAGE, SPImageClass))
-#define SP_IS_IMAGE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_IMAGE))
-#define SP_IS_IMAGE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_IMAGE))
+#define SP_IMAGE(obj) (dynamic_cast<SPImage*>((SPObject*)obj))
+#define SP_IS_IMAGE(obj) (dynamic_cast<const SPImage*>((SPObject*)obj) != NULL)
 
 #define SP_IMAGE_HREF_MODIFIED_FLAG SP_OBJECT_USER_MODIFIED_FLAG_A
 
 namespace Inkscape { class Pixbuf; }
+class SPImage : public SPItem {
+public:
+    SPImage();
+    virtual ~SPImage();
 
-struct SPImage : public SPItem {
     SVGLength x;
     SVGLength y;
     SVGLength width;
@@ -54,13 +54,21 @@ struct SPImage : public SPItem {
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
     Inkscape::Pixbuf *pixbuf;
-};
 
-struct SPImageClass {
-    SPItemClass parent_class;
-};
+    virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
+    virtual void release();
+    virtual void set(unsigned int key, gchar const* value);
+    virtual void update(SPCtx *ctx, guint flags);
+    virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+    virtual void modified(unsigned int flags);
 
-GType sp_image_get_type (void);
+    virtual Geom::OptRect bbox(Geom::Affine const &transform, SPItem::BBoxType type);
+    virtual void print(SPPrintContext *ctx);
+    virtual gchar* description();
+    virtual Inkscape::DrawingItem* show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
+    virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
+    virtual Geom::Affine set_transform(Geom::Affine const &transform);
+};
 
 /* Return duplicate of curve or NULL */
 SPCurve *sp_image_get_curve (SPImage *image);

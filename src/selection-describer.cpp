@@ -38,51 +38,53 @@
 #include "sp-polyline.h"
 #include "sp-spiral.h"
 
+// CPPIFY: this is ugly.
 static const gchar *
 type2term(SPItem *item)
 {
-    GType type = G_OBJECT_TYPE( item ); 
-    if (type == SP_TYPE_ANCHOR)
-        //TRANSLATORS: "Link" means internet link (anchor)
-        { return C_("Web", "Link"); }
-    if (type == SP_TYPE_CIRCLE)
-        { return _("Circle"); }
-    if (type == SP_TYPE_ELLIPSE)
-        { return _("Ellipse"); }
-    if (type == SP_TYPE_FLOWTEXT)
-        { return _("Flowed text"); }
-    if (type == SP_TYPE_GROUP)
-        { return _("Group"); }
-    if (type == SP_TYPE_IMAGE)
-        { return _("Image"); }
-    if (type == SP_TYPE_LINE)
-        { return _("Line"); }
-    if (type == SP_TYPE_PATH)
-        { return _("Path"); }
-    if (type == SP_TYPE_POLYGON)
-        { return _("Polygon"); }
-    if (type == SP_TYPE_POLYLINE)
-        { return _("Polyline"); }
-    if (type == SP_TYPE_RECT)
-        { return _("Rectangle"); }
-    if (type == SP_TYPE_BOX3D)
-        { return _("3D Box"); }
-    if (type == SP_TYPE_TEXT)
-        { return C_("Object", "Text"); }
-    if (type == SP_TYPE_USE)
-        if (SP_IS_SYMBOL(item->firstChild()))
-            { return C_("Object", "Symbol"); }
-        // TRANSLATORS: "Clone" is a noun, type of object
-        { return C_("Object", "Clone"); }
-    if (type == SP_TYPE_ARC)
-        { return _("Ellipse"); }
-    if (type == SP_TYPE_OFFSET)
-        { return _("Offset path"); }
-    if (type == SP_TYPE_SPIRAL)
-        { return _("Spiral"); }
-    if (type == SP_TYPE_STAR)
-        { return _("Star"); }
-    return NULL;
+//    GType type = G_OBJECT_TYPE( item );
+//    if (type == SP_TYPE_ANCHOR)
+//        //TRANSLATORS: "Link" means internet link (anchor)
+//        { return C_("Web", "Link"); }
+//    if (type == SP_TYPE_CIRCLE)
+//        { return _("Circle"); }
+//    if (type == SP_TYPE_ELLIPSE)
+//        { return _("Ellipse"); }
+//    if (type == SP_TYPE_FLOWTEXT)
+//        { return _("Flowed text"); }
+//    if (type == SP_TYPE_GROUP)
+//        { return _("Group"); }
+//    if (type == SP_TYPE_IMAGE)
+//        { return _("Image"); }
+//    if (type == SP_TYPE_LINE)
+//        { return _("Line"); }
+//    if (type == SP_TYPE_PATH)
+//        { return _("Path"); }
+//    if (type == SP_TYPE_POLYGON)
+//        { return _("Polygon"); }
+//    if (type == SP_TYPE_POLYLINE)
+//        { return _("Polyline"); }
+//    if (type == SP_TYPE_RECT)
+//        { return _("Rectangle"); }
+//    if (type == SP_TYPE_BOX3D)
+//        { return _("3D Box"); }
+//    if (type == SP_TYPE_TEXT)
+//        { return C_("Object", "Text"); }
+//    if (type == SP_TYPE_USE)
+//        if (SP_IS_SYMBOL(item->firstChild()))
+//            { return C_("Object", "Symbol"); }
+//        // TRANSLATORS: "Clone" is a noun, type of object
+//        { return C_("Object", "Clone"); }
+//    if (type == SP_TYPE_ARC)
+//        { return _("Ellipse"); }
+//    if (type == SP_TYPE_OFFSET)
+//        { return _("Offset path"); }
+//    if (type == SP_TYPE_SPIRAL)
+//        { return _("Spiral"); }
+//    if (type == SP_TYPE_STAR)
+//        { return _("Star"); }
+//    return NULL;
+	return "Selektion-Describer ---";
 }
 
 static GSList *collect_terms (GSList *items)

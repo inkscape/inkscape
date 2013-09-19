@@ -21,16 +21,17 @@
 #include "axis-manip.h"
 
 #define SP_TYPE_BOX3D            (box3d_get_type ())
-#define SP_BOX3D(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_BOX3D, SPBox3D))
-#define SP_BOX3D_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_BOX3D, Box3DClass))
-#define SP_IS_BOX3D(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_BOX3D))
-#define SP_IS_BOX3D_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_BOX3D))
+#define SP_BOX3D(obj) (dynamic_cast<SPBox3D*>((SPObject*)obj))
+#define SP_IS_BOX3D(obj) (dynamic_cast<const SPBox3D*>((SPObject*)obj) != NULL)
 
-struct Persp3D;
+class Persp3D;
 class Persp3DReference;
 
 class SPBox3D : public SPGroup {
 public:
+	SPBox3D();
+	virtual ~SPBox3D();
+
     gint z_orders[6]; // z_orders[i] holds the ID of the face at position #i in the group (from top to bottom)
 
     gchar *persp_href;
@@ -50,14 +51,17 @@ public:
      * Create a SPBox3D and append it to the parent.
      */
     static SPBox3D * createBox3D(SPItem * parent);
-};
 
-class SPBox3DClass {
-public:
-    SPGroupClass parent_class;
-};
+	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
+	virtual void release();
+	virtual void set(unsigned int key, gchar const* value);
+	virtual void update(SPCtx *ctx, guint flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
 
-GType box3d_get_type (void);
+	virtual gchar *description();
+	virtual Geom::Affine set_transform(Geom::Affine const &transform);
+    virtual void convert_to_guides();
+};
 
 void box3d_position_set (SPBox3D *box);
 Proj::Pt3 box3d_get_proj_corner (SPBox3D const *box, guint id);

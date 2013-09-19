@@ -3,30 +3,19 @@
 
 #include "sp-shape.h"
 
-
-
-#define SP_TYPE_POLYLINE            (sp_polyline_get_type ())
-#define SP_POLYLINE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_POLYLINE, SPPolyLine))
-#define SP_POLYLINE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_POLYLINE, SPPolyLineClass))
-#define SP_IS_POLYLINE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_POLYLINE))
-#define SP_IS_POLYLINE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_POLYLINE))
-
-class SPPolyLine;
-class SPPolyLineClass;
-
-GType sp_polyline_get_type (void) G_GNUC_CONST;
+#define SP_POLYLINE(obj) (dynamic_cast<SPPolyLine*>((SPObject*)obj))
+#define SP_IS_POLYLINE(obj) (dynamic_cast<const SPPolyLine*>((SPObject*)obj) != NULL)
 
 class SPPolyLine : public SPShape {
-private:
-    friend class SPPolyLineClass;
-};
-
-class SPPolyLineClass {
 public:
-    SPShapeClass parent_class;
+	SPPolyLine();
+	virtual ~SPPolyLine();
 
-private:
-    friend class SPPolyLine;	
+	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
+	virtual void set(unsigned int key, gchar const* value);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+
+	virtual gchar* description();
 };
 
 #endif // SEEN_SP_POLYLINE_H

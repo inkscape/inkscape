@@ -45,14 +45,6 @@
 
 using Inkscape::ControlManager;
 
-static void sp_pen_context_dispose(GObject *object);
-
-static void sp_pen_context_setup(SPEventContext *ec);
-static void sp_pen_context_finish(SPEventContext *ec);
-static void sp_pen_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val);
-static gint sp_pen_context_root_handler(SPEventContext *ec, GdkEvent *event);
-static gint sp_pen_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event);
-
 static void spdc_pen_set_initial_point(SPPenContext *pc, Geom::Point const p);
 static void spdc_pen_set_subsequent_point(SPPenContext *const pc, Geom::Point const p, bool statusbar, guint status = 0);
 static void spdc_pen_set_ctrl(SPPenContext *pc, Geom::Point const p, guint state);
@@ -78,84 +70,69 @@ static void pen_set_to_nearest_horiz_vert(const SPPenContext *const pc, Geom::Po
 
 static int pen_last_paraxial_dir = 0; // last used direction in horizontal/vertical mode; 0 = horizontal, 1 = vertical
 
-G_DEFINE_TYPE(SPPenContext, sp_pen_context, SP_TYPE_DRAW_CONTEXT);
 
-/**
- * Initialize the SPPenContext vtable.
- */
-static void sp_pen_context_class_init(SPPenContextClass *klass)
-{
-    GObjectClass *object_class;
-    SPEventContextClass *event_context_class;
+#include "tool-factory.h"
 
-    object_class = (GObjectClass *) klass;
-    event_context_class = (SPEventContextClass *) klass;
+namespace {
+	SPEventContext* createPenContext() {
+		return new SPPenContext();
+	}
 
-    object_class->dispose = sp_pen_context_dispose;
-
-    event_context_class->setup = sp_pen_context_setup;
-    event_context_class->finish = sp_pen_context_finish;
-    event_context_class->set = sp_pen_context_set;
-    event_context_class->root_handler = sp_pen_context_root_handler;
-    event_context_class->item_handler = sp_pen_context_item_handler;
+	bool penContextRegistered = ToolFactory::instance().registerObject("/tools/freehand/pen", createPenContext);
 }
 
-/**
- * Callback to initialize SPPenContext object.
- */
-static void sp_pen_context_init(SPPenContext *pc)
-{
-    SPEventContext *event_context = SP_EVENT_CONTEXT(pc);
-
-    event_context->cursor_shape = cursor_pen_xpm;
-    event_context->hot_x = 4;
-    event_context->hot_y = 4;
-
-    pc->npoints = 0;
-    pc->mode = SP_PEN_CONTEXT_MODE_CLICK;
-    pc->state = SP_PEN_CONTEXT_POINT;
-
-    pc->c0 = NULL;
-    pc->c1 = NULL;
-    pc->cl0 = NULL;
-    pc->cl1 = NULL;
-
-    pc->events_disabled = 0;
-
-    pc->num_clicks = 0;
-    pc->waiting_LPE = NULL;
-    pc->waiting_item = NULL;
+const std::string& SPPenContext::getPrefsPath() {
+	return SPPenContext::prefsPath;
 }
 
-/**
- * Callback to destroy the SPPenContext object's members and itself.
- */
-static void sp_pen_context_dispose(GObject *object)
-{
-    SPPenContext *pc = SP_PEN_CONTEXT(object);
+const std::string SPPenContext::prefsPath = "/tools/freehand/pen";
 
-    if (pc->c0) {
-        sp_canvas_item_destroy(pc->c0);
-        pc->c0 = NULL;
+SPPenContext::SPPenContext() : SPDrawContext() {
+	this->polylines_only = false;
+	this->polylines_paraxial = false;
+	this->expecting_clicks_for_LPE = 0;
+
+    this->cursor_shape = cursor_pen_xpm;
+    this->hot_x = 4;
+    this->hot_y = 4;
+
+    this->npoints = 0;
+    this->mode = MODE_CLICK;
+    this->state = POINT;
+
+    this->c0 = NULL;
+    this->c1 = NULL;
+    this->cl0 = NULL;
+    this->cl1 = NULL;
+
+    this->events_disabled = 0;
+
+    this->num_clicks = 0;
+    this->waiting_LPE = NULL;
+    this->waiting_item = NULL;
+}
+
+SPPenContext::~SPPenContext() {
+    if (this->c0) {
+        sp_canvas_item_destroy(this->c0);
+        this->c0 = NULL;
     }
-    if (pc->c1) {
-        sp_canvas_item_destroy(pc->c1);
-        pc->c1 = NULL;
+    if (this->c1) {
+        sp_canvas_item_destroy(this->c1);
+        this->c1 = NULL;
     }
-    if (pc->cl0) {
-        sp_canvas_item_destroy(pc->cl0);
-        pc->cl0 = NULL;
+    if (this->cl0) {
+        sp_canvas_item_destroy(this->cl0);
+        this->cl0 = NULL;
     }
-    if (pc->cl1) {
-        sp_canvas_item_destroy(pc->cl1);
-        pc->cl1 = NULL;
+    if (this->cl1) {
+        sp_canvas_item_destroy(this->cl1);
+        this->cl1 = NULL;
     }
 
-    G_OBJECT_CLASS(sp_pen_context_parent_class)->dispose(object);
-
-    if (pc->expecting_clicks_for_LPE > 0) {
+    if (this->expecting_clicks_for_LPE > 0) {
         // we received too few clicks to sanely set the parameter path so we remove the LPE from the item
-        sp_lpe_item_remove_current_path_effect(pc->waiting_item, false);
+        sp_lpe_item_remove_current_path_effect(this->waiting_item, false);
     }
 }
 
@@ -169,55 +146,49 @@ void sp_pen_context_set_polyline_mode(SPPenContext *const pc) {
 /**
  * Callback to initialize SPPenContext object.
  */
-static void sp_pen_context_setup(SPEventContext *ec)
-{
-    SPPenContext *pc = SP_PEN_CONTEXT(ec);
-
-    if (((SPEventContextClass *) sp_pen_context_parent_class)->setup) {
-        ((SPEventContextClass *) sp_pen_context_parent_class)->setup(ec);
-    }
+void SPPenContext::setup() {
+    SPDrawContext::setup();
 
     ControlManager &mgr = ControlManager::getManager();
 
     // Pen indicators
-    pc->c0 = mgr.createControl(sp_desktop_controls(SP_EVENT_CONTEXT_DESKTOP(ec)), Inkscape::CTRL_TYPE_ADJ_HANDLE);
-    mgr.track(pc->c0);
+    this->c0 = mgr.createControl(sp_desktop_controls(SP_EVENT_CONTEXT_DESKTOP(this)), Inkscape::CTRL_TYPE_ADJ_HANDLE);
+    mgr.track(this->c0);
 
-    pc->c1 = mgr.createControl(sp_desktop_controls(SP_EVENT_CONTEXT_DESKTOP(ec)), Inkscape::CTRL_TYPE_ADJ_HANDLE);
-    mgr.track(pc->c1);
+    this->c1 = mgr.createControl(sp_desktop_controls(SP_EVENT_CONTEXT_DESKTOP(this)), Inkscape::CTRL_TYPE_ADJ_HANDLE);
+    mgr.track(this->c1);
 
-    pc->cl0 = mgr.createControlLine(sp_desktop_controls(SP_EVENT_CONTEXT_DESKTOP(ec)));
-    pc->cl1 = mgr.createControlLine(sp_desktop_controls(SP_EVENT_CONTEXT_DESKTOP(ec)));
+    this->cl0 = mgr.createControlLine(sp_desktop_controls(SP_EVENT_CONTEXT_DESKTOP(this)));
+    this->cl1 = mgr.createControlLine(sp_desktop_controls(SP_EVENT_CONTEXT_DESKTOP(this)));
 
+    sp_canvas_item_hide(this->c0);
+    sp_canvas_item_hide(this->c1);
+    sp_canvas_item_hide(this->cl0);
+    sp_canvas_item_hide(this->cl1);
 
-    sp_canvas_item_hide(pc->c0);
-    sp_canvas_item_hide(pc->c1);
-    sp_canvas_item_hide(pc->cl0);
-    sp_canvas_item_hide(pc->cl1);
+    sp_event_context_read(this, "mode");
 
-    sp_event_context_read(ec, "mode");
+    this->anchor_statusbar = false;
 
-    pc->anchor_statusbar = false;
-
-    sp_pen_context_set_polyline_mode(pc);
+    sp_pen_context_set_polyline_mode(this);
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (prefs->getBool("/tools/freehand/pen/selcue")) {
-        ec->enableSelectionCue();
+        this->enableSelectionCue();
     }
 }
 
 static void pen_cancel (SPPenContext *const pc)
 {
     pc->num_clicks = 0;
-    pc->state = SP_PEN_CONTEXT_STOP;
+    pc->state = SPPenContext::STOP;
     spdc_reset_colors(pc);
     sp_canvas_item_hide(pc->c0);
     sp_canvas_item_hide(pc->c1);
     sp_canvas_item_hide(pc->cl0);
     sp_canvas_item_hide(pc->cl1);
-    pc->_message_context->clear();
-    pc->_message_context->flash(Inkscape::NORMAL_MESSAGE, _("Drawing cancelled"));
+    pc->message_context->clear();
+    pc->message_context->flash(Inkscape::NORMAL_MESSAGE, _("Drawing cancelled"));
 
     pc->desktop->canvas->endForcedFullRedraws();
 }
@@ -225,34 +196,27 @@ static void pen_cancel (SPPenContext *const pc)
 /**
  * Finalization callback.
  */
-static void sp_pen_context_finish(SPEventContext *ec)
-{
-    SPPenContext *pc = SP_PEN_CONTEXT(ec);
+void SPPenContext::finish() {
+    sp_event_context_discard_delayed_snap_event(this);
 
-    sp_event_context_discard_delayed_snap_event(ec);
-
-    if (pc->npoints != 0) {
-        pen_cancel (pc);
+    if (this->npoints != 0) {
+        pen_cancel(this);
     }
 
-    if (((SPEventContextClass *) sp_pen_context_parent_class)->finish) {
-        ((SPEventContextClass *) sp_pen_context_parent_class)->finish(ec);
-    }
+    SPDrawContext::finish();
 }
 
 /**
  * Callback that sets key to value in pen context.
  */
-static void sp_pen_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val)
-{
-    SPPenContext *pc = SP_PEN_CONTEXT(ec);
-    Glib::ustring name = val->getEntryName();
+void SPPenContext::set(const Inkscape::Preferences::Entry& val) {
+    Glib::ustring name = val.getEntryName();
 
     if (name == "mode") {
-        if ( val->getString() == "drag" ) {
-            pc->mode = SP_PEN_CONTEXT_MODE_DRAG;
+        if ( val.getString() == "drag" ) {
+            this->mode = MODE_DRAG;
         } else {
-            pc->mode = SP_PEN_CONTEXT_MODE_CLICK;
+            this->mode = MODE_CLICK;
         }
     }
 }
@@ -299,26 +263,22 @@ static void spdc_endpoint_snap_handle(SPPenContext const *const pc, Geom::Point 
     }
 }
 
-static gint sp_pen_context_item_handler(SPEventContext *ec, SPItem *item, GdkEvent *event)
-{
-    SPPenContext *const pc = SP_PEN_CONTEXT(ec);
-
+bool SPPenContext::item_handler(SPItem* item, GdkEvent* event) {
     gint ret = FALSE;
 
     switch (event->type) {
         case GDK_BUTTON_PRESS:
-            ret = pen_handle_button_press(pc, event->button);
+            ret = pen_handle_button_press(this, event->button);
             break;
         case GDK_BUTTON_RELEASE:
-            ret = pen_handle_button_release(pc, event->button);
+            ret = pen_handle_button_release(this, event->button);
             break;
         default:
             break;
     }
 
     if (!ret) {
-        if (((SPEventContextClass *) sp_pen_context_parent_class)->item_handler)
-            ret = ((SPEventContextClass *) sp_pen_context_parent_class)->item_handler(ec, item, event);
+    	ret = SPDrawContext::item_handler(item, event);
     }
 
     return ret;
@@ -327,31 +287,28 @@ static gint sp_pen_context_item_handler(SPEventContext *ec, SPItem *item, GdkEve
 /**
  * Callback to handle all pen events.
  */
-static gint sp_pen_context_root_handler(SPEventContext *ec, GdkEvent *event)
-{
-    SPPenContext *const pc = SP_PEN_CONTEXT(ec);
-
+bool SPPenContext::root_handler(GdkEvent* event) {
     gint ret = FALSE;
 
     switch (event->type) {
         case GDK_BUTTON_PRESS:
-            ret = pen_handle_button_press(pc, event->button);
+            ret = pen_handle_button_press(this, event->button);
             break;
 
         case GDK_MOTION_NOTIFY:
-            ret = pen_handle_motion_notify(pc, event->motion);
+            ret = pen_handle_motion_notify(this, event->motion);
             break;
 
         case GDK_BUTTON_RELEASE:
-            ret = pen_handle_button_release(pc, event->button);
+            ret = pen_handle_button_release(this, event->button);
             break;
 
         case GDK_2BUTTON_PRESS:
-            ret = pen_handle_2button_press(pc, event->button);
+            ret = pen_handle_2button_press(this, event->button);
             break;
 
         case GDK_KEY_PRESS:
-            ret = pen_handle_key_press(pc, event);
+            ret = pen_handle_key_press(this, event);
             break;
 
         default:
@@ -359,11 +316,7 @@ static gint sp_pen_context_root_handler(SPEventContext *ec, GdkEvent *event)
     }
 
     if (!ret) {
-        gint (*const parent_root_handler)(SPEventContext *, GdkEvent *)
-            = ((SPEventContextClass *) sp_pen_context_parent_class)->root_handler;
-        if (parent_root_handler) {
-            ret = parent_root_handler(ec, event);
-        }
+    	ret = SPDrawContext::root_handler(event);
     }
 
     return ret;
@@ -390,7 +343,7 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
         // make sure this is not the last click for a waiting LPE (otherwise we want to finish the path)
         && pc->expecting_clicks_for_LPE != 1) {
 
-        if (Inkscape::have_viable_layer(desktop, dc->_message_context) == false) {
+        if (Inkscape::have_viable_layer(desktop, dc->message_context) == false) {
             return TRUE;
         }
 
@@ -410,26 +363,26 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
         SPDrawAnchor * const anchor = spdc_test_inside(pc, event_w);
 
         switch (pc->mode) {
-            case SP_PEN_CONTEXT_MODE_CLICK:
+            case SPPenContext::MODE_CLICK:
                 // In click mode we add point on release
                 switch (pc->state) {
-                    case SP_PEN_CONTEXT_POINT:
-                    case SP_PEN_CONTEXT_CONTROL:
-                    case SP_PEN_CONTEXT_CLOSE:
+                    case SPPenContext::POINT:
+                    case SPPenContext::CONTROL:
+                    case SPPenContext::CLOSE:
                         break;
-                    case SP_PEN_CONTEXT_STOP:
+                    case SPPenContext::STOP:
                         // This is allowed, if we just canceled curve
-                        pc->state = SP_PEN_CONTEXT_POINT;
+                        pc->state = SPPenContext::POINT;
                         break;
                     default:
                         break;
                 }
                 break;
-            case SP_PEN_CONTEXT_MODE_DRAG:
+            case SPPenContext::MODE_DRAG:
                 switch (pc->state) {
-                    case SP_PEN_CONTEXT_STOP:
+                    case SPPenContext::STOP:
                         // This is allowed, if we just canceled curve
-                    case SP_PEN_CONTEXT_POINT:
+                    case SPPenContext::POINT:
                         if (pc->npoints == 0) {
 
                             Geom::Point p;
@@ -485,7 +438,7 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
                                 p = anchor->dp;
                                 // we hit an anchor, will finish the curve (either with or without closing)
                                 // in release handler
-                                pc->state = SP_PEN_CONTEXT_CLOSE;
+                                pc->state = SPPenContext::CLOSE;
 
                                 if (pc->green_anchor && pc->green_anchor->active) {
                                     // we clicked on the current curve start, so close it even if
@@ -502,13 +455,13 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
                             }
                         }
 
-                        pc->state = pc->polylines_only ? SP_PEN_CONTEXT_POINT : SP_PEN_CONTEXT_CONTROL;
+                        pc->state = pc->polylines_only ? SPPenContext::POINT : SPPenContext::CONTROL;
                         ret = TRUE;
                         break;
-                    case SP_PEN_CONTEXT_CONTROL:
+                    case SPPenContext::CONTROL:
                         g_warning("Button down in CONTROL state");
                         break;
-                    case SP_PEN_CONTEXT_CLOSE:
+                    case SPPenContext::CLOSE:
                         g_warning("Button down in CLOSE state");
                         break;
                     default:
@@ -584,9 +537,9 @@ static gint pen_handle_motion_notify(SPPenContext *const pc, GdkEventMotion cons
     SPDrawAnchor *anchor = spdc_test_inside(pc, event_w);
 
     switch (pc->mode) {
-        case SP_PEN_CONTEXT_MODE_CLICK:
+        case SPPenContext::MODE_CLICK:
             switch (pc->state) {
-                case SP_PEN_CONTEXT_POINT:
+                case SPPenContext::POINT:
                     if ( pc->npoints != 0 ) {
                         // Only set point, if we are already appending
                         spdc_endpoint_snap(pc, p, mevent.state);
@@ -599,23 +552,23 @@ static gint pen_handle_motion_notify(SPPenContext *const pc, GdkEventMotion cons
                         m.unSetup();
                     }
                     break;
-                case SP_PEN_CONTEXT_CONTROL:
-                case SP_PEN_CONTEXT_CLOSE:
+                case SPPenContext::CONTROL:
+                case SPPenContext::CLOSE:
                     // Placing controls is last operation in CLOSE state
                     spdc_endpoint_snap(pc, p, mevent.state);
                     spdc_pen_set_ctrl(pc, p, mevent.state);
                     ret = TRUE;
                     break;
-                case SP_PEN_CONTEXT_STOP:
+                case SPPenContext::STOP:
                     // This is perfectly valid
                     break;
                 default:
                     break;
             }
             break;
-        case SP_PEN_CONTEXT_MODE_DRAG:
+        case SPPenContext::MODE_DRAG:
             switch (pc->state) {
-                case SP_PEN_CONTEXT_POINT:
+                case SPPenContext::POINT:
                     if ( pc->npoints > 0 ) {
                         // Only set point, if we are already appending
 
@@ -627,20 +580,20 @@ static gint pen_handle_motion_notify(SPPenContext *const pc, GdkEventMotion cons
                         }
 
                         if (anchor && !pc->anchor_statusbar) {
-                            pc->_message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Click</b> or <b>click and drag</b> to close and finish the path."));
+                            pc->message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Click</b> or <b>click and drag</b> to close and finish the path."));
                             pc->anchor_statusbar = true;
                         } else if (!anchor && pc->anchor_statusbar) {
-                            pc->_message_context->clear();
+                            pc->message_context->clear();
                             pc->anchor_statusbar = false;
                         }
 
                         ret = TRUE;
                     } else {
                         if (anchor && !pc->anchor_statusbar) {
-                            pc->_message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Click</b> or <b>click and drag</b> to continue the path from this point."));
+                            pc->message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Click</b> or <b>click and drag</b> to continue the path from this point."));
                             pc->anchor_statusbar = true;
                         } else if (!anchor && pc->anchor_statusbar) {
-                            pc->_message_context->clear();
+                            pc->message_context->clear();
                             pc->anchor_statusbar = false;
                         }
                         if (!sp_event_context_knot_mouseover(pc)) {
@@ -651,8 +604,8 @@ static gint pen_handle_motion_notify(SPPenContext *const pc, GdkEventMotion cons
                         }
                     }
                     break;
-                case SP_PEN_CONTEXT_CONTROL:
-                case SP_PEN_CONTEXT_CLOSE:
+                case SPPenContext::CONTROL:
+                case SPPenContext::CLOSE:
                     // Placing controls is last operation in CLOSE state
 
                     // snap the handle
@@ -666,7 +619,7 @@ static gint pen_handle_motion_notify(SPPenContext *const pc, GdkEventMotion cons
                     gobble_motion_events(GDK_BUTTON1_MASK);
                     ret = TRUE;
                     break;
-                case SP_PEN_CONTEXT_STOP:
+                case SPPenContext::STOP:
                     // This is perfectly valid
                     break;
                 default:
@@ -710,9 +663,9 @@ static gint pen_handle_button_release(SPPenContext *const pc, GdkEventButton con
         SPDrawAnchor *anchor = spdc_test_inside(pc, event_w);
 
         switch (pc->mode) {
-            case SP_PEN_CONTEXT_MODE_CLICK:
+            case SPPenContext::MODE_CLICK:
                 switch (pc->state) {
-                    case SP_PEN_CONTEXT_POINT:
+                    case SPPenContext::POINT:
                         if ( pc->npoints == 0 ) {
                             // Start new thread only with button release
                             if (anchor) {
@@ -727,43 +680,43 @@ static gint pen_handle_button_release(SPPenContext *const pc, GdkEventButton con
                                 p = anchor->dp;
                             }
                         }
-                        pc->state = SP_PEN_CONTEXT_CONTROL;
+                        pc->state = SPPenContext::CONTROL;
                         ret = TRUE;
                         break;
-                    case SP_PEN_CONTEXT_CONTROL:
+                    case SPPenContext::CONTROL:
                         // End current segment
                         spdc_endpoint_snap(pc, p, revent.state);
                         spdc_pen_finish_segment(pc, p, revent.state);
-                        pc->state = SP_PEN_CONTEXT_POINT;
+                        pc->state = SPPenContext::POINT;
                         ret = TRUE;
                         break;
-                    case SP_PEN_CONTEXT_CLOSE:
+                    case SPPenContext::CLOSE:
                         // End current segment
                         if (!anchor) {   // Snap node only if not hitting anchor
                             spdc_endpoint_snap(pc, p, revent.state);
                         }
                         spdc_pen_finish_segment(pc, p, revent.state);
                         spdc_pen_finish(pc, TRUE);
-                        pc->state = SP_PEN_CONTEXT_POINT;
+                        pc->state = SPPenContext::POINT;
                         ret = TRUE;
                         break;
-                    case SP_PEN_CONTEXT_STOP:
+                    case SPPenContext::STOP:
                         // This is allowed, if we just canceled curve
-                        pc->state = SP_PEN_CONTEXT_POINT;
+                        pc->state = SPPenContext::POINT;
                         ret = TRUE;
                         break;
                     default:
                         break;
                 }
                 break;
-            case SP_PEN_CONTEXT_MODE_DRAG:
+            case SPPenContext::MODE_DRAG:
                 switch (pc->state) {
-                    case SP_PEN_CONTEXT_POINT:
-                    case SP_PEN_CONTEXT_CONTROL:
+                    case SPPenContext::POINT:
+                    case SPPenContext::CONTROL:
                         spdc_endpoint_snap(pc, p, revent.state);
                         spdc_pen_finish_segment(pc, p, revent.state);
                         break;
-                    case SP_PEN_CONTEXT_CLOSE:
+                    case SPPenContext::CLOSE:
                         spdc_endpoint_snap(pc, p, revent.state);
                         spdc_pen_finish_segment(pc, p, revent.state);
                         if (pc->green_closed) {
@@ -774,13 +727,13 @@ static gint pen_handle_button_release(SPPenContext *const pc, GdkEventButton con
                             spdc_pen_finish(pc, FALSE);
                         }
                         break;
-                    case SP_PEN_CONTEXT_STOP:
+                    case SPPenContext::STOP:
                         // This is allowed, if we just cancelled curve
                         break;
                     default:
                         break;
                 }
-                pc->state = SP_PEN_CONTEXT_POINT;
+                pc->state = SPPenContext::POINT;
                 ret = TRUE;
                 break;
             default:
@@ -1122,7 +1075,7 @@ static gint pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
                 sp_canvas_item_hide(pc->c1);
                 sp_canvas_item_hide(pc->cl0);
                 sp_canvas_item_hide(pc->cl1);
-                pc->state = SP_PEN_CONTEXT_POINT;
+                pc->state = SPPenContext::POINT;
                 spdc_pen_set_subsequent_point(pc, pt, true);
                 pen_last_paraxial_dir = !pen_last_paraxial_dir;
                 ret = TRUE;
@@ -1194,7 +1147,7 @@ static void spdc_pen_set_angle_distance_status_message(SPPenContext *const pc, G
         }
     }
 
-    pc->_message_context->setF(Inkscape::IMMEDIATE_MESSAGE, message, angle, dist->str);
+    pc->message_context->setF(Inkscape::IMMEDIATE_MESSAGE, message, angle, dist->str);
     g_string_free(dist, FALSE);
 }
 
@@ -1261,8 +1214,8 @@ static void spdc_pen_set_ctrl(SPPenContext *const pc, Geom::Point const p, guint
         sp_canvas_item_show(pc->c0);
         sp_canvas_item_show(pc->cl0);
         bool is_symm = false;
-        if ( ( ( pc->mode == SP_PEN_CONTEXT_MODE_CLICK ) && ( state & GDK_CONTROL_MASK ) ) ||
-             ( ( pc->mode == SP_PEN_CONTEXT_MODE_DRAG ) &&  !( state & GDK_SHIFT_MASK  ) ) ) {
+        if ( ( ( pc->mode == SPPenContext::MODE_CLICK ) && ( state & GDK_CONTROL_MASK ) ) ||
+             ( ( pc->mode == SPPenContext::MODE_DRAG ) &&  !( state & GDK_SHIFT_MASK  ) ) ) {
             Geom::Point delta = p - pc->p[3];
             pc->p[2] = pc->p[3] - delta;
             is_symm = true;
@@ -1323,7 +1276,7 @@ static void spdc_pen_finish(SPPenContext *const pc, gboolean const closed)
     pen_disable_events(pc);
 
     SPDesktop *const desktop = pc->desktop;
-    pc->_message_context->clear();
+    pc->message_context->clear();
     desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Drawing finished"));
 
     pc->red_curve->reset();
@@ -1332,7 +1285,7 @@ static void spdc_pen_finish(SPPenContext *const pc, gboolean const closed)
     pc->ea = NULL;
 
     pc->npoints = 0;
-    pc->state = SP_PEN_CONTEXT_POINT;
+    pc->state = SPPenContext::POINT;
 
     sp_canvas_item_hide(pc->c0);
     sp_canvas_item_hide(pc->c1);

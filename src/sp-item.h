@@ -27,7 +27,9 @@
 #include "snap-preferences.h"
 #include "snap-candidate.h"
 
-class SPGuideConstraint;
+//class SPGuideConstraint;
+#include "sp-guide-constraint.h"
+
 class SPClipPathReference;
 class SPMaskReference;
 class SPAvoidRef;
@@ -97,15 +99,8 @@ public:
     Geom::Affine i2vp;
 };
 
-class SPItem;
-class SPItemClass;
-
-#define SP_TYPE_ITEM (sp_item_get_type ())
-#define SP_ITEM(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_ITEM, SPItem))
-#define SP_ITEM_CLASS(clazz) (G_TYPE_CHECK_CLASS_CAST((clazz), SP_TYPE_ITEM, SPItemClass))
-#define SP_IS_ITEM(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_ITEM))
-
-GType sp_item_get_type() G_GNUC_CONST;
+#define SP_ITEM(obj) (dynamic_cast<SPItem*>((SPObject*)obj))
+#define SP_IS_ITEM(obj) (dynamic_cast<const SPItem*>((SPObject*)obj) != NULL)
 
 /** Abstract base class for all visible shapes. */
 class SPItem : public SPObject {
@@ -118,6 +113,9 @@ public:
         // includes everything: correctly done stroke (with proper miters and caps), markers, filter margins (e.g. blur)
         VISUAL_BBOX
     };
+
+    SPItem();
+    virtual ~SPItem();
 
     unsigned int sensitive : 1;
     unsigned int stop_paint: 1;
@@ -141,7 +139,6 @@ public:
 
     sigc::signal<void, Geom::Affine const *, SPItem *> _transformed_signal;
 
-    void init();
     bool isLocked() const;
     void setLocked(bool lock);
 
@@ -191,7 +188,7 @@ public:
     Geom::OptRect desktopBounds(BBoxType type) const;
 
     unsigned pos_in_parent();
-    gchar *description();
+    gchar *getDetailedDescription();
     int ifilt();
     void invoke_print(SPPrintContext *ctx);
     static unsigned int display_key_new(unsigned int numkeys);
@@ -215,7 +212,7 @@ public:
     Geom::Affine i2dt_affine() const;
     void set_i2d_affine(Geom::Affine const &transform);
     Geom::Affine dt2i_affine() const;
-    void convert_to_guides();
+    //void convert_to_guides();
 
 private:
     enum EvaluatedStatus
@@ -230,44 +227,24 @@ private:
     static void clip_ref_changed(SPObject *old_clip, SPObject *clip, SPItem *item);
     static void mask_ref_changed(SPObject *old_clip, SPObject *clip, SPItem *item);
 
-    friend class SPItemClass;
-};
-
-/// The SPItem vtable.
-class SPItemClass {
 public:
-    SPObjectClass parent_class;
+	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
+	virtual void release();
+	virtual void set(unsigned int key, gchar const* value);
+	virtual void update(SPCtx *ctx, guint flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
 
-    /** BBox union in given coordinate system */
-    Geom::OptRect (* bbox) (SPItem const *item, Geom::Affine const &transform, SPItem::BBoxType type);
-
-    /** Printing method. Assumes ctm is set to item affine matrix */
-    /* \todo Think about it, and maybe implement generic export method instead (Lauris) */
-    void (* print) (SPItem *item, SPPrintContext *ctx);
-
-    /** Give short description of item (for status display) */
-    gchar * (* description) (SPItem * item);
-
-    Inkscape::DrawingItem * (* show) (SPItem *item, Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
-    void (* hide) (SPItem *item, unsigned int key);
-
-    /** Write to an iterator the points that should be considered for snapping
-     * as the item's `nodes'.
-     */
-    void (* snappoints) (SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
-
-    /** Apply the transform optimally, and return any residual transformation */
-    Geom::Affine (* set_transform)(SPItem *item, Geom::Affine const &transform);
-
-    /** Convert the item to guidelines */
-    void (* convert_to_guides)(SPItem *item);
-
-    /** Emit event, if applicable */
-    gint (* event) (SPItem *item, SPEvent *event);
-
-private:
-    friend class SPItem;
+	virtual Geom::OptRect bbox(Geom::Affine const &transform, SPItem::BBoxType type);
+	virtual void print(SPPrintContext *ctx);
+	virtual gchar* description();
+	virtual Inkscape::DrawingItem* show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
+	virtual void hide(unsigned int key);
+    virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
+    virtual Geom::Affine set_transform(Geom::Affine const &transform);
+    virtual void convert_to_guides();
+    virtual gint event(SPEvent *event);
 };
+
 
 // Utility
 

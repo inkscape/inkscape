@@ -17,17 +17,15 @@
 #include "svg/svg-length.h"
 #include "sp-shape.h"
 
-G_BEGIN_DECLS
-
 /* Common parent class */
+#define SP_GENERICELLIPSE(obj) (dynamic_cast<SPGenericEllipse*>((SPObject*)obj))
+#define SP_IS_GENERICELLIPSE(obj) (dynamic_cast<const SPGenericEllipse*>((SPObject*)obj) != NULL)
 
-#define SP_TYPE_GENERICELLIPSE (sp_genericellipse_get_type ())
-#define SP_GENERICELLIPSE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_GENERICELLIPSE, SPGenericEllipse))
-#define SP_GENERICELLIPSE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_GENERICELLIPSE, SPGenericEllipseClass))
-#define SP_IS_GENERICELLIPSE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_GENERICELLIPSE))
-#define SP_IS_GENERICELLIPSE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_GENERICELLIPSE))
+class SPGenericEllipse : public SPShape {
+public:
+	SPGenericEllipse();
+	virtual ~SPGenericEllipse();
 
-struct SPGenericEllipse : public SPShape {
 	SVGLength cx;
 	SVGLength cy;
 	SVGLength rx;
@@ -35,72 +33,68 @@ struct SPGenericEllipse : public SPShape {
 
 	unsigned int closed : 1;
 	double start, end;
-};
 
-struct SPGenericEllipseClass {
-	SPShapeClass parent_class;
-};
+	virtual void update(SPCtx* ctx, unsigned int flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
 
-GType sp_genericellipse_get_type (void);
+	virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
+	virtual void set_shape();
+
+	virtual void update_patheffect(bool write);
+};
 
 /* This is technically priate by we need this in object edit (Lauris) */
 void sp_genericellipse_normalize (SPGenericEllipse *ellipse);
 
 /* SVG <ellipse> element */
+#define SP_ELLIPSE(obj) (dynamic_cast<SPEllipse*>((SPObject*)obj))
+#define SP_IS_ELLIPSE(obj) (dynamic_cast<const SPEllipse*>((SPObject*)obj) != NULL)
 
-#define SP_TYPE_ELLIPSE (sp_ellipse_get_type ())
-#define SP_ELLIPSE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_ELLIPSE, SPEllipse))
-#define SP_ELLIPSE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_ELLIPSE, SPEllipseClass))
-#define SP_IS_ELLIPSE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_ELLIPSE))
-#define SP_IS_ELLIPSE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_ELLIPSE))
+class SPEllipse : public SPGenericEllipse {
+public:
+	SPEllipse();
+	virtual ~SPEllipse();
 
-struct SPEllipse : public SPGenericEllipse {
+	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+	virtual void set(unsigned int key, gchar const* value);
+	virtual gchar* description();
 };
-
-struct SPEllipseClass {
-	SPGenericEllipseClass parent_class;
-};
-
-GType sp_ellipse_get_type (void);
 
 void sp_ellipse_position_set (SPEllipse * ellipse, gdouble x, gdouble y, gdouble rx, gdouble ry);
 
 /* SVG <circle> element */
+#define SP_CIRCLE(obj) (dynamic_cast<SPCircle*>((SPObject*)obj))
+#define SP_IS_CIRCLE(obj) (dynamic_cast<const SPCircle*>((SPObject*)obj) != NULL)
 
-#define SP_TYPE_CIRCLE (sp_circle_get_type ())
-#define SP_CIRCLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_CIRCLE, SPCircle))
-#define SP_CIRCLE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_CIRCLE, SPCircleClass))
-#define SP_IS_CIRCLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_CIRCLE))
-#define SP_IS_CIRCLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_CIRCLE))
+class SPCircle : public SPGenericEllipse {
+public:
+	SPCircle();
+	virtual ~SPCircle();
 
-struct SPCircle : public SPGenericEllipse {
+	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+	virtual void set(unsigned int key, gchar const* value);
+	virtual gchar* description();
 };
-
-struct SPCircleClass {
-	SPGenericEllipseClass parent_class;
-};
-
-GType sp_circle_get_type (void);
 
 /* <path sodipodi:type="arc"> element */
+#define SP_ARC(obj) (dynamic_cast<SPArc*>((SPObject*)obj))
+#define SP_IS_ARC(obj) (dynamic_cast<const SPArc*>((SPObject*)obj) != NULL)
 
-#define SP_TYPE_ARC (sp_arc_get_type ())
-#define SP_ARC(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_ARC, SPArc))
-#define SP_ARC_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_ARC, SPArcClass))
-#define SP_IS_ARC(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_ARC))
-#define SP_IS_ARC_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_ARC))
+class SPArc : public SPGenericEllipse {
+public:
+	SPArc();
+	virtual ~SPArc();
 
-struct SPArc : public SPGenericEllipse {
+	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+	virtual void set(unsigned int key, gchar const* value);
+	virtual gchar* description();
+	virtual void modified(unsigned int flags);
 };
 
-struct SPArcClass {
-	SPGenericEllipseClass parent_class;
-};
-
-GType sp_arc_get_type (void);
 void sp_arc_position_set (SPArc * arc, gdouble x, gdouble y, gdouble rx, gdouble ry);
 Geom::Point sp_arc_get_xy (SPArc *ge, gdouble arg);
-
-G_END_DECLS
 
 #endif

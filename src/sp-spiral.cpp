@@ -28,85 +28,43 @@
 
 #include "sp-spiral.h"
 
-static void sp_spiral_build (SPObject * object, SPDocument * document, Inkscape::XML::Node * repr);
-static Inkscape::XML::Node *sp_spiral_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
-static void sp_spiral_set (SPObject *object, unsigned int key, const gchar *value);
-static void sp_spiral_update (SPObject *object, SPCtx *ctx, guint flags);
 
-static gchar * sp_spiral_description (SPItem * item);
-static void sp_spiral_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
+#include "sp-factory.h"
 
-static void sp_spiral_set_shape (SPShape *shape);
-static void sp_spiral_update_patheffect (SPLPEItem *lpeitem, bool write);
+namespace {
+	SPObject* createSpiral() {
+		return new SPSpiral();
+	}
 
-static Geom::Point sp_spiral_get_tangent (SPSpiral const *spiral, gdouble t);
-
-G_DEFINE_TYPE(SPSpiral, sp_spiral, SP_TYPE_SHAPE);
-
-/**
- * SPSpiral vtable initialization.
- */
-static void sp_spiral_class_init(SPSpiralClass *klass)
-{
-    SPObjectClass *sp_object_class = reinterpret_cast<SPObjectClass *>(klass);
-    SPItemClass *item_class = reinterpret_cast<SPItemClass *>(klass);
-    SPLPEItemClass *lpe_item_class = reinterpret_cast<SPLPEItemClass *>(klass);
-    SPShapeClass *shape_class = reinterpret_cast<SPShapeClass *>(klass);
-
-    sp_object_class->build = sp_spiral_build;
-    sp_object_class->write = sp_spiral_write;
-    sp_object_class->set = sp_spiral_set;
-    sp_object_class->update = sp_spiral_update;
-
-    item_class->description = sp_spiral_description;
-    item_class->snappoints = sp_spiral_snappoints;
-
-    lpe_item_class->update_patheffect = sp_spiral_update_patheffect;
-
-    shape_class->set_shape = sp_spiral_set_shape;
+	bool spiralRegistered = SPFactory::instance().registerObject("spiral", createSpiral);
 }
 
-/**
- * Callback for SPSpiral object initialization.
- */
-static void
-sp_spiral_init (SPSpiral * spiral)
-{
-    spiral->cx         = 0.0;
-    spiral->cy         = 0.0;
-    spiral->exp        = 1.0;
-    spiral->revo       = 3.0;
-    spiral->rad        = 1.0;
-    spiral->arg        = 0.0;
-    spiral->t0         = 0.0;
+SPSpiral::SPSpiral() : SPShape() {
+	this->cx         = 0.0;
+	this->cy         = 0.0;
+	this->exp        = 1.0;
+	this->revo       = 3.0;
+	this->rad        = 1.0;
+	this->arg        = 0.0;
+	this->t0         = 0.0;
 }
 
-/**
- * Virtual build: set spiral properties from corresponding repr.
- */
-static void sp_spiral_build(SPObject * object, SPDocument * document, Inkscape::XML::Node * repr)
-{
-    if (reinterpret_cast<SPObjectClass *>(sp_spiral_parent_class)->build) {
-        reinterpret_cast<SPObjectClass *>(sp_spiral_parent_class)->build(object, document, repr);
-    }
-
-    object->readAttr( "sodipodi:cx" );
-    object->readAttr( "sodipodi:cy" );
-    object->readAttr( "sodipodi:expansion" );
-    object->readAttr( "sodipodi:revolution" );
-    object->readAttr( "sodipodi:radius" );
-    object->readAttr( "sodipodi:argument" );
-    object->readAttr( "sodipodi:t0" );
+SPSpiral::~SPSpiral() {
 }
 
-/**
- * Virtual write: write spiral attributes to corresponding repr.
- */
-static Inkscape::XML::Node *
-sp_spiral_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
-{
-    SPSpiral *spiral = SP_SPIRAL (object);
+void SPSpiral::build(SPDocument * document, Inkscape::XML::Node * repr) {
+    SPShape::build(document, repr);
 
+    this->readAttr("sodipodi:cx");
+    this->readAttr("sodipodi:cy");
+    this->readAttr("sodipodi:expansion");
+    this->readAttr("sodipodi:revolution");
+    this->readAttr("sodipodi:radius");
+    this->readAttr("sodipodi:argument");
+    this->readAttr("sodipodi:t0");
+}
+
+Inkscape::XML::Node* SPSpiral::write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags) {
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
         repr = xml_doc->createElement("svg:path");
     }
@@ -116,55 +74,51 @@ sp_spiral_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::X
          * sodipodi:spiral="cx cy exp revo rad arg t0"
          */
         repr->setAttribute("sodipodi:type", "spiral");
-        sp_repr_set_svg_double(repr, "sodipodi:cx", spiral->cx);
-        sp_repr_set_svg_double(repr, "sodipodi:cy", spiral->cy);
-        sp_repr_set_svg_double(repr, "sodipodi:expansion", spiral->exp);
-        sp_repr_set_svg_double(repr, "sodipodi:revolution", spiral->revo);
-        sp_repr_set_svg_double(repr, "sodipodi:radius", spiral->rad);
-        sp_repr_set_svg_double(repr, "sodipodi:argument", spiral->arg);
-        sp_repr_set_svg_double(repr, "sodipodi:t0", spiral->t0);
+        sp_repr_set_svg_double(repr, "sodipodi:cx", this->cx);
+        sp_repr_set_svg_double(repr, "sodipodi:cy", this->cy);
+        sp_repr_set_svg_double(repr, "sodipodi:expansion", this->exp);
+        sp_repr_set_svg_double(repr, "sodipodi:revolution", this->revo);
+        sp_repr_set_svg_double(repr, "sodipodi:radius", this->rad);
+        sp_repr_set_svg_double(repr, "sodipodi:argument", this->arg);
+        sp_repr_set_svg_double(repr, "sodipodi:t0", this->t0);
     }
 
      // make sure the curve is rebuilt with all up-to-date parameters
-     sp_spiral_set_shape(spiral);
+     this->set_shape();
 
     //Nulls might be possible if this called iteratively
-    if ( !spiral->_curve ) {
+    if (!this->_curve) {
             //g_warning("sp_spiral_write(): No path to copy\n");
             return NULL;
     }
-    char *d = sp_svg_write_path ( spiral->_curve->get_pathvector() );
+    char *d = sp_svg_write_path(this->_curve->get_pathvector());
     repr->setAttribute("d", d);
-    g_free (d);
+    g_free(d);
 
-    if (reinterpret_cast<SPObjectClass *>(sp_spiral_parent_class)->write) {
-        reinterpret_cast<SPObjectClass *>(sp_spiral_parent_class)->write(object, xml_doc, repr, flags | SP_SHAPE_WRITE_PATH);
-    }
+    SPShape::write(xml_doc, repr, flags | SP_SHAPE_WRITE_PATH);
 
     return repr;
 }
 
-/**
- * Virtual set: change spiral object attribute.
- */
-static void sp_spiral_set(SPObject *object, unsigned int key, const gchar *value)
-{
-    SPSpiral *spiral = SP_SPIRAL(object);
-
+void SPSpiral::set(unsigned int key, gchar const* value) {
     /// \todo fixme: we should really collect updates
     switch (key) {
     case SP_ATTR_SODIPODI_CX:
-        if (!sp_svg_length_read_computed_absolute (value, &spiral->cx)) {
-            spiral->cx = 0.0;
+        if (!sp_svg_length_read_computed_absolute (value, &this->cx)) {
+        	this->cx = 0.0;
         }
-        object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+
+        this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         break;
+
     case SP_ATTR_SODIPODI_CY:
-        if (!sp_svg_length_read_computed_absolute (value, &spiral->cy)) {
-            spiral->cy = 0.0;
+        if (!sp_svg_length_read_computed_absolute (value, &this->cy)) {
+        	this->cy = 0.0;
         }
-        object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+
+        this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         break;
+
     case SP_ATTR_SODIPODI_EXPANSION:
         if (value) {
             /** \todo
@@ -174,31 +128,37 @@ static void sp_spiral_set(SPObject *object, unsigned int key, const gchar *value
                          * N.B. atof/sscanf/strtod consider "nan" and "inf"
                          * to be valid numbers.
                          */
-            spiral->exp = g_ascii_strtod (value, NULL);
-            spiral->exp = CLAMP (spiral->exp, 0.0, 1000.0);
+        	this->exp = g_ascii_strtod (value, NULL);
+            this->exp = CLAMP (this->exp, 0.0, 1000.0);
         } else {
-            spiral->exp = 1.0;
+        	this->exp = 1.0;
         }
-        object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+
+        this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         break;
+
     case SP_ATTR_SODIPODI_REVOLUTION:
         if (value) {
-            spiral->revo = g_ascii_strtod (value, NULL);
-            spiral->revo = CLAMP (spiral->revo, 0.05, 1024.0);
+        	this->revo = g_ascii_strtod (value, NULL);
+            this->revo = CLAMP (this->revo, 0.05, 1024.0);
         } else {
-            spiral->revo = 3.0;
+        	this->revo = 3.0;
         }
-        object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+
+        this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         break;
+
     case SP_ATTR_SODIPODI_RADIUS:
-        if (!sp_svg_length_read_computed_absolute (value, &spiral->rad)) {
-            spiral->rad = MAX (spiral->rad, 0.001);
+        if (!sp_svg_length_read_computed_absolute (value, &this->rad)) {
+        	this->rad = MAX (this->rad, 0.001);
         }
-        object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+
+        this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         break;
+
     case SP_ATTR_SODIPODI_ARGUMENT:
         if (value) {
-            spiral->arg = g_ascii_strtod (value, NULL);
+        	this->arg = g_ascii_strtod (value, NULL);
             /** \todo
                          * FIXME: We still need some bounds on arg, for
                          * numerical reasons. E.g., we don't want inf or NaN,
@@ -208,14 +168,16 @@ static void sp_spiral_set(SPObject *object, unsigned int key, const gchar *value
                          * results in very negative arg.
                          */
         } else {
-            spiral->arg = 0.0;
+        	this->arg = 0.0;
         }
-        object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+
+        this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         break;
+
     case SP_ATTR_SODIPODI_T0:
         if (value) {
-            spiral->t0 = g_ascii_strtod (value, NULL);
-            spiral->t0 = CLAMP (spiral->t0, 0.0, 0.999);
+        	this->t0 = g_ascii_strtod (value, NULL);
+        	this->t0 = CLAMP (this->t0, 0.0, 0.999);
             /** \todo
                          * Have shared constants for the allowable bounds for
                          * attributes. There was a bug here where we used -1.0
@@ -224,36 +186,32 @@ static void sp_spiral_set(SPObject *object, unsigned int key, const gchar *value
                          * requirements.
                          */
         } else {
-            spiral->t0 = 0.0;
+        	this->t0 = 0.0;
         }
-        object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+
+        this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         break;
+
     default:
-        if (reinterpret_cast<SPObjectClass *>(sp_spiral_parent_class)->set) {
-            reinterpret_cast<SPObjectClass *>(sp_spiral_parent_class)->set(object, key, value);
-        }
+        SPShape::set(key, value);
         break;
     }
 }
 
-/**
- * Virtual update callback.
- */
-static void sp_spiral_update(SPObject *object, SPCtx *ctx, guint flags)
-{
+void SPSpiral::update(SPCtx *ctx, guint flags) {
+	SPSpiral* object = this;
+
     if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
-        reinterpret_cast<SPShape *>(object)->setShape();
+        reinterpret_cast<SPShape *>(object)->set_shape();
     }
 
-    if (reinterpret_cast<SPObjectClass *>(sp_spiral_parent_class)->update) {
-        reinterpret_cast<SPObjectClass *>(sp_spiral_parent_class)->update(object, ctx, flags);
-    }
+    SPShape::update(ctx, flags);
 }
 
-static void sp_spiral_update_patheffect(SPLPEItem *lpeitem, bool write)
-{
-    SPShape *shape = static_cast<SPShape *>(lpeitem);
-    sp_spiral_set_shape(shape);
+void SPSpiral::update_patheffect(bool write) {
+	SPSpiral* shape = this;
+
+    this->set_shape();
 
     if (write) {
         Inkscape::XML::Node *repr = shape->getRepr();
@@ -269,16 +227,13 @@ static void sp_spiral_update_patheffect(SPLPEItem *lpeitem, bool write)
     shape->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-/**
- * Return textual description of spiral.
- */
-static gchar *sp_spiral_description(SPItem * item)
-{
-    // TRANSLATORS: since turn count isn't an integer, please adjust the
-    // string as needed to deal with an localized plural forms.
-    return g_strdup_printf (_("<b>Spiral</b> with %3f turns"), SP_SPIRAL(item)->revo);
-}
+gchar* SPSpiral::description() {
+	SPSpiral* item = this;
 
+	// TRANSLATORS: since turn count isn't an integer, please adjust the
+    // string as needed to deal with an localized plural forms.
+	return g_strdup_printf (_("<b>Spiral</b> with %3f turns"), SP_SPIRAL(item)->revo);
+}
 
 /**
  * Fit beziers together to spiral and draw it.
@@ -287,18 +242,11 @@ static gchar *sp_spiral_description(SPItem * item)
  * \pre is_unit_vector(*hat1).
  * \post is_unit_vector(*hat2).
  **/
-static void
-sp_spiral_fit_and_draw (SPSpiral const *spiral,
-            SPCurve     *c,
-            double dstep,
-            Geom::Point darray[],
-            Geom::Point const &hat1,
-            Geom::Point &hat2,
-            double *t)
-{
+void SPSpiral::fitAndDraw(SPCurve* c, double dstep, Geom::Point darray[], Geom::Point const& hat1, Geom::Point& hat2, double* t) const {
 #define BEZIER_SIZE   4
 #define FITTING_MAX_BEZIERS 4
 #define BEZIER_LENGTH (BEZIER_SIZE * FITTING_MAX_BEZIERS)
+
     g_assert (dstep > 0);
     g_assert (is_unit_vector (hat1));
 
@@ -307,13 +255,11 @@ sp_spiral_fit_and_draw (SPSpiral const *spiral,
     int depth, i;
 
     for (d = *t, i = 0; i <= SAMPLE_SIZE; d += dstep, i++) {
-        darray[i] = sp_spiral_get_xy(spiral, d);
+        darray[i] = this->getXY(d);
 
         /* Avoid useless adjacent dups.  (Otherwise we can have all of darray filled with
            the same value, which upsets chord_length_parameterize.) */
-        if ((i != 0)
-            && (darray[i] == darray[i - 1])
-            && (d < 1.0)) {
+        if ((i != 0) && (darray[i] == darray[i - 1]) && (d < 1.0)) {
             i--;
             d += dstep;
             /** We mustn't increase dstep for subsequent values of
@@ -338,7 +284,7 @@ sp_spiral_fit_and_draw (SPSpiral const *spiral,
     double const next_t = d - 2 * dstep;
     /* == t + (SAMPLE_SIZE - 1) * dstep, in absence of dups. */
 
-    hat2 = -sp_spiral_get_tangent (spiral, next_t);
+    hat2 = -this->getTangent(next_t);
 
     /** \todo
          * We should use better algorithm to specify maximum error.
@@ -347,12 +293,15 @@ sp_spiral_fit_and_draw (SPSpiral const *spiral,
                       hat1, hat2,
                       SPIRAL_TOLERANCE*SPIRAL_TOLERANCE,
                       FITTING_MAX_BEZIERS);
+
     g_assert(depth * BEZIER_SIZE <= gint(G_N_ELEMENTS(bezier)));
+
 #ifdef SPIRAL_DEBUG
     if (*t == spiral->t0 || *t == 1.0)
         g_print ("[%s] depth=%d, dstep=%g, t0=%g, t=%g, arg=%g\n",
              debug_state, depth, dstep, spiral->t0, *t, spiral->arg);
 #endif
+
     if (depth != -1) {
         for (i = 0; i < 4*depth; i += 4) {
             c->curveto(bezier[i + 1],
@@ -366,17 +315,19 @@ sp_spiral_fit_and_draw (SPSpiral const *spiral,
         for (i = 1; i < SAMPLE_SIZE; i++)
             c->lineto(darray[i]);
     }
+
     *t = next_t;
+
     g_assert (is_unit_vector (hat2));
 }
 
-static void
-sp_spiral_set_shape (SPShape *shape)
-{
-    SPSpiral *spiral = SP_SPIRAL(shape);
+void SPSpiral::set_shape() {
+    SPSpiral *spiral = this;
+    SPSpiral* shape = spiral;
 
     if (sp_lpe_item_has_broken_path_effect(SP_LPE_ITEM(shape))) {
         g_warning ("The spiral shape has unknown LPE on it! Convert to path to make it editable preserving the appearance; editing it as spiral will remove the bad LPE");
+
         if (shape->getRepr()->attribute("d")) {
             // unconditionally read the curve from d, if any, to preserve appearance
             Geom::PathVector pv = sp_svg_read_pathv(shape->getRepr()->attribute("d"));
@@ -385,6 +336,7 @@ sp_spiral_set_shape (SPShape *shape)
             shape->setCurveBeforeLPE( cold );
             cold->unref();
         }
+
         return;
     }
 
@@ -407,86 +359,74 @@ sp_spiral_set_shape (SPShape *shape)
 #endif
 
     /* Initial moveto. */
-    c->moveto(sp_spiral_get_xy(spiral, spiral->t0));
+    c->moveto(spiral->getXY(spiral->t0));
 
     double const tstep = SAMPLE_STEP / spiral->revo;
     double const dstep = tstep / (SAMPLE_SIZE - 1);
 
-    Geom::Point hat1 = sp_spiral_get_tangent (spiral, spiral->t0);
+    Geom::Point hat1 = spiral->getTangent(spiral->t0);
     Geom::Point hat2;
+
     for (t = spiral->t0; t < (1.0 - tstep);) {
-        sp_spiral_fit_and_draw (spiral, c, dstep, darray, hat1, hat2, &t);
+        spiral->fitAndDraw(c, dstep, darray, hat1, hat2, &t);
 
         hat1 = -hat2;
     }
-    if ((1.0 - t) > SP_EPSILON)
-        sp_spiral_fit_and_draw (spiral, c, (1.0 - t)/(SAMPLE_SIZE - 1.0),
-                    darray, hat1, hat2, &t);
+
+    if ((1.0 - t) > SP_EPSILON) {
+        spiral->fitAndDraw(c, (1.0 - t) / (SAMPLE_SIZE - 1.0), darray, hat1, hat2, &t);
+    }
 
     /* Reset the shape'scurve to the "original_curve"
      * This is very important for LPEs to work properly! (the bbox might be recalculated depending on the curve in shape)*/
     shape->setCurveInsync( c, TRUE);
     shape->setCurveBeforeLPE( c );
+
     if (sp_lpe_item_has_path_effect(SP_LPE_ITEM(shape)) && sp_lpe_item_path_effects_enabled(SP_LPE_ITEM(shape))) {
         SPCurve *c_lpe = c->copy();
         bool success = sp_lpe_item_perform_path_effect(SP_LPE_ITEM (shape), c_lpe);
+
         if (success) {
             shape->setCurveInsync( c_lpe, TRUE);
         }
+
         c_lpe->unref();
     }
+
     c->unref();
 }
 
 /**
  * Set spiral properties and update display.
  */
-void
-sp_spiral_position_set       (SPSpiral          *spiral,
-             gdouble            cx,
-             gdouble            cy,
-             gdouble            exp,
-             gdouble            revo,
-             gdouble            rad,
-             gdouble            arg,
-             gdouble            t0)
-{
-    g_return_if_fail (spiral != NULL);
-    g_return_if_fail (SP_IS_SPIRAL (spiral));
-
+void SPSpiral::setPosition(gdouble cx, gdouble cy, gdouble exp, gdouble revo, gdouble rad, gdouble arg, gdouble t0) {
     /** \todo
          * Consider applying CLAMP or adding in-bounds assertions for
          * some of these parameters.
          */
-    spiral->cx         = cx;
-    spiral->cy         = cy;
-    spiral->exp        = exp;
-    spiral->revo       = revo;
-    spiral->rad        = MAX (rad, 0.0);
-    spiral->arg        = arg;
-    spiral->t0         = CLAMP(t0, 0.0, 0.999);
+	this->cx         = cx;
+	this->cy         = cy;
+	this->exp        = exp;
+    this->revo       = revo;
+    this->rad        = MAX (rad, 0.0);
+    this->arg        = arg;
+    this->t0         = CLAMP(t0, 0.0, 0.999);
 
-    (static_cast<SPObject *>(spiral))->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-/**
- * Virtual snappoints callback.
- */
-static void sp_spiral_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs)
-{
+void SPSpiral::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) {
     // We will determine the spiral's midpoint ourselves, instead of trusting on the base class
     // Therefore snapping to object midpoints is temporarily disabled
     Inkscape::SnapPreferences local_snapprefs = *snapprefs;
     local_snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_OBJECT_MIDPOINT, false);
 
-    if ((reinterpret_cast<SPItemClass *>(sp_spiral_parent_class))->snappoints) {
-        (reinterpret_cast<SPItemClass *>(sp_spiral_parent_class))->snappoints (item, p, &local_snapprefs);
-    }
+    SPShape::snappoints(p, &local_snapprefs);
 
     if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_OBJECT_MIDPOINT)) {
-        Geom::Affine const i2dt (item->i2dt_affine ());
-        SPSpiral *spiral = SP_SPIRAL(item);
-        p.push_back(Inkscape::SnapCandidatePoint(Geom::Point(spiral->cx, spiral->cy) * i2dt, Inkscape::SNAPSOURCE_OBJECT_MIDPOINT, Inkscape::SNAPTARGET_OBJECT_MIDPOINT));
+        Geom::Affine const i2dt (this->i2dt_affine ());
+
+        p.push_back(Inkscape::SnapCandidatePoint(Geom::Point(this->cx, this->cy) * i2dt, Inkscape::SNAPSOURCE_OBJECT_MIDPOINT, Inkscape::SNAPTARGET_OBJECT_MIDPOINT));
         // This point is the start-point of the spiral, which is also returned when _snap_to_itemnode has been set
         // in the object snapper. In that case we will get a duplicate!
     }
@@ -500,22 +440,18 @@ static void sp_spiral_snappoints(SPItem const *item, std::vector<Inkscape::SnapC
  * than 1.0, though some callers go slightly beyond 1.0 for curve-fitting
  * purposes.)
  */
-Geom::Point sp_spiral_get_xy (SPSpiral const *spiral, gdouble t)
-{
-    g_assert (spiral != NULL);
-    g_assert (SP_IS_SPIRAL(spiral));
-    g_assert (spiral->exp >= 0.0);
+Geom::Point SPSpiral::getXY(gdouble t) const {
+    g_assert (this->exp >= 0.0);
     /* Otherwise we get NaN for t==0. */
-    g_assert (spiral->exp <= 1000.0);
+    g_assert (this->exp <= 1000.0);
     /* Anything much more results in infinities.  Even allowing 1000 is somewhat overkill. */
     g_assert (t >= 0.0);
     /* Any callers passing -ve t will have a bug for non-integral values of exp. */
 
-    double const rad = spiral->rad * pow(t, (double) spiral->exp);
-    double const arg = 2.0 * M_PI * spiral->revo * t + spiral->arg;
+    double const rad = this->rad * pow(t, (double)this->exp);
+    double const arg = 2.0 * M_PI * this->revo * t + this->arg;
 
-    return Geom::Point(rad * cos (arg) + spiral->cx,
-                           rad * sin (arg) + spiral->cy);
+    return Geom::Point(rad * cos(arg) + this->cx, rad * sin(arg) + this->cy);
 }
 
 
@@ -528,28 +464,24 @@ Geom::Point sp_spiral_get_xy (SPSpiral const *spiral, gdouble t)
  *  \pre p != NULL.
  *  \post is_unit_vector(*p).
  */
-static Geom::Point
-sp_spiral_get_tangent (SPSpiral const *spiral, gdouble t)
-{
+Geom::Point SPSpiral::getTangent(gdouble t) const {
     Geom::Point ret(1.0, 0.0);
-    g_return_val_if_fail (( ( spiral != NULL )
-                && SP_IS_SPIRAL(spiral) ),
-                  ret);
+
     g_assert (t >= 0.0);
-    g_assert (spiral->exp >= 0.0);
+    g_assert (this->exp >= 0.0);
     /* See above for comments on these assertions. */
 
-    double const t_scaled = 2.0 * M_PI * spiral->revo * t;
-    double const arg = t_scaled + spiral->arg;
-    double const s = sin (arg);
-    double const c = cos (arg);
+    double const t_scaled = 2.0 * M_PI * this->revo * t;
+    double const arg = t_scaled + this->arg;
+    double const s = sin(arg);
+    double const c = cos(arg);
 
-    if (spiral->exp == 0.0) {
+    if (this->exp == 0.0) {
         ret = Geom::Point(-s, c);
     } else if (t_scaled == 0.0) {
         ret = Geom::Point(c, s);
     } else {
-        Geom::Point unrotated(spiral->exp, t_scaled);
+        Geom::Point unrotated(this->exp, t_scaled);
         double const s_len = L2 (unrotated);
         g_assert (s_len != 0);
         /** \todo
@@ -581,43 +513,43 @@ sp_spiral_get_tangent (SPSpiral const *spiral, gdouble t)
         /* Proof that ret length is non-zero: see above.  (Should be near 1.) */
     }
 
-    g_assert (is_unit_vector (ret));
+    g_assert (is_unit_vector(ret));
     return ret;
 }
 
 /**
  * Compute rad and/or arg for point on spiral.
  */
-void
-sp_spiral_get_polar (SPSpiral const *spiral, gdouble t, gdouble *rad, gdouble *arg)
-{
-    g_return_if_fail (spiral != NULL);
-    g_return_if_fail (SP_IS_SPIRAL(spiral));
+void SPSpiral::getPolar(gdouble t, gdouble* rad, gdouble* arg) const {
+    if (rad) {
+        *rad = this->rad * pow(t, (double)this->exp);
+    }
 
-    if (rad)
-        *rad = spiral->rad * pow(t, (double) spiral->exp);
-    if (arg)
-        *arg = 2.0 * M_PI * spiral->revo * t + spiral->arg;
+    if (arg) {
+        *arg = 2.0 * M_PI * this->revo * t + this->arg;
+    }
 }
 
 /**
  * Return true if spiral has properties that make it invalid.
  */
-bool
-sp_spiral_is_invalid (SPSpiral const *spiral)
-{
+bool SPSpiral::isInvalid() const {
     gdouble rad;
 
-    sp_spiral_get_polar (spiral, 0.0, &rad, NULL);
+    this->getPolar(0.0, &rad, NULL);
+
     if (rad < 0.0 || rad > SP_HUGE) {
-        g_print ("rad(t=0)=%g\n", rad);
+        g_print("rad(t=0)=%g\n", rad);
         return TRUE;
     }
-    sp_spiral_get_polar (spiral, 1.0, &rad, NULL);
+
+    this->getPolar(1.0, &rad, NULL);
+
     if (rad < 0.0 || rad > SP_HUGE) {
-        g_print ("rad(t=1)=%g\n", rad);
+        g_print("rad(t=1)=%g\n", rad);
         return TRUE;
     }
+
     return FALSE;
 }
 

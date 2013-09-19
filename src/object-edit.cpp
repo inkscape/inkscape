@@ -1164,7 +1164,7 @@ SpiralKnotHolderEntityInner::knot_set(Geom::Point const &p, Geom::Point const &o
     } else {
         // roll/unroll from inside
         gdouble   arg_t0;
-        sp_spiral_get_polar(spiral, spiral->t0, NULL, &arg_t0);
+        spiral->getPolar(spiral->t0, NULL, &arg_t0);
 
         gdouble   arg_tmp = atan2(dy, dx) - arg_t0;
         gdouble   arg_t0_new = arg_tmp - floor((arg_tmp+M_PI)/(2.0*M_PI))*2.0*M_PI + arg_t0;
@@ -1213,7 +1213,7 @@ SpiralKnotHolderEntityOuter::knot_set(Geom::Point const &p, Geom::Point const &/
     } else { // roll/unroll
         // arg of the spiral outer end
         double arg_1;
-        sp_spiral_get_polar(spiral, 1, NULL, &arg_1);
+        spiral->getPolar(1, NULL, &arg_1);
 
         // its fractional part after the whole turns are subtracted
         double arg_r = arg_1 - sp_round(arg_1, 2.0*M_PI);
@@ -1241,7 +1241,7 @@ SpiralKnotHolderEntityOuter::knot_set(Geom::Point const &p, Geom::Point const &/
         // the rad at that t:
         double rad_new = 0;
         if (t_temp > spiral->t0)
-            sp_spiral_get_polar(spiral, t_temp, &rad_new, NULL);
+            spiral->getPolar(t_temp, &rad_new, NULL);
 
         // change the revo (converting diff from radians to the number of turns)
         spiral->revo += diff/(2*M_PI);
@@ -1252,7 +1252,7 @@ SpiralKnotHolderEntityOuter::knot_set(Geom::Point const &p, Geom::Point const &/
         if (!(state & GDK_MOD1_MASK) && rad_new > 1e-3 && rad_new/spiral->rad < 2) {
             // adjust t0 too so that the inner point stays unmoved
             double r0;
-            sp_spiral_get_polar(spiral, spiral->t0, &r0, NULL);
+            spiral->getPolar(spiral->t0, &r0, NULL);
             spiral->rad = rad_new;
             spiral->t0 = pow(r0 / spiral->rad, 1.0/spiral->exp);
         }
@@ -1268,7 +1268,7 @@ SpiralKnotHolderEntityInner::knot_get() const
 {
     SPSpiral const *spiral = SP_SPIRAL(item);
 
-    return sp_spiral_get_xy(spiral, spiral->t0);
+    return spiral->getXY(spiral->t0);
 }
 
 Geom::Point
@@ -1276,7 +1276,7 @@ SpiralKnotHolderEntityOuter::knot_get() const
 {
     SPSpiral const *spiral = SP_SPIRAL(item);
 
-    return sp_spiral_get_xy(spiral, 1.0);
+    return spiral->getXY(1.0);
 }
 
 void

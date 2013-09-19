@@ -417,7 +417,7 @@ Flowing in rectangle is possible, not in arb shape.
     }
 
     SPRect *frame = SP_RECT(frame_item);
-    Geom::Rect framebox = sp_rect_get_rect(frame) * transform();
+    Geom::Rect framebox = frame->getRect() * transform();
 
     // get position and alignment
     // Align on topleft corner.

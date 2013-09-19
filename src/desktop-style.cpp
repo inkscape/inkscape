@@ -200,7 +200,7 @@ sp_desktop_set_style(SPDesktop *desktop, SPCSSAttr *css, bool change, bool write
     if (!intercepted) {
         // If we have an event context, update its cursor (TODO: it could be neater to do this with the signal sent above, but what if the signal gets intercepted?)
         if (desktop->event_context) {
-            sp_event_context_update_cursor(desktop->event_context);
+            desktop->event_context->sp_event_context_update_cursor();
         }
 
         // Remove text attributes if not text...

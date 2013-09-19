@@ -648,8 +648,8 @@ SPStop *sp_vector_add_stop(SPGradient *vector, SPStop* prev_stop, SPStop* next_s
     SPStop *newstop = reinterpret_cast<SPStop *>(vector->document->getObjectByRepr(new_stop_repr));
     newstop->offset = offset;
     sp_repr_set_css_double( newstop->getRepr(), "offset", (double)offset);
-    guint32 const c1 = sp_stop_get_rgba32(prev_stop);
-    guint32 const c2 = sp_stop_get_rgba32(next_stop);
+    guint32 const c1 = prev_stop->get_rgba32();
+    guint32 const c2 = next_stop->get_rgba32();
     guint32 cnew = average_color (c1, c2, (offset - prev_stop->offset) / (next_stop->offset - prev_stop->offset));
     Inkscape::CSSOStringStream os;
     gchar c[64];
@@ -726,7 +726,7 @@ guint32 sp_item_gradient_stop_query_style(SPItem *item, GrPointType point_type, 
             {
                 SPStop *first = vector->getFirstStop();
                 if (first) {
-                    return sp_stop_get_rgba32(first);
+                    return first->get_rgba32();
                 }
             }
             break;
@@ -737,7 +737,7 @@ guint32 sp_item_gradient_stop_query_style(SPItem *item, GrPointType point_type, 
             {
                 SPStop *last = sp_last_stop (vector);
                 if (last) {
-                    return sp_stop_get_rgba32(last);
+                    return last->get_rgba32();
                 }
             }
             break;
@@ -748,7 +748,7 @@ guint32 sp_item_gradient_stop_query_style(SPItem *item, GrPointType point_type, 
             {
                 SPStop *stopi = sp_get_stop_i (vector, point_i);
                 if (stopi) {
-                    return sp_stop_get_rgba32(stopi);
+                    return stopi->get_rgba32();
                 }
             }
             break;
@@ -982,7 +982,7 @@ void sp_item_gradient_invert_vector_color(SPItem *item, Inkscape::PaintTarget fi
 
     for ( SPObject *child = vector->firstChild(); child; child = child->getNext()) {
         if (SP_IS_STOP(child)) {
-            guint32 color =  sp_stop_get_rgba32(SP_STOP(child));
+            guint32 color =  SP_STOP(child)->get_rgba32();
             //g_message("Stop color %d", color);
             gchar c[64];
             sp_svg_write_color (c, sizeof(c),
@@ -1571,7 +1571,7 @@ void sp_gradient_invert_selected_gradients(SPDesktop *desktop, Inkscape::PaintTa
 void sp_gradient_reverse_selected_gradients(SPDesktop *desktop)
 {
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
-    SPEventContext *ev = sp_desktop_event_context(desktop);
+    SPEventContext *ev = desktop->getEventContext();
 
     if (!ev) {
         return;

@@ -16,35 +16,31 @@
 #include "sp-title.h"
 #include "xml/repr.h"
 
-static Inkscape::XML::Node *sp_title_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
+#include "sp-factory.h"
 
-G_DEFINE_TYPE(SPTitle, sp_title, SP_TYPE_OBJECT);
+namespace {
+	SPObject* createTitle() {
+		return new SPTitle();
+	}
 
-static void
-sp_title_class_init(SPTitleClass *klass)
-{
-    SPObjectClass *sp_object_class = (SPObjectClass *) klass;
-
-    sp_object_class->write = sp_title_write;
+	bool titleRegistered = SPFactory::instance().registerObject("svg:title", createTitle);
 }
 
-static void
-sp_title_init(SPTitle */*desc*/)
-{
+SPTitle::SPTitle() : SPObject() {
 }
 
-/**
- * Writes it's settings to an incoming repr object, if any.
- */
-static Inkscape::XML::Node *sp_title_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
-{
+SPTitle::~SPTitle() {
+}
+
+Inkscape::XML::Node* SPTitle::write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags) {
+	SPTitle* object = this;
+
     if (!repr) {
-        repr = object->getRepr()->duplicate(doc);
+        repr = object->getRepr()->duplicate(xml_doc);
     }
 
-    if (((SPObjectClass *) sp_title_parent_class)->write) {
-        ((SPObjectClass *) sp_title_parent_class)->write(object, doc, repr, flags);
-    }
+    SPObject::write(xml_doc, repr, flags);
 
     return repr;
 }
+

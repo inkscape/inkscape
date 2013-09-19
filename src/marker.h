@@ -19,8 +19,8 @@
  */
 
 #define SP_TYPE_MARKER (sp_marker_get_type ())
-#define SP_MARKER(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), SP_TYPE_MARKER, SPMarker))
-#define SP_IS_MARKER(o) (G_TYPE_CHECK_INSTANCE_TYPE ((o), SP_TYPE_MARKER))
+#define SP_MARKER(obj) (dynamic_cast<SPMarker*>((SPObject*)obj))
+#define SP_IS_MARKER(obj) (dynamic_cast<const SPMarker*>((SPObject*)obj) != NULL)
 
 struct SPMarkerView;
 
@@ -32,7 +32,11 @@ struct SPMarkerView;
 #include "sp-marker-loc.h"
 #include "uri-references.h"
 
-struct SPMarker : public SPGroup {
+class SPMarker : public SPGroup {
+public:
+	SPMarker();
+	virtual ~SPMarker();
+
 	/* units */
 	unsigned int markerUnits_set : 1;
 	unsigned int markerUnits : 1;
@@ -63,13 +67,19 @@ struct SPMarker : public SPGroup {
 
 	/* Private views */
 	SPMarkerView *views;
-};
 
-struct SPMarkerClass {
-	SPGroupClass parent_class;
-};
+	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
+	virtual void release();
+	virtual void set(unsigned int key, gchar const* value);
+	virtual void update(SPCtx *ctx, guint flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
 
-GType sp_marker_get_type (void);
+	virtual Inkscape::DrawingItem* show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
+	virtual void hide(unsigned int key);
+
+	virtual Geom::OptRect bbox(Geom::Affine const &transform, SPItem::BBoxType type);
+	virtual void print(SPPrintContext *ctx);
+};
 
 class SPMarkerReference : public Inkscape::URIReference {
 	SPMarkerReference(SPObject *obj) : URIReference(obj) {}

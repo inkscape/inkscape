@@ -28,7 +28,7 @@
 #include <cairo.h>
 
 class SPClipPath;
-struct SPMask;
+class SPMask;
 
 namespace Inkscape {
 namespace Extension {

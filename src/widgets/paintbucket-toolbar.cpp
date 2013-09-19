@@ -79,7 +79,8 @@ using Inkscape::Util::unit_table;
 static void paintbucket_channels_changed(EgeSelectOneAction* act, GObject* /*tbl*/)
 {
     gint channels = ege_select_one_action_get_active( act );
-    flood_channels_set_channels( channels );
+    //flood_channels_set_channels( channels );
+    SPFloodContext::set_channels(channels);
 }
 
 static void paintbucket_threshold_changed(GtkAdjustment *adj, GObject * /*tbl*/)

@@ -78,13 +78,21 @@ using namespace std;
 #define DDC_RED_RGBA 0xff0000ff
 #define DYNA_MIN_WIDTH 1.0e-6
 
-static void sp_spray_context_dispose(GObject *object);
+#include "tool-factory.h"
 
-static void sp_spray_context_setup(SPEventContext *ec);
-static void sp_spray_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val);
-static gint sp_spray_context_root_handler(SPEventContext *ec, GdkEvent *event);
+namespace {
+	SPEventContext* createSprayContext() {
+		return new SPSprayContext();
+	}
 
-G_DEFINE_TYPE(SPSprayContext, sp_spray_context, SP_TYPE_EVENT_CONTEXT);
+	bool sprayContextRegistered = ToolFactory::instance().registerObject("/tools/spray", createSprayContext);
+}
+
+const std::string& SPSprayContext::getPrefsPath() {
+	return SPSprayContext::prefsPath;
+}
+
+const std::string SPSprayContext::prefsPath = "/tools/spray";
 
 /**
  * This function returns pseudo-random numbers from a normal distribution
@@ -95,18 +103,6 @@ inline double NormalDistribution(double mu, double sigma)
 {
   // use Box Muller's algorithm
   return mu + sigma * sqrt( -2.0 * log(g_random_double_range(0, 1)) ) * cos( 2.0*M_PI*g_random_double_range(0, 1) );
-}
-
-static void sp_spray_context_class_init(SPSprayContextClass *klass)
-{
-    GObjectClass *object_class = G_OBJECT_CLASS(klass);
-    SPEventContextClass *event_context_class = SP_EVENT_CONTEXT_CLASS(klass);
-
-    object_class->dispose = sp_spray_context_dispose;
-
-    event_context_class->setup = sp_spray_context_setup;
-    event_context_class->set = sp_spray_context_set;
-    event_context_class->root_handler = sp_spray_context_root_handler;
 }
 
 /* Method to rotate items */
@@ -133,54 +129,45 @@ static void sp_spray_scale_rel(Geom::Point c, SPDesktop */*desktop*/, SPItem *it
     item->doWriteTransform(item->getRepr(), item->transform);
 }
 
-static void sp_spray_context_init(SPSprayContext *tc)
-{
-    SPEventContext *event_context = SP_EVENT_CONTEXT(tc);
+SPSprayContext::SPSprayContext() : SPEventContext() {
+	this->usetilt = 0;
+	this->dilate_area = 0;
+	this->usetext = false;
+	this->population = 0;
+	this->is_drawing = false;
+	this->mode = 0;
+	this->usepressure = 0;
 
-    event_context->cursor_shape = cursor_spray_xpm;
-    event_context->hot_x = 4;
-    event_context->hot_y = 4;
+    this->cursor_shape = cursor_spray_xpm;
+    this->hot_x = 4;
+    this->hot_y = 4;
 
     /* attributes */
-    tc->dragging = FALSE;
-    tc->distrib = 1;
-    tc->width = 0.2;
-    tc->force = 0.2;
-    tc->ratio = 0;
-    tc->tilt = 0;
-    tc->mean = 0.2;
-    tc->rotation_variation = 0;
-    tc->standard_deviation = 0.2;
-    tc->scale = 1;
-    tc->scale_variation = 1;
-    tc->pressure = TC_DEFAULT_PRESSURE;
+    this->dragging = FALSE;
+    this->distrib = 1;
+    this->width = 0.2;
+    this->force = 0.2;
+    this->ratio = 0;
+    this->tilt = 0;
+    this->mean = 0.2;
+    this->rotation_variation = 0;
+    this->standard_deviation = 0.2;
+    this->scale = 1;
+    this->scale_variation = 1;
+    this->pressure = TC_DEFAULT_PRESSURE;
 
-    tc->is_dilating = false;
-    tc->has_dilated = false;
-
-    new (&tc->style_set_connection) sigc::connection();
+    this->is_dilating = false;
+    this->has_dilated = false;
 }
 
-static void sp_spray_context_dispose(GObject *object)
-{
-    SPSprayContext *tc = SP_SPRAY_CONTEXT(object);
-    SPEventContext *ec = SP_EVENT_CONTEXT(object);
+SPSprayContext::~SPSprayContext() {
+    this->enableGrDrag(false);
+    this->style_set_connection.disconnect();
 
-    ec->enableGrDrag(false);
-
-    tc->style_set_connection.disconnect();
-    tc->style_set_connection.~connection();
-
-    if (tc->dilate_area) {
-        sp_canvas_item_destroy(tc->dilate_area);
-        tc->dilate_area = NULL;
+    if (this->dilate_area) {
+        sp_canvas_item_destroy(this->dilate_area);
+        this->dilate_area = NULL;
     }
-
-    if (tc->_message_context) {
-        delete tc->_message_context;
-    }
-
-    G_OBJECT_CLASS(sp_spray_context_parent_class)->dispose(object);
 }
 
 static bool is_transform_modes(gint mode)
@@ -191,13 +178,10 @@ static bool is_transform_modes(gint mode)
             mode == SPRAY_OPTION);
 }
 
-static void sp_spray_update_cursor(SPSprayContext *tc, bool /*with_shift*/)
-{
-    SPEventContext *event_context = SP_EVENT_CONTEXT(tc);
-    SPDesktop *desktop = event_context->desktop;
-
+void SPSprayContext::update_cursor(bool /*with_shift*/) {
     guint num = 0;
     gchar *sel_message = NULL;
+
     if (!desktop->selection->isEmpty()) {
         num = g_slist_length(const_cast<GSList *>(desktop->selection->itemList()));
         sel_message = g_strdup_printf(ngettext("<b>%i</b> object selected","<b>%i</b> objects selected",num), num);
@@ -205,31 +189,26 @@ static void sp_spray_update_cursor(SPSprayContext *tc, bool /*with_shift*/)
         sel_message = g_strdup_printf(_("<b>Nothing</b> selected"));
     }
 
+	switch (this->mode) {
+	   case SPRAY_MODE_COPY:
+		   this->message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag, click or click and scroll to spray <b>copies</b> of the initial selection."), sel_message);
+		   break;
+	   case SPRAY_MODE_CLONE:
+		   this->message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag, click or click and scroll to spray <b>clones</b> of the initial selection."), sel_message);
+		   break;
+	   case SPRAY_MODE_SINGLE_PATH:
+		   this->message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag, click or click and scroll to spray in a <b>single path</b> of the initial selection."), sel_message);
+		   break;
+	   default:
+		   break;
+	}
 
-   switch (tc->mode) {
-       case SPRAY_MODE_COPY:
-           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag, click or click and scroll to spray <b>copies</b> of the initial selection."), sel_message);
-           break;
-       case SPRAY_MODE_CLONE:
-           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag, click or click and scroll to spray <b>clones</b> of the initial selection."), sel_message);
-           break;
-       case SPRAY_MODE_SINGLE_PATH:
-           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag, click or click and scroll to spray in a <b>single path</b> of the initial selection."), sel_message);
-           break;
-       default:
-           break;
-   }
-   sp_event_context_update_cursor(event_context);
-   g_free(sel_message);
+	this->sp_event_context_update_cursor();
+	g_free(sel_message);
 }
 
-static void sp_spray_context_setup(SPEventContext *ec)
-{
-    SPSprayContext *tc = SP_SPRAY_CONTEXT(ec);
-
-    if ((SP_EVENT_CONTEXT_CLASS(sp_spray_context_parent_class))->setup) {
-        (SP_EVENT_CONTEXT_CLASS(sp_spray_context_parent_class))->setup(ec);
-    }
+void SPSprayContext::setup() {
+    SPEventContext::setup();
 
     {
         /* TODO: have a look at sp_dyna_draw_context_setup where the same is done.. generalize? at least make it an arcto! */
@@ -241,71 +220,67 @@ static void sp_spray_context_setup(SPEventContext *ec)
         c->curveto(1, -C1, C1, -1, 0, -1 );
         c->curveto(-C1, -1, -1, -C1, -1, 0 );
         c->closepath();
-        tc->dilate_area = sp_canvas_bpath_new(sp_desktop_controls(ec->desktop), c);
+        this->dilate_area = sp_canvas_bpath_new(sp_desktop_controls(this->desktop), c);
         c->unref();
-        sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(tc->dilate_area), 0x00000000,(SPWindRule)0);
-        sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(tc->dilate_area), 0xff9900ff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
-        sp_canvas_item_hide(tc->dilate_area);
+        sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(this->dilate_area), 0x00000000,(SPWindRule)0);
+        sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(this->dilate_area), 0xff9900ff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
+        sp_canvas_item_hide(this->dilate_area);
     }
 
-    tc->is_drawing = false;
+    this->is_drawing = false;
 
-    tc->_message_context = new Inkscape::MessageContext((ec->desktop)->messageStack());
-
-    sp_event_context_read(ec, "distrib");
-    sp_event_context_read(ec, "width");
-    sp_event_context_read(ec, "ratio");
-    sp_event_context_read(ec, "tilt");
-    sp_event_context_read(ec, "rotation_variation");
-    sp_event_context_read(ec, "scale_variation");
-    sp_event_context_read(ec, "mode");
-    sp_event_context_read(ec, "population");
-    sp_event_context_read(ec, "force");
-    sp_event_context_read(ec, "mean");
-    sp_event_context_read(ec, "standard_deviation");
-    sp_event_context_read(ec, "usepressure");
-    sp_event_context_read(ec, "Scale");
+    sp_event_context_read(this, "distrib");
+    sp_event_context_read(this, "width");
+    sp_event_context_read(this, "ratio");
+    sp_event_context_read(this, "tilt");
+    sp_event_context_read(this, "rotation_variation");
+    sp_event_context_read(this, "scale_variation");
+    sp_event_context_read(this, "mode");
+    sp_event_context_read(this, "population");
+    sp_event_context_read(this, "force");
+    sp_event_context_read(this, "mean");
+    sp_event_context_read(this, "standard_deviation");
+    sp_event_context_read(this, "usepressure");
+    sp_event_context_read(this, "Scale");
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (prefs->getBool("/tools/spray/selcue")) {
-        ec->enableSelectionCue();
+        this->enableSelectionCue();
     }
     if (prefs->getBool("/tools/spray/gradientdrag")) {
-        ec->enableGrDrag();
+        this->enableGrDrag();
     }
 }
 
-static void sp_spray_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val)
-{
-    SPSprayContext *tc = SP_SPRAY_CONTEXT(ec);
-    Glib::ustring path = val->getEntryName();
+void SPSprayContext::set(const Inkscape::Preferences::Entry& val) {
+    Glib::ustring path = val.getEntryName();
 
     if (path == "mode") {
-        tc->mode = val->getInt();
-        sp_spray_update_cursor(tc, false);
+        this->mode = val.getInt();
+        this->update_cursor(false);
     } else if (path == "width") {
-        tc->width = 0.01 * CLAMP(val->getInt(10), 1, 100);
+        this->width = 0.01 * CLAMP(val.getInt(10), 1, 100);
     } else if (path == "usepressure") {
-        tc->usepressure = val->getBool();
+        this->usepressure = val.getBool();
     } else if (path == "population") {
-        tc->population = 0.01 * CLAMP(val->getInt(10), 1, 100);
+        this->population = 0.01 * CLAMP(val.getInt(10), 1, 100);
     } else if (path == "rotation_variation") {
-        tc->rotation_variation = CLAMP(val->getDouble(0.0), 0, 100.0);
+        this->rotation_variation = CLAMP(val.getDouble(0.0), 0, 100.0);
     } else if (path == "scale_variation") {
-        tc->scale_variation = CLAMP(val->getDouble(1.0), 0, 100.0);
+        this->scale_variation = CLAMP(val.getDouble(1.0), 0, 100.0);
     } else if (path == "standard_deviation") {
-        tc->standard_deviation = 0.01 * CLAMP(val->getInt(10), 1, 100);
+        this->standard_deviation = 0.01 * CLAMP(val.getInt(10), 1, 100);
     } else if (path == "mean") {
-        tc->mean = 0.01 * CLAMP(val->getInt(10), 1, 100);
+        this->mean = 0.01 * CLAMP(val.getInt(10), 1, 100);
 // Not implemented in the toolbar and preferences yet
     } else if (path == "distribution") {
-        tc->distrib = val->getInt(1);
+        this->distrib = val.getInt(1);
     } else if (path == "tilt") {
-        tc->tilt = CLAMP(val->getDouble(0.1), 0, 1000.0);
+        this->tilt = CLAMP(val.getDouble(0.1), 0, 1000.0);
     } else if (path == "ratio") {
-        tc->ratio = CLAMP(val->getDouble(), 0.0, 0.9);
+        this->ratio = CLAMP(val.getDouble(), 0.0, 0.9);
     } else if (path == "force") {
-        tc->force = CLAMP(val->getDouble(1.0), 0, 1.0);
+        this->force = CLAMP(val.getDouble(1.0), 0, 1.0);
     } 
 }
 
@@ -607,45 +582,41 @@ static void sp_spray_switch_mode(SPSprayContext *tc, gint mode, bool with_shift)
     SP_EVENT_CONTEXT(tc)->desktop->setToolboxSelectOneValue("spray_tool_mode", mode); 
     // need to set explicitly, because the prefs may not have changed by the previous
     tc->mode = mode;
-    sp_spray_update_cursor(tc, with_shift);
+    tc->update_cursor(with_shift);
 }
 
-gint sp_spray_context_root_handler(SPEventContext *event_context, GdkEvent *event)
-{
-    SPSprayContext *tc = SP_SPRAY_CONTEXT(event_context);
-    SPDesktop *desktop = event_context->desktop;
-
+bool SPSprayContext::root_handler(GdkEvent* event) {
     gint ret = FALSE;
 
     switch (event->type) {
         case GDK_ENTER_NOTIFY:
-            sp_canvas_item_show(tc->dilate_area);
+            sp_canvas_item_show(this->dilate_area);
             break;
         case GDK_LEAVE_NOTIFY:
-            sp_canvas_item_hide(tc->dilate_area);
+            sp_canvas_item_hide(this->dilate_area);
             break;
         case GDK_BUTTON_PRESS:
-            if (event->button.button == 1 && !event_context->space_panning) {
-                if (Inkscape::have_viable_layer(desktop, tc->_message_context) == false) {
+            if (event->button.button == 1 && !this->space_panning) {
+                if (Inkscape::have_viable_layer(desktop, this->message_context) == false) {
                     return TRUE;
                 }
 
                 Geom::Point const motion_w(event->button.x, event->button.y);
                 Geom::Point const motion_dt(desktop->w2d(motion_w));
-                tc->last_push = desktop->dt2doc(motion_dt);
+                this->last_push = desktop->dt2doc(motion_dt);
 
-                sp_spray_extinput(tc, event);
+                sp_spray_extinput(this, event);
 
                 desktop->canvas->forceFullRedrawAfterInterruptions(3);
-                tc->is_drawing = true;
-                tc->is_dilating = true;
-                tc->has_dilated = false;
+                this->is_drawing = true;
+                this->is_dilating = true;
+                this->has_dilated = false;
 
-                if(tc->is_dilating && event->button.button == 1 && !event_context->space_panning) {
-                    sp_spray_dilate(tc, motion_w, desktop->dt2doc(motion_dt), Geom::Point(0,0), MOD__SHIFT(event));
+                if(this->is_dilating && event->button.button == 1 && !this->space_panning) {
+                    sp_spray_dilate(this, motion_w, desktop->dt2doc(motion_dt), Geom::Point(0,0), MOD__SHIFT(event));
                 }
 
-                tc->has_dilated = true;
+                this->has_dilated = true;
                 ret = TRUE;
             }
             break;
@@ -654,27 +625,27 @@ gint sp_spray_context_root_handler(SPEventContext *event_context, GdkEvent *even
                                      event->motion.y);
             Geom::Point motion_dt(desktop->w2d(motion_w));
             Geom::Point motion_doc(desktop->dt2doc(motion_dt));
-            sp_spray_extinput(tc, event);
+            sp_spray_extinput(this, event);
 
             // draw the dilating cursor
-            double radius = get_dilate_radius(tc);
-            Geom::Affine const sm (Geom::Scale(radius/(1-tc->ratio), radius/(1+tc->ratio)) );
-            sp_canvas_item_affine_absolute(tc->dilate_area, (sm*Geom::Rotate(tc->tilt))*Geom::Translate(desktop->w2d(motion_w)));
-            sp_canvas_item_show(tc->dilate_area);
+            double radius = get_dilate_radius(this);
+            Geom::Affine const sm (Geom::Scale(radius/(1-this->ratio), radius/(1+this->ratio)) );
+            sp_canvas_item_affine_absolute(this->dilate_area, (sm*Geom::Rotate(this->tilt))*Geom::Translate(desktop->w2d(motion_w)));
+            sp_canvas_item_show(this->dilate_area);
 
             guint num = 0;
             if (!desktop->selection->isEmpty()) {
                 num = g_slist_length(const_cast<GSList *>(desktop->selection->itemList()));
             }
             if (num == 0) {
-                tc->_message_context->flash(Inkscape::ERROR_MESSAGE, _("<b>Nothing selected!</b> Select objects to spray."));
+                this->message_context->flash(Inkscape::ERROR_MESSAGE, _("<b>Nothing selected!</b> Select objects to spray."));
             }
 
             // dilating:
-            if (tc->is_drawing && ( event->motion.state & GDK_BUTTON1_MASK )) {
-                sp_spray_dilate(tc, motion_w, motion_doc, motion_doc - tc->last_push, event->button.state & GDK_SHIFT_MASK? true : false);
-                //tc->last_push = motion_doc;
-                tc->has_dilated = true;
+            if (this->is_drawing && ( event->motion.state & GDK_BUTTON1_MASK )) {
+                sp_spray_dilate(this, motion_w, motion_doc, motion_doc - this->last_push, event->button.state & GDK_SHIFT_MASK? true : false);
+                //this->last_push = motion_doc;
+                this->has_dilated = true;
 
                 // it's slow, so prevent clogging up with events
                 gobble_motion_events(GDK_BUTTON1_MASK);
@@ -686,31 +657,31 @@ gint sp_spray_context_root_handler(SPEventContext *event_context, GdkEvent *even
         case GDK_SCROLL: {
             if (event->scroll.state & GDK_BUTTON1_MASK) {
                 double temp ;
-                temp = tc->population;
-                tc->population = 1.0;
-                desktop->setToolboxAdjustmentValue("population", tc->population * 100);
+                temp = this->population;
+                this->population = 1.0;
+                desktop->setToolboxAdjustmentValue("population", this->population * 100);
                 Geom::Point const scroll_w(event->button.x, event->button.y);
                 Geom::Point const scroll_dt = desktop->point();;
                 Geom::Point motion_doc(desktop->dt2doc(scroll_dt));
                 switch (event->scroll.direction) {
                     case GDK_SCROLL_DOWN:
                     case GDK_SCROLL_UP: {
-                        if (Inkscape::have_viable_layer(desktop, tc->_message_context) == false) {
+                        if (Inkscape::have_viable_layer(desktop, this->message_context) == false) {
                             return TRUE;
                         }
-                        tc->last_push = desktop->dt2doc(scroll_dt);
-                        sp_spray_extinput(tc, event);
+                        this->last_push = desktop->dt2doc(scroll_dt);
+                        sp_spray_extinput(this, event);
                         desktop->canvas->forceFullRedrawAfterInterruptions(3);
-                        tc->is_drawing = true;
-                        tc->is_dilating = true;
-                        tc->has_dilated = false;
-                        if(tc->is_dilating && !event_context->space_panning) {
-                            sp_spray_dilate(tc, scroll_w, desktop->dt2doc(scroll_dt), Geom::Point(0,0), false);
+                        this->is_drawing = true;
+                        this->is_dilating = true;
+                        this->has_dilated = false;
+                        if(this->is_dilating && !this->space_panning) {
+                            sp_spray_dilate(this, scroll_w, desktop->dt2doc(scroll_dt), Geom::Point(0,0), false);
                         }
-                        tc->has_dilated = true;
+                        this->has_dilated = true;
                         
-                        tc->population = temp;
-                        desktop->setToolboxAdjustmentValue("population", tc->population * 100);
+                        this->population = temp;
+                        desktop->setToolboxAdjustmentValue("population", this->population * 100);
 
                         ret = TRUE;
                     }
@@ -729,27 +700,27 @@ gint sp_spray_context_root_handler(SPEventContext *event_context, GdkEvent *even
             Geom::Point const motion_dt(desktop->w2d(motion_w));
 
             desktop->canvas->endForcedFullRedraws();
-            tc->is_drawing = false;
+            this->is_drawing = false;
 
-            if (tc->is_dilating && event->button.button == 1 && !event_context->space_panning) {
-                if (!tc->has_dilated) {
+            if (this->is_dilating && event->button.button == 1 && !this->space_panning) {
+                if (!this->has_dilated) {
                     // if we did not rub, do a light tap
-                    tc->pressure = 0.03;
-                    sp_spray_dilate(tc, motion_w, desktop->dt2doc(motion_dt), Geom::Point(0,0), MOD__SHIFT(event));
+                    this->pressure = 0.03;
+                    sp_spray_dilate(this, motion_w, desktop->dt2doc(motion_dt), Geom::Point(0,0), MOD__SHIFT(event));
                 }
-                tc->is_dilating = false;
-                tc->has_dilated = false;
-                switch (tc->mode) {
+                this->is_dilating = false;
+                this->has_dilated = false;
+                switch (this->mode) {
                     case SPRAY_MODE_COPY:
-                        DocumentUndo::done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
+                        DocumentUndo::done(sp_desktop_document(SP_EVENT_CONTEXT(this)->desktop),
                                            SP_VERB_CONTEXT_SPRAY, _("Spray with copies"));
                         break;
                     case SPRAY_MODE_CLONE:
-                        DocumentUndo::done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
+                        DocumentUndo::done(sp_desktop_document(SP_EVENT_CONTEXT(this)->desktop),
                                            SP_VERB_CONTEXT_SPRAY, _("Spray with clones"));
                         break;
                     case SPRAY_MODE_SINGLE_PATH:
-                        DocumentUndo::done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
+                        DocumentUndo::done(sp_desktop_document(SP_EVENT_CONTEXT(this)->desktop),
                                            SP_VERB_CONTEXT_SPRAY, _("Spray in single path"));
                         break;
                 }
@@ -762,83 +733,83 @@ gint sp_spray_context_root_handler(SPEventContext *event_context, GdkEvent *even
                 case GDK_KEY_j:
                 case GDK_KEY_J:
                     if (MOD__SHIFT_ONLY(event)) {
-                        sp_spray_switch_mode(tc, SPRAY_MODE_COPY, MOD__SHIFT(event));
+                        sp_spray_switch_mode(this, SPRAY_MODE_COPY, MOD__SHIFT(event));
                         ret = TRUE;
                     }
                     break;
                 case GDK_KEY_k:
                 case GDK_KEY_K:
                     if (MOD__SHIFT_ONLY(event)) {
-                        sp_spray_switch_mode(tc, SPRAY_MODE_CLONE, MOD__SHIFT(event));
+                        sp_spray_switch_mode(this, SPRAY_MODE_CLONE, MOD__SHIFT(event));
                         ret = TRUE;
                     }
                     break;
                 case GDK_KEY_l:
                 case GDK_KEY_L:
                     if (MOD__SHIFT_ONLY(event)) {
-                        sp_spray_switch_mode(tc, SPRAY_MODE_SINGLE_PATH, MOD__SHIFT(event));
+                        sp_spray_switch_mode(this, SPRAY_MODE_SINGLE_PATH, MOD__SHIFT(event));
                         ret = TRUE;
                     }
                     break;
                 case GDK_KEY_Up:
                 case GDK_KEY_KP_Up:
                     if (!MOD__CTRL_ONLY(event)) {
-                        tc->population += 0.01;
-                        if (tc->population > 1.0) {
-                            tc->population = 1.0;
+                        this->population += 0.01;
+                        if (this->population > 1.0) {
+                            this->population = 1.0;
                         }
-                        desktop->setToolboxAdjustmentValue("spray-population", tc->population * 100);
+                        desktop->setToolboxAdjustmentValue("spray-population", this->population * 100);
                         ret = TRUE;
                     }
                     break;
                 case GDK_KEY_Down:
                 case GDK_KEY_KP_Down:
                     if (!MOD__CTRL_ONLY(event)) {
-                        tc->population -= 0.01;
-                        if (tc->population < 0.0) {
-                            tc->population = 0.0;
+                        this->population -= 0.01;
+                        if (this->population < 0.0) {
+                            this->population = 0.0;
                         }
-                        desktop->setToolboxAdjustmentValue("spray-population", tc->population * 100);
+                        desktop->setToolboxAdjustmentValue("spray-population", this->population * 100);
                         ret = TRUE;
                     }
                     break;
                 case GDK_KEY_Right:
                 case GDK_KEY_KP_Right:
                     if (!MOD__CTRL_ONLY(event)) {
-                        tc->width += 0.01;
-                        if (tc->width > 1.0) {
-                            tc->width = 1.0;
+                        this->width += 0.01;
+                        if (this->width > 1.0) {
+                            this->width = 1.0;
                         }
                         // the same spinbutton is for alt+x
-                        desktop->setToolboxAdjustmentValue("altx-spray", tc->width * 100);
-                        sp_spray_update_area(tc);
+                        desktop->setToolboxAdjustmentValue("altx-spray", this->width * 100);
+                        sp_spray_update_area(this);
                         ret = TRUE;
                     }
                     break;
                 case GDK_KEY_Left:
                 case GDK_KEY_KP_Left:
                     if (!MOD__CTRL_ONLY(event)) {
-                        tc->width -= 0.01;
-                        if (tc->width < 0.01) {
-                            tc->width = 0.01;
+                        this->width -= 0.01;
+                        if (this->width < 0.01) {
+                            this->width = 0.01;
                         }
-                        desktop->setToolboxAdjustmentValue("altx-spray", tc->width * 100);
-                        sp_spray_update_area(tc);
+                        desktop->setToolboxAdjustmentValue("altx-spray", this->width * 100);
+                        sp_spray_update_area(this);
                         ret = TRUE;
                     }
                     break;
                 case GDK_KEY_Home:
                 case GDK_KEY_KP_Home:
-                    tc->width = 0.01;
-                    desktop->setToolboxAdjustmentValue("altx-spray", tc->width * 100);
-                    sp_spray_update_area(tc);
+                    this->width = 0.01;
+                    desktop->setToolboxAdjustmentValue("altx-spray", this->width * 100);
+                    sp_spray_update_area(this);
                     ret = TRUE;
                     break;
                 case GDK_KEY_End:
                 case GDK_KEY_KP_End:
-                    tc->width = 1.0;
-                    desktop->setToolboxAdjustmentValue("altx-spray", tc->width * 100);
-                    sp_spray_update_area(tc);
+                    this->width = 1.0;
+                    desktop->setToolboxAdjustmentValue("altx-spray", this->width * 100);
+                    sp_spray_update_area(this);
                     ret = TRUE;
                     break;
                 case GDK_KEY_x:
@@ -850,7 +821,7 @@ gint sp_spray_context_root_handler(SPEventContext *event_context, GdkEvent *even
                     break;
                 case GDK_KEY_Shift_L:
                 case GDK_KEY_Shift_R:
-                    sp_spray_update_cursor(tc, true);
+                    this->update_cursor(true);
                     break;
                 case GDK_KEY_Control_L:
                 case GDK_KEY_Control_R:
@@ -858,7 +829,7 @@ gint sp_spray_context_root_handler(SPEventContext *event_context, GdkEvent *even
                 case GDK_KEY_Delete:
                 case GDK_KEY_KP_Delete:
                 case GDK_KEY_BackSpace:
-                    ret = event_context->deleteSelectedDrag(MOD__CTRL_ONLY(event));
+                    ret = this->deleteSelectedDrag(MOD__CTRL_ONLY(event));
                     break;
 
                 default:
@@ -871,15 +842,15 @@ gint sp_spray_context_root_handler(SPEventContext *event_context, GdkEvent *even
             switch (get_group0_keyval(&event->key)) {
                 case GDK_KEY_Shift_L:
                 case GDK_KEY_Shift_R:
-                    sp_spray_update_cursor(tc, false);
+                    this->update_cursor(false);
                     break;
                 case GDK_KEY_Control_L:
                 case GDK_KEY_Control_R:
-                    sp_spray_switch_mode (tc, prefs->getInt("/tools/spray/mode"), MOD__SHIFT(event));
-                    tc->_message_context->clear();
+                    sp_spray_switch_mode (this, prefs->getInt("/tools/spray/mode"), MOD__SHIFT(event));
+                    this->message_context->clear();
                     break;
                 default:
-                    sp_spray_switch_mode (tc, prefs->getInt("/tools/spray/mode"), MOD__SHIFT(event));
+                    sp_spray_switch_mode (this, prefs->getInt("/tools/spray/mode"), MOD__SHIFT(event));
                     break;
             }
         }
@@ -889,9 +860,10 @@ gint sp_spray_context_root_handler(SPEventContext *event_context, GdkEvent *even
     }
 
     if (!ret) {
-        if ((SP_EVENT_CONTEXT_CLASS(sp_spray_context_parent_class))->root_handler) {
-            ret = (SP_EVENT_CONTEXT_CLASS(sp_spray_context_parent_class))->root_handler(event_context, event);
-        }
+//        if ((SP_EVENT_CONTEXT_CLASS(sp_spray_context_parent_class))->root_handler) {
+//            ret = (SP_EVENT_CONTEXT_CLASS(sp_spray_context_parent_class))->root_handler(event_context, event);
+//        }
+    	ret = SPEventContext::root_handler(event);
     }
 
     return ret;

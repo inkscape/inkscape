@@ -29,71 +29,48 @@
 #define SP_MACROS_SILENT
 #include "macros.h"
 
-/* FePointLight class */
-static void sp_fepointlight_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
-static void sp_fepointlight_release(SPObject *object);
-static void sp_fepointlight_set(SPObject *object, unsigned int key, gchar const *value);
-static void sp_fepointlight_update(SPObject *object, SPCtx *ctx, guint flags);
-static Inkscape::XML::Node *sp_fepointlight_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
+#include "sp-factory.h"
 
-G_DEFINE_TYPE(SPFePointLight, sp_fepointlight, SP_TYPE_OBJECT);
+namespace {
+	SPObject* createPointLight() {
+		return new SPFePointLight();
+	}
 
-static void
-sp_fepointlight_class_init(SPFePointLightClass *klass)
-{
-    SPObjectClass *sp_object_class = (SPObjectClass *)klass;
-
-    sp_object_class->build = sp_fepointlight_build;
-    sp_object_class->release = sp_fepointlight_release;
-    sp_object_class->write = sp_fepointlight_write;
-    sp_object_class->set = sp_fepointlight_set;
-    sp_object_class->update = sp_fepointlight_update;
+	bool pointLightRegistered = SPFactory::instance().registerObject("svg:fePointLight", createPointLight);
 }
 
-static void
-sp_fepointlight_init(SPFePointLight *fepointlight)
-{
-    fepointlight->x = 0;
-    fepointlight->y = 0;
-    fepointlight->z = 0;
-
-    fepointlight->x_set = FALSE;
-    fepointlight->y_set = FALSE;
-    fepointlight->z_set = FALSE;
+SPFePointLight::SPFePointLight() 
+    : SPObject(), x(0), x_set(FALSE), y(0), y_set(FALSE), z(0), z_set(FALSE) {
 }
+
+SPFePointLight::~SPFePointLight() {
+}
+
 
 /**
  * Reads the Inkscape::XML::Node, and initializes SPPointLight variables.  For this to get called,
  * our name must be associated with a repr via "sp_object_type_register".  Best done through
  * sp-object-repr.cpp's repr_name_entries array.
  */
-static void
-sp_fepointlight_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
-{
-    if (((SPObjectClass *) sp_fepointlight_parent_class)->build) {
-        ((SPObjectClass *) sp_fepointlight_parent_class)->build(object, document, repr);
-    }
+void SPFePointLight::build(SPDocument *document, Inkscape::XML::Node *repr) {
+	SPObject::build(document, repr);
 
     //Read values of key attributes from XML nodes into object.
-    object->readAttr( "x" );
-    object->readAttr( "y" );
-    object->readAttr( "z" );
+    this->readAttr( "x" );
+    this->readAttr( "y" );
+    this->readAttr( "z" );
 
 //is this necessary?
-    document->addResource("fepointlight", object);
+    document->addResource("fepointlight", this);
 }
 
 /**
  * Drops any allocated memory.
  */
-static void
-sp_fepointlight_release(SPObject *object)
-{
-    //SPFePointLight *fepointlight = SP_FEPOINTLIGHT(object);
-
-    if ( object->document ) {
+void SPFePointLight::release() {
+    if ( this->document ) {
         // Unregister ourselves
-        object->document->removeResource("fepointlight", object);
+        this->document->removeResource("fepointlight", this);
     }
 
 //TODO: release resources here
@@ -102,71 +79,79 @@ sp_fepointlight_release(SPObject *object)
 /**
  * Sets a specific value in the SPFePointLight.
  */
-static void
-sp_fepointlight_set(SPObject *object, unsigned int key, gchar const *value)
-{
-    SPFePointLight *fepointlight = SP_FEPOINTLIGHT(object);
+void SPFePointLight::set(unsigned int key, gchar const *value) {
     gchar *end_ptr;
+
     switch (key) {
     case SP_ATTR_X:
         end_ptr = NULL;
+
         if (value) {
-            fepointlight->x = g_ascii_strtod(value, &end_ptr);
+            this->x = g_ascii_strtod(value, &end_ptr);
+
             if (end_ptr) {
-                fepointlight->x_set = TRUE;
+                this->x_set = TRUE;
             }
         }
+
         if (!value || !end_ptr) {
-            fepointlight->x = 0;
-            fepointlight->x_set = FALSE;
+            this->x = 0;
+            this->x_set = FALSE;
         }
-        if (object->parent &&
-                (SP_IS_FEDIFFUSELIGHTING(object->parent) ||
-                 SP_IS_FESPECULARLIGHTING(object->parent))) {
-            object->parent->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+
+        if (this->parent &&
+                (SP_IS_FEDIFFUSELIGHTING(this->parent) ||
+                 SP_IS_FESPECULARLIGHTING(this->parent))) {
+            this->parent->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
         }
         break;
     case SP_ATTR_Y:
         end_ptr = NULL;
+
         if (value) {
-            fepointlight->y = g_ascii_strtod(value, &end_ptr);
+            this->y = g_ascii_strtod(value, &end_ptr);
+
             if (end_ptr) {
-                fepointlight->y_set = TRUE;
+                this->y_set = TRUE;
             }
         }
+
         if (!value || !end_ptr) {
-            fepointlight->y = 0;
-            fepointlight->y_set = FALSE;
+            this->y = 0;
+            this->y_set = FALSE;
         }
-        if (object->parent &&
-                (SP_IS_FEDIFFUSELIGHTING(object->parent) ||
-                 SP_IS_FESPECULARLIGHTING(object->parent))) {
-            object->parent->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+
+        if (this->parent &&
+                (SP_IS_FEDIFFUSELIGHTING(this->parent) ||
+                 SP_IS_FESPECULARLIGHTING(this->parent))) {
+            this->parent->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
         }
         break;
     case SP_ATTR_Z:
         end_ptr = NULL;
+
         if (value) {
-            fepointlight->z = g_ascii_strtod(value, &end_ptr);
+            this->z = g_ascii_strtod(value, &end_ptr);
+
             if (end_ptr) {
-                fepointlight->z_set = TRUE;
+                this->z_set = TRUE;
             }
         }
+
         if (!value || !end_ptr) {
-            fepointlight->z = 0;
-            fepointlight->z_set = FALSE;
+            this->z = 0;
+            this->z_set = FALSE;
         }
-        if (object->parent &&
-                (SP_IS_FEDIFFUSELIGHTING(object->parent) ||
-                 SP_IS_FESPECULARLIGHTING(object->parent))) {
-            object->parent->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+
+        if (this->parent &&
+                (SP_IS_FEDIFFUSELIGHTING(this->parent) ||
+                 SP_IS_FESPECULARLIGHTING(this->parent))) {
+            this->parent->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
         }
         break;
     default:
         // See if any parents need this value.
-        if (((SPObjectClass *) sp_fepointlight_parent_class)->set) {
-            ((SPObjectClass *) sp_fepointlight_parent_class)->set(object, key, value);
-        }
+    	SPObject::set(key, value);
         break;
     }
 }
@@ -174,46 +159,33 @@ sp_fepointlight_set(SPObject *object, unsigned int key, gchar const *value)
 /**
  *  * Receives update notifications.
  *   */
-static void
-sp_fepointlight_update(SPObject *object, SPCtx *ctx, guint flags)
-{
-    SPFePointLight *fePointLight = SP_FEPOINTLIGHT(object);
-    (void)fePointLight;
-
+void SPFePointLight::update(SPCtx *ctx, guint flags) {
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
         /* do something to trigger redisplay, updates? */
-        object->readAttr( "x" );
-        object->readAttr( "y" );
-        object->readAttr( "z" );
+        this->readAttr( "x" );
+        this->readAttr( "y" );
+        this->readAttr( "z" );
     }
 
-    if (((SPObjectClass *) sp_fepointlight_parent_class)->update) {
-        ((SPObjectClass *) sp_fepointlight_parent_class)->update(object, ctx, flags);
-    }
+    SPObject::update(ctx, flags);
 }
 
 /**
  * Writes its settings to an incoming repr object, if any.
  */
-static Inkscape::XML::Node *
-sp_fepointlight_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
-{
-    SPFePointLight *fepointlight = SP_FEPOINTLIGHT(object);
-
+Inkscape::XML::Node* SPFePointLight::write(Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags) {
     if (!repr) {
-        repr = object->getRepr()->duplicate(doc);
+        repr = this->getRepr()->duplicate(doc);
     }
 
-    if (fepointlight->x_set)
-        sp_repr_set_css_double(repr, "x", fepointlight->x);
-    if (fepointlight->y_set)
-        sp_repr_set_css_double(repr, "y", fepointlight->y);
-    if (fepointlight->z_set)
-        sp_repr_set_css_double(repr, "z", fepointlight->z);
+    if (this->x_set)
+        sp_repr_set_css_double(repr, "x", this->x);
+    if (this->y_set)
+        sp_repr_set_css_double(repr, "y", this->y);
+    if (this->z_set)
+        sp_repr_set_css_double(repr, "z", this->z);
 
-    if (((SPObjectClass *) sp_fepointlight_parent_class)->write) {
-        ((SPObjectClass *) sp_fepointlight_parent_class)->write(object, doc, repr, flags);
-    }
+    SPObject::write(doc, repr, flags);
 
     return repr;
 }

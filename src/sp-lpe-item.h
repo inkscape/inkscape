@@ -18,12 +18,10 @@
 
 #include <list>
 
-#define SP_TYPE_LPE_ITEM (sp_lpe_item_get_type())
-#define SP_LPE_ITEM(o) (G_TYPE_CHECK_INSTANCE_CAST((o), SP_TYPE_LPE_ITEM, SPLPEItem))
-#define SP_LPE_ITEM_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_LPE_ITEM, SPLPEItemClass))
-#define SP_IS_LPE_ITEM(o) (G_TYPE_CHECK_INSTANCE_TYPE((o), SP_TYPE_LPE_ITEM))
-#define SP_IS_LPE_ITEM_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_LPE_ITEM))
+#define SP_LPE_ITEM(obj) (dynamic_cast<SPLPEItem*>((SPObject*)obj))
+#define SP_IS_LPE_ITEM(obj) (dynamic_cast<const SPLPEItem*>((SPObject*)obj) != NULL)
 
+class CLPEItem;
 class LivePathEffectObject;
 class SPCurve;
 class SPDesktop;
@@ -42,6 +40,9 @@ typedef std::list<Inkscape::LivePathEffect::LPEObjectReference *> PathEffectList
 
 class SPLPEItem : public SPItem {
 public:
+	SPLPEItem();
+	virtual ~SPLPEItem();
+
     int path_effects_enabled;
 
     PathEffectList* path_effect_list;
@@ -52,15 +53,23 @@ public:
 
     void replacePathEffects( std::vector<LivePathEffectObject const *> const &old_lpeobjs,
                              std::vector<LivePathEffectObject const *> const &new_lpeobjs );
+
+
+	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
+	virtual void release();
+
+	virtual void set(unsigned int key, gchar const* value);
+
+	virtual void update(SPCtx* ctx, unsigned int flags);
+	virtual void modified(unsigned int flags);
+
+	virtual void child_added(Inkscape::XML::Node* child, Inkscape::XML::Node* ref);
+	virtual void remove_child(Inkscape::XML::Node* child);
+
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+
+	virtual void update_patheffect(bool write);
 };
-
-struct SPLPEItemClass {
-    SPItemClass parent_class;
-
-    void (* update_patheffect) (SPLPEItem *lpeitem, bool write);
-};
-
-GType sp_lpe_item_get_type();
 
 void sp_lpe_item_update_patheffect (SPLPEItem *lpeitem, bool wholetree, bool write);
 bool sp_lpe_item_perform_path_effect(SPLPEItem *lpeitem, SPCurve *curve);

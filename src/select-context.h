@@ -15,11 +15,8 @@
 #include "event-context.h"
 #include <gtk/gtk.h>
 
-#define SP_TYPE_SELECT_CONTEXT            (sp_select_context_get_type ())
-#define SP_SELECT_CONTEXT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_SELECT_CONTEXT, SPSelectContext))
-#define SP_SELECT_CONTEXT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_SELECT_CONTEXT, SPSelectContextClass))
-#define SP_IS_SELECT_CONTEXT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_SELECT_CONTEXT))
-#define SP_IS_SELECT_CONTEXT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_SELECT_CONTEXT))
+#define SP_SELECT_CONTEXT(obj) (dynamic_cast<SPSelectContext*>((SPEventContext*)obj))
+#define SP_IS_SELECT_CONTEXT(obj) (dynamic_cast<const SPSelectContext*>((const SPEventContext*)obj) != NULL)
 
 struct SPCanvasItem;
 
@@ -29,7 +26,11 @@ namespace Inkscape {
   class SelectionDescriber;
 }
 
-struct SPSelectContext : public SPEventContext {
+class SPSelectContext : public SPEventContext {
+public:
+	SPSelectContext();
+	virtual ~SPSelectContext();
+
 	guint dragging : 1;
 	guint moved : 1;
 	bool button_press_shift;
@@ -46,14 +47,19 @@ struct SPSelectContext : public SPEventContext {
 	SPCanvasItem *grabbed;
 	Inkscape::SelTrans *_seltrans;
 	Inkscape::SelectionDescriber *_describer;
+
+	static const std::string prefsPath;
+
+	virtual void setup();
+	virtual void set(const Inkscape::Preferences::Entry& val);
+	virtual bool root_handler(GdkEvent* event);
+	virtual bool item_handler(SPItem* item, GdkEvent* event);
+
+	virtual const std::string& getPrefsPath();
+
+private:
+	bool sp_select_context_abort();
+	void sp_select_context_cycle_through_items(Inkscape::Selection *selection, GdkEventScroll *scroll_event, bool shift_pressed);
 };
-
-struct SPSelectContextClass {
-	SPEventContextClass parent_class;
-};
-
-/* Standard Gtk function */
-
-GType sp_select_context_get_type (void);
 
 #endif

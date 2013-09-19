@@ -22,24 +22,22 @@
 #include <stddef.h>
 #include <sigc++/connection.h>
 
-#define SP_TYPE_SHAPE (sp_shape_get_type ())
-#define SP_SHAPE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_SHAPE, SPShape))
-#define SP_SHAPE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_SHAPE, SPShapeClass))
-#define SP_IS_SHAPE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_SHAPE))
-#define SP_IS_SHAPE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_SHAPE))
+#define SP_SHAPE(obj) (dynamic_cast<SPShape*>((SPObject*)obj))
+#define SP_IS_SHAPE(obj) (dynamic_cast<const SPShape*>((SPObject*)obj) != NULL)
 
 #define SP_SHAPE_WRITE_PATH (1 << 2)
 
 class SPDesktop;
 namespace Inkscape { class DrawingItem; }
-GType sp_shape_get_type (void) G_GNUC_CONST;
 
 /**
  * Base class for shapes, including <path> element
  */
 class SPShape : public SPLPEItem {
 public:
-    void setShape ();
+	SPShape();
+	virtual ~SPShape();
+
     SPCurve * getCurve () const;
     SPCurve * getCurveBeforeLPE () const;
     void setCurve (SPCurve *curve, unsigned int owner);
@@ -57,20 +55,25 @@ public:
     sigc::connection _release_connect [SP_MARKER_LOC_QTY];
     sigc::connection _modified_connect [SP_MARKER_LOC_QTY];
 
-private:
-    friend class SPShapeClass;	
+	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
+	virtual void release();
+	virtual void update(SPCtx* ctx, guint flags);
+	virtual void modified(unsigned int flags);
+
+	virtual void set(unsigned int key, gchar const* value);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+
+	virtual Geom::OptRect bbox(Geom::Affine const &transform, SPItem::BBoxType bboxtype);
+	virtual void print(SPPrintContext* ctx);
+
+	virtual Inkscape::DrawingItem* show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
+	virtual void hide(unsigned int key);
+
+	virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
+
+	virtual void set_shape();
 };
 
-class SPShapeClass {
-public:
-    SPLPEItemClass item_class;
-
-    /* Build bpath from extra shape attributes */
-    void (* set_shape) (SPShape *shape);
-
-private:
-    friend class SPShape;
-};
 
 void sp_shape_set_marker (SPObject *object, unsigned int key, const gchar *value);
 

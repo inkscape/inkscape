@@ -46,172 +46,117 @@
 
 using Inkscape::DocumentUndo;
 
-//static const double goldenratio = 1.61803398874989484820; // golden ratio
+#include "tool-factory.h"
 
-static void sp_rect_context_dispose(GObject *object);
+namespace {
+	SPEventContext* createRectContext() {
+		return new SPRectContext();
+	}
 
-static void sp_rect_context_setup(SPEventContext *ec);
-static void sp_rect_context_finish(SPEventContext *ec);
-static void sp_rect_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val);
-
-static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent *event);
-static gint sp_rect_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event);
-
-static void sp_rect_drag(SPRectContext &rc, Geom::Point const pt, guint state);
-static void sp_rect_finish(SPRectContext *rc);
-static void sp_rect_cancel(SPRectContext *rc);
-
-G_DEFINE_TYPE(SPRectContext, sp_rect_context, SP_TYPE_EVENT_CONTEXT);
-
-static void sp_rect_context_class_init(SPRectContextClass *klass)
-{
-    GObjectClass *object_class = (GObjectClass *) klass;
-    SPEventContextClass *event_context_class = (SPEventContextClass *) klass;
-
-    object_class->dispose = sp_rect_context_dispose;
-
-    event_context_class->setup = sp_rect_context_setup;
-    event_context_class->finish = sp_rect_context_finish;
-    event_context_class->set = sp_rect_context_set;
-    event_context_class->root_handler  = sp_rect_context_root_handler;
-    event_context_class->item_handler  = sp_rect_context_item_handler;
+	bool rectContextRegistered = ToolFactory::instance().registerObject("/tools/shapes/rect", createRectContext);
 }
 
-static void sp_rect_context_init(SPRectContext *rect_context)
-{
-    SPEventContext *event_context = SP_EVENT_CONTEXT(rect_context);
-
-    event_context->cursor_shape = cursor_rect_xpm;
-    event_context->hot_x = 4;
-    event_context->hot_y = 4;
-    event_context->xp = 0;
-    event_context->yp = 0;
-    event_context->tolerance = 0;
-    event_context->within_tolerance = false;
-    event_context->item_to_select = NULL;
-    event_context->tool_url = "/tools/shapes/rect";
-
-    rect_context->item = NULL;
-
-    rect_context->rx = 0.0;
-    rect_context->ry = 0.0;
-
-    new (&rect_context->sel_changed_connection) sigc::connection();
+const std::string& SPRectContext::getPrefsPath() {
+	return SPRectContext::prefsPath;
 }
 
-static void sp_rect_context_finish(SPEventContext *ec)
-{
-    SPRectContext *rc = SP_RECT_CONTEXT(ec);
-    SPDesktop *desktop = ec->desktop;
+const std::string SPRectContext::prefsPath = "/tools/shapes/rect";
 
-    sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), GDK_CURRENT_TIME);
-    sp_rect_finish(rc);
-    rc->sel_changed_connection.disconnect();
+SPRectContext::SPRectContext() : SPEventContext() {
+    this->cursor_shape = cursor_rect_xpm;
+    this->hot_x = 4;
+    this->hot_y = 4;
+    this->xp = 0;
+    this->yp = 0;
+    this->tolerance = 0;
+    this->within_tolerance = false;
+    this->item_to_select = NULL;
 
-    if (((SPEventContextClass *) sp_rect_context_parent_class)->finish) {
-        ((SPEventContextClass *) sp_rect_context_parent_class)->finish(ec);
-    }
+    this->rect = NULL;
+
+    this->rx = 0.0;
+    this->ry = 0.0;
 }
 
+void SPRectContext::finish() {
+    sp_canvas_item_ungrab(SP_CANVAS_ITEM(this->desktop->acetate), GDK_CURRENT_TIME);
+    
+    this->finishItem();
+    this->sel_changed_connection.disconnect();
 
-static void sp_rect_context_dispose(GObject *object)
-{
-    SPRectContext *rc = SP_RECT_CONTEXT(object);
-    SPEventContext *ec = SP_EVENT_CONTEXT(object);
+    SPEventContext::finish();
+}
 
-    ec->enableGrDrag(false);
+SPRectContext::~SPRectContext() {
+    this->enableGrDrag(false);
 
-    rc->sel_changed_connection.disconnect();
-    rc->sel_changed_connection.~connection();
+    this->sel_changed_connection.disconnect();
 
-    delete ec->shape_editor;
-    ec->shape_editor = NULL;
+    delete this->shape_editor;
+    this->shape_editor = NULL;
 
     /* fixme: This is necessary because we do not grab */
-    if (rc->item) {
-        sp_rect_finish(rc);
+    if (this->rect) {
+        this->finishItem();
     }
-
-    if (rc->_message_context) {
-        delete rc->_message_context;
-    }
-
-    G_OBJECT_CLASS(sp_rect_context_parent_class)->dispose(object);
 }
 
 /**
  * Callback that processes the "changed" signal on the selection;
  * destroys old and creates new knotholder.
  */
-static void sp_rect_context_selection_changed(Inkscape::Selection *selection, gpointer data)
-{
-    SPRectContext *rc = SP_RECT_CONTEXT(data);
-    SPEventContext *ec = SP_EVENT_CONTEXT(rc);
-
-    ec->shape_editor->unset_item(SH_KNOTHOLDER);
-    SPItem *item = selection->singleItem();
-    ec->shape_editor->set_item(item, SH_KNOTHOLDER);
+void SPRectContext::selection_changed(Inkscape::Selection* selection) {
+    this->shape_editor->unset_item(SH_KNOTHOLDER);
+    this->shape_editor->set_item(selection->singleItem(), SH_KNOTHOLDER);
 }
 
-static void sp_rect_context_setup(SPEventContext *ec)
-{
-    SPRectContext *rc = SP_RECT_CONTEXT(ec);
+void SPRectContext::setup() {
+    SPEventContext::setup();
 
-    if (((SPEventContextClass *) sp_rect_context_parent_class)->setup) {
-        ((SPEventContextClass *) sp_rect_context_parent_class)->setup(ec);
-    }
+    this->shape_editor = new ShapeEditor(this->desktop);
 
-    ec->shape_editor = new ShapeEditor(ec->desktop);
-
-    SPItem *item = sp_desktop_selection(ec->desktop)->singleItem();
+    SPItem *item = sp_desktop_selection(this->desktop)->singleItem();
     if (item) {
-        ec->shape_editor->set_item(item, SH_KNOTHOLDER);
+        this->shape_editor->set_item(item, SH_KNOTHOLDER);
     }
 
-    rc->sel_changed_connection.disconnect();
-    rc->sel_changed_connection = sp_desktop_selection(ec->desktop)->connectChanged(
-        sigc::bind(sigc::ptr_fun(&sp_rect_context_selection_changed), (gpointer)rc)
+    this->sel_changed_connection.disconnect();
+    this->sel_changed_connection = sp_desktop_selection(this->desktop)->connectChanged(
+    	sigc::mem_fun(this, &SPRectContext::selection_changed)
     );
 
-    sp_event_context_read(ec, "rx");
-    sp_event_context_read(ec, "ry");
+    sp_event_context_read(this, "rx");
+    sp_event_context_read(this, "ry");
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (prefs->getBool("/tools/shapes/selcue")) {
-        ec->enableSelectionCue();
+        this->enableSelectionCue();
     }
 
     if (prefs->getBool("/tools/shapes/gradientdrag")) {
-        ec->enableGrDrag();
+        this->enableGrDrag();
     }
-
-    rc->_message_context = new Inkscape::MessageContext((ec->desktop)->messageStack());
 }
 
-static void sp_rect_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val)
-{
-    SPRectContext *rc = SP_RECT_CONTEXT(ec);
-
+void SPRectContext::set(const Inkscape::Preferences::Entry& val) {
     /* fixme: Proper error handling for non-numeric data.  Use a locale-independent function like
      * g_ascii_strtod (or a thin wrapper that does the right thing for invalid values inf/nan). */
-    Glib::ustring name = val->getEntryName();
+    Glib::ustring name = val.getEntryName();
+    
     if ( name == "rx" ) {
-        rc->rx = val->getDoubleLimited(); // prevents NaN and +/-Inf from messing up
+        this->rx = val.getDoubleLimited(); // prevents NaN and +/-Inf from messing up
     } else if ( name == "ry" ) {
-        rc->ry = val->getDoubleLimited();
+        this->ry = val.getDoubleLimited();
     }
 }
 
-static gint sp_rect_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event)
-{
-    SPDesktop *desktop = event_context->desktop;
-
+bool SPRectContext::item_handler(SPItem* item, GdkEvent* event) {
     gint ret = FALSE;
 
     switch (event->type) {
     case GDK_BUTTON_PRESS:
-        if ( event->button.button == 1 && !event_context->space_panning) {
-            Inkscape::setup_for_drag_start(desktop, event_context, event);
+        if ( event->button.button == 1 && !this->space_panning) {
+            Inkscape::setup_for_drag_start(desktop, this, event);
             ret = TRUE;
         }
         break;
@@ -220,52 +165,50 @@ static gint sp_rect_context_item_handler(SPEventContext *event_context, SPItem *
         break;
     }
 
-    if (((SPEventContextClass *) sp_rect_context_parent_class)->item_handler) {
-        ret = ((SPEventContextClass *) sp_rect_context_parent_class)->item_handler(event_context, item, event);
+    if (!ret) {
+    	ret = SPEventContext::item_handler(item, event);
     }
 
     return ret;
 }
 
-static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent *event)
-{
+bool SPRectContext::root_handler(GdkEvent* event) {
     static bool dragging;
 
-    SPDesktop *desktop = event_context->desktop;
+    SPDesktop *desktop = this->desktop;
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
 
-    SPRectContext *rc = SP_RECT_CONTEXT(event_context);
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
-    event_context->tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
+    this->tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
 
     gint ret = FALSE;
+    
     switch (event->type) {
     case GDK_BUTTON_PRESS:
-        if (event->button.button == 1 && !event_context->space_panning) {
-            Geom::Point const button_w(event->button.x,
-                                     event->button.y);
+        if (event->button.button == 1 && !this->space_panning) {
+            Geom::Point const button_w(event->button.x, event->button.y);
 
             // save drag origin
-            event_context->xp = (gint) button_w[Geom::X];
-            event_context->yp = (gint) button_w[Geom::Y];
-            event_context->within_tolerance = true;
+            this->xp = (gint) button_w[Geom::X];
+            this->yp = (gint) button_w[Geom::Y];
+            this->within_tolerance = true;
 
             // remember clicked item, disregarding groups, honoring Alt
-            event_context->item_to_select = sp_event_context_find_item (desktop, button_w, event->button.state & GDK_MOD1_MASK, TRUE);
+            this->item_to_select = sp_event_context_find_item (desktop, button_w, event->button.state & GDK_MOD1_MASK, TRUE);
 
             dragging = true;
 
             /* Position center */
             Geom::Point button_dt(desktop->w2d(button_w));
-            rc->center = button_dt;
+            this->center = button_dt;
 
             /* Snap center */
             SnapManager &m = desktop->namedview->snap_manager;
             m.setup(desktop);
             m.freeSnapReturnByRef(button_dt, Inkscape::SNAPSOURCE_NODE_HANDLE);
             m.unSetup();
-            rc->center = button_dt;
+            this->center = button_dt;
 
             sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                                 ( GDK_KEY_PRESS_MASK |
@@ -280,25 +223,25 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
         break;
     case GDK_MOTION_NOTIFY:
         if ( dragging
-             && (event->motion.state & GDK_BUTTON1_MASK) && !event_context->space_panning)
+             && (event->motion.state & GDK_BUTTON1_MASK) && !this->space_panning)
         {
-            if ( event_context->within_tolerance
-                 && ( abs( (gint) event->motion.x - event_context->xp ) < event_context->tolerance )
-                 && ( abs( (gint) event->motion.y - event_context->yp ) < event_context->tolerance ) ) {
+            if ( this->within_tolerance
+                 && ( abs( (gint) event->motion.x - this->xp ) < this->tolerance )
+                 && ( abs( (gint) event->motion.y - this->yp ) < this->tolerance ) ) {
                 break; // do not drag if we're within tolerance from origin
             }
             // Once the user has moved farther than tolerance from the original location
             // (indicating they intend to draw, not click), then always process the
             // motion notify coordinates as given (no snapping back to origin)
-            event_context->within_tolerance = false;
+            this->within_tolerance = false;
 
             Geom::Point const motion_w(event->motion.x, event->motion.y);
             Geom::Point motion_dt(desktop->w2d(motion_w));
 
-            sp_rect_drag(*rc, motion_dt, event->motion.state); // this will also handle the snapping
+            this->drag(motion_dt, event->motion.state); // this will also handle the snapping
             gobble_motion_events(GDK_BUTTON1_MASK);
             ret = TRUE;
-        } else if (!sp_event_context_knot_mouseover(rc)) {
+        } else if (!sp_event_context_knot_mouseover(this)) {
             SnapManager &m = desktop->namedview->snap_manager;
             m.setup(desktop);
 
@@ -310,27 +253,27 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
         }
         break;
     case GDK_BUTTON_RELEASE:
-        event_context->xp = event_context->yp = 0;
-        if (event->button.button == 1 && !event_context->space_panning) {
+        this->xp = this->yp = 0;
+        if (event->button.button == 1 && !this->space_panning) {
             dragging = false;
-            sp_event_context_discard_delayed_snap_event(event_context);
+            sp_event_context_discard_delayed_snap_event(this);
 
-            if (!event_context->within_tolerance) {
+            if (!this->within_tolerance) {
                 // we've been dragging, finish the rect
-                sp_rect_finish(rc);
-            } else if (event_context->item_to_select) {
+                this->finishItem();
+            } else if (this->item_to_select) {
                 // no dragging, select clicked item if any
                 if (event->button.state & GDK_SHIFT_MASK) {
-                    selection->toggle(event_context->item_to_select);
+                    selection->toggle(this->item_to_select);
                 } else {
-                    selection->set(event_context->item_to_select);
+                    selection->set(this->item_to_select);
                 }
             } else {
                 // click in an empty space
                 selection->clear();
             }
 
-            event_context->item_to_select = NULL;
+            this->item_to_select = NULL;
             ret = TRUE;
             sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate),
                                   event->button.time);
@@ -347,7 +290,7 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
         case GDK_KEY_Meta_L:  // Meta is when you press Shift+Alt (at least on my machine)
         case GDK_KEY_Meta_R:
             if (!dragging){
-                sp_event_show_modifier_tip (event_context->defaultMessageContext(), event,
+                sp_event_show_modifier_tip (this->defaultMessageContext(), event,
                                             _("<b>Ctrl</b>: make square or integer-ratio rect, lock a rounded corner circular"),
                                             _("<b>Shift</b>: draw around the starting point"),
                                             NULL);
@@ -381,9 +324,9 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
         case GDK_KEY_Escape:
             if (dragging) {
                 dragging = false;
-                sp_event_context_discard_delayed_snap_event(event_context);
+                sp_event_context_discard_delayed_snap_event(this);
                 // if drawing, cancel, otherwise pass it up for deselecting
-                sp_rect_cancel(rc);
+                this->cancel();
                 ret = TRUE;
             }
             break;
@@ -393,10 +336,11 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
                 sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate),
                                       event->button.time);
                 dragging = false;
-                sp_event_context_discard_delayed_snap_event(event_context);
-                if (!event_context->within_tolerance) {
+                sp_event_context_discard_delayed_snap_event(this);
+                
+                if (!this->within_tolerance) {
                     // we've been dragging, finish the rect
-                    sp_rect_finish(rc);
+                    this->finishItem();
                 }
                 // do not return true, so that space would work switching to selector
             }
@@ -405,7 +349,7 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
         case GDK_KEY_Delete:
         case GDK_KEY_KP_Delete:
         case GDK_KEY_BackSpace:
-            ret = event_context->deleteSelectedDrag(MOD__CTRL_ONLY(event));
+            ret = this->deleteSelectedDrag(MOD__CTRL_ONLY(event));
             break;
 
         default:
@@ -422,7 +366,7 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
         case GDK_KEY_Shift_R:
         case GDK_KEY_Meta_L:  // Meta is when you press Shift+Alt
         case GDK_KEY_Meta_R:
-            event_context->defaultMessageContext()->clear();
+            this->defaultMessageContext()->clear();
             break;
         default:
             break;
@@ -433,136 +377,135 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
     }
 
     if (!ret) {
-        if (((SPEventContextClass *) sp_rect_context_parent_class)->root_handler) {
-            ret = ((SPEventContextClass *) sp_rect_context_parent_class)->root_handler(event_context, event);
-        }
+    	ret = SPEventContext::root_handler(event);
     }
 
     return ret;
 }
 
-static void sp_rect_drag(SPRectContext &rc, Geom::Point const pt, guint state)
-{
-    SPDesktop *desktop = SP_EVENT_CONTEXT(&rc)->desktop;
+void SPRectContext::drag(Geom::Point const pt, guint state) {
+    SPDesktop *desktop = this->desktop;
 
-    if (!rc.item) {
-
-        if (Inkscape::have_viable_layer(desktop, rc._message_context) == false) {
+    if (!this->rect) {
+        if (Inkscape::have_viable_layer(desktop, this->message_context) == false) {
             return;
         }
 
         // Create object
-        Inkscape::XML::Document *xml_doc = SP_EVENT_CONTEXT_DOCUMENT(&rc)->getReprDoc();
+        Inkscape::XML::Document *xml_doc = this->desktop->doc()->getReprDoc();
         Inkscape::XML::Node *repr = xml_doc->createElement("svg:rect");
 
         // Set style
         sp_desktop_apply_style_tool (desktop, repr, "/tools/shapes/rect", false);
 
-        rc.item = (SPItem *) desktop->currentLayer()->appendChildRepr(repr);
+        this->rect = SP_RECT(desktop->currentLayer()->appendChildRepr(repr));
         Inkscape::GC::release(repr);
-        rc.item->transform = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
-        rc.item->updateRepr();
+
+        this->rect->transform = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
+        this->rect->updateRepr();
 
         desktop->canvas->forceFullRedrawAfterInterruptions(5);
     }
 
-    Geom::Rect const r = Inkscape::snap_rectangular_box(desktop, rc.item, pt, rc.center, state);
+    Geom::Rect const r = Inkscape::snap_rectangular_box(desktop, this->rect, pt, this->center, state);
 
-    sp_rect_position_set(SP_RECT(rc.item), r.min()[Geom::X], r.min()[Geom::Y], r.dimensions()[Geom::X], r.dimensions()[Geom::Y]);
-    if ( rc.rx != 0.0 ) {
-        sp_rect_set_rx (SP_RECT(rc.item), TRUE, rc.rx);
+    this->rect->setPosition(r.min()[Geom::X], r.min()[Geom::Y], r.dimensions()[Geom::X], r.dimensions()[Geom::Y]);
+
+    if (this->rx != 0.0) {
+    	this->rect->setRx(true, this->rx);
     }
-    if ( rc.ry != 0.0 ) {
-        if (rc.rx == 0.0)
-            sp_rect_set_ry (SP_RECT(rc.item), TRUE, CLAMP(rc.ry, 0, MIN(r.dimensions()[Geom::X], r.dimensions()[Geom::Y])/2));
+
+    if (this->ry != 0.0) {
+        if (this->rx == 0.0)
+        	this->rect->setRy(true, CLAMP(this->ry, 0, MIN(r.dimensions()[Geom::X], r.dimensions()[Geom::Y])/2));
         else
-            sp_rect_set_ry (SP_RECT(rc.item), TRUE, CLAMP(rc.ry, 0, r.dimensions()[Geom::Y]));
+        	this->rect->setRy(true, CLAMP(this->ry, 0, r.dimensions()[Geom::Y]));
     }
 
     // status text
     double rdimx = r.dimensions()[Geom::X];
     double rdimy = r.dimensions()[Geom::Y];
+
     Inkscape::Util::Quantity rdimx_q = Inkscape::Util::Quantity(rdimx, "px");
     Inkscape::Util::Quantity rdimy_q = Inkscape::Util::Quantity(rdimy, "px");
     GString *xs = g_string_new(rdimx_q.string(*desktop->namedview->doc_units).c_str());
     GString *ys = g_string_new(rdimy_q.string(*desktop->namedview->doc_units).c_str());
+
     if (state & GDK_CONTROL_MASK) {
         int ratio_x, ratio_y;
         bool is_golden_ratio = false;
+
         if (fabs (rdimx) > fabs (rdimy)) {
             if (fabs(rdimx / rdimy - goldenratio) < 1e-6) {
                 is_golden_ratio = true;
             }
+
             ratio_x = (int) rint (rdimx / rdimy);
             ratio_y = 1;
         } else {
             if (fabs(rdimy / rdimx - goldenratio) < 1e-6) {
                 is_golden_ratio = true;
             }
+
             ratio_x = 1;
             ratio_y = (int) rint (rdimy / rdimx);
         }
+
         if (!is_golden_ratio) {
-            rc._message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>Rectangle</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> to draw around the starting point"), xs->str, ys->str, ratio_x, ratio_y);
+            this->message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>Rectangle</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> to draw around the starting point"), xs->str, ys->str, ratio_x, ratio_y);
         } else {
             if (ratio_y == 1) {
-                rc._message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1.618 : 1); with <b>Shift</b> to draw around the starting point"), xs->str, ys->str);
+                this->message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1.618 : 1); with <b>Shift</b> to draw around the starting point"), xs->str, ys->str);
             } else {
-                rc._message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1 : 1.618); with <b>Shift</b> to draw around the starting point"), xs->str, ys->str);
+                this->message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1 : 1.618); with <b>Shift</b> to draw around the starting point"), xs->str, ys->str);
             }
         }
     } else {
-        rc._message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>Rectangle</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-ratio rectangle; with <b>Shift</b> to draw around the starting point"), xs->str, ys->str);
+        this->message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>Rectangle</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-ratio rectangle; with <b>Shift</b> to draw around the starting point"), xs->str, ys->str);
     }
+
     g_string_free(xs, FALSE);
     g_string_free(ys, FALSE);
 }
 
-static void sp_rect_finish(SPRectContext *rc)
-{
-    rc->_message_context->clear();
+void SPRectContext::finishItem() {
+    this->message_context->clear();
 
-    if ( rc->item != NULL ) {
-        SPRect *rect = SP_RECT(rc->item);
-        if (rect->width.computed == 0 || rect->height.computed == 0) {
-            sp_rect_cancel(rc); // Don't allow the creating of zero sized rectangle, for example when the start and and point snap to the snap grid point
+    if (this->rect != NULL) {
+        if (this->rect->width.computed == 0 || this->rect->height.computed == 0) {
+            this->cancel(); // Don't allow the creating of zero sized rectangle, for example when the start and and point snap to the snap grid point
             return;
         }
 
-        SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(rc);
+        this->rect->updateRepr();
 
-        SP_OBJECT(rc->item)->updateRepr();
+        this->desktop->canvas->endForcedFullRedraws();
 
-        desktop->canvas->endForcedFullRedraws();
+        sp_desktop_selection(this->desktop)->set(this->rect);
 
-        sp_desktop_selection(desktop)->set(rc->item);
-        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_RECT,
-                           _("Create rectangle"));
+        DocumentUndo::done(sp_desktop_document(this->desktop), SP_VERB_CONTEXT_RECT, _("Create rectangle"));
 
-        rc->item = NULL;
+        this->rect = NULL;
     }
 }
 
-static void sp_rect_cancel(SPRectContext *rc)
-{
-    SPDesktop *desktop = SP_EVENT_CONTEXT(rc)->desktop;
+void SPRectContext::cancel(){
+    sp_desktop_selection(this->desktop)->clear();
+    sp_canvas_item_ungrab(SP_CANVAS_ITEM(this->desktop->acetate), 0);
 
-    sp_desktop_selection(desktop)->clear();
-    sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), 0);
-
-    if (rc->item != NULL) {
-        SP_OBJECT(rc->item)->deleteObject();
-        rc->item = NULL;
+    if (this->rect != NULL) {
+        this->rect->deleteObject();
+        this->rect = NULL;
     }
 
-    rc->within_tolerance = false;
-    rc->xp = 0;
-    rc->yp = 0;
-    rc->item_to_select = NULL;
+    this->within_tolerance = false;
+    this->xp = 0;
+    this->yp = 0;
+    this->item_to_select = NULL;
 
-    desktop->canvas->endForcedFullRedraws();
+    this->desktop->canvas->endForcedFullRedraws();
 
-    DocumentUndo::cancel(sp_desktop_document(desktop));
+    DocumentUndo::cancel(sp_desktop_document(this->desktop));
 }
 
 

@@ -17,7 +17,7 @@ class SPDocument;
 
 namespace Inkscape {
 
-struct ColorProfile;
+class ColorProfile;
 
 class ProfileManager : public DocumentSubset,
                        public GC::Finalized

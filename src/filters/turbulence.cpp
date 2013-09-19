@@ -28,35 +28,26 @@
 #include "display/nr-filter.h"
 #include "display/nr-filter-turbulence.h"
 
-/* FeTurbulence base class */
-static void sp_feTurbulence_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
-static void sp_feTurbulence_release(SPObject *object);
-static void sp_feTurbulence_set(SPObject *object, unsigned int key, gchar const *value);
-static void sp_feTurbulence_update(SPObject *object, SPCtx *ctx, guint flags);
-static Inkscape::XML::Node *sp_feTurbulence_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
-static void sp_feTurbulence_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter);
+#include "sp-factory.h"
 
-G_DEFINE_TYPE(SPFeTurbulence, sp_feTurbulence, SP_TYPE_FILTER_PRIMITIVE);
+namespace {
+	SPObject* createTurbulence() {
+		return new SPFeTurbulence();
+	}
 
-static void
-sp_feTurbulence_class_init(SPFeTurbulenceClass *klass)
-{
-    SPObjectClass *sp_object_class = (SPObjectClass *)klass;
-    SPFilterPrimitiveClass * sp_primitive_class = (SPFilterPrimitiveClass *)klass;
-
-    sp_object_class->build = sp_feTurbulence_build;
-    sp_object_class->release = sp_feTurbulence_release;
-    sp_object_class->write = sp_feTurbulence_write;
-    sp_object_class->set = sp_feTurbulence_set;
-    sp_object_class->update = sp_feTurbulence_update;
-
-    sp_primitive_class->build_renderer = sp_feTurbulence_build_renderer;
+	bool turbulenceRegistered = SPFactory::instance().registerObject("svg:feTurbulence", createTurbulence);
 }
 
-static void
-sp_feTurbulence_init(SPFeTurbulence *feTurbulence)
-{
-    feTurbulence->updated=false;
+SPFeTurbulence::SPFeTurbulence() : SPFilterPrimitive() {
+	this->stitchTiles = 0;
+	this->seed = 0;
+	this->numOctaves = 0;
+	this->type = Inkscape::Filters::TURBULENCE_FRACTALNOISE;
+
+    this->updated=false;
+}
+
+SPFeTurbulence::~SPFeTurbulence() {
 }
 
 /**
@@ -64,66 +55,70 @@ sp_feTurbulence_init(SPFeTurbulence *feTurbulence)
  * our name must be associated with a repr via "sp_object_type_register".  Best done through
  * sp-object-repr.cpp's repr_name_entries array.
  */
-static void
-sp_feTurbulence_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
-{
-    if (((SPObjectClass *) sp_feTurbulence_parent_class)->build) {
-        ((SPObjectClass *) sp_feTurbulence_parent_class)->build(object, document, repr);
-    }
+void SPFeTurbulence::build(SPDocument *document, Inkscape::XML::Node *repr) {
+	SPFilterPrimitive::build(document, repr);
 
-    /*LOAD ATTRIBUTES FROM REPR HERE*/
-    object->readAttr( "baseFrequency" );
-    object->readAttr( "numOctaves" );
-    object->readAttr( "seed" );
-    object->readAttr( "stitchTiles" );
-    object->readAttr( "type" );
+	/*LOAD ATTRIBUTES FROM REPR HERE*/
+	this->readAttr( "baseFrequency" );
+	this->readAttr( "numOctaves" );
+	this->readAttr( "seed" );
+	this->readAttr( "stitchTiles" );
+	this->readAttr( "type" );
 }
 
 /**
  * Drops any allocated memory.
  */
-static void
-sp_feTurbulence_release(SPObject *object)
-{
-    if (((SPObjectClass *) sp_feTurbulence_parent_class)->release)
-        ((SPObjectClass *) sp_feTurbulence_parent_class)->release(object);
+void SPFeTurbulence::release() {
+	SPFilterPrimitive::release();
 }
 
 static bool sp_feTurbulence_read_stitchTiles(gchar const *value){
-    if (!value) return false; // 'noStitch' is default
+    if (!value) {
+    	return false; // 'noStitch' is default
+    }
+
     switch(value[0]){
         case 's':
-            if (strncmp(value, "stitch", 6) == 0) return true;
+            if (strncmp(value, "stitch", 6) == 0) {
+            	return true;
+            }
             break;
         case 'n':
-            if (strncmp(value, "noStitch", 8) == 0) return false;
+            if (strncmp(value, "noStitch", 8) == 0) {
+            	return false;
+            }
             break;
     }
+
     return false; // 'noStitch' is default
 }
 
 static Inkscape::Filters::FilterTurbulenceType sp_feTurbulence_read_type(gchar const *value){
-    if (!value) return Inkscape::Filters::TURBULENCE_TURBULENCE; // 'turbulence' is default
+    if (!value) {
+    	return Inkscape::Filters::TURBULENCE_TURBULENCE; // 'turbulence' is default
+    }
+
     switch(value[0]){
         case 'f':
-            if (strncmp(value, "fractalNoise", 12) == 0) return Inkscape::Filters::TURBULENCE_FRACTALNOISE;
+            if (strncmp(value, "fractalNoise", 12) == 0) {
+            	return Inkscape::Filters::TURBULENCE_FRACTALNOISE;
+            }
             break;
         case 't':
-            if (strncmp(value, "turbulence", 10) == 0) return Inkscape::Filters::TURBULENCE_TURBULENCE;
+            if (strncmp(value, "turbulence", 10) == 0) {
+            	return Inkscape::Filters::TURBULENCE_TURBULENCE;
+            }
             break;
     }
+
     return Inkscape::Filters::TURBULENCE_TURBULENCE; // 'turbulence' is default
 }
 
 /**
  * Sets a specific value in the SPFeTurbulence.
  */
-static void
-sp_feTurbulence_set(SPObject *object, unsigned int key, gchar const *value)
-{
-    SPFeTurbulence *feTurbulence = SP_FETURBULENCE(object);
-    (void)feTurbulence;
-
+void SPFeTurbulence::set(unsigned int key, gchar const *value) {
     int read_int;
     double read_num;
     bool read_bool;
@@ -131,61 +126,66 @@ sp_feTurbulence_set(SPObject *object, unsigned int key, gchar const *value)
 
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
-
         case SP_ATTR_BASEFREQUENCY:
-            feTurbulence->baseFrequency.set(value);
-                //From SVG spec: If two <number>s are provided, the first number represents a base frequency in the X direction and the second value represents a base frequency in the Y direction. If one number is provided, then that value is used for both X and Y.
-            if (feTurbulence->baseFrequency.optNumIsSet() == false)
-                feTurbulence->baseFrequency.setOptNumber(feTurbulence->baseFrequency.getNumber());
-            feTurbulence->updated = false;
-            object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->baseFrequency.set(value);
+
+            // From SVG spec: If two <number>s are provided, the first number represents
+            // a base frequency in the X direction and the second value represents a base
+            // frequency in the Y direction. If one number is provided, then that value is
+            // used for both X and Y.
+            if (this->baseFrequency.optNumIsSet() == false) {
+                this->baseFrequency.setOptNumber(this->baseFrequency.getNumber());
+            }
+
+            this->updated = false;
+            this->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_ATTR_NUMOCTAVES:
             read_int = value ? (int)floor(helperfns_read_number(value)) : 1;
-            if (read_int != feTurbulence->numOctaves){
-                feTurbulence->numOctaves = read_int;
-                feTurbulence->updated = false;
-                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+
+            if (read_int != this->numOctaves){
+                this->numOctaves = read_int;
+                this->updated = false;
+                this->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         case SP_ATTR_SEED:
             read_num = value ? helperfns_read_number(value) : 0;
-            if (read_num != feTurbulence->seed){
-                feTurbulence->seed = read_num;
-                feTurbulence->updated = false;
-                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+
+            if (read_num != this->seed){
+                this->seed = read_num;
+                this->updated = false;
+                this->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         case SP_ATTR_STITCHTILES:
             read_bool = sp_feTurbulence_read_stitchTiles(value);
-            if (read_bool != feTurbulence->stitchTiles){
-                feTurbulence->stitchTiles = read_bool;
-                feTurbulence->updated = false;
-                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+
+            if (read_bool != this->stitchTiles){
+                this->stitchTiles = read_bool;
+                this->updated = false;
+                this->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         case SP_ATTR_TYPE:
             read_type = sp_feTurbulence_read_type(value);
-            if (read_type != feTurbulence->type){
-                feTurbulence->type = read_type;
-                feTurbulence->updated = false;
-                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+
+            if (read_type != this->type){
+                this->type = read_type;
+                this->updated = false;
+                this->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         default:
-            if (((SPObjectClass *) sp_feTurbulence_parent_class)->set)
-                ((SPObjectClass *) sp_feTurbulence_parent_class)->set(object, key, value);
+        	SPFilterPrimitive::set(key, value);
             break;
     }
-
 }
 
 /**
  * Receives update notifications.
  */
-static void
-sp_feTurbulence_update(SPObject *object, SPCtx *ctx, guint flags)
-{
+void SPFeTurbulence::update(SPCtx *ctx, guint flags) {
     if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG |
                  SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
 
@@ -193,26 +193,20 @@ sp_feTurbulence_update(SPObject *object, SPCtx *ctx, guint flags)
 
     }
 
-    if (((SPObjectClass *) sp_feTurbulence_parent_class)->update) {
-        ((SPObjectClass *) sp_feTurbulence_parent_class)->update(object, ctx, flags);
-    }
+    SPFilterPrimitive::update(ctx, flags);
 }
 
 /**
  * Writes its settings to an incoming repr object, if any.
  */
-static Inkscape::XML::Node *
-sp_feTurbulence_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
-{
+Inkscape::XML::Node* SPFeTurbulence::write(Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags) {
     /* TODO: Don't just clone, but create a new repr node and write all
      * relevant values into it */
     if (!repr) {
-        repr = object->getRepr()->duplicate(doc);
+        repr = this->getRepr()->duplicate(doc);
     }
 
-    if (((SPObjectClass *) sp_feTurbulence_parent_class)->write) {
-        ((SPObjectClass *) sp_feTurbulence_parent_class)->write(object, doc, repr, flags);
-    }
+    SPFilterPrimitive::write(doc, repr, flags);
 
     /* turbulence doesn't take input */
     repr->setAttribute("in", 0);
@@ -220,26 +214,24 @@ sp_feTurbulence_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::
     return repr;
 }
 
-static void sp_feTurbulence_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter) {
-    g_assert(primitive != NULL);
+void SPFeTurbulence::build_renderer(Inkscape::Filters::Filter* filter) {
+    g_assert(this != NULL);
     g_assert(filter != NULL);
-
-    SPFeTurbulence *sp_turbulence = SP_FETURBULENCE(primitive);
 
     int primitive_n = filter->add_primitive(Inkscape::Filters::NR_FILTER_TURBULENCE);
     Inkscape::Filters::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
     Inkscape::Filters::FilterTurbulence *nr_turbulence = dynamic_cast<Inkscape::Filters::FilterTurbulence*>(nr_primitive);
     g_assert(nr_turbulence != NULL);
 
-    sp_filter_primitive_renderer_common(primitive, nr_primitive);
+    sp_filter_primitive_renderer_common(this, nr_primitive);
 
-    nr_turbulence->set_baseFrequency(0, sp_turbulence->baseFrequency.getNumber());
-    nr_turbulence->set_baseFrequency(1, sp_turbulence->baseFrequency.getOptNumber());
-    nr_turbulence->set_numOctaves(sp_turbulence->numOctaves);
-    nr_turbulence->set_seed(sp_turbulence->seed);
-    nr_turbulence->set_stitchTiles(sp_turbulence->stitchTiles);
-    nr_turbulence->set_type(sp_turbulence->type);
-    nr_turbulence->set_updated(sp_turbulence->updated);
+    nr_turbulence->set_baseFrequency(0, this->baseFrequency.getNumber());
+    nr_turbulence->set_baseFrequency(1, this->baseFrequency.getOptNumber());
+    nr_turbulence->set_numOctaves(this->numOctaves);
+    nr_turbulence->set_seed(this->seed);
+    nr_turbulence->set_stitchTiles(this->stitchTiles);
+    nr_turbulence->set_type(this->type);
+    nr_turbulence->set_updated(this->updated);
 }
 
 /*

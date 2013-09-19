@@ -16,33 +16,31 @@
 #include "sp-desc.h"
 #include "xml/repr.h"
 
-static Inkscape::XML::Node *sp_desc_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
+#include "sp-factory.h"
 
-G_DEFINE_TYPE(SPDesc, sp_desc, SP_TYPE_OBJECT);
+namespace {
+	SPObject* createDesc() {
+		return new SPDesc();
+	}
 
-static void sp_desc_class_init(SPDescClass *klass)
-{
-    SPObjectClass *sp_object_class = reinterpret_cast<SPObjectClass *>(klass);
-
-    sp_object_class->write = sp_desc_write;
+	bool descRegistered = SPFactory::instance().registerObject("svg:desc", createDesc);
 }
 
-static void sp_desc_init(SPDesc */*desc*/)
-{
+SPDesc::SPDesc() : SPObject() {
+}
+
+SPDesc::~SPDesc() {
 }
 
 /**
  * Writes it's settings to an incoming repr object, if any.
  */
-static Inkscape::XML::Node *sp_desc_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
-{
+Inkscape::XML::Node* SPDesc::write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags) {
     if (!repr) {
-        repr = object->getRepr()->duplicate(doc);
+        repr = this->getRepr()->duplicate(doc);
     }
 
-    if ((static_cast<SPObjectClass *>(sp_desc_parent_class))->write) {
-        (static_cast<SPObjectClass *>(sp_desc_parent_class))->write(object, doc, repr, flags);
-    }
+    SPObject::write(doc, repr, flags);
 
     return repr;
 }

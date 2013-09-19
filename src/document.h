@@ -33,8 +33,8 @@ class Router;
 
 class  SPItem;
 class  SPObject;
-struct SPGroup;
-struct SPRoot;
+class SPGroup;
+class SPRoot;
 
 namespace Inkscape {
     struct Application;
@@ -53,7 +53,7 @@ namespace Inkscape {
 
 class SPDefs;
 class SP3DBox;
-struct Persp3D;
+class Persp3D;
 class Persp3DImpl;
 class SPItemCtx;
 

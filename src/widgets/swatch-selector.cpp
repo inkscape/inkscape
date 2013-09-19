@@ -172,7 +172,7 @@ void SwatchSelector::setVector(SPDocument */*doc*/, SPGradient *vector)
     if ( vector && vector->isSolid() ) {
         SPStop* stop = vector->getFirstStop();
 
-        guint32 const colorVal = sp_stop_get_rgba32(stop);
+        guint32 const colorVal = stop->get_rgba32();
         _csel->base->setAlpha(SP_RGBA32_A_F(colorVal));
         SPColor color( SP_RGBA32_R_F(colorVal), SP_RGBA32_G_F(colorVal), SP_RGBA32_B_F(colorVal) );
         // set its color, from the stored array

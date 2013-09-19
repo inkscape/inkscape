@@ -17,7 +17,7 @@
 
 class SPDesktop;
 class SPDocument;
-struct SPEventContext;
+class SPEventContext;
 
 namespace Inkscape {
     class ActionContext;

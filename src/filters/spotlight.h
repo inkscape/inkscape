@@ -17,13 +17,13 @@
 
 #include "sp-object.h"
 
-#define SP_TYPE_FESPOTLIGHT (sp_fespotlight_get_type())
-#define SP_FESPOTLIGHT(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_FESPOTLIGHT, SPFeSpotLight))
-#define SP_FESPOTLIGHT_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_FESPOTLIGHT, SPFeSpotLightClass))
-#define SP_IS_FESPOTLIGHT(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_FESPOTLIGHT))
-#define SP_IS_FESPOTLIGHT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_FESPOTLIGHT))
+#define SP_FESPOTLIGHT(obj) (dynamic_cast<SPFeSpotLight*>((SPObject*)obj))
+#define SP_IS_FESPOTLIGHT(obj) (dynamic_cast<const SPFeSpotLight*>((SPObject*)obj) != NULL)
 
-struct SPFeSpotLight : public SPObject {
+class SPFeSpotLight : public SPObject {
+public:
+	SPFeSpotLight();
+	virtual ~SPFeSpotLight();
 
     /** x coordinate of the light source */
     gfloat x; 
@@ -50,14 +50,18 @@ struct SPFeSpotLight : public SPObject {
     gfloat limitingConeAngle;
     guint limitingConeAngle_set : 1;
     //other fields
+
+protected:
+	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
+	virtual void release();
+
+	virtual void set(unsigned int key, const gchar* value);
+
+	virtual void update(SPCtx* ctx, unsigned int flags);
+
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
 };
 
-struct SPFeSpotLightClass {
-    SPObjectClass parent_class;
-};
-
-GType
-sp_fespotlight_get_type();
 #endif /* !SP_FESPOTLIGHT_H_SEEN */
 
 /*

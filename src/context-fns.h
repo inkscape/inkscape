@@ -16,7 +16,7 @@
 
 class  SPDesktop;
 class  SPItem;
-struct SPEventContext;
+class SPEventContext;
 
 const double goldenratio = 1.61803398874989484820; // golden ratio
 

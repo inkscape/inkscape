@@ -50,50 +50,57 @@ using Inkscape::Util::unit_table;
 #define DEFAULTBORDERCOLOR 0x000000ff
 #define DEFAULTPAGECOLOR 0xffffff00
 
-static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
-static void sp_namedview_release(SPObject *object);
-static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *value);
-static void sp_namedview_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref);
-static void sp_namedview_remove_child(SPObject *object, Inkscape::XML::Node *child);
-static Inkscape::XML::Node *sp_namedview_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
-
 static void sp_namedview_setup_guides(SPNamedView * nv);
 static void sp_namedview_show_single_guide(SPGuide* guide, bool show);
 
 static gboolean sp_str_to_bool(const gchar *str);
 static gboolean sp_nv_read_opacity(const gchar *str, guint32 *color);
 
-G_DEFINE_TYPE(SPNamedView, sp_namedview, SP_TYPE_OBJECTGROUP);
+#include "sp-factory.h"
 
-static void sp_namedview_class_init(SPNamedViewClass * klass)
-{
-    SPObjectClass *sp_object_class = SP_OBJECT_CLASS(klass);
+namespace {
+	SPObject* createNamedView() {
+		return new SPNamedView();
+	}
 
-    sp_object_class->build = sp_namedview_build;
-    sp_object_class->release = sp_namedview_release;
-    sp_object_class->set = sp_namedview_set;
-    sp_object_class->child_added = sp_namedview_child_added;
-    sp_object_class->remove_child = sp_namedview_remove_child;
-    sp_object_class->write = sp_namedview_write;
+	bool namedViewRegistered = SPFactory::instance().registerObject("sodipodi:namedview", createNamedView);
 }
 
-static void sp_namedview_init(SPNamedView *nv)
-{
-    nv->editable = TRUE;
-    nv->showguides = TRUE;
-    nv->grids_visible = false;
-    nv->showborder = TRUE;
-    nv->showpageshadow = TRUE;
+SPNamedView::SPNamedView() : SPObjectGroup(), snap_manager(this) {
+	this->zoom = 0;
+	this->guidecolor = 0;
+	this->guidehicolor = 0;
+	this->views = NULL;
+	this->borderlayer = 0;
+	this->units = NULL;
+	this->window_x = 0;
+	this->cy = 0;
+	this->window_y = 0;
+	this->doc_units = NULL;
+	this->pagecolor = 0;
+	this->cx = 0;
+	this->pageshadow = 0;
+	this->window_width = 0;
+	this->window_height = 0;
+	this->window_maximized = 0;
+	this->bordercolor = 0;
 
-    nv->guides = NULL;
-    nv->viewcount = 0;
-    nv->grids = NULL;
+    this->editable = TRUE;
+    this->showguides = TRUE;
+    this->grids_visible = false;
+    this->showborder = TRUE;
+    this->showpageshadow = TRUE;
 
-    nv->default_layer_id = 0;
+    this->guides = NULL;
+    this->viewcount = 0;
+    this->grids = NULL;
 
-    nv->connector_spacing = defaultConnSpacing;
+    this->default_layer_id = 0;
 
-    new (&nv->snap_manager) SnapManager(nv);
+    this->connector_spacing = defaultConnSpacing;
+}
+
+SPNamedView::~SPNamedView() {
 }
 
 static void sp_namedview_generate_old_grid(SPNamedView * /*nv*/, SPDocument *document, Inkscape::XML::Node *repr) {
@@ -184,353 +191,353 @@ static void sp_namedview_generate_old_grid(SPNamedView * /*nv*/, SPDocument *doc
     }
 }
 
-static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
-{
-    SPNamedView *nv = (SPNamedView *) object;
-    SPObjectGroup *og = (SPObjectGroup *) object;
+void SPNamedView::build(SPDocument *document, Inkscape::XML::Node *repr) {
+    SPObjectGroup::build(document, repr);
 
-    if (((SPObjectClass *) (sp_namedview_parent_class))->build) {
-        (* ((SPObjectClass *) (sp_namedview_parent_class))->build)(object, document, repr);
-    }
-
-    object->readAttr( "inkscape:document-units" );
-    object->readAttr( "units" );
-    object->readAttr( "viewonly" );
-    object->readAttr( "showguides" );
-    object->readAttr( "showgrid" );
-    object->readAttr( "gridtolerance" );
-    object->readAttr( "guidetolerance" );
-    object->readAttr( "objecttolerance" );
-    object->readAttr( "guidecolor" );
-    object->readAttr( "guideopacity" );
-    object->readAttr( "guidehicolor" );
-    object->readAttr( "guidehiopacity" );
-    object->readAttr( "showborder" );
-    object->readAttr( "inkscape:showpageshadow" );
-    object->readAttr( "borderlayer" );
-    object->readAttr( "bordercolor" );
-    object->readAttr( "borderopacity" );
-    object->readAttr( "pagecolor" );
-    object->readAttr( "inkscape:pageopacity" );
-    object->readAttr( "inkscape:pageshadow" );
-    object->readAttr( "inkscape:zoom" );
-    object->readAttr( "inkscape:cx" );
-    object->readAttr( "inkscape:cy" );
-    object->readAttr( "inkscape:window-width" );
-    object->readAttr( "inkscape:window-height" );
-    object->readAttr( "inkscape:window-x" );
-    object->readAttr( "inkscape:window-y" );
-    object->readAttr( "inkscape:window-maximized" );
-    object->readAttr( "inkscape:snap-global" );
-    object->readAttr( "inkscape:snap-bbox" );
-    object->readAttr( "inkscape:snap-nodes" );
-    object->readAttr( "inkscape:snap-others" );
-    object->readAttr( "inkscape:snap-from-guide" );
-    object->readAttr( "inkscape:snap-center" );
-    object->readAttr( "inkscape:snap-smooth-nodes" );
-    object->readAttr( "inkscape:snap-midpoints" );
-    object->readAttr( "inkscape:snap-object-midpoints" );
-    object->readAttr( "inkscape:snap-text-baseline" );
-    object->readAttr( "inkscape:snap-bbox-edge-midpoints" );
-    object->readAttr( "inkscape:snap-bbox-midpoints" );
-    object->readAttr( "inkscape:snap-to-guides" );
-    object->readAttr( "inkscape:snap-grids" );
-    object->readAttr( "inkscape:snap-intersection-paths" );
-    object->readAttr( "inkscape:object-paths" );
-    object->readAttr( "inkscape:snap-perpendicular" );
-    object->readAttr( "inkscape:snap-tangential" );
-    object->readAttr( "inkscape:snap-path-clip" );
-    object->readAttr( "inkscape:snap-path-mask" );
-    object->readAttr( "inkscape:object-nodes" );
-    object->readAttr( "inkscape:bbox-paths" );
-    object->readAttr( "inkscape:bbox-nodes" );
-    object->readAttr( "inkscape:snap-page" );
-    object->readAttr( "inkscape:current-layer" );
-    object->readAttr( "inkscape:connector-spacing" );
+    this->readAttr( "inkscape:document-units" );
+    this->readAttr( "units" );
+    this->readAttr( "viewonly" );
+    this->readAttr( "showguides" );
+    this->readAttr( "showgrid" );
+    this->readAttr( "gridtolerance" );
+    this->readAttr( "guidetolerance" );
+    this->readAttr( "objecttolerance" );
+    this->readAttr( "guidecolor" );
+    this->readAttr( "guideopacity" );
+    this->readAttr( "guidehicolor" );
+    this->readAttr( "guidehiopacity" );
+    this->readAttr( "showborder" );
+    this->readAttr( "inkscape:showpageshadow" );
+    this->readAttr( "borderlayer" );
+    this->readAttr( "bordercolor" );
+    this->readAttr( "borderopacity" );
+    this->readAttr( "pagecolor" );
+    this->readAttr( "inkscape:pageopacity" );
+    this->readAttr( "inkscape:pageshadow" );
+    this->readAttr( "inkscape:zoom" );
+    this->readAttr( "inkscape:cx" );
+    this->readAttr( "inkscape:cy" );
+    this->readAttr( "inkscape:window-width" );
+    this->readAttr( "inkscape:window-height" );
+    this->readAttr( "inkscape:window-x" );
+    this->readAttr( "inkscape:window-y" );
+    this->readAttr( "inkscape:window-maximized" );
+    this->readAttr( "inkscape:snap-global" );
+    this->readAttr( "inkscape:snap-bbox" );
+    this->readAttr( "inkscape:snap-nodes" );
+    this->readAttr( "inkscape:snap-others" );
+    this->readAttr( "inkscape:snap-from-guide" );
+    this->readAttr( "inkscape:snap-center" );
+    this->readAttr( "inkscape:snap-smooth-nodes" );
+    this->readAttr( "inkscape:snap-midpoints" );
+    this->readAttr( "inkscape:snap-object-midpoints" );
+    this->readAttr( "inkscape:snap-text-baseline" );
+    this->readAttr( "inkscape:snap-bbox-edge-midpoints" );
+    this->readAttr( "inkscape:snap-bbox-midpoints" );
+    this->readAttr( "inkscape:snap-to-guides" );
+    this->readAttr( "inkscape:snap-grids" );
+    this->readAttr( "inkscape:snap-intersection-paths" );
+    this->readAttr( "inkscape:object-paths" );
+    this->readAttr( "inkscape:snap-perpendicular" );
+    this->readAttr( "inkscape:snap-tangential" );
+    this->readAttr( "inkscape:snap-path-clip" );
+    this->readAttr( "inkscape:snap-path-mask" );
+    this->readAttr( "inkscape:object-nodes" );
+    this->readAttr( "inkscape:bbox-paths" );
+    this->readAttr( "inkscape:bbox-nodes" );
+    this->readAttr( "inkscape:snap-page" );
+    this->readAttr( "inkscape:current-layer" );
+    this->readAttr( "inkscape:connector-spacing" );
 
     /* Construct guideline list */
-    for (SPObject *o = og->firstChild() ; o; o = o->getNext() ) {
+    for (SPObject *o = this->firstChild() ; o; o = o->getNext() ) {
         if (SP_IS_GUIDE(o)) {
             SPGuide * g = SP_GUIDE(o);
-            nv->guides = g_slist_prepend(nv->guides, g);
-            g_object_set(G_OBJECT(g), "color", nv->guidecolor, "hicolor", nv->guidehicolor, NULL);
+            this->guides = g_slist_prepend(this->guides, g);
+            //g_object_set(G_OBJECT(g), "color", nv->guidecolor, "hicolor", nv->guidehicolor, NULL);
+            g->setColor(this->guidecolor);
+            g->setHiColor(this->guidehicolor);
         }
     }
 
     // backwards compatibility with grid settings (pre 0.46)
-    sp_namedview_generate_old_grid(nv, document, repr);
+    sp_namedview_generate_old_grid(this, document, repr);
 }
 
-static void sp_namedview_release(SPObject *object)
-{
-    SPNamedView *namedview = (SPNamedView *) object;
-
-    if (namedview->guides) {
-        g_slist_free(namedview->guides);
-        namedview->guides = NULL;
+void SPNamedView::release() {
+    if (this->guides) {
+        g_slist_free(this->guides);
+        this->guides = NULL;
     }
 
     // delete grids:
-    while ( namedview->grids ) {
-        Inkscape::CanvasGrid *gr = (Inkscape::CanvasGrid *)namedview->grids->data; // get first entry
+    while ( this->grids ) {
+        Inkscape::CanvasGrid *gr = (Inkscape::CanvasGrid *)this->grids->data; // get first entry
         delete gr;
-        namedview->grids = g_slist_remove_link(namedview->grids, namedview->grids); // deletes first entry
+        this->grids = g_slist_remove_link(this->grids, this->grids); // deletes first entry
     }
 
-    if (((SPObjectClass *) sp_namedview_parent_class)->release) {
-        ((SPObjectClass *) sp_namedview_parent_class)->release(object);
-    }
-
-    namedview->snap_manager.~SnapManager();
+    SPObjectGroup::release();
 }
 
-static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *value)
-{
-    SPNamedView *nv = SP_NAMEDVIEW(object);
-
+void SPNamedView::set(unsigned int key, const gchar* value) {
     switch (key) {
     case SP_ATTR_VIEWONLY:
-            nv->editable = (!value);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->editable = (!value);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_SHOWGUIDES:
             if (!value) { // show guides if not specified, for backwards compatibility
-                nv->showguides = TRUE;
+                this->showguides = TRUE;
             } else {
-                nv->showguides = sp_str_to_bool(value);
+                this->showguides = sp_str_to_bool(value);
             }
-            sp_namedview_setup_guides(nv);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            sp_namedview_setup_guides(this);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_SHOWGRIDS:
             if (!value) { // don't show grids if not specified, for backwards compatibility
-                nv->grids_visible = false;
+                this->grids_visible = false;
             } else {
-                nv->grids_visible = sp_str_to_bool(value);
+                this->grids_visible = sp_str_to_bool(value);
             }
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_GRIDTOLERANCE:
-            nv->snap_manager.snapprefs.setGridTolerance(value ? g_ascii_strtod(value, NULL) : 10000);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->snap_manager.snapprefs.setGridTolerance(value ? g_ascii_strtod(value, NULL) : 10000);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_GUIDETOLERANCE:
-            nv->snap_manager.snapprefs.setGuideTolerance(value ? g_ascii_strtod(value, NULL) : 20);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->snap_manager.snapprefs.setGuideTolerance(value ? g_ascii_strtod(value, NULL) : 20);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_OBJECTTOLERANCE:
-            nv->snap_manager.snapprefs.setObjectTolerance(value ? g_ascii_strtod(value, NULL) : 20);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->snap_manager.snapprefs.setObjectTolerance(value ? g_ascii_strtod(value, NULL) : 20);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_GUIDECOLOR:
-            nv->guidecolor = (nv->guidecolor & 0xff) | (DEFAULTGUIDECOLOR & 0xffffff00);
+            this->guidecolor = (this->guidecolor & 0xff) | (DEFAULTGUIDECOLOR & 0xffffff00);
+
             if (value) {
-                nv->guidecolor = (nv->guidecolor & 0xff) | sp_svg_read_color(value, nv->guidecolor);
+                this->guidecolor = (this->guidecolor & 0xff) | sp_svg_read_color(value, this->guidecolor);
             }
-            for (GSList *l = nv->guides; l != NULL; l = l->next) {
-                g_object_set(G_OBJECT(l->data), "color", nv->guidecolor, NULL);
+
+            for (GSList *l = this->guides; l != NULL; l = l->next) {
+                //g_object_set(G_OBJECT(l->data), "color", nv->guidecolor, NULL);
+            	SP_GUIDE(l->data)->setColor(this->guidecolor);
             }
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_GUIDEOPACITY:
-            nv->guidecolor = (nv->guidecolor & 0xffffff00) | (DEFAULTGUIDECOLOR & 0xff);
-            sp_nv_read_opacity(value, &nv->guidecolor);
-            for (GSList *l = nv->guides; l != NULL; l = l->next) {
-                g_object_set(G_OBJECT(l->data), "color", nv->guidecolor, NULL);
+            this->guidecolor = (this->guidecolor & 0xffffff00) | (DEFAULTGUIDECOLOR & 0xff);
+            sp_nv_read_opacity(value, &this->guidecolor);
+
+            for (GSList *l = this->guides; l != NULL; l = l->next) {
+                //g_object_set(G_OBJECT(l->data), "color", nv->guidecolor, NULL);
+            	SP_GUIDE(l->data)->setColor(this->guidecolor);
             }
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_GUIDEHICOLOR:
-            nv->guidehicolor = (nv->guidehicolor & 0xff) | (DEFAULTGUIDEHICOLOR & 0xffffff00);
+            this->guidehicolor = (this->guidehicolor & 0xff) | (DEFAULTGUIDEHICOLOR & 0xffffff00);
+
             if (value) {
-                nv->guidehicolor = (nv->guidehicolor & 0xff) | sp_svg_read_color(value, nv->guidehicolor);
+                this->guidehicolor = (this->guidehicolor & 0xff) | sp_svg_read_color(value, this->guidehicolor);
             }
-            for (GSList *l = nv->guides; l != NULL; l = l->next) {
-                g_object_set(G_OBJECT(l->data), "hicolor", nv->guidehicolor, NULL);
+
+            for (GSList *l = this->guides; l != NULL; l = l->next) {
+                //g_object_set(G_OBJECT(l->data), "hicolor", nv->guidehicolor, NULL);
+            	SP_GUIDE(l->data)->setHiColor(this->guidehicolor);
             }
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_GUIDEHIOPACITY:
-            nv->guidehicolor = (nv->guidehicolor & 0xffffff00) | (DEFAULTGUIDEHICOLOR & 0xff);
-            sp_nv_read_opacity(value, &nv->guidehicolor);
-            for (GSList *l = nv->guides; l != NULL; l = l->next) {
-                g_object_set(G_OBJECT(l->data), "hicolor", nv->guidehicolor, NULL);
+            this->guidehicolor = (this->guidehicolor & 0xffffff00) | (DEFAULTGUIDEHICOLOR & 0xff);
+            sp_nv_read_opacity(value, &this->guidehicolor);
+
+            for (GSList *l = this->guides; l != NULL; l = l->next) {
+                //g_object_set(G_OBJECT(l->data), "hicolor", nv->guidehicolor, NULL);
+            	SP_GUIDE(l->data)->setHiColor(this->guidehicolor);
             }
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_SHOWBORDER:
-            nv->showborder = (value) ? sp_str_to_bool (value) : TRUE;
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->showborder = (value) ? sp_str_to_bool (value) : TRUE;
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_BORDERLAYER:
-            nv->borderlayer = SP_BORDER_LAYER_BOTTOM;
-            if (value && !strcasecmp(value, "true")) nv->borderlayer = SP_BORDER_LAYER_TOP;
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->borderlayer = SP_BORDER_LAYER_BOTTOM;
+            if (value && !strcasecmp(value, "true")) this->borderlayer = SP_BORDER_LAYER_TOP;
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_BORDERCOLOR:
-            nv->bordercolor = (nv->bordercolor & 0xff) | (DEFAULTBORDERCOLOR & 0xffffff00);
+            this->bordercolor = (this->bordercolor & 0xff) | (DEFAULTBORDERCOLOR & 0xffffff00);
             if (value) {
-                nv->bordercolor = (nv->bordercolor & 0xff) | sp_svg_read_color (value, nv->bordercolor);
+                this->bordercolor = (this->bordercolor & 0xff) | sp_svg_read_color (value, this->bordercolor);
             }
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_BORDEROPACITY:
-            nv->bordercolor = (nv->bordercolor & 0xffffff00) | (DEFAULTBORDERCOLOR & 0xff);
-            sp_nv_read_opacity(value, &nv->bordercolor);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->bordercolor = (this->bordercolor & 0xffffff00) | (DEFAULTBORDERCOLOR & 0xff);
+            sp_nv_read_opacity(value, &this->bordercolor);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_PAGECOLOR:
-            nv->pagecolor = (nv->pagecolor & 0xff) | (DEFAULTPAGECOLOR & 0xffffff00);
+            this->pagecolor = (this->pagecolor & 0xff) | (DEFAULTPAGECOLOR & 0xffffff00);
             if (value) {
-                nv->pagecolor = (nv->pagecolor & 0xff) | sp_svg_read_color(value, nv->pagecolor);
+                this->pagecolor = (this->pagecolor & 0xff) | sp_svg_read_color(value, this->pagecolor);
             }
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_PAGEOPACITY:
-            nv->pagecolor = (nv->pagecolor & 0xffffff00) | (DEFAULTPAGECOLOR & 0xff);
-            sp_nv_read_opacity(value, &nv->pagecolor);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->pagecolor = (this->pagecolor & 0xffffff00) | (DEFAULTPAGECOLOR & 0xff);
+            sp_nv_read_opacity(value, &this->pagecolor);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_PAGESHADOW:
-            nv->pageshadow = value? atoi(value) : 2; // 2 is the default
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->pageshadow = value? atoi(value) : 2; // 2 is the default
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_SHOWPAGESHADOW:
-            nv->showpageshadow = (value) ? sp_str_to_bool(value) : TRUE;
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->showpageshadow = (value) ? sp_str_to_bool(value) : TRUE;
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_ZOOM:
-            nv->zoom = value ? g_ascii_strtod(value, NULL) : 0; // zero means not set
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->zoom = value ? g_ascii_strtod(value, NULL) : 0; // zero means not set
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_CX:
-            nv->cx = value ? g_ascii_strtod(value, NULL) : HUGE_VAL; // HUGE_VAL means not set
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->cx = value ? g_ascii_strtod(value, NULL) : HUGE_VAL; // HUGE_VAL means not set
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_CY:
-            nv->cy = value ? g_ascii_strtod(value, NULL) : HUGE_VAL; // HUGE_VAL means not set
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->cy = value ? g_ascii_strtod(value, NULL) : HUGE_VAL; // HUGE_VAL means not set
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_WINDOW_WIDTH:
-            nv->window_width = value? atoi(value) : -1; // -1 means not set
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->window_width = value? atoi(value) : -1; // -1 means not set
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_WINDOW_HEIGHT:
-            nv->window_height = value ? atoi(value) : -1; // -1 means not set
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->window_height = value ? atoi(value) : -1; // -1 means not set
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_WINDOW_X:
-            nv->window_x = value ? atoi(value) : 0;
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->window_x = value ? atoi(value) : 0;
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_WINDOW_Y:
-            nv->window_y = value ? atoi(value) : 0;
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->window_y = value ? atoi(value) : 0;
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_WINDOW_MAXIMIZED:
-            nv->window_maximized = value ? atoi(value) : 0;
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->window_maximized = value ? atoi(value) : 0;
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_GLOBAL:
-            nv->snap_manager.snapprefs.setSnapEnabledGlobally(value ? sp_str_to_bool(value) : TRUE);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->snap_manager.snapprefs.setSnapEnabledGlobally(value ? sp_str_to_bool(value) : TRUE);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_BBOX:
-            nv->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_BBOX_CATEGORY, value ? sp_str_to_bool(value) : FALSE);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_BBOX_CATEGORY, value ? sp_str_to_bool(value) : FALSE);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_NODE:
-            nv->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_NODE_CATEGORY, value ? sp_str_to_bool(value) : TRUE);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_NODE_CATEGORY, value ? sp_str_to_bool(value) : TRUE);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_OTHERS:
-            nv->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_OTHERS_CATEGORY, value ? sp_str_to_bool(value) : TRUE);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_OTHERS_CATEGORY, value ? sp_str_to_bool(value) : TRUE);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_ROTATION_CENTER:
-            nv->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_ROTATION_CENTER, value ? sp_str_to_bool(value) : FALSE);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_ROTATION_CENTER, value ? sp_str_to_bool(value) : FALSE);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_GRID:
-            nv->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_GRID, value ? sp_str_to_bool(value) : TRUE);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_GRID, value ? sp_str_to_bool(value) : TRUE);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_GUIDE:
-            nv->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_GUIDE, value ? sp_str_to_bool(value) : TRUE);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_GUIDE, value ? sp_str_to_bool(value) : TRUE);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_NODE_SMOOTH:
-            nv->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_NODE_SMOOTH, value ? sp_str_to_bool(value) : FALSE);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_NODE_SMOOTH, value ? sp_str_to_bool(value) : FALSE);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_LINE_MIDPOINT:
-            nv->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_LINE_MIDPOINT, value ? sp_str_to_bool(value) : FALSE);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_LINE_MIDPOINT, value ? sp_str_to_bool(value) : FALSE);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_OBJECT_MIDPOINT:
-            nv->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_OBJECT_MIDPOINT, value ? sp_str_to_bool(value) : FALSE);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_OBJECT_MIDPOINT, value ? sp_str_to_bool(value) : FALSE);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_TEXT_BASELINE:
-            nv->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_TEXT_BASELINE, value ? sp_str_to_bool(value) : FALSE);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_TEXT_BASELINE, value ? sp_str_to_bool(value) : FALSE);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_BBOX_EDGE_MIDPOINT:
-            nv->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_BBOX_EDGE_MIDPOINT, value ? sp_str_to_bool(value) : FALSE);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_BBOX_EDGE_MIDPOINT, value ? sp_str_to_bool(value) : FALSE);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_BBOX_MIDPOINT:
-            nv->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_BBOX_MIDPOINT, value ? sp_str_to_bool(value) : FALSE);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_BBOX_MIDPOINT, value ? sp_str_to_bool(value) : FALSE);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_PATH_INTERSECTION:
-            nv->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_PATH_INTERSECTION, value ? sp_str_to_bool(value) : FALSE);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_PATH_INTERSECTION, value ? sp_str_to_bool(value) : FALSE);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_PATH:
-            nv->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_PATH, value ? sp_str_to_bool(value) : FALSE);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_PATH, value ? sp_str_to_bool(value) : FALSE);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_PERP:
-            nv->snap_manager.snapprefs.setSnapPerp(value ? sp_str_to_bool(value) : FALSE);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->snap_manager.snapprefs.setSnapPerp(value ? sp_str_to_bool(value) : FALSE);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_TANG:
-            nv->snap_manager.snapprefs.setSnapTang(value ? sp_str_to_bool(value) : FALSE);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->snap_manager.snapprefs.setSnapTang(value ? sp_str_to_bool(value) : FALSE);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_PATH_CLIP:
-            nv->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_PATH_CLIP, value ? sp_str_to_bool(value) : FALSE);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_PATH_CLIP, value ? sp_str_to_bool(value) : FALSE);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_PATH_MASK:
-            nv->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_PATH_MASK, value ? sp_str_to_bool(value) : FALSE);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_PATH_MASK, value ? sp_str_to_bool(value) : FALSE);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_NODE_CUSP:
-            nv->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_NODE_CUSP, value ? sp_str_to_bool(value) : FALSE);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_NODE_CUSP, value ? sp_str_to_bool(value) : FALSE);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_BBOX_EDGE:
-            nv->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_BBOX_EDGE, value ? sp_str_to_bool(value) : FALSE);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_BBOX_EDGE, value ? sp_str_to_bool(value) : FALSE);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_BBOX_CORNER:
-            nv->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_BBOX_CORNER, value ? sp_str_to_bool(value) : FALSE);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_BBOX_CORNER, value ? sp_str_to_bool(value) : FALSE);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_PAGE_BORDER:
-            nv->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_PAGE_BORDER, value ? sp_str_to_bool(value) : FALSE);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_PAGE_BORDER, value ? sp_str_to_bool(value) : FALSE);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_CURRENT_LAYER:
-            nv->default_layer_id = value ? g_quark_from_string(value) : 0;
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->default_layer_id = value ? g_quark_from_string(value) : 0;
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_CONNECTOR_SPACING:
-            nv->connector_spacing = value ? g_ascii_strtod(value, NULL) :
+            this->connector_spacing = value ? g_ascii_strtod(value, NULL) :
                     defaultConnSpacing;
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_DOCUMENT_UNITS: {
             /* The default unit if the document doesn't override this: e.g. for files saved as
@@ -570,8 +577,8 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
                     /* fixme: Don't use g_log (see above). */
                 }
             }
-            nv->doc_units = new_unit;
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->doc_units = new_unit;
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     }
     case SP_ATTR_UNITS: {
@@ -594,14 +601,12 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
                     /* fixme: Don't use g_log (see above). */
                 }
             }
-            nv->units = new_unit;
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->units = new_unit;
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     }
     default:
-            if (((SPObjectClass *) (sp_namedview_parent_class))->set) {
-                ((SPObjectClass *) (sp_namedview_parent_class))->set(object, key, value);
-            }
+            SPObjectGroup::set(key, value);
             break;
     }
 }
@@ -647,78 +652,77 @@ sp_namedview_add_grid(SPNamedView *nv, Inkscape::XML::Node *repr, SPDesktop *des
     return grid;
 }
 
-static void sp_namedview_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
-{
-    SPNamedView *nv = (SPNamedView *) object;
-
-    if (((SPObjectClass *) (sp_namedview_parent_class))->child_added) {
-        (* ((SPObjectClass *) (sp_namedview_parent_class))->child_added)(object, child, ref);
-    }
+void SPNamedView::child_added(Inkscape::XML::Node *child, Inkscape::XML::Node *ref) {
+    SPObjectGroup::child_added(child, ref);
 
     if (!strcmp(child->name(), "inkscape:grid")) {
-        sp_namedview_add_grid(nv, child, NULL);
+        sp_namedview_add_grid(this, child, NULL);
     } else {
-        SPObject *no = object->document->getObjectByRepr(child);
-        if ( !SP_IS_OBJECT(no) )
+        SPObject *no = this->document->getObjectByRepr(child);
+        if ( !SP_IS_OBJECT(no) ) {
             return;
+        }
 
         if (SP_IS_GUIDE(no)) {
             SPGuide *g = (SPGuide *) no;
-            nv->guides = g_slist_prepend(nv->guides, g);
-            g_object_set(G_OBJECT(g), "color", nv->guidecolor, "hicolor", nv->guidehicolor, NULL);
-            if (nv->editable) {
-                for (GSList *l = nv->views; l != NULL; l = l->next) {
+            this->guides = g_slist_prepend(this->guides, g);
+
+            //g_object_set(G_OBJECT(g), "color", this->guidecolor, "hicolor", this->guidehicolor, NULL);
+            g->setColor(this->guidecolor);
+            g->setHiColor(this->guidehicolor);
+
+            if (this->editable) {
+                for (GSList *l = this->views; l != NULL; l = l->next) {
                     g->SPGuide::showSPGuide(static_cast<SPDesktop*>(l->data)->guides, (GCallback) sp_dt_guide_event);
-                    if (static_cast<SPDesktop*>(l->data)->guides_active)
-                        g->sensitize(sp_desktop_canvas(static_cast<SPDesktop*> (l->data)),
-                                           TRUE);
-                    sp_namedview_show_single_guide(SP_GUIDE(g), nv->showguides);
+
+                    if (static_cast<SPDesktop*>(l->data)->guides_active) {
+                        g->sensitize(sp_desktop_canvas(static_cast<SPDesktop*> (l->data)), TRUE);
+                    }
+
+                    sp_namedview_show_single_guide(SP_GUIDE(g), this->showguides);
                 }
             }
         }
     }
 }
 
-static void sp_namedview_remove_child(SPObject *object, Inkscape::XML::Node *child)
-{
-    SPNamedView *nv = (SPNamedView *) object;
-
+void SPNamedView::remove_child(Inkscape::XML::Node *child) {
     if (!strcmp(child->name(), "inkscape:grid")) {
-        for ( GSList *iter = nv->grids ; iter ; iter = iter->next ) {
+        for ( GSList *iter = this->grids ; iter ; iter = iter->next ) {
             Inkscape::CanvasGrid *gr = (Inkscape::CanvasGrid *)iter->data;
+
             if ( gr->repr == child ) {
                 delete gr;
-                nv->grids = g_slist_remove_link(nv->grids, iter);
+                this->grids = g_slist_remove_link(this->grids, iter);
                 break;
             }
         }
     } else {
-        GSList **ref = &nv->guides;
-        for ( GSList *iter = nv->guides ; iter ; iter = iter->next ) {
+        GSList **ref = &this->guides;
+        for ( GSList *iter = this->guides ; iter ; iter = iter->next ) {
+
             if ( reinterpret_cast<SPObject *>(iter->data)->getRepr() == child ) {
                 *ref = iter->next;
                 iter->next = NULL;
                 g_slist_free_1(iter);
                 break;
             }
+
             ref = &iter->next;
         }
     }
 
-    if (((SPObjectClass *) (sp_namedview_parent_class))->remove_child) {
-        (* ((SPObjectClass *) (sp_namedview_parent_class))->remove_child)(object, child);
-    }
+    SPObjectGroup::remove_child(child);
 }
 
-static Inkscape::XML::Node *sp_namedview_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
-{
+Inkscape::XML::Node* SPNamedView::write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags) {
     if ( ( flags & SP_OBJECT_WRITE_EXT ) &&
-         repr != object->getRepr() )
+         repr != this->getRepr() )
     {
         if (repr) {
-            repr->mergeFrom(object->getRepr(), "id");
+            repr->mergeFrom(this->getRepr(), "id");
         } else {
-            repr = object->getRepr()->duplicate(doc);
+            repr = this->getRepr()->duplicate(xml_doc);
         }
     }
 

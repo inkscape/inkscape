@@ -24,34 +24,20 @@
 #include "display/nr-filter.h"
 #include "display/nr-filter-merge.h"
 
-/* FeMerge base class */
-static void sp_feMerge_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
-static void sp_feMerge_release(SPObject *object);
-static void sp_feMerge_set(SPObject *object, unsigned int key, gchar const *value);
-static void sp_feMerge_update(SPObject *object, SPCtx *ctx, guint flags);
-static Inkscape::XML::Node *sp_feMerge_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
-static void sp_feMerge_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter);
+#include "sp-factory.h"
 
-G_DEFINE_TYPE(SPFeMerge, sp_feMerge, SP_TYPE_FILTER_PRIMITIVE);
+namespace {
+	SPObject* createMerge() {
+		return new SPFeMerge();
+	}
 
-static void
-sp_feMerge_class_init(SPFeMergeClass *klass)
-{
-    SPObjectClass *sp_object_class = (SPObjectClass *)klass;
-    SPFilterPrimitiveClass *sp_primitive_class = (SPFilterPrimitiveClass *)klass;
-
-    sp_object_class->build = sp_feMerge_build;
-    sp_object_class->release = sp_feMerge_release;
-    sp_object_class->write = sp_feMerge_write;
-    sp_object_class->set = sp_feMerge_set;
-    sp_object_class->update = sp_feMerge_update;
-
-    sp_primitive_class->build_renderer = sp_feMerge_build_renderer;
+	bool mergeRegistered = SPFactory::instance().registerObject("svg:feMerge", createMerge);
 }
 
-static void
-sp_feMerge_init(SPFeMerge */*feMerge*/)
-{
+SPFeMerge::SPFeMerge() : SPFilterPrimitive() {
+}
+
+SPFeMerge::~SPFeMerge() {
 }
 
 /**
@@ -59,102 +45,77 @@ sp_feMerge_init(SPFeMerge */*feMerge*/)
  * our name must be associated with a repr via "sp_object_type_register".  Best done through
  * sp-object-repr.cpp's repr_name_entries array.
  */
-static void
-sp_feMerge_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
-{
-    if (((SPObjectClass *) sp_feMerge_parent_class)->build) {
-        ((SPObjectClass *) sp_feMerge_parent_class)->build(object, document, repr);
-    }
-
-    /*LOAD ATTRIBUTES FROM REPR HERE*/
+void SPFeMerge::build(SPDocument *document, Inkscape::XML::Node *repr) {
+	SPFilterPrimitive::build(document, repr);
 }
 
 /**
  * Drops any allocated memory.
  */
-static void
-sp_feMerge_release(SPObject *object)
-{
-    if (((SPObjectClass *) sp_feMerge_parent_class)->release)
-        ((SPObjectClass *) sp_feMerge_parent_class)->release(object);
+void SPFeMerge::release() {
+	SPFilterPrimitive::release();
 }
 
 /**
  * Sets a specific value in the SPFeMerge.
  */
-static void
-sp_feMerge_set(SPObject *object, unsigned int key, gchar const *value)
-{
-    SPFeMerge *feMerge = SP_FEMERGE(object);
-    (void)feMerge;
-
+void SPFeMerge::set(unsigned int key, gchar const *value) {
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
         default:
-            if (((SPObjectClass *) sp_feMerge_parent_class)->set)
-                ((SPObjectClass *) sp_feMerge_parent_class)->set(object, key, value);
+        	SPFilterPrimitive::set(key, value);
             break;
     }
-
 }
 
 /**
  * Receives update notifications.
  */
-static void
-sp_feMerge_update(SPObject *object, SPCtx *ctx, guint flags)
-{
+void SPFeMerge::update(SPCtx *ctx, guint flags) {
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
-        object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+        this->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
     }
 
-    if (((SPObjectClass *) sp_feMerge_parent_class)->update) {
-        ((SPObjectClass *) sp_feMerge_parent_class)->update(object, ctx, flags);
-    }
+    SPFilterPrimitive::update(ctx, flags);
 }
 
 /**
  * Writes its settings to an incoming repr object, if any.
  */
-static Inkscape::XML::Node *
-sp_feMerge_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
-{
+Inkscape::XML::Node* SPFeMerge::write(Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags) {
     /* TODO: Don't just clone, but create a new repr node and write all
      * relevant values into it. And child nodes, too! */
     if (!repr) {
-        repr = object->getRepr()->duplicate(doc);
+        repr = this->getRepr()->duplicate(doc);
     }
 
 
-    if (((SPObjectClass *) sp_feMerge_parent_class)->write) {
-        ((SPObjectClass *) sp_feMerge_parent_class)->write(object, doc, repr, flags);
-    }
+    SPFilterPrimitive::write(doc, repr, flags);
 
     return repr;
 }
 
-static void sp_feMerge_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter) {
-    g_assert(primitive != NULL);
+void SPFeMerge::build_renderer(Inkscape::Filters::Filter* filter) {
+    g_assert(this != NULL);
     g_assert(filter != NULL);
-
-    SPFeMerge *sp_merge = SP_FEMERGE(primitive);
-    (void)sp_merge;
 
     int primitive_n = filter->add_primitive(Inkscape::Filters::NR_FILTER_MERGE);
     Inkscape::Filters::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
     Inkscape::Filters::FilterMerge *nr_merge = dynamic_cast<Inkscape::Filters::FilterMerge*>(nr_primitive);
     g_assert(nr_merge != NULL);
 
-    sp_filter_primitive_renderer_common(primitive, nr_primitive);
+    sp_filter_primitive_renderer_common(this, nr_primitive);
 
-    SPObject *input = primitive->children;
+    SPObject *input = this->children;
     int in_nr = 0;
+
     while (input) {
         if (SP_IS_FEMERGENODE(input)) {
             SPFeMergeNode *node = SP_FEMERGENODE(input);
             nr_merge->set_input(in_nr, node->input);
             in_nr++;
         }
+
         input = input->next;
     }
 }

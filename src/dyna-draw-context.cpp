@@ -81,164 +81,129 @@ using Inkscape::DocumentUndo;
 
 #define DYNA_MIN_WIDTH 1.0e-6
 
-static void sp_dyna_draw_context_dispose(GObject *object);
-
-static void sp_dyna_draw_context_setup(SPEventContext *ec);
-static void sp_dyna_draw_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *value);
-static gint sp_dyna_draw_context_root_handler(SPEventContext *ec, GdkEvent *event);
-
-static void clear_current(SPDynaDrawContext *dc);
-static void set_to_accumulated(SPDynaDrawContext *dc, bool unionize, bool subtract);
 static void add_cap(SPCurve *curve, Geom::Point const &from, Geom::Point const &to, double rounding);
-static bool accumulate_calligraphic(SPDynaDrawContext *dc);
 
-static void fit_and_split(SPDynaDrawContext *ddc, gboolean release);
 
-static void sp_dyna_draw_reset(SPDynaDrawContext *ddc, Geom::Point p);
-static Geom::Point sp_dyna_draw_get_npoint(SPDynaDrawContext const *ddc, Geom::Point v);
-static Geom::Point sp_dyna_draw_get_vpoint(SPDynaDrawContext const *ddc, Geom::Point n);
-static void draw_temporary_box(SPDynaDrawContext *dc);
+#include "tool-factory.h"
 
-G_DEFINE_TYPE(SPDynaDrawContext, sp_dyna_draw_context, SP_TYPE_COMMON_CONTEXT);
+namespace {
+	SPEventContext* createCalligraphicContext() {
+		return new SPDynaDrawContext();
+	}
 
-static void
-sp_dyna_draw_context_class_init(SPDynaDrawContextClass *klass)
-{
-    GObjectClass *object_class = G_OBJECT_CLASS(klass);
-    SPEventContextClass *event_context_class = SP_EVENT_CONTEXT_CLASS(klass);
-
-    object_class->dispose = sp_dyna_draw_context_dispose;
-
-    event_context_class->setup = sp_dyna_draw_context_setup;
-    event_context_class->set = sp_dyna_draw_context_set;
-    event_context_class->root_handler = sp_dyna_draw_context_root_handler;
+	bool calligraphicContextRegistered = ToolFactory::instance().registerObject("/tools/calligraphic", createCalligraphicContext);
 }
 
-static void
-sp_dyna_draw_context_init(SPDynaDrawContext *ddc)
-{
-    ddc->cursor_shape = cursor_calligraphy_xpm;
-    ddc->hot_x = 4;
-    ddc->hot_y = 4;
-
-    ddc->vel_thin = 0.1;
-    ddc->flatness = 0.9;
-    ddc->cap_rounding = 0.0;
-
-    ddc->abs_width = false;
-    ddc->keep_selected = true;
-
-    ddc->hatch_spacing = 0;
-    ddc->hatch_spacing_step = 0;
-    new (&ddc->hatch_pointer_past) std::list<double>();
-    new (&ddc->hatch_nearest_past) std::list<double>();
-    new (&ddc->inertia_vectors) std::list<Geom::Point>();
-    new (&ddc->hatch_vectors) std::list<Geom::Point>();
-    ddc->hatch_last_nearest = Geom::Point(0,0);
-    ddc->hatch_last_pointer = Geom::Point(0,0);
-    ddc->hatch_escaped = false;
-    ddc->hatch_area = NULL;
-    ddc->hatch_item = NULL;
-    ddc->hatch_livarot_path = NULL;
-
-    ddc->trace_bg = false;
-    ddc->just_started_drawing = false;
+const std::string& SPDynaDrawContext::getPrefsPath() {
+	return SPDynaDrawContext::prefsPath;
 }
 
-static void
-sp_dyna_draw_context_dispose(GObject *object)
-{
-    SPDynaDrawContext *ddc = SP_DYNA_DRAW_CONTEXT(object);
 
-    if (ddc->hatch_area) {
-        sp_canvas_item_destroy(ddc->hatch_area);
-        ddc->hatch_area = NULL;
+const std::string SPDynaDrawContext::prefsPath = "/tools/calligraphic";
+
+SPDynaDrawContext::SPDynaDrawContext() : SPCommonContext() {
+    this->cursor_shape = cursor_calligraphy_xpm;
+    this->hot_x = 4;
+    this->hot_y = 4;
+
+    this->vel_thin = 0.1;
+    this->flatness = 0.9;
+    this->cap_rounding = 0.0;
+
+    this->abs_width = false;
+    this->keep_selected = true;
+
+    this->hatch_spacing = 0;
+    this->hatch_spacing_step = 0;
+
+    this->hatch_last_nearest = Geom::Point(0,0);
+    this->hatch_last_pointer = Geom::Point(0,0);
+    this->hatch_escaped = false;
+    this->hatch_area = NULL;
+    this->hatch_item = NULL;
+    this->hatch_livarot_path = NULL;
+
+    this->trace_bg = false;
+    this->just_started_drawing = false;
+}
+
+SPDynaDrawContext::~SPDynaDrawContext() {
+    if (this->hatch_area) {
+        sp_canvas_item_destroy(this->hatch_area);
+        this->hatch_area = NULL;
     }
-
-
-    G_OBJECT_CLASS(sp_dyna_draw_context_parent_class)->dispose(object);
-
-    ddc->hatch_pointer_past.~list();
-    ddc->hatch_nearest_past.~list();
-    ddc->inertia_vectors.~list();
-    ddc->hatch_vectors.~list();
 }
 
-static void
-sp_dyna_draw_context_setup(SPEventContext *ec)
-{
-    SPDynaDrawContext *ddc = SP_DYNA_DRAW_CONTEXT(ec);
+void SPDynaDrawContext::setup() {
+    SPCommonContext::setup();
 
-    if ((SP_EVENT_CONTEXT_CLASS(sp_dyna_draw_context_parent_class))->setup)
-        (SP_EVENT_CONTEXT_CLASS(sp_dyna_draw_context_parent_class))->setup(ec);
+    this->accumulated = new SPCurve();
+    this->currentcurve = new SPCurve();
 
-    ddc->accumulated = new SPCurve();
-    ddc->currentcurve = new SPCurve();
+    this->cal1 = new SPCurve();
+    this->cal2 = new SPCurve();
 
-    ddc->cal1 = new SPCurve();
-    ddc->cal2 = new SPCurve();
+    this->currentshape = sp_canvas_item_new(sp_desktop_sketch(this->desktop), SP_TYPE_CANVAS_BPATH, NULL);
+    sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(this->currentshape), DDC_RED_RGBA, SP_WIND_RULE_EVENODD);
+    sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(this->currentshape), 0x00000000, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
 
-    ddc->currentshape = sp_canvas_item_new(sp_desktop_sketch(ec->desktop), SP_TYPE_CANVAS_BPATH, NULL);
-    sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(ddc->currentshape), DDC_RED_RGBA, SP_WIND_RULE_EVENODD);
-    sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(ddc->currentshape), 0x00000000, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
     /* fixme: Cannot we cascade it to root more clearly? */
-    g_signal_connect(G_OBJECT(ddc->currentshape), "event", G_CALLBACK(sp_desktop_root_handler), ec->desktop);
+    g_signal_connect(G_OBJECT(this->currentshape), "event", G_CALLBACK(sp_desktop_root_handler), this->desktop);
 
     {
         /* TODO: this can be done either with an arcto, and should maybe also be put in a general file (other tools use this as well) */
         SPCurve *c = new SPCurve();
+
         const double C1 = 0.552;
+
         c->moveto(-1,0);
         c->curveto(-1, C1, -C1, 1, 0, 1 );
         c->curveto(C1, 1, 1, C1, 1, 0 );
         c->curveto(1, -C1, C1, -1, 0, -1 );
         c->curveto(-C1, -1, -1, -C1, -1, 0 );
         c->closepath();
-        ddc->hatch_area = sp_canvas_bpath_new(sp_desktop_controls(ec->desktop), c);
+
+        this->hatch_area = sp_canvas_bpath_new(sp_desktop_controls(this->desktop), c);
+
         c->unref();
-        sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(ddc->hatch_area), 0x00000000,(SPWindRule)0);
-        sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(ddc->hatch_area), 0x0000007f, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
-        sp_canvas_item_hide(ddc->hatch_area);
+
+        sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(this->hatch_area), 0x00000000,(SPWindRule)0);
+        sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(this->hatch_area), 0x0000007f, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
+        sp_canvas_item_hide(this->hatch_area);
     }
 
-    sp_event_context_read(ec, "mass");
-    sp_event_context_read(ec, "wiggle");
-    sp_event_context_read(ec, "angle");
-    sp_event_context_read(ec, "width");
-    sp_event_context_read(ec, "thinning");
-    sp_event_context_read(ec, "tremor");
-    sp_event_context_read(ec, "flatness");
-    sp_event_context_read(ec, "tracebackground");
-    sp_event_context_read(ec, "usepressure");
-    sp_event_context_read(ec, "usetilt");
-    sp_event_context_read(ec, "abs_width");
-    sp_event_context_read(ec, "keep_selected");
-    sp_event_context_read(ec, "cap_rounding");
+    sp_event_context_read(this, "mass");
+    sp_event_context_read(this, "wiggle");
+    sp_event_context_read(this, "angle");
+    sp_event_context_read(this, "width");
+    sp_event_context_read(this, "thinning");
+    sp_event_context_read(this, "tremor");
+    sp_event_context_read(this, "flatness");
+    sp_event_context_read(this, "tracebackground");
+    sp_event_context_read(this, "usepressure");
+    sp_event_context_read(this, "usetilt");
+    sp_event_context_read(this, "abs_width");
+    sp_event_context_read(this, "keep_selected");
+    sp_event_context_read(this, "cap_rounding");
 
-    ddc->is_drawing = false;
-    ddc->_message_context = new Inkscape::MessageContext((ec->desktop)->messageStack());
+    this->is_drawing = false;
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (prefs->getBool("/tools/calligraphic/selcue")) {
-        ec->enableSelectionCue();
+        this->enableSelectionCue();
     }
 }
 
-static void
-sp_dyna_draw_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val)
-{
-    SPDynaDrawContext *ddc = SP_DYNA_DRAW_CONTEXT(ec);
-    Glib::ustring path = val->getEntryName();
+void SPDynaDrawContext::set(const Inkscape::Preferences::Entry& val) {
+    Glib::ustring path = val.getEntryName();
 
     if (path == "tracebackground") {
-        ddc->trace_bg = val->getBool();
+        this->trace_bg = val.getBool();
     } else if (path == "keep_selected") {
-        ddc->keep_selected = val->getBool();
+        this->keep_selected = val.getBool();
     } else {
         //pass on up to parent class to handle common attributes.
-        if ( SP_COMMON_CONTEXT_CLASS(sp_dyna_draw_context_parent_class)->set ) {
-            SP_COMMON_CONTEXT_CLASS(sp_dyna_draw_context_parent_class)->set(ec, val);
-        }
+    	SPCommonContext::set(val);
     }
 
     //g_print("DDC: %g %g %g %g\n", ddc->mass, ddc->drag, ddc->angle, ddc->width);
@@ -250,66 +215,64 @@ flerp(double f0, double f1, double p)
     return f0 + ( f1 - f0 ) * p;
 }
 
-/* Get normalized point */
-static Geom::Point
-sp_dyna_draw_get_npoint(SPDynaDrawContext const *dc, Geom::Point v)
-{
-    Geom::Rect drect = SP_EVENT_CONTEXT(dc)->desktop->get_display_area();
-    double const max = MAX ( drect.dimensions()[Geom::X], drect.dimensions()[Geom::Y] );
-    return Geom::Point(( v[Geom::X] - drect.min()[Geom::X] ) / max,  ( v[Geom::Y] - drect.min()[Geom::Y] ) / max);
+///* Get normalized point */
+//Geom::Point SPDynaDrawContext::getNormalizedPoint(Geom::Point v) const {
+//    Geom::Rect drect = desktop->get_display_area();
+//
+//    double const max = MAX ( drect.dimensions()[Geom::X], drect.dimensions()[Geom::Y] );
+//
+//    return Geom::Point(( v[Geom::X] - drect.min()[Geom::X] ) / max,  ( v[Geom::Y] - drect.min()[Geom::Y] ) / max);
+//}
+//
+///* Get view point */
+//Geom::Point SPDynaDrawContext::getViewPoint(Geom::Point n) const {
+//    Geom::Rect drect = desktop->get_display_area();
+//
+//    double const max = MAX ( drect.dimensions()[Geom::X], drect.dimensions()[Geom::Y] );
+//
+//    return Geom::Point(n[Geom::X] * max + drect.min()[Geom::X], n[Geom::Y] * max + drect.min()[Geom::Y]);
+//}
+
+void SPDynaDrawContext::reset(Geom::Point p) {
+    this->last = this->cur = this->getNormalizedPoint(p);
+
+    this->vel = Geom::Point(0,0);
+    this->vel_max = 0;
+    this->acc = Geom::Point(0,0);
+    this->ang = Geom::Point(0,0);
+    this->del = Geom::Point(0,0);
 }
 
-/* Get view point */
-static Geom::Point
-sp_dyna_draw_get_vpoint(SPDynaDrawContext const *dc, Geom::Point n)
-{
-    Geom::Rect drect = SP_EVENT_CONTEXT(dc)->desktop->get_display_area();
-    double const max = MAX ( drect.dimensions()[Geom::X], drect.dimensions()[Geom::Y] );
-    return Geom::Point(n[Geom::X] * max + drect.min()[Geom::X], n[Geom::Y] * max + drect.min()[Geom::Y]);
-}
+void SPDynaDrawContext::extinput(GdkEvent *event) {
+    if (gdk_event_get_axis (event, GDK_AXIS_PRESSURE, &this->pressure)) {
+        this->pressure = CLAMP (this->pressure, DDC_MIN_PRESSURE, DDC_MAX_PRESSURE);
+    } else {
+        this->pressure = DDC_DEFAULT_PRESSURE;
+    }
 
-static void
-sp_dyna_draw_reset(SPDynaDrawContext *dc, Geom::Point p)
-{
-    dc->last = dc->cur = sp_dyna_draw_get_npoint(dc, p);
-    dc->vel = Geom::Point(0,0);
-    dc->vel_max = 0;
-    dc->acc = Geom::Point(0,0);
-    dc->ang = Geom::Point(0,0);
-    dc->del = Geom::Point(0,0);
-}
+    if (gdk_event_get_axis (event, GDK_AXIS_XTILT, &this->xtilt)) {
+        this->xtilt = CLAMP (this->xtilt, DDC_MIN_TILT, DDC_MAX_TILT);
+    } else {
+        this->xtilt = DDC_DEFAULT_TILT;
+    }
 
-static void
-sp_dyna_draw_extinput(SPDynaDrawContext *dc, GdkEvent *event)
-{
-    if (gdk_event_get_axis (event, GDK_AXIS_PRESSURE, &dc->pressure))
-        dc->pressure = CLAMP (dc->pressure, DDC_MIN_PRESSURE, DDC_MAX_PRESSURE);
-    else
-        dc->pressure = DDC_DEFAULT_PRESSURE;
-
-    if (gdk_event_get_axis (event, GDK_AXIS_XTILT, &dc->xtilt))
-        dc->xtilt = CLAMP (dc->xtilt, DDC_MIN_TILT, DDC_MAX_TILT);
-    else
-        dc->xtilt = DDC_DEFAULT_TILT;
-
-    if (gdk_event_get_axis (event, GDK_AXIS_YTILT, &dc->ytilt))
-        dc->ytilt = CLAMP (dc->ytilt, DDC_MIN_TILT, DDC_MAX_TILT);
-    else
-        dc->ytilt = DDC_DEFAULT_TILT;
+    if (gdk_event_get_axis (event, GDK_AXIS_YTILT, &this->ytilt)) {
+        this->ytilt = CLAMP (this->ytilt, DDC_MIN_TILT, DDC_MAX_TILT);
+    } else {
+        this->ytilt = DDC_DEFAULT_TILT;
+    }
 }
 
 
-static gboolean
-sp_dyna_draw_apply(SPDynaDrawContext *dc, Geom::Point p)
-{
-    Geom::Point n = sp_dyna_draw_get_npoint(dc, p);
+bool SPDynaDrawContext::apply(Geom::Point p) {
+    Geom::Point n = this->getNormalizedPoint(p);
 
     /* Calculate mass and drag */
-    double const mass = flerp(1.0, 160.0, dc->mass);
-    double const drag = flerp(0.0, 0.5, dc->drag * dc->drag);
+    double const mass = flerp(1.0, 160.0, this->mass);
+    double const drag = flerp(0.0, 0.5, this->drag * this->drag);
 
     /* Calculate force and acceleration */
-    Geom::Point force = n - dc->cur;
+    Geom::Point force = n - this->cur;
 
     // If force is below the absolute threshold DYNA_EPSILON,
     // or we haven't yet reached DYNA_VEL_START (i.e. at the beginning of stroke)
@@ -318,27 +281,27 @@ sp_dyna_draw_apply(SPDynaDrawContext *dc, Geom::Point p)
     // This prevents flips, blobs, and jerks caused by microscopic tremor of the tablet pen,
     // especially bothersome at the start of the stroke where we don't yet have the inertia to
     // smooth them out.
-    if ( Geom::L2(force) < DYNA_EPSILON || (dc->vel_max < DYNA_VEL_START && Geom::L2(force) < DYNA_EPSILON_START)) {
+    if ( Geom::L2(force) < DYNA_EPSILON || (this->vel_max < DYNA_VEL_START && Geom::L2(force) < DYNA_EPSILON_START)) {
         return FALSE;
     }
 
-    dc->acc = force / mass;
+    this->acc = force / mass;
 
     /* Calculate new velocity */
-    dc->vel += dc->acc;
+    this->vel += this->acc;
 
-    if (Geom::L2(dc->vel) > dc->vel_max)
-        dc->vel_max = Geom::L2(dc->vel);
+    if (Geom::L2(this->vel) > this->vel_max)
+        this->vel_max = Geom::L2(this->vel);
 
     /* Calculate angle of drawing tool */
 
     double a1;
-    if (dc->usetilt) {
+    if (this->usetilt) {
         // 1a. calculate nib angle from input device tilt:
-        gdouble length = std::sqrt(dc->xtilt*dc->xtilt + dc->ytilt*dc->ytilt);;
+        gdouble length = std::sqrt(this->xtilt*this->xtilt + this->ytilt*this->ytilt);;
 
         if (length > 0) {
-            Geom::Point ang1 = Geom::Point(dc->ytilt/length, dc->xtilt/length);
+            Geom::Point ang1 = Geom::Point(this->ytilt/length, this->xtilt/length);
             a1 = atan2(ang1);
         }
         else
@@ -346,17 +309,17 @@ sp_dyna_draw_apply(SPDynaDrawContext *dc, Geom::Point p)
     }
     else {
         // 1b. fixed dc->angle (absolutely flat nib):
-        double const radians = ( (dc->angle - 90) / 180.0 ) * M_PI;
+        double const radians = ( (this->angle - 90) / 180.0 ) * M_PI;
         Geom::Point ang1 = Geom::Point(-sin(radians),  cos(radians));
         a1 = atan2(ang1);
     }
 
     // 2. perpendicular to dc->vel (absolutely non-flat nib):
-    gdouble const mag_vel = Geom::L2(dc->vel);
+    gdouble const mag_vel = Geom::L2(this->vel);
     if ( mag_vel < DYNA_EPSILON ) {
         return FALSE;
     }
-    Geom::Point ang2 = Geom::rot90(dc->vel) / mag_vel;
+    Geom::Point ang2 = Geom::rot90(this->vel) / mag_vel;
 
     // 3. Average them using flatness parameter:
     // calculate angles
@@ -374,53 +337,51 @@ sp_dyna_draw_apply(SPDynaDrawContext *dc, Geom::Point p)
         a2 += 2*M_PI;
     // find the flatness-weighted bisector angle, unflip if a2 was flipped
     // FIXME: when dc->vel is oscillating around the fixed angle, the new_ang flips back and forth. How to avoid this?
-    double new_ang = a1 + (1 - dc->flatness) * (a2 - a1) - (flipped? M_PI : 0);
+    double new_ang = a1 + (1 - this->flatness) * (a2 - a1) - (flipped? M_PI : 0);
 
     // Try to detect a sudden flip when the new angle differs too much from the previous for the
     // current velocity; in that case discard this move
-    double angle_delta = Geom::L2(Geom::Point (cos (new_ang), sin (new_ang)) - dc->ang);
-    if ( angle_delta / Geom::L2(dc->vel) > 4000 ) {
+    double angle_delta = Geom::L2(Geom::Point (cos (new_ang), sin (new_ang)) - this->ang);
+    if ( angle_delta / Geom::L2(this->vel) > 4000 ) {
         return FALSE;
     }
 
     // convert to point
-    dc->ang = Geom::Point (cos (new_ang), sin (new_ang));
+    this->ang = Geom::Point (cos (new_ang), sin (new_ang));
 
 //    g_print ("force %g  acc %g  vel_max %g  vel %g  a1 %g  a2 %g  new_ang %g\n", Geom::L2(force), Geom::L2(dc->acc), dc->vel_max, Geom::L2(dc->vel), a1, a2, new_ang);
 
     /* Apply drag */
-    dc->vel *= 1.0 - drag;
+    this->vel *= 1.0 - drag;
 
     /* Update position */
-    dc->last = dc->cur;
-    dc->cur += dc->vel;
+    this->last = this->cur;
+    this->cur += this->vel;
 
     return TRUE;
 }
 
-static void
-sp_dyna_draw_brush(SPDynaDrawContext *dc)
-{
-    g_assert( dc->npoints >= 0 && dc->npoints < SAMPLING_SIZE );
+void SPDynaDrawContext::brush() {
+    g_assert( this->npoints >= 0 && this->npoints < SAMPLING_SIZE );
 
     // How much velocity thins strokestyle
-    double vel_thin = flerp (0, 160, dc->vel_thin);
+    double vel_thin = flerp (0, 160, this->vel_thin);
 
     // Influence of pressure on thickness
-    double pressure_thick = (dc->usepressure ? dc->pressure : 1.0);
+    double pressure_thick = (this->usepressure ? this->pressure : 1.0);
 
     // get the real brush point, not the same as pointer (affected by hatch tracking and/or mass
     // drag)
-    Geom::Point brush = sp_dyna_draw_get_vpoint(dc, dc->cur);
-    Geom::Point brush_w = SP_EVENT_CONTEXT(dc)->desktop->d2w(brush);
+    Geom::Point brush = this->getViewPoint(this->cur);
+    Geom::Point brush_w = SP_EVENT_CONTEXT(this)->desktop->d2w(brush);
 
     double trace_thick = 1;
-    if (dc->trace_bg) {
+    if (this->trace_bg) {
         // pick single pixel
         double R, G, B, A;
         Geom::IntRect area = Geom::IntRect::from_xywh(brush_w.floor(), Geom::IntPoint(1, 1));
         cairo_surface_t *s = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
-        sp_canvas_arena_render_surface(SP_CANVAS_ARENA(sp_desktop_drawing(SP_EVENT_CONTEXT(dc)->desktop)), s, area);
+        sp_canvas_arena_render_surface(SP_CANVAS_ARENA(sp_desktop_drawing(SP_EVENT_CONTEXT(this)->desktop)), s, area);
         ink_cairo_surface_average_color_premul(s, R, G, B, A);
         cairo_surface_destroy(s);
         double max = MAX (MAX (R, G), B);
@@ -430,10 +391,10 @@ sp_dyna_draw_brush(SPDynaDrawContext *dc)
         //g_print ("L %g thick %g\n", L, trace_thick);
     }
 
-    double width = (pressure_thick * trace_thick - vel_thin * Geom::L2(dc->vel)) * dc->width;
+    double width = (pressure_thick * trace_thick - vel_thin * Geom::L2(this->vel)) * this->width;
 
     double tremble_left = 0, tremble_right = 0;
-    if (dc->tremor > 0) {
+    if (this->tremor > 0) {
         // obtain two normally distributed random variables, using polar Box-Muller transform
         double x1, x2, w, y1, y2;
         do {
@@ -450,28 +411,28 @@ sp_dyna_draw_brush(SPDynaDrawContext *dc)
         // (2) deflection depends on width, but is upped for small widths for better visual uniformity across widths;
         // (3) deflection somewhat depends on speed, to prevent fast strokes looking
         // comparatively smooth and slow ones excessively jittery
-        tremble_left  = (y1)*dc->tremor * (0.15 + 0.8*width) * (0.35 + 14*Geom::L2(dc->vel));
-        tremble_right = (y2)*dc->tremor * (0.15 + 0.8*width) * (0.35 + 14*Geom::L2(dc->vel));
+        tremble_left  = (y1)*this->tremor * (0.15 + 0.8*width) * (0.35 + 14*Geom::L2(this->vel));
+        tremble_right = (y2)*this->tremor * (0.15 + 0.8*width) * (0.35 + 14*Geom::L2(this->vel));
     }
 
-    if ( width < 0.02 * dc->width ) {
-        width = 0.02 * dc->width;
+    if ( width < 0.02 * this->width ) {
+        width = 0.02 * this->width;
     }
 
     double dezoomify_factor = 0.05 * 1000;
-    if (!dc->abs_width) {
-        dezoomify_factor /= SP_EVENT_CONTEXT(dc)->desktop->current_zoom();
+    if (!this->abs_width) {
+        dezoomify_factor /= SP_EVENT_CONTEXT(this)->desktop->current_zoom();
     }
 
-    Geom::Point del_left = dezoomify_factor * (width + tremble_left) * dc->ang;
-    Geom::Point del_right = dezoomify_factor * (width + tremble_right) * dc->ang;
+    Geom::Point del_left = dezoomify_factor * (width + tremble_left) * this->ang;
+    Geom::Point del_right = dezoomify_factor * (width + tremble_right) * this->ang;
 
-    dc->point1[dc->npoints] = brush + del_left;
-    dc->point2[dc->npoints] = brush - del_right;
+    this->point1[this->npoints] = brush + del_left;
+    this->point2[this->npoints] = brush - del_right;
 
-    dc->del = 0.5*(del_left + del_right);
+    this->del = 0.5*(del_left + del_right);
 
-    dc->npoints++;
+    this->npoints++;
 }
 
 static void
@@ -480,53 +441,45 @@ sp_ddc_update_toolbox (SPDesktop *desktop, const gchar *id, double value)
     desktop->setToolboxAdjustmentValue (id, value);
 }
 
-static void
-calligraphic_cancel(SPDynaDrawContext *dc)
-{
-    SPDesktop *desktop = SP_EVENT_CONTEXT(dc)->desktop;
-    dc->dragging = FALSE;
-    dc->is_drawing = false;
+void SPDynaDrawContext::cancel() {
+    this->dragging = false;
+    this->is_drawing = false;
+
     sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), 0);
-            /* Remove all temporary line segments */
-            while (dc->segments) {
-                sp_canvas_item_destroy(SP_CANVAS_ITEM(dc->segments->data));
-                dc->segments = g_slist_remove(dc->segments, dc->segments->data);
-            }
-            /* reset accumulated curve */
-            dc->accumulated->reset();
-            clear_current(dc);
-            if (dc->repr) {
-                dc->repr = NULL;
-            }
+
+	/* Remove all temporary line segments */
+	while (this->segments) {
+		sp_canvas_item_destroy(SP_CANVAS_ITEM(this->segments->data));
+		this->segments = g_slist_remove(this->segments, this->segments->data);
+	}
+
+	/* reset accumulated curve */
+	this->accumulated->reset();
+	this->clear_current();
+
+	if (this->repr) {
+		this->repr = NULL;
+	}
 }
 
-
-gint
-sp_dyna_draw_context_root_handler(SPEventContext *event_context,
-                                  GdkEvent *event)
-{
-    SPDynaDrawContext *dc = SP_DYNA_DRAW_CONTEXT(event_context);
-    SPDesktop *desktop = event_context->desktop;
-
+bool SPDynaDrawContext::root_handler(GdkEvent* event) {
     gint ret = FALSE;
 
     switch (event->type) {
         case GDK_BUTTON_PRESS:
-            if (event->button.button == 1 && !event_context->space_panning) {
-
-                SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(dc);
-
-                if (Inkscape::have_viable_layer(desktop, dc->_message_context) == false) {
+            if (event->button.button == 1 && !this->space_panning) {
+                if (Inkscape::have_viable_layer(desktop, this->message_context) == false) {
                     return TRUE;
                 }
 
-                dc->accumulated->reset();
-                if (dc->repr) {
-                    dc->repr = NULL;
+                this->accumulated->reset();
+
+                if (this->repr) {
+                    this->repr = NULL;
                 }
 
                 /* initialize first point */
-                dc->npoints = 0;
+                this->npoints = 0;
 
                 sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                                     ( GDK_KEY_PRESS_MASK |
@@ -539,8 +492,8 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                 ret = TRUE;
 
                 desktop->canvas->forceFullRedrawAfterInterruptions(3);
-                dc->is_drawing = true;
-                dc->just_started_drawing = true;
+                this->is_drawing = true;
+                this->just_started_drawing = true;
             }
             break;
         case GDK_MOTION_NOTIFY:
@@ -548,9 +501,9 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
             Geom::Point const motion_w(event->motion.x,
                                      event->motion.y);
             Geom::Point motion_dt(desktop->w2d(motion_w));
-            sp_dyna_draw_extinput(dc, event);
+            this->extinput(event);
 
-            dc->_message_context->clear();
+            this->message_context->clear();
 
             // for hatching:
             double hatch_dist = 0;
@@ -566,12 +519,12 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                     // One item selected, and it's a path;
                     // let's try to track it as a guide
 
-                    if (selected != dc->hatch_item) {
-                        dc->hatch_item = selected;
-                        if (dc->hatch_livarot_path)
-                            delete dc->hatch_livarot_path;
-                        dc->hatch_livarot_path = Path_for_item (dc->hatch_item, true, true);
-                        dc->hatch_livarot_path->ConvertWithBackData(0.01);
+                    if (selected != this->hatch_item) {
+                        this->hatch_item = selected;
+                        if (this->hatch_livarot_path)
+                            delete this->hatch_livarot_path;
+                        this->hatch_livarot_path = Path_for_item (this->hatch_item, true, true);
+                        this->hatch_livarot_path->ConvertWithBackData(0.01);
                     }
 
                     // calculate pointer point in the guide item's coords
@@ -579,8 +532,8 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                     pointer = motion_dt * motion_to_curve;
 
                     // calculate the nearest point on the guide path
-                    boost::optional<Path::cut_position> position = get_nearest_position_on_Path(dc->hatch_livarot_path, pointer);
-                    nearest = get_point_on_Path(dc->hatch_livarot_path, position->piece, position->t);
+                    boost::optional<Path::cut_position> position = get_nearest_position_on_Path(this->hatch_livarot_path, pointer);
+                    nearest = get_point_on_Path(this->hatch_livarot_path, position->piece, position->t);
 
 
                     // distance from pointer to nearest
@@ -588,16 +541,16 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                     // unit-length vector
                     hatch_unit_vector = (pointer - nearest)/hatch_dist;
 
-                    dc->_message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Guide path selected</b>; start drawing along the guide with <b>Ctrl</b>"));
+                    this->message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Guide path selected</b>; start drawing along the guide with <b>Ctrl</b>"));
                 } else {
-                    dc->_message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Select a guide path</b> to track with <b>Ctrl</b>"));
+                    this->message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Select a guide path</b> to track with <b>Ctrl</b>"));
                 }
             }
 
-            if ( dc->is_drawing && (event->motion.state & GDK_BUTTON1_MASK) && !event_context->space_panning) {
-                dc->dragging = TRUE;
+            if ( this->is_drawing && (event->motion.state & GDK_BUTTON1_MASK) && !this->space_panning) {
+                this->dragging = TRUE;
 
-                if (event->motion.state & GDK_CONTROL_MASK && dc->hatch_item) { // hatching
+                if (event->motion.state & GDK_CONTROL_MASK && this->hatch_item) { // hatching
 
 #define HATCH_VECTOR_ELEMENTS 12
 #define INERTIA_ELEMENTS 24
@@ -619,33 +572,33 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                     // mass recommended; with zero mass, jerks are still quite noticeable).
 
                     double speed = 1;
-                    if (Geom::L2(dc->hatch_last_nearest) != 0) {
+                    if (Geom::L2(this->hatch_last_nearest) != 0) {
                         // the distance nearest moved since the last motion event
-                        double nearest_moved = Geom::L2(nearest - dc->hatch_last_nearest);
+                        double nearest_moved = Geom::L2(nearest - this->hatch_last_nearest);
                         // the distance pointer moved since the last motion event
-                        double pointer_moved = Geom::L2(pointer - dc->hatch_last_pointer);
+                        double pointer_moved = Geom::L2(pointer - this->hatch_last_pointer);
                         // store them in stacks limited to SPEED_ELEMENTS
-                        dc->hatch_nearest_past.push_front(nearest_moved);
-                        if (dc->hatch_nearest_past.size() > SPEED_ELEMENTS)
-                            dc->hatch_nearest_past.pop_back();
-                        dc->hatch_pointer_past.push_front(pointer_moved);
-                        if (dc->hatch_pointer_past.size() > SPEED_ELEMENTS)
-                            dc->hatch_pointer_past.pop_back();
+                        this->hatch_nearest_past.push_front(nearest_moved);
+                        if (this->hatch_nearest_past.size() > SPEED_ELEMENTS)
+                            this->hatch_nearest_past.pop_back();
+                        this->hatch_pointer_past.push_front(pointer_moved);
+                        if (this->hatch_pointer_past.size() > SPEED_ELEMENTS)
+                            this->hatch_pointer_past.pop_back();
 
                         // If the stacks are full,
-                        if (dc->hatch_nearest_past.size() == SPEED_ELEMENTS) {
+                        if (this->hatch_nearest_past.size() == SPEED_ELEMENTS) {
                             // calculate the sums of all stored movements
-                            double nearest_sum = std::accumulate (dc->hatch_nearest_past.begin(), dc->hatch_nearest_past.end(), 0.0);
-                            double pointer_sum = std::accumulate (dc->hatch_pointer_past.begin(), dc->hatch_pointer_past.end(), 0.0);
+                            double nearest_sum = std::accumulate (this->hatch_nearest_past.begin(), this->hatch_nearest_past.end(), 0.0);
+                            double pointer_sum = std::accumulate (this->hatch_pointer_past.begin(), this->hatch_pointer_past.end(), 0.0);
                             // and divide to get the speed
                             speed = nearest_sum/pointer_sum;
                             //g_print ("nearest sum %g  pointer_sum %g  speed %g\n", nearest_sum, pointer_sum, speed);
                         }
                     }
 
-                    if (   dc->hatch_escaped  // already escaped, do not reattach
+                    if (   this->hatch_escaped  // already escaped, do not reattach
                         || (speed < SPEED_MIN) // stuck; most likely reached end of traced stroke
-                        || (dc->hatch_spacing > 0 && hatch_dist > 50 * dc->hatch_spacing) // went too far from the guide
+                        || (this->hatch_spacing > 0 && hatch_dist > 50 * this->hatch_spacing) // went too far from the guide
                         ) {
                         // We are NOT attracted to the guide!
 
@@ -653,12 +606,12 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
 
                         // Remember hatch_escaped so we don't get
                         // attracted again until the end of this stroke
-                        dc->hatch_escaped = true;
+                        this->hatch_escaped = true;
 
-                        if (dc->inertia_vectors.size() >= INERTIA_ELEMENTS/2) { // move by inertia
-                            Geom::Point moved_past_escape = motion_dt - dc->inertia_vectors.front();
+                        if (this->inertia_vectors.size() >= INERTIA_ELEMENTS/2) { // move by inertia
+                            Geom::Point moved_past_escape = motion_dt - this->inertia_vectors.front();
                             Geom::Point inertia = 
-                                dc->inertia_vectors.front() - dc->inertia_vectors.back();
+                                this->inertia_vectors.front() - this->inertia_vectors.back();
 
                             double dot = Geom::dot (moved_past_escape, inertia);
                             dot /= Geom::L2(moved_past_escape) * Geom::L2(inertia);
@@ -666,7 +619,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                             if (dot > 0) { // mouse is still moving in approx the same direction
                                 Geom::Point should_have_moved = 
                                     (inertia) * (1/Geom::L2(inertia)) * Geom::L2(moved_past_escape);
-                                motion_dt = dc->inertia_vectors.front() + 
+                                motion_dt = this->inertia_vectors.front() + 
                                     (INERTIA_FORCE * should_have_moved + (1 - INERTIA_FORCE) * moved_past_escape);
                             }
                         }
@@ -677,19 +630,19 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                         // summed, to detect if we accidentally flipped to the other side of the
                         // guide
                         Geom::Point hatch_vector_accumulated = std::accumulate 
-                            (dc->hatch_vectors.begin(), dc->hatch_vectors.end(), Geom::Point(0,0));
+                            (this->hatch_vectors.begin(), this->hatch_vectors.end(), Geom::Point(0,0));
                         double dot = Geom::dot (pointer - nearest, hatch_vector_accumulated);
                         dot /= Geom::L2(pointer - nearest) * Geom::L2(hatch_vector_accumulated);
 
-                        if (dc->hatch_spacing != 0) { // spacing was already set
+                        if (this->hatch_spacing != 0) { // spacing was already set
                             double target;
                             if (speed > SPEED_NORMAL) {
                                 // all ok, strictly obey the spacing
-                                target = dc->hatch_spacing;
+                                target = this->hatch_spacing;
                             } else {
                                 // looks like we're starting to lose speed,
                                 // so _gradually_ let go attraction to prevent jerks
-                                target = (dc->hatch_spacing * speed + hatch_dist * (SPEED_NORMAL - speed))/SPEED_NORMAL;
+                                target = (this->hatch_spacing * speed + hatch_dist * (SPEED_NORMAL - speed))/SPEED_NORMAL;
                             }
                             if (!IS_NAN(dot) && dot < -0.5) {// flip
                                 target = -target;
@@ -700,91 +653,91 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
 
                             // some limited feedback: allow persistent pulling to slightly change
                             // the spacing
-                            dc->hatch_spacing += (hatch_dist - dc->hatch_spacing)/3500;
+                            this->hatch_spacing += (hatch_dist - this->hatch_spacing)/3500;
 
                             // return it to the desktop coords
                             motion_dt = new_pointer * motion_to_curve.inverse();
 
                             if (speed >= SPEED_NORMAL) {
-                                dc->inertia_vectors.push_front(motion_dt);
-                                if (dc->inertia_vectors.size() > INERTIA_ELEMENTS)
-                                    dc->inertia_vectors.pop_back();
+                                this->inertia_vectors.push_front(motion_dt);
+                                if (this->inertia_vectors.size() > INERTIA_ELEMENTS)
+                                    this->inertia_vectors.pop_back();
                             }
 
                         } else {
                             // this is the first motion event, set the dist
-                            dc->hatch_spacing = hatch_dist;
+                            this->hatch_spacing = hatch_dist;
                         }
 
                         // remember last points
-                        dc->hatch_last_pointer = pointer;
-                        dc->hatch_last_nearest = nearest;
+                        this->hatch_last_pointer = pointer;
+                        this->hatch_last_nearest = nearest;
 
-                        dc->hatch_vectors.push_front(pointer - nearest);
-                        if (dc->hatch_vectors.size() > HATCH_VECTOR_ELEMENTS)
-                            dc->hatch_vectors.pop_back();
+                        this->hatch_vectors.push_front(pointer - nearest);
+                        if (this->hatch_vectors.size() > HATCH_VECTOR_ELEMENTS)
+                            this->hatch_vectors.pop_back();
                     }
 
-                    dc->_message_context->set(Inkscape::NORMAL_MESSAGE, dc->hatch_escaped? _("Tracking: <b>connection to guide path lost!</b>") : _("<b>Tracking</b> a guide path"));
+                    this->message_context->set(Inkscape::NORMAL_MESSAGE, this->hatch_escaped? _("Tracking: <b>connection to guide path lost!</b>") : _("<b>Tracking</b> a guide path"));
 
                 } else {
-                    dc->_message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Drawing</b> a calligraphic stroke"));
+                    this->message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Drawing</b> a calligraphic stroke"));
                 }
 
-                if (dc->just_started_drawing) {
-                    dc->just_started_drawing = false;
-                    sp_dyna_draw_reset(dc, motion_dt);
+                if (this->just_started_drawing) {
+                    this->just_started_drawing = false;
+                    this->reset(motion_dt);
                 }
 
-                if (!sp_dyna_draw_apply(dc, motion_dt)) {
+                if (!this->apply(motion_dt)) {
                     ret = TRUE;
                     break;
                 }
 
-                if ( dc->cur != dc->last ) {
-                    sp_dyna_draw_brush(dc);
-                    g_assert( dc->npoints > 0 );
-                    fit_and_split(dc, FALSE);
+                if ( this->cur != this->last ) {
+                    this->brush();
+                    g_assert( this->npoints > 0 );
+                    this->fit_and_split(false);
                 }
                 ret = TRUE;
             }
 
             // Draw the hatching circle if necessary
             if (event->motion.state & GDK_CONTROL_MASK) {
-                if (dc->hatch_spacing == 0 && hatch_dist != 0) {
+                if (this->hatch_spacing == 0 && hatch_dist != 0) {
                     // Haven't set spacing yet: gray, center free, update radius live
                     Geom::Point c = desktop->w2d(motion_w);
                     Geom::Affine const sm (Geom::Scale(hatch_dist, hatch_dist) * Geom::Translate(c));
-                    sp_canvas_item_affine_absolute(dc->hatch_area, sm);
-                    sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->hatch_area), 0x7f7f7fff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
-                    sp_canvas_item_show(dc->hatch_area);
-                } else if (dc->dragging && !dc->hatch_escaped) {
+                    sp_canvas_item_affine_absolute(this->hatch_area, sm);
+                    sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(this->hatch_area), 0x7f7f7fff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
+                    sp_canvas_item_show(this->hatch_area);
+                } else if (this->dragging && !this->hatch_escaped) {
                     // Tracking: green, center snapped, fixed radius
                     Geom::Point c = motion_dt;
-                    Geom::Affine const sm (Geom::Scale(dc->hatch_spacing, dc->hatch_spacing) * Geom::Translate(c));
-                    sp_canvas_item_affine_absolute(dc->hatch_area, sm);
-                    sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->hatch_area), 0x00FF00ff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
-                    sp_canvas_item_show(dc->hatch_area);
-                } else if (dc->dragging && dc->hatch_escaped) {
+                    Geom::Affine const sm (Geom::Scale(this->hatch_spacing, this->hatch_spacing) * Geom::Translate(c));
+                    sp_canvas_item_affine_absolute(this->hatch_area, sm);
+                    sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(this->hatch_area), 0x00FF00ff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
+                    sp_canvas_item_show(this->hatch_area);
+                } else if (this->dragging && this->hatch_escaped) {
                     // Tracking escaped: red, center free, fixed radius
                     Geom::Point c = motion_dt;
-                    Geom::Affine const sm (Geom::Scale(dc->hatch_spacing, dc->hatch_spacing) * Geom::Translate(c));
+                    Geom::Affine const sm (Geom::Scale(this->hatch_spacing, this->hatch_spacing) * Geom::Translate(c));
 
-                    sp_canvas_item_affine_absolute(dc->hatch_area, sm);
-                    sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->hatch_area), 0xFF0000ff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
-                    sp_canvas_item_show(dc->hatch_area);
+                    sp_canvas_item_affine_absolute(this->hatch_area, sm);
+                    sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(this->hatch_area), 0xFF0000ff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
+                    sp_canvas_item_show(this->hatch_area);
                 } else {
                     // Not drawing but spacing set: gray, center snapped, fixed radius
-                    Geom::Point c = (nearest + dc->hatch_spacing * hatch_unit_vector) * motion_to_curve.inverse();
+                    Geom::Point c = (nearest + this->hatch_spacing * hatch_unit_vector) * motion_to_curve.inverse();
                     if (!IS_NAN(c[Geom::X]) && !IS_NAN(c[Geom::Y])) {
-                        Geom::Affine const sm (Geom::Scale(dc->hatch_spacing, dc->hatch_spacing) * Geom::Translate(c));
-                        sp_canvas_item_affine_absolute(dc->hatch_area, sm);
-                        sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->hatch_area), 0x7f7f7fff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
-                        sp_canvas_item_show(dc->hatch_area);
+                        Geom::Affine const sm (Geom::Scale(this->hatch_spacing, this->hatch_spacing) * Geom::Translate(c));
+                        sp_canvas_item_affine_absolute(this->hatch_area, sm);
+                        sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(this->hatch_area), 0x7f7f7fff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
+                        sp_canvas_item_show(this->hatch_area);
                     }
                 }
             } else {
-                sp_canvas_item_hide(dc->hatch_area);
+                sp_canvas_item_hide(this->hatch_area);
             }
         }
         break;
@@ -797,54 +750,54 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
 
         sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), event->button.time);
         desktop->canvas->endForcedFullRedraws();
-        dc->is_drawing = false;
+        this->is_drawing = false;
 
-        if (dc->dragging && event->button.button == 1 && !event_context->space_panning) {
-            dc->dragging = FALSE;
+        if (this->dragging && event->button.button == 1 && !this->space_panning) {
+            this->dragging = FALSE;
 
-            sp_dyna_draw_apply(dc, motion_dt);
+            this->apply(motion_dt);
 
             /* Remove all temporary line segments */
-            while (dc->segments) {
-                sp_canvas_item_destroy(SP_CANVAS_ITEM(dc->segments->data));
-                dc->segments = g_slist_remove(dc->segments, dc->segments->data);
+            while (this->segments) {
+                sp_canvas_item_destroy(SP_CANVAS_ITEM(this->segments->data));
+                this->segments = g_slist_remove(this->segments, this->segments->data);
             }
 
             /* Create object */
-            fit_and_split(dc, TRUE);
-            if (accumulate_calligraphic(dc))
-                set_to_accumulated(dc, event->button.state & GDK_SHIFT_MASK, event->button.state & GDK_MOD1_MASK); // performs document_done
+            this->fit_and_split(true);
+            if (this->accumulate())
+                this->set_to_accumulated(event->button.state & GDK_SHIFT_MASK, event->button.state & GDK_MOD1_MASK); // performs document_done
             else
                 g_warning ("Failed to create path: invalid data in dc->cal1 or dc->cal2");
 
             /* reset accumulated curve */
-            dc->accumulated->reset();
+            this->accumulated->reset();
 
-            clear_current(dc);
-            if (dc->repr) {
-                dc->repr = NULL;
+            this->clear_current();
+            if (this->repr) {
+                this->repr = NULL;
             }
 
-            if (!dc->hatch_pointer_past.empty()) dc->hatch_pointer_past.clear();
-            if (!dc->hatch_nearest_past.empty()) dc->hatch_nearest_past.clear();
-            if (!dc->inertia_vectors.empty()) dc->inertia_vectors.clear();
-            if (!dc->hatch_vectors.empty()) dc->hatch_vectors.clear();
-            dc->hatch_last_nearest = Geom::Point(0,0);
-            dc->hatch_last_pointer = Geom::Point(0,0);
-            dc->hatch_escaped = false;
-            dc->hatch_item = NULL;
-            dc->hatch_livarot_path = NULL;
-            dc->just_started_drawing = false;
+            if (!this->hatch_pointer_past.empty()) this->hatch_pointer_past.clear();
+            if (!this->hatch_nearest_past.empty()) this->hatch_nearest_past.clear();
+            if (!this->inertia_vectors.empty()) this->inertia_vectors.clear();
+            if (!this->hatch_vectors.empty()) this->hatch_vectors.clear();
+            this->hatch_last_nearest = Geom::Point(0,0);
+            this->hatch_last_pointer = Geom::Point(0,0);
+            this->hatch_escaped = false;
+            this->hatch_item = NULL;
+            this->hatch_livarot_path = NULL;
+            this->just_started_drawing = false;
 
-            if (dc->hatch_spacing != 0 && !dc->keep_selected) {
+            if (this->hatch_spacing != 0 && !this->keep_selected) {
                 // we do not select the newly drawn path, so increase spacing by step
-                if (dc->hatch_spacing_step == 0) {
-                    dc->hatch_spacing_step = dc->hatch_spacing;
+                if (this->hatch_spacing_step == 0) {
+                    this->hatch_spacing_step = this->hatch_spacing;
                 }
-                dc->hatch_spacing += dc->hatch_spacing_step;
+                this->hatch_spacing += this->hatch_spacing_step;
             }
 
-            dc->_message_context->clear();
+            this->message_context->clear();
             ret = TRUE;
         }
         break;
@@ -855,53 +808,53 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
         case GDK_KEY_Up:
         case GDK_KEY_KP_Up:
             if (!MOD__CTRL_ONLY(event)) {
-                dc->angle += 5.0;
-                if (dc->angle > 90.0)
-                    dc->angle = 90.0;
-                sp_ddc_update_toolbox (desktop, "calligraphy-angle", dc->angle);
+                this->angle += 5.0;
+                if (this->angle > 90.0)
+                    this->angle = 90.0;
+                sp_ddc_update_toolbox (desktop, "calligraphy-angle", this->angle);
                 ret = TRUE;
             }
             break;
         case GDK_KEY_Down:
         case GDK_KEY_KP_Down:
             if (!MOD__CTRL_ONLY(event)) {
-                dc->angle -= 5.0;
-                if (dc->angle < -90.0)
-                    dc->angle = -90.0;
-                sp_ddc_update_toolbox (desktop, "calligraphy-angle", dc->angle);
+                this->angle -= 5.0;
+                if (this->angle < -90.0)
+                    this->angle = -90.0;
+                sp_ddc_update_toolbox (desktop, "calligraphy-angle", this->angle);
                 ret = TRUE;
             }
             break;
         case GDK_KEY_Right:
         case GDK_KEY_KP_Right:
             if (!MOD__CTRL_ONLY(event)) {
-                dc->width += 0.01;
-                if (dc->width > 1.0)
-                    dc->width = 1.0;
-                sp_ddc_update_toolbox (desktop, "altx-calligraphy", dc->width * 100); // the same spinbutton is for alt+x
+                this->width += 0.01;
+                if (this->width > 1.0)
+                    this->width = 1.0;
+                sp_ddc_update_toolbox (desktop, "altx-calligraphy", this->width * 100); // the same spinbutton is for alt+x
                 ret = TRUE;
             }
             break;
         case GDK_KEY_Left:
         case GDK_KEY_KP_Left:
             if (!MOD__CTRL_ONLY(event)) {
-                dc->width -= 0.01;
-                if (dc->width < 0.01)
-                    dc->width = 0.01;
-                sp_ddc_update_toolbox (desktop, "altx-calligraphy", dc->width * 100);
+                this->width -= 0.01;
+                if (this->width < 0.01)
+                    this->width = 0.01;
+                sp_ddc_update_toolbox (desktop, "altx-calligraphy", this->width * 100);
                 ret = TRUE;
             }
             break;
         case GDK_KEY_Home:
         case GDK_KEY_KP_Home:
-            dc->width = 0.01;
-            sp_ddc_update_toolbox (desktop, "altx-calligraphy", dc->width * 100);
+            this->width = 0.01;
+            sp_ddc_update_toolbox (desktop, "altx-calligraphy", this->width * 100);
             ret = TRUE;
             break;
         case GDK_KEY_End:
         case GDK_KEY_KP_End:
-            dc->width = 1.0;
-            sp_ddc_update_toolbox (desktop, "altx-calligraphy", dc->width * 100);
+            this->width = 1.0;
+            sp_ddc_update_toolbox (desktop, "altx-calligraphy", this->width * 100);
             ret = TRUE;
             break;
         case GDK_KEY_x:
@@ -912,17 +865,17 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
             }
             break;
         case GDK_KEY_Escape:
-            if (dc->is_drawing) {
+            if (this->is_drawing) {
                 // if drawing, cancel, otherwise pass it up for deselecting
-                calligraphic_cancel (dc);
+                this->cancel();
                 ret = TRUE;
             }
             break;
         case GDK_KEY_z:
         case GDK_KEY_Z:
-            if (MOD__CTRL_ONLY(event) && dc->is_drawing) {
+            if (MOD__CTRL_ONLY(event) && this->is_drawing) {
                 // if drawing, cancel, otherwise pass it up for undo
-                calligraphic_cancel (dc);
+                this->cancel();
                 ret = TRUE;
             }
             break;
@@ -935,48 +888,44 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
         switch (get_group0_keyval(&event->key)) {
             case GDK_KEY_Control_L:
             case GDK_KEY_Control_R:
-                dc->_message_context->clear();
-                dc->hatch_spacing = 0;
-                dc->hatch_spacing_step = 0;
+                this->message_context->clear();
+                this->hatch_spacing = 0;
+                this->hatch_spacing_step = 0;
                 break;
             default:
                 break;
         }
+        break;
 
     default:
         break;
     }
 
     if (!ret) {
-        if ((SP_EVENT_CONTEXT_CLASS(sp_dyna_draw_context_parent_class))->root_handler) {
-            ret = (SP_EVENT_CONTEXT_CLASS(sp_dyna_draw_context_parent_class))->root_handler(event_context, event);
-        }
+//        if ((SP_EVENT_CONTEXT_CLASS(sp_dyna_draw_context_parent_class))->root_handler) {
+//            ret = (SP_EVENT_CONTEXT_CLASS(sp_dyna_draw_context_parent_class))->root_handler(event_context, event);
+//        }
+    	ret = SPCommonContext::root_handler(event);
     }
 
     return ret;
 }
 
 
-static void
-clear_current(SPDynaDrawContext *dc)
-{
+void SPDynaDrawContext::clear_current() {
     /* reset bpath */
-    sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(dc->currentshape), NULL);
+    sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->currentshape), NULL);
     /* reset curve */
-    dc->currentcurve->reset();
-    dc->cal1->reset();
-    dc->cal2->reset();
+    this->currentcurve->reset();
+    this->cal1->reset();
+    this->cal2->reset();
     /* reset points */
-    dc->npoints = 0;
+    this->npoints = 0;
 }
 
-static void
-set_to_accumulated(SPDynaDrawContext *dc, bool unionize, bool subtract)
-{
-    SPDesktop *desktop = SP_EVENT_CONTEXT(dc)->desktop;
-
-    if (!dc->accumulated->is_empty()) {
-        if (!dc->repr) {
+void SPDynaDrawContext::set_to_accumulated(bool unionize, bool subtract) {
+    if (!this->accumulated->is_empty()) {
+        if (!this->repr) {
             /* Create object */
             Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
             Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
@@ -984,36 +933,37 @@ set_to_accumulated(SPDynaDrawContext *dc, bool unionize, bool subtract)
             /* Set style */
             sp_desktop_apply_style_tool (desktop, repr, "/tools/calligraphic", false);
 
-            dc->repr = repr;
+            this->repr = repr;
 
-            SPItem *item=SP_ITEM(desktop->currentLayer()->appendChildRepr(dc->repr));
-            Inkscape::GC::release(dc->repr);
+            SPItem *item=SP_ITEM(desktop->currentLayer()->appendChildRepr(this->repr));
+            Inkscape::GC::release(this->repr);
             item->transform = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
             item->updateRepr();
         }
-        Geom::PathVector pathv = dc->accumulated->get_pathvector() * desktop->dt2doc();
+
+        Geom::PathVector pathv = this->accumulated->get_pathvector() * desktop->dt2doc();
         gchar *str = sp_svg_write_path(pathv);
         g_assert( str != NULL );
-        dc->repr->setAttribute("d", str);
+        this->repr->setAttribute("d", str);
         g_free(str);
 
         if (unionize) {
-            sp_desktop_selection(desktop)->add(dc->repr);
+            sp_desktop_selection(desktop)->add(this->repr);
             sp_selected_path_union_skip_undo(sp_desktop_selection(desktop), desktop);
         } else if (subtract) {
-            sp_desktop_selection(desktop)->add(dc->repr);
+            sp_desktop_selection(desktop)->add(this->repr);
             sp_selected_path_diff_skip_undo(sp_desktop_selection(desktop), desktop);
         } else {
-            if (dc->keep_selected) {
-                sp_desktop_selection(desktop)->set(dc->repr);
+            if (this->keep_selected) {
+                sp_desktop_selection(desktop)->set(this->repr);
             }
         }
-
     } else {
-        if (dc->repr) {
-            sp_repr_unparent(dc->repr);
+        if (this->repr) {
+            sp_repr_unparent(this->repr);
         }
-        dc->repr = NULL;
+
+        this->repr = NULL;
     }
 
     DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_CALLIGRAPHIC,
@@ -1035,54 +985,54 @@ add_cap(SPCurve *curve,
     }
 }
 
-static bool
-accumulate_calligraphic(SPDynaDrawContext *dc)
-{
-        if (
-            dc->cal1->is_empty() ||
-            dc->cal2->is_empty() ||
-            (dc->cal1->get_segment_count() <= 0) ||
-            dc->cal1->first_path()->closed()
-            ) {
-            dc->cal1->reset();
-            dc->cal2->reset();
-            return false; // failure
-        }
+bool SPDynaDrawContext::accumulate() {
+	if (
+		this->cal1->is_empty() ||
+		this->cal2->is_empty() ||
+		(this->cal1->get_segment_count() <= 0) ||
+		this->cal1->first_path()->closed()
+		) {
 
-        SPCurve *rev_cal2 = dc->cal2->create_reverse();
-        if (
-            (rev_cal2->get_segment_count() <= 0) ||
-            rev_cal2->first_path()->closed()
-            ) {
-            rev_cal2->unref();
-            dc->cal1->reset();
-            dc->cal2->reset();
-            return false; // failure
-        }
+		this->cal1->reset();
+		this->cal2->reset();
 
-        Geom::Curve const * dc_cal1_firstseg  = dc->cal1->first_segment();
-        Geom::Curve const * rev_cal2_firstseg = rev_cal2->first_segment();
-        Geom::Curve const * dc_cal1_lastseg   = dc->cal1->last_segment();
-        Geom::Curve const * rev_cal2_lastseg  = rev_cal2->last_segment();
+		return false; // failure
+	}
 
-        dc->accumulated->reset(); /*  Is this required ?? */
+	SPCurve *rev_cal2 = this->cal2->create_reverse();
 
-        dc->accumulated->append(dc->cal1, false);
+	if ((rev_cal2->get_segment_count() <= 0) || rev_cal2->first_path()->closed()) {
+		rev_cal2->unref();
 
-        add_cap(dc->accumulated, dc_cal1_lastseg->finalPoint(), rev_cal2_firstseg->initialPoint(), dc->cap_rounding);
+		this->cal1->reset();
+		this->cal2->reset();
 
-        dc->accumulated->append(rev_cal2, true);
+		return false; // failure
+	}
 
-        add_cap(dc->accumulated, rev_cal2_lastseg->finalPoint(), dc_cal1_firstseg->initialPoint(), dc->cap_rounding);
+	Geom::Curve const * dc_cal1_firstseg  = this->cal1->first_segment();
+	Geom::Curve const * rev_cal2_firstseg = rev_cal2->first_segment();
+	Geom::Curve const * dc_cal1_lastseg   = this->cal1->last_segment();
+	Geom::Curve const * rev_cal2_lastseg  = rev_cal2->last_segment();
 
-        dc->accumulated->closepath();
+	this->accumulated->reset(); /*  Is this required ?? */
 
-        rev_cal2->unref();
+	this->accumulated->append(this->cal1, false);
 
-        dc->cal1->reset();
-        dc->cal2->reset();
+	add_cap(this->accumulated, dc_cal1_lastseg->finalPoint(), rev_cal2_firstseg->initialPoint(), this->cap_rounding);
 
-        return true; // success
+	this->accumulated->append(rev_cal2, true);
+
+	add_cap(this->accumulated, rev_cal2_lastseg->finalPoint(), dc_cal1_firstseg->initialPoint(), this->cap_rounding);
+
+	this->accumulated->closepath();
+
+	rev_cal2->unref();
+
+	this->cal1->reset();
+	this->cal2->reset();
+
+	return true; // success
 }
 
 static double square(double const x)
@@ -1090,48 +1040,45 @@ static double square(double const x)
     return x * x;
 }
 
-static void
-fit_and_split(SPDynaDrawContext *dc, gboolean release)
-{
-    SPDesktop *desktop = SP_EVENT_CONTEXT(dc)->desktop;
-
+void SPDynaDrawContext::fit_and_split(bool release) {
     double const tolerance_sq = square( desktop->w2d().descrim() * TOLERANCE_CALLIGRAPHIC );
 
 #ifdef DYNA_DRAW_VERBOSE
     g_print("[F&S:R=%c]", release?'T':'F');
 #endif
 
-    if (!( dc->npoints > 0 && dc->npoints < SAMPLING_SIZE ))
+    if (!( this->npoints > 0 && this->npoints < SAMPLING_SIZE )) {
         return; // just clicked
+    }
 
-    if ( dc->npoints == SAMPLING_SIZE - 1 || release ) {
+    if ( this->npoints == SAMPLING_SIZE - 1 || release ) {
 #define BEZIER_SIZE       4
 #define BEZIER_MAX_BEZIERS  8
 #define BEZIER_MAX_LENGTH ( BEZIER_SIZE * BEZIER_MAX_BEZIERS )
 
 #ifdef DYNA_DRAW_VERBOSE
         g_print("[F&S:#] dc->npoints:%d, release:%s\n",
-                dc->npoints, release ? "TRUE" : "FALSE");
+                this->npoints, release ? "TRUE" : "FALSE");
 #endif
 
         /* Current calligraphic */
-        if ( dc->cal1->is_empty() || dc->cal2->is_empty() ) {
+        if ( this->cal1->is_empty() || this->cal2->is_empty() ) {
             /* dc->npoints > 0 */
             /* g_print("calligraphics(1|2) reset\n"); */
-            dc->cal1->reset();
-            dc->cal2->reset();
+            this->cal1->reset();
+            this->cal2->reset();
 
-            dc->cal1->moveto(dc->point1[0]);
-            dc->cal2->moveto(dc->point2[0]);
+            this->cal1->moveto(this->point1[0]);
+            this->cal2->moveto(this->point2[0]);
         }
 
         Geom::Point b1[BEZIER_MAX_LENGTH];
-        gint const nb1 = Geom::bezier_fit_cubic_r(b1, dc->point1, dc->npoints,
+        gint const nb1 = Geom::bezier_fit_cubic_r(b1, this->point1, this->npoints,
                                                tolerance_sq, BEZIER_MAX_BEZIERS);
         g_assert( nb1 * BEZIER_SIZE <= gint(G_N_ELEMENTS(b1)) );
 
         Geom::Point b2[BEZIER_MAX_LENGTH];
-        gint const nb2 = Geom::bezier_fit_cubic_r(b2, dc->point2, dc->npoints,
+        gint const nb2 = Geom::bezier_fit_cubic_r(b2, this->point2, this->npoints,
                                                tolerance_sq, BEZIER_MAX_BEZIERS);
         g_assert( nb2 * BEZIER_SIZE <= gint(G_N_ELEMENTS(b2)) );
 
@@ -1142,56 +1089,56 @@ fit_and_split(SPDynaDrawContext *dc, gboolean release)
 #endif
             /* CanvasShape */
             if (! release) {
-                dc->currentcurve->reset();
-                dc->currentcurve->moveto(b1[0]);
+                this->currentcurve->reset();
+                this->currentcurve->moveto(b1[0]);
                 for (Geom::Point *bp1 = b1; bp1 < b1 + BEZIER_SIZE * nb1; bp1 += BEZIER_SIZE) {
-                    dc->currentcurve->curveto(bp1[1], bp1[2], bp1[3]);
+                    this->currentcurve->curveto(bp1[1], bp1[2], bp1[3]);
                 }
-                dc->currentcurve->lineto(b2[BEZIER_SIZE*(nb2-1) + 3]);
+                this->currentcurve->lineto(b2[BEZIER_SIZE*(nb2-1) + 3]);
                 for (Geom::Point *bp2 = b2 + BEZIER_SIZE * ( nb2 - 1 ); bp2 >= b2; bp2 -= BEZIER_SIZE) {
-                    dc->currentcurve->curveto(bp2[2], bp2[1], bp2[0]);
+                    this->currentcurve->curveto(bp2[2], bp2[1], bp2[0]);
                 }
                 // FIXME: dc->segments is always NULL at this point??
-                if (!dc->segments) { // first segment
-                    add_cap(dc->currentcurve, b2[0], b1[0], dc->cap_rounding);
+                if (!this->segments) { // first segment
+                    add_cap(this->currentcurve, b2[0], b1[0], this->cap_rounding);
                 }
-                dc->currentcurve->closepath();
-                sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(dc->currentshape), dc->currentcurve);
+                this->currentcurve->closepath();
+                sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->currentshape), this->currentcurve);
             }
 
             /* Current calligraphic */
             for (Geom::Point *bp1 = b1; bp1 < b1 + BEZIER_SIZE * nb1; bp1 += BEZIER_SIZE) {
-                dc->cal1->curveto(bp1[1], bp1[2], bp1[3]);
+                this->cal1->curveto(bp1[1], bp1[2], bp1[3]);
             }
             for (Geom::Point *bp2 = b2; bp2 < b2 + BEZIER_SIZE * nb2; bp2 += BEZIER_SIZE) {
-                dc->cal2->curveto(bp2[1], bp2[2], bp2[3]);
+                this->cal2->curveto(bp2[1], bp2[2], bp2[3]);
             }
         } else {
             /* fixme: ??? */
 #ifdef DYNA_DRAW_VERBOSE
             g_print("[fit_and_split] failed to fit-cubic.\n");
 #endif
-            draw_temporary_box(dc);
+            this->draw_temporary_box();
 
-            for (gint i = 1; i < dc->npoints; i++) {
-                dc->cal1->lineto(dc->point1[i]);
+            for (gint i = 1; i < this->npoints; i++) {
+                this->cal1->lineto(this->point1[i]);
             }
-            for (gint i = 1; i < dc->npoints; i++) {
-                dc->cal2->lineto(dc->point2[i]);
+            for (gint i = 1; i < this->npoints; i++) {
+                this->cal2->lineto(this->point2[i]);
             }
         }
 
         /* Fit and draw and copy last point */
 #ifdef DYNA_DRAW_VERBOSE
-        g_print("[%d]Yup\n", dc->npoints);
+        g_print("[%d]Yup\n", this->npoints);
 #endif
         if (!release) {
-            g_assert(!dc->currentcurve->is_empty());
+            g_assert(!this->currentcurve->is_empty());
 
             SPCanvasItem *cbp = sp_canvas_item_new(sp_desktop_sketch(desktop),
                                                    SP_TYPE_CANVAS_BPATH,
                                                    NULL);
-            SPCurve *curve = dc->currentcurve->copy();
+            SPCurve *curve = this->currentcurve->copy();
             sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH (cbp), curve);
             curve->unref();
 
@@ -1207,36 +1154,36 @@ fit_and_split(SPDynaDrawContext *dc, gboolean release)
             /* fixme: Cannot we cascade it to root more clearly? */
             g_signal_connect(G_OBJECT(cbp), "event", G_CALLBACK(sp_desktop_root_handler), desktop);
 
-            dc->segments = g_slist_prepend(dc->segments, cbp);
+            this->segments = g_slist_prepend(this->segments, cbp);
         }
 
-        dc->point1[0] = dc->point1[dc->npoints - 1];
-        dc->point2[0] = dc->point2[dc->npoints - 1];
-        dc->npoints = 1;
+        this->point1[0] = this->point1[this->npoints - 1];
+        this->point2[0] = this->point2[this->npoints - 1];
+        this->npoints = 1;
     } else {
-        draw_temporary_box(dc);
+        this->draw_temporary_box();
     }
 }
 
-static void
-draw_temporary_box(SPDynaDrawContext *dc)
-{
-    dc->currentcurve->reset();
+void SPDynaDrawContext::draw_temporary_box() {
+    this->currentcurve->reset();
 
-    dc->currentcurve->moveto(dc->point2[dc->npoints-1]);
-    for (gint i = dc->npoints-2; i >= 0; i--) {
-        dc->currentcurve->lineto(dc->point2[i]);
-    }
-    for (gint i = 0; i < dc->npoints; i++) {
-        dc->currentcurve->lineto(dc->point1[i]);
+    this->currentcurve->moveto(this->point2[this->npoints-1]);
+
+    for (gint i = this->npoints-2; i >= 0; i--) {
+        this->currentcurve->lineto(this->point2[i]);
     }
 
-    if (dc->npoints >= 2) {
-        add_cap(dc->currentcurve, dc->point1[dc->npoints-1], dc->point2[dc->npoints-1], dc->cap_rounding);
+    for (gint i = 0; i < this->npoints; i++) {
+        this->currentcurve->lineto(this->point1[i]);
     }
 
-    dc->currentcurve->closepath();
-    sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(dc->currentshape), dc->currentcurve);
+    if (this->npoints >= 2) {
+        add_cap(this->currentcurve, this->point1[this->npoints-1], this->point2[this->npoints-1], this->cap_rounding);
+    }
+
+    this->currentcurve->closepath();
+    sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->currentshape), this->currentcurve);
 }
 
 /*

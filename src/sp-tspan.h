@@ -9,13 +9,8 @@
 #include "sp-item.h"
 #include "text-tag-attributes.h"
 
-G_BEGIN_DECLS
-
-#define SP_TYPE_TSPAN (sp_tspan_get_type())
-#define SP_TSPAN(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_TSPAN, SPTSpan))
-#define SP_TSPAN_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_TSPAN, SPTSpanClass))
-#define SP_IS_TSPAN(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_TSPAN))
-#define SP_IS_TSPAN_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_TSPAN))
+#define SP_TSPAN(obj) (dynamic_cast<SPTSpan*>((SPObject*)obj))
+#define SP_IS_TSPAN(obj) (dynamic_cast<const SPTSpan*>((SPObject*)obj) != NULL)
 
 enum {
     SP_TSPAN_ROLE_UNSPECIFIED,
@@ -23,18 +18,24 @@ enum {
     SP_TSPAN_ROLE_LINE
 };
 
-struct SPTSpan : public SPItem {
+class SPTSpan : public SPItem {
+public:
+	SPTSpan();
+	virtual ~SPTSpan();
+
     guint role : 2;
     TextTagAttributes attributes;
+
+	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
+	virtual void release();
+	virtual void set(unsigned int key, const gchar* value);
+	virtual void update(SPCtx* ctx, unsigned int flags);
+	virtual void modified(unsigned int flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
+
+	virtual Geom::OptRect bbox(Geom::Affine const &transform, SPItem::BBoxType type);
+	virtual gchar* description();
 };
-
-struct SPTSpanClass {
-    SPItemClass parent_class;
-};
-
-GType sp_tspan_get_type() G_GNUC_CONST;
-
-G_END_DECLS
 
 #endif /* !INKSCAPE_SP_TSPAN_H */
 

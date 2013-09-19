@@ -20,14 +20,10 @@
 #include "event-context.h"
 #include "live_effects/effect.h"
 
-G_BEGIN_DECLS
 /* Freehand context */
 
-#define SP_TYPE_DRAW_CONTEXT (sp_draw_context_get_type())
-#define SP_DRAW_CONTEXT(o) (G_TYPE_CHECK_INSTANCE_CAST((o), SP_TYPE_DRAW_CONTEXT, SPDrawContext))
-#define SP_DRAW_CONTEXT_CLASS(k) (G_TYPE_CHECK_CLASS_CAST((k), SP_TYPE_DRAW_CONTEXT, SPDrawContextClass))
-#define SP_IS_DRAW_CONTEXT(o) (G_TYPE_CHECK_INSTANCE_TYPE((o), SP_TYPE_DRAW_CONTEXT))
-#define SP_IS_DRAW_CONTEXT_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE((k), SP_TYPE_DRAW_CONTEXT))
+#define SP_DRAW_CONTEXT(obj) (dynamic_cast<SPDrawContext*>((SPEventContext*)obj))
+#define SP_IS_DRAW_CONTEXT(obj) (dynamic_cast<const SPDrawContext*>((const SPEventContext*)obj) != NULL)
 
 struct SPDrawAnchor;
 namespace Inkscape
@@ -35,7 +31,11 @@ namespace Inkscape
   class Selection;
 }
 
-struct SPDrawContext : public SPEventContext{
+class SPDrawContext : public SPEventContext {
+public:
+	SPDrawContext();
+	virtual ~SPDrawContext();
+
     Inkscape::Selection *selection;
     SPCanvasItem *grab;
 
@@ -79,11 +79,13 @@ struct SPDrawContext : public SPEventContext{
     bool red_curve_is_valid;
 
     bool anchor_statusbar;
+
+protected:
+	virtual void setup();
+	virtual void finish();
+	virtual void set(const Inkscape::Preferences::Entry& val);
+	virtual bool root_handler(GdkEvent* event);
 };
-
-struct SPDrawContextClass : public SPEventContextClass{};
-
-GType sp_draw_context_get_type(void) G_GNUC_CONST;
 
 /**
  * Returns FIRST active anchor (the activated one).
@@ -120,7 +122,6 @@ void spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item);
  */
 void spdc_create_single_dot(SPEventContext *ec, Geom::Point const &pt, char const *tool, guint event_state);
 
-G_END_DECLS
 #endif // SEEN_SP_DRAW_CONTEXT_H
 
 /*

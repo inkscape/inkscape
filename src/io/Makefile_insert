@@ -5,8 +5,6 @@ ink_common_sources += \
 	io/base64stream.cpp \
 	io/bufferstream.cpp  \
 	io/bufferstream.h    \
-	io/ftos.cpp \
-	io/ftos.h \
 	io/gzipstream.cpp \
 	io/gzipstream.h \
 	io/inkjar.cpp \

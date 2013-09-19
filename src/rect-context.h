@@ -19,14 +19,28 @@
 #include <2geom/point.h>
 #include "event-context.h"
 
-#define SP_TYPE_RECT_CONTEXT            (sp_rect_context_get_type ())
-#define SP_RECT_CONTEXT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_RECT_CONTEXT, SPRectContext))
-#define SP_RECT_CONTEXT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_RECT_CONTEXT, SPRectContextClass))
-#define SP_IS_RECT_CONTEXT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_RECT_CONTEXT))
-#define SP_IS_RECT_CONTEXT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_RECT_CONTEXT))
+#include "sp-rect.h"
 
-struct SPRectContext : public SPEventContext {
-	SPItem *item;
+#define SP_RECT_CONTEXT(obj) (dynamic_cast<SPRectContext*>((SPEventContext*)obj))
+#define SP_IS_RECT_CONTEXT(obj) (dynamic_cast<const SPRectContext*>((const SPEventContext*)obj) != NULL)
+
+class SPRectContext : public SPEventContext {
+public:
+	SPRectContext();
+	virtual ~SPRectContext();
+
+	static const std::string prefsPath;
+
+	virtual void setup();
+	virtual void finish();
+	virtual void set(const Inkscape::Preferences::Entry& val);
+	virtual bool root_handler(GdkEvent* event);
+	virtual bool item_handler(SPItem* item, GdkEvent* event);
+
+	virtual const std::string& getPrefsPath();
+
+private:
+	SPRect *rect;
 	Geom::Point center;
 
   	gdouble rx;	/* roundness radius (x direction) */
@@ -34,15 +48,10 @@ struct SPRectContext : public SPEventContext {
 
 	sigc::connection sel_changed_connection;
 
-	Inkscape::MessageContext *_message_context;
+	void drag(Geom::Point const pt, guint state);
+	void finishItem();
+	void cancel();
+	void selection_changed(Inkscape::Selection* selection);
 };
-
-struct SPRectContextClass {
-	SPEventContextClass parent_class;
-};
-
-/* Standard Gtk function */
-
-GType sp_rect_context_get_type (void);
 
 #endif

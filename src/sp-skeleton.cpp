@@ -52,7 +52,13 @@ sp_skeleton_class_init(SPSkeletonClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
 
+<<<<<<< TREE
     sp_object_class->build = sp_skeleton_build;
+=======
+    skeleton_parent_class = (SPObjectClass*)g_type_class_peek_parent(klass);
+
+    //sp_object_class->build = sp_skeleton_build;
+>>>>>>> MERGE-SOURCE
     sp_object_class->release = sp_skeleton_release;
     sp_object_class->write = sp_skeleton_write;
     sp_object_class->set = sp_skeleton_set;
@@ -74,9 +80,15 @@ static void
 sp_skeleton_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     debug("0x%p",object);
+<<<<<<< TREE
     if (((SPObjectClass *) sp_skeleton_parent_class)->build) {
         ((SPObjectClass *) sp_skeleton_parent_class)->build(object, document, repr);
     }
+=======
+//    if (((SPObjectClass *) skeleton_parent_class)->build) {
+//        ((SPObjectClass *) skeleton_parent_class)->build(object, document, repr);
+//    }
+>>>>>>> MERGE-SOURCE
 
     /*
        Pay attention to certain settings here

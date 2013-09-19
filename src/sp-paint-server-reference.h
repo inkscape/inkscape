@@ -18,7 +18,7 @@
 #include "sp-object.h"
 #include "uri-references.h"
 
-struct SPPaintServer;
+class SPPaintServer;
 
 class SPPaintServerReference : public Inkscape::URIReference {
 public:

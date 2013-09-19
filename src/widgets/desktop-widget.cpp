@@ -1809,7 +1809,10 @@ sp_desktop_widget_adjustment_value_changed (GtkAdjustment */*adj*/, SPDesktopWid
     sp_desktop_widget_update_rulers (dtw);
 
     /*  update perspective lines if we are in the 3D box tool (so that infinite ones are shown correctly) */
-    sp_box3d_context_update_lines(dtw->desktop->event_context);
+    //sp_box3d_context_update_lines(dtw->desktop->event_context);
+    if (SP_IS_BOX3D_CONTEXT(dtw->desktop->event_context)) {
+		SP_BOX3D_CONTEXT(dtw->desktop->event_context)->_vpdrag->updateLines();
+	}
 
     dtw->update = 0;
 }

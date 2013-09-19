@@ -46,144 +46,158 @@
 using Inkscape::DocumentUndo;
 using std::vector;
 
-enum {
-    PROP_0,
-    PROP_COLOR,
-    PROP_HICOLOR
-};
+//enum {
+//    PROP_0,
+//    PROP_COLOR,
+//    PROP_HICOLOR
+//};
+//
+//static void sp_guide_set_property(GObject *object, guint prop_id, const GValue *value, GParamSpec *pspec);
+//static void sp_guide_get_property(GObject *object, guint prop_id, GValue *value, GParamSpec *pspec);
 
-static void sp_guide_set_property(GObject *object, guint prop_id, const GValue *value, GParamSpec *pspec);
-static void sp_guide_get_property(GObject *object, guint prop_id, GValue *value, GParamSpec *pspec);
+#include "sp-factory.h"
 
-static void sp_guide_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
-static void sp_guide_release(SPObject *object);
-static void sp_guide_set(SPObject *object, unsigned int key, const gchar *value);
+namespace {
+	SPObject* createGuide() {
+		return new SPGuide();
+	}
 
-G_DEFINE_TYPE(SPGuide, sp_guide, SP_TYPE_OBJECT);
-
-static void sp_guide_class_init(SPGuideClass *gc)
-{
-    GObjectClass *gobject_class = (GObjectClass *) gc;
-    SPObjectClass *sp_object_class = (SPObjectClass *) gc;
-
-    gobject_class->set_property = sp_guide_set_property;
-    gobject_class->get_property = sp_guide_get_property;
-
-    sp_object_class->build = sp_guide_build;
-    sp_object_class->release = sp_guide_release;
-    sp_object_class->set = sp_guide_set;
-
-    g_object_class_install_property(gobject_class,
-                                    PROP_COLOR,
-                                    g_param_spec_uint("color", "Color", "Color",
-                                                      0,
-                                                      0xffffffff,
-                                                      0xff000000,
-                                                      (GParamFlags) G_PARAM_READWRITE));
-
-    g_object_class_install_property(gobject_class,
-                                    PROP_HICOLOR,
-                                    g_param_spec_uint("hicolor", "HiColor", "HiColor",
-                                                      0,
-                                                      0xffffffff,
-                                                      0xff000000,
-                                                      (GParamFlags) G_PARAM_READWRITE));
+	bool guideRegistered = SPFactory::instance().registerObject("sodipodi:guide", createGuide);
 }
 
-static void sp_guide_init(SPGuide *guide)
-{
-    guide->normal_to_line = Geom::Point(0.,1.);
-    guide->point_on_line = Geom::Point(0.,0.);
-    guide->color = 0x0000ff7f;
-    guide->hicolor = 0xff00007f;
+//static void sp_guide_class_init(SPGuideClass *gc)
+//{
+//    GObjectClass *gobject_class = (GObjectClass *) gc;
+//
+//    gobject_class->set_property = sp_guide_set_property;
+//    gobject_class->get_property = sp_guide_get_property;
+//
+//    g_object_class_install_property(gobject_class,
+//                                    PROP_COLOR,
+//                                    g_param_spec_uint("color", "Color", "Color",
+//                                                      0,
+//                                                      0xffffffff,
+//                                                      0xff000000,
+//                                                      (GParamFlags) G_PARAM_READWRITE));
+//
+//    g_object_class_install_property(gobject_class,
+//                                    PROP_HICOLOR,
+//                                    g_param_spec_uint("hicolor", "HiColor", "HiColor",
+//                                                      0,
+//                                                      0xffffffff,
+//                                                      0xff000000,
+//                                                      (GParamFlags) G_PARAM_READWRITE));
+//}
+// CPPIFY: properties!
+
+SPGuide::SPGuide() : SPObject() {
+	this->label = NULL;
+	this->views = NULL;
+
+    this->normal_to_line = Geom::Point(0.,1.);
+    this->point_on_line = Geom::Point(0.,0.);
+    this->color = 0x0000ff7f;
+    this->hicolor = 0xff00007f;
 }
 
-static void sp_guide_set_property(GObject *object, guint prop_id, const GValue *value, GParamSpec */*pspec*/)
-{
-    SPGuide &guide = *SP_GUIDE(object);
-
-    switch (prop_id) {
-        case PROP_COLOR:
-            guide.color = g_value_get_uint(value);
-            for (GSList *l = guide.views; l != NULL; l = l->next) {
-                sp_guideline_set_color(SP_GUIDELINE(l->data), guide.color);
-            }
-            break;
-
-        case PROP_HICOLOR:
-            guide.hicolor = g_value_get_uint(value);
-            break;
-    }
+SPGuide::~SPGuide() {
 }
 
-static void sp_guide_get_property(GObject *object, guint prop_id, GValue *value, GParamSpec */*pspec*/)
-{
-    SPGuide const &guide = *SP_GUIDE(object);
-
-    switch (prop_id) {
-        case PROP_COLOR:
-            g_value_set_uint(value, guide.color);
-            break;
-        case PROP_HICOLOR:
-            g_value_set_uint(value, guide.hicolor);
-            break;
-    }
+guint32 SPGuide::getColor() const {
+	return color;
 }
 
-static void sp_guide_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
-{
-    if ((SP_OBJECT_CLASS(sp_guide_parent_class))->build) {
-        (* (SP_OBJECT_CLASS(sp_guide_parent_class))->build)(object, document, repr);
-    }
+guint32 SPGuide::getHiColor() const {
+	return hicolor;
+}
 
-    object->readAttr( "inkscape:label" );
-    object->readAttr( "orientation" );
-    object->readAttr( "position" );
+void SPGuide::setColor(guint32 c) {
+	color = c;
+
+	for (GSList *l = this->views; l != NULL; l = l->next) {
+		sp_guideline_set_color(SP_GUIDELINE(l->data), this->color);
+	}
+}
+
+void SPGuide::setHiColor(guint32 h) {
+	this->hicolor = h;
+}
+
+//static void sp_guide_set_property(GObject *object, guint prop_id, const GValue *value, GParamSpec */*pspec*/)
+//{
+//    SPGuide &guide = *SP_GUIDE(object);
+//
+//    switch (prop_id) {
+//        case PROP_COLOR:
+//            guide.color = g_value_get_uint(value);
+//            for (GSList *l = guide.views; l != NULL; l = l->next) {
+//                sp_guideline_set_color(SP_GUIDELINE(l->data), guide.color);
+//            }
+//            break;
+//
+//        case PROP_HICOLOR:
+//            guide.hicolor = g_value_get_uint(value);
+//            break;
+//    }
+//}
+//
+//static void sp_guide_get_property(GObject *object, guint prop_id, GValue *value, GParamSpec */*pspec*/)
+//{
+//    SPGuide const &guide = *SP_GUIDE(object);
+//
+//    switch (prop_id) {
+//        case PROP_COLOR:
+//            g_value_set_uint(value, guide.color);
+//            break;
+//        case PROP_HICOLOR:
+//            g_value_set_uint(value, guide.hicolor);
+//            break;
+//    }
+//}
+
+void SPGuide::build(SPDocument *document, Inkscape::XML::Node *repr) {
+	SPObject::build(document, repr);
+
+    this->readAttr( "inkscape:label" );
+    this->readAttr( "orientation" );
+    this->readAttr( "position" );
 
     /* Register */
-    document->addResource("guide", object);
+    document->addResource("guide", this);
 }
 
-static void sp_guide_release(SPObject *object)
-{
-    SPGuide *guide = (SPGuide *) object;
-
-    while (guide->views) {
-        sp_guideline_delete(SP_GUIDELINE(guide->views->data));
-        guide->views = g_slist_remove(guide->views, guide->views->data);
+void SPGuide::release() {
+    while (this->views) {
+        sp_guideline_delete(SP_GUIDELINE(this->views->data));
+        this->views = g_slist_remove(this->views, this->views->data);
     }
 
-    if (object->document) {
+    if (this->document) {
         // Unregister ourselves
-        object->document->removeResource("guide", object);
+        this->document->removeResource("guide", this);
     }
 
-    if ((SP_OBJECT_CLASS(sp_guide_parent_class))->release) {
-        (SP_OBJECT_CLASS(sp_guide_parent_class))->release(object);
-    }
+    SPObject::release();
 }
 
-static void sp_guide_set(SPObject *object, unsigned int key, const gchar *value)
-{
-    SPGuide *guide = SP_GUIDE(object);
-
+void SPGuide::set(unsigned int key, const gchar *value) {
     switch (key) {
     case SP_ATTR_INKSCAPE_LABEL:
         if (value) {
-            guide->label = g_strdup(value);
+            this->label = g_strdup(value);
         } else {
-            guide->label = NULL;
+            this->label = NULL;
         }
 
-        sp_guide_set_label(*guide, guide->label, false);
+        sp_guide_set_label(*this, this->label, false);
         break;
     case SP_ATTR_ORIENTATION:
         {
             if (value && !strcmp(value, "horizontal")) {
                 /* Visual representation of a horizontal line, constrain vertically (y coordinate). */
-                guide->normal_to_line = Geom::Point(0., 1.);
+                this->normal_to_line = Geom::Point(0., 1.);
             } else if (value && !strcmp(value, "vertical")) {
-                guide->normal_to_line = Geom::Point(1., 0.);
+                this->normal_to_line = Geom::Point(1., 0.);
             } else if (value) {
                 gchar ** strarray = g_strsplit(value, ",", 2);
                 double newx, newy;
@@ -193,16 +207,16 @@ static void sp_guide_set(SPObject *object, unsigned int key, const gchar *value)
                 if (success == 2 && (fabs(newx) > 1e-6 || fabs(newy) > 1e-6)) {
                     Geom::Point direction(newx, newy);
                     direction.normalize();
-                    guide->normal_to_line = direction;
+                    this->normal_to_line = direction;
                 } else {
                     // default to vertical line for bad arguments
-                    guide->normal_to_line = Geom::Point(1., 0.);
+                    this->normal_to_line = Geom::Point(1., 0.);
                 }
             } else {
                 // default to vertical line for bad arguments
-                guide->normal_to_line = Geom::Point(1., 0.);
+                this->normal_to_line = Geom::Point(1., 0.);
             }
-            sp_guide_set_normal(*guide, guide->normal_to_line, false);
+            sp_guide_set_normal(*this, this->normal_to_line, false);
         }
         break;
     case SP_ATTR_POSITION:
@@ -214,29 +228,27 @@ static void sp_guide_set(SPObject *object, unsigned int key, const gchar *value)
                 success += sp_svg_number_read_d(strarray[1], &newy);
                 g_strfreev (strarray);
                 if (success == 2) {
-                    guide->point_on_line = Geom::Point(newx, newy);
+                    this->point_on_line = Geom::Point(newx, newy);
                 } else if (success == 1) {
                     // before 0.46 style guideline definition.
-                    const gchar *attr = object->getRepr()->attribute("orientation");
+                    const gchar *attr = this->getRepr()->attribute("orientation");
                     if (attr && !strcmp(attr, "horizontal")) {
-                        guide->point_on_line = Geom::Point(0, newx);
+                        this->point_on_line = Geom::Point(0, newx);
                     } else {
-                        guide->point_on_line = Geom::Point(newx, 0);
+                        this->point_on_line = Geom::Point(newx, 0);
                     }
                 }
             } else {
                 // default to (0,0) for bad arguments
-                guide->point_on_line = Geom::Point(0,0);
+                this->point_on_line = Geom::Point(0,0);
             }
             // update position in non-committing way
             // fixme: perhaps we need to add an update method instead, and request_update here
-            sp_guide_moveto(*guide, guide->point_on_line, false);
+            sp_guide_moveto(*this, this->point_on_line, false);
         }
         break;
     default:
-            if ((SP_OBJECT_CLASS(sp_guide_parent_class))->set) {
-                (SP_OBJECT_CLASS(sp_guide_parent_class))->set(object, key, value);
-            }
+    	SPObject::set(key, value);
             break;
     }
 }

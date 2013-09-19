@@ -47,6 +47,7 @@
 #include "widgets/icon.h"
 #include "sp-root.h"
 #include "document-undo.h"
+#include "desktop.h"
 
 #include <glibmm/i18n.h>
 
@@ -367,19 +368,25 @@ public :
 private :
     Geom::Dim2 _orientation;
     bool _distribute;
-    virtual void on_button_click()
-    {
 
-        if (!_dialog.getDesktop()) return;
-        SPEventContext *event_context = sp_desktop_event_context(_dialog.getDesktop());
-        if (!INK_IS_NODE_TOOL (event_context)) return;
+    virtual void on_button_click() {
+        if (!_dialog.getDesktop()) {
+        	return;
+        }
+
+        SPEventContext *event_context = _dialog.getDesktop()->getEventContext();
+
+        if (!INK_IS_NODE_TOOL(event_context)) {
+        	return;
+        }
+
         InkNodeTool *nt = INK_NODE_TOOL(event_context);
 
-        if (_distribute)
+        if (_distribute) {
             nt->_multipath->distributeNodes(_orientation);
-        else
+        } else {
             nt->_multipath->alignNodes(_orientation);
-
+        }
     }
 };
 
@@ -825,7 +832,7 @@ private :
 static void on_tool_changed(Inkscape::Application */*inkscape*/, SPEventContext */*context*/, AlignAndDistribute *daad)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    if (desktop && sp_desktop_event_context(desktop))
+    if (desktop && desktop->getEventContext())
         daad->setMode(tools_active(desktop) == TOOLS_NODES);
 }
 

@@ -22,7 +22,7 @@
 
 class SPGradient;
 class SPDesktop;
-struct SPPattern;
+class SPPattern;
 struct SPStyle;
 
 #define SP_TYPE_PAINT_SELECTOR (sp_paint_selector_get_type ())

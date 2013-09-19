@@ -7,34 +7,27 @@
 #include "style.h"
 using Inkscape::XML::TEXT_NODE;
 
-static void sp_style_elem_build(SPObject *object, SPDocument *doc, Inkscape::XML::Node *repr);
-static void sp_style_elem_set(SPObject *object, unsigned const key, gchar const *const value);
-static void sp_style_elem_read_content(SPObject *);
-static Inkscape::XML::Node *sp_style_elem_write(SPObject *, Inkscape::XML::Document *, Inkscape::XML::Node *, guint flags);
+#include "sp-factory.h"
 
-G_DEFINE_TYPE(SPStyleElem, sp_style_elem, SP_TYPE_OBJECT);
+namespace {
+	SPObject* createStyle() {
+		return new SPStyleElem();
+	}
 
-static void
-sp_style_elem_class_init(SPStyleElemClass *klass)
-{
-    /* FIXME */
-
-    klass->build = sp_style_elem_build;
-    klass->set = sp_style_elem_set;
-    klass->read_content = sp_style_elem_read_content;
-    klass->write = sp_style_elem_write;
+	bool styleRegistered = SPFactory::instance().registerObject("svg:style", createStyle);
 }
 
-static void
-sp_style_elem_init(SPStyleElem *style_elem)
-{
-    media_set_all(style_elem->media);
-    style_elem->is_css = false;
+SPStyleElem::SPStyleElem() : SPObject() {
+    media_set_all(this->media);
+    this->is_css = false;
 }
 
-static void
-sp_style_elem_set(SPObject *object, unsigned const key, gchar const *const value)
-{
+SPStyleElem::~SPStyleElem() {
+}
+
+void SPStyleElem::set(unsigned int key, const gchar* value) {
+	SPStyleElem* object = this;
+
     g_return_if_fail(object);
     SPStyleElem &style_elem = *SP_STYLE_ELEM(object);
 
@@ -63,26 +56,25 @@ sp_style_elem_set(SPObject *object, unsigned const key, gchar const *const value
 
         /* title is ignored. */
         default: {
-            if (SP_OBJECT_CLASS(sp_style_elem_parent_class)->set) {
-                SP_OBJECT_CLASS(sp_style_elem_parent_class)->set(object, key, value);
-            }
+            SPObject::set(key, value);
             break;
         }
     }
 }
 
+
 static void
 child_add_rm_cb(Inkscape::XML::Node *, Inkscape::XML::Node *, Inkscape::XML::Node *,
                 void *const data)
 {
-    sp_style_elem_read_content(static_cast<SPObject *>(data));
+    static_cast<SPObject *>(data)->read_content();
 }
 
 static void
 content_changed_cb(Inkscape::XML::Node *, gchar const *, gchar const *,
                    void *const data)
 {
-    sp_style_elem_read_content(static_cast<SPObject *>(data));
+    static_cast<SPObject *>(data)->read_content();
 }
 
 static void
@@ -90,12 +82,12 @@ child_order_changed_cb(Inkscape::XML::Node *, Inkscape::XML::Node *,
                        Inkscape::XML::Node *, Inkscape::XML::Node *,
                        void *const data)
 {
-    sp_style_elem_read_content(static_cast<SPObject *>(data));
+    static_cast<SPObject *>(data)->read_content();
 }
 
-static Inkscape::XML::Node *
-sp_style_elem_write(SPObject *const object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint const flags)
-{
+Inkscape::XML::Node* SPStyleElem::write(Inkscape::XML::Document* xml_doc, Inkscape::XML::Node* repr, guint flags) {
+	SPStyleElem* object = this;
+
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
         repr = xml_doc->createElement("svg:style");
     }
@@ -112,8 +104,7 @@ sp_style_elem_write(SPObject *const object, Inkscape::XML::Document *xml_doc, In
     }
     /* todo: media */
 
-    if (((SPObjectClass *) sp_style_elem_parent_class)->write)
-        ((SPObjectClass *) sp_style_elem_parent_class)->write(object, xml_doc, repr, flags);
+    SPObject::write(xml_doc, repr, flags);
 
     return repr;
 }
@@ -271,9 +262,9 @@ property_cb(CRDocHandler *const a_handler,
     g_return_if_fail(append_status == CR_OK);
 }
 
-static void
-sp_style_elem_read_content(SPObject *const object)
-{
+void SPStyleElem::read_content() {
+	SPStyleElem* object = this;
+
     SPStyleElem &style_elem = *SP_STYLE_ELEM(object);
 
     /* fixme: If there's more than one <style> element in a document, then the document stylesheet
@@ -359,10 +350,10 @@ rec_add_listener(Inkscape::XML::Node &repr,
     }
 }
 
-static void
-sp_style_elem_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
-{
-    sp_style_elem_read_content(object);
+void SPStyleElem::build(SPDocument *document, Inkscape::XML::Node *repr) {
+	SPStyleElem* object = this;
+
+    object->read_content();
 
     object->readAttr( "type" );
     object->readAttr( "media" );
@@ -376,10 +367,9 @@ sp_style_elem_build(SPObject *object, SPDocument *document, Inkscape::XML::Node 
     };
     rec_add_listener(*repr, &nodeEventVector, object);
 
-    if (((SPObjectClass *) sp_style_elem_parent_class)->build) {
-        ((SPObjectClass *) sp_style_elem_parent_class)->build(object, document, repr);
-    }
+    SPObject::build(document, repr);
 }
+
 
 
 /*

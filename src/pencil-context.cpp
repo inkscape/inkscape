@@ -45,10 +45,6 @@
 #include "display/curve.h"
 #include "livarot/Path.h"
 
-static void sp_pencil_context_setup(SPEventContext *ec);
-static void sp_pencil_context_dispose(GObject *object);
-
-static gint sp_pencil_context_root_handler(SPEventContext *event_context, GdkEvent *event);
 static gint pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &bevent);
 static gint pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mevent);
 static gint pencil_handle_button_release(SPPencilContext *const pc, GdkEventButton const &revent);
@@ -68,72 +64,51 @@ static bool pencil_within_tolerance = false;
 
 static bool in_svg_plane(Geom::Point const &p) { return Geom::LInfty(p) < 1e18; }
 
-G_DEFINE_TYPE(SPPencilContext, sp_pencil_context, SP_TYPE_DRAW_CONTEXT);
+#include "tool-factory.h"
 
-/**
- * Initialize SPPencilContext vtable.
- */
-static void
-sp_pencil_context_class_init(SPPencilContextClass *klass)
-{
-    GObjectClass *object_class;
-    SPEventContextClass *event_context_class;
+namespace {
+	SPEventContext* createPencilContext() {
+		return new SPPencilContext();
+	}
 
-    object_class = (GObjectClass *) klass;
-    event_context_class = (SPEventContextClass *) klass;
-
-    object_class->dispose = sp_pencil_context_dispose;
-
-    event_context_class->setup = sp_pencil_context_setup;
-    event_context_class->root_handler = sp_pencil_context_root_handler;
+	bool pencilContextRegistered = ToolFactory::instance().registerObject("/tools/freehand/pencil", createPencilContext);
 }
 
-/**
- * Callback to initialize SPPencilContext object.
- */
-static void
-sp_pencil_context_init(SPPencilContext *pc)
-{
-    SPEventContext *event_context = SP_EVENT_CONTEXT(pc);
+const std::string& SPPencilContext::getPrefsPath() {
+	return SPPencilContext::prefsPath;
+}
 
-    event_context->cursor_shape = cursor_pencil_xpm;
-    event_context->hot_x = 4;
-    event_context->hot_y = 4;
+const std::string SPPencilContext::prefsPath = "/tools/freehand/pencil";
 
-    pc->npoints = 0;
-    pc->state = SP_PENCIL_CONTEXT_IDLE;
-    pc->req_tangent = Geom::Point(0, 0);
+SPPencilContext::SPPencilContext() : SPDrawContext() {
+	this->is_drawing = false;
+
+    this->cursor_shape = cursor_pencil_xpm;
+    this->hot_x = 4;
+    this->hot_y = 4;
+
+    this->npoints = 0;
+    this->state = SP_PENCIL_CONTEXT_IDLE;
+    this->req_tangent = Geom::Point(0, 0);
 
     // since SPPencilContext is not properly constructed...
-    pc->sketch_interpolation = Geom::Piecewise<Geom::D2<Geom::SBasis> >();
-    pc->sketch_n = 0;
+    this->sketch_interpolation = Geom::Piecewise<Geom::D2<Geom::SBasis> >();
+    this->sketch_n = 0;
 }
 
-/**
- * Callback to setup SPPencilContext object.
- */
-static void
-sp_pencil_context_setup(SPEventContext *ec)
-{
+void SPPencilContext::setup() {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (prefs->getBool("/tools/freehand/pencil/selcue")) {
-        ec->enableSelectionCue();
+        this->enableSelectionCue();
     }
 
-    if (((SPEventContextClass *) sp_pencil_context_parent_class)->setup) {
-        ((SPEventContextClass *) sp_pencil_context_parent_class)->setup(ec);
-    }
+    SPDrawContext::setup();
 
-    SPPencilContext *const pc = SP_PENCIL_CONTEXT(ec);
-    pc->is_drawing = false;
-
-    pc->anchor_statusbar = false;
+    this->is_drawing = false;
+    this->anchor_statusbar = false;
 }
 
-static void
-sp_pencil_context_dispose(GObject *object)
-{
-    G_OBJECT_CLASS(sp_pencil_context_parent_class)->dispose(object);
+SPPencilContext::~SPPencilContext() {
 }
 
 /** Snaps new node relative to the previous node. */
@@ -157,32 +132,28 @@ spdc_endpoint_snap(SPPencilContext const *pc, Geom::Point &p, guint const state)
 /**
  * Callback for handling all pencil context events.
  */
-gint
-sp_pencil_context_root_handler(SPEventContext *const ec, GdkEvent *event)
-{
-    SPPencilContext *const pc = SP_PENCIL_CONTEXT(ec);
-
+bool SPPencilContext::root_handler(GdkEvent* event) {
     gint ret = FALSE;
 
     switch (event->type) {
         case GDK_BUTTON_PRESS:
-            ret = pencil_handle_button_press(pc, event->button);
+            ret = pencil_handle_button_press(this, event->button);
             break;
 
         case GDK_MOTION_NOTIFY:
-            ret = pencil_handle_motion_notify(pc, event->motion);
+            ret = pencil_handle_motion_notify(this, event->motion);
             break;
 
         case GDK_BUTTON_RELEASE:
-            ret = pencil_handle_button_release(pc, event->button);
+            ret = pencil_handle_button_release(this, event->button);
             break;
 
         case GDK_KEY_PRESS:
-            ret = pencil_handle_key_press(pc, get_group0_keyval (&event->key), event->key.state);
+            ret = pencil_handle_key_press(this, get_group0_keyval (&event->key), event->key.state);
             break;
 
         case GDK_KEY_RELEASE:
-            ret = pencil_handle_key_release(pc, get_group0_keyval (&event->key), event->key.state);
+            ret = pencil_handle_key_release(this, get_group0_keyval (&event->key), event->key.state);
             break;
 
         default:
@@ -190,11 +161,7 @@ sp_pencil_context_root_handler(SPEventContext *const ec, GdkEvent *event)
     }
 
     if (!ret) {
-        gint (*const parent_root_handler)(SPEventContext *, GdkEvent *)
-            = ((SPEventContextClass *) sp_pencil_context_parent_class)->root_handler;
-        if (parent_root_handler) {
-            ret = parent_root_handler(ec, event);
-        }
+    	ret = SPDrawContext::root_handler(event);
     }
 
     return ret;
@@ -211,7 +178,7 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
         SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(dc);
         Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
-        if (Inkscape::have_viable_layer(desktop, dc->_message_context) == false) {
+        if (Inkscape::have_viable_layer(desktop, dc->message_context) == false) {
             return TRUE;
         }
 
@@ -372,21 +339,21 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
                 }
 
                 if (anchor && !pc->anchor_statusbar) {
-                    pc->_message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Release</b> here to close and finish the path."));
+                    pc->message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Release</b> here to close and finish the path."));
                     pc->anchor_statusbar = true;
                 } else if (!anchor && pc->anchor_statusbar) {
-                    pc->_message_context->clear();
+                    pc->message_context->clear();
                     pc->anchor_statusbar = false;
                 } else if (!anchor) {
-                    pc->_message_context->set(Inkscape::NORMAL_MESSAGE, _("Drawing a freehand path"));
+                    pc->message_context->set(Inkscape::NORMAL_MESSAGE, _("Drawing a freehand path"));
                 }
 
             } else {
                 if (anchor && !pc->anchor_statusbar) {
-                    pc->_message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Drag</b> to continue the path from this point."));
+                    pc->message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Drag</b> to continue the path from this point."));
                     pc->anchor_statusbar = true;
                 } else if (!anchor && pc->anchor_statusbar) {
-                    pc->_message_context->clear();
+                    pc->message_context->clear();
                     pc->anchor_statusbar = false;
                 }
             }
@@ -530,8 +497,8 @@ pencil_cancel (SPPencilContext *const pc)
         pc->green_anchor = sp_draw_anchor_destroy(pc->green_anchor);
     }
 
-    pc->_message_context->clear();
-    pc->_message_context->flash(Inkscape::NORMAL_MESSAGE, _("Drawing cancelled"));
+    pc->message_context->clear();
+    pc->message_context->flash(Inkscape::NORMAL_MESSAGE, _("Drawing cancelled"));
 
     pc->desktop->canvas->endForcedFullRedraws();
 }

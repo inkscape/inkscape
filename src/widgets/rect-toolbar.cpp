@@ -88,7 +88,7 @@ static void sp_rtb_sensitivize( GObject *tbl )
 
 
 static void sp_rtb_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *value_name,
-                                 void (*setter)(SPRect *, gdouble))
+                                 void (SPRect::*setter)(gdouble))
 {
     SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( tbl, "desktop" ));
 
@@ -114,8 +114,7 @@ static void sp_rtb_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *
     for (GSList const *items = selection->itemList(); items != NULL; items = items->next) {
         if (SP_IS_RECT(items->data)) {
             if (gtk_adjustment_get_value(adj) != 0) {
-                setter(SP_RECT(items->data),
-                Quantity::convert(gtk_adjustment_get_value(adj), unit, "px"));
+                (SP_RECT(items->data)->*setter)(Quantity::convert(gtk_adjustment_get_value(adj), unit, "px"));
             } else {
                 SP_OBJECT(items->data)->getRepr()->setAttribute(value_name, NULL);
             }
@@ -135,22 +134,22 @@ static void sp_rtb_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *
 
 static void sp_rtb_rx_value_changed(GtkAdjustment *adj, GObject *tbl)
 {
-    sp_rtb_value_changed(adj, tbl, "rx", sp_rect_set_visible_rx);
+    sp_rtb_value_changed(adj, tbl, "rx", &SPRect::setVisibleRx);
 }
 
 static void sp_rtb_ry_value_changed(GtkAdjustment *adj, GObject *tbl)
 {
-    sp_rtb_value_changed(adj, tbl, "ry", sp_rect_set_visible_ry);
+    sp_rtb_value_changed(adj, tbl, "ry", &SPRect::setVisibleRy);
 }
 
 static void sp_rtb_width_value_changed(GtkAdjustment *adj, GObject *tbl)
 {
-    sp_rtb_value_changed(adj, tbl, "width", sp_rect_set_visible_width);
+    sp_rtb_value_changed(adj, tbl, "width", &SPRect::setVisibleWidth);
 }
 
 static void sp_rtb_height_value_changed(GtkAdjustment *adj, GObject *tbl)
 {
-    sp_rtb_value_changed(adj, tbl, "height", sp_rect_set_visible_height);
+    sp_rtb_value_changed(adj, tbl, "height", &SPRect::setVisibleHeight);
 }
 
 
@@ -192,25 +191,29 @@ static void rect_tb_event_attr_changed(Inkscape::XML::Node * /*repr*/, gchar con
     if (item && SP_IS_RECT(item)) {
         {
             GtkAdjustment *adj = GTK_ADJUSTMENT( g_object_get_data( tbl, "rx" ) );
-            gdouble rx = sp_rect_get_visible_rx(SP_RECT(item));
+
+            gdouble rx = SP_RECT(item)->getVisibleRx();
             gtk_adjustment_set_value(adj, Quantity::convert(rx, "px", unit));
         }
 
         {
             GtkAdjustment *adj = GTK_ADJUSTMENT( g_object_get_data( tbl, "ry" ) );
-            gdouble ry = sp_rect_get_visible_ry(SP_RECT(item));
+
+            gdouble ry = SP_RECT(item)->getVisibleRy();
             gtk_adjustment_set_value(adj, Quantity::convert(ry, "px", unit));
         }
 
         {
             GtkAdjustment *adj = GTK_ADJUSTMENT( g_object_get_data( tbl, "width" ) );
-            gdouble width = sp_rect_get_visible_width (SP_RECT(item));
+
+            gdouble width = SP_RECT(item)->getVisibleWidth();
             gtk_adjustment_set_value(adj, Quantity::convert(width, "px", unit));
         }
 
         {
             GtkAdjustment *adj = GTK_ADJUSTMENT( g_object_get_data( tbl, "height" ) );
-            gdouble height = sp_rect_get_visible_height (SP_RECT(item));
+
+            gdouble height = SP_RECT(item)->getVisibleHeight();
             gtk_adjustment_set_value(adj, Quantity::convert(height, "px", unit));
         }
     }

@@ -55,6 +55,7 @@ ink_common_sources +=	\
 	event-context.cpp event-context.h				\
 	event-log.cpp event-log.h event.h				\
 	extract-uri.cpp extract-uri.h					\
+	factory.h							\
 	file.cpp file.h							\
 	fill-or-stroke.h						\
 	filter-chemistry.cpp filter-chemistry.h				\
@@ -141,7 +142,7 @@ ink_common_sources +=	\
 	shape-editor.cpp shape-editor.h					\
 	shortcuts.cpp shortcuts.h					\
 	snap.cpp snap.h							\
-	snap-enums.h snap-candidate.h \
+	snap-enums.h snap-candidate.h					\
 	snapped-curve.cpp snapped-curve.h				\
 	snapped-line.cpp snapped-line.h					\
 	snapped-point.cpp snapped-point.h				\
@@ -155,6 +156,7 @@ ink_common_sources +=	\
 	sp-defs.cpp sp-defs.h						\
 	sp-desc.cpp sp-desc.h						\
 	sp-ellipse.cpp sp-ellipse.h					\
+	sp-factory.h							\
 	sp-filter.cpp sp-filter.h number-opt-number.h			\
 	sp-filter-primitive.cpp	sp-filter-primitive.h			\
 	sp-filter-reference.cpp	sp-filter-reference.h			\
@@ -167,7 +169,6 @@ ink_common_sources +=	\
         sp-glyph.cpp sp-glyph.h						\
         sp-glyph-kerning.cpp sp-glyph-kerning.h				\
 	sp-gradient.cpp sp-gradient.h					\
-	sp-gradient-fns.h						\
 	sp-gradient-reference.cpp sp-gradient-reference.h		\
 	sp-gradient-spread.h						\
 	sp-gradient-units.h						\
@@ -183,8 +184,7 @@ ink_common_sources +=	\
 	sp-item-rm-unsatisfied-cns.cpp sp-item-rm-unsatisfied-cns.h	\
 	sp-item-transform.cpp sp-item-transform.h			\
 	sp-item-update-cns.cpp sp-item-update-cns.h			\
-	sp-linear-gradient-fns.h					\
-	sp-linear-gradient.h						\
+	sp-linear-gradient.cpp sp-linear-gradient.h			\
 	sp-line.cpp sp-line.h						\
 	splivarot.cpp splivarot.h					\
 	sp-lpe-item.cpp sp-lpe-item.h					\
@@ -192,17 +192,13 @@ ink_common_sources +=	\
 	sp-mask.cpp sp-mask.h						\
 	sp-metadata.cpp sp-metadata.h					\
 	sp-mesh-array.cpp sp-mesh-array.h				\
-	sp-mesh-gradient-fns.h						\
-	sp-mesh-gradient.h						\
-	sp-mesh-patch-fns.h						\
+	sp-mesh-gradient.cpp sp-mesh-gradient.h				\
 	sp-mesh-patch.cpp sp-mesh-patch.h				\
-	sp-mesh-row-fns.h						\
 	sp-mesh-row.cpp sp-mesh-row.h					\
         sp-missing-glyph.cpp sp-missing-glyph.h \
 	sp-namedview.cpp sp-namedview.h		\
 	sp-object.cpp sp-object.h		\
 	sp-object-group.cpp sp-object-group.h	\
-	sp-object-repr.cpp sp-object-repr.h	\
 	sp-offset.cpp sp-offset.h		\
 	sp-paint-server.cpp sp-paint-server.h	\
 	sp-paint-server-reference.h		\
@@ -210,8 +206,7 @@ ink_common_sources +=	\
 	sp-pattern.cpp sp-pattern.h		\
 	sp-polygon.cpp sp-polygon.h		\
 	sp-polyline.cpp sp-polyline.h		\
-	sp-radial-gradient-fns.h		\
-	sp-radial-gradient.h			\
+	sp-radial-gradient.cpp sp-radial-gradient.h			\
 	sp-rect.cpp sp-rect.h			\
 	sp-root.cpp sp-root.h			\
 	sp-script.cpp sp-script.h		\
@@ -244,6 +239,7 @@ ink_common_sources +=	\
 	text-context.cpp text-context.h		\
 	text-editing.cpp text-editing.h		\
 	text-tag-attributes.h			\
+	tool-factory.h				\
 	tools-switch.cpp tools-switch.h		\
 	transf_mat_3x4.cpp transf_mat_3x4.h	\
 	tweak-context.h tweak-context.cpp	\

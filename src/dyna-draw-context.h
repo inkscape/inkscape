@@ -21,12 +21,6 @@
 #include "common-context.h"
 #include "splivarot.h"
 
-#define SP_TYPE_DYNA_DRAW_CONTEXT (sp_dyna_draw_context_get_type())
-#define SP_DYNA_DRAW_CONTEXT(o) (G_TYPE_CHECK_INSTANCE_CAST((o), SP_TYPE_DYNA_DRAW_CONTEXT, SPDynaDrawContext))
-#define SP_DYNA_DRAW_CONTEXT_CLASS(k) (G_TYPE_CHECK_CLASS_CAST((k), SP_TYPE_DYNA_DRAW_CONTEXT, SPDynaDrawContextClass))
-#define SP_IS_DYNA_DRAW_CONTEXT(o) (G_TYPE_CHECK_INSTANCE_TYPE((o), SP_TYPE_DYNA_DRAW_CONTEXT))
-#define SP_IS_DYNA_DRAW_CONTEXT_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE((k), SP_TYPE_DYNA_DRAW_CONTEXT))
-
 #define DDC_MIN_PRESSURE      0.0
 #define DDC_MAX_PRESSURE      1.0
 #define DDC_DEFAULT_PRESSURE  1.0
@@ -35,7 +29,20 @@
 #define DDC_MAX_TILT          1.0
 #define DDC_DEFAULT_TILT      0.0
 
-struct SPDynaDrawContext : public SPCommonContext {
+class SPDynaDrawContext : public SPCommonContext {
+public:
+	SPDynaDrawContext();
+	virtual ~SPDynaDrawContext();
+
+	static const std::string prefsPath;
+
+	virtual void setup();
+	virtual void set(const Inkscape::Preferences::Entry& val);
+	virtual bool root_handler(GdkEvent* event);
+
+	virtual const std::string& getPrefsPath();
+
+private:
     /** newly created object remain selected */
     bool keep_selected;
 
@@ -52,11 +59,18 @@ struct SPDynaDrawContext : public SPCommonContext {
     SPCanvasItem *hatch_area;
     bool just_started_drawing;
     bool trace_bg;
+
+	void clear_current();
+	void set_to_accumulated(bool unionize, bool subtract);
+	bool accumulate();
+	void fit_and_split(bool release);
+	void draw_temporary_box();
+	void cancel();
+	void brush();
+	bool apply(Geom::Point p);
+	void extinput(GdkEvent *event);
+	void reset(Geom::Point p);
 };
-
-struct SPDynaDrawContextClass : public SPEventContextClass{};
-
-GType sp_dyna_draw_context_get_type(void);
 
 #endif // SP_DYNA_DRAW_CONTEXT_H_SEEN
 

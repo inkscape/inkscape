@@ -36,8 +36,8 @@
 #include "xml/repr.h"
 
 #include "sp-color-notebook.h"
-#include "sp-linear-gradient-fns.h"
-#include "sp-radial-gradient-fns.h"
+#include "sp-linear-gradient.h"
+#include "sp-radial-gradient.h"
 /* fixme: Move it from dialogs to here */
 #include "gradient-selector.h"
 #include <inkscape.h>

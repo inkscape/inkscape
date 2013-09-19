@@ -56,164 +56,115 @@
 
 #include "text-editing.h"
 
+#include "sp-factory.h"
+
+namespace {
+	SPObject* createText() {
+		return new SPText();
+	}
+
+	bool textRegistered = SPFactory::instance().registerObject("svg:text", createText);
+}
+
 /*#####################################################
 #  SPTEXT
 #####################################################*/
-
-static void sp_text_release (SPObject *object);
-
-static void sp_text_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
-static void sp_text_set (SPObject *object, unsigned key, gchar const *value);
-static void sp_text_child_added (SPObject *object, Inkscape::XML::Node *rch, Inkscape::XML::Node *ref);
-static void sp_text_remove_child (SPObject *object, Inkscape::XML::Node *rch);
-static void sp_text_update (SPObject *object, SPCtx *ctx, guint flags);
-static void sp_text_modified (SPObject *object, guint flags);
-static Inkscape::XML::Node *sp_text_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
-
-static Geom::OptRect sp_text_bbox(SPItem const *item, Geom::Affine const &transform, SPItem::BBoxType type);
-static Inkscape::DrawingItem *sp_text_show (SPItem *item, Inkscape::Drawing &drawing, unsigned key, unsigned flags);
-static void sp_text_hide (SPItem *item, unsigned key);
-static char *sp_text_description (SPItem *item);
-static void sp_text_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
-static Geom::Affine sp_text_set_transform(SPItem *item, Geom::Affine const &xform);
-static void sp_text_print (SPItem *item, SPPrintContext *gpc);
-
-G_DEFINE_TYPE(SPText, sp_text, SP_TYPE_ITEM);
-
-static void
-sp_text_class_init (SPTextClass *classname)
-{
-    SPObjectClass *sp_object_class = (SPObjectClass *) classname;
-    SPItemClass *item_class = (SPItemClass *) classname;
-
-    sp_object_class->release = sp_text_release;
-    sp_object_class->build = sp_text_build;
-    sp_object_class->set = sp_text_set;
-    sp_object_class->child_added = sp_text_child_added;
-    sp_object_class->remove_child = sp_text_remove_child;
-    sp_object_class->update = sp_text_update;
-    sp_object_class->modified = sp_text_modified;
-    sp_object_class->write = sp_text_write;
-
-    item_class->bbox = sp_text_bbox;
-    item_class->show = sp_text_show;
-    item_class->hide = sp_text_hide;
-    item_class->description = sp_text_description;
-    item_class->snappoints = sp_text_snappoints;
-    item_class->set_transform = sp_text_set_transform;
-    item_class->print = sp_text_print;
+SPText::SPText() : SPItem() {
+    //new (&this->layout) Inkscape::Text::Layout;
+    //new (&this->attributes) TextTagAttributes;
 }
 
-static void
-sp_text_init (SPText *text)
-{
-    new (&text->layout) Inkscape::Text::Layout;
-    new (&text->attributes) TextTagAttributes;
+SPText::~SPText() {
 }
 
-static void
-sp_text_release (SPObject *object)
-{
-    SPText *text = SP_TEXT(object);
-    text->attributes.~TextTagAttributes();
-    text->layout.~Layout();
+void SPText::build(SPDocument *doc, Inkscape::XML::Node *repr) {
+    this->readAttr( "x" );
+    this->readAttr( "y" );
+    this->readAttr( "dx" );
+    this->readAttr( "dy" );
+    this->readAttr( "rotate" );
 
-    if ((SP_OBJECT_CLASS(sp_text_parent_class))->release)
-        (SP_OBJECT_CLASS(sp_text_parent_class))->release(object);
+    SPItem::build(doc, repr);
+
+    this->readAttr( "sodipodi:linespacing" );    // has to happen after the styles are read
 }
 
-static void
-sp_text_build (SPObject *object, SPDocument *doc, Inkscape::XML::Node *repr)
-{
-    object->readAttr( "x" );
-    object->readAttr( "y" );
-    object->readAttr( "dx" );
-    object->readAttr( "dy" );
-    object->readAttr( "rotate" );
+void SPText::release() {
+    //this->attributes.~TextTagAttributes();
+    //this->layout.~Layout();
 
-    if ((SP_OBJECT_CLASS(sp_text_parent_class))->build)
-        (SP_OBJECT_CLASS(sp_text_parent_class))->build(object, doc, repr);
-
-    object->readAttr( "sodipodi:linespacing" );    // has to happen after the styles are read
+    SPItem::release();
 }
 
-static void
-sp_text_set(SPObject *object, unsigned key, gchar const *value)
-{
-    SPText *text = SP_TEXT (object);
-
-    if (text->attributes.readSingleAttribute(key, value)) {
-        object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+void SPText::set(unsigned int key, const gchar* value) {
+    if (this->attributes.readSingleAttribute(key, value)) {
+        this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
     } else {
         switch (key) {
             case SP_ATTR_SODIPODI_LINESPACING:
                 // convert deprecated tag to css
                 if (value) {
-                    text->style->line_height.set = TRUE;
-                    text->style->line_height.inherit = FALSE;
-                    text->style->line_height.normal = FALSE;
-                    text->style->line_height.unit = SP_CSS_UNIT_PERCENT;
-                    text->style->line_height.value = text->style->line_height.computed = sp_svg_read_percentage (value, 1.0);
+                    this->style->line_height.set = TRUE;
+                    this->style->line_height.inherit = FALSE;
+                    this->style->line_height.normal = FALSE;
+                    this->style->line_height.unit = SP_CSS_UNIT_PERCENT;
+                    this->style->line_height.value = this->style->line_height.computed = sp_svg_read_percentage (value, 1.0);
                 }
-                object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_TEXT_LAYOUT_MODIFIED_FLAG);
+
+                this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_TEXT_LAYOUT_MODIFIED_FLAG);
                 break;
+
             default:
-                if ((SP_OBJECT_CLASS(sp_text_parent_class))->set)
-                    (SP_OBJECT_CLASS(sp_text_parent_class))->set (object, key, value);
+                SPItem::set(key, value);
                 break;
         }
     }
 }
 
-static void
-sp_text_child_added (SPObject *object, Inkscape::XML::Node *rch, Inkscape::XML::Node *ref)
-{
-    SPText *text = SP_TEXT (object);
+void SPText::child_added(Inkscape::XML::Node *rch, Inkscape::XML::Node *ref) {
+    SPItem::child_added(rch, ref);
 
-    if ((SP_OBJECT_CLASS(sp_text_parent_class))->child_added)
-        (SP_OBJECT_CLASS(sp_text_parent_class))->child_added (object, rch, ref);
-
-    text->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_TEXT_CONTENT_MODIFIED_FLAG | SP_TEXT_LAYOUT_MODIFIED_FLAG);
+    this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_TEXT_CONTENT_MODIFIED_FLAG | SP_TEXT_LAYOUT_MODIFIED_FLAG);
 }
 
-static void
-sp_text_remove_child (SPObject *object, Inkscape::XML::Node *rch)
-{
-    SPText *text = SP_TEXT (object);
+void SPText::remove_child(Inkscape::XML::Node *rch) {
+    SPItem::remove_child(rch);
 
-    if ((SP_OBJECT_CLASS(sp_text_parent_class))->remove_child)
-        (SP_OBJECT_CLASS(sp_text_parent_class))->remove_child (object, rch);
-
-    text->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_TEXT_CONTENT_MODIFIED_FLAG | SP_TEXT_LAYOUT_MODIFIED_FLAG);
+    this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_TEXT_CONTENT_MODIFIED_FLAG | SP_TEXT_LAYOUT_MODIFIED_FLAG);
 }
 
-static void sp_text_update(SPObject *object, SPCtx *ctx, guint flags)
-{
-    SPText *text = SP_TEXT (object);
 
-    if ((SP_OBJECT_CLASS(sp_text_parent_class))->update)
-        (SP_OBJECT_CLASS(sp_text_parent_class))->update (object, ctx, flags);
+void SPText::update(SPCtx *ctx, guint flags) {
+    SPItem::update(ctx, flags);
 
     guint cflags = (flags & SP_OBJECT_MODIFIED_CASCADE);
-    if (flags & SP_OBJECT_MODIFIED_FLAG) cflags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
 
+    if (flags & SP_OBJECT_MODIFIED_FLAG) {
+    	cflags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
+    }
 
     // Create temporary list of children
     GSList *l = NULL;
-    for (SPObject *child = object->firstChild() ; child ; child = child->getNext() ) {
-        sp_object_ref(child, object);
+
+    for (SPObject *child = this->firstChild() ; child ; child = child->getNext() ) {
+        sp_object_ref(child, this);
         l = g_slist_prepend (l, child);
     }
+
     l = g_slist_reverse (l);
+
     while (l) {
         SPObject *child = reinterpret_cast<SPObject*>(l->data); // We just built this list, so cast is safe.
         l = g_slist_remove (l, child);
+
         if (cflags || (child->uflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
             /* fixme: Do we need transform? */
             child->updateDisplay(ctx, cflags);
         }
-        sp_object_unref(child, object);
+
+        sp_object_unref(child, this);
     }
+
     if (flags & ( SP_OBJECT_STYLE_MODIFIED_FLAG |
                   SP_OBJECT_CHILD_MODIFIED_FLAG |
                   SP_TEXT_LAYOUT_MODIFIED_FLAG   ) )
@@ -221,95 +172,103 @@ static void sp_text_update(SPObject *object, SPCtx *ctx, guint flags)
         /* fixme: It is not nice to have it here, but otherwise children content changes does not work */
         /* fixme: Even now it may not work, as we are delayed */
         /* fixme: So check modification flag everywhere immediate state is used */
-        text->rebuildLayout();
+        this->rebuildLayout();
 
-        Geom::OptRect paintbox = text->geometricBounds();
-        for (SPItemView* v = text->display; v != NULL; v = v->next) {
+        Geom::OptRect paintbox = this->geometricBounds();
+
+        for (SPItemView* v = this->display; v != NULL; v = v->next) {
             Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
-            text->_clearFlow(g);
-            g->setStyle(object->style);
-            // pass the bbox of the text object as paintbox (used for paintserver fills)
-            text->layout.show(g, paintbox);
+            this->_clearFlow(g);
+            g->setStyle(this->style);
+            // pass the bbox of the this this as paintbox (used for paintserver fills)
+            this->layout.show(g, paintbox);
         }
     }
 }
 
-static void sp_text_modified(SPObject *object, guint flags)
-{
-    if ((SP_OBJECT_CLASS(sp_text_parent_class))->modified) {
-        (SP_OBJECT_CLASS(sp_text_parent_class))->modified (object, flags);
-    }
+void SPText::modified(guint flags) {
+//	SPItem::onModified(flags);
 
     guint cflags = (flags & SP_OBJECT_MODIFIED_CASCADE);
+
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
         cflags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
     }
 
     // FIXME: all that we need to do here is to call setStyle, to set the changed
     // style, but there's no easy way to access the drawing glyphs or texts corresponding to a
-    // text object. Therefore we do here the same as in _update, that is, destroy all items
+    // text this. Therefore we do here the same as in _update, that is, destroy all items
     // and create new ones. This is probably quite wasteful.
     if (flags & ( SP_OBJECT_STYLE_MODIFIED_FLAG )) {
-        SPText *text = SP_TEXT (object);
-        Geom::OptRect paintbox = text->geometricBounds();
-        for (SPItemView* v = text->display; v != NULL; v = v->next) {
+        Geom::OptRect paintbox = this->geometricBounds();
+
+        for (SPItemView* v = this->display; v != NULL; v = v->next) {
             Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
-            text->_clearFlow(g);
-            g->setStyle(object->style);
-            text->layout.show(g, paintbox);
+            this->_clearFlow(g);
+            g->setStyle(this->style);
+            this->layout.show(g, paintbox);
         }
     }
 
     // Create temporary list of children
     GSList *l = NULL;
-    for (SPObject *child = object->firstChild() ; child ; child = child->getNext() ) {
-        sp_object_ref(child, object);
+
+    for (SPObject *child = this->firstChild() ; child ; child = child->getNext() ) {
+        sp_object_ref(child, this);
         l = g_slist_prepend (l, child);
     }
+
     l = g_slist_reverse (l);
+
     while (l) {
         SPObject *child = reinterpret_cast<SPObject*>(l->data); // We just built this list, so cast is safe.
         l = g_slist_remove (l, child);
+
         if (cflags || (child->mflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
             child->emitModified(cflags);
         }
-        sp_object_unref(child, object);
+
+        sp_object_unref(child, this);
     }
 }
 
-static Inkscape::XML::Node *sp_text_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
-{
-    SPText *text = SP_TEXT (object);
-
+Inkscape::XML::Node *SPText::write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags) {
     if (flags & SP_OBJECT_WRITE_BUILD) {
         if (!repr) {
-            repr = xml_doc->createElement("svg:text");
+            repr = xml_doc->createElement("svg:this");
         }
+
         GSList *l = NULL;
-        for (SPObject *child = object->firstChild() ; child ; child = child->getNext() ) {
+
+        for (SPObject *child = this->firstChild() ; child ; child = child->getNext() ) {
             if (SP_IS_TITLE(child) || SP_IS_DESC(child)) {
                 continue;
             }
+
             Inkscape::XML::Node *crepr = NULL;
+
             if (SP_IS_STRING(child)) {
                 crepr = xml_doc->createTextNode(SP_STRING(child)->string.c_str());
             } else {
                 crepr = child->updateRepr(xml_doc, NULL, flags);
             }
+
             if (crepr) {
                 l = g_slist_prepend (l, crepr);
             }
         }
+
         while (l) {
             repr->addChild((Inkscape::XML::Node *) l->data, NULL);
             Inkscape::GC::release((Inkscape::XML::Node *) l->data);
             l = g_slist_remove (l, l->data);
         }
     } else {
-        for (SPObject *child = object->firstChild() ; child ; child = child->getNext() ) {
+        for (SPObject *child = this->firstChild() ; child ; child = child->getNext() ) {
             if (SP_IS_TITLE(child) || SP_IS_DESC(child)) {
                 continue;
             }
+
             if (SP_IS_STRING(child)) {
                 child->getRepr()->setContent(SP_STRING(child)->string.c_str());
             } else {
@@ -318,68 +277,58 @@ static Inkscape::XML::Node *sp_text_write(SPObject *object, Inkscape::XML::Docum
         }
     }
 
-    text->attributes.writeTo(repr);
+    this->attributes.writeTo(repr);
 
     // deprecated attribute, but keep it around for backwards compatibility
-    if (text->style->line_height.set && !text->style->line_height.inherit && !text->style->line_height.normal && text->style->line_height.unit == SP_CSS_UNIT_PERCENT) {
+    if (this->style->line_height.set && !this->style->line_height.inherit && !this->style->line_height.normal && this->style->line_height.unit == SP_CSS_UNIT_PERCENT) {
         Inkscape::SVGOStringStream os;
-        os << (text->style->line_height.value * 100.0) << "%";
-        text->getRepr()->setAttribute("sodipodi:linespacing", os.str().c_str());
+        os << (this->style->line_height.value * 100.0) << "%";
+        this->getRepr()->setAttribute("sodipodi:linespacing", os.str().c_str());
     } else {
-        text->getRepr()->setAttribute("sodipodi:linespacing", NULL);
+        this->getRepr()->setAttribute("sodipodi:linespacing", NULL);
     }
 
-    if ((SP_OBJECT_CLASS(sp_text_parent_class))->write) {
-        (SP_OBJECT_CLASS(sp_text_parent_class))->write (object, xml_doc, repr, flags);
-    }
+    SPItem::write(xml_doc, repr, flags);
 
     return repr;
 }
 
-static Geom::OptRect
-sp_text_bbox(SPItem const *item, Geom::Affine const &transform, SPItem::BBoxType type)
-{
-    Geom::OptRect bbox = SP_TEXT(item)->layout.bounds(transform);
+Geom::OptRect SPText::bbox(Geom::Affine const &transform, SPItem::BBoxType type) {
+    Geom::OptRect bbox = SP_TEXT(this)->layout.bounds(transform);
 
     // FIXME this code is incorrect
-    if (bbox && type == SPItem::VISUAL_BBOX && !item->style->stroke.isNone()) {
+    if (bbox && type == SPItem::VISUAL_BBOX && !this->style->stroke.isNone()) {
         double scale = transform.descrim();
-        bbox->expandBy(0.5 * item->style->stroke_width.computed * scale);
+        bbox->expandBy(0.5 * this->style->stroke_width.computed * scale);
     }
+
     return bbox;
 }
 
-
-static Inkscape::DrawingItem *
-sp_text_show(SPItem *item, Inkscape::Drawing &drawing, unsigned /* key*/, unsigned /*flags*/)
-{
-    SPText *group = (SPText *) item;
-
+Inkscape::DrawingItem* SPText::show(Inkscape::Drawing &drawing, unsigned key, unsigned flags) {
     Inkscape::DrawingGroup *flowed = new Inkscape::DrawingGroup(drawing);
     flowed->setPickChildren(false);
-    flowed->setStyle(group->style);
+    flowed->setStyle(this->style);
 
     // pass the bbox of the text object as paintbox (used for paintserver fills)
-    group->layout.show(flowed, group->geometricBounds());
+    this->layout.show(flowed, this->geometricBounds());
 
     return flowed;
 }
 
-static void
-sp_text_hide(SPItem *item, unsigned key)
-{
-    if ((SP_ITEM_CLASS(sp_text_parent_class))->hide)
-        (SP_ITEM_CLASS(sp_text_parent_class))->hide (item, key);
+
+void SPText::hide(unsigned int key) {
+//	SPItem::onHide(key);
 }
 
-static char * sp_text_description(SPItem *item)
-{
-    SPText *text = reinterpret_cast<SPText *>(item);
-    SPStyle *style = text->style;
+
+gchar* SPText::description() {
+    SPStyle *style = this->style;
 
     font_instance *tf = font_factory::Default()->FaceFromStyle(style);
 
     char *n;
+
     if (tf) {
         char name_buf[256];
         tf->Family(name_buf, sizeof(name_buf));
@@ -394,40 +343,38 @@ static char * sp_text_description(SPItem *item)
     GString *xs = g_string_new(q.string(*sp_desktop_namedview(SP_ACTIVE_DESKTOP)->doc_units).c_str());
 
     char const *trunc = "";
-    Inkscape::Text::Layout const *layout = te_get_layout((SPItem *) item);
+    Inkscape::Text::Layout const *layout = te_get_layout((SPItem *) this);
+
     if (layout && layout->inputTruncated()) {
         trunc = _(" [truncated]");
     }
 
-    char *ret = ( SP_IS_TEXT_TEXTPATH(item)
+    char *ret = ( SP_IS_TEXT_TEXTPATH(this)
                   ? g_strdup_printf(_("<b>Text on path</b>%s (%s, %s)"), trunc, n, xs->str)
                   : g_strdup_printf(_("<b>Text</b>%s (%s, %s)"), trunc, n, xs->str) );
     g_free(n);
     return ret;
 }
 
-static void sp_text_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs)
-{
+void SPText::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) {
     if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_TEXT_BASELINE)) {
         // Choose a point on the baseline for snapping from or to, with the horizontal position
         // of this point depending on the text alignment (left vs. right)
-        Inkscape::Text::Layout const *layout = te_get_layout((SPItem *) item);
+        Inkscape::Text::Layout const *layout = te_get_layout(this);
+
         if (layout != NULL && layout->outputExists()) {
             boost::optional<Geom::Point> pt = layout->baselineAnchorPoint();
+
             if (pt) {
-                p.push_back(Inkscape::SnapCandidatePoint((*pt) * item->i2dt_affine(), Inkscape::SNAPSOURCE_TEXT_ANCHOR, Inkscape::SNAPTARGET_TEXT_ANCHOR));
+                p.push_back(Inkscape::SnapCandidatePoint((*pt) * this->i2dt_affine(), Inkscape::SNAPSOURCE_TEXT_ANCHOR, Inkscape::SNAPTARGET_TEXT_ANCHOR));
             }
         }
     }
 }
 
-static Geom::Affine
-sp_text_set_transform (SPItem *item, Geom::Affine const &xform)
-{
-    SPText *text = SP_TEXT(item);
-
+Geom::Affine SPText::set_transform(Geom::Affine const &xform) {
     // we cannot optimize textpath because changing its fontsize will break its match to the path
-    if (SP_IS_TEXT_TEXTPATH (text))
+    if (SP_IS_TEXT_TEXTPATH (this))
         return xform;
 
     /* This function takes care of scaling & translation only, we return whatever parts we can't
@@ -451,37 +398,34 @@ sp_text_set_transform (SPItem *item, Geom::Affine const &xform)
     ret[3] /= ex;
 
     // Adjust x/y, dx/dy
-    text->_adjustCoordsRecursive (item, xform * ret.inverse(), ex);
+    this->_adjustCoordsRecursive (this, xform * ret.inverse(), ex);
 
     // Adjust font size
-    text->_adjustFontsizeRecursive (item, ex);
+    this->_adjustFontsizeRecursive (this, ex);
 
     // Adjust stroke width
-    item->adjust_stroke_width_recursive (ex);
+    this->adjust_stroke_width_recursive (ex);
 
     // Adjust pattern fill
-    item->adjust_pattern(xform * ret.inverse());
+    this->adjust_pattern(xform * ret.inverse());
 
     // Adjust gradient fill
-    item->adjust_gradient(xform * ret.inverse());
+    this->adjust_gradient(xform * ret.inverse());
 
-    item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_TEXT_LAYOUT_MODIFIED_FLAG);
+    this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_TEXT_LAYOUT_MODIFIED_FLAG);
 
     return ret;
 }
 
-static void
-sp_text_print (SPItem *item, SPPrintContext *ctx)
-{
-    SPText *group = SP_TEXT (item);
+void SPText::print(SPPrintContext *ctx) {
     Geom::OptRect pbox, bbox, dbox;
+    pbox = this->geometricBounds();
+    bbox = this->desktopVisualBounds();
+    dbox = Geom::Rect::from_xywh(Geom::Point(0,0), this->document->getDimensions());
 
-    pbox = item->geometricBounds();
-    bbox = item->desktopVisualBounds();
-    dbox = Geom::Rect::from_xywh(Geom::Point(0,0), item->document->getDimensions());
-    Geom::Affine const ctm (item->i2dt_affine());
+    Geom::Affine const ctm (this->i2dt_affine());
 
-    group->layout.print(ctx,pbox,dbox,bbox,ctm);
+    this->layout.print(ctx,pbox,dbox,bbox,ctm);
 }
 
 /*

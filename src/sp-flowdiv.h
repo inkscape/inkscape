@@ -7,78 +7,90 @@
 #include "sp-object.h"
 #include "sp-item.h"
 
-#define SP_TYPE_FLOWDIV            (sp_flowdiv_get_type ())
-#define SP_FLOWDIV(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_FLOWDIV, SPFlowdiv))
-#define SP_FLOWDIV_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_FLOWDIV, SPFlowdivClass))
-#define SP_IS_FLOWDIV(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_FLOWDIV))
-#define SP_IS_FLOWDIV_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_FLOWDIV))
+#define SP_FLOWDIV(obj) (dynamic_cast<SPFlowdiv*>((SPObject*)obj))
+#define SP_IS_FLOWDIV(obj) (dynamic_cast<const SPFlowdiv*>((SPObject*)obj) != NULL)
 
-#define SP_TYPE_FLOWTSPAN            (sp_flowtspan_get_type ())
-#define SP_FLOWTSPAN(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_FLOWTSPAN, SPFlowtspan))
-#define SP_FLOWTSPAN_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_FLOWTSPAN, SPFlowtspanClass))
-#define SP_IS_FLOWTSPAN(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_FLOWTSPAN))
-#define SP_IS_FLOWTSPAN_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_FLOWTSPAN))
+#define SP_FLOWTSPAN(obj) (dynamic_cast<SPFlowtspan*>((SPObject*)obj))
+#define SP_IS_FLOWTSPAN(obj) (dynamic_cast<const SPFlowtspan*>((SPObject*)obj) != NULL)
 
-#define SP_TYPE_FLOWPARA            (sp_flowpara_get_type ())
-#define SP_FLOWPARA(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_FLOWPARA, SPFlowpara))
-#define SP_FLOWPARA_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_FLOWPARA, SPFlowparaClass))
-#define SP_IS_FLOWPARA(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_FLOWPARA))
-#define SP_IS_FLOWPARA_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_FLOWPARA))
+#define SP_FLOWPARA(obj) (dynamic_cast<SPFlowpara*>((SPObject*)obj))
+#define SP_IS_FLOWPARA(obj) (dynamic_cast<const SPFlowpara*>((SPObject*)obj) != NULL)
 
-#define SP_TYPE_FLOWLINE            (sp_flowline_get_type ())
-#define SP_FLOWLINE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_FLOWLINE, SPFlowline))
-#define SP_FLOWLINE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_FLOWLINE, SPFlowlineClass))
-#define SP_IS_FLOWLINE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_FLOWLINE))
-#define SP_IS_FLOWLINE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_FLOWLINE))
+#define SP_FLOWLINE(obj) (dynamic_cast<SPFlowline*>((SPObject*)obj))
+#define SP_IS_FLOWLINE(obj) (dynamic_cast<const SPFlowline*>((SPObject*)obj) != NULL)
 
-#define SP_TYPE_FLOWREGIONBREAK            (sp_flowregionbreak_get_type ())
-#define SP_FLOWREGIONBREAK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_FLOWREGIONBREAK, SPFlowregionbreak))
-#define SP_FLOWREGIONBREAK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_FLOWREGIONBREAK, SPFlowregionbreakClass))
-#define SP_IS_FLOWREGIONBREAK(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_FLOWREGIONBREAK))
-#define SP_IS_FLOWREGIONBREAK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_FLOWREGIONBREAK))
+#define SP_FLOWREGIONBREAK(obj) (dynamic_cast<SPFlowregionbreak*>((SPObject*)obj))
+#define SP_IS_FLOWREGIONBREAK(obj) (dynamic_cast<const SPFlowregionbreak*>((SPObject*)obj) != NULL)
 
 // these 3 are derivatives of SPItem to get the automatic style handling
-struct SPFlowdiv : public SPItem {
+class SPFlowdiv : public SPItem {
+public:
+	SPFlowdiv();
+	virtual ~SPFlowdiv();
+
+protected:
+	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
+	virtual void release();
+	virtual void update(SPCtx* ctx, guint flags);
+	virtual void modified(unsigned int flags);
+
+	virtual void set(unsigned int key, gchar const* value);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
 };
 
-struct SPFlowtspan : public SPItem {
+class SPFlowtspan : public SPItem {
+public:
+	SPFlowtspan();
+	virtual ~SPFlowtspan();
+
+protected:
+	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
+	virtual void release();
+	virtual void update(SPCtx* ctx, guint flags);
+	virtual void modified(unsigned int flags);
+
+	virtual void set(unsigned int key, gchar const* value);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
 };
 
-struct SPFlowpara : public SPItem {
+class SPFlowpara : public SPItem {
+public:
+	SPFlowpara();
+	virtual ~SPFlowpara();
+
+protected:
+	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
+	virtual void release();
+	virtual void update(SPCtx* ctx, guint flags);
+	virtual void modified(unsigned int flags);
+
+	virtual void set(unsigned int key, gchar const* value);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
 };
 
 // these do not need any style
-struct SPFlowline : public SPObject {
+class SPFlowline : public SPObject {
+public:
+	SPFlowline();
+	virtual ~SPFlowline();
+
+protected:
+	virtual void release();
+	virtual void modified(unsigned int flags);
+
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
 };
 
-struct SPFlowregionbreak : public SPObject {
+class SPFlowregionbreak : public SPObject {
+public:
+	SPFlowregionbreak();
+	virtual ~SPFlowregionbreak();
+
+protected:
+	virtual void release();
+	virtual void modified(unsigned int flags);
+
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
 };
-
-
-struct SPFlowdivClass {
-	SPItemClass parent_class;
-};
-
-struct SPFlowtspanClass {
-	SPItemClass parent_class;
-};
-
-struct SPFlowparaClass {
-	SPItemClass parent_class;
-};
-
-struct SPFlowlineClass {
-	SPObjectClass parent_class;
-};
-
-struct SPFlowregionbreakClass {
-	SPObjectClass parent_class;
-};
-
-GType sp_flowdiv_get_type (void);
-GType sp_flowtspan_get_type (void);
-GType sp_flowpara_get_type (void);
-GType sp_flowline_get_type (void);
-GType sp_flowregionbreak_get_type (void);
 
 #endif

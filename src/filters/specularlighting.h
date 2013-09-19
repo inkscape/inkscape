@@ -17,11 +17,8 @@
 #include "sp-filter-primitive.h"
 #include "number-opt-number.h"
 
-#define SP_TYPE_FESPECULARLIGHTING (sp_feSpecularLighting_get_type())
-#define SP_FESPECULARLIGHTING(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_FESPECULARLIGHTING, SPFeSpecularLighting))
-#define SP_FESPECULARLIGHTING_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_FESPECULARLIGHTING, SPFeSpecularLightingClass))
-#define SP_IS_FESPECULARLIGHTING(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_FESPECULARLIGHTING))
-#define SP_IS_FESPECULARLIGHTING_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_FESPECULARLIGHTING))
+#define SP_FESPECULARLIGHTING(obj) (dynamic_cast<SPFeSpecularLighting*>((SPObject*)obj))
+#define SP_IS_FESPECULARLIGHTING(obj) (dynamic_cast<const SPFeSpecularLighting*>((SPObject*)obj) != NULL)
 
 struct SVGICCColor;
 
@@ -31,7 +28,11 @@ class FilterSpecularLighting;
 }
 }
 
-struct SPFeSpecularLighting : public SPFilterPrimitive {
+class SPFeSpecularLighting : public SPFilterPrimitive {
+public:
+	SPFeSpecularLighting();
+	virtual ~SPFeSpecularLighting();
+
     gfloat surfaceScale;
     guint surfaceScale_set : 1;
     gfloat specularConstant;
@@ -44,14 +45,24 @@ struct SPFeSpecularLighting : public SPFilterPrimitive {
     SVGICCColor *icc;
 
     Inkscape::Filters::FilterSpecularLighting *renderer;
+
+protected:
+	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
+	virtual void release();
+
+	virtual void child_added(Inkscape::XML::Node* child, Inkscape::XML::Node* ref);
+	virtual void remove_child(Inkscape::XML::Node* child);
+
+	virtual void order_changed(Inkscape::XML::Node* child, Inkscape::XML::Node* old_repr, Inkscape::XML::Node* new_repr);
+
+	virtual void set(unsigned int key, const gchar* value);
+
+	virtual void update(SPCtx* ctx, unsigned int flags);
+
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
+
+	virtual void build_renderer(Inkscape::Filters::Filter* filter);
 };
-
-struct SPFeSpecularLightingClass {
-    SPFilterPrimitiveClass parent_class;
-};
-
-GType sp_feSpecularLighting_get_type();
-
 
 #endif /* !SP_FESPECULARLIGHTING_H_SEEN */
 

@@ -16,25 +16,21 @@
 
 #include "sp-object.h"
 
-#define SP_TYPE_OBJECTGROUP            (sp_objectgroup_get_type ())
-#define SP_OBJECTGROUP(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_OBJECTGROUP, SPObjectGroup))
-#define SP_OBJECTGROUP_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_OBJECTGROUP, SPObjectGroupClass))
-#define SP_IS_OBJECTGROUP(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_OBJECTGROUP))
-#define SP_IS_OBJECTGROUP_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_OBJECTGROUP))
-
-GType sp_objectgroup_get_type() G_GNUC_CONST;
+#define SP_OBJECTGROUP(obj) (dynamic_cast<SPObjectGroup*>((SPObject*)obj))
+#define SP_IS_OBJECTGROUP(obj) (dynamic_cast<const SPObjectGroup*>((SPObject*)obj) != NULL)
 
 class SPObjectGroup : public SPObject {
-private:
-    friend class SPObjectGroupClass;
-};
-
-class SPObjectGroupClass {
 public:
-    SPObjectClass parent_class;
+	SPObjectGroup();
+	virtual ~SPObjectGroup();
 
-private:
-    friend class SPObjectGroup;	
+protected:
+	virtual void child_added(Inkscape::XML::Node* child, Inkscape::XML::Node* ref);
+	virtual void remove_child(Inkscape::XML::Node* child);
+
+	virtual void order_changed(Inkscape::XML::Node* child, Inkscape::XML::Node* old, Inkscape::XML::Node* new_repr);
+
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
 };
 
 #endif // SEEN_SP_OBJECTGROUP_H

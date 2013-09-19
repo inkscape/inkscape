@@ -14,30 +14,42 @@
 
 #include "event-context.h"
 
-G_BEGIN_DECLS
-
-#define SP_TYPE_DROPPER_CONTEXT (sp_dropper_context_get_type ())
-#define SP_DROPPER_CONTEXT(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_DROPPER_CONTEXT, SPDropperContext))
-#define SP_IS_DROPPER_CONTEXT(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_DROPPER_CONTEXT))
+#define SP_DROPPER_CONTEXT(obj) (dynamic_cast<SPDropperContext*>((SPEventContext*)obj))
+#define SP_IS_DROPPER_CONTEXT(obj) (dynamic_cast<const SPDropperContext*>((const SPEventContext*)obj) != NULL)
 
 enum {
       SP_DROPPER_PICK_VISIBLE,
       SP_DROPPER_PICK_ACTUAL  
 };
 
-struct SPDropperContext {
-    SPEventContext event_context;
+class SPDropperContext : public SPEventContext {
+public:
+	SPDropperContext();
+	virtual ~SPDropperContext();
+
+	static const std::string prefsPath;
+
+	virtual const std::string& getPrefsPath();
+
+	guint32 get_color();
+
+protected:
+	virtual void setup();
+	virtual void finish();
+	virtual bool root_handler(GdkEvent* event);
+
+private:
+    double        R;
+    double        G;
+    double        B;
+    double        alpha;
+
+    bool dragging;
+
+    SPCanvasItem* grabbed;
+    SPCanvasItem* area;
+    Geom::Point centre;
 };
-
-struct SPDropperContextClass {
-    SPEventContextClass parent_class;
-};
-
-GType sp_dropper_context_get_type (void);
-
-guint32 sp_dropper_context_get_color(SPEventContext *ec);
-
-G_END_DECLS
 
 #endif
 

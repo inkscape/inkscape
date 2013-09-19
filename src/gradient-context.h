@@ -19,13 +19,13 @@
 #include <sigc++/sigc++.h>
 #include "event-context.h"
 
-#define SP_TYPE_GRADIENT_CONTEXT            (sp_gradient_context_get_type())
-#define SP_GRADIENT_CONTEXT(obj)            (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_GRADIENT_CONTEXT, SPGradientContext))
-#define SP_GRADIENT_CONTEXT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_GRADIENT_CONTEXT, SPGradientContextClass))
-#define SP_IS_GRADIENT_CONTEXT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_GRADIENT_CONTEXT))
-#define SP_IS_GRADIENT_CONTEXT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_GRADIENT_CONTEXT))
+#define SP_GRADIENT_CONTEXT(obj) (dynamic_cast<SPGradientContext*>((SPEventContext*)obj))
+#define SP_IS_GRADIENT_CONTEXT(obj) (dynamic_cast<const SPGradientContext*>((const SPEventContext*)obj) != NULL)
 
-struct SPGradientContext : public SPEventContext {
+class SPGradientContext : public SPEventContext {
+public:
+	SPGradientContext();
+	virtual ~SPGradientContext();
 
     Geom::Point origin;
 
@@ -35,18 +35,19 @@ struct SPGradientContext : public SPEventContext {
 
     Geom::Point mousepoint_doc; // stores mousepoint when over_line in doc coords
 
-    Inkscape::MessageContext *_message_context;
-
     sigc::connection *selcon;
     sigc::connection *subselcon;
-};
 
-struct SPGradientContextClass {
-    SPEventContextClass parent_class;
-};
+	static const std::string prefsPath;
 
-/* Standard Gtk function */
-GType sp_gradient_context_get_type();
+	virtual void setup();
+	virtual bool root_handler(GdkEvent* event);
+
+	virtual const std::string& getPrefsPath();
+
+private:
+	void selection_changed(Inkscape::Selection*);
+};
 
 void sp_gradient_context_select_next (SPEventContext *event_context);
 void sp_gradient_context_select_prev (SPEventContext *event_context);

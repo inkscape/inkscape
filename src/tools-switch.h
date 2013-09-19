@@ -18,6 +18,7 @@ namespace Geom {
 class Point;
 }
 
+
 enum {
   TOOLS_INVALID,
   TOOLS_SELECT,

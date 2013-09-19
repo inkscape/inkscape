@@ -19,9 +19,9 @@
 #include "display/nr-filter-slot.h"
 #include "display/nr-filter-units.h"
 
-struct SPFeDistantLight;
-struct SPFePointLight;
-struct SPFeSpotLight;
+class SPFeDistantLight;
+class SPFePointLight;
+class SPFeSpotLight;
 struct SVGICCColor;
 
 namespace Inkscape {

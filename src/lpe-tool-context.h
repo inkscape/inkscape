@@ -17,11 +17,8 @@
 
 #include "pen-context.h"
 
-#define SP_TYPE_LPETOOL_CONTEXT (sp_lpetool_context_get_type())
-#define SP_LPETOOL_CONTEXT(o) (G_TYPE_CHECK_INSTANCE_CAST((o), SP_TYPE_LPETOOL_CONTEXT, SPLPEToolContext))
-#define SP_LPETOOL_CONTEXT_CLASS(k) (G_TYPE_CHECK_CLASS_CAST((k), SP_TYPE_LPETOOL_CONTEXT, SPLPEToolContextClass))
-#define SP_IS_LPETOOL_CONTEXT(o) (G_TYPE_CHECK_INSTANCE_TYPE((o), SP_TYPE_LPETOOL_CONTEXT))
-#define SP_IS_LPETOOL_CONTEXT_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE((k), SP_TYPE_LPETOOL_CONTEXT))
+#define SP_LPETOOL_CONTEXT(obj) (dynamic_cast<SPLPEToolContext*>((SPEventContext*)obj))
+#define SP_IS_LPETOOL_CONTEXT(obj) (dynamic_cast<const SPLPEToolContext*>((const SPEventContext*)obj) != NULL)
 
 /* This is the list of subtools from which the toolbar of the LPETool is built automatically */
 extern const int num_subtools;
@@ -44,20 +41,30 @@ class Selection;
 
 class ShapeEditor;
 
-struct SPLPEToolContext : public SPPenContext {
+class SPLPEToolContext : public SPPenContext {
+public:
+	SPLPEToolContext();
+	virtual ~SPLPEToolContext();
+
     ShapeEditor* shape_editor;
     SPCanvasItem *canvas_bbox;
     Inkscape::LivePathEffect::EffectType mode;
 
     std::map<SPPath *, SPCanvasItem*> *measuring_items;
 
-    Inkscape::MessageContext *_lpetool_message_context;
-
     sigc::connection sel_changed_connection;
     sigc::connection sel_modified_connection;
-};
 
-struct SPLPEToolContextClass : public SPEventContextClass{};
+	static const std::string prefsPath;
+
+	virtual const std::string& getPrefsPath();
+
+protected:
+	virtual void setup();
+	virtual void set(const Inkscape::Preferences::Entry& val);
+	virtual bool root_handler(GdkEvent* event);
+	virtual bool item_handler(SPItem* item, GdkEvent* event);
+};
 
 int lpetool_mode_to_index(Inkscape::LivePathEffect::EffectType const type);
 int lpetool_item_has_construction(SPLPEToolContext *lc, SPItem *item);
@@ -69,8 +76,6 @@ void lpetool_create_measuring_items(SPLPEToolContext *lc, Inkscape::Selection *s
 void lpetool_delete_measuring_items(SPLPEToolContext *lc);
 void lpetool_update_measuring_items(SPLPEToolContext *lc);
 void lpetool_show_measuring_info(SPLPEToolContext *lc, bool show = true);
-
-GType sp_lpetool_context_get_type(void);
 
 #endif // SP_LPETOOL_CONTEXT_H_SEEN
 

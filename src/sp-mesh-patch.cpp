@@ -17,6 +17,19 @@
 #include "sp-mesh-patch.h"
 #include "style.h"
 
+#include "attributes.h"
+#include "xml/repr.h"
+
+#include "sp-factory.h"
+
+namespace {
+	SPObject* createMeshPatch() {
+		return new SPMeshPatch();
+	}
+
+	bool meshPatchRegistered = SPFactory::instance().registerObject("svg:meshPatch", createMeshPatch);
+}
+
 SPMeshPatch* SPMeshPatch::getNextMeshPatch()
 {
     SPMeshPatch *result = 0;
@@ -50,6 +63,61 @@ SPMeshPatch* SPMeshPatch::getPrevMeshPatch()
 
     return result;
 }
+
+
+/*
+ * Mesh Patch
+ */
+
+SPMeshPatch::SPMeshPatch() : SPObject() {
+    this->tensor_string = NULL;
+}
+
+SPMeshPatch::~SPMeshPatch() {
+}
+
+void SPMeshPatch::build(SPDocument* doc, Inkscape::XML::Node* repr) {
+	SPObject::build(doc, repr);
+
+	this->readAttr( "tensor" );
+}
+
+/**
+ * Virtual build: set meshpatch attributes from its associated XML node.
+ */
+
+void SPMeshPatch::set(unsigned int key, const gchar* value) {
+    switch (key) {
+        case SP_ATTR_TENSOR: {
+            if (value) {
+                this->tensor_string = new Glib::ustring( value );
+                // std::cout << "sp_meshpatch_set: Tensor string: " << patch->tensor_string->c_str() << std::endl;
+            }
+            break;
+        }
+        default: {
+            // Do nothing
+        }
+    }
+}
+
+/**
+ * Virtual set: set attribute to value.
+ */
+
+Inkscape::XML::Node* SPMeshPatch::write(Inkscape::XML::Document* xml_doc, Inkscape::XML::Node* repr, guint flags) {
+    if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
+        repr = xml_doc->createElement("svg:meshPatch");
+    }
+
+    SPObject::write(xml_doc, repr, flags);
+
+    return repr;
+}
+
+/**
+ * Virtual write: write object attributes to repr.
+ */
 
 /*
   Local Variables:

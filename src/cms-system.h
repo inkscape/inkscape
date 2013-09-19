@@ -15,7 +15,7 @@ class SPDocument;
 
 namespace Inkscape {
 
-struct ColorProfile;
+class ColorProfile;
 
 class CMSSystem {
 public:

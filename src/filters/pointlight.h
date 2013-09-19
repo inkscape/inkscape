@@ -17,13 +17,13 @@
 
 #include "sp-object.h"
 
-#define SP_TYPE_FEPOINTLIGHT (sp_fepointlight_get_type())
-#define SP_FEPOINTLIGHT(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_FEPOINTLIGHT, SPFePointLight))
-#define SP_FEPOINTLIGHT_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_FEPOINTLIGHT, SPFePointLightClass))
-#define SP_IS_FEPOINTLIGHT(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_FEPOINTLIGHT))
-#define SP_IS_FEPOINTLIGHT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_FEPOINTLIGHT))
+#define SP_FEPOINTLIGHT(obj) (dynamic_cast<SPFePointLight*>((SPObject*)obj))
+#define SP_IS_FEPOINTLIGHT(obj) (dynamic_cast<const SPFePointLight*>((SPObject*)obj) != NULL)
 
-struct SPFePointLight : public SPObject {
+class SPFePointLight : public SPObject {
+public:
+	SPFePointLight();
+	virtual ~SPFePointLight();
 
     /** x coordinate of the light source */
     gfloat x; 
@@ -35,15 +35,17 @@ struct SPFePointLight : public SPObject {
     gfloat z; 
     guint z_set : 1;
 
-    //other fields
+protected:
+	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
+	virtual void release();
+
+	virtual void set(unsigned int key, const gchar* value);
+
+	virtual void update(SPCtx* ctx, unsigned int flags);
+
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
 };
 
-struct SPFePointLightClass {
-    SPObjectClass parent_class;
-};
-
-GType
-sp_fepointlight_get_type();
 #endif /* !SP_FEPOINTLIGHT_H_SEEN */
 
 /*

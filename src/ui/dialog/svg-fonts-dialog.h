@@ -34,8 +34,8 @@ class HScale;
 #endif
 }
 
-struct SPGlyph;
-struct SPGlyphKerning;
+class SPGlyph;
+class SPGlyphKerning;
 class SvgFont;
 
 class SvgFontDrawingArea : Gtk::DrawingArea{
@@ -52,7 +52,7 @@ private:
     bool on_expose_event (GdkEventExpose *event);
 };
 
-struct SPFont;
+class SPFont;
 
 namespace Inkscape {
 namespace UI {

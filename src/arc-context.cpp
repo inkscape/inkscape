@@ -48,144 +48,102 @@
 
 using Inkscape::DocumentUndo;
 
-static void sp_arc_context_dispose(GObject *object);
+#include "tool-factory.h"
 
-static void sp_arc_context_setup(SPEventContext *ec);
-static void sp_arc_context_finish(SPEventContext *ec);
-static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent *event);
-static gint sp_arc_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event);
+namespace {
+	SPEventContext* createArcContext() {
+		return new SPArcContext();
+	}
 
-static void sp_arc_drag(SPArcContext *ec, Geom::Point pt, guint state);
-static void sp_arc_finish(SPArcContext *ec);
-static void sp_arc_cancel(SPArcContext *ec);
-
-G_DEFINE_TYPE(SPArcContext, sp_arc_context, SP_TYPE_EVENT_CONTEXT);
-
-static void sp_arc_context_class_init(SPArcContextClass *klass)
-{
-    GObjectClass *object_class = G_OBJECT_CLASS(klass);
-    SPEventContextClass *event_context_class = SP_EVENT_CONTEXT_CLASS(klass);
-
-    object_class->dispose = sp_arc_context_dispose;
-
-    event_context_class->setup = sp_arc_context_setup;
-    event_context_class->finish = sp_arc_context_finish;
-    event_context_class->root_handler = sp_arc_context_root_handler;
-    event_context_class->item_handler = sp_arc_context_item_handler;
+	bool arcContextRegistered = ToolFactory::instance().registerObject("/tools/shapes/arc", createArcContext);
 }
 
-static void sp_arc_context_init(SPArcContext *arc_context)
-{
-    SPEventContext *event_context = SP_EVENT_CONTEXT(arc_context);
-
-    event_context->cursor_shape = cursor_ellipse_xpm;
-    event_context->hot_x = 4;
-    event_context->hot_y = 4;
-    event_context->xp = 0;
-    event_context->yp = 0;
-    event_context->tolerance = 0;
-    event_context->within_tolerance = false;
-    event_context->item_to_select = NULL;
-    event_context->tool_url = "/tools/shapes/arc";
-
-    arc_context->item = NULL;
-
-    new (&arc_context->sel_changed_connection) sigc::connection();
+const std::string& SPArcContext::getPrefsPath() {
+	return SPArcContext::prefsPath;
 }
 
-static void sp_arc_context_finish(SPEventContext *ec)
-{
-    SPArcContext *ac = SP_ARC_CONTEXT(ec);
-    SPDesktop *desktop = ec->desktop;
+const std::string SPArcContext::prefsPath = "/tools/shapes/arc";
 
+
+SPArcContext::SPArcContext() : SPEventContext() {
+    this->cursor_shape = cursor_ellipse_xpm;
+    this->hot_x = 4;
+    this->hot_y = 4;
+    this->xp = 0;
+    this->yp = 0;
+    this->tolerance = 0;
+    this->within_tolerance = false;
+    this->item_to_select = NULL;
+    //this->tool_url = "/tools/shapes/arc";
+
+    this->arc = NULL;
+}
+
+void SPArcContext::finish() {
     sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), GDK_CURRENT_TIME);
-    sp_arc_finish(ac);
-    ac->sel_changed_connection.disconnect();
+    this->finishItem();
+    this->sel_changed_connection.disconnect();
 
-    if ((SP_EVENT_CONTEXT_CLASS(sp_arc_context_parent_class))->finish) {
-        (SP_EVENT_CONTEXT_CLASS(sp_arc_context_parent_class))->finish(ec);
-    }
+    SPEventContext::finish();
 }
 
-static void sp_arc_context_dispose(GObject *object)
-{
-    SPEventContext *ec = SP_EVENT_CONTEXT(object);
-    SPArcContext *ac = SP_ARC_CONTEXT(object);
+SPArcContext::~SPArcContext() {
+    this->enableGrDrag(false);
 
-    ec->enableGrDrag(false);
+    this->sel_changed_connection.disconnect();
 
-    ac->sel_changed_connection.disconnect();
-    ac->sel_changed_connection.~connection();
-
-    delete ec->shape_editor;
-    ec->shape_editor = NULL;
+    delete this->shape_editor;
+    this->shape_editor = NULL;
 
     /* fixme: This is necessary because we do not grab */
-    if (ac->item) {
-        sp_arc_finish(ac);
+    if (this->arc) {
+        this->finishItem();
     }
-
-    delete ac->_message_context;
-
-    G_OBJECT_CLASS(sp_arc_context_parent_class)->dispose(object);
 }
 
 /**
  * Callback that processes the "changed" signal on the selection;
  * destroys old and creates new knotholder.
  */
-static void sp_arc_context_selection_changed(Inkscape::Selection * selection, gpointer data)
-{
-    SPArcContext *ac = SP_ARC_CONTEXT(data);
-    SPEventContext *ec = SP_EVENT_CONTEXT(ac);
-
-    ec->shape_editor->unset_item(SH_KNOTHOLDER);
-    SPItem *item = selection->singleItem();
-    ec->shape_editor->set_item(item, SH_KNOTHOLDER);
+void SPArcContext::selection_changed(Inkscape::Selection* selection) {
+    this->shape_editor->unset_item(SH_KNOTHOLDER);
+    this->shape_editor->set_item(selection->singleItem(), SH_KNOTHOLDER);
 }
 
-static void sp_arc_context_setup(SPEventContext *ec)
-{
-    SPArcContext *ac = SP_ARC_CONTEXT(ec);
-    Inkscape::Selection *selection = sp_desktop_selection(ec->desktop);
+void SPArcContext::setup() {
+    SPEventContext::setup();
 
-    if ((SP_EVENT_CONTEXT_CLASS(sp_arc_context_parent_class))->setup) {
-        (SP_EVENT_CONTEXT_CLASS(sp_arc_context_parent_class))->setup(ec);
-    }
+    Inkscape::Selection *selection = sp_desktop_selection(this->desktop);
 
-    ec->shape_editor = new ShapeEditor(ec->desktop);
+    this->shape_editor = new ShapeEditor(this->desktop);
 
-    SPItem *item = sp_desktop_selection(ec->desktop)->singleItem();
+    SPItem *item = sp_desktop_selection(this->desktop)->singleItem();
     if (item) {
-        ec->shape_editor->set_item(item, SH_KNOTHOLDER);
+        this->shape_editor->set_item(item, SH_KNOTHOLDER);
     }
 
-    ac->sel_changed_connection.disconnect();
-    ac->sel_changed_connection = selection->connectChanged(
-        sigc::bind(sigc::ptr_fun(&sp_arc_context_selection_changed), (gpointer) ac)
-        );
+    this->sel_changed_connection.disconnect();
+    this->sel_changed_connection = selection->connectChanged(
+        sigc::mem_fun(this, &SPArcContext::selection_changed)
+    );
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (prefs->getBool("/tools/shapes/selcue")) {
-        ec->enableSelectionCue();
+        this->enableSelectionCue();
     }
 
     if (prefs->getBool("/tools/shapes/gradientdrag")) {
-        ec->enableGrDrag();
+        this->enableGrDrag();
     }
-
-    ac->_message_context = new Inkscape::MessageContext(ec->desktop->messageStack());
 }
 
-static gint sp_arc_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event)
-{
-    SPDesktop *desktop = event_context->desktop;
+bool SPArcContext::item_handler(SPItem* item, GdkEvent* event) {
     gint ret = FALSE;
 
     switch (event->type) {
         case GDK_BUTTON_PRESS:
-            if (event->button.button == 1 && !event_context->space_panning) {
-                Inkscape::setup_for_drag_start(desktop, event_context, event);
+            if (event->button.button == 1 && !this->space_panning) {
+                Inkscape::setup_for_drag_start(desktop, this, event);
                 ret = TRUE;
             }
             break;
@@ -194,37 +152,36 @@ static gint sp_arc_context_item_handler(SPEventContext *event_context, SPItem *i
             break;
     }
 
-    if ((SP_EVENT_CONTEXT_CLASS(sp_arc_context_parent_class))->item_handler) {
-        ret = (SP_EVENT_CONTEXT_CLASS(sp_arc_context_parent_class))->item_handler(event_context, item, event);
-    }
+//    if ((SP_EVENT_CONTEXT_CLASS(sp_arc_context_parent_class))->item_handler) {
+//        ret = (SP_EVENT_CONTEXT_CLASS(sp_arc_context_parent_class))->item_handler(event_context, item, event);
+//    }
+    // CPPIFY: ret is overwritten...
+    ret = SPEventContext::item_handler(item, event);
 
     return ret;
 }
 
-static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent *event)
-{
+bool SPArcContext::root_handler(GdkEvent* event) {
     static bool dragging;
 
-    SPDesktop *desktop = event_context->desktop;
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
-    SPArcContext *ac = SP_ARC_CONTEXT(event_context);
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
-    event_context->tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
+    this->tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
 
     gint ret = FALSE;
 
     switch (event->type) {
         case GDK_BUTTON_PRESS:
-            if (event->button.button == 1 && !event_context->space_panning) {
-
+            if (event->button.button == 1 && !this->space_panning) {
                 dragging = true;
-                ac->center = Inkscape::setup_for_drag_start(desktop, event_context, event);
+
+                this->center = Inkscape::setup_for_drag_start(desktop, this, event);
 
                 /* Snap center */
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop);
-                m.freeSnapReturnByRef(ac->center, Inkscape::SNAPSOURCE_NODE_HANDLE);
+                m.freeSnapReturnByRef(this->center, Inkscape::SNAPSOURCE_NODE_HANDLE);
 
                 sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                                     GDK_KEY_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
@@ -235,27 +192,26 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
             }
             break;
         case GDK_MOTION_NOTIFY:
-            if (dragging && (event->motion.state & GDK_BUTTON1_MASK) && !event_context->space_panning) {
-
-                if ( event_context->within_tolerance
-                     && ( abs( (gint) event->motion.x - event_context->xp ) < event_context->tolerance )
-                     && ( abs( (gint) event->motion.y - event_context->yp ) < event_context->tolerance ) ) {
+            if (dragging && (event->motion.state & GDK_BUTTON1_MASK) && !this->space_panning) {
+                if ( this->within_tolerance
+                     && ( abs( (gint) event->motion.x - this->xp ) < this->tolerance )
+                     && ( abs( (gint) event->motion.y - this->yp ) < this->tolerance ) ) {
                     break; // do not drag if we're within tolerance from origin
                 }
                 // Once the user has moved farther than tolerance from the original location
                 // (indicating they intend to draw, not click), then always process the
                 // motion notify coordinates as given (no snapping back to origin)
-                event_context->within_tolerance = false;
+                this->within_tolerance = false;
 
                 Geom::Point const motion_w(event->motion.x, event->motion.y);
                 Geom::Point motion_dt(desktop->w2d(motion_w));
 
-                sp_arc_drag(ac, motion_dt, event->motion.state);
+                this->drag(motion_dt, event->motion.state);
 
                 gobble_motion_events(GDK_BUTTON1_MASK);
 
                 ret = TRUE;
-            } else if (!sp_event_context_knot_mouseover(ac)){
+            } else if (!sp_event_context_knot_mouseover(this)){
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop);
 
@@ -266,31 +222,34 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
             }
             break;
         case GDK_BUTTON_RELEASE:
-            event_context->xp = event_context->yp = 0;
-            if (event->button.button == 1 && !event_context->space_panning) {
+            this->xp = this->yp = 0;
+            if (event->button.button == 1 && !this->space_panning) {
                 dragging = false;
-                sp_event_context_discard_delayed_snap_event(event_context);
-                if (!event_context->within_tolerance) {
+                sp_event_context_discard_delayed_snap_event(this);
+
+                if (!this->within_tolerance) {
                     // we've been dragging, finish the arc
-                       sp_arc_finish(ac);
-                } else if (event_context->item_to_select) {
+                    this->finishItem();
+                } else if (this->item_to_select) {
                     // no dragging, select clicked item if any
                     if (event->button.state & GDK_SHIFT_MASK) {
-                        selection->toggle(event_context->item_to_select);
+                        selection->toggle(this->item_to_select);
                     } else {
-                        selection->set(event_context->item_to_select);
+                        selection->set(this->item_to_select);
                     }
                 } else {
                     // click in an empty space
                     selection->clear();
                 }
-                event_context->xp = 0;
-                event_context->yp = 0;
-                event_context->item_to_select = NULL;
+
+                this->xp = 0;
+                this->yp = 0;
+                this->item_to_select = NULL;
                 ret = TRUE;
             }
             sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), event->button.time);
             break;
+
         case GDK_KEY_PRESS:
             switch (get_group0_keyval (&event->key)) {
                 case GDK_KEY_Alt_L:
@@ -302,12 +261,13 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
                 case GDK_KEY_Meta_L:  // Meta is when you press Shift+Alt (at least on my machine)
                 case GDK_KEY_Meta_R:
                     if (!dragging) {
-                        sp_event_show_modifier_tip(event_context->defaultMessageContext(), event,
+                        sp_event_show_modifier_tip(this->defaultMessageContext(), event,
                                                    _("<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"),
                                                    _("<b>Shift</b>: draw around the starting point"),
                                                    NULL);
                     }
                     break;
+
                 case GDK_KEY_Up:
                 case GDK_KEY_Down:
                 case GDK_KEY_KP_Up:
@@ -316,6 +276,7 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
                     if (!MOD__CTRL_ONLY(event))
                         ret = TRUE;
                     break;
+
                 case GDK_KEY_x:
                 case GDK_KEY_X:
                     if (MOD__ALT_ONLY(event)) {
@@ -323,38 +284,42 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
                         ret = TRUE;
                     }
                     break;
+
                 case GDK_KEY_Escape:
                     if (dragging) {
                         dragging = false;
-                        sp_event_context_discard_delayed_snap_event(event_context);
+                        sp_event_context_discard_delayed_snap_event(this);
                         // if drawing, cancel, otherwise pass it up for deselecting
-                        sp_arc_cancel(ac);
+                        this->cancel();
                         ret = TRUE;
                     }
                     break;
+
                 case GDK_KEY_space:
                     if (dragging) {
-                        sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate),
-                                              event->button.time);
+                        sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), event->button.time);
                         dragging = false;
-                        sp_event_context_discard_delayed_snap_event(event_context);
-                        if (!event_context->within_tolerance) {
+                        sp_event_context_discard_delayed_snap_event(this);
+
+                        if (!this->within_tolerance) {
                             // we've been dragging, finish the arc
-                            sp_arc_finish(ac);
+                            this->finishItem();
                         }
                         // do not return true, so that space would work switching to selector
                     }
                     break;
+
                 case GDK_KEY_Delete:
                 case GDK_KEY_KP_Delete:
                 case GDK_KEY_BackSpace:
-                    ret = event_context->deleteSelectedDrag(MOD__CTRL_ONLY(event));
+                    ret = this->deleteSelectedDrag(MOD__CTRL_ONLY(event));
                     break;
 
                 default:
                     break;
             }
             break;
+
         case GDK_KEY_RELEASE:
             switch (event->key.keyval) {
                 case GDK_KEY_Alt_L:
@@ -365,32 +330,28 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
                 case GDK_KEY_Shift_R:
                 case GDK_KEY_Meta_L:  // Meta is when you press Shift+Alt
                 case GDK_KEY_Meta_R:
-                    event_context->defaultMessageContext()->clear();
+                    this->defaultMessageContext()->clear();
                     break;
+
                 default:
                     break;
             }
             break;
+
         default:
             break;
     }
 
     if (!ret) {
-        if ((SP_EVENT_CONTEXT_CLASS(sp_arc_context_parent_class))->root_handler) {
-            ret = (SP_EVENT_CONTEXT_CLASS(sp_arc_context_parent_class))->root_handler(event_context, event);
-        }
+    	ret = SPEventContext::root_handler(event);
     }
 
     return ret;
 }
 
-static void sp_arc_drag(SPArcContext *ac, Geom::Point pt, guint state)
-{
-    SPDesktop *desktop = SP_EVENT_CONTEXT(ac)->desktop;
-
-    if (!ac->item) {
-
-        if (Inkscape::have_viable_layer(desktop, ac->_message_context) == false) {
+void SPArcContext::drag(Geom::Point pt, guint state) {
+    if (!this->arc) {
+        if (Inkscape::have_viable_layer(desktop, this->message_context) == false) {
             return;
         }
 
@@ -402,33 +363,38 @@ static void sp_arc_drag(SPArcContext *ac, Geom::Point pt, guint state)
         // Set style
         sp_desktop_apply_style_tool(desktop, repr, "/tools/shapes/arc", false);
 
-        ac->item = SP_ITEM(desktop->currentLayer()->appendChildRepr(repr));
+        this->arc = SP_ARC(desktop->currentLayer()->appendChildRepr(repr));
         Inkscape::GC::release(repr);
-        ac->item->transform = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
-        ac->item->updateRepr();
+        this->arc->transform = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
+        this->arc->updateRepr();
 
         desktop->canvas->forceFullRedrawAfterInterruptions(5);
     }
 
     bool ctrl_save = false;
+
     if ((state & GDK_MOD1_MASK) && (state & GDK_CONTROL_MASK) && !(state & GDK_SHIFT_MASK)) {
         // if Alt is pressed without Shift in addition to Control, temporarily drop the CONTROL mask
         // so that the ellipse is not constrained to integer ratios
         ctrl_save = true;
         state = state ^ GDK_CONTROL_MASK;
     }
-    Geom::Rect r = Inkscape::snap_rectangular_box(desktop, ac->item, pt, ac->center, state);
+
+    Geom::Rect r = Inkscape::snap_rectangular_box(desktop, this->arc, pt, this->center, state);
+
     if (ctrl_save) {
         state = state ^ GDK_CONTROL_MASK;
     }
 
     Geom::Point dir = r.dimensions() / 2;
+
     if (state & GDK_MOD1_MASK) {
         /* With Alt let the ellipse pass through the mouse pointer */
         Geom::Point c = r.midpoint();
+
         if (!ctrl_save) {
             if (fabs(dir[Geom::X]) > 1E-6 && fabs(dir[Geom::Y]) > 1E-6) {
-                Geom::Affine const i2d ( (ac->item)->i2dt_affine() );
+                Geom::Affine const i2d ( (this->arc)->i2dt_affine() );
                 Geom::Point new_dir = pt * i2d - c;
                 new_dir[Geom::X] *= dir[Geom::Y] / dir[Geom::X];
                 double lambda = new_dir.length() / dir[Geom::Y];
@@ -443,18 +409,21 @@ static void sp_arc_drag(SPArcContext *ac, Geom::Point pt, guint state)
         }
     }
 
-    sp_arc_position_set(SP_ARC(ac->item),
+    sp_arc_position_set(SP_ARC(this->arc),
                         r.midpoint()[Geom::X], r.midpoint()[Geom::Y],
                         r.dimensions()[Geom::X] / 2, r.dimensions()[Geom::Y] / 2);
 
     double rdimx = r.dimensions()[Geom::X];
     double rdimy = r.dimensions()[Geom::Y];
+
     Inkscape::Util::Quantity rdimx_q = Inkscape::Util::Quantity(rdimx, "px");
     Inkscape::Util::Quantity rdimy_q = Inkscape::Util::Quantity(rdimy, "px");
     GString *xs = g_string_new(rdimx_q.string(*desktop->namedview->doc_units).c_str());
     GString *ys = g_string_new(rdimy_q.string(*desktop->namedview->doc_units).c_str());
+
     if (state & GDK_CONTROL_MASK) {
         int ratio_x, ratio_y;
+
         if (fabs (rdimx) > fabs (rdimy)) {
             ratio_x = (int) rint (rdimx / rdimy);
             ratio_y = 1;
@@ -462,56 +431,50 @@ static void sp_arc_drag(SPArcContext *ac, Geom::Point pt, guint state)
             ratio_x = 1;
             ratio_y = (int) rint (rdimy / rdimx);
         }
-        ac->_message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>Ellipse</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> to draw around the starting point"), xs->str, ys->str, ratio_x, ratio_y);
+
+        this->message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>Ellipse</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> to draw around the starting point"), xs->str, ys->str, ratio_x, ratio_y);
     } else {
-        ac->_message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>Ellipse</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-ratio ellipse; with <b>Shift</b> to draw around the starting point"), xs->str, ys->str);
+        this->message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>Ellipse</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-ratio ellipse; with <b>Shift</b> to draw around the starting point"), xs->str, ys->str);
     }
+
     g_string_free(xs, FALSE);
     g_string_free(ys, FALSE);
 }
 
-static void sp_arc_finish(SPArcContext *ac)
-{
-    ac->_message_context->clear();
+void SPArcContext::finishItem() {
+    this->message_context->clear();
 
-    if (ac->item != NULL) {
-
-        SPGenericEllipse *ge = SP_GENERICELLIPSE(SP_ARC(ac->item));
-        if (ge->rx.computed == 0 || ge->ry.computed == 0) {
-            sp_arc_cancel(ac); // Don't allow the creating of zero sized arc, for example when the start and and point snap to the snap grid point
+    if (this->arc != NULL) {
+        if (this->arc->rx.computed == 0 || this->arc->ry.computed == 0) {
+            this->cancel(); // Don't allow the creating of zero sized arc, for example when the start and and point snap to the snap grid point
             return;
         }
 
-        SPDesktop *desktop = SP_EVENT_CONTEXT(ac)->desktop;
-
-        SP_OBJECT(ac->item)->updateRepr();
+        this->arc->updateRepr();
 
         desktop->canvas->endForcedFullRedraws();
 
-        sp_desktop_selection(desktop)->set(ac->item);
-		DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_ARC,
-                         _("Create ellipse"));
+        sp_desktop_selection(desktop)->set(this->arc);
 
-        ac->item = NULL;
+		DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_ARC, _("Create ellipse"));
+
+        this->arc = NULL;
     }
 }
 
-static void sp_arc_cancel(SPArcContext *ac)
-{
-    SPDesktop *desktop = SP_EVENT_CONTEXT(ac)->desktop;
-
+void SPArcContext::cancel() {
     sp_desktop_selection(desktop)->clear();
     sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), 0);
 
-    if (ac->item != NULL) {
-        SP_OBJECT(ac->item)->deleteObject();
-        ac->item = NULL;
+    if (this->arc != NULL) {
+        this->arc->deleteObject();
+        this->arc = NULL;
     }
 
-    ac->within_tolerance = false;
-    ac->xp = 0;
-    ac->yp = 0;
-    ac->item_to_select = NULL;
+    this->within_tolerance = false;
+    this->xp = 0;
+    this->yp = 0;
+    this->item_to_select = NULL;
 
     desktop->canvas->endForcedFullRedraws();
 

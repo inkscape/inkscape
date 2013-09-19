@@ -26,7 +26,7 @@
 #include <vector>
 #include <sp-shape.h>
 
-struct SPImage;
+class SPImage;
 class  SPItem;
 
 namespace Inkscape {

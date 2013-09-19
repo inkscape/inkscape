@@ -12,11 +12,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#define SP_TYPE_PERSP3D         (persp3d_get_type ())
-#define SP_PERSP3D(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_PERSP3D, Persp3D))
-#define SP_PERSP3D_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_PERSP3D, Persp3DClass))
-#define SP_IS_PERSP3D(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_PERSP3D))
-#define SP_IS_PERSP3D_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_PERSP3D))
+#define SP_PERSP3D(obj) (dynamic_cast<Persp3D*>((SPObject*)obj))
+#define SP_IS_PERSP3D(obj) (dynamic_cast<const Persp3D*>((SPObject*)obj) != NULL)
 
 #include <list>
 #include <vector>
@@ -27,7 +24,7 @@
 #include "inkscape.h"
 
 class SPBox3D;
-struct Box3DContext;
+class Box3DContext;
 
 class Persp3DImpl {
 public:
@@ -46,17 +43,24 @@ public:
 //    friend class Persp3D;
 };
 
-struct Persp3D : public SPObject {
+class Persp3D : public SPObject {
+public:
+	Persp3D();
+	virtual ~Persp3D();
+
     Persp3DImpl *perspective_impl;
+
+protected:
+	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
+	virtual void release();
+
+	virtual void set(unsigned int key, const gchar* value);
+
+	virtual void update(SPCtx* ctx, unsigned int flags);
+
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
 };
 
-struct Persp3DClass {
-    SPItemClass parent_class;
-};
-
-
-/* Standard GType function */
-GType persp3d_get_type (void);
 
 // FIXME: Make more of these inline!
 inline Persp3D * persp3d_get_from_repr (Inkscape::XML::Node *repr) {

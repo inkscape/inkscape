@@ -8,7 +8,7 @@
 #include <glib.h>
 #include <2geom/point.h>
 
-struct SPDrawContext;
+class SPDrawContext;
 class SPCurve;
 struct SPCanvasItem;
 

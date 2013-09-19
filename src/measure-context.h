@@ -14,19 +14,23 @@
 
 #include "event-context.h"
 
-#define SP_TYPE_MEASURE_CONTEXT (sp_measure_context_get_type())
-#define SP_MEASURE_CONTEXT(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_MEASURE_CONTEXT, SPMeasureContext))
-#define SP_IS_MEASURE_CONTEXT(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_MEASURE_CONTEXT))
+#define SP_MEASURE_CONTEXT(obj) (dynamic_cast<SPMeasureContext*>((SPEventContext*)obj))
+#define SP_IS_MEASURE_CONTEXT(obj) (dynamic_cast<const SPMeasureContext*>((const SPEventContext*)obj) != NULL)
 
-struct SPMeasureContext {
-	SPEventContext event_context;
-	SPCanvasItem *grabbed;
+class SPMeasureContext : public SPEventContext {
+public:
+	SPMeasureContext();
+	virtual ~SPMeasureContext();
+
+	static const std::string prefsPath;
+
+	virtual void finish();
+	virtual bool root_handler(GdkEvent* event);
+
+	virtual const std::string& getPrefsPath();
+
+private:
+	SPCanvasItem* grabbed;
 };
-
-struct SPMeasureContextClass {
-	SPEventContextClass parent_class;
-};
-
-GType sp_measure_context_get_type(void);
 
 #endif // SEEN_SP_MEASURING_CONTEXT_H

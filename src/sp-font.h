@@ -18,25 +18,33 @@
 
 #include "sp-object.h"
 
-#define SP_TYPE_FONT (sp_font_get_type ())
-#define SP_FONT(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_FONT, SPFont))
-#define SP_FONT_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_FONT, SPFontClass))
-#define SP_IS_FONT(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_FONT))
-#define SP_IS_FONT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_FONT))
+#define SP_FONT(obj) (dynamic_cast<SPFont*>((SPObject*)obj))
+#define SP_IS_FONT(obj) (dynamic_cast<const SPFont*>((SPObject*)obj) != NULL)
 
-struct SPFont : public SPObject {
+class SPFont : public SPObject {
+public:
+	SPFont();
+	virtual ~SPFont();
+
     double horiz_origin_x;
     double horiz_origin_y;
     double horiz_adv_x;
     double vert_origin_x;
     double vert_origin_y;
     double vert_adv_y;
-};
 
-struct SPFontClass {
-    SPObjectClass parent_class;
-};
+protected:
+	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
+	virtual void release();
 
-GType sp_font_get_type (void);
+	virtual void child_added(Inkscape::XML::Node* child, Inkscape::XML::Node* ref);
+	virtual void remove_child(Inkscape::XML::Node* child);
+
+	virtual void set(unsigned int key, const gchar* value);
+
+	virtual void update(SPCtx* ctx, unsigned int flags);
+
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
+};
 
 #endif //#ifndef SP_FONT_H_SEEN

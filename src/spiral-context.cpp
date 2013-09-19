@@ -45,182 +45,138 @@
 
 using Inkscape::DocumentUndo;
 
-static void sp_spiral_context_dispose(GObject *object);
-static void sp_spiral_context_setup(SPEventContext *ec);
-static void sp_spiral_context_finish(SPEventContext *ec);
-static void sp_spiral_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val);
+#include "tool-factory.h"
 
-static gint sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event);
+namespace {
+	SPEventContext* createSpiralContext() {
+		return new SPSpiralContext();
+	}
 
-static void sp_spiral_drag(SPSpiralContext *sc, Geom::Point const &p, guint state);
-static void sp_spiral_finish(SPSpiralContext *sc);
-static void sp_spiral_cancel(SPSpiralContext *sc);
-
-G_DEFINE_TYPE(SPSpiralContext, sp_spiral_context, SP_TYPE_EVENT_CONTEXT);
-
-static void
-sp_spiral_context_class_init(SPSpiralContextClass *klass)
-{
-    GObjectClass *object_class = G_OBJECT_CLASS(klass);
-    SPEventContextClass *event_context_class = SP_EVENT_CONTEXT_CLASS(klass);
-
-    object_class->dispose = sp_spiral_context_dispose;
-
-    event_context_class->setup = sp_spiral_context_setup;
-    event_context_class->finish = sp_spiral_context_finish;
-    event_context_class->set = sp_spiral_context_set;
-    event_context_class->root_handler = sp_spiral_context_root_handler;
+	bool spiralContextRegistered = ToolFactory::instance().registerObject("/tools/shapes/spiral", createSpiralContext);
 }
 
-static void
-sp_spiral_context_init(SPSpiralContext *spiral_context)
-{
-    SPEventContext *event_context = SP_EVENT_CONTEXT(spiral_context);
-
-    event_context->cursor_shape = cursor_spiral_xpm;
-    event_context->hot_x = 4;
-    event_context->hot_y = 4;
-    event_context->xp = 0;
-    event_context->yp = 0;
-    event_context->tolerance = 0;
-    event_context->within_tolerance = false;
-    event_context->item_to_select = NULL;
-
-    spiral_context->item = NULL;
-
-    spiral_context->revo = 3.0;
-    spiral_context->exp = 1.0;
-    spiral_context->t0 = 0.0;
-
-    new (&spiral_context->sel_changed_connection) sigc::connection();
+const std::string& SPSpiralContext::getPrefsPath() {
+	return SPSpiralContext::prefsPath;
 }
 
-static void sp_spiral_context_finish(SPEventContext *ec)
-{
-    SPSpiralContext *sc = SP_SPIRAL_CONTEXT(ec);
-    SPDesktop *desktop = ec->desktop;
+const std::string SPSpiralContext::prefsPath = "/tools/shapes/spiral";
+
+SPSpiralContext::SPSpiralContext() : SPEventContext() {
+    this->cursor_shape = cursor_spiral_xpm;
+    this->hot_x = 4;
+    this->hot_y = 4;
+    this->xp = 0;
+    this->yp = 0;
+    this->tolerance = 0;
+    this->within_tolerance = false;
+    this->item_to_select = NULL;
+
+    this->spiral = NULL;
+
+    this->revo = 3.0;
+    this->exp = 1.0;
+    this->t0 = 0.0;
+}
+
+void SPSpiralContext::finish() {
+    SPDesktop *desktop = this->desktop;
 
     sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), GDK_CURRENT_TIME);
-    sp_spiral_finish(sc);
-    sc->sel_changed_connection.disconnect();
 
-    if ((SP_EVENT_CONTEXT_CLASS(sp_spiral_context_parent_class))->finish) {
-        (SP_EVENT_CONTEXT_CLASS(sp_spiral_context_parent_class))->finish(ec);
-    }
+    this->finishItem();
+    this->sel_changed_connection.disconnect();
+
+    SPEventContext::finish();
 }
 
-static void
-sp_spiral_context_dispose(GObject *object)
-{
-    SPSpiralContext *sc = SP_SPIRAL_CONTEXT(object);
-    SPEventContext *ec = SP_EVENT_CONTEXT(object);
+SPSpiralContext::~SPSpiralContext() {
+    this->enableGrDrag(false);
 
-    ec->enableGrDrag(false);
+    this->sel_changed_connection.disconnect();
 
-    sc->sel_changed_connection.disconnect();
-    sc->sel_changed_connection.~connection();
-
-    delete ec->shape_editor;
-    ec->shape_editor = NULL;
+    delete this->shape_editor;
+    this->shape_editor = NULL;
 
     /* fixme: This is necessary because we do not grab */
-    if (sc->item) sp_spiral_finish(sc);
-
-    if (sc->_message_context) {
-        delete sc->_message_context;
+    if (this->spiral) {
+    	this->finishItem();
     }
-
-    G_OBJECT_CLASS(sp_spiral_context_parent_class)->dispose(object);
 }
 
 /**
  * Callback that processes the "changed" signal on the selection;
  * destroys old and creates new knotholder.
  */
-static void sp_spiral_context_selection_changed(Inkscape::Selection *selection, gpointer data)
-{
-    SPSpiralContext *sc = SP_SPIRAL_CONTEXT(data);
-    SPEventContext *ec = SP_EVENT_CONTEXT(sc);
-
-    ec->shape_editor->unset_item(SH_KNOTHOLDER);
-    SPItem *item = selection->singleItem();
-    ec->shape_editor->set_item(item, SH_KNOTHOLDER);
+void SPSpiralContext::selection_changed(Inkscape::Selection *selection) {
+    this->shape_editor->unset_item(SH_KNOTHOLDER);
+    this->shape_editor->set_item(selection->singleItem(), SH_KNOTHOLDER);
 }
 
-static void
-sp_spiral_context_setup(SPEventContext *ec)
-{
-    SPSpiralContext *sc = SP_SPIRAL_CONTEXT(ec);
+void SPSpiralContext::setup() {
+    SPEventContext::setup();
 
-    if ((SP_EVENT_CONTEXT_CLASS(sp_spiral_context_parent_class))->setup)
-        (SP_EVENT_CONTEXT_CLASS(sp_spiral_context_parent_class))->setup(ec);
+    sp_event_context_read(this, "expansion");
+    sp_event_context_read(this, "revolution");
+    sp_event_context_read(this, "t0");
 
-    sp_event_context_read(ec, "expansion");
-    sp_event_context_read(ec, "revolution");
-    sp_event_context_read(ec, "t0");
+    this->shape_editor = new ShapeEditor(this->desktop);
 
-    ec->shape_editor = new ShapeEditor(ec->desktop);
-
-    SPItem *item = sp_desktop_selection(ec->desktop)->singleItem();
+    SPItem *item = sp_desktop_selection(this->desktop)->singleItem();
     if (item) {
-        ec->shape_editor->set_item(item, SH_KNOTHOLDER);
+        this->shape_editor->set_item(item, SH_KNOTHOLDER);
     }
 
-    Inkscape::Selection *selection = sp_desktop_selection(ec->desktop);
-    sc->sel_changed_connection.disconnect();
-    sc->sel_changed_connection = selection->connectChanged(sigc::bind(sigc::ptr_fun(&sp_spiral_context_selection_changed), (gpointer)sc));
+    Inkscape::Selection *selection = sp_desktop_selection(this->desktop);
+    this->sel_changed_connection.disconnect();
+
+    this->sel_changed_connection = selection->connectChanged(sigc::mem_fun(this, &SPSpiralContext::selection_changed));
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+
     if (prefs->getBool("/tools/shapes/selcue")) {
-        ec->enableSelectionCue();
-    }
-    if (prefs->getBool("/tools/shapes/gradientdrag")) {
-        ec->enableGrDrag();
+        this->enableSelectionCue();
     }
 
-    sc->_message_context = new Inkscape::MessageContext((ec->desktop)->messageStack());
+    if (prefs->getBool("/tools/shapes/gradientdrag")) {
+        this->enableGrDrag();
+    }
 }
 
-static void
-sp_spiral_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val)
-{
-    SPSpiralContext *sc = SP_SPIRAL_CONTEXT(ec);
-    Glib::ustring name = val->getEntryName();
+void SPSpiralContext::set(const Inkscape::Preferences::Entry& val) {
+    Glib::ustring name = val.getEntryName();
 
     if (name == "expansion") {
-        sc->exp = CLAMP(val->getDouble(), 0.0, 1000.0);
+        this->exp = CLAMP(val.getDouble(), 0.0, 1000.0);
     } else if (name == "revolution") {
-        sc->revo = CLAMP(val->getDouble(3.0), 0.05, 40.0);
+        this->revo = CLAMP(val.getDouble(3.0), 0.05, 40.0);
     } else if (name == "t0") {
-        sc->t0 = CLAMP(val->getDouble(), 0.0, 0.999);
+        this->t0 = CLAMP(val.getDouble(), 0.0, 0.999);
     }
 }
 
-static gint
-sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
-{
+bool SPSpiralContext::root_handler(GdkEvent* event) {
     static gboolean dragging;
 
-    SPDesktop *desktop = event_context->desktop;
+    SPDesktop *desktop = this->desktop;
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
-    SPSpiralContext *sc = SP_SPIRAL_CONTEXT(event_context);
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    event_context->tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
+    this->tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
 
     gint ret = FALSE;
 
     switch (event->type) {
         case GDK_BUTTON_PRESS:
-            if (event->button.button == 1 && !event_context->space_panning) {
-
+            if (event->button.button == 1 && !this->space_panning) {
                 dragging = TRUE;
-                sc->center = Inkscape::setup_for_drag_start(desktop, event_context, event);
+
+                this->center = Inkscape::setup_for_drag_start(desktop, this, event);
 
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop);
-                m.freeSnapReturnByRef(sc->center, Inkscape::SNAPSOURCE_NODE_HANDLE);
+                m.freeSnapReturnByRef(this->center, Inkscape::SNAPSOURCE_NODE_HANDLE);
                 m.unSetup();
+
                 sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                                     ( GDK_KEY_PRESS_MASK |
                                       GDK_BUTTON_RELEASE_MASK |
@@ -231,32 +187,33 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 ret = TRUE;
             }
             break;
-        case GDK_MOTION_NOTIFY:
-            if (dragging && (event->motion.state & GDK_BUTTON1_MASK) && !event_context->space_panning) {
 
-                if ( event_context->within_tolerance
-                     && ( abs( (gint) event->motion.x - event_context->xp ) < event_context->tolerance )
-                     && ( abs( (gint) event->motion.y - event_context->yp ) < event_context->tolerance ) ) {
+        case GDK_MOTION_NOTIFY:
+            if (dragging && (event->motion.state & GDK_BUTTON1_MASK) && !this->space_panning) {
+                if ( this->within_tolerance
+                     && ( abs( (gint) event->motion.x - this->xp ) < this->tolerance )
+                     && ( abs( (gint) event->motion.y - this->yp ) < this->tolerance ) ) {
                     break; // do not drag if we're within tolerance from origin
                 }
                 // Once the user has moved farther than tolerance from the original location
                 // (indicating they intend to draw, not click), then always process the
                 // motion notify coordinates as given (no snapping back to origin)
-                event_context->within_tolerance = false;
+                this->within_tolerance = false;
 
                 Geom::Point const motion_w(event->motion.x, event->motion.y);
-                Geom::Point motion_dt(event_context->desktop->w2d(motion_w));
+                Geom::Point motion_dt(this->desktop->w2d(motion_w));
 
                 SnapManager &m = desktop->namedview->snap_manager;
-                m.setup(desktop, true, sc->item);
+                m.setup(desktop, true, this->spiral);
                 m.freeSnapReturnByRef(motion_dt, Inkscape::SNAPSOURCE_NODE_HANDLE);
                 m.unSetup();
-                sp_spiral_drag(sc, motion_dt, event->motion.state);
+
+                this->drag(motion_dt, event->motion.state);
 
                 gobble_motion_events(GDK_BUTTON1_MASK);
 
                 ret = TRUE;
-            } else if (!sp_event_context_knot_mouseover(sc)) {
+            } else if (!sp_event_context_knot_mouseover(this)) {
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop);
                 Geom::Point const motion_w(event->motion.x, event->motion.y);
@@ -265,31 +222,34 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 m.unSetup();
             }
             break;
+
         case GDK_BUTTON_RELEASE:
-            event_context->xp = event_context->yp = 0;
-            if (event->button.button == 1 && !event_context->space_panning) {
+            this->xp = this->yp = 0;
+            if (event->button.button == 1 && !this->space_panning) {
                 dragging = FALSE;
-                sp_event_context_discard_delayed_snap_event(event_context);
-                if (!event_context->within_tolerance) {
+                sp_event_context_discard_delayed_snap_event(this);
+
+                if (!this->within_tolerance) {
                     // we've been dragging, finish the spiral
-                    sp_spiral_finish(sc);
-                } else if (event_context->item_to_select) {
+                    this->finishItem();
+                } else if (this->item_to_select) {
                     // no dragging, select clicked item if any
                     if (event->button.state & GDK_SHIFT_MASK) {
-                        selection->toggle(event_context->item_to_select);
+                        selection->toggle(this->item_to_select);
                     } else {
-                        selection->set(event_context->item_to_select);
+                        selection->set(this->item_to_select);
                     }
                 } else {
                     // click in an empty space
                     selection->clear();
                 }
 
-                event_context->item_to_select = NULL;
+                this->item_to_select = NULL;
                 ret = TRUE;
                 sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), event->button.time);
             }
             break;
+
         case GDK_KEY_PRESS:
             switch (get_group0_keyval(&event->key)) {
                 case GDK_KEY_Alt_R:
@@ -299,7 +259,7 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 case GDK_KEY_Shift_R:
                 case GDK_KEY_Meta_L:  // Meta is when you press Shift+Alt (at least on my machine)
                 case GDK_KEY_Meta_R:
-                    sp_event_show_modifier_tip(event_context->defaultMessageContext(), event,
+                    sp_event_show_modifier_tip(this->defaultMessageContext(), event,
                                                _("<b>Ctrl</b>: snap angle"),
                                                NULL,
                                                _("<b>Alt</b>: lock spiral radius"));
@@ -312,6 +272,7 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     if (!MOD__CTRL_ONLY(event))
                         ret = TRUE;
                     break;
+
                 case GDK_KEY_x:
                 case GDK_KEY_X:
                     if (MOD__ALT_ONLY(event)) {
@@ -319,12 +280,13 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         ret = TRUE;
                     }
                     break;
+
                 case GDK_KEY_Escape:
                 	if (dragging) {
                 		dragging = false;
-                		sp_event_context_discard_delayed_snap_event(event_context);
+                		sp_event_context_discard_delayed_snap_event(this);
                 		// if drawing, cancel, otherwise pass it up for deselecting
-                		sp_spiral_cancel(sc);
+                		this->cancel();
                 		ret = TRUE;
                 	}
                 	break;
@@ -334,24 +296,27 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate),
                                               event->button.time);
                         dragging = false;
-                        sp_event_context_discard_delayed_snap_event(event_context);
-                        if (!event_context->within_tolerance) {
+                        sp_event_context_discard_delayed_snap_event(this);
+
+                        if (!this->within_tolerance) {
                             // we've been dragging, finish the spiral
-                            sp_spiral_finish(sc);
+                            this->finish();
                         }
                         // do not return true, so that space would work switching to selector
                     }
                     break;
+
                 case GDK_KEY_Delete:
                 case GDK_KEY_KP_Delete:
                 case GDK_KEY_BackSpace:
-                    ret = event_context->deleteSelectedDrag(MOD__CTRL_ONLY(event));
+                    ret = this->deleteSelectedDrag(MOD__CTRL_ONLY(event));
                     break;
 
                 default:
                     break;
             }
             break;
+
         case GDK_KEY_RELEASE:
             switch (get_group0_keyval(&event->key)) {
                 case GDK_KEY_Alt_L:
@@ -362,135 +327,123 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 case GDK_KEY_Shift_R:
                 case GDK_KEY_Meta_L:  // Meta is when you press Shift+Alt
                 case GDK_KEY_Meta_R:
-                    event_context->defaultMessageContext()->clear();
+                    this->defaultMessageContext()->clear();
                     break;
+
                 default:
                     break;
             }
             break;
+
         default:
             break;
     }
 
     if (!ret) {
-        if ((SP_EVENT_CONTEXT_CLASS(sp_spiral_context_parent_class))->root_handler)
-            ret = (SP_EVENT_CONTEXT_CLASS(sp_spiral_context_parent_class))->root_handler(event_context, event);
+    	ret = SPEventContext::root_handler(event);
     }
 
     return ret;
 }
 
-static void sp_spiral_drag(SPSpiralContext *sc, Geom::Point const &p, guint state)
-{
-    SPDesktop *desktop = SP_EVENT_CONTEXT(sc)->desktop;
+void SPSpiralContext::drag(Geom::Point const &p, guint state) {
+    SPDesktop *desktop = SP_EVENT_CONTEXT(this)->desktop;
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int const snaps = prefs->getInt("/options/rotationsnapsperpi/value", 12);
 
-    if (!sc->item) {
-
-        if (Inkscape::have_viable_layer(desktop, sc->_message_context) == false) {
+    if (!this->spiral) {
+        if (Inkscape::have_viable_layer(desktop, this->message_context) == false) {
             return;
         }
 
         // Create object
-        Inkscape::XML::Document *xml_doc = SP_EVENT_CONTEXT_DOCUMENT(sc)->getReprDoc();
+        Inkscape::XML::Document *xml_doc = SP_EVENT_CONTEXT_DOCUMENT(this)->getReprDoc();
         Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
         repr->setAttribute("sodipodi:type", "spiral");
 
         // Set style
         sp_desktop_apply_style_tool(desktop, repr, "/tools/shapes/spiral", false);
 
-        sc->item = SP_ITEM(desktop->currentLayer()->appendChildRepr(repr));
+        this->spiral = SP_SPIRAL(desktop->currentLayer()->appendChildRepr(repr));
         Inkscape::GC::release(repr);
-        sc->item->transform = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
-        sc->item->updateRepr();
+        this->spiral->transform = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
+        this->spiral->updateRepr();
 
         desktop->canvas->forceFullRedrawAfterInterruptions(5);
     }
 
     SnapManager &m = desktop->namedview->snap_manager;
-    m.setup(desktop, true, sc->item);
+    m.setup(desktop, true, this->spiral);
     Geom::Point pt2g = p;
     m.freeSnapReturnByRef(pt2g, Inkscape::SNAPSOURCE_NODE_HANDLE);
     m.unSetup();
-    Geom::Point const p0 = desktop->dt2doc(sc->center);
+    Geom::Point const p0 = desktop->dt2doc(this->center);
     Geom::Point const p1 = desktop->dt2doc(pt2g);
-
-    SPSpiral *spiral = SP_SPIRAL(sc->item);
 
     Geom::Point const delta = p1 - p0;
     gdouble const rad = Geom::L2(delta);
 
-    gdouble arg = Geom::atan2(delta) - 2.0*M_PI*spiral->revo;
+    gdouble arg = Geom::atan2(delta) - 2.0*M_PI*this->spiral->revo;
 
     if (state & GDK_CONTROL_MASK) {
         arg = sp_round(arg, M_PI/snaps);
     }
 
     /* Fixme: these parameters should be got from dialog box */
-    sp_spiral_position_set(spiral, p0[Geom::X], p0[Geom::Y],
-                           /*expansion*/ sc->exp,
-                           /*revolution*/ sc->revo,
+    this->spiral->setPosition(p0[Geom::X], p0[Geom::Y],
+                           /*expansion*/ this->exp,
+                           /*revolution*/ this->revo,
                            rad, arg,
-                           /*t0*/ sc->t0);
+                           /*t0*/ this->t0);
 
     /* status text */
     Inkscape::Util::Quantity q = Inkscape::Util::Quantity(rad, "px");
     GString *rads = g_string_new(q.string(*desktop->namedview->doc_units).c_str());
-    sc->_message_context->setF(Inkscape::IMMEDIATE_MESSAGE,
+    this->message_context->setF(Inkscape::IMMEDIATE_MESSAGE,
                                _("<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"),
-                               rads->str, sp_round((arg + 2.0*M_PI*spiral->revo)*180/M_PI, 0.0001));
+                               rads->str, sp_round((arg + 2.0*M_PI*this->spiral->revo)*180/M_PI, 0.0001));
     g_string_free(rads, FALSE);
 }
 
-static void
-sp_spiral_finish(SPSpiralContext *sc)
-{
-    sc->_message_context->clear();
+void SPSpiralContext::finishItem() {
+    this->message_context->clear();
 
-    if (sc->item != NULL) {
-    	SPSpiral *spiral = SP_SPIRAL(sc->item);
-    	if (spiral->rad == 0) {
-    		sp_spiral_cancel(sc); // Don't allow the creating of zero sized spiral, for example when the start and and point snap to the snap grid point
+    if (this->spiral != NULL) {
+    	if (this->spiral->rad == 0) {
+    		this->cancel(); // Don't allow the creating of zero sized spiral, for example when the start and and point snap to the snap grid point
     		return;
     	}
 
-    	SPDesktop *desktop = SP_EVENT_CONTEXT(sc)->desktop;
+        spiral->set_shape();
+        spiral->updateRepr(SP_OBJECT_WRITE_EXT);
 
-        SP_SHAPE(spiral)->setShape();
-        SP_OBJECT(spiral)->updateRepr(SP_OBJECT_WRITE_EXT);
+        this->desktop->canvas->endForcedFullRedraws();
 
-        desktop->canvas->endForcedFullRedraws();
+        sp_desktop_selection(this->desktop)->set(this->spiral);
+        DocumentUndo::done(sp_desktop_document(this->desktop), SP_VERB_CONTEXT_SPIRAL, _("Create spiral"));
 
-        sp_desktop_selection(desktop)->set(sc->item);
-        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_SPIRAL,
-                           _("Create spiral"));
-
-        sc->item = NULL;
+        this->spiral = NULL;
     }
 }
 
-static void sp_spiral_cancel(SPSpiralContext *sc)
-{
-	SPDesktop *desktop = SP_EVENT_CONTEXT(sc)->desktop;
+void SPSpiralContext::cancel() {
+	sp_desktop_selection(this->desktop)->clear();
+	sp_canvas_item_ungrab(SP_CANVAS_ITEM(this->desktop->acetate), 0);
 
-	sp_desktop_selection(desktop)->clear();
-	sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), 0);
-
-    if (sc->item != NULL) {
-    	SP_OBJECT(sc->item)->deleteObject();
-    	sc->item = NULL;
+    if (this->spiral != NULL) {
+    	this->spiral->deleteObject();
+    	this->spiral = NULL;
     }
 
-    sc->within_tolerance = false;
-    sc->xp = 0;
-    sc->yp = 0;
-    sc->item_to_select = NULL;
+    this->within_tolerance = false;
+    this->xp = 0;
+    this->yp = 0;
+    this->item_to_select = NULL;
 
-    desktop->canvas->endForcedFullRedraws();
+    this->desktop->canvas->endForcedFullRedraws();
 
-    DocumentUndo::cancel(sp_desktop_document(desktop));
+    DocumentUndo::cancel(sp_desktop_document(this->desktop));
 }
 
 /*

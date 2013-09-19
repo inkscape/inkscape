@@ -259,170 +259,133 @@ static std::vector<FontFaceStretchType> sp_read_fontFaceStretchType(gchar const 
     return v;
 }
 
-static void sp_fontface_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
-static void sp_fontface_release(SPObject *object);
-static void sp_fontface_set(SPObject *object, unsigned int key, const gchar *value);
-static Inkscape::XML::Node *sp_fontface_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
+#include "sp-factory.h"
 
-static void sp_fontface_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref);
-static void sp_fontface_remove_child(SPObject *object, Inkscape::XML::Node *child);
-static void sp_fontface_update(SPObject *object, SPCtx *ctx, guint flags);
+namespace {
+	SPObject* createFontFace() {
+		return new SPFontFace();
+	}
 
-G_DEFINE_TYPE(SPFontFace, sp_fontface, SP_TYPE_OBJECT);
-
-static void sp_fontface_class_init(SPFontFaceClass *fc)
-{
-    SPObjectClass *sp_object_class = reinterpret_cast<SPObjectClass *>(fc);
-
-    sp_object_class->build = sp_fontface_build;
-    sp_object_class->release = sp_fontface_release;
-    sp_object_class->set = sp_fontface_set;
-    sp_object_class->write = sp_fontface_write;
-    sp_object_class->child_added = sp_fontface_child_added;
-    sp_object_class->remove_child = sp_fontface_remove_child;
-    sp_object_class->update = sp_fontface_update;
+	bool fontFaceRegistered = SPFactory::instance().registerObject("svg:font-face", createFontFace);
 }
 
-static void sp_fontface_init(SPFontFace *face)
-{
+SPFontFace::SPFontFace() : SPObject() {
     std::vector<FontFaceStyleType> style;
     style.push_back(SP_FONTFACE_STYLE_ALL);
-    face->font_style = style;
+    this->font_style = style;
 
     std::vector<FontFaceVariantType> variant;
     variant.push_back(SP_FONTFACE_VARIANT_NORMAL);
-    face->font_variant = variant;
+    this->font_variant = variant;
 
     std::vector<FontFaceWeightType> weight;
     weight.push_back(SP_FONTFACE_WEIGHT_ALL);
-    face->font_weight = weight;
+    this->font_weight = weight;
 
     std::vector<FontFaceStretchType> stretch;
     stretch.push_back(SP_FONTFACE_STRETCH_NORMAL);
-    face->font_stretch = stretch;
-    face->font_family = NULL;
-    /*
-    //face->font_style = ;
-    //face->font_variant = ;
-    //face->font_weight = ;
-    //face->font_stretch = ;
-    face->font_size = NULL;
-    //face->unicode_range = ;
-    face->units_per_em = 1000;
-    //face->panose_1 = ;
-    face->stem_v = ;
-    face->stem_h = ;
-    face->slope = 0;
-    face->cap_height = ;
-    face->x_height = ;
-    face->accent_height = ;
-    face->ascent = ;
-    face->descent = ;
-    face->widths = NULL;
-    face->bbox = NULL;
-    face->ideographic = ;
-    face->alphabetic = ;
-    face->mathematical = ;
-    face->hanging = ;
-    face->v_ideographic = ;
-    face->v_alphabetic = ;
-    face->v_mathematical = ;
-    face->v_hanging = ;
-    face->underline_position = ;
-    face->underline_thickness = ;
-    face->strikethrough_position = ;
-    face->strikethrough_thickness = ;
-    face->overline_position = ;
-    face->overline_thickness = ;
-*/
+    this->font_stretch = stretch;
+    this->font_family = NULL;
+
+    //this->font_style = ;
+    //this->font_variant = ;
+    //this->font_weight = ;
+    //this->font_stretch = ;
+    this->font_size = NULL;
+    //this->unicode_range = ;
+    this->units_per_em = 1000;
+    //this->panose_1 = ;
+    this->stemv = 0;
+    this->stemh = 0;
+    this->slope = 0;
+    this->cap_height = 0;
+    this->x_height = 0;
+    this->accent_height = 0;
+    this->ascent = 0;
+    this->descent = 0;
+    this->widths = NULL;
+    this->bbox = NULL;
+    this->ideographic = 0;
+    this->alphabetic = 0;
+    this->mathematical = 0;
+    this->hanging = 0;
+    this->v_ideographic = 0;
+    this->v_alphabetic = 0;
+    this->v_mathematical = 0;
+    this->v_hanging = 0;
+    this->underline_position = 0;
+    this->underline_thickness = 0;
+    this->strikethrough_position = 0;
+    this->strikethrough_thickness = 0;
+    this->overline_position = 0;
+    this->overline_thickness = 0;
 }
 
-static void sp_fontface_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
-{
-    if ((SP_OBJECT_CLASS(sp_fontface_parent_class))->build) {
-        (SP_OBJECT_CLASS(sp_fontface_parent_class))->build(object, document, repr);
-    }
-
-    object->readAttr( "font-family" );
-    object->readAttr( "font-style" );
-    object->readAttr( "font-variant" );
-    object->readAttr( "font-weight" );
-    object->readAttr( "font-stretch" );
-    object->readAttr( "font-size" );
-    object->readAttr( "unicode-range" );
-    object->readAttr( "units-per-em" );
-    object->readAttr( "panose-1" );
-    object->readAttr( "stem-v" );
-    object->readAttr( "stem-h" );
-    object->readAttr( "slope" );
-    object->readAttr( "cap-height" );
-    object->readAttr( "x-height" );
-    object->readAttr( "accent-height" );
-    object->readAttr( "ascent" );
-    object->readAttr( "descent" );
-    object->readAttr( "widths" );
-    object->readAttr( "bbox" );
-    object->readAttr( "ideographic" );
-    object->readAttr( "alphabetic" );
-    object->readAttr( "mathematical" );
-    object->readAttr( "ranging" );
-    object->readAttr( "v-ideogaphic" );
-    object->readAttr( "v-alphabetic" );
-    object->readAttr( "v-mathematical" );
-    object->readAttr( "v-hanging" );
-    object->readAttr( "underline-position" );
-    object->readAttr( "underline-thickness" );
-    object->readAttr( "strikethrough-position" );
-    object->readAttr( "strikethrough-thickness" );
-    object->readAttr( "overline-position" );
-    object->readAttr( "overline-thickness" );
+SPFontFace::~SPFontFace() {
 }
 
-static void sp_fontface_children_modified(SPFontFace */*sp_fontface*/)
-{
+void SPFontFace::build(SPDocument *document, Inkscape::XML::Node *repr) {
+	SPObject::build(document, repr);
+
+	this->readAttr( "font-family" );
+	this->readAttr( "font-style" );
+	this->readAttr( "font-variant" );
+	this->readAttr( "font-weight" );
+	this->readAttr( "font-stretch" );
+	this->readAttr( "font-size" );
+	this->readAttr( "unicode-range" );
+	this->readAttr( "units-per-em" );
+	this->readAttr( "panose-1" );
+	this->readAttr( "stem-v" );
+	this->readAttr( "stem-h" );
+	this->readAttr( "slope" );
+	this->readAttr( "cap-height" );
+	this->readAttr( "x-height" );
+	this->readAttr( "accent-height" );
+	this->readAttr( "ascent" );
+	this->readAttr( "descent" );
+	this->readAttr( "widths" );
+	this->readAttr( "bbox" );
+	this->readAttr( "ideographic" );
+	this->readAttr( "alphabetic" );
+	this->readAttr( "mathematical" );
+	this->readAttr( "ranging" );
+	this->readAttr( "v-ideogaphic" );
+	this->readAttr( "v-alphabetic" );
+	this->readAttr( "v-mathematical" );
+	this->readAttr( "v-hanging" );
+	this->readAttr( "underline-position" );
+	this->readAttr( "underline-thickness" );
+	this->readAttr( "strikethrough-position" );
+	this->readAttr( "strikethrough-thickness" );
+	this->readAttr( "overline-position" );
+	this->readAttr( "overline-thickness" );
 }
 
 /**
  * Callback for child_added event.
  */
-static void
-sp_fontface_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
-{
-    SPFontFace *f = SP_FONTFACE(object);
+void SPFontFace::child_added(Inkscape::XML::Node *child, Inkscape::XML::Node *ref) {
+    SPObject::child_added(child, ref);
 
-    if ((SP_OBJECT_CLASS(sp_fontface_parent_class))->child_added)
-        (* (SP_OBJECT_CLASS(sp_fontface_parent_class))->child_added)(object, child, ref);
-
-    sp_fontface_children_modified(f);
-    object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+    this->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
 
 /**
  * Callback for remove_child event.
  */
-static void
-sp_fontface_remove_child(SPObject *object, Inkscape::XML::Node *child)
-{
-    SPFontFace *f = SP_FONTFACE(object);
+void SPFontFace::remove_child(Inkscape::XML::Node *child) {
+    SPObject::remove_child(child);
 
-    if ((SP_OBJECT_CLASS(sp_fontface_parent_class))->remove_child)
-        (* (SP_OBJECT_CLASS(sp_fontface_parent_class))->remove_child)(object, child);
-
-    sp_fontface_children_modified(f);
-    object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+    this->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
-static void sp_fontface_release(SPObject *object)
-{
-    if ((SP_OBJECT_CLASS(sp_fontface_parent_class))->release) {
-        (SP_OBJECT_CLASS(sp_fontface_parent_class))->release(object);
-    }
+void SPFontFace::release() {
+	SPObject::release();
 }
 
-static void sp_fontface_set(SPObject *object, unsigned int key, const gchar *value)
-{
-    SPFontFace *face = SP_FONTFACE(object);
+void SPFontFace::set(unsigned int key, const gchar *value) {
     std::vector<FontFaceStyleType> style;
     std::vector<FontFaceVariantType> variant;
     std::vector<FontFaceWeightType> weight;
@@ -430,22 +393,24 @@ static void sp_fontface_set(SPObject *object, unsigned int key, const gchar *val
 
     switch (key) {
         case SP_PROP_FONT_FAMILY:
-            if (face->font_family) {
-                g_free(face->font_family);
+            if (this->font_family) {
+                g_free(this->font_family);
             }
-            face->font_family = g_strdup(value);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            this->font_family = g_strdup(value);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_PROP_FONT_STYLE:
             style = sp_read_fontFaceStyleType(value);
-            if (face->font_style.size() != style.size()){
-                face->font_style = style;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            if (this->font_style.size() != style.size()){
+                this->font_style = style;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             } else {
                 for (unsigned int i=0;i<style.size();i++){
-                    if (style[i] != face->font_style[i]){
-                        face->font_style = style;
-                        object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+                    if (style[i] != this->font_style[i]){
+                        this->font_style = style;
+                        this->requestModified(SP_OBJECT_MODIFIED_FLAG);
                         break;
                     }
                 }
@@ -453,14 +418,15 @@ static void sp_fontface_set(SPObject *object, unsigned int key, const gchar *val
             break;
         case SP_PROP_FONT_VARIANT:
             variant = sp_read_fontFaceVariantType(value);
-            if (face->font_variant.size() != variant.size()){
-                face->font_variant = variant;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            if (this->font_variant.size() != variant.size()){
+                this->font_variant = variant;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             } else {
                 for (unsigned int i=0;i<variant.size();i++){
-                    if (variant[i] != face->font_variant[i]){
-                        face->font_variant = variant;
-                        object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+                    if (variant[i] != this->font_variant[i]){
+                        this->font_variant = variant;
+                        this->requestModified(SP_OBJECT_MODIFIED_FLAG);
                         break;
                     }
                 }
@@ -468,14 +434,15 @@ static void sp_fontface_set(SPObject *object, unsigned int key, const gchar *val
             break;
         case SP_PROP_FONT_WEIGHT:
             weight = sp_read_fontFaceWeightType(value);
-            if (face->font_weight.size() != weight.size()){
-                face->font_weight = weight;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            if (this->font_weight.size() != weight.size()){
+                this->font_weight = weight;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             } else {
                 for (unsigned int i=0;i<weight.size();i++){
-                    if (weight[i] != face->font_weight[i]){
-                        face->font_weight = weight;
-                        object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+                    if (weight[i] != this->font_weight[i]){
+                        this->font_weight = weight;
+                        this->requestModified(SP_OBJECT_MODIFIED_FLAG);
                         break;
                     }
                 }
@@ -483,14 +450,15 @@ static void sp_fontface_set(SPObject *object, unsigned int key, const gchar *val
             break;
         case SP_PROP_FONT_STRETCH:
             stretch = sp_read_fontFaceStretchType(value);
-            if (face->font_stretch.size() != stretch.size()){
-                face->font_stretch = stretch;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            if (this->font_stretch.size() != stretch.size()){
+                this->font_stretch = stretch;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             } else {
                 for (unsigned int i=0;i<stretch.size();i++){
-                    if (stretch[i] != face->font_stretch[i]){
-                        face->font_stretch = stretch;
-                        object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+                    if (stretch[i] != this->font_stretch[i]){
+                        this->font_stretch = stretch;
+                        this->requestModified(SP_OBJECT_MODIFIED_FLAG);
                         break;
                     }
                 }
@@ -499,214 +467,235 @@ static void sp_fontface_set(SPObject *object, unsigned int key, const gchar *val
         case SP_ATTR_UNITS_PER_EM:
         {
             double number = value ? g_ascii_strtod(value, 0) : 0;
-            if (number != face->units_per_em){
-                face->units_per_em = number;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            if (number != this->units_per_em){
+                this->units_per_em = number;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         case SP_ATTR_STEMV:
         {
             double number = value ? g_ascii_strtod(value, 0) : 0;
-            if (number != face->stemv){
-                face->stemv = number;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            if (number != this->stemv){
+                this->stemv = number;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         case SP_ATTR_STEMH:
         {
             double number = value ? g_ascii_strtod(value, 0) : 0;
-            if (number != face->stemh){
-                face->stemh = number;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            if (number != this->stemh){
+                this->stemh = number;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         case SP_ATTR_SLOPE:
         {
             double number = value ? g_ascii_strtod(value, 0) : 0;
-            if (number != face->slope){
-                face->slope = number;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            if (number != this->slope){
+                this->slope = number;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         case SP_ATTR_CAP_HEIGHT:
         {
             double number = value ? g_ascii_strtod(value, 0) : 0;
-            if (number != face->cap_height){
-                face->cap_height = number;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            if (number != this->cap_height){
+                this->cap_height = number;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         case SP_ATTR_X_HEIGHT:
         {
             double number = value ? g_ascii_strtod(value, 0) : 0;
-            if (number != face->x_height){
-                face->x_height = number;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            if (number != this->x_height){
+                this->x_height = number;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         case SP_ATTR_ACCENT_HEIGHT:
         {
             double number = value ? g_ascii_strtod(value, 0) : 0;
-            if (number != face->accent_height){
-                face->accent_height = number;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            if (number != this->accent_height){
+                this->accent_height = number;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         case SP_ATTR_ASCENT:
         {
             double number = value ? g_ascii_strtod(value, 0) : 0;
-            if (number != face->ascent){
-                face->ascent = number;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            if (number != this->ascent){
+                this->ascent = number;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         case SP_ATTR_DESCENT:
         {
             double number = value ? g_ascii_strtod(value, 0) : 0;
-            if (number != face->descent){
-                face->descent = number;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            if (number != this->descent){
+                this->descent = number;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         case SP_ATTR_IDEOGRAPHIC:
         {
             double number = value ? g_ascii_strtod(value, 0) : 0;
-            if (number != face->ideographic){
-                face->ideographic = number;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            if (number != this->ideographic){
+                this->ideographic = number;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         case SP_ATTR_ALPHABETIC:
         {
             double number = value ? g_ascii_strtod(value, 0) : 0;
-            if (number != face->alphabetic){
-                face->alphabetic = number;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            if (number != this->alphabetic){
+                this->alphabetic = number;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         case SP_ATTR_MATHEMATICAL:
         {
             double number = value ? g_ascii_strtod(value, 0) : 0;
-            if (number != face->mathematical){
-                face->mathematical = number;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            if (number != this->mathematical){
+                this->mathematical = number;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         case SP_ATTR_HANGING:
         {
             double number = value ? g_ascii_strtod(value, 0) : 0;
-            if (number != face->hanging){
-                face->hanging = number;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            if (number != this->hanging){
+                this->hanging = number;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         case SP_ATTR_V_IDEOGRAPHIC:
         {
             double number = value ? g_ascii_strtod(value, 0) : 0;
-            if (number != face->v_ideographic){
-                face->v_ideographic = number;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            if (number != this->v_ideographic){
+                this->v_ideographic = number;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         case SP_ATTR_V_ALPHABETIC:
         {
             double number = value ? g_ascii_strtod(value, 0) : 0;
-            if (number != face->v_alphabetic){
-                face->v_alphabetic = number;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            if (number != this->v_alphabetic){
+                this->v_alphabetic = number;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         case SP_ATTR_V_MATHEMATICAL:
         {
             double number = value ? g_ascii_strtod(value, 0) : 0;
-            if (number != face->v_mathematical){
-                face->v_mathematical = number;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            if (number != this->v_mathematical){
+                this->v_mathematical = number;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         case SP_ATTR_V_HANGING:
         {
             double number = value ? g_ascii_strtod(value, 0) : 0;
-            if (number != face->v_hanging){
-                face->v_hanging = number;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            if (number != this->v_hanging){
+                this->v_hanging = number;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         case SP_ATTR_UNDERLINE_POSITION:
         {
             double number = value ? g_ascii_strtod(value, 0) : 0;
-            if (number != face->underline_position){
-                face->underline_position = number;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            if (number != this->underline_position){
+                this->underline_position = number;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         case SP_ATTR_UNDERLINE_THICKNESS:
         {
             double number = value ? g_ascii_strtod(value, 0) : 0;
-            if (number != face->underline_thickness){
-                face->underline_thickness = number;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            if (number != this->underline_thickness){
+                this->underline_thickness = number;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         case SP_ATTR_STRIKETHROUGH_POSITION:
         {
             double number = value ? g_ascii_strtod(value, 0) : 0;
-            if (number != face->strikethrough_position){
-                face->strikethrough_position = number;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            if (number != this->strikethrough_position){
+                this->strikethrough_position = number;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         case SP_ATTR_STRIKETHROUGH_THICKNESS:
         {
             double number = value ? g_ascii_strtod(value, 0) : 0;
-            if (number != face->strikethrough_thickness){
-                face->strikethrough_thickness = number;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            if (number != this->strikethrough_thickness){
+                this->strikethrough_thickness = number;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         case SP_ATTR_OVERLINE_POSITION:
         {
             double number = value ? g_ascii_strtod(value, 0) : 0;
-            if (number != face->overline_position){
-                face->overline_position = number;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            if (number != this->overline_position){
+                this->overline_position = number;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         case SP_ATTR_OVERLINE_THICKNESS:
         {
             double number = value ? g_ascii_strtod(value, 0) : 0;
-            if (number != face->overline_thickness){
-                face->overline_thickness = number;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            
+            if (number != this->overline_thickness){
+                this->overline_thickness = number;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         default:
-            if ((SP_OBJECT_CLASS(sp_fontface_parent_class))->set) {
-                (SP_OBJECT_CLASS(sp_fontface_parent_class))->set(object, key, value);
-            }
+        	SPObject::set(key, value);
             break;
     }
 }
@@ -714,56 +703,49 @@ static void sp_fontface_set(SPObject *object, unsigned int key, const gchar *val
 /**
  * Receives update notifications.
  */
-static void
-sp_fontface_update(SPObject *object, SPCtx *ctx, guint flags)
-{
+void SPFontFace::update(SPCtx *ctx, guint flags) {
     if (flags & (SP_OBJECT_MODIFIED_FLAG)) {
-        object->readAttr( "font-family" );
-        object->readAttr( "font-style" );
-        object->readAttr( "font-variant" );
-        object->readAttr( "font-weight" );
-        object->readAttr( "font-stretch" );
-        object->readAttr( "font-size" );
-        object->readAttr( "unicode-range" );
-        object->readAttr( "units-per-em" );
-        object->readAttr( "panose-1" );
-        object->readAttr( "stemv" );
-        object->readAttr( "stemh" );
-        object->readAttr( "slope" );
-        object->readAttr( "cap-height" );
-        object->readAttr( "x-height" );
-        object->readAttr( "accent-height" );
-        object->readAttr( "ascent" );
-        object->readAttr( "descent" );
-        object->readAttr( "widths" );
-        object->readAttr( "bbox" );
-        object->readAttr( "ideographic" );
-        object->readAttr( "alphabetic" );
-        object->readAttr( "mathematical" );
-        object->readAttr( "hanging" );
-        object->readAttr( "v-ideographic" );
-        object->readAttr( "v-alphabetic" );
-        object->readAttr( "v-mathematical" );
-        object->readAttr( "v-hanging" );
-        object->readAttr( "underline-position" );
-        object->readAttr( "underline-thickness" );
-        object->readAttr( "strikethrough-position" );
-        object->readAttr( "strikethrough-thickness" );
-        object->readAttr( "overline-position" );
-        object->readAttr( "overline-thickness" );
+        this->readAttr( "font-family" );
+        this->readAttr( "font-style" );
+        this->readAttr( "font-variant" );
+        this->readAttr( "font-weight" );
+        this->readAttr( "font-stretch" );
+        this->readAttr( "font-size" );
+        this->readAttr( "unicode-range" );
+        this->readAttr( "units-per-em" );
+        this->readAttr( "panose-1" );
+        this->readAttr( "stemv" );
+        this->readAttr( "stemh" );
+        this->readAttr( "slope" );
+        this->readAttr( "cap-height" );
+        this->readAttr( "x-height" );
+        this->readAttr( "accent-height" );
+        this->readAttr( "ascent" );
+        this->readAttr( "descent" );
+        this->readAttr( "widths" );
+        this->readAttr( "bbox" );
+        this->readAttr( "ideographic" );
+        this->readAttr( "alphabetic" );
+        this->readAttr( "mathematical" );
+        this->readAttr( "hanging" );
+        this->readAttr( "v-ideographic" );
+        this->readAttr( "v-alphabetic" );
+        this->readAttr( "v-mathematical" );
+        this->readAttr( "v-hanging" );
+        this->readAttr( "underline-position" );
+        this->readAttr( "underline-thickness" );
+        this->readAttr( "strikethrough-position" );
+        this->readAttr( "strikethrough-thickness" );
+        this->readAttr( "overline-position" );
+        this->readAttr( "overline-thickness" );
     }
 
-    if ((SP_OBJECT_CLASS(sp_fontface_parent_class))->update) {
-        (SP_OBJECT_CLASS(sp_fontface_parent_class))->update(object, ctx, flags);
-    }
+    SPObject::update(ctx, flags);
 }
 
 #define COPY_ATTR(rd,rs,key) (rd)->setAttribute((key), rs->attribute(key));
 
-static Inkscape::XML::Node *sp_fontface_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
-{
-    SPFontFace *face = SP_FONTFACE(object);
-
+Inkscape::XML::Node* SPFontFace::write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags) {
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
         repr = xml_doc->createElement("svg:font-face");
     }
@@ -776,74 +758,72 @@ static Inkscape::XML::Node *sp_fontface_write(SPObject *object, Inkscape::XML::D
     //sp_repr_set_svg_double(repr, "font-stretch", face->font_stretch);
     //sp_repr_set_svg_double(repr, "font-size", face->font_size);
     //sp_repr_set_svg_double(repr, "unicode-range", face->unicode_range);
-    sp_repr_set_svg_double(repr, "units-per-em", face->units_per_em);
+    sp_repr_set_svg_double(repr, "units-per-em", this->units_per_em);
     //sp_repr_set_svg_double(repr, "panose-1", face->panose_1);
-    sp_repr_set_svg_double(repr, "stemv", face->stemv);
-    sp_repr_set_svg_double(repr, "stemh", face->stemh);
-    sp_repr_set_svg_double(repr, "slope", face->slope);
-    sp_repr_set_svg_double(repr, "cap-height", face->cap_height);
-    sp_repr_set_svg_double(repr, "x-height", face->x_height);
-    sp_repr_set_svg_double(repr, "accent-height", face->accent_height);
-    sp_repr_set_svg_double(repr, "ascent", face->ascent);
-    sp_repr_set_svg_double(repr, "descent", face->descent);
+    sp_repr_set_svg_double(repr, "stemv", this->stemv);
+    sp_repr_set_svg_double(repr, "stemh", this->stemh);
+    sp_repr_set_svg_double(repr, "slope", this->slope);
+    sp_repr_set_svg_double(repr, "cap-height", this->cap_height);
+    sp_repr_set_svg_double(repr, "x-height", this->x_height);
+    sp_repr_set_svg_double(repr, "accent-height", this->accent_height);
+    sp_repr_set_svg_double(repr, "ascent", this->ascent);
+    sp_repr_set_svg_double(repr, "descent", this->descent);
     //sp_repr_set_svg_double(repr, "widths", face->widths);
     //sp_repr_set_svg_double(repr, "bbox", face->bbox);
-    sp_repr_set_svg_double(repr, "ideographic", face->ideographic);
-    sp_repr_set_svg_double(repr, "alphabetic", face->alphabetic);
-    sp_repr_set_svg_double(repr, "mathematical", face->mathematical);
-    sp_repr_set_svg_double(repr, "hanging", face->hanging);
-    sp_repr_set_svg_double(repr, "v-ideographic", face->v_ideographic);
-    sp_repr_set_svg_double(repr, "v-alphabetic", face->v_alphabetic);
-    sp_repr_set_svg_double(repr, "v-mathematical", face->v_mathematical);
-    sp_repr_set_svg_double(repr, "v-hanging", face->v_hanging);
-    sp_repr_set_svg_double(repr, "underline-position", face->underline_position);
-    sp_repr_set_svg_double(repr, "underline-thickness", face->underline_thickness);
-    sp_repr_set_svg_double(repr, "strikethrough-position", face->strikethrough_position);
-    sp_repr_set_svg_double(repr, "strikethrough-thickness", face->strikethrough_thickness);
-    sp_repr_set_svg_double(repr, "overline-position", face->overline_position);
-    sp_repr_set_svg_double(repr, "overline-thickness", face->overline_thickness);
+    sp_repr_set_svg_double(repr, "ideographic", this->ideographic);
+    sp_repr_set_svg_double(repr, "alphabetic", this->alphabetic);
+    sp_repr_set_svg_double(repr, "mathematical", this->mathematical);
+    sp_repr_set_svg_double(repr, "hanging", this->hanging);
+    sp_repr_set_svg_double(repr, "v-ideographic", this->v_ideographic);
+    sp_repr_set_svg_double(repr, "v-alphabetic", this->v_alphabetic);
+    sp_repr_set_svg_double(repr, "v-mathematical", this->v_mathematical);
+    sp_repr_set_svg_double(repr, "v-hanging", this->v_hanging);
+    sp_repr_set_svg_double(repr, "underline-position", this->underline_position);
+    sp_repr_set_svg_double(repr, "underline-thickness", this->underline_thickness);
+    sp_repr_set_svg_double(repr, "strikethrough-position", this->strikethrough_position);
+    sp_repr_set_svg_double(repr, "strikethrough-thickness", this->strikethrough_thickness);
+    sp_repr_set_svg_double(repr, "overline-position", this->overline_position);
+    sp_repr_set_svg_double(repr, "overline-thickness", this->overline_thickness);
 
-    if (repr != object->getRepr()) {
+    if (repr != this->getRepr()) {
         // In all COPY_ATTR given below the XML tree is 
         //  being used directly while it shouldn't be.
-        COPY_ATTR(repr, object->getRepr(), "font-family");
-        COPY_ATTR(repr, object->getRepr(), "font-style");
-        COPY_ATTR(repr, object->getRepr(), "font-variant");
-        COPY_ATTR(repr, object->getRepr(), "font-weight");
-        COPY_ATTR(repr, object->getRepr(), "font-stretch");
-        COPY_ATTR(repr, object->getRepr(), "font-size");
-        COPY_ATTR(repr, object->getRepr(), "unicode-range");
-        COPY_ATTR(repr, object->getRepr(), "units-per-em");
-        COPY_ATTR(repr, object->getRepr(), "panose-1");
-        COPY_ATTR(repr, object->getRepr(), "stemv");
-        COPY_ATTR(repr, object->getRepr(), "stemh");
-        COPY_ATTR(repr, object->getRepr(), "slope");
-        COPY_ATTR(repr, object->getRepr(), "cap-height");
-        COPY_ATTR(repr, object->getRepr(), "x-height");
-        COPY_ATTR(repr, object->getRepr(), "accent-height");
-        COPY_ATTR(repr, object->getRepr(), "ascent");
-        COPY_ATTR(repr, object->getRepr(), "descent");
-        COPY_ATTR(repr, object->getRepr(), "widths");
-        COPY_ATTR(repr, object->getRepr(), "bbox");
-        COPY_ATTR(repr, object->getRepr(), "ideographic");
-        COPY_ATTR(repr, object->getRepr(), "alphabetic");
-        COPY_ATTR(repr, object->getRepr(), "mathematical");
-        COPY_ATTR(repr, object->getRepr(), "hanging");
-        COPY_ATTR(repr, object->getRepr(), "v-ideographic");
-        COPY_ATTR(repr, object->getRepr(), "v-alphabetic");
-        COPY_ATTR(repr, object->getRepr(), "v-mathematical");
-        COPY_ATTR(repr, object->getRepr(), "v-hanging");
-        COPY_ATTR(repr, object->getRepr(), "underline-position");
-        COPY_ATTR(repr, object->getRepr(), "underline-thickness");
-        COPY_ATTR(repr, object->getRepr(), "strikethrough-position");
-        COPY_ATTR(repr, object->getRepr(), "strikethrough-thickness");
-        COPY_ATTR(repr, object->getRepr(), "overline-position");
-        COPY_ATTR(repr, object->getRepr(), "overline-thickness");
+        COPY_ATTR(repr, this->getRepr(), "font-family");
+        COPY_ATTR(repr, this->getRepr(), "font-style");
+        COPY_ATTR(repr, this->getRepr(), "font-variant");
+        COPY_ATTR(repr, this->getRepr(), "font-weight");
+        COPY_ATTR(repr, this->getRepr(), "font-stretch");
+        COPY_ATTR(repr, this->getRepr(), "font-size");
+        COPY_ATTR(repr, this->getRepr(), "unicode-range");
+        COPY_ATTR(repr, this->getRepr(), "units-per-em");
+        COPY_ATTR(repr, this->getRepr(), "panose-1");
+        COPY_ATTR(repr, this->getRepr(), "stemv");
+        COPY_ATTR(repr, this->getRepr(), "stemh");
+        COPY_ATTR(repr, this->getRepr(), "slope");
+        COPY_ATTR(repr, this->getRepr(), "cap-height");
+        COPY_ATTR(repr, this->getRepr(), "x-height");
+        COPY_ATTR(repr, this->getRepr(), "accent-height");
+        COPY_ATTR(repr, this->getRepr(), "ascent");
+        COPY_ATTR(repr, this->getRepr(), "descent");
+        COPY_ATTR(repr, this->getRepr(), "widths");
+        COPY_ATTR(repr, this->getRepr(), "bbox");
+        COPY_ATTR(repr, this->getRepr(), "ideographic");
+        COPY_ATTR(repr, this->getRepr(), "alphabetic");
+        COPY_ATTR(repr, this->getRepr(), "mathematical");
+        COPY_ATTR(repr, this->getRepr(), "hanging");
+        COPY_ATTR(repr, this->getRepr(), "v-ideographic");
+        COPY_ATTR(repr, this->getRepr(), "v-alphabetic");
+        COPY_ATTR(repr, this->getRepr(), "v-mathematical");
+        COPY_ATTR(repr, this->getRepr(), "v-hanging");
+        COPY_ATTR(repr, this->getRepr(), "underline-position");
+        COPY_ATTR(repr, this->getRepr(), "underline-thickness");
+        COPY_ATTR(repr, this->getRepr(), "strikethrough-position");
+        COPY_ATTR(repr, this->getRepr(), "strikethrough-thickness");
+        COPY_ATTR(repr, this->getRepr(), "overline-position");
+        COPY_ATTR(repr, this->getRepr(), "overline-thickness");
     }
 
-    if ((SP_OBJECT_CLASS(sp_fontface_parent_class))->write) {
-        (SP_OBJECT_CLASS(sp_fontface_parent_class))->write(object, xml_doc, repr, flags);
-    }
+    SPObject::write(xml_doc, repr, flags);
 
     return repr;
 }

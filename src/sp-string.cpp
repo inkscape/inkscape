@@ -32,60 +32,42 @@
 #include "sp-string.h"
 #include "xml/repr.h"
 
+#include "sp-factory.h"
+
+namespace {
+    SPObject* createString() {
+        return new SPString();
+    }
+
+    bool stringRegistered = SPFactory::instance().registerObject("string", createString);
+}
 
 /*#####################################################
 #  SPSTRING
 #####################################################*/
 
-static void sp_string_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
-static void sp_string_release(SPObject *object);
-static void sp_string_read_content(SPObject *object);
-static void sp_string_update(SPObject *object, SPCtx *ctx, unsigned flags);
-
-G_DEFINE_TYPE(SPString, sp_string, SP_TYPE_OBJECT);
-
-static void
-sp_string_class_init(SPStringClass *classname)
-{
-    SPObjectClass *sp_object_class;
-
-    sp_object_class = (SPObjectClass *) classname;
-
-    sp_object_class->build        = sp_string_build;
-    sp_object_class->release      = sp_string_release;
-    sp_object_class->read_content = sp_string_read_content;
-    sp_object_class->update       = sp_string_update;
+SPString::SPString() : SPObject() {
+    //new (&this->string) Glib::ustring();
 }
 
-static void
-sp_string_init(SPString *string)
-{
-    new (&string->string) Glib::ustring();
+SPString::~SPString() {
 }
 
-static void
-sp_string_build(SPObject *object, SPDocument *doc, Inkscape::XML::Node *repr)
-{
-    sp_string_read_content(object);
+void SPString::build(SPDocument *doc, Inkscape::XML::Node *repr) {
+    SPString* object = this;
+    object->read_content();
 
-    if (((SPObjectClass *) sp_string_parent_class)->build)
-        ((SPObjectClass *) sp_string_parent_class)->build(object, doc, repr);
+    SPObject::build(doc, repr);
 }
 
-static void
-sp_string_release(SPObject *object)
-{
-    SPString *string = SP_STRING(object);
-
-    string->string.~ustring();
-
-    if (((SPObjectClass *) sp_string_parent_class)->release)
-        ((SPObjectClass *) sp_string_parent_class)->release(object);
+void SPString::release() {
+    SPObject::release();
 }
 
-static void
-sp_string_read_content(SPObject *object)
-{
+
+void SPString::read_content() {
+    SPString* object = this;
+
     SPString *string = SP_STRING(object);
 
     string->string.clear();
@@ -126,11 +108,8 @@ sp_string_read_content(SPObject *object)
     object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-static void
-sp_string_update(SPObject *object, SPCtx *ctx, unsigned flags)
-{
-    if (((SPObjectClass *) sp_string_parent_class)->update)
-        ((SPObjectClass *) sp_string_parent_class)->update(object, ctx, flags);
+void SPString::update(SPCtx *ctx, unsigned flags) {
+//    SPObject::onUpdate(ctx, flags);
 
     // if (flags & (SP_OBJECT_STYLE_MODIFIED_FLAG | SP_OBJECT_MODIFIED_FLAG)) {
     //     /* Parent style or we ourselves changed, so recalculate */

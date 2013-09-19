@@ -20,11 +20,8 @@
 #include "libavoid/connector.h"
 #include <glibmm/i18n.h>
 
-#define SP_TYPE_CONNECTOR_CONTEXT (sp_connector_context_get_type())
-#define SP_CONNECTOR_CONTEXT(o) (G_TYPE_CHECK_INSTANCE_CAST((o), SP_TYPE_CONNECTOR_CONTEXT, SPConnectorContext))
-#define SP_CONNECTOR_CONTEXT_CLASS(k) (G_TYPE_CHECK_CLASS_CAST((k), SP_TYPE_CONNECTOR_CONTEXT, SPConnectorContextClass))
-#define SP_IS_CONNECTOR_CONTEXT(o) (G_TYPE_CHECK_INSTANCE_TYPE((o), SP_TYPE_CONNECTOR_CONTEXT))
-#define SP_IS_CONNECTOR_CONTEXT_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE((k), SP_TYPE_CONNECTOR_CONTEXT))
+#define SP_CONNECTOR_CONTEXT(obj) (dynamic_cast<SPConnectorContext*>((SPEventContext*)obj))
+//#define SP_IS_CONNECTOR_CONTEXT(obj) (dynamic_cast<const SPConnectorContext*>((const SPEventContext*)obj) != NULL)
 
 struct SPKnot;
 class SPCurve;
@@ -45,7 +42,11 @@ enum {
 
 typedef std::map<SPKnot *, int>  SPKnotList;
 
-struct SPConnectorContext : public SPEventContext {
+class SPConnectorContext : public SPEventContext {
+public:
+	SPConnectorContext();
+	virtual ~SPConnectorContext();
+
     Inkscape::Selection *selection;
     Geom::Point p[5];
 
@@ -92,11 +93,20 @@ struct SPConnectorContext : public SPEventContext {
     gchar *shref;
     gchar *ehref;
     SPCanvasItem *c0, *c1, *cl0, *cl1;
+
+	static const std::string prefsPath;
+
+	virtual void setup();
+	virtual void finish();
+	virtual void set(const Inkscape::Preferences::Entry& val);
+	virtual bool root_handler(GdkEvent* event);
+	virtual bool item_handler(SPItem* item, GdkEvent* event);
+
+	virtual const std::string& getPrefsPath();
+
+private:
+	void selection_changed(Inkscape::Selection *selection);
 };
-
-struct SPConnectorContextClass : public SPEventContextClass { };
-
-GType sp_connector_context_get_type();
 
 void cc_selection_set_avoid(bool const set_ignore);
 void cc_create_connection_point(SPConnectorContext* cc);

@@ -260,7 +260,7 @@ static std::vector<Geom::Point> approxItemWithPoints(SPItem const *item, const G
     }
     else if (SP_IS_SHAPE(item))
     {
-        SP_SHAPE(item)->setShape();
+        SP_SHAPE(item)->set_shape();
         SPCurve* item_curve = SP_SHAPE(item)->getCurve();
         // make sure it has an associated curve
         if (item_curve)

@@ -23,7 +23,7 @@
 #include "enums.h"
 
 class SPDesktop;
-struct SPEventContext;
+class SPEventContext;
 
 namespace Inkscape {
 namespace UI {

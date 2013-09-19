@@ -4,22 +4,22 @@
 #include "sp-object.h"
 #include "media.h"
 
-#define SP_TYPE_STYLE_ELEM (sp_style_elem_get_type())
-#define SP_STYLE_ELEM(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_STYLE_ELEM, SPStyleElem))
-#define SP_STYLE_ELEM_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_STYLE_ELEM, SPStyleElemClass))
-#define SP_IS_STYLE_ELEM(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_STYLE_ELEM))
-#define SP_IS_STYLE_ELEM_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_STYLE_ELEM))
+#define SP_STYLE_ELEM(obj) (dynamic_cast<SPStyleElem*>((SPObject*)obj))
+#define SP_IS_STYLE_ELEM(obj) (dynamic_cast<const SPStyleElem*>((SPObject*)obj) != NULL)
 
 class SPStyleElem : public SPObject {
 public:
+	SPStyleElem();
+	virtual ~SPStyleElem();
+
     Media media;
     bool is_css;
-};
 
-class SPStyleElemClass : public SPObjectClass {
+	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
+	virtual void set(unsigned int key, gchar const* value);
+	virtual void read_content();
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
 };
-
-GType sp_style_elem_get_type();
 
 
 #endif /* !INKSCAPE_SP_STYLE_ELEM_H */

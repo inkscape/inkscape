@@ -53,59 +53,49 @@
 
 using Inkscape::DocumentUndo;
 
-static void sp_mesh_context_dispose(GObject *object);
-
-static void sp_mesh_context_setup(SPEventContext *ec);
-
-static gint sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event);
-
 static void sp_mesh_drag(SPMeshContext &rc, Geom::Point const pt, guint state, guint32 etime);
 
-G_DEFINE_TYPE(SPMeshContext, sp_mesh_context, SP_TYPE_EVENT_CONTEXT);
 
-static void sp_mesh_context_class_init(SPMeshContextClass *klass)
-{
-    GObjectClass *object_class = (GObjectClass *) klass;
-    SPEventContextClass *event_context_class = (SPEventContextClass *) klass;
+#include "tool-factory.h"
 
-    object_class->dispose = sp_mesh_context_dispose;
+namespace {
+	SPEventContext* createMeshContext() {
+		return new SPMeshContext();
+	}
 
-    event_context_class->setup = sp_mesh_context_setup;
-    event_context_class->root_handler  = sp_mesh_context_root_handler;
+	bool meshContextRegistered = ToolFactory::instance().registerObject("/tools/mesh", createMeshContext);
 }
 
-static void sp_mesh_context_init(SPMeshContext *gr_context)
-{
-    SPEventContext *event_context = SP_EVENT_CONTEXT(gr_context);
-
-    gr_context->cursor_addnode = false;
-    event_context->cursor_shape = cursor_gradient_xpm;
-    event_context->hot_x = 4;
-    event_context->hot_y = 4;
-    event_context->xp = 0;
-    event_context->yp = 0;
-    event_context->tolerance = 6;
-    event_context->within_tolerance = false;
-    event_context->item_to_select = NULL;
+const std::string& SPMeshContext::getPrefsPath() {
+	return SPMeshContext::prefsPath;
 }
 
-static void sp_mesh_context_dispose(GObject *object)
-{
-    SPMeshContext *rc = SP_MESH_CONTEXT(object);
-    SPEventContext *ec = SP_EVENT_CONTEXT(object);
+const std::string SPMeshContext::prefsPath = "/tools/mesh";
 
-    ec->enableGrDrag(false);
+SPMeshContext::SPMeshContext() : SPEventContext() {
+	this->selcon = 0;
+	this->node_added = false;
+	this->subselcon = 0;
 
-    if (rc->_message_context) {
-        delete rc->_message_context;
-    }
+    this->cursor_addnode = false;
+    this->cursor_shape = cursor_gradient_xpm;
+    this->hot_x = 4;
+    this->hot_y = 4;
+    this->xp = 0;
+    this->yp = 0;
+    this->tolerance = 6;
+    this->within_tolerance = false;
+    this->item_to_select = NULL;
+}
 
-    rc->selcon->disconnect();
-    delete rc->selcon;
-    rc->subselcon->disconnect();
-    delete rc->subselcon;
+SPMeshContext::~SPMeshContext() {
+    this->enableGrDrag(false);
 
-    G_OBJECT_CLASS(sp_mesh_context_parent_class)->dispose(object);
+    this->selcon->disconnect();
+    delete this->selcon;
+    
+    this->subselcon->disconnect();
+    delete this->subselcon;
 }
 
 const gchar *ms_handle_descr [] = {
@@ -114,20 +104,20 @@ const gchar *ms_handle_descr [] = {
     N_("Mesh gradient <b>tensor</b>")
 };
 
-static void
-mesh_selection_changed (Inkscape::Selection *, gpointer data)
-{
-    SPMeshContext *rc = (SPMeshContext *) data;
+void SPMeshContext::selection_changed(Inkscape::Selection* sel) {
+    GrDrag *drag = this->_grdrag;
+    Inkscape::Selection *selection = sp_desktop_selection(this->desktop);
 
-    GrDrag *drag = rc->_grdrag;
-    Inkscape::Selection *selection = sp_desktop_selection(SP_EVENT_CONTEXT(rc)->desktop);
     if (selection == NULL) {
         return;
     }
+
     guint n_obj = g_slist_length((GSList *) selection->itemList());
 
-    if (!drag->isNonEmpty() || selection->isEmpty())
+    if (!drag->isNonEmpty() || selection->isEmpty()) {
         return;
+    }
+
     guint n_tot = drag->numDraggers();
     guint n_sel = drag->numSelected();
 
@@ -140,7 +130,7 @@ mesh_selection_changed (Inkscape::Selection *, gpointer data)
                 //TRANSLATORS: Mind the space in front. This is part of a compound message
                 ngettext(" out of %d mesh handle"," out of %d mesh handles",n_tot),
                 ngettext(" on %d selected object"," on %d selected objects",n_obj),NULL);
-            rc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
+            this->message_context->setF(Inkscape::NORMAL_MESSAGE,
                                        message,_(ms_handle_descr[drag->singleSelectedDraggerSingleDraggableType()]), n_tot, n_obj);
         } else {
             gchar * message =
@@ -151,7 +141,7 @@ mesh_selection_changed (Inkscape::Selection *, gpointer data)
                              drag->singleSelectedDraggerNumDraggables()),
                     ngettext(" out of %d mesh handle"," out of %d mesh handles",n_tot),
                     ngettext(" on %d selected object"," on %d selected objects",n_obj),NULL);
-            rc->_message_context->setF(Inkscape::NORMAL_MESSAGE,message,drag->singleSelectedDraggerNumDraggables(), n_tot, n_obj);
+            this->message_context->setF(Inkscape::NORMAL_MESSAGE,message,drag->singleSelectedDraggerNumDraggables(), n_tot, n_obj);
         }
     } else if (n_sel > 1) {
         //TRANSLATORS: The plural refers to number of selected mesh handles. This is part of a compound message (part two indicates selected object count)
@@ -159,9 +149,9 @@ mesh_selection_changed (Inkscape::Selection *, gpointer data)
             g_strconcat(ngettext("<b>%d</b> mesh handle selected out of %d","<b>%d</b> mesh handles selected out of %d",n_sel),
                         //TRANSLATORS: Mind the space in front. (Refers to gradient handles selected). This is part of a compound message
                         ngettext(" on %d selected object"," on %d selected objects",n_obj),NULL);
-        rc->_message_context->setF(Inkscape::NORMAL_MESSAGE,message, n_sel, n_tot, n_obj);
+        this->message_context->setF(Inkscape::NORMAL_MESSAGE,message, n_sel, n_tot, n_obj);
     } else if (n_sel == 0) {
-        rc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
+        this->message_context->setF(Inkscape::NORMAL_MESSAGE,
                                    //TRANSLATORS: The plural refers to number of selected objects
                                    ngettext("<b>No</b> mesh handles selected out of %d on %d selected object",
                                             "<b>No</b> mesh handles selected out of %d on %d selected objects",n_obj), n_tot, n_obj);
@@ -234,35 +224,29 @@ mesh_selection_changed (Inkscape::Selection *, gpointer data)
     // }
 }
 
-
-static void
-mesh_subselection_changed (gpointer, gpointer data)
-{
-    mesh_selection_changed (NULL, data);
-}
-
-
-static void sp_mesh_context_setup(SPEventContext *ec)
-{
-    SPMeshContext *rc = SP_MESH_CONTEXT(ec);
-
-    if (((SPEventContextClass *) sp_mesh_context_parent_class)->setup) {
-        ((SPEventContextClass *) sp_mesh_context_parent_class)->setup(ec);
-    }
+void SPMeshContext::setup() {
+    SPEventContext::setup();
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (prefs->getBool("/tools/mesh/selcue", true)) {
-        ec->enableSelectionCue();
+        this->enableSelectionCue();
     }
 
-    ec->enableGrDrag();
-    Inkscape::Selection *selection = sp_desktop_selection(ec->desktop);
+    this->enableGrDrag();
+    Inkscape::Selection *selection = sp_desktop_selection(this->desktop);
 
-    rc->_message_context = new Inkscape::MessageContext(sp_desktop_message_stack(ec->desktop));
+    this->selcon = new sigc::connection(selection->connectChanged(
+    	sigc::mem_fun(this, &SPMeshContext::selection_changed)
+    ));
 
-    rc->selcon = new sigc::connection (selection->connectChanged( sigc::bind (sigc::ptr_fun(&mesh_selection_changed), rc)));
-    rc->subselcon = new sigc::connection (ec->desktop->connectToolSubselectionChanged(sigc::bind (sigc::ptr_fun(&mesh_subselection_changed), rc)));
-    mesh_selection_changed(selection, rc);
+    this->subselcon = new sigc::connection(this->desktop->connectToolSubselectionChanged(
+    	sigc::hide(sigc::bind(
+    		sigc::mem_fun(*this, &SPMeshContext::selection_changed),
+    		(Inkscape::Selection*)NULL)
+    	)
+    ));
+
+    this->selection_changed(selection);
 }
 
 void
@@ -452,28 +436,21 @@ sp_mesh_context_corner_operation (SPMeshContext *rc, MeshCornerOperation operati
 /**
 Handles all keyboard and mouse input for meshs.
 */
-static gint
-sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
-{
-    // static int count = 0;
-    // std::cout << "sp_mesh_context_root_handler: " << count++ << std::endl;
+bool SPMeshContext::root_handler(GdkEvent* event) {
     static bool dragging;
 
-    SPDesktop *desktop = event_context->desktop;
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
-    SPMeshContext *rc = SP_MESH_CONTEXT(event_context);
-
-    event_context->tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
+    this->tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
     double const nudge = prefs->getDoubleLimited("/options/nudgedistance/value", 2, 0, 1000, "px"); // in px
 
-    GrDrag *drag = event_context->_grdrag;
+    GrDrag *drag = this->_grdrag;
     g_assert (drag);
 
     gint ret = FALSE;
-    switch (event->type) {
 
+    switch (event->type) {
     case GDK_2BUTTON_PRESS:
 
 #ifdef DEBUG_MESH
@@ -485,27 +462,24 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
         //  If not over a line, create new gradients for selected objects.
 
         if ( event->button.button == 1 ) {
-
             // Are we over a mesh line?
             bool over_line = false;
             SPCtrlCurve *line = NULL;
+
             if (drag->lines) {
                 for (GSList *l = drag->lines; (l != NULL) && (!over_line); l = l->next) {
                     line = (SPCtrlCurve*) l->data;
-                    over_line |= sp_mesh_context_is_over_line (rc, (SPItem*) line, Geom::Point(event->motion.x, event->motion.y));
+                    over_line |= sp_mesh_context_is_over_line (this, (SPItem*) line, Geom::Point(event->motion.x, event->motion.y));
                 }
             }
 
             if (over_line) {
                 // We take the first item in selection, because with doubleclick, the first click
                 // always resets selection to the single object under cursor
-                sp_mesh_context_split_near_point(rc, SP_ITEM(selection->itemList()->data), rc->mousepoint_doc, event->button.time);
-
+                sp_mesh_context_split_near_point(this, SP_ITEM(selection->itemList()->data), this->mousepoint_doc, event->button.time);
             } else {
                 // Create a new gradient with default coordinates.
-
                 for (GSList const* i = selection->itemList(); i != NULL; i = i->next) {
-
                     SPItem *item = SP_ITEM(i->data);
                     SPGradientType new_type = SP_GRADIENT_TYPE_MESH;
                     Inkscape::PaintTarget fsmode = (prefs->getInt("/tools/gradient/newfillorstroke", 1) != 0) ? Inkscape::FOR_FILL : Inkscape::FOR_STROKE;
@@ -522,6 +496,7 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 DocumentUndo::done(sp_desktop_document (desktop), SP_VERB_CONTEXT_MESH,
                                    _("Create default mesh"));
             }
+
             ret = TRUE;
         }
         break;
@@ -534,14 +509,13 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
         // Button down
         //  If Shift key down: do rubber band selection
         //  Else set origin for drag. A drag creates a new gradient if one does not exist
- 
-        if ( event->button.button == 1 && !event_context->space_panning ) {
+         if ( event->button.button == 1 && !this->space_panning ) {
             Geom::Point button_w(event->button.x, event->button.y);
 
             // save drag origin
-            event_context->xp = (gint) button_w[Geom::X];
-            event_context->yp = (gint) button_w[Geom::Y];
-            event_context->within_tolerance = true;
+            this->xp = (gint) button_w[Geom::X];
+            this->yp = (gint) button_w[Geom::Y];
+            this->within_tolerance = true;
 
             dragging = true;
 
@@ -551,8 +525,9 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             } else {
                 // remember clicked item, disregarding groups, honoring Alt; do nothing with Crtl to
                 // enable Ctrl+doubleclick of exactly the selected item(s)
-                if (!(event->button.state & GDK_CONTROL_MASK))
-                    event_context->item_to_select = sp_event_context_find_item (desktop, button_w, event->button.state & GDK_MOD1_MASK, TRUE);
+                if (!(event->button.state & GDK_CONTROL_MASK)) {
+                    this->item_to_select = sp_event_context_find_item (desktop, button_w, event->button.state & GDK_MOD1_MASK, TRUE);
+                }
 
                 if (!selection->isEmpty()) {
                     SnapManager &m = desktop->namedview->snap_manager;
@@ -560,7 +535,8 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     m.freeSnapReturnByRef(button_dt, Inkscape::SNAPSOURCE_NODE_HANDLE);
                     m.unSetup();
                 }
-                rc->origin = button_dt;
+
+                this->origin = button_dt;
             }
 
             ret = TRUE;
@@ -568,41 +544,37 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
         break;
 
     case GDK_MOTION_NOTIFY:
-
         // Mouse move
-
-        if ( dragging
-             && ( event->motion.state & GDK_BUTTON1_MASK ) && !event_context->space_panning )
-        {
+        if ( dragging && ( event->motion.state & GDK_BUTTON1_MASK ) && !this->space_panning ) {
  
 #ifdef DEBUG_MESH
             std::cout << "sp_mesh_context_root_handler: GDK_MOTION_NOTIFY: Dragging" << std::endl;
 #endif
-            if ( event_context->within_tolerance
-                 && ( abs( (gint) event->motion.x - event_context->xp ) < event_context->tolerance )
-                 && ( abs( (gint) event->motion.y - event_context->yp ) < event_context->tolerance ) ) {
+            if ( this->within_tolerance
+                 && ( abs( (gint) event->motion.x - this->xp ) < this->tolerance )
+                 && ( abs( (gint) event->motion.y - this->yp ) < this->tolerance ) ) {
                 break; // do not drag if we're within tolerance from origin
             }
             // Once the user has moved farther than tolerance from the original location
             // (indicating they intend to draw, not click), then always process the
             // motion notify coordinates as given (no snapping back to origin)
-            event_context->within_tolerance = false;
+            this->within_tolerance = false;
 
             Geom::Point const motion_w(event->motion.x,
                                      event->motion.y);
-            Geom::Point const motion_dt = event_context->desktop->w2d(motion_w);
+            Geom::Point const motion_dt = this->desktop->w2d(motion_w);
 
             if (Inkscape::Rubberband::get(desktop)->is_started()) {
                 Inkscape::Rubberband::get(desktop)->move(motion_dt);
-                event_context->defaultMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Draw around</b> handles to select them"));
+                this->defaultMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Draw around</b> handles to select them"));
             } else {
                 // Create new gradient with coordinates determined by drag.
-                sp_mesh_drag(*rc, motion_dt, event->motion.state, event->motion.time);
+                sp_mesh_drag(*this, motion_dt, event->motion.state, event->motion.time);
             }
+
             gobble_motion_events(GDK_BUTTON1_MASK);
 
             ret = TRUE;
-
         } else {
             // Not dragging
 
@@ -612,7 +584,7 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 m.setup(desktop);
 
                 Geom::Point const motion_w(event->motion.x, event->motion.y);
-                Geom::Point const motion_dt = event_context->desktop->w2d(motion_w);
+                Geom::Point const motion_dt = this->desktop->w2d(motion_w);
 
                 m.preSnap(Inkscape::SnapCandidatePoint(motion_dt, Inkscape::SNAPSOURCE_OTHER_HANDLE));
                 m.unSetup();
@@ -627,20 +599,21 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
             // Change cursor shape if over line
             bool over_line = false;
+
             if (drag->lines) {
                 for (GSList *l = drag->lines; l != NULL; l = l->next) {
-                    over_line |= sp_mesh_context_is_over_line (rc, (SPItem*) l->data, Geom::Point(event->motion.x, event->motion.y));
+                    over_line |= sp_mesh_context_is_over_line (this, (SPItem*) l->data, Geom::Point(event->motion.x, event->motion.y));
                 }
             }
 
-            if (rc->cursor_addnode && !over_line) {
-                event_context->cursor_shape = cursor_gradient_xpm;
-                sp_event_context_update_cursor(event_context);
-                rc->cursor_addnode = false;
-            } else if (!rc->cursor_addnode && over_line) {
-                event_context->cursor_shape = cursor_gradient_add_xpm;
-                sp_event_context_update_cursor(event_context);
-                rc->cursor_addnode = true;
+            if (this->cursor_addnode && !over_line) {
+                this->cursor_shape = cursor_gradient_xpm;
+                this->sp_event_context_update_cursor();
+                this->cursor_addnode = false;
+            } else if (!this->cursor_addnode && over_line) {
+                this->cursor_shape = cursor_gradient_add_xpm;
+                this->sp_event_context_update_cursor();
+                this->cursor_addnode = true;
             }
         }
         break;
@@ -651,29 +624,30 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
         std::cout << "sp_mesh_context_root_handler: GDK_BUTTON_RELEASE" << std::endl;
 #endif
 
-        event_context->xp = event_context->yp = 0;
-        if ( event->button.button == 1 && !event_context->space_panning ) {
+        this->xp = this->yp = 0;
 
+        if ( event->button.button == 1 && !this->space_panning ) {
             // Check if over line
             bool over_line = false;
             SPCtrlLine *line = NULL;
+
             if (drag->lines) {
                 for (GSList *l = drag->lines; (l != NULL) && (!over_line); l = l->next) {
                     line = (SPCtrlLine*) l->data;
-                    over_line = sp_mesh_context_is_over_line (rc, (SPItem*) line, Geom::Point(event->motion.x, event->motion.y));
-                    if (over_line)
+                    over_line = sp_mesh_context_is_over_line (this, (SPItem*) line, Geom::Point(event->motion.x, event->motion.y));
+
+                    if (over_line) {
                         break;
+                    }
                 }
             }
 
             if ( (event->button.state & GDK_CONTROL_MASK) && (event->button.state & GDK_MOD1_MASK ) ) {
                 if (over_line && line) {
-                    sp_mesh_context_split_near_point(rc, line->item, rc->mousepoint_doc, 0);
+                    sp_mesh_context_split_near_point(this, line->item, this->mousepoint_doc, 0);
                     ret = TRUE;
                 }
-
             } else {
-
                 dragging = false;
 
                 // unless clicked with Ctrl (to enable Ctrl+doubleclick).
@@ -682,29 +656,28 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     break;
                 }
 
-                if (!event_context->within_tolerance) {
+                if (!this->within_tolerance) {
                     // we've been dragging, either do nothing (grdrag handles that),
                     // or rubberband-select if we have rubberband
                     Inkscape::Rubberband *r = Inkscape::Rubberband::get(desktop);
-                    if (r->is_started() && !event_context->within_tolerance) {
+
+                    if (r->is_started() && !this->within_tolerance) {
                         // this was a rubberband drag
                         if (r->getMode() == RUBBERBAND_MODE_RECT) {
                             Geom::OptRect const b = r->getRectangle();
                             drag->selectRect(*b);
                         }
                     }
-
-                } else if (event_context->item_to_select) {
+                } else if (this->item_to_select) {
                     if (over_line && line) {
                         // Clicked on an existing mesh line, don't change selection. This stops
                         // possible change in selection during a double click with overlapping objects
-                    }
-                    else {
+                    } else {
                         // no dragging, select clicked item if any
                         if (event->button.state & GDK_SHIFT_MASK) {
-                            selection->toggle(event_context->item_to_select);
+                            selection->toggle(this->item_to_select);
                         } else {
-                            selection->set(event_context->item_to_select);
+                            selection->set(this->item_to_select);
                         }
                     }
                 } else {
@@ -716,9 +689,10 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     }
                 }
 
-                event_context->item_to_select = NULL;
+                this->item_to_select = NULL;
                 ret = TRUE;
             }
+
             Inkscape::Rubberband::get(desktop)->stop();
         }
         break;
@@ -739,7 +713,7 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
         case GDK_KEY_Shift_R:
         case GDK_KEY_Meta_L:  // Meta is when you press Shift+Alt (at least on my machine)
         case GDK_KEY_Meta_R:
-            sp_event_show_modifier_tip (event_context->defaultMessageContext(), event,
+            sp_event_show_modifier_tip (this->defaultMessageContext(), event,
                                         _("FIXME<b>Ctrl</b>: snap mesh angle"),
                                         _("FIXME<b>Shift</b>: draw mesh around the starting point"),
                                         NULL);
@@ -759,6 +733,7 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             } else {
                 selection->clear();
             }
+
             ret = TRUE;
             //TODO: make dragging escapable by Esc
             break;
@@ -767,33 +742,46 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
         case GDK_KEY_KP_Left:
         case GDK_KEY_KP_4:
             if (!MOD__CTRL(event)) { // not ctrl
-                gint mul = 1 + gobble_key_events(
-                    get_group0_keyval(&event->key), 0); // with any mask
+                gint mul = 1 + gobble_key_events(get_group0_keyval(&event->key), 0); // with any mask
+
                 if (MOD__ALT(event)) { // alt
-                    if (MOD__SHIFT(event)) drag->selected_move_screen(mul*-10, 0); // shift
-                    else drag->selected_move_screen(mul*-1, 0); // no shift
+                    if (MOD__SHIFT(event)) {
+                    	drag->selected_move_screen(mul*-10, 0); // shift
+                    } else {
+                    	drag->selected_move_screen(mul*-1, 0); // no shift
+                    }
+                } else { // no alt
+                    if (MOD__SHIFT(event)) {
+                    	drag->selected_move(mul*-10*nudge, 0); // shift
+                    } else {
+                    	drag->selected_move(mul*-nudge, 0); // no shift
+                    }
                 }
-                else { // no alt
-                    if (MOD__SHIFT(event)) drag->selected_move(mul*-10*nudge, 0); // shift
-                    else drag->selected_move(mul*-nudge, 0); // no shift
-                }
+
                 ret = TRUE;
             }
             break;
+
         case GDK_KEY_Up: // move handle up
         case GDK_KEY_KP_Up:
         case GDK_KEY_KP_8:
             if (!MOD__CTRL(event)) { // not ctrl
-                gint mul = 1 + gobble_key_events(
-                    get_group0_keyval(&event->key), 0); // with any mask
+                gint mul = 1 + gobble_key_events(get_group0_keyval(&event->key), 0); // with any mask
+
                 if (MOD__ALT(event)) { // alt
-                    if (MOD__SHIFT(event)) drag->selected_move_screen(0, mul*10); // shift
-                    else drag->selected_move_screen(0, mul*1); // no shift
+                    if (MOD__SHIFT(event)) {
+                    	drag->selected_move_screen(0, mul*10); // shift
+                    } else {
+                    	drag->selected_move_screen(0, mul*1); // no shift
+                    }
+                } else { // no alt
+                    if (MOD__SHIFT(event)) {
+                    	drag->selected_move(0, mul*10*nudge); // shift
+                    } else {
+                    	drag->selected_move(0, mul*nudge); // no shift
+                    }
                 }
-                else { // no alt
-                    if (MOD__SHIFT(event)) drag->selected_move(0, mul*10*nudge); // shift
-                    else drag->selected_move(0, mul*nudge); // no shift
-                }
+
                 ret = TRUE;
             }
             break;
@@ -802,16 +790,22 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
         case GDK_KEY_KP_Right:
         case GDK_KEY_KP_6:
             if (!MOD__CTRL(event)) { // not ctrl
-                gint mul = 1 + gobble_key_events(
-                    get_group0_keyval(&event->key), 0); // with any mask
+                gint mul = 1 + gobble_key_events(get_group0_keyval(&event->key), 0); // with any mask
+
                 if (MOD__ALT(event)) { // alt
-                    if (MOD__SHIFT(event)) drag->selected_move_screen(mul*10, 0); // shift
-                    else drag->selected_move_screen(mul*1, 0); // no shift
+                    if (MOD__SHIFT(event)) {
+                    	drag->selected_move_screen(mul*10, 0); // shift
+                    } else {
+                    	drag->selected_move_screen(mul*1, 0); // no shift
+                    }
+                } else { // no alt
+                    if (MOD__SHIFT(event)) {
+                    	drag->selected_move(mul*10*nudge, 0); // shift
+                    } else {
+                    	drag->selected_move(mul*nudge, 0); // no shift
+                    }
                 }
-                else { // no alt
-                    if (MOD__SHIFT(event)) drag->selected_move(mul*10*nudge, 0); // shift
-                    else drag->selected_move(mul*nudge, 0); // no shift
-                }
+
                 ret = TRUE;
             }
             break;
@@ -820,16 +814,22 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
         case GDK_KEY_KP_Down:
         case GDK_KEY_KP_2:
             if (!MOD__CTRL(event)) { // not ctrl
-                gint mul = 1 + gobble_key_events(
-                    get_group0_keyval(&event->key), 0); // with any mask
+                gint mul = 1 + gobble_key_events(get_group0_keyval(&event->key), 0); // with any mask
+
                 if (MOD__ALT(event)) { // alt
-                    if (MOD__SHIFT(event)) drag->selected_move_screen(0, mul*-10); // shift
-                    else drag->selected_move_screen(0, mul*-1); // no shift
+                    if (MOD__SHIFT(event)) {
+                    	drag->selected_move_screen(0, mul*-10); // shift
+                    } else {
+                    	drag->selected_move_screen(0, mul*-1); // no shift
+                    }
+                } else { // no alt
+                    if (MOD__SHIFT(event)) {
+                    	drag->selected_move(0, mul*-10*nudge); // shift
+                    } else {
+                    	drag->selected_move(0, mul*-nudge); // no shift
+                    }
                 }
-                else { // no alt
-                    if (MOD__SHIFT(event)) drag->selected_move(0, mul*-10*nudge); // shift
-                    else drag->selected_move(0, mul*-nudge); // no shift
-                }
+
                 ret = TRUE;
             }
             break;
@@ -856,7 +856,7 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
         case GDK_KEY_b:  // Toggle mesh side between lineto and curveto.
         case GDK_KEY_B: 
             if (MOD__ALT(event) && drag->isNonEmpty() && drag->hasSelection()) {
-                sp_mesh_context_corner_operation ( rc, MG_CORNER_SIDE_TOGGLE );
+                sp_mesh_context_corner_operation ( this, MG_CORNER_SIDE_TOGGLE );
                 ret = TRUE;
             }
             break;
@@ -864,7 +864,7 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
         case GDK_KEY_c:  // Convert mesh side from generic Bezier to Bezier approximating arc,
         case GDK_KEY_C:  // preserving handle direction.
             if (MOD__ALT(event) && drag->isNonEmpty() && drag->hasSelection()) {
-                sp_mesh_context_corner_operation ( rc, MG_CORNER_SIDE_ARC );
+                sp_mesh_context_corner_operation ( this, MG_CORNER_SIDE_ARC );
                 ret = TRUE;
             }
             break;
@@ -872,7 +872,7 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
         case GDK_KEY_g:  // Toggle mesh tensor points on/off
         case GDK_KEY_G: 
             if (MOD__ALT(event) && drag->isNonEmpty() && drag->hasSelection()) {
-                sp_mesh_context_corner_operation ( rc, MG_CORNER_TENSOR_TOGGLE );
+                sp_mesh_context_corner_operation ( this, MG_CORNER_TENSOR_TOGGLE );
                 ret = TRUE;
             }
             break;
@@ -880,7 +880,7 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
         case GDK_KEY_j:  // Smooth corner color
         case GDK_KEY_J:
             if (MOD__ALT(event) && drag->isNonEmpty() && drag->hasSelection()) {
-                sp_mesh_context_corner_operation ( rc, MG_CORNER_COLOR_SMOOTH );
+                sp_mesh_context_corner_operation ( this, MG_CORNER_COLOR_SMOOTH );
                 ret = TRUE;
             }
             break;
@@ -888,7 +888,7 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
         case GDK_KEY_k:  // Pick corner color
         case GDK_KEY_K:
             if (MOD__ALT(event) && drag->isNonEmpty() && drag->hasSelection()) {
-                sp_mesh_context_corner_operation ( rc, MG_CORNER_COLOR_PICK );
+                sp_mesh_context_corner_operation ( this, MG_CORNER_COLOR_PICK );
                 ret = TRUE;
             }
             break;
@@ -913,7 +913,7 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
         case GDK_KEY_Shift_R:
         case GDK_KEY_Meta_L:  // Meta is when you press Shift+Alt
         case GDK_KEY_Meta_R:
-            event_context->defaultMessageContext()->clear();
+            this->defaultMessageContext()->clear();
             break;
         default:
             break;
@@ -924,18 +924,13 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
     }
 
     if (!ret) {
-        if (((SPEventContextClass *) sp_mesh_context_parent_class)->root_handler) {
-            ret = ((SPEventContextClass *) sp_mesh_context_parent_class)->root_handler(event_context, event);
-        }
+    	ret = SPEventContext::root_handler(event);
     }
 
     return ret;
 }
 
-
-static void sp_mesh_drag(SPMeshContext &rc, Geom::Point const /*pt*/, guint /*state*/, guint32 /*etime*/)
-{
-
+static void sp_mesh_drag(SPMeshContext &rc, Geom::Point const /*pt*/, guint /*state*/, guint32 /*etime*/) {
     SPDesktop *desktop = SP_EVENT_CONTEXT(&rc)->desktop;
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     SPDocument *document = sp_desktop_document(desktop);
@@ -993,7 +988,7 @@ static void sp_mesh_drag(SPMeshContext &rc, Geom::Point const /*pt*/, guint /*st
         // status text; we do not track coords because this branch is run once, not all the time
         // during drag
         int n_objects = g_slist_length((GSList *) selection->itemList());
-        rc._message_context->setF(Inkscape::NORMAL_MESSAGE,
+        rc.message_context->setF(Inkscape::NORMAL_MESSAGE,
                                   ngettext("<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle",
                                            "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle", n_objects),
                                   n_objects);

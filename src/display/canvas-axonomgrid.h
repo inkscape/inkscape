@@ -14,7 +14,7 @@
 
 struct SPCanvasBuf;
 class  SPDesktop;
-struct SPNamedView;
+class SPNamedView;
 
 namespace Inkscape {
 namespace XML {

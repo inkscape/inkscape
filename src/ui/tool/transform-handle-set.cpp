@@ -129,7 +129,8 @@ bool TransformHandle::grabbed(GdkEventMotion *)
 
     // Collect the snap-candidates, one for each selected node. These will be stored in the _snap_points vector.
     InkNodeTool *nt = INK_NODE_TOOL(_th._desktop->event_context);
-    ControlPointSelection *selection = nt->_selected_nodes.get();
+    //ControlPointSelection *selection = nt->_selected_nodes.get();
+    ControlPointSelection* selection = nt->_selected_nodes;
 
     selection->setOriginalPoints();
     selection->getOriginalPoints(_snap_points);
@@ -293,7 +294,7 @@ protected:
 private:
 
     static Glib::RefPtr<Gdk::Pixbuf> _corner_to_pixbuf(unsigned c) {
-        sp_select_context_get_type();
+        //sp_select_context_get_type();
         switch (c % 2) {
             case 0:
                 return Glib::wrap(handles[1], true);
@@ -376,7 +377,7 @@ protected:
     }
 private:
     static Glib::RefPtr<Gdk::Pixbuf> _side_to_pixbuf(unsigned c) {
-        sp_select_context_get_type();
+        //sp_select_context_get_type();
         switch (c % 2) {
         case 0: return Glib::wrap(handles[3], true);
         default: return Glib::wrap(handles[2], true);
@@ -456,7 +457,7 @@ protected:
 
 private:
     static Glib::RefPtr<Gdk::Pixbuf> _corner_to_pixbuf(unsigned c) {
-        sp_select_context_get_type();
+        //sp_select_context_get_type();
         switch (c % 4) {
         case 0: return Glib::wrap(handles[7], true);
         case 1: return Glib::wrap(handles[6], true);
@@ -603,7 +604,7 @@ protected:
 private:
 
     static Glib::RefPtr<Gdk::Pixbuf> _side_to_pixbuf(unsigned s) {
-        sp_select_context_get_type();
+        //sp_select_context_get_type();
         switch (s % 4) {
         case 0: return Glib::wrap(handles[10], true);
         case 1: return Glib::wrap(handles[9], true);
@@ -658,7 +659,7 @@ protected:
 private:
 
     static Glib::RefPtr<Gdk::Pixbuf> _get_pixbuf() {
-        sp_select_context_get_type();
+        //sp_select_context_get_type();
         return Glib::wrap(handles[12], true);
     }
 

@@ -23,17 +23,15 @@ struct SPCanvas;
 struct SPCanvasGroup;
 class SPDesktop;
 
-G_BEGIN_DECLS
-
-#define SP_TYPE_GUIDE            (sp_guide_get_type())
-#define SP_GUIDE(obj)            (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_GUIDE, SPGuide))
-#define SP_GUIDE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_GUIDE, SPGuideClass))
-#define SP_IS_GUIDE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_GUIDE))
-#define SP_IS_GUIDE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_GUIDE))
+#define SP_GUIDE(obj) (dynamic_cast<SPGuide*>((SPObject*)obj))
+#define SP_IS_GUIDE(obj) (dynamic_cast<const SPGuide*>((SPObject*)obj) != NULL)
 
 /* Represents the constraint on p that dot(g.direction, p) == g.position. */
 class SPGuide : public SPObject {
 public:
+	SPGuide();
+	virtual ~SPGuide();
+
     char* label;
     Geom::Point normal_to_line;
     Geom::Point point_on_line;
@@ -42,6 +40,11 @@ public:
     guint32 hicolor;
     GSList *views;
     std::vector<SPGuideAttachment> attached_items;
+
+    guint32 getColor() const;
+    guint32 getHiColor() const;
+    void setColor(guint32 c);
+    void setHiColor(guint32 h);
 
     inline bool isHorizontal() const { return (normal_to_line[Geom::X] == 0.); };
     inline bool isVertical() const { return (normal_to_line[Geom::Y] == 0.); };
@@ -52,14 +55,12 @@ public:
     void sensitize(SPCanvas *canvas, gboolean sensitive);
     Geom::Point getPositionFrom(Geom::Point const &pt) const;
     double getDistanceFrom(Geom::Point const &pt) const;
-};
 
-class SPGuideClass {
-public:
-    SPObjectClass parent_class;
+protected:
+	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
+	virtual void release();
+	virtual void set(unsigned int key, const gchar* value);
 };
-
-GType sp_guide_get_type();
 
 void sp_guide_pt_pairs_to_guides(SPDocument *doc, std::list<std::pair<Geom::Point, Geom::Point> > &pts);
 void sp_guide_create_guides_around_page(SPDesktop *dt);
@@ -72,8 +73,6 @@ void sp_guide_set_color(SPGuide &guide, const unsigned r, const unsigned g, cons
 void sp_guide_remove(SPGuide *guide);
 
 char *sp_guide_description(SPGuide const *guide, const bool verbose = true);
-
-G_END_DECLS
 
 #endif // SEEN_SP_GUIDE_H
 

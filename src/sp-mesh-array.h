@@ -127,7 +127,7 @@ public:
   void    setOpacity( guint i, gdouble o );
 };
 
-struct SPMeshGradient;
+class SPMeshGradient;
 
 // An array of mesh nodes.
 class SPMeshNodeArray {

@@ -21,15 +21,17 @@
 
 class SPCurve;
 
-#define SP_TYPE_PATH (sp_path_get_type ())
-#define SP_PATH(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_PATH, SPPath))
-#define SP_IS_PATH(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_PATH))
+#define SP_PATH(obj) (dynamic_cast<SPPath*>((SPObject*)obj))
+#define SP_IS_PATH(obj) (dynamic_cast<const SPPath*>((SPObject*)obj) != NULL)
 
 /**
  * SVG <path> implementation
  */
 class SPPath : public SPShape {
 public:
+	SPPath();
+	virtual ~SPPath();
+
     gint nodesInPath() const;
 
     // still in lowercase because the names should be clearer on whether curve, curve->copy or curve-ref is returned.
@@ -44,13 +46,20 @@ public: // should be made protected
 
 public:
     SPConnEndPair connEndPair;
-};
 
-struct SPPathClass {
-    SPShapeClass shape_class;
-};
+	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
+	virtual void release();
+	virtual void update(SPCtx* ctx, guint flags);
 
-GType sp_path_get_type (void);
+	virtual void set(unsigned int key, gchar const* value);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+
+	virtual gchar* description();
+	virtual Geom::Affine set_transform(Geom::Affine const &transform);
+    virtual void convert_to_guides();
+
+    virtual void update_patheffect(bool write);
+};
 
 #endif // SEEN_SP_PATH_H
 

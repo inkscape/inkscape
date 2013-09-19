@@ -1013,7 +1013,7 @@ inkscape_add_desktop (SPDesktop * desktop)
     inkscape->desktops = g_slist_prepend (inkscape->desktops, desktop);
 
     g_signal_emit (G_OBJECT (inkscape), inkscape_signals[ACTIVATE_DESKTOP], 0, desktop);
-    g_signal_emit (G_OBJECT (inkscape), inkscape_signals[SET_EVENTCONTEXT], 0, sp_desktop_event_context (desktop));
+    g_signal_emit (G_OBJECT (inkscape), inkscape_signals[SET_EVENTCONTEXT], 0, desktop->getEventContext());
     g_signal_emit (G_OBJECT (inkscape), inkscape_signals[SET_SELECTION], 0, sp_desktop_selection (desktop));
     g_signal_emit (G_OBJECT (inkscape), inkscape_signals[CHANGE_SELECTION], 0, sp_desktop_selection (desktop));
 }
@@ -1035,7 +1035,7 @@ inkscape_remove_desktop (SPDesktop * desktop)
             inkscape->desktops = g_slist_remove (inkscape->desktops, new_desktop);
             inkscape->desktops = g_slist_prepend (inkscape->desktops, new_desktop);
             g_signal_emit (G_OBJECT (inkscape), inkscape_signals[ACTIVATE_DESKTOP], 0, new_desktop);
-            g_signal_emit (G_OBJECT (inkscape), inkscape_signals[SET_EVENTCONTEXT], 0, sp_desktop_event_context (new_desktop));
+            g_signal_emit (G_OBJECT (inkscape), inkscape_signals[SET_EVENTCONTEXT], 0, new_desktop->getEventContext());
             g_signal_emit (G_OBJECT (inkscape), inkscape_signals[SET_SELECTION], 0, sp_desktop_selection (new_desktop));
             g_signal_emit (G_OBJECT (inkscape), inkscape_signals[CHANGE_SELECTION], 0, sp_desktop_selection (new_desktop));
         } else {
@@ -1075,7 +1075,7 @@ inkscape_activate_desktop (SPDesktop * desktop)
     inkscape->desktops = g_slist_prepend (inkscape->desktops, desktop);
 
     g_signal_emit (G_OBJECT (inkscape), inkscape_signals[ACTIVATE_DESKTOP], 0, desktop);
-    g_signal_emit (G_OBJECT (inkscape), inkscape_signals[SET_EVENTCONTEXT], 0, sp_desktop_event_context (desktop));
+    g_signal_emit (G_OBJECT (inkscape), inkscape_signals[SET_EVENTCONTEXT], 0, desktop->getEventContext());
     g_signal_emit (G_OBJECT (inkscape), inkscape_signals[SET_SELECTION], 0, sp_desktop_selection (desktop));
     g_signal_emit (G_OBJECT (inkscape), inkscape_signals[CHANGE_SELECTION], 0, sp_desktop_selection (desktop));
 }
@@ -1342,7 +1342,7 @@ SPEventContext *
 inkscape_active_event_context (void)
 {
     if (SP_ACTIVE_DESKTOP) {
-        return sp_desktop_event_context (SP_ACTIVE_DESKTOP);
+        return SP_ACTIVE_DESKTOP->getEventContext();
     }
 
     return NULL;

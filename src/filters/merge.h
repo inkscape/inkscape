@@ -12,22 +12,26 @@
 
 #include "sp-filter-primitive.h"
 
-#define SP_TYPE_FEMERGE (sp_feMerge_get_type())
-#define SP_FEMERGE(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_FEMERGE, SPFeMerge))
-#define SP_FEMERGE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_FEMERGE, SPFeMergeClass))
-#define SP_IS_FEMERGE(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_FEMERGE))
-#define SP_IS_FEMERGE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_FEMERGE))
+#define SP_FEMERGE(obj) (dynamic_cast<SPFeMerge*>((SPObject*)obj))
+#define SP_IS_FEMERGE(obj) (dynamic_cast<const SPFeMerge*>((SPObject*)obj) != NULL)
 
-struct SPFeMerge : public SPFilterPrimitive {
-    
+class SPFeMerge : public SPFilterPrimitive {
+public:
+	SPFeMerge();
+    virtual ~SPFeMerge();
+
+protected:
+	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
+	virtual void release();
+
+	virtual void set(unsigned int key, const gchar* value);
+
+	virtual void update(SPCtx* ctx, unsigned int flags);
+
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
+
+	virtual void build_renderer(Inkscape::Filters::Filter* filter);
 };
-
-struct SPFeMergeClass {
-    SPFilterPrimitiveClass parent_class;
-};
-
-GType sp_feMerge_get_type();
-
 
 #endif /* !SP_FEMERGE_H_SEEN */
 

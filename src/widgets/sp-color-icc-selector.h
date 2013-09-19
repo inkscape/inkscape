@@ -8,7 +8,7 @@
 #include "sp-color-selector.h"
 
 namespace Inkscape {
-struct ColorProfile;
+class ColorProfile;
 }
 
 struct SPColorICCSelector;

@@ -16,7 +16,6 @@
 #include "display/cairo-utils.h"
 #include "gradient-image.h"
 #include "sp-gradient.h"
-#include "sp-gradient-fns.h"
 
 #include <sigc++/functors/ptr_fun.h>
 #include <sigc++/adaptors/bind.h>

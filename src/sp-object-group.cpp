@@ -16,108 +16,60 @@
 #include "xml/repr.h"
 #include "document.h"
 
-static void sp_objectgroup_child_added(SPObject            *object,
-                                       Inkscape::XML::Node *child,
-                                       Inkscape::XML::Node *ref);
-
-static void sp_objectgroup_remove_child(SPObject            *object,
-                                        Inkscape::XML::Node *child);
-
-static void sp_objectgroup_order_changed(SPObject            *object,
-                                         Inkscape::XML::Node *child,
-                                         Inkscape::XML::Node *old_ref,
-                                         Inkscape::XML::Node *new_ref);
-
-static Inkscape::XML::Node* sp_objectgroup_write(SPObject                *object,
-                                                 Inkscape::XML::Document *doc,
-                                                 Inkscape::XML::Node     *repr,
-                                                 guint                    flags);
-
-G_DEFINE_TYPE(SPObjectGroup, sp_objectgroup, SP_TYPE_OBJECT);
-
-static void
-sp_objectgroup_class_init(SPObjectGroupClass *klass)
-{
-    SPObjectClass * sp_object_class = SP_OBJECT_CLASS(klass);
-
-    sp_object_class->child_added   = sp_objectgroup_child_added;
-    sp_object_class->remove_child  = sp_objectgroup_remove_child;
-    sp_object_class->order_changed = sp_objectgroup_order_changed;
-    sp_object_class->write         = sp_objectgroup_write;
+SPObjectGroup::SPObjectGroup() : SPObject() {
 }
 
-static void
-sp_objectgroup_init(SPObjectGroup * /*objectgroup*/)
-{
+SPObjectGroup::~SPObjectGroup() {
 }
 
-static void
-sp_objectgroup_child_added(SPObject            *object,
-                           Inkscape::XML::Node *child,
-                           Inkscape::XML::Node *ref)
-{
-    if ((SP_OBJECT_CLASS(sp_objectgroup_parent_class))->child_added) {
-        (* (SP_OBJECT_CLASS(sp_objectgroup_parent_class))->child_added)(object, child, ref);
-    }
+void SPObjectGroup::child_added(Inkscape::XML::Node *child, Inkscape::XML::Node *ref) {
+	SPObject::child_added(child, ref);
 
-    object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+	this->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
-static void
-sp_objectgroup_remove_child(SPObject            *object,
-                            Inkscape::XML::Node *child)
-{
-    if ((SP_OBJECT_CLASS(sp_objectgroup_parent_class))->remove_child) {
-        (* (SP_OBJECT_CLASS(sp_objectgroup_parent_class))->remove_child)(object, child);
-    }
 
-    object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+void SPObjectGroup::remove_child(Inkscape::XML::Node *child) {
+	SPObject::remove_child(child);
+
+	this->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
-static void
-sp_objectgroup_order_changed(SPObject            *object,
-                             Inkscape::XML::Node *child,
-                             Inkscape::XML::Node *old_ref,
-                             Inkscape::XML::Node *new_ref)
-{
-    if ((SP_OBJECT_CLASS(sp_objectgroup_parent_class))->order_changed) {
-        (* (SP_OBJECT_CLASS(sp_objectgroup_parent_class))->order_changed)(object, child, old_ref, new_ref);
-    }
 
-    object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+void SPObjectGroup::order_changed(Inkscape::XML::Node *child, Inkscape::XML::Node *old_ref, Inkscape::XML::Node *new_ref) {
+	SPObject::order_changed(child, old_ref, new_ref);
+
+	this->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
-static Inkscape::XML::Node*
-sp_objectgroup_write(SPObject                *object,
-                     Inkscape::XML::Document *xml_doc,
-                     Inkscape::XML::Node     *repr,
-                     guint                    flags)
-{
+
+Inkscape::XML::Node *SPObjectGroup::write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags) {
     if (flags & SP_OBJECT_WRITE_BUILD) {
         if (!repr) {
             repr = xml_doc->createElement("svg:g");
         }
+
         GSList *l = 0;
-        for ( SPObject *child = object->firstChild() ; child ; child = child->getNext() ) {
+        for ( SPObject *child = this->firstChild() ; child ; child = child->getNext() ) {
             Inkscape::XML::Node *crepr = child->updateRepr(xml_doc, NULL, flags);
+
             if (crepr) {
                 l = g_slist_prepend(l, crepr);
             }
         }
+
         while (l) {
             repr->addChild(static_cast<Inkscape::XML::Node *>(l->data), NULL);
             Inkscape::GC::release(static_cast<Inkscape::XML::Node *>(l->data));
             l = g_slist_remove(l, l->data);
         }
     } else {
-        for ( SPObject *child = object->firstChild() ; child ; child = child->getNext() ) {
+        for ( SPObject *child = this->firstChild() ; child ; child = child->getNext() ) {
             child->updateRepr(flags);
         }
     }
 
-    if ((SP_OBJECT_CLASS(sp_objectgroup_parent_class))->write) {
-        SP_OBJECT_CLASS(sp_objectgroup_parent_class)->write(object, xml_doc, repr, flags);
-    }
+    SPObject::write(xml_doc, repr, flags);
 
     return repr;
 }

@@ -41,9 +41,9 @@ class SPCSSAttr;
 struct SPCanvas;
 struct SPCanvasItem;
 struct SPCanvasGroup;
-struct SPEventContext;
+class SPEventContext;
 class  SPItem;
-struct SPNamedView;
+class SPNamedView;
 class  SPObject;
 struct SPStyle;
 typedef struct _DocumentInterface DocumentInterface;//struct DocumentInterface;
@@ -134,6 +134,21 @@ public:
     DocumentInterface *dbus_document_interface;
     Inkscape::Display::TemporaryItemList *temporary_item_list;
     Inkscape::Display::SnapIndicator *snapindicator;
+
+    SPEventContext* getEventContext() const;
+    Inkscape::Selection* getSelection() const;
+    SPDocument* getDocument() const;
+    SPCanvas* getCanvas() const;
+    SPCanvasItem* getAcetate() const;
+    SPCanvasGroup* getMain() const;
+    SPCanvasGroup* getGridGroup() const;
+    SPCanvasGroup* getGuides() const;
+    SPCanvasItem* getDrawing() const;
+    SPCanvasGroup* getSketch() const;
+    SPCanvasGroup* getControls() const;
+    SPCanvasGroup* getTempGroup() const;
+    Inkscape::MessageStack* getMessageStack() const;
+    SPNamedView* getNamedView() const;
 
     SPCanvasItem  *acetate;
     SPCanvasGroup *main;
@@ -279,8 +294,11 @@ public:
     void activate_guides (bool activate);
     void change_document (SPDocument *document);
 
-    void set_event_context (GType type, const gchar *config);
-    void push_event_context (GType type, const gchar *config, unsigned int key);
+
+    void set_event_context2(const std::string& toolName);
+
+    //void set_event_context (GType type, const gchar *config);
+    //void push_event_context (GType type, const gchar *config, unsigned int key);
 
     void set_coordinate_status (Geom::Point p);
     SPItem *getItemFromListAtPointBottom(const GSList *list, Geom::Point const p) const;

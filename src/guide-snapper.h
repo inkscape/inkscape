@@ -13,7 +13,7 @@
 
 #include "line-snapper.h"
 
-struct SPNamedView;
+class SPNamedView;
 
 namespace Inkscape
 {

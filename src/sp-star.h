@@ -16,18 +16,20 @@
 
 #include "sp-polygon.h"
 
-#define SP_TYPE_STAR            (sp_star_get_type ())
-#define SP_STAR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_STAR, SPStar))
-#define SP_STAR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_STAR, SPStarClass))
-#define SP_IS_STAR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_STAR))
-#define SP_IS_STAR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_STAR))
+
+#define SP_STAR(obj) (dynamic_cast<SPStar*>((SPObject*)obj))
+#define SP_IS_STAR(obj) (dynamic_cast<const SPStar*>((SPObject*)obj) != NULL)
 
 typedef enum {
 	SP_STAR_POINT_KNOT1,
 	SP_STAR_POINT_KNOT2
 } SPStarPoint;
 
-struct SPStar : public SPPolygon {
+class SPStar : public SPPolygon {
+public:
+	SPStar();
+	virtual ~SPStar();
+
 	gint sides;
 
 	Geom::Point center;
@@ -37,13 +39,23 @@ struct SPStar : public SPPolygon {
 
 	double rounded;
 	double randomized;
-};
 
-struct SPStarClass {
-	SPPolygonClass parent_class;
-};
+// CPPIFY: This derivation is a bit weird.
+// parent_class = reinterpret_cast<SPShapeClass *>(g_type_class_ref(SP_TYPE_SHAPE));
+// So shouldn't star be derived from shape instead of polygon?
+// What does polygon have that shape doesn't?
 
-GType sp_star_get_type (void);
+	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+	virtual void set(unsigned int key, gchar const* value);
+	virtual void update(SPCtx* ctx, guint flags);
+
+	virtual gchar* description();
+	virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
+
+	virtual void update_patheffect(bool write);
+	virtual void set_shape();
+};
 
 void sp_star_position_set (SPStar *star, gint sides, Geom::Point center, gdouble r1, gdouble r2, gdouble arg1, gdouble arg2, bool isflat, double rounded, double randomized);
 

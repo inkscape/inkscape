@@ -23,15 +23,16 @@
 #include "display/curve.h"
 #include <2geom/point.h>
 
-#define SP_TYPE_COMMON_CONTEXT (sp_common_context_get_type())
-#define SP_COMMON_CONTEXT(o) (G_TYPE_CHECK_INSTANCE_CAST((o), SP_TYPE_COMMON_CONTEXT, SPCommonContext))
-#define SP_COMMON_CONTEXT_CLASS(k) (G_TYPE_CHECK_CLASS_CAST((k), SP_TYPE_COMMON_CONTEXT, SPCommonContextClass))
-#define SP_IS_COMMON_CONTEXT(o) (G_TYPE_CHECK_INSTANCE_TYPE((o), SP_TYPE_COMMON_CONTEXT))
-#define SP_IS_COMMON_CONTEXT_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE((k), SP_TYPE_COMMON_CONTEXT))
-
 #define SAMPLING_SIZE 8        /* fixme: ?? */
 
-struct SPCommonContext : public SPEventContext {
+class SPCommonContext : public SPEventContext {
+public:
+	SPCommonContext();
+	virtual ~SPCommonContext();
+
+	virtual void set(const Inkscape::Preferences::Entry& val);
+
+protected:
     /** accumulated shape which ultimately goes in svg:path */
     SPCurve *accumulated;
 
@@ -88,17 +89,16 @@ struct SPCommonContext : public SPEventContext {
     double tremor;
     double cap_rounding;
 
-    Inkscape::MessageContext *_message_context;
+    //Inkscape::MessageContext *_message_context;
 
     bool is_drawing;
 
     /** uses absolute width independent of zoom */
     bool abs_width;
+
+	Geom::Point getViewPoint(Geom::Point n) const;
+	Geom::Point getNormalizedPoint(Geom::Point v) const;
 };
-
-struct SPCommonContextClass : public SPEventContextClass{};
-
-GType sp_common_context_get_type(void);
 
 #endif // COMMON_CONTEXT_H_SEEN
 

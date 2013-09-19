@@ -42,7 +42,6 @@
 #include "path-prefix.h"
 #include "preferences.h"
 #include "sp-item.h"
-#include "sp-gradient-fns.h"
 #include "sp-gradient.h"
 #include "sp-gradient-vector.h"
 #include "style.h"

@@ -23,11 +23,9 @@
 #define SAMPLE_STEP      (1.0/4.0) ///< step per 2PI 
 #define SAMPLE_SIZE      8         ///< sample size per one bezier 
 
-#define SP_TYPE_SPIRAL            (sp_spiral_get_type ())
-#define SP_SPIRAL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_SPIRAL, SPSpiral))
-#define SP_SPIRAL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_SPIRAL, SPSpiralClass))
-#define SP_IS_SPIRAL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_SPIRAL))
-#define SP_IS_SPIRAL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_SPIRAL))
+
+#define SP_SPIRAL(obj) (dynamic_cast<SPSpiral*>((SPObject*)obj))
+#define SP_IS_SPIRAL(obj) (dynamic_cast<const SPSpiral*>((SPObject*)obj) != NULL)
 
 /**
  * A spiral Shape.
@@ -41,45 +39,42 @@
  *
  * \todo Should I remove these attributes?
  */
-struct SPSpiral : public SPShape {
+class SPSpiral : public SPShape {
+public:
+	SPSpiral();
+	virtual ~SPSpiral();
+
 	float cx, cy;
 	float exp;  ///< Spiral expansion factor
 	float revo; ///< Spiral revolution factor
 	float rad;  ///< Spiral radius
 	float arg;  ///< Spiral argument
 	float t0;
+
+	/* Lowlevel interface */
+	void setPosition(gdouble cx, gdouble cy, gdouble exp, gdouble revo, gdouble rad, gdouble arg, gdouble t0);
+
+	Geom::Point getXY(gdouble t) const;
+
+	void getPolar(gdouble t, gdouble* rad, gdouble* arg) const;
+
+	bool isInvalid() const;
+
+//private:
+	Geom::Point getTangent(gdouble t) const;
+
+	void fitAndDraw(SPCurve* c, double dstep, Geom::Point darray[], Geom::Point const& hat1, Geom::Point& hat2, double* t) const;
+
+	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+	virtual void update(SPCtx *ctx, guint flags);
+	virtual void set(unsigned int key, gchar const* value);
+
+	virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
+	virtual gchar* description();
+
+	virtual void set_shape();
+	virtual void update_patheffect(bool write);
 };
-
-/// The SPSpiral vtable.
-struct SPSpiralClass {
-	SPShapeClass parent_class;
-};
-
-
-/* Standard Gtk function */
-GType sp_spiral_get_type  (void);
-
-/* Lowlevel interface */
-void    sp_spiral_position_set		(SPSpiral      *spiral,
-				 gdouble	cx,
-				 gdouble	cy,
-				 gdouble	exp,
-				 gdouble	revo,
-				 gdouble	rad,
-				 gdouble	arg,
-				 gdouble	t0);
-
-Geom::Point    sp_spiral_get_xy	(SPSpiral const *spiral,
-				 gdouble	t);
-
-void    sp_spiral_get_polar	(SPSpiral const *spiral,
-				 gdouble	t,
-				 gdouble       *rad,
-				 gdouble       *arg);
-
-bool sp_spiral_is_invalid   (SPSpiral const *spiral);
-
-
-
 
 #endif // SEEN_SP_SPIRAL_H

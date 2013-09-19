@@ -19,36 +19,48 @@
 #include <2geom/point.h>
 #include "event-context.h"
 
-#define SP_TYPE_STAR_CONTEXT (sp_star_context_get_type ())
-#define SP_STAR_CONTEXT(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_STAR_CONTEXT, SPStarContext))
-#define SP_STAR_CONTEXT_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_STAR_CONTEXT, SPStarContextClass))
-#define SP_IS_STAR_CONTEXT(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_STAR_CONTEXT))
-#define SP_IS_STAR_CONTEXT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_STAR_CONTEXT))
+#include "sp-star.h"
 
-struct SPStarContext : public SPEventContext {
-    SPItem *item;
-    Geom::Point center;
+class SPStarContext : public SPEventContext {
+public:
+	SPStarContext();
+	virtual ~SPStarContext();
+
+	static const std::string prefsPath;
+
+	virtual void setup();
+	virtual void finish();
+	virtual void set(const Inkscape::Preferences::Entry& val);
+	virtual bool root_handler(GdkEvent* event);
+
+	virtual const std::string& getPrefsPath();
+
+private:
+	SPStar* star;
+
+	Geom::Point center;
 
     /* Number of corners */
     gint magnitude;
+
     /* Outer/inner radius ratio */
     gdouble proportion;
+
     /* flat sides or not? */
     bool isflatsided;
+
     /* rounded corners ratio */
     gdouble rounded;
+
     // randomization
     gdouble randomized;
 
     sigc::connection sel_changed_connection;
 
-    Inkscape::MessageContext *_message_context;
+	void drag(Geom::Point p, guint state);
+	void finishItem();
+	void cancel();
+	void selection_changed(Inkscape::Selection* selection);
 };
-
-struct SPStarContextClass {
-    SPEventContextClass parent_class;
-};
-
-GType sp_star_context_get_type (void);
 
 #endif

@@ -1484,7 +1484,7 @@ bool OdfOutput::processGradient(SPItem *item,
     for (SPStop *stop = grvec->getFirstStop();
          stop ; stop = stop->getNextStop())
     {
-        unsigned long rgba = sp_stop_get_rgba32(stop);
+        unsigned long rgba = stop->get_rgba32();
         unsigned long rgb  = (rgba >> 8) & 0xffffff;
         double opacity     = (static_cast<double>(rgba & 0xff)) / 256.0;
         GradientStop gs(rgb, opacity);

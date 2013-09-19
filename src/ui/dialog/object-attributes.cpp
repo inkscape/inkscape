@@ -124,16 +124,20 @@ void ObjectAttributes::widget_setup (void)
     }
     
     blocked = true;
+
+    // CPPIFY
     SPObject *obj = SP_OBJECT(item); //to get the selected item
-    GObjectClass *klass = G_OBJECT_GET_CLASS(obj); //to deduce the object's type
-    GType type = G_TYPE_FROM_CLASS(klass);
+//    GObjectClass *klass = G_OBJECT_GET_CLASS(obj); //to deduce the object's type
+//    GType type = G_TYPE_FROM_CLASS(klass);
     const SPAttrDesc *desc;
     
-    if (type == SP_TYPE_ANCHOR)
+//    if (type == SP_TYPE_ANCHOR)
+    if (SP_IS_ANCHOR(item))
     {
         desc = anchor_desc;
     }
-    else if (type == SP_TYPE_IMAGE)
+//    else if (type == SP_TYPE_IMAGE)
+    else if (SP_IS_IMAGE(item))
     {
         Inkscape::XML::Node *ir = obj->getRepr();
         const gchar *href = ir->attribute("xlink:href");

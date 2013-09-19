@@ -34,59 +34,35 @@
 #include "display/nr-filter-specularlighting.h"
 
 /* FeSpecularLighting base class */
-static void sp_feSpecularLighting_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
-static void sp_feSpecularLighting_release(SPObject *object);
-static void sp_feSpecularLighting_set(SPObject *object, unsigned int key, gchar const *value);
-static void sp_feSpecularLighting_update(SPObject *object, SPCtx *ctx, guint flags);
-//we assume that svg:feSpecularLighting can have any number of children
-//only the first one is considered as the light source of the filter
-//TODO is that right?
-//if not modify child_added and remove_child to raise errors
-static void sp_feSpecularLighting_child_added(SPObject *object,
-                                    Inkscape::XML::Node *child,
-                                    Inkscape::XML::Node *ref);
-static void sp_feSpecularLighting_remove_child(SPObject *object, Inkscape::XML::Node *child);
-static void sp_feSpecularLighting_order_changed(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *old_ref, Inkscape::XML::Node *new_ref);
-static Inkscape::XML::Node *sp_feSpecularLighting_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
-static void sp_feSpecularLighting_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter);
 static void sp_feSpecularLighting_children_modified(SPFeSpecularLighting *sp_specularlighting);
 
-G_DEFINE_TYPE(SPFeSpecularLighting, sp_feSpecularLighting, SP_TYPE_FILTER_PRIMITIVE);
+#include "sp-factory.h"
 
-static void
-sp_feSpecularLighting_class_init(SPFeSpecularLightingClass *klass)
-{
-    SPObjectClass *sp_object_class = (SPObjectClass *)klass;
-    SPFilterPrimitiveClass *sp_primitive_class = (SPFilterPrimitiveClass *)klass;
+namespace {
+	SPObject* createSpecularLighting() {
+		return new SPFeSpecularLighting();
+	}
 
-    sp_object_class->build = sp_feSpecularLighting_build;
-    sp_object_class->release = sp_feSpecularLighting_release;
-    sp_object_class->write = sp_feSpecularLighting_write;
-    sp_object_class->set = sp_feSpecularLighting_set;
-    sp_object_class->update = sp_feSpecularLighting_update;
-    sp_object_class->child_added = sp_feSpecularLighting_child_added;
-    sp_object_class->remove_child = sp_feSpecularLighting_remove_child;
-    sp_object_class->order_changed = sp_feSpecularLighting_order_changed;
-
-    sp_primitive_class->build_renderer = sp_feSpecularLighting_build_renderer;
+	bool specularLightingRegistered = SPFactory::instance().registerObject("svg:feSpecularLighting", createSpecularLighting);
 }
 
-static void
-sp_feSpecularLighting_init(SPFeSpecularLighting *feSpecularLighting)
-{
-    feSpecularLighting->surfaceScale = 1;
-    feSpecularLighting->specularConstant = 1;
-    feSpecularLighting->specularExponent = 1;
-    feSpecularLighting->lighting_color = 0xffffffff;
-    feSpecularLighting->icc = NULL;
+SPFeSpecularLighting::SPFeSpecularLighting() : SPFilterPrimitive() {
+    this->surfaceScale = 1;
+    this->specularConstant = 1;
+    this->specularExponent = 1;
+    this->lighting_color = 0xffffffff;
+    this->icc = NULL;
 
     //TODO kernelUnit
-    feSpecularLighting->renderer = NULL;
+    this->renderer = NULL;
     
-    feSpecularLighting->surfaceScale_set = FALSE;
-    feSpecularLighting->specularConstant_set = FALSE;
-    feSpecularLighting->specularExponent_set = FALSE;
-    feSpecularLighting->lighting_color_set = FALSE;
+    this->surfaceScale_set = FALSE;
+    this->specularConstant_set = FALSE;
+    this->specularExponent_set = FALSE;
+    this->lighting_color_set = FALSE;
+}
+
+SPFeSpecularLighting::~SPFeSpecularLighting() {
 }
 
 /**
@@ -94,196 +70,181 @@ sp_feSpecularLighting_init(SPFeSpecularLighting *feSpecularLighting)
  * our name must be associated with a repr via "sp_object_type_register".  Best done through
  * sp-object-repr.cpp's repr_name_entries array.
  */
-static void
-sp_feSpecularLighting_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
-{
-    if (((SPObjectClass *) sp_feSpecularLighting_parent_class)->build) {
-        ((SPObjectClass *) sp_feSpecularLighting_parent_class)->build(object, document, repr);
-    }
+void SPFeSpecularLighting::build(SPDocument *document, Inkscape::XML::Node *repr) {
+	SPFilterPrimitive::build(document, repr);
 
-    /*LOAD ATTRIBUTES FROM REPR HERE*/
-    object->readAttr( "surfaceScale" );
-    object->readAttr( "specularConstant" );
-    object->readAttr( "specularExponent" );
-    object->readAttr( "kernelUnitLength" );
-    object->readAttr( "lighting-color" );
-    
+	/*LOAD ATTRIBUTES FROM REPR HERE*/
+	this->readAttr( "surfaceScale" );
+	this->readAttr( "specularConstant" );
+	this->readAttr( "specularExponent" );
+	this->readAttr( "kernelUnitLength" );
+	this->readAttr( "lighting-color" );
 }
 
 /**
  * Drops any allocated memory.
  */
-static void
-sp_feSpecularLighting_release(SPObject *object)
-{
-    if (((SPObjectClass *) sp_feSpecularLighting_parent_class)->release)
-        ((SPObjectClass *) sp_feSpecularLighting_parent_class)->release(object);
+void SPFeSpecularLighting::release() {
+	SPFilterPrimitive::release();
 }
 
 /**
  * Sets a specific value in the SPFeSpecularLighting.
  */
-static void
-sp_feSpecularLighting_set(SPObject *object, unsigned int key, gchar const *value)
-{
-    SPFeSpecularLighting *feSpecularLighting = SP_FESPECULARLIGHTING(object);
+void SPFeSpecularLighting::set(unsigned int key, gchar const *value) {
     gchar const *cend_ptr = NULL;
     gchar *end_ptr = NULL;
+
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
 //TODO test forbidden values
         case SP_ATTR_SURFACESCALE:
             end_ptr = NULL;
             if (value) {
-                feSpecularLighting->surfaceScale = g_ascii_strtod(value, &end_ptr);
+                this->surfaceScale = g_ascii_strtod(value, &end_ptr);
                 if (end_ptr) {
-                    feSpecularLighting->surfaceScale_set = TRUE;
+                    this->surfaceScale_set = TRUE;
                 } else {
-                    g_warning("feSpecularLighting: surfaceScale should be a number ... defaulting to 1");
+                    g_warning("this: surfaceScale should be a number ... defaulting to 1");
                 }
 
             }
             //if the attribute is not set or has an unreadable value
             if (!value || !end_ptr) {
-                feSpecularLighting->surfaceScale = 1;
-                feSpecularLighting->surfaceScale_set = FALSE;
+                this->surfaceScale = 1;
+                this->surfaceScale_set = FALSE;
             }
-            if (feSpecularLighting->renderer) {
-                feSpecularLighting->renderer->surfaceScale = feSpecularLighting->surfaceScale;
+            if (this->renderer) {
+                this->renderer->surfaceScale = this->surfaceScale;
             }
-            object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_ATTR_SPECULARCONSTANT:
             end_ptr = NULL;
             if (value) {
-                feSpecularLighting->specularConstant = g_ascii_strtod(value, &end_ptr);
-                if (end_ptr && feSpecularLighting->specularConstant >= 0) {
-                    feSpecularLighting->specularConstant_set = TRUE;
+                this->specularConstant = g_ascii_strtod(value, &end_ptr);
+                if (end_ptr && this->specularConstant >= 0) {
+                    this->specularConstant_set = TRUE;
                 } else {
                     end_ptr = NULL;
-                    g_warning("feSpecularLighting: specularConstant should be a positive number ... defaulting to 1");
+                    g_warning("this: specularConstant should be a positive number ... defaulting to 1");
                 }
             }
             if (!value || !end_ptr) {
-                feSpecularLighting->specularConstant = 1;
-                feSpecularLighting->specularConstant_set = FALSE;
+                this->specularConstant = 1;
+                this->specularConstant_set = FALSE;
             }
-            if (feSpecularLighting->renderer) {
-                feSpecularLighting->renderer->specularConstant = feSpecularLighting->specularConstant;
+            if (this->renderer) {
+                this->renderer->specularConstant = this->specularConstant;
             }
-            object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_ATTR_SPECULAREXPONENT:
             end_ptr = NULL;
             if (value) {
-                feSpecularLighting->specularExponent = g_ascii_strtod(value, &end_ptr);
-                if (feSpecularLighting->specularExponent >= 1 && feSpecularLighting->specularExponent <= 128) {
-                    feSpecularLighting->specularExponent_set = TRUE;
+                this->specularExponent = g_ascii_strtod(value, &end_ptr);
+                if (this->specularExponent >= 1 && this->specularExponent <= 128) {
+                    this->specularExponent_set = TRUE;
                 } else {
                     end_ptr = NULL;
-                    g_warning("feSpecularLighting: specularExponent should be a number in range [1, 128] ... defaulting to 1");
+                    g_warning("this: specularExponent should be a number in range [1, 128] ... defaulting to 1");
                 }
             } 
             if (!value || !end_ptr) {
-                feSpecularLighting->specularExponent = 1;
-                feSpecularLighting->specularExponent_set = FALSE;
+                this->specularExponent = 1;
+                this->specularExponent_set = FALSE;
             }
-            if (feSpecularLighting->renderer) {
-                feSpecularLighting->renderer->specularExponent = feSpecularLighting->specularExponent;
+            if (this->renderer) {
+                this->renderer->specularExponent = this->specularExponent;
             }
-            object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_ATTR_KERNELUNITLENGTH:
             //TODO kernelUnit
-            //feSpecularLighting->kernelUnitLength.set(value);
+            //this->kernelUnitLength.set(value);
             /*TODOif (feSpecularLighting->renderer) {
                 feSpecularLighting->renderer->surfaceScale = feSpecularLighting->renderer;
             }
             */
-            object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_PROP_LIGHTING_COLOR:
             cend_ptr = NULL;
-            feSpecularLighting->lighting_color = sp_svg_read_color(value, &cend_ptr, 0xffffffff);
+            this->lighting_color = sp_svg_read_color(value, &cend_ptr, 0xffffffff);
             //if a value was read
             if (cend_ptr) {
                 while (g_ascii_isspace(*cend_ptr)) {
                     ++cend_ptr;
                 }
                 if (strneq(cend_ptr, "icc-color(", 10)) {
-                    if (!feSpecularLighting->icc) feSpecularLighting->icc = new SVGICCColor();
-                    if ( ! sp_svg_read_icc_color( cend_ptr, feSpecularLighting->icc ) ) {
-                        delete feSpecularLighting->icc;
-                        feSpecularLighting->icc = NULL;
+                    if (!this->icc) this->icc = new SVGICCColor();
+                    if ( ! sp_svg_read_icc_color( cend_ptr, this->icc ) ) {
+                        delete this->icc;
+                        this->icc = NULL;
                     }
                 }
-                feSpecularLighting->lighting_color_set = TRUE;
+                this->lighting_color_set = TRUE;
             } else {
                 //lighting_color already contains the default value
-                feSpecularLighting->lighting_color_set = FALSE;
+                this->lighting_color_set = FALSE;
             }
-            if (feSpecularLighting->renderer) {
-                feSpecularLighting->renderer->lighting_color = feSpecularLighting->lighting_color;
+            if (this->renderer) {
+                this->renderer->lighting_color = this->lighting_color;
             }
-            object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         default:
-            if (((SPObjectClass *) sp_feSpecularLighting_parent_class)->set)
-                ((SPObjectClass *) sp_feSpecularLighting_parent_class)->set(object, key, value);
+        	SPFilterPrimitive::set(key, value);
             break;
     }
-
 }
 
 /**
  * Receives update notifications.
  */
-static void
-sp_feSpecularLighting_update(SPObject *object, SPCtx *ctx, guint flags)
-{
+void SPFeSpecularLighting::update(SPCtx *ctx, guint flags) {
     if (flags & (SP_OBJECT_MODIFIED_FLAG)) {
-        object->readAttr( "surfaceScale" );
-        object->readAttr( "specularConstant" );
-        object->readAttr( "specularExponent" );
-        object->readAttr( "kernelUnitLength" );
-        object->readAttr( "lighting-color" );
+        this->readAttr( "surfaceScale" );
+        this->readAttr( "specularConstant" );
+        this->readAttr( "specularExponent" );
+        this->readAttr( "kernelUnitLength" );
+        this->readAttr( "lighting-color" );
     }
 
-    if (((SPObjectClass *) sp_feSpecularLighting_parent_class)->update) {
-        ((SPObjectClass *) sp_feSpecularLighting_parent_class)->update(object, ctx, flags);
-    }
+    SPFilterPrimitive::update(ctx, flags);
 }
 
 /**
  * Writes its settings to an incoming repr object, if any.
  */
-static Inkscape::XML::Node *
-sp_feSpecularLighting_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
-{
-    SPFeSpecularLighting *fespecularlighting = SP_FESPECULARLIGHTING(object);
-    
+Inkscape::XML::Node* SPFeSpecularLighting::write(Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags) {
     /* TODO: Don't just clone, but create a new repr node and write all
      * relevant values _and children_ into it */
     if (!repr) {
-        repr = object->getRepr()->duplicate(doc);
+        repr = this->getRepr()->duplicate(doc);
         //repr = doc->createElement("svg:feSpecularLighting");
     }
 
-    if (fespecularlighting->surfaceScale_set)
-        sp_repr_set_css_double(repr, "surfaceScale", fespecularlighting->surfaceScale);
-    if (fespecularlighting->specularConstant_set)
-        sp_repr_set_css_double(repr, "specularConstant", fespecularlighting->specularConstant);
-    if (fespecularlighting->specularExponent_set)
-        sp_repr_set_css_double(repr, "specularExponent", fespecularlighting->specularExponent);
-   /*TODO kernelUnits */ 
-    if (fespecularlighting->lighting_color_set) {
+    if (this->surfaceScale_set) {
+        sp_repr_set_css_double(repr, "surfaceScale", this->surfaceScale);
+    }
+
+    if (this->specularConstant_set) {
+        sp_repr_set_css_double(repr, "specularConstant", this->specularConstant);
+    }
+
+    if (this->specularExponent_set) {
+        sp_repr_set_css_double(repr, "specularExponent", this->specularExponent);
+    }
+
+    /*TODO kernelUnits */ 
+    if (this->lighting_color_set) {
         gchar c[64];
-        sp_svg_write_color(c, sizeof(c), fespecularlighting->lighting_color);
+        sp_svg_write_color(c, sizeof(c), this->lighting_color);
         repr->setAttribute("lighting-color", c);
     }
-    if (((SPObjectClass *) sp_feSpecularLighting_parent_class)->write) {
-        ((SPObjectClass *) sp_feSpecularLighting_parent_class)->write(object, doc, repr, flags);
-    }
+    
+    SPFilterPrimitive::write(doc, repr, flags);
 
     return repr;
 }
@@ -291,97 +252,85 @@ sp_feSpecularLighting_write(SPObject *object, Inkscape::XML::Document *doc, Inks
 /**
  * Callback for child_added event.
  */
-static void
-sp_feSpecularLighting_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
-{
-    SPFeSpecularLighting *f = SP_FESPECULARLIGHTING(object);
+void SPFeSpecularLighting::child_added(Inkscape::XML::Node *child, Inkscape::XML::Node *ref) {
+    SPFilterPrimitive::child_added(child, ref);
 
-    if (((SPObjectClass *) sp_feSpecularLighting_parent_class)->child_added)
-        (* ((SPObjectClass *) sp_feSpecularLighting_parent_class)->child_added)(object, child, ref);
-
-    sp_feSpecularLighting_children_modified(f);
-    object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+    sp_feSpecularLighting_children_modified(this);
+    this->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
-            
 
 /**
  * Callback for remove_child event.
  */
-static void
-sp_feSpecularLighting_remove_child(SPObject *object, Inkscape::XML::Node *child)
-{   
-    SPFeSpecularLighting *f = SP_FESPECULARLIGHTING(object);
+void SPFeSpecularLighting::remove_child(Inkscape::XML::Node *child) {
+    SPFilterPrimitive::remove_child(child);
 
-    if (((SPObjectClass *) sp_feSpecularLighting_parent_class)->remove_child)
-        (* ((SPObjectClass *) sp_feSpecularLighting_parent_class)->remove_child)(object, child);   
-
-    sp_feSpecularLighting_children_modified(f);
-    object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+    sp_feSpecularLighting_children_modified(this);
+    this->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
-static void
-sp_feSpecularLighting_order_changed (SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *old_ref, Inkscape::XML::Node *new_ref)
-{
-    SPFeSpecularLighting *f = SP_FESPECULARLIGHTING(object);
-    if (((SPObjectClass *) (sp_feSpecularLighting_parent_class))->order_changed)
-        (* ((SPObjectClass *) (sp_feSpecularLighting_parent_class))->order_changed) (object, child, old_ref, new_ref);
+void SPFeSpecularLighting::order_changed(Inkscape::XML::Node *child, Inkscape::XML::Node *old_ref, Inkscape::XML::Node *new_ref) {
+    SPFilterPrimitive::order_changed(child, old_ref, new_ref);
 
-    sp_feSpecularLighting_children_modified(f);
-    object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+    sp_feSpecularLighting_children_modified(this);
+    this->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
-static void sp_feSpecularLighting_children_modified(SPFeSpecularLighting *sp_specularlighting)
-{
-   if (sp_specularlighting->renderer) {
+static void sp_feSpecularLighting_children_modified(SPFeSpecularLighting *sp_specularlighting) {
+	if (sp_specularlighting->renderer) {
         sp_specularlighting->renderer->light_type = Inkscape::Filters::NO_LIGHT;
+        
         if (SP_IS_FEDISTANTLIGHT(sp_specularlighting->children)) {
             sp_specularlighting->renderer->light_type = Inkscape::Filters::DISTANT_LIGHT;
             sp_specularlighting->renderer->light.distant = SP_FEDISTANTLIGHT(sp_specularlighting->children);
         }
+        
         if (SP_IS_FEPOINTLIGHT(sp_specularlighting->children)) {
             sp_specularlighting->renderer->light_type = Inkscape::Filters::POINT_LIGHT;
             sp_specularlighting->renderer->light.point = SP_FEPOINTLIGHT(sp_specularlighting->children);
         }
+        
         if (SP_IS_FESPOTLIGHT(sp_specularlighting->children)) {
             sp_specularlighting->renderer->light_type = Inkscape::Filters::SPOT_LIGHT;
             sp_specularlighting->renderer->light.spot = SP_FESPOTLIGHT(sp_specularlighting->children);
         }
-   }
+	}
 }
 
-static void sp_feSpecularLighting_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter) {
-    g_assert(primitive != NULL);
+void SPFeSpecularLighting::build_renderer(Inkscape::Filters::Filter* filter) {
+    g_assert(this != NULL);
     g_assert(filter != NULL);
-
-    SPFeSpecularLighting *sp_specularlighting = SP_FESPECULARLIGHTING(primitive);
 
     int primitive_n = filter->add_primitive(Inkscape::Filters::NR_FILTER_SPECULARLIGHTING);
     Inkscape::Filters::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
     Inkscape::Filters::FilterSpecularLighting *nr_specularlighting = dynamic_cast<Inkscape::Filters::FilterSpecularLighting*>(nr_primitive);
     g_assert(nr_specularlighting != NULL);
 
-    sp_specularlighting->renderer = nr_specularlighting;
-    sp_filter_primitive_renderer_common(primitive, nr_primitive);
+    this->renderer = nr_specularlighting;
+    sp_filter_primitive_renderer_common(this, nr_primitive);
 
-    nr_specularlighting->specularConstant = sp_specularlighting->specularConstant;
-    nr_specularlighting->specularExponent = sp_specularlighting->specularExponent;
-    nr_specularlighting->surfaceScale = sp_specularlighting->surfaceScale;
-    nr_specularlighting->lighting_color = sp_specularlighting->lighting_color;
-    nr_specularlighting->set_icc(sp_specularlighting->icc);
+    nr_specularlighting->specularConstant = this->specularConstant;
+    nr_specularlighting->specularExponent = this->specularExponent;
+    nr_specularlighting->surfaceScale = this->surfaceScale;
+    nr_specularlighting->lighting_color = this->lighting_color;
+    nr_specularlighting->set_icc(this->icc);
 
     //We assume there is at most one child
     nr_specularlighting->light_type = Inkscape::Filters::NO_LIGHT;
-    if (SP_IS_FEDISTANTLIGHT(primitive->children)) {
+
+    if (SP_IS_FEDISTANTLIGHT(this->children)) {
         nr_specularlighting->light_type = Inkscape::Filters::DISTANT_LIGHT;
-        nr_specularlighting->light.distant = SP_FEDISTANTLIGHT(primitive->children);
+        nr_specularlighting->light.distant = SP_FEDISTANTLIGHT(this->children);
     }
-    if (SP_IS_FEPOINTLIGHT(primitive->children)) {
+
+    if (SP_IS_FEPOINTLIGHT(this->children)) {
         nr_specularlighting->light_type = Inkscape::Filters::POINT_LIGHT;
-        nr_specularlighting->light.point = SP_FEPOINTLIGHT(primitive->children);
+        nr_specularlighting->light.point = SP_FEPOINTLIGHT(this->children);
     }
-    if (SP_IS_FESPOTLIGHT(primitive->children)) {
+
+    if (SP_IS_FESPOTLIGHT(this->children)) {
         nr_specularlighting->light_type = Inkscape::Filters::SPOT_LIGHT;
-        nr_specularlighting->light.spot = SP_FESPOTLIGHT(primitive->children);
+        nr_specularlighting->light.spot = SP_FESPOTLIGHT(this->children);
     }
         
     //nr_offset->set_dx(sp_offset->dx);

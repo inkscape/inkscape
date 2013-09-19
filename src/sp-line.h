@@ -17,38 +17,30 @@
 #include "svg/svg-length.h"
 #include "sp-shape.h"
 
-
-
-#define SP_TYPE_LINE            (sp_line_get_type())
-#define SP_LINE(obj)            (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_LINE, SPLine))
-#define SP_LINE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_LINE, SPLineClass))
-#define SP_IS_LINE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_LINE))
-#define SP_IS_LINE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_LINE))
-
-class SPLine;
-class SPLineClass;
-
-GType sp_line_get_type(void) G_GNUC_CONST;
+#define SP_LINE(obj) (dynamic_cast<SPLine*>((SPObject*)obj))
+#define SP_IS_LINE(obj) (dynamic_cast<const SPLine*>((SPObject*)obj) != NULL)
 
 class SPLine : public SPShape {
 public:
+	SPLine();
+	virtual ~SPLine();
+
     SVGLength x1;
     SVGLength y1;
     SVGLength x2;
     SVGLength y2;
 
-private:
-    friend class SPLineClass;
+	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+	virtual void set(unsigned int key, gchar const* value);
+
+	virtual gchar* description();
+	virtual Geom::Affine set_transform(Geom::Affine const &transform);
+	virtual void convert_to_guides();
+	virtual void update(SPCtx* ctx, guint flags);
+
+	virtual void set_shape();
 };
-
-class SPLineClass {
-public:
-    SPShapeClass parent_class;
-
-private:
-    friend class SPLine;
-};
-
 
 #endif // SEEN_SP_LINE_H
 /*

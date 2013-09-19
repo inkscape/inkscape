@@ -48,24 +48,28 @@ using Inkscape::ControlManager;
 using Inkscape::CTLINE_SECONDARY;
 using Inkscape::Util::unit_table;
 
-static void sp_measure_context_setup(SPEventContext *ec);
-static void sp_measure_context_finish(SPEventContext *ec);
-
-static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEvent *event);
-static gint sp_measure_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event);
-
-static gint xp = 0; // where drag started
-static gint yp = 0;
-static gint tolerance = 0;
-static bool within_tolerance = false;
-
 Geom::Point start_point;
 boost::optional<Geom::Point> explicitBase;
 boost::optional<Geom::Point> lastEnd;
 
 std::vector<Inkscape::Display::TemporaryItem*> measure_tmp_items;
 
-G_DEFINE_TYPE(SPMeasureContext, sp_measure_context, SP_TYPE_EVENT_CONTEXT);
+
+#include "tool-factory.h"
+
+namespace {
+	SPEventContext* createMeasureContext() {
+		return new SPMeasureContext();
+	}
+
+	bool measureContextRegistered = ToolFactory::instance().registerObject("/tools/measure", createMeasureContext);
+}
+
+const std::string& SPMeasureContext::getPrefsPath() {
+	return SPMeasureContext::prefsPath;
+}
+
+const std::string SPMeasureContext::prefsPath = "/tools/measure";
 
 namespace
 {
@@ -232,55 +236,46 @@ void createAngleDisplayCurve(SPDesktop *desktop, Geom::Point const &center, Geom
 
 } // namespace
 
-static void sp_measure_context_class_init(SPMeasureContextClass *klass)
-{
-    SPEventContextClass *event_context_class = reinterpret_cast<SPEventContextClass *>(klass);
 
-    event_context_class->setup = sp_measure_context_setup;
-    event_context_class->finish = sp_measure_context_finish;
+SPMeasureContext::SPMeasureContext() : SPEventContext() {
+	this->grabbed = 0;
 
-    event_context_class->root_handler = sp_measure_context_root_handler;
-    event_context_class->item_handler = sp_measure_context_item_handler;
+    this->cursor_shape = cursor_measure_xpm;
+    this->hot_x = 4;
+    this->hot_y = 4;
 }
 
-static void sp_measure_context_init(SPMeasureContext *measure_context)
-{
-    SPEventContext *event_context = SP_EVENT_CONTEXT(measure_context);
-
-    event_context->cursor_shape = cursor_measure_xpm;
-    event_context->hot_x = 4;
-    event_context->hot_y = 4;
+SPMeasureContext::~SPMeasureContext() {
 }
 
-static void sp_measure_context_finish(SPEventContext *ec)
-{
-    SPMeasureContext *mc = SP_MEASURE_CONTEXT(ec);
+void SPMeasureContext::finish() {
+    this->enableGrDrag(false);
 
-    ec->enableGrDrag(false);
-
-    if (mc->grabbed) {
-        sp_canvas_item_ungrab(mc->grabbed, GDK_CURRENT_TIME);
-        mc->grabbed = NULL;
+    if (this->grabbed) {
+        sp_canvas_item_ungrab(this->grabbed, GDK_CURRENT_TIME);
+        this->grabbed = NULL;
     }
 }
 
-static void sp_measure_context_setup(SPEventContext *ec)
-{
-    if (SP_EVENT_CONTEXT_CLASS(sp_measure_context_parent_class)->setup) {
-        SP_EVENT_CONTEXT_CLASS(sp_measure_context_parent_class)->setup(ec);
-    }
-}
+//void SPMeasureContext::setup() {
+//	SPEventContext* ec = this;
+//
+////    if (SP_EVENT_CONTEXT_CLASS(sp_measure_context_parent_class)->setup) {
+////        SP_EVENT_CONTEXT_CLASS(sp_measure_context_parent_class)->setup(ec);
+////    }
+//	SPEventContext::setup();
+//}
 
-static gint sp_measure_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event)
-{
-    gint ret = FALSE;
-
-    if (SP_EVENT_CONTEXT_CLASS(sp_measure_context_parent_class)->item_handler) {
-        ret = SP_EVENT_CONTEXT_CLASS(sp_measure_context_parent_class)->item_handler(event_context, item, event);
-    }
-
-    return ret;
-}
+//gint SPMeasureContext::item_handler(SPItem* item, GdkEvent* event) {
+//    gint ret = FALSE;
+//
+////    if (SP_EVENT_CONTEXT_CLASS(sp_measure_context_parent_class)->item_handler) {
+////        ret = SP_EVENT_CONTEXT_CLASS(sp_measure_context_parent_class)->item_handler(event_context, item, event);
+////    }
+//    ret = SPEventContext::item_handler(item, event);
+//
+//    return ret;
+//}
 
 static bool GeomPointSortPredicate(const Geom::Point& p1, const Geom::Point& p2)
 {
@@ -317,23 +312,20 @@ static void calculate_intersections(SPDesktop * /*desktop*/, SPItem* item, Geom:
     }
 }
 
-static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEvent *event)
-{
-    SPDesktop *desktop = event_context->desktop;
+bool SPMeasureContext::root_handler(GdkEvent* event) {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
 
-    SPMeasureContext *mc = SP_MEASURE_CONTEXT(event_context);
     gint ret = FALSE;
 
     switch (event->type) {
-        case GDK_BUTTON_PRESS:
-        {
+        case GDK_BUTTON_PRESS: {
             Geom::Point const button_w(event->button.x, event->button.y);
             explicitBase = boost::none;
             lastEnd = boost::none;
             start_point = desktop->w2d(button_w);
-            if (event->button.button == 1 && !event_context->space_panning) {
+
+            if (event->button.button == 1 && !this->space_panning) {
                 // save drag origin
                 xp = static_cast<gint>(event->button.x);
                 yp = static_cast<gint>(event->button.y);
@@ -350,12 +342,10 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
             sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                                 GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK | GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK,
                                 NULL, event->button.time);
-            mc->grabbed = SP_CANVAS_ITEM(desktop->acetate);
+            this->grabbed = SP_CANVAS_ITEM(desktop->acetate);
             break;
         }
-
-        case GDK_KEY_PRESS:
-        {
+        case GDK_KEY_PRESS: {
             if ((event->key.keyval == GDK_KEY_Shift_L) || (event->key.keyval == GDK_KEY_Shift_R)) {
                 if (lastEnd) {
                     explicitBase = lastEnd;
@@ -363,10 +353,8 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
             }
             break;
         }
-
-        case GDK_MOTION_NOTIFY:
-        {
-            if (!((event->motion.state & GDK_BUTTON1_MASK) && !event_context->space_panning)) {
+        case GDK_MOTION_NOTIFY: {
+            if (!((event->motion.state & GDK_BUTTON1_MASK) && !this->space_panning)) {
                 if (!(event->motion.state & GDK_SHIFT_MASK)) {
                     Geom::Point const motion_w(event->motion.x, event->motion.y);
                     Geom::Point const motion_dt(desktop->w2d(motion_w));
@@ -397,6 +385,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                 for (size_t idx = 0; idx < measure_tmp_items.size(); ++idx) {
                     desktop->remove_temporary_canvasitem(measure_tmp_items[idx]);
                 }
+
                 measure_tmp_items.clear();
 
                 Geom::Point const motion_w(event->motion.x, event->motion.y);
@@ -404,7 +393,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                 Geom::Point end_point = motion_dt;
 
                 if (event->motion.state & GDK_CONTROL_MASK) {
-                    spdc_endpoint_snap_rotation(event_context, end_point, start_point, event->motion.state);
+                    spdc_endpoint_snap_rotation(this, end_point, start_point, event->motion.state);
                 } else {
                     if (!(event->motion.state & GDK_SHIFT_MASK)) {
                         SnapManager &m = desktop->namedview->snap_manager;
@@ -416,7 +405,6 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                         m.unSetup();
                     }
                 }
-
 
                 Geom::PathVector lineseg;
                 Geom::Path p;
@@ -435,6 +423,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
 
                     baseAngle = atan2(deltay2, deltax2);
                     angle -= baseAngle;
+
                     if (angle < -M_PI) {
                         angle += 2 * M_PI;
                     } else if (angle > M_PI) {
@@ -447,6 +436,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
 #define NPOINTS 800
 
                 std::vector<Geom::Point> points;
+
                 for (double i = 0; i < NPOINTS; i++) {
                     points.push_back(desktop->d2w(start_point + (i / NPOINTS) * (end_point - start_point)));
                 }
@@ -740,10 +730,8 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
             }
             break;
         }
-
-        case GDK_BUTTON_RELEASE:
-        {
-            sp_event_context_discard_delayed_snap_event(event_context);
+        case GDK_BUTTON_RELEASE: {
+            sp_event_context_discard_delayed_snap_event(this);
             explicitBase = boost::none;
             lastEnd = boost::none;
 
@@ -751,12 +739,14 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
             for (size_t idx = 0; idx < measure_tmp_items.size(); ++idx) {
                 desktop->remove_temporary_canvasitem(measure_tmp_items[idx]);
             }
+
             measure_tmp_items.clear();
 
-            if (mc->grabbed) {
-                sp_canvas_item_ungrab(mc->grabbed, event->button.time);
-                mc->grabbed = NULL;
+            if (this->grabbed) {
+                sp_canvas_item_ungrab(this->grabbed, event->button.time);
+                this->grabbed = NULL;
             }
+
             xp = 0;
             yp = 0;
             break;
@@ -766,9 +756,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
     }
 
     if (!ret) {
-        if (SP_EVENT_CONTEXT_CLASS(sp_measure_context_parent_class)->root_handler) {
-            ret = SP_EVENT_CONTEXT_CLASS(sp_measure_context_parent_class)->root_handler(event_context, event);
-        }
+    	ret = SPEventContext::root_handler(event);
     }
 
     return ret;

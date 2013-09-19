@@ -17,9 +17,9 @@
 #include <sigc++/connection.h>
 
 class SvgFont;
-struct SPFont;
-struct SPGlyph;
-struct SPMissingGlyph;
+class SPFont;
+class SPGlyph;
+class SPMissingGlyph;
 
 struct _GdkEventExpose;
 typedef _GdkEventExpose GdkEventExpose;

@@ -13,9 +13,9 @@
 #include "display/nr-light-types.h"
 #include <2geom/forward.h>
 
-struct SPFeDistantLight;
-struct SPFePointLight;
-struct SPFeSpotLight;
+class SPFeDistantLight;
+class SPFePointLight;
+class SPFeSpotLight;
 
 namespace Inkscape {
 namespace Filters {

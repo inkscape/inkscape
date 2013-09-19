@@ -14,23 +14,25 @@
 
 #include "sp-item.h"
 
-#define SP_TYPE_SCRIPT (sp_script_get_type())
-#define SP_SCRIPT(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_SCRIPT, SPScript))
-#define SP_SCRIPT_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_SCRIPT, SPScriptClass))
-#define SP_IS_SCRIPT(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_SCRIPT))
-#define SP_IS_SCRIPT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_SCRIPT))
+#define SP_SCRIPT(obj) (dynamic_cast<SPScript*>((SPObject*)obj))
+#define SP_IS_SCRIPT(obj) (dynamic_cast<const SPScript*>((SPObject*)obj) != NULL)
 
 /* SPScript */
+class SPScript : public SPObject {
+public:
+	SPScript();
+	virtual ~SPScript();
 
-struct SPScript : public SPObject {
 	gchar *xlinkhref;
-};
 
-struct SPScriptClass {
-    SPObjectClass parent_class;
+protected:
+	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
+	virtual void release();
+	virtual void set(unsigned int key, const gchar* value);
+	virtual void update(SPCtx* ctx, unsigned int flags);
+	virtual void modified(unsigned int flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
 };
-
-GType sp_script_get_type();
 
 #endif
 

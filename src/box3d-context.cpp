@@ -52,115 +52,77 @@
 
 using Inkscape::DocumentUndo;
 
-static void sp_box3d_context_dispose(GObject *object);
+#include "tool-factory.h"
 
-static void sp_box3d_context_setup(SPEventContext *ec);
-static void sp_box3d_context_finish(SPEventContext *ec);
+namespace {
+	SPEventContext* createBox3dContext() {
+		return new Box3DContext();
+	}
 
-static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEvent *event);
-static gint sp_box3d_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event);
-
-static void sp_box3d_drag(Box3DContext &bc, guint state);
-static void sp_box3d_finish(Box3DContext *bc);
-
-G_DEFINE_TYPE(Box3DContext, sp_box3d_context, SP_TYPE_EVENT_CONTEXT);
-
-static void sp_box3d_context_class_init(Box3DContextClass *klass)
-{
-    GObjectClass *object_class = (GObjectClass *) klass;
-    SPEventContextClass *event_context_class = (SPEventContextClass *) klass;
-
-    object_class->dispose = sp_box3d_context_dispose;
-
-    event_context_class->setup = sp_box3d_context_setup;
-    event_context_class->finish = sp_box3d_context_finish;
-    event_context_class->root_handler  = sp_box3d_context_root_handler;
-    event_context_class->item_handler  = sp_box3d_context_item_handler;
+	bool box3dContextRegistered = ToolFactory::instance().registerObject("/tools/shapes/3dbox", createBox3dContext);
 }
 
-static void sp_box3d_context_init(Box3DContext *box3d_context)
-{
-    SPEventContext *event_context = SP_EVENT_CONTEXT(box3d_context);
-
-    event_context->cursor_shape = cursor_3dbox_xpm;
-    event_context->hot_x = 4;
-    event_context->hot_y = 4;
-    event_context->xp = 0;
-    event_context->yp = 0;
-    event_context->tolerance = 0;
-    event_context->within_tolerance = false;
-    event_context->item_to_select = NULL;
-
-    box3d_context->item = NULL;
-
-    box3d_context->ctrl_dragged = false;
-    box3d_context->extruded = false;
-
-    box3d_context->_vpdrag = NULL;
-
-    new (&box3d_context->sel_changed_connection) sigc::connection();
+const std::string& Box3DContext::getPrefsPath() {
+	return Box3DContext::prefsPath;
 }
 
-static void sp_box3d_context_finish(SPEventContext *ec)
-{
-    Box3DContext *bc = SP_BOX3D_CONTEXT(ec);
-    SPDesktop *desktop = ec->desktop;
+const std::string Box3DContext::prefsPath = "/tools/shapes/3dbox";
 
+Box3DContext::Box3DContext() : SPEventContext() {
+    this->cursor_shape = cursor_3dbox_xpm;
+    this->hot_x = 4;
+    this->hot_y = 4;
+    this->xp = 0;
+    this->yp = 0;
+    this->tolerance = 0;
+    this->within_tolerance = false;
+    this->item_to_select = NULL;
+
+    this->box3d = NULL;
+
+    this->ctrl_dragged = false;
+    this->extruded = false;
+
+    this->_vpdrag = NULL;
+}
+
+void Box3DContext::finish() {
     sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), GDK_CURRENT_TIME);
-    sp_box3d_finish(bc);
-    bc->sel_changed_connection.disconnect();
-//    sp_repr_remove_listener_by_data(cc->active_shape_repr, cc);
+    this->finishItem();
+    this->sel_changed_connection.disconnect();
 
-    if (((SPEventContextClass *) sp_box3d_context_parent_class)->finish) {
-        ((SPEventContextClass *) sp_box3d_context_parent_class)->finish(ec);
-    }
+    SPEventContext::finish();
 }
 
 
-static void sp_box3d_context_dispose(GObject *object)
-{
-    Box3DContext *bc = SP_BOX3D_CONTEXT(object);
-    SPEventContext *ec = SP_EVENT_CONTEXT(object);
+Box3DContext::~Box3DContext() {
+    this->enableGrDrag(false);
 
-    ec->enableGrDrag(false);
+    delete (this->_vpdrag);
+    this->_vpdrag = NULL;
 
-    delete (bc->_vpdrag);
-    bc->_vpdrag = NULL;
+    this->sel_changed_connection.disconnect();
 
-    bc->sel_changed_connection.disconnect();
-    bc->sel_changed_connection.~connection();
-
-    delete ec->shape_editor;
-    ec->shape_editor = NULL;
+    delete this->shape_editor;
+    this->shape_editor = NULL;
 
     /* fixme: This is necessary because we do not grab */
-    if (bc->item) {
-        sp_box3d_finish(bc);
+    if (this->box3d) {
+        this->finishItem();
     }
-
-    if (bc->_message_context) {
-        delete bc->_message_context;
-    }
-
-    G_OBJECT_CLASS(sp_box3d_context_parent_class)->dispose(object);
 }
 
 /**
  * Callback that processes the "changed" signal on the selection;
  * destroys old and creates new knotholder.
  */
-static void sp_box3d_context_selection_changed(Inkscape::Selection *selection, gpointer data)
-{
-    Box3DContext *bc = SP_BOX3D_CONTEXT(data);
-    SPEventContext *ec = SP_EVENT_CONTEXT(bc);
-
-    ec->shape_editor->unset_item(SH_KNOTHOLDER);
-    SPItem *item = selection->singleItem();
-    ec->shape_editor->set_item(item, SH_KNOTHOLDER);
+void Box3DContext::selection_changed(Inkscape::Selection* selection) {
+    this->shape_editor->unset_item(SH_KNOTHOLDER);
+    this->shape_editor->set_item(selection->singleItem(), SH_KNOTHOLDER);
 
     if (selection->perspList().size() == 1) {
         // selecting a single box changes the current perspective
-        ec->desktop->doc()->setCurrentPersp3D(selection->perspList().front());
+        this->desktop->doc()->setCurrentPersp3D(selection->perspList().front());
     }
 }
 
@@ -183,50 +145,41 @@ static void sp_box3d_context_ensure_persp_in_defs(SPDocument *document) {
     }
 }
 
-static void sp_box3d_context_setup(SPEventContext *ec)
-{
-    Box3DContext *bc = SP_BOX3D_CONTEXT(ec);
+void Box3DContext::setup() {
+    SPEventContext::setup();
 
-    if (((SPEventContextClass *) sp_box3d_context_parent_class)->setup) {
-        ((SPEventContextClass *) sp_box3d_context_parent_class)->setup(ec);
-    }
+    this->shape_editor = new ShapeEditor(this->desktop);
 
-    ec->shape_editor = new ShapeEditor(ec->desktop);
-
-    SPItem *item = sp_desktop_selection(ec->desktop)->singleItem();
+    SPItem *item = sp_desktop_selection(this->desktop)->singleItem();
     if (item) {
-        ec->shape_editor->set_item(item, SH_KNOTHOLDER);
+        this->shape_editor->set_item(item, SH_KNOTHOLDER);
     }
 
-    bc->sel_changed_connection.disconnect();
-    bc->sel_changed_connection = sp_desktop_selection(ec->desktop)->connectChanged(
-        sigc::bind(sigc::ptr_fun(&sp_box3d_context_selection_changed), (gpointer)bc)
+    this->sel_changed_connection.disconnect();
+    this->sel_changed_connection = sp_desktop_selection(this->desktop)->connectChanged(
+    	sigc::mem_fun(this, &Box3DContext::selection_changed)
     );
 
-    bc->_vpdrag = new Box3D::VPDrag(sp_desktop_document (ec->desktop));
+    this->_vpdrag = new Box3D::VPDrag(sp_desktop_document(this->desktop));
+
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     if (prefs->getBool("/tools/shapes/selcue")) {
-        ec->enableSelectionCue();
+        this->enableSelectionCue();
     }
 
     if (prefs->getBool("/tools/shapes/gradientdrag")) {
-        ec->enableGrDrag();
+        this->enableGrDrag();
     }
-
-    bc->_message_context = new Inkscape::MessageContext((ec->desktop)->messageStack());
 }
 
-static gint sp_box3d_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event)
-{
-    SPDesktop *desktop = event_context->desktop;
-
+bool Box3DContext::item_handler(SPItem* item, GdkEvent* event) {
     gint ret = FALSE;
 
     switch (event->type) {
     case GDK_BUTTON_PRESS:
-        if ( event->button.button == 1 && !event_context->space_panning) {
-            Inkscape::setup_for_drag_start(desktop, event_context, event);
+        if ( event->button.button == 1 && !this->space_panning) {
+            Inkscape::setup_for_drag_start(desktop, this, event);
             ret = TRUE;
         }
         break;
@@ -235,55 +188,53 @@ static gint sp_box3d_context_item_handler(SPEventContext *event_context, SPItem 
         break;
     }
 
-    if (((SPEventContextClass *) sp_box3d_context_parent_class)->item_handler) {
-        ret = ((SPEventContextClass *) sp_box3d_context_parent_class)->item_handler(event_context, item, event);
-    }
+//    if (((SPEventContextClass *) sp_box3d_context_parent_class)->item_handler) {
+//        ret = ((SPEventContextClass *) sp_box3d_context_parent_class)->item_handler(event_context, item, event);
+//    }
+    // CPPIFY: ret is always overwritten...
+    ret = SPEventContext::item_handler(item, event);
 
     return ret;
 }
 
-static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEvent *event)
-{
+bool Box3DContext::root_handler(GdkEvent* event) {
     static bool dragging;
 
-    SPDesktop *desktop = event_context->desktop;
     SPDocument *document = sp_desktop_document (desktop);
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int const snaps = prefs->getInt("/options/rotationsnapsperpi/value", 12);
 
-    Box3DContext *bc = SP_BOX3D_CONTEXT(event_context);
     Persp3D *cur_persp = document->getCurrentPersp3D();
 
-    event_context->tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
+    this->tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
 
     gint ret = FALSE;
     switch (event->type) {
     case GDK_BUTTON_PRESS:
-        if ( event->button.button == 1  && !event_context->space_panning) {
-            Geom::Point const button_w(event->button.x,
-                                       event->button.y);
+        if ( event->button.button == 1  && !this->space_panning) {
+            Geom::Point const button_w(event->button.x, event->button.y);
             Geom::Point button_dt(desktop->w2d(button_w));
 
             // save drag origin
-            event_context->xp = (gint) button_w[Geom::X];
-            event_context->yp = (gint) button_w[Geom::Y];
-            event_context->within_tolerance = true;
+            this->xp = (gint) button_w[Geom::X];
+            this->yp = (gint) button_w[Geom::Y];
+            this->within_tolerance = true;
 
-            // remember clicked item, *not* disregarding groups (since a 3D box is a group), honoring Alt
-            event_context->item_to_select = sp_event_context_find_item (desktop, button_w, event->button.state & GDK_MOD1_MASK, event->button.state & GDK_CONTROL_MASK);
+            // remember clicked box3d, *not* disregarding groups (since a 3D box is a group), honoring Alt
+            this->item_to_select = sp_event_context_find_item (desktop, button_w, event->button.state & GDK_MOD1_MASK, event->button.state & GDK_CONTROL_MASK);
 
             dragging = true;
 
             SnapManager &m = desktop->namedview->snap_manager;
-            m.setup(desktop, true, bc->item);
+            m.setup(desktop, true, this->box3d);
             m.freeSnapReturnByRef(button_dt, Inkscape::SNAPSOURCE_NODE_HANDLE);
             m.unSetup();
-            bc->center = button_dt;
+            this->center = button_dt;
 
-            bc->drag_origin = button_dt;
-            bc->drag_ptB = button_dt;
-            bc->drag_ptC = button_dt;
+            this->drag_origin = button_dt;
+            this->drag_ptB = button_dt;
+            this->drag_ptC = button_dt;
 
             // This can happen after saving when the last remaining perspective was purged and must be recreated.
             if (!cur_persp) {
@@ -292,11 +243,11 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
             }
 
             /* Projective preimages of clicked point under current perspective */
-            bc->drag_origin_proj = cur_persp->perspective_impl->tmat.preimage (button_dt, 0, Proj::Z);
-            bc->drag_ptB_proj = bc->drag_origin_proj;
-            bc->drag_ptC_proj = bc->drag_origin_proj;
-            bc->drag_ptC_proj.normalize();
-            bc->drag_ptC_proj[Proj::Z] = 0.25;
+            this->drag_origin_proj = cur_persp->perspective_impl->tmat.preimage (button_dt, 0, Proj::Z);
+            this->drag_ptB_proj = this->drag_origin_proj;
+            this->drag_ptC_proj = this->drag_origin_proj;
+            this->drag_ptC_proj.normalize();
+            this->drag_ptC_proj[Proj::Z] = 0.25;
 
             sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                                 ( GDK_KEY_PRESS_MASK |
@@ -307,66 +258,67 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
             ret = TRUE;
         }
         break;
+
     case GDK_MOTION_NOTIFY:
-        if ( dragging
-             && ( event->motion.state & GDK_BUTTON1_MASK )  && !event_context->space_panning)
-        {
-            if ( event_context->within_tolerance
-                 && ( abs( (gint) event->motion.x - event_context->xp ) < event_context->tolerance )
-                 && ( abs( (gint) event->motion.y - event_context->yp ) < event_context->tolerance ) ) {
+        if (dragging && ( event->motion.state & GDK_BUTTON1_MASK )  && !this->space_panning) {
+            if ( this->within_tolerance
+                 && ( abs( (gint) event->motion.x - this->xp ) < this->tolerance )
+                 && ( abs( (gint) event->motion.y - this->yp ) < this->tolerance ) ) {
                 break; // do not drag if we're within tolerance from origin
             }
             // Once the user has moved farther than tolerance from the original location
             // (indicating they intend to draw, not click), then always process the
             // motion notify coordinates as given (no snapping back to origin)
-            event_context->within_tolerance = false;
+            this->within_tolerance = false;
 
             Geom::Point const motion_w(event->motion.x,
                                        event->motion.y);
             Geom::Point motion_dt(desktop->w2d(motion_w));
 
             SnapManager &m = desktop->namedview->snap_manager;
-            m.setup(desktop, true, bc->item);
+            m.setup(desktop, true, this->box3d);
             m.freeSnapReturnByRef(motion_dt, Inkscape::SNAPSOURCE_NODE_HANDLE);
-            bc->ctrl_dragged  = event->motion.state & GDK_CONTROL_MASK;
+            this->ctrl_dragged  = event->motion.state & GDK_CONTROL_MASK;
 
-            if (event->motion.state & GDK_SHIFT_MASK && !bc->extruded && bc->item) {
-                // once shift is pressed, set bc->extruded
-                bc->extruded = true;
+            if ((event->motion.state & GDK_SHIFT_MASK) && !this->extruded && this->box3d) {
+                // once shift is pressed, set this->extruded
+                this->extruded = true;
             }
 
-            if (!bc->extruded) {
-                bc->drag_ptB = motion_dt;
-                bc->drag_ptC = motion_dt;
+            if (!this->extruded) {
+                this->drag_ptB = motion_dt;
+                this->drag_ptC = motion_dt;
 
-                bc->drag_ptB_proj = cur_persp->perspective_impl->tmat.preimage (motion_dt, 0, Proj::Z);
-                bc->drag_ptC_proj = bc->drag_ptB_proj;
-                bc->drag_ptC_proj.normalize();
-                bc->drag_ptC_proj[Proj::Z] = 0.25;
+                this->drag_ptB_proj = cur_persp->perspective_impl->tmat.preimage (motion_dt, 0, Proj::Z);
+                this->drag_ptC_proj = this->drag_ptB_proj;
+                this->drag_ptC_proj.normalize();
+                this->drag_ptC_proj[Proj::Z] = 0.25;
             } else {
                 // Without Ctrl, motion of the extruded corner is constrained to the
                 // perspective line from drag_ptB to vanishing point Y.
-                if (!bc->ctrl_dragged) {
+                if (!this->ctrl_dragged) {
                     /* snapping */
-                    Box3D::PerspectiveLine pline (bc->drag_ptB, Proj::Z, document->getCurrentPersp3D());
-                    bc->drag_ptC = pline.closest_to (motion_dt);
+                    Box3D::PerspectiveLine pline (this->drag_ptB, Proj::Z, document->getCurrentPersp3D());
+                    this->drag_ptC = pline.closest_to (motion_dt);
 
-                    bc->drag_ptB_proj.normalize();
-                    bc->drag_ptC_proj = cur_persp->perspective_impl->tmat.preimage (bc->drag_ptC, bc->drag_ptB_proj[Proj::X], Proj::X);
+                    this->drag_ptB_proj.normalize();
+                    this->drag_ptC_proj = cur_persp->perspective_impl->tmat.preimage (this->drag_ptC, this->drag_ptB_proj[Proj::X], Proj::X);
                 } else {
-                    bc->drag_ptC = motion_dt;
+                    this->drag_ptC = motion_dt;
 
-                    bc->drag_ptB_proj.normalize();
-                    bc->drag_ptC_proj = cur_persp->perspective_impl->tmat.preimage (motion_dt, bc->drag_ptB_proj[Proj::X], Proj::X);
+                    this->drag_ptB_proj.normalize();
+                    this->drag_ptC_proj = cur_persp->perspective_impl->tmat.preimage (motion_dt, this->drag_ptB_proj[Proj::X], Proj::X);
                 }
-                m.freeSnapReturnByRef(bc->drag_ptC, Inkscape::SNAPSOURCE_NODE_HANDLE);
+
+                m.freeSnapReturnByRef(this->drag_ptC, Inkscape::SNAPSOURCE_NODE_HANDLE);
             }
+
             m.unSetup();
 
-            sp_box3d_drag(*bc, event->motion.state);
+            this->drag(event->motion.state);
 
             ret = TRUE;
-        } else if (!sp_event_context_knot_mouseover(bc)) {
+        } else if (!sp_event_context_knot_mouseover(this)) {
             SnapManager &m = desktop->namedview->snap_manager;
             m.setup(desktop);
 
@@ -376,33 +328,36 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
             m.unSetup();
         }
         break;
-    case GDK_BUTTON_RELEASE:
-        event_context->xp = event_context->yp = 0;
-        if ( event->button.button == 1  && !event_context->space_panning) {
-            dragging = false;
-            sp_event_context_discard_delayed_snap_event(event_context);
 
-            if (!event_context->within_tolerance) {
+    case GDK_BUTTON_RELEASE:
+        this->xp = this->yp = 0;
+
+        if (event->button.button == 1 && !this->space_panning) {
+            dragging = false;
+            sp_event_context_discard_delayed_snap_event(this);
+
+            if (!this->within_tolerance) {
                 // we've been dragging, finish the box
-                sp_box3d_finish(bc);
-            } else if (event_context->item_to_select) {
-                // no dragging, select clicked item if any
+                this->finishItem();
+            } else if (this->item_to_select) {
+                // no dragging, select clicked box3d if any
                 if (event->button.state & GDK_SHIFT_MASK) {
-                    selection->toggle(event_context->item_to_select);
+                    selection->toggle(this->item_to_select);
                 } else {
-                    selection->set(event_context->item_to_select);
+                    selection->set(this->item_to_select);
                 }
             } else {
                 // click in an empty space
                 selection->clear();
             }
 
-            event_context->item_to_select = NULL;
+            this->item_to_select = NULL;
             ret = TRUE;
             sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate),
                                   event->button.time);
         }
         break;
+
     case GDK_KEY_PRESS:
         switch (get_group0_keyval (&event->key)) {
         case GDK_KEY_Up:
@@ -492,7 +447,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
             }
             if (MOD__SHIFT_ONLY(event)) {
                 persp3d_toggle_VPs(selection->perspList(), Proj::X);
-                bc->_vpdrag->updateLines(); // FIXME: Shouldn't this be done automatically?
+                this->_vpdrag->updateLines(); // FIXME: Shouldn't this be done automatically?
                 ret = true;
             }
             break;
@@ -501,7 +456,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
         case GDK_KEY_Y:
             if (MOD__SHIFT_ONLY(event)) {
                 persp3d_toggle_VPs(selection->perspList(), Proj::Y);
-                bc->_vpdrag->updateLines(); // FIXME: Shouldn't this be done automatically?
+                this->_vpdrag->updateLines(); // FIXME: Shouldn't this be done automatically?
                 ret = true;
             }
             break;
@@ -510,7 +465,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
         case GDK_KEY_Z:
             if (MOD__SHIFT_ONLY(event)) {
                 persp3d_toggle_VPs(selection->perspList(), Proj::Z);
-                bc->_vpdrag->updateLines(); // FIXME: Shouldn't this be done automatically?
+                this->_vpdrag->updateLines(); // FIXME: Shouldn't this be done automatically?
                 ret = true;
             }
             break;
@@ -525,55 +480,50 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
                 sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate),
                                       event->button.time);
                 dragging = false;
-                sp_event_context_discard_delayed_snap_event(event_context);
-                if (!event_context->within_tolerance) {
+                sp_event_context_discard_delayed_snap_event(this);
+                if (!this->within_tolerance) {
                     // we've been dragging, finish the box
-                    sp_box3d_finish(bc);
+                    this->finishItem();
                 }
                 // do not return true, so that space would work switching to selector
             }
             break;
+
         case GDK_KEY_Delete:
         case GDK_KEY_KP_Delete:
         case GDK_KEY_BackSpace:
-            ret = event_context->deleteSelectedDrag(MOD__CTRL_ONLY(event));
+            ret = this->deleteSelectedDrag(MOD__CTRL_ONLY(event));
             break;
 
         default:
             break;
         }
         break;
+
     default:
         break;
     }
 
     if (!ret) {
-        if (((SPEventContextClass *) sp_box3d_context_parent_class)->root_handler) {
-            ret = ((SPEventContextClass *) sp_box3d_context_parent_class)->root_handler(event_context, event);
-        }
+    	ret = SPEventContext::root_handler(event);
     }
 
     return ret;
 }
 
-static void sp_box3d_drag(Box3DContext &bc, guint /*state*/)
-{
-    SPDesktop *desktop = bc.desktop;
-
-    if (!bc.item) {
-
-        if (Inkscape::have_viable_layer(desktop, bc._message_context) == false) {
+void Box3DContext::drag(guint state) {
+    if (!this->box3d) {
+        if (Inkscape::have_viable_layer(desktop, this->message_context) == false) {
             return;
         }
 
         // Create object
-        SPBox3D *box3d = 0;
-        box3d = SPBox3D::createBox3D((SPItem *)desktop->currentLayer());
+        SPBox3D *box3d = SPBox3D::createBox3D((SPItem*)desktop->currentLayer());
 
         // Set style
         desktop->applyCurrentOrToolStyle(box3d, "/tools/shapes/3dbox", false);
         
-        bc.item = box3d;
+        this->box3d = box3d;
 
         // TODO: Incorporate this in box3d-side.cpp!
         for (int i = 0; i < 6; ++i) {
@@ -593,13 +543,14 @@ static void sp_box3d_drag(Box3DContext &bc, guint /*state*/)
             Glib::ustring descr = "/desktop/";
             descr += box3d_side_axes_string(side);
             descr += "/style";
+
             Glib::ustring cur_style = prefs->getString(descr);    
     
             bool use_current = prefs->getBool("/tools/shapes/3dbox/usecurrent", false);
+
             if (use_current && !cur_style.empty()) {
                 // use last used style 
                 side->setAttribute("style", cur_style.data());
-				
             } else {
                 // use default style 
                 GString *pstring = g_string_new("");
@@ -610,71 +561,59 @@ static void sp_box3d_drag(Box3DContext &bc, guint /*state*/)
             side->updateRepr(); // calls box3d_side_write() and updates, e.g., the axes string description
         }
 
-        box3d_set_z_orders(SP_BOX3D(bc.item));
-        bc.item->updateRepr();
+        box3d_set_z_orders(this->box3d);
+        this->box3d->updateRepr();
 
         // TODO: It would be nice to show the VPs during dragging, but since there is no selection
         //       at this point (only after finishing the box), we must do this "manually"
-        /* bc._vpdrag->updateDraggers(); */
+        /* this._vpdrag->updateDraggers(); */
 
         desktop->canvas->forceFullRedrawAfterInterruptions(5);
     }
 
-    g_assert(bc.item);
+    g_assert(this->box3d);
 
-    SPBox3D *box = SP_BOX3D(bc.item);
+    this->box3d->orig_corner0 = this->drag_origin_proj;
+    this->box3d->orig_corner7 = this->drag_ptC_proj;
 
-    box->orig_corner0 = bc.drag_origin_proj;
-    box->orig_corner7 = bc.drag_ptC_proj;
-
-    box3d_check_for_swapped_coords(box);
+    box3d_check_for_swapped_coords(this->box3d);
 
     /* we need to call this from here (instead of from box3d_position_set(), for example)
        because z-order setting must not interfere with display updates during undo/redo */
-    box3d_set_z_orders (box);
+    box3d_set_z_orders (this->box3d);
 
-    box3d_position_set(box);
+    box3d_position_set(this->box3d);
 
     // status text
-    bc._message_context->setF(Inkscape::NORMAL_MESSAGE, _("<b>3D Box</b>; with <b>Shift</b> to extrude along the Z axis"));
+    this->message_context->setF(Inkscape::NORMAL_MESSAGE, _("<b>3D Box</b>; with <b>Shift</b> to extrude along the Z axis"));
 }
 
-static void sp_box3d_finish(Box3DContext *bc)
-{
-    bc->_message_context->clear();
-    bc->ctrl_dragged = false;
-    bc->extruded = false;
+void Box3DContext::finishItem() {
+    this->message_context->clear();
+    this->ctrl_dragged = false;
+    this->extruded = false;
 
-    if ( bc->item != NULL ) {
-        SPDesktop * desktop = SP_EVENT_CONTEXT_DESKTOP(bc);
-        SPDocument *doc = sp_desktop_document(desktop);
-        if (!doc || !doc->getCurrentPersp3D())
+    if (this->box3d != NULL) {
+        SPDocument *doc = sp_desktop_document(this->desktop);
+
+        if (!doc || !doc->getCurrentPersp3D()) {
             return;
+        }
 
-        SPBox3D *box = SP_BOX3D(bc->item);
+        this->box3d->orig_corner0 = this->drag_origin_proj;
+        this->box3d->orig_corner7 = this->drag_ptC_proj;
 
-        box->orig_corner0 = bc->drag_origin_proj;
-        box->orig_corner7 = bc->drag_ptC_proj;
+        this->box3d->updateRepr();
 
-        box->updateRepr();
-
-        box3d_relabel_corners(box);
+        box3d_relabel_corners(this->box3d);
 
         desktop->canvas->endForcedFullRedraws();
 
-        sp_desktop_selection(desktop)->set(bc->item);
+        sp_desktop_selection(desktop)->set(this->box3d);
         DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_3DBOX,
                          _("Create 3D box"));
 
-        bc->item = NULL;
-    }
-}
-
-void sp_box3d_context_update_lines(SPEventContext *ec) {
-    /*  update perspective lines if we are in the 3D box tool (so that infinite ones are shown correctly) */
-    if (SP_IS_BOX3D_CONTEXT (ec)) {
-        Box3DContext *bc = SP_BOX3D_CONTEXT (ec);
-        bc->_vpdrag->updateLines();
+        this->box3d = NULL;
     }
 }
 

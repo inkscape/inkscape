@@ -15,12 +15,6 @@
 #include "event-context.h"
 #include <2geom/point.h>
 
-#define SP_TYPE_TWEAK_CONTEXT (sp_tweak_context_get_type())
-#define SP_TWEAK_CONTEXT(o) (G_TYPE_CHECK_INSTANCE_CAST((o), SP_TYPE_TWEAK_CONTEXT, SPTweakContext))
-#define SP_TWEAK_CONTEXT_CLASS(k) (G_TYPE_CHECK_CLASS_CAST((k), SP_TYPE_TWEAK_CONTEXT, SPTweakContextClass))
-#define SP_IS_TWEAK_CONTEXT(o) (G_TYPE_CHECK_INSTANCE_TYPE((o), SP_TYPE_TWEAK_CONTEXT))
-#define SP_IS_TWEAK_CONTEXT_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE((k), SP_TYPE_TWEAK_CONTEXT))
-
 #define SAMPLING_SIZE 8        /* fixme: ?? */
 
 #define TC_MIN_PRESSURE      0.0
@@ -43,9 +37,10 @@ enum {
     TWEAK_MODE_BLUR
 };
 
-struct SPTweakContext
-{
-    SPEventContext event_context;
+class SPTweakContext : public SPEventContext {
+public:
+	SPTweakContext();
+	virtual ~SPTweakContext();
 
     /* extended input data */
     gdouble pressure;
@@ -61,8 +56,6 @@ struct SPTweakContext
 
     gint mode;
 
-    Inkscape::MessageContext *_message_context;
-
     bool is_drawing;
 
     bool is_dilating;
@@ -76,14 +69,20 @@ struct SPTweakContext
     bool do_o;
 
   	sigc::connection style_set_connection;
-};
 
-struct SPTweakContextClass
-{
-    SPEventContextClass parent_class;
-};
+	static const std::string prefsPath;
 
-GType sp_tweak_context_get_type(void);
+	virtual void setup();
+	virtual void set(const Inkscape::Preferences::Entry& val);
+	virtual bool root_handler(GdkEvent* event);
+
+	virtual const std::string& getPrefsPath();
+
+	void update_cursor(bool with_shift);
+
+private:
+	bool set_style(const SPCSSAttr* css);
+};
 
 #endif
 

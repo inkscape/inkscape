@@ -53,153 +53,190 @@
 
 using Inkscape::DocumentUndo;
 
-static void sp_group_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
-static void sp_group_release(SPObject *object);
-static void sp_group_dispose(GObject *object);
-
-static void sp_group_child_added (SPObject * object, Inkscape::XML::Node * child, Inkscape::XML::Node * ref);
-static void sp_group_remove_child (SPObject * object, Inkscape::XML::Node * child);
-static void sp_group_order_changed (SPObject * object, Inkscape::XML::Node * child, Inkscape::XML::Node * old_ref, Inkscape::XML::Node * new_ref);
-static void sp_group_update (SPObject *object, SPCtx *ctx, guint flags);
-static void sp_group_modified (SPObject *object, guint flags);
-static Inkscape::XML::Node *sp_group_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
-static void sp_group_set(SPObject *object, unsigned key, char const *value);
-
-static Geom::OptRect sp_group_bbox(SPItem const *item, Geom::Affine const &transform, SPItem::BBoxType type);
-static void sp_group_print (SPItem * item, SPPrintContext *ctx);
-static gchar * sp_group_description (SPItem * item);
-static Inkscape::DrawingItem *sp_group_show (SPItem *item, Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
-static void sp_group_hide (SPItem * item, unsigned int key);
-static void sp_group_snappoints (SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
-
-static void sp_group_update_patheffect(SPLPEItem *lpeitem, bool write);
 static void sp_group_perform_patheffect(SPGroup *group, SPGroup *topgroup, bool write);
 
-G_DEFINE_TYPE(SPGroup, sp_group, SP_TYPE_LPE_ITEM);
+#include "sp-factory.h"
 
-static void
-sp_group_class_init (SPGroupClass *klass)
-{
-    GObjectClass * object_class;
-    SPObjectClass * sp_object_class;
-    SPItemClass * item_class;
-    SPLPEItemClass * lpe_item_class;
+namespace {
+	SPObject* createGroup() {
+		return new SPGroup();
+	}
 
-    object_class = (GObjectClass *) klass;
-    sp_object_class = (SPObjectClass *) klass;
-    item_class = (SPItemClass *) klass;
-    lpe_item_class = (SPLPEItemClass *) klass;
-
-    object_class->dispose = sp_group_dispose;
-
-    sp_object_class->child_added = sp_group_child_added;
-    sp_object_class->remove_child = sp_group_remove_child;
-    sp_object_class->order_changed = sp_group_order_changed;
-    sp_object_class->update = sp_group_update;
-    sp_object_class->modified = sp_group_modified;
-    sp_object_class->set = sp_group_set;
-    sp_object_class->write = sp_group_write;
-    sp_object_class->release = sp_group_release;
-    sp_object_class->build = sp_group_build;
-
-    item_class->bbox = sp_group_bbox;
-    item_class->print = sp_group_print;
-    item_class->description = sp_group_description;
-    item_class->show = sp_group_show;
-    item_class->hide = sp_group_hide;
-    item_class->snappoints = sp_group_snappoints;
-
-    lpe_item_class->update_patheffect = sp_group_update_patheffect;
+	bool groupRegistered = SPFactory::instance().registerObject("svg:g", createGroup);
 }
 
-static void
-sp_group_init (SPGroup *group)
-{
-    group->_layer_mode = SPGroup::GROUP;
-    group->group = new CGroup(group);
-    new (&group->_display_modes) std::map<unsigned int, SPGroup::LayerMode>();
+SPGroup::SPGroup() : SPLPEItem() {
+    this->_layer_mode = SPGroup::GROUP;
+    //new (&this->_display_modes) std::map<unsigned int, SPGroup::LayerMode>();
 }
 
-static void sp_group_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
-{
-    object->readAttr( "inkscape:groupmode" );
-
-    if (((SPObjectClass *)sp_group_parent_class)->build) {
-        ((SPObjectClass *)sp_group_parent_class)->build(object, document, repr);
-    }
+SPGroup::~SPGroup() {
+	//this->_display_modes.~map();
 }
 
-static void sp_group_release(SPObject *object) {
-    if ( SP_GROUP(object)->_layer_mode == SPGroup::LAYER ) {
-        object->document->removeResource("layer", object);
-    }
-    if (((SPObjectClass *)sp_group_parent_class)->release) {
-        ((SPObjectClass *)sp_group_parent_class)->release(object);
-    }
+void SPGroup::build(SPDocument *document, Inkscape::XML::Node *repr) {
+    this->readAttr( "inkscape:groupmode" );
+
+    SPLPEItem::build(document, repr);
 }
 
-static void
-sp_group_dispose(GObject *object)
-{
-    SP_GROUP(object)->_display_modes.~map();
-    delete SP_GROUP(object)->group;
-}
-
-static void sp_group_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
-{
-    SPGroup *group = SP_GROUP(object);
-
-    if (((SPObjectClass *) (sp_group_parent_class))->child_added) {
-        (* ((SPObjectClass *) (sp_group_parent_class))->child_added) (object, child, ref);
+void SPGroup::release() {
+    if (this->_layer_mode == SPGroup::LAYER) {
+        this->document->removeResource("layer", this);
     }
 
-    group->group->onChildAdded(child);
+    SPLPEItem::release();
+}
+
+void SPGroup::child_added(Inkscape::XML::Node* child, Inkscape::XML::Node* ref) {
+    SPLPEItem::child_added(child, ref);
+
+    SPObject *last_child = this->lastChild();
+
+    if (last_child && last_child->getRepr() == child) {
+        // optimization for the common special case where the child is being added at the end
+        SPObject *ochild = last_child;
+        if ( SP_IS_ITEM(ochild) ) {
+            /* TODO: this should be moved into SPItem somehow */
+            SPItemView *v;
+            Inkscape::DrawingItem *ac;
+
+            for (v = this->display; v != NULL; v = v->next) {
+                ac = SP_ITEM (ochild)->invoke_show (v->arenaitem->drawing(), v->key, v->flags);
+
+                if (ac) {
+                    v->arenaitem->appendChild(ac);
+                }
+            }
+        }
+    } else {    // general case
+        SPObject *ochild = this->get_child_by_repr(child);
+        if ( ochild && SP_IS_ITEM(ochild) ) {
+            /* TODO: this should be moved into SPItem somehow */
+            SPItemView *v;
+            Inkscape::DrawingItem *ac;
+
+            unsigned position = SP_ITEM(ochild)->pos_in_parent();
+
+            for (v = this->display; v != NULL; v = v->next) {
+                ac = SP_ITEM (ochild)->invoke_show (v->arenaitem->drawing(), v->key, v->flags);
+
+                if (ac) {
+                    v->arenaitem->prependChild(ac);
+                    ac->setZOrder(position);
+                }
+            }
+        }
+    }
+
+    this->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
 /* fixme: hide (Lauris) */
 
-static void
-sp_group_remove_child (SPObject * object, Inkscape::XML::Node * child)
-{
-    if (((SPObjectClass *) (sp_group_parent_class))->remove_child)
-        (* ((SPObjectClass *) (sp_group_parent_class))->remove_child) (object, child);
+void SPGroup::remove_child(Inkscape::XML::Node *child) {
+    SPLPEItem::remove_child(child);
 
-    SP_GROUP(object)->group->onChildRemoved(child);
+    this->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
-static void
-sp_group_order_changed (SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *old_ref, Inkscape::XML::Node *new_ref)
+void SPGroup::order_changed (Inkscape::XML::Node *child, Inkscape::XML::Node *old_ref, Inkscape::XML::Node *new_ref)
 {
-    if (((SPObjectClass *) (sp_group_parent_class))->order_changed)
-        (* ((SPObjectClass *) (sp_group_parent_class))->order_changed) (object, child, old_ref, new_ref);
+	SPLPEItem::order_changed(child, old_ref, new_ref);
 
-    SP_GROUP(object)->group->onOrderChanged(child, old_ref, new_ref);
+    SPObject *ochild = this->get_child_by_repr(child);
+    if ( ochild && SP_IS_ITEM(ochild) ) {
+        /* TODO: this should be moved into SPItem somehow */
+        SPItemView *v;
+        unsigned position = SP_ITEM(ochild)->pos_in_parent();
+        for ( v = SP_ITEM (ochild)->display ; v != NULL ; v = v->next ) {
+            v->arenaitem->setZOrder(position);
+        }
+    }
+
+    this->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
-static void
-sp_group_update (SPObject *object, SPCtx *ctx, unsigned int flags)
-{
-    if (((SPObjectClass *) (sp_group_parent_class))->update)
-        ((SPObjectClass *) (sp_group_parent_class))->update (object, ctx, flags);
+void SPGroup::update(SPCtx *ctx, unsigned int flags) {
+    SPLPEItem::update(ctx, flags);
 
-    SP_GROUP(object)->group->onUpdate(ctx, flags);
+    SPItemCtx *ictx, cctx;
+
+    ictx = (SPItemCtx *) ctx;
+    cctx = *ictx;
+
+    if (flags & SP_OBJECT_MODIFIED_FLAG) {
+      flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
+    }
+
+    flags &= SP_OBJECT_MODIFIED_CASCADE;
+
+    if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
+        for (SPItemView *v = this->display; v != NULL; v = v->next) {
+            Inkscape::DrawingGroup *group = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
+            group->setStyle(this->style);
+        }
+    }
+
+    GSList *l = g_slist_reverse(this->childList(true, SPObject::ActionUpdate));
+    while (l) {
+        SPObject *child = SP_OBJECT (l->data);
+        l = g_slist_remove (l, child);
+
+        if (flags || (child->uflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
+            if (SP_IS_ITEM (child)) {
+                SPItem const &chi = *SP_ITEM(child);
+                cctx.i2doc = chi.transform * ictx->i2doc;
+                cctx.i2vp = chi.transform * ictx->i2vp;
+                child->updateDisplay((SPCtx *)&cctx, flags);
+            } else {
+                child->updateDisplay(ctx, flags);
+            }
+        }
+
+        sp_object_unref(child);
+    }
 }
 
-static void
-sp_group_modified (SPObject *object, guint flags)
-{
-    if (((SPObjectClass *) (sp_group_parent_class))->modified)
-        ((SPObjectClass *) (sp_group_parent_class))->modified (object, flags);
+void SPGroup::modified(guint flags) {
+    SPLPEItem::modified(flags);
 
-    SP_GROUP(object)->group->onModified(flags);
+    SPObject *child;
+
+    if (flags & SP_OBJECT_MODIFIED_FLAG) {
+    	flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
+    }
+
+    flags &= SP_OBJECT_MODIFIED_CASCADE;
+
+    if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
+        for (SPItemView *v = this->display; v != NULL; v = v->next) {
+            Inkscape::DrawingGroup *group = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
+            group->setStyle(this->style);
+        }
+    }
+
+    GSList *l = g_slist_reverse(this->childList(true));
+
+    while (l) {
+        child = SP_OBJECT (l->data);
+        l = g_slist_remove (l, child);
+
+        if (flags || (child->mflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
+            child->emitModified(flags);
+        }
+
+        sp_object_unref(child);
+    }
 }
 
-static Inkscape::XML::Node * sp_group_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
-{
+Inkscape::XML::Node* SPGroup::write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags) {
+	SPGroup* object = this;
     SPGroup *group = SP_GROUP(object);
 
     if (flags & SP_OBJECT_WRITE_BUILD) {
         GSList *l;
+
         if (!repr) {
             if (SP_IS_SWITCH(object)) {
                 repr = xml_doc->createElement("svg:switch");
@@ -207,15 +244,19 @@ static Inkscape::XML::Node * sp_group_write(SPObject *object, Inkscape::XML::Doc
                 repr = xml_doc->createElement("svg:g");
             }
         }
+
         l = NULL;
+
         for (SPObject *child = object->firstChild(); child; child = child->getNext() ) {
             if ( !SP_IS_TITLE(child) && !SP_IS_DESC(child) ) {
                 Inkscape::XML::Node *crepr = child->updateRepr(xml_doc, NULL, flags);
+
                 if (crepr) {
                     l = g_slist_prepend (l, crepr);
                 }
             }
         }
+
         while (l) {
             repr->addChild((Inkscape::XML::Node *) l->data, NULL);
             Inkscape::GC::release((Inkscape::XML::Node *) l->data);
@@ -240,69 +281,109 @@ static Inkscape::XML::Node * sp_group_write(SPObject *object, Inkscape::XML::Doc
         } else {
             value = NULL;
         }
+
         repr->setAttribute("inkscape:groupmode", value);
     }
 
-    if (((SPObjectClass *) (sp_group_parent_class))->write) {
-        ((SPObjectClass *) (sp_group_parent_class))->write (object, xml_doc, repr, flags);
-    }
+    SPLPEItem::write(xml_doc, repr, flags);
 
     return repr;
 }
 
-static Geom::OptRect
-sp_group_bbox(SPItem const *item, Geom::Affine const &transform, SPItem::BBoxType type)
+Geom::OptRect SPGroup::bbox(Geom::Affine const &transform, SPItem::BBoxType bboxtype)
 {
-    return SP_GROUP(item)->group->bounds(type, transform);
-}
+    Geom::OptRect bbox;
 
-static void
-sp_group_print (SPItem * item, SPPrintContext *ctx)
-{
-    SP_GROUP(item)->group->onPrint(ctx);
-}
+    GSList *l = this->childList(false, SPObject::ActionBBox);
 
-static gchar * sp_group_description (SPItem * item)
-{
-    return SP_GROUP(item)->group->getDescription();
-}
+    while (l) {
+        SPObject *o = SP_OBJECT (l->data);
 
-static void sp_group_set(SPObject *object, unsigned key, char const *value) {
-    SPGroup *group = SP_GROUP(object);
-
-    switch (key) {
-        case SP_ATTR_INKSCAPE_GROUPMODE:
-            if ( value && !strcmp(value, "layer") ) {
-                group->setLayerMode(SPGroup::LAYER);
-            } else if ( value && !strcmp(value, "maskhelper") ) {
-                group->setLayerMode(SPGroup::MASK_HELPER);
-            } else {
-                group->setLayerMode(SPGroup::GROUP);
-            }
-            break;
-        default: {
-            if (((SPObjectClass *) (sp_group_parent_class))->set) {
-                (* ((SPObjectClass *) (sp_group_parent_class))->set)(object, key, value);
-            }
+        if (SP_IS_ITEM(o) && !SP_ITEM(o)->isHidden()) {
+            SPItem *child = SP_ITEM(o);
+            Geom::Affine const ct(child->transform * transform);
+            bbox |= child->bounds(bboxtype, ct);
         }
+
+        l = g_slist_remove (l, o);
+    }
+
+    return bbox;
+}
+
+void SPGroup::print(SPPrintContext *ctx) {
+    GSList *l = g_slist_reverse(this->childList(false));
+
+    while (l) {
+        SPObject *o = SP_OBJECT (l->data);
+
+        if (SP_IS_ITEM(o)) {
+            SP_ITEM(o)->invoke_print (ctx);
+        }
+
+        l = g_slist_remove (l, o);
     }
 }
 
-static Inkscape::DrawingItem *
-sp_group_show (SPItem *item, Inkscape::Drawing &drawing, unsigned int key, unsigned int flags)
-{
-    return SP_GROUP(item)->group->show(drawing, key, flags);
+gchar *SPGroup::description() {
+    gint len = this->getItemCount();
+    return g_strdup_printf(
+            ngettext("<b>Group</b> of <b>%d</b> object",
+                 "<b>Group</b> of <b>%d</b> objects",
+                 len), len);
 }
 
-static void
-sp_group_hide (SPItem *item, unsigned int key)
-{
-    SP_GROUP(item)->group->hide(key);
+void SPGroup::set(unsigned int key, gchar const* value) {
+    switch (key) {
+        case SP_ATTR_INKSCAPE_GROUPMODE:
+            if ( value && !strcmp(value, "layer") ) {
+                this->setLayerMode(SPGroup::LAYER);
+            } else if ( value && !strcmp(value, "maskhelper") ) {
+                this->setLayerMode(SPGroup::MASK_HELPER);
+            } else {
+                this->setLayerMode(SPGroup::GROUP);
+            }
+            break;
+
+        default:
+            SPLPEItem::set(key, value);
+            break;
+    }
 }
 
-static void sp_group_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs)
-{
-    for ( SPObject const *o = item->firstChild(); o; o = o->getNext() )
+Inkscape::DrawingItem *SPGroup::show (Inkscape::Drawing &drawing, unsigned int key, unsigned int flags) {
+    Inkscape::DrawingGroup *ai;
+
+    ai = new Inkscape::DrawingGroup(drawing);
+    ai->setPickChildren(this->effectiveLayerMode(key) == SPGroup::LAYER);
+    ai->setStyle(this->style);
+
+    this->_showChildren(drawing, ai, key, flags);
+    return ai;
+}
+
+void SPGroup::hide (unsigned int key) {
+    SPItem * child;
+
+    GSList *l = g_slist_reverse(this->childList(false, SPObject::ActionShow));
+
+    while (l) {
+        SPObject *o = SP_OBJECT (l->data);
+
+        if (SP_IS_ITEM (o)) {
+            child = SP_ITEM (o);
+            child->invoke_hide (key);
+        }
+
+        l = g_slist_remove (l, o);
+    }
+
+//    SPLPEItem::onHide(key);
+}
+
+
+void SPGroup::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) {
+    for ( SPObject const *o = this->firstChild(); o; o = o->getNext() )
     {
         if (SP_IS_ITEM(o)) {
             SP_ITEM(o)->getSnappoints(p, snapprefs);
@@ -561,152 +642,9 @@ void SPGroup::translateChildItems(Geom::Translate const &tr)
     }
 }
 
-CGroup::CGroup(SPGroup *group) {
-    _group = group;
-}
-
-CGroup::~CGroup() {
-}
-
-void CGroup::onChildAdded(Inkscape::XML::Node *child) {
-    SPObject *last_child = _group->lastChild();
-    if (last_child && last_child->getRepr() == child) {
-        // optimization for the common special case where the child is being added at the end
-        SPObject *ochild = last_child;
-        if ( SP_IS_ITEM(ochild) ) {
-            /* TODO: this should be moved into SPItem somehow */
-            SPItemView *v;
-            Inkscape::DrawingItem *ac;
-
-            for (v = _group->display; v != NULL; v = v->next) {
-                ac = SP_ITEM (ochild)->invoke_show (v->arenaitem->drawing(), v->key, v->flags);
-
-                if (ac) {
-                    v->arenaitem->appendChild(ac);
-                }
-            }
-        }
-    } else {    // general case
-        SPObject *ochild = _group->get_child_by_repr(child);
-        if ( ochild && SP_IS_ITEM(ochild) ) {
-            /* TODO: this should be moved into SPItem somehow */
-            SPItemView *v;
-            Inkscape::DrawingItem *ac;
-
-            unsigned position = SP_ITEM(ochild)->pos_in_parent();
-
-            for (v = _group->display; v != NULL; v = v->next) {
-                ac = SP_ITEM (ochild)->invoke_show (v->arenaitem->drawing(), v->key, v->flags);
-
-                if (ac) {
-                    v->arenaitem->prependChild(ac);
-                    ac->setZOrder(position);
-                }
-            }
-        }
-    }
-
-    _group->requestModified(SP_OBJECT_MODIFIED_FLAG);
-}
-
-void CGroup::onChildRemoved(Inkscape::XML::Node */*child*/) {
-    _group->requestModified(SP_OBJECT_MODIFIED_FLAG);
-}
-
-void CGroup::onUpdate(SPCtx *ctx, unsigned int flags) {
-    SPItemCtx *ictx, cctx;
-
-    ictx = (SPItemCtx *) ctx;
-    cctx = *ictx;
-
-    if (flags & SP_OBJECT_MODIFIED_FLAG) {
-      flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
-    }
-
-    flags &= SP_OBJECT_MODIFIED_CASCADE;
-
-    if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
-        SPObject *object = _group;
-        for (SPItemView *v = _group->display; v != NULL; v = v->next) {
-            Inkscape::DrawingGroup *group = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
-            group->setStyle(object->style);
-        }
-    }
-
-    GSList *l = g_slist_reverse(_group->childList(true, SPObject::ActionUpdate));
-    while (l) {
-        SPObject *child = SP_OBJECT (l->data);
-        l = g_slist_remove (l, child);
-        if (flags || (child->uflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
-            if (SP_IS_ITEM (child)) {
-                SPItem const &chi = *SP_ITEM(child);
-                cctx.i2doc = chi.transform * ictx->i2doc;
-                cctx.i2vp = chi.transform * ictx->i2vp;
-                child->updateDisplay((SPCtx *)&cctx, flags);
-            } else {
-                child->updateDisplay(ctx, flags);
-            }
-        }
-        g_object_unref (G_OBJECT (child));
-    }
-}
-
-void CGroup::onModified(guint flags) {
-    SPObject *child;
-
-    if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
-    flags &= SP_OBJECT_MODIFIED_CASCADE;
-
-    if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
-        SPObject *object = _group;
-        for (SPItemView *v = _group->display; v != NULL; v = v->next) {
-            Inkscape::DrawingGroup *group = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
-            group->setStyle(object->style);
-        }
-    }
-
-    GSList *l = g_slist_reverse(_group->childList(true));
-    while (l) {
-        child = SP_OBJECT (l->data);
-        l = g_slist_remove (l, child);
-        if (flags || (child->mflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
-            child->emitModified(flags);
-        }
-        g_object_unref (G_OBJECT (child));
-    }
-}
-
-Geom::OptRect CGroup::bounds(SPItem::BBoxType type, Geom::Affine const &transform)
-{
-    Geom::OptRect bbox;
-
-    GSList *l = _group->childList(false, SPObject::ActionBBox);
-    while (l) {
-        SPObject *o = SP_OBJECT (l->data);
-        if (SP_IS_ITEM(o) && !SP_ITEM(o)->isHidden()) {
-            SPItem *child = SP_ITEM(o);
-            Geom::Affine const ct(child->transform * transform);
-            bbox |= child->bounds(type, ct);
-        }
-        l = g_slist_remove (l, o);
-    }
-    return bbox;
-}
-
-void CGroup::onPrint(SPPrintContext *ctx) {
-    GSList *l = g_slist_reverse(_group->childList(false));
-    while (l) {
-        SPObject *o = SP_OBJECT (l->data);
-        if (SP_IS_ITEM(o)) {
-            SP_ITEM(o)->invoke_print (ctx);
-        }
-        l = g_slist_remove (l, o);
-    }
-}
-
-gint CGroup::getItemCount() {
+gint SPGroup::getItemCount() {
     gint len = 0;
-    for (SPObject *o = _group->firstChild() ; o ; o = o->getNext() ) {
+    for (SPObject *o = this->firstChild() ; o ; o = o->getNext() ) {
         if (SP_IS_ITEM(o)) {
             len++;
         }
@@ -715,30 +653,10 @@ gint CGroup::getItemCount() {
     return len;
 }
 
-gchar *CGroup::getDescription() {
-    gint len = getItemCount();
-    return g_strdup_printf(
-            ngettext("<b>Group</b> of <b>%d</b> object",
-                 "<b>Group</b> of <b>%d</b> objects",
-                 len), len);
-}
-
-Inkscape::DrawingItem *CGroup::show (Inkscape::Drawing &drawing, unsigned int key, unsigned int flags) {
-    Inkscape::DrawingGroup *ai;
-    SPObject *object = _group;
-
-    ai = new Inkscape::DrawingGroup(drawing);
-    ai->setPickChildren(_group->effectiveLayerMode(key) == SPGroup::LAYER);
-    ai->setStyle(object->style);
-
-    _showChildren(drawing, ai, key, flags);
-    return ai;
-}
-
-void CGroup::_showChildren (Inkscape::Drawing &drawing, Inkscape::DrawingItem *ai, unsigned int key, unsigned int flags) {
+void SPGroup::_showChildren (Inkscape::Drawing &drawing, Inkscape::DrawingItem *ai, unsigned int key, unsigned int flags) {
     Inkscape::DrawingItem *ac = NULL;
     SPItem * child = NULL;
-    GSList *l = g_slist_reverse(_group->childList(false, SPObject::ActionShow));
+    GSList *l = g_slist_reverse(this->childList(false, SPObject::ActionShow));
     while (l) {
         SPObject *o = SP_OBJECT (l->data);
         if (SP_IS_ITEM (o)) {
@@ -752,67 +670,32 @@ void CGroup::_showChildren (Inkscape::Drawing &drawing, Inkscape::DrawingItem *a
     }
 }
 
-void CGroup::hide (unsigned int key) {
-    SPItem * child;
-
-    GSList *l = g_slist_reverse(_group->childList(false, SPObject::ActionShow));
-    while (l) {
-        SPObject *o = SP_OBJECT (l->data);
-        if (SP_IS_ITEM (o)) {
-            child = SP_ITEM (o);
-            child->invoke_hide (key);
-        }
-        l = g_slist_remove (l, o);
-    }
-
-    if (((SPItemClass *) sp_group_parent_class)->hide)
-        ((SPItemClass *) sp_group_parent_class)->hide (_group, key);
-}
-
-void CGroup::onOrderChanged (Inkscape::XML::Node *child, Inkscape::XML::Node *, Inkscape::XML::Node *)
-{
-    SPObject *ochild = _group->get_child_by_repr(child);
-    if ( ochild && SP_IS_ITEM(ochild) ) {
-        /* TODO: this should be moved into SPItem somehow */
-        SPItemView *v;
-        unsigned position = SP_ITEM(ochild)->pos_in_parent();
-        for ( v = SP_ITEM (ochild)->display ; v != NULL ; v = v->next ) {
-            v->arenaitem->setZOrder(position);
-        }
-    }
-
-    _group->requestModified(SP_OBJECT_MODIFIED_FLAG);
-}
-
-static void
-sp_group_update_patheffect (SPLPEItem *lpeitem, bool write)
-{
+void SPGroup::update_patheffect(bool write) {
 #ifdef GROUP_VERBOSE
     g_message("sp_group_update_patheffect: %p\n", lpeitem);
 #endif
-    g_return_if_fail (lpeitem != NULL);
-    g_return_if_fail (SP_IS_GROUP (lpeitem));
 
-    GSList const *item_list = sp_item_group_item_list(SP_GROUP(lpeitem));
+    GSList const *item_list = sp_item_group_item_list(this);
+
     for ( GSList const *iter = item_list; iter; iter = iter->next ) {
         SPObject *subitem = static_cast<SPObject *>(iter->data);
+
         if (SP_IS_LPE_ITEM(subitem)) {
-            if (SP_LPE_ITEM_CLASS (G_OBJECT_GET_CLASS (subitem))->update_patheffect) {
-                SP_LPE_ITEM_CLASS (G_OBJECT_GET_CLASS (subitem))->update_patheffect (SP_LPE_ITEM(subitem), write);
-            }
+        	((SPLPEItem*)subitem)->update_patheffect(write);
         }
     }
 
-    if (sp_lpe_item_has_path_effect(lpeitem) && sp_lpe_item_path_effects_enabled(lpeitem)) {
-        for (PathEffectList::iterator it = lpeitem->path_effect_list->begin(); it != lpeitem->path_effect_list->end(); it++)
+    if (sp_lpe_item_has_path_effect(this) && sp_lpe_item_path_effects_enabled(this)) {
+        for (PathEffectList::iterator it = this->path_effect_list->begin(); it != this->path_effect_list->end(); it++)
         {
             LivePathEffectObject *lpeobj = (*it)->lpeobject;
+
             if (lpeobj && lpeobj->get_lpe()) {
-                lpeobj->get_lpe()->doBeforeEffect(lpeitem);
+                lpeobj->get_lpe()->doBeforeEffect(this);
             }
         }
 
-        sp_group_perform_patheffect(SP_GROUP(lpeitem), SP_GROUP(lpeitem), write);
+        sp_group_perform_patheffect(this, this, write);
     }
 }
 
@@ -820,17 +703,21 @@ static void
 sp_group_perform_patheffect(SPGroup *group, SPGroup *topgroup, bool write)
 {
     GSList const *item_list = sp_item_group_item_list(SP_GROUP(group));
+
     for ( GSList const *iter = item_list; iter; iter = iter->next ) {
         SPObject *subitem = static_cast<SPObject *>(iter->data);
+
         if (SP_IS_GROUP(subitem)) {
             sp_group_perform_patheffect(SP_GROUP(subitem), topgroup, write);
         } else if (SP_IS_SHAPE(subitem)) {
             SPCurve * c = NULL;
+
             if (SP_IS_PATH(subitem)) {
                 c = SP_PATH(subitem)->get_original_curve();
             } else {
                 c = SP_SHAPE(subitem)->getCurve();
             }
+
             // only run LPEs when the shape has a curve defined
             if (c) {
                 sp_lpe_item_perform_path_effect(SP_LPE_ITEM(topgroup), c);

@@ -40,8 +40,9 @@
 #include "xml/repr.h"
 #include "snap-candidate.h"
 #include "preferences.h"
-
 #include "io/sys.h"
+#include "sp-factory.h"
+
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 #include "cms-system.h"
 #include "color-profile.h"
@@ -72,19 +73,6 @@
 #define MAGIC_EPSILON_TOO 1e-18
 // TODO: also check if it is correct to be using two different epsilon values
 
-static void sp_image_build (SPObject * object, SPDocument * document, Inkscape::XML::Node * repr);
-static void sp_image_release (SPObject * object);
-static void sp_image_set (SPObject *object, unsigned int key, const gchar *value);
-static void sp_image_update (SPObject *object, SPCtx *ctx, unsigned int flags);
-static void sp_image_modified (SPObject *object, unsigned int flags);
-static Inkscape::XML::Node *sp_image_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
-
-static Geom::OptRect sp_image_bbox(SPItem const *item, Geom::Affine const &transform, SPItem::BBoxType type);
-static void sp_image_print (SPItem * item, SPPrintContext *ctx);
-static gchar * sp_image_description (SPItem * item);
-static void sp_image_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
-static Inkscape::DrawingItem *sp_image_show (SPItem *item, Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
-static Geom::Affine sp_image_set_transform (SPItem *item, Geom::Affine const &xform);
 static void sp_image_set_curve(SPImage *image);
 
 static Inkscape::Pixbuf *sp_image_repr_read_image(gchar const *href, gchar const *absref, gchar const *base );
@@ -126,144 +114,131 @@ extern guint update_in_progress;
 #define DEBUG_MESSAGE_SCISLAC(key, ...)
 #endif // DEBUG_LCMS
 
-G_DEFINE_TYPE(SPImage, sp_image, SP_TYPE_ITEM);
-
-static void sp_image_class_init( SPImageClass * klass )
-{
-    SPObjectClass *sp_object_class = SP_OBJECT_CLASS(klass);
-    SPItemClass *item_class = SP_ITEM_CLASS(klass);
-
-    sp_object_class->build = sp_image_build;
-    sp_object_class->release = sp_image_release;
-    sp_object_class->set = sp_image_set;
-    sp_object_class->update = sp_image_update;
-    sp_object_class->modified = sp_image_modified;
-    sp_object_class->write = sp_image_write;
-
-    item_class->bbox = sp_image_bbox;
-    item_class->print = sp_image_print;
-    item_class->description = sp_image_description;
-    item_class->show = sp_image_show;
-    item_class->snappoints = sp_image_snappoints;
-    item_class->set_transform = sp_image_set_transform;
+namespace {
+SPObject* createImage() {
+    return new SPImage();
 }
 
-static void sp_image_init( SPImage *image )
-{
-    image->x.unset();
-    image->y.unset();
-    image->width.unset();
-    image->height.unset();
-    image->aspect_align = SP_ASPECT_NONE;
-    image->clipbox = Geom::Rect();
-    image->sx = image->sy = 1.0;
-    image->ox = image->oy = 0.0;
+bool imageRegistered = SPFactory::instance().registerObject("svg:image", createImage);
+}
 
-    image->curve = NULL;
+SPImage::SPImage() : SPItem() {
+    this->aspect_clip = 0;
 
-    image->href = 0;
+    this->x.unset();
+    this->y.unset();
+    this->width.unset();
+    this->height.unset();
+    this->aspect_align = SP_ASPECT_NONE;
+    this->clipbox = Geom::Rect();
+    this->sx = this->sy = 1.0;
+    this->ox = this->oy = 0.0;
+
+    this->curve = NULL;
+
+    this->href = 0;
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
-    image->color_profile = 0;
+    this->color_profile = 0;
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
-    image->pixbuf = 0;
+    this->pixbuf = 0;
 }
 
-static void sp_image_build( SPObject *object, SPDocument *document, Inkscape::XML::Node *repr )
-{
-    if (((SPObjectClass *) sp_image_parent_class)->build) {
-        ((SPObjectClass *) sp_image_parent_class)->build (object, document, repr);
-    }
+SPImage::~SPImage() {
+}
 
-    object->readAttr( "xlink:href" );
-    object->readAttr( "x" );
-    object->readAttr( "y" );
-    object->readAttr( "width" );
-    object->readAttr( "height" );
-    object->readAttr( "preserveAspectRatio" );
-    object->readAttr( "color-profile" );
+void SPImage::build(SPDocument *document, Inkscape::XML::Node *repr) {
+    SPItem::build(document, repr);
+
+    this->readAttr( "xlink:href" );
+    this->readAttr( "x" );
+    this->readAttr( "y" );
+    this->readAttr( "width" );
+    this->readAttr( "height" );
+    this->readAttr( "preserveAspectRatio" );
+    this->readAttr( "color-profile" );
 
     /* Register */
-    document->addResource("image", object);
+    document->addResource("image", this);
 }
 
-static void sp_image_release( SPObject *object )
-{
-    SPImage *image = SP_IMAGE(object);
-
-    if (object->document) {
+void SPImage::release() {
+    if (this->document) {
         // Unregister ourselves
-        object->document->removeResource("image", object);
+        this->document->removeResource("image", this);
     }
 
-    if (image->href) {
-        g_free (image->href);
-        image->href = NULL;
+    if (this->href) {
+        g_free (this->href);
+        this->href = NULL;
     }
 
-    if (image->pixbuf) {
-        delete image->pixbuf;
-        image->pixbuf = NULL;
-    }
+    delete this->pixbuf;
+    this->pixbuf = NULL;
 
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
-    if (image->color_profile) {
-        g_free (image->color_profile);
-        image->color_profile = NULL;
+    if (this->color_profile) {
+        g_free (this->color_profile);
+        this->color_profile = NULL;
     }
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
-    if (image->curve) {
-        image->curve = image->curve->unref();
+    if (this->curve) {
+        this->curve = this->curve->unref();
     }
 
-    if (((SPObjectClass *) sp_image_parent_class)->release) {
-        ((SPObjectClass *) sp_image_parent_class)->release (object);
-    }
+    SPItem::release();
 }
 
-static void sp_image_set( SPObject *object, unsigned int key, const gchar *value )
-{
-    SPImage *image = SP_IMAGE (object);
-
+void SPImage::set(unsigned int key, const gchar* value) {
     switch (key) {
         case SP_ATTR_XLINK_HREF:
-            g_free (image->href);
-            image->href = (value) ? g_strdup (value) : NULL;
-            object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_IMAGE_HREF_MODIFIED_FLAG);
+            g_free (this->href);
+            this->href = (value) ? g_strdup (value) : NULL;
+            this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_IMAGE_HREF_MODIFIED_FLAG);
             break;
+
         case SP_ATTR_X:
-            if (!image->x.readAbsolute(value)) {
+            if (!this->x.readAbsolute(value)) {
                 /* fixme: em, ex, % are probably valid, but require special treatment (Lauris) */
-                image->x.unset();
+                this->x.unset();
             }
-            object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+
+            this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
             break;
+
         case SP_ATTR_Y:
-            if (!image->y.readAbsolute(value)) {
+            if (!this->y.readAbsolute(value)) {
                 /* fixme: em, ex, % are probably valid, but require special treatment (Lauris) */
-                image->y.unset();
+                this->y.unset();
             }
-            object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+
+            this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
             break;
+
         case SP_ATTR_WIDTH:
-            if (!image->width.readAbsolute(value)) {
+            if (!this->width.readAbsolute(value)) {
                 /* fixme: em, ex, % are probably valid, but require special treatment (Lauris) */
-                image->width.unset();
+                this->width.unset();
             }
-            object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+
+            this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
             break;
+
         case SP_ATTR_HEIGHT:
-            if (!image->height.readAbsolute(value)) {
+            if (!this->height.readAbsolute(value)) {
                 /* fixme: em, ex, % are probably valid, but require special treatment (Lauris) */
-                image->height.unset();
+                this->height.unset();
             }
-            object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+
+            this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
             break;
+
         case SP_ATTR_PRESERVEASPECTRATIO:
             /* Do setup before, so we can use break to escape */
-            image->aspect_align = SP_ASPECT_NONE;
-            image->aspect_clip = SP_ASPECT_MEET;
-            object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG);
+            this->aspect_align = SP_ASPECT_NONE;
+            this->aspect_clip = SP_ASPECT_MEET;
+            this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG);
+
             if (value) {
                 int len;
                 gchar c[256];
@@ -302,8 +277,11 @@ static void sp_image_set( SPObject *object, unsigned int key, const gchar *value
                 } else {
                     break;
                 }
+
                 clip = SP_ASPECT_MEET;
+
                 while (*e && *e == 32) e += 1;
+
                 if (*e) {
                     if (!strcmp (e, "meet")) {
                         clip = SP_ASPECT_MEET;
@@ -313,62 +291,60 @@ static void sp_image_set( SPObject *object, unsigned int key, const gchar *value
                         break;
                     }
                 }
-                image->aspect_align = align;
-                image->aspect_clip = clip;
+
+                this->aspect_align = align;
+                this->aspect_clip = clip;
             }
             break;
 
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
         case SP_PROP_COLOR_PROFILE:
-            if ( image->color_profile ) {
-                g_free (image->color_profile);
+            if ( this->color_profile ) {
+                g_free (this->color_profile);
             }
-            image->color_profile = (value) ? g_strdup (value) : NULL;
+
+            this->color_profile = (value) ? g_strdup (value) : NULL;
 
             if ( value ) {
-                DEBUG_MESSAGE( lcmsFour, "<image> color-profile set to '%s'", value );
+                DEBUG_MESSAGE( lcmsFour, "<this> color-profile set to '%s'", value );
             } else {
-                DEBUG_MESSAGE( lcmsFour, "<image> color-profile cleared" );
+                DEBUG_MESSAGE( lcmsFour, "<this> color-profile cleared" );
             }
 
             // TODO check on this HREF_MODIFIED flag
-            object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_IMAGE_HREF_MODIFIED_FLAG);
+            this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_IMAGE_HREF_MODIFIED_FLAG);
             break;
+
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
         default:
-            if (((SPObjectClass *) (sp_image_parent_class))->set)
-                ((SPObjectClass *) (sp_image_parent_class))->set (object, key, value);
+            SPItem::set(key, value);
             break;
     }
 
-    sp_image_set_curve(image); //creates a curve at the image's boundary for snapping
+    sp_image_set_curve(this); //creates a curve at the image's boundary for snapping
 }
 
-static void sp_image_update( SPObject *object, SPCtx *ctx, unsigned int flags )
-{
-    SPImage *image = SP_IMAGE(object);
-    SPDocument *doc = object->document;
+void SPImage::update(SPCtx *ctx, unsigned int flags) {
+    SPDocument *doc = this->document;
 
-    if (((SPObjectClass *) (sp_image_parent_class))->update) {
-        ((SPObjectClass *) (sp_image_parent_class))->update (object, ctx, flags);
-    }
+    SPItem::update(ctx, flags);
 
     if (flags & SP_IMAGE_HREF_MODIFIED_FLAG) {
-        if (image->pixbuf) {
-            delete image->pixbuf;
-            image->pixbuf = NULL;
-        }
-        if (image->href) {
+        delete this->pixbuf;
+        this->pixbuf = NULL;
+
+        if (this->href) {
             Inkscape::Pixbuf *pixbuf = NULL;
             pixbuf = sp_image_repr_read_image (
-                object->getRepr()->attribute("xlink:href"),
-                object->getRepr()->attribute("sodipodi:absref"),
+                this->getRepr()->attribute("xlink:href"),
+                this->getRepr()->attribute("sodipodi:absref"),
                 doc->getBase());
+            
             if (pixbuf) {
 // BLIP
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
-                if ( image->color_profile )
+                if ( this->color_profile )
                 {
                     // TODO: this will prevent using MIME data when exporting.
                     // Integrate color correction into loading.
@@ -382,13 +358,14 @@ static void sp_image_update( SPObject *object, SPCtx *ctx, unsigned int flags )
                         DEBUG_MESSAGE( lcmsFive, "in <image>'s sp_image_update. About to call colorprofile_get_handle()" );
 
                         guint profIntent = Inkscape::RENDERING_INTENT_UNKNOWN;
-                        cmsHPROFILE prof = Inkscape::CMSSystem::getHandle( object->document,
+                        cmsHPROFILE prof = Inkscape::CMSSystem::getHandle( this->document,
                                                                            &profIntent,
-                                                                           image->color_profile );
+                                                                           this->color_profile );
                         if ( prof ) {
                             cmsProfileClassSignature profileClass = cmsGetDeviceClass( prof );
                             if ( profileClass != cmsSigNamedColorClass ) {
                                 int intent = INTENT_PERCEPTUAL;
+                                
                                 switch ( profIntent ) {
                                     case Inkscape::RENDERING_INTENT_RELATIVE_COLORIMETRIC:
                                         intent = INTENT_RELATIVE_COLORIMETRIC;
@@ -405,6 +382,7 @@ static void sp_image_update( SPObject *object, SPCtx *ctx, unsigned int flags )
                                     default:
                                         intent = INTENT_PERCEPTUAL;
                                 }
+                                
                                 cmsHPROFILE destProf = cmsCreate_sRGBProfile();
                                 cmsHTRANSFORM transf = cmsCreateTransform( prof,
                                                                            TYPE_RGBA_8,
@@ -435,39 +413,40 @@ static void sp_image_update( SPObject *object, SPCtx *ctx, unsigned int flags )
                 }
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
-                image->pixbuf = pixbuf;
+                this->pixbuf = pixbuf;
             }
         }
     }
 
-    if (image->pixbuf) {
+    if (this->pixbuf) {
         /* fixme: We are slightly violating spec here (Lauris) */
-        if (!image->width._set) {
-            image->width.computed = image->pixbuf->width();
+        if (!this->width._set) {
+            this->width.computed = this->pixbuf->width();
         }
-        if (!image->height._set) {
-            image->height.computed = image->pixbuf->height();
+
+        if (!this->height._set) {
+            this->height.computed = this->pixbuf->height();
         }
     }
 
-    Geom::Point p(image->x.computed, image->y.computed);
-    Geom::Point wh(image->width.computed, image->height.computed);
-    image->clipbox = Geom::Rect(p, p + wh);
+    this->clipbox = Geom::Rect::from_xywh(
+        this->x.computed, this->y.computed,
+        this->width.computed, this->height.computed);
 
-    image->ox = image->x.computed;
-    image->oy = image->y.computed;
+    this->ox = this->x.computed;
+    this->oy = this->y.computed;
 
-    int pixwidth = image->pixbuf->width();
-    int pixheight = image->pixbuf->height();
+    int pixwidth = this->pixbuf->width();
+    int pixheight = this->pixbuf->height();
 
-    image->sx = image->width.computed / pixwidth;
-    image->sy = image->height.computed / pixheight;
+    this->sx = this->width.computed / pixwidth;
+    this->sy = this->height.computed / pixheight;
 
     // preserveAspectRatio calculate bounds / clipping rectangle -- EAF
-    if (image->pixbuf && (image->aspect_align != SP_ASPECT_NONE)) {
+    if (this->pixbuf && (this->aspect_align != SP_ASPECT_NONE)) {
         double x, y;
 
-        switch (image->aspect_align) {
+        switch (this->aspect_align) {
             case SP_ASPECT_XMIN_YMIN:
                 x = 0.0;
                 y = 0.0;
@@ -510,96 +489,87 @@ static void sp_image_update( SPObject *object, SPCtx *ctx, unsigned int flags )
                 break;
         }
 
-        if (image->aspect_clip == SP_ASPECT_SLICE) {
-            double scale = std::max(image->sx, image->sy);
-            image->sx = scale;
-            image->sy = scale;
+        if (this->aspect_clip == SP_ASPECT_SLICE) {
+            double scale = std::max(this->sx, this->sy);
+            this->sx = scale;
+            this->sy = scale;
         } else {
-            double scale = std::min(image->sx, image->sy);
-            image->sx = scale;
-            image->sy = scale;
+            double scale = std::min(this->sx, this->sy);
+            this->sx = scale;
+            this->sy = scale;
         }
 
-        double vw = pixwidth * image->sx;
-        double vh = pixheight * image->sy;
-        image->ox += x * (image->width.computed - vw);
-        image->oy += y * (image->height.computed - vh);
+        double vw = pixwidth * this->sx;
+        double vh = pixheight * this->sy;
+        this->ox += x * (this->width.computed - vw);
+        this->oy += y * (this->height.computed - vh);
     }
-    sp_image_update_canvas_image ((SPImage *) object);
+    sp_image_update_canvas_image ((SPImage *) this);
 }
 
-static void sp_image_modified( SPObject *object, unsigned int flags )
-{
-    SPImage *image = SP_IMAGE (object);
-
-    if (((SPObjectClass *) (sp_image_parent_class))->modified) {
-      (* ((SPObjectClass *) (sp_image_parent_class))->modified) (object, flags);
-    }
+void SPImage::modified(unsigned int flags) {
+//  SPItem::onModified(flags);
 
     if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
-        for (SPItemView *v = image->display; v != NULL; v = v->next) {
+        for (SPItemView *v = this->display; v != NULL; v = v->next) {
             Inkscape::DrawingImage *img = dynamic_cast<Inkscape::DrawingImage *>(v->arenaitem);
-            img->setStyle(object->style);
+            img->setStyle(this->style);
         }
     }
 }
 
-static Inkscape::XML::Node *sp_image_write( SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags )
-{
-    SPImage *image = SP_IMAGE (object);
 
+Inkscape::XML::Node *SPImage::write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags ) {
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
         repr = xml_doc->createElement("svg:image");
     }
 
-    repr->setAttribute("xlink:href", image->href);
+    repr->setAttribute("xlink:href", this->href);
+
     /* fixme: Reset attribute if needed (Lauris) */
-    if (image->x._set) {
-        sp_repr_set_svg_double(repr, "x", image->x.computed);
+    if (this->x._set) {
+        sp_repr_set_svg_double(repr, "x", this->x.computed);
     }
-    if (image->y._set) {
-        sp_repr_set_svg_double(repr, "y", image->y.computed);
+
+    if (this->y._set) {
+        sp_repr_set_svg_double(repr, "y", this->y.computed);
     }
-    if (image->width._set) {
-        sp_repr_set_svg_double(repr, "width", image->width.computed);
+
+    if (this->width._set) {
+        sp_repr_set_svg_double(repr, "width", this->width.computed);
     }
-    if (image->height._set) {
-        sp_repr_set_svg_double(repr, "height", image->height.computed);
+
+    if (this->height._set) {
+        sp_repr_set_svg_double(repr, "height", this->height.computed);
     }
 
     //XML Tree being used directly here while it shouldn't be...
-    repr->setAttribute("preserveAspectRatio", object->getRepr()->attribute("preserveAspectRatio"));
+    repr->setAttribute("preserveAspectRatio", this->getRepr()->attribute("preserveAspectRatio"));
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
-    if (image->color_profile) {
-        repr->setAttribute("color-profile", image->color_profile);
+    if (this->color_profile) {
+        repr->setAttribute("color-profile", this->color_profile);
     }
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
-    if (((SPObjectClass *) (sp_image_parent_class))->write) {
-        ((SPObjectClass *) (sp_image_parent_class))->write (object, xml_doc, repr, flags);
-    }
+    SPItem::write(xml_doc, repr, flags);
 
     return repr;
 }
 
-static Geom::OptRect sp_image_bbox( SPItem const *item,Geom::Affine const &transform, SPItem::BBoxType /*type*/ )
-{
-    SPImage const &image = *SP_IMAGE(item);
+Geom::OptRect SPImage::bbox(Geom::Affine const &transform, SPItem::BBoxType type) {
     Geom::OptRect bbox;
 
-    if ((image.width.computed > 0.0) && (image.height.computed > 0.0)) {
-        bbox = Geom::Rect::from_xywh(image.x.computed, image.y.computed, image.width.computed, image.height.computed);
+    if ((this->width.computed > 0.0) && (this->height.computed > 0.0)) {
+        bbox = Geom::Rect::from_xywh(this->x.computed, this->y.computed, this->width.computed, this->height.computed);
         *bbox *= transform;
     }
+
     return bbox;
 }
 
-static void sp_image_print( SPItem *item, SPPrintContext *ctx )
-{
-    SPImage *image = SP_IMAGE(item);
-
-    if (image->pixbuf && (image->width.computed > 0.0) && (image->height.computed > 0.0) ) {
-        Inkscape::Pixbuf *pb = new Inkscape::Pixbuf(*image->pixbuf);
+void SPImage::print(SPPrintContext *ctx) {
+    if (this->pixbuf && (this->width.computed > 0.0) && (this->height.computed > 0.0) ) {
+        Inkscape::Pixbuf *pb = new Inkscape::Pixbuf(*this->pixbuf);
         pb->ensurePixelFormat(Inkscape::Pixbuf::PF_GDK);
 
         guchar *px = pb->pixels();
@@ -609,27 +579,27 @@ static void sp_image_print( SPItem *item, SPPrintContext *ctx )
         //int pixskip = gdk_pixbuf_get_n_channels(pb) * gdk_pixbuf_get_bits_per_sample(pb) / 8;
         int pixskip = 4;
 
-        if (image->aspect_align == SP_ASPECT_NONE) {
+        if (this->aspect_align == SP_ASPECT_NONE) {
             Geom::Affine t;
-            Geom::Translate tp(image->x.computed, image->y.computed);
-            Geom::Scale s(image->width.computed, -image->height.computed);
+            Geom::Translate tp(this->x.computed, this->y.computed);
+            Geom::Scale s(this->width.computed, -this->height.computed);
             Geom::Translate ti(0.0, -1.0);
             t = s * tp;
             t = ti * t;
-            sp_print_image_R8G8B8A8_N(ctx, px, w, h, rs, t, item->style);
+            sp_print_image_R8G8B8A8_N(ctx, px, w, h, rs, t, this->style);
         } else { // preserveAspectRatio
-            double vw = image->width.computed / image->sx;
-            double vh = image->height.computed / image->sy;
+            double vw = this->width.computed / this->sx;
+            double vh = this->height.computed / this->sy;
 
-            int trimwidth = std::min<int>(w, ceil(image->width.computed / vw * w));
-            int trimheight = std::min<int>(h, ceil(image->height.computed / vh * h));
-            int trimx = std::max<int>(0, floor((image->x.computed - image->ox) / vw * w));
-            int trimy = std::max<int>(0, floor((image->y.computed - image->oy) / vh * h));
+            int trimwidth = std::min<int>(w, ceil(this->width.computed / vw * w));
+            int trimheight = std::min<int>(h, ceil(this->height.computed / vh * h));
+            int trimx = std::max<int>(0, floor((this->x.computed - this->ox) / vw * w));
+            int trimy = std::max<int>(0, floor((this->y.computed - this->oy) / vh * h));
 
-            double vx = std::max<double>(image->ox, image->x.computed);
-            double vy = std::max<double>(image->oy, image->y.computed);
-            double vcw = std::min<double>(image->width.computed, vw);
-            double vch = std::min<double>(image->height.computed, vh);
+            double vx = std::max<double>(this->ox, this->x.computed);
+            double vy = std::max<double>(this->oy, this->y.computed);
+            double vcw = std::min<double>(this->width.computed, vw);
+            double vch = std::min<double>(this->height.computed, vh);
 
             Geom::Affine t;
             Geom::Translate tp(vx, vy);
@@ -637,41 +607,38 @@ static void sp_image_print( SPItem *item, SPPrintContext *ctx )
             Geom::Translate ti(0.0, -1.0);
             t = s * tp;
             t = ti * t;
-            sp_print_image_R8G8B8A8_N(ctx, px + trimx*pixskip + trimy*rs, trimwidth, trimheight, rs, t, item->style);
+            sp_print_image_R8G8B8A8_N(ctx, px + trimx*pixskip + trimy*rs, trimwidth, trimheight, rs, t, this->style);
         }
         g_object_unref(pb);
     }
 }
 
-static gchar *sp_image_description( SPItem *item )
-{
-    SPImage *image = SP_IMAGE(item);
+gchar* SPImage::description() {
     char *href_desc;
-    if (image->href) {
-        href_desc = (strncmp(image->href, "data:", 5) == 0)
+
+    if (this->href) {
+        href_desc = (strncmp(this->href, "data:", 5) == 0)
             ? g_strdup(_("embedded"))
-            : xml_quote_strdup(image->href);
+            : xml_quote_strdup(this->href);
     } else {
         g_warning("Attempting to call strncmp() with a null pointer.");
         href_desc = g_strdup("(null_pointer)"); // we call g_free() on href_desc
     }
 
-    char *ret = ( image->pixbuf == NULL
+    char *ret = ( this->pixbuf == NULL
                   ? g_strdup_printf(_("<b>Image with bad reference</b>: %s"), href_desc)
                   : g_strdup_printf(_("<b>Image</b> %d &#215; %d: %s"),
-                                    image->pixbuf->width(),
-                                    image->pixbuf->height(),
+                                    this->pixbuf->width(),
+                                    this->pixbuf->height(),
                                     href_desc) );
     g_free(href_desc);
     return ret;
 }
 
-static Inkscape::DrawingItem *sp_image_show( SPItem *item, Inkscape::Drawing &drawing, unsigned int /*key*/, unsigned int /*flags*/ )
-{
-    SPImage * image = SP_IMAGE(item);
+Inkscape::DrawingItem* SPImage::show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags) {
     Inkscape::DrawingImage *ai = new Inkscape::DrawingImage(drawing);
 
-    sp_image_update_arenaitem(image, ai);
+    sp_image_update_arenaitem(this, ai);
 
     return ai;
 }
@@ -777,29 +744,26 @@ static void sp_image_update_canvas_image(SPImage *image)
     }
 }
 
-static void sp_image_snappoints( SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs )
-{
+void SPImage::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) {
     /* An image doesn't have any nodes to snap, but still we want to be able snap one image
     to another. Therefore we will create some snappoints at the corner, similar to a rect. If
     the image is rotated, then the snappoints will rotate with it. Again, just like a rect.
     */
 
-    g_assert(item != NULL);
-    g_assert(SP_IS_IMAGE(item));
-
-    if (item->clip_ref->getObject()) {
+    if (this->clip_ref->getObject()) {
         //We are looking at a clipped image: do not return any snappoints, as these might be
         //far far away from the visible part from the clipped image
         //TODO Do return snappoints, but only when within visual bounding box
     } else {
         if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_IMG_CORNER)) {
             // The image has not been clipped: return its corners, which might be rotated for example
-            SPImage &image = *SP_IMAGE(item);
-            double const x0 = image.x.computed;
-            double const y0 = image.y.computed;
-            double const x1 = x0 + image.width.computed;
-            double const y1 = y0 + image.height.computed;
-            Geom::Affine const i2d (item->i2dt_affine ());
+            double const x0 = this->x.computed;
+            double const y0 = this->y.computed;
+            double const x1 = x0 + this->width.computed;
+            double const y1 = y0 + this->height.computed;
+
+            Geom::Affine const i2d (this->i2dt_affine ());
+
             p.push_back(Inkscape::SnapCandidatePoint(Geom::Point(x0, y0) * i2d, Inkscape::SNAPSOURCE_IMG_CORNER, Inkscape::SNAPTARGET_IMG_CORNER));
             p.push_back(Inkscape::SnapCandidatePoint(Geom::Point(x0, y1) * i2d, Inkscape::SNAPSOURCE_IMG_CORNER, Inkscape::SNAPTARGET_IMG_CORNER));
             p.push_back(Inkscape::SnapCandidatePoint(Geom::Point(x1, y1) * i2d, Inkscape::SNAPSOURCE_IMG_CORNER, Inkscape::SNAPTARGET_IMG_CORNER));
@@ -813,18 +777,16 @@ static void sp_image_snappoints( SPItem const *item, std::vector<Inkscape::SnapC
  * Transform x, y, set x, y, clear translation
  */
 
-static Geom::Affine sp_image_set_transform( SPItem *item, Geom::Affine const &xform )
-{
-    SPImage *image = SP_IMAGE(item);
-
+Geom::Affine SPImage::set_transform(Geom::Affine const &xform) {
     /* Calculate position in parent coords. */
-    Geom::Point pos( Geom::Point(image->x.computed, image->y.computed) * xform );
+    Geom::Point pos( Geom::Point(this->x.computed, this->y.computed) * xform );
 
     /* This function takes care of translation and scaling, we return whatever parts we can't
        handle. */
     Geom::Affine ret(Geom::Affine(xform).withoutTranslation());
     Geom::Point const scale(hypot(ret[0], ret[1]),
                             hypot(ret[2], ret[3]));
+
     if ( scale[Geom::X] > MAGIC_EPSILON ) {
         ret[0] /= scale[Geom::X];
         ret[1] /= scale[Geom::X];
@@ -832,6 +794,7 @@ static Geom::Affine sp_image_set_transform( SPItem *item, Geom::Affine const &xf
         ret[0] = 1.0;
         ret[1] = 0.0;
     }
+
     if ( scale[Geom::Y] > MAGIC_EPSILON ) {
         ret[2] /= scale[Geom::Y];
         ret[3] /= scale[Geom::Y];
@@ -840,15 +803,15 @@ static Geom::Affine sp_image_set_transform( SPItem *item, Geom::Affine const &xf
         ret[3] = 1.0;
     }
 
-    image->width = image->width.computed * scale[Geom::X];
-    image->height = image->height.computed * scale[Geom::Y];
+    this->width = this->width.computed * scale[Geom::X];
+    this->height = this->height.computed * scale[Geom::Y];
 
     /* Find position in item coords */
     pos = pos * ret.inverse();
-    image->x = pos[Geom::X];
-    image->y = pos[Geom::Y];
+    this->x = pos[Geom::X];
+    this->y = pos[Geom::Y];
 
-    item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 
     return ret;
 }
@@ -861,7 +824,7 @@ static void sp_image_set_curve( SPImage *image )
             image->curve = image->curve->unref();
         }
     } else {
-        Geom::OptRect rect = sp_image_bbox(image, Geom::identity(), SPItem::VISUAL_BBOX);
+        Geom::OptRect rect = image->bbox(Geom::identity(), SPItem::VISUAL_BBOX);
         SPCurve *c = SPCurve::new_from_rect(*rect, true);
 
         if (image->curve) {
@@ -951,7 +914,7 @@ void sp_image_refresh_if_outdated( SPImage* image )
             if ( st.st_mtime != image->pixbuf->modificationTime() ) {
                 SPCtx *ctx = 0;
                 unsigned int flags = SP_IMAGE_HREF_MODIFIED_FLAG;
-                sp_image_update(image, ctx, flags);
+                image->update(ctx, flags);
             }
         }
     }

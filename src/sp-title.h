@@ -14,16 +14,15 @@
 
 #include "sp-object.h"
 
-#define SP_TYPE_TITLE           (sp_title_get_type ())
-#define SP_IS_TITLE(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_TITLE))
+#define SP_TITLE(obj) (dynamic_cast<SPTitle*>((SPObject*)obj))
+#define SP_IS_TITLE(obj) (dynamic_cast<const SPTitle*>((SPObject*)obj) != NULL)
 
-struct SPTitle : public SPObject {
+class SPTitle : public SPObject {
+public:
+	SPTitle();
+	virtual ~SPTitle();
+
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
 };
-
-struct SPTitleClass {
-	SPObjectClass parent_class;
-};
-
-GType sp_title_get_type (void);
 
 #endif

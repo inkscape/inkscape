@@ -31,7 +31,7 @@
 class SPDesktop;
 class SPItem;
 class SPBox3D;
-struct Persp3D;
+class Persp3D;
 
 namespace Inkscape {
 class LayerModel;

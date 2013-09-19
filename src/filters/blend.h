@@ -16,23 +16,29 @@
 #include "sp-filter-primitive.h"
 #include "display/nr-filter-blend.h"
 
-#define SP_TYPE_FEBLEND (sp_feBlend_get_type())
-#define SP_FEBLEND(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_FEBLEND, SPFeBlend))
-#define SP_FEBLEND_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_FEBLEND, SPFeBlendClass))
-#define SP_IS_FEBLEND(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_FEBLEND))
-#define SP_IS_FEBLEND_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_FEBLEND))
+#define SP_FEBLEND(obj) (dynamic_cast<SPFeBlend*>((SPObject*)obj))
+#define SP_IS_FEBLEND(obj) (dynamic_cast<const SPFeBlend*>((SPObject*)obj) != NULL)
 
-struct SPFeBlend : public SPFilterPrimitive {
+class SPFeBlend : public SPFilterPrimitive {
+public:
+	SPFeBlend();
+	virtual ~SPFeBlend();
+
     Inkscape::Filters::FilterBlendMode blend_mode;
     int in2;
+
+protected:
+	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
+	virtual void release();
+
+	virtual void set(unsigned int key, const gchar* value);
+
+	virtual void update(SPCtx* ctx, unsigned int flags);
+
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
+
+	virtual void build_renderer(Inkscape::Filters::Filter* filter);
 };
-
-struct SPFeBlendClass {
-    SPFilterPrimitiveClass parent_class;
-};
-
-GType sp_feBlend_get_type();
-
 
 #endif /* !SP_FEBLEND_H_SEEN */
 

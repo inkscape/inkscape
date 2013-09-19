@@ -15,19 +15,14 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#define SP_TYPE_CLIPPATH (sp_clippath_get_type())
-#define SP_CLIPPATH(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_CLIPPATH, SPClipPath))
-#define SP_CLIPPATH_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_CLIPPATH, SPClipPathClass))
-#define SP_IS_CLIPPATH(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_CLIPPATH))
-#define SP_IS_CLIPPATH_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_CLIPPATH))
+#define SP_CLIPPATH(obj) (dynamic_cast<SPClipPath*>((SPObject*)obj))
+#define SP_IS_CLIPPATH(obj) (dynamic_cast<const SPClipPath*>((SPObject*)obj) != NULL)
 
 struct SPClipPathView;
 
 #include "sp-object-group.h"
 #include "uri-references.h"
 #include "xml/node.h"
-
-GType sp_clippath_get_type() G_GNUC_CONST;
 
 namespace Inkscape {
 
@@ -38,6 +33,9 @@ class DrawingItem;
 
 class SPClipPath : public SPObjectGroup {
 public:
+	SPClipPath();
+	virtual ~SPClipPath();
+
     class Reference;
 
     unsigned int clipPathUnits_set : 1;
@@ -53,17 +51,20 @@ public:
     void setBBox(unsigned int key, Geom::OptRect const &bbox);
     Geom::OptRect geometricBounds(Geom::Affine const &transform);
 
-private:
-    friend class SPClipPathClass;
+protected:
+    virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
+	virtual void release();
+
+	virtual void child_added(Inkscape::XML::Node* child, Inkscape::XML::Node* ref);
+
+	virtual void set(unsigned int key, const gchar* value);
+
+	virtual void update(SPCtx* ctx, unsigned int flags);
+	virtual void modified(unsigned int flags);
+
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
 };
 
-class SPClipPathClass {
-public:
-    SPObjectGroupClass parent_class;
-
-private:
-    friend class SPClipPath;
-};
 
 class SPClipPathReference : public Inkscape::URIReference {
 public:

@@ -61,9 +61,8 @@
 #include "sp-shape.h"
 #include "sp-gradient.h"
 #include "sp-gradient-reference.h"
-#include "sp-gradient-fns.h"
-#include "sp-linear-gradient-fns.h"
-#include "sp-radial-gradient-fns.h"
+#include "sp-linear-gradient.h"
+#include "sp-radial-gradient.h"
 #include "sp-clippath.h"
 #include "sp-mask.h"
 #include "sp-textpath.h"
@@ -238,7 +237,8 @@ void ClipboardManagerImpl::copy(SPDesktop *desktop)
 
     // Special case for when the color picker ("dropper") is active - copies color under cursor
     if (tools_isactive(desktop, TOOLS_DROPPER)) {
-        _setClipboardColor(sp_dropper_context_get_color(desktop->event_context));
+        //_setClipboardColor(sp_dropper_context_get_color(desktop->event_context));
+    	_setClipboardColor(SP_DROPPER_CONTEXT(desktop->event_context)->get_color());
         _discardInternalClipboard();
         return;
     }

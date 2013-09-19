@@ -16,36 +16,41 @@
 #include <gtk/gtk.h>
 #include "event-context.h"
 
-#define SP_TYPE_FLOOD_CONTEXT            (sp_flood_context_get_type ())
-#define SP_FLOOD_CONTEXT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_FLOOD_CONTEXT, SPFloodContext))
-#define SP_FLOOD_CONTEXT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_FLOOD_CONTEXT, SPFloodContextClass))
-#define SP_IS_FLOOD_CONTEXT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_FLOOD_CONTEXT))
-#define SP_IS_FLOOD_CONTEXT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_FLOOD_CONTEXT))
+#define SP_FLOOD_CONTEXT(obj) (dynamic_cast<SPFloodContext*>((SPEventContext*)obj))
+#define SP_IS_FLOOD_CONTEXT(obj) (dynamic_cast<const SPFloodContext*>((const SPEventContext*)obj) != NULL)
+
 
 #define FLOOD_COLOR_CHANNEL_R 1
 #define FLOOD_COLOR_CHANNEL_G 2
 #define FLOOD_COLOR_CHANNEL_B 4
 #define FLOOD_COLOR_CHANNEL_A 8
 
-struct SPFloodContext : public SPEventContext {
+class SPFloodContext : public SPEventContext {
+public:
+	SPFloodContext();
+	virtual ~SPFloodContext();
+
 	SPItem *item;
 
 	sigc::connection sel_changed_connection;
 
-	Inkscape::MessageContext *_message_context;
+	static const std::string prefsPath;
+
+	virtual void setup();
+	virtual bool root_handler(GdkEvent* event);
+	virtual bool item_handler(SPItem* item, GdkEvent* event);
+
+	virtual const std::string& getPrefsPath();
+
+	static void set_channels(gint channels);
+
+private:
+	void selection_changed(Inkscape::Selection* selection);
+	void finishItem();
 };
-
-struct SPFloodContextClass {
-	SPEventContextClass parent_class;
-};
-
-/* Standard Gtk function */
-
-GType sp_flood_context_get_type (void);
 
 GList* flood_channels_dropdown_items_list (void);
 GList* flood_autogap_dropdown_items_list (void);
-void flood_channels_set_channels( gint channels );
 
 enum PaintBucketChannels {
     FLOOD_CHANNELS_RGB,

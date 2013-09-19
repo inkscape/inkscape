@@ -56,13 +56,6 @@
 using Inkscape::ControlManager;
 using Inkscape::DocumentUndo;
 
-static void sp_text_context_dispose(GObject *obj);
-
-static void sp_text_context_setup(SPEventContext *ec);
-static void sp_text_context_finish(SPEventContext *ec);
-static gint sp_text_context_root_handler(SPEventContext *event_context, GdkEvent *event);
-static gint sp_text_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event);
-
 static void sp_text_context_selection_changed(Inkscape::Selection *selection, SPTextContext *tc);
 static void sp_text_context_selection_modified(Inkscape::Selection *selection, guint flags, SPTextContext *tc);
 static bool sp_text_context_style_set(SPCSSAttr const *css, SPTextContext *tc);
@@ -78,119 +71,98 @@ static gint sptc_focus_in(GtkWidget *widget, GdkEventFocus *event, SPTextContext
 static gint sptc_focus_out(GtkWidget *widget, GdkEventFocus *event, SPTextContext *tc);
 static void sptc_commit(GtkIMContext *imc, gchar *string, SPTextContext *tc);
 
-G_DEFINE_TYPE(SPTextContext, sp_text_context, SP_TYPE_EVENT_CONTEXT);
 
-static void sp_text_context_class_init(SPTextContextClass *klass)
-{
-    GObjectClass *object_class=G_OBJECT_CLASS(klass);
-    SPEventContextClass *event_context_class = SP_EVENT_CONTEXT_CLASS(klass);
+#include "tool-factory.h"
 
-    object_class->dispose = sp_text_context_dispose;
+namespace {
+	SPEventContext* createTextContext() {
+		return new SPTextContext();
+	}
 
-    event_context_class->setup = sp_text_context_setup;
-    event_context_class->finish = sp_text_context_finish;
-    event_context_class->root_handler = sp_text_context_root_handler;
-    event_context_class->item_handler = sp_text_context_item_handler;
+	bool textContextRegistered = ToolFactory::instance().registerObject("/tools/text", createTextContext);
 }
 
-static void sp_text_context_init(SPTextContext *tc)
-{
-    SPEventContext *event_context = SP_EVENT_CONTEXT(tc);
-
-    event_context->cursor_shape = cursor_text_xpm;
-    event_context->hot_x = 7;
-    event_context->hot_y = 7;
-
-    event_context->xp = 0;
-    event_context->yp = 0;
-    event_context->tolerance = 0;
-    event_context->within_tolerance = false;
-
-    tc->imc = NULL;
-
-    tc->text = NULL;
-    tc->pdoc = Geom::Point(0, 0);
-    new (&tc->text_sel_start) Inkscape::Text::Layout::iterator();
-    new (&tc->text_sel_end) Inkscape::Text::Layout::iterator();
-    new (&tc->text_selection_quads) std::vector<SPCanvasItem*>();
-
-    tc->unimode = false;
-
-    tc->cursor = NULL;
-    tc->indicator = NULL;
-    tc->frame = NULL;
-    tc->grabbed = NULL;
-    tc->timeout = 0;
-    tc->show = FALSE;
-    tc->phase = 0;
-    tc->nascent_object = 0;
-    tc->over_text = 0;
-    tc->dragging = 0;
-    tc->creating = 0;
-
-    new (&tc->sel_changed_connection) sigc::connection();
-    new (&tc->sel_modified_connection) sigc::connection();
-    new (&tc->style_set_connection) sigc::connection();
-    new (&tc->style_query_connection) sigc::connection();
+const std::string& SPTextContext::getPrefsPath() {
+	return SPTextContext::prefsPath;
 }
 
-static void sp_text_context_dispose(GObject *obj)
-{
-    SPTextContext *tc = SP_TEXT_CONTEXT(obj);
-    SPEventContext *ec = SP_EVENT_CONTEXT(tc);
-    tc->style_query_connection.~connection();
-    tc->style_set_connection.~connection();
-    tc->sel_changed_connection.~connection();
-    tc->sel_modified_connection.~connection();
+const std::string SPTextContext::prefsPath = "/tools/text";
 
-    delete ec->shape_editor;
-    ec->shape_editor = NULL;
 
-    tc->text_sel_end.~iterator();
-    tc->text_sel_start.~iterator();
-    tc->text_selection_quads.~vector();
-    if (G_OBJECT_CLASS(sp_text_context_parent_class)->dispose) {
-        G_OBJECT_CLASS(sp_text_context_parent_class)->dispose(obj);
-    }
-    if (tc->grabbed) {
-        sp_canvas_item_ungrab(tc->grabbed, GDK_CURRENT_TIME);
-        tc->grabbed = NULL;
+SPTextContext::SPTextContext() : SPEventContext() {
+	this->preedit_string = 0;
+	this->unipos = 0;
+
+    this->cursor_shape = cursor_text_xpm;
+    this->hot_x = 7;
+    this->hot_y = 7;
+
+    this->xp = 0;
+    this->yp = 0;
+    this->tolerance = 0;
+    this->within_tolerance = false;
+
+    this->imc = NULL;
+
+    this->text = NULL;
+    this->pdoc = Geom::Point(0, 0);
+
+    this->unimode = false;
+
+    this->cursor = NULL;
+    this->indicator = NULL;
+    this->frame = NULL;
+    this->grabbed = NULL;
+    this->timeout = 0;
+    this->show = FALSE;
+    this->phase = 0;
+    this->nascent_object = 0;
+    this->over_text = 0;
+    this->dragging = 0;
+    this->creating = 0;
+}
+
+SPTextContext::~SPTextContext() {
+    delete this->shape_editor;
+    this->shape_editor = NULL;
+
+    if (this->grabbed) {
+        sp_canvas_item_ungrab(this->grabbed, GDK_CURRENT_TIME);
+        this->grabbed = NULL;
     }
 
-    Inkscape::Rubberband::get(ec->desktop)->stop();
+    Inkscape::Rubberband::get(this->desktop)->stop();
 }
 
-static void sp_text_context_setup(SPEventContext *ec)
-{
-    SPTextContext *tc = SP_TEXT_CONTEXT(ec);
-    SPDesktop *desktop = ec->desktop;
+void SPTextContext::setup() {
     GtkSettings* settings = gtk_settings_get_default();
     gint timeout = 0;
     g_object_get( settings, "gtk-cursor-blink-time", &timeout, NULL );
+    
     if (timeout < 0) {
         timeout = 200;
     } else {
         timeout /= 2;
     }
 
-    tc->cursor = ControlManager::getManager().createControlLine(sp_desktop_controls(desktop), Geom::Point(100, 0), Geom::Point(100, 100));
-    tc->cursor->setRgba32(0x000000ff);
-    sp_canvas_item_hide(tc->cursor);
+    this->cursor = ControlManager::getManager().createControlLine(sp_desktop_controls(desktop), Geom::Point(100, 0), Geom::Point(100, 100));
+    this->cursor->setRgba32(0x000000ff);
+    sp_canvas_item_hide(this->cursor);
 
-    tc->indicator = sp_canvas_item_new(sp_desktop_controls(desktop), SP_TYPE_CTRLRECT, NULL);
-    SP_CTRLRECT(tc->indicator)->setRectangle(Geom::Rect(Geom::Point(0, 0), Geom::Point(100, 100)));
-    SP_CTRLRECT(tc->indicator)->setColor(0x0000ff7f, false, 0);
-    sp_canvas_item_hide(tc->indicator);
+    this->indicator = sp_canvas_item_new(sp_desktop_controls(desktop), SP_TYPE_CTRLRECT, NULL);
+    SP_CTRLRECT(this->indicator)->setRectangle(Geom::Rect(Geom::Point(0, 0), Geom::Point(100, 100)));
+    SP_CTRLRECT(this->indicator)->setColor(0x0000ff7f, false, 0);
+    sp_canvas_item_hide(this->indicator);
 
-    tc->frame = sp_canvas_item_new(sp_desktop_controls(desktop), SP_TYPE_CTRLRECT, NULL);
-    SP_CTRLRECT(tc->frame)->setRectangle(Geom::Rect(Geom::Point(0, 0), Geom::Point(100, 100)));
-    SP_CTRLRECT(tc->frame)->setColor(0x0000ff7f, false, 0);
-    sp_canvas_item_hide(tc->frame);
+    this->frame = sp_canvas_item_new(sp_desktop_controls(desktop), SP_TYPE_CTRLRECT, NULL);
+    SP_CTRLRECT(this->frame)->setRectangle(Geom::Rect(Geom::Point(0, 0), Geom::Point(100, 100)));
+    SP_CTRLRECT(this->frame)->setColor(0x0000ff7f, false, 0);
+    sp_canvas_item_hide(this->frame);
 
-    tc->timeout = g_timeout_add(timeout, (GSourceFunc) sp_text_context_timeout, ec);
+    this->timeout = g_timeout_add(timeout, (GSourceFunc) sp_text_context_timeout, this);
 
-    tc->imc = gtk_im_multicontext_new();
-    if (tc->imc) {
+    this->imc = gtk_im_multicontext_new();
+    if (this->imc) {
         GtkWidget *canvas = GTK_WIDGET(sp_desktop_canvas(desktop));
 
         /* im preedit handling is very broken in inkscape for
@@ -199,201 +171,194 @@ static void sp_text_context_setup(SPEventContext *ec)
          * just take in the characters when they're finished being
          * entered.
          */
-        gtk_im_context_set_use_preedit(tc->imc, FALSE);
-        gtk_im_context_set_client_window(tc->imc, 
+        gtk_im_context_set_use_preedit(this->imc, FALSE);
+        gtk_im_context_set_client_window(this->imc, 
 			gtk_widget_get_window (canvas));
 
-        g_signal_connect(G_OBJECT(canvas), "focus_in_event", G_CALLBACK(sptc_focus_in), tc);
-        g_signal_connect(G_OBJECT(canvas), "focus_out_event", G_CALLBACK(sptc_focus_out), tc);
-        g_signal_connect(G_OBJECT(tc->imc), "commit", G_CALLBACK(sptc_commit), tc);
+        g_signal_connect(G_OBJECT(canvas), "focus_in_event", G_CALLBACK(sptc_focus_in), this);
+        g_signal_connect(G_OBJECT(canvas), "focus_out_event", G_CALLBACK(sptc_focus_out), this);
+        g_signal_connect(G_OBJECT(this->imc), "commit", G_CALLBACK(sptc_commit), this);
 
         if (gtk_widget_has_focus(canvas)) {
-            sptc_focus_in(canvas, NULL, tc);
+            sptc_focus_in(canvas, NULL, this);
         }
     }
 
-    if ((SP_EVENT_CONTEXT_CLASS(sp_text_context_parent_class))->setup)
-        (SP_EVENT_CONTEXT_CLASS(sp_text_context_parent_class))->setup(ec);
+    SPEventContext::setup();
 
-    ec->shape_editor = new ShapeEditor(ec->desktop);
+    this->shape_editor = new ShapeEditor(this->desktop);
 
-    SPItem *item = sp_desktop_selection(ec->desktop)->singleItem();
+    SPItem *item = sp_desktop_selection(this->desktop)->singleItem();
     if (item && SP_IS_FLOWTEXT(item) && SP_FLOWTEXT(item)->has_internal_frame()) {
-        ec->shape_editor->set_item(item, SH_KNOTHOLDER);
+        this->shape_editor->set_item(item, SH_KNOTHOLDER);
     }
 
-    tc->sel_changed_connection = sp_desktop_selection(desktop)->connectChanged(
-        sigc::bind(sigc::ptr_fun(&sp_text_context_selection_changed), tc)
-        );
-    tc->sel_modified_connection = sp_desktop_selection(desktop)->connectModified(
-        sigc::bind(sigc::ptr_fun(&sp_text_context_selection_modified), tc)
-        );
-    tc->style_set_connection = desktop->connectSetStyle(
-        sigc::bind(sigc::ptr_fun(&sp_text_context_style_set), tc)
-        );
-    tc->style_query_connection = desktop->connectQueryStyle(
-        sigc::bind(sigc::ptr_fun(&sp_text_context_style_query), tc)
-        );
+    this->sel_changed_connection = sp_desktop_selection(desktop)->connectChanged(
+        sigc::bind(sigc::ptr_fun(&sp_text_context_selection_changed), this)
+	);
+    this->sel_modified_connection = sp_desktop_selection(desktop)->connectModified(
+        sigc::bind(sigc::ptr_fun(&sp_text_context_selection_modified), this)
+	);
+    this->style_set_connection = desktop->connectSetStyle(
+        sigc::bind(sigc::ptr_fun(&sp_text_context_style_set), this)
+	);
+    this->style_query_connection = desktop->connectQueryStyle(
+        sigc::bind(sigc::ptr_fun(&sp_text_context_style_query), this)
+	);
 
-    sp_text_context_selection_changed(sp_desktop_selection(desktop), tc);
+    sp_text_context_selection_changed(sp_desktop_selection(desktop), this);
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (prefs->getBool("/tools/text/selcue")) {
-        ec->enableSelectionCue();
+        this->enableSelectionCue();
     }
     if (prefs->getBool("/tools/text/gradientdrag")) {
-        ec->enableGrDrag();
+        this->enableGrDrag();
     }
 }
 
-static void sp_text_context_finish(SPEventContext *ec)
-{
-    SPTextContext *tc = SP_TEXT_CONTEXT(ec);
-
-    if (ec->desktop) {
-        sp_signal_disconnect_by_data(sp_desktop_canvas(ec->desktop), tc);
+void SPTextContext::finish() {
+    if (this->desktop) {
+        sp_signal_disconnect_by_data(sp_desktop_canvas(this->desktop), this);
     }
 
-    ec->enableGrDrag(false);
+    this->enableGrDrag(false);
 
-    tc->style_set_connection.disconnect();
-    tc->style_query_connection.disconnect();
-    tc->sel_changed_connection.disconnect();
-    tc->sel_modified_connection.disconnect();
+    this->style_set_connection.disconnect();
+    this->style_query_connection.disconnect();
+    this->sel_changed_connection.disconnect();
+    this->sel_modified_connection.disconnect();
 
-    sp_text_context_forget_text(SP_TEXT_CONTEXT(ec));
+    sp_text_context_forget_text(SP_TEXT_CONTEXT(this));
 
-    if (tc->imc) {
-        g_object_unref(G_OBJECT(tc->imc));
-        tc->imc = NULL;
+    if (this->imc) {
+        g_object_unref(G_OBJECT(this->imc));
+        this->imc = NULL;
     }
 
-    if (tc->timeout) {
-        g_source_remove(tc->timeout);
-        tc->timeout = 0;
+    if (this->timeout) {
+        g_source_remove(this->timeout);
+        this->timeout = 0;
     }
 
-    if (tc->cursor) {
-        sp_canvas_item_destroy(tc->cursor);
-        tc->cursor = NULL;
+    if (this->cursor) {
+        sp_canvas_item_destroy(this->cursor);
+        this->cursor = NULL;
     }
 
-    if (tc->indicator) {
-        sp_canvas_item_destroy(tc->indicator);
-        tc->indicator = NULL;
+    if (this->indicator) {
+        sp_canvas_item_destroy(this->indicator);
+        this->indicator = NULL;
     }
 
-    if (tc->frame) {
-        sp_canvas_item_destroy(tc->frame);
-        tc->frame = NULL;
+    if (this->frame) {
+        sp_canvas_item_destroy(this->frame);
+        this->frame = NULL;
     }
 
-    for (std::vector<SPCanvasItem*>::iterator it = tc->text_selection_quads.begin() ;
-         it != tc->text_selection_quads.end() ; ++it) {
+    for (std::vector<SPCanvasItem*>::iterator it = this->text_selection_quads.begin() ;
+         it != this->text_selection_quads.end() ; ++it) {
         sp_canvas_item_hide(*it);
         sp_canvas_item_destroy(*it);
     }
-    tc->text_selection_quads.clear();
+    
+    this->text_selection_quads.clear();
 }
 
-
-static gint sp_text_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event)
-{
-    SPTextContext *tc = SP_TEXT_CONTEXT(event_context);
-    SPDesktop *desktop = event_context->desktop;
+bool SPTextContext::item_handler(SPItem* item, GdkEvent* event) {
     SPItem *item_ungrouped;
 
     gint ret = FALSE;
 
-    sp_text_context_validate_cursor_iterators(tc);
-    Inkscape::Text::Layout::iterator old_start = tc->text_sel_start;
+    sp_text_context_validate_cursor_iterators(this);
+    Inkscape::Text::Layout::iterator old_start = this->text_sel_start;
 
     switch (event->type) {
         case GDK_BUTTON_PRESS:
-            if (event->button.button == 1 && !event_context->space_panning) {
+            if (event->button.button == 1 && !this->space_panning) {
                 // find out clicked item, disregarding groups
                 item_ungrouped = desktop->getItemAtPoint(Geom::Point(event->button.x, event->button.y), TRUE);
                 if (SP_IS_TEXT(item_ungrouped) || SP_IS_FLOWTEXT(item_ungrouped)) {
                     sp_desktop_selection(desktop)->set(item_ungrouped);
-                    if (tc->text) {
+                    if (this->text) {
                         // find out click point in document coordinates
                         Geom::Point p = desktop->w2d(Geom::Point(event->button.x, event->button.y));
                         // set the cursor closest to that point
                         if (event->button.state & GDK_SHIFT_MASK) {
-                            tc->text_sel_start = old_start;
-                            tc->text_sel_end = sp_te_get_position_by_coords(tc->text, p);
+                            this->text_sel_start = old_start;
+                            this->text_sel_end = sp_te_get_position_by_coords(this->text, p);
                         } else {
-                            tc->text_sel_start = tc->text_sel_end = sp_te_get_position_by_coords(tc->text, p);
+                            this->text_sel_start = this->text_sel_end = sp_te_get_position_by_coords(this->text, p);
                         }
                         // update display
-                        sp_text_context_update_cursor(tc);
-                        sp_text_context_update_text_selection(tc);
-                        tc->dragging = 1;
+                        sp_text_context_update_cursor(this);
+                        sp_text_context_update_text_selection(this);
+                        this->dragging = 1;
                     }
                     ret = TRUE;
                 }
             }
             break;
         case GDK_2BUTTON_PRESS:
-            if (event->button.button == 1 && tc->text) {
-                Inkscape::Text::Layout const *layout = te_get_layout(tc->text);
+            if (event->button.button == 1 && this->text) {
+                Inkscape::Text::Layout const *layout = te_get_layout(this->text);
                 if (layout) {
-                    if (!layout->isStartOfWord(tc->text_sel_start))
-                        tc->text_sel_start.prevStartOfWord();
-                    if (!layout->isEndOfWord(tc->text_sel_end))
-                        tc->text_sel_end.nextEndOfWord();
-                    sp_text_context_update_cursor(tc);
-                    sp_text_context_update_text_selection(tc);
-                    tc->dragging = 2;
+                    if (!layout->isStartOfWord(this->text_sel_start))
+                        this->text_sel_start.prevStartOfWord();
+                    if (!layout->isEndOfWord(this->text_sel_end))
+                        this->text_sel_end.nextEndOfWord();
+                    sp_text_context_update_cursor(this);
+                    sp_text_context_update_text_selection(this);
+                    this->dragging = 2;
                     ret = TRUE;
                 }
             }
             break;
         case GDK_3BUTTON_PRESS:
-            if (event->button.button == 1 && tc->text) {
-                tc->text_sel_start.thisStartOfLine();
-                tc->text_sel_end.thisEndOfLine();
-                sp_text_context_update_cursor(tc);
-                sp_text_context_update_text_selection(tc);
-                tc->dragging = 3;
+            if (event->button.button == 1 && this->text) {
+                this->text_sel_start.thisStartOfLine();
+                this->text_sel_end.thisEndOfLine();
+                sp_text_context_update_cursor(this);
+                sp_text_context_update_text_selection(this);
+                this->dragging = 3;
                 ret = TRUE;
             }
             break;
         case GDK_BUTTON_RELEASE:
-            if (event->button.button == 1 && tc->dragging && !event_context->space_panning) {
-                tc->dragging = 0;
-                sp_event_context_discard_delayed_snap_event(event_context);
+            if (event->button.button == 1 && this->dragging && !this->space_panning) {
+                this->dragging = 0;
+                sp_event_context_discard_delayed_snap_event(this);
                 ret = TRUE;
             }
             break;
         case GDK_MOTION_NOTIFY:
-            if (event->motion.state & GDK_BUTTON1_MASK && tc->dragging && !event_context->space_panning) {
-                Inkscape::Text::Layout const *layout = te_get_layout(tc->text);
+            if ((event->motion.state & GDK_BUTTON1_MASK) && this->dragging && !this->space_panning) {
+                Inkscape::Text::Layout const *layout = te_get_layout(this->text);
                 if (!layout) break;
                 // find out click point in document coordinates
                 Geom::Point p = desktop->w2d(Geom::Point(event->button.x, event->button.y));
                 // set the cursor closest to that point
-                Inkscape::Text::Layout::iterator new_end = sp_te_get_position_by_coords(tc->text, p);
-                if (tc->dragging == 2) {
+                Inkscape::Text::Layout::iterator new_end = sp_te_get_position_by_coords(this->text, p);
+                if (this->dragging == 2) {
                     // double-click dragging: go by word
-                    if (new_end < tc->text_sel_start) {
+                    if (new_end < this->text_sel_start) {
                         if (!layout->isStartOfWord(new_end))
                             new_end.prevStartOfWord();
                     } else
                         if (!layout->isEndOfWord(new_end))
                             new_end.nextEndOfWord();
-                } else if (tc->dragging == 3) {
+                } else if (this->dragging == 3) {
                     // triple-click dragging: go by line
-                    if (new_end < tc->text_sel_start)
+                    if (new_end < this->text_sel_start)
                         new_end.thisStartOfLine();
                     else
                         new_end.thisEndOfLine();
                 }
                 // update display
-                if (tc->text_sel_end != new_end) {
-                    tc->text_sel_end = new_end;
-                    sp_text_context_update_cursor(tc);
-                    sp_text_context_update_text_selection(tc);
+                if (this->text_sel_end != new_end) {
+                    this->text_sel_end = new_end;
+                    sp_text_context_update_cursor(this);
+                    sp_text_context_update_text_selection(this);
                 }
                 gobble_motion_events(GDK_BUTTON1_MASK);
                 ret = TRUE;
@@ -405,21 +370,21 @@ static gint sp_text_context_item_handler(SPEventContext *event_context, SPItem *
 
                 Inkscape::Text::Layout const *layout = te_get_layout(item_ungrouped);
                 if (layout->inputTruncated()) {
-                    SP_CTRLRECT(tc->indicator)->setColor(0xff0000ff, false, 0);
+                    SP_CTRLRECT(this->indicator)->setColor(0xff0000ff, false, 0);
                 } else {
-                    SP_CTRLRECT(tc->indicator)->setColor(0x0000ff7f, false, 0);
+                    SP_CTRLRECT(this->indicator)->setColor(0x0000ff7f, false, 0);
                 }
                 Geom::OptRect ibbox = item_ungrouped->desktopVisualBounds();
                 if (ibbox) {
-                    SP_CTRLRECT(tc->indicator)->setRectangle(*ibbox);
+                    SP_CTRLRECT(this->indicator)->setRectangle(*ibbox);
                 }
-                sp_canvas_item_show(tc->indicator);
+                sp_canvas_item_show(this->indicator);
 
-                event_context->cursor_shape = cursor_text_insert_xpm;
-                event_context->hot_x = 7;
-                event_context->hot_y = 10;
-                sp_event_context_update_cursor(event_context);
-                sp_text_context_update_text_selection(tc);
+                this->cursor_shape = cursor_text_insert_xpm;
+                this->hot_x = 7;
+                this->hot_y = 10;
+                this->sp_event_context_update_cursor();
+                sp_text_context_update_text_selection(this);
 
                 if (SP_IS_TEXT (item_ungrouped)) {
                     desktop->event_context->defaultMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Click</b> to edit the text, <b>drag</b> to select part of the text."));
@@ -427,7 +392,7 @@ static gint sp_text_context_item_handler(SPEventContext *event_context, SPItem *
                     desktop->event_context->defaultMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Click</b> to edit the flowed text, <b>drag</b> to select part of the text."));
                 }
 
-                tc->over_text = true;
+                this->over_text = true;
 
                 ret = TRUE;
             }
@@ -437,8 +402,7 @@ static gint sp_text_context_item_handler(SPEventContext *event_context, SPItem *
     }
 
     if (!ret) {
-        if ((SP_EVENT_CONTEXT_CLASS(sp_text_context_parent_class))->item_handler)
-            ret = (SP_EVENT_CONTEXT_CLASS(sp_text_context_parent_class))->item_handler(event_context, item, event);
+    	ret = SPEventContext::item_handler(item, event);
     }
 
     return ret;
@@ -559,31 +523,26 @@ static void show_curr_uni_char(SPTextContext *const tc)
     }
 }
 
-static gint sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *const event)
-{
-    SPTextContext *const tc = SP_TEXT_CONTEXT(event_context);
+bool SPTextContext::root_handler(GdkEvent* event) {
+    sp_canvas_item_hide(this->indicator);
 
-    SPDesktop *desktop = event_context->desktop;
-
-    sp_canvas_item_hide(tc->indicator);
-
-    sp_text_context_validate_cursor_iterators(tc);
+    sp_text_context_validate_cursor_iterators(this);
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    event_context->tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
+    this->tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
 
     switch (event->type) {
         case GDK_BUTTON_PRESS:
-            if (event->button.button == 1 && !event_context->space_panning) {
+            if (event->button.button == 1 && !this->space_panning) {
 
                 if (Inkscape::have_viable_layer(desktop, desktop->messageStack()) == false) {
                     return TRUE;
                 }
 
                 // save drag origin
-                event_context->xp = (gint) event->button.x;
-                event_context->yp = (gint) event->button.y;
-                event_context->within_tolerance = true;
+                this->xp = (gint) event->button.x;
+                this->yp = (gint) event->button.y;
+                this->within_tolerance = true;
 
                 Geom::Point const button_pt(event->button.x, event->button.y);
                 Geom::Point button_dt(desktop->w2d(button_pt));
@@ -593,39 +552,39 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                 m.freeSnapReturnByRef(button_dt, Inkscape::SNAPSOURCE_NODE_HANDLE);
                 m.unSetup();
 
-                tc->p0 = button_dt;
-                Inkscape::Rubberband::get(desktop)->start(desktop, tc->p0);
+                this->p0 = button_dt;
+                Inkscape::Rubberband::get(desktop)->start(desktop, this->p0);
                 sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                                     GDK_KEY_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | GDK_BUTTON_PRESS_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK,
                                     NULL, event->button.time);
-                tc->grabbed = SP_CANVAS_ITEM(desktop->acetate);
-                tc->creating = 1;
+                this->grabbed = SP_CANVAS_ITEM(desktop->acetate);
+                this->creating = 1;
 
                 /* Processed */
                 return TRUE;
             }
             break;
         case GDK_MOTION_NOTIFY:
-            if (tc->over_text) {
-                tc->over_text = 0;
+            if (this->over_text) {
+                this->over_text = 0;
                 // update cursor and statusbar: we are not over a text object now
-                event_context->cursor_shape = cursor_text_xpm;
-                event_context->hot_x = 7;
-                event_context->hot_y = 7;
-                sp_event_context_update_cursor(event_context);
+                this->cursor_shape = cursor_text_xpm;
+                this->hot_x = 7;
+                this->hot_y = 7;
+                this->sp_event_context_update_cursor();
                 desktop->event_context->defaultMessageContext()->clear();
             }
 
-            if (tc->creating && event->motion.state & GDK_BUTTON1_MASK && !event_context->space_panning) {
-                if ( event_context->within_tolerance
-                     && ( abs( (gint) event->motion.x - event_context->xp ) < event_context->tolerance )
-                     && ( abs( (gint) event->motion.y - event_context->yp ) < event_context->tolerance ) ) {
+            if (this->creating && (event->motion.state & GDK_BUTTON1_MASK) && !this->space_panning) {
+                if ( this->within_tolerance
+                     && ( abs( (gint) event->motion.x - this->xp ) < this->tolerance )
+                     && ( abs( (gint) event->motion.y - this->yp ) < this->tolerance ) ) {
                     break; // do not drag if we're within tolerance from origin
                 }
                 // Once the user has moved farther than tolerance from the original location
                 // (indicating they intend to draw, not click), then always process the
                 // motion notify coordinates as given (no snapping back to origin)
-                event_context->within_tolerance = false;
+                this->within_tolerance = false;
 
                 Geom::Point const motion_pt(event->motion.x, event->motion.y);
                 Geom::Point p = desktop->w2d(motion_pt);
@@ -639,15 +598,16 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                 gobble_motion_events(GDK_BUTTON1_MASK);
 
                 // status text
-                Inkscape::Util::Quantity x_q = Inkscape::Util::Quantity(fabs((p - tc->p0)[Geom::X]), "px");
-                Inkscape::Util::Quantity y_q = Inkscape::Util::Quantity(fabs((p - tc->p0)[Geom::Y]), "px");
+                Inkscape::Util::Quantity x_q = Inkscape::Util::Quantity(fabs((p - this->p0)[Geom::X]), "px");
+                Inkscape::Util::Quantity y_q = Inkscape::Util::Quantity(fabs((p - this->p0)[Geom::Y]), "px");
                 GString *xs = g_string_new(x_q.string(*desktop->namedview->doc_units).c_str());
                 GString *ys = g_string_new(y_q.string(*desktop->namedview->doc_units).c_str());
-                event_context->_message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>Flowed text frame</b>: %s &#215; %s"), xs->str, ys->str);
+                this->message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>Flowed text frame</b>: %s &#215; %s"), xs->str, ys->str);
+
                 g_string_free(xs, FALSE);
                 g_string_free(ys, FALSE);
 
-            } else if (!sp_event_context_knot_mouseover(event_context)) {
+            } else if (!sp_event_context_knot_mouseover(this)) {
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop);
 
@@ -658,8 +618,8 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
             }
             break;
         case GDK_BUTTON_RELEASE:
-            if (event->button.button == 1 && !event_context->space_panning) {
-                sp_event_context_discard_delayed_snap_event(event_context);
+            if (event->button.button == 1 && !this->space_panning) {
+                sp_event_context_discard_delayed_snap_event(this);
 
                 Geom::Point p1 = desktop->w2d(Geom::Point(event->button.x, event->button.y));
 
@@ -668,46 +628,46 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                 m.freeSnapReturnByRef(p1, Inkscape::SNAPSOURCE_NODE_HANDLE);
                 m.unSetup();
 
-                if (tc->grabbed) {
-                    sp_canvas_item_ungrab(tc->grabbed, GDK_CURRENT_TIME);
-                    tc->grabbed = NULL;
+                if (this->grabbed) {
+                    sp_canvas_item_ungrab(this->grabbed, GDK_CURRENT_TIME);
+                    this->grabbed = NULL;
                 }
 
                 Inkscape::Rubberband::get(desktop)->stop();
 
-                if (tc->creating && event_context->within_tolerance) {
+                if (this->creating && this->within_tolerance) {
                     /* Button 1, set X & Y & new item */
                     sp_desktop_selection(desktop)->clear();
-                    tc->pdoc = desktop->dt2doc(p1);
-                    tc->show = TRUE;
-                    tc->phase = 1;
-                    tc->nascent_object = 1; // new object was just created
+                    this->pdoc = desktop->dt2doc(p1);
+                    this->show = TRUE;
+                    this->phase = 1;
+                    this->nascent_object = 1; // new object was just created
 
                     /* Cursor */
-                    sp_canvas_item_show(tc->cursor);
+                    sp_canvas_item_show(this->cursor);
                     // Cursor height is defined by the new text object's font size; it needs to be set
                     // artificially here, for the text object does not exist yet:
                     double cursor_height = sp_desktop_get_font_size_tool(desktop);
-                    tc->cursor->setCoords(p1, p1 + Geom::Point(0, cursor_height));
-                    if (tc->imc) {
+                    this->cursor->setCoords(p1, p1 + Geom::Point(0, cursor_height));
+                    if (this->imc) {
                         GdkRectangle im_cursor;
-                        Geom::Point const top_left = SP_EVENT_CONTEXT(tc)->desktop->get_display_area().corner(3);
+                        Geom::Point const top_left = SP_EVENT_CONTEXT(this)->desktop->get_display_area().corner(3);
                         Geom::Point const cursor_size(0, cursor_height);
-                        Geom::Point const im_position = SP_EVENT_CONTEXT(tc)->desktop->d2w(p1 + cursor_size - top_left);
+                        Geom::Point const im_position = SP_EVENT_CONTEXT(this)->desktop->d2w(p1 + cursor_size - top_left);
                         im_cursor.x = (int) floor(im_position[Geom::X]);
                         im_cursor.y = (int) floor(im_position[Geom::Y]);
                         im_cursor.width = 0;
-                        im_cursor.height = (int) -floor(SP_EVENT_CONTEXT(tc)->desktop->d2w(cursor_size)[Geom::Y]);
-                        gtk_im_context_set_cursor_location(tc->imc, &im_cursor);
+                        im_cursor.height = (int) -floor(SP_EVENT_CONTEXT(this)->desktop->d2w(cursor_size)[Geom::Y]);
+                        gtk_im_context_set_cursor_location(this->imc, &im_cursor);
                     }
-                    event_context->_message_context->set(Inkscape::NORMAL_MESSAGE, _("Type text; <b>Enter</b> to start new line.")); // FIXME:: this is a copy of a string from _update_cursor below, do not desync
+                    this->message_context->set(Inkscape::NORMAL_MESSAGE, _("Type text; <b>Enter</b> to start new line.")); // FIXME:: this is a copy of a string from _update_cursor below, do not desync
 
-                    event_context->within_tolerance = false;
-                } else if (tc->creating) {
+                    this->within_tolerance = false;
+                } else if (this->creating) {
                     double cursor_height = sp_desktop_get_font_size_tool(desktop);
-                    if (fabs(p1[Geom::Y] - tc->p0[Geom::Y]) > cursor_height) {
+                    if (fabs(p1[Geom::Y] - this->p0[Geom::Y]) > cursor_height) {
                         // otherwise even one line won't fit; most probably a slip of hand (even if bigger than tolerance)
-                        SPItem *ft = create_flowtext_with_internal_frame (desktop, tc->p0, p1);
+                        SPItem *ft = create_flowtext_with_internal_frame (desktop, this->p0, p1);
                         /* Set style */
                         sp_desktop_apply_style_tool(desktop, ft->getRepr(), "/tools/text", true);
                         sp_desktop_selection(desktop)->set(ft);
@@ -718,7 +678,7 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                         desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("The frame is <b>too small</b> for the current font size. Flowed text not created."));
                     }
                 }
-                tc->creating = false;
+                this->creating = false;
                 return TRUE;
             }
             break;
@@ -731,16 +691,16 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                     break; // otherwise pass on keypad +/- so they can zoom
             }
 
-            if ((tc->text) || (tc->nascent_object)) {
+            if ((this->text) || (this->nascent_object)) {
                 // there is an active text object in this context, or a new object was just created
 
-                if (tc->unimode || !tc->imc
+                if (this->unimode || !this->imc
                     || (MOD__CTRL(event) && MOD__SHIFT(event))    // input methods tend to steal this for unimode,
                                                     // but we have our own so make sure they don't swallow it
-                    || !gtk_im_context_filter_keypress(tc->imc, (GdkEventKey*) event)) {
+                    || !gtk_im_context_filter_keypress(this->imc, (GdkEventKey*) event)) {
                     //IM did not consume the key, or we're in unimode
 
-                    if (!MOD__CTRL_ONLY(event) && tc->unimode) {
+                    if (!MOD__CTRL_ONLY(event) && this->unimode) {
                             /* TODO: ISO 14755 (section 3 Definitions) says that we should also
                                accept the first 6 characters of alphabets other than the latin
                                alphabet "if the Latin alphabet is not used".  The below is also
@@ -751,39 +711,39 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                             switch (group0_keyval) {
                                 case GDK_KEY_space:
                                 case GDK_KEY_KP_Space: {
-                                    if (tc->unipos) {
-                                        insert_uni_char(tc);
+                                    if (this->unipos) {
+                                        insert_uni_char(this);
                                     }
                                     /* Stay in unimode. */
-                                    show_curr_uni_char(tc);
+                                    show_curr_uni_char(this);
                                     return TRUE;
                                 }
 
                                 case GDK_KEY_BackSpace: {
-                                    g_return_val_if_fail(tc->unipos < sizeof(tc->uni), TRUE);
-                                    if (tc->unipos) {
-                                        tc->uni[--tc->unipos] = '\0';
+                                    g_return_val_if_fail(this->unipos < sizeof(this->uni), TRUE);
+                                    if (this->unipos) {
+                                        this->uni[--this->unipos] = '\0';
                                     }
-                                    show_curr_uni_char(tc);
+                                    show_curr_uni_char(this);
                                     return TRUE;
                                 }
 
                                 case GDK_KEY_Return:
                                 case GDK_KEY_KP_Enter: {
-                                    if (tc->unipos) {
-                                        insert_uni_char(tc);
+                                    if (this->unipos) {
+                                        insert_uni_char(this);
                                     }
                                     /* Exit unimode. */
-                                    tc->unimode = false;
-                                    event_context->defaultMessageContext()->clear();
+                                    this->unimode = false;
+                                    this->defaultMessageContext()->clear();
                                     return TRUE;
                                 }
 
                                 case GDK_KEY_Escape: {
                                     // Cancel unimode.
-                                    tc->unimode = false;
-                                    gtk_im_context_reset(tc->imc);
-                                    event_context->defaultMessageContext()->clear();
+                                    this->unimode = false;
+                                    gtk_im_context_reset(this->imc);
+                                    this->defaultMessageContext()->clear();
                                     return TRUE;
                                 }
 
@@ -793,10 +753,10 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
 
                                 default: {
                                     if (g_ascii_isxdigit(group0_keyval)) {
-                                        g_return_val_if_fail(tc->unipos < sizeof(tc->uni) - 1, TRUE);
-                                        tc->uni[tc->unipos++] = group0_keyval;
-                                        tc->uni[tc->unipos] = '\0';
-                                        if (tc->unipos == 8) {
+                                        g_return_val_if_fail(this->unipos < sizeof(this->uni) - 1, TRUE);
+                                        this->uni[this->unipos++] = group0_keyval;
+                                        this->uni[this->unipos] = '\0';
+                                        if (this->unipos == 8) {
                                             /* This behaviour is partly to allow us to continue to
                                                use a fixed-length buffer for tc->uni.  Reason for
                                                choosing the number 8 is that it's the length of
@@ -804,9 +764,9 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                                                An advantage over choosing 6 is that it allows using
                                                backspace for typos & misremembering when entering a
                                                6-digit number. */
-                                            insert_uni_char(tc);
+                                            insert_uni_char(this);
                                         }
-                                        show_curr_uni_char(tc);
+                                        show_curr_uni_char(this);
                                         return TRUE;
                                     } else {
                                         /* The intent is to ignore but consume characters that could be
@@ -820,12 +780,12 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                             }
                         }
 
-                        Inkscape::Text::Layout::iterator old_start = tc->text_sel_start;
-                        Inkscape::Text::Layout::iterator old_end = tc->text_sel_end;
+                        Inkscape::Text::Layout::iterator old_start = this->text_sel_start;
+                        Inkscape::Text::Layout::iterator old_end = this->text_sel_end;
                         bool cursor_moved = false;
                         int screenlines = 1;
-                        if (tc->text) {
-                            double spacing = sp_te_get_average_linespacing(tc->text);
+                        if (this->text) {
+                            double spacing = sp_te_get_average_linespacing(this->text);
                             Geom::Rect const d = desktop->get_display_area();
                             screenlines = (int) floor(fabs(d.min()[Geom::Y] - d.max()[Geom::Y])/spacing) - 1;
                             if (screenlines <= 0)
@@ -844,13 +804,13 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                             case GDK_KEY_space:
                                 if (MOD__CTRL_ONLY(event)) {
                                     /* No-break space */
-                                    if (!tc->text) { // printable key; create text if none (i.e. if nascent_object)
-                                        sp_text_context_setup_text(tc);
-                                        tc->nascent_object = 0; // we don't need it anymore, having created a real <text>
+                                    if (!this->text) { // printable key; create text if none (i.e. if nascent_object)
+                                        sp_text_context_setup_text(this);
+                                        this->nascent_object = 0; // we don't need it anymore, having created a real <text>
                                     }
-                                    tc->text_sel_start = tc->text_sel_end = sp_te_replace(tc->text, tc->text_sel_start, tc->text_sel_end, "\302\240");
-                                    sp_text_context_update_cursor(tc);
-                                    sp_text_context_update_text_selection(tc);
+                                    this->text_sel_start = this->text_sel_end = sp_te_replace(this->text, this->text_sel_start, this->text_sel_end, "\302\240");
+                                    sp_text_context_update_cursor(this);
+                                    sp_text_context_update_text_selection(this);
                                     desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("No-break space"));
                                     DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT,
 						       _("Insert no-break space"));
@@ -860,24 +820,24 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                             case GDK_KEY_U:
                             case GDK_KEY_u:
                                 if (MOD__CTRL_ONLY(event) || (MOD__CTRL(event) && MOD__SHIFT(event))) {
-                                    if (tc->unimode) {
-                                        tc->unimode = false;
-                                        event_context->defaultMessageContext()->clear();
+                                    if (this->unimode) {
+                                        this->unimode = false;
+                                        this->defaultMessageContext()->clear();
                                     } else {
-                                        tc->unimode = true;
-                                        tc->unipos = 0;
-                                        event_context->defaultMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("Unicode (<b>Enter</b> to finish): "));
+                                        this->unimode = true;
+                                        this->unipos = 0;
+                                        this->defaultMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("Unicode (<b>Enter</b> to finish): "));
                                     }
-                                    if (tc->imc) {
-                                        gtk_im_context_reset(tc->imc);
+                                    if (this->imc) {
+                                        gtk_im_context_reset(this->imc);
                                     }
                                     return TRUE;
                                 }
                                 break;
                             case GDK_KEY_B:
                             case GDK_KEY_b:
-                                if (MOD__CTRL_ONLY(event) && tc->text) {
-                                    SPStyle const *style = sp_te_style_at_position(tc->text, std::min(tc->text_sel_start, tc->text_sel_end));
+                                if (MOD__CTRL_ONLY(event) && this->text) {
+                                    SPStyle const *style = sp_te_style_at_position(this->text, std::min(this->text_sel_start, this->text_sel_end));
                                     SPCSSAttr *css = sp_repr_css_attr_new();
                                     if (style->font_weight.computed == SP_CSS_FONT_WEIGHT_NORMAL
                                         || style->font_weight.computed == SP_CSS_FONT_WEIGHT_100
@@ -887,43 +847,43 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                                         sp_repr_css_set_property(css, "font-weight", "bold");
                                     else
                                         sp_repr_css_set_property(css, "font-weight", "normal");
-                                    sp_te_apply_style(tc->text, tc->text_sel_start, tc->text_sel_end, css);
+                                    sp_te_apply_style(this->text, this->text_sel_start, this->text_sel_end, css);
                                     sp_repr_css_attr_unref(css);
                                     DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT,
 						       _("Make bold"));
-                                    sp_text_context_update_cursor(tc);
-                                    sp_text_context_update_text_selection(tc);
+                                    sp_text_context_update_cursor(this);
+                                    sp_text_context_update_text_selection(this);
                                     return TRUE;
                                 }
                                 break;
                             case GDK_KEY_I:
                             case GDK_KEY_i:
-                                if (MOD__CTRL_ONLY(event) && tc->text) {
-                                    SPStyle const *style = sp_te_style_at_position(tc->text, std::min(tc->text_sel_start, tc->text_sel_end));
+                                if (MOD__CTRL_ONLY(event) && this->text) {
+                                    SPStyle const *style = sp_te_style_at_position(this->text, std::min(this->text_sel_start, this->text_sel_end));
                                     SPCSSAttr *css = sp_repr_css_attr_new();
                                     if (style->font_style.computed != SP_CSS_FONT_STYLE_NORMAL)
                                         sp_repr_css_set_property(css, "font-style", "normal");
                                     else
                                         sp_repr_css_set_property(css, "font-style", "italic");
-                                    sp_te_apply_style(tc->text, tc->text_sel_start, tc->text_sel_end, css);
+                                    sp_te_apply_style(this->text, this->text_sel_start, this->text_sel_end, css);
                                     sp_repr_css_attr_unref(css);
                                     DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT,
 						       _("Make italic"));
-                                    sp_text_context_update_cursor(tc);
-                                    sp_text_context_update_text_selection(tc);
+                                    sp_text_context_update_cursor(this);
+                                    sp_text_context_update_text_selection(this);
                                     return TRUE;
                                 }
                                 break;
 
                             case GDK_KEY_A:
                             case GDK_KEY_a:
-                                if (MOD__CTRL_ONLY(event) && tc->text) {
-                                    Inkscape::Text::Layout const *layout = te_get_layout(tc->text);
+                                if (MOD__CTRL_ONLY(event) && this->text) {
+                                    Inkscape::Text::Layout const *layout = te_get_layout(this->text);
                                     if (layout) {
-                                        tc->text_sel_start = layout->begin();
-                                        tc->text_sel_end = layout->end();
-                                        sp_text_context_update_cursor(tc);
-                                        sp_text_context_update_text_selection(tc);
+                                        this->text_sel_start = layout->begin();
+                                        this->text_sel_end = layout->end();
+                                        sp_text_context_update_cursor(this);
+                                        sp_text_context_update_text_selection(this);
                                         return TRUE;
                                     }
                                 }
@@ -932,101 +892,101 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                             case GDK_KEY_Return:
                             case GDK_KEY_KP_Enter:
                             {
-                                if (!tc->text) { // printable key; create text if none (i.e. if nascent_object)
-                                    sp_text_context_setup_text(tc);
-                                    tc->nascent_object = 0; // we don't need it anymore, having created a real <text>
+                                if (!this->text) { // printable key; create text if none (i.e. if nascent_object)
+                                    sp_text_context_setup_text(this);
+                                    this->nascent_object = 0; // we don't need it anymore, having created a real <text>
                                 }
 
                                 iterator_pair enter_pair;
-                                bool success = sp_te_delete(tc->text, tc->text_sel_start, tc->text_sel_end, enter_pair);
+                                bool success = sp_te_delete(this->text, this->text_sel_start, this->text_sel_end, enter_pair);
                                 (void)success; // TODO cleanup
-                                tc->text_sel_start = tc->text_sel_end = enter_pair.first;
+                                this->text_sel_start = this->text_sel_end = enter_pair.first;
 
-                                tc->text_sel_start = tc->text_sel_end = sp_te_insert_line(tc->text, tc->text_sel_start);
+                                this->text_sel_start = this->text_sel_end = sp_te_insert_line(this->text, this->text_sel_start);
 
-                                sp_text_context_update_cursor(tc);
-                                sp_text_context_update_text_selection(tc);
+                                sp_text_context_update_cursor(this);
+                                sp_text_context_update_text_selection(this);
                                 DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT,
 						   _("New line"));
                                 return TRUE;
                             }
                             case GDK_KEY_BackSpace:
-                                if (tc->text) { // if nascent_object, do nothing, but return TRUE; same for all other delete and move keys
+                                if (this->text) { // if nascent_object, do nothing, but return TRUE; same for all other delete and move keys
 
                                     bool noSelection = false;
 
                                     if (MOD__CTRL(event)) {
-                                        tc->text_sel_start = tc->text_sel_end;
+                                        this->text_sel_start = this->text_sel_end;
                                     }
 
-                                    if (tc->text_sel_start == tc->text_sel_end) {
+                                    if (this->text_sel_start == this->text_sel_end) {
                                         if (MOD__CTRL(event)) {
-                                            tc->text_sel_start.prevStartOfWord();
+                                            this->text_sel_start.prevStartOfWord();
                                         } else {
-                                            tc->text_sel_start.prevCursorPosition();
+                                            this->text_sel_start.prevCursorPosition();
                                         }
                                         noSelection = true;
                                     }
 
                                     iterator_pair bspace_pair;
-                                    bool success = sp_te_delete(tc->text, tc->text_sel_start, tc->text_sel_end, bspace_pair);
+                                    bool success = sp_te_delete(this->text, this->text_sel_start, this->text_sel_end, bspace_pair);
 
                                     if (noSelection) {
                                         if (success) {
-                                            tc->text_sel_start = tc->text_sel_end = bspace_pair.first;
+                                            this->text_sel_start = this->text_sel_end = bspace_pair.first;
                                         } else { // nothing deleted
-                                            tc->text_sel_start = tc->text_sel_end = bspace_pair.second;
+                                            this->text_sel_start = this->text_sel_end = bspace_pair.second;
                                         }
                                     } else {
                                         if (success) {
-                                            tc->text_sel_start = tc->text_sel_end = bspace_pair.first;
+                                            this->text_sel_start = this->text_sel_end = bspace_pair.first;
                                         } else { // nothing deleted
-                                            tc->text_sel_start = bspace_pair.first;
-                                            tc->text_sel_end = bspace_pair.second;
+                                            this->text_sel_start = bspace_pair.first;
+                                            this->text_sel_end = bspace_pair.second;
                                         }
                                     }
 
-                                    sp_text_context_update_cursor(tc);
-                                    sp_text_context_update_text_selection(tc);
+                                    sp_text_context_update_cursor(this);
+                                    sp_text_context_update_text_selection(this);
                                     DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT,
 						       _("Backspace"));
                                 }
                                 return TRUE;
                             case GDK_KEY_Delete:
                             case GDK_KEY_KP_Delete:
-                                if (tc->text) {
+                                if (this->text) {
                                     bool noSelection = false;
 
                                     if (MOD__CTRL(event)) {
-                                        tc->text_sel_start = tc->text_sel_end;
+                                        this->text_sel_start = this->text_sel_end;
                                     }
 
-                                    if (tc->text_sel_start == tc->text_sel_end) {
+                                    if (this->text_sel_start == this->text_sel_end) {
                                         if (MOD__CTRL(event)) {
-                                            tc->text_sel_end.nextEndOfWord();
+                                            this->text_sel_end.nextEndOfWord();
                                         } else {
-                                            tc->text_sel_end.nextCursorPosition();
+                                            this->text_sel_end.nextCursorPosition();
                                         }
                                         noSelection = true;
                                     }
 
                                     iterator_pair del_pair;
-                                    bool success = sp_te_delete(tc->text, tc->text_sel_start, tc->text_sel_end, del_pair);
+                                    bool success = sp_te_delete(this->text, this->text_sel_start, this->text_sel_end, del_pair);
 
                                     if (noSelection) {
-                                        tc->text_sel_start = tc->text_sel_end = del_pair.first;
+                                        this->text_sel_start = this->text_sel_end = del_pair.first;
                                     } else {
                                         if (success) {
-                                            tc->text_sel_start = tc->text_sel_end = del_pair.first;
+                                            this->text_sel_start = this->text_sel_end = del_pair.first;
                                         } else { // nothing deleted
-                                            tc->text_sel_start = del_pair.first;
-                                            tc->text_sel_end = del_pair.second;
+                                            this->text_sel_start = del_pair.first;
+                                            this->text_sel_end = del_pair.second;
                                         }
                                     }
 
 
-                                    sp_text_context_update_cursor(tc);
-                                    sp_text_context_update_text_selection(tc);
+                                    sp_text_context_update_cursor(this);
+                                    sp_text_context_update_text_selection(this);
                                     DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT,
 						       _("Delete"));
                                 }
@@ -1034,23 +994,23 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                             case GDK_KEY_Left:
                             case GDK_KEY_KP_Left:
                             case GDK_KEY_KP_4:
-                                if (tc->text) {
+                                if (this->text) {
                                     if (MOD__ALT(event)) {
                                         gint mul = 1 + gobble_key_events(
                                             get_group0_keyval(&event->key), 0); // with any mask
                                         if (MOD__SHIFT(event))
-                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, Geom::Point(mul*-10, 0));
+                                            sp_te_adjust_kerning_screen(this->text, this->text_sel_start, this->text_sel_end, desktop, Geom::Point(mul*-10, 0));
                                         else
-                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, Geom::Point(mul*-1, 0));
-                                        sp_text_context_update_cursor(tc);
-                                        sp_text_context_update_text_selection(tc);
+                                            sp_te_adjust_kerning_screen(this->text, this->text_sel_start, this->text_sel_end, desktop, Geom::Point(mul*-1, 0));
+                                        sp_text_context_update_cursor(this);
+                                        sp_text_context_update_text_selection(this);
                                         DocumentUndo::maybeDone(sp_desktop_document(desktop), "kern:left", SP_VERB_CONTEXT_TEXT,
 								_("Kern to the left"));
                                     } else {
                                         if (MOD__CTRL(event))
-                                            tc->text_sel_end.cursorLeftWithControl();
+                                            this->text_sel_end.cursorLeftWithControl();
                                         else
-                                            tc->text_sel_end.cursorLeft();
+                                            this->text_sel_end.cursorLeft();
                                         cursor_moved = true;
                                         break;
                                     }
@@ -1059,23 +1019,23 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                             case GDK_KEY_Right:
                             case GDK_KEY_KP_Right:
                             case GDK_KEY_KP_6:
-                                if (tc->text) {
+                                if (this->text) {
                                     if (MOD__ALT(event)) {
                                         gint mul = 1 + gobble_key_events(
                                             get_group0_keyval(&event->key), 0); // with any mask
                                         if (MOD__SHIFT(event))
-                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, Geom::Point(mul*10, 0));
+                                            sp_te_adjust_kerning_screen(this->text, this->text_sel_start, this->text_sel_end, desktop, Geom::Point(mul*10, 0));
                                         else
-                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, Geom::Point(mul*1, 0));
-                                        sp_text_context_update_cursor(tc);
-                                        sp_text_context_update_text_selection(tc);
+                                            sp_te_adjust_kerning_screen(this->text, this->text_sel_start, this->text_sel_end, desktop, Geom::Point(mul*1, 0));
+                                        sp_text_context_update_cursor(this);
+                                        sp_text_context_update_text_selection(this);
                                         DocumentUndo::maybeDone(sp_desktop_document(desktop), "kern:right", SP_VERB_CONTEXT_TEXT,
 								_("Kern to the right"));
                                     } else {
                                         if (MOD__CTRL(event))
-                                            tc->text_sel_end.cursorRightWithControl();
+                                            this->text_sel_end.cursorRightWithControl();
                                         else
-                                            tc->text_sel_end.cursorRight();
+                                            this->text_sel_end.cursorRight();
                                         cursor_moved = true;
                                         break;
                                     }
@@ -1084,23 +1044,23 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                             case GDK_KEY_Up:
                             case GDK_KEY_KP_Up:
                             case GDK_KEY_KP_8:
-                                if (tc->text) {
+                                if (this->text) {
                                     if (MOD__ALT(event)) {
                                         gint mul = 1 + gobble_key_events(
                                             get_group0_keyval(&event->key), 0); // with any mask
                                         if (MOD__SHIFT(event))
-                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, Geom::Point(0, mul*-10));
+                                            sp_te_adjust_kerning_screen(this->text, this->text_sel_start, this->text_sel_end, desktop, Geom::Point(0, mul*-10));
                                         else
-                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, Geom::Point(0, mul*-1));
-                                        sp_text_context_update_cursor(tc);
-                                        sp_text_context_update_text_selection(tc);
+                                            sp_te_adjust_kerning_screen(this->text, this->text_sel_start, this->text_sel_end, desktop, Geom::Point(0, mul*-1));
+                                        sp_text_context_update_cursor(this);
+                                        sp_text_context_update_text_selection(this);
                                         DocumentUndo::maybeDone(sp_desktop_document(desktop), "kern:up", SP_VERB_CONTEXT_TEXT,
 								_("Kern up"));
                                     } else {
                                         if (MOD__CTRL(event))
-                                            tc->text_sel_end.cursorUpWithControl();
+                                            this->text_sel_end.cursorUpWithControl();
                                         else
-                                            tc->text_sel_end.cursorUp();
+                                            this->text_sel_end.cursorUp();
                                         cursor_moved = true;
                                         break;
                                     }
@@ -1109,23 +1069,23 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                             case GDK_KEY_Down:
                             case GDK_KEY_KP_Down:
                             case GDK_KEY_KP_2:
-                                if (tc->text) {
+                                if (this->text) {
                                     if (MOD__ALT(event)) {
                                         gint mul = 1 + gobble_key_events(
                                             get_group0_keyval(&event->key), 0); // with any mask
                                         if (MOD__SHIFT(event))
-                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, Geom::Point(0, mul*10));
+                                            sp_te_adjust_kerning_screen(this->text, this->text_sel_start, this->text_sel_end, desktop, Geom::Point(0, mul*10));
                                         else
-                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, Geom::Point(0, mul*1));
-                                        sp_text_context_update_cursor(tc);
-                                        sp_text_context_update_text_selection(tc);
+                                            sp_te_adjust_kerning_screen(this->text, this->text_sel_start, this->text_sel_end, desktop, Geom::Point(0, mul*1));
+                                        sp_text_context_update_cursor(this);
+                                        sp_text_context_update_text_selection(this);
                                         DocumentUndo::maybeDone(sp_desktop_document(desktop), "kern:down", SP_VERB_CONTEXT_TEXT,
 								_("Kern down"));
                                     } else {
                                         if (MOD__CTRL(event))
-                                            tc->text_sel_end.cursorDownWithControl();
+                                            this->text_sel_end.cursorDownWithControl();
                                         else
-                                            tc->text_sel_end.cursorDown();
+                                            this->text_sel_end.cursorDown();
                                         cursor_moved = true;
                                         break;
                                     }
@@ -1133,143 +1093,143 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                                 return TRUE;
                             case GDK_KEY_Home:
                             case GDK_KEY_KP_Home:
-                                if (tc->text) {
+                                if (this->text) {
                                     if (MOD__CTRL(event))
-                                        tc->text_sel_end.thisStartOfShape();
+                                        this->text_sel_end.thisStartOfShape();
                                     else
-                                        tc->text_sel_end.thisStartOfLine();
+                                        this->text_sel_end.thisStartOfLine();
                                     cursor_moved = true;
                                     break;
                                 }
                                 return TRUE;
                             case GDK_KEY_End:
                             case GDK_KEY_KP_End:
-                                if (tc->text) {
+                                if (this->text) {
                                     if (MOD__CTRL(event))
-                                        tc->text_sel_end.nextStartOfShape();
+                                        this->text_sel_end.nextStartOfShape();
                                     else
-                                        tc->text_sel_end.thisEndOfLine();
+                                        this->text_sel_end.thisEndOfLine();
                                     cursor_moved = true;
                                     break;
                                 }
                                 return TRUE;
                             case GDK_KEY_Page_Down:
                             case GDK_KEY_KP_Page_Down:
-                                if (tc->text) {
-                                    tc->text_sel_end.cursorDown(screenlines);
+                                if (this->text) {
+                                    this->text_sel_end.cursorDown(screenlines);
                                     cursor_moved = true;
                                     break;
                                 }
                                 return TRUE;
                             case GDK_KEY_Page_Up:
                             case GDK_KEY_KP_Page_Up:
-                                if (tc->text) {
-                                    tc->text_sel_end.cursorUp(screenlines);
+                                if (this->text) {
+                                    this->text_sel_end.cursorUp(screenlines);
                                     cursor_moved = true;
                                     break;
                                 }
                                 return TRUE;
                             case GDK_KEY_Escape:
-                                if (tc->creating) {
-                                    tc->creating = 0;
-                                    if (tc->grabbed) {
-                                        sp_canvas_item_ungrab(tc->grabbed, GDK_CURRENT_TIME);
-                                        tc->grabbed = NULL;
+                                if (this->creating) {
+                                    this->creating = 0;
+                                    if (this->grabbed) {
+                                        sp_canvas_item_ungrab(this->grabbed, GDK_CURRENT_TIME);
+                                        this->grabbed = NULL;
                                     }
                                     Inkscape::Rubberband::get(desktop)->stop();
                                 } else {
                                     sp_desktop_selection(desktop)->clear();
                                 }
-                                tc->nascent_object = FALSE;
+                                this->nascent_object = FALSE;
                                 return TRUE;
                             case GDK_KEY_bracketleft:
-                                if (tc->text) {
+                                if (this->text) {
                                     if (MOD__ALT(event) || MOD__CTRL(event)) {
                                         if (MOD__ALT(event)) {
                                             if (MOD__SHIFT(event)) {
                                                 // FIXME: alt+shift+[] does not work, don't know why
-                                                sp_te_adjust_rotation_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, -10);
+                                                sp_te_adjust_rotation_screen(this->text, this->text_sel_start, this->text_sel_end, desktop, -10);
                                             } else {
-                                                sp_te_adjust_rotation_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, -1);
+                                                sp_te_adjust_rotation_screen(this->text, this->text_sel_start, this->text_sel_end, desktop, -1);
                                             }
                                         } else {
-                                            sp_te_adjust_rotation(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, -90);
+                                            sp_te_adjust_rotation(this->text, this->text_sel_start, this->text_sel_end, desktop, -90);
                                         }
                                         DocumentUndo::maybeDone(sp_desktop_document(desktop), "textrot:ccw", SP_VERB_CONTEXT_TEXT,
 								_("Rotate counterclockwise"));
-                                        sp_text_context_update_cursor(tc);
-                                        sp_text_context_update_text_selection(tc);
+                                        sp_text_context_update_cursor(this);
+                                        sp_text_context_update_text_selection(this);
                                         return TRUE;
                                     }
                                 }
                                 break;
                             case GDK_KEY_bracketright:
-                                if (tc->text) {
+                                if (this->text) {
                                     if (MOD__ALT(event) || MOD__CTRL(event)) {
                                         if (MOD__ALT(event)) {
                                             if (MOD__SHIFT(event)) {
                                                 // FIXME: alt+shift+[] does not work, don't know why
-                                                sp_te_adjust_rotation_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, 10);
+                                                sp_te_adjust_rotation_screen(this->text, this->text_sel_start, this->text_sel_end, desktop, 10);
                                             } else {
-                                                sp_te_adjust_rotation_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, 1);
+                                                sp_te_adjust_rotation_screen(this->text, this->text_sel_start, this->text_sel_end, desktop, 1);
                                             }
                                         } else {
-                                            sp_te_adjust_rotation(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, 90);
+                                            sp_te_adjust_rotation(this->text, this->text_sel_start, this->text_sel_end, desktop, 90);
                                         }
                                         DocumentUndo::maybeDone(sp_desktop_document(desktop), "textrot:cw", SP_VERB_CONTEXT_TEXT,
 								_("Rotate clockwise"));
-                                        sp_text_context_update_cursor(tc);
-                                        sp_text_context_update_text_selection(tc);
+                                        sp_text_context_update_cursor(this);
+                                        sp_text_context_update_text_selection(this);
                                         return TRUE;
                                     }
                                 }
                                 break;
                             case GDK_KEY_less:
                             case GDK_KEY_comma:
-                                if (tc->text) {
+                                if (this->text) {
                                     if (MOD__ALT(event)) {
                                         if (MOD__CTRL(event)) {
                                             if (MOD__SHIFT(event))
-                                                sp_te_adjust_linespacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, -10);
+                                                sp_te_adjust_linespacing_screen(this->text, this->text_sel_start, this->text_sel_end, desktop, -10);
                                             else
-                                                sp_te_adjust_linespacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, -1);
+                                                sp_te_adjust_linespacing_screen(this->text, this->text_sel_start, this->text_sel_end, desktop, -1);
                                             DocumentUndo::maybeDone(sp_desktop_document(desktop), "linespacing:dec", SP_VERB_CONTEXT_TEXT,
 								    _("Contract line spacing"));
                                         } else {
                                             if (MOD__SHIFT(event))
-                                                sp_te_adjust_tspan_letterspacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, -10);
+                                                sp_te_adjust_tspan_letterspacing_screen(this->text, this->text_sel_start, this->text_sel_end, desktop, -10);
                                             else
-                                                sp_te_adjust_tspan_letterspacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, -1);
+                                                sp_te_adjust_tspan_letterspacing_screen(this->text, this->text_sel_start, this->text_sel_end, desktop, -1);
                                             DocumentUndo::maybeDone(sp_desktop_document(desktop), "letterspacing:dec", SP_VERB_CONTEXT_TEXT,
 								    _("Contract letter spacing"));
                                         }
-                                        sp_text_context_update_cursor(tc);
-                                        sp_text_context_update_text_selection(tc);
+                                        sp_text_context_update_cursor(this);
+                                        sp_text_context_update_text_selection(this);
                                         return TRUE;
                                     }
                                 }
                                 break;
                             case GDK_KEY_greater:
                             case GDK_KEY_period:
-                                if (tc->text) {
+                                if (this->text) {
                                     if (MOD__ALT(event)) {
                                         if (MOD__CTRL(event)) {
                                             if (MOD__SHIFT(event))
-                                                sp_te_adjust_linespacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, 10);
+                                                sp_te_adjust_linespacing_screen(this->text, this->text_sel_start, this->text_sel_end, desktop, 10);
                                             else
-                                                sp_te_adjust_linespacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, 1);
+                                                sp_te_adjust_linespacing_screen(this->text, this->text_sel_start, this->text_sel_end, desktop, 1);
                                             DocumentUndo::maybeDone(sp_desktop_document(desktop), "linespacing:inc", SP_VERB_CONTEXT_TEXT,
 								    _("Expand line spacing"));
                                         } else {
                                             if (MOD__SHIFT(event))
-                                                sp_te_adjust_tspan_letterspacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, 10);
+                                                sp_te_adjust_tspan_letterspacing_screen(this->text, this->text_sel_start, this->text_sel_end, desktop, 10);
                                             else
-                                                sp_te_adjust_tspan_letterspacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, 1);
+                                                sp_te_adjust_tspan_letterspacing_screen(this->text, this->text_sel_start, this->text_sel_end, desktop, 1);
                                             DocumentUndo::maybeDone(sp_desktop_document(desktop), "letterspacing:inc", SP_VERB_CONTEXT_TEXT,
                                                                     _("Expand letter spacing"));\
                                         }
-                                        sp_text_context_update_cursor(tc);
-                                        sp_text_context_update_text_selection(tc);
+                                        sp_text_context_update_cursor(this);
+                                        sp_text_context_update_text_selection(this);
                                         return TRUE;
                                     }
                                 }
@@ -1280,10 +1240,10 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
 
                         if (cursor_moved) {
                             if (!MOD__SHIFT(event))
-                                tc->text_sel_start = tc->text_sel_end;
-                            if (old_start != tc->text_sel_start || old_end != tc->text_sel_end) {
-                                sp_text_context_update_cursor(tc);
-                                sp_text_context_update_text_selection(tc);
+                                this->text_sel_start = this->text_sel_end;
+                            if (old_start != this->text_sel_start || old_end != this->text_sel_end) {
+                                sp_text_context_update_cursor(this);
+                                sp_text_context_update_text_selection(this);
                             }
                             return TRUE;
                         }
@@ -1298,11 +1258,11 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                     && !MOD__CTRL_ONLY(event)) {
                     return TRUE;
                 } else if (group0_keyval == GDK_KEY_Escape) { // cancel rubberband
-                    if (tc->creating) {
-                        tc->creating = 0;
-                        if (tc->grabbed) {
-                            sp_canvas_item_ungrab(tc->grabbed, GDK_CURRENT_TIME);
-                            tc->grabbed = NULL;
+                    if (this->creating) {
+                        this->creating = 0;
+                        if (this->grabbed) {
+                            sp_canvas_item_ungrab(this->grabbed, GDK_CURRENT_TIME);
+                            this->grabbed = NULL;
                         }
                         Inkscape::Rubberband::get(desktop)->stop();
                     }
@@ -1315,7 +1275,7 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
         }
 
         case GDK_KEY_RELEASE:
-            if (!tc->unimode && tc->imc && gtk_im_context_filter_keypress(tc->imc, (GdkEventKey*) event)) {
+            if (!this->unimode && this->imc && gtk_im_context_filter_keypress(this->imc, (GdkEventKey*) event)) {
                 return TRUE;
             }
             break;
@@ -1324,11 +1284,13 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
     }
 
     // if nobody consumed it so far
-    if ((SP_EVENT_CONTEXT_CLASS(sp_text_context_parent_class))->root_handler) { // and there's a handler in parent context,
-        return (SP_EVENT_CONTEXT_CLASS(sp_text_context_parent_class))->root_handler(event_context, event); // send event to parent
-    } else {
-        return FALSE; // return "I did nothing" value so that global shortcuts can be activated
-    }
+//    if ((SP_EVENT_CONTEXT_CLASS(sp_text_context_parent_class))->root_handler) { // and there's a handler in parent context,
+//        return (SP_EVENT_CONTEXT_CLASS(sp_text_context_parent_class))->root_handler(event_context, event); // send event to parent
+//    } else {
+//        return FALSE; // return "I did nothing" value so that global shortcuts can be activated
+//    }
+    return SPEventContext::root_handler(event);
+
 }
 
 /**
@@ -1645,9 +1607,9 @@ static void sp_text_context_update_cursor(SPTextContext *tc,  bool scroll_to_see
                 }
             }
 
-            SP_EVENT_CONTEXT(tc)->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("Type or edit flowed text (%d characters%s); <b>Enter</b> to start new paragraph."), nChars, trunc);
+            SP_EVENT_CONTEXT(tc)->message_context->setF(Inkscape::NORMAL_MESSAGE, _("Type or edit flowed text (%d characters%s); <b>Enter</b> to start new paragraph."), nChars, trunc);
         } else {
-            SP_EVENT_CONTEXT(tc)->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("Type or edit text (%d characters%s); <b>Enter</b> to start new line."), nChars, trunc);
+            SP_EVENT_CONTEXT(tc)->message_context->setF(Inkscape::NORMAL_MESSAGE, _("Type or edit text (%d characters%s); <b>Enter</b> to start new line."), nChars, trunc);
         }
 
     } else {
@@ -1655,7 +1617,7 @@ static void sp_text_context_update_cursor(SPTextContext *tc,  bool scroll_to_see
         sp_canvas_item_hide(tc->frame);
         tc->show = FALSE;
         if (!tc->nascent_object) {
-            SP_EVENT_CONTEXT(tc)->_message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Click</b> to select or create text, <b>drag</b> to create flowed text; then type.")); // FIXME: this is a copy of string from tools-switch, do not desync
+            SP_EVENT_CONTEXT(tc)->message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Click</b> to select or create text, <b>drag</b> to create flowed text; then type.")); // FIXME: this is a copy of string from tools-switch, do not desync
         }
     }
 

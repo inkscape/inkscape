@@ -8,38 +8,39 @@
 #include "draw-context.h"
 #include "live_effects/effect.h"
 
-#define SP_TYPE_PEN_CONTEXT (sp_pen_context_get_type())
-#define SP_PEN_CONTEXT(o) (G_TYPE_CHECK_INSTANCE_CAST((o), SP_TYPE_PEN_CONTEXT, SPPenContext))
-#define SP_PEN_CONTEXT_CLASS(k) (G_TYPE_CHECK_CLASS_CAST((k), SP_TYPE_PEN_CONTEXT, SPPenContextClass))
-#define SP_IS_PEN_CONTEXT(o) (G_TYPE_CHECK_INSTANCE_TYPE((o), SP_TYPE_PEN_CONTEXT))
-#define SP_IS_PEN_CONTEXT_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE((k), SP_TYPE_PEN_CONTEXT))
-
-enum {
-    SP_PEN_CONTEXT_POINT,
-    SP_PEN_CONTEXT_CONTROL,
-    SP_PEN_CONTEXT_CLOSE,
-    SP_PEN_CONTEXT_STOP
-};
-
-enum {
-    SP_PEN_CONTEXT_MODE_CLICK,
-    SP_PEN_CONTEXT_MODE_DRAG
-};
+#define SP_PEN_CONTEXT(obj) (dynamic_cast<SPPenContext*>((SPEventContext*)obj))
+#define SP_IS_PEN_CONTEXT(obj) (dynamic_cast<const SPPenContext*>((const SPEventContext*)obj) != NULL)
 
 struct SPCtrlLine;
 
 /**
  * SPPenContext: a context for pen tool events.
  */
-struct SPPenContext : public SPDrawContext {
+class SPPenContext : public SPDrawContext {
+public:
+	SPPenContext();
+	virtual ~SPPenContext();
+
+	enum Mode {
+	    MODE_CLICK,
+	    MODE_DRAG
+	};
+
+	enum State {
+	    POINT,
+	    CONTROL,
+	    CLOSE,
+	    STOP
+	};
+
     Geom::Point p[5];
 
     /** \invar npoints in {0, 2, 5}. */
     // npoints somehow determines the type of the node (what does it mean, exactly? the number of Bezier handles?)
     gint npoints;
 
-    unsigned int mode : 1;
-    unsigned int state : 2;
+    Mode mode;
+    State state;
 
     bool polylines_only;
     bool polylines_paraxial;
@@ -56,12 +57,18 @@ struct SPPenContext : public SPDrawContext {
     SPCtrlLine *cl1;
     
     unsigned int events_disabled : 1;
+
+	static const std::string prefsPath;
+
+	virtual const std::string& getPrefsPath();
+
+protected:
+	virtual void setup();
+	virtual void finish();
+	virtual void set(const Inkscape::Preferences::Entry& val);
+	virtual bool root_handler(GdkEvent* event);
+	virtual bool item_handler(SPItem* item, GdkEvent* event);
 };
-
-/// The SPPenContext vtable (empty).
-struct SPPenContextClass : public SPEventContextClass { };
-
-GType sp_pen_context_get_type();
 
 inline bool sp_pen_context_has_waiting_LPE(SPPenContext *pc) {
     // note: waiting_LPE_type is defined in SPDrawContext

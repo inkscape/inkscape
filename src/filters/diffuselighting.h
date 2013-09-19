@@ -15,11 +15,8 @@
 #include "sp-filter-primitive.h"
 #include "number-opt-number.h"
 
-#define SP_TYPE_FEDIFFUSELIGHTING (sp_feDiffuseLighting_get_type())
-#define SP_FEDIFFUSELIGHTING(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_FEDIFFUSELIGHTING, SPFeDiffuseLighting))
-#define SP_FEDIFFUSELIGHTING_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_FEDIFFUSELIGHTING, SPFeDiffuseLightingClass))
-#define SP_IS_FEDIFFUSELIGHTING(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_FEDIFFUSELIGHTING))
-#define SP_IS_FEDIFFUSELIGHTING_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_FEDIFFUSELIGHTING))
+#define SP_FEDIFFUSELIGHTING(obj) (dynamic_cast<SPFeDiffuseLighting*>((SPObject*)obj))
+#define SP_IS_FEDIFFUSELIGHTING(obj) (dynamic_cast<const SPFeDiffuseLighting*>((SPObject*)obj) != NULL)
 
 struct SVGICCColor;
 
@@ -28,7 +25,11 @@ namespace Filters {
 class FilterDiffuseLighting;
 } }
 
-struct SPFeDiffuseLighting : public SPFilterPrimitive {
+class SPFeDiffuseLighting : public SPFilterPrimitive {
+public:
+	SPFeDiffuseLighting();
+	virtual ~SPFeDiffuseLighting();
+
     gfloat surfaceScale;
     guint surfaceScale_set : 1;
     gfloat diffuseConstant;
@@ -38,13 +39,24 @@ struct SPFeDiffuseLighting : public SPFilterPrimitive {
     guint lighting_color_set : 1;
     Inkscape::Filters::FilterDiffuseLighting *renderer;
     SVGICCColor *icc;
-};
 
-struct SPFeDiffuseLightingClass {
-    SPFilterPrimitiveClass parent_class;
-};
+protected:
+	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
+	virtual void release();
 
-GType sp_feDiffuseLighting_get_type();
+	virtual void child_added(Inkscape::XML::Node* child, Inkscape::XML::Node* ref);
+	virtual void remove_child(Inkscape::XML::Node* child);
+
+	virtual void order_changed(Inkscape::XML::Node* child, Inkscape::XML::Node* old_repr, Inkscape::XML::Node* new_repr);
+
+	virtual void set(unsigned int key, const gchar* value);
+
+	virtual void update(SPCtx* ctx, unsigned int flags);
+
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
+
+	virtual void build_renderer(Inkscape::Filters::Filter* filter);
+};
 
 #endif /* !SP_FEDIFFUSELIGHTING_H_SEEN */
 

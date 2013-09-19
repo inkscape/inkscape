@@ -17,9 +17,9 @@
 #include "display/nr-light-types.h"
 #include "display/nr-filter-primitive.h"
 
-struct SPFeDistantLight;
-struct SPFePointLight;
-struct SPFeSpotLight;
+class SPFeDistantLight;
+class SPFePointLight;
+class SPFeSpotLight;
 struct SVGICCColor;
 
 namespace Inkscape {

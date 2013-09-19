@@ -21,14 +21,27 @@
 #include <2geom/point.h>
 #include "event-context.h"
 
-#define SP_TYPE_SPIRAL_CONTEXT            (sp_spiral_context_get_type ())
-#define SP_SPIRAL_CONTEXT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_SPIRAL_CONTEXT, SPSpiralContext))
-#define SP_SPIRAL_CONTEXT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_SPIRAL_CONTEXT, SPSpiralContextClass))
-#define SP_IS_SPIRAL_CONTEXT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_SPIRAL_CONTEXT))
-#define SP_IS_SPIRAL_CONTEXT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_SPIRAL_CONTEXT))
+#include "sp-spiral.h"
 
-struct SPSpiralContext : public SPEventContext {
-	SPItem * item;
+#define SP_SPIRAL_CONTEXT(obj) (dynamic_cast<SPSpiralContext*>((SPEventContext*)obj))
+#define SP_IS_SPIRAL_CONTEXT(obj) (dynamic_cast<const SPSpiralContext*>((const SPEventContext*)obj) != NULL)
+
+class SPSpiralContext : public SPEventContext {
+public:
+	SPSpiralContext();
+	virtual ~SPSpiralContext();
+
+	static const std::string prefsPath;
+
+	virtual void setup();
+	virtual void finish();
+	virtual void set(const Inkscape::Preferences::Entry& val);
+	virtual bool root_handler(GdkEvent* event);
+
+	virtual const std::string& getPrefsPath();
+
+private:
+	SPSpiral * spiral;
 	Geom::Point center;
 	gdouble revo;
 	gdouble exp;
@@ -36,15 +49,10 @@ struct SPSpiralContext : public SPEventContext {
 
     sigc::connection sel_changed_connection;
 
-    Inkscape::MessageContext *_message_context;
+	void drag(Geom::Point const &p, guint state);
+	void finishItem();
+	void cancel();
+	void selection_changed(Inkscape::Selection *selection);
 };
-
-struct SPSpiralContextClass {
-	SPEventContextClass parent_class;
-};
-
-/* Standard Gtk function */
-
-GType sp_spiral_context_get_type (void);
 
 #endif

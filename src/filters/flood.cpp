@@ -27,34 +27,24 @@
 #include "display/nr-filter.h"
 #include "display/nr-filter-flood.h"
 
-/* FeFlood base class */
+#include "sp-factory.h"
 
-static void sp_feFlood_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
-static void sp_feFlood_release(SPObject *object);
-static void sp_feFlood_set(SPObject *object, unsigned int key, gchar const *value);
-static void sp_feFlood_update(SPObject *object, SPCtx *ctx, guint flags);
-static Inkscape::XML::Node *sp_feFlood_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
-static void sp_feFlood_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter);
+namespace {
+	SPObject* createFlood() {
+		return new SPFeFlood();
+	}
 
-G_DEFINE_TYPE(SPFeFlood, sp_feFlood, SP_TYPE_FILTER_PRIMITIVE);
-
-static void sp_feFlood_class_init(SPFeFloodClass *klass)
-{
-    SPObjectClass *sp_object_class = (SPObjectClass *)klass;
-    SPFilterPrimitiveClass *sp_primitive_class = (SPFilterPrimitiveClass *)klass;
-
-    sp_object_class->build = sp_feFlood_build;
-    sp_object_class->release = sp_feFlood_release;
-    sp_object_class->write = sp_feFlood_write;
-    sp_object_class->set = sp_feFlood_set;
-    sp_object_class->update = sp_feFlood_update;
-    sp_primitive_class->build_renderer = sp_feFlood_build_renderer;
+	bool floodRegistered = SPFactory::instance().registerObject("svg:feFlood", createFlood);
 }
 
-static void sp_feFlood_init(SPFeFlood *feFlood)
-{
-    feFlood->opacity = 1;
-    feFlood->icc = NULL;
+SPFeFlood::SPFeFlood() : SPFilterPrimitive() {
+	this->color = 0;
+
+    this->opacity = 1;
+    this->icc = NULL;
+}
+
+SPFeFlood::~SPFeFlood() {
 }
 
 /**
@@ -62,35 +52,25 @@ static void sp_feFlood_init(SPFeFlood *feFlood)
  * our name must be associated with a repr via "sp_object_type_register".  Best done through
  * sp-object-repr.cpp's repr_name_entries array.
  */
-static void
-sp_feFlood_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
-{
-    if ((SP_OBJECT_CLASS(sp_feFlood_parent_class))->build) {
-        (SP_OBJECT_CLASS(sp_feFlood_parent_class))->build(object, document, repr);
-    }
+void SPFeFlood::build(SPDocument *document, Inkscape::XML::Node *repr) {
+	SPFilterPrimitive::build(document, repr);
 
-    /*LOAD ATTRIBUTES FROM REPR HERE*/
-    object->readAttr( "flood-opacity" );
-    object->readAttr( "flood-color" );
+	/*LOAD ATTRIBUTES FROM REPR HERE*/
+	this->readAttr( "flood-opacity" );
+	this->readAttr( "flood-color" );
 }
 
 /**
  * Drops any allocated memory.
  */
-static void sp_feFlood_release(SPObject *object)
-{
-    if ((SP_OBJECT_CLASS(sp_feFlood_parent_class))->release)
-        (SP_OBJECT_CLASS(sp_feFlood_parent_class))->release(object);
+void SPFeFlood::release() {
+	SPFilterPrimitive::release();
 }
 
 /**
  * Sets a specific value in the SPFeFlood.
  */
-static void
-sp_feFlood_set(SPObject *object, unsigned int key, gchar const *value)
-{
-    SPFeFlood *feFlood = SP_FEFLOOD(object);
-    (void)feFlood;
+void SPFeFlood::set(unsigned int key, gchar const *value) {
     gchar const *cend_ptr = NULL;
     gchar *end_ptr = NULL;
     guint32 read_color;
@@ -103,8 +83,8 @@ sp_feFlood_set(SPObject *object, unsigned int key, gchar const *value)
             cend_ptr = NULL;
             read_color = sp_svg_read_color(value, &cend_ptr, 0xffffffff);
 
-            if (cend_ptr && read_color != feFlood->color){
-                feFlood->color = read_color;
+            if (cend_ptr && read_color != this->color){
+                this->color = read_color;
                 dirty=true;
             }
 
@@ -112,52 +92,54 @@ sp_feFlood_set(SPObject *object, unsigned int key, gchar const *value)
                 while (g_ascii_isspace(*cend_ptr)) {
                     ++cend_ptr;
                 }
+
                 if (strneq(cend_ptr, "icc-color(", 10)) {
-                    if (!feFlood->icc) feFlood->icc = new SVGICCColor();
-                    if ( ! sp_svg_read_icc_color( cend_ptr, feFlood->icc ) ) {
-                        delete feFlood->icc;
-                        feFlood->icc = NULL;
+                    if (!this->icc) {
+                    	this->icc = new SVGICCColor();
                     }
+
+                    if ( ! sp_svg_read_icc_color( cend_ptr, this->icc ) ) {
+                        delete this->icc;
+                        this->icc = NULL;
+                    }
+
                     dirty = true;
                 }
             }
-            if (dirty)
-                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+
+            if (dirty) {
+                this->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            }
             break;
         case SP_PROP_FLOOD_OPACITY:
             if (value) {
                 read_num = g_ascii_strtod(value, &end_ptr);
-                if (end_ptr != NULL)
-                {
-                    if (*end_ptr)
-                    {
+
+                if (end_ptr != NULL) {
+                    if (*end_ptr) {
                         g_warning("Unable to convert \"%s\" to number", value);
                         read_num = 1;
                     }
                 }
-            }
-            else {
+            } else {
                 read_num = 1;
             }
-            if (read_num != feFlood->opacity){
-                feFlood->opacity = read_num;
-                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+
+            if (read_num != this->opacity) {
+                this->opacity = read_num;
+                this->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         default:
-            if ((SP_OBJECT_CLASS(sp_feFlood_parent_class))->set)
-                (SP_OBJECT_CLASS(sp_feFlood_parent_class))->set(object, key, value);
+        	SPFilterPrimitive::set(key, value);
             break;
     }
-
 }
 
 /**
  * Receives update notifications.
  */
-static void
-sp_feFlood_update(SPObject *object, SPCtx *ctx, guint flags)
-{
+void SPFeFlood::update(SPCtx *ctx, guint flags) {
     if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG |
                  SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
 
@@ -165,49 +147,39 @@ sp_feFlood_update(SPObject *object, SPCtx *ctx, guint flags)
 
     }
 
-    if ((SP_OBJECT_CLASS(sp_feFlood_parent_class))->update) {
-        (SP_OBJECT_CLASS(sp_feFlood_parent_class))->update(object, ctx, flags);
-    }
+    SPFilterPrimitive::update(ctx, flags);
 }
 
 /**
  * Writes its settings to an incoming repr object, if any.
  */
-static Inkscape::XML::Node *
-sp_feFlood_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
-{
+Inkscape::XML::Node* SPFeFlood::write(Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags) {
     /* TODO: Don't just clone, but create a new repr node and write all
      * relevant values into it */
     if (!repr) {
-        repr = object->getRepr()->duplicate(doc);
+        repr = this->getRepr()->duplicate(doc);
     }
 
-    if ((SP_OBJECT_CLASS(sp_feFlood_parent_class))->write) {
-        (SP_OBJECT_CLASS(sp_feFlood_parent_class))->write(object, doc, repr, flags);
-    }
+    SPFilterPrimitive::write(doc, repr, flags);
 
     return repr;
 }
 
-static void sp_feFlood_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter) {
-    g_assert(primitive != NULL);
+void SPFeFlood::build_renderer(Inkscape::Filters::Filter* filter) {
+    g_assert(this != NULL);
     g_assert(filter != NULL);
-
-    SPFeFlood *sp_flood = SP_FEFLOOD(primitive);
-    (void)sp_flood;
 
     int primitive_n = filter->add_primitive(Inkscape::Filters::NR_FILTER_FLOOD);
     Inkscape::Filters::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
     Inkscape::Filters::FilterFlood *nr_flood = dynamic_cast<Inkscape::Filters::FilterFlood*>(nr_primitive);
     g_assert(nr_flood != NULL);
 
-    sp_filter_primitive_renderer_common(primitive, nr_primitive);
+    sp_filter_primitive_renderer_common(this, nr_primitive);
     
-    nr_flood->set_opacity(sp_flood->opacity);
-    nr_flood->set_color(sp_flood->color);
-    nr_flood->set_icc(sp_flood->icc);
+    nr_flood->set_opacity(this->opacity);
+    nr_flood->set_color(this->color);
+    nr_flood->set_icc(this->icc);
 }
-
 
 /*
   Local Variables:

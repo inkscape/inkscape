@@ -18,24 +18,27 @@
 
 #include "sp-object.h"
 
-#define SP_TYPE_MISSING_GLYPH (sp_missing_glyph_get_type ())
-#define SP_MISSING_GLYPH(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_MISSING_GLYPH, SPMissingGlyph))
-#define SP_MISSING_GLYPH_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_MISSING_GLYPH, SPMissingGlyphClass))
-#define SP_IS_MISSING_GLYPH(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_MISSING_GLYPH))
-#define SP_IS_MISSING_GLYPH_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_MISSING_GLYPH))
+#define SP_MISSING_GLYPH(obj) (dynamic_cast<SPMissingGlyph*>((SPObject*)obj))
+#define SP_IS_MISSING_GLYPH(obj) (dynamic_cast<const SPMissingGlyph*>((SPObject*)obj) != NULL)
 
-struct SPMissingGlyph : public SPObject {
-    char* d;
+class SPMissingGlyph : public SPObject {
+public:
+	SPMissingGlyph();
+	virtual ~SPMissingGlyph();
+
+	char* d;
+
+protected:
+    virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
+	virtual void release();
+	virtual void set(unsigned int key, const gchar* value);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
+
+private:
     double horiz_adv_x;
     double vert_origin_x;
     double vert_origin_y;
     double vert_adv_y;
 };
-
-struct SPMissingGlyphClass {
-	SPObjectClass parent_class;
-};
-
-GType sp_missing_glyph_get_type (void);
 
 #endif //#ifndef __SP_MISSING_GLYPH_H__

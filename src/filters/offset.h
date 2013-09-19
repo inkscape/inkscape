@@ -14,22 +14,28 @@
 
 #include "sp-filter-primitive.h"
 
-#define SP_TYPE_FEOFFSET (sp_feOffset_get_type())
-#define SP_FEOFFSET(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_FEOFFSET, SPFeOffset))
-#define SP_FEOFFSET_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_FEOFFSET, SPFeOffsetClass))
-#define SP_IS_FEOFFSET(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_FEOFFSET))
-#define SP_IS_FEOFFSET_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_FEOFFSET))
+#define SP_FEOFFSET(obj) (dynamic_cast<SPFeOffset*>((SPObject*)obj))
+#define SP_IS_FEOFFSET(obj) (dynamic_cast<const SPFeOffset*>((SPObject*)obj) != NULL)
 
-struct SPFeOffset : public SPFilterPrimitive {
+class SPFeOffset : public SPFilterPrimitive {
+public:
+	SPFeOffset();
+	virtual ~SPFeOffset();
+
     double dx, dy;
+
+protected:
+	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
+	virtual void release();
+
+	virtual void set(unsigned int key, const gchar* value);
+
+	virtual void update(SPCtx* ctx, unsigned int flags);
+
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
+
+	virtual void build_renderer(Inkscape::Filters::Filter* filter);
 };
-
-struct SPFeOffsetClass {
-    SPFilterPrimitiveClass parent_class;
-};
-
-GType sp_feOffset_get_type();
-
 
 #endif /* !SP_FEOFFSET_H_SEEN */
 

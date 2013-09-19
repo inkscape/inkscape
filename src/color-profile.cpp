@@ -50,7 +50,6 @@
 #include <glibmm/convert.h>
 
 using Inkscape::ColorProfile;
-using Inkscape::ColorProfileClass;
 using Inkscape::ColorProfileImpl;
 
 namespace
@@ -102,8 +101,6 @@ extern guint update_in_progress;
 #define DEBUG_MESSAGE_SCISLAC(key, ...)
 #define DEBUG_MESSAGE(key, ...)
 #endif // DEBUG_LCMS
-
-static SPObjectClass *cprof_parent_class;
 
 namespace Inkscape {
 
@@ -182,99 +179,65 @@ cmsHPROFILE ColorProfileImpl::getNULLProfile() {
 
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
-/**
- * Register ColorProfile class and return its type.
- */
-GType Inkscape::colorprofile_get_type()
-{
-    return ColorProfile::getType();
+
+#include "sp-factory.h"
+
+namespace {
+	SPObject* createColorProfile() {
+		return new Inkscape::ColorProfile();
+	}
+
+	bool rectRegistered = SPFactory::instance().registerObject("svg:color-profile", createColorProfile);
 }
 
-GType ColorProfile::getType()
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(ColorProfileClass),
-            NULL, NULL,
-            (GClassInitFunc) ColorProfile::classInit,
-            NULL, NULL,
-            sizeof(ColorProfile),
-            16,
-            (GInstanceInitFunc) ColorProfile::init,
-            NULL,   /* value_table */
-        };
-        type = g_type_register_static( SP_TYPE_OBJECT, "ColorProfile", &info, static_cast<GTypeFlags>(0) );
-    }
-    return type;
+ColorProfile::ColorProfile() : SPObject() {
+    this->impl = new ColorProfileImpl();
+
+    this->href = 0;
+    this->local = 0;
+    this->name = 0;
+    this->intentStr = 0;
+    this->rendering_intent = Inkscape::RENDERING_INTENT_UNKNOWN;
 }
 
-/**
- * ColorProfile vtable initialization.
- */
-void ColorProfile::classInit( ColorProfileClass *klass )
-{
-    SPObjectClass *sp_object_class = reinterpret_cast<SPObjectClass *>(klass);
-
-    cprof_parent_class = static_cast<SPObjectClass*>(g_type_class_ref(SP_TYPE_OBJECT));
-
-    sp_object_class->release = ColorProfile::release;
-    sp_object_class->build = ColorProfile::build;
-    sp_object_class->set = ColorProfile::set;
-    sp_object_class->write = ColorProfile::write;
-}
-
-/**
- * Callback for ColorProfile object initialization.
- */
-void ColorProfile::init( ColorProfile *cprof )
-{
-    cprof->impl = new ColorProfileImpl();
-
-    cprof->href = 0;
-    cprof->local = 0;
-    cprof->name = 0;
-    cprof->intentStr = 0;
-    cprof->rendering_intent = Inkscape::RENDERING_INTENT_UNKNOWN;
+ColorProfile::~ColorProfile() {
 }
 
 /**
  * Callback: free object
  */
-void ColorProfile::release( SPObject *object )
-{
+void ColorProfile::release() {
     // Unregister ourselves
-    if ( object->document ) {
-        object->document->removeResource("iccprofile", object);
+    if ( this->document ) {
+        this->document->removeResource("iccprofile", this);
     }
 
-    ColorProfile *cprof = COLORPROFILE(object);
-    if ( cprof->href ) {
-        g_free( cprof->href );
-        cprof->href = 0;
+    if ( this->href ) {
+        g_free( this->href );
+        this->href = 0;
     }
 
-    if ( cprof->local ) {
-        g_free( cprof->local );
-        cprof->local = 0;
+    if ( this->local ) {
+        g_free( this->local );
+        this->local = 0;
     }
 
-    if ( cprof->name ) {
-        g_free( cprof->name );
-        cprof->name = 0;
+    if ( this->name ) {
+        g_free( this->name );
+        this->name = 0;
     }
 
-    if ( cprof->intentStr ) {
-        g_free( cprof->intentStr );
-        cprof->intentStr = 0;
+    if ( this->intentStr ) {
+        g_free( this->intentStr );
+        this->intentStr = 0;
     }
 
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
-    cprof->impl->_clearProfile();
+    this->impl->_clearProfile();
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
-    delete cprof->impl;
-    cprof->impl = 0;
+    delete this->impl;
+    this->impl = 0;
 }
 
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
@@ -304,44 +267,39 @@ void ColorProfileImpl::_clearProfile()
 /**
  * Callback: set attributes from associated repr.
  */
-void ColorProfile::build( SPObject *object, SPDocument *document, Inkscape::XML::Node *repr )
-{
-    ColorProfile *cprof = COLORPROFILE(object);
-    g_assert(cprof->href == 0);
-    g_assert(cprof->local == 0);
-    g_assert(cprof->name == 0);
-    g_assert(cprof->intentStr == 0);
+void ColorProfile::build(SPDocument *document, Inkscape::XML::Node *repr) {
+    g_assert(this->href == 0);
+    g_assert(this->local == 0);
+    g_assert(this->name == 0);
+    g_assert(this->intentStr == 0);
 
-    if (cprof_parent_class->build) {
-        (* cprof_parent_class->build)(object, document, repr);
-    }
-    object->readAttr( "xlink:href" );
-    object->readAttr( "local" );
-    object->readAttr( "name" );
-    object->readAttr( "rendering-intent" );
+    SPObject::build(document, repr);
+
+    this->readAttr( "xlink:href" );
+    this->readAttr( "local" );
+    this->readAttr( "name" );
+    this->readAttr( "rendering-intent" );
 
     // Register
     if ( document ) {
-        document->addResource( "iccprofile", object );
+        document->addResource( "iccprofile", this );
     }
 }
+
 
 /**
  * Callback: set attribute.
  */
-void ColorProfile::set( SPObject *object, unsigned key, gchar const *value )
-{
-    ColorProfile *cprof = COLORPROFILE(object);
-
+void ColorProfile::set(unsigned key, gchar const *value) {
     switch (key) {
         case SP_ATTR_XLINK_HREF:
-            if ( cprof->href ) {
-                g_free( cprof->href );
-                cprof->href = 0;
+            if ( this->href ) {
+                g_free( this->href );
+                this->href = 0;
             }
             if ( value ) {
-                cprof->href = g_strdup( value );
-                if ( *cprof->href ) {
+                this->href = g_strdup( value );
+                if ( *this->href ) {
 #if HAVE_LIBLCMS1
                     cmsErrorAction( LCMS_ERROR_SHOW );
 #endif
@@ -352,10 +310,10 @@ void ColorProfile::set( SPObject *object, unsigned key, gchar const *value )
                     //LCMSAPI cmsHPROFILE   LCMSEXPORT cmsOpenProfileFromMem(LPVOID MemPtr, cmsUInt32Number dwSize);
 
                     // Try to open relative
-                    SPDocument *doc = object->document;
+                    SPDocument *doc = this->document;
                     if (!doc) {
                         doc = SP_ACTIVE_DOCUMENT;
-                        g_warning("object has no document.  using active");
+                        g_warning("this has no document.  using active");
                     }
                     //# 1.  Get complete URI of document
                     gchar const *docbase = doc->getURI();
@@ -365,7 +323,7 @@ void ColorProfile::set( SPObject *object, unsigned key, gchar const *value )
                         docbase = "";
                     }
 
-                    gchar* escaped = g_uri_escape_string(cprof->href, "!*'();:@=+$,/?#[]", TRUE);
+                    gchar* escaped = g_uri_escape_string(this->href, "!*'();:@=+$,/?#[]", TRUE);
 
                     //g_message("docbase:%s\n", docbase);
                     org::w3c::dom::URI docUri(docbase);
@@ -375,108 +333,100 @@ void ColorProfile::set( SPObject *object, unsigned key, gchar const *value )
                     //      the w3c specs.  All absolute and relative issues are considered
                     org::w3c::dom::URI cprofUri = docUri.resolve(hrefUri);
                     gchar* fullname = g_uri_unescape_string(cprofUri.getNativePath().c_str(), "");
-                    cprof->impl->_clearProfile();
-                    cprof->impl->_profHandle = cmsOpenProfileFromFile( fullname, "r" );
-                    if ( cprof->impl->_profHandle ) {
-                        cprof->impl->_profileSpace = cmsGetColorSpace( cprof->impl->_profHandle );
-                        cprof->impl->_profileClass = cmsGetDeviceClass( cprof->impl->_profHandle );
+                    this->impl->_clearProfile();
+                    this->impl->_profHandle = cmsOpenProfileFromFile( fullname, "r" );
+                    if ( this->impl->_profHandle ) {
+                        this->impl->_profileSpace = cmsGetColorSpace( this->impl->_profHandle );
+                        this->impl->_profileClass = cmsGetDeviceClass( this->impl->_profHandle );
                     }
-                    DEBUG_MESSAGE( lcmsOne, "cmsOpenProfileFromFile( '%s'...) = %p", fullname, (void*)cprof->impl->_profHandle );
+                    DEBUG_MESSAGE( lcmsOne, "cmsOpenProfileFromFile( '%s'...) = %p", fullname, (void*)this->impl->_profHandle );
                     g_free(escaped);
                     escaped = 0;
                     g_free(fullname);
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
                 }
             }
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
 
         case SP_ATTR_LOCAL:
-            if ( cprof->local ) {
-                g_free( cprof->local );
-                cprof->local = 0;
+            if ( this->local ) {
+                g_free( this->local );
+                this->local = 0;
             }
-            cprof->local = g_strdup( value );
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->local = g_strdup( value );
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
 
         case SP_ATTR_NAME:
-            if ( cprof->name ) {
-                g_free( cprof->name );
-                cprof->name = 0;
+            if ( this->name ) {
+                g_free( this->name );
+                this->name = 0;
             }
-            cprof->name = g_strdup( value );
-            DEBUG_MESSAGE( lcmsTwo, "<color-profile> name set to '%s'", cprof->name );
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->name = g_strdup( value );
+            DEBUG_MESSAGE( lcmsTwo, "<color-profile> name set to '%s'", this->name );
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
 
         case SP_ATTR_RENDERING_INTENT:
-            if ( cprof->intentStr ) {
-                g_free( cprof->intentStr );
-                cprof->intentStr = 0;
+            if ( this->intentStr ) {
+                g_free( this->intentStr );
+                this->intentStr = 0;
             }
-            cprof->intentStr = g_strdup( value );
+            this->intentStr = g_strdup( value );
 
             if ( value ) {
                 if ( strcmp( value, "auto" ) == 0 ) {
-                    cprof->rendering_intent = RENDERING_INTENT_AUTO;
+                    this->rendering_intent = RENDERING_INTENT_AUTO;
                 } else if ( strcmp( value, "perceptual" ) == 0 ) {
-                    cprof->rendering_intent = RENDERING_INTENT_PERCEPTUAL;
+                    this->rendering_intent = RENDERING_INTENT_PERCEPTUAL;
                 } else if ( strcmp( value, "relative-colorimetric" ) == 0 ) {
-                    cprof->rendering_intent = RENDERING_INTENT_RELATIVE_COLORIMETRIC;
+                    this->rendering_intent = RENDERING_INTENT_RELATIVE_COLORIMETRIC;
                 } else if ( strcmp( value, "saturation" ) == 0 ) {
-                    cprof->rendering_intent = RENDERING_INTENT_SATURATION;
+                    this->rendering_intent = RENDERING_INTENT_SATURATION;
                 } else if ( strcmp( value, "absolute-colorimetric" ) == 0 ) {
-                    cprof->rendering_intent = RENDERING_INTENT_ABSOLUTE_COLORIMETRIC;
+                    this->rendering_intent = RENDERING_INTENT_ABSOLUTE_COLORIMETRIC;
                 } else {
-                    cprof->rendering_intent = RENDERING_INTENT_UNKNOWN;
+                    this->rendering_intent = RENDERING_INTENT_UNKNOWN;
                 }
             } else {
-                cprof->rendering_intent = RENDERING_INTENT_UNKNOWN;
+                this->rendering_intent = RENDERING_INTENT_UNKNOWN;
             }
 
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
 
         default:
-            if (cprof_parent_class->set) {
-                (* cprof_parent_class->set)(object, key, value);
-            }
+        	SPObject::set(key, value);
             break;
     }
-
 }
 
 /**
  * Callback: write attributes to associated repr.
  */
-Inkscape::XML::Node* ColorProfile::write( SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags )
-{
-    ColorProfile *cprof = COLORPROFILE(object);
-
+Inkscape::XML::Node* ColorProfile::write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags) {
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
         repr = xml_doc->createElement("svg:color-profile");
     }
 
-    if ( (flags & SP_OBJECT_WRITE_ALL) || cprof->href ) {
-        repr->setAttribute( "xlink:href", cprof->href );
+    if ( (flags & SP_OBJECT_WRITE_ALL) || this->href ) {
+        repr->setAttribute( "xlink:href", this->href );
     }
 
-    if ( (flags & SP_OBJECT_WRITE_ALL) || cprof->local ) {
-        repr->setAttribute( "local", cprof->local );
+    if ( (flags & SP_OBJECT_WRITE_ALL) || this->local ) {
+        repr->setAttribute( "local", this->local );
     }
 
-    if ( (flags & SP_OBJECT_WRITE_ALL) || cprof->name ) {
-        repr->setAttribute( "name", cprof->name );
+    if ( (flags & SP_OBJECT_WRITE_ALL) || this->name ) {
+        repr->setAttribute( "name", this->name );
     }
 
-    if ( (flags & SP_OBJECT_WRITE_ALL) || cprof->intentStr ) {
-        repr->setAttribute( "rendering-intent", cprof->intentStr );
+    if ( (flags & SP_OBJECT_WRITE_ALL) || this->intentStr ) {
+        repr->setAttribute( "rendering-intent", this->intentStr );
     }
 
-    if (cprof_parent_class->write) {
-        (* cprof_parent_class->write)(object, xml_doc, repr, flags);
-    }
+    SPObject::write(xml_doc, repr, flags);
 
     return repr;
 }

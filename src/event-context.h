@@ -23,7 +23,7 @@ class  GrDrag;
 class  SPDesktop;
 class  SPItem;
 class  ShapeEditor;
-struct SPEventContext;
+class SPEventContext;
 
 namespace Inkscape {
     class MessageContext;
@@ -33,13 +33,8 @@ namespace Inkscape {
     }
 }
 
-
-#define SP_TYPE_EVENT_CONTEXT (sp_event_context_get_type())
-#define SP_EVENT_CONTEXT(o) (G_TYPE_CHECK_INSTANCE_CAST((o), SP_TYPE_EVENT_CONTEXT, SPEventContext))
-#define SP_EVENT_CONTEXT_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_EVENT_CONTEXT, SPEventContextClass))
-#define SP_IS_EVENT_CONTEXT(o) (G_TYPE_CHECK_INSTANCE_TYPE((o), SP_TYPE_EVENT_CONTEXT))
-
-GType sp_event_context_get_type();
+#define SP_EVENT_CONTEXT(obj) (dynamic_cast<SPEventContext*>((SPEventContext*)obj))
+#define SP_IS_EVENT_CONTEXT(obj) (dynamic_cast<const SPEventContext*>((const SPEventContext*)obj) != NULL)
 
 gboolean sp_event_context_snap_watchdog_callback(gpointer data);
 void sp_event_context_discard_delayed_snap_event(SPEventContext *ec);
@@ -104,14 +99,15 @@ void sp_event_context_snap_delay_handler(SPEventContext *ec, gpointer const dse_
  * plus few abstract base classes. Writing a new tool involves
  * subclassing SPEventContext.
  */
-struct SPEventContext : public GObject {
+class SPEventContext {
+public:
     void enableSelectionCue (bool enable=true);
     void enableGrDrag (bool enable=true);
     bool deleteSelectedDrag(bool just_one);
 
-    /// Desktop eventcontext stack
-    SPEventContext *next;
-    unsigned key;
+    SPEventContext();
+    virtual ~SPEventContext();
+
     SPDesktop *desktop;
     Inkscape::Preferences::Observer *pref_observer;
     gchar const *const *cursor_shape;
@@ -126,10 +122,10 @@ struct SPEventContext : public GObject {
                             ///< be selected if this is a click not drag
 
     Inkscape::MessageContext *defaultMessageContext() {
-        return _message_context;
+        return message_context;
     }
 
-    Inkscape::MessageContext *_message_context;
+    Inkscape::MessageContext *message_context;
 
     Inkscape::SelCue *_selcue;
 
@@ -143,20 +139,43 @@ struct SPEventContext : public GObject {
     DelayedSnapEvent *_delayed_snap_event;
     bool _dse_callback_in_process;
 
-    char const * tool_url; ///< the (preferences) url for the tool (if a subclass corresponding to a tool is used)
-};
+	virtual void setup();
+	virtual void finish();
 
-/**
- * The SPEvent vtable.
- */
-struct SPEventContextClass : public GObjectClass {
-    void (* setup)(SPEventContext *ec);
-    void (* finish)(SPEventContext *ec);
-    void (* set)(SPEventContext *ec, Inkscape::Preferences::Entry *val);
-    void (* activate)(SPEventContext *ec);
-    void (* deactivate)(SPEventContext *ec);
-    gint (* root_handler)(SPEventContext *ec, GdkEvent *event);
-    gint (* item_handler)(SPEventContext *ec, SPItem *item, GdkEvent *event);
+	// Is called by our pref_observer if a preference has been changed.
+	virtual void set(const Inkscape::Preferences::Entry& val);
+
+	virtual void activate();
+	virtual void deactivate();
+
+	virtual bool root_handler(GdkEvent* event);
+	virtual bool item_handler(SPItem* item, GdkEvent* event);
+
+	virtual const std::string& getPrefsPath() = 0;
+
+	/**
+	 * An observer that relays pref changes to the derived classes.
+	 */
+	class ToolPrefObserver: public Inkscape::Preferences::Observer {
+	public:
+	    ToolPrefObserver(Glib::ustring const &path, SPEventContext *ec) :
+	        Inkscape::Preferences::Observer(path), ec(ec) {
+	    }
+
+	    virtual void notify(Inkscape::Preferences::Entry const &val) {
+	    	ec->set(val);
+	    }
+
+	private:
+	    SPEventContext * const ec;
+	};
+
+//protected:
+	void sp_event_context_update_cursor();
+
+private:
+	SPEventContext(const SPEventContext&);
+	SPEventContext& operator=(const SPEventContext&);
 };
 
 #define SP_EVENT_CONTEXT_DESKTOP(e) (SP_EVENT_CONTEXT(e)->desktop)
@@ -164,11 +183,11 @@ struct SPEventContextClass : public GObjectClass {
 
 #define SP_EVENT_CONTEXT_STATIC 0
 
-SPEventContext *sp_event_context_new(GType type, SPDesktop *desktop, gchar const *pref_path, unsigned key);
-void sp_event_context_finish(SPEventContext *ec);
+//SPEventContext *sp_event_context_new(GType type, SPDesktop *desktop, gchar const *pref_path, unsigned key);
+//void sp_event_context_finish(SPEventContext *ec);
 void sp_event_context_read(SPEventContext *ec, gchar const *key);
 void sp_event_context_activate(SPEventContext *ec);
-void sp_event_context_deactivate(SPEventContext *ec);
+//void sp_event_context_deactivate(SPEventContext *ec);
 
 gint sp_event_context_root_handler(SPEventContext *ec, GdkEvent *event);
 gint sp_event_context_virtual_root_handler(SPEventContext *ec, GdkEvent *event);
@@ -180,7 +199,7 @@ void sp_event_root_menu_popup(SPDesktop *desktop, SPItem *item, GdkEvent *event)
 gint gobble_key_events(guint keyval, gint mask);
 gint gobble_motion_events(gint mask);
 
-void sp_event_context_update_cursor(SPEventContext *ec);
+//void sp_event_context_update_cursor(SPEventContext *ec);
 
 void sp_event_show_modifier_tip(Inkscape::MessageContext *message_context, GdkEvent *event,
                                 gchar const *ctrl_tip, gchar const *shift_tip, gchar const *alt_tip);
@@ -192,14 +211,14 @@ SPItem *sp_event_context_over_item (SPDesktop *desktop, SPItem *item, Geom::Poin
 
 void sp_toggle_dropper(SPDesktop *dt);
 
-ShapeEditor *sp_event_context_get_shape_editor (SPEventContext *ec);
+//ShapeEditor *sp_event_context_get_shape_editor (SPEventContext *ec);
 bool sp_event_context_knot_mouseover(SPEventContext *ec);
 
-void ec_shape_event_attr_changed(Inkscape::XML::Node *shape_repr,
-                                     gchar const *name, gchar const *old_value, gchar const *new_value,
-                                 bool const is_interactive, gpointer const data);
-
-void event_context_print_event_info(GdkEvent *event, bool print_return = true);
+//void ec_shape_event_attr_changed(Inkscape::XML::Node *shape_repr,
+//                                     gchar const *name, gchar const *old_value, gchar const *new_value,
+//                                 bool const is_interactive, gpointer const data);
+//
+//void event_context_print_event_info(GdkEvent *event, bool print_return = true);
 
 #endif // SEEN_SP_EVENT_CONTEXT_H
 

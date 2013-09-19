@@ -17,32 +17,25 @@
 //#include "svg/svg-length.h"
 #include "sp-object.h"
 
-class SPObjectClass;
-
-struct SPMeshPatch;
-struct SPMeshPatchClass;
-
-#define SP_TYPE_MESHPATCH (sp_meshpatch_get_type())
-#define SP_MESHPATCH(o) (G_TYPE_CHECK_INSTANCE_CAST((o), SP_TYPE_MESHPATCH, SPMeshPatch))
-#define SP_MESHPATCH_CLASS(k) (G_TYPE_CHECK_CLASS_CAST((k), SP_TYPE_MESHPATCH, SPMeshPatchClass))
-#define SP_IS_MESHPATCH(o) (G_TYPE_CHECK_INSTANCE_TYPE((o), SP_TYPE_MESHPATCH))
-#define SP_IS_MESHPATCH_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE((k), SP_TYPE_MESHPATCH))
-
-GType sp_meshpatch_get_type();
+#define SP_MESHPATCH(obj) (dynamic_cast<SPMeshPatch*>((SPObject*)obj))
+#define SP_IS_MESHPATCH(obj) (dynamic_cast<const SPMeshPatch*>((SPObject*)obj) != NULL)
 
 /** Gradient MeshPatch. */
-struct SPMeshPatch : public SPObject {
+class SPMeshPatch : public SPObject {
+public:
+	SPMeshPatch();
+	virtual ~SPMeshPatch();
 
     SPMeshPatch* getNextMeshPatch();
     SPMeshPatch* getPrevMeshPatch();
     Glib::ustring * tensor_string;
     //SVGLength tx[4];  // Tensor points
     //SVGLength ty[4];  // Tensor points
-};
 
-/// The SPMeshPatch vtable.
-struct SPMeshPatchClass {
-    SPObjectClass parent_class;
+protected:
+	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
+	virtual void set(unsigned int key, const gchar* value);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
 };
 
 #endif /* !SEEN_SP_MESHPATCH_H */

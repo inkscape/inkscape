@@ -27,55 +27,36 @@
 #include "display/nr-filter.h"
 #include "display/nr-filter-component-transfer.h"
 
-/* FeComponentTransfer base class */
-static void sp_feComponentTransfer_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
-static void sp_feComponentTransfer_release(SPObject *object);
-static void sp_feComponentTransfer_set(SPObject *object, unsigned int key, gchar const *value);
-static void sp_feComponentTransfer_update(SPObject *object, SPCtx *ctx, guint flags);
-static void sp_feComponentTransfer_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter);
-static void sp_feComponentTransfer_remove_child(SPObject *object, Inkscape::XML::Node *child);
-static void sp_feComponentTransfer_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref);
-static Inkscape::XML::Node *sp_feComponentTransfer_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
+#include "sp-factory.h"
 
-G_DEFINE_TYPE(SPFeComponentTransfer, sp_feComponentTransfer, SP_TYPE_FILTER_PRIMITIVE);
+namespace {
+	SPObject* createComponentTransfer() {
+		return new SPFeComponentTransfer();
+	}
 
-static void
-sp_feComponentTransfer_class_init(SPFeComponentTransferClass *klass)
-{
-    SPObjectClass *sp_object_class = (SPObjectClass *)klass;
-    SPFilterPrimitiveClass *sp_primitive_class = (SPFilterPrimitiveClass *)klass;
-
-    sp_object_class->build = sp_feComponentTransfer_build;
-    sp_object_class->release = sp_feComponentTransfer_release;
-    sp_object_class->write = sp_feComponentTransfer_write;
-    sp_object_class->set = sp_feComponentTransfer_set;
-    sp_object_class->update = sp_feComponentTransfer_update;
-    sp_object_class->child_added = sp_feComponentTransfer_child_added;
-    sp_object_class->remove_child = sp_feComponentTransfer_remove_child;
-
-    sp_primitive_class->build_renderer = sp_feComponentTransfer_build_renderer;
+	bool componentTransferRegistered = SPFactory::instance().registerObject("svg:feComponentTransfer", createComponentTransfer);
 }
 
-static void
-sp_feComponentTransfer_init(SPFeComponentTransfer */*feComponentTransfer*/)
-{}
+SPFeComponentTransfer::SPFeComponentTransfer()
+    : SPFilterPrimitive(), renderer(NULL)
+{
+}
+
+SPFeComponentTransfer::~SPFeComponentTransfer() {
+}
 
 /**
  * Reads the Inkscape::XML::Node, and initializes SPFeComponentTransfer variables.  For this to get called,
  * our name must be associated with a repr via "sp_object_type_register".  Best done through
  * sp-object-repr.cpp's repr_name_entries array.
  */
-static void
-sp_feComponentTransfer_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
-{
-    if (((SPObjectClass *) sp_feComponentTransfer_parent_class)->build) {
-        ((SPObjectClass *) sp_feComponentTransfer_parent_class)->build(object, document, repr);
-    }
+void SPFeComponentTransfer::build(SPDocument *document, Inkscape::XML::Node *repr) {
+	SPFilterPrimitive::build(document, repr);
 
-    /*LOAD ATTRIBUTES FROM REPR HERE*/
+	/*LOAD ATTRIBUTES FROM REPR HERE*/
 
-    //do we need this?
-    //document->addResource("feComponentTransfer", object);
+	//do we need this?
+	//document->addResource("feComponentTransfer", object);
 }
 
 static void sp_feComponentTransfer_children_modified(SPFeComponentTransfer *sp_componenttransfer)
@@ -114,58 +95,38 @@ static void sp_feComponentTransfer_children_modified(SPFeComponentTransfer *sp_c
 /**
  * Callback for child_added event.
  */
-static void
-sp_feComponentTransfer_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
-{
-    SPFeComponentTransfer *f = SP_FECOMPONENTTRANSFER(object);
+void SPFeComponentTransfer::child_added(Inkscape::XML::Node *child, Inkscape::XML::Node *ref) {
+    SPFilterPrimitive::child_added(child, ref);
 
-    if (((SPObjectClass *) sp_feComponentTransfer_parent_class)->child_added)
-        (* ((SPObjectClass *) sp_feComponentTransfer_parent_class)->child_added)(object, child, ref);
-
-    sp_feComponentTransfer_children_modified(f);
-    object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+    sp_feComponentTransfer_children_modified(this);
+    this->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
-
 
 /**
  * Callback for remove_child event.
  */
-static void
-sp_feComponentTransfer_remove_child(SPObject *object, Inkscape::XML::Node *child)
-{
-    SPFeComponentTransfer *f = SP_FECOMPONENTTRANSFER(object);
+void SPFeComponentTransfer::remove_child(Inkscape::XML::Node *child) {
+    SPFilterPrimitive::remove_child(child);
 
-    if (((SPObjectClass *) sp_feComponentTransfer_parent_class)->remove_child)
-        (* ((SPObjectClass *) sp_feComponentTransfer_parent_class)->remove_child)(object, child);
-
-    sp_feComponentTransfer_children_modified(f);
-    object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+    sp_feComponentTransfer_children_modified(this);
+    this->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
 /**
  * Drops any allocated memory.
  */
-static void
-sp_feComponentTransfer_release(SPObject *object)
-{
-    if (((SPObjectClass *) sp_feComponentTransfer_parent_class)->release)
-        ((SPObjectClass *) sp_feComponentTransfer_parent_class)->release(object);
+void SPFeComponentTransfer::release() {
+	SPFilterPrimitive::release();
 }
 
 /**
  * Sets a specific value in the SPFeComponentTransfer.
  */
-static void
-sp_feComponentTransfer_set(SPObject *object, unsigned int key, gchar const *value)
-{
-    SPFeComponentTransfer *feComponentTransfer = SP_FECOMPONENTTRANSFER(object);
-    (void)feComponentTransfer;
-
+void SPFeComponentTransfer::set(unsigned int key, gchar const *value) {
     switch(key) {
         /*DEAL WITH SETTING ATTRIBUTES HERE*/
         default:
-            if (((SPObjectClass *) sp_feComponentTransfer_parent_class)->set)
-                ((SPObjectClass *) sp_feComponentTransfer_parent_class)->set(object, key, value);
+        	SPFilterPrimitive::set(key, value);
             break;
     }
 }
@@ -173,9 +134,7 @@ sp_feComponentTransfer_set(SPObject *object, unsigned int key, gchar const *valu
 /**
  * Receives update notifications.
  */
-static void
-sp_feComponentTransfer_update(SPObject *object, SPCtx *ctx, guint flags)
-{
+void SPFeComponentTransfer::update(SPCtx *ctx, guint flags) {
     if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG |
                  SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
 
@@ -183,46 +142,38 @@ sp_feComponentTransfer_update(SPObject *object, SPCtx *ctx, guint flags)
 
     }
 
-    if (((SPObjectClass *) sp_feComponentTransfer_parent_class)->update) {
-        ((SPObjectClass *) sp_feComponentTransfer_parent_class)->update(object, ctx, flags);
-    }
+    SPFilterPrimitive::update(ctx, flags);
 }
 
 /**
  * Writes its settings to an incoming repr object, if any.
  */
-static Inkscape::XML::Node *
-sp_feComponentTransfer_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
-{
+Inkscape::XML::Node* SPFeComponentTransfer::write(Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags) {
     /* TODO: Don't just clone, but create a new repr node and write all
      * relevant values into it */
     if (!repr) {
-        repr = object->getRepr()->duplicate(doc);
+        repr = this->getRepr()->duplicate(doc);
     }
 
-    if (((SPObjectClass *) sp_feComponentTransfer_parent_class)->write) {
-        ((SPObjectClass *) sp_feComponentTransfer_parent_class)->write(object, doc, repr, flags);
-    }
+    SPFilterPrimitive::write(doc, repr, flags);
 
     return repr;
 }
 
-static void sp_feComponentTransfer_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter) {
-    g_assert(primitive != NULL);
+void SPFeComponentTransfer::build_renderer(Inkscape::Filters::Filter* filter) {
+    g_assert(this != NULL);
     g_assert(filter != NULL);
-
-    SPFeComponentTransfer *sp_componenttransfer = SP_FECOMPONENTTRANSFER(primitive);
 
     int primitive_n = filter->add_primitive(Inkscape::Filters::NR_FILTER_COMPONENTTRANSFER);
     Inkscape::Filters::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
     Inkscape::Filters::FilterComponentTransfer *nr_componenttransfer = dynamic_cast<Inkscape::Filters::FilterComponentTransfer*>(nr_primitive);
     g_assert(nr_componenttransfer != NULL);
 
-    sp_componenttransfer->renderer = nr_componenttransfer;
-    sp_filter_primitive_renderer_common(primitive, nr_primitive);
+    this->renderer = nr_componenttransfer;
+    sp_filter_primitive_renderer_common(this, nr_primitive);
 
 
-    sp_feComponentTransfer_children_modified(sp_componenttransfer);    //do we need it?!
+    sp_feComponentTransfer_children_modified(this);    //do we need it?!
 }
 
 /*

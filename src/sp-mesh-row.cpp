@@ -17,6 +17,18 @@
 #include "sp-mesh-row.h"
 #include "style.h"
 
+#include "xml/repr.h"
+
+#include "sp-factory.h"
+
+namespace {
+	SPObject* createMeshRow() {
+		return new SPMeshRow();
+	}
+
+	bool meshRowRegistered = SPFactory::instance().registerObject("svg:meshRow", createMeshRow);
+}
+
 SPMeshRow* SPMeshRow::getNextMeshRow()
 {
     SPMeshRow *result = 0;
@@ -50,6 +62,45 @@ SPMeshRow* SPMeshRow::getPrevMeshRow()
 
     return result;
 }
+
+
+/*
+ * Mesh Row
+ */
+SPMeshRow::SPMeshRow() : SPObject() {
+}
+
+SPMeshRow::~SPMeshRow() {
+}
+
+void SPMeshRow::build(SPDocument* doc, Inkscape::XML::Node* repr) {
+	SPObject::build(doc, repr);
+}
+
+/**
+ * Virtual build: set meshrow attributes from its associated XML node.
+ */
+
+void SPMeshRow::set(unsigned int key, const gchar* value) {
+}
+
+/**
+ * Virtual set: set attribute to value.
+ */
+
+Inkscape::XML::Node* SPMeshRow::write(Inkscape::XML::Document* xml_doc, Inkscape::XML::Node* repr, guint flags) {
+    if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
+        repr = xml_doc->createElement("svg:meshRow");
+    }
+
+    SPObject::write(xml_doc, repr, flags);
+
+    return repr;
+}
+
+/**
+ * Virtual write: write object attributes to repr.
+ */
 
 /*
   Local Variables:

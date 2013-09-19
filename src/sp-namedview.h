@@ -14,18 +14,13 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#define SP_TYPE_NAMEDVIEW (sp_namedview_get_type())
-#define SP_NAMEDVIEW(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_NAMEDVIEW, SPNamedView))
-#define SP_NAMEDVIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_NAMEDVIEW, SPNamedViewClass))
-#define SP_IS_NAMEDVIEW(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_NAMEDVIEW))
-#define SP_IS_NAMEDVIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_NAMEDVIEW))
+#define SP_NAMEDVIEW(obj) (dynamic_cast<SPNamedView*>((SPObject*)obj))
+#define SP_IS_NAMEDVIEW(obj) (dynamic_cast<const SPNamedView*>((SPObject*)obj) != NULL)
 
 #include "sp-object-group.h"
 #include "snap.h"
 #include "document.h"
 #include "util/units.h"
-
-G_BEGIN_DECLS
 
 namespace Inkscape {
     class CanvasGrid;
@@ -39,7 +34,11 @@ enum {
     SP_BORDER_LAYER_TOP
 };
 
-struct SPNamedView : public SPObjectGroup {
+class SPNamedView : public SPObjectGroup {
+public:
+	SPNamedView();
+	virtual ~SPNamedView();
+
     unsigned int editable : 1;
     unsigned int showguides : 1;
     unsigned int showborder : 1;
@@ -97,13 +96,18 @@ struct SPNamedView : public SPObjectGroup {
 private:
     double getMarginLength(gchar const * const key,Inkscape::Util::Unit const * const margin_units,Inkscape::Util::Unit const * const return_units,double const width,double const height,bool const use_width);
     friend class SPDocument;
+
+protected:
+	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
+	virtual void release();
+	virtual void set(unsigned int key, gchar const* value);
+
+	virtual void child_added(Inkscape::XML::Node* child, Inkscape::XML::Node* ref);
+	virtual void remove_child(Inkscape::XML::Node* child);
+
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
 };
 
-struct SPNamedViewClass {
-    SPObjectGroupClass parent_class;
-};
-
-GType sp_namedview_get_type();
 
 SPNamedView *sp_document_namedview(SPDocument *document, gchar const *name);
 
@@ -115,7 +119,6 @@ void sp_namedview_toggle_guides(SPDocument *doc, Inkscape::XML::Node *repr);
 void sp_namedview_show_grids(SPNamedView *namedview, bool show, bool dirty_document);
 Inkscape::CanvasGrid * sp_namedview_get_first_enabled_grid(SPNamedView *namedview);
 
-G_END_DECLS
 
 #endif /* !INKSCAPE_SP_NAMEDVIEW_H */
 

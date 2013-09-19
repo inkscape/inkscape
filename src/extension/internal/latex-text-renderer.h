@@ -22,7 +22,7 @@
 #include <stack>
 
 class SPItem;
-struct SPRoot;
+class SPRoot;
 
 namespace Inkscape {
 namespace Extension {

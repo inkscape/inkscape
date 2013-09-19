@@ -15,19 +15,25 @@
 
 #include "event-context.h"
 
-#define SP_TYPE_ZOOM_CONTEXT (sp_zoom_context_get_type ())
-#define SP_ZOOM_CONTEXT(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_ZOOM_CONTEXT, SPZoomContext))
-#define SP_IS_ZOOM_CONTEXT(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_ZOOM_CONTEXT))
+#define SP_ZOOM_CONTEXT(obj) (dynamic_cast<SPZoomContext*>((SPEventContext*)obj))
+#define SP_IS_ZOOM_CONTEXT(obj) (dynamic_cast<const SPZoomContext*>((const SPEventContext*)obj) != NULL)
 
-struct SPZoomContext {
-	SPEventContext event_context;
+class SPZoomContext : public SPEventContext {
+public:
+	SPZoomContext();
+	virtual ~SPZoomContext();
+
+	static const std::string prefsPath;
+
+	virtual void setup();
+	virtual void finish();
+	virtual bool root_handler(GdkEvent* event);
+
+	virtual const std::string& getPrefsPath();
+
+private:
 	SPCanvasItem *grabbed;
+	bool escaped;
 };
-
-struct SPZoomContextClass {
-	SPEventContextClass parent_class;
-};
-
-GType sp_zoom_context_get_type (void);
 
 #endif

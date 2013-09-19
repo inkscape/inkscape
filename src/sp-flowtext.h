@@ -9,11 +9,8 @@
 #include <2geom/forward.h>
 #include "libnrtype/Layout-TNG.h"
 
-#define SP_TYPE_FLOWTEXT            (sp_flowtext_get_type ())
-#define SP_FLOWTEXT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_FLOWTEXT, SPFlowtext))
-#define SP_FLOWTEXT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_FLOWTEXT, SPFlowtextClass))
-#define SP_IS_FLOWTEXT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_FLOWTEXT))
-#define SP_IS_FLOWTEXT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_FLOWTEXT))
+#define SP_FLOWTEXT(obj) (dynamic_cast<SPFlowtext*>((SPObject*)obj))
+#define SP_IS_FLOWTEXT(obj) (dynamic_cast<const SPFlowtext*>((SPObject*)obj) != NULL)
 
 
 namespace Inkscape {
@@ -22,8 +19,11 @@ class DrawingGroup;
 
 } // namespace Inkscape
 
+class SPFlowtext : public SPItem {
+public:
+	SPFlowtext();
+	virtual ~SPFlowtext();
 
-struct SPFlowtext : public SPItem {
     /** Completely recalculates the layout. */
     void rebuildLayout();
 
@@ -51,13 +51,26 @@ private:
     of this flowroot. */
     Shape* _buildExclusionShape() const;
 
-};
+public:
+	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
 
-struct SPFlowtextClass {
-    SPItemClass parent_class;
-};
+	virtual void child_added(Inkscape::XML::Node* child, Inkscape::XML::Node* ref);
+	virtual void remove_child(Inkscape::XML::Node* child);
 
-GType sp_flowtext_get_type (void);
+	virtual void set(unsigned int key, const gchar* value);
+
+	virtual void update(SPCtx* ctx, unsigned int flags);
+	virtual void modified(unsigned int flags);
+
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
+
+	virtual Geom::OptRect bbox(Geom::Affine const &transform, SPItem::BBoxType type);
+	virtual void print(SPPrintContext *ctx);
+	virtual gchar* description();
+	virtual Inkscape::DrawingItem* show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
+	virtual void hide(unsigned int key);
+    virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
+};
 
 SPItem *create_flowtext_with_internal_frame (SPDesktop *desktop, Geom::Point p1, Geom::Point p2);
 

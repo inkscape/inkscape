@@ -23,28 +23,14 @@
 
 #include "display/nr-svgfonts.h"
 
-static void sp_font_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
-static void sp_font_release(SPObject *object);
-static void sp_font_set(SPObject *object, unsigned int key, const gchar *value);
-static Inkscape::XML::Node *sp_font_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
+#include "sp-factory.h"
 
-static void sp_font_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref);
-static void sp_font_remove_child(SPObject *object, Inkscape::XML::Node *child);
-static void sp_font_update(SPObject *object, SPCtx *ctx, guint flags);
+namespace {
+	SPObject* createFont() {
+		return new SPFont();
+	}
 
-G_DEFINE_TYPE(SPFont, sp_font, SP_TYPE_OBJECT);
-
-static void sp_font_class_init(SPFontClass *fc)
-{
-    SPObjectClass *sp_object_class = (SPObjectClass *) fc;
-
-    sp_object_class->build = sp_font_build;
-    sp_object_class->release = sp_font_release;
-    sp_object_class->set = sp_font_set;
-    sp_object_class->write = sp_font_write;
-    sp_object_class->child_added = sp_font_child_added;
-    sp_object_class->remove_child = sp_font_remove_child;
-    sp_object_class->update = sp_font_update;
+	bool fontRegistered = SPFactory::instance().registerObject("svg:font", createFont);
 }
 
 //I think we should have extra stuff here and in the set method in order to set default value as specified at http://www.w3.org/TR/SVG/fonts.html
@@ -54,142 +40,121 @@ double FNT_DEFAULT_ADV = 90; // TODO determine proper default
 double FNT_DEFAULT_ASCENT = 90; // TODO determine proper default
 double FNT_UNITS_PER_EM = 90; // TODO determine proper default
 
-static void sp_font_init(SPFont *font)
-{
-    font->horiz_origin_x = 0;
-    font->horiz_origin_y = 0;
-    font->horiz_adv_x = FNT_DEFAULT_ADV;
-    font->vert_origin_x = FNT_DEFAULT_ADV / 2.0;
-    font->vert_origin_y = FNT_DEFAULT_ASCENT;
-    font->vert_adv_y = FNT_UNITS_PER_EM;
+SPFont::SPFont() : SPObject() {
+    this->horiz_origin_x = 0;
+    this->horiz_origin_y = 0;
+    this->horiz_adv_x = FNT_DEFAULT_ADV;
+    this->vert_origin_x = FNT_DEFAULT_ADV / 2.0;
+    this->vert_origin_y = FNT_DEFAULT_ASCENT;
+    this->vert_adv_y = FNT_UNITS_PER_EM;
 }
 
-static void sp_font_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
-{
-    if (((SPObjectClass *) (sp_font_parent_class))->build) {
-        ((SPObjectClass *) (sp_font_parent_class))->build(object, document, repr);
-    }
-
-    object->readAttr( "horiz-origin-x" );
-    object->readAttr( "horiz-origin-y" );
-    object->readAttr( "horiz-adv-x" );
-    object->readAttr( "vert-origin-x" );
-    object->readAttr( "vert-origin-y" );
-    object->readAttr( "vert-adv-y" );
-
-    document->addResource("font", object);
+SPFont::~SPFont() {
 }
 
+void SPFont::build(SPDocument *document, Inkscape::XML::Node *repr) {
+	SPObject::build(document, repr);
 
-static void sp_font_children_modified(SPFont */*sp_font*/)
-{
+	this->readAttr( "horiz-origin-x" );
+	this->readAttr( "horiz-origin-y" );
+	this->readAttr( "horiz-adv-x" );
+	this->readAttr( "vert-origin-x" );
+	this->readAttr( "vert-origin-y" );
+	this->readAttr( "vert-adv-y" );
+
+	document->addResource("font", this);
 }
 
 /**
  * Callback for child_added event.
  */
-static void
-sp_font_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
-{
-    SPFont *f = SP_FONT(object);
+void SPFont::child_added(Inkscape::XML::Node *child, Inkscape::XML::Node *ref) {
+    SPObject::child_added(child, ref);
 
-    if (((SPObjectClass *) sp_font_parent_class)->child_added)
-        (* ((SPObjectClass *) sp_font_parent_class)->child_added)(object, child, ref);
-
-    sp_font_children_modified(f);
-    object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+    this->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
 
 /**
  * Callback for remove_child event.
  */
-static void
-sp_font_remove_child(SPObject *object, Inkscape::XML::Node *child)
-{
-    SPFont *f = SP_FONT(object);
+void SPFont::remove_child(Inkscape::XML::Node* child) {
+    SPObject::remove_child(child);
 
-    if (((SPObjectClass *) sp_font_parent_class)->remove_child)
-        (* ((SPObjectClass *) sp_font_parent_class)->remove_child)(object, child);
-
-    sp_font_children_modified(f);
-    object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+    this->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
-static void sp_font_release(SPObject *object)
-{
-    //SPFont *font = SP_FONT(object);
-    object->document->removeResource("font", object);
+void SPFont::release() {
+    this->document->removeResource("font", this);
 
-    if (((SPObjectClass *) sp_font_parent_class)->release) {
-        ((SPObjectClass *) sp_font_parent_class)->release(object);
-    }
+    SPObject::release();
 }
 
-static void sp_font_set(SPObject *object, unsigned int key, const gchar *value)
-{
-    SPFont *font = SP_FONT(object);
-
+void SPFont::set(unsigned int key, const gchar *value) {
     // TODO these are floating point, so some epsilon comparison would be good
     switch (key) {
         case SP_ATTR_HORIZ_ORIGIN_X:
         {
             double number = value ? g_ascii_strtod(value, 0) : 0;
-            if (number != font->horiz_origin_x){
-                font->horiz_origin_x = number;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+
+            if (number != this->horiz_origin_x){
+                this->horiz_origin_x = number;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         case SP_ATTR_HORIZ_ORIGIN_Y:
         {
             double number = value ? g_ascii_strtod(value, 0) : 0;
-            if (number != font->horiz_origin_y){
-                font->horiz_origin_y = number;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+
+            if (number != this->horiz_origin_y){
+                this->horiz_origin_y = number;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         case SP_ATTR_HORIZ_ADV_X:
         {
             double number = value ? g_ascii_strtod(value, 0) : FNT_DEFAULT_ADV;
-            if (number != font->horiz_adv_x){
-                font->horiz_adv_x = number;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+
+            if (number != this->horiz_adv_x){
+                this->horiz_adv_x = number;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         case SP_ATTR_VERT_ORIGIN_X:
         {
             double number = value ? g_ascii_strtod(value, 0) : FNT_DEFAULT_ADV / 2.0;
-            if (number != font->vert_origin_x){
-                font->vert_origin_x = number;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+
+            if (number != this->vert_origin_x){
+                this->vert_origin_x = number;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         case SP_ATTR_VERT_ORIGIN_Y:
         {
             double number = value ? g_ascii_strtod(value, 0) : FNT_DEFAULT_ASCENT;
-            if (number != font->vert_origin_y){
-                font->vert_origin_y = number;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+
+            if (number != this->vert_origin_y){
+                this->vert_origin_y = number;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         case SP_ATTR_VERT_ADV_Y:
         {
             double number = value ? g_ascii_strtod(value, 0) : FNT_UNITS_PER_EM;
-            if (number != font->vert_adv_y){
-                font->vert_adv_y = number;
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+
+            if (number != this->vert_adv_y){
+                this->vert_adv_y = number;
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
         default:
-            if (((SPObjectClass *) (sp_font_parent_class))->set) {
-                ((SPObjectClass *) (sp_font_parent_class))->set(object, key, value);
-            }
+        	SPObject::set(key, value);
             break;
     }
 }
@@ -197,54 +162,45 @@ static void sp_font_set(SPObject *object, unsigned int key, const gchar *value)
 /**
  * Receives update notifications.
  */
-static void
-sp_font_update(SPObject *object, SPCtx *ctx, guint flags)
-{
+void SPFont::update(SPCtx *ctx, guint flags) {
     if (flags & (SP_OBJECT_MODIFIED_FLAG)) {
-        object->readAttr( "horiz-origin-x" );
-        object->readAttr( "horiz-origin-y" );
-        object->readAttr( "horiz-adv-x" );
-        object->readAttr( "vert-origin-x" );
-        object->readAttr( "vert-origin-y" );
-        object->readAttr( "vert-adv-y" );
+        this->readAttr( "horiz-origin-x" );
+        this->readAttr( "horiz-origin-y" );
+        this->readAttr( "horiz-adv-x" );
+        this->readAttr( "vert-origin-x" );
+        this->readAttr( "vert-origin-y" );
+        this->readAttr( "vert-adv-y" );
     }
 
-    if (((SPObjectClass *) sp_font_parent_class)->update) {
-        ((SPObjectClass *) sp_font_parent_class)->update(object, ctx, flags);
-    }
+    SPObject::update(ctx, flags);
 }
 
 #define COPY_ATTR(rd,rs,key) (rd)->setAttribute((key), rs->attribute(key));
 
-static Inkscape::XML::Node *sp_font_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
-{
-    SPFont *font = SP_FONT(object);
-
+Inkscape::XML::Node* SPFont::write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags) {
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        repr = xml_doc->createElement("svg:font");
+        repr = xml_doc->createElement("svg:this");
     }
 
-    sp_repr_set_svg_double(repr, "horiz-origin-x", font->horiz_origin_x);
-    sp_repr_set_svg_double(repr, "horiz-origin-y", font->horiz_origin_y);
-    sp_repr_set_svg_double(repr, "horiz-adv-x", font->horiz_adv_x);
-    sp_repr_set_svg_double(repr, "vert-origin-x", font->vert_origin_x);
-    sp_repr_set_svg_double(repr, "vert-origin-y", font->vert_origin_y);
-    sp_repr_set_svg_double(repr, "vert-adv-y", font->vert_adv_y);
+    sp_repr_set_svg_double(repr, "horiz-origin-x", this->horiz_origin_x);
+    sp_repr_set_svg_double(repr, "horiz-origin-y", this->horiz_origin_y);
+    sp_repr_set_svg_double(repr, "horiz-adv-x", this->horiz_adv_x);
+    sp_repr_set_svg_double(repr, "vert-origin-x", this->vert_origin_x);
+    sp_repr_set_svg_double(repr, "vert-origin-y", this->vert_origin_y);
+    sp_repr_set_svg_double(repr, "vert-adv-y", this->vert_adv_y);
 
-    if (repr != object->getRepr()) {
+    if (repr != this->getRepr()) {
         // All the below COPY_ATTR funtions are directly using 
         //  the XML Tree while they shouldn't
-        COPY_ATTR(repr, object->getRepr(), "horiz-origin-x");
-        COPY_ATTR(repr, object->getRepr(), "horiz-origin-y");
-        COPY_ATTR(repr, object->getRepr(), "horiz-adv-x");
-        COPY_ATTR(repr, object->getRepr(), "vert-origin-x");
-        COPY_ATTR(repr, object->getRepr(), "vert-origin-y");
-        COPY_ATTR(repr, object->getRepr(), "vert-adv-y");
+        COPY_ATTR(repr, this->getRepr(), "horiz-origin-x");
+        COPY_ATTR(repr, this->getRepr(), "horiz-origin-y");
+        COPY_ATTR(repr, this->getRepr(), "horiz-adv-x");
+        COPY_ATTR(repr, this->getRepr(), "vert-origin-x");
+        COPY_ATTR(repr, this->getRepr(), "vert-origin-y");
+        COPY_ATTR(repr, this->getRepr(), "vert-adv-y");
     }
 
-    if (((SPObjectClass *) (sp_font_parent_class))->write) {
-        ((SPObjectClass *) (sp_font_parent_class))->write(object, xml_doc, repr, flags);
-    }
+    SPObject::write(xml_doc, repr, flags);
 
     return repr;
 }

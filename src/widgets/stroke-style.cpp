@@ -707,7 +707,7 @@ StrokeStyle::getItemColorForMarker(SPItem *item, Inkscape::PaintTarget fill_or_s
                 stop = sp_last_stop(vector);
             }
             if (stop) {
-                guint32 const c1 = sp_stop_get_rgba32(stop);
+                guint32 const c1 = stop->get_rgba32();
                 gchar c[64];
                 sp_svg_write_color(c, sizeof(c), c1);
                 color = g_strdup(c);
