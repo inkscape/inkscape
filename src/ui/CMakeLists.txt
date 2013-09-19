@@ -175,6 +175,7 @@ set(ui_SRC
 	dialog/object-properties.h
 	dialog/ocaldialogs.h
 	dialog/panel-dialog.h
+	dialog/pixelartdialog.h
 	dialog/print-colors-preview-dialog.h
 	dialog/print.h
 	
@@ -183,7 +184,7 @@ set(ui_SRC
 	dialog/swatches.h
 	dialog/symbols.h
 	dialog/template-load-tab.h
-    dialog/template-widget.h
+	dialog/template-widget.h
 	dialog/text-edit.h
 	dialog/tile.h
 	dialog/tracedialog.h

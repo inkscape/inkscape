@@ -2,7 +2,6 @@
 set(io_SRC
 	base64stream.cpp
 	bufferstream.cpp
-	ftos.cpp
 	gzipstream.cpp
 	inkjar.cpp
 	inkscapestream.cpp
@@ -16,7 +15,6 @@ set(io_SRC
 	# Headers
 	base64stream.h
 	bufferstream.h
-	ftos.h
 	gzipstream.h
 	inkjar.h
 	inkscapestream.h

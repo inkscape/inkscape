@@ -1,10 +1,7 @@
 
 set(svg_SRC
 	css-ostringstream.cpp
-	#ftos.cpp
-	itos.cpp
 	path-string.cpp
-	round.cpp
 	sp-svg.def
 	stringstream.cpp
 	strip-trailing-zeros.cpp

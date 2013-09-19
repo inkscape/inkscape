@@ -40,16 +40,17 @@ set(sp_SRC
 	sp-item-update-cns.cpp
 	sp-item.cpp
 	sp-line.cpp
+	sp-linear-gradient.cpp
 	sp-lpe-item.cpp
 	sp-mask.cpp
 	sp-mesh-array.cpp
+	sp-mesh-gradient.cpp
 	sp-mesh-patch.cpp
 	sp-mesh-row.cpp
 	sp-metadata.cpp
 	sp-missing-glyph.cpp
 	sp-namedview.cpp
 	sp-object-group.cpp
-	sp-object-repr.cpp
 	sp-object.cpp
 	sp-offset.cpp
 	sp-paint-server.cpp
@@ -57,6 +58,7 @@ set(sp_SRC
 	sp-pattern.cpp
 	sp-polygon.cpp
 	sp-polyline.cpp
+	sp-radial-gradient.cpp
 	sp-rect.cpp
 	sp-root.cpp
 	sp-script.cpp
@@ -92,6 +94,7 @@ set(sp_SRC
 	sp-defs.h
 	sp-desc.h
 	sp-ellipse.h
+	sp-factory.h
 	sp-filter-primitive.h
 	sp-filter-reference.h
 	sp-filter-units.h
@@ -103,7 +106,6 @@ set(sp_SRC
 	sp-font.h
 	sp-glyph-kerning.h
 	sp-glyph.h
-	sp-gradient-fns.h
 	sp-gradient-reference.h
 	sp-gradient-spread.h
 	sp-gradient-test.h
@@ -121,23 +123,18 @@ set(sp_SRC
 	sp-item-update-cns.h
 	sp-item.h
 	sp-line.h
-	sp-linear-gradient-fns.h
 	sp-linear-gradient.h
 	sp-lpe-item.h
 	sp-marker-loc.h
 	sp-mask.h
 	sp-mesh-array.h
-	sp-mesh-gradient-fns.h
 	sp-mesh-gradient.h
-	sp-mesh-patch-fns.h
 	sp-mesh-patch.h
-	sp-mesh-row-fns.h
 	sp-mesh-row.h
 	sp-metadata.h
 	sp-missing-glyph.h
 	sp-namedview.h
 	sp-object-group.h
-	sp-object-repr.h
 	sp-object.h
 	sp-offset.h
 	sp-paint-server-reference.h
@@ -146,7 +143,6 @@ set(sp_SRC
 	sp-pattern.h
 	sp-polygon.h
 	sp-polyline.h
-	sp-radial-gradient-fns.h
 	sp-radial-gradient.h
 	sp-rect.h
 	sp-root.h
@@ -357,6 +353,7 @@ set(inkscape_SRC
 	event.h
 	extract-uri-test.h
 	extract-uri.h
+	factory.h
 	file.h
 	fill-or-stroke.h
 	filter-chemistry.h
@@ -393,7 +390,7 @@ set(inkscape_SRC
 	knotholder.h
 	layer-fns.h
 	layer-manager.h
-  layer-model.h
+	layer-model.h
 	line-geometry.h
 	line-snapper.h
 	lpe-tool-context.h
@@ -474,6 +471,7 @@ set(inkscape_SRC
 	text-context.h
 	text-editing.h
 	text-tag-attributes.h
+	tool-factory.h
 	tools-switch.h
 	transf_mat_3x4.h
 	tweak-context.h
@@ -490,7 +488,7 @@ set(inkscape_SRC
 )
 
 if(WIN32)
-    list(APPEND inkscape_SRC
+	list(APPEND inkscape_SRC
 		registrytool.cpp
 		#deptool.cpp
 		winmain.cpp
@@ -597,6 +595,7 @@ target_link_libraries(inkscape
 	livarot_LIB
 	uemf_LIB
 	2geom_LIB
+	depixelize_LIB
 
 	${INKSCAPE_LIBS}
 )
