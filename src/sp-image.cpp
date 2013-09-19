@@ -609,7 +609,7 @@ void SPImage::print(SPPrintContext *ctx) {
             t = ti * t;
             sp_print_image_R8G8B8A8_N(ctx, px + trimx*pixskip + trimy*rs, trimwidth, trimheight, rs, t, this->style);
         }
-        g_object_unref(pb);
+        delete pb;
     }
 }
 
