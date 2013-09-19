@@ -560,6 +560,7 @@ add_subdirectory(libuemf)
 add_subdirectory(libvpsc)
 add_subdirectory(livarot)
 add_subdirectory(libnrtype)
+add_subdirectory(libdepixelize)
 
 
 get_property(inkscape_global_SRC GLOBAL PROPERTY inkscape_global_SRC)

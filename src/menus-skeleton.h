@@ -222,6 +222,7 @@ static char const menus_skeleton[] =
 "       <verb verb-id=\"ObjectToPath\" />\n"
 "       <verb verb-id=\"StrokeToPath\" />\n"
 "       <verb verb-id=\"SelectionTrace\" />\n"
+"       <verb verb-id=\"SelectionPixelArt\" />\n"
 "       <separator/>\n"
 "       <verb verb-id=\"SelectionUnion\" />\n"
 "       <verb verb-id=\"SelectionDiff\" />\n"

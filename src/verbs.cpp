@@ -1173,6 +1173,10 @@ void SelectionVerb::perform(SPAction *action, void *data)
             inkscape_dialogs_unhide();
             dt->_dlg_mgr->showDialog("Trace");
             break;
+        case SP_VERB_SELECTION_PIXEL_ART:
+            inkscape_dialogs_unhide();
+            dt->_dlg_mgr->showDialog("PixelArt");
+            break;
         case SP_VERB_SELECTION_CREATE_BITMAP:
             sp_selection_create_bitmap_copy(dt);
             break;
@@ -2545,6 +2549,8 @@ Verb *Verb::_base_verbs[] = {
     // TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
     new SelectionVerb(SP_VERB_SELECTION_TRACE, "SelectionTrace", N_("_Trace Bitmap..."),
                       N_("Create one or more paths from a bitmap by tracing it"), INKSCAPE_ICON("bitmap-trace")),
+    new SelectionVerb(SP_VERB_SELECTION_PIXEL_ART, "SelectionPixelArt", N_("Trace Pixel Art..."),
+                      N_("Create paths using Kopf-Lischinski algorithm to vectorize pixel art"), INKSCAPE_ICON("pixelart-trace")),
     new SelectionVerb(SP_VERB_SELECTION_CREATE_BITMAP, "SelectionCreateBitmap", N_("Make a _Bitmap Copy"),
                       N_("Export selection to a bitmap and insert it into document"), INKSCAPE_ICON("selection-make-bitmap-copy") ),
     new SelectionVerb(SP_VERB_SELECTION_COMBINE, "SelectionCombine", N_("_Combine"),

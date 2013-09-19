@@ -239,6 +239,11 @@ class ContextMenu : public Gtk::Menu
         void ImageTraceBitmap(void);
 
         /**
+         * callback, is executed on clicking the "Trace Pixel Art" menu entry
+         */
+        void ImageTracePixelArt(void);
+
+        /**
          * callback, is executed on clicking the "Extract Image" menu entry
          */
         void ImageExtract(void);

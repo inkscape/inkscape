@@ -35,6 +35,7 @@
 #include "ui/dialog/symbols.h"
 #include "ui/dialog/tile.h"
 #include "ui/dialog/tracedialog.h"
+#include "ui/dialog/pixelartdialog.h"
 #include "ui/dialog/transformation.h"
 #include "ui/dialog/undo-history.h"
 #include "ui/dialog/panel-dialog.h"
@@ -118,6 +119,7 @@ DialogManager::DialogManager() {
         registerFactory("Symbols",             &create<SymbolsDialog,        FloatingBehavior>);
         registerFactory("TileDialog",          &create<TileDialog,           FloatingBehavior>);
         registerFactory("Trace",               &create<TraceDialog,          FloatingBehavior>);
+        registerFactory("PixelArt",            &create<PixelArtDialog,       FloatingBehavior>);
         registerFactory("Transformation",      &create<Transformation,       FloatingBehavior>);
         registerFactory("UndoHistory",         &create<UndoHistory,          FloatingBehavior>);
         registerFactory("InputDevices",        &create<InputDialog,          FloatingBehavior>);
@@ -151,6 +153,7 @@ DialogManager::DialogManager() {
         registerFactory("Symbols",             &create<SymbolsDialog,        DockBehavior>);
         registerFactory("TileDialog",          &create<TileDialog,           DockBehavior>);
         registerFactory("Trace",               &create<TraceDialog,          DockBehavior>);
+        registerFactory("PixelArt",            &create<PixelArtDialog,       DockBehavior>);
         registerFactory("Transformation",      &create<Transformation,       DockBehavior>);
         registerFactory("UndoHistory",         &create<UndoHistory,          DockBehavior>);
         registerFactory("InputDevices",        &create<InputDialog,          DockBehavior>);

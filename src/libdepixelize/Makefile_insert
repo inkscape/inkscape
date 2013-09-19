@@ -1,0 +1,11 @@
+## Makefile.am fragment sourced by src/Makefile.am.
+
+libdepixelize/all: libdepixelize/libdepixelize.a
+
+libdepixelize/clean:
+	rm -f libdepixelize/libdepixelize.a $(libdepixelize_libdepixelize_a_OBJECTS)
+
+libdepixelize_libdepixelize_a_SOURCES =	 \
+	libdepixelize/kopftracer2011.cpp \
+        libdepixelize/kopftracer2011.h   \
+        libdepixelize/splines.h

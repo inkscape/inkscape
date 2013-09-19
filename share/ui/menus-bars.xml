@@ -144,6 +144,7 @@
       <menuitem action='ObjectToPath'/>
       <menuitem action='StrokeToPath'/>
       <menuitem action='Trace'/>
+      <menuitem action='PixelArt' />
       <separator/>
       <menuitem action='Union'/>
       <menuitem action='Difference'/>

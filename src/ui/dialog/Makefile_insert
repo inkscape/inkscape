@@ -101,6 +101,8 @@ ink_common_sources +=		\
 	ui/dialog/tile.h			\
 	ui/dialog/tracedialog.cpp		\
 	ui/dialog/tracedialog.h			\
+	ui/dialog/pixelartdialog.cpp		\
+	ui/dialog/pixelartdialog.h		\
 	ui/dialog/transformation.cpp		\
 	ui/dialog/transformation.h		\
 	ui/dialog/undo-history.cpp		\

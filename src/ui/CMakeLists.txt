@@ -71,6 +71,7 @@ set(ui_SRC
 	dialog/text-edit.cpp
 	dialog/tile.cpp
 	dialog/tracedialog.cpp
+	dialog/pixelartdialog.cpp
 	dialog/transformation.cpp
 	dialog/undo-history.cpp
 	# dialog/whiteboard-connect.cpp

@@ -1923,6 +1923,7 @@ SPDesktop::show_dialogs()
     mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_DISPLAY, "/dialogs/preferences") );
     mapVerbPreference.insert(std::make_pair ((int)SP_VERB_SELECTION_GRIDTILE, "/dialogs/gridtiler") );
     mapVerbPreference.insert(std::make_pair ((int)SP_VERB_SELECTION_TRACE, "/dialogs/trace") );
+    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_SELECTION_PIXEL_ART, "/dialogs/pixelart") );
     mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_TEXT, "/dialogs/textandfont") );
     mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_EXPORT, "/dialogs/export") );
     mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_XML_EDITOR, "/dialogs/xml") );
