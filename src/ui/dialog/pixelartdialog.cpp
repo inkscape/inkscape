@@ -16,10 +16,6 @@
 # include <config.h>
 #endif
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 #include "pixelartdialog.h"
 #include <gtkmm/radiobutton.h>
 #include <gtkmm/stock.h>
