@@ -386,9 +386,9 @@ void PixelArtDialogImpl::processLibdepixelize(SPImage *img)
             {
                 gchar b[64];
                 sp_svg_write_color(b, sizeof(b),
-                                   SP_RGBA32_U_COMPOSE(unsigned(it->rgba[2]),
+                                   SP_RGBA32_U_COMPOSE(unsigned(it->rgba[0]),
                                                        unsigned(it->rgba[1]),
-                                                       unsigned(it->rgba[0]),
+                                                       unsigned(it->rgba[2]),
                                                        unsigned(it->rgba[3])));
 
                 sp_repr_css_set_property(css, "fill", b);
