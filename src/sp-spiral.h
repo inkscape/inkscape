@@ -71,6 +71,7 @@ public:
 	virtual void set(unsigned int key, gchar const* value);
 
 	virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
+    virtual const char* display_name();
 	virtual gchar* description();
 
 	virtual void set_shape();

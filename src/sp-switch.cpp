@@ -71,12 +71,14 @@ GSList *SPSwitch::_childList(bool add_ref, SPObject::Action action) {
     return g_slist_prepend (NULL, child);
 }
 
+const char *SPSwitch::display_name() {
+    return _("Conditional Group");
+}
+
 gchar *SPSwitch::description() {
     gint len = this->getItemCount();
     return g_strdup_printf(
-            ngettext("<b>Conditional group</b> of <b>%d</b> object",
-                 "<b>Conditional group</b> of <b>%d</b> objects",
-                 len), len);
+        ngettext(_("of <b>%d</b> object"), _("of <b>%d</b> objects"), len), len);
 }
 
 void SPSwitch::child_added(Inkscape::XML::Node* child, Inkscape::XML::Node* ref) {

@@ -325,12 +325,14 @@ void SPGroup::print(SPPrintContext *ctx) {
     }
 }
 
+const char *SPGroup::display_name() {
+    return _("Group");
+}
+
 gchar *SPGroup::description() {
     gint len = this->getItemCount();
     return g_strdup_printf(
-            ngettext("<b>Group</b> of <b>%d</b> object",
-                 "<b>Group</b> of <b>%d</b> objects",
-                 len), len);
+        ngettext(_("of <b>%d</b> object"), _("of <b>%d</b> objects"), len), len);
 }
 
 void SPGroup::set(unsigned int key, gchar const* value) {

@@ -122,8 +122,8 @@ Inkscape::XML::Node* SPLine::write(Inkscape::XML::Document *xml_doc, Inkscape::X
     return repr;
 }
 
-gchar* SPLine::description() {
-	return g_strdup(_("<b>Line</b>"));
+const char* SPLine::display_name() {
+	return _("Line");
 }
 
 void SPLine::convert_to_guides() {

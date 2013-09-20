@@ -233,28 +233,30 @@ Geom::OptRect SPTRef::bbox(Geom::Affine const &transform, SPItem::BBoxType type)
     return bbox;
 }
 
+const char* SPTRef::display_name() {
+    return _("Cloned Character Data");
+}
+
 gchar* SPTRef::description() {
-	SPObject *referred = this->getObjectReferredTo();
+    SPObject *referred = this->getObjectReferredTo();
 
-	if (this->getObjectReferredTo()) {
-		char *child_desc;
+    if (this->getObjectReferredTo()) {
+	char *child_desc;
 
-		if (SP_IS_ITEM(referred)) {
-			child_desc = SP_ITEM(referred)->getDetailedDescription();
-		} else {
-			child_desc = g_strdup("");
-		}
-
-		char *ret = g_strdup_printf(
-				_("<b>Cloned character data</b>%s%s"),
-				(SP_IS_ITEM(referred) ? _(" from ") : ""),
-				child_desc);
-		g_free(child_desc);
-
-		return ret;
+	if (SP_IS_ITEM(referred)) {
+	    child_desc = SP_ITEM(referred)->getDetailedDescription();
+	} else {
+	    child_desc = g_strdup("");
 	}
 
-    return g_strdup(_("<b>Orphaned cloned character data</b>"));
+	char *ret = g_strdup_printf("%s%s",
+	    (SP_IS_ITEM(referred) ? _(" from ") : ""), child_desc);
+	g_free(child_desc);
+
+	return ret;
+    }
+
+    return g_strdup(_("[orphaned]"));
 }
 
 

@@ -58,7 +58,7 @@ public:
 	virtual void update(SPCtx *ctx, guint flags);
 	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
 
-	virtual gchar *description();
+        virtual const char* display_name();
 	virtual Geom::Affine set_transform(Geom::Affine const &transform);
     virtual void convert_to_guides();
 };

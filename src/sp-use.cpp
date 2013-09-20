@@ -226,12 +226,17 @@ void SPUse::print(SPPrintContext* ctx) {
     }
 }
 
+const char* SPUse::display_name() {
+    if(this->child && SP_IS_SYMBOL( this->child )) {
+        return _("Symbol");
+    }
+    return _("Clone");
+}
+
 gchar* SPUse::description() {
     if (this->child) {
         if( SP_IS_SYMBOL( this->child ) ) {
-            char *symbol_desc = SP_ITEM(this->child)->title();
-            return g_strdup_printf(_("<b>'%s' Symbol</b>"), symbol_desc );
-            g_free(symbol_desc);
+            return g_strdup_printf(_("called %s"), SP_ITEM(this->child)->title());
         }
 
         static unsigned recursion_depth = 0;
@@ -248,12 +253,12 @@ gchar* SPUse::description() {
         char *child_desc = SP_ITEM(this->child)->getDetailedDescription();
         --recursion_depth;
 
-        char *ret = g_strdup_printf(_("<b>Clone</b> of: %s"), child_desc);
+        char *ret = g_strdup_printf(_("of: %s"), child_desc);
         g_free(child_desc);
 
         return ret;
     } else {
-        return g_strdup(_("<b>Orphaned clone</b>"));
+        return g_strdup(_("[orphaned]"));
     }
 }
 

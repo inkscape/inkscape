@@ -255,11 +255,8 @@ Inkscape::XML::Node* SPBox3D::write(Inkscape::XML::Document *xml_doc, Inkscape::
     return repr;
 }
 
-gchar* SPBox3D::description() {
-	SPBox3D* item = this;
-
-	g_return_val_if_fail(SP_IS_BOX3D(item), NULL);
-	return g_strdup(_("<b>3D Box</b>"));
+const char* SPBox3D::display_name() {
+    return _("3D Box");
 }
 
 void box3d_position_set(SPBox3D *box)

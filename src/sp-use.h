@@ -57,6 +57,7 @@ public:
 	virtual void modified(unsigned int flags);
 
 	virtual Geom::OptRect bbox(Geom::Affine const &transform, SPItem::BBoxType bboxtype);
+    virtual const char* display_name();
 	virtual gchar* description();
 	virtual void print(SPPrintContext *ctx);
 	virtual Inkscape::DrawingItem* show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);

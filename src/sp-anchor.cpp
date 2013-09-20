@@ -115,14 +115,18 @@ Inkscape::XML::Node* SPAnchor::write(Inkscape::XML::Document *xml_doc, Inkscape:
     return repr;
 }
 
+const char* SPAnchor::display_name() {
+    return _("Link");
+}
+
 gchar* SPAnchor::description() {
     if (this->href) {
         char *quoted_href = xml_quote_strdup(this->href);
-        char *ret = g_strdup_printf(_("<b>Link</b> to %s"), quoted_href);
+        char *ret = g_strdup_printf(_("to %s"), quoted_href);
         g_free(quoted_href);
         return ret;
     } else {
-        return g_strdup (_("<b>Link</b> without URI"));
+        return g_strdup (_("without URI"));
     }
 }
 

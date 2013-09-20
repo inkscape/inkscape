@@ -280,17 +280,20 @@ void SPFlowtext::print(SPPrintContext *ctx) {
     this->layout.print(ctx, pbox, dbox, bbox, ctm);
 }
 
+const char* SPFlowtext::display_name() {
+    if (SP_FLOWTEXT(this)->has_internal_frame()) {
+        return _("Flowed Text");
+    } else {
+        return _("Linked Flowed Text");
+    }
+}
+
 gchar* SPFlowtext::description() {
     Inkscape::Text::Layout const &layout = SP_FLOWTEXT(this)->layout;
     int const nChars = layout.iteratorToCharIndex(layout.end());
-
     char const *trunc = (layout.inputTruncated()) ? _(" [truncated]") : "";
 
-    if (SP_FLOWTEXT(this)->has_internal_frame()) {
-        return g_strdup_printf(ngettext("<b>Flowed text</b> (%d character%s)", "<b>Flowed text</b> (%d characters%s)", nChars), nChars, trunc);
-    } else {
-        return g_strdup_printf(ngettext("<b>Linked flowed text</b> (%d character%s)", "<b>Linked flowed text</b> (%d characters%s)", nChars), nChars, trunc);
-    }
+    return g_strdup_printf(ngettext(_("(%d character%s)"), _("(%d characters%s)"), nChars), nChars, trunc);
 }
 
 void SPFlowtext::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) {

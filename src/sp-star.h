@@ -50,6 +50,7 @@ public:
 	virtual void set(unsigned int key, gchar const* value);
 	virtual void update(SPCtx* ctx, guint flags);
 
+    virtual const char* display_name();
 	virtual gchar* description();
 	virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
 

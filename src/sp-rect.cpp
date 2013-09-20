@@ -159,8 +159,8 @@ Inkscape::XML::Node * SPRect::write(Inkscape::XML::Document *xml_doc, Inkscape::
     return repr;
 }
 
-gchar* SPRect::description() {
-	return g_strdup(_("<b>Rectangle</b>"));
+const char* SPRect::display_name() {
+    return _("Rectangle");
 }
 
 #define C1 0.554

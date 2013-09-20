@@ -251,19 +251,18 @@ void SPStar::update_patheffect(bool write) {
     this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
+const char* SPStar::display_name() {
+    if (this->flatsided == false)
+        return _("Star");
+    return _("Polygon");
+}
+
 gchar* SPStar::description() {
     // while there will never be less than 3 vertices, we still need to
     // make calls to ngettext because the pluralization may be different
     // for various numbers >=3.  The singular form is used as the index.
-    if (this->flatsided == false) {
-    	return g_strdup_printf (ngettext("<b>Star</b> with %d vertex",
-                         "<b>Star</b> with %d vertices",
-                         this->sides), this->sides);
-    } else {
-        return g_strdup_printf (ngettext("<b>Polygon</b> with %d vertex",
-                         "<b>Polygon</b> with %d vertices",
-                         this->sides), this->sides);
-    }
+    return g_strdup_printf (ngettext(_("with %d vertex"), _("with %d vertices"),
+                this->sides), this->sides);
 }
 
 /**

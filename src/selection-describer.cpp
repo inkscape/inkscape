@@ -38,64 +38,22 @@
 #include "sp-polyline.h"
 #include "sp-spiral.h"
 
-// CPPIFY: this is ugly.
-static const gchar *
-type2term(SPItem *item)
+// Returns a list of terms for the items to be used in the statusbar
+const char* collect_terms (GSList *items)
 {
-//    GType type = G_OBJECT_TYPE( item );
-//    if (type == SP_TYPE_ANCHOR)
-//        //TRANSLATORS: "Link" means internet link (anchor)
-//        { return C_("Web", "Link"); }
-//    if (type == SP_TYPE_CIRCLE)
-//        { return _("Circle"); }
-//    if (type == SP_TYPE_ELLIPSE)
-//        { return _("Ellipse"); }
-//    if (type == SP_TYPE_FLOWTEXT)
-//        { return _("Flowed text"); }
-//    if (type == SP_TYPE_GROUP)
-//        { return _("Group"); }
-//    if (type == SP_TYPE_IMAGE)
-//        { return _("Image"); }
-//    if (type == SP_TYPE_LINE)
-//        { return _("Line"); }
-//    if (type == SP_TYPE_PATH)
-//        { return _("Path"); }
-//    if (type == SP_TYPE_POLYGON)
-//        { return _("Polygon"); }
-//    if (type == SP_TYPE_POLYLINE)
-//        { return _("Polyline"); }
-//    if (type == SP_TYPE_RECT)
-//        { return _("Rectangle"); }
-//    if (type == SP_TYPE_BOX3D)
-//        { return _("3D Box"); }
-//    if (type == SP_TYPE_TEXT)
-//        { return C_("Object", "Text"); }
-//    if (type == SP_TYPE_USE)
-//        if (SP_IS_SYMBOL(item->firstChild()))
-//            { return C_("Object", "Symbol"); }
-//        // TRANSLATORS: "Clone" is a noun, type of object
-//        { return C_("Object", "Clone"); }
-//    if (type == SP_TYPE_ARC)
-//        { return _("Ellipse"); }
-//    if (type == SP_TYPE_OFFSET)
-//        { return _("Offset path"); }
-//    if (type == SP_TYPE_SPIRAL)
-//        { return _("Spiral"); }
-//    if (type == SP_TYPE_STAR)
-//        { return _("Star"); }
-//    return NULL;
-	return "Selektion-Describer ---";
-}
+    GSList *check = NULL;
+    std::stringstream ss;
+    bool first = true;
 
-static GSList *collect_terms (GSList *items)
-{
-    GSList *r = NULL;
-    for (GSList *i = items; i != NULL; i = i->next) {
-        const gchar *term = type2term ( SP_ITEM(i->data) );
-        if (term != NULL && g_slist_find (r, term) == NULL)
-            r = g_slist_prepend (r, (void *) term);
+    for (GSList *i = (GSList *)items; i != NULL; i = i->next) {
+        const char *term = SP_ITEM(i->data)->display_name();
+        if (term != NULL && g_slist_find (check, term) == NULL) {
+            check = g_slist_prepend (check, (void *) term);
+            ss << (first ? "" : ", ") << "<b>" << term << "</b>";
+            first = false;
+        }
     }
-    return r;
+    return ss.str().c_str();
 }
 
 // Returns the number of filtered items in the list
@@ -201,7 +159,8 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
         g_free (parent_name);
 
         if (!items->next) { // one item
-            char *item_desc = item->description();
+            char *item_desc = item->getDetailedDescription();
+
             if (SP_IS_USE(item) && SP_IS_SYMBOL(item->firstChild())) {
                 _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s. %s.",
                               item_desc, in_phrase,
@@ -229,38 +188,11 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
             g_free(item_desc);
         } else { // multiple items
             int object_count = g_slist_length((GSList *)items);
+            const char *terms = collect_terms ((GSList *)items);
 
-            gchar *objects_str = NULL;
-            GSList *terms = collect_terms ((GSList *)items);
-            int n_terms = g_slist_length(terms);
-            if (n_terms == 0) {
-                objects_str = g_strdup_printf (
-                    // this is only used with 2 or more objects
-                    ngettext("<b>%i</b> object selected", "<b>%i</b> objects selected", object_count), 
-                    object_count);
-            } else if (n_terms == 1) {
-                objects_str = g_strdup_printf (
-                    // this is only used with 2 or more objects
-                    ngettext("<b>%i</b> object of type <b>%s</b>", "<b>%i</b> objects of type <b>%s</b>", object_count),
-                    object_count, (gchar *) terms->data);
-            } else if (n_terms == 2) {
-                objects_str = g_strdup_printf (
-                    // this is only used with 2 or more objects
-                    ngettext("<b>%i</b> object of types <b>%s</b>, <b>%s</b>", "<b>%i</b> objects of types <b>%s</b>, <b>%s</b>", object_count), 
-                    object_count, (gchar *) terms->data, (gchar *) terms->next->data);
-            } else if (n_terms == 3) {
-                objects_str = g_strdup_printf (
-                    // this is only used with 2 or more objects
-                    ngettext("<b>%i</b> object of types <b>%s</b>, <b>%s</b>, <b>%s</b>", "<b>%i</b> objects of types <b>%s</b>, <b>%s</b>, <b>%s</b>", object_count), 
-                    object_count, (gchar *) terms->data, (gchar *) terms->next->data, (gchar *) terms->next->next->data);
-            } else {
-                objects_str = g_strdup_printf (
-                    // this is only used with 2 or more objects
-                    ngettext("<b>%i</b> object of <b>%i</b> types", "<b>%i</b> objects of <b>%i</b> types", object_count), 
-                    object_count, n_terms);
-            }
-            g_slist_free (terms);
-
+            gchar *objects_str = 
+                g_strdup_printf( "<b>%i</b> objects selected of types %s",
+                        object_count, terms );
 
             // indicate all, some, or none filtered
             gchar *filt_str = NULL;

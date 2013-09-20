@@ -188,14 +188,11 @@ Inkscape::XML::Node *SPFlowregion::write(Inkscape::XML::Document *xml_doc, Inksc
     return repr;
 }
 
-gchar* SPFlowregion::description() {
+const char* SPFlowregion::display_name() {
 	// TRANSLATORS: "Flow region" is an area where text is allowed to flow
-	return g_strdup_printf(_("Flow region"));
+	return _("Flow Region");
 }
 
-/*
- *
- */
 SPFlowregionExclude::SPFlowregionExclude() : SPItem() {
 	this->computed = NULL;
 }
@@ -338,17 +335,13 @@ Inkscape::XML::Node *SPFlowregionExclude::write(Inkscape::XML::Document *xml_doc
     return repr;
 }
 
-gchar* SPFlowregionExclude::description() {
+const char* SPFlowregionExclude::display_name() {
 	/* TRANSLATORS: A region "cut out of" a flow region; text is not allowed to flow inside the
 	 * flow excluded region.  flowRegionExclude in SVG 1.2: see
 	 * http://www.w3.org/TR/2004/WD-SVG12-20041027/flow.html#flowRegion-elem and
 	 * http://www.w3.org/TR/2004/WD-SVG12-20041027/flow.html#flowRegionExclude-elem. */
-	return g_strdup_printf(_("Flow excluded region"));
+	return _("Flow Excluded Region");
 }
-
-/*
- *
- */
 
 static void         UnionShape(Shape **base_shape, Shape const *add_shape)
 {

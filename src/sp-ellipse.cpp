@@ -427,8 +427,8 @@ void SPEllipse::set(unsigned int key, gchar const* value) {
     }
 }
 
-gchar* SPEllipse::description() {
-	return g_strdup(_("<b>Ellipse</b>"));
+const char* SPEllipse::display_name() {
+    return _("Ellipse");
 }
 
 
@@ -507,8 +507,8 @@ void SPCircle::set(unsigned int key, gchar const* value) {
     }
 }
 
-gchar* SPCircle::description() {
-	return g_strdup(_("<b>Circle</b>"));
+const char* SPCircle::display_name() {
+	return _("Circle");
 }
 
 /* <path sodipodi:type="arc"> element */
@@ -681,7 +681,7 @@ void SPArc::modified(guint flags) {
 }
 
 
-gchar* SPArc::description() {
+const char* SPArc::display_name() {
     gdouble len = fmod(this->end - this->start, SP_2PI);
 
     if (len < 0.0) {
@@ -690,12 +690,12 @@ gchar* SPArc::description() {
 
     if (!(fabs(len) < 1e-8 || fabs(len - SP_2PI) < 1e-8)) {
         if (this->closed) {
-            return g_strdup(_("<b>Segment</b>"));
+            return _("Segment");
         } else {
-            return g_strdup(_("<b>Arc</b>"));
+            return _("Arc");
         }
     } else {
-        return g_strdup(_("<b>Ellipse</b>"));
+        return _("Ellipse");
     }
 }
 

@@ -66,8 +66,13 @@ gint SPPath::nodesInPath() const
     return _curve ? _curve->nodes_in_path() : 0;
 }
 
+const char* SPPath::display_name() {
+    return _("Path");
+}
+
 gchar* SPPath::description() {
     int count = this->nodesInPath();
+    char *lpe_desc = g_strdup("");
     
     if (sp_lpe_item_has_path_effect(this)) {
         Glib::ustring s;
@@ -87,13 +92,12 @@ gchar* SPPath::description() {
                 s = s + ", " + lpeobj->get_lpe()->getName();
             }
         }
-
-        return g_strdup_printf(ngettext("<b>Path</b> (%i node, path effect: %s)",
-                                        "<b>Path</b> (%i nodes, path effect: %s)",count), count, s.c_str());
-    } else {
-        return g_strdup_printf(ngettext("<b>Path</b> (%i node)",
-                                        "<b>Path</b> (%i nodes)",count), count);
+        lpe_desc = g_strdup_printf(_(", path effect: %s"), s.c_str());
     }
+    char *ret = g_strdup_printf(ngettext(
+                _("%i node%s"), _("%i nodes%s"), count), count, lpe_desc);
+    g_free(lpe_desc);
+    return ret;
 }
 
 void SPPath::convert_to_guides() {

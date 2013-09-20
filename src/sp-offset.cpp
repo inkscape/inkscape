@@ -339,16 +339,18 @@ void SPOffset::update(SPCtx *ctx, guint flags) {
     SPShape::update(ctx, flags);
 }
 
-gchar* SPOffset::description() {
+const char* SPOffset::display_name() {
     if ( this->sourceHref ) {
-        // TRANSLATORS COMMENT: %s is either "outset" or "inset" depending on sign
-        return g_strdup_printf(_("<b>Linked offset</b>, %s by %f pt"),
-                               (this->rad >= 0)? _("outset") : _("inset"), fabs (this->rad));
+        return _("Linked Offset");
     } else {
-        // TRANSLATORS COMMENT: %s is either "outset" or "inset" depending on sign
-        return g_strdup_printf(_("<b>Dynamic offset</b>, %s by %f pt"),
-                               (this->rad >= 0)? _("outset") : _("inset"), fabs (this->rad));
+        return _("Dynamic Offset");
     }
+}
+
+gchar* SPOffset::description() {
+    // TRANSLATORS COMMENT: %s is either "outset" or "inset" depending on sign
+    return g_strdup_printf(_("%s by %f pt"), (this->rad >= 0) ?
+            _("outset") : _("inset"), fabs (this->rad));
 }
 
 void SPOffset::set_shape() {

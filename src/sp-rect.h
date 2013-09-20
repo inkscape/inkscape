@@ -55,7 +55,7 @@ public:
 	virtual void update(SPCtx* ctx, unsigned int flags);
 
 	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
-	virtual gchar* description();
+        virtual const char* display_name();
 
 	virtual void set_shape();
 	virtual Geom::Affine set_transform(Geom::Affine const& xform);

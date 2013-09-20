@@ -58,7 +58,7 @@ public:
 	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
 	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
 	virtual void set(unsigned int key, gchar const* value);
-	virtual gchar* description();
+    virtual const char* display_name();
 };
 
 void sp_ellipse_position_set (SPEllipse * ellipse, gdouble x, gdouble y, gdouble rx, gdouble ry);
@@ -75,7 +75,7 @@ public:
 	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
 	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
 	virtual void set(unsigned int key, gchar const* value);
-	virtual gchar* description();
+    virtual const char* display_name();
 };
 
 /* <path sodipodi:type="arc"> element */
@@ -90,7 +90,7 @@ public:
 	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
 	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
 	virtual void set(unsigned int key, gchar const* value);
-	virtual gchar* description();
+    virtual const char* display_name();
 	virtual void modified(unsigned int flags);
 };
 

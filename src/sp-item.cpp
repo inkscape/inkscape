@@ -931,9 +931,12 @@ void SPItem::invoke_print(SPPrintContext *ctx)
     }
 }
 
-// CPPIFY: is it possible to combine this method with "SPItem::description()"?
+const char* SPItem::display_name() {
+    return _("Object");
+}
+
 gchar* SPItem::description() {
-	return g_strdup(_("Object"));
+    return g_strdup("");
 }
 
 /**
@@ -943,7 +946,8 @@ gchar* SPItem::description() {
  */
 gchar *SPItem::getDetailedDescription()
 {
-	gchar* s = this->description();
+        gchar* s = g_strdup_printf("<b>%s</b> %s",
+                    this->display_name(), this->description());
 
 	if (s && clip_ref->getObject()) {
 		gchar *snew = g_strdup_printf (_("%s; <i>clipped</i>"), s);

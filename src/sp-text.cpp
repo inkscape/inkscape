@@ -321,6 +321,9 @@ void SPText::hide(unsigned int key) {
 //	SPItem::onHide(key);
 }
 
+const char* SPText::display_name() {
+    return _("Text");
+}
 
 gchar* SPText::description() {
     SPStyle *style = this->style;
@@ -350,8 +353,8 @@ gchar* SPText::description() {
     }
 
     char *ret = ( SP_IS_TEXT_TEXTPATH(this)
-                  ? g_strdup_printf(_("<b>Text on path</b>%s (%s, %s)"), trunc, n, xs->str)
-                  : g_strdup_printf(_("<b>Text</b>%s (%s, %s)"), trunc, n, xs->str) );
+                  ? g_strdup_printf(_("on path%s (%s, %s)"), trunc, n, xs->str)
+                  : g_strdup_printf(_("%s (%s, %s)"), trunc, n, xs->str) );
     g_free(n);
     return ret;
 }

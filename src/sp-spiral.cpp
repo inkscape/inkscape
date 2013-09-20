@@ -227,12 +227,14 @@ void SPSpiral::update_patheffect(bool write) {
     shape->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-gchar* SPSpiral::description() {
-	SPSpiral* item = this;
+const char* SPSpiral::display_name() {
+    return _("Spiral");
+}
 
-	// TRANSLATORS: since turn count isn't an integer, please adjust the
+gchar* SPSpiral::description() {
+    // TRANSLATORS: since turn count isn't an integer, please adjust the
     // string as needed to deal with an localized plural forms.
-	return g_strdup_printf (_("<b>Spiral</b> with %3f turns"), SP_SPIRAL(item)->revo);
+    return g_strdup_printf (_("with %3f turns"), SP_SPIRAL(this)->revo);
 }
 
 /**

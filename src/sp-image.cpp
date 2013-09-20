@@ -613,6 +613,10 @@ void SPImage::print(SPPrintContext *ctx) {
     }
 }
 
+const char* SPImage::display_name() {
+    return _("Image");
+}
+
 gchar* SPImage::description() {
     char *href_desc;
 
@@ -626,8 +630,8 @@ gchar* SPImage::description() {
     }
 
     char *ret = ( this->pixbuf == NULL
-                  ? g_strdup_printf(_("<b>Image with bad reference</b>: %s"), href_desc)
-                  : g_strdup_printf(_("<b>Image</b> %d &#215; %d: %s"),
+                  ? g_strdup_printf(_("[bad reference]: %s"), href_desc)
+                  : g_strdup_printf(_("%d &#215; %d: %s"),
                                     this->pixbuf->width(),
                                     this->pixbuf->height(),
                                     href_desc) );
