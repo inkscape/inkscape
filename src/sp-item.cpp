@@ -608,8 +608,8 @@ void SPItem::update(SPCtx *ctx, guint flags) {
         Geom::OptRect item_bbox = item->visualBounds();
         SPItemView *itemview = item->display;
         do {
-            if (itemview->arenaitem)
-                itemview->arenaitem->setItemBounds(item_bbox);
+            if (itemview->arenaitem) // Already enlarged by visualBounds
+                itemview->arenaitem->setFilterBounds(item_bbox);
         } while ( (itemview = itemview->next) );
     }
 
@@ -1065,7 +1065,8 @@ Inkscape::DrawingItem *SPItem::invoke_show(Inkscape::Drawing &drawing, unsigned 
             item_bbox = visualBounds();
         }
         ai->setData(this);
-        ai->setItemBounds(item_bbox);
+        // Already enlarged by visualBounds for filters
+        ai->setFilterBounds(item_bbox);
     }
 
     return ai;

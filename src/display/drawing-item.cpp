@@ -281,8 +281,15 @@ DrawingItem::setZOrder(unsigned z)
     _markForRendering();
 }
 
-void
-DrawingItem::setItemBounds(Geom::OptRect const &bounds)
+void DrawingItem::setItemBounds(Geom::OptRect const &bounds)
+{
+    if (!bounds) return;
+    Geom::IntRect copy = bounds->roundOutwards();
+    if (_filter) _filter->area_enlarge(copy, this);
+    this->setFilterBounds(copy);
+}
+
+void DrawingItem::setFilterBounds(Geom::OptRect const &bounds)
 {
     if (bounds) _filter_bbox = bounds;
 }
@@ -352,10 +359,10 @@ DrawingItem::update(Geom::IntRect const &area, UpdateContext const &ctx, unsigne
 
     if (to_update & STATE_BBOX) {
         // compute drawbox
-        if (_filter && render_filters && _bbox) {
-            Geom::IntRect newbox(*_bbox);
-            _filter->area_enlarge(newbox, this);
-            _drawbox = Geom::OptIntRect(newbox);
+        if (_filter && render_filters && _filter_bbox) {
+            Geom::OptRect enlarged = _filter_bbox;
+            *enlarged *= ctm();
+            _drawbox = enlarged->roundOutwards();
         } else {
             _drawbox = _bbox;
         }
