@@ -61,6 +61,14 @@ using std::strstr;
 # define debug(f, a...) /* */
 #endif
 
+namespace {
+    SPObject* createObject() {
+        return new SPObject();
+    }
+
+    bool gridRegistered = SPFactory::instance().registerObject("inkscape:grid", createObject);
+}
+
 guint update_in_progress = 0; // guard against update-during-update
 
 Inkscape::XML::NodeEventVector object_event_vector = {
