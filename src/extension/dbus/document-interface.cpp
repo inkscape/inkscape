@@ -43,6 +43,7 @@
 #include "sp-object.h"
 #include "sp-root.h"
 #include "style.h" //style_write
+#include "util/units.h"
 
 #include "extension/system.h" //IO
 
@@ -543,13 +544,13 @@ gchar *document_interface_node(DocumentInterface *doc_interface, gchar *type, GE
 gdouble
 document_interface_document_get_width (DocumentInterface *doc_interface)
 {
-  return doc_interface->target.getDocument()->getWidth();
+  return doc_interface->target.getDocument()->getWidth().value("px");
 }
 
 gdouble
 document_interface_document_get_height (DocumentInterface *doc_interface)
 {
-  return doc_interface->target.getDocument()->getHeight();
+  return doc_interface->target.getDocument()->getHeight().value("px");
 }
 
 gchar *document_interface_document_get_css(DocumentInterface *doc_interface, GError ** error)
