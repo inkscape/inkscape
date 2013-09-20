@@ -148,7 +148,7 @@ void sp_eraser_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
                                                               GTK_WIDGET(desktop->canvas), holder, TRUE, "altx-eraser",
                                                               1, 100, 1.0, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
-                                                              sp_erc_width_value_changed, 1, 0);
+                                                              sp_erc_width_value_changed, NULL /*unit tracker*/, 1, 0);
         ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );

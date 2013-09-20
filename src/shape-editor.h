@@ -65,11 +65,14 @@ public:
     void shapeeditor_event_attr_changed(gchar const *name);
 
     bool knot_mouseover();
+    
+    static void blockSetItem(bool b) {_blockSetItem = b;}
 
 private:
     bool has_knotholder ();
     void reset_item (SubType type, bool keep_knotholder = true);
     const SPItem *get_item (SubType type);
+    static bool _blockSetItem;
 
     SPDesktop *desktop;
     KnotHolder *knotholder;

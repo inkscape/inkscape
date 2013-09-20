@@ -34,6 +34,7 @@
 #include "preferences.h"
 #include "rdf.h"
 #include "display/cairo-utils.h"
+#include "util/units.h"
 
 /* This is an example of how to use libpng to read and write PNG files.
  * The file libpng.txt is much more verbose then this.  If you have not
@@ -415,7 +416,7 @@ ExportResult sp_export_png_file(SPDocument *doc, gchar const *filename,
     doc->ensureUpToDate();
 
     /* Calculate translation by transforming to document coordinates (flipping Y)*/
-    Geom::Point translation = Geom::Point(-area[Geom::X][0], area[Geom::Y][1] - doc->getHeight());
+    Geom::Point translation = Geom::Point(-area[Geom::X][0], area[Geom::Y][1] - doc->getHeight().value("px"));
 
     /*  This calculation is only valid when assumed that (x0,y0)= area.corner(0) and (x1,y1) = area.corner(2)
      * 1) a[0] * x0 + a[2] * y1 + a[4] = 0.0

@@ -115,6 +115,7 @@ struct _EgeAdjustmentActionPrivate
     gchar* appearance;
     gchar* iconId;
     Inkscape::IconSize iconSize;
+    Inkscape::UI::Widget::UnitTracker *unitTracker;
 };
 
 #define EGE_ADJUSTMENT_ACTION_GET_PRIVATE( o ) ( G_TYPE_INSTANCE_GET_PRIVATE( (o), EGE_ADJUSTMENT_ACTION_TYPE, EgeAdjustmentActionPrivate ) )
@@ -128,7 +129,8 @@ enum {
     PROP_TOOL_POST,
     PROP_APPEARANCE,
     PROP_ICON_ID,
-    PROP_ICON_SIZE
+    PROP_ICON_SIZE,
+    PROP_UNIT_TRACKER
 };
 
 enum {
@@ -234,6 +236,13 @@ static void ege_adjustment_action_class_init( EgeAdjustmentActionClass* klass )
                                                            (int)Inkscape::ICON_SIZE_SMALL_TOOLBAR,
                                                            (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
 
+        g_object_class_install_property( objClass,
+                                         PROP_UNIT_TRACKER,
+                                         g_param_spec_pointer( "unit_tracker",
+                                                               "Unit Tracker",
+                                                               "The widget that keeps track of the unit",
+                                                               (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
+
         g_type_class_add_private( klass, sizeof(EgeAdjustmentActionClass) );
     }
 }
@@ -263,6 +272,7 @@ static void ege_adjustment_action_init( EgeAdjustmentAction* action )
     action->private_data->appearance = 0;
     action->private_data->iconId = 0;
     action->private_data->iconSize = Inkscape::ICON_SIZE_SMALL_TOOLBAR;
+    action->private_data->unitTracker = NULL;
 }
 
 static void ege_adjustment_action_finalize( GObject* object )
@@ -292,7 +302,8 @@ EgeAdjustmentAction* ege_adjustment_action_new( GtkAdjustment* adjustment,
                                                 const gchar *tooltip,
                                                 const gchar *stock_id,
                                                 gdouble climb_rate,
-                                                guint digits )
+                                                guint digits,
+                                                Inkscape::UI::Widget::UnitTracker *unit_tracker )
 {
     GObject* obj = (GObject*)g_object_new( EGE_ADJUSTMENT_ACTION_TYPE,
                                            "name", name,
@@ -302,6 +313,7 @@ EgeAdjustmentAction* ege_adjustment_action_new( GtkAdjustment* adjustment,
                                            "adjustment", adjustment,
                                            "climb-rate", climb_rate,
                                            "digits", digits,
+                                           "unit_tracker", unit_tracker,
                                            NULL );
 
     EgeAdjustmentAction* action = EGE_ADJUSTMENT_ACTION( obj );
@@ -347,6 +359,10 @@ static void ege_adjustment_action_get_property( GObject* obj, guint propId, GVal
 
         case PROP_ICON_SIZE:
             g_value_set_int( value, action->private_data->iconSize );
+            break;
+
+        case PROP_UNIT_TRACKER:
+            g_value_set_pointer( value, action->private_data->unitTracker );
             break;
 
         default:
@@ -447,6 +463,12 @@ void ege_adjustment_action_set_property( GObject* obj, guint propId, const GValu
         case PROP_ICON_SIZE:
         {
             action->private_data->iconSize = (Inkscape::IconSize)g_value_get_int( value );
+        }
+        break;
+
+        case PROP_UNIT_TRACKER:
+        {
+            action->private_data->unitTracker = (Inkscape::UI::Widget::UnitTracker*)g_value_get_pointer( value );
         }
         break;
 
@@ -812,7 +834,7 @@ static GtkWidget* create_tool_item( GtkAction* action )
             gtk_scale_button_set_icons( GTK_SCALE_BUTTON(spinbutton), floogles );
         } else {
             if ( gFactoryCb ) {
-                spinbutton = gFactoryCb( act->private_data->adj, act->private_data->climbRate, act->private_data->digits );
+                spinbutton = gFactoryCb( act->private_data->adj, act->private_data->climbRate, act->private_data->digits, act->private_data->unitTracker );
             } else {
                 spinbutton = gtk_spin_button_new( act->private_data->adj, act->private_data->climbRate, act->private_data->digits );
             }

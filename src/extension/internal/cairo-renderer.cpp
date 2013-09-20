@@ -463,8 +463,8 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
     }
 
     // The width and height of the bitmap in pixels
-    unsigned width =  ceil(bbox->width() * (res / Inkscape::Util::Quantity::convert(1, "in", "px")));
-    unsigned height = ceil(bbox->height() * (res / Inkscape::Util::Quantity::convert(1, "in", "px")));
+    unsigned width =  ceil(bbox->width() * Inkscape::Util::Quantity::convert(res, "px", "in"));
+    unsigned height = ceil(bbox->height() * Inkscape::Util::Quantity::convert(res, "px", "in"));
 
     if (width == 0 || height == 0) return;
 
@@ -638,9 +638,9 @@ CairoRenderer::setupDocument(CairoRenderContext *ctx, SPDocument *doc, bool page
             Geom::Affine tp( Geom::Translate( bleedmargin_px, bleedmargin_px ) );
             ctx->transform(tp);
         } else {
-            double high = doc->getHeight();
+            double high = doc->getHeight().value("px");
             if (ctx->_vector_based_target)
-                high *= Inkscape::Util::Quantity::convert(1, "px", "pt");
+                high = Inkscape::Util::Quantity::convert(high, "px", "pt");
 
             // this transform translates the export drawing to a virtual page (0,0)-(width,height)
             Geom::Affine tp(Geom::Translate(-d.left() * (ctx->_vector_based_target ? Inkscape::Util::Quantity::convert(1, "pt", "px") : 1.0),

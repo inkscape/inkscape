@@ -149,7 +149,7 @@ SPDesktop *sp_file_new(const Glib::ustring &templ)
             // If the current desktop is empty, open the document there
         doc->ensureUpToDate(); // TODO this will trigger broken link warnings, etc.
         desktop->change_document(doc);
-        doc->emitResizedSignal(doc->getWidth(), doc->getHeight());
+        doc->emitResizedSignal(doc->getWidth().value("px"), doc->getHeight().value("px"));
     } else {
             // create a whole new desktop and window
         SPViewWidget *dtw = sp_desktop_widget_new(sp_document_namedview(doc, NULL)); // TODO this will trigger broken link warnings, etc.
@@ -291,7 +291,7 @@ bool sp_file_open(const Glib::ustring &uri,
             // If the current desktop is empty, open the document there
             doc->ensureUpToDate(); // TODO this will trigger broken link warnings, etc.
             desktop->change_document(doc);
-            doc->emitResizedSignal(doc->getWidth(), doc->getHeight());
+            doc->emitResizedSignal(doc->getWidth().value("px"), doc->getHeight().value("px"));
         } else {
             // create a whole new desktop and window
             SPViewWidget *dtw = sp_desktop_widget_new(sp_document_namedview(doc, NULL)); // TODO this will trigger broken link warnings, etc.

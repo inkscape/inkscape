@@ -1799,8 +1799,8 @@ std::cout << "BEFORE DRAW"
             d->MMX = d->MM100InX / 100.0;
             d->MMY = d->MM100InY / 100.0;
 
-            d->PixelsOutX = d->MMX * Inkscape::Util::Quantity::convert(1, "mm", "px");
-            d->PixelsOutY = d->MMY * Inkscape::Util::Quantity::convert(1, "mm", "px");
+            d->PixelsOutX = Inkscape::Util::Quantity::convert(d->MMX, "mm", "px");
+            d->PixelsOutY = Inkscape::Util::Quantity::convert(d->MMY, "mm", "px");
 
             // Upper left corner, from header rclBounds, in device units, usually both 0, but not always
             d->ulCornerInX = pEmr->rclBounds.left;

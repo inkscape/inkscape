@@ -443,6 +443,7 @@ void SPStarContext::finishItem() {
         this->star->setCenter(this->center);
         this->star->set_shape();
         this->star->updateRepr(SP_OBJECT_WRITE_EXT);
+        this->star->doWriteTransform(this->star->getRepr(), this->star->transform, NULL, true);
 
         desktop->canvas->endForcedFullRedraws();
 

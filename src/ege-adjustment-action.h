@@ -63,6 +63,14 @@ typedef struct _EgeAdjustmentAction      EgeAdjustmentAction;
 typedef struct _EgeAdjustmentActionClass EgeAdjustmentActionClass;
 typedef struct _EgeAdjustmentActionPrivate EgeAdjustmentActionPrivate;
 
+namespace Inkscape {
+    namespace UI {
+        namespace Widget {
+            class UnitTracker;
+        }
+    }
+}
+
 /**
  * Instance structure of EgeAdjustmentAction.
  */
@@ -95,7 +103,7 @@ GType ege_adjustment_action_get_type( void );
  */
 
 /** Callback type for widgets creation factory */
-typedef GtkWidget* (*EgeCreateAdjWidgetCB)( GtkAdjustment *adjustment, gdouble climb_rate, guint digits );
+typedef GtkWidget* (*EgeCreateAdjWidgetCB)( GtkAdjustment *adjustment, gdouble climb_rate, guint digits, Inkscape::UI::Widget::UnitTracker *unit_tracker );
 
 /**
  * Sets a factory callback to be used to create the specific widget.
@@ -117,6 +125,7 @@ void ege_adjustment_action_set_compact_tool_factory( EgeCreateAdjWidgetCB factor
  * @param stock_id Icon id to use.
  * @param climb_rate Used for created widgets.
  * @param digits Used for created widgets.
+ * @param unit_tracker Used to store unit.
  */
 EgeAdjustmentAction* ege_adjustment_action_new( GtkAdjustment* adjustment,
                                                 const gchar *name,
@@ -124,7 +133,8 @@ EgeAdjustmentAction* ege_adjustment_action_new( GtkAdjustment* adjustment,
                                                 const gchar *tooltip,
                                                 const gchar *stock_id,
                                                 gdouble climb_rate,
-                                                guint digits
+                                                guint digits,
+                                                Inkscape::UI::Widget::UnitTracker *unit_tracker
                                                 );
 /**
  * Returns a pointer to the GtkAdjustment represented by the given

@@ -504,7 +504,7 @@ void sp_star_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
                                          GTK_WIDGET(desktop->canvas), holder, FALSE, NULL,
                                          3, 1024, 1, 5,
                                          labels, values, G_N_ELEMENTS(labels),
-                                         sp_stb_magnitude_value_changed,
+                                         sp_stb_magnitude_value_changed, NULL /*unit tracker*/,
                                          1.0, 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
@@ -559,7 +559,7 @@ void sp_star_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
                                          GTK_WIDGET(desktop->canvas), holder, FALSE, NULL,
                                          -10.0, 10.0, 0.001, 0.01,
                                          labels, values, G_N_ELEMENTS(labels),
-                                         sp_stb_randomized_value_changed, 0.1, 3 );
+                                         sp_stb_randomized_value_changed, NULL /*unit tracker*/, 0.1, 3 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         }

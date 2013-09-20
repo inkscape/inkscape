@@ -279,14 +279,14 @@ PdfParser::PdfParser(XRef *xrefA, Inkscape::Extension::Internal::SvgBuilder *bui
   ignoreUndef = 0;
   operatorHistory = NULL;
   builder = builderA;
-  builder->setDocumentSize(state->getPageWidth()*Inkscape::Util::Quantity::convert(1, "pt", "px"),
-                           state->getPageHeight()*Inkscape::Util::Quantity::convert(1, "pt", "px"));
+  builder->setDocumentSize(Inkscape::Util::Quantity::convert(state->getPageWidth(), "pt", "px"),
+                           Inkscape::Util::Quantity::convert(state->getPageHeight(), "pt", "px"));
 
   double *ctm = state->getCTM();
   double scaledCTM[6];
   for (int i = 0; i < 6; ++i) {
     baseMatrix[i] = ctm[i];
-    scaledCTM[i] = Inkscape::Util::Quantity::convert(1, "pt", "px") * ctm[i];
+    scaledCTM[i] = Inkscape::Util::Quantity::convert(ctm[i], "pt", "px");
   }
   saveState();
   builder->setTransform((double*)&scaledCTM);

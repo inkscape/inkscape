@@ -958,6 +958,10 @@ void SPDynaDrawContext::set_to_accumulated(bool unionize, bool subtract) {
                 sp_desktop_selection(desktop)->set(this->repr);
             }
         }
+
+        SPItem *item=SP_ITEM(desktop->doc()->getObjectByRepr(this->repr));
+        item->doWriteTransform(item->getRepr(), item->transform, NULL, true);
+
     } else {
         if (this->repr) {
             sp_repr_unparent(this->repr);

@@ -197,7 +197,7 @@ CairoRendererPdfOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, 
 
     float new_bleedmargin_px = 0.;
     try {
-        new_bleedmargin_px = mod->get_param_float("bleed") * Inkscape::Util::Quantity::convert(1, "mm", "px");
+        new_bleedmargin_px = Inkscape::Util::Quantity::convert(mod->get_param_float("bleed"), "mm", "px");
     }
     catch(...) {
         g_warning("Parameter <bleed> might not exist");

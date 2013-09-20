@@ -31,9 +31,12 @@
 #include "inkscape.h"
 #include "io/sys.h"
 #include "preferences.h"
+#include "shape-editor.h"
 #include "sp-namedview.h"
 #include "sp-root.h"
 #include "sp-script.h"
+#include "svg/stringstream.h"
+#include "tools-switch.h"
 #include "ui/widget/color-picker.h"
 #include "ui/widget/scalar-unit.h"
 #include "ui/dialog/filedialog.h"
@@ -52,6 +55,8 @@
 #include <gtkmm/imagemenuitem.h>
 #include <gtkmm/stock.h>
 #include <gtkmm/table.h>
+
+#include <2geom/transforms.h>
 
 using std::pair;
 
@@ -168,6 +173,9 @@ DocumentProperties::DocumentProperties()
     signalDocumentReplaced().connect(sigc::mem_fun(*this, &DocumentProperties::_handleDocumentReplaced));
     signalActivateDesktop().connect(sigc::mem_fun(*this, &DocumentProperties::_handleActivateDesktop));
     signalDeactiveDesktop().connect(sigc::mem_fun(*this, &DocumentProperties::_handleDeactivateDesktop));
+    
+    _rum_deflt._changed_connection.block();
+    _rum_deflt.getUnitMenu()->signal_changed().connect(sigc::mem_fun(*this, &DocumentProperties::onDocUnitChange));
 }
 
 void DocumentProperties::init()
@@ -1432,9 +1440,17 @@ void DocumentProperties::update()
     if (nv->doc_units)
         _rum_deflt.setUnit (nv->doc_units->abbr);
 
-    double const doc_w_px = sp_desktop_document(dt)->getWidth();
-    double const doc_h_px = sp_desktop_document(dt)->getHeight();
-    _page_sizer.setDim (doc_w_px, doc_h_px);
+    double const doc_w = sp_desktop_document(dt)->getRoot()->width.value;
+    Glib::ustring doc_w_unit = unit_table.getUnit(sp_desktop_document(dt)->getRoot()->width.unit).abbr;
+    if (doc_w_unit == "") {
+        doc_w_unit = "px";
+    }
+    double const doc_h = sp_desktop_document(dt)->getRoot()->height.value;
+    Glib::ustring doc_h_unit = unit_table.getUnit(sp_desktop_document(dt)->getRoot()->height.unit).abbr;
+    if (doc_h_unit == "") {
+        doc_h_unit = "px";
+    }
+    _page_sizer.setDim(Inkscape::Util::Quantity(doc_w, doc_w_unit), Inkscape::Util::Quantity(doc_h, doc_h_unit));
     _page_sizer.updateFitMarginsUI(nv->getRepr());
 
     //-----------------------------------------------------------guide page
@@ -1617,6 +1633,47 @@ void DocumentProperties::onRemoveGrid()
     }
 }
 
+/** Callback for document unit change. */
+void DocumentProperties::onDocUnitChange()
+{
+    SPDocument *doc = SP_ACTIVE_DOCUMENT;
+    Inkscape::XML::Node *repr = sp_desktop_namedview(getDesktop())->getRepr();
+    Inkscape::Util::Unit old_doc_unit = unit_table.getUnit("px");
+    if(repr->attribute("inkscape:document-units")) {
+        old_doc_unit = unit_table.getUnit(repr->attribute("inkscape:document-units"));
+    }
+    Inkscape::Util::Unit doc_unit = _rum_deflt.getUnit();
+    
+    // Don't execute when change is being undone
+    if (!DocumentUndo::getUndoSensitive(doc)) {
+        return;
+    }
+    
+    // Set document unit
+    Inkscape::SVGOStringStream os;
+    os << doc_unit.abbr;
+    repr->setAttribute("inkscape:document-units", os.str().c_str());
+    
+    // Set viewBox
+    Inkscape::Util::Quantity width = doc->getWidth();
+    Inkscape::Util::Quantity height = doc->getHeight();
+    doc->setViewBox(Geom::Rect::from_xywh(0, 0, width.value(doc_unit), height.value(doc_unit)));
+    
+    // TODO: Fix bug in nodes tool instead of switching away from it
+    if (tools_active(getDesktop()) == TOOLS_NODES) {
+        tools_switch(getDesktop(), TOOLS_SELECT);
+    }
+    
+    // Scale and translate objects
+    gdouble scale = Inkscape::Util::Quantity::convert(1, old_doc_unit, doc_unit);
+    ShapeEditor::blockSetItem(true);
+    doc->getRoot()->scaleChildItemsRec(Geom::Scale(scale), Geom::Point(0, doc->getHeight().value("px")));
+    ShapeEditor::blockSetItem(false);
+    
+    doc->setModifiedSinceSave();
+    
+    DocumentUndo::done(doc, SP_VERB_NONE, _("Changed document unit"));
+}
 
 } // namespace Dialog
 } // namespace UI

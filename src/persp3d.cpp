@@ -24,6 +24,7 @@
 #include "desktop-handles.h"
 #include <glibmm/i18n.h>
 #include "verbs.h"
+#include "util/units.h"
 
 using Inkscape::DocumentUndo;
 
@@ -168,10 +169,10 @@ Persp3D *persp3d_create_xml_element(SPDocument *document, Persp3DImpl *dup) {// 
     repr = xml_doc->createElement("inkscape:perspective");
     repr->setAttribute("sodipodi:type", "inkscape:persp3d");
 
-    Proj::Pt2 proj_vp_x = Proj::Pt2 (0.0, document->getHeight()/2, 1.0);
+    Proj::Pt2 proj_vp_x = Proj::Pt2 (0.0, document->getHeight().value("px")/2, 1.0);
     Proj::Pt2 proj_vp_y = Proj::Pt2 (0.0, 1000.0, 0.0);
-    Proj::Pt2 proj_vp_z = Proj::Pt2 (document->getWidth(), document->getHeight()/2, 1.0);
-    Proj::Pt2 proj_origin = Proj::Pt2 (document->getWidth()/2, document->getHeight()/3, 1.0);
+    Proj::Pt2 proj_vp_z = Proj::Pt2 (document->getWidth().value("px"), document->getHeight().value("px")/2, 1.0);
+    Proj::Pt2 proj_origin = Proj::Pt2 (document->getWidth().value("px")/2, document->getHeight().value("px")/3, 1.0);
 
     if (dup) {
         proj_vp_x = dup->tmat.column (Proj::X);

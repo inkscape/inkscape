@@ -21,6 +21,7 @@
 #include "document.h"
 #include "svg-view.h"
 #include "svg-view-widget.h"
+#include "util/units.h"
 
 static void sp_svg_view_widget_class_init (SPSVGSPViewWidgetClass *klass);
 static void sp_svg_view_widget_init (SPSVGSPViewWidget *widget);
@@ -175,8 +176,8 @@ static void sp_svg_view_widget_size_request(GtkWidget *widget, GtkRequisition *r
 		gdouble width, height;
 
 		svgv = static_cast<SPSVGView*> (v);
-		width = (v->doc())->getWidth () * svgv->_hscale;
-		height = (v->doc())->getHeight () * svgv->_vscale;
+		width = (v->doc())->getWidth().value("px") * svgv->_hscale;
+		height = (v->doc())->getHeight().value("px") * svgv->_vscale;
 
 		if (width <= vw->maxwidth) {
 			hpol = GTK_POLICY_NEVER;

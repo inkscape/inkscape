@@ -377,8 +377,13 @@ void SPText::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::
 
 Geom::Affine SPText::set_transform(Geom::Affine const &xform) {
     // we cannot optimize textpath because changing its fontsize will break its match to the path
-    if (SP_IS_TEXT_TEXTPATH (this))
-        return xform;
+    if (SP_IS_TEXT_TEXTPATH (this)) {
+        if (!this->_optimizeTextpathText) {
+            return xform;
+        } else {
+            this->_optimizeTextpathText = false;
+        }
+    }
 
     /* This function takes care of scaling & translation only, we return whatever parts we can't
        handle. */

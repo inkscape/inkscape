@@ -770,7 +770,7 @@ void Inkscape::ObjectSnapper::_clear_paths() const
 
 Geom::PathVector* Inkscape::ObjectSnapper::_getBorderPathv() const
 {
-    Geom::Rect const border_rect = Geom::Rect(Geom::Point(0,0), Geom::Point((_snapmanager->getDocument())->getWidth(),(_snapmanager->getDocument())->getHeight()));
+    Geom::Rect const border_rect = Geom::Rect(Geom::Point(0,0), Geom::Point((_snapmanager->getDocument())->getWidth().value("px"),(_snapmanager->getDocument())->getHeight().value("px")));
     return _getPathvFromRect(border_rect);
 }
 
@@ -787,8 +787,8 @@ Geom::PathVector* Inkscape::ObjectSnapper::_getPathvFromRect(Geom::Rect const re
 
 void Inkscape::ObjectSnapper::_getBorderNodes(std::vector<SnapCandidatePoint> *points) const
 {
-    Geom::Coord w = (_snapmanager->getDocument())->getWidth();
-    Geom::Coord h = (_snapmanager->getDocument())->getHeight();
+    Geom::Coord w = (_snapmanager->getDocument())->getWidth().value("px");
+    Geom::Coord h = (_snapmanager->getDocument())->getHeight().value("px");
     points->push_back(SnapCandidatePoint(Geom::Point(0,0), SNAPSOURCE_UNDEFINED, SNAPTARGET_PAGE_CORNER));
     points->push_back(SnapCandidatePoint(Geom::Point(0,h), SNAPSOURCE_UNDEFINED, SNAPTARGET_PAGE_CORNER));
     points->push_back(SnapCandidatePoint(Geom::Point(w,h), SNAPSOURCE_UNDEFINED, SNAPTARGET_PAGE_CORNER));

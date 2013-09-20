@@ -998,6 +998,8 @@ spcc_flush_white(SPConnectorContext *cc, SPCurve *gc)
             cc->newconn->updateRepr();
         }
 
+        cc->newconn->doWriteTransform(cc->newconn->getRepr(), cc->newconn->transform, NULL, true);
+
         // Only set the selection after we are finished with creating the attributes of
         // the connector.  Otherwise, the selection change may alter the defaults for
         // values like curvature in the connector context, preventing subsequent lookup

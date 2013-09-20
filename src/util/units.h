@@ -1,5 +1,6 @@
 /*
  * Inkscape Units
+ * These classes are used for defining different unit systems.
  *
  * Authors:
  *   Matthew Petroff <matthew@mpetroff.net>
@@ -9,25 +10,12 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-/*
-This is a rough draft of a global 'units' thingee, to allow dialogs and
-the ruler to share info about unit systems...  Dunno if this is the
-right kind of object though, so we may have to redo this or shift things
-around later when it becomes clearer what we need.
-
-This object is used for defining different unit systems.
-
-This is intended to eventually replace inkscape/helper/units.*.
-
-Need to review the Units support that's in Gtkmm already...
-
-*/
-
 #ifndef INKSCAPE_UTIL_UNITS_H
 #define INKSCAPE_UTIL_UNITS_H
 
 #include <map>
 #include <glibmm/ustring.h>
+#include "svg/svg-length.h"
 
 namespace Inkscape {
 namespace Util {
@@ -112,6 +100,11 @@ public:
     static double convert(const double from_dist, const Glib::ustring from, const Unit &to);
     static double convert(const double from_dist, const Unit &from, const Glib::ustring to);
     static double convert(const double from_dist, const Glib::ustring from, const Glib::ustring to);
+    
+    /** Comparison operators. */
+    friend bool operator< (const Quantity &ql, const Quantity &qr);
+    friend bool operator> (const Quantity &ql, const Quantity &qr);
+    friend bool operator!= (const Quantity &q1, const Quantity &q2);
 };
 
 class UnitTable {
@@ -131,6 +124,9 @@ class UnitTable {
 
     /** Retrieve a given unit based on its string identifier */
     Unit    getUnit(Glib::ustring const &name) const;
+    
+    /** Retrieve a given unit based on its SVGLength unit */
+    Unit    getUnit(SVGLength::Unit const u) const;
     
     /** Retrieve a quantity based on its string identifier */
     Quantity getQuantity(Glib::ustring const &q) const;

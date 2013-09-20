@@ -2135,8 +2135,8 @@ sp_desktop_widget_update_scrollbars (SPDesktopWidget *dtw, double scale)
 
     /* The desktop region we always show unconditionally */
     SPDocument *doc = dtw->desktop->doc();
-    Geom::Rect darea ( Geom::Point(-doc->getWidth(), -doc->getHeight()),
-                     Geom::Point(2 * doc->getWidth(), 2 * doc->getHeight())  );
+    Geom::Rect darea ( Geom::Point(-doc->getWidth().value("px"), -doc->getHeight().value("px")),
+                     Geom::Point(2 * doc->getWidth().value("px"), 2 * doc->getHeight().value("px"))  );
 
     Geom::OptRect deskarea;
     if (Inkscape::Preferences::get()->getInt("/tools/bounding_box") == 0) {

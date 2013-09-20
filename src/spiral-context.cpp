@@ -417,6 +417,7 @@ void SPSpiralContext::finishItem() {
 
         spiral->set_shape();
         spiral->updateRepr(SP_OBJECT_WRITE_EXT);
+        spiral->doWriteTransform(spiral->getRepr(), spiral->transform, NULL, true);
 
         this->desktop->canvas->endForcedFullRedraws();
 

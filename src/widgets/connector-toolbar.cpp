@@ -364,7 +364,7 @@ void sp_connector_toolbox_prep( SPDesktop *desktop, GtkActionGroup* mainActions,
                                     GTK_WIDGET(desktop->canvas), holder, TRUE, "inkscape:connector-curvature",
                                     0, 100, 1.0, 10.0,
                                     0, 0, 0,
-                                    connector_curvature_changed, 1, 0 );
+                                    connector_curvature_changed, NULL /*unit tracker*/, 1, 0 );
     gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
 
     // Spacing spinbox
@@ -375,7 +375,7 @@ void sp_connector_toolbox_prep( SPDesktop *desktop, GtkActionGroup* mainActions,
                                     GTK_WIDGET(desktop->canvas), holder, TRUE, "inkscape:connector-spacing",
                                     0, 100, 1.0, 10.0,
                                     0, 0, 0,
-                                    connector_spacing_changed, 1, 0 );
+                                    connector_spacing_changed, NULL /*unit tracker*/, 1, 0 );
     gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
 
     // Graph (connector network) layout
@@ -397,7 +397,7 @@ void sp_connector_toolbox_prep( SPDesktop *desktop, GtkActionGroup* mainActions,
                                      GTK_WIDGET(desktop->canvas), holder, TRUE, "inkscape:connector-length",
                                      10, 1000, 10.0, 100.0,
                                      0, 0, 0,
-                                     connector_length_changed, 1, 0 );
+                                     connector_length_changed, NULL /*unit tracker*/, 1, 0 );
     gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
 
 

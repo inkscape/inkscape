@@ -599,6 +599,7 @@ static void spdc_flush_white(SPDrawContext *dc, SPCurve *gc)
             dc->selection->set(repr);
             Inkscape::GC::release(repr);
             item->transform = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
+            item->doWriteTransform(item->getRepr(), item->transform, NULL, true);
             item->updateRepr();
         }
 

@@ -318,6 +318,59 @@ void SPGenericEllipse::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, 
     }
 }
 
+Geom::Affine SPGenericEllipse::set_transform(Geom::Affine const &xform)
+{
+    /* Calculate ellipse start in parent coords. */
+    Geom::Point pos( Geom::Point(this->cx.computed, this->cy.computed) * xform );
+
+    /* This function takes care of translation and scaling, we return whatever parts we can't
+       handle. */
+    Geom::Affine ret(Geom::Affine(xform).withoutTranslation());
+    gdouble const sw = hypot(ret[0], ret[1]);
+    gdouble const sh = hypot(ret[2], ret[3]);
+    if (sw > 1e-9) {
+        ret[0] /= sw;
+        ret[1] /= sw;
+    } else {
+        ret[0] = 1.0;
+        ret[1] = 0.0;
+    }
+    if (sh > 1e-9) {
+        ret[2] /= sh;
+        ret[3] /= sh;
+    } else {
+        ret[2] = 0.0;
+        ret[3] = 1.0;
+    }
+
+    if (this->rx._set) {
+        this->rx = this->rx.computed * sw;
+    }
+    if (this->ry._set) {
+        this->ry = this->ry.computed * sh;
+    }
+
+    /* Find start in item coords */
+    pos = pos * ret.inverse();
+    this->cx = pos[Geom::X];
+    this->cy = pos[Geom::Y];
+
+    this->set_shape();
+
+    // Adjust stroke width
+    this->adjust_stroke(sqrt(fabs(sw * sh)));
+
+    // Adjust pattern fill
+    this->adjust_pattern(xform * ret.inverse());
+
+    // Adjust gradient fill
+    this->adjust_gradient(xform * ret.inverse());
+
+    this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
+
+    return ret;
+}
+
 void
 sp_genericellipse_normalize(SPGenericEllipse *ellipse)
 {

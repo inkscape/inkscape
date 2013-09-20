@@ -216,6 +216,9 @@ private:
     // callback methods for buttons on grids page.
     void onNewGrid();
     void onRemoveGrid();
+    
+    // callback for document unit change
+    void onDocUnitChange();
 };
 
 } // namespace Dialog

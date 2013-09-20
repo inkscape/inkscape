@@ -451,6 +451,7 @@ void SPArcContext::finishItem() {
         }
 
         this->arc->updateRepr();
+        this->arc->doWriteTransform(this->arc->getRepr(), this->arc->transform, NULL, true);
 
         desktop->canvas->endForcedFullRedraws();
 

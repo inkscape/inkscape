@@ -130,7 +130,7 @@ void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
                                                               GTK_WIDGET(desktop->canvas), holder, TRUE, "altx-spray",
                                                               1, 100, 1.0, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
-                                                              sp_spray_width_value_changed,  1, 0 );
+                                                              sp_spray_width_value_changed, NULL /*unit tracker*/, 1, 0 );
         ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
@@ -146,7 +146,7 @@ void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
                                                               GTK_WIDGET(desktop->canvas), holder, TRUE, "spray-mean",
                                                               0, 100, 1.0, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
-                                                              sp_spray_mean_value_changed,  1, 0 );
+                                                              sp_spray_mean_value_changed, NULL /*unit tracker*/, 1, 0 );
         ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
@@ -162,7 +162,7 @@ void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
                                                               GTK_WIDGET(desktop->canvas), holder, TRUE, "spray-standard_deviation",
                                                               1, 100, 1.0, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
-                                                              sp_spray_standard_deviation_value_changed,  1, 0 );
+                                                              sp_spray_standard_deviation_value_changed, NULL /*unit tracker*/, 1, 0 );
         ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
@@ -223,7 +223,7 @@ void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
                                                               GTK_WIDGET(desktop->canvas), holder, TRUE, "spray-population",
                                                               1, 100, 1.0, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
-                                                              sp_spray_population_value_changed,  1, 0 );
+                                                              sp_spray_population_value_changed, NULL /*unit tracker*/, 1, 0 );
         ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
@@ -254,7 +254,7 @@ void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
                                                               GTK_WIDGET(desktop->canvas), holder, TRUE, "spray-rotation",
                                                               0, 100, 1.0, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
-                                                              sp_spray_rotation_value_changed,  1, 0 );
+                                                              sp_spray_rotation_value_changed, NULL /*unit tracker*/, 1, 0 );
         ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
@@ -272,7 +272,7 @@ void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
                                                               GTK_WIDGET(desktop->canvas), holder, TRUE, "spray-scale",
                                                               0, 100, 1.0, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
-                                                              sp_spray_scale_value_changed,  1, 0 );
+                                                              sp_spray_scale_value_changed, NULL /*unit tracker*/, 1, 0 );
         ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );

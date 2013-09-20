@@ -2809,7 +2809,7 @@ void sp_selection_to_marker(SPDesktop *desktop, bool apply)
     }
 
     // calculate the transform to be applied to objects to move them to 0,0
-    Geom::Point move_p = Geom::Point(0, doc->getHeight()) - *c;
+    Geom::Point move_p = Geom::Point(0, doc->getHeight().value("px")) - *c;
     move_p[Geom::Y] = -move_p[Geom::Y];
     Geom::Affine move = Geom::Affine(Geom::Translate(move_p));
 
@@ -3093,7 +3093,7 @@ sp_selection_tile(SPDesktop *desktop, bool apply)
     }
 
     // calculate the transform to be applied to objects to move them to 0,0
-    Geom::Point move_p = Geom::Point(0, doc->getHeight()) - (r->min() + Geom::Point(0, r->dimensions()[Geom::Y]));
+    Geom::Point move_p = Geom::Point(0, doc->getHeight().value("px")) - (r->min() + Geom::Point(0, r->dimensions()[Geom::Y]));
     move_p[Geom::Y] = -move_p[Geom::Y];
     Geom::Affine move = Geom::Affine(Geom::Translate(move_p));
 
@@ -3398,7 +3398,7 @@ void sp_selection_create_bitmap_copy(SPDesktop *desktop)
         res = prefs_res;
     } else if (0 < prefs_min) {
         // If minsize is given, look up minimum bitmap size (default 250 pixels) and calculate resolution from it
-        res = Inkscape::Util::Quantity::convert(1, "in", "px") * prefs_min / MIN(bbox->width(), bbox->height());
+        res = Inkscape::Util::Quantity::convert(prefs_min, "in", "px") / MIN(bbox->width(), bbox->height());
     } else {
         float hint_xdpi = 0, hint_ydpi = 0;
         Glib::ustring hint_filename;
@@ -3419,8 +3419,8 @@ void sp_selection_create_bitmap_copy(SPDesktop *desktop)
     }
 
     // The width and height of the bitmap in pixels
-    unsigned width = (unsigned) floor(bbox->width() * res / Inkscape::Util::Quantity::convert(1, "in", "px"));
-    unsigned height =(unsigned) floor(bbox->height() * res / Inkscape::Util::Quantity::convert(1, "in", "px"));
+    unsigned width = (unsigned) floor(bbox->width() * Inkscape::Util::Quantity::convert(res, "px", "in"));
+    unsigned height =(unsigned) floor(bbox->height() * Inkscape::Util::Quantity::convert(res, "px", "in"));
 
     // Find out if we have to run an external filter
     gchar const *run = NULL;

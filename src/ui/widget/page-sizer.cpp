@@ -442,6 +442,7 @@ PageSizer::init ()
     _portrait_connection = _portraitButton.signal_toggled().connect (sigc::mem_fun (*this, &PageSizer::on_portrait));
     _changedw_connection = _dimensionWidth.signal_value_changed().connect (sigc::mem_fun (*this, &PageSizer::on_value_changed));
     _changedh_connection = _dimensionHeight.signal_value_changed().connect (sigc::mem_fun (*this, &PageSizer::on_value_changed));
+    _changedu_connection = _dimensionUnits.getUnitMenu()->signal_changed().connect (sigc::mem_fun (*this, &PageSizer::on_units_changed));
     _fitPageButton.signal_clicked().connect(sigc::mem_fun(*this, &PageSizer::fire_fit_canvas_to_selection_or_drawing));
 
     show_all_children();
@@ -454,11 +455,11 @@ PageSizer::init ()
  * 'changeList' is true, then adjust the paperSizeList to show the closest
  * standard page size.
  *
- * \param w, h given in px
+ * \param w, h
  * \param changeList whether to modify the paper size list
  */
 void
-PageSizer::setDim (double w, double h, bool changeList)
+PageSizer::setDim (Inkscape::Util::Quantity w, Inkscape::Util::Quantity h, bool changeList)
 {
     static bool _called = false;
     if (_called) {
@@ -475,12 +476,12 @@ PageSizer::setDim (double w, double h, bool changeList)
 
     if (SP_ACTIVE_DESKTOP && !_widgetRegistry->isUpdating()) {
         SPDocument *doc = sp_desktop_document(SP_ACTIVE_DESKTOP);
-        double const old_height = doc->getHeight();
-        doc->setWidth (Inkscape::Util::Quantity(w, "px"));
-        doc->setHeight (Inkscape::Util::Quantity(h, "px"));
+        Inkscape::Util::Quantity const old_height = doc->getHeight();
+        doc->setWidth (w);
+        doc->setHeight (h);
         // The origin for the user is in the lower left corner; this point should remain stationary when
         // changing the page size. The SVG's origin however is in the upper left corner, so we must compensate for this
-        Geom::Translate const vert_offset(Geom::Point(0, (old_height - h)));
+        Geom::Translate const vert_offset(Geom::Point(0, (old_height.value("px") - h.value("px"))));
         doc->getRoot()->translateChildItems(vert_offset);
         DocumentUndo::done(doc, SP_VERB_NONE, _("Set page size"));
     }
@@ -503,9 +504,10 @@ PageSizer::setDim (double w, double h, bool changeList)
             _paperSizeListSelection->select(row);
         }
 
-    Unit const& unit = _dimensionUnits.getUnit();
-    _dimensionWidth.setValue (w / unit.factor);
-    _dimensionHeight.setValue (h / unit.factor);
+    _dimensionWidth.setUnit(w.unit->abbr);
+    _dimensionWidth.setValue (w.quantity);
+    _dimensionHeight.setUnit(h.unit->abbr);
+    _dimensionHeight.setValue (h.quantity);
 
     _paper_size_list_connection.unblock();
     _landscape_connection.unblock();
@@ -547,12 +549,12 @@ PageSizer::updateFitMarginsUI(Inkscape::XML::Node *nv_repr)
  * paperSizeListStore->children().end() if no such paper exists.
  */
 Gtk::ListStore::iterator
-PageSizer::find_paper_size (double w, double h) const
+PageSizer::find_paper_size (Inkscape::Util::Quantity w, Inkscape::Util::Quantity h) const
 {
-    double smaller = w;
-    double larger  = h;
+    double smaller = w.quantity;
+    double larger  = h.quantity;
     if ( h < w ) {
-        smaller = h; larger = w;
+        smaller = h.quantity; larger = w.quantity;
     }
 
     g_return_val_if_fail(smaller <= larger, _paperSizeListStore->children().end());
@@ -562,8 +564,8 @@ PageSizer::find_paper_size (double w, double h) const
          iter != _paperSizeTable.end() ; ++iter) {
         PaperSize paper = iter->second;
         Inkscape::Util::Unit const &i_unit = paper.unit;
-        double smallX = Inkscape::Util::Quantity::convert(paper.smaller, i_unit, "px");
-        double largeX = Inkscape::Util::Quantity::convert(paper.larger, i_unit, "px");
+        double smallX = Inkscape::Util::Quantity::convert(paper.smaller, i_unit, *w.unit);
+        double largeX = Inkscape::Util::Quantity::convert(paper.larger, i_unit, *w.unit);
 
         g_return_val_if_fail(smallX <= largeX, _paperSizeListStore->children().end());
 
@@ -643,8 +645,8 @@ PageSizer::on_paper_size_list_changed()
         return;
     }
     PaperSize paper = piter->second;
-    double w = paper.smaller;
-    double h = paper.larger;
+    Inkscape::Util::Quantity w = Inkscape::Util::Quantity(paper.smaller, paper.unit);
+    Inkscape::Util::Quantity h = Inkscape::Util::Quantity(paper.larger, paper.unit);
 
     if (std::find(lscape_papers.begin(), lscape_papers.end(), paper.name.c_str()) != lscape_papers.end()) {
         // enforce landscape mode if this is desired for the given page format
@@ -653,9 +655,6 @@ PageSizer::on_paper_size_list_changed()
         // otherwise we keep the current mode
         _landscape = _landscapeButton.get_active();
     }
-
-    w = Inkscape::Util::Quantity::convert(w, paper.unit, "px");
-    h = Inkscape::Util::Quantity::convert(h, paper.unit, "px");
 
     if (_landscape)
         setDim (h, w, false);
@@ -673,8 +672,8 @@ PageSizer::on_portrait()
 {
     if (!_portraitButton.get_active())
         return;
-    double w = _dimensionWidth.getValue ("px");
-    double h = _dimensionHeight.getValue ("px");
+    Inkscape::Util::Quantity w = Inkscape::Util::Quantity(_dimensionWidth.getValue(""), _dimensionWidth.getUnit());
+    Inkscape::Util::Quantity h = Inkscape::Util::Quantity(_dimensionHeight.getValue(""), _dimensionHeight.getUnit());
     if (h < w) {
         setDim (h, w);
     }
@@ -689,8 +688,8 @@ PageSizer::on_landscape()
 {
     if (!_landscapeButton.get_active())
         return;
-    double w = _dimensionWidth.getValue ("px");
-    double h = _dimensionHeight.getValue ("px");
+    Inkscape::Util::Quantity w = Inkscape::Util::Quantity(_dimensionWidth.getValue(""), _dimensionWidth.getUnit());
+    Inkscape::Util::Quantity h = Inkscape::Util::Quantity(_dimensionHeight.getValue(""), _dimensionHeight.getUnit());
     if (w < h) {
         setDim (h, w);
     }
@@ -703,11 +702,18 @@ void
 PageSizer::on_value_changed()
 {
     if (_widgetRegistry->isUpdating()) return;
-
-    setDim (_dimensionWidth.getValue("px"),
-            _dimensionHeight.getValue("px"));
+    if (_unit != _dimensionUnits.getUnit().abbr) return;
+    setDim (Inkscape::Util::Quantity(_dimensionWidth.getValue(""), _dimensionUnits.getUnit()),
+            Inkscape::Util::Quantity(_dimensionHeight.getValue(""), _dimensionUnits.getUnit()));
 }
-
+void
+PageSizer::on_units_changed()
+{
+    if (_widgetRegistry->isUpdating()) return;
+    _unit = _dimensionUnits.getUnit().abbr;
+    setDim (Inkscape::Util::Quantity(_dimensionWidth.getValue(""), _dimensionUnits.getUnit()),
+            Inkscape::Util::Quantity(_dimensionHeight.getValue(""), _dimensionUnits.getUnit()));
+}
 
 } // namespace Widget
 } // namespace UI

@@ -28,7 +28,6 @@
 
 #include "sp-spiral.h"
 
-
 #include "sp-factory.h"
 
 namespace {
@@ -432,6 +431,58 @@ void SPSpiral::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape
         // This point is the start-point of the spiral, which is also returned when _snap_to_itemnode has been set
         // in the object snapper. In that case we will get a duplicate!
     }
+}
+
+/**
+ * Set spiral transform
+ */
+Geom::Affine SPSpiral::set_transform(Geom::Affine const &xform)
+{
+    // Only set transform with proportional scaling
+    if (!xform.withoutTranslation().isUniformScale()) {
+        return xform;
+    }
+
+    /* Calculate spiral start in parent coords. */
+    Geom::Point pos( Geom::Point(this->cx, this->cy) * xform );
+
+    /* This function takes care of translation and scaling, we return whatever parts we can't
+       handle. */
+    Geom::Affine ret(Geom::Affine(xform).withoutTranslation());
+    gdouble const s = hypot(ret[0], ret[1]);
+    if (s > 1e-9) {
+        ret[0] /= s;
+        ret[1] /= s;
+        ret[2] /= s;
+        ret[3] /= s;
+    } else {
+        ret[0] = 1.0;
+        ret[1] = 0.0;
+        ret[2] = 0.0;
+        ret[3] = 1.0;
+    }
+
+    this->rad *= s;
+
+    /* Find start in item coords */
+    pos = pos * ret.inverse();
+    this->cx = pos[Geom::X];
+    this->cy = pos[Geom::Y];
+
+    this->set_shape();
+
+    // Adjust stroke width
+    this->adjust_stroke(s);
+
+    // Adjust pattern fill
+    this->adjust_pattern(xform * ret.inverse());
+
+    // Adjust gradient fill
+    this->adjust_gradient(xform * ret.inverse());
+
+    this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
+
+    return ret;
 }
 
 /**

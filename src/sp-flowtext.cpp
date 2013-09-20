@@ -28,6 +28,7 @@
 #include "text-tag-attributes.h"
 #include "text-chemistry.h"
 #include "text-editing.h"
+#include "sp-text.h"
 
 #include "livarot/Shape.h"
 
@@ -648,6 +649,44 @@ SPItem *create_flowtext_with_internal_frame (SPDesktop *desktop, Geom::Point p0,
     return ft_item;
 }
 
+Geom::Affine SPFlowtext::set_transform (Geom::Affine const &xform)
+{
+    if ((this->_optimizeScaledText && !xform.withoutTranslation().isNonzeroUniformScale())
+        || (!this->_optimizeScaledText && !xform.isNonzeroUniformScale())) {
+        this->_optimizeScaledText = false;
+        return xform;
+    }
+    this->_optimizeScaledText = false;
+    
+    SPText *text = reinterpret_cast<SPText *>(this);
+    
+    double const ex = xform.descrim();
+    if (ex == 0) {
+        return xform;
+    }
+
+    Geom::Affine ret(xform);
+    ret[0] /= ex;
+    ret[1] /= ex;
+    ret[2] /= ex;
+    ret[3] /= ex;
+
+    // Adjust font size
+    text->_adjustFontsizeRecursive (this, ex);
+
+    // Adjust stroke width
+    this->adjust_stroke_width_recursive (ex);
+
+    // Adjust pattern fill
+    this->adjust_pattern(xform * ret.inverse());
+
+    // Adjust gradient fill
+    this->adjust_gradient(xform * ret.inverse());
+
+    this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_TEXT_LAYOUT_MODIFIED_FLAG);
+
+    return ret;
+}
 
 /*
   Local Variables:

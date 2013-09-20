@@ -227,12 +227,13 @@ public:
 
     SPDocument *doRef();
     SPDocument *doUnref();
-    gdouble getWidth() const;
-    gdouble getHeight() const;
+    Inkscape::Util::Quantity getWidth() const;
+    Inkscape::Util::Quantity getHeight() const;
     Geom::Point getDimensions() const;
     Geom::OptRect preferredBounds() const;
     void setWidth(const Inkscape::Util::Quantity &width);
     void setHeight(const Inkscape::Util::Quantity &height);
+    void setViewBox(const Geom::Rect &viewBox);
     void requestModified();
     gint ensureUpToDate();
     bool addResource(const gchar *key, SPObject *object);

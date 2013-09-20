@@ -138,8 +138,8 @@ unsigned int PrintWmf::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
 
     // WMF header the only things that can be set are the page size in inches (w,h) and the dpi
     // width and height in px
-    _width  = doc->getWidth();
-    _height = doc->getHeight();
+    _width  = doc->getWidth().value("px");
+    _height = doc->getHeight().value("px");
 
     // initialize a few global variables
     hbrush = hpen = 0;

@@ -262,7 +262,7 @@ void sp_spiral_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
                                          GTK_WIDGET(desktop->canvas), holder, TRUE, "altx-spiral",
                                          0.01, 1024.0, 0.1, 1.0,
                                          labels, values, G_N_ELEMENTS(labels),
-                                         sp_spl_tb_revolution_value_changed, 1, 2);
+                                         sp_spl_tb_revolution_value_changed, NULL /*unit tracker*/, 1, 2);
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
     }
 

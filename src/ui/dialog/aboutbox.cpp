@@ -34,6 +34,7 @@
 #include "svg-view-widget.h"
 #include "sp-text.h"
 #include "text-editing.h"
+#include "util/units.h"
 
 #include "inkscape-version.h"
 
@@ -175,8 +176,8 @@ Gtk::Widget *build_splash_widget() {
 
     GtkWidget *v=sp_svg_view_widget_new(doc);
 
-    double width=doc->getWidth();
-    double height=doc->getHeight();
+    double width=doc->getWidth().value("px");
+    double height=doc->getHeight().value("px");
     
     doc->doUnref();
 

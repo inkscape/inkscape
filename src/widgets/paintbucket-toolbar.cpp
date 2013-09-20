@@ -169,7 +169,7 @@ void sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
             "/tools/paintbucket/threshold", 5, GTK_WIDGET(desktop->canvas), holder, TRUE,
             "inkscape:paintbucket-threshold", 0, 100.0, 1.0, 10.0,
             0, 0, 0,
-            paintbucket_threshold_changed, 1, 0 );
+            paintbucket_threshold_changed, NULL /*unit tracker*/, 1, 0 );
 
         ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
@@ -197,7 +197,7 @@ void sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
             "/tools/paintbucket/offset", 0, GTK_WIDGET(desktop->canvas), holder, TRUE,
             "inkscape:paintbucket-offset", -1e4, 1e4, 0.1, 0.5,
             0, 0, 0,
-            paintbucket_offset_changed, 1, 2);
+            paintbucket_offset_changed, tracker, 1, 2);
         tracker->addAdjustment( ege_adjustment_action_get_adjustment(eact) );
 
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );

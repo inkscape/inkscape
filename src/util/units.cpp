@@ -114,6 +114,7 @@ Unit::Unit(UnitType type,
     abbr(abbr),
     description(description)
 {
+    g_return_if_fail(factor <= 0);
 }
 
 void Unit::clear()
@@ -166,25 +167,25 @@ bool operator!= (const Unit &u1, const Unit &u2)
 int Unit::svgUnit() const
 {
     if (!abbr.compare("px"))
-        return 1;
+        return SVGLength::PX;
     if (!abbr.compare("pt"))
-        return 2;
+        return SVGLength::PT;
     if (!abbr.compare("pc"))
-        return 3;
+        return SVGLength::PC;
     if (!abbr.compare("mm"))
-        return 4;
+        return SVGLength::MM;
     if (!abbr.compare("cm"))
-        return 5;
+        return SVGLength::CM;
     if (!abbr.compare("in"))
-        return 6;
+        return SVGLength::INCH;
     if (!abbr.compare("ft"))
-        return 7;
+        return SVGLength::FOOT;
     if (!abbr.compare("em"))
-        return 8;
+        return SVGLength::EM;
     if (!abbr.compare("ex"))
-        return 9;
+        return SVGLength::EX;
     if (!abbr.compare("%"))
-        return 10;
+        return SVGLength::PERCENT;
     return 0;
 }
 
@@ -219,6 +220,36 @@ Unit UnitTable::getUnit(Glib::ustring const &unit_abbr) const
     } else {
         return Unit();
     }
+}
+Unit UnitTable::getUnit(SVGLength::Unit const u) const
+{
+    Glib::ustring u_str;
+    switch(u) {
+        case SVGLength::PX:
+            u_str = "px"; break;
+        case SVGLength::PT:
+            u_str = "pt"; break;
+        case SVGLength::PC:
+            u_str = "pc"; break;
+        case SVGLength::MM:
+            u_str = "mm"; break;
+        case SVGLength::CM:
+            u_str = "cm"; break;
+        case SVGLength::INCH:
+            u_str = "in"; break;
+        case SVGLength::FOOT:
+            u_str = "ft"; break;
+        case SVGLength::EM:
+            u_str = "em"; break;
+        case SVGLength::EX:
+            u_str = "ex"; break;
+        case SVGLength::PERCENT:
+            u_str = "%"; break;
+        default:
+            u_str = "";
+    }
+    
+    return getUnit(u_str);
 }
 
 Quantity UnitTable::getQuantity(Glib::ustring const& q) const
@@ -419,6 +450,27 @@ double Quantity::convert(const double from_dist, const Unit &from, const Glib::u
 double Quantity::convert(const double from_dist, const Glib::ustring from, const Glib::ustring to)
 {
     return convert(from_dist, unit_table.getUnit(from), unit_table.getUnit(to));
+}
+
+bool operator< (const Quantity &ql, const Quantity &qr)
+{
+    if (ql.unit->type != qr.unit->type) {
+        g_warning("Incompatible units");
+        return false;
+    }
+    return ql.quantity < qr.value(*ql.unit);
+}
+bool operator> (const Quantity &ql, const Quantity &qr)
+{
+    if (ql.unit->type != qr.unit->type) {
+        g_warning("Incompatible units");
+        return false;
+    }
+    return ql.quantity > qr.value(*ql.unit);
+}
+bool operator!= (const Quantity &q1, const Quantity &q2)
+{
+    return (*q1.unit != *q2.unit) || (q1.quantity != q2.quantity);
 }
 
 } // namespace Util

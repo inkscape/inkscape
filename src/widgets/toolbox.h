@@ -28,6 +28,10 @@ class SPEventContext;
 namespace Inkscape {
 namespace UI {
 
+namespace Widget {
+    class UnitTracker;
+}
+
 /**
  * Main toolbox source.
  */
@@ -123,6 +127,7 @@ void delete_connection(GObject * /*obj*/, sigc::connection *connection);
                                                        gdouble lower, gdouble upper, gdouble step, gdouble page,
                                                        gchar const** descrLabels, gdouble const* descrValues, guint descrCount,
                                                        void (*callback)(GtkAdjustment *, GObject *),
+                                                       Inkscape::UI::Widget::UnitTracker *unit_tracker = NULL,
                                                        gdouble climb = 0.1, guint digits = 3, double factor = 1.0 );
 
 #endif /* !SEEN_TOOLBOX_H */

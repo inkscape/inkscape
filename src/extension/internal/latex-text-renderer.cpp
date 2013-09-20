@@ -633,7 +633,7 @@ LaTeXTextRenderer::setupDocument(SPDocument *doc, bool pageBoundingBox, float bl
     }
 
     // flip y-axis
-    push_transform( Geom::Scale(1,-1) * Geom::Translate(0, doc->getHeight()) ); /// @fixme hardcoded desktop transform!
+    push_transform( Geom::Scale(1,-1) * Geom::Translate(0, doc->getHeight().value("px")) ); /// @fixme hardcoded desktop transform!
 
     // write the info to LaTeX
     Inkscape::SVGOStringStream os;
@@ -642,7 +642,7 @@ LaTeXTextRenderer::setupDocument(SPDocument *doc, bool pageBoundingBox, float bl
     // scaling of the image when including it in LaTeX
 
     os << "  \\ifx\\svgwidth\\undefined%\n";
-    os << "    \\setlength{\\unitlength}{" << d.width() * Inkscape::Util::Quantity::convert(1, "px", "pt") << "bp}%\n"; // note: 'bp' is the Postscript pt unit in LaTeX, see LP bug #792384
+    os << "    \\setlength{\\unitlength}{" << Inkscape::Util::Quantity::convert(d.width(), "px", "pt") << "bp}%\n"; // note: 'bp' is the Postscript pt unit in LaTeX, see LP bug #792384
     os << "    \\ifx\\svgscale\\undefined%\n";
     os << "      \\relax%\n";
     os << "    \\else%\n";

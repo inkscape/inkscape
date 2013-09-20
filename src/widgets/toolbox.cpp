@@ -1012,7 +1012,7 @@ GtkWidget *ToolboxFactory::createSnapToolbox()
     return toolboxNewCommon( tb, BAR_SNAP, GTK_POS_LEFT );
 }
 
-static GtkWidget* createCustomSlider( GtkAdjustment *adjustment, gdouble climbRate, guint digits )
+static GtkWidget* createCustomSlider( GtkAdjustment *adjustment, gdouble climbRate, guint digits, Inkscape::UI::Widget::UnitTracker *unit_tracker)
 {
 #if WITH_GTKMM_3_0
     Glib::RefPtr<Gtk::Adjustment> adj = Glib::wrap(adjustment, true);
@@ -1020,6 +1020,7 @@ static GtkWidget* createCustomSlider( GtkAdjustment *adjustment, gdouble climbRa
 #else
     Inkscape::UI::Widget::SpinButton *inkSpinner = new Inkscape::UI::Widget::SpinButton(*Glib::wrap(adjustment, true), climbRate, digits);
 #endif
+    inkSpinner->addUnitTracker(unit_tracker);
     inkSpinner = Gtk::manage( inkSpinner );
     GtkWidget *widget = GTK_WIDGET( inkSpinner->gobj() );
     return widget;
@@ -1034,6 +1035,7 @@ EgeAdjustmentAction * create_adjustment_action( gchar const *name,
                                                        gdouble lower, gdouble upper, gdouble step, gdouble page,
                                                        gchar const** descrLabels, gdouble const* descrValues, guint descrCount,
                                                        void (*callback)(GtkAdjustment *, GObject *),
+                                                       Inkscape::UI::Widget::UnitTracker *unit_tracker,
                                                        gdouble climb/* = 0.1*/, guint digits/* = 3*/, double factor/* = 1.0*/ )
 {
     static bool init = false;
@@ -1048,7 +1050,7 @@ EgeAdjustmentAction * create_adjustment_action( gchar const *name,
 
     g_signal_connect( G_OBJECT(adj), "value-changed", G_CALLBACK(callback), dataKludge );
 
-    EgeAdjustmentAction* act = ege_adjustment_action_new( adj, name, label, tooltip, 0, climb, digits );
+    EgeAdjustmentAction* act = ege_adjustment_action_new( adj, name, label, tooltip, 0, climb, digits, unit_tracker );
     if ( shortLabel ) {
         g_object_set( act, "short_label", shortLabel, NULL );
     }

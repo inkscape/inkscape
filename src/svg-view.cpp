@@ -20,6 +20,7 @@
 #include "sp-item.h"
 #include "svg-view.h"
 #include "sp-root.h"
+#include "util/units.h"
 
 SPSVGView::SPSVGView(SPCanvasGroup *parent)
 {
@@ -71,16 +72,16 @@ void SPSVGView::doRescale(bool event)
     if (!doc()) {
         return;
     }
-    if (doc()->getWidth () < 1e-9) {
+    if (doc()->getWidth().value("px") < 1e-9) {
         return;
     }
-    if (doc()->getHeight () < 1e-9) {
+    if (doc()->getHeight().value("px") < 1e-9) {
         return;
     }
 
     if (_rescale) {
-        _hscale = _width / doc()->getWidth ();
-        _vscale = _height / doc()->getHeight ();
+        _hscale = _width / doc()->getWidth().value("px");
+        _vscale = _height / doc()->getHeight().value("px");
         if (_keepaspect) {
             if (_hscale > _vscale) {
                 _hscale = _vscale;
@@ -95,8 +96,8 @@ void SPSVGView::doRescale(bool event)
     }
 
     if (event) {
-        emitResized (doc()->getWidth () * _hscale,
-                doc()->getHeight () * _vscale);
+        emitResized (doc()->getWidth().value("px") * _hscale,
+                doc()->getHeight().value("px") * _vscale);
     }
 }
 

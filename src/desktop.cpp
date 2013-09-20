@@ -242,7 +242,7 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas, Inkscape::UI::View::EditWid
     // display rect and zoom are now handled in sp_desktop_widget_realize()
 
     Geom::Rect const d(Geom::Point(0.0, 0.0),
-                       Geom::Point(document->getWidth(), document->getHeight()));
+                       Geom::Point(document->getWidth().value("px"), document->getHeight().value("px")));
 
     SP_CTRLRECT(page)->setRectangle(d);
     SP_CTRLRECT(page_border)->setRectangle(d);
@@ -259,7 +259,7 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas, Inkscape::UI::View::EditWid
 
 
     /* Connect event for page resize */
-    _doc2dt[5] = document->getHeight();
+    _doc2dt[5] = document->getHeight().value("px");
     sp_canvas_item_affine_absolute (SP_CANVAS_ITEM (drawing), _doc2dt);
 
     _modified_connection = namedview->connectModified(sigc::bind<2>(sigc::ptr_fun(&_namedview_modified), this));
@@ -1108,7 +1108,7 @@ void
 SPDesktop::zoom_page()
 {
     Geom::Rect d(Geom::Point(0, 0),
-                 Geom::Point(doc()->getWidth(), doc()->getHeight()));
+                 Geom::Point(doc()->getWidth().value("px"), doc()->getHeight().value("px")));
 
     if (d.minExtent() < 1.0) {
         return;
@@ -1125,12 +1125,12 @@ SPDesktop::zoom_page_width()
 {
     Geom::Rect const a = get_display_area();
 
-    if (doc()->getWidth() < 1.0) {
+    if (doc()->getWidth().value("px") < 1.0) {
         return;
     }
 
     Geom::Rect d(Geom::Point(0, a.midpoint()[Geom::Y]),
-                 Geom::Point(doc()->getWidth(), a.midpoint()[Geom::Y]));
+                 Geom::Point(doc()->getWidth().value("px"), a.midpoint()[Geom::Y]));
 
     set_display_area(d, 10);
 }

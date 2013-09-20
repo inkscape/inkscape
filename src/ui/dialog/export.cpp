@@ -762,7 +762,7 @@ void Export::onAreaToggled ()
                 }
             case SELECTION_PAGE:
                 bbox = Geom::Rect(Geom::Point(0.0, 0.0),
-                                  Geom::Point(doc->getWidth(), doc->getHeight()));
+                                  Geom::Point(doc->getWidth().value("px"), doc->getHeight().value("px")));
 
                 // std::cout << "Using selection: PAGE" << std::endl;
                 key = SELECTION_PAGE;
@@ -1475,8 +1475,8 @@ void Export::detectSize() {
                 doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
 
                 Geom::Point x(0.0, 0.0);
-                Geom::Point y(doc->getWidth(),
-                              doc->getHeight());
+                Geom::Point y(doc->getWidth().value("px"),
+                              doc->getHeight().value("px"));
                 Geom::Rect bbox(x, y);
 
                 if (bbox_equal(bbox,current_bbox)) {

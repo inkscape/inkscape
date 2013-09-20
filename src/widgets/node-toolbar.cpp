@@ -595,7 +595,7 @@ void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
                                          GTK_WIDGET(desktop->canvas), holder, TRUE, "altx-nodes",
                                          -1e6, 1e6, SPIN_STEP, SPIN_PAGE_STEP,
                                          labels, values, G_N_ELEMENTS(labels),
-                                         sp_node_path_x_value_changed );
+                                         sp_node_path_x_value_changed, tracker );
         tracker->addAdjustment( ege_adjustment_action_get_adjustment(eact) );
         g_object_set_data( holder, "nodes_x_action", eact );
         gtk_action_set_sensitive( GTK_ACTION(eact), FALSE );
@@ -613,7 +613,7 @@ void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
                                          GTK_WIDGET(desktop->canvas), holder, FALSE, NULL,
                                          -1e6, 1e6, SPIN_STEP, SPIN_PAGE_STEP,
                                          labels, values, G_N_ELEMENTS(labels),
-                                         sp_node_path_y_value_changed );
+                                         sp_node_path_y_value_changed, tracker );
         tracker->addAdjustment( ege_adjustment_action_get_adjustment(eact) );
         g_object_set_data( holder, "nodes_y_action", eact );
         gtk_action_set_sensitive( GTK_ACTION(eact), FALSE );

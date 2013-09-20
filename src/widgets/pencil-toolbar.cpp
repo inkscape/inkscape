@@ -307,6 +307,7 @@ void sp_pencil_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
                                          1, 100.0, 0.5, 1.0,
                                          labels, values, G_N_ELEMENTS(labels),
                                          sp_pencil_tb_tolerance_value_changed,
+                                         NULL /*unit tracker*/,
                                          1, 2);
         ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );

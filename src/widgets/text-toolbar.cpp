@@ -1459,6 +1459,7 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
             0.0, 10.0, 0.01, 0.10,                /* lower, upper, step (arrow up/down), page up/down */
             labels, values, G_N_ELEMENTS(labels), /* drop down menu */
             sp_text_lineheight_value_changed,     /* callback */
+            NULL,                                 /* unit tracker */
             0.1,                                  /* step (used?) */
             2,                                    /* digits to show */
             1.0                                   /* factor (multiplies default) */
@@ -1489,6 +1490,7 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
             -100.0, 100.0, 0.01, 0.10,            /* lower, upper, step (arrow up/down), page up/down */
             labels, values, G_N_ELEMENTS(labels), /* drop down menu */
             sp_text_wordspacing_value_changed,    /* callback */
+            NULL,                                 /* unit tracker */
             0.1,                                  /* step (used?) */
             2,                                    /* digits to show */
             1.0                                   /* factor (multiplies default) */
@@ -1519,6 +1521,7 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
             -100.0, 100.0, 0.01, 0.10,            /* lower, upper, step (arrow up/down), page up/down */
             labels, values, G_N_ELEMENTS(labels), /* drop down menu */
             sp_text_letterspacing_value_changed,  /* callback */
+            NULL,                                 /* unit tracker */
             0.1,                                  /* step (used?) */
             2,                                    /* digits to show */
             1.0                                   /* factor (multiplies default) */
@@ -1549,6 +1552,7 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
             -100.0, 100.0, 0.01, 0.1,             /* lower, upper, step (arrow up/down), page up/down */
             labels, values, G_N_ELEMENTS(labels), /* drop down menu */
             sp_text_dx_value_changed,             /* callback */
+            NULL,                                 /* unit tracker */
             0.1,                                  /* step (used?) */
             2,                                    /* digits to show */
             1.0                                   /* factor (multiplies default) */
@@ -1579,6 +1583,7 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
             -100.0, 100.0, 0.01, 0.1,             /* lower, upper, step (arrow up/down), page up/down */
             labels, values, G_N_ELEMENTS(labels), /* drop down menu */
             sp_text_dy_value_changed,             /* callback */
+            NULL,                                 /* unit tracker */
             0.1,                                  /* step (used?) */
             2,                                    /* digits to show */
             1.0                                   /* factor (multiplies default) */
@@ -1609,6 +1614,7 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
             -180.0, 180.0, 0.1, 1.0,              /* lower, upper, step (arrow up/down), page up/down */
             labels, values, G_N_ELEMENTS(labels), /* drop down menu */
             sp_text_rotation_value_changed,       /* callback */
+            NULL,                                 /* unit tracker */
             0.1,                                  /* step (used?) */
             2,                                    /* digits to show */
             1.0                                   /* factor (multiplies default) */

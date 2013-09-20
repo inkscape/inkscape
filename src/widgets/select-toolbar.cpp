@@ -273,7 +273,7 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
     g_object_set_data(G_OBJECT(spw), "update", GINT_TO_POINTER(FALSE));
 }
 
-static GtkWidget* createCustomSlider( GtkAdjustment *adjustment, gdouble climbRate, guint digits )
+static GtkWidget* createCustomSlider( GtkAdjustment *adjustment, gdouble climbRate, guint digits, Inkscape::UI::Widget::UnitTracker *unit_tracker )
 {
 #if WITH_GTKMM_3_0
     Glib::RefPtr<Gtk::Adjustment> adj = Glib::wrap(adjustment, true);
@@ -281,6 +281,7 @@ static GtkWidget* createCustomSlider( GtkAdjustment *adjustment, gdouble climbRa
 #else
     Inkscape::UI::Widget::SpinButton *inkSpinner = new Inkscape::UI::Widget::SpinButton(*Glib::wrap(adjustment, true), climbRate, digits);
 #endif
+    inkSpinner->addUnitTracker(unit_tracker);
     inkSpinner = Gtk::manage( inkSpinner );
     GtkWidget *widget = GTK_WIDGET( inkSpinner->gobj() );
     return widget;
@@ -313,7 +314,7 @@ static EgeAdjustmentAction * create_adjustment_action( gchar const *name,
         g_object_set_data( G_OBJECT(spw), data, adj );
     }
 
-    EgeAdjustmentAction* act = ege_adjustment_action_new( adj, name, Q_(label), tooltip, 0, SPIN_STEP, 3 );
+    EgeAdjustmentAction* act = ege_adjustment_action_new( adj, name, Q_(label), tooltip, 0, SPIN_STEP, 3, tracker );
     if ( shortLabel ) {
         g_object_set( act, "short_label", Q_(shortLabel), NULL );
     }

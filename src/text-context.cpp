@@ -441,6 +441,7 @@ static void sp_text_context_setup_text(SPTextContext *tc)
     text_item->transform = SP_ITEM(ec->desktop->currentLayer())->i2doc_affine().inverse();
 
     text_item->updateRepr();
+    text_item->doWriteTransform(text_item->getRepr(), text_item->transform, NULL, true);
     DocumentUndo::done(sp_desktop_document(ec->desktop), SP_VERB_CONTEXT_TEXT,
 		       _("Create text"));
 }

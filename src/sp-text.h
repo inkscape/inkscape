@@ -58,6 +58,8 @@ public:
     /** discards the drawing objects representing this text. */
     void _clearFlow(Inkscape::DrawingGroup *in_arena);
 
+    bool _optimizeTextpathText;
+
 private:
     /** Recursively walks the xml tree adding tags and their contents. The
     non-trivial code does two things: firstly, it manages the positioning
@@ -67,6 +69,10 @@ private:
     unsigned _buildLayoutInput(SPObject *root, Inkscape::Text::Layout::OptionalTextTagAttrs const &parent_optional_attrs, unsigned parent_attrs_offset, bool in_textpath);
 
 public:
+    /** Optimize textpath text on next set_transform. */
+    void optimizeTextpathText()
+        {_optimizeTextpathText = true;}
+
 	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
 	virtual void release();
 	virtual void child_added(Inkscape::XML::Node* child, Inkscape::XML::Node* ref);

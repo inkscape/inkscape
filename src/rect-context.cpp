@@ -478,6 +478,7 @@ void SPRectContext::finishItem() {
         }
 
         this->rect->updateRepr();
+        this->rect->doWriteTransform(this->rect->getRepr(), this->rect->transform, NULL, true);
 
         this->desktop->canvas->endForcedFullRedraws();
 

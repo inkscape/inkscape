@@ -43,6 +43,12 @@ public:
 
     double par_indent;
 
+    bool _optimizeScaledText;
+
+    /** Optimize scaled flow text on next set_transform. */
+    void optimizeScaledText()
+        {_optimizeScaledText = true;}
+
 private:
     /** Recursively walks the xml tree adding tags and their contents. */
     void _buildLayoutInput(SPObject *root, Shape const *exclusion_shape, std::list<Shape> *shapes, SPObject **pending_line_break_object);
@@ -58,6 +64,7 @@ public:
 	virtual void remove_child(Inkscape::XML::Node* child);
 
 	virtual void set(unsigned int key, const gchar* value);
+	virtual Geom::Affine set_transform(Geom::Affine const& xform);
 
 	virtual void update(SPCtx* ctx, unsigned int flags);
 	virtual void modified(unsigned int flags);

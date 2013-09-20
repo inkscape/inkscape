@@ -1175,8 +1175,9 @@ void sp_gradient_toolbox_prep(SPDesktop * desktop, GtkActionGroup* mainActions, 
                                          GTK_WIDGET(desktop->canvas), holder, FALSE, NULL,
                                          0.0, 1.0, 0.01, 0.1,
                                          0, 0, 0,
-                                         gr_stop_offset_adjustment_changed
-                                         , 0.01, 2, 1.0);
+                                         gr_stop_offset_adjustment_changed,
+                                         NULL /*unit tracker*/,
+                                         0.01, 2, 1.0);
 
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         g_object_set_data( holder, "offset_action", eact );

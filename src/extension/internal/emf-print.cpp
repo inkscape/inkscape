@@ -138,8 +138,8 @@ unsigned int PrintEmf::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
 
 
     // width and height in px
-    _width  = doc->getWidth();
-    _height = doc->getHeight();
+    _width  = doc->getWidth().value("px");
+    _height = doc->getHeight().value("px");
 
     // initialize a few global variables
     hbrush = hbrushOld = hpen = 0;
@@ -243,7 +243,7 @@ unsigned int PrintEmf::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
             g_error("Fatal programming error in PrintEmf::begin at textcomment_set 1");
         }
 
-        snprintf(buff, sizeof(buff) - 1, "Drawing=%.1lfx%.1lfpx, %.1lfx%.1lfmm", _width, _height, dwInchesX * Inkscape::Util::Quantity::convert(1, "in", "mm"), dwInchesY * Inkscape::Util::Quantity::convert(1, "in", "mm"));
+        snprintf(buff, sizeof(buff) - 1, "Drawing=%.1lfx%.1lfpx, %.1lfx%.1lfmm", _width, _height, Inkscape::Util::Quantity::convert(dwInchesX, "in", "mm"), Inkscape::Util::Quantity::convert(dwInchesY, "in", "mm"));
         rec = textcomment_set(buff);
         if (!rec || emf_append((PU_ENHMETARECORD)rec, et, U_REC_FREE)) {
             g_error("Fatal programming error in PrintEmf::begin at textcomment_set 1");

@@ -42,6 +42,7 @@
 #include "display/drawing.h"
 #include "io/sys.h"
 #include "sp-root.h"
+#include "util/units.h"
 
 #include "icon.h"
 
@@ -1137,7 +1138,7 @@ sp_icon_doc_icon( SPDocument *doc, Inkscape::Drawing &drawing,
             if ( object->parent == NULL )
             {
                 dbox = Geom::Rect(Geom::Point(0, 0),
-                                Geom::Point(doc->getWidth(), doc->getHeight()));
+                                Geom::Point(doc->getWidth().value("px"), doc->getHeight().value("px")));
             }
 
             /* This is in document coordinates, i.e. pixels */

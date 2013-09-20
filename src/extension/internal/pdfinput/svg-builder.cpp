@@ -793,7 +793,7 @@ gchar *SvgBuilder::_createGradient(GfxShading *shading, double *matrix, bool for
         Geom::Affine pat_matrix(matrix[0], matrix[1], matrix[2], matrix[3],
                               matrix[4], matrix[5]);
         if ( !for_shading && _is_top_level ) {
-            Geom::Affine flip(1.0, 0.0, 0.0, -1.0, 0.0, _height * Inkscape::Util::Quantity::convert(1, "px", "pt"));
+            Geom::Affine flip(1.0, 0.0, 0.0, -1.0, 0.0, Inkscape::Util::Quantity::convert(_height, "px", "pt"));
             pat_matrix *= flip;
         }
         gchar *transform_text = sp_svg_transform_write(pat_matrix);

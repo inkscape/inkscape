@@ -144,7 +144,7 @@ void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
                                                               GTK_WIDGET(desktop->canvas), holder, TRUE, "altx-tweak",
                                                               1, 100, 1.0, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
-                                                              sp_tweak_width_value_changed,  0.01, 0, 100 );
+                                                              sp_tweak_width_value_changed, NULL /*unit tracker*/, 0.01, 0, 100 );
         ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
@@ -161,7 +161,7 @@ void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
                                                               GTK_WIDGET(desktop->canvas), holder, TRUE, "tweak-force",
                                                               1, 100, 1.0, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
-                                                              sp_tweak_force_value_changed,  0.01, 0, 100 );
+                                                              sp_tweak_force_value_changed, NULL /*unit tracker*/, 0.01, 0, 100 );
         ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
@@ -370,7 +370,7 @@ void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
                                                               GTK_WIDGET(desktop->canvas), holder, TRUE, "tweak-fidelity",
                                                               1, 100, 1.0, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
-                                                              sp_tweak_fidelity_value_changed,  0.01, 0, 100 );
+                                                              sp_tweak_fidelity_value_changed, NULL /*unit tracker*/, 0.01, 0, 100 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         if (mode == TWEAK_MODE_COLORPAINT || mode == TWEAK_MODE_COLORJITTER) {

@@ -9,7 +9,8 @@
    xmlns:cc="http://web.resource.org/cc/"
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    width="90mm"
-   height="50mm">
+   height="50mm"
+   viewBox="0 0 90 50">
   <defs
      id="defs3" />
   <sodipodi:namedview

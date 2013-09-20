@@ -75,6 +75,7 @@
 #include "sp-flowtext.h"
 #include "svg/svg.h"
 #include "text-editing.h"
+#include "util/units.h"
 
 
 //# DOM-specific includes
@@ -945,7 +946,7 @@ static Geom::Affine getODFTransform(const SPItem *item)
     //### Get SVG-to-ODF transform
     Geom::Affine tf (item->i2dt_affine());
     //Flip Y into document coordinates
-    double doc_height    = SP_ACTIVE_DOCUMENT->getHeight();
+    double doc_height    = SP_ACTIVE_DOCUMENT->getHeight().value("px");
     Geom::Affine doc2dt_tf = Geom::Affine(Geom::Scale(1.0, -1.0));                    /// @fixme hardcoded desktop transform
     doc2dt_tf            = doc2dt_tf * Geom::Affine(Geom::Translate(0, doc_height));
     tf                   = tf * doc2dt_tf;

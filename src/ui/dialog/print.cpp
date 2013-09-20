@@ -49,8 +49,8 @@ static void draw_page(
 
     if (junk->_tab->as_bitmap()) {
         // Render as exported PNG
-        gdouble width = (junk->_doc)->getWidth();
-        gdouble height = (junk->_doc)->getHeight();
+        gdouble width = (junk->_doc)->getWidth().value("px");
+        gdouble height = (junk->_doc)->getHeight().value("px");
         gdouble dpi = junk->_tab->bitmap_dpi();
         std::string tmp_png;
         std::string tmp_base = "inkscape-print-png-XXXXXX";
@@ -72,8 +72,8 @@ static void draw_page(
 
             sp_export_png_file(junk->_doc, tmp_png.c_str(), 0.0, 0.0,
                 width, height,
-                (unsigned long)(width * dpi / Inkscape::Util::Quantity::convert(1, "in", "px")),
-                (unsigned long)(height * dpi / Inkscape::Util::Quantity::convert(1, "in", "px")),
+                (unsigned long)(Inkscape::Util::Quantity::convert(width, "px", "in") * dpi),
+                (unsigned long)(Inkscape::Util::Quantity::convert(height, "px", "in") * dpi),
                 dpi, dpi, bgcolor, NULL, NULL, true, NULL);
 
             // This doesn't seem to work:
@@ -195,8 +195,8 @@ Print::Print(SPDocument *doc, SPItem *base) :
     // set up paper size to match the document size
     gtk_print_operation_set_unit (_printop, GTK_UNIT_POINTS);
     GtkPageSetup *page_setup = gtk_page_setup_new();
-    gdouble doc_width = _doc->getWidth() * Inkscape::Util::Quantity::convert(1, "px", "pt");
-    gdouble doc_height = _doc->getHeight() * Inkscape::Util::Quantity::convert(1, "px", "pt");
+    gdouble doc_width = _doc->getWidth().value("pt");
+    gdouble doc_height = _doc->getHeight().value("pt");
     GtkPaperSize *paper_size;
     if (doc_width > doc_height) {
         gtk_page_setup_set_orientation (page_setup, GTK_PAGE_ORIENTATION_LANDSCAPE);

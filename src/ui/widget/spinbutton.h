@@ -25,6 +25,7 @@ namespace UI {
 namespace Widget {
 
 class UnitMenu;
+class UnitTracker;
 
 /**
  * SpinButton widget, that allows entry of simple math expressions (also units, when linked with UnitMenu),
@@ -50,14 +51,18 @@ public:
       _unit_menu(NULL)
   {
       connect_signals();
+      _unit_tracker = NULL;
   };
 
   virtual ~SpinButton() {};
 
   void setUnitMenu(UnitMenu* unit_menu) { _unit_menu = unit_menu; };
+  
+  void addUnitTracker(UnitTracker* ut) { _unit_tracker = ut; };
 
 protected:
   UnitMenu *_unit_menu; /// Linked unit menu for unit conversion in entered expressions.
+  UnitTracker *_unit_tracker; // Linked unit tracker for unit conversion in entered expressions.
 
   void connect_signals();
 

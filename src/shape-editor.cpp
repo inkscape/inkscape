@@ -35,6 +35,8 @@
 
 using Inkscape::createKnotHolder;
 
+bool ShapeEditor::_blockSetItem = false;
+
 ShapeEditor::ShapeEditor(SPDesktop *dt) {
     this->desktop = dt;
     this->knotholder = NULL;
@@ -169,6 +171,10 @@ static Inkscape::XML::NodeEventVector shapeeditor_repr_events = {
 
 
 void ShapeEditor::set_item(SPItem *item, SubType type, bool keep_knotholder) {
+    if (_blockSetItem) {
+        return;
+    }
+
     // this happens (and should only happen) when for an LPEItem having both knotholder and
     // nodepath the knotholder is adapted; in this case we don't want to delete the knotholder
     // since this freezes the handles

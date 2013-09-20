@@ -287,7 +287,7 @@ sp_guide_create_guides_around_page(SPDesktop *dt) {
     std::list<std::pair<Geom::Point, Geom::Point> > pts;
 
     Geom::Point A(0, 0);
-    Geom::Point C(doc->getWidth(), doc->getHeight());
+    Geom::Point C(doc->getWidth().value("px"), doc->getHeight().value("px"));
     Geom::Point B(C[Geom::X], 0);
     Geom::Point D(0, C[Geom::Y]);
 

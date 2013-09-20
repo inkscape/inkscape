@@ -2523,11 +2523,11 @@ sp_style_css_size_px_to_units(double size, int unit)
 
         case SP_CSS_UNIT_NONE: unit_size = size; break;
         case SP_CSS_UNIT_PX: unit_size = size; break;
-        case SP_CSS_UNIT_PT: unit_size = size * Inkscape::Util::Quantity::convert(1, "px", "pt");  break;
-        case SP_CSS_UNIT_PC: unit_size = size * (Inkscape::Util::Quantity::convert(1, "px", "pt") / Inkscape::Util::Quantity::convert(1, "pc", "pt"));  break;
-        case SP_CSS_UNIT_MM: unit_size = size * Inkscape::Util::Quantity::convert(1, "px", "mm");  break;
-        case SP_CSS_UNIT_CM: unit_size = size * Inkscape::Util::Quantity::convert(1, "px", "cm");  break;
-        case SP_CSS_UNIT_IN: unit_size = size * Inkscape::Util::Quantity::convert(1, "px", "in");  break;
+        case SP_CSS_UNIT_PT: unit_size = Inkscape::Util::Quantity::convert(size, "px", "pt");  break;
+        case SP_CSS_UNIT_PC: unit_size = Inkscape::Util::Quantity::convert(size, "px", "pc");  break;
+        case SP_CSS_UNIT_MM: unit_size = Inkscape::Util::Quantity::convert(size, "px", "mm");  break;
+        case SP_CSS_UNIT_CM: unit_size = Inkscape::Util::Quantity::convert(size, "px", "cm");  break;
+        case SP_CSS_UNIT_IN: unit_size = Inkscape::Util::Quantity::convert(size, "px", "in");  break;
         case SP_CSS_UNIT_EM: unit_size = size / SP_CSS_FONT_SIZE_DEFAULT; break;
         case SP_CSS_UNIT_EX: unit_size = size * 2.0 / SP_CSS_FONT_SIZE_DEFAULT ; break;
         case SP_CSS_UNIT_PERCENT: unit_size = size * 100.0 / SP_CSS_FONT_SIZE_DEFAULT; break;
@@ -3530,19 +3530,19 @@ sp_style_read_ilength(SPILength *val, gchar const *str)
             } else if (!strcmp(e, "pt")) {
                 /* Userspace / DEVICESCALE */
                 val->unit = SP_CSS_UNIT_PT;
-                val->computed = value * Inkscape::Util::Quantity::convert(1, "pt", "px");
+                val->computed = Inkscape::Util::Quantity::convert(value, "pt", "px");
             } else if (!strcmp(e, "pc")) {
                 val->unit = SP_CSS_UNIT_PC;
-                val->computed = value * Inkscape::Util::Quantity::convert(1, "pc", "px");
+                val->computed = Inkscape::Util::Quantity::convert(value, "pc", "px");
             } else if (!strcmp(e, "mm")) {
                 val->unit = SP_CSS_UNIT_MM;
-                val->computed = value * Inkscape::Util::Quantity::convert(1, "mm", "px");
+                val->computed = Inkscape::Util::Quantity::convert(value, "mm", "px");
             } else if (!strcmp(e, "cm")) {
                 val->unit = SP_CSS_UNIT_CM;
-                val->computed = value * Inkscape::Util::Quantity::convert(1, "cm", "px");
+                val->computed = Inkscape::Util::Quantity::convert(value, "cm", "px");
             } else if (!strcmp(e, "in")) {
                 val->unit = SP_CSS_UNIT_IN;
-                val->computed = value * Inkscape::Util::Quantity::convert(1, "in", "px");
+                val->computed = Inkscape::Util::Quantity::convert(value, "in", "px");
             } else if (!strcmp(e, "em")) {
                 /* EM square */
                 val->unit = SP_CSS_UNIT_EM;
@@ -4204,23 +4204,23 @@ sp_style_write_ilength(gchar *p, gint const len, gchar const *const key,
                     return g_strlcpy(p, os.str().c_str(), len);
                     break;
                 case SP_CSS_UNIT_PT:
-                    os << key << ":" << val->computed * Inkscape::Util::Quantity::convert(1, "px", "pt") << "pt;";
+                    os << key << ":" << Inkscape::Util::Quantity::convert(val->computed, "px", "pt") << "pt;";
                     return g_strlcpy(p, os.str().c_str(), len);
                     break;
                 case SP_CSS_UNIT_PC:
-                    os << key << ":" << val->computed * Inkscape::Util::Quantity::convert(1, "px", "pt") / 12.0 << "pc;";
+                    os << key << ":" << Inkscape::Util::Quantity::convert(val->computed, "px", "pc") << "pc;";
                     return g_strlcpy(p, os.str().c_str(), len);
                     break;
                 case SP_CSS_UNIT_MM:
-                    os << key << ":" << val->computed * Inkscape::Util::Quantity::convert(1, "px", "mm") << "mm;";
+                    os << key << ":" << Inkscape::Util::Quantity::convert(val->computed, "px", "mm") << "mm;";
                     return g_strlcpy(p, os.str().c_str(), len);
                     break;
                 case SP_CSS_UNIT_CM:
-                    os << key << ":" << val->computed * Inkscape::Util::Quantity::convert(1, "px", "cm") << "cm;";
+                    os << key << ":" << Inkscape::Util::Quantity::convert(val->computed, "px", "cm") << "cm;";
                     return g_strlcpy(p, os.str().c_str(), len);
                     break;
                 case SP_CSS_UNIT_IN:
-                    os << key << ":" << val->computed * Inkscape::Util::Quantity::convert(1, "px", "in") << "in;";
+                    os << key << ":" << Inkscape::Util::Quantity::convert(val->computed, "px", "in") << "in;";
                     return g_strlcpy(p, os.str().c_str(), len);
                     break;
                 case SP_CSS_UNIT_EM:

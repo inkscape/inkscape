@@ -39,6 +39,7 @@ public:
 
 	virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
 	virtual void set_shape();
+	virtual Geom::Affine set_transform(Geom::Affine const& xform);
 
 	virtual void update_patheffect(bool write);
 };

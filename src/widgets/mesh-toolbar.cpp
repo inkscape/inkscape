@@ -265,7 +265,7 @@ void sp_mesh_toolbox_prep(SPDesktop * desktop, GtkActionGroup* mainActions, GObj
                                          GTK_WIDGET(desktop->canvas), holder, FALSE, NULL,
                                          1, 20, 1, 1,
                                          labels, values, G_N_ELEMENTS(labels),
-                                         ms_row_changed,
+                                         ms_row_changed, NULL /*unit tracker*/,
                                          1.0, 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
@@ -281,7 +281,7 @@ void sp_mesh_toolbox_prep(SPDesktop * desktop, GtkActionGroup* mainActions, GObj
                                          GTK_WIDGET(desktop->canvas), holder, FALSE, NULL,
                                          1, 20, 1, 1,
                                          labels, values, G_N_ELEMENTS(labels),
-                                         ms_col_changed,
+                                         ms_col_changed, NULL /*unit tracker*/,
                                          1.0, 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );

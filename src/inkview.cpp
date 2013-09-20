@@ -54,6 +54,7 @@
 #include "document.h"
 #include "svg-view.h"
 #include "svg-view-widget.h"
+#include "util/units.h"
 
 #ifdef WITH_INKJAR
 #include "io/inkjar.h"
@@ -308,8 +309,8 @@ main (int argc, const char **argv)
     w = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title( GTK_WINDOW(w), ss.doc->getName() );
     gtk_window_set_default_size (GTK_WINDOW (w),
-				 MIN ((int)(ss.doc)->getWidth (), (int)gdk_screen_width () - 64),
-				 MIN ((int)(ss.doc)->getHeight (), (int)gdk_screen_height () - 64));
+				 MIN ((int)(ss.doc)->getWidth().value("px"), (int)gdk_screen_width() - 64),
+				 MIN ((int)(ss.doc)->getHeight().value("px"), (int)gdk_screen_height() - 64));
     ss.window = w;
 
     g_signal_connect (G_OBJECT (w), "delete_event", (GCallback) sp_svgview_main_delete, &ss);
@@ -318,7 +319,7 @@ main (int argc, const char **argv)
     (ss.doc)->ensureUpToDate();
     ss.view = sp_svg_view_widget_new (ss.doc);
     (ss.doc)->doUnref ();
-    SP_SVG_VIEW_WIDGET(ss.view)->setResize( false, ss.doc->getWidth(), ss.doc->getHeight() );
+    SP_SVG_VIEW_WIDGET(ss.view)->setResize( false, ss.doc->getWidth().value("px"), ss.doc->getHeight().value("px") );
     gtk_widget_show (ss.view);
     gtk_container_add (GTK_CONTAINER (w), ss.view);
 

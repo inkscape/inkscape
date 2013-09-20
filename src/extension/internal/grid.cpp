@@ -35,6 +35,7 @@
 #include "extension/effect.h"
 #include "extension/system.h"
 
+#include "util/units.h"
 
 #include "grid.h"
 
@@ -97,14 +98,14 @@ Grid::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *doc
         /* get page size */
         SPDocument * doc = document->doc();
         bounding_area = Geom::Rect(  Geom::Point(0,0),
-                                     Geom::Point(doc->getWidth(), doc->getHeight())  );
+                                     Geom::Point(doc->getWidth().value("px"), doc->getHeight().value("px"))  );
     } else {
         Geom::OptRect bounds = selection->visualBounds();
         if (bounds) {
             bounding_area = *bounds;
         }
 
-        gdouble doc_height  =  (document->doc())->getHeight();
+        gdouble doc_height  =  (document->doc())->getHeight().value("px");
         Geom::Rect temprec = Geom::Rect(Geom::Point(bounding_area.min()[Geom::X], doc_height - bounding_area.min()[Geom::Y]),
                                     Geom::Point(bounding_area.max()[Geom::X], doc_height - bounding_area.max()[Geom::Y]));
 

@@ -114,7 +114,7 @@ static void sp_rtb_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *
     for (GSList const *items = selection->itemList(); items != NULL; items = items->next) {
         if (SP_IS_RECT(items->data)) {
             if (gtk_adjustment_get_value(adj) != 0) {
-                (SP_RECT(items->data)->*setter)(Quantity::convert(gtk_adjustment_get_value(adj), unit, "px"));
+                (SP_RECT(items->data)->*setter)(Quantity::convert(gtk_adjustment_get_value(adj), unit, *sp_desktop_namedview(desktop)->doc_units));
             } else {
                 SP_OBJECT(items->data)->getRepr()->setAttribute(value_name, NULL);
             }
@@ -186,6 +186,7 @@ static void rect_tb_event_attr_changed(Inkscape::XML::Node * /*repr*/, gchar con
 
     UnitTracker* tracker = reinterpret_cast<UnitTracker*>( g_object_get_data( tbl, "tracker" ) );
     Unit const unit = tracker->getActiveUnit();
+    Unit const doc_unit = *sp_desktop_namedview(SP_ACTIVE_DESKTOP)->doc_units;
 
     gpointer item = g_object_get_data( tbl, "item" );
     if (item && SP_IS_RECT(item)) {
@@ -193,28 +194,28 @@ static void rect_tb_event_attr_changed(Inkscape::XML::Node * /*repr*/, gchar con
             GtkAdjustment *adj = GTK_ADJUSTMENT( g_object_get_data( tbl, "rx" ) );
 
             gdouble rx = SP_RECT(item)->getVisibleRx();
-            gtk_adjustment_set_value(adj, Quantity::convert(rx, "px", unit));
+            gtk_adjustment_set_value(adj, Quantity::convert(rx, doc_unit, unit));
         }
 
         {
             GtkAdjustment *adj = GTK_ADJUSTMENT( g_object_get_data( tbl, "ry" ) );
 
             gdouble ry = SP_RECT(item)->getVisibleRy();
-            gtk_adjustment_set_value(adj, Quantity::convert(ry, "px", unit));
+            gtk_adjustment_set_value(adj, Quantity::convert(ry, doc_unit, unit));
         }
 
         {
             GtkAdjustment *adj = GTK_ADJUSTMENT( g_object_get_data( tbl, "width" ) );
 
             gdouble width = SP_RECT(item)->getVisibleWidth();
-            gtk_adjustment_set_value(adj, Quantity::convert(width, "px", unit));
+            gtk_adjustment_set_value(adj, Quantity::convert(width, doc_unit, unit));
         }
 
         {
             GtkAdjustment *adj = GTK_ADJUSTMENT( g_object_get_data( tbl, "height" ) );
 
             gdouble height = SP_RECT(item)->getVisibleHeight();
-            gtk_adjustment_set_value(adj, Quantity::convert(height, "px", unit));
+            gtk_adjustment_set_value(adj, Quantity::convert(height, doc_unit, unit));
         }
     }
 
@@ -322,7 +323,7 @@ void sp_rect_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
                                          GTK_WIDGET(desktop->canvas), holder, TRUE, "altx-rect",
                                          0, 1e6, SPIN_STEP, SPIN_PAGE_STEP,
                                          labels, values, G_N_ELEMENTS(labels),
-                                         sp_rtb_width_value_changed );
+                                         sp_rtb_width_value_changed, tracker);
         tracker->addAdjustment( ege_adjustment_action_get_adjustment(eact) );
         g_object_set_data( holder, "width_action", eact );
         gtk_action_set_sensitive( GTK_ACTION(eact), FALSE );
@@ -339,7 +340,7 @@ void sp_rect_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
                                          GTK_WIDGET(desktop->canvas), holder, FALSE, NULL,
                                          0, 1e6, SPIN_STEP, SPIN_PAGE_STEP,
                                          labels, values, G_N_ELEMENTS(labels),
-                                         sp_rtb_height_value_changed );
+                                         sp_rtb_height_value_changed, tracker);
         tracker->addAdjustment( ege_adjustment_action_get_adjustment(eact) );
         g_object_set_data( holder, "height_action", eact );
         gtk_action_set_sensitive( GTK_ACTION(eact), FALSE );
@@ -356,7 +357,7 @@ void sp_rect_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
                                          GTK_WIDGET(desktop->canvas), holder, FALSE, NULL,
                                          0, 1e6, SPIN_STEP, SPIN_PAGE_STEP,
                                          labels, values, G_N_ELEMENTS(labels),
-                                         sp_rtb_rx_value_changed);
+                                         sp_rtb_rx_value_changed, tracker);
         tracker->addAdjustment( ege_adjustment_action_get_adjustment(eact) );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
     }
@@ -371,7 +372,7 @@ void sp_rect_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
                                          GTK_WIDGET(desktop->canvas), holder, FALSE, NULL,
                                          0, 1e6, SPIN_STEP, SPIN_PAGE_STEP,
                                          labels, values, G_N_ELEMENTS(labels),
-                                         sp_rtb_ry_value_changed);
+                                         sp_rtb_ry_value_changed, tracker);
         tracker->addAdjustment( ege_adjustment_action_get_adjustment(eact) );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
     }

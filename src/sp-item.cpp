@@ -73,6 +73,8 @@
 #include "live_effects/effect.h"
 #include "live_effects/lpeobject-reference.h"
 
+#include "util/units.h"
+
 #define noSP_ITEM_DEBUG_IDLE
 
 
@@ -818,7 +820,7 @@ Geom::OptRect SPItem::desktopGeometricBounds() const
 Geom::OptRect SPItem::desktopVisualBounds() const
 {
     /// @fixme hardcoded desktop transform
-    Geom::Affine m = Geom::Scale(1, -1) * Geom::Translate(0, document->getHeight());
+    Geom::Affine m = Geom::Scale(1, -1) * Geom::Translate(0, document->getHeight().value("px"));
     Geom::OptRect ret = documentVisualBounds();
     if (ret) *ret *= m;
     return ret;
@@ -1500,7 +1502,7 @@ Geom::Affine SPItem::i2dt_affine() const
         // TODO temp code to prevent crashing on command-line launch:
         ret = i2doc_affine()
             * Geom::Scale(1, -1)
-            * Geom::Translate(0, document->getHeight());
+            * Geom::Translate(0, document->getHeight().value("px"));
     }
     return ret;
 }
