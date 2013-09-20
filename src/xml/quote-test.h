@@ -7,10 +7,7 @@
 #include <cstring>
 #include <functional>
 
-/* mental disclaims all responsibility for this evil idea for testing
-   static functions.  The main disadvantages are that we retain any
-   #define's and `using' directives of the included file. */
-#include "quote.cpp"
+#include "quote.h"
 
 class XmlQuoteTest : public CxxTest::TestSuite
 {

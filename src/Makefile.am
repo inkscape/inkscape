@@ -268,7 +268,6 @@ XFAIL_TESTS = $(check_PROGRAMS)
 
 # including the the testsuites here ensures that they get distributed
 cxxtests_SOURCES = cxxtests.cpp $(CXXTEST_TESTSUITES) $(ink_common_sources) $(win32_sources)
-cxxtests_LDFLAGS = -z muldefs
 cxxtests_LDADD = $(all_libs)
 
 cxxtests.cpp: $(CXXTEST_TESTSUITES) $(CXXTEST_TEMPLATE)
