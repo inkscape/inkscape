@@ -491,7 +491,7 @@ bool PdfImportCairoDialog::_onDraw(const Cairo::RefPtr<Cairo::Context>& cr) {
  */
 void PdfImportCairoDialog::_setPreviewPage(int page) {
 
-    PopplerPage *_previewed_page = poppler_document_get_page(_poppler_doc, page);
+    PopplerPage *_previewed_page = poppler_document_get_page(_poppler_doc, page-1);
 
     // Try to get a thumbnail from the PDF if possible
     if (!_render_thumb) {
