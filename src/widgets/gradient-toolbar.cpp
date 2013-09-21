@@ -286,7 +286,7 @@ void gr_read_selection( Inkscape::Selection *selection,
                 }
             }
             if (spread != spr_selected) {
-                if (spr_selected != INT_MAX) {
+                if (spr_selected != SP_GRADIENT_SPREAD_UNDEFINED) {
                     spr_multi = true;
                 } else {
                     spr_selected = spread;
@@ -319,7 +319,7 @@ void gr_read_selection( Inkscape::Selection *selection,
                     }
                 }
                 if (spread != spr_selected) {
-                    if (spr_selected != INT_MAX) {
+                    if (spr_selected != SP_GRADIENT_SPREAD_UNDEFINED) {
                         spr_multi = true;
                     } else {
                         spr_selected = spread;
@@ -345,7 +345,7 @@ void gr_read_selection( Inkscape::Selection *selection,
                     }
                 }
                 if (spread != spr_selected) {
-                    if (spr_selected != INT_MAX) {
+                    if (spr_selected != SP_GRADIENT_SPREAD_UNDEFINED) {
                         spr_multi = true;
                     } else {
                         spr_selected = spread;
@@ -380,7 +380,7 @@ static void gr_tb_selection_changed(Inkscape::Selection * /*selection*/, gpointe
         }
 
         SPGradient *gr_selected = 0;
-        SPGradientSpread spr_selected = static_cast<SPGradientSpread>(INT_MAX); // meaning undefined
+        SPGradientSpread spr_selected = SP_GRADIENT_SPREAD_UNDEFINED;
         bool gr_multi = false;
         bool spr_multi = false;
 
