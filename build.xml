@@ -437,7 +437,6 @@
        </flags>
        <fileset dir="${build}/obj">
            <exclude name="winconsole.o"/>
-           <exclude name="2geom/conjugate_gradient.o"/>
            <exclude name="dom/prop-css.o"/>
            <exclude name="dom/prop-css2.o"/>
            <exclude name="dom/prop-svg.o"/>
@@ -527,7 +526,6 @@
            <exclude name="winconsole.o"/>
            <exclude name="inkres.o"/>
            <!-- broken files -->
-           <exclude name="2geom/conjugate_gradient.o"/>
            <exclude name="dom/prop-css.o"/>
            <exclude name="dom/prop-css2.o"/>
            <exclude name="dom/prop-svg.o"/>
@@ -590,7 +588,6 @@
            <exclude name="inkviewres.o"/>
            <exclude name="inkview.o"/>
            <!-- broken files -->
-           <exclude name="2geom/conjugate_gradient.o"/>
            <exclude name="dom/prop-css.o"/>
            <exclude name="dom/prop-css2.o"/>
            <exclude name="dom/prop-svg.o"/>
