@@ -19,7 +19,14 @@
 #include <glibmm/miscutils.h>
 
 #include "template-load-tab.h"
+#include "desktop.h"
+#include "desktop-handles.h"
+#include "document.h"
+#include "document-undo.h"
 #include "file.h"
+#include "extension/implementation/implementation.h"
+#include "inkscape.h"
+
 
 namespace Inkscape {
 namespace UI {
@@ -28,18 +35,16 @@ namespace UI {
 TemplateWidget::TemplateWidget()
     : _more_info_button(_("More info"))
     , _short_description_label(_(" "))
-    , _template_author_label(_(" "))
     , _template_name_label(_("no template selected"))
+    , _effect_prefs(NULL)
 {
     pack_start(_template_name_label, Gtk::PACK_SHRINK, 10);
-    pack_start(_template_author_label, Gtk::PACK_SHRINK, 0);
     pack_start(_preview_box, Gtk::PACK_SHRINK, 0);
     
     _preview_box.pack_start(_preview_image, Gtk::PACK_EXPAND_PADDING, 15);
     _preview_box.pack_start(_preview_render, Gtk::PACK_EXPAND_PADDING, 10);
     
     _short_description_label.set_line_wrap(true);
-    //_short_description_label.set_size_request(200);
 
     Gtk::Alignment *align;
     align = manage(new Gtk::Alignment(Gtk::ALIGN_END, Gtk::ALIGN_CENTER, 0.0, 0.0));
@@ -55,10 +60,19 @@ TemplateWidget::TemplateWidget()
 
 void TemplateWidget::create()
 {
-    if (_current_template.path == "")
+    if (_current_template.display_name == "")
         return;
     
-    if (_current_template.is_procedural) {}
+    if (_current_template.is_procedural){
+        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+        SPDesktop *desc = sp_file_new_default();
+        _current_template.tpl_effect->effect(desc);
+        DocumentUndo::clearUndo(sp_desktop_document(desc));
+        sp_desktop_document(desc)->setModifiedSinceSave(false);
+        
+        if (desktop)
+            desktop->clearWaitingCursor();
+    }
     else {
         sp_file_new(_current_template.path);
     }
@@ -68,34 +82,41 @@ void TemplateWidget::create()
 void TemplateWidget::display(TemplateLoadTab::TemplateData data)
 {
     _current_template = data;
-    if (data.is_procedural){}
-    else{
-        _template_name_label.set_text(_current_template.display_name);
-        _template_author_label.set_text(_current_template.author);
-        _short_description_label.set_text(_current_template.short_description);
+
+    _template_name_label.set_text(_current_template.display_name);
+    _short_description_label.set_text(_current_template.short_description);
         
-        Glib::ustring imagePath = Glib::build_filename(Glib::path_get_dirname(_current_template.path),  _current_template.preview_name);
-        if (data.preview_name != ""){
-            _preview_image.set(imagePath);
-            _preview_image.show();
-            _preview_render.hide();
-        }
-        else{
-            _preview_render.showImage(data.path);
-            _preview_render.show();
-            _preview_image.hide();
-        }
+    _preview_render.hide();
+    _preview_image.hide();
+    
+    std::string imagePath = Glib::build_filename(Glib::path_get_dirname(_current_template.path),  _current_template.preview_name);
+    if (data.preview_name != ""){
+        _preview_image.set(imagePath);
+        _preview_image.show();
+    }
+    else if (!data.is_procedural){
+        Glib::ustring gPath = data.path.c_str();
+        _preview_render.showImage(gPath);
+        _preview_render.show();
+    }
+    
+    if (_effect_prefs != NULL){
+        remove (*_effect_prefs);
+        _effect_prefs = NULL;
+    }
+    if (data.is_procedural){
+        _effect_prefs = data.tpl_effect->get_imp()->prefs_effect(data.tpl_effect, SP_ACTIVE_DESKTOP, NULL, NULL); 
+        pack_start(*_effect_prefs);
     }
 }
 
 
 void TemplateWidget::_displayTemplateDetails()
 {    
-    if (_current_template.path == "")
-        return;
+    Glib::ustring message = _current_template.display_name + "\n\n";
     
-    Glib::ustring message = _current_template.display_name + "\n\n" +
-                            _("Path: ") + _current_template.path + "\n\n";
+    if (_current_template.path != "")
+        message += _("Path: ") + _current_template.path + "\n\n";
     
     if (_current_template.long_description != "")
         message += _("Description: ") + _current_template.long_description + "\n\n";

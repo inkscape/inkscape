@@ -16,6 +16,7 @@
  */
 
 #include <glibmm/ustring.h>
+#include <string>
 #include "extension/system.h"
 
 class SPDesktop;
@@ -43,7 +44,7 @@ Glib::ustring sp_file_default_template_uri();
  * Creates a new Inkscape document and window.
  * Return value is a pointer to the newly created desktop.
  */
-SPDesktop* sp_file_new (const Glib::ustring &templ);
+SPDesktop* sp_file_new (const std::string &templ);
 SPDesktop* sp_file_new_default (void);
 
 /*######################

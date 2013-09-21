@@ -54,6 +54,7 @@ extensions = \
 	edge3d.py \
 	embedimage.py \
 	embed_raster_in_svg.pl \
+	empty_page.py \
 	eqtexsvg.py \
 	export_gimp_palette.py \
 	extractimage.py \
@@ -238,6 +239,7 @@ modules = \
 	edge3d.inx \
 	embedimage.inx \
 	embedselectedimages.inx \
+	empty_page.inx \
 	eps_input.inx \
 	eqtexsvg.inx \
 	export_gimp_palette.inx \

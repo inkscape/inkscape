@@ -17,6 +17,7 @@
 
 #include "template-load-tab.h"
 
+
 namespace Inkscape {
 namespace UI {
     
@@ -36,8 +37,8 @@ private:
     Gtk::Image _preview_image;
     Dialog::SVGPreview _preview_render;
     Gtk::Label _short_description_label;
-    Gtk::Label _template_author_label;
     Gtk::Label _template_name_label;
+    Gtk::Widget *_effect_prefs;
     
     void _displayTemplateDetails();
 };

@@ -18,6 +18,10 @@
 #include <gtkmm/treeview.h>
 #include <map>
 #include <set>
+#include <string>
+
+#include "xml/node.h"
+#include "extension/effect.h"
 
 
 namespace Inkscape {
@@ -32,7 +36,7 @@ public:
     struct TemplateData
     {
         bool is_procedural;
-        Glib::ustring path;
+        std::string path;
         Glib::ustring display_name;
         Glib::ustring author;
         Glib::ustring short_description;
@@ -40,6 +44,7 @@ public:
         Glib::ustring preview_name;
         Glib::ustring creation_date;
         std::set<Glib::ustring> keywords;
+        Inkscape::Extension::Effect *tpl_effect;
     };
     
     TemplateLoadTab();
@@ -60,7 +65,7 @@ protected:
     
     Glib::ustring _current_keyword;
     Glib::ustring _current_template;
-    Glib::ustring _loading_path;
+    std::string _loading_path;
     std::map<Glib::ustring, TemplateData> _tdata;
     std::set<Glib::ustring> _keywords;
     
@@ -91,9 +96,11 @@ private:
     
     SearchType _current_search_type;
     
-    void _getTemplatesFromDir(const Glib::ustring &);
+    void _getDataFromNode(Inkscape::XML::Node *, TemplateData &);
+    void _getProceduralTemplates();
+    void _getTemplatesFromDir(const std::string &);
     void _keywordSelected();    
-    TemplateData _processTemplateFile(const Glib::ustring &);
+    TemplateData _processTemplateFile(const std::string &);
 };
 
 }
