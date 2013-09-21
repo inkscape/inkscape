@@ -19,7 +19,9 @@ AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CANONICAL_HOST
 
-AM_INIT_AUTOMAKE([-Wall dist-zip dist-bzip2 tar-pax])
+# We need version 1.9 of Automake or higher since we no longer distribute the
+# obsolete mkinstalldirs script
+AM_INIT_AUTOMAKE([-Wall dist-zip dist-bzip2 tar-pax 1.9])
 
 AC_ARG_ENABLE([lsb], AS_HELP_STRING([--enable-lsb], [LSB-compatible build configuration]), [
   prefix=/opt/inkscape
