@@ -392,32 +392,6 @@
   </target>
   
 
-  <!--
-  ########################################################################
-  ## T A R G E T    :    L I B
-  ########################################################################
-  -->
-  <target name="lib" depends="compile"
-      description="create a static library">
-    <staticlib command="${archutil}ar crsv"
-           file="${build}/libinkscape.a">
-       <fileset dir="${build}/obj">
-           <exclude name="main.o"/>
-           <exclude name="winmain.o"/>
-           <exclude name="inkview.o"/>
-           <!-- CxxTest -->
-           <exclude name="test-main.o"/>
-           <exclude name="test-src.o"/>
-           <exclude name="display/test-display.o"/>
-           <exclude name="helper/test-helper.o"/>
-           <exclude name="svg/test-svg.o"/>
-           <exclude name="util/test-util.o"/>
-           <exclude name="xml/test-xml.o"/>
-       </fileset>
-    </staticlib>
-  </target>
-
-
 
   <!--
   ########################################################################
@@ -443,7 +417,7 @@
   ## T A R G E T    :    L I N K
   ########################################################################
   -->
-  <target name="link" depends="lib"
+  <target name="link" depends="compile"
       description="link objects and library to create executable">
 
     <rc command="${archutil}windres" 
@@ -461,11 +435,22 @@
            -mwindows
            -mthreads
        </flags>
-       <fileset dir="${build}">
-           <include name="inkres.o"/>
-           <include name="obj/main.o"/>
-           <include name="obj/winmain.o"/>
-           <include name="libinkscape.a"/>
+       <fileset dir="${build}/obj">
+           <exclude name="winconsole.o"/>
+           <exclude name="2geom/conjugate_gradient.o"/>
+           <exclude name="dom/prop-css.o"/>
+           <exclude name="dom/prop-css2.o"/>
+           <exclude name="dom/prop-svg.o"/>
+           <exclude name="inkview.o"/>
+           <exclude name="inkviewres.o"/>
+           <!-- CxxTest -->
+           <exclude name="test-main.o"/>
+           <exclude name="test-src.o"/>
+           <exclude name="display/test-display.o"/>
+           <exclude name="helper/test-helper.o"/>
+           <exclude name="svg/test-svg.o"/>
+           <exclude name="util/test-util.o"/>
+           <exclude name="xml/test-xml.o"/>
        </fileset>
        <!-- WARNING: If you change these libraries, don't forget to change them for inkview and cxxtests below as well! -->
        <libs>
@@ -517,7 +502,7 @@
   ## T A R G E T    :    L I N K I N K V I E W
   ########################################################################
   -->
-  <target name="linkinkview" depends="lib"
+  <target name="linkinkview" depends="compile"
         description="link objects and library to create Inkview executable">
 
     <rc command="${archutil}windres" 
@@ -535,10 +520,25 @@
            -mwindows
            -mthreads
        </flags>
-       <fileset dir="${build}">
-           <include name="inkviewres.o"/>
-           <include name="obj/inkview.o"/>
-           <include name="libinkscape.a"/>
+       <fileset dir="${build}/obj">
+           <!-- exclude the other programs -->
+           <exclude name="main.o"/>
+           <exclude name="winmain.o"/>
+           <exclude name="winconsole.o"/>
+           <exclude name="inkres.o"/>
+           <!-- broken files -->
+           <exclude name="2geom/conjugate_gradient.o"/>
+           <exclude name="dom/prop-css.o"/>
+           <exclude name="dom/prop-css2.o"/>
+           <exclude name="dom/prop-svg.o"/>
+           <!-- CxxTest -->
+           <exclude name="test-main.o"/>
+           <exclude name="test-src.o"/>
+           <exclude name="display/test-display.o"/>
+           <exclude name="helper/test-helper.o"/>
+           <exclude name="svg/test-svg.o"/>
+           <exclude name="util/test-util.o"/>
+           <exclude name="xml/test-xml.o"/>
        </fileset>
        <libs>
            -L${devlibs}/lib
@@ -570,7 +570,7 @@
   ## T A R G E T    :    L I N K C X X T E S T S
   ########################################################################
   -->
-  <target name="linkcxxtests" depends="lib"
+  <target name="linkcxxtests" depends="compile"
       description="link objects and library to create executable">
 
     <link command="${arch}g++" out="${build}/cxxtests.exe"
@@ -578,17 +578,22 @@
               stripcommand="${archutil}strip"
               objcopycommand="${archutil}objcopy">
        <flags>
+           -mconsole
            -mthreads
        </flags>
-       <fileset dir="${build}">
-           <include name="obj/test-main.o"/>
-           <include name="obj/test-src.o"/>
-           <include name="obj/display/test-display.o"/>
-           <include name="obj/helper/test-helper.o"/>
-           <include name="obj/svg/test-svg.o"/>
-           <include name="obj/util/test-util.o"/>
-           <include name="obj/xml/test-xml.o"/>
-           <include name="libinkscape.a"/>
+       <fileset dir="${build}/obj">
+           <!-- exclude the other programs -->
+           <exclude name="main.o"/>
+           <exclude name="winmain.o"/>
+           <exclude name="winconsole.o"/>
+           <exclude name="inkres.o"/>
+           <exclude name="inkviewres.o"/>
+           <exclude name="inkview.o"/>
+           <!-- broken files -->
+           <exclude name="2geom/conjugate_gradient.o"/>
+           <exclude name="dom/prop-css.o"/>
+           <exclude name="dom/prop-css2.o"/>
+           <exclude name="dom/prop-svg.o"/>
        </fileset>
        <libs>
            -L${devlibs}/lib

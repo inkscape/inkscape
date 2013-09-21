@@ -777,7 +777,7 @@ DOMString SVGSVGElementImpl::getAttribute(const DOMString& name)
     else if (name == "y")
         s = d2s(y.getAnimVal().getValue());
     else 
-	    s = SVGElement::getAttribute(name);
+	    s = SVGElementImpl::getAttribute(name);
 	return s;
 }
 
@@ -792,7 +792,7 @@ void SVGSVGElementImpl::setAttribute(const DOMString& name,
         x.getAnimVal().setValue(s2d(value));
     else if (name == "y")
         y.getAnimVal().setValue(s2d(value));
-    SVGElement::setAttribute(name, value);
+    SVGElementImpl::setAttribute(name, value);
 }
 
 
