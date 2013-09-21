@@ -78,9 +78,6 @@ static void sp_image_set_curve(SPImage *image);
 static Inkscape::Pixbuf *sp_image_repr_read_image(gchar const *href, gchar const *absref, gchar const *base );
 static void sp_image_update_arenaitem (SPImage *img, Inkscape::DrawingImage *ai);
 static void sp_image_update_canvas_image (SPImage *image);
-static GdkPixbuf * sp_image_repr_read_dataURI (const gchar * uri_data);
-static GdkPixbuf * sp_image_repr_read_b64 (const gchar * uri_data);
-static void pixbuf_set_mime_data(GdkPixbuf *pb, guchar *data, gsize len, GdkPixbufFormat *fmt);
 
 #ifdef DEBUG_LCMS
 extern guint update_in_progress;

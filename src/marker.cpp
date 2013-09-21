@@ -35,11 +35,6 @@ struct SPMarkerView {
   std::vector<Inkscape::DrawingItem *> items;
 };
 
-static Inkscape::DrawingItem *sp_marker_private_show (SPItem *item, Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
-static void sp_marker_private_hide (SPItem *item, unsigned int key);
-static Geom::OptRect sp_marker_bbox(SPItem const *item, Geom::Affine const &transform, SPItem::BBoxType type);
-static void sp_marker_print (SPItem *item, SPPrintContext *ctx);
-
 static void sp_marker_view_remove (SPMarker *marker, SPMarkerView *view, unsigned int destroyitems);
 
 #include "sp-factory.h"
@@ -503,55 +498,17 @@ Inkscape::DrawingItem* SPMarker::show(Inkscape::Drawing &drawing, unsigned int k
 	return SPGroup::show(drawing, key, flags);
 }
 
-/**
- * This routine is disabled to break propagation.
- */
-static Inkscape::DrawingItem *
-sp_marker_private_show (SPItem */*item*/, Inkscape::Drawing &/*drawing*/, unsigned int /*key*/, unsigned int /*flags*/)
-{
-    /* Break propagation */
-    return NULL;
-}
-
 void SPMarker::hide(unsigned int key) {
 	// CPPIFY: correct?
 	SPGroup::hide(key);
-}
-
-/**
- * This routine is disabled to break propagation.
- */
-static void
-sp_marker_private_hide (SPItem */*item*/, unsigned int /*key*/)
-{
-    /* Break propagation */
 }
 
 Geom::OptRect SPMarker::bbox(Geom::Affine const &transform, SPItem::BBoxType type) {
 	return Geom::OptRect();
 }
 
-/**
- * This routine is disabled to break propagation.
- */
-static Geom::OptRect
-sp_marker_bbox(SPItem const *, Geom::Affine const &, SPItem::BBoxType)
-{
-    /* Break propagation */
-    return Geom::OptRect();
-}
-
 void SPMarker::print(SPPrintContext* ctx) {
 
-}
-
-/**
- * This routine is disabled to break propagation.
- */
-static void
-sp_marker_print (SPItem */*item*/, SPPrintContext */*ctx*/)
-{
-    /* Break propagation */
 }
 
 /* fixme: Remove link if zero-sized (Lauris) */

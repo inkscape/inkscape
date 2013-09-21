@@ -716,33 +716,6 @@ sp_recent_open(GtkRecentChooser *recent_menu, gpointer /*user_data*/)
     g_free(uri);
 }
 
-static bool
-compare_file_basenames(gchar const *a, gchar const *b) {
-    bool rc;
-    gchar *ba, *bb;
-
-    bool sort_by_fullname = true; // Sort by full name (including path) or just filename
-    if (sort_by_fullname) {
-        ba = g_strdup(a);
-        bb = g_strdup(b);
-    } else {
-        ba = g_path_get_basename(a);
-        bb = g_path_get_basename(b);
-    }
-
-    gchar *fa =  g_filename_to_utf8(ba,  -1, NULL, NULL, NULL);
-    gchar *fb =  g_filename_to_utf8(bb,  -1, NULL, NULL, NULL);
-    g_free(ba);
-    g_free(bb);
-
-    rc = g_utf8_collate(fa, fb) < 0;
-
-    g_free(fa);
-    g_free(fb);
-
-    return rc;
-}
-
 static void
 sp_ui_checkboxes_menus(GtkMenu *m, Inkscape::UI::View::View *view)
 {
