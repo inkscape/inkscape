@@ -459,7 +459,7 @@ SpellCheck::finished ()
         if (_stops)
             label = g_strdup_printf(_("<b>Finished</b>, <b>%d</b> words added to dictionary"), _adds);
         else
-            label = g_strdup_printf(_("<b>Finished</b>, nothing suspicious found"));
+            label = g_strdup_printf("%s", _("<b>Finished</b>, nothing suspicious found"));
         banner_label.set_markup(label);
         g_free(label);
     }

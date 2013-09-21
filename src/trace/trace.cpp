@@ -213,7 +213,7 @@ Glib::RefPtr<Gdk::Pixbuf> Tracer::sioxProcessImage(SPImage *img, Glib::RefPtr<Gd
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (!desktop)
         {
-        g_warning(_("Trace: No active desktop"));
+        g_warning("%s", _("Trace: No active desktop"));
         return Glib::RefPtr<Gdk::Pixbuf>(NULL);
         }
 
@@ -310,7 +310,7 @@ Glib::RefPtr<Gdk::Pixbuf> Tracer::sioxProcessImage(SPImage *img, Glib::RefPtr<Gd
     SioxImage result = sengine.extractForeground(simage, 0xffffff);
     if (!result.isValid())
         {
-        g_warning(_("Invalid SIOX result"));
+        g_warning("%s", _("Invalid SIOX result"));
         return Glib::RefPtr<Gdk::Pixbuf>(NULL);
         }
 

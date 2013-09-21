@@ -470,7 +470,7 @@ char *sp_guide_description(SPGuide const *guide, const bool verbose)
     char *descr = 0;
     if ( !guide->document ) {
         // Guide has probably been deleted and no longer has an attached namedview.
-        descr = g_strdup_printf(_("Deleted"));
+        descr = g_strdup_printf("%s", _("Deleted"));
     } else {
         SPNamedView *namedview = sp_document_namedview(guide->document, NULL);
 

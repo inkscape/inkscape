@@ -101,7 +101,7 @@ static void draw_page(
             unlink (tmp_png.c_str());
         }
         else {
-            g_warning(_("Could not open temporary PNG for bitmap printing"));
+            g_warning("%s", _("Could not open temporary PNG for bitmap printing"));
         }
     }
     else {
@@ -144,11 +144,11 @@ static void draw_page(
                 ret = ctx->finish();
             }
             else {
-                g_warning(_("Could not set up Document"));
+                g_warning("%s", _("Could not set up Document"));
             }
         }
         else {
-            g_warning(_("Failed to set CairoRenderContext"));
+            g_warning("%s", _("Failed to set CairoRenderContext"));
         }
 
         // Clean up

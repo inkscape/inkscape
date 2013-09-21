@@ -146,7 +146,7 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
                 if (layer == parent)
                     in_phrase = g_strdup_printf(_(" in %s"), layer_name);
                 else if (!layer)
-                    in_phrase = g_strdup_printf(_(" hidden in definitions"));
+                    in_phrase = g_strdup_printf("%s", _(" hidden in definitions"));
                 else 
                     in_phrase = g_strdup_printf(_(" in group %s (%s)"), parent_name, layer_name);
             } else {

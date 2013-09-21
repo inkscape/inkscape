@@ -962,7 +962,7 @@ font_instance *font_factory::Face(PangoFontDescription *descr, bool canFail)
             nFace = pango_font_map_load_font(fontServer,fontContext,descr);
         }
         else {
-            g_warning(_("Ignoring font without family that will crash Pango"));
+            g_warning("%s", _("Ignoring font without family that will crash Pango"));
         }
 
         if ( nFace ) {

@@ -186,7 +186,7 @@ void SPSprayContext::update_cursor(bool /*with_shift*/) {
         num = g_slist_length(const_cast<GSList *>(desktop->selection->itemList()));
         sel_message = g_strdup_printf(ngettext("<b>%i</b> object selected","<b>%i</b> objects selected",num), num);
     } else {
-        sel_message = g_strdup_printf(_("<b>Nothing</b> selected"));
+        sel_message = g_strdup_printf("%s", _("<b>Nothing</b> selected"));
     }
 
 	switch (this->mode) {

@@ -295,7 +295,7 @@ static void
 build_module_from_dir(gchar const *dirname)
 {
     if (!dirname) {
-        g_warning(_("Null external module directory name.  Modules will not be loaded."));
+        g_warning("%s", _("Null external module directory name.  Modules will not be loaded."));
         return;
     }
 

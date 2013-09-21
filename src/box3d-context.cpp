@@ -585,7 +585,7 @@ void Box3DContext::drag(guint state) {
     box3d_position_set(this->box3d);
 
     // status text
-    this->message_context->setF(Inkscape::NORMAL_MESSAGE, _("<b>3D Box</b>; with <b>Shift</b> to extrude along the Z axis"));
+    this->message_context->setF(Inkscape::NORMAL_MESSAGE, "%s", _("<b>3D Box</b>; with <b>Shift</b> to extrude along the Z axis"));
 }
 
 void Box3DContext::finishItem() {

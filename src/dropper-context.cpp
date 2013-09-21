@@ -279,7 +279,7 @@ bool SPDropperContext::root_handler(GdkEvent* event) {
                 // locale-sensitive printf is OK, since this goes to the UI, not into SVG
                 gchar *alpha = g_strdup_printf(_(" alpha %.3g"), alpha_to_set);
                 // where the color is picked, to show in the statusbar
-                gchar *where = this->dragging ? g_strdup_printf(_(", averaged with radius %d"), (int) rw) : g_strdup_printf(_(" under cursor"));
+                gchar *where = this->dragging ? g_strdup_printf(_(", averaged with radius %d"), (int) rw) : g_strdup_printf("%s", _(" under cursor"));
                 // message, to show in the statusbar
                 const gchar *message = this->dragging ? _("<b>Release mouse</b> to set color.") : _("<b>Click</b> to set fill, <b>Shift+click</b> to set stroke; <b>drag</b> to average color in area; with <b>Alt</b> to pick inverse color; <b>Ctrl+C</b> to copy the color under mouse to clipboard");
 

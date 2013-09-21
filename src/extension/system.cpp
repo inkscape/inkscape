@@ -124,7 +124,7 @@ SPDocument *open(Extension *key, gchar const *filename)
         if ( inkscape_use_gui() ) {
             sp_ui_error_dialog(_("Format autodetect failed. The file is being opened as SVG."));
         } else {
-            g_warning(_("Format autodetect failed. The file is being opened as SVG."));
+            g_warning("%s", _("Format autodetect failed. The file is being opened as SVG."));
         }
     }
 
