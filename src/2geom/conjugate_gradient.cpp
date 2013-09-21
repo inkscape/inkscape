@@ -36,6 +36,9 @@
 
 /* lifted wholely from wikipedia. */
 
+namespace Geom
+{
+
 using std::valarray;
 
 static void 
@@ -125,6 +128,8 @@ conjugate_gradient(valarray<double> const &A,
     //std::max(-r.min(), r.max()), sqrt(r_r));
     // x is solution
 }
+
+} // namespace Geom
 
 /*
   Local Variables:
