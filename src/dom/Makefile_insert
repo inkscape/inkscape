@@ -27,7 +27,6 @@ dom_libdom_a_SOURCES =       \
 	dom/smilimpl.cpp         \
 	dom/smilimpl.h           \
 	dom/stylesheets.h        \
-	dom/svg2.h               \
 	dom/svg.h                \
 	dom/svgimpl.cpp          \
 	dom/svgimpl.h            \
