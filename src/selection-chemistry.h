@@ -85,7 +85,7 @@ void sp_selection_raise_to_top(Inkscape::Selection *selection, SPDesktop *deskto
 void sp_selection_lower(Inkscape::Selection *selection, SPDesktop *desktop);
 void sp_selection_lower_to_bottom(Inkscape::Selection *selection, SPDesktop *desktop);
 
-SPCSSAttr *take_style_from_item (SPItem *item);
+SPCSSAttr *take_style_from_item (SPObject *object);
 
 void sp_selection_cut(SPDesktop *desktop);
 void sp_selection_copy(SPDesktop *desktop);

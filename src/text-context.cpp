@@ -1390,8 +1390,11 @@ SPCSSAttr *sp_text_get_style_at_cursor(SPEventContext const *ec)
         return NULL;
 
     SPObject const *obj = sp_te_object_at_position(tc->text, tc->text_sel_end);
-    if (obj)
-        return take_style_from_item(SP_ITEM(obj));
+
+    if (obj) {
+        return take_style_from_item(const_cast<SPObject*>(obj));
+    }
+
     return NULL;
 }
 

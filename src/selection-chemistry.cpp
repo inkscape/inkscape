@@ -1104,18 +1104,21 @@ void sp_selection_cut(SPDesktop *desktop)
  * \pre item != NULL
  */
 SPCSSAttr *
-take_style_from_item(SPItem *item)
+take_style_from_item(SPObject *object)
 {
+    // CPPIFY:
+    // This function should only take SPItems, but currently SPString is not an Item.
+
     // write the complete cascaded style, context-free
-    SPCSSAttr *css = sp_css_attr_from_object(item, SP_STYLE_FLAG_ALWAYS);
+    SPCSSAttr *css = sp_css_attr_from_object(object, SP_STYLE_FLAG_ALWAYS);
     if (css == NULL)
         return NULL;
 
-    if ((SP_IS_GROUP(item) && item->children) ||
-        (SP_IS_TEXT(item) && item->children && item->children->next == NULL)) {
+    if ((SP_IS_GROUP(object) && object->children) ||
+        (SP_IS_TEXT(object) && object->children && object->children->next == NULL)) {
         // if this is a text with exactly one tspan child, merge the style of that tspan as well
         // If this is a group, merge the style of its topmost (last) child with style
-        for (SPObject *last_element = item->lastChild(); last_element != NULL; last_element = last_element->getPrev()) {
+        for (SPObject *last_element = object->lastChild(); last_element != NULL; last_element = last_element->getPrev()) {
             if ( last_element->style ) {
                 SPCSSAttr *temp = sp_css_attr_from_object(last_element, SP_STYLE_FLAG_IFSET);
                 if (temp) {
@@ -1126,15 +1129,18 @@ take_style_from_item(SPItem *item)
             }
         }
     }
-    if (!(SP_IS_TEXT(item) || SP_IS_TSPAN(item) || SP_IS_TREF(item) || SP_IS_STRING(item))) {
+
+    if (!(SP_IS_TEXT(object) || SP_IS_TSPAN(object) || SP_IS_TREF(object) || SP_IS_STRING(object))) {
         // do not copy text properties from non-text objects, it's confusing
         css = sp_css_attr_unset_text(css);
     }
 
-    // FIXME: also transform gradient/pattern fills, by forking? NO, this must be nondestructive
-    double ex = item->i2doc_affine().descrim();
-    if (ex != 1.0) {
-        css = sp_css_attr_scale(css, ex);
+    if (SP_IS_ITEM(object)) {
+        // FIXME: also transform gradient/pattern fills, by forking? NO, this must be nondestructive
+        double ex = SP_ITEM(object)->i2doc_affine().descrim();
+        if (ex != 1.0) {
+            css = sp_css_attr_scale(css, ex);
+        }
     }
 
     return css;
