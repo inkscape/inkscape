@@ -165,9 +165,7 @@ bool SPRectContext::item_handler(SPItem* item, GdkEvent* event) {
         break;
     }
 
-    if (!ret) {
-    	ret = SPEventContext::item_handler(item, event);
-    }
+   	ret = SPEventContext::item_handler(item, event);
 
     return ret;
 }
