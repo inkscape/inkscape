@@ -569,21 +569,21 @@ set(inkscape_SRC
 # -----------------------------------------------------------------------------
 # Setup the executable
 # -----------------------------------------------------------------------------
-add_inkscape_lib(sp_LIB "${sp_SRC}")
-add_inkscape_lib(inkscape_LIB "${inkscape_SRC}")
+#add_inkscape_lib(sp_LIB "${sp_SRC}")
+#add_inkscape_lib(inkscape_LIB "${inkscape_SRC}")
 
 # make executable for INKSCAPE
-add_executable(inkscape ${main_SRC})
+add_executable(inkscape ${main_SRC} ${inkscape_SRC} ${sp_SRC})
 
 add_dependencies(inkscape inkscape_version)
 
 target_link_libraries(inkscape
 	# order from automake 
-	sp_LIB
+	#sp_LIB
 	nrtype_LIB
 
-	inkscape_LIB
-	sp_LIB # annoying, we need both!
+	#inkscape_LIB
+	#sp_LIB # annoying, we need both!
 	nrtype_LIB # annoying, we need both!
 
 	dom_LIB
