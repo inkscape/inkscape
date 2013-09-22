@@ -3483,6 +3483,11 @@ Emf::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
 
     d.tri = trinfo_release_except_FC(d.tri);
 
+    // Set viewBox if it doesn't exist
+    if (!doc->getRoot()->viewBox_set) {
+        doc->setViewBox(Geom::Rect::from_xywh(0, 0, doc->getWidth().quantity, doc->getHeight().quantity));
+    }
+
     return doc;
 }
 

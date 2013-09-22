@@ -23,6 +23,10 @@
 #include "extension/input.h"
 #include "dialogs/dialog-events.h"
 #include "document.h"
+#include "sp-root.h"
+#include "util/units.h"
+
+#include <2geom/rect.h>
 
 #include "inkscape.h"
 
@@ -619,6 +623,11 @@ PdfInputCairo::open(Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
     cairo_surface_destroy(surface);
 
     SPDocument * doc = SPDocument::createNewDocFromMem(output->c_str(), output->length(), TRUE);
+
+    // Set viewBox if it doesn't exist
+    if (!doc->getRoot()->viewBox_set) {
+        doc->setViewBox(Geom::Rect::from_xywh(0, 0, doc->getWidth().quantity, doc->getHeight().quantity));
+    }
 
     delete output;
     g_object_unref(page);

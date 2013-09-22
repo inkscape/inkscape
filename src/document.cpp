@@ -450,11 +450,6 @@ SPDocument *SPDocument::createDoc(Inkscape::XML::Document *rdoc,
         document->setCurrentPersp3DImpl(persp_impl);
     }
 
-    // Set viewBox if it doesn't exist
-    if (!document->root->viewBox_set) {
-        document->setViewBox(Geom::Rect::from_xywh(0, 0, document->getWidth().quantity, document->getHeight().quantity));
-    }
-
     DocumentUndo::setUndoSensitive(document, true);
 
     // reset undo key when selection changes, so that same-key actions on different objects are not coalesced

@@ -140,6 +140,11 @@ SPDesktop *sp_file_new(const std::string &templ)
         DocumentUndo::clearUndo(doc);
     }
     
+    // Set viewBox if it doesn't exist
+    if (!doc->getRoot()->viewBox_set) {
+        doc->setViewBox(Geom::Rect::from_xywh(0, 0, doc->getWidth().quantity, doc->getHeight().quantity));
+    }
+    
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop)
         desktop->setWaitingCursor();

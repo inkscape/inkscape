@@ -48,6 +48,8 @@
 #include "extension/system.h"
 #include "extension/input.h"
 #include "document.h"
+#include "sp-root.h"
+#include "util/units.h"
 #include <cstring>
 
 // Take a guess and fallback to 0.1.x if no configure has run
@@ -109,6 +111,12 @@ SPDocument *WpgInput::open(Inkscape::Extension::Input * /*mod*/, const gchar * u
     //printf("I've got a doc: \n%s", painter.document.c_str());
 
     SPDocument * doc = SPDocument::createNewDocFromMem(output.cstr(), strlen(output.cstr()), TRUE);
+    
+    // Set viewBox if it doesn't exist
+    if (!doc->getRoot()->viewBox_set) {
+        doc->setViewBox(Geom::Rect::from_xywh(0, 0, doc->getWidth().quantity, doc->getHeight().quantity));
+    }
+    
     delete input;
     return doc;
 }

@@ -46,6 +46,7 @@
 #include "document-private.h"
 #include "document-undo.h"
 #include "inkscape.h"
+#include "util/units.h"
 
 #include "dialogs/dialog-events.h"
 #include <gtk/gtk.h>
@@ -746,6 +747,11 @@ PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
     g_free(docname);
     delete pdf_doc;
     delete dlg;
+
+    // Set viewBox if it doesn't exist
+    if (!doc->getRoot()->viewBox_set) {
+        doc->setViewBox(Geom::Rect::from_xywh(0, 0, doc->getWidth().quantity, doc->getHeight().quantity));
+    }
 
     // Restore undo
     DocumentUndo::setUndoSensitive(doc, saved);

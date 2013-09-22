@@ -254,6 +254,12 @@ SPDocument *VsdInput::open(Inkscape::Extension::Input * /*mod*/, const gchar * u
      }
 
      SPDocument * doc = SPDocument::createNewDocFromMem(tmpSVGOutput[page_num-1].cstr(), strlen(tmpSVGOutput[page_num-1].cstr()), TRUE);
+     
+     // Set viewBox if it doesn't exist
+     if (!doc->root->viewBox_set) {
+         doc->setViewBox(Geom::Rect::from_xywh(0, 0, doc->getWidth().quantity, doc->getHeight().quantity));
+     }
+     
      return doc;
 }
 

@@ -102,6 +102,12 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
         doc->getRoot()->appendChildRepr(image_node);
         Inkscape::GC::release(image_node);
         fit_canvas_to_drawing(doc);
+        
+        // Set viewBox if it doesn't exist
+        if (!doc->getRoot()->viewBox_set) {
+            doc->setViewBox(Geom::Rect::from_xywh(0, 0, doc->getWidth().quantity, doc->getHeight().quantity));
+        }
+        
         // restore undo, as now this document may be shown to the user if a bitmap was opened
         DocumentUndo::setUndoSensitive(doc, saved);
     } else {

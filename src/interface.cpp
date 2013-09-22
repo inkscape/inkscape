@@ -50,6 +50,7 @@
 #include "sp-gradient.h"
 #include "sp-flowtext.h"
 #include "sp-namedview.h"
+#include "sp-root.h"
 #include "ui/view/view.h"
 #include "helper/action.h"
 #include "helper/action-context.h"
@@ -321,6 +322,10 @@ sp_ui_close_view(GtkWidget */*widget*/)
     if (desktops.size() == 1) {
         Glib::ustring templateUri = sp_file_default_template_uri();
         SPDocument *doc = SPDocument::createNewDoc( templateUri.c_str() , TRUE, true );
+        // Set viewBox if it doesn't exist
+        if (!doc->getRoot()->viewBox_set) {
+            doc->setViewBox(Geom::Rect::from_xywh(0, 0, doc->getWidth().quantity, doc->getHeight().quantity));
+        }
         dt->change_document(doc);
         sp_namedview_window_from_document(dt);
         sp_namedview_update_layers_from_document(dt);
