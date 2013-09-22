@@ -39,6 +39,7 @@
 #include "document-private.h"
 #include "document-undo.h"
 #include "inkscape.h"
+#include "util/units.h"
 
 #include "dialogs/dialog-events.h"
 #include <gtk/gtk.h>
@@ -256,7 +257,7 @@ SPDocument *VsdInput::open(Inkscape::Extension::Input * /*mod*/, const gchar * u
      SPDocument * doc = SPDocument::createNewDocFromMem(tmpSVGOutput[page_num-1].cstr(), strlen(tmpSVGOutput[page_num-1].cstr()), TRUE);
      
      // Set viewBox if it doesn't exist
-     if (!doc->root->viewBox_set) {
+     if (!doc->getRoot()->viewBox_set) {
          doc->setViewBox(Geom::Rect::from_xywh(0, 0, doc->getWidth().quantity, doc->getHeight().quantity));
      }
      
