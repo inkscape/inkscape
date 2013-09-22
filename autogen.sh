@@ -34,7 +34,9 @@ AUTOPOINT='intltoolize --automake --copy' autoreconf --force --install --verbose
 # in the correct location on OS X and Free-BSD systems.  This is a workaround
 # for a bug in intltool.  See https://launchpad.net/bugs/398571
 #
-# TODO: Drop this hack, and bump our intltool version requiement once the issue
+# The issue should be fixed in intltool 0.51.0.
+#
+# TODO: Drop this hack, and bump our intltool version requirement once the issue
 #       is fixed in intltool
 sed 's/itlocaledir = $(prefix)\/$(DATADIRNAME)\/locale/itlocaledir = $(datarootdir)\/locale/' < po/Makefile.in.in > po/Makefile.in.in.tmp
 mv po/Makefile.in.in.tmp po/Makefile.in.in
