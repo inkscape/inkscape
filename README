@@ -14,12 +14,11 @@ and SVG XML editing. It also imports several formats like EPS, Postscript,
 JPEG, PNG, BMP, and TIFF and exports PNG as well as multiple vector-based
 formats.
 
-Inkscape's main motivation is to provide the Open Source community
-with a fully W3C compliant XML, SVG, and CSS2 drawing tool. Additional
-planned work includes conversion of the codebase from C/Gtk to C++/Gtkmm,
-emphasizing a lightweight core with powerful features added through
-an extension mechanism, and the establishment of a friendly, open,
-community-oriented development processes.
+Inkscape's main motivations are to provide the Open Source community
+with a fully W3C compliant XML, SVG, and CSS2 drawing tool emphasizing a
+lightweight core with powerful features added as extensions, and the
+establishment of a friendly, open, community-oriented development
+processes.
 
 
 Basic Installation
