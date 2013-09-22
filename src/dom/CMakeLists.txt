@@ -38,7 +38,6 @@ set(dom_SRC
 	smilimpl.h
 	stylesheets.h
 	svg.h
-	svg2.h
 	svgimpl.h
 	svgreader.h
 	svgtypes.h
