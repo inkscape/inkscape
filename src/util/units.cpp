@@ -321,6 +321,9 @@ bool UnitTable::load(std::string const &filename) {
         Glib::ustring unitfile = Glib::file_get_contents(filename);
         ctx.parse(unitfile);
         ctx.end_parse();
+    } catch (Glib::FileError const &e) {
+        g_warning("Units file %s is missing: %s\n", filename.c_str(), e.what().c_str());
+        return false;
     } catch (Glib::MarkupError const &e) {
         g_warning("Problem loading units file '%s': %s\n", filename.c_str(), e.what().c_str());
         return false;
