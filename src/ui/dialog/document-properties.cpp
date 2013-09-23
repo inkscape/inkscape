@@ -1440,15 +1440,21 @@ void DocumentProperties::update()
     if (nv->doc_units)
         _rum_deflt.setUnit (nv->doc_units->abbr);
 
-    double const doc_w = sp_desktop_document(dt)->getRoot()->width.value;
+    double doc_w = sp_desktop_document(dt)->getRoot()->width.value;
     Glib::ustring doc_w_unit = unit_table.getUnit(sp_desktop_document(dt)->getRoot()->width.unit).abbr;
     if (doc_w_unit == "") {
         doc_w_unit = "px";
+    } else if (doc_w_unit == "%" && sp_desktop_document(dt)->getRoot()->viewBox_set) {
+        doc_w_unit = "px";
+        doc_w = sp_desktop_document(dt)->getRoot()->viewBox.width();
     }
-    double const doc_h = sp_desktop_document(dt)->getRoot()->height.value;
+    double doc_h = sp_desktop_document(dt)->getRoot()->height.value;
     Glib::ustring doc_h_unit = unit_table.getUnit(sp_desktop_document(dt)->getRoot()->height.unit).abbr;
     if (doc_h_unit == "") {
         doc_h_unit = "px";
+    } else if (doc_h_unit == "%" && sp_desktop_document(dt)->getRoot()->viewBox_set) {
+        doc_h_unit = "px";
+        doc_h = sp_desktop_document(dt)->getRoot()->viewBox.height();
     }
     _page_sizer.setDim(Inkscape::Util::Quantity(doc_w, doc_w_unit), Inkscape::Util::Quantity(doc_h, doc_h_unit));
     _page_sizer.updateFitMarginsUI(nv->getRepr());

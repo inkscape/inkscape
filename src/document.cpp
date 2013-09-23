@@ -557,6 +557,7 @@ Inkscape::Util::Quantity SPDocument::getWidth() const
     SVGLength::Unit u = root->width.unit;
     if (root->width.unit == SVGLength::PERCENT && root->viewBox_set) {
         result = root->viewBox.width();
+        u = SVGLength::PX;
     }
     if (u == SVGLength::NONE) {
         u = SVGLength::PX;
@@ -566,24 +567,20 @@ Inkscape::Util::Quantity SPDocument::getWidth() const
 
 void SPDocument::setWidth(const Inkscape::Util::Quantity &width)
 {
-    if (root->width.unit == SVGLength::PERCENT && root->viewBox_set) { // set to viewBox=
-        root->viewBox.setMax(Geom::Point(root->viewBox.left() + width.value("px"), root->viewBox.bottom()));
-    } else { // set to width=
-        gdouble old_computed = root->width.computed;
-        root->width.computed = width.value("px");
-        /* SVG does not support meters as a unit, so we must translate meters to
-         * cm when writing */
-        if (*width.unit == unit_table.getUnit("m")) {
-            root->width.value = width.value("cm");
-            root->width.unit = SVGLength::CM;
-        } else {
-            root->width.value = width.quantity;
-            root->width.unit = (SVGLength::Unit) width.unit->svgUnit();
-        }
-
-        if (root->viewBox_set)
-            root->viewBox.setMax(Geom::Point(root->viewBox.left() + (root->width.computed / old_computed) * root->viewBox.width(), root->viewBox.bottom()));
+    gdouble old_computed = root->width.computed;
+    root->width.computed = width.value("px");
+    /* SVG does not support meters as a unit, so we must translate meters to
+     * cm when writing */
+    if (*width.unit == unit_table.getUnit("m")) {
+        root->width.value = width.value("cm");
+        root->width.unit = SVGLength::CM;
+    } else {
+        root->width.value = width.quantity;
+        root->width.unit = (SVGLength::Unit) width.unit->svgUnit();
     }
+
+    if (root->viewBox_set)
+        root->viewBox.setMax(Geom::Point(root->viewBox.left() + (root->width.computed / old_computed) * root->viewBox.width(), root->viewBox.bottom()));
 
     root->updateRepr();
 }
@@ -597,6 +594,7 @@ Inkscape::Util::Quantity SPDocument::getHeight() const
     SVGLength::Unit u = root->height.unit;
     if (root->height.unit == SVGLength::PERCENT && root->viewBox_set) {
         result = root->viewBox.height();
+        u = SVGLength::PX;
     }
     if (u == SVGLength::NONE) {
         u = SVGLength::PX;
@@ -606,24 +604,20 @@ Inkscape::Util::Quantity SPDocument::getHeight() const
 
 void SPDocument::setHeight(const Inkscape::Util::Quantity &height)
 {
-    if (root->height.unit == SVGLength::PERCENT && root->viewBox_set) { // set to viewBox=
-        root->viewBox.setMax(Geom::Point(root->viewBox.right(), root->viewBox.top() + height.value("px")));
-    } else { // set to height=
-        gdouble old_computed = root->height.computed;
-        root->height.computed = height.value("px");
-        /* SVG does not support meters as a unit, so we must translate meters to
-         * cm when writing */
-        if (*height.unit == unit_table.getUnit("m")) {
-            root->height.value = height.value("cm");
-            root->height.unit = SVGLength::CM;
-        } else {
-            root->height.value = height.quantity;
-            root->height.unit = (SVGLength::Unit) height.unit->svgUnit();
-        }
-
-        if (root->viewBox_set)
-            root->viewBox.setMax(Geom::Point(root->viewBox.right(), root->viewBox.top() + (root->height.computed / old_computed) * root->viewBox.height()));
+    gdouble old_computed = root->height.computed;
+    root->height.computed = height.value("px");
+    /* SVG does not support meters as a unit, so we must translate meters to
+     * cm when writing */
+    if (*height.unit == unit_table.getUnit("m")) {
+        root->height.value = height.value("cm");
+        root->height.unit = SVGLength::CM;
+    } else {
+        root->height.value = height.quantity;
+        root->height.unit = (SVGLength::Unit) height.unit->svgUnit();
     }
+
+    if (root->viewBox_set)
+        root->viewBox.setMax(Geom::Point(root->viewBox.right(), root->viewBox.top() + (root->height.computed / old_computed) * root->viewBox.height()));
 
     root->updateRepr();
 }

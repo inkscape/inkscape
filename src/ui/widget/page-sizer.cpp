@@ -474,6 +474,8 @@ PageSizer::setDim (Inkscape::Util::Quantity w, Inkscape::Util::Quantity h, bool 
     _changedw_connection.block();
     _changedh_connection.block();
 
+    _unit = w.unit->abbr;
+
     if (SP_ACTIVE_DESKTOP && !_widgetRegistry->isUpdating()) {
         SPDocument *doc = sp_desktop_document(SP_ACTIVE_DESKTOP);
         Inkscape::Util::Quantity const old_height = doc->getHeight();
