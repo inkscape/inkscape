@@ -599,6 +599,7 @@ void SPObject::child_added(Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
         std::string node = e.what();
 
         // special cases
+        if (node.empty()) return;      // comments, usually
         if (node == "rdf:RDF") return; // no SP node yet
         if (node == "inkscape:clipboard") return; // SP node not necessary
 
@@ -651,6 +652,7 @@ void SPObject::build(SPDocument *document, Inkscape::XML::Node *repr) {
             const std::string typeString = NodeTraits::get_type_string(*rchild);
 
             // special cases
+            if (typeString.empty()) continue;      // comments, usually
             if (typeString == "rdf:RDF") continue; // no SP node yet
             if (typeString == "inkscape:clipboard") continue; // SP node not necessary
 

@@ -30,10 +30,37 @@
 #define SP_MACROS_SILENT
 #include "macros.h"
 
+
+#include "sp-factory.h"
+
+namespace {
+    SPObject* createFuncR() {
+        return new SPFeFuncNode(SPFeFuncNode::R);
+    }
+
+    SPObject* createFuncG() {
+        return new SPFeFuncNode(SPFeFuncNode::G);
+    }
+
+    SPObject* createFuncB() {
+        return new SPFeFuncNode(SPFeFuncNode::B);
+    }
+
+    SPObject* createFuncA() {
+        return new SPFeFuncNode(SPFeFuncNode::A);
+    }
+
+    bool funcRRegistered = SPFactory::instance().registerObject("svg:feFuncR", createFuncR);
+    bool funcGRegistered = SPFactory::instance().registerObject("svg:feFuncG", createFuncG);
+    bool funcBRegistered = SPFactory::instance().registerObject("svg:feFuncB", createFuncB);
+    bool funcARegistered = SPFactory::instance().registerObject("svg:feFuncA", createFuncA);
+}
+
+
 /* FeFuncNode class */
-SPFeFuncNode::SPFeFuncNode()
+SPFeFuncNode::SPFeFuncNode(SPFeFuncNode::Channel channel)
     : SPObject(), type(Inkscape::Filters::COMPONENTTRANSFER_TYPE_IDENTITY),
-      slope(1), intercept(0), amplitude(1), exponent(1), offset(0) {
+      slope(1), intercept(0), amplitude(1), exponent(1), offset(0), channel(channel) {
 }
 
 SPFeFuncNode::~SPFeFuncNode() {

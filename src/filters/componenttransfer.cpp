@@ -65,12 +65,26 @@ static void sp_feComponentTransfer_children_modified(SPFeComponentTransfer *sp_c
         bool set[4] = {false, false, false, false};
         SPObject* node = sp_componenttransfer->children;
         for(;node;node=node->next){
-            int i=4;
-            if (SP_IS_FEFUNCR(node)) i=0;
-            if (SP_IS_FEFUNCG(node)) i=1;
-            if (SP_IS_FEFUNCB(node)) i=2;
-            if (SP_IS_FEFUNCA(node)) i=3;
-            if (i==4) {
+            int i = 4;
+
+            SPFeFuncNode *funcNode = SP_FEFUNCNODE(node);
+
+            switch (funcNode->channel) {
+            case SPFeFuncNode::R:
+                i = 0;
+                break;
+            case SPFeFuncNode::G:
+                i = 1;
+                break;
+            case SPFeFuncNode::B:
+                i = 2;
+                break;
+            case SPFeFuncNode::A:
+                i = 3;
+                break;
+            }
+
+            if (i == 4) {
                 g_warning("Unrecognized channel for component transfer.");
                 break;
             }
