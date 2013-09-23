@@ -37,7 +37,7 @@
 #include "priv/colorspace.h"
 #include "priv/homogeneoussplines.h"
 #include "priv/branchless.h"
-#include "priv/splines.h"
+#include "priv/splines-kopf2011.h"
 #include "priv/iterator.h"
 
 namespace Tracer {
@@ -141,6 +141,12 @@ SimplifiedVoronoi<T> Kopf2011::_voronoi(const Glib::RefPtr<Gdk::Pixbuf const> &b
 #endif
 
     _remove_crossing_edges_unsafe(graph, options);
+
+#ifndef NDEBUG
+    graph.checkConsistency();
+#endif
+
+    _remove_puzzle_pattern(graph);
 
 #ifndef NDEBUG
     graph.checkConsistency();
@@ -309,6 +315,33 @@ void Kopf2011::_remove_crossing_edges_unsafe(PixelGraph &graph,
     }
 }
 
+inline
+void Kopf2011::_remove_puzzle_pattern(PixelGraph &graph)
+{
+    if ( graph.width() < 2 || graph.height() < 2 )
+        return;
+
+    PixelGraph::iterator it = graph.begin();
+    for ( int i = 0 ; i + 1 != graph.height() ; ++i ) {
+        PixelGraph::iterator it2 = it;
+        for ( int j = 0 ; j + 1 != graph.width() ; ++j ) {
+            // Evil pattern currently not handled correctly in SimplifiedVoronoi
+            if ( it2->adj.right + it2->adj.bottom
+                 + graph.nodeBottomRight(it2)->adj.left
+                 + graph.nodeBottomRight(it2)->adj.top == 3 ) {
+                // We fake a new connection =)
+                it2->adj.right = true;
+                it2->adj.bottom = true;
+                graph.nodeBottomRight(it2)->adj.left = true;
+                graph.nodeBottomRight(it2)->adj.top = true;
+            }
+
+            it2 = graph.nodeRight(it2);
+        }
+        it = graph.nodeBottom(it);
+    }
+}
+
 inline int Heuristics::curves(const PixelGraph &graph,
                               PixelGraph::const_iterator a,
                               PixelGraph::const_iterator b)
@@ -383,22 +416,25 @@ inline void Heuristics::SparsePixels::operator ()(const PixelGraph &graph,
     {
         unsigned x = graph.toX(diagonals[MAIN_DIAGONAL].first.first);
         unsigned y = graph.toY(diagonals[MAIN_DIAGONAL].first.first);
-        unsigned minor = std::min(x, y);
         unsigned displace = radius - 1;
 
-        if ( displace > minor ) {
-            displace = minor;
-            radius = displace + 1;
+        {
+            unsigned minor = std::min(x, y);
+
+            if ( displace > minor ) {
+                displace = minor;
+                radius = displace + 1;
+            }
         }
 
         displace = radius;
 
-        if ( x + displace >= graph.width() ) {
+        if ( x + displace >= unsigned(graph.width()) ) {
             displace = unsigned(graph.width()) - x - 1;
             radius = displace;
         }
 
-        if ( y + displace >= graph.height() ) {
+        if ( y + displace >= unsigned(graph.height()) ) {
             displace = unsigned(graph.height()) - y - 1;
             radius = displace;
         }
@@ -434,7 +470,6 @@ inline void Heuristics::SparsePixels::operator ()(const PixelGraph &graph,
     int minor = std::min(diagonals[0].second, diagonals[1].second);
     for ( int i = 0 ; i != 2 ; ++i )
         diagonals[i].second -= minor;
-
     std::swap(diagonals[0].second, diagonals[1].second);
 }
 

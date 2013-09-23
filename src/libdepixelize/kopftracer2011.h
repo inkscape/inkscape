@@ -73,12 +73,17 @@ public:
     /**
      * # Exceptions
      *
+     * \p options.optimize and options.nthreads will be ignored
+     *
      * Glib::FileError
      * Gdk::PixbufError
      */
     static Splines to_voronoi(const std::string &filename,
                               const Options &options = Options());
 
+    /*
+     * \p options.optimize and options.nthreads will be ignored
+     */
     static Splines to_voronoi(const Glib::RefPtr<Gdk::Pixbuf const> &buf,
                               const Options &options = Options());
 
@@ -95,7 +100,7 @@ public:
                               const Options &options = Options());
 
 private:
-    typedef double Precision;
+    typedef Geom::Coord Precision;
 
     template<class T>
     static SimplifiedVoronoi<T> _voronoi(const Glib::RefPtr<Gdk::Pixbuf const> &buf,
@@ -105,6 +110,7 @@ private:
     static void _remove_crossing_edges_safe(PixelGraph &graph);
     static void _remove_crossing_edges_unsafe(PixelGraph &graph,
                                               const Options &options);
+    static void _remove_puzzle_pattern(PixelGraph &graph);
 };
 
 } // namespace Tracer

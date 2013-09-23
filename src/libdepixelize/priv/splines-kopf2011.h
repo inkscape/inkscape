@@ -22,55 +22,65 @@
     Lesser General Public License for more details.
 */
 
-#ifndef LIBDEPIXELIZE_TRACER_SPLINES_PRIV_H
-#define LIBDEPIXELIZE_TRACER_SPLINES_PRIV_H
+#ifndef LIBDEPIXELIZE_TRACER_SPLINES_KOPF2011_H
+#define LIBDEPIXELIZE_TRACER_SPLINES_KOPF2011_H
 
 #include "../splines.h"
 #include "homogeneoussplines.h"
+#include "optimization-kopf2011.h"
 
 namespace Tracer {
 
+/**
+ * Maybe the pass-by-value and then move idiom should be more efficient. But all
+ * this is inlinable and we're not even in C++11 yet.
+ */
 template<class T>
-Geom::Point to_geom_point(Point<T> p)
-{
-    return Geom::Point(p.x, p.y);
-}
-
-template<class T>
-Geom::Path worker_helper(const std::vector< Point<T> > &source, bool optimize)
+Geom::Path worker_helper(const std::vector< Point<T> > &source1, bool optimize)
 {
     typedef Geom::LineSegment Line;
     typedef Geom::QuadraticBezier Quad;
     typedef typename std::vector< Point<T> >::const_iterator iterator;
 
+    std::vector< Point<T> > source;
+
+    if ( optimize )
+        source = Tracer::optimize(source1);
+    else
+        source = source1;
+
     iterator it = source.begin();
-    Geom::Path ret(to_geom_point((source.back() + *it) / 2));
+    Point<T> prev = source.back();
+    Geom::Path ret(to_geom_point(midpoint(prev, *it)));
 
-    for ( iterator end = --source.end() ; it != end ; ++it ) {
-        Point<T> next = *(it + 1);
-        Point<T> middle = (*it + next) / 2;
+    for ( iterator end = source.end() ; it != end ; ++it ) {
+#if LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES
+        // remove redundant points
+        if ( !it->visible ) {
+            prev = *it;
+            continue;
+        }
+#endif // LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES
+
+        if ( !prev.visible ) {
+            Geom::Point middle = to_geom_point(midpoint(prev, *it));
+            if ( ret.finalPoint() != middle ) {
+                // All generated invisible points are straight lines
+                ret.appendNew<Line>(middle);
+            }
+        }
+
+        Point<T> next = (it + 1 == end) ? source.front() : *(it + 1);
+        Point<T> middle = midpoint(*it, next);
 
         if ( !it->smooth ) {
-            // TODO: remove redundant colinear points
-            ret.appendNew<Line>(Geom::Point(it->x, it->y));
-            ret.appendNew<Line>(Geom::Point(middle.x, middle.y));
+            ret.appendNew<Line>(to_geom_point(*it));
+            ret.appendNew<Line>(to_geom_point(middle));
         } else {
-            ret.appendNew<Quad>(Geom::Point(it->x, it->y),
-                                Geom::Point(middle.x, middle.y));
+            ret.appendNew<Quad>(to_geom_point(*it), to_geom_point(middle));
         }
-    }
 
-    {
-        Point<T> next = source.front();
-        Point<T> middle = (*it + next) / 2;
-
-        if ( !it->smooth ) {
-            ret.appendNew<Line>(Geom::Point(it->x, it->y));
-            ret.appendNew<Line>(Geom::Point(middle.x, middle.y));
-        } else {
-            ret.appendNew<Quad>(Geom::Point(it->x, it->y),
-                                Geom::Point(middle.x, middle.y));
-        }
+        prev = *it;
     }
 
     return ret;
@@ -98,7 +108,9 @@ void worker(const typename HomogeneousSplines<T>::Polygon &source,
 }
 
 template<typename T>
-Splines::Splines(const SimplifiedVoronoi<T> &diagram)
+Splines::Splines(const SimplifiedVoronoi<T> &diagram) :
+    _width(diagram.width()),
+    _height(diagram.height())
 {
     _paths.reserve(diagram.size());
 
@@ -141,7 +153,7 @@ Splines::Splines(const HomogeneousSplines<T> &homogeneousSplines,
 
 } // namespace Tracer
 
-#endif // LIBDEPIXELIZE_TRACER_SPLINES_PRIV_H
+#endif // LIBDEPIXELIZE_TRACER_SPLINES_KOPF2011_H
 
 /*
   Local Variables:

@@ -124,11 +124,6 @@ private:
     typedef void (*PointTransform)(Point<T> &p, T dx, T dy);
     typedef bool (*NodeTransform)(PixelGraph::const_iterator);
 
-    static Point<T> _midpoint(const Point<T> &p1, const Point<T> p2)
-    {
-        return Point<T>((p1.x + p2.x) / 2, (p1.y + p2.y) / 2);
-    }
-
     /**
      * Output is translated by -.5 in each axis. This function fixes this error.
      */
@@ -220,7 +215,7 @@ private:
      * code base 4 times smaller and bugs will be MUCH MUCH difficult to hide.
      *
      * Some maintainers may go mad because the level extra level of
-     * abstracation.
+     * abstraction.
      *
      * "All problems in computer science can be solved by another level of
      *  indirection, except for the problem of too many layers of indirection."
@@ -255,6 +250,11 @@ SimplifiedVoronoi<T>::SimplifiedVoronoi(const PixelGraph &graph) :
     if (!graph.size())
         return;
 
+    /*
+     * The insertion order of cells is not a big deal. Here I just follow
+     * the order of PixelGraph arrangement.
+     */
+
     // ...the "center" cells first...
     if ( _width > 2 && _height > 2 ) {
         PixelGraph::const_iterator graph_it = graph.begin() + _width + 1;
@@ -276,7 +276,7 @@ SimplifiedVoronoi<T>::SimplifiedVoronoi(const PixelGraph &graph) :
                 // Bottom-left
                 _complexBottomLeft(graph, graph_it, cells_it, j, i);
             }
-            // After the previous loop, 'it' is poiting to the last cell from
+            // After the previous loop, 'it' is pointing to the last cell from
             // the row.
             // Go south, then first node in the row (increment 'it' by 1)
             // Go to the second node in the line (increment 'it' by 1)
@@ -794,13 +794,13 @@ SimplifiedVoronoi<T>
                              PixelGraph::const_iterator d_it,
                              Cell *const cells_it, int x, int y,
                              PointTransform transform,
-                             NodeTransform top,
+                             NodeTransform,
                              NodeTransform topright,
                              NodeTransform right,
                              NodeTransform bottomright,
                              NodeTransform bottom,
                              NodeTransform bottomleft,
-                             NodeTransform left,
+                             NodeTransform,
                              NodeTransform topleft)
 {
     using colorspace::contour_edge;
@@ -808,31 +808,36 @@ SimplifiedVoronoi<T>
 
     const Point<T> initial(x, y);
 
+    /*
+     * The insertion order of points within the cell is very important. You must
+     * follow current practice: Clockwise order.
+     */
+
     if ( bottomright(a_it) ) {
         // this and bottom-right are connected
 
         bool smooth[2] = {
-            same_color(a_it->rgba, d_it->rgba) + right(a_it),
-            same_color(a_it->rgba, d_it->rgba) + bottom(a_it)
+            same_color(a_it->rgba, d_it->rgba) || right(a_it),
+            same_color(a_it->rgba, d_it->rgba) || bottom(a_it)
         };
 
         Point<T> borderMid = initial;
         {
             transform(borderMid, 1, 1);
-            borderMid = _midpoint(initial, borderMid);
+            borderMid = midpoint(initial, borderMid);
         }
 
         Point<T> vertices[2] = {initial, initial};
         {
             transform(vertices[0], 1, 0);
-            vertices[0] = _adjust(_midpoint(borderMid, vertices[0]), smooth[0]);
+            vertices[0] = _adjust(midpoint(borderMid, vertices[0]), smooth[0]);
 
             transform(vertices[1], 0, 1);
-            vertices[1] = _adjust(_midpoint(borderMid, vertices[1]), smooth[1]);
+            vertices[1] = _adjust(midpoint(borderMid, vertices[1]), smooth[1]);
         }
 
         if ( !smooth[0] ) {
-            cells_it->vertices.push_back(vertices[0]);
+            cells_it->vertices.push_back(vertices[0].invisible());
             {
                 Point<T> another = vertices[0];
                 transform(another,
@@ -841,7 +846,7 @@ SimplifiedVoronoi<T>
                           // y
                           - ( 0.5625
                               - ( topright(a_it) + topleft(b_it) ) * 0.1875 ));
-                cells_it->vertices.push_back(another);
+                cells_it->vertices.push_back(another.invisible());
             }
             {
                 Point<T> another = vertices[0];
@@ -862,7 +867,7 @@ SimplifiedVoronoi<T>
                           // y
                           0.0625
                           + ( bottomright(b_it) - topright(d_it) ) * 0.0625);
-                cells_it->vertices.push_back(another);
+                cells_it->vertices.push_back(another.invisible());
             }
             {
                 transform(vertices[0],
@@ -874,6 +879,7 @@ SimplifiedVoronoi<T>
                               + ( topright(d_it) - topright(a_it)
                                   - topleft(b_it) - bottomright(b_it) )
                               * 0.03125 ));
+                vertices[0].visible = false;
             }
         }
 
@@ -891,7 +897,7 @@ SimplifiedVoronoi<T>
                           0.0625
                           + ( bottomleft(a_it) - bottomleft(d_it)
                               - topleft(c_it) - bottomright(c_it) ) * 0.03125);
-                cells_it->vertices.push_back(another);
+                cells_it->vertices.push_back(another.invisible());
             }
             {
                 Point<T> another = vertices[1];
@@ -901,7 +907,7 @@ SimplifiedVoronoi<T>
                           // y
                           0.1875
                           - ( bottomright(c_it) + bottomleft(d_it) ) * 0.0625);
-                cells_it->vertices.push_back(another);
+                cells_it->vertices.push_back(another.invisible());
             }
             {
                 Point<T> another = vertices[1];
@@ -926,8 +932,9 @@ SimplifiedVoronoi<T>
                           - ( 0.1875
                               - ( bottomleft(a_it) - topleft(c_it) )
                               * 0.1875 ));
-                cells_it->vertices.push_back(another);
+                cells_it->vertices.push_back(another.invisible());
             }
+            vertices[1].visible = false;
         }
 
         cells_it->vertices.push_back(vertices[1]);
@@ -936,7 +943,7 @@ SimplifiedVoronoi<T>
 
         Point<T> vertex = initial;
         transform(vertex, 1, 1);
-        vertex = _adjust(_midpoint(_midpoint(initial, vertex), initial), true);
+        vertex = _adjust(midpoint(midpoint(initial, vertex), initial), true);
         cells_it->vertices.push_back(vertex);
     } else {
         // Connections don't affect the shape of this squared-like
@@ -944,7 +951,7 @@ SimplifiedVoronoi<T>
 
         Point<T> vertex = initial;
         transform(vertex, 1, 1);
-        vertex = _adjust(_midpoint(initial, vertex));
+        vertex = _adjust(midpoint(initial, vertex));
 
         // compute smoothness
         if ( right(a_it) ) {
@@ -969,13 +976,13 @@ SimplifiedVoronoi<T>
                                     - ( ( bottomright(c_it) + topleft(c_it) )
                                         * 0.03125 );
                                 transform(another, - amount, amount);
-                                cells_it->vertices.push_back(another);
+                                cells_it->vertices.push_back(another.invisible());
                             }
                             {
                                 Point<T> another = vertex;
                                 T amount = 0.0625 * bottomright(c_it);
                                 transform(another, amount, 0.25 - amount);
-                                cells_it->vertices.push_back(another);
+                                cells_it->vertices.push_back(another.invisible());
                             }
                             {
                                 Point<T> another = vertex;
@@ -990,8 +997,9 @@ SimplifiedVoronoi<T>
                                 T amount = 0.1875 * topleft(c_it);
                                 transform(another, - ( 0.75 - amount ),
                                           - amount);
-                                cells_it->vertices.push_back(another);
+                                cells_it->vertices.push_back(another.invisible());
                             }
+                            vertex.visible = false;
                         } else if ( twin_is_contour ) {
                             T amount = 0.125
                                 - ( ( bottomleft(d_it) + topright(d_it) )
@@ -1036,13 +1044,13 @@ SimplifiedVoronoi<T>
 
                     if ( !vertex.smooth ) {
                         if ( another_is_contour ) {
-                            cells_it->vertices.push_back(vertex);
+                            cells_it->vertices.push_back(vertex.invisible());
                             {
                                 Point<T> another = vertex;
                                 T amount = 0.1875 * topleft(b_it);
                                 transform(another, - amount,
                                           - ( 0.75 - amount ));
-                                cells_it->vertices.push_back(another);
+                                cells_it->vertices.push_back(another.invisible());
                             }
                             {
                                 Point<T> another = vertex;
@@ -1056,13 +1064,14 @@ SimplifiedVoronoi<T>
                                 Point<T> another = vertex;
                                 T amount = 0.0625 * bottomright(b_it);
                                 transform(another, 0.25 - amount, amount);
-                                cells_it->vertices.push_back(another);
+                                cells_it->vertices.push_back(another.invisible());
                             }
                             {
                                 T amount = 0.125
                                     - (bottomright(b_it) + topleft(b_it))
                                     * 0.03125;
                                 transform(vertex, amount, - amount);
+                                vertex.visible = false;
                             }
                         } else if ( twin_is_contour ) {
                             T amount = 0.125
@@ -1115,13 +1124,13 @@ SimplifiedVoronoi<T>
                                 - ( topleft(c_it) + bottomright(c_it) )
                                 * 0.03125;
                             transform(another, - amount, amount);
-                            cells_it->vertices.push_back(another);
+                            cells_it->vertices.push_back(another.invisible());
                         }
                         {
                             Point<T> another = vertex;
                             T amount = 0.0625 * bottomright(c_it);
                             transform(another, amount, 0.25 - amount);
-                            cells_it->vertices.push_back(another);
+                            cells_it->vertices.push_back(another.invisible());
                         }
                         {
                             Point<T> another = vertex;
@@ -1134,8 +1143,9 @@ SimplifiedVoronoi<T>
                             Point<T> another = vertex;
                             T amount = 0.1875 * topleft(c_it);
                             transform(another, - ( 0.75 - amount ), - amount);
-                            cells_it->vertices.push_back(another);
+                            cells_it->vertices.push_back(another.invisible());
                         }
+                        vertex.visible = false;
                     } else {
                         special = true;
                     }
@@ -1149,7 +1159,7 @@ SimplifiedVoronoi<T>
             }
 
             if ( special ) {
-                cells_it->vertices.push_back(vertex);
+                cells_it->vertices.push_back(vertex.invisible());
                 {
                     Point<T> another = vertex;
                     T amount = 0.1875;
@@ -1159,7 +1169,7 @@ SimplifiedVoronoi<T>
                               - ( 0.75
                                   - ( topleft(b_it) + topright(a_it) )
                                   * amount ));
-                    cells_it->vertices.push_back(another);
+                    cells_it->vertices.push_back(another.invisible());
                 }
                 {
                     Point<T> another = vertex;
@@ -1181,7 +1191,7 @@ SimplifiedVoronoi<T>
                               // y
                               0.25 - amount
                               * ( bottomleft(d_it) + bottomright(c_it) ));
-                    cells_it->vertices.push_back(another);
+                    cells_it->vertices.push_back(another.invisible());
                 }
                 {
                     transform(vertex,
@@ -1192,6 +1202,7 @@ SimplifiedVoronoi<T>
                               ( topleft(b_it) - bottomleft(d_it)
                                 + topright(a_it) - bottomright(c_it) )
                               * 0.03125);
+                    vertex.visible = false;
                 }
             }
         } else if ( right(c_it) ) {
@@ -1212,12 +1223,12 @@ SimplifiedVoronoi<T>
 
                 if ( !vertex.smooth ) {
                     if ( similar_neighbor_is_contour ) {
-                        cells_it->vertices.push_back(vertex);
+                        cells_it->vertices.push_back(vertex.invisible());
                         {
                             Point<T> another = vertex;
                             T amount = 0.1875 * topleft(b_it);
                             transform(another, - amount, - ( 0.75 - amount ));
-                            cells_it->vertices.push_back(another);
+                            cells_it->vertices.push_back(another.invisible());
                         }
                         {
                             Point<T> another = vertex;
@@ -1230,12 +1241,13 @@ SimplifiedVoronoi<T>
                             Point<T> another = vertex;
                             T amount = 0.0625 * bottomright(b_it);
                             transform(another, 0.25 - amount, amount);
-                            cells_it->vertices.push_back(another);
+                            cells_it->vertices.push_back(another.invisible());
                         }
                         {
                             T amount = 0.125
                                 - 0.03125 * (topleft(b_it) + bottomright(b_it));
                             transform(vertex, amount, - amount);
+                            vertex.visible = false;
                         }
                     } else {
                         special = true;
@@ -1261,7 +1273,7 @@ SimplifiedVoronoi<T>
                               - amount
                               * ( topleft(c_it) + topright(d_it)
                                   - bottomleft(a_it) - bottomright(b_it) ));
-                    cells_it->vertices.push_back(another);
+                    cells_it->vertices.push_back(another.invisible());
                 }
                 {
                     Point<T> another = vertex;
@@ -1272,7 +1284,7 @@ SimplifiedVoronoi<T>
                               // y
                               - amount
                               * ( topright(d_it) - bottomright(b_it) ));
-                    cells_it->vertices.push_back(another);
+                    cells_it->vertices.push_back(another.invisible());
                 }
                 {
                     Point<T> another = vertex;
@@ -1295,8 +1307,9 @@ SimplifiedVoronoi<T>
                               // y
                               -  amount
                               * ( topleft(c_it) - bottomleft(a_it) ));
-                    cells_it->vertices.push_back(another);
+                    cells_it->vertices.push_back(another.invisible());
                 }
+                vertex.visible = false;
             }
         } else {
             // there is a 4-color pattern, where the current node

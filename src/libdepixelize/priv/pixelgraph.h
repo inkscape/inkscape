@@ -378,7 +378,7 @@ inline void PixelGraph::connectAllNeighbors()
 
                 it = nodeRight(it);
             }
-            // After the previous loop, 'it' is poiting to the last node from
+            // After the previous loop, 'it' is pointing to the last node from
             // the row.
             // Go south, then first node in the row (increment 'it' by 1)
             // Go to the second node in the line (increment 'it' by 1)
@@ -445,21 +445,34 @@ inline void PixelGraph::connectAllNeighbors()
     //  ...and the 4 corner nodes
     {
         Node *const top_left = &(*this)[0][0];
-        top_left->adj.right = 1;
-        top_left->adj.bottomright = 1;
-        top_left->adj.bottom = 1;
+
+        if ( _width > 1 )
+            top_left->adj.right = 1;
+
+        if ( _width > 1 && _height > 1 )
+            top_left->adj.bottomright = 1;
+
+        if ( _height > 1 )
+            top_left->adj.bottom = 1;
     }
     if ( _width > 1 ) {
         Node *const top_right = &(*this)[_width - 1][0];
-        top_right->adj.bottom = 1;
-        top_right->adj.bottomleft = 1;
+
+        if ( _height > 1 ) {
+            top_right->adj.bottom = 1;
+            top_right->adj.bottomleft = 1;
+        }
+
         top_right->adj.left = 1;
     }
     if ( _height > 1 ) {
         Node *const down_left = &(*this)[0][_height - 1];
         down_left->adj.top = 1;
-        down_left->adj.topright = 1;
-        down_left->adj.right = 1;
+
+        if ( _width > 1 ) {
+            down_left->adj.topright = 1;
+            down_left->adj.right = 1;
+        }
     }
     if ( _width > 1 && _height > 1 ) {
         Node *const down_right = &(*this)[_width - 1][_height - 1];
