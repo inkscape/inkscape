@@ -129,7 +129,9 @@ private:
 
     Gtk::RadioButton voronoiRadioButton;
     Gtk::RadioButton noOptimizeRadioButton;
+#if LIBDEPIXELIZE_INKSCAPE_ENABLE_SMOOTH
     Gtk::RadioButton optimizeRadioButton;
+#endif // LIBDEPIXELIZE_INKSCAPE_ENABLE_SMOOTH
 
     SPDesktop *desktop;
     DesktopTracker deskTrack;
@@ -247,12 +249,14 @@ PixelArtDialogImpl::PixelArtDialogImpl() :
 
         outputVBox.pack_start(noOptimizeRadioButton, false, false);
 
+#if LIBDEPIXELIZE_INKSCAPE_ENABLE_SMOOTH
         optimizeRadioButton.set_label(_("_Smooth curves"));
         optimizeRadioButton.set_tooltip_text(_("The Kopf-Lischinski algorithm"));
         optimizeRadioButton.set_use_underline(true);
         optimizeRadioButton.set_group(outputGroup);
 
         outputVBox.pack_start(optimizeRadioButton, false, false);
+#endif // LIBDEPIXELIZE_INKSCAPE_ENABLE_SMOOTH
 
         outputFrame.set_label(_("Output"));
         outputFrame.add(outputVBox);
@@ -308,7 +312,11 @@ Tracer::Kopf2011::Options PixelArtDialogImpl::options()
     options.islandsWeight = islandsWeightSpinner.get_value_as_int();
     options.sparsePixelsMultiplier = sparsePixelsMultiplierSpinner.get_value();
     options.sparsePixelsRadius = sparsePixelsRadiusSpinner.get_value_as_int();
+#if LIBDEPIXELIZE_INKSCAPE_ENABLE_SMOOTH
     options.optimize = optimizeRadioButton.get_active();
+#else // LIBDEPIXELIZE_INKSCAPE_ENABLE_SMOOTH
+    options.optimize = false;
+#endif // LIBDEPIXELIZE_INKSCAPE_ENABLE_SMOOTH
 
     options.nthreads = Inkscape::Preferences::get()
         ->getIntLimited("/options/threading/numthreads",
@@ -450,7 +458,11 @@ void PixelArtDialogImpl::setDefaults()
     sparsePixelsMultiplierSpinner.set_value(Tracer::Kopf2011::Options
                                             ::SPARSE_PIXELS_MULTIPLIER);
 
+#if LIBDEPIXELIZE_INKSCAPE_ENABLE_SMOOTH
     optimizeRadioButton.set_active();
+#else // LIBDEPIXELIZE_INKSCAPE_ENABLE_SMOOTH
+    noOptimizeRadioButton.set_active();
+#endif // LIBDEPIXELIZE_INKSCAPE_ENABLE_SMOOTH
 
     ignorePreview = false;
 
