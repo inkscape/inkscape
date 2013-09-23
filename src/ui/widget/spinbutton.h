@@ -38,7 +38,9 @@ class SpinButton : public Gtk::SpinButton
 public:
   SpinButton(double climb_rate = 0.0, guint digits = 0)
     : Gtk::SpinButton(climb_rate, digits),
-      _unit_menu(NULL)
+      _unit_menu(NULL),
+      _unit_tracker(NULL),
+      _on_focus_in_value(0.)
   {
       connect_signals();
   };
@@ -48,10 +50,11 @@ public:
   explicit SpinButton(Gtk::Adjustment& adjustment, double climb_rate = 0.0, guint digits = 0)
 #endif
     : Gtk::SpinButton(adjustment, climb_rate, digits),
-      _unit_menu(NULL)
+      _unit_menu(NULL),
+      _unit_tracker(NULL),
+      _on_focus_in_value(0.)
   {
       connect_signals();
-      _unit_tracker = NULL;
   };
 
   virtual ~SpinButton() {};
@@ -63,6 +66,7 @@ public:
 protected:
   UnitMenu *_unit_menu; /// Linked unit menu for unit conversion in entered expressions.
   UnitTracker *_unit_tracker; // Linked unit tracker for unit conversion in entered expressions.
+  double _on_focus_in_value;
 
   void connect_signals();
 
@@ -94,8 +98,6 @@ protected:
      * Undo the editing, by resetting the value upon when the spinbutton got focus.
      */
     void undo();
-
-  double on_focus_in_value;
 
 private:
   // noncopyable

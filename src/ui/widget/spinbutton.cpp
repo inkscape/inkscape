@@ -65,7 +65,7 @@ int SpinButton::on_input(double* newvalue)
 
 bool SpinButton::on_my_focus_in_event(GdkEventFocus* /*event*/)
 {
-    on_focus_in_value = get_value();
+    _on_focus_in_value = get_value();
     return false; // do not consume the event
 }
 
@@ -92,7 +92,7 @@ bool SpinButton::on_my_key_press_event(GdkEventKey* event)
 
 void SpinButton::undo()
 {
-    set_value(on_focus_in_value);
+    set_value(_on_focus_in_value);
 }
 
 
