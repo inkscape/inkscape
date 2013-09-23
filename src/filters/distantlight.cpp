@@ -29,6 +29,18 @@
 #define SP_MACROS_SILENT
 #include "macros.h"
 
+
+#include "sp-factory.h"
+
+namespace {
+    SPObject* createDistantLight() {
+        return new SPFeDistantLight();
+    }
+
+    bool distantLightRegistered = SPFactory::instance().registerObject("svg:feDistantLight", createDistantLight);
+}
+
+
 SPFeDistantLight::SPFeDistantLight()
     : SPObject(), azimuth(0), azimuth_set(FALSE), elevation(0), elevation_set(FALSE) {
 }

@@ -597,6 +597,7 @@ void SPObject::child_added(Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
         ochild->invoke_build(object->document, child, object->cloned);
     } catch (const FactoryExceptions::TypeNotRegistered& e) {
         std::string node = e.what();
+
         // special cases
         if (node == "rdf:RDF") return; // no SP node yet
         if (node == "inkscape:clipboard") return; // SP node not necessary
@@ -646,19 +647,12 @@ void SPObject::build(SPDocument *document, Inkscape::XML::Node *repr) {
     object->readAttr("inkscape:collect");
 
     for (Inkscape::XML::Node *rchild = repr->firstChild() ; rchild != NULL; rchild = rchild->next()) {
-//        GType type = sp_repr_type_lookup(rchild);
-//        if (!type) {
-//            continue;
-//        }
-//        SPObject *child = SP_OBJECT(g_object_new(type, 0));
-
-//      SPObject* child = SPFactory::instance().createObject(*rchild);
-//      if (!child) {
-//          continue;
-//      }
-
         try {
             const std::string typeString = NodeTraits::get_type_string(*rchild);
+
+            // special cases
+            if (typeString == "rdf:RDF") continue; // no SP node yet
+            if (typeString == "inkscape:clipboard") continue; // SP node not necessary
 
             SPObject* child = SPFactory::instance().createObject(typeString);
 
@@ -666,7 +660,7 @@ void SPObject::build(SPDocument *document, Inkscape::XML::Node *repr) {
             sp_object_unref(child, NULL);
             child->invoke_build(document, rchild, object->cloned);
         } catch (const FactoryExceptions::TypeNotRegistered& e) {
-            //g_warning("TypeNotRegistered exception: %s", e.what());
+            g_warning("TypeNotRegistered exception: %s", e.what());
         }
     }
 }
