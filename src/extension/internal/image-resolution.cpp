@@ -11,6 +11,7 @@
 # include <config.h>
 #endif
 
+#include "util/units.h"
 #include "image-resolution.h"
 
 #define IR_TRY_PNG 1
@@ -341,15 +342,9 @@ void ImageResolution::readmagick(char const *fn) {
         image.read(fn);
     } catch (...) {}
     Magick::Geometry geo = image.density();
-    std::string type = image.magick();
-    
-    if (type == "PNG") { // PNG only supports pixelspercentimeter 
-        x_ = (double)geo.width() * 2.54;
-        y_ = (double)geo.height() * 2.54;
-    } else {
-        x_ = (double)geo.width();
-        y_ = (double)geo.height();
-    }
+
+    x_ = Inkscape::Util::Quantity::convert((double)geo.width(), "pt", "px");
+    y_ = Inkscape::Util::Quantity::convert((double)geo.height(), "pt", "px");
     ok_ = true;
 }
 
