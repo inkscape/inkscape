@@ -2,7 +2,7 @@
  * @brief  Dialog for renaming layers
  */
 /* Author:
- *   Bryce W. Harrington <bryce@bryceharrington.com>
+ *   Bryce W. Harrington <bryce@bryceharrington.org>
  *
  * Copyright (C) 2004 Bryce Harrington
  *

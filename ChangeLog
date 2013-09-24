@@ -4245,7 +4245,7 @@
 	  deleting, and getting and fixed toolboxes to be static with no
 	  warnings.
 
-2005-03-26  Bryce <bryce@bryceharrington.com>
+2005-03-26  Bryce <bryce@bryceharrington.org>
 
 	* share/ui/keybindings.rc, share/ui/menus-bars.xml
 	  src/application/editor-impl.cpp, src/application/editor-impl.h,

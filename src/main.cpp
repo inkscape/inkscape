@@ -11,7 +11,7 @@
  *   Michael Meeks <michael@helixcode.com>
  *   Chema Celorio <chema@celorio.com>
  *   Pawel Palucha
- *   Bryce Harrington <bryce@bryceharrington.com>
+ *   Bryce Harrington <bryce@bryceharrington.org>
  * ... and various people who have worked with various projects
  *   Jon A. Cruz <jon@oncruz.org>
  *   Abhishek Sharma

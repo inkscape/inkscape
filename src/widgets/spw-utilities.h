@@ -5,7 +5,7 @@
  * Inkscape Widget Utilities
  *
  * Author:
- *   Bryce W. Harrington <brycehar@bryceharrington.com>
+ *   Bryce W. Harrington <brycehar@bryceharrington.org>
  * 
  * Copyright (C) 2003 Bryce Harrington
  *

@@ -531,7 +531,7 @@ application sits:
 [% INCLUDE "AUTHORS" %]
 
 This man page was put together by Bryce Harrington
-E<lt>brycehar@bryceharrington.comE<gt>.
+E<lt>brycehar@bryceharrington.orgE<gt>.
 
 =head1 HISTORY
 

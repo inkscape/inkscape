@@ -3,7 +3,7 @@
  * Dialog for renaming layers.
  */
 /* Author:
- *   Bryce W. Harrington <bryce@bryceharrington.com>
+ *   Bryce W. Harrington <bryce@bryceharrington.org>
  *   Andrius R. <knutux@gmail.com>
  *   Abhishek Sharma
  *
