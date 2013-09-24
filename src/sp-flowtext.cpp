@@ -204,7 +204,7 @@ void SPFlowtext::set(unsigned int key, const gchar* value) {
                 if ( val == NULL ) {
                     this->par_indent = 0.0;
                 } else {
-                    sp_repr_get_double((Inkscape::XML::Node*)opts, "par-indent", &this->par_indent);
+                    this->par_indent = g_ascii_strtod(val, NULL);
                 }
             }
 

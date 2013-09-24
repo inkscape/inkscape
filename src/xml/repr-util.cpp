@@ -432,13 +432,11 @@ unsigned int sp_repr_get_int(Inkscape::XML::Node *repr, gchar const *key, int *v
 
 unsigned int sp_repr_get_double(Inkscape::XML::Node *repr, gchar const *key, double *val)
 {
-    gchar const *v;
-
     g_return_val_if_fail(repr != NULL, FALSE);
     g_return_val_if_fail(key != NULL, FALSE);
     g_return_val_if_fail(val != NULL, FALSE);
 
-    v = repr->attribute(key);
+    gchar const *v = repr->attribute(key);
 
     if (v != NULL) {
         *val = g_ascii_strtod(v, NULL);
