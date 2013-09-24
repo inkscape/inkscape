@@ -1417,7 +1417,7 @@ void GrDragger::updateTip()
 
     if (g_slist_length (this->draggables) == 1) {
         GrDraggable *draggable = (GrDraggable *) this->draggables->data;
-        char *item_desc = draggable->item->getDetailedDescription();
+        char *item_desc = draggable->item->detailedDescription();
         switch (draggable->point_type) {
             case POINT_LG_MID:
             case POINT_RG_MID1:

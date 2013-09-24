@@ -122,7 +122,7 @@ Inkscape::XML::Node* SPLine::write(Inkscape::XML::Document *xml_doc, Inkscape::X
     return repr;
 }
 
-const char* SPLine::display_name() {
+const char* SPLine::displayName() {
 	return _("Line");
 }
 

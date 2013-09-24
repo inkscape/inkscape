@@ -188,7 +188,7 @@ Inkscape::XML::Node *SPFlowregion::write(Inkscape::XML::Document *xml_doc, Inksc
     return repr;
 }
 
-const char* SPFlowregion::display_name() {
+const char* SPFlowregion::displayName() {
 	// TRANSLATORS: "Flow region" is an area where text is allowed to flow
 	return _("Flow Region");
 }
@@ -335,7 +335,7 @@ Inkscape::XML::Node *SPFlowregionExclude::write(Inkscape::XML::Document *xml_doc
     return repr;
 }
 
-const char* SPFlowregionExclude::display_name() {
+const char* SPFlowregionExclude::displayName() {
 	/* TRANSLATORS: A region "cut out of" a flow region; text is not allowed to flow inside the
 	 * flow excluded region.  flowRegionExclude in SVG 1.2: see
 	 * http://www.w3.org/TR/2004/WD-SVG12-20041027/flow.html#flowRegion-elem and

@@ -115,7 +115,7 @@ Inkscape::XML::Node* SPAnchor::write(Inkscape::XML::Document *xml_doc, Inkscape:
     return repr;
 }
 
-const char* SPAnchor::display_name() {
+const char* SPAnchor::displayName() {
     return _("Link");
 }
 

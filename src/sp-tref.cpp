@@ -233,7 +233,7 @@ Geom::OptRect SPTRef::bbox(Geom::Affine const &transform, SPItem::BBoxType type)
     return bbox;
 }
 
-const char* SPTRef::display_name() {
+const char* SPTRef::displayName() {
     return _("Cloned Character Data");
 }
 
@@ -244,7 +244,7 @@ gchar* SPTRef::description() {
 	char *child_desc;
 
 	if (SP_IS_ITEM(referred)) {
-	    child_desc = SP_ITEM(referred)->getDetailedDescription();
+	    child_desc = SP_ITEM(referred)->detailedDescription();
 	} else {
 	    child_desc = g_strdup("");
 	}

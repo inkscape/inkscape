@@ -339,7 +339,7 @@ void SPOffset::update(SPCtx *ctx, guint flags) {
     SPShape::update(ctx, flags);
 }
 
-const char* SPOffset::display_name() {
+const char* SPOffset::displayName() {
     if ( this->sourceHref ) {
         return _("Linked Offset");
     } else {

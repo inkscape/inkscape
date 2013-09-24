@@ -480,7 +480,7 @@ void SPEllipse::set(unsigned int key, gchar const* value) {
     }
 }
 
-const char* SPEllipse::display_name() {
+const char* SPEllipse::displayName() {
     return _("Ellipse");
 }
 
@@ -560,7 +560,7 @@ void SPCircle::set(unsigned int key, gchar const* value) {
     }
 }
 
-const char* SPCircle::display_name() {
+const char* SPCircle::displayName() {
 	return _("Circle");
 }
 
@@ -734,7 +734,7 @@ void SPArc::modified(guint flags) {
 }
 
 
-const char* SPArc::display_name() {
+const char* SPArc::displayName() {
     gdouble len = fmod(this->end - this->start, SP_2PI);
 
     if (len < 0.0) {

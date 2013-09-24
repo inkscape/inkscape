@@ -30,7 +30,7 @@ public:
 	virtual void set(unsigned int key, gchar const* value);
 	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
 
-    virtual const char* display_name();
+    virtual const char* displayName();
 	virtual gchar* description();
 	virtual gint event(SPEvent *event);
 };

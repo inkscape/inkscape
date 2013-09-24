@@ -226,7 +226,7 @@ void SPUse::print(SPPrintContext* ctx) {
     }
 }
 
-const char* SPUse::display_name() {
+const char* SPUse::displayName() {
     if(this->child && SP_IS_SYMBOL( this->child )) {
         return _("Symbol");
     }
@@ -250,7 +250,7 @@ gchar* SPUse::description() {
         }
 
         ++recursion_depth;
-        char *child_desc = SP_ITEM(this->child)->getDetailedDescription();
+        char *child_desc = SP_ITEM(this->child)->detailedDescription();
         --recursion_depth;
 
         char *ret = g_strdup_printf(_("of: %s"), child_desc);

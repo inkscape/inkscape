@@ -82,7 +82,7 @@ public:
 	virtual void release();
 
 	virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
-        virtual const char* display_name();
+        virtual const char* displayName();
 	virtual gchar* description();
 
 	virtual void set_shape();

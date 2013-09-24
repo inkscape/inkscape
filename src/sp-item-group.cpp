@@ -328,7 +328,7 @@ void SPGroup::print(SPPrintContext *ctx) {
     }
 }
 
-const char *SPGroup::display_name() {
+const char *SPGroup::displayName() {
     return _("Group");
 }
 

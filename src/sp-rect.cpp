@@ -159,7 +159,7 @@ Inkscape::XML::Node * SPRect::write(Inkscape::XML::Document *xml_doc, Inkscape::
     return repr;
 }
 
-const char* SPRect::display_name() {
+const char* SPRect::displayName() {
     return _("Rectangle");
 }
 

@@ -321,7 +321,7 @@ void SPText::hide(unsigned int key) {
 //	SPItem::onHide(key);
 }
 
-const char* SPText::display_name() {
+const char* SPText::displayName() {
     return _("Text");
 }
 

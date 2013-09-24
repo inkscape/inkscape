@@ -251,7 +251,7 @@ void SPStar::update_patheffect(bool write) {
     this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-const char* SPStar::display_name() {
+const char* SPStar::displayName() {
     if (this->flatsided == false)
         return _("Star");
     return _("Polygon");

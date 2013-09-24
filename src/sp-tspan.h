@@ -34,7 +34,7 @@ public:
 	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
 
 	virtual Geom::OptRect bbox(Geom::Affine const &transform, SPItem::BBoxType type);
-        virtual const char* display_name();
+        virtual const char* displayName();
 };
 
 #endif /* !INKSCAPE_SP_TSPAN_H */

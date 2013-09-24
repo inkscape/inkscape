@@ -188,7 +188,7 @@ public:
     Geom::OptRect desktopBounds(BBoxType type) const;
 
     unsigned pos_in_parent();
-    gchar *getDetailedDescription();
+    gchar *detailedDescription();
     int ifilt();
     void invoke_print(SPPrintContext *ctx);
     static unsigned int display_key_new(unsigned int numkeys);
@@ -236,7 +236,7 @@ public:
 
 	virtual Geom::OptRect bbox(Geom::Affine const &transform, SPItem::BBoxType type);
 	virtual void print(SPPrintContext *ctx);
-    virtual const char* display_name();
+    virtual const char* displayName();
 	virtual gchar* description();
 	virtual Inkscape::DrawingItem* show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
 	virtual void hide(unsigned int key);

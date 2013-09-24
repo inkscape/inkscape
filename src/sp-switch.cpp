@@ -71,7 +71,7 @@ GSList *SPSwitch::_childList(bool add_ref, SPObject::Action action) {
     return g_slist_prepend (NULL, child);
 }
 
-const char *SPSwitch::display_name() {
+const char *SPSwitch::displayName() {
     return _("Conditional Group");
 }
 

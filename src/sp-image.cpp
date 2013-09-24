@@ -610,7 +610,7 @@ void SPImage::print(SPPrintContext *ctx) {
     }
 }
 
-const char* SPImage::display_name() {
+const char* SPImage::displayName() {
     return _("Image");
 }
 

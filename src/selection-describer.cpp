@@ -39,21 +39,21 @@
 #include "sp-spiral.h"
 
 // Returns a list of terms for the items to be used in the statusbar
-const char* collect_terms (GSList *items)
+char* collect_terms (GSList *items)
 {
     GSList *check = NULL;
     std::stringstream ss;
     bool first = true;
 
     for (GSList *i = (GSList *)items; i != NULL; i = i->next) {
-        const char *term = SP_ITEM(i->data)->display_name();
+        const char *term = SP_ITEM(i->data)->displayName();
         if (term != NULL && g_slist_find (check, term) == NULL) {
             check = g_slist_prepend (check, (void *) term);
             ss << (first ? "" : ", ") << "<b>" << term << "</b>";
             first = false;
         }
     }
-    return ss.str().c_str();
+    return g_strdup(ss.str().c_str());
 }
 
 // Returns the number of filtered items in the list
@@ -150,16 +150,16 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
                 else 
                     in_phrase = g_strdup_printf(_(" in group %s (%s)"), parent_name, layer_name);
             } else {
-                    in_phrase = g_strdup_printf(ngettext(" in <b>%i</b> parents (%s)", " in <b>%i</b> parents (%s)", num_parents), num_parents, layer_name);
+                    in_phrase = g_strdup_printf(ngettext(" in <b>%i</b> parent (%s)", " in <b>%i</b> parents (%s)", num_parents), num_parents, layer_name);
             }
         } else {
-            in_phrase = g_strdup_printf(ngettext(" in <b>%i</b> layers", " in <b>%i</b> layers", num_layers), num_layers);
+            in_phrase = g_strdup_printf(ngettext(" in <b>%i</b> layer", " in <b>%i</b> layers", num_layers), num_layers);
         }
         g_free (layer_name);
         g_free (parent_name);
 
         if (!items->next) { // one item
-            char *item_desc = item->getDetailedDescription();
+            char *item_desc = item->detailedDescription();
 
             if (SP_IS_USE(item) && SP_IS_SYMBOL(item->firstChild())) {
                 _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s. %s.",
@@ -187,12 +187,13 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
             }
             g_free(item_desc);
         } else { // multiple items
-            int object_count = g_slist_length((GSList *)items);
-            const char *terms = collect_terms ((GSList *)items);
+            int objcount = g_slist_length((GSList *)items);
+            char *terms = collect_terms ((GSList *)items);
 
-            gchar *objects_str = 
-                g_strdup_printf( "<b>%i</b> objects selected of types %s",
-                        object_count, terms );
+            gchar *objects_str = g_strdup_printf(
+                "<b>%i</b> objects selected of types %s", objcount, terms);
+
+            g_free(terms);
 
             // indicate all, some, or none filtered
             gchar *filt_str = NULL;
@@ -201,7 +202,7 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
                 filt_str = g_strdup_printf(ngettext("; <i>%d filtered object</i> ",
                                                      "; <i>%d filtered objects</i> ", n_filt), n_filt);
             } else {
-                filt_str = g_strdup_printf("%s", "");
+                filt_str = g_strdup("");
             }
 
             _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s%s. %s.", objects_str, filt_str, in_phrase, _when_selected);
@@ -211,7 +212,7 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
             }
             if (filt_str) {
                 g_free(filt_str);
-                objects_str = 0;
+                filt_str = 0;
             }
         }
 

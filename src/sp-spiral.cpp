@@ -226,7 +226,7 @@ void SPSpiral::update_patheffect(bool write) {
     shape->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-const char* SPSpiral::display_name() {
+const char* SPSpiral::displayName() {
     return _("Spiral");
 }
 

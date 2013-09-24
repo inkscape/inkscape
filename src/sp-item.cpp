@@ -933,7 +933,7 @@ void SPItem::invoke_print(SPPrintContext *ctx)
     }
 }
 
-const char* SPItem::display_name() {
+const char* SPItem::displayName() {
     return _("Object");
 }
 
@@ -946,10 +946,10 @@ gchar* SPItem::description() {
  *
  * Must be freed by caller.
  */
-gchar *SPItem::getDetailedDescription()
+gchar *SPItem::detailedDescription()
 {
         gchar* s = g_strdup_printf("<b>%s</b> %s",
-                    this->display_name(), this->description());
+                    this->displayName(), this->description());
 
 	if (s && clip_ref->getObject()) {
 		gchar *snew = g_strdup_printf (_("%s; <i>clipped</i>"), s);
