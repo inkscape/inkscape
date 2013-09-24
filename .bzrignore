@@ -97,6 +97,7 @@ share/Makefile
 share/Makefile.in
 share/attributes/Makefile
 share/attributes/Makefile.in
+share/branding/Makefile
 share/clipart/Makefile
 share/clipart/Makefile.in
 share/examples/Makefile
@@ -175,10 +176,12 @@ src/inkscape-version.cpp
 src/inkview
 src/io/makefile
 src/jabber_whiteboard/makefile
+src/libavoid/makefile
 src/libcroco/makefile
 src/libgdl/makefile
 src/libnr/makefile
 src/libnrtype/makefile
+src/libuemf/makefile
 src/livarot/makefile
 src/live_effects/makefile
 src/live_effects/parameter/makefile
