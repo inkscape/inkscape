@@ -326,7 +326,7 @@ void SPSpiral::set_shape() {
     SPSpiral *spiral = this;
     SPSpiral* shape = spiral;
 
-    if (sp_lpe_item_has_broken_path_effect(SP_LPE_ITEM(shape))) {
+    if (hasBrokenPathEffect()) {
         g_warning ("The spiral shape has unknown LPE on it! Convert to path to make it editable preserving the appearance; editing it as spiral will remove the bad LPE");
 
         if (shape->getRepr()->attribute("d")) {
@@ -380,12 +380,12 @@ void SPSpiral::set_shape() {
 
     /* Reset the shape'scurve to the "original_curve"
      * This is very important for LPEs to work properly! (the bbox might be recalculated depending on the curve in shape)*/
-    shape->setCurveInsync( c, TRUE);
-    shape->setCurveBeforeLPE( c );
+    setCurveInsync( c, TRUE);
+    setCurveBeforeLPE( c );
 
-    if (sp_lpe_item_has_path_effect(SP_LPE_ITEM(shape)) && sp_lpe_item_path_effects_enabled(SP_LPE_ITEM(shape))) {
+    if (hasPathEffect() && sp_lpe_item_path_effects_enabled(this)) {
         SPCurve *c_lpe = c->copy();
-        bool success = sp_lpe_item_perform_path_effect(SP_LPE_ITEM (shape), c_lpe);
+        bool success = sp_lpe_item_perform_path_effect(this, c_lpe);
 
         if (success) {
             shape->setCurveInsync( c_lpe, TRUE);

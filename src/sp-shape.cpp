@@ -1003,7 +1003,7 @@ SPCurve * SPShape::getCurve() const
  */
 SPCurve * SPShape::getCurveBeforeLPE() const
 {
-    if (sp_lpe_item_has_path_effect(this)) {
+    if (hasPathEffect()) {
         if (_curve_before_lpe) {
             return this->_curve_before_lpe->copy();
         }

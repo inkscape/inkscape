@@ -628,7 +628,7 @@ sp_selected_path_reverse(SPDesktop *desktop)
         SPCurve *rcurve = path->get_curve_reference()->create_reverse();
 
         gchar *str = sp_svg_write_path(rcurve->get_pathvector());
-        if ( sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(path)) ) {
+        if ( path->hasPathEffectRecursive() ) {
             path->getRepr()->setAttribute("inkscape:original-d", str);
         } else {
             path->getRepr()->setAttribute("d", str);

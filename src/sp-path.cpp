@@ -74,7 +74,7 @@ gchar* SPPath::description() {
     int count = this->nodesInPath();
     char *lpe_desc = g_strdup("");
     
-    if (sp_lpe_item_has_path_effect(this)) {
+    if (hasPathEffect()) {
         Glib::ustring s;
         PathEffectList effect_list =  sp_lpe_item_get_effect_list(this);
         
@@ -259,20 +259,20 @@ void SPPath::update(SPCtx *ctx, guint flags) {
 }
 
 Geom::Affine SPPath::set_transform(Geom::Affine const &transform) {
-    if (!this->_curve) { // 0 nodes, nothing to transform
+    if (!_curve) { // 0 nodes, nothing to transform
         return Geom::identity();
     }
 
     // Transform the original-d path if this is a valid LPE this, other else the (ordinary) path
-    if (this->_curve_before_lpe && sp_lpe_item_has_path_effect_recursive(this)) {
-        if (sp_lpe_item_has_path_effect_of_type(this, Inkscape::LivePathEffect::CLONE_ORIGINAL)) {
+    if (_curve_before_lpe && hasPathEffectRecursive()) {
+        if (getPathEffectOfType(Inkscape::LivePathEffect::CLONE_ORIGINAL)) {
             // if path has the CLONE_ORIGINAL LPE applied, don't write the transform to the pathdata, but write it 'unoptimized'
             return transform;
         } else {
-        	this->_curve_before_lpe->transform(transform);
+            _curve_before_lpe->transform(transform);
         }
     } else {
-    	this->_curve->transform(transform);
+        _curve->transform(transform);
     }
 
     // Adjust stroke
@@ -301,8 +301,8 @@ void SPPath::update_patheffect(bool write) {
 g_message("sp_path_update_patheffect");
 #endif
 
-    if (this->_curve_before_lpe && sp_lpe_item_has_path_effect_recursive(this)) {
-        SPCurve *curve = this->_curve_before_lpe->copy();
+    if (_curve_before_lpe && hasPathEffectRecursive()) {
+        SPCurve *curve = _curve_before_lpe->copy();
         /* if a path has an lpeitem applied, then reset the curve to the _curve_before_lpe.
          * This is very important for LPEs to work properly! (the bbox might be recalculated depending on the curve in shape)*/
         this->setCurveInsync(curve, TRUE);
@@ -315,7 +315,7 @@ g_message("sp_path_update_patheffect");
 g_message("sp_path_update_patheffect writes 'd' attribute");
 #endif
 
-            if ( this->_curve != NULL ) {
+            if (_curve) {
                 gchar *str = sp_svg_write_path(this->_curve->get_pathvector());
                 repr->setAttribute("d", str);
                 g_free(str);
@@ -385,7 +385,7 @@ SPCurve * SPPath::get_original_curve () const
  */
 SPCurve* SPPath::get_curve_for_edit () const
 {
-    if (_curve_before_lpe && sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(this))) {
+    if (_curve_before_lpe && hasPathEffectRecursive()) {
         return get_original_curve();
     } else {
         return getCurve();
@@ -398,7 +398,7 @@ SPCurve* SPPath::get_curve_for_edit () const
  */
 const SPCurve* SPPath::get_curve_reference () const
 {
-    if (_curve_before_lpe && sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(this))) {
+    if (_curve_before_lpe && hasPathEffectRecursive()) {
         return _curve_before_lpe;
     } else {
         return _curve;
@@ -411,7 +411,7 @@ const SPCurve* SPPath::get_curve_reference () const
  */
 SPCurve* SPPath::get_curve ()
 {
-    if (_curve_before_lpe && sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(this))) {
+    if (_curve_before_lpe && hasPathEffectRecursive()) {
         return _curve_before_lpe;
     } else {
         return _curve;

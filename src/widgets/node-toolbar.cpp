@@ -317,7 +317,7 @@ static void sp_node_toolbox_sel_changed(Inkscape::Selection *selection, GObject 
     GtkAction* w = GTK_ACTION( g_object_get_data( tbl, "nodes_lpeedit" ) );
     SPItem *item = selection->singleItem();
     if (item && SP_IS_LPE_ITEM(item)) {
-       if (sp_lpe_item_has_path_effect(SP_LPE_ITEM(item))) {
+       if (SP_LPE_ITEM(item)->hasPathEffect()) {
            gtk_action_set_sensitive(w, TRUE);
        } else {
            gtk_action_set_sensitive(w, FALSE);

@@ -574,7 +574,7 @@ static void spdc_flush_white(SPDrawContext *dc, SPCurve *gc)
         Inkscape::XML::Node *repr;
         if (dc->white_item) {
             repr = dc->white_item->getRepr();
-            has_lpe = sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(dc->white_item));
+            has_lpe = SP_LPE_ITEM(dc->white_item)->hasPathEffectRecursive();
         } else {
             repr = xml_doc->createElement("svg:path");
             // Set style

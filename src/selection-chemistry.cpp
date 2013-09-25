@@ -1182,9 +1182,10 @@ void sp_selection_paste_livepatheffect(SPDesktop *desktop)
 
 static void sp_selection_remove_livepatheffect_impl(SPItem *item)
 {
-    if ( item && SP_IS_LPE_ITEM(item) &&
-         sp_lpe_item_has_path_effect(SP_LPE_ITEM(item))) {
-        sp_lpe_item_remove_all_path_effects(SP_LPE_ITEM(item), false);
+    if ( SPLPEItem *lpeitem = dynamic_cast<SPLPEItem*>(item) ) {
+        if ( lpeitem->hasPathEffect() ) {
+            sp_lpe_item_remove_all_path_effects(SP_LPE_ITEM(item), false);
+        }
     }
 }
 
@@ -2318,9 +2319,9 @@ void sp_selection_next_patheffect_param(SPDesktop * dt)
     Inkscape::Selection *selection = sp_desktop_selection(dt);
     if ( selection && !selection->isEmpty() ) {
         SPItem *item = selection->singleItem();
-        if ( item && SP_IS_SHAPE(item)) {
-            if (sp_lpe_item_has_path_effect(SP_LPE_ITEM(item))) {
-                sp_lpe_item_edit_next_param_oncanvas(SP_LPE_ITEM(item), dt);
+        if ( SPLPEItem *lpeitem = dynamic_cast<SPLPEItem*>(item) ) {
+            if (lpeitem->hasPathEffect()) {
+                sp_lpe_item_edit_next_param_oncanvas(lpeitem, dt);
             } else {
                 dt->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("The selection has no applied path effect."));
             }
@@ -2679,7 +2680,7 @@ sp_select_clone_original(SPDesktop *desktop)
         original = SP_FLOWTEXT(item)->get_frame(NULL); // first frame only
     } else if (SP_IS_LPE_ITEM(item)) {
         // check if the applied LPE is Clone original, if so, go to the refered path
-        Inkscape::LivePathEffect::Effect* lpe = sp_lpe_item_has_path_effect_of_type(SP_LPE_ITEM(item), Inkscape::LivePathEffect::CLONE_ORIGINAL);
+        Inkscape::LivePathEffect::Effect* lpe = SP_LPE_ITEM(item)->getPathEffectOfType(Inkscape::LivePathEffect::CLONE_ORIGINAL);
         if (lpe) {
             Inkscape::LivePathEffect::Parameter *lpeparam = lpe->getParameter("linkedpath");
             if (Inkscape::LivePathEffect::OriginalPathParam *pathparam = dynamic_cast<Inkscape::LivePathEffect::OriginalPathParam *>(lpeparam)) {

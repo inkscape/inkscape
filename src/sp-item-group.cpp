@@ -765,7 +765,7 @@ void SPGroup::update_patheffect(bool write) {
         }
     }
 
-    if (sp_lpe_item_has_path_effect(this) && sp_lpe_item_path_effects_enabled(this)) {
+    if (hasPathEffect() && sp_lpe_item_path_effects_enabled(this)) {
         for (PathEffectList::iterator it = this->path_effect_list->begin(); it != this->path_effect_list->end(); it++)
         {
             LivePathEffectObject *lpeobj = (*it)->lpeobject;

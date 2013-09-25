@@ -207,7 +207,7 @@ void Box3DSide::set_shape() {
      * This is very important for LPEs to work properly! (the bbox might be recalculated depending on the curve in shape)*/
     this->setCurveInsync( c, TRUE);
 
-    if (sp_lpe_item_has_path_effect(this) && sp_lpe_item_path_effects_enabled(this)) {
+    if (hasPathEffect() && sp_lpe_item_path_effects_enabled(this)) {
         SPCurve *c_lpe = c->copy();
         bool success = sp_lpe_item_perform_path_effect(this, c_lpe);
 

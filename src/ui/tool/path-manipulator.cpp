@@ -1201,8 +1201,8 @@ void PathManipulator::_createGeometryFromControlPoints(bool alert_LPE)
     Geom::PathVector pathv = builder.peek() * (_edit_transform * _i2d_transform).inverse();
     _spcurve->set_pathvector(pathv);
     if (alert_LPE) {
-        if (SP_IS_LPE_ITEM(_path) && sp_lpe_item_has_path_effect(SP_LPE_ITEM(_path))) {
-            PathEffectList effect_list = sp_lpe_item_get_effect_list(SP_LPE_ITEM(_path));
+        if (_path->hasPathEffect()) {
+            PathEffectList effect_list = sp_lpe_item_get_effect_list(_path);
             LivePathEffect::LPEPowerStroke *lpe_pwr = dynamic_cast<LivePathEffect::LPEPowerStroke*>( effect_list.front()->lpeobject->get_lpe() );
             if (lpe_pwr) {
                 lpe_pwr->adjustForNewPath(pathv);

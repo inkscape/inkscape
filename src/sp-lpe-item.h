@@ -69,6 +69,11 @@ public:
 	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
 
 	virtual void update_patheffect(bool write);
+
+    bool hasPathEffect() const;
+    bool hasPathEffectRecursive() const;
+    Inkscape::LivePathEffect::Effect* getPathEffectOfType(int type);
+    bool hasBrokenPathEffect() const;
 };
 
 void sp_lpe_item_update_patheffect (SPLPEItem *lpeitem, bool wholetree, bool write);
@@ -80,10 +85,6 @@ void sp_lpe_item_remove_all_path_effects(SPLPEItem *lpeitem, bool keep_paths);
 void sp_lpe_item_remove_current_path_effect(SPLPEItem *lpeitem, bool keep_paths);
 void sp_lpe_item_down_current_path_effect(SPLPEItem *lpeitem);
 void sp_lpe_item_up_current_path_effect(SPLPEItem *lpeitem);
-bool sp_lpe_item_has_path_effect(SPLPEItem const *lpeitem);
-bool sp_lpe_item_has_broken_path_effect(SPLPEItem const *lpeitem);
-bool sp_lpe_item_has_path_effect_recursive(SPLPEItem const *lpeitem);
-Inkscape::LivePathEffect::Effect* sp_lpe_item_has_path_effect_of_type(SPLPEItem *lpeitem, int type);
 bool sp_lpe_item_can_accept_freehand_shape(SPLPEItem *lpeitem);
 void sp_lpe_item_edit_next_param_oncanvas(SPLPEItem *lpeitem, SPDesktop *dt);
 PathEffectList sp_lpe_item_get_effect_list(SPLPEItem *lpeitem);

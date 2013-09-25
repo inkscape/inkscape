@@ -378,7 +378,7 @@ void SPStar::set_shape() {
     // perhaps we should convert all our shapes into LPEs without source path
     // and with knotholders for parameters, then this situation will be handled automatically
     // by disabling the entire stack (including the shape LPE)
-    if (sp_lpe_item_has_broken_path_effect(SP_LPE_ITEM(this))) {
+    if (hasBrokenPathEffect()) {
         g_warning ("The star shape has unknown LPE on it! Convert to path to make it editable preserving the appearance; editing it as star will remove the bad LPE");
 
         if (this->getRepr()->attribute("d")) {
@@ -395,7 +395,6 @@ void SPStar::set_shape() {
 
     SPCurve *c = new SPCurve ();
 
-    gint sides = this->sides;
     bool not_rounded = (fabs (this->rounded) < 1e-4);
 
     // note that we pass randomized=true to sp_star_get_xy, because the curve must be randomized;
@@ -461,9 +460,9 @@ void SPStar::set_shape() {
     this->setCurveInsync( c, TRUE);
     this->setCurveBeforeLPE( c );
 
-    if (sp_lpe_item_has_path_effect(SP_LPE_ITEM(this)) && sp_lpe_item_path_effects_enabled(SP_LPE_ITEM(this))) {
+    if (hasPathEffect() && sp_lpe_item_path_effects_enabled(this)) {
         SPCurve *c_lpe = c->copy();
-        bool success = sp_lpe_item_perform_path_effect(SP_LPE_ITEM (this), c_lpe);
+        bool success = sp_lpe_item_perform_path_effect(this, c_lpe);
 
         if (success) {
             this->setCurveInsync( c_lpe, TRUE);

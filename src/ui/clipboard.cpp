@@ -724,7 +724,7 @@ void ClipboardManagerImpl::_copyUsedDefs(SPItem *item)
     // For lpe items, copy lpe stack if applicable
     if (SP_IS_LPE_ITEM(item)) {
         SPLPEItem *lpeitem = SP_LPE_ITEM (item);
-        if (sp_lpe_item_has_path_effect(lpeitem)) {
+        if (lpeitem->hasPathEffect()) {
             for (PathEffectList::iterator it = lpeitem->path_effect_list->begin(); it != lpeitem->path_effect_list->end(); ++it)
             {
                 LivePathEffectObject *lpeobj = (*it)->lpeobject;

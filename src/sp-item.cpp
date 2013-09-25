@@ -1287,7 +1287,7 @@ void SPItem::adjust_livepatheffect (Geom::Affine const &postmul, bool set)
 {
     if ( SP_IS_LPE_ITEM(this) ) {
         SPLPEItem *lpeitem = SP_LPE_ITEM (this);
-        if ( sp_lpe_item_has_path_effect(lpeitem) ) {
+        if ( lpeitem->hasPathEffect() ) {
             sp_lpe_item_fork_path_effects_if_necessary(lpeitem);
 
             // now that all LPEs are forked_if_necessary, we can apply the transform

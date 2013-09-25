@@ -279,7 +279,7 @@ LivePathEffectEditor::onSelectionChanged(Inkscape::Selection *sel)
                 current_lpeitem = lpeitem;
 
                 set_sensitize_all(true);
-                if ( sp_lpe_item_has_path_effect(lpeitem) ) {
+                if ( lpeitem->hasPathEffect() ) {
                     Inkscape::LivePathEffect::Effect *lpe = sp_lpe_item_get_current_lpe(lpeitem);
                     if (lpe) {
                         showParams(*lpe);
