@@ -3170,9 +3170,7 @@ sp_style_clear(SPStyle *style)
     style->color_interpolation.value = style->color_interpolation.computed = SP_CSS_COLOR_INTERPOLATION_SRGB;
     style->color_interpolation_filters.set = FALSE;
     style->color_interpolation_filters.inherit = FALSE;
-    style->color_interpolation_filters.value = style->color_interpolation_filters.computed = SP_CSS_COLOR_INTERPOLATION_SRGB;
-    //this line changed because rendering issues: Bug lp:1127103
-    //style->color_interpolation_filters.value = style->color_interpolation_filters.computed = SP_CSS_COLOR_INTERPOLATION_LINEARRGB;
+    style->color_interpolation_filters.value = style->color_interpolation_filters.computed = SP_CSS_COLOR_INTERPOLATION_LINEARRGB;
 
 
     style->fill.clear();
