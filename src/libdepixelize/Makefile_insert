@@ -13,7 +13,7 @@ libdepixelize_libdepixelize_a_SOURCES =            \
 	libdepixelize/priv/colorspace.h            \
 	libdepixelize/priv/curvature.h             \
 	libdepixelize/priv/homogeneoussplines.h    \
-	libdepixelize/priv/integral                \
+	libdepixelize/priv/integral.h              \
 	libdepixelize/priv/iterator.h              \
 	libdepixelize/priv/optimization-kopf2011.h \
 	libdepixelize/priv/pixelgraph.h            \
