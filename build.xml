@@ -422,7 +422,7 @@
 
     <rc command="${archutil}windres" 
         file="${src}/inkscape.rc"
-        out="${build}/inkres.o">
+        out="${build}/obj/inkres.o">
         <flags>
         --include-dir=${src}
         </flags>
@@ -506,7 +506,7 @@
 
     <rc command="${archutil}windres" 
         file="${src}/inkview.rc"
-        out="${build}/inkviewres.o">
+        out="${build}/obj/inkviewres.o">
         <flags>
         --include-dir=${src}
         </flags>
