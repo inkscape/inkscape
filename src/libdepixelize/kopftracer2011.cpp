@@ -331,9 +331,16 @@ void Kopf2011::_remove_puzzle_pattern(PixelGraph &graph)
                  + graph.nodeBottomRight(it2)->adj.top == 3 ) {
                 // We fake a new connection =)
                 it2->adj.right = true;
+                graph.nodeRight(it2)->adj.left = true;
+
                 it2->adj.bottom = true;
+                graph.nodeBottom(it2)->adj.top = true;
+
                 graph.nodeBottomRight(it2)->adj.left = true;
+                graph.nodeBottom(it2)->adj.right = true;
+
                 graph.nodeBottomRight(it2)->adj.top = true;
+                graph.nodeRight(it2)->adj.bottom = true;
             }
 
             it2 = graph.nodeRight(it2);
