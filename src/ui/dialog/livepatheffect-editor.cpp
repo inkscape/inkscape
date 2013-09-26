@@ -296,7 +296,7 @@ LivePathEffectEditor::onSelectionChanged(Inkscape::Selection *sel)
                 }
             } else if ( SP_IS_USE(item) ) {
                 // test whether linked object is supported by the CLONE_ORIGINAL LPE
-                SPItem *orig = sp_use_get_original( SP_USE(item) );
+                SPItem *orig = SP_USE(item)->get_original();
                 if ( SP_IS_SHAPE(orig) ||
                      SP_IS_TEXT(orig) )
                 {
@@ -433,7 +433,7 @@ LivePathEffectEditor::onAdd()
                 // convert to path, apply CLONE_ORIGINAL LPE, link it to the cloned path
 
                 // test whether linked object is supported by the CLONE_ORIGINAL LPE
-                SPItem *orig = sp_use_get_original( SP_USE(item) );
+                SPItem *orig = SP_USE(item)->get_original();
                 if ( SP_IS_SHAPE(orig) ||
                      SP_IS_TEXT(orig) )
                 {

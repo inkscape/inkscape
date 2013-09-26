@@ -55,6 +55,7 @@
 #include "display/canvas-arena.h"
 #include "display/curve.h"
 #include "livarot/Shape.h"
+#include <2geom/circle.h>
 #include <2geom/transforms.h>
 #include "preferences.h"
 #include "style.h"
@@ -212,14 +213,11 @@ void SPSprayContext::setup() {
 
     {
         /* TODO: have a look at sp_dyna_draw_context_setup where the same is done.. generalize? at least make it an arcto! */
-        SPCurve *c = new SPCurve();
-        const double C1 = 0.552;
-        c->moveto(-1,0);
-        c->curveto(-1, C1, -C1, 1, 0, 1 );
-        c->curveto(C1, 1, 1, C1, 1, 0 );
-        c->curveto(1, -C1, C1, -1, 0, -1 );
-        c->curveto(-C1, -1, -1, -C1, -1, 0 );
-        c->closepath();
+        Geom::PathVector path;
+        Geom::Circle(0, 0, 1).getPath(path);
+
+        SPCurve *c = new SPCurve(path);
+
         this->dilate_area = sp_canvas_bpath_new(sp_desktop_controls(this->desktop), c);
         c->unref();
         sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(this->dilate_area), 0x00000000,(SPWindRule)0);

@@ -20,8 +20,8 @@
 #define SP_HUGE          1e5
 
 #define SPIRAL_TOLERANCE 3.0
-#define SAMPLE_STEP      (1.0/4.0) ///< step per 2PI 
-#define SAMPLE_SIZE      8         ///< sample size per one bezier 
+#define SAMPLE_STEP      (1.0/4.0) ///< step per 2PI
+#define SAMPLE_SIZE      8         ///< sample size per one bezier
 
 
 #define SP_SPIRAL(obj) (dynamic_cast<SPSpiral*>((SPObject*)obj))
@@ -61,11 +61,6 @@ public:
 
 	bool isInvalid() const;
 
-//private:
-	Geom::Point getTangent(gdouble t) const;
-
-	void fitAndDraw(SPCurve* c, double dstep, Geom::Point darray[], Geom::Point const& hat1, Geom::Point& hat2, double* t) const;
-
 	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
 	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
 	virtual void update(SPCtx *ctx, guint flags);
@@ -77,6 +72,10 @@ public:
 
 	virtual void set_shape();
 	virtual void update_patheffect(bool write);
+
+private:
+	Geom::Point getTangent(gdouble t) const;
+	void fitAndDraw(SPCurve* c, double dstep, Geom::Point darray[], Geom::Point const& hat1, Geom::Point& hat2, double* t) const;
 };
 
 #endif // SEEN_SP_SPIRAL_H

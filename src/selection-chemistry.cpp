@@ -499,7 +499,7 @@ void sp_selection_duplicate(SPDesktop *desktop, bool suppressDone)
             const gchar *id = old_ids[i];
             SPObject *old_clone = doc->getObjectById(id);
             if (SP_IS_USE(old_clone)) {
-                SPItem *orig = sp_use_get_original(SP_USE(old_clone));
+                SPItem *orig = SP_USE(old_clone)->get_original();
                 if (!orig) // orphaned
                     continue;
                 for (unsigned int j = 0; j < old_ids.size(); j++) {
@@ -1382,7 +1382,7 @@ selection_contains_original(SPItem *item, Inkscape::Selection *selection)
     SPItem *item_use_first = item;
     while (is_use && item_use && !contains_original)
     {
-        item_use = sp_use_get_original(SP_USE(item_use));
+        item_use = SP_USE(item_use)->get_original();
         contains_original |= selection->includes(item_use);
         if (item_use == item_use_first)
             break;
@@ -1527,7 +1527,7 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Affine cons
                 // we need to cancel out the move compensation, too
 
                 // find out the clone move, same as in sp_use_move_compensate
-                Geom::Affine parent = sp_use_get_parent_transform(SP_USE(item));
+                Geom::Affine parent = SP_USE(item)->get_parent_transform();
                 Geom::Affine clone_move = parent.inverse() * t * parent;
 
                 if (prefs_parallel) {
@@ -2623,7 +2623,7 @@ sp_selection_unlink(SPDesktop *desktop)
 
         SPItem *unlink;
         if (SP_IS_USE(item)) {
-            unlink = sp_use_unlink(SP_USE(item));
+            unlink = SP_USE(item)->unlink();
             // Unable to unlink use (external or invalid href?)
             if (!unlink) {
                 new_select = g_slist_prepend(new_select, item);
@@ -2671,7 +2671,7 @@ sp_select_clone_original(SPDesktop *desktop)
 
     SPItem *original = NULL;
     if (SP_IS_USE(item)) {
-        original = sp_use_get_original(SP_USE(item));
+        original = SP_USE(item)->get_original();
     } else if (SP_IS_OFFSET(item) && SP_OFFSET(item)->sourceHref) {
         original = sp_offset_get_source(SP_OFFSET(item));
     } else if (SP_IS_TEXT_TEXTPATH(item)) {

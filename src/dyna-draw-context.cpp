@@ -38,6 +38,7 @@
 #include <2geom/math-utils.h>
 #include <2geom/pathvector.h>
 #include <2geom/bezier-utils.h>
+#include <2geom/circle.h>
 #include "display/curve.h"
 #include <glib.h>
 #include "macros.h"
@@ -151,17 +152,11 @@ void SPDynaDrawContext::setup() {
     g_signal_connect(G_OBJECT(this->currentshape), "event", G_CALLBACK(sp_desktop_root_handler), this->desktop);
 
     {
-        /* TODO: this can be done either with an arcto, and should maybe also be put in a general file (other tools use this as well) */
-        SPCurve *c = new SPCurve();
+        /* TODO: have a look at SPDropperContext::setup where the same is done.. generalize? */
+        Geom::PathVector path;
+        Geom::Circle(0, 0, 1).getPath(path);
 
-        const double C1 = 0.552;
-
-        c->moveto(-1,0);
-        c->curveto(-1, C1, -C1, 1, 0, 1 );
-        c->curveto(C1, 1, 1, C1, 1, 0 );
-        c->curveto(1, -C1, C1, -1, 0, -1 );
-        c->curveto(-C1, -1, -1, -C1, -1, 0 );
-        c->closepath();
+        SPCurve *c = new SPCurve(path);
 
         this->hatch_area = sp_canvas_bpath_new(sp_desktop_controls(this->desktop), c);
 

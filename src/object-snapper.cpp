@@ -194,7 +194,7 @@ void Inkscape::ObjectSnapper::_collectNodes(SnapSourceType const &t,
             //Geom::Affine i2doc(Geom::identity());
             SPItem *root_item = (*i).item;
             if (SP_IS_USE((*i).item)) {
-                root_item = sp_use_root(SP_USE((*i).item));
+                root_item = SP_USE((*i).item)->root();
             }
             g_return_if_fail(root_item);
 
@@ -382,8 +382,8 @@ void Inkscape::ObjectSnapper::_collectPaths(Geom::Point /*p*/,
             SPItem *root_item = NULL;
             /* We might have a clone at hand, so make sure we get the root item */
             if (SP_IS_USE((*i).item)) {
-                i2doc = sp_use_get_root_transform(SP_USE((*i).item));
-                root_item = sp_use_root(SP_USE((*i).item));
+                i2doc = SP_USE((*i).item)->get_root_transform();
+                root_item = SP_USE((*i).item)->root();
                 g_return_if_fail(root_item);
             } else {
                 i2doc = (*i).item->i2doc_affine();

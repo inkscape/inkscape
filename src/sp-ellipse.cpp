@@ -26,6 +26,7 @@
 #include <glibmm/i18n.h>
 #include <2geom/transforms.h>
 #include <2geom/pathvector.h>
+#include <2geom/svg-path.h>
 #include "document.h"
 #include "sp-ellipse.h"
 #include "preferences.h"
@@ -141,6 +142,8 @@ void SPGenericEllipse::update_patheffect(bool write) {
     this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
+#include <2geom/ellipse.h>
+
 /* fixme: Think (Lauris) */
 /* Can't we use arcto in this method? */
 void SPGenericEllipse::set_shape() {
@@ -158,12 +161,6 @@ void SPGenericEllipse::set_shape() {
         return;
     }
 
-    double rx;
-    double ry;
-    double s;
-    double len;
-    gint slice = FALSE;
-
     if ((this->rx.computed < 1e-18) || (this->ry.computed < 1e-18)) {
     	return;
     }
@@ -174,58 +171,65 @@ void SPGenericEllipse::set_shape() {
 
     sp_genericellipse_normalize(this);
 
-    rx = this->rx.computed;
-    ry = this->ry.computed;
-
     // figure out if we have a slice, guarding against rounding errors
-    len = fmod(this->end - this->start, SP_2PI);
+    double len = fmod(this->end - this->start, SP_2PI);
 
     if (len < 0.0) {
     	len += SP_2PI;
     }
 
+    bool slice = false;
+
     if (fabs(len) < 1e-8 || fabs(len - SP_2PI) < 1e-8) {
-        slice = FALSE;
+        slice = false;
         this->end = this->start + SP_2PI;
     } else {
-        slice = TRUE;
+        slice = true;
     }
 
-    SPCurve * curve = new SPCurve();
-    curve->moveto(cos(this->start), sin(this->start));
+    SPCurve *curve = NULL;
 
-    for (s = this->start; s < this->end; s += M_PI_2) {
-        double e = s + M_PI_2;
+    // For simplicity, we use a circle with center (0, 0) and radius 1 for our calculations.
 
-        if (e > this->end) {
-            e = this->end;
+    if (slice) {
+        Geom::Point startPoint(cos(start), sin(start));
+        Geom::Point endPoint(cos(end), sin(end));
+        Geom::Point middlePoint = make_angle_bisector_ray(Geom::Ray(Geom::Point(), start), Geom::Ray(Geom::Point(), end)).versor();
+
+        Geom::Ellipse ellipse(0, 0, 1, 1, 0);
+        Geom::EllipticalArc *arc = ellipse.arc(startPoint, middlePoint, endPoint);
+
+        Geom::Path path(startPoint);
+        path.append(*arc);
+
+        delete arc;
+
+        Geom::PathBuilder pb;
+        pb.append(path);
+
+        if (this->closed) {
+            // "pizza slice"
+            pb.lineTo(Geom::Point(0, 0));
+            pb.closePath();
+        } else {
+            // arc only
+            pb.finish();
         }
 
-        len = 4*tan((e - s)/4)/3;
-        double x0 = cos(s);
-        double y0 = sin(s);
-        double x1 = x0 + len * cos(s + M_PI_2);
-        double y1 = y0 + len * sin(s + M_PI_2);
-        double x3 = cos(e);
-        double y3 = sin(e);
-        double x2 = x3 + len * cos(e - M_PI_2);
-        double y2 = y3 + len * sin(e - M_PI_2);
-#ifdef ELLIPSE_VERBOSE
-        g_print("step %d s %f e %f coords %f %f %f %f %f %f\n",
-                i, s, e, x1, y1, x2, y2, x3, y3);
-#endif
-        curve->curveto(x1,y1, x2,y2, x3,y3);
-    }
+        curve = new SPCurve(pb.peek());
+    } else {
+        // Full ellipse
+        Geom::Circle circle(0, 0, 1);
+        Geom::PathVector path;
 
-    if (slice && this->closed) {  // TODO: is this check for "ellipse->closed" necessary?
-        curve->lineto(0., 0.);
-    }
+        circle.getPath(path);
 
-    if (this->closed) {
+        curve = new SPCurve(path);
         curve->closepath();
     }
 
-    Geom::Affine aff = Geom::Scale(rx, ry) * Geom::Translate(this->cx.computed, this->cy.computed);
+    // Stretching / moving the calculated shape to fit the actual dimensions.
+    Geom::Affine aff = Geom::Scale(rx.computed, ry.computed) * Geom::Translate(cx.computed, cy.computed);
     curve->transform(aff);
 
     /* Reset the shape's curve to the "original_curve"

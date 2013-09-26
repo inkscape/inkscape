@@ -37,12 +37,6 @@
 #include "sp-use.h"
 #include "sp-use-reference.h"
 
-/* fixme: */
-static void sp_use_href_changed(SPObject *old_ref, SPObject *ref, SPUse *use);
-static void sp_use_delete_self(SPObject *deleted, SPUse *self);
-
-#include "sp-factory.h"
-
 namespace {
     SPObject* createUse() {
         return new SPUse();
@@ -51,23 +45,20 @@ namespace {
     bool useRegistered = SPFactory::instance().registerObject("svg:use", createUse);
 }
 
-SPUse::SPUse() : SPItem() {
-    this->child = NULL;
-
+SPUse::SPUse()
+    : SPItem()
+    , child(NULL)
+    , href(NULL)
+    , ref(new SPUseReference(this))
+{
     this->x.unset();
     this->y.unset();
     this->width.unset(SVGLength::PERCENT, 1.0, 1.0);
     this->height.unset(SVGLength::PERCENT, 1.0, 1.0);
-    this->href = NULL;
 
-    //new (&this->_delete_connection) sigc::connection();
-    //new (&this->_changed_connection) sigc::connection();
-
-    //new (&this->_transformed_connection) sigc::connection();
-
-    this->ref = new SPUseReference(this);
-
-    this->_changed_connection = this->ref->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_use_href_changed), this));
+    this->_changed_connection = this->ref->changedSignal().connect(
+        sigc::hide(sigc::hide(sigc::mem_fun(this, &SPUse::href_changed)))
+    );
 }
 
 SPUse::~SPUse() {
@@ -79,11 +70,6 @@ SPUse::~SPUse() {
     this->ref->detach();
     delete this->ref;
     this->ref = 0;
-
-    //this->_delete_connection.~connection();
-    //this->_changed_connection.~connection();
-
-    //this->_transformed_connection.~connection();
 }
 
 void SPUse::build(SPDocument *document, Inkscape::XML::Node *repr) {
@@ -195,12 +181,8 @@ Inkscape::XML::Node* SPUse::write(Inkscape::XML::Document *xml_doc, Inkscape::XM
 Geom::OptRect SPUse::bbox(Geom::Affine const &transform, SPItem::BBoxType bboxtype) {
     Geom::OptRect bbox;
 
-    if (this->child && SP_IS_ITEM(this->child)) {
-        SPItem *child = SP_ITEM(this->child);
-        Geom::Affine const ct( child->transform
-                             * Geom::Translate(this->x.computed,
-                                               this->y.computed)
-                             * transform );
+    if (this->child) {
+        Geom::Affine const ct(child->transform * Geom::Translate(this->x.computed, this->y.computed) * transform );
 
         bbox = child->bounds(bboxtype, ct);
     }
@@ -217,8 +199,8 @@ void SPUse::print(SPPrintContext* ctx) {
         translated = true;
     }
 
-    if (this->child && SP_IS_ITEM(this->child)) {
-        SP_ITEM(this->child)->invoke_print(ctx);
+    if (this->child) {
+        this->child->invoke_print(ctx);
     }
 
     if (translated) {
@@ -227,16 +209,17 @@ void SPUse::print(SPPrintContext* ctx) {
 }
 
 const char* SPUse::displayName() {
-    if(this->child && SP_IS_SYMBOL( this->child )) {
+    if (this->child && SP_IS_SYMBOL( this->child )) {
         return _("Symbol");
     }
+
     return _("Clone");
 }
 
 gchar* SPUse::description() {
     if (this->child) {
         if( SP_IS_SYMBOL( this->child ) ) {
-            return g_strdup_printf(_("called %s"), SP_ITEM(this->child)->title());
+            return g_strdup_printf(_("called %s"), this->child->title());
         }
 
         static unsigned recursion_depth = 0;
@@ -250,7 +233,7 @@ gchar* SPUse::description() {
         }
 
         ++recursion_depth;
-        char *child_desc = SP_ITEM(this->child)->detailedDescription();
+        char *child_desc = this->child->detailedDescription();
         --recursion_depth;
 
         char *ret = g_strdup_printf(_("of: %s"), child_desc);
@@ -268,7 +251,8 @@ Inkscape::DrawingItem* SPUse::show(Inkscape::Drawing &drawing, unsigned int key,
     ai->setStyle(this->style);
 
     if (this->child) {
-        Inkscape::DrawingItem *ac = SP_ITEM(this->child)->invoke_show(drawing, key, flags);
+        Inkscape::DrawingItem *ac = this->child->invoke_show(drawing, key, flags);
+
         if (ac) {
             ai->prependChild(ac);
         }
@@ -282,7 +266,7 @@ Inkscape::DrawingItem* SPUse::show(Inkscape::Drawing &drawing, unsigned int key,
 
 void SPUse::hide(unsigned int key) {
     if (this->child) {
-        SP_ITEM(this->child)->invoke_hide(key);
+        this->child->invoke_hide(key);
     }
 
 //  SPItem::onHide(key);
@@ -297,38 +281,42 @@ void SPUse::hide(unsigned int key) {
  * Note that the returned is the clone object, i.e. the child of an SPUse (of the argument one for
  * the trivial case) and not the "true original".
  */
-SPItem *
-sp_use_root(SPUse *use)
-{
-    SPObject *orig = use->child;
+SPItem *SPUse::root() {
+    SPItem *orig = this->child;
+
     while (orig && SP_IS_USE(orig)) {
         orig = SP_USE(orig)->child;
     }
-    if (!orig || !SP_IS_ITEM(orig))
+
+    if (!orig) {
         return NULL;
-    return SP_ITEM(orig);
+    }
+
+    return orig;
 }
 
 /**
  * Returns the effective transform that goes from the ultimate original to given SPUse, both ends
  * included.
  */
-Geom::Affine
-sp_use_get_root_transform(SPUse *use)
-{
+Geom::Affine SPUse::get_root_transform() {
     //track the ultimate source of a chain of uses
-    SPObject *orig = use->child;
+    SPObject *orig = this->child;
+
     GSList *chain = NULL;
-    chain = g_slist_prepend(chain, use);
+    chain = g_slist_prepend(chain, this);
+
     while (SP_IS_USE(orig)) {
         chain = g_slist_prepend(chain, orig);
         orig = SP_USE(orig)->child;
     }
+
     chain = g_slist_prepend(chain, orig);
 
 
-    //calculate the accummulated transform, starting from the original
+    // calculate the accummulated transform, starting from the original
     Geom::Affine t(Geom::identity());
+
     for (GSList *i = chain; i != NULL; i = i->next) {
         SPItem *i_tem = SP_ITEM(i->data);
 
@@ -337,6 +325,7 @@ sp_use_get_root_transform(SPUse *use)
         // represent the values of the x and y attributes on the 'use' element." - http://www.w3.org/TR/SVG11/struct.html#UseElement
         if (SP_IS_USE(i_tem)) {
             SPUse *i_use = SP_USE(i_tem);
+
             if ((i_use->x._set && i_use->x.computed != 0) || (i_use->y._set && i_use->y.computed != 0)) {
                 t = t * Geom::Translate(i_use->x._set ? i_use->x.computed : 0, i_use->y._set ? i_use->y.computed : 0);
             }
@@ -353,16 +342,14 @@ sp_use_get_root_transform(SPUse *use)
  * Returns the transform that leads to the use from its immediate original.
  * Does not inlcude the original's transform if any.
  */
-Geom::Affine
-sp_use_get_parent_transform(SPUse *use)
-{
+Geom::Affine SPUse::get_parent_transform() {
     Geom::Affine t(Geom::identity());
-    if ((use->x._set && use->x.computed != 0) || (use->y._set && use->y.computed != 0)) {
-        t *= Geom::Translate(use->x._set ? use->x.computed : 0,
-                           use->y._set ? use->y.computed : 0);
+
+    if ((this->x._set && this->x.computed != 0) || (this->y._set && this->y.computed != 0)) {
+        t *= Geom::Translate(this->x._set ? this->x.computed : 0, this->y._set ? this->y.computed : 0);
     }
 
-    t *= SP_ITEM(use)->transform;
+    t *= this->transform;
     return t;
 }
 
@@ -371,17 +358,15 @@ sp_use_get_parent_transform(SPUse *use)
  * that the clone stays unmoved or moves in parallel (depending on user setting) regardless of the
  * clone's transform.
  */
-static void
-sp_use_move_compensate(Geom::Affine const *mp, SPItem */*original*/, SPUse *self)
-{
+void SPUse::move_compensate(Geom::Affine const *mp) {
     // the clone is orphaned; or this is not a real use, but a clone of another use;
     // we skip it, otherwise duplicate compensation will occur
-    if (self->cloned) {
+    if (this->cloned) {
         return;
     }
 
     // never compensate uses which are used in flowtext
-    if (self->parent && SP_IS_FLOWREGION(self->parent)) {
+    if (this->parent && SP_IS_FLOWREGION(this->parent)) {
         return;
     }
 
@@ -398,9 +383,9 @@ sp_use_move_compensate(Geom::Affine const *mp, SPItem */*original*/, SPUse *self
         return;
 
     // restore item->transform field from the repr, in case it was changed by seltrans
-    self->readAttr ("transform");
+    this->readAttr ("transform");
 
-    Geom::Affine t = sp_use_get_parent_transform(self);
+    Geom::Affine t = this->get_parent_transform();
     Geom::Affine clone_move = t.inverse() * m * t;
 
     // calculate the compensation matrix and the advertized movement matrix
@@ -416,77 +401,63 @@ sp_use_move_compensate(Geom::Affine const *mp, SPItem */*original*/, SPUse *self
     }
 
     // commit the compensation
-    self->transform *= clone_move;
-    self->doWriteTransform(self->getRepr(), self->transform, &advertized_move);
-    self->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    this->transform *= clone_move;
+    this->doWriteTransform(this->getRepr(), this->transform, &advertized_move);
+    this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-static void
-sp_use_href_changed(SPObject */*old_ref*/, SPObject */*ref*/, SPUse *use)
-{
-    SPItem *item = SP_ITEM(use);
+void SPUse::href_changed() {
+    this->_delete_connection.disconnect();
+    this->_transformed_connection.disconnect();
 
-    use->_delete_connection.disconnect();
-    use->_transformed_connection.disconnect();
-
-    if (use->child) {
-        use->detach(use->child);
-        use->child = NULL;
+    if (this->child) {
+        this->detach(this->child);
+        this->child = NULL;
     }
 
-    if (use->href) {
-        SPItem *refobj = use->ref->getObject();
+    if (this->href) {
+        SPItem *refobj = this->ref->getObject();
+
         if (refobj) {
             Inkscape::XML::Node *childrepr = refobj->getRepr();
 
-//            GType type = sp_repr_type_lookup(childrepr);
-//            g_return_if_fail(type > G_TYPE_NONE);
-//            if (g_type_is_a(type, SP_TYPE_ITEM)) {
-//                use->child = (SPObject*) g_object_new(type, 0);
-//                use->attach(use->child, use->lastChild());
-//                sp_object_unref(use->child, use);
-//                (use->child)->invoke_build(use->document, childrepr, TRUE);
-//
-//                for (SPItemView *v = item->display; v != NULL; v = v->next) {
-//                    Inkscape::DrawingItem *ai;
-//                    ai = SP_ITEM(use->child)->invoke_show(v->arenaitem->drawing(), v->key, v->flags);
-//                    if (ai) {
-//                        v->arenaitem->prependChild(ai);
-//                    }
-//                }
-//            }
-
             SPObject* obj = SPFactory::instance().createObject(NodeTraits::get_type_string(*childrepr));
+
             if (SP_IS_ITEM(obj)) {
-                use->child = obj;
+                this->child = SP_ITEM(obj);
 
-                use->attach(use->child, use->lastChild());
-                sp_object_unref(use->child, use);
-                (use->child)->invoke_build(use->document, childrepr, TRUE);
+                this->attach(this->child, this->lastChild());
+                sp_object_unref(this->child, this);
 
-                for (SPItemView *v = item->display; v != NULL; v = v->next) {
-                    Inkscape::DrawingItem *ai;
-                    ai = SP_ITEM(use->child)->invoke_show(v->arenaitem->drawing(), v->key, v->flags);
+                this->child->invoke_build(this->document, childrepr, TRUE);
+
+                for (SPItemView *v = this->display; v != NULL; v = v->next) {
+                    Inkscape::DrawingItem *ai = this->child->invoke_show(v->arenaitem->drawing(), v->key, v->flags);
+
                     if (ai) {
                         v->arenaitem->prependChild(ai);
                     }
                 }
             } else {
                 delete obj;
+                g_warning("Tried to create svg:use from invalid object");
             }
 
-            use->_delete_connection = refobj->connectDelete(sigc::bind(sigc::ptr_fun(&sp_use_delete_self), use));
-            use->_transformed_connection = SP_ITEM(refobj)->connectTransformed(sigc::bind(sigc::ptr_fun(&sp_use_move_compensate), use));
+            this->_delete_connection = refobj->connectDelete(
+                sigc::hide(sigc::mem_fun(this, &SPUse::delete_self))
+            );
+
+            this->_transformed_connection = refobj->connectTransformed(
+                sigc::hide(sigc::mem_fun(this, &SPUse::move_compensate))
+            );
         }
     }
 }
 
-static void
-sp_use_delete_self(SPObject */*deleted*/, SPUse *self)
-{
+void SPUse::delete_self() {
     // always delete uses which are used in flowtext
-    if (self->parent && SP_IS_FLOWREGION(self->parent)) {
-        self->deleteObject();
+    if (this->parent && SP_IS_FLOWREGION(this->parent)) {
+        this->deleteObject();
         return;
     }
 
@@ -495,9 +466,9 @@ sp_use_delete_self(SPObject */*deleted*/, SPUse *self)
                                                SP_CLONE_ORPHANS_UNLINK);
 
     if (mode == SP_CLONE_ORPHANS_UNLINK) {
-        sp_use_unlink(self);
+        this->unlink();
     } else if (mode == SP_CLONE_ORPHANS_DELETE) {
-        self->deleteObject();
+        this->deleteObject();
     }
 }
 
@@ -514,7 +485,7 @@ void SPUse::update(SPCtx *ctx, unsigned flags) {
     flags &= SP_OBJECT_MODIFIED_CASCADE;
 
     if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
-      for (SPItemView *v = SP_ITEM(this)->display; v != NULL; v = v->next) {
+      for (SPItemView *v = this->display; v != NULL; v = v->next) {
         Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
         g->setStyle(this->style);
       }
@@ -545,14 +516,10 @@ void SPUse::update(SPCtx *ctx, unsigned flags) {
         sp_object_ref(this->child);
 
         if (flags || (this->child->uflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
-            if (SP_IS_ITEM(this->child)) {
-                SPItem const &chi = *SP_ITEM(this->child);
-                cctx.i2doc = chi.transform * ictx->i2doc;
-                cctx.i2vp = chi.transform * ictx->i2vp;
-                this->child->updateDisplay((SPCtx *)&cctx, flags);
-            } else {
-                this->child->updateDisplay(ctx, flags);
-            }
+            SPItem const &chi = *SP_ITEM(this->child);
+            cctx.i2doc = chi.transform * ictx->i2doc;
+            cctx.i2vp = chi.transform * ictx->i2vp;
+            this->child->updateDisplay((SPCtx *)&cctx, flags);
         }
 
         sp_object_unref(this->child);
@@ -574,13 +541,11 @@ void SPUse::modified(unsigned int flags) {
     flags &= SP_OBJECT_MODIFIED_CASCADE;
 
     if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
-      for (SPItemView *v = SP_ITEM(this)->display; v != NULL; v = v->next) {
+      for (SPItemView *v = this->display; v != NULL; v = v->next) {
         Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
         g->setStyle(this->style);
       }
     }
-
-    SPObject *child = this->child;
 
     if (child) {
         sp_object_ref(child);
@@ -593,30 +558,26 @@ void SPUse::modified(unsigned int flags) {
     }
 }
 
-SPItem *sp_use_unlink(SPUse *use)
-{
-    if (!use) {
-        return NULL;
-    }
+SPItem *SPUse::unlink() {
+    Inkscape::XML::Node *repr = this->getRepr();
 
-    Inkscape::XML::Node *repr = use->getRepr();
     if (!repr) {
         return NULL;
     }
 
     Inkscape::XML::Node *parent = repr->parent();
-    SPDocument *document = use->document;
+    SPDocument *document = this->document;
     Inkscape::XML::Document *xml_doc = document->getReprDoc();
 
     // Track the ultimate source of a chain of uses.
-    SPItem *orig = sp_use_root(use);
+    SPItem *orig = this->root();
 
     if (!orig) {
         return NULL;
     }
 
     // Calculate the accumulated transform, starting from the original.
-    Geom::Affine t = sp_use_get_root_transform(use);
+    Geom::Affine t = this->get_root_transform();
 
     Inkscape::XML::Node *copy = NULL;
 
@@ -639,19 +600,19 @@ SPItem *sp_use_unlink(SPUse *use)
 
     // Merge style from the use.
     SPStyle *unli_sty = unlinked->style;
-    SPStyle const *use_sty = use->style;
+    SPStyle const *use_sty = this->style;
     sp_style_merge_from_dying_parent(unli_sty, use_sty);
     sp_style_merge_from_parent(unli_sty, unlinked->parent->style);
 
     unlinked->updateRepr();
 
     // Hold onto our SPObject and repr for now.
-    sp_object_ref(use, NULL);
+    sp_object_ref(this, NULL);
     Inkscape::GC::anchor(repr);
 
     // Remove ourselves, not propagating delete events to avoid a
     // chain-reaction with other elements that might reference us.
-    use->deleteObject(false);
+    this->deleteObject(false);
 
     // Give the copy our old id and let go of our old repr.
     copy->setAttribute("id", repr->attribute("id"));
@@ -665,10 +626,11 @@ SPItem *sp_use_unlink(SPUse *use)
     copy->setAttribute("inkscape:tile-cy", NULL);
 
     // Establish the succession and let go of our object.
-    use->setSuccessor(unlinked);
-    sp_object_unref(use, NULL);
+    this->setSuccessor(unlinked);
+    sp_object_unref(this, NULL);
 
     SPItem *item = SP_ITEM(unlinked);
+
     // Set the accummulated transform.
     {
         Geom::Affine nomove(Geom::identity());
@@ -679,21 +641,18 @@ SPItem *sp_use_unlink(SPUse *use)
     return item;
 }
 
-SPItem *sp_use_get_original(SPUse *use)
-{
+SPItem *SPUse::get_original() {
     SPItem *ref = NULL;
 
-    if (use) {
-        if (use->ref){
-            ref = use->ref->getObject();
+        if (this->ref){
+            ref = this->ref->getObject();
         }
-    }
 
     return ref;
 }
 
 void SPUse::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) {
-    SPItem *root = sp_use_root(this);
+    SPItem *root = this->root();
 
     if (!root) {
         return;

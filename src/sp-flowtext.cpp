@@ -582,7 +582,7 @@ SPItem *SPFlowtext::get_frame(SPItem *after)
         }
 
         if ( frame && SP_IS_USE(frame) ) {
-            frame = sp_use_get_original(SP_USE(frame));
+            frame = SP_USE(frame)->get_original();
         }
     }
     return frame;
