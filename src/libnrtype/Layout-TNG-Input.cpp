@@ -25,7 +25,7 @@ namespace Text {
 
 void Layout::_clearInputObjects()
 {
-    for(std::vector<InputStreamItem*>::iterator it = _input_stream.begin() ; it != _input_stream.end() ; it++)
+    for(std::vector<InputStreamItem*>::iterator it = _input_stream.begin() ; it != _input_stream.end() ; ++it)
         delete *it;
     _input_stream.clear();
     _input_wrap_shapes.clear();
@@ -46,7 +46,7 @@ void Layout::appendText(Glib::ustring const &text, SPStyle *style, void *source_
     sp_style_ref(style);
 
     new_source->text_length = 0;
-    for ( ; text_begin != text_end && text_begin != text.end() ; text_begin++)
+    for ( ; text_begin != text_end && text_begin != text.end() ; ++text_begin)
         new_source->text_length++;        // save this because calculating the length of a UTF-8 string is expensive
 
     if (optional_attributes) {

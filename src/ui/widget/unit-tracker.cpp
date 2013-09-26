@@ -41,7 +41,7 @@ UnitTracker::UnitTracker(UnitType unit_type) :
     UnitTable::UnitMap::iterator m_iter = m.begin();
     while(m_iter != m.end()) {
         Glib::ustring text = (*m_iter).first;
-        m_iter++;
+        ++m_iter;
         gtk_list_store_append(_store, &iter);
         gtk_list_store_set(_store, &iter, COLUMN_STRING, text.c_str(), -1);
     }

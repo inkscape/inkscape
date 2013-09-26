@@ -85,7 +85,7 @@ void Layout::_clearOutputObjects()
     _paragraphs.clear();
     _lines.clear();
     _chunks.clear();
-    for (std::vector<Span>::iterator it_span = _spans.begin() ; it_span != _spans.end() ; it_span++)
+    for (std::vector<Span>::iterator it_span = _spans.begin() ; it_span != _spans.end() ; ++it_span)
         if (it_span->font) it_span->font->Unref();
     _spans.clear();
     _characters.clear();
@@ -330,7 +330,7 @@ std:: cout << "DEBUG Layout::print in while "
                 // conditions that prevent this character from joining the record
                 lc_index++;
                 if(lc_index >= _characters.size()) break; // nothing more to process, so it must be the end of the record
-                text_iter++;
+                ++text_iter;
                 if(doUTN)newtarget=SingleUnicodeToNon(*text_iter); // this should only ever be with a 1:1 glyph:character situation
                 if(newtarget != oldtarget)break;     // change in unicode to nonunicode translation status
                 // MUST exit on any major span change, but not on some little events, like a font substitution event irrelvant for the file save
@@ -424,7 +424,7 @@ void Layout::showGlyphs(CairoRenderContext *ctx) const
         unsigned original_span = _characters[char_index].in_span;
         while (char_index && _characters[char_index - 1].in_span == original_span) {
             char_index--;
-            span_iter++;
+            ++span_iter;
         }
 
         // try to output as many characters as possible in one go
@@ -434,7 +434,7 @@ void Layout::showGlyphs(CairoRenderContext *ctx) const
         glyphtext.clear();
         do {
             span_string += *span_iter;
-            span_iter++;
+            ++span_iter;
 
             unsigned same_character = _glyphs[glyph_index].in_character;
             while (glyph_index < _glyphs.size() && _glyphs[glyph_index].in_character == same_character) {
@@ -550,11 +550,11 @@ Glib::ustring Layout::dumpAsText() const
         for(unsigned j = 0; j < _characters.size() ; j++){
             if(lastspan != _characters[j].in_span){
                 lastspan = _characters[j].in_span;
-                icc  = _spans[lastspan].input_stream_first_character;
+                icc = _spans[lastspan].input_stream_first_character;
             }
             snprintf(line, sizeof(line), "char     %4d: '%c' 0x%4.4x x=%8.4f glyph=%3d span=%3d\n", j, *icc, *icc, _characters[j].x,  _characters[j].in_glyph,  _characters[j].in_span);
             result += line;
-            icc++;
+            ++icc;
         }
     }
     if(_glyphs.size()){
@@ -602,7 +602,7 @@ Glib::ustring Layout::dumpAsText() const
                 snprintf(line, sizeof(line), "      %d: control x=%f flags=%03x glyph=%d\n", char_index, _characters[char_index].x, *u.uattr, _characters[char_index].in_glyph);
             } else {  // some text has empty tspans, iter_char cannot be dereferenced
                 snprintf(line, sizeof(line), "      %d: '%c' 0x%4.4x x=%f flags=%03x glyph=%d\n", char_index, *iter_char, *iter_char, _characters[char_index].x, *u.uattr, _characters[char_index].in_glyph);
-                iter_char++;
+                ++iter_char;
             }
             result += line;
         }

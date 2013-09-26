@@ -348,7 +348,7 @@ font_factory::~font_factory(void)
     PangoStringToDescrMap::iterator it = fontInstanceMap.begin();
     while (it != fontInstanceMap.end()) {
         pango_font_description_free((*it).second);
-        it++;
+        ++it;
     }
 }
 
@@ -662,7 +662,7 @@ Glib::ustring font_factory::FontSpecificationBestMatch(const Glib::ustring & fon
         Glib::ustring bestMatchDescription;
 
         bool setFirstFamilyMatch = false;
-        for (it = fontInstanceMap.begin(); it != fontInstanceMap.end(); it++) {
+        for (it = fontInstanceMap.begin(); it != fontInstanceMap.end(); ++it) {
 
             Glib::ustring currentFontSpec = (*it).first;
             Glib::ustring currentFamily = GetUIFamilyString((*it).second);
@@ -776,7 +776,7 @@ void font_factory::GetUIFamiliesAndStyles(FamilyToStylesMap *map)
 
                         for (std::list<Glib::ustring>::iterator it=styleList.begin();
                                  it != styleList.end();
-                                 it++) {
+                                 ++it) {
                             if (*it == styleUIName) {
                                 exists = true;
                                 break;
@@ -809,7 +809,7 @@ void font_factory::GetUIFamiliesAndStyles(FamilyToStylesMap *map)
         families = 0;
 
         // Sort the style lists
-        for (FamilyToStylesMap::iterator iter = map->begin() ; iter != map->end(); iter++) {
+        for (FamilyToStylesMap::iterator iter = map->begin() ; iter != map->end(); ++iter) {
             (*iter).second.sort(StyleNameCompareInternal);
         }
     }
