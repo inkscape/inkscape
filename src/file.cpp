@@ -1143,7 +1143,8 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
                Inkscape::Extension::Extension *key)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-
+    bool cancelled = false;
+    
     //DEBUG_MESSAGE( fileImport, "file_import( in_doc:%p uri:[%s], key:%p", in_doc, uri, key );
     SPDocument *doc;
     try {
@@ -1152,6 +1153,9 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
         doc = NULL;
     } catch (Inkscape::Extension::Input::open_failed &e) {
         doc = NULL;
+    } catch (Inkscape::Extension::Input::open_cancelled &e) {
+        doc = NULL;
+        cancelled = true;
     }
 
     if (doc != NULL) {
@@ -1248,7 +1252,7 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
         DocumentUndo::done(in_doc, SP_VERB_FILE_IMPORT,
                            _("Import"));
         return new_obj;
-    } else {
+    } else if (!cancelled) {
         gchar *text = g_strdup_printf(_("Failed to load the requested file %s"), uri.c_str());
         sp_ui_error_dialog(text);
         g_free(text);
