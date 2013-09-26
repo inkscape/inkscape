@@ -23,7 +23,6 @@ DrawingImage::DrawingImage(Drawing &drawing)
     : DrawingItem(drawing)
     , _pixbuf(NULL)
     , _style(NULL)
-    , _new_surface(NULL)
 {}
 
 DrawingImage::~DrawingImage()
@@ -123,123 +122,11 @@ unsigned DrawingImage::_renderItem(DrawingContext &ct, Geom::IntRect const &/*ar
         ct.rectangle(_clipbox);
         ct.clip();
 
-        /////////////////////////////////////////////////////////////////////////////
-        // BEGIN: Hack to avoid Cairo bug
-        // The total transform (which is RIGHT-multiplied with the item points to get display points) equals:
-        //   scale*translate_origin*_ctm = scale*translate(origin)*expansion*expansionInv*_ctm
-        //                               = scale*expansion*translate(origin*expansion)*expansionInv*_ctm
-        // To avoid a Cairo bug, we handle the scale*expansion part ourselves.
-        // See https://bugs.launchpad.net/inkscape/+bug/804162
-        
-        Geom::Scale expansion(_ctm.expansion());
-        int orgwidth = _pixbuf->width();
-        int orgheight = _pixbuf->height();
+        ct.translate(_origin);
+        ct.scale(_scale);
+        ct.setSource(_pixbuf->getSurfaceRaw(), 0, 0);
 
-        if (_scale[Geom::X]*expansion[Geom::X]*orgwidth*255.0<1.0 || _scale[Geom::Y]*expansion[Geom::Y]*orgheight*255.0<1.0) {
-            // Resized image too small to actually see anything
-            return RENDER_OK;
-        }
-
-        _pixbuf->ensurePixelFormat(Inkscape::Pixbuf::PF_CAIRO);
-
-        // Split scale*expansion in a part that is <= 1.0 and a part that is >= 1.0. We only take care of the part <= 1.0.
-        Geom::Scale scaleExpansionSmall(std::min<Geom::Coord>(fabs(_scale[Geom::X]*expansion[Geom::X]),1),std::min<Geom::Coord>(fabs(_scale[Geom::Y]*expansion[Geom::Y]),1));
-        Geom::Scale scaleExpansionLarge(_scale[Geom::X]*expansion[Geom::X]/scaleExpansionSmall[Geom::X],_scale[Geom::Y]*expansion[Geom::Y]/scaleExpansionSmall[Geom::Y]);
-
-        Geom::Point newSize(Geom::Point(orgwidth,orgheight)*scaleExpansionSmall);
-        if ((newSize-Geom::Point(orgwidth,orgheight)).length()<0.1) {
-            // Just use _surface directly.
-            ct.scale(expansion.inverse()); // This should not include scale (see derivation above)
-            ct.translate(_origin*expansion);
-            ct.scale(scaleExpansionLarge);
-            ct.setSource(_pixbuf->getSurfaceRaw(), 0, 0);
-        } else if (!_new_surface || (newSize-_rescaledSize).length()>0.1) {
-            // Rescaled image is sufficiently different from cached image to recompute
-            if (_new_surface) cairo_surface_destroy(_new_surface);
-            _rescaledSize = newSize;
-
-            // This essentially considers an image to be composed of rectangular pixels (box kernel) and computes the least-squares approximation of the original.
-            // When the scale factor is really large or small this essentially results in using a box filter, while for scale factors approaching 1 it is more like a "tent" kernel.
-            // Although the quality of the result is not great, it is typically better than an ordinary box filter, and it is guaranteed to preserve the overall brightness of the image.
-            // The best improvement would probably be to do the same kind of thing based on a tent kernel, but that's quite a bit more complicated, and probably not worth the trouble for a hack like this.
-            int newwidth = static_cast<int>(floor(orgwidth*scaleExpansionSmall[Geom::X])+1);
-            int newheight = static_cast<int>(floor(orgheight*scaleExpansionSmall[Geom::Y])+1);
-            std::vector<int> xBegin(newwidth, -1), yBegin(newheight, -1);
-            std::vector< std::vector<float> > xCoefs(xBegin.size()), yCoefs(yBegin.size());
-            for(int x=0; x<orgwidth; x++) {
-                double coordBegin = x*static_cast<double>(scaleExpansionSmall[Geom::X]); // x-coord in target coordinates where the current source pixel begins
-                double coordEnd = (x+1)*static_cast<double>(scaleExpansionSmall[Geom::X]); // x-coord in target coordinates where the current source pixel ends
-                int begin = static_cast<int>(floor(coordBegin)); // First pixel (x-coord) affected by the current source pixel
-                int end = static_cast<int>(ceil(coordEnd)); // First pixel (x-coord) NOT affected by the current source pixel (a zero contribution is counted as not affecting the pixel)
-                for(int nx=begin; nx<end; nx++) {
-                    // Set xBegin if this is the first source pixel contributing to the target pixel.
-                    if (xBegin[nx]==-1) xBegin[nx] = x;
-                    // This computes the fraction of the current target pixel (at nx) that is covered by the source pixel (at x).
-                    xCoefs[nx].push_back(static_cast<float>(std::min<double>(nx+1,coordEnd) - std::max<double>(nx,coordBegin)));
-                }
-            }
-            for(int y=0; y<orgheight; y++) {
-                double coordBegin = y*static_cast<double>(scaleExpansionSmall[Geom::Y]); // y-coord in target coordinates where the current source pixel begins
-                double coordEnd = (y+1)*static_cast<double>(scaleExpansionSmall[Geom::Y]); // y-coord in target coordinates where the current source pixel ends
-                int begin = static_cast<int>(floor(coordBegin)); // First pixel (y-coord) affected by the current source pixel
-                int end = static_cast<int>(ceil(coordEnd)); // First pixel (y-coord) NOT affected by the current source pixel (a zero contribution is counted as not affecting the pixel)
-                for(int ny=begin; ny<end; ny++) {
-                    // Set yBegin if this is the first source pixel contributing to the target pixel.
-                    if (yBegin[ny]==-1) yBegin[ny] = y;
-                    // This computes the fraction of the current target pixel (at ny) that is covered by the source pixel (at y).
-                    yCoefs[ny].push_back(static_cast<float>(std::min<double>(ny+1,coordEnd) - std::max<double>(ny,coordBegin)));
-                }
-            }
-
-            cairo_surface_t *surface = _pixbuf->getSurfaceRaw();
-            _new_surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, newwidth,newheight);
-            unsigned char * orgdata = cairo_image_surface_get_data(surface);
-            unsigned char * newdata = cairo_image_surface_get_data(_new_surface);
-            int orgstride = cairo_image_surface_get_stride(surface);
-            int newstride = cairo_image_surface_get_stride(_new_surface);
-
-            cairo_surface_flush(_new_surface);
-
-            for(int y=0; y<newheight; y++) {
-                for(int x=0; x<newwidth; x++) {
-                    float tempSum[4] = {0,0,0,0};
-                    for(int oy=0; oy<static_cast<int>(yCoefs[y].size()); oy++) {
-                        for(int ox=0; ox<static_cast<int>(xCoefs[x].size()); ox++) {
-                            for(int c=0; c<4; c++) {
-                                tempSum[c] += xCoefs[x][ox]*yCoefs[y][oy]*orgdata[c+4*(xBegin[x]+ox)+orgstride*(yBegin[y]+oy)];
-                            }
-                        }
-                    }
-                    for(int c=0; c<4; c++) {
-                        newdata[c+4*x+newstride*y] = static_cast<unsigned char>(tempSum[c]);
-                    }
-                }
-            }
-            
-            cairo_surface_mark_dirty(_new_surface);
-        
-            ct.scale(expansion.inverse()); // This should not include scale (see derivation above)
-            ct.translate(_origin*expansion); 
-            ct.scale(scaleExpansionLarge);
-            ct.setSource(_new_surface, 0, 0);
-        } else {
-            // No need to regenerate, but we do draw from _new_surface.
-            ct.scale(expansion.inverse()); // This should not include scale (see derivation above)
-            ct.translate(_origin*expansion); 
-            ct.scale(scaleExpansionLarge);
-            ct.setSource(_new_surface, 0, 0);
-        }
-        
-        // END: Hack to avoid Cairo bug
-        /////////////////////////////////////////////////////////////////////////////
-
-        // TODO: If Cairo's problems are gone, uncomment the following:
-        //ct.translate(_origin);
-        //ct.scale(_scale);
-        //ct.setSource(_pixbuf->getSurfaceRaw(), 0, 0);
-
-        //ct.paint(_opacity);
-        ct.paint();
+        ct.paint(_opacity);
 
     } else { // outline; draw a rect instead
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();

@@ -45,9 +45,6 @@ protected:
     Inkscape::Pixbuf *_pixbuf;
     SPStyle *_style;
 
-    cairo_surface_t *_new_surface; // Part of hack around Cairo bug
-    Geom::Point _rescaledSize; // Part of hack around Cairo bug
-
     // TODO: the following three should probably be merged into a new Geom::Viewbox object
     Geom::Rect _clipbox; ///< for preserveAspectRatio
     Geom::Point _origin;
