@@ -407,7 +407,7 @@ void extlogpen_print(
      printf("elpStyleEntry:");
      elpStyleEntry = (uint32_t *) elp->elpStyleEntry;
      for(i=0;i<elp->elpNumEntries;i++){
-        printf("%d:%u ",i,elpStyleEntry[i]);
+        printf("%u:%u ",i,elpStyleEntry[i]);
      }
    }
 }
@@ -484,7 +484,7 @@ void rgndata_print(
    if(rd->rdh.nCount){
      rects = (PU_RECTL) &(rd->Buffer);
      for(i=0;i<rd->rdh.nCount;i++){
-        printf("%d:",i); rectl_print(rects[i]);
+        printf("%u:",i); rectl_print(rects[i]);
      }
    }
 }
@@ -616,7 +616,7 @@ void core1_print(const char *name, const char *contents){
    printf("   cptl:           %d\n",pEmr->cptl        );
    printf("   Points:         ");
    for(i=0;i<pEmr->cptl; i++){
-      printf("[%d]:",i); pointl_print(pEmr->aptl[i]);
+      printf("[%u]:",i); pointl_print(pEmr->aptl[i]);
    }
    printf("\n");
 }
@@ -631,13 +631,13 @@ void core2_print(const char *name, const char *contents){
    printf("   cptl:           %d\n",pEmr->cptl          );
    printf("   Counts:         ");
    for(i=0;i<pEmr->nPolys; i++){
-      printf(" [%d]:%d ",i,pEmr->aPolyCounts[i] );
+      printf(" [%u]:%d ",i,pEmr->aPolyCounts[i] );
    }
    printf("\n");
    PU_POINTL paptl = (PU_POINTL)((char *)pEmr->aPolyCounts + sizeof(uint32_t)* pEmr->nPolys);
    printf("   Points:         ");
    for(i=0;i<pEmr->cptl; i++){
-      printf(" [%d]:",i); pointl_print(paptl[i]);
+      printf(" [%u]:",i); pointl_print(paptl[i]);
    }
    printf("\n");
 }
@@ -675,7 +675,7 @@ void core6_print(const char *name, const char *contents){
    printf("   Points:         ");
    PU_POINT16 papts = (PU_POINT16)(&(pEmr->apts));
    for(i=0; i<pEmr->cpts; i++){
-      printf(" [%d]:",i);  point16_print(papts[i]);
+      printf(" [%u]:",i);  point16_print(papts[i]);
    }
    printf("\n");
 } 
@@ -729,7 +729,7 @@ void core10_print(const char *name, const char *contents){
    printf("   cpts:           %d\n",pEmr->cpts          );
    printf("   Counts:         ");
    for(i=0;i<pEmr->nPolys; i++){
-      printf(" [%d]:%d ",i,pEmr->aPolyCounts[i] );
+      printf(" [%u]:%d ",i,pEmr->aPolyCounts[i] );
    }
    printf("\n");
    printf("   Points:         ");
@@ -753,7 +753,7 @@ void core11_print(const char *name, const char *contents){
    i=1; 
    char *prd = (char *) &(pEmr->RgnData);
    while(roff + 28 < pEmr->emr.nSize){ // up to the end of the record
-      printf("   RegionData:%d",i);
+      printf("   RegionData:%u",i);
       rgndata_print((PU_RGNDATA) (prd + roff));
       roff += (((PU_RGNDATA)prd)->rdh.dwSize + ((PU_RGNDATA)prd)->rdh.nRgnSize - 16);
       printf("\n");
@@ -1362,7 +1362,7 @@ void U_EMRSETPALETTEENTRIES_print(const char *contents){
       printf("      PLTEntries:");
       PU_LOGPLTNTRY aPalEntries = (PU_LOGPLTNTRY) &(pEmr->aPalEntries);
       for(i=0; i<pEmr->cEntries; i++){
-         printf("%d:",i); logpltntry_print(aPalEntries[i]);
+         printf("%u:",i); logpltntry_print(aPalEntries[i]);
       }
       printf("\n");
    }
@@ -1428,13 +1428,13 @@ void U_EMRPOLYDRAW_print(const char *contents){
    printf("   cptl:           %d\n",pEmr->cptl        );
    printf("   Points:         ");
    for(i=0;i<pEmr->cptl; i++){
-      printf(" [%d]:",i);
+      printf(" [%u]:",i);
       pointl_print(pEmr->aptl[i]);
    }
    printf("\n");
    printf("   Types:          ");
    for(i=0;i<pEmr->cptl; i++){
-      printf(" [%d]:%u ",i,pEmr->abTypes[i]);
+      printf(" [%u]:%u ",i,pEmr->abTypes[i]);
    }
    printf("\n");
 }
@@ -1619,7 +1619,7 @@ void U_EMRFILLRGN_print(const char *contents){
    i=1; 
    char *prd = (char *) &(pEmr->RgnData);
    while(roff + 28 < pEmr->emr.nSize){ // up to the end of the record
-      printf("   RegionData[%d]: ",i);   rgndata_print((PU_RGNDATA) (prd + roff));  printf("\n");
+      printf("   RegionData[%u]: ",i);   rgndata_print((PU_RGNDATA) (prd + roff));  printf("\n");
       roff += (((PU_RGNDATA)prd)->rdh.dwSize + ((PU_RGNDATA)prd)->rdh.nRgnSize - 16);
    }
 } 
@@ -1641,7 +1641,7 @@ void U_EMRFRAMERGN_print(const char *contents){
    i=1; 
    char *prd = (char *) &(pEmr->RgnData);
    while(roff + 28 < pEmr->emr.nSize){ // up to the end of the record
-      printf("   RegionData[%d]: ",i);   rgndata_print((PU_RGNDATA) (prd + roff));  printf("\n");
+      printf("   RegionData[%u]: ",i);   rgndata_print((PU_RGNDATA) (prd + roff));  printf("\n");
       roff += (((PU_RGNDATA)prd)->rdh.dwSize + ((PU_RGNDATA)prd)->rdh.nRgnSize - 16);
    }
 } 
@@ -1973,13 +1973,13 @@ void U_EMRPOLYDRAW16_print(const char *contents){
    printf("   cpts:           %d\n",pEmr->cpts        );
    printf("   Points:         ");
    for(i=0;i<pEmr->cpts; i++){
-      printf(" [%d]:",i);
+      printf(" [%u]:",i);
       point16_print(pEmr->apts[i]);
    }
    printf("\n");
    printf("   Types:          ");
    for(i=0;i<pEmr->cpts; i++){
-      printf(" [%d]:%u ",i,pEmr->abTypes[i]);
+      printf(" [%u]:%u ",i,pEmr->abTypes[i]);
    }
    printf("\n");
 }
@@ -2218,7 +2218,7 @@ void U_EMRCREATECOLORSPACEW_print(const char *contents){
    printf("   Data:           ");
    if(pEmr->dwFlags & 1){
      for(i=0; i<pEmr->cbData; i++){
-        printf("[%d]:%2.2X ",i,pEmr->Data[i]);
+        printf("[%u]:%2.2X ",i,pEmr->Data[i]);
      }
    }
    printf("\n");
