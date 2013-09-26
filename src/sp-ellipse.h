@@ -31,7 +31,9 @@ public:
 	SVGLength rx;
 	SVGLength ry;
 
-	unsigned int closed : 1;
+	// Stores whether the shape is closed ("pizza slice" or full ellipse) or not (arc only).
+	bool closed;
+
 	double start, end;
 
 	virtual void update(SPCtx* ctx, unsigned int flags);
@@ -42,10 +44,16 @@ public:
 	virtual Geom::Affine set_transform(Geom::Affine const& xform);
 
 	virtual void update_patheffect(bool write);
+
+	void normalize();
+
+	Geom::Point getPointAtAngle(double arg) const;
+
+protected:
+	/// Determines whether the shape is a part of a ellipse.
+	bool isSlice() const;
 };
 
-/* This is technically priate by we need this in object edit (Lauris) */
-void sp_genericellipse_normalize (SPGenericEllipse *ellipse);
 
 /* SVG <ellipse> element */
 #define SP_ELLIPSE(obj) (dynamic_cast<SPEllipse*>((SPObject*)obj))
@@ -62,7 +70,6 @@ public:
     virtual const char* displayName();
 };
 
-void sp_ellipse_position_set (SPEllipse * ellipse, gdouble x, gdouble y, gdouble rx, gdouble ry);
 
 /* SVG <circle> element */
 #define SP_CIRCLE(obj) (dynamic_cast<SPCircle*>((SPObject*)obj))
@@ -79,6 +86,7 @@ public:
     virtual const char* displayName();
 };
 
+
 /* <path sodipodi:type="arc"> element */
 #define SP_ARC(obj) (dynamic_cast<SPArc*>((SPObject*)obj))
 #define SP_IS_ARC(obj) (dynamic_cast<const SPArc*>((SPObject*)obj) != NULL)
@@ -93,9 +101,24 @@ public:
 	virtual void set(unsigned int key, gchar const* value);
     virtual const char* displayName();
 	virtual void modified(unsigned int flags);
+
+	void sp_arc_position_set(gdouble x, gdouble y, gdouble rx, gdouble ry);
+
+private:
+	bool sp_arc_set_elliptical_path_attribute(Inkscape::XML::Node *repr);
+
+	friend class SPGenericEllipse;
 };
 
-void sp_arc_position_set (SPArc * arc, gdouble x, gdouble y, gdouble rx, gdouble ry);
-Geom::Point sp_arc_get_xy (SPArc *ge, gdouble arg);
-
 #endif
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :

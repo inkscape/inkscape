@@ -24,6 +24,8 @@
 #include "style.h"
 #include "display/curve.h"
 #include <glibmm/i18n.h>
+#include <2geom/angle.h>
+#include <2geom/ellipse.h>
 #include <2geom/transforms.h>
 #include <2geom/pathvector.h>
 #include <2geom/svg-path.h>
@@ -31,8 +33,6 @@
 #include "sp-ellipse.h"
 #include "preferences.h"
 #include "snap-candidate.h"
-
-/* Common parent class */
 
 #define noELLIPSE_VERBOSE
 
@@ -64,40 +64,12 @@ namespace {
 
 #define SP_2PI (2 * M_PI)
 
-#if 1
-/* Hmmm... shouldn't this also qualify */
-/* Whether it is faster or not, well, nobody knows */
-#define sp_round(v,m) (((v) < 0.0) ? ((ceil((v) / (m) - 0.5)) * (m)) : ((floor((v) / (m) + 0.5)) * (m)))
-#else
-/* we do not use C99 round(3) function yet */
-static double sp_round(double x, double y)
+SPGenericEllipse::SPGenericEllipse()
+    : SPShape()
+    , closed(true)
+    , start(0)
+    , end(SP_2PI)
 {
-    double remain;
-
-    g_assert(y > 0.0);
-
-    /* return round(x/y) * y; */
-
-    remain = fmod(x, y);
-
-    if (remain >= 0.5*y)
-        return x - remain + y;
-    else
-        return x - remain;
-}
-#endif
-
-static gboolean sp_arc_set_elliptical_path_attribute(SPArc *arc, Inkscape::XML::Node *repr);
-
-SPGenericEllipse::SPGenericEllipse() : SPShape() {
-    this->cx.unset();
-    this->cy.unset();
-    this->rx.unset();
-    this->ry.unset();
-
-    this->start = 0.0;
-    this->end = SP_2PI;
-    this->closed = TRUE;
 }
 
 SPGenericEllipse::~SPGenericEllipse() {
@@ -109,7 +81,7 @@ void SPGenericEllipse::update(SPCtx *ctx, guint flags) {
 
         double const dx = viewbox.width();
         double const dy = viewbox.height();
-        double const dr = sqrt(dx*dx + dy*dy)/sqrt(2);
+        double const dr = hypot(dx, dy) / sqrt(2);
         double const em = this->style->font_size.computed;
         double const ex = em * 0.5; // fixme: get from pango or libnrtype
 
@@ -142,13 +114,22 @@ void SPGenericEllipse::update_patheffect(bool write) {
     this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-#include <2geom/ellipse.h>
+bool SPGenericEllipse::isSlice() const {
+    // figure out if we have a slice, guarding against rounding errors
+    double diff = fmod(this->end - this->start, SP_2PI);
+
+    if (diff < 0.0) {
+        diff += SP_2PI;
+    }
+
+    return (fabs(diff) >= 1e-8 && fabs(diff - SP_2PI) >= 1e-8);
+}
 
 /* fixme: Think (Lauris) */
 /* Can't we use arcto in this method? */
 void SPGenericEllipse::set_shape() {
     if (hasBrokenPathEffect()) {
-        g_warning ("The ellipse shape has unknown LPE on it! Convert to path to make it editable preserving the appearance; editing it as ellipse will remove the bad LPE");
+        g_warning("The ellipse shape has unknown LPE on it! Convert to path to make it editable preserving the appearance; editing it as ellipse will remove the bad LPE");
 
         if (this->getRepr()->attribute("d")) {
             // unconditionally read the curve from d, if any, to preserve appearance
@@ -169,32 +150,17 @@ void SPGenericEllipse::set_shape() {
     	return;
     }
 
-    sp_genericellipse_normalize(this);
-
-    // figure out if we have a slice, guarding against rounding errors
-    double len = fmod(this->end - this->start, SP_2PI);
-
-    if (len < 0.0) {
-    	len += SP_2PI;
-    }
-
-    bool slice = false;
-
-    if (fabs(len) < 1e-8 || fabs(len - SP_2PI) < 1e-8) {
-        slice = false;
-        this->end = this->start + SP_2PI;
-    } else {
-        slice = true;
-    }
+    this->normalize();
 
     SPCurve *curve = NULL;
 
     // For simplicity, we use a circle with center (0, 0) and radius 1 for our calculations.
 
-    if (slice) {
-        Geom::Point startPoint(cos(start), sin(start));
-        Geom::Point endPoint(cos(end), sin(end));
-        Geom::Point middlePoint = make_angle_bisector_ray(Geom::Ray(Geom::Point(), start), Geom::Ray(Geom::Point(), end)).versor();
+    if (this->isSlice()) {
+        Geom::Point center(0, 0);
+        Geom::Point startPoint = Geom::Point::polar(start);
+        Geom::Point endPoint = Geom::Point::polar(end);
+        Geom::Point middlePoint = make_angle_bisector_ray(Geom::Ray(center, start), Geom::Ray(center, end)).versor();
 
         Geom::Ellipse ellipse(0, 0, 1, 1, 0);
         Geom::EllipticalArc *arc = ellipse.arc(startPoint, middlePoint, endPoint);
@@ -209,7 +175,7 @@ void SPGenericEllipse::set_shape() {
 
         if (this->closed) {
             // "pizza slice"
-            pb.lineTo(Geom::Point(0, 0));
+            pb.lineTo(center);
             pb.closePath();
         } else {
             // arc only
@@ -252,69 +218,49 @@ void SPGenericEllipse::set_shape() {
 }
 
 void SPGenericEllipse::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) {
-    sp_genericellipse_normalize(this);
+    this->normalize();
     Geom::Affine const i2dt = this->i2dt_affine();
 
-    // figure out if we have a slice, while guarding against rounding errors
-    bool slice = false;
-    double len = fmod(this->end - this->start, SP_2PI);
-
-    if (len < 0.0) {
-    	len += SP_2PI;
-    }
-
-    if (fabs(len) < 1e-8 || fabs(len - SP_2PI) < 1e-8) {
-        slice = false;
-        this->end = this->start + SP_2PI;
-    } else {
-        slice = true;
-    }
-
-    double rx = this->rx.computed;
-    double ry = this->ry.computed;
-    double cx = this->cx.computed;
-    double cy = this->cy.computed;
-
-    // Snap to the 4 quadrant points of the this, but only if the arc
+    // Snap to the 4 quadrant points of the ellipse, but only if the arc
     // spans far enough to include them
     if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_ELLIPSE_QUADRANT_POINT)) {
         double angle = 0;
 
         for (angle = 0; angle < SP_2PI; angle += M_PI_2) {
             if (angle >= this->start && angle <= this->end) {
-                Geom::Point pt = Geom::Point(cx + cos(angle)*rx, cy + sin(angle)*ry) * i2dt;
+                Geom::Point pt = this->getPointAtAngle(angle) * i2dt;
                 p.push_back(Inkscape::SnapCandidatePoint(pt, Inkscape::SNAPSOURCE_ELLIPSE_QUADRANT_POINT, Inkscape::SNAPTARGET_ELLIPSE_QUADRANT_POINT));
             }
         }
     }
 
+    double cx = this->cx.computed;
+    double cy = this->cy.computed;
+
+    bool slice = this->isSlice();
+
     // Add the centre, if we have a closed slice or when explicitly asked for
-    bool c1 = snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_NODE_CUSP) && slice && this->closed;
-    bool c2 = snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_OBJECT_MIDPOINT);
-
-    if (c1 || c2) {
+    if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_NODE_CUSP) && slice && this->closed) {
         Geom::Point pt = Geom::Point(cx, cy) * i2dt;
+        p.push_back(Inkscape::SnapCandidatePoint(pt, Inkscape::SNAPSOURCE_NODE_CUSP, Inkscape::SNAPTARGET_NODE_CUSP));
+    }
 
-        if (c1) {
-            p.push_back(Inkscape::SnapCandidatePoint(pt, Inkscape::SNAPSOURCE_NODE_CUSP, Inkscape::SNAPTARGET_NODE_CUSP));
-        }
-
-        if (c2) {
-            p.push_back(Inkscape::SnapCandidatePoint(pt, Inkscape::SNAPSOURCE_OBJECT_MIDPOINT, Inkscape::SNAPTARGET_OBJECT_MIDPOINT));
-        }
+    if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_OBJECT_MIDPOINT)) {
+        Geom::Point pt = Geom::Point(cx, cy) * i2dt;
+        p.push_back(Inkscape::SnapCandidatePoint(pt, Inkscape::SNAPSOURCE_OBJECT_MIDPOINT, Inkscape::SNAPTARGET_OBJECT_MIDPOINT));
     }
 
     // And if we have a slice, also snap to the endpoints
     if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_NODE_CUSP) && slice) {
         // Add the start point, if it's not coincident with a quadrant point
         if (fmod(this->start, M_PI_2) != 0.0 ) {
-            Geom::Point pt = Geom::Point(cx + cos(this->start)*rx, cy + sin(this->start)*ry) * i2dt;
+            Geom::Point pt = this->getPointAtAngle(this->start) * i2dt;
             p.push_back(Inkscape::SnapCandidatePoint(pt, Inkscape::SNAPSOURCE_NODE_CUSP, Inkscape::SNAPTARGET_NODE_CUSP));
         }
 
         // Add the end point, if it's not coincident with a quadrant point
         if (fmod(this->end, M_PI_2) != 0.0 ) {
-            Geom::Point pt = Geom::Point(cx + cos(this->end)*rx, cy + sin(this->end)*ry) * i2dt;
+            Geom::Point pt = this->getPointAtAngle(this->end) * i2dt;
             p.push_back(Inkscape::SnapCandidatePoint(pt, Inkscape::SNAPSOURCE_NODE_CUSP, Inkscape::SNAPTARGET_NODE_CUSP));
         }
     }
@@ -330,6 +276,7 @@ Geom::Affine SPGenericEllipse::set_transform(Geom::Affine const &xform)
     Geom::Affine ret(Geom::Affine(xform).withoutTranslation());
     gdouble const sw = hypot(ret[0], ret[1]);
     gdouble const sh = hypot(ret[2], ret[3]);
+
     if (sw > 1e-9) {
         ret[0] /= sw;
         ret[1] /= sw;
@@ -337,6 +284,7 @@ Geom::Affine SPGenericEllipse::set_transform(Geom::Affine const &xform)
         ret[0] = 1.0;
         ret[1] = 0.0;
     }
+
     if (sh > 1e-9) {
         ret[2] /= sh;
         ret[3] /= sh;
@@ -348,6 +296,7 @@ Geom::Affine SPGenericEllipse::set_transform(Geom::Affine const &xform)
     if (this->rx._set) {
         this->rx = this->rx.computed * sw;
     }
+
     if (this->ry._set) {
         this->ry = this->ry.computed * sh;
     }
@@ -373,20 +322,18 @@ Geom::Affine SPGenericEllipse::set_transform(Geom::Affine const &xform)
     return ret;
 }
 
-void
-sp_genericellipse_normalize(SPGenericEllipse *ellipse)
-{
-    ellipse->start = fmod(ellipse->start, SP_2PI);
-    ellipse->end = fmod(ellipse->end, SP_2PI);
+void SPGenericEllipse::normalize() {
+    this->start = fmod(this->start, SP_2PI);
+    this->end = fmod(this->end, SP_2PI);
 
-    if (ellipse->start < 0.0) {
-        ellipse->start += SP_2PI;
+    if (this->start < 0.0) {
+        this->start += SP_2PI;
     }
 
-    double diff = ellipse->start - ellipse->end;
+    double diff = this->start - this->end;
 
     if (diff >= 0.0) {
-        ellipse->end += diff - fmod(diff, SP_2PI) + SP_2PI;
+        this->end += diff - fmod(diff, SP_2PI) + SP_2PI;
     }
 
     /* Now we keep: 0 <= start < end <= 2*PI */
@@ -404,7 +351,7 @@ Inkscape::XML::Node* SPGenericEllipse::write(Inkscape::XML::Document *xml_doc, I
         sp_repr_set_svg_double(repr, "sodipodi:ry", this->ry.computed);
 
         if (SP_IS_ARC(this)) {
-            sp_arc_set_elliptical_path_attribute(SP_ARC(this), this->getRepr());
+            SP_ARC(this)->sp_arc_set_elliptical_path_attribute(this->getRepr());
         }
     }
 
@@ -486,24 +433,6 @@ const char* SPEllipse::displayName() {
     return _("Ellipse");
 }
 
-
-void
-sp_ellipse_position_set(SPEllipse *ellipse, gdouble x, gdouble y, gdouble rx, gdouble ry)
-{
-    SPGenericEllipse *ge;
-
-    g_return_if_fail(ellipse != NULL);
-    g_return_if_fail(SP_IS_ELLIPSE(ellipse));
-
-    ge = SP_GENERICELLIPSE(ellipse);
-
-    ge->cx.computed = x;
-    ge->cy.computed = y;
-    ge->rx.computed = rx;
-    ge->ry.computed = ry;
-
-    ((SPObject *)ge)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-}
 
 /* SVG <circle> element */
 SPCircle::SPCircle() : SPGenericEllipse() {
@@ -594,32 +523,32 @@ void SPArc::build(SPDocument *document, Inkscape::XML::Node *repr) {
  * See SVG 1.0 Specification W3C Recommendation
  * ``F.6 Ellptical arc implementation notes'' for more detail.
  */
-static gboolean
-sp_arc_set_elliptical_path_attribute(SPArc *arc, Inkscape::XML::Node *repr)
-{
-    SPGenericEllipse *ge = SP_GENERICELLIPSE(arc);
-
+bool SPArc::sp_arc_set_elliptical_path_attribute(Inkscape::XML::Node *repr) {
     Inkscape::SVG::PathString str;
 
-    Geom::Point p1 = sp_arc_get_xy(arc, ge->start);
-    Geom::Point p2 = sp_arc_get_xy(arc, ge->end);
-    double rx = ge->rx.computed;
-    double ry = ge->ry.computed;
+    Geom::Point p1 = this->getPointAtAngle(this->start);
+    Geom::Point p2 = this->getPointAtAngle(this->end);
+    double rx = this->rx.computed;
+    double ry = this->ry.computed;
 
     str.moveTo(p1);
 
-    double dt = fmod(ge->end - ge->start, SP_2PI);
+    double dt = fmod(this->end - this->start, SP_2PI);
+
     if (fabs(dt) < 1e-6) {
-        Geom::Point ph = sp_arc_get_xy(arc, (ge->start + ge->end) / 2.0);
+        Geom::Point ph = getPointAtAngle((this->start + this->end) / 2.0);
+
         str.arcTo(rx, ry, 0, true, true, ph)
            .arcTo(rx, ry, 0, true, true, p2)
            .closePath();
     } else {
         bool fa = (fabs(dt) > M_PI);
         bool fs = (dt > 0);
+
         str.arcTo(rx, ry, 0, fa, fs, p2);
-        if (ge->closed) {
-            Geom::Point center = Geom::Point(ge->cx.computed, ge->cy.computed);
+
+        if (this->closed) {
+            Geom::Point center = Geom::Point(this->cx.computed, this->cy.computed);
             str.lineTo(center).closePath();
         }
     }
@@ -642,13 +571,7 @@ Inkscape::XML::Node* SPArc::write(Inkscape::XML::Document *xml_doc, Inkscape::XM
         sp_repr_set_svg_double(repr, "sodipodi:ry", this->ry.computed);
 
         // write start and end only if they are non-trivial; otherwise remove
-        gdouble len = fmod(this->end - this->start, SP_2PI);
-
-        if (len < 0.0) {
-        	len += SP_2PI;
-        }
-
-        if (!(fabs(len) < 1e-8 || fabs(len - SP_2PI) < 1e-8)) {
+        if (this->isSlice()) {
             sp_repr_set_svg_double(repr, "sodipodi:start", this->start);
             sp_repr_set_svg_double(repr, "sodipodi:end", this->end);
 
@@ -661,7 +584,7 @@ Inkscape::XML::Node* SPArc::write(Inkscape::XML::Document *xml_doc, Inkscape::XM
     }
 
     // write d=
-    sp_arc_set_elliptical_path_attribute(this, repr);
+    this->sp_arc_set_elliptical_path_attribute(repr);
 
     SPGenericEllipse::write(xml_doc, repr, flags);
 
@@ -735,15 +658,8 @@ void SPArc::modified(guint flags) {
     SPGenericEllipse::modified(flags);
 }
 
-
 const char* SPArc::displayName() {
-    gdouble len = fmod(this->end - this->start, SP_2PI);
-
-    if (len < 0.0) {
-    	len += SP_2PI;
-    }
-
-    if (!(fabs(len) < 1e-8 || fabs(len - SP_2PI) < 1e-8)) {
+    if (this->isSlice()) {
         if (this->closed) {
             return _("Segment");
         } else {
@@ -754,40 +670,31 @@ const char* SPArc::displayName() {
     }
 }
 
-void
-sp_arc_position_set(SPArc *arc, gdouble x, gdouble y, gdouble rx, gdouble ry)
-{
-    g_return_if_fail(arc != NULL);
-    g_return_if_fail(SP_IS_ARC(arc));
+void SPArc::sp_arc_position_set(gdouble x, gdouble y, gdouble rx, gdouble ry) {
+    this->cx.computed = x;
+    this->cy.computed = y;
+    this->rx.computed = rx;
+    this->ry.computed = ry;
 
-    SPGenericEllipse *ge = SP_GENERICELLIPSE(arc);
-
-    ge->cx.computed = x;
-    ge->cy.computed = y;
-    ge->rx.computed = rx;
-    ge->ry.computed = ry;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+
     // those pref values are in degrees, while we want radians
-    if (prefs->getDouble("/tools/shapes/arc/start", 0.0) != 0)
-        ge->start = prefs->getDouble("/tools/shapes/arc/start", 0.0) * M_PI / 180;
-    if (prefs->getDouble("/tools/shapes/arc/end", 0.0) != 0)
-        ge->end = prefs->getDouble("/tools/shapes/arc/end", 0.0) * M_PI / 180;
-    if (!prefs->getBool("/tools/shapes/arc/open"))
-        ge->closed = 1;
-    else
-        ge->closed = 0;
+    if (prefs->getDouble("/tools/shapes/arc/start", 0.0) != 0) {
+        this->start = Geom::Angle::from_degrees(prefs->getDouble("/tools/shapes/arc/start", 0.0)).radians0();
+    }
 
-    ((SPObject *)arc)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    if (prefs->getDouble("/tools/shapes/arc/end", 0.0) != 0) {
+        this->end = Geom::Angle::from_degrees(prefs->getDouble("/tools/shapes/arc/end", 0.0)).radians0();
+    }
+
+    this->closed = !prefs->getBool("/tools/shapes/arc/open");
+
+    this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-Geom::Point sp_arc_get_xy(SPArc *arc, gdouble arg)
-{
-    SPGenericEllipse *ge = SP_GENERICELLIPSE(arc);
-
-    return Geom::Point(ge->rx.computed * cos(arg) + ge->cx.computed,
-                     ge->ry.computed * sin(arg) + ge->cy.computed);
+Geom::Point SPGenericEllipse::getPointAtAngle(double arg) const {
+    return Geom::Point::polar(arg) * Geom::Scale(rx.computed, ry.computed) * Geom::Translate(cx.computed, cy.computed);
 }
-
 
 /*
   Local Variables:

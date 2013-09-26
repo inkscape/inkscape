@@ -409,7 +409,7 @@ void SPArcContext::drag(Geom::Point pt, guint state) {
         }
     }
 
-    sp_arc_position_set(SP_ARC(this->arc),
+    this->arc->sp_arc_position_set(
                         r.midpoint()[Geom::X], r.midpoint()[Geom::Y],
                         r.dimensions()[Geom::X] / 2, r.dimensions()[Geom::Y] / 2);
 

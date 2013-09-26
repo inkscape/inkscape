@@ -21,6 +21,7 @@
 class SVGLength
 {
 public:
+    SVGLength();
 
     enum Unit {
         NONE,

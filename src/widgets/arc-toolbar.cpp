@@ -123,7 +123,7 @@ sp_arctb_startend_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *v
                 ge->end = (gtk_adjustment_get_value(adj) * M_PI)/ 180;
             }
 
-            sp_genericellipse_normalize(ge);
+            ge->normalize();
             (SP_OBJECT(arc))->updateRepr();
             (SP_OBJECT(arc))->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 

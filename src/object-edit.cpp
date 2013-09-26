@@ -801,7 +801,7 @@ ArcKnotHolderEntityStart::knot_set(Geom::Point const &p, Geom::Point const &/*or
     {
         ge->start = sp_round(ge->start, M_PI/snaps);
     }
-    sp_genericellipse_normalize(ge);
+    ge->normalize();
     (static_cast<SPObject *>(arc))->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
@@ -811,7 +811,7 @@ ArcKnotHolderEntityStart::knot_get() const
     SPGenericEllipse const *ge = SP_GENERICELLIPSE(item);
     SPArc *arc = SP_ARC(item);
 
-    return sp_arc_get_xy(arc, ge->start);
+    return arc->getPointAtAngle(ge->start);
 }
 
 void
@@ -844,7 +844,7 @@ ArcKnotHolderEntityEnd::knot_set(Geom::Point const &p, Geom::Point const &/*orig
     {
         ge->end = sp_round(ge->end, M_PI/snaps);
     }
-    sp_genericellipse_normalize(ge);
+    ge->normalize();
     (static_cast<SPObject *>(arc))->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
@@ -854,7 +854,7 @@ ArcKnotHolderEntityEnd::knot_get() const
     SPGenericEllipse const *ge = SP_GENERICELLIPSE(item);
     SPArc *arc = SP_ARC(item);
 
-    return sp_arc_get_xy(arc, ge->end);
+    return arc->getPointAtAngle(ge->end);
 }
 
 

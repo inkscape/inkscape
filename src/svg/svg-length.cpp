@@ -171,6 +171,14 @@ unsigned int sp_svg_number_write_de(gchar *buf, int bufLen, double val, unsigned
     }
 }
 
+SVGLength::SVGLength()
+    : _set(false)
+    , unit(NONE)
+    , value(0)
+    , computed(0)
+{
+}
+
 /* Length */
 
 bool SVGLength::read(gchar const *str)
