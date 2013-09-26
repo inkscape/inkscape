@@ -339,7 +339,6 @@ void SPSpiral::set_shape() {
     }
 
     Geom::Point darray[SAMPLE_SIZE + 1];
-    double t;
 
     this->requestModified(SP_OBJECT_MODIFIED_FLAG);
 
@@ -365,6 +364,7 @@ void SPSpiral::set_shape() {
     Geom::Point hat1 = this->getTangent(this->t0);
     Geom::Point hat2;
 
+    double t;
     for (t = this->t0; t < (1.0 - tstep);) {
         this->fitAndDraw(c, dstep, darray, hat1, hat2, &t);
 

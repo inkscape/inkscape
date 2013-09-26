@@ -410,7 +410,7 @@ lpetool_create_measuring_items(SPLPEToolContext *lc, Inkscape::Selection *select
     for (GSList const *i = selection->itemList(); i != NULL; i = i->next) {
         if (SP_IS_PATH(i->data)) {
             path = SP_PATH(i->data);
-            curve = SP_SHAPE(path)->getCurve();
+            curve = path->getCurve();
             Geom::Piecewise<Geom::D2<Geom::SBasis> > pwd2 = paths_to_pw(curve->get_pathvector());
             canvas_text = (SPCanvasText *) sp_canvastext_new(tmpgrp, lc->desktop, Geom::Point(0,0), "");
             if (!show)
@@ -453,7 +453,7 @@ lpetool_update_measuring_items(SPLPEToolContext *lc)
           ++i )
     {
         SPPath *path = i->first;
-        SPCurve *curve = SP_SHAPE(path)->getCurve();
+        SPCurve *curve = path->getCurve();
         Geom::Piecewise<Geom::D2<Geom::SBasis> > pwd2 = Geom::paths_to_pw(curve->get_pathvector());
         Inkscape::Util::Unit unit;
         if (prefs->getString("/tools/lpetool/unit").compare("")) {

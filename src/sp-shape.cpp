@@ -93,16 +93,13 @@ void SPShape::build(SPDocument *document, Inkscape::XML::Node *repr) {
  * \see SPObject::release()
  */
 void SPShape::release() {
-    SPItemView *v;
-    int i;
-
-    for (i = 0; i < SP_MARKER_LOC_QTY; i++) {
+    for (int i = 0; i < SP_MARKER_LOC_QTY; i++) {
         if (this->_marker[i]) {
-        	
-            for (v = this->display; v != NULL; v = v->next) {
+
+            for (SPItemView *v = this->display; v != NULL; v = v->next) {
               sp_marker_hide ((SPMarker *) this->_marker[i], v->arenaitem->key() + i);
             }
-            
+
             this->_release_connect[i].disconnect();
             this->_modified_connect[i].disconnect();
             this->_marker[i] = sp_object_hunref (this->_marker[i], this);
@@ -143,16 +140,14 @@ void SPShape::update(SPCtx* ctx, guint flags) {
     }
 
     if (flags & (SP_OBJECT_STYLE_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
-        SPStyle *style = this->style;
-
-        if (style->stroke_width.unit == SP_CSS_UNIT_PERCENT) {
+        if (this->style->stroke_width.unit == SP_CSS_UNIT_PERCENT) {
             SPItemCtx *ictx = (SPItemCtx *) ctx;
             double const aw = 1.0 / ictx->i2vp.descrim();
-            style->stroke_width.computed = style->stroke_width.value * aw;
+            this->style->stroke_width.computed = this->style->stroke_width.value * aw;
 
             for (SPItemView *v = ((SPItem *) (this))->display; v != NULL; v = v->next) {
                 Inkscape::DrawingShape *sh = dynamic_cast<Inkscape::DrawingShape *>(v->arenaitem);
-                sh->setStyle(style);
+                sh->setStyle(this->style);
             }
         }
     }
@@ -219,8 +214,7 @@ Geom::Affine sp_shape_marker_get_transform(Geom::Curve const & c1, Geom::Curve c
     double const angle1 = Geom::atan2(tang1);
     double const angle2 = Geom::atan2(tang2);
 
-    double ret_angle;
-    ret_angle = .5 * (angle1 + angle2);
+    double ret_angle = .5 * (angle1 + angle2);
 
     if ( fabs( angle2 - angle1 ) > M_PI ) {
         /* ret_angle is in the middle of the larger of the two sectors between angle1 and
@@ -281,8 +275,6 @@ Geom::Affine sp_shape_marker_get_transform_at_end(Geom::Curve const & c)
 static void
 sp_shape_update_marker_view(SPShape *shape, Inkscape::DrawingItem *ai)
 {
-    SPStyle *style = ((SPObject *) shape)->style;
-
     // position arguments to sp_marker_show_instance, basically counts the amount of markers.
     int counter[4] = {0};
 
@@ -300,7 +292,7 @@ sp_shape_update_marker_view(SPShape *shape, Inkscape::DrawingItem *ai)
             if ( shape->_marker[i] ) {
                 sp_marker_show_instance ((SPMarker* ) shape->_marker[i], ai,
                                          ai->key() + i, counter[i], m,
-                                         style->stroke_width.computed);
+                                         shape->style->stroke_width.computed);
                  counter[i]++;
             }
         }
@@ -318,7 +310,7 @@ sp_shape_update_marker_view(SPShape *shape, Inkscape::DrawingItem *ai)
                     if ( shape->_marker[i] ) {
                         sp_marker_show_instance ((SPMarker* ) shape->_marker[i], ai,
                                                  ai->key() + i, counter[i], m,
-                                                 style->stroke_width.computed);
+                                                 shape->style->stroke_width.computed);
                          counter[i]++;
                     }
                 }
@@ -338,7 +330,7 @@ sp_shape_update_marker_view(SPShape *shape, Inkscape::DrawingItem *ai)
                         if (shape->_marker[i]) {
                             sp_marker_show_instance ((SPMarker* ) shape->_marker[i], ai,
                                                      ai->key() + i, counter[i], m,
-                                                     style->stroke_width.computed);
+                                                     shape->style->stroke_width.computed);
                             counter[i]++;
                         }
                     }
@@ -355,7 +347,7 @@ sp_shape_update_marker_view(SPShape *shape, Inkscape::DrawingItem *ai)
                     if (shape->_marker[i]) {
                         sp_marker_show_instance ((SPMarker* ) shape->_marker[i], ai,
                                                  ai->key() + i, counter[i], m,
-                                                 style->stroke_width.computed);
+                                                 shape->style->stroke_width.computed);
                         counter[i]++;
                     }
                 }
@@ -379,7 +371,7 @@ sp_shape_update_marker_view(SPShape *shape, Inkscape::DrawingItem *ai)
             if (shape->_marker[i]) {
                 sp_marker_show_instance ((SPMarker* ) shape->_marker[i], ai,
                                          ai->key() + i, counter[i], m,
-                                         style->stroke_width.computed);
+                                         shape->style->stroke_width.computed);
                 counter[i]++;
             }
         }
@@ -412,9 +404,8 @@ Geom::OptRect SPShape::bbox(Geom::Affine const &transform, SPItem::BBoxType bbox
 
     if (bboxtype == SPItem::VISUAL_BBOX) {
         // convert the stroke to a path and calculate that path's geometric bbox
-        SPStyle* style = this->style;
 
-        if (!style->stroke.isNone()) {
+        if (!this->style->stroke.isNone()) {
             Geom::PathVector *pathv = item_outline(this, true);  // calculate bbox_only
 
             if (pathv) {
@@ -442,7 +433,7 @@ Geom::OptRect SPShape::bbox(Geom::Affine const &transform, SPItem::BBoxType bbox
                         }
 
                         if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
-                            tr = Geom::Scale(style->stroke_width.computed) * tr;
+                            tr = Geom::Scale(this->style->stroke_width.computed) * tr;
                         }
 
                         // total marker transform
@@ -480,7 +471,7 @@ Geom::OptRect SPShape::bbox(Geom::Affine const &transform, SPItem::BBoxType bbox
                         }
 
                         if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
-                            tr = Geom::Scale(style->stroke_width.computed) * tr;
+                            tr = Geom::Scale(this->style->stroke_width.computed) * tr;
                         }
 
                         tr = marker_item->transform * marker->c2p * tr * transform;
@@ -510,7 +501,7 @@ Geom::OptRect SPShape::bbox(Geom::Affine const &transform, SPItem::BBoxType bbox
                                 }
 
                                 if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
-                                    tr = Geom::Scale(style->stroke_width.computed) * tr;
+                                    tr = Geom::Scale(this->style->stroke_width.computed) * tr;
                                 }
 
                                 tr = marker_item->transform * marker->c2p * tr * transform;
@@ -533,7 +524,7 @@ Geom::OptRect SPShape::bbox(Geom::Affine const &transform, SPItem::BBoxType bbox
                         }
 
                         if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
-                            tr = Geom::Scale(style->stroke_width.computed) * tr;
+                            tr = Geom::Scale(this->style->stroke_width.computed) * tr;
                         }
 
                         tr = marker_item->transform * marker->c2p * tr * transform;
@@ -568,7 +559,7 @@ Geom::OptRect SPShape::bbox(Geom::Affine const &transform, SPItem::BBoxType bbox
                         }
 
                         if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
-                            tr = Geom::Scale(style->stroke_width.computed) * tr;
+                            tr = Geom::Scale(this->style->stroke_width.computed) * tr;
                         }
 
                         // total marker transform
