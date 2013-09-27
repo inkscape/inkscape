@@ -129,7 +129,7 @@ class VertInfList
         unsigned int shapesSize(void) const;
         void stats(FILE *fp = stderr)
         {
-            fprintf(fp, "Conns %d, shapes %d\n", _connVertices, 
+            fprintf(fp, "Conns %u, shapes %u\n", _connVertices, 
                     _shapeVertices);
         }
     private:

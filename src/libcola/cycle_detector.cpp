@@ -53,7 +53,7 @@ void CycleDetector::make_matrix()  {
   assert(traverse.empty());
 
   // from the edges passed, fill the adjacency matrix
-  for (ei = edges->begin(); ei != edges->end(); ei++)  {
+  for (ei = edges->begin(); ei != edges->end(); ++ei)  {
     anEdge = *ei;
     // the matrix is indexed by the first vertex of the edge
     // the second vertex of the edge is pushed onto another
@@ -241,7 +241,7 @@ bool CycleDetector::find_node(std::vector<Node *> *& list, unsigned k)  {
 }
 
 pair< bool, vector<unsigned>::iterator > CycleDetector::find_node(std::vector<unsigned>& list, unsigned k)  {
-  for (vector<unsigned>::iterator ti = traverse.begin(); ti != traverse.end(); ti++)  {
+  for (vector<unsigned>::iterator ti = traverse.begin(); ti != traverse.end(); ++ti)  {
     if (*ti == k)  { return pair< bool, vector<unsigned>::iterator >(true, ti); }
   }
 

@@ -222,7 +222,7 @@ void GradientProjection::destroyVPSC(IncSolver *vpsc) {
     delete vpsc;
     delete [] cs;
     delete [] vs;
-    for(vector<Constraint*>::iterator i=lcs.begin();i!=lcs.end();i++) {
+    for(vector<Constraint*>::iterator i=lcs.begin();i!=lcs.end();++i) {
             delete *i;
     }
     lcs.clear();

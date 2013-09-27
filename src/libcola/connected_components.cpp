@@ -77,7 +77,7 @@ namespace cola {
         }
         vector<Edge>::const_iterator ei;
         SimpleConstraints::const_iterator ci;
-        for(ei=es.begin();ei!=es.end();ei++) {
+        for(ei=es.begin();ei!=es.end();++ei) {
             vs[ei->first].neighbours.push_back(&vs[ei->second]);
             vs[ei->second].neighbours.push_back(&vs[ei->first]);
         }
@@ -88,13 +88,13 @@ namespace cola {
             dfs(v,remaining,component,cmap);
             components.push_back(component);
         }
-        for(ei=es.begin();ei!=es.end();ei++) {
+        for(ei=es.begin();ei!=es.end();++ei) {
             pair<Component*,unsigned> u=cmap[ei->first],
                                       v=cmap[ei->second];
             assert(u.first==v.first);
             u.first->edges.push_back(make_pair(u.second,v.second));
         }
-        for(ci=scx.begin();ci!=scx.end();ci++) {
+        for(ci=scx.begin();ci!=scx.end();++ci) {
             SimpleConstraint *c=*ci;
             pair<Component*,unsigned> u=cmap[c->left],
                                       v=cmap[c->right];
@@ -102,7 +102,7 @@ namespace cola {
             u.first->scx.push_back(
                     new SimpleConstraint(u.second,v.second,c->gap));
         }
-        for(ci=scy.begin();ci!=scy.end();ci++) {
+        for(ci=scy.begin();ci!=scy.end();++ci) {
             SimpleConstraint *c=*ci;
             pair<Component*,unsigned> u=cmap[c->left],
                                       v=cmap[c->right];

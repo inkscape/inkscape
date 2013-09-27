@@ -90,7 +90,7 @@ namespace straightener {
                     ds.erase(copyit);
                 }
             }
-            for(set<pair<double,unsigned> >::iterator j=pntsOnLineSegment.begin();j!=pntsOnLineSegment.end();j++) {
+            for(set<pair<double,unsigned> >::iterator j=pntsOnLineSegment.begin();j!=pntsOnLineSegment.end();++j) {
                 path.push_back(j->second);
             }
             //printf("\n");
@@ -144,11 +144,11 @@ namespace straightener {
                 e->ypos(conjpos,bs);
             }
             //cerr << "edge(intersections="<<bs.size()<<":("<<e->startNode<<","<<e->endNode<<"))"<<endl;
-            for(vector<double>::iterator it=bs.begin();it!=bs.end();it++) {
+            for(vector<double>::iterator it=bs.begin();it!=bs.end();++it) {
                 sortedEdges.insert(make_pair(*it,e));
             }
         }
-        for(set<PosEdgePair>::iterator i=sortedEdges.begin();i!=sortedEdges.end();i++) {
+        for(set<PosEdgePair>::iterator i=sortedEdges.begin();i!=sortedEdges.end();++i) {
             double pos=i->first;
             if(pos < minpos) continue;
             if(pos > v->scanpos) break;
@@ -169,7 +169,7 @@ namespace straightener {
         if(r!=NULL) {
             maxpos=r->scanpos;
         }
-        for(set<PosEdgePair>::iterator i=sortedEdges.begin();i!=sortedEdges.end();i++) {
+        for(set<PosEdgePair>::iterator i=sortedEdges.begin();i!=sortedEdges.end();++i) {
             if(i->first < v->scanpos) continue;
             if(i->first > maxpos) break;
             double pos=i->first;
@@ -262,7 +262,7 @@ namespace straightener {
                 // Case A: create constraints between adjacent edges skipping edges joined
                 // to l,v or r.
                 Node* lastNode=NULL;
-                for(vector<Node*>::iterator i=L.begin();i!=L.end();i++) {
+                for(vector<Node*>::iterator i=L.begin();i!=L.end();++i) {
                     if((*i)->dummy) {
                         // node is on an edge
                         Edge *edge=(*i)->edge;
@@ -284,7 +284,7 @@ namespace straightener {
                 // their own end, also in the scan line
                 vector<Node*> skipList;
                 lastNode=NULL;
-                for(vector<Node*>::iterator i=L.begin();i!=L.end();i++) {
+                for(vector<Node*>::iterator i=L.begin();i!=L.end();++i) {
                     if((*i)->dummy) {
                         // node is on an edge
                         if(lastNode!=NULL) {
@@ -292,7 +292,7 @@ namespace straightener {
                                 skipList.push_back(*i);
                             } else {
                                 for(vector<Node*>::iterator j=skipList.begin();
-                                        j!=skipList.end();j++) {
+                                        j!=skipList.end();++j) {
                                     //printf("  Rule B: Constraint: v%d +g <= v%d\n",(*j)->id,(*i)->id);
                                     cs.push_back(createConstraint(*j,*i,dim));
                                 }
@@ -309,7 +309,7 @@ namespace straightener {
                 skipList.clear();
                 // Case C: reverse of B
                 lastNode=NULL;
-                for(vector<Node*>::reverse_iterator i=L.rbegin();i!=L.rend();i++) {
+                for(vector<Node*>::reverse_iterator i=L.rbegin();i!=L.rend();++i) {
                     if((*i)->dummy) {
                         // node is on an edge
                         if(lastNode!=NULL) {
@@ -317,7 +317,7 @@ namespace straightener {
                                 skipList.push_back(*i);
                             } else {
                                 for(vector<Node*>::iterator j=skipList.begin();
-                                        j!=skipList.end();j++) {
+                                        j!=skipList.end();++j) {
                                     //printf("  Rule C: Constraint: v%d +g <= v%d\n",(*i)->id,(*j)->id);
                                     cs.push_back(createConstraint(*i,*j,dim));
                                 }
