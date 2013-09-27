@@ -40,21 +40,24 @@
 #include "sp-factory.h"
 
 namespace {
-	SPObject* createEllipse() {
-		return new SPEllipse();
-	}
+SPObject *create_ellipse()
+{
+    return new SPEllipse();
+}
 
-	SPObject* createCircle() {
-		return new SPCircle();
-	}
+SPObject *create_circle()
+{
+    return new SPCircle();
+}
 
-	SPObject* createArc() {
-		return new SPArc();
-	}
+SPObject *create_arc()
+{
+    return new SPArc();
+}
 
-	bool ellipseRegistered = SPFactory::instance().registerObject("svg:ellipse", createEllipse);
-	bool circleRegistered = SPFactory::instance().registerObject("svg:circle", createCircle);
-	bool arcRegistered = SPFactory::instance().registerObject("arc", createArc);
+bool ellipse_registered = SPFactory::instance().registerObject("svg:ellipse", create_ellipse);
+bool circle_registered = SPFactory::instance().registerObject("svg:circle", create_circle);
+bool arc_registered = SPFactory::instance().registerObject("arc", create_arc);
 }
 
 
@@ -72,10 +75,12 @@ SPGenericEllipse::SPGenericEllipse()
 {
 }
 
-SPGenericEllipse::~SPGenericEllipse() {
+SPGenericEllipse::~SPGenericEllipse()
+{
 }
 
-void SPGenericEllipse::update(SPCtx *ctx, guint flags) {
+void SPGenericEllipse::update(SPCtx *ctx, guint flags)
+{
     if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
         Geom::Rect const &viewbox = ((SPItemCtx const *) ctx)->viewport;
 
@@ -96,13 +101,14 @@ void SPGenericEllipse::update(SPCtx *ctx, guint flags) {
     SPShape::update(ctx, flags);
 }
 
-void SPGenericEllipse::update_patheffect(bool write) {
+void SPGenericEllipse::update_patheffect(bool write)
+{
     this->set_shape();
 
     if (write) {
         Inkscape::XML::Node *repr = this->getRepr();
 
-        if ( this->_curve != NULL ) {
+        if (this->_curve != NULL) {
             gchar *str = sp_svg_write_path(this->_curve->get_pathvector());
             repr->setAttribute("d", str);
             g_free(str);
@@ -114,7 +120,8 @@ void SPGenericEllipse::update_patheffect(bool write) {
     this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-bool SPGenericEllipse::isSlice() const {
+bool SPGenericEllipse::_isSlice() const
+{
     // figure out if we have a slice, guarding against rounding errors
     double diff = fmod(this->end - this->start, SP_2PI);
 
@@ -127,7 +134,8 @@ bool SPGenericEllipse::isSlice() const {
 
 /* fixme: Think (Lauris) */
 /* Can't we use arcto in this method? */
-void SPGenericEllipse::set_shape() {
+void SPGenericEllipse::set_shape()
+{
     if (hasBrokenPathEffect()) {
         g_warning("The ellipse shape has unknown LPE on it! Convert to path to make it editable preserving the appearance; editing it as ellipse will remove the bad LPE");
 
@@ -135,7 +143,7 @@ void SPGenericEllipse::set_shape() {
             // unconditionally read the curve from d, if any, to preserve appearance
             Geom::PathVector pv = sp_svg_read_pathv(this->getRepr()->attribute("d"));
             SPCurve *cold = new SPCurve(pv);
-            this->setCurveInsync( cold, TRUE);
+            this->setCurveInsync(cold, TRUE);
             cold->unref();
         }
 
@@ -143,11 +151,11 @@ void SPGenericEllipse::set_shape() {
     }
 
     if ((this->rx.computed < 1e-18) || (this->ry.computed < 1e-18)) {
-    	return;
+        return;
     }
 
     if (fabs(this->end - this->start) < 1e-9) {
-    	return;
+        return;
     }
 
     this->normalize();
@@ -156,16 +164,16 @@ void SPGenericEllipse::set_shape() {
 
     // For simplicity, we use a circle with center (0, 0) and radius 1 for our calculations.
 
-    if (this->isSlice()) {
+    if (this->_isSlice()) {
         Geom::Point center(0, 0);
-        Geom::Point startPoint = Geom::Point::polar(start);
-        Geom::Point endPoint = Geom::Point::polar(end);
-        Geom::Point middlePoint = make_angle_bisector_ray(Geom::Ray(center, start), Geom::Ray(center, end)).versor();
+        Geom::Point start_point = Geom::Point::polar(start);
+        Geom::Point end_point = Geom::Point::polar(end);
+        Geom::Point middle_point = make_angle_bisector_ray(Geom::Ray(center, start), Geom::Ray(center, end)).versor();
 
         Geom::Ellipse ellipse(0, 0, 1, 1, 0);
-        Geom::EllipticalArc *arc = ellipse.arc(startPoint, middlePoint, endPoint);
+        Geom::EllipticalArc *arc = ellipse.arc(start_point, middle_point, end_point);
 
-        Geom::Path path(startPoint);
+        Geom::Path path(start_point);
         path.append(*arc);
 
         delete arc;
@@ -200,7 +208,7 @@ void SPGenericEllipse::set_shape() {
 
     /* Reset the shape's curve to the "original_curve"
      * This is very important for LPEs to work properly! (the bbox might be recalculated depending on the curve in shape)*/
-    this->setCurveInsync( curve, TRUE);
+    this->setCurveInsync(curve, TRUE);
     this->setCurveBeforeLPE(curve);
 
     if (hasPathEffect() && sp_lpe_item_path_effects_enabled(this)) {
@@ -208,7 +216,7 @@ void SPGenericEllipse::set_shape() {
         bool success = sp_lpe_item_perform_path_effect(this, c_lpe);
 
         if (success) {
-        	this->setCurveInsync( c_lpe, TRUE);
+            this->setCurveInsync(c_lpe, TRUE);
         }
 
         c_lpe->unref();
@@ -217,7 +225,8 @@ void SPGenericEllipse::set_shape() {
     curve->unref();
 }
 
-void SPGenericEllipse::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) {
+void SPGenericEllipse::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs)
+{
     this->normalize();
     Geom::Affine const i2dt = this->i2dt_affine();
 
@@ -237,7 +246,7 @@ void SPGenericEllipse::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, 
     double cx = this->cx.computed;
     double cy = this->cy.computed;
 
-    bool slice = this->isSlice();
+    bool slice = this->_isSlice();
 
     // Add the centre, if we have a closed slice or when explicitly asked for
     if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_NODE_CUSP) && slice && this->closed) {
@@ -253,13 +262,13 @@ void SPGenericEllipse::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, 
     // And if we have a slice, also snap to the endpoints
     if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_NODE_CUSP) && slice) {
         // Add the start point, if it's not coincident with a quadrant point
-        if (fmod(this->start, M_PI_2) != 0.0 ) {
+        if (fmod(this->start, M_PI_2) != 0.0) {
             Geom::Point pt = this->getPointAtAngle(this->start) * i2dt;
             p.push_back(Inkscape::SnapCandidatePoint(pt, Inkscape::SNAPSOURCE_NODE_CUSP, Inkscape::SNAPTARGET_NODE_CUSP));
         }
 
         // Add the end point, if it's not coincident with a quadrant point
-        if (fmod(this->end, M_PI_2) != 0.0 ) {
+        if (fmod(this->end, M_PI_2) != 0.0) {
             Geom::Point pt = this->getPointAtAngle(this->end) * i2dt;
             p.push_back(Inkscape::SnapCandidatePoint(pt, Inkscape::SNAPSOURCE_NODE_CUSP, Inkscape::SNAPTARGET_NODE_CUSP));
         }
@@ -269,7 +278,7 @@ void SPGenericEllipse::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, 
 Geom::Affine SPGenericEllipse::set_transform(Geom::Affine const &xform)
 {
     /* Calculate ellipse start in parent coords. */
-    Geom::Point pos( Geom::Point(this->cx.computed, this->cy.computed) * xform );
+    Geom::Point pos(Geom::Point(this->cx.computed, this->cy.computed) * xform);
 
     /* This function takes care of translation and scaling, we return whatever parts we can't
        handle. */
@@ -322,7 +331,8 @@ Geom::Affine SPGenericEllipse::set_transform(Geom::Affine const &xform)
     return ret;
 }
 
-void SPGenericEllipse::normalize() {
+void SPGenericEllipse::normalize()
+{
     this->start = fmod(this->start, SP_2PI);
     this->end = fmod(this->end, SP_2PI);
 
@@ -339,7 +349,8 @@ void SPGenericEllipse::normalize() {
     /* Now we keep: 0 <= start < end <= 2*PI */
 }
 
-Inkscape::XML::Node* SPGenericEllipse::write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags) {
+Inkscape::XML::Node *SPGenericEllipse::write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
+{
     if (flags & SP_OBJECT_WRITE_EXT) {
         if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
             repr = xml_doc->createElement("svg:path");
@@ -363,23 +374,27 @@ Inkscape::XML::Node* SPGenericEllipse::write(Inkscape::XML::Document *xml_doc, I
 }
 
 /* SVG <ellipse> element */
-SPEllipse::SPEllipse() : SPGenericEllipse() {
+SPEllipse::SPEllipse() : SPGenericEllipse()
+{
 }
 
-SPEllipse::~SPEllipse() {
+SPEllipse::~SPEllipse()
+{
 }
 
-void SPEllipse::build(SPDocument *document, Inkscape::XML::Node *repr) {
-	SPGenericEllipse::build(document, repr);
+void SPEllipse::build(SPDocument *document, Inkscape::XML::Node *repr)
+{
+    SPGenericEllipse::build(document, repr);
 
-    this->readAttr( "cx" );
-    this->readAttr( "cy" );
-    this->readAttr( "rx" );
-    this->readAttr( "ry" );
+    this->readAttr("cx");
+    this->readAttr("cy");
+    this->readAttr("rx");
+    this->readAttr("ry");
 }
 
 
-Inkscape::XML::Node* SPEllipse::write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags) {
+Inkscape::XML::Node *SPEllipse::write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
+{
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
         repr = xml_doc->createElement("svg:ellipse");
     }
@@ -395,62 +410,68 @@ Inkscape::XML::Node* SPEllipse::write(Inkscape::XML::Document *xml_doc, Inkscape
 }
 
 
-void SPEllipse::set(unsigned int key, gchar const* value) {
+void SPEllipse::set(unsigned int key, gchar const *value)
+{
     switch (key) {
-        case SP_ATTR_CX:
-            this->cx.readOrUnset(value);
-            this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-            break;
-            
-        case SP_ATTR_CY:
-            this->cy.readOrUnset(value);
-            this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-            break;
-            
-        case SP_ATTR_RX:
-            if (!this->rx.read(value) || (this->rx.value <= 0.0)) {
-                this->rx.unset();
-            }
-            
-            this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-            break;
-            
-        case SP_ATTR_RY:
-            if (!this->ry.read(value) || (this->ry.value <= 0.0)) {
-                this->ry.unset();
-            }
-            
-            this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-            break;
-            
-        default:
-            SPGenericEllipse::set(key, value);
-            break;
+    case SP_ATTR_CX:
+        this->cx.readOrUnset(value);
+        this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+        break;
+
+    case SP_ATTR_CY:
+        this->cy.readOrUnset(value);
+        this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+        break;
+
+    case SP_ATTR_RX:
+        if (!this->rx.read(value) || (this->rx.value <= 0.0)) {
+            this->rx.unset();
+        }
+
+        this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+        break;
+
+    case SP_ATTR_RY:
+        if (!this->ry.read(value) || (this->ry.value <= 0.0)) {
+            this->ry.unset();
+        }
+
+        this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+        break;
+
+    default:
+        SPGenericEllipse::set(key, value);
+        break;
     }
 }
 
-const char* SPEllipse::displayName() {
+const char *SPEllipse::displayName()
+{
     return _("Ellipse");
 }
 
 
 /* SVG <circle> element */
-SPCircle::SPCircle() : SPGenericEllipse() {
+SPCircle::SPCircle() : SPGenericEllipse()
+{
 }
 
-SPCircle::~SPCircle() {
+SPCircle::~SPCircle()
+{
 }
 
-void SPCircle::build(SPDocument *document, Inkscape::XML::Node *repr) {
+void SPCircle::build(SPDocument *document, Inkscape::XML::Node *repr)
+{
     SPGenericEllipse::build(document, repr);
 
-    this->readAttr( "cx" );
-    this->readAttr( "cy" );
-    this->readAttr( "r" );
+    this->readAttr("cx");
+    this->readAttr("cy");
+    this->readAttr("r");
 }
 
 
-Inkscape::XML::Node* SPCircle::write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags) {
+Inkscape::XML::Node *SPCircle::write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
+{
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
         repr = xml_doc->createElement("svg:circle");
     }
@@ -464,55 +485,60 @@ Inkscape::XML::Node* SPCircle::write(Inkscape::XML::Document *xml_doc, Inkscape:
     return repr;
 }
 
-void SPCircle::set(unsigned int key, gchar const* value) {
+void SPCircle::set(unsigned int key, gchar const *value)
+{
     switch (key) {
-        case SP_ATTR_CX:
-            this->cx.readOrUnset(value);
-            this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-            break;
-            
-        case SP_ATTR_CY:
-            this->cy.readOrUnset(value);
-            this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-            break;
-            
-        case SP_ATTR_R:
-            if (!this->rx.read(value) || this->rx.value <= 0.0) {
-                this->rx.unset();
-            }
-            
-            this->ry = this->rx;
-            this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-            break;
-            
-        default:
-            SPGenericEllipse::set(key, value);
-            break;
+    case SP_ATTR_CX:
+        this->cx.readOrUnset(value);
+        this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+        break;
+
+    case SP_ATTR_CY:
+        this->cy.readOrUnset(value);
+        this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+        break;
+
+    case SP_ATTR_R:
+        if (!this->rx.read(value) || this->rx.value <= 0.0) {
+            this->rx.unset();
+        }
+
+        this->ry = this->rx;
+        this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+        break;
+
+    default:
+        SPGenericEllipse::set(key, value);
+        break;
     }
 }
 
-const char* SPCircle::displayName() {
-	return _("Circle");
+const char *SPCircle::displayName()
+{
+    return _("Circle");
 }
 
 /* <path sodipodi:type="arc"> element */
-SPArc::SPArc() : SPGenericEllipse() {
+SPArc::SPArc() : SPGenericEllipse()
+{
 }
 
-SPArc::~SPArc() {
+SPArc::~SPArc()
+{
 }
 
-void SPArc::build(SPDocument *document, Inkscape::XML::Node *repr) {
-	SPGenericEllipse::build(document, repr);
+void SPArc::build(SPDocument *document, Inkscape::XML::Node *repr)
+{
+    SPGenericEllipse::build(document, repr);
 
-    this->readAttr( "sodipodi:cx" );
-    this->readAttr( "sodipodi:cy" );
-    this->readAttr( "sodipodi:rx" );
-    this->readAttr( "sodipodi:ry" );
+    this->readAttr("sodipodi:cx");
+    this->readAttr("sodipodi:cy");
+    this->readAttr("sodipodi:rx");
+    this->readAttr("sodipodi:ry");
 
-    this->readAttr( "sodipodi:start" );
-    this->readAttr( "sodipodi:end" );
-    this->readAttr( "sodipodi:open" );
+    this->readAttr("sodipodi:start");
+    this->readAttr("sodipodi:end");
+    this->readAttr("sodipodi:open");
 }
 
 /*
@@ -523,7 +549,8 @@ void SPArc::build(SPDocument *document, Inkscape::XML::Node *repr) {
  * See SVG 1.0 Specification W3C Recommendation
  * ``F.6 Ellptical arc implementation notes'' for more detail.
  */
-bool SPArc::sp_arc_set_elliptical_path_attribute(Inkscape::XML::Node *repr) {
+bool SPArc::sp_arc_set_elliptical_path_attribute(Inkscape::XML::Node *repr)
+{
     Inkscape::SVG::PathString str;
 
     Geom::Point p1 = this->getPointAtAngle(this->start);
@@ -539,8 +566,8 @@ bool SPArc::sp_arc_set_elliptical_path_attribute(Inkscape::XML::Node *repr) {
         Geom::Point ph = getPointAtAngle((this->start + this->end) / 2.0);
 
         str.arcTo(rx, ry, 0, true, true, ph)
-           .arcTo(rx, ry, 0, true, true, p2)
-           .closePath();
+        .arcTo(rx, ry, 0, true, true, p2)
+        .closePath();
     } else {
         bool fa = (fabs(dt) > M_PI);
         bool fs = (dt > 0);
@@ -557,7 +584,8 @@ bool SPArc::sp_arc_set_elliptical_path_attribute(Inkscape::XML::Node *repr) {
     return true;
 }
 
-Inkscape::XML::Node* SPArc::write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags) {
+Inkscape::XML::Node *SPArc::write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
+{
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
         repr = xml_doc->createElement("svg:path");
     }
@@ -571,7 +599,7 @@ Inkscape::XML::Node* SPArc::write(Inkscape::XML::Document *xml_doc, Inkscape::XM
         sp_repr_set_svg_double(repr, "sodipodi:ry", this->ry.computed);
 
         // write start and end only if they are non-trivial; otherwise remove
-        if (this->isSlice()) {
+        if (this->_isSlice()) {
             sp_repr_set_svg_double(repr, "sodipodi:start", this->start);
             sp_repr_set_svg_double(repr, "sodipodi:end", this->end);
 
@@ -591,66 +619,68 @@ Inkscape::XML::Node* SPArc::write(Inkscape::XML::Document *xml_doc, Inkscape::XM
     return repr;
 }
 
-void SPArc::set(unsigned int key, gchar const* value) {
+void SPArc::set(unsigned int key, gchar const *value)
+{
     switch (key) {
-        case SP_ATTR_SODIPODI_CX:
-            this->cx.readOrUnset(value);
-            this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-            break;
+    case SP_ATTR_SODIPODI_CX:
+        this->cx.readOrUnset(value);
+        this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+        break;
 
-        case SP_ATTR_SODIPODI_CY:
-            this->cy.readOrUnset(value);
-            this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-            break;
+    case SP_ATTR_SODIPODI_CY:
+        this->cy.readOrUnset(value);
+        this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+        break;
 
-        case SP_ATTR_SODIPODI_RX:
-            if (!this->rx.read(value) || this->rx.computed <= 0.0) {
-                this->rx.unset();
-            }
+    case SP_ATTR_SODIPODI_RX:
+        if (!this->rx.read(value) || this->rx.computed <= 0.0) {
+            this->rx.unset();
+        }
 
-            this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-            break;
+        this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+        break;
 
-        case SP_ATTR_SODIPODI_RY:
-            if (!this->ry.read(value) || this->ry.computed <= 0.0) {
-                this->ry.unset();
-            }
+    case SP_ATTR_SODIPODI_RY:
+        if (!this->ry.read(value) || this->ry.computed <= 0.0) {
+            this->ry.unset();
+        }
 
-            this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-            break;
+        this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+        break;
 
-        case SP_ATTR_SODIPODI_START:
-            if (value) {
-                sp_svg_number_read_d(value, &this->start);
-            } else {
-                this->start = 0;
-            }
+    case SP_ATTR_SODIPODI_START:
+        if (value) {
+            sp_svg_number_read_d(value, &this->start);
+        } else {
+            this->start = 0;
+        }
 
-            this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-            break;
+        this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+        break;
 
-        case SP_ATTR_SODIPODI_END:
-            if (value) {
-                sp_svg_number_read_d(value, &this->end);
-            } else {
-                this->end = 2 * M_PI;
-            }
+    case SP_ATTR_SODIPODI_END:
+        if (value) {
+            sp_svg_number_read_d(value, &this->end);
+        } else {
+            this->end = 2 * M_PI;
+        }
 
-            this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-            break;
+        this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+        break;
 
-        case SP_ATTR_SODIPODI_OPEN:
-            this->closed = (!value);
-            this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-            break;
+    case SP_ATTR_SODIPODI_OPEN:
+        this->closed = (!value);
+        this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+        break;
 
-        default:
-            SPGenericEllipse::set(key, value);
-            break;
+    default:
+        SPGenericEllipse::set(key, value);
+        break;
     }
 }
 
-void SPArc::modified(guint flags) {
+void SPArc::modified(guint flags)
+{
     if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
         this->set_shape();
     }
@@ -658,8 +688,9 @@ void SPArc::modified(guint flags) {
     SPGenericEllipse::modified(flags);
 }
 
-const char* SPArc::displayName() {
-    if (this->isSlice()) {
+const char *SPArc::displayName()
+{
+    if (this->_isSlice()) {
         if (this->closed) {
             return _("Segment");
         } else {
@@ -670,7 +701,8 @@ const char* SPArc::displayName() {
     }
 }
 
-void SPArc::sp_arc_position_set(gdouble x, gdouble y, gdouble rx, gdouble ry) {
+void SPArc::sp_arc_position_set(gdouble x, gdouble y, gdouble rx, gdouble ry)
+{
     this->cx.computed = x;
     this->cy.computed = y;
     this->rx.computed = rx;
@@ -692,7 +724,8 @@ void SPArc::sp_arc_position_set(gdouble x, gdouble y, gdouble rx, gdouble ry) {
     this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-Geom::Point SPGenericEllipse::getPointAtAngle(double arg) const {
+Geom::Point SPGenericEllipse::getPointAtAngle(double arg) const
+{
     return Geom::Point::polar(arg) * Geom::Scale(rx.computed, ry.computed) * Geom::Translate(cx.computed, cy.computed);
 }
 

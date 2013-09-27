@@ -48,10 +48,6 @@ using Inkscape::ControlManager;
 using Inkscape::CTLINE_SECONDARY;
 using Inkscape::Util::unit_table;
 
-Geom::Point start_point;
-boost::optional<Geom::Point> explicitBase;
-boost::optional<Geom::Point> lastEnd;
-
 std::vector<Inkscape::Display::TemporaryItem*> measure_tmp_items;
 
 
@@ -313,6 +309,10 @@ static void calculate_intersections(SPDesktop * /*desktop*/, SPItem* item, Geom:
 }
 
 bool SPMeasureContext::root_handler(GdkEvent* event) {
+    Geom::Point start_point;
+    boost::optional<Geom::Point> explicitBase;
+    boost::optional<Geom::Point> lastEnd;
+
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
 

@@ -23,35 +23,35 @@
 
 class SPGenericEllipse : public SPShape {
 public:
-	SPGenericEllipse();
-	virtual ~SPGenericEllipse();
+    SPGenericEllipse();
+    virtual ~SPGenericEllipse();
 
-	SVGLength cx;
-	SVGLength cy;
-	SVGLength rx;
-	SVGLength ry;
+    SVGLength cx;
+    SVGLength cy;
+    SVGLength rx;
+    SVGLength ry;
 
-	// Stores whether the shape is closed ("pizza slice" or full ellipse) or not (arc only).
-	bool closed;
+    // Stores whether the shape is closed ("pizza slice" or full ellipse) or not (arc only).
+    bool closed;
 
-	double start, end;
+    double start, end;
 
-	virtual void update(SPCtx* ctx, unsigned int flags);
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+    virtual void update(SPCtx *ctx, unsigned int flags);
+    virtual Inkscape::XML::Node *write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
 
-	virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
-	virtual void set_shape();
-	virtual Geom::Affine set_transform(Geom::Affine const& xform);
+    virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
+    virtual void set_shape();
+    virtual Geom::Affine set_transform(Geom::Affine const &xform);
 
-	virtual void update_patheffect(bool write);
+    virtual void update_patheffect(bool write);
 
-	void normalize();
+    void normalize();
 
-	Geom::Point getPointAtAngle(double arg) const;
+    Geom::Point getPointAtAngle(double arg) const;
 
 protected:
-	/// Determines whether the shape is a part of a ellipse.
-	bool isSlice() const;
+    /// Determines whether the shape is a part of a ellipse.
+    bool _isSlice() const;
 };
 
 
@@ -61,13 +61,13 @@ protected:
 
 class SPEllipse : public SPGenericEllipse {
 public:
-	SPEllipse();
-	virtual ~SPEllipse();
+    SPEllipse();
+    virtual ~SPEllipse();
 
-	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
-	virtual void set(unsigned int key, gchar const* value);
-    virtual const char* displayName();
+    virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
+    virtual Inkscape::XML::Node *write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+    virtual void set(unsigned int key, gchar const *value);
+    virtual const char *displayName();
 };
 
 
@@ -77,13 +77,13 @@ public:
 
 class SPCircle : public SPGenericEllipse {
 public:
-	SPCircle();
-	virtual ~SPCircle();
+    SPCircle();
+    virtual ~SPCircle();
 
-	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
-	virtual void set(unsigned int key, gchar const* value);
-    virtual const char* displayName();
+    virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
+    virtual Inkscape::XML::Node *write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+    virtual void set(unsigned int key, gchar const *value);
+    virtual const char *displayName();
 };
 
 
@@ -93,21 +93,21 @@ public:
 
 class SPArc : public SPGenericEllipse {
 public:
-	SPArc();
-	virtual ~SPArc();
+    SPArc();
+    virtual ~SPArc();
 
-	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
-	virtual void set(unsigned int key, gchar const* value);
-    virtual const char* displayName();
-	virtual void modified(unsigned int flags);
+    virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
+    virtual Inkscape::XML::Node *write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+    virtual void set(unsigned int key, gchar const *value);
+    virtual const char *displayName();
+    virtual void modified(unsigned int flags);
 
-	void sp_arc_position_set(gdouble x, gdouble y, gdouble rx, gdouble ry);
+    void sp_arc_position_set(gdouble x, gdouble y, gdouble rx, gdouble ry);
 
 private:
-	bool sp_arc_set_elliptical_path_attribute(Inkscape::XML::Node *repr);
+    bool sp_arc_set_elliptical_path_attribute(Inkscape::XML::Node *repr);
 
-	friend class SPGenericEllipse;
+    friend class SPGenericEllipse;
 };
 
 #endif
