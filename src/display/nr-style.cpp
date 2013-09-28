@@ -77,6 +77,8 @@ NRStyle::~NRStyle()
     if (dash){
         delete [] dash;
     }
+    fill.clear();
+    stroke.clear();
 }
 
 void NRStyle::set(SPStyle *style)
