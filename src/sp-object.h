@@ -106,7 +106,9 @@ enum {
 class SPDocument;
 
 /// Internal class consisting of two bits.
-struct SPIXmlSpace {
+class SPIXmlSpace {
+public:    
+    SPIXmlSpace(): set(0), value(SP_XML_SPACE_DEFAULT) {};
     guint set : 1;
     guint value : 1;
 };
