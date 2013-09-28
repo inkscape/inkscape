@@ -326,7 +326,12 @@ Inkscape::DrawingItem* SPFlowtext::show(Inkscape::Drawing &drawing, unsigned int
 }
 
 void SPFlowtext::hide(unsigned int key) {
-	SPItem::hide(key);
+    for (SPItemView* v = this->display; v != NULL; v = v->next) {
+        if (v->key == key) {
+            Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
+            this->_clearFlow(g);
+        }
+    }
 }
 
 

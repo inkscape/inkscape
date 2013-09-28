@@ -318,7 +318,12 @@ Inkscape::DrawingItem* SPText::show(Inkscape::Drawing &drawing, unsigned key, un
 
 
 void SPText::hide(unsigned int key) {
-//	SPItem::onHide(key);
+    for (SPItemView* v = this->display; v != NULL; v = v->next) {
+        if (v->key == key) {
+            Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
+            this->_clearFlow(g);
+        }
+    }
 }
 
 const char* SPText::displayName() {
