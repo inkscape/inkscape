@@ -725,7 +725,7 @@ Geom::OptRect SPItem::visualBounds(Geom::Affine const &transform) const
         // call the subclass method
     	// CPPIFY
     	//bbox = this->bbox(Geom::identity(), SPItem::VISUAL_BBOX);
-    	bbox = const_cast<SPItem*>(this)->bbox(Geom::identity(), SPItem::VISUAL_BBOX);
+    	bbox = const_cast<SPItem*>(this)->bbox(Geom::identity(), SPItem::GEOMETRIC_BBOX); // see LP Bug 1229971
 
         SPFilter *filter = SP_FILTER(style->getFilter());
         // default filer area per the SVG spec:
