@@ -954,9 +954,20 @@ void SPDynaDrawContext::set_to_accumulated(bool unionize, bool subtract) {
             }
         }
 
-        SPItem *item=SP_ITEM(desktop->doc()->getObjectByRepr(this->repr));
-        item->doWriteTransform(item->getRepr(), item->transform, NULL, true);
+        // Now we need to write the transform information.
+        // First, find out whether our repr is still linked to a valid object. In this case,
+        // we need to write the transform data only for this element.
+        // Either there was no boolean op or it failed.
+        SPItem *result = SP_ITEM(desktop->doc()->getObjectByRepr(this->repr));
 
+        if (result == NULL) {
+            // The boolean operation succeeded.
+            // Now we fetch the single item, that has been set as selected by the boolean op.
+            // This is its result.
+            result = desktop->getSelection()->singleItem();
+        }
+
+        result->doWriteTransform(result->getRepr(), result->transform, NULL, true);
     } else {
         if (this->repr) {
             sp_repr_unparent(this->repr);
