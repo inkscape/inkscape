@@ -646,34 +646,14 @@ void sp_knot_update_ctrl(SPKnot *knot)
  */
 static void sp_knot_set_ctrl_state(SPKnot *knot)
 {
+    int state = SP_KNOT_STATE_NORMAL;
     if (knot->flags & SP_KNOT_DRAGGING) {
-        g_object_set(knot->item,
-                       "fill_color",
-                       knot->fill[SP_KNOT_STATE_DRAGGING],
-                       NULL);
-        g_object_set(knot->item,
-                       "stroke_color",
-                       knot->stroke[SP_KNOT_STATE_DRAGGING],
-                       NULL);
+        state = SP_KNOT_STATE_DRAGGING;
     } else if (knot->flags & SP_KNOT_MOUSEOVER) {
-        g_object_set(knot->item,
-                       "fill_color",
-                       knot->fill[SP_KNOT_STATE_MOUSEOVER],
-                       NULL);
-        g_object_set(knot->item,
-                       "stroke_color",
-                       knot->stroke[SP_KNOT_STATE_MOUSEOVER],
-                       NULL);
-    } else {
-        g_object_set(knot->item,
-                       "fill_color",
-                        knot->fill[SP_KNOT_STATE_NORMAL],
-                       NULL);
-        g_object_set(knot->item,
-                       "stroke_color",
-                       knot->stroke[SP_KNOT_STATE_NORMAL],
-                       NULL);
+        state = SP_KNOT_STATE_MOUSEOVER;
     }
+    g_object_set(knot->item, "fill_color",   knot->fill[state],   NULL);
+    g_object_set(knot->item, "stroke_color", knot->stroke[state], NULL);
 }
 
 

@@ -108,81 +108,50 @@ sp_ctrl_set_property(GObject *object, guint prop_id, const GValue *value, GParam
     ctrl = SP_CTRL (object);
 
     switch (prop_id) {
-        case ARG_SHAPE: {
-            ctrl->shape = (SPCtrlShapeType) g_value_get_int(value);
-            ctrl->build = FALSE;
-            sp_canvas_item_request_update(item);
-            }
-            break;
-
-        case ARG_MODE: {
-            ctrl->mode = (SPCtrlModeType) g_value_get_int(value);
-            ctrl->build = FALSE;
-            sp_canvas_item_request_update(item);
-            }
-            break;
-
-        case ARG_ANCHOR: {
-            ctrl->anchor = (SPAnchorType) g_value_get_int(value);
-            ctrl->build = FALSE;
-            sp_canvas_item_request_update(item);
-            }
-            break;
-
-        case ARG_SIZE: {
-            ctrl->span = (gint)((g_value_get_double(value) - 1.0) / 2.0 + 0.5);
-            ctrl->defined = (ctrl->span > 0);
-            ctrl->build = FALSE;
-            sp_canvas_item_request_update(item);
-            }
-            break;
-
-        case ARG_FILLED: {
-            ctrl->filled = g_value_get_boolean(value);
-            ctrl->build = FALSE;
-            sp_canvas_item_request_update(item);
-            }
-            break;
-
-        case ARG_FILL_COLOR: {
-            guint32 fill = g_value_get_int(value);
-            ctrl->fill_color = fill;
-            ctrl->build = FALSE;
-            sp_canvas_item_request_update(item);
-            }
-            break;
-
-        case ARG_STROKED: {
-            ctrl->stroked = g_value_get_boolean(value);
-            ctrl->build = FALSE;
-            sp_canvas_item_request_update(item);
-            }
-            break;
-
-        case ARG_STROKE_COLOR: {
-            guint32 stroke = g_value_get_int(value);
-            ctrl->stroke_color = stroke;
-            ctrl->build = FALSE;
-            sp_canvas_item_request_update(item);
-            }
-            break;
-
-        case ARG_PIXBUF: {
-            pixbuf = (GdkPixbuf*) g_value_get_pointer(value);
-            if (gdk_pixbuf_get_has_alpha(pixbuf)) {
-                ctrl->pixbuf = pixbuf;
-            } else {
-                ctrl->pixbuf = gdk_pixbuf_add_alpha(pixbuf, FALSE, 0, 0, 0);
-                g_object_unref(pixbuf);
-            }
-            ctrl->build = FALSE;
-            }
-            break;
-
-        default:
-            G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
-            break;
+    case ARG_SHAPE:
+        ctrl->shape = (SPCtrlShapeType) g_value_get_int(value);
+        break;
+    case ARG_MODE:
+        ctrl->mode = (SPCtrlModeType) g_value_get_int(value);
+        break;
+    case ARG_ANCHOR:
+        ctrl->anchor = (SPAnchorType) g_value_get_int(value);
+        break;
+    case ARG_SIZE:
+        ctrl->width = (gint)(g_value_get_double(value) / 2.0);
+        ctrl->height = ctrl->width;
+        ctrl->defined = (ctrl->width > 0);
+        break;
+    case ARG_FILLED:
+        ctrl->filled = g_value_get_boolean(value);
+        break;
+    case ARG_FILL_COLOR:
+        ctrl->fill_color = (guint32)g_value_get_int(value);
+        break;
+    case ARG_STROKED:
+        ctrl->stroked = g_value_get_boolean(value);
+        break;
+    case ARG_STROKE_COLOR:
+        ctrl->stroke_color = (guint32)g_value_get_int(value);
+        break;
+    case ARG_PIXBUF:
+        pixbuf = (GdkPixbuf*) g_value_get_pointer(value);
+        // A pixbuf defines it's own size, don't mess about with size.
+        ctrl->width = gdk_pixbuf_get_width(pixbuf) / 2.0;
+        ctrl->height = gdk_pixbuf_get_height(pixbuf) / 2.0;
+        if (gdk_pixbuf_get_has_alpha(pixbuf)) {
+            ctrl->pixbuf = pixbuf;
+        } else {
+            ctrl->pixbuf = gdk_pixbuf_add_alpha(pixbuf, FALSE, 0, 0, 0);
+            g_object_unref(pixbuf);
+        }
+        break;
+    default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
+        return; // Do not do an update
     }
+    ctrl->build = FALSE;
+    sp_canvas_item_request_update(item);
 }
 
 static void
@@ -206,7 +175,7 @@ sp_ctrl_get_property (GObject *object, guint prop_id, GValue *value, GParamSpec 
             break;
 
         case ARG_SIZE:
-            g_value_set_double(value, ctrl->span);
+            g_value_set_double(value, ctrl->width);
             break;
 
         case ARG_FILLED:
@@ -241,7 +210,8 @@ sp_ctrl_init (SPCtrl *ctrl)
     ctrl->shape = SP_CTRL_SHAPE_SQUARE;
     ctrl->mode = SP_CTRL_MODE_COLOR;
     ctrl->anchor = SP_ANCHOR_CENTER;
-    ctrl->span = 3;
+    ctrl->width = 3;
+    ctrl->height = 3;
     ctrl->defined = TRUE;
     ctrl->shown = FALSE;
     ctrl->build = FALSE;
@@ -249,12 +219,6 @@ sp_ctrl_init (SPCtrl *ctrl)
     ctrl->stroked = 0;
     ctrl->fill_color = 0x000000ff;
     ctrl->stroke_color = 0x000000ff;
-
-    // This way we make sure that the first sp_ctrl_update() call finishes properly;
-    // in subsequent calls it will not update anything it the control hasn't moved
-    // Consider for example the case in which a snap indicator is drawn at (0, 0);
-    // If moveto() is called then it will not set _moved to true because we're initially already at (0, 0)
-    ctrl->_moved = true; // Is this flag ever going to be set back to false? I can't find where that is supposed to happen
 
     new (&ctrl->box) Geom::IntRect(0,0,0,0);
     ctrl->cache = NULL;
@@ -292,16 +256,14 @@ sp_ctrl_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int fla
 
     sp_canvas_item_reset_bounds (item);
 
-    if (!ctrl->_moved) return;
-
     if (ctrl->shown) {
         item->canvas->requestRedraw(ctrl->box.left(), ctrl->box.top(), ctrl->box.right() + 1, ctrl->box.bottom() + 1);
     }
 
     if (!ctrl->defined) return;
 
-    x = (gint) ((affine[4] > 0) ? (affine[4] + 0.5) : (affine[4] - 0.5)) - ctrl->span;
-    y = (gint) ((affine[5] > 0) ? (affine[5] + 0.5) : (affine[5] - 0.5)) - ctrl->span;
+    x = (gint) ((affine[4] > 0) ? (affine[4] + 0.5) : (affine[4] - 0.5)) - ctrl->width;
+    y = (gint) ((affine[5] > 0) ? (affine[5] + 0.5) : (affine[5] - 0.5)) - ctrl->height;
 
     switch (ctrl->anchor) {
         case SP_ANCHOR_N:
@@ -312,13 +274,13 @@ sp_ctrl_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int fla
         case SP_ANCHOR_NW:
         case SP_ANCHOR_W:
         case SP_ANCHOR_SW:
-            x += ctrl->span;
+            x += ctrl->width;
             break;
 
         case SP_ANCHOR_NE:
         case SP_ANCHOR_E:
         case SP_ANCHOR_SE:
-            x -= (ctrl->span + 1);
+            x -= (ctrl->width + 1);
             break;
     }
 
@@ -331,17 +293,17 @@ sp_ctrl_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int fla
         case SP_ANCHOR_NW:
         case SP_ANCHOR_N:
         case SP_ANCHOR_NE:
-            y += ctrl->span;
+            y += ctrl->height;
             break;
 
         case SP_ANCHOR_SW:
         case SP_ANCHOR_S:
         case SP_ANCHOR_SE:
-            y -= (ctrl->span + 1);
+            y -= (ctrl->height + 1);
             break;
     }
 
-    ctrl->box = Geom::IntRect::from_xywh(x, y, 2*ctrl->span, 2*ctrl->span);
+    ctrl->box = Geom::IntRect::from_xywh(x, y, 2*ctrl->width, 2*ctrl->height);
     sp_canvas_update_bbox (item, ctrl->box.left(), ctrl->box.top(), ctrl->box.right() + 1, ctrl->box.bottom() + 1);
 }
 
@@ -360,7 +322,7 @@ static void
 sp_ctrl_build_cache (SPCtrl *ctrl)
 {
     guint32 *p, *q;
-    gint size, x, y, z, s, a, side, c;
+    gint size, x, y, z, s, a, width, height, c;
     guint32 stroke_color, fill_color;
 
     if (ctrl->filled) {
@@ -382,11 +344,11 @@ sp_ctrl_build_cache (SPCtrl *ctrl)
         stroke_color = fill_color;
     }
 
-
-    side = (ctrl->span * 2 +1);
-    c = ctrl->span;
-    size = side * side;
-    if (side < 2) return;
+    width = (ctrl->width * 2 +1);
+    height = (ctrl->height * 2 +1);
+    c = ctrl->width; // Only used for pre-set square drawing
+    size = width * height;
+    if (width < 2) return;
 
     if (ctrl->cache) delete[] ctrl->cache;
     ctrl->cache = new guint32[size];
@@ -395,19 +357,19 @@ sp_ctrl_build_cache (SPCtrl *ctrl)
         case SP_CTRL_SHAPE_SQUARE:
             p = ctrl->cache;
             // top edge
-            for (x=0; x < side; x++) {
+            for (x=0; x < width; x++) {
                 *p++ = stroke_color;
             }
             // middle
-            for (y = 2; y < side; y++) {
+            for (y = 2; y < height; y++) {
                 *p++ = stroke_color; // stroke at first and last pixel
-                for (x=2; x < side; x++) {
+                for (x=2; x < width; x++) {
                     *p++ = fill_color; // fill in the middle
                 }
                 *p++ = stroke_color;
             }
             // bottom edge
-            for (x=0; x < side; x++) {
+            for (x=0; x < width; x++) {
                 *p++ = stroke_color;
             }
             ctrl->build = TRUE;
@@ -415,19 +377,19 @@ sp_ctrl_build_cache (SPCtrl *ctrl)
 
         case SP_CTRL_SHAPE_DIAMOND:
             p = ctrl->cache;
-            for (y = 0; y < side; y++) {
+            for (y = 0; y < height; y++) {
                 z = abs (c - y);
                 for (x = 0; x < z; x++) {
                     *p++ = 0;
                 }
                 *p++ = stroke_color; x++;
-                for (; x < side - z -1; x++) {
+                for (; x < width - z -1; x++) {
                     *p++ = fill_color;
                 }
                 if (z != c) {
                     *p++ = stroke_color; x++;
                 }
-                for (; x < side; x++) {
+                for (; x < width; x++) {
                     *p++ = 0;
                 }
             }
@@ -462,7 +424,7 @@ sp_ctrl_build_cache (SPCtrl *ctrl)
                     *q-- = stroke_color;
                     x++;
                 } while (x <= c+z);
-                while (x < side) {
+                while (x < width) {
                     *p++ = 0;
                     *q-- = 0;
                     x++;
@@ -474,7 +436,7 @@ sp_ctrl_build_cache (SPCtrl *ctrl)
 
         case SP_CTRL_SHAPE_CROSS:
             p = ctrl->cache;
-            for (y = 0; y < side; y++) {
+            for (y = 0; y < height; y++) {
                 z = abs (c - y);
                 for (x = 0; x < c-z; x++) {
                     *p++ = 0;
@@ -486,7 +448,7 @@ sp_ctrl_build_cache (SPCtrl *ctrl)
                 if (z != 0) {
                     *p++ = stroke_color; x++;
                 }
-                for (; x < side; x++) {
+                for (; x < width; x++) {
                     *p++ = 0;
                 }
             }
@@ -499,12 +461,12 @@ sp_ctrl_build_cache (SPCtrl *ctrl)
                 unsigned int rs;
                 px = gdk_pixbuf_get_pixels (ctrl->pixbuf);
                 rs = gdk_pixbuf_get_rowstride (ctrl->pixbuf);
-                for (y = 0; y < side; y++){
+                for (y = 0; y < height; y++){
                     guint32 *d;
                     unsigned char *s;
                     s = px + y * rs;
-                    d = ctrl->cache + side * y;
-                    for (x = 0; x < side; x++) {
+                    d = ctrl->cache + height * y;
+                    for (x = 0; x < width; x++) {
                         if (s[3] < 0x80) {
                             *d++ = 0;
                         } else if (s[0] < 0x80) {
@@ -527,9 +489,9 @@ sp_ctrl_build_cache (SPCtrl *ctrl)
                 guint32 *px;
                 guchar *data = gdk_pixbuf_get_pixels (ctrl->pixbuf);
                 p = ctrl->cache;
-                for (y = 0; y < side; y++){
+                for (y = 0; y < height; y++){
                     px = reinterpret_cast<guint32*>(data + y * r);
-                    for (x = 0; x < side; x++) {
+                    for (x = 0; x < width; x++) {
                         *p++ = *px++;
                     }
                 }
@@ -566,8 +528,8 @@ sp_ctrl_render (SPCanvasItem *item, SPCanvasBuf *buf)
         sp_ctrl_build_cache (ctrl);
     }
 
-    int w, h;
-    w = h = (ctrl->span * 2 +1);
+    int w = (ctrl->width * 2 + 1);
+    int h = (ctrl->height * 2 + 1);
 
     // The code below works even when the target is not an image surface
     if (ctrl->mode == SP_CTRL_MODE_XOR) {
@@ -627,7 +589,6 @@ sp_ctrl_render (SPCanvasItem *item, SPCanvasBuf *buf)
 void SPCtrl::moveto (Geom::Point const p) {
     if (p != _point) {
         sp_canvas_item_affine_absolute (SP_CANVAS_ITEM (this), Geom::Affine(Geom::Translate (p)));
-        _moved = true;
     }
     _point = p;
 }

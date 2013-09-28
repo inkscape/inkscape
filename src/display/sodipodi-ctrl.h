@@ -37,7 +37,8 @@ struct SPCtrl : public SPCanvasItem {
     SPCtrlShapeType shape;
     SPCtrlModeType mode;
     SPAnchorType anchor;
-    gint span;
+    gint width;
+    gint height;
     guint defined : 1;
     guint shown   : 1;
     guint build   : 1;
@@ -45,7 +46,6 @@ struct SPCtrl : public SPCanvasItem {
     guint stroked : 1;
     guint32 fill_color;
     guint32 stroke_color;
-    bool _moved;
 
     Geom::IntRect box;   /* NB! x1 & y1 are included */
     guint32 *cache;
