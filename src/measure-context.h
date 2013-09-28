@@ -13,6 +13,8 @@
  */
 
 #include "event-context.h"
+#include <2geom/point.h>
+#include <boost/optional.hpp>
 
 #define SP_MEASURE_CONTEXT(obj) (dynamic_cast<SPMeasureContext*>((SPEventContext*)obj))
 #define SP_IS_MEASURE_CONTEXT(obj) (dynamic_cast<const SPMeasureContext*>((const SPEventContext*)obj) != NULL)
@@ -31,6 +33,10 @@ public:
 
 private:
 	SPCanvasItem* grabbed;
+
+    Geom::Point start_point;
+    boost::optional<Geom::Point> explicitBase;
+    boost::optional<Geom::Point> lastEnd;
 };
 
 #endif // SEEN_SP_MEASURING_CONTEXT_H
