@@ -192,6 +192,7 @@ font_instance::~font_instance(void)
 
     //printf("font instance death\n");
     if ( pFont ) {
+        FreeTheFace();
         g_object_unref(pFont);
         pFont = 0;
     }
@@ -232,10 +233,6 @@ void font_instance::Unref(void)
     //printf("font %x %s unref'd %i\n",this,tc,refCount);
     //free(tc);
     if ( refCount <= 0 ) {
-        if ( daddy ) {
-            daddy->UnrefFace(this);
-        }
-        daddy=NULL;
         delete this;
     }
 }
@@ -387,6 +384,7 @@ unsigned int font_instance::Attribute(const gchar *key, gchar *str, unsigned int
 
 void font_instance::InitTheFace()
 {
+    if (theFace == NULL && pFont != NULL) {
 #ifdef USE_PANGO_WIN32
     if ( !theFace ) {
         LOGFONT *lf=pango_win32_font_logfont(pFont);
@@ -404,6 +402,7 @@ void font_instance::InitTheFace()
         FT_Select_Charmap(theFace,ft_encoding_unicode) && FT_Select_Charmap(theFace,ft_encoding_symbol);
     }
 #endif
+    }
 }
 
 void font_instance::FreeTheFace()
@@ -423,6 +422,7 @@ void font_instance::InstallFace(PangoFont* iFace)
         return;
     }
     pFont=iFace;
+    iFace = NULL;
 
     InitTheFace();
 
