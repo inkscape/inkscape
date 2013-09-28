@@ -89,7 +89,7 @@ Effect::Effect (Inkscape::XML::Node * in_repr, Implementation::Implementation * 
         } // children of "inkscape-extension"
     } // if we have an XML file
 
-    if (INKSCAPE != NULL) {
+    if (INKSCAPE != NULL && inkscape_use_gui()) {
         if (_effects_list == NULL)
             _effects_list = find_menu(inkscape_get_menus(INKSCAPE), EFFECTS_LIST);
         if (_filters_list == NULL)

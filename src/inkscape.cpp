@@ -502,7 +502,7 @@ inkscape_init (SPObject * object)
     new (&inkscape->document_set) std::map<SPDocument *, int>();
     new (&inkscape->selection_models) std::map<SPDocument *, AppSelectionModel *>();
 
-    inkscape->menus = sp_repr_read_mem (_(menus_skeleton), MENUS_SKELETON_SIZE, NULL);
+    inkscape->menus = NULL;
     inkscape->desktops = NULL;
     inkscape->dialogs_toggle = TRUE;
     inkscape->mapalt = GDK_MOD1_MASK;

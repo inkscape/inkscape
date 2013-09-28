@@ -109,8 +109,6 @@
 
 #include "init.h"
 
-extern gboolean inkscape_app_use_gui( Inkscape::Application const *app );
-
 namespace Inkscape {
 namespace Extension {
 
