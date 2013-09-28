@@ -980,6 +980,7 @@ void  Layout::Calculator::_buildPangoItemizationForPara(ParagraphInfo *para) con
             attribute_font_description->end_index = para_text.bytes();
             pango_attr_list_insert(attributes_list, attribute_font_description);
             // ownership of attribute is assumed by the list
+            font->Unref();
         }
     }
 
