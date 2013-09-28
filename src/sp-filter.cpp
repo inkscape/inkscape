@@ -114,6 +114,10 @@ void SPFilter::release() {
         this->href = NULL;
     }
 
+    for (map<gchar *, int, ltstr>::const_iterator i = this->_image_name->begin() ; i != this->_image_name->end() ; i++) {
+        g_free(i->first);
+    }
+
     delete this->_image_name;
 
     SPObject::release();
