@@ -219,6 +219,11 @@ SPDocument::~SPDocument() {
         inkscape_unref();
         keepalive = FALSE;
     }
+
+    if (this->current_persp3d_impl) 
+        delete this->current_persp3d_impl;
+    this->current_persp3d_impl = NULL;
+
     //delete this->_whiteboard_session_manager;
 }
 
