@@ -682,11 +682,12 @@ Inkscape::Pixbuf *sp_image_repr_read_image(gchar const *href, gchar const *absre
                 // and if it fails, we also try to use bare href regardless of its g_path_is_absolute
                 if (g_file_test (fullname, G_FILE_TEST_EXISTS) && !g_file_test (fullname, G_FILE_TEST_IS_DIR)) {
                     inkpb = Inkscape::Pixbuf::create_from_file(fullname);
-                    g_free (fullname);
                     if (inkpb != NULL) {
+                        g_free (fullname);
                         return inkpb;
                     }
                 }
+                g_free (fullname);
             }
 
             /* try filename as absolute */
