@@ -28,6 +28,7 @@ DrawingGroup::~DrawingGroup()
 {
     if (_style)
         sp_style_unref(_style);
+    delete _child_transform; // delete NULL; is safe
 }
 
 /**
