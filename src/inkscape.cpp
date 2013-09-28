@@ -1483,7 +1483,9 @@ profile_path(const char *filename)
             }
 
             if (prefdir) {
-                prefdir = g_build_filename(prefdir, INKSCAPE_PROFILE_DIR, NULL);
+                const char *prefdir_profile = g_build_filename(prefdir, INKSCAPE_PROFILE_DIR, NULL);
+                g_free((void *)prefdir);
+                prefdir = prefdir_profile;
             }
         }
 #endif
