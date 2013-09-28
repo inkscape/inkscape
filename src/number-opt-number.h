@@ -120,6 +120,8 @@ public:
                 _set = FALSE;
                 optNumber_set = FALSE;
         }
+
+        g_strfreev(values);
     }
 
 };
