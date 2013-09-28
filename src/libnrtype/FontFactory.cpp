@@ -25,7 +25,6 @@ typedef INK_UNORDERED_MAP<PangoFontDescription*, font_instance*, font_descr_hash
 // need to avoid using the size field
 size_t font_descr_hash::operator()( PangoFontDescription *const &x) const {
     int h = 0;
-    h *= 1128467;
     char const *theF = sp_font_description_get_family(x);
     h += (theF)?g_str_hash(theF):0;
     h *= 1128467;
@@ -295,7 +294,7 @@ font_factory *font_factory::Default(void)
 }
 
 font_factory::font_factory(void) :
-    nbEnt(0),
+    nbEnt(0), // Note: this "ents" cache only keeps fonts from being unreffed, does not speed up access
     maxEnt(32),
     ents(static_cast<font_entry*>(g_malloc(maxEnt*sizeof(font_entry)))),
 
@@ -327,12 +326,6 @@ font_factory::font_factory(void) :
 
 font_factory::~font_factory(void)
 {
-    if (loadedPtr) {
-        FaceMapType* tmp = static_cast<FaceMapType*>(loadedPtr);
-        delete tmp;
-        loadedPtr = 0;
-    }
-
     for (int i = 0;i < nbEnt;i++) ents[i].f->Unref();
     if ( ents ) g_free(ents);
 
@@ -343,6 +336,12 @@ font_factory::~font_factory(void)
     //pango_ft2_shutdown_display();
 #endif
     //g_object_unref(fontContext);
+
+    if (loadedPtr) {
+        FaceMapType* tmp = static_cast<FaceMapType*>(loadedPtr);
+        delete tmp;
+        loadedPtr = 0;
+    }
 
     // Delete the pango font pointers in the string to instance map
     PangoStringToDescrMap::iterator it = fontInstanceMap.begin();
@@ -1126,7 +1125,7 @@ void font_factory::AddInCache(font_instance *who)
         return;
     }
     who->Ref();
-    if ( nbEnt == maxEnt ) {
+    if ( nbEnt == maxEnt ) { // cache is filled, unref the oldest-accessed font in it
         int    bi = 0;
         double ba = ents[bi].age;
         for (int i = 1;i < nbEnt;i++) {
