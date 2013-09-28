@@ -541,7 +541,9 @@ void SvgFontsDialog::set_glyph_description_from_selected_path(){
     Geom::PathVector pathv = sp_svg_read_pathv(node->attribute("d"));
 
 	//XML Tree being directly used here while it shouldn't be.
-    glyph->getRepr()->setAttribute("d", (char*) sp_svg_write_path (flip_coordinate_system(pathv)));
+    gchar *str = sp_svg_write_path (flip_coordinate_system(pathv));
+    glyph->getRepr()->setAttribute("d", str);
+    g_free(str);
     DocumentUndo::done(doc, SP_VERB_DIALOG_SVG_FONTS, _("Set glyph curves"));
 
     update_glyphs();
@@ -578,7 +580,9 @@ void SvgFontsDialog::missing_glyph_description_from_selected_path(){
         if (SP_IS_MISSING_GLYPH(obj)){
 
             //XML Tree being directly used here while it shouldn't be.
-            obj->getRepr()->setAttribute("d", (char*) sp_svg_write_path (flip_coordinate_system(pathv)));
+            gchar *str = sp_svg_write_path (flip_coordinate_system(pathv));
+            obj->getRepr()->setAttribute("d", str);
+            g_free(str);
             DocumentUndo::done(doc, SP_VERB_DIALOG_SVG_FONTS, _("Set glyph curves"));
         }
     }
