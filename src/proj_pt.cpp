@@ -34,6 +34,7 @@ Pt2::Pt2(const gchar *coord_str) {
     pt[0] = g_ascii_strtod(coords[0], NULL);
     pt[1] = g_ascii_strtod(coords[1], NULL);
     pt[2] = g_ascii_strtod(coords[2], NULL);
+    g_strfreev (coords);
 }
 
 void
