@@ -665,16 +665,20 @@ Inkscape::XML::Node* SPItem::write(Inkscape::XML::Document *xml_doc, Inkscape::X
 
     if (item->clip_ref){
         if (item->clip_ref->getObject()) {
-            const gchar *value = g_strdup_printf ("url(%s)", item->clip_ref->getURI()->toString());
+            gchar *uri = item->clip_ref->getURI()->toString();
+            const gchar *value = g_strdup_printf ("url(%s)", uri);
             repr->setAttribute ("clip-path", value);
             g_free ((void *) value);
+            g_free ((void *) uri);
         }
     }
     if (item->mask_ref){
         if (item->mask_ref->getObject()) {
-            const gchar *value = g_strdup_printf ("url(%s)", item->mask_ref->getURI()->toString());
+            gchar *uri = item->mask_ref->getURI()->toString();
+            const gchar *value = g_strdup_printf ("url(%s)", uri);
             repr->setAttribute ("mask", value);
             g_free ((void *) value);
+            g_free ((void *) uri);
         }
     }
 
