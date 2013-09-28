@@ -593,10 +593,18 @@ sp_style_unref(SPStyle *style)
         sp_style_filter_clear(style);
 
         g_free(style->stroke_dash.dash);
-        g_free(style);
-    }
 
-    return NULL;
+        for (unsigned i = SP_MARKER_LOC; i < SP_MARKER_LOC_QTY; i++) {
+            if (style->marker[i].value) {
+                g_free(style->marker[i].value);
+                style->marker[i].value = NULL;
+            }
+        }
+
+        g_free(style);
+        return NULL;
+    }
+    return style;
 }
 
 /**
@@ -4447,6 +4455,7 @@ sp_style_write_ipaint(gchar *b, gint const len, gchar const *const key,
             if ( paint->value.href && paint->value.href->getURI() ) {
                 const gchar* uri = paint->value.href->getURI()->toString();
                 css << "url(" << uri << ")";
+                g_free((void *)uri);
             }
 
             if ( paint->noneSet ) {
@@ -4631,7 +4640,10 @@ sp_style_write_ifilter(gchar *p, gint const len, gchar const *key,
         if (val->inherit) {
             return g_snprintf(p, len, "%s:inherit;", key);
         } else if (val->href && val->href->getURI()) {
-            return g_snprintf(p, len, "%s:url(%s);", key, val->href->getURI()->toString());
+            gchar *uri = val->href->getURI()->toString();
+            gint ret = g_snprintf(p, len, "%s:url(%s);", key, uri);
+            g_free(uri);
+            return ret;        
         }
     }
 
