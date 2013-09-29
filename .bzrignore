@@ -211,3 +211,8 @@ share/palettes/palettes.h
 ltmain.sh
 backup.bzr
 mkinstalldirs
+Inkscape.config
+Inkscape.creator
+Inkscape.creator.user
+Inkscape.files
+Inkscape.includes
