@@ -200,6 +200,7 @@ tutorial_DATA = \
     tutorial-tracing.sl.svg \
     tutorial-tracing.vi.svg \
     tutorial-tracing.zh_TW.svg \
+    tutorial-tracing-pixelart.svg \
     tux.png
 
 
