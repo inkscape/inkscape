@@ -34,9 +34,6 @@
 #include "preferences.h"
 #include "snap-candidate.h"
 
-#define noELLIPSE_VERBOSE
-
-
 #include "sp-factory.h"
 
 namespace {
@@ -69,14 +66,22 @@ bool arc_registered = SPFactory::instance().registerObject("arc", create_arc);
 
 SPGenericEllipse::SPGenericEllipse()
     : SPShape()
-    , closed(true)
     , start(0)
     , end(SP_2PI)
+    , _closed(true)
 {
 }
 
 SPGenericEllipse::~SPGenericEllipse()
 {
+}
+
+bool SPGenericEllipse::closed() {
+    return _closed;
+}
+
+void SPGenericEllipse::setClosed(bool value) {
+    _closed = value;
 }
 
 void SPGenericEllipse::update(SPCtx *ctx, guint flags)
@@ -122,18 +127,11 @@ void SPGenericEllipse::update_patheffect(bool write)
 
 bool SPGenericEllipse::_isSlice() const
 {
-    // figure out if we have a slice, guarding against rounding errors
-    double diff = fmod(this->end - this->start, SP_2PI);
+    Geom::AngleInterval a(this->start, this->end, true);
 
-    if (diff < 0.0) {
-        diff += SP_2PI;
-    }
-
-    return (fabs(diff) >= 1e-8 && fabs(diff - SP_2PI) >= 1e-8);
+    return !(Geom::are_near(a.extent(), 0) || Geom::are_near(a.extent(), SP_2PI));
 }
 
-/* fixme: Think (Lauris) */
-/* Can't we use arcto in this method? */
 void SPGenericEllipse::set_shape()
 {
     if (hasBrokenPathEffect()) {
@@ -150,11 +148,7 @@ void SPGenericEllipse::set_shape()
         return;
     }
 
-    if ((this->rx.computed < 1e-18) || (this->ry.computed < 1e-18)) {
-        return;
-    }
-
-    if (fabs(this->end - this->start) < 1e-9) {
+    if (Geom::are_near(this->rx.computed, 0) || Geom::are_near(this->ry.computed, 0)) {
         return;
     }
 
@@ -181,7 +175,7 @@ void SPGenericEllipse::set_shape()
         Geom::PathBuilder pb;
         pb.append(path);
 
-        if (this->closed) {
+        if (this->_closed) {
             // "pizza slice"
             pb.lineTo(center);
             pb.closePath();
@@ -233,10 +227,8 @@ void SPGenericEllipse::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, 
     // Snap to the 4 quadrant points of the ellipse, but only if the arc
     // spans far enough to include them
     if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_ELLIPSE_QUADRANT_POINT)) {
-        double angle = 0;
-
-        for (angle = 0; angle < SP_2PI; angle += M_PI_2) {
-            if (angle >= this->start && angle <= this->end) {
+        for (double angle = 0; angle < SP_2PI; angle += M_PI_2) {
+            if (Geom::AngleInterval(this->start, this->end, true).contains(angle)) {
                 Geom::Point pt = this->getPointAtAngle(angle) * i2dt;
                 p.push_back(Inkscape::SnapCandidatePoint(pt, Inkscape::SNAPSOURCE_ELLIPSE_QUADRANT_POINT, Inkscape::SNAPTARGET_ELLIPSE_QUADRANT_POINT));
             }
@@ -249,7 +241,7 @@ void SPGenericEllipse::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, 
     bool slice = this->_isSlice();
 
     // Add the centre, if we have a closed slice or when explicitly asked for
-    if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_NODE_CUSP) && slice && this->closed) {
+    if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_NODE_CUSP) && slice && this->_closed) {
         Geom::Point pt = Geom::Point(cx, cy) * i2dt;
         p.push_back(Inkscape::SnapCandidatePoint(pt, Inkscape::SNAPSOURCE_NODE_CUSP, Inkscape::SNAPTARGET_NODE_CUSP));
     }
@@ -262,13 +254,13 @@ void SPGenericEllipse::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, 
     // And if we have a slice, also snap to the endpoints
     if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_NODE_CUSP) && slice) {
         // Add the start point, if it's not coincident with a quadrant point
-        if (fmod(this->start, M_PI_2) != 0.0) {
+        if (!Geom::are_near(std::fmod(this->start, M_PI_2), 0)) {
             Geom::Point pt = this->getPointAtAngle(this->start) * i2dt;
             p.push_back(Inkscape::SnapCandidatePoint(pt, Inkscape::SNAPSOURCE_NODE_CUSP, Inkscape::SNAPTARGET_NODE_CUSP));
         }
 
         // Add the end point, if it's not coincident with a quadrant point
-        if (fmod(this->end, M_PI_2) != 0.0) {
+        if (!Geom::are_near(std::fmod(this->end, M_PI_2), 0)) {
             Geom::Point pt = this->getPointAtAngle(this->end) * i2dt;
             p.push_back(Inkscape::SnapCandidatePoint(pt, Inkscape::SNAPSOURCE_NODE_CUSP, Inkscape::SNAPTARGET_NODE_CUSP));
         }
@@ -333,20 +325,10 @@ Geom::Affine SPGenericEllipse::set_transform(Geom::Affine const &xform)
 
 void SPGenericEllipse::normalize()
 {
-    this->start = fmod(this->start, SP_2PI);
-    this->end = fmod(this->end, SP_2PI);
+    Geom::AngleInterval a(this->start, this->end, true);
 
-    if (this->start < 0.0) {
-        this->start += SP_2PI;
-    }
-
-    double diff = this->start - this->end;
-
-    if (diff >= 0.0) {
-        this->end += diff - fmod(diff, SP_2PI) + SP_2PI;
-    }
-
-    /* Now we keep: 0 <= start < end <= 2*PI */
+    this->start = a.initialAngle().radians0();
+    this->end = a.finalAngle().radians0();
 }
 
 Inkscape::XML::Node *SPGenericEllipse::write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
@@ -574,7 +556,7 @@ bool SPArc::sp_arc_set_elliptical_path_attribute(Inkscape::XML::Node *repr)
 
         str.arcTo(rx, ry, 0, fa, fs, p2);
 
-        if (this->closed) {
+        if (this->_closed) {
             Geom::Point center = Geom::Point(this->cx.computed, this->cy.computed);
             str.lineTo(center).closePath();
         }
@@ -603,7 +585,7 @@ Inkscape::XML::Node *SPArc::write(Inkscape::XML::Document *xml_doc, Inkscape::XM
             sp_repr_set_svg_double(repr, "sodipodi:start", this->start);
             sp_repr_set_svg_double(repr, "sodipodi:end", this->end);
 
-            repr->setAttribute("sodipodi:open", (!this->closed) ? "true" : NULL);
+            repr->setAttribute("sodipodi:open", (!this->_closed) ? "true" : NULL);
         } else {
             repr->setAttribute("sodipodi:end", NULL);
             repr->setAttribute("sodipodi:start", NULL);
@@ -669,7 +651,7 @@ void SPArc::set(unsigned int key, gchar const *value)
         break;
 
     case SP_ATTR_SODIPODI_OPEN:
-        this->closed = (!value);
+        this->_closed = (!value);
         this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         break;
 
@@ -691,7 +673,7 @@ void SPArc::modified(guint flags)
 const char *SPArc::displayName()
 {
     if (this->_isSlice()) {
-        if (this->closed) {
+        if (this->_closed) {
             return _("Segment");
         } else {
             return _("Arc");
@@ -719,7 +701,7 @@ void SPArc::sp_arc_position_set(gdouble x, gdouble y, gdouble rx, gdouble ry)
         this->end = Geom::Angle::from_degrees(prefs->getDouble("/tools/shapes/arc/end", 0.0)).radians0();
     }
 
-    this->closed = !prefs->getBool("/tools/shapes/arc/open");
+    this->_closed = !prefs->getBool("/tools/shapes/arc/open");
 
     this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }

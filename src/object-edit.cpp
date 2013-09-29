@@ -785,24 +785,23 @@ sp_genericellipse_side(SPGenericEllipse *ellipse, Geom::Point const &p)
 void
 ArcKnotHolderEntityStart::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint state)
 {
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    int snaps = prefs->getInt("/options/rotationsnapsperpi/value", 12);
+    int snaps = Inkscape::Preferences::get()->getInt("/options/rotationsnapsperpi/value", 12);
 
-    SPGenericEllipse *ge = SP_GENERICELLIPSE(item);
     SPArc *arc = SP_ARC(item);
 
-    ge->closed = (sp_genericellipse_side(ge, p) == -1) ? TRUE : FALSE;
+    arc->setClosed(sp_genericellipse_side(arc, p) == -1);
 
-    Geom::Point delta = p - Geom::Point(ge->cx.computed, ge->cy.computed);
-    Geom::Scale sc(ge->rx.computed, ge->ry.computed);
-    ge->start = atan2(delta * sc.inverse());
-    if ( ( state & GDK_CONTROL_MASK )
-         && snaps )
-    {
-        ge->start = sp_round(ge->start, M_PI/snaps);
+    Geom::Point delta = p - Geom::Point(arc->cx.computed, arc->cy.computed);
+    Geom::Scale sc(arc->rx.computed, arc->ry.computed);
+
+    arc->start = atan2(delta * sc.inverse());
+
+    if ((state & GDK_CONTROL_MASK) && snaps) {
+        arc->start = sp_round(arc->start, M_PI / snaps);
     }
-    ge->normalize();
-    (static_cast<SPObject *>(arc))->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+
+    arc->normalize();
+    arc->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
 Geom::Point
@@ -828,24 +827,23 @@ ArcKnotHolderEntityStart::knot_click(guint state)
 void
 ArcKnotHolderEntityEnd::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint state)
 {
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    int snaps = prefs->getInt("/options/rotationsnapsperpi/value", 12);
+    int snaps = Inkscape::Preferences::get()->getInt("/options/rotationsnapsperpi/value", 12);
 
-    SPGenericEllipse *ge = SP_GENERICELLIPSE(item);
     SPArc *arc = SP_ARC(item);
 
-    ge->closed = (sp_genericellipse_side(ge, p) == -1) ? TRUE : FALSE;
+    arc->setClosed(sp_genericellipse_side(arc, p) == -1);
 
-    Geom::Point delta = p - Geom::Point(ge->cx.computed, ge->cy.computed);
-    Geom::Scale sc(ge->rx.computed, ge->ry.computed);
-    ge->end = atan2(delta * sc.inverse());
-    if ( ( state & GDK_CONTROL_MASK )
-         && snaps )
-    {
-        ge->end = sp_round(ge->end, M_PI/snaps);
+    Geom::Point delta = p - Geom::Point(arc->cx.computed, arc->cy.computed);
+    Geom::Scale sc(arc->rx.computed, arc->ry.computed);
+
+    arc->end = atan2(delta * sc.inverse());
+
+    if ((state & GDK_CONTROL_MASK) && snaps) {
+        arc->end = sp_round(arc->end, M_PI/snaps);
     }
-    ge->normalize();
-    (static_cast<SPObject *>(arc))->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+
+    arc->normalize();
+    arc->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
 Geom::Point

@@ -31,8 +31,11 @@ public:
     SVGLength rx;
     SVGLength ry;
 
-    // Stores whether the shape is closed ("pizza slice" or full ellipse) or not (arc only).
-    bool closed;
+    /**
+     * If we have a slice, returns whether the shape is closed ("pizza slice") or not (arc only).
+     */
+    bool closed();
+    void setClosed(bool value);
 
     double start, end;
 
@@ -45,13 +48,20 @@ public:
 
     virtual void update_patheffect(bool write);
 
+    /**
+     * @brief Makes sure that start and end lie between 0 and 2 * PI.
+     */
     void normalize();
 
     Geom::Point getPointAtAngle(double arg) const;
 
 protected:
-    /// Determines whether the shape is a part of a ellipse.
+    /**
+     * @brief Determines whether the shape is a part of an ellipse.
+     */
     bool _isSlice() const;
+
+    bool _closed;
 };
 
 
