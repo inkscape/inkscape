@@ -139,8 +139,6 @@ SPDocument::SPDocument() :
 }
 
 SPDocument::~SPDocument() {
-    collectOrphans();
-
     // kill/unhook this first
     if ( profileManager ) {
         delete profileManager;
@@ -223,6 +221,9 @@ SPDocument::~SPDocument() {
     if (this->current_persp3d_impl) 
         delete this->current_persp3d_impl;
     this->current_persp3d_impl = NULL;
+
+    // This is at the end of the destructor, because preceding code adds new orphans to the queue
+    collectOrphans();
 
     //delete this->_whiteboard_session_manager;
 }
