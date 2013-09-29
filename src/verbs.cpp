@@ -2119,6 +2119,9 @@ void TutorialVerb::perform(SPAction *action, void *data)
             // TRANSLATORS: See "tutorial-basic.svg" comment.
             sp_help_open_tutorial(NULL, (gpointer)_("tutorial-tracing.svg"));
             break;
+        case SP_VERB_TUTORIAL_TRACING_PIXELART:
+            sp_help_open_tutorial(NULL, (gpointer)_("tutorial-tracing-pixelart.svg"));
+            break;
         case SP_VERB_TUTORIAL_CALLIGRAPHY:
             // TRANSLATORS: See "tutorial-basic.svg" comment.
             sp_help_open_tutorial(NULL, (gpointer)_("tutorial-calligraphy.svg"));
@@ -2883,6 +2886,8 @@ Verb *Verb::_base_verbs[] = {
     // TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
     new TutorialVerb(SP_VERB_TUTORIAL_TRACING, "TutorialsTracing", N_("Inkscape: T_racing"),
                      N_("Using bitmap tracing"), NULL/*"tutorial_tracing"*/),
+    new TutorialVerb(SP_VERB_TUTORIAL_TRACING_PIXELART, "TutorialsTracingPixelArt", N_("Inkscape: Tracing Pixel Art"),
+                     N_("Using Trace Pixel Art dialog"), NULL),
     new TutorialVerb(SP_VERB_TUTORIAL_CALLIGRAPHY, "TutorialsCalligraphy", N_("Inkscape: _Calligraphy"),
                      N_("Using the Calligraphy pen tool"), NULL),
     new TutorialVerb(SP_VERB_TUTORIAL_INTERPOLATE, "TutorialsInterpolate", N_("Inkscape: _Interpolate"),

@@ -285,6 +285,7 @@ static char const menus_skeleton[] =
 "           <verb verb-id=\"TutorialsShapes\" />\n"
 "           <verb verb-id=\"TutorialsAdvanced\" />\n"
 "           <verb verb-id=\"TutorialsTracing\" />\n"
+"           <verb verb-id=\"TutorialsTracingPixelArt\" />\n"
 "           <verb verb-id=\"TutorialsCalligraphy\" />\n"
 "           <verb verb-id=\"TutorialsInterpolate\" />\n"
 "           <verb verb-id=\"TutorialsDesign\" />\n"
