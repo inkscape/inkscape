@@ -268,7 +268,7 @@ dbus_call_verb (DocumentInterface *doc_interface, int verbid, GError **error)
         if ( action ) {
             sp_action_perform( action, NULL );
             if (doc_interface->updates)
-                Inkscape::DocumentUndo::done(doc_interface->target.getDocument(),  verb->get_code(), g_strdup(verb->get_tip()));
+                Inkscape::DocumentUndo::done(doc_interface->target.getDocument(), verb->get_code(), verb->get_tip());
             return TRUE;
         }
     }
@@ -357,7 +357,7 @@ document_interface_call_verb (DocumentInterface *doc_interface, gchar *verbid, G
         if ( action ) {
             sp_action_perform( action, NULL );
             if (doc_interface->updates) {
-                Inkscape::DocumentUndo::done(doc_interface->target.getDocument(),  verb->get_code(), g_strdup(verb->get_tip()));
+                Inkscape::DocumentUndo::done(doc_interface->target.getDocument(), verb->get_code(), verb->get_tip());
             }
             return TRUE;
         }
