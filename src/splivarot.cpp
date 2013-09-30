@@ -2183,6 +2183,7 @@ sp_selected_path_simplify_items(SPDesktop *desktop,
             gchar *message = g_strdup_printf(_("%s <b>%d</b> of <b>%d</b> paths simplified..."),
                 simplificationType, pathsSimplified, totalPathCount);
             desktop->messageStack()->flash(Inkscape::IMMEDIATE_MESSAGE, message);
+            g_free(message);
         }
 
         didSomething |= sp_selected_path_simplify_item(desktop, selection, item,
@@ -2192,7 +2193,7 @@ sp_selected_path_simplify_items(SPDesktop *desktop,
     desktop->clearWaitingCursor();
 
     if (pathsSimplified > 20) {
-        desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, g_strdup_printf(_("<b>%d</b> paths simplified."), pathsSimplified));
+        desktop->messageStack()->flashF(Inkscape::NORMAL_MESSAGE, _("<b>%d</b> paths simplified."), pathsSimplified);
     }
 
     return didSomething;
