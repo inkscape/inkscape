@@ -85,6 +85,8 @@ SPObject* getMarkerObj(gchar const *n, SPDocument *doc)
 
     // FIXME: get the document from the object and let the caller pass it in
     SPObject *marker = doc->getObjectById(b);
+
+    g_free(b);
     return marker;
 }
 
