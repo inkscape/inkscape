@@ -88,28 +88,28 @@ static char const *const tool_names[] = {
 };
 static char const *const tool_msg[] = {
     NULL,
-    _("<b>Click</b> to Select and Tranform objects, <b>Drag</b> to select many objects."),
-    _("Modify selected path points (nodes) directly."),
-    _("To tweak a path by pushing, select it and drag over it."),
-    _("<b>Drag</b>, <b>click</b> or <b>click and scroll</b> to spray the selected objects."),
-    _("<b>Drag</b> to create a rectangle. <b>Drag controls</b> to round corners and resize. <b>Click</b> to select."),
-    _("<b>Drag</b> to create a 3D box. <b>Drag controls</b> to resize in perspective. <b>Click</b> to select (with <b>Ctrl+Alt</b> for single faces)."),
-    _("<b>Drag</b> to create an ellipse. <b>Drag controls</b> to make an arc or segment. <b>Click</b> to select."),
-    _("<b>Drag</b> to create a star. <b>Drag controls</b> to edit the star shape. <b>Click</b> to select."),
-    _("<b>Drag</b> to create a spiral. <b>Drag controls</b> to edit the spiral shape. <b>Click</b> to select."),
-    _("<b>Drag</b> to create a freehand line. <b>Shift</b> appends to selected path, <b>Alt</b> activates sketch mode."),
-    _("<b>Click</b> or <b>click and drag</b> to start a path; with <b>Shift</b> to append to selected path. <b>Ctrl+click</b> to create single dots (straight line modes only)."),
-    _("<b>Drag</b> to draw a calligraphic stroke; with <b>Ctrl</b> to track a guide path. <b>Arrow keys</b> adjust width (left/right) and angle (up/down)."),
-    _("<b>Click</b> to select or create text, <b>drag</b> to create flowed text; then type."),
-    _("<b>Drag</b> or <b>double click</b> to create a gradient on selected objects, <b>drag handles</b> to adjust gradients."),
-    _("<b>Drag</b> or <b>double click</b> to create a mesh on selected objects, <b>drag handles</b> to adjust meshes."),
-    _("<b>Click</b> or <b>drag around an area</b> to zoom in, <b>Shift+click</b> to zoom out."),
-    _("<b>Drag</b> to measure the dimensions of objects."),
-    _("<b>Click</b> to set fill, <b>Shift+click</b> to set stroke; <b>drag</b> to average color in area; with <b>Alt</b> to pick inverse color; <b>Ctrl+C</b> to copy the color under mouse to clipboard"),
-    _("<b>Click and drag</b> between shapes to create a connector."),
-    _("<b>Click</b> to paint a bounded area, <b>Shift+click</b> to union the new fill with the current selection, <b>Ctrl+click</b> to change the clicked object's fill and stroke to the current setting."),
-    _("<b>Drag</b> to erase."),
-    _("Choose a subtool from the toolbar"),
+    N_("<b>Click</b> to Select and Tranform objects, <b>Drag</b> to select many objects."),
+    N_("Modify selected path points (nodes) directly."),
+    N_("To tweak a path by pushing, select it and drag over it."),
+    N_("<b>Drag</b>, <b>click</b> or <b>click and scroll</b> to spray the selected objects."),
+    N_("<b>Drag</b> to create a rectangle. <b>Drag controls</b> to round corners and resize. <b>Click</b> to select."),
+    N_("<b>Drag</b> to create a 3D box. <b>Drag controls</b> to resize in perspective. <b>Click</b> to select (with <b>Ctrl+Alt</b> for single faces)."),
+    N_("<b>Drag</b> to create an ellipse. <b>Drag controls</b> to make an arc or segment. <b>Click</b> to select."),
+    N_("<b>Drag</b> to create a star. <b>Drag controls</b> to edit the star shape. <b>Click</b> to select."),
+    N_("<b>Drag</b> to create a spiral. <b>Drag controls</b> to edit the spiral shape. <b>Click</b> to select."),
+    N_("<b>Drag</b> to create a freehand line. <b>Shift</b> appends to selected path, <b>Alt</b> activates sketch mode."),
+    N_("<b>Click</b> or <b>click and drag</b> to start a path; with <b>Shift</b> to append to selected path. <b>Ctrl+click</b> to create single dots (straight line modes only)."),
+    N_("<b>Drag</b> to draw a calligraphic stroke; with <b>Ctrl</b> to track a guide path. <b>Arrow keys</b> adjust width (left/right) and angle (up/down)."),
+    N_("<b>Click</b> to select or create text, <b>drag</b> to create flowed text; then type."),
+    N_("<b>Drag</b> or <b>double click</b> to create a gradient on selected objects, <b>drag handles</b> to adjust gradients."),
+    N_("<b>Drag</b> or <b>double click</b> to create a mesh on selected objects, <b>drag handles</b> to adjust meshes."),
+    N_("<b>Click</b> or <b>drag around an area</b> to zoom in, <b>Shift+click</b> to zoom out."),
+    N_("<b>Drag</b> to measure the dimensions of objects."),
+    N_("<b>Click</b> to set fill, <b>Shift+click</b> to set stroke; <b>drag</b> to average color in area; with <b>Alt</b> to pick inverse color; <b>Ctrl+C</b> to copy the color under mouse to clipboard"),
+    N_("<b>Click and drag</b> between shapes to create a connector."),
+    N_("<b>Click</b> to paint a bounded area, <b>Shift+click</b> to union the new fill with the current selection, <b>Ctrl+click</b> to change the clicked object's fill and stroke to the current setting."),
+    N_("<b>Drag</b> to erase."),
+    N_("Choose a subtool from the toolbar"),
 };
 
 static int
@@ -152,7 +152,7 @@ tools_switch(SPDesktop *dt, int num)
     /* First 4 tools use guides, first is undefined but we don't care */
     dt->activate_guides(num < 5);
     inkscape_eventcontext_set(dt->getEventContext());
-    dt->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, tool_msg[num] );
+    dt->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, gettext( tool_msg[num] ) );
 }
 
 void tools_switch_by_item(SPDesktop *dt, SPItem *item, Geom::Point const p)
