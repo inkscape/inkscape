@@ -2995,7 +2995,9 @@ void sp_selection_symbol(SPDocument *doc, SPObject *group)
     Inkscape::XML::Node *clone = xml_doc->createElement("svg:use");
     clone->setAttribute("x", "0", false);
     clone->setAttribute("y", "0", false);
-    clone->setAttribute("xlink:href", g_strdup_printf("#%s", id.c_str()), false);
+    gchar *href_str = g_strdup_printf("#%s", id.c_str());
+    clone->setAttribute("xlink:href", href_str, false);
+    g_free(href_str);
 
     clone->setAttribute("inkscape:transform-center-x", group->getAttribute("inkscape:transform-center-x"), false);
     clone->setAttribute("inkscape:transform-center-y", group->getAttribute("inkscape:transform-center-y"), false);
@@ -3155,7 +3157,9 @@ sp_selection_tile(SPDesktop *desktop, bool apply)
 
     if (apply) {
         Inkscape::XML::Node *rect = xml_doc->createElement("svg:rect");
-        rect->setAttribute("style", g_strdup_printf("stroke:none;fill:url(#%s)", pat_id));
+        gchar *style_str = g_strdup_printf("stroke:none;fill:url(#%s)", pat_id);
+        rect->setAttribute("style", style_str);
+        g_free(style_str);
 
         Geom::Point min = bbox.min() * parent_transform.inverse();
         Geom::Point max = bbox.max() * parent_transform.inverse();
@@ -3721,7 +3725,9 @@ void sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_
             Inkscape::GC::release(group);
         }
 
-        apply_mask_to->setAttribute(attributeName, g_strdup_printf("url(#%s)", mask_id));
+        gchar *value_str = g_strdup_printf("url(#%s)", mask_id);
+        apply_mask_to->setAttribute(attributeName, value_str);
+        g_free(value_str);
 
     }
 
