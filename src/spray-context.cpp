@@ -499,7 +499,9 @@ static bool sp_spray_recursive(SPDesktop *desktop,
                 // Ad the clone to the list of the father's sons
                 parent->appendChild(clone);
                 // Generates the link between father and son attributes
-                clone->setAttribute("xlink:href", g_strdup_printf("#%s", old_repr->attribute("id")), false); 
+                gchar *href_str = g_strdup_printf("#%s", old_repr->attribute("id"));
+                clone->setAttribute("xlink:href", href_str, false); 
+                g_free(href_str);
 
                 SPObject *clone_object = doc->getObjectByRepr(clone);
                 // conversion object->item

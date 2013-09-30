@@ -152,7 +152,9 @@ text_put_on_path()
     // create textPath and put it into the text
     Inkscape::XML::Node *textpath = xml_doc->createElement("svg:textPath");
     // reference the shape
-    textpath->setAttribute("xlink:href", g_strdup_printf("#%s", shape->getRepr()->attribute("id")));
+    gchar *href_str = g_strdup_printf("#%s", shape->getRepr()->attribute("id"));
+    textpath->setAttribute("xlink:href", href_str);
+    g_free(href_str);
     if (text_alignment == Inkscape::Text::Layout::RIGHT) {
         textpath->setAttribute("startOffset", "100%");
     } else if (text_alignment == Inkscape::Text::Layout::CENTER) {
@@ -331,7 +333,9 @@ text_flow_into_shape()
             Inkscape::XML::Node *clone = xml_doc->createElement("svg:use");
             clone->setAttribute("x", "0");
             clone->setAttribute("y", "0");
-            clone->setAttribute("xlink:href", g_strdup_printf("#%s", item->getRepr()->attribute("id")));
+            gchar *href_str = g_strdup_printf("#%s", item->getRepr()->attribute("id"));
+            clone->setAttribute("xlink:href", href_str);
+            g_free(href_str);
 
             // add the new clone to the region
             region_repr->appendChild(clone);
