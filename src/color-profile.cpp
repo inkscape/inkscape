@@ -829,7 +829,7 @@ std::vector<Glib::ustring> ColorProfile::getProfileFiles()
                 for (gchar const *file = g_dir_read_name(dir); file != NULL; file = g_dir_read_name(dir)) {
                     gchar *filepath = g_build_filename(it->c_str(), file, NULL);
                     if ( g_file_test( filepath, G_FILE_TEST_IS_DIR ) ) {
-                        sources.push_back(g_strdup(filepath));
+                        sources.push_back( filepath );
                     } else {
                         if ( isIccFile( filepath ) ) {
                             files.push_back( filepath );
