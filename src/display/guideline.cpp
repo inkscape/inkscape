@@ -94,12 +94,18 @@ static void sp_guideline_destroy(SPCanvasItem *object)
     g_return_if_fail (SP_IS_GUIDELINE (object));
     //g_return_if_fail (SP_GUIDELINE(object)->origin != NULL);
     //g_return_if_fail (SP_IS_CTRLPOINT(SP_GUIDELINE(object)->origin));
-    
-    if (SP_GUIDELINE(object)->origin != NULL && SP_IS_CTRLPOINT(SP_GUIDELINE(object)->origin)) {
-        sp_canvas_item_destroy(SP_GUIDELINE(object)->origin);
+
+    SPGuideLine *gl = SP_GUIDELINE(object);
+
+    if (gl->origin != NULL && SP_IS_CTRLPOINT(gl->origin)) {
+        sp_canvas_item_destroy(gl->origin);
     } else {
         // FIXME: This branch shouldn't be reached (although it seems to be harmless).
         //g_error("Why can it be that gl->origin is not a valid SPCtrlPoint?\n");
+    }
+
+    if (gl->label) {
+        g_free(gl->label);
     }
 
     SP_CANVAS_ITEM_CLASS(parent_class)->destroy(object);
