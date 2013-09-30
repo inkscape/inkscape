@@ -234,9 +234,9 @@ text_remove_all_kerns_recursively(SPObject *o)
         gchar **xa_space = g_strsplit(x, " ", 0);
         gchar **xa_comma = g_strsplit(x, ",", 0);
         if (xa_space && *xa_space && *(xa_space + 1)) {
-            o->getRepr()->setAttribute("x", g_strdup(*xa_space));
+            o->getRepr()->setAttribute("x", *xa_space);
         } else if (xa_comma && *xa_comma && *(xa_comma + 1)) {
-            o->getRepr()->setAttribute("x", g_strdup(*xa_comma));
+            o->getRepr()->setAttribute("x", *xa_comma);
         }
         g_strfreev(xa_space);
         g_strfreev(xa_comma);
