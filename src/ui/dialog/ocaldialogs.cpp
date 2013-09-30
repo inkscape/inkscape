@@ -1017,7 +1017,7 @@ void SearchResultList::populate_from_xml(xmlNode * a_node)
                 }
                 else if (!strcmp(reinterpret_cast<const char*>(cur_node->name), "enclosure"))
                 {
-                    xmlChar *xml_url = xmlGetProp(cur_node, reinterpret_cast<xmlChar*>(g_strdup("url")));
+                    xmlChar *xml_url = xmlGetProp(cur_node, reinterpret_cast<xmlChar*>("url"));
                     char* url = reinterpret_cast<char*>(xml_url);
                     char* filename = g_path_get_basename(url);
 
@@ -1027,7 +1027,7 @@ void SearchResultList::populate_from_xml(xmlNode * a_node)
                 }
                 else if (!strcmp(reinterpret_cast<const char*>(cur_node->name), "thumbnail"))
                 {
-                    xmlChar *xml_thumbnail_url = xmlGetProp(cur_node, reinterpret_cast<xmlChar*>(g_strdup("url")));
+                    xmlChar *xml_thumbnail_url = xmlGetProp(cur_node, reinterpret_cast<xmlChar*>("url"));
                     char* thumbnail_url = reinterpret_cast<char*>(xml_thumbnail_url);
                     char* thumbnail_filename = g_path_get_basename(thumbnail_url);
 
