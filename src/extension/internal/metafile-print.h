@@ -26,8 +26,8 @@
 #include "splivarot.h"
 #include "display/canvas-bpath.h"
 
-struct SPGradient;
-struct SPObject;
+class SPGradient;
+class SPObject;
 
 namespace Inkscape {
 class Pixbuf;
