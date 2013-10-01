@@ -161,43 +161,48 @@ void SPGroup::order_changed (Inkscape::XML::Node *child, Inkscape::XML::Node *ol
 }
 
 void SPGroup::update(SPCtx *ctx, unsigned int flags) {
-    SPLPEItem::update(ctx, flags);
-
     SPItemCtx *ictx, cctx;
 
     ictx = (SPItemCtx *) ctx;
     cctx = *ictx;
 
+    unsigned childflags = flags;
+
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
-      flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
+      childflags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
     }
-
-    flags &= SP_OBJECT_MODIFIED_CASCADE;
-
-    if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
-        for (SPItemView *v = this->display; v != NULL; v = v->next) {
-            Inkscape::DrawingGroup *group = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
-            group->setStyle(this->style);
-        }
-    }
+    childflags &= SP_OBJECT_MODIFIED_CASCADE;
 
     GSList *l = g_slist_reverse(this->childList(true, SPObject::ActionUpdate));
     while (l) {
         SPObject *child = SP_OBJECT (l->data);
         l = g_slist_remove (l, child);
 
-        if (flags || (child->uflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
+        if (childflags || (child->uflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
             if (SP_IS_ITEM (child)) {
                 SPItem const &chi = *SP_ITEM(child);
                 cctx.i2doc = chi.transform * ictx->i2doc;
                 cctx.i2vp = chi.transform * ictx->i2vp;
-                child->updateDisplay((SPCtx *)&cctx, flags);
+                child->updateDisplay((SPCtx *)&cctx, childflags);
             } else {
-                child->updateDisplay(ctx, flags);
+                child->updateDisplay(ctx, childflags);
             }
         }
 
         sp_object_unref(child);
+    }
+
+    // For a group, we need to update ourselves *after* updating children.
+    // this is because the group might contain shapes such as rect or ellipse,
+    // which recompute their equivalent path (a.k.a curve) in the update callback,
+    // and this is in turn used when computing bbox.
+    SPLPEItem::update(ctx, flags);
+
+    if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
+        for (SPItemView *v = this->display; v != NULL; v = v->next) {
+            Inkscape::DrawingGroup *group = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
+            group->setStyle(this->style);
+        }
     }
 }
 
