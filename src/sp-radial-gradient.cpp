@@ -156,28 +156,36 @@ cairo_pattern_t* SPRadialGradient::pattern_new(cairo_t *ct, Geom::OptRect const 
     // https://bugs.launchpad.net/inkscape/+bug/970355
 
     Geom::Affine gs2user = this->gradientTransform;
-    Geom::Scale  gs2user_scale;
 
     if (this->getUnits() == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX && bbox) {
         Geom::Affine bbox2user(bbox->width(), 0, 0, bbox->height(), bbox->left(), bbox->top());
         gs2user *= bbox2user;
-        gs2user_scale = Geom::Scale( gs2user[0], gs2user[3] );
     }
 
-    Geom::Point d = focus - center;
-    Geom::Point d_user = d * gs2user_scale;
-    Geom::Point r_user( radius, 0 );
-    r_user *= gs2user_scale;
+    // we need to use vectors with the same direction to represent the transformed
+    // radius and the focus-center delta, because gs2user might contain non-uniform scaling
+    Geom::Point d(focus - center);
+    Geom::Point d_user(d.length(), 0);
+    Geom::Point r_user(radius, 0);
+    d_user *= gs2user.withoutTranslation();
+    r_user *= gs2user.withoutTranslation();
 
-    if (d_user.length() + tolerance > r_user.length()) {
+    double dx = d_user.x(), dy = d_user.y();
+    cairo_user_to_device_distance(ct, &dx, &dy);
+
+    // compute the tolerance distance in user space
+    // create a vector with the same direction as the transformed d,
+    // with the length equal to tolerance
+    double dl = hypot(dx, dy);
+    double tx = tolerance * dx / dl, ty = tolerance * dy / dl;
+    cairo_device_to_user_distance(ct, &tx, &ty);
+    double tolerance_user = hypot(tx, ty);
+
+    if (d_user.length() + tolerance_user > r_user.length()) {
         scale = r_user.length() / d_user.length();
-        double dx = d_user.x(), dy = d_user.y();
-        cairo_user_to_device_distance(ct, &dx, &dy);
 
-        if (!Geom::are_near(dx, 0, tolerance) || !Geom::are_near(dy, 0, tolerance))
-        {
-            scale *= 1.0 - 2.0 * tolerance / hypot(dx, dy);
-        }
+        // nudge the focus slightly inside
+        scale *= 1.0 - 2.0 * tolerance / dl;
     }
 
     cairo_pattern_t *cp = cairo_pattern_create_radial(
