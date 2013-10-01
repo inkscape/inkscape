@@ -141,7 +141,11 @@ DrawingItem::appendChild(DrawingItem *item)
     assert(item->_child_type == CHILD_ORPHAN);
     item->_child_type = CHILD_NORMAL;
     _children.push_back(*item);
-    _markForUpdate(STATE_ALL, false);
+    // Because _markForUpdate recurses through ancestors, we can simply call it
+    // on the just-added child. This has the additional benefit that we do not
+    // rely on the appended child being in the default non-updated state.
+    // We set propagate to true, because the child might have descendants of its own.
+    item->_markForUpdate(STATE_ALL, true);
 }
 
 void
@@ -151,7 +155,8 @@ DrawingItem::prependChild(DrawingItem *item)
     assert(item->_child_type == CHILD_ORPHAN);
     item->_child_type = CHILD_NORMAL;
     _children.push_front(*item);
-    _markForUpdate(STATE_ALL, false);
+    // See appendChild for explanation
+    item->_markForUpdate(STATE_ALL, true);
 }
 
 /// Delete all regular children of this item (not mask or clip).
@@ -714,8 +719,11 @@ DrawingItem::pick(Geom::Point const &p, double delta, unsigned flags)
 {
     // Sometimes there's no BBOX in state, reason unknown (bug 992817)
     // I made this not an assert to remove the warning
-    if (!(_state & STATE_BBOX) || !(_state & STATE_PICK))
+    if (!(_state & STATE_BBOX) || !(_state & STATE_PICK)) {
+        g_warning("Invalid state when picking: STATE_BBOX = %d, STATE_PICK = %d",
+                  _state & STATE_BBOX, _state & STATE_PICK);
         return NULL;
+    }
     // ignore invisible and insensitive items unless sticky
     if (!(flags & PICK_STICKY) && !(_visible && _sensitive))
         return NULL;
@@ -736,7 +744,10 @@ DrawingItem::pick(Geom::Point const &p, double delta, unsigned flags)
     }
 
     Geom::OptIntRect box = (outline || (flags & PICK_AS_CLIP)) ? _bbox : _drawbox;
-    if (!box) return NULL;
+    if (!box) {
+        g_warning("bbox unset when picking");
+        return NULL;
+    }
 
     Geom::Rect expanded = *box;
     expanded.expandBy(delta);
@@ -756,6 +767,9 @@ DrawingItem::pick(Geom::Point const &p, double delta, unsigned flags)
 void
 DrawingItem::_markForRendering()
 {
+    // TODO: this function does too much work when a large subtree
+    // is invalidated - fix
+    
     bool outline = _drawing.outline();
     Geom::OptIntRect dirty = outline ? _bbox : _drawbox;
     if (!dirty) return;
@@ -807,8 +821,8 @@ DrawingItem::_invalidateFilterBackground(Geom::IntRect const &area)
  * all children should also have the corresponding flags unset before checking
  * whether they need to be traversed. This way there is one less traversal
  * of the tree. Without this we would need to unset state bits in all children.
- * With _propagate we do this during the update call, when we have to traverse
- * the tree anyway.
+ * With _propagate we do this during the update call, when we have to recurse
+ * into children anyway.
  */
 void
 DrawingItem::_markForUpdate(unsigned flags, bool propagate)
@@ -818,15 +832,31 @@ DrawingItem::_markForUpdate(unsigned flags, bool propagate)
     }
 
     if (_state & flags) {
+        unsigned oldstate = _state;
         _state &= ~flags;
-        if (_parent) {
+        if (oldstate != _state && _parent) {
+            // If we actually reset anything in state, recurse on the parent.
             _parent->_markForUpdate(flags, false);
         } else {
+            // If nothing changed, it means our ancestors are already invalidated
+            // up to the root. Do not bother recursing, because it won't change anything.
+            // Also do this if we are the root item, because we have no more ancestors
+            // to invalidate.
             _drawing.signal_request_update.emit(this);
         }
     }
 }
 
+/**
+ * Process information related to the new style.
+ *
+ * This function is something of a hack to avoid creating an extra class in the hierarchy
+ * which would differ from DrawingItem only by having a _style member.
+ * This is mainly to the benefit of DrawingGlyphs, which use the style of their parent.
+ * This should probably be refactored some day, possibly by creating the relevant class
+ * or creating a more complex data model in DrawingText and removing DrawingGlyphs,
+ * which would cause every item to have a style.
+ */
 void
 DrawingItem::_setStyleCommon(SPStyle *&_style, SPStyle *style)
 {
@@ -834,7 +864,6 @@ DrawingItem::_setStyleCommon(SPStyle *&_style, SPStyle *style)
     if (_style) sp_style_unref(_style);
     _style = style;
 
-    // if group has a filter
     if (style->filter.set && style->getFilter()) {
         if (!_filter) {
             int primitives = sp_filter_primitive_count(SP_FILTER(style->getFilter()));
