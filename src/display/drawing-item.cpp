@@ -141,6 +141,9 @@ DrawingItem::appendChild(DrawingItem *item)
     assert(item->_child_type == CHILD_ORPHAN);
     item->_child_type = CHILD_NORMAL;
     _children.push_back(*item);
+
+    // This ensures that _markForUpdate() called on the child will recurse to this item
+    item->_state = STATE_ALL;
     // Because _markForUpdate recurses through ancestors, we can simply call it
     // on the just-added child. This has the additional benefit that we do not
     // rely on the appended child being in the default non-updated state.
@@ -156,6 +159,7 @@ DrawingItem::prependChild(DrawingItem *item)
     item->_child_type = CHILD_NORMAL;
     _children.push_front(*item);
     // See appendChild for explanation
+    item->_state = STATE_ALL;
     item->_markForUpdate(STATE_ALL, true);
 }
 
