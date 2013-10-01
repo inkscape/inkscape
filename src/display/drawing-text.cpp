@@ -398,8 +398,8 @@ unsigned DrawingText::_renderItem(DrawingContext &ct, Geom::IntRect const &/*are
     using Geom::X;
     using Geom::Y;
 
-    has_fill   = _nrstyle.prepareFill(  ct, _bbox);
-    has_stroke = _nrstyle.prepareStroke(ct, _bbox);
+    has_fill   = _nrstyle.prepareFill(  ct, _item_bbox);
+    has_stroke = _nrstyle.prepareStroke(ct, _item_bbox);
 
     if (has_fill || has_stroke) {
         Geom::Affine rotinv;

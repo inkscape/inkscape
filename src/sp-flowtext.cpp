@@ -72,10 +72,11 @@ void SPFlowtext::update(SPCtx* ctx, unsigned int flags) {
     SPItemCtx *ictx = (SPItemCtx *) ctx;
     SPItemCtx cctx = *ictx;
 
-    SPItem::update(ctx, flags);
-
-    if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
-    flags &= SP_OBJECT_MODIFIED_CASCADE;
+    unsigned childflags = flags;
+    if (flags & SP_OBJECT_MODIFIED_FLAG) {
+        childflags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
+    }
+    childflags &= SP_OBJECT_MODIFIED_CASCADE;
 
     GSList *l = NULL;
 
@@ -90,19 +91,21 @@ void SPFlowtext::update(SPCtx* ctx, unsigned int flags) {
         SPObject *child = SP_OBJECT(l->data);
         l = g_slist_remove(l, child);
 
-        if (flags || (child->uflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
+        if (childflags || (child->uflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
             if (SP_IS_ITEM(child)) {
                 SPItem const &chi = *SP_ITEM(child);
                 cctx.i2doc = chi.transform * ictx->i2doc;
                 cctx.i2vp = chi.transform * ictx->i2vp;
-                child->updateDisplay((SPCtx *)&cctx, flags);
+                child->updateDisplay((SPCtx *)&cctx, childflags);
             } else {
-                child->updateDisplay(ctx, flags);
+                child->updateDisplay(ctx, childflags);
             }
         }
 
         sp_object_unref(child);
     }
+
+    SPItem::update(ctx, flags);
 
     this->rebuildLayout();
 

@@ -114,14 +114,12 @@ int Filter::render(Inkscape::DrawingItem const *item, DrawingContext &graphic, D
 
     Geom::Affine trans = item->ctm();
 
-    // Get filter area, the filter_effect_area is already done in visualBounds
-    Geom::OptRect filter_area = item->filterBounds();
-    // Use the geometricBounds as a backup solution
+    Geom::OptRect filter_area = filter_effect_area(item->itemBounds());
     if (!filter_area) return 1;
 
     FilterUnits units(_filter_units, _primitive_units);
     units.set_ctm(trans);
-    units.set_item_bbox(filter_area);
+    units.set_item_bbox(item->itemBounds());
     units.set_filter_area(*filter_area);
 
     std::pair<double,double> resolution
@@ -201,7 +199,7 @@ void Filter::area_enlarge(Geom::IntRect &bbox, Inkscape::DrawingItem const *item
     }
 
     Geom::Rect item_bbox;
-    Geom::OptRect maybe_bbox = item->geometricBounds();
+    Geom::OptRect maybe_bbox = item->itemBounds();
     if (maybe_bbox.isEmpty()) {
         // Code below needs a bounding box
         return;

@@ -476,20 +476,12 @@ void SPUse::update(SPCtx *ctx, unsigned flags) {
     SPItemCtx *ictx = (SPItemCtx *) ctx;
     SPItemCtx cctx = *ictx;
 
-    SPItem::update(ctx, flags);
-
+    unsigned childflags = flags;
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
-        flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
+        childflags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
     }
 
-    flags &= SP_OBJECT_MODIFIED_CASCADE;
-
-    if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
-      for (SPItemView *v = this->display; v != NULL; v = v->next) {
-        Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
-        g->setStyle(this->style);
-      }
-    }
+    childflags &= SP_OBJECT_MODIFIED_CASCADE;
 
     /* Set up child viewport */
     if (this->x.unit == SVGLength::PERCENT) {
@@ -510,19 +502,28 @@ void SPUse::update(SPCtx *ctx, unsigned flags) {
 
     cctx.viewport = Geom::Rect::from_xywh(0, 0, this->width.computed, this->height.computed);
     cctx.i2vp = Geom::identity();
-    flags&=~SP_OBJECT_USER_MODIFIED_FLAG_B;
+    childflags &= ~SP_OBJECT_USER_MODIFIED_FLAG_B;
 
     if (this->child) {
         sp_object_ref(this->child);
 
-        if (flags || (this->child->uflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
+        if (childflags || (this->child->uflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
             SPItem const &chi = *SP_ITEM(this->child);
             cctx.i2doc = chi.transform * ictx->i2doc;
             cctx.i2vp = chi.transform * ictx->i2vp;
-            this->child->updateDisplay((SPCtx *)&cctx, flags);
+            this->child->updateDisplay((SPCtx *)&cctx, childflags);
         }
 
         sp_object_unref(this->child);
+    }
+
+    SPItem::update(ctx, flags);
+
+    if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
+        for (SPItemView *v = this->display; v != NULL; v = v->next) {
+            Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
+            g->setStyle(this->style);
+        }
     }
 
     /* As last step set additional transform of arena group */

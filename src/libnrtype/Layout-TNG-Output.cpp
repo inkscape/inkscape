@@ -181,6 +181,7 @@ void Layout::show(DrawingGroup *in_arena, Geom::OptRect const &paintbox) const
             glyph_index++;
         }
         nr_text->setStyle(text_source->style);
+        nr_text->setItemBounds(paintbox);
         in_arena->prependChild(nr_text);
         // Set item bounds without filter enlargement
         in_arena->setItemBounds(paintbox);

@@ -217,13 +217,6 @@ void SPGroup::modified(guint flags) {
 
     flags &= SP_OBJECT_MODIFIED_CASCADE;
 
-    if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
-        for (SPItemView *v = this->display; v != NULL; v = v->next) {
-            Inkscape::DrawingGroup *group = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
-            group->setStyle(this->style);
-        }
-    }
-
     GSList *l = g_slist_reverse(this->childList(true));
 
     while (l) {

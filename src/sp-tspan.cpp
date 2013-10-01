@@ -107,19 +107,19 @@ void SPTSpan::set(unsigned int key, const gchar* value) {
 }
 
 void SPTSpan::update(SPCtx *ctx, guint flags) {
-    SPItem::update(ctx, flags);
-
+    unsigned childflags = flags;
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
-        flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
+        childflags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
     }
-    
-    flags &= SP_OBJECT_MODIFIED_CASCADE;
+    childflags &= SP_OBJECT_MODIFIED_CASCADE;
 
     for ( SPObject *ochild = this->firstChild() ; ochild ; ochild = ochild->getNext() ) {
         if ( flags || ( ochild->uflags & SP_OBJECT_MODIFIED_FLAG )) {
-        	ochild->updateDisplay(ctx, flags);
+        	ochild->updateDisplay(ctx, childflags);
         }
     }
+
+    SPItem::update(ctx, flags);
 }
 
 void SPTSpan::modified(unsigned int flags) {

@@ -135,12 +135,9 @@ void SPText::remove_child(Inkscape::XML::Node *rch) {
 
 
 void SPText::update(SPCtx *ctx, guint flags) {
-    SPItem::update(ctx, flags);
-
-    guint cflags = (flags & SP_OBJECT_MODIFIED_CASCADE);
-
+    unsigned childflags = (flags & SP_OBJECT_MODIFIED_CASCADE);
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
-    	cflags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
+    	childflags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
     }
 
     // Create temporary list of children
@@ -157,13 +154,16 @@ void SPText::update(SPCtx *ctx, guint flags) {
         SPObject *child = reinterpret_cast<SPObject*>(l->data); // We just built this list, so cast is safe.
         l = g_slist_remove (l, child);
 
-        if (cflags || (child->uflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
+        if (childflags || (child->uflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
             /* fixme: Do we need transform? */
-            child->updateDisplay(ctx, cflags);
+            child->updateDisplay(ctx, childflags);
         }
 
         sp_object_unref(child, this);
     }
+
+    // update ourselves after updating children
+    SPItem::update(ctx, flags);
 
     if (flags & ( SP_OBJECT_STYLE_MODIFIED_FLAG |
                   SP_OBJECT_CHILD_MODIFIED_FLAG |

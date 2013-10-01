@@ -148,21 +148,21 @@ void SPTRef::set(unsigned int key, const gchar* value) {
 void SPTRef::update(SPCtx *ctx, guint flags) {
     debug("0x%p",this);
 
-    SPItem::update(ctx, flags);
-
+    unsigned childflags = flags;
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
-        flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
+        childflags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
     }
-
-    flags &= SP_OBJECT_MODIFIED_CASCADE;
+    childflags &= SP_OBJECT_MODIFIED_CASCADE;
 
     SPObject *child = this->stringChild;
     
     if (child) {
-        if ( flags || ( child->uflags & SP_OBJECT_MODIFIED_FLAG )) {
-            child->updateDisplay(ctx, flags);
+        if ( childflags || ( child->uflags & SP_OBJECT_MODIFIED_FLAG )) {
+            child->updateDisplay(ctx, childflags);
         }
     }
+
+    SPItem::update(ctx, flags);
 }
 
 void SPTRef::modified(unsigned int flags) {

@@ -603,13 +603,13 @@ void SPItem::update(SPCtx *ctx, guint flags) {
             }
         }
     }
-    /* Update bounding box data used by filters */
+    /* Update bounding box in user space, used for filter and objectBoundingBox units */
     if (item->style->filter.set && item->display) {
-        Geom::OptRect item_bbox = item->visualBounds();
+        Geom::OptRect item_bbox = item->geometricBounds();
         SPItemView *itemview = item->display;
         do {
-            if (itemview->arenaitem) // Already enlarged by visualBounds
-                itemview->arenaitem->setFilterBounds(item_bbox);
+            if (itemview->arenaitem)
+                itemview->arenaitem->setItemBounds(item_bbox);
         } while ( (itemview = itemview->next) );
     }
 
@@ -1065,12 +1065,8 @@ Inkscape::DrawingItem *SPItem::invoke_show(Inkscape::Drawing &drawing, unsigned 
             SP_MASK(mask)->sp_mask_set_bbox(mask_key, item_bbox);
             mask->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         }
-        if (style->filter.set && display) {
-            item_bbox = visualBounds();
-        }
         ai->setData(this);
-        // Already enlarged by visualBounds for filters
-        ai->setFilterBounds(item_bbox);
+        ai->setItemBounds(geometricBounds());
     }
 
     return ai;
