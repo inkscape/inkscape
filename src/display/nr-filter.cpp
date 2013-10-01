@@ -114,7 +114,7 @@ int Filter::render(Inkscape::DrawingItem const *item, DrawingContext &graphic, D
 
     Geom::Affine trans = item->ctm();
 
-    // Get filter are, the filter_effect_area is already done in visualBounds
+    // Get filter area, the filter_effect_area is already done in visualBounds
     Geom::OptRect filter_area = item->filterBounds();
     // Use the geometricBounds as a backup solution
     if (!filter_area) return 1;

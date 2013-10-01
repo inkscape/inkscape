@@ -179,8 +179,8 @@ DrawingShape::_renderItem(DrawingContext &ct, Geom::IntRect const &area, unsigne
         // update fill and stroke paints.
         // this cannot be done during nr_arena_shape_update, because we need a Cairo context
         // to render svg:pattern
-        has_fill   = _nrstyle.prepareFill(ct, _bbox);
-        has_stroke = _nrstyle.prepareStroke(ct, _bbox);
+        has_fill   = _nrstyle.prepareFill(ct, _filter_bbox);
+        has_stroke = _nrstyle.prepareStroke(ct, _filter_bbox);
         has_stroke &= (_nrstyle.stroke_width != 0);
 
         if (has_fill || has_stroke) {
