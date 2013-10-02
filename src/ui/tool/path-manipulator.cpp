@@ -459,7 +459,10 @@ void PathManipulator::weldSegments()
             if (j->selected()) ++num_selected;
             else ++num_unselected;
         }
-        if (num_selected < 3) continue;
+
+        // if 2 or fewer nodes are selected, there can't be any middle points to remove.
+        if (num_selected <= 2) continue;
+
         if (num_unselected == 0 && sp->closed()) {
             // if all nodes in a closed subpath are selected, the operation doesn't make much sense
             continue;
@@ -489,14 +492,16 @@ void PathManipulator::weldSegments()
             }
             if (num_points > 2) {
                 // remove nodes in the middle
+                // TODO: fit bezier to the former shape
                 sel_beg = sel_beg.next();
                 while (sel_beg != sel_end.prev()) {
                     NodeList::iterator next = sel_beg.next();
                     sp->erase(sel_beg);
                     sel_beg = next;
                 }
-                sel_beg = sel_end;
             }
+            sel_beg = sel_end;
+            // decrease num_selected by the number of points processed
             num_selected -= num_points;
         }
     }
