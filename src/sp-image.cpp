@@ -433,73 +433,75 @@ void SPImage::update(SPCtx *ctx, unsigned int flags) {
     this->ox = this->x.computed;
     this->oy = this->y.computed;
 
-    int pixwidth = this->pixbuf->width();
-    int pixheight = this->pixbuf->height();
+    if (this->pixbuf) {
+        int pixwidth = this->pixbuf->width();
+        int pixheight = this->pixbuf->height();
 
-    this->sx = this->width.computed / pixwidth;
-    this->sy = this->height.computed / pixheight;
+        this->sx = this->width.computed / pixwidth;
+        this->sy = this->height.computed / pixheight;
 
-    // preserveAspectRatio calculate bounds / clipping rectangle -- EAF
-    if (this->pixbuf && (this->aspect_align != SP_ASPECT_NONE)) {
-        double x, y;
+        // preserveAspectRatio calculate bounds / clipping rectangle -- EAF
+        if (this->aspect_align != SP_ASPECT_NONE) {
+            double x, y;
 
-        switch (this->aspect_align) {
-            case SP_ASPECT_XMIN_YMIN:
-                x = 0.0;
-                y = 0.0;
-                break;
-            case SP_ASPECT_XMID_YMIN:
-                x = 0.5;
-                y = 0.0;
-                break;
-            case SP_ASPECT_XMAX_YMIN:
-                x = 1.0;
-                y = 0.0;
-                break;
-            case SP_ASPECT_XMIN_YMID:
-                x = 0.0;
-                y = 0.5;
-                break;
-            case SP_ASPECT_XMID_YMID:
-                x = 0.5;
-                y = 0.5;
-                break;
-            case SP_ASPECT_XMAX_YMID:
-                x = 1.0;
-                y = 0.5;
-                break;
-            case SP_ASPECT_XMIN_YMAX:
-                x = 0.0;
-                y = 1.0;
-                break;
-            case SP_ASPECT_XMID_YMAX:
-                x = 0.5;
-                y = 1.0;
-                break;
-            case SP_ASPECT_XMAX_YMAX:
-                x = 1.0;
-                y = 1.0;
-                break;
-            default:
-                x = 0.0;
-                y = 0.0;
-                break;
+            switch (this->aspect_align) {
+                case SP_ASPECT_XMIN_YMIN:
+                    x = 0.0;
+                    y = 0.0;
+                    break;
+                case SP_ASPECT_XMID_YMIN:
+                    x = 0.5;
+                    y = 0.0;
+                    break;
+                case SP_ASPECT_XMAX_YMIN:
+                    x = 1.0;
+                    y = 0.0;
+                    break;
+                case SP_ASPECT_XMIN_YMID:
+                    x = 0.0;
+                    y = 0.5;
+                    break;
+                case SP_ASPECT_XMID_YMID:
+                    x = 0.5;
+                    y = 0.5;
+                    break;
+                case SP_ASPECT_XMAX_YMID:
+                    x = 1.0;
+                    y = 0.5;
+                    break;
+                case SP_ASPECT_XMIN_YMAX:
+                    x = 0.0;
+                    y = 1.0;
+                    break;
+                case SP_ASPECT_XMID_YMAX:
+                    x = 0.5;
+                    y = 1.0;
+                    break;
+                case SP_ASPECT_XMAX_YMAX:
+                    x = 1.0;
+                    y = 1.0;
+                    break;
+                default:
+                    x = 0.0;
+                    y = 0.0;
+                    break;
+            }
+
+            if (this->aspect_clip == SP_ASPECT_SLICE) {
+                double scale = std::max(this->sx, this->sy);
+                this->sx = scale;
+                this->sy = scale;
+            } else {
+                double scale = std::min(this->sx, this->sy);
+                this->sx = scale;
+                this->sy = scale;
+            }
+
+            double vw = pixwidth * this->sx;
+            double vh = pixheight * this->sy;
+            this->ox += x * (this->width.computed - vw);
+            this->oy += y * (this->height.computed - vh);
         }
-
-        if (this->aspect_clip == SP_ASPECT_SLICE) {
-            double scale = std::max(this->sx, this->sy);
-            this->sx = scale;
-            this->sy = scale;
-        } else {
-            double scale = std::min(this->sx, this->sy);
-            this->sx = scale;
-            this->sy = scale;
-        }
-
-        double vw = pixwidth * this->sx;
-        double vh = pixheight * this->sy;
-        this->ox += x * (this->width.computed - vw);
-        this->oy += y * (this->height.computed - vh);
     }
     sp_image_update_canvas_image ((SPImage *) this);
 }
