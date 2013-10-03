@@ -203,6 +203,7 @@ namespace Inkscape
       font_list_store->thaw_notify();
     }
 
+    // FIXME: why do we parse the style attribute instead of the object's SPStyle?
     void
     FontLister::update_font_list_recursive( SPObject *r, std::list<Glib::ustring> *l ) {
 
