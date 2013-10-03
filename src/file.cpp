@@ -135,14 +135,17 @@ SPDesktop *sp_file_new(const std::string &templ)
     Inkscape::XML::Node *myRoot = doc->getReprRoot();
     Inkscape::XML::Node *nodeToRemove = sp_repr_lookup_name(myRoot, "inkscape:_templateinfo");
     if (nodeToRemove != NULL){
+        DocumentUndo::setUndoSensitive(doc, false);
         sp_repr_unparent(nodeToRemove);
         delete nodeToRemove;
-        DocumentUndo::clearUndo(doc);
+        DocumentUndo::setUndoSensitive(doc, true);
     }
     
     // Set viewBox if it doesn't exist
     if (!doc->getRoot()->viewBox_set) {
+        DocumentUndo::setUndoSensitive(doc, false);
         doc->setViewBox(Geom::Rect::from_xywh(0, 0, doc->getWidth().quantity, doc->getHeight().quantity));
+        DocumentUndo::setUndoSensitive(doc, true);
     }
     
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
