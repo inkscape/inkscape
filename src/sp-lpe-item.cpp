@@ -531,6 +531,26 @@ bool SPLPEItem::hasPathEffect() const
     return true;
 }
 
+bool SPLPEItem::hasPathEffectOfType(int const type) const
+{
+    if (path_effect_list->empty()) {
+        return false;
+    }
+
+    for (PathEffectList::const_iterator it = path_effect_list->begin(); it != path_effect_list->end(); ++it)
+    {
+        LivePathEffectObject const *lpeobj = (*it)->lpeobject;
+        if (lpeobj) {
+            Inkscape::LivePathEffect::Effect const* lpe = lpeobj->get_lpe();
+            if (lpe && (lpe->effectType() == type)) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
 bool SPLPEItem::hasPathEffectRecursive() const
 {
     if (parent && SP_IS_LPE_ITEM(parent)) {
@@ -546,25 +566,15 @@ SPLPEItem::getPathEffectOfType(int type)
 {
     std::list<Inkscape::LivePathEffect::LPEObjectReference *>::iterator i;
     for (i = path_effect_list->begin(); i != path_effect_list->end(); ++i) {
-        Inkscape::LivePathEffect::Effect* lpe = (*i)->lpeobject->get_lpe();
-        if (lpe && (lpe->effectType() == type)) {
-            return lpe;
+        LivePathEffectObject *lpeobj = (*i)->lpeobject;
+        if (lpeobj) {
+            Inkscape::LivePathEffect::Effect* lpe = lpeobj->get_lpe();
+            if (lpe && (lpe->effectType() == type)) {
+                return lpe;
+            }
         }
     }
     return NULL;
-}
-
-/* Return false if the item is not a path or already has a shape applied */
-bool sp_lpe_item_can_accept_freehand_shape(SPLPEItem *lpeitem)
-{
-    if (!SP_IS_PATH(lpeitem))
-        return false;
-
-    if (lpeitem->getPathEffectOfType(Inkscape::LivePathEffect::FREEHAND_SHAPE)) {
-        return false;
-    }
-
-    return true;
 }
 
 void sp_lpe_item_edit_next_param_oncanvas(SPLPEItem *lpeitem, SPDesktop *dt)

@@ -265,7 +265,7 @@ Geom::Affine SPPath::set_transform(Geom::Affine const &transform) {
 
     // Transform the original-d path if this is a valid LPE this, other else the (ordinary) path
     if (_curve_before_lpe && hasPathEffectRecursive()) {
-        if (getPathEffectOfType(Inkscape::LivePathEffect::CLONE_ORIGINAL)) {
+        if (this->hasPathEffectOfType(Inkscape::LivePathEffect::CLONE_ORIGINAL)) {
             // if path has the CLONE_ORIGINAL LPE applied, don't write the transform to the pathdata, but write it 'unoptimized'
             return transform;
         } else {
