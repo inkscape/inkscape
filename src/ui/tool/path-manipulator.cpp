@@ -203,7 +203,7 @@ void PathManipulator::writeXML()
         sp_object_ref(_path);
         _path->deleteObject(true, true);
         sp_object_unref(_path);
-        _path = 0;
+        _path = NULL;
     }
     _observer->unblock();
 }
@@ -1206,7 +1206,8 @@ void PathManipulator::_createGeometryFromControlPoints(bool alert_LPE)
     Geom::PathVector pathv = builder.peek() * (_edit_transform * _i2d_transform).inverse();
     _spcurve->set_pathvector(pathv);
     if (alert_LPE) {
-        if (_path->hasPathEffect()) {
+        /// \todo note that _path can be an Inkscape::LivePathEffect::Effect* too, kind of confusing, rework member naming?
+        if (SP_IS_LPE_ITEM(_path) && _path->hasPathEffect()) {
             PathEffectList effect_list = sp_lpe_item_get_effect_list(_path);
             LivePathEffect::LPEPowerStroke *lpe_pwr = dynamic_cast<LivePathEffect::LPEPowerStroke*>( effect_list.front()->lpeobject->get_lpe() );
             if (lpe_pwr) {
