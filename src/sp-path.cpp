@@ -307,7 +307,7 @@ g_message("sp_path_update_patheffect");
          * This is very important for LPEs to work properly! (the bbox might be recalculated depending on the curve in shape)*/
         this->setCurveInsync(curve, TRUE);
 
-        bool success = sp_lpe_item_perform_path_effect(this, curve);
+        bool success = this->performPathEffect(curve);
 
         if (success && write) {
             // could also do this->getRepr()->updateRepr();  but only the d attribute needs updating.

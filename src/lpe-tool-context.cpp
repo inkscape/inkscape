@@ -290,7 +290,7 @@ int lpetool_item_has_construction(SPLPEToolContext */*lc*/, SPItem *item)
         return -1;
     }
 
-    Inkscape::LivePathEffect::Effect* lpe = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
+    Inkscape::LivePathEffect::Effect* lpe = SP_LPE_ITEM(item)->getCurrentLPE();
     if (!lpe) {
         return -1;
     }

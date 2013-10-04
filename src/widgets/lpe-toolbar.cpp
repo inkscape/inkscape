@@ -145,7 +145,7 @@ static void sp_lpetool_toolbox_sel_changed(Inkscape::Selection *selection, GObje
     SPItem *item = selection->singleItem();
     if (item && SP_IS_LPE_ITEM(item) && lpetool_item_has_construction(lc, item)) {
         SPLPEItem *lpeitem = SP_LPE_ITEM(item);
-        Effect* lpe = sp_lpe_item_get_current_lpe(lpeitem);
+        Effect* lpe = lpeitem->getCurrentLPE();
         if (lpe && lpe->effectType() == LINE_SEGMENT) {
             LPELineSegment *lpels = static_cast<LPELineSegment*>(lpe);
             g_object_set_data(tbl, "currentlpe", lpe);

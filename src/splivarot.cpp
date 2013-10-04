@@ -419,7 +419,7 @@ sp_selected_path_boolop(Inkscape::Selection *selection, SPDesktop *desktop, bool
         {
             // apply live path effects prior to performing boolean operation
             if (SP_IS_LPE_ITEM(l->data)) {
-                sp_lpe_item_remove_all_path_effects(SP_LPE_ITEM(l->data), true);
+                SP_LPE_ITEM(l->data)->removeAllPathEffects(true);
             }
 
             SPCSSAttr *css = sp_repr_css_attr(reinterpret_cast<SPObject *>(il->data)->getRepr(), "style");

@@ -207,7 +207,7 @@ void SPGenericEllipse::set_shape()
 
     if (hasPathEffect() && pathEffectsEnabled()) {
         SPCurve *c_lpe = curve->copy();
-        bool success = sp_lpe_item_perform_path_effect(this, c_lpe);
+        bool success = this->performPathEffect(c_lpe);
 
         if (success) {
             this->setCurveInsync(c_lpe, TRUE);

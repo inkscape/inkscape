@@ -212,7 +212,7 @@ static void spdc_paste_curve_as_freehand_shape(const SPCurve *c, SPDrawContext *
     // TODO: Don't paste path if nothing is on the clipboard
 
     Effect::createAndApply(PATTERN_ALONG_PATH, dc->desktop->doc(), item);
-    Effect* lpe = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
+    Effect* lpe = SP_LPE_ITEM(item)->getCurrentLPE();
     gchar *svgd = sp_svg_write_path(c->get_pathvector());
     static_cast<LPEPatternAlongPath*>(lpe)->pattern.paste_param_path(svgd);
 }
@@ -222,7 +222,7 @@ static void spdc_apply_powerstroke_shape(const std::vector<Geom::Point> & points
     using namespace Inkscape::LivePathEffect;
 
     Effect::createAndApply(POWERSTROKE, dc->desktop->doc(), item);
-    Effect* lpe = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
+    Effect* lpe = SP_LPE_ITEM(item)->getCurrentLPE();
     static_cast<LPEPowerStroke*>(lpe)->offset_points.param_set_and_write_new_value(points);
 
     // write powerstroke parameters:
@@ -297,7 +297,7 @@ static void spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item
             {
                 // take shape from clipboard; TODO: catch the case where clipboard is empty
                 Effect::createAndApply(PATTERN_ALONG_PATH, dc->desktop->doc(), item);
-                Effect* lpe = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
+                Effect* lpe = SP_LPE_ITEM(item)->getCurrentLPE();
                 static_cast<LPEPatternAlongPath*>(lpe)->pattern.on_paste_button_click();
 
                 shape_applied = true;

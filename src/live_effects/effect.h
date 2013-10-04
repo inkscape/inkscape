@@ -66,7 +66,7 @@ public:
     /*
      * isReady() indicates whether all preparations which are necessary to apply the LPE are done,
      * e.g., waiting for a parameter path either before the effect is created or when it needs a
-     * path as argument. This is set in sp_lpe_item_add_path_effect().
+     * path as argument. This is set in SPLPEItem::addPathEffect().
      */
     inline bool isReady() const { return is_ready; }
     inline void setReady(bool ready = true) { is_ready = ready; }

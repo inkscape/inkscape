@@ -132,7 +132,7 @@ SPPenContext::~SPPenContext() {
 
     if (this->expecting_clicks_for_LPE > 0) {
         // we received too few clicks to sanely set the parameter path so we remove the LPE from the item
-        sp_lpe_item_remove_current_path_effect(this->waiting_item, false);
+        this->waiting_item->removeCurrentPathEffect(false);
     }
 }
 

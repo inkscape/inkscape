@@ -46,7 +46,7 @@ static KnotHolder *sp_lpe_knot_holder(SPItem *item, SPDesktop *desktop)
 {
     KnotHolder *knot_holder = new KnotHolder(desktop, item, NULL);
 
-    Inkscape::LivePathEffect::Effect *effect = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
+    Inkscape::LivePathEffect::Effect *effect = SP_LPE_ITEM(item)->getCurrentLPE();
     effect->addHandles(knot_holder, desktop, item);
 
     return knot_holder;
@@ -61,9 +61,9 @@ KnotHolder *createKnotHolder(SPItem *item, SPDesktop *desktop)
     KnotHolder *knotholder = NULL;
 
     if (SP_IS_LPE_ITEM(item) &&
-        sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item)) &&
-        sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item))->isVisible() &&
-        sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item))->providesKnotholder()) {
+        SP_LPE_ITEM(item)->getCurrentLPE() &&
+        SP_LPE_ITEM(item)->getCurrentLPE()->isVisible() &&
+        SP_LPE_ITEM(item)->getCurrentLPE()->providesKnotholder()) {
         knotholder = sp_lpe_knot_holder(item, desktop);
     } else if (SP_IS_RECT(item)) {
         knotholder = new RectKnotHolder(desktop, item, NULL);

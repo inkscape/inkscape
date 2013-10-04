@@ -482,7 +482,7 @@ void sp_selection_duplicate(SPDesktop *desktop, bool suppressDone)
         if (fork_livepatheffects) {
             SPObject *new_obj = doc->getObjectByRepr(copy);
             if (new_obj && SP_IS_LPE_ITEM(new_obj)) {
-                sp_lpe_item_fork_path_effects_if_necessary(SP_LPE_ITEM(new_obj), 1);
+                SP_LPE_ITEM(new_obj)->forkPathEffectsIfNecessary(1);
             }
         }
 
@@ -1184,7 +1184,7 @@ static void sp_selection_remove_livepatheffect_impl(SPItem *item)
 {
     if ( SPLPEItem *lpeitem = dynamic_cast<SPLPEItem*>(item) ) {
         if ( lpeitem->hasPathEffect() ) {
-            sp_lpe_item_remove_all_path_effects(SP_LPE_ITEM(item), false);
+            lpeitem->removeAllPathEffects(false);
         }
     }
 }
@@ -2321,7 +2321,7 @@ void sp_selection_next_patheffect_param(SPDesktop * dt)
         SPItem *item = selection->singleItem();
         if ( SPLPEItem *lpeitem = dynamic_cast<SPLPEItem*>(item) ) {
             if (lpeitem->hasPathEffect()) {
-                sp_lpe_item_edit_next_param_oncanvas(lpeitem, dt);
+                lpeitem->editNextParamOncanvas(dt);
             } else {
                 dt->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("The selection has no applied path effect."));
             }
@@ -2779,7 +2779,7 @@ void sp_selection_clone_original_path_lpe(SPDesktop *desktop)
         SPObject *clone_obj = desktop->doc()->getObjectById(clone->attribute("id"));
         if (SP_IS_LPE_ITEM(clone_obj)) {
             gchar *href = g_strdup_printf("#%s", lpe_id);
-            sp_lpe_item_add_path_effect( SP_LPE_ITEM(clone_obj), href, false );
+            SP_LPE_ITEM(clone_obj)->addPathEffect( href, false );
             g_free(href);
         }
     }

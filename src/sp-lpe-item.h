@@ -70,6 +70,8 @@ public:
 
 	virtual void update_patheffect(bool write);
 
+    bool performPathEffect(SPCurve *curve);
+
     bool pathEffectsEnabled() const;
     bool hasPathEffect() const;
     bool hasPathEffectOfType(int const type) const;
@@ -82,19 +84,20 @@ public:
 
     void downCurrentPathEffect();
     void upCurrentPathEffect();
+    Inkscape::LivePathEffect::LPEObjectReference* getCurrentLPEReference();
+    Inkscape::LivePathEffect::Effect* getCurrentLPE();
+    bool setCurrentPathEffect(Inkscape::LivePathEffect::LPEObjectReference* lperef);
+    void removeCurrentPathEffect(bool keep_paths);
+    void removeAllPathEffects(bool keep_paths);
+    void addPathEffect(gchar *value, bool reset);
+    void addPathEffect(LivePathEffectObject * new_lpeobj);
+
+    bool forkPathEffectsIfNecessary(unsigned int nr_of_allowed_users = 1);
+
+    void editNextParamOncanvas(SPDesktop *dt);
 };
 
-void sp_lpe_item_update_patheffect (SPLPEItem *lpeitem, bool wholetree, bool write);
-bool sp_lpe_item_perform_path_effect(SPLPEItem *lpeitem, SPCurve *curve);
-void sp_lpe_item_add_path_effect(SPLPEItem *lpeitem, gchar *value, bool reset);
-void sp_lpe_item_add_path_effect(SPLPEItem *lpeitem, LivePathEffectObject * new_lpeobj);
-bool sp_lpe_item_fork_path_effects_if_necessary(SPLPEItem *lpeitem, unsigned int nr_of_allowed_users = 1);
-void sp_lpe_item_remove_all_path_effects(SPLPEItem *lpeitem, bool keep_paths);
-void sp_lpe_item_remove_current_path_effect(SPLPEItem *lpeitem, bool keep_paths);
-void sp_lpe_item_edit_next_param_oncanvas(SPLPEItem *lpeitem, SPDesktop *dt);
-Inkscape::LivePathEffect::LPEObjectReference* sp_lpe_item_get_current_lpereference(SPLPEItem *lpeitem);
-Inkscape::LivePathEffect::Effect* sp_lpe_item_get_current_lpe(SPLPEItem *lpeitem);
-bool sp_lpe_item_set_current_path_effect(SPLPEItem *lpeitem, Inkscape::LivePathEffect::LPEObjectReference* lperef);
+void sp_lpe_item_update_patheffect (SPLPEItem *lpeitem, bool wholetree, bool write); // careful, class already has method with *very* similar name!
 
 #endif /* !SP_LPE_ITEM_H_SEEN */
 
