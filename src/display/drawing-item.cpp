@@ -746,7 +746,6 @@ DrawingItem::pick(Geom::Point const &p, double delta, unsigned flags)
 
     Geom::OptIntRect box = (outline || (flags & PICK_AS_CLIP)) ? _bbox : _drawbox;
     if (!box) {
-        g_warning("bbox unset when picking");
         return NULL;
     }
 
