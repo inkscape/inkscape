@@ -57,7 +57,7 @@ public:
 
     //Usefull??
     //    protected: 
-    //virtual void addCanvasIndicators(SPLPEItem *lpeitem, std::vector<Geom::PathVector> &hp_vec); 
+    //virtual void addCanvasIndicators(SPLPEItem const *lpeitem, std::vector<Geom::PathVector> &hp_vec); 
 
 private:
     ScalarParam  nbgenerations;

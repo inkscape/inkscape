@@ -588,7 +588,7 @@ LPEKnot::doBeforeEffect (SPLPEItem const* lpeitem)
 }
 
 void
-LPEKnot::addCanvasIndicators(SPLPEItem */*lpeitem*/, std::vector<Geom::PathVector> &hp_vec)
+LPEKnot::addCanvasIndicators(SPLPEItem const */*lpeitem*/, std::vector<Geom::PathVector> &hp_vec)
 {
     using namespace Geom;
     double r = switcher_size*.1;

@@ -176,7 +176,7 @@ LPEVonKoch::doEffect_path (std::vector<Geom::Path> const & path_in)
 
 //Usefull?? 
 //void 
-//LPEVonKoch::addCanvasIndicators(SPLPEItem */*lpeitem*/, std::vector<Geom::PathVector> &hp_vec)
+//LPEVonKoch::addCanvasIndicators(SPLPEItem const */*lpeitem*/, std::vector<Geom::PathVector> &hp_vec)
 /*{
     using namespace Geom;
     if (draw_boxes.get_value()){
