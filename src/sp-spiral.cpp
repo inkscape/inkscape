@@ -380,7 +380,7 @@ void SPSpiral::set_shape() {
     setCurveInsync( c, TRUE);
     setCurveBeforeLPE( c );
 
-    if (hasPathEffect() && sp_lpe_item_path_effects_enabled(this)) {
+    if (hasPathEffect() && pathEffectsEnabled()) {
         SPCurve *c_lpe = c->copy();
         bool success = sp_lpe_item_perform_path_effect(this, c_lpe);
 

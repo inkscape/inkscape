@@ -76,7 +76,7 @@ gchar* SPPath::description() {
     
     if (hasPathEffect()) {
         Glib::ustring s;
-        PathEffectList effect_list =  sp_lpe_item_get_effect_list(this);
+        PathEffectList effect_list =  this->getEffectList();
         
         for (PathEffectList::iterator it = effect_list.begin(); it != effect_list.end(); ++it)
         {

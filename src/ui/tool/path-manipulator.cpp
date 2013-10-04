@@ -1208,7 +1208,7 @@ void PathManipulator::_createGeometryFromControlPoints(bool alert_LPE)
     if (alert_LPE) {
         /// \todo note that _path can be an Inkscape::LivePathEffect::Effect* too, kind of confusing, rework member naming?
         if (SP_IS_LPE_ITEM(_path) && _path->hasPathEffect()) {
-            PathEffectList effect_list = sp_lpe_item_get_effect_list(_path);
+            PathEffectList effect_list = _path->getEffectList();
             LivePathEffect::LPEPowerStroke *lpe_pwr = dynamic_cast<LivePathEffect::LPEPowerStroke*>( effect_list.front()->lpeobject->get_lpe() );
             if (lpe_pwr) {
                 lpe_pwr->adjustForNewPath(pathv);

@@ -206,7 +206,7 @@ bool sp_lpe_item_perform_path_effect(SPLPEItem *lpeitem, SPCurve *curve) {
     	return false;
     }
 
-    if (lpeitem->hasPathEffect() && sp_lpe_item_path_effects_enabled(lpeitem)) {
+    if (lpeitem->hasPathEffect() && lpeitem->pathEffectsEnabled()) {
         for (PathEffectList::iterator it = lpeitem->path_effect_list->begin(); it != lpeitem->path_effect_list->end(); ++it)
         {
             LivePathEffectObject *lpeobj = (*it)->lpeobject;
@@ -273,11 +273,11 @@ sp_lpe_item_update_patheffect (SPLPEItem *lpeitem, bool wholetree, bool write)
     g_return_if_fail (lpeitem != NULL);
     g_return_if_fail (SP_IS_LPE_ITEM (lpeitem));
 
-    if (!sp_lpe_item_path_effects_enabled(lpeitem))
+    if (!lpeitem->pathEffectsEnabled())
         return;
 
     // TODO: hack! this will be removed when path length measuring is reimplemented in a better way
-    PathEffectList lpelist = sp_lpe_item_get_effect_list(lpeitem);
+    PathEffectList lpelist = lpeitem->getEffectList();
     std::list<Inkscape::LivePathEffect::LPEObjectReference *>::iterator i;
     for (i = lpelist.begin(); i != lpelist.end(); ++i) {
         if ((*i)->lpeobject) {
@@ -452,13 +452,13 @@ void sp_lpe_item_remove_all_path_effects(SPLPEItem *lpeitem, bool keep_paths)
     }
 }
 
-void sp_lpe_item_down_current_path_effect(SPLPEItem *lpeitem)
+void SPLPEItem::downCurrentPathEffect()
 {
-    Inkscape::LivePathEffect::LPEObjectReference* lperef = sp_lpe_item_get_current_lpereference(lpeitem);
+    Inkscape::LivePathEffect::LPEObjectReference* lperef = sp_lpe_item_get_current_lpereference(this);
     if (!lperef)
         return;
 
-    PathEffectList new_list = *lpeitem->path_effect_list;
+    PathEffectList new_list = *this->path_effect_list;
     PathEffectList::iterator cur_it = find( new_list.begin(), new_list.end(), lperef );
     if (cur_it != new_list.end()) {
         PathEffectList::iterator down_it = cur_it;
@@ -468,18 +468,18 @@ void sp_lpe_item_down_current_path_effect(SPLPEItem *lpeitem)
         }
     }
     std::string r = patheffectlist_write_svg(new_list);
-    lpeitem->getRepr()->setAttribute("inkscape:path-effect", r.c_str());
+    this->getRepr()->setAttribute("inkscape:path-effect", r.c_str());
 
-    sp_lpe_item_cleanup_original_path_recursive(lpeitem);
+    sp_lpe_item_cleanup_original_path_recursive(this);
 }
 
-void sp_lpe_item_up_current_path_effect(SPLPEItem *lpeitem)
+void SPLPEItem::upCurrentPathEffect()
 {
-    Inkscape::LivePathEffect::LPEObjectReference* lperef = sp_lpe_item_get_current_lpereference(lpeitem);
+    Inkscape::LivePathEffect::LPEObjectReference* lperef = sp_lpe_item_get_current_lpereference(this);
     if (!lperef)
         return;
 
-    PathEffectList new_list = *lpeitem->path_effect_list;
+    PathEffectList new_list = *this->path_effect_list;
     PathEffectList::iterator cur_it = find( new_list.begin(), new_list.end(), lperef );
     if (cur_it != new_list.end() && cur_it != new_list.begin()) {
         PathEffectList::iterator up_it = cur_it;
@@ -488,9 +488,9 @@ void sp_lpe_item_up_current_path_effect(SPLPEItem *lpeitem)
     }
     std::string r = patheffectlist_write_svg(new_list);
 
-    lpeitem->getRepr()->setAttribute("inkscape:path-effect", r.c_str());
+    this->getRepr()->setAttribute("inkscape:path-effect", r.c_str());
 
-    sp_lpe_item_cleanup_original_path_recursive(lpeitem);
+    sp_lpe_item_cleanup_original_path_recursive(this);
 }
 
 /** used for shapes so they can see if they should also disable shape calculation and read from d= */
@@ -647,15 +647,15 @@ static std::string hreflist_write_svg(HRefList const & list)
 }
 
 // Return a copy of the effect list
-PathEffectList sp_lpe_item_get_effect_list(SPLPEItem *lpeitem)
+PathEffectList SPLPEItem::getEffectList()
 {
-    return *(lpeitem->path_effect_list);
+    return *path_effect_list;
 }
 
 // Return a copy of the effect list
-PathEffectList const sp_lpe_item_get_effect_list(SPLPEItem const *lpeitem)
+PathEffectList const SPLPEItem::getEffectList() const
 {
-    return *(lpeitem->path_effect_list);
+    return *path_effect_list;
 }
 
 Inkscape::LivePathEffect::LPEObjectReference* sp_lpe_item_get_current_lpereference(SPLPEItem *lpeitem)
@@ -738,7 +738,7 @@ bool sp_lpe_item_fork_path_effects_if_necessary(SPLPEItem *lpeitem, unsigned int
         nr_of_allowed_users += lpeitem->hrefcount;
 
         std::vector<LivePathEffectObject const *> old_lpeobjs, new_lpeobjs;
-        PathEffectList effect_list =  sp_lpe_item_get_effect_list(lpeitem);
+        PathEffectList effect_list = lpeitem->getEffectList();
         for (PathEffectList::iterator it = effect_list.begin(); it != effect_list.end(); ++it)
         {
             LivePathEffectObject *lpeobj = (*it)->lpeobject;
@@ -773,9 +773,9 @@ static void sp_lpe_item_enable_path_effects(SPLPEItem *lpeitem, bool enable)
 }
 
 // Are the path effects enabled on this item ?
-bool sp_lpe_item_path_effects_enabled(SPLPEItem *lpeitem)
+bool SPLPEItem::pathEffectsEnabled() const
 {
-    return lpeitem->path_effects_enabled > 0;
+    return path_effects_enabled > 0;
 }
 
 /*

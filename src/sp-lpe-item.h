@@ -70,11 +70,18 @@ public:
 
 	virtual void update_patheffect(bool write);
 
+    bool pathEffectsEnabled() const;
     bool hasPathEffect() const;
     bool hasPathEffectOfType(int const type) const;
     bool hasPathEffectRecursive() const;
     Inkscape::LivePathEffect::Effect* getPathEffectOfType(int type);
     bool hasBrokenPathEffect() const;
+
+    PathEffectList getEffectList();
+    PathEffectList const getEffectList() const;
+
+    void downCurrentPathEffect();
+    void upCurrentPathEffect();
 };
 
 void sp_lpe_item_update_patheffect (SPLPEItem *lpeitem, bool wholetree, bool write);
@@ -84,15 +91,10 @@ void sp_lpe_item_add_path_effect(SPLPEItem *lpeitem, LivePathEffectObject * new_
 bool sp_lpe_item_fork_path_effects_if_necessary(SPLPEItem *lpeitem, unsigned int nr_of_allowed_users = 1);
 void sp_lpe_item_remove_all_path_effects(SPLPEItem *lpeitem, bool keep_paths);
 void sp_lpe_item_remove_current_path_effect(SPLPEItem *lpeitem, bool keep_paths);
-void sp_lpe_item_down_current_path_effect(SPLPEItem *lpeitem);
-void sp_lpe_item_up_current_path_effect(SPLPEItem *lpeitem);
 void sp_lpe_item_edit_next_param_oncanvas(SPLPEItem *lpeitem, SPDesktop *dt);
-PathEffectList sp_lpe_item_get_effect_list(SPLPEItem *lpeitem);
-PathEffectList const sp_lpe_item_get_effect_list(SPLPEItem const *lpeitem);
 Inkscape::LivePathEffect::LPEObjectReference* sp_lpe_item_get_current_lpereference(SPLPEItem *lpeitem);
 Inkscape::LivePathEffect::Effect* sp_lpe_item_get_current_lpe(SPLPEItem *lpeitem);
 bool sp_lpe_item_set_current_path_effect(SPLPEItem *lpeitem, Inkscape::LivePathEffect::LPEObjectReference* lperef);
-bool sp_lpe_item_path_effects_enabled(SPLPEItem *lpeitem);
 
 #endif /* !SP_LPE_ITEM_H_SEEN */
 
