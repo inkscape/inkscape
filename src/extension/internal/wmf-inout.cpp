@@ -46,6 +46,10 @@
 #include "util/units.h"
 #include "clear-n_.h"
 #include "document.h"
+#include "shape-editor.h"
+#include "sp-namedview.h"
+#include "document-undo.h"
+#include "inkscape.h"
 
 
 #include "wmf-inout.h"
@@ -3173,7 +3177,29 @@ Wmf::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
 
     // Set viewBox if it doesn't exist
     if (!doc->getRoot()->viewBox_set) {
+        bool saved = Inkscape::DocumentUndo::getUndoSensitive(doc);
+        Inkscape::DocumentUndo::setUndoSensitive(doc, false);
+        
+        doc->ensureUpToDate();
+        
+        // Set document unit
+        Inkscape::XML::Node *repr = sp_document_namedview(doc, 0)->getRepr();
+        Inkscape::SVGOStringStream os;
+        os << doc->getWidth().unit->abbr;
+        repr->setAttribute("inkscape:document-units", os.str().c_str());
+        
+        // Set viewBox
         doc->setViewBox(Geom::Rect::from_xywh(0, 0, doc->getWidth().quantity, doc->getHeight().quantity));
+        
+        // Scale and translate objects
+        double scale = Inkscape::Util::Quantity::convert(1, "px", doc->getWidth().unit->abbr);
+        ShapeEditor::blockSetItem(true);
+        doc->getRoot()->scaleChildItemsRec(Geom::Scale(scale), Geom::Point(0, SP_ACTIVE_DOCUMENT->getHeight().value("px")));
+        ShapeEditor::blockSetItem(false);
+        
+        doc->ensureUpToDate();
+        
+        Inkscape::DocumentUndo::setUndoSensitive(doc, saved);
     }
 
     return doc;
