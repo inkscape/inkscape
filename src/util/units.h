@@ -14,8 +14,10 @@
 #define INKSCAPE_UTIL_UNITS_H
 
 #include <map>
+#include <boost/operators.hpp>
 #include <glibmm/ustring.h>
 #include "svg/svg-length.h"
+#include "unordered-containers.h"
 
 namespace Inkscape {
 namespace Util {
@@ -33,8 +35,10 @@ enum UnitType {
 
 const char DEG[] = "°";
 
-class Unit {
- public:
+class Unit
+    : boost::equality_comparable<Unit>
+{
+public:
     Unit();
     Unit(UnitType type,
          double factor,
@@ -54,8 +58,9 @@ class Unit {
     int            defaultDigits() const;
 
     /** Checks if a unit is compatible with the specified unit. */
-    bool           compatibleWith(const Unit &u) const;
-    bool           compatibleWith(const Glib::ustring) const;
+    bool           compatibleWith(Unit const &u) const;
+    bool           compatibleWith(Glib::ustring const &) const;
+    bool           compatibleWith(char const *) const;
 
     UnitType       type;
     double         factor;
@@ -65,50 +70,53 @@ class Unit {
     Glib::ustring  description;
     
     /** Check if units are equal. */
-    friend bool operator== (const Unit &u1, const Unit &u2);
-    /** Check if units are not equal. */ 
-    friend bool operator!= (const Unit &u1, const Unit &u2);
+    bool operator==(Unit const &other) const;
     
-    /** Get SVG unit. */
+    /** Get SVG unit code. */
     int svgUnit() const;
 };
 
-class Quantity {
+class Quantity
+    : boost::totally_ordered<Quantity>
+{
 public:
-    const Unit *unit;
+    Unit const *unit;
     double quantity;
     
     /** Initialize a quantity. */
-    Quantity(double q, const Unit &u);          // constructor
-    Quantity(double q, const Glib::ustring u);  // constructor
+    Quantity(double q, Unit const &u);
+    Quantity(double q, Glib::ustring const &u);
+    Quantity(double q, char const *u);
     
     /** Checks if a quantity is compatible with the specified unit. */
-    bool compatibleWith(const Unit &u) const;
-    bool compatibleWith(const Glib::ustring u) const;
+    bool compatibleWith(Unit const &u) const;
+    bool compatibleWith(Glib::ustring const &u) const;
+    bool compatibleWith(char const *u) const;
     
     /** Return the quantity's value in the specified unit. */
-    double value(const Unit &u) const;
-    double value(const Glib::ustring u) const;
+    double value(Unit const &u) const;
+    double value(Glib::ustring const &u) const;
+    double value(char const *u) const;
     
     /** Return a printable string of the value in the specified unit. */
-    Glib::ustring string(const Unit &u) const;
-    Glib::ustring string(const Glib::ustring u) const;
+    Glib::ustring string(Unit const &u) const;
+    Glib::ustring string(Glib::ustring const &u) const;
     Glib::ustring string() const;
     
     /** Convert distances. */
-    static double convert(const double from_dist, const Unit &from, const Unit &to);
-    static double convert(const double from_dist, const Glib::ustring from, const Unit &to);
-    static double convert(const double from_dist, const Unit &from, const Glib::ustring to);
-    static double convert(const double from_dist, const Glib::ustring from, const Glib::ustring to);
-    
+    static double convert(double from_dist, Unit const &from, Unit const &to);
+    static double convert(double from_dist, Glib::ustring const &from, Unit const &to);
+    static double convert(double from_dist, Unit const &from, Glib::ustring const &to);
+    static double convert(double from_dist, Glib::ustring const &from, Glib::ustring const &to);
+    static double convert(double from_dist, char const *from, char const *to);
+
     /** Comparison operators. */
-    friend bool operator< (const Quantity &ql, const Quantity &qr);
-    friend bool operator> (const Quantity &ql, const Quantity &qr);
-    friend bool operator!= (const Quantity &q1, const Quantity &q2);
+    bool operator<(Quantity const &other) const;
+    bool operator==(Quantity const &other) const;
 };
 
 class UnitTable {
- public:
+public:
     /**
      * Initializes the unit tables and identifies the primary unit types.
      *
@@ -117,19 +125,21 @@ class UnitTable {
     UnitTable();
     virtual ~UnitTable();
 
-    typedef std::map<Glib::ustring, Unit*> UnitMap;
+    typedef INK_UNORDERED_MAP<Glib::ustring, Unit> UnitMap;
+    typedef INK_UNORDERED_MAP<unsigned, Unit*> UnitCodeMap;
 
     /** Add a new unit to the table */
     void    addUnit(Unit const &u, bool primary);
 
     /** Retrieve a given unit based on its string identifier */
-    Unit    getUnit(Glib::ustring const &name) const;
+    Unit const &getUnit(Glib::ustring const &name) const;
+    Unit const &getUnit(char const *name) const;
     
     /** Retrieve a given unit based on its SVGLength unit */
-    Unit    getUnit(SVGLength::Unit const u) const;
+    Unit const &getUnit(SVGLength::Unit u) const;
     
     /** Retrieve a quantity based on its string identifier */
-    Quantity getQuantity(Glib::ustring const &q) const;
+    Quantity parseQuantity(Glib::ustring const &q) const;
 
     /** Remove a unit definition from the given unit type table */
     bool    deleteUnit(Unit const &u);
@@ -138,7 +148,7 @@ class UnitTable {
     bool    hasUnit(Glib::ustring const &name) const;
 
     /** Provides an iteratable list of items in the given unit table */
-    UnitTable::UnitMap units(UnitType type) const;
+    UnitMap units(UnitType type) const;
 
     /** Returns the default unit abbr for the given type */
     Glib::ustring primary(UnitType type) const;
@@ -159,13 +169,14 @@ class UnitTable {
     /** Saves the current UnitTable to the given file. */
     bool    save(std::string const &filename);
 
- protected:
-    UnitTable::UnitMap  _unit_map;
+protected:
+    UnitCodeMap         _unit_map;
     Glib::ustring       _primary_unit[UNIT_TYPE_QTY];
 
     double              _linear_scale;
+    static Unit         _empty_unit;
 
- private:
+private:
     UnitTable(UnitTable const &t);
     UnitTable operator=(UnitTable const &t);
 

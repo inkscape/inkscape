@@ -33,11 +33,9 @@ bool UnitMenu::setUnitType(UnitType unit_type)
 {
     // Expand the unit widget with unit entries from the unit table
     UnitTable::UnitMap m = unit_table.units(unit_type);
-    UnitTable::UnitMap::iterator iter = m.begin();
-    while(iter != m.end()) {
-        Glib::ustring text = (*iter).first;
-        append(text);
-        ++iter;
+
+    for (UnitTable::UnitMap::iterator i = m.begin(); i != m.end(); ++i) {
+        append(i->first);
     }
     _type = unit_type;
     set_active_text(unit_table.primary(unit_type));

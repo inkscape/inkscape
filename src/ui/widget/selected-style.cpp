@@ -313,7 +313,7 @@ SelectedStyle::SelectedStyle(bool /*layout*/)
         Inkscape::Util::UnitTable::UnitMap::iterator iter = m.begin();
         while(iter != m.end()) {
             Gtk::RadioMenuItem *mi = Gtk::manage(new Gtk::RadioMenuItem(_sw_group));
-            mi->add(*(new Gtk::Label((*iter).first, 0.0, 0.5)));
+            mi->add(*(new Gtk::Label(iter->first, 0.0, 0.5)));
             _unit_mis = g_slist_append(_unit_mis, mi);
             Inkscape::Util::Unit const *u = new Inkscape::Util::Unit(unit_table.getUnit(iter->first));
             mi->signal_activate().connect(sigc::bind<Inkscape::Util::Unit>(sigc::mem_fun(*this, &SelectedStyle::on_popup_units), *u));

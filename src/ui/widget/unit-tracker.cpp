@@ -38,10 +38,10 @@ UnitTracker::UnitTracker(UnitType unit_type) :
     
     GtkTreeIter iter;
     UnitTable::UnitMap m = unit_table.units(unit_type);
-    UnitTable::UnitMap::iterator m_iter = m.begin();
-    while(m_iter != m.end()) {
-        Glib::ustring text = (*m_iter).first;
-        ++m_iter;
+    
+
+    for (UnitTable::UnitMap::iterator m_iter = m.begin(); m_iter != m.end(); ++m_iter) {
+        Glib::ustring text = m_iter->first;
         gtk_list_store_append(_store, &iter);
         gtk_list_store_set(_store, &iter, COLUMN_STRING, text.c_str(), -1);
     }

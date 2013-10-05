@@ -16,6 +16,8 @@
 # include "config.h"
 #endif
 
+#include <glibmm/ustring.h>
+
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if defined(HAVE_TR1_UNORDERED_SET)
 
@@ -25,12 +27,32 @@
 # define INK_UNORDERED_MAP std::tr1::unordered_map
 # define INK_HASH std::tr1::hash
 
+namespace std {
+namespace tr1 {
+template <>
+struct hash<Glib::ustring> : public std::unary_function<Glib::ustring, std::size_t> {
+    std::size_t operator()(Glib::ustring const &s) const {
+        return hash<std::string>()(s.raw());
+    }
+};
+} // namespace tr1
+} // namespace std
+
 #elif defined(HAVE_BOOST_UNORDERED_SET)
 # include <boost/unordered_set.hpp>
 # include <boost/unordered_map.hpp>
 # define INK_UNORDERED_SET boost::unordered_set
 # define INK_UNORDERED_MAP boost::unordered_map
 # define INK_HASH boost::hash
+
+namespace boost {
+template <>
+struct hash<Glib::ustring> : public std::unary_function<Glib::ustring, std::size_t> {
+    std::size_t operator()(Glib::ustring const &s) const {
+        return hash<std::string>()(s.raw());
+    }
+};
+} // namespace boost
 
 #elif defined(HAVE_EXT_HASH_SET)
 
@@ -52,6 +74,13 @@ struct hash<T *> : public std::unary_function<T *, std::size_t> {
         // Taken from Boost
         std::size_t x = static_cast<std::size_t>(reinterpret_cast<std::ptrdiff_t>(p));
         return x + (x >> 3);
+    }
+};
+
+template <>
+struct hash<Glib::ustring> : public std::unary_function<Glib::ustring, std::size_t> {
+    std::size_t operator()(Glib::ustring const &s) const {
+        return hash<std::string>()(s.raw());
     }
 };
 } // namespace __gnu_cxx

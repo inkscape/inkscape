@@ -214,18 +214,18 @@ CanvasAxonomGrid::readRepr()
 {
     gchar const *value;
     if ( (value = repr->attribute("originx")) ) {
-        Inkscape::Util::Quantity q = unit_table.getQuantity(value);
+        Inkscape::Util::Quantity q = unit_table.parseQuantity(value);
         gridunit = q.unit;
-        origin[Geom::X] = unit_table.getQuantity(value).value("px");
+        origin[Geom::X] = q.value("px");
     }
     if ( (value = repr->attribute("originy")) ) {
-        Inkscape::Util::Quantity q = unit_table.getQuantity(value);
+        Inkscape::Util::Quantity q = unit_table.parseQuantity(value);
         gridunit = q.unit;
-        origin[Geom::Y] = unit_table.getQuantity(value).value("px");
+        origin[Geom::Y] = q.value("px");
     }
 
     if ( (value = repr->attribute("spacingy")) ) {
-        Inkscape::Util::Quantity q = unit_table.getQuantity(value);
+        Inkscape::Util::Quantity q = unit_table.parseQuantity(value);
         gridunit = q.unit;
         lengthy = q.value("px");
         if (lengthy < 0.0500) lengthy = 0.0500;

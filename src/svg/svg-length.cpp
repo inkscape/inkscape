@@ -541,6 +541,8 @@ std::string sp_svg_length_write_with_units(SVGLength const &length)
     Inkscape::SVGOStringStream os;
     if (length.unit == SVGLength::PERCENT) {
         os << 100*length.value << sp_svg_length_get_css_units(length.unit);
+    } else if (length.unit == SVGLength::FOOT) {
+        os << 12*length.value << sp_svg_length_get_css_units(SVGLength::INCH);
     } else {
         os << length.value << sp_svg_length_get_css_units(length.unit);
     }
