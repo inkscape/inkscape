@@ -32,7 +32,7 @@
 
 namespace Tracer {
 
-template<typename T>
+template<typename T, bool adjust_splines>
 class SimplifiedVoronoi
 {
 public:
@@ -121,8 +121,10 @@ public:
     }
 
 private:
+#ifdef LIBDEPIXELIZE_VERY_TYPE_SAFE
     typedef void (*PointTransform)(Point<T> &p, T dx, T dy);
     typedef bool (*NodeTransform)(PixelGraph::const_iterator);
+#endif // LIBDEPIXELIZE_VERY_TYPE_SAFE
 
     /**
      * Output is translated by -.5 in each axis. This function fixes this error.
@@ -221,6 +223,9 @@ private:
      *  indirection, except for the problem of too many layers of indirection."
      *         -- David J. Wheeler
      */
+#ifndef LIBDEPIXELIZE_VERY_TYPE_SAFE
+    template<class PointTransform, class NodeTransform>
+#endif // LIBDEPIXELIZE_VERY_TYPE_SAFE
     void _genericComplexBottomRight(PixelGraph::const_iterator a_it,
                                     PixelGraph::const_iterator b_it,
                                     PixelGraph::const_iterator c_it,
@@ -241,8 +246,9 @@ private:
     std::vector<Cell> _cells;
 };
 
-template<class T>
-SimplifiedVoronoi<T>::SimplifiedVoronoi(const PixelGraph &graph) :
+template<class T, bool adjust_splines>
+SimplifiedVoronoi<T, adjust_splines>
+::SimplifiedVoronoi(const PixelGraph &graph) :
     _width(graph.width()),
     _height(graph.height()),
     _cells(graph.size())
@@ -481,10 +487,11 @@ SimplifiedVoronoi<T>::SimplifiedVoronoi(const PixelGraph &graph) :
     }
 }
 
-template<class T> void
-SimplifiedVoronoi<T>::_complexTopLeft(const PixelGraph &graph,
-                                      PixelGraph::const_iterator graph_it,
-                                      Cell *const cells_it, int x, int y)
+template<class T, bool adjust_splines> void
+SimplifiedVoronoi<T, adjust_splines>
+::_complexTopLeft(const PixelGraph &graph,
+                  PixelGraph::const_iterator graph_it, Cell *const cells_it,
+                  int x, int y)
 {
     _genericComplexBottomRight(graph_it,
                                graph.nodeLeft(graph_it),
@@ -502,10 +509,11 @@ SimplifiedVoronoi<T>::_complexTopLeft(const PixelGraph &graph,
                                &SimplifiedVoronoi::_complexTopLeftTransformTopLeft);
 }
 
-template<class T> void
-SimplifiedVoronoi<T>::_complexTopRight(const PixelGraph &graph,
-                                       PixelGraph::const_iterator graph_it,
-                                       Cell *const cells_it, int x, int y)
+template<class T, bool adjust_splines> void
+SimplifiedVoronoi<T, adjust_splines>
+::_complexTopRight(const PixelGraph &graph,
+                   PixelGraph::const_iterator graph_it, Cell *const cells_it,
+                   int x, int y)
 {
     _genericComplexBottomRight(graph_it,
                                graph.nodeTop(graph_it),
@@ -523,10 +531,11 @@ SimplifiedVoronoi<T>::_complexTopRight(const PixelGraph &graph,
                                &SimplifiedVoronoi::_complexTopRightTransformTopLeft);
 }
 
-template<class T> void
-SimplifiedVoronoi<T>::_complexBottomRight(const PixelGraph &graph,
-                                          PixelGraph::const_iterator graph_it,
-                                          Cell *const cells_it, int x, int y)
+template<class T, bool adjust_splines> void
+SimplifiedVoronoi<T, adjust_splines>
+::_complexBottomRight(const PixelGraph &graph,
+                      PixelGraph::const_iterator graph_it, Cell *const cells_it,
+                      int x, int y)
 {
     _genericComplexBottomRight(graph_it,
                                graph.nodeRight(graph_it),
@@ -544,10 +553,11 @@ SimplifiedVoronoi<T>::_complexBottomRight(const PixelGraph &graph,
                                &SimplifiedVoronoi::_complexBottomRightTransformTopLeft);
 }
 
-template<class T> void
-SimplifiedVoronoi<T>::_complexBottomLeft(const PixelGraph &graph,
-                                         PixelGraph::const_iterator graph_it,
-                                         Cell *const cells_it, int x, int y)
+template<class T, bool adjust_splines> void
+SimplifiedVoronoi<T, adjust_splines>
+::_complexBottomLeft(const PixelGraph &graph,
+                     PixelGraph::const_iterator graph_it, Cell *const cells_it,
+                     int x, int y)
 {
     _genericComplexBottomRight(graph_it,
                                graph.nodeBottom(graph_it),
@@ -565,229 +575,268 @@ SimplifiedVoronoi<T>::_complexBottomLeft(const PixelGraph &graph,
                                &SimplifiedVoronoi::_complexBottomLeftTransformTopLeft);
 }
 
-template<class T> void
-SimplifiedVoronoi<T>::_complexTopLeftTransform(Point<T> &p, T dx, T dy)
+template<class T, bool adjust_splines> void
+SimplifiedVoronoi<T, adjust_splines>
+::_complexTopLeftTransform(Point<T> &p, T dx, T dy)
 {
     p.x -= dx;
     p.y -= dy;
 }
 
-template<class T> void
-SimplifiedVoronoi<T>::_complexTopRightTransform(Point<T> &p, T dx, T dy)
+template<class T, bool adjust_splines> void
+SimplifiedVoronoi<T, adjust_splines>
+::_complexTopRightTransform(Point<T> &p, T dx, T dy)
 {
     p.x += dy;
     p.y -= dx;
 }
 
-template<class T> void
-SimplifiedVoronoi<T>::_complexBottomRightTransform(Point<T> &p, T dx, T dy)
+template<class T, bool adjust_splines> void
+SimplifiedVoronoi<T, adjust_splines>
+::_complexBottomRightTransform(Point<T> &p, T dx, T dy)
 {
     p.x += dx;
     p.y += dy;
 }
 
-template<class T> void
-SimplifiedVoronoi<T>::_complexBottomLeftTransform(Point<T> &p, T dx, T dy)
+template<class T, bool adjust_splines> void
+SimplifiedVoronoi<T, adjust_splines>
+::_complexBottomLeftTransform(Point<T> &p, T dx, T dy)
 {
     p.x -= dy;
     p.y += dx;
 }
 
-template<class T>
-bool SimplifiedVoronoi<T>::_complexTopLeftTransformTop(PixelGraph::const_iterator graph_it)
+template<class T, bool adjust_splines>
+bool SimplifiedVoronoi<T, adjust_splines>
+::_complexTopLeftTransformTop(PixelGraph::const_iterator graph_it)
 {
     return graph_it->adj.bottom;
 }
 
-template<class T>
-bool SimplifiedVoronoi<T>::_complexTopLeftTransformTopRight(PixelGraph::const_iterator graph_it)
+template<class T, bool adjust_splines>
+bool SimplifiedVoronoi<T, adjust_splines>
+::_complexTopLeftTransformTopRight(PixelGraph::const_iterator graph_it)
 {
     return graph_it->adj.bottomleft;
 }
 
-template<class T>
-bool SimplifiedVoronoi<T>::_complexTopLeftTransformRight(PixelGraph::const_iterator graph_it)
+template<class T, bool adjust_splines>
+bool SimplifiedVoronoi<T, adjust_splines>
+::_complexTopLeftTransformRight(PixelGraph::const_iterator graph_it)
 {
     return graph_it->adj.left;
 }
 
-template<class T>
-bool SimplifiedVoronoi<T>::_complexTopLeftTransformBottomRight(PixelGraph::const_iterator graph_it)
+template<class T, bool adjust_splines>
+bool SimplifiedVoronoi<T, adjust_splines>
+::_complexTopLeftTransformBottomRight(PixelGraph::const_iterator graph_it)
 {
     return graph_it->adj.topleft;
 }
 
-template<class T>
-bool SimplifiedVoronoi<T>::_complexTopLeftTransformBottom(PixelGraph::const_iterator graph_it)
+template<class T, bool adjust_splines>
+bool SimplifiedVoronoi<T, adjust_splines>
+::_complexTopLeftTransformBottom(PixelGraph::const_iterator graph_it)
 {
     return graph_it->adj.top;
 }
 
-template<class T>
-bool SimplifiedVoronoi<T>::_complexTopLeftTransformBottomLeft(PixelGraph::const_iterator graph_it)
+template<class T, bool adjust_splines>
+bool SimplifiedVoronoi<T, adjust_splines>
+::_complexTopLeftTransformBottomLeft(PixelGraph::const_iterator graph_it)
 {
     return graph_it->adj.topright;
 }
 
-template<class T>
-bool SimplifiedVoronoi<T>::_complexTopLeftTransformLeft(PixelGraph::const_iterator graph_it)
+template<class T, bool adjust_splines>
+bool SimplifiedVoronoi<T, adjust_splines>
+::_complexTopLeftTransformLeft(PixelGraph::const_iterator graph_it)
 {
     return graph_it->adj.right;
 }
 
-template<class T>
-bool SimplifiedVoronoi<T>::_complexTopLeftTransformTopLeft(PixelGraph::const_iterator graph_it)
+template<class T, bool adjust_splines>
+bool SimplifiedVoronoi<T, adjust_splines>
+::_complexTopLeftTransformTopLeft(PixelGraph::const_iterator graph_it)
 {
     return graph_it->adj.bottomright;
 }
 
-template<class T>
-bool SimplifiedVoronoi<T>::_complexTopRightTransformTop(PixelGraph::const_iterator graph_it)
+template<class T, bool adjust_splines>
+bool SimplifiedVoronoi<T, adjust_splines>
+::_complexTopRightTransformTop(PixelGraph::const_iterator graph_it)
 {
     return graph_it->adj.left;
 }
 
-template<class T>
-bool SimplifiedVoronoi<T>::_complexTopRightTransformTopRight(PixelGraph::const_iterator graph_it)
+template<class T, bool adjust_splines>
+bool SimplifiedVoronoi<T, adjust_splines>
+::_complexTopRightTransformTopRight(PixelGraph::const_iterator graph_it)
 {
     return graph_it->adj.topleft;
 }
 
-template<class T>
-bool SimplifiedVoronoi<T>::_complexTopRightTransformRight(PixelGraph::const_iterator graph_it)
+template<class T, bool adjust_splines>
+bool SimplifiedVoronoi<T, adjust_splines>
+::_complexTopRightTransformRight(PixelGraph::const_iterator graph_it)
 {
     return graph_it->adj.top;
 }
 
-template<class T>
-bool SimplifiedVoronoi<T>::_complexTopRightTransformBottomRight(PixelGraph::const_iterator graph_it)
+template<class T, bool adjust_splines>
+bool SimplifiedVoronoi<T, adjust_splines>
+::_complexTopRightTransformBottomRight(PixelGraph::const_iterator graph_it)
 {
     return graph_it->adj.topright;
 }
 
-template<class T>
-bool SimplifiedVoronoi<T>::_complexTopRightTransformBottom(PixelGraph::const_iterator graph_it)
+template<class T, bool adjust_splines>
+bool SimplifiedVoronoi<T, adjust_splines>
+::_complexTopRightTransformBottom(PixelGraph::const_iterator graph_it)
 {
     return graph_it->adj.right;
 }
 
-template<class T>
-bool SimplifiedVoronoi<T>::_complexTopRightTransformBottomLeft(PixelGraph::const_iterator graph_it)
+template<class T, bool adjust_splines>
+bool SimplifiedVoronoi<T, adjust_splines>
+::_complexTopRightTransformBottomLeft(PixelGraph::const_iterator graph_it)
 {
     return graph_it->adj.bottomright;
 }
 
-template<class T>
-bool SimplifiedVoronoi<T>::_complexTopRightTransformLeft(PixelGraph::const_iterator graph_it)
+template<class T, bool adjust_splines>
+bool SimplifiedVoronoi<T, adjust_splines>
+::_complexTopRightTransformLeft(PixelGraph::const_iterator graph_it)
 {
     return graph_it->adj.bottom;
 }
 
-template<class T>
-bool SimplifiedVoronoi<T>::_complexTopRightTransformTopLeft(PixelGraph::const_iterator graph_it)
+template<class T, bool adjust_splines>
+bool SimplifiedVoronoi<T, adjust_splines>
+::_complexTopRightTransformTopLeft(PixelGraph::const_iterator graph_it)
 {
     return graph_it->adj.bottomleft;
 }
 
-template<class T>
-bool SimplifiedVoronoi<T>::_complexBottomRightTransformTop(PixelGraph::const_iterator graph_it)
+template<class T, bool adjust_splines>
+bool SimplifiedVoronoi<T, adjust_splines>
+::_complexBottomRightTransformTop(PixelGraph::const_iterator graph_it)
 {
     return graph_it->adj.top;
 }
 
-template<class T>
-bool SimplifiedVoronoi<T>::_complexBottomRightTransformTopRight(PixelGraph::const_iterator graph_it)
+template<class T, bool adjust_splines>
+bool SimplifiedVoronoi<T, adjust_splines>
+::_complexBottomRightTransformTopRight(PixelGraph::const_iterator graph_it)
 {
     return graph_it->adj.topright;
 }
 
-template<class T>
-bool SimplifiedVoronoi<T>::_complexBottomRightTransformRight(PixelGraph::const_iterator graph_it)
+template<class T, bool adjust_splines>
+bool SimplifiedVoronoi<T, adjust_splines>
+::_complexBottomRightTransformRight(PixelGraph::const_iterator graph_it)
 {
     return graph_it->adj.right;
 }
 
-template<class T>
-bool SimplifiedVoronoi<T>::_complexBottomRightTransformBottomRight(PixelGraph::const_iterator graph_it)
+template<class T, bool adjust_splines>
+bool SimplifiedVoronoi<T, adjust_splines>
+::_complexBottomRightTransformBottomRight(PixelGraph::const_iterator graph_it)
 {
     return graph_it->adj.bottomright;
 }
 
-template<class T>
-bool SimplifiedVoronoi<T>::_complexBottomRightTransformBottom(PixelGraph::const_iterator graph_it)
+template<class T, bool adjust_splines>
+bool SimplifiedVoronoi<T, adjust_splines>
+::_complexBottomRightTransformBottom(PixelGraph::const_iterator graph_it)
 {
     return graph_it->adj.bottom;
 }
 
-template<class T>
-bool SimplifiedVoronoi<T>::_complexBottomRightTransformBottomLeft(PixelGraph::const_iterator graph_it)
+template<class T, bool adjust_splines>
+bool SimplifiedVoronoi<T, adjust_splines>
+::_complexBottomRightTransformBottomLeft(PixelGraph::const_iterator graph_it)
 {
     return graph_it->adj.bottomleft;
 }
 
-template<class T>
-bool SimplifiedVoronoi<T>::_complexBottomRightTransformLeft(PixelGraph::const_iterator graph_it)
+template<class T, bool adjust_splines>
+bool SimplifiedVoronoi<T, adjust_splines>
+::_complexBottomRightTransformLeft(PixelGraph::const_iterator graph_it)
 {
     return graph_it->adj.left;
 }
 
-template<class T>
-bool SimplifiedVoronoi<T>::_complexBottomRightTransformTopLeft(PixelGraph::const_iterator graph_it)
+template<class T, bool adjust_splines>
+bool SimplifiedVoronoi<T, adjust_splines>
+::_complexBottomRightTransformTopLeft(PixelGraph::const_iterator graph_it)
 {
     return graph_it->adj.topleft;
 }
 
-template<class T>
-bool SimplifiedVoronoi<T>::_complexBottomLeftTransformTop(PixelGraph::const_iterator graph_it)
+template<class T, bool adjust_splines>
+bool SimplifiedVoronoi<T, adjust_splines>
+::_complexBottomLeftTransformTop(PixelGraph::const_iterator graph_it)
 {
     return graph_it->adj.right;
 }
 
-template<class T>
-bool SimplifiedVoronoi<T>::_complexBottomLeftTransformTopRight(PixelGraph::const_iterator graph_it)
+template<class T, bool adjust_splines>
+bool SimplifiedVoronoi<T, adjust_splines>
+::_complexBottomLeftTransformTopRight(PixelGraph::const_iterator graph_it)
 {
     return graph_it->adj.bottomright;
 }
 
-template<class T>
-bool SimplifiedVoronoi<T>::_complexBottomLeftTransformRight(PixelGraph::const_iterator graph_it)
+template<class T, bool adjust_splines>
+bool SimplifiedVoronoi<T, adjust_splines>
+::_complexBottomLeftTransformRight(PixelGraph::const_iterator graph_it)
 {
     return graph_it->adj.bottom;
 }
 
-template<class T>
-bool SimplifiedVoronoi<T>::_complexBottomLeftTransformBottomRight(PixelGraph::const_iterator graph_it)
+template<class T, bool adjust_splines>
+bool SimplifiedVoronoi<T, adjust_splines>
+::_complexBottomLeftTransformBottomRight(PixelGraph::const_iterator graph_it)
 {
     return graph_it->adj.bottomleft;
 }
 
-template<class T>
-bool SimplifiedVoronoi<T>::_complexBottomLeftTransformBottom(PixelGraph::const_iterator graph_it)
+template<class T, bool adjust_splines>
+bool SimplifiedVoronoi<T, adjust_splines>
+::_complexBottomLeftTransformBottom(PixelGraph::const_iterator graph_it)
 {
     return graph_it->adj.left;
 }
 
-template<class T>
-bool SimplifiedVoronoi<T>::_complexBottomLeftTransformBottomLeft(PixelGraph::const_iterator graph_it)
+template<class T, bool adjust_splines>
+bool SimplifiedVoronoi<T, adjust_splines>
+::_complexBottomLeftTransformBottomLeft(PixelGraph::const_iterator graph_it)
 {
     return graph_it->adj.topleft;
 }
 
-template<class T>
-bool SimplifiedVoronoi<T>::_complexBottomLeftTransformLeft(PixelGraph::const_iterator graph_it)
+template<class T, bool adjust_splines>
+bool SimplifiedVoronoi<T, adjust_splines>
+::_complexBottomLeftTransformLeft(PixelGraph::const_iterator graph_it)
 {
     return graph_it->adj.top;
 }
 
-template<class T>
-bool SimplifiedVoronoi<T>::_complexBottomLeftTransformTopLeft(PixelGraph::const_iterator graph_it)
+template<class T, bool adjust_splines>
+bool SimplifiedVoronoi<T, adjust_splines>
+::_complexBottomLeftTransformTopLeft(PixelGraph::const_iterator graph_it)
 {
     return graph_it->adj.topright;
 }
 
-template<class T>
+template<class T, bool adjust_splines>
+#ifndef LIBDEPIXELIZE_VERY_TYPE_SAFE
+template<class PointTransform, class NodeTransform>
+#endif // LIBDEPIXELIZE_VERY_TYPE_SAFE
 void
-SimplifiedVoronoi<T>
+SimplifiedVoronoi<T, adjust_splines>
 ::_genericComplexBottomRight(PixelGraph::const_iterator a_it,
                              PixelGraph::const_iterator b_it,
                              PixelGraph::const_iterator c_it,
@@ -817,8 +866,12 @@ SimplifiedVoronoi<T>
         // this and bottom-right are connected
 
         bool smooth[2] = {
-            same_color(a_it->rgba, d_it->rgba) || right(a_it),
-            same_color(a_it->rgba, d_it->rgba) || bottom(a_it)
+            ( same_color(a_it->rgba, d_it->rgba)
+              || same_color(a_it->rgba, b_it->rgba)
+              || same_color(b_it->rgba, d_it->rgba) ),
+            ( same_color(a_it->rgba, d_it->rgba)
+              || same_color(a_it->rgba, c_it->rgba)
+              || same_color(c_it->rgba, d_it->rgba) )
         };
 
         Point<T> borderMid = initial;
@@ -836,7 +889,7 @@ SimplifiedVoronoi<T>
             vertices[1] = _adjust(midpoint(borderMid, vertices[1]), smooth[1]);
         }
 
-        if ( !smooth[0] ) {
+        if ( !smooth[0] && adjust_splines ) {
             cells_it->vertices.push_back(vertices[0].invisible());
             {
                 Point<T> another = vertices[0];
@@ -885,7 +938,7 @@ SimplifiedVoronoi<T>
 
         cells_it->vertices.push_back(vertices[0]);
 
-        if ( !smooth[1] ) {
+        if ( !smooth[1] && adjust_splines ) {
             {
                 Point<T> another = vertices[1];
                 transform(another,
@@ -954,7 +1007,7 @@ SimplifiedVoronoi<T>
         vertex = _adjust(midpoint(initial, vertex));
 
         // compute smoothness
-        if ( right(a_it) ) {
+        if ( right(a_it) && adjust_splines ) {
             // this and right are connected
 
             if ( !right(c_it) && !( bottom(a_it) && bottom(b_it) ) ) {
@@ -1006,11 +1059,65 @@ SimplifiedVoronoi<T>
                                     * 0.03125 );
                             transform(vertex, amount, amount);
                         }
+                    } else if ( !same_color(a_it->rgba, b_it->rgba) ) {
+                        vertex.smooth = false;
+                        // This is the same code of the if ( special )
+                        // I REALLY NEED lambdas to improve this code without
+                        // creating yet another interface that takes a million
+                        // of function parameters and keep code locality
+                        {
+                            Point<T> another = vertex;
+                            T amount = 0.03125;
+                            transform(another,
+                                      amount
+                                      * ( topleft(c_it) - topright(d_it)
+                                          + bottomleft(a_it) - bottomright(b_it) ),
+                                      // y
+                                      - amount
+                                      * ( topleft(c_it) + topright(d_it)
+                                          - bottomleft(a_it) - bottomright(b_it) ));
+                            cells_it->vertices.push_back(another.invisible());
+                        }
+                        {
+                            Point<T> another = vertex;
+                            T amount = 0.0625;
+                            transform(another,
+                                      0.25 - amount
+                                      * ( topright(d_it) + bottomright(b_it) ),
+                                      // y
+                                      - amount
+                                      * ( topright(d_it) - bottomright(b_it) ));
+                            cells_it->vertices.push_back(another.invisible());
+                        }
+                        {
+                            Point<T> another = vertex;
+                            T amount = 0.0625;
+                            transform(another,
+                                      - ( 0.25 - amount
+                                          * ( topleft(c_it) + bottomleft(a_it) ) ),
+                                      // y
+                                      - amount
+                                      * ( topleft(c_it) - bottomleft(a_it) ));
+                            another.smooth = true;
+                            cells_it->vertices.push_back(another);
+                        }
+                        {
+                            Point<T> another = vertex;
+                            T amount = 0.1875;
+                            transform(another,
+                                      - ( 0.75 - amount
+                                          * ( topleft(c_it) + bottomleft(a_it) ) ),
+                                      // y
+                                      -  amount
+                                      * ( topleft(c_it) - bottomleft(a_it) ));
+                            cells_it->vertices.push_back(another.invisible());
+                        }
+                        vertex.visible = false;
                     }
                 } else {
                     // {this, right} is the pair with the angle
                     // closest to 180 degrees
-                    vertex.smooth = true;
+                    vertex.smooth = same_color(a_it->rgba, b_it->rgba);
                 }
             } else {
                 // there might be 2-color, then vertex.smooth = true
@@ -1018,17 +1125,12 @@ SimplifiedVoronoi<T>
                 // or it might be 1-color and doesn't matter,
                 // because the current node will disappear
                 vertex.smooth
-                    = !( bottom(a_it) ^ bottom(b_it) );
-
-                if ( vertex.smooth ) {
-                    vertex.smooth
-                        = same_color(a_it->rgba, b_it->rgba)
-                        + same_color(a_it->rgba, c_it->rgba)
-                        + same_color(d_it->rgba, b_it->rgba)
-                        + same_color(d_it->rgba, c_it->rgba) == 2;
-                }
+                    = same_color(a_it->rgba, b_it->rgba)
+                    + same_color(a_it->rgba, c_it->rgba)
+                    + same_color(d_it->rgba, b_it->rgba)
+                    + same_color(d_it->rgba, c_it->rgba) == 2;
             }
-        } else if ( bottom(a_it) ) {
+        } else if ( bottom(a_it) && adjust_splines ) {
             // this and bottom are connected
 
             if ( !bottom(b_it) && !( right(a_it) && right(c_it) ) ) {
@@ -1079,28 +1181,75 @@ SimplifiedVoronoi<T>
                                     * 0.03125 );
                             transform(vertex, amount, amount);
                         }
+                    } else if ( !same_color(a_it->rgba, c_it->rgba) ) {
+                        vertex.smooth = false;
+                        // This is the same code of the if ( special )
+                        // I REALLY NEED lambdas to improve this code without
+                        // creating yet another interface that takes a million
+                        // of function parameters and keep code locality
+                        cells_it->vertices.push_back(vertex.invisible());
+                        {
+                            Point<T> another = vertex;
+                            T amount = 0.1875;
+                            transform(another,
+                                      - ( topleft(b_it) - topright(a_it) ) * amount,
+                                      // y
+                                      - ( 0.75
+                                          - ( topleft(b_it) + topright(a_it) )
+                                          * amount ));
+                            cells_it->vertices.push_back(another.invisible());
+                        }
+                        {
+                            Point<T> another = vertex;
+                            T amount = 0.0625;
+                            transform(another,
+                                      - ( topleft(b_it) - topright(a_it) ) * amount,
+                                      // y
+                                      - ( 0.25
+                                          - ( topleft(b_it) + topright(a_it) )
+                                          * amount ));
+                            another.smooth = true;
+                            cells_it->vertices.push_back(another);
+                        }
+                        {
+                            Point<T> another = vertex;
+                            T amount = 0.0625;
+                            transform(another, - amount
+                                      * ( bottomleft(d_it) - bottomright(c_it) ),
+                                      // y
+                                      0.25 - amount
+                                      * ( bottomleft(d_it) + bottomright(c_it) ));
+                            cells_it->vertices.push_back(another.invisible());
+                        }
+                        {
+                            transform(vertex,
+                                      - ( topleft(b_it) + bottomleft(d_it)
+                                          - topright(a_it) - bottomright(c_it) )
+                                      * 0.03125,
+                                      // y
+                                      ( topleft(b_it) - bottomleft(d_it)
+                                        + topright(a_it) - bottomright(c_it) )
+                                      * 0.03125);
+                            vertex.visible = false;
+                        }
                     }
                 } else {
                     // {this, bottom} is the pair with the angle
                     // closest to 180 degrees
-                    vertex.smooth = true;
+                    vertex.smooth = same_color(a_it->rgba, c_it->rgba);
                 }
             } else {
                 // there might be 2-color, then vertex.smooth = true
 
                 // or it might be 1-color and doesn't matter,
                 // because the current node will disappear
-                vertex.smooth = !( right(a_it) ^ right(c_it) );
-
-                if ( vertex.smooth ) {
-                    vertex.smooth
-                        = same_color(a_it->rgba, c_it->rgba)
-                        + same_color(a_it->rgba, b_it->rgba)
-                        + same_color(d_it->rgba, b_it->rgba)
-                        + same_color(d_it->rgba, c_it->rgba) == 2;
-                }
+                vertex.smooth
+                    = same_color(a_it->rgba, c_it->rgba)
+                    + same_color(a_it->rgba, b_it->rgba)
+                    + same_color(d_it->rgba, b_it->rgba)
+                    + same_color(d_it->rgba, c_it->rgba) == 2;
             }
-        } else if ( bottom(b_it) ) {
+        } else if ( bottom(b_it) && adjust_splines ) {
             // right and bottom-right are connected
 
             bool special = false;
@@ -1205,7 +1354,7 @@ SimplifiedVoronoi<T>
                     vertex.visible = false;
                 }
             }
-        } else if ( right(c_it) ) {
+        } else if ( right(c_it) && adjust_splines ) {
             // bottom and bottom-right are connected
 
             bool special = false;

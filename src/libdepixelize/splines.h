@@ -30,7 +30,7 @@
 
 namespace Tracer {
 
-template<typename T>
+template<typename T, bool adjust_splines = true>
 class SimplifiedVoronoi;
 
 template<typename T>
@@ -54,8 +54,8 @@ public:
 
     Splines() /* = default */ {}
 
-    template<typename T>
-    Splines(const SimplifiedVoronoi<T> &simplifiedVoronoi);
+    template<typename T, bool adjust_splines>
+    Splines(const SimplifiedVoronoi<T, adjust_splines> &simplifiedVoronoi);
 
     /**
      * There are two levels of optimization. The first level only removes

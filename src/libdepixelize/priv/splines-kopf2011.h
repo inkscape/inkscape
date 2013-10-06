@@ -107,22 +107,22 @@ void worker(const typename HomogeneousSplines<T>::Polygon &source,
     }
 }
 
-template<typename T>
-Splines::Splines(const SimplifiedVoronoi<T> &diagram) :
+template<typename T, bool adjust_splines>
+Splines::Splines(const SimplifiedVoronoi<T, adjust_splines> &diagram) :
     _width(diagram.width()),
     _height(diagram.height())
 {
     _paths.reserve(diagram.size());
 
-    for ( typename SimplifiedVoronoi<T>::const_iterator it = diagram.begin()
-              , end = diagram.end() ; it != end ; ++it ) {
+    for ( typename SimplifiedVoronoi<T, adjust_splines>::const_iterator
+              it = diagram.begin() , end = diagram.end() ; it != end ; ++it ) {
         Path path;
 
         path.pathVector
             .push_back(Geom::Path(to_geom_point(it->vertices.front())));
 
         for ( typename std::vector< Point<T> >::const_iterator
-                  it2 = it->vertices.begin(), end2 = it->vertices.end()
+                  it2 = ++it->vertices.begin(), end2 = it->vertices.end()
                   ; it2 != end2 ; ++it2 ) {
             path.pathVector.back()
                 .appendNew<Geom::LineSegment>(Geom::Point(it2->x, it2->y));

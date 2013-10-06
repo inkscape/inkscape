@@ -35,8 +35,6 @@
 namespace Tracer {
 
 class PixelGraph;
-template<typename T> class SimplifiedVoronoi;
-template<typename T> class HomogeneousSplines;
 
 class Kopf2011
 {
@@ -102,15 +100,15 @@ public:
 private:
     typedef Geom::Coord Precision;
 
-    template<class T>
-    static SimplifiedVoronoi<T> _voronoi(const Glib::RefPtr<Gdk::Pixbuf const> &buf,
-                                         const Options &options);
+    template<class T, bool adjust_splines>
+    static SimplifiedVoronoi<T, adjust_splines>
+    _voronoi(const Glib::RefPtr<Gdk::Pixbuf const> &buf,
+             const Options &options);
 
     static void _disconnect_neighbors_with_dissimilar_colors(PixelGraph &graph);
     static void _remove_crossing_edges_safe(PixelGraph &graph);
     static void _remove_crossing_edges_unsafe(PixelGraph &graph,
                                               const Options &options);
-    static void _remove_puzzle_pattern(PixelGraph &graph);
 };
 
 } // namespace Tracer
