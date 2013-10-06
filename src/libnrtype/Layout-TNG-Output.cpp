@@ -221,13 +221,9 @@ void Layout::print(SPPrintContext *ctx,
                    Geom::Affine const &ctm) const
 {
 bool text_to_path         = ctx->module->textToPath();
-int     oldtarget         = 0;
-int     newtarget         = 0;
 #define MAX_DX 2048
 float    hold_dx[MAX_DX]; // For smuggling dx values (character widths) into print functions, unlikely any simple text output will be longer than this.
-float    ky;              // For smuggling y kern value for span
-int      ndx              = 0;
-double   rtl              = 1.0;        // 1 L->R, -1 R->L, constant across a span. 1.0 for t->b b->t???
+
 Geom::Affine glyph_matrix;
 
     if (_input_stream.empty()) return;
@@ -253,7 +249,10 @@ Geom::Affine glyph_matrix;
         double char_x;
         int    doUTN  = CanUTN();  // Unicode to Nonunicode translation enabled if true
         Direction block_progression = _blockProgression();
-
+        int oldtarget = 0;
+        int ndx = 0;
+        double rtl = 1.0;        // 1 L->R, -1 R->L, constant across a span. 1.0 for t->b b->t???
+        
         for (unsigned char_index = 0 ; char_index < _characters.size() ; ) {
             Glib::ustring text_string;  // accumulate text for record in this
             Geom::Point g_pos(0,0);     // all strings are output at (0,0) because we do the translation using the matrix
@@ -262,7 +261,7 @@ Geom::Affine glyph_matrix;
                 char_index++;
                 continue;
             }
-            ky = _glyphs[glyph_index].y;  // same value for all positions in a span
+            float ky = _glyphs[glyph_index].y;  // For smuggling y kern value for span // same value for all positions in a span
             unsigned span_index  = _characters[char_index].in_span;
             Span const &span = _spans[span_index];
             char_x = 0.0;
@@ -283,12 +282,15 @@ Geom::Affine glyph_matrix;
                 case Layout::LEFT_TO_RIGHT: rtl =  1.0; break;
                 case Layout::RIGHT_TO_LEFT: rtl = -1.0; break;
             }
-            if(doUTN)oldtarget=SingleUnicodeToNon(*text_iter); // this should only ever be with a 1:1 glyph:character situation
+            if(doUTN){
+                oldtarget=SingleUnicodeToNon(*text_iter); // this should only ever be with a 1:1 glyph:character situation
+            }
 
             // accumulate a record to write
 
             unsigned lc_index  = char_index;
             unsigned hold_iisi = _spans[span_index].in_input_stream_item;
+            int newtarget = 0;
             while(1){
                 glyph_index = _characters[lc_index].in_glyph;
                 if(glyph_index == -1){  // end of a line within a paragraph, for instance
@@ -377,7 +379,7 @@ std:: cout << "DEBUG Layout::print in while  ---  "
             sp_print_text(ctx, smuggle_string, g_pos, text_source->style);
             free(smuggle_string);
             sp_print_release(ctx);
-            ndx=0;
+            ndx = 0;
             char_index = lc_index;
         }
     }
@@ -546,28 +548,29 @@ Glib::ustring Layout::dumpAsText() const
     result += line;
     snprintf(line, sizeof(line), "glyphs    %zu\n", _glyphs.size());
     result += line;
-    unsigned lastspan=5000;
+    
     if(_characters.size() > 1){
+        unsigned lastspan=5000;
         for(unsigned j = 0; j < _characters.size() ; j++){
             if(lastspan != _characters[j].in_span){
                 lastspan = _characters[j].in_span;
                 icc = _spans[lastspan].input_stream_first_character;
             }
-            snprintf(line, sizeof(line), "char     %4d: '%c' 0x%4.4x x=%8.4f glyph=%3d span=%3d\n", j, *icc, *icc, _characters[j].x,  _characters[j].in_glyph,  _characters[j].in_span);
+            snprintf(line, sizeof(line), "char     %4u: '%c' 0x%4.4x x=%8.4f glyph=%3d span=%3d\n", j, *icc, *icc, _characters[j].x,  _characters[j].in_glyph,  _characters[j].in_span);
             result += line;
             ++icc;
         }
     }
     if(_glyphs.size()){
         for(unsigned j = 0; j < _glyphs.size() ; j++){
-            snprintf(line, sizeof(line), "glyph    %4d: %4d (%8.4f,%8.4f) rot=%8.4f cx=%8.4f char=%4d\n",
+            snprintf(line, sizeof(line), "glyph    %4u: %4d (%8.4f,%8.4f) rot=%8.4f cx=%8.4f char=%4d\n",
                 j, _glyphs[j].glyph, _glyphs[j].x, _glyphs[j].y, _glyphs[j].rotation, _glyphs[j].width, _glyphs[j].in_character);
             result += line;
         }
     }
 
     for (unsigned span_index = 0 ; span_index < _spans.size() ; span_index++) {
-        snprintf(line, sizeof(line), "==== span %d \n", span_index);
+        snprintf(line, sizeof(line), "==== span %u \n", span_index);
         result += line;
         snprintf(line, sizeof(line), "  in para %d (direction=%s)\n", _lines[_chunks[_spans[span_index].in_chunk].in_line].in_paragraph,
                  direction_to_text(_paragraphs[_lines[_chunks[_spans[span_index].in_chunk].in_line].in_paragraph].base_direction));
@@ -600,9 +603,9 @@ Glib::ustring Layout::dumpAsText() const
             u.pattr = &_characters[char_index].char_attributes;
             if (_characters[char_index].in_span != span_index) continue;
             if (_input_stream[_spans[span_index].in_input_stream_item]->Type() != TEXT_SOURCE) {
-                snprintf(line, sizeof(line), "      %d: control x=%f flags=%03x glyph=%d\n", char_index, _characters[char_index].x, *u.uattr, _characters[char_index].in_glyph);
+                snprintf(line, sizeof(line), "      %u: control x=%f flags=%03x glyph=%d\n", char_index, _characters[char_index].x, *u.uattr, _characters[char_index].in_glyph);
             } else {  // some text has empty tspans, iter_char cannot be dereferenced
-                snprintf(line, sizeof(line), "      %d: '%c' 0x%4.4x x=%f flags=%03x glyph=%d\n", char_index, *iter_char, *iter_char, _characters[char_index].x, *u.uattr, _characters[char_index].in_glyph);
+                snprintf(line, sizeof(line), "      %u: '%c' 0x%4.4x x=%f flags=%03x glyph=%d\n", char_index, *iter_char, *iter_char, _characters[char_index].x, *u.uattr, _characters[char_index].in_glyph);
                 ++iter_char;
             }
             result += line;
@@ -610,7 +613,7 @@ Glib::ustring Layout::dumpAsText() const
         result += "    ** glyphs:\n";
         for (unsigned glyph_index = 0 ; glyph_index < _glyphs.size() ; glyph_index++) {
             if (_characters[_glyphs[glyph_index].in_character].in_span != span_index) continue;
-            snprintf(line, sizeof(line), "      %d: %d (%f,%f) rot=%f cx=%f char=%d\n", glyph_index, _glyphs[glyph_index].glyph, _glyphs[glyph_index].x, _glyphs[glyph_index].y, _glyphs[glyph_index].rotation, _glyphs[glyph_index].width, _glyphs[glyph_index].in_character);
+            snprintf(line, sizeof(line), "      %u: %d (%f,%f) rot=%f cx=%f char=%d\n", glyph_index, _glyphs[glyph_index].glyph, _glyphs[glyph_index].x, _glyphs[glyph_index].y, _glyphs[glyph_index].rotation, _glyphs[glyph_index].width, _glyphs[glyph_index].in_character);
             result += line;
         }
         result += "\n";
