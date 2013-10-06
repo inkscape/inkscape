@@ -817,7 +817,12 @@ class Layout::iterator {
 public:
     friend class Layout;
     // this is just so you can create uninitialised iterators - don't actually try to use one
-    iterator() : _parent_layout(NULL) {}
+    iterator() :
+        _parent_layout(NULL),
+        _glyph_index(-1),
+        _char_index(0),
+        _cursor_moving_vertically(false),
+        _x_coordinate(0.0){}
     // no copy constructor required, the default does what we want
     bool operator== (iterator const &other) const
         {return _glyph_index == other._glyph_index && _char_index == other._char_index;}
