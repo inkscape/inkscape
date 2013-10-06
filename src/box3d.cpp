@@ -1325,6 +1325,15 @@ SPGroup *box3d_convert_to_group(SPBox3D *box)
     return SP_GROUP(doc->getObjectByRepr(grepr));
 }
 
+const char *SPBox3D::displayName() {
+    return _("3D Box");
+}
+
+gchar *SPBox3D::description() {
+    // We could put more details about the 3d box here
+    return g_strdup("");
+}
+
 static inline void
 box3d_push_back_corner_pair(SPBox3D *box, std::list<std::pair<Geom::Point, Geom::Point> > &pts, int c1, int c2) {
     pts.push_back(std::make_pair(box3d_get_corner_screen(box, c1, false),
