@@ -80,19 +80,19 @@ const std::string& SPPencilContext::getPrefsPath() {
 
 const std::string SPPencilContext::prefsPath = "/tools/freehand/pencil";
 
-SPPencilContext::SPPencilContext() : SPDrawContext() {
-	this->is_drawing = false;
-
+SPPencilContext::SPPencilContext() :
+    SPDrawContext(),
+    p(),
+    npoints(0),
+    state(SP_PENCIL_CONTEXT_IDLE),
+    req_tangent(0,0),
+    is_drawing(false),
+    ps(),
+    sketch_interpolation(Geom::Piecewise<Geom::D2<Geom::SBasis> >())// since SPPencilContext is not properly constructed...
+{
     this->cursor_shape = cursor_pencil_xpm;
     this->hot_x = 4;
     this->hot_y = 4;
-
-    this->npoints = 0;
-    this->state = SP_PENCIL_CONTEXT_IDLE;
-    this->req_tangent = Geom::Point(0, 0);
-
-    // since SPPencilContext is not properly constructed...
-    this->sketch_interpolation = Geom::Piecewise<Geom::D2<Geom::SBasis> >();
     this->sketch_n = 0;
 }
 

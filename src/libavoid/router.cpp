@@ -58,13 +58,17 @@ class ActionInfo {
         }
         ActionInfo(ActionType t, ShapeRef *s)
             : type(t),
-              objPtr(s)
+              objPtr(s),
+              newPoly(),
+              firstMove(0)
         {
             COLA_ASSERT(type != ConnChange);
         }
         ActionInfo(ActionType t, ConnRef *c)
             : type(t),
-              objPtr(c)
+              objPtr(c),
+              newPoly(),
+              firstMove(0)
         {
             COLA_ASSERT(type == ConnChange);
         }
