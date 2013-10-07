@@ -91,15 +91,13 @@ cr_num_new_with_val (gdouble a_val, enum CRNumType a_type)
 guchar *
 cr_num_to_string (CRNum * a_this)
 {
-        gdouble test_val = 0.0;
-
         guchar *tmp_char1 = NULL,
                 *tmp_char2 = NULL,
                 *result = NULL;
 
         g_return_val_if_fail (a_this, NULL);
 
-        test_val = a_this->val - (glong) a_this->val;
+        gdouble test_val = a_this->val - (glong) a_this->val;
 
         if (!test_val) {
                 tmp_char1 = (guchar *)g_strdup_printf ("%ld", (glong) a_this->val);

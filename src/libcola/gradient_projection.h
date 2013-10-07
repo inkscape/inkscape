@@ -225,7 +225,7 @@ public:
         delete [] g;
         delete [] d;
         delete [] old_place;
-        for(Constraints::iterator i(gcs.begin()); i!=gcs.end(); i++) {
+        for(Constraints::iterator i(gcs.begin()); i!=gcs.end(); ++i) {
             delete *i;
         }
         gcs.clear();

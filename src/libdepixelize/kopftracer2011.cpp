@@ -336,8 +336,7 @@ inline int Heuristics::curves(const PixelGraph &graph,
             {
                 // There are only two values that won't be zero'ed
                 // and one of them has the same value of prev
-                guintptr aux = guintptr(to_ptr(it));
-                aux = (it->adj.top
+                guintptr aux = (it->adj.top
                        * guintptr(to_ptr(graph.nodeTop(it))))
                     + (it->adj.topright
                        * guintptr(to_ptr(graph.nodeTopRight(it))))
