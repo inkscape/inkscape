@@ -35,6 +35,7 @@
 #include "inkscape.h"
 #include "desktop.h"
 #include "shape-editor.h"
+#include "sp-ellipse.h"
 
 #include <algorithm>
 
@@ -387,6 +388,10 @@ void SPLPEItem::addPathEffect(gchar *value, bool reset)
 
         this->getRepr()->setAttribute("inkscape:path-effect", hrefs.c_str());
 
+        // Make sure that ellipse is stored as <svg:path>
+        if( SP_IS_GENERICELLIPSE(this)) {
+            SP_GENERICELLIPSE(this)->write( this->getRepr()->document(), this->getRepr(), SP_OBJECT_WRITE_EXT );
+        }
         // make sure there is an original-d for paths!!!
         sp_lpe_item_create_original_path_recursive(this);
 
@@ -436,6 +441,10 @@ void SPLPEItem::removeCurrentPathEffect(bool keep_paths)
         this->getRepr()->setAttribute("inkscape:path-effect", r.c_str());
     } else {
         this->getRepr()->setAttribute("inkscape:path-effect", NULL);
+        // Make sure that ellipse is stored as <svg:circle> or <svg:ellipse> if possible.
+        if( SP_IS_GENERICELLIPSE(this)) {
+            SP_GENERICELLIPSE(this)->write( this->getRepr()->document(), this->getRepr(), SP_OBJECT_WRITE_EXT );
+        }
     }
 
     if (!keep_paths) {
@@ -446,6 +455,11 @@ void SPLPEItem::removeCurrentPathEffect(bool keep_paths)
 void SPLPEItem::removeAllPathEffects(bool keep_paths)
 {
     this->getRepr()->setAttribute("inkscape:path-effect", NULL);
+
+    // Make sure that ellipse is stored as <svg:circle> or <svg:ellipse> if possible.
+    if( SP_IS_GENERICELLIPSE(this)) {
+        SP_GENERICELLIPSE(this)->write( this->getRepr()->document(), this->getRepr(), SP_OBJECT_WRITE_EXT );
+    }
 
     if (!keep_paths) {
         sp_lpe_item_cleanup_original_path_recursive(this);

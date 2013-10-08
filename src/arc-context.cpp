@@ -363,7 +363,7 @@ void SPArcContext::drag(Geom::Point pt, guint state) {
         // Set style
         sp_desktop_apply_style_tool(desktop, repr, "/tools/shapes/arc", false);
 
-        this->arc = SP_ARC(desktop->currentLayer()->appendChildRepr(repr));
+        this->arc = SP_GENERICELLIPSE(desktop->currentLayer()->appendChildRepr(repr));
         Inkscape::GC::release(repr);
         this->arc->transform = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
         this->arc->updateRepr();
@@ -409,9 +409,9 @@ void SPArcContext::drag(Geom::Point pt, guint state) {
         }
     }
 
-    this->arc->sp_arc_position_set(
-                        r.midpoint()[Geom::X], r.midpoint()[Geom::Y],
-                        r.dimensions()[Geom::X] / 2, r.dimensions()[Geom::Y] / 2);
+    this->arc->position_set(
+        r.midpoint()[Geom::X], r.midpoint()[Geom::Y],
+        r.dimensions()[Geom::X] / 2, r.dimensions()[Geom::Y] / 2);
 
     double rdimx = r.dimensions()[Geom::X];
     double rdimy = r.dimensions()[Geom::Y];

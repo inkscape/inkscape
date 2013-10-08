@@ -69,7 +69,7 @@ KnotHolder *createKnotHolder(SPItem *item, SPDesktop *desktop)
         knotholder = new RectKnotHolder(desktop, item, NULL);
     } else if (SP_IS_BOX3D(item)) {
         knotholder = new Box3DKnotHolder(desktop, item, NULL);
-    } else if (SP_IS_ARC(item)) {
+    } else if (SP_IS_GENERICELLIPSE(item)) {
         knotholder = new ArcKnotHolder(desktop, item, NULL);
     } else if (SP_IS_STAR(item)) {
         knotholder = new StarKnotHolder(desktop, item, NULL);
@@ -787,7 +787,7 @@ ArcKnotHolderEntityStart::knot_set(Geom::Point const &p, Geom::Point const &/*or
 {
     int snaps = Inkscape::Preferences::get()->getInt("/options/rotationsnapsperpi/value", 12);
 
-    SPArc *arc = SP_ARC(item);
+    SPGenericEllipse *arc = SP_GENERICELLIPSE(item);
 
     arc->setClosed(sp_genericellipse_side(arc, p) == -1);
 
@@ -808,9 +808,8 @@ Geom::Point
 ArcKnotHolderEntityStart::knot_get() const
 {
     SPGenericEllipse const *ge = SP_GENERICELLIPSE(item);
-    SPArc *arc = SP_ARC(item);
 
-    return arc->getPointAtAngle(ge->start);
+    return ge->getPointAtAngle(ge->start);
 }
 
 void
@@ -829,7 +828,7 @@ ArcKnotHolderEntityEnd::knot_set(Geom::Point const &p, Geom::Point const &/*orig
 {
     int snaps = Inkscape::Preferences::get()->getInt("/options/rotationsnapsperpi/value", 12);
 
-    SPArc *arc = SP_ARC(item);
+    SPGenericEllipse *arc = SP_GENERICELLIPSE(item);
 
     arc->setClosed(sp_genericellipse_side(arc, p) == -1);
 
@@ -850,9 +849,8 @@ Geom::Point
 ArcKnotHolderEntityEnd::knot_get() const
 {
     SPGenericEllipse const *ge = SP_GENERICELLIPSE(item);
-    SPArc *arc = SP_ARC(item);
 
-    return arc->getPointAtAngle(ge->end);
+    return ge->getPointAtAngle(ge->end);
 }
 
 

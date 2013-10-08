@@ -242,7 +242,7 @@ KnotHolder::knot_ungrabbed_handler(SPKnot */*knot*/)
 
 void KnotHolder::add(KnotHolderEntity *e)
 {
-    g_message("Adding a knot at %p", e);
+    // g_message("Adding a knot at %p", e);
     entity.push_back(e);
     updateControlSizes();
 }

@@ -1058,9 +1058,9 @@ void SPMeshNodeArray::create( SPMeshGradient *mg, SPItem *item, Geom::OptRect bb
             end   = start + 2.0 * M_PI;
         }
 
-        if ( SP_IS_ARC( item ) ) {
+        if ( SP_IS_GENERICELLIPSE( item ) ) {
             // For arcs use set start/stop
-            SPArc* arc = SP_ARC( item );
+            SPGenericEllipse* arc = SP_GENERICELLIPSE( item );
             center[Geom::X] = arc->cx.computed;
             center[Geom::Y] = arc->cy.computed;
             rx = arc->rx.computed;
@@ -1130,11 +1130,11 @@ void SPMeshNodeArray::create( SPMeshGradient *mg, SPItem *item, Geom::OptRect bb
 
         // Normal grid meshes
 
-        if( SP_IS_ARC( item ) ) {
+        if( SP_IS_GENERICELLIPSE( item ) ) {
 
             // std::cout << "We've got ourselves an arc!" << std::endl;
 
-            SPArc* arc = SP_ARC( item );
+            SPGenericEllipse* arc = SP_GENERICELLIPSE( item );
             center[Geom::X] = arc->cx.computed;
             center[Geom::Y] = arc->cy.computed;
             gdouble rx = arc->rx.computed;

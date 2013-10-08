@@ -664,7 +664,7 @@ bool Find::item_type_match (SPItem *item)
     if ( SP_IS_RECT(item)) {
         return ( all ||check_rects.get_active());
 
-    } else if (SP_IS_GENERICELLIPSE(item) || SP_IS_ELLIPSE(item) || SP_IS_ARC(item) || SP_IS_CIRCLE(item)) {
+    } else if (SP_IS_GENERICELLIPSE(item)) {
         return ( all ||  check_ellipses.get_active());
 
     } else if (SP_IS_STAR(item) || SP_IS_POLYGON(item)) {

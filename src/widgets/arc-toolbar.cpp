@@ -112,10 +112,9 @@ sp_arctb_startend_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *v
     {
         SPItem *item = SP_ITEM(items->data);
 
-        if (SP_IS_ARC(item) && SP_IS_GENERICELLIPSE(item)) {
+        if (SP_IS_GENERICELLIPSE(item)) {
 
             SPGenericEllipse *ge = SP_GENERICELLIPSE(item);
-            SPArc *arc = SP_ARC(item);
 
             if (!strcmp(value_name, "start")) {
                 ge->start = (gtk_adjustment_get_value(adj) * M_PI)/ 180;
@@ -124,8 +123,8 @@ sp_arctb_startend_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *v
             }
 
             ge->normalize();
-            (SP_OBJECT(arc))->updateRepr();
-            (SP_OBJECT(arc))->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+            (SP_OBJECT(ge))->updateRepr();
+            (SP_OBJECT(ge))->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 
             modmade = true;
         }
@@ -181,7 +180,7 @@ static void sp_arctb_open_state_changed( EgeSelectOneAction *act, GObject *tbl )
              items = items->next)
         {
             SPItem *item = reinterpret_cast<SPItem*>(items->data);
-            if (SP_IS_ARC(item)) {
+            if (SP_IS_GENERICELLIPSE(item)) {
                 Inkscape::XML::Node *repr = item->getRepr();
                 repr->setAttribute("sodipodi:open", "true");
                 item->updateRepr();
@@ -194,7 +193,7 @@ static void sp_arctb_open_state_changed( EgeSelectOneAction *act, GObject *tbl )
              items = items->next)
         {
             SPItem *item = reinterpret_cast<SPItem *>(items->data);
-            if (SP_IS_ARC(item)) {
+            if (SP_IS_GENERICELLIPSE(item)) {
                 Inkscape::XML::Node *repr = item->getRepr();
                 repr->setAttribute("sodipodi:open", NULL);
                 item->updateRepr();
@@ -286,7 +285,7 @@ static void sp_arc_toolbox_selection_changed(Inkscape::Selection *selection, GOb
          items = items->next)
     {
         SPItem *item = reinterpret_cast<SPItem *>(items->data);
-        if (SP_IS_ARC(item)) {
+        if (SP_IS_GENERICELLIPSE(item)) {
             n_selected++;
             repr = item->getRepr();
         }

@@ -41,7 +41,7 @@ public:
 	virtual const std::string& getPrefsPath();
 
 private:
-	SPArc *arc;
+	SPGenericEllipse *arc;
 
     Geom::Point center;
 
