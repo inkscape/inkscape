@@ -142,7 +142,7 @@ bool RegistryTool::setPathInfo()
     //    fullPath.c_str(), path.c_str(), exeName.c_str());
 
     Glib::ustring keyName =
-    "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\";
+    "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\";
     keyName.append(exeName);
 
     Glib::ustring valueName = "";
