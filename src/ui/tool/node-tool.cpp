@@ -534,11 +534,7 @@ bool InkNodeTool::root_handler(GdkEvent* event) {
     	break;
     }
     
-//    if (SP_EVENT_CONTEXT_CLASS(ink_node_tool_parent_class)->root_handler)
-//        return SP_EVENT_CONTEXT_CLASS(ink_node_tool_parent_class)->root_handler(event_context, event);
-    SPEventContext::root_handler(event);
-
-    return FALSE;
+    return SPEventContext::root_handler(event);
 }
 
 void InkNodeTool::update_tip(GdkEvent *event) {
@@ -605,12 +601,6 @@ void InkNodeTool::update_tip(GdkEvent *event) {
                 "Drag to select objects to edit"));
         }
     }
-}
-
-bool InkNodeTool::item_handler(SPItem* item, GdkEvent* event) {
-	SPEventContext::item_handler(item, event);
-
-    return FALSE;
 }
 
 void InkNodeTool::select_area(Geom::Rect const &sel, GdkEventButton *event) {
