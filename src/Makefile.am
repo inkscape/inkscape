@@ -266,7 +266,7 @@ TESTS = $(check_PROGRAMS) ../share/extensions/test/run-all-extension-tests
 
 XFAIL_TESTS = $(check_PROGRAMS)
 
-# including the the testsuites here ensures that they get distributed
+# including the testsuites here ensures that they get distributed
 cxxtests_SOURCES = cxxtests.cpp $(CXXTEST_TESTSUITES) $(ink_common_sources) $(win32_sources)
 cxxtests_LDADD = $(all_libs)
 

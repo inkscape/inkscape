@@ -365,7 +365,7 @@ cr_rgb_is_set_to_inherit (CRRgb *a_this)
 }
 
 /**
- *Tests if the the rgb is set to the
+ *Tests if the rgb is set to the
  *value "transparent" or not.
  *@param a_this the current instance of
  *#CRRgb

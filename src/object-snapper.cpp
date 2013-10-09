@@ -538,7 +538,7 @@ void Inkscape::ObjectSnapper::_snapPaths(IntermSnapResults &isr,
                          * - Linking the individual nodes of the SPPath we have here, to the nodes of the NodePath::SubPath class as being
                          *   used in sp_nodepath_selected_nodes_move. This class has a member variable called "selected". For this the nodes
                          *   should be in the exact same order for both classes, so we can index them
-                         * - Replacing the SPPath being used here by the the NodePath::SubPath class; but how?
+                         * - Replacing the SPPath being used here by the NodePath::SubPath class; but how?
                          */
                     }
 

@@ -459,7 +459,7 @@ struct MaskLuminanceToAlpha {
 /**
  * Rasterize items.
  * This method submits the drawing opeartions required to draw this item
- * to the supplied DrawingContext, restricting drawing the the specified area.
+ * to the supplied DrawingContext, restricting drawing the specified area.
  *
  * This method does some common tasks and calls the item-specific rendering
  * function, _renderItem(), to render e.g. paths or bitmaps.

@@ -456,7 +456,7 @@ extension-element-prefixes="math">
 <!-- 
   // Gradient transform //
   Not implemented yet
-  Gradient positioning and tranformation are very different in FXG
+  Gradient positioning and transformation are very different in FXG
 -->
 <xsl:template name="gradient_transform">
   <xsl:param name="transform" />

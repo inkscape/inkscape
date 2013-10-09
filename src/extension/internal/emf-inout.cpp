@@ -321,7 +321,7 @@ Emf::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *filena
 }
 
 
-/*  given the transformation matrix from worldTranform return the scale in the matrix part.  Assumes that the
+/*  given the transformation matrix from worldTransform return the scale in the matrix part.  Assumes that the
     matrix is not used to skew, invert, or make another distorting transformation.  */
 double Emf::current_scale(PEMF_CALLBACK_DATA d){
     double scale =
@@ -332,7 +332,7 @@ double Emf::current_scale(PEMF_CALLBACK_DATA d){
     return(scale);
 }
 
-/*  given the transformation matrix from worldTranform and the current x,y position in inkscape coordinates,
+/*  given the transformation matrix from worldTransform and the current x,y position in inkscape coordinates,
     generate an SVG transform that gives the same amount of rotation, no scaling, and maps x,y back onto x,y.  This is used for
     rotating objects when the location of at least one point in that object is known. Returns:
     "matrix(a,b,c,d,e,f)"  (WITH the double quotes)
@@ -359,7 +359,7 @@ std::string Emf::current_matrix(PEMF_CALLBACK_DATA d, double x, double y, int us
     return(cxform.str());
 }
 
-/*  given the transformation matrix from worldTranform return the rotation angle in radians.
+/*  given the transformation matrix from worldTransform return the rotation angle in radians.
     counter clocwise from the x axis.  */
 double Emf::current_rotation(PEMF_CALLBACK_DATA d){
     return -std::atan2(d->dc[d->level].worldTransform.eM12, d->dc[d->level].worldTransform.eM11);

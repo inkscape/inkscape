@@ -3235,7 +3235,7 @@ cr_parser_parse_statement_core (CRParser * a_this)
  *ruleset ::= selector [ ',' S* selector ]* 
  *'{' S* declaration? [ ';' S* declaration? ]* '}' S*;
  *
- *This methods calls the the SAC handler on the relevant SAC handler
+ *This methods calls the SAC handler on the relevant SAC handler
  *callbacks whenever it encounters some specific constructions.
  *See the documentation of #CRDocHandler (the SAC handler) to know
  *when which SAC handler is called.

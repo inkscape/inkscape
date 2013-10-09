@@ -88,7 +88,7 @@ static char const *const tool_names[] = {
 };
 static char const *const tool_msg[] = {
     NULL,
-    N_("<b>Click</b> to Select and Tranform objects, <b>Drag</b> to select many objects."),
+    N_("<b>Click</b> to Select and Transform objects, <b>Drag</b> to select many objects."),
     N_("Modify selected path points (nodes) directly."),
     N_("To tweak a path by pushing, select it and drag over it."),
     N_("<b>Drag</b>, <b>click</b> or <b>click and scroll</b> to spray the selected objects."),

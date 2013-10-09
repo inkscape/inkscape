@@ -140,7 +140,7 @@ public:
 
     /// Shows the file dialog, and blocks until a file
     /// has been selected.
-    /// @return Returns true if the the user selected a
+    /// @return Returns true if the user selected a
     /// file, or false if the user pressed cancel.
     bool show();
 
@@ -341,7 +341,7 @@ public:
 
     /// Shows the file dialog, and blocks until a file
     /// has been selected.
-    /// @return Returns true if the the user selected a
+    /// @return Returns true if the user selected a
     /// file, or false if the user pressed cancel.
     bool show();
 

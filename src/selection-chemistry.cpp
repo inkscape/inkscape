@@ -1032,7 +1032,8 @@ void sp_selection_lower(Inkscape::Selection *selection, SPDesktop *desktop)
     }
 
     DocumentUndo::done(selection->layers()->getDocument(), SP_VERB_SELECTION_LOWER,
-                       _("Lower"));
+                       //TRANSLATORS: "Lower" means "to lower an object" in the undo history
+                       C_("Undo action", "Lower"));
 }
 
 void sp_selection_lower_to_bottom(Inkscape::Selection *selection, SPDesktop *desktop)

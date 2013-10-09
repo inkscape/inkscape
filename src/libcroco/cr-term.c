@@ -766,7 +766,7 @@ cr_term_unref (CRTerm * a_this)
 }
 
 /**
- *The destructor of the the #CRTerm class.
+ *The destructor of the #CRTerm class.
  *@param a_this the "this pointer" of the current instance
  *of #CRTerm.
  */

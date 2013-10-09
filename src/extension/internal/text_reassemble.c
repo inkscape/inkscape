@@ -1015,7 +1015,7 @@ int cxinfo_make_insertable(CX_INFO *cxi){
     \brief Insert a complex into the CX_INFO structure. (Insert may be either TR_TEXT or TR_LINE.)
     \returns 0 on success, !0 on error.
     \param cxi pointer to the CX_INFO structure (complexes).
-    \param src index of the the complex to insert.
+    \param src index of the complex to insert.
     \param src_rt_tidx index of the bounding rectangle
     \param type TR_TEXT (index is for tpi->chunks[]) or TR_LINE (index is for cxi->kids[])
 */

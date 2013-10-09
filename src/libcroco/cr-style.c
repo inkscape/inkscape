@@ -36,7 +36,7 @@
  *Each supported css property has an ID which is
  *an entry into a property "population" jump table.
  *each entry of the property population jump table
- *contains code to tranform the literal form of
+ *contains code to transform the literal form of
  *a property value into a strongly typed value.
  */
 enum CRPropertyID {
@@ -148,7 +148,7 @@ static CRPropertyDesc gv_prop_table[] = {
 /**
  *A the key/value pair of this hash table
  *are:
- *key => name of the the css propertie found in gv_prop_table
+ *key => name of the css property found in gv_prop_table
  *value => matching property id found in gv_prop_table.
  *So this hash table is here just to retrieval of a property id
  *from a property name.

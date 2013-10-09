@@ -514,7 +514,7 @@ public:
     /**
      * Updates the object's repr based on the object's state.
      *
-     *  This method updates the the repr attached to the object to reflect the object's current
+     *  This method updates the repr attached to the object to reflect the object's current
      *  state; see the three-argument version for details.
      *
      * @param flags object write flags that apply to this update

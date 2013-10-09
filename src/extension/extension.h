@@ -144,12 +144,12 @@ private:
                               extension */
 
 public:
-    /** \brief  A function to get the the number of parameters that
+    /** \brief  A function to get the number of parameters that
                 the extension has.
         \return The number of parameters. */
     unsigned int param_count ( ) { return parameters == NULL ? 0 :
                                               g_slist_length(parameters); };
-    /** \brief  A function to get the the number of parameters that
+    /** \brief  A function to get the number of parameters that
                 are visible to the user that the extension has.
         \return The number of visible parameters.
 

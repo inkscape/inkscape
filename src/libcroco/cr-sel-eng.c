@@ -839,7 +839,7 @@ cr_sel_eng_get_matched_rulesets_real (CRSelEng * a_this,
                 sel_list = NULL;
 
                 /*
-                 *get the the damn selector list in 
+                 *get the damn selector list in 
                  *which we have to look
                  */
                 switch (cur_stmt->type) {

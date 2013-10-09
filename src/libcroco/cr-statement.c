@@ -1907,7 +1907,7 @@ cr_statement_ruleset_set_sel_list (CRStatement * a_this,
  *Gets a pointer to the list of declaration contained
  *in the ruleset statement.
  *@param a_this the current instance of #CRStatement.
- *@a_decl_list out parameter. A pointer to the the returned
+ *@a_decl_list out parameter. A pointer to the returned
  *list of declaration. Must not be NULL.
  *@return CR_OK upon successfull completion, an error code if something
  *bad happened.

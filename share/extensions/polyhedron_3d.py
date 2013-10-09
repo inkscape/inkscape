@@ -473,7 +473,7 @@ class Poly_3D(inkex.Effect):
                         'transform':poly_transform }
         poly = inkex.etree.SubElement(self.current_layer, 'g', poly_attribs)#the group to put everything in
         
-        #TRANFORMATION OF THE OBJECT (ROTATION, SCALE, ETC)
+        #TRANSFORMATION OF THE OBJECT (ROTATION, SCALE, ETC)
         
         trans_mat = mat(identity(3, float)) #init. trans matrix as identity matrix
         for i in range(1, 7):#for each rotation

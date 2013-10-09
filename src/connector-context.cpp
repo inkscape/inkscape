@@ -50,7 +50,7 @@
  *  changed so that it no longer defines special attributes to record
  *  the points. Instead it uses single node paths to define points
  *  who are then seperate objects that can be fixed on the canvas,
- *  grouped into objects and take full advantage of all tranform, snap
+ *  grouped into objects and take full advantage of all transform, snap
  *  and align functionality of all other objects.
  *
  * 	I think that the style change between polyline and orthogonal

@@ -319,7 +319,7 @@ void SPMarker::update(SPCtx *ctx, guint flags) {
     // Copy parent context
     rctx.flags = ctx->flags;
 
-    // Initialize tranformations
+    // Initialize transformations
     rctx.i2doc = Geom::identity();
     rctx.i2vp = Geom::identity();
 

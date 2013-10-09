@@ -163,7 +163,7 @@ unsigned find_bottom_right(ConvexHull const &a);
 
 /*** Arbitrary transform operator.
  * Take a convex hull and apply an arbitrary convexity preserving transform.
- *  we should be concerned about singular tranforms here.
+ *  we should be concerned about singular transforms here.
  */
 template <class T> ConvexHull operator*(ConvexHull const &p, T const &m) {
     ConvexHull pr;

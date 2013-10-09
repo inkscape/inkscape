@@ -320,12 +320,12 @@ Wmf::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *filena
 }
 
 
-/* WMF has no worldTranform, so this always returns 1.0.  Retain it to keep WMF and WMF in sync as much as possible.*/
+/* WMF has no worldTransform, so this always returns 1.0.  Retain it to keep WMF and WMF in sync as much as possible.*/
 double Wmf::current_scale(PWMF_CALLBACK_DATA d){
     return 1.0;
 }
 
-/* WMF has no worldTranform, so this always returns an Identity rotation matrix, but the offsets may have values.*/
+/* WMF has no worldTransform, so this always returns an Identity rotation matrix, but the offsets may have values.*/
 std::string Wmf::current_matrix(PWMF_CALLBACK_DATA d, double x, double y, int useoffset){
     std::stringstream cxform;
     double scale = current_scale(d);
@@ -340,7 +340,7 @@ std::string Wmf::current_matrix(PWMF_CALLBACK_DATA d, double x, double y, int us
     return(cxform.str());
 }
 
-/* WMF has no worldTranform, so this always returns 0.  Retain it to keep WMF and WMF in sync as much as possible.*/
+/* WMF has no worldTransform, so this always returns 0.  Retain it to keep WMF and WMF in sync as much as possible.*/
 double Wmf::current_rotation(PWMF_CALLBACK_DATA d){
     return 0.0;
 }

@@ -183,7 +183,7 @@ void SPWidgetImpl::dispose(GObject *object)
     if (spw->inkscape) {
         // Disconnect signals
 
-        // the checks are necessary because when destroy is caused by the the program shutting down,
+        // the checks are necessary because when destroy is caused by the program shutting down,
         // the inkscape object may already be (partly?) invalid --bb
         if (G_IS_OBJECT(spw->inkscape) && G_OBJECT_GET_CLASS(spw->inkscape)) {
             sp_signal_disconnect_by_data(spw->inkscape, spw);
