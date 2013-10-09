@@ -1,9 +1,9 @@
 /* XPM */
 static char const *cursor_node_d_xpm[] = {
 "32 32 3 1",
-" 	g None",
-".	g #ffffff",
-"+	g #000000",
+" 	c None",
+".	c #FFFFFF",
+"+	c #000000",
 " .                              ",
 ".+.                             ",
 " .+.                            ",
