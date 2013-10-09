@@ -116,9 +116,9 @@ class SVGCalendar (inkex.Effect):
           help='Color for the week numbers.')
         self.OptionParser.add_option("--month-names",
           action="store", type="string",
-          dest="month_names", default='January February March' + \
+          dest="month_names", default='January February March ' + \
                                       'April May June '+ \
-                                      'July August September' + \
+                                      'July August September ' + \
                                       'October November December',
           help='The month names for localization.')
         self.OptionParser.add_option("--day-names",
