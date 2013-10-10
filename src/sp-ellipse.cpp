@@ -75,6 +75,7 @@ SPGenericEllipse::SPGenericEllipse()
     : SPShape()
     , start(0)
     , end(SP_2PI)
+    , type(SP_GENERIC_ELLIPSE_UNDEFINED)
     , _closed(true)
 {
 }
@@ -416,6 +417,7 @@ void SPGenericEllipse::set_shape()
     SPCurve *curve = NULL;
 
     // For simplicity, we use a circle with center (0, 0) and radius 1 for our calculations.
+    Geom::Circle circle(0, 0, 1);
 
     if (this->_isSlice()) {
         Geom::Point center(0, 0);
@@ -423,8 +425,7 @@ void SPGenericEllipse::set_shape()
         Geom::Point end_point = Geom::Point::polar(end);
         Geom::Point middle_point = make_angle_bisector_ray(Geom::Ray(center, start), Geom::Ray(center, end)).versor();
 
-        Geom::Ellipse ellipse(0, 0, 1, 1, 0);
-        Geom::EllipticalArc *arc = ellipse.arc(start_point, middle_point, end_point);
+        Geom::EllipticalArc *arc = circle.arc(start_point, middle_point, end_point);
 
         Geom::Path path(start_point);
         path.append(*arc);
@@ -446,13 +447,33 @@ void SPGenericEllipse::set_shape()
         curve = new SPCurve(pb.peek());
     } else {
         // Full ellipse
-        Geom::Circle circle(0, 0, 1);
-        Geom::PathVector path;
+        // This code converts the circle to four elliptical arcs explicitly.
+        // Circle::getPath currently creates cubic bezier curves, these are not suitable here
+        // as a circle should have four mid markers at 0, 90, 180, 270 degrees.
+        Geom::Path path;
+        Geom::EllipticalArc* arc;
 
-        circle.getPath(path);
+        arc = circle.arc(Geom::Point::polar(0), Geom::Point::polar(M_PI / 4.0), Geom::Point::polar(M_PI / 2.0));
+        path.append(*arc);
+        delete arc;
 
-        curve = new SPCurve(path);
-        curve->closepath();
+        arc = circle.arc(Geom::Point::polar(M_PI / 2.0), Geom::Point::polar(3.0 * M_PI / 4.0), Geom::Point::polar(M_PI));
+        path.append(*arc);
+        delete arc;
+
+        arc = circle.arc(Geom::Point::polar(M_PI), Geom::Point::polar(5.0 * M_PI / 4.0), Geom::Point::polar(3.0 * M_PI / 2.0));
+        path.append(*arc);
+        delete arc;
+
+        arc = circle.arc(Geom::Point::polar(3.0 * M_PI / 2.0), Geom::Point::polar(7.0 * M_PI / 4.0), Geom::Point::polar(2.0 * M_PI));
+        path.append(*arc);
+        delete arc;
+
+        Geom::PathBuilder pb;
+        pb.append(path);
+        pb.closePath();
+
+        curve = new SPCurve(pb.peek());
     }
 
     // gchar *str = sp_svg_write_path(curve->get_pathvector());
@@ -639,36 +660,19 @@ Geom::Point SPGenericEllipse::getPointAtAngle(double arg) const
  */
 bool SPGenericEllipse::set_elliptical_path_attribute(Inkscape::XML::Node *repr)
 {
-    Inkscape::SVG::PathString str;
+    // Make sure our pathvector is up to date.
+    this->set_shape();
 
-    Geom::Point p1 = this->getPointAtAngle(this->start);
-    Geom::Point p2 = this->getPointAtAngle(this->end);
-    double rx = this->rx.computed;
-    double ry = this->ry.computed;
+    if (this->getCurve() != NULL) {
+        gchar* d = sp_svg_write_path(this->getCurve()->get_pathvector());
 
-    str.moveTo(p1);
+        repr->setAttribute("d", d);
 
-    double dt = fmod(this->end - this->start, SP_2PI);
-
-    if (fabs(dt) < 1e-6) {
-        Geom::Point ph = getPointAtAngle((this->start + this->end) / 2.0);
-
-        str.arcTo(rx, ry, 0, true, true, ph)
-        .arcTo(rx, ry, 0, true, true, p2)
-        .closePath();
+        g_free(d);
     } else {
-        bool fa = (fabs(dt) > M_PI);
-        bool fs = (dt > 0);
-
-        str.arcTo(rx, ry, 0, fa, fs, p2);
-
-        if (this->_closed) {
-            Geom::Point center = Geom::Point(this->cx.computed, this->cy.computed);
-            str.lineTo(center).closePath();
-        }
+        repr->setAttribute("d", NULL);
     }
 
-    repr->setAttribute("d", str.c_str());
     return true;
 }
 
