@@ -63,7 +63,7 @@ enum {
 typedef struct
 {
   GtkOrientation   orientation;
-  Inkscape::Util::Unit *unit;
+  Inkscape::Util::Unit const *unit;
   gdouble          lower;
   gdouble          upper;
   gdouble          position;
@@ -260,7 +260,7 @@ sp_ruler_init (SPRuler *ruler)
   gtk_widget_set_has_window (GTK_WIDGET (ruler), FALSE);
 
   priv->orientation   = GTK_ORIENTATION_HORIZONTAL;
-  priv->unit          = new Inkscape::Util::Unit(unit_table.getUnit("px"));
+  priv->unit          = unit_table.getUnit("px");
   priv->lower         = 0;
   priv->upper         = 0;
   priv->position      = 0;
@@ -1071,15 +1071,15 @@ sp_ruler_remove_track_widget (SPRuler   *ruler,
  */
 void
 sp_ruler_set_unit (SPRuler  *ruler,
-                   const Inkscape::Util::Unit &unit)
+                   Inkscape::Util::Unit const *unit)
 {
   SPRulerPrivate *priv = SP_RULER_GET_PRIVATE (ruler);
   
   g_return_if_fail (SP_IS_RULER (ruler));
 
-  if (*priv->unit != unit)
+  if (*priv->unit != *unit)
     {
-      priv->unit = new Inkscape::Util::Unit(unit);
+      priv->unit = unit;
       g_object_notify(G_OBJECT(ruler), "unit");
 
       gtk_widget_queue_draw (GTK_WIDGET (ruler));
@@ -1092,7 +1092,7 @@ sp_ruler_set_unit (SPRuler  *ruler,
  *
  * Return value: the unit currently used in the @ruler widget.
  **/
-Inkscape::Util::Unit*
+Inkscape::Util::Unit const*
 sp_ruler_get_unit (SPRuler *ruler)
 {
   return SP_RULER_GET_PRIVATE (ruler)->unit;
@@ -1182,7 +1182,7 @@ sp_ruler_draw_ticks (SPRuler *ruler)
     gint             text_size;
     gint             pos;
     gdouble          max_size;
-    Inkscape::Util::Unit *unit;
+    Inkscape::Util::Unit const *unit = NULL;
     SPRulerMetric    ruler_metric = ruler_metric_general; /* The metric to use for this unit system */
     PangoLayout     *layout;
     PangoRectangle   logical_rect, ink_rect;
@@ -1298,7 +1298,7 @@ sp_ruler_draw_ticks (SPRuler *ruler)
 
     /* Inkscape change to ruler: Use a 1,2,4,8... scale for inches
      * or a 1,2,5,10... scale for everything else */
-    if (*sp_ruler_get_unit (ruler) == unit_table.getUnit("in"))
+    if (*sp_ruler_get_unit (ruler) == *unit_table.getUnit("in"))
       ruler_metric = ruler_metric_inches;
 
     for (scale = 0; scale < G_N_ELEMENTS (ruler_metric.ruler_scale); scale++)
@@ -1317,7 +1317,7 @@ sp_ruler_draw_ticks (SPRuler *ruler)
         gdouble subd_incr;
        
         /* hack to get proper subdivisions at full pixels */
-        if (*unit == unit_table.getUnit("px") && scale == 1 && i == 1)
+        if (*unit == *unit_table.getUnit("px") && scale == 1 && i == 1)
           subd_incr = 1.0;
         else
           subd_incr = ((gdouble) ruler_metric.ruler_scale[scale] / 

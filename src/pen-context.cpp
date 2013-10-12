@@ -1137,7 +1137,7 @@ static void spdc_pen_set_angle_distance_status_message(SPPenContext *const pc, G
     SPDesktop *desktop = SP_EVENT_CONTEXT(pc)->desktop;
     Geom::Point rel = p - pc->p[pc_point_to_compare];
     Inkscape::Util::Quantity q = Inkscape::Util::Quantity(Geom::L2(rel), "px");
-    GString *dist = g_string_new(q.string(*desktop->namedview->doc_units).c_str());
+    GString *dist = g_string_new(q.string(desktop->namedview->doc_units).c_str());
     double angle = atan2(rel[Geom::Y], rel[Geom::X]) * 180 / M_PI;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (prefs->getBool("/options/compassangledisplay/value", 0) != 0) {

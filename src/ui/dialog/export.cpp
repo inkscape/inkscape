@@ -1884,7 +1884,7 @@ void Export::setValuePx(Glib::RefPtr<Gtk::Adjustment>& adj, double val)
 void Export::setValuePx( Gtk::Adjustment *adj, double val)
 #endif
 {
-    const Unit unit = unit_selector->getUnit();
+    Unit const *unit = unit_selector->getUnit();
 
     setValue(adj, Inkscape::Util::Quantity::convert(val, "px", unit));
 
@@ -1934,7 +1934,7 @@ float Export::getValuePx(  Gtk::Adjustment *adj )
 #endif
 {
     float value = getValue( adj);
-    const Unit unit = unit_selector->getUnit();
+    Unit const *unit = unit_selector->getUnit();
 
     return Inkscape::Util::Quantity::convert(value, unit, "px");
 } // end of sp_export_value_get_px()

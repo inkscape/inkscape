@@ -133,13 +133,13 @@ public:
 class ExpressionEvaluator
 {
 public:
-    ExpressionEvaluator(const char *string, Unit *unit = NULL);
+    ExpressionEvaluator(const char *string, Unit const *unit = NULL);
     
     EvaluatorQuantity evaluate();
 
 private:
     const char *string;
-    Unit *unit;
+    Unit const *unit;
     
     EvaluatorToken current_token;
     const char *start_of_current_token;
@@ -160,7 +160,7 @@ private:
     static bool isUnitIdentifierStart(gunichar c);
     static int getIdentifierSize(const char *s, int start);
     
-    static bool resolveUnit(const char *identifier, EvaluatorQuantity *result, Unit *unit);
+    static bool resolveUnit(const char *identifier, EvaluatorQuantity *result, Unit const *unit);
     
     void throwError(const char *msg);
 };

@@ -565,9 +565,8 @@ PageSizer::find_paper_size (Inkscape::Util::Quantity w, Inkscape::Util::Quantity
     for (iter = _paperSizeTable.begin() ;
          iter != _paperSizeTable.end() ; ++iter) {
         PaperSize paper = iter->second;
-        Inkscape::Util::Unit const &i_unit = paper.unit;
-        double smallX = Inkscape::Util::Quantity::convert(paper.smaller, i_unit, *w.unit);
-        double largeX = Inkscape::Util::Quantity::convert(paper.larger, i_unit, *w.unit);
+        double smallX = Inkscape::Util::Quantity::convert(paper.smaller, paper.unit, w.unit);
+        double largeX = Inkscape::Util::Quantity::convert(paper.larger, paper.unit, w.unit);
 
         g_return_val_if_fail(smallX <= largeX, _paperSizeListStore->children().end());
 
@@ -704,7 +703,7 @@ void
 PageSizer::on_value_changed()
 {
     if (_widgetRegistry->isUpdating()) return;
-    if (_unit != _dimensionUnits.getUnit().abbr) return;
+    if (_unit != _dimensionUnits.getUnit()->abbr) return;
     setDim (Inkscape::Util::Quantity(_dimensionWidth.getValue(""), _dimensionUnits.getUnit()),
             Inkscape::Util::Quantity(_dimensionHeight.getValue(""), _dimensionUnits.getUnit()));
 }
@@ -712,7 +711,7 @@ void
 PageSizer::on_units_changed()
 {
     if (_widgetRegistry->isUpdating()) return;
-    _unit = _dimensionUnits.getUnit().abbr;
+    _unit = _dimensionUnits.getUnit()->abbr;
     setDim (Inkscape::Util::Quantity(_dimensionWidth.getValue(""), _dimensionUnits.getUnit()),
             Inkscape::Util::Quantity(_dimensionHeight.getValue(""), _dimensionUnits.getUnit()));
 }

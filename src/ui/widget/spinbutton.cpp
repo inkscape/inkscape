@@ -35,16 +35,16 @@ int SpinButton::on_input(double* newvalue)
     try {
         Inkscape::Util::EvaluatorQuantity result;
         if (_unit_menu || _unit_tracker) {
-            Unit unit;
+            Unit const *unit = NULL;
             if (_unit_menu) {
                 unit = _unit_menu->getUnit();
             } else {
                 unit = _unit_tracker->getActiveUnit();
             }
-            Inkscape::Util::ExpressionEvaluator eval = Inkscape::Util::ExpressionEvaluator(get_text().c_str(), &unit);
+            Inkscape::Util::ExpressionEvaluator eval = Inkscape::Util::ExpressionEvaluator(get_text().c_str(), unit);
             result = eval.evaluate();
             // check if output dimension corresponds to input unit
-            if (result.dimension != (unit.isAbsolute() ? 1 : 0) ) {
+            if (result.dimension != (unit->isAbsolute() ? 1 : 0) ) {
                 throw Inkscape::Util::EvaluatorException("Input dimensions do not match with parameter dimensions.","");
             }
         } else {

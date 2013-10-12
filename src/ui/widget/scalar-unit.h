@@ -82,7 +82,7 @@ public:
     /**
      * Gets the object for the currently selected unit.
      */
-    Unit      getUnit() const;
+    Unit const * getUnit() const;
 
     /**
      * Gets the UnitType ID for the unit.

@@ -74,7 +74,7 @@ public:
      * Returns the Unit object corresponding to the current selection
      * in the dropdown widget.
      */
-    Unit          getUnit() const;
+    Unit const *  getUnit() const;
 
     /**
      * Returns the abbreviated unit name of the selected unit.

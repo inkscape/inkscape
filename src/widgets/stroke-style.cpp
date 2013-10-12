@@ -147,7 +147,8 @@ StrokeStyle::StrokeStyle() :
     selectModifiedConn(),
     startMarkerConn(),
     midMarkerConn(),
-    endMarkerConn()
+    endMarkerConn(),
+    _old_unit(NULL)
 {
     Gtk::HBox *hb;
     Gtk::HBox *f = new Gtk::HBox(false, 0);
@@ -199,12 +200,12 @@ StrokeStyle::StrokeStyle() :
     Gtk::Widget *us = manage(unitSelector);
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
-    unitSelector->addUnit(unit_table.getUnit("%"));
+    unitSelector->addUnit(*unit_table.getUnit("%"));
+    _old_unit = unitSelector->getUnit();
     if (desktop) {
         unitSelector->setUnit(sp_desktop_namedview(desktop)->doc_units->abbr);
-        _old_unit = new Inkscape::Util::Unit(*sp_desktop_namedview(desktop)->doc_units);
+        _old_unit = sp_desktop_namedview(desktop)->doc_units;
     }
-    _old_unit = new Inkscape::Util::Unit(unitSelector->getUnit());
     widthSpin->setUnitMenu(unitSelector);
     unitChangedConn = unitSelector->signal_changed().connect(sigc::mem_fun(*this, &StrokeStyle::unitChangedCB));
     
@@ -529,12 +530,12 @@ void StrokeStyle::updateMarkerHist(SPMarkerLoc const which)
  */
 void StrokeStyle::unitChangedCB()
 {
-    Inkscape::Util::Unit new_unit = unitSelector->getUnit();
-    if (new_unit.type == Inkscape::Util::UNIT_TYPE_DIMENSIONLESS) {
+    Inkscape::Util::Unit const *new_unit = unitSelector->getUnit();
+    if (new_unit->type == Inkscape::Util::UNIT_TYPE_DIMENSIONLESS) {
         widthSpin->set_value(100);
     }
-    widthSpin->set_value(Inkscape::Util::Quantity::convert(widthSpin->get_value(), *_old_unit, new_unit));
-    _old_unit = new Inkscape::Util::Unit(new_unit);
+    widthSpin->set_value(Inkscape::Util::Quantity::convert(widthSpin->get_value(), _old_unit, new_unit));
+    _old_unit = new_unit;
 }
 
 /**
@@ -824,21 +825,20 @@ StrokeStyle::updateLine()
     } else {
         table->set_sensitive(true);
 
-        Inkscape::Util::Unit const *unit = new Inkscape::Util::Unit(unitSelector->getUnit());
-
         if (result_sw == QUERY_STYLE_MULTIPLE_AVERAGED) {
             unitSelector->setUnit("%");
         } else {
             // same width, or only one object; no sense to keep percent, switch to absolute
-            if (unit->type != Inkscape::Util::UNIT_TYPE_LINEAR) {
+            Inkscape::Util::Unit const *tempunit = unitSelector->getUnit();
+            if (tempunit->type != Inkscape::Util::UNIT_TYPE_LINEAR) {
                 unitSelector->setUnit(sp_desktop_namedview(SP_ACTIVE_DESKTOP)->doc_units->abbr);
             }
         }
 
-        unit = new Inkscape::Util::Unit(unitSelector->getUnit());
+        Inkscape::Util::Unit const *unit = unitSelector->getUnit();
 
         if (unit->type == Inkscape::Util::UNIT_TYPE_LINEAR) {
-            double avgwidth = Inkscape::Util::Quantity::convert(query->stroke_width.computed, "px", *unit);
+            double avgwidth = Inkscape::Util::Quantity::convert(query->stroke_width.computed, "px", unit);
 #if WITH_GTKMM_3_0
             (*widthAdj)->set_value(avgwidth);
 #else
@@ -964,7 +964,7 @@ StrokeStyle::scaleLine()
         double const miterlimit = miterLimitAdj->get_value();
 #endif
 
-        Inkscape::Util::Unit const *const unit = new Inkscape::Util::Unit(unitSelector->getUnit());
+        Inkscape::Util::Unit const *const unit = unitSelector->getUnit();
 
         double *dash, offset;
         int ndash;
@@ -974,7 +974,7 @@ StrokeStyle::scaleLine()
             /* Set stroke width */
             double width;
             if (unit->type == Inkscape::Util::UNIT_TYPE_LINEAR) {
-                width = Inkscape::Util::Quantity::convert(width_typed, *unit, "px");
+                width = Inkscape::Util::Quantity::convert(width_typed, unit, "px");
             } else { // percentage
                 gdouble old_w = SP_OBJECT(i->data)->style->stroke_width.computed;
                 width = old_w * width_typed / 100;

@@ -348,7 +348,7 @@ gchar* SPText::description() {
     }
 
     Inkscape::Util::Quantity q = Inkscape::Util::Quantity(style->font_size.computed, "px");
-    GString *xs = g_string_new(q.string(*sp_desktop_namedview(SP_ACTIVE_DESKTOP)->doc_units).c_str());
+    GString *xs = g_string_new(q.string(sp_desktop_namedview(SP_ACTIVE_DESKTOP)->doc_units).c_str());
 
     char const *trunc = "";
     Inkscape::Text::Layout const *layout = te_get_layout((SPItem *) this);

@@ -58,7 +58,7 @@ public:
     int            defaultDigits() const;
 
     /** Checks if a unit is compatible with the specified unit. */
-    bool           compatibleWith(Unit const &u) const;
+    bool           compatibleWith(Unit const *u) const;
     bool           compatibleWith(Glib::ustring const &) const;
     bool           compatibleWith(char const *) const;
 
@@ -84,29 +84,30 @@ public:
     double quantity;
     
     /** Initialize a quantity. */
-    Quantity(double q, Unit const &u);
+    Quantity(double q, Unit const *u);
     Quantity(double q, Glib::ustring const &u);
     Quantity(double q, char const *u);
     
     /** Checks if a quantity is compatible with the specified unit. */
-    bool compatibleWith(Unit const &u) const;
+    bool compatibleWith(Unit const *u) const;
     bool compatibleWith(Glib::ustring const &u) const;
     bool compatibleWith(char const *u) const;
     
     /** Return the quantity's value in the specified unit. */
-    double value(Unit const &u) const;
+    double value(Unit const *u) const;
     double value(Glib::ustring const &u) const;
     double value(char const *u) const;
     
     /** Return a printable string of the value in the specified unit. */
-    Glib::ustring string(Unit const &u) const;
+    Glib::ustring string(Unit const *u) const;
     Glib::ustring string(Glib::ustring const &u) const;
     Glib::ustring string() const;
     
-    /** Convert distances. */
-    static double convert(double from_dist, Unit const &from, Unit const &to);
-    static double convert(double from_dist, Glib::ustring const &from, Unit const &to);
-    static double convert(double from_dist, Unit const &from, Glib::ustring const &to);
+    /** Convert distances. 
+       no NULL check is performed on the passed pointers to Unit objects!  */
+    static double convert(double from_dist, Unit const *from, Unit const *to);
+    static double convert(double from_dist, Glib::ustring const &from, Unit const *to);
+    static double convert(double from_dist, Unit const *from, Glib::ustring const &to);
     static double convert(double from_dist, Glib::ustring const &from, Glib::ustring const &to);
     static double convert(double from_dist, char const *from, char const *to);
 
@@ -132,17 +133,18 @@ public:
     void    addUnit(Unit const &u, bool primary);
 
     /** Retrieve a given unit based on its string identifier */
-    Unit const &getUnit(Glib::ustring const &name) const;
-    Unit const &getUnit(char const *name) const;
+    Unit const *getUnit(Glib::ustring const &name) const;
+    Unit const *getUnit(char const *name) const;
     
     /** Retrieve a given unit based on its SVGLength unit */
-    Unit const &getUnit(SVGLength::Unit u) const;
+    Unit const *getUnit(SVGLength::Unit u) const;
     
     /** Retrieve a quantity based on its string identifier */
     Quantity parseQuantity(Glib::ustring const &q) const;
 
-    /** Remove a unit definition from the given unit type table */
-    bool    deleteUnit(Unit const &u);
+    /** Remove a unit definition from the given unit type table * /
+     * DISABLED, unsafe with the current passing around pointers to Unit objects in this table */
+    //bool    deleteUnit(Unit const &u);
 
     /** Returns true if the given string 'name' is a valid unit in the table */
     bool    hasUnit(Glib::ustring const &name) const;

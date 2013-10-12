@@ -1441,7 +1441,7 @@ void DocumentProperties::update()
         _rum_deflt.setUnit (nv->doc_units->abbr);
 
     double doc_w = sp_desktop_document(dt)->getRoot()->width.value;
-    Glib::ustring doc_w_unit = unit_table.getUnit(sp_desktop_document(dt)->getRoot()->width.unit).abbr;
+    Glib::ustring doc_w_unit = unit_table.getUnit(sp_desktop_document(dt)->getRoot()->width.unit)->abbr;
     if (doc_w_unit == "") {
         doc_w_unit = "px";
     } else if (doc_w_unit == "%" && sp_desktop_document(dt)->getRoot()->viewBox_set) {
@@ -1449,7 +1449,7 @@ void DocumentProperties::update()
         doc_w = sp_desktop_document(dt)->getRoot()->viewBox.width();
     }
     double doc_h = sp_desktop_document(dt)->getRoot()->height.value;
-    Glib::ustring doc_h_unit = unit_table.getUnit(sp_desktop_document(dt)->getRoot()->height.unit).abbr;
+    Glib::ustring doc_h_unit = unit_table.getUnit(sp_desktop_document(dt)->getRoot()->height.unit)->abbr;
     if (doc_h_unit == "") {
         doc_h_unit = "px";
     } else if (doc_h_unit == "%" && sp_desktop_document(dt)->getRoot()->viewBox_set) {
@@ -1644,11 +1644,11 @@ void DocumentProperties::onDocUnitChange()
 {
     SPDocument *doc = SP_ACTIVE_DOCUMENT;
     Inkscape::XML::Node *repr = sp_desktop_namedview(getDesktop())->getRepr();
-    Inkscape::Util::Unit old_doc_unit = unit_table.getUnit("px");
+    Inkscape::Util::Unit const *old_doc_unit = unit_table.getUnit("px");
     if(repr->attribute("inkscape:document-units")) {
         old_doc_unit = unit_table.getUnit(repr->attribute("inkscape:document-units"));
     }
-    Inkscape::Util::Unit doc_unit = _rum_deflt.getUnit();
+    Inkscape::Util::Unit const *doc_unit = _rum_deflt.getUnit();
     
     // Don't execute when change is being undone
     if (!DocumentUndo::getUndoSensitive(doc)) {
@@ -1657,7 +1657,7 @@ void DocumentProperties::onDocUnitChange()
     
     // Set document unit
     Inkscape::SVGOStringStream os;
-    os << doc_unit.abbr;
+    os << doc_unit->abbr;
     repr->setAttribute("inkscape:document-units", os.str().c_str());
     
     // Set viewBox

@@ -556,8 +556,8 @@ SPDocument *SPDocument::doUnref()
 
 Inkscape::Util::Quantity SPDocument::getWidth() const
 {
-    g_return_val_if_fail(this->priv != NULL, Inkscape::Util::Quantity(0.0, Inkscape::Util::Unit()));
-    g_return_val_if_fail(this->root != NULL, Inkscape::Util::Quantity(0.0, Inkscape::Util::Unit()));
+    g_return_val_if_fail(this->priv != NULL, Inkscape::Util::Quantity(0.0, unit_table.getUnit("")));
+    g_return_val_if_fail(this->root != NULL, Inkscape::Util::Quantity(0.0, unit_table.getUnit("")));
 
     gdouble result = root->width.value;
     SVGLength::Unit u = root->width.unit;
@@ -577,7 +577,7 @@ void SPDocument::setWidth(const Inkscape::Util::Quantity &width)
     root->width.computed = width.value("px");
     /* SVG does not support meters as a unit, so we must translate meters to
      * cm when writing */
-    if (*width.unit == unit_table.getUnit("m")) {
+    if (*width.unit == *unit_table.getUnit("m")) {
         root->width.value = width.value("cm");
         root->width.unit = SVGLength::CM;
     } else {
@@ -593,8 +593,8 @@ void SPDocument::setWidth(const Inkscape::Util::Quantity &width)
 
 Inkscape::Util::Quantity SPDocument::getHeight() const
 {
-    g_return_val_if_fail(this->priv != NULL, Inkscape::Util::Quantity(0.0, Inkscape::Util::Unit()));
-    g_return_val_if_fail(this->root != NULL, Inkscape::Util::Quantity(0.0, Inkscape::Util::Unit()));
+    g_return_val_if_fail(this->priv != NULL, Inkscape::Util::Quantity(0.0, unit_table.getUnit("")));
+    g_return_val_if_fail(this->root != NULL, Inkscape::Util::Quantity(0.0, unit_table.getUnit("")));
 
     gdouble result = root->height.value;
     SVGLength::Unit u = root->height.unit;
@@ -614,7 +614,7 @@ void SPDocument::setHeight(const Inkscape::Util::Quantity &height)
     root->height.computed = height.value("px");
     /* SVG does not support meters as a unit, so we must translate meters to
      * cm when writing */
-    if (*height.unit == unit_table.getUnit("m")) {
+    if (*height.unit == *unit_table.getUnit("m")) {
         root->height.value = height.value("cm");
         root->height.unit = SVGLength::CM;
     } else {
@@ -660,7 +660,7 @@ void SPDocument::fitToRect(Geom::Rect const &rect, bool with_margins)
     double const h = rect.height();
 
     double const old_height = getHeight().value("px");
-    Inkscape::Util::Unit const px = unit_table.getUnit("px");
+    Inkscape::Util::Unit const *px = unit_table.getUnit("px");
     
     /* in px */
     double margin_top = 0.0;
@@ -674,17 +674,16 @@ void SPDocument::fitToRect(Geom::Rect const &rect, bool with_margins)
         if (nv != NULL) {
             gchar const * const units_abbr = nv->getAttribute("units");
             Inkscape::Util::Unit const *margin_units = NULL;
-            if (units_abbr != NULL) {
-                Inkscape::Util::Unit mu = unit_table.getUnit(units_abbr);
-                margin_units = &mu;
+            if (units_abbr) {
+                margin_units = unit_table.getUnit(units_abbr);
             }
-            if (margin_units == NULL) {
-                margin_units = &px;
+            if (!margin_units) {
+                margin_units = px;
             }
-            margin_top = nv->getMarginLength("fit-margin-top",margin_units, &px, w, h, false);
-            margin_left = nv->getMarginLength("fit-margin-left",margin_units, &px, w, h, true);
-            margin_right = nv->getMarginLength("fit-margin-right",margin_units, &px, w, h, true);
-            margin_bottom = nv->getMarginLength("fit-margin-bottom",margin_units, &px, w, h, false);
+            margin_top = nv->getMarginLength("fit-margin-top",margin_units, px, w, h, false);
+            margin_left = nv->getMarginLength("fit-margin-left",margin_units, px, w, h, true);
+            margin_right = nv->getMarginLength("fit-margin-right",margin_units, px, w, h, true);
+            margin_bottom = nv->getMarginLength("fit-margin-bottom",margin_units, px, w, h, false);
         }
     }
     
@@ -693,8 +692,8 @@ void SPDocument::fitToRect(Geom::Rect const &rect, bool with_margins)
             rect.max() + Geom::Point(margin_right, margin_top));
     
     
-    setWidth(Inkscape::Util::Quantity(rect_with_margins.width(), "px"));
-    setHeight(Inkscape::Util::Quantity(rect_with_margins.height(), "px"));
+    setWidth(Inkscape::Util::Quantity(rect_with_margins.width(), px));
+    setHeight(Inkscape::Util::Quantity(rect_with_margins.height(), px));
 
     Geom::Translate const tr(
             Geom::Point(0, old_height - rect_with_margins.height())

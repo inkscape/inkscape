@@ -98,13 +98,13 @@ static void paintbucket_autogap_changed(EgeSelectOneAction* act, GObject * /*tbl
 static void paintbucket_offset_changed(GtkAdjustment *adj, GObject *tbl)
 {
     UnitTracker* tracker = static_cast<UnitTracker*>(g_object_get_data( tbl, "tracker" ));
-    Unit const unit = tracker->getActiveUnit();
+    Unit const *unit = tracker->getActiveUnit();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     // Don't adjust the offset value because we're saving the
     // unit and it'll be correctly handled on load.
     prefs->setDouble("/tools/paintbucket/offset", (gdouble)gtk_adjustment_get_value(adj));
-    prefs->setString("/tools/paintbucket/offsetunits", unit.abbr);
+    prefs->setString("/tools/paintbucket/offsetunits", unit->abbr);
 }
 
 static void paintbucket_defaults(GtkWidget *, GObject *tbl)
@@ -179,8 +179,8 @@ void sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
     UnitTracker* tracker = new UnitTracker(Inkscape::Util::UNIT_TYPE_LINEAR);
     Glib::ustring stored_unit = prefs->getString("/tools/paintbucket/offsetunits");
     if (!stored_unit.empty()) {
-        Unit u = unit_table.getUnit(stored_unit);
-        tracker->setActiveUnit(&u);
+        Unit const *u = unit_table.getUnit(stored_unit);
+        tracker->setActiveUnit(u);
     }
     g_object_set_data( holder, "tracker", tracker );
     {

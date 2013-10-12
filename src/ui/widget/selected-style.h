@@ -276,11 +276,11 @@ protected:
     Gtk::Menu _popup_sw; 
     Gtk::RadioButtonGroup _sw_group;
     GSList *_unit_mis;
-    void on_popup_units(Inkscape::Util::Unit &u);
+    void on_popup_units(Inkscape::Util::Unit const *u);
     void on_popup_preset(int i);
     Gtk::MenuItem _popup_sw_remove;
 
-    Inkscape::Util::Unit *_sw_unit;
+    Inkscape::Util::Unit const *_sw_unit;  /// points to object in UnitTable, do not delete
 
     void *_drop[2];
     bool _dropEnabled[2];

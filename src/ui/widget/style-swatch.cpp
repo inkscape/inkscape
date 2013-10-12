@@ -333,7 +333,7 @@ void StyleSwatch::setStyle(SPStyle *query)
     if (has_stroke) {
         double w;
         if (_sw_unit) {
-            w = Inkscape::Util::Quantity::convert(query->stroke_width.computed, "px", *_sw_unit);
+            w = Inkscape::Util::Quantity::convert(query->stroke_width.computed, "px", _sw_unit);
         } else {
             w = query->stroke_width.computed;
         }

@@ -48,7 +48,7 @@ EvaluatorToken::EvaluatorToken()
     value.fl = 0;
 }
 
-ExpressionEvaluator::ExpressionEvaluator(const char *string, Unit *unit) :
+ExpressionEvaluator::ExpressionEvaluator(const char *string, Unit const *unit) :
     string(string),
     unit(unit)
 {
@@ -360,7 +360,7 @@ int ExpressionEvaluator::getIdentifierSize(const char *string, int start_offset)
 
 bool ExpressionEvaluator::resolveUnit (const char* identifier,
                                        EvaluatorQuantity *result,
-                                       Unit* unit)
+                                       Unit const* unit)
 {
     if (!unit) {
         result->value = 1;
@@ -371,9 +371,9 @@ bool ExpressionEvaluator::resolveUnit (const char* identifier,
         result->dimension = unit->isAbsolute() ? 1 : 0;
         return true;
     } else if (unit_table.hasUnit(identifier)) {
-        Unit identifier_unit = unit_table.getUnit(identifier);
-        result->value = Quantity::convert(1, *unit, identifier_unit);
-        result->dimension = identifier_unit.isAbsolute() ? 1 : 0;
+        Unit const *identifier_unit = unit_table.getUnit(identifier);
+        result->value = Quantity::convert(1, unit, identifier_unit);
+        result->dimension = identifier_unit->isAbsolute() ? 1 : 0;
         return true;
     } else {
         return false;

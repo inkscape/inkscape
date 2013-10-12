@@ -785,9 +785,8 @@ double Preferences::_extractDouble(Entry const &v, Glib::ustring const &requeste
     if (unit.length() == 0) {
         // no unit specified, don't do conversion
         return val;
-    } else {
-        return val * (unit_table.getUnit(unit).factor / unit_table.getUnit(requested_unit).factor);
     }
+    return val * (unit_table.getUnit(unit)->factor / unit_table.getUnit(requested_unit)->factor); /// \todo rewrite using Quantity class, so the standard code handles unit conversion
 }
 
 Glib::ustring Preferences::_extractString(Entry const &v)

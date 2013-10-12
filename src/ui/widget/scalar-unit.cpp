@@ -102,7 +102,7 @@ void ScalarUnit::resetUnitType(UnitType unit_type)
     lastUnits = _unit_menu->getUnitAbbr();
 }
 
-Unit ScalarUnit::getUnit() const
+Unit const * ScalarUnit::getUnit() const
 {
     g_assert(_unit_menu != NULL);
     return _unit_menu->getUnit();
@@ -228,13 +228,13 @@ void ScalarUnit::on_unit_changed()
     Glib::ustring abbr = _unit_menu->getUnitAbbr();
     _suffix->set_label(abbr);
 
-    Inkscape::Util::Unit new_unit = (unit_table.getUnit(abbr));
-    Inkscape::Util::Unit old_unit = (unit_table.getUnit(lastUnits));
+    Inkscape::Util::Unit const *new_unit = unit_table.getUnit(abbr);
+    Inkscape::Util::Unit const *old_unit = unit_table.getUnit(lastUnits);
 
     double convertedVal = 0;
-    if (old_unit.type == UNIT_TYPE_DIMENSIONLESS && new_unit.type == UNIT_TYPE_LINEAR) {
+    if (old_unit->type == UNIT_TYPE_DIMENSIONLESS && new_unit->type == UNIT_TYPE_LINEAR) {
         convertedVal = PercentageToAbsolute(Scalar::getValue());
-    } else if (old_unit.type == UNIT_TYPE_LINEAR && new_unit.type == UNIT_TYPE_DIMENSIONLESS) {
+    } else if (old_unit->type == UNIT_TYPE_LINEAR && new_unit->type == UNIT_TYPE_DIMENSIONLESS) {
         convertedVal = AbsoluteToPercentage(Scalar::getValue());
     } else {
         double conversion = _unit_menu->getConversion(lastUnits);

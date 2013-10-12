@@ -189,15 +189,15 @@ int Unit::defaultDigits() const
     return factor_digits;
 }
 
-bool Unit::compatibleWith(Unit const &u) const
+bool Unit::compatibleWith(Unit const *u) const
 {
     // Percentages
-    if (type == UNIT_TYPE_DIMENSIONLESS || u.type == UNIT_TYPE_DIMENSIONLESS) {
+    if (type == UNIT_TYPE_DIMENSIONLESS || u->type == UNIT_TYPE_DIMENSIONLESS) {
         return true;
     }
 
     // Other units with same type
-    if (type == u.type) {
+    if (type == u->type) {
         return true;
     }
 
@@ -254,30 +254,30 @@ void UnitTable::addUnit(Unit const &u, bool primary)
     }
 }
 
-Unit const &UnitTable::getUnit(char const *abbr) const
+Unit const *UnitTable::getUnit(char const *abbr) const
 {
     UnitCodeMap::const_iterator f = _unit_map.find(make_unit_code(abbr));
     if (f != _unit_map.end()) {
-        return *f->second;
+        return &(*f->second);
     }
-    return _empty_unit;
+    return &_empty_unit;
 }
 
-Unit const &UnitTable::getUnit(Glib::ustring const &unit_abbr) const
+Unit const *UnitTable::getUnit(Glib::ustring const &unit_abbr) const
 {
     return getUnit(unit_abbr.c_str());
 }
-Unit const &UnitTable::getUnit(SVGLength::Unit u) const
+Unit const *UnitTable::getUnit(SVGLength::Unit u) const
 {
     if (u == 0 || u > SVGLength::LAST_UNIT) {
-        return _empty_unit;
+        return &_empty_unit;
     }
 
     UnitCodeMap::const_iterator f = _unit_map.find(svg_length_lookup[u]);
     if (f != _unit_map.end()) {
-        return *f->second;
+        return &(*f->second);
     }
-    return _empty_unit;
+    return &_empty_unit;
 }
 
 Quantity UnitTable::parseQuantity(Glib::ustring const &q) const
@@ -303,6 +303,7 @@ Quantity UnitTable::parseQuantity(Glib::ustring const &q) const
     return qty;
 }
 
+/* UNSAFE while passing around pointers to the Unit objects in this table 
 bool UnitTable::deleteUnit(Unit const &u)
 {
     bool deleted = false;
@@ -318,6 +319,7 @@ bool UnitTable::deleteUnit(Unit const &u)
     }
     return deleted;
 }
+*/
 
 bool UnitTable::hasUnit(Glib::ustring const &unit) const
 {
@@ -418,23 +420,23 @@ void UnitParser::on_end_element(Ctx &ctx, Glib::ustring const &name)
     }
 }
 
-Quantity::Quantity(double q, Unit const &u)
+Quantity::Quantity(double q, Unit const *u)
+  : unit(u)
+  , quantity(q)
 {
-    unit = new Unit(u);
-    quantity = q;
 }
 Quantity::Quantity(double q, Glib::ustring const &u)
+  : unit(unit_table.getUnit(u.c_str()))
+  , quantity(q)
 {
-    unit = new Unit(unit_table.getUnit(u.c_str()));
-    quantity = q;
 }
 Quantity::Quantity(double q, char const *u)
+  : unit(unit_table.getUnit(u))
+  , quantity(q)
 {
-    unit = new Unit(unit_table.getUnit(u));
-    quantity = q;
 }
 
-bool Quantity::compatibleWith(Unit const &u) const
+bool Quantity::compatibleWith(Unit const *u) const
 {
     return unit->compatibleWith(u);
 }
@@ -447,9 +449,9 @@ bool Quantity::compatibleWith(char const *u) const
     return compatibleWith(unit_table.getUnit(u));
 }
 
-double Quantity::value(Unit const &u) const
+double Quantity::value(Unit const *u) const
 {
-    return convert(quantity, *unit, u);
+    return convert(quantity, unit, u);
 }
 double Quantity::value(Glib::ustring const &u) const
 {
@@ -460,36 +462,36 @@ double Quantity::value(char const *u) const
     return value(unit_table.getUnit(u));
 }
 
-Glib::ustring Quantity::string(Unit const &u) const {
+Glib::ustring Quantity::string(Unit const *u) const {
     return Glib::ustring::format(std::fixed, std::setprecision(2), value(u)) + " " + unit->abbr;
 }
 Glib::ustring Quantity::string(Glib::ustring const &u) const {
     return string(unit_table.getUnit(u.c_str()));
 }
 Glib::ustring Quantity::string() const {
-    return string(*unit);
+    return string(unit);
 }
 
-double Quantity::convert(double from_dist, Unit const &from, Unit const &to)
+double Quantity::convert(double from_dist, Unit const *from, Unit const *to)
 {
     // Percentage
-    if (to.type == UNIT_TYPE_DIMENSIONLESS) {
-        return from_dist * to.factor;
+    if (to->type == UNIT_TYPE_DIMENSIONLESS) {
+        return from_dist * to->factor;
     }
     
     // Incompatible units
-    if (from.type != to.type) {
+    if (from->type != to->type) {
         return -1;
     }
     
     // Compatible units
-    return from_dist * from.factor / to.factor;
+    return from_dist * from->factor / to->factor;
 }
-double Quantity::convert(double from_dist, Glib::ustring const &from, Unit const &to)
+double Quantity::convert(double from_dist, Glib::ustring const &from, Unit const *to)
 {
     return convert(from_dist, unit_table.getUnit(from.c_str()), to);
 }
-double Quantity::convert(double from_dist, Unit const &from, Glib::ustring const &to)
+double Quantity::convert(double from_dist, Unit const *from, Glib::ustring const &to)
 {
     return convert(from_dist, from, unit_table.getUnit(to.c_str()));
 }
@@ -508,7 +510,7 @@ bool Quantity::operator<(Quantity const &other) const
         g_warning("Incompatible units");
         return false;
     }
-    return quantity < other.value(*unit);
+    return quantity < other.value(unit);
 }
 bool Quantity::operator==(Quantity const &other) const
 {

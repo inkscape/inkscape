@@ -82,7 +82,7 @@ sp_measure_fontsize_value_changed(GtkAdjustment *adj, GObject *tbl)
 static void measure_unit_changed(GtkAction* /*act*/, GObject* tbl)
 {
     UnitTracker* tracker = reinterpret_cast<UnitTracker*>(g_object_get_data(tbl, "tracker"));
-    Glib::ustring const unit = tracker->getActiveUnit().abbr;
+    Glib::ustring const unit = tracker->getActiveUnit()->abbr;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setString("/tools/measure/unit", unit);
 }

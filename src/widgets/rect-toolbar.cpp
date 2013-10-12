@@ -93,7 +93,7 @@ static void sp_rtb_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *
     SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( tbl, "desktop" ));
 
     UnitTracker* tracker = reinterpret_cast<UnitTracker*>(g_object_get_data( tbl, "tracker" ));
-    Unit const unit = tracker->getActiveUnit();
+    Unit const *unit = tracker->getActiveUnit();
 
     if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -114,7 +114,7 @@ static void sp_rtb_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *
     for (GSList const *items = selection->itemList(); items != NULL; items = items->next) {
         if (SP_IS_RECT(items->data)) {
             if (gtk_adjustment_get_value(adj) != 0) {
-                (SP_RECT(items->data)->*setter)(Quantity::convert(gtk_adjustment_get_value(adj), unit, *sp_desktop_namedview(desktop)->doc_units));
+                (SP_RECT(items->data)->*setter)(Quantity::convert(gtk_adjustment_get_value(adj), unit, sp_desktop_namedview(desktop)->doc_units));
             } else {
                 SP_OBJECT(items->data)->getRepr()->setAttribute(value_name, NULL);
             }
@@ -185,8 +185,8 @@ static void rect_tb_event_attr_changed(Inkscape::XML::Node * /*repr*/, gchar con
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
 
     UnitTracker* tracker = reinterpret_cast<UnitTracker*>( g_object_get_data( tbl, "tracker" ) );
-    Unit const unit = tracker->getActiveUnit();
-    Unit const doc_unit = *sp_desktop_namedview(SP_ACTIVE_DESKTOP)->doc_units;
+    Unit const *unit = tracker->getActiveUnit();
+    Unit const *doc_unit = sp_desktop_namedview(SP_ACTIVE_DESKTOP)->doc_units;
 
     gpointer item = g_object_get_data( tbl, "item" );
     if (item && SP_IS_RECT(item)) {

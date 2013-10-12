@@ -80,7 +80,7 @@ sp_selection_layout_widget_update(SPWidget *spw, Inkscape::Selection *sel)
         Geom::OptRect const bbox(sel->bounds(bbox_type));
         if ( bbox ) {
             UnitTracker *tracker = reinterpret_cast<UnitTracker*>(g_object_get_data(G_OBJECT(spw), "tracker"));
-            Unit const unit = tracker->getActiveUnit();
+            Unit const *unit = tracker->getActiveUnit();
 
             struct { char const *key; double val; } const keyval[] = {
                 { "X", bbox->min()[X] },
@@ -89,8 +89,8 @@ sp_selection_layout_widget_update(SPWidget *spw, Inkscape::Selection *sel)
                 { "height", bbox->dimensions()[Y] }
             };
 
-            if (unit.type == Inkscape::Util::UNIT_TYPE_DIMENSIONLESS) {
-                double const val = unit.factor * 100;
+            if (unit->type == Inkscape::Util::UNIT_TYPE_DIMENSIONLESS) {
+                double const val = unit->factor * 100;
                 for (unsigned i = 0; i < G_N_ELEMENTS(keyval); ++i) {
                     GtkAdjustment *a = GTK_ADJUSTMENT(g_object_get_data(G_OBJECT(spw), keyval[i].key));
                     gtk_adjustment_set_value(a, val);
@@ -185,14 +185,14 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
     gdouble y1 = 0;
     gdouble xrel = 0;
     gdouble yrel = 0;
-    Unit const unit = tracker->getActiveUnit();
+    Unit const *unit = tracker->getActiveUnit();
 
     GtkAdjustment* a_x = GTK_ADJUSTMENT( g_object_get_data( G_OBJECT(spw), "X" ) );
     GtkAdjustment* a_y = GTK_ADJUSTMENT( g_object_get_data( G_OBJECT(spw), "Y" ) );
     GtkAdjustment* a_w = GTK_ADJUSTMENT( g_object_get_data( G_OBJECT(spw), "width" ) );
     GtkAdjustment* a_h = GTK_ADJUSTMENT( g_object_get_data( G_OBJECT(spw), "height" ) );
 
-    if (unit.type == Inkscape::Util::UNIT_TYPE_LINEAR) {
+    if (unit->type == Inkscape::Util::UNIT_TYPE_LINEAR) {
         x0 = Quantity::convert(gtk_adjustment_get_value(a_x), unit, "px");
         y0 = Quantity::convert(gtk_adjustment_get_value(a_y), unit, "px");
         x1 = x0 + Quantity::convert(gtk_adjustment_get_value(a_w), unit, "px");
@@ -200,13 +200,13 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
         y1 = y0 + Quantity::convert(gtk_adjustment_get_value(a_h), unit, "px");;
         yrel = Quantity::convert(gtk_adjustment_get_value(a_h), unit, "px") / bbox_user->dimensions()[Geom::Y];
     } else {
-        double const x0_propn = gtk_adjustment_get_value (a_x) / 100 / unit.factor;
+        double const x0_propn = gtk_adjustment_get_value (a_x) / 100 / unit->factor;
         x0 = bbox_user->min()[Geom::X] * x0_propn;
-        double const y0_propn = gtk_adjustment_get_value (a_y) / 100 / unit.factor;
+        double const y0_propn = gtk_adjustment_get_value (a_y) / 100 / unit->factor;
         y0 = y0_propn * bbox_user->min()[Geom::Y];
-        xrel = gtk_adjustment_get_value (a_w) / (100 / unit.factor);
+        xrel = gtk_adjustment_get_value (a_w) / (100 / unit->factor);
         x1 = x0 + xrel * bbox_user->dimensions()[Geom::X];
-        yrel = gtk_adjustment_get_value (a_h) / (100 / unit.factor);
+        yrel = gtk_adjustment_get_value (a_h) / (100 / unit->factor);
         y1 = y0 + yrel * bbox_user->dimensions()[Geom::Y];
     }
 
@@ -227,7 +227,7 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
     double sv = fabs(y1 - bbox_user->max()[Geom::Y]);
 
     // unless the unit is %, convert the scales and moves to the unit
-    if (unit.type == Inkscape::Util::UNIT_TYPE_LINEAR) {
+    if (unit->type == Inkscape::Util::UNIT_TYPE_LINEAR) {
         mh = Quantity::convert(mh, "px", unit);
         sh = Quantity::convert(sh, "px", unit);
         mv = Quantity::convert(mv, "px", unit);

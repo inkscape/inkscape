@@ -354,7 +354,7 @@ void PrefSpinUnit::on_my_value_changed()
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (getWidget()->get_visible()) //only take action if user changed value
     {
-        prefs->setDoubleUnit(_prefs_path, getValue(getUnit().abbr), getUnit().abbr);
+        prefs->setDoubleUnit(_prefs_path, getValue(getUnit()->abbr), getUnit()->abbr);
     }
 }
 

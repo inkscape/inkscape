@@ -27,6 +27,7 @@ namespace Widget {
 UnitTracker::UnitTracker(UnitType unit_type) :
     _active(0),
     _isUpdating(false),
+    _activeUnit(NULL),
     _activeUnitInitialized(false),
     _store(0),
     _unitList(0),
@@ -74,7 +75,7 @@ bool UnitTracker::isUpdating() const
     return _isUpdating;
 }
 
-Inkscape::Util::Unit UnitTracker::getActiveUnit() const
+Inkscape::Util::Unit const * UnitTracker::getActiveUnit() const
 {
     return _activeUnit;
 }
@@ -101,8 +102,8 @@ void UnitTracker::setActiveUnit(Inkscape::Util::Unit const *unit)
 
 void UnitTracker::setActiveUnitByAbbr(gchar const *abbr)
 {
-    Inkscape::Util::Unit u = unit_table.getUnit(abbr);
-    setActiveUnit(&u);
+    Inkscape::Util::Unit const *u = unit_table.getUnit(abbr);
+    setActiveUnit(u);
 }
 
 void UnitTracker::addAdjustment(GtkAdjustment *adj)
@@ -113,11 +114,11 @@ void UnitTracker::addAdjustment(GtkAdjustment *adj)
     }
 }
 
-void UnitTracker::addUnit(Inkscape::Util::Unit const &u)
+void UnitTracker::addUnit(Inkscape::Util::Unit const *u)
 {
     GtkTreeIter iter;
     gtk_list_store_append(_store, &iter);
-    gtk_list_store_set(_store, &iter, COLUMN_STRING, u.abbr.c_str(), -1);
+    gtk_list_store_set(_store, &iter, COLUMN_STRING, u ? u->abbr.c_str() : "NULL", -1);
 }
 
 void UnitTracker::setFullVal(GtkAdjustment *adj, gdouble val)
@@ -197,13 +198,13 @@ void UnitTracker::_setActive(gint active)
         if (found) {
             gchar *abbr;
             gtk_tree_model_get(GTK_TREE_MODEL(_store), &iter, COLUMN_STRING, &abbr, -1);
-            Inkscape::Util::Unit unit = unit_table.getUnit(abbr);
+            Inkscape::Util::Unit const *unit = unit_table.getUnit(abbr);
 
             found = gtk_tree_model_iter_nth_child(GTK_TREE_MODEL(_store), &iter, NULL, active);
             if (found) {
                 gchar *newAbbr;
                 gtk_tree_model_get(GTK_TREE_MODEL(_store), &iter, COLUMN_STRING, &newAbbr, -1);
-                Inkscape::Util::Unit newUnit = unit_table.getUnit(newAbbr);
+                Inkscape::Util::Unit const *newUnit = unit_table.getUnit(newAbbr);
                 _activeUnit = newUnit;
 
                 if (_adjList) {
@@ -230,7 +231,7 @@ void UnitTracker::_setActive(gint active)
     }
 }
 
-void UnitTracker::_fixupAdjustments(Inkscape::Util::Unit const oldUnit, Inkscape::Util::Unit const newUnit)
+void UnitTracker::_fixupAdjustments(Inkscape::Util::Unit const *oldUnit, Inkscape::Util::Unit const *newUnit)
 {
     _isUpdating = true;
     for ( GSList *cur = _adjList ; cur ; cur = g_slist_next(cur) ) {
@@ -238,13 +239,13 @@ void UnitTracker::_fixupAdjustments(Inkscape::Util::Unit const oldUnit, Inkscape
         gdouble oldVal = gtk_adjustment_get_value(adj);
         gdouble val = oldVal;
 
-        if ( (oldUnit.type != Inkscape::Util::UNIT_TYPE_DIMENSIONLESS)
-            && (newUnit.type == Inkscape::Util::UNIT_TYPE_DIMENSIONLESS) )
+        if ( (oldUnit->type != Inkscape::Util::UNIT_TYPE_DIMENSIONLESS)
+            && (newUnit->type == Inkscape::Util::UNIT_TYPE_DIMENSIONLESS) )
         {
-            val = newUnit.factor * 100;
+            val = newUnit->factor * 100;
             _priorValues[adj] = Inkscape::Util::Quantity::convert(oldVal, oldUnit, "px");
-        } else if ( (oldUnit.type == Inkscape::Util::UNIT_TYPE_DIMENSIONLESS)
-            && (newUnit.type != Inkscape::Util::UNIT_TYPE_DIMENSIONLESS) )
+        } else if ( (oldUnit->type == Inkscape::Util::UNIT_TYPE_DIMENSIONLESS)
+            && (newUnit->type != Inkscape::Util::UNIT_TYPE_DIMENSIONLESS) )
         {
             if (_priorValues.find(adj) != _priorValues.end()) {
                 val = Inkscape::Util::Quantity::convert(_priorValues[adj], "px", newUnit);

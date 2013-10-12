@@ -240,7 +240,7 @@ static void sp_node_toolbox_coord_changed(gpointer /*shape_editor*/, GObject *tb
     if (!tracker) {
         return;
     }
-    Unit const unit = tracker->getActiveUnit();
+    Unit const *unit = tracker->getActiveUnit();
 
     InkNodeTool *nt = get_node_tool();
     if (!nt || nt->_selected_nodes->empty()) {
@@ -274,7 +274,7 @@ static void sp_node_path_value_changed(GtkAdjustment *adj, GObject *tbl, Geom::D
     if (!tracker) {
         return;
     }
-    Unit const unit = tracker->getActiveUnit();
+    Unit const *unit = tracker->getActiveUnit();
 
     if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
         prefs->setDouble(Glib::ustring("/tools/nodes/") + (d == Geom::X ? "x" : "y"),

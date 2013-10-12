@@ -64,7 +64,7 @@ public:
     PaperSize(const Glib::ustring &nameArg,
 	          double smallerArg,
 	          double largerArg,
-			  Inkscape::Util::Unit unitArg)
+			  Inkscape::Util::Unit const *unitArg)
 	    {
 	    name    = nameArg;
 	    smaller = smallerArg;
@@ -108,7 +108,7 @@ public:
     /**
      * The units (px, pt, mm, etc) of this specification
      */	     
-    Inkscape::Util::Unit unit;
+    Inkscape::Util::Unit const *unit; /// pointer to object in UnitTable, do not delete
 
 private:
 

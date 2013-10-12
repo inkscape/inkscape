@@ -56,8 +56,8 @@ void            sp_ruler_remove_track_widget (SPRuler        *ruler,
 		                              GtkWidget      *widget);
 
 void            sp_ruler_set_unit            (SPRuler        *ruler,
-                                              const Inkscape::Util::Unit &unit);
-Inkscape::Util::Unit *sp_ruler_get_unit            (SPRuler        *ruler);
+                                              const Inkscape::Util::Unit *unit);
+Inkscape::Util::Unit const * sp_ruler_get_unit            (SPRuler        *ruler);
 void            sp_ruler_set_position        (SPRuler        *ruler,
                                               gdouble         set_position);
 gdouble         sp_ruler_get_position        (SPRuler        *ruler);

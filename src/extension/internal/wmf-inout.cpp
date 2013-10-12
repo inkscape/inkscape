@@ -3192,7 +3192,7 @@ Wmf::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
         doc->setViewBox(Geom::Rect::from_xywh(0, 0, doc->getWidth().quantity, doc->getHeight().quantity));
         
         // Scale and translate objects
-        double scale = Inkscape::Util::Quantity::convert(1, "px", doc->getWidth().unit->abbr);
+        double scale = Inkscape::Util::Quantity::convert(1, "px", doc->getWidth().unit);
         ShapeEditor::blockSetItem(true);
         doc->getRoot()->scaleChildItemsRec(Geom::Scale(scale), Geom::Point(0, SP_ACTIVE_DOCUMENT->getHeight().value("px")));
         ShapeEditor::blockSetItem(false);

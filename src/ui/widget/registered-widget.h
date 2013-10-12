@@ -167,7 +167,7 @@ public:
                          SPDocument *doc_in = NULL );
 
     void setUnit (const Glib::ustring);
-    Unit getUnit() const { return static_cast<UnitMenu*>(_widget)->getUnit(); };
+    Unit const * getUnit() const { return static_cast<UnitMenu*>(_widget)->getUnit(); };
     UnitMenu* getUnitMenu() const { return static_cast<UnitMenu*>(_widget); };
     sigc::connection _changed_connection;
 

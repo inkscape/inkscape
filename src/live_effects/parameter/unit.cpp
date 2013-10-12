@@ -24,7 +24,7 @@ UnitParam::UnitParam( const Glib::ustring& label, const Glib::ustring& tip,
                               Effect* effect, Glib::ustring default_unit)
     : Parameter(label, tip, key, wr, effect)
 {
-    defunit = new Inkscape::Util::Unit(unit_table.getUnit(default_unit));
+    defunit = unit_table.getUnit(default_unit);
     unit = defunit;
 }
 
@@ -36,7 +36,7 @@ bool
 UnitParam::param_readSVGValue(const gchar * strvalue)
 {
     if (strvalue) {
-        param_set_value(unit_table.getUnit(strvalue));
+        param_set_value(*unit_table.getUnit(strvalue));
         return true;
     }
     return false;

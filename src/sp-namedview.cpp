@@ -557,12 +557,11 @@ void SPNamedView::set(unsigned int key, const gchar* value) {
              * in that they aren't in general absolute units as currently required by
              * doc_units.
              */
-            static Inkscape::Util::Unit px = unit_table.getUnit("px");
-            Inkscape::Util::Unit const *new_unit = new Inkscape::Util::Unit(px);
+            static Inkscape::Util::Unit const *px = unit_table.getUnit("px");
+            Inkscape::Util::Unit const *new_unit = px;
 
             if (value) {
-                Inkscape::Util::Unit u = unit_table.getUnit(value);
-                Inkscape::Util::Unit const *const req_unit = new Inkscape::Util::Unit(u);
+                Inkscape::Util::Unit const *const req_unit = unit_table.getUnit(value);
                 if ( !unit_table.hasUnit(value) ) {
                     g_warning("Unrecognized unit `%s'", value);
                     /* fixme: Document errors should be reported in the status bar or
@@ -585,8 +584,7 @@ void SPNamedView::set(unsigned int key, const gchar* value) {
             Inkscape::Util::Unit const *new_unit = NULL;
 
             if (value) {
-                Inkscape::Util::Unit u = unit_table.getUnit(value);
-                Inkscape::Util::Unit const *const req_unit = new Inkscape::Util::Unit(u);
+                Inkscape::Util::Unit const *const req_unit = unit_table.getUnit(value);
                 if ( !unit_table.hasUnit(value) ) {
                     g_warning("Unrecognized unit `%s'", value);
                     /* fixme: Document errors should be reported in the status bar or
@@ -1114,14 +1112,14 @@ double SPNamedView::getMarginLength(gchar const * const key,
                              bool const use_width)
 {
     double value;
-    Inkscape::Util::Unit percent = unit_table.getUnit("%");
+    static Inkscape::Util::Unit const *percent = unit_table.getUnit("%");
     if(!this->storeAsDouble(key,&value)) {
         return 0.0;
     }
-    if (*margin_units == percent) {
+    if (*margin_units == *percent) {
         return (use_width)? width * value : height * value; 
     }
-    if (!margin_units->compatibleWith(*return_units)) {
+    if (!margin_units->compatibleWith(return_units)) {
         return 0.0;
     }
     return value;
@@ -1129,14 +1127,11 @@ double SPNamedView::getMarginLength(gchar const * const key,
 
 /**
  * Returns namedview's default unit.
+ * If no default unit is set, "pt" is returned
  */
-Inkscape::Util::Unit const SPNamedView::getDefaultUnit() const
+Inkscape::Util::Unit const * SPNamedView::getDefaultUnit() const
 {
-    if (doc_units) {
-        return *doc_units;
-    } else {
-        return *(new Inkscape::Util::Unit(unit_table.getUnit("pt")));
-    }
+    return doc_units ? doc_units : unit_table.getUnit("pt");
 }
 
 /**

@@ -1107,7 +1107,7 @@ CloneTiler::CloneTiler (void) :
 #endif
 
                     double value = prefs->getDouble(prefs_path + "fillwidth", 50.0);
-                    Inkscape::Util::Unit const unit = unit_menu->getUnit();
+                    Inkscape::Util::Unit const *unit = unit_menu->getUnit();
                     gdouble const units = Inkscape::Util::Quantity::convert(value, "px", unit);
                     fill_width->set_value (units);
 
@@ -1140,7 +1140,7 @@ CloneTiler::CloneTiler (void) :
 #endif
 
                     double value = prefs->getDouble(prefs_path + "fillheight", 50.0);
-                    Inkscape::Util::Unit const unit = unit_menu->getUnit();
+                    Inkscape::Util::Unit const *unit = unit_menu->getUnit();
                     gdouble const units = Inkscape::Util::Quantity::convert(value, "px", unit);
                     fill_height->set_value (units);
 
@@ -2948,7 +2948,7 @@ void CloneTiler::clonetiler_switch_to_fill(GtkToggleButton * /*tb*/, GtkWidget *
 void CloneTiler::clonetiler_fill_width_changed(GtkAdjustment *adj, Inkscape::UI::Widget::UnitMenu *u)
 {
     gdouble const raw_dist = gtk_adjustment_get_value (adj);
-    Inkscape::Util::Unit const unit = u->getUnit();
+    Inkscape::Util::Unit const *unit = u->getUnit();
     gdouble const pixels = Inkscape::Util::Quantity::convert(raw_dist, unit, "px");
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -2958,7 +2958,7 @@ void CloneTiler::clonetiler_fill_width_changed(GtkAdjustment *adj, Inkscape::UI:
 void CloneTiler::clonetiler_fill_height_changed(GtkAdjustment *adj, Inkscape::UI::Widget::UnitMenu *u)
 {
     gdouble const raw_dist = gtk_adjustment_get_value (adj);
-    Inkscape::Util::Unit const unit = u->getUnit();
+    Inkscape::Util::Unit const *unit = u->getUnit();
     gdouble const pixels = Inkscape::Util::Quantity::convert(raw_dist, unit, "px");
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -2971,7 +2971,7 @@ void CloneTiler::clonetiler_unit_changed()
     gdouble width_pixels = prefs->getDouble(prefs_path + "fillwidth");
     gdouble height_pixels = prefs->getDouble(prefs_path + "fillheight");
     
-    Inkscape::Util::Unit unit = unit_menu->getUnit();
+    Inkscape::Util::Unit const *unit = unit_menu->getUnit();
     
     gdouble width_value = Inkscape::Util::Quantity::convert(width_pixels, "px", unit);
     gdouble height_value = Inkscape::Util::Quantity::convert(height_pixels, "px", unit);

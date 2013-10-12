@@ -36,9 +36,9 @@ public:
 
     void setActiveUnit(Inkscape::Util::Unit const *unit);
     void setActiveUnitByAbbr(gchar const *abbr);
-    Inkscape::Util::Unit getActiveUnit() const;
+    Inkscape::Util::Unit const * getActiveUnit() const;
 
-    void addUnit(Inkscape::Util::Unit const &u);
+    void addUnit(Inkscape::Util::Unit const *u);
     void addAdjustment(GtkAdjustment *adj);
     void setFullVal(GtkAdjustment *adj, gdouble val);
 
@@ -52,13 +52,13 @@ private:
     static void _actionFinalizedCB(gpointer data, GObject *where_the_object_was);
     static void _adjustmentFinalizedCB(gpointer data, GObject *where_the_object_was);
     void _setActive(gint index);
-    void _fixupAdjustments(Inkscape::Util::Unit const oldUnit, Inkscape::Util::Unit const newUnit);
+    void _fixupAdjustments(Inkscape::Util::Unit const *oldUnit, Inkscape::Util::Unit const *newUnit);
     void _actionFinalized(GObject *where_the_object_was);
     void _adjustmentFinalized(GObject *where_the_object_was);
 
     gint _active;
     bool _isUpdating;
-    Inkscape::Util::Unit _activeUnit;
+    Inkscape::Util::Unit const *_activeUnit;
     bool _activeUnitInitialized;
     GtkListStore *_store;
     GSList *_unitList;

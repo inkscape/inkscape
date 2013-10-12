@@ -198,9 +198,9 @@ static void lpetool_toggle_show_measuring_info(GtkToggleAction *act, GObject *tb
 static void lpetool_unit_changed(GtkAction* /*act*/, GObject* tbl)
 {
     UnitTracker* tracker = reinterpret_cast<UnitTracker*>(g_object_get_data(tbl, "tracker"));
-    Unit const unit = tracker->getActiveUnit();
+    Unit const *unit = tracker->getActiveUnit();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setString("/tools/lpetool/unit", unit.abbr);
+    prefs->setString("/tools/lpetool/unit", unit->abbr);
 
     SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( tbl, "desktop" ));
     if (SP_IS_LPETOOL_CONTEXT(desktop->event_context)) {
@@ -299,10 +299,10 @@ void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GO
     UnitTracker* tracker = new UnitTracker(Inkscape::Util::UNIT_TYPE_LINEAR);
     tracker->setActiveUnit(sp_desktop_namedview(desktop)->doc_units);
     g_object_set_data(holder, "tracker", tracker);
-    Unit const unit = tracker->getActiveUnit();
+    Unit const *unit = tracker->getActiveUnit();
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setString("/tools/lpetool/unit", unit.abbr);
+    prefs->setString("/tools/lpetool/unit", unit->abbr);
 
     /** Automatically create a list of LPEs that get added to the toolbar **/
     {

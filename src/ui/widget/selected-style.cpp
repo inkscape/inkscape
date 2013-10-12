@@ -315,8 +315,8 @@ SelectedStyle::SelectedStyle(bool /*layout*/)
             Gtk::RadioMenuItem *mi = Gtk::manage(new Gtk::RadioMenuItem(_sw_group));
             mi->add(*(new Gtk::Label(iter->first, 0.0, 0.5)));
             _unit_mis = g_slist_append(_unit_mis, mi);
-            Inkscape::Util::Unit const *u = new Inkscape::Util::Unit(unit_table.getUnit(iter->first));
-            mi->signal_activate().connect(sigc::bind<Inkscape::Util::Unit>(sigc::mem_fun(*this, &SelectedStyle::on_popup_units), *u));
+            Inkscape::Util::Unit const *u = unit_table.getUnit(iter->first);
+            mi->signal_activate().connect(sigc::bind<Inkscape::Util::Unit const *>(sigc::mem_fun(*this, &SelectedStyle::on_popup_units), u));
             _popup_sw.attach(*mi, 0,1, row, row+1);
             row++;
             ++iter;
@@ -481,7 +481,7 @@ SelectedStyle::setDesktop(SPDesktop *desktop)
             this )
     ));
 
-    _sw_unit = const_cast<Inkscape::Util::Unit*>(sp_desktop_namedview(desktop)->doc_units);
+    _sw_unit = sp_desktop_namedview(desktop)->doc_units;
 
     // Set the doc default unit active in the units list
     gint length = g_slist_length(_unit_mis);
@@ -931,8 +931,8 @@ SelectedStyle::on_opacity_click(GdkEventButton *event)
     return false;
 }
 
-void SelectedStyle::on_popup_units(Inkscape::Util::Unit &unit) {
-    _sw_unit = new Inkscape::Util::Unit(unit);
+void SelectedStyle::on_popup_units(Inkscape::Util::Unit const *unit) {
+    _sw_unit = unit;
     update();
 }
 
@@ -940,7 +940,7 @@ void SelectedStyle::on_popup_preset(int i) {
     SPCSSAttr *css = sp_repr_css_attr_new ();
     gdouble w;
     if (_sw_unit) {
-        w = Inkscape::Util::Quantity::convert(_sw_presets[i], *_sw_unit, "px");
+        w = Inkscape::Util::Quantity::convert(_sw_presets[i], _sw_unit, "px");
     } else {
         w = _sw_presets[i];
     }
@@ -1119,7 +1119,7 @@ SelectedStyle::update()
     {
         double w;
         if (_sw_unit) {
-            w = Inkscape::Util::Quantity::convert(query->stroke_width.computed, "px", *_sw_unit);
+            w = Inkscape::Util::Quantity::convert(query->stroke_width.computed, "px", _sw_unit);
         } else {
             w = query->stroke_width.computed;
         }

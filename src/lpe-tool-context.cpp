@@ -415,7 +415,7 @@ lpetool_create_measuring_items(SPLPEToolContext *lc, Inkscape::Selection *select
             if (!show)
                 sp_canvas_item_hide(SP_CANVAS_ITEM(canvas_text));
 
-            Inkscape::Util::Unit unit;
+            Inkscape::Util::Unit const * unit = NULL;
             if (prefs->getString("/tools/lpetool/unit").compare("")) {
                 unit = unit_table.getUnit(prefs->getString("/tools/lpetool/unit"));
             } else {
@@ -424,7 +424,7 @@ lpetool_create_measuring_items(SPLPEToolContext *lc, Inkscape::Selection *select
 
             lengthval = Geom::length(pwd2);
             lengthval = Inkscape::Util::Quantity::convert(lengthval, "px", unit);
-            arc_length = g_strdup_printf("%.2f %s", lengthval, unit.abbr.c_str());
+            arc_length = g_strdup_printf("%.2f %s", lengthval, unit->abbr.c_str());
             sp_canvastext_set_text (canvas_text, arc_length);
             set_pos_and_anchor(canvas_text, pwd2, 0.5, 10);
             // TODO: must we free arc_length?
@@ -454,7 +454,7 @@ lpetool_update_measuring_items(SPLPEToolContext *lc)
         SPPath *path = i->first;
         SPCurve *curve = path->getCurve();
         Geom::Piecewise<Geom::D2<Geom::SBasis> > pwd2 = Geom::paths_to_pw(curve->get_pathvector());
-        Inkscape::Util::Unit unit;
+        Inkscape::Util::Unit const * unit = NULL;
         if (prefs->getString("/tools/lpetool/unit").compare("")) {
             unit = unit_table.getUnit(prefs->getString("/tools/lpetool/unit"));
         } else {
@@ -462,7 +462,7 @@ lpetool_update_measuring_items(SPLPEToolContext *lc)
         }
         double lengthval = Geom::length(pwd2);
         lengthval = Inkscape::Util::Quantity::convert(lengthval, "px", unit);
-        gchar *arc_length = g_strdup_printf("%.2f %s", lengthval, unit.abbr.c_str());
+        gchar *arc_length = g_strdup_printf("%.2f %s", lengthval, unit->abbr.c_str());
         sp_canvastext_set_text (SP_CANVASTEXT(i->second), arc_length);
         set_pos_and_anchor(SP_CANVASTEXT(i->second), pwd2, 0.5, 10);
         // TODO: must we free arc_length?

@@ -92,7 +92,7 @@ public:
     guint32 empcolor;     /**< Color for emphasis lines */
     gint empspacing;      /**< Spacing between emphasis lines */
 
-    Inkscape::Util::Unit const* gridunit;
+    Inkscape::Util::Unit const* gridunit;  /**< points to Unit object in UnitTable (so don't delete it) */
 
     Inkscape::XML::Node * repr;
     SPDocument *doc;

@@ -214,7 +214,7 @@ private:
     sigc::connection endMarkerConn;
     sigc::connection unitChangedConn;
     
-    Inkscape::Util::Unit *_old_unit;
+    Inkscape::Util::Unit const *_old_unit;
 };
 
 } // namespace Inkscape
