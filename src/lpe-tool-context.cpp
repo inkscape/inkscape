@@ -191,8 +191,7 @@ bool SPLPEToolContext::root_handler(GdkEvent* event) {
     if (sp_pen_context_has_waiting_LPE(this)) {
         // quit when we are waiting for a LPE to be applied
         //ret = ((SPEventContextClass *) sp_lpetool_context_parent_class)->root_handler(event_context, event);
-    	ret = this->root_handler(event);
-        return ret;
+	return SPPenContext::root_handler(event);
     }
 
     switch (event->type) {
@@ -224,7 +223,7 @@ bool SPLPEToolContext::root_handler(GdkEvent* event) {
 
                 // we pass the mouse click on to pen tool as the first click which it should collect
                 //ret = ((SPEventContextClass *) sp_lpetool_context_parent_class)->root_handler(event_context, event);
-                ret = this->root_handler(event);
+		ret = SPPenContext::root_handler(event);
             }
             break;
 
