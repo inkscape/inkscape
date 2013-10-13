@@ -254,7 +254,6 @@ Pixbuf *Pixbuf::create_from_data_uri(gchar const *uri_data)
     }
 
     if ((*data) && data_is_image && data_is_base64) {
-        GdkPixbuf *buf = NULL;
         GdkPixbufLoader *loader = gdk_pixbuf_loader_new();
 
         if (!loader) return NULL;
@@ -264,7 +263,7 @@ Pixbuf *Pixbuf::create_from_data_uri(gchar const *uri_data)
 
         if (gdk_pixbuf_loader_write(loader, decoded, decoded_len, NULL)) {
             gdk_pixbuf_loader_close(loader, NULL);
-            buf = gdk_pixbuf_loader_get_pixbuf(loader);
+            GdkPixbuf *buf = gdk_pixbuf_loader_get_pixbuf(loader);
             if (buf) {
                 g_object_ref(buf);
                 pixbuf = new Pixbuf(buf);

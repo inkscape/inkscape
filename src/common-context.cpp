@@ -19,50 +19,41 @@
 #define DRAG_DEFAULT 1.0
 #define DRAG_MAX 1.0
 
-SPCommonContext::SPCommonContext() : SPEventContext() {
-	this->tremor = 0;
-	this->usetilt = 0;
-	this->is_drawing = false;
-	this->xtilt = 0;
-	this->ytilt = 0;
-	this->usepressure = 0;
-
-//     ctx->cursor_shape = cursor_eraser_xpm;
-//     ctx->hot_x = 4;
-//     ctx->hot_y = 4;
-
-    this->accumulated = 0;
-    this->segments = 0;
-    this->currentcurve = 0;
-    this->currentshape = 0;
-    this->npoints = 0;
-    this->cal1 = 0;
-    this->cal2 = 0;
-    this->repr = 0;
-
-    /* Common values */
-    this->cur = Geom::Point(0,0);
-    this->last = Geom::Point(0,0);
-    this->vel = Geom::Point(0,0);
-    this->vel_max = 0;
-    this->acc = Geom::Point(0,0);
-    this->ang = Geom::Point(0,0);
-    this->del = Geom::Point(0,0);
-
-    /* attributes */
-    this->dragging = FALSE;
-
-    this->mass = 0.3;
-    this->drag = DRAG_DEFAULT;
-    this->angle = 30.0;
-    this->width = 0.2;
-    this->pressure = DEFAULT_PRESSURE;
-
-    this->vel_thin = 0.1;
-    this->flatness = 0.9;
-    this->cap_rounding = 0.0;
-
-    this->abs_width = false;
+SPCommonContext::SPCommonContext() :
+    SPEventContext(),
+    accumulated(NULL),
+    segments(NULL),
+    currentshape(NULL),
+    currentcurve(NULL),
+    cal1(NULL),
+    cal2(NULL),
+    point1(),
+    point2(),
+    repr(NULL),
+    cur(0,0),
+    vel(0,0),
+    vel_max(0),
+    acc(0,0),
+    ang(0,0),
+    last(0,0),
+    del(0,0),
+    pressure(DEFAULT_PRESSURE),
+    xtilt(0),
+    ytilt(0),
+    dragging(FALSE),
+    usepressure(FALSE),
+    usetilt(FALSE),
+    mass(0.3),
+    drag(DRAG_DEFAULT),
+    angle(30.0),
+    width(0.2),
+    vel_thin(0.1),
+    flatness(0.9),
+    tremor(0),
+    cap_rounding(0),
+    is_drawing(false),
+    abs_width(false)
+{
 }
 
 SPCommonContext::~SPCommonContext() {
