@@ -6,7 +6,7 @@
     <output>
         <extension>.sk1</extension>
         <mimetype>application/x-xsk1</mimetype>
-        <_filetypename>sK1 vector graphics files (.sk1)</_filetypename>
+        <_filetypename>sK1 vector graphics files (*.sk1)</_filetypename>
         <_filetypetooltip>File format for use in sK1 vector graphics editor</_filetypetooltip>
     </output>
     <script>

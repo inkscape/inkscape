@@ -6,7 +6,7 @@
     <input>
         <extension>.cmx</extension>
         <mimetype>application/x-xcmx</mimetype>
-        <_filetypename>Corel DRAW Presentation Exchange files (UC) (.cmx)</_filetypename>
+        <_filetypename>Corel DRAW Presentation Exchange files (UC) (*.cmx)</_filetypename>
         <_filetypetooltip>Open presentation exchange files saved in Corel DRAW (UC)</_filetypetooltip>
     </input>
     <script>

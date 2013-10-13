@@ -6,7 +6,7 @@
     <input>
         <extension>.cgm</extension>
         <mimetype>application/x-xcgm</mimetype>
-        <_filetypename>Computer Graphics Metafile files (.cgm)</_filetypename>
+        <_filetypename>Computer Graphics Metafile files (*.cgm)</_filetypename>
         <_filetypetooltip>Open Computer Graphics Metafile files</_filetypetooltip>
     </input>
     <script>

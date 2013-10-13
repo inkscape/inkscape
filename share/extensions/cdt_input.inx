@@ -6,7 +6,7 @@
     <input>
         <extension>.cdt</extension>
         <mimetype>application/x-xcdt</mimetype>
-        <_filetypename>Corel DRAW 7-13 template files (UC) (.cdt)</_filetypename>
+        <_filetypename>Corel DRAW 7-13 template files (UC) (*.cdt)</_filetypename>
         <_filetypetooltip>Open files saved in Corel DRAW 7-13 (UC)</_filetypetooltip>
     </input>
     <script>

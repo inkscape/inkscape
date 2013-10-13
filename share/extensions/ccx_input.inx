@@ -6,7 +6,7 @@
     <input>
         <extension>.ccx</extension>
         <mimetype>application/x-xccx</mimetype>
-        <_filetypename>Corel DRAW Compressed Exchange files (UC) (.ccx)</_filetypename>
+        <_filetypename>Corel DRAW Compressed Exchange files (UC) (*.ccx)</_filetypename>
         <_filetypetooltip>Open compressed exchange files saved in Corel DRAW (UC)</_filetypetooltip>
     </input>
     <script>

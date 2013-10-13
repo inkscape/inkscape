@@ -6,7 +6,7 @@
 	<input>
 		<extension>.dhw</extension>
 		<mimetype>application/x-extension-DHW</mimetype>
-		<_filetypename>ACECAD Digimemo File (.dhw)</_filetypename>
+		<_filetypename>ACECAD Digimemo File (*.dhw)</_filetypename>
 		<_filetypetooltip>Open files from ACECAD Digimemo</_filetypetooltip>
 	</input>
 	<script>
