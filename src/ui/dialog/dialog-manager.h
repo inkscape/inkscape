@@ -44,8 +44,8 @@ public:
     void registerFactory(GQuark name, DialogFactory factory);
     Dialog *getDialog(gchar const* dlgName); 
     Dialog *getDialog(GQuark dlgName); 
-    void showDialog(gchar const *name);
-    void showDialog(GQuark name);
+    void showDialog(gchar const *name, bool grabfocus=true);
+    void showDialog(GQuark name, bool grabfocus=true);
 
 protected:
     DialogManager(DialogManager const &d); // no copy

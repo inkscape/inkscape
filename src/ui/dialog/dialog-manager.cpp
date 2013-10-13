@@ -243,14 +243,14 @@ Dialog *DialogManager::getDialog(GQuark name) {
 /**
  * Shows the named dialog, creating it if necessary.
  */
-void DialogManager::showDialog(gchar const *name) {
-    showDialog(g_quark_from_string(name));
+void DialogManager::showDialog(gchar const *name, bool grabfocus) {
+    showDialog(g_quark_from_string(name), grabfocus);
 }
 
 /**
  * Shows the named dialog, creating it if necessary.
  */
-void DialogManager::showDialog(GQuark name) {
+void DialogManager::showDialog(GQuark name, bool grabfocus) {
     bool wantTiming = Inkscape::Preferences::get()->getBool("/dialogs/debug/trackAppear", false);
     GTimer *timer = (wantTiming) ? g_timer_new() : 0; // if needed, must be created/started before getDialog()
     Dialog *dialog = getDialog(name);
@@ -261,7 +261,8 @@ void DialogManager::showDialog(GQuark name) {
             tracker->setAutodelete(true);
             timer = 0;
         }
-        dialog->present();
+        if (grabfocus)
+            dialog->present();
     }
 
     if ( timer ) {

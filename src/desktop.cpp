@@ -1896,55 +1896,45 @@ SPDesktop::show_dialogs()
 
 
     /*
-     * Get each dialogs previous state from preferences and reopen on startup if needed.
-     * Map dialog 'open' verb ids to dialog last visible state preference.
-     * Would prefer to use the Dialog Manager to open, but currently it doesn't support non-dockable dialogs
+     * Get each dialogs previous state from preferences and reopen on startup if needed, without grabbing focus (canvas retains focus).
+     * Map dialog manager's dialog IDs to dialog last visible state preference. FIXME: store this correspondence in dialogs themselves!
      */
-    std::map<int, Glib::ustring> mapVerbPreference;
-    std::map<int, Glib::ustring>::const_iterator iter;
-    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_LAYERS, "/dialogs/layers") );
-    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_FILL_STROKE, "/dialogs/fillstroke") );
-    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_EXTENSIONEDITOR, "/dialogs/extensioneditor") );
-    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_ALIGN_DISTRIBUTE, "/dialogs/align") );
-    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_METADATA, "/dialogs/documentmetadata") );
-    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_NAMEDVIEW, "/dialogs/documentoptions") );
-    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_FILTER_EFFECTS, "/dialogs/filtereffects") );
-    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_FIND, "/dialogs/find") );
-    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_GLYPHS, "/dialogs/glyphs") );
-    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_DEBUG, "/dialogs/messages") );
-    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_HELP_MEMORY, "/dialogs/memory") );
-    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_LIVE_PATH_EFFECT, "/dialogs/livepatheffect") );
-    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_UNDO_HISTORY, "/dialogs/undo-history") );
-    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_TRANSFORM, "/dialogs/transformation") );
-    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_SWATCHES, "/dialogs/swatches") );
-    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_VIEW_ICON_PREVIEW, "/dialogs/iconpreview") );
-    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_SVG_FONTS, "/dialogs/svgfonts") );
-    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_INPUT, "/dialogs/inputdevices") );
-    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_DISPLAY, "/dialogs/preferences") );
-    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_SELECTION_GRIDTILE, "/dialogs/gridtiler") );
-    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_SELECTION_TRACE, "/dialogs/trace") );
-    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_SELECTION_PIXEL_ART, "/dialogs/pixelart") );
-    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_TEXT, "/dialogs/textandfont") );
-    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_EXPORT, "/dialogs/export") );
-    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_XML_EDITOR, "/dialogs/xml") );
-    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_FIND, "/dialogs/find") );
-    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_CLONETILER, "/dialogs/clonetiler") );
-    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_ITEM, "/dialogs/object") );
-    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_SPELLCHECK, "/dialogs/spellcheck") );
-    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_SYMBOLS, "/dialogs/symbols") );
+    std::map<Glib::ustring, Glib::ustring> mapVerbPreference;
+    mapVerbPreference.insert(std::make_pair ("LayersPanel", "/dialogs/layers") );
+    mapVerbPreference.insert(std::make_pair ("FillAndStroke", "/dialogs/fillstroke") );
+    mapVerbPreference.insert(std::make_pair ("ExtensionEditor", "/dialogs/extensioneditor") );
+    mapVerbPreference.insert(std::make_pair ("AlignAndDistribute", "/dialogs/align") );
+    mapVerbPreference.insert(std::make_pair ("DocumentMetadata", "/dialogs/documentmetadata") );
+    mapVerbPreference.insert(std::make_pair ("DocumentProperties", "/dialogs/documentoptions") );
+    mapVerbPreference.insert(std::make_pair ("FilterEffectsDialog", "/dialogs/filtereffects") );
+    mapVerbPreference.insert(std::make_pair ("Find", "/dialogs/find") );
+    mapVerbPreference.insert(std::make_pair ("Glyphs", "/dialogs/glyphs") );
+    mapVerbPreference.insert(std::make_pair ("Messages", "/dialogs/messages") );
+    mapVerbPreference.insert(std::make_pair ("Memory", "/dialogs/memory") );
+    mapVerbPreference.insert(std::make_pair ("LivePathEffect", "/dialogs/livepatheffect") );
+    mapVerbPreference.insert(std::make_pair ("UndoHistory", "/dialogs/undo-history") );
+    mapVerbPreference.insert(std::make_pair ("Transformation", "/dialogs/transformation") );
+    mapVerbPreference.insert(std::make_pair ("Swatches", "/dialogs/swatches") );
+    mapVerbPreference.insert(std::make_pair ("IconPreviewPanel", "/dialogs/iconpreview") );
+    mapVerbPreference.insert(std::make_pair ("SvgFontsDialog", "/dialogs/svgfonts") );
+    mapVerbPreference.insert(std::make_pair ("InputDevices", "/dialogs/inputdevices") );
+    mapVerbPreference.insert(std::make_pair ("InkscapePreferences", "/dialogs/preferences") );
+    mapVerbPreference.insert(std::make_pair ("TileDialog", "/dialogs/gridtiler") );
+    mapVerbPreference.insert(std::make_pair ("Trace", "/dialogs/trace") );
+    mapVerbPreference.insert(std::make_pair ("PixelArt", "/dialogs/pixelart") );
+    mapVerbPreference.insert(std::make_pair ("TextFont", "/dialogs/textandfont") );
+    mapVerbPreference.insert(std::make_pair ("Export", "/dialogs/export") );
+    mapVerbPreference.insert(std::make_pair ("XmlTree", "/dialogs/xml") );
+    mapVerbPreference.insert(std::make_pair ("CloneTiler", "/dialogs/clonetiler") );
+    mapVerbPreference.insert(std::make_pair ("ObjectProperties", "/dialogs/object") );
+    mapVerbPreference.insert(std::make_pair ("SpellCheck", "/dialogs/spellcheck") );
+    mapVerbPreference.insert(std::make_pair ("Symbols", "/dialogs/symbols") );
 
-    for (iter = mapVerbPreference.begin(); iter != mapVerbPreference.end(); iter++) {
-        int verbId = iter->first;
+    for (std::map<Glib::ustring, Glib::ustring>::const_iterator iter = mapVerbPreference.begin(); iter != mapVerbPreference.end(); iter++) {
         Glib::ustring pref = iter->second;
         int visible = prefs->getInt(pref + "/visible", 0);
         if (visible) {
-            Inkscape::Verb *verb = Inkscape::Verb::get(verbId);
-            if (verb) {
-                SPAction *action = verb->get_action(Inkscape::ActionContext(this));
-                if (action) {
-                    sp_action_perform(action, NULL);
-                }
-            }
+            _dlg_mgr->showDialog(iter->first.c_str(), false); // without grabbing focus, we need focus to remain on the canvas
         }
     }
 }
