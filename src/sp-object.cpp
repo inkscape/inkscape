@@ -596,14 +596,11 @@ void SPObject::child_added(Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
 
         ochild->invoke_build(object->document, child, object->cloned);
     } catch (const FactoryExceptions::TypeNotRegistered& e) {
-        std::string node = e.what();
-
-        // special cases
-        if (node.empty()) return;      // comments, usually
-        if (node == "rdf:RDF") return; // no SP node yet
-        if (node == "inkscape:clipboard") return; // SP node not necessary
-
-        g_warning("TypeNotRegistered exception: %s", e.what());
+        // Currenty, there are many node types that do not have
+        // corresponding classes in the SPObject tree.
+        // (rdf:RDF, inkscape:clipboard, ...)
+        // Thus, simply ignore this case for now.
+        return;
     }
 }
 
@@ -617,13 +614,13 @@ void SPObject::release() {
 }
 
 void SPObject::remove_child(Inkscape::XML::Node* child) {
-    SPObject* object = this;
+    debug("id=%x, typename=%s", this, g_type_name_from_instance((GTypeInstance*)this));
 
-    debug("id=%x, typename=%s", object, g_type_name_from_instance((GTypeInstance*)object));
-    SPObject *ochild = object->get_child_by_repr(child);
-    g_return_if_fail (ochild != NULL || !strcmp("comment", child->name())); // comments have no objects
+    SPObject *ochild = this->get_child_by_repr(child);
+
+    // If the xml node has got a corresponding child in the object tree
     if (ochild) {
-        object->detach(ochild);
+        this->detach(ochild);
     }
 }
 
@@ -662,7 +659,11 @@ void SPObject::build(SPDocument *document, Inkscape::XML::Node *repr) {
             sp_object_unref(child, NULL);
             child->invoke_build(document, rchild, object->cloned);
         } catch (const FactoryExceptions::TypeNotRegistered& e) {
-            g_warning("TypeNotRegistered exception: %s", e.what());
+            // Currenty, there are many node types that do not have
+            // corresponding classes in the SPObject tree.
+            // (rdf:RDF, inkscape:clipboard, ...)
+            // Thus, simply ignore this case for now.
+            return;
         }
     }
 }
