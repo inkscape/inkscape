@@ -1510,7 +1510,7 @@ extern void generateStaticOrthogonalVisGraph(Router *router)
         const int pass = 1;
         processEventVert(router, scanline, segments, events[i], pass);
     }
-    COLA_ASSERT(scanline.size() == 0);
+    COLA_ASSERT(scanline.empty());
     for (unsigned i = 0; i < totalEvents; ++i)
     {
         delete events[i];
@@ -1589,7 +1589,7 @@ extern void generateStaticOrthogonalVisGraph(Router *router)
         const int pass = 1;
         processEventHori(router, scanline, vertSegments, events[i], pass);
     }
-    COLA_ASSERT(scanline.size() == 0);
+    COLA_ASSERT(scanline.empty());
     for (unsigned i = 0; i < totalEvents; ++i)
     {
         delete events[i];
@@ -1879,7 +1879,7 @@ static void buildOrthogonalChannelInfo(Router *router,
         processShiftEvent(router, scanline, segmentList, events[i],
                 dim, pass);
     }
-    COLA_ASSERT(scanline.size() == 0);
+    COLA_ASSERT(scanline.empty());
     for (unsigned i = 0; i < totalEvents; ++i)
     {
         delete events[i];

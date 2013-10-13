@@ -104,7 +104,7 @@ void IncSolver::copyResult() {
     for(Variables::const_iterator i=vs.begin();i!=vs.end();++i) {
         Variable* v=*i;
         v->finalPosition=v->position();
-        COLA_ASSERT(v->finalPosition==v->finalPosition);
+        COLA_ASSERT(v->finalPosition==v->finalPosition);/// TODO: check! Possibly some error in this line...
     }
 }
 
@@ -132,16 +132,16 @@ bool IncSolver::constraintGraphIsCyclic(const unsigned n, Variable* const vs[]) 
             varmap[vs[i]]->out.insert(varmap[r]);
         }
     }
-    while(graph.size()>0) {
+    while(!graph.empty()) {
         node *u=NULL;
         vector<node*>::iterator i=graph.begin();
         for(;i!=graph.end();++i) {
             u=*i;
-            if(u->in.size()==0) {
+            if(u->in.empty()) {
                 break;
             }
         }
-        if(i==graph.end() && graph.size()>0) {
+        if(i==graph.end() && !graph.empty()) {
             //cycle found!
             return true;
         } else {
@@ -189,16 +189,16 @@ bool IncSolver::blockGraphIsCyclic() {
             c=b->findMinOutConstraint();
         }
     }
-    while(graph.size()>0) {
+    while(!graph.empty()) {
         node *u=NULL;
         vector<node*>::iterator i=graph.begin();
         for(;i!=graph.end();++i) {
             u=*i;
-            if(u->in.size()==0) {
+            if(u->in.empty()) {
                 break;
             }
         }
-        if(i==graph.end() && graph.size()>0) {
+        if(i==graph.end() && !graph.empty()) {
             //cycle found!
             return true;
         } else {
@@ -287,7 +287,7 @@ bool IncSolver::satisfy() {
                     v->unsatisfiable=true;
                     continue;
                 }
-            } catch(UnsatisfiableException e) {
+            } catch(UnsatisfiableException& e) {
                 e.path.push_back(v);
                 std::cerr << "Unsatisfiable:" << std::endl;
                 for(std::vector<Constraint*>::iterator r=e.path.begin();
@@ -1162,10 +1162,10 @@ Constraint* Block::splitBetween(Variable* const vl, Variable* const vr,
     f<<"  need to split between: "<<*vl<<" and "<<*vr<<endl;
 #endif
     Constraint *c=findMinLMBetween(vl, vr);
+    if(c!=NULL) {
 #ifdef LIBVPSC_LOGGING
     f<<"  going to split on: "<<*c<<endl;
 #endif
-    if(c!=NULL) {
         split(lb,rb,c);
         deleted = true;
     }
