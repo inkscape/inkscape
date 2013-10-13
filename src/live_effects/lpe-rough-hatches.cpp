@@ -239,10 +239,10 @@ LPERoughHatches::LPERoughHatches(LivePathEffectObject *lpeobject) :
     fat_output(_("Generate thick/thin path"), _("Simulate a stroke of varying width"), "fat_output", &wr, this, true),
     do_bend(_("Bend hatches"), _("Add a global bend to the hatches (slower)"), "do_bend", &wr, this, true),
     stroke_width_top(_("Thickness: at 1st side:"), _("Width at 'bottom' half-turns"), "stroke_width_top", &wr, this, 1.),
-    stroke_width_bot(_("at 2nd side:"), _("Width at 'top' half-turns"), "stroke_width_bottom", &wr, this, 1.),
+    stroke_width_bot(_("At 2nd side:"), _("Width at 'top' half-turns"), "stroke_width_bottom", &wr, this, 1.),
 //
-    front_thickness(_("from 2nd to 1st side:"), _("Width from 'top' to 'bottom'"), "front_thickness", &wr, this, 1.),
-    back_thickness(_("from 1st to 2nd side:"), _("Width from 'bottom' to 'top'"), "back_thickness", &wr, this, .25),
+    front_thickness(_("From 2nd to 1st side:"), _("Width from 'top' to 'bottom'"), "front_thickness", &wr, this, 1.),
+    back_thickness(_("From 1st to 2nd side:"), _("Width from 'bottom' to 'top'"), "back_thickness", &wr, this, .25),
 
     direction(_("Hatches width and dir"), _("Defines hatches frequency and direction"), "direction", &wr, this, Geom::Point(50,0)),
 //
