@@ -360,7 +360,7 @@ EllipticalArc::pointAndDerivatives(Coord t, unsigned int n) const
     for ( unsigned int i = 0; i < m; ++i )
     {
         result.push_back( ea->pointAtAngle(angle) );
-        angle += M_PI/2;
+        angle += (_sweep ? M_PI/2 : -M_PI/2);
         if ( !(angle < 2*M_PI) ) angle -= 2*M_PI;
     }
     m = nn / 4;
