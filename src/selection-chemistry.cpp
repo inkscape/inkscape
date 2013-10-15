@@ -785,7 +785,7 @@ void sp_selection_ungroup(Inkscape::Selection *selection, SPDesktop *desktop)
         SPItem *group = static_cast<SPItem *>(i->data);
 
         // when ungrouping cloned groups with their originals, some objects that were selected may no more exist due to unlinking
-        if (!SP_IS_OBJECT(group)) {
+        if (!SP_IS_OBJECT(group) || !group->getRepr()) {
             continue;
         }
 
