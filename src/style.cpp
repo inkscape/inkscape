@@ -2469,9 +2469,7 @@ sp_style_set_ipaint_to_uri(SPStyle *style, SPIPaint *paint, const Inkscape::URI 
         if (paint->value.href->getObject()){
             paint->value.href->detach();
         }
-    }
 
-    if (paint->value.href) {
         try {
             paint->value.href->attach(*uri);
         } catch (Inkscape::BadURIException &e) {
