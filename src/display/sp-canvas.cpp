@@ -2301,8 +2301,6 @@ int SPCanvasImpl::do_update(SPCanvas *canvas)
 
 gint SPCanvasImpl::idle_handler(gpointer data)
 {
-    GDK_THREADS_ENTER ();
-
     SPCanvas *canvas = SP_CANVAS (data);
 
     int const ret = do_update (canvas);
@@ -2312,15 +2310,13 @@ gint SPCanvasImpl::idle_handler(gpointer data)
         canvas->idle_id = 0;
     }
 
-    GDK_THREADS_LEAVE ();
-
     return !ret;
 }
 
 void SPCanvasImpl::add_idle(SPCanvas *canvas)
 {
     if (canvas->idle_id == 0) {
-        canvas->idle_id = g_idle_add_full(UPDATE_PRIORITY, idle_handler, canvas, NULL);
+        canvas->idle_id = gdk_threads_add_idle_full(UPDATE_PRIORITY, idle_handler, canvas, NULL);
     }
 }
 
