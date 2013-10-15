@@ -4,7 +4,12 @@
 
 #define noDEBUG_LCMS
 
-#include <gdkmm/color.h>
+#if WITH_GTKMM_3_0
+# include <gdkmm/rgba.h>
+#else
+# include <gdkmm/color.h>
+#endif
+
 #include <glibmm/checksum.h>
 #include <glib/gstdio.h>
 #include <fcntl.h>
@@ -973,7 +978,13 @@ void loadProfiles()
 } // namespace
 
 static bool gamutWarn = false;
+
+#if WITH_GTKMM_3_0
+static Gdk::RGBA lastGamutColor("#808080");
+#else
 static Gdk::Color lastGamutColor("#808080");
+#endif
+
 static bool lastBPC = false;
 #if defined(cmsFLAGS_PRESERVEBLACK)
 static bool lastPreserveBlack = false;
@@ -1118,7 +1129,12 @@ cmsHTRANSFORM Inkscape::CMSSystem::getDisplayTransform()
     bool preserveBlack = prefs->getBool( "/options/softproof/preserveblack");
 #endif //defined(cmsFLAGS_PRESERVEBLACK)
     Glib::ustring colorStr = prefs->getString("/options/softproof/gamutcolor");
+
+#if WITH_GTKMM_3_0
+    Gdk::RGBA gamutColor( colorStr.empty() ? "#808080" : colorStr );
+#else
     Gdk::Color gamutColor( colorStr.empty() ? "#808080" : colorStr );
+#endif
 
     if ( (warn != gamutWarn)
          || (lastIntent != intent)
@@ -1288,7 +1304,12 @@ cmsHTRANSFORM Inkscape::CMSSystem::getDisplayPer( Glib::ustring const& id )
                 bool preserveBlack = prefs->getBool( "/options/softproof/preserveblack");
 #endif //defined(cmsFLAGS_PRESERVEBLACK)
                 Glib::ustring colorStr = prefs->getString("/options/softproof/gamutcolor");
+
+#if WITH_GTKMM_3_0
+                Gdk::RGBA gamutColor( colorStr.empty() ? "#808080" : colorStr );
+#else
                 Gdk::Color gamutColor( colorStr.empty() ? "#808080" : colorStr );
+#endif
 
                 if ( (warn != gamutWarn)
                      || (lastIntent != intent)
