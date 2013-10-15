@@ -245,12 +245,14 @@ gboolean eek_preview_draw(GtkWidget *widget,
 
     GtkAllocation allocation;
     gtk_widget_get_allocation(widget, &allocation);
-    
+   
+#if !GTK_CHECK_VERSION(3,0,0) 
     GdkColor fg = { 0,
                     static_cast<guint16>(priv->r),
                     static_cast<guint16>(priv->g),
                     static_cast<guint16>(priv->b)
                   };
+#endif
 
     gint insetTop = 0, insetBottom = 0;
     gint insetLeft = 0, insetRight = 0;
