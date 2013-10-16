@@ -1047,7 +1047,7 @@ void Path::TangentOnArcAt(double at, const Geom::Point &iS, PathDescrArcTo const
 		dtgt[0] = -ca * rx * cb + sa * ry * sb;
 		dtgt[1] = -sa * rx * cb - ca * ry * sb;
 		len = L2(tgt);
-		rad = len * dot(tgt, tgt) / (tgt[0] * dtgt[1] - tgt[1] * dtgt[0]);
+		rad = -len * dot(tgt, tgt) / (tgt[0] * dtgt[1] - tgt[1] * dtgt[0]);
 		tgt /= len;
 	}
 	else
@@ -1476,7 +1476,7 @@ Path::RecStdArcTo (outline_callback_data * data, double tol, double width,
 	}
 	const Geom::Point diff = req - chk;
 	const double err = (dot(diff,diff));
-	if (err <= tol * tol)
+	if (err <= tol)  // tolerance is given as a quadratic value, no need to use tol*tol here
 	{
 		int n_d = data->dest->CubicTo (enPos + width*enNor,
 									   stGue*scal*stTgt,
