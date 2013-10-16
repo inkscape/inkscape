@@ -1165,13 +1165,24 @@ cmsHTRANSFORM Inkscape::CMSSystem::getDisplayTransform()
             cmsUInt32Number dwFlags = cmsFLAGS_SOFTPROOFING;
             if ( gamutWarn ) {
                 dwFlags |= cmsFLAGS_GAMUTCHECK;
+
+#if WITH_GTKMM_3_0
+                gushort gamutColor_r = gamutColor.get_red_u();
+                gushort gamutColor_g = gamutColor.get_green_u();
+                gushort gamutColor_b = gamutColor.get_blue_u();
+#else
+                gushort gamutColor_r = gamutColor.get_red();
+                gushort gamutColor_g = gamutColor.get_green();
+                gushort gamutColor_b = gamutColor.get_blue();
+#endif
+
 #if HAVE_LIBLCMS1
-                cmsSetAlarmCodes(gamutColor.get_red() >> 8, gamutColor.get_green() >> 8, gamutColor.get_blue() >> 8);
+                cmsSetAlarmCodes(gamutColor_r >> 8, gamutColor_g >> 8, gamutColor_b >> 8);
 #elif HAVE_LIBLCMS2
                 cmsUInt16Number newAlarmCodes[cmsMAXCHANNELS] = {0};
-                newAlarmCodes[0] = gamutColor.get_red();
-                newAlarmCodes[1] = gamutColor.get_green();
-                newAlarmCodes[2] = gamutColor.get_blue();
+                newAlarmCodes[0] = gamutColor_r;
+                newAlarmCodes[1] = gamutColor_g;
+                newAlarmCodes[2] = gamutColor_b;
                 newAlarmCodes[3] = ~0;
                 cmsSetAlarmCodes(newAlarmCodes);
 #endif
@@ -1339,13 +1350,24 @@ cmsHTRANSFORM Inkscape::CMSSystem::getDisplayPer( Glib::ustring const& id )
                         cmsUInt32Number dwFlags = cmsFLAGS_SOFTPROOFING;
                         if ( gamutWarn ) {
                             dwFlags |= cmsFLAGS_GAMUTCHECK;
+
+#if WITH_GTKMM_3_0
+                            gushort gamutColor_r = gamutColor.get_red_u();
+                            gushort gamutColor_g = gamutColor.get_green_u();
+                            gushort gamutColor_b = gamutColor.get_blue_u();
+#else
+                            gushort gamutColor_r = gamutColor.get_red();
+                            gushort gamutColor_g = gamutColor.get_green();
+                            gushort gamutColor_b = gamutColor.get_blue();
+#endif
+
 #if HAVE_LIBLCMS1
-                            cmsSetAlarmCodes(gamutColor.get_red() >> 8, gamutColor.get_green() >> 8, gamutColor.get_blue() >> 8);
+                            cmsSetAlarmCodes(gamutColor_r >> 8, gamutColor_g >> 8, gamutColor_b >> 8);
 #elif HAVE_LIBLCMS2
                             cmsUInt16Number newAlarmCodes[cmsMAXCHANNELS] = {0};
-                            newAlarmCodes[0] = gamutColor.get_red();
-                            newAlarmCodes[1] = gamutColor.get_green();
-                            newAlarmCodes[2] = gamutColor.get_blue();
+                            newAlarmCodes[0] = gamutColor_r;
+                            newAlarmCodes[1] = gamutColor_g;
+                            newAlarmCodes[2] = gamutColor_b;
                             newAlarmCodes[3] = ~0;
                             cmsSetAlarmCodes(newAlarmCodes);
 #endif
