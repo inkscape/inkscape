@@ -735,7 +735,7 @@ void core10_print(const char *name, const char *contents){
    printf("   Points:         ");
    PU_POINT16 papts = (PU_POINT16)((char *)pEmr->aPolyCounts + sizeof(uint32_t)* pEmr->nPolys);
    for(i=0; i<pEmr->cpts; i++){
-      printf(" [%d]:",i);  point16_print(papts[i]);
+      printf(" [%u]:",i);  point16_print(papts[i]);
    }
    printf("\n");
 
