@@ -25,7 +25,12 @@ typedef std::vector<SimpleConstraint*> SimpleConstraints;
 class AlignmentConstraint {
 friend class GradientProjection;
 public:
-    AlignmentConstraint(double pos) : position(pos), variable(NULL) {}
+    AlignmentConstraint(double pos) :
+        offsets(),
+        guide(NULL),
+        position(pos),
+        variable(NULL)
+        {}
     void updatePosition() {
         position = variable->position();
     }
@@ -74,7 +79,21 @@ typedef std::vector<std::pair<unsigned, double> > CList;
  */
 class DummyVarPair {
 public:
-    DummyVarPair(double desiredDist) : dist(desiredDist), lap2(1.0/(desiredDist*desiredDist)) { }
+    DummyVarPair(double desiredDist) :
+        leftof(),
+        rightof(),
+        place_l(0),
+        place_r(0),
+        dist(desiredDist),
+        b(0),
+        left(NULL),
+        right(NULL),
+        lap2(1.0/(desiredDist*desiredDist)),
+        g(0),
+        old_place_l(0),
+        old_place_r(0)
+        {}
+    
     CList leftof; // variables to which left dummy var must be to the left of
     CList rightof; // variables to which right dummy var must be to the right of
     double place_l;

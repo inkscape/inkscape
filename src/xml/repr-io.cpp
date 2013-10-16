@@ -78,11 +78,14 @@ public:
     XmlSource()
         : filename(0),
           encoding(0),
-          fp(0),
+          fp(NULL),
           firstFewLen(0),
+          LoadEntities(false),
+          cachedData(),
+          cachedPos(0),
           dummy("x"),
-          instr(0),
-          gzin(0)
+          instr(NULL),
+          gzin(NULL)
     {
         for (int k=0;k<4;k++)
         {
@@ -191,7 +194,7 @@ int XmlSource::setFile(char const *filename, bool load_entities=false)
             buffer[len] = 0;
             this->cachedData += buffer;
         }
-        free(buffer);
+        delete[] buffer;
 
         // Check for SYSTEM or PUBLIC entities and remove them from the cache
         GMatchInfo *info;

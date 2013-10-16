@@ -38,7 +38,7 @@ namespace straightener {
         std::vector<unsigned> dummyNodes;
         std::vector<unsigned> path;
         Edge(unsigned id, unsigned start, unsigned end, Route* route)
-        : id(id), startNode(start), endNode(end), route(route)
+        : id(id), openInd(0), startNode(start), endNode(end), route(route)
         {
             route->boundingBox(xmin,ymin,xmax,ymax);
         }
@@ -98,7 +98,7 @@ namespace straightener {
         double weight;
         bool open;
         Node(unsigned id, vpsc::Rectangle* r) :
-            id(id),x(r->getCentreX()),y(r->getCentreY()), width(r->width()), height(r->height()),
+            id(id),x(r->getCentreX()),y(r->getCentreY()), scanpos(0), width(r->width()), height(r->height()),
             xmin(x-width/2),xmax(x+width/2),
             ymin(y-height/2),ymax(y+height/2),
             edge(NULL),dummy(false),weight(-0.1),open(false) { }
