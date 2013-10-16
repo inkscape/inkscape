@@ -24,11 +24,11 @@ Constraint::Constraint(Variable *left, Variable *right, double gap, bool equalit
 }
 Constraint::~Constraint() {
 	Constraints::iterator i;
-	for(i=left->out.begin(); i!=left->out.end(); i++) {
+	for(i=left->out.begin(); i!=left->out.end(); ++i) {
 		if(*i==this) break;
 	}
 	left->out.erase(i);
-	for(i=right->in.begin(); i!=right->in.end(); i++) {
+	for(i=right->in.begin(); i!=right->in.end(); ++i) {
 		if(*i==this) break;
 	}
 	right->in.erase(i);

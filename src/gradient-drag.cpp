@@ -879,7 +879,7 @@ static void gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, gui
         if (!bsp.getSnapped()) {
             // If we didn't truly snap to an object or to a grid, then we will still have to look for the
             // closest projection onto one of the constraints. findBestSnap() will not do this for us
-            for (std::list<Inkscape::SnappedPoint>::const_iterator i = isr.points.begin(); i != isr.points.end(); i++) {
+            for (std::list<Inkscape::SnappedPoint>::const_iterator i = isr.points.begin(); i != isr.points.end(); ++i) {
                 if (i == isr.points.begin() || (Geom::L2((*i).getPoint() - p) < Geom::L2(bsp.getPoint() - p))) {
                     bsp.setPoint((*i).getPoint());
                     bsp.setTarget(Inkscape::SNAPTARGET_CONSTRAINED_ANGLE);

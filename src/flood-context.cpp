@@ -955,7 +955,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
                         unsigned int sort_y = (unsigned int)cp[Geom::Y];
                         unsigned int current_y = sort_y;
                         
-                        for (std::deque<Geom::Point>::iterator i = fill_queue.begin(); i != fill_queue.end(); i++) {
+                        for (std::deque<Geom::Point>::iterator i = fill_queue.begin(); i != fill_queue.end(); ++i) {
                             Geom::Point current = *i;
                             current_y = (unsigned int)current[Geom::Y];
                             if (current_y != sort_y) {

@@ -1394,7 +1394,7 @@ void Inkscape::SelTrans::moveTo(Geom::Point const &xy, guint state)
 
         /* Pick one */
         Inkscape::SnappedPoint best_snapped_point;
-        for (std::list<Inkscape::SnappedPoint>::const_iterator i = s.begin(); i != s.end(); i++) {
+        for (std::list<Inkscape::SnappedPoint>::const_iterator i = s.begin(); i != s.end(); ++i) {
             if (i->getSnapped()) {
                 if (best_snapped_point.isOtherSnapBetter(*i, true)) {
                     best_snapped_point = *i;

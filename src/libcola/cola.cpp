@@ -271,7 +271,7 @@ void ConstrainedMajorizationLayout::straighten(std::vector<straightener::Edge*>&
     double b[n],*coords=dim==HORIZONTAL?X:Y,dist_ub,dist_bv;
     std::fill(b,b+n,0);
     for(LinearConstraints::iterator i=linearConstraints.begin();
-           i!= linearConstraints.end();i++) {
+           i!= linearConstraints.end();++i) {
         LinearConstraint* c=*i;
         if(straightenToProjection) {
             Q[c->u][c->u]+=c->w*c->duu;
