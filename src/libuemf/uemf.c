@@ -1371,8 +1371,8 @@ int emf_htable_create(
    }
    ehtl->stack = malloc(initsize * sizeof(uint32_t));
    if(!ehtl->stack){
-      free(ehtl);
       free(ehtl->table);
+      free(ehtl);
       return(5);
    }
    memset(ehtl->table , 0, initsize * sizeof(uint32_t));  // zero all slots in the table
