@@ -107,8 +107,24 @@ void text_wrapper::AppendUTF8(char const *text, int len)
     /* effic: (Not an issue for the sole caller at the time of writing.)  This implementation
        takes quadratic time if the text is composed of n appends.  Use a proper data structure.
        STL vector would suffice. */
-    utf8_text = (char*)realloc(utf8_text, (utf8_length + nlen + 1) * sizeof(char));
-    uni32_codepoint = (int*)realloc(uni32_codepoint, (utf8_length + nlen + 1) * sizeof(int));
+    char *newdata = static_cast<char*>(realloc(utf8_text, (utf8_length + nlen + 1) * sizeof(char)));
+    if (newdata != NULL)
+    {
+        utf8_text = newdata;
+    }
+    else
+    {
+        g_warning("Failed to reallocate utf8_text");
+    }
+    int* newdata2 = static_cast<int*>(realloc(uni32_codepoint, (utf8_length + nlen + 1) * sizeof(int)));
+    if (newdata2 != NULL)
+    {
+        uni32_codepoint = newdata2;
+    }
+    else
+    {
+        g_warning("Failed to reallocate uni32_codepoint");
+    }
 
     // copy the source text in the newly lengthened array
     memcpy(utf8_text + utf8_length, text, nlen * sizeof(char));
@@ -164,11 +180,27 @@ void text_wrapper::AppendUTF8(char const *text, int len)
     // so setting the dx to 0 is mandatory
     if ( uni32_length > last_addition ) {
         if ( kern_x ) {
-            kern_x = (double*)realloc(kern_x, (uni32_length + 1) * sizeof(double));
+            double *newdata = static_cast<double*>(realloc(kern_x, (uni32_length + 1) * sizeof(double)));
+            if (newdata != NULL)
+            {
+                kern_x = newdata;
+            }
+            else
+            {
+                g_warning("Failed to reallocate kern_x");
+            }
             for (int i = last_addition; i <= uni32_length; i++) kern_x[i] = 0;
         }
         if ( kern_y ) {
-            kern_y = (double*)realloc(kern_y, (uni32_length + 1) * sizeof(double));
+            double *newdata = static_cast<double*>(realloc(kern_y, (uni32_length + 1) * sizeof(double)));
+            if (newdata != NULL)
+            {
+                kern_y = newdata;
+            }
+            else
+            {
+                g_warning("Failed to reallocate kern_y");
+            }
             for (int i = last_addition; i <= uni32_length; i++) kern_y[i] = 0;
         }
     }
@@ -214,7 +246,15 @@ void text_wrapper::DoLayout(void)
                     // realloc the structures
                     if ( glyph_length >= max_g ) {
                         max_g = 2 * glyph_length + 1;
-                        glyph_text = (one_glyph*)realloc(glyph_text, (max_g + 1) * sizeof(one_glyph));
+                        one_glyph *newdata = static_cast<one_glyph*>(realloc(glyph_text, (max_g + 1) * sizeof(one_glyph)));
+                        if (newdata != NULL)
+                        {
+                            glyph_text = newdata;
+                        }
+                        else
+                        {
+                            g_warning("Failed to reallocate glyph_text");
+                        }
                     }
                     // fill the glyph info
                     glyph_text[glyph_length].font = pRun->item->analysis.font;
@@ -354,7 +394,15 @@ void text_wrapper::ChunkText(void)
                     } while ( n_en < g_en && glyph_text[n_en].font == curPF );
                     if ( nbBox >= maxBox ) {
                         maxBox = 2 * nbBox + 1;
-                        boxes = (one_box*)realloc(boxes, maxBox * sizeof(one_box));
+                        one_box *newdata = static_cast<one_box*>(realloc(boxes, maxBox * sizeof(one_box)));
+                        if (newdata != NULL)
+                        {
+                            boxes = newdata;
+                        }
+                        else
+                        {
+                            g_warning("Failed to reallocate boxes");
+                        }
                     }
                     boxes[nbBox].g_st = n_st;
                     boxes[nbBox].g_en = n_en;
@@ -378,7 +426,15 @@ void text_wrapper::ChunkText(void)
                 if ( b_en < nbBox && boxes[b_en].g_en == g_en ) {
                     if ( nbPara >= maxPara ) {
                         maxPara = 2 * nbPara + 1;
-                        paras = (one_para*)realloc(paras, maxPara * sizeof(one_para));
+                        one_para *newdata = static_cast<one_para*>(realloc(paras, maxPara * sizeof(one_para)));
+                        if (newdata != NULL)
+                        {
+                            paras = newdata;
+                        }
+                        else
+                        {
+                            g_warning("Failed to reallocate paras");
+                        }
                     }
                     paras[nbPara].b_st = b_st;
                     paras[nbPara].b_en = b_en;
@@ -571,7 +627,15 @@ unsigned text_wrapper::AddBoundary(text_boundary const &ib)
 {
     if ( nbBound >= maxBound ) {
         maxBound = 2 * nbBound + 1;
-        bounds = (text_boundary*)realloc(bounds, maxBound * sizeof(text_boundary));
+        text_boundary *newdata = static_cast<text_boundary*>(realloc(bounds, maxBound * sizeof(text_boundary)));
+        if (newdata != NULL)
+        {
+            bounds = newdata;
+        }
+        else
+        {
+            g_warning("Failed to reallocate bounds");
+        }
     }
     unsigned const ix = nbBound++;
     bounds[ix] = ib;
@@ -893,7 +957,7 @@ void text_wrapper::AddDxDy(void)
             } else if ( l_pos > n_pos ) {
                 for (int j = l_pos; j > n_pos; j--) sum -= kern_x[j];
             }
-            l_pos = n_pos;
+            // l_pos = n_pos;
             glyph_text[glyph_length].x += sum;
         }
     }
@@ -918,7 +982,7 @@ void text_wrapper::AddDxDy(void)
             } else if ( l_pos > n_pos ) {
                 for (int j = l_pos; j > n_pos; j--) sum -= kern_y[j];
             }
-            l_pos = n_pos;
+            // l_pos = n_pos;
             glyph_text[glyph_length].y += sum;
         }
     }
