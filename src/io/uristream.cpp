@@ -89,7 +89,7 @@ static FILE *fopen_utf8name( char const *utf8name, int mode )
  *
  */
 UriInputStream::UriInputStream(Inkscape::URI &source)
-                    throw (StreamException): uri(source)
+                   : uri(source)
 {
     //get information from uri
     char const *schemestr = uri.getScheme();
@@ -130,7 +130,7 @@ UriInputStream::UriInputStream(Inkscape::URI &source)
  *
  */
 UriInputStream::UriInputStream(FILE *source, Inkscape::URI &uri)
-    throw (StreamException): uri(uri),
+                           : uri(uri),
                              inf(source),
                              data(0),
                              dataPos(0),
@@ -147,7 +147,7 @@ UriInputStream::UriInputStream(FILE *source, Inkscape::URI &uri)
 /**
  *
  */
-UriInputStream::~UriInputStream() throw(StreamException)
+UriInputStream::~UriInputStream()
 {
     close();
 }
@@ -157,7 +157,7 @@ UriInputStream::~UriInputStream() throw(StreamException)
  * this input stream without blocking by the next caller of a method for
  * this input stream.
  */
-int UriInputStream::available() throw(StreamException)
+int UriInputStream::available()
 {
     return 0;
 }
@@ -167,7 +167,7 @@ int UriInputStream::available() throw(StreamException)
  *  Closes this input stream and releases any system resources
  *  associated with the stream.
  */
-void UriInputStream::close() throw(StreamException)
+void UriInputStream::close()
 {
     if (closed)
         return;
@@ -194,7 +194,7 @@ void UriInputStream::close() throw(StreamException)
 /**
  * Reads the next byte of data from the input stream.  -1 if EOF
  */
-int UriInputStream::get() throw(StreamException)
+int UriInputStream::get()
 {
     int retVal = -1;
     if (!closed)
@@ -236,7 +236,7 @@ int UriInputStream::get() throw(StreamException)
  *
  */
 UriReader::UriReader(Inkscape::URI &uri)
-                    throw (StreamException)
+                   
 {
     inputStream = new UriInputStream(uri);
 }
@@ -244,7 +244,7 @@ UriReader::UriReader(Inkscape::URI &uri)
 /**
  *
  */
-UriReader::~UriReader() throw (StreamException)
+UriReader::~UriReader()
 {
     delete inputStream;
 }
@@ -252,7 +252,7 @@ UriReader::~UriReader() throw (StreamException)
 /**
  *
  */
-int UriReader::available() throw(StreamException)
+int UriReader::available()
 {
     return inputStream->available();
 }
@@ -260,7 +260,7 @@ int UriReader::available() throw(StreamException)
 /**
  *
  */
-void UriReader::close() throw(StreamException)
+void UriReader::close()
 {
     inputStream->close();
 }
@@ -268,7 +268,7 @@ void UriReader::close() throw(StreamException)
 /**
  *
  */
-gunichar UriReader::get() throw(StreamException)
+gunichar UriReader::get()
 {
     gunichar ch = (gunichar)inputStream->get();
     return ch;
@@ -283,7 +283,7 @@ gunichar UriReader::get() throw(StreamException)
  * Temporary kludge
  */
 UriOutputStream::UriOutputStream(FILE* fp, Inkscape::URI &destination)
-                    throw (StreamException): closed(false),
+                                           : closed(false),
                                              ownsFile(false),
                                              outf(fp),
                                              uri(destination),
@@ -299,7 +299,7 @@ UriOutputStream::UriOutputStream(FILE* fp, Inkscape::URI &destination)
  *
  */
 UriOutputStream::UriOutputStream(Inkscape::URI &destination)
-                    throw (StreamException): closed(false),
+                                           : closed(false),
                                              ownsFile(true),
                                              outf(NULL),
                                              uri(destination),
@@ -340,7 +340,7 @@ UriOutputStream::UriOutputStream(Inkscape::URI &destination)
 /**
  *
  */
-UriOutputStream::~UriOutputStream() throw(StreamException)
+UriOutputStream::~UriOutputStream()
 {
     close();
 }
@@ -349,7 +349,7 @@ UriOutputStream::~UriOutputStream() throw(StreamException)
  * Closes this output stream and releases any system resources
  * associated with this stream.
  */
-void UriOutputStream::close() throw(StreamException)
+void UriOutputStream::close()
 {
     if (closed)
         return;
@@ -378,7 +378,7 @@ void UriOutputStream::close() throw(StreamException)
  *  Flushes this output stream and forces any buffered output
  *  bytes to be written out.
  */
-void UriOutputStream::flush() throw(StreamException)
+void UriOutputStream::flush()
 {
     if (closed)
         return;
@@ -402,7 +402,7 @@ void UriOutputStream::flush() throw(StreamException)
 /**
  * Writes the specified byte to this output stream.
  */
-int UriOutputStream::put(gunichar ch) throw(StreamException)
+int UriOutputStream::put(gunichar ch)
 {
     if (closed)
         return -1;
@@ -436,7 +436,7 @@ int UriOutputStream::put(gunichar ch) throw(StreamException)
  *
  */
 UriWriter::UriWriter(Inkscape::URI &uri)
-                    throw (StreamException)
+                   
 {
     outputStream = new UriOutputStream(uri);
 }
@@ -444,7 +444,7 @@ UriWriter::UriWriter(Inkscape::URI &uri)
 /**
  *
  */
-UriWriter::~UriWriter() throw (StreamException)
+UriWriter::~UriWriter()
 {
     delete outputStream;
 }
@@ -452,7 +452,7 @@ UriWriter::~UriWriter() throw (StreamException)
 /**
  *
  */
-void UriWriter::close() throw(StreamException)
+void UriWriter::close()
 {
     outputStream->close();
 }
@@ -460,7 +460,7 @@ void UriWriter::close() throw(StreamException)
 /**
  *
  */
-void UriWriter::flush() throw(StreamException)
+void UriWriter::flush()
 {
     outputStream->flush();
 }
@@ -468,7 +468,7 @@ void UriWriter::flush() throw(StreamException)
 /**
  *
  */
-void UriWriter::put(gunichar ch) throw(StreamException)
+void UriWriter::put(gunichar ch)
 {
     outputStream->put(ch);
 }

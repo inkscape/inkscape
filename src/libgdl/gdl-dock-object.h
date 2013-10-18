@@ -207,7 +207,7 @@ GType                 gdl_dock_object_set_type_for_nick (const gchar *nick,
     G_STMT_START {                            \
     g_log (G_LOG_DOMAIN,                      \
 	   G_LOG_LEVEL_DEBUG,                 \
-           "%s:%d (%s) %s [%p %d%s:%d]: "format, \
+           "%s:%d (%s) %s [%p %d%s:%d]: " format, \
 	   __FILE__,                          \
 	   __LINE__,                          \
 	   __PRETTY_FUNCTION__,               \
