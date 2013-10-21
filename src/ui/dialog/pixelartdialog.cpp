@@ -421,7 +421,7 @@ void PixelArtDialogImpl::processLibdepixelize(SPImage *img)
             sp_repr_css_attr_unref(css);
         }
 
-        gchar *str = sp_svg_write_path(move(it->pathVector));
+        gchar *str = sp_svg_write_path(Dialog::move(it->pathVector));
         repr->setAttribute("d", str);
         g_free(str);
 
