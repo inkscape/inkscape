@@ -41,6 +41,7 @@
 #include <2geom/crossing.h>
 #include <2geom/exception.h>
 #include <2geom/ray.h>
+#include <2geom/angle.h>
 
 namespace Geom
 {

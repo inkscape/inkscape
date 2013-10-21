@@ -39,6 +39,7 @@
 #include <cmath>
 #include <2geom/forward.h>
 #include <2geom/affine.h>
+#include <2geom/angle.h>
 
 namespace Geom {
 

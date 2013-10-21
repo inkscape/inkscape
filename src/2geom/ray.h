@@ -36,6 +36,8 @@
 #include <2geom/bezier-curve.h> // for LineSegment
 #include <2geom/exception.h>
 #include <2geom/math-utils.h>
+#include <2geom/transforms.h>
+#include <2geom/angle.h>
 
 namespace Geom
 {
@@ -146,17 +148,31 @@ double angle_between(Ray const& r1, Ray const& r2, bool cw = true) {
 	return angle;
 }
 
+/**
+ * @brief Returns the angle bisector for the two given rays.
+ * 
+ * @a r1 is rotated half the way to @a r2 in either clockwise or counter-clockwise direction.
+ *
+ * @pre Both passed rays must have the same origin.
+ * 
+ * @remarks If the versors of both given rays point in the same direction, the direction of the
+ * angle bisector ray depends on the third parameter:
+ * - If @a cw is set to @c true, the returned ray will equal the passed rays @a r1 and @a r2.
+ * - If @a cw is set to @c false, the returned ray will go in the opposite direction.
+ * 
+ * @throws RangeError if the given rays do not have the same origins
+ */
 inline
-Ray make_angle_bisector_ray(Ray const& r1, Ray const& r2)
+Ray make_angle_bisector_ray(Ray const& r1, Ray const& r2, bool cw = true)
 {
     if ( !are_near(r1.origin(), r2.origin()) )
     {
-        THROW_RANGEERROR("passed rays have not the same origin");
+        THROW_RANGEERROR("passed rays do not have the same origin");
     }
 
-    Point M = middle_point(r1.pointAt(1), r2.pointAt(1) );
-    if (angle_between(r1, r2) > M_PI)  M = 2 * r1.origin() - M;
-    return Ray(r1.origin(), M);
+    Ray bisector(r1.origin(), r1.origin() +  r1.versor() * Rotate(angle_between(r1, r2) / 2.0));
+    
+    return (cw ? bisector : bisector.reverse());
 }
 
 }  // end namespace Geom
