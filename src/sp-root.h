@@ -41,7 +41,7 @@ public:
     SVGLength height;
 
     /* viewBox; */
-    bool viewBox_set : true;
+    bool viewBox_set;
     Geom::Rect viewBox;
 
     /* preserveAspectRatio */

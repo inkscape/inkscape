@@ -62,7 +62,7 @@ SPRoot::SPRoot() : SPGroup()
     this->width.unset(SVGLength::PERCENT, 1.0, 1.0);
     this->height.unset(SVGLength::PERCENT, 1.0, 1.0);
 
-    this->viewBox_set = FALSE;
+    this->viewBox_set = false;
 
     this->c2p.setIdentity();
 
