@@ -648,11 +648,6 @@ void SPObject::build(SPDocument *document, Inkscape::XML::Node *repr) {
         try {
             const std::string typeString = NodeTraits::get_type_string(*rchild);
 
-            // special cases
-            if (typeString.empty()) continue;      // comments, usually
-            if (typeString == "rdf:RDF") continue; // no SP node yet
-            if (typeString == "inkscape:clipboard") continue; // SP node not necessary
-
             SPObject* child = SPFactory::instance().createObject(typeString);
 
             object->attach(child, object->lastChild());
@@ -663,7 +658,7 @@ void SPObject::build(SPDocument *document, Inkscape::XML::Node *repr) {
             // corresponding classes in the SPObject tree.
             // (rdf:RDF, inkscape:clipboard, ...)
             // Thus, simply ignore this case for now.
-            return;
+            continue;
         }
     }
 }
