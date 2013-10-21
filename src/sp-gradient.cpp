@@ -418,23 +418,28 @@ void SPGradient::remove_child(Inkscape::XML::Node *child)
 void SPGradient::modified(guint flags)
 {
     if (flags & SP_OBJECT_CHILD_MODIFIED_FLAG) {
-    	// CPPIFY
+        // CPPIFY
+        // This comparison has never worked (i. e. always evaluated to false),
+        // the right value would have been SP_TYPE_MESHGRADIENT
         //if( this->get_type() != SP_GRADIENT_TYPE_MESH ) {
-    	if (!SP_IS_MESHGRADIENT(this)) {
-            this->invalidateVector();
-        } else {
-            this->invalidateArray();
-        }
+//        if (!SP_IS_MESHGRADIENT(this)) {
+//            this->invalidateVector();
+//        } else {
+//            this->invalidateArray();
+//        }
+        this->invalidateVector();
     }
 
     if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
-    	// CPPIFY
+        // CPPIFY
+        // see above
         //if( this->get_type() != SP_GRADIENT_TYPE_MESH ) {
-    	if (!SP_IS_MESHGRADIENT(this)) {
-            this->ensureVector();
-        } else {
-            this->ensureArray();
-        }
+//        if (!SP_IS_MESHGRADIENT(this)) {
+//            this->ensureVector();
+//        } else {
+//            this->ensureArray();
+//        }
+        this->ensureVector();
     }
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
