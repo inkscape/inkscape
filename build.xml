@@ -346,7 +346,7 @@
             <file name="extension/param"/>
         </excludeinc>
         <flags>
-            <!-- -std=c++0x -->
+            <!-- -std=gnu++0x -->
             -Wall -Wformat -Werror=format-security -W -Wpointer-arith -Wcast-align -Wsign-compare -Woverloaded-virtual -Wswitch
             -Werror=return-type
             -O2
