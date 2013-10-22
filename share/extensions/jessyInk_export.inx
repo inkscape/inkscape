@@ -11,7 +11,7 @@
         <_option value="PDF">PDF</_option>
         <_option value="PNG">PNG</_option>
 			</param>
-			<param name="resolution" type="int" min="50" max="1000" _gui-text="Resolution:">92</param>
+			<param name="resolution" type="int" min="1" max="1000" _gui-text="Resolution:">92</param>
 		</page>
     <page name="help" _gui-text="Help">
       <_param name="help_text" type="description">This extension allows you to export a JessyInk presentation once you created an export layer in your browser. Please see code.google.com/p/jessyink for more details.</_param>
