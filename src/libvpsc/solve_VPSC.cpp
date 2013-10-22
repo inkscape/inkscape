@@ -301,16 +301,16 @@ bool Solver::constraintGraphIsCyclic(const unsigned n, Variable* const vs[]) {
 			varmap[vs[i]]->out.insert(varmap[r]);
 		}
 	}
-	while(graph.size()>0) {
+	while(!graph.empty()) {
 		node *u=NULL;
 		vector<node*>::iterator i=graph.begin();
 		for(;i!=graph.end();++i) {
 			u=*i;
-			if(u->in.size()==0) {
+			if(u->in.empty()) {
 				break;
 			}
 		}
-		if(i==graph.end() && graph.size()>0) {
+		if(i==graph.end() && !graph.empty()) {
 			//cycle found!
 			return true;
 		} else {
@@ -358,16 +358,16 @@ bool Solver::blockGraphIsCyclic() {
 			c=b->findMinOutConstraint();
 		}
 	}
-	while(graph.size()>0) {
+	while(!graph.empty()) {
 		node *u=NULL;
 		vector<node*>::iterator i=graph.begin();
 		for(;i!=graph.end();++i) {
 			u=*i;
-			if(u->in.size()==0) {
+			if(u->in.empty()) {
 				break;
 			}
 		}
-		if(i==graph.end() && graph.size()>0) {
+		if(i==graph.end() && !graph.empty()) {
 			//cycle found!
 			return true;
 		} else {

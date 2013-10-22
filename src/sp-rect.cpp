@@ -113,7 +113,7 @@ void SPRect::set(unsigned key, gchar const *value) {
 
 void SPRect::update(SPCtx* ctx, unsigned int flags) {
     if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
-        SPItemCtx const *ictx = (SPItemCtx const *) ctx;
+        SPItemCtx const *ictx = reinterpret_cast<SPItemCtx const *>(ctx);
 
         double const w = ictx->viewport.width();
         double const h = ictx->viewport.height();

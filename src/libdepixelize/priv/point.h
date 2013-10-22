@@ -30,8 +30,8 @@ namespace Tracer {
 template<class T>
 struct Point
 {
-    Point() : visible(true) {}
-    Point(T x, T y) : visible(true), x(x), y(y) {}
+    Point() : smooth(false), visible(true) {}
+    Point(T x, T y) : smooth(false), visible(true), x(x), y(y) {}
     Point(T x, T y, bool smooth) : smooth(smooth), visible(true), x(x), y(y) {}
 
     Point operator+(const Point &rhs) const
