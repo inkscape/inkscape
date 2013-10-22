@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: Inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-10-09 21:08+0200\n"
-"PO-Revision-Date: 2013-10-21 16:24+0300\n"
+"PO-Revision-Date: 2013-10-22 22:49+0300\n"
 "Last-Translator: Jānis Eisaks <jancs@dv.lv>\n"
 "Language-Team: Latvian\n"
 "Language: lv\n"
@@ -29,7 +29,7 @@ msgstr "Vektoru grafikas redaktors"
 
 #: ../inkscape.desktop.in.h:3
 msgid "Inkscape Vector Graphics Editor"
-msgstr "Inkscape vektoru grafikas redaktors"
+msgstr "Vektoru grafikas redaktors Inkscape"
 
 #: ../inkscape.desktop.in.h:4
 msgid "Create and edit Scalable Vector Graphics images"
@@ -52,7 +52,7 @@ msgstr "Slīpumi"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Same as Matte jelly but with more controls"
-msgstr "Līdzīgs matētai želejai, tikai vairāk parametriem"
+msgstr "Līdzīgs matētai želejai, tikai ar vairāk parametriem"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Metal Casting"
@@ -19244,6 +19244,8 @@ msgstr "Reti pikseļi (_reizinātājs)"
 msgid "Favors connections that are part of foreground color"
 msgstr "Dod priekšroku savienojumiem, kas ir priekšplāna krāsas daļa"
 
+# clarification:
+# 'heuristic' vote: voters base their decisions on their feelings towards those promoting a Yes or a No vote, rather than on the issue itself.
 #: ../src/ui/dialog/pixelartdialog.cpp:218
 msgid "The heuristic computed vote will be multiplied by this value"
 msgstr ""
