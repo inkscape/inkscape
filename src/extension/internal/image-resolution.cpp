@@ -342,9 +342,16 @@ void ImageResolution::readmagick(char const *fn) {
         image.read(fn);
     } catch (...) {}
     Magick::Geometry geo = image.density();
+    std::string type = image.magick();
 
-    x_ = Inkscape::Util::Quantity::convert((double)geo.width(), "pt", "px");
-    y_ = Inkscape::Util::Quantity::convert((double)geo.height(), "pt", "px");
+    if (type == "PNG") { // PNG only supports pixelspercentimeter 
+        x_ = Inkscape::Util::Quantity::convert((double)geo.width(), "in", "cm");
+        y_ = Inkscape::Util::Quantity::convert((double)geo.height(), "in", "cm");
+    } else {
+        x_ = (double)geo.width();
+        y_ = (double)geo.height();
+    }
+
     ok_ = true;
 }
 
