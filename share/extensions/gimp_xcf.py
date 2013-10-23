@@ -232,7 +232,7 @@ class MyEffect(inkex.Effect):
             f = p.stdin
             out = p.stdout
             err = p.stderr
-            f.write(script_fu)
+            f.write(script_fu.encode('utf-8'))
             return_code = p.wait()
             
             if p.returncode != 0:
