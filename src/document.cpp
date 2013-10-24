@@ -679,7 +679,7 @@ void SPDocument::fitToRect(Geom::Rect const &rect, bool with_margins)
     double margin_right = 0.0;
     double margin_bottom = 0.0;
     
-    SPNamedView *nv = sp_document_namedview(this, 0);
+    SPNamedView *nv = sp_document_namedview(this, NULL);
     
     if (with_margins && nv) {
         if (nv != NULL) {
