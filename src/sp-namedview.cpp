@@ -1073,6 +1073,11 @@ SPNamedView *sp_document_namedview(SPDocument *document, const gchar *id)
     return (SPNamedView *) nv;
 }
 
+SPNamedView const *sp_document_namedview(SPDocument const *document, const gchar *id)
+{
+    return sp_document_namedview(const_cast<SPDocument *>(document), id);  // use a const_cast here to avoid duplicating code
+}
+
 void SPNamedView::setGuides(bool v)
 {
     g_assert(this->getRepr() != NULL);

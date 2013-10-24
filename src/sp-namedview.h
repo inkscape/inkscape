@@ -110,6 +110,7 @@ protected:
 
 
 SPNamedView *sp_document_namedview(SPDocument *document, gchar const *name);
+SPNamedView const *sp_document_namedview(SPDocument const *document, gchar const *name);
 
 void sp_namedview_window_from_document(SPDesktop *desktop);
 void sp_namedview_document_from_window(SPDesktop *desktop);
