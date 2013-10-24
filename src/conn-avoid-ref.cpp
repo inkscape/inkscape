@@ -303,23 +303,29 @@ static Avoid::Polygon avoid_item_poly(SPItem const *item)
         Geom::Line parallel_hull_edge;
         parallel_hull_edge.setOrigin(hull_edge.origin()+hull_edge.versor().ccw()*spacing);
         parallel_hull_edge.setVersor(hull_edge.versor());
-        
+
         // determine the intersection point
-        
-        Geom::OptCrossing int_pt = Geom::intersection(parallel_hull_edge, prev_parallel_hull_edge);
-        if (int_pt)
-        {
-            Avoid::Point avoid_pt((parallel_hull_edge.origin()+parallel_hull_edge.versor()*int_pt->ta)[Geom::X],
-                                    (parallel_hull_edge.origin()+parallel_hull_edge.versor()*int_pt->ta)[Geom::Y]);
-            poly.ps.push_back(avoid_pt);
+        try {
+            Geom::OptCrossing int_pt = Geom::intersection(parallel_hull_edge, prev_parallel_hull_edge);
+            if (int_pt)
+            {
+                Avoid::Point avoid_pt((parallel_hull_edge.origin()+parallel_hull_edge.versor()*int_pt->ta)[Geom::X],
+                                        (parallel_hull_edge.origin()+parallel_hull_edge.versor()*int_pt->ta)[Geom::Y]);
+                poly.ps.push_back(avoid_pt);
+            }
+            else
+            {
+                // something went wrong...
+                std::cout<<"conn-avoid-ref.cpp: avoid_item_poly: Geom:intersection failed."<<std::endl;
+            }
         }
-        else
-        {
-            // something went wrong...
-            std::cout<<"conn-avoid-ref.cpp: avoid_item_poly: Geom:intersection failed."<<std::endl;
+        catch (Geom::InfiniteSolutions const &e) {
+            // the parallel_hull_edge and prev_parallel_hull_edge lie on top of each other, hence infinite crossings
+            g_message("conn-avoid-ref.cpp: trying to get crossings of identical lines");
         }
         prev_parallel_hull_edge = parallel_hull_edge;
     }
+
     return poly;
 }
 
