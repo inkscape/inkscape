@@ -856,6 +856,7 @@ extern "C" {
 #define U_DSTINVERT   0x550009
 #define U_BLACKNESS   0x000042
 #define U_WHITENESS   0xff0062
+#define U_NOOP        0xaa0029  /* Many GDI programs end with a bitblt with this ROP == "D".  Seems to work like flush() */
 /** @} */
 
 /** \defgroup U_EMRSETROP2_iMode_Qualifiers Binary Raster Operation Enumeration

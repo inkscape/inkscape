@@ -2859,6 +2859,7 @@ std::cout << "BEFORE DRAW"
             if (!pEmr->cbBmiSrc) {
                 // should be an application of a DIBPATTERNBRUSHPT, use a solid color instead
 
+                if(pEmr->dwRop == U_NOOP)break; /* GDI applications apparently often end with this as a sort of flush(), nothing should be drawn */
                 int32_t dx = pEmr->Dest.x;
                 int32_t dy = pEmr->Dest.y;
                 int32_t dw = pEmr->cDest.x;
