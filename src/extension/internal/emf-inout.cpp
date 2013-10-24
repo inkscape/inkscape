@@ -3497,12 +3497,13 @@ Emf::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
         // Set document unit
         Inkscape::XML::Node *repr = sp_document_namedview(doc, 0)->getRepr();
         Inkscape::SVGOStringStream os;
-        os << doc->getWidth().unit->abbr;
+        Inkscape::Util::Unit const* doc_unit = doc->getWidth().unit;
+        os << doc_unit->abbr;
         repr->setAttribute("inkscape:document-units", os.str().c_str());
-        
+
         // Set viewBox
-        doc->setViewBox(Geom::Rect::from_xywh(0, 0, doc->getWidth().quantity, doc->getHeight().quantity));
-        
+        doc->setViewBox(Geom::Rect::from_xywh(0, 0, doc->getWidth().value(doc_unit), doc->getHeight().value(doc_unit)));
+
         // Scale and translate objects
         double scale = Inkscape::Util::Quantity::convert(1, "px", doc->getWidth().unit);
         ShapeEditor::blockSetItem(true);

@@ -558,6 +558,13 @@ SPDocument *SPDocument::doUnref()
     return NULL;
 }
 
+/// guaranteed not to return nullptr
+Inkscape::Util::Unit const* SPDocument::getDefaultUnit()
+{
+    SPNamedView const* nv = sp_document_namedview(this, NULL);
+    return nv ? nv->getDefaultUnit() : unit_table.getUnit("pt");
+}
+
 Inkscape::Util::Quantity SPDocument::getWidth() const
 {
     g_return_val_if_fail(this->priv != NULL, Inkscape::Util::Quantity(0.0, unit_table.getUnit("")));
