@@ -1970,7 +1970,9 @@ std::cout << "BEFORE DRAW"
             }
 
             if (!d->dc[d->level].sizeView.x || !d->dc[d->level].sizeView.y) {
-                d->dc[d->level].sizeView = d->dc[d->level].sizeWnd;
+                /* Previously it used sizeWnd, but that always resulted in scale = 1 if no viewport ever appeared, and in most files, it did not */
+                d->dc[d->level].sizeView.x = d->PixelsInX - 1;
+                d->dc[d->level].sizeView.y = d->PixelsInY - 1;
             }
 
             /* scales logical to WMF pixels, transfer a negative sign on Y, if any */
