@@ -173,7 +173,7 @@ DocumentProperties::DocumentProperties()
     signalDocumentReplaced().connect(sigc::mem_fun(*this, &DocumentProperties::_handleDocumentReplaced));
     signalActivateDesktop().connect(sigc::mem_fun(*this, &DocumentProperties::_handleActivateDesktop));
     signalDeactiveDesktop().connect(sigc::mem_fun(*this, &DocumentProperties::_handleDeactivateDesktop));
-    
+
     _rum_deflt._changed_connection.block();
     _rum_deflt.getUnitMenu()->signal_changed().connect(sigc::mem_fun(*this, &DocumentProperties::onDocUnitChange));
 }
@@ -1437,8 +1437,9 @@ void DocumentProperties::update()
     _rcp_bord.setRgba32 (nv->bordercolor);
     _rcb_shad.setActive (nv->showpageshadow);
 
-    if (nv->doc_units)
+    if (nv->doc_units) {
         _rum_deflt.setUnit (nv->doc_units->abbr);
+    }
 
     double doc_w = sp_desktop_document(dt)->getRoot()->width.value;
     Glib::ustring doc_w_unit = unit_table.getUnit(sp_desktop_document(dt)->getRoot()->width.unit)->abbr;
@@ -1643,18 +1644,23 @@ void DocumentProperties::onRemoveGrid()
 void DocumentProperties::onDocUnitChange()
 {
     SPDocument *doc = SP_ACTIVE_DOCUMENT;
+    // Don't execute when change is being undone
+    if (!DocumentUndo::getUndoSensitive(doc)) {
+        return;
+    }
+    // Don't execute when initializing widgets
+    if (_wr.isUpdating()) {
+        return;
+    }
+
+
     Inkscape::XML::Node *repr = sp_desktop_namedview(getDesktop())->getRepr();
     Inkscape::Util::Unit const *old_doc_unit = unit_table.getUnit("px");
     if(repr->attribute("inkscape:document-units")) {
         old_doc_unit = unit_table.getUnit(repr->attribute("inkscape:document-units"));
     }
     Inkscape::Util::Unit const *doc_unit = _rum_deflt.getUnit();
-    
-    // Don't execute when change is being undone
-    if (!DocumentUndo::getUndoSensitive(doc)) {
-        return;
-    }
-    
+
     // Set document unit
     Inkscape::SVGOStringStream os;
     os << doc_unit->abbr;
