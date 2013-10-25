@@ -154,7 +154,7 @@ class Length(inkex.Effect):
                 mat = simpletransform.composeParents(node, [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]])
                 p = cubicsuperpath.parsePath(node.get('d'))
                 simpletransform.applyTransformToPath(mat, p)
-                factor = factor/inkex.unittouu('1'+self.options.unit)
+                factor = factor/self.unittouu('1'+self.options.unit)
                 if self.options.type == "length":
                     slengths, stotal = csplength(p)
                 else:

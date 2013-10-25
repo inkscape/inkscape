@@ -103,8 +103,8 @@ class InterpAttG(inkex.Effect):
       sv = self.options.start_val
       ev = self.options.end_val
       if self.inte_att_type and self.inte_att_type != 'none':
-        sv = inkex.unittouu( sv + self.inte_att_type )
-        ev = inkex.unittouu( ev + self.inte_att_type )
+        sv = self.unittouu( sv + self.inte_att_type )
+        ev = self.unittouu( ev + self.inte_att_type )
       self.val_cur = self.val_ini = sv
       self.val_end = ev
       self.val_inc = ( ev - sv ) / float( self.tot_el - 1 )

@@ -67,9 +67,9 @@ class Gears(inkex.Effect):
     def effect(self):
 
         teeth = self.options.teeth
-        pitch = inkex.unittouu( str(self.options.pitch) + self.options.unit)
+        pitch = self.unittouu( str(self.options.pitch) + self.options.unit)
         angle = self.options.angle  # Angle of tangent to tooth at circular pitch wrt radial line.
- 	centerdiameter = inkex.unittouu( str(self.options.centerdiameter) + self.options.unit)
+        centerdiameter = self.unittouu( str(self.options.centerdiameter) + self.options.unit)
 
         # print >>sys.stderr, "Teeth: %s\n"        % teeth
 
@@ -180,6 +180,7 @@ class Gears(inkex.Effect):
 if __name__ == '__main__':
     e = Gears()
     e.affect()
+
 
 
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 fileencoding=utf-8 textwidth=99

@@ -290,8 +290,8 @@ class Voronoi2svg(inkex.Effect):
       clipBox = ()
       if self.options.clipBox == 'Page':
         svg = self.document.getroot()
-        w = inkex.unittouu(svg.get('width'))
-        h = inkex.unittouu(svg.get('height'))
+        w = self.unittouu(svg.get('width'))
+        h = self.unittouu(svg.get('height'))
         clipBox = (0,w,0,h)
       else:
         clipBox = (2*gBbox[0]-gBbox[1],

@@ -34,8 +34,6 @@ class Printing_Marks (inkex.Effect):
 
     # Default parameters
     stroke_width = 0.25
-    mark_size = inkex.unittouu('1cm')
-    min_mark_margin = inkex.unittouu('3mm')
 
     def __init__(self):
         inkex.Effect.__init__(self)
@@ -228,6 +226,8 @@ class Printing_Marks (inkex.Effect):
         self.area_h = max_y - min_y
 
     def effect(self):
+        self.mark_size = self.unittouu('1cm')
+        self.min_mark_margin = self.unittouu('3mm')
 
         if self.options.where_to_crop == 'selection' :
             self.get_selection_area()
@@ -235,8 +235,8 @@ class Printing_Marks (inkex.Effect):
             #exit(1)
         else :
             svg = self.document.getroot()
-            self.area_w  = inkex.unittouu(svg.get('width'))
-            self.area_h  = inkex.unittouu(svg.attrib['height'])
+            self.area_w  = self.unittouu(svg.get('width'))
+            self.area_h  = self.unittouu(svg.attrib['height'])
             self.area_x1 = 0
             self.area_y1 = 0
             self.area_x2 = self.area_w
@@ -245,16 +245,16 @@ class Printing_Marks (inkex.Effect):
         # Get SVG document dimensions
         # self.width must be replaced by self.area_x2. same to others.
         svg = self.document.getroot()
-        #self.width  = width  = inkex.unittouu(svg.get('width'))
-        #self.height = height = inkex.unittouu(svg.attrib['height'])
+        #self.width  = width  = self.unittouu(svg.get('width'))
+        #self.height = height = self.unittouu(svg.attrib['height'])
 
         # Convert parameters to user unit
-        offset = inkex.unittouu(str(self.options.crop_offset) + \
+        offset = self.unittouu(str(self.options.crop_offset) + \
                                 self.options.unit)
-        bt = inkex.unittouu(str(self.options.bleed_top)    + self.options.unit)
-        bb = inkex.unittouu(str(self.options.bleed_bottom) + self.options.unit)
-        bl = inkex.unittouu(str(self.options.bleed_left)   + self.options.unit)
-        br = inkex.unittouu(str(self.options.bleed_right)  + self.options.unit)
+        bt = self.unittouu(str(self.options.bleed_top)    + self.options.unit)
+        bb = self.unittouu(str(self.options.bleed_bottom) + self.options.unit)
+        bl = self.unittouu(str(self.options.bleed_left)   + self.options.unit)
+        br = self.unittouu(str(self.options.bleed_right)  + self.options.unit)
         # Bleed margin
         if bt < offset : bmt = 0
         else :           bmt = bt - offset
@@ -476,9 +476,9 @@ class Printing_Marks (inkex.Effect):
                 }
             txt = inkex.etree.SubElement(g_pag_info, 'text', txt_attribs)
             txt.text = 'Page size: ' +\
-                       str(round(inkex.uutounit(self.area_w,self.options.unit),2)) +\
+                       str(round(self.uutounit(self.area_w,self.options.unit),2)) +\
                        'x' +\
-                       str(round(inkex.uutounit(self.area_h,self.options.unit),2)) +\
+                       str(round(self.uutounit(self.area_h,self.options.unit),2)) +\
                        ' ' + self.options.unit
 
 

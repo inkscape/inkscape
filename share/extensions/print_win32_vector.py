@@ -63,7 +63,7 @@ class MyEffect(inkex.Effect):
                 if style['stroke'] and style['stroke'] != 'none' and style['stroke'][0:3] != 'url':
                     rgb = simplestyle.parseColor(style['stroke'])
             if style.has_key('stroke-width'):
-                stroke = inkex.unittouu(style['stroke-width'])
+                stroke = self.unittouu(style['stroke-width'])
                 stroke = int(stroke*self.scale)
             if style.has_key('fill'):
                 if style['fill'] and style['fill'] != 'none' and style['fill'][0:3] != 'url':

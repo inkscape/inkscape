@@ -166,8 +166,8 @@ class SVGCalendar (inkex.Effect):
         else:
             calendar.setfirstweekday(0)
         # Convert string numbers with unit to user space float numbers
-        self.options.month_width  = inkex.unittouu( self.options.month_width )
-        self.options.month_margin = inkex.unittouu( self.options.month_margin )
+        self.options.month_width  = self.unittouu( self.options.month_width )
+        self.options.month_margin = self.unittouu( self.options.month_margin )
 
     # initial values
     month_x_pos = 0
@@ -176,8 +176,8 @@ class SVGCalendar (inkex.Effect):
 
     def calculate_size_and_positions(self):
         #month_margin month_width months_per_line auto_organize
-        self.doc_w = inkex.unittouu(self.document.getroot().get('width'))
-        self.doc_h = inkex.unittouu(self.document.getroot().get('height'))
+        self.doc_w = self.unittouu(self.document.getroot().get('width'))
+        self.doc_h = self.unittouu(self.document.getroot().get('height'))
         if self.options.show_weeknr:
             self.cols_before = 1
         else:

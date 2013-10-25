@@ -61,8 +61,8 @@ def tweenstylefloat(property, start, end, time):
     ep = float(end[property])
     return str(sp + (time * (ep - sp)))
 def tweenstyleunit(property, start, end, time):
-    sp = inkex.unittouu(start[property])
-    ep = inkex.unittouu(end[property])
+    sp = self.unittouu(start[property])
+    ep = self.unittouu(end[property])
     return str(sp + (time * (ep - sp)))
 def tweenstylecolor(property, start, end, time):
     sr,sg,sb = parsecolor(start[property])

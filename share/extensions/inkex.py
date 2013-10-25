@@ -78,30 +78,6 @@ def localize():
     #sys.stderr.write(str(localdir) + "\n")
     trans.install()
 
-#a dictionary of unit to user unit conversion factors
-uuconv = {'in':90.0, 'pt':1.25, 'px':1, 'mm':3.5433070866, 'cm':35.433070866, 'm':3543.3070866,
-          'km':3543307.0866, 'pc':15.0, 'yd':3240 , 'ft':1080}
-def unittouu(string):
-    '''Returns userunits given a string representation of units in another system'''
-    unit = re.compile('(%s)$' % '|'.join(uuconv.keys()))
-    param = re.compile(r'(([-+]?[0-9]+(\.[0-9]*)?|[-+]?\.[0-9]+)([eE][-+]?[0-9]+)?)')
-
-    p = param.match(string)
-    u = unit.search(string)    
-    if p:
-        retval = float(p.string[p.start():p.end()])
-    else:
-        retval = 0.0
-    if u:
-        try:
-            return retval * uuconv[u.string[u.start():u.end()]]
-        except KeyError:
-            pass
-    return retval
-
-def uutounit(val, unit):
-    return val/uuconv[unit]
-
 def debug(what):
     sys.stderr.write(str(what) + "\n")
     return what
@@ -189,6 +165,7 @@ class Effect:
         self.original_document = copy.deepcopy(self.document)
         stream.close()
 
+    # defines view_center in terms of document units
     def getposinlayer(self):
         #defaults
         self.current_layer = self.document.getroot()
@@ -203,10 +180,10 @@ class Effect:
 
         xattr = self.document.xpath('//sodipodi:namedview/@inkscape:cx', namespaces=NSS)
         yattr = self.document.xpath('//sodipodi:namedview/@inkscape:cy', namespaces=NSS)
-        doc_height = unittouu(self.document.getroot().get('height'))
         if xattr and yattr:
-            x = xattr[0]
-            y = yattr[0]
+            x = self.unittouu( xattr[0] + 'px' )
+            y = self.unittouu( yattr[0] + 'px')
+            doc_height = self.unittouu(self.document.getroot().get('height'))
             if x and y:
                 self.view_center = (float(x), doc_height - float(y)) # FIXME: y-coordinate flip, eliminate it when it's gone in Inkscape
 
@@ -283,6 +260,37 @@ class Effect:
             errormsg(_("No matching node for expression: %s") % path)
             retval = None
         return retval
-            
+
+    def getDocumentUnit(self):
+        docunit = self.document.xpath('//sodipodi:namedview/@inkscape:document-units', namespaces=NSS)
+        if docunit:
+            return docunit[0]
+        else:
+            return 'px'
+
+    #a dictionary of unit to user unit conversion factors
+    uuconv = {'in':90.0, 'pt':1.25, 'px':1, 'mm':3.5433070866, 'cm':35.433070866, 'm':3543.3070866,
+              'km':3543307.0866, 'pc':15.0, 'yd':3240 , 'ft':1080}
+    def unittouu(self, string):
+        '''Returns userunits given a string representation of units in another system'''
+        unit = re.compile('(%s)$' % '|'.join(self.uuconv.keys()))
+        param = re.compile(r'(([-+]?[0-9]+(\.[0-9]*)?|[-+]?\.[0-9]+)([eE][-+]?[0-9]+)?)')
+
+        p = param.match(string)
+        u = unit.search(string)    
+        if p:
+            retval = float(p.string[p.start():p.end()])
+        else:
+            retval = 0.0
+        if u:
+            try:
+                return retval * (self.uuconv[u.string[u.start():u.end()]] / self.uuconv[self.getDocumentUnit()])
+            except KeyError:
+                pass
+        return retval
+
+    def uutounit(self, val, unit):
+        return val / (self.uuconv[unit] / self.uuconv[self.getDocumentUnit()])
+
 
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 fileencoding=utf-8 textwidth=99

@@ -128,7 +128,7 @@ class Guillotine(inkex.Effect):
         '''
         root = self.document.getroot()
         horizontals = ['0']
-        height = inkex.unittouu(root.attrib['height'])
+        height = self.unittouu(root.attrib['height'])
         for h in self.get_all_horizontal_guides():
             if h >= 0 and float(h) <= float(height):
                 horizontals.append(h)
@@ -144,7 +144,7 @@ class Guillotine(inkex.Effect):
         '''
         root = self.document.getroot()
         verticals = ['0']
-        width = inkex.unittouu(root.attrib['width'])
+        width = self.unittouu(root.attrib['width'])
         for v in self.get_all_vertical_guides():
             if v >= 0 and float(v) <= float(width):
                 verticals.append(v)

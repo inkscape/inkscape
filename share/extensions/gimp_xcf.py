@@ -74,8 +74,8 @@ class MyEffect(inkex.Effect):
         docname = ttmp_orig.get(inkex.addNS('docname',u'sodipodi'))
         if docname is None: docname = self.args[-1]
 
-        pageHeight = int(inkex.unittouu(self.xpathSingle('/svg:svg/@height').split('.')[0]))
-        pageWidth = int(inkex.unittouu(self.xpathSingle('/svg:svg/@width').split('.')[0]))
+        pageHeight = int(self.unittouu(self.xpathSingle('/svg:svg/@height').split('.')[0]))
+        pageWidth = int(self.unittouu(self.xpathSingle('/svg:svg/@width').split('.')[0]))
 
         # Create os temp dir (to store exported pngs and Gimp log file)
         self.tmp_dir = tempfile.mkdtemp()

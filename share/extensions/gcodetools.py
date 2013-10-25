@@ -5852,7 +5852,7 @@ class Gcodetools(inkex.Effect):
 				attr["transform"] = transform 
 
 			orientation_group = inkex.etree.SubElement(layer, inkex.addNS('g','svg'), attr)
-			doc_height = inkex.unittouu(self.document.getroot().get('height'))
+			doc_height = self.unittouu(self.document.getroot().get('height'))
 			if self.document.getroot().get('height') == "100%" :
 				doc_height = 1052.3622047
 				print_("Overruding height from 100 percents to %s" % doc_height)

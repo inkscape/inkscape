@@ -32,7 +32,7 @@ def expandTuple(unit, x, length = 4):
     if len(x) != length:
         raise Exception("expandTuple: requires 2 or 4 item tuple")
     try:
-        return tuple(map(lambda ev: (inkex.unittouu(str(eval(str(ev)))+unit)), x))
+        return tuple(map(lambda ev: (self.unittouu(str(eval(str(ev)))+unit)), x))
     except:
         return None
 #@-node:tbrown.20070622103716.1:expandTuple

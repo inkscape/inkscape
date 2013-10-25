@@ -69,8 +69,8 @@ class Dots(inkex.Effect):
                 y = dy/dist
                 if x1 > x2: x *= -1
                 if y1 > y2: y *= -1
-                p[lastDot][1][-2] += x * inkex.unittouu(self.options.dotsize)
-                p[lastDot][1][-1] += y * inkex.unittouu(self.options.dotsize)
+                p[lastDot][1][-2] += x * self.unittouu(self.options.dotsize)
+                p[lastDot][1][-1] += y * self.unittouu(self.options.dotsize)
 
     def addDot(self, node):
         self.group = inkex.etree.SubElement( node.getparent(), inkex.addNS('g','svg') )
@@ -94,7 +94,7 @@ class Dots(inkex.Effect):
             if cmd != 'Z' and cmd != 'z':
                 dot_att = {
                   'style': style,
-                  'r':  str( inkex.unittouu(self.options.dotsize) / 2 ),
+                  'r':  str( self.unittouu(self.options.dotsize) / 2 ),
                   'cx': str( params[-2] ),
                   'cy': str( params[-1] )
                 }
@@ -104,8 +104,8 @@ class Dots(inkex.Effect):
                   dot_att )
                 self.addText(
                   self.numGroup,
-                  params[-2] + ( inkex.unittouu(self.options.dotsize) / 2 ),
-                  params[-1] - ( inkex.unittouu(self.options.dotsize) / 2 ),
+                  params[-2] + ( self.unittouu(self.options.dotsize) / 2 ),
+                  params[-1] - ( self.unittouu(self.options.dotsize) / 2 ),
                   num )
                 num += self.options.step
         node.getparent().remove( node )

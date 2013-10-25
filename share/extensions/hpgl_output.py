@@ -115,8 +115,8 @@ class MyEffect(inkex.Effect):
         if viewBox:
             viewBox = string.split(viewBox, ' ')
             if viewBox[2] and viewBox[3]:
-                viewBoxTransformX = float(inkex.unittouu(doc.get('width'))) / float(viewBox[2])
-                viewBoxTransformY = float(inkex.unittouu(doc.get('height'))) / float(viewBox[3])
+                viewBoxTransformX = float(self.unittouu(doc.get('width'))) / float(viewBox[2])
+                viewBoxTransformY = float(self.unittouu(doc.get('height'))) / float(viewBox[3])
         # dryRun to find edges
         self.dryRun = True
         self.groupmat = [[[scale*viewBoxTransformX, 0.0, 0.0], [0.0, mirror*scale*viewBoxTransformY, 0.0]]]
