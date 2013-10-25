@@ -1120,6 +1120,9 @@ unsigned int PrintWmf::image(
     Geom::Point pLL(x1, y1);
     Geom::Point pLL2 = pLL * tf;  //location of LL corner in Inkscape coordinates
 
+    Geom::Point pWH(dw, dh);
+    Geom::Point pWH2 = pWH * tf.withoutTranslation();  //adjust scale
+
     char                *px;
     uint32_t             cbPx;
     uint32_t             colortype;
@@ -1133,7 +1136,7 @@ unsigned int PrintWmf::image(
     Bmi = bitmapinfo_set(Bmih, ct);
 
     U_POINT16 Dest  = point16_set(round(pLL2[Geom::X] * PX2WORLD), round(pLL2[Geom::Y] * PX2WORLD));
-    U_POINT16 cDest = point16_set(round(dw * PX2WORLD), round(dh * PX2WORLD));
+    U_POINT16 cDest = point16_set(round(pWH2[Geom::X] * PX2WORLD), round(pWH2[Geom::Y] * PX2WORLD));
     U_POINT16 Src   = point16_set(0, 0);
     U_POINT16 cSrc  = point16_set(w, h);
     rec = U_WMRSTRETCHDIB_set(
