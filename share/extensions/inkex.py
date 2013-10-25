@@ -287,6 +287,9 @@ class Effect:
                 return retval * (self.uuconv[u.string[u.start():u.end()]] / self.uuconv[self.getDocumentUnit()])
             except KeyError:
                 pass
+        else: # default assume 'px' unit
+            return retval / self.uuconv[self.getDocumentUnit()]
+
         return retval
 
     def uutounit(self, val, unit):
