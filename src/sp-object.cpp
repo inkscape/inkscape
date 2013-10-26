@@ -228,7 +228,7 @@ SPObject *sp_object_unref(SPObject *object, SPObject *owner)
     //g_object_unref(G_OBJECT(object));
     object->refCount--;
 
-    if (object->refCount < 0) {
+    if (object->refCount <= 0) {
         delete object;
     }
 
