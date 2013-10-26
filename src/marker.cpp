@@ -503,7 +503,7 @@ void SPMarker::hide(unsigned int key) {
 	SPGroup::hide(key);
 }
 
-Geom::OptRect SPMarker::bbox(Geom::Affine const &transform, SPItem::BBoxType type) {
+Geom::OptRect SPMarker::bbox(Geom::Affine const &transform, SPItem::BBoxType type) const {
 	return Geom::OptRect();
 }
 

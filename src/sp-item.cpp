@@ -255,7 +255,7 @@ SPItem::unsetCenter() {
     transform_center_y = 0;
 }
 
-bool SPItem::isCenterSet() {
+bool SPItem::isCenterSet() const {
     return (transform_center_x != 0 || transform_center_y != 0);
 }
 
@@ -688,7 +688,7 @@ Inkscape::XML::Node* SPItem::write(Inkscape::XML::Document *xml_doc, Inkscape::X
 }
 
 // CPPIFY: make pure virtual
-Geom::OptRect SPItem::bbox(Geom::Affine const &transform, SPItem::BBoxType type) {
+Geom::OptRect SPItem::bbox(Geom::Affine const &transform, SPItem::BBoxType type) const {
 	//throw;
 	return Geom::OptRect();
 }
@@ -848,18 +848,17 @@ Geom::OptRect SPItem::desktopBounds(BBoxType type) const
     }
 }
 
-unsigned SPItem::pos_in_parent()
-{
+unsigned int SPItem::pos_in_parent() const {
     g_assert(parent != NULL);
     g_assert(SP_IS_OBJECT(parent));
 
-    SPObject *object = this;
+    unsigned int pos = 0;
 
-    unsigned pos=0;
     for ( SPObject *iter = parent->firstChild() ; iter ; iter = iter->next) {
-        if ( iter == object ) {
+        if (iter == this) {
             return pos;
         }
+
         if (SP_IS_ITEM(iter)) {
             pos++;
         }
@@ -870,7 +869,7 @@ unsigned SPItem::pos_in_parent()
 }
 
 // CPPIFY: make pure virtual, see below!
-void SPItem::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) {
+void SPItem::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) const {
 	//throw;
 }
     /* This will only be called if the derived class doesn't override this.
@@ -937,11 +936,11 @@ void SPItem::invoke_print(SPPrintContext *ctx)
     }
 }
 
-const char* SPItem::displayName() {
+const char* SPItem::displayName() const {
     return _("Object");
 }
 
-gchar* SPItem::description() {
+gchar* SPItem::description() const {
     return g_strdup("");
 }
 
@@ -950,8 +949,7 @@ gchar* SPItem::description() {
  *
  * Must be freed by caller.
  */
-gchar *SPItem::detailedDescription()
-{
+gchar *SPItem::detailedDescription() const {
         gchar* s = g_strdup_printf("<b>%s</b> %s",
                     this->displayName(), this->description());
 
@@ -985,17 +983,11 @@ gchar *SPItem::detailedDescription()
 }
 
 /**
- * Returns 1 if the item is filtered, 0 otherwise.  Used with groups/lists to determine how many, or if any, are filtered
+ * Returns true if the item is filtered, false otherwise.  Used with groups/lists to determine how many, or if any, are filtered
  *
  */
-int SPItem::ifilt()
-{
-    int retval=0;
-    if ( style && style->filter.href && style->filter.href->getObject() ) {
-		retval=1;
-	}
-
-    return retval;
+bool SPItem::isFiltered() const {
+	return (style && style->filter.href && style->filter.href->getObject());
 }
 
 /**
@@ -1443,8 +1435,8 @@ void SPItem::set_item_transform(Geom::Affine const &transform_matrix)
     }
 }
 
-//void SPItem::convert_to_guides() {
-//	// CPPIFY: If not overridden, call SPItem::convert_to_guides(), see below!
+//void SPItem::convert_to_guides() const {
+//	// CPPIFY: If not overridden, call SPItem::convert_to_guides() const, see below!
 //	this->convert_to_guides();
 //}
 
@@ -1607,7 +1599,7 @@ SPItem *sp_item_first_item_child(SPObject *obj)
     return child;
 }
 
-void SPItem::convert_to_guides() {
+void SPItem::convert_to_guides() const {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int prefs_bbox = prefs->getInt("/tools/bounding_box", 0);
 

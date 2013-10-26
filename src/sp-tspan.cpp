@@ -138,7 +138,7 @@ void SPTSpan::modified(unsigned int flags) {
     }
 }
 
-Geom::OptRect SPTSpan::bbox(Geom::Affine const &transform, SPItem::BBoxType type) {
+Geom::OptRect SPTSpan::bbox(Geom::Affine const &transform, SPItem::BBoxType type) const {
     Geom::OptRect bbox;
     // find out the ancestor text which holds our layout
     SPObject const *parent_text = this;
@@ -216,7 +216,7 @@ Inkscape::XML::Node* SPTSpan::write(Inkscape::XML::Document *xml_doc, Inkscape::
     return repr;
 }
 
-const char* SPTSpan::displayName() {
+const char* SPTSpan::displayName() const {
     return _("Text Span");
 }
 

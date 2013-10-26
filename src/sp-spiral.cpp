@@ -226,11 +226,11 @@ void SPSpiral::update_patheffect(bool write) {
     this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-const char* SPSpiral::displayName() {
+const char* SPSpiral::displayName() const {
     return _("Spiral");
 }
 
-gchar* SPSpiral::description() {
+gchar* SPSpiral::description() const {
     // TRANSLATORS: since turn count isn't an integer, please adjust the
     // string as needed to deal with an localized plural forms.
     return g_strdup_printf (_("with %3f turns"), this->revo);
@@ -413,7 +413,7 @@ void SPSpiral::setPosition(gdouble cx, gdouble cy, gdouble exp, gdouble revo, gd
     this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-void SPSpiral::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) {
+void SPSpiral::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) const {
     // We will determine the spiral's midpoint ourselves, instead of trusting on the base class
     // Therefore snapping to object midpoints is temporarily disabled
     Inkscape::SnapPreferences local_snapprefs = *snapprefs;

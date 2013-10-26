@@ -127,7 +127,7 @@ Inkscape::XML::Node* SPPolyLine::write(Inkscape::XML::Document *xml_doc, Inkscap
     return repr;
 }
 
-gchar* SPPolyLine::description() {
+gchar* SPPolyLine::description() const {
 	return g_strdup(_("<b>Polyline</b>"));
 }
 

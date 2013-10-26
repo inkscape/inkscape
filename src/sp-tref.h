@@ -49,6 +49,7 @@ public:
     sigc::connection _changed_connection;
     
     SPObject * getObjectReferredTo();
+    SPObject const *getObjectReferredTo() const;
 
 	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
 	virtual void release();
@@ -57,9 +58,9 @@ public:
 	virtual void modified(unsigned int flags);
 	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
 
-	virtual Geom::OptRect bbox(Geom::Affine const &transform, SPItem::BBoxType type);
-        virtual const char* displayName();
-	virtual gchar* description();
+	virtual Geom::OptRect bbox(Geom::Affine const &transform, SPItem::BBoxType type) const;
+        virtual const char* displayName() const;
+	virtual gchar* description() const;
 };
 
 void sp_tref_update_text(SPTRef *tref);

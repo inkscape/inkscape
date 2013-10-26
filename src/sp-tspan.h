@@ -33,8 +33,8 @@ public:
 	virtual void modified(unsigned int flags);
 	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
 
-	virtual Geom::OptRect bbox(Geom::Affine const &transform, SPItem::BBoxType type);
-        virtual const char* displayName();
+	virtual Geom::OptRect bbox(Geom::Affine const &transform, SPItem::BBoxType type) const;
+        virtual const char* displayName() const;
 };
 
 #endif /* !INKSCAPE_SP_TSPAN_H */

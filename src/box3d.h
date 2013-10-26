@@ -60,9 +60,9 @@ public:
 
         virtual const char* display_name();
 	virtual Geom::Affine set_transform(Geom::Affine const &transform);
-    virtual void convert_to_guides();
-    virtual const char* displayName();
-    virtual gchar *description();
+    virtual void convert_to_guides() const;
+    virtual const char* displayName() const;
+    virtual gchar *description() const;
 };
 
 void box3d_position_set (SPBox3D *box);

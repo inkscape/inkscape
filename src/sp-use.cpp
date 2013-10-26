@@ -178,7 +178,7 @@ Inkscape::XML::Node* SPUse::write(Inkscape::XML::Document *xml_doc, Inkscape::XM
     return repr;
 }
 
-Geom::OptRect SPUse::bbox(Geom::Affine const &transform, SPItem::BBoxType bboxtype) {
+Geom::OptRect SPUse::bbox(Geom::Affine const &transform, SPItem::BBoxType bboxtype) const {
     Geom::OptRect bbox;
 
     if (this->child) {
@@ -208,7 +208,7 @@ void SPUse::print(SPPrintContext* ctx) {
     }
 }
 
-const char* SPUse::displayName() {
+const char* SPUse::displayName() const {
     if (this->child && SP_IS_SYMBOL( this->child )) {
         return _("Symbol");
     }
@@ -216,7 +216,7 @@ const char* SPUse::displayName() {
     return _("Clone");
 }
 
-gchar* SPUse::description() {
+gchar* SPUse::description() const {
     if (this->child) {
         if( SP_IS_SYMBOL( this->child ) ) {
             return g_strdup_printf(_("called %s"), this->child->title());
@@ -293,6 +293,10 @@ SPItem *SPUse::root() {
     }
 
     return orig;
+}
+
+SPItem const *SPUse::root() const {
+	return const_cast<SPUse*>(this)->root();
 }
 
 /**
@@ -652,8 +656,8 @@ SPItem *SPUse::get_original() {
     return ref;
 }
 
-void SPUse::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) {
-    SPItem *root = this->root();
+void SPUse::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) const {
+    SPItem const *root = this->root();
 
     if (!root) {
         return;

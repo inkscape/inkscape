@@ -122,11 +122,11 @@ Inkscape::XML::Node* SPLine::write(Inkscape::XML::Document *xml_doc, Inkscape::X
     return repr;
 }
 
-const char* SPLine::displayName() {
+const char* SPLine::displayName() const {
 	return _("Line");
 }
 
-void SPLine::convert_to_guides() {
+void SPLine::convert_to_guides() const {
     Geom::Point points[2];
     Geom::Affine const i2dt(this->i2dt_affine());
 

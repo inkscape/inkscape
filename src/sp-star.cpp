@@ -251,13 +251,13 @@ void SPStar::update_patheffect(bool write) {
     this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-const char* SPStar::displayName() {
+const char* SPStar::displayName() const {
     if (this->flatsided == false)
         return _("Star");
     return _("Polygon");
 }
 
-gchar* SPStar::description() {
+gchar* SPStar::description() const {
     // while there will never be less than 3 vertices, we still need to
     // make calls to ngettext because the pluralization may be different
     // for various numbers >=3.  The singular form is used as the index.
@@ -498,7 +498,7 @@ sp_star_position_set (SPStar *star, gint sides, Geom::Point center, gdouble r1, 
     star->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-void SPStar::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) {
+void SPStar::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) const {
     // We will determine the star's midpoint ourselves, instead of trusting on the base class
     // Therefore snapping to object midpoints is temporarily disabled
     Inkscape::SnapPreferences local_snapprefs = *snapprefs;

@@ -339,7 +339,7 @@ void SPOffset::update(SPCtx *ctx, guint flags) {
     SPShape::update(ctx, flags);
 }
 
-const char* SPOffset::displayName() {
+const char* SPOffset::displayName() const {
     if ( this->sourceHref ) {
         return _("Linked Offset");
     } else {
@@ -347,7 +347,7 @@ const char* SPOffset::displayName() {
     }
 }
 
-gchar* SPOffset::description() {
+gchar* SPOffset::description() const {
     // TRANSLATORS COMMENT: %s is either "outset" or "inset" depending on sign
     return g_strdup_printf(_("%s by %f pt"), (this->rad >= 0) ?
             _("outset") : _("inset"), fabs (this->rad));
@@ -692,7 +692,7 @@ void SPOffset::set_shape() {
     }
 }
 
-void SPOffset::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) {
+void SPOffset::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) const {
     SPShape::snappoints(p, snapprefs);
 }
 

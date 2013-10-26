@@ -56,15 +56,16 @@ public:
 	virtual void update(SPCtx* ctx, unsigned int flags);
 	virtual void modified(unsigned int flags);
 
-	virtual Geom::OptRect bbox(Geom::Affine const &transform, SPItem::BBoxType bboxtype);
-    virtual const char* displayName();
-	virtual gchar* description();
+	virtual Geom::OptRect bbox(Geom::Affine const &transform, SPItem::BBoxType bboxtype) const;
+    virtual const char* displayName() const;
+	virtual gchar* description() const;
 	virtual void print(SPPrintContext *ctx);
 	virtual Inkscape::DrawingItem* show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
 	virtual void hide(unsigned int key);
-	virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
+	virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) const;
 
 	SPItem *root();
+	SPItem const *root() const;
 
 	SPItem *unlink();
 	SPItem *get_original();

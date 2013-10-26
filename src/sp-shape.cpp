@@ -389,7 +389,7 @@ void SPShape::modified(unsigned int flags) {
     }
 }
 
-Geom::OptRect SPShape::bbox(Geom::Affine const &transform, SPItem::BBoxType bboxtype) {
+Geom::OptRect SPShape::bbox(Geom::Affine const &transform, SPItem::BBoxType bboxtype) const {
     Geom::OptRect bbox;
 
     if (!this->_curve) {
@@ -796,8 +796,7 @@ int SPShape::hasMarkers() const
 * \param type Marker type (e.g. SP_MARKER_LOC_START)
 * \return Number of markers that the shape has of this type.
 */
-int SPShape::numberOfMarkers(int type)
-{
+int SPShape::numberOfMarkers(int type) const {
     Geom::PathVector const & pathv = this->_curve->get_pathvector();
 
     if (pathv.size() == 0) {
@@ -1025,7 +1024,7 @@ void SPShape::setCurveInsync(SPCurve *new_curve, unsigned int owner)
     }
 }
 
-void SPShape::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) {
+void SPShape::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) const {
     if (this->_curve == NULL) {
         return;
     }

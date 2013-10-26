@@ -291,11 +291,12 @@ Inkscape::XML::Node* SPGroup::write(Inkscape::XML::Document *xml_doc, Inkscape::
     return repr;
 }
 
-Geom::OptRect SPGroup::bbox(Geom::Affine const &transform, SPItem::BBoxType bboxtype)
+Geom::OptRect SPGroup::bbox(Geom::Affine const &transform, SPItem::BBoxType bboxtype) const
 {
     Geom::OptRect bbox;
 
-    GSList *l = this->childList(false, SPObject::ActionBBox);
+    // CPPIFY: replace this const_cast later
+    GSList *l = const_cast<SPGroup*>(this)->childList(false, SPObject::ActionBBox);
 
     while (l) {
         SPObject *o = SP_OBJECT (l->data);
@@ -326,11 +327,11 @@ void SPGroup::print(SPPrintContext *ctx) {
     }
 }
 
-const char *SPGroup::displayName() {
+const char *SPGroup::displayName() const {
     return _("Group");
 }
 
-gchar *SPGroup::description() {
+gchar *SPGroup::description() const {
     gint len = this->getItemCount();
     return g_strdup_printf(
         ngettext(_("of <b>%d</b> object"), _("of <b>%d</b> objects"), len), len);
@@ -385,7 +386,7 @@ void SPGroup::hide (unsigned int key) {
 }
 
 
-void SPGroup::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) {
+void SPGroup::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) const {
     for ( SPObject const *o = this->firstChild(); o; o = o->getNext() )
     {
         if (SP_IS_ITEM(o)) {
@@ -720,9 +721,9 @@ void SPGroup::scaleChildItemsRec(Geom::Scale const &sc, Geom::Point const &p)
     }
 }
 
-gint SPGroup::getItemCount() {
+gint SPGroup::getItemCount() const {
     gint len = 0;
-    for (SPObject *o = this->firstChild() ; o ; o = o->getNext() ) {
+    for (SPObject const *o = this->firstChild() ; o ; o = o->getNext() ) {
         if (SP_IS_ITEM(o)) {
             len++;
         }

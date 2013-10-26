@@ -555,7 +555,7 @@ Inkscape::XML::Node *SPImage::write(Inkscape::XML::Document *xml_doc, Inkscape::
     return repr;
 }
 
-Geom::OptRect SPImage::bbox(Geom::Affine const &transform, SPItem::BBoxType type) {
+Geom::OptRect SPImage::bbox(Geom::Affine const &transform, SPItem::BBoxType type) const {
     Geom::OptRect bbox;
 
     if ((this->width.computed > 0.0) && (this->height.computed > 0.0)) {
@@ -612,11 +612,11 @@ void SPImage::print(SPPrintContext *ctx) {
     }
 }
 
-const char* SPImage::displayName() {
+const char* SPImage::displayName() const {
     return _("Image");
 }
 
-gchar* SPImage::description() {
+gchar* SPImage::description() const {
     char *href_desc;
 
     if (this->href) {
@@ -748,7 +748,7 @@ static void sp_image_update_canvas_image(SPImage *image)
     }
 }
 
-void SPImage::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) {
+void SPImage::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) const {
     /* An image doesn't have any nodes to snap, but still we want to be able snap one image
     to another. Therefore we will create some snappoints at the corner, similar to a rect. If
     the image is rotated, then the snappoints will rotate with it. Again, just like a rect.

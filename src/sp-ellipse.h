@@ -57,12 +57,12 @@ public:
     virtual void update(SPCtx *ctx, unsigned int flags);
 
     virtual Inkscape::XML::Node *write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
-    virtual const char *displayName();
+    virtual const char *displayName() const;
 
     virtual void set_shape();
     virtual Geom::Affine set_transform(Geom::Affine const &xform);
 
-    virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
+    virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) const;
 
     virtual void modified(unsigned int flags);
 

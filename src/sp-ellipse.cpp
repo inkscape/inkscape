@@ -362,7 +362,7 @@ Inkscape::XML::Node *SPGenericEllipse::write(Inkscape::XML::Document *xml_doc, I
     return repr;
 }
 
-const char *SPGenericEllipse::displayName()
+const char *SPGenericEllipse::displayName() const
 {
 
     switch ( type ) {
@@ -560,9 +560,11 @@ Geom::Affine SPGenericEllipse::set_transform(Geom::Affine const &xform)
     return ret;
 }
 
-void SPGenericEllipse::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs)
+void SPGenericEllipse::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) const
 {
-    this->normalize();
+	// CPPIFY: is this call necessary?
+	const_cast<SPGenericEllipse*>(this)->normalize();
+
     Geom::Affine const i2dt = this->i2dt_affine();
 
     // Snap to the 4 quadrant points of the ellipse, but only if the arc

@@ -157,7 +157,7 @@ public:
 
     void setCenter(Geom::Point const &object_centre);
     void unsetCenter();
-    bool isCenterSet();
+    bool isCenterSet() const;
     Geom::Point getCenter() const;
 
     bool isVisibleAndUnlocked() const;
@@ -187,9 +187,12 @@ public:
     Geom::OptRect desktopPreferredBounds() const;
     Geom::OptRect desktopBounds(BBoxType type) const;
 
-    unsigned pos_in_parent();
-    gchar *detailedDescription();
-    int ifilt();
+    unsigned int pos_in_parent() const;
+
+    gchar *detailedDescription() const;
+
+    bool isFiltered() const;
+
     void invoke_print(SPPrintContext *ctx);
     static unsigned int display_key_new(unsigned int numkeys);
     Inkscape::DrawingItem *invoke_show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
@@ -204,7 +207,6 @@ public:
     void adjust_livepatheffect(Geom::Affine const &postmul, bool set = false);
     void doWriteTransform(Inkscape::XML::Node *repr, Geom::Affine const &transform, Geom::Affine const *adv = NULL, bool compensate = true);
     void set_item_transform(Geom::Affine const &transform_matrix);
-    void convert_item_to_guides();
     gint emitEvent (SPEvent &event);
     Inkscape::DrawingItem *get_arenaitem(unsigned int key);
 
@@ -212,7 +214,6 @@ public:
     Geom::Affine i2dt_affine() const;
     void set_i2d_affine(Geom::Affine const &transform);
     Geom::Affine dt2i_affine() const;
-    //void convert_to_guides();
 
 private:
     enum EvaluatedStatus
@@ -234,15 +235,17 @@ public:
 	virtual void update(SPCtx *ctx, guint flags);
 	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
 
-	virtual Geom::OptRect bbox(Geom::Affine const &transform, SPItem::BBoxType type);
+	virtual Geom::OptRect bbox(Geom::Affine const &transform, SPItem::BBoxType type) const;
 	virtual void print(SPPrintContext *ctx);
-    virtual const char* displayName();
-	virtual gchar* description();
+    virtual const char* displayName() const;
+	virtual gchar* description() const;
 	virtual Inkscape::DrawingItem* show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
 	virtual void hide(unsigned int key);
-    virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
+    virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) const;
     virtual Geom::Affine set_transform(Geom::Affine const &transform);
-    virtual void convert_to_guides();
+
+    virtual void convert_to_guides() const;
+
     virtual gint event(SPEvent *event);
 };
 

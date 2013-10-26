@@ -54,10 +54,10 @@ public:
 	virtual void set(unsigned int key, gchar const* value);
 	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
 
-        virtual const char* displayName();
-	virtual gchar* description();
+        virtual const char* displayName() const;
+	virtual gchar* description() const;
 	virtual Geom::Affine set_transform(Geom::Affine const &transform);
-    virtual void convert_to_guides();
+    virtual void convert_to_guides() const;
 
     virtual void update_patheffect(bool write);
 };

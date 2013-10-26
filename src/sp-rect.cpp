@@ -159,7 +159,7 @@ Inkscape::XML::Node * SPRect::write(Inkscape::XML::Document *xml_doc, Inkscape::
     return repr;
 }
 
-const char* SPRect::displayName() {
+const char* SPRect::displayName() const {
     return _("Rectangle");
 }
 
@@ -484,7 +484,7 @@ gdouble SPRect::getVisibleHeight() const {
         this->transform);
 }
 
-void SPRect::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) {
+void SPRect::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) const {
     /* This method overrides sp_shape_snappoints, which is the default for any shape. The default method
     returns all eight points along the path of a rounded rectangle, but not the real corners. Snapping
     the startpoint and endpoint of each rounded corner is not very useful and really confusing. Instead
@@ -518,7 +518,7 @@ void SPRect::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::
     }
 }
 
-void SPRect::convert_to_guides() {
+void SPRect::convert_to_guides() const {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     if (!prefs->getBool("/tools/shapes/rect/convertguides", true)) {

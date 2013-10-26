@@ -1325,53 +1325,50 @@ SPGroup *box3d_convert_to_group(SPBox3D *box)
     return SP_GROUP(doc->getObjectByRepr(grepr));
 }
 
-const char *SPBox3D::displayName() {
+const char *SPBox3D::displayName() const {
     return _("3D Box");
 }
 
-gchar *SPBox3D::description() {
+gchar *SPBox3D::description() const {
     // We could put more details about the 3d box here
     return g_strdup("");
 }
 
 static inline void
-box3d_push_back_corner_pair(SPBox3D *box, std::list<std::pair<Geom::Point, Geom::Point> > &pts, int c1, int c2) {
+box3d_push_back_corner_pair(SPBox3D const *box, std::list<std::pair<Geom::Point, Geom::Point> > &pts, int c1, int c2) {
     pts.push_back(std::make_pair(box3d_get_corner_screen(box, c1, false),
                                  box3d_get_corner_screen(box, c2, false)));
 }
 
-void SPBox3D::convert_to_guides() {
-	SPBox3D* item = this;
-    SPBox3D *box = item;
-
+void SPBox3D::convert_to_guides() const {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     if (!prefs->getBool("/tools/shapes/3dbox/convertguides", true)) {
-        box->convert_to_guides();
+        this->convert_to_guides();
         return;
     }
 
     std::list<std::pair<Geom::Point, Geom::Point> > pts;
 
     /* perspective lines in X direction */
-    box3d_push_back_corner_pair(box, pts, 0, 1);
-    box3d_push_back_corner_pair(box, pts, 2, 3);
-    box3d_push_back_corner_pair(box, pts, 4, 5);
-    box3d_push_back_corner_pair(box, pts, 6, 7);
+    box3d_push_back_corner_pair(this, pts, 0, 1);
+    box3d_push_back_corner_pair(this, pts, 2, 3);
+    box3d_push_back_corner_pair(this, pts, 4, 5);
+    box3d_push_back_corner_pair(this, pts, 6, 7);
 
     /* perspective lines in Y direction */
-    box3d_push_back_corner_pair(box, pts, 0, 2);
-    box3d_push_back_corner_pair(box, pts, 1, 3);
-    box3d_push_back_corner_pair(box, pts, 4, 6);
-    box3d_push_back_corner_pair(box, pts, 5, 7);
+    box3d_push_back_corner_pair(this, pts, 0, 2);
+    box3d_push_back_corner_pair(this, pts, 1, 3);
+    box3d_push_back_corner_pair(this, pts, 4, 6);
+    box3d_push_back_corner_pair(this, pts, 5, 7);
 
     /* perspective lines in Z direction */
-    box3d_push_back_corner_pair(box, pts, 0, 4);
-    box3d_push_back_corner_pair(box, pts, 1, 5);
-    box3d_push_back_corner_pair(box, pts, 2, 6);
-    box3d_push_back_corner_pair(box, pts, 3, 7);
+    box3d_push_back_corner_pair(this, pts, 0, 4);
+    box3d_push_back_corner_pair(this, pts, 1, 5);
+    box3d_push_back_corner_pair(this, pts, 2, 6);
+    box3d_push_back_corner_pair(this, pts, 3, 7);
 
-    sp_guide_pt_pairs_to_guides(item->document, pts);
+    sp_guide_pt_pairs_to_guides(this->document, pts);
 }
 
 /*

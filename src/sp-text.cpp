@@ -293,7 +293,7 @@ Inkscape::XML::Node *SPText::write(Inkscape::XML::Document *xml_doc, Inkscape::X
     return repr;
 }
 
-Geom::OptRect SPText::bbox(Geom::Affine const &transform, SPItem::BBoxType type) {
+Geom::OptRect SPText::bbox(Geom::Affine const &transform, SPItem::BBoxType type) const {
     Geom::OptRect bbox = SP_TEXT(this)->layout.bounds(transform);
 
     // FIXME this code is incorrect
@@ -326,11 +326,11 @@ void SPText::hide(unsigned int key) {
     }
 }
 
-const char* SPText::displayName() {
+const char* SPText::displayName() const {
     return _("Text");
 }
 
-gchar* SPText::description() {
+gchar* SPText::description() const {
     SPStyle *style = this->style;
 
     font_instance *tf = font_factory::Default()->FaceFromStyle(style);
@@ -364,7 +364,7 @@ gchar* SPText::description() {
     return ret;
 }
 
-void SPText::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) {
+void SPText::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) const {
     if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_TEXT_BASELINE)) {
         // Choose a point on the baseline for snapping from or to, with the horizontal position
         // of this point depending on the text alignment (left vs. right)

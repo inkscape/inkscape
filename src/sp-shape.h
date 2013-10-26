@@ -44,7 +44,7 @@ public:
     void setCurveInsync (SPCurve *curve, unsigned int owner);
     void setCurveBeforeLPE (SPCurve *curve);
     int hasMarkers () const;
-    int numberOfMarkers (int type);
+    int numberOfMarkers (int type) const;
 
 public: // temporarily public, until SPPath is properly classed, etc.
     SPCurve *_curve_before_lpe;
@@ -63,13 +63,13 @@ public:
 	virtual void set(unsigned int key, gchar const* value);
 	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
 
-	virtual Geom::OptRect bbox(Geom::Affine const &transform, SPItem::BBoxType bboxtype);
+	virtual Geom::OptRect bbox(Geom::Affine const &transform, SPItem::BBoxType bboxtype) const;
 	virtual void print(SPPrintContext* ctx);
 
 	virtual Inkscape::DrawingItem* show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
 	virtual void hide(unsigned int key);
 
-	virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
+	virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) const;
 
 	virtual void set_shape();
 };

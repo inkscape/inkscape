@@ -178,7 +178,7 @@ void SPPolygon::set(unsigned int key, const gchar* value) {
     }
 }
 
-gchar* SPPolygon::description() {
+gchar* SPPolygon::description() const {
 	return g_strdup(_("<b>Polygon</b>"));
 }
 

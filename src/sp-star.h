@@ -50,9 +50,9 @@ public:
 	virtual void set(unsigned int key, gchar const* value);
 	virtual void update(SPCtx* ctx, guint flags);
 
-    virtual const char* displayName();
-	virtual gchar* description();
-	virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
+    virtual const char* displayName() const;
+	virtual gchar* description() const;
+	virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) const;
 
 	virtual void update_patheffect(bool write);
 	virtual void set_shape();

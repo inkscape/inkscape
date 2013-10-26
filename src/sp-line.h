@@ -34,9 +34,9 @@ public:
 	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
 	virtual void set(unsigned int key, gchar const* value);
 
-	virtual const char* displayName();
+	virtual const char* displayName() const;
 	virtual Geom::Affine set_transform(Geom::Affine const &transform);
-	virtual void convert_to_guides();
+	virtual void convert_to_guides() const;
 	virtual void update(SPCtx* ctx, guint flags);
 
 	virtual void set_shape();

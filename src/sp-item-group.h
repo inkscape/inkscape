@@ -54,7 +54,7 @@ public:
     void translateChildItems(Geom::Translate const &tr);
     void scaleChildItemsRec(Geom::Scale const &sc, Geom::Point const &p);
 
-    gint getItemCount();
+    gint getItemCount() const;
     void _showChildren (Inkscape::Drawing &drawing, Inkscape::DrawingItem *ai, unsigned int key, unsigned int flags);
 
 private:
@@ -74,14 +74,14 @@ public:
 
     virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
 
-    virtual Geom::OptRect bbox(Geom::Affine const &transform, SPItem::BBoxType bboxtype);
+    virtual Geom::OptRect bbox(Geom::Affine const &transform, SPItem::BBoxType bboxtype) const;
     virtual void print(SPPrintContext *ctx);
-    virtual const char* displayName();
-    virtual gchar *description();
+    virtual const char* displayName() const;
+    virtual gchar *description() const;
     virtual Inkscape::DrawingItem *show (Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
     virtual void hide (unsigned int key);
 
-    virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
+    virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) const;
 
     virtual void update_patheffect(bool write);
 };

@@ -66,11 +66,11 @@ gint SPPath::nodesInPath() const
     return _curve ? _curve->nodes_in_path() : 0;
 }
 
-const char* SPPath::displayName() {
+const char* SPPath::displayName() const {
     return _("Path");
 }
 
-gchar* SPPath::description() {
+gchar* SPPath::description() const {
     int count = this->nodesInPath();
     char *lpe_desc = g_strdup("");
     
@@ -100,7 +100,7 @@ gchar* SPPath::description() {
     return ret;
 }
 
-void SPPath::convert_to_guides() {
+void SPPath::convert_to_guides() const {
     if (!this->_curve) {
         return;
     }

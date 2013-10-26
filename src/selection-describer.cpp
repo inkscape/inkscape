@@ -62,7 +62,7 @@ static int count_filtered (GSList *items)
     int count=0;
     for (GSList *i = items; i != NULL; i = i->next) {
         SPItem *item = SP_ITEM(i->data);
-        count += item->ifilt();
+        count += item->isFiltered();
     }
     return count;
 }

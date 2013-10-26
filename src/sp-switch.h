@@ -41,8 +41,8 @@ public:
     virtual void child_added(Inkscape::XML::Node* child, Inkscape::XML::Node* ref);
     virtual void remove_child(Inkscape::XML::Node *child);
     virtual void order_changed(Inkscape::XML::Node *child, Inkscape::XML::Node *old_ref, Inkscape::XML::Node *new_ref);
-    virtual const char* displayName();
-    virtual gchar *description();
+    virtual const char* displayName() const;
+    virtual gchar *description() const;
 };
 
 #endif

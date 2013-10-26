@@ -31,7 +31,7 @@ public:
 	virtual void update(SPCtx *ctx, unsigned int flags);
 	virtual void modified(guint flags);
 	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
-	virtual const char* displayName();
+	virtual const char* displayName() const;
 };
 
 class SPFlowregionExclude : public SPItem {
@@ -48,7 +48,7 @@ public:
 	virtual void update(SPCtx *ctx, unsigned int flags);
 	virtual void modified(guint flags);
 	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
-	virtual const char* displayName();
+	virtual const char* displayName() const;
 };
 
 #endif

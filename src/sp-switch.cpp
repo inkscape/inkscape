@@ -71,11 +71,11 @@ GSList *SPSwitch::_childList(bool add_ref, SPObject::Action action) {
     return g_slist_prepend (NULL, child);
 }
 
-const char *SPSwitch::displayName() {
+const char *SPSwitch::displayName() const {
     return _("Conditional Group");
 }
 
-gchar *SPSwitch::description() {
+gchar *SPSwitch::description() const {
     gint len = this->getItemCount();
     return g_strdup_printf(
         ngettext(_("of <b>%d</b> object"), _("of <b>%d</b> objects"), len), len);

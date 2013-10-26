@@ -81,9 +81,9 @@ public:
 	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
 	virtual void release();
 
-	virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
-        virtual const char* displayName();
-	virtual gchar* description();
+	virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) const;
+        virtual const char* displayName() const;
+	virtual gchar* description() const;
 
 	virtual void set_shape();
 };

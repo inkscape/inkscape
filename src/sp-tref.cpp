@@ -206,7 +206,7 @@ Inkscape::XML::Node* SPTRef::write(Inkscape::XML::Document *xml_doc, Inkscape::X
     return repr;
 }
 
-Geom::OptRect SPTRef::bbox(Geom::Affine const &transform, SPItem::BBoxType type) {
+Geom::OptRect SPTRef::bbox(Geom::Affine const &transform, SPItem::BBoxType type) const {
     Geom::OptRect bbox;
     // find out the ancestor text which holds our layout
     SPObject const *parent_text = this;
@@ -233,14 +233,14 @@ Geom::OptRect SPTRef::bbox(Geom::Affine const &transform, SPItem::BBoxType type)
     return bbox;
 }
 
-const char* SPTRef::displayName() {
+const char* SPTRef::displayName() const {
     return _("Cloned Character Data");
 }
 
-gchar* SPTRef::description() {
-    SPObject *referred = this->getObjectReferredTo();
+gchar* SPTRef::description() const {
+    SPObject const *referred = this->getObjectReferredTo();
 
-    if (this->getObjectReferredTo()) {
+    if (referred) {
 	char *child_desc;
 
 	if (SP_IS_ITEM(referred)) {
@@ -304,6 +304,19 @@ sp_tref_delete_self(SPObject */*deleted*/, SPTRef *self)
  */
 SPObject * SPTRef::getObjectReferredTo(void)
 {
+    SPObject *referredObject = NULL;
+
+    if (uriOriginalRef) {
+        referredObject = uriOriginalRef->getObject();
+    }
+
+    return referredObject;
+}
+
+/**
+ * Return the object referred to via the URI reference
+ */
+SPObject const *SPTRef::getObjectReferredTo() const {
     SPObject *referredObject = NULL;
 
     if (uriOriginalRef) {

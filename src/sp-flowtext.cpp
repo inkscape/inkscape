@@ -260,7 +260,7 @@ Inkscape::XML::Node* SPFlowtext::write(Inkscape::XML::Document* doc, Inkscape::X
     return repr;
 }
 
-Geom::OptRect SPFlowtext::bbox(Geom::Affine const &transform, SPItem::BBoxType type) {
+Geom::OptRect SPFlowtext::bbox(Geom::Affine const &transform, SPItem::BBoxType type) const {
     Geom::OptRect bbox = this->layout.bounds(transform);
 
     // Add stroke width
@@ -284,7 +284,7 @@ void SPFlowtext::print(SPPrintContext *ctx) {
     this->layout.print(ctx, pbox, dbox, bbox, ctm);
 }
 
-const char* SPFlowtext::displayName() {
+const char* SPFlowtext::displayName() const {
     if (SP_FLOWTEXT(this)->has_internal_frame()) {
         return _("Flowed Text");
     } else {
@@ -292,7 +292,7 @@ const char* SPFlowtext::displayName() {
     }
 }
 
-gchar* SPFlowtext::description() {
+gchar* SPFlowtext::description() const {
     Inkscape::Text::Layout const &layout = SP_FLOWTEXT(this)->layout;
     int const nChars = layout.iteratorToCharIndex(layout.end());
     char const *trunc = (layout.inputTruncated()) ? _(" [truncated]") : "";
@@ -300,7 +300,7 @@ gchar* SPFlowtext::description() {
     return g_strdup_printf(ngettext(_("(%d character%s)"), _("(%d characters%s)"), nChars), nChars, trunc);
 }
 
-void SPFlowtext::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) {
+void SPFlowtext::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) const {
     if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_TEXT_BASELINE)) {
         // Choose a point on the baseline for snapping from or to, with the horizontal position
         // of this point depending on the text alignment (left vs. right)

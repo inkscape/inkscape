@@ -27,7 +27,7 @@ public:
 	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
 	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
 	virtual void set(unsigned int key, gchar const* value);
-	virtual gchar* description();
+	virtual gchar* description() const;
 };
 
 // made 'public' so that SPCurve can set it as friend:
