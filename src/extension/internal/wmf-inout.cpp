@@ -3200,7 +3200,7 @@ Wmf::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
         // Scale and translate objects
         double scale = Inkscape::Util::Quantity::convert(1, "px", doc->getWidth().unit);
         ShapeEditor::blockSetItem(true);
-        doc->getRoot()->scaleChildItemsRec(Geom::Scale(scale), Geom::Point(0, SP_ACTIVE_DOCUMENT->getHeight().value("px")));
+        doc->getRoot()->scaleChildItemsRec(Geom::Scale(scale), Geom::Point(0, doc->getHeight().value("px")));
         ShapeEditor::blockSetItem(false);
         
         doc->ensureUpToDate();
