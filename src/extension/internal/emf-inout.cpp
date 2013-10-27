@@ -3496,7 +3496,7 @@ Emf::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
     d.tri = trinfo_release_except_FC(d.tri);
 
     // Set viewBox if it doesn't exist
-    if (!doc->getRoot()->viewBox_set) {
+    if (doc && !doc->getRoot()->viewBox_set) {
         bool saved = Inkscape::DocumentUndo::getUndoSensitive(doc);
         Inkscape::DocumentUndo::setUndoSensitive(doc, false);
         
