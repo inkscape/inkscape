@@ -65,6 +65,7 @@ unsigned int sp_svg_number_read_d(gchar const *str, double *val)
 }
 
 // TODO must add a buffer length parameter for safety:
+// rewrite using std::string?
 static unsigned int sp_svg_number_write_ui(gchar *buf, unsigned int val)
 {
     unsigned int i = 0;
@@ -81,6 +82,7 @@ static unsigned int sp_svg_number_write_ui(gchar *buf, unsigned int val)
 }
 
 // TODO unsafe code ingnoring bufLen
+// rewrite using std::string?
 static unsigned int sp_svg_number_write_i(gchar *buf, int bufLen, int val)
 {
     int p = 0;
@@ -98,6 +100,7 @@ static unsigned int sp_svg_number_write_i(gchar *buf, int bufLen, int val)
 }
 
 // TODO unsafe code ingnoring bufLen
+// rewrite using std::string?
 static unsigned sp_svg_number_write_d(gchar *buf, int bufLen, double val, unsigned int tprec, unsigned int fprec)
 {
     /* Process sign */

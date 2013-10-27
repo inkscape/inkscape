@@ -1736,7 +1736,8 @@ CrossingsInfoPair countRealCrossings(Avoid::Polygon& poly,
                                 !reversedY);
                     }
                     else
-                    {
+                    { /// \todo FIXME: this whole branch was not doing anything
+                    /*
                         int turnDirA = vecDir(a0, a1, a2); 
                         int turnDirB = vecDir(b0, b1, b2); 
                         bool reversed = (side1 != -turnDirA); 
@@ -1761,6 +1762,7 @@ CrossingsInfoPair countRealCrossings(Avoid::Polygon& poly,
                         }
                         VertID vID(b1.id, true, b1.vn);
                         //(*pointOrders)[b1].addPoints(&b1, &a1, reversed);
+                    */
                     }
                 }
             }
