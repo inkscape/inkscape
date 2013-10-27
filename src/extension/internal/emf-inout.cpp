@@ -3511,15 +3511,14 @@ Emf::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
 
         // Set viewBox
         doc->setViewBox(Geom::Rect::from_xywh(0, 0, doc->getWidth().value(doc_unit), doc->getHeight().value(doc_unit)));
+        doc->ensureUpToDate();
 
         // Scale and translate objects
-        double scale = Inkscape::Util::Quantity::convert(1, "px", doc->getWidth().unit);
+        double scale = Inkscape::Util::Quantity::convert(1, "px", doc_unit);
         ShapeEditor::blockSetItem(true);
-        doc->getRoot()->scaleChildItemsRec(Geom::Scale(scale), Geom::Point(0, SP_ACTIVE_DOCUMENT->getHeight().value("px")));
+        doc->getRoot()->scaleChildItemsRec(Geom::Scale(scale), Geom::Point(0, doc->getHeight().value("px")));
         ShapeEditor::blockSetItem(false);
-        
-        doc->ensureUpToDate();
-        
+
         Inkscape::DocumentUndo::setUndoSensitive(doc, saved);
     }
 
