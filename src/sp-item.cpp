@@ -562,7 +562,7 @@ void SPItem::mask_ref_changed(SPObject *old_mask, SPObject *mask, SPItem *item)
     }
 }
 
-void SPItem::update(SPCtx *ctx, guint flags) {
+void SPItem::update(SPCtx* /*ctx*/, guint flags) {
     SPItem *item = this;
     SPItem* object = item;
 
@@ -688,7 +688,7 @@ Inkscape::XML::Node* SPItem::write(Inkscape::XML::Document *xml_doc, Inkscape::X
 }
 
 // CPPIFY: make pure virtual
-Geom::OptRect SPItem::bbox(Geom::Affine const &transform, SPItem::BBoxType type) const {
+Geom::OptRect SPItem::bbox(Geom::Affine const & /*transform*/, SPItem::BBoxType /*type*/) const {
 	//throw;
 	return Geom::OptRect();
 }
@@ -869,7 +869,7 @@ unsigned int SPItem::pos_in_parent() const {
 }
 
 // CPPIFY: make pure virtual, see below!
-void SPItem::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) const {
+void SPItem::snappoints(std::vector<Inkscape::SnapCandidatePoint> & /*p*/, Inkscape::SnapPreferences const */*snapprefs*/) const {
 	//throw;
 }
     /* This will only be called if the derived class doesn't override this.
@@ -919,7 +919,7 @@ void SPItem::getSnappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscap
 }
 
 // CPPIFY: make pure virtual
-void SPItem::print(SPPrintContext* ctx) {
+void SPItem::print(SPPrintContext* /*ctx*/) {
 	//throw;
 }
 
@@ -1006,7 +1006,7 @@ unsigned SPItem::display_key_new(unsigned numkeys)
 }
 
 // CPPIFY: make pure virtual
-Inkscape::DrawingItem* SPItem::show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags) {
+Inkscape::DrawingItem* SPItem::show(Inkscape::Drawing& /*drawing*/, unsigned int /*key*/, unsigned int /*flags*/) {
 	//throw;
 	return 0;
 }
@@ -1065,7 +1065,7 @@ Inkscape::DrawingItem *SPItem::invoke_show(Inkscape::Drawing &drawing, unsigned 
 }
 
 // CPPIFY: make pure virtual
-void SPItem::hide(unsigned int key) {
+void SPItem::hide(unsigned int /*key*/) {
 	//throw;
 }
 
@@ -1411,7 +1411,7 @@ void SPItem::doWriteTransform(Inkscape::XML::Node *repr, Geom::Affine const &tra
 }
 
 // CPPIFY: see below, do not make pure?
-gint SPItem::event(SPEvent* event) {
+gint SPItem::event(SPEvent* /*event*/) {
 	return FALSE;
 }
 

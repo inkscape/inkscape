@@ -93,7 +93,7 @@ sp_meshgradient_repr_write(SPMeshGradient *mg)
 }
 
 
-cairo_pattern_t* SPMeshGradient::pattern_new(cairo_t *ct,
+cairo_pattern_t* SPMeshGradient::pattern_new(cairo_t * /*ct*/,
 #if defined(MESH_DEBUG) || (CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 11, 4))
                                                        Geom::OptRect const &bbox,
                                                        double opacity

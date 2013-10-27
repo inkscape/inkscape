@@ -151,11 +151,11 @@ void SPObject::read_content() {
     //throw;
 }
 
-void SPObject::update(SPCtx* ctx, unsigned int flags) {
+void SPObject::update(SPCtx* /*ctx*/, unsigned int /*flags*/) {
     //throw;
 }
 
-void SPObject::modified(unsigned int flags) {
+void SPObject::modified(unsigned int /*flags*/) {
     //throw;
 }
 
@@ -624,7 +624,7 @@ void SPObject::remove_child(Inkscape::XML::Node* child) {
     }
 }
 
-void SPObject::order_changed(Inkscape::XML::Node *child, Inkscape::XML::Node * old_ref, Inkscape::XML::Node *new_ref) {
+void SPObject::order_changed(Inkscape::XML::Node *child, Inkscape::XML::Node * /*old_ref*/, Inkscape::XML::Node *new_ref) {
     SPObject* object = this;
 
     SPObject *ochild = object->get_child_by_repr(child);

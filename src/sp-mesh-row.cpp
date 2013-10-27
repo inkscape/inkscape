@@ -81,7 +81,7 @@ void SPMeshRow::build(SPDocument* doc, Inkscape::XML::Node* repr) {
  * Virtual build: set meshrow attributes from its associated XML node.
  */
 
-void SPMeshRow::set(unsigned int key, const gchar* value) {
+void SPMeshRow::set(unsigned int /*key*/, const gchar* /*value*/) {
 }
 
 /**

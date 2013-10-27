@@ -98,7 +98,7 @@ void SPMetadata::set(unsigned int key, const gchar* value) {
     SPObject::set(key, value);
 }
 
-void SPMetadata::update(SPCtx* ctx, unsigned int flags) {
+void SPMetadata::update(SPCtx* /*ctx*/, unsigned int flags) {
     debug("0x%08x",(unsigned int)this);
     //SPMetadata *metadata = SP_METADATA(object);
 

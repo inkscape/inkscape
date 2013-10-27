@@ -96,7 +96,7 @@ Inkscape::XML::Node* SPLinearGradient::write(Inkscape::XML::Document *xml_doc, I
     return repr;
 }
 
-cairo_pattern_t* SPLinearGradient::pattern_new(cairo_t *ct, Geom::OptRect const &bbox, double opacity) {
+cairo_pattern_t* SPLinearGradient::pattern_new(cairo_t * /*ct*/, Geom::OptRect const &bbox, double opacity) {
     this->ensureVector();
 
     cairo_pattern_t *cp = cairo_pattern_create_linear(
