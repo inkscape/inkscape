@@ -77,7 +77,7 @@ static guint32 scroll_event_time = 0;
 static gdouble scroll_multiply = 1;
 static guint scroll_keyval = 0;
 
-void SPEventContext::set(const Inkscape::Preferences::Entry& val) {
+void SPEventContext::set(const Inkscape::Preferences::Entry& /*val*/) {
 }
 
 void SPEventContext::activate() {

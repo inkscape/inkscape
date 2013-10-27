@@ -258,7 +258,7 @@ bool SPLPEItem::performPathEffect(SPCurve *curve) {
 }
 
 // CPPIFY: make pure virtual
-void SPLPEItem::update_patheffect(bool write) {
+void SPLPEItem::update_patheffect(bool /*write*/) {
 	//throw;
 }
 

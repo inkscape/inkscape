@@ -165,7 +165,7 @@ void SPDrawContext::finish() {
     spdc_free_colors(this);
 }
 
-void SPDrawContext::set(const Inkscape::Preferences::Entry& value) {
+void SPDrawContext::set(const Inkscape::Preferences::Entry& /*value*/) {
 }
 
 bool SPDrawContext::root_handler(GdkEvent* event) {
