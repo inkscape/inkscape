@@ -4140,8 +4140,8 @@ bool MakeBase::executeCommand(const String &command,
                               String &errbuf)
 {
 
-    status("============ cmd ============\n%s\n=============================",
-                command.c_str());
+//    status("============ cmd ============\n%s\n=============================",
+//                command.c_str());
 
     outbuf.clear();
     errbuf.clear();
@@ -7060,8 +7060,9 @@ public:
             //# First we check if the source is newer than the .o
             if (isNewerThan(srcFullName, destFullName))
                 {
-                taskstatus("compile of %s required by source: %s",
-                        destFullName.c_str(), srcFullName.c_str());
+//                taskstatus("compile of %s (req. by: %s)",
+//                        destFullName.c_str(), srcFullName.c_str());
+                taskstatus("compile %s", srcFullName.c_str());
                 compileMe = true;
                 }
             else
@@ -7083,8 +7084,8 @@ public:
                     //        destFullName.c_str(), depFullName.c_str());
                     if (depRequires)
                         {
-                        taskstatus("compile of %s required by included: %s",
-                                destFullName.c_str(), depFullName.c_str());
+                        taskstatus("compile %s (%s modified)",
+                                srcFullName.c_str(), depFullName.c_str());
                         compileMe = true;
                         break;
                         }
@@ -7143,11 +7144,13 @@ public:
                 fprintf(f, "#### STDERR ###\n%s\n\n", errString.c_str());
                 fflush(f);
                 }
-            if (!ret)
-                {
+            if (!ret) {
                 error("problem compiling: %s", errString.c_str());
                 errorOccurred = true;
-                }
+            } else if (!errString.empty()) {
+                status("STDERR: \n%s\n", errString.c_str());
+            }
+
 
             if (errorOccurred && !continueOnError) {
 #ifndef _OPENMP // figure out a way to break the loop here with OpenMP
