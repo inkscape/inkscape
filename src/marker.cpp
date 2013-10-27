@@ -503,11 +503,11 @@ void SPMarker::hide(unsigned int key) {
 	SPGroup::hide(key);
 }
 
-Geom::OptRect SPMarker::bbox(Geom::Affine const &transform, SPItem::BBoxType type) const {
+Geom::OptRect SPMarker::bbox(Geom::Affine const &/*transform*/, SPItem::BBoxType /*type*/) const {
 	return Geom::OptRect();
 }
 
-void SPMarker::print(SPPrintContext* ctx) {
+void SPMarker::print(SPPrintContext* /*ctx*/) {
 
 }
 

@@ -555,7 +555,7 @@ Inkscape::XML::Node *SPImage::write(Inkscape::XML::Document *xml_doc, Inkscape::
     return repr;
 }
 
-Geom::OptRect SPImage::bbox(Geom::Affine const &transform, SPItem::BBoxType type) const {
+Geom::OptRect SPImage::bbox(Geom::Affine const &transform, SPItem::BBoxType /*type*/) const {
     Geom::OptRect bbox;
 
     if ((this->width.computed > 0.0) && (this->height.computed > 0.0)) {
@@ -638,7 +638,7 @@ gchar* SPImage::description() const {
     return ret;
 }
 
-Inkscape::DrawingItem* SPImage::show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags) {
+Inkscape::DrawingItem* SPImage::show(Inkscape::Drawing &drawing, unsigned int /*key*/, unsigned int /*flags*/) {
     Inkscape::DrawingImage *ai = new Inkscape::DrawingImage(drawing);
 
     sp_image_update_arenaitem(this, ai);

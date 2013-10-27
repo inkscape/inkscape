@@ -327,7 +327,7 @@ Shape::ConvertToForme (Path * dest, int nbP, Path * *orig, bool splitWhenForced)
   MakeSweepDestData (false);
 }
 void 
-Shape::ConvertToFormeNested (Path * dest, int nbP, Path * *orig, int wildPath,int &nbNest,int *&nesting,int *&contStart,bool splitWhenForced)
+Shape::ConvertToFormeNested (Path * dest, int nbP, Path * *orig, int /*wildPath*/,int &nbNest,int *&nesting,int *&contStart,bool splitWhenForced)
 {
   nesting=NULL;
   contStart=NULL;

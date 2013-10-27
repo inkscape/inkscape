@@ -120,7 +120,7 @@ public:
           maxiterations(maxiterations) { reset(); }
     virtual ~TestConvergence() {}
 
-    virtual bool operator()(double new_stress, double* X, double* Y) {
+    virtual bool operator()(double new_stress, double* /*X*/, double* /*Y*/) {
         //std::cout<<"iteration="<<iterations<<", new_stress="<<new_stress<<std::endl;
         if (old_stress == DBL_MAX) {
             old_stress = new_stress;

@@ -316,7 +316,7 @@ void SPFlowtext::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inksca
     }
 }
 
-Inkscape::DrawingItem* SPFlowtext::show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags) {
+Inkscape::DrawingItem* SPFlowtext::show(Inkscape::Drawing &drawing, unsigned int /*key*/, unsigned int /*flags*/) {
     Inkscape::DrawingGroup *flowed = new Inkscape::DrawingGroup(drawing);
     flowed->setPickChildren(false);
     flowed->setStyle(this->style);

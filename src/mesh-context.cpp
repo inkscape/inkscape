@@ -104,7 +104,7 @@ const gchar *ms_handle_descr [] = {
     N_("Mesh gradient <b>tensor</b>")
 };
 
-void SPMeshContext::selection_changed(Inkscape::Selection* sel) {
+void SPMeshContext::selection_changed(Inkscape::Selection* /*sel*/) {
     GrDrag *drag = this->_grdrag;
     Inkscape::Selection *selection = sp_desktop_selection(this->desktop);
 
