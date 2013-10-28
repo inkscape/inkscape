@@ -155,7 +155,7 @@ namespace Inkscape
 
         /* See if font-family (or first in fallback list) is on system. If so, get styles. */
         std::vector<Glib::ustring> tokens = Glib::Regex::split_simple(",", *i );
-        if( !tokens[0].empty() ) {
+        if( !tokens.empty() && !tokens[0].empty() ) {
 
 	  Gtk::TreeModel::iterator iter2 = font_list_store->get_iter( "0" );
 	  while( iter2 != font_list_store->children().end() ) {
