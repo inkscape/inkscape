@@ -1558,7 +1558,7 @@ static SPObject* ascend_while_first(SPObject *item, Glib::ustring::iterator text
 
 /**     empty spans: abc<span></span>def
                       -> abcdef                  */
-static bool tidy_operator_empty_spans(SPObject **item, bool has_text_decoration)
+static bool tidy_operator_empty_spans(SPObject **item, bool /*has_text_decoration*/)
 {
     bool result = false;
     if ( !(*item)->hasChildren()
@@ -1576,7 +1576,7 @@ static bool tidy_operator_empty_spans(SPObject **item, bool has_text_decoration)
 /**    inexplicable spans: abc<span style="">def</span>ghi
                             -> "abc""def""ghi"
 the repeated strings will be merged by another operator. */
-static bool tidy_operator_inexplicable_spans(SPObject **item, bool has_text_decoration)
+static bool tidy_operator_inexplicable_spans(SPObject **item, bool /*has_text_decoration*/)
 {
     //XML Tree being directly used here while it shouldn't be.
     if (*item && sp_repr_is_meta_element((*item)->getRepr())) {
@@ -1611,7 +1611,7 @@ static bool tidy_operator_inexplicable_spans(SPObject **item, bool has_text_deco
 
 /**    repeated spans: <font a>abc</font><font a>def</font>
                         -> <font a>abcdef</font>            */
-static bool tidy_operator_repeated_spans(SPObject **item, bool has_text_decoration)
+static bool tidy_operator_repeated_spans(SPObject **item, bool /*has_text_decoration*/)
 {
     SPObject *first = *item;
     SPObject *second = first->getNext();
@@ -1657,7 +1657,7 @@ static bool tidy_operator_repeated_spans(SPObject **item, bool has_text_decorati
                            -> <font b>abc</font>
        excessive nesting: <font a><size 1>abc</size></font>
                            -> <font a,size 1>abc</font>      */
-static bool tidy_operator_excessive_nesting(SPObject **item, bool has_text_decoration)
+static bool tidy_operator_excessive_nesting(SPObject **item, bool /*has_text_decoration*/)
 {
     if (!(*item)->hasChildren()) {
         return false;
@@ -1735,7 +1735,7 @@ example. You may note that this only does its work when the doubly-nested
 child is the first or last. The other cases are called 'style inversion'
 below, and I'm not yet convinced that the result of that operation will be
 tidier in all cases. */
-static bool tidy_operator_redundant_double_nesting(SPObject **item, bool has_text_decoration)
+static bool tidy_operator_redundant_double_nesting(SPObject **item, bool /*has_text_decoration*/)
 {
     if (!(*item)->hasChildren()) return false;
     if ((*item)->firstChild() == (*item)->lastChild()) return false;     // this is excessive nesting, done above
@@ -1796,7 +1796,7 @@ static bool redundant_semi_nesting_processor(SPObject **item, SPObject *child, b
                                 -> <font b>abc</font><font>def</font>
 test this by applying a colour to a region, then a different colour to
 a partially-overlapping region. */
-static bool tidy_operator_redundant_semi_nesting(SPObject **item, bool has_text_decoration)
+static bool tidy_operator_redundant_semi_nesting(SPObject **item, bool /*has_text_decoration*/)
 {
     if (!(*item)->hasChildren()) return false;
     if ((*item)->firstChild() == (*item)->lastChild()) return false;     // this is redundant nesting, done above

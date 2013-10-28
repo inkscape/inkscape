@@ -25,10 +25,10 @@ extern int main (int argc, char **argv);
 #endif
 
 int _stdcall
-WinMain (struct HINSTANCE__ *hInstance,
-	 struct HINSTANCE__ *hPrevInstance,
-	 char               *lpszCmdLine,
-	 int                 nCmdShow)
+WinMain (struct HINSTANCE__ */*hInstance*/,
+	 struct HINSTANCE__ */*hPrevInstance*/,
+	 char               */*lpszCmdLine*/,
+	 int                 /*nCmdShow*/)
 {
     if (fileno (stdout) != -1 &&
  	  _get_osfhandle (fileno (stdout)) != -1)

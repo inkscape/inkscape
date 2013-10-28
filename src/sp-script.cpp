@@ -57,11 +57,11 @@ void SPScript::release() {
     SPObject::release();
 }
 
-void SPScript::update(SPCtx* ctx, unsigned int flags) {
+void SPScript::update(SPCtx* /*ctx*/, unsigned int /*flags*/) {
 }
 
 
-void SPScript::modified(unsigned int flags) {
+void SPScript::modified(unsigned int /*flags*/) {
 }
 
 
@@ -81,7 +81,7 @@ void SPScript::set(unsigned int key, const gchar* value) {
     }
 }
 
-Inkscape::XML::Node* SPScript::write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags) {
+Inkscape::XML::Node* SPScript::write(Inkscape::XML::Document* /*doc*/, Inkscape::XML::Node* repr, guint /*flags*/) {
 	return repr;
 }
 

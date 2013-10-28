@@ -81,7 +81,7 @@ gchar *SPSwitch::description() const {
         ngettext(_("of <b>%d</b> object"), _("of <b>%d</b> objects"), len), len);
 }
 
-void SPSwitch::child_added(Inkscape::XML::Node* child, Inkscape::XML::Node* ref) {
+void SPSwitch::child_added(Inkscape::XML::Node* /*child*/, Inkscape::XML::Node* /*ref*/) {
     this->_reevaluate(true);
 }
 

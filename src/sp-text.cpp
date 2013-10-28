@@ -305,7 +305,7 @@ Geom::OptRect SPText::bbox(Geom::Affine const &transform, SPItem::BBoxType type)
     return bbox;
 }
 
-Inkscape::DrawingItem* SPText::show(Inkscape::Drawing &drawing, unsigned key, unsigned flags) {
+Inkscape::DrawingItem* SPText::show(Inkscape::Drawing &drawing, unsigned /*key*/, unsigned /*flags*/) {
     Inkscape::DrawingGroup *flowed = new Inkscape::DrawingGroup(drawing);
     flowed->setPickChildren(false);
     flowed->setStyle(this->style);

@@ -712,7 +712,7 @@ void SPShape::print(SPPrintContext* ctx) {
 	}
 }
 
-Inkscape::DrawingItem* SPShape::show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags) {
+Inkscape::DrawingItem* SPShape::show(Inkscape::Drawing &drawing, unsigned int /*key*/, unsigned int /*flags*/) {
     Inkscape::DrawingShape *s = new Inkscape::DrawingShape(drawing);
     s->setStyle(this->style);
     s->setPath(this->_curve);
