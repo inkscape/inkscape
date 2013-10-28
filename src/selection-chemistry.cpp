@@ -3232,19 +3232,21 @@ void sp_selection_untile(SPDesktop *desktop)
         pat_transform *= item->transform;
 
         for (SPObject *child = pattern->firstChild() ; child != NULL; child = child->next ) {
-            Inkscape::XML::Node *copy = child->getRepr()->duplicate(xml_doc);
-            SPItem *i = SP_ITEM(desktop->currentLayer()->appendChildRepr(copy));
+            if (SP_IS_ITEM(child)) {
+                Inkscape::XML::Node *copy = child->getRepr()->duplicate(xml_doc);
+                SPItem *i = SP_ITEM(desktop->currentLayer()->appendChildRepr(copy));
 
-           // FIXME: relink clones to the new canvas objects
-           // use SPObject::setid when mental finishes it to steal ids of
+               // FIXME: relink clones to the new canvas objects
+               // use SPObject::setid when mental finishes it to steal ids of
 
-            // this is needed to make sure the new item has curve (simply requestDisplayUpdate does not work)
-            doc->ensureUpToDate();
+                // this is needed to make sure the new item has curve (simply requestDisplayUpdate does not work)
+                doc->ensureUpToDate();
 
-            Geom::Affine transform( i->transform * pat_transform );
-            i->doWriteTransform(i->getRepr(), transform);
+                Geom::Affine transform( i->transform * pat_transform );
+                i->doWriteTransform(i->getRepr(), transform);
 
-            new_select = g_slist_prepend(new_select, i);
+                new_select = g_slist_prepend(new_select, i);
+            }
         }
 
         SPCSSAttr *css = sp_repr_css_attr_new();

@@ -1374,11 +1374,12 @@ void SPItem::doWriteTransform(Inkscape::XML::Node *repr, Geom::Affine const &tra
 
     if ( // run the object's set_transform (i.e. embed transform) only if:
              !preserve && // user did not chose to preserve all transforms
-             !clip_ref->getObject() && // the object does not have a clippath
-             !mask_ref->getObject() && // the object does not have a mask
+             (!clip_ref || !clip_ref->getObject()) && // the object does not have a clippath
+             (!mask_ref || !mask_ref->getObject()) && // the object does not have a mask
              !(!transform.isTranslation() && style && style->getFilter()) // the object does not have a filter, or the transform is translation (which is supposed to not affect filters)
-        ) {
-    	transform_attr = this->set_transform(transform);
+        )
+    {
+        transform_attr = this->set_transform(transform);
 
         if (freeze_stroke_width) {
             freeze_stroke_width_recursive(false);
