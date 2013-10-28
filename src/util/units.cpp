@@ -463,7 +463,7 @@ double Quantity::value(char const *u) const
 }
 
 Glib::ustring Quantity::string(Unit const *u) const {
-    return Glib::ustring::format(std::fixed, std::setprecision(2), value(u)) + " " + unit->abbr;
+    return Glib::ustring::format(std::fixed, std::setprecision(2), value(u)) + " " + u->abbr;
 }
 Glib::ustring Quantity::string(Glib::ustring const &u) const {
     return string(unit_table.getUnit(u.c_str()));
