@@ -7062,7 +7062,7 @@ public:
                 {
 //                taskstatus("compile of %s (req. by: %s)",
 //                        destFullName.c_str(), srcFullName.c_str());
-                taskstatus("compile %s", srcFullName.c_str());
+                fprintf(stdout, "compile %s\n", srcFullName.c_str());
                 compileMe = true;
                 }
             else
@@ -7148,7 +7148,7 @@ public:
                 error("problem compiling: %s", errString.c_str());
                 errorOccurred = true;
             } else if (!errString.empty()) {
-                status("STDERR: \n%s\n", errString.c_str());
+                fprintf(stdout, "STDERR: \n%s\n", errString.c_str());
             }
 
 
