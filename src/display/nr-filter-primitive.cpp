@@ -112,11 +112,14 @@ Geom::Rect FilterPrimitive::filter_primitive_area(FilterUnits const &units)
 {
     Geom::OptRect const bb_opt = units.get_item_bbox();
     Geom::OptRect const fa_opt = units.get_filter_area();
+    Geom::Rect bb;
+    Geom::Rect fa;
     if (!bb_opt || !fa_opt) {
         return Geom::Rect (Geom::Point(0.,0.), Geom::Point(0.,0.));
+    } else {
+        bb = *bb_opt;
+        fa = *fa_opt;
     }
-    Geom::Rect const &bb = *bb_opt;
-    Geom::Rect const &fa = *fa_opt;
 
     // This is definitely a hack... but what else to do?
     // Current viewport might not be document viewport... but how to find?
