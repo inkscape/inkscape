@@ -168,8 +168,8 @@ public:
      */
     bool    load(std::string const &filename);
 
-    /** Saves the current UnitTable to the given file. */
-    bool    save(std::string const &filename);
+    /* * Saves the current UnitTable to the given file. */
+    //bool    save(std::string const &filename);
 
 protected:
     UnitCodeMap         _unit_map;

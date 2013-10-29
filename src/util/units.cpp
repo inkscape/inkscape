@@ -362,12 +362,13 @@ bool UnitTable::load(std::string const &filename) {
     return true;
 }
 
-bool UnitTable::save(std::string const &/*filename*/) {
-
+/*
+bool UnitTable::save(std::string const &filename) {
     g_warning("UnitTable::save(): not implemented");
 
-    return true;
+    return false;
 }
+*/
 
 Inkscape::Util::UnitTable unit_table;
 
