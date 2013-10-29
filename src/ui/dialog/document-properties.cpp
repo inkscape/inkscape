@@ -1677,11 +1677,31 @@ void DocumentProperties::onDocUnitChange()
     }
     
     // Scale and translate objects
-    gdouble scale = Inkscape::Util::Quantity::convert(1, old_doc_unit, doc_unit);
-    ShapeEditor::blockSetItem(true);
-    doc->getRoot()->scaleChildItemsRec(Geom::Scale(scale), Geom::Point(0, doc->getHeight().value("px")));
-    ShapeEditor::blockSetItem(false);
-    
+    // set transform options to scale all things with the transform, so all things scale properly after the viewbox change.
+    /// \todo this "low-level" code of changing viewbox/unit should be moved somewhere else
+
+    // save prefs
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool transform_stroke      = prefs->getBool("/options/transform/stroke", true);
+    bool transform_rectcorners = prefs->getBool("/options/transform/rectcorners", true);
+    bool transform_pattern     = prefs->getBool("/options/transform/pattern", true);
+    bool transform_gradient    = prefs->getBool("/options/transform/gradient", true);
+
+    prefs->setBool("/options/transform/stroke", true);
+    prefs->setBool("/options/transform/rectcorners", true);
+    prefs->setBool("/options/transform/pattern", true);
+    prefs->setBool("/options/transform/gradient", true);
+    {
+        ShapeEditor::blockSetItem(true);
+        gdouble scale = Inkscape::Util::Quantity::convert(1, old_doc_unit, doc_unit);
+        doc->getRoot()->scaleChildItemsRec(Geom::Scale(scale), Geom::Point(0, doc->getHeight().value("px")));
+        ShapeEditor::blockSetItem(false);
+    }
+    prefs->setBool("/options/transform/stroke",      transform_stroke);
+    prefs->setBool("/options/transform/rectcorners", transform_rectcorners);
+    prefs->setBool("/options/transform/pattern",     transform_pattern);
+    prefs->setBool("/options/transform/gradient",    transform_gradient);
+
     doc->setModifiedSinceSave();
     
     DocumentUndo::done(doc, SP_VERB_NONE, _("Changed document unit"));
