@@ -1307,7 +1307,7 @@ void FilterEffectsDialog::FilterModifier::on_name_edited(const Glib::ustring& pa
     }
 }
 
-void FilterEffectsDialog::FilterModifier::on_filter_reorder(const Gtk::TreeModel::Path& path) {
+void FilterEffectsDialog::FilterModifier::on_filter_reorder(const Gtk::TreeModel::Path& /*path*/) {
   for(Gtk::TreeModel::iterator i = _model->children().begin(); i != _model->children().end(); ++i) {
       SPObject* object = (*i)[_columns.filter];
       if(object && object->getRepr())

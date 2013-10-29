@@ -23,7 +23,7 @@ Equalize::applyEffect(Magick::Image *image) {
 }
 
 void
-Equalize::refreshParameters(Inkscape::Extension::Effect *module) { }
+Equalize::refreshParameters(Inkscape::Extension::Effect */*module*/) { }
 
 #include "../clear-n_.h"
 

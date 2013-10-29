@@ -23,7 +23,7 @@ Despeckle::applyEffect(Magick::Image *image) {
 }
 
 void
-Despeckle::refreshParameters(Inkscape::Extension::Effect *module) {	
+Despeckle::refreshParameters(Inkscape::Extension::Effect */*module*/) {	
 }
 
 #include "../clear-n_.h"

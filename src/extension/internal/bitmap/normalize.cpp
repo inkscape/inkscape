@@ -23,7 +23,7 @@ Normalize::applyEffect(Magick::Image* image) {
 }
 
 void
-Normalize::refreshParameters(Inkscape::Extension::Effect* module) {	
+Normalize::refreshParameters(Inkscape::Extension::Effect* /*module*/) {	
 }
 
 #include "../clear-n_.h"

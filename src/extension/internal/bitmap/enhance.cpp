@@ -23,7 +23,7 @@ Enhance::applyEffect(Magick::Image *image) {
 }
 
 void
-Enhance::refreshParameters(Inkscape::Extension::Effect *module) { }
+Enhance::refreshParameters(Inkscape::Extension::Effect */*module*/) { }
 
 #include "../clear-n_.h"
 

@@ -23,7 +23,7 @@ Negate::applyEffect(Magick::Image* image) {
 }
 
 void
-Negate::refreshParameters(Inkscape::Extension::Effect* module) {	
+Negate::refreshParameters(Inkscape::Extension::Effect* /*module*/) {	
 }
 
 #include "../clear-n_.h"
