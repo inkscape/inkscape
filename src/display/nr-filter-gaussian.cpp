@@ -304,10 +304,9 @@ filter2D_IIR(PT *const dest, int const dstr1, int const dstr2,
     #define PREMUL_ALPHA_LOOP for(unsigned int c=1; c<PC; ++c)
 #endif
 
+INK_UNUSED(num_threads); // to suppress unused argument compiler warning
 #if HAVE_OPENMP
 #pragma omp parallel for num_threads(num_threads)
-#else
-    INK_UNUSED(num_threads);
 #endif // HAVE_OPENMP
     for ( int c2 = 0 ; c2 < n2 ; c2++ ) {
 #if HAVE_OPENMP
@@ -375,10 +374,9 @@ filter2D_FIR(PT *const dst, int const dstr1, int const dstr2,
     // Past pixels seen (to enable in-place operation)
     PT history[scr_len+1][PC];
 
+INK_UNUSED(num_threads); // suppresses unused argument compiler warning
 #if HAVE_OPENMP
 #pragma omp parallel for num_threads(num_threads) private(history)
-#else
-    INK_UNUSED(num_threads);
 #endif // HAVE_OPENMP
     for ( int c2 = 0 ; c2 < n2 ; c2++ ) {
 
