@@ -110,8 +110,13 @@ void FilterPrimitive::set_subregion(SVGLength const &x, SVGLength const &y,
 
 Geom::Rect FilterPrimitive::filter_primitive_area(FilterUnits const &units)
 {
-    Geom::OptRect bb = units.get_item_bbox();
-    Geom::OptRect fa = units.get_filter_area();
+    Geom::OptRect const bb_opt = units.get_item_bbox();
+    Geom::OptRect const fa_opt = units.get_filter_area();
+    if (!bb_opt || !fa_opt) {
+        return Geom::Rect (Geom::Point(0.,0.), Geom::Point(0.,0.));
+    }
+    Geom::Rect const &bb = *bb_opt;
+    Geom::Rect const &fa = *fa_opt;
 
     // This is definitely a hack... but what else to do?
     // Current viewport might not be document viewport... but how to find?
@@ -127,8 +132,8 @@ Geom::Rect FilterPrimitive::filter_primitive_area(FilterUnits const &units)
 
     /* Update computed values for ex, em, %. For %, assumes primitive unit is objectBoundingBox. */
     /* TODO: fetch somehow the object ex and em lengths; 12, 6 are just dummy values. */
-    double len_x = bb->width();
-    double len_y = bb->height();
+    double len_x = bb.width();
+    double len_y = bb.height();
     _subregion_x.update(12, 6, len_x);
     _subregion_y.update(12, 6, len_y);
     _subregion_width.update(12, 6, len_x);
@@ -143,44 +148,37 @@ Geom::Rect FilterPrimitive::filter_primitive_area(FilterUnits const &units)
     double height = 0;
 
     // If subregion not set, by special case use filter region.
-    if( !_subregion_x._set )      x = fa->min()[X];
-    if( !_subregion_y._set )      y = fa->min()[Y];
-    if( !_subregion_width._set )  width  = fa->width();
-    if( !_subregion_height._set ) height = fa->height();
+    if( !_subregion_x._set )      x = fa.min()[X];
+    if( !_subregion_y._set )      y = fa.min()[Y];
+    if( !_subregion_width._set )  width  = fa.width();
+    if( !_subregion_height._set ) height = fa.height();
 
     if( units.get_primitive_units() == SP_FILTER_UNITS_OBJECTBOUNDINGBOX ) {
         // Values are in terms of fraction of bounding box.
-        if( _subregion_x._set      && _subregion_x.unit      != SVGLength::PERCENT )      x = bb->min()[X] + bb->width()  * _subregion_x.value;
-        if( _subregion_y._set      && _subregion_y.unit      != SVGLength::PERCENT )      y = bb->min()[Y] + bb->height() * _subregion_y.value;
-        if( _subregion_width._set  && _subregion_width.unit  != SVGLength::PERCENT )  width = bb->width() *  _subregion_width.value;
-        if( _subregion_height._set && _subregion_height.unit != SVGLength::PERCENT ) height = bb->height() * _subregion_height.value;
-        // Values are in terms of percent
-        if( _subregion_x._set      && _subregion_x.unit      == SVGLength::PERCENT )      x = bb->min()[X] + _subregion_x.computed;
-        if( _subregion_y._set      && _subregion_y.unit      == SVGLength::PERCENT )      y = bb->min()[Y] + _subregion_y.computed;
-        if( _subregion_width._set  && _subregion_width.unit  == SVGLength::PERCENT )  width = _subregion_width.computed;
-        if( _subregion_height._set && _subregion_height.unit == SVGLength::PERCENT ) height = _subregion_height.computed;
+        if( _subregion_x._set      && (_subregion_x.unit      != SVGLength::PERCENT) )      x = bb.min()[X] + bb.width()  * _subregion_x.value;
+        if( _subregion_y._set      && (_subregion_y.unit      != SVGLength::PERCENT) )      y = bb.min()[Y] + bb.height() * _subregion_y.value;
+        if( _subregion_width._set  && (_subregion_width.unit  != SVGLength::PERCENT) )  width = bb.width() *  _subregion_width.value;
+        if( _subregion_height._set && (_subregion_height.unit != SVGLength::PERCENT) ) height = bb.height() * _subregion_height.value;
+        // Values are in terms of percent                                                         
+        if( _subregion_x._set      && (_subregion_x.unit      == SVGLength::PERCENT) )      x = bb.min()[X] + _subregion_x.computed;
+        if( _subregion_y._set      && (_subregion_y.unit      == SVGLength::PERCENT) )      y = bb.min()[Y] + _subregion_y.computed;
+        if( _subregion_width._set  && (_subregion_width.unit  == SVGLength::PERCENT) )  width = _subregion_width.computed;
+        if( _subregion_height._set && (_subregion_height.unit == SVGLength::PERCENT) ) height = _subregion_height.computed;
     } else {
         // Values are in terms of user space coordinates or percent of viewbox (yuck!),
         // which is usually the size of SVG drawing.  Default.
-        if( _subregion_x._set      && _subregion_x.unit      != SVGLength::PERCENT )      x = _subregion_x.computed;
-        if( _subregion_y._set      && _subregion_y.unit      != SVGLength::PERCENT )      y = _subregion_y.computed;
-        if( _subregion_width._set  && _subregion_width.unit  != SVGLength::PERCENT )  width = _subregion_width.computed;
-        if( _subregion_height._set && _subregion_height.unit != SVGLength::PERCENT ) height = _subregion_height.computed;
+        if( _subregion_x._set      && (_subregion_x.unit      != SVGLength::PERCENT) )      x = _subregion_x.computed;
+        if( _subregion_y._set      && (_subregion_y.unit      != SVGLength::PERCENT) )      y = _subregion_y.computed;
+        if( _subregion_width._set  && (_subregion_width.unit  != SVGLength::PERCENT) )  width = _subregion_width.computed;
+        if( _subregion_height._set && (_subregion_height.unit != SVGLength::PERCENT) ) height = _subregion_height.computed;
         // Percent of viewport
-        if( _subregion_x._set      && _subregion_x.unit      == SVGLength::PERCENT )      x = _subregion_x.value      * viewport.width();
-        if( _subregion_y._set      && _subregion_y.unit      == SVGLength::PERCENT )      y = _subregion_y.value      * viewport.height();
-        if( _subregion_width._set  && _subregion_width.unit  == SVGLength::PERCENT )  width = _subregion_width.value  * viewport.width();
-        if( _subregion_height._set && _subregion_height.unit == SVGLength::PERCENT ) height = _subregion_height.value * viewport.height();
+        if( _subregion_x._set      && (_subregion_x.unit      == SVGLength::PERCENT) )      x = _subregion_x.value      * viewport.width();
+        if( _subregion_y._set      && (_subregion_y.unit      == SVGLength::PERCENT) )      y = _subregion_y.value      * viewport.height();
+        if( _subregion_width._set  && (_subregion_width.unit  == SVGLength::PERCENT) )  width = _subregion_width.value  * viewport.width();
+        if( _subregion_height._set && (_subregion_height.unit == SVGLength::PERCENT) ) height = _subregion_height.value * viewport.height();
     }
 
-    Geom::Point minp, maxp;
-    minp[X] = x;
-    minp[Y] = y;
-    maxp[X] = x + width;
-    maxp[Y] = y + height;
-
-    Geom::Rect area(minp, maxp);
-    return area;
+    return Geom::Rect (Geom::Point(x,y), Geom::Point(x + width, y + height));
 }
 
 void FilterPrimitive::setStyle(SPStyle *style)
