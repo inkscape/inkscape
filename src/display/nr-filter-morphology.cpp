@@ -69,6 +69,7 @@ void morphologicalFilter1D(cairo_surface_t * const input, cairo_surface_t * cons
     int limit = w * h;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int numOfThreads = prefs->getIntLimited("/options/threading/numthreads", omp_get_num_procs(), 1, 256);
+    (void) numOfThreads; // suppress unused variable warning
     #pragma omp parallel for if(limit > OPENMP_THRESHOLD) num_threads(numOfThreads)
     #endif // HAVE_OPENMP
     for (int i = 0; i < h; ++i) {
