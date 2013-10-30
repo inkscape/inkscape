@@ -592,10 +592,14 @@ get_file_save_extension (Inkscape::Extension::FileSaveMethod method) {
         case FILE_SAVE_METHOD_INKSCAPE_SVG:
             extension = SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE;
             break;
+        case FILE_SAVE_METHOD_EXPORT:
+            /// \todo no default extension set for Export? defaults to SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE is ok?
+            break;
     }
 
-    if(extension.empty())
+    if(extension.empty()) {
         extension = SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE;
+    }
 
     return extension;
 }
@@ -635,13 +639,19 @@ get_file_save_path (SPDocument *doc, FileSaveMethod method) {
                 // leave this as a choice to the user.
                 path = prefs->getString("/dialogs/save_as/path");
             }
+            break;
+        case FILE_SAVE_METHOD_EXPORT:
+            /// \todo no default path set for Export? 
+            // defaults to g_get_home_dir()
+            break;
     }
 
-    if(path.empty())
+    if(path.empty()) {
         path = g_get_home_dir(); // Is this the most sensible solution? Note that we should avoid
                                  // g_get_current_dir because this leads to problems on OS X where
                                  // Inkscape opens the dialog inside application bundle when it is
                                  // invoked for the first teim.
+    }
 
     return path;
 }
@@ -658,6 +668,7 @@ store_file_extension_in_prefs (Glib::ustring extension, FileSaveMethod method) {
             prefs->setString("/dialogs/save_copy/default", extension);
             break;
         case FILE_SAVE_METHOD_INKSCAPE_SVG:
+        case FILE_SAVE_METHOD_EXPORT:
             // do nothing
             break;
     }
@@ -675,6 +686,7 @@ store_save_path_in_prefs (Glib::ustring path, FileSaveMethod method) {
             prefs->setString("/dialogs/save_copy/path", path);
             break;
         case FILE_SAVE_METHOD_INKSCAPE_SVG:
+        case FILE_SAVE_METHOD_EXPORT:
             // do nothing
             break;
     }
