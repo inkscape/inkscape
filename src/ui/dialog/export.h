@@ -108,7 +108,6 @@ private:
      * @param  max  Maximum value for the spin button
      * @param  step The step size for the spin button
      * @param  page Size of the page increment
-     * @param  us   Unit selector that effects this spin button
      * @param  t    Table to put the spin button in
      * @param  x    X location in the table \c t to start with
      * @param  y    Y location in the table \c t to start with
@@ -117,17 +116,19 @@ private:
      * @param  digits  Number of digits to display after the decimal
      * @param  sensitive  Whether the spin button is sensitive or not
      * @param  cb   Callback for when this spin button is changed (optional)
+     *
+     * No unit_selector is stored in the created spinbutton, relies on external unit management
      */
 #if WITH_GTKMM_3_0
     Glib::RefPtr<Gtk::Adjustment> createSpinbutton( gchar const *key, float val, float min, float max,
-                                          float step, float page, GtkWidget *us,
+                                          float step, float page,
                                           Gtk::Grid *t, int x, int y,
                                           const Glib::ustring ll, const Glib::ustring lr,
                                           int digits, unsigned int sensitive,
                                           void (Export::*cb)() );
 #else
     Gtk::Adjustment * createSpinbutton( gchar const *key, float val, float min, float max,
-                                          float step, float page, GtkWidget *us,
+                                          float step, float page,
                                           Gtk::Table *t, int x, int y,
                                           const Glib::ustring ll, const Glib::ustring lr,
                                           int digits, unsigned int sensitive,
@@ -335,7 +336,7 @@ private:
 
     /* Unit selector widgets */
     Gtk::HBox unitbox;
-    Inkscape::UI::Widget::UnitMenu *unit_selector;
+    Inkscape::UI::Widget::UnitMenu unit_selector;
     Gtk::Label units_label;
 
     /* Filename widgets  */

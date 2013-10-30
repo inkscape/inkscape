@@ -164,6 +164,7 @@ Export::Export (void) :
     size_box(false, 3),
     file_box(false, 3),
     unitbox(false, 0),
+    unit_selector(),
     units_label(_("Units:")),
     filename_box(false, 5),
     browse_label(_("_Export As..."), 1),
@@ -199,14 +200,14 @@ Export::Export (void) :
         /* Units box */
         /* gets added to the vbox later, but the unit selector is needed
            earlier than that */
-        unit_selector = new Inkscape::UI::Widget::UnitMenu();
-        unit_selector->setUnitType(Inkscape::Util::UNIT_TYPE_LINEAR);
+        unit_selector.setUnitType(Inkscape::Util::UNIT_TYPE_LINEAR);
         
         SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-        if (desktop)
-            unit_selector->setUnit(sp_desktop_namedview(desktop)->doc_units->abbr);
-        unitChangedConn = unit_selector->signal_changed().connect(sigc::mem_fun(*this, &Export::onUnitChanged));
-        unitbox.pack_end(*unit_selector, false, false, 0);
+        if (desktop) {
+            unit_selector.setUnit(sp_desktop_namedview(desktop)->doc_units->abbr);
+        }
+        unitChangedConn = unit_selector.signal_changed().connect(sigc::mem_fun(*this, &Export::onUnitChanged));
+        unitbox.pack_end(unit_selector, false, false, 0);
         unitbox.pack_end(units_label, false, false, 3);
 
         for (int i = 0; i < SELECTION_NUMBER_OF; i++) {
@@ -230,28 +231,28 @@ Export::Export (void) :
         t->set_col_spacings (4);
 #endif
 
-        x0_adj = createSpinbutton ( "x0", 0.0, -1000000.0, 1000000.0, 0.1, 1.0, ((Gtk::Widget*) unit_selector)->gobj(),
+        x0_adj = createSpinbutton ( "x0", 0.0, -1000000.0, 1000000.0, 0.1, 1.0,
                                    t, 0, 0, _("_x0:"), "", EXPORT_COORD_PRECISION, 1,
                                    &Export::onAreaX0Change);
 
-        x1_adj = createSpinbutton ( "x1", 0.0, -1000000.0, 1000000.0, 0.1, 1.0, ((Gtk::Widget*) unit_selector)->gobj(),
+        x1_adj = createSpinbutton ( "x1", 0.0, -1000000.0, 1000000.0, 0.1, 1.0,
                                    t, 0, 1, _("x_1:"), "", EXPORT_COORD_PRECISION, 1,
                                    &Export::onAreaX1Change);
 
         width_adj = createSpinbutton ( "width", 0.0, 0.0, PNG_UINT_31_MAX, 0.1, 1.0,
-                                   ((Gtk::Widget*) unit_selector)->gobj(), t, 0, 2, _("Wid_th:"), "", EXPORT_COORD_PRECISION, 1,
+                                   t, 0, 2, _("Wid_th:"), "", EXPORT_COORD_PRECISION, 1,
                                    &Export::onAreaWidthChange);
 
-        y0_adj = createSpinbutton ( "y0", 0.0, -1000000.0, 1000000.0, 0.1, 1.0, ((Gtk::Widget*) unit_selector)->gobj(),
+        y0_adj = createSpinbutton ( "y0", 0.0, -1000000.0, 1000000.0, 0.1, 1.0,
                                    t, 2, 0, _("_y0:"), "", EXPORT_COORD_PRECISION, 1,
                                    &Export::onAreaY0Change);
 
-        y1_adj = createSpinbutton ( "y1", 0.0, -1000000.0, 1000000.0, 0.1, 1.0, ((Gtk::Widget*) unit_selector)->gobj(),
+        y1_adj = createSpinbutton ( "y1", 0.0, -1000000.0, 1000000.0, 0.1, 1.0,
                                    t, 2, 1, _("y_1:"), "", EXPORT_COORD_PRECISION, 1,
                                    &Export::onAreaY1Change);
 
         height_adj = createSpinbutton ( "height", 0.0, 0.0, PNG_UINT_31_MAX, 0.1, 1.0,
-                                   ((Gtk::Widget*) unit_selector)->gobj(), t, 2, 2, _("Hei_ght:"), "", EXPORT_COORD_PRECISION, 1,
+                                   t, 2, 2, _("Hei_ght:"), "", EXPORT_COORD_PRECISION, 1,
                                    &Export::onAreaHeightChange);
 
         area_box.pack_start(togglebox, false, false, 3);
@@ -283,18 +284,18 @@ Export::Export (void) :
         size_box.pack_start(*t);
 
         bmwidth_adj = createSpinbutton ( "bmwidth", 16.0, 1.0, 1000000.0, 1.0, 10.0,
-                                   NULL, t, 0, 0,
+                                   t, 0, 0,
                                    _("_Width:"), _("pixels at"), 0, 1,
                                    &Export::onBitmapWidthChange);
 
         xdpi_adj = createSpinbutton ( "xdpi",
                                    prefs->getDouble("/dialogs/export/defaultxdpi/value", DPI_BASE),
-                                   0.01, 100000.0, 0.1, 1.0, NULL, t, 3, 0,
+                                   0.01, 100000.0, 0.1, 1.0, t, 3, 0,
                                    "", _("dp_i"), 2, 1,
                                    &Export::onExportXdpiChange);
 
         bmheight_adj = createSpinbutton ( "bmheight", 16.0, 1.0, 1000000.0, 1.0, 10.0,
-                                   NULL, t, 0, 1,
+                                   t, 0, 1,
                                    _("_Height:"), _("pixels at"), 0, 1,
                                    &Export::onBitmapHeightChange);
 
@@ -302,7 +303,7 @@ Export::Export (void) :
          *  There's no way to set ydpi currently, so we use the defaultxdpi value here, too...
          */
         ydpi_adj = createSpinbutton ( "ydpi", prefs->getDouble("/dialogs/export/defaultxdpi/value", DPI_BASE),
-                                   0.01, 100000.0, 0.1, 1.0, NULL, t, 3, 1,
+                                   0.01, 100000.0, 0.1, 1.0, t, 3, 1,
                                    "", _("dpi"), 2, 0, NULL );
 
         singleexport_box.pack_start(size_box);
@@ -481,14 +482,14 @@ void Export::set_default_filename () {
 
 #if WITH_GTKMM_3_0
 Glib::RefPtr<Gtk::Adjustment> Export::createSpinbutton( gchar const * /*key*/, float val, float min, float max,
-                                      float step, float page, GtkWidget *us,
+                                      float step, float page,
                                       Gtk::Grid *t, int x, int y,
                                       const Glib::ustring ll, const Glib::ustring lr,
                                       int digits, unsigned int sensitive,
                                       void (Export::*cb)() )
 #else
 Gtk::Adjustment * Export::createSpinbutton( gchar const * /*key*/, float val, float min, float max,
-                                      float step, float page, GtkWidget *us,
+                                      float step, float page,
                                       Gtk::Table *t, int x, int y,
                                       const Glib::ustring ll, const Glib::ustring lr,
                                       int digits, unsigned int sensitive,
@@ -1884,7 +1885,7 @@ void Export::setValuePx(Glib::RefPtr<Gtk::Adjustment>& adj, double val)
 void Export::setValuePx( Gtk::Adjustment *adj, double val)
 #endif
 {
-    Unit const *unit = unit_selector->getUnit();
+    Unit const *unit = unit_selector.getUnit();
 
     setValue(adj, Inkscape::Util::Quantity::convert(val, "px", unit));
 
@@ -1934,7 +1935,7 @@ float Export::getValuePx(  Gtk::Adjustment *adj )
 #endif
 {
     float value = getValue( adj);
-    Unit const *unit = unit_selector->getUnit();
+    Unit const *unit = unit_selector.getUnit();
 
     return Inkscape::Util::Quantity::convert(value, unit, "px");
 } // end of sp_export_value_get_px()
