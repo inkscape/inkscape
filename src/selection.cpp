@@ -237,8 +237,11 @@ void Selection::_remove(SPObject *obj) {
 }
 
 void Selection::setList(GSList const *list) {
-    _clear();
-    addList(list);
+    // Clear and add, or just clear with emit.
+    if (list != NULL) {
+        _clear();
+        addList(list);
+    } else clear();
 }
 
 void Selection::addList(GSList const *list) {
@@ -444,12 +447,7 @@ boost::optional<Geom::Point> Selection::center() const {
             return first->getCenter();
         }
     }
-    Geom::OptRect bbox;
-    if (Inkscape::Preferences::get()->getInt("/tools/bounding_box") == 0) {
-        bbox = visualBounds();
-    } else{
-        bbox = geometricBounds();
-    }    
+    Geom::OptRect bbox = preferredBounds();
     if (bbox) {
         return bbox->midpoint();
     } else {
