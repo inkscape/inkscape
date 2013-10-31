@@ -134,9 +134,12 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
         // Parent name
         SPObject *parent = item->parent;
         gchar const *parent_label = parent->getId();
-        char *quoted_parent_label = xml_quote_strdup(parent_label);
-        gchar *parent_name = g_strdup_printf(_("<i>%s</i>"), quoted_parent_label);
-        g_free(quoted_parent_label);
+        gchar *parent_name = NULL;
+        if (parent_label) {
+            char *quoted_parent_label = xml_quote_strdup(parent_label);
+            parent_name = g_strdup_printf(_("<i>%s</i>"), quoted_parent_label);
+            g_free(quoted_parent_label);
+        }
 
         gchar *in_phrase;
         guint num_layers = selection->numberOfLayers();
@@ -147,8 +150,10 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
                     in_phrase = g_strdup_printf(_(" in %s"), layer_name);
                 else if (!layer)
                     in_phrase = g_strdup_printf("%s", _(" hidden in definitions"));
-                else 
+                else if (parent_name)
                     in_phrase = g_strdup_printf(_(" in group %s (%s)"), parent_name, layer_name);
+                else
+                    in_phrase = g_strdup_printf(_(" in unnamed group (%s)"), layer_name);
             } else {
                     in_phrase = g_strdup_printf(ngettext(" in <b>%i</b> parent (%s)", " in <b>%i</b> parents (%s)", num_parents), num_parents, layer_name);
             }
