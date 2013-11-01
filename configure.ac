@@ -550,7 +550,7 @@ dnl Check for libcdr for extension
 dnl ********************************
 
 AC_ARG_ENABLE(cdr,
-       AS_HELP_STRING([--disable-cdr], [compile without support for Microsoft Visio Diagrams]),
+       AS_HELP_STRING([--disable-cdr], [compile without support for CorelDRAW Diagrams]),
        enable_cdr=$enableval,enable_cdr=yes)
 
 with_libcdr=no
