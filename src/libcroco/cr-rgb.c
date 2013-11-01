@@ -418,14 +418,14 @@ cr_rgb_set_from_name (CRRgb * a_this, const guchar * a_color_name)
 
         g_return_val_if_fail (a_this && a_color_name, CR_BAD_PARAM_ERROR);
 
-        for (i = 0; i < sizeof (gv_standard_colors); i++) {
+        for (i = 0; i < G_N_ELEMENTS (gv_standard_colors); i++) {
                 if (!strcmp ((char *)a_color_name, gv_standard_colors[i].name)) {
                         cr_rgb_set_from_rgb (a_this, &gv_standard_colors[i]);
                         break;
                 }
         }
 
-        if (i < sizeof (gv_standard_colors))
+        if (i < G_N_ELEMENTS (gv_standard_colors))
                 status = CR_OK;
         else
                status = CR_UNKNOWN_TYPE_ERROR;
