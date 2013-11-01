@@ -197,7 +197,7 @@ DrawingText::_updateItem(Geom::IntRect const &area, UpdateContext const &ctx, un
     return DrawingGroup::_updateItem(area, ctx, flags, reset);
 }
 
-void DrawingText::decorateStyle(DrawingContext &ct, double vextent, double xphase, Geom::Point p1, Geom::Point p2)
+void DrawingText::decorateStyle(DrawingContext &ct, double vextent, double xphase, Geom::Point const &p1, Geom::Point const &p2)
 {
     double wave[16]={
         0.000000,  0.382499,  0.706825,  0.923651,   1.000000,  0.923651,  0.706825,  0.382499, 
@@ -311,28 +311,25 @@ pf = Geom::Point(step * round(p2[Geom::X]/step),p2[Geom::Y]);
 }
 
 /* returns scaled line thickness */
-double DrawingText::decorateItem(DrawingContext &ct, Geom::Affine aff, double phase_length)
+double DrawingText::decorateItem(DrawingContext &ct, Geom::Affine const &aff, double phase_length)
 {
-    double tsp_width_adj, tsp_asc_adj, tsp_size_adj;
-    double final_underline_thickness, final_line_through_thickness;
-    double thickness;
+    double tsp_width_adj                = _nrstyle.tspan_width                     / _nrstyle.font_size;
+    double tsp_asc_adj                  = _nrstyle.ascender                        / _nrstyle.font_size;
+    double tsp_size_adj                 = (_nrstyle.ascender + _nrstyle.descender) / _nrstyle.font_size;
 
-    tsp_width_adj                = _nrstyle.tspan_width                     / _nrstyle.font_size;
-    tsp_asc_adj                  = _nrstyle.ascender                        / _nrstyle.font_size;
-    tsp_size_adj                 = (_nrstyle.ascender + _nrstyle.descender) / _nrstyle.font_size;
-#define VALTRUNC(A,B,C) (A < B ? B : ( A > C ? C : A ))
-    final_underline_thickness    = VALTRUNC(_nrstyle.underline_thickness,    tsp_size_adj/30.0, tsp_size_adj/10.0);
-    final_line_through_thickness = VALTRUNC(_nrstyle.line_through_thickness, tsp_size_adj/30.0, tsp_size_adj/10.0);
-    Inkscape::DrawingContext::Save save(ct);
+    double final_underline_thickness    = CLAMP(_nrstyle.underline_thickness,    tsp_size_adj/30.0, tsp_size_adj/10.0);
+    double final_line_through_thickness = CLAMP(_nrstyle.line_through_thickness, tsp_size_adj/30.0, tsp_size_adj/10.0);
 
     double scale = aff.descrim();
     double xphase = phase_length/ _nrstyle.font_size; // used to figure out phase of patterns
 
+    Inkscape::DrawingContext::Save save(ct);
     ct.transform(aff);  // must be leftmost affine in span
+
     Geom::Point p1;
     Geom::Point p2;
     // All lines must be the same thickness, in combinations, line_through trumps underline
-    thickness = final_underline_thickness;
+    double thickness = final_underline_thickness;
     if(_nrstyle.text_decoration_line & TEXT_DECORATION_LINE_UNDERLINE){
         p1 = Geom::Point(0.0,          -_nrstyle.underline_position);
         p2 = Geom::Point(tsp_width_adj,-_nrstyle.underline_position);
@@ -393,21 +390,32 @@ unsigned DrawingText::_renderItem(DrawingContext &ct, Geom::IntRect const &/*are
     bool   firsty       = true;
     bool   decorate     = true;
     double starty       = 0.0;
-    bool   has_stroke, has_fill;
     Geom::Affine aff;
     using Geom::X;
     using Geom::Y;
 
-    has_fill   = _nrstyle.prepareFill(  ct, _item_bbox);
-    has_stroke = _nrstyle.prepareStroke(ct, _item_bbox);
+    // NOTE:
+    // prepareFill / prepareStroke need to be called with _ctm in effect.
+    // However, we might need to apply a different ctm for glyphs.
+    // Therefore, only apply this ctm temporarily.
+    bool has_stroke, has_fill;
+    {
+        Inkscape::DrawingContext::Save save(ct);
+        ct.transform(_ctm);
+
+        has_fill   = _nrstyle.prepareFill(  ct, _item_bbox);
+        has_stroke = _nrstyle.prepareStroke(ct, _item_bbox);
+    }
 
     if (has_fill || has_stroke) {
         Geom::Affine rotinv;
-        bool invset=false;
+        bool invset = false;
+
+        // accumulate the path that represents the glyphs
         for (ChildrenList::iterator i = _children.begin(); i != _children.end(); ++i) {
             DrawingGlyphs *g = dynamic_cast<DrawingGlyphs *>(&*i);
             if (!g) throw InvalidItemException();
-            if(!invset){
+            if (!invset) {
                 rotinv = g->_ctm.withoutTranslation().inverse();
                 invset = true;
             }
@@ -415,14 +423,14 @@ unsigned DrawingText::_renderItem(DrawingContext &ct, Geom::IntRect const &/*are
             Inkscape::DrawingContext::Save save(ct);
             if (g->_ctm.isSingular()) continue;
             ct.transform(g->_ctm);
-            if(g->_drawable){
+            if (g->_drawable) {
                 ct.path(*g->_font->PathVector(g->_glyph));
             }
             // get the leftmost affine transform (leftmost defined with respect to the x axis of the first transform).  
             // That way the decoration will work no matter what mix of L->R, R->L text is in the span.
-            if(_nrstyle.text_decoration_line != TEXT_DECORATION_LINE_CLEAR){
-                Geom::Point pt =g->_ctm.translation() * rotinv;
-                if(pt[X] < leftmost){
+            if (_nrstyle.text_decoration_line != TEXT_DECORATION_LINE_CLEAR) {
+                Geom::Point pt = g->_ctm.translation() * rotinv;
+                if (pt[X] < leftmost) {
                     leftmost     = pt[X];
                     aff          = g->_ctm;
                     phase_length = g->_pl;
@@ -430,18 +438,20 @@ unsigned DrawingText::_renderItem(DrawingContext &ct, Geom::IntRect const &/*are
                 /* If the text has been mapped onto a path, which causes y to vary, drop the text decorations.
                    To handle that properly would need a conformal map
                 */
-                if(firsty){
+                if (firsty) {
                     firsty = false;
                     starty = pt[Y];
                 }
-                else {
-                    if(fabs(pt[Y] - starty) > 1.0e-6)decorate=false;
+                else if (fabs(pt[Y] - starty) > 1.0e-6) {
+                    decorate = false;
                 }
             }
         }
 
+        // draw the text itself
+        // we need to apply this object's ctm again
         Inkscape::DrawingContext::Save save(ct);
-        ct.transform(_ctm); // For one thing, this is needed to scale a fill-pattern when zooming in
+        ct.transform(_ctm);
         if (has_fill) {
             _nrstyle.applyFill(ct);
             ct.fillPreserve();
@@ -451,9 +461,11 @@ unsigned DrawingText::_renderItem(DrawingContext &ct, Geom::IntRect const &/*are
             ct.strokePreserve();
         }
         ct.newPath(); // clear path
-        if(_nrstyle.text_decoration_line != TEXT_DECORATION_LINE_CLEAR && decorate){
+
+        // draw text decoration
+        if (_nrstyle.text_decoration_line != TEXT_DECORATION_LINE_CLEAR && decorate) {
             guint32 ergba;
-            if(_nrstyle.text_decoration_useColor){ // color different from the glyph
+            if (_nrstyle.text_decoration_useColor) { // color different from the glyph
                 ergba =  SP_RGBA32_F_COMPOSE(
                     _nrstyle.text_decoration_color.color.v.c[0],
                     _nrstyle.text_decoration_color.color.v.c[1],

@@ -68,8 +68,8 @@ protected:
     virtual DrawingItem *_pickItem(Geom::Point const &p, double delta, unsigned flags);
     virtual bool _canClip();
 
-    double decorateItem(DrawingContext &ct, Geom::Affine aff, double phase_length);
-    void decorateStyle(DrawingContext &ct, double vextent, double xphase, Geom::Point p1, Geom::Point p2);
+    double decorateItem(DrawingContext &ct, Geom::Affine const &aff, double phase_length);
+    void decorateStyle(DrawingContext &ct, double vextent, double xphase, Geom::Point const &p1, Geom::Point const &p2);
     NRStyle _nrstyle;
 
     friend class DrawingGlyphs;
