@@ -51,6 +51,9 @@
   <!-- Use these settings for the native compiler -->  
   <!-- -->
   <property name="arch"          value="mingw32-"/>
+  <property name="arch_cc"       value="${arch}gcc"/>
+  <property name="arch_cxx"      value="${arch}g++"/>
+  <property name="arch_link"     value="${arch}g++"/>
   <property name="archutil"      value=""/>
   <property name="devlibs"       location="${env.DEVLIBS_PATH}"/>
   <property name="mingw"         location="${env.MINGW_PATH}"/>
@@ -62,6 +65,9 @@
   <!-- Use these settings for the cross compiler -->  
   <!--
   <property name="arch"          value="i686-pc-mingw32-"/>
+  <property name="arch_cc"       value="${arch}gcc"/>
+  <property name="arch_cxx"      value="${arch}g++"/>
+  <property name="arch_link"     value="${arch}g++"/>
   <property name="archutil"      value="${arch}"/>
   <property name="devlibs"       location="/target"/>
   <property name="mingw_bin"     location="${env.MINGW_BIN}"/>
@@ -295,7 +301,7 @@
         description="compile the source to .o" >
 
     <!-- Compile from source to build -->
-    <cc cc="${arch}gcc" cxx="${arch}g++"
+    <cc cc="${arch_cc}" cxx="${arch_cxx}"
              destdir="${build}/obj"
              continueOnError="true"
              refreshCache="${refresh}">
@@ -428,7 +434,7 @@
         --include-dir=${src}
         </flags>
     </rc>
-    <link command="${arch}g++" out="${build}/inkscape.exe"
+    <link command="${arch_link}" out="${build}/inkscape.exe"
               strip="true" symfile="${build}/inkscape.dbg"
               stripcommand="${archutil}strip"
               objcopycommand="${archutil}objcopy">
@@ -484,7 +490,7 @@
   <target name="linkconsole" depends="compile"
         description="link console helper">
 
-    <link command="${arch}g++" out="${build}/inkscape-console.exe"
+    <link command="${arch_link}" out="${build}/inkscape-console.exe"
               strip="true" stripcommand="${archutil}strip">
        <flags>
            -mconsole
@@ -512,7 +518,7 @@
         --include-dir=${src}
         </flags>
     </rc>
-    <link command="${arch}g++" out="${build}/inkview.exe"
+    <link command="${arch_link}" out="${build}/inkview.exe"
               strip="true" symfile="${build}/inkview.dbg"
               stripcommand="${archutil}strip"
               objcopycommand="${archutil}objcopy">
@@ -572,7 +578,7 @@
   <target name="linkcxxtests" depends="compile"
       description="link objects and library to create executable">
 
-    <link command="${arch}g++" out="${build}/cxxtests.exe"
+    <link command="${arch_link}" out="${build}/cxxtests.exe"
               strip="true" symfile="${build}/cxxtests.dbg"
               stripcommand="${archutil}strip"
               objcopycommand="${archutil}objcopy">
