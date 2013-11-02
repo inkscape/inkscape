@@ -1217,7 +1217,7 @@ void Path::ConvertPositionsToForced(int nbPos, cut_position *poss)
         }
         {
           double      sang,eang;
-          ArcAngles(startP,endP,rx,ry,angle,large,clockw,sang,eang);
+          ArcAngles(startP,endP,rx,ry,angle*M_PI/180.0,large,clockw,sang,eang);
           
           if (clockw) {
             if ( sang < eang ) sang += 2*M_PI;

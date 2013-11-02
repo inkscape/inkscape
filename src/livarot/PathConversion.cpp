@@ -1076,13 +1076,14 @@ void Path::DoArc(Geom::Point const &iS, Geom::Point const &iE,
     double sang;
     double eang;
     Geom::Point dr_temp;
-    ArcAnglesAndCenter(iS, iE, rx, ry, angle, large, wise, sang, eang, dr_temp);
+    ArcAnglesAndCenter(iS, iE, rx, ry, angle*M_PI/180.0, large, wise, sang, eang, dr_temp);
     Geom::Point dr = dr_temp;
     /* TODO: This isn't as good numerically as treating iS and iE as primary.  E.g. consider
        the case of low curvature (i.e. very large radius). */
 
     Geom::Scale const ar(rx, ry);
-    Geom::Rotate cb(angle + sang);
+    Geom::Rotate cb(sang);
+    Geom::Rotate cbangle(angle*M_PI/180.0);
     if (wise) {
 
         double const incr = -0.1;
@@ -1092,7 +1093,7 @@ void Path::DoArc(Geom::Point const &iS, Geom::Point const &iE,
         Geom::Rotate const omega(incr);
         for (double b = sang + incr; b > eang ;b += incr) {
             cb = omega * cb;
-            AddPoint(cb.vector() * ar + dr, piece, (sang - b) / (sang - eang));
+            AddPoint(cb.vector() * ar * cbangle + dr, piece, (sang - b) / (sang - eang));
         }
 
     } else {
@@ -1103,7 +1104,7 @@ void Path::DoArc(Geom::Point const &iS, Geom::Point const &iE,
         Geom::Rotate const omega(incr);
         for (double b = sang + incr ; b < eang ; b += incr) {
             cb = omega * cb;
-            AddPoint(cb.vector() * ar + dr, piece, (b - sang) / (eang - sang));
+            AddPoint(cb.vector() * ar * cbangle + dr, piece, (b - sang) / (eang - sang));
         }
     }
 }

@@ -930,7 +930,7 @@ void Path::TangentOnArcAt(double at, const Geom::Point &iS, PathDescrArcTo const
 	Geom::Point const iE  = fin.p;
 	double const rx = fin.rx;
 	double const ry = fin.ry;
-	double const angle = fin.angle;
+	double const angle = fin.angle*M_PI/180.0;
 	bool const large = fin.large;
 	bool const wise = fin.clockwise;
 
@@ -1442,7 +1442,7 @@ Path::RecStdArcTo (outline_callback_data * data, double tol, double width,
 	{
 		Geom::Point  tms(data->x1,data->y1),tme(data->x2,data->y2);
 		ArcAngles (tms,tme, data->d.a.rx,
-				   data->d.a.ry, data->d.a.angle, data->d.a.large, !data->d.a.clock,
+				   data->d.a.ry, data->d.a.angle*M_PI/180.0, data->d.a.large, !data->d.a.clock,
 				   sang, eang);
 	}
 	double scal = eang - sang;
