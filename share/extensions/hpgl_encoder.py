@@ -1,0 +1,296 @@
+#!/usr/bin/env python
+# coding=utf-8
+'''
+Copyright (C) 2008 Aaron Spike, aaron@ekips.org
+Copyright (C) 2013 Sebastian Wüst, sebi@timewaster.de
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+'''
+
+# standard libraries
+import math
+import string
+# local libraries
+import bezmisc
+import cspsubdiv
+import cubicsuperpath
+import inkex
+import simplestyle
+import simpletransform
+
+
+# TODO: Unittests
+class hpglEncoder:
+    PI = math.pi
+    TWO_PI = PI * 2
+
+    def __init__(self, effect):
+        ''' options:
+                "resolutionX":float
+                "resolutionY":float
+                "pen":int
+                "orientation":string // "0", "90", "-90", "180"
+                "mirrorX":bool
+                "mirrorY":bool
+                "center":bool
+                "flat":float
+                "useOvercut":bool
+                "overcut":float
+                "useToolOffset":bool
+                "toolOffset":float
+                "precut":bool
+                "offsetX":float
+                "offsetY":float
+        '''
+        self.doc = effect.document.getroot()
+        self.options = effect.options
+        self.divergenceX = 'False'
+        self.divergenceY = 'False'
+        self.sizeX = 'False'
+        self.sizeY = 'False'
+        self.dryRun = True
+        self.lastPoint = [0, 0, 0]
+        self.scaleX = self.options.resolutionX / 90 # inch to pixels
+        self.scaleY = self.options.resolutionY / 90 # inch to pixels
+        self.options.offsetX = self.options.offsetX * 3.5433070866 * self.scaleX # mm to dots (plotter coordinate system)
+        self.options.offsetY = self.options.offsetY * 3.5433070866 * self.scaleY # mm to dots
+        self.options.overcut = self.options.overcut * 3.5433070866 * ((self.scaleX + self.scaleY) / 2) # mm to dots
+        self.options.toolOffset = self.options.toolOffset * 3.5433070866 * ((self.scaleX + self.scaleY) / 2) # mm to dots
+        self.options.flat = ((self.options.resolutionX + self.options.resolutionY) / 2) * self.options.flat / 1000 # scale flatness to resolution
+        self.toolOffsetFlat = self.options.flat / self.options.toolOffset * 4.5 # scale flatness to offset
+        self.mirrorX = 1.0
+        if self.options.mirrorX:
+            self.mirrorX = -1.0
+        self.mirrorY = -1.0
+        if self.options.mirrorY:
+            self.mirrorY = 1.0
+        # process viewBox attribute to correct page scaling
+        viewBox = self.doc.get('viewBox')
+        self.viewBoxTransformX = 1
+        self.viewBoxTransformY = 1
+        if viewBox:
+            viewBox = string.split(viewBox, ' ')
+            if viewBox[2] and viewBox[3]:
+                self.viewBoxTransformX = float(effect.unittouu(self.doc.get('width'))) / float(viewBox[2])
+                self.viewBoxTransformY = float(effect.unittouu(self.doc.get('height'))) / float(viewBox[3])
+
+    def getHpgl(self):
+        # dryRun to find edges
+        self.groupmat = [[[self.mirrorX * self.scaleX * self.viewBoxTransformX, 0.0, 0.0], [0.0, self.mirrorY * self.scaleY * self.viewBoxTransformY, 0.0]]]
+        self.groupmat[0] = simpletransform.composeTransform(self.groupmat[0], simpletransform.parseTransform('rotate(' + self.options.orientation + ')'))
+        self.vData = [['', -1.0, -1.0], ['', -1.0, -1.0], ['', -1.0, -1.0], ['', -1.0, -1.0]]
+        self.process_group(self.doc, self.groupmat)
+        if self.divergenceX == 'False' or self.divergenceY == 'False' or self.sizeX == 'False' or self.sizeY == 'False':
+            raise Exception('NO_PATHS')
+        # live run
+        self.dryRun = False
+        if self.options.center:
+            self.divergenceX += (self.sizeX - self.divergenceX) / 2
+            self.divergenceY += (self.sizeY - self.divergenceY) / 2
+        elif self.options.useToolOffset:
+            self.options.offsetX += self.options.toolOffset
+            self.options.offsetY += self.options.toolOffset
+        self.groupmat = [[[self.mirrorX * self.scaleX * self.viewBoxTransformX, 0.0, - self.divergenceX + self.options.offsetX],
+            [0.0, self.mirrorY * self.scaleY * self.viewBoxTransformY, - self.divergenceY + self.options.offsetY]]]
+        self.groupmat[0] = simpletransform.composeTransform(self.groupmat[0], simpletransform.parseTransform('rotate(' + self.options.orientation + ')'))
+        self.vData = [['', -1.0, -1.0], ['', -1.0, -1.0], ['', -1.0, -1.0], ['', -1.0, -1.0]]
+        # store first hpgl commands
+        self.hpgl = 'IN;SP%d' % self.options.pen
+        # add precut
+        if self.options.useToolOffset and self.options.precut:
+            self.calcOffset('PU', 0, 0)
+            self.calcOffset('PD', 0, self.options.toolOffset * 8)
+        # start conversion
+        self.process_group(self.doc, self.groupmat)
+        # shift an empty node in in order to process last node in cache
+        self.calcOffset('PU', 0, 0)
+        # add return to zero point
+        self.hpgl += ';PU0,0;'
+        return self.hpgl
+
+    def process_group(self, group, groupmat):
+        # process groups
+        style = group.get('style')
+        if style:
+            style = simplestyle.parseStyle(style)
+            if style.has_key('display'):
+                if style['display'] == 'none':
+                    return
+        trans = group.get('transform')
+        if trans:
+            groupmat.append(simpletransform.composeTransform(groupmat[-1], simpletransform.parseTransform(trans)))
+        for node in group:
+            if node.tag == inkex.addNS('path', 'svg'):
+                self.process_path(node, groupmat[-1])
+            if node.tag == inkex.addNS('g', 'svg'):
+                # TODO: Remove recursion
+                self.process_group(node, groupmat)
+        if trans:
+            groupmat.pop()
+
+    def process_path(self, node, mat):
+        # process path
+        drawing = node.get('d')
+        if drawing:
+            # transform path
+            paths = cubicsuperpath.parsePath(drawing)
+            trans = node.get('transform')
+            if trans:
+                mat = simpletransform.composeTransform(mat, simpletransform.parseTransform(trans))
+            simpletransform.applyTransformToPath(mat, paths)
+            cspsubdiv.cspsubdiv(paths, self.options.flat)
+            # path to HPGL commands
+            oldPosX = ''
+            oldPosY = ''
+            # TODO: Plot smallest parts first to avid plotter dragging parts of foil around (on text)
+            for singlePath in paths:
+                cmd = 'PU'
+                for singlePathPoint in singlePath:
+                    posX, posY = singlePathPoint[1]
+                    # check if point is repeating, if so, ignore
+                    if posX != oldPosX or posY != oldPosY:
+                        self.calcOffset(cmd, posX, posY)
+                        cmd = 'PD'
+                        oldPosX = posX
+                        oldPosY = posY
+                # perform overcut
+                # TODO: Find that evasive bug that produces an extra point between the end of the path and the overcut
+                if self.options.useOvercut and not self.dryRun:
+                    # check if last and first points are the same, otherwise the path is not closed and no overcut can be performed
+                    if int(round(oldPosX)) == int(round(singlePath[0][1][0])) and int(round(oldPosY)) == int(round(singlePath[0][1][1])):
+                        overcutLength = 0
+                        for singlePathPoint in singlePath:
+                            posX, posY = singlePathPoint[1]
+                            # check if point is repeating, if so, ignore
+                            if posX != oldPosX or posY != oldPosY:
+                                overcutLength += self.getLength(oldPosX, oldPosY, posX, posY)
+                                if overcutLength >= self.options.overcut:
+                                    newLength = self.changeLength(oldPosX, oldPosY, posX, posY, - (overcutLength - self.options.overcut))
+                                    self.calcOffset(cmd, newLength[0], newLength[1])
+                                    break
+                                else:
+                                    self.calcOffset(cmd, posX, posY)
+                                oldPosX = posX
+                                oldPosY = posY
+
+    def getLength(self, x1, y1, x2, y2, absolute=True):
+        # calc absoulute or relative length between two points
+        length = math.sqrt((x2 - x1) ** 2.0 + (y2 - y1) ** 2.0)
+        if absolute:
+            length = math.fabs(length)
+        return length
+
+    def changeLength(self, x1, y1, x2, y2, offset):
+        # change length of line
+        if offset < 0:
+            offset = max( - self.getLength(x1, y1, x2, y2), offset)
+        x = x2 + (x2 - x1) / self.getLength(x1, y1, x2, y2, False) * offset
+        y = y2 + (y2 - y1) / self.getLength(x1, y1, x2, y2, False) * offset
+        return [x, y]
+
+    def getAlpha(self, x1, y1, x2, y2, x3, y3):
+        # get alpha of point 2
+        temp1 = (x1 - x2) ** 2 + (y1 - y2) ** 2 + (x3 - x2) ** 2 + (y3 - y2) ** 2 - (x1 - x3) ** 2 - (y1 - y3) ** 2
+        temp2 = 2 * math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2) * math.sqrt((x3 - x2) ** 2 + (y3 - y2) ** 2)
+        return math.acos(max(min(temp1 / temp2, 1.0), -1.0))
+
+    def calcOffset(self, cmd, posX, posY):
+        # calculate offset correction (or dont)
+        if not self.options.useToolOffset or self.dryRun:
+            self.storePoint(cmd, posX, posY)
+        else:
+            # insert data into cache
+            self.vData.pop(0)
+            self.vData.insert(3, [cmd, posX, posY])
+            # decide if enough data is availabe
+            if self.vData[2][1] != -1.0:
+                if self.vData[1][1] == -1.0:
+                    self.storePoint(self.vData[2][0], self.vData[2][1], self.vData[2][2])
+                else:
+                    # perform tool offset correction (It's a *tad* complicated, if you want to understand it draw the data as lines on paper)
+                    if self.vData[2][0] == 'PD': # If the 3rd entry in the cache is a pen down command make the line longer by the tool offset
+                        pointThree = self.changeLength(self.vData[1][1], self.vData[1][2], self.vData[2][1], self.vData[2][2], self.options.toolOffset)
+                        self.storePoint('PD', pointThree[0], pointThree[1])
+                    elif self.vData[0][1] != -1.0:
+                        # Elif the 1st entry in the cache is filled with data and the 3rd entry is a pen up command shift
+                        # the 3rd entry by the current tool offset position according to the 2nd command
+                        pointThree = self.changeLength(self.vData[0][1], self.vData[0][2], self.vData[1][1], self.vData[1][2], self.options.toolOffset)
+                        pointThree[0] = self.vData[2][1] - (self.vData[1][1] - pointThree[0])
+                        pointThree[1] = self.vData[2][2] - (self.vData[1][2] - pointThree[1])
+                        self.storePoint('PU', pointThree[0], pointThree[1])
+                    else:
+                        # Else just write the 3rd entry
+                        pointThree = [self.vData[2][1], self.vData[2][2]]
+                        self.storePoint('PU', pointThree[0], pointThree[1])
+                    if self.vData[3][0] == 'PD':
+                        # If the 4th entry in the cache is a pen down command guide tool to next line with a circle between the prolonged 3rd and 4th entry
+                        if self.getLength(self.vData[2][1], self.vData[2][2], self.vData[3][1], self.vData[3][2]) >= self.options.toolOffset:
+                            pointFour = self.changeLength(self.vData[3][1], self.vData[3][2], self.vData[2][1], self.vData[2][2], - self.options.toolOffset)
+                        else:
+                            pointFour = self.changeLength(self.vData[2][1], self.vData[2][2], self.vData[3][1], self.vData[3][2],
+                                (self.options.toolOffset - self.getLength(self.vData[2][1], self.vData[2][2], self.vData[3][1], self.vData[3][2])))
+                        # get angle start and angle vector
+                        angleStart = math.atan2(pointThree[1] - self.vData[2][2], pointThree[0] - self.vData[2][1])
+                        angleVector = math.atan2(pointFour[1] - self.vData[2][2], pointFour[0] - self.vData[2][1]) - angleStart
+                        # switch direction when arc is bigger than 180°
+                        if angleVector > self.PI:
+                            angleVector -= self.TWO_PI
+                        elif angleVector < - self.PI:
+                            angleVector += self.TWO_PI
+                        # draw arc
+                        if angleVector >= 0:
+                            angle = angleStart + self.toolOffsetFlat
+                            while angle < angleStart + angleVector:
+                                self.storePoint('PD', self.vData[2][1] + math.cos(angle) * self.options.toolOffset, self.vData[2][2] + math.sin(angle) * self.options.toolOffset)
+                                angle += self.toolOffsetFlat
+                        else:
+                            angle = angleStart - self.toolOffsetFlat
+                            while angle > angleStart + angleVector:
+                                self.storePoint('PD', self.vData[2][1] + math.cos(angle) * self.options.toolOffset, self.vData[2][2] + math.sin(angle) * self.options.toolOffset)
+                                angle -= self.toolOffsetFlat
+                        self.storePoint('PD', pointFour[0], pointFour[1])
+
+    def storePoint(self, command, x, y):
+        x = int(round(x))
+        y = int(round(y))
+        # skip when no change in movement
+        if self.lastPoint[0] == command and self.lastPoint[1] == x and self.lastPoint[2] == y:
+            return
+        if self.dryRun:
+            # find edges
+            if self.divergenceX == 'False' or x < self.divergenceX:
+                self.divergenceX = x
+            if self.divergenceY == 'False' or y < self.divergenceY:
+                self.divergenceY = y
+            if self.sizeX == 'False' or x > self.sizeX:
+                self.sizeX = x
+            if self.sizeY == 'False' or y > self.sizeY:
+                self.sizeY = y
+        else:
+            # store point
+            if not self.options.center:
+                # only positive values are allowed (usually)
+                if x < 0:
+                    x = 0
+                if y < 0:
+                    y = 0
+            # do not repeat command
+            if command == 'PD' and self.lastPoint[0] == 'PD':
+                self.hpgl += ',%d,%d' % (x, y)
+            else:
+                self.hpgl += ';%s%d,%d' % (command, x, y)
+        self.lastPoint = [command, x, y]
+
+# vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 fileencoding=utf-8 textwidth=99
