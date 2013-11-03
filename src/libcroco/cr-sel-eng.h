@@ -31,7 +31,7 @@
 #include "cr-prop-list.h"
 #include "cr-node-iface.h"
 
-
+#include <libxml/tree.h>
 
 /**
  *@file:
