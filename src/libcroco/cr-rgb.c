@@ -30,7 +30,7 @@
 #include "cr-term.h"
 #include "cr-parser.h"
 
-tatic const CRRgb gv_standard_colors[] = {
+static const CRRgb gv_standard_colors[] = {
         {(const guchar*)"aliceblue",   240, 248, 255, FALSE, FALSE, FALSE, {0,0,0}},
         {(const guchar*)"antiquewhite",        250, 235, 215, FALSE, FALSE, FALSE, {0,0,0}},
         {(const guchar*)"aqua",          0, 255, 255, FALSE, FALSE, FALSE, {0,0,0}},

@@ -47,7 +47,7 @@ cr_additional_sel_new (void)
 {
         CRAdditionalSel *result = NULL;
 
-        result = (CRAdditionalSel *)g_try_malloc (sizeof (CRAdditionalSel));
+        result = g_try_malloc (sizeof (CRAdditionalSel));
 
         if (result == NULL) {
                 cr_utils_trace_debug ("Out of memory");
