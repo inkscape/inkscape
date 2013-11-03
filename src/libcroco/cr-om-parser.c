@@ -25,8 +25,6 @@
 #include "cr-utils.h"
 #include "cr-om-parser.h"
 
-#define UNUSED(_param) ((void)(_param))
-
 /**
  *@CROMParser:
  *
@@ -113,8 +111,9 @@ struct _ParsingContext {
 static ParsingContext *
 new_parsing_context (void)
 {
-        ParsingContext *result = 
-		    (ParsingContext *)g_try_malloc (sizeof (ParsingContext));
+        ParsingContext *result = NULL;
+
+        result = g_try_malloc (sizeof (ParsingContext));
         if (!result) {
                 cr_utils_trace_info ("Out of Memory");
                 return NULL;
@@ -212,10 +211,10 @@ start_font_face (CRDocHandler * a_this,
         ParsingContext *ctxt = NULL;
         ParsingContext **ctxtptr = NULL;
 
-        UNUSED(a_location);
         g_return_if_fail (a_this);
 
-        ctxtptr = &ctxt;
+        g_return_if_fail (a_this);
+	ctxtptr = &ctxt;
         status = cr_doc_handler_get_ctxt (a_this, (gpointer *) ctxtptr);
         g_return_if_fail (status == CR_OK && ctxt);
         g_return_if_fail (ctxt->cur_stmt == NULL);
@@ -311,10 +310,8 @@ charset (CRDocHandler * a_this, CRString * a_charset,
         ParsingContext *ctxt = NULL;
         ParsingContext **ctxtptr = NULL;
 
-        UNUSED(a_location);
         g_return_if_fail (a_this);
-
-        ctxtptr = &ctxt;
+	ctxtptr = &ctxt;
         status = cr_doc_handler_get_ctxt (a_this, (gpointer *) ctxtptr);
         g_return_if_fail (status == CR_OK && ctxt);
         g_return_if_fail (ctxt->stylesheet);
@@ -347,10 +344,8 @@ start_page (CRDocHandler * a_this,
         ParsingContext *ctxt = NULL;
         ParsingContext **ctxtptr = NULL;
 
-        UNUSED(a_location);
         g_return_if_fail (a_this);
-
-        ctxtptr = &ctxt;
+	ctxtptr = &ctxt;
         status = cr_doc_handler_get_ctxt (a_this, (gpointer *) ctxtptr);
         g_return_if_fail (status == CR_OK && ctxt);
         g_return_if_fail (ctxt->cur_stmt == NULL);
@@ -391,11 +386,8 @@ end_page (CRDocHandler * a_this,
         ParsingContext **ctxtptr = NULL;
         CRStatement *stmt = NULL;
 
-        UNUSED(a_page);
-        UNUSED(a_pseudo_page);
         g_return_if_fail (a_this);
-
-        ctxtptr = &ctxt;
+	ctxtptr = &ctxt;
         status = cr_doc_handler_get_ctxt (a_this, (gpointer *) ctxtptr);
         g_return_if_fail (status == CR_OK && ctxt);
         g_return_if_fail (ctxt->cur_stmt
@@ -415,6 +407,8 @@ end_page (CRDocHandler * a_this,
                 cr_statement_destroy (ctxt->cur_stmt);
                 ctxt->cur_stmt = NULL;
         }
+        a_page = NULL;          /*keep compiler happy */
+        a_pseudo_page = NULL;   /*keep compiler happy */
 }
 
 static void
@@ -427,10 +421,8 @@ start_media (CRDocHandler * a_this,
         ParsingContext **ctxtptr = NULL;
         GList *media_list = NULL;
 
-        UNUSED(a_location);
         g_return_if_fail (a_this);
-
-        ctxtptr = &ctxt;
+	ctxtptr = &ctxt;
         status = cr_doc_handler_get_ctxt (a_this, (gpointer *) ctxtptr);
         g_return_if_fail (status == CR_OK && ctxt);
 
@@ -440,10 +432,12 @@ start_media (CRDocHandler * a_this,
                           && ctxt->stylesheet);
         if (a_media_list) {
                 /*duplicate the media_list */
-                media_list = cr_utils_dup_glist_of_cr_string(a_media_list);
+                media_list = cr_utils_dup_glist_of_cr_string 
+                        (a_media_list);
         }
         ctxt->cur_media_stmt =
-                cr_statement_new_at_media_rule(ctxt->stylesheet, NULL, media_list);
+                cr_statement_new_at_media_rule
+                (ctxt->stylesheet, NULL, media_list);
 
 }
 
@@ -455,10 +449,8 @@ end_media (CRDocHandler * a_this, GList * a_media_list)
         ParsingContext **ctxtptr = NULL;
         CRStatement *stmts = NULL;
 
-        UNUSED(a_media_list);
         g_return_if_fail (a_this);
-
-        ctxtptr = &ctxt;
+	ctxtptr = &ctxt;
         status = cr_doc_handler_get_ctxt (a_this, (gpointer *) ctxtptr);
         g_return_if_fail (status == CR_OK && ctxt);
         g_return_if_fail (ctxt
@@ -478,6 +470,7 @@ end_media (CRDocHandler * a_this, GList * a_media_list)
 
         ctxt->cur_stmt = NULL ;
         ctxt->cur_media_stmt = NULL ;
+        a_media_list = NULL;
 }
 
 static void
@@ -495,11 +488,8 @@ import_style (CRDocHandler * a_this,
         ParsingContext **ctxtptr = NULL;
         GList *media_list = NULL ;
 
-        UNUSED(a_uri_default_ns);
-        UNUSED(a_location);
         g_return_if_fail (a_this);
-
-        ctxtptr = &ctxt;
+	ctxtptr = &ctxt;
         status = cr_doc_handler_get_ctxt (a_this, (gpointer *) ctxtptr);
         g_return_if_fail (status == CR_OK && ctxt);
         g_return_if_fail (ctxt->stylesheet);
@@ -571,10 +561,8 @@ end_selector (CRDocHandler * a_this, CRSelector * a_selector_list)
         ParsingContext *ctxt = NULL;
         ParsingContext **ctxtptr = NULL;
 
-        UNUSED(a_selector_list);
         g_return_if_fail (a_this);
-
-        ctxtptr = &ctxt;
+	ctxtptr = &ctxt;
         status = cr_doc_handler_get_ctxt (a_this, (gpointer *) ctxtptr);
         g_return_if_fail (status == CR_OK && ctxt);
         g_return_if_fail (ctxt->cur_stmt && ctxt->stylesheet);
@@ -778,9 +766,10 @@ unrecoverable_error (CRDocHandler * a_this)
 CROMParser *
 cr_om_parser_new (CRInput * a_input)
 {
+        CROMParser *result = NULL;
         enum CRStatus status = CR_OK;
 
-        CROMParser *result = (CROMParser *)g_try_malloc (sizeof (CROMParser));
+        result = g_try_malloc (sizeof (CROMParser));
 
         if (!result) {
                 cr_utils_trace_info ("Out of memory");
@@ -788,7 +777,7 @@ cr_om_parser_new (CRInput * a_input)
         }
 
         memset (result, 0, sizeof (CROMParser));
-        PRIVATE (result) = (CROMParserPriv *)g_try_malloc (sizeof (CROMParserPriv));
+        PRIVATE (result) = g_try_malloc (sizeof (CROMParserPriv));
 
         if (!PRIVATE (result)) {
                 cr_utils_trace_info ("Out of memory");

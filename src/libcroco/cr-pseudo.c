@@ -37,7 +37,9 @@
 CRPseudo *
 cr_pseudo_new (void)
 {
-        CRPseudo *result = (CRPseudo *)g_malloc0 (sizeof (CRPseudo));
+        CRPseudo *result = NULL;
+
+        result = g_malloc0 (sizeof (CRPseudo));
 
         return result;
 }
@@ -53,17 +55,20 @@ guchar *
 cr_pseudo_to_string (CRPseudo const * a_this)
 {
         guchar *result = NULL;
+        GString *str_buf = NULL;
 
         g_return_val_if_fail (a_this, NULL);
 
-        GString *str_buf = (GString *)g_string_new (NULL);
+        str_buf = g_string_new (NULL);
 
         if (a_this->type == IDENT_PSEUDO) {
+                guchar *name = NULL;
 
-                if (a_this->name == NULL)
+                if (a_this->name == NULL) {
                         goto error;
+                }
 
-                gchar *name = g_strndup (a_this->name->stryng->str, 
+                name = g_strndup (a_this->name->stryng->str, 
                                   a_this->name->stryng->len);
 
                 if (name) {
@@ -72,12 +77,13 @@ cr_pseudo_to_string (CRPseudo const * a_this)
                         name = NULL;
                 }
         } else if (a_this->type == FUNCTION_PSEUDO) {
-                gchar *arg = NULL;
+                guchar *name = NULL,
+                        *arg = NULL;
 
                 if (a_this->name == NULL)
                         goto error;
 
-                gchar *name = g_strndup (a_this->name->stryng->str, 
+                name = g_strndup (a_this->name->stryng->str, 
                                   a_this->name->stryng->len);
 
                 if (a_this->extra) {
@@ -101,7 +107,7 @@ cr_pseudo_to_string (CRPseudo const * a_this)
         }
 
         if (str_buf) {
-                result = (guchar *)str_buf->str;
+                result = str_buf->str;
                 g_string_free (str_buf, FALSE);
                 str_buf = NULL;
         }

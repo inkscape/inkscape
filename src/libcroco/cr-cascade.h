@@ -22,7 +22,7 @@
  */
 
 /*
- *$Id: cr-cascade.h,v 1.6 2004/01/29 22:05:14 dodji Exp $
+ *$Id$
  */
 
 #ifndef __CR_CASCADE_H__

@@ -69,14 +69,16 @@ struct _CRDocHandlerPriv {
 CRDocHandler *
 cr_doc_handler_new (void)
 {
-        CRDocHandler *result = ( CRDocHandler *)g_try_malloc (sizeof (CRDocHandler));
+        CRDocHandler *result = NULL;
+
+        result = g_try_malloc (sizeof (CRDocHandler));
 
         g_return_val_if_fail (result, NULL);
 
         memset (result, 0, sizeof (CRDocHandler));
         result->ref_count++;
 
-        result->priv =  (CRDocHandlerPriv *)g_try_malloc (sizeof (CRDocHandlerPriv));
+        result->priv = g_try_malloc (sizeof (CRDocHandlerPriv));
         if (!result->priv) {
                 cr_utils_trace_info ("Out of memory exception");
                 g_free (result);
@@ -270,5 +272,5 @@ cr_doc_handler_associate_a_parser (CRDocHandler *a_this,
 	g_return_if_fail (a_this && PRIVATE (a_this) 
 			  && a_parser) ;
 
-	PRIVATE (a_this)->parser = (CRParser *)a_parser ;
+	PRIVATE (a_this)->parser = a_parser ;
 }

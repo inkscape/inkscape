@@ -41,7 +41,9 @@
 CRAttrSel *
 cr_attr_sel_new (void)
 {
-        CRAttrSel *result = (CRAttrSel *)g_malloc0 (sizeof (CRAttrSel));
+        CRAttrSel *result = NULL;
+
+        result = g_malloc0 (sizeof (CRAttrSel));
 
         return result;
 }
@@ -119,7 +121,9 @@ cr_attr_sel_to_string (CRAttrSel const * a_this)
                 }
 
                 if (cur->name) {
-                        gchar *name = g_strndup (cur->name->stryng->str, 
+                        guchar *name = NULL;
+
+                        name = g_strndup (cur->name->stryng->str, 
                                           cur->name->stryng->len);
                         if (name) {
                                 g_string_append (str_buf, name);
@@ -129,7 +133,9 @@ cr_attr_sel_to_string (CRAttrSel const * a_this)
                 }
 
                 if (cur->value) {
-                        gchar *value = g_strndup (cur->value->stryng->str, 
+                        guchar *value = NULL;
+
+                        value = g_strndup (cur->value->stryng->str, 
                                            cur->value->stryng->len);
                         if (value) {
                                 switch (cur->match_way) {
@@ -162,7 +168,7 @@ cr_attr_sel_to_string (CRAttrSel const * a_this)
         }
 
         if (str_buf) {
-                result = (guchar *)str_buf->str;
+                result = str_buf->str;
                 g_string_free (str_buf, FALSE);
         }
 

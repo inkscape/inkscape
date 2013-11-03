@@ -191,7 +191,9 @@ static const CRRgb gv_standard_colors[] = {
 CRRgb *
 cr_rgb_new (void)
 {
-        CRRgb *result = (CRRgb *)g_try_malloc (sizeof (CRRgb));
+        CRRgb *result = NULL;
+
+        result = g_try_malloc (sizeof (CRRgb));
 
         if (result == NULL) {
                 cr_utils_trace_info ("No more memory");
@@ -245,8 +247,10 @@ cr_rgb_new_with_vals (gulong a_red, gulong a_green,
 guchar *
 cr_rgb_to_string (CRRgb const * a_this)
 {
-        gchar *result = NULL;
-        GString *str_buf = (GString *)g_string_new (NULL);
+        guchar *result = NULL;
+        GString *str_buf = NULL;
+
+        str_buf = g_string_new (NULL);
         g_return_val_if_fail (str_buf, NULL);
 
         if (a_this->is_percentage == 1) {
@@ -274,7 +278,7 @@ cr_rgb_to_string (CRRgb const * a_this)
                 g_string_free (str_buf, FALSE);
         }
 
-        return (guchar *)result;
+        return result;
 }
 
 /**
@@ -502,7 +506,7 @@ cr_rgb_set_from_hex_str (CRRgb * a_this, const guchar * a_hex)
 
         g_return_val_if_fail (a_this && a_hex, CR_BAD_PARAM_ERROR);
 
-        if (strlen ((char *)a_hex) == 3) {
+        if (strlen (a_hex) == 3) {
                 for (i = 0; i < 3; i++) {
                         if (a_hex[i] >= '0' && a_hex[i] <= '9') {
                                 colors[i] = a_hex[i] - '0';
@@ -517,7 +521,7 @@ cr_rgb_set_from_hex_str (CRRgb * a_this, const guchar * a_hex)
                                 status = CR_UNKNOWN_TYPE_ERROR;
                         }
                 }
-        } else if (strlen ((char *)a_hex) == 6) {
+        } else if (strlen (a_hex) == 6) {
                 for (i = 0; i < 6; i++) {
                         if (a_hex[i] >= '0' && a_hex[i] <= '9') {
                                 colors[i / 2] <<= 4;
@@ -559,8 +563,8 @@ cr_rgb_set_from_hex_str (CRRgb * a_this, const guchar * a_hex)
 enum CRStatus
 cr_rgb_set_from_term (CRRgb *a_this, const struct _CRTerm *a_value)
 {
-    enum CRStatus status = CR_OK ;
-    g_return_val_if_fail (a_this && a_value,
+        enum CRStatus status = CR_OK ;
+        g_return_val_if_fail (a_this && a_value,
                               CR_BAD_PARAM_ERROR) ;
 
 	switch(a_value->type) {
@@ -582,7 +586,7 @@ cr_rgb_set_from_term (CRRgb *a_this, const struct _CRTerm *a_value)
 			} else  {
                         	status = cr_rgb_set_from_name
                                         (a_this,
-                                         (guchar *)a_value->content.str->stryng->str) ;
+                                         a_value->content.str->stryng->str) ;
 			}
                 } else {
                         cr_utils_trace_info 
@@ -595,7 +599,7 @@ cr_rgb_set_from_term (CRRgb *a_this, const struct _CRTerm *a_value)
                     && a_value->content.str->stryng->str) {
                         status = cr_rgb_set_from_hex_str
                                 (a_this, 
-                                 (guchar *)a_value->content.str->stryng->str) ;
+                                 a_value->content.str->stryng->str) ;
                 } else {
                         cr_utils_trace_info
                                 ("a_value has NULL string value") ;
@@ -651,7 +655,7 @@ cr_rgb_parse_from_buf (const guchar *a_str,
 	
 	g_return_val_if_fail (a_str, NULL);
 	
-	parser = cr_parser_new_from_buf ((guchar *)a_str, strlen ((char *)a_str), 
+	parser = cr_parser_new_from_buf ((guchar*)a_str, strlen (a_str), 
                                          a_enc, FALSE) ;
 
 	g_return_val_if_fail (parser, NULL);

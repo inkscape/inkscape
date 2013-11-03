@@ -21,7 +21,7 @@
  */
 
 /*
- *$Id: cr-enc-handler.c,v 1.7 2004/03/07 13:22:47 dodji Exp $
+ *$Id$
  */
 
 /**
@@ -57,7 +57,7 @@ static struct CREncAlias gv_default_aliases[] = {
         {"UCS-4", CR_UCS_4},
         {"UCS_4", CR_UCS_4},
         {"ASCII", CR_ASCII},
-        {(char *)0, (enum CREncoding)0}
+        {0, 0}
 };
 
 static CREncHandler gv_default_enc_handlers[] = {
@@ -70,7 +70,7 @@ static CREncHandler gv_default_enc_handlers[] = {
         {CR_ASCII, cr_utils_ucs1_to_utf8, cr_utils_utf8_to_ucs1,
          cr_utils_ucs1_str_len_as_utf8, cr_utils_utf8_str_len_as_ucs1},
 
-        {(enum CREncoding)0, NULL, NULL, NULL, NULL}
+        {0, NULL, NULL, NULL, NULL}
 };
 
 /**
@@ -113,11 +113,12 @@ cr_enc_handler_resolve_enc_alias (const guchar * a_alias_name,
                                   enum CREncoding *a_enc)
 {
         gulong i = 0;
+        guchar *alias_name_up = NULL;
         enum CRStatus status = CR_ENCODING_NOT_FOUND_ERROR;
 
         g_return_val_if_fail (a_alias_name != NULL, CR_BAD_PARAM_ERROR);
 
-        gchar *alias_name_up = g_strdup ((gchar *)a_alias_name);
+        alias_name_up = g_strdup (a_alias_name);
         g_ascii_strup (alias_name_up, -1);
 
         for (i = 0; gv_default_aliases[i].name; i++) {
@@ -170,7 +171,7 @@ cr_enc_handler_convert_input (CREncHandler * a_this,
                 *a_out_len = *a_in_len;
         }
 
-        *a_out = (guchar *)g_malloc0 (*a_out_len);
+        *a_out = g_malloc0 (*a_out_len);
 
         status = a_this->decode_input (a_in, a_in_len, *a_out, a_out_len);
 

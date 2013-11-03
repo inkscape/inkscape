@@ -39,12 +39,12 @@ struct _CRRgb
          *Either NO_UNIT (integer) or 
          *UNIT_PERCENTAGE (percentage).
          */
-        const gchar *name ;
+        const guchar *name ;
         glong red ;
         glong green ;
         glong blue ;
         gboolean is_percentage ;
-	    gboolean inherit ;
+	gboolean inherit ;
         gboolean is_transparent ;
         CRParsingLocation location ;
 } ;

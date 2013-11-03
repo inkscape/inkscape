@@ -22,7 +22,7 @@
  */
 
 /*
- *$Id: cr-om-parser.h,v 1.9 2004/01/29 22:05:14 dodji Exp $
+ *$Id$
  */
 
 #ifndef __CR_OM_PARSER_H__

@@ -21,7 +21,7 @@
  */
 
 /*
- *$Id: cr-enc-handler.h,v 1.5 2004/01/24 19:24:01 dodji Exp $
+ *$Id$
  */
 
 /**

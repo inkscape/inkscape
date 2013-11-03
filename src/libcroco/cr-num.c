@@ -43,7 +43,9 @@
 CRNum *
 cr_num_new (void)
 {
-        CRNum *result = (CRNum *)g_try_malloc (sizeof (CRNum));
+        CRNum *result = NULL;
+
+        result = g_try_malloc (sizeof (CRNum));
 
         if (result == NULL) {
                 cr_utils_trace_info ("Out of memory");
@@ -92,16 +94,18 @@ cr_num_new_with_val (gdouble a_val, enum CRNumType a_type)
 guchar *
 cr_num_to_string (CRNum const * a_this)
 {
+        gdouble test_val = 0.0;
+
         guchar *tmp_char1 = NULL,
                 *tmp_char2 = NULL,
                 *result = NULL;
 
         g_return_val_if_fail (a_this, NULL);
 
-        gdouble test_val = a_this->val - (glong) a_this->val;
+        test_val = a_this->val - (glong) a_this->val;
 
         if (!test_val) {
-                tmp_char1 = (guchar *)g_strdup_printf ("%ld", (glong) a_this->val);
+                tmp_char1 = g_strdup_printf ("%ld", (glong) a_this->val);
         } else {
                 /* We can't use g_ascii_dtostr, because that sometimes uses
                    e notation (which wouldn't be a valid number in CSS). */
@@ -191,8 +195,7 @@ cr_num_to_string (CRNum const * a_this)
         }
 
         if (tmp_char2) {
-                result = (guchar *)g_strconcat (
-				    (gchar *)tmp_char1, (gchar *)tmp_char2, NULL);
+                result = g_strconcat (tmp_char1, tmp_char2, NULL);
                 g_free (tmp_char1);
         } else {
                 result = tmp_char1;
