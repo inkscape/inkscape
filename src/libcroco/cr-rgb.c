@@ -180,8 +180,11 @@ static CRRgb gv_standard_colors[] = {
 };
 
 /**
+ * cr_rgb_new:
+ *
  *The default constructor of #CRRgb.
- *@return the newly built instance of #CRRgb
+ *
+ *Returns the newly built instance of #CRRgb
  */
 CRRgb *
 cr_rgb_new (void)
@@ -199,13 +202,16 @@ cr_rgb_new (void)
 }
 
 /**
- *A constructor of #CRRgb.
- *@param a_red the red component of the color.
- *@param a_green the green component of the color.
- *@param a_blue the blue component of the color.
- *@param a_unit the unit of the rgb values.
+ * cr_rgb_new_with_vals:
+ *@a_red: the red component of the color.
+ *@a_green: the green component of the color.
+ *@a_blue: the blue component of the color.
+ *@a_unit: the unit of the rgb values.
  *(either percentage or integer values)
- *@return the newly built instance of #CRRgb.
+ *
+ *A constructor of #CRRgb.
+ *
+ *Returns the newly built instance of #CRRgb.
  */
 CRRgb *
 cr_rgb_new_with_vals (gulong a_red, gulong a_green,
@@ -226,13 +232,16 @@ cr_rgb_new_with_vals (gulong a_red, gulong a_green,
 }
 
 /**
+ * cr_rgb_to_string:
+ *@a_this: the instance of #CRRgb to serialize.
+ *
  *Serializes the rgb into a zero terminated string.
- *@param a_this the instance of #CRRgb to serialize.
- *@return the zero terminated string containing the serialized
+ *
+ *Returns the zero terminated string containing the serialized
  *rgb. MUST BE FREED by the caller using g_free().
  */
 guchar *
-cr_rgb_to_string (CRRgb * a_this)
+cr_rgb_to_string (CRRgb const * a_this)
 {
         gchar *result = NULL;
         GString *str_buf = (GString *)g_string_new (NULL);
@@ -267,14 +276,16 @@ cr_rgb_to_string (CRRgb * a_this)
 }
 
 /**
+ * cr_rgb_dump:
+ *@a_this: the "this pointer" of
+ *the current instance of #CRRgb.
+ *@a_fp: the destination file pointer.
+ *
  *Dumps the current instance of #CRRgb
  *to a file.
- *@param a_this the "this pointer" of
- *the current instance of #CRRgb.
- *@param a_fp the destination file pointer.
  */
 void
-cr_rgb_dump (CRRgb * a_this, FILE * a_fp)
+cr_rgb_dump (CRRgb const * a_this, FILE * a_fp)
 {
         guchar *str = NULL;
 
@@ -290,10 +301,13 @@ cr_rgb_dump (CRRgb * a_this, FILE * a_fp)
 }
 
 /**
+ * cr_rgb_compute_from_percentage:
+ *@a_this: the current instance of #CRRgb
+ *
  *If the rgb values are expressed in percentage,
  *compute their real value.
- *@param a_this the current instance of #CRRgb
- *@return
+ *
+ *Returns CR_OK upon successful completion, an error code otherwise.
  */
 enum CRStatus
 cr_rgb_compute_from_percentage (CRRgb * a_this)
@@ -310,12 +324,15 @@ cr_rgb_compute_from_percentage (CRRgb * a_this)
 }
 
 /**
+ * cr_rgb_set:
+ *@a_this: the current instance of #CRRgb.
+ *@a_red: the red value.
+ *@a_green: the green value.
+ *@a_blue: the blue value.
+ *
  *Sets rgb values to the RGB.
- *@param a_this the current instance of #CRRgb.
- *@param a_red the red value.
- *@param a_green the green value.
- *@param a_blue the blue value.
- *@return CR_OK upon successful completion, an error code
+ *
+ *Returns CR_OK upon successful completion, an error code
  *otherwise.
  */
 enum CRStatus
@@ -340,11 +357,14 @@ cr_rgb_set (CRRgb * a_this, gulong a_red,
 }
 
 /**
+ * cr_rgb_set_to_inherit:
+ *@a_this: the current instance of #CRRgb
+ *
  *sets the value of the rgb to inherit.
  *Look at the css spec from chapter 6.1 to 6.2 to understand
  *the meaning of "inherit".
- *@param a_this the current instance of #CRRgb
  *
+ * Returns CR_OK upon succesful completion, an error code otherwise.
  */
 enum CRStatus 
 cr_rgb_set_to_inherit (CRRgb *a_this, gboolean a_inherit)
@@ -356,8 +376,15 @@ cr_rgb_set_to_inherit (CRRgb *a_this, gboolean a_inherit)
         return CR_OK ;
 }
 
+/**
+ * cr_rgb_is_set_to_inherit:
+ *
+ * @a_this: the current instance of #CRRgb.
+ *
+ * Returns TRUE if the rgb is set to the value "inherit", FALSE otherwise.
+ */
 gboolean
-cr_rgb_is_set_to_inherit (CRRgb *a_this)
+cr_rgb_is_set_to_inherit (CRRgb const *a_this)
 {
         g_return_val_if_fail (a_this, CR_BAD_PARAM_ERROR) ;
 
@@ -365,15 +392,18 @@ cr_rgb_is_set_to_inherit (CRRgb *a_this)
 }
 
 /**
+ * cr_rgb_is_set_to_transparent:
+ *@a_this: the current instance of
+ *#CRRgb
+ *
  *Tests if the rgb is set to the
  *value "transparent" or not.
- *@param a_this the current instance of
- *#CRRgb
- *@return TRUE if the rgb has been set to
+ *
+ *Returns TRUE if the rgb has been set to
  *transparent, FALSE otherwise.
  */
 gboolean 
-cr_rgb_is_set_to_transparent (CRRgb *a_this)
+cr_rgb_is_set_to_transparent (CRRgb const *a_this)
 {
         g_return_val_if_fail (a_this, FALSE) ;
         return a_this->is_transparent ;
@@ -381,9 +411,12 @@ cr_rgb_is_set_to_transparent (CRRgb *a_this)
 
 
 /**
+ * cr_rgb_set_to_transparent:
+ *@a_this: the current instance of #CRRgb
+ *@a_is_transparent: set to transparent or not.
+ *
  *Sets the rgb to the "transparent" value (or not)
- *@param a_this the current instance of #CRRgb
- *@param a_is_transparent set to transparent or not.
+ *Returns CR_OK upon successfull completion, an error code otherwise.
  */
 enum CRStatus 
 cr_rgb_set_to_transparent (CRRgb *a_this, 
@@ -395,13 +428,16 @@ cr_rgb_set_to_transparent (CRRgb *a_this,
 }
 
 /**
+ * cr_rgb_set_from_rgb:
+ *@a_this: the current instance of #CRRgb.
+ *@a_rgb: the rgb to "copy"
+ *
  *Sets the rgb from an other one.
- *@param a_this the current instance of #CRRgb.
- *@param a_rgb the rgb to "copy"
- *@return CR_OK upon successful completion, an error code otherwise.
+ *
+ *Returns CR_OK upon successful completion, an error code otherwise.
  */
 enum CRStatus
-cr_rgb_set_from_rgb (CRRgb * a_this, CRRgb * a_rgb)
+cr_rgb_set_from_rgb (CRRgb * a_this, CRRgb const * a_rgb)
 {
         g_return_val_if_fail (a_this && a_rgb, CR_BAD_PARAM_ERROR);
 
@@ -410,6 +446,13 @@ cr_rgb_set_from_rgb (CRRgb * a_this, CRRgb * a_rgb)
         return CR_OK;
 }
 
+/**
+ * cr_rgb_set_from_name:
+ * @a_this: the current instance of #CRRgb
+ * @a_color_name: the color name
+ * 
+ * Returns CR_OK upon successful completion, an error code otherwise.
+ */
 enum CRStatus
 cr_rgb_set_from_name (CRRgb * a_this, const guchar * a_color_name)
 {
@@ -433,6 +476,13 @@ cr_rgb_set_from_name (CRRgb * a_this, const guchar * a_color_name)
         return status;
 }
 
+/**
+ * cr_rgb_set_from_hex_str:
+ * @a_this: the current instance of #CRRgb
+ * @a_hex: the hexadecimal value to set.
+ *
+ * Returns CR_OK upon successful completion.
+ */
 enum CRStatus
 cr_rgb_set_from_hex_str (CRRgb * a_this, const guchar * a_hex)
 {
@@ -488,9 +538,13 @@ cr_rgb_set_from_hex_str (CRRgb * a_this, const guchar * a_hex)
 }
 
 /**
+ * cr_rgb_set_from_term:
+ *@a_this: the instance of #CRRgb to set
+ *@a_value: the terminal from which to set
+ *
  *Set the rgb from a terminal symbol
- *@param a_this the instance of #CRRgb to set
- *@param a_value the terminal from which to set
+ *
+ * Returns CR_OK upon successful completion, an error code otherwise.
  */
 enum CRStatus
 cr_rgb_set_from_term (CRRgb *a_this, const struct _CRTerm *a_value)
@@ -544,7 +598,7 @@ cr_rgb_set_from_term (CRRgb *a_this, const struct _CRTerm *a_value)
 }
 
 enum CRStatus 
-cr_rgb_copy (CRRgb *a_dest, CRRgb*a_src)
+cr_rgb_copy (CRRgb *a_dest, CRRgb const *a_src)
 {
         g_return_val_if_fail (a_dest && a_src,
                               CR_BAD_PARAM_ERROR) ;
@@ -554,9 +608,11 @@ cr_rgb_copy (CRRgb *a_dest, CRRgb*a_src)
 }
 
 /**
- *Destructor of #CRRgb.
- *@param a_this the "this pointer" of the
+ * cr_rgb_destroy:
+ *@a_this: the "this pointer" of the
  *current instance of #CRRgb.
+ *
+ *Destructor of #CRRgb.
  */
 void
 cr_rgb_destroy (CRRgb * a_this)
@@ -566,13 +622,16 @@ cr_rgb_destroy (CRRgb * a_this)
 }
 
 /**
+ * cr_rgb_parse_from_buf:
+ *@a_str: a string that contains a color description
+ *@a_enc: the encoding of a_str
+ *
  *Parses a text buffer that contains a rgb color
  *
- *@param a_str a string that contains a color description
- *@param a_enc the encoding of a_str
- *@return the parsed color, or NULL in case of error
+ *Returns the parsed color, or NULL in case of error
  */
-CRRgb *cr_rgb_parse_from_buf (const guchar *a_str,
+CRRgb *
+cr_rgb_parse_from_buf (const guchar *a_str,
                               enum CREncoding a_enc)
 {
 	enum CRStatus status = CR_OK ;
@@ -612,6 +671,4 @@ cleanup:
 	}
 	return result ;
 }
-	  
 
-	

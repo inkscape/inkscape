@@ -25,7 +25,6 @@
 
 #ifndef __CR_FONTS_H__
 #define __CR_FONTS_H__
-#endif
 
 #include "cr-utils.h"
 #include "cr-num.h"
@@ -236,7 +235,7 @@ cr_font_family_append (CRFontFamily *a_this,
 		       CRFontFamily *a_family_to_append) ;
 
 guchar *
-cr_font_family_to_string (CRFontFamily *a_this,
+cr_font_family_to_string (CRFontFamily const *a_this,
                           gboolean a_walk_font_family_list) ;
 
 CRFontFamily *
@@ -259,7 +258,7 @@ CRFontSize * cr_font_size_new (void) ;
 enum CRStatus cr_font_size_clear (CRFontSize *a_this) ;
 
 enum CRStatus cr_font_size_copy (CRFontSize *a_dst, 
-                                 CRFontSize *a_src) ;
+                                 CRFontSize const *a_src) ;
 enum CRStatus cr_font_size_set_predefined_absolute_font_size (CRFontSize *a_this, 
                                                               enum CRPredefinedAbsoluteFontSize a_predefined) ;
 enum CRStatus cr_font_size_set_relative_font_size (CRFontSize *a_this,
@@ -271,9 +270,9 @@ enum CRStatus cr_font_size_set_absolute_font_size (CRFontSize *a_this,
 
 enum CRStatus cr_font_size_set_to_inherit (CRFontSize *a_this) ;
 
-gboolean cr_font_size_is_set_to_inherit (CRFontSize *a_this) ;
+gboolean cr_font_size_is_set_to_inherit (CRFontSize const *a_this) ;
 
-gchar* cr_font_size_to_string (CRFontSize *a_this) ;
+gchar* cr_font_size_to_string (CRFontSize const *a_this) ;
 
 void cr_font_size_destroy (CRFontSize *a_font_size) ;
 
@@ -283,7 +282,7 @@ void cr_font_size_destroy (CRFontSize *a_font_size) ;
 
 CRFontSizeAdjust * cr_font_size_adjust_new (void) ;
 
-gchar * cr_font_size_adjust_to_string (CRFontSizeAdjust *a_this) ;
+gchar * cr_font_size_adjust_to_string (CRFontSizeAdjust const *a_this) ;
 
 void cr_font_size_adjust_destroy (CRFontSizeAdjust *a_this) ;
 
@@ -312,3 +311,5 @@ const gchar * cr_font_variant_to_string (enum CRFontVariant a_code) ;
 const gchar * cr_font_stretch_to_string (enum CRFontStretch a_code) ;
 
 G_END_DECLS
+
+#endif

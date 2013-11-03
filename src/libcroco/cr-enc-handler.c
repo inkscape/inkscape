@@ -74,10 +74,13 @@ static CREncHandler gv_default_enc_handlers[] = {
 };
 
 /**
+ * cr_enc_handler_get_instance:
+ *@a_enc: the encoding of the Handler.
+ *
  *Gets the instance of encoding handler.
  *This function implements a singleton pattern.
- *@param a_enc the encoding of the Handler.
- *@return the instance of #CREncHandler.
+ *
+ *Returns the instance of #CREncHandler.
  */
 CREncHandler *
 cr_enc_handler_get_instance (enum CREncoding a_enc)
@@ -95,12 +98,15 @@ cr_enc_handler_get_instance (enum CREncoding a_enc)
 }
 
 /**
+ * cr_enc_handler_resolve_enc_alias:
+ *@a_alias_name: the encoding name.
+ *@a_enc: output param. The returned encoding type
+ *or 0 if the alias is not supported.
+ *
  *Given an encoding name (called an alias name)
  *the function returns the matching encoding type.
- *@param a_alias_name the encoding name
- *@param a_enc output param. The returned encoding type
- *or 0 if the alias is not supported.
- *@return CR_OK upon successfull completion, an error code otherwise.
+ *
+ *Returns CR_OK upon successfull completion, an error code otherwise.
  */
 enum CRStatus
 cr_enc_handler_resolve_enc_alias (const guchar * a_alias_name,
@@ -126,16 +132,19 @@ cr_enc_handler_resolve_enc_alias (const guchar * a_alias_name,
 }
 
 /**
- *Converts a raw input buffer into an utf8 buffer.
- *@param a_this the current instance of #CREncHandler.
- *@param a_in the input buffer to convert.
- *@param a_in_len in/out parameter. The len of the input
+ * cr_enc_handler_convert_input:
+ *@a_this: the current instance of #CREncHandler.
+ *@a_in: the input buffer to convert.
+ *@a_in_len: in/out parameter. The len of the input
  *buffer to convert. After return, contains the number of
  *bytes actually consumed.
- *@param @a_out output parameter. The converted output buffer.
+ *@a_out: output parameter. The converted output buffer.
  *Must be freed by the buffer.
- *@param a_out_len output parameter. The length of the output buffer.
- *@return CR_OK upon successfull completion, an error code otherwise.
+ *@a_out_len: output parameter. The length of the output buffer.
+ *
+ *Converts a raw input buffer into an utf8 buffer.
+ *
+ *Returns CR_OK upon successfull completion, an error code otherwise.
  */
 enum CRStatus
 cr_enc_handler_convert_input (CREncHandler * a_this,

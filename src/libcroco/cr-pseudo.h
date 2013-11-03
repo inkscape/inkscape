@@ -53,9 +53,9 @@ struct _CRPseudo
 
 CRPseudo * cr_pseudo_new (void) ;
 
-guchar * cr_pseudo_to_string (CRPseudo *a_this) ;
+guchar * cr_pseudo_to_string (CRPseudo const *a_this) ;
 
-void cr_pseudo_dump (CRPseudo *a_this, FILE *a_fp) ;
+void cr_pseudo_dump (CRPseudo const *a_this, FILE *a_fp) ;
 
 void cr_pseudo_destroy (CRPseudo *a_this) ;
 

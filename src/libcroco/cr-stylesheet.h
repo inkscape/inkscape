@@ -84,10 +84,10 @@ struct _CRStyleSheet
 
 CRStyleSheet * cr_stylesheet_new (CRStatement *a_stmts) ;
 
-gchar * cr_stylesheet_to_string (CRStyleSheet *a_this) ;
-void cr_stylesheet_dump (CRStyleSheet *a_this, FILE *a_fp) ;
+gchar * cr_stylesheet_to_string (CRStyleSheet const *a_this) ;
+void cr_stylesheet_dump (CRStyleSheet const *a_this, FILE *a_fp) ;
 
-gint cr_stylesheet_nr_rules (CRStyleSheet *a_this) ;
+gint cr_stylesheet_nr_rules (CRStyleSheet const *a_this) ;
 
 CRStatement * cr_stylesheet_statement_get_from_list (CRStyleSheet *a_this, int itemnr) ;
 

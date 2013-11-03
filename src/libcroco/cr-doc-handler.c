@@ -1,4 +1,4 @@
-/* -*- Mode: C; indent-tabs-mode: ni; c-basic-offset: 8 -*- */
+/* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
 
 /*
  * This file is part of The Croco Library
@@ -25,7 +25,8 @@
 #include "cr-parser.h"
 
 /**
- *@file
+ *@CRDocHandler:
+ *
  *The definition of the CRDocHandler class.
  *Contains methods to instantiate, destroy,
  *and initialyze instances of #CRDocHandler
@@ -58,9 +59,12 @@ struct _CRDocHandlerPriv {
 };
 
 /**
+ * cr_doc_handler_new:
  *Constructor of #CRDocHandler.
- *@return the newly built instance of
+ *
+ *Returns the newly built instance of
  *#CRDocHandler
+ *
  */
 CRDocHandler *
 cr_doc_handler_new (void)
@@ -70,6 +74,7 @@ cr_doc_handler_new (void)
         g_return_val_if_fail (result, NULL);
 
         memset (result, 0, sizeof (CRDocHandler));
+        result->ref_count++;
 
         result->priv =  (CRDocHandlerPriv *)g_try_malloc (sizeof (CRDocHandlerPriv));
         if (!result->priv) {
@@ -84,15 +89,17 @@ cr_doc_handler_new (void)
 }
 
 /**
- *Returns the private parsing context.
+ * cr_doc_handler_get_ctxt:
+ *@a_this: the current instance of #CRDocHandler.
+ *@a_ctxt: out parameter. The new parsing context.
+ *
+ *Gets the private parsing context associated to the document handler
  *The private parsing context is used by libcroco only.
- *@param a_this the current instance of #CRDocHandler.
- *@param a_ctxt out parameter. The new parsing context.
- *@return CR_OK upon successfull completion, an error code otherwise.
- *@return the parsing context, or NULL if an error occured.
+ *
+ *Returns CR_OK upon successfull completion, an error code otherwise.
  */
 enum CRStatus
-cr_doc_handler_get_ctxt (CRDocHandler * a_this, gpointer * a_ctxt)
+cr_doc_handler_get_ctxt (CRDocHandler const * a_this, gpointer * a_ctxt)
 {
         g_return_val_if_fail (a_this && a_this->priv, CR_BAD_PARAM_ERROR);
 
@@ -102,11 +109,13 @@ cr_doc_handler_get_ctxt (CRDocHandler * a_this, gpointer * a_ctxt)
 }
 
 /**
+ * cr_doc_handler_set_ctxt:
+ *@a_this: the current instance of #CRDocHandler
+ *@a_ctxt: a pointer to the parsing context.
+ *
  *Sets the private parsing context.
  *This is used by libcroco only.
- *@param a_this the current instance of #CRDocHandler
- *@param a_ctxt a pointer to the parsing context.
- *@return CR_OK upon successfull completion, an error code otherwise.
+ *Returns CR_OK upon successfull completion, an error code otherwise.
  */
 enum CRStatus
 cr_doc_handler_set_ctxt (CRDocHandler * a_this, gpointer a_ctxt)
@@ -117,14 +126,17 @@ cr_doc_handler_set_ctxt (CRDocHandler * a_this, gpointer a_ctxt)
 }
 
 /**
- *Returns the private parsing result.
+ * cr_doc_handler_get_result:
+ *@a_this: the current instance of #CRDocHandler
+ *@a_result: out parameter. The returned result.
+ *
+ *Gets the private parsing result.
  *The private parsing result is used by libcroco only.
- *@param a_this the current instance of #CRDocHandler
- *@param a_result out parameter. The returned result.
- *@return CR_OK upon successfull completion, an error code otherwise.
+ *
+ *Returns CR_OK upon successfull completion, an error code otherwise.
  */
 enum CRStatus
-cr_doc_handler_get_result (CRDocHandler * a_this, gpointer * a_result)
+cr_doc_handler_get_result (CRDocHandler const * a_this, gpointer * a_result)
 {
         g_return_val_if_fail (a_this && a_this->priv, CR_BAD_PARAM_ERROR);
 
@@ -134,11 +146,14 @@ cr_doc_handler_get_result (CRDocHandler * a_this, gpointer * a_result)
 }
 
 /**
+ * cr_doc_handler_set_result:
+ *@a_this: the current instance of #CRDocHandler
+ *@a_result: the new result.
+ *
  *Sets the private parsing context.
  *This is used by libcroco only.
- *@param a_this the current instance of #CRDocHandler
- *@param a_result the new result.
- *@return CR_OK upon successfull completion, an error code otherwise.
+ *
+ *Returns CR_OK upon successfull completion, an error code otherwise.
  */
 enum CRStatus
 cr_doc_handler_set_result (CRDocHandler * a_this, gpointer a_result)
@@ -149,14 +164,16 @@ cr_doc_handler_set_result (CRDocHandler * a_this, gpointer a_result)
 }
 
 /**
+ *cr_doc_handler_set_default_sac_handler:
+ *@a_this: a pointer to the current instance of #CRDocHandler.
+ *
  *Sets the sac handlers contained in the current
  *instance of DocHandler to the default handlers.
  *For the time being the default handlers are
  *test handlers. This is expected to change in a
  *near future, when the libcroco gets a bit debugged.
  *
- *@param a_this a pointer to the current instance of #CRDocHandler.
- *@return CR_OK upon successfull completion, an error code otherwise.
+ *Returns CR_OK upon successfull completion, an error code otherwise.
  */
 enum CRStatus
 cr_doc_handler_set_default_sac_handler (CRDocHandler * a_this)
@@ -184,8 +201,8 @@ cr_doc_handler_set_default_sac_handler (CRDocHandler * a_this)
 }
 
 /**
- *Increases the reference count of the doc handler
- *@param a_this the current instance of #CRDocHandler.
+ * cr_doc_handler_ref:
+ *@a_this: the current instance of #CRDocHandler.
  */
 void
 cr_doc_handler_ref (CRDocHandler * a_this)
@@ -196,10 +213,13 @@ cr_doc_handler_ref (CRDocHandler * a_this)
 }
 
 /**
+ * cr_doc_handler_unref:
+ *@a_this: the currrent instance of #CRDocHandler.
+ *
  *Decreases the ref count of the current instance of #CRDocHandler.
  *If the ref count reaches '0' then, destroys the instance.
- *@param a_this the currrent instance of #CRDocHandler.
- *@return TRUE if the instance as been destroyed, FALSE otherwise.
+ *
+ *Returns TRUE if the instance as been destroyed, FALSE otherwise.
  */
 gboolean
 cr_doc_handler_unref (CRDocHandler * a_this)
@@ -218,9 +238,11 @@ cr_doc_handler_unref (CRDocHandler * a_this)
 }
 
 /**
- *The destructor of the #CRDocHandler class.
- *@param a_this the instance of #CRDocHandler to
+ * cr_doc_handler_destroy:
+ *@a_this: the instance of #CRDocHandler to
  *destroy.
+ *
+ *The destructor of the #CRDocHandler class.
  */
 void
 cr_doc_handler_destroy (CRDocHandler * a_this)
@@ -235,9 +257,11 @@ cr_doc_handler_destroy (CRDocHandler * a_this)
 }
 
 /**
+ * cr_doc_handler_associate_a_parser:
  *Associates a parser to the current document handler
- *@param a_this the current instance of document handler.
- *@param a_parser the parser to associate.
+ *
+ *@a_this: the current instance of document handler.
+ *@a_parser: the parser to associate.
  */
 void
 cr_doc_handler_associate_a_parser (CRDocHandler *a_this,

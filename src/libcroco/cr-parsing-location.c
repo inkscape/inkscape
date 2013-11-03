@@ -1,4 +1,4 @@
-/* -*- Mode: C; indent-tabs-mode: ni; c-basic-offset: 8 -*- */
+/* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
 
 /*
  * This file is part of The Croco Library
@@ -25,14 +25,17 @@
 #include "cr-parsing-location.h"
 
 /**
- *@file
+ *@CRParsingLocation:
+ *
  *Definition of the #CRparsingLocation class.
  */
 
 
 /**
+ * cr_parsing_location_new:
  *Instanciates a new parsing location.
- *@return the newly instanciated #CRParsingLocation.
+ *
+ *Returns the newly instanciated #CRParsingLocation.
  *Must be freed by cr_parsing_location_destroy()
  */
 CRParsingLocation * 
@@ -49,9 +52,12 @@ cr_parsing_location_new (void)
 }
 
 /**
+ * cr_parsing_location_init:
+ *@a_this: the current instance of #CRParsingLocation.
+ *
  *Initializes the an instance of #CRparsingLocation.
- *@param a_this the current instance of #CRParsingLocation.
- *@return CR_OK upon
+ *
+ *Returns CR_OK upon succesful completion, an error code otherwise.
  */
 enum CRStatus 
 cr_parsing_location_init (CRParsingLocation *a_this)
@@ -63,16 +69,19 @@ cr_parsing_location_init (CRParsingLocation *a_this)
 }
 
 /**
- *Copies an instance of CRParsingLocation into another one.
- *@param a_to the destination of the copy. 
+ * cr_parsing_location_copy:
+ *@a_to: the destination of the copy. 
  *Must be allocated by the caller.
- *@param a_from the source of the copy.
- *@return CR_OK upon succesful completion, an error code
+ *@a_from: the source of the copy.
+ *
+ *Copies an instance of CRParsingLocation into another one.
+ *
+ *Returns CR_OK upon succesful completion, an error code
  *otherwise.
  */
 enum CRStatus 
 cr_parsing_location_copy (CRParsingLocation *a_to,
-			  CRParsingLocation *a_from)
+			  CRParsingLocation const *a_from)
 {
 	g_return_val_if_fail (a_to && a_from, CR_BAD_PARAM_ERROR) ;
 
@@ -81,13 +90,15 @@ cr_parsing_location_copy (CRParsingLocation *a_to,
 }
 
 /**
- *@param a_this the current instance of #CRParsingLocation.
- *@param a_mask a bitmap that defines which parts of the
+ * cr_parsing_location_to_string:
+ *@a_this: the current instance of #CRParsingLocation.
+ *@a_mask: a bitmap that defines which parts of the
  *parsing location are to be serialized (line, column or byte offset)
- *@return the serialized string or NULL in case of an error.
+ *
+ *Returns the serialized string or NULL in case of an error.
  */
 gchar * 
-cr_parsing_location_to_string (CRParsingLocation *a_this,
+cr_parsing_location_to_string (CRParsingLocation const *a_this,
 			       enum CRParsingLocationSerialisationMask a_mask)
 {
 	gchar *str = NULL ;
@@ -122,8 +133,14 @@ cr_parsing_location_to_string (CRParsingLocation *a_this,
 	return str ;
 }
 
+/**
+ * cr_parsing_location_dump:
+ * @a_this: current instance of #CRParsingLocation
+ * @a_mask: the serialization mask.
+ * @a_fp: the file pointer to dump the parsing location to.
+ */
 void
-cr_parsing_location_dump (CRParsingLocation *a_this,
+cr_parsing_location_dump (CRParsingLocation const *a_this,
 			  enum CRParsingLocationSerialisationMask a_mask,
 			  FILE *a_fp)
 {
@@ -139,9 +156,11 @@ cr_parsing_location_dump (CRParsingLocation *a_this,
 }
 
 /**
- *Destroys the current instance of #CRParsingLocation
- *@param a_this the current instance of #CRParsingLocation. Must
+ * cr_parsing_location_destroy:
+ *@a_this: the current instance of #CRParsingLocation. Must
  *have been allocated with cr_parsing_location_new().
+ *
+ *Destroys the current instance of #CRParsingLocation
  */
 void 
 cr_parsing_location_destroy (CRParsingLocation *a_this)

@@ -53,7 +53,7 @@ CRPropList *  cr_prop_list_prepend2 (CRPropList *a_this,
 enum CRStatus cr_prop_list_set_prop (CRPropList *a_this,
 				     CRString *a_prop) ;
 
-enum CRStatus cr_prop_list_get_prop (CRPropList *a_this,
+enum CRStatus cr_prop_list_get_prop (CRPropList const *a_this,
 				     CRString **a_prop) ;
 
 enum CRStatus cr_prop_list_lookup_prop (CRPropList *a_this,
@@ -67,7 +67,7 @@ CRPropList * cr_prop_list_get_prev (CRPropList *a_this) ;
 enum CRStatus cr_prop_list_set_decl (CRPropList *a_this,
 				     CRDeclaration *a_decl);
 
-enum CRStatus cr_prop_list_get_decl (CRPropList *a_this,
+enum CRStatus cr_prop_list_get_decl (CRPropList const *a_this,
 				     CRDeclaration **a_decl) ;
 
 CRPropList * cr_prop_list_unlink (CRPropList *a_this, 

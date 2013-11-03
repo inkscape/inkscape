@@ -22,11 +22,6 @@
  */
 
 
-/**
- *@file
- *This file holds the declaration of the
- *#CRAddSel class. 
- */
 #ifndef __CR_ADD_SEL_H__
 #define __CR_ADD_SEL_H__
 
@@ -58,15 +53,6 @@ union CRAdditionalSelectorContent
 
 typedef struct _CRAdditionalSel CRAdditionalSel ;
 
-/**
- *#CRAdditionalSel abstracts
- *an additionnal selector.
- *An additional selector is the selector part
- *that comes after the combination of type selectors.
- *It can be either "a class selector (the .class part),
- *a pseudo class selector, an attribute selector 
- *or an id selector.
- */
 struct _CRAdditionalSel
 {
         enum AddSelectorType type ;
@@ -99,11 +85,11 @@ void cr_additional_sel_set_attr_sel (CRAdditionalSel *a_this,
 CRAdditionalSel * cr_additional_sel_prepend (CRAdditionalSel *a_this, 
                                              CRAdditionalSel *a_sel) ;
 
-guchar * cr_additional_sel_to_string (CRAdditionalSel *a_this) ;
+guchar * cr_additional_sel_to_string (CRAdditionalSel const *a_this) ;
 
-guchar * cr_additional_sel_one_to_string (CRAdditionalSel *a_this) ;
+guchar * cr_additional_sel_one_to_string (CRAdditionalSel const *a_this) ;
 
-void cr_additional_sel_dump (CRAdditionalSel *a_this, FILE *a_fp) ;
+void cr_additional_sel_dump (CRAdditionalSel const *a_this, FILE *a_fp) ;
 
 void cr_additional_sel_destroy (CRAdditionalSel *a_this) ;
 

@@ -169,13 +169,13 @@ CRTerm * cr_term_append_term (CRTerm *a_this, CRTerm *a_new_term) ;
 
 CRTerm * cr_term_prepend_term (CRTerm *a_this, CRTerm *a_new_term) ;
 
-guchar * cr_term_to_string (CRTerm *a_this) ;
+guchar * cr_term_to_string (CRTerm const *a_this) ;
 
-guchar * cr_term_one_to_string (CRTerm * a_this) ;
+guchar * cr_term_one_to_string (CRTerm const * a_this) ;
 
-void cr_term_dump (CRTerm *a_this, FILE *a_fp) ;
+void cr_term_dump (CRTerm const *a_this, FILE *a_fp) ;
 
-int cr_term_nr_values (CRTerm *a_this) ;
+int cr_term_nr_values (CRTerm const *a_this) ;
 
 CRTerm * cr_term_get_from_list (CRTerm *a_this, int itemnr) ;
 

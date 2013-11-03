@@ -1,4 +1,4 @@
-/* -*- Mode: C; indent-tabs-mode: ni; c-basic-offset: 8 -*- */
+/* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
 
 /*
  * This file is part of The Croco Library
@@ -25,10 +25,14 @@
 #include "cr-parser.h"
 
 /**
- *Creates a new instance of #CRSelector.
- *@param a_simple_sel the initial simple selector list
+ * cr_selector_new:
+ *
+ *@a_simple_sel: the initial simple selector list
  *of the current instance of #CRSelector.
- *@return the newly built instance of #CRSelector, or
+ *
+ *Creates a new instance of #CRSelector.
+ *
+ *Returns the newly built instance of #CRSelector, or
  *NULL in case of failure.
  */
 CRSelector *
@@ -60,10 +64,14 @@ cr_selector_parse_from_buf (const guchar * a_char_buf, enum CREncoding a_enc)
 }
 
 /**
+ * cr_selector_append:
+ *
+ *@a_this: the current instance of #CRSelector.
+ *@a_new: the instance of #CRSelector to be appended.
+ *
  *Appends a new instance of #CRSelector to the current selector list.
- *@param a_this the current instance of #CRSelector.
- *@param a_new the instance of #CRSelector to be appended.
- *@return the new list.
+ *
+ *Returns the new list.
  */
 CRSelector *
 cr_selector_append (CRSelector * a_this, CRSelector * a_new)
@@ -84,10 +92,14 @@ cr_selector_append (CRSelector * a_this, CRSelector * a_new)
 }
 
 /**
+ * cr_selector_prepend:
+ *
+ *@a_this: the current instance of #CRSelector list.
+ *@a_new: the instance of #CRSelector.
+ *
  *Prepends an element to the #CRSelector list.
- *@param a_this the current instance of #CRSelector list.
- *@param a_new the instance of #CRSelector.
- *@return the new list.
+ * 
+ *Returns the new list.
  */
 CRSelector *
 cr_selector_prepend (CRSelector * a_this, CRSelector * a_new)
@@ -103,10 +115,14 @@ cr_selector_prepend (CRSelector * a_this, CRSelector * a_new)
 }
 
 /**
+ * cr_selector_append_simple_sel:
+ *
+ *@a_this: the current instance of #CRSelector.
+ *@a_simple_sel: the simple selector to append.
+ *
  *append a simple selector to the current #CRSelector list.
- *@param a_this the current instance of #CRSelector.
- *@param a_simple_sel the simple selector to append.
- *@return the new list or NULL in case of failure.
+ *
+ *Returns the new list or NULL in case of failure.
  */
 CRSelector *
 cr_selector_append_simple_sel (CRSelector * a_this,
@@ -121,7 +137,7 @@ cr_selector_append_simple_sel (CRSelector * a_this,
 }
 
 guchar *
-cr_selector_to_string (CRSelector * a_this)
+cr_selector_to_string (CRSelector const * a_this)
 {
         guchar *result = NULL;
 
@@ -129,7 +145,7 @@ cr_selector_to_string (CRSelector * a_this)
         g_return_val_if_fail (str_buf, NULL);
 
         if (a_this) {
-                CRSelector *cur = NULL;
+                CRSelector const *cur = NULL;
 
                 for (cur = a_this; cur; cur = cur->next) {
                         if (cur->simple_sel) {
@@ -162,12 +178,15 @@ cr_selector_to_string (CRSelector * a_this)
 }
 
 /**
+ * cr_selector_dump:
+ *
+ *@a_this: the current instance of #CRSelector.
+ *@a_fp: the destination file.
+ *
  *Serializes the current instance of #CRSelector to a file.
- *@param a_this the current instance of #CRSelector.
- *@param a_fp the destination file.
  */
 void
-cr_selector_dump (CRSelector * a_this, FILE * a_fp)
+cr_selector_dump (CRSelector const * a_this, FILE * a_fp)
 {
         guchar *tmp_buf = NULL;
 
@@ -182,9 +201,12 @@ cr_selector_dump (CRSelector * a_this, FILE * a_fp)
 }
 
 /**
+ * cr_selector_ref:
+ *
+ *@a_this: the current instance of #CRSelector.
+ *
  *Increments the ref count of the current instance
  *of #CRSelector.
- *@param a_this the current instance of #CRSelector.
  */
 void
 cr_selector_ref (CRSelector * a_this)
@@ -195,12 +217,16 @@ cr_selector_ref (CRSelector * a_this)
 }
 
 /**
+ * cr_selector_unref:
+ *
+ *@a_this: the current instance of #CRSelector.
+ *
  *Decrements the ref count of the current instance of
  *#CRSelector.
  *If the ref count reaches zero, the current instance of
  *#CRSelector is destroyed.
- *@param a_this the current instance of #CRSelector.
- *@return TRUE if this function destroyed the current instance
+ *
+ *Returns TRUE if this function destroyed the current instance
  *of #CRSelector, FALSE otherwise.
  */
 gboolean
@@ -221,8 +247,11 @@ cr_selector_unref (CRSelector * a_this)
 }
 
 /**
+ * cr_selector_destroy:
+ *
+ *@a_this: the current instance of #CRSelector.
+ *
  *Destroys the selector list.
- *@param a_this the current instance of #CRSelector.
  */
 void
 cr_selector_destroy (CRSelector * a_this)

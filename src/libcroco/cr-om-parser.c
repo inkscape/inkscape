@@ -28,7 +28,8 @@
 #define UNUSED(_param) ((void)(_param))
 
 /**
- *@file
+ *@CROMParser:
+ *
  *The definition of the CSS Object Model Parser.
  *This parser uses (and sits) the SAC api of libcroco defined
  *in cr-parser.h and cr-doc-handler.h
@@ -773,9 +774,11 @@ unrecoverable_error (CRDocHandler * a_this)
  ********************************************/
 
 /**
+ * cr_om_parser_new:
+ *@a_input: the input stream.
+ *
  *Constructor of the CROMParser.
- *@param a_input the input stream.
- *@return the newly built instance of #CROMParser.
+ *Returns the newly built instance of #CROMParser.
  */
 CROMParser *
 cr_om_parser_new (CRInput * a_input)
@@ -824,13 +827,16 @@ cr_om_parser_new (CRInput * a_input)
 }
 
 /**
+ * cr_om_parser_parse_buf:
+ *@a_this: the current instance of #CROMParser.
+ *@a_buf: the in memory buffer to parse.
+ *@a_len: the length of the in memory buffer in number of bytes.
+ *@a_enc: the encoding of the in memory buffer.
+ *@a_result: out parameter the resulting style sheet
+ *
  *Parses the content of an in memory  buffer.
- *@param a_this the current instance of #CROMParser.
- *@param a_buf the in memory buffer to parse.
- *@param a_len the length of the in memory buffer in number of bytes.
- *@param a_enc the encoding of the in memory buffer.
- *@param a_result out parameter the resulting style sheet
- *@return CR_OK upon successfull completion, an error code otherwise.
+ *
+ *Returns CR_OK upon successfull completion, an error code otherwise.
  */
 enum CRStatus
 cr_om_parser_parse_buf (CROMParser * a_this,
@@ -871,12 +877,15 @@ cr_om_parser_parse_buf (CROMParser * a_this,
 }
 
 /**
+ * cr_om_parser_simply_parse_buf:
+ *@a_buf: the css2 in memory buffer.
+ *@a_len: the length of the in memory buffer.
+ *@a_enc: the encoding of the in memory buffer.
+ *@a_result: out parameter. The resulting css2 style sheet.
+ *
  *The simpler way to parse an in memory css2 buffer.
- *@param a_buf the css2 in memory buffer.
- *@param a_len the length of the in memory buffer.
- *@param a_enc the encoding of the in memory buffer.
- *@param a_result out parameter. The resulting css2 style sheet.
- *@return CR_OK upon successfull completion, an error code otherwise.
+ *
+ *Returns CR_OK upon successfull completion, an error code otherwise.
  */
 enum CRStatus
 cr_om_parser_simply_parse_buf (const guchar * a_buf,
@@ -906,16 +915,18 @@ cr_om_parser_simply_parse_buf (const guchar * a_buf,
 }
 
 /**
+ * cr_om_parser_parse_file:
+ *@a_this: the current instance of the cssom parser.
+ *@a_file_uri: the uri of the file. 
+ *(only local file paths are suppported so far)
+ *@a_enc: the encoding of the file.
+ *@a_result: out parameter. A pointer 
+ *the build css object model.
+ *
  *Parses a css2 stylesheet contained
  *in a file.
- *@param a_this the current instance of the cssom parser.
- *@param a_file_uri the uri of the file. 
- *(only local file paths are suppported so far)
- *@param a_enc the encoding of the file.
- *@param a_result out parameter. A pointer 
- *the build css object model.
- *@param CR_OK upon successfull completion, an error code
- *otherwise.
+ *
+ * Returns CR_OK upon succesful completion, an error code otherwise.
  */
 enum CRStatus
 cr_om_parser_parse_file (CROMParser * a_this,
@@ -955,12 +966,15 @@ cr_om_parser_parse_file (CROMParser * a_this,
 }
 
 /**
- *The simpler method to parse a css2 file.
- *@param a_file_path the css2 local file path.
- *@param a_enc the file encoding.
- *@param a_result out parameter. The returned css stylesheet.
+ * cr_om_parser_simply_parse_file:
+ *@a_file_path: the css2 local file path.
+ *@a_enc: the file encoding.
+ *@a_result: out parameter. The returned css stylesheet.
  *Must be freed by the caller using cr_stylesheet_destroy.
- *@return CR_OK upon successfull completion, an error code otherwise.
+ *
+ *The simpler method to parse a css2 file.
+ *
+ *Returns CR_OK upon successfull completion, an error code otherwise.
  *Note that this method uses cr_om_parser_parse_file() so both methods
  *have the same return values.
  */
@@ -990,14 +1004,18 @@ cr_om_parser_simply_parse_file (const guchar * a_file_path,
 }
 
 /**
- *Parses three sheets located by their paths and build a cascade
- *@param a_this the current instance of #CROMParser
- *@param a_author_path the path to the author stylesheet
- *@param a_user_path the path to the user stylesheet
- *@param a_ua_path the path to the User Agent stylesheet
- *@param a_result out parameter. The resulting cascade if the parsing
+ * cr_om_parser_parse_paths_to_cascade:
+ *@a_this: the current instance of #CROMParser
+ *@a_author_path: the path to the author stylesheet
+ *@a_user_path: the path to the user stylesheet
+ *@a_ua_path: the path to the User Agent stylesheet
+ *@a_encoding: the encoding of the sheets.
+ *@a_result: out parameter. The resulting cascade if the parsing
  *was okay
- *@return CR_OK upon successful completion, an error code otherwise
+ *
+ *Parses three sheets located by their paths and build a cascade
+ *
+ *Returns CR_OK upon successful completion, an error code otherwise
  */
 enum CRStatus
 cr_om_parser_parse_paths_to_cascade (CROMParser * a_this,
@@ -1017,7 +1035,7 @@ cr_om_parser_parse_paths_to_cascade (CROMParser * a_this,
 
         g_return_val_if_fail (a_this, CR_BAD_PARAM_ERROR);
 
-        memset (sheets, 0, sizeof (sheets));
+        memset (sheets, 0, sizeof (CRStyleSheet*) * 3);
         paths[0] = (guchar *) a_author_path;
         paths[1] = (guchar *) a_user_path;
         paths[2] = (guchar *) a_ua_path;
@@ -1046,13 +1064,17 @@ cr_om_parser_parse_paths_to_cascade (CROMParser * a_this,
 }
 
 /**
- *Parses three sheets located by their paths and build a cascade
- *@param a_author_path the path to the author stylesheet
- *@param a_user_path the path to the user stylesheet
- *@param a_ua_path the path to the User Agent stylesheet
- *@param a_result out parameter. The resulting cascade if the parsing
+ * cr_om_parser_simply_parse_paths_to_cascade:
+ *@a_author_path: the path to the author stylesheet
+ *@a_user_path: the path to the user stylesheet
+ *@a_ua_path: the path to the User Agent stylesheet
+ *@a_encoding: the encoding of the sheets.
+ *@a_result: out parameter. The resulting cascade if the parsing
  *was okay
- *@return CR_OK upon successful completion, an error code otherwise
+ *
+ *Parses three sheets located by their paths and build a cascade
+ *
+ *Returns CR_OK upon successful completion, an error code otherwise
  */
 enum CRStatus
 cr_om_parser_simply_parse_paths_to_cascade (const guchar * a_author_path,
@@ -1083,8 +1105,10 @@ cr_om_parser_simply_parse_paths_to_cascade (const guchar * a_author_path,
 }
 
 /**
+ * cr_om_parser_destroy:
+ *@a_this: the current instance of #CROMParser.
+ *
  *Destructor of the #CROMParser.
- *@param a_this the current instance of #CROMParser.
  */
 void
 cr_om_parser_destroy (CROMParser * a_this)

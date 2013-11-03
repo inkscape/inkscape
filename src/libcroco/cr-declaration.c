@@ -1,4 +1,4 @@
-/* -*- Mode: C; indent-tabs-mode: ni; c-basic-offset: 8 -*- */
+/* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
 
 /*
  * This file is part of The Croco Library
@@ -28,18 +28,21 @@
 #include "cr-parser.h"
 
 /**
- *@file
+ *@CRDeclaration:
+ *
  *The definition of the #CRDeclaration class.
  */
 
 /**
+ * dump:
+ *@a_this: the current instance of #CRDeclaration.
+ *@a_fp: the destination file pointer.
+ *@a_indent: the number of indentation white char. 
+ *
  *Dumps (serializes) one css declaration to a file.
- *@param a_this the current instance of #CRDeclaration.
- *@param a_fp the destination file pointer.
- *@param a_indent the number of indentation white char. 
  */
 static void
-dump (CRDeclaration * a_this, FILE * a_fp, glong a_indent)
+dump (CRDeclaration const * a_this, FILE * a_fp, glong a_indent)
 {
         g_return_if_fail (a_this);
 
@@ -52,11 +55,18 @@ dump (CRDeclaration * a_this, FILE * a_fp, glong a_indent)
 }
 
 /**
+ * cr_declaration_new:
+ * @a_statement: the statement this declaration belongs to. can be NULL.
+ *@a_property: the property string of the declaration
+ *@a_value: the value expression of the declaration.
  *Constructor of #CRDeclaration.
- *@param a_property the property string of the declaration
- *@param a_value the value expression of the declaration.
- *@return the newly built instance of #CRDeclaration, or NULL in
+ *
+ *Returns the newly built instance of #CRDeclaration, or NULL in
  *case of error.
+ *
+ *The returned CRDeclaration takes ownership of @a_property and @a_value.
+ *(E.g. cr_declaration_destroy on this CRDeclaration will also free
+ *@a_property and @a_value.)
  */
 CRDeclaration *
 cr_declaration_new (CRStatement * a_statement,
@@ -89,15 +99,16 @@ cr_declaration_new (CRStatement * a_statement,
 }
 
 /**
- *Parses a text buffer that contains
- *a css declaration.
- *
- *@param a_statement the parent css2 statement of this
+ * cr_declaration_parse_from_buf:
+ *@a_statement: the parent css2 statement of this
  *this declaration. Must be non NULL and of type
  *RULESET_STMT (must be a ruleset).
- *@param a_str the string that contains the statement.
- *@param a_enc the encoding of a_str.
- *@return the parsed declaration, or NULL in case of error.
+ *@a_str: the string that contains the statement.
+ *@a_enc: the encoding of a_str.
+ *
+ *Parses a text buffer that contains
+ *a css declaration.
+ *Returns the parsed declaration, or NULL in case of error.
  */
 CRDeclaration *
 cr_declaration_parse_from_buf (CRStatement * a_statement,
@@ -156,11 +167,13 @@ cr_declaration_parse_from_buf (CRStatement * a_statement,
 }
 
 /**
- *Parses a ';' separated list of properties declaration.
- *@param a_str the input buffer that contains the list of declaration to
+ * cr_declaration_parse_list_from_buf:
+ *@a_str: the input buffer that contains the list of declaration to
  *parse.
- *@param a_enc the encoding of a_str
- *@return the parsed list of declaration, NULL if parsing failed.
+ *@a_enc: the encoding of a_str
+ *
+ *Parses a ';' separated list of properties declaration.
+ *Returns the parsed list of declaration, NULL if parsing failed.
  */
 CRDeclaration *
 cr_declaration_parse_list_from_buf (const guchar * a_str,
@@ -269,10 +282,12 @@ cr_declaration_parse_list_from_buf (const guchar * a_str,
 }
 
 /**
+ * cr_declaration_append:
+ *@a_this: the current declaration list.
+ *@a_new: the declaration to append.
+ *
  *Appends a new declaration to the current declarations list.
- *@param a_this the current declaration list.
- *@param a_new the declaration to append.
- *@return the declaration list with a_new appended to it, or NULL
+ *Returns the declaration list with a_new appended to it, or NULL
  *in case of error.
  */
 CRDeclaration *
@@ -294,10 +309,13 @@ cr_declaration_append (CRDeclaration * a_this, CRDeclaration * a_new)
 }
 
 /**
+ * cr_declaration_unlink:
+ *@a_decls: the declaration to unlink.
+ *
  *Unlinks the declaration from the declaration list.
- *@param a_decl the declaration to unlink.
- *@return a pointer to the unlinked declaration in
  *case of a successfull completion, NULL otherwise.
+ *
+ *Returns a pointer to the unlinked declaration in
  */
 CRDeclaration *
 cr_declaration_unlink (CRDeclaration * a_decl)
@@ -369,10 +387,13 @@ cr_declaration_unlink (CRDeclaration * a_decl)
 }
 
 /**
- *prepends a declaration to the current declaration list.
- *@param a_this the current declaration list.
- *@param a_new the declaration to prepend.
- *@return the list with a_new prepended or NULL in case of error.
+ * cr_declaration_prepend:
+ * @a_this: the current declaration list.
+ * @a_new: the declaration to prepend.
+ *
+ * prepends a declaration to the current declaration list.
+ *
+ * Returns the list with a_new prepended or NULL in case of error.
  */
 CRDeclaration *
 cr_declaration_prepend (CRDeclaration * a_this, CRDeclaration * a_new)
@@ -393,11 +414,13 @@ cr_declaration_prepend (CRDeclaration * a_this, CRDeclaration * a_new)
 }
 
 /**
+ * cr_declaration_append2:
+ *@a_this: the current declaration list.
+ *@a_prop: the property string of the declaration to append.
+ *@a_value: the value of the declaration to append.
+ *
  *Appends a declaration to the current declaration list.
- *@param a_this the current declaration list.
- *@param a_prop the property string of the declaration to append.
- *@param a_value the value of the declaration to append.
- *@return the list with the new property appended to it, or NULL in
+ *Returns the list with the new property appended to it, or NULL in
  *case of an error.
  */
 CRDeclaration *
@@ -419,16 +442,20 @@ cr_declaration_append2 (CRDeclaration * a_this,
 }
 
 /**
+ * cr_declaration_dump:
+ *@a_this: the current instance of #CRDeclaration.
+ *@a_fp: the destination file.
+ *@a_indent: the number of indentation white char.
+ *@a_one_per_line: whether to put one declaration per line of not .
+ *
+ *
  *Dumps a declaration list to a file.
- *@param a_this the current instance of #CRDeclaration.
- *@param a_fp the destination file.
- *@param a_indent the number of indentation white char.
  */
 void
-cr_declaration_dump (CRDeclaration * a_this, FILE * a_fp, glong a_indent,
+cr_declaration_dump (CRDeclaration const * a_this, FILE * a_fp, glong a_indent,
                      gboolean a_one_per_line)
 {
-        CRDeclaration *cur = NULL;
+        CRDeclaration const *cur = NULL;
 
         g_return_if_fail (a_this);
 
@@ -444,13 +471,15 @@ cr_declaration_dump (CRDeclaration * a_this, FILE * a_fp, glong a_indent,
 }
 
 /**
+ * cr_declaration_dump_one:
+ *@a_this: the current instance of #CRDeclaration.
+ *@a_fp: the destination file.
+ *@a_indent: the number of indentation white char.
+ *
  *Dumps the first declaration of the declaration list to a file.
- *@param a_this the current instance of #CRDeclaration.
- *@param a_fp the destination file.
- *@param a_indent the number of indentation white char.
  */
 void
-cr_declaration_dump_one (CRDeclaration * a_this, FILE * a_fp, glong a_indent)
+cr_declaration_dump_one (CRDeclaration const * a_this, FILE * a_fp, glong a_indent)
 {
         g_return_if_fail (a_this);
 
@@ -458,13 +487,17 @@ cr_declaration_dump_one (CRDeclaration * a_this, FILE * a_fp, glong a_indent)
 }
 
 /**
- *Serializes the declaration into a string
- *@param a_this the current instance of #CRDeclaration.
- *@param a_indent the number of indentation white char
+ * cr_declaration_to_string:
+ *@a_this: the current instance of #CRDeclaration.
+ *@a_indent: the number of indentation white char
  *to put before the actual serialisation.
+ *
+ *Serializes the declaration into a string
+ *Returns the serialized form the declaration. The caller must
+ *free the string using g_free().
  */
 gchar *
-cr_declaration_to_string (CRDeclaration * a_this, gulong a_indent)
+cr_declaration_to_string (CRDeclaration const * a_this, gulong a_indent)
 {
         GString *stringue = NULL;
 
@@ -525,15 +558,17 @@ cr_declaration_to_string (CRDeclaration * a_this, gulong a_indent)
 }
 
 /**
- *Serializes the declaration list into a string
- *@param a_this the current instance of #CRDeclaration.
- *@param a_indent the number of indentation white char
+ * cr_declaration_list_to_string:
+ *@a_this: the current instance of #CRDeclaration.
+ *@a_indent: the number of indentation white char
  *to put before the actual serialisation.
+ *
+ *Serializes the declaration list into a string
  */
 guchar *
-cr_declaration_list_to_string (CRDeclaration * a_this, gulong a_indent)
+cr_declaration_list_to_string (CRDeclaration const * a_this, gulong a_indent)
 {
-        CRDeclaration *cur = NULL;
+        CRDeclaration const *cur = NULL;
         GString *stringue = NULL;
         gchar *str = NULL,
                 *result = NULL;
@@ -559,16 +594,20 @@ cr_declaration_list_to_string (CRDeclaration * a_this, gulong a_indent)
 }
 
 /**
- *Serializes the declaration list into a string
- *@param a_this the current instance of #CRDeclaration.
- *@param a_indent the number of indentation white char
+ * cr_declaration_list_to_string2:
+ *@a_this: the current instance of #CRDeclaration.
+ *@a_indent: the number of indentation white char
+ *@a_one_decl_per_line: whether to output one doc per line or not.
  *to put before the actual serialisation.
+ *
+ *Serializes the declaration list into a string
+ *Returns the serialized form the declararation.
  */
 guchar *
-cr_declaration_list_to_string2 (CRDeclaration * a_this,
+cr_declaration_list_to_string2 (CRDeclaration const * a_this,
                                 gulong a_indent, gboolean a_one_decl_per_line)
 {
-        CRDeclaration *cur = NULL;
+        CRDeclaration const *cur = NULL;
         GString *stringue = NULL;
         gchar *str = NULL,
                 *result = NULL;
@@ -608,14 +647,14 @@ cr_declaration_list_to_string2 (CRDeclaration * a_this,
 }
 
 /**
- *Return the number of properties in the declaration;
- *@param a_this the current instance of #CRDeclaration.
- *@return number of properties in the declaration list.
+ * cr_declaration_nr_props:
+ *@a_this: the current instance of #CRDeclaration.
+ *Return the number of properties in the declaration
  */
 gint
-cr_declaration_nr_props (CRDeclaration * a_this)
+cr_declaration_nr_props (CRDeclaration const * a_this)
 {
-        CRDeclaration *cur = NULL;
+        CRDeclaration const *cur = NULL;
         int nr = 0;
 
         g_return_val_if_fail (a_this, -1);
@@ -626,10 +665,14 @@ cr_declaration_nr_props (CRDeclaration * a_this)
 }
 
 /**
+ * cr_declaration_get_from_list:
+ *@a_this: the current instance of #CRDeclaration.
+ *@itemnr: the index into the declaration list.
+ *
  *Use an index to get a CRDeclaration from the declaration list.
- *@param a_this the current instance of #CRDeclaration.
- *@param itemnr the index into the declaration list.
- *@return CRDeclaration at position itemnr, if itemnr > number of declarations - 1,
+ *
+ *Returns #CRDeclaration at position itemnr, 
+ *if itemnr > number of declarations - 1,
  *it will return NULL.
  */
 CRDeclaration *
@@ -647,10 +690,12 @@ cr_declaration_get_from_list (CRDeclaration * a_this, int itemnr)
 }
 
 /**
+ * cr_declaration_get_by_prop_name:
+ *@a_this: the current instance of #CRDeclaration.
+ *@a_prop: the property name to search for.
+ *
  *Use property name to get a CRDeclaration from the declaration list.
- *@param a_this the current instance of #CRDeclaration.
- *@param a_prop the property name to search for.
- *@return CRDeclaration with property name a_prop, or NULL if not found.
+ *Returns #CRDeclaration with property name a_prop, or NULL if not found.
  */
 CRDeclaration *
 cr_declaration_get_by_prop_name (CRDeclaration * a_this,
@@ -675,8 +720,10 @@ cr_declaration_get_by_prop_name (CRDeclaration * a_this,
 }
 
 /**
+ * cr_declaration_ref:
+ *@a_this: the current instance of #CRDeclaration.
+ *
  *Increases the ref count of the current instance of #CRDeclaration.
- *@param a_this the current instance of #CRDeclaration.
  */
 void
 cr_declaration_ref (CRDeclaration * a_this)
@@ -687,12 +734,14 @@ cr_declaration_ref (CRDeclaration * a_this)
 }
 
 /**
+ * cr_declaration_unref:
+ *@a_this: the current instance of #CRDeclaration.
+ *
  *Decrements the ref count of the current instance of #CRDeclaration.
  *If the ref count reaches zero, the current instance of #CRDeclaration
  *if destroyed.
- *@param a_this the current instance of #CRDeclaration.
- *@return TRUE if the current instance of #CRDeclaration has been destroyed
- *(ref count reached zero), FALSE otherwise.
+ *Returns TRUE if @a_this was destroyed (ref count reached zero),
+ *FALSE otherwise.
  */
 gboolean
 cr_declaration_unref (CRDeclaration * a_this)
@@ -711,8 +760,10 @@ cr_declaration_unref (CRDeclaration * a_this)
 }
 
 /**
+ * cr_declaration_destroy:
+ *@a_this: the current instance of #CRDeclaration.
+ *
  *Destructor of the declaration list.
- *@param a_this the current instance of #CRDeclaration.
  */
 void
 cr_declaration_destroy (CRDeclaration * a_this)
@@ -722,54 +773,29 @@ cr_declaration_destroy (CRDeclaration * a_this)
         g_return_if_fail (a_this);
 
         /*
-         *Go get the tail of the list.
-         *Meanwhile, free each property/value pair contained in the list.
+         * Go to the last element of the list.
          */
-        for (cur = a_this; cur && cur->next; cur = cur->next) {
-                if (cur->property) {
-                        cr_string_destroy (cur->property);
-                        cur->property = NULL;
-                }
+        for (cur = a_this; cur->next; cur = cur->next)
+                g_assert (cur->next->prev == cur);
 
-                if (cur->value) {
-                        cr_term_destroy (cur->value);
-                        cur->value = NULL;
-                }
-        }
-
-        if (cur) {
-                if (cur->property) {
-                        cr_string_destroy (cur->property);
-                        cur->property = NULL;
-                }
-
-                if (cur->value) {
-                        cr_term_destroy (cur->value);
-                        cur->value = NULL;
-                }
-        }
-
-        /*in case the list contains only one element */
-        if (cur && !cur->prev) {
-                g_free (cur);
-                return;
-        }
-
-        /*walk backward the list and free each "next" element */
-        for (cur = cur->prev; cur && cur->prev; cur = cur->prev) {
-                if (cur->next) {
-                        g_free (cur->next);
-                        cur->next = NULL;
-                }
-        }
-
-        if (!cur)
-                return;
-
-        if (cur->next) {
+        /*
+         * Walk backward the list and free each "next" element.
+         * Meanwhile, free each property/value pair contained in the list.
+         */
+        for (; cur; cur = cur->prev) {
                 g_free (cur->next);
                 cur->next = NULL;
+
+                if (cur->property) {
+                        cr_string_destroy (cur->property);
+                        cur->property = NULL;
+                }
+
+                if (cur->value) {
+                        cr_term_destroy (cur->value);
+                        cur->value = NULL;
+                }
         }
 
-        g_free (cur);
+        g_free (a_this);
 }

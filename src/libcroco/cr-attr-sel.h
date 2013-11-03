@@ -58,14 +58,14 @@ struct _CRAttrSel
 CRAttrSel * cr_attr_sel_new (void) ;
 
 enum CRStatus cr_attr_sel_append_attr_sel (CRAttrSel * a_this, 
-                                           CRAttrSel *a_new) ;
+                                           CRAttrSel *a_attr_sel) ;
 
 enum CRStatus cr_attr_sel_prepend_attr_sel (CRAttrSel *a_this, 
                                             CRAttrSel *a_attr_sel) ;
         
-guchar * cr_attr_sel_to_string (CRAttrSel *a_this) ;
+guchar * cr_attr_sel_to_string (CRAttrSel const *a_this) ;
 
-void cr_attr_sel_dump (CRAttrSel *a_this, FILE *a_fp) ;
+void cr_attr_sel_dump (CRAttrSel const *a_this, FILE *a_fp) ;
 
 void cr_attr_sel_destroy (CRAttrSel *a_this) ;
 

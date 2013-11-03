@@ -64,11 +64,11 @@ struct _CRString {
 CRString * cr_string_new (void) ;
 
 CRString  *cr_string_new_from_string (const gchar * a_string) ;
-CRString * cr_string_new_from_gstring (GString *a_string) ;
-CRString *cr_string_dup (CRString *a_this) ;
-gchar *cr_string_dup2 (CRString *a_this) ;
-const gchar *cr_string_peek_raw_str (CRString *a_this) ;
-gint cr_string_peek_raw_str_len (CRString *a_this) ;
+CRString * cr_string_new_from_gstring (GString const *a_string) ;
+CRString *cr_string_dup (CRString const *a_this) ;
+gchar *cr_string_dup2 (CRString const *a_this) ;
+const gchar *cr_string_peek_raw_str (CRString const *a_this) ;
+gint cr_string_peek_raw_str_len (CRString const *a_this) ;
 void cr_string_destroy (CRString *a_this) ;
 
 G_END_DECLS

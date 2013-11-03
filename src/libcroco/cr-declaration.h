@@ -1,4 +1,4 @@
-/* -*- Mode: C; indent-tabs-mode: ni; c-basic-offset: 8 -*- */
+/* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
 
 /*
  * This file is part of The Croco Library
@@ -100,14 +100,14 @@ CRDeclaration * cr_declaration_prepend (CRDeclaration *a_this,
 CRDeclaration * cr_declaration_unlink (CRDeclaration * a_decl) ;
 
 void
-cr_declaration_dump (CRDeclaration *a_this, 
+cr_declaration_dump (CRDeclaration const *a_this,
 		     FILE *a_fp, glong a_indent,
 		     gboolean a_one_per_line) ;
 
-void cr_declaration_dump_one (CRDeclaration *a_this, 
+void cr_declaration_dump_one (CRDeclaration const *a_this,
 			      FILE *a_fp, glong a_indent) ;
 
-gint cr_declaration_nr_props (CRDeclaration *a_this) ;
+gint cr_declaration_nr_props (CRDeclaration const *a_this) ;
 
 CRDeclaration * cr_declaration_get_from_list (CRDeclaration *a_this, 
 					      int itemnr) ;
@@ -115,13 +115,13 @@ CRDeclaration * cr_declaration_get_from_list (CRDeclaration *a_this,
 CRDeclaration * cr_declaration_get_by_prop_name (CRDeclaration *a_this, 
 						 const guchar *a_str) ;
 
-gchar * cr_declaration_to_string (CRDeclaration *a_this,
+gchar * cr_declaration_to_string (CRDeclaration const *a_this,
 				  gulong a_indent) ;
 
-guchar * cr_declaration_list_to_string (CRDeclaration *a_this,
+guchar * cr_declaration_list_to_string (CRDeclaration const *a_this,
 					gulong a_indent) ;
 
-guchar * cr_declaration_list_to_string2 (CRDeclaration *a_this,
+guchar * cr_declaration_list_to_string2 (CRDeclaration const *a_this,
 					 gulong a_indent,
 					 gboolean a_one_decl_per_line) ;
 

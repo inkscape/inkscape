@@ -46,6 +46,7 @@ cr_token_clear (CRToken * a_this)
         switch (a_this->type) {
         case S_TK:
         case CDO_TK:
+        case CDC_TK:
         case INCLUDES_TK:
         case DASHMATCH_TK:
         case PAGE_SYM_TK:

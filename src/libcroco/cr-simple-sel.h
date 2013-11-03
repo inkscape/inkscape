@@ -40,9 +40,9 @@ G_BEGIN_DECLS
 enum Combinator
 {
         NO_COMBINATOR,
-        COMB_WS,/*whitesape*/
-        COMB_PLUS,
-        COMB_GT/*greater than*/
+        COMB_WS,/*whitespace: descendent*/
+        COMB_PLUS,/*'+': preceded by*/
+        COMB_GT/*greater than ('>'): child*/
 } ;
 
 enum SimpleSelectorType
@@ -112,13 +112,13 @@ CRSimpleSel * cr_simple_sel_append_simple_sel (CRSimpleSel *a_this,
 CRSimpleSel * cr_simple_sel_prepend_simple_sel (CRSimpleSel *a_this, 
                                                 CRSimpleSel *a_sel) ;
 
-guchar * cr_simple_sel_to_string (CRSimpleSel *a_this) ;
+guchar * cr_simple_sel_to_string (CRSimpleSel const *a_this) ;
 
-guchar * cr_simple_sel_one_to_string (CRSimpleSel * a_this) ;
+guchar * cr_simple_sel_one_to_string (CRSimpleSel const * a_this) ;
 
-enum CRStatus cr_simple_sel_dump (CRSimpleSel *a_this, FILE *a_fp) ;
+enum CRStatus cr_simple_sel_dump (CRSimpleSel const *a_this, FILE *a_fp) ;
 
-enum CRStatus cr_simple_sel_dump_attr_sel_list (CRSimpleSel *a_this) ;
+enum CRStatus cr_simple_sel_dump_attr_sel_list (CRSimpleSel const *a_this) ;
 
 enum CRStatus cr_simple_sel_compute_specificity (CRSimpleSel *a_this) ;
 

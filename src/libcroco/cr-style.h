@@ -80,7 +80,7 @@ enum CRPositionType
         POSITION_RELATIVE,
         POSITION_ABSOLUTE,
         POSITION_FIXED,
-        POSITION_INHERIT,
+        POSITION_INHERIT
 } ;
 
 enum CRFloatType

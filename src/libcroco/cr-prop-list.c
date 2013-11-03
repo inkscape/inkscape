@@ -62,10 +62,13 @@ cr_prop_list_allocate (void)
  ***************/
 
 /**
+ * cr_prop_list_append:
+ *@a_this: the current instance of #CRPropList
+ *@a_to_append: the property list to append
+ *
  *Appends a property list to the current one.
- *@param a_this the current instance of #CRPropList
- *@param a_to_append the property list to append
- *@return the resulting prop list, or NULL if an error
+ *
+ *Returns the resulting prop list, or NULL if an error
  *occured
  */
 CRPropList *
@@ -89,12 +92,14 @@ cr_prop_list_append (CRPropList * a_this, CRPropList * a_to_append)
 }
 
 /**
+ * cr_prop_list_append2:
  *Appends a pair of prop/declaration to
  *the current prop list.
- *@param a_this the current instance of #CRPropList
- *@param a_prop the property to consider
- *@param a_decl the declaration to consider
- *@return the resulting property list, or NULL in case
+ *@a_this: the current instance of #CRPropList
+ *@a_prop: the property to consider
+ *@a_decl: the declaration to consider
+ *
+ *Returns the resulting property list, or NULL in case
  *of an error.
  */
 CRPropList *
@@ -118,9 +123,12 @@ cr_prop_list_append2 (CRPropList * a_this,
 }
 
 /**
+ * cr_prop_list_prepend:
+ *@a_this: the current instance of #CRPropList
+ *@a_to_prepend: the new list to prepend.
+ *
  *Prepends a list to the current list
- *@param a_this the current instance of #CRPropList
- *@param the new list to prepend.
+ *Returns the new properties list.
  */
 CRPropList *
 cr_prop_list_prepend (CRPropList * a_this, CRPropList * a_to_prepend)
@@ -141,32 +149,39 @@ cr_prop_list_prepend (CRPropList * a_this, CRPropList * a_to_prepend)
 }
 
 /**
- *Prepends a list to the current list
- *@param a_this the current instance of #CRPropList
- *@param the new list to prepend.
+ * cr_prop_list_prepend2:
+ *@a_this: the current instance of #CRPropList
+ *@a_prop_name: property name to append
+ *@a_decl: the property value to append.
+ *
+ *Prepends a propertie to a list of properties 
+ *
+ *Returns the new property list.
  */
 CRPropList *
 cr_prop_list_prepend2 (CRPropList * a_this,
-                       CRString * a_prop, CRDeclaration * a_decl)
+                       CRString * a_prop_name, CRDeclaration * a_decl)
 {
         CRPropList *list = NULL,
                 *result = NULL;
 
         g_return_val_if_fail (a_this && PRIVATE (a_this)
-                              && a_prop && a_decl, NULL);
+                              && a_prop_name && a_decl, NULL);
 
         list = cr_prop_list_allocate ();
         g_return_val_if_fail (list, NULL);
-        PRIVATE (list)->prop = a_prop;
+        PRIVATE (list)->prop = a_prop_name;
         PRIVATE (list)->decl = a_decl;
         result = cr_prop_list_prepend (a_this, list);
         return result;
 }
 
 /**
+ * cr_prop_list_set_prop:
+ *@a_this: the current instance of #CRPropList
+ *@a_prop: the property to set
+ *
  *Sets the property of a CRPropList
- *@param a_this the current instance of #CRPropList
- *@param a_prop the property to set
  */
 enum CRStatus
 cr_prop_list_set_prop (CRPropList * a_this, CRString * a_prop)
@@ -179,15 +194,18 @@ cr_prop_list_set_prop (CRPropList * a_this, CRString * a_prop)
 }
 
 /**
+ * cr_prop_list_get_prop:
+ *@a_this: the current instance of #CRPropList
+ *@a_prop: out parameter. The returned property
+ *
  *Getter of the property associated to the current instance
  *of #CRPropList
- *@param a_this the current instance of #CRPropList
- *@param a_prop out parameter. The returned property
- *@return CR_OK upon successful completion, an error code
+ *
+ *Returns CR_OK upon successful completion, an error code
  *otherwise.
  */
 enum CRStatus
-cr_prop_list_get_prop (CRPropList * a_this, CRString ** a_prop)
+cr_prop_list_get_prop (CRPropList const * a_this, CRString ** a_prop)
 {
         g_return_val_if_fail (a_this && PRIVATE (a_this)
                               && a_prop, CR_BAD_PARAM_ERROR);
@@ -196,6 +214,13 @@ cr_prop_list_get_prop (CRPropList * a_this, CRString ** a_prop)
         return CR_OK;
 }
 
+/**
+ * cr_prop_list_set_decl:
+ * @a_this: the current instance of #CRPropList
+ * @a_decl: the new property value.
+ *
+ * Returns CR_OK upon successful completion, an error code otherwise.
+ */
 enum CRStatus
 cr_prop_list_set_decl (CRPropList * a_this, CRDeclaration * a_decl)
 {
@@ -206,8 +231,15 @@ cr_prop_list_set_decl (CRPropList * a_this, CRDeclaration * a_decl)
         return CR_OK;
 }
 
+/**
+ * cr_prop_list_get_decl:
+ * @a_this: the current instance of #CRPropList
+ * @a_decl: out parameter. The property value
+ *
+ * Returns CR_OK upon successful completion.
+ */
 enum CRStatus
-cr_prop_list_get_decl (CRPropList * a_this, CRDeclaration ** a_decl)
+cr_prop_list_get_decl (CRPropList const * a_this, CRDeclaration ** a_decl)
 {
         g_return_val_if_fail (a_this && PRIVATE (a_this)
                               && a_decl, CR_BAD_PARAM_ERROR);
@@ -217,12 +249,15 @@ cr_prop_list_get_decl (CRPropList * a_this, CRDeclaration ** a_decl)
 }
 
 /**
- *Lookup a given property/declaration pair
- *@param a_this the current instance of #CRPropList
- *@param a_prop the property to lookup
- *@param a_prop_list out parameter. The property/declaration
+ * cr_prop_list_lookup_prop:
+ *@a_this: the current instance of #CRPropList
+ *@a_prop: the property to lookup
+ *@a_prop_list: out parameter. The property/declaration
  *pair found (if and only if the function returned code if CR_OK)
- *@return CR_OK if a prop/decl pair has been found,
+ *
+ *Lookup a given property/declaration pair
+ *
+ *Returns CR_OK if a prop/decl pair has been found,
  *CR_VALUE_NOT_FOUND_ERROR if not, or an error code if something
  *bad happens.
  */
@@ -259,11 +294,12 @@ cr_prop_list_lookup_prop (CRPropList * a_this,
 }
 
 /**
+ * cr_prop_list_get_next:
+ *@a_this: the current instance of CRPropList
+ *
  *Gets the next prop/decl pair in the list
- *@param a_this the current instance of CRPropList
- *@param the next prop/decl pair, or NULL if we
- *reached the end of the list.
- *@return the next prop/declaration pair of the list, 
+ *
+ *Returns the next prop/declaration pair of the list, 
  *or NULL if we reached end of list (or if an error occurs)
  */
 CRPropList *
@@ -275,11 +311,12 @@ cr_prop_list_get_next (CRPropList * a_this)
 }
 
 /**
+ * cr_prop_list_get_prev:
+ *@a_this: the current instance of CRPropList
+ *
  *Gets the previous prop/decl pair in the list
- *@param a_this the current instance of CRPropList
- *@param the previous prop/decl pair, or NULL if we
- *reached the end of the list.
- *@return the previous prop/declaration pair of the list, 
+ *
+ *Returns the previous prop/declaration pair of the list, 
  *or NULL if we reached end of list (or if an error occurs)
  */
 CRPropList *
@@ -291,10 +328,13 @@ cr_prop_list_get_prev (CRPropList * a_this)
 }
 
 /**
+ * cr_prop_list_unlink:
+ *@a_this: the current list of prop/decl pairs
+ *@a_pair: the prop/decl pair to unlink.
+ *
  *Unlinks a prop/decl pair from the list
- *@param a_this the current list of prop/decl pairs
- *@param a_pair the prop/decl pair to unlink.
- *@return the new list or NULL in case of an error.
+ *
+ *Returns the new list or NULL in case of an error.
  */
 CRPropList *
 cr_prop_list_unlink (CRPropList * a_this, CRPropList * a_pair)
@@ -330,6 +370,10 @@ cr_prop_list_unlink (CRPropList * a_this, CRPropList * a_pair)
         return a_this;
 }
 
+/**
+ * cr_prop_list_destroy:
+ * @a_this: the current instance of #CRPropList
+ */
 void
 cr_prop_list_destroy (CRPropList * a_this)
 {

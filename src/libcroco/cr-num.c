@@ -23,7 +23,8 @@
  */
 
 /**
- *@file
+ *@CRNum:
+ *
  *The definition
  *of the #CRNum class.
  */
@@ -32,9 +33,11 @@
 #include "string.h"
 
 /**
- *The default constructor of
+ * cr_num_new:
+ *
  *#CRNum.
- *@return the newly built instance of
+ *
+ *Returns the newly built instance of
  *#CRNum.
  */
 CRNum *
@@ -53,16 +56,14 @@ cr_num_new (void)
 }
 
 /**
- *A constructor of #CRNum.
- *@param a_is_natural indicates whether the intance of #CRNum is 
- *a natural number or not.
- *@param a_integer_part the integer part of the instance 
- *of #CRNum
- *@param a_decimal_part in case the instance of #CRNum
- *natural number (but a decimal one) this parameter
- *is the decimal part of the instance of #CRNum.
- *@return the newly built instance of #CRNum or
- *NULL if an error arises.
+ * cr_num_new_with_val:
+ * @a_val: the numerical value of the number.
+ * @a_type: the type of number.
+ * 
+ * A constructor of #CRNum.
+ *
+ * Returns the newly built instance of #CRNum or
+ * NULL if an error arises.
  */
 CRNum *
 cr_num_new_with_val (gdouble a_val, enum CRNumType a_type)
@@ -80,16 +81,16 @@ cr_num_new_with_val (gdouble a_val, enum CRNumType a_type)
 }
 
 /**
- *Returns the string representation of the
- *current instance of #CRNum.
- *@param a_this the current instance of #CRNum.
- *@return the newly built string representation
+ * cr_num_to_string:
+ *@a_this: the current instance of #CRNum.
+ *
+ *Returns the newly built string representation
  *of the current instance of #CRNum. The returned
  *string is NULL terminated. The caller *must*
  *free the returned string.
  */
 guchar *
-cr_num_to_string (CRNum * a_this)
+cr_num_to_string (CRNum const * a_this)
 {
         guchar *tmp_char1 = NULL,
                 *tmp_char2 = NULL,
@@ -201,16 +202,19 @@ cr_num_to_string (CRNum * a_this)
 }
 
 /**
- *Copies an instance of #CRNum.
- *@param a_src the instance of #CRNum to copy.
+ * cr_num_copy:
+ *@a_src: the instance of #CRNum to copy.
  *Must be non NULL.
- *@param a_dst the destination of the copy.
+ *@a_dest: the destination of the copy.
  *Must be non NULL
- *@return CR_OK upon successful completion, an
+ *
+ *Copies an instance of #CRNum.
+ *
+ *Returns CR_OK upon successful completion, an
  *error code otherwise.
  */
 enum CRStatus
-cr_num_copy (CRNum * a_dest, CRNum * a_src)
+cr_num_copy (CRNum * a_dest, CRNum const * a_src)
 {
         g_return_val_if_fail (a_dest && a_src, CR_BAD_PARAM_ERROR);
 
@@ -220,13 +224,16 @@ cr_num_copy (CRNum * a_dest, CRNum * a_src)
 }
 
 /**
+ * cr_num_dup:
+ *@a_this: the instance of #CRNum to duplicate.
+ *
  *Duplicates an instance of #CRNum
- *@param a_this the instance of #CRNum to duplicate.
- *@return the newly created (duplicated) instance of #CRNum.
+ *
+ *Returns the newly created (duplicated) instance of #CRNum.
  *Must be freed by cr_num_destroy().
  */
 CRNum *
-cr_num_dup (CRNum * a_this)
+cr_num_dup (CRNum const * a_this)
 {
         CRNum *result = NULL;
         enum CRStatus status = CR_OK;
@@ -243,11 +250,14 @@ cr_num_dup (CRNum * a_this)
 }
 
 /**
+ * cr_num_set:
  *Sets an instance of #CRNum.
- *@param a_this the current instance of #CRNum to be set.
- *@param a_val the new numerical value to be hold by the current
+ *@a_this: the current instance of #CRNum to be set.
+ *@a_val: the new numerical value to be hold by the current
  *instance of #CRNum
- *@param a_type the new type of #CRNum.
+ *@a_type: the new type of #CRNum.
+ *
+ * Returns CR_OK upon succesful completion, an error code otherwise.
  */
 enum CRStatus
 cr_num_set (CRNum * a_this, gdouble a_val, enum CRNumType a_type)
@@ -261,15 +271,19 @@ cr_num_set (CRNum * a_this, gdouble a_val, enum CRNumType a_type)
 }
 
 /**
+ * cr_num_is_fixed_length:
+ * @a_this: the current instance of #CRNum .
+ *
  *Tests if the current instance of #CRNum is a fixed
  *length value or not. Typically a fixed length value
  *is anything from NUM_LENGTH_EM to NUM_LENGTH_PC.
  *See the definition of #CRNumType to see what we mean.
- *@return TRUE if the instance of #CRNum is a fixed length number,
+ *
+ *Returns TRUE if the instance of #CRNum is a fixed length number,
  *FALSE otherwise.
  */
 gboolean
-cr_num_is_fixed_length (CRNum * a_this)
+cr_num_is_fixed_length (CRNum const * a_this)
 {
         gboolean result = FALSE;
 
@@ -283,9 +297,11 @@ cr_num_is_fixed_length (CRNum * a_this)
 }
 
 /**
- *The destructor of #CRNum.
- *@param a_this the this pointer of
+ * cr_num_destroy:
+ *@a_this: the this pointer of
  *the current instance of #CRNum.
+ *
+ *The destructor of #CRNum.
  */
 void
 cr_num_destroy (CRNum * a_this)

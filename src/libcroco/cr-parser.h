@@ -68,7 +68,7 @@ enum CRStatus cr_parser_set_tknzr (CRParser *a_this, CRTknzr *a_tknzr) ;
 
 enum CRStatus cr_parser_get_tknzr (CRParser *a_this, CRTknzr **a_tknzr) ;
 
-enum CRStatus cr_parser_get_parsing_location (CRParser *a_this, CRParsingLocation *a_loc) ;
+enum CRStatus cr_parser_get_parsing_location (CRParser const *a_this, CRParsingLocation *a_loc) ;
 
 enum CRStatus cr_parser_try_to_skip_spaces_and_comments (CRParser *a_this) ;
 
@@ -81,7 +81,7 @@ enum CRStatus cr_parser_get_sac_handler (CRParser *a_this,
 
 enum CRStatus cr_parser_set_use_core_grammar (CRParser *a_this,
                                               gboolean a_use_core_grammar) ;
-enum CRStatus cr_parser_get_use_core_grammar (CRParser *a_this,
+enum CRStatus cr_parser_get_use_core_grammar (CRParser const *a_this,
                                               gboolean *a_use_core_grammar) ;
 
 enum CRStatus cr_parser_parse (CRParser *a_this) ;

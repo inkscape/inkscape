@@ -448,38 +448,49 @@ cr_tknzr_parse_comment (CRTknzr * a_this,
         READ_NEXT_CHAR (a_this, &cur_char);
         ENSURE_PARSING_COND (cur_char == '*');
         comment = cr_string_new ();
-        for (;;) {
+        for (;;) { /* [^*]* */
+                PEEK_NEXT_CHAR (a_this, &next_char);
+                if (next_char == '*')
+                        break;
                 READ_NEXT_CHAR (a_this, &cur_char);
-
-                /*make sure there are no nested comments */
-                if (cur_char == '/') {
-                        READ_NEXT_CHAR (a_this, &cur_char);
-                        ENSURE_PARSING_COND (cur_char != '*');
-                        g_string_append_c (comment->stryng, '/');
-                        g_string_append_unichar (comment->stryng, 
-                                                 cur_char);
-                        continue;
-                }
-
-                /*Detect the end of the comments region */
-                if (cur_char == '*') {
-                        PEEK_NEXT_CHAR (a_this, &next_char);
-
-                        if (next_char == '/') {
-                                /*
-                                 *end of comments region
-                                 *Now, call the right SAC callback.
-                                 */
-                                SKIP_CHARS (a_this, 1) ;
-                                status = CR_OK;
-                                break;
-                        } else {
-                                g_string_append_c (comment->stryng, 
-                                                   '*');
-                        }
-                }
                 g_string_append_unichar (comment->stryng, cur_char);
         }
+        /* Stop condition: next_char == '*' */
+        for (;;) { /* \*+ */
+                READ_NEXT_CHAR(a_this, &cur_char);
+                ENSURE_PARSING_COND (cur_char == '*');
+                g_string_append_unichar (comment->stryng, cur_char);
+                PEEK_NEXT_CHAR (a_this, &next_char);
+                if (next_char != '*')
+                        break;
+        }
+        /* Stop condition: next_char != '*' */
+        for (;;) { /* ([^/][^*]*\*+)* */
+                if (next_char == '/')
+                        break;
+                READ_NEXT_CHAR(a_this, &cur_char);
+                g_string_append_unichar (comment->stryng, cur_char);
+                for (;;) { /* [^*]* */
+                        PEEK_NEXT_CHAR (a_this, &next_char);
+                        if (next_char == '*')
+                                break;
+                        READ_NEXT_CHAR (a_this, &cur_char);
+                        g_string_append_unichar (comment->stryng, cur_char);
+                }
+                /* Stop condition: next_char = '*', no need to verify, because peek and read exit to error anyway */
+                for (;;) { /* \*+ */
+                        READ_NEXT_CHAR(a_this, &cur_char);
+                        ENSURE_PARSING_COND (cur_char == '*');
+                        g_string_append_unichar (comment->stryng, cur_char);
+                        PEEK_NEXT_CHAR (a_this, &next_char);
+                        if (next_char != '*')
+                                break;
+                }
+                /* Continue condition: next_char != '*' */
+        }
+        /* Stop condition: next_char == '\/' */
+        READ_NEXT_CHAR(a_this, &cur_char);
+        g_string_append_unichar (comment->stryng, cur_char);
 
         if (status == CR_OK) {
                 cr_parsing_location_copy (&comment->location, 
@@ -562,39 +573,16 @@ cr_tknzr_parse_unicode_escape (CRTknzr * a_this,
                         cur_char_val = 10 + (cur_char - 'A');
                 }
 
-                unicode = unicode * 10 + cur_char_val;
+                unicode = unicode * 16 + cur_char_val;
 
                 PEEK_NEXT_CHAR (a_this, &cur_char);
         }
 
-        if (occur == 5) {
-                /*
-                 *the unicode escape is 6 digit length
-                 */
-
-                /*
-                 *parse one space that may 
-                 *appear just after the unicode
-                 *escape.
-                 */
-                cr_tknzr_parse_w (a_this, &tmp_char_ptr1, 
-                                  &tmp_char_ptr2, NULL);
-                status = CR_OK;
-        } else {
-                /*
-                 *The unicode escape is less than
-                 *6 digit length. The character
-                 *that comes right after the escape
-                 *must be a white space.
-                 */
-                status = cr_tknzr_parse_w (a_this, &tmp_char_ptr1,
-                                           &tmp_char_ptr2, NULL);
-        }
-
-        if (status == CR_OK) {
-                *a_unicode = unicode;
-                return CR_OK;
-        }
+        /* Eat a whitespace if possible. */
+        cr_tknzr_parse_w (a_this, &tmp_char_ptr1, 
+                          &tmp_char_ptr2, NULL);
+        *a_unicode = unicode;
+        return CR_OK;
 
       error:
         /*
@@ -2106,18 +2094,8 @@ cr_tknzr_get_next_token (CRTknzr * a_this, CRToken ** a_tk)
                                 }
                                 goto done;
                         }
-                } else {
-                        status = cr_tknzr_parse_ident (a_this, &str);
-                        if (status == CR_OK && str) {
-                                status = cr_token_set_ident (token, str);
-                                CHECK_PARSING_STATUS (status, TRUE);
-                                if (str) {
-                                        cr_parsing_location_copy (&token->location, 
-                                                                  &str->location) ;
-                                }
-                                goto done;
-                        }
-                }
+                } 
+                goto fallback;
                 break;
 
         case 'r':
@@ -2136,28 +2114,18 @@ cr_tknzr_get_next_token (CRTknzr * a_this, CRToken ** a_tk)
                                 goto done;
                         }
 
-                } else {
-                        status = cr_tknzr_parse_ident (a_this, &str);
-                        if (status == CR_OK) {
-                                status = cr_token_set_ident (token, str);
-                                CHECK_PARSING_STATUS (status, TRUE);
-                                if (str) {
-                                        cr_parsing_location_copy (&token->location, 
-                                                                  &str->location) ;
-                                }
-                                str = NULL;
-                                goto done;
-                        }
                 }
+                goto fallback;
                 break;
 
         case '<':
-                if (BYTE (input, 2, NULL) == '-'
-                    && BYTE (input, 3, NULL) == '-') {
+                if (BYTE (input, 2, NULL) == '!'
+                    && BYTE (input, 3, NULL) == '-'
+                    && BYTE (input, 4, NULL) == '-') {
                         SKIP_CHARS (a_this, 1);
                         cr_tknzr_get_parsing_location (a_this, 
                                                        &location) ;
-                        SKIP_CHARS (a_this, 2);
+                        SKIP_CHARS (a_this, 3);
                         status = cr_token_set_cdo (token);
                         CHECK_PARSING_STATUS (status, TRUE);
                         cr_parsing_location_copy (&token->location, 
@@ -2538,6 +2506,7 @@ cr_tknzr_get_next_token (CRTknzr * a_this, CRToken ** a_tk)
                 break;
 
         default:
+        fallback:
                 /*process the fallback cases here */
 
                 if (next_char == '\\'

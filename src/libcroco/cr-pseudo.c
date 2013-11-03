@@ -24,13 +24,15 @@
 #include "cr-pseudo.h"
 
 /**
- *@file
+ *@CRPseudo:
  *The definition of the #CRPseudo class.
  */
 
 /**
+ * cr_pseudo_new:
  *Constructor of the #CRPseudo class.
- *@return the newly build instance.
+ *
+ *Returns the newly build instance.
  */
 CRPseudo *
 cr_pseudo_new (void)
@@ -40,8 +42,15 @@ cr_pseudo_new (void)
         return result;
 }
 
+/**
+ * cr_pseudo_to_string:
+ * @a_this: the current instance of #CRPseud.
+ *
+ * Returns the serialized pseudo. Caller must free the returned
+ * string using g_free().
+ */
 guchar *
-cr_pseudo_to_string (CRPseudo * a_this)
+cr_pseudo_to_string (CRPseudo const * a_this)
 {
         guchar *result = NULL;
 
@@ -105,12 +114,15 @@ cr_pseudo_to_string (CRPseudo * a_this)
 }
 
 /**
+ * cr_pseudo_dump:
+ *@a_this: the current instance of pseudo
+ *@a_fp: the destination file pointer.
+ *
  *Dumps the pseudo to a file.
- *@param a_this the current instance of pseudo
- *@param a_fp the destination file pointer.
+ *
  */
 void
-cr_pseudo_dump (CRPseudo * a_this, FILE * a_fp)
+cr_pseudo_dump (CRPseudo const * a_this, FILE * a_fp)
 {
         guchar *tmp_str = NULL;
 
@@ -125,8 +137,10 @@ cr_pseudo_dump (CRPseudo * a_this, FILE * a_fp)
 }
 
 /**
+ * cr_pseudo_destroy:
+ *@a_this: the current instance to destroy.
+ *
  *destructor of the #CRPseudo class.
- *@param a_this the current instance to destroy.
  */
 void
 cr_pseudo_destroy (CRPseudo * a_this)

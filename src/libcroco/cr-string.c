@@ -68,7 +68,7 @@ cr_string_new_from_string (const gchar * a_string)
  *@return the newly instanciated #CRString.
  */
 CRString *
-cr_string_new_from_gstring (GString *a_string)
+cr_string_new_from_gstring (GString const *a_string)
 {
 	CRString *result = cr_string_new () ;
 	if (!result) {
@@ -85,7 +85,7 @@ cr_string_new_from_gstring (GString *a_string)
 }
 
 CRString *
-cr_string_dup (CRString *a_this)
+cr_string_dup (CRString const *a_this)
 {
 	g_return_val_if_fail (a_this, NULL) ;
 
@@ -100,7 +100,7 @@ cr_string_dup (CRString *a_this)
 }
 
 gchar *
-cr_string_dup2 (CRString *a_this)
+cr_string_dup2 (CRString const *a_this)
 {
         gchar *result = NULL ;
 
@@ -121,7 +121,7 @@ cr_string_dup2 (CRString *a_this)
  *@param a_this the current instance of #CRString
  */
 const gchar *
-cr_string_peek_raw_str (CRString *a_this)
+cr_string_peek_raw_str (CRString const *a_this)
 {
         g_return_val_if_fail (a_this, NULL) ;
         
@@ -138,7 +138,7 @@ cr_string_peek_raw_str (CRString *a_this)
  *of -1 if no length can be returned.
  */
 gint
-cr_string_peek_raw_str_len (CRString *a_this)
+cr_string_peek_raw_str_len (CRString const *a_this)
 {
         g_return_val_if_fail (a_this && a_this->stryng,
                               -1) ;
