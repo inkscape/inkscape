@@ -76,10 +76,10 @@ cr_string_new_from_gstring (GString const *a_string)
 		return NULL ;
 	}
 	if (a_string) {
-		result->stryng = g_string_new_len
-			(a_string->str, a_string->len) ;
-	} else {
-		result->stryng = g_string_new (NULL) ;
+		g_string_append_len (result->stryng,
+				     a_string->str,
+				     a_string->len);
+
 	}
 	return result ;
 }

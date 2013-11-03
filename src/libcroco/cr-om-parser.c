@@ -143,7 +143,7 @@ static enum CRStatus
 cr_om_parser_init_default_sac_handler (CROMParser * a_this)
 {
         CRDocHandler *sac_handler = NULL;
-        gboolean free_hdlr_if_error = FALSE;
+        gboolean created_handler = FALSE;
         enum CRStatus status = CR_OK;
 
         g_return_val_if_fail (a_this && PRIVATE (a_this)
@@ -156,7 +156,7 @@ cr_om_parser_init_default_sac_handler (CROMParser * a_this)
 
         if (!sac_handler) {
                 sac_handler = cr_doc_handler_new ();
-                free_hdlr_if_error = TRUE;
+                created_handler = TRUE;
         }
 
         /*
@@ -178,15 +178,10 @@ cr_om_parser_init_default_sac_handler (CROMParser * a_this)
         sac_handler->end_media = end_media;
         sac_handler->import_style = import_style;
 
-        status = cr_parser_set_sac_handler (PRIVATE (a_this)->parser,
-                                            sac_handler);
-        if (status == CR_OK) {
-                return CR_OK;
-        }
-
-        if (sac_handler && free_hdlr_if_error == TRUE) {
-                cr_doc_handler_destroy (sac_handler);
-                sac_handler = NULL;
+        if (created_handler) {
+                status = cr_parser_set_sac_handler (PRIVATE (a_this)->parser,
+                                                    sac_handler);
+                cr_doc_handler_unref (sac_handler);
         }
 
         return status;
