@@ -85,7 +85,7 @@ tatic const CRRgb gv_standard_colors[] = {
         {(const guchar*)"gold",        255, 215,   0, FALSE, FALSE, FALSE, {0,0,0}},
         {(const guchar*)"goldenrod",   218, 165,  32, FALSE, FALSE, FALSE, {0,0,0}},
         {(const guchar*)"gray",        128, 128, 128, FALSE, FALSE, FALSE, {0,0,0}},
-        {(const guchar*)"green",         0, 128,   0, FALSE, FALSE, FALSE, {0,0,0}},
+        {(const guchar*)"green",         0, 255,   0, FALSE, FALSE, FALSE, {0,0,0}},
         {(const guchar*)"greenyellow", 173, 255,  47, FALSE, FALSE, FALSE, {0,0,0}},
         {(const guchar*)"grey",        128, 128, 128, FALSE, FALSE, FALSE, {0,0,0}},
         {(const guchar*)"honeydew",    240, 255, 240, FALSE, FALSE, FALSE, {0,0,0}},
