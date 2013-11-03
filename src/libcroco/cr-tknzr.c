@@ -1466,6 +1466,12 @@ cr_tknzr_parse_important (CRTknzr * a_this,
  *@param a_num out parameter. The parsed number.
  *@return CR_OK upon successfull completion, 
  *an error code otherwise.
+ *
+ *The CSS specification says that numbers may be
+ *preceeded by '+' or '-' to indicate the sign.
+ *Technically, the "num" construction as defined
+ *by the tokenizer doesn't allow this, but we parse
+ *it here for simplicity.
  */
 static enum CRStatus
 cr_tknzr_parse_num (CRTknzr * a_this, 
@@ -1481,13 +1487,22 @@ cr_tknzr_parse_num (CRTknzr * a_this,
         gdouble numerator, denominator = 1;
         CRInputPos init_pos;
         CRParsingLocation location = {0,0,0} ;
+        int sign = 1;
 
         g_return_val_if_fail (a_this && PRIVATE (a_this)
                               && PRIVATE (a_this)->input, 
                               CR_BAD_PARAM_ERROR);
 
         RECORD_INITIAL_POS (a_this, &init_pos);
-        READ_NEXT_CHAR (a_this, &cur_char);        
+        READ_NEXT_CHAR (a_this, &cur_char);
+
+        if (cur_char == '+' || cur_char == '-') {
+                if (cur_char == '-') {
+                        sign = -1;
+                }
+                READ_NEXT_CHAR (a_this, &cur_char);
+        }
+
         if (IS_NUM (cur_char)) {
                 numerator = (cur_char - '0');
                 parsing_dec = FALSE;
@@ -1540,7 +1555,7 @@ cr_tknzr_parse_num (CRTknzr * a_this,
          *Now, set the output param values.
          */
         if (status == CR_OK) {
-                gdouble val = numerator / denominator;
+                gdouble val = (numerator / denominator) * sign;
                 if (*a_num == NULL) {
                         *a_num = cr_num_new_with_val (val, val_type);
 
@@ -2157,6 +2172,8 @@ cr_tknzr_get_next_token (CRTknzr * a_this, CRToken ** a_tk)
                                                                   &str->location) ;
                                 }
                                 goto done;
+                        } else {
+                                goto parse_number;
                         }
                 }
                 break;
@@ -2350,6 +2367,9 @@ cr_tknzr_get_next_token (CRTknzr * a_this, CRToken ** a_tk)
         case '8':
         case '9':
         case '.':
+        case '+':
+        /* '-' case is handled separately above for --> comments */
+        parse_number:
                 {
                         CRNum *num = NULL;
 
