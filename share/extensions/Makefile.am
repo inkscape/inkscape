@@ -80,10 +80,8 @@ extensions = \
 	hershey.py \
 	hersheydata.py \
 	hpgl_output.py \
-	ill2svg.pl \
 	ink2canvas.py \
 	inkex.py \
-	Inkscape.pm \
 	inkscape_follow_link.py \
 	inkwebeffect.py \
 	interp.py \
@@ -113,7 +111,6 @@ extensions = \
 	new_glyph_layer.py \
 	next_glyph_layer.py \
 	previous_glyph_layer.py \
-	outline2svg.pl	\
 	param_curves.py \
 	pathalongpath.py\
 	pathscatter.py\
@@ -147,7 +144,6 @@ extensions = \
 	simpletransform.py \
 	sk1_output.py \
 	sk2svg.sh \
-	SpSVG.pm \
 	spirograph.py\
 	split.py \
 	straightseg.py \
@@ -169,7 +165,6 @@ extensions = \
 	text_braille.py \
 	text_merge.py \
 	triangle.py \
-	txt2svg.pl \
 	uniconv-ext.py \
 	uniconv_output.py \
 	voronoi.py \
@@ -309,7 +304,6 @@ modules = \
 	new_glyph_layer.inx \
 	next_glyph_layer.inx \
 	previous_glyph_layer.inx \
-	outline2svg.inx \
 	param_curves.inx \
 	pathalongpath.inx\
 	pathscatter.inx\
@@ -354,7 +348,6 @@ modules = \
 	text_braille.inx \
 	text_merge.inx \
 	triangle.inx \
-	txt2svg.inx \
 	voronoi2svg.inx \
 	webslicer_create_group.inx \
 	webslicer_create_rect.inx \
