@@ -480,6 +480,22 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
 </xsl:template>
 
 <!--
+  // Fake GaussianBlur filter effect //
+  Replaces all the other SVG effects with a zero radius blur effect.
+-->
+<xsl:template mode="forward" match="*[name(.) = 'feBlend' or name(.) = 'feColorMatrix' or name(.) = 'feComponentTransfer' or name(.) = 'feComposite' or name(.) = 'feConvolveMatrix' or name(.) = 'feDiffuseLighting' or name(.) = 'feDisplacementMap' or name(.) = 'feFlood' or name(.) = 'feImage' or name(.) = 'feMerge' or name(.) = 'feMorphology' or name(.) = 'feOffset' or name(.) = 'feSpecularLighting' or name(.) = 'feTile' or name(.) = 'feTurbulence']">
+  <xsl:comment>
+    <xsl:value-of select="concat('Tag ', name(.), ' not supported, replaced with empty blur')" />
+  </xsl:comment>
+  <BlurEffect>
+    <xsl:if test="../@id"><xsl:attribute name="x:Key"><xsl:value-of select="../@id" /></xsl:attribute></xsl:if>
+    <xsl:attribute name="Radius">
+      <xsl:value-of select="0" />
+    </xsl:attribute>
+  </BlurEffect>  
+</xsl:template>
+
+<!--
   // Linked filter effect //
   Only supports blurs
 -->
