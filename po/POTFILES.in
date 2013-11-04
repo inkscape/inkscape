@@ -504,7 +504,6 @@ share/extensions/wireframe_sphere.py
 [type: gettext/xml] share/extensions/motion.inx
 [type: gettext/xml] share/extensions/new_glyph_layer.inx
 [type: gettext/xml] share/extensions/next_glyph_layer.inx
-[type: gettext/xml] share/extensions/outline2svg.inx
 [type: gettext/xml] share/extensions/param_curves.inx
 [type: gettext/xml] share/extensions/pathalongpath.inx
 [type: gettext/xml] share/extensions/pathscatter.inx
@@ -554,7 +553,6 @@ share/extensions/wireframe_sphere.py
 [type: gettext/xml] share/extensions/text_titlecase.inx
 [type: gettext/xml] share/extensions/text_uppercase.inx
 [type: gettext/xml] share/extensions/triangle.inx
-[type: gettext/xml] share/extensions/txt2svg.inx
 [type: gettext/xml] share/extensions/voronoi2svg.inx
 [type: gettext/xml] share/extensions/web-set-att.inx
 [type: gettext/xml] share/extensions/webslicer_create_group.inx
