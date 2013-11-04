@@ -365,6 +365,7 @@ share/extensions/gimp_xcf.py
 share/extensions/guides_creator.py
 share/extensions/guillotine.py
 share/extensions/hpgl_input.py
+share/extensions/hpgl_output.py
 share/extensions/inkex.py
 share/extensions/interp_att_g.py
 share/extensions/jessyInk_autoTexts.py
@@ -383,6 +384,7 @@ share/extensions/pathalongpath.py
 share/extensions/pathmodifier.py
 share/extensions/pathscatter.py
 share/extensions/perspective.py
+share/extensions/plotter.py
 share/extensions/polyhedron_3d.py
 share/extensions/print_win32_vector.py
 share/extensions/render_barcode_datamatrix.py
@@ -510,6 +512,7 @@ share/extensions/wireframe_sphere.py
 [type: gettext/xml] share/extensions/perfectboundcover.inx
 [type: gettext/xml] share/extensions/perspective.inx
 [type: gettext/xml] share/extensions/pixelsnap.inx
+[type: gettext/xml] share/extensions/plotter.inx
 [type: gettext/xml] share/extensions/plt_input.inx
 [type: gettext/xml] share/extensions/plt_output.inx
 [type: gettext/xml] share/extensions/polyhedron_3d.inx
