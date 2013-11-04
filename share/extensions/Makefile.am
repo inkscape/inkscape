@@ -76,9 +76,11 @@ extensions = \
 	guides_creator.py \
 	guillotine.py \
 	handles.py \
-	hpgl_input.py \
 	hershey.py \
 	hersheydata.py \
+	hpgl_decoder.py \
+	hpgl_encoder.py \
+	hpgl_input.py \
 	hpgl_output.py \
 	ink2canvas.py \
 	inkex.py \
@@ -118,6 +120,7 @@ extensions = \
 	perfectboundcover.py \
 	perspective.py \
 	pixelsnap.py \
+	plotter.py \
 	plt_output.py \
 	polyhedron_3d.py \
 	printing_marks.py \
@@ -266,8 +269,8 @@ modules = \
 	guides_creator.inx \
 	guillotine.inx \
 	handles.inx \
-	hpgl_input.inx \
 	hershey.inx \
+	hpgl_input.inx \
 	hpgl_output.inx \
 	ink2canvas.inx \
 	inkscape_follow_link.inx \
@@ -310,6 +313,7 @@ modules = \
 	perfectboundcover.inx \
 	perspective.inx	\
 	pixelsnap.inx \
+	plotter.inx \
 	plt_input.inx \
 	plt_output.inx \
 	polyhedron_3d.inx	\
