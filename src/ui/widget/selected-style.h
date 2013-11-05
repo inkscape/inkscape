@@ -115,9 +115,6 @@ private:
     bool startvalue_set;
 
     gchar const *undokey;
-
-    GdkCursor *cr;
-    bool cr_set;
 };
 
 /**

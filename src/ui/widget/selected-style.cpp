@@ -1439,9 +1439,7 @@ RotateableStrokeWidth::RotateableStrokeWidth(SelectedStyle *parent) :
     parent(parent),
     startvalue(0),
     startvalue_set(false),
-    undokey("swrot1"),
-    cr(0),
-    cr_set(false)
+    undokey("swrot1")
 {
 }
 
