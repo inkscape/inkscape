@@ -297,7 +297,7 @@ gchar* SPFlowtext::description() const {
     int const nChars = layout.iteratorToCharIndex(layout.end());
     char const *trunc = (layout.inputTruncated()) ? _(" [truncated]") : "";
 
-    return g_strdup_printf(ngettext(_("(%d character%s)"), _("(%d characters%s)"), nChars), nChars, trunc);
+    return g_strdup_printf(ngettext("(%d character%s)", "(%d characters%s)", nChars), nChars, trunc);
 }
 
 void SPFlowtext::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) const {

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2013-10-09 21:08+0200\n"
+"POT-Creation-Date: 2013-11-06 10:37+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3270,16 +3270,16 @@ msgstr ""
 msgid "3D Box"
 msgstr ""
 
-#: ../src/color-profile.cpp:845
+#: ../src/color-profile.cpp:850
 #, c-format
 msgid "Color profiles directory (%s) is unavailable."
 msgstr ""
 
-#: ../src/color-profile.cpp:904 ../src/color-profile.cpp:921
+#: ../src/color-profile.cpp:909 ../src/color-profile.cpp:926
 msgid "(invalid UTF-8 string)"
 msgstr ""
 
-#: ../src/color-profile.cpp:906 ../src/filter-enums.cpp:94
+#: ../src/color-profile.cpp:911 ../src/filter-enums.cpp:94
 #: ../src/live_effects/lpe-ruler.cpp:32
 #: ../src/ui/dialog/filter-effects-dialog.cpp:518
 #: ../src/ui/dialog/inkscape-preferences.cpp:332
@@ -3346,11 +3346,11 @@ msgstr ""
 msgid "<b>Current layer is locked</b>. Unlock it to be able to draw on it."
 msgstr ""
 
-#: ../src/desktop.cpp:924
+#: ../src/desktop.cpp:925
 msgid "No previous zoom."
 msgstr ""
 
-#: ../src/desktop.cpp:945
+#: ../src/desktop.cpp:946
 msgid "No next zoom."
 msgstr ""
 
@@ -3372,92 +3372,92 @@ msgstr ""
 msgid "<b>Guideline</b>: %s"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:316 ../src/display/canvas-grid.cpp:693
+#: ../src/display/canvas-axonomgrid.cpp:317 ../src/display/canvas-grid.cpp:693
 msgid "Grid _units:"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:318 ../src/display/canvas-grid.cpp:695
+#: ../src/display/canvas-axonomgrid.cpp:319 ../src/display/canvas-grid.cpp:695
 msgid "_Origin X:"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:318 ../src/display/canvas-grid.cpp:695
+#: ../src/display/canvas-axonomgrid.cpp:319 ../src/display/canvas-grid.cpp:695
 #: ../src/ui/dialog/inkscape-preferences.cpp:735
 #: ../src/ui/dialog/inkscape-preferences.cpp:760
 msgid "X coordinate of grid origin"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:320 ../src/display/canvas-grid.cpp:697
+#: ../src/display/canvas-axonomgrid.cpp:321 ../src/display/canvas-grid.cpp:697
 msgid "O_rigin Y:"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:320 ../src/display/canvas-grid.cpp:697
+#: ../src/display/canvas-axonomgrid.cpp:321 ../src/display/canvas-grid.cpp:697
 #: ../src/ui/dialog/inkscape-preferences.cpp:736
 #: ../src/ui/dialog/inkscape-preferences.cpp:761
 msgid "Y coordinate of grid origin"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:322 ../src/display/canvas-grid.cpp:701
+#: ../src/display/canvas-axonomgrid.cpp:323 ../src/display/canvas-grid.cpp:701
 msgid "Spacing _Y:"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:322
+#: ../src/display/canvas-axonomgrid.cpp:323
 #: ../src/ui/dialog/inkscape-preferences.cpp:764
 msgid "Base length of z-axis"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:324
+#: ../src/display/canvas-axonomgrid.cpp:325
 #: ../src/ui/dialog/inkscape-preferences.cpp:767
 #: ../src/widgets/box3d-toolbar.cpp:315
 msgid "Angle X:"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:324
+#: ../src/display/canvas-axonomgrid.cpp:325
 #: ../src/ui/dialog/inkscape-preferences.cpp:767
 msgid "Angle of x-axis"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:326
+#: ../src/display/canvas-axonomgrid.cpp:327
 #: ../src/ui/dialog/inkscape-preferences.cpp:768
 #: ../src/widgets/box3d-toolbar.cpp:394
 msgid "Angle Z:"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:326
+#: ../src/display/canvas-axonomgrid.cpp:327
 #: ../src/ui/dialog/inkscape-preferences.cpp:768
 msgid "Angle of z-axis"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:330 ../src/display/canvas-grid.cpp:705
+#: ../src/display/canvas-axonomgrid.cpp:331 ../src/display/canvas-grid.cpp:705
 msgid "Minor grid line _color:"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:330 ../src/display/canvas-grid.cpp:705
+#: ../src/display/canvas-axonomgrid.cpp:331 ../src/display/canvas-grid.cpp:705
 #: ../src/ui/dialog/inkscape-preferences.cpp:719
 msgid "Minor grid line color"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:330 ../src/display/canvas-grid.cpp:705
+#: ../src/display/canvas-axonomgrid.cpp:331 ../src/display/canvas-grid.cpp:705
 msgid "Color of the minor grid lines"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:335 ../src/display/canvas-grid.cpp:710
+#: ../src/display/canvas-axonomgrid.cpp:336 ../src/display/canvas-grid.cpp:710
 msgid "Ma_jor grid line color:"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:335 ../src/display/canvas-grid.cpp:710
+#: ../src/display/canvas-axonomgrid.cpp:336 ../src/display/canvas-grid.cpp:710
 #: ../src/ui/dialog/inkscape-preferences.cpp:721
 msgid "Major grid line color"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:336 ../src/display/canvas-grid.cpp:711
+#: ../src/display/canvas-axonomgrid.cpp:337 ../src/display/canvas-grid.cpp:711
 msgid "Color of the major (highlighted) grid lines"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:340 ../src/display/canvas-grid.cpp:715
+#: ../src/display/canvas-axonomgrid.cpp:341 ../src/display/canvas-grid.cpp:715
 msgid "_Major grid line every:"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:340 ../src/display/canvas-grid.cpp:715
+#: ../src/display/canvas-axonomgrid.cpp:341 ../src/display/canvas-grid.cpp:715
 msgid "lines"
 msgstr ""
 
@@ -3671,11 +3671,11 @@ msgstr ""
 msgid "Bounding box side midpoint"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:194 ../src/ui/tool/node.cpp:1316
+#: ../src/display/snap-indicator.cpp:194 ../src/ui/tool/node.cpp:1315
 msgid "Smooth node"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:197 ../src/ui/tool/node.cpp:1315
+#: ../src/display/snap-indicator.cpp:197 ../src/ui/tool/node.cpp:1314
 msgid "Cusp node"
 msgstr ""
 
@@ -3731,16 +3731,21 @@ msgstr ""
 msgid " to "
 msgstr ""
 
-#: ../src/document.cpp:511
+#: ../src/document.cpp:507
 #, c-format
 msgid "New document %d"
 msgstr ""
 
-#: ../src/document.cpp:537
+#: ../src/document.cpp:512
+#, c-format
+msgid "Memory document %d"
+msgstr ""
+
+#: ../src/document.cpp:541
 msgid "Memory document %1"
 msgstr ""
 
-#: ../src/document.cpp:742
+#: ../src/document.cpp:752
 #, c-format
 msgid "Unnamed document %d"
 msgstr ""
@@ -4636,8 +4641,8 @@ msgstr ""
 #: ../src/extension/internal/cairo-ps-out.cpp:335
 #: ../src/extension/internal/cairo-ps-out.cpp:376
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:250
-#: ../src/extension/internal/emf-inout.cpp:3543
-#: ../src/extension/internal/wmf-inout.cpp:3231
+#: ../src/extension/internal/emf-inout.cpp:3551
+#: ../src/extension/internal/wmf-inout.cpp:3236
 msgid "Convert texts to paths"
 msgstr ""
 
@@ -4757,118 +4762,118 @@ msgstr ""
 msgid "Page Selector"
 msgstr ""
 
-#: ../src/extension/internal/cdr-input.cpp:273
+#: ../src/extension/internal/cdr-input.cpp:274
 msgid "Corel DRAW Input"
 msgstr ""
 
-#: ../src/extension/internal/cdr-input.cpp:278
+#: ../src/extension/internal/cdr-input.cpp:279
 msgid "Corel DRAW 7-X4 files (*.cdr)"
 msgstr ""
 
-#: ../src/extension/internal/cdr-input.cpp:279
+#: ../src/extension/internal/cdr-input.cpp:280
 msgid "Open files saved in Corel DRAW 7-X4"
 msgstr ""
 
-#: ../src/extension/internal/cdr-input.cpp:286
+#: ../src/extension/internal/cdr-input.cpp:287
 msgid "Corel DRAW templates input"
 msgstr ""
 
-#: ../src/extension/internal/cdr-input.cpp:291
+#: ../src/extension/internal/cdr-input.cpp:292
 msgid "Corel DRAW 7-13 template files (*.cdt)"
 msgstr ""
 
-#: ../src/extension/internal/cdr-input.cpp:292
+#: ../src/extension/internal/cdr-input.cpp:293
 msgid "Open files saved in Corel DRAW 7-13"
 msgstr ""
 
-#: ../src/extension/internal/cdr-input.cpp:299
+#: ../src/extension/internal/cdr-input.cpp:300
 msgid "Corel DRAW Compressed Exchange files input"
 msgstr ""
 
-#: ../src/extension/internal/cdr-input.cpp:304
+#: ../src/extension/internal/cdr-input.cpp:305
 msgid "Corel DRAW Compressed Exchange files (*.ccx)"
 msgstr ""
 
-#: ../src/extension/internal/cdr-input.cpp:305
+#: ../src/extension/internal/cdr-input.cpp:306
 msgid "Open compressed exchange files saved in Corel DRAW"
 msgstr ""
 
-#: ../src/extension/internal/cdr-input.cpp:312
+#: ../src/extension/internal/cdr-input.cpp:313
 msgid "Corel DRAW Presentation Exchange files input"
 msgstr ""
 
-#: ../src/extension/internal/cdr-input.cpp:317
+#: ../src/extension/internal/cdr-input.cpp:318
 msgid "Corel DRAW Presentation Exchange files (*.cmx)"
 msgstr ""
 
-#: ../src/extension/internal/cdr-input.cpp:318
+#: ../src/extension/internal/cdr-input.cpp:319
 msgid "Open presentation exchange files saved in Corel DRAW"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3527
+#: ../src/extension/internal/emf-inout.cpp:3535
 msgid "EMF Input"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3532
+#: ../src/extension/internal/emf-inout.cpp:3540
 msgid "Enhanced Metafiles (*.emf)"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3533
+#: ../src/extension/internal/emf-inout.cpp:3541
 msgid "Enhanced Metafiles"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3541
+#: ../src/extension/internal/emf-inout.cpp:3549
 msgid "EMF Output"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3544
-#: ../src/extension/internal/wmf-inout.cpp:3232
+#: ../src/extension/internal/emf-inout.cpp:3552
+#: ../src/extension/internal/wmf-inout.cpp:3237
 msgid "Map Unicode to Symbol font"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3545
-#: ../src/extension/internal/wmf-inout.cpp:3233
+#: ../src/extension/internal/emf-inout.cpp:3553
+#: ../src/extension/internal/wmf-inout.cpp:3238
 msgid "Map Unicode to Wingdings"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3546
-#: ../src/extension/internal/wmf-inout.cpp:3234
+#: ../src/extension/internal/emf-inout.cpp:3554
+#: ../src/extension/internal/wmf-inout.cpp:3239
 msgid "Map Unicode to Zapf Dingbats"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3547
-#: ../src/extension/internal/wmf-inout.cpp:3235
+#: ../src/extension/internal/emf-inout.cpp:3555
+#: ../src/extension/internal/wmf-inout.cpp:3240
 msgid "Use MS Unicode PUA (0xF020-0xF0FF) for converted characters"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3548
-#: ../src/extension/internal/wmf-inout.cpp:3236
+#: ../src/extension/internal/emf-inout.cpp:3556
+#: ../src/extension/internal/wmf-inout.cpp:3241
 msgid "Compensate for PPT font bug"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3549
-#: ../src/extension/internal/wmf-inout.cpp:3237
+#: ../src/extension/internal/emf-inout.cpp:3557
+#: ../src/extension/internal/wmf-inout.cpp:3242
 msgid "Convert dashed/dotted lines to single lines"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3550
-#: ../src/extension/internal/wmf-inout.cpp:3238
+#: ../src/extension/internal/emf-inout.cpp:3558
+#: ../src/extension/internal/wmf-inout.cpp:3243
 msgid "Convert gradients to colored polygon series"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3551
+#: ../src/extension/internal/emf-inout.cpp:3559
 msgid "Map all fill patterns to standard EMF hatches"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3552
+#: ../src/extension/internal/emf-inout.cpp:3560
 msgid "Ignore image rotations"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3556
+#: ../src/extension/internal/emf-inout.cpp:3564
 msgid "Enhanced Metafile (*.emf)"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3557
+#: ../src/extension/internal/emf-inout.cpp:3565
 msgid "Enhanced Metafile"
 msgstr ""
 
@@ -7033,33 +7038,33 @@ msgstr ""
 msgid "Microsoft Visio 2013 drawing (*.vsdx)"
 msgstr ""
 
-#: ../src/extension/internal/wmf-inout.cpp:3215
+#: ../src/extension/internal/wmf-inout.cpp:3220
 msgid "WMF Input"
 msgstr ""
 
-#: ../src/extension/internal/wmf-inout.cpp:3220
+#: ../src/extension/internal/wmf-inout.cpp:3225
 msgid "Windows Metafiles (*.wmf)"
 msgstr ""
 
-#: ../src/extension/internal/wmf-inout.cpp:3221
+#: ../src/extension/internal/wmf-inout.cpp:3226
 msgid "Windows Metafiles"
 msgstr ""
 
-#: ../src/extension/internal/wmf-inout.cpp:3229
+#: ../src/extension/internal/wmf-inout.cpp:3234
 msgid "WMF Output"
 msgstr ""
 
-#: ../src/extension/internal/wmf-inout.cpp:3239
+#: ../src/extension/internal/wmf-inout.cpp:3244
 msgid "Map all fill patterns to standard WMF hatches"
 msgstr ""
 
-#: ../src/extension/internal/wmf-inout.cpp:3243
+#: ../src/extension/internal/wmf-inout.cpp:3248
 #: ../share/extensions/wmf_input.inx.h:2
 #: ../share/extensions/wmf_output.inx.h:2
 msgid "Windows Metafile (*.wmf)"
 msgstr ""
 
-#: ../src/extension/internal/wmf-inout.cpp:3244
+#: ../src/extension/internal/wmf-inout.cpp:3249
 msgid "Windows Metafile"
 msgstr ""
 
@@ -8497,7 +8502,7 @@ msgstr ""
 
 #: ../src/live_effects/lpe-bendpath.cpp:54
 #: ../src/live_effects/lpe-patternalongpath.cpp:62
-#: ../src/ui/dialog/export.cpp:287 ../src/ui/dialog/transformation.cpp:80
+#: ../src/ui/dialog/export.cpp:288 ../src/ui/dialog/transformation.cpp:80
 #: ../src/ui/widget/page-sizer.cpp:236
 msgid "_Width:"
 msgstr ""
@@ -9452,7 +9457,7 @@ msgstr ""
 #. TRANSLATORS: The line join style specifies the shape to be used at the
 #. corners of paths. It can be "miter", "round" or "bevel".
 #: ../src/live_effects/lpe-powerstroke.cpp:238
-#: ../src/widgets/stroke-style.cpp:225
+#: ../src/widgets/stroke-style.cpp:226
 msgid "Join:"
 msgstr ""
 
@@ -9465,7 +9470,7 @@ msgid "Miter limit:"
 msgstr ""
 
 #: ../src/live_effects/lpe-powerstroke.cpp:239
-#: ../src/widgets/stroke-style.cpp:276
+#: ../src/widgets/stroke-style.cpp:277
 msgid "Maximum length of the miter (in units of stroke width)"
 msgstr ""
 
@@ -9614,7 +9619,7 @@ msgid "Width at 'bottom' half-turns"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
-msgid "at 2nd side:"
+msgid "At 2nd side:"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
@@ -9623,7 +9628,7 @@ msgstr ""
 
 #.
 #: ../src/live_effects/lpe-rough-hatches.cpp:244
-msgid "from 2nd to 1st side:"
+msgid "From 2nd to 1st side:"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:244
@@ -9631,7 +9636,7 @@ msgid "Width from 'top' to 'bottom'"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:245
-msgid "from 1st to 2nd side:"
+msgid "From 1st to 2nd side:"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:245
@@ -10060,7 +10065,7 @@ msgstr ""
 msgid "Change vector parameter"
 msgstr ""
 
-#: ../src/lpe-tool-context.cpp:205
+#: ../src/lpe-tool-context.cpp:204
 msgid "Choose a construction tool from the toolbar."
 msgstr ""
 
@@ -11123,7 +11128,7 @@ msgstr ""
 msgid "Select <b>some objects</b> to group."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:762 ../src/sp-item-group.cpp:330
+#: ../src/selection-chemistry.cpp:762 ../src/sp-item-group.cpp:331
 msgid "Group"
 msgstr ""
 
@@ -11135,7 +11140,7 @@ msgstr ""
 msgid "<b>No groups</b> to ungroup in the selection."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:820 ../src/sp-item-group.cpp:563
+#: ../src/selection-chemistry.cpp:820 ../src/sp-item-group.cpp:564
 msgid "Ungroup"
 msgstr ""
 
@@ -11431,68 +11436,68 @@ msgstr ""
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3256
+#: ../src/selection-chemistry.cpp:3258
 msgid "<b>No pattern fills</b> in the selection."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3259
+#: ../src/selection-chemistry.cpp:3261
 msgid "Pattern to objects"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3350
+#: ../src/selection-chemistry.cpp:3352
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3354
+#: ../src/selection-chemistry.cpp:3356
 msgid "Rendering bitmap..."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3533
+#: ../src/selection-chemistry.cpp:3535
 msgid "Create bitmap"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3565
+#: ../src/selection-chemistry.cpp:3567
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3568
+#: ../src/selection-chemistry.cpp:3570
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3751
+#: ../src/selection-chemistry.cpp:3753
 msgid "Set clipping path"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3753
+#: ../src/selection-chemistry.cpp:3755
 msgid "Set mask"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3768
+#: ../src/selection-chemistry.cpp:3770
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3879
+#: ../src/selection-chemistry.cpp:3881
 msgid "Release clipping path"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3881
+#: ../src/selection-chemistry.cpp:3883
 msgid "Release mask"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3900
+#: ../src/selection-chemistry.cpp:3902
 msgid "Select <b>object(s)</b> to fit canvas to."
 msgstr ""
 
 #. Fit Page
-#: ../src/selection-chemistry.cpp:3920 ../src/verbs.cpp:2907
+#: ../src/selection-chemistry.cpp:3922 ../src/verbs.cpp:2907
 msgid "Fit Page to Selection"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3949 ../src/verbs.cpp:2909
+#: ../src/selection-chemistry.cpp:3951 ../src/verbs.cpp:2909
 msgid "Fit Page to Drawing"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3970 ../src/verbs.cpp:2911
+#: ../src/selection-chemistry.cpp:3972 ../src/verbs.cpp:2911
 msgid "Fit Page to Selection or Drawing"
 msgstr ""
 
@@ -11515,60 +11520,65 @@ msgstr ""
 msgid "layer <b><i>%s</i></b>"
 msgstr ""
 
-#: ../src/selection-describer.cpp:138
+#: ../src/selection-describer.cpp:140
 #, c-format
 msgid "<i>%s</i>"
 msgstr ""
 
-#: ../src/selection-describer.cpp:147
+#: ../src/selection-describer.cpp:150
 #, c-format
 msgid " in %s"
 msgstr ""
 
-#: ../src/selection-describer.cpp:149
+#: ../src/selection-describer.cpp:152
 msgid " hidden in definitions"
 msgstr ""
 
-#: ../src/selection-describer.cpp:151
+#: ../src/selection-describer.cpp:154
 #, c-format
 msgid " in group %s (%s)"
 msgstr ""
 
-#: ../src/selection-describer.cpp:153
+#: ../src/selection-describer.cpp:156
+#, c-format
+msgid " in unnamed group (%s)"
+msgstr ""
+
+#: ../src/selection-describer.cpp:158
 #, c-format
 msgid " in <b>%i</b> parent (%s)"
 msgid_plural " in <b>%i</b> parents (%s)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/selection-describer.cpp:156
+#: ../src/selection-describer.cpp:161
 #, c-format
 msgid " in <b>%i</b> layer"
 msgid_plural " in <b>%i</b> layers"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/selection-describer.cpp:167
+#: ../src/selection-describer.cpp:172
 msgid "Convert symbol to group to edit"
 msgstr ""
 
-#: ../src/selection-describer.cpp:171
+#: ../src/selection-describer.cpp:176
 msgid "Remove from symbols tray to edit symbol"
 msgstr ""
 
-#: ../src/selection-describer.cpp:175
+#: ../src/selection-describer.cpp:180
 msgid "Use <b>Shift+D</b> to look up original"
 msgstr ""
 
-#: ../src/selection-describer.cpp:179
+#: ../src/selection-describer.cpp:184
 msgid "Use <b>Shift+D</b> to look up path"
 msgstr ""
 
-#: ../src/selection-describer.cpp:183
+#: ../src/selection-describer.cpp:188
 msgid "Use <b>Shift+D</b> to look up frame"
 msgstr ""
 
-#: ../src/selection-describer.cpp:202
+#: ../src/selection-describer.cpp:207
 #, c-format
 msgid "; <i>%d filtered object</i> "
 msgid_plural "; <i>%d filtered objects</i> "
@@ -11657,8 +11667,8 @@ msgstr ""
 msgid "Keyboard directory (%s) is unavailable."
 msgstr ""
 
-#: ../src/shortcuts.cpp:337 ../src/ui/dialog/export.cpp:1294
-#: ../src/ui/dialog/export.cpp:1328
+#: ../src/shortcuts.cpp:337 ../src/ui/dialog/export.cpp:1295
+#: ../src/ui/dialog/export.cpp:1329
 msgid "Select a filename for exporting"
 msgstr ""
 
@@ -11675,22 +11685,22 @@ msgstr ""
 msgid "without URI"
 msgstr ""
 
-#: ../src/sp-ellipse.cpp:373
+#: ../src/sp-ellipse.cpp:374
 msgid "Segment"
 msgstr ""
 
-#: ../src/sp-ellipse.cpp:375
+#: ../src/sp-ellipse.cpp:376
 msgid "Arc"
 msgstr ""
 
 #. Ellipse
-#: ../src/sp-ellipse.cpp:378 ../src/sp-ellipse.cpp:385
+#: ../src/sp-ellipse.cpp:379 ../src/sp-ellipse.cpp:386
 #: ../src/ui/dialog/inkscape-preferences.cpp:403
 #: ../src/widgets/pencil-toolbar.cpp:187
 msgid "Ellipse"
 msgstr ""
 
-#: ../src/sp-ellipse.cpp:382
+#: ../src/sp-ellipse.cpp:383
 msgid "Circle"
 msgstr ""
 
@@ -11723,12 +11733,9 @@ msgstr ""
 #: ../src/sp-flowtext.cpp:300
 #, c-format
 msgid "(%d character%s)"
-msgstr ""
-
-#: ../src/sp-flowtext.cpp:300
-#, c-format
-msgid "(%d characters%s)"
-msgstr ""
+msgid_plural "(%d characters%s)"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../src/sp-guide.cpp:301
 msgid "Create Guides Around the Page"
@@ -11796,36 +11803,36 @@ msgstr ""
 msgid "Create spiral"
 msgstr ""
 
-#: ../src/sp-item.cpp:941 ../src/verbs.cpp:213
+#: ../src/sp-item.cpp:940 ../src/verbs.cpp:213
 msgid "Object"
 msgstr ""
 
-#: ../src/sp-item.cpp:959
+#: ../src/sp-item.cpp:957
 #, c-format
 msgid "%s; <i>clipped</i>"
 msgstr ""
 
-#: ../src/sp-item.cpp:965
+#: ../src/sp-item.cpp:963
 #, c-format
 msgid "%s; <i>masked</i>"
 msgstr ""
 
-#: ../src/sp-item.cpp:975
+#: ../src/sp-item.cpp:973
 #, c-format
 msgid "%s; <i>filtered (%s)</i>"
 msgstr ""
 
-#: ../src/sp-item.cpp:977
+#: ../src/sp-item.cpp:975
 #, c-format
 msgid "%s; <i>filtered</i>"
 msgstr ""
 
-#: ../src/sp-item-group.cpp:336 ../src/sp-switch.cpp:81
+#: ../src/sp-item-group.cpp:337 ../src/sp-switch.cpp:81
 #, c-format
 msgid "of <b>%d</b> object"
 msgstr ""
 
-#: ../src/sp-item-group.cpp:336 ../src/sp-switch.cpp:81
+#: ../src/sp-item-group.cpp:337 ../src/sp-switch.cpp:81
 #, c-format
 msgid "of <b>%d</b> objects"
 msgstr ""
@@ -14190,11 +14197,11 @@ msgstr ""
 msgid "<b>Defined grids</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:1638
+#: ../src/ui/dialog/document-properties.cpp:1639
 msgid "Remove grid"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:1681
+#: ../src/ui/dialog/document-properties.cpp:1707
 msgid "Changed document unit"
 msgstr ""
 
@@ -14214,177 +14221,177 @@ msgstr ""
 msgid "_Custom"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:167 ../src/widgets/measure-toolbar.cpp:116
+#: ../src/ui/dialog/export.cpp:168 ../src/widgets/measure-toolbar.cpp:116
 #: ../src/widgets/measure-toolbar.cpp:124
 #: ../share/extensions/render_gears.inx.h:6
 msgid "Units:"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:169
+#: ../src/ui/dialog/export.cpp:170
 msgid "_Export As..."
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:172
+#: ../src/ui/dialog/export.cpp:173
 msgid "B_atch export all selected objects"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:172
+#: ../src/ui/dialog/export.cpp:173
 msgid ""
 "Export each selected object into its own PNG file, using export hints if any "
 "(caution, overwrites without asking!)"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:174
+#: ../src/ui/dialog/export.cpp:175
 msgid "Hide a_ll except selected"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:174
+#: ../src/ui/dialog/export.cpp:175
 msgid "In the exported image, hide all objects except those that are selected"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:175
+#: ../src/ui/dialog/export.cpp:176
 msgid "Close when complete"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:175
+#: ../src/ui/dialog/export.cpp:176
 msgid "Once the export completes, close this dialog"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:177
+#: ../src/ui/dialog/export.cpp:178
 msgid "_Export"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:195
+#: ../src/ui/dialog/export.cpp:196
 msgid "<b>Export area</b>"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:234
+#: ../src/ui/dialog/export.cpp:235
 msgid "_x0:"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:238
+#: ../src/ui/dialog/export.cpp:239
 msgid "x_1:"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:242
+#: ../src/ui/dialog/export.cpp:243
 msgid "Wid_th:"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:246
+#: ../src/ui/dialog/export.cpp:247
 msgid "_y0:"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:250
+#: ../src/ui/dialog/export.cpp:251
 msgid "y_1:"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:254
+#: ../src/ui/dialog/export.cpp:255
 msgid "Hei_ght:"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:269
+#: ../src/ui/dialog/export.cpp:270
 msgid "<b>Image size</b>"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:287 ../src/ui/dialog/export.cpp:298
+#: ../src/ui/dialog/export.cpp:288 ../src/ui/dialog/export.cpp:299
 msgid "pixels at"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:293
+#: ../src/ui/dialog/export.cpp:294
 msgid "dp_i"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:298 ../src/ui/dialog/transformation.cpp:82
+#: ../src/ui/dialog/export.cpp:299 ../src/ui/dialog/transformation.cpp:82
 #: ../src/ui/widget/page-sizer.cpp:237
 msgid "_Height:"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:306
+#: ../src/ui/dialog/export.cpp:307
 #: ../src/ui/dialog/inkscape-preferences.cpp:1436
 #: ../src/ui/dialog/inkscape-preferences.cpp:1439
 #: ../src/ui/dialog/inkscape-preferences.cpp:1451
 msgid "dpi"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:314
+#: ../src/ui/dialog/export.cpp:315
 msgid "<b>_Filename</b>"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:356
+#: ../src/ui/dialog/export.cpp:357
 msgid "Export the bitmap file with these settings"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:607
+#: ../src/ui/dialog/export.cpp:608
 #, c-format
 msgid "B_atch export %d selected object"
 msgid_plural "B_atch export %d selected objects"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/ui/dialog/export.cpp:923
+#: ../src/ui/dialog/export.cpp:924
 msgid "Export in progress"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1013
+#: ../src/ui/dialog/export.cpp:1014
 msgid "No items selected."
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1017 ../src/ui/dialog/export.cpp:1019
+#: ../src/ui/dialog/export.cpp:1018 ../src/ui/dialog/export.cpp:1020
 msgid "Exporting %1 files"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1059 ../src/ui/dialog/export.cpp:1061
+#: ../src/ui/dialog/export.cpp:1060 ../src/ui/dialog/export.cpp:1062
 #, c-format
 msgid "Exporting file <b>%s</b>..."
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1070 ../src/ui/dialog/export.cpp:1161
+#: ../src/ui/dialog/export.cpp:1071 ../src/ui/dialog/export.cpp:1162
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1073
+#: ../src/ui/dialog/export.cpp:1074
 #, c-format
 msgid "Could not export to filename <b>%s</b>."
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1088
+#: ../src/ui/dialog/export.cpp:1089
 #, c-format
 msgid "Successfully exported <b>%d</b> files from <b>%d</b> selected items."
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1099
+#: ../src/ui/dialog/export.cpp:1100
 msgid "You have to enter a filename."
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1100
+#: ../src/ui/dialog/export.cpp:1101
 msgid "You have to enter a filename"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1114
+#: ../src/ui/dialog/export.cpp:1115
 msgid "The chosen area to be exported is invalid."
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1115
+#: ../src/ui/dialog/export.cpp:1116
 msgid "The chosen area to be exported is invalid"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1130
+#: ../src/ui/dialog/export.cpp:1131
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr ""
 
 #. TRANSLATORS: %1 will be the filename, %2 the width, and %3 the height of the image
-#: ../src/ui/dialog/export.cpp:1144 ../src/ui/dialog/export.cpp:1146
+#: ../src/ui/dialog/export.cpp:1145 ../src/ui/dialog/export.cpp:1147
 msgid "Exporting %1 (%2 x %3)"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1172
+#: ../src/ui/dialog/export.cpp:1173
 #, c-format
 msgid "Drawing exported to <b>%s</b>."
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1176
+#: ../src/ui/dialog/export.cpp:1177
 msgid "Export aborted."
 msgstr ""
 
@@ -17379,6 +17386,8 @@ msgid "_Time of opacity change animation:"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:703
+#: ../share/extensions/hpgl_output.inx.h:30
+#: ../share/extensions/plotter.inx.h:40
 msgid "Miscellaneous"
 msgstr ""
 
@@ -20776,61 +20785,61 @@ msgctxt "Path node tip"
 msgid "Move node by %s, %s"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1317
+#: ../src/ui/tool/node.cpp:1316
 msgid "Symmetric node"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1318
+#: ../src/ui/tool/node.cpp:1317
 msgid "Auto-smooth node"
 msgstr ""
 
-#: ../src/ui/tool/node-tool.cpp:557
+#: ../src/ui/tool/node-tool.cpp:553
 msgctxt "Node tool tip"
 msgid ""
 "<b>Shift</b>: drag to add nodes to the selection, click to toggle object "
 "selection"
 msgstr ""
 
-#: ../src/ui/tool/node-tool.cpp:561
+#: ../src/ui/tool/node-tool.cpp:557
 msgctxt "Node tool tip"
 msgid "<b>Shift</b>: drag to add nodes to the selection"
 msgstr ""
 
-#: ../src/ui/tool/node-tool.cpp:573
+#: ../src/ui/tool/node-tool.cpp:569
 #, c-format
 msgid "<b>%u of %u</b> node selected."
 msgid_plural "<b>%u of %u</b> nodes selected."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/ui/tool/node-tool.cpp:579
+#: ../src/ui/tool/node-tool.cpp:575
 #, c-format
 msgctxt "Node tool tip"
 msgid "%s Drag to select nodes, click to edit only this object (more: Shift)"
 msgstr ""
 
-#: ../src/ui/tool/node-tool.cpp:585
+#: ../src/ui/tool/node-tool.cpp:581
 #, c-format
 msgctxt "Node tool tip"
 msgid "%s Drag to select nodes, click clear the selection"
 msgstr ""
 
-#: ../src/ui/tool/node-tool.cpp:594
+#: ../src/ui/tool/node-tool.cpp:590
 msgctxt "Node tool tip"
 msgid "Drag to select nodes, click to edit only this object"
 msgstr ""
 
-#: ../src/ui/tool/node-tool.cpp:597
+#: ../src/ui/tool/node-tool.cpp:593
 msgctxt "Node tool tip"
 msgid "Drag to select nodes, click to clear the selection"
 msgstr ""
 
-#: ../src/ui/tool/node-tool.cpp:602
+#: ../src/ui/tool/node-tool.cpp:598
 msgctxt "Node tool tip"
 msgid "Drag to select objects to edit, click to edit this object (more: Shift)"
 msgstr ""
 
-#: ../src/ui/tool/node-tool.cpp:605
+#: ../src/ui/tool/node-tool.cpp:601
 msgctxt "Node tool tip"
 msgid "Drag to select objects to edit"
 msgstr ""
@@ -21063,7 +21072,7 @@ msgstr ""
 msgid "Bottom margin"
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:296 ../share/extensions/hpgl_output.inx.h:7
+#: ../src/ui/widget/page-sizer.cpp:296
 msgid "Orientation:"
 msgstr ""
 
@@ -26119,11 +26128,11 @@ msgstr ""
 msgid "Scatter randomly the corners and angles"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:190
+#: ../src/widgets/stroke-style.cpp:191
 msgid "Stroke width"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:192
+#: ../src/widgets/stroke-style.cpp:193
 msgctxt "Stroke width"
 msgid "_Width:"
 msgstr ""
@@ -26131,80 +26140,80 @@ msgstr ""
 #. TRANSLATORS: Miter join: joining lines with a sharp (pointed) corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:237
+#: ../src/widgets/stroke-style.cpp:238
 msgid "Miter join"
 msgstr ""
 
 #. TRANSLATORS: Round join: joining lines with a rounded corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:245
+#: ../src/widgets/stroke-style.cpp:246
 msgid "Round join"
 msgstr ""
 
 #. TRANSLATORS: Bevel join: joining lines with a blunted (flattened) corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:253
+#: ../src/widgets/stroke-style.cpp:254
 msgid "Bevel join"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:278
+#: ../src/widgets/stroke-style.cpp:279
 msgid "Miter _limit:"
 msgstr ""
 
 #. Cap type
 #. TRANSLATORS: cap type specifies the shape for the ends of lines
 #. spw_label(t, _("_Cap:"), 0, i);
-#: ../src/widgets/stroke-style.cpp:294
+#: ../src/widgets/stroke-style.cpp:295
 msgid "Cap:"
 msgstr ""
 
 #. TRANSLATORS: Butt cap: the line shape does not extend beyond the end point
 #. of the line; the ends of the line are square
-#: ../src/widgets/stroke-style.cpp:305
+#: ../src/widgets/stroke-style.cpp:306
 msgid "Butt cap"
 msgstr ""
 
 #. TRANSLATORS: Round cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are rounded
-#: ../src/widgets/stroke-style.cpp:312
+#: ../src/widgets/stroke-style.cpp:313
 msgid "Round cap"
 msgstr ""
 
 #. TRANSLATORS: Square cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are square
-#: ../src/widgets/stroke-style.cpp:319
+#: ../src/widgets/stroke-style.cpp:320
 msgid "Square cap"
 msgstr ""
 
 #. Dash
-#: ../src/widgets/stroke-style.cpp:324
+#: ../src/widgets/stroke-style.cpp:325
 msgid "Dashes:"
 msgstr ""
 
 #. Drop down marker selectors
 #. TRANSLATORS: Path markers are an SVG feature that allows you to attach arbitrary shapes
 #. (arrowheads, bullets, faces, whatever) to the start, end, or middle nodes of a path.
-#: ../src/widgets/stroke-style.cpp:350
+#: ../src/widgets/stroke-style.cpp:351
 msgid "Markers:"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:356
+#: ../src/widgets/stroke-style.cpp:357
 msgid "Start Markers are drawn on the first node of a path or shape"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:365
+#: ../src/widgets/stroke-style.cpp:366
 msgid ""
 "Mid Markers are drawn on every node of a path or shape except the first and "
 "last nodes"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:374
+#: ../src/widgets/stroke-style.cpp:375
 msgid "End Markers are drawn on the last node of a path or shape"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:492
+#: ../src/widgets/stroke-style.cpp:493
 msgid "Set markers"
 msgstr ""
 
@@ -27190,17 +27199,24 @@ msgstr ""
 msgid "The sliced bitmaps have been saved as:"
 msgstr ""
 
-#: ../share/extensions/hpgl_input.py:59
-msgid "No HPGL data found."
-msgstr ""
-
-#: ../share/extensions/hpgl_input.py:111
+#: ../share/extensions/hpgl_input.py:58
 msgid ""
 "The HPGL data contained unknown (unsupported) commands, there is a "
 "possibility that the drawing is missing some content."
 msgstr ""
 
-#: ../share/extensions/inkex.py:133
+#. issue error if no hpgl data found
+#: ../share/extensions/hpgl_input.py:64
+msgid "No HPGL data found."
+msgstr ""
+
+#. issue error if no paths found
+#: ../share/extensions/hpgl_output.py:59
+msgid ""
+"No paths where found. Please convert all objects you want to save into paths."
+msgstr ""
+
+#: ../share/extensions/inkex.py:109
 #, python-format
 msgid ""
 "The fantastic lxml wrapper for libxml2 is required by inkex.py and therefore "
@@ -27212,7 +27228,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: ../share/extensions/inkex.py:283
+#: ../share/extensions/inkex.py:260
 #, python-format
 msgid "No matching node for expression: %s"
 msgstr ""
@@ -27460,6 +27476,22 @@ msgstr ""
 msgid ""
 "The first selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
+msgstr ""
+
+#: ../share/extensions/plotter.py:62
+msgid "pySerial is not installed."
+msgstr ""
+
+#. issue error if no paths found
+#: ../share/extensions/plotter.py:75
+msgid ""
+"No paths where found. Please convert all objects you want to plot into paths."
+msgstr ""
+
+#: ../share/extensions/plotter.py:111
+msgid ""
+"Could not send data. Please check that your plotter is running, connected "
+"and the settings are correct."
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.py:65
@@ -27712,7 +27744,7 @@ msgid "Corel DRAW Compressed Exchange files input (UC)"
 msgstr ""
 
 #: ../share/extensions/ccx_input.inx.h:2
-msgid "Corel DRAW Compressed Exchange files (UC) (.ccx)"
+msgid "Corel DRAW Compressed Exchange files (UC) (*.ccx)"
 msgstr ""
 
 #: ../share/extensions/ccx_input.inx.h:3
@@ -27736,7 +27768,7 @@ msgid "Corel DRAW templates input (UC)"
 msgstr ""
 
 #: ../share/extensions/cdt_input.inx.h:2
-msgid "Corel DRAW 7-13 template files (UC) (.cdt)"
+msgid "Corel DRAW 7-13 template files (UC) (*.cdt)"
 msgstr ""
 
 #: ../share/extensions/cdt_input.inx.h:3
@@ -27748,7 +27780,7 @@ msgid "Computer Graphics Metafile files input"
 msgstr ""
 
 #: ../share/extensions/cgm_input.inx.h:2
-msgid "Computer Graphics Metafile files (.cgm)"
+msgid "Computer Graphics Metafile files (*.cgm)"
 msgstr ""
 
 #: ../share/extensions/cgm_input.inx.h:3
@@ -27760,7 +27792,7 @@ msgid "Corel DRAW Presentation Exchange files input (UC)"
 msgstr ""
 
 #: ../share/extensions/cmx_input.inx.h:2
-msgid "Corel DRAW Presentation Exchange files (UC) (.cmx)"
+msgid "Corel DRAW Presentation Exchange files (UC) (*.cmx)"
 msgstr ""
 
 #: ../share/extensions/cmx_input.inx.h:3
@@ -27948,7 +27980,7 @@ msgid "DHW file input"
 msgstr ""
 
 #: ../share/extensions/dhw_input.inx.h:2
-msgid "ACECAD Digimemo File (.dhw)"
+msgid "ACECAD Digimemo File (*.dhw)"
 msgstr ""
 
 #: ../share/extensions/dhw_input.inx.h:3
@@ -29825,35 +29857,46 @@ msgid "HPGL Input"
 msgstr ""
 
 #: ../share/extensions/hpgl_input.inx.h:2
-msgid "Resolution X (dpi)"
+msgid ""
+"Please note that you can only open HPGL files written by Inkscape, to open "
+"other HPGL files please change their file extension to .plt, make sure you "
+"have UniConverter installed and open them again."
 msgstr ""
 
 #: ../share/extensions/hpgl_input.inx.h:3
-msgid "The amount of steps in one inch on the X axis (Default: 1016.0)"
+#: ../share/extensions/hpgl_output.inx.h:6
+#: ../share/extensions/plotter.inx.h:16
+msgid "Resolution X (dpi)"
 msgstr ""
 
 #: ../share/extensions/hpgl_input.inx.h:4
-msgid "Resolution Y (dpi)"
+msgid "The amount of steps in one inch on the X axis (Default: 1016.0)"
 msgstr ""
 
 #: ../share/extensions/hpgl_input.inx.h:5
-msgid "The amount of steps in one inch on the Y axis (Default: 1016.0)"
+#: ../share/extensions/hpgl_output.inx.h:8
+#: ../share/extensions/plotter.inx.h:18
+msgid "Resolution Y (dpi)"
 msgstr ""
 
 #: ../share/extensions/hpgl_input.inx.h:6
-msgid "Show Movements between paths"
+msgid "The amount of steps in one inch on the Y axis (Default: 1016.0)"
 msgstr ""
 
 #: ../share/extensions/hpgl_input.inx.h:7
-msgid "Show movements between paths in a different color (Default: Un-checked)"
+msgid "Show Movements between paths"
 msgstr ""
 
 #: ../share/extensions/hpgl_input.inx.h:8
+msgid "Check this to show movements between paths (Default: Unchecked)"
+msgstr ""
+
+#: ../share/extensions/hpgl_input.inx.h:9
 #: ../share/extensions/hpgl_output.inx.h:36
 msgid "HP Graphics Language file (*.hpgl)"
 msgstr ""
 
-#: ../share/extensions/hpgl_input.inx.h:9
+#: ../share/extensions/hpgl_input.inx.h:10
 msgid "Import HP Graphics Language file"
 msgstr ""
 
@@ -29863,163 +29906,184 @@ msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:2
 msgid ""
-"Please make sure that all objects you want to plot are converted to paths. "
-"The plot will automatically be aligned to the zero point."
+"Please make sure that all objects you want to save are converted to paths. "
+"The drawing will be automatically aligned to the zero point. Please use the "
+"plotter extension (Extensions menu) to plot directly on a plotter."
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:3
-msgid "Resolution (dpi):"
+#: ../share/extensions/plotter.inx.h:13
+msgid "Plotter Settings"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:4
-msgid ""
-"The amount of steps the cutter moves if it moves for 1 inch, either get this "
-"value from your plotter manual or learn it by trial and error (Standard: "
-"'1016')"
+#: ../share/extensions/plotter.inx.h:14
+msgid "Pen number"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:5
-msgid "Pen number:"
-msgstr ""
-
-#: ../share/extensions/hpgl_output.inx.h:6
+#: ../share/extensions/plotter.inx.h:15
 msgid "The number of the pen (tool) to use, on most plotters 1 (Standard: '1')"
 msgstr ""
 
-#: ../share/extensions/hpgl_output.inx.h:8
+#: ../share/extensions/hpgl_output.inx.h:7
+#: ../share/extensions/plotter.inx.h:17
 msgid ""
-"Orientation of the plot, change this if your plotter is plotting horizontal "
-"instead of vertical (Standard: '90°')"
+"The amount of steps the cutter moves if it moves for 1 inch on the X axis - "
+"Try different settings to find the one that fits your plotter (Default: "
+"1016.0)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:9
-msgid "Mirror Y-axis"
+#: ../share/extensions/plotter.inx.h:19
+msgid ""
+"The amount of steps the cutter moves if it moves for 1 inch on the Y axis - "
+"Try different settings to find the one that fits your plotter (Default: "
+"1016.0)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:10
-msgid ""
-"Whether to mirror the Y axis. Some plotters need this, some not. Look in "
-"your plotter manual or learn it by trial and error (Standard: 'False')"
+#: ../share/extensions/plotter.inx.h:20
+msgid "Mirror X-axis"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:11
-msgid "Center Zero Point"
+msgid ""
+"Check this to mirror the X axis - Try different settings to find the one "
+"that fits your plotter (Default: Unchecked)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:12
-msgid ""
-"Whether the plotter needs the zero point to be in the center of the drawing. "
-"Some plotters need this, some not. Look in your plotter manual or learn it "
-"by trial and error (Standard: 'False')"
+#: ../share/extensions/plotter.inx.h:22
+msgid "Mirror Y-axis"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:13
-msgid "Curve flatness:"
+#: ../share/extensions/plotter.inx.h:23
+msgid ""
+"Check this to mirror the Y axis - Try different settings to find the one "
+"that fits your plotter (Default: Unchecked)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:14
-msgid ""
-"Curves are divided into lines, this number controls how fine the curves will "
-"be reproduced, the smaller the finer (Standard: '1.2')"
+#: ../share/extensions/plotter.inx.h:24
+msgid "Rotation (Clockwise)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:15
-msgid "Use Overcut"
+msgid ""
+"Rotation of the drawing - Try different settings to find the one that fits "
+"your plotter (Default: 0°)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:16
-msgid ""
-"Whether the overcut will be used, if not the 'Overcut' parameter is unused "
-"(Standard: 'True')"
+#: ../share/extensions/plotter.inx.h:26
+msgid "Center zero point"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:17
-msgid "Overcut (mm):"
+#: ../share/extensions/plotter.inx.h:27
+msgid ""
+"Check this if your plotter uses a centered zero point - Try different "
+"settings to find the one that fits your plotter (Default: Unchecked)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:18
-msgid ""
-"The distance in mm that will be cut over the starting point of the path to "
-"prevent open paths (Standard: '1.00')"
+#: ../share/extensions/plotter.inx.h:28
+msgid "Overcut &#x26; Tool Offset"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:19
-msgid "Correct tool offset"
+#: ../share/extensions/plotter.inx.h:29
+msgid "Use overcut"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:20
+#: ../share/extensions/plotter.inx.h:30
 msgid ""
-"Whether the tool offset should be corrected, if not the 'Tool offset' and "
-"'Return Factor' parameters are unused (Standard: 'True')"
+"Check this to use the overcut, if not checked the 'Overcut' parameter is "
+"unused (Default: Checked)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:21
-msgid "Tool offset (mm):"
+#: ../share/extensions/plotter.inx.h:31
+msgid "Overcut (mm)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:22
-msgid "The offset from the tool tip to the tool axis in mm (Standard: '0.25')"
+#: ../share/extensions/plotter.inx.h:32
+msgid ""
+"The distance in mm that will be cut over the starting point of the path to "
+"prevent open paths (Default: 1.00)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:23
-msgid "Return Factor:"
+#: ../share/extensions/plotter.inx.h:33
+msgid "Use tool offset correction"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:24
+#: ../share/extensions/plotter.inx.h:34
 msgid ""
-"The return factor multiplied by the tool offset is the length that is used "
-"to guide the tool back to the original path after an overcut is performed, "
-"you can only determine this value by experimentation (Standard: '2.50')"
+"Check this to use the tool offset correction, if not checked the 'Tool "
+"offset' and 'Precut' parameters are unused (Default: Checked)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:25
-msgid "X offset (mm):"
+#: ../share/extensions/plotter.inx.h:35
+msgid "Tool offset (mm)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:26
-msgid ""
-"The offset to move your plot away from the zero point in mm (Standard: "
-"'0.00')"
+#: ../share/extensions/plotter.inx.h:36
+msgid "The offset from the tool tip to the tool axis in mm (Default: 0.25)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:27
-msgid "Y offset (mm):"
+#: ../share/extensions/plotter.inx.h:37
+msgid "Use precut"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:28
-msgid "Plot invisible layers"
+#: ../share/extensions/plotter.inx.h:38
+msgid ""
+"Check this to cut a small line before the real drawing to align the tool "
+"orientation for the first cut (Default: Checked)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:29
-msgid "Plot invisible layers (Standard: 'False')"
-msgstr ""
-
-#: ../share/extensions/hpgl_output.inx.h:30
-msgid "Send to Plotter also"
+#: ../share/extensions/plotter.inx.h:39
+msgid ""
+"Please note that using the tool offset correction will move your plot away "
+"from the zero point by the length in mm specified by the tool offset."
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:31
-msgid ""
-"Sends the generated HPGL data also via serial connection to your plotter "
-"(Standard: 'False')"
+#: ../share/extensions/plotter.inx.h:41
+msgid "Curve flatness"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:32
-msgid "Serial Port:"
+#: ../share/extensions/plotter.inx.h:42
+msgid ""
+"Curves are divided into lines, this number controls how fine the curves will "
+"be reproduced, the smaller the finer (Default: '1.2')"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:33
-msgid ""
-"The port of your serial connection, on Windows something like 'COM1', on "
-"Linux something like: '/dev/ttyUSB0' (Standard: 'COM1')"
+#: ../share/extensions/plotter.inx.h:43
+msgid "X offset (mm)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:34
-msgid "Baud Rate:"
+msgid ""
+"The offset to shift your plot away from the zero point in mm (Default: "
+"'0.00')"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:35
-msgid "The Baud rate of your serial connection (Standard: '9600')"
+#: ../share/extensions/plotter.inx.h:45
+msgid "Y offset (mm)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:37
@@ -31003,18 +31067,6 @@ msgstr ""
 msgid "View Next Glyph"
 msgstr ""
 
-#: ../share/extensions/outline2svg.inx.h:1
-msgid "Text Outline Input"
-msgstr ""
-
-#: ../share/extensions/outline2svg.inx.h:2
-msgid "Text Outline File (*.outline)"
-msgstr ""
-
-#: ../share/extensions/outline2svg.inx.h:3
-msgid "ASCII Text with outline markup"
-msgstr ""
-
 #: ../share/extensions/param_curves.inx.h:1
 msgid "Parametric Curves"
 msgstr ""
@@ -31253,6 +31305,82 @@ msgstr ""
 msgid ""
 "Snap all paths in selection to pixels. Snaps borders to half-points and "
 "fills to full points."
+msgstr ""
+
+#: ../share/extensions/plotter.inx.h:1
+msgid "Plot"
+msgstr ""
+
+#: ../share/extensions/plotter.inx.h:2
+msgid ""
+"Please make sure that all objects you want to plot are converted to paths. "
+"The plot will automatically be aligned to the zero point."
+msgstr ""
+
+#: ../share/extensions/plotter.inx.h:3
+msgid "Connection"
+msgstr ""
+
+#: ../share/extensions/plotter.inx.h:4
+msgid "Serial Port"
+msgstr ""
+
+#: ../share/extensions/plotter.inx.h:5
+msgid ""
+"The port of your serial connection, on Windows something like 'COM1', on "
+"Linux something like: '/dev/ttyUSB0' (Default: COM1)"
+msgstr ""
+
+#: ../share/extensions/plotter.inx.h:6
+msgid "Serial Baud rate"
+msgstr ""
+
+#: ../share/extensions/plotter.inx.h:7
+msgid "The Baud rate of your serial connection (Default: 9600)"
+msgstr ""
+
+#: ../share/extensions/plotter.inx.h:8
+msgid "Flow control"
+msgstr ""
+
+#: ../share/extensions/plotter.inx.h:9
+msgid ""
+"Software / Hardware flow control - Try different settings to find the one "
+"that fits your plotter (Default: None)"
+msgstr ""
+
+#: ../share/extensions/plotter.inx.h:10
+msgid ""
+"This can be a physical serial connection or a USB-to-Serial bridge. Ask your "
+"plotter manufacturer for drivers if needed."
+msgstr ""
+
+#: ../share/extensions/plotter.inx.h:11
+msgid "Please note that Parallel (LPT) connections are not supported."
+msgstr ""
+
+#: ../share/extensions/plotter.inx.h:12
+msgid ""
+"Please note that only the HPGL command language is supported at the moment."
+msgstr ""
+
+#: ../share/extensions/plotter.inx.h:21
+msgid "Check this to mirror the X axis (Default: Unchecked)"
+msgstr ""
+
+#: ../share/extensions/plotter.inx.h:25
+msgid ""
+"Rotation of the plot - Try different settings to find the one that fits your "
+"plotter (Default: 0°)"
+msgstr ""
+
+#: ../share/extensions/plotter.inx.h:44
+msgid ""
+"The offset to move your plot away from the zero point in mm (Default: '0.00')"
+msgstr ""
+
+#: ../share/extensions/plotter.inx.h:46
+msgid "Plotter"
 msgstr ""
 
 #: ../share/extensions/plt_input.inx.h:1
@@ -32010,7 +32138,7 @@ msgstr ""
 
 #: ../share/extensions/sk1_input.inx.h:2
 #: ../share/extensions/sk1_output.inx.h:2
-msgid "sK1 vector graphics files (.sk1)"
+msgid "sK1 vector graphics files (*.sk1)"
 msgstr ""
 
 #: ../share/extensions/sk1_input.inx.h:3
@@ -32452,18 +32580,6 @@ msgstr ""
 
 #: ../share/extensions/triangle.inx.h:13
 msgid "From Side c and Angles a, b"
-msgstr ""
-
-#: ../share/extensions/txt2svg.inx.h:1
-msgid "Text Input"
-msgstr ""
-
-#: ../share/extensions/txt2svg.inx.h:2
-msgid "Text File (*.txt)"
-msgstr ""
-
-#: ../share/extensions/txt2svg.inx.h:3
-msgid "ASCII Text"
 msgstr ""
 
 #: ../share/extensions/voronoi2svg.inx.h:1
