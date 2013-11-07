@@ -21,13 +21,17 @@
 #include <sigc++/sigc++.h>
 #include "event-context.h"
 
-#define SP_MESH_CONTEXT(obj) (dynamic_cast<SPMeshContext*>((SPEventContext*)obj))
-#define SP_IS_MESH_CONTEXT(obj) (dynamic_cast<const SPMeshContext*>((const SPEventContext*)obj) != NULL)
+#define SP_MESH_CONTEXT(obj) (dynamic_cast<Inkscape::UI::Tools::MeshTool*>((Inkscape::UI::Tools::ToolBase*)obj))
+#define SP_IS_MESH_CONTEXT(obj) (dynamic_cast<const Inkscape::UI::Tools::MeshTool*>((const Inkscape::UI::Tools::ToolBase*)obj) != NULL)
 
-class SPMeshContext : public SPEventContext {
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+class MeshTool : public ToolBase {
 public:
-	SPMeshContext();
-	virtual ~SPMeshContext();
+	MeshTool();
+	virtual ~MeshTool();
 
     Geom::Point origin;
 
@@ -51,8 +55,12 @@ private:
 	void selection_changed(Inkscape::Selection* sel);
 };
 
-void sp_mesh_context_select_next(SPEventContext *event_context);
-void sp_mesh_context_select_prev(SPEventContext *event_context);
+void sp_mesh_context_select_next(ToolBase *event_context);
+void sp_mesh_context_select_prev(ToolBase *event_context);
+
+}
+}
+}
 
 #endif // SEEN_SP_MESH_CONTEXT_H
 

@@ -217,14 +217,14 @@ Geom::Rect Inkscape::snap_rectangular_box(SPDesktop const *desktop, SPItem *item
 
 
 
-Geom::Point Inkscape::setup_for_drag_start(SPDesktop *desktop, SPEventContext* ec, GdkEvent *ev)
+Geom::Point Inkscape::setup_for_drag_start(SPDesktop *desktop, Inkscape::UI::Tools::ToolBase* ec, GdkEvent *ev)
 {
     ec->xp = static_cast<gint>(ev->button.x);
     ec->yp = static_cast<gint>(ev->button.y);
     ec->within_tolerance = true;
 
     Geom::Point const p(ev->button.x, ev->button.y);
-    ec->item_to_select = sp_event_context_find_item(desktop, p, ev->button.state & GDK_MOD1_MASK, TRUE);
+    ec->item_to_select = Inkscape::UI::Tools::sp_event_context_find_item(desktop, p, ev->button.state & GDK_MOD1_MASK, TRUE);
     return ec->desktop->w2d(p);
 }
 

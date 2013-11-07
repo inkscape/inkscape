@@ -80,7 +80,7 @@ static void paintbucket_channels_changed(EgeSelectOneAction* act, GObject* /*tbl
 {
     gint channels = ege_select_one_action_get_active( act );
     //flood_channels_set_channels( channels );
-    SPFloodContext::set_channels(channels);
+    Inkscape::UI::Tools::FloodTool::set_channels(channels);
 }
 
 static void paintbucket_threshold_changed(GtkAdjustment *adj, GObject * /*tbl*/)
@@ -127,7 +127,7 @@ static void paintbucket_defaults(GtkWidget *, GObject *tbl)
     }
 
     EgeSelectOneAction* channels_action = EGE_SELECT_ONE_ACTION( g_object_get_data (tbl, "channels_action" ) );
-    ege_select_one_action_set_active( channels_action, FLOOD_CHANNELS_RGB );
+    ege_select_one_action_set_active( channels_action, Inkscape::UI::Tools::FLOOD_CHANNELS_RGB );
     EgeSelectOneAction* autogap_action = EGE_SELECT_ONE_ACTION( g_object_get_data (tbl, "autogap_action" ) );
     ege_select_one_action_set_active( autogap_action, 0 );
 }
@@ -142,7 +142,7 @@ void sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
 
         GList* items = 0;
         gint count = 0;
-        for ( items = flood_channels_dropdown_items_list(); items ; items = g_list_next(items) )
+        for ( items = Inkscape::UI::Tools::flood_channels_dropdown_items_list(); items ; items = g_list_next(items) )
         {
             GtkTreeIter iter;
             gtk_list_store_append( model, &iter );
@@ -209,7 +209,7 @@ void sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
 
         GList* items = 0;
         gint count = 0;
-        for ( items = flood_autogap_dropdown_items_list(); items ; items = g_list_next(items) )
+        for ( items = Inkscape::UI::Tools::flood_autogap_dropdown_items_list(); items ; items = g_list_next(items) )
         {
             GtkTreeIter iter;
             gtk_list_store_append( model, &iter );

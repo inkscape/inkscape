@@ -23,7 +23,16 @@
 #include "enums.h"
 
 class SPDesktop;
-class SPEventContext;
+
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+class ToolBase;
+
+}
+}
+}
 
 namespace Inkscape {
 namespace UI {
@@ -181,7 +190,7 @@ public:
     static Glib::ustring format_tip(char const *format, ...) G_GNUC_PRINTF(1,2);
 
     // temporarily public, until snap delay is refactored a little
-    virtual bool _eventHandler(SPEventContext *event_context, GdkEvent *event);
+    virtual bool _eventHandler(Inkscape::UI::Tools::ToolBase *event_context, GdkEvent *event);
     SPDesktop *const _desktop; ///< The desktop this control point resides on.
 
 protected:

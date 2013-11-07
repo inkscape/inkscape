@@ -94,7 +94,7 @@ static void ms_tb_selection_changed(Inkscape::Selection * /*selection*/, gpointe
 
     // Inkscape::Selection *selection = sp_desktop_selection(desktop); // take from desktop, not from args
     // if (selection) {
-    //     SPEventContext *ev = sp_desktop_event_context(desktop);
+    //     ToolBase *ev = sp_desktop_event_context(desktop);
     //     GrDrag *drag = NULL;
     //     if (ev) {
     //         drag = ev->get_drag();

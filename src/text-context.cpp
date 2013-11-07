@@ -1,5 +1,5 @@
 /*
- * SPTextContext
+ * TextTool
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
@@ -52,44 +52,46 @@
 #include "xml/node-event-vector.h"
 #include "xml/repr.h"
 #include <gtk/gtk.h>
+#include "tool-factory.h"
 
 using Inkscape::ControlManager;
 using Inkscape::DocumentUndo;
 
-static void sp_text_context_selection_changed(Inkscape::Selection *selection, SPTextContext *tc);
-static void sp_text_context_selection_modified(Inkscape::Selection *selection, guint flags, SPTextContext *tc);
-static bool sp_text_context_style_set(SPCSSAttr const *css, SPTextContext *tc);
-static int sp_text_context_style_query(SPStyle *style, int property, SPTextContext *tc);
+namespace Inkscape {
+namespace UI {
+namespace Tools {
 
-static void sp_text_context_validate_cursor_iterators(SPTextContext *tc);
-static void sp_text_context_update_cursor(SPTextContext *tc, bool scroll_to_see = true);
-static void sp_text_context_update_text_selection(SPTextContext *tc);
-static gint sp_text_context_timeout(SPTextContext *tc);
-static void sp_text_context_forget_text(SPTextContext *tc);
+static void sp_text_context_selection_changed(Inkscape::Selection *selection, TextTool *tc);
+static void sp_text_context_selection_modified(Inkscape::Selection *selection, guint flags, TextTool *tc);
+static bool sp_text_context_style_set(SPCSSAttr const *css, TextTool *tc);
+static int sp_text_context_style_query(SPStyle *style, int property, TextTool *tc);
 
-static gint sptc_focus_in(GtkWidget *widget, GdkEventFocus *event, SPTextContext *tc);
-static gint sptc_focus_out(GtkWidget *widget, GdkEventFocus *event, SPTextContext *tc);
-static void sptc_commit(GtkIMContext *imc, gchar *string, SPTextContext *tc);
+static void sp_text_context_validate_cursor_iterators(TextTool *tc);
+static void sp_text_context_update_cursor(TextTool *tc, bool scroll_to_see = true);
+static void sp_text_context_update_text_selection(TextTool *tc);
+static gint sp_text_context_timeout(TextTool *tc);
+static void sp_text_context_forget_text(TextTool *tc);
 
-
-#include "tool-factory.h"
+static gint sptc_focus_in(GtkWidget *widget, GdkEventFocus *event, TextTool *tc);
+static gint sptc_focus_out(GtkWidget *widget, GdkEventFocus *event, TextTool *tc);
+static void sptc_commit(GtkIMContext *imc, gchar *string, TextTool *tc);
 
 namespace {
-	SPEventContext* createTextContext() {
-		return new SPTextContext();
+	ToolBase* createTextContext() {
+		return new TextTool();
 	}
 
 	bool textContextRegistered = ToolFactory::instance().registerObject("/tools/text", createTextContext);
 }
 
-const std::string& SPTextContext::getPrefsPath() {
-	return SPTextContext::prefsPath;
+const std::string& TextTool::getPrefsPath() {
+	return TextTool::prefsPath;
 }
 
-const std::string SPTextContext::prefsPath = "/tools/text";
+const std::string TextTool::prefsPath = "/tools/text";
 
 
-SPTextContext::SPTextContext() : SPEventContext() {
+TextTool::TextTool() : ToolBase() {
 	this->preedit_string = 0;
 	this->unipos = 0;
 
@@ -122,7 +124,7 @@ SPTextContext::SPTextContext() : SPEventContext() {
     this->creating = 0;
 }
 
-SPTextContext::~SPTextContext() {
+TextTool::~TextTool() {
     delete this->shape_editor;
     this->shape_editor = NULL;
 
@@ -134,7 +136,7 @@ SPTextContext::~SPTextContext() {
     Inkscape::Rubberband::get(this->desktop)->stop();
 }
 
-void SPTextContext::setup() {
+void TextTool::setup() {
     GtkSettings* settings = gtk_settings_get_default();
     gint timeout = 0;
     g_object_get( settings, "gtk-cursor-blink-time", &timeout, NULL );
@@ -184,7 +186,7 @@ void SPTextContext::setup() {
         }
     }
 
-    SPEventContext::setup();
+    ToolBase::setup();
 
     this->shape_editor = new ShapeEditor(this->desktop);
 
@@ -217,7 +219,7 @@ void SPTextContext::setup() {
     }
 }
 
-void SPTextContext::finish() {
+void TextTool::finish() {
     if (this->desktop) {
         sp_signal_disconnect_by_data(sp_desktop_canvas(this->desktop), this);
     }
@@ -265,7 +267,7 @@ void SPTextContext::finish() {
     this->text_selection_quads.clear();
 }
 
-bool SPTextContext::item_handler(SPItem* item, GdkEvent* event) {
+bool TextTool::item_handler(SPItem* item, GdkEvent* event) {
     SPItem *item_ungrouped;
 
     gint ret = FALSE;
@@ -402,15 +404,15 @@ bool SPTextContext::item_handler(SPItem* item, GdkEvent* event) {
     }
 
     if (!ret) {
-    	ret = SPEventContext::item_handler(item, event);
+    	ret = ToolBase::item_handler(item, event);
     }
 
     return ret;
 }
 
-static void sp_text_context_setup_text(SPTextContext *tc)
+static void sp_text_context_setup_text(TextTool *tc)
 {
-    SPEventContext *ec = SP_EVENT_CONTEXT(tc);
+    ToolBase *ec = SP_EVENT_CONTEXT(tc);
 
     /* Create <text> */
     Inkscape::XML::Document *xml_doc = SP_EVENT_CONTEXT_DESKTOP(ec)->doc()->getReprDoc();
@@ -452,7 +454,7 @@ static void sp_text_context_setup_text(SPTextContext *tc)
  *
  * \pre tc.uni/tc.unipos non-empty.
  */
-static void insert_uni_char(SPTextContext *const tc)
+static void insert_uni_char(TextTool *const tc)
 {
     g_return_if_fail(tc->unipos
                      && tc->unipos < sizeof(tc->uni)
@@ -500,7 +502,7 @@ static void hex_to_printable_utf8_buf(char const *const ehex, char *utf8)
     utf8[len] = '\0';
 }
 
-static void show_curr_uni_char(SPTextContext *const tc)
+static void show_curr_uni_char(TextTool *const tc)
 {
     g_return_if_fail(tc->unipos < sizeof(tc->uni)
                      && tc->uni[tc->unipos] == '\0');
@@ -524,7 +526,7 @@ static void show_curr_uni_char(SPTextContext *const tc)
     }
 }
 
-bool SPTextContext::root_handler(GdkEvent* event) {
+bool TextTool::root_handler(GdkEvent* event) {
     sp_canvas_item_hide(this->indicator);
 
     sp_text_context_validate_cursor_iterators(this);
@@ -1290,19 +1292,19 @@ bool SPTextContext::root_handler(GdkEvent* event) {
 //    } else {
 //        return FALSE; // return "I did nothing" value so that global shortcuts can be activated
 //    }
-    return SPEventContext::root_handler(event);
+    return ToolBase::root_handler(event);
 
 }
 
 /**
  Attempts to paste system clipboard into the currently edited text, returns true on success
  */
-bool sp_text_paste_inline(SPEventContext *ec)
+bool sp_text_paste_inline(ToolBase *ec)
 {
     if (!SP_IS_TEXT_CONTEXT(ec))
         return false;
 
-    SPTextContext *tc = SP_TEXT_CONTEXT(ec);
+    TextTool *tc = SP_TEXT_CONTEXT(ec);
 
     if ((tc->text) || (tc->nascent_object)) {
         // there is an active text object in this context, or a new object was just created
@@ -1370,22 +1372,22 @@ bool sp_text_paste_inline(SPEventContext *ec)
  Gets the raw characters that comprise the currently selected text, converting line
  breaks into lf characters.
 */
-Glib::ustring sp_text_get_selected_text(SPEventContext const *ec)
+Glib::ustring sp_text_get_selected_text(ToolBase const *ec)
 {
     if (!SP_IS_TEXT_CONTEXT(ec))
         return "";
-    SPTextContext const *tc = SP_TEXT_CONTEXT(ec);
+    TextTool const *tc = SP_TEXT_CONTEXT(ec);
     if (tc->text == NULL)
         return "";
 
     return sp_te_get_string_multiline(tc->text, tc->text_sel_start, tc->text_sel_end);
 }
 
-SPCSSAttr *sp_text_get_style_at_cursor(SPEventContext const *ec)
+SPCSSAttr *sp_text_get_style_at_cursor(ToolBase const *ec)
 {
     if (!SP_IS_TEXT_CONTEXT(ec))
         return NULL;
-    SPTextContext const *tc = SP_TEXT_CONTEXT(ec);
+    TextTool const *tc = SP_TEXT_CONTEXT(ec);
     if (tc->text == NULL)
         return NULL;
 
@@ -1402,11 +1404,11 @@ SPCSSAttr *sp_text_get_style_at_cursor(SPEventContext const *ec)
  Deletes the currently selected characters. Returns false if there is no
  text selection currently.
 */
-bool sp_text_delete_selection(SPEventContext *ec)
+bool sp_text_delete_selection(ToolBase *ec)
 {
     if (!SP_IS_TEXT_CONTEXT(ec))
         return false;
-    SPTextContext *tc = SP_TEXT_CONTEXT(ec);
+    TextTool *tc = SP_TEXT_CONTEXT(ec);
     if (tc->text == NULL)
         return false;
 
@@ -1434,11 +1436,11 @@ bool sp_text_delete_selection(SPEventContext *ec)
  * \param selection Should not be NULL.
  */
 static void
-sp_text_context_selection_changed(Inkscape::Selection *selection, SPTextContext *tc)
+sp_text_context_selection_changed(Inkscape::Selection *selection, TextTool *tc)
 {
     g_assert(selection != NULL);
 
-    SPEventContext *ec = SP_EVENT_CONTEXT(tc);
+    ToolBase *ec = SP_EVENT_CONTEXT(tc);
 
     ec->shape_editor->unset_item(SH_KNOTHOLDER);
     SPItem *item = selection->singleItem();
@@ -1467,13 +1469,13 @@ sp_text_context_selection_changed(Inkscape::Selection *selection, SPTextContext 
 }
 
 static void
-sp_text_context_selection_modified(Inkscape::Selection */*selection*/, guint /*flags*/, SPTextContext *tc)
+sp_text_context_selection_modified(Inkscape::Selection */*selection*/, guint /*flags*/, TextTool *tc)
 {
     sp_text_context_update_cursor(tc);
     sp_text_context_update_text_selection(tc);
 }
 
-static bool sp_text_context_style_set(SPCSSAttr const *css, SPTextContext *tc)
+static bool sp_text_context_style_set(SPCSSAttr const *css, TextTool *tc)
 {
     if (tc->text == NULL)
         return false;
@@ -1490,7 +1492,7 @@ static bool sp_text_context_style_set(SPCSSAttr const *css, SPTextContext *tc)
 }
 
 static int
-sp_text_context_style_query(SPStyle *style, int property, SPTextContext *tc)
+sp_text_context_style_query(SPStyle *style, int property, TextTool *tc)
 {
     if (tc->text == NULL) {
         return QUERY_STYLE_NOTHING;
@@ -1536,7 +1538,7 @@ sp_text_context_style_query(SPStyle *style, int property, SPTextContext *tc)
     return result;
 }
 
-static void sp_text_context_validate_cursor_iterators(SPTextContext *tc)
+static void sp_text_context_validate_cursor_iterators(TextTool *tc)
 {
     if (tc->text == NULL)
         return;
@@ -1547,7 +1549,7 @@ static void sp_text_context_validate_cursor_iterators(SPTextContext *tc)
     }
 }
 
-static void sp_text_context_update_cursor(SPTextContext *tc,  bool scroll_to_see)
+static void sp_text_context_update_cursor(TextTool *tc,  bool scroll_to_see)
 {
     // due to interruptible display, tc may already be destroyed during a display update before
     // the cursor update (can't do both atomically, alas)
@@ -1628,7 +1630,7 @@ static void sp_text_context_update_cursor(SPTextContext *tc,  bool scroll_to_see
     SP_EVENT_CONTEXT(tc)->desktop->emitToolSubselectionChanged((gpointer)tc);
 }
 
-static void sp_text_context_update_text_selection(SPTextContext *tc)
+static void sp_text_context_update_text_selection(TextTool *tc)
 {
     // due to interruptible display, tc may already be destroyed during a display update before
     // the selection update (can't do both atomically, alas)
@@ -1655,7 +1657,7 @@ static void sp_text_context_update_text_selection(SPTextContext *tc)
     }
 }
 
-static gint sp_text_context_timeout(SPTextContext *tc)
+static gint sp_text_context_timeout(TextTool *tc)
 {
     if (tc->show) {
         sp_canvas_item_show(tc->cursor);
@@ -1671,7 +1673,7 @@ static gint sp_text_context_timeout(SPTextContext *tc)
     return TRUE;
 }
 
-static void sp_text_context_forget_text(SPTextContext *tc)
+static void sp_text_context_forget_text(TextTool *tc)
 {
     if (! tc->text) return;
     SPItem *ti = tc->text;
@@ -1699,19 +1701,19 @@ static void sp_text_context_forget_text(SPTextContext *tc)
 */
 }
 
-gint sptc_focus_in(GtkWidget */*widget*/, GdkEventFocus */*event*/, SPTextContext *tc)
+gint sptc_focus_in(GtkWidget */*widget*/, GdkEventFocus */*event*/, TextTool *tc)
 {
     gtk_im_context_focus_in(tc->imc);
     return FALSE;
 }
 
-gint sptc_focus_out(GtkWidget */*widget*/, GdkEventFocus */*event*/, SPTextContext *tc)
+gint sptc_focus_out(GtkWidget */*widget*/, GdkEventFocus */*event*/, TextTool *tc)
 {
     gtk_im_context_focus_out(tc->imc);
     return FALSE;
 }
 
-static void sptc_commit(GtkIMContext */*imc*/, gchar *string, SPTextContext *tc)
+static void sptc_commit(GtkIMContext */*imc*/, gchar *string, TextTool *tc)
 {
     if (!tc->text) {
         sp_text_context_setup_text(tc);
@@ -1726,7 +1728,7 @@ static void sptc_commit(GtkIMContext */*imc*/, gchar *string, SPTextContext *tc)
 		       _("Type text"));
 }
 
-void sp_text_context_place_cursor (SPTextContext *tc, SPObject *text, Inkscape::Text::Layout::iterator where)
+void sp_text_context_place_cursor (TextTool *tc, SPObject *text, Inkscape::Text::Layout::iterator where)
 {
     SP_EVENT_CONTEXT_DESKTOP (tc)->selection->set (text);
     tc->text_sel_start = tc->text_sel_end = where;
@@ -1734,19 +1736,22 @@ void sp_text_context_place_cursor (SPTextContext *tc, SPObject *text, Inkscape::
     sp_text_context_update_text_selection(tc);
 }
 
-void sp_text_context_place_cursor_at (SPTextContext *tc, SPObject *text, Geom::Point const p)
+void sp_text_context_place_cursor_at (TextTool *tc, SPObject *text, Geom::Point const p)
 {
     SP_EVENT_CONTEXT_DESKTOP (tc)->selection->set (text);
     sp_text_context_place_cursor (tc, text, sp_te_get_position_by_coords(tc->text, p));
 }
 
-Inkscape::Text::Layout::iterator *sp_text_context_get_cursor_position(SPTextContext *tc, SPObject *text)
+Inkscape::Text::Layout::iterator *sp_text_context_get_cursor_position(TextTool *tc, SPObject *text)
 {
     if (text != tc->text)
         return NULL;
     return &(tc->text_sel_end);
 }
 
+}
+}
+}
 
 /*
   Local Variables:

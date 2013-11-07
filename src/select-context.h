@@ -15,8 +15,8 @@
 #include "event-context.h"
 #include <gtk/gtk.h>
 
-#define SP_SELECT_CONTEXT(obj) (dynamic_cast<SPSelectContext*>((SPEventContext*)obj))
-#define SP_IS_SELECT_CONTEXT(obj) (dynamic_cast<const SPSelectContext*>((const SPEventContext*)obj) != NULL)
+#define SP_SELECT_CONTEXT(obj) (dynamic_cast<Inkscape::UI::Tools::SelectTool*>((Inkscape::UI::Tools::ToolBase*)obj))
+#define SP_IS_SELECT_CONTEXT(obj) (dynamic_cast<const Inkscape::UI::Tools::SelectTool*>((const Inkscape::UI::Tools::ToolBase*)obj) != NULL)
 
 struct SPCanvasItem;
 
@@ -26,10 +26,14 @@ namespace Inkscape {
   class SelectionDescriber;
 }
 
-class SPSelectContext : public SPEventContext {
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+class SelectTool : public ToolBase {
 public:
-	SPSelectContext();
-	virtual ~SPSelectContext();
+	SelectTool();
+	virtual ~SelectTool();
 
 	guint dragging : 1;
 	guint moved : 1;
@@ -61,5 +65,9 @@ private:
 	bool sp_select_context_abort();
 	void sp_select_context_cycle_through_items(Inkscape::Selection *selection, GdkEventScroll *scroll_event, bool shift_pressed);
 };
+
+}
+}
+}
 
 #endif

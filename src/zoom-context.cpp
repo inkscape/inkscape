@@ -27,21 +27,25 @@
 #include "zoom-context.h"
 #include "tool-factory.h"
 
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
 namespace {
-	SPEventContext* createZoomContext() {
-		return new SPZoomContext();
+	ToolBase* createZoomContext() {
+		return new ZoomTool();
 	}
 
 	bool zoomContextRegistered = ToolFactory::instance().registerObject("/tools/zoom", createZoomContext);
 }
 
-const std::string& SPZoomContext::getPrefsPath() {
-	return SPZoomContext::prefsPath;
+const std::string& ZoomTool::getPrefsPath() {
+	return ZoomTool::prefsPath;
 }
 
-const std::string SPZoomContext::prefsPath = "/tools/zoom";
+const std::string ZoomTool::prefsPath = "/tools/zoom";
 
-SPZoomContext::SPZoomContext() : SPEventContext() {
+ZoomTool::ZoomTool() : ToolBase() {
 	this->grabbed = 0;
     this->cursor_shape = cursor_zoom_xpm;
     this->hot_x = 6;
@@ -49,10 +53,10 @@ SPZoomContext::SPZoomContext() : SPEventContext() {
     this->escaped = false;
 }
 
-SPZoomContext::~SPZoomContext() {
+ZoomTool::~ZoomTool() {
 }
 
-void SPZoomContext::finish() {
+void ZoomTool::finish() {
 	this->enableGrDrag(false);
 	
     if (this->grabbed) {
@@ -61,7 +65,7 @@ void SPZoomContext::finish() {
     }
 }
 
-void SPZoomContext::setup() {
+void ZoomTool::setup() {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     if (prefs->getBool("/tools/zoom/selcue")) {
@@ -72,10 +76,10 @@ void SPZoomContext::setup() {
         this->enableGrDrag();
     }
 
-    SPEventContext::setup();
+    ToolBase::setup();
 }
 
-bool SPZoomContext::root_handler(GdkEvent* event) {
+bool ZoomTool::root_handler(GdkEvent* event) {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 	
     tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
@@ -224,10 +228,14 @@ bool SPZoomContext::root_handler(GdkEvent* event) {
     }
 
     if (!ret) {
-    	ret = SPEventContext::root_handler(event);
+    	ret = ToolBase::root_handler(event);
     }
 
     return ret;
+}
+
+}
+}
 }
 
 /*

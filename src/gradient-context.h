@@ -19,13 +19,17 @@
 #include <sigc++/sigc++.h>
 #include "event-context.h"
 
-#define SP_GRADIENT_CONTEXT(obj) (dynamic_cast<SPGradientContext*>((SPEventContext*)obj))
-#define SP_IS_GRADIENT_CONTEXT(obj) (dynamic_cast<const SPGradientContext*>((const SPEventContext*)obj) != NULL)
+#define SP_GRADIENT_CONTEXT(obj) (dynamic_cast<Inkscape::UI::Tools::GradientTool*>((Inkscape::UI::Tools::ToolBase*)obj))
+#define SP_IS_GRADIENT_CONTEXT(obj) (dynamic_cast<const Inkscape::UI::Tools::GradientTool*>((const Inkscape::UI::Tools::ToolBase*)obj) != NULL)
 
-class SPGradientContext : public SPEventContext {
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+class GradientTool : public ToolBase {
 public:
-	SPGradientContext();
-	virtual ~SPGradientContext();
+	GradientTool();
+	virtual ~GradientTool();
 
     Geom::Point origin;
 
@@ -49,9 +53,13 @@ private:
 	void selection_changed(Inkscape::Selection*);
 };
 
-void sp_gradient_context_select_next (SPEventContext *event_context);
-void sp_gradient_context_select_prev (SPEventContext *event_context);
-void sp_gradient_context_add_stops_between_selected_stops (SPGradientContext *rc);
+void sp_gradient_context_select_next (ToolBase *event_context);
+void sp_gradient_context_select_prev (ToolBase *event_context);
+void sp_gradient_context_add_stops_between_selected_stops (GradientTool *rc);
+
+}
+}
+}
 
 #endif
 

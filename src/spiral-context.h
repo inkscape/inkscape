@@ -23,13 +23,17 @@
 
 #include "sp-spiral.h"
 
-#define SP_SPIRAL_CONTEXT(obj) (dynamic_cast<SPSpiralContext*>((SPEventContext*)obj))
-#define SP_IS_SPIRAL_CONTEXT(obj) (dynamic_cast<const SPSpiralContext*>((const SPEventContext*)obj) != NULL)
+#define SP_SPIRAL_CONTEXT(obj) (dynamic_cast<Inkscape::UI::Tools::SpiralTool*>((Inkscape::UI::Tools::ToolBase*)obj))
+#define SP_IS_SPIRAL_CONTEXT(obj) (dynamic_cast<const Inkscape::UI::Tools::SpiralTool*>((const Inkscape::UI::Tools::ToolBase*)obj) != NULL)
 
-class SPSpiralContext : public SPEventContext {
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+class SpiralTool : public ToolBase {
 public:
-	SPSpiralContext();
-	virtual ~SPSpiralContext();
+	SpiralTool();
+	virtual ~SpiralTool();
 
 	static const std::string prefsPath;
 
@@ -54,5 +58,9 @@ private:
 	void cancel();
 	void selection_changed(Inkscape::Selection *selection);
 };
+
+}
+}
+}
 
 #endif

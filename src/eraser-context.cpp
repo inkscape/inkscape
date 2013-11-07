@@ -85,30 +85,34 @@ using Inkscape::DocumentUndo;
 
 #include "tool-factory.h"
 
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
 namespace {
-	SPEventContext* createEraserContext() {
-		return new SPEraserContext();
+	ToolBase* createEraserContext() {
+		return new EraserTool();
 	}
 
 	bool eraserContextRegistered = ToolFactory::instance().registerObject("/tools/eraser", createEraserContext);
 }
 
-const std::string& SPEraserContext::getPrefsPath() {
-	return SPEraserContext::prefsPath;
+const std::string& EraserTool::getPrefsPath() {
+	return EraserTool::prefsPath;
 }
 
-const std::string SPEraserContext::prefsPath = "/tools/eraser";
+const std::string EraserTool::prefsPath = "/tools/eraser";
 
-SPEraserContext::SPEraserContext() : SPCommonContext() {
+EraserTool::EraserTool() : SPCommonContext() {
     this->cursor_shape = cursor_eraser_xpm;
     this->hot_x = 4;
     this->hot_y = 4;
 }
 
-SPEraserContext::~SPEraserContext() {
+EraserTool::~EraserTool() {
 }
 
-void SPEraserContext::setup() {
+void EraserTool::setup() {
     SPCommonContext::setup();
 
     this->accumulated = new SPCurve();
@@ -167,7 +171,7 @@ flerp(double f0, double f1, double p)
     return f0 + ( f1 - f0 ) * p;
 }
 
-void SPEraserContext::reset(Geom::Point p) {
+void EraserTool::reset(Geom::Point p) {
     this->last = this->cur = getNormalizedPoint(p);
     this->vel = Geom::Point(0,0);
     this->vel_max = 0;
@@ -176,7 +180,7 @@ void SPEraserContext::reset(Geom::Point p) {
     this->del = Geom::Point(0,0);
 }
 
-void SPEraserContext::extinput(GdkEvent *event) {
+void EraserTool::extinput(GdkEvent *event) {
     if (gdk_event_get_axis (event, GDK_AXIS_PRESSURE, &this->pressure))
         this->pressure = CLAMP (this->pressure, ERC_MIN_PRESSURE, ERC_MAX_PRESSURE);
     else
@@ -194,7 +198,7 @@ void SPEraserContext::extinput(GdkEvent *event) {
 }
 
 
-bool SPEraserContext::apply(Geom::Point p) {
+bool EraserTool::apply(Geom::Point p) {
     Geom::Point n = getNormalizedPoint(p);
 
     /* Calculate mass and drag */
@@ -291,7 +295,7 @@ bool SPEraserContext::apply(Geom::Point p) {
     return TRUE;
 }
 
-void SPEraserContext::brush() {
+void EraserTool::brush() {
     g_assert( this->npoints >= 0 && this->npoints < SAMPLING_SIZE );
 
     // How much velocity thins strokestyle
@@ -357,7 +361,7 @@ sp_erc_update_toolbox (SPDesktop *desktop, const gchar *id, double value)
     desktop->setToolboxAdjustmentValue (id, value);
 }
 
-void SPEraserContext::cancel() {
+void EraserTool::cancel() {
     SPDesktop *desktop = SP_EVENT_CONTEXT(this)->desktop;
     this->dragging = FALSE;
     this->is_drawing = false;
@@ -375,7 +379,7 @@ void SPEraserContext::cancel() {
             }
 }
 
-bool SPEraserContext::root_handler(GdkEvent* event) {
+bool EraserTool::root_handler(GdkEvent* event) {
     gint ret = FALSE;
 
     switch (event->type) {
@@ -620,7 +624,7 @@ bool SPEraserContext::root_handler(GdkEvent* event) {
     return ret;
 }
 
-void SPEraserContext::clear_current() {
+void EraserTool::clear_current() {
     // reset bpath
     sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->currentshape), NULL);
 
@@ -633,7 +637,7 @@ void SPEraserContext::clear_current() {
     this->npoints = 0;
 }
 
-void SPEraserContext::set_to_accumulated() {
+void EraserTool::set_to_accumulated() {
     bool workDone = false;
 
     if (!this->accumulated->is_empty()) {
@@ -801,7 +805,7 @@ add_cap(SPCurve *curve,
     }
 }
 
-void SPEraserContext::accumulate() {
+void EraserTool::accumulate() {
     if ( !this->cal1->is_empty() && !this->cal2->is_empty() ) {
         this->accumulated->reset(); /*  Is this required ?? */
         SPCurve *rev_cal2 = this->cal2->create_reverse();
@@ -843,7 +847,7 @@ static double square(double const x)
     return x * x;
 }
 
-void SPEraserContext::fit_and_split(bool release) {
+void EraserTool::fit_and_split(bool release) {
     double const tolerance_sq = square( desktop->w2d().descrim() * TOLERANCE_ERASER );
 
 #ifdef ERASER_VERBOSE
@@ -978,7 +982,7 @@ void SPEraserContext::fit_and_split(bool release) {
     }
 }
 
-void SPEraserContext::draw_temporary_box() {
+void EraserTool::draw_temporary_box() {
     this->currentcurve->reset();
 
     this->currentcurve->moveto(this->point1[this->npoints-1]);
@@ -997,6 +1001,10 @@ void SPEraserContext::draw_temporary_box() {
 
     this->currentcurve->closepath();
     sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->currentshape), this->currentcurve);
+}
+
+}
+}
 }
 
 /*

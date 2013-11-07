@@ -208,7 +208,7 @@ PathParam::param_editOncanvas(SPItem *item, SPDesktop * dt)
         tools_switch(dt, TOOLS_NODES);
     }
 
-    InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
+    Inkscape::UI::Tools::NodeTool *nt = static_cast<Inkscape::UI::Tools::NodeTool*>(dt->event_context);
     std::set<ShapeRecord> shapes;
     ShapeRecord r;
 

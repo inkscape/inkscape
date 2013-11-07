@@ -917,6 +917,16 @@ static int sp_common_main( int argc, char const **argv, GSList **flDest )
     return 0;
 }
 
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+guint get_group0_keyval(GdkEventKey* event);
+
+}
+}
+}
+
 static void
 snooper(GdkEvent *event, gpointer /*data*/) {
     if (inkscape_mapalt())  /* returns the map of the keyboard modifier to map to Alt, zero if no mapping */
@@ -959,7 +969,7 @@ snooper(GdkEvent *event, gpointer /*data*/) {
         static gboolean altL_pressed = FALSE;
         static gboolean altR_pressed = FALSE;
         static gboolean alt_pressed = FALSE;
-        guint get_group0_keyval(GdkEventKey* event);
+
         guint keyval = 0;
         switch (event->type) {
         case GDK_MOTION_NOTIFY:
@@ -969,7 +979,7 @@ snooper(GdkEvent *event, gpointer /*data*/) {
             alt_pressed = TRUE && (event->button.state & GDK_MOD1_MASK);
             break;
         case GDK_KEY_PRESS:
-            keyval = get_group0_keyval(&event->key);
+            keyval = Inkscape::UI::Tools::get_group0_keyval(&event->key);
             if (keyval == GDK_KEY_Alt_L) altL_pressed = TRUE;
             if (keyval == GDK_KEY_Alt_R) altR_pressed = TRUE;
             alt_pressed = alt_pressed || altL_pressed || altR_pressed;
@@ -980,7 +990,7 @@ snooper(GdkEvent *event, gpointer /*data*/) {
                 event->key.state &= ~GDK_MOD1_MASK;
             break;
         case GDK_KEY_RELEASE:
-            keyval = get_group0_keyval(&event->key);
+            keyval = Inkscape::UI::Tools::get_group0_keyval(&event->key);
             if (keyval == GDK_KEY_Alt_L) altL_pressed = FALSE;
             if (keyval == GDK_KEY_Alt_R) altR_pressed = FALSE;
             if (!altL_pressed && !altR_pressed)

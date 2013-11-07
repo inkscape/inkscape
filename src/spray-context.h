@@ -21,8 +21,8 @@
 #include <2geom/point.h>
 #include "event-context.h"
 
-#define SP_SPRAY_CONTEXT(obj) (dynamic_cast<SPSprayContext*>((SPEventContext*)obj))
-#define SP_IS_SPRAY_CONTEXT(obj) (dynamic_cast<const SPSprayContext*>((const SPEventContext*)obj) != NULL)
+#define SP_SPRAY_CONTEXT(obj) (dynamic_cast<Inkscape::UI::Tools::SprayTool*>((Inkscape::UI::Tools::ToolBase*)obj))
+#define SP_IS_SPRAY_CONTEXT(obj) (dynamic_cast<const Inkscape::UI::Tools::SprayTool*>((const Inkscape::UI::Tools::ToolBase*)obj) != NULL)
 
 namespace Inkscape {
   namespace UI {
@@ -39,6 +39,10 @@ namespace Inkscape {
 #define TC_MAX_PRESSURE      1.0
 #define TC_DEFAULT_PRESSURE  0.35
 
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
 enum {
     SPRAY_MODE_COPY,
     SPRAY_MODE_CLONE,
@@ -46,12 +50,12 @@ enum {
     SPRAY_OPTION,
 };
 
-class SPSprayContext : public SPEventContext {
+class SprayTool : public ToolBase {
 public:
-	SPSprayContext();
-	virtual ~SPSprayContext();
+	SprayTool();
+	virtual ~SprayTool();
 
-    //SPEventContext event_context;
+    //ToolBase event_context;
     //Inkscape::UI::Dialog::Dialog *dialog_option;//Attribut de type SprayOptionClass, localisé dans scr/ui/dialog    
     /* extended input data */
     gdouble pressure;
@@ -97,6 +101,10 @@ public:
 
 	void update_cursor(bool /*with_shift*/);
 };
+
+}
+}
+}
 
 #endif
 

@@ -50,22 +50,26 @@ using Inkscape::DocumentUndo;
 
 #include "tool-factory.h"
 
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
 namespace {
-	SPEventContext* createArcContext() {
-		return new SPArcContext();
+	ToolBase* createArcContext() {
+		return new ArcTool();
 	}
 
 	bool arcContextRegistered = ToolFactory::instance().registerObject("/tools/shapes/arc", createArcContext);
 }
 
-const std::string& SPArcContext::getPrefsPath() {
-	return SPArcContext::prefsPath;
+const std::string& ArcTool::getPrefsPath() {
+	return ArcTool::prefsPath;
 }
 
-const std::string SPArcContext::prefsPath = "/tools/shapes/arc";
+const std::string ArcTool::prefsPath = "/tools/shapes/arc";
 
 
-SPArcContext::SPArcContext() : SPEventContext() {
+ArcTool::ArcTool() : ToolBase() {
     this->cursor_shape = cursor_ellipse_xpm;
     this->hot_x = 4;
     this->hot_y = 4;
@@ -79,15 +83,15 @@ SPArcContext::SPArcContext() : SPEventContext() {
     this->arc = NULL;
 }
 
-void SPArcContext::finish() {
+void ArcTool::finish() {
     sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), GDK_CURRENT_TIME);
     this->finishItem();
     this->sel_changed_connection.disconnect();
 
-    SPEventContext::finish();
+    ToolBase::finish();
 }
 
-SPArcContext::~SPArcContext() {
+ArcTool::~ArcTool() {
     this->enableGrDrag(false);
 
     this->sel_changed_connection.disconnect();
@@ -105,13 +109,13 @@ SPArcContext::~SPArcContext() {
  * Callback that processes the "changed" signal on the selection;
  * destroys old and creates new knotholder.
  */
-void SPArcContext::selection_changed(Inkscape::Selection* selection) {
+void ArcTool::selection_changed(Inkscape::Selection* selection) {
     this->shape_editor->unset_item(SH_KNOTHOLDER);
     this->shape_editor->set_item(selection->singleItem(), SH_KNOTHOLDER);
 }
 
-void SPArcContext::setup() {
-    SPEventContext::setup();
+void ArcTool::setup() {
+    ToolBase::setup();
 
     Inkscape::Selection *selection = sp_desktop_selection(this->desktop);
 
@@ -124,7 +128,7 @@ void SPArcContext::setup() {
 
     this->sel_changed_connection.disconnect();
     this->sel_changed_connection = selection->connectChanged(
-        sigc::mem_fun(this, &SPArcContext::selection_changed)
+        sigc::mem_fun(this, &ArcTool::selection_changed)
     );
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -137,7 +141,7 @@ void SPArcContext::setup() {
     }
 }
 
-bool SPArcContext::item_handler(SPItem* item, GdkEvent* event) {
+bool ArcTool::item_handler(SPItem* item, GdkEvent* event) {
     gint ret = FALSE;
 
     switch (event->type) {
@@ -156,12 +160,12 @@ bool SPArcContext::item_handler(SPItem* item, GdkEvent* event) {
 //        ret = (SP_EVENT_CONTEXT_CLASS(sp_arc_context_parent_class))->item_handler(event_context, item, event);
 //    }
     // CPPIFY: ret is overwritten...
-    ret = SPEventContext::item_handler(item, event);
+    ret = ToolBase::item_handler(item, event);
 
     return ret;
 }
 
-bool SPArcContext::root_handler(GdkEvent* event) {
+bool ArcTool::root_handler(GdkEvent* event) {
     static bool dragging;
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
@@ -343,13 +347,13 @@ bool SPArcContext::root_handler(GdkEvent* event) {
     }
 
     if (!ret) {
-    	ret = SPEventContext::root_handler(event);
+    	ret = ToolBase::root_handler(event);
     }
 
     return ret;
 }
 
-void SPArcContext::drag(Geom::Point pt, guint state) {
+void ArcTool::drag(Geom::Point pt, guint state) {
     if (!this->arc) {
         if (Inkscape::have_viable_layer(desktop, this->message_context) == false) {
             return;
@@ -441,7 +445,7 @@ void SPArcContext::drag(Geom::Point pt, guint state) {
     g_string_free(ys, FALSE);
 }
 
-void SPArcContext::finishItem() {
+void ArcTool::finishItem() {
     this->message_context->clear();
 
     if (this->arc != NULL) {
@@ -463,7 +467,7 @@ void SPArcContext::finishItem() {
     }
 }
 
-void SPArcContext::cancel() {
+void ArcTool::cancel() {
     sp_desktop_selection(desktop)->clear();
     sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), 0);
 
@@ -480,6 +484,10 @@ void SPArcContext::cancel() {
     desktop->canvas->endForcedFullRedraws();
 
     DocumentUndo::cancel(sp_desktop_document(desktop));
+}
+
+}
+}
 }
 
 

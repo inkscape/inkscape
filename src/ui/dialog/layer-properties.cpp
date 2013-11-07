@@ -318,7 +318,7 @@ SPObject* LayerPropertiesDialog::_selectedLayer()
 bool LayerPropertiesDialog::_handleKeyEvent(GdkEventKey *event)
 {
 
-    switch (get_group0_keyval(event)) {
+    switch (Inkscape::UI::Tools::get_group0_keyval(event)) {
         case GDK_KEY_Return:
         case GDK_KEY_KP_Enter: {
             _strategy->perform(*this);

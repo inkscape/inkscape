@@ -53,26 +53,29 @@
 
 using Inkscape::DocumentUndo;
 
-static void sp_mesh_drag(SPMeshContext &rc, Geom::Point const pt, guint state, guint32 etime);
-
-
 #include "tool-factory.h"
 
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+static void sp_mesh_drag(MeshTool &rc, Geom::Point const pt, guint state, guint32 etime);
+
 namespace {
-	SPEventContext* createMeshContext() {
-		return new SPMeshContext();
+	ToolBase* createMeshContext() {
+		return new MeshTool();
 	}
 
 	bool meshContextRegistered = ToolFactory::instance().registerObject("/tools/mesh", createMeshContext);
 }
 
-const std::string& SPMeshContext::getPrefsPath() {
-	return SPMeshContext::prefsPath;
+const std::string& MeshTool::getPrefsPath() {
+	return MeshTool::prefsPath;
 }
 
-const std::string SPMeshContext::prefsPath = "/tools/mesh";
+const std::string MeshTool::prefsPath = "/tools/mesh";
 
-SPMeshContext::SPMeshContext() : SPEventContext() {
+MeshTool::MeshTool() : ToolBase() {
 	this->selcon = 0;
 	this->node_added = false;
 	this->subselcon = 0;
@@ -88,7 +91,7 @@ SPMeshContext::SPMeshContext() : SPEventContext() {
     this->item_to_select = NULL;
 }
 
-SPMeshContext::~SPMeshContext() {
+MeshTool::~MeshTool() {
     this->enableGrDrag(false);
 
     this->selcon->disconnect();
@@ -104,7 +107,7 @@ const gchar *ms_handle_descr [] = {
     N_("Mesh gradient <b>tensor</b>")
 };
 
-void SPMeshContext::selection_changed(Inkscape::Selection* /*sel*/) {
+void MeshTool::selection_changed(Inkscape::Selection* /*sel*/) {
     GrDrag *drag = this->_grdrag;
     Inkscape::Selection *selection = sp_desktop_selection(this->desktop);
 
@@ -224,8 +227,8 @@ void SPMeshContext::selection_changed(Inkscape::Selection* /*sel*/) {
     // }
 }
 
-void SPMeshContext::setup() {
-    SPEventContext::setup();
+void MeshTool::setup() {
+    ToolBase::setup();
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (prefs->getBool("/tools/mesh/selcue", true)) {
@@ -236,12 +239,12 @@ void SPMeshContext::setup() {
     Inkscape::Selection *selection = sp_desktop_selection(this->desktop);
 
     this->selcon = new sigc::connection(selection->connectChanged(
-    	sigc::mem_fun(this, &SPMeshContext::selection_changed)
+    	sigc::mem_fun(this, &MeshTool::selection_changed)
     ));
 
     this->subselcon = new sigc::connection(this->desktop->connectToolSubselectionChanged(
     	sigc::hide(sigc::bind(
-    		sigc::mem_fun(*this, &SPMeshContext::selection_changed),
+    		sigc::mem_fun(*this, &MeshTool::selection_changed),
     		(Inkscape::Selection*)NULL)
     	)
     ));
@@ -250,7 +253,7 @@ void SPMeshContext::setup() {
 }
 
 void
-sp_mesh_context_select_next (SPEventContext *event_context)
+sp_mesh_context_select_next (ToolBase *event_context)
 {
     GrDrag *drag = event_context->_grdrag;
     g_assert (drag);
@@ -261,7 +264,7 @@ sp_mesh_context_select_next (SPEventContext *event_context)
 }
 
 void
-sp_mesh_context_select_prev (SPEventContext *event_context)
+sp_mesh_context_select_prev (ToolBase *event_context)
 {
     GrDrag *drag = event_context->_grdrag;
     g_assert (drag);
@@ -275,7 +278,7 @@ sp_mesh_context_select_prev (SPEventContext *event_context)
 Returns true if mouse cursor over mesh edge.
 */
 static bool
-sp_mesh_context_is_over_line (SPMeshContext *rc, SPItem *item, Geom::Point event_p)
+sp_mesh_context_is_over_line (MeshTool *rc, SPItem *item, Geom::Point event_p)
 {
     SPDesktop *desktop = SP_EVENT_CONTEXT (rc)->desktop;
 
@@ -300,7 +303,7 @@ sp_mesh_context_is_over_line (SPMeshContext *rc, SPItem *item, Geom::Point event
 /**
 Split row/column near the mouse point.
 */
-static void sp_mesh_context_split_near_point(SPMeshContext *rc, SPItem *item,  Geom::Point mouse_p, guint32 /*etime*/)
+static void sp_mesh_context_split_near_point(MeshTool *rc, SPItem *item,  Geom::Point mouse_p, guint32 /*etime*/)
 {
 
 #ifdef DEBUG_MESH
@@ -309,7 +312,7 @@ static void sp_mesh_context_split_near_point(SPMeshContext *rc, SPItem *item,  G
 
     // item is the selected item. mouse_p the location in doc coordinates of where to add the stop
 
-    SPEventContext *ec = SP_EVENT_CONTEXT(rc);
+    ToolBase *ec = SP_EVENT_CONTEXT(rc);
     SPDesktop *desktop = SP_EVENT_CONTEXT (rc)->desktop;
 
     double tolerance = (double) ec->tolerance;
@@ -326,7 +329,7 @@ static void sp_mesh_context_split_near_point(SPMeshContext *rc, SPItem *item,  G
 Wrapper for various mesh operations that require a list of selected corner nodes.
  */
 static void
-sp_mesh_context_corner_operation (SPMeshContext *rc, MeshCornerOperation operation )
+sp_mesh_context_corner_operation (MeshTool *rc, MeshCornerOperation operation )
 {
 
 #ifdef DEBUG_MESH
@@ -436,7 +439,7 @@ sp_mesh_context_corner_operation (SPMeshContext *rc, MeshCornerOperation operati
 /**
 Handles all keyboard and mouse input for meshs.
 */
-bool SPMeshContext::root_handler(GdkEvent* event) {
+bool MeshTool::root_handler(GdkEvent* event) {
     static bool dragging;
 
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
@@ -924,17 +927,17 @@ bool SPMeshContext::root_handler(GdkEvent* event) {
     }
 
     if (!ret) {
-    	ret = SPEventContext::root_handler(event);
+    	ret = ToolBase::root_handler(event);
     }
 
     return ret;
 }
 
-static void sp_mesh_drag(SPMeshContext &rc, Geom::Point const /*pt*/, guint /*state*/, guint32 /*etime*/) {
+static void sp_mesh_drag(MeshTool &rc, Geom::Point const /*pt*/, guint /*state*/, guint32 /*etime*/) {
     SPDesktop *desktop = SP_EVENT_CONTEXT(&rc)->desktop;
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     SPDocument *document = sp_desktop_document(desktop);
-    SPEventContext *ec = SP_EVENT_CONTEXT(&rc);
+    ToolBase *ec = SP_EVENT_CONTEXT(&rc);
 
     if (!selection->isEmpty()) {
 
@@ -998,6 +1001,9 @@ static void sp_mesh_drag(SPMeshContext &rc, Geom::Point const /*pt*/, guint /*st
 
 }
 
+}
+}
+}
 
 /*
   Local Variables:

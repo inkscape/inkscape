@@ -1,5 +1,5 @@
 /** @file
- * Factory for SPEventContext tree
+ * Factory for ToolBase tree
  *//*
  * Authors:
  *   Markus Engel
@@ -13,8 +13,17 @@
 
 #include "factory.h"
 
-class SPEventContext;
-typedef Singleton< Factory<SPEventContext> > ToolFactory;
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+class ToolBase;
+
+}
+}
+}
+
+typedef Singleton< Factory<Inkscape::UI::Tools::ToolBase> > ToolFactory;
 
 
 #endif

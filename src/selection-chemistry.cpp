@@ -119,6 +119,7 @@ SPCycleType SP_CYCLING = SP_CYCLE_FOCUS;
 using Inkscape::DocumentUndo;
 using Geom::X;
 using Geom::Y;
+using Inkscape::UI::Tools::NodeTool;
 
 /* The clipboard handling is in ui/clipboard.cpp now. There are some legacy functions left here,
 because the layer manipulation code uses them. It should be rewritten specifically
@@ -146,7 +147,7 @@ namespace Inkscape {
 void SelectionHelper::selectAll(SPDesktop *dt)
 {
     if (tools_isactive(dt, TOOLS_NODES)) {
-        InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
+        NodeTool *nt = static_cast<NodeTool*>(dt->event_context);
         if (!nt->_multipath->empty()) {
             nt->_multipath->selectSubpaths();
             return;
@@ -158,7 +159,7 @@ void SelectionHelper::selectAll(SPDesktop *dt)
 void SelectionHelper::selectAllInAll(SPDesktop *dt)
 {
     if (tools_isactive(dt, TOOLS_NODES)) {
-        InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
+        NodeTool *nt = static_cast<NodeTool*>(dt->event_context);
         nt->_selected_nodes->selectAll();
     } else {
         sp_edit_select_all_in_all_layers(dt);
@@ -167,9 +168,9 @@ void SelectionHelper::selectAllInAll(SPDesktop *dt)
 
 void SelectionHelper::selectNone(SPDesktop *dt)
 {
-    InkNodeTool *nt = NULL;
+    NodeTool *nt = NULL;
     if (tools_isactive(dt, TOOLS_NODES)) {
-        nt = static_cast<InkNodeTool*>(dt->event_context);
+        nt = static_cast<NodeTool*>(dt->event_context);
     }
 
     if (nt && !nt->_selected_nodes->empty()) {
@@ -210,7 +211,7 @@ void SelectionHelper::selectSameObjectType(SPDesktop *dt)
 void SelectionHelper::invert(SPDesktop *dt)
 {
     if (tools_isactive(dt, TOOLS_NODES)) {
-        InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
+        NodeTool *nt = static_cast<NodeTool*>(dt->event_context);
         nt->_multipath->invertSelectionInSubpaths();
     } else {
         sp_edit_invert(dt);
@@ -220,7 +221,7 @@ void SelectionHelper::invert(SPDesktop *dt)
 void SelectionHelper::invertAllInAll(SPDesktop *dt)
 {
     if (tools_isactive(dt, TOOLS_NODES)) {
-        InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
+        NodeTool *nt = static_cast<NodeTool*>(dt->event_context);
         nt->_selected_nodes->invertSelection();
     } else {
         sp_edit_invert_in_all_layers(dt);
@@ -231,7 +232,7 @@ void SelectionHelper::reverse(SPDesktop *dt)
 {
     // TODO make this a virtual method of event context!
     if (tools_isactive(dt, TOOLS_NODES)) {
-        InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
+        NodeTool *nt = static_cast<NodeTool*>(dt->event_context);
         nt->_multipath->reverseSubpaths();
     } else {
         sp_selected_path_reverse(dt);
@@ -240,13 +241,13 @@ void SelectionHelper::reverse(SPDesktop *dt)
 
 void SelectionHelper::selectNext(SPDesktop *dt)
 {
-    SPEventContext *ec = dt->event_context;
+    Inkscape::UI::Tools::ToolBase *ec = dt->event_context;
     if (tools_isactive(dt, TOOLS_NODES)) {
-        InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
+        NodeTool *nt = static_cast<NodeTool*>(dt->event_context);
         nt->_multipath->shiftSelection(1);
     } else if (tools_isactive(dt, TOOLS_GRADIENT)
                && ec->_grdrag->isNonEmpty()) {
-        sp_gradient_context_select_next(ec);
+        Inkscape::UI::Tools::sp_gradient_context_select_next(ec);
     } else {
         sp_selection_item_next(dt);
     }
@@ -254,13 +255,13 @@ void SelectionHelper::selectNext(SPDesktop *dt)
 
 void SelectionHelper::selectPrev(SPDesktop *dt)
 {
-    SPEventContext *ec = dt->event_context;
+    Inkscape::UI::Tools::ToolBase *ec = dt->event_context;
     if (tools_isactive(dt, TOOLS_NODES)) {
-        InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
+        NodeTool *nt = static_cast<NodeTool*>(dt->event_context);
         nt->_multipath->shiftSelection(-1);
     } else if (tools_isactive(dt, TOOLS_GRADIENT)
                && ec->_grdrag->isNonEmpty()) {
-        sp_gradient_context_select_prev(ec);
+        Inkscape::UI::Tools::sp_gradient_context_select_prev(ec);
     } else {
         sp_selection_item_prev(dt);
     }
@@ -388,7 +389,7 @@ void sp_selection_delete(SPDesktop *desktop)
     }
 
     if (tools_isactive(desktop, TOOLS_TEXT))
-        if (sp_text_delete_selection(desktop->event_context)) {
+        if (Inkscape::UI::Tools::sp_text_delete_selection(desktop->event_context)) {
             DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT,
                                _("Delete text"));
             return;
@@ -1471,7 +1472,7 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Affine cons
         // If we're moving a connector, we want to detach it
         // from shapes that aren't part of the selection, but
         // leave it attached if they are
-        if (cc_item_is_connector(item)) {
+        if (Inkscape::UI::Tools::cc_item_is_connector(item)) {
             SPItem *attItem[2];
             SP_PATH(item)->connEndPair.getAttachedItems(attItem);
 

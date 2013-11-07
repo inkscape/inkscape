@@ -23,13 +23,17 @@
 
 #include "sp-ellipse.h"
 
-#define SP_ARC_CONTEXT(obj) (dynamic_cast<SPArcContext*>((SPEventContext*)obj))
-#define SP_IS_ARC_CONTEXT(obj) (dynamic_cast<const SPArcContext*>(const SPEventContext*(obj)) != NULL)
+#define SP_ARC_CONTEXT(obj) (dynamic_cast<Inkscape::UI::Tools::ArcTool*>((Inkscape::UI::Tools::ToolBase*)obj))
+#define SP_IS_ARC_CONTEXT(obj) (dynamic_cast<const Inkscape::UI::Tools::ArcTool*>(const Inkscape::UI::Tools::ToolBase*(obj)) != NULL)
 
-class SPArcContext : public SPEventContext {
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+class ArcTool : public ToolBase {
 public:
-	SPArcContext();
-	virtual ~SPArcContext();
+	ArcTool();
+	virtual ~ArcTool();
 
 	static const std::string prefsPath;
 
@@ -53,6 +57,10 @@ private:
 	void finishItem();
 	void cancel();
 };
+
+}
+}
+}
 
 #endif /* !SEEN_ARC_CONTEXT_H */
 

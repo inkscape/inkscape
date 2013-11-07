@@ -23,7 +23,7 @@ in which case we'd have filled in pc->red_curve to a non-empty curve.
 
 Expansion of the above claim of at least 3 distinct points: We know n_segs <= 0 ||
 unsigned(dc->npoints) >= G_N_ELEMENTS(pc->p) from the negation of the containing `if' condition.
-G_N_ELEMENTS(pc->p) is greater than 3 (in int arithmetic), from SPPencilContext::p array definition
+G_N_ELEMENTS(pc->p) is greater than 3 (in int arithmetic), from PencilTool::p array definition
 in pencil-context.h.  npoints grows by no more than one per fit_and_split invocation; we should be
 able to establish that dc->npoints == G_N_ELEMENTS(pc->p) if unsigned(dc->npoints) >=
 G_N_ELEMENTS(pc->p), in which case 3 <= dc->npoints in int arithmetic.  We know that dc->npoints >=

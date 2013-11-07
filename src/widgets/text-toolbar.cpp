@@ -652,7 +652,7 @@ static void sp_text_dx_value_changed( GtkAdjustment *adj, GObject *tbl )
     bool modmade = false;
 
     if( SP_IS_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context) ) {
-        SPTextContext *const tc = SP_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context);
+        Inkscape::UI::Tools::TextTool *const tc = SP_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context);
         if( tc ) {
             unsigned char_index = -1;
             TextTagAttributes *attributes =
@@ -686,7 +686,7 @@ static void sp_text_dy_value_changed( GtkAdjustment *adj, GObject *tbl )
     bool modmade = false;
 
     if( SP_IS_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context) ) {
-        SPTextContext *const tc = SP_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context);
+        Inkscape::UI::Tools::TextTool *const tc = SP_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context);
         if( tc ) {
             unsigned char_index = -1;
             TextTagAttributes *attributes =
@@ -721,7 +721,7 @@ static void sp_text_rotation_value_changed( GtkAdjustment *adj, GObject *tbl )
 
     bool modmade = false;
     if( SP_IS_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context) ) {
-        SPTextContext *const tc = SP_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context);
+        Inkscape::UI::Tools::TextTool *const tc = SP_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context);
         if( tc ) {
             unsigned char_index = -1;
             TextTagAttributes *attributes =
@@ -1091,7 +1091,7 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
 
     // Kerning (xshift), yshift, rotation.  NB: These are not CSS attributes.
     if( SP_IS_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context) ) {
-        SPTextContext *const tc = SP_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context);
+        Inkscape::UI::Tools::TextTool *const tc = SP_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context);
         if( tc ) {
             unsigned char_index = -1;
             TextTagAttributes *attributes =

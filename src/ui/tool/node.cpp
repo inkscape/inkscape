@@ -250,7 +250,7 @@ char const *Handle::handle_type_to_localized_string(NodeType type)
     }
 }
 
-bool Handle::_eventHandler(SPEventContext *event_context, GdkEvent *event)
+bool Handle::_eventHandler(Inkscape::UI::Tools::ToolBase *event_context, GdkEvent *event)
 {
     switch (event->type)
     {
@@ -834,7 +834,7 @@ NodeType Node::parse_nodetype(char x)
     }
 }
 
-bool Node::_eventHandler(SPEventContext *event_context, GdkEvent *event)
+bool Node::_eventHandler(Inkscape::UI::Tools::ToolBase *event_context, GdkEvent *event)
 {
     int dir = 0;
 

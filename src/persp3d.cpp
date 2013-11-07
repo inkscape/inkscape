@@ -140,9 +140,9 @@ void Persp3D::set(unsigned key, gchar const *value) {
     }
 
     // FIXME: Is this the right place for resetting the draggers?
-    SPEventContext *ec = inkscape_active_event_context();
+    Inkscape::UI::Tools::ToolBase *ec = inkscape_active_event_context();
     if (SP_IS_BOX3D_CONTEXT(ec)) {
-        Box3DContext *bc = SP_BOX3D_CONTEXT(ec);
+        Inkscape::UI::Tools::Box3dTool *bc = SP_BOX3D_CONTEXT(ec);
         bc->_vpdrag->updateDraggers();
         bc->_vpdrag->updateLines();
         bc->_vpdrag->updateBoxHandles();

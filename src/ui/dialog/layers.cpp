@@ -544,7 +544,7 @@ void LayersPanel::_toggled( Glib::ustring const& str, int targetCol )
 bool LayersPanel::_handleKeyEvent(GdkEventKey *event)
 {
 
-    switch (get_group0_keyval(event)) {
+    switch (Inkscape::UI::Tools::get_group0_keyval(event)) {
         case GDK_KEY_Return:
         case GDK_KEY_KP_Enter:
         case GDK_KEY_F2: {

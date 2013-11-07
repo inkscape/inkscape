@@ -270,7 +270,7 @@ bool Dialog::_onEvent(GdkEvent *event)
 
     switch (event->type) {
         case GDK_KEY_PRESS: {
-            switch (get_group0_keyval (&event->key)) {
+            switch (Inkscape::UI::Tools::get_group0_keyval (&event->key)) {
                 case GDK_KEY_Escape: {
                     _defocus();
                     ret = true;
@@ -300,7 +300,7 @@ bool Dialog::_onEvent(GdkEvent *event)
 bool Dialog::_onKeyPress(GdkEventKey *event)
 {
     unsigned int shortcut;
-    shortcut = get_group0_keyval(event) |
+    shortcut = Inkscape::UI::Tools::get_group0_keyval(event) |
         ( event->state & GDK_SHIFT_MASK ?
           SP_SHORTCUT_SHIFT_MASK : 0 ) |
         ( event->state & GDK_CONTROL_MASK ?

@@ -92,7 +92,7 @@ static void sp_tweak_mode_changed( EgeSelectOneAction *act, GObject *tbl )
     prefs->setInt("/tools/tweak/mode", mode);
 
     static gchar const* names[] = {"tweak_doh", "tweak_dos", "tweak_dol", "tweak_doo", "tweak_channels_label"};
-    bool flag = ((mode == TWEAK_MODE_COLORPAINT) || (mode == TWEAK_MODE_COLORJITTER));
+    bool flag = ((mode == Inkscape::UI::Tools::TWEAK_MODE_COLORPAINT) || (mode == Inkscape::UI::Tools::TWEAK_MODE_COLORJITTER));
     for (size_t i = 0; i < G_N_ELEMENTS(names); ++i) {
         GtkAction *act = GTK_ACTION(g_object_get_data( tbl, names[i] ));
         if (act) {
@@ -289,7 +289,7 @@ void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
         EgeOutputAction* act = ege_output_action_new( "TweakChannelsLabel", _("Channels:"), "", 0 );
         ege_output_action_set_use_markup( act, TRUE );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
-        if (mode != TWEAK_MODE_COLORPAINT && mode != TWEAK_MODE_COLORJITTER) {
+        if (mode != Inkscape::UI::Tools::TWEAK_MODE_COLORPAINT && mode != Inkscape::UI::Tools::TWEAK_MODE_COLORJITTER) {
             gtk_action_set_sensitive (GTK_ACTION(act), FALSE);
         }
         g_object_set_data( holder, "tweak_channels_label", act);
@@ -306,7 +306,7 @@ void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(tweak_toggle_doh), desktop );
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/tweak/doh", true) );
-        if (mode != TWEAK_MODE_COLORPAINT && mode != TWEAK_MODE_COLORJITTER) {
+        if (mode != Inkscape::UI::Tools::TWEAK_MODE_COLORPAINT && mode != Inkscape::UI::Tools::TWEAK_MODE_COLORJITTER) {
             gtk_action_set_sensitive (GTK_ACTION(act), FALSE);
         }
         g_object_set_data( holder, "tweak_doh", act);
@@ -322,7 +322,7 @@ void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(tweak_toggle_dos), desktop );
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/tweak/dos", true) );
-        if (mode != TWEAK_MODE_COLORPAINT && mode != TWEAK_MODE_COLORJITTER) {
+        if (mode != Inkscape::UI::Tools::TWEAK_MODE_COLORPAINT && mode != Inkscape::UI::Tools::TWEAK_MODE_COLORJITTER) {
             gtk_action_set_sensitive (GTK_ACTION(act), FALSE);
         }
         g_object_set_data( holder, "tweak_dos", act );
@@ -338,7 +338,7 @@ void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(tweak_toggle_dol), desktop );
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/tweak/dol", true) );
-        if (mode != TWEAK_MODE_COLORPAINT && mode != TWEAK_MODE_COLORJITTER) {
+        if (mode != Inkscape::UI::Tools::TWEAK_MODE_COLORPAINT && mode != Inkscape::UI::Tools::TWEAK_MODE_COLORJITTER) {
             gtk_action_set_sensitive (GTK_ACTION(act), FALSE);
         }
         g_object_set_data( holder, "tweak_dol", act );
@@ -354,7 +354,7 @@ void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(tweak_toggle_doo), desktop );
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/tweak/doo", true) );
-        if (mode != TWEAK_MODE_COLORPAINT && mode != TWEAK_MODE_COLORJITTER) {
+        if (mode != Inkscape::UI::Tools::TWEAK_MODE_COLORPAINT && mode != Inkscape::UI::Tools::TWEAK_MODE_COLORJITTER) {
             gtk_action_set_sensitive (GTK_ACTION(act), FALSE);
         }
         g_object_set_data( holder, "tweak_doo", act );
@@ -373,7 +373,7 @@ void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
                                                               sp_tweak_fidelity_value_changed, NULL /*unit tracker*/, 0.01, 0, 100 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
-        if (mode == TWEAK_MODE_COLORPAINT || mode == TWEAK_MODE_COLORJITTER) {
+        if (mode == Inkscape::UI::Tools::TWEAK_MODE_COLORPAINT || mode == Inkscape::UI::Tools::TWEAK_MODE_COLORJITTER) {
             gtk_action_set_sensitive (GTK_ACTION(eact), FALSE);
         }
         g_object_set_data( holder, "tweak_fidelity", eact );

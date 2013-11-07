@@ -145,7 +145,7 @@ struct Inkscape::ApplicationClass {
     void (* change_subselection) (Inkscape::Application * inkscape, SPDesktop *desktop);
     void (* modify_selection) (Inkscape::Application * inkscape, Inkscape::Selection * selection, guint flags);
     void (* set_selection) (Inkscape::Application * inkscape, Inkscape::Selection * selection);
-    void (* set_eventcontext) (Inkscape::Application * inkscape, SPEventContext * eventcontext);
+    void (* set_eventcontext) (Inkscape::Application * inkscape, Inkscape::UI::Tools::ToolBase * eventcontext);
     void (* activate_desktop) (Inkscape::Application * inkscape, SPDesktop * desktop);
     void (* deactivate_desktop) (Inkscape::Application * inkscape, SPDesktop * desktop);
     void (* destroy_document) (Inkscape::Application *inkscape, SPDocument *doc);
@@ -991,7 +991,7 @@ inkscape_selection_set (Inkscape::Selection * selection)
 
 
 void
-inkscape_eventcontext_set (SPEventContext * eventcontext)
+inkscape_eventcontext_set (Inkscape::UI::Tools::ToolBase * eventcontext)
 {
     g_return_if_fail (eventcontext != NULL);
     g_return_if_fail (SP_IS_EVENT_CONTEXT (eventcontext));
@@ -1338,7 +1338,7 @@ bool inkscape_is_sole_desktop_for_document(SPDesktop const &desktop) {
     return true;
 }
 
-SPEventContext *
+Inkscape::UI::Tools::ToolBase *
 inkscape_active_event_context (void)
 {
     if (SP_ACTIVE_DESKTOP) {

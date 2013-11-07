@@ -90,7 +90,7 @@ public:
     void invertSelection();
     void spatialGrow(SelectableControlPoint *origin, int dir);
 
-    virtual bool event(SPEventContext *, GdkEvent *);
+    virtual bool event(Inkscape::UI::Tools::ToolBase *, GdkEvent *);
 
     void transform(Geom::Affine const &m);
     void align(Geom::Dim2 d);

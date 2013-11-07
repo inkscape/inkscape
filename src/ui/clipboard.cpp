@@ -247,13 +247,13 @@ void ClipboardManagerImpl::copy(SPDesktop *desktop)
     // not the object that holds it; also copy the style at cursor into
     if (tools_isactive(desktop, TOOLS_TEXT)) {
         _discardInternalClipboard();
-        Glib::ustring selected_text = sp_text_get_selected_text(desktop->event_context);
+        Glib::ustring selected_text = Inkscape::UI::Tools::sp_text_get_selected_text(desktop->event_context);
         _clipboard->set_text(selected_text);
         if (_text_style) {
             sp_repr_css_attr_unref(_text_style);
             _text_style = NULL;
         }
-        _text_style = sp_text_get_style_at_cursor(desktop->event_context);
+        _text_style = Inkscape::UI::Tools::sp_text_get_style_at_cursor(desktop->event_context);
         return;
     }
 
@@ -908,7 +908,7 @@ bool ClipboardManagerImpl::_pasteText(SPDesktop *desktop)
 
     // if the text editing tool is active, paste the text into the active text object
     if (tools_isactive(desktop, TOOLS_TEXT)) {
-        return sp_text_paste_inline(desktop->event_context);
+        return Inkscape::UI::Tools::sp_text_paste_inline(desktop->event_context);
     }
 
     // try to parse the text as a color and, if successful, apply it as the current style

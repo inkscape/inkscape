@@ -23,7 +23,16 @@
 #define TOOLBAR_SLIDER_HINT "full"
 
 class SPDesktop;
-class SPEventContext;
+
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+class ToolBase;
+
+}
+}
+}
 
 namespace Inkscape {
 namespace UI {
@@ -50,7 +59,7 @@ public:
 
     static Glib::ustring getToolboxName(GtkWidget* toolbox);
 
-    static void updateSnapToolbox(SPDesktop *desktop, SPEventContext *eventcontext, GtkWidget *toolbox);
+    static void updateSnapToolbox(SPDesktop *desktop, Inkscape::UI::Tools::ToolBase *eventcontext, GtkWidget *toolbox);
 
     static Inkscape::IconSize prefToSize(Glib::ustring const &path, int base = 0 );
 

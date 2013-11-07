@@ -245,7 +245,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
 int sp_dt_hruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidget *dtw)
 {
     if (event->type == GDK_MOTION_NOTIFY) {
-        sp_event_context_snap_delay_handler(dtw->desktop->event_context, (gpointer) widget, (gpointer) dtw, (GdkEventMotion *)event, DelayedSnapEvent::GUIDE_HRULER);
+        sp_event_context_snap_delay_handler(dtw->desktop->event_context, (gpointer) widget, (gpointer) dtw, (GdkEventMotion *)event, Inkscape::UI::Tools::DelayedSnapEvent::GUIDE_HRULER);
     }
     return sp_dt_ruler_event(widget, event, dtw, true);
 }
@@ -253,7 +253,7 @@ int sp_dt_hruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidget *dtw)
 int sp_dt_vruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidget *dtw)
 {
     if (event->type == GDK_MOTION_NOTIFY) {
-        sp_event_context_snap_delay_handler(dtw->desktop->event_context, (gpointer) widget, (gpointer) dtw, (GdkEventMotion *)event, DelayedSnapEvent::GUIDE_VRULER);
+        sp_event_context_snap_delay_handler(dtw->desktop->event_context, (gpointer) widget, (gpointer) dtw, (GdkEventMotion *)event, Inkscape::UI::Tools::DelayedSnapEvent::GUIDE_VRULER);
     }
     return sp_dt_ruler_event(widget, event, dtw, false);
 }
@@ -324,7 +324,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                                            event->motion.y);
                 Geom::Point motion_dt(desktop->w2d(motion_w));
 
-                sp_event_context_snap_delay_handler(desktop->event_context, (gpointer) item, data, (GdkEventMotion *)event, DelayedSnapEvent::GUIDE_HANDLER);
+                sp_event_context_snap_delay_handler(desktop->event_context, (gpointer) item, data, (GdkEventMotion *)event, Inkscape::UI::Tools::DelayedSnapEvent::GUIDE_HANDLER);
 
                 // This is for snapping while dragging existing guidelines. New guidelines,
                 // which are dragged off the ruler, are being snapped in sp_dt_ruler_event
@@ -525,7 +525,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
             desktop->guidesMessageContext()->clear();
             break;
         case GDK_KEY_PRESS:
-            switch (get_group0_keyval (&event->key)) {
+            switch (Inkscape::UI::Tools::get_group0_keyval (&event->key)) {
                 case GDK_KEY_Delete:
                 case GDK_KEY_KP_Delete:
                 case GDK_KEY_BackSpace:
@@ -558,7 +558,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
             }
             break;
         case GDK_KEY_RELEASE:
-            switch (get_group0_keyval (&event->key)) {
+            switch (Inkscape::UI::Tools::get_group0_keyval (&event->key)) {
                 case GDK_KEY_Shift_L:
                 case GDK_KEY_Shift_R:
                     GdkCursor *guide_cursor;

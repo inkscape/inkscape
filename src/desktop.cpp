@@ -362,7 +362,7 @@ void SPDesktop::destroy()
     g_signal_handlers_disconnect_by_func(G_OBJECT (drawing), (gpointer) G_CALLBACK(_arena_handler), this);
 
 //    while (event_context) {
-//        SPEventContext *ec = event_context;
+//        ToolBase *ec = event_context;
 //        event_context = ec->next;
 //        sp_event_context_finish (ec);
 //        g_object_unref (G_OBJECT (ec));
@@ -401,7 +401,7 @@ SPDesktop::~SPDesktop()
 }
 
 
-SPEventContext* SPDesktop::getEventContext() const {
+Inkscape::UI::Tools::ToolBase* SPDesktop::getEventContext() const {
 	return event_context;
 }
 
@@ -672,13 +672,13 @@ SPDesktop::change_document (SPDocument *theDocument)
 #include "tool-factory.h"
 
 void SPDesktop::set_event_context2(const std::string& toolName) {
-	SPEventContext* ec_old = event_context;
+    Inkscape::UI::Tools::ToolBase* ec_old = event_context;
 
 	if (ec_old) {
 		ec_old->deactivate();
 	}
 
-	SPEventContext* ec_new = ToolFactory::instance().createObject(toolName);
+	Inkscape::UI::Tools::ToolBase* ec_new = ToolFactory::instance().createObject(toolName);
 	ec_new->desktop = this;
 	ec_new->message_context = new Inkscape::MessageContext(this->messageStack());
 
@@ -702,13 +702,13 @@ void SPDesktop::set_event_context2(const std::string& toolName) {
 //void
 //SPDesktop::set_event_context (GType type, const gchar *config)
 //{
-//    //SPEventContext *ec;
+//    //ToolBase *ec;
 //    //while (event_context) {
 //        //ec = event_context;
 //        sp_event_context_deactivate (event_context);
 //        // we have to keep event_context valid during destruction - otherwise writing
 //        // destructors is next to impossible
-//      //  SPEventContext *next = ec->next;
+//      //  ToolBase *next = ec->next;
 //        sp_event_context_finish (event_context);
 //        g_object_unref (G_OBJECT (event_context));
 //      //  event_context = next;
@@ -733,7 +733,7 @@ void SPDesktop::set_event_context2(const std::string& toolName) {
 //void
 //SPDesktop::push_event_context (GType type, const gchar *config, unsigned int key)
 //{
-//    SPEventContext *ref, *ec;
+//    ToolBase *ref, *ec;
 //
 //    if (event_context && event_context->key == key) return;
 //    ref = event_context;
@@ -976,7 +976,7 @@ void SPDesktop::zoom_quick(bool enable)
         // TODO This needs to migrate into the node tool, but currently the design
         // of this method is sufficiently wrong to prevent this.
         if (!zoomed && INK_IS_NODE_TOOL(event_context)) {
-            InkNodeTool *nt = static_cast<InkNodeTool*>(event_context);
+            Inkscape::UI::Tools::NodeTool *nt = static_cast<Inkscape::UI::Tools::NodeTool*>(event_context);
             if (!nt->_selected_nodes->empty()) {
                 Geom::Rect nodes = *nt->_selected_nodes->bounds();
                 double area = nodes.area();
@@ -1945,7 +1945,7 @@ SPDesktop::show_dialogs()
 // void
 // SPDesktop::pop_event_context (unsigned int key)
 // {
-//    SPEventContext *ec = NULL;
+//    ToolBase *ec = NULL;
 //
 //    if (event_context && event_context->key == key) {
 //        g_return_if_fail (event_context);
@@ -1957,7 +1957,7 @@ SPDesktop::show_dialogs()
 //        _event_context_changed_signal.emit (this, ec);
 //    }
 //
-//    SPEventContext *ref = event_context;
+//    ToolBase *ref = event_context;
 //    while (ref && ref->next && ref->next->key != key)
 //        ref = ref->next;
 //

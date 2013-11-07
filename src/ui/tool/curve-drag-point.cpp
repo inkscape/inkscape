@@ -32,7 +32,7 @@ CurveDragPoint::CurveDragPoint(PathManipulator &pm) :
     setVisible(false);
 }
 
-bool CurveDragPoint::_eventHandler(SPEventContext *event_context, GdkEvent *event)
+bool CurveDragPoint::_eventHandler(Inkscape::UI::Tools::ToolBase *event_context, GdkEvent *event)
 {
     // do not process any events when the manipulator is empty
     if (_pm.empty()) {

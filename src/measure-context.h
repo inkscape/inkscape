@@ -16,13 +16,17 @@
 #include <2geom/point.h>
 #include <boost/optional.hpp>
 
-#define SP_MEASURE_CONTEXT(obj) (dynamic_cast<SPMeasureContext*>((SPEventContext*)obj))
-#define SP_IS_MEASURE_CONTEXT(obj) (dynamic_cast<const SPMeasureContext*>((const SPEventContext*)obj) != NULL)
+#define SP_MEASURE_CONTEXT(obj) (dynamic_cast<Inkscape::UI::Tools::MeasureTool*>((Inkscape::UI::Tools::ToolBase*)obj))
+#define SP_IS_MEASURE_CONTEXT(obj) (dynamic_cast<const Inkscape::UI::Tools::MeasureTool*>((const Inkscape::UI::Tools::ToolBase*)obj) != NULL)
 
-class SPMeasureContext : public SPEventContext {
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+class MeasureTool : public ToolBase {
 public:
-	SPMeasureContext();
-	virtual ~SPMeasureContext();
+	MeasureTool();
+	virtual ~MeasureTool();
 
 	static const std::string prefsPath;
 
@@ -38,5 +42,9 @@ private:
     boost::optional<Geom::Point> explicitBase;
     boost::optional<Geom::Point> lastEnd;
 };
+
+}
+}
+}
 
 #endif // SEEN_SP_MEASURING_CONTEXT_H

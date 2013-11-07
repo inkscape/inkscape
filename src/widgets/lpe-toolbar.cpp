@@ -73,6 +73,8 @@ using Inkscape::UI::UXManager;
 using Inkscape::DocumentUndo;
 using Inkscape::UI::ToolboxFactory;
 using Inkscape::UI::PrefPusher;
+using Inkscape::UI::Tools::ToolBase;
+using Inkscape::UI::Tools::LpeTool;
 
 
 //########################
@@ -87,7 +89,7 @@ static void sp_lpetool_mode_changed(EgeSelectOneAction *act, GObject *tbl)
     using namespace Inkscape::LivePathEffect;
 
     SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data(tbl, "desktop"));
-    SPEventContext *ec = desktop->event_context;
+    ToolBase *ec = desktop->event_context;
     if (!SP_IS_LPETOOL_CONTEXT(ec)) {
         return;
     }
@@ -100,7 +102,7 @@ static void sp_lpetool_mode_changed(EgeSelectOneAction *act, GObject *tbl)
         gint mode = ege_select_one_action_get_active(act);
         EffectType type = lpesubtools[mode].type;
 
-        SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(desktop->event_context);
+        LpeTool *lc = SP_LPETOOL_CONTEXT(desktop->event_context);
         bool success = lpetool_try_construction(lc, type);
         if (success) {
             // since the construction was already performed, we set the state back to inactive
@@ -122,7 +124,7 @@ static void sp_lpetool_mode_changed(EgeSelectOneAction *act, GObject *tbl)
 
 static void sp_lpetool_toolbox_sel_modified(Inkscape::Selection *selection, guint /*flags*/, GObject * /*tbl*/)
 {
-    SPEventContext *ec = selection->desktop()->event_context;
+    ToolBase *ec = selection->desktop()->event_context;
     if (SP_IS_LPETOOL_CONTEXT(ec)) {
         lpetool_update_measuring_items(SP_LPETOOL_CONTEXT(ec));
     }
@@ -131,11 +133,11 @@ static void sp_lpetool_toolbox_sel_modified(Inkscape::Selection *selection, guin
 static void sp_lpetool_toolbox_sel_changed(Inkscape::Selection *selection, GObject *tbl)
 {
     using namespace Inkscape::LivePathEffect;
-    SPEventContext *ec = selection->desktop()->event_context;
+    ToolBase *ec = selection->desktop()->event_context;
     if (!SP_IS_LPETOOL_CONTEXT(ec)) {
         return;
     }
-    SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(ec);
+    LpeTool *lc = SP_LPETOOL_CONTEXT(ec);
 
     lpetool_delete_measuring_items(lc);
     lpetool_create_measuring_items(lc, selection);
@@ -172,7 +174,7 @@ static void lpetool_toggle_show_bbox(GtkToggleAction *act, gpointer data) {
     prefs->setBool("/tools/lpetool/show_bbox",  show);
 
     if (tools_isactive(desktop, TOOLS_LPETOOL)) {
-        SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(desktop->event_context);
+        LpeTool *lc = SP_LPETOOL_CONTEXT(desktop->event_context);
         lpetool_context_reset_limiting_bbox(lc);
     }
 }
@@ -185,7 +187,7 @@ static void lpetool_toggle_show_measuring_info(GtkToggleAction *act, GObject *tb
     }
 
     GtkAction *unitact = static_cast<GtkAction*>(g_object_get_data(tbl, "lpetool_units_action"));
-    SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(desktop->event_context);
+    LpeTool *lc = SP_LPETOOL_CONTEXT(desktop->event_context);
     if (tools_isactive(desktop, TOOLS_LPETOOL)) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         bool show = gtk_toggle_action_get_active( act );
@@ -204,7 +206,7 @@ static void lpetool_unit_changed(GtkAction* /*act*/, GObject* tbl)
 
     SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( tbl, "desktop" ));
     if (SP_IS_LPETOOL_CONTEXT(desktop->event_context)) {
-        SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(desktop->event_context);
+        LpeTool *lc = SP_LPETOOL_CONTEXT(desktop->event_context);
         lpetool_delete_measuring_items(lc);
         lpetool_create_measuring_items(lc);
     }

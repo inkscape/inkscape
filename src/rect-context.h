@@ -21,13 +21,17 @@
 
 #include "sp-rect.h"
 
-#define SP_RECT_CONTEXT(obj) (dynamic_cast<SPRectContext*>((SPEventContext*)obj))
-#define SP_IS_RECT_CONTEXT(obj) (dynamic_cast<const SPRectContext*>((const SPEventContext*)obj) != NULL)
+#define SP_RECT_CONTEXT(obj) (dynamic_cast<Inkscape::UI::Tools::RectTool*>((Inkscape::UI::Tools::ToolBase*)obj))
+#define SP_IS_RECT_CONTEXT(obj) (dynamic_cast<const Inkscape::UI::Tools::RectTool*>((const Inkscape::UI::Tools::ToolBase*)obj) != NULL)
 
-class SPRectContext : public SPEventContext {
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+class RectTool : public ToolBase {
 public:
-	SPRectContext();
-	virtual ~SPRectContext();
+	RectTool();
+	virtual ~RectTool();
 
 	static const std::string prefsPath;
 
@@ -53,5 +57,9 @@ private:
 	void cancel();
 	void selection_changed(Inkscape::Selection* selection);
 };
+
+}
+}
+}
 
 #endif

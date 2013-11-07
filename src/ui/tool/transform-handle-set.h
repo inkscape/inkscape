@@ -40,7 +40,7 @@ public:
 
     TransformHandleSet(SPDesktop *d, SPCanvasGroup *th_group);
     virtual ~TransformHandleSet();
-    virtual bool event(SPEventContext *, GdkEvent *);
+    virtual bool event(Inkscape::UI::Tools::ToolBase *, GdkEvent *);
 
     bool visible() const { return _visible; }
     Mode mode() const { return _mode; }

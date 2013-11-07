@@ -2,24 +2,28 @@
 #define SEEN_PEN_CONTEXT_H
 
 /** \file 
- * SPPenContext: a context for pen tool events.
+ * PenTool: a context for pen tool events.
  */
 
 #include "draw-context.h"
 #include "live_effects/effect.h"
 
-#define SP_PEN_CONTEXT(obj) (dynamic_cast<SPPenContext*>((SPEventContext*)obj))
-#define SP_IS_PEN_CONTEXT(obj) (dynamic_cast<const SPPenContext*>((const SPEventContext*)obj) != NULL)
+#define SP_PEN_CONTEXT(obj) (dynamic_cast<Inkscape::UI::Tools::PenTool*>((Inkscape::UI::Tools::ToolBase*)obj))
+#define SP_IS_PEN_CONTEXT(obj) (dynamic_cast<const Inkscape::UI::Tools::PenTool*>((const Inkscape::UI::Tools::ToolBase*)obj) != NULL)
 
 struct SPCtrlLine;
 
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
 /**
- * SPPenContext: a context for pen tool events.
+ * PenTool: a context for pen tool events.
  */
-class SPPenContext : public SPDrawContext {
+class PenTool : public SPDrawContext {
 public:
-	SPPenContext();
-	virtual ~SPPenContext();
+	PenTool();
+	virtual ~PenTool();
 
 	enum Mode {
 	    MODE_CLICK,
@@ -70,18 +74,22 @@ protected:
 	virtual bool item_handler(SPItem* item, GdkEvent* event);
 };
 
-inline bool sp_pen_context_has_waiting_LPE(SPPenContext *pc) {
+inline bool sp_pen_context_has_waiting_LPE(PenTool *pc) {
     // note: waiting_LPE_type is defined in SPDrawContext
     return (pc->waiting_LPE != NULL ||
             pc->waiting_LPE_type != Inkscape::LivePathEffect::INVALID_LPE);
 }
 
-void sp_pen_context_set_polyline_mode(SPPenContext *const pc);
-void sp_pen_context_wait_for_LPE_mouse_clicks(SPPenContext *pc, Inkscape::LivePathEffect::EffectType effect_type,
+void sp_pen_context_set_polyline_mode(PenTool *const pc);
+void sp_pen_context_wait_for_LPE_mouse_clicks(PenTool *pc, Inkscape::LivePathEffect::EffectType effect_type,
                                               unsigned int num_clicks, bool use_polylines = true);
-void sp_pen_context_cancel_waiting_for_LPE(SPPenContext *pc);
+void sp_pen_context_cancel_waiting_for_LPE(PenTool *pc);
 void sp_pen_context_put_into_waiting_mode(SPDesktop *desktop, Inkscape::LivePathEffect::EffectType effect_type,
                                           unsigned int num_clicks, bool use_polylines = true);
+
+}
+}
+}
 
 #endif /* !SEEN_PEN_CONTEXT_H */
 

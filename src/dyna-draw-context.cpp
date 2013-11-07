@@ -82,27 +82,30 @@ using Inkscape::DocumentUndo;
 
 #define DYNA_MIN_WIDTH 1.0e-6
 
-static void add_cap(SPCurve *curve, Geom::Point const &from, Geom::Point const &to, double rounding);
-
-
 #include "tool-factory.h"
 
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+static void add_cap(SPCurve *curve, Geom::Point const &from, Geom::Point const &to, double rounding);
+
 namespace {
-	SPEventContext* createCalligraphicContext() {
-		return new SPDynaDrawContext();
+	ToolBase* createCalligraphicContext() {
+		return new CalligraphicTool();
 	}
 
 	bool calligraphicContextRegistered = ToolFactory::instance().registerObject("/tools/calligraphic", createCalligraphicContext);
 }
 
-const std::string& SPDynaDrawContext::getPrefsPath() {
-	return SPDynaDrawContext::prefsPath;
+const std::string& CalligraphicTool::getPrefsPath() {
+	return CalligraphicTool::prefsPath;
 }
 
 
-const std::string SPDynaDrawContext::prefsPath = "/tools/calligraphic";
+const std::string CalligraphicTool::prefsPath = "/tools/calligraphic";
 
-SPDynaDrawContext::SPDynaDrawContext() : SPCommonContext() {
+CalligraphicTool::CalligraphicTool() : SPCommonContext() {
     this->cursor_shape = cursor_calligraphy_xpm;
     this->hot_x = 4;
     this->hot_y = 4;
@@ -128,14 +131,14 @@ SPDynaDrawContext::SPDynaDrawContext() : SPCommonContext() {
     this->just_started_drawing = false;
 }
 
-SPDynaDrawContext::~SPDynaDrawContext() {
+CalligraphicTool::~CalligraphicTool() {
     if (this->hatch_area) {
         sp_canvas_item_destroy(this->hatch_area);
         this->hatch_area = NULL;
     }
 }
 
-void SPDynaDrawContext::setup() {
+void CalligraphicTool::setup() {
     SPCommonContext::setup();
 
     this->accumulated = new SPCurve();
@@ -152,7 +155,7 @@ void SPDynaDrawContext::setup() {
     g_signal_connect(G_OBJECT(this->currentshape), "event", G_CALLBACK(sp_desktop_root_handler), this->desktop);
 
     {
-        /* TODO: have a look at SPDropperContext::setup where the same is done.. generalize? */
+        /* TODO: have a look at DropperTool::setup where the same is done.. generalize? */
         Geom::PathVector path;
         Geom::Circle(0, 0, 1).getPath(path);
 
@@ -189,7 +192,7 @@ void SPDynaDrawContext::setup() {
     }
 }
 
-void SPDynaDrawContext::set(const Inkscape::Preferences::Entry& val) {
+void CalligraphicTool::set(const Inkscape::Preferences::Entry& val) {
     Glib::ustring path = val.getEntryName();
 
     if (path == "tracebackground") {
@@ -211,7 +214,7 @@ flerp(double f0, double f1, double p)
 }
 
 ///* Get normalized point */
-//Geom::Point SPDynaDrawContext::getNormalizedPoint(Geom::Point v) const {
+//Geom::Point CalligraphicTool::getNormalizedPoint(Geom::Point v) const {
 //    Geom::Rect drect = desktop->get_display_area();
 //
 //    double const max = MAX ( drect.dimensions()[Geom::X], drect.dimensions()[Geom::Y] );
@@ -220,7 +223,7 @@ flerp(double f0, double f1, double p)
 //}
 //
 ///* Get view point */
-//Geom::Point SPDynaDrawContext::getViewPoint(Geom::Point n) const {
+//Geom::Point CalligraphicTool::getViewPoint(Geom::Point n) const {
 //    Geom::Rect drect = desktop->get_display_area();
 //
 //    double const max = MAX ( drect.dimensions()[Geom::X], drect.dimensions()[Geom::Y] );
@@ -228,7 +231,7 @@ flerp(double f0, double f1, double p)
 //    return Geom::Point(n[Geom::X] * max + drect.min()[Geom::X], n[Geom::Y] * max + drect.min()[Geom::Y]);
 //}
 
-void SPDynaDrawContext::reset(Geom::Point p) {
+void CalligraphicTool::reset(Geom::Point p) {
     this->last = this->cur = this->getNormalizedPoint(p);
 
     this->vel = Geom::Point(0,0);
@@ -238,7 +241,7 @@ void SPDynaDrawContext::reset(Geom::Point p) {
     this->del = Geom::Point(0,0);
 }
 
-void SPDynaDrawContext::extinput(GdkEvent *event) {
+void CalligraphicTool::extinput(GdkEvent *event) {
     if (gdk_event_get_axis (event, GDK_AXIS_PRESSURE, &this->pressure)) {
         this->pressure = CLAMP (this->pressure, DDC_MIN_PRESSURE, DDC_MAX_PRESSURE);
     } else {
@@ -259,7 +262,7 @@ void SPDynaDrawContext::extinput(GdkEvent *event) {
 }
 
 
-bool SPDynaDrawContext::apply(Geom::Point p) {
+bool CalligraphicTool::apply(Geom::Point p) {
     Geom::Point n = this->getNormalizedPoint(p);
 
     /* Calculate mass and drag */
@@ -356,7 +359,7 @@ bool SPDynaDrawContext::apply(Geom::Point p) {
     return TRUE;
 }
 
-void SPDynaDrawContext::brush() {
+void CalligraphicTool::brush() {
     g_assert( this->npoints >= 0 && this->npoints < SAMPLING_SIZE );
 
     // How much velocity thins strokestyle
@@ -436,7 +439,7 @@ sp_ddc_update_toolbox (SPDesktop *desktop, const gchar *id, double value)
     desktop->setToolboxAdjustmentValue (id, value);
 }
 
-void SPDynaDrawContext::cancel() {
+void CalligraphicTool::cancel() {
     this->dragging = false;
     this->is_drawing = false;
 
@@ -457,7 +460,7 @@ void SPDynaDrawContext::cancel() {
 	}
 }
 
-bool SPDynaDrawContext::root_handler(GdkEvent* event) {
+bool CalligraphicTool::root_handler(GdkEvent* event) {
     gint ret = FALSE;
 
     switch (event->type) {
@@ -907,7 +910,7 @@ bool SPDynaDrawContext::root_handler(GdkEvent* event) {
 }
 
 
-void SPDynaDrawContext::clear_current() {
+void CalligraphicTool::clear_current() {
     /* reset bpath */
     sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->currentshape), NULL);
     /* reset curve */
@@ -918,7 +921,7 @@ void SPDynaDrawContext::clear_current() {
     this->npoints = 0;
 }
 
-void SPDynaDrawContext::set_to_accumulated(bool unionize, bool subtract) {
+void CalligraphicTool::set_to_accumulated(bool unionize, bool subtract) {
     if (!this->accumulated->is_empty()) {
         if (!this->repr) {
             /* Create object */
@@ -995,7 +998,7 @@ add_cap(SPCurve *curve,
     }
 }
 
-bool SPDynaDrawContext::accumulate() {
+bool CalligraphicTool::accumulate() {
 	if (
 		this->cal1->is_empty() ||
 		this->cal2->is_empty() ||
@@ -1050,7 +1053,7 @@ static double square(double const x)
     return x * x;
 }
 
-void SPDynaDrawContext::fit_and_split(bool release) {
+void CalligraphicTool::fit_and_split(bool release) {
     double const tolerance_sq = square( desktop->w2d().descrim() * TOLERANCE_CALLIGRAPHIC );
 
 #ifdef DYNA_DRAW_VERBOSE
@@ -1175,7 +1178,7 @@ void SPDynaDrawContext::fit_and_split(bool release) {
     }
 }
 
-void SPDynaDrawContext::draw_temporary_box() {
+void CalligraphicTool::draw_temporary_box() {
     this->currentcurve->reset();
 
     this->currentcurve->moveto(this->point2[this->npoints-1]);
@@ -1195,6 +1198,11 @@ void SPDynaDrawContext::draw_temporary_box() {
     this->currentcurve->closepath();
     sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->currentshape), this->currentcurve);
 }
+
+}
+}
+}
+
 
 /*
   Local Variables:

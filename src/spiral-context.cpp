@@ -47,21 +47,25 @@ using Inkscape::DocumentUndo;
 
 #include "tool-factory.h"
 
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
 namespace {
-	SPEventContext* createSpiralContext() {
-		return new SPSpiralContext();
+	ToolBase* createSpiralContext() {
+		return new SpiralTool();
 	}
 
 	bool spiralContextRegistered = ToolFactory::instance().registerObject("/tools/shapes/spiral", createSpiralContext);
 }
 
-const std::string& SPSpiralContext::getPrefsPath() {
-	return SPSpiralContext::prefsPath;
+const std::string& SpiralTool::getPrefsPath() {
+	return SpiralTool::prefsPath;
 }
 
-const std::string SPSpiralContext::prefsPath = "/tools/shapes/spiral";
+const std::string SpiralTool::prefsPath = "/tools/shapes/spiral";
 
-SPSpiralContext::SPSpiralContext() : SPEventContext() {
+SpiralTool::SpiralTool() : ToolBase() {
     this->cursor_shape = cursor_spiral_xpm;
     this->hot_x = 4;
     this->hot_y = 4;
@@ -78,7 +82,7 @@ SPSpiralContext::SPSpiralContext() : SPEventContext() {
     this->t0 = 0.0;
 }
 
-void SPSpiralContext::finish() {
+void SpiralTool::finish() {
     SPDesktop *desktop = this->desktop;
 
     sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), GDK_CURRENT_TIME);
@@ -86,10 +90,10 @@ void SPSpiralContext::finish() {
     this->finishItem();
     this->sel_changed_connection.disconnect();
 
-    SPEventContext::finish();
+    ToolBase::finish();
 }
 
-SPSpiralContext::~SPSpiralContext() {
+SpiralTool::~SpiralTool() {
     this->enableGrDrag(false);
 
     this->sel_changed_connection.disconnect();
@@ -107,13 +111,13 @@ SPSpiralContext::~SPSpiralContext() {
  * Callback that processes the "changed" signal on the selection;
  * destroys old and creates new knotholder.
  */
-void SPSpiralContext::selection_changed(Inkscape::Selection *selection) {
+void SpiralTool::selection_changed(Inkscape::Selection *selection) {
     this->shape_editor->unset_item(SH_KNOTHOLDER);
     this->shape_editor->set_item(selection->singleItem(), SH_KNOTHOLDER);
 }
 
-void SPSpiralContext::setup() {
-    SPEventContext::setup();
+void SpiralTool::setup() {
+    ToolBase::setup();
 
     sp_event_context_read(this, "expansion");
     sp_event_context_read(this, "revolution");
@@ -129,7 +133,7 @@ void SPSpiralContext::setup() {
     Inkscape::Selection *selection = sp_desktop_selection(this->desktop);
     this->sel_changed_connection.disconnect();
 
-    this->sel_changed_connection = selection->connectChanged(sigc::mem_fun(this, &SPSpiralContext::selection_changed));
+    this->sel_changed_connection = selection->connectChanged(sigc::mem_fun(this, &SpiralTool::selection_changed));
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
@@ -142,7 +146,7 @@ void SPSpiralContext::setup() {
     }
 }
 
-void SPSpiralContext::set(const Inkscape::Preferences::Entry& val) {
+void SpiralTool::set(const Inkscape::Preferences::Entry& val) {
     Glib::ustring name = val.getEntryName();
 
     if (name == "expansion") {
@@ -154,7 +158,7 @@ void SPSpiralContext::set(const Inkscape::Preferences::Entry& val) {
     }
 }
 
-bool SPSpiralContext::root_handler(GdkEvent* event) {
+bool SpiralTool::root_handler(GdkEvent* event) {
     static gboolean dragging;
 
     SPDesktop *desktop = this->desktop;
@@ -340,13 +344,13 @@ bool SPSpiralContext::root_handler(GdkEvent* event) {
     }
 
     if (!ret) {
-    	ret = SPEventContext::root_handler(event);
+    	ret = ToolBase::root_handler(event);
     }
 
     return ret;
 }
 
-void SPSpiralContext::drag(Geom::Point const &p, guint state) {
+void SpiralTool::drag(Geom::Point const &p, guint state) {
     SPDesktop *desktop = SP_EVENT_CONTEXT(this)->desktop;
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -406,7 +410,7 @@ void SPSpiralContext::drag(Geom::Point const &p, guint state) {
     g_string_free(rads, FALSE);
 }
 
-void SPSpiralContext::finishItem() {
+void SpiralTool::finishItem() {
     this->message_context->clear();
 
     if (this->spiral != NULL) {
@@ -428,7 +432,7 @@ void SPSpiralContext::finishItem() {
     }
 }
 
-void SPSpiralContext::cancel() {
+void SpiralTool::cancel() {
 	sp_desktop_selection(this->desktop)->clear();
 	sp_canvas_item_ungrab(SP_CANVAS_ITEM(this->desktop->acetate), 0);
 
@@ -445,6 +449,10 @@ void SPSpiralContext::cancel() {
     this->desktop->canvas->endForcedFullRedraws();
 
     DocumentUndo::cancel(sp_desktop_document(this->desktop));
+}
+
+}
+}
 }
 
 /*

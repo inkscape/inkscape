@@ -25,7 +25,11 @@
 
 #define SAMPLING_SIZE 8        /* fixme: ?? */
 
-class SPCommonContext : public SPEventContext {
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+class SPCommonContext : public ToolBase {
 public:
 	SPCommonContext();
 	virtual ~SPCommonContext();
@@ -99,6 +103,10 @@ protected:
 	Geom::Point getViewPoint(Geom::Point n) const;
 	Geom::Point getNormalizedPoint(Geom::Point v) const;
 };
+
+}
+}
+}
 
 #endif // COMMON_CONTEXT_H_SEEN
 

@@ -218,7 +218,7 @@ int ControlPoint::_event_handler(SPCanvasItem */*item*/, GdkEvent *event, Contro
 }
 
 // main event callback, which emits all other callbacks.
-bool ControlPoint::_eventHandler(SPEventContext *event_context, GdkEvent *event)
+bool ControlPoint::_eventHandler(Inkscape::UI::Tools::ToolBase *event_context, GdkEvent *event)
 {
     // NOTE the static variables below are shared for all points!
     // TODO handle clicks and drags from other buttons too
@@ -310,7 +310,7 @@ bool ControlPoint::_eventHandler(SPEventContext *event_context, GdkEvent *event)
                 _desktop->set_coordinate_status(_position);
                 sp_event_context_snap_delay_handler(event_context, NULL,
                     (gpointer) this, &event->motion,
-                    DelayedSnapEvent::CONTROL_POINT_HANDLER);
+                    Inkscape::UI::Tools::DelayedSnapEvent::CONTROL_POINT_HANDLER);
             }
             return true;
         }
@@ -375,7 +375,7 @@ bool ControlPoint::_eventHandler(SPEventContext *event_context, GdkEvent *event)
     // update tips on modifier state change
     // TODO add ESC keybinding as drag cancel
     case GDK_KEY_PRESS:
-        switch (get_group0_keyval(&event->key))
+        switch (Inkscape::UI::Tools::get_group0_keyval(&event->key))
         {
         case GDK_KEY_Escape: {
             // ignore Escape if this is not a drag

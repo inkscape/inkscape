@@ -71,7 +71,7 @@ bool SpinButton::on_my_focus_in_event(GdkEventFocus* /*event*/)
 
 bool SpinButton::on_my_key_press_event(GdkEventKey* event)
 {
-    switch (get_group0_keyval (event)) {
+    switch (Inkscape::UI::Tools::get_group0_keyval (event)) {
     case GDK_KEY_Escape:
         undo();
         return true; // I consumed the event

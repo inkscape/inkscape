@@ -21,10 +21,14 @@
 
 #include "sp-star.h"
 
-class SPStarContext : public SPEventContext {
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+class StarTool : public ToolBase {
 public:
-	SPStarContext();
-	virtual ~SPStarContext();
+	StarTool();
+	virtual ~StarTool();
 
 	static const std::string prefsPath;
 
@@ -62,5 +66,9 @@ private:
 	void cancel();
 	void selection_changed(Inkscape::Selection* selection);
 };
+
+}
+}
+}
 
 #endif

@@ -104,9 +104,10 @@ using Inkscape::UI::UXManager;
 using Inkscape::DocumentUndo;
 using Inkscape::UI::PrefPusher;
 using Inkscape::UI::ToolboxFactory;
+using Inkscape::UI::Tools::ToolBase;
 
 typedef void (*SetupFunction)(GtkWidget *toolbox, SPDesktop *desktop);
-typedef void (*UpdateFunction)(SPDesktop *desktop, SPEventContext *eventcontext, GtkWidget *toolbox);
+typedef void (*UpdateFunction)(SPDesktop *desktop, ToolBase *eventcontext, GtkWidget *toolbox);
 
 enum BarId {
     BAR_TOOL = 0,
@@ -550,13 +551,13 @@ static Glib::RefPtr<Gtk::ActionGroup> create_or_fetch_actions( SPDesktop* deskto
 static void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop);
 
 static void setup_tool_toolbox(GtkWidget *toolbox, SPDesktop *desktop);
-static void update_tool_toolbox(SPDesktop *desktop, SPEventContext *eventcontext, GtkWidget *toolbox);
+static void update_tool_toolbox(SPDesktop *desktop, ToolBase *eventcontext, GtkWidget *toolbox);
 
 static void setup_aux_toolbox(GtkWidget *toolbox, SPDesktop *desktop);
-static void update_aux_toolbox(SPDesktop *desktop, SPEventContext *eventcontext, GtkWidget *toolbox);
+static void update_aux_toolbox(SPDesktop *desktop, ToolBase *eventcontext, GtkWidget *toolbox);
 
 static void setup_commands_toolbox(GtkWidget *toolbox, SPDesktop *desktop);
-static void update_commands_toolbox(SPDesktop *desktop, SPEventContext *eventcontext, GtkWidget *toolbox);
+static void update_commands_toolbox(SPDesktop *desktop, ToolBase *eventcontext, GtkWidget *toolbox);
 
 static GtkToolItem * sp_toolbox_button_item_new_from_verb_with_doubleclick( GtkWidget *t, Inkscape::IconSize size, SPButtonType type,
                                                                      Inkscape::Verb *verb, Inkscape::Verb *doubleclick_verb,
@@ -1310,7 +1311,7 @@ void setup_tool_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
                         "/toolbox/tools/small");
 }
 
-void update_tool_toolbox( SPDesktop *desktop, SPEventContext *eventcontext, GtkWidget * /*toolbox*/ )
+void update_tool_toolbox( SPDesktop *desktop, ToolBase *eventcontext, GtkWidget * /*toolbox*/ )
 {
     gchar const *const tname = ( eventcontext
                                  ? eventcontext->getPrefsPath().c_str() //g_type_name(G_OBJECT_TYPE(eventcontext))
@@ -1432,7 +1433,7 @@ void setup_aux_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
     g_object_unref( G_OBJECT(grouper) );
 }
 
-void update_aux_toolbox(SPDesktop * /*desktop*/, SPEventContext *eventcontext, GtkWidget *toolbox)
+void update_aux_toolbox(SPDesktop * /*desktop*/, ToolBase *eventcontext, GtkWidget *toolbox)
 {
     gchar const *tname = ( eventcontext
                            ? eventcontext->getPrefsPath().c_str() //g_type_name(G_OBJECT_TYPE(eventcontext))
@@ -1495,7 +1496,7 @@ void setup_commands_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
                         "/toolbox/small" );
 }
 
-void update_commands_toolbox(SPDesktop * /*desktop*/, SPEventContext * /*eventcontext*/, GtkWidget * /*toolbox*/)
+void update_commands_toolbox(SPDesktop * /*desktop*/, ToolBase * /*eventcontext*/, GtkWidget * /*toolbox*/)
 {
 }
 
@@ -1864,7 +1865,7 @@ Glib::ustring ToolboxFactory::getToolboxName(GtkWidget* toolbox)
     return name;
 }
 
-void ToolboxFactory::updateSnapToolbox(SPDesktop *desktop, SPEventContext * /*eventcontext*/, GtkWidget *toolbox)
+void ToolboxFactory::updateSnapToolbox(SPDesktop *desktop, ToolBase * /*eventcontext*/, GtkWidget *toolbox)
 {
     g_assert(desktop != NULL);
     g_assert(toolbox != NULL);

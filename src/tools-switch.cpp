@@ -169,7 +169,7 @@ void tools_switch_by_item(SPDesktop *dt, SPItem *item, Geom::Point const p)
     } else if (SP_IS_SPIRAL(item)) {
         tools_switch(dt, TOOLS_SHAPES_SPIRAL);
     } else if (SP_IS_PATH(item)) {
-        if (cc_item_is_connector(item)) {
+        if (Inkscape::UI::Tools::cc_item_is_connector(item)) {
             tools_switch(dt, TOOLS_CONNECTOR);
         }
         else {

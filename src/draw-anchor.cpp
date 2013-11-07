@@ -30,7 +30,7 @@ using Inkscape::ControlManager;
 /**
  * Creates an anchor object and initializes it.
  */
-SPDrawAnchor *sp_draw_anchor_new(SPDrawContext *dc, SPCurve *curve, gboolean start, Geom::Point delta)
+SPDrawAnchor *sp_draw_anchor_new(Inkscape::UI::Tools::SPDrawContext *dc, SPCurve *curve, gboolean start, Geom::Point delta)
 {
     if (SP_IS_LPETOOL_CONTEXT(dc)) {
         // suppress all kinds of anchors in LPEToolContext

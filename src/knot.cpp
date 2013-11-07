@@ -396,7 +396,7 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
                                      SP_KNOT_DRAGGING,
                                      TRUE);
                 }
-                sp_event_context_snap_delay_handler(knot->desktop->event_context, NULL, (gpointer) knot, (GdkEventMotion *)event, DelayedSnapEvent::KNOT_HANDLER);
+                sp_event_context_snap_delay_handler(knot->desktop->event_context, NULL, (gpointer) knot, (GdkEventMotion *)event, Inkscape::UI::Tools::DelayedSnapEvent::KNOT_HANDLER);
                 sp_knot_handler_request_position(event, knot);
                 moved = TRUE;
             }
@@ -426,7 +426,7 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
             consumed = TRUE;
             break;
     case GDK_KEY_PRESS: // keybindings for knot
-            switch (get_group0_keyval(&event->key)) {
+            switch (Inkscape::UI::Tools::get_group0_keyval(&event->key)) {
                 case GDK_KEY_Escape:
                             sp_knot_set_flag(knot, SP_KNOT_GRABBED, FALSE);
                             if (!nograb) {
@@ -471,7 +471,7 @@ void sp_knot_handler_request_position(GdkEvent *event, SPKnot *knot)
     knot->desktop->scroll_to_point (motion_dt);
     knot->desktop->set_coordinate_status(knot->pos); // display the coordinate of knot, not cursor - they may be different!
     if (event->motion.state & GDK_BUTTON1_MASK)
-        gobble_motion_events(GDK_BUTTON1_MASK);
+        Inkscape::UI::Tools::gobble_motion_events(GDK_BUTTON1_MASK);
 }
 
 SPKnot *sp_knot_new(SPDesktop *desktop, const gchar *tip)

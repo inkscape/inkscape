@@ -15,13 +15,17 @@
 
 #include "event-context.h"
 
-#define SP_ZOOM_CONTEXT(obj) (dynamic_cast<SPZoomContext*>((SPEventContext*)obj))
-#define SP_IS_ZOOM_CONTEXT(obj) (dynamic_cast<const SPZoomContext*>((const SPEventContext*)obj) != NULL)
+#define SP_ZOOM_CONTEXT(obj) (dynamic_cast<Inkscape::UI::Tools::ZoomTool*>((Inkscape::UI::Tools::ToolBase*)obj))
+#define SP_IS_ZOOM_CONTEXT(obj) (dynamic_cast<const Inkscape::UI::Tools::ZoomTool*>((const Inkscape::UI::Tools::ToolBase*)obj) != NULL)
 
-class SPZoomContext : public SPEventContext {
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+class ZoomTool : public ToolBase {
 public:
-	SPZoomContext();
-	virtual ~SPZoomContext();
+	ZoomTool();
+	virtual ~ZoomTool();
 
 	static const std::string prefsPath;
 
@@ -35,5 +39,9 @@ private:
 	SPCanvasItem *grabbed;
 	bool escaped;
 };
+
+}
+}
+}
 
 #endif

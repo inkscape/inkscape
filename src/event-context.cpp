@@ -58,8 +58,6 @@
 #include "sp-guide.h"
 #include "color.h"
 
-static void set_event_location(SPDesktop * desktop, GdkEvent * event);
-
 // globals for temporary switching to selector by space
 static bool selector_toggled = FALSE;
 static int switch_selector_to = 0;
@@ -77,20 +75,28 @@ static guint32 scroll_event_time = 0;
 static gdouble scroll_multiply = 1;
 static guint scroll_keyval = 0;
 
-void SPEventContext::set(const Inkscape::Preferences::Entry& /*val*/) {
+
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+static void set_event_location(SPDesktop * desktop, GdkEvent * event);
+
+
+void ToolBase::set(const Inkscape::Preferences::Entry& /*val*/) {
 }
 
-void SPEventContext::activate() {
+void ToolBase::activate() {
 }
 
-void SPEventContext::deactivate() {
+void ToolBase::deactivate() {
 }
 
-void SPEventContext::finish() {
+void ToolBase::finish() {
 	this->enableSelectionCue(false);
 }
 
-SPEventContext::SPEventContext() {
+ToolBase::ToolBase() {
 	this->hot_y = 0;
 	this->xp = 0;
 	this->cursor_shape = 0;
@@ -114,7 +120,7 @@ SPEventContext::SPEventContext() {
     //this->tool_url = NULL;
 }
 
-SPEventContext::~SPEventContext() {
+ToolBase::~ToolBase() {
     if (this->message_context) {
         delete this->message_context;
     }
@@ -145,7 +151,7 @@ SPEventContext::~SPEventContext() {
 /**
  * Set the cursor to a standard GDK cursor
  */
-static void sp_event_context_set_cursor(SPEventContext *event_context, GdkCursorType cursor_type) {
+static void sp_event_context_set_cursor(ToolBase *event_context, GdkCursorType cursor_type) {
 
     GtkWidget *w = GTK_WIDGET(sp_desktop_canvas(event_context->desktop));
     GdkDisplay *display = gdk_display_get_default();
@@ -164,9 +170,9 @@ static void sp_event_context_set_cursor(SPEventContext *event_context, GdkCursor
 }
 
 /**
- * Recreates and draws cursor on desktop related to SPEventContext.
+ * Recreates and draws cursor on desktop related to ToolBase.
  */
-void SPEventContext::sp_event_context_update_cursor() {
+void ToolBase::sp_event_context_update_cursor() {
     GtkWidget *w = GTK_WIDGET(sp_desktop_canvas(this->desktop));
     if (gtk_widget_get_window (w)) {
     
@@ -223,14 +229,14 @@ void SPEventContext::sp_event_context_update_cursor() {
 }
 
 /**
- * Callback that gets called on initialization of SPEventContext object.
+ * Callback that gets called on initialization of ToolBase object.
  * Redraws mouse cursor, at the moment.
  */
 
 /**
  * When you override it, call this method first.
  */
-void SPEventContext::setup() {
+void ToolBase::setup() {
     this->pref_observer = new ToolPrefObserver(this->getPrefsPath(), this);
     Inkscape::Preferences::get()->addObserver(*(this->pref_observer));
 
@@ -356,12 +362,12 @@ static gdouble accelerate_scroll(GdkEvent *event, gdouble acceleration,
  * Main event dispatch, gets called from Gdk.
  */
 //static gint sp_event_context_private_root_handler(
-//        SPEventContext *event_context, GdkEvent *event) {
+//        ToolBase *event_context, GdkEvent *event) {
 //
 //	return event_context->ceventcontext->root_handler(event);
 //}
 
-bool SPEventContext::root_handler(GdkEvent* event) {
+bool ToolBase::root_handler(GdkEvent* event) {
     static Geom::Point button_w;
     static unsigned int panning = 0;
     static unsigned int panning_cursor = 0;
@@ -866,13 +872,13 @@ bool SPEventContext::root_handler(GdkEvent* event) {
  * Only reacts to right mouse button at the moment.
  * \todo Fixme: do context sensitive popup menu on items.
  */
-//gint sp_event_context_private_item_handler(SPEventContext *ec, SPItem *item,
+//gint sp_event_context_private_item_handler(ToolBase *ec, SPItem *item,
 //        GdkEvent *event) {
 //
 //	return ec->ceventcontext->item_handler(item, event);
 //}
 
-bool SPEventContext::item_handler(SPItem* item, GdkEvent* event) {
+bool ToolBase::item_handler(SPItem* item, GdkEvent* event) {
     int ret = FALSE;
 
     switch (event->type) {
@@ -893,7 +899,7 @@ bool SPEventContext::item_handler(SPItem* item, GdkEvent* event) {
 /**
  * Returns true if we're hovering above a knot (needed because we don't want to pre-snap in that case).
  */
-bool sp_event_context_knot_mouseover(SPEventContext *ec)
+bool sp_event_context_knot_mouseover(ToolBase *ec)
 {
     if (ec->shape_editor) {
         return ec->shape_editor->knot_mouseover();
@@ -903,16 +909,16 @@ bool sp_event_context_knot_mouseover(SPEventContext *ec)
 }
 
 /**
- * Creates new SPEventContext object and calls its virtual setup() function.
+ * Creates new ToolBase object and calls its virtual setup() function.
  * @todo This is bogus. pref_path should be a private property of the inheriting objects.
  */
-//SPEventContext *
+//ToolBase *
 //sp_event_context_new(GType type, SPDesktop *desktop, gchar const *pref_path,
 //        unsigned int key) {
 //    g_return_val_if_fail(g_type_is_a(type, SP_TYPE_EVENT_CONTEXT), NULL);
 //    g_return_val_if_fail(desktop != NULL, NULL);
 //
-//    SPEventContext * const ec = static_cast<SPEventContext*>(g_object_new(type, NULL));
+//    ToolBase * const ec = static_cast<ToolBase*>(g_object_new(type, NULL));
 //
 //    ec->desktop = desktop;
 //    ec->_message_context
@@ -935,9 +941,9 @@ bool sp_event_context_knot_mouseover(SPEventContext *ec)
 //}
 
 /**
- * Finishes SPEventContext.
+ * Finishes ToolBase.
  */
-//void sp_event_context_finish(SPEventContext *ec) {
+//void sp_event_context_finish(ToolBase *ec) {
 //    g_return_if_fail(ec != NULL);
 //    g_return_if_fail(SP_IS_EVENT_CONTEXT(ec));
 //
@@ -955,9 +961,9 @@ bool sp_event_context_knot_mouseover(SPEventContext *ec)
 //-------------------------------member functions
 
 /**
- * Enables/disables the SPEventContext's SelCue.
+ * Enables/disables the ToolBase's SelCue.
  */
-void SPEventContext::enableSelectionCue(bool enable) {
+void ToolBase::enableSelectionCue(bool enable) {
     if (enable) {
         if (!_selcue) {
             _selcue = new Inkscape::SelCue(desktop);
@@ -969,9 +975,9 @@ void SPEventContext::enableSelectionCue(bool enable) {
 }
 
 /**
- * Enables/disables the SPEventContext's GrDrag.
+ * Enables/disables the ToolBase's GrDrag.
  */
-void SPEventContext::enableGrDrag(bool enable) {
+void ToolBase::enableGrDrag(bool enable) {
     if (enable) {
         if (!_grdrag) {
             _grdrag = new GrDrag(desktop);
@@ -987,7 +993,7 @@ void SPEventContext::enableGrDrag(bool enable) {
 /**
  * Delete a selected GrDrag point
  */
-bool SPEventContext::deleteSelectedDrag(bool just_one) {
+bool ToolBase::deleteSelectedDrag(bool just_one) {
 
     if (_grdrag && _grdrag->selected) {
         _grdrag->deleteSelected(just_one);
@@ -998,9 +1004,9 @@ bool SPEventContext::deleteSelectedDrag(bool just_one) {
 }
 
 /**
- * Calls virtual set() function of SPEventContext.
+ * Calls virtual set() function of ToolBase.
  */
-void sp_event_context_read(SPEventContext *ec, gchar const *key) {
+void sp_event_context_read(ToolBase *ec, gchar const *key) {
     g_return_if_fail(ec != NULL);
     g_return_if_fail(SP_IS_EVENT_CONTEXT(ec));
     g_return_if_fail(key != NULL);
@@ -1018,9 +1024,9 @@ void sp_event_context_read(SPEventContext *ec, gchar const *key) {
 }
 
 /**
- * Calls virtual activate() function of SPEventContext.
+ * Calls virtual activate() function of ToolBase.
  */
-void sp_event_context_activate(SPEventContext *ec) {
+void sp_event_context_activate(ToolBase *ec) {
     g_return_if_fail(ec != NULL);
     g_return_if_fail(SP_IS_EVENT_CONTEXT(ec));
 
@@ -1035,9 +1041,9 @@ void sp_event_context_activate(SPEventContext *ec) {
 }
 
 /**
- * Calls virtual deactivate() function of SPEventContext.
+ * Calls virtual deactivate() function of ToolBase.
  */
-//void sp_event_context_deactivate(SPEventContext *ec) {
+//void sp_event_context_deactivate(ToolBase *ec) {
 //    g_return_if_fail(ec != NULL);
 //    g_return_if_fail(SP_IS_EVENT_CONTEXT(ec));
 //
@@ -1049,7 +1055,7 @@ void sp_event_context_activate(SPEventContext *ec) {
 /**
  * Calls virtual root_handler(), the main event handling function.
  */
-gint sp_event_context_root_handler(SPEventContext * event_context,
+gint sp_event_context_root_handler(ToolBase * event_context,
         GdkEvent * event)
 {
     switch (event->type) {
@@ -1080,7 +1086,7 @@ gint sp_event_context_root_handler(SPEventContext * event_context,
     return sp_event_context_virtual_root_handler(event_context, event);
 }
 
-gint sp_event_context_virtual_root_handler(SPEventContext * event_context, GdkEvent * event) {
+gint sp_event_context_virtual_root_handler(ToolBase * event_context, GdkEvent * event) {
     gint ret = false;
     if (event_context) {    // If no event-context is available then do nothing, otherwise Inkscape would crash
                             // (see the comment in SPDesktop::set_event_context, and bug LP #622350)
@@ -1095,7 +1101,7 @@ gint sp_event_context_virtual_root_handler(SPEventContext * event_context, GdkEv
 /**
  * Calls virtual item_handler(), the item event handling function.
  */
-gint sp_event_context_item_handler(SPEventContext * event_context,
+gint sp_event_context_item_handler(ToolBase * event_context,
         SPItem * item, GdkEvent * event) {
     switch (event->type) {
     case GDK_MOTION_NOTIFY:
@@ -1121,7 +1127,7 @@ gint sp_event_context_item_handler(SPEventContext * event_context,
     return sp_event_context_virtual_item_handler(event_context, item, event);
 }
 
-gint sp_event_context_virtual_item_handler(SPEventContext * event_context, SPItem * item, GdkEvent * event) {
+gint sp_event_context_virtual_item_handler(ToolBase * event_context, SPItem * item, GdkEvent * event) {
     gint ret = false;
     if (event_context) {    // If no event-context is available then do nothing, otherwise Inkscape would crash
                             // (see the comment in SPDesktop::set_event_context, and bug LP #622350)
@@ -1269,7 +1275,7 @@ sp_event_context_over_item(SPDesktop *desktop, SPItem *item,
 }
 
 ShapeEditor *
-sp_event_context_get_shape_editor(SPEventContext *ec) {
+sp_event_context_get_shape_editor(ToolBase *ec) {
     return ec->shape_editor;
 }
 
@@ -1326,7 +1332,7 @@ void event_context_print_event_info(GdkEvent *event, bool print_return) {
  * @param event Pointer to the motion event.
  * @param origin Identifier (enum) specifying where the delay (and the call to this method) were initiated.
  */
-void sp_event_context_snap_delay_handler(SPEventContext *ec,
+void sp_event_context_snap_delay_handler(ToolBase *ec,
         gpointer const dse_item, gpointer const dse_item2, GdkEventMotion *event,
         DelayedSnapEvent::DelayedSnapEventOrigin origin)
 {
@@ -1415,7 +1421,7 @@ gboolean sp_event_context_snap_watchdog_callback(gpointer data) {
         return FALSE;
     }
 
-    SPEventContext *ec = dse->getEventContext();
+    ToolBase *ec = dse->getEventContext();
     if (ec == NULL) {
         delete dse;
         return false;
@@ -1513,10 +1519,14 @@ gboolean sp_event_context_snap_watchdog_callback(gpointer data) {
     return FALSE; //Kills the timer and stops it from executing this callback over and over again.
 }
 
-void sp_event_context_discard_delayed_snap_event(SPEventContext *ec) {
+void sp_event_context_discard_delayed_snap_event(ToolBase *ec) {
     delete ec->_delayed_snap_event;
     ec->_delayed_snap_event = NULL;
     ec->desktop->namedview->snap_manager.snapprefs.setSnapPostponedGlobally(false);
+}
+
+}
+}
 }
 
 /*

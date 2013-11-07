@@ -2,7 +2,7 @@
 #define __SP_TEXT_CONTEXT_H__
 
 /*
- * SPTextContext
+ * TextTool
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
@@ -23,15 +23,19 @@
 #include <2geom/point.h>
 #include "libnrtype/Layout-TNG.h"
 
-#define SP_TEXT_CONTEXT(obj) (dynamic_cast<SPTextContext*>((SPEventContext*)obj))
-#define SP_IS_TEXT_CONTEXT(obj) (dynamic_cast<const SPTextContext*>((const SPEventContext*)obj) != NULL)
+#define SP_TEXT_CONTEXT(obj) (dynamic_cast<Inkscape::UI::Tools::TextTool*>((Inkscape::UI::Tools::ToolBase*)obj))
+#define SP_IS_TEXT_CONTEXT(obj) (dynamic_cast<const Inkscape::UI::Tools::TextTool*>((const Inkscape::UI::Tools::ToolBase*)obj) != NULL)
 
 struct SPCtrlLine;
 
-class SPTextContext : public SPEventContext {
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+class TextTool : public ToolBase {
 public:
-	SPTextContext();
-	virtual ~SPTextContext();
+	TextTool();
+	virtual ~TextTool();
 
     sigc::connection sel_changed_connection;
     sigc::connection sel_modified_connection;
@@ -82,12 +86,16 @@ public:
 	virtual const std::string& getPrefsPath();
 };
 
-bool sp_text_paste_inline(SPEventContext *ec);
-Glib::ustring sp_text_get_selected_text(SPEventContext const *ec);
-SPCSSAttr *sp_text_get_style_at_cursor(SPEventContext const *ec);
-bool sp_text_delete_selection(SPEventContext *ec);
-void sp_text_context_place_cursor (SPTextContext *tc, SPObject *text, Inkscape::Text::Layout::iterator where);
-void sp_text_context_place_cursor_at (SPTextContext *tc, SPObject *text, Geom::Point const p);
-Inkscape::Text::Layout::iterator *sp_text_context_get_cursor_position(SPTextContext *tc, SPObject *text);
+bool sp_text_paste_inline(ToolBase *ec);
+Glib::ustring sp_text_get_selected_text(ToolBase const *ec);
+SPCSSAttr *sp_text_get_style_at_cursor(ToolBase const *ec);
+bool sp_text_delete_selection(ToolBase *ec);
+void sp_text_context_place_cursor (TextTool *tc, SPObject *text, Inkscape::Text::Layout::iterator where);
+void sp_text_context_place_cursor_at (TextTool *tc, SPObject *text, Geom::Point const p);
+Inkscape::Text::Layout::iterator *sp_text_context_get_cursor_position(TextTool *tc, SPObject *text);
+
+}
+}
+}
 
 #endif

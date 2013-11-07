@@ -48,21 +48,25 @@ using Inkscape::DocumentUndo;
 
 #include "tool-factory.h"
 
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
 namespace {
-	SPEventContext* createRectContext() {
-		return new SPRectContext();
+	ToolBase* createRectContext() {
+		return new RectTool();
 	}
 
 	bool rectContextRegistered = ToolFactory::instance().registerObject("/tools/shapes/rect", createRectContext);
 }
 
-const std::string& SPRectContext::getPrefsPath() {
-	return SPRectContext::prefsPath;
+const std::string& RectTool::getPrefsPath() {
+	return RectTool::prefsPath;
 }
 
-const std::string SPRectContext::prefsPath = "/tools/shapes/rect";
+const std::string RectTool::prefsPath = "/tools/shapes/rect";
 
-SPRectContext::SPRectContext() : SPEventContext() {
+RectTool::RectTool() : ToolBase() {
     this->cursor_shape = cursor_rect_xpm;
     this->hot_x = 4;
     this->hot_y = 4;
@@ -78,16 +82,16 @@ SPRectContext::SPRectContext() : SPEventContext() {
     this->ry = 0.0;
 }
 
-void SPRectContext::finish() {
+void RectTool::finish() {
     sp_canvas_item_ungrab(SP_CANVAS_ITEM(this->desktop->acetate), GDK_CURRENT_TIME);
     
     this->finishItem();
     this->sel_changed_connection.disconnect();
 
-    SPEventContext::finish();
+    ToolBase::finish();
 }
 
-SPRectContext::~SPRectContext() {
+RectTool::~RectTool() {
     this->enableGrDrag(false);
 
     this->sel_changed_connection.disconnect();
@@ -105,13 +109,13 @@ SPRectContext::~SPRectContext() {
  * Callback that processes the "changed" signal on the selection;
  * destroys old and creates new knotholder.
  */
-void SPRectContext::selection_changed(Inkscape::Selection* selection) {
+void RectTool::selection_changed(Inkscape::Selection* selection) {
     this->shape_editor->unset_item(SH_KNOTHOLDER);
     this->shape_editor->set_item(selection->singleItem(), SH_KNOTHOLDER);
 }
 
-void SPRectContext::setup() {
-    SPEventContext::setup();
+void RectTool::setup() {
+    ToolBase::setup();
 
     this->shape_editor = new ShapeEditor(this->desktop);
 
@@ -122,7 +126,7 @@ void SPRectContext::setup() {
 
     this->sel_changed_connection.disconnect();
     this->sel_changed_connection = sp_desktop_selection(this->desktop)->connectChanged(
-    	sigc::mem_fun(this, &SPRectContext::selection_changed)
+    	sigc::mem_fun(this, &RectTool::selection_changed)
     );
 
     sp_event_context_read(this, "rx");
@@ -138,7 +142,7 @@ void SPRectContext::setup() {
     }
 }
 
-void SPRectContext::set(const Inkscape::Preferences::Entry& val) {
+void RectTool::set(const Inkscape::Preferences::Entry& val) {
     /* fixme: Proper error handling for non-numeric data.  Use a locale-independent function like
      * g_ascii_strtod (or a thin wrapper that does the right thing for invalid values inf/nan). */
     Glib::ustring name = val.getEntryName();
@@ -150,7 +154,7 @@ void SPRectContext::set(const Inkscape::Preferences::Entry& val) {
     }
 }
 
-bool SPRectContext::item_handler(SPItem* item, GdkEvent* event) {
+bool RectTool::item_handler(SPItem* item, GdkEvent* event) {
     gint ret = FALSE;
 
     switch (event->type) {
@@ -165,12 +169,12 @@ bool SPRectContext::item_handler(SPItem* item, GdkEvent* event) {
         break;
     }
 
-   	ret = SPEventContext::item_handler(item, event);
+   	ret = ToolBase::item_handler(item, event);
 
     return ret;
 }
 
-bool SPRectContext::root_handler(GdkEvent* event) {
+bool RectTool::root_handler(GdkEvent* event) {
     static bool dragging;
 
     SPDesktop *desktop = this->desktop;
@@ -375,13 +379,13 @@ bool SPRectContext::root_handler(GdkEvent* event) {
     }
 
     if (!ret) {
-    	ret = SPEventContext::root_handler(event);
+    	ret = ToolBase::root_handler(event);
     }
 
     return ret;
 }
 
-void SPRectContext::drag(Geom::Point const pt, guint state) {
+void RectTool::drag(Geom::Point const pt, guint state) {
     SPDesktop *desktop = this->desktop;
 
     if (!this->rect) {
@@ -466,7 +470,7 @@ void SPRectContext::drag(Geom::Point const pt, guint state) {
     g_string_free(ys, FALSE);
 }
 
-void SPRectContext::finishItem() {
+void RectTool::finishItem() {
     this->message_context->clear();
 
     if (this->rect != NULL) {
@@ -488,7 +492,7 @@ void SPRectContext::finishItem() {
     }
 }
 
-void SPRectContext::cancel(){
+void RectTool::cancel(){
     sp_desktop_selection(this->desktop)->clear();
     sp_canvas_item_ungrab(SP_CANVAS_ITEM(this->desktop->acetate), 0);
 
@@ -507,6 +511,9 @@ void SPRectContext::cancel(){
     DocumentUndo::cancel(sp_desktop_document(this->desktop));
 }
 
+}
+}
+}
 
 /*
   Local Variables:

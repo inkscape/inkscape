@@ -51,21 +51,25 @@ using Inkscape::DocumentUndo;
 
 #include "tool-factory.h"
 
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
 namespace {
-	SPEventContext* createStarContext() {
-		return new SPStarContext();
+	ToolBase* createStarContext() {
+		return new StarTool();
 	}
 
 	bool starContextRegistered = ToolFactory::instance().registerObject("/tools/shapes/star", createStarContext);
 }
 
-const std::string& SPStarContext::getPrefsPath() {
-	return SPStarContext::prefsPath;
+const std::string& StarTool::getPrefsPath() {
+	return StarTool::prefsPath;
 }
 
-const std::string SPStarContext::prefsPath = "/tools/shapes/star";
+const std::string StarTool::prefsPath = "/tools/shapes/star";
 
-SPStarContext::SPStarContext() : SPEventContext() {
+StarTool::StarTool() : ToolBase() {
 	this->randomized = 0;
 	this->rounded = 0;
 
@@ -86,16 +90,16 @@ SPStarContext::SPStarContext() : SPEventContext() {
     this->isflatsided = false;
 }
 
-void SPStarContext::finish() {
+void StarTool::finish() {
     sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), GDK_CURRENT_TIME);
 
     this->finishItem();
     this->sel_changed_connection.disconnect();
 
-    SPEventContext::finish();
+    ToolBase::finish();
 }
 
-SPStarContext::~SPStarContext() {
+StarTool::~StarTool() {
     this->enableGrDrag(false);
 
     this->sel_changed_connection.disconnect();
@@ -115,15 +119,15 @@ SPStarContext::~SPStarContext() {
  *
  * @param  selection Should not be NULL.
  */
-void SPStarContext::selection_changed(Inkscape::Selection* selection) {
+void StarTool::selection_changed(Inkscape::Selection* selection) {
     g_assert (selection != NULL);
 
     this->shape_editor->unset_item(SH_KNOTHOLDER);
     this->shape_editor->set_item(selection->singleItem(), SH_KNOTHOLDER);
 }
 
-void SPStarContext::setup() {
-	SPEventContext::setup();
+void StarTool::setup() {
+	ToolBase::setup();
 
 	sp_event_context_read(this, "magnitude");
 	sp_event_context_read(this, "proportion");
@@ -142,7 +146,7 @@ void SPStarContext::setup() {
 	
 	this->sel_changed_connection.disconnect();
 
-	this->sel_changed_connection = selection->connectChanged(sigc::mem_fun(this, &SPStarContext::selection_changed));
+	this->sel_changed_connection = selection->connectChanged(sigc::mem_fun(this, &StarTool::selection_changed));
 
 	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 	if (prefs->getBool("/tools/shapes/selcue")) {
@@ -154,7 +158,7 @@ void SPStarContext::setup() {
 	}
 }
 
-void SPStarContext::set(const Inkscape::Preferences::Entry& val) {
+void StarTool::set(const Inkscape::Preferences::Entry& val) {
     Glib::ustring path = val.getEntryName();
 
     if (path == "magnitude") {
@@ -170,7 +174,7 @@ void SPStarContext::set(const Inkscape::Preferences::Entry& val) {
     }
 }
 
-bool SPStarContext::root_handler(GdkEvent* event) {
+bool StarTool::root_handler(GdkEvent* event) {
     static bool dragging;
 
     SPDesktop *desktop = this->desktop;
@@ -356,13 +360,13 @@ bool SPStarContext::root_handler(GdkEvent* event) {
     }
 
     if (!ret) {
-    	ret = SPEventContext::root_handler(event);
+    	ret = ToolBase::root_handler(event);
     }
 
     return ret;
 }
 
-void SPStarContext::drag(Geom::Point p, guint state)
+void StarTool::drag(Geom::Point p, guint state)
 {
     SPDesktop *desktop = this->desktop;
 
@@ -427,7 +431,7 @@ void SPStarContext::drag(Geom::Point p, guint state)
     g_string_free(rads, FALSE);
 }
 
-void SPStarContext::finishItem() {
+void StarTool::finishItem() {
     this->message_context->clear();
 
     if (this->star != NULL) {
@@ -455,7 +459,7 @@ void SPStarContext::finishItem() {
     }
 }
 
-void SPStarContext::cancel() {
+void StarTool::cancel() {
     sp_desktop_selection(desktop)->clear();
     sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), 0);
 
@@ -472,6 +476,10 @@ void SPStarContext::cancel() {
     desktop->canvas->endForcedFullRedraws();
 
     DocumentUndo::cancel(sp_desktop_document(desktop));
+}
+
+}
+}
 }
 
 /*

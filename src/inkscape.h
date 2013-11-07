@@ -17,7 +17,16 @@
 
 class SPDesktop;
 class SPDocument;
-class SPEventContext;
+
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+class ToolBase;
+
+}
+}
+}
 
 namespace Inkscape {
     class ActionContext;
@@ -49,7 +58,7 @@ bool inkscapeIsCrashing();
 SPDesktop * inkscape_find_desktop_by_dkey (unsigned int dkey);
 
 #define SP_ACTIVE_EVENTCONTEXT inkscape_active_event_context ()
-SPEventContext * inkscape_active_event_context (void);
+Inkscape::UI::Tools::ToolBase * inkscape_active_event_context (void);
 
 #define SP_ACTIVE_DOCUMENT inkscape_active_document ()
 SPDocument * inkscape_active_document (void);

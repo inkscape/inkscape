@@ -49,30 +49,35 @@
 #include "display/sp-canvas.h"
 #include "display/sp-canvas-item.h"
 #include "display/drawing-item.h"
+#include "tool-factory.h"
 
 using Inkscape::DocumentUndo;
 
+GdkPixbuf *handles[13];
+
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
 static GdkCursor *CursorSelectMouseover = NULL;
 static GdkCursor *CursorSelectDragging = NULL;
-GdkPixbuf *handles[13];
 
 static gint rb_escaped = 0; // if non-zero, rubberband was canceled by esc, so the next button release should not deselect
 static gint drag_escaped = 0; // if non-zero, drag was canceled by esc
-#include "tool-factory.h"
 
 namespace {
-	SPEventContext* createSelectContext() {
-		return new SPSelectContext();
+	ToolBase* createSelectContext() {
+		return new SelectTool();
 	}
 
 	bool selectContextRegistered = ToolFactory::instance().registerObject("/tools/select", createSelectContext);
 }
 
-const std::string& SPSelectContext::getPrefsPath() {
-	return SPSelectContext::prefsPath;
+const std::string& SelectTool::getPrefsPath() {
+	return SelectTool::prefsPath;
 }
 
-const std::string SPSelectContext::prefsPath = "/tools/select";
+const std::string SelectTool::prefsPath = "/tools/select";
 
 
 //Creates rotated variations for handles
@@ -85,7 +90,7 @@ sp_load_handles(int start, int count, char const **xpm) {
     }
 }
 
-SPSelectContext::SPSelectContext() : SPEventContext() {
+SelectTool::SelectTool() : ToolBase() {
 	this->grabbed = 0;
 	this->item = 0;
 
@@ -120,10 +125,10 @@ SPSelectContext::SPSelectContext() : SPEventContext() {
 //static bool within_tolerance = false;
 static bool is_cycling = false;
 static bool moved_while_cycling = false;
-SPEventContext *prev_event_context = NULL;
+ToolBase *prev_event_context = NULL;
 
 
-SPSelectContext::~SPSelectContext() {
+SelectTool::~SelectTool() {
     this->enableGrDrag(false);
 
     if (this->grabbed) {
@@ -156,8 +161,8 @@ SPSelectContext::~SPSelectContext() {
     }
 }
 
-void SPSelectContext::setup() {
-    SPEventContext::setup();
+void SelectTool::setup() {
+    ToolBase::setup();
 
     this->_describer = new Inkscape::SelectionDescriber(
                 desktop->selection, 
@@ -178,7 +183,7 @@ void SPSelectContext::setup() {
     }
 }
 
-void SPSelectContext::set(const Inkscape::Preferences::Entry& val) {
+void SelectTool::set(const Inkscape::Preferences::Entry& val) {
     Glib::ustring path = val.getEntryName();
 
     if (path == "show") {
@@ -190,7 +195,7 @@ void SPSelectContext::set(const Inkscape::Preferences::Entry& val) {
     }
 }
 
-bool SPSelectContext::sp_select_context_abort() {
+bool SelectTool::sp_select_context_abort() {
     Inkscape::SelTrans *seltrans = this->_seltrans;
 
     if (this->dragging) {
@@ -273,7 +278,7 @@ sp_select_context_up_one_layer(SPDesktop *desktop)
     }
 }
 
-bool SPSelectContext::item_handler(SPItem* item, GdkEvent* event) {
+bool SelectTool::item_handler(SPItem* item, GdkEvent* event) {
     gint ret = FALSE;
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -387,13 +392,13 @@ bool SPSelectContext::item_handler(SPItem* item, GdkEvent* event) {
     }
 
     if (!ret) {
-    	ret = SPEventContext::item_handler(item, event);
+    	ret = ToolBase::item_handler(item, event);
     }
 
     return ret;
 }
 
-void SPSelectContext::sp_select_context_cycle_through_items(Inkscape::Selection *selection, GdkEventScroll *scroll_event, bool shift_pressed) {
+void SelectTool::sp_select_context_cycle_through_items(Inkscape::Selection *selection, GdkEventScroll *scroll_event, bool shift_pressed) {
     if (!this->cycling_cur_item) {
         return;
     }
@@ -438,10 +443,10 @@ void SPSelectContext::sp_select_context_cycle_through_items(Inkscape::Selection 
 
 
 static void
-sp_select_context_reset_opacities(SPEventContext *event_context)
+sp_select_context_reset_opacities(ToolBase *event_context)
 {
     // SPDesktop *desktop = event_context->desktop;
-	SPSelectContext *sc = SP_SELECT_CONTEXT(event_context);
+	SelectTool *sc = SP_SELECT_CONTEXT(event_context);
 	Inkscape::DrawingItem *arenaitem;
 	for (GList *l = sc->cycling_items; l != NULL; l = g_list_next(l)) {
 		arenaitem = SP_ITEM(l->data)->get_arenaitem(event_context->desktop->dkey);
@@ -456,7 +461,7 @@ sp_select_context_reset_opacities(SPEventContext *event_context)
 	sc->cycling_items_cmp = NULL;
 }
 
-bool SPSelectContext::root_handler(GdkEvent* event) {
+bool SelectTool::root_handler(GdkEvent* event) {
     SPItem *item = NULL;
     SPItem *item_at_point = NULL, *group_at_point = NULL, *item_in_group = NULL;
     gint ret = FALSE;
@@ -1225,10 +1230,14 @@ bool SPSelectContext::root_handler(GdkEvent* event) {
     }
 
     if (!ret) {
-    	ret = SPEventContext::root_handler(event);
+    	ret = ToolBase::root_handler(event);
     }
 
     return ret;
+}
+
+}
+}
 }
 
 /*

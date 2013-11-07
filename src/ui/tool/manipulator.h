@@ -40,7 +40,7 @@ public:
     virtual ~Manipulator() {}
     
     /// Handle input event. Returns true if handled.
-    virtual bool event(SPEventContext *, GdkEvent *)=0;
+    virtual bool event(Inkscape::UI::Tools::ToolBase *, GdkEvent *)=0;
     SPDesktop *const _desktop;
 };
 
@@ -145,7 +145,7 @@ public:
         }
     }
     
-    virtual bool event(SPEventContext *event_context, GdkEvent *event) {
+    virtual bool event(Inkscape::UI::Tools::ToolBase *event_context, GdkEvent *event) {
         for (typename MapType::iterator i = _mmap.begin(); i != _mmap.end(); ++i) {
             if ((*i).second->event(event_context, event)) return true;
         }

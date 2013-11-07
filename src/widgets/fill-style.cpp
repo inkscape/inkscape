@@ -88,7 +88,7 @@ private:
     static void fillruleChangedCB( SPPaintSelector *psel, SPPaintSelector::FillRule mode, FillNStroke *self );
 
     void selectionModifiedCB(guint flags);
-    void eventContextCB(SPDesktop *desktop, SPEventContext *eventcontext);
+    void eventContextCB(SPDesktop *desktop, Inkscape::UI::Tools::ToolBase *eventcontext);
 
     void dragFromPaint();
     void updateFromPaint();
@@ -211,7 +211,7 @@ void FillNStroke::setDesktop(SPDesktop *desktop)
         if (desktop && desktop->selection) {
             selectChangedConn = desktop->selection->connectChanged(sigc::hide(sigc::mem_fun(*this, &FillNStroke::performUpdate)));
             subselChangedConn = desktop->connectToolSubselectionChanged(sigc::hide(sigc::mem_fun(*this, &FillNStroke::performUpdate)));
-            eventContextConn = desktop->connectEventContextChanged(sigc::hide(sigc::bind(sigc::mem_fun(*this, &FillNStroke::eventContextCB), (SPEventContext *)NULL)));
+            eventContextConn = desktop->connectEventContextChanged(sigc::hide(sigc::bind(sigc::mem_fun(*this, &FillNStroke::eventContextCB), (Inkscape::UI::Tools::ToolBase *)NULL)));
 
             // Must check flags, so can't call performUpdate() directly.
             selectModifiedConn = desktop->selection->connectModified(sigc::hide<0>(sigc::mem_fun(*this, &FillNStroke::selectionModifiedCB)));
@@ -224,7 +224,7 @@ void FillNStroke::setDesktop(SPDesktop *desktop)
  * Listen to this "change in tool" event, in case a subselection tool (such as Gradient or Node) selection
  * is changed back to a selection tool - especially needed for selected gradient stops.
  */
-void FillNStroke::eventContextCB(SPDesktop * /*desktop*/, SPEventContext * /*eventcontext*/)
+void FillNStroke::eventContextCB(SPDesktop * /*desktop*/, Inkscape::UI::Tools::ToolBase * /*eventcontext*/)
 {
     performUpdate();
 }

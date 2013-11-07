@@ -23,7 +23,6 @@ class  GrDrag;
 class  SPDesktop;
 class  SPItem;
 class  ShapeEditor;
-class SPEventContext;
 
 namespace Inkscape {
     class MessageContext;
@@ -33,11 +32,17 @@ namespace Inkscape {
     }
 }
 
-#define SP_EVENT_CONTEXT(obj) (dynamic_cast<SPEventContext*>((SPEventContext*)obj))
-#define SP_IS_EVENT_CONTEXT(obj) (dynamic_cast<const SPEventContext*>((const SPEventContext*)obj) != NULL)
+#define SP_EVENT_CONTEXT(obj) (dynamic_cast<Inkscape::UI::Tools::ToolBase*>((Inkscape::UI::Tools::ToolBase*)obj))
+#define SP_IS_EVENT_CONTEXT(obj) (dynamic_cast<const Inkscape::UI::Tools::ToolBase*>((const Inkscape::UI::Tools::ToolBase*)obj) != NULL)
+
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+class ToolBase;
 
 gboolean sp_event_context_snap_watchdog_callback(gpointer data);
-void sp_event_context_discard_delayed_snap_event(SPEventContext *ec);
+void sp_event_context_discard_delayed_snap_event(ToolBase *ec);
 
 class DelayedSnapEvent
 {
@@ -53,7 +58,7 @@ public:
         GUIDE_VRULER
     };
 
-    DelayedSnapEvent(SPEventContext *event_context, gpointer const dse_item, gpointer dse_item2, GdkEventMotion const *event, DelayedSnapEvent::DelayedSnapEventOrigin const origin)
+    DelayedSnapEvent(ToolBase *event_context, gpointer const dse_item, gpointer dse_item2, GdkEventMotion const *event, DelayedSnapEvent::DelayedSnapEventOrigin const origin)
     : _timer_id(0), _event(NULL), _item(dse_item), _item2(dse_item2), _origin(origin), _event_context(event_context)
     {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -68,7 +73,7 @@ public:
         if (_event != NULL) gdk_event_free(_event); // Remove the copy of the original event
     }
 
-    SPEventContext* getEventContext() {return _event_context;}
+    ToolBase* getEventContext() {return _event_context;}
     DelayedSnapEventOrigin getOrigin() {return _origin;}
     GdkEvent* getEvent() {return _event;}
     gpointer getItem() {return _item;}
@@ -80,10 +85,10 @@ private:
     gpointer _item;
     gpointer _item2;
     DelayedSnapEventOrigin _origin;
-    SPEventContext* _event_context;
+    ToolBase* _event_context;
 };
 
-void sp_event_context_snap_delay_handler(SPEventContext *ec, gpointer const dse_item, gpointer const dse_item2, GdkEventMotion *event, DelayedSnapEvent::DelayedSnapEventOrigin origin);
+void sp_event_context_snap_delay_handler(ToolBase *ec, gpointer const dse_item, gpointer const dse_item2, GdkEventMotion *event, DelayedSnapEvent::DelayedSnapEventOrigin origin);
 
 
 /**
@@ -92,21 +97,21 @@ void sp_event_context_snap_delay_handler(SPEventContext *ec, gpointer const dse_
  * This is per desktop object, which (its derivatives) implements
  * different actions bound to mouse events.
  *
- * SPEventContext is an abstract base class of all tools. As the name
+ * ToolBase is an abstract base class of all tools. As the name
  * indicates, event context implementations process UI events (mouse
  * movements and keypresses) and take actions (like creating or modifying
  * objects).  There is one event context implementation for each tool,
  * plus few abstract base classes. Writing a new tool involves
- * subclassing SPEventContext.
+ * subclassing ToolBase.
  */
-class SPEventContext {
+class ToolBase {
 public:
     void enableSelectionCue (bool enable=true);
     void enableGrDrag (bool enable=true);
     bool deleteSelectedDrag(bool just_one);
 
-    SPEventContext();
-    virtual ~SPEventContext();
+    ToolBase();
+    virtual ~ToolBase();
 
     SPDesktop *desktop;
     Inkscape::Preferences::Observer *pref_observer;
@@ -158,7 +163,7 @@ public:
 	 */
 	class ToolPrefObserver: public Inkscape::Preferences::Observer {
 	public:
-	    ToolPrefObserver(Glib::ustring const &path, SPEventContext *ec) :
+	    ToolPrefObserver(Glib::ustring const &path, ToolBase *ec) :
 	        Inkscape::Preferences::Observer(path), ec(ec) {
 	    }
 
@@ -167,15 +172,15 @@ public:
 	    }
 
 	private:
-	    SPEventContext * const ec;
+	    ToolBase * const ec;
 	};
 
 //protected:
 	void sp_event_context_update_cursor();
 
 private:
-	SPEventContext(const SPEventContext&);
-	SPEventContext& operator=(const SPEventContext&);
+	ToolBase(const ToolBase&);
+	ToolBase& operator=(const ToolBase&);
 };
 
 #define SP_EVENT_CONTEXT_DESKTOP(e) (SP_EVENT_CONTEXT(e)->desktop)
@@ -183,23 +188,23 @@ private:
 
 #define SP_EVENT_CONTEXT_STATIC 0
 
-//SPEventContext *sp_event_context_new(GType type, SPDesktop *desktop, gchar const *pref_path, unsigned key);
-//void sp_event_context_finish(SPEventContext *ec);
-void sp_event_context_read(SPEventContext *ec, gchar const *key);
-void sp_event_context_activate(SPEventContext *ec);
-//void sp_event_context_deactivate(SPEventContext *ec);
+//ToolBase *sp_event_context_new(GType type, SPDesktop *desktop, gchar const *pref_path, unsigned key);
+//void sp_event_context_finish(ToolBase *ec);
+void sp_event_context_read(ToolBase *ec, gchar const *key);
+void sp_event_context_activate(ToolBase *ec);
+//void sp_event_context_deactivate(ToolBase *ec);
 
-gint sp_event_context_root_handler(SPEventContext *ec, GdkEvent *event);
-gint sp_event_context_virtual_root_handler(SPEventContext *ec, GdkEvent *event);
-gint sp_event_context_item_handler(SPEventContext *ec, SPItem *item, GdkEvent *event);
-gint sp_event_context_virtual_item_handler(SPEventContext *ec, SPItem *item, GdkEvent *event);
+gint sp_event_context_root_handler(ToolBase *ec, GdkEvent *event);
+gint sp_event_context_virtual_root_handler(ToolBase *ec, GdkEvent *event);
+gint sp_event_context_item_handler(ToolBase *ec, SPItem *item, GdkEvent *event);
+gint sp_event_context_virtual_item_handler(ToolBase *ec, SPItem *item, GdkEvent *event);
 
 void sp_event_root_menu_popup(SPDesktop *desktop, SPItem *item, GdkEvent *event);
 
 gint gobble_key_events(guint keyval, gint mask);
 gint gobble_motion_events(gint mask);
 
-//void sp_event_context_update_cursor(SPEventContext *ec);
+//void sp_event_context_update_cursor(ToolBase *ec);
 
 void sp_event_show_modifier_tip(Inkscape::MessageContext *message_context, GdkEvent *event,
                                 gchar const *ctrl_tip, gchar const *shift_tip, gchar const *alt_tip);
@@ -211,14 +216,18 @@ SPItem *sp_event_context_over_item (SPDesktop *desktop, SPItem *item, Geom::Poin
 
 void sp_toggle_dropper(SPDesktop *dt);
 
-//ShapeEditor *sp_event_context_get_shape_editor (SPEventContext *ec);
-bool sp_event_context_knot_mouseover(SPEventContext *ec);
+//ShapeEditor *sp_event_context_get_shape_editor (ToolBase *ec);
+bool sp_event_context_knot_mouseover(ToolBase *ec);
 
 //void ec_shape_event_attr_changed(Inkscape::XML::Node *shape_repr,
 //                                     gchar const *name, gchar const *old_value, gchar const *new_value,
 //                                 bool const is_interactive, gpointer const data);
 //
 //void event_context_print_event_info(GdkEvent *event, bool print_return = true);
+
+}
+}
+}
 
 #endif // SEEN_SP_EVENT_CONTEXT_H
 

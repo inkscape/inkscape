@@ -54,21 +54,25 @@ using Inkscape::DocumentUndo;
 
 #include "tool-factory.h"
 
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
 namespace {
-	SPEventContext* createBox3dContext() {
-		return new Box3DContext();
+	ToolBase* createBox3dTool() {
+		return new Box3dTool();
 	}
 
-	bool box3dContextRegistered = ToolFactory::instance().registerObject("/tools/shapes/3dbox", createBox3dContext);
+	bool Box3dToolRegistered = ToolFactory::instance().registerObject("/tools/shapes/3dbox", createBox3dTool);
 }
 
-const std::string& Box3DContext::getPrefsPath() {
-	return Box3DContext::prefsPath;
+const std::string& Box3dTool::getPrefsPath() {
+	return Box3dTool::prefsPath;
 }
 
-const std::string Box3DContext::prefsPath = "/tools/shapes/3dbox";
+const std::string Box3dTool::prefsPath = "/tools/shapes/3dbox";
 
-Box3DContext::Box3DContext() : SPEventContext() {
+Box3dTool::Box3dTool() : ToolBase() {
     this->cursor_shape = cursor_3dbox_xpm;
     this->hot_x = 4;
     this->hot_y = 4;
@@ -86,16 +90,16 @@ Box3DContext::Box3DContext() : SPEventContext() {
     this->_vpdrag = NULL;
 }
 
-void Box3DContext::finish() {
+void Box3dTool::finish() {
     sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), GDK_CURRENT_TIME);
     this->finishItem();
     this->sel_changed_connection.disconnect();
 
-    SPEventContext::finish();
+    ToolBase::finish();
 }
 
 
-Box3DContext::~Box3DContext() {
+Box3dTool::~Box3dTool() {
     this->enableGrDrag(false);
 
     delete (this->_vpdrag);
@@ -116,7 +120,7 @@ Box3DContext::~Box3DContext() {
  * Callback that processes the "changed" signal on the selection;
  * destroys old and creates new knotholder.
  */
-void Box3DContext::selection_changed(Inkscape::Selection* selection) {
+void Box3dTool::selection_changed(Inkscape::Selection* selection) {
     this->shape_editor->unset_item(SH_KNOTHOLDER);
     this->shape_editor->set_item(selection->singleItem(), SH_KNOTHOLDER);
 
@@ -145,8 +149,8 @@ static void sp_box3d_context_ensure_persp_in_defs(SPDocument *document) {
     }
 }
 
-void Box3DContext::setup() {
-    SPEventContext::setup();
+void Box3dTool::setup() {
+    ToolBase::setup();
 
     this->shape_editor = new ShapeEditor(this->desktop);
 
@@ -157,7 +161,7 @@ void Box3DContext::setup() {
 
     this->sel_changed_connection.disconnect();
     this->sel_changed_connection = sp_desktop_selection(this->desktop)->connectChanged(
-    	sigc::mem_fun(this, &Box3DContext::selection_changed)
+    	sigc::mem_fun(this, &Box3dTool::selection_changed)
     );
 
     this->_vpdrag = new Box3D::VPDrag(sp_desktop_document(this->desktop));
@@ -173,7 +177,7 @@ void Box3DContext::setup() {
     }
 }
 
-bool Box3DContext::item_handler(SPItem* item, GdkEvent* event) {
+bool Box3dTool::item_handler(SPItem* item, GdkEvent* event) {
     gint ret = FALSE;
 
     switch (event->type) {
@@ -188,16 +192,16 @@ bool Box3DContext::item_handler(SPItem* item, GdkEvent* event) {
         break;
     }
 
-//    if (((SPEventContextClass *) sp_box3d_context_parent_class)->item_handler) {
-//        ret = ((SPEventContextClass *) sp_box3d_context_parent_class)->item_handler(event_context, item, event);
+//    if (((ToolBaseClass *) sp_box3d_context_parent_class)->item_handler) {
+//        ret = ((ToolBaseClass *) sp_box3d_context_parent_class)->item_handler(event_context, item, event);
 //    }
     // CPPIFY: ret is always overwritten...
-    ret = SPEventContext::item_handler(item, event);
+    ret = ToolBase::item_handler(item, event);
 
     return ret;
 }
 
-bool Box3DContext::root_handler(GdkEvent* event) {
+bool Box3dTool::root_handler(GdkEvent* event) {
     static bool dragging;
 
     SPDocument *document = sp_desktop_document (desktop);
@@ -505,13 +509,13 @@ bool Box3DContext::root_handler(GdkEvent* event) {
     }
 
     if (!ret) {
-    	ret = SPEventContext::root_handler(event);
+    	ret = ToolBase::root_handler(event);
     }
 
     return ret;
 }
 
-void Box3DContext::drag(guint state) {
+void Box3dTool::drag(guint state) {
     if (!this->box3d) {
         if (Inkscape::have_viable_layer(desktop, this->message_context) == false) {
             return;
@@ -588,7 +592,7 @@ void Box3DContext::drag(guint state) {
     this->message_context->setF(Inkscape::NORMAL_MESSAGE, "%s", _("<b>3D Box</b>; with <b>Shift</b> to extrude along the Z axis"));
 }
 
-void Box3DContext::finishItem() {
+void Box3dTool::finishItem() {
     this->message_context->clear();
     this->ctrl_dragged = false;
     this->extruded = false;
@@ -615,6 +619,10 @@ void Box3DContext::finishItem() {
 
         this->box3d = NULL;
     }
+}
+
+}
+}
 }
 
 /*

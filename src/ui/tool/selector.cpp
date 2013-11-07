@@ -48,12 +48,12 @@ public:
 
     SPDesktop *desktop() { return _desktop; }
 
-    bool event(SPEventContext *ec, GdkEvent *e) {
+    bool event(Inkscape::UI::Tools::ToolBase *ec, GdkEvent *e) {
         return _eventHandler(ec, e);
     }
 
 protected:
-    virtual bool _eventHandler(SPEventContext *event_context, GdkEvent *event) {
+    virtual bool _eventHandler(Inkscape::UI::Tools::ToolBase *event_context, GdkEvent *event) {
         if (event->type == GDK_KEY_PRESS && shortcut_key(event->key) == GDK_KEY_Escape &&
             sp_canvas_item_is_visible(_rubber))
         {
@@ -110,7 +110,7 @@ Selector::~Selector()
     delete _dragger;
 }
 
-bool Selector::event(SPEventContext *event_context, GdkEvent *event)
+bool Selector::event(Inkscape::UI::Tools::ToolBase *event_context, GdkEvent *event)
 {
     // The hidden control point will capture all events after it obtains the grab,
     // but it relies on this function to initiate it. If we pass only first button
@@ -118,7 +118,7 @@ bool Selector::event(SPEventContext *event_context, GdkEvent *event)
     switch (event->type) {
     case GDK_BUTTON_PRESS:
         // Do not pass button presses other than left button to the control point.
-        // This way middle click and right click can be handled in SPEventContext.
+        // This way middle click and right click can be handled in ToolBase.
         if (event->button.button == 1 && !event_context->space_panning) {
             _dragger->setPosition(_desktop->w2d(event_point(event->motion)));
             return _dragger->event(event_context, event);

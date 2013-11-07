@@ -56,7 +56,7 @@ public:
     PathManipulator(MultiPathManipulator &mpm, SPPath *path, Geom::Affine const &edit_trans,
         guint32 outline_color, Glib::ustring lpe_key);
     ~PathManipulator();
-    virtual bool event(SPEventContext *, GdkEvent *);
+    virtual bool event(Inkscape::UI::Tools::ToolBase *, GdkEvent *);
 
     bool empty();
     void writeXML();

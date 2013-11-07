@@ -107,7 +107,7 @@ sp_dialog_event_handler (GtkWindow *win, GdkEvent *event, gpointer data)
 
         case GDK_KEY_PRESS:
 
-            switch (get_group0_keyval (&event->key)) {
+            switch (Inkscape::UI::Tools::get_group0_keyval (&event->key)) {
                 case GDK_KEY_Escape:
                     sp_dialog_defocus (win);
                     ret = TRUE;

@@ -24,7 +24,17 @@
 #include "inkscape.h"
 
 class SPBox3D;
-class Box3DContext;
+
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+class Box3dTool;
+
+}
+}
+}
+
 
 class Persp3DImpl {
 public:

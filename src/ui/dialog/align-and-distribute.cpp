@@ -374,13 +374,13 @@ private :
         	return;
         }
 
-        SPEventContext *event_context = _dialog.getDesktop()->getEventContext();
+        Inkscape::UI::Tools::ToolBase *event_context = _dialog.getDesktop()->getEventContext();
 
         if (!INK_IS_NODE_TOOL(event_context)) {
         	return;
         }
 
-        InkNodeTool *nt = INK_NODE_TOOL(event_context);
+        Inkscape::UI::Tools::NodeTool *nt = INK_NODE_TOOL(event_context);
 
         if (_distribute) {
             nt->_multipath->distributeNodes(_orientation);
@@ -829,7 +829,7 @@ private :
 
 
 
-static void on_tool_changed(Inkscape::Application */*inkscape*/, SPEventContext */*context*/, AlignAndDistribute *daad)
+static void on_tool_changed(Inkscape::Application */*inkscape*/, Inkscape::UI::Tools::ToolBase */*context*/, AlignAndDistribute *daad)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop && desktop->getEventContext())

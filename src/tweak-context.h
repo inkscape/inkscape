@@ -21,6 +21,10 @@
 #define TC_MAX_PRESSURE      1.0
 #define TC_DEFAULT_PRESSURE  0.35
 
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
 enum {
     TWEAK_MODE_MOVE,
     TWEAK_MODE_MOVE_IN_OUT,
@@ -37,10 +41,10 @@ enum {
     TWEAK_MODE_BLUR
 };
 
-class SPTweakContext : public SPEventContext {
+class TweakTool : public ToolBase {
 public:
-	SPTweakContext();
-	virtual ~SPTweakContext();
+	TweakTool();
+	virtual ~TweakTool();
 
     /* extended input data */
     gdouble pressure;
@@ -83,6 +87,10 @@ public:
 private:
 	bool set_style(const SPCSSAttr* css);
 };
+
+}
+}
+}
 
 #endif
 

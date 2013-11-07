@@ -258,27 +258,27 @@ namespace XML {}
  *
  * \section Event Context Class Hierarchy
  *
- *- SPEventContext[\ref event-context.cpp, \ref event-context.h]
- * - SPArcContext [\ref arc-context.cpp, \ref arc-context.h]
+ *- ToolBase[\ref event-context.cpp, \ref event-context.h]
+ * - ArcTool [\ref arc-context.cpp, \ref arc-context.h]
  * - SPDrawContext [\ref draw-context.cpp, \ref draw-context.h]
- *   - SPPenContext [\ref pen-context.cpp, \ref pen-context.h]
- *   - SPPencilContext [\ref pencil-context.cpp, \ref pencil-context.h]
- *   - SPConnectorContext [\ref connector-context.cpp, \ref connector-context.h, \ref sp-conn-end.cpp, \ref sp-conn-end-pair.cpp]
- * - SPGradientContext [\ref gradient-context.cpp, \ref gradient-context.h, \ref gradient-drag.cpp, \ref gradient-toolbar.cpp]
- * - SPRectContext [\ref rect-context.cpp, \ref rect-context.h]
- * - SPSelectContext [\ref select-context.cpp, \ref select-context.h]
- * - SPSpiralContext [\ref spiral-context.cpp, \ref spiral-context.h]
- * - SPStarContext [\ref star-context.cpp, \ref star-context.h]
+ *   - PenTool [\ref pen-context.cpp, \ref pen-context.h]
+ *   - PencilTool [\ref pencil-context.cpp, \ref pencil-context.h]
+ *   - ConnectorTool [\ref connector-context.cpp, \ref connector-context.h, \ref sp-conn-end.cpp, \ref sp-conn-end-pair.cpp]
+ * - GradientTool [\ref gradient-context.cpp, \ref gradient-context.h, \ref gradient-drag.cpp, \ref gradient-toolbar.cpp]
+ * - RectTool [\ref rect-context.cpp, \ref rect-context.h]
+ * - SelectTool [\ref select-context.cpp, \ref select-context.h]
+ * - SpiralTool [\ref spiral-context.cpp, \ref spiral-context.h]
+ * - StarTool [\ref star-context.cpp, \ref star-context.h]
  * - FloodContext [\ref flood-context.cpp, \ref flood-context.h]
- * - Box3DContext [\ref box3d-context.cpp, \ref box3d-context.h]
+ * - Box3dTool [\ref box3d-context.cpp, \ref box3d-context.h]
  *
  * SPNodeContext [\ref node-context.cpp, \ref node-context.h]
  *
- * SPZoomContext [\ref zoom-context.cpp, \ref zoom-context.h]
+ * ZoomTool [\ref zoom-context.cpp, \ref zoom-context.h]
  *
- * SPDynaDrawContext [\ref dyna-draw-context.cpp, \ref dyna-draw-context.h]
+ * CalligraphicTool [\ref dyna-draw-context.cpp, \ref dyna-draw-context.h]
  *
- * SPDropperContext [\ref dropper-context.cpp, \ref dropper-context.h]
+ * DropperTool [\ref dropper-context.cpp, \ref dropper-context.h]
  */
 /** \page UI User Interface Classes and Files
  *

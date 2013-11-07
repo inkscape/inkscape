@@ -157,7 +157,7 @@ PathManipulator::~PathManipulator()
 }
 
 /** Handle motion events to update the position of the curve drag point. */
-bool PathManipulator::event(SPEventContext * /*event_context*/, GdkEvent *event)
+bool PathManipulator::event(Inkscape::UI::Tools::ToolBase * /*event_context*/, GdkEvent *event)
 {
     if (empty()) return false;
 

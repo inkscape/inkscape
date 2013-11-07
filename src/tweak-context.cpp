@@ -93,21 +93,25 @@ using Inkscape::DocumentUndo;
 
 #include "tool-factory.h"
 
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
 namespace {
-	SPEventContext* createTweakContext() {
-		return new SPTweakContext();
+	ToolBase* createTweakContext() {
+		return new TweakTool();
 	}
 
 	bool tweakContextRegistered = ToolFactory::instance().registerObject("/tools/tweak", createTweakContext);
 }
 
-const std::string& SPTweakContext::getPrefsPath() {
-	return SPTweakContext::prefsPath;
+const std::string& TweakTool::getPrefsPath() {
+	return TweakTool::prefsPath;
 }
 
-const std::string SPTweakContext::prefsPath = "/tools/tweak";
+const std::string TweakTool::prefsPath = "/tools/tweak";
 
-SPTweakContext::SPTweakContext() : SPEventContext() {
+TweakTool::TweakTool() : ToolBase() {
 	this->mode = 0;
 	this->dilate_area = 0;
 	this->usetilt = 0;
@@ -135,7 +139,7 @@ SPTweakContext::SPTweakContext() : SPEventContext() {
     this->do_o = false;
 }
 
-SPTweakContext::~SPTweakContext() {
+TweakTool::~TweakTool() {
     this->enableGrDrag(false);
     
     this->style_set_connection.disconnect();
@@ -161,7 +165,7 @@ static bool is_color_mode (gint mode)
     return (mode == TWEAK_MODE_COLORPAINT || mode == TWEAK_MODE_COLORJITTER || mode == TWEAK_MODE_BLUR);
 }
 
-void SPTweakContext::update_cursor (bool with_shift) {
+void TweakTool::update_cursor (bool with_shift) {
     guint num = 0;
     gchar *sel_message = NULL;
 
@@ -255,7 +259,7 @@ void SPTweakContext::update_cursor (bool with_shift) {
    g_free(sel_message);
 }
 
-bool SPTweakContext::set_style(const SPCSSAttr* css) {
+bool TweakTool::set_style(const SPCSSAttr* css) {
     if (this->mode == TWEAK_MODE_COLORPAINT) { // intercept color setting only in this mode
         // we cannot store properties with uris
         css = sp_css_attr_unset_uris(const_cast<SPCSSAttr *>(css));
@@ -267,8 +271,8 @@ bool SPTweakContext::set_style(const SPCSSAttr* css) {
     return false;
 }
 
-void SPTweakContext::setup() {
-    SPEventContext::setup();
+void TweakTool::setup() {
+    ToolBase::setup();
 
     {
         /* TODO: have a look at sp_dyna_draw_context_setup where the same is done.. generalize? at least make it an arcto! */
@@ -298,7 +302,7 @@ void SPTweakContext::setup() {
 
     this->style_set_connection = this->desktop->connectSetStyle( // catch style-setting signal in this tool
         //sigc::bind(sigc::ptr_fun(&sp_tweak_context_style_set), this)
-   		sigc::mem_fun(this, &SPTweakContext::set_style)
+   		sigc::mem_fun(this, &TweakTool::set_style)
     );
     
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -310,7 +314,7 @@ void SPTweakContext::setup() {
     }
 }
 
-void SPTweakContext::set(const Inkscape::Preferences::Entry& val) {
+void TweakTool::set(const Inkscape::Preferences::Entry& val) {
     Glib::ustring path = val.getEntryName();
 
     if (path == "width") {
@@ -336,7 +340,7 @@ void SPTweakContext::set(const Inkscape::Preferences::Entry& val) {
 }
 
 static void
-sp_tweak_extinput(SPTweakContext *tc, GdkEvent *event)
+sp_tweak_extinput(TweakTool *tc, GdkEvent *event)
 {
     if (gdk_event_get_axis (event, GDK_AXIS_PRESSURE, &tc->pressure)) {
         tc->pressure = CLAMP (tc->pressure, TC_MIN_PRESSURE, TC_MAX_PRESSURE);
@@ -346,14 +350,14 @@ sp_tweak_extinput(SPTweakContext *tc, GdkEvent *event)
 }
 
 static double
-get_dilate_radius (SPTweakContext *tc)
+get_dilate_radius (TweakTool *tc)
 {
     // 10 times the pen width:
     return 500 * tc->width/SP_EVENT_CONTEXT(tc)->desktop->current_zoom();
 }
 
 static double
-get_path_force (SPTweakContext *tc)
+get_path_force (TweakTool *tc)
 {
     double force = 8 * (tc->usepressure? tc->pressure : TC_DEFAULT_PRESSURE)
         /sqrt(SP_EVENT_CONTEXT(tc)->desktop->current_zoom());
@@ -364,7 +368,7 @@ get_path_force (SPTweakContext *tc)
 }
 
 static double
-get_move_force (SPTweakContext *tc)
+get_move_force (TweakTool *tc)
 {
     double force = (tc->usepressure? tc->pressure : TC_DEFAULT_PRESSURE);
     return force * tc->force;
@@ -1021,7 +1025,7 @@ sp_tweak_color_recursive (guint mode, SPItem *item, SPItem *item_at_point,
 
 
 static bool
-sp_tweak_dilate (SPTweakContext *tc, Geom::Point event_p, Geom::Point p, Geom::Point vector, bool reverse)
+sp_tweak_dilate (TweakTool *tc, Geom::Point event_p, Geom::Point p, Geom::Point vector, bool reverse)
 {
     Inkscape::Selection *selection = sp_desktop_selection(SP_EVENT_CONTEXT(tc)->desktop);
     SPDesktop *desktop = SP_EVENT_CONTEXT(tc)->desktop;
@@ -1111,7 +1115,7 @@ sp_tweak_dilate (SPTweakContext *tc, Geom::Point event_p, Geom::Point p, Geom::P
 }
 
 static void
-sp_tweak_update_area (SPTweakContext *tc)
+sp_tweak_update_area (TweakTool *tc)
 {
         double radius = get_dilate_radius(tc);
         Geom::Affine const sm (Geom::Scale(radius, radius) * Geom::Translate(SP_EVENT_CONTEXT(tc)->desktop->point()));
@@ -1120,7 +1124,7 @@ sp_tweak_update_area (SPTweakContext *tc)
 }
 
 static void
-sp_tweak_switch_mode (SPTweakContext *tc, gint mode, bool with_shift)
+sp_tweak_switch_mode (TweakTool *tc, gint mode, bool with_shift)
 {
     SP_EVENT_CONTEXT(tc)->desktop->setToolboxSelectOneValue ("tweak_tool_mode", mode);
     // need to set explicitly, because the prefs may not have changed by the previous
@@ -1129,7 +1133,7 @@ sp_tweak_switch_mode (SPTweakContext *tc, gint mode, bool with_shift)
 }
 
 static void
-sp_tweak_switch_mode_temporarily (SPTweakContext *tc, gint mode, bool with_shift)
+sp_tweak_switch_mode_temporarily (TweakTool *tc, gint mode, bool with_shift)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
    // Juggling about so that prefs have the old value but tc->mode and the button show new mode:
@@ -1142,7 +1146,7 @@ sp_tweak_switch_mode_temporarily (SPTweakContext *tc, gint mode, bool with_shift
    tc->update_cursor(with_shift);
 }
 
-bool SPTweakContext::root_handler(GdkEvent* event) {
+bool TweakTool::root_handler(GdkEvent* event) {
     gint ret = FALSE;
 
     switch (event->type) {
@@ -1498,12 +1502,15 @@ bool SPTweakContext::root_handler(GdkEvent* event) {
     }
 
     if (!ret) {
-    	ret = SPEventContext::root_handler(event);
+    	ret = ToolBase::root_handler(event);
     }
 
     return ret;
 }
 
+}
+}
+}
 
 /*
   Local Variables:

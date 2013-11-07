@@ -1473,7 +1473,7 @@ void ObjectVerb::perform( SPAction *action, void *data)
 
     g_return_if_fail(ensure_desktop_valid(action));
 
-    SPEventContext *ec = dt->event_context;
+    Inkscape::UI::Tools::ToolBase *ec = dt->event_context;
 
     if (sel->isEmpty())
         return;
@@ -1622,7 +1622,7 @@ void ContextVerb::perform(SPAction *action, void *data)
             tools_switch(dt, TOOLS_MEASURE);
             break;
         case SP_VERB_CONTEXT_DROPPER:
-            sp_toggle_dropper(dt); // Functionality defined in event-context.cpp
+            Inkscape::UI::Tools::sp_toggle_dropper(dt); // Functionality defined in event-context.cpp
             break;
         case SP_VERB_CONTEXT_CONNECTOR:
             tools_switch(dt,  TOOLS_CONNECTOR);
@@ -1767,7 +1767,7 @@ void ZoomVerb::perform(SPAction *action, void *data)
 {
     g_return_if_fail(ensure_desktop_valid(action));
     SPDesktop *dt = sp_action_get_desktop(action);
-    SPEventContext *ec = dt->event_context;
+    Inkscape::UI::Tools::ToolBase *ec = dt->event_context;
 
     SPDocument *doc = sp_desktop_document(dt);
 
@@ -1780,7 +1780,7 @@ void ZoomVerb::perform(SPAction *action, void *data)
     switch (reinterpret_cast<std::size_t>(data)) {
         case SP_VERB_ZOOM_IN:
         {
-            gint mul = 1 + gobble_key_events(
+            gint mul = 1 + Inkscape::UI::Tools::gobble_key_events(
                  GDK_KEY_KP_Add, 0); // with any mask
             // While drawing with the pen/pencil tool, zoom towards the end of the unfinished path
             if (tools_isactive(dt, TOOLS_FREEHAND_PENCIL) || tools_isactive(dt, TOOLS_FREEHAND_PEN)) {
@@ -1798,7 +1798,7 @@ void ZoomVerb::perform(SPAction *action, void *data)
         }
         case SP_VERB_ZOOM_OUT:
         {
-            gint mul = 1 + gobble_key_events(
+            gint mul = 1 + Inkscape::UI::Tools::gobble_key_events(
                  GDK_KEY_KP_Subtract, 0); // with any mask
             // While drawing with the pen/pencil tool, zoom away from the end of the unfinished path
             if (tools_isactive(dt, TOOLS_FREEHAND_PENCIL) || tools_isactive(dt, TOOLS_FREEHAND_PEN)) {

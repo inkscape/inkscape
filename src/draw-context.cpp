@@ -50,6 +50,10 @@
 
 using Inkscape::DocumentUndo;
 
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
 static void spdc_selection_changed(Inkscape::Selection *sel, SPDrawContext *dc);
 static void spdc_selection_modified(Inkscape::Selection *sel, guint flags, SPDrawContext *dc);
 
@@ -66,7 +70,7 @@ static void spdc_flush_white(SPDrawContext *dc, SPCurve *gc);
 static void spdc_reset_white(SPDrawContext *dc);
 static void spdc_free_colors(SPDrawContext *dc);
 
-SPDrawContext::SPDrawContext() : SPEventContext() {
+SPDrawContext::SPDrawContext() : ToolBase() {
 	this->selection = 0;
 	this->grab = 0;
 	this->anchor_statusbar = false;
@@ -113,7 +117,7 @@ SPDrawContext::~SPDrawContext() {
 }
 
 void SPDrawContext::setup() {
-    SPEventContext::setup();
+    ToolBase::setup();
 
     this->selection = sp_desktop_selection(desktop);
 
@@ -192,7 +196,7 @@ bool SPDrawContext::root_handler(GdkEvent* event) {
     }
 
     if (!ret) {
-    	ret = SPEventContext::root_handler(event);
+    	ret = ToolBase::root_handler(event);
     }
 
     return ret;
@@ -398,7 +402,7 @@ static void spdc_attach_selection(SPDrawContext *dc, Inkscape::Selection */*sel*
 }
 
 
-void spdc_endpoint_snap_rotation(SPEventContext const *const ec, Geom::Point &p, Geom::Point const &o,
+void spdc_endpoint_snap_rotation(ToolBase const *const ec, Geom::Point &p, Geom::Point const &o,
                                  guint state)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -427,7 +431,7 @@ void spdc_endpoint_snap_rotation(SPEventContext const *const ec, Geom::Point &p,
 }
 
 
-void spdc_endpoint_snap_free(SPEventContext const * const ec, Geom::Point& p, boost::optional<Geom::Point> &start_of_line, guint const /*state*/)
+void spdc_endpoint_snap_free(ToolBase const * const ec, Geom::Point& p, boost::optional<Geom::Point> &start_of_line, guint const /*state*/)
 {
     SPDesktop *dt = SP_EVENT_CONTEXT_DESKTOP(ec);
     SnapManager &m = dt->namedview->snap_manager;
@@ -702,7 +706,7 @@ static void spdc_free_colors(SPDrawContext *dc)
     }
 }
 
-void spdc_create_single_dot(SPEventContext *ec, Geom::Point const &pt, char const *tool, guint event_state) {
+void spdc_create_single_dot(ToolBase *ec, Geom::Point const &pt, char const *tool, guint event_state) {
     g_return_if_fail(!strcmp(tool, "/tools/freehand/pen") || !strcmp(tool, "/tools/freehand/pencil"));
     Glib::ustring tool_path = tool;
 
@@ -763,6 +767,10 @@ void spdc_create_single_dot(SPEventContext *ec, Geom::Point const &pt, char cons
 
     desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Creating single dot"));
     DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_NONE, _("Create single dot"));
+}
+
+}
+}
 }
 
 /*

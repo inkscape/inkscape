@@ -2,13 +2,17 @@
 #define SEEN_PENCIL_CONTEXT_H
 
 /** \file
- * SPPencilContext: a context for pencil tool events
+ * PencilTool: a context for pencil tool events
  */
 
 #include "draw-context.h"
 
-#define SP_PENCIL_CONTEXT(obj) (dynamic_cast<SPPencilContext*>((SPEventContext*)obj))
-#define SP_IS_PENCIL_CONTEXT(obj) (dynamic_cast<const SPPencilContext*>((const SPEventContext*)obj) != NULL)
+#define SP_PENCIL_CONTEXT(obj) (dynamic_cast<Inkscape::UI::Tools::PencilTool*>((ToolBase*)obj))
+#define SP_IS_PENCIL_CONTEXT(obj) (dynamic_cast<const Inkscape::UI::Tools::PencilTool*>((const ToolBase*)obj) != NULL)
+
+namespace Inkscape {
+namespace UI {
+namespace Tools {
 
 enum PencilState {
     SP_PENCIL_CONTEXT_IDLE,
@@ -18,12 +22,12 @@ enum PencilState {
 };
 
 /**
- * SPPencilContext: a context for pencil tool events
+ * PencilTool: a context for pencil tool events
  */
-class SPPencilContext : public SPDrawContext {
+class PencilTool : public SPDrawContext {
 public:
-	SPPencilContext();
-	virtual ~SPPencilContext();
+	PencilTool();
+	virtual ~PencilTool();
 
     Geom::Point p[16];
     gint npoints;
@@ -45,6 +49,10 @@ protected:
 	virtual void setup();
 	virtual bool root_handler(GdkEvent* event);
 };
+
+}
+}
+}
 
 #endif /* !SEEN_PENCIL_CONTEXT_H */
 

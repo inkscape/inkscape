@@ -76,21 +76,25 @@ using Inkscape::Display::AssembleARGB32;
 
 #include "tool-factory.h"
 
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
 namespace {
-	SPEventContext* createPaintbucketContext() {
-		return new SPFloodContext();
+	ToolBase* createPaintbucketContext() {
+		return new FloodTool();
 	}
 
 	bool paintbucketContextRegistered = ToolFactory::instance().registerObject("/tools/paintbucket", createPaintbucketContext);
 }
 
-const std::string& SPFloodContext::getPrefsPath() {
-	return SPFloodContext::prefsPath;
+const std::string& FloodTool::getPrefsPath() {
+	return FloodTool::prefsPath;
 }
 
-const std::string SPFloodContext::prefsPath = "/tools/paintbucket";
+const std::string FloodTool::prefsPath = "/tools/paintbucket";
 
-SPFloodContext::SPFloodContext() : SPEventContext() {
+FloodTool::FloodTool() : ToolBase() {
     this->cursor_shape = cursor_paintbucket_xpm;
     this->hot_x = 11;
     this->hot_y = 30;
@@ -103,7 +107,7 @@ SPFloodContext::SPFloodContext() : SPEventContext() {
     this->item = NULL;
 }
 
-SPFloodContext::~SPFloodContext() {
+FloodTool::~FloodTool() {
     this->sel_changed_connection.disconnect();
 
     delete this->shape_editor;
@@ -119,13 +123,13 @@ SPFloodContext::~SPFloodContext() {
  * Callback that processes the "changed" signal on the selection;
  * destroys old and creates new knotholder.
  */
-void SPFloodContext::selection_changed(Inkscape::Selection* selection) {
+void FloodTool::selection_changed(Inkscape::Selection* selection) {
     this->shape_editor->unset_item(SH_KNOTHOLDER);
     this->shape_editor->set_item(selection->singleItem(), SH_KNOTHOLDER);
 }
 
-void SPFloodContext::setup() {
-    SPEventContext::setup();
+void FloodTool::setup() {
+    ToolBase::setup();
 
     this->shape_editor = new ShapeEditor(this->desktop);
 
@@ -136,7 +140,7 @@ void SPFloodContext::setup() {
 
     this->sel_changed_connection.disconnect();
     this->sel_changed_connection = sp_desktop_selection(this->desktop)->connectChanged(
-    	sigc::mem_fun(this, &SPFloodContext::selection_changed)
+    	sigc::mem_fun(this, &FloodTool::selection_changed)
     );
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -739,7 +743,7 @@ static bool sort_fill_queue_horizontal(Geom::Point a, Geom::Point b) {
  * @param is_point_fill If false, use the Rubberband "touch selection" to get the initial points for the fill.
  * @param is_touch_fill If true, use only the initial contact point in the Rubberband "touch selection" as the fill target color.
  */
-static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *event, bool union_with_selection, bool is_point_fill, bool is_touch_fill) {
+static void sp_flood_do_flood_fill(ToolBase *event_context, GdkEvent *event, bool union_with_selection, bool is_point_fill, bool is_touch_fill) {
     SPDesktop *desktop = event_context->desktop;
     SPDocument *document = sp_desktop_document(desktop);
 
@@ -1084,7 +1088,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     DocumentUndo::done(document, SP_VERB_CONTEXT_PAINTBUCKET, _("Fill bounded area"));
 }
 
-bool SPFloodContext::item_handler(SPItem* item, GdkEvent* event) {
+bool FloodTool::item_handler(SPItem* item, GdkEvent* event) {
     gint ret = FALSE;
 
     switch (event->type) {
@@ -1107,16 +1111,16 @@ bool SPFloodContext::item_handler(SPItem* item, GdkEvent* event) {
         break;
     }
 
-//    if (((SPEventContextClass *) sp_flood_context_parent_class)->item_handler) {
-//        ret = ((SPEventContextClass *) sp_flood_context_parent_class)->item_handler(event_context, item, event);
+//    if (((ToolBaseClass *) sp_flood_context_parent_class)->item_handler) {
+//        ret = ((ToolBaseClass *) sp_flood_context_parent_class)->item_handler(event_context, item, event);
 //    }
     // CPPIFY: ret is overwritten...
-    ret = SPEventContext::item_handler(item, event);
+    ret = ToolBase::item_handler(item, event);
 
     return ret;
 }
 
-bool SPFloodContext::root_handler(GdkEvent* event) {
+bool FloodTool::root_handler(GdkEvent* event) {
     static bool dragging;
     
     gint ret = FALSE;
@@ -1216,13 +1220,13 @@ bool SPFloodContext::root_handler(GdkEvent* event) {
     }
 
     if (!ret) {
-    	ret = SPEventContext::root_handler(event);
+    	ret = ToolBase::root_handler(event);
     }
 
     return ret;
 }
 
-void SPFloodContext::finishItem() {
+void FloodTool::finishItem() {
     this->message_context->clear();
 
     if (this->item != NULL) {
@@ -1238,9 +1242,13 @@ void SPFloodContext::finishItem() {
     }
 }
 
-void SPFloodContext::set_channels(gint channels) {
+void FloodTool::set_channels(gint channels) {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setInt("/tools/paintbucket/channels", channels);
+}
+
+}
+}
 }
 
 /*

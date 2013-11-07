@@ -557,7 +557,7 @@ void MultiPathManipulator::updateHandles()
     invokeForAll(&PathManipulator::updateHandles);
 }
 
-bool MultiPathManipulator::event(SPEventContext *event_context, GdkEvent *event)
+bool MultiPathManipulator::event(Inkscape::UI::Tools::ToolBase *event_context, GdkEvent *event)
 {
     _tracker.event(event);
     guint key = 0;

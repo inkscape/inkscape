@@ -17,8 +17,8 @@
 
 #include "pen-context.h"
 
-#define SP_LPETOOL_CONTEXT(obj) (dynamic_cast<SPLPEToolContext*>((SPEventContext*)obj))
-#define SP_IS_LPETOOL_CONTEXT(obj) (dynamic_cast<const SPLPEToolContext*>((const SPEventContext*)obj) != NULL)
+#define SP_LPETOOL_CONTEXT(obj) (dynamic_cast<Inkscape::UI::Tools::LpeTool*>((Inkscape::UI::Tools::ToolBase*)obj))
+#define SP_IS_LPETOOL_CONTEXT(obj) (dynamic_cast<const Inkscape::UI::Tools::LpeTool*>((const Inkscape::UI::Tools::ToolBase*)obj) != NULL)
 
 /* This is the list of subtools from which the toolbar of the LPETool is built automatically */
 extern const int num_subtools;
@@ -41,10 +41,14 @@ class Selection;
 
 class ShapeEditor;
 
-class SPLPEToolContext : public SPPenContext {
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+class LpeTool : public PenTool {
 public:
-	SPLPEToolContext();
-	virtual ~SPLPEToolContext();
+	LpeTool();
+	virtual ~LpeTool();
 
     ShapeEditor* shape_editor;
     SPCanvasItem *canvas_bbox;
@@ -67,15 +71,19 @@ protected:
 };
 
 int lpetool_mode_to_index(Inkscape::LivePathEffect::EffectType const type);
-int lpetool_item_has_construction(SPLPEToolContext *lc, SPItem *item);
-bool lpetool_try_construction(SPLPEToolContext *lc, Inkscape::LivePathEffect::EffectType const type);
-void lpetool_context_switch_mode(SPLPEToolContext *lc, Inkscape::LivePathEffect::EffectType const type);
+int lpetool_item_has_construction(LpeTool *lc, SPItem *item);
+bool lpetool_try_construction(LpeTool *lc, Inkscape::LivePathEffect::EffectType const type);
+void lpetool_context_switch_mode(LpeTool *lc, Inkscape::LivePathEffect::EffectType const type);
 void lpetool_get_limiting_bbox_corners(SPDocument *document, Geom::Point &A, Geom::Point &B);
-void lpetool_context_reset_limiting_bbox(SPLPEToolContext *lc);
-void lpetool_create_measuring_items(SPLPEToolContext *lc, Inkscape::Selection *selection = NULL);
-void lpetool_delete_measuring_items(SPLPEToolContext *lc);
-void lpetool_update_measuring_items(SPLPEToolContext *lc);
-void lpetool_show_measuring_info(SPLPEToolContext *lc, bool show = true);
+void lpetool_context_reset_limiting_bbox(LpeTool *lc);
+void lpetool_create_measuring_items(LpeTool *lc, Inkscape::Selection *selection = NULL);
+void lpetool_delete_measuring_items(LpeTool *lc);
+void lpetool_update_measuring_items(LpeTool *lc);
+void lpetool_show_measuring_info(LpeTool *lc, bool show = true);
+
+}
+}
+}
 
 #endif // SP_LPETOOL_CONTEXT_H_SEEN
 

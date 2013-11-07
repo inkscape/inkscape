@@ -71,6 +71,7 @@ using Inkscape::DocumentUndo;
 using Inkscape::UI::ToolboxFactory;
 using Inkscape::UI::PrefPusher;
 using Inkscape::Util::unit_table;
+using Inkscape::UI::Tools::NodeTool;
 
 //####################################
 //# node editing callbacks
@@ -78,13 +79,13 @@ using Inkscape::Util::unit_table;
 
 /** Temporary hack: Returns the node tool in the active desktop.
  * Will go away during tool refactoring. */
-static InkNodeTool *get_node_tool()
+static NodeTool *get_node_tool()
 {
-    InkNodeTool *tool = 0;
+    NodeTool *tool = 0;
     if (SP_ACTIVE_DESKTOP ) {
-        SPEventContext *ec = SP_ACTIVE_DESKTOP->event_context;
+        Inkscape::UI::Tools::ToolBase *ec = SP_ACTIVE_DESKTOP->event_context;
         if (INK_IS_NODE_TOOL(ec)) {
-            tool = static_cast<InkNodeTool*>(ec);
+            tool = static_cast<NodeTool*>(ec);
         }
     }
     return tool;
@@ -92,7 +93,7 @@ static InkNodeTool *get_node_tool()
 
 static void sp_node_path_edit_add(void)
 {
-    InkNodeTool *nt = get_node_tool();
+    NodeTool *nt = get_node_tool();
     if (nt) {
         nt->_multipath->insertNodes();
     }
@@ -100,28 +101,28 @@ static void sp_node_path_edit_add(void)
 
 static void sp_node_path_edit_add_min_x(void)
 {
-    InkNodeTool *nt = get_node_tool();
+    NodeTool *nt = get_node_tool();
     if (nt) {
         nt->_multipath->insertNodesAtExtrema(Inkscape::UI::PointManipulator::EXTR_MIN_X);
     }
 }
 static void sp_node_path_edit_add_max_x(void)
 {
-    InkNodeTool *nt = get_node_tool();
+    NodeTool *nt = get_node_tool();
     if (nt) {
         nt->_multipath->insertNodesAtExtrema(Inkscape::UI::PointManipulator::EXTR_MAX_X);
     }
 }
 static void sp_node_path_edit_add_min_y(void)
 {
-    InkNodeTool *nt = get_node_tool();
+    NodeTool *nt = get_node_tool();
     if (nt) {
         nt->_multipath->insertNodesAtExtrema(Inkscape::UI::PointManipulator::EXTR_MIN_Y);
     }
 }
 static void sp_node_path_edit_add_max_y(void)
 {
-    InkNodeTool *nt = get_node_tool();
+    NodeTool *nt = get_node_tool();
     if (nt) {
         nt->_multipath->insertNodesAtExtrema(Inkscape::UI::PointManipulator::EXTR_MAX_Y);
     }
@@ -129,7 +130,7 @@ static void sp_node_path_edit_add_max_y(void)
 
 static void sp_node_path_edit_delete(void)
 {
-    InkNodeTool *nt = get_node_tool();
+    NodeTool *nt = get_node_tool();
     if (nt) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         nt->_multipath->deleteNodes(prefs->getBool("/tools/nodes/delete_preserves_shape", true));
@@ -138,7 +139,7 @@ static void sp_node_path_edit_delete(void)
 
 static void sp_node_path_edit_delete_segment(void)
 {
-    InkNodeTool *nt = get_node_tool();
+    NodeTool *nt = get_node_tool();
     if (nt) {
         nt->_multipath->deleteSegments();
     }
@@ -146,7 +147,7 @@ static void sp_node_path_edit_delete_segment(void)
 
 static void sp_node_path_edit_break(void)
 {
-    InkNodeTool *nt = get_node_tool();
+    NodeTool *nt = get_node_tool();
     if (nt) {
         nt->_multipath->breakNodes();
     }
@@ -154,7 +155,7 @@ static void sp_node_path_edit_break(void)
 
 static void sp_node_path_edit_join(void)
 {
-    InkNodeTool *nt = get_node_tool();
+    NodeTool *nt = get_node_tool();
     if (nt) {
         nt->_multipath->joinNodes();
     }
@@ -162,7 +163,7 @@ static void sp_node_path_edit_join(void)
 
 static void sp_node_path_edit_join_segment(void)
 {
-    InkNodeTool *nt = get_node_tool();
+    NodeTool *nt = get_node_tool();
     if (nt) {
         nt->_multipath->joinSegments();
     }
@@ -170,7 +171,7 @@ static void sp_node_path_edit_join_segment(void)
 
 static void sp_node_path_edit_toline(void)
 {
-    InkNodeTool *nt = get_node_tool();
+    NodeTool *nt = get_node_tool();
     if (nt) {
         nt->_multipath->setSegmentType(Inkscape::UI::SEGMENT_STRAIGHT);
     }
@@ -178,7 +179,7 @@ static void sp_node_path_edit_toline(void)
 
 static void sp_node_path_edit_tocurve(void)
 {
-    InkNodeTool *nt = get_node_tool();
+    NodeTool *nt = get_node_tool();
     if (nt) {
         nt->_multipath->setSegmentType(Inkscape::UI::SEGMENT_CUBIC_BEZIER);
     }
@@ -186,7 +187,7 @@ static void sp_node_path_edit_tocurve(void)
 
 static void sp_node_path_edit_cusp(void)
 {
-    InkNodeTool *nt = get_node_tool();
+    NodeTool *nt = get_node_tool();
     if (nt) {
         nt->_multipath->setNodeType(Inkscape::UI::NODE_CUSP);
     }
@@ -194,7 +195,7 @@ static void sp_node_path_edit_cusp(void)
 
 static void sp_node_path_edit_smooth(void)
 {
-    InkNodeTool *nt = get_node_tool();
+    NodeTool *nt = get_node_tool();
     if (nt) {
         nt->_multipath->setNodeType(Inkscape::UI::NODE_SMOOTH);
     }
@@ -202,7 +203,7 @@ static void sp_node_path_edit_smooth(void)
 
 static void sp_node_path_edit_symmetrical(void)
 {
-    InkNodeTool *nt = get_node_tool();
+    NodeTool *nt = get_node_tool();
     if (nt) {
         nt->_multipath->setNodeType(Inkscape::UI::NODE_SYMMETRIC);
     }
@@ -210,7 +211,7 @@ static void sp_node_path_edit_symmetrical(void)
 
 static void sp_node_path_edit_auto(void)
 {
-    InkNodeTool *nt = get_node_tool();
+    NodeTool *nt = get_node_tool();
     if (nt) {
         nt->_multipath->setNodeType(Inkscape::UI::NODE_AUTO);
     }
@@ -242,7 +243,7 @@ static void sp_node_toolbox_coord_changed(gpointer /*shape_editor*/, GObject *tb
     }
     Unit const *unit = tracker->getActiveUnit();
 
-    InkNodeTool *nt = get_node_tool();
+    NodeTool *nt = get_node_tool();
     if (!nt || nt->_selected_nodes->empty()) {
         // no path selected
         gtk_action_set_sensitive(xact, FALSE);
@@ -289,7 +290,7 @@ static void sp_node_path_value_changed(GtkAdjustment *adj, GObject *tbl, Geom::D
     // in turn, prevent listener from responding
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE));
 
-    InkNodeTool *nt = get_node_tool();
+    NodeTool *nt = get_node_tool();
     if (nt && !nt->_selected_nodes->empty()) {
         double val = Quantity::convert(gtk_adjustment_get_value(adj), unit, "px");
         double oldval = nt->_selected_nodes->pointwiseBounds()->midpoint()[d];

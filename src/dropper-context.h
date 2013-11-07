@@ -14,18 +14,22 @@
 
 #include "event-context.h"
 
-#define SP_DROPPER_CONTEXT(obj) (dynamic_cast<SPDropperContext*>((SPEventContext*)obj))
-#define SP_IS_DROPPER_CONTEXT(obj) (dynamic_cast<const SPDropperContext*>((const SPEventContext*)obj) != NULL)
+#define SP_DROPPER_CONTEXT(obj) (dynamic_cast<Inkscape::UI::Tools::DropperTool*>((Inkscape::UI::Tools::ToolBase*)obj))
+#define SP_IS_DROPPER_CONTEXT(obj) (dynamic_cast<const Inkscape::UI::Tools::DropperTool*>((const Inkscape::UI::Tools::ToolBase*)obj) != NULL)
 
 enum {
       SP_DROPPER_PICK_VISIBLE,
       SP_DROPPER_PICK_ACTUAL  
 };
 
-class SPDropperContext : public SPEventContext {
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+class DropperTool : public ToolBase {
 public:
-	SPDropperContext();
-	virtual ~SPDropperContext();
+	DropperTool();
+	virtual ~DropperTool();
 
 	static const std::string prefsPath;
 
@@ -50,6 +54,10 @@ private:
     SPCanvasItem* area;
     Geom::Point centre;
 };
+
+}
+}
+}
 
 #endif
 

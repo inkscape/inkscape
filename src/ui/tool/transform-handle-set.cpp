@@ -128,7 +128,7 @@ bool TransformHandle::grabbed(GdkEventMotion *)
     _setState(_state);
 
     // Collect the snap-candidates, one for each selected node. These will be stored in the _snap_points vector.
-    InkNodeTool *nt = INK_NODE_TOOL(_th._desktop->event_context);
+    Inkscape::UI::Tools::NodeTool *nt = INK_NODE_TOOL(_th._desktop->event_context);
     //ControlPointSelection *selection = nt->_selected_nodes.get();
     ControlPointSelection* selection = nt->_selected_nodes;
 
@@ -754,7 +754,7 @@ void TransformHandleSet::setBounds(Geom::Rect const &r, bool preserve_center)
     }
 }
 
-bool TransformHandleSet::event(SPEventContext *, GdkEvent*)
+bool TransformHandleSet::event(Inkscape::UI::Tools::ToolBase *, GdkEvent*)
 {
     return false;
 }

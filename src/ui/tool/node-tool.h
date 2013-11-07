@@ -30,13 +30,17 @@ namespace Inkscape {
 	}
 }
 
-#define INK_NODE_TOOL(obj) (dynamic_cast<InkNodeTool*>((SPEventContext*)obj))
-#define INK_IS_NODE_TOOL(obj) (dynamic_cast<const InkNodeTool*>((const SPEventContext*)obj))
+#define INK_NODE_TOOL(obj) (dynamic_cast<Inkscape::UI::Tools::NodeTool*>((Inkscape::UI::Tools::ToolBase*)obj))
+#define INK_IS_NODE_TOOL(obj) (dynamic_cast<const Inkscape::UI::Tools::NodeTool*>((const Inkscape::UI::Tools::ToolBase*)obj))
 
-class InkNodeTool : public SPEventContext {
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+class NodeTool : public ToolBase {
 public:
-	InkNodeTool();
-	virtual ~InkNodeTool();
+	NodeTool();
+	virtual ~NodeTool();
 
 	Inkscape::UI::ControlPointSelection* _selected_nodes;
     Inkscape::UI::MultiPathManipulator* _multipath;
@@ -82,6 +86,10 @@ private:
 	void update_tip(GdkEvent *event);
 	void handleControlUiStyleChange();
 };
+
+}
+}
+}
 
 #endif
 

@@ -542,7 +542,7 @@ void ColorNotebook::_picker_clicked(GtkWidget * /*widget*/, SPColorNotebook * /*
     // Set the dropper into a "one click" mode, so it reverts to the previous tool after a click
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setBool("/tools/dropper/onetimepick", true);
-    sp_toggle_dropper(SP_ACTIVE_DESKTOP);
+    Inkscape::UI::Tools::sp_toggle_dropper(SP_ACTIVE_DESKTOP);
 }
 
 void ColorNotebook::_rgbaEntryChangedHook(GtkEntry *entry, SPColorNotebook *colorbook)

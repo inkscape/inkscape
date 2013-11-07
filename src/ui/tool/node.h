@@ -106,7 +106,7 @@ protected:
 
     Handle(NodeSharedData const &data, Geom::Point const &initial_pos, Node *parent);
 
-    virtual bool _eventHandler(SPEventContext *event_context, GdkEvent *event);
+    virtual bool _eventHandler(Inkscape::UI::Tools::ToolBase *event_context, GdkEvent *event);
     virtual void dragged(Geom::Point &new_pos, GdkEventMotion *event);
     virtual bool grabbed(GdkEventMotion *event);
     virtual void ungrabbed(GdkEventButton *event);
@@ -217,7 +217,7 @@ public:
 
     // temporarily public
     /** Customized event handler to catch scroll events needed for selection grow/shrink. */
-    virtual bool _eventHandler(SPEventContext *event_context, GdkEvent *event);
+    virtual bool _eventHandler(Inkscape::UI::Tools::ToolBase *event_context, GdkEvent *event);
 
     Inkscape::SnapCandidatePoint snapCandidatePoint();
 

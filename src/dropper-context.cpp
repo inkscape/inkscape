@@ -54,21 +54,25 @@ static GdkCursor *cursor_dropper_stroke = NULL;
 
 #include "tool-factory.h"
 
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
 namespace {
-	SPEventContext* createDropperContext() {
-		return new SPDropperContext();
+	ToolBase* createDropperContext() {
+		return new DropperTool();
 	}
 
 	bool dropperContextRegistered = ToolFactory::instance().registerObject("/tools/dropper", createDropperContext);
 }
 
-const std::string& SPDropperContext::getPrefsPath() {
-	return SPDropperContext::prefsPath;
+const std::string& DropperTool::getPrefsPath() {
+	return DropperTool::prefsPath;
 }
 
-const std::string SPDropperContext::prefsPath = "/tools/dropper";
+const std::string DropperTool::prefsPath = "/tools/dropper";
 
-SPDropperContext::SPDropperContext() : SPEventContext() {
+DropperTool::DropperTool() : ToolBase() {
 	this->R = 0;
 	this->G = 0;
 	this->B = 0;
@@ -87,13 +91,13 @@ SPDropperContext::SPDropperContext() : SPEventContext() {
     cursor_dropper_stroke = sp_cursor_new_from_xpm(cursor_dropper_s_xpm , 7, 7);
 }
 
-SPDropperContext::~SPDropperContext() {
+DropperTool::~DropperTool() {
 }
 
-void SPDropperContext::setup() {
-    SPEventContext::setup();
+void DropperTool::setup() {
+    ToolBase::setup();
 
-    /* TODO: have a look at SPDynaDrawContext::setup where the same is done.. generalize? */
+    /* TODO: have a look at CalligraphicTool::setup where the same is done.. generalize? */
     Geom::PathVector path;
     Geom::Circle(0, 0, 1).getPath(path);
 
@@ -118,7 +122,7 @@ void SPDropperContext::setup() {
     }
 }
 
-void SPDropperContext::finish() {
+void DropperTool::finish() {
     this->enableGrDrag(false);
 	
     if (this->grabbed) {
@@ -153,7 +157,7 @@ void SPDropperContext::finish() {
 /**
  * Returns the current dropper context color.
  */
-guint32 SPDropperContext::get_color() {
+guint32 DropperTool::get_color() {
     Inkscape::Preferences   *prefs = Inkscape::Preferences::get();
 
     int pick = prefs->getInt("/tools/dropper/pick", SP_DROPPER_PICK_VISIBLE);
@@ -165,7 +169,7 @@ guint32 SPDropperContext::get_color() {
                                (pick == SP_DROPPER_PICK_ACTUAL && setalpha) ? this->alpha : 1.0);
 }
 
-bool SPDropperContext::root_handler(GdkEvent* event) {
+bool DropperTool::root_handler(GdkEvent* event) {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     int ret = FALSE;
@@ -387,10 +391,14 @@ bool SPDropperContext::root_handler(GdkEvent* event) {
     }
 
     if (!ret) {
-    	ret = SPEventContext::root_handler(event);
+    	ret = ToolBase::root_handler(event);
     }
 
     return ret;
+}
+
+}
+}
 }
 
 

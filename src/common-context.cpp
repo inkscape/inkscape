@@ -19,8 +19,12 @@
 #define DRAG_DEFAULT 1.0
 #define DRAG_MAX 1.0
 
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
 SPCommonContext::SPCommonContext() :
-    SPEventContext(),
+    ToolBase(),
     accumulated(NULL),
     segments(NULL),
     currentshape(NULL),
@@ -140,6 +144,10 @@ Geom::Point SPCommonContext::getViewPoint(Geom::Point n) const {
     double const max = MAX ( drect.dimensions()[Geom::X], drect.dimensions()[Geom::Y] );
 
     return Geom::Point(n[Geom::X] * max + drect.min()[Geom::X], n[Geom::Y] * max + drect.min()[Geom::Y]);
+}
+
+}
+}
 }
 
 /*

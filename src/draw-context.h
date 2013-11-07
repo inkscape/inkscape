@@ -22,8 +22,8 @@
 
 /* Freehand context */
 
-#define SP_DRAW_CONTEXT(obj) (dynamic_cast<SPDrawContext*>((SPEventContext*)obj))
-#define SP_IS_DRAW_CONTEXT(obj) (dynamic_cast<const SPDrawContext*>((const SPEventContext*)obj) != NULL)
+#define SP_DRAW_CONTEXT(obj) (dynamic_cast<Inkscape::UI::Tools::SPDrawContext*>((Inkscape::UI::Tools::ToolBase*)obj))
+#define SP_IS_DRAW_CONTEXT(obj) (dynamic_cast<const Inkscape::UI::Tools::SPDrawContext*>((const Inkscape::UI::Tools::ToolBase*)obj) != NULL)
 
 struct SPDrawAnchor;
 namespace Inkscape
@@ -31,7 +31,11 @@ namespace Inkscape
   class Selection;
 }
 
-class SPDrawContext : public SPEventContext {
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+class SPDrawContext : public ToolBase {
 public:
 	SPDrawContext();
 	virtual ~SPDrawContext();
@@ -107,9 +111,9 @@ void spdc_concat_colors_and_flush(SPDrawContext *dc, gboolean forceclosed);
  *  @param o origin point.
  *  @param state  keyboard state to check if ctrl or shift was pressed.
  */
-void spdc_endpoint_snap_rotation(SPEventContext const *const ec, Geom::Point &p, Geom::Point const &o, guint state);
+void spdc_endpoint_snap_rotation(ToolBase const *const ec, Geom::Point &p, Geom::Point const &o, guint state);
 
-void spdc_endpoint_snap_free(SPEventContext const *ec, Geom::Point &p, boost::optional<Geom::Point> &start_of_line, guint state);
+void spdc_endpoint_snap_free(ToolBase const *ec, Geom::Point &p, boost::optional<Geom::Point> &start_of_line, guint state);
 
 /**
  * If we have an item and a waiting LPE, apply the effect to the item
@@ -120,7 +124,11 @@ void spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item);
 /**
  * Create a single dot represented by a circle.
  */
-void spdc_create_single_dot(SPEventContext *ec, Geom::Point const &pt, char const *tool, guint event_state);
+void spdc_create_single_dot(ToolBase *ec, Geom::Point const &pt, char const *tool, guint event_state);
+
+}
+}
+}
 
 #endif // SEEN_SP_DRAW_CONTEXT_H
 

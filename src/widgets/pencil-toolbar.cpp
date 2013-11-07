@@ -103,7 +103,7 @@ static void freehand_mode_changed(EgeSelectOneAction* act, GObject* tbl)
     // in pen tool we have more options than in pencil tool; if one of them was chosen, we do any
     // preparatory work here
     if (SP_IS_PEN_CONTEXT(desktop->event_context)) {
-        SPPenContext *pc = SP_PEN_CONTEXT(desktop->event_context);
+        Inkscape::UI::Tools::PenTool *pc = SP_PEN_CONTEXT(desktop->event_context);
         sp_pen_context_set_polyline_mode(pc);
     }
 }

@@ -48,24 +48,27 @@ using Inkscape::ControlManager;
 using Inkscape::CTLINE_SECONDARY;
 using Inkscape::Util::unit_table;
 
-std::vector<Inkscape::Display::TemporaryItem*> measure_tmp_items;
-
-
 #include "tool-factory.h"
 
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+std::vector<Inkscape::Display::TemporaryItem*> measure_tmp_items;
+
 namespace {
-	SPEventContext* createMeasureContext() {
-		return new SPMeasureContext();
+	ToolBase* createMeasureContext() {
+		return new MeasureTool();
 	}
 
 	bool measureContextRegistered = ToolFactory::instance().registerObject("/tools/measure", createMeasureContext);
 }
 
-const std::string& SPMeasureContext::getPrefsPath() {
-	return SPMeasureContext::prefsPath;
+const std::string& MeasureTool::getPrefsPath() {
+	return MeasureTool::prefsPath;
 }
 
-const std::string SPMeasureContext::prefsPath = "/tools/measure";
+const std::string MeasureTool::prefsPath = "/tools/measure";
 
 namespace
 {
@@ -233,7 +236,7 @@ void createAngleDisplayCurve(SPDesktop *desktop, Geom::Point const &center, Geom
 } // namespace
 
 
-SPMeasureContext::SPMeasureContext() : SPEventContext() {
+MeasureTool::MeasureTool() : ToolBase() {
 	this->grabbed = 0;
 
     this->cursor_shape = cursor_measure_xpm;
@@ -241,10 +244,10 @@ SPMeasureContext::SPMeasureContext() : SPEventContext() {
     this->hot_y = 4;
 }
 
-SPMeasureContext::~SPMeasureContext() {
+MeasureTool::~MeasureTool() {
 }
 
-void SPMeasureContext::finish() {
+void MeasureTool::finish() {
     this->enableGrDrag(false);
 
     if (this->grabbed) {
@@ -253,22 +256,22 @@ void SPMeasureContext::finish() {
     }
 }
 
-//void SPMeasureContext::setup() {
-//	SPEventContext* ec = this;
+//void MeasureTool::setup() {
+//	ToolBase* ec = this;
 //
 ////    if (SP_EVENT_CONTEXT_CLASS(sp_measure_context_parent_class)->setup) {
 ////        SP_EVENT_CONTEXT_CLASS(sp_measure_context_parent_class)->setup(ec);
 ////    }
-//	SPEventContext::setup();
+//	ToolBase::setup();
 //}
 
-//gint SPMeasureContext::item_handler(SPItem* item, GdkEvent* event) {
+//gint MeasureTool::item_handler(SPItem* item, GdkEvent* event) {
 //    gint ret = FALSE;
 //
 ////    if (SP_EVENT_CONTEXT_CLASS(sp_measure_context_parent_class)->item_handler) {
 ////        ret = SP_EVENT_CONTEXT_CLASS(sp_measure_context_parent_class)->item_handler(event_context, item, event);
 ////    }
-//    ret = SPEventContext::item_handler(item, event);
+//    ret = ToolBase::item_handler(item, event);
 //
 //    return ret;
 //}
@@ -308,7 +311,7 @@ static void calculate_intersections(SPDesktop * /*desktop*/, SPItem* item, Geom:
     }
 }
 
-bool SPMeasureContext::root_handler(GdkEvent* event) {
+bool MeasureTool::root_handler(GdkEvent* event) {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
 
@@ -752,10 +755,14 @@ bool SPMeasureContext::root_handler(GdkEvent* event) {
     }
 
     if (!ret) {
-    	ret = SPEventContext::root_handler(event);
+    	ret = ToolBase::root_handler(event);
     }
 
     return ret;
+}
+
+}
+}
 }
 
 /*

@@ -51,27 +51,30 @@
 
 using Inkscape::DocumentUndo;
 
-static void sp_gradient_drag(SPGradientContext &rc, Geom::Point const pt, guint state, guint32 etime);
-
-
 #include "tool-factory.h"
 
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+static void sp_gradient_drag(GradientTool &rc, Geom::Point const pt, guint state, guint32 etime);
+
 namespace {
-	SPEventContext* createGradientContext() {
-		return new SPGradientContext();
+	ToolBase* createGradientContext() {
+		return new GradientTool();
 	}
 
 	bool gradientContextRegistered = ToolFactory::instance().registerObject("/tools/gradient", createGradientContext);
 }
 
-const std::string& SPGradientContext::getPrefsPath() {
-	return SPGradientContext::prefsPath;
+const std::string& GradientTool::getPrefsPath() {
+	return GradientTool::prefsPath;
 }
 
-const std::string SPGradientContext::prefsPath = "/tools/gradient";
+const std::string GradientTool::prefsPath = "/tools/gradient";
 
 
-SPGradientContext::SPGradientContext() : SPEventContext() {
+GradientTool::GradientTool() : ToolBase() {
 	this->node_added = false;
 	this->subselcon = 0;
 	this->selcon = 0;
@@ -87,7 +90,7 @@ SPGradientContext::SPGradientContext() : SPEventContext() {
     this->item_to_select = NULL;
 }
 
-SPGradientContext::~SPGradientContext() {
+GradientTool::~GradientTool() {
     this->enableGrDrag(false);
 
     this->selcon->disconnect();
@@ -109,8 +112,8 @@ const gchar *gr_handle_descr [] = {
     N_("Radial gradient <b>mid stop</b>")
 };
 
-void SPGradientContext::selection_changed(Inkscape::Selection*) {
-    SPGradientContext *rc = (SPGradientContext *) this;
+void GradientTool::selection_changed(Inkscape::Selection*) {
+    GradientTool *rc = (GradientTool *) this;
 
     GrDrag *drag = rc->_grdrag;
     Inkscape::Selection *selection = sp_desktop_selection(SP_EVENT_CONTEXT(rc)->desktop);
@@ -158,8 +161,8 @@ void SPGradientContext::selection_changed(Inkscape::Selection*) {
     }
 }
 
-void SPGradientContext::setup() {
-    SPEventContext::setup();
+void GradientTool::setup() {
+    ToolBase::setup();
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     
@@ -171,12 +174,12 @@ void SPGradientContext::setup() {
     Inkscape::Selection *selection = sp_desktop_selection(this->desktop);
 
     this->selcon = new sigc::connection(selection->connectChanged(
-    	sigc::mem_fun(this, &SPGradientContext::selection_changed)
+    	sigc::mem_fun(this, &GradientTool::selection_changed)
     ));
 
     this->subselcon = new sigc::connection(this->desktop->connectToolSubselectionChanged(
     	sigc::hide(sigc::bind(
-    		sigc::mem_fun(this, &SPGradientContext::selection_changed),
+    		sigc::mem_fun(this, &GradientTool::selection_changed),
     		(Inkscape::Selection*)NULL
     	))
     ));
@@ -185,7 +188,7 @@ void SPGradientContext::setup() {
 }
 
 void
-sp_gradient_context_select_next (SPEventContext *event_context)
+sp_gradient_context_select_next (ToolBase *event_context)
 {
     GrDrag *drag = event_context->_grdrag;
     g_assert (drag);
@@ -196,7 +199,7 @@ sp_gradient_context_select_next (SPEventContext *event_context)
 }
 
 void
-sp_gradient_context_select_prev (SPEventContext *event_context)
+sp_gradient_context_select_prev (ToolBase *event_context)
 {
     GrDrag *drag = event_context->_grdrag;
     g_assert (drag);
@@ -207,7 +210,7 @@ sp_gradient_context_select_prev (SPEventContext *event_context)
 }
 
 static bool
-sp_gradient_context_is_over_line (SPGradientContext *rc, SPItem *item, Geom::Point event_p)
+sp_gradient_context_is_over_line (GradientTool *rc, SPItem *item, Geom::Point event_p)
 {
     SPDesktop *desktop = SP_EVENT_CONTEXT (rc)->desktop;
 
@@ -311,7 +314,7 @@ sp_gradient_context_get_stop_intervals (GrDrag *drag, GSList **these_stops, GSLi
 }
 
 void
-sp_gradient_context_add_stops_between_selected_stops (SPGradientContext *rc)
+sp_gradient_context_add_stops_between_selected_stops (GradientTool *rc)
 {
     SPDocument *doc = NULL;
     GrDrag *drag = rc->_grdrag;
@@ -383,7 +386,7 @@ sp_gradient_context_add_stops_between_selected_stops (SPGradientContext *rc)
 static double sqr(double x) {return x*x;}
 
 static void
-sp_gradient_simplify(SPGradientContext *rc, double tolerance)
+sp_gradient_simplify(GradientTool *rc, double tolerance)
 {
     SPDocument *doc = NULL;
     GrDrag *drag = rc->_grdrag;
@@ -449,11 +452,11 @@ sp_gradient_simplify(SPGradientContext *rc, double tolerance)
 
 
 static void
-sp_gradient_context_add_stop_near_point (SPGradientContext *rc, SPItem *item,  Geom::Point mouse_p, guint32 /*etime*/)
+sp_gradient_context_add_stop_near_point (GradientTool *rc, SPItem *item,  Geom::Point mouse_p, guint32 /*etime*/)
 {
     // item is the selected item. mouse_p the location in doc coordinates of where to add the stop
 
-    SPEventContext *ec = SP_EVENT_CONTEXT(rc);
+    ToolBase *ec = SP_EVENT_CONTEXT(rc);
     SPDesktop *desktop = SP_EVENT_CONTEXT (rc)->desktop;
 
     double tolerance = (double) ec->tolerance;
@@ -468,7 +471,7 @@ sp_gradient_context_add_stop_near_point (SPGradientContext *rc, SPItem *item,  G
     ec->get_drag()->selectByStop(newstop);
 }
 
-bool SPGradientContext::root_handler(GdkEvent* event) {
+bool GradientTool::root_handler(GdkEvent* event) {
     static bool dragging;
 
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
@@ -879,18 +882,18 @@ bool SPGradientContext::root_handler(GdkEvent* event) {
     }
 
     if (!ret) {
-    	ret = SPEventContext::root_handler(event);
+    	ret = ToolBase::root_handler(event);
     }
 
     return ret;
 }
 
-static void sp_gradient_drag(SPGradientContext &rc, Geom::Point const pt, guint /*state*/, guint32 etime)
+static void sp_gradient_drag(GradientTool &rc, Geom::Point const pt, guint /*state*/, guint32 etime)
 {
     SPDesktop *desktop = SP_EVENT_CONTEXT(&rc)->desktop;
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     SPDocument *document = sp_desktop_document(desktop);
-    SPEventContext *ec = SP_EVENT_CONTEXT(&rc);
+    ToolBase *ec = SP_EVENT_CONTEXT(&rc);
 
     if (!selection->isEmpty()) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -955,6 +958,10 @@ static void sp_gradient_drag(SPGradientContext &rc, Geom::Point const pt, guint 
     } else {
         sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>objects</b> on which to create gradient."));
     }
+}
+
+}
+}
 }
 
 

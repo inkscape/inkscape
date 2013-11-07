@@ -35,7 +35,7 @@ public:
     void setSize(double sz) { _setSize(sz); }
     void setTimeValue(double t) { _t = t; }
     void setIterator(NodeList::iterator i) { first = i; }
-    virtual bool _eventHandler(SPEventContext *event_context, GdkEvent *event);
+    virtual bool _eventHandler(Inkscape::UI::Tools::ToolBase *event_context, GdkEvent *event);
 
 protected:
 

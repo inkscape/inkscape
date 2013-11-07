@@ -76,13 +76,13 @@ using Inkscape::UI::PrefPusher;
 
 static void sp_connector_path_set_avoid(void)
 {
-    cc_selection_set_avoid(true);
+    Inkscape::UI::Tools::cc_selection_set_avoid(true);
 }
 
 
 static void sp_connector_path_set_ignore(void)
 {
-    cc_selection_set_avoid(false);
+    Inkscape::UI::Tools::cc_selection_set_avoid(false);
 }
 
 static void sp_connector_orthogonal_toggled( GtkToggleAction* act, GObject *tbl )
@@ -114,7 +114,7 @@ static void sp_connector_orthogonal_toggled( GtkToggleAction* act, GObject *tbl 
     while (l) {
         SPItem *item = SP_ITEM(l->data);
 
-        if (cc_item_is_connector(item)) {
+        if (Inkscape::UI::Tools::cc_item_is_connector(item)) {
             item->setAttribute( "inkscape:connector-type",
                     value, NULL);
             item->avoidRef->handleSettingChange();
@@ -163,7 +163,7 @@ static void connector_curvature_changed(GtkAdjustment *adj, GObject* tbl)
     while (l) {
         SPItem *item = SP_ITEM(l->data);
 
-        if (cc_item_is_connector(item)) {
+        if (Inkscape::UI::Tools::cc_item_is_connector(item)) {
             item->setAttribute( "inkscape:connector-curvature",
                     value, NULL);
             item->avoidRef->handleSettingChange();

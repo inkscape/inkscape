@@ -16,8 +16,8 @@
 #include <gtk/gtk.h>
 #include "event-context.h"
 
-#define SP_FLOOD_CONTEXT(obj) (dynamic_cast<SPFloodContext*>((SPEventContext*)obj))
-#define SP_IS_FLOOD_CONTEXT(obj) (dynamic_cast<const SPFloodContext*>((const SPEventContext*)obj) != NULL)
+#define SP_FLOOD_CONTEXT(obj) (dynamic_cast<Inkscape::UI::Tools::FloodTool*>((Inkscape::UI::Tools::ToolBase*)obj))
+#define SP_IS_FLOOD_CONTEXT(obj) (dynamic_cast<const Inkscape::UI::Tools::FloodTool*>((const Inkscape::UI::Tools::ToolBase*)obj) != NULL)
 
 
 #define FLOOD_COLOR_CHANNEL_R 1
@@ -25,10 +25,14 @@
 #define FLOOD_COLOR_CHANNEL_B 4
 #define FLOOD_COLOR_CHANNEL_A 8
 
-class SPFloodContext : public SPEventContext {
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+class FloodTool : public ToolBase {
 public:
-	SPFloodContext();
-	virtual ~SPFloodContext();
+	FloodTool();
+	virtual ~FloodTool();
 
 	SPItem *item;
 
@@ -62,5 +66,9 @@ enum PaintBucketChannels {
     FLOOD_CHANNELS_L,
     FLOOD_CHANNELS_ALPHA
 };
+
+}
+}
+}
 
 #endif

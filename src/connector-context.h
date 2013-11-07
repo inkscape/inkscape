@@ -20,8 +20,8 @@
 #include "libavoid/connector.h"
 #include <glibmm/i18n.h>
 
-#define SP_CONNECTOR_CONTEXT(obj) (dynamic_cast<SPConnectorContext*>((SPEventContext*)obj))
-//#define SP_IS_CONNECTOR_CONTEXT(obj) (dynamic_cast<const SPConnectorContext*>((const SPEventContext*)obj) != NULL)
+#define SP_CONNECTOR_CONTEXT(obj) (dynamic_cast<Inkscape::UI::Tools::ConnectorTool*>((Inkscape::UI::Tools::ToolBase*)obj))
+//#define SP_IS_CONNECTOR_CONTEXT(obj) (dynamic_cast<const ConnectorTool*>((const ToolBase*)obj) != NULL)
 
 struct SPKnot;
 class SPCurve;
@@ -42,10 +42,14 @@ enum {
 
 typedef std::map<SPKnot *, int>  SPKnotList;
 
-class SPConnectorContext : public SPEventContext {
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+class ConnectorTool : public ToolBase {
 public:
-	SPConnectorContext();
-	virtual ~SPConnectorContext();
+	ConnectorTool();
+	virtual ~ConnectorTool();
 
     Inkscape::Selection *selection;
     Geom::Point p[5];
@@ -109,10 +113,13 @@ private:
 };
 
 void cc_selection_set_avoid(bool const set_ignore);
-void cc_create_connection_point(SPConnectorContext* cc);
-void cc_remove_connection_point(SPConnectorContext* cc);
+void cc_create_connection_point(ConnectorTool* cc);
+void cc_remove_connection_point(ConnectorTool* cc);
 bool cc_item_is_connector(SPItem *item);
 
+}
+}
+}
 
 #endif /* !SEEN_CONNECTOR_CONTEXT_H */
 

@@ -81,19 +81,23 @@ using namespace std;
 
 #include "tool-factory.h"
 
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
 namespace {
-	SPEventContext* createSprayContext() {
-		return new SPSprayContext();
+	ToolBase* createSprayContext() {
+		return new SprayTool();
 	}
 
 	bool sprayContextRegistered = ToolFactory::instance().registerObject("/tools/spray", createSprayContext);
 }
 
-const std::string& SPSprayContext::getPrefsPath() {
-	return SPSprayContext::prefsPath;
+const std::string& SprayTool::getPrefsPath() {
+	return SprayTool::prefsPath;
 }
 
-const std::string SPSprayContext::prefsPath = "/tools/spray";
+const std::string SprayTool::prefsPath = "/tools/spray";
 
 /**
  * This function returns pseudo-random numbers from a normal distribution
@@ -130,7 +134,7 @@ static void sp_spray_scale_rel(Geom::Point c, SPDesktop */*desktop*/, SPItem *it
     item->doWriteTransform(item->getRepr(), item->transform);
 }
 
-SPSprayContext::SPSprayContext() : SPEventContext() {
+SprayTool::SprayTool() : ToolBase() {
 	this->usetilt = 0;
 	this->dilate_area = 0;
 	this->usetext = false;
@@ -161,7 +165,7 @@ SPSprayContext::SPSprayContext() : SPEventContext() {
     this->has_dilated = false;
 }
 
-SPSprayContext::~SPSprayContext() {
+SprayTool::~SprayTool() {
     this->enableGrDrag(false);
     this->style_set_connection.disconnect();
 
@@ -179,7 +183,7 @@ static bool is_transform_modes(gint mode)
             mode == SPRAY_OPTION);
 }
 
-void SPSprayContext::update_cursor(bool /*with_shift*/) {
+void SprayTool::update_cursor(bool /*with_shift*/) {
     guint num = 0;
     gchar *sel_message = NULL;
 
@@ -208,8 +212,8 @@ void SPSprayContext::update_cursor(bool /*with_shift*/) {
 	g_free(sel_message);
 }
 
-void SPSprayContext::setup() {
-    SPEventContext::setup();
+void SprayTool::setup() {
+    ToolBase::setup();
 
     {
         /* TODO: have a look at sp_dyna_draw_context_setup where the same is done.. generalize? at least make it an arcto! */
@@ -250,7 +254,7 @@ void SPSprayContext::setup() {
     }
 }
 
-void SPSprayContext::set(const Inkscape::Preferences::Entry& val) {
+void SprayTool::set(const Inkscape::Preferences::Entry& val) {
     Glib::ustring path = val.getEntryName();
 
     if (path == "mode") {
@@ -282,7 +286,7 @@ void SPSprayContext::set(const Inkscape::Preferences::Entry& val) {
     } 
 }
 
-static void sp_spray_extinput(SPSprayContext *tc, GdkEvent *event)
+static void sp_spray_extinput(SprayTool *tc, GdkEvent *event)
 {
     if (gdk_event_get_axis(event, GDK_AXIS_PRESSURE, &tc->pressure)) {
         tc->pressure = CLAMP(tc->pressure, TC_MIN_PRESSURE, TC_MAX_PRESSURE);
@@ -291,12 +295,12 @@ static void sp_spray_extinput(SPSprayContext *tc, GdkEvent *event)
     }
 }
 
-static double get_dilate_radius(SPSprayContext *tc)
+static double get_dilate_radius(SprayTool *tc)
 {
     return 250 * tc->width/SP_EVENT_CONTEXT(tc)->desktop->current_zoom();
 }
 
-static double get_path_force(SPSprayContext *tc)
+static double get_path_force(SprayTool *tc)
 {
     double force = 8 * (tc->usepressure? tc->pressure : TC_DEFAULT_PRESSURE)
         /sqrt(SP_EVENT_CONTEXT(tc)->desktop->current_zoom());
@@ -306,28 +310,28 @@ static double get_path_force(SPSprayContext *tc)
     return force * tc->force;
 }
 
-static double get_path_mean(SPSprayContext *tc)
+static double get_path_mean(SprayTool *tc)
 {
     return tc->mean;
 }
 
-static double get_path_standard_deviation(SPSprayContext *tc)
+static double get_path_standard_deviation(SprayTool *tc)
 {
     return tc->standard_deviation;
 }
 
-static double get_move_force(SPSprayContext *tc)
+static double get_move_force(SprayTool *tc)
 {
     double force = (tc->usepressure? tc->pressure : TC_DEFAULT_PRESSURE);
     return force * tc->force;
 }
 
-static double get_move_mean(SPSprayContext *tc)
+static double get_move_mean(SprayTool *tc)
 {
     return tc->mean;
 }
 
-static double get_move_standard_deviation(SPSprayContext *tc)
+static double get_move_standard_deviation(SprayTool *tc)
 {
     return tc->standard_deviation;
 }
@@ -523,7 +527,7 @@ static bool sp_spray_recursive(SPDesktop *desktop,
     return did;
 }
 
-static bool sp_spray_dilate(SPSprayContext *tc, Geom::Point /*event_p*/, Geom::Point p, Geom::Point vector, bool reverse)
+static bool sp_spray_dilate(SprayTool *tc, Geom::Point /*event_p*/, Geom::Point p, Geom::Point vector, bool reverse)
 {
     Inkscape::Selection *selection = sp_desktop_selection(SP_EVENT_CONTEXT(tc)->desktop);
     SPDesktop *desktop = SP_EVENT_CONTEXT(tc)->desktop;
@@ -568,7 +572,7 @@ static bool sp_spray_dilate(SPSprayContext *tc, Geom::Point /*event_p*/, Geom::P
     return did;
 }
 
-static void sp_spray_update_area(SPSprayContext *tc)
+static void sp_spray_update_area(SprayTool *tc)
 {
     double radius = get_dilate_radius(tc);
     Geom::Affine const sm ( Geom::Scale(radius/(1-tc->ratio), radius/(1+tc->ratio)) );
@@ -576,7 +580,7 @@ static void sp_spray_update_area(SPSprayContext *tc)
     sp_canvas_item_show(tc->dilate_area);
 }
 
-static void sp_spray_switch_mode(SPSprayContext *tc, gint mode, bool with_shift)
+static void sp_spray_switch_mode(SprayTool *tc, gint mode, bool with_shift)
 {
     // select the button mode
     SP_EVENT_CONTEXT(tc)->desktop->setToolboxSelectOneValue("spray_tool_mode", mode); 
@@ -585,7 +589,7 @@ static void sp_spray_switch_mode(SPSprayContext *tc, gint mode, bool with_shift)
     tc->update_cursor(with_shift);
 }
 
-bool SPSprayContext::root_handler(GdkEvent* event) {
+bool SprayTool::root_handler(GdkEvent* event) {
     gint ret = FALSE;
 
     switch (event->type) {
@@ -863,10 +867,14 @@ bool SPSprayContext::root_handler(GdkEvent* event) {
 //        if ((SP_EVENT_CONTEXT_CLASS(sp_spray_context_parent_class))->root_handler) {
 //            ret = (SP_EVENT_CONTEXT_CLASS(sp_spray_context_parent_class))->root_handler(event_context, event);
 //        }
-    	ret = SPEventContext::root_handler(event);
+    	ret = ToolBase::root_handler(event);
     }
 
     return ret;
+}
+
+}
+}
 }
 
 /*

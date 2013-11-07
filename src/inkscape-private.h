@@ -43,7 +43,7 @@ void inkscape_trackalt(guint);
 void inkscape_selection_modified (Inkscape::Selection *selection, guint flags);
 void inkscape_selection_changed (Inkscape::Selection * selection);
 void inkscape_selection_set (Inkscape::Selection * selection);
-void inkscape_eventcontext_set (SPEventContext * eventcontext);
+void inkscape_eventcontext_set (Inkscape::UI::Tools::ToolBase * eventcontext);
 void inkscape_add_desktop (SPDesktop * desktop);
 void inkscape_remove_desktop (SPDesktop * desktop);
 void inkscape_activate_desktop (SPDesktop * desktop);

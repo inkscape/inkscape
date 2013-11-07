@@ -29,10 +29,14 @@
 #define ERC_MAX_TILT          1.0
 #define ERC_DEFAULT_TILT      0.0
 
-class SPEraserContext : public SPCommonContext {
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+class EraserTool : public SPCommonContext {
 public:
-	SPEraserContext();
-	virtual ~SPEraserContext();
+	EraserTool();
+	virtual ~EraserTool();
 
 	static const std::string prefsPath;
 
@@ -53,6 +57,10 @@ private:
 	void fit_and_split(bool release);
 	void draw_temporary_box();
 };
+
+}
+}
+}
 
 #endif // SP_ERASER_CONTEXT_H_SEEN
 

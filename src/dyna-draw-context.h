@@ -29,10 +29,14 @@
 #define DDC_MAX_TILT          1.0
 #define DDC_DEFAULT_TILT      0.0
 
-class SPDynaDrawContext : public SPCommonContext {
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+class CalligraphicTool : public SPCommonContext {
 public:
-	SPDynaDrawContext();
-	virtual ~SPDynaDrawContext();
+	CalligraphicTool();
+	virtual ~CalligraphicTool();
 
 	static const std::string prefsPath;
 
@@ -71,6 +75,10 @@ private:
 	void extinput(GdkEvent *event);
 	void reset(Geom::Point p);
 };
+
+}
+}
+}
 
 #endif // SP_DYNA_DRAW_CONTEXT_H_SEEN
 

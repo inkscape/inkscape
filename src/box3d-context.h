@@ -23,13 +23,17 @@
 
 #include "box3d.h"
 
-#define SP_BOX3D_CONTEXT(obj) (dynamic_cast<Box3DContext*>((SPEventContext*)obj))
-#define SP_IS_BOX3D_CONTEXT(obj) (dynamic_cast<const Box3DContext*>((const SPEventContext*)obj) != NULL)
+#define SP_BOX3D_CONTEXT(obj) (dynamic_cast<Inkscape::UI::Tools::Box3dTool*>((Inkscape::UI::Tools::ToolBase*)obj))
+#define SP_IS_BOX3D_CONTEXT(obj) (dynamic_cast<const Inkscape::UI::Tools::Box3dTool*>((const Inkscape::UI::Tools::ToolBase*)obj) != NULL)
 
-class Box3DContext : public SPEventContext {
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+class Box3dTool : public ToolBase {
 public:
-	Box3DContext();
-	virtual ~Box3DContext();
+	Box3dTool();
+	virtual ~Box3dTool();
 
 	Box3D::VPDrag * _vpdrag;
 
@@ -72,6 +76,10 @@ private:
 	void drag(guint state);
 	void finishItem();
 };
+
+}
+}
+}
 
 #endif /* __SP_BOX3D_CONTEXT_H__ */
 

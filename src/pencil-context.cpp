@@ -44,43 +44,46 @@
 #include "display/sp-canvas.h"
 #include "display/curve.h"
 #include "livarot/Path.h"
+#include "tool-factory.h"
 
-static gint pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &bevent);
-static gint pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mevent);
-static gint pencil_handle_button_release(SPPencilContext *const pc, GdkEventButton const &revent);
-static gint pencil_handle_key_press(SPPencilContext *const pc, guint const keyval, guint const state);
-static gint pencil_handle_key_release(SPPencilContext *const pc, guint const keyval, guint const state);
+namespace Inkscape {
+namespace UI {
+namespace Tools {
 
-static void spdc_set_startpoint(SPPencilContext *pc, Geom::Point const &p);
-static void spdc_set_endpoint(SPPencilContext *pc, Geom::Point const &p);
-static void spdc_finish_endpoint(SPPencilContext *pc);
-static void spdc_add_freehand_point(SPPencilContext *pc, Geom::Point const &p, guint state);
-static void fit_and_split(SPPencilContext *pc);
-static void interpolate(SPPencilContext *pc);
-static void sketch_interpolate(SPPencilContext *pc);
+static gint pencil_handle_button_press(PencilTool *const pc, GdkEventButton const &bevent);
+static gint pencil_handle_motion_notify(PencilTool *const pc, GdkEventMotion const &mevent);
+static gint pencil_handle_button_release(PencilTool *const pc, GdkEventButton const &revent);
+static gint pencil_handle_key_press(PencilTool *const pc, guint const keyval, guint const state);
+static gint pencil_handle_key_release(PencilTool *const pc, guint const keyval, guint const state);
+
+static void spdc_set_startpoint(PencilTool *pc, Geom::Point const &p);
+static void spdc_set_endpoint(PencilTool *pc, Geom::Point const &p);
+static void spdc_finish_endpoint(PencilTool *pc);
+static void spdc_add_freehand_point(PencilTool *pc, Geom::Point const &p, guint state);
+static void fit_and_split(PencilTool *pc);
+static void interpolate(PencilTool *pc);
+static void sketch_interpolate(PencilTool *pc);
 
 static Geom::Point pencil_drag_origin_w(0, 0);
 static bool pencil_within_tolerance = false;
 
 static bool in_svg_plane(Geom::Point const &p) { return Geom::LInfty(p) < 1e18; }
 
-#include "tool-factory.h"
-
 namespace {
-	SPEventContext* createPencilContext() {
-		return new SPPencilContext();
+	ToolBase* createPencilContext() {
+		return new PencilTool();
 	}
 
 	bool pencilContextRegistered = ToolFactory::instance().registerObject("/tools/freehand/pencil", createPencilContext);
 }
 
-const std::string& SPPencilContext::getPrefsPath() {
-	return SPPencilContext::prefsPath;
+const std::string& PencilTool::getPrefsPath() {
+	return PencilTool::prefsPath;
 }
 
-const std::string SPPencilContext::prefsPath = "/tools/freehand/pencil";
+const std::string PencilTool::prefsPath = "/tools/freehand/pencil";
 
-SPPencilContext::SPPencilContext() :
+PencilTool::PencilTool() :
     SPDrawContext(),
     p(),
     npoints(0),
@@ -88,7 +91,7 @@ SPPencilContext::SPPencilContext() :
     req_tangent(0,0),
     is_drawing(false),
     ps(),
-    sketch_interpolation(Geom::Piecewise<Geom::D2<Geom::SBasis> >())// since SPPencilContext is not properly constructed...
+    sketch_interpolation(Geom::Piecewise<Geom::D2<Geom::SBasis> >())// since PencilTool is not properly constructed...
 {
     this->cursor_shape = cursor_pencil_xpm;
     this->hot_x = 4;
@@ -96,7 +99,7 @@ SPPencilContext::SPPencilContext() :
     this->sketch_n = 0;
 }
 
-void SPPencilContext::setup() {
+void PencilTool::setup() {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (prefs->getBool("/tools/freehand/pencil/selcue")) {
         this->enableSelectionCue();
@@ -108,12 +111,12 @@ void SPPencilContext::setup() {
     this->anchor_statusbar = false;
 }
 
-SPPencilContext::~SPPencilContext() {
+PencilTool::~PencilTool() {
 }
 
 /** Snaps new node relative to the previous node. */
 static void
-spdc_endpoint_snap(SPPencilContext const *pc, Geom::Point &p, guint const state)
+spdc_endpoint_snap(PencilTool const *pc, Geom::Point &p, guint const state)
 {
     if ((state & GDK_CONTROL_MASK)) { //CTRL enables constrained snapping
         if (pc->npoints > 0) {
@@ -132,7 +135,7 @@ spdc_endpoint_snap(SPPencilContext const *pc, Geom::Point &p, guint const state)
 /**
  * Callback for handling all pencil context events.
  */
-bool SPPencilContext::root_handler(GdkEvent* event) {
+bool PencilTool::root_handler(GdkEvent* event) {
     gint ret = FALSE;
 
     switch (event->type) {
@@ -168,10 +171,10 @@ bool SPPencilContext::root_handler(GdkEvent* event) {
 }
 
 static gint
-pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &bevent)
+pencil_handle_button_press(PencilTool *const pc, GdkEventButton const &bevent)
 {
     gint ret = FALSE;
-    SPEventContext *event_context = SP_EVENT_CONTEXT(pc);
+    ToolBase *event_context = SP_EVENT_CONTEXT(pc);
     if ( bevent.button == 1  && !event_context->space_panning) {
 
         SPDrawContext *dc = SP_DRAW_CONTEXT (pc);
@@ -251,7 +254,7 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
 }
 
 static gint
-pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mevent)
+pencil_handle_motion_notify(PencilTool *const pc, GdkEventMotion const &mevent)
 {
     SPDesktop *const dt = pc->desktop;
 
@@ -263,7 +266,7 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
     }
     gint ret = FALSE;
 
-    SPEventContext *event_context = SP_EVENT_CONTEXT(pc);
+    ToolBase *event_context = SP_EVENT_CONTEXT(pc);
     if (event_context->space_panning || mevent.state & GDK_BUTTON2_MASK || mevent.state & GDK_BUTTON3_MASK) {
         // allow scrolling
         return FALSE;
@@ -373,11 +376,11 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
 }
 
 static gint
-pencil_handle_button_release(SPPencilContext *const pc, GdkEventButton const &revent)
+pencil_handle_button_release(PencilTool *const pc, GdkEventButton const &revent)
 {
     gint ret = FALSE;
 
-    SPEventContext *event_context = SP_EVENT_CONTEXT(pc);
+    ToolBase *event_context = SP_EVENT_CONTEXT(pc);
     if ( revent.button == 1 && pc->is_drawing && !event_context->space_panning) {
         SPDesktop *const dt = pc->desktop;
 
@@ -474,7 +477,7 @@ pencil_handle_button_release(SPPencilContext *const pc, GdkEventButton const &re
 }
 
 static void
-pencil_cancel (SPPencilContext *const pc)
+pencil_cancel (PencilTool *const pc)
 {
     if (pc->grab) {
         /* Release grab now */
@@ -504,7 +507,7 @@ pencil_cancel (SPPencilContext *const pc)
 }
 
 static gint
-pencil_handle_key_press(SPPencilContext *const pc, guint const keyval, guint const state)
+pencil_handle_key_press(PencilTool *const pc, guint const keyval, guint const state)
 {
     gint ret = FALSE;
     switch (keyval) {
@@ -558,7 +561,7 @@ pencil_handle_key_press(SPPencilContext *const pc, guint const keyval, guint con
 }
 
 static gint
-pencil_handle_key_release(SPPencilContext *const pc, guint const keyval, guint const /*state*/)
+pencil_handle_key_release(PencilTool *const pc, guint const keyval, guint const /*state*/)
 {
     gint ret = FALSE;
     switch (keyval) {
@@ -590,7 +593,7 @@ pencil_handle_key_release(SPPencilContext *const pc, guint const keyval, guint c
  * Reset points and set new starting point.
  */
 static void
-spdc_set_startpoint(SPPencilContext *const pc, Geom::Point const &p)
+spdc_set_startpoint(PencilTool *const pc, Geom::Point const &p)
 {
     pc->npoints = 0;
     pc->red_curve_is_valid = false;
@@ -610,7 +613,7 @@ spdc_set_startpoint(SPPencilContext *const pc, Geom::Point const &p)
  * We change RED curve.
  */
 static void
-spdc_set_endpoint(SPPencilContext *const pc, Geom::Point const &p)
+spdc_set_endpoint(PencilTool *const pc, Geom::Point const &p)
 {
     if (pc->npoints == 0) {
         return;
@@ -645,7 +648,7 @@ spdc_set_endpoint(SPPencilContext *const pc, Geom::Point const &p)
  * Still not sure, how it will make most sense.
  */
 static void
-spdc_finish_endpoint(SPPencilContext *const pc)
+spdc_finish_endpoint(PencilTool *const pc)
 {
     if ( ( pc->red_curve->is_empty() )
          || ( *(pc->red_curve->first_point()) == *(pc->red_curve->second_point())   ) )
@@ -662,7 +665,7 @@ spdc_finish_endpoint(SPPencilContext *const pc)
 
 
 static void
-spdc_add_freehand_point(SPPencilContext *pc, Geom::Point const &p, guint /*state*/)
+spdc_add_freehand_point(PencilTool *pc, Geom::Point const &p, guint /*state*/)
 {
     g_assert( pc->npoints > 0 );
     g_return_if_fail(unsigned(pc->npoints) < G_N_ELEMENTS(pc->p));
@@ -683,7 +686,7 @@ square(double const x)
 }
 
 static void
-interpolate(SPPencilContext *pc)
+interpolate(PencilTool *pc)
 {
     if ( pc->ps.size() <= 1 ) {
         return;
@@ -749,7 +752,7 @@ interpolate(SPPencilContext *pc)
 
 /* interpolates the sketched curve and tweaks the current sketch interpolation*/
 static void
-sketch_interpolate(SPPencilContext *pc)
+sketch_interpolate(PencilTool *pc)
 {
     if ( pc->ps.size() <= 1 ) {
         return;
@@ -841,7 +844,7 @@ sketch_interpolate(SPPencilContext *pc)
 }
 
 static void
-fit_and_split(SPPencilContext *pc)
+fit_and_split(PencilTool *pc)
 {
     g_assert( pc->npoints > 1 );
 
@@ -897,6 +900,9 @@ fit_and_split(SPPencilContext *pc)
     }
 }
 
+}
+}
+}
 
 /*
   Local Variables:

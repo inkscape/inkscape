@@ -42,8 +42,7 @@
 #include "lpe-tool-context.h"
 
 using Inkscape::Util::unit_table;
-
-void sp_lpetool_context_selection_changed(Inkscape::Selection *selection, gpointer data);
+using Inkscape::UI::Tools::PenTool;
 
 const int num_subtools = 8;
 
@@ -62,21 +61,27 @@ SubtoolEntry lpesubtools[] = {
 
 #include "tool-factory.h"
 
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+void sp_lpetool_context_selection_changed(Inkscape::Selection *selection, gpointer data);
+
 namespace {
-	SPEventContext* createLPEToolContext() {
-		return new SPLPEToolContext();
+	ToolBase* createLPEToolContext() {
+		return new LpeTool();
 	}
 
 	bool lpetoolContextRegistered = ToolFactory::instance().registerObject("/tools/lpetool", createLPEToolContext);
 }
 
-const std::string& SPLPEToolContext::getPrefsPath() {
-	return SPLPEToolContext::prefsPath;
+const std::string& LpeTool::getPrefsPath() {
+	return LpeTool::prefsPath;
 }
 
-const std::string SPLPEToolContext::prefsPath = "/tools/lpetool";
+const std::string LpeTool::prefsPath = "/tools/lpetool";
 
-SPLPEToolContext::SPLPEToolContext() : SPPenContext() {
+LpeTool::LpeTool() : PenTool() {
 	this->mode = Inkscape::LivePathEffect::BEND_PATH;
 	this->shape_editor = 0;
 
@@ -88,7 +93,7 @@ SPLPEToolContext::SPLPEToolContext() : SPPenContext() {
     this->measuring_items = new std::map<SPPath *, SPCanvasItem*>;
 }
 
-SPLPEToolContext::~SPLPEToolContext() {
+LpeTool::~LpeTool() {
     delete this->shape_editor;
     this->shape_editor = NULL;
 
@@ -104,8 +109,8 @@ SPLPEToolContext::~SPLPEToolContext() {
     this->sel_changed_connection.disconnect();
 }
 
-void SPLPEToolContext::setup() {
-    SPPenContext::setup();
+void LpeTool::setup() {
+    PenTool::setup();
 
     Inkscape::Selection *selection = sp_desktop_selection (this->desktop);
     SPItem *item = selection->singleItem();
@@ -141,21 +146,21 @@ void SPLPEToolContext::setup() {
  */
 void sp_lpetool_context_selection_changed(Inkscape::Selection *selection, gpointer data)
 {
-    SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(data);
+    LpeTool *lc = SP_LPETOOL_CONTEXT(data);
 
     lc->shape_editor->unset_item(SH_KNOTHOLDER);
     SPItem *item = selection->singleItem();
     lc->shape_editor->set_item(item, SH_KNOTHOLDER);
 }
 
-void SPLPEToolContext::set(const Inkscape::Preferences::Entry& val) {
+void LpeTool::set(const Inkscape::Preferences::Entry& val) {
     if (val.getEntryName() == "mode") {
         Inkscape::Preferences::get()->setString("/tools/geometric/mode", "drag");
-        SP_PEN_CONTEXT(this)->mode = SPPenContext::MODE_DRAG;
+        SP_PEN_CONTEXT(this)->mode = PenTool::MODE_DRAG;
     }
 }
 
-bool SPLPEToolContext::item_handler(SPItem* item, GdkEvent* event) {
+bool LpeTool::item_handler(SPItem* item, GdkEvent* event) {
     gint ret = FALSE;
 
     switch (event->type) {
@@ -177,21 +182,21 @@ bool SPLPEToolContext::item_handler(SPItem* item, GdkEvent* event) {
     }
 
     if (!ret) {
-    	ret = SPPenContext::item_handler(item, event);
+    	ret = PenTool::item_handler(item, event);
     }
 
     return ret;
 }
 
-bool SPLPEToolContext::root_handler(GdkEvent* event) {
+bool LpeTool::root_handler(GdkEvent* event) {
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
 
     bool ret = false;
 
     if (sp_pen_context_has_waiting_LPE(this)) {
         // quit when we are waiting for a LPE to be applied
-        //ret = ((SPEventContextClass *) sp_lpetool_context_parent_class)->root_handler(event_context, event);
-	return SPPenContext::root_handler(event);
+        //ret = ((ToolBaseClass *) sp_lpetool_context_parent_class)->root_handler(event_context, event);
+	return PenTool::root_handler(event);
     }
 
     switch (event->type) {
@@ -222,8 +227,8 @@ bool SPLPEToolContext::root_handler(GdkEvent* event) {
                 sp_pen_context_wait_for_LPE_mouse_clicks(this, type, Inkscape::LivePathEffect::Effect::acceptsNumClicks(type));
 
                 // we pass the mouse click on to pen tool as the first click which it should collect
-                //ret = ((SPEventContextClass *) sp_lpetool_context_parent_class)->root_handler(event_context, event);
-		ret = SPPenContext::root_handler(event);
+                //ret = ((ToolBaseClass *) sp_lpetool_context_parent_class)->root_handler(event_context, event);
+		ret = PenTool::root_handler(event);
             }
             break;
 
@@ -259,7 +264,7 @@ bool SPLPEToolContext::root_handler(GdkEvent* event) {
     }
 
     if (!ret) {
-    	ret = SPPenContext::root_handler(event);
+    	ret = PenTool::root_handler(event);
     }
 
     return ret;
@@ -283,7 +288,7 @@ lpetool_mode_to_index(Inkscape::LivePathEffect::EffectType const type) {
  * Checks whether an item has a construction applied as LPE and if so returns the index in
  * lpesubtools of this construction
  */
-int lpetool_item_has_construction(SPLPEToolContext */*lc*/, SPItem *item)
+int lpetool_item_has_construction(LpeTool */*lc*/, SPItem *item)
 {
     if (!SP_IS_LPE_ITEM(item)) {
         return -1;
@@ -301,7 +306,7 @@ int lpetool_item_has_construction(SPLPEToolContext */*lc*/, SPItem *item)
  * a single selected item. Returns whether we succeeded.
  */
 bool
-lpetool_try_construction(SPLPEToolContext *lc, Inkscape::LivePathEffect::EffectType const type)
+lpetool_try_construction(LpeTool *lc, Inkscape::LivePathEffect::EffectType const type)
 {
     Inkscape::Selection *selection = sp_desktop_selection(lc->desktop);
     SPItem *item = selection->singleItem();
@@ -315,7 +320,7 @@ lpetool_try_construction(SPLPEToolContext *lc, Inkscape::LivePathEffect::EffectT
 }
 
 void
-lpetool_context_switch_mode(SPLPEToolContext *lc, Inkscape::LivePathEffect::EffectType const type)
+lpetool_context_switch_mode(LpeTool *lc, Inkscape::LivePathEffect::EffectType const type)
 {
     int index = lpetool_mode_to_index(type);
     if (index != -1) {
@@ -347,7 +352,7 @@ lpetool_get_limiting_bbox_corners(SPDocument *document, Geom::Point &A, Geom::Po
  */
 // TODO: Note that currently the bbox is not user-settable; we simply use the page borders
 void
-lpetool_context_reset_limiting_bbox(SPLPEToolContext *lc)
+lpetool_context_reset_limiting_bbox(LpeTool *lc)
 {
     if (lc->canvas_bbox) {
         sp_canvas_item_destroy(lc->canvas_bbox);
@@ -391,7 +396,7 @@ set_pos_and_anchor(SPCanvasText *canvas_text, const Geom::Piecewise<Geom::D2<Geo
 }
 
 void
-lpetool_create_measuring_items(SPLPEToolContext *lc, Inkscape::Selection *selection)
+lpetool_create_measuring_items(LpeTool *lc, Inkscape::Selection *selection)
 {
     if (!selection) {
         selection = sp_desktop_selection(lc->desktop);
@@ -434,7 +439,7 @@ lpetool_create_measuring_items(SPLPEToolContext *lc, Inkscape::Selection *select
 }
 
 void
-lpetool_delete_measuring_items(SPLPEToolContext *lc)
+lpetool_delete_measuring_items(LpeTool *lc)
 {
     std::map<SPPath *, SPCanvasItem*>::iterator i;
     for (i = lc->measuring_items->begin(); i != lc->measuring_items->end(); ++i) {
@@ -444,7 +449,7 @@ lpetool_delete_measuring_items(SPLPEToolContext *lc)
 }
 
 void
-lpetool_update_measuring_items(SPLPEToolContext *lc)
+lpetool_update_measuring_items(LpeTool *lc)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     for ( std::map<SPPath *, SPCanvasItem*>::iterator i = lc->measuring_items->begin();
@@ -470,7 +475,7 @@ lpetool_update_measuring_items(SPLPEToolContext *lc)
 }
 
 void
-lpetool_show_measuring_info(SPLPEToolContext *lc, bool show)
+lpetool_show_measuring_info(LpeTool *lc, bool show)
 {
     std::map<SPPath *, SPCanvasItem*>::iterator i;
     for (i = lc->measuring_items->begin(); i != lc->measuring_items->end(); ++i) {
@@ -480,6 +485,10 @@ lpetool_show_measuring_info(SPLPEToolContext *lc, bool show)
             sp_canvas_item_hide(i->second);
         }
     }
+}
+
+}
+}
 }
 
 /*

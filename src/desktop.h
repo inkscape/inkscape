@@ -41,7 +41,17 @@ class SPCSSAttr;
 struct SPCanvas;
 struct SPCanvasItem;
 struct SPCanvasGroup;
-class SPEventContext;
+
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
+class ToolBase;
+
+}
+}
+}
+
 class  SPItem;
 class SPNamedView;
 class  SPObject;
@@ -110,7 +120,7 @@ namespace Inkscape {
  * data, like grid and guideline placement, snapping options and so on.
  *
  * Associated with each SPDesktop are the two most important editing
- * related objects - SPSelection and SPEventContext.
+ * related objects - SPSelection and ToolBase.
  *
  * Sodipodi keeps track of the active desktop and invokes notification
  * signals whenever it changes. UI elements can use these to update their
@@ -128,14 +138,14 @@ public:
     Inkscape::LayerModel      *layers;
     /// current selection; will never generally be NULL
     Inkscape::Selection       *selection;
-    SPEventContext            *event_context;
+    Inkscape::UI::Tools::ToolBase            *event_context;
     Inkscape::LayerManager    *layer_manager;
     Inkscape::EventLog        *event_log;
     DocumentInterface *dbus_document_interface;
     Inkscape::Display::TemporaryItemList *temporary_item_list;
     Inkscape::Display::SnapIndicator *snapindicator;
 
-    SPEventContext* getEventContext() const;
+    Inkscape::UI::Tools::ToolBase* getEventContext() const;
     Inkscape::Selection* getSelection() const;
     SPDocument* getDocument() const;
     SPCanvas* getCanvas() const;
@@ -207,7 +217,7 @@ public:
         return _document_replaced_signal.connect (slot);
     }
 
-    sigc::connection connectEventContextChanged (const sigc::slot<void,SPDesktop*,SPEventContext*> & slot)
+    sigc::connection connectEventContextChanged (const sigc::slot<void,SPDesktop*,Inkscape::UI::Tools::ToolBase*> & slot)
     {
         return _event_context_changed_signal.connect (slot);
     }
@@ -425,7 +435,7 @@ private:
     sigc::signal<void,SPDesktop*,SPDocument*>     _document_replaced_signal;
     sigc::signal<void>                 _activate_signal;
     sigc::signal<void>                 _deactivate_signal;
-    sigc::signal<void,SPDesktop*,SPEventContext*> _event_context_changed_signal;
+    sigc::signal<void,SPDesktop*,Inkscape::UI::Tools::ToolBase*> _event_context_changed_signal;
     sigc::signal<void, gpointer>       _tool_subselection_changed;
 
     sigc::connection _activate_connection;

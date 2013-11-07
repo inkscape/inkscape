@@ -61,6 +61,7 @@
 
 using Inkscape::DocumentUndo;
 using Inkscape::UI::ToolboxFactory;
+using Inkscape::UI::Tools::ToolBase;
 
 void gr_apply_gradient_to_item( SPItem *item, SPGradient *gr, SPGradientType initialType, Inkscape::PaintTarget initialMode, Inkscape::PaintTarget mode );
 void gr_apply_gradient(Inkscape::Selection *selection, GrDrag *drag, SPGradient *gr);
@@ -70,8 +71,8 @@ void gr_read_selection( Inkscape::Selection *selection, GrDrag *drag, SPGradient
 static gboolean update_stop_list( GtkWidget *stop_combo, SPGradient *gradient, SPStop *new_stop, GtkWidget *widget, bool gr_multi);
 static void sp_gradient_vector_widget_load_gradient(GtkWidget *widget, SPGradient *gradient);
 static void select_stop_in_list( GtkWidget *combo_box, SPGradient *gradient, SPStop *new_stop, GtkWidget *data, gboolean block);
-static void select_stop_by_drag( GtkWidget *combo_box, SPGradient *gradient, SPEventContext *ev, GtkWidget *data);
-static void select_drag_by_stop( GtkWidget *combo_box, SPGradient *gradient, SPEventContext *ev);
+static void select_stop_by_drag( GtkWidget *combo_box, SPGradient *gradient, ToolBase *ev, GtkWidget *data);
+static void select_drag_by_stop( GtkWidget *combo_box, SPGradient *gradient, ToolBase *ev);
 static SPGradient *gr_get_selected_gradient(GtkWidget *widget);
 static void gr_stop_set_offset(GtkComboBox *widget, GtkWidget *data);
 void add_toolbar_widget(GtkWidget *tbl, GtkWidget *widget);
@@ -373,7 +374,7 @@ static void gr_tb_selection_changed(Inkscape::Selection * /*selection*/, gpointe
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop); // take from desktop, not from args
     if (selection) {
-        SPEventContext *ev = desktop->getEventContext();
+        ToolBase *ev = desktop->getEventContext();
         GrDrag *drag = NULL;
         if (ev) {
             drag = ev->get_drag();
@@ -585,8 +586,8 @@ static void gr_add_stop(GtkWidget * /*button*/, GtkWidget *vb)
         return;
     }
 
-    SPEventContext *ev = desktop->getEventContext();
-    SPGradientContext *rc = SP_GRADIENT_CONTEXT(ev);
+    ToolBase *ev = desktop->getEventContext();
+    Inkscape::UI::Tools::GradientTool *rc = SP_GRADIENT_CONTEXT(ev);
 
     if (rc) {
         sp_gradient_context_add_stops_between_selected_stops(rc);
@@ -607,7 +608,7 @@ static void gr_remove_stop(GtkWidget * /*button*/, GtkWidget *vb)
         return;
     }
 
-    SPEventContext *ev = desktop->getEventContext();
+    ToolBase *ev = desktop->getEventContext();
     GrDrag *drag = NULL;
     if (ev) {
         drag = ev->get_drag();
@@ -641,7 +642,7 @@ static void gr_reverse(GtkWidget * /*button*/, gpointer data)
 /*
  *  Change desktop drag selection to this stop
  */
-static void select_drag_by_stop( GtkWidget *data, SPGradient *gradient, SPEventContext *ev)
+static void select_drag_by_stop( GtkWidget *data, SPGradient *gradient, ToolBase *ev)
 {
     if (blocked || !ev || !gradient)
         return;
@@ -657,7 +658,7 @@ static void select_drag_by_stop( GtkWidget *data, SPGradient *gradient, SPEventC
     blocked = FALSE;
 }
 
-static void select_stop_by_drag(GtkWidget *combo_box, SPGradient *gradient, SPEventContext *ev, GtkWidget *data)
+static void select_stop_by_drag(GtkWidget *combo_box, SPGradient *gradient, ToolBase *ev, GtkWidget *data)
 {
     if (blocked || !ev || !gradient)
         return;
@@ -939,7 +940,7 @@ static void gr_gradient_combo_changed(EgeSelectOneAction *act, gpointer data)
 
         SPDesktop *desktop = static_cast<SPDesktop *>(data);
         Inkscape::Selection *selection = sp_desktop_selection(desktop);
-        SPEventContext *ev = desktop->getEventContext();
+        ToolBase *ev = desktop->getEventContext();
 
         gr_apply_gradient(selection, ev? ev->get_drag() : NULL, gr);
 
@@ -981,7 +982,7 @@ static void gr_stop_combo_changed(GtkComboBox * /*widget*/, GtkWidget *data)
     }
 
     SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data(G_OBJECT(data), "desktop"));
-    SPEventContext *ev = desktop->getEventContext();
+    ToolBase *ev = desktop->getEventContext();
     SPGradient *gr = gr_get_selected_gradient(data);
 
     select_drag_by_stop(data, gr, ev);

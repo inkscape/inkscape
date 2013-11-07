@@ -343,8 +343,8 @@ Effect::doAcceptPathPreparations(SPLPEItem *lpeitem)
         tools_switch(desktop, TOOLS_FREEHAND_PEN);
     }
 
-    SPEventContext *ec = desktop->event_context;
-    SPPenContext *pc = SP_PEN_CONTEXT(ec);
+    Inkscape::UI::Tools::ToolBase *ec = desktop->event_context;
+    Inkscape::UI::Tools::PenTool *pc = SP_PEN_CONTEXT(ec);
     pc->expecting_clicks_for_LPE = this->acceptsNumClicks();
     pc->waiting_LPE = this;
     pc->waiting_item = lpeitem;

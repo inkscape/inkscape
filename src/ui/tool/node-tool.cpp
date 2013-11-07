@@ -45,7 +45,7 @@
 
 #include <gdk/gdkkeysyms.h>
 
-/** @struct InkNodeTool
+/** @struct NodeTool
  *
  * Node tool event context.
  *
@@ -104,25 +104,29 @@
 
 using Inkscape::ControlManager;
 
-SPCanvasGroup *create_control_group(SPDesktop *d);
-
 #include "tool-factory.h"
 
+namespace Inkscape {
+namespace UI {
+namespace Tools {
+
 namespace {
-	SPEventContext* createNodesContext() {
-		return new InkNodeTool();
+	ToolBase* createNodesContext() {
+		return new NodeTool();
 	}
 
 	bool nodesContextRegistered = ToolFactory::instance().registerObject("/tools/nodes", createNodesContext);
 }
 
-const std::string& InkNodeTool::getPrefsPath() {
-	return InkNodeTool::prefsPath;
+const std::string& NodeTool::getPrefsPath() {
+	return NodeTool::prefsPath;
 }
 
-const std::string InkNodeTool::prefsPath = "/tools/nodes";
+const std::string NodeTool::prefsPath = "/tools/nodes";
 
-InkNodeTool::InkNodeTool() : SPEventContext() {
+SPCanvasGroup *create_control_group(SPDesktop *d);
+
+NodeTool::NodeTool() : ToolBase() {
 	this->show_handles = false;
 	this->single_node_transform_handles = false;
 	this->show_transform_handles = false;
@@ -159,7 +163,7 @@ void destroy_group(SPCanvasGroup *g)
     sp_canvas_item_destroy(SP_CANVAS_ITEM(g));
 }
 
-InkNodeTool::~InkNodeTool() {
+NodeTool::~NodeTool() {
     this->enableGrDrag(false);
 
     if (this->flash_tempitem) {
@@ -184,8 +188,8 @@ InkNodeTool::~InkNodeTool() {
     destroy_group(this->_transform_handle_group);
 }
 
-void InkNodeTool::setup() {
-    SPEventContext::setup();
+void NodeTool::setup() {
+    ToolBase::setup();
 
     this->_path_data = new Inkscape::UI::PathSharedData();
 
@@ -208,14 +212,14 @@ void InkNodeTool::setup() {
 
     this->_selection_changed_connection.disconnect();
     this->_selection_changed_connection =
-        selection->connectChanged(sigc::mem_fun(this, &InkNodeTool::selection_changed));
+        selection->connectChanged(sigc::mem_fun(this, &NodeTool::selection_changed));
 
     this->_mouseover_changed_connection.disconnect();
     this->_mouseover_changed_connection = 
-        Inkscape::UI::ControlPoint::signal_mouseover_change.connect(sigc::mem_fun(this, &InkNodeTool::mouseover_changed));
+        Inkscape::UI::ControlPoint::signal_mouseover_change.connect(sigc::mem_fun(this, &NodeTool::mouseover_changed));
 
     this->_sizeUpdatedConn = ControlManager::getManager().connectCtrlSizeChanged(
-    		sigc::mem_fun(this, &InkNodeTool::handleControlUiStyleChange)
+    		sigc::mem_fun(this, &NodeTool::handleControlUiStyleChange)
     );
     
     this->_selected_nodes = new Inkscape::UI::ControlPointSelection(this->desktop, this->_transform_handle_group);
@@ -224,8 +228,8 @@ void InkNodeTool::setup() {
 
     this->_multipath = new Inkscape::UI::MultiPathManipulator(data, this->_selection_changed_connection);
 
-    this->_selector->signal_point.connect(sigc::mem_fun(this, &InkNodeTool::select_point));
-    this->_selector->signal_area.connect(sigc::mem_fun(this, &InkNodeTool::select_area));
+    this->_selector->signal_point.connect(sigc::mem_fun(this, &NodeTool::select_point));
+    this->_selector->signal_area.connect(sigc::mem_fun(this, &NodeTool::select_area));
 
     this->_multipath->signal_coords_changed.connect(
         sigc::bind(
@@ -240,7 +244,7 @@ void InkNodeTool::setup() {
 		// <=>
 		// void update_tip(GdkEvent *event)
 		sigc::hide(sigc::hide(sigc::bind(
-				sigc::mem_fun(this, &InkNodeTool::update_tip),
+				sigc::mem_fun(this, &NodeTool::update_tip),
 				(GdkEvent*)NULL
 		)))
     );
@@ -279,7 +283,7 @@ void InkNodeTool::setup() {
     this->desktop->emitToolSubselectionChanged(NULL); // sets the coord entry fields to inactive
 }
 
-void InkNodeTool::set(const Inkscape::Preferences::Entry& value) {
+void NodeTool::set(const Inkscape::Preferences::Entry& value) {
     Glib::ustring entry_name = value.getEntryName();
 
     if (entry_name == "show_handles") {
@@ -312,12 +316,12 @@ void InkNodeTool::set(const Inkscape::Preferences::Entry& value) {
         this->edit_masks = value.getBool();
         this->selection_changed(this->desktop->selection);
     } else {
-    	SPEventContext::set(value);
+    	ToolBase::set(value);
     }
 }
 
 /** Recursively collect ShapeRecords */
-void gather_items(InkNodeTool *nt, SPItem *base, SPObject *obj, Inkscape::UI::ShapeRole role,
+void gather_items(NodeTool *nt, SPItem *base, SPObject *obj, Inkscape::UI::ShapeRole role,
     std::set<Inkscape::UI::ShapeRecord> &s)
 {
     using namespace Inkscape::UI;
@@ -358,7 +362,7 @@ void gather_items(InkNodeTool *nt, SPItem *base, SPObject *obj, Inkscape::UI::Sh
     }
 }
 
-void InkNodeTool::selection_changed(Inkscape::Selection *sel) {
+void NodeTool::selection_changed(Inkscape::Selection *sel) {
     using namespace Inkscape::UI;
 
     std::set<ShapeRecord> shapes;
@@ -405,7 +409,7 @@ void InkNodeTool::selection_changed(Inkscape::Selection *sel) {
     this->desktop->updateNow();
 }
 
-bool InkNodeTool::root_handler(GdkEvent* event) {
+bool NodeTool::root_handler(GdkEvent* event) {
     /* things to handle here:
      * 1. selection of items
      * 2. passing events to manipulators
@@ -534,10 +538,10 @@ bool InkNodeTool::root_handler(GdkEvent* event) {
     	break;
     }
     
-    return SPEventContext::root_handler(event);
+    return ToolBase::root_handler(event);
 }
 
-void InkNodeTool::update_tip(GdkEvent *event) {
+void NodeTool::update_tip(GdkEvent *event) {
     using namespace Inkscape::UI;
 
     if (event && (event->type == GDK_KEY_PRESS || event->type == GDK_KEY_RELEASE)) {
@@ -603,7 +607,7 @@ void InkNodeTool::update_tip(GdkEvent *event) {
     }
 }
 
-void InkNodeTool::select_area(Geom::Rect const &sel, GdkEventButton *event) {
+void NodeTool::select_area(Geom::Rect const &sel, GdkEventButton *event) {
     using namespace Inkscape::UI;
 
     if (this->_multipath->empty()) {
@@ -621,7 +625,7 @@ void InkNodeTool::select_area(Geom::Rect const &sel, GdkEventButton *event) {
     }
 }
 
-void InkNodeTool::select_point(Geom::Point const &sel, GdkEventButton *event) {
+void NodeTool::select_point(Geom::Point const &sel, GdkEventButton *event) {
     using namespace Inkscape::UI; // pull in event helpers
 
     if (!event) {
@@ -659,7 +663,7 @@ void InkNodeTool::select_point(Geom::Point const &sel, GdkEventButton *event) {
     }
 }
 
-void InkNodeTool::mouseover_changed(Inkscape::UI::ControlPoint *p) {
+void NodeTool::mouseover_changed(Inkscape::UI::ControlPoint *p) {
     using Inkscape::UI::CurveDragPoint;
 
     CurveDragPoint *cdp = dynamic_cast<CurveDragPoint*>(p);
@@ -679,8 +683,12 @@ void InkNodeTool::mouseover_changed(Inkscape::UI::ControlPoint *p) {
     }
 }
 
-void InkNodeTool::handleControlUiStyleChange() {
+void NodeTool::handleControlUiStyleChange() {
     this->_multipath->updateHandles();
+}
+
+}
+}
 }
 
 //} // anonymous namespace

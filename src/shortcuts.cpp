@@ -121,7 +121,7 @@ unsigned int sp_gdkmodifier_to_shortcut(guint accel_key, Gdk::ModifierType gdkmo
     event.state = gdkmodifier;
     event.keyval = accel_key;
     event.hardware_keycode = hardware_keycode;
-    guint keyval = get_group0_keyval (&event);
+    guint keyval = Inkscape::UI::Tools::get_group0_keyval (&event);
 
     shortcut = accel_key |
                ( (gdkmodifier & GDK_SHIFT_MASK) || ( accel_key != keyval) ?
