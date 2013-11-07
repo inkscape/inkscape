@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2013-11-06 10:37+0100\n"
+"POT-Creation-Date: 2013-11-07 15:09+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12391,14 +12391,21 @@ msgstr ""
 #: ../src/text-context.cpp:1614
 #, c-format
 msgid ""
+"Type or edit flowed text (%d character%s); <b>Enter</b> to start new "
+"paragraph."
+msgid_plural ""
 "Type or edit flowed text (%d characters%s); <b>Enter</b> to start new "
 "paragraph."
-msgstr ""
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../src/text-context.cpp:1616
 #, c-format
-msgid "Type or edit text (%d characters%s); <b>Enter</b> to start new line."
-msgstr ""
+msgid "Type or edit text (%d character%s); <b>Enter</b> to start new line."
+msgid_plural ""
+"Type or edit text (%d characters%s); <b>Enter</b> to start new line."
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../src/text-context.cpp:1624 ../src/tools-switch.cpp:103
 msgid ""
@@ -21562,12 +21569,12 @@ msgid ""
 "to adjust lightness"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1497
-#: ../src/ui/widget/selected-style.cpp:1511
+#: ../src/ui/widget/selected-style.cpp:1495
+#: ../src/ui/widget/selected-style.cpp:1509
 msgid "Adjust stroke width"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1498
+#: ../src/ui/widget/selected-style.cpp:1496
 #, c-format
 msgid "Adjusting <b>stroke width</b>: was %.3g, now <b>%.3g</b> (diff %.3g)"
 msgstr ""

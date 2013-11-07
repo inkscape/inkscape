@@ -1611,9 +1611,9 @@ static void sp_text_context_update_cursor(SPTextContext *tc,  bool scroll_to_see
                 }
             }
 
-            SP_EVENT_CONTEXT(tc)->message_context->setF(Inkscape::NORMAL_MESSAGE, _("Type or edit flowed text (%d characters%s); <b>Enter</b> to start new paragraph."), nChars, trunc);
+            SP_EVENT_CONTEXT(tc)->message_context->setF(Inkscape::NORMAL_MESSAGE, ngettext("Type or edit flowed text (%d character%s); <b>Enter</b> to start new paragraph.", "Type or edit flowed text (%d characters%s); <b>Enter</b> to start new paragraph.", nChars), nChars, trunc);
         } else {
-            SP_EVENT_CONTEXT(tc)->message_context->setF(Inkscape::NORMAL_MESSAGE, _("Type or edit text (%d characters%s); <b>Enter</b> to start new line."), nChars, trunc);
+            SP_EVENT_CONTEXT(tc)->message_context->setF(Inkscape::NORMAL_MESSAGE, ngettext("Type or edit text (%d character%s); <b>Enter</b> to start new line.", "Type or edit text (%d characters%s); <b>Enter</b> to start new line.", nChars), nChars, trunc);
         }
 
     } else {
