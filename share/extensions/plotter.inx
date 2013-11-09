@@ -27,9 +27,10 @@
                 <option value="115200">115200</option>
             </param>
             <param name="flowControl" type="optiongroup" appearance="minimal" _gui-text="Flow control" _gui-description="Software / Hardware flow control - Try different settings to find the one that fits your plotter (Default: None)">
-                <option value="0">None</option>
-                <option value="1">Software (XON/XOFF)</option>
-                <option value="2">Hardware (RTS/CTS)</option>
+                <option value="">None</option>
+                <option value="xonxoff">Software (XON/XOFF)</option>
+                <option value="rtscts">Hardware (RTS/CTS)</option>
+                <option value="dsrdtrrtscts">Hardware (DSR/DTR + RTS/CTS)</option>
             </param>
             <param name="space" type="description">&#xa0;</param>
             <_param name="serialHelp" type="description">This can be a physical serial connection or a USB-to-Serial bridge. Ask your plotter manufacturer for drivers if needed.</_param>

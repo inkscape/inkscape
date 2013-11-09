@@ -98,10 +98,12 @@ class MyEffect(inkex.Effect):
                 raise ValueError, ("", type, value), traceback
         '''
         # send data to plotter
-        if self.options.flowControl == '1':
+        if self.options.flowControl == 'xonxoff':
             mySerial = serial.Serial(port=self.options.serialPort, baudrate=self.options.serialBaudRate, timeout=0.1, writeTimeout=10, xonxoff=True)
-        elif self.options.flowControl == '2':
-            mySerial = serial.Serial(port=self.options.serialPort, baudrate=self.options.serialBaudRate, timeout=0.1, writeTimeout=10, dsrdtr=None, rtscts=True)
+        elif self.options.flowControl == 'rtscts':
+            mySerial = serial.Serial(port=self.options.serialPort, baudrate=self.options.serialBaudRate, timeout=0.1, writeTimeout=10, rtscts=True)
+        elif self.options.flowControl == 'dsrdtrrtscts':
+            mySerial = serial.Serial(port=self.options.serialPort, baudrate=self.options.serialBaudRate, timeout=0.1, writeTimeout=10, dsrdtr=True, rtscts=True)
         else:
             mySerial = serial.Serial(port=self.options.serialPort, baudrate=self.options.serialBaudRate, timeout=0.1, writeTimeout=10)
         try:
