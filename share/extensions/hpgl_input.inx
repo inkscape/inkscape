@@ -14,7 +14,7 @@
         <extension>.hpgl</extension>
         <mimetype>image/hpgl</mimetype>
         <_filetypename>HP Graphics Language file (*.hpgl)</_filetypename>
-        <_filetypetooltip>Import HP Graphics Language file</_filetypetooltip>
+        <_filetypetooltip>Import an HP Graphics Language file</_filetypetooltip>
     </input>
     <script>
         <command reldir="extensions" interpreter="python">hpgl_input.py</command>

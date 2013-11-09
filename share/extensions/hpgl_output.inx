@@ -42,7 +42,7 @@
         <extension>.hpgl</extension>
         <mimetype>image/hpgl</mimetype>
         <_filetypename>HP Graphics Language file (*.hpgl)</_filetypename>
-        <_filetypetooltip>Export to an HP Graphics Language file</_filetypetooltip>
+        <_filetypetooltip>Export an HP Graphics Language file</_filetypetooltip>
         <dataloss>true</dataloss>
     </output>
     <script>
