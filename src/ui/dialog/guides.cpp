@@ -25,7 +25,7 @@
 #include "sp-guide.h"
 #include "sp-namedview.h"
 #include "desktop-handles.h"
-#include "event-context.h"
+#include "ui/tools/tool-base.h"
 #include "widgets/desktop-widget.h"
 #include <glibmm/i18n.h>
 #include "dialogs/dialog-events.h"

@@ -44,7 +44,7 @@
 #include "selection.h"
 #include "message-stack.h"
 #include "context-fns.h"
-#include "dropper-context.h" // used in copy()
+#include "ui/tools/dropper-tool.h" // used in copy()
 #include "style.h"
 #include "extension/db.h" // extension database
 #include "extension/input.h"
@@ -74,7 +74,7 @@
 #include "live_effects/parameter/path.h"
 #include "svg/svg.h" // for sp_svg_transform_write, used in _copySelection
 #include "svg/css-ostringstream.h" // used in copy
-#include "text-context.h"
+#include "ui/tools/text-tool.h"
 #include "text-editing.h"
 #include "tools-switch.h"
 #include "path-chemistry.h"

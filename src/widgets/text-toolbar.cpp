@@ -56,7 +56,7 @@
 #include "../xml/repr.h"
 #include "ui/uxmanager.h"
 #include "../ui/icon-names.h"
-#include "../pen-context.h"
+#include "ui/tools/pen-tool.h"
 #include "../sp-namedview.h"
 #include "../svg/css-ostringstream.h"
 #include "../sp-flowtext.h"
@@ -64,7 +64,7 @@
 #include "../style.h"
 #include "../libnrtype/font-lister.h"
 #include "../libnrtype/font-instance.h"
-#include "../text-context.h"
+#include "ui/tools/text-tool.h"
 #include "../text-editing.h"
 #include "widgets/font-selector.h"
 

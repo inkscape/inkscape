@@ -63,11 +63,11 @@
 #include "ui/uxmanager.h"
 
 //#include "../ui/tool/control-point-selection.h"
-//#include "../ui/tool/node-tool.h"
+//#include "ui/tools/node-tool.h"
 //#include "../ui/tool/multi-path-manipulator.h"
 #include "../ui/icon-names.h"
 
-#include "../pen-context.h"
+#include "ui/tools/pen-tool.h"
 //#include "../sp-namedview.h"
 #include "../tools-switch.h"
 

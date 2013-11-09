@@ -58,7 +58,7 @@
 #include "document-private.h"
 #include "xml/document.h"
 #include <glibmm/i18n.h>
-#include "pen-context.h"
+#include "ui/tools/pen-tool.h"
 #include "tools-switch.h"
 #include "message-stack.h"
 #include "desktop.h"

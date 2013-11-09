@@ -54,7 +54,7 @@
 #include "../xml/repr.h"
 #include "ui/uxmanager.h"
 #include "../ui/icon-names.h"
-#include "../pen-context.h"
+#include "ui/tools/pen-tool.h"
 #include "../tools-switch.h"
 
 using Inkscape::UI::UXManager;

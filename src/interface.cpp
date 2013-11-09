@@ -67,7 +67,7 @@
 #include "svg/svg-color.h"
 #include "desktop-style.h"
 #include "style.h"
-#include "event-context.h"
+#include "ui/tools/tool-base.h"
 #include "gradient-drag.h"
 #include "widgets/ege-paint-def.h"
 #include "document-undo.h"
@@ -1300,7 +1300,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
     }
 }
 
-#include "gradient-context.h"
+#include "ui/tools/gradient-tool.h"
 
 void sp_ui_drag_motion( GtkWidget */*widget*/,
                         GdkDragContext */*drag_context*/,

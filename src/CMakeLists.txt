@@ -77,7 +77,6 @@ set(sp_SRC
 	sp-tspan.cpp
 	sp-use-reference.cpp
 	sp-use.cpp
-	spiral-context.cpp
 	splivarot.cpp
 
 
@@ -167,19 +166,15 @@ set(sp_SRC
 )
 
 set(inkscape_SRC
-	arc-context.cpp
 	attributes.cpp
 	axis-manip.cpp
-	box3d-context.cpp
 	box3d-side.cpp
 	box3d.cpp
 	color-profile.cpp
 	color.cpp
-	common-context.cpp
 	composite-undo-stack-observer.cpp
 	conditions.cpp
 	conn-avoid-ref.cpp
-	connector-context.cpp
 	console-output-undo-observer.cpp
 	context-fns.cpp
 	desktop-events.cpp
@@ -193,26 +188,19 @@ set(inkscape_SRC
 	document.cpp
 	doxygen-main.cpp
 	draw-anchor.cpp
-	draw-context.cpp
-	dropper-context.cpp
-	dyna-draw-context.cpp
 	ege-adjustment-action.cpp
 	ege-color-prof-tracker.cpp
 	ege-output-action.cpp
 	ege-select-one-action.cpp
-	eraser-context.cpp
-	event-context.cpp
 	event-log.cpp
 	extract-uri.cpp
 	file.cpp
 	filter-chemistry.cpp
 	filter-enums.cpp
-	flood-context.cpp
 	gc-anchored.cpp
 	gc-finalized.cpp
 	gc.cpp
 	gradient-chemistry.cpp
-	gradient-context.cpp
 	gradient-drag.cpp
 	graphlayout.cpp
 	guide-snapper.cpp
@@ -232,12 +220,9 @@ set(inkscape_SRC
 	layer-model.cpp
 	line-geometry.cpp
 	line-snapper.cpp
-	lpe-tool-context.cpp
 	main-cmdlineact.cpp
 	marker.cpp
-	measure-context.cpp
 	media.cpp
-	mesh-context.cpp
 	message-context.cpp
 	message-stack.cpp
 	mod360.cpp
@@ -245,8 +230,6 @@ set(inkscape_SRC
 	object-hierarchy.cpp
 	object-snapper.cpp
 	path-chemistry.cpp
-	pen-context.cpp
-	pencil-context.cpp
 	persp3d-reference.cpp
 	persp3d.cpp
 	perspective-line.cpp
@@ -256,13 +239,11 @@ set(inkscape_SRC
 	profile-manager.cpp
 	proj_pt.cpp
 	rdf.cpp
-	rect-context.cpp
 	removeoverlap.cpp
 	resource-manager.cpp
 	rubberband.cpp
 	satisfied-guide-cns.cpp
 	selcue.cpp
-	select-context.cpp
 	selection-chemistry.cpp
 	selection-describer.cpp
 	selection.cpp
@@ -276,17 +257,13 @@ set(inkscape_SRC
 	snapped-line.cpp
 	snapped-point.cpp
 	snapper.cpp
-	spray-context.cpp
-	star-context.cpp
 	style.cpp
 	svg-view-widget.cpp
 	svg-view.cpp
 	text-chemistry.cpp
-	text-context.cpp
 	text-editing.cpp
 	tools-switch.cpp
 	transf_mat_3x4.cpp
-	tweak-context.cpp
 	unclump.cpp
 	unicoderange.cpp
 	uri-references.cpp
@@ -294,20 +271,16 @@ set(inkscape_SRC
 	vanishing-point.cpp
 	verbs.cpp
 	version.cpp
-	zoom-context.cpp
-
 
 	# -------
 	# Headers
 	MultiPrinter.h
 	PylogFormatter.h
 	TRPIFormatter.h
-	arc-context.h
 	attributes-test.h
 	attributes.h
 	axis-manip.h
 	bad-uri-exception.h
-	box3d-context.h
 	box3d-side.h
 	box3d.h
 	cms-color-types.h
@@ -318,12 +291,10 @@ set(inkscape_SRC
 	color-rgba.h
 	color.h
 	colorspace.h
-	common-context.h
 	composite-undo-stack-observer.h
 	conditions.h
 	conn-avoid-ref.h
 	connection-pool.h
-	connector-context.h
 	console-output-undo-observer.h
 	context-fns.h
 	decimal-round.h
@@ -339,16 +310,11 @@ set(inkscape_SRC
 	document-undo.h
 	document.h
 	draw-anchor.h
-	draw-context.h
-	dropper-context.h
-	dyna-draw-context.h
 	ege-adjustment-action.h
 	ege-color-prof-tracker.h
 	ege-output-action.h
 	ege-select-one-action.h
 	enums.h
-	eraser-context.h
-	event-context.h
 	event-log.h
 	event.h
 	extract-uri-test.h
@@ -358,7 +324,6 @@ set(inkscape_SRC
 	fill-or-stroke.h
 	filter-chemistry.h
 	filter-enums.h
-	flood-context.h
 	gc-alloc.h
 	gc-allocator.h
 	gc-anchored.h
@@ -367,7 +332,6 @@ set(inkscape_SRC
 	gc-managed.h
 	gc-soft-ptr.h
 	gradient-chemistry.h
-	gradient-context.h
 	gradient-drag.h
 	graphlayout.h
 	guide-snapper.h
@@ -393,15 +357,12 @@ set(inkscape_SRC
 	layer-model.h
 	line-geometry.h
 	line-snapper.h
-	lpe-tool-context.h
 	macros.h
 	main-cmdlineact.h
 	marker-test.h
 	marker.h
-	measure-context.h
 	media.h
 	menus-skeleton.h
-	mesh-context.h
 	message-context.h
 	message-stack.h
 	message.h
@@ -414,8 +375,6 @@ set(inkscape_SRC
 	object-snapper.h
 	path-chemistry.h
 	path-prefix.h
-	pen-context.h
-	pencil-context.h
 	persp3d-reference.h
 	persp3d.h
 	perspective-line.h
@@ -427,7 +386,6 @@ set(inkscape_SRC
 	profile-manager.h
 	proj_pt.h
 	rdf.h
-	rect-context.h
 	registrytool.h
 	remove-last.h
 	removeoverlap.h
@@ -438,7 +396,6 @@ set(inkscape_SRC
 	rubberband.h
 	satisfied-guide-cns.h
 	selcue.h
-	select-context.h
 	selection-chemistry.h
 	selection-describer.h
 	selection.h
@@ -454,10 +411,7 @@ set(inkscape_SRC
 	snapped-line.h
 	snapped-point.h
 	snapper.h
-	spiral-context.h
 	splivarot.h
-	spray-context.h
-	star-context.h
 	streq.h
 	strneq.h
 	style-test.h
@@ -468,13 +422,11 @@ set(inkscape_SRC
 	syseq.h
 	test-helpers.h
 	text-chemistry.h
-	text-context.h
 	text-editing.h
 	text-tag-attributes.h
 	tool-factory.h
 	tools-switch.h
 	transf_mat_3x4.h
-	tweak-context.h
 	unclump.h
 	undo-stack-observer.h
 	unicoderange.h
@@ -484,7 +436,6 @@ set(inkscape_SRC
 	verbs-test.h
 	verbs.h
 	version.h
-	zoom-context.h
 )
 
 if(WIN32)

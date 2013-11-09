@@ -96,7 +96,7 @@
 #include "toolbox.h"
 #include <gtk/gtk.h>
 
-#include "event-context.h"
+#include "ui/tools/tool-base.h"
 
 //#define DEBUG_TEXT
 

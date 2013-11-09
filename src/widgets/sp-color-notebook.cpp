@@ -39,7 +39,7 @@
 #include "color-profile.h"
 #include "cms-system.h"
 #include "tools-switch.h"
-#include "event-context.h"
+#include "ui/tools/tool-base.h"
 
 using Inkscape::CMSSystem;
 

@@ -55,12 +55,12 @@
 #include "../xml/repr.h"
 #include "ui/uxmanager.h"
 #include "../ui/tool/control-point-selection.h"
-#include "../ui/tool/node-tool.h"
+#include "ui/tools/node-tool.h"
 #include "../ui/tool/multi-path-manipulator.h"
 #include "../ui/icon-names.h"
 #include "util/units.h"
 #include "ui/widget/unit-tracker.h"
-#include "../lpe-tool-context.h"
+#include "ui/tools/lpe-tool.h"
 #include "../sp-namedview.h"
 
 using Inkscape::UI::Widget::UnitTracker;

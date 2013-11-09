@@ -18,7 +18,7 @@
 #include <glib.h>
 #include <gdk/gdk.h>
 #include <boost/shared_ptr.hpp>
-#include "event-context.h"
+#include "ui/tools/tool-base.h"
 
 class SPDesktop;
 namespace Inkscape {

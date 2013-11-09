@@ -41,7 +41,7 @@
 #include "desktop-handles.h"
 #include <glibmm/i18n.h>
 
-#include "gradient-context.h"
+#include "ui/tools/gradient-tool.h"
 #include "gradient-drag.h"
 #include "sp-mesh-gradient.h"
 #include "gradient-chemistry.h"
@@ -59,7 +59,7 @@
 #include "svg/css-ostringstream.h"
 #include "svg/svg-color.h"
 #include "desktop-style.h"
-#include "gradient-context.h"
+#include "ui/tools/gradient-tool.h"
 
 #include "toolbox.h"
 

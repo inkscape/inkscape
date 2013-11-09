@@ -27,7 +27,7 @@
 #include "dialogs/dialog-events.h"
 #include "document.h"
 #include "document-undo.h"
-#include "event-context.h"
+#include "ui/tools/tool-base.h"
 #include "helper/window.h"
 #include "inkscape.h"
 #include "interface.h"

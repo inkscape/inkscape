@@ -21,7 +21,7 @@
 
 #include "box3d.h"
 #include "box3d-side.h"
-#include "box3d-context.h"
+#include "ui/tools/box3d-tool.h"
 #include "proj_pt.h"
 #include "transf_mat_3x4.h"
 #include "perspective-line.h"

@@ -32,7 +32,7 @@
 #include "selection.h"
 #include "sp-guide.h"
 #include "preferences.h"
-#include "event-context.h"
+#include "ui/tools/tool-base.h"
 #include "util/mathfns.h"
 using std::vector;
 using Inkscape::Util::round_to_upper_multiple_plus;

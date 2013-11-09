@@ -43,7 +43,7 @@
 #include "xml/repr.h"
 #include "document.h"
 #include "preferences.h"
-#include "event-context.h"
+#include "ui/tools/tool-base.h"
 #include "inkscape.h"
 #include "desktop.h"
 #include "path-prefix.h"

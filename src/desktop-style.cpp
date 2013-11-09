@@ -42,7 +42,7 @@
 #include "xml/sp-css-attr.h"
 #include "libnrtype/font-style-to-pos.h"
 #include "sp-path.h"
-#include "event-context.h"
+#include "ui/tools/tool-base.h"
 
 #include "desktop-style.h"
 #include "svg/svg-icc-color.h"

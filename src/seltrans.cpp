@@ -31,7 +31,7 @@
 #include "knot.h"
 #include "snap.h"
 #include "selection.h"
-#include "select-context.h"
+#include "ui/tools/select-tool.h"
 #include "sp-item.h"
 #include "sp-item-transform.h"
 #include "seltrans-handles.h"

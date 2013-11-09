@@ -12,7 +12,7 @@
  */
 
 #include "live_effects/lpe-line_segment.h"
-#include "lpe-tool-context.h"
+#include "ui/tools/lpe-tool.h"
 
 #include <2geom/pathvector.h>
 #include <2geom/geom.h>

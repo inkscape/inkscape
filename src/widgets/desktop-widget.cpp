@@ -27,7 +27,7 @@
 #include <2geom/rect.h>
 
 #include "ui/dialog/dialog-manager.h"
-#include "box3d-context.h"
+#include "ui/tools/box3d-tool.h"
 #include "cms-system.h"
 #include "conn-avoid-ref.h"
 #include "desktop.h"

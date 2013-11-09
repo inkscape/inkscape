@@ -31,7 +31,7 @@
 #include "selection-chemistry.h"
 #include "ui/icon-names.h"
 #include "ui/widget/imagetoggler.h"
-#include "event-context.h"
+#include "ui/tools/tool-base.h"
 
 namespace Inkscape {
 namespace UI {

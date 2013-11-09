@@ -22,7 +22,7 @@
 #include "inkscape.h"
 #include "shortcuts.h"
 #include "desktop.h"
-#include "event-context.h"
+#include "ui/tools/tool-base.h"
 #include "window.h"
 #include <gtk/gtk.h>
 

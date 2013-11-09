@@ -32,7 +32,7 @@
 #include "desktop.h"
 #include "desktop-style.h"
 #include "desktop-handles.h"
-#include "event-context.h"
+#include "ui/tools/tool-base.h"
 #include "selection.h"
 #include "verbs.h"
 #include <glibmm/i18n.h>

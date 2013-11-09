@@ -19,8 +19,6 @@ ink_common_sources += \
 	ui/tool/node.cpp			\
 	ui/tool/node.h				\
 	ui/tool/node-types.h			\
-	ui/tool/node-tool.cpp			\
-	ui/tool/node-tool.h			\
 	ui/tool/path-manipulator.cpp		\
 	ui/tool/path-manipulator.h		\
 	ui/tool/selectable-control-point.cpp	\

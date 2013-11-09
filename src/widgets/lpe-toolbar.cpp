@@ -59,12 +59,12 @@
 #include "../helper/action-context.h"
 #include "util/units.h"
 #include "ui/widget/unit-tracker.h"
-#include "../pen-context.h"
+#include "ui/tools/pen-tool.h"
 #include "../sp-namedview.h"
 #include "../tools-switch.h"
 #include "../live_effects/effect.h"
 #include "../live_effects/lpe-angle_bisector.h"
-#include "../lpe-tool-context.h"
+#include "ui/tools/lpe-tool.h"
 
 using Inkscape::UI::Widget::UnitTracker;
 using Inkscape::Util::Unit;

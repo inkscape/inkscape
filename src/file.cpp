@@ -36,7 +36,7 @@
 #include "dir-util.h"
 #include "document-private.h"
 #include "document-undo.h"
-#include "event-context.h"
+#include "ui/tools/tool-base.h"
 #include "extension/db.h"
 #include "extension/input.h"
 #include "extension/output.h"

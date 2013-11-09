@@ -16,8 +16,8 @@
 #include "draw-anchor.h"
 #include "desktop.h"
 #include "desktop-handles.h"
-#include "event-context.h"
-#include "lpe-tool-context.h"
+#include "ui/tools/tool-base.h"
+#include "ui/tools/lpe-tool.h"
 #include "display/sodipodi-ctrl.h"
 #include "display/curve.h"
 #include "ui/control-manager.h"
@@ -30,7 +30,7 @@ using Inkscape::ControlManager;
 /**
  * Creates an anchor object and initializes it.
  */
-SPDrawAnchor *sp_draw_anchor_new(Inkscape::UI::Tools::SPDrawContext *dc, SPCurve *curve, gboolean start, Geom::Point delta)
+SPDrawAnchor *sp_draw_anchor_new(Inkscape::UI::Tools::FreehandBase *dc, SPCurve *curve, gboolean start, Geom::Point delta)
 {
     if (SP_IS_LPETOOL_CONTEXT(dc)) {
         // suppress all kinds of anchors in LPEToolContext

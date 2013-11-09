@@ -9,7 +9,7 @@
 #include "message-stack.h"
 #include "context-fns.h"
 #include "snap.h"
-#include "event-context.h"
+#include "ui/tools/tool-base.h"
 #include "sp-namedview.h"
 #include "display/snap-indicator.h"
 

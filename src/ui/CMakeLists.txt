@@ -14,12 +14,37 @@ set(ui_SRC
 	tool/manipulator.cpp
 	tool/modifier-tracker.cpp
 	tool/multi-path-manipulator.cpp
-	tool/node-tool.cpp
 	tool/node.cpp
 	tool/path-manipulator.cpp
 	tool/selectable-control-point.cpp
 	tool/selector.cpp
 	tool/transform-handle-set.cpp
+
+	tools/arc-tool.cpp
+	tools/box3d-tool.cpp
+	tools/calligraphic-tool.cpp
+	tools/connector-tool.cpp
+	tools/dropper-tool.cpp
+	tools/dynamic-base.cpp
+	tools/eraser-tool.cpp
+	tools/flood-tool.cpp
+	tools/freehand-base.cpp
+	tools/gradient-tool.cpp
+	tools/lpe-tool.cpp
+	tools/measure-tool.cpp
+	tools/mesh-tool.cpp
+	tools/node-tool.cpp
+	tools/pencil-tool.cpp
+	tools/pen-tool.cpp
+	tools/rect-tool.cpp
+	tools/select-tool.cpp
+	tools/spiral-tool.cpp
+	tools/spray-tool.cpp
+	tools/star-tool.cpp
+	tools/text-tool.cpp
+	tools/tool-base.cpp
+	tools/tweak-tool.cpp
+	tools/zoom-tool.cpp
 
 	dialog/aboutbox.cpp
 	dialog/align-and-distribute.cpp
@@ -200,7 +225,6 @@ set(ui_SRC
 	tool/manipulator.h
 	tool/modifier-tracker.h
 	tool/multi-path-manipulator.h
-	tool/node-tool.h
 	tool/node-types.h
 	tool/node.h
 	tool/path-manipulator.h
@@ -208,6 +232,32 @@ set(ui_SRC
 	tool/selector.h
 	tool/shape-record.h
 	tool/transform-handle-set.h
+
+	tools/arc-tool.h
+	tools/box3d-tool.h
+	tools/calligraphic-tool.h
+	tools/connector-tool.h
+	tools/dropper-tool.h
+	tools/dynamic-base.h
+	tools/eraser-tool.h
+	tools/flood-tool.h
+	tools/freehand-base.h
+	tools/gradient-tool.h
+	tools/lpe-tool.h
+	tools/measure-tool.h
+	tools/mesh-tool.h
+	tools/node-tool.h
+	tools/pencil-tool.h
+	tools/pen-tool.h
+	tools/rect-tool.h
+	tools/select-tool.h
+	tools/spiral-tool.h
+	tools/spray-tool.h
+	tools/star-tool.h
+	tools/text-tool.h
+	tools/tool-base.h
+	tools/tweak-tool.h
+	tools/zoom-tool.h
 
 	widget/attr-widget.h
 	widget/button.h

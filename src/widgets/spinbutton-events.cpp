@@ -18,7 +18,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "../event-context.h"
+#include "ui/tools/tool-base.h"
 
 #include "sp-widget.h"
 #include "widget-sizes.h"

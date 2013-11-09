@@ -56,9 +56,9 @@
 #include "../ui/icon-names.h"
 #include "util/units.h"
 #include "ui/widget/unit-tracker.h"
-#include "../pen-context.h"
+#include "ui/tools/pen-tool.h"
 #include "../sp-namedview.h"
-#include "../flood-context.h"
+#include "ui/tools/flood-tool.h"
 
 #include <gtk/gtk.h>
 

@@ -56,7 +56,7 @@
 #include "../xml/repr.h"
 #include "ui/uxmanager.h"
 #include "../ui/icon-names.h"
-#include "../pen-context.h"
+#include "ui/tools/pen-tool.h"
 #include "../sp-ellipse.h"
 #include "../mod360.h"
 

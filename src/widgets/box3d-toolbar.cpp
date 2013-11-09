@@ -58,9 +58,9 @@
 
 #include "../ui/icon-names.h"
 
-#include "../pen-context.h"
+#include "ui/tools/pen-tool.h"
 
-#include "../box3d-context.h"
+#include "ui/tools/box3d-tool.h"
 #include "../box3d.h"
 
 using Inkscape::UI::UXManager;

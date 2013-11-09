@@ -19,7 +19,7 @@
 #include <gtkmm/eventbox.h>
 #include <glibmm/i18n.h>
 #include <2geom/point.h>
-#include "event-context.h"
+#include "ui/tools/tool-base.h"
 #include "rotateable.h"
 
 namespace Inkscape {

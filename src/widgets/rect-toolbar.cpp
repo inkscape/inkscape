@@ -55,7 +55,7 @@
 #include "../ui/icon-names.h"
 #include "util/units.h"
 #include "ui/widget/unit-tracker.h"
-#include "../pen-context.h"
+#include "ui/tools/pen-tool.h"
 #include "../sp-namedview.h"
 #include "../sp-rect.h"
 

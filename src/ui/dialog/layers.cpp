@@ -41,7 +41,7 @@
 #include "widgets/icon.h"
 #include "xml/repr.h"
 #include "sp-root.h"
-#include "event-context.h"
+#include "ui/tools/tool-base.h"
 #include "selection-chemistry.h"
 
 //#define DUMP_LAYERS 1

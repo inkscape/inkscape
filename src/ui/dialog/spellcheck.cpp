@@ -24,7 +24,7 @@
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "tools-switch.h"
-#include "text-context.h"
+#include "ui/tools/text-tool.h"
 #include "interface.h"
 #include "preferences.h"
 #include "sp-text.h"

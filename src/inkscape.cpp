@@ -51,7 +51,7 @@
 #include "desktop-handles.h"
 #include "device-manager.h"
 #include "document.h"
-#include "event-context.h"
+#include "ui/tools/tool-base.h"
 #include "extension/db.h"
 #include "extension/init.h"
 #include "extension/output.h"

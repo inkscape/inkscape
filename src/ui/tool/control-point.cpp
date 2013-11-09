@@ -14,7 +14,7 @@
 #include "desktop-handles.h"
 #include "display/sp-canvas.h"
 #include "display/snap-indicator.h"
-#include "event-context.h"
+#include "ui/tools/tool-base.h"
 #include "message-context.h"
 #include "preferences.h"
 #include "snap-preferences.h"

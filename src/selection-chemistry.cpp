@@ -56,11 +56,11 @@ SPCycleType SP_CYCLING = SP_CYCLE_FOCUS;
 #include "sp-polyline.h"
 #include "sp-line.h"
 #include "text-editing.h"
-#include "text-context.h"
-#include "connector-context.h"
+#include "ui/tools/text-tool.h"
+#include "ui/tools/connector-tool.h"
 #include "sp-path.h"
 #include "sp-conn-end.h"
-#include "dropper-context.h"
+#include "ui/tools/dropper-tool.h"
 #include <glibmm/i18n.h>
 #include <2geom/transforms.h>
 #include "xml/repr.h"
@@ -74,7 +74,7 @@ SPCycleType SP_CYCLING = SP_CYCLE_FOCUS;
 #include "sp-pattern.h"
 #include "sp-symbol.h"
 #include "sp-radial-gradient.h"
-#include "gradient-context.h"
+#include "ui/tools/gradient-tool.h"
 #include "sp-namedview.h"
 #include "preferences.h"
 #include "sp-offset.h"
@@ -111,7 +111,7 @@ SPCycleType SP_CYCLING = SP_CYCLE_FOCUS;
 
 // For clippath editing
 #include "tools-switch.h"
-#include "ui/tool/node-tool.h"
+#include "ui/tools/node-tool.h"
 
 #include "ui/clipboard.h"
 #include "verbs.h"

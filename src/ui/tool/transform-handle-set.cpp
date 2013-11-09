@@ -26,7 +26,7 @@
 #include "ui/tool/selectable-control-point.h"
 #include "ui/tool/event-utils.h"
 #include "ui/tool/transform-handle-set.h"
-#include "ui/tool/node-tool.h"
+#include "ui/tools/node-tool.h"
 #include "ui/tool/node.h"
 #include "seltrans.h"
 

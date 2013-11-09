@@ -23,7 +23,7 @@
 #include <gdk/gdkkeysyms.h>
 
 #include "inkscape.h"
-#include "event-context.h"
+#include "ui/tools/tool-base.h"
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "modifier-fns.h"

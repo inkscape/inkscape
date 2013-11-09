@@ -43,7 +43,7 @@
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "desktop-style.h"
-#include "event-context.h"
+#include "ui/tools/tool-base.h"
 #include "inkscape.h"
 #include "style.h"
 #include "message-stack.h"

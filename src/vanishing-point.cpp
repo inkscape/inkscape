@@ -19,7 +19,7 @@
 #include "desktop.h"
 #include "display/sp-canvas-item.h"
 #include "display/sp-ctrlline.h"
-#include "event-context.h"
+#include "ui/tools/tool-base.h"
 #include "xml/repr.h"
 #include "perspective-line.h"
 #include "shape-editor.h"

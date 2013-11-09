@@ -40,7 +40,7 @@
 #include "sp-text.h"
 #include "display/curve.h"
 
-#include "ui/tool/node-tool.h"
+#include "ui/tools/node-tool.h"
 #include "ui/tool/multi-path-manipulator.h"
 #include "ui/tool/shape-record.h"
 

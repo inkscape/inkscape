@@ -27,7 +27,7 @@
 #include "desktop.h"
 #include "inkscape-private.h"
 #include "preferences.h"
-#include "event-context.h"
+#include "ui/tools/tool-base.h"
 
 #include "dialog-events.h"
 

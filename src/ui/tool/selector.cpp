@@ -13,7 +13,7 @@
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "display/sodipodi-ctrlrect.h"
-#include "event-context.h"
+#include "ui/tools/tool-base.h"
 #include "preferences.h"
 #include "ui/tool/event-utils.h"
 #include "ui/tool/selector.h"

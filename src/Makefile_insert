@@ -4,14 +4,12 @@ ink_common_sources +=	\
 	util/find-last-if.h					\
 	util/longest-common-suffix.h				\
 	remove-last.h					\
-	arc-context.cpp arc-context.h					\
 	attributes.cpp attributes.h					\
 	attribute-rel-svg.cpp attribute-rel-svg.h			\
 	attribute-rel-css.cpp attribute-rel-css.h			\
 	attribute-rel-util.cpp attribute-rel-util.h			\
 	axis-manip.cpp axis-manip.h					\
 	bad-uri-exception.h						\
-	box3d-context.cpp box3d-context.h				\
 	box3d.cpp box3d.h						\
 	box3d-side.cpp box3d-side.h					\
 	brokenimage.xpm							\
@@ -22,13 +20,11 @@ ink_common_sources +=	\
 	color-profile-cms-fns.h						\
 	color-rgba.h							\
 	colorspace.h							\
-	common-context.cpp common-context.h				\
 	composite-undo-stack-observer.cpp				\
 	composite-undo-stack-observer.h					\
 	conditions.cpp conditions.h					\
 	conn-avoid-ref.cpp conn-avoid-ref.h				\
 	connection-pool.h						\
-	connector-context.cpp connector-context.h			\
 	console-output-undo-observer.h console-output-undo-observer.cpp \
 	context-fns.cpp context-fns.h					\
 	decimal-round.h							\
@@ -43,16 +39,11 @@ ink_common_sources +=	\
 	document-undo.cpp document-undo.h \
 	doxygen-main.cpp						\
 	draw-anchor.cpp	draw-anchor.h					\
-	draw-context.cpp draw-context.h					\
-	dropper-context.cpp dropper-context.h				\
-	dyna-draw-context.cpp dyna-draw-context.h			\
 	ege-adjustment-action.cpp ege-adjustment-action.h		\
 	ege-color-prof-tracker.cpp ege-color-prof-tracker.h		\
 	ege-output-action.cpp ege-output-action.h			\
 	ege-select-one-action.cpp ege-select-one-action.h		\
 	enums.h								\
-	eraser-context.cpp eraser-context.h				\
-	event-context.cpp event-context.h				\
 	event-log.cpp event-log.h event.h				\
 	extract-uri.cpp extract-uri.h					\
 	factory.h							\
@@ -60,7 +51,6 @@ ink_common_sources +=	\
 	fill-or-stroke.h						\
 	filter-chemistry.cpp filter-chemistry.h				\
 	filter-enums.cpp filter-enums.h					\
-	flood-context.cpp flood-context.h				\
 	gc-alloc.h							\
 	gc-anchored.h gc-anchored.cpp					\
 	gc-core.h							\
@@ -69,7 +59,6 @@ ink_common_sources +=	\
 	gc-managed.h							\
 	gc-soft-ptr.h							\
 	gradient-chemistry.cpp gradient-chemistry.h			\
-	gradient-context.cpp gradient-context.h				\
 	gradient-drag.cpp gradient-drag.h				\
 	graphlayout.cpp graphlayout.h					\
 	guide-snapper.cpp guide-snapper.h				\
@@ -96,13 +85,11 @@ ink_common_sources +=	\
   layer-model.cpp layer-model.h         \
 	line-geometry.cpp line-geometry.h				\
 	line-snapper.cpp line-snapper.h					\
-	lpe-tool-context.cpp lpe-tool-context.h				\
 	macros.h							\
 	main-cmdlineact.cpp main-cmdlineact.h				\
 	marker.cpp marker.h						\
 	media.cpp media.h						\
 	menus-skeleton.h						\
-	mesh-context.cpp mesh-context.h					\
 	message-context.cpp message-context.h				\
 	message.h							\
 	message-stack.cpp message-stack.h				\
@@ -113,8 +100,6 @@ ink_common_sources +=	\
 	object-snapper.cpp object-snapper.h				\
 	path-chemistry.cpp path-chemistry.h				\
 	path-prefix.h							\
-	pencil-context.cpp pencil-context.h				\
-	pen-context.cpp	pen-context.h					\
 	persp3d.cpp persp3d.h						\
 	persp3d-reference.cpp persp3d-reference.h			\
 	perspective-line.cpp perspective-line.h				\
@@ -126,14 +111,12 @@ ink_common_sources +=	\
 	proj_pt.cpp proj_pt.h						\
 	removeoverlap.cpp removeoverlap.h				\
 	rdf.cpp rdf.h							\
-	rect-context.cpp rect-context.h					\
 	resource-manager.cpp resource-manager.h				\
 	require-config.h						\
 	round.h								\
 	rubberband.cpp rubberband.h					\
 	satisfied-guide-cns.cpp satisfied-guide-cns.h			\
 	selcue.cpp selcue.h						\
-	select-context.cpp select-context.h				\
 	selection-chemistry.cpp selection-chemistry.h			\
 	selection.cpp selection.h					\
 	selection-describer.cpp selection-describer.h			\
@@ -177,7 +160,6 @@ ink_common_sources +=	\
 	sp-guide-constraint.h						\
 	sp-guide.cpp sp-guide.h						\
 	sp-image.cpp sp-image.h						\
-	spiral-context.cpp spiral-context.h				\
 	sp-item.cpp sp-item.h						\
 	sp-item-group.cpp sp-item-group.h				\
 	sp-item-notify-moveto.cpp sp-item-notify-moveto.h		\
@@ -226,8 +208,6 @@ ink_common_sources +=	\
 	sp-tspan.cpp sp-tspan.h			\
 	sp-use.cpp sp-use.h			\
 	sp-use-reference.cpp sp-use-reference.h	\
-	spray-context.cpp spray-context.h	\
-	star-context.cpp star-context.h		\
 	streq.h					\
 	strneq.h				\
 	style.cpp style.h			\
@@ -236,13 +216,11 @@ ink_common_sources +=	\
 	svg-view-widget.cpp svg-view-widget.h	\
 	syseq.h					\
 	text-chemistry.cpp text-chemistry.h	\
-	text-context.cpp text-context.h		\
 	text-editing.cpp text-editing.h		\
 	text-tag-attributes.h			\
 	tool-factory.h				\
 	tools-switch.cpp tools-switch.h		\
 	transf_mat_3x4.cpp transf_mat_3x4.h	\
-	tweak-context.h tweak-context.cpp	\
 	unclump.cpp unclump.h			\
 	undo-stack-observer.h			\
 	unicoderange.cpp unicoderange.h		\
@@ -250,9 +228,7 @@ ink_common_sources +=	\
 	uri-references.cpp uri-references.h	\
 	vanishing-point.cpp vanishing-point.h	\
 	verbs.cpp verbs.h			\
-	version.cpp version.h			\
-	zoom-context.cpp zoom-context.h			\
-	measure-context.cpp measure-context.h
+	version.cpp version.h
 
 # Additional dependencies
 

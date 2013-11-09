@@ -33,7 +33,7 @@
 #include <2geom/transforms.h>
 #include <2geom/rect.h>
 
-#include "box3d-context.h"
+#include "ui/tools/box3d-tool.h"
 #include "color.h"
 #include "desktop-events.h"
 #include "desktop.h"
@@ -64,7 +64,7 @@
 #include "message-stack.h"
 #include "preferences.h"
 #include "resource-manager.h"
-#include "select-context.h"
+#include "ui/tools/select-tool.h"
 #include "selection.h"
 #include "sp-item-group.h"
 #include "sp-item-group.h"
@@ -76,7 +76,7 @@
 #include "helper/action.h" //sp_action_perform
 
 // TODO those includes are only for node tool quick zoom. Remove them after fixing it.
-#include "ui/tool/node-tool.h"
+#include "ui/tools/node-tool.h"
 #include "ui/tool/control-point-selection.h"
 
 namespace Inkscape { namespace XML { class Node; }}

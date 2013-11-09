@@ -27,7 +27,7 @@
 #include "preferences.h"
 #include "message-stack.h"
 #include "message-context.h"
-#include "event-context.h"
+#include "ui/tools/tool-base.h"
 
 using Inkscape::DocumentUndo;
 

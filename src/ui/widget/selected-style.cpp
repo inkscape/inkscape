@@ -39,7 +39,7 @@
 #include "sp-gradient.h"
 #include "svg/svg-color.h"
 #include "svg/css-ostringstream.h"
-#include "event-context.h"
+#include "ui/tools/tool-base.h"
 #include "message-context.h"
 #include "verbs.h"
 #include "color.h"
