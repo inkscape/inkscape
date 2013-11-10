@@ -102,7 +102,7 @@ class MyEffect(inkex.Effect):
             self.hpgl = self.hpgl.replace(';', ',')
             self.hpgl = self.hpgl.replace('PU', 'U')
             self.hpgl = self.hpgl.replace('PD', 'D')
-            self.hpgl = re.sub(r'IN,SP([0-9]{1,2}),', r';:HAEC1L0P\1', self.hpgl)
+            self.hpgl = re.sub(r'IN,SP([0-9]{1,2}),', r';:HAL0P\1EC1', self.hpgl)
             self.hpgl += 'Z'
         # send data to plotter
         mySerial = serial.Serial()
