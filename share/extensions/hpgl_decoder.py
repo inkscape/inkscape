@@ -38,17 +38,18 @@ class hpglDecoder:
         self.options = options
         self.scaleX = options.resolutionX / 90.0 # dots/inch to dots/pixels
         self.scaleY = options.resolutionY / 90.0 # dots/inch to dots/pixels
-        self.warnings = []
+        self.warning = ''
+        self.textMovements = _("Movements")
+        self.textPenNumber = _("Pen #")
 
     def getSvg(self):
-        # parse hpgl data
         # prepare document
         self.doc = inkex.etree.parse(StringIO('<svg xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" width="%s" height="%s"></svg>' %
             (self.options.docWidth, self.options.docHeight)))
         actualLayer = 0
         self.layers = {}
         if self.options.showMovements:
-            self.layers[0] = inkex.etree.SubElement(self.doc.getroot(), 'g', {inkex.addNS('groupmode', 'inkscape'): 'layer', inkex.addNS('label', 'inkscape'): 'Movements'})
+            self.layers[0] = inkex.etree.SubElement(self.doc.getroot(), 'g', {inkex.addNS('groupmode', 'inkscape'): 'layer', inkex.addNS('label', 'inkscape'): self.textMovements})
         # parse paths
         hpglData = self.hpglString.split(';')
         if len(hpglData) < 3:
@@ -89,14 +90,14 @@ class hpglDecoder:
                         parameterString = ','.join(parameter)
                         path += ' L %s' % parameterString
                 else:
-                    self.warnings.append('UNKNOWN_COMMANDS')
+                    self.warning = 'UNKNOWN_COMMANDS'
         if ' L ' in path:
             self.addPathToLayer(path, actualLayer)
-        return (self.doc, self.warnings)
+        return (self.doc, self.warning)
 
     def createLayer(self, layerNumber):
         self.layers[layerNumber] = inkex.etree.SubElement(self.doc.getroot(), 'g',
-            {inkex.addNS('groupmode', 'inkscape'): 'layer', inkex.addNS('label', 'inkscape'): 'Drawing Pen ' + layerNumber})
+            {inkex.addNS('groupmode', 'inkscape'): 'layer', inkex.addNS('label', 'inkscape'): self.textPenNumber + layerNumber})
 
     def addPathToLayer(self, path, layerNumber):
         lineColor = '000000'

@@ -35,7 +35,7 @@ class MyEffect(inkex.Effect):
         self.OptionParser.add_option('--resolutionX',      action='store', type='float',   dest='resolutionX',      default=1016.0,  help='Resolution X (dpi)')
         self.OptionParser.add_option('--resolutionY',      action='store', type='float',   dest='resolutionY',      default=1016.0,  help='Resolution Y (dpi)')
         self.OptionParser.add_option('--pen',              action='store', type='int',     dest='pen',              default=1,       help='Pen number')
-        self.OptionParser.add_option('--orientation',      action='store', type='string',  dest='orientation',      default='90',    help='orientation')
+        self.OptionParser.add_option('--orientation',      action='store', type='string',  dest='orientation',      default='90',    help='Rotation (Clockwise)')
         self.OptionParser.add_option('--mirrorX',          action='store', type='inkbool', dest='mirrorX',          default='FALSE', help='Mirror X-axis')
         self.OptionParser.add_option('--mirrorY',          action='store', type='inkbool', dest='mirrorY',          default='FALSE', help='Mirror Y-axis')
         self.OptionParser.add_option('--center',           action='store', type='inkbool', dest='center',           default='FALSE', help='Center zero point')
@@ -57,14 +57,16 @@ class MyEffect(inkex.Effect):
             if inst.args[0] == 'NO_PATHS':
                 # issue error if no paths found
                 inkex.errormsg(_("No paths where found. Please convert all objects you want to save into paths."))
-                self.hpgl = 1
+                self.hpgl = ''
+                return
             else:
                 type, value, traceback = sys.exc_info()
                 raise ValueError, ("", type, value), traceback
 
     def output(self):
         # print to file
-        print self.hpgl
+        if self.hpgl != '':
+            print self.hpgl
 
 if __name__ == '__main__':
     # Raise recursion limit to avoid exceptions on big documents

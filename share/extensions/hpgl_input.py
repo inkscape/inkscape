@@ -53,18 +53,20 @@ hpglString = ';'.join(hpglString)
 myHpglDecoder = hpgl_decoder.hpglDecoder(hpglString, options)
 try:
     doc, warnings = myHpglDecoder.getSvg()
-    # issue warning if unknown commands where found
-    if 'UNKNOWN_COMMANDS' in warnings:
-        inkex.errormsg(_("The HPGL data contained unknown (unsupported) commands, there is a possibility that the drawing is missing some content."))
-    # deliver document to inkscape
-    doc.write(inkex.sys.stdout)
 except Exception as inst:
     if inst.args[0] == 'NO_HPGL_DATA':
         # issue error if no hpgl data found
         inkex.errormsg(_("No HPGL data found."))
-        print 1
+        exit(1)
     else:
         type, value, traceback = sys.exc_info()
         raise ValueError, ("", type, value), traceback
+
+# issue warning if unknown commands where found
+if 'UNKNOWN_COMMANDS' in warnings:
+    inkex.errormsg(_("The HPGL data contained unknown (unsupported) commands, there is a possibility that the drawing is missing some content."))
+
+# deliver document to inkscape
+doc.write(inkex.sys.stdout)
 
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 fileencoding=utf-8 textwidth=99

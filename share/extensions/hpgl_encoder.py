@@ -125,7 +125,7 @@ class hpglEncoder:
         style = group.get('style')
         if style:
             style = simplestyle.parseStyle(style)
-            if style.has_key('display'):
+            if 'display' in style:
                 if style['display'] == 'none':
                     return
         trans = group.get('transform')

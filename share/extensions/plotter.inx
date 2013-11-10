@@ -26,11 +26,15 @@
                 <option value="57600">57600</option>
                 <option value="115200">115200</option>
             </param>
-            <param name="flowControl" type="optiongroup" appearance="minimal" _gui-text="Flow control" _gui-description="Software / Hardware flow control - Try different settings to find the one that fits your plotter (Default: None)">
-                <_option value="">None</_option>
+            <param name="flowControl" type="optiongroup" appearance="minimal" _gui-text="Flow control" _gui-description="Software / Hardware flow control - Try different settings to find the one that fits your plotter (Default: Software)">
                 <_option value="xonxoff">Software (XON/XOFF)</_option>
                 <_option value="rtscts">Hardware (RTS/CTS)</_option>
                 <_option value="dsrdtrrtscts">Hardware (DSR/DTR + RTS/CTS)</_option>
+                <_option value="">None</_option>
+            </param>
+            <param name="commandLanguage" type="optiongroup" appearance="minimal" _gui-text="Command Language" _gui-description="The command language to use - Try different settings to find the one that fits your plotter (Default: HPGL)">
+                <option value="hpgl">HPGL</option>
+                <option value="dmpl">DMPL</option>
             </param>
             <param name="space" type="description">&#xa0;</param>
             <_param name="serialHelp" type="description">This can be a physical serial connection or a USB-to-Serial bridge. Ask your plotter manufacturer for drivers if needed.</_param>
@@ -38,7 +42,7 @@
             <_param name="hpglNote" type="description">Please note that only the HPGL command language is supported at the moment.</_param>
         </page>
         <page name="plotter" _gui-text="Plotter Settings">
-            <param name="pen" type="int" min="0" max="10" _gui-text="Pen number" _gui-description="The number of the pen (tool) to use, on most plotters 1 (Standard: '1')">1</param>
+            <param name="pen" type="int" min="0" max="99" _gui-text="Pen number" _gui-description="The number of the pen (tool) to use, on most plotters 1 (Standard: '1')">1</param>
             <param name="resolutionX" type="float" min="1.0" max="4096.0" precision="1" _gui-text="Resolution X (dpi)" _gui-description="The amount of steps the cutter moves if it moves for 1 inch on the X axis - Try different settings to find the one that fits your plotter (Default: 1016.0)">1016.0</param>
             <param name="resolutionY" type="float" min="1.0" max="4096.0" precision="1" _gui-text="Resolution Y (dpi)" _gui-description="The amount of steps the cutter moves if it moves for 1 inch on the Y axis - Try different settings to find the one that fits your plotter (Default: 1016.0)">1016.0</param>
             <param name="mirrorX" type="boolean" _gui-text="Mirror X-axis" _gui-description="Check this to mirror the X axis (Default: Unchecked)">false</param>
