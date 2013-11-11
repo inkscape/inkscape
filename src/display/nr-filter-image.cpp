@@ -163,6 +163,10 @@ void FilterImage::render_cairo(FilterSlot &slot)
         broken_ref = false;
     }
 
+    if (broken_ref) {
+        return;
+    }
+
     cairo_surface_t *image_surface = image->getSurfaceRaw();
 
     Geom::Rect sa = slot.get_slot_area();
