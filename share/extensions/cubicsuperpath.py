@@ -46,8 +46,8 @@ def ArcToPath(p1,params):
     rx,ry,teta,longflag,sweepflag,x2,y2=params[:]
     teta = teta*pi/180.0
     B=[x2,y2]
-    if rx==0 or ry==0:
-        return([[A,A,A],[B,B,B]])
+    if rx==0 or ry==0 or A==B:
+        return([[A[:],A[:],A[:]],[B[:],B[:],B[:]]])
     mat=matprod((rotmat(teta),[[1/rx,0],[0,1/ry]],rotmat(-teta)))
     applymat(mat, A)
     applymat(mat, B)
