@@ -69,8 +69,6 @@ class MyEffect(inkex.Effect):
             print self.hpgl
 
 if __name__ == '__main__':
-    # Raise recursion limit to avoid exceptions on big documents
-    sys.setrecursionlimit(20000)
     # start extension
     e = MyEffect()
     e.affect()

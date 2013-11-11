@@ -88,10 +88,10 @@ class hpglEncoder:
 
     def getHpgl(self):
         # dryRun to find edges
-        self.groupmat = [[[self.mirrorX * self.scaleX * self.viewBoxTransformX, 0.0, 0.0], [0.0, self.mirrorY * self.scaleY * self.viewBoxTransformY, 0.0]]]
-        self.groupmat[0] = simpletransform.composeTransform(self.groupmat[0], simpletransform.parseTransform('rotate(' + self.options.orientation + ')'))
+        groupmat = [[self.mirrorX * self.scaleX * self.viewBoxTransformX, 0.0, 0.0], [0.0, self.mirrorY * self.scaleY * self.viewBoxTransformY, 0.0]]
+        groupmat = simpletransform.composeTransform(groupmat, simpletransform.parseTransform('rotate(' + self.options.orientation + ')'))
         self.vData = [['', -1.0, -1.0], ['', -1.0, -1.0], ['', -1.0, -1.0], ['', -1.0, -1.0]]
-        self.process_group(self.doc, self.groupmat)
+        self.process_groups(self.doc, groupmat)
         if self.divergenceX == 'False' or self.divergenceY == 'False' or self.sizeX == 'False' or self.sizeY == 'False':
             raise Exception('NO_PATHS')
         # live run
@@ -102,9 +102,9 @@ class hpglEncoder:
         elif self.options.useToolOffset:
             self.options.offsetX += self.options.toolOffset
             self.options.offsetY += self.options.toolOffset
-        self.groupmat = [[[self.mirrorX * self.scaleX * self.viewBoxTransformX, 0.0, - self.divergenceX + self.options.offsetX],
-            [0.0, self.mirrorY * self.scaleY * self.viewBoxTransformY, - self.divergenceY + self.options.offsetY]]]
-        self.groupmat[0] = simpletransform.composeTransform(self.groupmat[0], simpletransform.parseTransform('rotate(' + self.options.orientation + ')'))
+        groupmat = [[self.mirrorX * self.scaleX * self.viewBoxTransformX, 0.0, - self.divergenceX + self.options.offsetX],
+            [0.0, self.mirrorY * self.scaleY * self.viewBoxTransformY, - self.divergenceY + self.options.offsetY]]
+        groupmat = simpletransform.composeTransform(groupmat, simpletransform.parseTransform('rotate(' + self.options.orientation + ')'))
         self.vData = [['', -1.0, -1.0], ['', -1.0, -1.0], ['', -1.0, -1.0], ['', -1.0, -1.0]]
         # store first hpgl commands
         self.hpgl = 'IN;SP%d' % self.options.pen
@@ -113,32 +113,49 @@ class hpglEncoder:
             self.calcOffset('PU', 0, 0)
             self.calcOffset('PD', 0, self.options.toolOffset * 8)
         # start conversion
-        self.process_group(self.doc, self.groupmat)
+        self.process_groups(self.doc, groupmat)
         # shift an empty node in in order to process last node in cache
         self.calcOffset('PU', 0, 0)
         # add return to zero point
         self.hpgl += ';PU0,0;'
         return self.hpgl
 
-    def process_group(self, group, groupmat):
-        # process groups
+    def process_groups(self, doc, groupmat):
+        # flatten groups to avoid recursion
+        paths = []
+        for node in doc:
+            if (node.tag == inkex.addNS('g', 'svg') and self.isGroupVisible(node)) or node.tag == inkex.addNS('path', 'svg'):
+                paths.append([node.tag, node, self.mergeTransform(node, groupmat)])
+        doc = ''
+        hasGroups = True
+        while hasGroups:
+            hasGroups = False
+            for i, elm in enumerate(paths):
+                if paths[i][0] == inkex.addNS('g', 'svg') and self.isGroupVisible(paths[i][1]):
+                    hasGroups = True
+                    for path in paths[i][1]:
+                        if (path.tag == inkex.addNS('g', 'svg') and self.isGroupVisible(path)) or path.tag == inkex.addNS('path', 'svg'):
+                            paths.append([path.tag, path, self.mergeTransform(path, paths[i][2])])
+                    paths[i][0] = ''
+        for node in paths:
+            if node[0] == inkex.addNS('path', 'svg'):
+                self.process_path(node[1], node[2])
+
+    def mergeTransform(self, doc, matrix):
+        # get and merge two matrixes into one
+        trans = doc.get('transform')
+        if trans:
+            return simpletransform.composeTransform(matrix, simpletransform.parseTransform(trans))
+        else:
+            return matrix
+
+    def isGroupVisible(self, group):
         style = group.get('style')
         if style:
             style = simplestyle.parseStyle(style)
-            if 'display' in style:
-                if style['display'] == 'none':
-                    return
-        trans = group.get('transform')
-        if trans:
-            groupmat.append(simpletransform.composeTransform(groupmat[-1], simpletransform.parseTransform(trans)))
-        for node in group:
-            if node.tag == inkex.addNS('path', 'svg'):
-                self.process_path(node, groupmat[-1])
-            if node.tag == inkex.addNS('g', 'svg'):
-                # TODO: Remove recursion
-                self.process_group(node, groupmat)
-        if trans:
-            groupmat.pop()
+            if 'display' in style and style['display'] == 'none':
+                return False
+        return True
 
     def process_path(self, node, mat):
         # process path

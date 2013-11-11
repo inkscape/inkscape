@@ -127,8 +127,6 @@ class MyEffect(inkex.Effect):
         mySerial.close()
 
 if __name__ == '__main__':
-    # raise recursion limit to avoid exceptions on big documents
-    sys.setrecursionlimit(20000)
     # start extension
     e = MyEffect()
     e.affect()
