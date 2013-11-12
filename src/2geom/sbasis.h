@@ -74,14 +74,16 @@ class SBasis{
 public:
     // As part of our migration away from SBasis isa vector we provide this minimal set of vector interface methods.
     size_t size() const {return d.size();}
+    typedef std::vector<Linear>::iterator iterator;
+    typedef std::vector<Linear>::const_iterator const_iterator;
     Linear operator[](unsigned i) const {
         return d[i];
     }
     Linear& operator[](unsigned i) { return d.at(i); }
-    Linear const* begin() const { return (Linear const*)&*d.begin();}
-    Linear const* end() const { return (Linear const*)&*d.end();}
-    Linear* begin() { return (Linear*)&*d.begin();}
-    Linear* end() { return (Linear*)&*d.end();}
+    const_iterator begin() const { return d.begin();}
+    const_iterator end() const { return d.end();}
+    iterator begin() { return d.begin();}
+    iterator end() { return d.end();}
     bool empty() const {return d.empty();}
     Linear &back() {return d.back();}
     Linear const &back() const {return d.back();}
@@ -90,8 +92,7 @@ public:
     void resize(unsigned n, Linear const& l) { d.resize(n, l);}
     void reserve(unsigned n) { d.reserve(n);}
     void clear() {d.clear();}
-    void insert(Linear* before, const Linear* src_begin, const Linear* src_end) { d.insert(std::vector<Linear>::iterator(before), src_begin, src_end);}
-    //void insert(Linear* aa, Linear* bb, Linear* cc} { d.insert(aa, bb, cc);}
+    void insert(iterator before, const_iterator src_begin, const_iterator src_end) { d.insert(before, src_begin, src_end);}
     Linear& at(unsigned i) { return d.at(i);}
     //void insert(Linear* before, int& n, Linear const &l) { d.insert(std::vector<Linear>::iterator(before), n, l);}
     bool operator==(SBasis const&B) const { return d == B.d;}
