@@ -111,6 +111,10 @@ public:
     void setSource(DrawingSurface *s);
     void setSourceCheckerboard();
 
+    void patternSetFilter(cairo_filter_t filter) {
+        cairo_pattern_set_filter(cairo_get_source(_ct), filter);
+    }
+
     Geom::Rect targetLogicalBounds() const;
 
     cairo_t *raw() { return _ct; }

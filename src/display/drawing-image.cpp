@@ -108,13 +108,6 @@ unsigned DrawingImage::_renderItem(DrawingContext &ct, Geom::IntRect const &/*ar
 
     if (!outline) {
         if (!_pixbuf) return RENDER_OK;
-        
-        // if (_style) {
-            // _style->image_rendering.computed
-            // See: http://www.w3.org/TR/SVG/painting.html#ImageRenderingProperty
-            //      http://www.w3.org/TR/css4-images/#the-image-rendering
-            //      style.h/style.cpp
-        // }
 
         Inkscape::DrawingContext::Save save(ct);
         ct.transform(_ctm);
@@ -125,6 +118,24 @@ unsigned DrawingImage::_renderItem(DrawingContext &ct, Geom::IntRect const &/*ar
         ct.translate(_origin);
         ct.scale(_scale);
         ct.setSource(_pixbuf->getSurfaceRaw(), 0, 0);
+
+        if (_style) {
+            // See: http://www.w3.org/TR/SVG/painting.html#ImageRenderingProperty
+            //      http://www.w3.org/TR/css4-images/#the-image-rendering
+            //      style.h/style.cpp
+            switch (_style->image_rendering.computed) {
+                case SP_CSS_COLOR_RENDERING_AUTO:
+                    // Do nothing
+                    break;
+                case SP_CSS_COLOR_RENDERING_OPTIMIZEQUALITY:
+                    ct.patternSetFilter( CAIRO_FILTER_BEST );
+                    break;
+                case SP_CSS_COLOR_RENDERING_OPTIMIZESPEED:
+                default:
+                    ct.patternSetFilter( CAIRO_FILTER_NEAREST );
+                    break;
+            }
+        }
 
         ct.paint(_opacity);
 
