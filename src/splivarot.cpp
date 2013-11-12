@@ -338,6 +338,8 @@ sp_selected_path_boolop(Inkscape::Selection *selection, SPDesktop *desktop, bool
         return;
     }
 
+    g_assert(il != NULL);
+
     if (g_slist_length(il) > 2) {
         if (bop == bool_op_diff || bop == bool_op_cut || bop == bool_op_slice ) {
             boolop_display_error_message(desktop, _("Select <b>exactly 2 paths</b> to perform difference, division, or path cut."));
@@ -352,8 +354,8 @@ sp_selected_path_boolop(Inkscape::Selection *selection, SPDesktop *desktop, bool
 
     if (bop == bool_op_diff || bop == bool_op_cut || bop == bool_op_slice) {
         // check in the tree to find which element of the selection list is topmost (for 2-operand commands only)
-        Inkscape::XML::Node *a = reinterpret_cast<SPObject *>(il->data)->getRepr();
-        Inkscape::XML::Node *b = reinterpret_cast<SPObject *>(il->next->data)->getRepr();
+        Inkscape::XML::Node *a = SP_OBJECT(il->data)->getRepr();
+        Inkscape::XML::Node *b = SP_OBJECT(il->next->data)->getRepr();
 
         if (a == NULL || b == NULL) {
             boolop_display_error_message(desktop, _("Unable to determine the <b>z-order</b> of the objects selected for difference, XOR, division, or path cut."));
@@ -393,6 +395,7 @@ sp_selected_path_boolop(Inkscape::Selection *selection, SPDesktop *desktop, bool
     }
 
     il = g_slist_copy(il);
+    g_assert(il != NULL);
 
     // first check if all the input objects have shapes
     // otherwise bail out
@@ -1160,7 +1163,7 @@ sp_selected_path_outline(SPDesktop *desktop)
          items != NULL;
          items = items->next) {
 
-        SPItem *item = (SPItem *) items->data;
+        SPItem *item = SP_ITEM(items->data);
 
         if (!SP_IS_SHAPE(item) && !SP_IS_TEXT(item))
             continue;
@@ -1176,6 +1179,8 @@ sp_selected_path_outline(SPDesktop *desktop)
             if (curve == NULL)
                 continue;
         }
+
+        g_assert(curve != NULL);
 
         if (curve->get_pathvector().empty()) {
             continue;
@@ -1595,6 +1600,8 @@ void sp_selected_path_create_offset_object(SPDesktop *desktop, int expand, bool 
         }
     }
 
+    g_assert(curve != NULL);
+
     Geom::Affine const transform(item->transform);
 
     item->doWriteTransform(item->getRepr(), Geom::identity());
@@ -1610,9 +1617,6 @@ void sp_selected_path_create_offset_object(SPDesktop *desktop, int expand, bool 
 
     float o_width = 0;
     {
-        SPStyle *i_style = item->style;
-
-        o_width = i_style->stroke_width.computed;
         {
             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
             o_width = prefs->getDouble("/options/defaultoffsetwidth/value", 1.0, "px");
@@ -1774,7 +1778,7 @@ sp_selected_path_do_offset(SPDesktop *desktop, bool expand, double prefOffset)
          items != NULL;
          items = items->next) {
 
-        SPItem *item = (SPItem *) items->data;
+        SPItem *item = SP_ITEM(items->data);
 
         if (!SP_IS_SHAPE(item) && !SP_IS_TEXT(item))
             continue;
@@ -1791,6 +1795,9 @@ sp_selected_path_do_offset(SPDesktop *desktop, bool expand, double prefOffset)
                 continue;
         }
 
+        // We've now checked that there is a curve for this item
+        g_assert(curve != NULL);
+
         Geom::Affine const transform(item->transform);
 
         item->doWriteTransform(item->getRepr(), Geom::identity());
@@ -1805,9 +1812,6 @@ sp_selected_path_do_offset(SPDesktop *desktop, bool expand, double prefOffset)
         {
             SPStyle *i_style = item->style;
             int jointype = i_style->stroke_linejoin.value;
-            //int captype = i_style->stroke_linecap.value;
-
-            o_width = i_style->stroke_width.computed;
 
             switch (jointype) {
                 case SP_STROKE_LINEJOIN_MITER:
@@ -1820,18 +1824,6 @@ sp_selected_path_do_offset(SPDesktop *desktop, bool expand, double prefOffset)
                     o_join = join_straight;
                     break;
             }
-
-            /*switch (captype) {
-                case SP_STROKE_LINECAP_SQUARE:
-                    o_butt = butt_square;
-                    break;
-                case SP_STROKE_LINECAP_ROUND:
-                    o_butt = butt_round;
-                    break;
-                default:
-                    o_butt = butt_straight;
-                    break;
-            }*/
 
             o_width = prefOffset;
 
