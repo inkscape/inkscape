@@ -29,7 +29,7 @@ import inkex
 inkex.localize()
 
 
-# TODO: Unittests, Material feed after plot, plot rectangles and circles (convert to paths), maybe interpret layers as pens
+# TODO: Unittests
 class MyEffect(inkex.Effect):
 
     def __init__(self):

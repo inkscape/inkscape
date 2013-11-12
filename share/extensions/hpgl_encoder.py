@@ -159,13 +159,10 @@ class hpglEncoder:
 
     def process_path(self, node, mat):
         # process path
-        drawing = node.get('d')
-        if drawing:
-            # transform path
-            paths = cubicsuperpath.parsePath(drawing)
-            trans = node.get('transform')
-            if trans:
-                mat = simpletransform.composeTransform(mat, simpletransform.parseTransform(trans))
+        paths = node.get('d')
+        if paths:
+            # parse and transform path
+            paths = cubicsuperpath.parsePath(paths)
             simpletransform.applyTransformToPath(mat, paths)
             cspsubdiv.cspsubdiv(paths, self.options.flat)
             # path to HPGL commands
