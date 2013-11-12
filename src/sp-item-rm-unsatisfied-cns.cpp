@@ -24,10 +24,12 @@ void sp_item_rm_unsatisfied_cns(SPItem &item)
         g_assert( snappoint_ix < int(snappoints.size()) );
 
         if (!Geom::are_near(cn.g->getDistanceFrom(snappoints[snappoint_ix].getPoint()), 0, 1e-2)) {
+
             remove_last(cn.g->attached_items, SPGuideAttachment(&item, cn.snappoint_ix));
+
             g_assert( i < item.constraints.size() );
-            vector<SPGuideConstraint>::iterator const ei(&item.constraints[i]);
-            item.constraints.erase(ei);
+
+            item.constraints.erase(item.constraints.begin() + i);
         }
     }
 }
