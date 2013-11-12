@@ -71,6 +71,7 @@
 #include "sp-namedview.h"
 #include "sp-root.h"
 #include "sp-defs.h"
+#include "tool-factory.h"
 #include "widgets/desktop-widget.h"
 #include "xml/repr.h"
 #include "helper/action.h" //sp_action_perform
@@ -229,14 +230,7 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas, Inkscape::UI::View::EditWid
     tempgroup = (SPCanvasGroup *) sp_canvas_item_new (main, SP_TYPE_CANVAS_GROUP, NULL);
     controls = (SPCanvasGroup *) sp_canvas_item_new (main, SP_TYPE_CANVAS_GROUP, NULL);
 
-    /* Push select tool to the bottom of stack */
-    /** \todo
-     * FIXME: this is the only call to this.  Everything else seems to just
-     * call "set" instead of "push".  Can we assume that there is only one
-     * context ever?
-     */
-    //push_event_context (SP_TYPE_SELECT_CONTEXT, "/tools/select", SP_EVENT_CONTEXT_STATIC);
-    //set_event_context(SP_TYPE_SELECT_CONTEXT, "/tools/select");
+    // Set the select tool as the active tool.
     set_event_context2("/tools/select");
 
     // display rect and zoom are now handled in sp_desktop_widget_realize()
@@ -361,18 +355,10 @@ void SPDesktop::destroy()
     g_signal_handlers_disconnect_by_func(G_OBJECT (main), (gpointer) G_CALLBACK(sp_desktop_root_handler), this);
     g_signal_handlers_disconnect_by_func(G_OBJECT (drawing), (gpointer) G_CALLBACK(_arena_handler), this);
 
-//    while (event_context) {
-//        ToolBase *ec = event_context;
-//        event_context = ec->next;
-//        sp_event_context_finish (ec);
-//        g_object_unref (G_OBJECT (ec));
-//    }
-    //sp_event_context_finish(event_context);
-    event_context->finish();
-    //g_object_unref(G_OBJECT(event_context));
     if (event_context) {
+        event_context->finish();
     	delete event_context;
-    	event_context = 0;
+    	event_context = NULL;
     }
 
     delete layers;
@@ -668,90 +654,31 @@ SPDesktop::change_document (SPDocument *theDocument)
     _document_replaced_signal.emit (this, theDocument);
 }
 
-
-#include "tool-factory.h"
-
+/**
+ * Replaces the currently active tool with a new one.
+ */
 void SPDesktop::set_event_context2(const std::string& toolName) {
-    Inkscape::UI::Tools::ToolBase* ec_old = event_context;
+	Inkscape::UI::Tools::ToolBase* new_tool = ToolFactory::instance().createObject(toolName);
+	new_tool->desktop = this;
+	new_tool->message_context = new Inkscape::MessageContext(this->messageStack());
 
-	if (ec_old) {
-		ec_old->deactivate();
+    Inkscape::UI::Tools::ToolBase* old_tool = event_context;
+	event_context = new_tool;
+
+	if (old_tool) {
+		old_tool->finish();
+		delete old_tool;
 	}
 
-	Inkscape::UI::Tools::ToolBase* ec_new = ToolFactory::instance().createObject(toolName);
-	ec_new->desktop = this;
-	ec_new->message_context = new Inkscape::MessageContext(this->messageStack());
+    new_tool->setup();
 
-	event_context = ec_new;
-
-	if (ec_old) {
-		ec_old->finish();
-		delete ec_old;
-	}
-
-    ec_new->setup();
-
-	sp_event_context_activate(event_context);
+    // Make sure no delayed snapping events are carried over after switching tools
+    // (this is only an additional safety measure against sloppy coding, because each
+    // tool should take care of this by itself)
+    sp_event_context_discard_delayed_snap_event(event_context);
 
 	_event_context_changed_signal.emit(this, event_context);
 }
-
-/**
- * Make desktop switch event contexts.
- */
-//void
-//SPDesktop::set_event_context (GType type, const gchar *config)
-//{
-//    //ToolBase *ec;
-//    //while (event_context) {
-//        //ec = event_context;
-//        sp_event_context_deactivate (event_context);
-//        // we have to keep event_context valid during destruction - otherwise writing
-//        // destructors is next to impossible
-//      //  ToolBase *next = ec->next;
-//        sp_event_context_finish (event_context);
-//        g_object_unref (G_OBJECT (event_context));
-//      //  event_context = next;
-//    //}
-//
-//    // The event_context will be null. This means that it will be impossible
-//    // to process any event invoked by the lines below. See for example bug
-//    // LP #622350. Cutting and undoing again in the node tool resets the event
-//    // context to the node tool. In this bug the line bellow invokes GDK_LEAVE_NOTIFY
-//    // events which cannot be handled and must be discarded.
-//    event_context = sp_event_context_new (type, this, config, SP_EVENT_CONTEXT_STATIC);
-//  //  ec->next = event_context;
-//    //event_context = ec;
-//    // Now the event_context has been set again and we can process all events again
-//    sp_event_context_activate (event_context);
-//    _event_context_changed_signal.emit (this, event_context);
-//}
-
-/**
- * Push event context onto desktop's context stack.
- */
-//void
-//SPDesktop::push_event_context (GType type, const gchar *config, unsigned int key)
-//{
-//    ToolBase *ref, *ec;
-//
-//    if (event_context && event_context->key == key) return;
-//    ref = event_context;
-//    while (ref && ref->next && ref->next->key != key) ref = ref->next;
-//    if (ref && ref->next) {
-//        ec = ref->next;
-//        ref->next = ec->next;
-//        sp_event_context_finish (ec);
-//        g_object_unref (G_OBJECT (ec));
-//    }
-//
-//    if (event_context) sp_event_context_deactivate (event_context);
-//    ec = sp_event_context_new (type, this, config, key);
-//    ec->next = event_context;
-//    event_context = ec;
-//    sp_event_context_activate (ec);
-//    _event_context_changed_signal.emit (this, ec);
-//}
 
 /**
  * Sets the coordinate status to a given point

@@ -66,10 +66,6 @@ static int switch_selector_to = 0;
 static bool dropper_toggled = FALSE;
 static int switch_dropper_to = 0;
 
-//static gint xp = 0, yp = 0; // where drag started
-//static gint tolerance = 0;
-//static bool within_tolerance = false;
-
 // globals for keeping track of keyboard scroll events in order to accelerate
 static guint32 scroll_event_time = 0;
 static gdouble scroll_multiply = 1;
@@ -86,14 +82,12 @@ static void set_event_location(SPDesktop * desktop, GdkEvent * event);
 void ToolBase::set(const Inkscape::Preferences::Entry& /*val*/) {
 }
 
-void ToolBase::activate() {
-}
-
-void ToolBase::deactivate() {
-}
-
 void ToolBase::finish() {
 	this->enableSelectionCue(false);
+}
+
+SPDesktop const& ToolBase::getDesktop() const {
+    return *desktop;
 }
 
 ToolBase::ToolBase() {
@@ -231,9 +225,7 @@ void ToolBase::sp_event_context_update_cursor() {
 /**
  * Callback that gets called on initialization of ToolBase object.
  * Redraws mouse cursor, at the moment.
- */
-
-/**
+ *
  * When you override it, call this method first.
  */
 void ToolBase::setup() {
@@ -357,15 +349,6 @@ static gdouble accelerate_scroll(GdkEvent *event, gdouble acceleration,
 
     return scroll_multiply;
 }
-
-/**
- * Main event dispatch, gets called from Gdk.
- */
-//static gint sp_event_context_private_root_handler(
-//        ToolBase *event_context, GdkEvent *event) {
-//
-//	return event_context->ceventcontext->root_handler(event);
-//}
 
 bool ToolBase::root_handler(GdkEvent* event) {
     static Geom::Point button_w;
@@ -872,12 +855,6 @@ bool ToolBase::root_handler(GdkEvent* event) {
  * Only reacts to right mouse button at the moment.
  * \todo Fixme: do context sensitive popup menu on items.
  */
-//gint sp_event_context_private_item_handler(ToolBase *ec, SPItem *item,
-//        GdkEvent *event) {
-//
-//	return ec->ceventcontext->item_handler(item, event);
-//}
-
 bool ToolBase::item_handler(SPItem* item, GdkEvent* event) {
     int ret = FALSE;
 
@@ -907,58 +884,6 @@ bool sp_event_context_knot_mouseover(ToolBase *ec)
 
     return false;
 }
-
-/**
- * Creates new ToolBase object and calls its virtual setup() function.
- * @todo This is bogus. pref_path should be a private property of the inheriting objects.
- */
-//ToolBase *
-//sp_event_context_new(GType type, SPDesktop *desktop, gchar const *pref_path,
-//        unsigned int key) {
-//    g_return_val_if_fail(g_type_is_a(type, SP_TYPE_EVENT_CONTEXT), NULL);
-//    g_return_val_if_fail(desktop != NULL, NULL);
-//
-//    ToolBase * const ec = static_cast<ToolBase*>(g_object_new(type, NULL));
-//
-//    ec->desktop = desktop;
-//    ec->_message_context
-//            = new Inkscape::MessageContext(desktop->messageStack());
-//    ec->key = key;
-//    ec->pref_observer = NULL;
-//
-//    if (pref_path) {
-//        ec->pref_observer = new ToolPrefObserver(pref_path, ec);
-//
-//        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-//        prefs->addObserver(*(ec->pref_observer));
-//    }
-//
-////    if ((SP_EVENT_CONTEXT_CLASS(G_OBJECT_GET_CLASS(ec)))->setup)
-////        (SP_EVENT_CONTEXT_CLASS(G_OBJECT_GET_CLASS(ec)))->setup(ec);
-//    ec->ceventcontext->setup();
-//
-//    return ec;
-//}
-
-/**
- * Finishes ToolBase.
- */
-//void sp_event_context_finish(ToolBase *ec) {
-//    g_return_if_fail(ec != NULL);
-//    g_return_if_fail(SP_IS_EVENT_CONTEXT(ec));
-//
-//    ec->enableSelectionCue(false);
-//
-////    if (ec->next) {
-////        g_warning("Finishing event context with active link\n");
-////    }
-//
-////    if ((SP_EVENT_CONTEXT_CLASS(G_OBJECT_GET_CLASS(ec)))->finish)
-////        (SP_EVENT_CONTEXT_CLASS(G_OBJECT_GET_CLASS(ec)))->finish(ec);
-//    ec->finish();
-//}
-
-//-------------------------------member functions
 
 /**
  * Enables/disables the ToolBase's SelCue.
@@ -1011,46 +936,10 @@ void sp_event_context_read(ToolBase *ec, gchar const *key) {
     g_return_if_fail(SP_IS_EVENT_CONTEXT(ec));
     g_return_if_fail(key != NULL);
 
-//    if ((SP_EVENT_CONTEXT_CLASS(G_OBJECT_GET_CLASS(ec)))->set) {
-//        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-//        Inkscape::Preferences::Entry val = prefs->getEntry(
-//                ec->pref_observer->observed_path + '/' + key);
-//        (SP_EVENT_CONTEXT_CLASS(G_OBJECT_GET_CLASS(ec)))->set(ec, &val);
-//    }
-
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     Inkscape::Preferences::Entry val = prefs->getEntry(ec->pref_observer->observed_path + '/' + key);
     ec->set(val);
 }
-
-/**
- * Calls virtual activate() function of ToolBase.
- */
-void sp_event_context_activate(ToolBase *ec) {
-    g_return_if_fail(ec != NULL);
-    g_return_if_fail(SP_IS_EVENT_CONTEXT(ec));
-
-    // Make sure no delayed snapping events are carried over after switching contexts
-    // (this is only an additional safety measure against sloppy coding, because each
-    // context should take care of this by itself.
-    sp_event_context_discard_delayed_snap_event(ec);
-
-//    if ((SP_EVENT_CONTEXT_CLASS(G_OBJECT_GET_CLASS(ec)))->activate)
-//        (SP_EVENT_CONTEXT_CLASS(G_OBJECT_GET_CLASS(ec)))->activate(ec);
-    ec->activate();
-}
-
-/**
- * Calls virtual deactivate() function of ToolBase.
- */
-//void sp_event_context_deactivate(ToolBase *ec) {
-//    g_return_if_fail(ec != NULL);
-//    g_return_if_fail(SP_IS_EVENT_CONTEXT(ec));
-//
-////    if ((SP_EVENT_CONTEXT_CLASS(G_OBJECT_GET_CLASS(ec)))->deactivate)
-////        (SP_EVENT_CONTEXT_CLASS(G_OBJECT_GET_CLASS(ec)))->deactivate(ec);
-//    ec->deactivate();
-//}
 
 /**
  * Calls virtual root_handler(), the main event handling function.

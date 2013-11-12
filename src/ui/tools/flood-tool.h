@@ -19,12 +19,6 @@
 #define SP_FLOOD_CONTEXT(obj) (dynamic_cast<Inkscape::UI::Tools::FloodTool*>((Inkscape::UI::Tools::ToolBase*)obj))
 #define SP_IS_FLOOD_CONTEXT(obj) (dynamic_cast<const Inkscape::UI::Tools::FloodTool*>((const Inkscape::UI::Tools::ToolBase*)obj) != NULL)
 
-
-#define FLOOD_COLOR_CHANNEL_R 1
-#define FLOOD_COLOR_CHANNEL_G 2
-#define FLOOD_COLOR_CHANNEL_B 4
-#define FLOOD_COLOR_CHANNEL_A 8
-
 namespace Inkscape {
 namespace UI {
 namespace Tools {

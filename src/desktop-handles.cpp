@@ -15,14 +15,6 @@
 #include "desktop.h"
 #include "desktop-handles.h"
 
-//ToolBase *
-//sp_desktop_event_context (SPDesktop const * desktop)
-//{
-//	g_return_val_if_fail (desktop != NULL, NULL);
-//
-//	return desktop->event_context;
-//}
-
 Inkscape::Selection *
 sp_desktop_selection (SPDesktop const * desktop)
 {

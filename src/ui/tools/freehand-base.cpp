@@ -408,8 +408,8 @@ void spdc_endpoint_snap_rotation(ToolBase const *const ec, Geom::Point &p, Geom:
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     unsigned const snaps = abs(prefs->getInt("/options/rotationsnapsperpi/value", 12));
 
-    SnapManager &m = SP_EVENT_CONTEXT_DESKTOP(ec)->namedview->snap_manager;
-    m.setup(SP_EVENT_CONTEXT_DESKTOP(ec));
+    SnapManager &m = ec->desktop->namedview->snap_manager;
+    m.setup(ec->desktop);
 
     bool snap_enabled = m.snapprefs.getSnapEnabledGlobally();
     if (state & GDK_SHIFT_MASK) {
@@ -433,7 +433,7 @@ void spdc_endpoint_snap_rotation(ToolBase const *const ec, Geom::Point &p, Geom:
 
 void spdc_endpoint_snap_free(ToolBase const * const ec, Geom::Point& p, boost::optional<Geom::Point> &start_of_line, guint const /*state*/)
 {
-    SPDesktop *dt = SP_EVENT_CONTEXT_DESKTOP(ec);
+    SPDesktop *dt = ec->desktop;
     SnapManager &m = dt->namedview->snap_manager;
     Inkscape::Selection *selection = sp_desktop_selection (dt);
 
@@ -491,7 +491,7 @@ void spdc_concat_colors_and_flush(FreehandBase *dc, gboolean forceclosed)
     // Step A - test, whether we ended on green anchor
     if ( forceclosed || ( dc->green_anchor && dc->green_anchor->active ) ) {
         // We hit green anchor, closing Green-Blue-Red
-        SP_EVENT_CONTEXT_DESKTOP(dc)->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Path is closed."));
+        dc->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Path is closed."));
         c->closepath_current();
         // Closed path, just flush
         spdc_flush_white(dc, c);
@@ -506,7 +506,7 @@ void spdc_concat_colors_and_flush(FreehandBase *dc, gboolean forceclosed)
               || dc->sa->curve->is_closed() ) )
     {
         // We hit bot start and end of single curve, closing paths
-        SP_EVENT_CONTEXT_DESKTOP(dc)->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Closing path."));
+        dc->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Closing path."));
         if (dc->sa->start && !(dc->sa->curve->is_closed()) ) {
             c = reverse_then_unref(c);
         }
@@ -565,9 +565,9 @@ static void spdc_flush_white(FreehandBase *dc, SPCurve *gc)
     // Now we have to go back to item coordinates at last
     c->transform( dc->white_item
                             ? (dc->white_item)->dt2i_affine()
-                            : SP_EVENT_CONTEXT_DESKTOP(dc)->dt2doc() );
+                            : dc->desktop->dt2doc() );
 
-    SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(dc);
+    SPDesktop *desktop = dc->desktop;
     SPDocument *doc = sp_desktop_document(desktop);
     Inkscape::XML::Document *xml_doc = doc->getReprDoc();
 
@@ -710,7 +710,7 @@ void spdc_create_single_dot(ToolBase *ec, Geom::Point const &pt, char const *too
     g_return_if_fail(!strcmp(tool, "/tools/freehand/pen") || !strcmp(tool, "/tools/freehand/pencil"));
     Glib::ustring tool_path = tool;
 
-    SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(ec);
+    SPDesktop *desktop = ec->desktop;
     Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
     Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
     repr->setAttribute("sodipodi:type", "arc");

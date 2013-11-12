@@ -178,7 +178,7 @@ pencil_handle_button_press(PencilTool *const pc, GdkEventButton const &bevent)
     if ( bevent.button == 1  && !event_context->space_panning) {
 
         FreehandBase *dc = SP_DRAW_CONTEXT (pc);
-        SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(dc);
+        SPDesktop *desktop = dc->desktop;
         Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
         if (Inkscape::have_viable_layer(desktop, dc->message_context) == false) {

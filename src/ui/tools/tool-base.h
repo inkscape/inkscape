@@ -113,10 +113,7 @@ public:
     ToolBase();
     virtual ~ToolBase();
 
-    SPDesktop *desktop;
     Inkscape::Preferences::Observer *pref_observer;
-    gchar const *const *cursor_shape;
-    gint hot_x, hot_y; ///< indicates the cursor's hot spot
     GdkCursor *cursor;
 
     gint xp, yp;           ///< where drag started
@@ -150,9 +147,6 @@ public:
 	// Is called by our pref_observer if a preference has been changed.
 	virtual void set(const Inkscape::Preferences::Entry& val);
 
-	virtual void activate();
-	virtual void deactivate();
-
 	virtual bool root_handler(GdkEvent* event);
 	virtual bool item_handler(SPItem* item, GdkEvent* event);
 
@@ -175,24 +169,24 @@ public:
 	    ToolBase * const ec;
 	};
 
+	SPDesktop const& getDesktop() const;
+
+
 //protected:
 	void sp_event_context_update_cursor();
+
+	SPDesktop *desktop;
+
+protected:
+    gchar const *const *cursor_shape;
+    gint hot_x, hot_y; ///< indicates the cursor's hot spot
 
 private:
 	ToolBase(const ToolBase&);
 	ToolBase& operator=(const ToolBase&);
 };
 
-#define SP_EVENT_CONTEXT_DESKTOP(e) (SP_EVENT_CONTEXT(e)->desktop)
-#define SP_EVENT_CONTEXT_DOCUMENT(e) ((SP_EVENT_CONTEXT_DESKTOP(e))->doc())
-
-#define SP_EVENT_CONTEXT_STATIC 0
-
-//ToolBase *sp_event_context_new(GType type, SPDesktop *desktop, gchar const *pref_path, unsigned key);
-//void sp_event_context_finish(ToolBase *ec);
 void sp_event_context_read(ToolBase *ec, gchar const *key);
-void sp_event_context_activate(ToolBase *ec);
-//void sp_event_context_deactivate(ToolBase *ec);
 
 gint sp_event_context_root_handler(ToolBase *ec, GdkEvent *event);
 gint sp_event_context_virtual_root_handler(ToolBase *ec, GdkEvent *event);
@@ -204,8 +198,6 @@ void sp_event_root_menu_popup(SPDesktop *desktop, SPItem *item, GdkEvent *event)
 gint gobble_key_events(guint keyval, gint mask);
 gint gobble_motion_events(gint mask);
 
-//void sp_event_context_update_cursor(ToolBase *ec);
-
 void sp_event_show_modifier_tip(Inkscape::MessageContext *message_context, GdkEvent *event,
                                 gchar const *ctrl_tip, gchar const *shift_tip, gchar const *alt_tip);
 
@@ -216,14 +208,7 @@ SPItem *sp_event_context_over_item (SPDesktop *desktop, SPItem *item, Geom::Poin
 
 void sp_toggle_dropper(SPDesktop *dt);
 
-//ShapeEditor *sp_event_context_get_shape_editor (ToolBase *ec);
 bool sp_event_context_knot_mouseover(ToolBase *ec);
-
-//void ec_shape_event_attr_changed(Inkscape::XML::Node *shape_repr,
-//                                     gchar const *name, gchar const *old_value, gchar const *new_value,
-//                                 bool const is_interactive, gpointer const data);
-//
-//void event_context_print_event_info(GdkEvent *event, bool print_return = true);
 
 }
 }

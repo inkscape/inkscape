@@ -37,8 +37,6 @@ SPDrawAnchor *sp_draw_anchor_new(Inkscape::UI::Tools::FreehandBase *dc, SPCurve 
         return NULL;
     }
 
-    SPDesktop *dt = SP_EVENT_CONTEXT_DESKTOP(dc);
-
     SPDrawAnchor *a = g_new(SPDrawAnchor, 1);
 
     a->dc = dc;
@@ -47,7 +45,7 @@ SPDrawAnchor *sp_draw_anchor_new(Inkscape::UI::Tools::FreehandBase *dc, SPCurve 
     a->start = start;
     a->active = FALSE;
     a->dp = delta;
-    a->ctrl = ControlManager::getManager().createControl(sp_desktop_controls(dt), Inkscape::CTRL_TYPE_ANCHOR);
+    a->ctrl = ControlManager::getManager().createControl(sp_desktop_controls(&dc->getDesktop()), Inkscape::CTRL_TYPE_ANCHOR);
 
     SP_CTRL(a->ctrl)->moveto(delta);
 
@@ -77,10 +75,9 @@ SPDrawAnchor *sp_draw_anchor_destroy(SPDrawAnchor *anchor)
  */
 SPDrawAnchor *sp_draw_anchor_test(SPDrawAnchor *anchor, Geom::Point w, gboolean activate)
 {
-    SPDesktop *dt = SP_EVENT_CONTEXT_DESKTOP(anchor->dc);
     SPCtrl *ctrl = SP_CTRL(anchor->ctrl);
 
-    if ( activate && ( Geom::LInfty( w - dt->d2w(anchor->dp) ) <= (ctrl->box.width() / 2.0) ) ) {
+    if ( activate && ( Geom::LInfty( w - anchor->dc->getDesktop().d2w(anchor->dp) ) <= (ctrl->box.width() / 2.0) ) ) {
         if (!anchor->active) {
             g_object_set(anchor->ctrl, "fill_color", FILL_COLOR_MOUSEOVER, NULL);
             anchor->active = TRUE;

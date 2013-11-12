@@ -519,7 +519,7 @@ connector_handle_button_press(ConnectorTool *const cc, GdkEventButton const &bev
 
         if ( bevent.button == 1 && !event_context->space_panning ) {
 
-            SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(cc);
+            SPDesktop *desktop = cc->desktop;
 
             if (Inkscape::have_viable_layer(desktop, cc->message_context) == false) {
                 return TRUE;
@@ -544,7 +544,7 @@ connector_handle_button_press(ConnectorTool *const cc, GdkEventButton const &bev
                     if ( cc->npoints == 0 ) {
                         cc_clear_active_conn(cc);
 
-                        SP_EVENT_CONTEXT_DESKTOP(cc)->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Creating new connector"));
+                        cc->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Creating new connector"));
 
                         /* Set start anchor */
                         /* Create green anchor */
@@ -715,7 +715,7 @@ connector_handle_button_release(ConnectorTool *const cc, GdkEventButton const &r
     ToolBase *event_context = SP_EVENT_CONTEXT(cc);
     if ( revent.button == 1 && !event_context->space_panning ) {
 
-        SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(cc);
+        SPDesktop *desktop = cc->desktop;
         SPDocument *doc = sp_desktop_document(desktop);
 
         SnapManager &m = desktop->namedview->snap_manager;
@@ -790,7 +790,7 @@ connector_handle_key_press(ConnectorTool *const cc, guint const keyval)
             case GDK_KEY_Escape:
                 if (cc->state == SP_CONNECTOR_CONTEXT_REROUTING) {
 
-                    SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(cc);
+                    SPDesktop *desktop = cc->desktop;
                     SPDocument *doc = sp_desktop_document(desktop);
 
                     cc_connector_rerouting_finish(cc, NULL);
@@ -819,7 +819,7 @@ connector_handle_key_press(ConnectorTool *const cc, guint const keyval)
 static void
 cc_connector_rerouting_finish(ConnectorTool *const cc, Geom::Point *const p)
 {
-    SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(cc);
+    SPDesktop *desktop = cc->desktop;
     SPDocument *doc = sp_desktop_document(desktop);
 
     // Clear the temporary path:
@@ -953,9 +953,9 @@ spcc_flush_white(ConnectorTool *cc, SPCurve *gc)
     }
 
     /* Now we have to go back to item coordinates at last */
-    c->transform(SP_EVENT_CONTEXT_DESKTOP(cc)->dt2doc());
+    c->transform(cc->desktop->dt2doc());
 
-    SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(cc);
+    SPDesktop *desktop = cc->desktop;
     SPDocument *doc = sp_desktop_document(desktop);
     Inkscape::XML::Document *xml_doc = doc->getReprDoc();
 

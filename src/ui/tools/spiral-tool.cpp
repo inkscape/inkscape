@@ -362,7 +362,7 @@ void SpiralTool::drag(Geom::Point const &p, guint state) {
         }
 
         // Create object
-        Inkscape::XML::Document *xml_doc = SP_EVENT_CONTEXT_DOCUMENT(this)->getReprDoc();
+        Inkscape::XML::Document *xml_doc = this->desktop->doc()->getReprDoc();
         Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
         repr->setAttribute("sodipodi:type", "spiral");
 

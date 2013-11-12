@@ -415,12 +415,12 @@ static void sp_text_context_setup_text(TextTool *tc)
     ToolBase *ec = SP_EVENT_CONTEXT(tc);
 
     /* Create <text> */
-    Inkscape::XML::Document *xml_doc = SP_EVENT_CONTEXT_DESKTOP(ec)->doc()->getReprDoc();
+    Inkscape::XML::Document *xml_doc = ec->desktop->doc()->getReprDoc();
     Inkscape::XML::Node *rtext = xml_doc->createElement("svg:text");
     rtext->setAttribute("xml:space", "preserve"); // we preserve spaces in the text objects we create
 
     /* Set style */
-    sp_desktop_apply_style_tool(SP_EVENT_CONTEXT_DESKTOP(ec), rtext, "/tools/text", true);
+    sp_desktop_apply_style_tool(ec->desktop, rtext, "/tools/text", true);
 
     sp_repr_set_svg_double(rtext, "x", tc->pdoc[Geom::X]);
     sp_repr_set_svg_double(rtext, "y", tc->pdoc[Geom::Y]);
@@ -1730,7 +1730,7 @@ static void sptc_commit(GtkIMContext */*imc*/, gchar *string, TextTool *tc)
 
 void sp_text_context_place_cursor (TextTool *tc, SPObject *text, Inkscape::Text::Layout::iterator where)
 {
-    SP_EVENT_CONTEXT_DESKTOP (tc)->selection->set (text);
+    tc->desktop->selection->set (text);
     tc->text_sel_start = tc->text_sel_end = where;
     sp_text_context_update_cursor(tc);
     sp_text_context_update_text_selection(tc);
@@ -1738,7 +1738,7 @@ void sp_text_context_place_cursor (TextTool *tc, SPObject *text, Inkscape::Text:
 
 void sp_text_context_place_cursor_at (TextTool *tc, SPObject *text, Geom::Point const p)
 {
-    SP_EVENT_CONTEXT_DESKTOP (tc)->selection->set (text);
+    tc->desktop->selection->set (text);
     sp_text_context_place_cursor (tc, text, sp_te_get_position_by_coords(tc->text, p));
 }
 

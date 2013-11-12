@@ -154,14 +154,14 @@ void PenTool::setup() {
     ControlManager &mgr = ControlManager::getManager();
 
     // Pen indicators
-    this->c0 = mgr.createControl(sp_desktop_controls(SP_EVENT_CONTEXT_DESKTOP(this)), Inkscape::CTRL_TYPE_ADJ_HANDLE);
+    this->c0 = mgr.createControl(sp_desktop_controls(this->desktop), Inkscape::CTRL_TYPE_ADJ_HANDLE);
     mgr.track(this->c0);
 
-    this->c1 = mgr.createControl(sp_desktop_controls(SP_EVENT_CONTEXT_DESKTOP(this)), Inkscape::CTRL_TYPE_ADJ_HANDLE);
+    this->c1 = mgr.createControl(sp_desktop_controls(this->desktop), Inkscape::CTRL_TYPE_ADJ_HANDLE);
     mgr.track(this->c1);
 
-    this->cl0 = mgr.createControlLine(sp_desktop_controls(SP_EVENT_CONTEXT_DESKTOP(this)));
-    this->cl1 = mgr.createControlLine(sp_desktop_controls(SP_EVENT_CONTEXT_DESKTOP(this)));
+    this->cl0 = mgr.createControlLine(sp_desktop_controls(this->desktop));
+    this->cl1 = mgr.createControlLine(sp_desktop_controls(this->desktop));
 
     sp_canvas_item_hide(this->c0);
     sp_canvas_item_hide(this->c1);
@@ -335,7 +335,7 @@ static gint pen_handle_button_press(PenTool *const pc, GdkEventButton const &bev
     }
 
     FreehandBase * const dc = SP_DRAW_CONTEXT(pc);
-    SPDesktop * const desktop = SP_EVENT_CONTEXT_DESKTOP(dc);
+    SPDesktop * const desktop = dc->desktop;
     Geom::Point const event_w(bevent.x, bevent.y);
     Geom::Point event_dt(desktop->w2d(event_w));
     ToolBase *event_context = SP_EVENT_CONTEXT(pc);
@@ -506,7 +506,7 @@ static gint pen_handle_motion_notify(PenTool *const pc, GdkEventMotion const &me
     gint ret = FALSE;
 
     ToolBase *event_context = SP_EVENT_CONTEXT(pc);
-    SPDesktop * const dt = SP_EVENT_CONTEXT_DESKTOP(event_context);
+    SPDesktop * const dt = event_context->desktop;
 
     if (event_context->space_panning || mevent.state & GDK_BUTTON2_MASK || mevent.state & GDK_BUTTON3_MASK) {
         // allow scrolling
