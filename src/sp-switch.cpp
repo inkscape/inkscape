@@ -40,6 +40,7 @@ SPSwitch::SPSwitch() : SPGroup() {
 }
 
 SPSwitch::~SPSwitch() {
+    _releaseLastItem(_cached_item);
 }
 
 SPObject *SPSwitch::_evaluateFirst() {

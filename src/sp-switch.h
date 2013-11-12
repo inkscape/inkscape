@@ -28,7 +28,7 @@ public:
     void resetChildEvaluated() { _reevaluate(); }
 
     GSList *_childList(bool add_ref, SPObject::Action action);
-    void _showChildren (Inkscape::Drawing &drawing, Inkscape::DrawingItem *ai, unsigned int key, unsigned int flags);
+    virtual void _showChildren (Inkscape::Drawing &drawing, Inkscape::DrawingItem *ai, unsigned int key, unsigned int flags);
 
     SPObject *_evaluateFirst();
     void _reevaluate(bool add_to_arena = false);

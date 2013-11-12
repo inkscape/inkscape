@@ -55,7 +55,7 @@ public:
     void scaleChildItemsRec(Geom::Scale const &sc, Geom::Point const &p);
 
     gint getItemCount() const;
-    void _showChildren (Inkscape::Drawing &drawing, Inkscape::DrawingItem *ai, unsigned int key, unsigned int flags);
+    virtual void _showChildren (Inkscape::Drawing &drawing, Inkscape::DrawingItem *ai, unsigned int key, unsigned int flags);
 
 private:
     void _updateLayerMode(unsigned int display_key=0);
