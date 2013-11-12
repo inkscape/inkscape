@@ -16,7 +16,13 @@
 #include <iosfwd>
 #include <stdexcept>
 #include <cstddef>
+
+#if __cplusplus >= 201103L
+#include <functional>
+#else
 #include <tr1/functional>
+#endif
+
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/shared_ptr.hpp>
 #include "ui/tool/selectable-control-point.h"
@@ -31,11 +37,13 @@ template <typename> class NodeIterator;
 }
 }
 
+#if __cplusplus < 201103L
 namespace std {
 namespace tr1 {
 template <typename N> struct hash< Inkscape::UI::NodeIterator<N> >;
 }
 }
+#endif
 
 namespace Inkscape {
 namespace UI {
