@@ -81,7 +81,7 @@ static double s2d(const DOMString &s)
 typedef struct
 {
     const char *name;
-    int         type;
+    unsigned int type;
 } SVGTableEntry;
 
 
@@ -119,7 +119,7 @@ SVGTableEntry interfaceTable[] =
     { "SVGUnitTypes",                 SVG_UNIT_TYPES                  },
     { "SVGURIReference",              SVG_URI_REFERENCE               },
     { "SVGViewSpec",                  SVG_VIEW_SPEC                   },
-    { "SVGZoomAndPan",                static_cast<int>(SVG_ZOOM_AND_PAN)}
+    { "SVGZoomAndPan",                SVG_ZOOM_AND_PAN                }
 };
 
 
@@ -266,9 +266,9 @@ int svgInterfaceStrToEnum(const char *str)
  * Return the string corresponding to a given SVG element type enum
  * Return "unknown" if not found
  */
-const char *svgInterfaceEnumToStr(int type)
+const char *svgInterfaceEnumToStr(unsigned int type)
 {
-    if (type < 1 || type > (int)SVG_ZOOM_AND_PAN)
+    if (type < 1 || type > SVG_ZOOM_AND_PAN)
         return "unknown";
     SVGTableEntry *entry = interfaceTable;
     for (int i = 0 ; i < SVG_NR_INTERFACES ; i++)
