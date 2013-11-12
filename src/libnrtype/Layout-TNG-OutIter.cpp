@@ -168,7 +168,7 @@ Layout::iterator Layout::getLetterAt(double x, double y) const
     return end();
 }
 
-Layout::iterator Layout::sourceToIterator(void *source_cookie, Glib::ustring::const_iterator text_iterator) const
+Layout::iterator Layout::sourceToIterator(void *source_cookie /*, Glib::ustring::const_iterator text_iterator*/) const
 {
     unsigned source_index;
     if (_characters.empty()) return end();
@@ -182,6 +182,8 @@ Layout::iterator Layout::sourceToIterator(void *source_cookie, Glib::ustring::co
         return iterator(this, char_index);
 
     InputStreamTextSource const *text_source = static_cast<InputStreamTextSource const *>(_input_stream[source_index]);
+    return iterator(this, char_index);
+    /* This code was never used, the text_iterator argument was "NULL" in all calling code
     if (text_iterator <= text_source->text_begin) return iterator(this, char_index);
     if (text_iterator >= text_source->text_end) {
         if (source_index == _input_stream.size() - 1) return end();
@@ -194,11 +196,7 @@ Layout::iterator Layout::sourceToIterator(void *source_cookie, Glib::ustring::co
         iter_text++;
     }
     return end(); // never happens
-}
-
-Layout::iterator Layout::sourceToIterator(void *source_cookie) const
-{
-    return sourceToIterator(source_cookie, Glib::ustring::const_iterator(std::string::const_iterator(NULL)));
+    */
 }
 
 Geom::OptRect Layout::glyphBoundingBox(iterator const &it, double *rotation) const
@@ -534,19 +532,24 @@ void Layout::getSourceOfCharacter(iterator const &it, void **source_cookie, Glib
     InputStreamItem *stream_item = _input_stream[_spans[_characters[it._char_index].in_span].in_input_stream_item];
     *source_cookie = stream_item->source_cookie;
     if (text_iterator && stream_item->Type() == TEXT_SOURCE) {
-        InputStreamTextSource const *text_source = static_cast<InputStreamTextSource const *>(stream_item);
-        Glib::ustring::const_iterator text_iter_const = text_source->text_begin;
+        InputStreamTextSource *text_source = dynamic_cast<InputStreamTextSource *>(stream_item);
+
+        // In order to return a non-const iterator in text_iterator, do the const_cast here.
+        // Note that, although ugly, it is safe because we do not write to *iterator anywhere.
+        Glib::ustring::iterator text_iter = const_cast<Glib::ustring *>(text_source->text)->begin();
+
         unsigned char_index = it._char_index;
         unsigned original_input_source_index = _spans[_characters[char_index].in_span].in_input_stream_item;
         // confusing algorithm because the iterator goes forwards while the index goes backwards.
         // It's just that it's faster doing it that way
         while (char_index && _spans[_characters[char_index - 1].in_span].in_input_stream_item == original_input_source_index) {
-            ++text_iter_const;
+            ++text_iter;
             char_index--;
         }
-        text_source->text->begin().base() + (text_iter_const.base() - text_source->text->begin().base());
-        *text_iterator = Glib::ustring::iterator(std::string::iterator(const_cast<char*>(&*text_source->text->begin().base() + (text_iter_const.base() - text_source->text->begin().base()))));
-             // the caller owns the string, so they're going to want a non-const iterator
+        
+        if (text_iterator) {
+            *text_iterator = text_iter;
+        }
     }
 }
 
