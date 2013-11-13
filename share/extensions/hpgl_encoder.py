@@ -91,7 +91,7 @@ class hpglEncoder:
         groupmat = [[self.mirrorX * self.scaleX * self.viewBoxTransformX, 0.0, 0.0], [0.0, self.mirrorY * self.scaleY * self.viewBoxTransformY, 0.0]]
         groupmat = simpletransform.composeTransform(groupmat, simpletransform.parseTransform('rotate(' + self.options.orientation + ')'))
         self.vData = [['', -1.0, -1.0], ['', -1.0, -1.0], ['', -1.0, -1.0], ['', -1.0, -1.0]]
-        self.process_groups(self.doc, groupmat)
+        self.processGroups(self.doc, groupmat)
         if self.divergenceX == 'False' or self.divergenceY == 'False' or self.sizeX == 'False' or self.sizeY == 'False':
             raise Exception('NO_PATHS')
         # live run
@@ -110,17 +110,17 @@ class hpglEncoder:
         self.hpgl = 'IN;SP%d' % self.options.pen
         # add precut
         if self.options.useToolOffset and self.options.precut:
-            self.calcOffset('PU', 0, 0)
-            self.calcOffset('PD', 0, self.options.toolOffset * 8)
+            self.processOffset('PU', 0, 0)
+            self.processOffset('PD', 0, self.options.toolOffset * 8)
         # start conversion
-        self.process_groups(self.doc, groupmat)
+        self.processGroups(self.doc, groupmat)
         # shift an empty node in in order to process last node in cache
-        self.calcOffset('PU', 0, 0)
+        self.processOffset('PU', 0, 0)
         # add return to zero point
         self.hpgl += ';PU0,0;'
         return self.hpgl
 
-    def process_groups(self, doc, groupmat):
+    def processGroups(self, doc, groupmat):
         # flatten groups to avoid recursion
         paths = []
         for node in doc:
@@ -139,7 +139,7 @@ class hpglEncoder:
                     paths[i][0] = ''
         for node in paths:
             if node[0] == inkex.addNS('path', 'svg'):
-                self.process_path(node[1], node[2])
+                self.processPath(node[1], node[2])
 
     def mergeTransform(self, doc, matrix):
         # get and merge two matrixes into one
@@ -157,7 +157,7 @@ class hpglEncoder:
                 return False
         return True
 
-    def process_path(self, node, mat):
+    def processPath(self, node, mat):
         # process path
         paths = node.get('d')
         if paths:
@@ -175,7 +175,7 @@ class hpglEncoder:
                     posX, posY = singlePathPoint[1]
                     # check if point is repeating, if so, ignore
                     if posX != oldPosX or posY != oldPosY:
-                        self.calcOffset(cmd, posX, posY)
+                        self.processOffset(cmd, posX, posY)
                         cmd = 'PD'
                         oldPosX = posX
                         oldPosY = posY
@@ -192,10 +192,10 @@ class hpglEncoder:
                                 overcutLength += self.getLength(oldPosX, oldPosY, posX, posY)
                                 if overcutLength >= self.options.overcut:
                                     newLength = self.changeLength(oldPosX, oldPosY, posX, posY, - (overcutLength - self.options.overcut))
-                                    self.calcOffset(cmd, newLength[0], newLength[1])
+                                    self.processOffset(cmd, newLength[0], newLength[1])
                                     break
                                 else:
-                                    self.calcOffset(cmd, posX, posY)
+                                    self.processOffset(cmd, posX, posY)
                                 oldPosX = posX
                                 oldPosY = posY
 
@@ -220,7 +220,7 @@ class hpglEncoder:
         temp2 = 2 * math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2) * math.sqrt((x3 - x2) ** 2 + (y3 - y2) ** 2)
         return math.acos(max(min(temp1 / temp2, 1.0), -1.0))
 
-    def calcOffset(self, cmd, posX, posY):
+    def processOffset(self, cmd, posX, posY):
         # calculate offset correction (or dont)
         if not self.options.useToolOffset or self.dryRun:
             self.storePoint(cmd, posX, posY)

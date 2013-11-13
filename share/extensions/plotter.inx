@@ -11,6 +11,7 @@
         <page name="misc" _gui-text="Connection">
             <param name="serialPort" type="string" _gui-text="Serial Port" _gui-description="The port of your serial connection, on Windows something like 'COM1', on Linux something like: '/dev/ttyUSB0' (Default: COM1)">COM1</param>
             <param name="serialBaudRate" type="optiongroup" appearance="minimal" _gui-text="Serial Baud rate" _gui-description="The Baud rate of your serial connection (Default: 9600)">
+                <option value="9600">9600</option>
                 <option value="110">110</option>
                 <option value="300">300</option>
                 <option value="600">600</option>
@@ -39,7 +40,6 @@
             <param name="space" type="description">&#xa0;</param>
             <_param name="serialHelp" type="description">This can be a physical serial connection or a USB-to-Serial bridge. Ask your plotter manufacturer for drivers if needed.</_param>
             <_param name="parallelHelp" type="description">Please note that Parallel (LPT) connections are not supported.</_param>
-            <_param name="hpglNote" type="description">Please note that only the HPGL command language is supported at the moment.</_param>
         </page>
         <page name="plotter" _gui-text="Plotter Settings">
             <param name="pen" type="int" min="0" max="99" _gui-text="Pen number" _gui-description="The number of the pen (tool) to use, on most plotters 1 (Standard: '1')">1</param>
