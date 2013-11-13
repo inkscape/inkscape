@@ -432,16 +432,17 @@ public:
     iterator getLetterAt(double x, double y) const;
     inline iterator getLetterAt(Geom::Point &point) const;
 
-    /** Returns an iterator pointing to the character in the output which
+    /* Returns an iterator pointing to the character in the output which
     was created from the given input. If the character at the given byte
     offset was removed (soft hyphens, for example) the next character after
     it is returned. If no input was added with the given cookie, end() is
     returned. If more than one input has the same cookie, the first will
     be used regardless of the value of \a text_iterator. If
     \a text_iterator is out of bounds, the first or last character belonging
-    to the given input will be returned accordingly. */
+    to the given input will be returned accordingly.
     iterator sourceToIterator(void *source_cookie, Glib::ustring::const_iterator text_iterator) const;
-
+ */
+ 
     /** Returns an iterator pointing to the first character in the output
     which was created from the given source. If \a source_cookie is invalid,
     end() is returned. If more than one input has the same cookie, the
