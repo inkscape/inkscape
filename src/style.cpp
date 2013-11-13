@@ -823,10 +823,10 @@ sp_style_read(SPStyle *style, SPObject *object, Inkscape::XML::Node *repr)
     SPS_READ_PENUM_IF_UNSET(&style->clip_rule, repr, "clip-rule", enum_clip_rule, true);
 
     /* color_rendering, image_rendering, shape_rendering, text_rendering */
-    SPS_READ_PENUM_IF_UNSET(&style->color_rendering, repr, "color_rendering", enum_color_rendering, true);
-    SPS_READ_PENUM_IF_UNSET(&style->image_rendering, repr, "image_rendering", enum_image_rendering, true);
-    SPS_READ_PENUM_IF_UNSET(&style->shape_rendering, repr, "shape_rendering", enum_shape_rendering, true);
-    SPS_READ_PENUM_IF_UNSET(&style->text_rendering,  repr, "text_rendering",  enum_text_rendering,  true);
+    SPS_READ_PENUM_IF_UNSET(&style->color_rendering, repr, "color-rendering", enum_color_rendering, true);
+    SPS_READ_PENUM_IF_UNSET(&style->image_rendering, repr, "image-rendering", enum_image_rendering, true);
+    SPS_READ_PENUM_IF_UNSET(&style->shape_rendering, repr, "shape-rendering", enum_shape_rendering, true);
+    SPS_READ_PENUM_IF_UNSET(&style->text_rendering,  repr, "text-rendering",  enum_text_rendering,  true);
 
     /* 3. Merge from parent */
     if (object) {
