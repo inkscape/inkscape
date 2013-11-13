@@ -157,9 +157,8 @@ enum {
     SP_ARG_EXPORT_PDF,
     SP_ARG_EXPORT_PDF_VERSION,
     SP_ARG_EXPORT_LATEX,
-#ifdef WIN32
     SP_ARG_EXPORT_EMF,
-#endif //WIN32
+    SP_ARG_EXPORT_WMF,
     SP_ARG_EXPORT_TEXT_TO_PATH,
     SP_ARG_EXPORT_IGNORE_FILTERS,
     SP_ARG_EXTENSIONDIR,
@@ -186,9 +185,9 @@ int sp_main_gui(int argc, char const **argv);
 int sp_main_console(int argc, char const **argv);
 static int sp_do_export_png(SPDocument *doc);
 static int do_export_ps_pdf(SPDocument* doc, gchar const* uri, char const *mime);
-#ifdef WIN32
 static int do_export_emf(SPDocument* doc, gchar const* uri, char const *mime);
-#endif //WIN32
+static int do_export_wmf(SPDocument* doc, gchar const* uri, char const *mime);
+static int do_export_win_metafile_common(SPDocument* doc, gchar const* uri, char const *mime);
 static void do_query_dimension (SPDocument *doc, bool extent, Geom::Dim2 const axis, const gchar *id);
 static void do_query_all (SPDocument *doc);
 static void do_query_all_recurse (SPObject *o);
@@ -215,9 +214,8 @@ static gchar *sp_export_eps = NULL;
 static gint sp_export_ps_level = 2;
 static gchar *sp_export_pdf = NULL;
 static gchar *sp_export_pdf_version = NULL;
-#ifdef WIN32
 static gchar *sp_export_emf = NULL;
-#endif //WIN32
+static gchar *sp_export_wmf = NULL;
 static gboolean sp_export_text_to_path = FALSE;
 static gboolean sp_export_ignore_filters = FALSE;
 static gboolean sp_export_font = FALSE;
@@ -264,9 +262,8 @@ static void resetCommandlineGlobals() {
         sp_export_ps_level = 2;
         sp_export_pdf = NULL;
         sp_export_pdf_version = NULL;
-#ifdef WIN32
         sp_export_emf = NULL;
-#endif //WIN32
+        sp_export_wmf = NULL;
         sp_export_text_to_path = FALSE;
         sp_export_ignore_filters = FALSE;
         sp_export_font = FALSE;
@@ -426,12 +423,15 @@ struct poptOption options[] = {
      N_("Export PDF/PS/EPS without text. Besides the PDF/PS/EPS, a LaTeX file is exported, putting the text on top of the PDF/PS/EPS file. Include the result in LaTeX like: \\input{latexfile.tex}"),
      NULL},
 
-#ifdef WIN32
     {"export-emf", 'M',
      POPT_ARG_STRING, &sp_export_emf, SP_ARG_EXPORT_EMF,
      N_("Export document to an Enhanced Metafile (EMF) File"),
      N_("FILENAME")},
-#endif //WIN32
+
+    {"export-wmf", 'm',
+     POPT_ARG_STRING, &sp_export_wmf, SP_ARG_EXPORT_WMF,
+     N_("Export document to a Windows Metafile (WMF) File"),
+     N_("FILENAME")},
 
     {"export-text-to-path", 'T',
      POPT_ARG_NONE, &sp_export_text_to_path, SP_ARG_EXPORT_TEXT_TO_PATH,
@@ -742,10 +742,10 @@ main(int argc, char **argv)
             || !strcmp(argv[i], "-A")
             || !strncmp(argv[i], "--export-pdf", 12)
             || !strncmp(argv[i], "--export-latex", 14)
-#ifdef WIN32
             || !strcmp(argv[i], "-M")
             || !strncmp(argv[i], "--export-emf", 12)
-#endif //WIN32
+            || !strcmp(argv[i], "-m")
+            || !strncmp(argv[i], "--export-wmf", 12)
             || !strcmp(argv[i], "-W")
             || !strncmp(argv[i], "--query-width", 13)
             || !strcmp(argv[i], "-H")
@@ -1190,11 +1190,12 @@ static int sp_process_file_list(GSList *fl)
             if (sp_export_pdf) {
                 retVal |= do_export_ps_pdf(doc, sp_export_pdf, "application/pdf");
             }
-#ifdef WIN32
             if (sp_export_emf) {
                 retVal |= do_export_emf(doc, sp_export_emf, "image/x-emf");
             }
-#endif //WIN32
+            if (sp_export_wmf) {
+                retVal |= do_export_wmf(doc, sp_export_wmf, "image/x-wmf");
+            }
             if (sp_query_all) {
                 do_query_all (doc);
             } else if (sp_query_width || sp_query_height) {
@@ -1788,16 +1789,15 @@ static int do_export_ps_pdf(SPDocument* doc, gchar const* uri, char const* mime)
     return 0;
 }
 
-#ifdef WIN32
 /**
- *  Export a document to EMF
+ *  Export a document to EMF or WMF 
  *
  *  \param doc Document to export.
  *  \param uri URI to export to.
- *  \param mime MIME type to export as (should be "image/x-emf")
+ *  \param mime MIME type to export as (should be "image/x-emf" or "image/x-wmf")
  */
 
-static int do_export_emf(SPDocument* doc, gchar const* uri, char const* mime)
+static int do_export_win_metafile_common(SPDocument* doc, gchar const* uri, char const* mime)
 {
     Inkscape::Extension::DB::OutputList o;
     Inkscape::Extension::db.get_output_list(o);
@@ -1822,7 +1822,32 @@ static int do_export_emf(SPDocument* doc, gchar const* uri, char const* mime)
     (*i)->save(doc, uri);
     return 0;
 }
-#endif //WIN32
+
+/**
+ *  Export a document to EMF
+ *
+ *  \param doc Document to export.
+ *  \param uri URI to export to.
+ *  \param mime MIME type to export as (should be "image/x-emf")
+ */
+
+static int do_export_emf(SPDocument* doc, gchar const* uri, char const* mime)
+{
+    return do_export_win_metafile_common(doc, uri, mime);
+}
+
+/**
+ *  Export a document to WMF
+ *
+ *  \param doc Document to export.
+ *  \param uri URI to export to.
+ *  \param mime MIME type to export as (should be "image/x-wmf")
+ */
+
+static int do_export_wmf(SPDocument* doc, gchar const* uri, char const* mime)
+{
+    return do_export_win_metafile_common(doc, uri, mime);
+}
 
 #ifdef WIN32
 bool replaceArgs( int& argc, char**& argv )

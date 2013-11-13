@@ -968,7 +968,10 @@ Glib::ustring SPDocument::getLanguage() const
         if ( NULL == document_language || *document_language == 0 ) {
             document_language = getenv ("LANG");
         }
-
+        if ( NULL == document_language || *document_language == 0 ) {
+            document_language = getenv ("LANGUAGE");
+        }
+        
         if ( NULL != document_language ) {
             const char *pos = strchr(document_language, '_');
             if ( NULL != pos ) {
