@@ -137,7 +137,7 @@ Splines::Splines(const SimplifiedVoronoi<T, adjust_splines> &diagram) :
 
 template<class T>
 Splines::Splines(const HomogeneousSplines<T> &homogeneousSplines,
-                 bool optimize, int nthreads) :
+                 bool optimize, int /*nthreads*/) :
     _paths(homogeneousSplines.size()),
     _width(homogeneousSplines.width()),
     _height(homogeneousSplines.height())
