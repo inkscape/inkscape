@@ -284,10 +284,14 @@ private:
     static int const BSize = 0x100;
     static int const BMask = 0xff;
 
-#if __cplusplus < 201103L
+#ifdef CPP11 // GCC 4.6.1 (currently used on Windows) does not correctly set __cplusplus in C++11 mode, so configure with -DCPP11 to make this work in C++11 mode
+    static double constexpr PerlinOffset = 4096.0;
+#else    
+#if (__cplusplus < 201103L)
     static double const PerlinOffset = 4096.0;
 #else
     static double constexpr PerlinOffset = 4096.0;
+#endif
 #endif
 
     Geom::Rect _tile;
