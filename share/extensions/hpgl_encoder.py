@@ -166,21 +166,20 @@ class hpglEncoder:
             simpletransform.applyTransformToPath(mat, paths)
             cspsubdiv.cspsubdiv(paths, self.options.flat)
             # path to HPGL commands
-            oldPosX = ''
-            oldPosY = ''
+            oldPosX = 0.0
+            oldPosY = 0.0
             # TODO: Plot smallest parts first to avid plotter dragging parts of foil around (on text)
             for singlePath in paths:
                 cmd = 'PU'
                 for singlePathPoint in singlePath:
                     posX, posY = singlePathPoint[1]
                     # check if point is repeating, if so, ignore
-                    if posX != oldPosX or posY != oldPosY:
+                    if int(round(posX)) != int(round(oldPosX)) or int(round(posY)) != int(round(oldPosY)):
                         self.processOffset(cmd, posX, posY)
                         cmd = 'PD'
                         oldPosX = posX
                         oldPosY = posY
                 # perform overcut
-                # TODO: Find that evasive bug that produces an extra point between the end of the path and the overcut
                 if self.options.useOvercut and not self.dryRun:
                     # check if last and first points are the same, otherwise the path is not closed and no overcut can be performed
                     if int(round(oldPosX)) == int(round(singlePath[0][1][0])) and int(round(oldPosY)) == int(round(singlePath[0][1][1])):
@@ -188,7 +187,7 @@ class hpglEncoder:
                         for singlePathPoint in singlePath:
                             posX, posY = singlePathPoint[1]
                             # check if point is repeating, if so, ignore
-                            if posX != oldPosX or posY != oldPosY:
+                            if int(round(posX)) != int(round(oldPosX)) or int(round(posY)) != int(round(oldPosY)):
                                 overcutLength += self.getLength(oldPosX, oldPosY, posX, posY)
                                 if overcutLength >= self.options.overcut:
                                     newLength = self.changeLength(oldPosX, oldPosY, posX, posY, - (overcutLength - self.options.overcut))

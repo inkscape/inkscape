@@ -82,20 +82,12 @@ class MyEffect(inkex.Effect):
         '''
         # reparse data for preview
         self.options.showMovements = True
-        self.options.docWidth = float(inkex.unittouu(self.document.getroot().get('width')))
-        self.options.docHeight = float(inkex.unittouu(self.document.getroot().get('height')))
+        self.options.docWidth = float(self.unittouu(self.document.getroot().get('width')))
+        self.options.docHeight = float(self.unittouu(self.document.getroot().get('height')))
         myHpglDecoder = hpgl_decoder.hpglDecoder(self.hpgl, self.options)
-        try:
-            doc, warnings = myHpglDecoder.getSvg()
-            # deliver document to inkscape
-            self.document = doc
-        except Exception as inst:
-            if inst.args[0] == 'NO_HPGL_DATA':
-                # do nothing
-                pass
-            else:
-                type, value, traceback = sys.exc_info()
-                raise ValueError, ('', type, value), traceback
+        doc, warnings = myHpglDecoder.getSvg()
+        # deliver document to inkscape
+        self.document = doc
         '''
         if self.options.commandLanguage == 'dmpl':
             # convert HPGL to DMPL
@@ -108,6 +100,7 @@ class MyEffect(inkex.Effect):
         mySerial = serial.Serial()
         mySerial.port = self.options.serialPort
         mySerial.baudrate = self.options.serialBaudRate
+        mySerial.timeout = 0.1
         if self.options.flowControl == 'xonxoff':
             mySerial.xonxoff = True
         if self.options.flowControl == 'rtscts' or self.options.flowControl == 'dsrdtrrtscts':
@@ -124,6 +117,7 @@ class MyEffect(inkex.Effect):
                 type, value, traceback = sys.exc_info()
                 raise ValueError, ('', type, value), traceback
         mySerial.write(self.hpgl)
+        mySerial.read(2)
         mySerial.close()
 
 if __name__ == '__main__':

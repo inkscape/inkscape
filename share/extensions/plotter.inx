@@ -39,7 +39,8 @@
             </param>
             <param name="space" type="description">&#xa0;</param>
             <_param name="serialHelp" type="description">This can be a physical serial connection or a USB-to-Serial bridge. Ask your plotter manufacturer for drivers if needed.</_param>
-            <_param name="parallelHelp" type="description">Please note that Parallel (LPT) connections are not supported.</_param>
+            <_param name="freezeHelp" type="description">Using wrong settings can under certain circumstances cause Inkscape to freeze. Always save your work before plotting.</_param>
+            <_param name="parallelHelp" type="description">Parallel (LPT) connections are not supported.</_param>
         </page>
         <page name="plotter" _gui-text="Plotter Settings">
             <param name="pen" type="int" min="0" max="99" _gui-text="Pen number" _gui-description="The number of the pen (tool) to use, on most plotters 1 (Standard: '1')">1</param>
