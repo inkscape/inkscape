@@ -1183,7 +1183,7 @@ Path::OutlineJoin (Path * dest, Geom::Point pos, Geom::Point stNor, Geom::Point 
 	const double angSi = cross (enNor,stNor);
 	const double angCo = dot (stNor, enNor);
 
-    if (fabs(angSi < .0000001) && angCo > 0) { // The join is straight -> nothing to do.
+    if ((fabs(angSi) < .0000001) && angCo > 0) { // The join is straight -> nothing to do.
     } else {
         if ((angSi > 0 && width >= 0) 
             || (angSi < 0 && width < 0)) { // This is an inside join -> join is independent of chosen JoinType.
