@@ -1585,22 +1585,18 @@ void sp_selected_path_create_offset_object(SPDesktop *desktop, int expand, bool 
         desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("Selected object is <b>not a path</b>, cannot inset/outset."));
         return;
     }
-    if (SP_IS_SHAPE(item))
+    else if (SP_IS_SHAPE(item))
     {
         curve = SP_SHAPE(item)->getCurve();
-        if (curve == NULL) {
-            return;
-        }
     }
-    if (SP_IS_TEXT(item))
+    else // Item must be SP_TEXT
     {
         curve = SP_TEXT(item)->getNormalizedBpath();
-        if (curve == NULL) {
-            return;
-        }
     }
-
-    g_assert(curve != NULL);
+        
+    if (curve == NULL) {
+        return;
+    }
 
     Geom::Affine const transform(item->transform);
 
@@ -1779,24 +1775,19 @@ sp_selected_path_do_offset(SPDesktop *desktop, bool expand, double prefOffset)
          items = items->next) {
 
         SPItem *item = SP_ITEM(items->data);
+        SPCurve *curve = NULL;
 
         if (!SP_IS_SHAPE(item) && !SP_IS_TEXT(item))
             continue;
-
-        SPCurve *curve = NULL;
-        if (SP_IS_SHAPE(item)) {
+        else if (SP_IS_SHAPE(item)) {
             curve = SP_SHAPE(item)->getCurve();
-            if (curve == NULL)
-                continue;
         }
-        if (SP_IS_TEXT(item)) {
+        else { // Item must be SP_TEXT
             curve = SP_TEXT(item)->getNormalizedBpath();
-            if (curve == NULL)
-                continue;
         }
 
-        // We've now checked that there is a curve for this item
-        g_assert(curve != NULL);
+        if (curve == NULL)
+            continue;
 
         Geom::Affine const transform(item->transform);
 
