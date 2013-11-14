@@ -215,23 +215,26 @@ void SPUsePath::refresh_source()
     // [tr: The bad case: no d attribute.  Must check that it's a SPShape and then take the outline.]
     SPObject *refobj = sourceObject;
     if ( refobj == NULL ) return;
+    
     SPItem *item = SP_ITEM(refobj);
-
     SPCurve *curve = NULL;
-    if (!SP_IS_SHAPE(item) && !SP_IS_TEXT(item)) {
+
+    if (SP_IS_SHAPE(item))
+    {
+        curve = SP_SHAPE(item)->getCurve();
+    }
+    else if (SP_IS_TEXT(item))
+    {
+        curve = SP_TEXT(item)->getNormalizedBpath();
+    }
+    else
+    {
         return;
     }
-    if (SP_IS_SHAPE(item)) {
-        curve = SP_SHAPE(item)->getCurve();
-        if (curve == NULL)
-            return;
-    }
-    if (SP_IS_TEXT(item)) {
-        curve = SP_TEXT(item)->getNormalizedBpath();
-        if (curve == NULL) {
-            return;
-        }
-    }
+        
+    if (curve == NULL)
+        return;
+
     originalPath = new Path;
     originalPath->LoadPathVector(curve->get_pathvector(), item->transform, true);
     curve->unref();

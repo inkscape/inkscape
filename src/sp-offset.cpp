@@ -1133,28 +1133,21 @@ refresh_offset_source(SPOffset* offset)
     	return;
     }
 
-    SPItem *item = SP_ITEM (refobj);
-
-    SPCurve *curve=NULL;
-
-    if (!SP_IS_SHAPE (item) && !SP_IS_TEXT (item)) {
-    	return;
-    }
+    SPItem  *item  = SP_ITEM (refobj);
+    SPCurve *curve = NULL;
 
     if (SP_IS_SHAPE (item)) {
         curve = SP_SHAPE (item)->getCurve ();
-
-        if (curve == NULL) {
-            return;
-        }
+    }
+    else if (SP_IS_TEXT (item)) {
+        curve = SP_TEXT (item)->getNormalizedBpath ();
+    }
+    else {
+        return;
     }
 
-    if (SP_IS_TEXT (item)) {
-        curve = SP_TEXT (item)->getNormalizedBpath ();
-
-        if (curve == NULL) {
-        	return;
-        }
+    if (curve == NULL) {
+        return;
     }
 
     Path *orig = new Path;
