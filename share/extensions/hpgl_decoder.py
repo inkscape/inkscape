@@ -33,6 +33,8 @@ class hpglDecoder:
                 "resolutionX":float
                 "resolutionY":float
                 "showMovements":bool
+                "docWidth":float
+                "docHeight":float
         '''
         self.hpglString = hpglString
         self.options = options
