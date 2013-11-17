@@ -269,11 +269,11 @@ class Effect:
             return 'px'
 
     #a dictionary of unit to user unit conversion factors
-    uuconv = {'in':90.0, 'pt':1.25, 'px':1, 'mm':3.5433070866, 'cm':35.433070866, 'm':3543.3070866,
+    __uuconv = {'in':90.0, 'pt':1.25, 'px':1, 'mm':3.5433070866, 'cm':35.433070866, 'm':3543.3070866,
               'km':3543307.0866, 'pc':15.0, 'yd':3240 , 'ft':1080}
     def unittouu(self, string):
         '''Returns userunits given a string representation of units in another system'''
-        unit = re.compile('(%s)$' % '|'.join(self.uuconv.keys()))
+        unit = re.compile('(%s)$' % '|'.join(self.__uuconv.keys()))
         param = re.compile(r'(([-+]?[0-9]+(\.[0-9]*)?|[-+]?\.[0-9]+)([eE][-+]?[0-9]+)?)')
 
         p = param.match(string)
@@ -284,16 +284,16 @@ class Effect:
             retval = 0.0
         if u:
             try:
-                return retval * (self.uuconv[u.string[u.start():u.end()]] / self.uuconv[self.getDocumentUnit()])
+                return retval * (self.__uuconv[u.string[u.start():u.end()]] / self.__uuconv[self.getDocumentUnit()])
             except KeyError:
                 pass
         else: # default assume 'px' unit
-            return retval / self.uuconv[self.getDocumentUnit()]
+            return retval / self.__uuconv[self.getDocumentUnit()]
 
         return retval
 
     def uutounit(self, val, unit):
-        return val / (self.uuconv[unit] / self.uuconv[self.getDocumentUnit()])
+        return val / (self.__uuconv[unit] / self.__uuconv[self.getDocumentUnit()])
 
 
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 fileencoding=utf-8 textwidth=99
