@@ -38,7 +38,7 @@ Inkscape::XML::Node * Effect::_filters_list = NULL;
 Effect::Effect (Inkscape::XML::Node * in_repr, Implementation::Implementation * in_imp)
     : Extension(in_repr, in_imp),
       _id_noprefs(Glib::ustring(get_id()) + ".noprefs"),
-      _name_noprefs(Glib::ustring(get_name()) + _(" (No preferences)")),
+      _name_noprefs(Glib::ustring(_(get_name())) + _(" (No preferences)")),
       _verb(get_id(), get_name(), NULL, NULL, this, true),
       _verb_nopref(_id_noprefs.c_str(), _name_noprefs.c_str(), NULL, NULL, this, false),
       _menu_node(NULL), _workingDialog(true),
