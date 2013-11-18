@@ -79,6 +79,7 @@ class MyEffect(inkex.Effect):
                 raise ValueError, ('', type, value), traceback
         # TODO: Get preview to work. This requires some work on the C++ side to be able to determine if it is
         # a preview or a final run. (Remember to set <effect needs-live-preview='false'> to true)
+        # This outcommented code has a user unit issue (getSvg produces px, docWidth could be mm or something else)
         '''
         # reparse data for preview
         self.options.showMovements = True
