@@ -450,7 +450,7 @@ void SPGenericEllipse::set_shape()
         // This code converts the circle to four elliptical arcs explicitly.
         // Circle::getPath currently creates cubic bezier curves, these are not suitable here
         // as a circle should have four mid markers at 0, 90, 180, 270 degrees.
-        Geom::Path path;
+        Geom::Path path(Geom::Point::polar(0));
         Geom::EllipticalArc* arc;
 
         arc = circle.arc(Geom::Point::polar(0), Geom::Point::polar(M_PI / 4.0), Geom::Point::polar(M_PI / 2.0));
