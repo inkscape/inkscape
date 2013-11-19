@@ -665,7 +665,8 @@ cairo_pattern_t* SPPattern::pattern_new(cairo_t *base_ct, Geom::OptRect const &b
     //       the scaling component from the complete matrix and use it
     //       to find the optimum tile size for rendering
     // c is number of pixels in buffer x and y.
-    Geom::Point c(pattern_tile.dimensions()*vb2ps.descrim()*ps2user.descrim()*full.descrim()*1.1);
+    // Scale factor of 1.1 is too small... see bug #1251039
+    Geom::Point c(pattern_tile.dimensions()*vb2ps.descrim()*ps2user.descrim()*full.descrim()*2.0);
 
     c[Geom::X] = ceil(c[Geom::X]);
     c[Geom::Y] = ceil(c[Geom::Y]);
