@@ -26,23 +26,34 @@ namespace Internal {
 SPDocument *
 GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
 {
-    // determine whether the image should be embedded
-    // TODO: this logic seems very wrong
-    bool embed = false;
+    // Determine whether the image should be embedded
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    Glib::ustring attr = prefs->getString("/dialogs/import/link");
-    if (strcmp(attr.c_str(), "embed") == 0) {
-        embed = true;
-    } else if (strcmp(attr.c_str(), "link") == 0) {
-        embed = false;
-    } else {
-        embed = (strcmp(mod->get_param_optiongroup("link"), "embed") == 0);
-        if (mod->get_param_bool("ask")) {
-            prefs->setString("/dialogs/import/link", mod->get_param_optiongroup("link"));
-            mod->set_param_bool("ask", false);
+    bool ask = prefs->getBool("/dialogs/import/ask");
+    Glib::ustring link  = prefs->getString("/dialogs/import/link");
+    Glib::ustring scale = prefs->getString("/dialogs/import/scale");
+    // std::cout << "GkdpixbufInput::open: "
+    //           << " ask: " << ask
+    //           << ", link: " << link 
+    //           << ", scale: " << scale << std::endl;
+    // std::cout << "     in  preferences: "
+    //           << " ask: " << !mod->get_param_bool("do_not_ask")
+    //           << ", link: " << mod->get_param_optiongroup("link")
+    //           << ", scale: " << mod->get_param_optiongroup("scale") << std::endl;
+    if( ask ) {
+        Glib::ustring mod_link = mod->get_param_optiongroup("link");
+        Glib::ustring mod_scale = mod->get_param_optiongroup("scale");
+        if( link.compare( mod_link ) != 0 ) {
+            link = mod_link;
         }
+        prefs->setString("/dialogs/import/link", link );
+        if( scale.compare( mod_scale ) != 0 ) {
+            scale = mod_scale;
+        }
+        prefs->setString("/dialogs/import/scale", scale );
+        prefs->setBool("/dialogs/import/ask", !mod->get_param_bool("do_not_ask") );
     }
-
+    bool embed = ( link.compare( "embed" ) == 0 );
+ 
     SPDocument *doc = NULL;
     boost::scoped_ptr<Inkscape::Pixbuf> pb(Inkscape::Pixbuf::create_from_file(uri));
 
@@ -84,6 +95,12 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
         Inkscape::XML::Node *image_node = xml_doc->createElement("svg:image");
         sp_repr_set_svg_double(image_node, "width", width);
         sp_repr_set_svg_double(image_node, "height", height);
+        if( scale.compare( "auto" ) != 0 ) {
+            SPCSSAttr *css = sp_repr_css_attr_new();
+            sp_repr_css_set_property(css, "image-rendering", scale.c_str());
+            sp_repr_css_set(image_node, css, "style");
+            sp_repr_css_attr_unref( css );
+        }
 
         if (embed) {
             sp_embed_image(image_node, pb.get());
@@ -155,12 +172,21 @@ GdkpixbufInput::init(void)
                 "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
                   "<name>%s</name>\n"
                   "<id>org.inkscape.input.gdkpixbuf.%s</id>\n"
+
                   "<param name='link' type='optiongroup' appearance='full' _gui-text='" N_("Link or embed image:") "' >\n"
                     "<_option value='embed' >" N_("Embed") "</_option>\n"
                     "<_option value='link' >" N_("Link") "</_option>\n"
                   "</param>\n"
                   "<_param name='help' type='description'>" N_("Embed results in stand-alone, larger SVG files. Link references a file outside this SVG document and all files must be moved together.") "</_param>\n"
-                  "<param name=\"ask\" _gui-description='" N_("Hide the dialog next time and always apply the same action.") "' gui-text=\"" N_("Don't ask again") "\" type=\"boolean\" >false</param>\n"
+
+                  "<param name='scale' type='optiongroup' appearance='full' _gui-text='" N_("Scale image preference (image-rendering):") "' >\n"
+                    "<_option value='auto' >" N_("None (auto)") "</_option>\n"
+                    "<_option value='optimizeQuality' >" N_("Smooth (optimizeQuality)") "</_option>\n"
+                    "<_option value='optimizeSpeed' >" N_("Blocky (optimizeSpeed)") "</_option>\n"
+                  "</param>\n"
+                  "<_param name='help' type='description'>" N_("When an image is upscaled, apply smoothing or keep blocky (pixelated). (Will not work in all browsers.)") "</_param>\n"
+
+                  "<param name=\"do_not_ask\" _gui-description='" N_("Hide the dialog next time and always apply the same actions.") "' gui-text=\"" N_("Don't ask again") "\" type=\"boolean\" >false</param>\n"
                   "<input>\n"
                     "<extension>.%s</extension>\n"
                     "<mimetype>%s</mimetype>\n"

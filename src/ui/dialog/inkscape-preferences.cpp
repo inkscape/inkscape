@@ -1419,34 +1419,43 @@ void InkscapePreferences::initPageRendering()
 
 void InkscapePreferences::initPageBitmaps()
 {
-    {
-        Glib::ustring labels[] = {_("None"), _("2x2"), _("4x4"), _("8x8"), _("16x16")};
-        int values[] = {0, 1, 2, 3, 4};
-        _misc_overs_bitmap.set_size_request(_sb_width);
-        _misc_overs_bitmap.init("/options/bitmapoversample/value", labels, values, G_N_ELEMENTS(values), 1);
-        _page_bitmaps.add_line( false, _("Oversample bitmaps:"), _misc_overs_bitmap, "", "", false);
-    }
-
+    /* Note: /options/bitmapoversample removed with Cairo renderer */
+    _page_bitmaps.add_group_header( _("Edit"));
     _misc_bitmap_autoreload.init(_("Automatically reload bitmaps"), "/options/bitmapautoreload/value", true);
     _page_bitmaps.add_line( false, "", _misc_bitmap_autoreload, "",
                            _("Automatically reload linked images when file is changed on disk"));
     _misc_bitmap_editor.init("/options/bitmapeditor/value", true);
     _page_bitmaps.add_line( false, _("_Bitmap editor:"), _misc_bitmap_editor, "", "", true);
+
+    _page_bitmaps.add_group_header( _("Export"));
     _importexport_export_res.init("/dialogs/export/defaultxdpi/value", 0.0, 6000.0, 1.0, 1.0, Inkscape::Util::Quantity::convert(1, "in", "px"), true, false);
     _page_bitmaps.add_line( false, _("Default export _resolution:"), _importexport_export_res, _("dpi"),
                             _("Default bitmap resolution (in dots per inch) in the Export dialog"), false);
+    _page_bitmaps.add_group_header( _("Create"));
     _bitmap_copy_res.init("/options/createbitmap/resolution", 1.0, 6000.0, 1.0, 1.0, Inkscape::Util::Quantity::convert(1, "in", "px"), true, false);
     _page_bitmaps.add_line( false, _("Resolution for Create Bitmap _Copy:"), _bitmap_copy_res, _("dpi"),
                             _("Resolution used by the Create Bitmap Copy command"), false);
-    {
-        Glib::ustring labels[] = {_("Always embed"), _("Always link"), _("Ask")};
-        Glib::ustring values[] = {"embed", "link", "ask"};
-        _bitmap_import.init("/dialogs/import/link", labels, values, G_N_ELEMENTS(values), "ask");
-        _page_bitmaps.add_line( false, _("Bitmap import:"), _bitmap_import, "", "", false);
 
-        _bitmap_import_quality.init("/dialogs/import/quality", 1, 100, 1, 1, 100, true, false);
-        _page_bitmaps.add_line( false, _("Bitmap import quality:"), _bitmap_import_quality, "%", "Bitmap import quality (jpeg only). 100 is best quality", false);
+    _page_bitmaps.add_group_header( _("Import"));
+    _bitmap_ask.init(_("Ask about linking and scaling when importing"), "/dialogs/import/ask", true);
+    _page_bitmaps.add_line( true, "", _bitmap_ask, "",
+                           _("Pop-up linking and scaling dialog when importing bitmap image."));
+
+    {
+        Glib::ustring labels[] = {_("Embed"), _("Link")};
+        Glib::ustring values[] = {"embed", "link"};
+        _bitmap_link.init("/dialogs/import/link", labels, values, G_N_ELEMENTS(values), "link");
+        _page_bitmaps.add_line( false, _("Bitmap link:"), _bitmap_link, "", "", false);
     }
+
+    {
+        Glib::ustring labels[] = {_("None (auto)"), _("Smooth (optimizeQuality)"), _("Blocky (optimizeSpeed)") };
+        Glib::ustring values[] = {"auto", "optimizeQuality", "optimizeSpeed"};
+        _bitmap_scale.init("/dialogs/import/scale", labels, values, G_N_ELEMENTS(values), "scale");
+        _page_bitmaps.add_line( false, _("Bitmap scale (image-rendering):"), _bitmap_scale, "", "", false);
+    }
+
+    /* Note: /dialogs/import/quality removed use of in r12542 */
     _importexport_import_res.init("/dialogs/import/defaultxdpi/value", 0.0, 6000.0, 1.0, 1.0, Inkscape::Util::Quantity::convert(1, "in", "px"), true, false);
     _page_bitmaps.add_line( false, _("Default _import resolution:"), _importexport_import_res, _("dpi"),
                             _("Default bitmap resolution (in dots per inch) for bitmap import"), false);

@@ -365,12 +365,14 @@ protected:
     UI::Widget::PrefCheckButton _spell_ignorenumbers;
     UI::Widget::PrefCheckButton _spell_ignoreallcaps;
 
-
+    // Bitmaps
     UI::Widget::PrefCombo       _misc_overs_bitmap;
     UI::Widget::PrefEntryFileButtonHBox       _misc_bitmap_editor;
     UI::Widget::PrefCheckButton _misc_bitmap_autoreload;
     UI::Widget::PrefSpinButton  _bitmap_copy_res;
-    UI::Widget::PrefCombo       _bitmap_import;
+    UI::Widget::PrefCheckButton _bitmap_ask;
+    UI::Widget::PrefCombo       _bitmap_link;
+    UI::Widget::PrefCombo       _bitmap_scale;
     UI::Widget::PrefSpinButton  _bitmap_import_quality;
 
     UI::Widget::PrefEntry       _kb_search;

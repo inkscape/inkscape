@@ -41,6 +41,7 @@
 #include <gtkmm/expander.h>
 #include <gtkmm/frame.h>
 #include <gtkmm/textview.h>
+#include <gtkmm/comboboxtext.h>
 
 #include "ui/dialog/desktop-tracker.h"
 
@@ -96,6 +97,8 @@ private:
     Gtk::Entry EntryLabel; //the entry for the object label
     Gtk::Label LabelTitle; //the label for the object title
     Gtk::Entry EntryTitle; //the entry for the object title
+    Gtk::Label LabelImageRendering; // the label for 'image-rendering'
+    Gtk::ComboBoxText ComboBoxTextImageRendering; // the combo box text for 'image-rendering'
     
     Gtk::Label LabelDescription; //the label for the object description
     UI::Widget::Frame FrameDescription; //the frame for the object description
@@ -134,6 +137,11 @@ private:
      */
     void label_changed(void);
     
+    /**
+     * Callback for 'image-rendering'.
+     */
+    void image_rendering_changed(void);
+
 	/**
      * Callback for checkbox Lock.
      */

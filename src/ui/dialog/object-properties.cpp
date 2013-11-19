@@ -36,6 +36,8 @@
 #include "selection.h"
 #include "desktop.h"
 #include "sp-item.h"
+#include "sp-image.h"
+#include "xml/repr.h"
 #include <glibmm/i18n.h>
 
 #if WITH_GTKMM_3_0
@@ -56,11 +58,12 @@ ObjectProperties::ObjectProperties (void) :
 #if WITH_GTKMM_3_0
     TopTable(Gtk::manage(new Gtk::Grid())),
 #else
-    TopTable(Gtk::manage(new Gtk::Table(3, 4))),
+    TopTable(Gtk::manage(new Gtk::Table(4, 4))),
 #endif
     LabelID(_("_ID:"), 1),
     LabelLabel(_("_Label:"), 1),
     LabelTitle(_("_Title:"),1),
+    LabelImageRendering(_("_Image Rendering:"),1),
     LabelDescription(_("_Description:"),1),
     FrameDescription("", FALSE),
     HBoxCheck(FALSE, 0),
@@ -248,6 +251,39 @@ void ObjectProperties::MakeWidget(void)
     FrameTextDescription.add (TextViewDescription);
     TextViewDescription.add_mnemonic_label(LabelDescription);
 
+    /* Image rendering */
+    /* Create the label for the object ImageRendering */
+    LabelImageRendering.set_label (LabelImageRendering.get_label() + " ");
+    LabelImageRendering.set_alignment (1, 0.5);
+
+#if WITH_GTKMM_3_0
+    LabelImageRendering.set_valign(Gtk::ALIGN_CENTER);
+    TopTable->attach(LabelImageRendering, 0, 3, 1, 1);
+#else
+    TopTable->attach(LabelImageRendering, 0, 1, 3, 4,
+                      Gtk::SHRINK | Gtk::FILL,
+                      Gtk::AttachOptions(), 0, 0 );
+#endif
+
+    /* Create the combo box text for the 'image-rendering' property  */
+    ComboBoxTextImageRendering.append( "auto" );
+    ComboBoxTextImageRendering.append( "optimizeQuality" );
+    ComboBoxTextImageRendering.append( "optimizeSpeed" );
+    ComboBoxTextImageRendering.set_tooltip_text (_("The 'image-rendering' property can influence how a bitmap is up-scaled:\n\t'auto' no preference;\n\t'optimizeQuality' smooth;\n\t'optimizeSpeed' blocky.\nNote that this behaviour is not defined in the SVG 1.1 specification and not all browsers follow this interpretation."));
+
+#if WITH_GTKMM_3_0
+    ComboBoxTextImageRendering.set_valign(Gtk::ALIGN_CENTER);
+    TopTable->attach(ComboBoxTextImageRendering, 1, 3, 1, 1);
+#else
+    TopTable->attach(ComboBoxTextImageRendering, 1, 2, 3, 4,
+                     Gtk::EXPAND | Gtk::FILL,
+                     Gtk::AttachOptions(), 0, 0 );
+#endif
+
+    LabelImageRendering.set_mnemonic_widget (ComboBoxTextImageRendering);
+
+    ComboBoxTextImageRendering.signal_changed().connect(sigc::mem_fun(this, &ObjectProperties::image_rendering_changed));
+
     /* Check boxes */
     contents->pack_start (HBoxCheck, FALSE, FALSE, 0);
     CheckTable->set_border_width(4);
@@ -376,6 +412,24 @@ void ObjectProperties::widget_setup(void)
         }
         EntryTitle.set_sensitive(TRUE);
 
+        /* Image Rendering */
+        if( SP_IS_IMAGE( item ) ) {
+            ComboBoxTextImageRendering.show();
+            LabelImageRendering.show();
+            char const *str = obj->getStyleProperty( "image-rendering", "auto" );
+            if( strcmp( str, "auto" ) == 0 ) {
+                ComboBoxTextImageRendering.set_active(0);
+            } else if( strcmp( str, "optimizeQuality" ) == 0 ) {
+                ComboBoxTextImageRendering.set_active(1);
+            }  else {
+                ComboBoxTextImageRendering.set_active(2);
+            }
+        } else {
+            ComboBoxTextImageRendering.hide();
+            ComboBoxTextImageRendering.unset_active();
+            LabelImageRendering.hide();
+        }
+
         /* Description */
         gchar *desc = obj->desc();
         if (desc) {
@@ -456,6 +510,32 @@ void ObjectProperties::label_changed(void)
         DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
                 _("Set object description"));
     
+    blocked = false;
+}
+
+void ObjectProperties::image_rendering_changed(void)
+{
+    if (blocked)
+    {
+        return;
+    }
+    
+    SPItem *item = sp_desktop_selection(SP_ACTIVE_DESKTOP)->singleItem();
+    g_return_if_fail (item != NULL);
+
+    blocked = true;
+
+    Glib::ustring scale = ComboBoxTextImageRendering.get_active_text();
+
+    // We should unset if the parent computed value is auto and the desired value is auto.
+    SPCSSAttr *css = sp_repr_css_attr_new();
+    sp_repr_css_set_property(css, "image-rendering", scale.c_str());
+    Inkscape::XML::Node *image_node = item->getRepr();
+    if( image_node ) {
+        sp_repr_css_change(image_node, css, "style");
+    }
+    sp_repr_css_attr_unref( css );
+        
     blocked = false;
 }
 
