@@ -106,7 +106,7 @@ void graphlayout(GSList const *const items) {
         return;
     }
 
-    using Inkscape::Util::GSListConstIterator;
+    using Inkscape::Util::GSListIterator;
     list<SPItem *> selected;
     filterConnectors(items,selected);
     if (selected.empty()) return;
@@ -167,7 +167,7 @@ void graphlayout(GSList const *const items) {
         GSList *nlist=iu->avoidRef->getAttachedConnectors(Avoid::runningFrom);
         list<SPItem *> connectors;
 
-        connectors.insert<GSListConstIterator<SPItem *> >(connectors.end(),nlist,NULL);
+        connectors.insert<GSListIterator<SPItem *> >(connectors.end(),nlist,NULL);
         for (list<SPItem *>::iterator j(connectors.begin());
                 j != connectors.end();
                 ++j) {
