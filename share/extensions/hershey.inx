@@ -11,13 +11,13 @@
       <param name="text" type="string" _gui-text="Text:">Hershey Text for Inkscape</param>
 
       <param name="action" type="optiongroup" appearance="minimal"
-        _gui-text="                Action">
+        _gui-text="               Action: ">
         <_option value="render">Typeset that text</_option>
         <_option value="table" >Write glyph table</_option> 
       </param>
 
       <param name="fontface" type="optiongroup" appearance="minimal"
-        _gui-text="            Font face ">
+        _gui-text="           Font face: ">
         <_option value="futural">Sans 1-stroke</_option>
         <_option value="futuram">Sans bold</_option> 
 
