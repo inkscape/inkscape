@@ -2916,6 +2916,8 @@ void sp_selection_to_guides(SPDesktop *desktop)
         sp_selection_to_guides_recursive(SP_ITEM(i->data), deleteitem, wholegroups);
     }
 
+    g_slist_free(items);
+
     DocumentUndo::done(doc, SP_VERB_EDIT_SELECTION_2_GUIDES, _("Objects to guides"));
 }
 
