@@ -372,10 +372,10 @@ static GSList *sp_selection_paste_impl(SPDocument *doc, SPObject *parent, GSList
 static void sp_selection_delete_impl(GSList const *items, bool propagate = true, bool propagate_descendants = true)
 {
     for (GSList const *i = items ; i ; i = i->next ) {
-        sp_object_ref((SPObject *)i->data, NULL);
+        sp_object_ref(static_cast<SPItem *>(i->data), NULL);
     }
     for (GSList const *i = items; i != NULL; i = i->next) {
-        SPItem *item = reinterpret_cast<SPItem *>(i->data);
+        SPItem *item = static_cast<SPItem *>(i->data);
         item->deleteObject(propagate, propagate_descendants);
         sp_object_unref(item, NULL);
     }
@@ -403,11 +403,11 @@ void sp_selection_delete(SPDesktop *desktop)
         return;
     }
 
-    GSList const *selected = g_slist_copy(const_cast<GSList *>(selection->itemList()));
+    GSList *selected = g_slist_copy(const_cast<GSList *>(selection->itemList()));
     selection->clear();
     sp_selection_delete_impl(selected);
-    g_slist_free(const_cast<GSList *>(selected));
-    reinterpret_cast<SPObject *>(desktop->currentLayer())->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    g_slist_free(selected);
+    desktop->currentLayer()->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 
     /* a tool may have set up private information in it's selection context
      * that depends on desktop items.  I think the only sane way to deal with
@@ -2879,17 +2879,13 @@ void sp_selection_to_marker(SPDesktop *desktop, bool apply)
                        _("Objects to marker"));
 }
 
-static void sp_selection_to_guides_recursive(SPItem *item, bool deleteitem, bool wholegroups) {
+static void sp_selection_to_guides_recursive(SPItem *item, bool wholegroups) {
     if (SP_IS_GROUP(item) && !SP_IS_BOX3D(item) && !wholegroups) {
         for (GSList *i = sp_item_group_item_list(SP_GROUP(item)); i != NULL; i = i->next) {
-            sp_selection_to_guides_recursive(SP_ITEM(i->data), deleteitem, wholegroups);
+            sp_selection_to_guides_recursive(static_cast<SPItem*>(i->data), wholegroups);
         }
     } else {
         item->convert_to_guides();
-
-        if (deleteitem) {
-            item->deleteObject(true);
-        }
     }
 }
 
@@ -2909,11 +2905,20 @@ void sp_selection_to_guides(SPDesktop *desktop)
     }
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    bool deleteitem = !prefs->getBool("/tools/cvg_keep_objects", 0);
+    bool deleteitems = !prefs->getBool("/tools/cvg_keep_objects", 0);
     bool wholegroups = prefs->getBool("/tools/cvg_convert_whole_groups", 0);
 
+    // If an object is earlier in the selection list than its clone, and it is deleted, then the clone will have changed
+    // and its entry in the selection list is invalid (crash).
+    // Therefore: first convert all, then delete all.
+
     for (GSList const *i = items; i != NULL; i = i->next) {
-        sp_selection_to_guides_recursive(SP_ITEM(i->data), deleteitem, wholegroups);
+        sp_selection_to_guides_recursive(static_cast<SPItem*>(i->data), wholegroups);
+    }
+
+    if (deleteitems) {
+        selection->clear();
+        sp_selection_delete_impl(items);
     }
 
     g_slist_free(items);
