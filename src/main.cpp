@@ -26,12 +26,13 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
-#include "path-prefix.h"
 
 // This has to be included prior to anything that includes setjmp.h, it croaks otherwise
 #include <png.h>
 
-#include "ui/widget/panel.h"
+#include "ui/widget/panel.h" // This has to be the first to include <glib.h> because of Glibmm's dependence on a deprecated feature...
+
+#include "path-prefix.h"
 
 #ifdef HAVE_IEEEFP_H
 #include <ieeefp.h>

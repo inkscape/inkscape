@@ -16,13 +16,14 @@
 # include <config.h>
 #endif
 
+#include "ocaldialogs.h"
+
 #include <stdio.h>  // rename()
 #include <unistd.h> // close()
 #include <errno.h>  // errno
 #include <string.h> // strerror()
 
 #include "path-prefix.h"
-#include "ocaldialogs.h"
 #include "filedialogimpl-gtkmm.h"
 #include "interface.h"
 #include "gc-core.h"
