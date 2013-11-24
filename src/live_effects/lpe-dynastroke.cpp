@@ -50,12 +50,12 @@ LPEDynastroke::LPEDynastroke(LivePathEffectObject *lpeobject) :
     method(_("Method:"), _("Choose pen type"), "method", DSMethodConverter, &wr, this, DSM_THICKTHIN_FAST),
     width(_("Pen width:"), _("Maximal stroke width"), "width", &wr, this, 25),
     roundness(_("Pen roundness:"), _("Min/Max width ratio"), "roundness", &wr, this, .2),
-    angle(_("Angle:"), _("direction of thickest strokes (opposite = thinest)"), "angle", &wr, this, 45),
+    angle(_("Angle:"), _("direction of thickest strokes (opposite = thinnest)"), "angle", &wr, this, 45),
 //    modulo_pi(_("modulo pi"), _("Give forward and backward moves in one direction the same thickness "), "modulo_pi", &wr, this, false),
     start_cap(_("Start:"), _("Choose start capping type"), "start_cap", DSCTConverter, &wr, this, DSCT_SHARP),
     end_cap(_("End:"), _("Choose end capping type"), "end_cap", DSCTConverter, &wr, this, DSCT_SHARP),
-    growfor(_("Grow for:"), _("Make the stroke thiner near it's start"), "growfor", &wr, this, 100),
-    fadefor(_("Fade for:"), _("Make the stroke thiner near it's end"), "fadefor", &wr, this, 100),
+    growfor(_("Grow for:"), _("Make the stroke thinner near it's start"), "growfor", &wr, this, 100),
+    fadefor(_("Fade for:"), _("Make the stroke thinner near it's end"), "fadefor", &wr, this, 100),
     round_ends(_("Round ends"), _("Strokes end with a round end"), "round_ends", &wr, this, false),
     capping(_("Capping:"), _("left capping"), "capping", &wr, this, "M 100,5 C 50,5 0,0 0,0 0,0 50,-5 100,-5")
 {
