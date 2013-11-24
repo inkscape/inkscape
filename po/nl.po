@@ -58,7 +58,7 @@ msgstr ""
 "Project-Id-Version: inkscape 0.49\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-11-07 15:09+0100\n"
-"PO-Revision-Date: 2013-11-13 21:02+0100\n"
+"PO-Revision-Date: 2013-11-24 21:22+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch\n"
 "MIME-Version: 1.0\n"
@@ -752,7 +752,7 @@ msgstr "Kilt"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Checkered tartan pattern"
-msgstr "Geruite kilt-patroon"
+msgstr "Geruit kiltpatroon"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Shaken Liquid"
@@ -3793,13 +3793,13 @@ msgid "New document %d"
 msgstr "Nieuw document %d"
 
 #: ../src/document.cpp:512
-#, fuzzy, c-format
+#, c-format
 msgid "Memory document %d"
-msgstr "Omvang van document in het geheugen %1"
+msgstr "Document in het geheugen %d"
 
 #: ../src/document.cpp:541
 msgid "Memory document %1"
-msgstr "Omvang van document in het geheugen %1"
+msgstr "Document in het geheugen %1"
 
 #: ../src/document.cpp:752
 #, c-format
@@ -8541,7 +8541,7 @@ msgstr "Zichtbaar?"
 
 #: ../src/live_effects/effect.cpp:286
 msgid "If unchecked, the effect remains applied to the object but is temporarily disabled on canvas"
-msgstr "Indien uitgevinkt, blijft het effect op het object toegepast, maar is tijdelijk niet zichtbaar op het canvas"
+msgstr "Indien uitgevinkt, blijft het effect op het object toegepast, maar is het tijdelijk niet zichtbaar op het canvas"
 
 #: ../src/live_effects/effect.cpp:307
 msgid "No effect"
@@ -8615,7 +8615,7 @@ msgstr "Breedte van het pad"
 
 #: ../src/live_effects/lpe-bendpath.cpp:55
 msgid "W_idth in units of length"
-msgstr "B_reedte uitgedrukt in eenheden van lengte"
+msgstr "B_reedte in eenheden van lengte"
 
 #: ../src/live_effects/lpe-bendpath.cpp:55
 msgid "Scale the width of the path in units of its length"
@@ -8639,7 +8639,7 @@ msgstr "Overlap"
 
 #: ../src/live_effects/lpe-boolops.cpp:24
 msgid "Subtract A-B"
-msgstr ""
+msgstr "A-B"
 
 #: ../src/live_effects/lpe-boolops.cpp:25
 msgid "Identity A"
@@ -8647,7 +8647,7 @@ msgstr "Identiteit A"
 
 #: ../src/live_effects/lpe-boolops.cpp:26
 msgid "Subtract B-A"
-msgstr ""
+msgstr "B-A"
 
 #: ../src/live_effects/lpe-boolops.cpp:27
 msgid "Identity B"
@@ -8669,18 +8669,16 @@ msgid "2nd path:"
 msgstr "2de pad:"
 
 #: ../src/live_effects/lpe-boolops.cpp:35
-#, fuzzy
 msgid "Path to which the original path will be boolop'ed."
-msgstr "Pad waar originele paddata van genomen worden"
+msgstr "Pad waarmee de booleaanse bewerking op het originele pad uitgevoerd zal worden."
 
 #: ../src/live_effects/lpe-boolops.cpp:36
-#, fuzzy
 msgid "Boolop type:"
-msgstr "Type gereedschap:"
+msgstr "Type booleaanse bewerking:"
 
 #: ../src/live_effects/lpe-boolops.cpp:36
 msgid "Determines which kind of boolop will be performed."
-msgstr ""
+msgstr "Bepaalt welke booleaanse bewerking uitgevoerd zal worden."
 
 #: ../src/live_effects/lpe-clone-original.cpp:18
 msgid "Linked path:"
@@ -8707,7 +8705,6 @@ msgid "The size of the grid in Y direction."
 msgstr "Rastergrootte in Y-richting"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:51
-#, fuzzy
 msgid "Starting:"
 msgstr "Begin:"
 
@@ -8817,14 +8814,13 @@ msgstr "Elliptische pen"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:36
 msgid "Thick-Thin strokes (fast)"
-msgstr ""
+msgstr "Dikke-dunne lijnen (snel)"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:37
 msgid "Thick-Thin strokes (slow)"
-msgstr ""
+msgstr "Dikke-dunne lijnen (traag)"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:42
-#, fuzzy
 msgid "Sharp"
 msgstr "Verscherpen"
 
@@ -8840,27 +8836,24 @@ msgid "Method:"
 msgstr "Methode:"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:50
-#, fuzzy
 msgid "Choose pen type"
-msgstr "Segmenttype veranderen"
+msgstr "Pentype kiezen"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:51
 msgid "Pen width:"
 msgstr "Penbreedte:"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:51
-#, fuzzy
 msgid "Maximal stroke width"
-msgstr "Lijndikte mee schalen"
+msgstr "Maximale lijndikte"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:52
-#, fuzzy
 msgid "Pen roundness:"
-msgstr "Willekeurigheid plaatsing:"
+msgstr "Penafronding:"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:52
 msgid "Min/Max width ratio"
-msgstr ""
+msgstr "Ratio min/max breedte"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:53
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:61
@@ -8871,8 +8864,9 @@ msgid "Angle:"
 msgstr "Hoek:"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:53
+#, fuzzy
 msgid "direction of thickest strokes (opposite = thinest)"
-msgstr ""
+msgstr "richting van de dikste lijnen ("
 
 #. modulo_pi(_("modulo pi"), _("Give forward and backward moves in one direction the same thickness "), "modulo_pi", &wr, this, false),
 #: ../src/live_effects/lpe-dynastroke.cpp:55
@@ -8881,9 +8875,8 @@ msgid "Start:"
 msgstr "Begin:"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:55
-#, fuzzy
 msgid "Choose start capping type"
-msgstr "Segmenttype veranderen"
+msgstr ""
 
 #: ../src/live_effects/lpe-dynastroke.cpp:56
 #: ../src/widgets/arc-toolbar.cpp:349
@@ -8896,16 +8889,14 @@ msgid "Choose end capping type"
 msgstr "Segmenttype veranderen"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:57
-#, fuzzy
 msgid "Grow for:"
-msgstr "Groei:"
+msgstr "Groeien naar:"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:57
 msgid "Make the stroke thiner near it's start"
 msgstr ""
 
 #: ../src/live_effects/lpe-dynastroke.cpp:58
-#, fuzzy
 msgid "Fade for:"
 msgstr "Vervagen naar:"
 
@@ -8914,24 +8905,20 @@ msgid "Make the stroke thiner near it's end"
 msgstr ""
 
 #: ../src/live_effects/lpe-dynastroke.cpp:59
-#, fuzzy
 msgid "Round ends"
 msgstr "Afgerond"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:59
-#, fuzzy
 msgid "Strokes end with a round end"
-msgstr "Geperst metaal met een gewalste rand"
+msgstr "Lijnen eindigen afgerond"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:60
-#, fuzzy
 msgid "Capping:"
-msgstr "Klotsen"
+msgstr ""
 
 #: ../src/live_effects/lpe-dynastroke.cpp:60
-#, fuzzy
 msgid "left capping"
-msgstr "Voor toepassen afsnijpad/masker"
+msgstr ""
 
 #: ../src/live_effects/lpe-envelope.cpp:31
 msgid "Top bend path:"
@@ -9237,40 +9224,36 @@ msgid "Open both"
 msgstr "Beide open"
 
 #: ../src/live_effects/lpe-line_segment.cpp:34
-#, fuzzy
 msgid "End type:"
-msgstr "Mengtype:"
+msgstr "Eindtype:"
 
 #: ../src/live_effects/lpe-line_segment.cpp:34
 msgid "Determines on which side the line or line segment is infinite."
 msgstr ""
 
 #: ../src/live_effects/lpe-mirror_symmetry.cpp:32
-#, fuzzy
 msgid "Discard original path?"
-msgstr "Origineel pad vervangen"
+msgstr "Origineel pad verwijderen?"
 
 #: ../src/live_effects/lpe-mirror_symmetry.cpp:32
 msgid "Check this to only keep the mirrored part of the path"
-msgstr ""
+msgstr "Vink dit aan om alleen het spiegelbeeld te behouden"
 
 #: ../src/live_effects/lpe-mirror_symmetry.cpp:33
-#, fuzzy
 msgid "Reflection line:"
-msgstr "Kloon herlinken"
+msgstr "Spiegellijn:"
 
 #: ../src/live_effects/lpe-mirror_symmetry.cpp:33
 msgid "Line which serves as 'mirror' for the reflection"
-msgstr ""
+msgstr "Lijn waarrond gespiegeld wordt"
 
 #: ../src/live_effects/lpe-offset.cpp:31
 msgid "Handle to control the distance of the offset from the curve"
 msgstr ""
 
 #: ../src/live_effects/lpe-parallel.cpp:50
-#, fuzzy
 msgid "Adjust the offset"
-msgstr "De <b>afstand voor verplaatsen</b> aanpassen"
+msgstr ""
 
 #: ../src/live_effects/lpe-parallel.cpp:51
 msgid "Specifies the left end of the parallel"
@@ -9296,9 +9279,8 @@ msgid "Scale:"
 msgstr "Schaal:"
 
 #: ../src/live_effects/lpe-path_length.cpp:26
-#, fuzzy
 msgid "Scaling factor"
-msgstr "Schalingsfactor:"
+msgstr "Schalingsfactor"
 
 #: ../src/live_effects/lpe-path_length.cpp:28
 #: ../src/live_effects/lpe-ruler.cpp:42
@@ -9316,14 +9298,12 @@ msgid "Unit"
 msgstr "Eenheid"
 
 #: ../src/live_effects/lpe-path_length.cpp:29
-#, fuzzy
 msgid "Display unit"
-msgstr "Weergavebijstelling"
+msgstr "Weergaveëenheid"
 
 #: ../src/live_effects/lpe-path_length.cpp:29
-#, fuzzy
 msgid "Print unit after path length"
-msgstr "In-uit padlengte"
+msgstr ""
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:50
 #: ../share/extensions/pathalongpath.inx.h:10
@@ -9368,7 +9348,7 @@ msgstr "Breedte van het patroon"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:63
 msgid "Wid_th in units of length"
-msgstr "Br_eedte uitgedrukt in eenheden van lengte"
+msgstr "Br_eedte in eenheden van lengte"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:64
 msgid "Scale the width of the pattern in units of its length"
@@ -9409,7 +9389,7 @@ msgstr "Patroon 90 graden draaien voor toepassen"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:77
 msgid "_Fuse nearby ends:"
-msgstr "Di_chtbijzijnde uiteinden aaneensmelten:"
+msgstr "Nabi_je uiteinden aaneensmelten:"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:77
 msgid "Fuse ends closer than this number. 0 means don't fuse."
@@ -9425,24 +9405,20 @@ msgstr "Het \"rechter\"deel van de deellijn aanpassen"
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-perspective_path.cpp:47
-#, fuzzy
 msgid "Scale x"
-msgstr "Schalen"
+msgstr ""
 
 #: ../src/live_effects/lpe-perspective_path.cpp:47
-#, fuzzy
 msgid "Scale factor in x direction"
-msgstr "Toestand van verdwijnpunt in X-richting"
+msgstr ""
 
 #: ../src/live_effects/lpe-perspective_path.cpp:48
-#, fuzzy
 msgid "Scale y"
-msgstr "Schalen"
+msgstr ""
 
 #: ../src/live_effects/lpe-perspective_path.cpp:48
-#, fuzzy
 msgid "Scale factor in y direction"
-msgstr "Toestand van verdwijnpunt in X-richting"
+msgstr ""
 
 #: ../src/live_effects/lpe-perspective_path.cpp:49
 msgid "Offset x"
@@ -9586,7 +9562,7 @@ msgstr "Maximale lengte (in lijnbreedtes) van de punt"
 
 #: ../src/live_effects/lpe-powerstroke.cpp:240
 msgid "End cap:"
-msgstr "Afronding uiteinde:"
+msgstr "Afronding einde:"
 
 #: ../src/live_effects/lpe-powerstroke.cpp:240
 msgid "Determines the shape of the path's end"
@@ -9717,7 +9693,6 @@ msgid "Width at 'bottom' half-turns"
 msgstr "Breedte bij bochten aan 'onderzijde'"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
-#, fuzzy
 msgid "At 2nd side:"
 msgstr "Bij 2de zijde:"
 
@@ -9727,7 +9702,6 @@ msgstr "Breedte bij bochten aan 'bovenzijde'"
 
 #.
 #: ../src/live_effects/lpe-rough-hatches.cpp:244
-#, fuzzy
 msgid "From 2nd to 1st side:"
 msgstr "Van 2de naar 1ste zijde:"
 
@@ -9736,7 +9710,6 @@ msgid "Width from 'top' to 'bottom'"
 msgstr "Breedte van 'bovenzijde' naar 'onderzijde'"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:245
-#, fuzzy
 msgid "From 1st to 2nd side:"
 msgstr "Van 1ste naar 2de zijde:"
 
@@ -9992,26 +9965,23 @@ msgstr "max kromming"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:61
 msgid "Additional angle between tangent and curve"
-msgstr ""
+msgstr "Additionele hoek tussen raaklijn en curve"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:62
-#, fuzzy
 msgid "Location along curve:"
-msgstr "Locatie van de cache van de gebruiker"
+msgstr "Positie langs de curve:"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:62
 msgid "Location of the point of attachment along the curve (between 0.0 and number-of-segments)"
 msgstr "Locatie van het raakpunt langs de curve (tussen 0.0 en het aantal segmenten)"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:63
-#, fuzzy
 msgid "Specifies the left end of the tangent"
-msgstr "Richting kleurverloop omdraaien"
+msgstr "Bepaalt het linkereinde van de raaklijn"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:64
-#, fuzzy
 msgid "Specifies the right end of the tangent"
-msgstr "Richting kleurverloop omdraaien"
+msgstr "Bepaalt het rechtereinde van de raaklijn"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:105
 msgid "Adjust the point of attachment of the tangent"
@@ -10026,19 +9996,16 @@ msgid "Adjust the \"right\" end of the tangent"
 msgstr "Het \"rechter\"deel van de raaklijn aanpassen"
 
 #: ../src/live_effects/lpe-test-doEffect-stack.cpp:22
-#, fuzzy
 msgid "Stack step:"
-msgstr "Status:"
+msgstr ""
 
 #: ../src/live_effects/lpe-test-doEffect-stack.cpp:23
-#, fuzzy
 msgid "Point param:"
-msgstr "Punt op:"
+msgstr ""
 
 #: ../src/live_effects/lpe-test-doEffect-stack.cpp:24
-#, fuzzy
 msgid "Path param:"
-msgstr "Data pad"
+msgstr ""
 
 #: ../src/live_effects/lpe-text_label.cpp:23
 msgid "Label:"
@@ -10167,9 +10134,8 @@ msgid "Change vector parameter"
 msgstr "Vectorparameter veranderen"
 
 #: ../src/lpe-tool-context.cpp:204
-#, fuzzy
 msgid "Choose a construction tool from the toolbar."
-msgstr "Een secundair gereedschap uit de gereedschappenbalk selecteren"
+msgstr ""
 
 #: ../src/main-cmdlineact.cpp:50
 #, c-format
@@ -11224,7 +11190,6 @@ msgstr "Selecteer <b>objecten</b> die u naar onderen wilt brengen."
 
 #. TRANSLATORS: "Lower" means "to lower an object" in the undo history
 #: ../src/selection-chemistry.cpp:1036
-#, fuzzy
 msgctxt "Undo action"
 msgid "Lower"
 msgstr "Omlaag"
@@ -11594,22 +11559,22 @@ msgid " in group %s (%s)"
 msgstr " in groep %s (%s)"
 
 #: ../src/selection-describer.cpp:156
-#, fuzzy, c-format
+#, c-format
 msgid " in unnamed group (%s)"
-msgstr " in groep %s (%s)"
+msgstr " in onbenoemde groep (%s)"
 
 #: ../src/selection-describer.cpp:158
-#, fuzzy, c-format
+#, c-format
 msgid " in <b>%i</b> parent (%s)"
 msgid_plural " in <b>%i</b> parents (%s)"
 msgstr[0] " in <b>%i</b> ouder (%s)"
 msgstr[1] " in <b>%i</b> ouders (%s)"
 
 #: ../src/selection-describer.cpp:161
-#, fuzzy, c-format
+#, c-format
 msgid " in <b>%i</b> layer"
 msgid_plural " in <b>%i</b> layers"
-msgstr[0] " in <b>%i</b> lagen"
+msgstr[0] " in <b>%i</b> laag"
 msgstr[1] " in <b>%i</b> lagen"
 
 #: ../src/selection-describer.cpp:172
@@ -11752,18 +11717,16 @@ msgstr "Cirkel"
 
 #. TRANSLATORS: "Flow region" is an area where text is allowed to flow
 #: ../src/sp-flowregion.cpp:193
-#, fuzzy
 msgid "Flow Region"
-msgstr "Gebied met tekstvormen"
+msgstr "Tekstgebied"
 
 #. TRANSLATORS: A region "cut out of" a flow region; text is not allowed to flow inside the
 #. * flow excluded region.  flowRegionExclude in SVG 1.2: see
 #. * http://www.w3.org/TR/2004/WD-SVG12-20041027/flow.html#flowRegion-elem and
 #. * http://www.w3.org/TR/2004/WD-SVG12-20041027/flow.html#flowRegionExclude-elem.
 #: ../src/sp-flowregion.cpp:343
-#, fuzzy
 msgid "Flow Excluded Region"
-msgstr "Gebied zonder tekstvormen"
+msgstr "Gebied zonder tekst"
 
 #: ../src/sp-flowtext.cpp:289
 msgid "Flowed Text"
@@ -11780,11 +11743,11 @@ msgid " [truncated]"
 msgstr " [afgekort]"
 
 #: ../src/sp-flowtext.cpp:300
-#, fuzzy, c-format
+#, c-format
 msgid "(%d character%s)"
 msgid_plural "(%d characters%s)"
 msgstr[0] "(%d karakter%s)"
-msgstr[1] "(%d karakter%s)"
+msgstr[1] "(%d karakters%s)"
 
 #: ../src/sp-guide.cpp:301
 msgid "Create Guides Around the Page"
@@ -11829,9 +11792,9 @@ msgid "[bad reference]: %s"
 msgstr "[slechte referentie]: %s"
 
 #: ../src/sp-image.cpp:633
-#, fuzzy, c-format
+#, c-format
 msgid "%d &#215; %d: %s"
-msgstr "<b>Afbeelding</b> %d &#215; %d: %s"
+msgstr "%d &#215; %d: %s"
 
 #: ../src/spiral-context.cpp:263
 msgid "<b>Ctrl</b>: snap angle"
@@ -11879,13 +11842,13 @@ msgstr "%s; <i>gefilterd</i>"
 #: ../src/sp-switch.cpp:81
 #, fuzzy, c-format
 msgid "of <b>%d</b> object"
-msgstr "<b>Groep</b> van <b>%d</b> object"
+msgstr "van <b>%d</b> object"
 
 #: ../src/sp-item-group.cpp:337
 #: ../src/sp-switch.cpp:81
-#, fuzzy, c-format
+#, c-format
 msgid "of <b>%d</b> objects"
-msgstr "<b>Groep</b> van <b>%d</b> object"
+msgstr "van <b>%d</b> objecten"
 
 #: ../src/sp-line.cpp:126
 msgid "Line"
@@ -12014,7 +11977,7 @@ msgstr "Dynamische offset"
 #: ../src/sp-offset.cpp:352
 #, c-format
 msgid "%s by %f pt"
-msgstr ""
+msgstr "%s bij %f pt"
 
 #: ../src/sp-offset.cpp:353
 msgid "outset"
@@ -12031,17 +11994,17 @@ msgstr "Pad"
 #: ../src/sp-path.cpp:95
 #, fuzzy, c-format
 msgid ", path effect: %s"
-msgstr "Padeffect toevoegen"
+msgstr ", padeffect: %s"
 
 #: ../src/sp-path.cpp:98
 #, c-format
 msgid "%i node%s"
-msgstr ""
+msgstr "%i knooppunt%s"
 
 #: ../src/sp-path.cpp:98
 #, c-format
 msgid "%i nodes%s"
-msgstr ""
+msgstr "%i knooppunten%s"
 
 #: ../src/sp-polygon.cpp:182
 msgid "<b>Polygon</b>"
@@ -23522,7 +23485,7 @@ msgstr "Padeffecten beheren, wijzigen en toepassen"
 
 #: ../src/verbs.cpp:2861
 msgid "Filter _Editor..."
-msgstr "Filter _editor..."
+msgstr "Filters _bewerken..."
 
 #: ../src/verbs.cpp:2862
 msgid "Manage, edit, and apply SVG filters"
@@ -27023,7 +26986,7 @@ msgid ""
 "Technical details:\n"
 "%s"
 msgstr ""
-"De fantastische lxml wrapper voor libxml2 is nodig voor inkex.py en dus ook voor deze uitbreiding. Download en installeer alstublief de laatste versie van http://cheeseshop.python.org/pypi/lxml/ of installeer het met uw package manager via de commandolijn: sudo apt-get install python-lxml\n"
+"De lxml wrapper voor libxml2 is nodig voor inkex.py en dus ook voor deze uitbreiding. Download en installeer alstublief de laatste versie van http://cheeseshop.python.org/pypi/lxml/ of installeer het met uw package manager via de commandolijn: sudo apt-get install python-lxml\n"
 "\n"
 "Technische details:\n"
 "%s"
@@ -27065,22 +27028,24 @@ msgid ""
 "Node with id '{0}' is not a suitable text node and was therefore ignored.\n"
 "\n"
 msgstr ""
+"Knooppunt met id '{0}' is geen geschikte tekstnode en wordt daarom genegeerd.\n"
+"\n"
 
 #: ../share/extensions/jessyInk_effects.py:53
 msgid "No object selected. Please select the object you want to assign an effect to and then press apply.\n"
-msgstr ""
+msgstr "Geen objecten geselecteerd. Selecteer aub. het object waaraan je een effect wil toekennen en druk op toepassen.\n"
 
 #: ../share/extensions/jessyInk_export.py:82
 msgid "Could not find Inkscape command.\n"
-msgstr ""
+msgstr "Kon Inkscape commando niet vinden.\n"
 
 #: ../share/extensions/jessyInk_masterSlide.py:56
 msgid "Layer not found. Removed current master slide selection.\n"
-msgstr ""
+msgstr "Laag niet gevonden. Huidige hoofddiaselectie is verwijderd.\n"
 
 #: ../share/extensions/jessyInk_masterSlide.py:58
 msgid "More than one layer with this name found. Removed current master slide selection.\n"
-msgstr ""
+msgstr "Er is meer dan één laag met deze naam. Huidige hoofddiaselectie is verwijderd.\n"
 
 #: ../share/extensions/jessyInk_summary.py:69
 msgid "JessyInk script version {0} installed."
@@ -27088,7 +27053,7 @@ msgstr "JessyInk script versie {0} geïnstalleerd."
 
 #: ../share/extensions/jessyInk_summary.py:71
 msgid "JessyInk script installed."
-msgstr "JessInk scrip geïnstalleerd."
+msgstr "JessInk script geïnstalleerd."
 
 #: ../share/extensions/jessyInk_summary.py:83
 msgid ""
@@ -27103,6 +27068,8 @@ msgid ""
 "\n"
 "Slide {0!s}:"
 msgstr ""
+"\n"
+"Dia {0!s}:"
 
 #: ../share/extensions/jessyInk_summary.py:94
 msgid "{0}Layer name: {1}"
@@ -27141,20 +27108,24 @@ msgid ""
 "\n"
 "{0}Initial effect (order number {1}):"
 msgstr ""
+"\n"
+"{0}Initieel effect (rangnummer {1}):"
 
 #: ../share/extensions/jessyInk_summary.py:170
 msgid ""
 "\n"
 "{0}Effect {1!s} (order number {2}):"
 msgstr ""
+"\n"
+"{0}Effect {1!s} (rangnummer {2}):"
 
 #: ../share/extensions/jessyInk_summary.py:174
 msgid "{0}\tView will be set according to object \"{1}\""
-msgstr ""
+msgstr "{0}\tZicht wordt ingesteld volgens het object \"{1}\""
 
 #: ../share/extensions/jessyInk_summary.py:176
 msgid "{0}\tObject \"{1}\""
-msgstr ""
+msgstr "{0}\tObject \"{1}\""
 
 #: ../share/extensions/jessyInk_summary.py:179
 msgid " will appear"
@@ -27166,11 +27137,11 @@ msgstr " zal verdwijnen"
 
 #: ../share/extensions/jessyInk_summary.py:184
 msgid " using effect \"{0}\""
-msgstr ""
+msgstr " met effect \"{0}\""
 
 #: ../share/extensions/jessyInk_summary.py:187
 msgid " in {0!s} s"
-msgstr ""
+msgstr " in {0!s} s"
 
 #: ../share/extensions/jessyInk_transitions.py:55
 msgid "Layer not found.\n"
@@ -27190,7 +27161,7 @@ msgid ""
 "Could not obtain the selected layer for inclusion of the video element.\n"
 "\n"
 msgstr ""
-"Kon de laag niet verkrijgen voor invoeging van de video.\n"
+"Laag voor invoeging van de video is niet beschikbaar.\n"
 "\n"
 
 #: ../share/extensions/jessyInk_view.py:75
@@ -27286,16 +27257,16 @@ msgstr ""
 
 #: ../share/extensions/plotter.py:62
 msgid "pySerial is not installed."
-msgstr ""
+msgstr "pySerial is niet geïnstalleerd."
 
 #. issue error if no paths found
 #: ../share/extensions/plotter.py:75
 msgid "No paths where found. Please convert all objects you want to plot into paths."
-msgstr ""
+msgstr "Er zijn geen paden gevonden. Converteer aub. alle objecten die je als paden wil plotten."
 
 #: ../share/extensions/plotter.py:111
 msgid "Could not send data. Please check that your plotter is running, connected and the settings are correct."
-msgstr ""
+msgstr "Kon de data niet verzenden. Kijk aub. na of je plotter aanstaat, verbonden is en of de de instellingen juist zijn."
 
 #: ../share/extensions/polyhedron_3d.py:65
 msgid "Failed to import the numpy module. This module is required by this extension. Please install it and try again.  On a Debian-like system this can be done with the command 'sudo apt-get install python-numpy'."
@@ -27355,7 +27326,7 @@ msgstr "Geef aub. een invoertekst op"
 
 #: ../share/extensions/replace_font.py:133
 msgid "Couldn't find anything using that font, please ensure the spelling and spacing is correct."
-msgstr ""
+msgstr "Er is niets dat dat lettertype gebruikt. Kijk de spelling en spaties na."
 
 #: ../share/extensions/replace_font.py:140
 #: ../share/extensions/svg_and_media_zip_output.py:193
@@ -27428,16 +27399,16 @@ msgstr "Je moet tenminste twee elementen selecteren."
 
 #: ../share/extensions/webslicer_create_group.py:57
 msgid "You must create and select some \"Slicer rectangles\" before trying to group."
-msgstr ""
+msgstr "Je moet enkele \"kniprechthoeken\" maken en selecteren vooraleer je groepeert."
 
 #: ../share/extensions/webslicer_create_group.py:72
 msgid "You must to select some \"Slicer rectangles\" or other \"Layout groups\"."
-msgstr ""
+msgstr "Je moet enkele \"kniprechthoeken\" of andere selecteren."
 
 #: ../share/extensions/webslicer_create_group.py:76
 #, python-format
 msgid "Oops... The element \"%s\" is not in the Web Slicer layer"
-msgstr ""
+msgstr "Oeps... Het element \"%s\" maakt geen deel uit van de Web Slicer laag"
 
 #: ../share/extensions/webslicer_export.py:57
 msgid "You must give a directory to export the slices."
@@ -29479,23 +29450,20 @@ msgid "Margins preset"
 msgstr "Marge hulplijn"
 
 #: ../share/extensions/guides_creator.inx.h:15
-#, fuzzy
 msgid "Header margin"
-msgstr "Marges"
+msgstr "Marge koptekst"
 
 #: ../share/extensions/guides_creator.inx.h:16
-#, fuzzy
 msgid "Footer margin"
-msgstr "Bovenmarge"
+msgstr "Marge voettekst"
 
 #: ../share/extensions/guillotine.inx.h:1
 msgid "Guillotine"
 msgstr "Guillotine"
 
 #: ../share/extensions/guillotine.inx.h:2
-#, fuzzy
 msgid "Directory to save images to:"
-msgstr "Pad voor bewaren afbeeldingen"
+msgstr "Pad voor bewaren afbeeldingen:"
 
 #: ../share/extensions/guillotine.inx.h:3
 msgid "Image name (without extension):"
@@ -29516,7 +29484,7 @@ msgstr "Handvatten tonen"
 
 #: ../share/extensions/hershey.inx.h:1
 msgid "Hershey Text"
-msgstr "Hershey tekst"
+msgstr "Hersheytekst"
 
 #: ../share/extensions/hershey.inx.h:2
 msgid "Render Text"
@@ -29531,16 +29499,15 @@ msgstr "Tekst:"
 
 #: ../share/extensions/hershey.inx.h:4
 msgid "                Action"
-msgstr "                Actie"
+msgstr "                 Actie"
 
 #: ../share/extensions/hershey.inx.h:5
 msgid "            Font face "
-msgstr "            Lettertype "
+msgstr "           Lettertype "
 
 #: ../share/extensions/hershey.inx.h:6
-#, fuzzy
 msgid "Typeset that text"
-msgstr "Tekst typen"
+msgstr "Tekst zetten"
 
 #: ../share/extensions/hershey.inx.h:7
 msgid "Write glyph table"
@@ -29548,7 +29515,7 @@ msgstr "Karaktertabel schrijven"
 
 #: ../share/extensions/hershey.inx.h:8
 msgid "Sans 1-stroke"
-msgstr ""
+msgstr "Sans 1-lijn"
 
 #: ../share/extensions/hershey.inx.h:9
 msgid "Sans bold"
@@ -29572,11 +29539,11 @@ msgstr "Serif vet"
 
 #: ../share/extensions/hershey.inx.h:14
 msgid "Script 1-stroke"
-msgstr ""
+msgstr "Script 1-lijn"
 
 #: ../share/extensions/hershey.inx.h:15
 msgid "Script 1-stroke (alt)"
-msgstr ""
+msgstr "Script 1-lijn (alt)"
 
 #: ../share/extensions/hershey.inx.h:16
 msgid "Script medium"
@@ -29596,7 +29563,7 @@ msgstr "Gotisch Italiaans"
 
 #: ../share/extensions/hershey.inx.h:20
 msgid "Greek 1-stroke"
-msgstr ""
+msgstr "Grieks 1-lijn"
 
 #: ../share/extensions/hershey.inx.h:21
 msgid "Greek medium"
@@ -29612,11 +29579,11 @@ msgstr "Astrologie"
 
 #: ../share/extensions/hershey.inx.h:25
 msgid "Math (lower)"
-msgstr ""
+msgstr "Wiskunde (onderkast)"
 
 #: ../share/extensions/hershey.inx.h:26
 msgid "Math (upper)"
-msgstr ""
+msgstr "Wiskunde (kapitaal)"
 
 #: ../share/extensions/hershey.inx.h:28
 msgid "Meteorology"
@@ -29628,7 +29595,7 @@ msgstr "Muziek"
 
 #: ../share/extensions/hershey.inx.h:30
 msgid "Symbolic"
-msgstr "Symbolisch"
+msgstr "Symbool"
 
 #: ../share/extensions/hershey.inx.h:31
 msgid ""
@@ -29664,6 +29631,21 @@ msgid ""
 "For additional information, please visit:\n"
 "  www.evilmadscientist.com/go/hershey"
 msgstr ""
+"\n"
+"Deze extensie rendert een lijn tekst met \n"
+"\"Hershey\" lettertypen voor plotters, uit \n"
+"NBS SP-424 1976-04, \"A contribution to \n"
+"computer typesetting techniques: Tables of\n"
+"Coordinates for Hershey's Repertory of\n"
+"Occidental Type Fonts and Graphic Symbols.\"\n"
+"\n"
+"Dit zijn geen traditionele lettertypen met een omtrek, \n"
+"maar zijn \"single-stroke\" lettertyen, of\n"
+"\"engraving\" lettertypen waar het karakter gevormd\n"
+"wordt door de lijn (en niet door de vulling).\n"
+"\n"
+"Voor meer informatie zie:\n"
+"  www.evilmadscientist.com/go/hershey"
 
 #: ../share/extensions/hpgl_input.inx.h:1
 msgid "HPGL Input"
@@ -29671,14 +29653,13 @@ msgstr "HPGL-invoer"
 
 #: ../share/extensions/hpgl_input.inx.h:2
 msgid "Please note that you can only open HPGL files written by Inkscape, to open other HPGL files please change their file extension to .plt, make sure you have UniConverter installed and open them again."
-msgstr ""
+msgstr "Noteer aub dat je alleen HPGL-bestanden van Inkscape kan openen. Om andere HPGL-bestanden te opennen, moet je de bestandsextensie veranderen in .plt, UniConverter geïnstalleerd hebben en opnieuw openen."
 
 #: ../share/extensions/hpgl_input.inx.h:3
 #: ../share/extensions/hpgl_output.inx.h:6
 #: ../share/extensions/plotter.inx.h:16
-#, fuzzy
 msgid "Resolution X (dpi)"
-msgstr "Resolutie (ppi):"
+msgstr "X-resolutie (ppi):"
 
 #: ../share/extensions/hpgl_input.inx.h:4
 msgid "The amount of steps in one inch on the X axis (Default: 1016.0)"
@@ -29687,9 +29668,8 @@ msgstr "Aantal stappen per duim op de X-as (standaard 1016.0)"
 #: ../share/extensions/hpgl_input.inx.h:5
 #: ../share/extensions/hpgl_output.inx.h:8
 #: ../share/extensions/plotter.inx.h:18
-#, fuzzy
 msgid "Resolution Y (dpi)"
-msgstr "Resolutie (ppi):"
+msgstr "Y-resolutie (ppi):"
 
 #: ../share/extensions/hpgl_input.inx.h:6
 msgid "The amount of steps in one inch on the Y axis (Default: 1016.0)"
@@ -29697,7 +29677,7 @@ msgstr "Aantal stappen per duim op de Y-as (standaard 1016.0)"
 
 #: ../share/extensions/hpgl_input.inx.h:7
 msgid "Show Movements between paths"
-msgstr ""
+msgstr "Bewegingen tussen paden tonen"
 
 #: ../share/extensions/hpgl_input.inx.h:8
 msgid "Check this to show movements between paths (Default: Unchecked)"
@@ -32544,15 +32524,15 @@ msgstr "Onbepaald (relatief tov de grootte van niet-vlottende inhoud)"
 
 #: ../share/extensions/webslicer_create_group.inx.h:12
 msgid "Layout Group is only about to help a better code generation (if you need it). To use this, you must to select some \"Slicer rectangles\" first."
-msgstr "Een layoutgroep dient enkel voor het genereren van betere code (indien nodig). Voor gebruik moet je eerst enkele \"Slicerrechthoeken\" selecteren."
+msgstr "Een layoutgroep dient enkel voor het genereren van betere code (indien nodig). Voor gebruik moet je eerst enkele \"kniprechthoeken\" selecteren."
 
 #: ../share/extensions/webslicer_create_group.inx.h:14
 msgid "Slicer"
-msgstr "Slicer"
+msgstr "Schaar"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:1
 msgid "Create a slicer rectangle"
-msgstr "Slicerrechthoek maken"
+msgstr "Kniprechthoek maken"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:4
 msgid "DPI:"
@@ -32776,15 +32756,4 @@ msgstr "Een populair bestandsformaat voor clipart"
 #: ../share/extensions/xaml2svg.inx.h:1
 msgid "XAML Input"
 msgstr "XAML-invoer"
-
-#~ msgid "(%d characters%s)"
-#~ msgstr "(%d karakters%s)"
-#~ msgid "Resolution (dpi):"
-#~ msgstr "Resolutie (ppi):"
-
-#, fuzzy
-#~ msgid "Correct tool offset"
-#~ msgstr "Gekoppelde offset maken"
-#~ msgid "Return Factor:"
-#~ msgstr "Factor:"
 
