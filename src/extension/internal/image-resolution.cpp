@@ -340,7 +340,13 @@ void ImageResolution::readmagick(char const *fn) {
     Magick::Image image;
     try {
         image.read(fn);
-    } catch (...) {}
+    } catch (Magick::Error & err) {
+        g_warning("ImageMagick error: %s", err.what());
+        return;
+    } catch (...) {
+        g_warning("ImageResolution::readmagick: Unknown error");
+        return;
+    }
     Magick::Geometry geo = image.density();
     std::string type = image.magick();
 
