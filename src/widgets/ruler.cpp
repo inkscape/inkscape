@@ -269,11 +269,17 @@ sp_ruler_init (SPRuler *ruler)
   priv->font_scale    = DEFAULT_RULER_FONT_SCALE;
 
 #if GTK_CHECK_VERSION(3,0,0)
+  #if GTK_CHECK_VERSION(3,8,0)
+  const gchar *str = 
+    "SPRuler {\n"
+    "  background-color: @theme_bg_color;\n"
+    "}\n";
+  #else
   const gchar *str = 
     "SPRuler {\n"
     "  background-color: @bg_color;\n"
     "}\n";
-  
+  #endif
   GtkCssProvider *css = gtk_css_provider_new ();
   gtk_css_provider_load_from_data (css, str, -1, NULL);
   gtk_style_context_add_provider (gtk_widget_get_style_context (GTK_WIDGET (ruler)),
