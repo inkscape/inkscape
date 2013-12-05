@@ -96,16 +96,50 @@ static Inkscape::Filters::FilterBlendMode sp_feBlend_readmode(gchar const *value
         case 's':
             if (strncmp(value, "screen", 6) == 0)
                 return Inkscape::Filters::BLEND_SCREEN;
+#ifdef WITH_CSSBLEND
+            if (strncmp(value, "saturation", 6) == 0)
+                return Inkscape::Filters::BLEND_SATURATION;
+#endif
             break;
         case 'd':
             if (strncmp(value, "darken", 6) == 0)
                 return Inkscape::Filters::BLEND_DARKEN;
+#ifdef WITH_CSSBLEND
+            if (strncmp(value, "difference", 10) == 0)
+                return Inkscape::Filters::BLEND_DIFFERENCE;
+#endif
             break;
         case 'l':
             if (strncmp(value, "lighten", 7) == 0)
                 return Inkscape::Filters::BLEND_LIGHTEN;
+#ifdef WITH_CSSBLEND
+            if (strncmp(value, "luminosity", 10) == 0)
+                return Inkscape::Filters::BLEND_LUMINOSITY;
             break;
+        case 'o':
+            if (strncmp(value, "overlay", 7) == 0)
+                return Inkscape::Filters::BLEND_OVERLAY;
+            break;
+        case 'c':
+            if (strncmp(value, "color-dodge", 11) == 0)
+                return Inkscape::Filters::BLEND_COLORDODGE;
+            if (strncmp(value, "color-burn", 10) == 0)
+                return Inkscape::Filters::BLEND_COLORBURN;
+            if (strncmp(value, "color", 5) == 0)
+                return Inkscape::Filters::BLEND_COLOR;
+            break;
+        case 'h':
+            if (strncmp(value, "hard-light", 7) == 0)
+                return Inkscape::Filters::BLEND_HARDLIGHT;
+            if (strncmp(value, "hue", 3) == 0)
+                return Inkscape::Filters::BLEND_HUE;
+            break;
+        case 'e':
+            if (strncmp(value, "exclusion", 10) == 0)
+                return Inkscape::Filters::BLEND_EXCLUSION;
+#endif
         default:
+            std::cout << "Inkscape::Filters::FilterBlendMode: Unimplemented mode: " << value << std::endl;
             // do nothing by default
             break;
     }
@@ -201,15 +235,40 @@ Inkscape::XML::Node* SPFeBlend::write(Inkscape::XML::Document *doc, Inkscape::XM
     char const *mode;
     switch(this->blend_mode) {
         case Inkscape::Filters::BLEND_NORMAL:
-            mode = "normal"; break;
+            mode = "normal";      break;
         case Inkscape::Filters::BLEND_MULTIPLY:
-            mode = "multiply"; break;
+            mode = "multiply";    break;
         case Inkscape::Filters::BLEND_SCREEN:
-            mode = "screen"; break;
+            mode = "screen";      break;
         case Inkscape::Filters::BLEND_DARKEN:
-            mode = "darken"; break;
+            mode = "darken";      break;
         case Inkscape::Filters::BLEND_LIGHTEN:
-            mode = "lighten"; break;
+            mode = "lighten";     break;
+#ifdef WITH_CSSBLEND
+        // New
+        case Inkscape::Filters::BLEND_OVERLAY:
+            mode = "overlay";     break;
+        case Inkscape::Filters::BLEND_COLORDODGE:
+            mode = "color-dodge"; break;
+        case Inkscape::Filters::BLEND_COLORBURN:
+            mode = "color-burn";  break;
+        case Inkscape::Filters::BLEND_HARDLIGHT:
+            mode = "hard-light";  break;
+        case Inkscape::Filters::BLEND_SOFTLIGHT:
+            mode = "soft-light";  break;
+        case Inkscape::Filters::BLEND_DIFFERENCE:
+            mode = "difference";  break;
+        case Inkscape::Filters::BLEND_EXCLUSION:
+            mode = "exclusion";   break;
+        case Inkscape::Filters::BLEND_HUE:
+            mode = "hue";         break;
+        case Inkscape::Filters::BLEND_SATURATION:
+            mode = "saturation";  break;
+        case Inkscape::Filters::BLEND_COLOR:
+            mode = "color";       break;
+        case Inkscape::Filters::BLEND_LUMINOSITY:
+            mode = "luminosity";  break;
+#endif
         default:
             mode = 0;
     }

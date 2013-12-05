@@ -100,6 +100,26 @@ sp_feComposite_read_operator(gchar const *value) {
     } else if (strcmp(value, "arithmetic") == 0) {
     	return COMPOSITE_ARITHMETIC;
     }
+#ifdef WITH_CSSCOMPOSITE
+      else if (strcmp(value, "clear") == 0) {
+    	return COMPOSITE_CLEAR;
+    } else if (strcmp(value, "copy") == 0) {
+    	return COMPOSITE_COPY;
+    } else if (strcmp(value, "destination") == 0) {
+    	return COMPOSITE_DESTINATION;
+    } else if (strcmp(value, "destination-over") == 0) {
+    	return COMPOSITE_DESTINATION_OVER;
+    } else if (strcmp(value, "destination-in") == 0) {
+    	return COMPOSITE_DESTINATION_IN;
+    } else if (strcmp(value, "destination-out") == 0) {
+    	return COMPOSITE_DESTINATION_OUT;
+    } else if (strcmp(value, "destination-atop") == 0) {
+    	return COMPOSITE_DESTINATION_ATOP;
+    } else if (strcmp(value, "lighter") == 0) {
+    	return COMPOSITE_LIGHTER;
+    }
+#endif
+    std::cout << "Inkscape::Filters::FilterCompositeOperator: Unimplemented operator: " << value << std::endl;
 
     return COMPOSITE_DEFAULT;
 }
@@ -243,6 +263,25 @@ Inkscape::XML::Node* SPFeComposite::write(Inkscape::XML::Document *doc, Inkscape
             comp_op = "xor"; break;
         case COMPOSITE_ARITHMETIC:
             comp_op = "arithmetic"; break;
+#ifdef WITH_CSSCOMPOSITE
+        // New CSS operators
+        case COMPOSITE_CLEAR:
+            comp_op = "clear"; break;
+        case COMPOSITE_COPY:
+            comp_op = "copy"; break;
+        case COMPOSITE_DESTINATION:
+            comp_op = "destination"; break;
+        case COMPOSITE_DESTINATION_OVER:
+            comp_op = "destination-over"; break;
+        case COMPOSITE_DESTINATION_IN:
+            comp_op = "destination-in"; break;
+        case COMPOSITE_DESTINATION_OUT:
+            comp_op = "destination-out"; break;
+        case COMPOSITE_DESTINATION_ATOP:
+            comp_op = "destination-atop"; break;
+        case COMPOSITE_LIGHTER:
+            comp_op = "lighter"; break;
+#endif
         default:
             comp_op = 0;
     }

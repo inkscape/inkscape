@@ -100,6 +100,9 @@ if test "$GCC" = "yes"; then
     CPPFLAGS="$ink_svd_CPPFLAGS"
   fi
 
+  # Uncomment for SVG2 stuff
+  # CPPFLAGS="-DWITH_MESH -DWITH_CSSBLEND -DWITH_CSSCOMPOSITE $CPPFLAGS"
+
   ####
   # C-specific flags...
 

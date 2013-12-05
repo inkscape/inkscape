@@ -20,13 +20,24 @@ enum FeCompositeOperator {
     // Default value is 'over', but let's distinquish specifying the
     // default and implicitely using the default
     COMPOSITE_DEFAULT,
-    COMPOSITE_OVER,
-    COMPOSITE_IN,
-    COMPOSITE_OUT,
-    COMPOSITE_ATOP,
+    COMPOSITE_OVER,              /* Source Over */
+    COMPOSITE_IN,                /* Source In   */
+    COMPOSITE_OUT,               /* Source Out  */
+    COMPOSITE_ATOP,              /* Source Atop */
     COMPOSITE_XOR,
-    COMPOSITE_ARITHMETIC,
-    COMPOSITE_ENDOPERATOR
+    COMPOSITE_ARITHMETIC,        /* Not a fundamental PorterDuff operator, nor Cairo */
+#ifdef WITH_CSSCOMPOSITE
+    // New in CSS
+    COMPOSITE_CLEAR,
+    COMPOSITE_COPY,              /* Source      */
+    COMPOSITE_DESTINATION,
+    COMPOSITE_DESTINATION_OVER,
+    COMPOSITE_DESTINATION_IN,
+    COMPOSITE_DESTINATION_OUT,
+    COMPOSITE_DESTINATION_ATOP,
+    COMPOSITE_LIGHTER,           /* Plus, Add (Not a fundamental PorterDuff operator  */
+#endif
+    COMPOSITE_ENDOPERATOR        /* Cairo Saturate is not included in CSS */
 };
 
 class SPFeComposite : public SPFilterPrimitive {

@@ -28,7 +28,21 @@ enum FilterBlendMode {
     BLEND_SCREEN,
     BLEND_DARKEN,
     BLEND_LIGHTEN,
-    BLEND_ENDMODE
+#ifdef WITH_CSSBLEND
+    // New in CSS Compositing and Blending Level 1
+    BLEND_OVERLAY,   
+    BLEND_COLORDODGE,
+    BLEND_COLORBURN,
+    BLEND_HARDLIGHT,
+    BLEND_SOFTLIGHT,
+    BLEND_DIFFERENCE,
+    BLEND_EXCLUSION,
+    BLEND_HUE,       
+    BLEND_SATURATION,
+    BLEND_COLOR,
+    BLEND_LUMINOSITY,
+#endif
+    BLEND_ENDMODE,
 };
 
 class FilterBlend : public FilterPrimitive {

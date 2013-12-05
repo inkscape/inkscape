@@ -83,6 +83,43 @@ void FilterBlend::render_cairo(FilterSlot &slot)
     case BLEND_LIGHTEN:
         cairo_set_operator(out_ct, CAIRO_OPERATOR_LIGHTEN);
         break;
+#ifdef WITH_CSSBLEND
+    // NEW
+    case BLEND_OVERLAY:   
+        cairo_set_operator(out_ct, CAIRO_OPERATOR_OVERLAY);
+        break;
+    case BLEND_COLORDODGE:
+        cairo_set_operator(out_ct, CAIRO_OPERATOR_COLOR_DODGE);
+        break;
+    case BLEND_COLORBURN:
+        cairo_set_operator(out_ct, CAIRO_OPERATOR_COLOR_BURN);
+        break;
+    case BLEND_HARDLIGHT:
+        cairo_set_operator(out_ct, CAIRO_OPERATOR_HARD_LIGHT);
+        break;
+    case BLEND_SOFTLIGHT:
+        cairo_set_operator(out_ct, CAIRO_OPERATOR_SOFT_LIGHT);
+        break;
+    case BLEND_DIFFERENCE:
+        cairo_set_operator(out_ct, CAIRO_OPERATOR_DIFFERENCE);
+        break;
+    case BLEND_EXCLUSION:
+        cairo_set_operator(out_ct, CAIRO_OPERATOR_EXCLUSION);
+        break;
+    case BLEND_HUE:       
+        cairo_set_operator(out_ct, CAIRO_OPERATOR_HSL_HUE);
+        break;
+    case BLEND_SATURATION:
+        cairo_set_operator(out_ct, CAIRO_OPERATOR_HSL_SATURATION);
+        break;
+    case BLEND_COLOR:
+        cairo_set_operator(out_ct, CAIRO_OPERATOR_HSL_COLOR);
+        break;
+    case BLEND_LUMINOSITY:
+        cairo_set_operator(out_ct, CAIRO_OPERATOR_HSL_LUMINOSITY);
+        break;
+#endif
+
     case BLEND_NORMAL:
     default:
         cairo_set_operator(out_ct, CAIRO_OPERATOR_OVER);
@@ -128,9 +165,18 @@ void FilterBlend::set_input(int input, int slot) {
 }
 
 void FilterBlend::set_mode(FilterBlendMode mode) {
-    if (mode == BLEND_NORMAL || mode == BLEND_MULTIPLY ||
-        mode == BLEND_SCREEN || mode == BLEND_DARKEN ||
-        mode == BLEND_LIGHTEN)
+    if (mode == BLEND_NORMAL     || mode == BLEND_MULTIPLY   ||
+        mode == BLEND_SCREEN     || mode == BLEND_DARKEN     ||
+        mode == BLEND_LIGHTEN
+#ifdef WITH_CSSBLEND
+                                 || mode == BLEND_OVERLAY    ||
+        mode == BLEND_COLORDODGE || mode == BLEND_COLORBURN  ||
+        mode == BLEND_HARDLIGHT  || mode == BLEND_SOFTLIGHT  ||
+        mode == BLEND_DIFFERENCE || mode == BLEND_EXCLUSION  ||
+        mode == BLEND_HUE        || mode == BLEND_SATURATION ||
+        mode == BLEND_COLOR      || mode == BLEND_LUMINOSITY
+#endif
+        )
     {
         _blend_mode = mode;
     }
