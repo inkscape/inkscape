@@ -247,7 +247,7 @@ gboolean colorItemHandleButtonPress( GtkWidget* widget, GdkEventButton* event, g
 {
     gboolean handled = FALSE;
 
-    if ( (event->button == 3) && (event->type == GDK_BUTTON_PRESS) ) {
+    if ( event && (event->button == 3) && (event->type == GDK_BUTTON_PRESS) ) {
         SwatchesPanel* swp = findContainingPanel( widget );
 
         if ( !popupMenu ) {
