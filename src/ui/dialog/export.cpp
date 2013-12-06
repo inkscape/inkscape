@@ -1343,7 +1343,15 @@ void Export::onBrowse ()
     wcsncpy(_filename, reinterpret_cast<wchar_t*>(utf16_path_string), _MAX_PATH);
     g_free(utf16_path_string);
 
-    opf.hwndOwner = (HWND)(GDK_WINDOW_HWND(gtk_widget_get_window(GTK_WIDGET(this))));
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    Glib::RefPtr<const Gdk::Window> parentWindow = desktop->getToplevel()->get_window();
+    g_assert(parentWindow->gobj() != NULL);
+
+#if WITH_GTKMM_3_0
+    opf.hwndOwner = (HWND)gdk_win32_window_get_handle((GdkWindow*)parentWindow->gobj());
+#else
+    opf.hwndOwner = (HWND)gdk_win32_drawable_get_handle((GdkDrawable*)parentWindow->gobj());
+#endif
     opf.lpstrFilter = filter_string;
     opf.lpstrCustomFilter = 0;
     opf.nMaxCustFilter = 0L;
