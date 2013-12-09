@@ -1156,7 +1156,7 @@ void sp_gradient_toolbox_prep(SPDesktop * desktop, GtkActionGroup* mainActions, 
 
         GtkTreeIter iter;
         gtk_list_store_append(store, &iter);
-        gtk_list_store_set(store, &iter, 0, _("No gradient"), 1, NULL, 2, NULL, -1);
+        gtk_list_store_set(store, &iter, 0, _("No stops"), 1, NULL, 2, NULL, -1);
 
         EgeSelectOneAction* act1 = ege_select_one_action_new( "GradientEditStopsAction", _("Stops"), _("Select a stop for the current gradient"), NULL, GTK_TREE_MODEL(store) );
         g_object_set( act1, "short_label", _("Stops:"), NULL );
