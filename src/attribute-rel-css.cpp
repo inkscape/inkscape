@@ -59,6 +59,7 @@ bool SPAttributeRelCSS::findIfValid(Glib::ustring property, Glib::ustring elemen
         || property.substr(0,9) == "sodipodi:"
         || property.substr(0,4) == "rdf:"
         || property.substr(0,3) == "cc:"
+        || property.substr(0,4) == "ns1:"  // JessyInk
         || (SPAttributeRelCSS::instance->propertiesOfElements[temp].find(property)
             != SPAttributeRelCSS::instance->propertiesOfElements[temp].end()) ) {
         return true;
