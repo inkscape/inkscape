@@ -364,6 +364,11 @@ struct SPStyle {
     /** opacity */
     SPIScale24 opacity;
 
+    /** mix-blend-mode:  CSS Compositing and Blending Level 1 */
+    SPIEnum isolation;
+    // Could be shared with Filter blending mode
+    SPIEnum blend_mode;
+
     /** color */
     SPIPaint color;
     /** color-interpolation */
@@ -604,6 +609,30 @@ enum SPCSSDisplay {
     SP_CSS_DISPLAY_TABLE_COLUMN,
     SP_CSS_DISPLAY_TABLE_CELL,
     SP_CSS_DISPLAY_TABLE_CAPTION
+};
+
+enum SPIsolation {
+    SP_CSS_ISOLATION_AUTO,
+    SP_CSS_ISOLATION_ISOLATE
+};
+
+enum SPBlendMode {
+    SP_CSS_BLEND_NORMAL,
+    SP_CSS_BLEND_MULTIPLY,
+    SP_CSS_BLEND_SCREEN,
+    SP_CSS_BLEND_DARKEN,
+    SP_CSS_BLEND_LIGHTEN,
+    SP_CSS_BLEND_OVERLAY,
+    SP_CSS_BLEND_COLORDODGE,
+    SP_CSS_BLEND_COLORBURN,
+    SP_CSS_BLEND_HARDLIGHT,
+    SP_CSS_BLEND_SOFTLIGHT,
+    SP_CSS_BLEND_DIFFERENCE,
+    SP_CSS_BLEND_EXCLUSION,
+    SP_CSS_BLEND_HUE,
+    SP_CSS_BLEND_SATURATION,
+    SP_CSS_BLEND_COLOR,
+    SP_CSS_BLEND_LUMINOSITY
 };
 
 enum SPEnableBackground {

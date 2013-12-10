@@ -303,6 +303,33 @@ static SPStyleEnum const enum_overflow[] = {
     {NULL, -1}
 };
 
+// CSS Compositing and Blending Level 1
+static SPStyleEnum const enum_isolation[] = {
+    {"auto",             SP_CSS_ISOLATION_AUTO},
+    {"isolate",          SP_CSS_ISOLATION_ISOLATE},
+    {NULL, -1}
+};
+
+static SPStyleEnum const enum_blend_mode[] = {
+    {"normal",           SP_CSS_BLEND_NORMAL},
+    {"multiply",         SP_CSS_BLEND_MULTIPLY},
+    {"screen",           SP_CSS_BLEND_SCREEN},
+    {"darken",           SP_CSS_BLEND_DARKEN},
+    {"lighten",          SP_CSS_BLEND_LIGHTEN},
+    {"overlay",          SP_CSS_BLEND_OVERLAY},
+    {"color-dodge",      SP_CSS_BLEND_COLORDODGE},
+    {"color-burn",       SP_CSS_BLEND_COLORBURN},
+    {"hard-light",       SP_CSS_BLEND_HARDLIGHT},
+    {"soft-light",       SP_CSS_BLEND_SOFTLIGHT},
+    {"difference",       SP_CSS_BLEND_DIFFERENCE},
+    {"exclusion",        SP_CSS_BLEND_EXCLUSION},
+    {"hue",              SP_CSS_BLEND_HUE},
+    {"saturation",       SP_CSS_BLEND_SATURATION},
+    {"color",            SP_CSS_BLEND_COLOR},
+    {"luminosity",       SP_CSS_BLEND_LUMINOSITY},
+    {NULL, -1}
+};
+
 static SPStyleEnum const enum_display[] = {
     {"none",      SP_CSS_DISPLAY_NONE},
     {"inline",    SP_CSS_DISPLAY_INLINE},
@@ -643,6 +670,11 @@ sp_style_read(SPStyle *style, SPObject *object, Inkscape::XML::Node *repr)
     SPS_READ_PENUM_IF_UNSET(&style->visibility, repr, "visibility", enum_visibility, true);
     SPS_READ_PENUM_IF_UNSET(&style->display, repr, "display", enum_display, true);
     SPS_READ_PENUM_IF_UNSET(&style->overflow, repr, "overflow", enum_overflow, true);
+
+    /* CSS Compositing and Blending Level 1 */
+    SPS_READ_PENUM_IF_UNSET(&style->isolation,  repr, "isolation",      enum_isolation,  true);
+    SPS_READ_PENUM_IF_UNSET(&style->blend_mode, repr, "mix_blend_mode", enum_blend_mode, true);
+
     /* Font */
     SPS_READ_PFONTSIZE_IF_UNSET(&style->font_size, repr, "font-size");
     SPS_READ_PENUM_IF_UNSET(&style->font_style, repr, "font-style", enum_font_style, true);
@@ -1207,6 +1239,13 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
         case SP_PROP_VISIBILITY:
             SPS_READ_IENUM_IF_UNSET(&style->visibility, val, enum_visibility, true);
             break;
+        case SP_PROP_ISOLATION:
+            SPS_READ_IENUM_IF_UNSET(&style->isolation,  val, enum_isolation,  true);
+            break;
+        case SP_PROP_BLEND_MODE:
+            SPS_READ_IENUM_IF_UNSET(&style->blend_mode, val, enum_blend_mode, true);
+            break;
+
             /* SVG */
             /* Clip/Mask */
         case SP_PROP_CLIP_PATH:
@@ -2180,6 +2219,7 @@ sp_style_merge_from_dying_parent(SPStyle *const style, SPStyle const *const pare
     /* Enum values that don't have any relative settings (other than `inherit'). */
     {
         SPIEnum SPStyle::*const fields[] = {
+            &SPStyle::blend_mode,
             &SPStyle::clip_rule,
             &SPStyle::color_interpolation,
             &SPStyle::color_interpolation_filters,
@@ -2189,6 +2229,7 @@ sp_style_merge_from_dying_parent(SPStyle *const style, SPStyle const *const pare
             &SPStyle::font_style,
             &SPStyle::font_variant,
             &SPStyle::image_rendering,
+            &SPStyle::isolation,
             //nyi: SPStyle::pointer_events,
             &SPStyle::shape_rendering,
             &SPStyle::stroke_linecap,
@@ -2791,6 +2832,8 @@ sp_style_write_string(SPStyle const *const style, guint const flags)
     p += sp_style_write_ienum(p, c + BMAX - p, "visibility", enum_visibility, &style->visibility, NULL, flags);
     p += sp_style_write_ienum(p, c + BMAX - p, "display", enum_display, &style->display, NULL, flags);
     p += sp_style_write_ienum(p, c + BMAX - p, "overflow", enum_overflow, &style->overflow, NULL, flags);
+    p += sp_style_write_ienum(p, c + BMAX - p, "isolation",      enum_isolation,  &style->isolation,  NULL, flags);
+    p += sp_style_write_ienum(p, c + BMAX - p, "mix-blend-mode", enum_blend_mode, &style->blend_mode, NULL, flags);
 
     /* filter: */
     p += sp_style_write_ifilter(p, c + BMAX - p, "filter", &style->filter, NULL, flags);
@@ -2949,6 +2992,8 @@ sp_style_write_difference(SPStyle const *const from, SPStyle const *const to)
     p += sp_style_write_ienum(p, c + BMAX - p, "visibility", enum_visibility, &from->visibility, &to->visibility, SP_STYLE_FLAG_IFSET);
     p += sp_style_write_ienum(p, c + BMAX - p, "display", enum_display, &from->display, &to->display, SP_STYLE_FLAG_IFSET);
     p += sp_style_write_ienum(p, c + BMAX - p, "overflow", enum_overflow, &from->overflow, &to->overflow, SP_STYLE_FLAG_IFSET);
+    p += sp_style_write_ienum(p, c + BMAX - p, "isolation",      enum_isolation,  &from->isolation,  &to->isolation, SP_STYLE_FLAG_IFSET);
+    p += sp_style_write_ienum(p, c + BMAX - p, "mix-blend-mode", enum_blend_mode, &from->blend_mode, &to->blend_mode, SP_STYLE_FLAG_IFSET);
 
     /* filter: */
     p += sp_style_write_ifilter(p, c + BMAX - p, "filter", &from->filter, &to->filter, SP_STYLE_FLAG_IFDIFF);
@@ -3168,6 +3213,12 @@ sp_style_clear(SPStyle *style)
     style->overflow.set = FALSE;
     style->overflow.inherit = FALSE;
     style->overflow.value = style->overflow.computed = SP_CSS_OVERFLOW_VISIBLE;
+    style->isolation.set = FALSE;
+    style->isolation.inherit = FALSE;
+    style->isolation.value = style->isolation.computed = SP_CSS_ISOLATION_AUTO;
+    style->blend_mode.set = FALSE;
+    style->blend_mode.inherit = FALSE;
+    style->blend_mode.value = style->blend_mode.computed = SP_CSS_BLEND_NORMAL;
 
     style->color.clear();
     style->color.setColor(0.0, 0.0, 0.0);

@@ -23,6 +23,66 @@
 
 namespace Inkscape {
 
+#ifdef WITH_CSSBLEND
+void set_cairo_blend_operator( DrawingContext &ct, unsigned blend_mode ) {
+
+    // All of the blend modes are implemented in Cairo as of 1.10.
+    // For a detailed description, see:
+    // http://cairographics.org/operators/
+    switch (blend_mode) {
+    case SP_CSS_BLEND_MULTIPLY:
+        ct.setOperator(CAIRO_OPERATOR_MULTIPLY);
+        break;
+    case SP_CSS_BLEND_SCREEN:
+        ct.setOperator(CAIRO_OPERATOR_SCREEN);
+        break;
+    case SP_CSS_BLEND_DARKEN:
+        ct.setOperator(CAIRO_OPERATOR_DARKEN);
+        break;
+    case SP_CSS_BLEND_LIGHTEN:
+        ct.setOperator(CAIRO_OPERATOR_LIGHTEN);
+        break;
+    case SP_CSS_BLEND_OVERLAY:   
+        ct.setOperator(CAIRO_OPERATOR_OVERLAY);
+        break;
+    case SP_CSS_BLEND_COLORDODGE:
+        ct.setOperator(CAIRO_OPERATOR_COLOR_DODGE);
+        break;
+    case SP_CSS_BLEND_COLORBURN:
+        ct.setOperator(CAIRO_OPERATOR_COLOR_BURN);
+        break;
+    case SP_CSS_BLEND_HARDLIGHT:
+        ct.setOperator(CAIRO_OPERATOR_HARD_LIGHT);
+        break;
+    case SP_CSS_BLEND_SOFTLIGHT:
+        ct.setOperator(CAIRO_OPERATOR_SOFT_LIGHT);
+        break;
+    case SP_CSS_BLEND_DIFFERENCE:
+        ct.setOperator(CAIRO_OPERATOR_DIFFERENCE);
+        break;
+    case SP_CSS_BLEND_EXCLUSION:
+        ct.setOperator(CAIRO_OPERATOR_EXCLUSION);
+        break;
+    case SP_CSS_BLEND_HUE:       
+        ct.setOperator(CAIRO_OPERATOR_HSL_HUE);
+        break;
+    case SP_CSS_BLEND_SATURATION:
+        ct.setOperator(CAIRO_OPERATOR_HSL_SATURATION);
+        break;
+    case SP_CSS_BLEND_COLOR:
+        ct.setOperator(CAIRO_OPERATOR_HSL_COLOR);
+        break;
+    case SP_CSS_BLEND_LUMINOSITY:
+        ct.setOperator(CAIRO_OPERATOR_HSL_LUMINOSITY);
+        break;
+    case SP_CSS_BLEND_NORMAL:
+    default:
+        ct.setOperator(CAIRO_OPERATOR_OVER);
+        break;
+    }
+}
+#endif
+
 /**
  * @class DrawingItem
  * SVG drawing item for display.
@@ -67,6 +127,8 @@ DrawingItem::DrawingItem(Drawing &drawing)
     , _propagate(0)
 //    , _renders_opacity(0)
     , _pick_children(0)
+    , _isolation(SP_CSS_ISOLATION_AUTO)
+    , _blend_mode(SP_CSS_BLEND_NORMAL)
 {}
 
 DrawingItem::~DrawingItem()
@@ -205,6 +267,22 @@ void
 DrawingItem::setOpacity(float opacity)
 {
     _opacity = opacity;
+    _markForRendering();
+}
+
+void
+DrawingItem::setIsolation(unsigned isolation)
+{
+    _isolation = isolation;
+    //if( isolation != 0 ) std::cout << "isolation: " << isolation << std::endl;
+    _markForRendering();
+}
+
+void
+DrawingItem::setBlendMode(unsigned blend_mode)
+{
+    _blend_mode = blend_mode;
+    //if( blend_mode != 0 ) std::cout << "setBlendMode: " << blend_mode << std::endl;
     _markForRendering();
 }
 
@@ -494,6 +572,9 @@ DrawingItem::render(DrawingContext &ct, Geom::IntRect const &area, unsigned flag
     if (_cached) {
         if (_cache) {
             _cache->prepare();
+#ifdef WITH_CSSBLEND
+            set_cairo_blend_operator( ct, _blend_mode );
+#endif
             _cache->paintFromCache(ct, carea);
             if (!carea) return RENDER_OK;
         } else {
@@ -522,6 +603,10 @@ DrawingItem::render(DrawingContext &ct, Geom::IntRect const &area, unsigned flag
     nir |= (_filter != NULL && render_filters); // 3. it has a filter
     nir |= needs_opacity; // 4. it is non-opaque
     nir |= (_cache != NULL); // 5. it is cached
+#ifdef WITH_CSSBLEND
+    nir |= (_blend_mode != SP_CSS_BLEND_NORMAL); // 6. Blend mode not normal
+    nir |= (_isolation == SP_CSS_ISOLATION_ISOLATE); // 7. Explicit isolatiom
+#endif
 
     /* How the rendering is done.
      *
@@ -633,6 +718,9 @@ DrawingItem::render(DrawingContext &ct, Geom::IntRect const &area, unsigned flag
     }
     ct.rectangle(*carea);
     ct.setSource(&intermediate);
+#ifdef WITH_CSSBLEND
+    set_cairo_blend_operator( ct, _blend_mode );
+#endif
     ct.fill();
     ct.setSource(0,0,0,0);
     // the call above is to clear a ref on the intermediate surface held by ct

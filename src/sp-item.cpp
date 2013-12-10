@@ -599,6 +599,8 @@ void SPItem::update(SPCtx* /*ctx*/, guint flags) {
         if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
             for (SPItemView *v = item->display; v != NULL; v = v->next) {
                 v->arenaitem->setOpacity(SP_SCALE24_TO_FLOAT(object->style->opacity.value));
+                v->arenaitem->setIsolation( object->style->isolation.value );
+                v->arenaitem->setBlendMode( object->style->blend_mode.value );
                 v->arenaitem->setVisible(!item->isHidden());
             }
         }
@@ -1023,6 +1025,9 @@ Inkscape::DrawingItem *SPItem::invoke_show(Inkscape::Drawing &drawing, unsigned 
         display = sp_item_view_new_prepend(display, this, flags, key, ai);
         ai->setTransform(transform);
         ai->setOpacity(SP_SCALE24_TO_FLOAT(style->opacity.value));
+        ai->setIsolation( style->isolation.value );
+        ai->setBlendMode( style->blend_mode.value );
+        //ai->setCompositeOperator( style->composite_op.value );
         ai->setVisible(!isHidden());
         ai->setSensitive(sensitive);
         if (clip_ref->getObject()) {
