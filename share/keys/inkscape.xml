@@ -44,6 +44,9 @@ override) the bindings in the main default.xml.
   <bind key="n" modifiers="Ctrl" action="FileNew" display="true" />
   <bind key="N" modifiers="Ctrl" action="FileNew" />
 
+  <bind key="n" modifiers="Ctrl,Alt" action="FileTemplates" display="true" />
+  <bind key="N" modifiers="Ctrl,Alt" action="FileTemplates" />
+
   <bind key="o" modifiers="Ctrl" action="FileOpen" display="true" />
   <bind key="O" modifiers="Ctrl" action="FileOpen" />
 
