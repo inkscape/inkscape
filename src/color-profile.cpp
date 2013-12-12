@@ -922,7 +922,7 @@ Glib::ustring getNameFromProfile(cmsHPROFILE profile)
         }
         nameStr = Glib::ustring(data.begin(), data.end());
     }
-    if (nameStr.empty()) {
+    if (nameStr.empty() || !g_utf8_validate(nameStr.c_str(), -1, NULL)) {
         nameStr = _("(invalid UTF-8 string)");
     }
 #endif
