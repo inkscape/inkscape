@@ -183,6 +183,17 @@ push @{$properties{ "text-align" }->{elements}}, "flowRoot";
 $properties{ "text-align" }->{default} = "start";
 $properties{ "text-align" }->{inherit} = "yes";
 
+# Compositing and Blending Level 1
+push @{$properties{ "mix-blend-mode" }->{elements}}, @container_elements;
+push @{$properties{ "mix-blend-mode" }->{elements}}, @graphics_elements;
+$properties{ "mix-blend-mode" }->{default} = "normal";
+$properties{ "mix-blend-mode" }->{inherit} = "no";
+
+push @{$properties{ "isolation" }->{elements}}, @container_elements;
+push @{$properties{ "isolation" }->{elements}}, @graphics_elements;
+$properties{ "isolation" }->{default} = "auto";
+$properties{ "isolation" }->{inherit} = "no";
+
 
 # Output
 

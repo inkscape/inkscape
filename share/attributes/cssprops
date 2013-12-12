@@ -62,6 +62,8 @@
 
 "image-rendering" - "pattern","image","feImage","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
 
+"isolation" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","circle","ellipse","image","line","path","polygon","polyline","rect","text","use"
+
 "kerning" - "altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
 
 "letter-spacing" - "altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
@@ -79,6 +81,8 @@
 "marker-start" - "path","line","polyline","polygon","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
 
 "mask" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","circle","ellipse","image","line","path","polygon","polyline","rect","text","use"
+
+"mix-blend-mode" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","circle","ellipse","image","line","path","polygon","polyline","rect","text","use"
 
 "opacity" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","circle","ellipse","image","line","path","polygon","polyline","rect","text","use"
 

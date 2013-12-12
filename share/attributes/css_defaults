@@ -62,6 +62,8 @@
 
 "image-rendering" - "auto" - "yes"
 
+"isolation" - "auto" - "no"
+
 "kerning" - "auto" - "yes"
 
 "letter-spacing" - "normal" - "yes"
@@ -79,6 +81,8 @@
 "marker-start" - "none" - "yes"
 
 "mask" - "none" - "no"
+
+"mix-blend-mode" - "normal" - "no"
 
 "opacity" - "1" - "no"
 
