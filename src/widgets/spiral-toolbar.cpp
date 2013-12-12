@@ -136,7 +136,7 @@ static void sp_spl_tb_defaults(GtkWidget * /*widget*/, GObject *obj)
     GtkAdjustment *adj;
 
     // fixme: make settable
-    gdouble rev = 5;
+    gdouble rev = 3;
     gdouble exp = 1.0;
     gdouble t0 = 0.0;
 
