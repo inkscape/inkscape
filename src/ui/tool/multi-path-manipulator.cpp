@@ -339,23 +339,27 @@ void MultiPathManipulator::setSegmentType(SegmentType type)
 
 void MultiPathManipulator::insertNodes()
 {
+    if (_selection.empty()) return;
     invokeForAll(&PathManipulator::insertNodes);
     _done(_("Add nodes"));
 }
 void MultiPathManipulator::insertNodesAtExtrema(ExtremumType extremum)
 {
+    if (_selection.empty()) return;
     invokeForAll(&PathManipulator::insertNodeAtExtremum, extremum);
     _done(_("Add extremum nodes"));
 }
 
 void MultiPathManipulator::duplicateNodes()
 {
+    if (_selection.empty()) return;
     invokeForAll(&PathManipulator::duplicateNodes);
     _done(_("Duplicate nodes"));
 }
 
 void MultiPathManipulator::joinNodes()
 {
+    if (_selection.empty()) return;
     invokeForAll(&PathManipulator::hideDragPoint);
     // Node join has two parts. In the first one we join two subpaths by fusing endpoints
     // into one. In the second we fuse nodes in each subpath.
@@ -433,6 +437,7 @@ void MultiPathManipulator::deleteNodes(bool keep_shape)
 /** Join selected endpoints to create segments. */
 void MultiPathManipulator::joinSegments()
 {
+    if (_selection.empty()) return;
     IterPairList joins;
     find_join_iterators(_selection, joins);
 
@@ -465,6 +470,7 @@ void MultiPathManipulator::deleteSegments()
 
 void MultiPathManipulator::alignNodes(Geom::Dim2 d)
 {
+    if (_selection.empty()) return;
     _selection.align(d);
     if (d == Geom::X) {
         _done("Align nodes to a horizontal line");
@@ -475,6 +481,7 @@ void MultiPathManipulator::alignNodes(Geom::Dim2 d)
 
 void MultiPathManipulator::distributeNodes(Geom::Dim2 d)
 {
+    if (_selection.empty()) return;
     _selection.distribute(d);
     if (d == Geom::X) {
         _done("Distrubute nodes horizontally");
@@ -496,6 +503,7 @@ void MultiPathManipulator::reverseSubpaths()
 
 void MultiPathManipulator::move(Geom::Point const &delta)
 {
+    if (_selection.empty()) return;
     _selection.transform(Geom::Translate(delta));
     _done("Move nodes");
 }
@@ -729,7 +737,7 @@ bool MultiPathManipulator::event(Inkscape::UI::Tools::ToolBase *event_context, G
         case GDK_KEY_u:
         case GDK_KEY_U:
             if (held_only_shift(event->key)) {
-                // Shift+L - make segments curves
+                // Shift+U - make segments curves
                 setSegmentType(SEGMENT_CUBIC_BEZIER);
                 return true;
             }
