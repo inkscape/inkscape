@@ -20,6 +20,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 # standard library
 import re
+import string
 import sys
 # local libraries
 import gettext
@@ -54,6 +55,7 @@ class MyEffect(inkex.Effect):
         self.OptionParser.add_option('--serialBaudRate',  action='store', type='string',  dest='serialBaudRate',  default='9600',  help='Serial Baud rate')
         self.OptionParser.add_option('--flowControl',     action='store', type='string',  dest='flowControl',     default='0',     help='Flow control')
         self.OptionParser.add_option('--commandLanguage', action='store', type='string',  dest='commandLanguage', default='hpgl',  help='Command Language')
+        self.OptionParser.add_option('--debug',           action='store', type='inkbool', dest='debug',           default='FALSE', help='Show debug information')
 
     def effect(self):
         # gracefully exit script when pySerial is missing
@@ -68,7 +70,7 @@ class MyEffect(inkex.Effect):
         # get hpgl data
         myHpglEncoder = hpgl_encoder.hpglEncoder(self)
         try:
-            self.hpgl = myHpglEncoder.getHpgl()
+            self.hpgl, debugObject = myHpglEncoder.getHpgl()
         except Exception as inst:
             if inst.args[0] == 'NO_PATHS':
                 # issue error if no paths found
@@ -97,29 +99,88 @@ class MyEffect(inkex.Effect):
             self.hpgl = self.hpgl.replace('PD', 'D')
             self.hpgl = re.sub(r'IN,SP([0-9]{1,2}),', r';:HAL0P\1EC1', self.hpgl)
             self.hpgl += 'Z'
-        # send data to plotter
-        mySerial = serial.Serial()
-        mySerial.port = self.options.serialPort
-        mySerial.baudrate = self.options.serialBaudRate
-        mySerial.timeout = 0.1
-        if self.options.flowControl == 'xonxoff':
-            mySerial.xonxoff = True
-        if self.options.flowControl == 'rtscts' or self.options.flowControl == 'dsrdtrrtscts':
-            mySerial.rtscts = True
-        if self.options.flowControl == 'dsrdtrrtscts':
-            mySerial.dsrdtr = True
-        try:
-            mySerial.open()
-        except Exception as inst:
-            if 'ould not open port' in inst.args[0]:
-                inkex.errormsg(_("Could not open port. Please check that your plotter is running, connected and the settings are correct."))
-                return
+        if self.options.debug:
+            # show debug information
+            inkex.errormsg("---------------------------------\nDebug information\n---------------------------------\n\nSettings:\n")
+            inkex.errormsg('  Serial Port: ' + str(self.options.serialPort))
+            inkex.errormsg('  Serial baud rate: ' + str(self.options.serialBaudRate))
+            inkex.errormsg('  Flow control: ' + str(self.options.flowControl))
+            inkex.errormsg('  Command language: ' + str(self.options.commandLanguage))
+            inkex.errormsg('  Pen number: ' + str(self.options.pen))
+            inkex.errormsg('  Resolution X (dpi): ' + str(self.options.resolutionX))
+            inkex.errormsg('  Resolution Y (dpi): ' + str(self.options.resolutionY))
+            inkex.errormsg('  Mirror X-axis: ' + str(self.options.mirrorX))
+            inkex.errormsg('  Mirror Y-axis: ' + str(self.options.mirrorY))
+            inkex.errormsg('  Rotation (Clockwise): ' + str(self.options.orientation))
+            inkex.errormsg('  Center zero point: ' + str(self.options.center))
+            inkex.errormsg('  Use overcut: ' + str(self.options.useOvercut))
+            inkex.errormsg('  Overcut (mm): ' + str(self.options.overcut))
+            inkex.errormsg('  Use tool offset correction: ' + str(self.options.useToolOffset))
+            inkex.errormsg('  Tool offset (mm): ' + str(self.options.toolOffset))
+            inkex.errormsg('  Use precut: ' + str(self.options.precut))
+            inkex.errormsg('  Curve flatness: ' + str(self.options.flat))
+            inkex.errormsg('  X offset (mm): ' + str(self.options.offsetX))
+            inkex.errormsg('  Y offset (mm): ' + str(self.options.offsetY))
+            inkex.errormsg('  Show debug information: ' + str(self.options.debug))
+            inkex.errormsg("\nDocument properties:\n")
+            version = self.document.getroot().xpath('//@inkscape:version', namespaces=inkex.NSS)
+            if version:
+                inkex.errormsg('  Inkscape version: ' + version[0])
+            fileName = self.document.getroot().xpath('//@sodipodi:docname', namespaces=inkex.NSS)
+            if fileName:
+                inkex.errormsg('  Filename: ' + fileName[0])
+            inkex.errormsg('  Document unit: ' + self.documentUnit)
+            inkex.errormsg('  Width: ' + str(self.unittouu(self.document.getroot().get('width'))) + ' ' + self.documentUnit)
+            inkex.errormsg('  Height: ' + str(self.unittouu(self.document.getroot().get('height'))) + ' ' + self.documentUnit)
+            viewBox = self.document.getroot().get('viewBox')
+            if viewBox:
+                viewBox = string.split(viewBox, ' ')
+                if viewBox[2] and viewBox[3]:
+                    inkex.errormsg('  Viewbox Width: ' + str(self.unittouu(viewBox[2])) + ' ' + self.documentUnit)
+                    inkex.errormsg('  Viewbox Height: ' + str(self.unittouu(viewBox[3])) + ' ' + self.documentUnit)
+            if self.options.commandLanguage == 'dmpl':
+                inkex.errormsg("\nDMPL properties:\n")
             else:
-                type, value, traceback = sys.exc_info()
-                raise ValueError, ('', type, value), traceback
-        mySerial.write(self.hpgl)
-        mySerial.read(2)
-        mySerial.close()
+                inkex.errormsg("\nHPGL properties:\n")
+            inkex.errormsg('  Drawing width: ' + str(self.unittouu(str((debugObject.sizeX - debugObject.divergenceX) / debugObject.scaleX))) + ' ' + self.documentUnit)
+            inkex.errormsg('  Drawing height: ' + str(self.unittouu(str((debugObject.sizeY - debugObject.divergenceY) / debugObject.scaleY))) + ' ' + self.documentUnit)
+            inkex.errormsg('  Drawing width: ' + str(debugObject.sizeX - debugObject.divergenceX) + ' plotter steps')
+            inkex.errormsg('  Drawing height: ' + str(debugObject.sizeY - debugObject.divergenceY) + ' plotter steps')
+            inkex.errormsg('  Offset X: ' + str(debugObject.offsetX) + ' plotter steps')
+            inkex.errormsg('  Offset Y: ' + str(debugObject.offsetX) + ' plotter steps')
+            inkex.errormsg('  Overcut: ' + str(debugObject.overcut) + ' plotter steps')
+            inkex.errormsg('  Tool offset: ' + str(debugObject.toolOffset) + ' plotter steps')
+            inkex.errormsg('  Flatness: ' + str(debugObject.flat) + ' plotter steps')
+            inkex.errormsg('  Tool offset flatness: ' + str(debugObject.toolOffsetFlat) + ' plotter steps')
+            if self.options.commandLanguage == 'dmpl':
+                inkex.errormsg("\nDMPL data:\n")
+            else:
+                inkex.errormsg("\nHPGL data:\n")
+            inkex.errormsg(self.hpgl)
+        else:
+            # send data to plotter
+            mySerial = serial.Serial()
+            mySerial.port = self.options.serialPort
+            mySerial.baudrate = self.options.serialBaudRate
+            mySerial.timeout = 0.1
+            if self.options.flowControl == 'xonxoff':
+                mySerial.xonxoff = True
+            if self.options.flowControl == 'rtscts' or self.options.flowControl == 'dsrdtrrtscts':
+                mySerial.rtscts = True
+            if self.options.flowControl == 'dsrdtrrtscts':
+                mySerial.dsrdtr = True
+            try:
+                mySerial.open()
+            except Exception as inst:
+                if 'ould not open port' in inst.args[0]:
+                    inkex.errormsg(_("Could not open port. Please check that your plotter is running, connected and the settings are correct."))
+                    return
+                else:
+                    type, value, traceback = sys.exc_info()
+                    raise ValueError, ('', type, value), traceback
+            mySerial.write(self.hpgl)
+            mySerial.read(2)
+            mySerial.close()
 
 if __name__ == '__main__':
     # start extension

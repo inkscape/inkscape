@@ -65,12 +65,12 @@ class hpglEncoder:
         self.scaleX = self.options.resolutionX / effect.unittouu("1.0in") # dots per inch to dots per user unit
         self.scaleY = self.options.resolutionY / effect.unittouu("1.0in") # dots per inch to dots per user unit
         scaleXY = (self.scaleX + self.scaleY) / 2
-        self.options.offsetX = effect.unittouu(str(self.options.offsetX) + "mm") * self.scaleX # mm to dots (plotter coordinate system)
-        self.options.offsetY = effect.unittouu(str(self.options.offsetY) + "mm") * self.scaleY # mm to dots
-        self.options.overcut = effect.unittouu(str(self.options.overcut) + "mm") * scaleXY # mm to dots
-        self.options.toolOffset = effect.unittouu(str(self.options.toolOffset) + "mm") * scaleXY # mm to dots
-        self.options.flat = self.options.flat / (1016 / ((self.options.resolutionX + self.options.resolutionY) / 2)) # scale flatness to resolution
-        self.toolOffsetFlat = self.options.flat / self.options.toolOffset * 4.5 # scale flatness to offset
+        self.offsetX = effect.unittouu(str(self.options.offsetX) + "mm") * self.scaleX # mm to dots (plotter coordinate system)
+        self.offsetY = effect.unittouu(str(self.options.offsetY) + "mm") * self.scaleY # mm to dots
+        self.overcut = effect.unittouu(str(self.options.overcut) + "mm") * scaleXY # mm to dots
+        self.toolOffset = effect.unittouu(str(self.options.toolOffset) + "mm") * scaleXY # mm to dots
+        self.flat = self.options.flat / (1016 / ((self.options.resolutionX + self.options.resolutionY) / 2)) # scale flatness to resolution
+        self.toolOffsetFlat = self.flat / self.toolOffset * 4.5 # scale flatness to offset
         self.mirrorX = 1.0
         if self.options.mirrorX:
             self.mirrorX = -1.0
@@ -101,10 +101,10 @@ class hpglEncoder:
             self.divergenceX += (self.sizeX - self.divergenceX) / 2
             self.divergenceY += (self.sizeY - self.divergenceY) / 2
         elif self.options.useToolOffset:
-            self.options.offsetX += self.options.toolOffset
-            self.options.offsetY += self.options.toolOffset
-        groupmat = [[self.mirrorX * self.scaleX * self.viewBoxTransformX, 0.0, - self.divergenceX + self.options.offsetX],
-            [0.0, self.mirrorY * self.scaleY * self.viewBoxTransformY, - self.divergenceY + self.options.offsetY]]
+            self.offsetX += self.toolOffset
+            self.offsetY += self.toolOffset
+        groupmat = [[self.mirrorX * self.scaleX * self.viewBoxTransformX, 0.0, - self.divergenceX + self.offsetX],
+            [0.0, self.mirrorY * self.scaleY * self.viewBoxTransformY, - self.divergenceY + self.offsetY]]
         groupmat = simpletransform.composeTransform(groupmat, simpletransform.parseTransform('rotate(' + self.options.orientation + ')'))
         self.vData = [['', -1.0, -1.0], ['', -1.0, -1.0], ['', -1.0, -1.0], ['', -1.0, -1.0]]
         # store first hpgl commands
@@ -112,14 +112,17 @@ class hpglEncoder:
         # add precut
         if self.options.useToolOffset and self.options.precut:
             self.processOffset('PU', 0, 0)
-            self.processOffset('PD', 0, self.options.toolOffset * 8)
+            self.processOffset('PD', 0, self.toolOffset * 8)
         # start conversion
         self.processGroups(self.doc, groupmat)
         # shift an empty node in in order to process last node in cache
         self.processOffset('PU', 0, 0)
         # add return to zero point
         self.hpgl += ';PU0,0;'
-        return self.hpgl
+        if self.options.debug:
+            return self.hpgl, self
+        else:
+            return self.hpgl, ""
 
     def processGroups(self, doc, groupmat):
         # flatten groups to avoid recursion
@@ -165,7 +168,7 @@ class hpglEncoder:
             # parse and transform path
             paths = cubicsuperpath.parsePath(paths)
             simpletransform.applyTransformToPath(mat, paths)
-            cspsubdiv.cspsubdiv(paths, self.options.flat)
+            cspsubdiv.cspsubdiv(paths, self.flat)
             # path to HPGL commands
             oldPosX = 0.0
             oldPosY = 0.0
@@ -190,8 +193,8 @@ class hpglEncoder:
                             # check if point is repeating, if so, ignore
                             if int(round(posX)) != int(round(oldPosX)) or int(round(posY)) != int(round(oldPosY)):
                                 overcutLength += self.getLength(oldPosX, oldPosY, posX, posY)
-                                if overcutLength >= self.options.overcut:
-                                    newLength = self.changeLength(oldPosX, oldPosY, posX, posY, - (overcutLength - self.options.overcut))
+                                if overcutLength >= self.overcut:
+                                    newLength = self.changeLength(oldPosX, oldPosY, posX, posY, - (overcutLength - self.overcut))
                                     self.processOffset(cmd, newLength[0], newLength[1])
                                     break
                                 else:
@@ -235,12 +238,12 @@ class hpglEncoder:
                 else:
                     # perform tool offset correction (It's a *tad* complicated, if you want to understand it draw the data as lines on paper)
                     if self.vData[2][0] == 'PD': # If the 3rd entry in the cache is a pen down command make the line longer by the tool offset
-                        pointThree = self.changeLength(self.vData[1][1], self.vData[1][2], self.vData[2][1], self.vData[2][2], self.options.toolOffset)
+                        pointThree = self.changeLength(self.vData[1][1], self.vData[1][2], self.vData[2][1], self.vData[2][2], self.toolOffset)
                         self.storePoint('PD', pointThree[0], pointThree[1])
                     elif self.vData[0][1] != -1.0:
                         # Elif the 1st entry in the cache is filled with data and the 3rd entry is a pen up command shift
                         # the 3rd entry by the current tool offset position according to the 2nd command
-                        pointThree = self.changeLength(self.vData[0][1], self.vData[0][2], self.vData[1][1], self.vData[1][2], self.options.toolOffset)
+                        pointThree = self.changeLength(self.vData[0][1], self.vData[0][2], self.vData[1][1], self.vData[1][2], self.toolOffset)
                         pointThree[0] = self.vData[2][1] - (self.vData[1][1] - pointThree[0])
                         pointThree[1] = self.vData[2][2] - (self.vData[1][2] - pointThree[1])
                         self.storePoint('PU', pointThree[0], pointThree[1])
@@ -250,11 +253,11 @@ class hpglEncoder:
                         self.storePoint('PU', pointThree[0], pointThree[1])
                     if self.vData[3][0] == 'PD':
                         # If the 4th entry in the cache is a pen down command guide tool to next line with a circle between the prolonged 3rd and 4th entry
-                        if self.getLength(self.vData[2][1], self.vData[2][2], self.vData[3][1], self.vData[3][2]) >= self.options.toolOffset:
-                            pointFour = self.changeLength(self.vData[3][1], self.vData[3][2], self.vData[2][1], self.vData[2][2], - self.options.toolOffset)
+                        if self.getLength(self.vData[2][1], self.vData[2][2], self.vData[3][1], self.vData[3][2]) >= self.toolOffset:
+                            pointFour = self.changeLength(self.vData[3][1], self.vData[3][2], self.vData[2][1], self.vData[2][2], - self.toolOffset)
                         else:
                             pointFour = self.changeLength(self.vData[2][1], self.vData[2][2], self.vData[3][1], self.vData[3][2],
-                                (self.options.toolOffset - self.getLength(self.vData[2][1], self.vData[2][2], self.vData[3][1], self.vData[3][2])))
+                                (self.toolOffset - self.getLength(self.vData[2][1], self.vData[2][2], self.vData[3][1], self.vData[3][2])))
                         # get angle start and angle vector
                         angleStart = math.atan2(pointThree[1] - self.vData[2][2], pointThree[0] - self.vData[2][1])
                         angleVector = math.atan2(pointFour[1] - self.vData[2][2], pointFour[0] - self.vData[2][1]) - angleStart
@@ -267,12 +270,12 @@ class hpglEncoder:
                         if angleVector >= 0:
                             angle = angleStart + self.toolOffsetFlat
                             while angle < angleStart + angleVector:
-                                self.storePoint('PD', self.vData[2][1] + math.cos(angle) * self.options.toolOffset, self.vData[2][2] + math.sin(angle) * self.options.toolOffset)
+                                self.storePoint('PD', self.vData[2][1] + math.cos(angle) * self.toolOffset, self.vData[2][2] + math.sin(angle) * self.toolOffset)
                                 angle += self.toolOffsetFlat
                         else:
                             angle = angleStart - self.toolOffsetFlat
                             while angle > angleStart + angleVector:
-                                self.storePoint('PD', self.vData[2][1] + math.cos(angle) * self.options.toolOffset, self.vData[2][2] + math.sin(angle) * self.options.toolOffset)
+                                self.storePoint('PD', self.vData[2][1] + math.cos(angle) * self.toolOffset, self.vData[2][2] + math.sin(angle) * self.toolOffset)
                                 angle -= self.toolOffsetFlat
                         self.storePoint('PD', pointFour[0], pointFour[1])
 

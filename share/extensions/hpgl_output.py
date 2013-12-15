@@ -49,10 +49,11 @@ class MyEffect(inkex.Effect):
         self.OptionParser.add_option('--offsetY',          action='store', type='float',   dest='offsetY',          default=0.0,     help='Y offset (mm)')
 
     def effect(self):
+        self.options.debug = False
         # get hpgl data
         myHpglEncoder = hpgl_encoder.hpglEncoder(self)
         try:
-            self.hpgl = myHpglEncoder.getHpgl()
+            self.hpgl, debugObject = myHpglEncoder.getHpgl()
         except Exception as inst:
             if inst.args[0] == 'NO_PATHS':
                 # issue error if no paths found

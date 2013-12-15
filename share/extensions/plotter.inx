@@ -9,8 +9,8 @@
     <_param name="introduction" type="description">Please make sure that all objects you want to plot are converted to paths. The plot will automatically be aligned to the zero point.</_param>
     <param name="tab" type="notebook">
         <page name="misc" _gui-text="Connection">
-            <param name="serialPort" type="string" _gui-text="Serial Port" _gui-description="The port of your serial connection, on Windows something like 'COM1', on Linux something like: '/dev/ttyUSB0' (Default: COM1)">COM1</param>
-            <param name="serialBaudRate" type="optiongroup" appearance="minimal" _gui-text="Serial Baud rate" _gui-description="The Baud rate of your serial connection (Default: 9600)">
+            <param name="serialPort" type="string" _gui-text="Serial port" _gui-description="The port of your serial connection, on Windows something like 'COM1', on Linux something like: '/dev/ttyUSB0' (Default: COM1)">COM1</param>
+            <param name="serialBaudRate" type="optiongroup" appearance="minimal" _gui-text="Serial baud rate" _gui-description="The Baud rate of your serial connection (Default: 9600)">
                 <option value="9600">9600</option>
                 <option value="110">110</option>
                 <option value="300">300</option>
@@ -33,7 +33,7 @@
                 <_option value="dsrdtrrtscts">Hardware (DSR/DTR + RTS/CTS)</_option>
                 <_option value="">None</_option>
             </param>
-            <param name="commandLanguage" type="optiongroup" appearance="minimal" _gui-text="Command Language" _gui-description="The command language to use - Try different settings to find the one that fits your plotter (Default: HPGL)">
+            <param name="commandLanguage" type="optiongroup" appearance="minimal" _gui-text="Command language" _gui-description="The command language to use - Try different settings to find the one that fits your plotter (Default: HPGL)">
                 <option value="hpgl">HPGL</option>
                 <option value="dmpl">DMPL</option>
             </param>
@@ -70,6 +70,7 @@
             <param name="flat" type="float" min="0.1" max="10.0" precision="1" _gui-text="Curve flatness" _gui-description="Curves are divided into lines, this number controls how fine the curves will be reproduced, the smaller the finer (Default: '1.2')">1.2</param>
             <param name="offsetX" type="float" min="-10000.0" max="10000.0" precision="2" _gui-text="X offset (mm)" _gui-description="The offset to move your plot away from the zero point in mm (Default: '0.00')">0.00</param>
             <param name="offsetY" type="float" min="-10000.0" max="10000.0" precision="2" _gui-text="Y offset (mm)" _gui-description="The offset to move your plot away from the zero point in mm (Default: '0.00')">0.00</param>
+            <param name="debug" type="boolean" _gui-text="Show debug information" _gui-description="Check this to get verbose information about the plot without actually sending something to the plotter (A.k.a. data dump). (Default: Unchecked)">false</param>
         </page>
     </param>
     <effect needs-live-preview="false">

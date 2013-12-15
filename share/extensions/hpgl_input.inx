@@ -9,7 +9,7 @@
     <param name="space" type="description">&#xa0;</param>
     <param name="resolutionX" type="float" min="1.0" max="4096.0" precision="1" _gui-text="Resolution X (dpi)" _gui-description="The amount of steps in one inch on the X axis (Default: 1016.0)">1016.0</param>
     <param name="resolutionY" type="float" min="1.0" max="4096.0" precision="1" _gui-text="Resolution Y (dpi)" _gui-description="The amount of steps in one inch on the Y axis (Default: 1016.0)">1016.0</param>
-    <param name="showMovements" type="boolean" _gui-text="Show Movements between paths" _gui-description="Check this to show movements between paths (Default: Unchecked)">false</param>
+    <param name="showMovements" type="boolean" _gui-text="Show movements between paths" _gui-description="Check this to show movements between paths (Default: Unchecked)">false</param>
     <input>
         <extension>.hpgl</extension>
         <mimetype>image/hpgl</mimetype>
