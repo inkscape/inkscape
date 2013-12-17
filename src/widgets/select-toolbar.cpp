@@ -259,7 +259,7 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
             // we'll just use the old get_scale_transform_for_uniform_stroke() for now.
             // 2) get_scale_transform_for_uniform_stroke() is intended for visual bounding boxes, not geometrical ones!
             // we'll trick it into using a geometric bounding box though, by setting the stroke width to zero
-            scaler = get_scale_transform_for_uniform_stroke (*bbox_geom, 0, false, x0, y0, x1, y1);
+            scaler = get_scale_transform_for_uniform_stroke (*bbox_geom, 0, false, false, x0, y0, x1, y1);
         }
 
         sp_selection_apply_affine(selection, scaler);

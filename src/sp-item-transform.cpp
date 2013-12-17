@@ -94,7 +94,7 @@ void sp_item_move_rel(SPItem *item, Geom::Translate const &tr)
  *   not possible here because it will only allow for a positive width and height, and therefore cannot mirror
  * @return
  */
-Geom::Affine get_scale_transform_for_uniform_stroke(Geom::Rect const &bbox_visual, gdouble strokewidth, bool transform_stroke, gdouble x0, gdouble y0, gdouble x1, gdouble y1)
+Geom::Affine get_scale_transform_for_uniform_stroke(Geom::Rect const &bbox_visual, gdouble strokewidth, bool transform_stroke, bool preserve, gdouble x0, gdouble y0, gdouble x1, gdouble y1)
 {
     Geom::Affine p2o = Geom::Translate (-bbox_visual.min());
     Geom::Affine o2n = Geom::Translate (x0, y0);
@@ -147,13 +147,13 @@ Geom::Affine get_scale_transform_for_uniform_stroke(Geom::Rect const &bbox_visua
         ratio_y = (h1 - r0) / (h0 - r0);
         r1 = transform_stroke ? r0 * sqrt(h1/h0) : r0;
         scale_x = 1;
-        scale_y = (h1 - r1)/(h0 - r0);
+        scale_y = preserve ? h1/h0 : (h1 - r1)/(h0 - r0);
     } else if (fabs(h0 - r0) < 1e-6) { // We have a horizontal line at hand
         direct = Geom::Scale(flip_x * w1 / w0, flip_y);
         ratio_x = (w1 - r0) / (w0 - r0);
         ratio_y = 1;
         r1 = transform_stroke ? r0 * sqrt(w1/w0) : r0;
-        scale_x = (w1 - r1)/(w0 - r0);
+        scale_x = preserve ? w1/w0 : (w1 - r1)/(w0 - r0);
         scale_y = 1;
     } else { // We have a true 2D object at hand
         direct = Geom::Scale(flip_x * w1 / w0, flip_y* h1 / h0); // Scaling of the visual bounding box
@@ -164,21 +164,21 @@ Geom::Affine get_scale_transform_for_uniform_stroke(Geom::Rect const &bbox_visua
          * This is how the stroke should scale: r1^2 / A1 = r0^2 / A0
          * So therefore we will need to solve this equation:
          *
-         * r1^2 * (w0-r0) * (h1-r1) = r0^2 * (w1-r1) * (h0-r0)
+         * r1^2 * (w0-r0) * (h0-r0) = r0^2 * (w1-r1) * (h1-r1)
          *
          * This is a quadratic equation in r1, of which the roots can be found using the ABC formula
          * */
         gdouble A = -w0*h0 + r0*(w0 + h0);
         gdouble B = -(w1 + h1) * r0*r0;
         gdouble C = w1 * h1 * r0*r0;
-        if (B*B - 4*A*C > 0) {
+        if ((B*B - 4*A*C > 0) && !preserve) {
             // Of the two roots, I verified experimentally that this is the one we need
             r1 = fabs((-B - sqrt(B*B - 4*A*C))/(2*A));
             // If w1 < 0 then the scale will be wrong if we just assume that scale_x = (w1 - r1)/(w0 - r0);
             // Therefore we here need the absolute values of w0, w1, h0, h1, and r0, as taken care of earlier
             scale_x = (w1 - r1)/(w0 - r0);
             scale_y = (h1 - r1)/(h0 - r0);
-        } else { // Can't find the roots of the quadratic equation. Likely the input parameters are invalid?
+        } else { // roots are complex. Or 'Preserve Transforms' was chosen.
             r1 = r0;
             scale_x = w1 / w0;
             scale_y = h1 / h0;
@@ -190,7 +190,8 @@ Geom::Affine get_scale_transform_for_uniform_stroke(Geom::Rect const &bbox_visua
         // Now we account for mirroring by flipping if needed
         scale *= Geom::Scale(flip_x * scale_x, flip_y * scale_y);
         // Make sure that the lower-left corner of the visual bounding box stays where it is, even though the stroke width has changed
-        unbudge *= Geom::Translate (-flip_x * 0.5 * (r0 * scale_x - r1), -flip_y * 0.5 * (r0 * scale_y - r1));
+        if (!preserve)
+            unbudge *= Geom::Translate (-flip_x * 0.5 * (r0 * scale_x - r1), -flip_y * 0.5 * (r0 * scale_y - r1));
     } else { // The stroke should not be scaled, or is zero
         if (r0 == 0 || r0 == Geom::infinity() ) { // Strokewidth is zero or infinite
             scale *= direct;
