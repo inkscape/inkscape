@@ -23,13 +23,15 @@ size_t
 xml_quoted_strlen(char const *val)
 {
     size_t ret = 0;
-    for (; *val != '\0'; val++) {
-        switch (*val) {
-            case '"': ret += sizeof("&quot;") - 1; break;
-            case '&': ret += sizeof("&amp;") - 1; break;
-            case '<': ret += sizeof("&lt;") - 1; break;
-            case '>': ret += sizeof("&gt;") - 1; break;
-            default: ++ret; break;
+    if (val != NULL) {
+        for (; *val != '\0'; val++) {
+            switch (*val) {
+                case '"': ret += sizeof("&quot;") - 1; break;
+                case '&': ret += sizeof("&amp;") - 1; break;
+                case '<': ret += sizeof("&lt;") - 1; break;
+                case '>': ret += sizeof("&gt;") - 1; break;
+                default: ++ret; break;
+            }
         }
     }
     return ret;
