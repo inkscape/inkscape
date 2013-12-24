@@ -58,7 +58,7 @@ msgstr ""
 "Project-Id-Version: inkscape 0.49\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-11-07 15:09+0100\n"
-"PO-Revision-Date: 2013-11-24 21:22+0100\n"
+"PO-Revision-Date: 2013-12-24 00:01+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch\n"
 "MIME-Version: 1.0\n"
@@ -4032,7 +4032,7 @@ msgstr "Er is momenteel geen help beschikbaar voor deze uitbreiding. Kijk aub. o
 
 #: ../src/extension/implementation/script.cpp:1037
 msgid "Inkscape has received additional data from the script executed.  The script did not return an error, but this may indicate the results will not be as expected."
-msgstr "Inkscape heeft extra informatie ontvangen van het script dat was aangeroepen. Het script gaf geen foutmelding, maar dit zou kunnen betekenen dat de resultaten anders zijn dan verwacht."
+msgstr "Inkscape heeft extra informatie ontvangen van het uitgevoerde script. Het script gaf geen foutmelding, maar dit zou kunnen betekenen dat de resultaten anders zijn dan verwacht."
 
 #: ../src/extension/init.cpp:296
 msgid "Null external module directory name.  Modules will not be loaded."
@@ -8864,9 +8864,8 @@ msgid "Angle:"
 msgstr "Hoek:"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:53
-#, fuzzy
 msgid "direction of thickest strokes (opposite = thinest)"
-msgstr "richting van de dikste lijnen ("
+msgstr "richting van de dikste lijnen (tegengesteld = dunste)"
 
 #. modulo_pi(_("modulo pi"), _("Give forward and backward moves in one direction the same thickness "), "modulo_pi", &wr, this, false),
 #: ../src/live_effects/lpe-dynastroke.cpp:55
@@ -8884,9 +8883,8 @@ msgid "End:"
 msgstr "Einde:"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:56
-#, fuzzy
 msgid "Choose end capping type"
-msgstr "Segmenttype veranderen"
+msgstr ""
 
 #: ../src/live_effects/lpe-dynastroke.cpp:57
 msgid "Grow for:"
@@ -9504,7 +9502,7 @@ msgstr "Geëxtrapoleerde boog"
 
 #: ../src/live_effects/lpe-powerstroke.cpp:233
 msgid "Offset points"
-msgstr ""
+msgstr "Offsetpunten"
 
 #: ../src/live_effects/lpe-powerstroke.cpp:234
 msgid "Sort points"
@@ -9512,7 +9510,7 @@ msgstr "Punten sorteren"
 
 #: ../src/live_effects/lpe-powerstroke.cpp:234
 msgid "Sort offset points according to their time value along the curve"
-msgstr ""
+msgstr "Punten sorteren overeenkomstig met de tijdswaarde langs de curve"
 
 #: ../src/live_effects/lpe-powerstroke.cpp:235
 msgid "Interpolator type:"
@@ -9574,7 +9572,7 @@ msgstr "Iteraties:"
 
 #: ../src/live_effects/lpe-recursiveskeleton.cpp:30
 msgid "recursivity"
-msgstr ""
+msgstr "recursiviteit"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:225
 msgid "Frequency randomness:"
@@ -10115,7 +10113,7 @@ msgstr "Puntparameter veranderen"
 #: ../src/live_effects/parameter/powerstrokepointarray.cpp:226
 #: ../src/live_effects/parameter/powerstrokepointarray.cpp:238
 msgid "<b>Stroke width control point</b>: drag to alter the stroke width. <b>Ctrl+click</b> adds a control point, <b>Ctrl+Alt+click</b> deletes it."
-msgstr ""
+msgstr "<b>Controlepunt lijnbreedte</b>: sleep om de lijnbreedte aan te passen. <b>Ctrl+klik</b> om een controlepunt toe te voegen, <b>Ctrl+Alt+klik</b> om het te verwijderen."
 
 #: ../src/live_effects/parameter/random.cpp:134
 msgid "Change random parameter"
@@ -10135,7 +10133,7 @@ msgstr "Vectorparameter veranderen"
 
 #: ../src/lpe-tool-context.cpp:204
 msgid "Choose a construction tool from the toolbar."
-msgstr ""
+msgstr "Kies een gereedschap van de gereedschappenbalk."
 
 #: ../src/main-cmdlineact.cpp:50
 #, c-format
@@ -10209,7 +10207,7 @@ msgstr "Het geëxporteerde gebied is de volledige pagina"
 
 #: ../src/main.cpp:347
 msgid "Only for PS/EPS/PDF, sets margin in mm around exported area (default 0)"
-msgstr ""
+msgstr "Alleen voor PS/EPS/PDF, bepaalt de marge in mm rond het geëxporteerde gebied (standaard 0)"
 
 #: ../src/main.cpp:348
 #: ../src/main.cpp:390
@@ -11067,7 +11065,7 @@ msgstr "Rechthoek maken"
 
 #: ../src/resource-manager.cpp:332
 msgid "Fixup broken links"
-msgstr ""
+msgstr "Kapotte links repareren"
 
 #: ../src/select-context.cpp:165
 msgid "Click selection to toggle scale/rotation handles"
@@ -11583,7 +11581,7 @@ msgstr "Symbool naar bewerkbare groep omzetten"
 
 #: ../src/selection-describer.cpp:176
 msgid "Remove from symbols tray to edit symbol"
-msgstr ""
+msgstr "Van symbolenkader verwijderen om symbool te bewerken"
 
 #: ../src/selection-describer.cpp:180
 msgid "Use <b>Shift+D</b> to look up original"
@@ -11992,7 +11990,7 @@ msgid "Path"
 msgstr "Pad"
 
 #: ../src/sp-path.cpp:95
-#, fuzzy, c-format
+#, c-format
 msgid ", path effect: %s"
 msgstr ", padeffect: %s"
 
@@ -12078,7 +12076,7 @@ msgstr "Spiraal"
 #: ../src/sp-spiral.cpp:236
 #, c-format
 msgid "with %3f turns"
-msgstr ""
+msgstr "met %3f bochten"
 
 #. Star
 #: ../src/sp-star.cpp:256
@@ -12098,12 +12096,12 @@ msgstr "Veelhoek"
 #: ../src/sp-star.cpp:264
 #, c-format
 msgid "with %d vertex"
-msgstr ""
+msgstr "met %d hoek"
 
 #: ../src/sp-star.cpp:264
 #, c-format
 msgid "with %d vertices"
-msgstr ""
+msgstr "met %d hoeken"
 
 #: ../src/sp-switch.cpp:75
 msgid "Conditional Group"
@@ -12170,7 +12168,7 @@ msgstr "Kloon"
 #: ../src/sp-use.cpp:222
 #, c-format
 msgid "called %s"
-msgstr "aangeroepen %s"
+msgstr "aanwezig (%s)"
 
 #. TRANSLATORS: Used for statusbar description for long <use> chains:
 #. * "Clone of: Clone of: ... in Layer 1".
@@ -13841,7 +13839,7 @@ msgstr "_Achtergrondkleur:"
 
 #: ../src/ui/dialog/document-properties.cpp:111
 msgid "Color of the page background. Note: transparency setting ignored while editing but used when exporting to bitmap."
-msgstr ""
+msgstr "Kleur van de achtergrond. Nota: transparantie-instelling wordt genegeerd tijdens het bewerken, maar gebruikt voor export van de bitmap."
 
 #: ../src/ui/dialog/document-properties.cpp:112
 msgid "Border _color:"
@@ -14199,9 +14197,8 @@ msgid "Remove grid"
 msgstr "Raster verwijderen"
 
 #: ../src/ui/dialog/document-properties.cpp:1707
-#, fuzzy
 msgid "Changed document unit"
-msgstr "Naamloos document %d"
+msgstr "Documenteenheid veranderd"
 
 #: ../src/ui/dialog/export.cpp:151
 #: ../src/verbs.cpp:2800
@@ -16755,7 +16752,7 @@ msgstr "Ho_ek lineair vulkleurverloop:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:489
 msgid "Default angle of new linear gradients in degrees (clockwise from horizontal)"
-msgstr ""
+msgstr "Standaardhoek in graden voor nieuwe lineaire kleurverlopen (met de klok mee, vanaf horizontaal)"
 
 #. Dropper
 #: ../src/ui/dialog/inkscape-preferences.cpp:493
@@ -17526,7 +17523,7 @@ msgstr "Het aantal spaties dat gebruikt wordt voor het inspringen van geneste el
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:880
 msgid "Path data"
-msgstr "Data pad"
+msgstr "Paddata"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:883
 msgid "Absolute"
@@ -17539,12 +17536,11 @@ msgstr "Relatief"
 #: ../src/ui/dialog/inkscape-preferences.cpp:883
 #: ../src/ui/dialog/inkscape-preferences.cpp:1173
 msgid "Optimized"
-msgstr "Optimaliseren"
+msgstr "Geoptimaliseerd"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:887
-#, fuzzy
 msgid "Path string format:"
-msgstr "Padstringformaat"
+msgstr "Padstringformaat:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:887
 msgid "Path data should be written: only with absolute coordinates, only with relative coordinates, or optimized for string length (mixed absolute and relative coordinates)"
@@ -19087,13 +19083,12 @@ msgid "Log capture stopped."
 msgstr "Log aanleggen gestopt."
 
 #: ../src/ui/dialog/new-from-template.cpp:24
-#, fuzzy
 msgid "Create from template"
-msgstr "Spiraal maken"
+msgstr "Van template maken"
 
 #: ../src/ui/dialog/new-from-template.cpp:26
 msgid "New From Template"
-msgstr ""
+msgstr "Nieuw van template"
 
 #: ../src/ui/dialog/object-attributes.cpp:47
 msgid "Href:"
@@ -19295,78 +19290,71 @@ msgstr "Sluiten"
 
 #: ../src/ui/dialog/pixelartdialog.cpp:162
 msgid "_Curves (multiplier)"
-msgstr ""
+msgstr "_Curves (vermenigvuldiger)"
 
 #: ../src/ui/dialog/pixelartdialog.cpp:165
 msgid "Favors connections that are part of a long curve"
-msgstr ""
+msgstr "Bevoordeelt verbindingen die deel uitmaken van een lange curve"
 
 #: ../src/ui/dialog/pixelartdialog.cpp:176
-#, fuzzy
 msgid "_Islands (weight)"
-msgstr "Italiaans (it)"
+msgstr "_Eilanden (gewicht)"
 
 #: ../src/ui/dialog/pixelartdialog.cpp:179
 msgid "Avoid single disconnected pixels"
-msgstr ""
+msgstr "Niet verbonden pixels vermijden"
 
 #: ../src/ui/dialog/pixelartdialog.cpp:181
-#, fuzzy
 msgid "A constant vote value"
-msgstr "beperkte hoek"
+msgstr "Een constante sterkte"
 
 #: ../src/ui/dialog/pixelartdialog.cpp:191
 msgid "Sparse pixels (window _radius)"
-msgstr ""
+msgstr "Verspreidde pixels (_straal venster)"
 
 #: ../src/ui/dialog/pixelartdialog.cpp:200
 msgid "The radius of the window analyzed"
-msgstr ""
+msgstr "De straal van het geanalyseerde venster"
 
 #: ../src/ui/dialog/pixelartdialog.cpp:201
 msgid "Sparse pixels (_multiplier)"
-msgstr ""
+msgstr "Verspreide pixels (_vermenigvuldiger)"
 
 #: ../src/ui/dialog/pixelartdialog.cpp:212
 msgid "Favors connections that are part of foreground color"
-msgstr ""
+msgstr "Bevoordeelt verbindingen die deel uitmaken van de voorgrondkleur"
 
 #: ../src/ui/dialog/pixelartdialog.cpp:218
 msgid "The heuristic computed vote will be multiplied by this value"
-msgstr ""
+msgstr "De sterkte bepaald door de heuristiek wordt vermenigvuldigd met deze waarde"
 
 #: ../src/ui/dialog/pixelartdialog.cpp:231
-#, fuzzy
 msgid "Heuristics"
-msgstr "Knooppunten"
+msgstr "Heuristiek"
 
 #: ../src/ui/dialog/pixelartdialog.cpp:238
-#, fuzzy
 msgid "_Voronoi diagram"
-msgstr "Voronoidiagram"
+msgstr "Vo_ronoidiagram"
 
 #: ../src/ui/dialog/pixelartdialog.cpp:239
 msgid "Output composed of straight lines"
-msgstr ""
+msgstr "Output bestaat uit rechte lijnen"
 
 #: ../src/ui/dialog/pixelartdialog.cpp:245
-#, fuzzy
 msgid "Convert to _B-spline curves"
-msgstr "Omzetten naar html5 canvas"
+msgstr "Om_zetten naar B-splines curves"
 
 #: ../src/ui/dialog/pixelartdialog.cpp:246
-#, fuzzy
 msgid "Preserve staircasing artifacts"
-msgstr "ID namen behouden die beginnen met:"
+msgstr "Trapvormige artefacten behouden"
 
 #: ../src/ui/dialog/pixelartdialog.cpp:253
-#, fuzzy
 msgid "_Smooth curves"
-msgstr "_Hoeken afronden"
+msgstr "_Gladde curves"
 
 #: ../src/ui/dialog/pixelartdialog.cpp:254
 msgid "The Kopf-Lischinski algorithm"
-msgstr ""
+msgstr "Kopf-Lischinski"
 
 #: ../src/ui/dialog/pixelartdialog.cpp:261
 msgid "Output"
@@ -19388,9 +19376,8 @@ msgid "Execute the trace"
 msgstr "Het overtrekken starten"
 
 #: ../src/ui/dialog/pixelartdialog.cpp:362
-#, fuzzy
 msgid "Trace pixel art"
-msgstr "beeldpunten met"
+msgstr "Pixel art overtrekken"
 
 #: ../src/ui/dialog/pixelartdialog.cpp:376
 msgid ""
@@ -19398,10 +19385,13 @@ msgid ""
 "\n"
 "Continue the procedure (without saving)?"
 msgstr ""
+"De afbeelding is groot. Uitvoering kan enige tijd duren en het is aan te raden om je document te bewaren vooraleer door te gaan.\n"
+"\n"
+"Doorgaan (zonder bewaren)?"
 
 #: ../src/ui/dialog/print.cpp:104
 msgid "Could not open temporary PNG for bitmap printing"
-msgstr "Kon tijdelijk PNG-bestand voor bitmap afdrukken niet openen"
+msgstr "Kon tijdelijk PNG-bestand voor bitmapafdruk niet openen"
 
 #: ../src/ui/dialog/print.cpp:147
 msgid "Could not set up Document"
@@ -19684,7 +19674,7 @@ msgstr "De palettenmap (%s) is niet beschikbaar."
 #. ******************* Symbol Sets ************************
 #: ../src/ui/dialog/symbols.cpp:128
 msgid "Symbol set: "
-msgstr "Symbolenset:"
+msgstr "Symbolenset: "
 
 #. Fill in later
 #: ../src/ui/dialog/symbols.cpp:137
@@ -19693,46 +19683,40 @@ msgid "Current Document"
 msgstr "Huidig document"
 
 #: ../src/ui/dialog/symbols.cpp:205
-#, fuzzy
 msgid "Add Symbol from the current document."
-msgstr "Alleen huidige laag tonen"
+msgstr "Symbool aan huidige document toevoegen."
 
 #: ../src/ui/dialog/symbols.cpp:214
-#, fuzzy
 msgid "Remove Symbol from the current document."
-msgstr "Selecteer een overgang voor het huidige kleurverloop"
+msgstr "Symbool uit huidig document verwijderen."
 
 #: ../src/ui/dialog/symbols.cpp:227
 msgid "Make Icons bigger by zooming in."
-msgstr ""
+msgstr "Iconen groter maken door inzoomen."
 
 #: ../src/ui/dialog/symbols.cpp:236
-#, fuzzy
 msgid "Make Icons smaller by zooming out."
-msgstr "Lijnkleur bij uitzoomen"
+msgstr "Iconen kleiner maken door uitzoomen."
 
 #: ../src/ui/dialog/symbols.cpp:245
 msgid "Toggle 'fit' symbols in icon space."
 msgstr ""
 
 #: ../src/ui/dialog/symbols.cpp:558
-#, fuzzy
 msgid "Unnamed Symbols"
-msgstr "Khmer symbolen"
+msgstr "Onbenoemde symbolen"
 
 #: ../src/ui/dialog/template-widget.cpp:36
-#, fuzzy
 msgid "More info"
-msgstr "Knooppunten verplaatsen"
+msgstr "Meer info"
 
 #: ../src/ui/dialog/template-widget.cpp:37
 msgid " "
 msgstr " "
 
 #: ../src/ui/dialog/template-widget.cpp:38
-#, fuzzy
 msgid "no template selected"
-msgstr "Geen items geselecteerd."
+msgstr "geen template geselecteerd"
 
 #: ../src/ui/dialog/template-widget.cpp:119
 msgid "Path: "
@@ -20946,7 +20930,7 @@ msgstr "Grootte"
 #: ../src/ui/widget/panel.cpp:143
 msgctxt "Swatches height"
 msgid "Tiny"
-msgstr "Klein"
+msgstr "Zeer klein"
 
 #: ../src/ui/widget/panel.cpp:144
 msgctxt "Swatches height"
@@ -20966,7 +20950,7 @@ msgstr "Groot"
 #: ../src/ui/widget/panel.cpp:147
 msgctxt "Swatches height"
 msgid "Huge"
-msgstr "Groot"
+msgstr "Zeer groot"
 
 #: ../src/ui/widget/panel.cpp:169
 msgctxt "Swatches"
@@ -20996,7 +20980,7 @@ msgstr "Breed"
 #: ../src/ui/widget/panel.cpp:177
 msgctxt "Swatches width"
 msgid "Wider"
-msgstr "Breed"
+msgstr "Breder"
 
 #: ../src/ui/widget/panel.cpp:207
 msgctxt "Swatches"
@@ -21787,9 +21771,8 @@ msgid "_Templates..."
 msgstr "_Templates..."
 
 #: ../src/verbs.cpp:2387
-#, fuzzy
 msgid "Create new project from template"
-msgstr "Een nieuw document aanmaken volgens het standaardsjabloon"
+msgstr "Nieuw document aanmaken van template"
 
 #: ../src/verbs.cpp:2390
 msgid "Undo last action"
@@ -22341,13 +22324,12 @@ msgid "Create one or more paths from a bitmap by tracing it"
 msgstr "Door overtrekken één of meer paden aanmaken uit een bitmap"
 
 #: ../src/verbs.cpp:2555
-#, fuzzy
 msgid "Trace Pixel Art..."
-msgstr "_Bitmap overtrekken..."
+msgstr "Pixel Art overtrekken..."
 
 #: ../src/verbs.cpp:2556
 msgid "Create paths using Kopf-Lischinski algorithm to vectorize pixel art"
-msgstr ""
+msgstr "Paken maken met het Kopf-Lischinski algorithme om pixel art te vectoriseren"
 
 #: ../src/verbs.cpp:2557
 msgid "Make a _Bitmap Copy"
@@ -23580,13 +23562,12 @@ msgstr "Bitmaps 'overtrekken' om een lijntekening te krijgen"
 
 #. "tutorial_tracing"
 #: ../src/verbs.cpp:2889
-#, fuzzy
 msgid "Inkscape: Tracing Pixel Art"
-msgstr "Inkscape: _Overtrekken"
+msgstr "Inkscape: Pixel art overtrekken"
 
 #: ../src/verbs.cpp:2890
 msgid "Using Trace Pixel Art dialog"
-msgstr ""
+msgstr "Gebruik van de Pixel Art dialoog"
 
 #: ../src/verbs.cpp:2891
 msgid "Inkscape: _Calligraphy"
@@ -26974,9 +26955,8 @@ msgstr "Geen HPGL-data gevonden."
 
 #. issue error if no paths found
 #: ../share/extensions/hpgl_output.py:59
-#, fuzzy
 msgid "No paths where found. Please convert all objects you want to save into paths."
-msgstr "Geen object geselecteerd. Selecteer aub. een object waar je een zicht aan wil toekennen en druk op Toepassen.\n"
+msgstr "Geen paden gevonden. Converteer aub. alle objecten die je wil bewaren in paden."
 
 #: ../share/extensions/inkex.py:109
 #, python-format
@@ -28181,14 +28161,12 @@ msgid "UTF 8"
 msgstr "UTF 8"
 
 #: ../share/extensions/dxf_outlines.inx.h:21
-#, fuzzy
 msgid "All (default)"
-msgstr "(standaard)"
+msgstr "Alle (standaard)"
 
 #: ../share/extensions/dxf_outlines.inx.h:22
-#, fuzzy
 msgid "Visible only"
-msgstr "Zichtbare kleuren"
+msgstr "Alleen zichtbaar"
 
 #: ../share/extensions/dxf_outlines.inx.h:23
 msgid "By name match"
@@ -31064,41 +31042,36 @@ msgid "Snap all paths in selection to pixels. Snaps borders to half-points and f
 msgstr "Kleeft alle paden in de selectie aan pixels. Kleeft randen aan halve punten en vullingen aan hele punten."
 
 #: ../share/extensions/plotter.inx.h:1
-#, fuzzy
 msgid "Plot"
-msgstr "Punt"
+msgstr ""
 
 #: ../share/extensions/plotter.inx.h:2
 msgid "Please make sure that all objects you want to plot are converted to paths. The plot will automatically be aligned to the zero point."
 msgstr ""
 
 #: ../share/extensions/plotter.inx.h:3
-#, fuzzy
 msgid "Connection"
-msgstr "Verbindingen"
+msgstr "Verbinding"
 
 #: ../share/extensions/plotter.inx.h:4
-#, fuzzy
 msgid "Serial Port"
-msgstr "Seriële poort:"
+msgstr "Seriële poort"
 
 #: ../share/extensions/plotter.inx.h:5
 msgid "The port of your serial connection, on Windows something like 'COM1', on Linux something like: '/dev/ttyUSB0' (Default: COM1)"
 msgstr ""
 
 #: ../share/extensions/plotter.inx.h:6
-#, fuzzy
 msgid "Serial Baud rate"
-msgstr "Seriële poort:"
+msgstr "Seriële baud rate:"
 
 #: ../share/extensions/plotter.inx.h:7
 msgid "The Baud rate of your serial connection (Default: 9600)"
 msgstr ""
 
 #: ../share/extensions/plotter.inx.h:8
-#, fuzzy
 msgid "Flow control"
-msgstr "Gebied met tekstvormen"
+msgstr ""
 
 #: ../share/extensions/plotter.inx.h:9
 msgid "Software / Hardware flow control - Try different settings to find the one that fits your plotter (Default: None)"
@@ -31129,9 +31102,8 @@ msgid "The offset to move your plot away from the zero point in mm (Default: '0.
 msgstr ""
 
 #: ../share/extensions/plotter.inx.h:46
-#, fuzzy
 msgid "Plotter"
-msgstr "Poster"
+msgstr "Plotter"
 
 #: ../share/extensions/plt_input.inx.h:1
 msgid "AutoCAD Plot Input"
@@ -31526,9 +31498,8 @@ msgid "Square size (px):"
 msgstr "Puntgrootte (px):"
 
 #: ../share/extensions/render_gear_rack.inx.h:1
-#, fuzzy
 msgid "Rack Gear"
-msgstr "Tandwiel"
+msgstr ""
 
 #: ../share/extensions/render_gear_rack.inx.h:2
 #, fuzzy
@@ -31536,14 +31507,12 @@ msgid "Rack Length:"
 msgstr "Lengte:"
 
 #: ../share/extensions/render_gear_rack.inx.h:3
-#, fuzzy
 msgid "Tooth Spacing:"
-msgstr "Horizontale tussenruimte:"
+msgstr "Ruimte tussen tanden:"
 
 #: ../share/extensions/render_gear_rack.inx.h:4
-#, fuzzy
 msgid "Contact Angle:"
-msgstr "Contactdriehoek"
+msgstr "Contacthoek:"
 
 #: ../share/extensions/render_gear_rack.inx.h:6
 #: ../share/extensions/render_gears.inx.h:1
@@ -32252,9 +32221,8 @@ msgid "lowercase"
 msgstr "kleine letters"
 
 #: ../share/extensions/text_merge.inx.h:14
-#, fuzzy
 msgid "Flow text"
-msgstr "Ingekaderde tekst"
+msgstr ""
 
 #: ../share/extensions/text_merge.inx.h:15
 msgid "Keep style"
