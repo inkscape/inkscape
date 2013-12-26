@@ -66,7 +66,10 @@ ParamDescription::ParamDescription (const gchar * name,
 Gtk::Widget *
 ParamDescription::get_widget (SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/, sigc::signal<void> * /*changeSignal*/)
 {
-	if (_gui_hidden) {
+    if (_gui_hidden) {
+        return NULL;
+    }
+    if (_value == NULL) {
         return NULL;
     }
 
