@@ -9,35 +9,38 @@
     <_param name="introduction" type="description">Please make sure that all objects you want to save are converted to paths. The drawing will be automatically aligned to the zero point. Please use the plotter extension (Extensions menu) to plot directly on a plotter.</_param>
     <param name="tab" type="notebook">
         <page name="plotter" _gui-text="Plotter Settings">
-            <param name="pen" type="int" min="0" max="10" _gui-text="Pen number" _gui-description="The number of the pen (tool) to use, on most plotters 1 (Standard: '1')">1</param>
-            <param name="resolutionX" type="float" min="1.0" max="4096.0" precision="1" _gui-text="Resolution X (dpi)" _gui-description="The amount of steps the cutter moves if it moves for 1 inch on the X axis - Try different settings to find the one that fits your plotter (Default: 1016.0)">1016.0</param>
-            <param name="resolutionY" type="float" min="1.0" max="4096.0" precision="1" _gui-text="Resolution Y (dpi)" _gui-description="The amount of steps the cutter moves if it moves for 1 inch on the Y axis - Try different settings to find the one that fits your plotter (Default: 1016.0)">1016.0</param>
-            <param name="mirrorX" type="boolean" _gui-text="Mirror X-axis" _gui-description="Check this to mirror the X axis - Try different settings to find the one that fits your plotter (Default: Unchecked)">false</param>
-            <param name="mirrorY" type="boolean" _gui-text="Mirror Y-axis" _gui-description="Check this to mirror the Y axis - Try different settings to find the one that fits your plotter (Default: Unchecked)">false</param>
-            <param name="orientation" type="optiongroup" appearance="minimal" _gui-text="Rotation (Clockwise)" _gui-description="Rotation of the drawing - Try different settings to find the one that fits your plotter (Default: 0°)">
+            <param name="resolutionX" type="float" min="1.0" max="4096.0" precision="1" _gui-text="Resolution X (dpi)" _gui-description="The amount of steps the cutter moves if it moves for 1 inch on the X axis. (Default: 1016.0)">1016.0</param>
+            <param name="resolutionY" type="float" min="1.0" max="4096.0" precision="1" _gui-text="Resolution Y (dpi)" _gui-description="The amount of steps the cutter moves if it moves for 1 inch on the Y axis. (Default: 1016.0)">1016.0</param>
+            <param name="pen" type="int" min="0" max="99" _gui-text="Pen number" _gui-description="The number of the pen (tool) to use. (Standard: '1')">1</param>
+            <param name="force" type="int" min="0" max="1000" _gui-text="Pen force (g)" _gui-description="The amount of force pushing down the pen in grams, set to 0 to omit command. Most plotters ignore this command. (Default: 24)">24</param>
+            <param name="speed" type="int" min="0" max="1000" _gui-text="Pen speed (cm/s)" _gui-description="The speed the pen will move with in centimetres per second, set to 0 to omit command. Most plotters ignore this command. (Default: 20)">20</param>
+            <param name="orientation" type="optiongroup" appearance="minimal" _gui-text="Rotation (Clockwise)" _gui-description="Rotation of the plot. (Default: 0°)">
                 <option value="0">0°</option>
                 <option value="90">90°</option>
                 <option value="180">180°</option>
                 <option value="270">270°</option>
             </param>
-            <param name="center" type="boolean" _gui-text="Center zero point" _gui-description="Check this if your plotter uses a centered zero point - Try different settings to find the one that fits your plotter (Default: Unchecked)">false</param>
+            <param name="mirrorX" type="boolean" _gui-text="Mirror X axis" _gui-description="Check this to mirror the X axis. (Default: Unchecked)">false</param>
+            <param name="mirrorY" type="boolean" _gui-text="Mirror Y axis" _gui-description="Check this to mirror the Y axis. (Default: Unchecked)">false</param>
+            <param name="center" type="boolean" _gui-text="Center zero point" _gui-description="Check this if your plotter uses a centered zero point. (Default: Unchecked)">false</param>
         </page>
         <page name="overcutToolOffset" _gui-text="Overcut &#x26; Tool Offset">
-            <param name="useOvercut" type="boolean" _gui-text="Use overcut" _gui-description="Check this to use the overcut, if not checked the 'Overcut' parameter is unused (Default: Checked)">true</param>
-            <param name="overcut" type="float" min="0.0" max="100.0" precision="2" _gui-text="Overcut (mm)" _gui-description="The distance in mm that will be cut over the starting point of the path to prevent open paths (Default: 1.00)">1.00</param>
+            <param name="useOvercut" type="boolean" _gui-text="Use overcut" _gui-description="Check this to use overcut, if not checked the 'Overcut' parameter is unused. (Default: Checked)">true</param>
+            <param name="overcut" type="float" min="0.0" max="100.0" precision="2" _gui-text="Overcut (mm)" _gui-description="The distance in mm that will be cut over the starting point of the path to prevent open paths. (Default: 1.00)">1.00</param>
             <param name="space" type="description">&#xa0;</param>
-            <param name="useToolOffset" type="boolean" _gui-text="Use tool offset correction" _gui-description="Check this to use the tool offset correction, if not checked the 'Tool offset' and 'Precut' parameters are unused (Default: Checked)">true</param>
-            <param name="toolOffset" type="float" min="0.0" max="20.0" precision="2" _gui-text="Tool offset (mm)" _gui-description="The offset from the tool tip to the tool axis in mm (Default: 0.25)">0.25</param>
-            <param name="precut" type="boolean" _gui-text="Use precut" _gui-description="Check this to cut a small line before the real drawing to align the tool orientation for the first cut (Default: Checked)">true</param>
+            <param name="useToolOffset" type="boolean" _gui-text="Use tool offset correction" _gui-description="Check this to use the tool offset correction, if not checked the 'Tool offset' and 'Precut' parameters are unused. (Default: Checked)">true</param>
+            <param name="toolOffset" type="float" min="0.0" max="20.0" precision="2" _gui-text="Tool offset (mm)" _gui-description="The offset from the tool tip to the tool axis in mm. (Default: 0.25)">0.25</param>
+            <param name="precut" type="boolean" _gui-text="Use precut" _gui-description="Check this to plot a small line before the real plot to align the tool orientation for the first real plot. (Default: Checked)">true</param>
             <param name="space" type="description">&#xa0;</param>
-            <_param name="offsetNote" type="description">Please note that using the tool offset correction will move your plot away from the zero point by the length in mm specified by the tool offset.</_param>
+            <_param name="offsetNote" type="description">Please note that using the tool offset correction will move your plot away from the zero point by one tool offset length.</_param>
         </page>
         <page name="misc" _gui-text="Miscellaneous">
-            <param name="flat" type="float" min="0.1" max="10.0" precision="1" _gui-text="Curve flatness" _gui-description="Curves are divided into lines, this number controls how fine the curves will be reproduced, the smaller the finer (Default: '1.2')">1.2</param>
-            <param name="offsetX" type="float" min="-10000.0" max="10000.0" precision="2" _gui-text="X offset (mm)" _gui-description="The offset to shift your plot away from the zero point in mm (Default: '0.00')">0.00</param>
-            <param name="offsetY" type="float" min="-10000.0" max="10000.0" precision="2" _gui-text="Y offset (mm)" _gui-description="The offset to shift your plot away from the zero point in mm (Default: '0.00')">0.00</param>
+            <param name="flat" type="float" min="0.1" max="10.0" precision="1" _gui-text="Curve flatness" _gui-description="Curves are divided into lines, this number controls how fine the curves will be reproduced, the smaller the finer. (Default: '1.2')">1.2</param>
+            <param name="offsetX" type="float" min="-10000.0" max="10000.0" precision="2" _gui-text="X offset (mm)" _gui-description="The offset to move your plot away from the zero point on the X axis in mm. (Default: '0.00')">0.00</param>
+            <param name="offsetY" type="float" min="-10000.0" max="10000.0" precision="2" _gui-text="Y offset (mm)" _gui-description="The offset to move your plot away from the zero point on the Y axis in mm. (Default: '0.00')">0.00</param>
         </page>
     </param>
+    <_param name="settingsHelp" type="description">All these settings depend on the plotter you use, for more information please consult the manual or homepage for your plotter.</_param>
     <output>
         <extension>.hpgl</extension>
         <mimetype>image/hpgl</mimetype>

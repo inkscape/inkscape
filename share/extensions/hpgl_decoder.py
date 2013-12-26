@@ -19,8 +19,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
 
 # standard libraries
-from StringIO import StringIO
 import math
+from StringIO import StringIO
 # local library
 import inkex
 
@@ -60,8 +60,8 @@ class hpglDecoder:
         path = ''
         for i, command in enumerate(hpglData):
             if command.strip() != '':
-                if command[:2] == 'IN':
-                    # if Initialize command, ignore
+                if command[:2] == 'IN' or command[:2] == 'FS' or command[:2] == 'VS':
+                    # if Initialize, force or speed command, ignore
                     pass
                 elif command[:2] == 'SP':
                     # if Select Pen command
@@ -71,7 +71,7 @@ class hpglDecoder:
                     # if Pen Up command
                     if ' L ' in path:
                         self.addPathToLayer(path, actualLayer)
-                    if self.options.showMovements and i != len(hpglData) - 1:
+                    if self.options.showMovements and oldCoordinates != self.getParameters(command[2:]):
                         path = 'M %f,%f' % oldCoordinates
                         path += ' L %f,%f' % self.getParameters(command[2:])
                         self.addPathToLayer(path, 0)
@@ -83,14 +83,14 @@ class hpglDecoder:
                     if parameterString.strip() != '':
                         parameterString = parameterString.replace(';', '').strip()
                         parameter = parameterString.split(',')
-                        oldCoordinates = (float(parameter[-2]) / self.scaleX, self.options.docHeight - float(parameter[-1]) / self.scaleX)
                         for i, param in enumerate(parameter):
                             if i % 2 == 0:
                                 parameter[i] = str(float(param) / self.scaleX)
                             else:
-                                parameter[i] = str(self.options.docHeight - float(param) / self.scaleY)
+                                parameter[i] = str(self.options.docHeight - (float(param) / self.scaleY))
                         parameterString = ','.join(parameter)
                         path += ' L %s' % parameterString
+                        oldCoordinates = (float(parameter[-2]), float(parameter[-1]))
                 else:
                     self.warning = 'UNKNOWN_COMMANDS'
         if ' L ' in path:
@@ -98,8 +98,11 @@ class hpglDecoder:
         return (self.doc, self.warning)
 
     def createLayer(self, layerNumber):
-        self.layers[layerNumber] = inkex.etree.SubElement(self.doc.getroot(), 'g',
-            {inkex.addNS('groupmode', 'inkscape'): 'layer', inkex.addNS('label', 'inkscape'): self.textPenNumber + layerNumber})
+        try:
+            self.layers[layerNumber]
+        except KeyError:
+            self.layers[layerNumber] = inkex.etree.SubElement(self.doc.getroot(), 'g',
+                {inkex.addNS('groupmode', 'inkscape'): 'layer', inkex.addNS('label', 'inkscape'): self.textPenNumber + layerNumber})
 
     def addPathToLayer(self, path, layerNumber):
         lineColor = '000000'
@@ -116,6 +119,6 @@ class hpglDecoder:
         # split parameter
         parameter = parameterString.split(',')
         # convert to svg coordinate system and return
-        return (float(parameter[0]) / self.scaleX, self.options.docHeight - float(parameter[1]) / self.scaleY)
+        return (float(parameter[0]) / self.scaleX, self.options.docHeight - (float(parameter[1]) / self.scaleY))
 
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 fileencoding=utf-8 textwidth=99

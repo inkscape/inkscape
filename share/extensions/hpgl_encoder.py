@@ -21,6 +21,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 # standard libraries
 import math
+import re
 import string
 # local libraries
 import bezmisc
@@ -35,12 +36,19 @@ import simpletransform
 class hpglEncoder:
     PI = math.pi
     TWO_PI = PI * 2
+    # a dictionary of arbitrary unit to user unit conversion factors
+    # in = Inch; pt = PostScript Point; px = Pixel; mm = Millimeter; cm = Centimeter;
+    # km = Kilometer; pc = PostScript Pica; yd = Yard; ft = Feet; m = Meter
+    __USER_UNIT_CONVERSION = {'in':90.0, 'pt':1.25, 'px':1, 'mm':3.5433070866, 'cm':35.433070866,
+                'km':3543307.0866, 'pc':15.0, 'yd':3240 , 'ft':1080, 'm':3543.3070866}
 
     def __init__(self, effect):
         ''' options:
                 "resolutionX":float
                 "resolutionY":float
                 "pen":int
+                "force:int
+                "speed:int
                 "orientation":string // "0", "90", "-90", "180"
                 "mirrorX":bool
                 "mirrorY":bool
@@ -53,22 +61,28 @@ class hpglEncoder:
                 "precut":bool
                 "offsetX":float
                 "offsetY":float
+                "debug":bool
         '''
         self.doc = effect.document.getroot()
         self.options = effect.options
+        self.documentUnit = self.doc.xpath('//sodipodi:namedview/@inkscape:document-units', namespaces=inkex.NSS)
+        if self.documentUnit:
+            self.documentUnit = self.documentUnit[0]
+        else:
+            self.documentUnit = 'px'
         self.divergenceX = 'False'
         self.divergenceY = 'False'
         self.sizeX = 'False'
         self.sizeY = 'False'
         self.dryRun = True
         self.lastPoint = [0, 0, 0]
-        self.scaleX = self.options.resolutionX / effect.unittouu("1.0in") # dots per inch to dots per user unit
-        self.scaleY = self.options.resolutionY / effect.unittouu("1.0in") # dots per inch to dots per user unit
+        self.scaleX = self.options.resolutionX / self.unitToUserUnit("1.0in") # dots per inch to dots per user unit
+        self.scaleY = self.options.resolutionY / self.unitToUserUnit("1.0in") # dots per inch to dots per user unit
         scaleXY = (self.scaleX + self.scaleY) / 2
-        self.offsetX = effect.unittouu(str(self.options.offsetX) + "mm") * self.scaleX # mm to dots (plotter coordinate system)
-        self.offsetY = effect.unittouu(str(self.options.offsetY) + "mm") * self.scaleY # mm to dots
-        self.overcut = effect.unittouu(str(self.options.overcut) + "mm") * scaleXY # mm to dots
-        self.toolOffset = effect.unittouu(str(self.options.toolOffset) + "mm") * scaleXY # mm to dots
+        self.offsetX = self.unitToUserUnit(str(self.options.offsetX) + "mm") * self.scaleX # mm to dots (plotter coordinate system)
+        self.offsetY = self.unitToUserUnit(str(self.options.offsetY) + "mm") * self.scaleY # mm to dots
+        self.overcut = self.unitToUserUnit(str(self.options.overcut) + "mm") * scaleXY # mm to dots
+        self.toolOffset = self.unitToUserUnit(str(self.options.toolOffset) + "mm") * scaleXY # mm to dots
         self.flat = self.options.flat / (1016 / ((self.options.resolutionX + self.options.resolutionY) / 2)) # scale flatness to resolution
         self.toolOffsetFlat = self.flat / self.toolOffset * 4.5 # scale flatness to offset
         self.mirrorX = 1.0
@@ -77,15 +91,25 @@ class hpglEncoder:
         self.mirrorY = -1.0
         if self.options.mirrorY:
             self.mirrorY = 1.0
+        if self.options.debug:
+            self.debugValues = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         # process viewBox attribute to correct page scaling
         viewBox = self.doc.get('viewBox')
         self.viewBoxTransformX = 1
         self.viewBoxTransformY = 1
+        if self.options.debug:
+            self.debugValues[0] = self.unitToUserUnit(self.doc.get('width'), True)
+            self.debugValues[1] = self.unitToUserUnit(self.doc.get('height'), True)
         if viewBox:
             viewBox = string.split(viewBox, ' ')
             if viewBox[2] and viewBox[3]:
-                self.viewBoxTransformX = effect.unittouu(self.doc.get('width')) / effect.unittouu(viewBox[2])
-                self.viewBoxTransformY = effect.unittouu(self.doc.get('height')) / effect.unittouu(viewBox[3])
+                viewBox[0] = viewBox[2]
+                viewBox[1] = viewBox[3]
+            if self.options.debug:
+                self.debugValues[2] = self.unitToUserUnit(viewBox[0])
+                self.debugValues[3] = self.unitToUserUnit(viewBox[1])
+            self.viewBoxTransformX = self.unitToUserUnit(self.doc.get('width'), True) / self.unitToUserUnit(viewBox[0])
+            self.viewBoxTransformY = self.unitToUserUnit(self.doc.get('height'), True) / self.unitToUserUnit(viewBox[1])
 
     def getHpgl(self):
         # dryRun to find edges
@@ -97,9 +121,14 @@ class hpglEncoder:
             raise Exception('NO_PATHS')
         # live run
         self.dryRun = False
+        if self.options.debug:
+            self.debugValues[4] = self.sizeX - self.divergenceX
+            self.debugValues[5] = self.sizeY - self.divergenceY
+            self.debugValues[6] = self.unitToUserUnit(str(self.debugValues[4] / self.scaleX))
+            self.debugValues[7] = self.unitToUserUnit(str(self.debugValues[5] / self.scaleY))
         if self.options.center:
-            self.divergenceX += (self.sizeX - self.divergenceX) / 2
-            self.divergenceY += (self.sizeY - self.divergenceY) / 2
+            self.divergenceX += self.sizeX - self.divergenceX / 2
+            self.divergenceY += self.sizeY - self.divergenceY / 2
         elif self.options.useToolOffset:
             self.offsetX += self.toolOffset
             self.offsetY += self.toolOffset
@@ -109,6 +138,10 @@ class hpglEncoder:
         self.vData = [['', -1.0, -1.0], ['', -1.0, -1.0], ['', -1.0, -1.0], ['', -1.0, -1.0]]
         # store first hpgl commands
         self.hpgl = 'IN;SP%d' % self.options.pen
+        if self.options.force > 0:
+            self.hpgl += ';FS%d' % self.options.force
+        if self.options.speed > 0:
+            self.hpgl += ';VS%d' % self.options.speed
         # add precut
         if self.options.useToolOffset and self.options.precut:
             self.processOffset('PU', 0, 0)
@@ -123,6 +156,18 @@ class hpglEncoder:
             return self.hpgl, self
         else:
             return self.hpgl, ""
+
+    def unitToUserUnit(self, string, isPixels=False):
+        '''Returns userunits given a string representation of units in another system'''
+        matches = re.match('^(.*?)(in|pt|px|mm|cm|km|pc|yd|ft|m)?$', string.strip())
+        value = float(matches.group(1))
+        unit = matches.group(2)
+        if unit is None:
+            if isPixels:
+                unit = "px"
+            else:
+                unit = self.documentUnit
+        return value * self.__USER_UNIT_CONVERSION[unit] / self.__USER_UNIT_CONVERSION[self.documentUnit]
 
     def processGroups(self, doc, groupmat):
         # flatten groups to avoid recursion

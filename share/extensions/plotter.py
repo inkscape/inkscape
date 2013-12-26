@@ -39,9 +39,11 @@ class MyEffect(inkex.Effect):
         self.OptionParser.add_option('--resolutionX',     action='store', type='float',   dest='resolutionX',     default=1016.0,  help='Resolution X (dpi)')
         self.OptionParser.add_option('--resolutionY',     action='store', type='float',   dest='resolutionY',     default=1016.0,  help='Resolution Y (dpi)')
         self.OptionParser.add_option('--pen',             action='store', type='int',     dest='pen',             default=1,       help='Pen number')
+        self.OptionParser.add_option('--force',           action='store', type='int',     dest='force',           default=24,      help='Pen force (g)')
+        self.OptionParser.add_option('--speed',           action='store', type='int',     dest='speed',           default=20,      help='Pen speed (cm/s)')
         self.OptionParser.add_option('--orientation',     action='store', type='string',  dest='orientation',     default='90',    help='Rotation (Clockwise)')
-        self.OptionParser.add_option('--mirrorX',         action='store', type='inkbool', dest='mirrorX',         default='FALSE', help='Mirror X-axis')
-        self.OptionParser.add_option('--mirrorY',         action='store', type='inkbool', dest='mirrorY',         default='FALSE', help='Mirror Y-axis')
+        self.OptionParser.add_option('--mirrorX',         action='store', type='inkbool', dest='mirrorX',         default='FALSE', help='Mirror X axis')
+        self.OptionParser.add_option('--mirrorY',         action='store', type='inkbool', dest='mirrorY',         default='FALSE', help='Mirror Y axis')
         self.OptionParser.add_option('--center',          action='store', type='inkbool', dest='center',          default='FALSE', help='Center zero point')
         self.OptionParser.add_option('--flat',            action='store', type='float',   dest='flat',            default=1.2,     help='Curve flatness')
         self.OptionParser.add_option('--useOvercut',      action='store', type='inkbool', dest='useOvercut',      default='TRUE',  help='Use overcut')
@@ -63,7 +65,7 @@ class MyEffect(inkex.Effect):
             import serial
         except ImportError, e:
             inkex.errormsg(_("pySerial is not installed."
-                + "\n\n1. Download pySerial here (not the \".exe\"): http://pypi.python.org/pypi/pyserial"
+                + "\n\n1. Download pySerial here (not the \".exe\"!): http://pypi.python.org/pypi/pyserial"
                 + "\n2. Extract the \"serial\" subfolder from the zip to the following folder: C:\\[Program files]\\inkscape\\python\\Lib\\"
                 + "\n3. Restart Inkscape."))
             return
@@ -92,95 +94,123 @@ class MyEffect(inkex.Effect):
         # deliver document to inkscape
         self.document = doc
         '''
-        if self.options.commandLanguage == 'dmpl':
-            # convert HPGL to DMPL
-            self.hpgl = self.hpgl.replace(';', ',')
-            self.hpgl = self.hpgl.replace('PU', 'U')
-            self.hpgl = self.hpgl.replace('PD', 'D')
-            self.hpgl = re.sub(r'IN,SP([0-9]{1,2}),', r';:HAL0P\1EC1', self.hpgl)
-            self.hpgl += 'Z'
+        # convert to other formats
+        if self.options.commandLanguage == 'DMPL':
+            self.convertToDmpl()
+        if self.options.commandLanguage == 'ZING':
+            self.convertToZing()
+        # output
         if self.options.debug:
-            # show debug information
-            inkex.errormsg("---------------------------------\nDebug information\n---------------------------------\n\nSettings:\n")
-            inkex.errormsg('  Serial Port: ' + str(self.options.serialPort))
-            inkex.errormsg('  Serial baud rate: ' + str(self.options.serialBaudRate))
-            inkex.errormsg('  Flow control: ' + str(self.options.flowControl))
-            inkex.errormsg('  Command language: ' + str(self.options.commandLanguage))
-            inkex.errormsg('  Pen number: ' + str(self.options.pen))
-            inkex.errormsg('  Resolution X (dpi): ' + str(self.options.resolutionX))
-            inkex.errormsg('  Resolution Y (dpi): ' + str(self.options.resolutionY))
-            inkex.errormsg('  Mirror X-axis: ' + str(self.options.mirrorX))
-            inkex.errormsg('  Mirror Y-axis: ' + str(self.options.mirrorY))
-            inkex.errormsg('  Rotation (Clockwise): ' + str(self.options.orientation))
-            inkex.errormsg('  Center zero point: ' + str(self.options.center))
-            inkex.errormsg('  Use overcut: ' + str(self.options.useOvercut))
-            inkex.errormsg('  Overcut (mm): ' + str(self.options.overcut))
-            inkex.errormsg('  Use tool offset correction: ' + str(self.options.useToolOffset))
-            inkex.errormsg('  Tool offset (mm): ' + str(self.options.toolOffset))
-            inkex.errormsg('  Use precut: ' + str(self.options.precut))
-            inkex.errormsg('  Curve flatness: ' + str(self.options.flat))
-            inkex.errormsg('  X offset (mm): ' + str(self.options.offsetX))
-            inkex.errormsg('  Y offset (mm): ' + str(self.options.offsetY))
-            inkex.errormsg('  Show debug information: ' + str(self.options.debug))
-            inkex.errormsg("\nDocument properties:\n")
-            version = self.document.getroot().xpath('//@inkscape:version', namespaces=inkex.NSS)
-            if version:
-                inkex.errormsg('  Inkscape version: ' + version[0])
-            fileName = self.document.getroot().xpath('//@sodipodi:docname', namespaces=inkex.NSS)
-            if fileName:
-                inkex.errormsg('  Filename: ' + fileName[0])
-            inkex.errormsg('  Document unit: ' + self.documentUnit)
-            inkex.errormsg('  Width: ' + str(self.unittouu(self.document.getroot().get('width'))) + ' ' + self.documentUnit)
-            inkex.errormsg('  Height: ' + str(self.unittouu(self.document.getroot().get('height'))) + ' ' + self.documentUnit)
-            viewBox = self.document.getroot().get('viewBox')
-            if viewBox:
-                viewBox = string.split(viewBox, ' ')
-                if viewBox[2] and viewBox[3]:
-                    inkex.errormsg('  Viewbox Width: ' + str(self.unittouu(viewBox[2])) + ' ' + self.documentUnit)
-                    inkex.errormsg('  Viewbox Height: ' + str(self.unittouu(viewBox[3])) + ' ' + self.documentUnit)
-            if self.options.commandLanguage == 'dmpl':
-                inkex.errormsg("\nDMPL properties:\n")
-            else:
-                inkex.errormsg("\nHPGL properties:\n")
-            inkex.errormsg('  Drawing width: ' + str(self.unittouu(str((debugObject.sizeX - debugObject.divergenceX) / debugObject.scaleX))) + ' ' + self.documentUnit)
-            inkex.errormsg('  Drawing height: ' + str(self.unittouu(str((debugObject.sizeY - debugObject.divergenceY) / debugObject.scaleY))) + ' ' + self.documentUnit)
-            inkex.errormsg('  Drawing width: ' + str(debugObject.sizeX - debugObject.divergenceX) + ' plotter steps')
-            inkex.errormsg('  Drawing height: ' + str(debugObject.sizeY - debugObject.divergenceY) + ' plotter steps')
-            inkex.errormsg('  Offset X: ' + str(debugObject.offsetX) + ' plotter steps')
-            inkex.errormsg('  Offset Y: ' + str(debugObject.offsetX) + ' plotter steps')
-            inkex.errormsg('  Overcut: ' + str(debugObject.overcut) + ' plotter steps')
-            inkex.errormsg('  Tool offset: ' + str(debugObject.toolOffset) + ' plotter steps')
-            inkex.errormsg('  Flatness: ' + str(debugObject.flat) + ' plotter steps')
-            inkex.errormsg('  Tool offset flatness: ' + str(debugObject.toolOffsetFlat) + ' plotter steps')
-            if self.options.commandLanguage == 'dmpl':
-                inkex.errormsg("\nDMPL data:\n")
-            else:
-                inkex.errormsg("\nHPGL data:\n")
-            inkex.errormsg(self.hpgl)
+            self.showDebugInfo(debugObject)
         else:
-            # send data to plotter
-            mySerial = serial.Serial()
-            mySerial.port = self.options.serialPort
-            mySerial.baudrate = self.options.serialBaudRate
-            mySerial.timeout = 0.1
-            if self.options.flowControl == 'xonxoff':
-                mySerial.xonxoff = True
-            if self.options.flowControl == 'rtscts' or self.options.flowControl == 'dsrdtrrtscts':
-                mySerial.rtscts = True
-            if self.options.flowControl == 'dsrdtrrtscts':
-                mySerial.dsrdtr = True
-            try:
-                mySerial.open()
-            except Exception as inst:
-                if 'ould not open port' in inst.args[0]:
-                    inkex.errormsg(_("Could not open port. Please check that your plotter is running, connected and the settings are correct."))
-                    return
-                else:
-                    type, value, traceback = sys.exc_info()
-                    raise ValueError, ('', type, value), traceback
-            mySerial.write(self.hpgl)
-            mySerial.read(2)
-            mySerial.close()
+            self.sendHpglToSerial()
+
+    def convertToDmpl(self):
+        # convert HPGL to DMPL
+        # ;: = Initialise plotter
+        # H = Home position
+        # A = Absolute pen positioning
+        # Ln = Line type
+        # Pn = Pen select
+        # Vn = velocity
+        # ECn = Coordinate addressing, 1: 0.001 inch, 5: 0.005 inch, M: 0.1 mm
+        # D = Pen down
+        # U = Pen up
+        # Z = Reset plotter
+        # n,n, = Coordinate pair
+        self.hpgl = self.hpgl.replace(';', ',')
+        self.hpgl = self.hpgl.replace('PU', 'U')
+        self.hpgl = self.hpgl.replace('PD', 'D')
+        velocity = ''
+        if self.options.speed > 0:
+            velocity = 'V' + str(self.options.speed)
+        self.hpgl = re.sub(r'IN,SP[0-9]+(,FS[0-9]+)?(,VS[0-9]+)?,', r';:HAL0P' + str(self.options.pen) + velocity + 'EC1', self.hpgl)
+        self.hpgl += 'Z'
+
+    def convertToZing(self):
+        # convert HPGL to Zing
+        self.hpgl = self.hpgl.replace('IN;', 'ZG;')
+        self.hpgl += '@'
+
+    def sendHpglToSerial(self):
+        # send data to plotter
+        mySerial = serial.Serial()
+        mySerial.port = self.options.serialPort
+        mySerial.baudrate = self.options.serialBaudRate
+        mySerial.timeout = 0.1
+        if self.options.flowControl == 'xonxoff':
+            mySerial.xonxoff = True
+        if self.options.flowControl == 'rtscts' or self.options.flowControl == 'dsrdtrrtscts':
+            mySerial.rtscts = True
+        if self.options.flowControl == 'dsrdtrrtscts':
+            mySerial.dsrdtr = True
+        try:
+            mySerial.open()
+        except Exception as inst:
+            if 'ould not open port' in inst.args[0]:
+                inkex.errormsg(_("Could not open port. Please check that your plotter is running, connected and the settings are correct."))
+                return
+            else:
+                type, value, traceback = sys.exc_info()
+                raise ValueError, ('', type, value), traceback
+        mySerial.write(self.hpgl)
+        mySerial.read(2)
+        mySerial.close()
+
+    def showDebugInfo(self, debugObject):
+        # show debug information
+        inkex.errormsg("---------------------------------\nDebug information\n---------------------------------\n\nSettings:\n")
+        inkex.errormsg('  Serial Port: ' + str(self.options.serialPort))
+        inkex.errormsg('  Serial baud rate: ' + str(self.options.serialBaudRate))
+        inkex.errormsg('  Flow control: ' + str(self.options.flowControl))
+        inkex.errormsg('  Command language: ' + str(self.options.commandLanguage))
+        inkex.errormsg('  Resolution X (dpi): ' + str(self.options.resolutionX))
+        inkex.errormsg('  Resolution Y (dpi): ' + str(self.options.resolutionY))
+        inkex.errormsg('  Pen number: ' + str(self.options.pen))
+        inkex.errormsg('  Pen force (g): ' + str(self.options.force))
+        inkex.errormsg('  Pen speed (cm/s): ' + str(self.options.speed))
+        inkex.errormsg('  Rotation (Clockwise): ' + str(self.options.orientation))
+        inkex.errormsg('  Mirror X axis: ' + str(self.options.mirrorX))
+        inkex.errormsg('  Mirror Y axis: ' + str(self.options.mirrorY))
+        inkex.errormsg('  Center zero point: ' + str(self.options.center))
+        inkex.errormsg('  Use overcut: ' + str(self.options.useOvercut))
+        inkex.errormsg('  Overcut (mm): ' + str(self.options.overcut))
+        inkex.errormsg('  Use tool offset correction: ' + str(self.options.useToolOffset))
+        inkex.errormsg('  Tool offset (mm): ' + str(self.options.toolOffset))
+        inkex.errormsg('  Use precut: ' + str(self.options.precut))
+        inkex.errormsg('  Curve flatness: ' + str(self.options.flat))
+        inkex.errormsg('  X offset (mm): ' + str(self.options.offsetX))
+        inkex.errormsg('  Y offset (mm): ' + str(self.options.offsetY))
+        inkex.errormsg('  Show debug information: ' + str(self.options.debug))
+        inkex.errormsg("\nDocument properties:\n")
+        version = self.document.getroot().xpath('//@inkscape:version', namespaces=inkex.NSS)
+        if version:
+            inkex.errormsg('  Inkscape version: ' + version[0])
+        fileName = self.document.getroot().xpath('//@sodipodi:docname', namespaces=inkex.NSS)
+        if fileName:
+            inkex.errormsg('  Filename: ' + fileName[0])
+        inkex.errormsg('  Document unit: ' + debugObject.documentUnit)
+        inkex.errormsg('  Width: ' + str(debugObject.debugValues[0]) + ' ' + debugObject.documentUnit)
+        inkex.errormsg('  Height: ' + str(debugObject.debugValues[1]) + ' ' + debugObject.documentUnit)
+        if debugObject.debugValues[2] == 0:
+            inkex.errormsg('  Viewbox Width: -')
+            inkex.errormsg('  Viewbox Height: -')
+        else:
+            inkex.errormsg('  Viewbox Width: ' + str(debugObject.debugValues[2]) + ' ' + debugObject.documentUnit)
+            inkex.errormsg('  Viewbox Height: ' + str(debugObject.debugValues[3]) + ' ' + debugObject.documentUnit)
+        inkex.errormsg("\n" + self.options.commandLanguage + " properties:\n")
+        inkex.errormsg('  Drawing width: ' + str(debugObject.debugValues[6]) + ' ' + debugObject.documentUnit)
+        inkex.errormsg('  Drawing height: ' + str(debugObject.debugValues[7]) + ' ' + debugObject.documentUnit)
+        inkex.errormsg('  Drawing width: ' + str(debugObject.debugValues[4]) + ' plotter steps')
+        inkex.errormsg('  Drawing height: ' + str(debugObject.debugValues[5]) + ' plotter steps')
+        inkex.errormsg('  Offset X: ' + str(debugObject.offsetX) + ' plotter steps')
+        inkex.errormsg('  Offset Y: ' + str(debugObject.offsetX) + ' plotter steps')
+        inkex.errormsg('  Overcut: ' + str(debugObject.overcut) + ' plotter steps')
+        inkex.errormsg('  Tool offset: ' + str(debugObject.toolOffset) + ' plotter steps')
+        inkex.errormsg('  Flatness: ' + str(debugObject.flat) + ' plotter steps')
+        inkex.errormsg('  Tool offset flatness: ' + str(debugObject.toolOffsetFlat) + ' plotter steps')
+        inkex.errormsg("\n" + self.options.commandLanguage + " data:\n")
+        inkex.errormsg(self.hpgl)
 
 if __name__ == '__main__':
     # start extension
