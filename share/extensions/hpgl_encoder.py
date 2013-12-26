@@ -92,7 +92,7 @@ class hpglEncoder:
         if self.options.mirrorY:
             self.mirrorY = 1.0
         if self.options.debug:
-            self.debugValues = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            self.debugValues = [0, 0, 0, 0, 0, 0, 0, 0]
         # process viewBox attribute to correct page scaling
         viewBox = self.doc.get('viewBox')
         self.viewBoxTransformX = 1
@@ -127,8 +127,8 @@ class hpglEncoder:
             self.debugValues[6] = self.unitToUserUnit(str(self.debugValues[4] / self.scaleX))
             self.debugValues[7] = self.unitToUserUnit(str(self.debugValues[5] / self.scaleY))
         if self.options.center:
-            self.divergenceX += self.sizeX - self.divergenceX / 2
-            self.divergenceY += self.sizeY - self.divergenceY / 2
+            self.divergenceX += (self.sizeX - self.divergenceX) / 2
+            self.divergenceY += (self.sizeY - self.divergenceY) / 2
         elif self.options.useToolOffset:
             self.offsetX += self.toolOffset
             self.offsetY += self.toolOffset
