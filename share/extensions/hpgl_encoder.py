@@ -208,17 +208,17 @@ class hpglEncoder:
 
     def processPath(self, node, mat):
         # process path
-        paths = node.get('d')
-        if paths:
+        path = node.get('d')
+        if path:
             # parse and transform path
-            paths = cubicsuperpath.parsePath(paths)
-            simpletransform.applyTransformToPath(mat, paths)
-            cspsubdiv.cspsubdiv(paths, self.flat)
+            path = cubicsuperpath.parsePath(path)
+            simpletransform.applyTransformToPath(mat, path)
+            cspsubdiv.cspsubdiv(path, self.flat)
             # path to HPGL commands
             oldPosX = 0.0
             oldPosY = 0.0
             # TODO: Plot smallest parts first to avid plotter dragging parts of foil around (on text)
-            for singlePath in paths:
+            for singlePath in path:
                 cmd = 'PU'
                 for singlePathPoint in singlePath:
                     posX, posY = singlePathPoint[1]

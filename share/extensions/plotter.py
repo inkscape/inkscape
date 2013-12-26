@@ -60,15 +60,6 @@ class MyEffect(inkex.Effect):
         self.OptionParser.add_option('--debug',           action='store', type='inkbool', dest='debug',           default='FALSE', help='Show debug information')
 
     def effect(self):
-        # gracefully exit script when pySerial is missing
-        try:
-            import serial
-        except ImportError, e:
-            inkex.errormsg(_("pySerial is not installed."
-                + "\n\n1. Download pySerial here (not the \".exe\"!): http://pypi.python.org/pypi/pyserial"
-                + "\n2. Extract the \"serial\" subfolder from the zip to the following folder: C:\\[Program files]\\inkscape\\python\\Lib\\"
-                + "\n3. Restart Inkscape."))
-            return
         # get hpgl data
         myHpglEncoder = hpgl_encoder.hpglEncoder(self)
         try:
@@ -133,6 +124,15 @@ class MyEffect(inkex.Effect):
         self.hpgl += '@'
 
     def sendHpglToSerial(self):
+        # gracefully exit script when pySerial is missing
+        try:
+            import serial
+        except ImportError, e:
+            inkex.errormsg(_("pySerial is not installed."
+                + "\n\n1. Download pySerial here (not the \".exe\"!): http://pypi.python.org/pypi/pyserial"
+                + "\n2. Extract the \"serial\" subfolder from the zip to the following folder: C:\\[Program files]\\inkscape\\python\\Lib\\"
+                + "\n3. Restart Inkscape."))
+            return
         # send data to plotter
         mySerial = serial.Serial()
         mySerial.port = self.options.serialPort
