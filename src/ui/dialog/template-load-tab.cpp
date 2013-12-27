@@ -9,7 +9,6 @@
  */
 
 #include "template-widget.h"
-
 #include "template-load-tab.h"
 
 #include <gtkmm/messagedialog.h>
@@ -83,6 +82,11 @@ void TemplateLoadTab::createTemplate()
 }
 
 
+void TemplateLoadTab::_onRowActivated(const Gtk::TreeModel::Path &, Gtk::TreeViewColumn*)
+{
+    _info_widget->create();
+}
+
 void TemplateLoadTab::_displayTemplateInfo()
 {
     Glib::RefPtr<Gtk::TreeSelection> templateSelectionRef = _tlist_view.get_selection();
@@ -119,8 +123,10 @@ void TemplateLoadTab::_initLists()
     _tlist_view.get_selection(); 
     templateSelectionRef->signal_changed().connect(
     sigc::mem_fun(*this, &TemplateLoadTab::_displayTemplateInfo));
+    
+    _tlist_view.signal_row_activated().connect(
+    sigc::mem_fun(*this, &TemplateLoadTab::_onRowActivated));
 }
-
 
 void TemplateLoadTab::_keywordSelected()
 {

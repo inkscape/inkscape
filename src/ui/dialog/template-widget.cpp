@@ -53,7 +53,7 @@ TemplateWidget::TemplateWidget()
     
     pack_end(_short_description_label, Gtk::PACK_SHRINK, 5);
     
-    _more_info_button.signal_pressed().connect(
+    _more_info_button.signal_clicked().connect(
     sigc::mem_fun(*this, &TemplateWidget::_displayTemplateDetails));
 }
 

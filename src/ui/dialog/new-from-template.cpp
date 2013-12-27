@@ -34,7 +34,7 @@ NewFromTemplate::NewFromTemplate()
     align->set_padding(0, 0, 0, 15);
     align->add(_create_template_button);
     
-    _create_template_button.signal_pressed().connect(
+    _create_template_button.signal_clicked().connect(
     sigc::mem_fun(*this, &NewFromTemplate::_createFromTemplate));
    
     show_all();

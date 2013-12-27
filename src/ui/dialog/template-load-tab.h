@@ -101,6 +101,8 @@ private:
     void _getTemplatesFromDir(const std::string &);
     void _keywordSelected();    
     TemplateData _processTemplateFile(const std::string &);
+    
+    void _onRowActivated(const Gtk::TreeModel::Path &, Gtk::TreeViewColumn*);
 };
 
 }
