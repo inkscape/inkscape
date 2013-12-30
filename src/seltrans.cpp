@@ -1461,7 +1461,7 @@ Geom::Point Inkscape::SelTrans::_getGeomHandlePos(Geom::Point const &visual_hand
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool transform_stroke = prefs->getBool("/options/transform/stroke", true);
     bool preserve = prefs->getBool("/options/preservetransform/value", false);
-    Geom::Affine abs_affine = get_scale_transform_for_uniform_stroke (*_bbox, _strokewidth, transform_stroke, preserve,
+    Geom::Affine abs_affine = get_scale_transform_for_uniform_stroke (*_bbox, _strokewidth, _strokewidth, transform_stroke, preserve,
                     new_bbox.min()[Geom::X], new_bbox.min()[Geom::Y], new_bbox.max()[Geom::X], new_bbox.max()[Geom::Y]);
 
     // Calculate the scaled geometrical bbox
@@ -1501,16 +1501,18 @@ Geom::Point Inkscape::SelTrans::_calcAbsAffineDefault(Geom::Scale const default_
 
     bool transform_stroke = false;
     bool preserve = false;
-    gdouble strokewidth = 0;
+    gdouble stroke_x = 0;
+    gdouble stroke_y = 0;
 
     if ( _snap_bbox_type != SPItem::GEOMETRIC_BBOX) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         transform_stroke = prefs->getBool("/options/transform/stroke", true);
         preserve = prefs->getBool("/options/preservetransform/value", false);
-        strokewidth = _strokewidth;
+        stroke_x = _visual_bbox->width() - _geometric_bbox->width();
+        stroke_y = _visual_bbox->height() - _geometric_bbox->height();
     }
 
-    _absolute_affine = get_scale_transform_for_uniform_stroke (*_visual_bbox, strokewidth, transform_stroke, preserve,
+    _absolute_affine = get_scale_transform_for_uniform_stroke (*_visual_bbox, stroke_x, stroke_y, transform_stroke, preserve,
                     new_bbox_min[Geom::X], new_bbox_min[Geom::Y], new_bbox_max[Geom::X], new_bbox_max[Geom::Y]);
 
     // return the new handle position

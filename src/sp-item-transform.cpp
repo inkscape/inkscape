@@ -84,8 +84,10 @@ void sp_item_move_rel(SPItem *item, Geom::Translate const &tr)
  * the strokewidth, which is either constant or scales width the area of the object. This function takes care of the calculation
  * of the affine transformation:
  * @param bbox_visual Current visual bounding box
- * @param strokewidth Strokewidth
+ * @param stroke_x Apparent strokewidth in horizontal direction
+ * @param stroke_y Apparent strokewidth in vertical direction
  * @param transform_stroke If true then the stroke will be scaled proportional to the square root of the area of the geometric bounding box
+ * @param preserve If true then the transform element will be preserved in XML, and evaluated after stroke is applied
  * @param x0 Coordinate of the target visual bounding box
  * @param y0 Coordinate of the target visual bounding box
  * @param x1 Coordinate of the target visual bounding box
@@ -94,7 +96,7 @@ void sp_item_move_rel(SPItem *item, Geom::Translate const &tr)
  *   not possible here because it will only allow for a positive width and height, and therefore cannot mirror
  * @return
  */
-Geom::Affine get_scale_transform_for_uniform_stroke(Geom::Rect const &bbox_visual, gdouble strokewidth, bool transform_stroke, bool preserve, gdouble x0, gdouble y0, gdouble x1, gdouble y1)
+Geom::Affine get_scale_transform_for_uniform_stroke(Geom::Rect const &bbox_visual, gdouble stroke_x, gdouble stroke_y, bool transform_stroke, bool preserve, gdouble x0, gdouble y0, gdouble x1, gdouble y1)
 {
     Geom::Affine p2o = Geom::Translate (-bbox_visual.min());
     Geom::Affine o2n = Geom::Translate (x0, y0);
@@ -103,13 +105,14 @@ Geom::Affine get_scale_transform_for_uniform_stroke(Geom::Rect const &bbox_visua
     Geom::Affine unbudge = Geom::Translate (0, 0); // moves the object(s) to compensate for the drift caused by stroke width change
 
     // 1) We start with a visual bounding box (w0, h0) which we want to transfer into another visual bounding box (w1, h1)
-    // 2) The stroke is r0, equal for all edges
+    // 2) The stroke is r0, equal for all edges, if preserve transforms is false
     // 3) Given this visual bounding box we can calculate the geometric bounding box by subtracting half the stroke from each side;
     // -> The width and height of the geometric bounding box will therefore be (w0 - 2*0.5*r0) and (h0 - 2*0.5*r0)
+    // 4) If preserve transforms is true, then stroke_x != stroke_y, since these are the apparent stroke widths, after transforming
 
     gdouble w0 = bbox_visual.width(); // will return a value >= 0, as required further down the road
     gdouble h0 = bbox_visual.height();
-    gdouble r0 = fabs(strokewidth);
+    gdouble r0 = sqrt(stroke_x*stroke_y); // r0 is redundant, used only for those cases where stroke_x = stroke_y
 
     // We also know the width and height of the new visual bounding box
     gdouble w1 = x1 - x0; // can have any sign
@@ -124,7 +127,6 @@ Geom::Affine get_scale_transform_for_uniform_stroke(Geom::Rect const &bbox_visua
     // Therefore we will use the absolute values from this point on
     w1 = fabs(w1);
     h1 = fabs(h1);
-    r0 = fabs(r0);
     // w0 and h0 will always be positive due to the definition of the width() and height() methods.
 
     // We will now try to calculate the affine transformation required to transform the first visual bounding box into
@@ -134,72 +136,73 @@ Geom::Affine get_scale_transform_for_uniform_stroke(Geom::Rect const &bbox_visua
         return Geom::Affine();
     }
 
-    Geom::Affine direct;
-    gdouble ratio_x = 1;
-    gdouble ratio_y = 1;
     gdouble scale_x = 1;
     gdouble scale_y = 1;
     gdouble r1 = r0;
 
     if (fabs(w0 - r0) < 1e-6) { // We have a vertical line at hand
-        direct = Geom::Scale(flip_x, flip_y * h1 / h0);
-        ratio_x = 1;
-        ratio_y = (h1 - r0) / (h0 - r0);
         r1 = transform_stroke ? r0 * sqrt(h1/h0) : r0;
         scale_x = 1;
         scale_y = preserve ? h1/h0 : (h1 - r1)/(h0 - r0);
     } else if (fabs(h0 - r0) < 1e-6) { // We have a horizontal line at hand
-        direct = Geom::Scale(flip_x * w1 / w0, flip_y);
-        ratio_x = (w1 - r0) / (w0 - r0);
-        ratio_y = 1;
         r1 = transform_stroke ? r0 * sqrt(w1/w0) : r0;
         scale_x = preserve ? w1/w0 : (w1 - r1)/(w0 - r0);
         scale_y = 1;
     } else { // We have a true 2D object at hand
-        direct = Geom::Scale(flip_x * w1 / w0, flip_y* h1 / h0); // Scaling of the visual bounding box
-        ratio_x = (w1 - r0) / (w0 - r0); // Only valid when the stroke is kept constant, in which case r1 = r0
-        ratio_y = (h1 - r0) / (h0 - r0);
-        /* Initial area of the geometric bounding box: A0 = (w0-r0)*(h0-r0)
-         * Desired area of the geometric bounding box: A1 = (w1-r1)*(h1-r1)
-         * This is how the stroke should scale: r1^2 / A1 = r0^2 / A0
-         * So therefore we will need to solve this equation:
-         *
-         * r1^2 * (w0-r0) * (h0-r0) = r0^2 * (w1-r1) * (h1-r1)
-         *
-         * This is a quadratic equation in r1, of which the roots can be found using the ABC formula
-         * */
-        gdouble A = -w0*h0 + r0*(w0 + h0);
-        gdouble B = -(w1 + h1) * r0*r0;
-        gdouble C = w1 * h1 * r0*r0;
-        if ((B*B - 4*A*C > 0) && !preserve) {
-            // Of the two roots, I verified experimentally that this is the one we need
-            r1 = fabs((-B - sqrt(B*B - 4*A*C))/(2*A));
-            // If w1 < 0 then the scale will be wrong if we just assume that scale_x = (w1 - r1)/(w0 - r0);
-            // Therefore we here need the absolute values of w0, w1, h0, h1, and r0, as taken care of earlier
-            scale_x = (w1 - r1)/(w0 - r0);
-            scale_y = (h1 - r1)/(h0 - r0);
-        } else { // roots are complex. Or 'Preserve Transforms' was chosen.
-            r1 = r0;
+        if (transform_stroke && !preserve) {
+            /* Initial area of the geometric bounding box: A0 = (w0-r0)*(h0-r0)
+             * Desired area of the geometric bounding box: A1 = (w1-r1)*(h1-r1)
+             * This is how the stroke should scale: r1^2 / A1 = r0^2 / A0
+             * So therefore we will need to solve this equation:
+             *
+             * r1^2 * (w0-r0) * (h0-r0) = r0^2 * (w1-r1) * (h1-r1)
+             *
+             * This is a quadratic equation in r1, of which the roots can be found using the ABC formula
+             * */
+            gdouble A = -w0*h0 + r0*(w0 + h0);
+            gdouble B = -(w1 + h1) * r0*r0;
+            gdouble C = w1 * h1 * r0*r0;
+            if (B*B - 4*A*C < 0) {
+                g_message("stroke scaling error : %d, %f, %f, %f, %f, %f", preserve, r0, w0, h0, w1, h1);
+            } else {
+                r1 = fabs((-B - sqrt(B*B - 4*A*C))/(2*A));
+                // If w1 < 0 then the scale will be wrong if we just assume that scale_x = (w1 - r1)/(w0 - r0);
+                // Therefore we here need the absolute values of w0, w1, h0, h1, and r0, as taken care of earlier
+                scale_x = (w1 - r1)/(w0 - r0);
+                scale_y = (h1 - r1)/(h0 - r0);
+                // Make sure that the lower-left corner of the visual bounding box stays where it is, even though the stroke width has changed
+                unbudge *= Geom::Translate (-flip_x * 0.5 * (r0 * scale_x - r1), -flip_y * 0.5 * (r0 * scale_y - r1));
+            }
+        } else if (!transform_stroke && !preserve) { // scale the geometric bbox with constant stroke
+            scale_x = (w1 - r0) / (w0 - r0);
+            scale_y = (h1 - r0) / (h0 - r0);
+            unbudge *= Geom::Translate (-flip_x * 0.5 * r0 * (scale_x - 1), -flip_y * 0.5 * r0 * (scale_y - 1));
+        } else if (!transform_stroke) { // 'Preserve Transforms' was chosen.
+            // geometric mean of stroke_x and stroke_y will be preserved
+            // new_stroke_x = stroke_x*sqrt(scale_x/scale_y)
+            // new_stroke_y = stroke_y*sqrt(scale_y/scale_x)
+            // scale_x = (w1 - new_stroke_x)/(w0 - stroke_x)
+            // scale_y = (h1 - new_stroke_y)/(h0 - stroke_y)
+            gdouble A = h1*(w0 - stroke_x);
+            gdouble B = (h0*stroke_x - w0*stroke_y);
+            gdouble C = -w1*(h0 - stroke_y);
+            gdouble Sx_div_Sy;          // Sx_div_Sy = sqrt(scale_x/scale_y)
+            if (B*B - 4*A*C < 0) {
+                g_message("stroke scaling error : %d, %f, %f, %f, %f, %f, %f", preserve, stroke_x, stroke_y, w0, h0, w1, h1);
+            } else {
+                Sx_div_Sy = (-B + sqrt(B*B - 4*A*C))/2/A;
+                scale_x = (w1 - stroke_x*Sx_div_Sy)/(w0 - stroke_x);
+                scale_y = (h1 - stroke_y/Sx_div_Sy)/(h0 - stroke_y);
+                unbudge *= Geom::Translate (-flip_x * 0.5 * stroke_x * scale_x * (1.0 - sqrt(1.0/scale_x/scale_y)), -flip_y * 0.5 * stroke_y * scale_y * (1.0 - sqrt(1.0/scale_x/scale_y)));
+            }
+        } else {                        // 'Preserve Transforms' was chosen, and stroke is scaled
             scale_x = w1 / w0;
             scale_y = h1 / h0;
         }
     }
 
-    // If the stroke is not kept constant however, the scaling of the geometric bbox is more difficult to find
-    if (transform_stroke && r0 != 0 && r0 != Geom::infinity()) { // Check if there's stroke, and we need to scale it
-        // Now we account for mirroring by flipping if needed
-        scale *= Geom::Scale(flip_x * scale_x, flip_y * scale_y);
-        // Make sure that the lower-left corner of the visual bounding box stays where it is, even though the stroke width has changed
-        if (!preserve)
-            unbudge *= Geom::Translate (-flip_x * 0.5 * (r0 * scale_x - r1), -flip_y * 0.5 * (r0 * scale_y - r1));
-    } else { // The stroke should not be scaled, or is zero
-        if (r0 == 0 || r0 == Geom::infinity() ) { // Strokewidth is zero or infinite
-            scale *= direct;
-        } else { // Nonscaling strokewidth
-            scale *= Geom::Scale(flip_x * ratio_x, flip_y * ratio_y); // Scaling of the geometric bounding box for constant stroke width
-            unbudge *= Geom::Translate (flip_x * 0.5 * r0 * (1 - ratio_x), flip_y * 0.5 * r0 * (1 - ratio_y));
-        }
-    }
+    // Now we account for mirroring by flipping if needed
+    scale *= Geom::Scale(flip_x * scale_x, flip_y * scale_y);
 
     return (p2o * scale * unbudge * o2n);
 }
