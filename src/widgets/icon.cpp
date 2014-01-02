@@ -1624,26 +1624,27 @@ void IconImpl::imageMapNamedCB(GtkWidget* widget, gpointer user_data)
         GtkImageType type = gtk_image_get_storage_type( GTK_IMAGE(img) );
         if ( type == GTK_IMAGE_ICON_NAME ) {
 
-            gint iconSize = 0;
-            gchar* iconName = NULL;
+            GtkIconSize iconSize = GTK_ICON_SIZE_INVALID;
+            gchar const* iconName_two = NULL;
             {
                 g_object_get(G_OBJECT(widget),
-                             "icon-name", &iconName,
+                             "icon-name", &iconName_two,
                              "icon-size", &iconSize,
                              NULL);
             }
 
             for ( std::vector<preRenderItem>::iterator it = pendingRenders.begin(); it != pendingRenders.end(); ++it ) {
-                if ( (it->_name == iconName) && (it->_lsize == size) ) {
-                    int psize = getPhysSize(size);
-                    prerenderIcon(iconName, size, psize);
+                /// @todo  fix pointer string comparison here!!! "it->_name == iconName_two", that seems very bug-prone
+                if ( (it->_name == iconName_two) && (it->_lsize == iconSize) ) {
+                    int psize = getPhysSize(iconSize);
+                    prerenderIcon(iconName_two, iconSize, psize);
                     pendingRenders.erase(it);
                     break;
                 }
             }
 
-            gtk_image_set_from_icon_name(img, "", (GtkIconSize)iconSize);
-            gtk_image_set_from_icon_name(img, iconName, (GtkIconSize)iconSize);
+            gtk_image_set_from_icon_name(img, "", iconSize);
+            gtk_image_set_from_icon_name(img, iconName_two, iconSize);
         } else {
             g_warning("UNEXPECTED TYPE of %d", (int)type);
         }
