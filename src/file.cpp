@@ -843,19 +843,16 @@ sp_file_save_dialog(Gtk::Window &parentWindow, SPDocument *doc, Inkscape::Extens
     if (extension)
         filename_extension = extension->get_extension();
 
-    Glib::ustring save_path;
-    Glib::ustring save_loc;
-
-    save_path = Inkscape::Extension::get_file_save_path(doc, save_method);
+    Glib::ustring save_path = Inkscape::Extension::get_file_save_path(doc, save_method);
 
     if (!Inkscape::IO::file_test(save_path.c_str(),
           (GFileTest)(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR)))
-        save_path = "";
+        save_path.clear();
 
-    if (save_path.size()<1)
+    if (save_path.empty())
         save_path = g_get_home_dir();
 
-    save_loc = save_path;
+    Glib::ustring save_loc = save_path;
     save_loc.append(G_DIR_SEPARATOR_S);
 
     // TODO fixed buffer is bad:
@@ -882,7 +879,7 @@ sp_file_save_dialog(Gtk::Window &parentWindow, SPDocument *doc, Inkscape::Extens
     // Inkscape::IO?
     Glib::ustring save_loc_local = Glib::filename_from_utf8(save_loc);
 
-    if ( save_loc_local.size() > 0)
+    if (!save_loc_local.empty())
         save_loc = save_loc_local;
 
     //# Show the SaveAs dialog
@@ -909,28 +906,27 @@ sp_file_save_dialog(Gtk::Window &parentWindow, SPDocument *doc, Inkscape::Extens
     bool success = saveDialog->show();
     if (!success) {
         delete saveDialog;
+        if(doc_title) g_free(doc_title);
         return success;
     }
 
     // set new title here (call RDF to ensure metadata and title element are updated)
     rdf_set_work_entity(doc, rdf_find_entity("title"), saveDialog->getDocTitle().c_str());
-    // free up old string
-    if(doc_title) g_free(doc_title);
 
     Glib::ustring fileName = saveDialog->getFilename();
     Inkscape::Extension::Extension *selectionType = saveDialog->getSelectionType();
 
     delete saveDialog;
-
     saveDialog = 0;
+    if(doc_title) g_free(doc_title);
 
-    if (fileName.size() > 0) {
+    if (!fileName.empty()) {
         Glib::ustring newFileName = Glib::filename_to_utf8(fileName);
 
-        if ( newFileName.size()>0 )
+        if (!newFileName.empty())
             fileName = newFileName;
         else
-            g_warning( "Error converting save filename to UTF-8." );
+            g_warning( "Error converting filename for saving to UTF-8." );
 
         Inkscape::Extension::Output *omod = dynamic_cast<Inkscape::Extension::Output *>(selectionType);
         if (omod) {
