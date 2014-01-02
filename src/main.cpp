@@ -584,11 +584,14 @@ static void _win32_set_inkscape_env(gchar const *exe)
     } else {
         printf("python not found\n\n");
     }*/
-    
+
     // INKSCAPE_LOCALEDIR is needed by Python/Gettext
     gchar *localepath = g_build_filename(exe, PACKAGE_LOCALE_DIR, NULL);
     g_setenv("INKSCAPE_LOCALEDIR", localepath, TRUE);
-    
+
+    // prevent "please insert disk" messages. fixes bug #950781
+    SetErrorMode(SEM_FAILCRITICALERRORS | SEM_NOGPFAULTERRORBOX | SEM_NOOPENFILEERRORBOX);
+
     g_free(python);
     g_free(scripts);
     g_free(perl);
