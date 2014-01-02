@@ -172,8 +172,8 @@ sp_icon_init(SPIcon *icon)
     gtk_widget_set_has_window (GTK_WIDGET (icon), FALSE);
     icon->lsize = Inkscape::ICON_SIZE_BUTTON;
     icon->psize = 0;
-    icon->name = 0;
-    icon->pb = 0;
+    icon->name = NULL;
+    icon->pb = NULL;
 }
 
 void IconImpl::dispose(GObject *object)
@@ -182,7 +182,7 @@ void IconImpl::dispose(GObject *object)
     clear(icon);
     if ( icon->name ) {
         g_free( icon->name );
-        icon->name = 0;
+        icon->name = NULL;
     }
 
     (G_OBJECT_CLASS(sp_icon_parent_class))->dispose(object);
@@ -325,7 +325,7 @@ void IconImpl::fetchPixbuf( SPIcon *icon )
 GdkPixbuf* IconImpl::renderup( gchar const* name, Inkscape::IconSize lsize, unsigned psize ) {
     GtkIconTheme *theme = gtk_icon_theme_get_default();
 
-    GdkPixbuf *pb = 0;
+    GdkPixbuf *pb = NULL;
     if (gtk_icon_theme_has_icon(theme, name)) {
         pb = gtk_icon_theme_load_icon(theme, name, psize, (GtkIconLookupFlags) 0, NULL);
     }
@@ -452,13 +452,13 @@ void IconImpl::validateCache()
 
     std::string present;
     {
-        gchar *contents = 0;
+        gchar *contents = NULL;
         if ( g_file_get_contents(iconCacheFile.c_str(), &contents, 0, 0) ) {
             if ( contents ) {
                 present = contents;
             }
             g_free(contents);
-            contents = 0;
+            contents = NULL;
         }
     }
     bool cacheValid = (present == wanted);
@@ -784,7 +784,7 @@ GtkWidget *IconImpl::newFull( Inkscape::IconSize lsize, gchar const *name )
 {
     static bool dump = Inkscape::Preferences::get()->getBool("/debug/icons/dumpGtk");
 
-    GtkWidget *widget = 0;
+    GtkWidget *widget = NULL;
     gint trySize = CLAMP( static_cast<gint>(lsize), 0, static_cast<gint>(G_N_ELEMENTS(iconSizeLookup) - 1) );
     if ( !sizeMapDone ) {
         injectCustomSize();
@@ -806,7 +806,7 @@ GtkWidget *IconImpl::newFull( Inkscape::IconSize lsize, gchar const *name )
         GtkImageType type = gtk_image_get_storage_type( GTK_IMAGE(img) );
         if ( type == GTK_IMAGE_ICON_NAME ) {
             widget = GTK_WIDGET(img);
-            img = 0;
+            img = NULL;
 
             // Add a hook to render if set visible before prerender is done.
             g_signal_connect( G_OBJECT(widget), "map", G_CALLBACK(imageMapNamedCB), GINT_TO_POINTER(0) );
@@ -822,7 +822,7 @@ GtkWidget *IconImpl::newFull( Inkscape::IconSize lsize, gchar const *name )
                 g_message( "skipped gtk '%s' %d  (not GTK_IMAGE_ICON_NAME)", name, lsize );
             }
             //g_object_unref(G_OBJECT(img));
-            img = 0;
+            img = NULL;
         }
     }
 
@@ -855,7 +855,7 @@ GdkPixbuf *sp_pixbuf_new( Inkscape::IconSize lsize, gchar const *name )
 // PUBLIC CALL:
 Gtk::Widget *sp_icon_get_icon( Glib::ustring const &oid, Inkscape::IconSize size )
 {
-    Gtk::Widget *result = 0;
+    Gtk::Widget *result = NULL;
     GtkWidget *widget = IconImpl::newFull( static_cast<Inkscape::IconSize>(Inkscape::getRegisteredIconSize(size)), oid.c_str() );
 
     if ( widget ) {
@@ -1242,7 +1242,7 @@ Glib::ustring icon_cache_key(Glib::ustring const & name, unsigned psize)
 }
 
 GdkPixbuf *get_cached_pixbuf(Glib::ustring const &key) {
-    GdkPixbuf* pb = 0;
+    GdkPixbuf* pb = NULL;
     std::map<Glib::ustring, GdkPixbuf *>::iterator found = pb_cache.find(key);
     if ( found != pb_cache.end() ) {
         pb = found->second;
@@ -1276,7 +1276,7 @@ guchar *IconImpl::load_svg_pixels(std::list<Glib::ustring> const &names,
     guchar *px = NULL;
     for (std::list<gchar*>::iterator i = sources.begin(); (i != sources.end()) && !px; ++i) {
         gchar *doc_filename = *i;
-        SVGDocCache *info = 0;
+        SVGDocCache *info = NULL;
 
         // Did we already load this doc?
         Glib::ustring key(doc_filename);
