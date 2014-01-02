@@ -1590,7 +1590,7 @@ gboolean IconImpl::prerenderTask(gpointer /*data*/) {
 
 void IconImpl::imageMapCB(GtkWidget* widget, gpointer user_data)
 {
-    gchar* id = 0;
+    gchar const* id = NULL;
     GtkIconSize size = GTK_ICON_SIZE_INVALID;
     gtk_image_get_icon_name(GTK_IMAGE(widget), &id, &size);
     GtkIconSize lsize = static_cast<GtkIconSize>(GPOINTER_TO_INT(user_data));
@@ -1617,7 +1617,7 @@ void IconImpl::imageMapCB(GtkWidget* widget, gpointer user_data)
 void IconImpl::imageMapNamedCB(GtkWidget* widget, gpointer user_data)
 {
     GtkImage* img = GTK_IMAGE(widget);
-    gchar const* iconName = 0;
+    gchar const* iconName = NULL;
     GtkIconSize size = GTK_ICON_SIZE_INVALID;
     gtk_image_get_icon_name(img, &iconName, &size);
     if ( iconName ) {
@@ -1625,7 +1625,7 @@ void IconImpl::imageMapNamedCB(GtkWidget* widget, gpointer user_data)
         if ( type == GTK_IMAGE_ICON_NAME ) {
 
             gint iconSize = 0;
-            gchar* iconName = 0;
+            gchar* iconName = NULL;
             {
                 g_object_get(G_OBJECT(widget),
                              "icon-name", &iconName,
