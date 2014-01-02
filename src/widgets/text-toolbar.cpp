@@ -1348,7 +1348,7 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
         gtk_list_store_set( model, &iter,
                             0, _("Align left"),
                             1, _("Align left"),
-                            2, GTK_STOCK_JUSTIFY_LEFT,
+                            2, INKSCAPE_ICON("format-justify-left"),
                             3, true,
                             -1 );
 
@@ -1356,7 +1356,7 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
         gtk_list_store_set( model, &iter,
                             0, _("Align center"),
                             1, _("Align center"),
-                            2, GTK_STOCK_JUSTIFY_CENTER,
+                            2, INKSCAPE_ICON("format-justify-center"),
                             3, true,
                             -1 );
 
@@ -1364,7 +1364,7 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
         gtk_list_store_set( model, &iter,
                             0, _("Align right"),
                             1, _("Align right"),
-                            2, GTK_STOCK_JUSTIFY_RIGHT,
+                            2, INKSCAPE_ICON("format-justify-right"),
                             3, true,
                             -1 );
 
@@ -1372,14 +1372,14 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
         gtk_list_store_set( model, &iter,
                             0, _("Justify"),
                             1, _("Justify (only flowed text)"),
-                            2, GTK_STOCK_JUSTIFY_FILL,
+                            2, INKSCAPE_ICON("format-justify-fill"),
                             3, false,
                             -1 );
 
         EgeSelectOneAction* act = ege_select_one_action_new( "TextAlignAction",       // Name
                                                              _("Alignment"),          // Label
                                                              _("Text alignment"),     // Tooltip
-                                                             NULL,                    // StockID
+                                                             NULL,                    // Icon name
                                                              GTK_TREE_MODEL(model) ); // Model
         g_object_set( act, "short_label", "NotUsed", NULL );
         gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
@@ -1420,7 +1420,7 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
         EgeSelectOneAction* act = ege_select_one_action_new( "TextOrientationAction", // Name
                                                              _("Orientation"),        // Label
                                                              _("Text orientation"),   // Tooltip
-                                                             NULL,                    // StockID
+                                                             NULL,                    // Icon name
                                                              GTK_TREE_MODEL(model) ); // Model
 
         g_object_set( act, "short_label", "NotUsed", NULL );

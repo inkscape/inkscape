@@ -638,7 +638,7 @@ void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
             InkAction* inky = ink_action_new( "ProfileEditAction",
                                               _("Add/Edit Profile"),
                                               _("Add or edit calligraphic profile"),
-                                              GTK_STOCK_PROPERTIES,
+                                              INKSCAPE_ICON("document-properties"),
                                               Inkscape::ICON_SIZE_DECORATION );
             g_object_set( inky, "short_label", _("Edit"), NULL );
             g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_ddc_edit_profile), (GObject*)holder );

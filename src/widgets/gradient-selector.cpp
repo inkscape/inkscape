@@ -36,6 +36,7 @@
 #include "paint-selector.h"
 #include "style.h"
 #include "id-clash.h"
+#include "ui/icon-names.h"
 
 enum {
     GRABBED,
@@ -196,8 +197,13 @@ static void sp_gradient_selector_init(SPGradientSelector *sel)
     //sel->nonsolid.push_back(hb);
     gtk_box_pack_start( GTK_BOX(sel), hb, FALSE, FALSE, 0 );
 
+#if GTK_CHECK_VERSION(3,10,0)
+    sel->add = gtk_button_new_from_icon_name(INKSCAPE_ICON("list-add"), GTK_ICON_SIZE_SMALL_TOOLBAR);
+#else
     sel->add = gtk_button_new ();
-    gtk_button_set_image(GTK_BUTTON(sel->add), gtk_image_new_from_stock ( GTK_STOCK_ADD, GTK_ICON_SIZE_SMALL_TOOLBAR ) );
+    GtkWidget *img = gtk_image_new_from_icon_name(INKSCAPE_ICON("list-add"), GTK_ICON_SIZE_SMALL_TOOLBAR);
+    gtk_button_set_image(GTK_BUTTON(sel->add), img);
+#endif
 
     sel->nonsolid.push_back(sel->add);
     gtk_box_pack_start (GTK_BOX (hb), sel->add, FALSE, FALSE, 0);
@@ -207,8 +213,14 @@ static void sp_gradient_selector_init(SPGradientSelector *sel)
     gtk_button_set_relief(GTK_BUTTON(sel->add), GTK_RELIEF_NONE);
     gtk_widget_set_tooltip_text( sel->add, _("Create a duplicate gradient"));
 
+    // FIXME: Probably better to either use something from the icon naming spec or ship our own "edit-gradient" icon
+#if GTK_CHECK_VERSION(3,10,0)
+    sel->edit = gtk_button_new_from_icon_name(INKSCAPE_ICON("gtk-edit"), GTK_ICON_SIZE_SMALL_TOOLBAR);
+#else
     sel->edit = gtk_button_new ();
-    gtk_button_set_image(GTK_BUTTON(sel->edit), gtk_image_new_from_stock ( GTK_STOCK_EDIT, GTK_ICON_SIZE_SMALL_TOOLBAR ) );
+    img = gtk_image_new_from_icon_name(INKSCAPE_ICON("gtk-edit"), GTK_ICON_SIZE_SMALL_TOOLBAR);
+    gtk_button_set_image(GTK_BUTTON(sel->edit), img);
+#endif
 
     sel->nonsolid.push_back(sel->edit);
     gtk_box_pack_start (GTK_BOX (hb), sel->edit, FALSE, FALSE, 0);
@@ -217,8 +229,13 @@ static void sp_gradient_selector_init(SPGradientSelector *sel)
     gtk_button_set_relief(GTK_BUTTON(sel->edit), GTK_RELIEF_NONE);
     gtk_widget_set_tooltip_text( sel->edit, _("Edit gradient"));
 
+#if GTK_CHECK_VERSION(3,10,0)
+    sel->del = gtk_button_new_from_icon_name(INKSCAPE_ICON("list-remove"), GTK_ICON_SIZE_SMALL_TOOLBAR);
+#else
     sel->del = gtk_button_new ();
-    gtk_button_set_image(GTK_BUTTON(sel->del), gtk_image_new_from_stock ( GTK_STOCK_REMOVE, GTK_ICON_SIZE_SMALL_TOOLBAR ) );
+    img = gtk_image_new_from_icon_name(INKSCAPE_ICON("list-remove"), GTK_ICON_SIZE_SMALL_TOOLBAR);
+    gtk_button_set_image(GTK_BUTTON(sel->del), img);
+#endif
 
     sel->swatch_widgets.push_back(sel->del);
     gtk_box_pack_start (GTK_BOX (hb), sel->del, FALSE, FALSE, 0);

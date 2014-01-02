@@ -46,6 +46,7 @@
 
 #include <gtkmm/button.h>
 #include <gtkmm/label.h>
+#include "ui/icon-names.h"
 
 namespace Inkscape {
 
@@ -153,7 +154,7 @@ PathParam::param_newWidget()
     static_cast<Gtk::HBox*>(_widget)->pack_start(*pLabel, true, true);
     pLabel->set_tooltip_text(param_tooltip);
 
-    Gtk::Widget*  pIcon = Gtk::manage( sp_icon_get_icon( "tool-node-editor", Inkscape::ICON_SIZE_BUTTON) );
+    Gtk::Widget*  pIcon = Gtk::manage( sp_icon_get_icon( INKSCAPE_ICON("tool-node-editor"), Inkscape::ICON_SIZE_BUTTON) );
     Gtk::Button * pButton = Gtk::manage(new Gtk::Button());
     pButton->set_relief(Gtk::RELIEF_NONE);
     pIcon->show();
@@ -163,7 +164,7 @@ PathParam::param_newWidget()
     static_cast<Gtk::HBox*>(_widget)->pack_start(*pButton, true, true);
     pButton->set_tooltip_text(_("Edit on-canvas"));
 
-    pIcon = Gtk::manage( sp_icon_get_icon( GTK_STOCK_COPY, Inkscape::ICON_SIZE_BUTTON) );
+    pIcon = Gtk::manage( sp_icon_get_icon( INKSCAPE_ICON("edit-copy"), Inkscape::ICON_SIZE_BUTTON) );
     pButton = Gtk::manage(new Gtk::Button());
     pButton->set_relief(Gtk::RELIEF_NONE);
     pIcon->show();
@@ -173,7 +174,7 @@ PathParam::param_newWidget()
     static_cast<Gtk::HBox*>(_widget)->pack_start(*pButton, true, true);
     pButton->set_tooltip_text(_("Copy path"));
 
-    pIcon = Gtk::manage( sp_icon_get_icon( GTK_STOCK_PASTE, Inkscape::ICON_SIZE_BUTTON) );
+    pIcon = Gtk::manage( sp_icon_get_icon( INKSCAPE_ICON("edit-paste"), Inkscape::ICON_SIZE_BUTTON) );
     pButton = Gtk::manage(new Gtk::Button());
     pButton->set_relief(Gtk::RELIEF_NONE);
     pIcon->show();
@@ -183,7 +184,7 @@ PathParam::param_newWidget()
     static_cast<Gtk::HBox*>(_widget)->pack_start(*pButton, true, true);
     pButton->set_tooltip_text(_("Paste path"));
 
-    pIcon = Gtk::manage( sp_icon_get_icon( "edit-clone", Inkscape::ICON_SIZE_BUTTON) );
+    pIcon = Gtk::manage( sp_icon_get_icon( INKSCAPE_ICON("edit-clone"), Inkscape::ICON_SIZE_BUTTON) );
     pButton = Gtk::manage(new Gtk::Button());
     pButton->set_relief(Gtk::RELIEF_NONE);
     pIcon->show();

@@ -48,6 +48,7 @@
 #include "icon-size.h"
 #include "ege-adjustment-action.h"
 #include "ui/widget/gimpspinscale.h"
+#include "ui/icon-names.h"
 
 
 static void ege_adjustment_action_finalize( GObject* object );
@@ -81,11 +82,11 @@ enum {
 
 /* TODO need to have appropriate icons setup for these: */
 static const gchar *floogles[] = {
-    GTK_STOCK_REMOVE,
-    GTK_STOCK_ADD,
-    GTK_STOCK_GO_DOWN,
-    GTK_STOCK_ABOUT,
-    GTK_STOCK_GO_UP,
+    INKSCAPE_ICON("list-remove"),
+    INKSCAPE_ICON("list-add"),
+    INKSCAPE_ICON("go-down"),
+    INKSCAPE_ICON("help-about"),
+    INKSCAPE_ICON("go-up"),
     0};
 
 typedef struct _EgeAdjustmentDescr EgeAdjustmentDescr;
@@ -1100,3 +1101,13 @@ gboolean keypress_cb( GtkWidget *widget, GdkEventKey *event, gpointer data )
 
     return wasConsumed;
 }
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :

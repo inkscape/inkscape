@@ -571,7 +571,7 @@ void sp_star_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
             GtkAction* act = gtk_action_new( "StarResetAction",
                                              _("Defaults"),
                                              _("Reset shape parameters to defaults (use Inkscape Preferences > Tools to change defaults)"),
-                                             GTK_STOCK_CLEAR );
+                                             INKSCAPE_ICON("edit-clear"));
             g_signal_connect_after( G_OBJECT(act), "activate", G_CALLBACK(sp_stb_defaults), holder );
             gtk_action_group_add_action( mainActions, act );
             gtk_action_set_sensitive( act, TRUE );

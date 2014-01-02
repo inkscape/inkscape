@@ -45,6 +45,7 @@
 #include "util/units.h"
 
 #include "icon.h"
+#include "ui/icon-names.h"
 
 struct IconImpl {
     static GtkWidget *newFull( Inkscape::IconSize lsize, gchar const *name );
@@ -790,44 +791,20 @@ GtkWidget *IconImpl::newFull( Inkscape::IconSize lsize, gchar const *name )
     }
     GtkIconSize mappedSize = iconSizeLookup[trySize];
 
-    GtkStockItem stock;
-    gboolean stockFound = gtk_stock_lookup( name, &stock );
-
-    GtkWidget *img = 0;
     if ( legacyNames.empty() ) {
         setupLegacyNaming();
     }
 
-    if ( stockFound ) {
-        img = gtk_image_new_from_stock( name, mappedSize );
-    } else {
-        img = gtk_image_new_from_icon_name( name, mappedSize );
-        if ( dump ) {
-            g_message("gtk_image_new_from_icon_name( '%s', %d ) = %p", name, mappedSize, img);
-            GtkImageType thing = gtk_image_get_storage_type(GTK_IMAGE(img));
-            g_message("      Type is %d  %s", (int)thing, (thing == GTK_IMAGE_EMPTY ? "Empty" : "ok"));
-        }
+    GtkWidget *img = gtk_image_new_from_icon_name( name, mappedSize );
+    if ( dump ) {
+        g_message("gtk_image_new_from_icon_name( '%s', %d ) = %p", name, mappedSize, img);
+        GtkImageType thing = gtk_image_get_storage_type(GTK_IMAGE(img));
+        g_message("      Type is %d  %s", (int)thing, (thing == GTK_IMAGE_EMPTY ? "Empty" : "ok"));
     }
 
     if ( img ) {
         GtkImageType type = gtk_image_get_storage_type( GTK_IMAGE(img) );
-        if ( type == GTK_IMAGE_STOCK ) {
-            if ( !stockFound ) {
-                // It's not showing as a stock ID, so assume it will be present internally
-                addPreRender( mappedSize, name );
-
-                // Add a hook to render if set visible before prerender is done.
-                g_signal_connect( G_OBJECT(img), "map", G_CALLBACK(imageMapCB), GINT_TO_POINTER(static_cast<int>(mappedSize)) );
-                if ( dump ) {
-                    g_message("      connecting %p for imageMapCB for [%s] %d", img, name, (int)mappedSize);
-                }
-            }
-            widget = GTK_WIDGET(img);
-            img = 0;
-            if ( dump ) {
-                g_message( "loaded gtk  '%s' %d  (GTK_IMAGE_STOCK) %s  on %p", name, mappedSize, (stockFound ? "STOCK" : "local"), widget );
-            }
-        } else if ( type == GTK_IMAGE_ICON_NAME ) {
+        if ( type == GTK_IMAGE_ICON_NAME ) {
             widget = GTK_WIDGET(img);
             img = 0;
 
@@ -842,7 +819,7 @@ GtkWidget *IconImpl::newFull( Inkscape::IconSize lsize, gchar const *name )
             }
         } else {
             if ( dump ) {
-                g_message( "skipped gtk '%s' %d  (not GTK_IMAGE_STOCK)", name, lsize );
+                g_message( "skipped gtk '%s' %d  (not GTK_IMAGE_ICON_NAME)", name, lsize );
             }
             //g_object_unref(G_OBJECT(img));
             img = 0;
@@ -1033,7 +1010,7 @@ int IconImpl::getPhysSize(int size)
             //   "The rendered pixbuf may not even correspond to the width/height returned by
             //   gtk_icon_size_lookup(), because themes are free to render the pixbuf however
             //   they like, including changing the usual size."
-            gchar const *id = GTK_STOCK_OPEN;
+            gchar const *id = INKSCAPE_ICON("document-open");
             GdkPixbuf *pb = gtk_widget_render_icon( icon, id, gtkSizes[i], NULL);
             if (pb) {
                 width = gdk_pixbuf_get_width(pb);
@@ -1334,9 +1311,9 @@ guchar *IconImpl::load_svg_pixels(std::list<Glib::ustring> const &names,
 
 static void addToIconSet(GdkPixbuf* pb, gchar const* name, GtkIconSize lsize, unsigned psize) {
     static bool dump = Inkscape::Preferences::get()->getBool("/debug/icons/dumpGtk");
-    GtkStockItem stock;
-    gboolean stockFound = gtk_stock_lookup( name, &stock );
-   if ( !stockFound ) {
+    Glib::RefPtr<Gtk::IconTheme> icon_theme = Gtk::IconTheme::get_default();
+    bool icon_found = icon_theme->has_icon(name);
+    if ( !icon_found ) {
         Gtk::IconTheme::add_builtin_icon( name, psize, Glib::wrap(pb) );
         if (dump) {
             g_message("    set in a builtin for %s:%d:%d", name, lsize, psize);
@@ -1346,10 +1323,8 @@ static void addToIconSet(GdkPixbuf* pb, gchar const* name, GtkIconSize lsize, un
 
 void Inkscape::queueIconPrerender( Glib::ustring const &name, Inkscape::IconSize lsize )
 {
-    GtkStockItem stock;
-    gboolean stockFound = gtk_stock_lookup( name.c_str(), &stock );
     gboolean themedFound = gtk_icon_theme_has_icon(gtk_icon_theme_get_default(), name.c_str());
-    if (!stockFound && !themedFound ) {
+    if ( !themedFound ) {
         gint trySize = CLAMP( static_cast<gint>(lsize), 0, static_cast<gint>(G_N_ELEMENTS(iconSizeLookup) - 1) );
         if ( !sizeMapDone ) {
             IconImpl::injectCustomSize();
@@ -1617,7 +1592,7 @@ void IconImpl::imageMapCB(GtkWidget* widget, gpointer user_data)
 {
     gchar* id = 0;
     GtkIconSize size = GTK_ICON_SIZE_INVALID;
-    gtk_image_get_stock(GTK_IMAGE(widget), &id, &size);
+    gtk_image_get_icon_name(GTK_IMAGE(widget), &id, &size);
     GtkIconSize lsize = static_cast<GtkIconSize>(GPOINTER_TO_INT(user_data));
     if ( id ) {
         int psize = getPhysSize(lsize);

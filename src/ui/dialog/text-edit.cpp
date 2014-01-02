@@ -94,10 +94,10 @@ TextEdit::TextEdit()
     fontsel_hbox.pack_start(*Gtk::manage(Glib::wrap(fontsel)), true, true);
 
     /* Align buttons */
-    styleButton(&align_left, _("Align left"), GTK_STOCK_JUSTIFY_LEFT, NULL);
-    styleButton(&align_center, _("Align center"), GTK_STOCK_JUSTIFY_CENTER, &align_left);
-    styleButton(&align_right, _("Align right"), GTK_STOCK_JUSTIFY_RIGHT, &align_left);
-    styleButton(&align_justify, _("Justify (only flowed text)"), GTK_STOCK_JUSTIFY_FILL, &align_left);
+    styleButton(&align_left,    _("Align left"),                 INKSCAPE_ICON("format-justify-left"),    NULL);
+    styleButton(&align_center,  _("Align center"),               INKSCAPE_ICON("format-justify-center"), &align_left);
+    styleButton(&align_right,   _("Align right"),                INKSCAPE_ICON("format-justify-right"),  &align_left);
+    styleButton(&align_justify, _("Justify (only flowed text)"), INKSCAPE_ICON("format-justify-fill"),   &align_left);
 
 #if WITH_GTKMM_3_0
     align_sep.set_orientation(Gtk::ORIENTATION_VERTICAL);
@@ -237,7 +237,7 @@ void TextEdit::styleButton(Gtk::RadioButton *button, gchar const *tooltip, gchar
 {
     GtkWidget *icon = sp_icon_new( Inkscape::ICON_SIZE_SMALL_TOOLBAR, icon_name );
     if (!GTK_IS_IMAGE(icon)) {
-        icon = gtk_image_new_from_stock ( icon_name, GTK_ICON_SIZE_SMALL_TOOLBAR );
+        icon = gtk_image_new_from_icon_name ( icon_name, GTK_ICON_SIZE_SMALL_TOOLBAR );
     }
 
     if (group_button) {

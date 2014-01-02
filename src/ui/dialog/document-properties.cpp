@@ -57,6 +57,7 @@
 #include <gtkmm/table.h>
 
 #include <2geom/transforms.h>
+#include "ui/icon-names.h"
 
 using std::pair;
 
@@ -609,10 +610,22 @@ void DocumentProperties::build_cms()
     label_avail->set_markup (_("<b>Available Color Profiles:</b>"));
 
     _link_btn.set_tooltip_text(_("Link Profile"));
-    _link_btn.set_image(*manage(Glib::wrap(gtk_image_new_from_stock ( GTK_STOCK_ADD, GTK_ICON_SIZE_SMALL_TOOLBAR ) )));
+#if GTK_CHECK_VERSION(3,10,0)
+    _link_btn.set_image_from_icon_name(INKSCAPE_ICON("list-add"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
+#else
+    Gtk::Image *image_link = Gtk::manage(new Gtk::Image());
+    image_link->set_from_icon_name(INKSCAPE_ICON("list-add"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
+    _link_btn.set_image(*image_link);
+#endif
 
     _unlink_btn.set_tooltip_text(_("Unlink Profile"));
-    _unlink_btn.set_image(*manage(Glib::wrap(gtk_image_new_from_stock ( GTK_STOCK_REMOVE, GTK_ICON_SIZE_SMALL_TOOLBAR ) )));
+#if GTK_CHECK_VERSION(3,10,0)
+    _unlink_btn.set_image_from_icon_name(INKSCAPE_ICON("list-remove"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
+#else
+    Gtk::Image *image_unlink = Gtk::manage(new Gtk::Image());
+    image_unlink->set_from_icon_name(INKSCAPE_ICON("list-remove"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
+    _unlink_btn.set_image(*image_unlink);
+#endif
 
     _page_cms->set_spacing(4);
     gint row = 0;
@@ -734,11 +747,22 @@ void DocumentProperties::build_scripting()
     label_external->set_markup (_("<b>External script files:</b>"));
 
     _external_add_btn.set_tooltip_text(_("Add the current file name or browse for a file"));
-    _external_add_btn.set_image(*manage(Glib::wrap(gtk_image_new_from_stock ( GTK_STOCK_ADD, GTK_ICON_SIZE_SMALL_TOOLBAR ) )));
+#if GTK_CHECK_VERSION(3,10,0)
+    _external_add_btn.set_image_from_icon_name(INKSCAPE_ICON("list-add"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
+#else
+    Gtk::Image *image_ext_add = Gtk::manage(new Gtk::Image());
+    image_ext_add->set_from_icon_name(INKSCAPE_ICON("list-add"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
+    _external_add_btn.set_image(*image_ext_add);
+#endif
 
     _external_remove_btn.set_tooltip_text(_("Remove"));
-    _external_remove_btn.set_image(*manage(Glib::wrap(gtk_image_new_from_stock ( GTK_STOCK_REMOVE, GTK_ICON_SIZE_SMALL_TOOLBAR ) )));
-
+#if GTK_CHECK_VERSION(3,10,0)
+    _external_remove_btn.set_image_from_icon_name(INKSCAPE_ICON("list-remove"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
+#else
+    Gtk::Image *image_ext_rm = Gtk::manage(new Gtk::Image());
+    image_ext_rm->set_from_icon_name(INKSCAPE_ICON("list-remove"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
+    _external_remove_btn.set_image(*image_ext_rm);
+#endif
 
     _page_external_scripts->set_spacing(4);
     gint row = 0;
@@ -812,10 +836,22 @@ void DocumentProperties::build_scripting()
     label_embedded->set_markup (_("<b>Embedded script files:</b>"));
 
     _embed_new_btn.set_tooltip_text(_("New"));
-    _embed_new_btn.set_image(*manage(Glib::wrap(gtk_image_new_from_stock ( GTK_STOCK_ADD, GTK_ICON_SIZE_SMALL_TOOLBAR ) )));
+#if GTK_CHECK_VERSION(3,10,0)
+    _embed_new_btn.set_image_from_icon_name(INKSCAPE_ICON("list-add"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
+#else
+    Gtk::Image *image_embed_new = Gtk::manage(new Gtk::Image());
+    image_embed_new->set_from_icon_name(INKSCAPE_ICON("list-add"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
+    _embed_new_btn.set_image(*image_embed_new);
+#endif
 
     _embed_remove_btn.set_tooltip_text(_("Remove"));
-    _embed_remove_btn.set_image(*manage(Glib::wrap(gtk_image_new_from_stock ( GTK_STOCK_REMOVE, GTK_ICON_SIZE_SMALL_TOOLBAR ) )));
+#if GTK_CHECK_VERSION(3,10,0)
+    _embed_remove_btn.set_image_from_icon_name(INKSCAPE_ICON("list-remove"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
+#else
+    Gtk::Image *image_embed_rm = Gtk::manage(new Gtk::Image());
+    image_embed_rm->set_from_icon_name(INKSCAPE_ICON("list-remove"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
+    _embed_remove_btn.set_image(*image_embed_rm);
+#endif
 
 #if !WITH_GTKMM_3_0
     // TODO: This has been removed from Gtkmm 3.0. Check that

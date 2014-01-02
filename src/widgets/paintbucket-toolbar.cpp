@@ -232,7 +232,7 @@ void sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         GtkAction* act = gtk_action_new( "PaintbucketResetAction",
                                           _("Defaults"),
                                           _("Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools to change defaults)"),
-                                          GTK_STOCK_CLEAR );
+                                          INKSCAPE_ICON("edit-clear"));
         g_signal_connect_after( G_OBJECT(act), "activate", G_CALLBACK(paintbucket_defaults), holder );
         gtk_action_group_add_action( mainActions, act );
         gtk_action_set_sensitive( act, TRUE );

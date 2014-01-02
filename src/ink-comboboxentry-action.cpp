@@ -31,6 +31,7 @@
 #include <gdk/gdkkeysyms.h>
 
 #include "ink-comboboxentry-action.h"
+#include "ui/icon-names.h"
 
 // Must handle both tool and menu items!
 static GtkWidget* create_tool_item( GtkAction* action );
@@ -535,18 +536,9 @@ gboolean ink_comboboxentry_action_set_active_text( Ink_ComboBoxEntry_Action* act
     if( action->warning != NULL ) {
       Glib::ustring missing = check_comma_separated_text( action );
       if( !missing.empty() ) {
-
-	GtkStockItem item;
-	gboolean isStock = gtk_stock_lookup( GTK_STOCK_DIALOG_WARNING, &item );
-	if (isStock) {	
-	  gtk_entry_set_icon_from_stock( action->entry,
-					 GTK_ENTRY_ICON_SECONDARY,
-					 GTK_STOCK_DIALOG_WARNING );
-	} else {
 	  gtk_entry_set_icon_from_icon_name( action->entry,
 					     GTK_ENTRY_ICON_SECONDARY,
-					     GTK_STOCK_DIALOG_WARNING );
-	}
+					     INKSCAPE_ICON("dialog-warning") );
 	// Can't add tooltip until icon set
 	Glib::ustring warning = action->warning;
 	warning += ": ";
@@ -579,10 +571,7 @@ gboolean ink_comboboxentry_action_set_active_text( Ink_ComboBoxEntry_Action* act
     if( !set && action->info != NULL ) {
       gtk_entry_set_icon_from_icon_name( GTK_ENTRY(action->entry),
 					 GTK_ENTRY_ICON_SECONDARY,
-					 GTK_STOCK_SELECT_ALL );
-      gtk_entry_set_icon_from_stock( GTK_ENTRY(action->entry),
-				     GTK_ENTRY_ICON_SECONDARY,
-				     GTK_STOCK_SELECT_ALL );
+					 INKSCAPE_ICON("edit-select-all") );
       gtk_entry_set_icon_tooltip_text( action->entry,
 				       GTK_ENTRY_ICON_SECONDARY,
 				       action->info );
@@ -610,9 +599,6 @@ gboolean ink_comboboxentry_action_set_active_text( Ink_ComboBoxEntry_Action* act
       gtk_entry_set_icon_from_icon_name( GTK_ENTRY(action->entry),
 					 GTK_ENTRY_ICON_SECONDARY,
 					 NULL );
-      gtk_entry_set_icon_from_stock( GTK_ENTRY(action->entry),
-				     GTK_ENTRY_ICON_SECONDARY,
-				     NULL );
     }
   }
 

@@ -299,7 +299,7 @@ void sp_spiral_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
         InkAction* inky = ink_action_new( "SpiralResetAction",
                                           _("Defaults"),
                                           _("Reset shape parameters to defaults (use Inkscape Preferences > Tools to change defaults)"),
-                                          GTK_STOCK_CLEAR,
+                                          INKSCAPE_ICON("edit-clear"),
                                           secondarySize );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_spl_tb_defaults), holder );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );

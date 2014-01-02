@@ -1295,8 +1295,8 @@ void Export::onBrowse ()
     fs = gtk_file_chooser_dialog_new (_("Select a filename for exporting"),
                                       (GtkWindow*)desktop->getToplevel(),
                                       GTK_FILE_CHOOSER_ACTION_SAVE,
-                                      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                      GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
+                                      _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                      _("_Save"),   GTK_RESPONSE_ACCEPT,
                                       NULL );
 
 #ifdef WITH_GNOME_VFS

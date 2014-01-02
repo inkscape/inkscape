@@ -321,7 +321,7 @@ void sp_pencil_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
         InkAction* inky = ink_action_new( "PencilResetAction",
                                           _("Defaults"),
                                           _("Reset pencil parameters to defaults (use Inkscape Preferences > Tools to change defaults)"),
-                                          GTK_STOCK_CLEAR,
+                                          INKSCAPE_ICON("edit-clear"),
                                           Inkscape::ICON_SIZE_SMALL_TOOLBAR );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_pencil_tb_defaults), holder );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );

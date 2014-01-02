@@ -70,6 +70,8 @@ Inkscape::Application *inkscape;
 #define bind_textdomain_codeset(p,c)
 #endif
 
+#include "ui/icon-names.h"
+
 extern char *optarg;
 extern int  optind, opterr;
 
@@ -353,16 +355,44 @@ static GtkWidget* sp_svgview_control_show(struct SPSlideShow *ss)
 #endif
 
 	gtk_container_add(GTK_CONTAINER(ctrlwin), t);
-	GtkWidget *b = gtk_button_new_from_stock(GTK_STOCK_GOTO_FIRST);
+
+#if GTK_CHECK_VERSION(3,10,0)
+        GtkWidget *b = gtk_button_new_from_icon_name(INKSCAPE_ICON("go-first"), GTK_ICON_SIZE_BUTTON);
+#else
+	GtkWidget *b   = gtk_button_new();
+        GtkWidget *img = gtk_image_new_from_icon_name(INKSCAPE_ICON("go-first"), GTK_ICON_SIZE_BUTTON);
+        gtk_button_set_image(GTK_BUTTON(b), img);
+#endif
 	gtk_container_add(GTK_CONTAINER(t), b);
+
 	g_signal_connect(G_OBJECT(b), "clicked", (GCallback) sp_svgview_goto_first_cb, ss);
-	b = gtk_button_new_from_stock(GTK_STOCK_GO_BACK);
+#if GTK_CHECK_VERSION(3,10,0)
+        b = gtk_button_new_from_icon_name(INKSCAPE_ICON("go-previous"), GTK_ICON_SIZE_BUTTON);
+#else
+	b   = gtk_button_new();
+        img = gtk_image_new_from_icon_name(INKSCAPE_ICON("go-previous"), GTK_ICON_SIZE_BUTTON);
+        gtk_button_set_image(GTK_BUTTON(b), img);
+#endif
 	gtk_container_add(GTK_CONTAINER(t), b);
+
 	g_signal_connect(G_OBJECT(b), "clicked", (GCallback) sp_svgview_show_prev_cb, ss);
-	b = gtk_button_new_from_stock(GTK_STOCK_GO_FORWARD);
+#if GTK_CHECK_VERSION(3,10,0)
+        b = gtk_button_new_from_icon_name(INKSCAPE_ICON("go-next"), GTK_ICON_SIZE_BUTTON);
+#else
+	b   = gtk_button_new();
+        img = gtk_image_new_from_icon_name(INKSCAPE_ICON("go-next"), GTK_ICON_SIZE_BUTTON);
+        gtk_button_set_image(GTK_BUTTON(b), img);
+#endif
 	gtk_container_add(GTK_CONTAINER(t), b);
+
 	g_signal_connect(G_OBJECT(b), "clicked", (GCallback) sp_svgview_show_next_cb, ss);
-	b = gtk_button_new_from_stock(GTK_STOCK_GOTO_LAST);
+#if GTK_CHECK_VERSION(3,10,0)
+        b = gtk_button_new_from_icon_name(INKSCAPE_ICON("go-last"), GTK_ICON_SIZE_BUTTON);
+#else
+	b   = gtk_button_new();
+        img = gtk_image_new_from_icon_name(INKSCAPE_ICON("go-last"), GTK_ICON_SIZE_BUTTON);
+        gtk_button_set_image(GTK_BUTTON(b), img);
+#endif
 	gtk_container_add(GTK_CONTAINER(t), b);
 	g_signal_connect(G_OBJECT(b), "clicked", (GCallback) sp_svgview_goto_last_cb, ss);
 	gtk_widget_show_all(ctrlwin);

@@ -881,30 +881,30 @@ LayersPanel::LayersPanel() :
     SPDesktop* targetDesktop = getDesktop();
 
     Gtk::Button* btn = manage( new Gtk::Button() );
-    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_NEW, GTK_STOCK_ADD, C_("Layers", "New") );
+    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_NEW, INKSCAPE_ICON("list-add"), C_("Layers", "New") );
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), (int)BUTTON_NEW) );
     _buttonsSecondary.pack_start(*btn, Gtk::PACK_SHRINK);
 
     btn = manage( new Gtk::Button() );
-    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_TO_BOTTOM, GTK_STOCK_GOTO_BOTTOM, C_("Layers", "Bot") );
+    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_TO_BOTTOM, INKSCAPE_ICON("go-bottom"), C_("Layers", "Bot") );
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), (int)BUTTON_BOTTOM) );
     _watchingNonBottom.push_back( btn );
     _buttonsPrimary.pack_end(*btn, Gtk::PACK_SHRINK);
     
     btn = manage( new Gtk::Button() );
-    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_LOWER, GTK_STOCK_GO_DOWN, C_("Layers", "Dn") );
+    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_LOWER, INKSCAPE_ICON("go-down"), C_("Layers", "Dn") );
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), (int)BUTTON_DOWN) );
     _watchingNonBottom.push_back( btn );
     _buttonsPrimary.pack_end(*btn, Gtk::PACK_SHRINK);
     
     btn = manage( new Gtk::Button() );
-    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_RAISE, GTK_STOCK_GO_UP, C_("Layers", "Up") );
+    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_RAISE, INKSCAPE_ICON("go-up"), C_("Layers", "Up") );
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), (int)BUTTON_UP) );
     _watchingNonTop.push_back( btn );
     _buttonsPrimary.pack_end(*btn, Gtk::PACK_SHRINK);
     
     btn = manage( new Gtk::Button() );
-    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_TO_TOP, GTK_STOCK_GOTO_TOP, C_("Layers", "Top") );
+    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_TO_TOP, INKSCAPE_ICON("go-top"), C_("Layers", "Top") );
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), (int)BUTTON_TOP) );
     _watchingNonTop.push_back( btn );
     _buttonsPrimary.pack_end(*btn, Gtk::PACK_SHRINK);
@@ -914,7 +914,7 @@ LayersPanel::LayersPanel() :
 //     _buttonsRow.add( *btn );
 
     btn = manage( new Gtk::Button() );
-    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_DELETE, GTK_STOCK_REMOVE, _("X") );
+    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_DELETE, INKSCAPE_ICON("list-remove"), _("X") );
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), (int)BUTTON_DELETE) );
     _watching.push_back( btn );
     _buttonsSecondary.pack_start(*btn, Gtk::PACK_SHRINK);
@@ -944,8 +944,8 @@ LayersPanel::LayersPanel() :
 
         _popupMenu.append(*manage(new Gtk::SeparatorMenuItem()));
 
-        _watchingNonTop.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_RAISE, GTK_STOCK_GO_UP, "Up", (int)BUTTON_UP ) );
-        _watchingNonBottom.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_LOWER, GTK_STOCK_GO_DOWN, "Down", (int)BUTTON_DOWN ) );
+        _watchingNonTop.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_RAISE, INKSCAPE_ICON("go-up"), "Up", (int)BUTTON_UP ) );
+        _watchingNonBottom.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_LOWER, INKSCAPE_ICON("go-down"), "Down", (int)BUTTON_DOWN ) );
 
         _popupMenu.show_all_children();
     }
