@@ -221,7 +221,7 @@ void fixup_labels( GObject *gobject, GParamSpec *arg1, gpointer user_data )
                 /* Search for the things we built up in create_tool_item() */
                 GList* children = gtk_container_get_children( GTK_CONTAINER(proxies->data) );
                 if ( children && children->data ) {
-                    if ( GTK_IS_HBOX(children->data) ) {
+                    if ( GTK_IS_BOX(children->data) ) {
                         children = gtk_container_get_children( GTK_CONTAINER(children->data) );
                         if ( children && g_list_next(children) ) {
                             GtkWidget* child = GTK_WIDGET( g_list_next(children)->data );

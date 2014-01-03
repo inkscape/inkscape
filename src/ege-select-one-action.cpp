@@ -866,7 +866,7 @@ void resync_active( EgeSelectOneAction* act, gint active, gboolean override )
                         } else if ( gtk_combo_box_get_active(combo) != active ) {
                             gtk_combo_box_set_active( combo, active );
                         }
-                    } else if ( GTK_IS_HBOX(children->data) ) {
+                    } else if ( GTK_IS_BOX(children->data) ) {
                         gpointer data = g_object_get_data( G_OBJECT(children->data), "ege-proxy_action-group" );
                         if ( data ) {
                             GSList* group = (GSList*)data;
@@ -921,7 +921,7 @@ void resync_sensitive( EgeSelectOneAction* act )
                 }
                 if ( GTK_IS_COMBO_BOX(combodata) ) {
                     /* Not implemented */
-                } else if ( GTK_IS_HBOX(children->data) ) {
+                } else if ( GTK_IS_BOX(children->data) ) {
                     gpointer data = g_object_get_data( G_OBJECT(children->data), "ege-proxy_action-group" );
                     if ( data ) {
                         GSList* group = (GSList*)data;

@@ -983,7 +983,7 @@ static gboolean process_tab( GtkWidget* widget, int direction )
                     if ( mid && GTK_IS_TOOL_ITEM(mid->data) ) {
                         /* potential target */
                         GtkWidget* child = gtk_bin_get_child( GTK_BIN(mid->data) );
-                        if ( child && GTK_IS_HBOX(child) ) { /* could be ours */
+                        if ( child && GTK_IS_BOX(child) ) { /* could be ours */
                             GList* subChildren = gtk_container_get_children( GTK_CONTAINER(child) );
                             if ( subChildren ) {
                                 GList* last = g_list_last(subChildren);
