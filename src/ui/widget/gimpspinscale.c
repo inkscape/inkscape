@@ -406,67 +406,81 @@ gimp_spin_scale_style_set (GtkWidget *widget,
 
 
 static gboolean
-
-#if WITH_GTKMM_3_0
-    gimp_spin_scale_draw (GtkWidget *widget, cairo_t   *cr)
+#if GTK_CHECK_VERSION(3,0,0)
+    gimp_spin_scale_draw (GtkWidget *widget,
+                          cairo_t   *cr)
 #else
-    gimp_spin_scale_expose (GtkWidget      *widget, GdkEventExpose *event)
+    gimp_spin_scale_expose (GtkWidget      *widget,
+                            GdkEventExpose *event)
 #endif
 {
-    GimpSpinScalePrivate *private = GET_PRIVATE (widget);
+  GimpSpinScalePrivate *private = GET_PRIVATE (widget);
+#if GTK_CHECK_VERSION(3,0,0)
+  GtkStyleContext      *style   = gtk_widget_get_style_context(widget);
+  GtkAllocation         allocation;
+  GdkRGBA               color;
 
-#if WITH_GTKMM_3_0
-    GtkStyleContext      *style   = gtk_widget_get_style_context(widget);
-    GtkAllocation         allocation;
-    GdkRGBA               color;
+  cairo_save (cr);
+  GTK_WIDGET_CLASS (parent_class)->draw (widget, cr);
+  cairo_restore (cr);
 
-    cairo_save (cr);
-    GTK_WIDGET_CLASS (parent_class)->draw (widget, cr);
-    cairo_restore (cr);
-
-    gtk_widget_get_allocation (widget, &allocation);
+  gtk_widget_get_allocation (widget, &allocation);
 #else
-    GtkStyle             *style   = gtk_widget_get_style (widget);
-    cairo_t              *cr;
-    gint                  w;
+  GtkStyle             *style   = gtk_widget_get_style (widget);
+  cairo_t              *cr;
+  gint                  w;
 
-    GTK_WIDGET_CLASS (parent_class)->expose_event (widget, event);
+  GTK_WIDGET_CLASS (parent_class)->expose_event (widget, event);
 
-    cr = gdk_cairo_create (event->window);
-    gdk_cairo_region (cr, event->region);
-    cairo_clip (cr);
+  cr = gdk_cairo_create (event->window);
+  gdk_cairo_region (cr, event->region);
+  cairo_clip (cr);
 
-    w = gdk_window_get_width (event->window);
+  w = gdk_window_get_width (event->window);
 #endif
 
-    cairo_set_line_width (cr, 1.0);
+  cairo_set_line_width (cr, 1.0);
 
-
-#if WITH_GTKMM_3_0
-      if (private->label)
-      {
-          GdkRectangle   text_area;
-          gint           minimum_width;
-          gint           natural_width;
+#if GTK_CHECK_VERSION(3,0,0)
+  if (private->label)
+    {
+      GdkRectangle   text_area;
+      gint           minimum_width;
+      gint           natural_width;
 #else
-      if (private->label  &&
-          gtk_widget_is_drawable (widget) &&
-          event->window == gtk_entry_get_text_window (GTK_ENTRY (widget)))
-      {
-          GtkRequisition requisition;
-          GtkAllocation  allocation;
+  if (private->label  &&
+      gtk_widget_is_drawable (widget) &&
+      event->window == gtk_entry_get_text_window (GTK_ENTRY (widget)))
+    {
+      GtkRequisition requisition;
+      GtkAllocation  allocation;
 #endif
-
       PangoRectangle logical;
       gint           layout_offset_x;
       gint           layout_offset_y;
+#if GTK_CHECK_VERSION(3,0,0)
+      GtkStateFlags  state;
+      GdkRGBA        text_color;
+      GdkRGBA        bar_text_color;
+#else
+      GtkStateType   state;
+      GdkColor       text_color;
+      GdkColor       bar_text_color;
+      gint           window_width;
+      gint           window_height;
+#endif
+      gdouble        progress_fraction;
+      gint           progress_x;
+      gint           progress_y;
+      gint           progress_width;
+      gint           progress_height;
 
-#if WITH_GTKMM_3_0
+#if GTK_CHECK_VERSION(3,0,0)
       gtk_entry_get_text_area (GTK_ENTRY (widget), &text_area);
 
       GTK_WIDGET_CLASS (parent_class)->get_preferred_width (widget,
-                                                               &minimum_width,
-                                                               &natural_width);
+                                                            &minimum_width,
+                                                            &natural_width);
 #else
       GTK_WIDGET_CLASS (parent_class)->size_request (widget, &requisition);
       gtk_widget_get_allocation (widget, &allocation);
@@ -481,17 +495,17 @@ static gboolean
 
       pango_layout_set_width (private->layout,
                               PANGO_SCALE *
-#if WITH_GTKMM_3_0
-                              (allocation.width - minimum_width + 10));
+#if GTK_CHECK_VERSION(3,0,0)
+                              (allocation.width - minimum_width));
 #else
-                              (allocation.width - requisition.width + 10));
+                              (allocation.width - requisition.width));
 #endif
       pango_layout_get_pixel_extents (private->layout, NULL, &logical);
 
       gtk_entry_get_layout_offsets (GTK_ENTRY (widget), NULL, &layout_offset_y);
 
       if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
-#if WITH_GTKMM_3_0
+#if GTK_CHECK_VERSION(3,0,0)
           layout_offset_x = text_area.x + text_area.width - logical.width - 4;
 #else
           layout_offset_x = w - logical.width - 4;
@@ -501,25 +515,97 @@ static gboolean
 
       layout_offset_x -= logical.x;
 
-#if WITH_GTKMM_3_0
-      cairo_move_to (cr, layout_offset_x, text_area.y + layout_offset_y-3);
-      
-      gtk_style_context_get_color (style, gtk_widget_get_state_flags (widget),
-                                   &color);
-      
-      gdk_cairo_set_source_rgba (cr, &color);
+#if GTK_CHECK_VERSION(3,0,0)
+      state = gtk_widget_get_state_flags (widget);
+
+      gtk_style_context_get_color (style, state, &text_color);
+
+      gtk_style_context_save (style);
+      gtk_style_context_add_class (style, GTK_STYLE_CLASS_PROGRESSBAR);
+      gtk_style_context_get_color (style, state, &bar_text_color);
+      gtk_style_context_restore (style);
 #else
-      cairo_move_to (cr, layout_offset_x, layout_offset_y-3);
-      
-      gdk_cairo_set_source_color (cr,
-                                  &style->text[gtk_widget_get_state (widget)]);
+      state = GTK_STATE_SELECTED;
+      if (! gtk_widget_get_sensitive (widget))
+        state = GTK_STATE_INSENSITIVE;
+      text_color     = style->text[gtk_widget_get_state (widget)];
+      bar_text_color = style->fg[state];
+
+      window_width  = gdk_window_get_width  (event->window);
+      window_height = gdk_window_get_height (event->window);
 #endif
 
+      progress_fraction = gtk_entry_get_progress_fraction (GTK_ENTRY (widget));
+
+      if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
+        {
+          progress_fraction = 1.0 - progress_fraction;
+
+#if GTK_CHECK_VERSION(3,0,0)
+          progress_x      = text_area.width * progress_fraction;
+#else
+          progress_x      = window_width * progress_fraction;
+#endif
+          progress_y      = 0;
+#if GTK_CHECK_VERSION(3,0,0)
+          progress_width  = text_area.width - progress_x;
+          progress_height = text_area.height;
+#else
+          progress_width  = window_width - progress_x;
+          progress_height = window_height;
+#endif
+        }
+      else
+        {
+          progress_x      = 0;
+          progress_y      = 0;
+#if GTK_CHECK_VERSION(3,0,0)
+          progress_width  = text_area.width * progress_fraction;
+          progress_height = text_area.height;
+#else
+          progress_width  = window_width * progress_fraction;
+          progress_height = window_height;
+#endif
+        }
+
+      cairo_save (cr);
+
+      cairo_set_fill_rule (cr, CAIRO_FILL_RULE_EVEN_ODD);
+#if GTK_CHECK_VERSION(3,0,0)
+      cairo_rectangle (cr, 0, 0, text_area.width, text_area.height);
+#else
+      cairo_rectangle (cr, 0, 0, window_width, window_height);
+#endif
+      cairo_rectangle (cr, progress_x, progress_y,
+                       progress_width, progress_height);
+      cairo_clip (cr);
+      cairo_set_fill_rule (cr, CAIRO_FILL_RULE_WINDING);
+
+#if GTK_CHECK_VERSION(3,0,0)
+      cairo_move_to (cr, layout_offset_x, text_area.y + layout_offset_y-3);
+      gdk_cairo_set_source_rgba (cr, &text_color);
+#else
+      cairo_move_to (cr, layout_offset_x, layout_offset_y-3);
+      gdk_cairo_set_source_color (cr, &text_color);
+#endif
+      pango_cairo_show_layout (cr, private->layout);
+      cairo_restore (cr);
+
+      cairo_rectangle (cr, progress_x, progress_y,
+                       progress_width, progress_height);
+      cairo_clip (cr);
+
+#if GTK_CHECK_VERSION(3,0,0)
+      cairo_move_to (cr, layout_offset_x, text_area.y + layout_offset_y-3);
+      gdk_cairo_set_source_rgba (cr, &bar_text_color);
+#else
+      cairo_move_to (cr, layout_offset_x, layout_offset_y-3);
+      gdk_cairo_set_source_color (cr, &bar_text_color);
+#endif
       pango_cairo_show_layout (cr, private->layout);
     }
 
-#if WITH_GTKMM_3_0
-#else
+#if !GTK_CHECK_VERSION(3,0,0)
   cairo_destroy (cr);
 #endif
 
@@ -980,7 +1066,6 @@ gimp_spin_scale_value_changed (GtkSpinButton *spin_button)
   gimp_spin_scale_get_limits (GIMP_SPIN_SCALE (spin_button), &lower, &upper);
 
   value = CLAMP (gtk_adjustment_get_value (adjustment), lower, upper);
-
 
   gtk_entry_set_progress_fraction (GTK_ENTRY (spin_button),
                                    pow ((value - lower) / (upper - lower),
