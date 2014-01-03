@@ -294,44 +294,23 @@ gimp_spin_scale_set_appearance( GtkWidget *widget, const gchar *appearance)
     }
 }
 
+#if GTK_CHECK_VERSION(3,0,0)
 static void
-#if WITH_GTKMM_3_0
 gimp_spin_scale_get_preferred_width (GtkWidget *widget,
                                      gint      *minimum_width,
                                      gint      *natural_width)
-#else
-gimp_spin_scale_size_request (GtkWidget      *widget,
-                              GtkRequisition *requisition)
-#endif
 {
   GimpSpinScalePrivate *private = GET_PRIVATE (widget);
-  GtkStyle             *style   = gtk_widget_get_style (widget);
   PangoContext         *context = gtk_widget_get_pango_context (widget);
   PangoFontMetrics     *metrics;
 
-#if WITH_GTKMM_3_0
   GTK_WIDGET_CLASS (parent_class)->get_preferred_width (widget,
-                                                          minimum_width,
-                                                          natural_width);
-#else
-  gint                  height;
-  GTK_WIDGET_CLASS (parent_class)->size_request (widget, requisition);
-#endif
+                                                        minimum_width,
+                                                        natural_width);
 
-  metrics = pango_context_get_metrics (context, style->font_desc,
+  metrics = pango_context_get_metrics (context,
+                                       pango_context_get_font_description (context),
                                        pango_context_get_language (context));
-
-#if WITH_GTKMM_3_0
-#else
-  height = PANGO_PIXELS (pango_font_metrics_get_ascent (metrics) +
-                         pango_font_metrics_get_descent (metrics));
-
-  if (private->appearanceMode == APPEARANCE_COMPACT) {
-      requisition->height += 1;
-  } else {
-      requisition->height += height;
-  }
-#endif
 
   if (private->label)
     {
@@ -343,26 +322,19 @@ gimp_spin_scale_size_request (GtkWidget      *widget,
       digit_width = pango_font_metrics_get_approximate_digit_width (metrics);
       char_pixels = PANGO_PIXELS (MAX (char_width, digit_width));
 
-#if WITH_GTKMM_3_0
+      /* ~3 chars for the ellipse */
       *minimum_width += char_pixels * 3;
       *natural_width += char_pixels * 3;
-#else
-      /* ~3 chars for the ellipses */
-      requisition->width += char_pixels * 3;
-#endif
-
     }
 
   pango_font_metrics_unref (metrics);
 }
 
-#if WITH_GTKMM_3_0
 static void
 gimp_spin_scale_get_preferred_height (GtkWidget *widget,
                                       gint      *minimum_height,
                                       gint      *natural_height)
 {
-  GtkStyle         *style   = gtk_widget_get_style (widget);
   PangoContext     *context = gtk_widget_get_pango_context (widget);
   PangoFontMetrics *metrics;
   //gint              height;
@@ -371,7 +343,8 @@ gimp_spin_scale_get_preferred_height (GtkWidget *widget,
                                                          minimum_height,
                                                          natural_height);
 
-  metrics = pango_context_get_metrics (context, style->font_desc,
+  metrics = pango_context_get_metrics (context,
+                                       pango_context_get_font_description (context),
                                        pango_context_get_language (context));
 
   //height = PANGO_PIXELS (pango_font_metrics_get_ascent (metrics) +
@@ -379,6 +352,47 @@ gimp_spin_scale_get_preferred_height (GtkWidget *widget,
 
   *minimum_height += 1;
   *natural_height += 1;
+
+  pango_font_metrics_unref (metrics);
+}
+#else
+static void
+gimp_spin_scale_size_request (GtkWidget      *widget,
+                              GtkRequisition *requisition)
+{
+  GimpSpinScalePrivate *private = GET_PRIVATE (widget);
+  GtkStyle             *style   = gtk_widget_get_style (widget);
+  PangoContext         *context = gtk_widget_get_pango_context (widget);
+  PangoFontMetrics     *metrics;
+  gint                  height;
+
+  GTK_WIDGET_CLASS (parent_class)->size_request (widget, requisition);
+
+  metrics = pango_context_get_metrics (context, style->font_desc,
+                                       pango_context_get_language (context));
+
+  height = PANGO_PIXELS (pango_font_metrics_get_ascent (metrics) +
+                         pango_font_metrics_get_descent (metrics));
+
+  if (private->appearanceMode == APPEARANCE_COMPACT) {
+      requisition->height += 1;
+  } else {
+      requisition->height += height;
+  }
+
+  if (private->label)
+    {
+      gint char_width;
+      gint digit_width;
+      gint char_pixels;
+
+      char_width = pango_font_metrics_get_approximate_char_width (metrics);
+      digit_width = pango_font_metrics_get_approximate_digit_width (metrics);
+      char_pixels = PANGO_PIXELS (MAX (char_width, digit_width));
+
+      /* ~3 chars for the ellipses */
+      requisition->width += char_pixels * 3;
+    }
 
   pango_font_metrics_unref (metrics);
 }
