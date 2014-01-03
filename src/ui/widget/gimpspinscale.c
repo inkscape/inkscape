@@ -225,26 +225,20 @@ gimp_spin_scale_set_property (GObject      *object,
                               GParamSpec   *pspec)
 {
   GimpSpinScalePrivate *private = GET_PRIVATE (object);
+  GimpSpinScale        *scale   = GIMP_SPIN_SCALE (object);
 
   switch (property_id)
     {
     case PROP_LABEL:
-      g_free (private->label);
-      private->label = g_value_dup_string (value);
-      if (private->layout)
-        {
-          g_object_unref (private->layout);
-          private->layout = NULL;
-        }
-      gtk_widget_queue_resize (GTK_WIDGET (object));
+      gimp_spin_scale_set_label (scale, g_value_get_string (value));
       break;
 
     case PROP_FOCUS_WIDGET:
-    {
+      {
         /* TODO unhook prior */
-        private->focusWidget = (GtkWidget*)g_value_get_pointer( value );
-    }
-    break;
+        private->focusWidget = GTK_WIDGET (g_value_get_pointer (value));
+      }
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -259,16 +253,17 @@ gimp_spin_scale_get_property (GObject    *object,
                               GParamSpec *pspec)
 {
   GimpSpinScalePrivate *private = GET_PRIVATE (object);
+  GimpSpinScale        *scale   = GIMP_SPIN_SCALE (object);
 
   switch (property_id)
     {
     case PROP_LABEL:
-      g_value_set_string (value, private->label);
+      g_value_set_string (value, gimp_spin_scale_get_label (scale));
       break;
 
     case PROP_FOCUS_WIDGET:
-        g_value_set_pointer( value, private->focusWidget );
-        break;
+      g_value_set_pointer (value, private->focusWidget);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -1096,6 +1091,41 @@ gimp_spin_scale_new (GtkAdjustment *adjustment,
 }
 
 void
+gimp_spin_scale_set_label (GimpSpinScale *scale,
+                           const gchar   *label)
+{
+  GimpSpinScalePrivate *private;
+
+  g_return_if_fail (GIMP_IS_SPIN_SCALE (scale));
+
+  private = GET_PRIVATE (scale);
+
+  if (label == private->label)
+    return;
+
+  g_free (private->label);
+  private->label = g_strdup (label);
+
+  if (private->layout)
+    {
+      g_object_unref (private->layout);
+      private->layout = NULL;
+    }
+
+  gtk_widget_queue_resize (GTK_WIDGET (scale));
+
+  g_object_notify (G_OBJECT (scale), "label");
+}
+
+const gchar *
+gimp_spin_scale_get_label (GimpSpinScale *scale)
+{
+  g_return_val_if_fail (GIMP_IS_SPIN_SCALE (scale), NULL);
+
+  return GET_PRIVATE (scale)->label;
+}
+
+void
 gimp_spin_scale_set_scale_limits (GimpSpinScale *scale,
                                   gdouble        lower,
                                   gdouble        upper)
@@ -1175,11 +1205,7 @@ gimp_spin_scale_set_gamma (GimpSpinScale *scale,
 gdouble
 gimp_spin_scale_get_gamma (GimpSpinScale *scale)
 {
-  GimpSpinScalePrivate *private;
-
   g_return_val_if_fail (GIMP_IS_SPIN_SCALE (scale), 1.0);
 
-  private = GET_PRIVATE (scale);
-
-  return private->gamma;
+  return GET_PRIVATE(scale)->gamma;
 }
