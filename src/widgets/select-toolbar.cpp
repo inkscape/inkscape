@@ -249,11 +249,12 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
         // FIXME: fix for GTK breakage, see comment in SelectedStyle::on_opacity_changed
         sp_desktop_canvas(desktop)->forceFullRedrawAfterInterruptions(0);
 
-        int transform_stroke = prefs->getBool("/options/transform/stroke", true) ? 1 : 0;
+        bool transform_stroke = prefs->getBool("/options/transform/stroke", true);
+        bool preserve = prefs->getBool("/options/preservetransform/value", false);
 
         Geom::Affine scaler;
         if (bbox_type == SPItem::VISUAL_BBOX) {
-            scaler = get_scale_transform_for_variable_stroke (*bbox_vis, *bbox_geom, transform_stroke, x0, y0, x1, y1);
+            scaler = get_scale_transform_for_variable_stroke (*bbox_vis, *bbox_geom, transform_stroke, preserve, x0, y0, x1, y1);
         } else {
             // 1) We could have use the newer get_scale_transform_for_variable_stroke() here, but to avoid regressions
             // we'll just use the old get_scale_transform_for_uniform_stroke() for now.

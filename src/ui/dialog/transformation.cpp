@@ -813,7 +813,8 @@ void Transformation::applyPageScale(Inkscape::Selection *selection)
     double scaleY = _scalar_scale_vertical.getValue("px");
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    int transform_stroke = prefs->getBool("/options/transform/stroke", true) ? 1 : 0;
+    bool transform_stroke = prefs->getBool("/options/transform/stroke", true);
+    bool preserve = prefs->getBool("/options/preservetransform/value", false);
     if (prefs->getBool("/dialogs/transformation/applyseparately")) {
         for (GSList const *l = selection->itemList(); l != NULL; l = l->next) {
             SPItem *item = SP_ITEM(l->data);
@@ -835,7 +836,7 @@ void Transformation::applyPageScale(Inkscape::Selection *selection)
                 double x1 = bbox_pref->midpoint()[Geom::X] + new_width/2;
                 double y1 = bbox_pref->midpoint()[Geom::Y] + new_height/2;
 
-                Geom::Affine scaler = get_scale_transform_for_variable_stroke (*bbox_pref, *bbox_geom, transform_stroke, x0, y0, x1, y1);
+                Geom::Affine scaler = get_scale_transform_for_variable_stroke (*bbox_pref, *bbox_geom, transform_stroke, preserve, x0, y0, x1, y1);
                 item->set_i2d_affine(item->i2dt_affine() * scaler);
                 item->doWriteTransform(item->getRepr(), item->transform);
             }
@@ -858,7 +859,7 @@ void Transformation::applyPageScale(Inkscape::Selection *selection)
             double y0 = bbox_pref->midpoint()[Geom::Y] - new_height/2;
             double x1 = bbox_pref->midpoint()[Geom::X] + new_width/2;
             double y1 = bbox_pref->midpoint()[Geom::Y] + new_height/2;
-            Geom::Affine scaler = get_scale_transform_for_variable_stroke (*bbox_pref, *bbox_geom, transform_stroke, x0, y0, x1, y1);
+            Geom::Affine scaler = get_scale_transform_for_variable_stroke (*bbox_pref, *bbox_geom, transform_stroke, preserve, x0, y0, x1, y1);
 
             sp_selection_apply_affine(selection, scaler);
         }
