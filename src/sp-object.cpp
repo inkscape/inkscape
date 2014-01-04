@@ -119,7 +119,7 @@ SPObject::SPObject()
       _successor(NULL), _collection_policy(SPObject::COLLECT_WITH_PARENT),
       _label(NULL), _default_label(NULL)
 {
-    debug("id=%x, typename=%s",this, g_type_name_from_instance((GTypeInstance*)object));
+    debug("id=%p, typename=%s",this, g_type_name_from_instance((GTypeInstance*)this));
 
     //used XML Tree here.
     this->getRepr(); // TODO check why this call is made
@@ -607,14 +607,14 @@ void SPObject::child_added(Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
 void SPObject::release() {
     SPObject* object = this;
 
-    debug("id=%x, typename=%s", object, g_type_name_from_instance((GTypeInstance*)object));
+    debug("id=%p, typename=%s", object, g_type_name_from_instance((GTypeInstance*)object));
     while (object->children) {
         object->detach(object->children);
     }
 }
 
 void SPObject::remove_child(Inkscape::XML::Node* child) {
-    debug("id=%x, typename=%s", this, g_type_name_from_instance((GTypeInstance*)this));
+    debug("id=%p, typename=%s", this, g_type_name_from_instance((GTypeInstance*)this));
 
     SPObject *ochild = this->get_child_by_repr(child);
 
@@ -638,7 +638,7 @@ void SPObject::build(SPDocument *document, Inkscape::XML::Node *repr) {
     SPObject* object = this;
 
     /* Nothing specific here */
-    debug("id=%x, typename=%s", object, g_type_name_from_instance((GTypeInstance*)object));
+    debug("id=%p, typename=%s", object, g_type_name_from_instance((GTypeInstance*)object));
 
     object->readAttr("xml:space");
     object->readAttr("inkscape:label");
@@ -665,7 +665,7 @@ void SPObject::build(SPDocument *document, Inkscape::XML::Node *repr) {
 
 void SPObject::invoke_build(SPDocument *document, Inkscape::XML::Node *repr, unsigned int cloned)
 {
-    debug("id=%x, typename=%s", this, g_type_name_from_instance((GTypeInstance*)this));
+    debug("id=%p, typename=%s", this, g_type_name_from_instance((GTypeInstance*)this));
 
     //g_assert(object != NULL);
     //g_assert(SP_IS_OBJECT(object));
