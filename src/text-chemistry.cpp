@@ -246,6 +246,7 @@ text_remove_all_kerns_recursively(SPObject *o)
 
     for (SPObject *i = o->firstChild(); i != NULL; i = i->getNext()) {
         text_remove_all_kerns_recursively(i);
+        i->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_TEXT_LAYOUT_MODIFIED_FLAG);
     }
 }
 
