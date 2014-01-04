@@ -220,7 +220,7 @@ Inkscape::XML::Node* SPFilter::write(Inkscape::XML::Document *doc, Inkscape::XML
     // Original from sp-item-group.cpp
     if (flags & SP_OBJECT_WRITE_BUILD) {
         if (!repr) {
-            repr = doc->createElement("svg:this");
+            repr = doc->createElement("svg:filter");
         }
 
         GSList *l = NULL;

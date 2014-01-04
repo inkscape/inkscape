@@ -179,7 +179,7 @@ void SPFont::update(SPCtx *ctx, guint flags) {
 
 Inkscape::XML::Node* SPFont::write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags) {
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        repr = xml_doc->createElement("svg:this");
+        repr = xml_doc->createElement("svg:font");
     }
 
     sp_repr_set_svg_double(repr, "horiz-origin-x", this->horiz_origin_x);

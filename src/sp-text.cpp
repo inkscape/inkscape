@@ -235,7 +235,7 @@ void SPText::modified(guint flags) {
 Inkscape::XML::Node *SPText::write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags) {
     if (flags & SP_OBJECT_WRITE_BUILD) {
         if (!repr) {
-            repr = xml_doc->createElement("svg:this");
+            repr = xml_doc->createElement("svg:text");
         }
 
         GSList *l = NULL;
