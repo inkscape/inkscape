@@ -159,7 +159,7 @@ PixelArtDialogImpl::PixelArtDialogImpl() :
 
     // Heuristics
     {
-        curvesMultiplierLabel.set_label(_("_Curves (multiplier)"));
+        curvesMultiplierLabel.set_label(_("_Curves (multiplier):"));
         curvesMultiplierLabel.set_use_underline(true);
         curvesMultiplierLabel.set_mnemonic_widget(curvesMultiplierSpinner);
         curvesMultiplierLabel.set_tooltip_text(_("Favors connections that are part of a long curve"));
@@ -173,7 +173,7 @@ PixelArtDialogImpl::PixelArtDialogImpl() :
         curvesMultiplierHBox.pack_end(curvesMultiplierSpinner, false, false);
         heuristicsVBox.pack_start(curvesMultiplierHBox, false, false);
 
-        islandsWeightLabel.set_label(_("_Islands (weight)"));
+        islandsWeightLabel.set_label(_("_Islands (weight):"));
         islandsWeightLabel.set_use_underline(true);
         islandsWeightLabel.set_mnemonic_widget(islandsWeightSpinner);
         islandsWeightLabel.set_tooltip_text(_("Avoid single disconnected pixels"));
@@ -188,7 +188,7 @@ PixelArtDialogImpl::PixelArtDialogImpl() :
         islandsWeightHBox.pack_end(islandsWeightSpinner, false, false);
         heuristicsVBox.pack_start(islandsWeightHBox, false, false);
 
-        sparsePixelsRadiusLabel.set_label(_("Sparse pixels (window _radius)"));
+        sparsePixelsRadiusLabel.set_label(_("Sparse pixels (window _radius):"));
         sparsePixelsRadiusLabel.set_use_underline(true);
         sparsePixelsRadiusLabel.set_mnemonic_widget(sparsePixelsRadiusSpinner);
 
@@ -198,7 +198,7 @@ PixelArtDialogImpl::PixelArtDialogImpl() :
             .connect(sigc::mem_fun(*this, &PixelArtDialogImpl::updatePreview));
 
         sparsePixelsRadiusSpinner.set_tooltip_text(_("The radius of the window analyzed"));
-        sparsePixelsMultiplierLabel.set_label(_("Sparse pixels (_multiplier)"));
+        sparsePixelsMultiplierLabel.set_label(_("Sparse pixels (_multiplier):"));
         sparsePixelsMultiplierLabel.set_use_underline(true);
         sparsePixelsMultiplierLabel.set_mnemonic_widget(sparsePixelsMultiplierSpinner);
 
