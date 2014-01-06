@@ -520,6 +520,11 @@ Geom::Affine SPStar::set_transform(Geom::Affine const &xform)
         return xform;
     }
 
+    // Allow live effects
+    if (hasPathEffect() && pathEffectsEnabled()) {
+        return xform;
+    }
+
     /* Calculate star start in parent coords. */
     Geom::Point pos( this->center * xform );
 

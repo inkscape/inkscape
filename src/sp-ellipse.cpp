@@ -506,6 +506,11 @@ void SPGenericEllipse::set_shape()
 
 Geom::Affine SPGenericEllipse::set_transform(Geom::Affine const &xform)
 {
+    // Allow live effects
+    if (hasPathEffect() && pathEffectsEnabled()) {
+        return xform;
+    }
+
     /* Calculate ellipse start in parent coords. */
     Geom::Point pos(Geom::Point(this->cx.computed, this->cy.computed) * xform);
 
