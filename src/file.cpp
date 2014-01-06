@@ -855,23 +855,18 @@ sp_file_save_dialog(Gtk::Window &parentWindow, SPDocument *doc, Inkscape::Extens
     Glib::ustring save_loc = save_path;
     save_loc.append(G_DIR_SEPARATOR_S);
 
-    // TODO fixed buffer is bad:
-    char formatBuf[256];
     int i = 1;
     if ( !doc->getURI() ) {
         // We are saving for the first time; create a unique default filename
-        snprintf(formatBuf, 255, _("drawing%s"), filename_extension.c_str());
-        save_loc.append(formatBuf);
+        save_loc = save_loc + Glib::ustring(_("drawing")) + filename_extension;
 
         while (Inkscape::IO::file_test(save_loc.c_str(), G_FILE_TEST_EXISTS)) {
             save_loc = save_path;
             save_loc.append(G_DIR_SEPARATOR_S);
-            snprintf(formatBuf, 255, _("drawing-%d%s"), i++, filename_extension.c_str());
-            save_loc.append(formatBuf);
+            save_loc = save_loc + Glib::ustring::compose(_("drawing-%1"), i++) + filename_extension;
         }
     } else {
-        snprintf(formatBuf, 255, _("%s"), Glib::path_get_basename(doc->getURI()).c_str());
-        save_loc.append(formatBuf);
+        save_loc.append(Glib::path_get_basename(doc->getURI()));
     }
 
     // convert save_loc from utf-8 to locale
