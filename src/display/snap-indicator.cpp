@@ -262,35 +262,37 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
 
         // Display the tooltip, which reveals the type of snap source and the type of snap target
         gchar *tooltip_str = NULL;
-        if (p.getSource() != SNAPSOURCE_GRID_PITCH) {
+        if (p.getSource() != SNAPSOURCE_GRID_PITCH && p.getTarget() != SNAPSOURCE_UNDEFINED) {
             tooltip_str = g_strconcat(source_name, _(" to "), target_name, NULL);
-        } else {
+        } else if (p.getSource() != SNAPSOURCE_UNDEFINED) {
             tooltip_str = g_strdup(source_name);
         }
         double fontsize = prefs->getInt("/tools/measure/fontsize");
 
-        Geom::Point tooltip_pos = p.getPoint();
-        if (tools_isactive(_desktop, TOOLS_MEASURE)) {
-            // Make sure that the snap tooltips do not overlap the ones from the measure tool
-            tooltip_pos += _desktop->w2d(Geom::Point(0, -3*fontsize));
-        } else {
-            tooltip_pos += _desktop->w2d(Geom::Point(0, -2*fontsize));
-        }
+        if (tooltip_str) {
+            Geom::Point tooltip_pos = p.getPoint();
+            if (tools_isactive(_desktop, TOOLS_MEASURE)) {
+                // Make sure that the snap tooltips do not overlap the ones from the measure tool
+                tooltip_pos += _desktop->w2d(Geom::Point(0, -3*fontsize));
+            } else {
+                tooltip_pos += _desktop->w2d(Geom::Point(0, -2*fontsize));
+            }
 
-        SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(_desktop), _desktop, tooltip_pos, tooltip_str);
-        sp_canvastext_set_fontsize(SP_CANVASTEXT(canvas_tooltip), fontsize);
-        SP_CANVASTEXT(canvas_tooltip)->rgba = 0xffffffff;
-        SP_CANVASTEXT(canvas_tooltip)->outline = false;
-        SP_CANVASTEXT(canvas_tooltip)->background = true;
-        if (pre_snap) {
-            SP_CANVASTEXT(canvas_tooltip)->rgba_background = 0x33337f40;
-        } else {
-            SP_CANVASTEXT(canvas_tooltip)->rgba_background = 0x33337f7f;
-        }
-        SP_CANVASTEXT(canvas_tooltip)->anchor_position = TEXT_ANCHOR_CENTER;
-        g_free(tooltip_str);
+            SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(_desktop), _desktop, tooltip_pos, tooltip_str);
+            sp_canvastext_set_fontsize(SP_CANVASTEXT(canvas_tooltip), fontsize);
+            SP_CANVASTEXT(canvas_tooltip)->rgba = 0xffffffff;
+            SP_CANVASTEXT(canvas_tooltip)->outline = false;
+            SP_CANVASTEXT(canvas_tooltip)->background = true;
+            if (pre_snap) {
+                SP_CANVASTEXT(canvas_tooltip)->rgba_background = 0x33337f40;
+            } else {
+                SP_CANVASTEXT(canvas_tooltip)->rgba_background = 0x33337f7f;
+            }
+            SP_CANVASTEXT(canvas_tooltip)->anchor_position = TEXT_ANCHOR_CENTER;
+            g_free(tooltip_str);
 
-        _snaptarget_tooltip = _desktop->add_temporary_canvasitem(canvas_tooltip, timeout_val);
+            _snaptarget_tooltip = _desktop->add_temporary_canvasitem(canvas_tooltip, timeout_val);
+        }
 
         // Display the bounding box, if we snapped to one
         Geom::OptRect const bbox = p.getTargetBBox();
