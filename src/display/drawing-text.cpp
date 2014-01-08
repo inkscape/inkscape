@@ -67,13 +67,11 @@ unsigned DrawingGlyphs::_updateItem(Geom::IntRect const &/*area*/, UpdateContext
     _pick_bbox = Geom::IntRect();
     _bbox = Geom::IntRect();
 
-    Geom::OptRect b;
-
 /* orignally it did the one line below,
     but it did not handle ws characters at all, and it had problems with scaling for overline/underline.
     Replaced with the section below, which seems to be much more stable.
 
-    b  = bounds_exact_transformed(*_font->PathVector(_glyph), ctx.ctm);
+    Geom::OptRect b  = bounds_exact_transformed(*_font->PathVector(_glyph), ctx.ctm);
 */
     /* Make a bounding box that is a little taller and lower (currently 10% extra) than the font's drawing box.  Extra space is
     to hold overline or underline, if present.  All characters in a font use the same ascent and descent,
@@ -81,37 +79,37 @@ unsigned DrawingGlyphs::_updateItem(Geom::IntRect const &/*area*/, UpdateContext
     the bounding box is limited to the box surrounding the drawn parts of visible glyphs only, and draws outside are ignored.
     */
 
-    float scale = 1.0;
-    if(_transform){ scale /= _transform->descrim(); }
+    float scale_bigbox = 1.0;
+    if (_transform) {
+        scale_bigbox /= _transform->descrim();
+    }
 
-    Geom::Rect bigbox(Geom::Point(0.0, _asc*scale*1.1),Geom::Point(_width*scale, -_dsc*scale*1.1));
-    b = bigbox * ctx.ctm;
+    Geom::Rect bigbox(Geom::Point(0.0, _asc*scale_bigbox*1.1),Geom::Point(_width*scale_bigbox, -_dsc*scale_bigbox*1.1));
+    Geom::Rect b = bigbox * ctx.ctm;
 
-    if (b && (ggroup->_nrstyle.stroke.type != NRStyle::PAINT_NONE)) {
-        float width, scale;
-
+    if (ggroup->_nrstyle.stroke.type != NRStyle::PAINT_NONE) {
         // this expands the selection box for cases where the stroke is "thick"
-        scale = ctx.ctm.descrim();
+        float scale = ctx.ctm.descrim();
         if (_transform) {
             scale /= _transform->descrim(); // FIXME temporary hack
         }
-        width = MAX(0.125, ggroup->_nrstyle.stroke_width * scale);
+        float width = MAX(0.125, ggroup->_nrstyle.stroke_width * scale);
         if ( fabs(ggroup->_nrstyle.stroke_width * scale) > 0.01 ) { // FIXME: this is always true
-            b->expandBy(0.5 * width);
+            b.expandBy(0.5 * width);
         }
 
        // save bbox without miters for picking
-        _pick_bbox = b->roundOutwards();
+        _pick_bbox = b.roundOutwards();
 
         float miterMax = width * ggroup->_nrstyle.miter_limit;
         if ( miterMax > 0.01 ) {
             // grunt mode. we should compute the various miters instead
             // (one for each point on the curve)
-            b->expandBy(miterMax);
+            b.expandBy(miterMax);
         }
-        _bbox = b->roundOutwards();
-    } else if (b) {
-        _bbox = b->roundOutwards();
+        _bbox = b.roundOutwards();
+    } else {
+        _bbox = b.roundOutwards();
         _pick_bbox = *_bbox;
     }
 /*
