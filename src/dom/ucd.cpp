@@ -2308,6 +2308,8 @@ typedef struct
     int map[3];
 } CaseMapEntry;
 
+/*
+
 static CaseMapEntry caseMap[] =
 {
     { 0x1fc2, 2, { 0xffff, 0x0159 } },
@@ -2426,7 +2428,7 @@ static CaseMapEntry caseMap[] =
 };
 
 
-
+*/
 
 
 
