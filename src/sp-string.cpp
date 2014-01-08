@@ -108,7 +108,7 @@ void SPString::read_content() {
     object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-void SPString::update(SPCtx *ctx, unsigned flags) {
+void SPString::update(SPCtx * /*ctx*/, unsigned /*flags*/) {
 //    SPObject::onUpdate(ctx, flags);
 
     // if (flags & (SP_OBJECT_STYLE_MODIFIED_FLAG | SP_OBJECT_MODIFIED_FLAG)) {
