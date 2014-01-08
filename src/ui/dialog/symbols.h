@@ -72,6 +72,7 @@ private:
     void revertSymbol();
     void defsModified(SPObject *object, guint flags);
     void selectionChanged(Inkscape::Selection *selection);
+    void documentReplaced(SPDesktop *desktop, SPDocument *document);
     SPDocument* selectedSymbols();
     Glib::ustring selectedSymbolId();
     void iconChanged();

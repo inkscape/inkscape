@@ -271,6 +271,10 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
           sigc::mem_fun(*this, &SymbolsDialog::selectionChanged));
   instanceConns.push_back(selectionChangedConn);
 
+  sigc::connection documentReplacedConn = currentDesktop->connectDocumentReplaced(
+          sigc::mem_fun(*this, &SymbolsDialog::documentReplaced));
+  instanceConns.push_back(documentReplacedConn);
+
   get_symbols();
   draw_symbols( currentDocument ); /* Defaults to current document */
 
@@ -376,6 +380,11 @@ void SymbolsDialog::selectionChanged(Inkscape::Selection *selection) {
   if(symbol && !selection->includes(symbol)) {
       iconView->unselect_all();
   }
+}
+
+void SymbolsDialog::documentReplaced(SPDesktop *desktop, SPDocument *document)
+{
+  rebuild();
 }
 
 SPDocument* SymbolsDialog::selectedSymbols() {
