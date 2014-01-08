@@ -107,6 +107,7 @@ inline std::vector<gdouble> helperfns_read_vector(const gchar* value){
                 // We could leave this out, too. If strtod can't convert
                 // anything, it will return zero.
                 ret = 0;
+                break;
             }
             v.push_back(ret);
 
