@@ -321,7 +321,7 @@ Wmf::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *filena
 
 
 /* WMF has no worldTransform, so this always returns 1.0.  Retain it to keep WMF and WMF in sync as much as possible.*/
-double Wmf::current_scale(PWMF_CALLBACK_DATA d){
+double Wmf::current_scale(PWMF_CALLBACK_DATA /*d*/){
     return 1.0;
 }
 
@@ -341,7 +341,7 @@ std::string Wmf::current_matrix(PWMF_CALLBACK_DATA d, double x, double y, int us
 }
 
 /* WMF has no worldTransform, so this always returns 0.  Retain it to keep WMF and WMF in sync as much as possible.*/
-double Wmf::current_rotation(PWMF_CALLBACK_DATA d){
+double Wmf::current_rotation(PWMF_CALLBACK_DATA /*d*/){
     return 0.0;
 }
 
@@ -1025,7 +1025,7 @@ Wmf::_pix_y_to_point(PWMF_CALLBACK_DATA d, double py)
 
 
 double
-Wmf::pix_to_x_point(PWMF_CALLBACK_DATA d, double px, double py)
+Wmf::pix_to_x_point(PWMF_CALLBACK_DATA d, double px, double /*py*/)
 {
     double x   = _pix_x_to_point(d, px);
 
@@ -1033,7 +1033,7 @@ Wmf::pix_to_x_point(PWMF_CALLBACK_DATA d, double px, double py)
 }
 
 double
-Wmf::pix_to_y_point(PWMF_CALLBACK_DATA d, double px, double py)
+Wmf::pix_to_y_point(PWMF_CALLBACK_DATA d, double /*px*/, double py)
 {
 
     double y   = _pix_y_to_point(d, py);
