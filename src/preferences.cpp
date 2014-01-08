@@ -668,6 +668,9 @@ Inkscape::XML::Node *Preferences::_getNode(Glib::ustring const &pref_key, bool c
     // No longer necessary, can cause problems with input devices which have a dot in the name
     // g_assert( pref_key.find('.') == Glib::ustring::npos );
 
+    if (_prefs_doc == NULL){
+        return NULL;
+    }
     Inkscape::XML::Node *node = _prefs_doc->root();
     Inkscape::XML::Node *child = NULL;
     gchar **splits = g_strsplit(pref_key.c_str(), "/", 0);
