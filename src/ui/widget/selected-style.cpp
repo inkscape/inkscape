@@ -107,7 +107,7 @@ typedef enum {
 // pointers/types used need to be read-only. So until we correct the using
 // code, those warnings are actually desired. They say "Hey! Fix this". We
 // definitely don't want to hide/ignore them. --JonCruz
-static GtkTargetEntry ui_drop_target_entries [] = {
+static const GtkTargetEntry ui_drop_target_entries [] = {
     {"application/x-color", 0, APP_X_COLOR}
 };
 
