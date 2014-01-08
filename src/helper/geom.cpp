@@ -495,13 +495,13 @@ pathv_to_linear_and_cubic_beziers( Geom::PathVector const &pathv )
 /*
  * Converts all segments in all paths to Geom::LineSegment.  There is an intermediate
  * stage where some may be converted to beziers.  maxdisp is the maximum displacement from
- * the line segment to the bezier curve.
+ * the line segment to the bezier curve; ** maxdisp is not used at this moment **.
  *
  * This is NOT a terribly fast method, but it should give a solution close to the one with the
  * fewest points.
  */
 Geom::PathVector
-pathv_to_linear( Geom::PathVector const &pathv, double maxdisp)
+pathv_to_linear( Geom::PathVector const &pathv, double /*maxdisp*/)
 {
     Geom::PathVector output;
     Geom::PathVector tmppath = pathv_to_linear_and_cubic_beziers(pathv);
@@ -536,12 +536,11 @@ pathv_to_linear( Geom::PathVector const &pathv, double maxdisp)
                    pointlist, 
                    0);
                 pointlist.push_back(D);
-                Geom::Point r0;
                 Geom::Point r1 = pointlist[0];
                 for (unsigned int i=1; i<pointlist.size();i++){
-                   r0 = r1;
+                   Geom::Point prev_r1 = r1;
                    r1 = pointlist[i];
-                   Geom::LineSegment ls(r0, r1);
+                   Geom::LineSegment ls(prev_r1, r1);
                    output.back().append(ls);
                 }
                 pointlist.clear();
