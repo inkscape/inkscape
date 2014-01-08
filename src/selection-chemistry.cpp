@@ -3072,8 +3072,9 @@ void sp_selection_unsymbol(SPDesktop *desktop)
 
     // Need to delete <symbol>; all other <use> elements that referenced <symbol> should
     // auto-magically reference <g>.
-    symbol->deleteObject(true);
+    symbol->setAttribute("id","todelete");
     group->setAttribute("id",id.c_str()); // After we delete symbol with same id.
+    symbol->deleteObject(true);
     parent->getRepr()->appendChild(group);
 
     SPItem *group_item = static_cast<SPItem *>(sp_desktop_document(desktop)->getObjectByRepr(group));
