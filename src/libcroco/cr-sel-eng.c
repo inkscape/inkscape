@@ -150,9 +150,7 @@ lang_pseudo_class_handler (CRSelEng *const a_this,
         for (; node; node = get_next_parent_element_node (node_iface, node)) {
                 char *val = node_iface->getProp (node, "lang");
                 if (val) {
-                        if (!strqcmp (val,
-                                      a_sel->content.pseudo->extra->stryng->str,
-                                      a_sel->content.pseudo->extra->stryng->len)) {
+                        if (!strcasecmp(val, a_sel->content.pseudo->extra->stryng->str)) {
                                 result = TRUE;
                                 break;
                         }
