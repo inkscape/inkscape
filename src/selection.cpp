@@ -154,6 +154,7 @@ bool Selection::includes(SPObject *obj) const {
 void Selection::add(SPObject *obj, bool persist_selection_context/* = false */) {
     g_return_if_fail(obj != NULL);
     g_return_if_fail(SP_IS_OBJECT(obj));
+    g_return_if_fail(obj->document != NULL);
 
     if (includes(obj)) {
         return;

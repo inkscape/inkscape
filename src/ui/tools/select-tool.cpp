@@ -692,8 +692,7 @@ bool SelectTool::root_handler(GdkEvent* event) {
                             }
                         } else { // simple or shift click, no previous selection
                             _seltrans->resetState();
-                            if(this->item && this->item->document)
-                                selection->set(this->item);
+                            selection->set(this->item);
                         }
                     }
 
