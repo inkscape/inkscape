@@ -262,7 +262,7 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
 
         // Display the tooltip, which reveals the type of snap source and the type of snap target
         gchar *tooltip_str = NULL;
-        if (p.getSource() != SNAPSOURCE_GRID_PITCH && p.getTarget() != SNAPSOURCE_UNDEFINED) {
+        if ( (p.getSource() != SNAPSOURCE_GRID_PITCH) && (p.getTarget() != SNAPTARGET_UNDEFINED) ) {
             tooltip_str = g_strconcat(source_name, _(" to "), target_name, NULL);
         } else if (p.getSource() != SNAPSOURCE_UNDEFINED) {
             tooltip_str = g_strdup(source_name);
