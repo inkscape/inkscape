@@ -1241,8 +1241,8 @@ void Shape::QuickScan(float &pos, int &curP, float to, FloatLigne* line, float s
     
     if ( nbQRas > 1 ) {
         int curW = 0;
-        float lastX = 0;
-        float lastY = 0;
+        // float lastX = 0;
+        // float lastY = 0;
         int lastGuess = -1;
         int lastB = -1;
         
@@ -1270,8 +1270,8 @@ void Shape::QuickScan(float &pos, int &curP, float to, FloatLigne* line, float s
                 
             } else if ( curW%2 != 0 && oW%2 == 0 ) {
 
-                lastX = swrData[cb].curX;
-                lastY = swrData[cb].curY;
+                // lastX = swrData[cb].curX;
+                // lastY = swrData[cb].curY;
                 lastB = cb;
                 swrData[cb].guess = -1;
                 
