@@ -512,11 +512,11 @@ additional_selector_matches_node (CRSelEng * a_this,
                         continue ;
                 } else if (cur_add_sel->type == PSEUDO_CLASS_ADD_SELECTOR
                            && cur_add_sel->content.pseudo) {
-                        if (pseudo_class_add_sel_matches_node
+                        if (!pseudo_class_add_sel_matches_node
                             (a_this, cur_add_sel, a_node)) {
-                                return TRUE;
+                                return FALSE;
                         }
-                        return FALSE;
+                        continue ;
                 }
         }
         if (evaluated == TRUE)
