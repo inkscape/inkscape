@@ -61,6 +61,10 @@ class MyEffect(inkex.Effect):
                                      action="store", type="inkbool",
                                      dest="layerBackground", default=False,
                                      help="Add background color to each layer")
+        self.OptionParser.add_option("-i", "--dpi",
+                                     action="store", type="string",
+                                     dest="resolution", default="90",
+                                     help="File resolution")
 
     def output(self):
         pass
@@ -132,6 +136,8 @@ class MyEffect(inkex.Effect):
         # Layers
         area = '--export-area-page'
         opacity = '--export-background-opacity='
+        resolution = '--export-dpi=' + self.options.resolution
+        
         if self.options.layerBackground:
             opacity += "1"
         else:
@@ -149,7 +155,7 @@ class MyEffect(inkex.Effect):
                 else:
                     name = id
                 filename = os.path.join(self.tmp_dir, "%s.png" % id)
-                command = "inkscape -i \"%s\" -j %s %s -e \"%s\" %s " % (id, area, opacity, filename, svg_file)
+                command = "inkscape -i \"%s\" -j %s %s -e \"%s\" %s %s" % (id, area, opacity, filename, svg_file, resolution)
                
                 p = Popen(command, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE)
                 return_code = p.wait()
@@ -193,6 +199,7 @@ class MyEffect(inkex.Effect):
   (
     (img (car (gimp-image-new 200 200 RGB)))
   )
+  (gimp-image-set-resolution img %s %s)
   (gimp-image-undo-disable img)
   (for-each
     (lambda (names)
@@ -223,7 +230,7 @@ class MyEffect(inkex.Effect):
   (gimp-image-undo-enable img)
   (gimp-file-save RUN-NONINTERACTIVE img (car (gimp-image-get-active-layer img)) "%s" "%s"))
 (gimp-quit 0)
-            """ % (filelist, namelist, hGList, vGList, gridSpacingFunc, gridOriginFunc, xcf, xcf)
+            """ % (self.options.resolution, self.options.resolution, filelist, namelist, hGList, vGList, gridSpacingFunc, gridOriginFunc, xcf, xcf)
 
             junk = os.path.join(self.tmp_dir, 'junk_from_gimp.txt')
             command = 'gimp -i --batch-interpreter plug-in-script-fu-eval -b - > %s 2>&1' % junk

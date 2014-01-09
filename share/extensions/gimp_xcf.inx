@@ -11,12 +11,14 @@
         <param name="guides" type="boolean" _gui-text="Save Guides">false</param>
         <param name="grid" type="boolean" _gui-text="Save Grid">false</param>
         <param name="background" type="boolean" _gui-text="Save Background">false</param>
+        <param name="dpi" type="int" min="1" max="3000" _gui-text="File Resolution:">90</param>
         </page>
         <page name="Help" _gui-text="Help">
             <_param name="instructions" type="description" xml:space="preserve">This extension exports the document to Gimp XCF format according to the following options:
     * Save Guides: convert all guides to Gimp guides.
     * Save Grid: convert the first rectangular grid to a Gimp grid (note that the default Inkscape grid is very narrow when shown in Gimp).
     * Save Background: add the document background to each converted layer.
+    * File Resolution: XCF file resolution, in DPI.
 
 Each first level layer is converted to a Gimp layer. Sublayers are concatenated and converted with their first level parent layer into a single Gimp layer.</_param>
         </page>
