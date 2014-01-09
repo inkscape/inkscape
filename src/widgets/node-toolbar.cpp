@@ -244,7 +244,7 @@ static void sp_node_toolbox_coord_changed(gpointer /*shape_editor*/, GObject *tb
     Unit const *unit = tracker->getActiveUnit();
 
     NodeTool *nt = get_node_tool();
-    if (!nt || nt->_selected_nodes->empty()) {
+    if (!nt || !(nt->_selected_nodes) ||nt->_selected_nodes->empty()) {
         // no path selected
         gtk_action_set_sensitive(xact, FALSE);
         gtk_action_set_sensitive(yact, FALSE);
