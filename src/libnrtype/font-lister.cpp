@@ -286,6 +286,8 @@ namespace Inkscape
 
       PangoFontDescription *descr = pango_font_description_from_string(fontspec.c_str());
       const gchar* family = pango_font_description_get_family(descr);
+      if(!family)
+          family = "Sans";
       Glib::ustring Family = family;
 
       // PANGO BUG...
