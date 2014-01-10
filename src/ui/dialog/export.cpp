@@ -813,7 +813,7 @@ void Export::onAreaToggled ()
                     /* If we still don't have a filename -- let's build
                        one that's nice */
                     if (filename.empty()) {
-                        const gchar * id = NULL;
+                        const gchar * id = "object";
                         const GSList * reprlst = sp_desktop_selection(SP_ACTIVE_DESKTOP)->reprList();
                         for(; reprlst != NULL; reprlst = reprlst->next) {
                             Inkscape::XML::Node * repr = (Inkscape::XML::Node *)reprlst->data;
