@@ -483,6 +483,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                 sp_canvas_item_ungrab(item, event->button.time);
                 ret=TRUE;
             }
+            break;
     case GDK_ENTER_NOTIFY:
     {
             sp_guideline_set_color(SP_GUIDELINE(item), guide->hicolor);
