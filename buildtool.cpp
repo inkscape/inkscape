@@ -52,6 +52,8 @@
 #include <utime.h>
 #include <dirent.h>
 
+#include <iostream>
+#include <list>
 #include <string>
 #include <map>
 #include <set>
@@ -4163,7 +4165,7 @@ bool MakeBase::executeCommand(const String &command,
        return false;
        }
     strcpy(paramBuf, (char *)command.c_str());
-
+   
     //# Go to http://msdn2.microsoft.com/en-us/library/ms682499.aspx
     //# to see how Win32 pipes work
 
@@ -8136,6 +8138,31 @@ public:
     virtual ~TaskLink()
         {}
 
+    virtual void UniqueParams(std::string& source) {
+        size_t prev = 0;
+        size_t next = 0;
+        std::list<std::string> thelist;
+        std::list<std::string>::iterator it;
+        std::string tstring=" ";
+        source +=std::string(" "); // else the last token may be lost
+	while ((next = source.find_first_of(" ", prev)) != std::string::npos){
+	   if (next - prev != 0){
+	      thelist.push_back(source.substr(prev, next - prev));
+	   }
+	   prev = next + 1;
+	}
+        thelist.sort();
+        source.clear();
+        source +=std::string(" ");
+        for(it=thelist.begin(); it!=thelist.end();it++){
+        	if(*it != tstring){
+        		tstring = *it;
+        		source +=tstring;
+        		source +=std::string(" ");
+        	}
+        }
+     }
+
     virtual bool execute()
         {
         String  command        = parent.eval(commandOpt, "g++");
@@ -8177,6 +8204,8 @@ public:
                 doit = true;
             }
         cmd.append(" ");
+        // trim it down to unique elements, reduce command line size
+        UniqueParams(libs);
         cmd.append(libs);
         if (!doit)
             {
@@ -8187,6 +8216,7 @@ public:
 
 
         String outbuf, errbuf;
+        std::cout << "DEBUG command = " << cmd << std::endl;
         if (!executeCommand(cmd.c_str(), "", outbuf, errbuf))
             {
             error("LINK problem: %s", errbuf.c_str());
@@ -8488,7 +8518,7 @@ public:
 
 
             String outString, errString;
-            if (!executeCommand(cmd.c_str(), "", outString, errString))
+           if (!executeCommand(cmd.c_str(), "", outString, errString))
                 {
                 error("<msgfmt> problem: %s", errString.c_str());
                 return false;
@@ -9058,7 +9088,7 @@ public:
             
         cmd = command;
         cmd.append(getNativePath(fullName));
-        if (!executeCommand(cmd, "", outbuf, errbuf))
+       if (!executeCommand(cmd, "", outbuf, errbuf))
             {
             error("<strip> failed : %s", errbuf.c_str());
             return false;
