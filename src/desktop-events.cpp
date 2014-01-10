@@ -575,6 +575,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                     // do nothing;
                     break;
             }
+            break;
     default:
         break;
     }
