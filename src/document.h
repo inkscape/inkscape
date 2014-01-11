@@ -222,7 +222,7 @@ public:
     /**
      * Returns the bottommost item from the list which is at the point, or NULL if none.
      */
-    static SPItem *getItemFromListAtPointBottom(unsigned int dkey, SPGroup *group, const GSList *list, Geom::Point const p, bool take_insensitive = false);
+    static SPItem *getItemFromListAtPointBottom(unsigned int dkey, SPGroup *group, const GSList *list, Geom::Point const &p, bool take_insensitive = false);
 
     // ToDo - Merge createDoc with createNewDoc
     static SPDocument *createDoc(Inkscape::XML::Document *rdoc, gchar const *uri, gchar const *base, gchar const *name, unsigned int keepalive);
@@ -244,9 +244,9 @@ public:
     const GSList *getResourceList(const gchar *key) const;
     GSList *getItemsInBox(unsigned int dkey, Geom::Rect const &box) const;
     GSList *getItemsPartiallyInBox(unsigned int dkey, Geom::Rect const &box) const;
-    SPItem *getItemAtPoint(unsigned int key, Geom::Point const p, gboolean into_groups, SPItem *upto = NULL) const;
+    SPItem *getItemAtPoint(unsigned int key, Geom::Point const &p, gboolean into_groups, SPItem *upto = NULL) const;
     GSList *getItemsAtPoints(unsigned const key, std::vector<Geom::Point> points) const;
-    SPItem *getGroupAtPoint(unsigned int key,  Geom::Point const p) const;
+    SPItem *getGroupAtPoint(unsigned int key,  Geom::Point const &p) const;
 
     void changeUriAndHrefs(gchar const *uri);
     void emitResizedSignal(gdouble width, gdouble height);

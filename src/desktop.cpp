@@ -695,7 +695,7 @@ Inkscape::UI::Widget::Dock* SPDesktop::getDock() {
 /**
  * \see SPDocument::getItemFromListAtPointBottom()
  */
-SPItem *SPDesktop::getItemFromListAtPointBottom(const GSList *list, Geom::Point const p) const
+SPItem *SPDesktop::getItemFromListAtPointBottom(const GSList *list, Geom::Point const &p) const
 {
     g_return_val_if_fail (doc() != NULL, NULL);
     return SPDocument::getItemFromListAtPointBottom(dkey, doc()->getRoot(), list, p);
@@ -704,7 +704,7 @@ SPItem *SPDesktop::getItemFromListAtPointBottom(const GSList *list, Geom::Point 
 /**
  * \see SPDocument::getItemAtPoint()
  */
-SPItem *SPDesktop::getItemAtPoint(Geom::Point const p, bool into_groups, SPItem *upto) const
+SPItem *SPDesktop::getItemAtPoint(Geom::Point const &p, bool into_groups, SPItem *upto) const
 {
     g_return_val_if_fail (doc() != NULL, NULL);
     return doc()->getItemAtPoint( dkey, p, into_groups, upto);
@@ -713,7 +713,7 @@ SPItem *SPDesktop::getItemAtPoint(Geom::Point const p, bool into_groups, SPItem 
 /**
  * \see SPDocument::getGroupAtPoint()
  */
-SPItem *SPDesktop::getGroupAtPoint(Geom::Point const p) const
+SPItem *SPDesktop::getGroupAtPoint(Geom::Point const &p) const
 {
     g_return_val_if_fail (doc() != NULL, NULL);
     return doc()->getGroupAtPoint(dkey, p);

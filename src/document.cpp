@@ -1173,7 +1173,7 @@ static bool item_is_in_group(SPItem *item, SPGroup *group)
     return inGroup;
 }
 
-SPItem *SPDocument::getItemFromListAtPointBottom(unsigned int dkey, SPGroup *group, GSList const *list,Geom::Point const p, bool take_insensitive)
+SPItem *SPDocument::getItemFromListAtPointBottom(unsigned int dkey, SPGroup *group, GSList const *list,Geom::Point const &p, bool take_insensitive)
 {
     g_return_val_if_fail(group, NULL);
     SPItem *bottomMost = 0;
@@ -1209,7 +1209,7 @@ items. If upto != NULL, then if item upto is encountered (at any level), stops s
 upwards in z-order and returns what it has found so far (i.e. the found item is
 guaranteed to be lower than upto).
  */
-static SPItem *find_item_at_point(unsigned int dkey, SPGroup *group, Geom::Point const p, gboolean into_groups, bool take_insensitive = false, SPItem *upto = NULL)
+static SPItem *find_item_at_point(unsigned int dkey, SPGroup *group, Geom::Point const &p, gboolean into_groups, bool take_insensitive = false, SPItem *upto = NULL)
 {
     SPItem *seen = NULL;
     SPItem *newseen = NULL;
@@ -1254,7 +1254,7 @@ static SPItem *find_item_at_point(unsigned int dkey, SPGroup *group, Geom::Point
 Returns the topmost non-layer group from the descendants of group which is at point
 p, or NULL if none. Recurses into layers but not into groups.
  */
-static SPItem *find_group_at_point(unsigned int dkey, SPGroup *group, Geom::Point const p)
+static SPItem *find_group_at_point(unsigned int dkey, SPGroup *group, Geom::Point const &p)
 {
     SPItem *seen = NULL;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -1334,7 +1334,7 @@ GSList *SPDocument::getItemsAtPoints(unsigned const key, std::vector<Geom::Point
     return items;
 }
 
-SPItem *SPDocument::getItemAtPoint( unsigned const key, Geom::Point const p,
+SPItem *SPDocument::getItemAtPoint( unsigned const key, Geom::Point const &p,
                                     gboolean const into_groups, SPItem *upto) const
 {
     g_return_val_if_fail(this->priv != NULL, NULL);
@@ -1342,7 +1342,7 @@ SPItem *SPDocument::getItemAtPoint( unsigned const key, Geom::Point const p,
     return find_item_at_point(key, SP_GROUP(this->root), p, into_groups, false, upto);
 }
 
-SPItem *SPDocument::getGroupAtPoint(unsigned int key, Geom::Point const p) const
+SPItem *SPDocument::getGroupAtPoint(unsigned int key, Geom::Point const &p) const
 {
     g_return_val_if_fail(this->priv != NULL, NULL);
 

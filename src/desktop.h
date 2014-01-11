@@ -311,9 +311,9 @@ public:
     //void push_event_context (GType type, const gchar *config, unsigned int key);
 
     void set_coordinate_status (Geom::Point p);
-    SPItem *getItemFromListAtPointBottom(const GSList *list, Geom::Point const p) const;
-    SPItem *getItemAtPoint(Geom::Point const p, bool into_groups, SPItem *upto = NULL) const;
-    SPItem *getGroupAtPoint(Geom::Point const p) const;
+    SPItem *getItemFromListAtPointBottom(const GSList *list, Geom::Point const &p) const;
+    SPItem *getItemAtPoint(Geom::Point const &p, bool into_groups, SPItem *upto = NULL) const;
+    SPItem *getGroupAtPoint(Geom::Point const &p) const;
     Geom::Point point() const;
 
     Geom::Rect get_display_area() const;
@@ -343,7 +343,7 @@ public:
 
     bool scroll_to_point (Geom::Point const &s_dt, gdouble autoscrollspeed = 0);
     void scroll_world (double dx, double dy, bool is_scrolling = false);
-    void scroll_world (Geom::Point const scroll, bool is_scrolling = false)
+    void scroll_world (Geom::Point const &scroll, bool is_scrolling = false)
     {
         scroll_world(scroll[Geom::X], scroll[Geom::Y], is_scrolling);
     }
