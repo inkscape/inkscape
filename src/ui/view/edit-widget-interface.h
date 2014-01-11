@@ -148,7 +148,7 @@ struct EditWidgetInterface
     virtual bool showInfoDialog( Glib::ustring const &message ) = 0;
 
     /// Open yes/no dialog with warning text and confirmation question.
-    virtual bool warnDialog (gchar*) = 0;
+    virtual bool warnDialog (Glib::ustring const &) = 0;
 
     virtual Inkscape::UI::Widget::Dock* getDock () = 0;
 };

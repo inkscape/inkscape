@@ -71,6 +71,7 @@
 
 #include "verbs.h"
 #include <gtkmm/paned.h>
+#include <gtkmm/messagedialog.h>
 
 #include <gtk/gtk.h>
 
@@ -1397,24 +1398,14 @@ bool SPDesktopWidget::showInfoDialog( Glib::ustring const &message )
     return result;
 }
 
-bool
-SPDesktopWidget::warnDialog (gchar* text)
+bool SPDesktopWidget::warnDialog (Glib::ustring const &text)
 {
-    GtkWindow *w =GTK_WINDOW(gtk_widget_get_toplevel(GTK_WIDGET(this)));
-    if (w)
-    {
-        GtkWidget *dialog = gtk_message_dialog_new(
-                w,
-                GTK_DIALOG_DESTROY_WITH_PARENT,
-                GTK_MESSAGE_WARNING,
-                GTK_BUTTONS_YES_NO,
-                "%s", text);
-        gint response = gtk_dialog_run(GTK_DIALOG(dialog));
-        gtk_widget_destroy(dialog);
-        if (response == GTK_RESPONSE_YES)
-            return true;
-    }
-    return false;
+    Gtk::MessageDialog dialog (*window, text, false, Gtk::MESSAGE_WARNING, Gtk::BUTTONS_OK_CANCEL);
+    gint response = dialog.run();
+    if (response == Gtk::RESPONSE_OK)
+        return true;
+    else
+        return false;
 }
 
 void

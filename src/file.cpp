@@ -360,11 +360,8 @@ void sp_file_revert_dialog()
 
     bool do_revert = true;
     if (doc->isModifiedSinceSave()) {
-        gchar *text = g_strdup_printf(_("Changes will be lost!  Are you sure you want to reload document %s?"), uri);
-
-        bool response = desktop->warnDialog (text);
-        g_free(text);
-
+        Glib::ustring tmpString = Glib::ustring::compose(_("Changes will be lost! Are you sure you want to reload document %1?"), uri);
+        bool response = desktop->warnDialog (tmpString);
         if (!response) {
             do_revert = false;
         }

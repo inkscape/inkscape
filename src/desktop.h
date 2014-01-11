@@ -356,7 +356,7 @@ public:
     Gtk::Window* getToplevel();
     void presentWindow();
     bool showInfoDialog( Glib::ustring const &message );
-    bool warnDialog (gchar *text);
+    bool warnDialog (Glib::ustring const &text);
     void toggleRulers();
     void toggleScrollbars();
     void layoutWidget();

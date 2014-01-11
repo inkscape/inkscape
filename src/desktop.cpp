@@ -1298,7 +1298,7 @@ bool SPDesktop::showInfoDialog( Glib::ustring const & message )
 }
 
 bool
-SPDesktop::warnDialog (gchar *text)
+SPDesktop::warnDialog (Glib::ustring const &text)
 {
     return _widget->warnDialog (text);
 }

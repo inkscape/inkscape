@@ -212,7 +212,7 @@ struct SPDesktopWidget {
             return _dtw->showInfoDialog( message );
         }
 
-        virtual bool warnDialog (gchar* text)
+        virtual bool warnDialog (Glib::ustring const &text)
             { return _dtw->warnDialog (text); }
 
         virtual Inkscape::UI::Widget::Dock* getDock ()
@@ -232,7 +232,7 @@ struct SPDesktopWidget {
     void setWindowTransient (void *p, int transient_policy);
     void presentWindow();
     bool showInfoDialog( Glib::ustring const &message );
-    bool warnDialog (gchar *text);
+    bool warnDialog (Glib::ustring const &text);
     void setToolboxFocusTo (gchar const *);
     void setToolboxAdjustmentValue (gchar const * id, double value);
     void setToolboxSelectOneValue (gchar const * id, gint value);
