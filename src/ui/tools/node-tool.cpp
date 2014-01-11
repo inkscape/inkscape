@@ -625,7 +625,7 @@ void NodeTool::select_area(Geom::Rect const &sel, GdkEventButton *event) {
     }
 }
 
-void NodeTool::select_point(Geom::Point const &sel, GdkEventButton *event) {
+void NodeTool::select_point(Geom::Point const &/*sel*/, GdkEventButton *event) {
     using namespace Inkscape::UI; // pull in event helpers
 
     if (!event) {
