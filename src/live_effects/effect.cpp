@@ -486,11 +486,13 @@ Effect::addHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item) {
 }
 
 /**
- * Return a vector of PathVectors which contain all helperpaths that should be drawn by the effect.
- * This is the function called by external code like SPLPEItem.
+ * Return a vector of PathVectors which contain all canvas indicators for this effect.
+ * This is the function called by external code to get all canvas indicators (effect and its parameters)
+ * lpeitem = the item onto which this effect is applied
+ * @todo change return type to one pathvector, add all paths to one pathvector instead of maintaining a vector of pathvectors
  */
 std::vector<Geom::PathVector>
-Effect::getHelperPaths(SPLPEItem const* lpeitem)
+Effect::getCanvasIndicators(SPLPEItem const* lpeitem)
 {
     std::vector<Geom::PathVector> hp_vec;
 
@@ -499,18 +501,10 @@ Effect::getHelperPaths(SPLPEItem const* lpeitem)
         return hp_vec;
     }
 
-    // TODO: we can probably optimize this by using a lot more references
-    //       rather than copying PathVectors all over the place
-    if (show_orig_path) {
-        // add original path to helperpaths
-        SPCurve* curve = SP_SHAPE(lpeitem)->getCurve ();
-        hp_vec.push_back(curve->get_pathvector());
-    }
-
-    // add other helperpaths provided by the effect itself
+    // add indicators provided by the effect itself
     addCanvasIndicators(lpeitem, hp_vec);
 
-    // add helperpaths provided by the effect's parameters
+    // add indicators provided by the effect's parameters
     for (std::vector<Parameter *>::iterator p = param_vector.begin(); p != param_vector.end(); ++p) {
         (*p)->addCanvasIndicators(lpeitem, hp_vec);
     }
