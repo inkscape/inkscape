@@ -164,6 +164,7 @@ void check_transforms()
 
     // notice that the first column is always the same and enumerates all transform types,
     // while the second one changes to each transform type in turn.
+    // cppcheck-suppress redundantAssignment
     m = t * t; m = t * s; m = t * r; m = t * h; m = t * v; m = t * z;
     m = s * t; m = s * s; m = s * r; m = s * h; m = s * v; m = s * z;
     m = r * t; m = r * s; m = r * r; m = r * h; m = r * v; m = r * z;

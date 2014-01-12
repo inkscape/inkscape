@@ -108,7 +108,10 @@ struct PathVectorPosition {
     // pathvector[path_nr].pointAt(t) is the position
     unsigned int path_nr;
     double       t;
-    PathVectorPosition() {}
+    PathVectorPosition() :
+        path_nr(0),
+        t(0)
+        {}
     PathVectorPosition(unsigned int path_nr,
                        double       t) : path_nr(path_nr), t(t) {}
 };

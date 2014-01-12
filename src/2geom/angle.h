@@ -48,6 +48,9 @@ namespace Geom {
 #ifndef M_PI
 # define M_PI 3.14159265358979323846
 #endif
+#ifndef M_1_2PI
+# define M_1_2PI 0.159154943091895335768883763373
+#endif
 
 /** @brief Wrapper for angular values.
  *
@@ -64,6 +67,7 @@ class Angle
       > >
 {
 public:
+    Angle() : _angle(0) {} //added default constructor because of cython
     Angle(Coord v) : _angle(v) { _normalize(); } // this can be called implicitly
     explicit Angle(Point p) : _angle(atan2(p)) { _normalize(); }
     Angle(Point a, Point b) : _angle(angle_between(a, b)) { _normalize(); }
@@ -85,7 +89,7 @@ public:
     /** @brief Get the angle as radians.
      * @return Number in range \f$[-\pi, \pi)\f$. */
     Coord radians() const {
-        return _angle > M_PI ? _angle - 2*M_PI : _angle;
+        return _angle >= M_PI ? _angle - 2*M_PI : _angle;
     }
     /** @brief Get the angle as positive radians.
      * @return Number in range \f$[0, 2\pi)\f$. */
@@ -95,7 +99,7 @@ public:
     /** @brief Get the angle as degrees in math convention.
      * @return Number in range [-180, 180) obtained by scaling the result of radians()
      *         by \f$180/\pi\f$. */
-    Coord degrees() const { return radians() / M_PI * 180.0; }
+    Coord degrees() const { return radians() * (180.0 / M_PI); }
     /** @brief Get the angle as degrees in clock convention.
      * This method converts the angle to the "clock convention": angles start from the +Y axis
      * and grow clockwise. This means that 0 corresponds to \f$\pi/2\f$ radians,
@@ -103,7 +107,7 @@ public:
      * @return A number in the range [0, 360).
      */
     Coord degreesClock() const {
-        Coord ret = 90.0 - _angle / M_PI * 180.0;
+        Coord ret = 90.0 - _angle * (180.0 / M_PI);
         if (ret < 0) ret += 360;
         return ret;
     }
@@ -114,7 +118,7 @@ public:
     }
     /** @brief Create an angle from its measure in degrees. */
     static Angle from_degrees(Coord d) {
-        Angle a(d * M_PI / 180);
+        Angle a(d * (M_PI / 180.0));
         return a;
     }
     /** @brief Create an angle from its measure in degrees in clock convention.
@@ -123,16 +127,16 @@ public:
         // first make sure d is in [0, 360)
         d = std::fmod(d, 360.0);
         if (d < 0) d += 360.0;
-        Coord rad = M_PI/2 - d * M_PI / 180.0;
+        Coord rad = M_PI/2 - d * (M_PI / 180.0);
         if (rad < 0) rad += 2*M_PI;
         Angle a;
         a._angle = rad;
         return a;
     }
 private:
-    Angle() {}
+
     void _normalize() {
-        _angle -= floor(_angle / (2*M_PI)) * 2*M_PI;
+        _angle -= floor(_angle * (1.0/(2*M_PI))) * 2*M_PI;
     }
     Coord _angle; // this is always in [0, 2pi)
     friend class AngleInterval;

@@ -347,16 +347,15 @@ void Path::do_update(Sequence::iterator first_replaced,
 }
 
 void Path::do_append(Curve *c) {
-  boost::shared_ptr<Curve> curve(c);
   if ( get_curves().front().get() == final_ ) {
-    final_->setPoint(1, curve->initialPoint());
+    final_->setPoint(1, c->initialPoint());
   } else {
-    if (curve->initialPoint() != finalPoint()) {
+    if (c->initialPoint() != finalPoint()) {
       THROW_CONTINUITYERROR();
     }
   }
-  get_curves().insert(get_curves().end()-1, curve);
-  final_->setPoint(0, curve->finalPoint());
+  get_curves().insert(get_curves().end()-1, boost::shared_ptr<Curve>(c));
+  final_->setPoint(0, c->finalPoint());
 }
 
 void Path::stitch(Sequence::iterator first_replaced,

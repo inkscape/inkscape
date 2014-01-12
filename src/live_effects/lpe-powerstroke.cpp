@@ -24,7 +24,7 @@
 #include <2geom/bezier-utils.h>
 #include <2geom/svg-elliptical-arc.h>
 #include <2geom/sbasis-to-bezier.h>
-#include <2geom/svg-path.h>
+#include <2geom/path-sink.h>
 #include <2geom/path-intersection.h>
 #include <2geom/crossing.h>
 #include <2geom/ellipse.h>
@@ -537,7 +537,7 @@ static Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::
 
         prev_i = i;
     }
-    pb.finish();
+    pb.flush();
     return pb.peek().front();
 }
 

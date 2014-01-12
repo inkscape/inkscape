@@ -89,6 +89,7 @@ class Circle
     arc(Point const& initial, Point const& inner, Point const& final,
         bool _svg_compliant = true);
 
+    D2<SBasis> toSBasis();
     void getPath(std::vector<Path> &path_out);
 
     Point center() const

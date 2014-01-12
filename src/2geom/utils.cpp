@@ -37,16 +37,15 @@ namespace Geom
 {
 
 // return a vector that contains all the binomial coefficients of degree n 
-void binomial_coefficients(std::vector<size_t>& bc, size_t n)
+void binomial_coefficients(std::vector<size_t>& bc, std::size_t n)
 {
     size_t s = n+1;
     bc.clear();
     bc.resize(s);
     bc[0] = 1;
-    size_t k;
     for (size_t i = 1; i < n; ++i)
     {
-        k = i >> 1;
+        size_t k = i >> 1;
         if (i & 1u)
         {
             bc[k+1] = bc[k] << 1;

@@ -81,14 +81,13 @@ const double INV_EPS = (1L<<14);
  */
 void OldBezier::split(double t, OldBezier &left, OldBezier &right) const {
     const unsigned sz = p.size();
- 
-    Geom::Point **Vtemp = new Geom::Point* [sz];
-
-    for (unsigned int i = 0; i < sz; ++i)
-        Vtemp[i] = new Geom::Point[sz];
+    //Geom::Point Vtemp[sz][sz];
+    std::vector< std::vector< Geom::Point > > Vtemp;
+    for (size_t i = 0; i < sz; ++i )
+        Vtemp[i].reserve(sz);
 
     /* Copy control points	*/
-    std::copy(p.begin(), p.end(), Vtemp[0]);
+    std::copy(p.begin(), p.end(), Vtemp[0].begin());
 
     /* Triangle computation	*/
     for (unsigned i = 1; i < sz; i++) {
@@ -103,11 +102,6 @@ void OldBezier::split(double t, OldBezier &left, OldBezier &right) const {
         left.p[j]  = Vtemp[j][0];
     for (unsigned j = 0; j < sz; j++)
         right.p[j] = Vtemp[sz-1-j][j];
-
-    for (unsigned int i = 0; i < sz; ++i)
-        delete[] Vtemp[i];
-
-    delete[] Vtemp;
 }
 
 #if 0
@@ -134,17 +128,15 @@ Point OldBezier::operator()(double t) const {
 #endif
 
 // suggested by Sederberg.
-Point OldBezier::operator()(double t) const {
-    int n = p.size()-1;
-    double u, bc, tn, tmp;
-    int i;
+Point OldBezier::operator()(double const t) const {
+    size_t const n = p.size()-1;
     Point r;
     for(int dim = 0; dim < 2; dim++) {
-        u = 1.0 - t;
-        bc = 1;
-        tn = 1;
-        tmp = p[0][dim]*u;
-        for(i=1; i<n; i++){
+        double const u = 1.0 - t;
+        double bc = 1;
+        double tn = 1;
+        double tmp = p[0][dim]*u;
+        for(size_t i=1; i<n; i++){
             tn = tn*t;
             bc = bc*(n-i+1)/i;
             tmp = (tmp + tn*bc*p[i][dim])*u;
@@ -183,8 +175,8 @@ bool intersect_BB( OldBezier a, OldBezier b ) {
     b.bounds(minbx, maxbx, minby, maxby);
     // Test bounding box of b against bounding box of a
     // Not >= : need boundary case
-    return not( ( minax > maxbx ) || ( minay > maxby )
-                || ( minbx > maxax ) || ( minby > maxay ) );
+    return !( ( minax > maxbx ) || ( minay > maxby )
+              || ( minbx > maxax ) || ( minby > maxay ) );
 }
 
 /*

@@ -12,7 +12,7 @@
 #include <glib.h>
 #include <2geom/curves.h>
 #include <2geom/pathvector.h>
-#include <2geom/svg-path.h>
+#include <2geom/path-sink.h>
 #include <2geom/svg-path-parser.h>
 
 #include "display/cairo-utils.h"

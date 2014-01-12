@@ -454,8 +454,7 @@ Eigen::Eigen(Affine const &m) {
     }
 }
 
-static void quadratic_roots(double q0, double q1, double q2, int &n, double&r0, double&r1) {
-    std::vector<double> r;
+static void quadratic_roots(const double q0, const double q1, const double q2, int &n, double&r0, double&r1) {
     if(q2 == 0) {
         if(q1 == 0) { // zero or infinite roots
             n = 0;

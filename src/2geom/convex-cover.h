@@ -84,8 +84,9 @@ public:
 
 public:
     ConvexHull() {}
-    ConvexHull(std::vector<Point> const & points) {
-        boundary = points;
+    ConvexHull(std::vector<Point> const & points) :
+        boundary (points)
+    {
         graham();
     }
 
@@ -163,7 +164,7 @@ unsigned find_bottom_right(ConvexHull const &a);
 
 /*** Arbitrary transform operator.
  * Take a convex hull and apply an arbitrary convexity preserving transform.
- *  we should be concerned about singular transforms here.
+ *  we should be concerned about singular tranforms here.
  */
 template <class T> ConvexHull operator*(ConvexHull const &p, T const &m) {
     ConvexHull pr;

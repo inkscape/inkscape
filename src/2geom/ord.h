@@ -43,7 +43,7 @@ enum Cmp {
   EQUAL_TO=0
 };
 
-inline Cmp operator-(Cmp x) {
+static inline Cmp operator-(Cmp x) {
   switch(x) {
   case LESS_THAN:
     return GREATER_THAN;

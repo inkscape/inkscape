@@ -71,6 +71,8 @@
 	2geom/path.h \
 	2geom/path-intersection.cpp \
 	2geom/path-intersection.h \
+	2geom/path-sink.cpp \
+	2geom/path-sink.h \
 	2geom/pathvector.cpp \
 	2geom/pathvector.h \
 	2geom/piecewise.cpp \
@@ -110,8 +112,6 @@
 	2geom/solver.h \
 	2geom/svg-elliptical-arc.cpp \
 	2geom/svg-elliptical-arc.h \
-	2geom/svg-path.cpp \
-	2geom/svg-path.h \
 	2geom/svg-path-parser.cpp \
 	2geom/svg-path-parser.h \
 	2geom/sweep.cpp \

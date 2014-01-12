@@ -21,7 +21,7 @@
 #include FT_TRUETYPE_TABLES_H
 #include <pango/pangoft2.h>
 #include <2geom/pathvector.h>
-#include <2geom/svg-path.h>
+#include <2geom/path-sink.h>
 #include "libnrtype/font-glyph.h"
 #include "libnrtype/font-instance.h"
 #include "livarot/Path.h"
@@ -618,7 +618,7 @@ void font_instance::LoadGlyph(int glyph_id)
             doAdd=true;
         }
 #endif
-        path_builder.finish();
+        path_builder.flush();
 
         if ( doAdd ) {
             Geom::PathVector pv = path_builder.peek();

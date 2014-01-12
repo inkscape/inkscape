@@ -473,10 +473,9 @@ void fat_line_bounds (Interval& bound,
 {
     bound[0] = 0;
     bound[1] = 0;
-    double d;
     for (size_t i = 0; i < c.size(); ++i)
     {
-        d = distance(c[i], l);
+        const double d = distance(c[i], l);
         if (bound[0] > d)  bound[0] = d;
         if (bound[1] < d)  bound[1] = d;
     }
@@ -509,10 +508,9 @@ void clip_interval (Interval& dom,
     double n = B.size() - 1;  // number of sub-intervals
     std::vector<Point> D;     // distance curve control points
     D.reserve (B.size());
-    double d;
     for (size_t i = 0; i < B.size(); ++i)
     {
-        d = distance (B[i], l);
+        const double d = distance (B[i], l);
         D.push_back (Point(i/n, d));
     }
     //print(D);
@@ -699,8 +697,8 @@ void distance_control_points (std::vector<Point> & D,
         for (size_t j = 0; j < F.size(); ++j)
             dBF(i,j) = dot (dB[i], F[j]);
 
-    size_t k0, kn, l;
-    double bc, bri;
+    size_t l;
+    double bc;
     Point dij;
     std::vector<double> d(F.size());
     for (size_t i = 0; i <= r; ++i)
@@ -709,9 +707,9 @@ void distance_control_points (std::vector<Point> & D,
         {
             d[j] = 0;
         }
-        k0 = std::max(i, n) - n;
-        kn = std::min(i, n-1);
-        bri = n / binomial(r,i);
+        const size_t k0 = std::max(i, n) - n;
+        const size_t kn = std::min(i, n-1);
+        const double bri = n / binomial(r,i);
         for (size_t k = k0; k <= kn; ++k)
         {
             //if (k > i || (i-k) > n) continue;

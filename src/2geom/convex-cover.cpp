@@ -433,7 +433,7 @@ bool same_side(Point L[2], Point  xs[4]) {
     int side = 0;
     for(int i = 0; i < 4; i++) {
         int sn = sgn(SignedTriangleArea(L[0], L[1], xs[i]));
-        if(sn and not side)
+        if(sn &&  !side)
             side = sn;
         else if(sn != side) return false;
     }
@@ -455,7 +455,7 @@ std::vector<pair<int, int> > bridges(ConvexHull a, ConvexHull b) {
     double ap_angle = atan2(a[ai+1] - a[ai]);
     double bp_angle = atan2(b[bi+1] - b[bi]);
     Point L[2] = {a[ai], b[bi]};
-    while(ai < int(a.size()) or bi < int(b.size())) {
+    while(ai < int(a.size()) || bi < int(b.size())) {
         if(ap_angle == bp_angle) {
             // In the case of parallel support lines, we must consider all four pairs of copodal points
             {
@@ -478,7 +478,7 @@ std::vector<pair<int, int> > bridges(ConvexHull a, ConvexHull b) {
             bi++;
             bp_angle += angle_between(b[bi] - b[bi-1], b[bi+1] - b[bi]);
             L[1] = b[bi];
-            //std::cout << "parallel\n";
+            std::cout << "parallel\n";
         } else if(ap_angle < bp_angle) {
             ai++;
             ap_angle += angle_between(a[ai] - a[ai-1], a[ai+1] - a[ai]);
@@ -559,7 +559,7 @@ T idx_to_pair(pair<T, T> p, int idx) {
 ConvexHull merge(ConvexHull a, ConvexHull b) {
     ConvexHull ret;
 
-    //std::cout << "---\n";
+    std::cout << "---\n";
     std::vector<pair<int, int> > bpair = bridges(a, b);
     
     // Given our list of bridges {(pb1, qb1), ..., (pbk, qbk)}
@@ -574,10 +574,10 @@ ConvexHull merge(ConvexHull a, ConvexHull b) {
     
     for(unsigned k = 0; k < bpair.size(); k++) {
         unsigned limit = idx_to_pair(bpair[k], state);
-        /*std::cout << bpair[k].first << " , " << bpair[k].second << "; "
+        std::cout << bpair[k].first << " , " << bpair[k].second << "; "
                   << idx << ", " << limit << ", s: "
                   << state
-                  << " \n";*/
+                  << " \n";
         while(idx <= limit) {
             ret.boundary.push_back(chs[state][idx++]);
         }
@@ -681,7 +681,7 @@ Point const * ConvexHull::furthest(Point direction) const {
 // is currently n*O(furthest)
 double ConvexHull::narrowest_diameter(Point &a, Point &b, Point &c) {
     Point tb = boundary.back();
-    double d = INFINITY;
+    double d = std::numeric_limits<double>::max();
     for(unsigned i = 0; i < boundary.size(); i++) {
         Point tc = boundary[i];
         Point n = -rot90(tb-tc);

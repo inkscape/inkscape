@@ -40,7 +40,7 @@
 #include <2geom/path.h>
 #include <2geom/curves.h>
 #include <2geom/sbasis-to-bezier.h>
-#include <2geom/svg-path.h>
+#include <2geom/path-sink.h>
 #include <2geom/svg-path-parser.h>
 #include <2geom/exception.h>
 #include <2geom/angle.h>
@@ -59,13 +59,13 @@ Geom::PathVector sp_svg_read_pathv(char const * str)
 
     typedef std::back_insert_iterator<Geom::PathVector> Inserter;
     Inserter iter(pathv);
-    Geom::SVGPathGenerator<Inserter> generator(iter);
+    Geom::PathIteratorSink<Inserter> generator(iter);
 
     try {
         Geom::parse_svg_path(str, generator);
     }
     catch (Geom::SVGPathParseError &e) {
-        generator.finish();
+        generator.flush();
         // This warning is extremely annoying when testing
         //g_warning("Malformed SVG path, truncated path up to where error was found.\n Input path=\"%s\"\n Parsed path=\"%s\"", str, sp_svg_write_path(pathv));
     }

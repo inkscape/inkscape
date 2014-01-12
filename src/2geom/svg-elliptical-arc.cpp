@@ -218,15 +218,23 @@ bool make_elliptical_arc::make_elliptiarc()
 
     if (svg_compliant_flag())
     {
+#ifdef CPP11
+        std::unique_ptr<EllipticalArc> arc( e.arc(initial_point, inner_point, final_point, true) );
+#else
         std::auto_ptr<EllipticalArc> arc( e.arc(initial_point, inner_point, final_point, true) );
+#endif
         ea = *arc;
     }
     else
     {
         try
         {
-            std::auto_ptr<EllipticalArc> eap(
-                e.arc(initial_point, inner_point, final_point, false) );
+#ifdef CPP11
+            std::unique_ptr<EllipticalArc>
+#else
+            std::auto_ptr<EllipticalArc>
+#endif
+                eap( e.arc(initial_point, inner_point, final_point, false) );
             ea = *eap;
         }
         catch(RangeError const &exc)

@@ -1,4 +1,5 @@
 /** Geometric operators on D2<SBasis> (1D->2D).
+ * Copyright 2012 JBC Engelen
  * Copyright 2007 JF Barraud
  * Copyright 2007 N Hurst
  *
@@ -18,7 +19,6 @@
 #include <2geom/sbasis-geometric.h>
 #include <2geom/sbasis.h>
 #include <2geom/sbasis-math.h>
-//#include <2geom/solver.h>
 #include <2geom/sbasis-geometric.h>
 
 //namespace Geom{
@@ -363,7 +363,6 @@ Geom::length(Piecewise<D2<SBasis> > const &M,
 Piecewise<SBasis>
 Geom::curvature(D2<SBasis> const &M, double tol) {
     D2<SBasis> dM=derivative(M);
-    Piecewise<SBasis> result;
     Piecewise<D2<SBasis> > unitv = unitVector(dM,tol);
     Piecewise<SBasis> dMlength = dot(Piecewise<D2<SBasis> >(dM),unitv);
     Piecewise<SBasis> k = cross(derivative(unitv),unitv);
@@ -436,11 +435,10 @@ Geom::arc_length_parametrization(Piecewise<D2<SBasis> > const &M,
                                  unsigned order,
                                  double tol){
     Piecewise<D2<SBasis> > result;
-    for (unsigned i=0; i<M.size(); i++ ){
-        Piecewise<D2<SBasis> > uniform_seg=arc_length_parametrization(M[i],order,tol);
-        result.concat(uniform_seg);
+    for (unsigned i=0; i<M.size(); i++) {
+        result.concat( arc_length_parametrization(M[i],order,tol) );
     }
-    return(result);
+    return result;
 }
 
 #include <gsl/gsl_integration.h>

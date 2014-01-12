@@ -92,11 +92,10 @@ void Bernsteins::find_bernstein_roots(double const *w, /* The control points  */
 
     int old_sign = SGN(w[0]);
     //std::cout << "w[0] = " << w[0] << std::endl;
-    int sign;
     for (size_t i = 1; i < N; i++)
     {
         //std::cout << "w[" << i << "] = " << w[i] << std::endl;
-        sign = SGN(w[i]);
+        int sign = SGN(w[i]);
         if (sign != 0)
         {
             if (sign != old_sign && old_sign != 0)
@@ -128,14 +127,14 @@ void Bernsteins::find_bernstein_roots(double const *w, /* The control points  */
         double s = 0, t = 1;
         double e = 1e-10;
         int side = 0;
-        double r, fr, fs = w[0], ft = w[degree];
+        double r, fs = w[0], ft = w[degree];
 
         for (size_t n = 0; n < 100; ++n)
         {
             r = (fs*t - ft*s) / (fs - ft);
             if (fabs(t-s) < e * fabs(t+s))  break;
 
-            fr = horner(w, r);
+            double fr = horner(w, r);
 
             if (fr * ft > 0)
             {

@@ -194,8 +194,6 @@ bezier_fit_cubic_full(Point bezier[], int split_points[],
                       Point const &tHat1, Point const &tHat2,
                       double const error, unsigned const max_beziers)
 {
-    int const maxIterations = 4;   /* std::max times to try iterating */
-    
     if(!(bezier != NULL) ||
        !(data != NULL) ||
        !(len > 0) ||
@@ -257,6 +255,7 @@ bezier_fit_cubic_full(Point bezier[], int split_points[],
 
         /* If error not too large, then try some reparameterization and iteration. */
         if ( 0.0 <= maxErrorRatio && maxErrorRatio <= 3.0 ) {
+            int const maxIterations = 4;   /* std::max times to try iterating */
             for (int i = 0; i < maxIterations; i++) {
                 generate_bezier(bezier, data, u, len, tHat1, tHat2, error);
                 reparameterize(data, len, u, bezier);

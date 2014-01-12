@@ -55,7 +55,7 @@ class SBasis;
 class Linear{
 public:
     double a[2];
-    Linear() {}
+    Linear() {a[0]=0; a[1]=0;}
     Linear(double aa, double b) {a[0] = aa; a[1] = b;}
     Linear(double aa) {a[0] = aa; a[1] = aa;}
 

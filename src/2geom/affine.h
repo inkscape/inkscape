@@ -75,12 +75,6 @@ public:
         _c[1] = _c[2] = _c[4] = _c[5] = 0;
     }
 
-    Affine(Affine const &m) {
-        for(int i = 0; i < 6; i++) {
-            _c[i] = m[i];
-        }
-    }
-
     /** @brief Create a matrix from its coefficient values.
      * It's rather inconvenient to directly create matrices in this way. Use transform classes
      * if your transformation has a geometric interpretation.
@@ -88,17 +82,12 @@ public:
      * @see Scale
      * @see Rotate
      * @see HShear
-     * @see VShear */
+     * @see VShear
+     * @see Zoom */
     Affine(Coord c0, Coord c1, Coord c2, Coord c3, Coord c4, Coord c5) {
         _c[0] = c0; _c[1] = c1;
         _c[2] = c2; _c[3] = c3;
         _c[4] = c4; _c[5] = c5;
-    }
-
-    Affine &operator=(Affine const &m) {
-        for(int i = 0; i < 6; i++)
-            _c[i] = m._c[i];
-        return *this;
     }
 
     /** @brief Access a coefficient by its index. */

@@ -29,45 +29,45 @@
  */
 
 #include <2geom/sbasis-to-bezier.h>
-#include <2geom/svg-path.h>
+#include <2geom/path-sink.h>
 #include <2geom/exception.h>
 
 namespace Geom {
 
-void output(Curve const &curve, SVGPathSink &sink) {
+void output(Curve const &curve, PathSink &sink) {
     std::vector<Point> pts;
     sbasis_to_bezier(pts, curve.toSBasis(), 2); //TODO: use something better!
     sink.curveTo(pts[0], pts[1], pts[2]);
 }
 
-void output(HLineSegment const &curve, SVGPathSink &sink) {
+void output(HLineSegment const &curve, PathSink &sink) {
     sink.hlineTo(curve.finalPoint()[X]);
 }
 
-void output(VLineSegment const &curve, SVGPathSink &sink) {
+void output(VLineSegment const &curve, PathSink &sink) {
     sink.vlineTo(curve.finalPoint()[Y]);
 }
 
-void output(LineSegment const &curve, SVGPathSink &sink) {
+void output(LineSegment const &curve, PathSink &sink) {
     sink.lineTo(curve[1]);
 }
 
-void output(CubicBezier const &curve, SVGPathSink &sink) {
+void output(CubicBezier const &curve, PathSink &sink) {
     sink.curveTo(curve[1], curve[2], curve[3]);
 }
 
-void output(QuadraticBezier const &curve, SVGPathSink &sink) {
+void output(QuadraticBezier const &curve, PathSink &sink) {
     sink.quadTo(curve[1], curve[2]);
 }
 
-void output(SVGEllipticalArc const &curve, SVGPathSink &sink) {
+void output(SVGEllipticalArc const &curve, PathSink &sink) {
     sink.arcTo( curve.ray(X), curve.ray(Y), curve.rotationAngle(),
     			curve.largeArc(), curve.sweep(),
     			curve.finalPoint() );
 }
 
 template <typename T>
-bool output_as(Curve const &curve, SVGPathSink &sink) {
+bool output_as(Curve const &curve, PathSink &sink) {
     T const *t = dynamic_cast<T const *>(&curve);
     if (t) {
         output(*t, sink);
@@ -77,24 +77,32 @@ bool output_as(Curve const &curve, SVGPathSink &sink) {
     }
 }
 
-void output_svg_path(Path &path, SVGPathSink &sink) {
-    sink.moveTo(path.front().initialPoint());
+void PathSink::path(Path const &path) {
+    flush();
+    moveTo(path.front().initialPoint());
 
-    Path::iterator iter;
-    for ( iter = path.begin() ; iter != path.end() ; ++iter ) {
-    	output_as<HLineSegment>(*iter, sink) ||
-    	output_as<VLineSegment>(*iter, sink) ||
-        output_as<LineSegment>(*iter, sink) ||
-        output_as<CubicBezier>(*iter, sink) ||
-        output_as<QuadraticBezier>(*iter, sink) ||
-        output_as<SVGEllipticalArc>(*iter, sink) ||
-        output_as<Curve>(*iter, sink);
+    Path::const_iterator iter;
+    for (iter = path.begin(); iter != path.end(); ++iter) {
+    	output_as<HLineSegment>(*iter, *this) ||
+    	output_as<VLineSegment>(*iter, *this) ||
+        output_as<LineSegment>(*iter, *this) ||
+        output_as<CubicBezier>(*iter, *this) ||
+        output_as<QuadraticBezier>(*iter, *this) ||
+        output_as<SVGEllipticalArc>(*iter, *this) ||
+        output_as<Curve>(*iter, *this);
     }
 
     if (path.closed()) {
-        sink.closePath();
+        closePath();
     }
-    sink.finish();
+    flush();
+}
+
+void PathSink::pathvector(PathVector const &pv) {
+    flush();
+    for (PathVector::const_iterator i = pv.begin(); i != pv.end(); ++i) {
+        path(*i);
+    }
 }
 
 }

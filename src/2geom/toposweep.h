@@ -193,7 +193,7 @@ Areas filter_areas(PathVector const &ps, Areas const & areas, Z const &z) {
         if(areas[i].size() < 2) continue;
         //find a representative section
         unsigned rj = 0;
-        bool rev = are_near(areas[i][0]->fp, areas[i][1]->tp);
+        //bool rev = are_near(areas[i][0]->fp, areas[i][1]->tp);
         for(unsigned j = 1; j < areas[i].size(); j++)
             if(sorty(*areas[i][rj], *areas[i][j])) rj = j;
         if(sortx(*areas[i][rj], *areas[i][(rj+areas[i].size() - 1) % areas[i].size()])) {

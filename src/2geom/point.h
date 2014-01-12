@@ -78,15 +78,6 @@ public:
         _pt[X] = p[X];
         _pt[Y] = p[Y];
     }
-    Point(Point const &p) {
-        for (unsigned i = 0; i < 2; ++i)
-            _pt[i] = p._pt[i];
-    }
-    Point &operator=(Point const &p) {
-        for (unsigned i = 0; i < 2; ++i)
-            _pt[i] = p._pt[i];
-        return *this;
-    }
     /** @brief Construct a point from its polar coordinates.
      * The angle is specified in radians, in the mathematical convention (increasing
      * counter-clockwise from +X). */

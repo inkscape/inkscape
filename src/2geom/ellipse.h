@@ -49,7 +49,10 @@ class Circle;
 class Ellipse
 {
   public:
-    Ellipse()
+    Ellipse():
+       m_centre(),
+       m_ray(),
+       m_angle(0)
     {}
 
     Ellipse(double cx, double cy, double rx, double ry, double a)

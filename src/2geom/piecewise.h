@@ -34,6 +34,7 @@
 
 #include <vector>
 #include <map>
+#include <utility>
 #include <boost/concept_check.hpp>
 #include <2geom/concepts.h>
 #include <2geom/math-utils.h>
@@ -92,8 +93,8 @@ class Piecewise {
 
     inline void reserve(unsigned i) { segs.reserve(i); cuts.reserve(i + 1); }
 
-    inline T operator[](unsigned i) const { return segs[i]; }
-    inline T &operator[](unsigned i) { return segs[i]; }
+    inline T const& operator[](unsigned i) const { return segs[i]; }
+    inline T&       operator[](unsigned i)       { return segs[i]; }
     inline output_type operator()(double t) const { return valueAt(t); }
     inline output_type valueAt(double t) const {
         unsigned n = segN(t);
@@ -139,6 +140,13 @@ class Piecewise {
         push_seg(s);
         push_cut(to);
     }
+#ifdef CPP11
+    inline void push(T &&s, double to) {
+        assert(cuts.size() - segs.size() == 1);
+        push_seg(s);
+        push_cut(to);
+    }
+#endif
     //Convenience/implementation hiding function to add cuts.
     inline void push_cut(double c) {
         ASSERT_INVARIANTS(cuts.empty() || c > cuts.back());
@@ -146,6 +154,9 @@ class Piecewise {
     }
     //Convenience/implementation hiding function to add segments.
     inline void push_seg(const T &s) { segs.push_back(s); }
+#ifdef CPP11
+    inline void push_seg(T &&s) { segs.emplace_back(s); }
+#endif
 
     /**Returns the segment index which corresponds to a 'global' piecewise time.
      * Also takes optional low/high parameters to expedite the search for the segment.

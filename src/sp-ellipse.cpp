@@ -29,7 +29,7 @@
 #include <2geom/ellipse.h>
 #include <2geom/transforms.h>
 #include <2geom/pathvector.h>
-#include <2geom/svg-path.h>
+#include <2geom/path-sink.h>
 #include "document.h"
 #include "sp-ellipse.h"
 #include "preferences.h"
@@ -441,7 +441,7 @@ void SPGenericEllipse::set_shape()
             pb.closePath();
         } else {
             // arc only
-            pb.finish();
+            pb.flush();
         }
 
         curve = new SPCurve(pb.peek());

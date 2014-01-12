@@ -154,7 +154,7 @@ Crossings reverse_tb(Crossings const &cr, unsigned split, std::vector<double> ma
     Crossings ret;
     for(Crossings::const_iterator i = cr.begin(); i != cr.end(); ++i) {
         double mx = max[i->b - split];
-        //std::cout << i->b << "\n";
+        std::cout << i->b << "\n";
         ret.push_back(Crossing(i->ta, i->tb > mx+0.01 ? (1 - (i->tb - mx) + mx) : mx - i->tb,
                                !i->dir));
     }

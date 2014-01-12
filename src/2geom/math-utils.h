@@ -40,6 +40,7 @@
 #include <math.h> // sincos is usually only available in math.h
 #include <cmath>
 #include <utility> // for std::pair
+#include <boost/math/special_functions/fpclassify.hpp>
 
 namespace Geom {
 
@@ -49,6 +50,8 @@ namespace Geom {
  * @return -1 when x is negative, 1 when positive, and 0 if equal to 0. */
 template <class T> inline int sgn(const T& x) {
     return (x < 0 ? -1 : (x > 0 ? 1 : 0) );
+// can we 'optimize' this with:
+//    return ( (T(0) < x) - (x < T(0)) );
 }
 
 template <class T> inline T sqr(const T& x) {return x * x;}
@@ -111,7 +114,7 @@ inline void sincos(double angle, double &sin_, double &cos_) {
 #elif defined (SOLARIS_2_8) && __GNUC__ == 3 && __GNUC_MINOR__ == 2
 # define IS_NAN(_a) (isnan(_a))		/* GNU definition */
 #else
-# define IS_NAN(_a) (std::isnan(_a))
+# define IS_NAN(_a) (boost::math::isnan(_a))
 #endif
 /* If the above doesn't work, then try (a != a). */
 
@@ -130,7 +133,7 @@ inline void sincos(double angle, double &sin_, double &cos_) {
 #include  <ieeefp.h>
 #define IS_FINITE(_a) (finite(_a) && !IS_NAN(_a))
 #else
-# define IS_FINITE(_a) (std::isfinite(_a))
+# define IS_FINITE(_a) (boost::math::isfinite(_a))
 #endif
 
 } // end namespace Geom

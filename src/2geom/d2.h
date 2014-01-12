@@ -150,7 +150,7 @@ template <typename T>
 inline bool
 are_near(D2<T> const &a, D2<T> const &b, double tol) {
     boost::function_requires<NearConcept<T> >();
-    return are_near(a[0], b[0]) && are_near(a[1], b[1]);
+    return are_near(a[0], b[0], tol) && are_near(a[1], b[1], tol);
 }
 
 //IMPL: AddableConcept

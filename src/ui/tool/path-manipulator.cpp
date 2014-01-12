@@ -18,7 +18,7 @@
 #include <boost/shared_ptr.hpp>
 #include <2geom/bezier-curve.h>
 #include <2geom/bezier-utils.h>
-#include <2geom/svg-path.h>
+#include <2geom/path-sink.h>
 #include <glibmm/i18n.h>
 #include "ui/tool/path-manipulator.h"
 #include "desktop.h"
@@ -1202,7 +1202,7 @@ void PathManipulator::_createGeometryFromControlPoints(bool alert_LPE)
         }
         ++spi;
     }
-    builder.finish();
+    builder.flush();
     Geom::PathVector pathv = builder.peek() * (_edit_transform * _i2d_transform).inverse();
     _spcurve->set_pathvector(pathv);
     if (alert_LPE) {

@@ -1,7 +1,7 @@
 /**
  * \file
  * \brief  callback interface for SVG path data
- *
+ *//*
  * Copyright 2007 MenTaLguY <mental@rydia.net>
  *
  * This library is free software; you can redistribute it and/or
@@ -32,41 +32,78 @@
 #ifndef SEEN_SVG_PATH_H
 #define SEEN_SVG_PATH_H
 
-#include <2geom/path.h>
+#include <2geom/pathvector.h>
 #include <2geom/curves.h>
 #include <iterator>
 
 namespace Geom {
 
-class SVGPathSink {
+
+/** @brief Callback interface for processing path data.
+ *
+ * PathSink provides an interface that allows one to easily write
+ * code which processes path data, for instance when converting
+ * between path formats used by different graphics libraries.
+ *
+ * To store a path in a new format, implement the virtual methods
+ * for segments in a derived class and call path() or pathvector().
+ */
+class PathSink {
 public:
-    virtual void moveTo(Point p) = 0;
+    /** Move to a different point without creating a segment.
+     * Usually starts a new subpath. */
+    virtual void moveTo(Point const &p) = 0;
+    /// Output a horizontal line segment. Only the X coordinate of the final point is given.
     virtual void hlineTo(Coord v) = 0;
+    /// Output a vertical line segment. Only the Y coordinate of the final point is given.
     virtual void vlineTo(Coord v) = 0;
-    virtual void lineTo(Point p) = 0;
-    virtual void curveTo(Point c0, Point c1, Point p) = 0;
-    virtual void quadTo(Point c, Point p) = 0;
+    /// Output a line segment.
+    virtual void lineTo(Point const &p) = 0;
+    /// Output a quadratic Bezier segment.
+    virtual void curveTo(Point const &c0, Point const &c1, Point const &p) = 0;
+    /// Output a cubic Bezier segment.
+    virtual void quadTo(Point const &c, Point const &p) = 0;
+    /** Output an elliptical arc segment.
+     * See the EllipticalArc class for the documentation of parameters. */
     virtual void arcTo(double rx, double ry, double angle,
-                       bool large_arc, bool sweep, Point p) = 0;
+                       bool large_arc, bool sweep, Point const &p) = 0;
 
-    /** Undo the last lineTo, curveTo, etc. call. */
-    virtual void backspace() = 0;
-
+    /// Close the current path with a line segment.
     virtual void closePath() = 0;
-    virtual void finish() = 0;
-    virtual ~SVGPathSink() {}
+    /** Flush any internal state of the generator.
+     * 
+     * This call should implicitly finish the current subpath.
+     * Calling this method should be idempotent, because the default
+     * implementations of path() and pathvector() will be call it
+     * multiple times in a row. */
+    virtual void flush() = 0;
+
+    /** Undo the last segment.
+     * This method is optional.
+     * @return true true if a segment was erased, false otherwise. */
+    virtual bool backspace() { return false; }
+
+    // these have a default implementation
+    /** Output a subpath.
+     * Calls the appropriate segment methods according to the contents
+     * of the passed subpath. You can override this function. */
+    virtual void path(Path const &p);
+    /** Output a path.
+     * Calls the appropriate segment methods according to the contents
+     * of the passed path. You can override this function. */
+    virtual void pathvector(PathVector const &v);
+
+    virtual ~PathSink() {}
 };
 
-void output_svg_path(Path &path, SVGPathSink &sink);
-
 template <typename OutputIterator>
-class SVGPathGenerator : public SVGPathSink {
+class PathIteratorSink : public PathSink {
 public:
-    explicit SVGPathGenerator(OutputIterator out)
+    explicit PathIteratorSink(OutputIterator out)
     : _in_path(false), _out(out) {}
 
-    void moveTo(Point p) {
-        finish();
+    void moveTo(Point const &p) {
+        flush();
         _path.start(p);
         _start_p = p;
         _in_path = true;
@@ -89,7 +126,7 @@ public:
         _path.template appendNew<VLineSegment>(Point(_path.finalPoint()[X], v));
     }
 
-    void lineTo(Point p) {
+    void lineTo(Point const &p) {
         // check for implicit moveto, like in: "M 1,1 L 2,2 z l 2,2 z"
         if (!_in_path) {
             moveTo(_start_p);
@@ -97,7 +134,7 @@ public:
         _path.template appendNew<LineSegment>(p);
     }
 
-    void quadTo(Point c, Point p) {
+    void quadTo(Point const &c, Point const &p) {
         // check for implicit moveto, like in: "M 1,1 L 2,2 z l 2,2 z"
         if (!_in_path) {
             moveTo(_start_p);
@@ -105,7 +142,7 @@ public:
         _path.template appendNew<QuadraticBezier>(c, p);
     }
 
-    void curveTo(Point c0, Point c1, Point p) {
+    void curveTo(Point const &c0, Point const &c1, Point const &p) {
         // check for implicit moveto, like in: "M 1,1 L 2,2 z l 2,2 z"
         if (!_in_path) {
             moveTo(_start_p);
@@ -114,7 +151,7 @@ public:
     }
 
     void arcTo(double rx, double ry, double angle,
-               bool large_arc, bool sweep, Point p)
+               bool large_arc, bool sweep, Point const &p)
     {
         // check for implicit moveto, like in: "M 1,1 L 2,2 z l 2,2 z"
         if (!_in_path) {
@@ -124,11 +161,13 @@ public:
                                                  large_arc, sweep, p);
     }
 
-    void backspace()
+    bool backspace()
     {
         if (_in_path && _path.size() > 0) {
             _path.erase_last();
+            return true;
         }
+        return false;
     }
 
     void append(Path const &other, Path::Stitching stitching = Path::NO_STITCHING)
@@ -141,16 +180,22 @@ public:
 
     void closePath() {
         _path.close();
-        finish();
+        flush();
     }
 
-    void finish() {
+    void flush() {
         if (_in_path) {
             _in_path = false;
-            *_out = _path;
+            *_out++ = _path;
             _path.clear();
             _path.close(false);
         }
+    }
+
+    void path(Path const &other)
+    {
+        flush();
+        *_out++ = other;
     }
 
 protected:
@@ -162,11 +207,11 @@ protected:
 
 typedef std::back_insert_iterator<std::vector<Path> > iter;
 
-class PathBuilder : public SVGPathGenerator<iter> {
+class PathBuilder : public PathIteratorSink<iter> {
 private:
     std::vector<Path> _pathset;
 public:
-    PathBuilder() : SVGPathGenerator<iter>(iter(_pathset)) {}
+    PathBuilder() : PathIteratorSink<iter>(iter(_pathset)) {}
     std::vector<Path> const &peek() const {return _pathset;}
 };
 

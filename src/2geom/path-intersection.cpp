@@ -113,11 +113,12 @@ int winding(Path const &path, Point p) {
  */
 bool path_direction(Path const &p) {
     if(p.empty()) return false;
+
+    /*goto doh;
     //could probably be more efficient, but this is a quick job
     double y = p.initialPoint()[Y];
     double x = p.initialPoint()[X];
     Cmp res = cmp(p[0].finalPoint()[Y], y);
-    /*goto doh;
     for(unsigned i = 1; i < p.size(); i++) {
         Cmp final_to_ray = cmp(p[i].finalPoint()[Y], y);
         Cmp initial_to_ray = cmp(p[i].initialPoint()[Y], y);
@@ -271,9 +272,9 @@ intersect_polish_root (Curve const &A, double &s, Curve const &B, double &t)
     }
 
 #ifdef HAVE_GSL
-    int status;
-    size_t iter = 0;
     if(0) { // the GSL version is more accurate, but taints this with GPL
+        int status;
+        size_t iter = 0;
         const size_t n = 2;
         struct rparams p = {A, B};
         gsl_multiroot_function f = {&intersect_polish_f, n, &p};

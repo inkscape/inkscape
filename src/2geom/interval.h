@@ -114,9 +114,9 @@ public:
     /** @brief Check whether the interior of the interval includes the given interval.
      * Interior means all numbers in the interval except its ends. */
     bool interiorContains(Interval const &val) const { return min() < val.min() && val.max() < max(); }
-    /** @brief Check whether the interiors of the intervals have any common elements. */
+    /** @brief Check whether the interiors of the intervals have any common elements.  A single point in common is not considered an intersection. */
     bool interiorIntersects(Interval const &val) const {
-        return interiorContains(val.min()) || interiorContains(val.max()) || val.interiorContains(*this);
+        return std::max(min(), val.min()) < std::min(max(), val.max());
     }
     /// @}
 

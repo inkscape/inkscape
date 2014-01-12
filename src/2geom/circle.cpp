@@ -88,7 +88,9 @@ void Circle::set(std::vector<Point> const& points)
     model.instance(*this, fitter.result(z));
 }
 
-
+/**
+ @param inner a point whose angle with the circle center is inside the angle that the arc spans
+ */
 EllipticalArc *
 Circle::arc(Point const& initial, Point const& inner, Point const& final,
              bool _svg_compliant)
@@ -98,10 +100,8 @@ Circle::arc(Point const& initial, Point const& inner, Point const& final,
     return e.arc(initial, inner, final, _svg_compliant);
 }
 
-void
-Circle::getPath(std::vector<Path> &path_out) {
-    Path pb;
-
+D2<SBasis> Circle::toSBasis()
+{
     D2<SBasis> B;
     Linear bo = Linear(0, 2 * M_PI);
 
@@ -109,6 +109,15 @@ Circle::getPath(std::vector<Path> &path_out) {
     B[1] = sin(bo,4);
 
     B = B * m_ray + m_centre;
+
+    return B;
+}
+
+void
+Circle::getPath(std::vector<Path> &path_out) {
+    Path pb;
+
+    D2<SBasis> B = toSBasis();
 
     pb.append(SBasisCurve(B));
 

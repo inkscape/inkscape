@@ -35,7 +35,7 @@
 #include <2geom/sbasis-to-bezier.h>
 #include <2geom/d2.h>
 #include <2geom/choose.h>
-#include <2geom/svg-path.h>
+#include <2geom/path-sink.h>
 #include <2geom/exception.h>
 
 #include <iostream>
@@ -180,6 +180,118 @@ void sbasis_to_bezier (std::vector<Point> & bz, D2<SBasis> const& sb, size_t sz)
     }
 }
 
+/** Changes the basis of p to be Bernstein.
+ \param p the D2 Symmetric basis polynomial
+ \returns the D2 Bernstein basis cubic polynomial
+
+Bezier is always cubic.
+For general asymmetric case, fit the SBasis function value at midpoint
+For parallel, symmetric case, find the point of closest approach to the midpoint
+For parallel, anti-symmetric case, fit the SBasis slope at midpoint
+*/
+void sbasis_to_cubic_bezier (std::vector<Point> & bz, D2<SBasis> const& sb)
+{
+    double delx[2], dely[2];
+    double xprime[2], yprime[2];
+    double midx = 0;
+    double midy = 0;
+    double numer;
+    double denom;
+    double div;
+
+    if ((sb[X].size() == 0) || (sb[Y].size() == 0)) {
+        THROW_RANGEERROR("size of sb is too small");
+    }
+
+    bz.resize(4, Point(0,0));
+    bz[0][X] = sb[X][0][0];
+    bz[0][Y] = sb[Y][0][0];
+    bz[3][X] = sb[X][0][1];
+    bz[3][Y] = sb[Y][0][1];
+
+//  calculate first derivatives of x and y wrt t
+
+    for (int i = 0; i < 2; ++i) {
+        xprime[i] = sb[X][0][1] - sb[X][0][0];
+        yprime[i] = sb[Y][0][1] - sb[Y][0][0];
+    }
+    if (sb[X].size() > 0) {
+        xprime[0] += sb[X][1][0];
+        xprime[1] -= sb[X][1][1];
+    }
+    if (sb[Y].size() > 0) {
+        yprime[0] += sb[Y][1][0];
+        yprime[1] -= sb[Y][1][1];
+    }
+
+//  calculate midpoint at t = 0.5
+
+    div = 2;
+    for (size_t i = 0; i < sb[X].size(); ++i) {
+        midx += (sb[X][i][0] + sb[X][i][1])/div;
+        div *= 4;
+    }
+    midx = 8*midx - 4*bz[0][X] - 4*bz[3][X];
+
+    div = 2;
+    for (size_t i = 0; i < sb[Y].size(); ++i) {
+        midy += (sb[Y][i][0] + sb[Y][i][1])/div;
+        div *= 4;
+    }
+    midy = 8*midy - 4*bz[0][Y] - 4*bz[3][Y];
+
+//  calculate Bezier control arms
+
+    if (std::abs(xprime[1]*yprime[0] - yprime[1]*xprime[0]) > 1.e-5) {	// general case : fit mid fxn value
+        denom = xprime[1]*yprime[0] - yprime[1]*xprime[0];
+        for (int i = 0; i < 2; ++i) {
+            numer = xprime[1 - i]*midy - yprime[1 - i]*midx;
+            delx[i] = xprime[i]*numer/denom/3;
+            dely[i] = yprime[i]*numer/denom/3;
+        }
+    }
+    else if ((xprime[0]*xprime[1] < 0) || (yprime[0]*yprime[1] < 0)) {	// symmetric case : use distance of closest approach
+        numer = midx*xprime[0] + midy*yprime[0];
+        denom = 6.0*(xprime[0]*xprime[0] + yprime[0]*yprime[0]);
+        delx[0] = xprime[0]*numer/denom;
+        dely[0] = yprime[0]*numer/denom;
+        delx[1] = -delx[0];
+        dely[1] = -dely[0];
+    }
+    else {						// anti-symmetric case : fit mid slope
+							// calculate slope at t = 0.5
+        midx = 0;
+        div = 1;
+        for (size_t i = 0; i < sb[X].size(); ++i) {
+            midx += (sb[X][i][1] - sb[X][i][0])/div;
+            div *= 4;
+        }
+        midy = 0;
+        div = 1;
+        for (size_t i = 0; i < sb[Y].size(); ++i) {
+            midy += (sb[Y][i][1] - sb[Y][i][0])/div;
+            div *= 4;
+        }
+        if (midx*yprime[0] != midy*xprime[0]) {
+            denom = midx*yprime[0] - midy*xprime[0];
+            numer = midx*(bz[3][Y] - bz[0][Y]) - midy*(bz[3][X] - bz[0][X]);
+            for (int i = 0; i < 2; ++i) {
+                delx[i] = xprime[0]*numer/denom;
+                dely[i] = yprime[0]*numer/denom;
+            }
+        }
+        else {					// linear case
+            for (int i = 0; i < 2; ++i) {
+                delx[i] = (bz[3][X] - bz[0][X])/3;
+                dely[i] = (bz[3][Y] - bz[0][Y])/3;
+            }
+        }
+    }
+    bz[1][X] = bz[0][X] + delx[0];
+    bz[1][Y] = bz[0][Y] + dely[0];
+    bz[2][X] = bz[3][X] - delx[1];
+    bz[2][Y] = bz[3][Y] - dely[1];
+}
 
 /** Changes the basis of p to be sbasis.
  \param p the Bernstein basis polynomial
@@ -347,12 +459,13 @@ void build_from_sbasis(Geom::PathBuilder &pb, D2<SBasis> const &B, double tol, b
     if (!B.isFinite()) {
         THROW_EXCEPTION("assertion failed: B.isFinite()");
     }
-    if(tail_error(B, 2) < tol || sbasis_size(B) == 2) { // nearly cubic enough
+    if(tail_error(B, 3) < tol || sbasis_size(B) == 2) { // nearly cubic enough
         if( !only_cubicbeziers && (sbasis_size(B) <= 1) ) {
             pb.lineTo(B.at1());
         } else {
             std::vector<Geom::Point> bez;
-            sbasis_to_bezier(bez, B, 4);
+//            sbasis_to_bezier(bez, B, 4);
+            sbasis_to_cubic_bezier(bez, B);
             pb.curveTo(bez[1], bez[2], bez[3]);
         }
     } else {
@@ -372,7 +485,7 @@ path_from_sbasis(D2<SBasis> const &B, double tol, bool only_cubicbeziers) {
     PathBuilder pb;
     pb.moveTo(B.at0());
     build_from_sbasis(pb, B, tol, only_cubicbeziers);
-    pb.finish();
+    pb.flush();
     return pb.peek().front();
 }
 
@@ -414,7 +527,7 @@ path_from_piecewise(Geom::Piecewise<Geom::D2<Geom::SBasis> > const &B, double to
             build_from_sbasis(pb, B[i], tol, only_cubicbeziers);
         }
     }
-    pb.finish();
+    pb.flush();
     return pb.peek();
 }
 
