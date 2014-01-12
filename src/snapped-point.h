@@ -66,7 +66,7 @@ public:
     bool getConstrainedSnap() const {return _constrained_snap;}
     bool getSnapped() const {return _distance < Geom::infinity();}
     Geom::Point getTransformation() const {return _transformation;}
-    void setTransformation(Geom::Point const t) {_transformation = t;}
+    void setTransformation(Geom::Point const &t) {_transformation = t;}
     void setTarget(SnapTargetType const target) {_target = target;}
     SnapTargetType getTarget() const {return _target;}
     void setTargetBBox(Geom::OptRect const target) {_target_bbox = target;}

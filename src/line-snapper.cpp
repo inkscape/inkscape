@@ -160,7 +160,7 @@ void Inkscape::LineSnapper::constrainedSnap(IntermSnapResults &isr,
 
 // Will only be overridden in the guide-snapper class, because grid lines don't have an origin; the
 // grid-snapper classes will use this default empty method
-void Inkscape::LineSnapper::_addSnappedLinesOrigin(IntermSnapResults &/*isr*/, Geom::Point const /*origin*/, Geom::Coord const /*snapped_distance*/, SnapSourceType const &/*source_type*/, long /*source_num*/, bool /*constrained_snap*/) const
+void Inkscape::LineSnapper::_addSnappedLinesOrigin(IntermSnapResults &/*isr*/, Geom::Point const &/*origin*/, Geom::Coord const &/*snapped_distance*/, SnapSourceType const &/*source_type*/, long /*source_num*/, bool /*constrained_snap*/) const
 {
 }
 
