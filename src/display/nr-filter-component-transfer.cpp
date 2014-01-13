@@ -254,16 +254,21 @@ void FilterComponentTransfer::render_cairo(FilterSlot &slot)
 
     // parameters: R = 0, G = 1, B = 2, A = 3
     // Cairo:      R = 2, G = 1, B = 0, A = 3
+    // If tableValues is empty, use identity.
     for (unsigned i = 0; i < 3; ++i) {
         guint32 color = 2 - i;
         switch (type[i]) {
         case COMPONENTTRANSFER_TYPE_TABLE:
-            ink_cairo_surface_filter(out, out,
-                ComponentTransferTable<false>(color, tableValues[i]));
+            if(!tableValues[i].empty()) {
+              ink_cairo_surface_filter(out, out,
+                  ComponentTransferTable<false>(color, tableValues[i]));
+            }
             break;
         case COMPONENTTRANSFER_TYPE_DISCRETE:
-            ink_cairo_surface_filter(out, out,
-                ComponentTransferDiscrete<false>(color, tableValues[i]));
+            if(!tableValues[i].empty()) {
+                ink_cairo_surface_filter(out, out,
+                    ComponentTransferDiscrete<false>(color, tableValues[i]));
+            }
             break;
         case COMPONENTTRANSFER_TYPE_LINEAR:
             ink_cairo_surface_filter(out, out,
@@ -284,12 +289,16 @@ void FilterComponentTransfer::render_cairo(FilterSlot &slot)
     // fast paths for alpha channel
     switch (type[3]) {
     case COMPONENTTRANSFER_TYPE_TABLE:
-        ink_cairo_surface_filter(out, out,
-            ComponentTransferTable<true>(tableValues[3]));
+        if(!tableValues[3].empty()) {
+          ink_cairo_surface_filter(out, out,
+              ComponentTransferTable<true>(tableValues[3]));
+        }
         break;
     case COMPONENTTRANSFER_TYPE_DISCRETE:
-        ink_cairo_surface_filter(out, out,
-            ComponentTransferDiscrete<true>(tableValues[3]));
+        if(!tableValues[3].empty()) {
+          ink_cairo_surface_filter(out, out,
+              ComponentTransferDiscrete<true>(tableValues[3]));
+        }
         break;
     case COMPONENTTRANSFER_TYPE_LINEAR:
         ink_cairo_surface_filter(out, out,
