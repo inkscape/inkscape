@@ -282,6 +282,7 @@ private:
     class Settings;
     class MatrixAttr;
     class ColorMatrixValues;
+    class ComponentTransferValues;
     class LightSourceControl;
     Settings* _settings;
     Settings* _filter_general_settings;
@@ -290,6 +291,9 @@ private:
     // Color Matrix
     ColorMatrixValues* _color_matrix_values;
 
+    // Component Transfer
+    ComponentTransferValues* _component_transfer_values;
+
     // Convolve Matrix
     MatrixAttr* _convolve_matrix;
     DualSpinButton* _convolve_order;
@@ -297,7 +301,6 @@ private:
 
     // For controlling setting sensitivity
     Gtk::Widget* _k1, *_k2, *_k3, *_k4;
-    Gtk::Widget* _ct_table, *_ct_slope, *_ct_intercept, *_ct_amplitude, *_ct_exponent, *_ct_offset;
 
     // To prevent unwanted signals
     bool _locked;

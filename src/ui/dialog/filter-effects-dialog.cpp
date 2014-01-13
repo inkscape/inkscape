@@ -47,6 +47,7 @@
 #include "filters/blend.h"
 #include "filters/colormatrix.h"
 #include "filters/componenttransfer.h"
+#include "filters/componenttransfer-funcnode.h"
 #include "filters/composite.h"
 #include "filters/convolvematrix.h"
 #include "filters/displacementmap.h"
@@ -366,6 +367,36 @@ public:
         col.set_rgb(r * 256, g * 256, b * 256);
         set_color(col);
 #endif
+    }
+};
+
+// Used for tableValue in feComponentTransfer
+class EntryAttr : public Gtk::Entry, public AttrWidget
+{
+public:
+    EntryAttr(const SPAttributeEnum a, char* tip_text)
+        : AttrWidget(a)
+    {
+        signal_changed().connect(signal_attr_changed().make_slot());
+        if (tip_text) {
+            set_tooltip_text(tip_text);
+        }
+    }
+
+    // No validity checking is done
+    Glib::ustring get_as_attribute() const
+    {
+        return get_text();
+    }
+
+    void set_from_attribute(SPObject* o)
+    {
+        const gchar* val = attribute_value(o);
+        if(val) {
+            set_text( val );
+        } else {
+            set_text( "" );
+        }
     }
 };
 
@@ -746,7 +777,7 @@ public:
             _groups[i] = new Gtk::VBox;
             b.pack_start(*_groups[i], false, false);
         }
-        _current_type = 0;
+        //_current_type = 0;  If set to 0 then update_and_show() fails to update properly.
     }
 
     ~Settings()
@@ -766,9 +797,9 @@ public:
             for(unsigned i = 0; i < _groups.size(); ++i)
                 _groups[i]->hide();
         }
-        if(t >= 0)
-            _groups[t]->show_all();
-
+        if(t >= 0) {
+            _groups[t]->show(); // Do not use show_all(), it shows children than should be hidden
+        }
         _dialog.set_attrs_locked(true);
         for(unsigned i = 0; i < _attrwidgets[_current_type].size(); ++i)
             _attrwidgets[_current_type][i]->set_from_attribute(ob);
@@ -800,7 +831,10 @@ public:
     // LightSource
     LightSourceControl* add_lightsource();
 
-    // CheckBox
+    // Component Transfer Values
+    ComponentTransferValues* add_componenttransfervalues(const Glib::ustring& label, SPFeFuncNode::Channel channel);
+
+    // CheckButton
     CheckButtonAttr* add_checkbutton(bool def, const SPAttributeEnum attr, const Glib::ustring& label,
                                      const Glib::ustring& tv, const Glib::ustring& fv, char* tip_text = NULL)
     {
@@ -938,6 +972,18 @@ public:
         add_attr_widget(combo->get_attrwidget());
         return combo->get_attrwidget();
     }
+
+    // Entry
+    EntryAttr* add_entry(const SPAttributeEnum attr,
+                         const Glib::ustring& label,
+                         char* tip_text = NULL)
+    {
+        EntryAttr* entry = new EntryAttr(attr, tip_text);
+        add_widget(entry, label);
+        add_attr_widget(entry);
+        return entry;
+    }
+
 private:
     void add_attr_widget(AttrWidget* a)
     {
@@ -971,6 +1017,154 @@ private:
     SetAttrSlot _set_attr_slot;
     std::vector<std::vector< AttrWidget*> > _attrwidgets;
     int _current_type, _max_types;
+};
+
+// Displays sliders and/or tables for feComponentTransfer
+class FilterEffectsDialog::ComponentTransferValues : public Gtk::Frame, public AttrWidget
+{
+public:
+    ComponentTransferValues(FilterEffectsDialog& d, SPFeFuncNode::Channel channel)
+        : AttrWidget(SP_ATTR_INVALID),
+          _dialog(d),
+          _settings(d, _box, sigc::mem_fun(*this, &ComponentTransferValues::set_func_attr), COMPONENTTRANSFER_TYPE_ERROR),
+          _type(ComponentTransferTypeConverter, SP_ATTR_TYPE, false),
+          _channel(channel),
+          _funcNode(NULL)
+    {
+        set_shadow_type(Gtk::SHADOW_IN);
+        add(_box);
+        _box.add(_type);
+        _box.reorder_child(_type, 0);
+        _type.signal_changed().connect(sigc::mem_fun(*this, &ComponentTransferValues::on_type_changed));
+
+        _settings.type(COMPONENTTRANSFER_TYPE_LINEAR);
+        _settings.add_spinscale(1, SP_ATTR_SLOPE,     _("Slope"),     -10, 10, 0.1, 0.01, 2);
+        _settings.add_spinscale(0, SP_ATTR_INTERCEPT, _("Intercept"), -10, 10, 0.1, 0.01, 2);
+
+        _settings.type(COMPONENTTRANSFER_TYPE_GAMMA);
+        _settings.add_spinscale(1, SP_ATTR_AMPLITUDE, _("Amplitude"),   0, 10, 0.1, 0.01, 2);
+        _settings.add_spinscale(1, SP_ATTR_EXPONENT,  _("Exponent"),    0, 10, 0.1, 0.01, 2);
+        _settings.add_spinscale(0, SP_ATTR_OFFSET,    _("Offset"),    -10, 10, 0.1, 0.01, 2);
+
+        _settings.type(COMPONENTTRANSFER_TYPE_TABLE);
+        _settings.add_entry(SP_ATTR_TABLEVALUES,  _("Table"));
+
+        _settings.type(COMPONENTTRANSFER_TYPE_DISCRETE);
+        _settings.add_entry(SP_ATTR_TABLEVALUES,  _("Discrete"));
+
+        //_settings.type(COMPONENTTRANSFER_TYPE_IDENTITY);
+        _settings.type(-1); // Force update_and_show() to show/hide windows correctly
+    }
+
+    // FuncNode can be in any order so we must search to find correct one.
+    SPFeFuncNode* find_node(SPFeComponentTransfer* ct)
+    {
+        SPObject* node = ct->children;
+        SPFeFuncNode* funcNode = NULL;
+        bool found = false;
+        for(;node;node=node->next){
+            funcNode = SP_FEFUNCNODE(node);
+            if( funcNode->channel == _channel ) {
+                found = true;
+                break;
+            }
+        }
+        if( !found )
+            funcNode = NULL;
+
+        return funcNode;
+    }
+
+    void set_func_attr(const AttrWidget* input)
+    {
+        _dialog.set_attr( _funcNode, input->get_attribute(), input->get_as_attribute().c_str());
+    }
+
+    // Set new type and update widget visibility
+    virtual void set_from_attribute(SPObject* o)
+    {
+        // See componenttransfer.cpp
+        if(SP_IS_FECOMPONENTTRANSFER(o)) {
+            SPFeComponentTransfer* ct = SP_FECOMPONENTTRANSFER(o);
+
+            _funcNode = find_node(ct);
+            if( _funcNode ) {
+                _type.set_from_attribute( _funcNode );
+            } else {
+                // Create <funcNode>
+                SPFilterPrimitive* prim = _dialog._primitive_list.get_selected();
+                if(prim) {
+                    Inkscape::XML::Document *xml_doc = prim->document->getReprDoc();
+                    Inkscape::XML::Node *repr = NULL;
+                    switch(_channel) {
+                        case SPFeFuncNode::R:
+                            repr = xml_doc->createElement("svg:feFuncR");
+                            break;
+                        case SPFeFuncNode::G:
+                            repr = xml_doc->createElement("svg:feFuncG");
+                            break;
+                        case SPFeFuncNode::B:
+                            repr = xml_doc->createElement("svg:feFuncB");
+                            break;
+                        case SPFeFuncNode::A:
+                            repr = xml_doc->createElement("svg:feFuncA");
+                            break;
+                    }
+
+                    //XML Tree being used directly here while it shouldn't be.
+                    prim->getRepr()->appendChild(repr);
+                    Inkscape::GC::release(repr);
+
+                    // Now we should find it!
+                    _funcNode = find_node(ct);
+                    if( _funcNode ) {
+                        _funcNode->setAttribute( "type", "identity" );
+                    } else {
+                        //std::cout << "ERROR ERROR: feFuncX not found!" << std::endl;
+                    }
+                }
+            }
+ 
+            update();
+        }
+    }
+
+private:
+    void on_type_changed()
+    {
+        SPFilterPrimitive* prim = _dialog._primitive_list.get_selected();
+        if(prim) {
+
+            _funcNode->getRepr()->setAttribute( "type", _type.get_as_attribute().c_str() );
+
+            SPFilter* filter = _dialog._filter_modifier.get_selected_filter();
+            filter->requestModified(SP_OBJECT_MODIFIED_FLAG);
+
+            DocumentUndo::done(prim->document, SP_VERB_DIALOG_FILTER_EFFECTS, _("New transfer function type"));
+            update();
+        }
+    }
+
+    void update()
+    {
+        SPFilterPrimitive* prim = _dialog._primitive_list.get_selected();
+        if(prim && _funcNode) {
+            _settings.show_and_update(_type.get_active_data()->id, _funcNode);
+        }
+    }
+
+public:
+    virtual Glib::ustring get_as_attribute() const
+    {
+        return "";
+    }
+
+    FilterEffectsDialog& _dialog;
+    Gtk::VBox _box;
+    Settings _settings;
+    ComboBoxEnum<FilterComponentTransferType> _type;
+    SPFeFuncNode::Channel _channel; // RGBA
+    SPFeFuncNode* _funcNode;
 };
 
 // Settings for the three light source objects
@@ -1012,6 +1206,9 @@ public:
         _settings.add_spinscale(1, SP_ATTR_SPECULAREXPONENT, _("Specular Exponent"), 1, 100, 1, 1, 0, _("Exponent value controlling the focus for the light source"));
         //TODO: here I have used 100 degrees as default value. But spec says that if not specified, no limiting cone is applied. So, there should be a way for the user to set a "no limiting cone" option.
         _settings.add_spinscale(100, SP_ATTR_LIMITINGCONEANGLE, _("Cone Angle"), 1, 100, 1, 1, 0, _("This is the angle between the spot light axis (i.e. the axis between the light source and the point to which it is pointing at) and the spot light cone. No light is projected outside this cone."));
+
+        _settings.type(-1); // Force update_and_show() to show/hide windows correctly
+
     }
 
     Gtk::VBox& get_box()
@@ -1101,6 +1298,16 @@ private:
     ComboBoxEnum<LightSource> _light_source;
     bool _locked;
 };
+
+    // ComponentTransferValues
+FilterEffectsDialog::ComponentTransferValues* FilterEffectsDialog::Settings::add_componenttransfervalues(const Glib::ustring& label, SPFeFuncNode::Channel channel)
+    {
+        ComponentTransferValues* ct = new ComponentTransferValues(_dialog, channel);
+        add_widget(ct, label);
+        add_attr_widget(ct);
+        return ct;
+    }
+
 
 FilterEffectsDialog::LightSourceControl* FilterEffectsDialog::Settings::add_lightsource()
 {
@@ -2527,7 +2734,6 @@ FilterEffectsDialog::FilterEffectsDialog()
     _sizegroup->set_ignore_hidden();
 
     _add_primitive_type.remove_row(NR_FILTER_TILE);
-    _add_primitive_type.remove_row(NR_FILTER_COMPONENTTRANSFER);
 
     // Initialize widget hierarchy
 #if WITH_GTKMM_3_0
@@ -2629,15 +2835,10 @@ void FilterEffectsDialog::init_settings_widgets()
     colmat->signal_attr_changed().connect(sigc::mem_fun(*this, &FilterEffectsDialog::update_color_matrix));
 
     _settings->type(NR_FILTER_COMPONENTTRANSFER);
-    _settings->add_notimplemented();
-    /*
-    //TRANSLATORS: for info on "Slope" and "Intercept", see http://id.mind.net/~zona/mmts/functionInstitute/linearFunctions/lsif.html
-    _settings->add_combo(COMPONENTTRANSFER_TYPE_IDENTITY, SP_ATTR_TYPE, _("Type"), ComponentTransferTypeConverter);
-    _ct_slope = _settings->add_spinscale(1, SP_ATTR_SLOPE, _("Slope"), -10, 10, 0.1, 0.01, 2);
-    _ct_intercept = _settings->add_spinscale(0, SP_ATTR_INTERCEPT, _("Intercept"), -10, 10, 0.1, 0.01, 2);
-    _ct_amplitude = _settings->add_spinscale(1, SP_ATTR_AMPLITUDE, _("Amplitude"), 0, 10, 0.1, 0.01, 2);
-    _ct_exponent = _settings->add_spinscale(1, SP_ATTR_EXPONENT, _("Exponent"), 0, 10, 0.1, 0.01, 2);
-    _ct_offset = _settings->add_spinscale(0, SP_ATTR_OFFSET, _("Offset"), -10, 10, 0.1, 0.01, 2);*/
+    _settings->add_componenttransfervalues(_("R:"), SPFeFuncNode::R);
+    _settings->add_componenttransfervalues(_("G:"), SPFeFuncNode::G);
+    _settings->add_componenttransfervalues(_("B:"), SPFeFuncNode::B);
+    _settings->add_componenttransfervalues(_("A:"), SPFeFuncNode::A);
 
     _settings->type(NR_FILTER_COMPOSITE);
     _settings->add_combo(COMPOSITE_OVER, SP_ATTR_OPERATOR, _("Operator:"), CompositeOperatorConverter);
@@ -2953,21 +3154,6 @@ void FilterEffectsDialog::update_settings_sensitivity()
     _k3->set_sensitive(use_k);
     _k4->set_sensitive(use_k);
 
-// Component transfer not yet implemented
-/*
-    if(SP_IS_FECOMPONENTTRANSFER(prim)) {
-        SPFeComponentTransfer* ct = SP_FECOMPONENTTRANSFER(prim);
-        const bool linear = ct->type == COMPONENTTRANSFER_TYPE_LINEAR;
-        const bool gamma = ct->type == COMPONENTTRANSFER_TYPE_GAMMA;
-
-        _ct_table->set_sensitive(ct->type == COMPONENTTRANSFER_TYPE_TABLE || ct->type == COMPONENTTRANSFER_TYPE_DISCRETE);
-        _ct_slope->set_sensitive(linear);
-        _ct_intercept->set_sensitive(linear);
-        _ct_amplitude->set_sensitive(gamma);
-        _ct_exponent->set_sensitive(gamma);
-        _ct_offset->set_sensitive(gamma);
-    }
-*/
 }
 
 void FilterEffectsDialog::update_color_matrix()

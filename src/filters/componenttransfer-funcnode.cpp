@@ -205,14 +205,18 @@ void SPFeFuncNode::set(unsigned int key, gchar const *value) {
 }
 
 /**
- *  * Receives update notifications.
- *   */
+ * Receives update notifications.
+ */
 void SPFeFuncNode::update(SPCtx *ctx, guint flags) {
+    std::cout << "SPFeFuncNode::update" << std::endl;
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
-        /* do something to trigger redisplay, updates? */
-        //TODO
-        //this->readAttr( "azimuth" );
-        //this->readAttr( "elevation" );
+        this->readAttr( "type" );
+        this->readAttr( "tableValues" );
+        this->readAttr( "slope" );
+        this->readAttr( "intercept" );
+        this->readAttr( "amplitude" );
+        this->readAttr( "exponent" );
+        this->readAttr( "offset" );
     }
 
     SPObject::update(ctx, flags);
@@ -222,17 +226,10 @@ void SPFeFuncNode::update(SPCtx *ctx, guint flags) {
  * Writes its settings to an incoming repr object, if any.
  */
 Inkscape::XML::Node* SPFeFuncNode::write(Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags) {
+    std::cout << "SPFeFuncNode::write" << std::endl;
     if (!repr) {
         repr = this->getRepr()->duplicate(doc);
     }
-
-    /*
-	TODO: I'm not sure what to do here...
-
-    if (fefuncnode->azimuth_set)
-        sp_repr_set_css_double(repr, "azimuth", fefuncnode->azimuth);
-    if (fefuncnode->elevation_set)
-        sp_repr_set_css_double(repr, "elevation", fefuncnode->elevation);*/
 
     SPObject::write(doc, repr, flags);
 
