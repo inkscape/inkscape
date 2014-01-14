@@ -73,8 +73,6 @@
 namespace Inkscape {
 namespace UI {
 
-static Cache::SvgPreview svg_preview_cache;
-
 namespace Dialog {
 
   // See: http://developer.gnome.org/gtkmm/stable/classGtk_1_1TreeModelColumnRecord.html
@@ -276,7 +274,7 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
   instanceConns.push_back(documentReplacedConn);
 
   get_symbols();
-  draw_symbols( currentDocument ); /* Defaults to current document */
+  add_symbols( currentDocument ); /* Defaults to current document */
 
   sigc::connection desktopChangeConn =
     deskTrack.connectDesktopChanged( sigc::mem_fun(*this, &SymbolsDialog::setTargetDesktop) );
@@ -329,7 +327,7 @@ void SymbolsDialog::rebuild() {
     addSymbol->set_sensitive( false );                                              
     removeSymbol->set_sensitive( false );
   }
-  draw_symbols( symbolDocument );
+  add_symbols( symbolDocument );
 }
 
 void SymbolsDialog::insertSymbol() {
@@ -651,18 +649,18 @@ gchar const* SymbolsDialog::style_from_use( gchar const* id, SPDocument* documen
   return style;
 }
 
-void SymbolsDialog::draw_symbols( SPDocument* symbolDocument ) {
+void SymbolsDialog::add_symbols( SPDocument* symbolDocument ) {
 
   GSList* l = symbols_in_doc( symbolDocument );
   for( ; l != NULL; l = l->next ) {
     SPObject* symbol = SP_OBJECT(l->data);
     if (SP_IS_SYMBOL(symbol)) {
-      draw_symbol( symbol );
+      add_symbol( symbol );
     }
   }
 }
 
-void SymbolsDialog::draw_symbol( SPObject* symbol ) {
+void SymbolsDialog::add_symbol( SPObject* symbol ) {
 
   SymbolColumns* columns = getColumns();
 
@@ -672,7 +670,7 @@ void SymbolsDialog::draw_symbol( SPObject* symbol ) {
     title = id;
   }
 
-  Glib::RefPtr<Gdk::Pixbuf> pixbuf = create_symbol_image(id, symbol );
+  Glib::RefPtr<Gdk::Pixbuf> pixbuf = draw_symbol( symbol );
 
   if( pixbuf ) {
     Gtk::ListStore::iterator row = store->append();
@@ -694,7 +692,7 @@ void SymbolsDialog::draw_symbol( SPObject* symbol ) {
  * the temporary document is rendered.
  */
 Glib::RefPtr<Gdk::Pixbuf>
-SymbolsDialog::create_symbol_image(gchar const *symbol_id, SPObject *symbol)
+SymbolsDialog::draw_symbol(SPObject *symbol)
 {
   // Create a copy repr of the symbol with id="the_symbol"
   Inkscape::XML::Document *xml_doc = previewDocument->getReprDoc();
@@ -713,7 +711,8 @@ SymbolsDialog::create_symbol_image(gchar const *symbol_id, SPObject *symbol)
   if( !style ) {
     // If no default style in <symbol>, look in documents.
     if( symbol->document == currentDocument ) {
-      style = style_from_use( symbol_id, symbol->document );
+      gchar const *id = symbol->getRepr()->attribute("id");
+      style = style_from_use( id, symbol->document );
     } else {
       style = symbol->document->getReprRoot()->attribute("style");
     }
@@ -722,9 +721,7 @@ SymbolsDialog::create_symbol_image(gchar const *symbol_id, SPObject *symbol)
   if( !style ) style = "fill:#bbbbbb;stroke:#808080";
 
   // This is for display in Symbols dialog only
-  if( style ) {
-    repr->setAttribute( "style", style );
-  }
+  if( style ) repr->setAttribute( "style", style );
 
   // BUG: Symbols don't work if defined outside of <defs>. Causes Inkscape
   // crash when trying to read in such a file.
@@ -733,7 +730,7 @@ SymbolsDialog::create_symbol_image(gchar const *symbol_id, SPObject *symbol)
   Inkscape::GC::release(repr);
 
   // Uncomment this to get the previewDocument documents saved (useful for debugging)
-  // FILE *fp = fopen (g_strconcat(symbol_id, ".svg", NULL), "w");
+  // FILE *fp = fopen (g_strconcat(id, ".svg", NULL), "w");
   // sp_repr_save_stream(previewDocument->getReprDoc(), fp);
   // fclose (fp);
 
@@ -746,55 +743,31 @@ SymbolsDialog::create_symbol_image(gchar const *symbol_id, SPObject *symbol)
   previewDocument->getRoot()->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
   previewDocument->ensureUpToDate();
 
-  // if( object_temp == NULL || !SP_IS_ITEM(object_temp) ) {
-  //   //std::cout << "  previewDocument broken?" << std::endl;
-  //   //return 0;
-  // }
-
   SPItem *item = SP_ITEM(object_temp);
-
   unsigned psize = SYMBOL_ICON_SIZES[in_sizes];
 
-  /* Update to renderable state */
-  Glib::ustring key = svg_preview_cache.cache_key(previewDocument->getURI(), symbol_id, psize);
-  //std::cout << "  Key: " << key << std::endl;
-
   Glib::RefPtr<Gdk::Pixbuf> pixbuf(NULL);
-  GdkPixbuf *pixbuf_gobj = svg_preview_cache.get_preview_from_cache(key);
-  if (pixbuf_gobj) {
-    g_object_ref(pixbuf_gobj); // the reference in svg_preview_cache will get destroyed when it's freed
-    pixbuf = Glib::wrap(pixbuf_gobj);
-  }
+  // We could use cache here, but it doesn't really work with the structure
+  // of this user interface and we've already cached the pixbuf in the gtklist
 
   // Find object's bbox in document.
   // Note symbols can have own viewport... ignore for now.
   //Geom::OptRect dbox = item->geometricBounds();
   Geom::OptRect dbox = item->documentVisualBounds();
-  if (!dbox) {
-    //std::cout << "  No dbox" << std::endl;
-    return pixbuf;
-  }
 
-  if (!pixbuf) {
-
+  if (dbox) {
     /* Scale symbols to fit */
     double scale = 1.0;
     double width  = dbox->width();
     double height = dbox->height();
-    if( width == 0.0 ) {
-      width = 1.0;
-    }
-    if( height == 0.0 ) {
-      height = 1.0;
-    }
 
-    if( fitSymbol->get_active() ) {
-    /* Fit */
-    scale = psize/std::max(width,height);
-    }
+    if( width == 0.0 ) width = 1.0;
+    if( height == 0.0 ) height = 1.0;
+
+    if( fitSymbol->get_active() )
+        scale = psize / std::max(width, height);
 
     pixbuf = Glib::wrap(render_pixbuf(renderDrawing, scale, *dbox, psize));
-    svg_preview_cache.set_preview_in_cache(key, pixbuf->gobj());
   }
 
   return pixbuf;

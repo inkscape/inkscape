@@ -79,8 +79,8 @@ private:
     void iconDragDataGet(const Glib::RefPtr<Gdk::DragContext>& context, Gtk::SelectionData& selection_data, guint info, guint time);
 
     void get_symbols();
-    void draw_symbols( SPDocument* symbol_document );
-    void draw_symbol( SPObject* symbol_document );
+    void add_symbols( SPDocument* symbol_document );
+    void add_symbol( SPObject* symbol_document );
     SPDocument* symbols_preview_doc();
 
     GSList* symbols_in_doc_recursive(SPObject *r, GSList *l);
@@ -89,8 +89,7 @@ private:
     GSList* use_in_doc( SPDocument* document );
     gchar const* style_from_use( gchar const* id, SPDocument* document);
 
-    Glib::RefPtr<Gdk::Pixbuf>
-    create_symbol_image(gchar const *symbol_name, SPObject *symbol);
+    Glib::RefPtr<Gdk::Pixbuf> draw_symbol(SPObject *symbol);
 
     /* Keep track of all symbol template documents */
     std::map<Glib::ustring, SPDocument*> symbolSets;
