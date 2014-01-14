@@ -657,19 +657,18 @@ SPDesktop::change_document (SPDocument *theDocument)
 /**
  * Replaces the currently active tool with a new one.
  */
-void SPDesktop::set_event_context2(const std::string& toolName) {
-	Inkscape::UI::Tools::ToolBase* new_tool = ToolFactory::instance().createObject(toolName);
-	new_tool->desktop = this;
-	new_tool->message_context = new Inkscape::MessageContext(this->messageStack());
-
+void SPDesktop::set_event_context2(const std::string& toolName)
+{
     Inkscape::UI::Tools::ToolBase* old_tool = event_context;
-	event_context = new_tool;
-
-	if (old_tool) {
-		old_tool->finish();
-		delete old_tool;
-	}
-
+    if (old_tool) {
+        old_tool->finish();
+        delete old_tool;
+    }
+    
+    Inkscape::UI::Tools::ToolBase* new_tool = ToolFactory::instance().createObject(toolName);
+    new_tool->desktop = this;
+    new_tool->message_context = new Inkscape::MessageContext(this->messageStack());
+    event_context = new_tool;
     new_tool->setup();
 
     // Make sure no delayed snapping events are carried over after switching tools
@@ -677,7 +676,7 @@ void SPDesktop::set_event_context2(const std::string& toolName) {
     // tool should take care of this by itself)
     sp_event_context_discard_delayed_snap_event(event_context);
 
-	_event_context_changed_signal.emit(this, event_context);
+    _event_context_changed_signal.emit(this, event_context);
 }
 
 /**
