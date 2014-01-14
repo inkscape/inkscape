@@ -148,19 +148,37 @@ if test "$GCC" = "yes"; then
 fi
 
 # Detect a working version of unordered containers.
+# First try looking for native support (C++11 feature)
+AC_MSG_CHECKING([native support for unordered_set])
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <unordered_set>]],
+[[
+  std::unordered_set<int> i, j;
+  i = j;
+]])],
+[native_unordered_set_works=yes], [native_unordered_set_works=no])
+
+if test "x$native_unordered_set_works" = "xyes"; then
+	AC_MSG_RESULT([ok])
+	AC_DEFINE(HAVE_NATIVE_UNORDERED_SET, 1, [Has working native unordered_set])
+else
+	AC_MSG_RESULT([not working])
+fi
+
 AC_MSG_CHECKING([TR1 unordered_set usability])
 AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <tr1/unordered_set>]],
 [[
   std::tr1::unordered_set<int> i, j;
   i = j;
 ]])],
-[unordered_set_works=yes], [unordered_set_works=no])
-if test "x$unordered_set_works" = "xyes"; then
+[tr1_unordered_set_works=yes], [tr1_unordered_set_works=no])
+
+if test "x$tr1_unordered_set_works" = "xyes"; then
 	AC_MSG_RESULT([ok])
 	AC_DEFINE(HAVE_TR1_UNORDERED_SET, 1, [Has working standard TR1 unordered_set])
 else
 	AC_MSG_RESULT([not working])
 fi
+
 AC_CHECK_HEADER([boost/unordered_set.hpp], [AC_DEFINE(HAVE_BOOST_UNORDERED_SET, 1, [Boost unordered_set (Boost >= 1.36)])], [])
 AC_CHECK_HEADER([ext/hash_set], [AC_DEFINE(HAVE_EXT_HASH_SET, 1, [Legacy GNU ext/hash_set])], [])
 

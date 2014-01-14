@@ -19,8 +19,24 @@
 #include <glibmm/ustring.h>
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-#if defined(HAVE_TR1_UNORDERED_SET)
 
+#if defined(HAVE_NATIVE_UNORDERED_SET)
+# include <unordered_set>
+# include <unordered_map>
+# define INK_UNORDERED_SET std::unordered_set
+# define INK_UNORDERED_MAP std::unordered_map
+# define INK_HASH std::hash
+
+namespace std {
+template <>
+struct hash<Glib::ustring> : public std::unary_function<Glib::ustring, std::size_t> {
+    std::size_t operator()(Glib::ustring const &s) const {
+        return hash<std::string>()(s.raw());
+    }
+};
+} // namespace std
+
+#elif defined(HAVE_TR1_UNORDERED_SET)
 # include <tr1/unordered_set>
 # include <tr1/unordered_map>
 # define INK_UNORDERED_SET std::tr1::unordered_set
