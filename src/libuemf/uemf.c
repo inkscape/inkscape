@@ -1535,20 +1535,56 @@ int drawing_size(
    return(0);
 }
 
+
 /** 
-    \brief Set a U_COLORREF value from separeate R,G,B values.
-    Or use macro directly:  cr = U_RGB(r,g,b).
+    \brief Set a U_COLORREF value from separate R,G,B values.
     \param red    Red   component
     \param green  Green component
     \param blue   Blue  component
     
 */
-U_COLORREF colorref_set(
+U_COLORREF colorref3_set(
       uint8_t red,
       uint8_t green,
       uint8_t blue
    ){
    U_COLORREF cr = (U_COLORREF){red , green, blue, 0};
+   return(cr);
+}
+
+/** 
+    \brief Set a U_COLORREF value from separate R,G,B, and Reserved values.
+    \param red    Red      component
+    \param green  Green    component
+    \param blue   Blue     component
+    \param blue   Reserved component
+    
+*/
+U_COLORREF colorref4_set(
+      uint8_t red,
+      uint8_t green,
+      uint8_t blue,
+      uint8_t Reserved
+   ){
+   U_COLORREF cr = (U_COLORREF){red , green, blue, Reserved};
+   return(cr);
+}
+
+/** 
+    \brief Set a U_RGBQUAD value from separate R,G,B, Reserved values.
+    \param red       Red      component
+    \param green     Green    component
+    \param blue      Blue     component
+    \param reserved  Reserved component
+    
+*/
+U_RGBQUAD rgbquad_set(
+      uint8_t red,
+      uint8_t green,
+      uint8_t blue,
+      uint8_t reserved
+   ){
+   U_RGBQUAD cr = (U_RGBQUAD){blue , green, red, reserved};
    return(cr);
 }
 

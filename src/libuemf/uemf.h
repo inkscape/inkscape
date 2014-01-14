@@ -1096,34 +1096,35 @@ extern "C" {
 /** \defgroup Common_macros Common Macros
   @{
 */
-//  Color U_BGR(A), byte order lo to hi: {B,G,R,A} corresponding to U_RGBQUAD.  Set/Get Macros.  
-//  These are used in EMF structures and the byte order must be the same in memory or on disk.
-#define U_BGR(r,g,b)           (U_RGBQUAD){b,g,r,0}             //!<  Set any BGR  color with an {r,g,b} triplet
-#define U_BGRA(r,g,b,a)        (U_RGBQUAD){b,g,r,a}             //!<  Set any BGRA color with an {r,g,b,a} quad
-#define U_WHITE                U_BGR(255,255,255)               //!<  Set BGR white.
-#define U_BLACK                U_BGR(0,0,0)                     //!<  Set BGR black.
-#define U_BGRAGetR(rgb)        (rgb.Red     )                   //!<  Color BGR Get Red Macro.
-#define U_BGRAGetG(rgb)        (rgb.Green   )                   //!<  Color BGR Get Green Macro.
-#define U_BGRAGetB(rgb)        (rgb.Blue    )                   //!<  Color BGR Get Blue Macro.
-#define U_BGRAGetA(rgb)        (rgb.Reserved)                   //!<  Color BGR Get A/reserved Macro.
+//  Note, many of these were originally defined using C99 (type){val,val,val} format, but that turned out to
+//  have incompatibilities with C++, so use functions as the basis to avoid this.
 
-#define U_PALETTERGB(r,g,b)    U_RGB(r,g,b,0x02))               //!<  Set any Palette RGB color.
-#define U_PALETTEINDEX(i)     ((U_COLORREF)(0x01000000 | (uint16_t)(i)))\
-                                                                //!<  Get RGB from Palette by index.
-
-//  Color U_RGB(A), byte order lo to hi: {R,G,B,A} corresponding to U_COLORREF. Set/Get Macros.
+//  Set/Get for U_RGBQUAD Colors, which are stored in byte order: {B,G,R,A}.  
 //  These are used in EMF structures and the byte order must be the same in memory or on disk.
-//  These MAY be used in PNG and other libraries if these enforce byte order in memory,otherwise
+#define U_BGR(r,g,b)         rgbquad_set(r, g, b, 0)        //!<  Set any BGR  color with an {r,g,b} triplet
+#define U_BGRA(r,g,b,a)      rgbquad_set(r, g, b, a)        //!<  Set any BGRA color with an {r,g,b,a} quad
+#define U_WHITE              U_BGR(255,255,255)             //!<  Set BGR white.
+#define U_BLACK              U_BGR(0,0,0)                   //!<  Set BGR black.
+#define U_BGRAGetR(rgb)      (rgb.Red     )                 //!<  Color BGR Red.
+#define U_BGRAGetG(rgb)      (rgb.Green   )                 //!<  Color BGR Green.
+#define U_BGRAGetB(rgb)      (rgb.Blue    )                 //!<  Color BGR Blue.
+#define U_BGRAGetA(rgb)      (rgb.Reserved)                 //!<  Color BGRA A/reserved
+
+
+//  Set/Get for U_COLORREF Color, which are stored in byte order:: {R,G,B,A}.
+//  These are used in EMF structures and the byte order must be the same in memory or on disk.
+//  These MAY be used in PNG and other libraries if these enforce byte order in memory, otherwise
 //  U_swap4 may need to also be employed.
+//
 
-/// Set any RGB  color with an {r,g,b} triplet
-#define U_RGB(r,g,b)         (U_COLORREF){(uint8_t)(r), (uint8_t)(g), (uint8_t)(b), 0}
-/// Set any RGBA color with an {r,g,b,a} quad
-#define U_RGBA(r,g,b,a)      (U_COLORREF){(uint8_t)(r), (uint8_t)(g), (uint8_t)(b), (uint8_t)(a)}
-#define U_RGBAGetR(rgb)     ((U_COLORREF)rgb).Red               //!<  Color RGB Get Red Macro.
-#define U_RGBAGetG(rgb)     ((U_COLORREF)rgb).Green             //!<  Color RGB Get Green Macro.
-#define U_RGBAGetB(rgb)     ((U_COLORREF)rgb).Blue              //!<  Color RGB Get Blue Macro.
-#define U_RGBAGetA(rgb)     ((U_COLORREF)rgb).Reserved          //!<  Color RGBA Get A/reserved Macro.
+#define colorref_set         colorref3_set                  //!<  Most frequent usage is 3 colors, so set the unqualified one to that
+#define U_RGB(r,g,b)         colorref3_set(r, g, b)         //!<  Set any RGB  color with an {r,g,b} triplet
+#define U_RGBA(r,g,b,a)      colorref4_set(r, g, b,  a)     //!<  Set any RGBA color with an {r,g,b,a} quad
+#define U_RGBAGetR(rgb)      (rgb.Red     )                 //!<  Color RGB Red.
+#define U_RGBAGetG(rgb)      (rgb.Green   )                 //!<  Color RGB Green
+#define U_RGBAGetB(rgb)      (rgb.Blue    )                 //!<  Color RGB Blue
+#define U_RGBAGetA(rgb)      (rgb.Reserved)                 //!<  Color RGBA A/reserved
+
 
 //   color type conversions
 #define U_RGB2BGR(rgb)        (U_RGBQUAD){ U_RGBAGetB(rgb),U_RGBAGetG(rgb),U_RGBAGetR(rgb),0}   //!<  Set any BGR color from an RGB color
@@ -2652,7 +2653,9 @@ U_POINT16        point16_set(int16_t  x,  int16_t  y);
 U_PANOSE         panose_set(uint8_t bFamilyType, uint8_t bSerifStyle,      uint8_t bWeight,   uint8_t bProportion,
                       uint8_t bContrast,   uint8_t bStrokeVariation, uint8_t bArmStyle, uint8_t bLetterform, 
                       uint8_t bMidline,    uint8_t bXHeight );
-U_COLORREF       colorref_set(uint8_t red, uint8_t green, uint8_t blue);
+U_COLORREF       colorref3_set(uint8_t red, uint8_t green, uint8_t blue);
+U_COLORREF       colorref4_set(uint8_t red, uint8_t green, uint8_t blue, uint8_t reserved);
+U_RGBQUAD        rgbquad_set(uint8_t red,uint8_t green, uint8_t blue,  uint8_t reserved);
 U_LOGBRUSH       logbrush_set(uint32_t lbStyle, U_COLORREF lbColor, int32_t lbHatch);
 U_XFORM          xform_set(U_FLOAT eM11, U_FLOAT eM12, U_FLOAT eM21, U_FLOAT eM22, U_FLOAT eDx, U_FLOAT eDy);
 U_XFORM          xform_alt_set(U_FLOAT scale, U_FLOAT ratio, U_FLOAT rot, U_FLOAT axisrot, U_FLOAT eDx, U_FLOAT eDy);
