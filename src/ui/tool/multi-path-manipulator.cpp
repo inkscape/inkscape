@@ -30,17 +30,6 @@
 
 #include <gdk/gdkkeysyms.h>
 
-#ifdef USE_GNU_HASHES
-namespace __gnu_cxx {
-template<>
-struct hash<Inkscape::UI::NodeList::iterator> {
-    size_t operator()(Inkscape::UI::NodeList::iterator const &n) const {
-        return reinterpret_cast<size_t>(n.ptr());
-    }
-};
-} // namespace __gnu_cxx
-#endif // USE_GNU_HASHES
-
 namespace Inkscape {
 namespace UI {
 
