@@ -580,9 +580,9 @@ void CairoRenderer::renderItem(CairoRenderContext *ctx, SPItem *item)
     setStateForItem(ctx, item);
 
     CairoRenderState *state = ctx->getCurrentState();
-    state->need_layer = ( state->mask || state->opacity != 1.0 );
+    state->need_layer = ( state->mask || state->clip_path || state->opacity != 1.0 );
 
-    // Draw item on a temporary surface so a mask or opacity can be applied to it.
+    // Draw item on a temporary surface so a mask, clip-path, or opacity can be applied to it.
     if (state->need_layer) {
         state->merge_opacity = FALSE;
         ctx->pushLayer();
@@ -591,7 +591,7 @@ void CairoRenderer::renderItem(CairoRenderContext *ctx, SPItem *item)
     sp_item_invoke_render(item, ctx);
 
     if (state->need_layer)
-        ctx->popLayer();
+        ctx->popLayer(); // This applies clipping/masking
 
     ctx->popState();
 }
