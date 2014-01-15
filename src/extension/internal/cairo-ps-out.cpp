@@ -328,9 +328,7 @@ CairoPsOutput::init (void)
             "<id>" SP_MODULE_KEY_PRINT_CAIRO_PS "</id>\n"
             "<param name=\"PSlevel\" gui-text=\"" N_("Restrict to PS level:") "\" type=\"enum\" >\n"
                 "<_item value='PS3'>" N_("PostScript level 3") "</_item>\n"
-#if (CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 5, 2))
                 "<_item value='PS2'>" N_("PostScript level 2") "</_item>\n"
-#endif
             "</param>\n"
             "<param name=\"textToPath\" gui-text=\"" N_("Convert texts to paths") "\" type=\"boolean\">false</param>\n"
             "<param name=\"textToLaTeX\" gui-text=\"" N_("PS+LaTeX: Omit text in PS, and create LaTeX file") "\" type=\"boolean\">false</param>\n"
@@ -369,9 +367,7 @@ CairoEpsOutput::init (void)
             "<id>" SP_MODULE_KEY_PRINT_CAIRO_EPS "</id>\n"
             "<param name=\"PSlevel\" gui-text=\"" N_("Restrict to PS level:") "\" type=\"enum\" >\n"
                 "<_item value='PS3'>" N_("PostScript level 3") "</_item>\n"
-#if (CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 5, 2))
                 "<_item value='PS2'>" N_("PostScript level 2") "</_item>\n"
-#endif
             "</param>\n"
             "<param name=\"textToPath\" gui-text=\"" N_("Convert texts to paths") "\" type=\"boolean\">false</param>\n"
             "<param name=\"textToLaTeX\" gui-text=\"" N_("EPS+LaTeX: Omit text in EPS, and create LaTeX file") "\" type=\"boolean\">false</param>\n"

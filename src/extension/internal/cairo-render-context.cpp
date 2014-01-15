@@ -803,9 +803,7 @@ CairoRenderContext::setupSurface(double width, double height)
 #ifdef CAIRO_HAS_PDF_SURFACE
         case CAIRO_SURFACE_TYPE_PDF:
             surface = cairo_pdf_surface_create_for_stream(Inkscape::Extension::Internal::_write_callback, _stream, width, height);
-#if (CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 10, 0))
             cairo_pdf_surface_restrict_to_version(surface, (cairo_pdf_version_t)_pdf_level);
-#endif
             break;
 #endif
 #ifdef CAIRO_HAS_PS_SURFACE
@@ -814,10 +812,8 @@ CairoRenderContext::setupSurface(double width, double height)
             if(CAIRO_STATUS_SUCCESS != cairo_surface_status(surface)) {
                 return FALSE;
             }
-#if (CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 5, 2))
             cairo_ps_surface_restrict_to_level(surface, (cairo_ps_level_t)_ps_level);
             cairo_ps_surface_set_eps(surface, (cairo_bool_t) _eps);
-#endif
             // Cairo calculates the bounding box itself, however we want to override this. See Launchpad bug #380501
 #if (CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 11, 2))
 //            cairo_ps_dsc_comment(surface, os_bbox.str().c_str());
