@@ -660,9 +660,16 @@ SPDesktop::change_document (SPDocument *theDocument)
 void SPDesktop::set_event_context2(const std::string& toolName)
 {
     Inkscape::UI::Tools::ToolBase* old_tool = event_context;
+
     if (old_tool) {
-        old_tool->finish();
-        delete old_tool;
+        if (toolName.compare(old_tool->pref_observer->observed_path) != 0) {
+            //g_message("Old tool: %s", old_tool->pref_observer->observed_path.c_str());
+            //g_message("New tool: %s", toolName.c_str());
+            old_tool->finish();
+            delete old_tool;
+        } else {
+            return;
+        }
     }
     
     Inkscape::UI::Tools::ToolBase* new_tool = ToolFactory::instance().createObject(toolName);
