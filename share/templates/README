@@ -10,3 +10,9 @@ different languages. The default.svg itself is in English. These translations co
 a translated name of the default layer and possibly different canvas size. Each
 language version of Inkscape will only use one of these templates and ignore the rest.
 
+Internationalization
+
+This file is internationalized the same way as share/filters/filters/svg
+The i18n.py script called from the makefile will extract strings from the *.svg
+into a *.svg.h file. Intltool is then able to extracts these strings just like
+from normal .h files.

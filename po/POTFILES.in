@@ -6,6 +6,7 @@ inkscape.desktop.in
 share/filters/filters.svg.h
 share/palettes/palettes.h
 share/patterns/patterns.svg.h
+share/templates/templates.h
 src/box3d.cpp
 src/color-profile.cpp
 src/context-fns.cpp
