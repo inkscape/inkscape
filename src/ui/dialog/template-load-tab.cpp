@@ -10,6 +10,7 @@
 
 #include "template-widget.h"
 #include "template-load-tab.h"
+#include "new-from-template.h"
 
 #include <gtkmm/messagedialog.h>
 #include <gtkmm/scrolledwindow.h>
@@ -31,10 +32,8 @@
 #include "xml/document.h"
 #include "xml/node.h"
 
-
 namespace Inkscape {
 namespace UI {
-    
 
 TemplateLoadTab::TemplateLoadTab()
     : _current_keyword("")
@@ -84,7 +83,9 @@ void TemplateLoadTab::createTemplate()
 
 void TemplateLoadTab::_onRowActivated(const Gtk::TreeModel::Path &, Gtk::TreeViewColumn*)
 {
-    _info_widget->create();
+    createTemplate();
+    NewFromTemplate* parent = static_cast<NewFromTemplate*> (this->get_toplevel());
+    parent->_onClose();
 }
 
 void TemplateLoadTab::_displayTemplateInfo()

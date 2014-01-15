@@ -44,10 +44,13 @@ NewFromTemplate::NewFromTemplate()
 void NewFromTemplate::_createFromTemplate()
 {
     _main_widget.createTemplate();
-    
-    response(0);
+    _onClose();
 }
 
+void NewFromTemplate::_onClose()
+{
+    response(0);
+}
 
 void NewFromTemplate::load_new_from_template()
 {

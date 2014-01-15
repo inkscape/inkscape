@@ -23,6 +23,8 @@ namespace UI {
 
 class NewFromTemplate : public Gtk::Dialog
 {
+
+friend class TemplateLoadTab;
 public:
     static void load_new_from_template();
     
@@ -32,6 +34,7 @@ private:
     TemplateLoadTab _main_widget;
     
     void _createFromTemplate();
+    void _onClose();
 };
 
 }
