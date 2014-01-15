@@ -154,6 +154,7 @@ void TextTool::setup() {
     this->indicator = sp_canvas_item_new(sp_desktop_controls(desktop), SP_TYPE_CTRLRECT, NULL);
     SP_CTRLRECT(this->indicator)->setRectangle(Geom::Rect(Geom::Point(0, 0), Geom::Point(100, 100)));
     SP_CTRLRECT(this->indicator)->setColor(0x0000ff7f, false, 0);
+    SP_CTRLRECT(this->indicator)->setShadow(1, 0xffffff7f);
     sp_canvas_item_hide(this->indicator);
 
     this->frame = sp_canvas_item_new(sp_desktop_controls(desktop), SP_TYPE_CTRLRECT, NULL);

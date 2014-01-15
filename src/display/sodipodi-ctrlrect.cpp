@@ -142,7 +142,18 @@ void CtrlRect::render(SPCanvasBuf *buf)
         ink_cairo_set_source_rgba32(buf->ct, _border_color);
         cairo_stroke(buf->ct);
 
-        if (_shadow_size > 0) {
+        if (_shadow_size == 1) { // highlight the border by drawing it in _shadow_color
+            if (_dashed) {
+                cairo_set_dash(buf->ct, dashes, 2, 4);
+                cairo_rectangle(buf->ct, 0.5 + area[X].min(), 0.5 + area[Y].min(),
+                                area[X].max() - area[X].min(), area[Y].max() - area[Y].min());
+            } else {
+                cairo_rectangle(buf->ct, -0.5 + area[X].min(), -0.5 + area[Y].min(),
+                                area[X].max() - area[X].min(), area[Y].max() - area[Y].min());
+            }
+            ink_cairo_set_source_rgba32(buf->ct, _shadow_color);
+            cairo_stroke(buf->ct);
+        } else if (_shadow_size > 1) { // fill the shadow
             ink_cairo_set_source_rgba32(buf->ct, _shadow_color);
             cairo_rectangle(buf->ct, 1 + area[X].max(), area[Y].min() + _shadow_size,
                                      _shadow_size, area[Y].max() - area[Y].min() + 1); // right shadow

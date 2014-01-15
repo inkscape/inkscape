@@ -99,6 +99,7 @@ void Inkscape::Rubberband::move(Geom::Point const &p)
     if (_mode == RUBBERBAND_MODE_RECT) {
         if (_rect == NULL) {
             _rect = static_cast<CtrlRect *>(sp_canvas_item_new(sp_desktop_controls(_desktop), SP_TYPE_CTRLRECT, NULL));
+            _rect->setShadow(1, 0xffffffff);
         }
         _rect->setRectangle(Geom::Rect(_start, _end));
 
