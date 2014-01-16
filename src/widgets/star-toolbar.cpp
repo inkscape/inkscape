@@ -568,13 +568,14 @@ void sp_star_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
     {
         /* Reset */
         {
-            GtkAction* act = gtk_action_new( "StarResetAction",
+            InkAction* inky = ink_action_new( "StarResetAction",
                                              _("Defaults"),
                                              _("Reset shape parameters to defaults (use Inkscape Preferences > Tools to change defaults)"),
-                                             INKSCAPE_ICON("edit-clear"));
-            g_signal_connect_after( G_OBJECT(act), "activate", G_CALLBACK(sp_stb_defaults), holder );
-            gtk_action_group_add_action( mainActions, act );
-            gtk_action_set_sensitive( act, TRUE );
+                                             INKSCAPE_ICON("edit-clear"),
+                                             Inkscape::ICON_SIZE_SMALL_TOOLBAR);
+            g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_stb_defaults), holder );
+            gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
+            gtk_action_set_sensitive( GTK_ACTION(inky), TRUE );
         }
     }
 
