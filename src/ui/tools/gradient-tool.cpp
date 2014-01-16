@@ -339,10 +339,12 @@ sp_gradient_context_add_stops_between_selected_stops (GradientTool *rc)
             SPGradient *gradient = getGradient(d->item, d->fill_or_stroke);
             SPGradient *vector = sp_gradient_get_forked_vector_if_necessary (gradient, false);
             SPStop *this_stop = sp_get_stop_i (vector, d->point_i);
-            SPStop *next_stop = this_stop->getNextStop();
-            if (this_stop && next_stop) {
-                these_stops = g_slist_prepend (these_stops, this_stop);
-                next_stops = g_slist_prepend (next_stops, next_stop);
+            if (this_stop) {
+                SPStop *next_stop = this_stop->getNextStop();
+                if (next_stop) {
+                    these_stops = g_slist_prepend (these_stops, this_stop);
+                    next_stops = g_slist_prepend (next_stops, next_stop);
+                }
             }
         }
     }
