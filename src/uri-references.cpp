@@ -12,6 +12,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <iostream>
 #include <cstring>
 #include <string>
 
@@ -21,6 +22,7 @@
 #include "uri-references.h"
 #include "extract-uri.h"
 
+#include <glibmm/miscutils.h>
 #include <sigc++/functors/mem_fun.h>
 
 namespace Inkscape {
@@ -45,14 +47,30 @@ URIReference::~URIReference()
 
 void URIReference::attach(const URI &uri) throw(BadURIException)
 {
-    SPDocument *document;
+    SPDocument *document = NULL;
+
+    // Attempt to get the document that contains the URI
     if (_owner) {
         document = _owner->document;
     } else if (_owner_document) {
         document = _owner_document;
-    } else {
-        g_assert_not_reached();
     }
+
+    // The path contains references to seperate document files to load.
+    const char *path = uri.getPath();
+    if(path) {
+        if(document != NULL) {
+            // Calculate the absolute path from an available document
+            std::string basePath = std::string( document->getBase() );
+            std::string absPath = Glib::build_filename(basePath, std::string( path ) );
+            path = absPath.c_str();
+        }
+        // TODO: This is inefficient because it will load the same svg file
+        // many times if it's used many times. A global list of documents would
+        // be useful for tracking linked items.
+        document = SPDocument::createNewDoc(path, FALSE);
+    }
+    g_return_if_fail(document != NULL);
 
     gchar const *fragment = uri.getFragment();
     if ( !uri.isRelative() || uri.getQuery() || !fragment ) {
