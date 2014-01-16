@@ -145,6 +145,7 @@ share/screens/Makefile
 share/screens/Makefile.in
 share/templates/Makefile
 share/templates/Makefile.in
+share/templates/templates.h
 share/tutorials/Makefile
 share/tutorials/Makefile.in
 share/ui/Makefile
