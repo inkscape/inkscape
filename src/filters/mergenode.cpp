@@ -45,7 +45,7 @@ SPFeMergeNode::~SPFeMergeNode() {
  * our name must be associated with a repr via "sp_object_type_register".  Best done through
  * sp-object-repr.cpp's repr_name_entries array.
  */
-void SPFeMergeNode::build(SPDocument *document, Inkscape::XML::Node *repr) {
+void SPFeMergeNode::build(SPDocument */*document*/, Inkscape::XML::Node */*repr*/) {
 	this->readAttr( "in" );
 }
 
