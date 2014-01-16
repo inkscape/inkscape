@@ -649,56 +649,27 @@ Inkscape::DrawingItem* SPImage::show(Inkscape::Drawing &drawing, unsigned int /*
 Inkscape::Pixbuf *sp_image_repr_read_image(gchar const *href, gchar const *absref, gchar const *base)
 {
     Inkscape::Pixbuf *inkpb = 0;
-
     gchar const *filename = href;
-    
+
     if (filename != NULL) {
         if (strncmp (filename,"file:",5) == 0) {
-            gchar *fullname = g_filename_from_uri(filename, NULL, NULL);
-            if (fullname) {
-                inkpb = Inkscape::Pixbuf::create_from_file(fullname);
-                g_free(fullname);
-                if (inkpb != NULL) {
-                    return inkpb;
-                }
-            }
+            filename = g_filename_from_uri(filename, NULL, NULL);
         } else if (strncmp (filename,"data:",5) == 0) {
             /* data URI - embedded image */
             filename += 5;
-            inkpb = Inkscape::Pixbuf::create_from_data_uri(filename);
-            if (inkpb != NULL) {
-                return inkpb;
-            }
-        } else {
+        } else if (!g_path_is_absolute (filename)) {
+            /* try to load from relative pos combined with document base*/
+            const gchar *docbase = base;
+            if (!docbase) docbase = ".";
+            filename = g_build_filename(docbase, filename, NULL);
+        }
+    }
 
-            if (!g_path_is_absolute (filename)) {
-                /* try to load from relative pos combined with document base*/
-                const gchar *docbase = base;
-                if (!docbase) {
-                    docbase = ".";
-                }
-                gchar *fullname = g_build_filename(docbase, filename, NULL);
-
-                // document base can be wrong (on the temporary doc when importing bitmap from a
-                // different dir) or unset (when doc is not saved yet), so we check for base+href existence first,
-                // and if it fails, we also try to use bare href regardless of its g_path_is_absolute
-                if (g_file_test (fullname, G_FILE_TEST_EXISTS) && !g_file_test (fullname, G_FILE_TEST_IS_DIR)) {
-                    inkpb = Inkscape::Pixbuf::create_from_file(fullname);
-                    if (inkpb != NULL) {
-                        g_free (fullname);
-                        return inkpb;
-                    }
-                }
-                g_free (fullname);
-            }
-
-            /* try filename as absolute */
-            if (g_file_test (filename, G_FILE_TEST_EXISTS) && !g_file_test (filename, G_FILE_TEST_IS_DIR)) {
-                inkpb = Inkscape::Pixbuf::create_from_file(filename);
-                if (inkpb != NULL) {
-                    return inkpb;
-                }
-            }
+    if (filename && g_file_test(filename, G_FILE_TEST_EXISTS) ) {
+        inkpb = Inkscape::Pixbuf::create_from_file(filename);
+        if (inkpb != NULL) {
+            // g_free filename?
+            return inkpb;
         }
     }
 
