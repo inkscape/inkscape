@@ -10,7 +10,7 @@ symbols_DATA = \
 symbols_i18n = $(wildcard $(srcdir)/*.svg)
 
 symbols.h: i18n.py $(symbols_i18n)
-	$(srcdir)/i18n.py $(foreach i,$(symbols_i18n),$(i)) > $(srcdir)/symbols.h
+	$(srcdir)/i18n.py $(symbols_i18n) > $(srcdir)/symbols.h
 
 EXTRA_DIST = $(symbols_DATA) \
              i18n.py

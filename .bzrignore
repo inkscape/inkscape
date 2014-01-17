@@ -136,7 +136,7 @@ share/markers/Makefile
 share/markers/Makefile.in
 share/palettes/Makefile
 share/palettes/Makefile.in
-share/palettes/palettes.hs
+share/palettes/palettes.h
 share/patterns/Makefile
 share/patterns/Makefile.in
 share/patterns/patterns.svg.h
