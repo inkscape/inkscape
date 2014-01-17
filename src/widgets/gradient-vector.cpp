@@ -923,7 +923,7 @@ static GtkWidget * sp_gradient_vector_widget_new(SPGradient *gradient, SPStop *s
 #endif
 
     /* Label */
-    GtkWidget *l = gtk_label_new(_("Offset:"));
+    GtkWidget *l = gtk_label_new(C_("Gradient","Offset:"));
     gtk_misc_set_alignment(GTK_MISC(l), 1.0, 0.5);
     gtk_box_pack_start(GTK_BOX(hb),l, FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
     gtk_widget_show(l);
