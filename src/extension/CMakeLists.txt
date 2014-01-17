@@ -45,6 +45,7 @@ set(extension_SRC
 	internal/image-resolution.cpp
 	internal/latex-pstricks.cpp
 	internal/latex-pstricks-out.cpp
+	internal/metafile-inout.cpp
 	internal/metafile-print.cpp
 	internal/odf.cpp
 	internal/latex-text-renderer.cpp

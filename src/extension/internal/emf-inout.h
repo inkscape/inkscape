@@ -11,9 +11,8 @@
 #ifndef SEEN_EXTENSION_INTERNAL_EMF_H
 #define SEEN_EXTENSION_INTERNAL_EMF_H
 
-#define PNG_SKIP_SETJMP_CHECK // else any further png.h include blows up in the compiler
-#include <png.h>
 #include <libuemf/uemf.h>
+#include "extension/internal/metafile-inout.h" // picks up PNG
 #include "extension/implementation/implementation.h"
 #include "style.h"
 #include "text_reassemble.h"
@@ -67,34 +66,6 @@ typedef struct emf_device_context {
 
 #define EMF_MAX_DC 128
 
-/*
-  both emf-inout.h and wmf-inout.h are included by init.cpp, so whichever one goes in first defines these ommon types
-*/
-#ifndef SEEN_EXTENSION_INTERNAL_METAFILECOMMON_
-#define SEEN_EXTENSION_INTERNAL_METAFILECOMMON_
-/* A coloured pixel. */
-typedef struct {
-    uint8_t red;
-    uint8_t green;
-    uint8_t blue;
-    uint8_t opacity;
-} pixel_t;
-
-/* A picture. */
-    
-typedef struct  {
-    pixel_t *pixels;
-    size_t width;
-    size_t height;
-} bitmap_t;
-    
-/* structure to store PNG image bytes */
-typedef struct {
-      char *buffer;
-      size_t size;
-} MEMPNG, *PMEMPNG;
-#endif
-
 typedef struct {
     Glib::ustring *outsvg;
     Glib::ustring *path;
@@ -126,6 +97,7 @@ typedef struct {
                               // both of these end up in <defs> under the names shown here.  These structures allow duplicates to be avoided.
     EMF_STRINGS hatches;      // hold pattern names, all like EMFhatch#_$$$$$$ where # is the EMF hatch code and $$$$$$ is the color
     EMF_STRINGS images;       // hold images, all like Image#, where # is the slot the image lives.
+    EMF_STRINGS gradients;    // hold gradient  names, all like EMF[HV]_$$$$$$_$$$$$$ where $$$$$$ are the colors
     TR_INFO    *tri;          // Text Reassembly data structure
 
 
@@ -133,7 +105,8 @@ typedef struct {
     PEMF_OBJECT emf_obj;
 } EMF_CALLBACK_DATA, *PEMF_CALLBACK_DATA;
 
-class Emf : Inkscape::Extension::Implementation::Implementation { //This is a derived class
+class Emf :  public Metafile 
+{ 
 
 public:
 
@@ -155,11 +128,6 @@ public:
 private:
 
 protected:
-
-    static pixel_t    *pixel_at (bitmap_t * bitmap, int x, int y);
-    static void        my_png_write_data(png_structp png_ptr, png_bytep data, png_size_t length);
-    static void        toPNG(PMEMPNG accum, int width, int height, const char *px);
-    static uint32_t    sethexcolor(U_COLORREF color);
     static void        print_document_to_file(SPDocument *doc, const gchar *filename);
     static double      current_scale(PEMF_CALLBACK_DATA d);
     static std::string current_matrix(PEMF_CALLBACK_DATA d, double x, double y, int useoffset);
@@ -171,6 +139,9 @@ protected:
     static int         in_images(PEMF_CALLBACK_DATA d, char *test);
     static uint32_t    add_image(PEMF_CALLBACK_DATA d,  void *pEmr, uint32_t cbBits, uint32_t cbBmi, 
                             uint32_t iUsage, uint32_t offBits, uint32_t offBmi);
+    static void        enlarge_gradients(PEMF_CALLBACK_DATA d);
+    static int         in_gradients(PEMF_CALLBACK_DATA d, char *test);
+    static uint32_t    add_gradient(PEMF_CALLBACK_DATA d, uint32_t gradientType, U_TRIVERTEX tv1, U_TRIVERTEX tv2);
     static void        output_style(PEMF_CALLBACK_DATA d, int iType);
     static double      _pix_x_to_point(PEMF_CALLBACK_DATA d, double px);
     static double      _pix_y_to_point(PEMF_CALLBACK_DATA d, double py);

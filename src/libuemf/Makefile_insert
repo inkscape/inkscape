@@ -20,5 +20,9 @@ libuemf_libuemf_a_SOURCES = \
 	libuemf/uwmf_endian.h \
 	libuemf/uwmf_print.c \
 	libuemf/uwmf_print.h \
+	libuemf/upmf.c \
+	libuemf/upmf.h \
+	libuemf/upmf_print.c \
+	libuemf/upmf_print.h \
 	libuemf/symbol_convert.c \
 	libuemf/symbol_convert.h

@@ -1,5 +1,7 @@
 /**
-  @file uemf_endian.c Functions for converting EMF records between Big Endian and Little Endian
+  @file uemf_endian.c
+  
+  @brief Functions for converting EMF records between Big Endian and Little Endian byte orders.
    
   EMF files use Little Endian order.
   On a Big Endian machine the data must be converted to/from Little Endian when it is writen to/read from a file.
@@ -16,12 +18,12 @@
 */
 
 /*
-File:      uemf_endian.h
-Version:   0.0.12
-Date:      14-FEB-2013
+File:      uemf_endian.c
+Version:   0.0.14
+Date:      15-JAN-2014
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
-Copyright: 2013 David Mathog and California Institute of Technology (Caltech)
+Copyright: 2014 David Mathog and California Institute of Technology (Caltech)
 */
 
 #ifdef __cplusplus
@@ -35,7 +37,7 @@ extern "C" {
 #include "uemf_endian.h"
 
 // hide almost everuything in here from Doxygen
-//! @cond
+//! \cond
 
 /* **********************************************************************************************
    These functions convert standard objects used in the EMR records.
@@ -1095,7 +1097,7 @@ void U_EMRABORTPATH_swap(char *record, int torev){
 }
 
 // U_EMRUNDEF69                       69
-#define U_EMRUNDEF69_swap U_EMRNOTIMPLEMENTED_swap
+#define U_EMRUNDEF69_swap(A,B) U_EMRNOTIMPLEMENTED_swap(A,B) //!< Not implemented.
 
 // U_EMRCOMMENT              70  Comment (any binary data, interpretation is program specific)
 void U_EMRCOMMENT_swap(char *record, int torev){
@@ -1458,9 +1460,9 @@ void U_EMREXTCREATEPEN_swap(char *record, int torev){
 }
 
 // U_EMRPOLYTEXTOUTA         96 NOT IMPLEMENTED, denigrated after Windows NT
-#define U_EMRPOLYTEXTOUTA_swap U_EMRNOTIMPLEMENTED_swap
+#define U_EMRPOLYTEXTOUTA_swap(A,B) U_EMRNOTIMPLEMENTED_swap(A,B) //!< Not implemented.
 // U_EMRPOLYTEXTOUTW         97 NOT IMPLEMENTED, denigrated after Windows NT
-#define U_EMRPOLYTEXTOUTW_swap U_EMRNOTIMPLEMENTED_swap
+#define U_EMRPOLYTEXTOUTW_swap(A,B) U_EMRNOTIMPLEMENTED_swap(A,B) //!< Not implemented.
 
 // U_EMRSETICMMODE           98
 void U_EMRSETICMMODE_swap(char *record, int torev){
@@ -1486,9 +1488,9 @@ void U_EMRDELETECOLORSPACE_swap(char *record, int torev){
 }
 
 // U_EMRGLSRECORD           102  Not implemented
-#define U_EMRGLSRECORD_swap U_EMRNOTIMPLEMENTED_swap
+#define U_EMRGLSRECORD_swap(A,B) U_EMRNOTIMPLEMENTED_swap(A,B) //!< Not implemented.
 // U_EMRGLSBOUNDEDRECORD    103  Not implemented
-#define U_EMRGLSBOUNDEDRECORD_swap U_EMRNOTIMPLEMENTED_swap
+#define U_EMRGLSBOUNDEDRECORD_swap(A,B) U_EMRNOTIMPLEMENTED_swap(A,B) //!< Not implemented.
 
 // U_EMRPIXELFORMAT         104
 void U_EMRPIXELFORMAT_swap(char *record, int torev){
@@ -1498,11 +1500,11 @@ void U_EMRPIXELFORMAT_swap(char *record, int torev){
 }
 
 // U_EMRDRAWESCAPE          105  Not implemented
-#define U_EMRDRAWESCAPE_swap U_EMRNOTIMPLEMENTED_swap
+#define U_EMRDRAWESCAPE_swap(A,B) U_EMRNOTIMPLEMENTED_swap(A,B) //!< Not implemented.
 // U_EMREXTESCAPE           106  Not implemented
-#define U_EMREXTESCAPE_swap U_EMRNOTIMPLEMENTED_swap
+#define U_EMREXTESCAPE_swap(A,B) U_EMRNOTIMPLEMENTED_swap(A,B) //!< Not implemented.
 // U_EMRUNDEF107            107  Not implemented
-#define U_EMRUNDEF107_swap U_EMRNOTIMPLEMENTED_swap
+#define U_EMRUNDEF107_swap(A,B) U_EMRNOTIMPLEMENTED_swap(A,B) //!< Not implemented.
 
 // U_EMRSMALLTEXTOUT        108
 void U_EMRSMALLTEXTOUT_swap(char *record, int torev){
@@ -1526,15 +1528,15 @@ void U_EMRSMALLTEXTOUT_swap(char *record, int torev){
 }
 
 // U_EMRFORCEUFIMAPPING     109  Not implemented
-#define U_EMRFORCEUFIMAPPING_swap U_EMRNOTIMPLEMENTED_swap
+#define U_EMRFORCEUFIMAPPING_swap(A,B) U_EMRNOTIMPLEMENTED_swap(A,B) //!< Not implemented.
 // U_EMRNAMEDESCAPE         110  Not implemented
-#define U_EMRNAMEDESCAPE_swap U_EMRNOTIMPLEMENTED_swap
+#define U_EMRNAMEDESCAPE_swap(A,B) U_EMRNOTIMPLEMENTED_swap(A,B) //!< Not implemented.
 // U_EMRCOLORCORRECTPALETTE 111  Not implemented
-#define U_EMRCOLORCORRECTPALETTE_swap U_EMRNOTIMPLEMENTED_swap
+#define U_EMRCOLORCORRECTPALETTE_swap(A,B) U_EMRNOTIMPLEMENTED_swap(A,B) //!< Not implemented.
 // U_EMRSETICMPROFILEA      112  Not implemented
-#define U_EMRSETICMPROFILEA_swap U_EMRNOTIMPLEMENTED_swap
+#define U_EMRSETICMPROFILEA_swap(A,B) U_EMRNOTIMPLEMENTED_swap(A,B) //!< Not implemented.
 // U_EMRSETICMPROFILEW      113  Not implemented
-#define U_EMRSETICMPROFILEW_swap U_EMRNOTIMPLEMENTED_swap
+#define U_EMRSETICMPROFILEW_swap(A,B) U_EMRNOTIMPLEMENTED_swap(A,B) //!< Not implemented.
 
 // U_EMRALPHABLEND          114
 void U_EMRALPHABLEND_swap(char *record, int torev){
@@ -1553,7 +1555,7 @@ void U_EMRTRANSPARENTBLT_swap(char *record, int torev){
 
 
 // U_EMRUNDEF117            117  Not implemented
-#define U_EMRUNDEF117_swap U_EMRNOTIMPLEMENTED_swap
+#define U_EMRUNDEF117_swap(A,B) U_EMRNOTIMPLEMENTED_swap(A,B) //!< Not implemented.
 // U_EMRGRADIENTFILL        118
 void U_EMRGRADIENTFILL_swap(char *record, int torev){
    int nTriVert=0;
@@ -1589,11 +1591,11 @@ void U_EMRGRADIENTFILL_swap(char *record, int torev){
 }
 
 // U_EMRSETLINKEDUFIS       119  Not implemented
-#define U_EMRSETLINKEDUFIS_swap U_EMRNOTIMPLEMENTED_swap
+#define U_EMRSETLINKEDUFIS_swap(A,B) U_EMRNOTIMPLEMENTED_swap(A,B) //!< Not implemented.
 // U_EMRSETTEXTJUSTIFICATION120  Not implemented (denigrated)
-#define U_EMRSETTEXTJUSTIFICATION_swap U_EMRNOTIMPLEMENTED_swap
+#define U_EMRSETTEXTJUSTIFICATION_swap(A,B) U_EMRNOTIMPLEMENTED_swap(A,B) //!< Not implemented.
 // U_EMRCOLORMATCHTOTARGETW 121  Not implemented  
-#define U_EMRCOLORMATCHTOTARGETW_swap U_EMRNOTIMPLEMENTED_swap
+#define U_EMRCOLORMATCHTOTARGETW_swap(A,B) U_EMRNOTIMPLEMENTED_swap(A,B) //!< Not implemented.
 
 // U_EMRCREATECOLORSPACEW   122
 void U_EMRCREATECOLORSPACEW_swap(char *record, int torev){
@@ -1605,7 +1607,7 @@ void U_EMRCREATECOLORSPACEW_swap(char *record, int torev){
    // ordered bytes:                           Data
 }
 
-//! @endcond
+//! \endcond
 
 
 /**
@@ -1619,7 +1621,7 @@ void U_EMRCREATECOLORSPACEW_swap(char *record, int torev){
     or immediately after reading the data from a file.
 */
 int U_emf_endian(char *contents, size_t length, int torev){
-    size_t    off;
+    uint32_t  off;
     uint32_t  OK, recnum, iType;
     char     *record;
     PU_ENHMETARECORD  pEmr;

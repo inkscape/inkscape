@@ -1,5 +1,7 @@
 /**
-  @file uemf_utf.h for manipulating UTF and various types of text.
+  @file uemf_utf.h
+  
+  @brief Prototypes for functions that manipulate UTF and various types of text.
 
 */
 

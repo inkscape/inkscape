@@ -1,10 +1,12 @@
 /**
-  @file uwmf.h Structures and functions prototypes for WMF files.
+  @file uwmf.h
+  
+  @brief Structures, definitions, and function prototypes for WMF files.
 
   WMF file Record structure information has been derived from Mingw and Wine header files, and from
   Microsoft's WMF Information pdf, release date July 5,2012, link from here:
   
-     http://msdn2.microsoft.com/en-us/library/250370.aspx
+     http://msdn2.microsoft.com/en-us/library/cc250370.aspx
   
   If the direct link fails the document may be found
   by searching for: "[MS-WMF]: Windows Metafile Format"
@@ -62,11 +64,11 @@ extern "C" {
 
 
 // ***********************************************************************************
-// Value enumerations and other predefined constants, alphabetical order by group
+// Value Enumerations and other predefined constants, alphabetical order by group
 
-/** RecordType Enumeration                 WMF PDF 2.1.1.1
-  \defgroup U_WMR_RecordTypes WMR Record types
-  @{
+/*     RecordType Enumeration                 WMF manual 2.1.1.1 */
+/** WMF manual 2.1.1.1
+  \brief WMR Record types
 */
 enum U_WMR_TYPES{
    U_WMR_EOF,                    //!< 0x0000  U_WMREOF                               record
@@ -326,20 +328,19 @@ enum U_WMR_TYPES{
    U_WMR_CREATEBITMAP,           //!< 0x06FE  U_WMRCREATEBITMAP                      record
    U_WMR_CREATEREGION,           //!< 0x06FF  U_WMRCREATEREGION                      record
 }; 
-/** @} */
 #define U_WMR_MIN 0                  //!< Minimum U_WMR_ value.
 #define U_WMR_MAX 255                //!< Maximum U_WMR_ value.
 #define U_WMR_MASK  0xFF             //!< Mask for enumerator (lower) byte
-#define U_WMR_INVALID         0xFFFFFFFF //!< Not any valid U_EMF_ valuee
+#define U_WMR_INVALID         0xFFFFFFFF //!< Indicates "Not a valid U_WMR_* value"
 
 
-/** BinaryRasterOperation Enumeration      WMF PDF 2.1.1.2
+/** BinaryRasterOperation Enumeration      WMF manual 2.1.1.2
   
-  Same as U_EMRSETROP2 in uemf.h
+  Same as U_EMF_EMRSETROP2 in uemf.h
 */
 
-/** BitCount Enumeration                   WMF PDF 2.1.1.3
-  \defgroup AltBitCount_Qualifiers Alternate names for the values under U_BITMAPINFOHEADER_biBitCount_Qualifiers in uemf.h
+/** BitCount Enumeration                   WMF manual 2.1.1.3
+  \defgroup U_WMF_AltBitCount_Qualifiers WMF Alternate names for the values under EMF Bitcount Enumeration in uemf.h
   @{
 */
 #define  BI_BITCOUNT_0  U_BCBM_EXPLICIT   //!< Derived from JPG or PNG compressed image or ?
@@ -351,26 +352,27 @@ enum U_WMR_TYPES{
 #define  BI_BITCOUNT_6  U_BCBM_COLOR32    //!< 2^32 colors. bmiColors is not used. Pixels are U_RGBQUAD.
 /** @} */
 
-/**  BrushStyle Enumeration                WMF PDF 2.1.1.4
-  Same as  "LB_Style Enumeration" in uemf.h
+/*  BrushStyle Enumeration                WMF manual 2.1.1.4
+  Same as "EMF LB_Style Enumeration" in uemf.h
 */
 
-/** CharacterSet Enumeration               WMF PDF 2.1.1.5
-  Same as  "LF_CharSet Enumeration" in uemf.h
+/* CharacterSet Enumeration               WMF manual 2.1.1.5
+  Same as "EMF LF_CharSet Enumeration" in uemf.h
 */
 
-/** ColorUsage Enumeration                 WMF PDF 2.1.1.6
-  Same as "DIBColors Enumeration" in uemf.h, with one addition
-  \defgroup Extra_iUsageSrc_Qualifiers Extra DIBColors Enumeration
+/** ColorUsage Enumeration                 WMF manual 2.1.1.6
   For cUsage fields in various DIB related records.
+  \defgroup U_WMF_Extra_iUsageSrc_Qualifiers WMF Extra DIBColors Enumeration
+  WMF is the same as "EMF DIBColors Enumeration" in uemf.h, except it also supports
+  this one extra value.
   @{
 */
 #define U_DIB_PAL_INDICES 2  //!< No color table, pixels are logical palette indices.
 /** @} */
 
-/** Compression Enumeration                WMF PDF 2.1.1.7
-  Same as "BI_Compression Enumeration" in uemf.h with these additions
-  \defgroup ExtraU_BITMAPINFOHEADER_biCompression_Qualifiers Extra BI_Compression Enumeration, none are implemented
+/** Compression Enumeration                WMF manual 2.1.1.7
+  Same as "EMF BI_Compression Enumeration" in uemf.h with these additions
+  \defgroup U_WMF_EXTRA_BITMAPINFOHEADER_biCompression_Qualifiers WMF Extra BI_Compression Enumerations, none are implemented
   @{
 */
 #define U_BI_CMYK       0x000B //!< CMYK uncompressed
@@ -378,49 +380,51 @@ enum U_WMR_TYPES{
 #define U_BI_CMYKRLE4 = 0x000D //!< CMYK RLE4 compression
 /** @} */
 
-/** FamilyFont enumeration                 WMF PDF 2.1.1.8
+/* FamilyFont Enumeration                 WMF manual 2.1.1.8
     Only used in a PitchAndFamily object, defined there
 */
 
-/** Floodfill enumeration                  WMF PDF 2.1.1.9
-    Same as "FloodFill Enumeration" in uemf.h
+/* FloodFill Enumeration                  WMF manual 2.1.1.9
+    Same as "EMF FloodFill Enumeration" in uemf.h
 */
 
-/** FontQuality enumeration                WMF PDF 2.1.1.10
-    Same as "LF_Quality Enumeration" in uemf.h
+/* FontQuality Enumeration                WMF manual 2.1.1.10
+    Same as "EMF LF_Quality Enumeration" in uemf.h
 */
 
-/** GamutMappingIntent enumeration         WMF PDF 2.1.1.11
-    Same as "LCS_Intent Enumeration" in uemf.h
+/* GamutMappingIntent Enumeration         WMF manual 2.1.1.11
+    Same as "EMF LCS_Intent Enumeration" in uemf.h
 */
 
-/** HatchStyle enumeration                 WMF PDF 2.1.1.12
-    Same as "HatchStyle Enumeration" in uemf.h
+/* HatchStyle Enumeration                 WMF manual 2.1.1.12
+    Same as "EMF HatchStyle Enumeration" in uemf.h
 */
 
-/** Layout enumeration                     WMF PDF 2.1.1.13
-    Same as "Mirroring Enumeration" in uemf.h
+/* Layout Enumeration                     WMF manual 2.1.1.13
+    Same as "EMF Mirroring Enumeration" in uemf.h
 */
 
-/** LogicalColorSpace Enumeration WMF PDF 2.1.1.14
+/** LogicalColorSpace Enumeration WMF manual 2.1.1.14
     Not used presently, applies in BitmapV4Header
   @{
 */
-//!< #define U_LCS_CALIBRATED_RGB        0x00000000     calibrated RGB  
-#define U_LCS_sRGB                  0x73524742 //!< ASCII for "sRGB"
-#define U_LCS_WINDOWS_COLOR_SPACE   0x57696E20 //!< ASCII for "Win "
+/*  U_LCS_CALIBRATED_RGB is defined in uemf.h under LCS_CSType Enumeration, WMF manual also defines it, but do not replicate define.
+#define U_LCS_CALIBRATED_RGB        0x00000000    //!< calibrated RGB  
+*/
+#define U_LCS_sRGB                  0x73524742    //!< ASCII for "sRGB"
+#define U_LCS_WINDOWS_COLOR_SPACE   0x57696E20    //!< ASCII for "Win "
 /** @} */
 
-/** LogicalColorSpaceV5 Enumeration        WMF PDF 2.1.1.15
-    Same as "Profile Enumeration" in uemf.h
+/* LogicalColorSpaceV5 Enumeration        WMF manual 2.1.1.15
+    Same as "EMF Profile Enumeration" in uemf.h
 */
 
-/** MapMode Enumeration                    WMF PDF 2.1.1.16
-    Same as "MapMode Enumeration" in uemf.h
+/* MapMode Enumeration                    WMF manual 2.1.1.16
+    Same as "EMF MapMode Enumeration" in uemf.h
 */
  
-/** MetaFilesEscape Enumeration      WMF PDF 2.1.1.17
-  \defgroup MFEscape_Qualifiers Metafile Escape record types
+/** MetaFilesEscape Enumeration      WMF manual 2.1.1.17
+  \defgroup U_WMF_MFEscape_Qualifiers WMF Metafile Escape record types
   For U_WMRESCAPE eFunc field
   @{
 */
@@ -486,14 +490,14 @@ enum U_WMR_TYPES{
 #define U_MFE_SPCLPASSTHROUGH2              0x11D8   //!< SPCLPASSTHROUGH2              escape type
 /** @} */
 
-/** MetafileType Enumeration               WMF PDF 2.1.1.18
+/** MetafileType Enumeration               WMF manual 2.1.1.18
   @{
 */
 #define U_MEMORYMETAFILE  0x0001 //!< memory metafile (never used by libUWMF) 
 #define U_DISKMETAFILE    0x0002 //!< disk metafile (always used by libUWMF)
 /** @} */
 
-/** MetafileVersion Enumeration            WMF PDF 2.1.1.19
+/** MetafileVersion Enumeration            WMF manual 2.1.1.19
   @{
 */
 
@@ -501,15 +505,15 @@ enum U_WMR_TYPES{
 #define U_METAVERSION300  0x0300 //!< DIBs allowed
 /** @} */
 
-/** MixMode Enumeration                    WMF PDF 2.1.1.20
-    Same as "BackgroundMode Enumeration" in uemf.h
+/* MixMode Enumeration                    WMF manual 2.1.1.20
+    Same as "EMF BackgroundMode Enumeration" in uemf.h
 */
 
-/** OutPrecision Enumeration               WMF PDF 2.1.1.21
-    Same as "LF_OutPrecision Enumeration" in uemf.h
+/* OutPrecision Enumeration               WMF manual 2.1.1.21
+    Same as "EMF LF_OutPrecision Enumeration" in uemf.h
 */
 
-/** PaletteEntryFlag Enumeration           WMF PDF 2.1.1.22
+/** PaletteEntryFlag Enumeration           WMF manual 2.1.1.22
   @{
 */
 #define U_PC_RESERVED    0x01 //!< used for animation
@@ -517,8 +521,8 @@ enum U_WMR_TYPES{
 #define U_PC_NOCOLLAPSE  0x04 //!< store as new color in palette, do not match to existing color
 /** @} */
 
-/** PenStyle Enumeration                   WMF PDF 2.1.1.23
-    Same as "PenStyle Enumeration" in uemf.h
+/** PenStyle Enumeration                   WMF manual 2.1.1.23
+    Same as "EMF PenStyle Enumeration" in uemf.h,
     EXCEPT no values >0xFFFF are used, in particular there is no U_PS_GEOMETRIC (ie, all are U_PS_COSMETIC).
     Apparently because there is no U_PS_GEOMETRIC, U_PS_JOIN* and U_PS_ENDCAP* are also ignored by XP SP3 Preview
     (which defaults to a rounded cap) and PowerPoint 2003 (which defaults to square cap).  The behavior
@@ -526,16 +530,16 @@ enum U_WMR_TYPES{
     to be very hit and miss from application to application.
 */
 
-/** PitchFont Enumeration                  WMF PDF 2.1.1.24
+/* PitchFont Enumeration                  WMF manual 2.1.1.24
     These are only used in PitchAndFamily object, defined there.
 */
 
-/** PolyFillMode Enumeration               WMF PDF 2.1.1.25
-    These are the first twp emtries in "PolygonFillMode Enumeration" in uemf.h
+/* PolyFillMode Enumeration               WMF manual 2.1.1.25
+    These are the first two emtries in "EMF PolygonFillMode Enumeration" in uemf.h
 
 */
 
-/** PostScriptCap Enumeration              WMF PDF 2.1.1.26
+/** PostScriptCap Enumeration              WMF manual 2.1.1.26
    These are used in Escape Cap
   @{
 */
@@ -545,13 +549,13 @@ enum U_WMR_TYPES{
 #define U_WPS_CAP_SQUARE  2
 /** @} */
 
-/** PostScriptClipping Enumeration         WMF PDF 2.1.1.27
-    PostFeatureSetting Enumeration         WMF PDF 2.1.1.28
+/* PostScriptClipping Enumeration         WMF manual 2.1.1.27
+    PostFeatureSetting Enumeration         WMF manual 2.1.1.28
 
     These are used by postscript drivers, not supported by libUWEMF.
 */
 
-/**     PostScrioptJoin Enumeration            WMF PDF 2.1.1.29
+/**     PostScrioptJoin Enumeration            WMF manual 2.1.1.29
    These are used in Escape Cap
   @{
 */
@@ -561,170 +565,182 @@ enum U_WMR_TYPES{
 #define U_WPS_JOIN_BEVEL   2
 /** @} */
 
-/** StretchMode Enumeration                WMF PDF 2.1.1.30
-    Same as "StretchMode Enumeration" in uemf.h
+/* StretchMode Enumeration                WMF manual 2.1.1.30
+    Same as "EMF StretchMode Enumeration" in uemf.h
 
 */
 
-/** TernaryRasterOperation  Enumeration    WMF PDF 2.1.1.31
-    Same as "Ternary Raster Operation Enumeration" in uemf.h
+/* TernaryRasterOperation  Enumeration    WMF manual 2.1.1.31
+    Same as "EMF Ternary Raster Operation Enumeration" in uemf.h
     Only partially supported in libUWMF.h    
 */
 
-/** ClipPrecision Flags                    WMF PDF 2.1.2.1
-    Same as "LF_ClipPrecision Enumeration" in uemf.h
+/* ClipPrecision Flags                    WMF manual 2.1.2.1
+    Same as "EMF LF_ClipPrecision Enumeration" in uemf.h
 */
 
-/** ExtTextOutOptions Flags                WMF PDF 2.1.2.2
-    These are a subset of  "ExtTextOutOptions Enumeration"  in uemf.h
+/* ExtTextOutOptions Flags                WMF manual 2.1.2.2
+    These are a subset of  "EMF ExtTextOutOptions Enumeration"  in uemf.h
+
     Not defined for WMF: U_ETO_NONE, U_ETO_GRAYED, U_ETO_NORECT,
        U_ETO_SMALL_CHARS,U_ETO_IGNORELANGUAGE,U_ETO_REVERSE_INDEX_MAP
+
     Defined for WMF: U_ETO_OPAQUE, U_ETO_CLIPPED, U_ETO_GLYPH_INDEX,      
        U_ETO_RTLREADING,_ETO_NUMERICSLOCAL,U_ETO_NUMERICSLATIN,   
        U_ETO_PDY
 */
 
-/** TextAlignment Enumeration              WMF PDF 2.1.2.3
-    VertialTextAlignment Enumeration       WMF PDF 2.1.2.4
-    These are both in  "TextAlignment Enumeration"  in uemf.h
+/*  TextAlignment Enumeration              WMF manual 2.1.2.3
+    VertialTextAlignment Enumeration       WMF manual 2.1.2.4
+    These are both in  "EMF TextAlignment Enumeration"  in uemf.h
 */
 
 
 
 //  ***************************************************************************
 //  Miscellaneous Values
-/** TextAlignmentMode Flags                WMF PDF 2.1.2.3
-    VerticalTextAlignmentMode Flags        WMF PDF 2.1.2.4
-    Same as "TextAlignment Enumeration" in uemf.h
+/*  TextAlignmentMode Flags                WMF manual 2.1.2.3
+    VerticalTextAlignmentMode Flags        WMF manual 2.1.2.4
+    Same as "EMF TextAlignment Enumeration" in uemf.h
 */
 
-/** \defgroup MinimumRecord_sizes Size in bytes of core record of each type.
-    These are USUALLY not the same
-    as the corresponding struct, so in general it is unsafe to use sizeof() with this code.  
+/** \defgroup U_WMF_MinimumRecord_sizes WMF Size in bytes of core record types.
+
+    The size of the object/record is USUALLY not the same
+    as the sizeof() of the corresponding struct, so in general it is unsafe to use sizeof() with this code.
+
     Always use the U_SIZE_x instead!!!!  
-    Note that some records may actually be much, much longer than their minimum as they include strings,
+
+    Note that some records may actually be much, much longer than their minimum size as they include strings,
     bitmaps, and such.
+    
+        Documentation for each value is: 
+            + = same as struct size
+               or
+            X = different from struct size
+               followed by
+            Number (sizeof(struct) == size of the struct in bytes.)
+    
   @{
 */
-/*                                                 Record         sizeof (+ same, X differs)   */
-#define U_SIZE_PAIRF                                  8         /* +    8 this might be different on 64 bit platform */
-#define U_SIZE_COLORREF                               4         /* +    4 */
-#define U_SIZE_BRUSH                                  8         /* +    8 */
-#define U_SIZE_FONT                                  19         /* +   20 */
-#define U_SIZE_FONT_CORE                             18                   /* Minus the FaceName part */
-#define U_SIZE_PLTNTRY                                4         /* +    4 */
-#define U_SIZE_PALETTE                                8         /* +    8 */
-#define U_SIZE_PEN                                   10         /* +   10 */
-#define U_SIZE_POINT16                                4         /* +    4 */
-#define U_SIZE_RECT16                                 8         /* +    8 */
-#define U_SIZE_REGION                                20         /* X   22   20 is minums the variable part */
-#define U_SIZE_BITMAP16                              10         /* +   10 */
-#define U_SIZE_BITMAPCOREHEADER                      12         /* +   12 */
-#define U_SIZE_BITMAPINFOHEADER                      40         /* +   40 */
-#define U_SIZE_BITMAPV4HEADER                       108         /* ?  108 not tested */
-#define U_SIZE_BITMAPV5HEADER                       124         /* ?  124 not tested */
-#define U_SIZE_WLOGBRUSH                              8         /* +    8 */
-#define U_SIZE_POLYPOLYGON                            4         /* +    4 */
-#define U_SIZE_SCAN                                   8         /* +    8 */
-#define U_SIZE_METARECORD                             6         /* X    8 */
-#define U_SIZE_WMRPLACEABLE                          22         /* X   24 */
-#define U_SIZE_WMRHEADER                             18         /* X   20 */
-#define U_SIZE_WMREOF                                 6         /* X    8 */
-#define U_SIZE_WMRSETRELABS                           6         /* X    8 */
-#define U_SIZE_WMRSAVEDC                              6         /* X    8 */
-#define U_SIZE_WMRRESTOREDC                           8         /* *    8 */
-#define U_SIZE_WMRREALIZEPALETTE                      6         /* X    8 */
-#define U_SIZE_WMRSETBKCOLOR                         10         /* X   12 */
-#define U_SIZE_WMRSETTEXTCOLOR                       10         /* X   12 */
-#define U_SIZE_WMRSETBKMODE                           8         /* X   12 last 2 bytes are optional */
-#define U_SIZE_WMRSETROP2                             8         /* X   12 last 2 bytes are optional */
-#define U_SIZE_WMRSETPOLYFILLMODE                     8         /* X   12 last 2 bytes are optional */
-#define U_SIZE_WMRSETSTRETCHBLTMODE                   8         /* X   12 last 2 bytes are optional */
-#define U_SIZE_WMRSETTEXTALIGN                        8         /* X   12 last 2 bytes are optional */
-#define U_SIZE_WMRSETMAPMODE                          8         /* +    8 */
-#define U_SIZE_WMRSETTEXTCHAREXTRA                    8         /* +    8 */
-#define U_SIZE_WMRSETTEXTJUSTIFICATION               10         /* X   12 */
-#define U_SIZE_WMRSETWINDOWORG                       10         /* X   12 */
-#define U_SIZE_WMRSETWINDOWEXT                       10         /* X   12 */
-#define U_SIZE_WMRSETVIEWPORTORG                     10         /* X   12 */
-#define U_SIZE_WMRSETVIEWPORTEXT                     10         /* X   12 */
-#define U_SIZE_WMROFFSETWINDOWORG                    10         /* X   12 */
-#define U_SIZE_WMROFFSETVIEWPORTORG                  10         /* X   12 */
-#define U_SIZE_WMRLINETO                             10         /* X   12 */
-#define U_SIZE_WMRMOVETO                             10         /* X   12 */
-#define U_SIZE_WMROFFSETCLIPRGN                      10         /* X   12 */
-#define U_SIZE_WMRSCALEWINDOWEXT                     14         /* X   16 */
-#define U_SIZE_WMRSCALEVIEWPORTEXT                   14         /* X   16 */
-#define U_SIZE_WMREXCLUDECLIPRECT                    14         /* X   16 */
-#define U_SIZE_WMRINTERSECTCLIPRECT                  14         /* X   16 */
-#define U_SIZE_WMRARC                                22         /* X   24 */
-#define U_SIZE_WMRELLIPSE                            14         /* X   16 */
-#define U_SIZE_WMRRECTANGLE                          14         /* X   16 */
-#define U_SIZE_WMRFLOODFILL                          16         /* +   16 */
-#define U_SIZE_WMREXTFLOODFILL                       16         /* +   16 */
-#define U_SIZE_WMRSETPIXEL                           14         /* X   16 */
-#define U_SIZE_WMRPIE                                22         /* X   24 */
-#define U_SIZE_WMRCHORD                              22         /* X   24 */
-#define U_SIZE_WMRROUNDRECT                          18         /* X   20 */
-#define U_SIZE_WMRPATBLT                             18         /* X   20 */
-#define U_SIZE_WMRTEXTOUT                             8         /* X   12 (not including String,y,x) */
-#define U_SIZE_WMRBITBLT_NOPX                        24         /* +   24 */
-#define U_SIZE_WMRBITBLT_PX                          22         /* X   32 */
-#define U_SIZE_WMRSTRETCHBLT_NOPX                    28         /* +   28 */
-#define U_SIZE_WMRSTRETCHBLT_PX                      26         /* X   36 */
-#define U_SIZE_WMRPOLYGON                            10         /* X   12 */
-#define U_SIZE_WMRPOLYLINE                           10         /* X   12 */
-#define U_SIZE_WMRESCAPE                             10         /* X   12 Data field could be completely absent */
-#define U_SIZE_WMRFILLREGION                         10         /* X   12 */
-#define U_SIZE_WMRFRAMEREGION                        14         /* X   16 */
-#define U_SIZE_WMRINVERTREGION                        8         /* +    8 */
-#define U_SIZE_WMRPAINTREGION                         8         /* +    8 */
-#define U_SIZE_WMRSELECTCLIPREGION                    8         /* +    8 */
-#define U_SIZE_WMRSELECTOBJECT                        8         /* +    8 */
-#define U_SIZE_WMRSELECTPALETTE                       8         /* +    8 */
-#define U_SIZE_WMRRESIZEPALETTE                       8         /* +    8 */
-#define U_SIZE_WMRDELETEOBJECT                        8         /* +    8 */
-#define U_SIZE_WMRDRAWTEXT                            6         /* X    8 */
-#define U_SIZE_WMRCREATEBITMAPINDIRECT                6         /* X    8 */
-#define U_SIZE_WMRCREATEBITMAP                        6         /* X    8 */
-#define U_SIZE_WMRSETMAPPERFLAGS                     10         /* X   12 */
-#define U_SIZE_WMREXTTEXTOUT                         14         /* X   16 */
-#define U_SIZE_WMRSETDIBTODEV                        22         /* X   28 */
-#define U_SIZE_WMRANIMATEPALETTE                     14         /* X   16 */
-#define U_SIZE_WMRSETPALENTRIES                      14         /* X   16 */
-#define U_SIZE_WMRCREATEPALETTE                      14         /* X   16 */
-#define U_SIZE_WMRPOLYPOLYGON                        10         /* X   12 */
-#define U_SIZE_WMRDIBBITBLT_NOPX                     24         /* +   24 */
-#define U_SIZE_WMRDIBBITBLT_PX                       22         /* X   24 */
-#define U_SIZE_WMRDIBSTRETCHBLT_NOPX                 28         /* +   28 */
-#define U_SIZE_WMRDIBSTRETCHBLT_PX                   26         /* X   28 */
-#define U_SIZE_WMRDIBCREATEPATTERNBRUSH              10         /* X   12 */
-#define U_SIZE_WMRSTRETCHDIB                         28         /* X   32 */
-#define U_SIZE_WMRCREATEPATTERNBRUSH                  6         /* X    8 */
-#define U_SIZE_WMRCREATEPENINDIRECT                  16         /* +   16 */
-#define U_SIZE_WMRCREATEFONTINDIRECT                 26         /* X   28 */
-#define U_SIZE_WMRCREATEBRUSHINDIRECT                14         /* X   16 */
-#define U_SIZE_WMRCREATEREGION                       26         /* X   28 */
+#define U_SIZE_PAIRF                                  8         /**< +    8 this might be different on 64 bit platform */
+#define U_SIZE_COLORREF                               4         /**< +    4 */
+#define U_SIZE_BRUSH                                  8         /**< +    8 */
+#define U_SIZE_FONT                                  19         /**< X   20 */
+#define U_SIZE_FONT_CORE                             18         /**< X   20 Like U_FONT, but minus the FaceName part */
+#define U_SIZE_PLTNTRY                                4         /**< +    4 */
+#define U_SIZE_PALETTE                                8         /**< +    8 */
+#define U_SIZE_PEN                                   10         /**< +   10 */
+#define U_SIZE_POINT16                                4         /**< +    4 */
+#define U_SIZE_RECT16                                 8         /**< +    8 */
+#define U_SIZE_REGION                                20         /**< X   22   20 is minums the variable part */
+#define U_SIZE_BITMAP16                              10         /**< +   10 */
+#define U_SIZE_BITMAPCOREHEADER                      12         /**< +   12 */
+#define U_SIZE_BITMAPINFOHEADER                      40         /**< +   40 */
+#define U_SIZE_BITMAPV4HEADER                       108         /**< ?  108 not tested */
+#define U_SIZE_BITMAPV5HEADER                       124         /**< ?  124 not tested */
+#define U_SIZE_WLOGBRUSH                              8         /**< +    8 */
+#define U_SIZE_POLYPOLYGON                            4         /**< +    4 */
+#define U_SIZE_SCAN                                   8         /**< +    8 */
+#define U_SIZE_METARECORD                             6         /**< X    8 */
+#define U_SIZE_WMRPLACEABLE                          22         /**< X   24 */
+#define U_SIZE_WMRHEADER                             18         /**< X   20 */
+#define U_SIZE_WMREOF                                 6         /**< X    8 */
+#define U_SIZE_WMRSETRELABS                           6         /**< X    8 */
+#define U_SIZE_WMRSAVEDC                              6         /**< X    8 */
+#define U_SIZE_WMRRESTOREDC                           8         /**< *    8 */
+#define U_SIZE_WMRREALIZEPALETTE                      6         /**< X    8 */
+#define U_SIZE_WMRSETBKCOLOR                         10         /**< X   12 */
+#define U_SIZE_WMRSETTEXTCOLOR                       10         /**< X   12 */
+#define U_SIZE_WMRSETBKMODE                           8         /**< X   12 last 2 bytes are optional */
+#define U_SIZE_WMRSETROP2                             8         /**< X   12 last 2 bytes are optional */
+#define U_SIZE_WMRSETPOLYFILLMODE                     8         /**< X   12 last 2 bytes are optional */
+#define U_SIZE_WMRSETSTRETCHBLTMODE                   8         /**< X   12 last 2 bytes are optional */
+#define U_SIZE_WMRSETTEXTALIGN                        8         /**< X   12 last 2 bytes are optional */
+#define U_SIZE_WMRSETMAPMODE                          8         /**< +    8 */
+#define U_SIZE_WMRSETTEXTCHAREXTRA                    8         /**< +    8 */
+#define U_SIZE_WMRSETTEXTJUSTIFICATION               10         /**< X   12 */
+#define U_SIZE_WMRSETWINDOWORG                       10         /**< X   12 */
+#define U_SIZE_WMRSETWINDOWEXT                       10         /**< X   12 */
+#define U_SIZE_WMRSETVIEWPORTORG                     10         /**< X   12 */
+#define U_SIZE_WMRSETVIEWPORTEXT                     10         /**< X   12 */
+#define U_SIZE_WMROFFSETWINDOWORG                    10         /**< X   12 */
+#define U_SIZE_WMROFFSETVIEWPORTORG                  10         /**< X   12 */
+#define U_SIZE_WMRLINETO                             10         /**< X   12 */
+#define U_SIZE_WMRMOVETO                             10         /**< X   12 */
+#define U_SIZE_WMROFFSETCLIPRGN                      10         /**< X   12 */
+#define U_SIZE_WMRSCALEWINDOWEXT                     14         /**< X   16 */
+#define U_SIZE_WMRSCALEVIEWPORTEXT                   14         /**< X   16 */
+#define U_SIZE_WMREXCLUDECLIPRECT                    14         /**< X   16 */
+#define U_SIZE_WMRINTERSECTCLIPRECT                  14         /**< X   16 */
+#define U_SIZE_WMRARC                                22         /**< X   24 */
+#define U_SIZE_WMRELLIPSE                            14         /**< X   16 */
+#define U_SIZE_WMRRECTANGLE                          14         /**< X   16 */
+#define U_SIZE_WMRFLOODFILL                          16         /**< +   16 */
+#define U_SIZE_WMREXTFLOODFILL                       16         /**< +   16 */
+#define U_SIZE_WMRSETPIXEL                           14         /**< X   16 */
+#define U_SIZE_WMRPIE                                22         /**< X   24 */
+#define U_SIZE_WMRCHORD                              22         /**< X   24 */
+#define U_SIZE_WMRROUNDRECT                          18         /**< X   20 */
+#define U_SIZE_WMRPATBLT                             18         /**< X   20 */
+#define U_SIZE_WMRTEXTOUT                             8         /**< X   12 (not including String,y,x) */
+#define U_SIZE_WMRBITBLT_NOPX                        24         /**< +   24 */
+#define U_SIZE_WMRBITBLT_PX                          22         /**< X   32 */
+#define U_SIZE_WMRSTRETCHBLT_NOPX                    28         /**< +   28 */
+#define U_SIZE_WMRSTRETCHBLT_PX                      26         /**< X   36 */
+#define U_SIZE_WMRPOLYGON                            10         /**< X   12 */
+#define U_SIZE_WMRPOLYLINE                           10         /**< X   12 */
+#define U_SIZE_WMRESCAPE                             10         /**< X   12 Data field could be completely absent */
+#define U_SIZE_WMRFILLREGION                         10         /**< X   12 */
+#define U_SIZE_WMRFRAMEREGION                        14         /**< X   16 */
+#define U_SIZE_WMRINVERTREGION                        8         /**< +    8 */
+#define U_SIZE_WMRPAINTREGION                         8         /**< +    8 */
+#define U_SIZE_WMRSELECTCLIPREGION                    8         /**< +    8 */
+#define U_SIZE_WMRSELECTOBJECT                        8         /**< +    8 */
+#define U_SIZE_WMRSELECTPALETTE                       8         /**< +    8 */
+#define U_SIZE_WMRRESIZEPALETTE                       8         /**< +    8 */
+#define U_SIZE_WMRDELETEOBJECT                        8         /**< +    8 */
+#define U_SIZE_WMRDRAWTEXT                            6         /**< X    8 */
+#define U_SIZE_WMRCREATEBITMAPINDIRECT                6         /**< X    8 */
+#define U_SIZE_WMRCREATEBITMAP                        6         /**< X    8 */
+#define U_SIZE_WMRSETMAPPERFLAGS                     10         /**< X   12 */
+#define U_SIZE_WMREXTTEXTOUT                         14         /**< X   16 */
+#define U_SIZE_WMRSETDIBTODEV                        22         /**< X   28 */
+#define U_SIZE_WMRANIMATEPALETTE                     14         /**< X   16 */
+#define U_SIZE_WMRSETPALENTRIES                      14         /**< X   16 */
+#define U_SIZE_WMRCREATEPALETTE                      14         /**< X   16 */
+#define U_SIZE_WMRPOLYPOLYGON                        10         /**< X   12 */
+#define U_SIZE_WMRDIBBITBLT_NOPX                     24         /**< +   24 */
+#define U_SIZE_WMRDIBBITBLT_PX                       22         /**< X   24 */
+#define U_SIZE_WMRDIBSTRETCHBLT_NOPX                 28         /**< +   28 */
+#define U_SIZE_WMRDIBSTRETCHBLT_PX                   26         /**< X   28 */
+#define U_SIZE_WMRDIBCREATEPATTERNBRUSH              10         /**< X   12 */
+#define U_SIZE_WMRSTRETCHDIB                         28         /**< X   32 */
+#define U_SIZE_WMRCREATEPATTERNBRUSH                  6         /**< X    8 */
+#define U_SIZE_WMRCREATEPENINDIRECT                  16         /**< +   16 */
+#define U_SIZE_WMRCREATEFONTINDIRECT                 26         /**< X   28 */
+#define U_SIZE_WMRCREATEBRUSHINDIRECT                14         /**< X   16 */
+#define U_SIZE_WMRCREATEREGION                       26         /**< X   28 */
 /** @} */
 
 
 //  ***************************************************************************
 //  Macros
 
-/** \defgroup Common_macros Common Macros
+/** \defgroup U_WMF_Common_macros WMF Common Macros
+Because Size16_4 may not be aligned no tests should dereference it directly from a pointer. 
+in NOPX tests cast causes uint8_t to promote to uint32_t, without it c++ compiler complains about
+comparison of int with unsigned int
   @{
 */
-/* Because Size16_4 may not be aligned no tests should dereference it directly from a pointer. 
-in NOPX tests cast causes uint8_t to promote to uint32_t, without it c++ compiler complains about
-comparison of int with unsigned int */
-#define U_TEST_NOPX2(A,B) (A ==   (uint32_t) (B + 3))  /* A is Size16_4 (extracted and aligned), B = xb    true if no bitmap associated with the structure, used with some BLT records*/
-#define U_TEST_NOPXB(A,B) (A/2 == (uint32_t) (B + 3))  /* A is Size16_4(extracted and aligned)*2, B - xb, true if no bitmap associated with the structure, used with some BLT records*/
-#define U_WMRTYPE(A) (((PU_METARECORD)A)->iType)                       //!<  Get iType                from U_WMR* record
-#define U_WMRXB(A)   (((PU_METARECORD)A)->xb)                          //!<  Get xb                   from U_WMR* record
-#define U_WMR_XB_FROM_TYPE(A) ((uint8_t) (U_wmr_values(A)>>8))           //!<  Get xb from type value
-#define U_U16(A)  (*(uint16_t *)&A)   /* interpret a 16 bit type as uint16_t */
-#define U_P16(A)  ( (uint16_t *)&A)   /* pass any 16 bit type as a pointer to a uint16_t */
-#define U_PP16(A) ( (uint16_t *) A)   /* pass any pointer to a 16 bit type as a pointer to a uint16_t */
+#define U_TEST_NOPX2(A,B) (A ==   (uint32_t) (B + 3))          //!< A is Size16_4 (extracted and aligned),   B = xb  true if no bitmap associated with the structure, used with some BLT records.
+#define U_TEST_NOPXB(A,B) (A/2 == (uint32_t) (B + 3))          //!< A is Size16_4 (extracted and aligned)*2, B = xb, true if no bitmap associated with the structure, used with some BLT records.
+#define U_WMRTYPE(A) (((U_METARECORD *)A)->iType)              //!< Get iType from U_WMR* record.
+#define U_WMRXB(A)   (((U_METARECORD *)A)->xb)                 //!< Get xb from U_WMR* record.
+#define U_WMR_XB_FROM_TYPE(A) ((uint8_t) (U_wmr_values(A)>>8)) //!< Get xb from type value.
+#define U_U16(A)  (*(uint16_t *)&A)                            //!< interpret a 16 bit type as uint16_t.
+#define U_P16(A)  ( (uint16_t *)&A)                            //!< pass any 16 bit type as a pointer to a uint16_t.
+#define U_PP16(A) ( (uint16_t *) A)                            //!< pass any pointer to a 16 bit type as a pointer to a uint16_t.
 
 /** @} */
 
@@ -732,28 +748,27 @@ comparison of int with unsigned int */
     WMF structures OTHER than those corresponding to complete U_WMR_* records
    ************************************************************ */
    
-/** Brush Object                           WMF PDF 2.2.1.1
+/** Brush Object                           WMF manual 2.2.1.1
 
   Documentation is muddy, bColor and bHatch fields have different meanings depending on
   the value of bStyle.  Unclear if bHatch bytes are present in some cases from the
   documentation.
 
-  style                Color                Data
-  U_BS_SOLID           ColorRef Object      Not used (bytes present???)
-  U_BS_NULL            ignored              ignored  (bytes present???).
-  U_BS_PATTERN         ignored              Bitmap16 object holding patern
-  U_BS_DIBPATTERNPT    ColorUsage Enum      DIB object
-  U_BS_HATCHED         ColorRef Object      HatchStyle Enumeration
+        style                Color                Data
+        U_BS_SOLID           ColorRef Object      Not used (bytes present???)
+        U_BS_NULL            ignored              ignored  (bytes present???).
+        U_BS_PATTERN         ignored              Bitmap16 object holding patern
+        U_BS_DIBPATTERNPT    ColorUsage Enum      DIB object
+        U_BS_HATCHED         ColorRef Object      HatchStyle Enumeration
 */
-
 typedef struct {
-    uint16_t            Style;              //!< BrushStyle enumeration
+    uint16_t            Style;              //!< BrushStyle Enumeration
     U_COLORREF          Color;              //!< Brush Color value, 32 bit value is not aligned.
     uint8_t             Data[1];            //!< Brush pattern information, variable size and format
-} U_BRUSH, *PU_BRUSH;
+} U_BRUSH;
    
 
-/** Font Object                             WMF PDF 2.2.1.2
+/** Font Object                             WMF manual 2.2.1.2
   Warning, only pass by pointer, passing by value will will truncate in Facename!
 */
 typedef struct {
@@ -771,9 +786,9 @@ typedef struct {
     uint8_t             Quality;            //!< LF_Quality Enumeration
     uint8_t             PitchAndFamily;     //!< LF_PitchAndFamily Enumeration
     uint8_t             FaceName[1];        //!< Name of font.  ANSI Latin1, null terminated.
-} U_FONT, *PU_FONT;
+} U_FONT;
  
-/**   PaletteEntry Object                  WMF PDF 2.2.2.13
+/**   PaletteEntry Object                  WMF manual 2.2.2.13
    Note, NOT compatiable with U_LOGPLTNTRY
    Out of PDF order because needed for next struture.
 */
@@ -782,10 +797,10 @@ typedef struct {
     uint8_t             Blue;               //!< Palette entry Blue Intensity
     uint8_t             Green;              //!< Palette entry Green Intensity
     uint8_t             Red;                //!< Palette entry Red Intensity
-} U_PLTNTRY, *PU_PLTNTRY;
+} U_PLTNTRY;
 
-/**  Palette Object                         WMF PDF 2.2.1.3
-  NOT same as "LogPalette Object" in uemf.h because Palette Entries have reversed colors.
+/**  Palette Object                         WMF manual 2.2.1.3
+  NOT Same as "EMF LogPalette Object" in uemf.h because Palette Entries have reversed colors.
   Values for palVersion are expanded
   
   Start must be 0x0300 (as for EMF) with U_WMRCREATEPALETTE but is an offset
@@ -795,17 +810,17 @@ typedef struct {
     uint16_t            Start;              //!< Either 0x0300 or an offset into the Palette table
     uint16_t            NumEntries;         //!< Number of U_LOGPLTNTRY objects
     U_PLTNTRY           PalEntries[1];      //!< Array of PaletteEntry Objects
-} U_PALETTE, *PU_PALETTE;
+} U_PALETTE;
 
-/**  Pen Object                             WMF PDF 2.2.1.4
+/**  Pen Object                             WMF manual 2.2.1.4
 */
 typedef struct {
     uint16_t            Style;              //!< PenStyle Enumeration
     uint16_t            Widthw[2];          //!< reassemble/store the Pen Width in object dimensions using Widthw, the 32 bit value is not aligned
     U_COLORREF          Color;              //!< Pen Color, the 32 bit value is not aligned.
-} U_PEN, *PU_PEN;
+} U_PEN;
 
-/**   Rect Object                          WMF PDF 2.2.2.18
+/**   Rect Object                          WMF manual 2.2.2.18
    \brief Coordinates of the upper left, lower right corner.
    Note that the coordinate system is 0,0 in the upper left corner
    of the screen an N,M in the lower right corner.
@@ -818,11 +833,11 @@ typedef struct {
     int16_t  top;                           //!< top coordinate
     int16_t  right;                         //!< right coordinate
     int16_t  bottom;                        //!< bottom coordinate
-} U_RECT16, *PU_RECT16;
+} U_RECT16;
 
 #define U_RCL16_DEF (U_RECT16){0,0,-1,-1}  //!< Use this when no bounds are needed. 
 
-/**  Region Object                         WMF PDF 2.2.1.5
+/**  Region Object                         WMF manual 2.2.1.5
 */
 typedef struct {
     uint16_t            ignore1;            //!< unused value
@@ -833,13 +848,13 @@ typedef struct {
     int16_t             sMax;               //!< largest number of points in any scan
     U_RECT16            sRect;              //!< bounding rectangle
     uint16_t            aScans[1];          //!< series of appended U_SCAN objects
-} U_REGION, *PU_REGION;
+} U_REGION;
 
-/**   Bitmap16 Object                      WMF PDF 2.2.2.1
+/**   Bitmap16 Object                      WMF manual 2.2.2.1
       
-      The U_BITMAP16 core is always followed by 
-      uint8_t             Bits[1];           //!<  bitmap pixel data. Bytes contained = (((Width * BitsPixel + 15) >> 4) << 1) * Height
-      Note that in U_WMRCREATEPATTERNBRUSH Bits is always [4].
+        The U_BITMAP16 core is always followed by 
+        uint8_t             Bits[1];           //!<  bitmap pixel data. Bytes contained = (((Width * BitsPixel + 15) >> 4) << 1) * Height
+        Note that in U_WMRCREATEPATTERNBRUSH Bits is always [4].
       
 */
 typedef struct {
@@ -849,9 +864,9 @@ typedef struct {
     int16_t             WidthBytes;         //!<  bytes per scan line.
     uint8_t             Planes;             //!<  must be 1.
     uint8_t             BitsPixel;          //!<  number of adjacent color bits on each plane (R bits + G bits + B bits ????)
-} U_BITMAP16, *PU_BITMAP16;
+} U_BITMAP16;
 
-/**   BitmapCoreHeader Object              WMF PDF 2.2.2.2
+/**   BitmapCoreHeader Object              WMF manual 2.2.2.2
 */
 typedef struct {
     uint16_t            Size_4[2];          //!<  size of U_BITMAPCOREHEADER in bytes.
@@ -859,15 +874,16 @@ typedef struct {
     uint16_t            Height;             //!<  DIB height in pixels.
     uint16_t            Planes;             //!<  must be 1
     uint16_t            BitCount;           //!<  Pixel Format (BitCount Enumeration)
-} U_BITMAPCOREHEADER, *PU_BITMAPCOREHEADER;
+} U_BITMAPCOREHEADER;
 
 
-/**   BitmapInfoHeader Object              WMF PDF 2.2.2.3
-  same as "BITMAPINFOHEADER Object" in uemf.h
+/**   BitmapInfoHeader Object              WMF manual 2.2.2.3
+  Same as "EMF BITMAPINFOHEADER Object" in uemf.h
   use U_BITMAPINFOHEADER
 */
 
-/**   BitmapV4Header Object                WMF PDF 2.2.2.4
+//! \cond
+/**   BitmapV4Header Object                WMF manual 2.2.2.4
 */
 typedef struct {
     uint32_t            bV4Size;
@@ -890,10 +906,10 @@ typedef struct {
     uint32_t            bV4GammaRed;
     uint32_t            bV4GammaGreen;
     uint32_t            bV4GammaBlue;
-} U_BITMAPV4HEADER, *PU_BITMAPV4HEADER;  //!< For ?
+} U_BITMAPV4HEADER;  //!< For ?
 
 
-/**   BitmapV5Header Object                WMF PDF 2.2.2.5
+/**   BitmapV5Header Object                WMF manual 2.2.2.5
 */
 typedef struct {
     uint32_t            bV5Size;
@@ -920,129 +936,138 @@ typedef struct {
     uint32_t            bV5ProfileData;
     uint32_t            bV5ProfileSize;
     uint32_t            bV5Reserved;
-} U_BITMAPV5HEADER, *PU_BITMAPV5HEADER;  //!< For ?
+} U_BITMAPV5HEADER;  //!< For ?
+//! \endcond
 
 
 
-/**   CIEXYZ Object                        WMF PDF 2.2.2.6
-    Same as "CIEXYZ Object" in uemf.h
+/**   CIEXYZ Object                        WMF manual 2.2.2.6
+    Same as "EMF CIEXYZ Object" in uemf.h
 */
 
-/**   CIEXYZTriple Object                  WMF PDF 2.2.2.7
-    Same as "CIEXYZTRIPLE Object" in uemf.h
+/**   CIEXYZTriple Object                  WMF manual 2.2.2.7
+    Same as "EMF CIEXYZTRIPLE Object" in uemf.h
 */
 
-/**   ColorRef Object                      WMF PDF 2.2.2.8
-    Same as "COLORREF Object" in uemf.h
+/**   ColorRef Object                      WMF manual 2.2.2.8
+    Same as "EMF COLORREF Object" in uemf.h
 */
 
-/**   DeviceIndependentBitmap Object       WMF PDF 2.2.2.9
+/**   DeviceIndependentBitmap Object       WMF manual 2.2.2.9
 This "object" has an organization, but not one that can be easily expressed with a C struct.  It consists of
 three parts, all of which have variable size:
 
-   DIBHeaderInfo  BitmapCoreHeader or BitmapInfoHeader Object
-   Colors         Array of RGBQuad Objects or uint16_t that make a color table, as determined from the DIBHeaderInfo field.
-   BitMapBuffer   Array of bytes containing the image.
+        DIBHeaderInfo  BitmapCoreHeader or BitmapInfoHeader Object
+        Colors         Array of RGBQuad Objects or uint16_t that make a color table, as determined from the DIBHeaderInfo field.
+        BitMapBuffer   Array of bytes containing the image.
 
 */
 
-/**   WLogBrush Object                      WMF PDF 2.2.2.10
+/**   WLogBrush Object                      WMF manual 2.2.2.10
   Not compatible with EMF LogBrush object!
 
-  style                Color                Hatch
-  U_BS_SOLID           ColorRef Object      Not used (bytes present???)
-  U_BS_NULL            ignored              ignored  (bytes present???).
-  U_BS_PATTERN         ignored              not used     (Action is not strictly defined)
-  U_BS_DIBPATTERN      ignored              not used     (Action is not strictly defined)
-  U_BS_DIBPATTERNPT    ignored              not used     (Action is not strictly defined)
-  U_BS_HATCHED         ColorRef Object      HatchStyle Enumeration
+        style                Color                Hatch
+        U_BS_SOLID           ColorRef Object      Not used (bytes present???)
+        U_BS_NULL            ignored              ignored  (bytes present???).
+        U_BS_PATTERN         ignored              not used     (Action is not strictly defined)
+        U_BS_DIBPATTERN      ignored              not used     (Action is not strictly defined)
+        U_BS_DIBPATTERNPT    ignored              not used     (Action is not strictly defined)
+        U_BS_HATCHED         ColorRef Object      HatchStyle Enumeration
 */
 typedef struct {
     uint16_t            Style;              //!< BrushStyle Enumeration
     U_COLORREF          Color;              //!< Brush Color value, 32 bit value is not aligned.
     uint16_t            Hatch;              //!< HatchStyle Enumeration
-} U_WLOGBRUSH, *PU_WLOGBRUSH;
+} U_WLOGBRUSH;
 
-/**   LogColorSpace Object                 WMF PDF 2.2.2.11
-    Same as "LOGCOLORSPACEA Object" in uemf.h
+/*   LogColorSpace Object                 WMF manual 2.2.2.11
+    Same as "EMF LOGCOLORSPACEA Object" in uemf.h
     use U_LOGCOLORSPACEA
 */
 
-/**   LogColorSpaceW Object                WMF PDF 2.2.2.12
-    Same as "LOGCOLORSPACEW Object" in uemf.h
+/*   LogColorSpaceW Object                WMF manual 2.2.2.12
+    Same as "EMF LOGCOLORSPACEW Object" in uemf.h
     use U_LOGCOLORSPACEW
 */
 
 
-/**   PaletteEntry Object                  WMF PDF 2.2.2.13
+/*   PaletteEntry Object                  WMF manual 2.2.2.13
     moved up before Palette Object */
 
-/** PitchAndFamily Enumerations            WMF PDF 2.2.2.14
-    Same as "LF_PitchAndFamily Enumeration" in uemf.h
+/* PitchAndFamily Enumerations            WMF manual 2.2.2.14
+    Same as "EMF LF_PitchAndFamily Enumeration" in uemf.h
 */
 
-/**   PointL Object                        WMF PDF 2.2.2.15
-    Same as "Point Object" in uemf.h
+/*   PointL Object                        WMF manual 2.2.2.15
+    Same as "EMF Point Object" in uemf.h
 */
 
-/**   PointS Object                        WMF PDF 2.2.2.16
-    Same as "POINTS Object" in uemf.h
+/*   PointS Object                        WMF manual 2.2.2.16
+    Same as "EMF POINTS Object" in uemf.h
 */
 
-/**   PolyPolygon Object                   WMF PDF 2.2.2.17
+/*   PolyPolygon Object                   WMF manual 2.2.2.17 */
+/** WMF manual 2.2.2.17
+
   There is an array "aPoints" of uint16_t after aPolyCounts that holds the coordinates.
+
   Presumably it is in order [x1,y1],[x2,y2],etc.  The documentation does not say, it might have
   y then x.
+
   aPoints starts at aPolyCounts[nPolys]
 */
 typedef struct {
     uint16_t            nPolys;             //!< Number of polygons
     uint16_t            aPolyCounts[1];     //!< Number of points in each polygon (sequential)
-} U_POLYPOLYGON, *PU_POLYPOLYGON;
+} U_POLYPOLYGON;
 
-/**   Rect Object                          WMF PDF 2.2.2.18
+/*   Rect Object                          WMF manual 2.2.2.18
      This one is out of order, had to be created much earlier than this
 */
 
-/**   RectL Object                         WMF PDF 2.2.2.19
-    Same as "RECT Object" in uemf.h
+/*   RectL Object                         WMF manual 2.2.2.19
+    Same as "EMF RECT Object" in uemf.h
 */
 
-/**   RGBQuad Object                       WMF PDF 2.2.2.20
-    Same as "RGBQUAD Object" in uemf.h
+/*   RGBQuad Object                       WMF manual 2.2.2.20
+    Same as "EMF RGBQUAD Object" in uemf.h
 */
 
-/**   Scan Object                          WMF PDF 2.2.2.21
-      Field "count2" must follow ScanLines, but it cannot be placed into the struct.  It is 
-      an uint16_t value which must be the same as count.
+/**   Scan Object                          WMF manual 2.2.2.21 */
+/** WMF manual 2.2.2.21
+
+      Mandatory field "count2" must follow ScanLines, but it cannot be placed into the struct because
+      ScanLines has variable size.  "count2" is 
+      an uint16_t value which must have the same value as count.
 */
 typedef struct {
     uint16_t  count;                         //!< Number of entries in the ScanLines array
     uint16_t  top;                           //!< Y coordinate of the top scanline
     uint16_t  bottom;                        //!< Y coordinate of the bottom scanline
     uint16_t  ScanLines[1];                  //!< Array of 16 bit left/right pairs
-} U_SCAN, *PU_SCAN;
+} U_SCAN;
 
-/**   SizeL Object                         WMF PDF 2.2.2.22
-    Same as "SIZEL Object" in uemf.h
+/**   SizeL Object                         WMF manual 2.2.2.22
+    Same as "EMF SIZEL Object" in uemf.h
 */
 
 
 /** First three fields of MOST WMF records (not WMR_HEADER and WMR_PLACEABLE!)
-    Should only used for accessing size and type fields.  
-    NOT used as a prefix like U_EMR in uemf.h because it may cause alignment issues.
+
+    This Sshould only used for accessing size and type fields.  
+    It is NOT used as a prefix like U_EMR in uemf.h because it may cause alignment issues.
     Microsoft name: WMF Object
 */
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
-} U_METARECORD, *PU_METARECORD;
+} U_METARECORD;
 
-/** WMF PDF 2.3.2.3 META_PLACEABLE
-   If present this must immediately precede the header.  
-   It is not enumerated as an WMR record type.
-   This only ever occurs at the start of a WMF file, so the two uint32_t values will always be aligned.
+/** WMF manual 2.3.2.3 META_PLACEABLE
+        If present this must immediately precede the header.  
+        It is not enumerated as an WMR record type.
+        This only ever occurs at the start of a WMF file, so the two uint32_t values will always be aligned.
 */
 typedef struct {
     uint32_t            Key;                //!< MUST be 0x9AC6CDD7
@@ -1051,146 +1076,172 @@ typedef struct {
     uint16_t            Inch;               //!< Logical units/inch (convention if not specified:  1440 logical units/inch)
     uint32_t            Reserved;           //!< must be 0
     uint16_t            Checksum;           //!< Checksum of preceding 10 16 bit values
-} U_WMRPLACEABLE, *PU_WMRPLACEABLE;
+} U_WMRPLACEABLE;
 
-/** WMF PDF 2.3.2.2 META_HEADER 
+/** WMF manual 2.3.2.2 META_HEADER 
 */
 typedef struct {
-    uint8_t             iType;              //!< RecordType enumeration, must be 1
+    uint8_t             iType;              //!< RecordType Enumeration, must be 1
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     uint16_t            Size16w;            //!< Total number of 16bit words in record
-    uint16_t            version;            //!< Metafile version enumeration
+    uint16_t            version;            //!< Metafile version Enumeration
     uint16_t            Sizew[2];           //!< reassemble/store the Size (16 bit words in entire file) using Sizew, the 32 bit value is not aligned
     uint16_t            nObjects;           //!< Total number of brushes, pens, and other graphics objects defined in this file
     uint32_t            maxSize;            //!< Largest record in file, in number of 16bit words (This uint32_t is aligned)
     uint16_t            nMembers;           //!< Unused, should be 0
-} U_WMRHEADER, *PU_WMRHEADER;
+} U_WMRHEADER;
 
 
 // ***********************************************************************************
 // The following structures correspond to U_WMR_# records
 
-/* Index 00 U_WMREOF                        WMF PDF 2.3.2.1 META_EOF */
-typedef struct {
-    uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
-    uint8_t             xb;                 //!< Extra high order byte associated with record type
-} U_WMREOF, *PU_WMREOF,
-  U_WMRSETRELABS, *PU_WMRSETRELABS,
-  U_WMRSAVEDC, *PU_WMRSAVEDC,
-  U_WMRREALIZEPALETTE, *PU_WMRREALIZEPALETTE;
-
-/* Index 01 U_WMRSETBKCOLOR                 WMF PDF 2.3.5.14 */
-typedef struct {
-    uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
-    uint8_t             xb;                 //!< Extra high order byte associated with record type
-    U_COLORREF          Color;              //!< Color value, the 32 bit value is not aligned.
-} U_WMRSETBKCOLOR, *PU_WMRSETBKCOLOR,
-  U_WMRSETTEXTCOLOR, *PU_WMRSETTEXTCOLOR;
-
-/* Index 02 U_WMRSETBKMODE                  WMF PDF 2.3.5.15 */
-typedef struct {
-    uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
-    uint8_t             xb;                 //!< Extra high order byte associated with record type
-    uint16_t            Mode;               //!< Various Enumeraton.
-    uint16_t            Reserved;           //!< Ignore (ALSO OPTIONAL - FIELD MAY NOT BE PRESENT!!!!)
-} U_WMRSETBKMODE, *PU_WMRSETBKMODE,         //!< MixMode Enumeration.
-  U_WMRSETROP2, *PU_WMRSETROP2,             //!< Binary Raster Operation Enumeration.
-  U_WMRSETPOLYFILLMODE, *PU_WMRSETPOLYFILLMODE,             //!< PolyFillMode Enumeration.
-  U_WMRSETSTRETCHBLTMODE, *PU_WMRSETSTRETCHBLTMODE,         //!< StretchMode Enumeration
-  U_WMRSETTEXTALIGN, *PU_WMRSETTEXTALIGN;   //!< TextAlignment Enumeration.
-
-/* Index 03 U_WMRSETMAPMODE                 WMF PDF 2.3.5.17 */
-typedef struct {
-    uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
-    uint8_t             xb;                 //!< Extra high order byte associated with record type
-    uint16_t            Mode;               //!< Various Enumeraton and other
-} U_WMRSETMAPMODE, *PU_WMRSETMAPMODE,       //!< MapMode Enumeration.
-  U_WMRSETTEXTCHAREXTRA, *PU_WMRSETTEXTCHAREXTRA;           //!< Extra space in logical units to add to each character
-
-/* Index 04 U_WMRSETROP2                    WMF PDF 2.3.5.22  See Index 02 */
-
-/* Index 05 U_WMRSETRELABS                  WMF PDF 2.3.5.21  See Index 00*/
-
-/* Index 06 U_WMRSETPOLYFILLMODE            WMF PDF 2.3.5.20 See Index 02
-   Index 07 U_WMRSETSTRETCHBLTMODE          WMF PDF 2.3.5.23 */
-
-/* Index 08 U_WMRSETTEXTCHAREXTRA           WMF PDF 2.3.5.25 See Index 03*/
-   
-/* Index 09 U_WMRSETTEXTCOLOR               WMF PDF 2.3.5.26 see Index 01 */
-
-/* Index 0A U_WMRSETTEXTJUSTIFICATION       WMF PDF 2.3.5.27 */
-typedef struct {
-    uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
-    uint8_t             xb;                 //!< Extra high order byte associated with record type
-    uint16_t            Count;              //!< Number of space characters in the line
-    uint16_t            Extra;              //!< Number of extra space characters to add to the line
-} U_WMRSETTEXTJUSTIFICATION, *PU_WMRSETTEXTJUSTIFICATION;
-
-/* Index 0B U_WMRSETWINDOWORG               WMF PDF 2.3.5.31
-   Index 0C U_WMRSETWINDOWEXT               WMF PDF 2.3.5.30
-   Index 0D U_WMRSETVIEWPORTORG             WMF PDF 2.3.5.29
-   Index 0E U_WMRSETVIEWPORTEXT             WMF PDF 2.3.5.28
-   Index 0F U_WMROFFSETWINDOWORG            WMF PDF 2.3.5.7
-   Index 13 U_WMRLINETO                     WMF PDF 2.3.3.10
-   Index 14 U_WMRMOVETO                     WMF PDF 2.3.3.4
+/* Index 00 U_WMREOF                        WMF manual 2.3.2.1 META_EOF */
+/** WMF manual 2.3.2.1 META_EOF
 */
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
+    uint8_t             xb;                 //!< Extra high order byte associated with record type
+} U_WMREOF,
+  U_WMRSETRELABS,                           //!< WMF manual 2.3.5.21
+  U_WMRSAVEDC,                              //!< WMF manual 2.3.5.11
+  U_WMRREALIZEPALETTE;                      //!< WMF manual 2.3.5.8
+
+/* Index 01 U_WMRSETBKCOLOR                 WMF manual 2.3.5.14 */
+/** WMF manual 2.3.5.14
+*/
+typedef struct {
+    uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
+    uint8_t             iType;              //!< RecordType Enumeration
+    uint8_t             xb;                 //!< Extra high order byte associated with record type
+    U_COLORREF          Color;              //!< Color value, the 32 bit value is not aligned.
+} U_WMRSETBKCOLOR,
+  U_WMRSETTEXTCOLOR;                        //!< WMF manual 2.3.5.26
+
+/* Index 02 U_WMRSETBKMODE                  WMF manual 2.3.5.15 */
+/** WMF manual 2.3.5.15
+mode = MixMode Enumeration.
+*/
+typedef struct {
+    uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
+    uint8_t             iType;              //!< RecordType Enumeration
+    uint8_t             xb;                 //!< Extra high order byte associated with record type
+    uint16_t            Mode;               //!< Various Enumeraton.
+    uint16_t            Reserved;           //!< Ignore (ALSO OPTIONAL - FIELD MAY NOT BE PRESENT!!!!)
+} U_WMRSETBKMODE,
+  U_WMRSETPOLYFILLMODE,                     //!< WMF manual 2.3.5.20 Mode = PolyFillMode Enumeration.
+  U_WMRSETROP2,                             //!< WMF manual 2.3.5.22 Binary Raster Operation Enumeration.
+  U_WMRSETSTRETCHBLTMODE,                   //!< WMF manual 2.3.5.23 Mode = StretchMode Enumeration
+  U_WMRSETTEXTALIGN;                        //!< WMF manual 2.3.5.24 Mode = TextAlignment Enumeration.
+
+/* Index 03 U_WMRSETMAPMODE                 WMF manual 2.3.5.17 */
+/** WMF manual 2.3.5.17
+Mode = MapMode Enumeration.
+*/
+typedef struct {
+    uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
+    uint8_t             iType;              //!< RecordType Enumeration
+    uint8_t             xb;                 //!< Extra high order byte associated with record type
+    uint16_t            Mode;               //!< Various Enumeraton and other
+} U_WMRSETMAPMODE,
+  U_WMRSETTEXTCHAREXTRA;                    //!< WMF manual 2.3.5.25, Mode = Extra space in logical units to add to each character
+
+/* Index 04 U_WMRSETROP2                    WMF manual 2.3.5.22  See Index 02 */
+
+/* Index 05 U_WMRSETRELABS                  WMF manual 2.3.5.21  See Index 00*/
+
+/* Index 06 U_WMRSETPOLYFILLMODE            WMF manual 2.3.5.20 See Index 02
+   Index 07 U_WMRSETSTRETCHBLTMODE          WMF manual 2.3.5.23 */
+
+/* Index 08 U_WMRSETTEXTCHAREXTRA           WMF manual 2.3.5.25 See Index 03*/
+   
+/* Index 09 U_WMRSETTEXTCOLOR               WMF manual 2.3.5.26 see Index 01 */
+
+/* Index 0A U_WMRSETTEXTJUSTIFICATION       WMF manual 2.3.5.27 */
+/** WMF manual 2.3.5.27
+*/
+typedef struct {
+    uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
+    uint8_t             iType;              //!< RecordType Enumeration
+    uint8_t             xb;                 //!< Extra high order byte associated with record type
+    uint16_t            Count;              //!< Number of space characters in the line
+    uint16_t            Extra;              //!< Number of extra space characters to add to the line
+} U_WMRSETTEXTJUSTIFICATION;
+
+/* Index 0B U_WMRSETWINDOWORG               WMF manual 2.3.5.31
+   Index 0C U_WMRSETWINDOWEXT               WMF manual 2.3.5.30
+   Index 0D U_WMRSETVIEWPORTORG             WMF manual 2.3.5.29
+   Index 0E U_WMRSETVIEWPORTEXT             WMF manual 2.3.5.28
+   Index 0F U_WMROFFSETWINDOWORG            WMF manual 2.3.5.7
+   Index 0F U_WMROFFSETVIEWPORTORG          WMF manual 2.3.5.6
+   Index 13 U_WMRLINETO                     WMF manual 2.3.3.10
+   Index 14 U_WMRMOVETO                     WMF manual 2.3.3.4
+   Index 20 U_WMROFFSETCLIPRGN              WMF manual 2.3.5.5
+*/
+/** WMF manual 2.3.5.31
+Window X,Y origin
+*/
+typedef struct {
+    uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     int16_t             y;                  //!< Y value (note order!)
     int16_t             x;                  //!< X value
-} U_WMRSETWINDOWORG, *PU_WMRSETWINDOWORG,             //!< Window X,Y origin
-  U_WMRSETWINDOWEXT, *PU_WMRSETWINDOWEXT,             //!< Window X,Y extent
-  U_WMRSETVIEWPORTORG, *PU_WMRSETVIEWPORTORG,         //!< Viewport X,Y origin
-  U_WMRSETVIEWPORTEXT, *PU_WMRSETVIEWPORTEXT,         //!< Viewport X,Y extent
-  U_WMROFFSETWINDOWORG, *PU_WMROFFSETWINDOWORG,       //!< Window X,Y offset in device units
-  U_WMROFFSETVIEWPORTORG, *PU_WMROFFSETVIEWPORTORG,   //!< Viewport X,Y offset in device units
-  U_WMRLINETO, *PU_WMRLINETO,                         //!< Endpoint X,Y  in logical units
-  U_WMRMOVETO, *PU_WMRMOVETO,                         //!< Destination X,Y in logical units
-  U_WMROFFSETCLIPRGN, *PU_WMROFFSETCLIPRGN;           //!< ClipRegion X,Y offset in logical units
+} U_WMRSETWINDOWORG,
+  U_WMRSETWINDOWEXT,                        //!< WMF manual 2.3.5.30, Window X,Y extent
+  U_WMRSETVIEWPORTORG,                      //!< WMF manual 2.3.5.29, Viewport X,Y origin
+  U_WMRSETVIEWPORTEXT,                      //!< WMF manual 2.3.5.28, Viewport X,Y extent
+  U_WMROFFSETWINDOWORG,                     //!< WMF manual 2.3.5.7,  Window X,Y offset in device units
+  U_WMROFFSETVIEWPORTORG,                   //!< WMF manual 2.3.5.6,  Viewport X,Y offset in device units
+  U_WMRLINETO,                              //!< WMF manual 2.3.3.10, Endpoint X,Y  in logical units
+  U_WMRMOVETO,                              //!< WMF manual 2.3.3.4,  Destination X,Y in logical units
+  U_WMROFFSETCLIPRGN;                       //!< WMF manual 2.3.5.5,  Y offset in logical units
 
-/* Index 10 U_WMRSCALEWINDOWEXT             WMF PDF 2.3.5.13 */
+/* Index 10 U_WMRSCALEWINDOWEXT             WMF manual 2.3.5.13 
+   Index 12 U_WMRSCALEVIEWPORTEXT           WMF manual 2.3.5.12
+*/
+/** WMF manual 2.3.5.13
+*/
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     int16_t             yDenom;             //!< Y denominator
     int16_t             yNum;               //!< Y numerator
     int16_t             xDenom;             //!< X denominator
     int16_t             xNum;               //!< X numerator
-} U_WMRSCALEWINDOWEXT, *PU_WMRSCALEWINDOWEXT,
-  U_WMRSCALEVIEWPORTEXT, *PU_WMRSCALEVIEWPORTEXT;
+} U_WMRSCALEWINDOWEXT,
+  U_WMRSCALEVIEWPORTEXT;                    //!< WMF manual 2.3.5.12
 
-/* Index 11 U_WMROFFSETVIEWPORTORG          WMF PDF 2.3.5.6  see Index 0B */
+/* Index 11 U_WMROFFSETVIEWPORTORG          WMF manual 2.3.5.6  see Index 0B */
 
-/* Index 12 U_WMRSCALEVIEWPORTEXT           WMF PDF 2.3.5.12 see Index 10 */
+/* Index 12 U_WMRSCALEVIEWPORTEXT           WMF manual 2.3.5.12 see Index 10 */
    
-/* Index 13 U_WMRLINETO                     WMF PDF 2.3.3.10 see index 0B
-   Index 14 U_WMRMOVETO                     WMF PDF 2.3.5.4  */
+/* Index 13 U_WMRLINETO                     WMF manual 2.3.3.10 see index 0B
+   Index 14 U_WMRMOVETO                     WMF manual 2.3.5.4  */
 
-/* Index 15 U_WMREXCLUDECLIPRECT            WMF PDF 2.3.5.2
-   Index 16 U_WMRINTERSECTCLIPRECT          WMF PDF 2.3.5.3  */
+/* Index 15 U_WMREXCLUDECLIPRECT            WMF manual 2.3.5.2
+   Index 16 U_WMRINTERSECTCLIPRECT          WMF manual 2.3.5.3 
+*/
+/** WMF manual 2.3.5.2
+*/
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     int16_t             Bottom;             //!< Coordinates in logical units
     int16_t             Right;              //!< Coordinates in logical units
     int16_t             Top;                //!< Coordinates in logical units
     int16_t             Left;               //!< Coordinates in logical units
-} U_WMREXCLUDECLIPRECT, *PU_WMREXCLUDECLIPRECT,    
-  U_WMRINTERSECTCLIPRECT, *PU_WMRINTERSECTCLIPRECT;
+} U_WMREXCLUDECLIPRECT,    
+  U_WMRINTERSECTCLIPRECT;                   //!< WMF manual 2.3.5.3
 
-/* Index 17 U_WMRARC                        WMF PDF 2.3.3.1  */
+/* Index 17 U_WMRARC                        WMF manual 2.3.3.1  */
+/** WMF manual 2.3.3.1
+*/
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     int16_t             yEndArc;            //!< Coordinates in logical units
     int16_t             xEndArc;            //!< Coordinates in logical units
@@ -1200,36 +1251,48 @@ typedef struct {
     int16_t             Right;              //!< Coordinates in logical units
     int16_t             Top;                //!< Coordinates in logical units
     int16_t             Left;               //!< Coordinates in logical units
-} U_WMRARC, *PU_WMRARC;  
+} U_WMRARC;  
 
-/* Index 18 U_WMRELLIPSE                    WMF PDF 2.3.3.3  */
+/* Index 18 U_WMRELLIPSE                    WMF manual 2.3.3.3  
+   Index 1B U_WMRRECTANGLE                  WMF manual 2.3.3.17
+*/
+/** WMF manual 2.3.3.3
+*/
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     int16_t             Bottom;             //!< Coordinates in logical units
     int16_t             Right;              //!< Coordinates in logical units
     int16_t             Top;                //!< Coordinates in logical units
     int16_t             Left;               //!< Coordinates in logical units
-} U_WMRELLIPSE, *PU_WMRELLIPSE,
-  U_WMRRECTANGLE, *PU_WMRRECTANGLE;   
+} U_WMRELLIPSE,
+  U_WMRRECTANGLE;                           //!< WMF manual 2.3.3.17
 
-/* Index 19 U_WMRFLOODFILL                  WMF PDF 2.3.3.7  */
+/* Index 19 U_WMRFLOODFILL                  WMF manual 2.3.3.7
+   Index 48 U_WMREXTFLOODFILL               WMF manual 2.3.3.4
+*/
+/** WMF manual 2.3.3.7
+*/
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     int16_t             Mode;               //!< FloodFill Enumeration
     U_COLORREF          Color;              //!< Color
     int16_t             y;                  //!< Y
     int16_t             x;                  //!< X
-} U_WMRFLOODFILL, *PU_WMRFLOODFILL,
-  U_WMREXTFLOODFILL, *PU_WMREXTFLOODFILL;
+} U_WMRFLOODFILL,
+  U_WMREXTFLOODFILL;                        //!< WMF manual 2.3.3.7
 
-/* Index 1A U_WMRPIE                        WMF PDF 2.3.3.13 */
+/* Index 1A U_WMRPIE                        WMF manual 2.3.3.13 
+   Index 30 U_WMRCHORD                      WMF manual 2.3.3.2
+*/
+/** WMF manual 2.3.3.13
+*/
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     int16_t             yRadial2;           //!< in logical units
     int16_t             xRadial2;           //!< in logical units
@@ -1239,15 +1302,17 @@ typedef struct {
     int16_t             Right;              //!< in logical units
     int16_t             Top;                //!< in logical units
     int16_t             Left;               //!< in logical units
-} U_WMRPIE, *PU_WMRPIE,
-  U_WMRCHORD, *PU_WMRCHORD;   
+} U_WMRPIE,
+  U_WMRCHORD;                               //!< WMF manual 2.3.3.2
 
-/* Index 1B U_WMRRECTANGLE                  WMF PDF 2.3.3.17 See Index 18 */
+/* Index 1B U_WMRRECTANGLE                  WMF manual 2.3.3.17 See Index 18 */
 
-/* Index 1C U_WMRROUNDRECT                  WMF PDF 2.3.3.18 */
+/* Index 1C U_WMRROUNDRECT                  WMF manual 2.3.3.18 */
+/** WMF manual 2.3.3.18
+*/
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     int16_t             Height;             //!< in logical units (rounded corner)
     int16_t             Width;              //!< in logical units (rounded corner)
@@ -1255,50 +1320,61 @@ typedef struct {
     int16_t             Right;              //!< in logical units
     int16_t             Top;                //!< in logical units
     int16_t             Left;               //!< in logical units
-} U_WMRROUNDRECT, *PU_WMRROUNDRECT;
+} U_WMRROUNDRECT;
 
-/* Index 1D U_WMRPATBLT                     WMF PDF 2.3.3.12
+/* Index 1D U_WMRPATBLT                     WMF manual 2.3.3.12
+*/
+/** WMF manual 2.3.3.12
 */
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     uint16_t            rop3w[2];           //!< reassemble/store the rop3 Ternary raster operation using rop3w, as the 32 bit value is not aligned
     int16_t             Height;             //!< in logical units (of Rect to Fill)
     int16_t             Width;              //!< in logical units (of Rect to Fill)
     int16_t             yDst;               //!< in logical units (UL corner to fill)
     int16_t             xDst;               //!< in logical units (UL corner to fill)
-} U_WMRPATBLT, *PU_WMRPATBLT;
+} U_WMRPATBLT;
 
-/* Index 1E U_WMRSAVEDC                     WMF PDF 2.3.5.11 See Index 00*/
+/* Index 1E U_WMRSAVEDC                     WMF manual 2.3.5.11 See Index 00*/
 
-/* Index 1F U_WMRSETPIXEL                   WMF PDF 2.3.3.19 */
+/* Index 1F U_WMRSETPIXEL                   WMF manual 2.3.3.19 */
+/** WMF manual 2.3.3.19
+*/
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     U_COLORREF          Color;              //!< Color
     int16_t             y;                  //!< Y
     int16_t             x;                  //!< X
-} U_WMRSETPIXEL, *PU_WMRSETPIXEL;
+} U_WMRSETPIXEL;
 
-/* Index 20 U_WMROFFSETCLIPRGN              WMF PDF 2.3.5.5  See Index 0B*/
+/* Index 20 U_WMROFFSETCLIPRGN              WMF manual 2.3.5.5  See Index 0B*/
 
-/* Index 21 U_WMRTEXTOUT                    WMF PDF 2.3.3.20
-    Also part of the record, but at variable positions
-    int16_t             y;                  start position
-    int16_t             x;                  start position
+/* Index 21 U_WMRTEXTOUT                    WMF manual 2.3.3.20
+*/
+/** WMF manual 2.3.3.20
+Also part of the record, following String, and so at variable positions:
+        
+int16_t             y;                  start position
+    
+int16_t             x;                  start position
 */
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     int16_t             Length;             //!< Stringlength in bytes
     uint8_t             String;             //!< String to write, storage area must be 2n bytes.
-} U_WMRTEXTOUT, *PU_WMRTEXTOUT;
+} U_WMRTEXTOUT;
 
-/* Index 22 U_WMRBITBLT                     WMF PDF 2.3.1.1
-   This is a variable structure the core, invariant part extends to xSrc.
+/* Index 22 U_WMRBITBLT                     WMF manual 2.3.1.1
+*/
+/** WMF manual 2.3.1.1
+
+   This is a variable structure the core/invariant part extends to xSrc.
    
    if RecordSize == ((xb) + 3) then there is no bitmap and use the _NOPX form, otherwise use the _PX form
    Use Macro U_TEST_NOPX2
@@ -1306,7 +1382,7 @@ typedef struct {
 */
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     uint16_t            rop3w[2];           //!< reassemble/store the Ternary raster operation rop3 value using rop3w, the 32 bit value is not aligned.
     int16_t             ySrc;               //!< in logical units (UL corner of Src rect)
@@ -1316,11 +1392,19 @@ typedef struct {
     int16_t             Width;              //!< in logical units (of Src and Dst rects)
     int16_t             yDst;               //!< in logical units (UL corner of Dst rect)
     int16_t             xDst;               //!< in logical units (UL corner of Dst rect)
-} U_WMRBITBLT_NOPX, *PU_WMRBITBLT_NOPX;
+} U_WMRBITBLT_NOPX;
 
+/** WMF manual 2.3.1.1
+
+   This is a variable structure the core/invariant part extends to xSrc.
+   
+   if RecordSize == ((xb) + 3) then there is no bitmap and use the _NOPX form, otherwise use the _PX form
+   Use Macro U_TEST_NOPX2
+
+*/
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     uint16_t            rop3w[2];           //!< reassemble/store the Ternary raster operation rop3 value using rop3w, the 32 bit value is not aligned.
     int16_t             ySrc;               //!< in logical units (UL corner of Src rect)
@@ -1330,18 +1414,21 @@ typedef struct {
     int16_t             yDst;               //!< in logical units (UL corner of Dst rect)
     int16_t             xDst;               //!< in logical units (UL corner of Dst rect)
     U_BITMAP16          bitmap;             //!< Src bitmap
-} U_WMRBITBLT_PX, *PU_WMRBITBLT_PX;
+} U_WMRBITBLT_PX;
 
 
-/* Index 23 U_WMRSTRETCHBLT                 WMF PDF 2.3.1.5
-   This is a variable structure the core, invariant part extends to xSrc.
+/* Index 23 U_WMRSTRETCHBLT                 WMF manual 2.3.1.5 */
+/** WMF manual 2.3.1.5
+
+   This is a variable structure the core/invariant part extends to xSrc.
    
    if RecordSize == ((xb) + 3) then there is no bitmap and use the _NOPX form, otherwise use the _PX form
    Use Macro U_TEST_NOPX2.
 */
+
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     uint16_t            rop3w[2];           //!< reassemble/store the Ternary raster operation rop3 value using rop3w, the 32 bit value is not aligned.
     int16_t             hSrc;               //!< Height in logical units of Src rect
@@ -1353,11 +1440,20 @@ typedef struct {
     int16_t             wDst;               //!< Wdith  in logical units of Dst rect
     int16_t             yDst;               //!< in logical units (UL corner of Dst rect)
     int16_t             xDst;               //!< in logical units (UL corner of Dst rect)
-} U_WMRSTRETCHBLT_NOPX, *PU_WMRSTRETCHBLT_NOPX;
+} U_WMRSTRETCHBLT_NOPX;
 
+
+/* Index 23 U_WMRSTRETCHBLT                 WMF manual 2.3.1.5 */
+/** WMF manual 2.3.1.5
+
+   This is a variable structure the core/invariant part extends to xSrc.
+   
+   if RecordSize == ((xb) + 3) then there is no bitmap and use the _NOPX form, otherwise use the _PX form
+   Use Macro U_TEST_NOPX2.
+*/
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     uint16_t            rop3w[2];           //!< reassemble/store the Ternary raster operation rop3 value using rop3w, the 32 bit value is not aligned.
     int16_t             hSrc;               //!< Height in logical units of Src rect
@@ -1369,124 +1465,153 @@ typedef struct {
     int16_t             yDst;               //!< in logical units (UL corner of Dst rect)
     int16_t             xDst;               //!< in logical units (UL corner of Dst rect)
     U_BITMAP16          bitmap;             //!< Src bitmap
-} U_WMRSTRETCHBLT_PX, *PU_WMRSTRETCHBLT_PX;
+} U_WMRSTRETCHBLT_PX;
 
-/* Index 24 U_WMRPOLYGON                    WMF PDF 2.3.3.15
-   Index 25 U_WMRPOLYLINE                   WMF PDF 2.3.3.14 */
+/* Index 24 U_WMRPOLYGON                    WMF manual 2.3.3.15
+   Index 25 U_WMRPOLYLINE                   WMF manual 2.3.3.14
+*/
+/** WMF manual 2.3.3.15
+*/
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     int16_t             nPoints;            //!< Number of points in aPoints
     U_POINT16           aPoints[1];         //!< Array of points
-} U_WMRPOLYGON, *PU_WMRPOLYGON,
-  U_WMRPOLYLINE, *PU_WMRPOLYLINE;
+} U_WMRPOLYGON,
+  U_WMRPOLYLINE;                            //!< WMF manual 2.3.3.14
 
-/* Index 26 U_WMRESCAPE                     WMF PDF 2.3.6.1  */
+/* Index 26 U_WMRESCAPE                     WMF manual 2.3.6.1  */
+/** WMF manual 2.3.6.1
+*/
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     uint16_t            eFunc;              //!< Escape function
     uint16_t            nBytes;             //!< bytes in the data array
     uint8_t             Data[1];            //!< data array
-} U_WMRESCAPE, *PU_WMRESCAPE;
+} U_WMRESCAPE;
 
-/* Index 27 U_WMRRESTOREDC                  WMF PDF 2.3.5.10*/
+/* Index 27 U_WMRRESTOREDC                  WMF manual 2.3.5.10 */
+/** WMF manual 2.3.5.10
+*/
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     int16_t             DC;                 //!< DC to restore (negative is relative to current, positive is absolute)
-} U_WMRRESTOREDC, *PU_WMRRESTOREDC;
+} U_WMRRESTOREDC;
 
-/* Index 28 U_WMRFILLREGION                 WMF PDF 2.3.3.6  */
+/* Index 28 U_WMRFILLREGION                 WMF manual 2.3.3.6  */
+/**  WMF manual 2.3.3.6
+*/
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     uint16_t            Region;             //!< Index of region to fill in object table
     uint16_t            Brush;              //!< Index of brush to use in object table
-} U_WMRFILLREGION, *PU_WMRFILLREGION;
+} U_WMRFILLREGION;
 
-/* Index 29 U_WMRFRAMEREGION                WMF PDF 2.3.3.8  */
+/* Index 29 U_WMRFRAMEREGION                WMF manual 2.3.3.8  */
+/**  WMF manual 2.3.3.8
+*/
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     uint16_t            Region;             //!< Index of region to frame in object table
     uint16_t            Brush;              //!< Index of brush to use in frame in object table
     int16_t             Height;             //!< in logical units (of frame)
     int16_t             Width;              //!< in logical units (of frame)
-} U_WMRFRAMEREGION, *PU_WMRFRAMEREGION;
+} U_WMRFRAMEREGION;
 
-/* Index 2A U_WMRINVERTREGION               WMF PDF 2.3.3.9  
-   Index 2B U_WMRPAINTREGION                WMF PDF 2.3.3.11
-   Index 2C U_WMRSELECTCLIPREGION           WMF PDF 2.3.4.9 
-   Index 2D U_WMRSELECTOBJECT               WMF PDF 2.3.4.10 */
-typedef struct {
-    uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
-    uint8_t             xb;                 //!< Extra high order byte associated with record type
-    uint16_t            index;              //!< (usually) index of region/object in object table
-} U_WMRINVERTREGION, *PU_WMRINVERTREGION,           //!< invert region
-  U_WMRPAINTREGION, *PU_WMRPAINTREGION,             //!< paint region
-  U_WMRSELECTCLIPREGION, *PU_WMRSELECTCLIPREGION,   //!< select as clip region
-  U_WMRSELECTOBJECT, *PU_WMRSELECTOBJECT,           //!< select object
-  U_WMRSELECTPALETTE, *PU_WMRSELECTPALETTE,         //!< select palette object
-  U_WMRRESIZEPALETTE, *PU_WMRRESIZEPALETTE,         //!< resize the system palette to "index"
-  U_WMRDELETEOBJECT, *PU_WMRDELETEOBJECT;           //!< delete object
-
-/* Index 2E U_WMRSETTEXTALIGN               WMF PDF 2.3.5.24  See Index 02 */
-
-/* Index 2F U_WMRDRAWTEXT                   in Wine, not in WMF PDF. 
-   no documentation found, this part must be correct    */
-typedef struct {
-    uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
-    uint8_t             xb;                 //!< Extra high order byte associated with record type
-} U_WMRDRAWTEXT, *PU_WMRDRAWTEXT,
-  U_WMRCREATEBITMAPINDIRECT, *PU_WMRCREATEBITMAPINDIRECT,
-  U_WMRCREATEBITMAP, *PU_WMRCREATEBITMAP;
- 
-/* Index 30 U_WMRCHORD                      WMF PDF 2.3.3.2  See Index 1A */
-
-/* Index 31 U_WMRSETMAPPERFLAGS             WMF PDF 2.3.5.18 */
-typedef struct {
-    uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
-    uint8_t             xb;                 //!< Extra high order byte associated with record type
-    uint16_t            valuew[2];          //!< if 1 bit set font mapper selects only matching aspect fonts. reassemble/store the value using valuew, the 32 bit value is not aligned.
-} U_WMRSETMAPPERFLAGS, *PU_WMRSETMAPPERFLAGS;
-
-/* Index 32 U_WMREXTTEXTOUT                 WMF PDF 2.3.3.5
-   Variable size structure.  Common part is shown.
-   
-   U_RECT16   Rect;    Only present when U_ETO_OPAQUE or U_ETO_CLIPPED bits are set in Opts
-   uint8_t    String;  String to write, storage area must be 2n bytes.
-   int16_t    Dx;      Kerning information.  Must have same number of entries as Length.
-                       Dx is present when
-                       2*Size16_4[2] -14 - 2*((Length + 1)/2)) - 8*(Opts & (U_ETO_OPAQUE | U_ETO_CLIPPED)) == 2*Length 
+/* Index 2A U_WMRINVERTREGION               WMF manual 2.3.3.9  
+   Index 2B U_WMRPAINTREGION                WMF manual 2.3.3.11
+   Index 2C U_WMRSELECTCLIPREGION           WMF manual 2.3.4.9 
+   Index 2D U_WMRSELECTOBJECT               WMF manual 2.3.4.10
+   Index 34 U_WMRSELECTPALETTE              WMF manual 2.3.4.11
+   Index 39 U_WMRRESIZEPALETTE              WMF manual 2.3.5.9
+   Index F0 U_WMRDELETEOBJECT               WMF manual 2.3.4.7
+*/
+/**  WMF manual 2.3.3.9
+invert region
 */
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
+    uint8_t             xb;                 //!< Extra high order byte associated with record type
+    uint16_t            index;              //!< (usually) index of region/object in object table
+} U_WMRINVERTREGION,
+  U_WMRPAINTREGION,                         //!< WMF manual 2.3.3.11, paint region
+  U_WMRSELECTCLIPREGION,                    //!< WMF manual 2.3.4.9,  select as clip region
+  U_WMRSELECTOBJECT,                        //!< WMF manual 2.3.4.10, select object
+  U_WMRSELECTPALETTE,                       //!< WMF manual 2.3.4.11, select palette object
+  U_WMRRESIZEPALETTE,                       //!< WMF manual 2.3.5.9,  resize the system palette to "index"
+  U_WMRDELETEOBJECT;                        //!< WMF manual 2.3.4.7,  delete object
+
+/* Index 2E U_WMRSETTEXTALIGN               WMF manual 2.3.5.24  See Index 02 */
+
+/* Index 2F U_WMRDRAWTEXT                   in GDI and Wine, not documented in WMF manual. 
+   Index FE U_WMRCREATEBITMAP               in GDI and Wine, not documented in WMF manual. 
+   Index FD U_WMRCREATEBITMAPINDIRECT       in GDI and Wine, not documented in WMF manual. 
+
+   no documentation found, this part of these records, at least, must be correct    */
+/** in GDI and Wine, not documented in WMF manual.
+*/
+typedef struct {
+    uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
+    uint8_t             iType;              //!< RecordType Enumeration
+    uint8_t             xb;                 //!< Extra high order byte associated with record type
+} U_WMRDRAWTEXT,
+  U_WMRCREATEBITMAPINDIRECT,                //!< in GDI and Wine, not documented in WMF manual.
+  U_WMRCREATEBITMAP;                        //!< in GDI and Wine, not documented in WMF manual.
+ 
+/* Index 30 U_WMRCHORD                      WMF manual 2.3.3.2  See Index 1A */
+
+/* Index 31 U_WMRSETMAPPERFLAGS             WMF manual 2.3.5.18 */
+/** WMF manual 2.3.5.18
+*/
+typedef struct {
+    uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
+    uint8_t             iType;              //!< RecordType Enumeration
+    uint8_t             xb;                 //!< Extra high order byte associated with record type
+    uint16_t            valuew[2];          //!< if 1 bit set font mapper selects only matching aspect fonts. reassemble/store the value using valuew, the 32 bit value is not aligned.
+} U_WMRSETMAPPERFLAGS;
+
+/* Index 32 U_WMREXTTEXTOUT                 WMF manual 2.3.3.5
+*/
+/** WMF manual 2.3.3.5
+
+   Variable size record.  Optional fields which follow the struct fields are:
+   
+        U_RECT16   Rect;    Only present when U_ETO_OPAQUE or U_ETO_CLIPPED bits are set in Opts
+        uint8_t    String;  String to write, storage area must be 2n bytes.
+        int16_t    Dx;      Kerning information.  Must have same number of entries as Length.
+                            Dx is present when
+                            2*Size16_4[2] -14 - 2*((Length + 1)/2)) - 8*(Opts & (U_ETO_OPAQUE | U_ETO_CLIPPED)) == 2*Length
+*/
+typedef struct {
+    uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     int16_t             y;                  //!< in logical units (draw point)
     int16_t             x;                  //!< in logical units (draw point)
     int16_t             Length;             //!< Stringlength in bytes
     uint16_t            Opts;               //!< ExtTextOutOptions Flags
-} U_WMREXTTEXTOUT, *PU_WMREXTTEXTOUT;
+} U_WMREXTTEXTOUT;
 
-/* Index 33 U_WMRSETDIBTODEV                WMF PDF 2.3.1.4
-   Constant part of record is showon.  It is followed by a
-   DeviceIndependentBitmap Object
+/* Index 33 U_WMRSETDIBTODEV                WMF manual 2.3.1.4 */
+/**  WMF manual 2.3.1.4
+
+   Constant part of record is shown.  It is followed by a DeviceIndependentBitmap Object
 */
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
-    uint16_t            cUsage;             //!< ColorUsage enumeration
+    uint16_t            cUsage;             //!< ColorUsage Enumeration
     uint16_t            ScanCount;          //!< Number of scan lines in Src
     uint16_t            StartScan;          //!< First Scan line in Src
     int16_t             ySrc;               //!< in logical units (UL corner of Src rect)
@@ -1496,35 +1621,44 @@ typedef struct {
     int16_t             yDst;               //!< in logical units (UL corner of Dst rect)
     int16_t             xDst;               //!< in logical units (UL corner of Dst rect)
     uint8_t             dib[1];             //!< DeviceIndependentBitmap object
-} U_WMRSETDIBTODEV, *PU_WMRSETDIBTODEV;
+} U_WMRSETDIBTODEV;
 
-/* Index 34 U_WMRSELECTPALETTE              WMF PDF 2.3.4.11 See Index 2A */
+/* Index 34 U_WMRSELECTPALETTE              WMF manual 2.3.4.11 See Index 2A */
 
-/* Index 35 U_WMRREALIZEPALETTE             WMF PDF 2.3.5.8  See Index 00 */
+/* Index 35 U_WMRREALIZEPALETTE             WMF manual 2.3.5.8  See Index 00 */
 
-/* Index 36 U_WMRANIMATEPALETTE             WMF PDF 2.3.5.1  
-   Index 37 U_WMRSETPALENTRIES              WMF PDF 2.3.5.19 */
+/* Index 36 U_WMRANIMATEPALETTE             WMF manual 2.3.5.1  
+   Index 37 U_WMRSETPALENTRIES              WMF manual 2.3.5.19
+   Index F7 U_WMRCREATEPALETTE              WMF manual 2.3.4.3
+*/
+/** WMF manual 2.3.5.1
+*/
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     U_PALETTE           Palette;            //!< Palette object
-} U_WMRANIMATEPALETTE, *PU_WMRANIMATEPALETTE,
-  U_WMRSETPALENTRIES, *PU_WMRSETPALENTRIES,
-  U_WMRCREATEPALETTE, *PU_WMRCREATEPALETTE;
+} U_WMRANIMATEPALETTE,
+  U_WMRSETPALENTRIES,                       //!< WMF manual 2.3.5.19
+  U_WMRCREATEPALETTE;                       //!< WMF manual 2.3.4.3
 
-/* Index 38 U_WMRPOLYPOLYGON                WMF PDF 2.3.3.16 */
+/* Index 38 U_WMRPOLYPOLYGON                WMF manual 2.3.3.16 */
+/** WMF manual 2.3.3.16
+*/
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     U_POLYPOLYGON       PPolygon;           //!< PolyPolygon object (size is variable!)
-} U_WMRPOLYPOLYGON, *PU_WMRPOLYPOLYGON;
+} U_WMRPOLYPOLYGON;
 
-/* Index 39 U_WMRRESIZEPALETTE              WMF PDF 2.3.5.9  See Index 2A */
+/* Index 39 U_WMRRESIZEPALETTE              WMF manual 2.3.5.9  See Index 2A */
 
-/* Index 40 U_WMRDIBBITBLT                  WMF PDF 2.3.1.2 
-   The PX form is a variable structure the core, invariant part extends to xDst, and that is
+/* Index 40 U_WMRDIBBITBLT                  WMF manual 2.3.1.2 
+*/
+/** WMF manual 2.3.1.2 
+
+   The PX form is a variable structure the core/invariant part extends to xDst, and that is
    followed by a DeviceInvariantBitmap object which starts at "dib".
    The NOPX form is a constant structure.
    
@@ -1533,7 +1667,7 @@ typedef struct {
 */
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     uint16_t            rop3w[2];           //!< reassemble/store the Ternary raster operation rop3 value using rop3w, the 32 bit value is not aligned.
     int16_t             ySrc;               //!< in logical units (UL corner of Src rect)
@@ -1543,11 +1677,20 @@ typedef struct {
     int16_t             Width;              //!< in logical units (of Src and Dst)
     int16_t             yDst;               //!< in logical units (UL corner of Dst rect)
     int16_t             xDst;               //!< in logical units (UL corner of Dst rect)
-} U_WMRDIBBITBLT_NOPX, *PU_WMRDIBBITBLT_NOPX;
+} U_WMRDIBBITBLT_NOPX;
 
+/** WMF manual 2.3.1.2 
+
+   The PX form is a variable structure the core/invariant part extends to xDst, and that is
+   followed by a DeviceInvariantBitmap object which starts at "dib".
+   The NOPX form is a constant structure.
+   
+   if RecordSize == ((xb) + 3) then there is no bitmap and use the _NOPX form, otherwise use the _PX form
+   Use Macro U_TEST_NOPX2.
+*/
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     uint16_t            rop3w[2];           //!< reassemble/store the Ternary raster operation rop3 value using rop3w, the 32 bit value is not aligned.
     int16_t             ySrc;               //!< in logical units (UL corner of Src rect)
@@ -1557,10 +1700,12 @@ typedef struct {
     int16_t             yDst;               //!< in logical units (UL corner of Dst rect)
     int16_t             xDst;               //!< in logical units (UL corner of Dst rect)
     uint8_t             dib[1];             //!< DeviceIndependentBitmap object
-} U_WMRDIBBITBLT_PX, *PU_WMRDIBBITBLT_PX;
+} U_WMRDIBBITBLT_PX;
 
-/* Index 41 U_WMRDIBSTRETCHBLT              WMF PDF 2.3.1.3 
-   The PX form is a variable structure the core, invariant part extends to xDst, and that is
+/* Index 41 U_WMRDIBSTRETCHBLT              WMF manual 2.3.1.3 */
+/** WMF manual 2.3.1.3 
+
+   The PX form is a variable structure the core/invariant part extends to xDst, and that is
    followed by a DeviceInvariantBitmap object which starts at "dib".
    The NOPX form is a constant structure.
    
@@ -1569,7 +1714,7 @@ typedef struct {
 */
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     uint16_t            rop3w[2];           //!< reassemble/store the Ternary raster operation rop3 value using rop3w, the 32 bit value is not aligned.
     int16_t             hSrc;               //!< in logical units (of Src)
@@ -1581,11 +1726,20 @@ typedef struct {
     int16_t             wDst;               //!< in logical units (of Dst)
     int16_t             yDst;               //!< in logical units (UL corner of Dst rect)
     int16_t             xDst;               //!< in logical units (UL corner of Dst rect)
-} U_WMRDIBSTRETCHBLT_NOPX, *PU_WMRDIBSTRETCHBLT_NOPX;
+} U_WMRDIBSTRETCHBLT_NOPX;
 
+/** WMF manual 2.3.1.3 
+
+   The PX form is a variable structure the core/invariant part extends to xDst, and that is
+   followed by a DeviceInvariantBitmap object which starts at "dib".
+   The NOPX form is a constant structure.
+   
+   if RecordSize == ((xb) + 3) then there is no bitmap and use the _NOPX form, otherwise use the _PX form
+   Use Macro U_TEST_NOPX2.
+*/
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     uint16_t            rop3w[2];           //!< reassemble/store the Ternary raster operation rop3 value using rop3w, the 32 bit value is not aligned.
     int16_t             hSrc;               //!< in logical units (of Src)
@@ -1597,34 +1751,38 @@ typedef struct {
     int16_t             yDst;               //!< in logical units (UL corner of Dst rect)
     int16_t             xDst;               //!< in logical units (UL corner of Dst rect)
     uint8_t             dib[1];             //!< DeviceIndependentBitmap object
-} U_WMRDIBSTRETCHBLT_PX, *PU_WMRDIBSTRETCHBLT_PX;
+} U_WMRDIBSTRETCHBLT_PX;
 
 
-/* Index 42 U_WMRDIBCREATEPATTERNBRUSH      WMF PDF 2.3.4.8
+/* Index 42 U_WMRDIBCREATEPATTERNBRUSH      WMF manual 2.3.4.8
+*/
+/** WMF manual 2.3.4.8
 
-  style                cUsage               Brush created
-  U_BS_SOLID                  like U_BS_DIBPATTERNPT
-  U_BS_NULL                   like U_BS_DIBPATTERNPT
-  U_BS_HATCHED                like U_BS_DIBPATTERNPT
-  U_BS_DIBPATTERNPT    ColorUsage enumer.    U_BS_DIBPATTERNPT brush from DIB in Src
-  U_BS_PATTERN         ColorUsage enumer.    U_BS_PATTERN brush from Bitmap16 object in Src
+        style                cUsage                Brush created
+        U_BS_SOLID                                 like U_BS_DIBPATTERNPT
+        U_BS_NULL                                  like U_BS_DIBPATTERNPT
+        U_BS_HATCHED                               like U_BS_DIBPATTERNPT
+        U_BS_DIBPATTERNPT    ColorUsage enumer.    U_BS_DIBPATTERNPT brush from DIB in Src
+        U_BS_PATTERN         ColorUsage enumer.    U_BS_PATTERN brush from Bitmap16 object in Src
 */
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     uint16_t            Style;              //!< BrushStyle Enumeration
     uint16_t            cUsage;             //!< See table above
     uint8_t             Src[1];             //!< DeviceIndependentBitmap or Bitmap16 object
-} U_WMRDIBCREATEPATTERNBRUSH, *PU_WMRDIBCREATEPATTERNBRUSH;
+} U_WMRDIBCREATEPATTERNBRUSH;
 
-/* Index 43 U_WMRSTRETCHDIB                 WMF PDF 2.3.1.6  */
+/* Index 43 U_WMRSTRETCHDIB                 WMF manual 2.3.1.6 */
+/** WMF manual 2.3.1.6
+*/
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     uint16_t            rop3w[2];           //!< reassemble/store the Ternary raster operation rop3 value using rop3w, the 32 bit value is not aligned.
-    uint16_t            cUsage;             //!< ColorUsage enumeration
+    uint16_t            cUsage;             //!< ColorUsage Enumeration
     int16_t             hSrc;               //!< in logical units (of Src)
     int16_t             wSrc;               //!< in logical units (of Src)
     int16_t             ySrc;               //!< in logical units (UL corner of Src rect)
@@ -1634,9 +1792,9 @@ typedef struct {
     int16_t             yDst;               //!< in logical units (UL corner of Dst rect)
     int16_t             xDst;               //!< in logical units (UL corner of Dst rect)
     uint8_t             dib[1];             //!< DeviceIndependentBitmap object
-} U_WMRSTRETCHDIB, *PU_WMRSTRETCHDIB;
+} U_WMRSTRETCHDIB;
 
-/* Index 48 U_WMREXTFLOODFILL               WMF PDF 2.3.3.4  See Index 19*/
+/* Index 48 U_WMREXTFLOODFILL               WMF manual 2.3.3.4  See Index 19*/
 /* Index 4C U_WMR4C                                          */ 
 /* Index 4D U_WMR4D                                          */ 
 /* Index 4F U_WMR4F                                          */ 
@@ -1788,78 +1946,90 @@ typedef struct {
 /* Index ED U_WMRED                                          */  
 /* Index EE U_WMREE                                          */  
 /* Index EF U_WMREF                                          */  
-/* Index F0 U_WMRDELETEOBJECT               WMF PDF 2.3.4.7  See Index 2A */       
+/* Index F0 U_WMRDELETEOBJECT               WMF manual 2.3.4.7  See Index 2A */       
 /* Index F1 U_WMRF1                                          */  
 /* Index F2 U_WMRF2                                          */  
 /* Index F3 U_WMRF3                                          */  
 /* Index F4 U_WMRF4                                          */  
 /* Index F5 U_WMRF5                                          */  
 
-/* Index F7 U_WMRCREATEPALETTE              WMF PDF 2.3.4.3  See Index 36*/
+/* Index F7 U_WMRCREATEPALETTE              WMF manual 2.3.4.3  See Index 36*/
 
 /* Index F8 U_WMRF8                                          */  
-/* Index F9 U_WMRCREATEPATTERNBRUSH         WMF PDF 2.3.4.4 
+/* Index F9 U_WMRCREATEPATTERNBRUSH         WMF manual 2.3.4.4 */ 
+/** WMF manual 2.3.4.4
 
-  This one is peculiar...
+  This record is peculiar...
   
   After the core structure there is:
   
-  1.  A truncated U_BITMAP16. Only the first 14 bytes are present, and the last 4 bytes (bits section) are ignored.\
-  2.  18 zero bytes (reserved)
-  3.  A pattern.  The pattern is a byte array whose size is set by the fields in the U_BITMAP16 structure as follows:
+        A truncated U_BITMAP16. Only the first 14 bytes are present, and the last 4 bytes (bits section) are ignored.
+        18 zero bytes (reserved)
+        A pattern.  The pattern is a byte array whose size is set by the fields in the U_BITMAP16 structure as follows:
 
-     (((Width * BitsPixel + 15) >> 4) << 1) * Height
+        (((Width * BitsPixel + 15) >> 4) << 1) * Height
+
+  brush created has style U_BS_PATTERN.
   
-  brush created is BS_PATTERN
-  
-*/ 
+*/
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
-} U_WMRCREATEPATTERNBRUSH, *PU_WMRCREATEPATTERNBRUSH;
+} U_WMRCREATEPATTERNBRUSH;
 
-/* Index FA U_WMRCREATEPENINDIRECT          WMF PDF 2.3.4.5  */
+/* Index FA U_WMRCREATEPENINDIRECT          WMF manual 2.3.4.5  */
+/** WMF manual 2.3.4.5 
+*/
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     U_PEN               pen;                //!< Pen Object
-} U_WMRCREATEPENINDIRECT, *PU_WMRCREATEPENINDIRECT;
+} U_WMRCREATEPENINDIRECT;
 
-/* Index FB U_WMRCREATEFONTINDIRECT         WMF PDF 2.3.4.2  */
+/* Index FB U_WMRCREATEFONTINDIRECT         WMF manual 2.3.4.2  */
+/** WMF manual 2.3.4.2
+*/
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     U_FONT              font;               //!< Font Object
-} U_WMRCREATEFONTINDIRECT, *PU_WMRCREATEFONTINDIRECT;
+} U_WMRCREATEFONTINDIRECT;
 
-/* Index FC U_WMRCREATEBRUSHINDIRECT        WMF PDF 2.3.4.1  */
+/* Index FC U_WMRCREATEBRUSHINDIRECT        WMF manual 2.3.4.1  */
+/** WMF manual 2.3.4.1
+*/
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     U_WLOGBRUSH         brush;              //!< WLogBrush Object
-} U_WMRCREATEBRUSHINDIRECT, *PU_WMRCREATEBRUSHINDIRECT;
+} U_WMRCREATEBRUSHINDIRECT;
 
-/* Index FD U_WMRCREATEBITMAPINDIRECT       in Wine, not in WMF PDF see index 2F */  
+/* Index FD U_WMRCREATEBITMAPINDIRECT       in GDI and Wine, not in WMF manual, see index 2F */  
 
-/* Index FE U_WMRCREATEBITMAP               in Wine, not in WMF PDF see index 2F */  
+/* Index FE U_WMRCREATEBITMAP               in GDI and Wine, not in WMF manual, see index 2F */  
 
-/* Index FF U_WMRCREATEREGION               WMF PDF 2.3.4.6  */  
+/* Index FF U_WMRCREATEREGION               WMF manual 2.3.4.6  */  
+/**  WMF manual 2.3.4.6
+*/
 typedef struct {
     uint16_t            Size16_4[2];        //!< Total number of 16bit words in record
-    uint8_t             iType;              //!< RecordType enumeration
+    uint8_t             iType;              //!< RecordType Enumeration
     uint8_t             xb;                 //!< Extra high order byte associated with record type
     U_REGION            region;             //!< Region Object
-} U_WMRCREATEREGION, *PU_WMRCREATEREGION;
+} U_WMRCREATEREGION;
 
 
 
 // ************************************************************************************************
 // Utility function structures
 
+/**
+  Storage for keeping track of properties of the growing WMF file as records are added.
+*/
 typedef struct {
     FILE               *fp;                 //!< Open file
     size_t              allocated;          //!< Size of the buffer
@@ -1891,14 +2061,15 @@ typedef struct {
     uint32_t            peak;               //!< Highest table slot occupied (ever)
 } WMFHANDLES;
 
+//! \cond
 // ************************************************************************************************
 // Prototypes (_set first, then _get)
 char        *wmr_dup(const char *wmr);
 int          wmf_start(const char *name, uint32_t initsize, uint32_t chunksize, WMFTRACK **wt);
 int          wmf_free(WMFTRACK **wt);
 int          wmf_finish(WMFTRACK *wt);
-int          wmf_append(PU_METARECORD rec, WMFTRACK *wt, int freerec);
-int          wmf_header_append(PU_METARECORD rec,WMFTRACK *et, int freerec);
+int          wmf_append(U_METARECORD *rec, WMFTRACK *wt, int freerec);
+int          wmf_header_append(U_METARECORD *rec,WMFTRACK *et, int freerec);
 int          wmf_readdata(const char *filename, char **contents, size_t*length);
 #define      wmf_fopen    emf_fopen
 int          wmf_htable_create(uint32_t initsize, uint32_t chunksize, WMFHANDLES **wht);
@@ -1917,34 +2088,34 @@ char        *U_wmr_escnames(int idx);
 void         U_sanerect16(U_RECT16 rc, double *left, double *top, double *right, double *bottom);
 
 
-PU_FONT      U_FONT_set(int16_t Height, int16_t Width, int16_t Escapement, int16_t Orientation,
+U_FONT      *U_FONT_set(int16_t Height, int16_t Width, int16_t Escapement, int16_t Orientation,
                         int16_t Weight, uint8_t Italic, uint8_t Underline, uint8_t StrikeOut, 
                         uint8_t CharSet, uint8_t OutPrecision, uint8_t ClipPrecision, 
                         uint8_t Quality, uint8_t PitchAndFamily, char *FaceName);
 U_PLTNTRY    U_PLTNTRY_set(U_COLORREF Color);
-PU_PALETTE   U_PLTENTRY_set(uint16_t Start, uint16_t NumEntries, PU_PLTNTRY Entries);
+U_PALETTE   *U_PLTENTRY_set(uint16_t Start, uint16_t NumEntries, U_PLTNTRY *Entries);
 U_PEN        U_PEN_set(uint16_t Style, uint16_t Width, U_COLORREF Color);
 U_RECT16     U_RECT16_set(U_POINT16 ul,U_POINT16 lr);
-PU_BITMAP16  U_BITMAP16_set(const int16_t Type, const int16_t Width, const int16_t Height, 
+U_BITMAP16  *U_BITMAP16_set(const int16_t Type, const int16_t Width, const int16_t Height, 
                 const int16_t LineN, const uint8_t BitsPixel, const char *Bits);
-PU_SCAN      U_SCAN_set(uint16_t count, uint16_t top, uint16_t bottom, uint16_t *ScanLines);
-PU_REGION    U_REGION_set(int16_t Size, int16_t sCount, int16_t sMax, U_RECT16 sRect, uint16_t *aScans);
+U_SCAN      *U_SCAN_set(uint16_t count, uint16_t top, uint16_t bottom, uint16_t *ScanLines);
+U_REGION    *U_REGION_set(int16_t Size, int16_t sCount, int16_t sMax, U_RECT16 sRect, uint16_t *aScans);
 U_WLOGBRUSH  U_WLOGBRUSH_set(uint16_t Style, U_COLORREF Color, uint16_t Hatch);
-PU_PAIRF     U_PAIRF_set(float x, float y);
+U_PAIRF     *U_PAIRF_set(float x, float y);
 
 char        *wdeleteobject_set(uint32_t *ihObject, WMFHANDLES  *wht);
 char        *wselectobject_set(uint32_t ihObject, WMFHANDLES *wht );
 char        *wcreatepenindirect_set(uint32_t *ihPen, WMFHANDLES *wht, U_PEN pen);
 char        *wcreatebrushindirect_set(uint32_t *ihBrush, WMFHANDLES *wht, U_WLOGBRUSH lb);
 char        *wcreatedibpatternbrush_srcdib_set(uint32_t *ihBrush, WMFHANDLES *wht, 
-                uint32_t iUsage,  const PU_BITMAPINFO Bmi, uint32_t cbPx, const char *Px);
+                uint32_t iUsage, const U_BITMAPINFO *Bmi, uint32_t cbPx, const char *Px);
 char        *wcreatedibpatternbrush_srcbm16_set(uint32_t *ihBrush, WMFHANDLES *wht, 
-                uint32_t iUsage,  const PU_BITMAP16 Bm16);
-char        *wcreatepatternbrush_set(uint32_t *ihBrush, WMFHANDLES *wht, PU_BITMAP16 Bm16, char *Pattern);
-char        *wcreatefontindirect_set(uint32_t *ihFont, WMFHANDLES *wht, PU_FONT uf);
-char        *wcreatepalette_set(uint32_t *ihPal, WMFHANDLES *wht, PU_PALETTE up);
-char        *wsetpaletteentries_set(uint32_t *ihPal, WMFHANDLES *wht, const PU_PALETTE Palletes);
-char        *wcreateregion_set(uint32_t *ihReg,  WMFHANDLES *wht, const PU_REGION Region);
+                uint32_t iUsage,  const U_BITMAP16 *Bm16);
+char        *wcreatepatternbrush_set(uint32_t *ihBrush, WMFHANDLES *wht, U_BITMAP16 *Bm16, char *Pattern);
+char        *wcreatefontindirect_set(uint32_t *ihFont, WMFHANDLES *wht, U_FONT *uf);
+char        *wcreatepalette_set(uint32_t *ihPal, WMFHANDLES *wht, U_PALETTE *up);
+char        *wsetpaletteentries_set(uint32_t *ihPal, WMFHANDLES *wht, const U_PALETTE *Palletes);
+char        *wcreateregion_set(uint32_t *ihReg,  WMFHANDLES *wht, const U_REGION *Region);
 char        *wbegin_path_set(void);
 char        *wend_path_set(void);
 char        *wlinecap_set(int32_t Type);
@@ -1952,7 +2123,7 @@ char        *wlinejoin_set(int32_t Type);
 char        *wmiterlimit_set(int32_t limit);
 
 
-char        *U_WMRHEADER_set(PU_PAIRF size,unsigned int dpi);
+char        *U_WMRHEADER_set(U_PAIRF *size,unsigned int dpi);
 char        *U_WMREOF_set(void);
 char        *U_WMRSETBKCOLOR_set(U_COLORREF Color);
 char        *U_WMRSETBKMODE_set(uint16_t Mode);
@@ -1988,11 +2159,11 @@ char        *U_WMRSETPIXEL_set(U_COLORREF Color, U_POINT16 coord);
 char        *U_WMROFFSETCLIPRGN_set(U_POINT16 offset);
 char        *U_WMRTEXTOUT_set(U_POINT16 Dst, char *string);
 char        *U_WMRBITBLT_set(U_POINT16 Dst, U_POINT16 cwh, U_POINT16 Src,
-                uint32_t dwRop3, const PU_BITMAP16 Bm16);
+                uint32_t dwRop3, const U_BITMAP16 *Bm16);
 char        *U_WMRSTRETCHBLT_set(U_POINT16 Dst, U_POINT16 cDst, U_POINT16 Src,
-                U_POINT16 cSrc, uint32_t dwRop3, const PU_BITMAP16 Bm16);
-char        *U_WMRPOLYGON_set(uint16_t Length, const PU_POINT16 Data);
-char        *U_WMRPOLYLINE_set(uint16_t Length, const PU_POINT16 Data);
+                U_POINT16 cSrc, uint32_t dwRop3, const U_BITMAP16 *Bm16);
+char        *U_WMRPOLYGON_set(uint16_t Length, const U_POINT16 * Data);
+char        *U_WMRPOLYLINE_set(uint16_t Length, const U_POINT16 * Data);
 char        *U_WMRESCAPE_set(uint16_t Escape, uint16_t Length,  const void *Data);
 char        *U_WMRRESTOREDC_set(int16_t DC);
 char        *U_WMRFILLREGION_set(uint16_t Region, uint16_t Brush);
@@ -2002,16 +2173,16 @@ char        *U_WMRPAINTREGION_set(uint16_t Region);
 char        *U_WMRSELECTCLIPREGION_set(uint16_t Region);
 char        *U_WMRSELECTOBJECT_set(uint16_t object);
 char        *U_WMRSETTEXTALIGN_set(uint16_t Mode);
-char        *U_WMRDRAWTEXT_set(void);  /* in Wine, not in WMF PDF. */
+char        *U_WMRDRAWTEXT_set(void);  /* in GDI and Wine, not in WMF manual. */
 char        *U_WMRCHORD_set(U_POINT16 Radial1, U_POINT16 Radial2, U_RECT16 rect);
 char        *U_WMRSETMAPPERFLAGS_set(uint32_t Mode);
 char        *U_WMREXTTEXTOUT_set(U_POINT16 Dst, int16_t Length, uint16_t Opts, const char *string, int16_t *dx, U_RECT16 rect);
 char        *U_WMRSETDIBTODEV_set(void);
 char        *U_WMRSELECTPALETTE_set(uint16_t Palette);
 char        *U_WMRREALIZEPALETTE_set(void);
-char        *U_WMRANIMATEPALETTE_set(PU_PALETTE Palette);
-char        *U_WMRSETPALENTRIES_set(PU_PALETTE Palette);
-char        *U_WMRPOLYPOLYGON_set(const uint16_t, const uint16_t *aPolyCounts, const PU_POINT16 points);
+char        *U_WMRANIMATEPALETTE_set(U_PALETTE *Palette);
+char        *U_WMRSETPALENTRIES_set(const U_PALETTE *Palette);
+char        *U_WMRPOLYPOLYGON_set(const uint16_t, const uint16_t *aPolyCounts, const U_POINT16 * points);
 char        *U_WMRRESIZEPALETTE_set(uint16_t Palette);
 char        *U_WMR3A_set(void);
 char        *U_WMR3B_set(void);
@@ -2020,13 +2191,13 @@ char        *U_WMR3D_set(void);
 char        *U_WMR3E_set(void);
 char        *U_WMR3F_set(void);
 char        *U_WMRDIBBITBLT_set(U_POINT16 Dst, U_POINT16 cwh, U_POINT16 Src,
-                uint32_t dwRop3, const PU_BITMAPINFO Bmi, uint32_t cbPx, const char *Px);
+                uint32_t dwRop3, const U_BITMAPINFO * Bmi, uint32_t cbPx, const char *Px);
 char        *U_WMRDIBSTRETCHBLT_set(U_POINT16 Dst, U_POINT16 cDst, U_POINT16 Src,
-                U_POINT16 cSrc, uint32_t dwRop3, const PU_BITMAPINFO Bmi, uint32_t cbPx, const char *Px);
+                U_POINT16 cSrc, uint32_t dwRop3, const U_BITMAPINFO *Bmi, uint32_t cbPx, const char *Px);
 char        *U_WMRDIBCREATEPATTERNBRUSH_set(const uint16_t Style, const uint16_t iUsage, 
-                PU_BITMAPINFO Bmi, uint32_t cbPx, const char *Px, PU_BITMAP16 Bm16);  
+                const U_BITMAPINFO *Bmi, uint32_t cbPx, const char *Px, const U_BITMAP16 *Bm16);  
 char        *U_WMRSTRETCHDIB_set(U_POINT16 Dest, U_POINT16 cDest, U_POINT16 Src, U_POINT16 cSrc,
-              const uint16_t cUsage, uint32_t dwRop3, const PU_BITMAPINFO Bmi, uint32_t cbPx, const char *Px);
+              const uint16_t cUsage, uint32_t dwRop3, const U_BITMAPINFO *Bmi, uint32_t cbPx, const char *Px);
 char        *U_WMR44_set(void);
 char        *U_WMR45_set(void);
 char        *U_WMR46_set(void);
@@ -2206,21 +2377,21 @@ char        *U_WMRF3_set(void);
 char        *U_WMRF4_set(void);
 char        *U_WMRF5_set(void);
 char        *U_WMRF6_set(void);
-char        *U_WMRCREATEPALETTE_set(PU_PALETTE Palette);
+char        *U_WMRCREATEPALETTE_set(U_PALETTE *Palette);
 char        *U_WMRF8_set(void);
-char        *U_WMRCREATEPATTERNBRUSH_set(PU_BITMAP16 Bm16, char *Pattern);
+char        *U_WMRCREATEPATTERNBRUSH_set(U_BITMAP16 *Bm16, char *Pattern);
 char        *U_WMRCREATEPENINDIRECT_set(U_PEN pen);
-char        *U_WMRCREATEFONTINDIRECT_set(PU_FONT font);
+char        *U_WMRCREATEFONTINDIRECT_set(U_FONT *font);
 char        *U_WMRCREATEBRUSHINDIRECT_set(U_WLOGBRUSH brush);
-char        *U_WMRCREATEBITMAPINDIRECT_set(void);      /* in Wine, not in WMF PDF*/
-char        *U_WMRCREATEBITMAP_set(void);              /* in Wine, not in WMF PDF */
-char        *U_WMRCREATEREGION_set(PU_REGION region);
+char        *U_WMRCREATEBITMAPINDIRECT_set(void);      /* in GDI and Wine, not in WMF manual. */
+char        *U_WMRCREATEBITMAP_set(void);              /* in GDI and Wine, not in WMF manual. */
+char        *U_WMRCREATEREGION_set(const U_REGION *region);
 
 int16_t     *dx16_get( int32_t height, uint32_t weight, uint32_t members);
 size_t       U_WMRRECSAFE_get(const char *contents, const char *blimit);
-int          wmfheader_get(const char *contents, const char *blimit, PU_WMRPLACEABLE Placeable, PU_WMRHEADER Header);
+int          wmfheader_get(const char *contents, const char *blimit, U_WMRPLACEABLE *Placeable, U_WMRHEADER *Header);
 int          wmr_arc_points(U_RECT16 rclBox, U_POINT16 ArcStart, U_POINT16 ArcEnd, 
-                int *f1, int f2, PU_PAIRF center, PU_PAIRF start, PU_PAIRF end, PU_PAIRF size );
+                int *f1, int f2, U_PAIRF *center, U_PAIRF *start, U_PAIRF *end, U_PAIRF *size );
 void         U_BITMAPINFOHEADER_get(const char *Bmih, uint32_t *Size, int32_t *Width, int32_t *Height, 
                 uint32_t *Planes, uint32_t *BitCount, uint32_t *Compression, uint32_t *SizeImage, 
                 int32_t *XPelsPerMeter, int32_t *YPelsPerMeter, uint32_t *ClrUsed, uint32_t *ClrImportant);
@@ -2228,7 +2399,7 @@ void         U_BITMAPCOREHEADER_get(const char *BmiCh, int32_t *Size, int32_t *W
 int          wget_DIB_params(const char *dib, const char **px, const U_RGBQUAD **ct, int32_t *numCt, 
                 int32_t *width, int32_t *height, int32_t *colortype, int32_t *invert);
 int          U_WMREOF_get(const char *contents);
-int          U_WMRSETBKCOLOR_get(const char *contents, PU_COLORREF Color);
+int          U_WMRSETBKCOLOR_get(const char *contents, U_COLORREF *Color);
 int          U_WMRSETBKMODE_get(const char *contents, uint16_t *Mode);
 int          U_WMRSETMAPMODE_get(const char *contents, uint16_t *Mode);
 int          U_WMRSETROP2_get(const char *contents, uint16_t *Mode);
@@ -2236,33 +2407,33 @@ int          U_WMRSETRELABS_get(const char *contents);
 int          U_WMRSETPOLYFILLMODE_get(const char *contents, uint16_t *Mode);
 int          U_WMRSETSTRETCHBLTMODE_get(const char *contents, uint16_t *Mode);
 int          U_WMRSETTEXTCHAREXTRA_get(const char *contents, uint16_t *Mode);
-int          U_WMRSETTEXTCOLOR_get(const char *contents, PU_COLORREF Color);
+int          U_WMRSETTEXTCOLOR_get(const char *contents, U_COLORREF *Color);
 int          U_WMRSETTEXTJUSTIFICATION_get(const char *contents, uint16_t *Count, uint16_t *Extra);
-int          U_WMRSETWINDOWORG_get(const char *contents, PU_POINT16 coord);
-int          U_WMRSETWINDOWEXT_get(const char *contents, PU_POINT16 extent);
-int          U_WMRSETVIEWPORTORG_get(const char *contents, PU_POINT16 coord);
-int          U_WMRSETVIEWPORTEXT_get(const char *contents, PU_POINT16 extent);
-int          U_WMROFFSETWINDOWORG_get(const char *contents, PU_POINT16 offset);
-int          U_WMRSCALEWINDOWEXT_get(const char *contents, PU_POINT16 Denom, PU_POINT16 Num);
-int          U_WMROFFSETVIEWPORTORG_get(const char *contents, PU_POINT16 offset);
-int          U_WMRSCALEVIEWPORTEXT_get(const char *contents, PU_POINT16 Denom, PU_POINT16 Num);
-int          U_WMRLINETO_get(const char *contents, PU_POINT16 coord);
-int          U_WMRMOVETO_get(const char *contents, PU_POINT16 coord);
-int          U_WMREXCLUDECLIPRECT_get(const char *contents, PU_RECT16 rect);
-int          U_WMRINTERSECTCLIPRECT_get(const char *contents, PU_RECT16 rect);
-int          U_WMRARC_get(const char *contents, PU_POINT16 StartArc, PU_POINT16 EndArc, PU_RECT16 rect);
-int          U_WMRELLIPSE_get(const char *contents, PU_RECT16 rect);
-int          U_WMRFLOODFILL_get(const char *contents, uint16_t *Mode, PU_COLORREF Color, PU_POINT16 coord);
-int          U_WMRPIE_get(const char *contents, PU_POINT16 Radial1, PU_POINT16 Radial2, PU_RECT16 rect);
-int          U_WMRRECTANGLE_get(const char *contents, PU_RECT16 rect);
-int          U_WMRROUNDRECT_get(const char *contents, int16_t *Width, int16_t *Height, PU_RECT16 rect);
-int          U_WMRPATBLT_get(const char *contents, PU_POINT16 Dst, PU_POINT16 cwh, uint32_t *dwRop3);
+int          U_WMRSETWINDOWORG_get(const char *contents, U_POINT16 * coord);
+int          U_WMRSETWINDOWEXT_get(const char *contents, U_POINT16 * extent);
+int          U_WMRSETVIEWPORTORG_get(const char *contents, U_POINT16 * coord);
+int          U_WMRSETVIEWPORTEXT_get(const char *contents, U_POINT16 * extent);
+int          U_WMROFFSETWINDOWORG_get(const char *contents, U_POINT16 * offset);
+int          U_WMRSCALEWINDOWEXT_get(const char *contents, U_POINT16 * Denom, U_POINT16 * Num);
+int          U_WMROFFSETVIEWPORTORG_get(const char *contents, U_POINT16 * offset);
+int          U_WMRSCALEVIEWPORTEXT_get(const char *contents, U_POINT16 * Denom, U_POINT16 * Num);
+int          U_WMRLINETO_get(const char *contents, U_POINT16 * coord);
+int          U_WMRMOVETO_get(const char *contents, U_POINT16 * coord);
+int          U_WMREXCLUDECLIPRECT_get(const char *contents, U_RECT16 * rect);
+int          U_WMRINTERSECTCLIPRECT_get(const char *contents, U_RECT16 * rect);
+int          U_WMRARC_get(const char *contents, U_POINT16 * StartArc, U_POINT16 * EndArc, U_RECT16 * rect);
+int          U_WMRELLIPSE_get(const char *contents, U_RECT16 * rect);
+int          U_WMRFLOODFILL_get(const char *contents, uint16_t *Mode, U_COLORREF *Color, U_POINT16 * coord);
+int          U_WMRPIE_get(const char *contents, U_POINT16 * Radial1, U_POINT16 * Radial2, U_RECT16 * rect);
+int          U_WMRRECTANGLE_get(const char *contents, U_RECT16 * rect);
+int          U_WMRROUNDRECT_get(const char *contents, int16_t *Width, int16_t *Height, U_RECT16 * rect);
+int          U_WMRPATBLT_get(const char *contents, U_POINT16 * Dst, U_POINT16 * cwh, uint32_t *dwRop3);
 int          U_WMRSAVEDC_get(const char *contents);
-int          U_WMRSETPIXEL_get(const char *contents, PU_COLORREF Color, PU_POINT16 coord);
-int          U_WMROFFSETCLIPRGN_get(const char *contents, PU_POINT16 offset);
-int          U_WMRTEXTOUT_get(const char *contents, PU_POINT16 Dst, int16_t *Length, const char **string);
-int          U_WMRBITBLT_get(const char *contents, PU_POINT16 Dst, PU_POINT16 cwh, PU_POINT16 Src, uint32_t *dwRop3, PU_BITMAP16 Bm16, const char **px);
-int          U_WMRSTRETCHBLT_get(const char *contents, PU_POINT16 Dst, PU_POINT16 cDst, PU_POINT16 Src, PU_POINT16 cSrc, uint32_t *dwRop3, PU_BITMAP16 Bm16, const char **px);
+int          U_WMRSETPIXEL_get(const char *contents, U_COLORREF *Color, U_POINT16 * coord);
+int          U_WMROFFSETCLIPRGN_get(const char *contents, U_POINT16 * offset);
+int          U_WMRTEXTOUT_get(const char *contents, U_POINT16 * Dst, int16_t *Length, const char **string);
+int          U_WMRBITBLT_get(const char *contents, U_POINT16 * Dst, U_POINT16 * cwh, U_POINT16 * Src, uint32_t *dwRop3, U_BITMAP16 *Bm16, const char **px);
+int          U_WMRSTRETCHBLT_get(const char *contents, U_POINT16 * Dst, U_POINT16 * cDst, U_POINT16 * Src, U_POINT16 * cSrc, uint32_t *dwRop3, U_BITMAP16 *Bm16, const char **px);
 int          U_WMRPOLYGON_get(const char *contents, uint16_t *Length, const char **Data);
 int          U_WMRPOLYLINE_get(const char *contents, uint16_t *Length, const char **Data);
 int          U_WMRESCAPE_get(const char *contents, uint16_t *Escape, uint16_t *Length, const char **Data);
@@ -2274,15 +2445,15 @@ int          U_WMRPAINTREGION_get(const char *contents, uint16_t *Region);
 int          U_WMRSELECTCLIPREGION_get(const char *contents, uint16_t *Region);
 int          U_WMRSELECTOBJECT_get(const char *contents, uint16_t *Object);
 int          U_WMRSETTEXTALIGN_get(const char *contents, uint16_t *Mode);
-int          U_WMRDRAWTEXT_get(void); /* in Wine, not in WMF PDF. */
-int          U_WMRCHORD_get(const char *contents, PU_POINT16 Radial1, PU_POINT16 Radial2, PU_RECT16 rect);
+int          U_WMRDRAWTEXT_get(void); /* in GDI and Wine, not in WMF manual. */
+int          U_WMRCHORD_get(const char *contents, U_POINT16 * Radial1, U_POINT16 * Radial2, U_RECT16 * rect);
 int          U_WMRSETMAPPERFLAGS_get(const char *contents, uint32_t *Mode);
-int          U_WMREXTTEXTOUT_get(const char *contents, PU_POINT16 Dst, int16_t *Length, uint16_t *Opts, const char **string, const int16_t **dx, PU_RECT16 rect);
-int          U_WMRSETDIBTODEV_get(const char *contents, PU_POINT16 Dst, PU_POINT16 cwh, PU_POINT16 Src, uint16_t *cUsage, uint16_t *ScanCount, uint16_t *StartScan, const char **dib);
+int          U_WMREXTTEXTOUT_get(const char *contents, U_POINT16 * Dst, int16_t *Length, uint16_t *Opts, const char **string, const int16_t **dx, U_RECT16 * rect);
+int          U_WMRSETDIBTODEV_get(const char *contents, U_POINT16 * Dst, U_POINT16 * cwh, U_POINT16 * Src, uint16_t *cUsage, uint16_t *ScanCount, uint16_t *StartScan, const char **dib);
 int          U_WMRSELECTPALETTE_get(const char *contents, uint16_t *Palette);
 int          U_WMRREALIZEPALETTE_get(const char *contents);
-int          U_WMRANIMATEPALETTE_get(const char *contents, PU_PALETTE Palette, const char **PalEntries);
-int          U_WMRSETPALENTRIES_get(const char *contents, PU_PALETTE Palette, const char **PalEntries);
+int          U_WMRANIMATEPALETTE_get(const char *contents, U_PALETTE *Palette, const char **PalEntries);
+int          U_WMRSETPALENTRIES_get(const char *contents, U_PALETTE *Palette, const char **PalEntries);
 int          U_WMRPOLYPOLYGON_get(const char *contents, uint16_t *nPolys, const uint16_t **aPolyCounts, const char **Points);
 int          U_WMRRESIZEPALETTE_get(const char *contents, uint16_t *Palette);
 int          U_WMR3A_get(void);
@@ -2291,15 +2462,15 @@ int          U_WMR3C_get(void);
 int          U_WMR3D_get(void);
 int          U_WMR3E_get(void);
 int          U_WMR3F_get(void);
-int          U_WMRDIBBITBLT_get(const char *contents, PU_POINT16 Dst, PU_POINT16 cwh, PU_POINT16 Src, uint32_t *dwRop3, const char **dib);
-int          U_WMRDIBSTRETCHBLT_get(const char *contents, PU_POINT16 Dst, PU_POINT16 cDst, PU_POINT16 Src, PU_POINT16 cSrc, uint32_t *dwRop3, const char **dib);
+int          U_WMRDIBBITBLT_get(const char *contents, U_POINT16 * Dst, U_POINT16 * cwh, U_POINT16 * Src, uint32_t *dwRop3, const char **dib);
+int          U_WMRDIBSTRETCHBLT_get(const char *contents, U_POINT16 * Dst, U_POINT16 * cDst, U_POINT16 * Src, U_POINT16 * cSrc, uint32_t *dwRop3, const char **dib);
 int          U_WMRDIBCREATEPATTERNBRUSH_get(const char *contents, uint16_t *Style, uint16_t *cUsage, const char **Bm16, const char **dib);
-int          U_WMRSTRETCHDIB_get(const char *contents, PU_POINT16 Dst, PU_POINT16 cDst, PU_POINT16 Src, PU_POINT16 cSrc, uint16_t *cUsage, uint32_t *dwRop3, const char **dib);
+int          U_WMRSTRETCHDIB_get(const char *contents, U_POINT16 * Dst, U_POINT16 * cDst, U_POINT16 * Src, U_POINT16 * cSrc, uint16_t *cUsage, uint32_t *dwRop3, const char **dib);
 int          U_WMR44_get(void);
 int          U_WMR45_get(void);
 int          U_WMR46_get(void);
 int          U_WMR47_get(void);
-int          U_WMREXTFLOODFILL_get(const char *contents, uint16_t *Mode, PU_COLORREF Color, PU_POINT16 coord);
+int          U_WMREXTFLOODFILL_get(const char *contents, uint16_t *Mode, U_COLORREF *Color, U_POINT16 * coord);
 int          U_WMR49_get(void);
 int          U_WMR4A_get(void);
 int          U_WMR4B_get(void);
@@ -2474,15 +2645,16 @@ int          U_WMRF3_get(void);
 int          U_WMRF4_get(void);
 int          U_WMRF5_get(void);
 int          U_WMRF6_get(void);
-int          U_WMRCREATEPALETTE_get(const char *contents, PU_PALETTE Palette, const char **PalEntries);
+int          U_WMRCREATEPALETTE_get(const char *contents, U_PALETTE *Palette, const char **PalEntries);
 int          U_WMRF8_get(void);
-int          U_WMRCREATEPATTERNBRUSH_get(const char *contents, PU_BITMAP16 Bm16, int *pasize, const char **Pattern);
-int          U_WMRCREATEPENINDIRECT_get(const char *contents, PU_PEN pen);
+int          U_WMRCREATEPATTERNBRUSH_get(const char *contents, U_BITMAP16 *Bm16, int *pasize, const char **Pattern);
+int          U_WMRCREATEPENINDIRECT_get(const char *contents, U_PEN *pen);
 int          U_WMRCREATEFONTINDIRECT_get(const char *contents, const char **font);
 int          U_WMRCREATEBRUSHINDIRECT_get(const char *contents, const char **brush);
 int          U_WMRCREATEBITMAPINDIRECT_get(void);
 int          U_WMRCREATEBITMAP_get(void);
 int          U_WMRCREATEREGION_get(const char *contents, const char **Region);
+//! \endcond
 
 
 #ifdef __cplusplus

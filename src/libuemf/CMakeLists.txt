@@ -8,6 +8,8 @@ set(libuemf_SRC
 	uwmf.c
 	uwmf_endian.c
 	uwmf_print.c
+	upmf.c
+	upmf_print.c
 
 	# -------
 	# Headers
@@ -19,6 +21,8 @@ set(libuemf_SRC
 	uwmf.h
 	uwmf_endian.h
 	uwmf_print.h
+	upmf.h
+	upmf_print.h
 )
 
 add_inkscape_lib(uemf_LIB "${libuemf_SRC}")

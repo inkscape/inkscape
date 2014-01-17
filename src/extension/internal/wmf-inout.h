@@ -11,9 +11,8 @@
 #ifndef SEEN_EXTENSION_INTERNAL_WMF_H
 #define SEEN_EXTENSION_INTERNAL_WMF_H
 
-#define PNG_SKIP_SETJMP_CHECK // else any further png.h include blows up in the compiler
-#include <png.h>
 #include <libuemf/uwmf.h>
+#include "extension/internal/metafile-inout.h"  // picks up PNG
 #include "extension/implementation/implementation.h"
 #include "style.h"
 #include "text_reassemble.h"
@@ -69,35 +68,6 @@ typedef struct wmf_device_context {
 
 #define WMF_MAX_DC 128
 
-/*
-  both emf-inout.h and wmf-inout.h are included by init.cpp, so whichever one goes in first defines these ommon types
-*/
-#ifndef SEEN_EXTENSION_INTERNAL_METAFILECOMMON_
-#define SEEN_EXTENSION_INTERNAL_METAFILECOMMON_
-/* A coloured pixel. */
-typedef struct {
-    uint8_t red;
-    uint8_t green;
-    uint8_t blue;
-    uint8_t opacity;
-} pixel_t;
-
-/* A picture. */
-    
-typedef struct  {
-    pixel_t *pixels;
-    size_t width;
-    size_t height;
-} bitmap_t;
-    
-/* structure to store PNG image bytes */
-typedef struct {
-      char *buffer;
-      size_t size;
-} MEMPNG, *PMEMPNG;
-#endif
-
-
 
 // like this causes a mysterious crash on the return from Wmf::open
 //typedef struct emf_callback_data {
@@ -138,7 +108,8 @@ typedef struct {
     PWMF_OBJECT wmf_obj;
 } WMF_CALLBACK_DATA, *PWMF_CALLBACK_DATA;
 
-class Wmf : Inkscape::Extension::Implementation::Implementation { //This is a derived class
+class Wmf : public Metafile
+{
 
 public:
     Wmf(); // Empty constructor
@@ -158,10 +129,6 @@ public:
 
 private:
 protected:
-   static pixel_t    *pixel_at (bitmap_t * bitmap, int x, int y);
-   static void        my_png_write_data(png_structp png_ptr, png_bytep data, png_size_t length);
-   static void        toPNG(PMEMPNG accum, int width, int height, const char *px);
-   static uint32_t    sethexcolor(U_COLORREF color);
    static void        print_document_to_file(SPDocument *doc, const gchar *filename);
    static double      current_scale(PWMF_CALLBACK_DATA d);
    static std::string current_matrix(PWMF_CALLBACK_DATA d, double x, double y, int useoffset);

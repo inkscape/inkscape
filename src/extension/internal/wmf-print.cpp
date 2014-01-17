@@ -76,7 +76,7 @@ namespace Internal {
 
 
 /* globals */
-static double       PX2WORLD = 1200.0 / 90.0;   // inkscape is 90 dpi, WMF file is 1200
+static double       PX2WORLD;   // value set in begin()
 static bool         FixPPTCharPos, FixPPTDashLine, FixPPTGrad2Polys, FixPPTPatternAsHatch;
 static WMFTRACK    *wt               = NULL;
 static WMFHANDLES  *wht              = NULL;
@@ -128,6 +128,8 @@ unsigned int PrintWmf::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
     char           *rec;
     gchar const    *utf8_fn = mod->get_param_string("destination");
 
+    // Typically PX2WORLD is 1200/90, using inkscape's default dpi
+    PX2WORLD = 1200.0 / Inkscape::Util::Quantity::convert(1.0, "in", "px");
     FixPPTCharPos        = mod->get_param_bool("FixPPTCharPos");
     FixPPTDashLine       = mod->get_param_bool("FixPPTDashLine");
     FixPPTGrad2Polys     = mod->get_param_bool("FixPPTGrad2Polys");
@@ -188,39 +190,39 @@ unsigned int PrintWmf::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
     int   dwPxY     = round(d.height() * 1200.0);
 #endif
 
-    PU_PAIRF ps = U_PAIRF_set(dwInchesX, dwInchesY);
+    U_PAIRF *ps = U_PAIRF_set(dwInchesX, dwInchesY);
     rec = U_WMRHEADER_set(ps, 1200); // Example: drawing is A4 horizontal,  1200 dpi
     if (!rec) {
         g_error("Fatal programming error in PrintWmf::begin at WMRSETMAPMODE");
     }
-    (void) wmf_header_append((PU_METARECORD)rec, wt, 1);
+    (void) wmf_header_append((U_METARECORD *)rec, wt, 1);
     free(ps);
 
     rec = U_WMRSETWINDOWEXT_set(point16_set(dwPxX, dwPxY));
-    if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+    if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
         g_error("Fatal programming error in PrintWmf::begin at WMRSETWINDOWEXT");
     }
 
     rec = U_WMRSETWINDOWORG_set(point16_set(0, 0));
-    if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+    if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
         g_error("Fatal programming error in PrintWmf::begin at WMRSETWINDOWORG");
     }
 
     rec = U_WMRSETMAPMODE_set(U_MM_ANISOTROPIC);
-    if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+    if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
         g_error("Fatal programming error in PrintWmf::begin at WMRSETMAPMODE");
     }
 
     /* set some parameters, else the program that reads the WMF may default to other values */
 
     rec = U_WMRSETBKMODE_set(U_TRANSPARENT);
-    if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+    if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
         g_error("Fatal programming error in PrintWmf::begin at U_WMRSETBKMODE");
     }
 
     hpolyfillmode = U_WINDING;
     rec = U_WMRSETPOLYFILLMODE_set(U_WINDING);
-    if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+    if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
         g_error("Fatal programming error in PrintWmf::begin at U_WMRSETPOLYFILLMODE");
     }
 
@@ -229,24 +231,24 @@ unsigned int PrintWmf::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
     //     actually starts, and already takes into account the text object's alignment;
     //   - for this reason, the WMF text alignment must always be TA_BASELINE|TA_LEFT.
     rec = U_WMRSETTEXTALIGN_set(U_TA_BASELINE | U_TA_LEFT);
-    if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+    if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
         g_error("Fatal programming error in PrintWmf::begin at U_WMRSETTEXTALIGN_set");
     }
 
     htextcolor_rgb[0] = htextcolor_rgb[1] = htextcolor_rgb[2] = 0.0;
     rec = U_WMRSETTEXTCOLOR_set(U_RGB(0, 0, 0));
-    if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+    if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
         g_error("Fatal programming error in PrintWmf::begin at U_WMRSETTEXTCOLOR_set");
     }
 
     rec = U_WMRSETROP2_set(U_R2_COPYPEN);
-    if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+    if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
         g_error("Fatal programming error in PrintWmf::begin at U_WMRSETROP2");
     }
 
     hmiterlimit = 5;
     rec = wmiterlimit_set(5);
-    if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+    if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
         g_error("Fatal programming error in PrintWmf::begin at wmiterlimit_set");
     }
 
@@ -255,14 +257,14 @@ unsigned int PrintWmf::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
     U_PEN up = U_PEN_set(U_PS_SOLID, 1, colorref_set(0, 0, 0));
     uint32_t   Pen;
     rec = wcreatepenindirect_set(&Pen, wht, up);
-    if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+    if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
         g_error("Fatal programming error in PrintWmf::begin at wcreatepenindirect_set");
     }
 
     // create a null pen.  If no specific pen is set, this is used
     up = U_PEN_set(U_PS_NULL, 1, colorref_set(0, 0, 0));
     rec = wcreatepenindirect_set(&hpen_null, wht, up);
-    if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+    if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
         g_error("Fatal programming error in PrintWmf::begin at wcreatepenindirect_set");
     }
     destroy_pen(); // make this pen active
@@ -270,7 +272,7 @@ unsigned int PrintWmf::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
     // create a null brush.  If no specific brush is set, this is used
     U_WLOGBRUSH lb = U_WLOGBRUSH_set(U_BS_NULL, U_RGB(0, 0, 0), U_HS_HORIZONTAL);
     rec = wcreatebrushindirect_set(&hbrush_null, wht, lb);
-    if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+    if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
         g_error("Fatal programming error in PrintWmf::begin at wcreatebrushindirect_set");
     }
     destroy_brush(); // make this brush active
@@ -288,25 +290,25 @@ unsigned int PrintWmf::finish(Inkscape::Extension::Print * /*mod*/)
 
     // get rid of null brush
     rec = wdeleteobject_set(&hbrush_null, wht);
-    if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+    if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
         g_error("Fatal programming error in PrintWmf::finish at wdeleteobject_set null brush");
     }
 
     // get rid of null pen
     rec = wdeleteobject_set(&hpen_null, wht);
-    if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+    if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
         g_error("Fatal programming error in PrintWmf::finish at wdeleteobject_set null pen");
     }
 
     // get rid of object 0, which was a pen that was used to shift the other object indices to >=1.
     hpen = 0;
     rec = wdeleteobject_set(&hpen, wht);
-    if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+    if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
         g_error("Fatal programming error in PrintWmf::finish at wdeleteobject_set filler object");
     }
 
     rec = U_WMREOF_set();  // generate the EOF record
-    if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+    if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
         g_error("Fatal programming error in PrintWmf::finish");
     }
     (void) wmf_finish(wt); // Finalize and write out the WMF
@@ -330,7 +332,7 @@ unsigned int PrintWmf::comment(Inkscape::Extension::Print * /*module*/, const ch
 
 
 // fcolor is defined when gradients are being expanded, it is the color of one stripe or ring.
-int PrintWmf::create_brush(SPStyle const *style, PU_COLORREF fcolor)
+int PrintWmf::create_brush(SPStyle const *style, U_COLORREF *fcolor)
 {
     float         rgb[3];
     char         *rec;
@@ -442,17 +444,17 @@ int PrintWmf::create_brush(SPStyle const *style, PU_COLORREF fcolor)
         // SVG text has no background attribute, so OPAQUE mode ALWAYS cancels after the next draw, otherwise it would mess up future text output.
         if (usebk) {
             rec = U_WMRSETBKCOLOR_set(bkColor);
-            if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+            if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
                 g_error("Fatal programming error in PrintWmf::create_brush at U_WMRSETBKCOLOR_set");
             }
             rec = U_WMRSETBKMODE_set(U_OPAQUE);
-            if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+            if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
                 g_error("Fatal programming error in PrintWmf::create_brush at U_WMRSETBKMODE_set");
             }
         }
         lb   = U_WLOGBRUSH_set(brushStyle, hatchColor, hatchType);
         rec = wcreatebrushindirect_set(&brush, wht, lb);
-        if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+        if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
             g_error("Fatal programming error in PrintWmf::create_brush at createbrushindirect_set");
         }
         break;
@@ -461,10 +463,10 @@ int PrintWmf::create_brush(SPStyle const *style, PU_COLORREF fcolor)
         char                *rgba_px;
         uint32_t             cbPx;
         uint32_t             colortype;
-        PU_RGBQUAD           ct;
+        U_RGBQUAD           *ct;
         int                  numCt;
         U_BITMAPINFOHEADER   Bmih;
-        PU_BITMAPINFO        Bmi;
+        U_BITMAPINFO        *Bmi;
         rgba_px = (char *) pixbuf->pixels(); // Do NOT free this!!!
         colortype = U_BCBM_COLOR32;
         (void) RGBA_to_DIB(&px, &cbPx, &ct, &numCt,  rgba_px,  width, height, width * 4, colortype, 0, 1);
@@ -474,7 +476,7 @@ int PrintWmf::create_brush(SPStyle const *style, PU_COLORREF fcolor)
         Bmih = bitmapinfoheader_set(width, height, 1, colortype, U_BI_RGB, 0, PXPERMETER, PXPERMETER, numCt, 0);
         Bmi = bitmapinfo_set(Bmih, ct);
         rec = wcreatedibpatternbrush_srcdib_set(&brush, wht, U_DIB_RGB_COLORS, Bmi, cbPx, px);
-        if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+        if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
             g_error("Fatal programming error in PrintWmf::create_brush at createdibpatternbrushpt_set");
         }
         free(px);
@@ -484,14 +486,14 @@ int PrintWmf::create_brush(SPStyle const *style, PU_COLORREF fcolor)
 
     hbrush = brush;  // need this later for destroy_brush
     rec = wselectobject_set(brush, wht);
-    if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+    if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
         g_error("Fatal programming error in PrintWmf::create_brush at wselectobject_set");
     }
 
     if (fmode != hpolyfillmode) {
         hpolyfillmode = fmode;
         rec = U_WMRSETPOLYFILLMODE_set(fmode);
-        if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+        if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
             g_error("Fatal programming error in PrintWmf::create_brush at U_WMRSETPOLYFILLMODE_set");
         }
     }
@@ -506,7 +508,7 @@ void PrintWmf::destroy_brush()
     // WMF lets any object be deleted whenever, and the chips fall where they may...
     if (hbrush) {
         rec = wdeleteobject_set(&hbrush, wht);
-        if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+        if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
             g_error("Fatal programming error in PrintWmf::destroy_brush");
         }
         hbrush = 0;
@@ -515,7 +517,7 @@ void PrintWmf::destroy_brush()
     // (re)select the null brush
 
     rec = wselectobject_set(hbrush_null, wht);
-    if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+    if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
         g_error("Fatal programming error in PrintWmf::destroy_brush");
     }
 }
@@ -583,7 +585,7 @@ int PrintWmf::create_pen(SPStyle const *style, const Geom::Affine &transform)
             if ((uint32_t)miterlimit != hmiterlimit) {
                 hmiterlimit = (uint32_t)miterlimit;
                 rec = wmiterlimit_set((uint32_t) miterlimit);
-                if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+                if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
                     g_error("Fatal programming error in PrintWmf::create_pen at wmiterlimit_set");
                 }
             }
@@ -605,12 +607,12 @@ int PrintWmf::create_pen(SPStyle const *style, const Geom::Affine &transform)
 
     up  = U_PEN_set(penstyle | modstyle, linewidth, penColor);
     rec = wcreatepenindirect_set(&pen, wht, up);
-    if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+    if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
         g_error("Fatal programming error in PrintWmf::create_pen at wcreatepenindirect_set");
     }
 
     rec = wselectobject_set(pen, wht);
-    if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+    if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
         g_error("Fatal programming error in PrintWmf::create_pen at wselectobject_set");
     }
     hpen = pen;  // need this later for destroy_pen
@@ -625,7 +627,7 @@ void PrintWmf::destroy_pen()
     // WMF lets any object be deleted whenever, and the chips fall where they may...
     if (hpen) {
         rec = wdeleteobject_set(&hpen, wht);
-        if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+        if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
             g_error("Fatal programming error in PrintWmf::destroy_pen");
         }
         hpen = 0;
@@ -634,7 +636,7 @@ void PrintWmf::destroy_pen()
     // (re)select the null pen
 
     rec = wselectobject_set(hpen_null, wht);
-    if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+    if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
         g_error("Fatal programming error in PrintWmf::destroy_pen");
     }
 }
@@ -757,7 +759,7 @@ unsigned int PrintWmf::fill(
             pathvr = sp_pathvector_boolop(pathvc, pathv, bool_op_inters, (FillRule) fill_nonZero, frb);
             print_pathv(pathvr, fill_transform);
 
-            /* after high end of gradient, overlap last slice poosition */
+            /* after high end of gradient, overlap last slice position */
             wc = weight_opacity(c2);
             (void) create_brush(style, &wc);
             pathvc = rect_cutter(gv.p2, uv * (-overlap), uv * (50000.0), puv * 50000.0);
@@ -898,7 +900,7 @@ unsigned int PrintWmf::stroke(
     if (usebk) { // OPAQUE was set, revert to TRANSPARENT
         usebk = false;
         rec = U_WMRSETBKMODE_set(U_TRANSPARENT);
-        if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+        if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
             g_error("Fatal programming error in PrintWmf::stroke at U_WMRSETBKMODE_set");
         }
     }
@@ -1066,7 +1068,7 @@ bool PrintWmf::print_simple_shape(Geom::PathVector const &pathv, const Geom::Aff
             });
             rec = U_WMRELLIPSE_set(rcl);
         }
-        if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+        if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
             g_error("Fatal programming error in PrintWmf::print_simple_shape at retangle/ellipse/polygon");
         }
 
@@ -1109,7 +1111,7 @@ unsigned int PrintWmf::image(
     Geom::Affine tf = m_tr_stack.top();
 
     rec = U_WMRSETSTRETCHBLTMODE_set(U_COLORONCOLOR);
-    if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+    if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
         g_error("Fatal programming error in PrintWmf::image at EMRHEADER");
     }
 
@@ -1126,10 +1128,10 @@ unsigned int PrintWmf::image(
     char                *px;
     uint32_t             cbPx;
     uint32_t             colortype;
-    PU_RGBQUAD           ct;
+    U_RGBQUAD           *ct;
     int                  numCt;
     U_BITMAPINFOHEADER   Bmih;
-    PU_BITMAPINFO        Bmi;
+    U_BITMAPINFO        *Bmi;
     colortype = U_BCBM_COLOR32;
     (void) RGBA_to_DIB(&px, &cbPx, &ct, &numCt, (char *) rgba_px,  w, h, w * 4, colortype, 0, 1);
     Bmih = bitmapinfoheader_set(w, h, 1, colortype, U_BI_RGB, 0, PXPERMETER, PXPERMETER, numCt, 0);
@@ -1150,7 +1152,7 @@ unsigned int PrintWmf::image(
               h * rs,              //! size in bytes of px
               px                   //! (Optional) bitmapbuffer (U_BITMAPINFO section)
           );
-    if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+    if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
         g_error("Fatal programming error in PrintWmf::image at U_WMRSTRETCHDIB_set");
     }
     free(px);
@@ -1165,7 +1167,7 @@ unsigned int PrintWmf::image(
 unsigned int PrintWmf::print_pathv(Geom::PathVector const &pathv, const Geom::Affine &transform)
 {
     char       *rec = NULL;
-    PU_POINT16  pt16hold, pt16ptr;
+    U_POINT16  *pt16hold, *pt16ptr;
     uint16_t   *n16hold;
     uint16_t   *n16ptr;
 
@@ -1199,7 +1201,7 @@ unsigned int PrintWmf::print_pathv(Geom::PathVector const &pathv, const Geom::Af
         }
 
         if (nPolys > 1) { // a single polypolygon, a single polygon falls through to the else
-            pt16hold = pt16ptr = (PU_POINT16) malloc(totPoints * sizeof(U_POINT16));
+            pt16hold = pt16ptr = (U_POINT16 *) malloc(totPoints * sizeof(U_POINT16));
             if (!pt16ptr) {
                 return(false);
             }
@@ -1235,7 +1237,7 @@ unsigned int PrintWmf::print_pathv(Geom::PathVector const &pathv, const Geom::Af
 
             }
             rec = U_WMRPOLYPOLYGON_set(nPolys, n16hold, pt16hold);
-            if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+            if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
                 g_error("Fatal programming error in PrintWmf::print_pathv at U_WMRPOLYPOLYGON_set");
             }
             free(pt16hold);
@@ -1256,7 +1258,7 @@ unsigned int PrintWmf::print_pathv(Geom::PathVector const &pathv, const Geom::Af
                 */
                 int nPoints = 1 + pit->size_default();
 
-                pt16hold = pt16ptr = (PU_POINT16) malloc(nPoints * sizeof(U_POINT16));
+                pt16hold = pt16ptr = (U_POINT16 *) malloc(nPoints * sizeof(U_POINT16));
                 if (!pt16ptr) {
                     break;
                 }
@@ -1280,21 +1282,21 @@ unsigned int PrintWmf::print_pathv(Geom::PathVector const &pathv, const Geom::Af
 
                 if (pit->end_default() == pit->end_closed()) {
                     rec = U_WMRPOLYGON_set(nPoints,  pt16hold);
-                    if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+                    if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
                         g_error("Fatal programming error in PrintWmf::print_pathv at U_WMRPOLYGON_set");
                     }
                 } else if (nPoints > 2) {
                     rec = U_WMRPOLYLINE_set(nPoints, pt16hold);
-                    if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+                    if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
                         g_error("Fatal programming error in PrintWmf::print_pathv at U_POLYLINE_set");
                     }
                 } else if (nPoints == 2) {
                     rec = U_WMRMOVETO_set(pt16hold[0]);
-                    if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+                    if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
                         g_error("Fatal programming error in PrintWmf::print_pathv at U_WMRMOVETO_set");
                     }
                     rec = U_WMRLINETO_set(pt16hold[1]);
-                    if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+                    if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
                         g_error("Fatal programming error in PrintWmf::print_pathv at U_WMRLINETO_set");
                     }
                 }
@@ -1348,7 +1350,7 @@ unsigned int PrintWmf::text(Inkscape::Extension::Print * /*mod*/, char const *te
     if (textalignment != htextalignment) {
         htextalignment = textalignment;
         rec = U_WMRSETTEXTALIGN_set(textalignment);
-        if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+        if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
             g_error("Fatal programming error in PrintWmf::text at U_WMRSETTEXTALIGN_set");
         }
     }
@@ -1420,7 +1422,7 @@ unsigned int PrintWmf::text(Inkscape::Extension::Print * /*mod*/, char const *te
         // it was streteched asymmetrically.)  Few applications support text from WMF which is scaled
         // differently by height/width, so leave lfWidth alone.
 
-        PU_FONT puf = U_FONT_set(
+        U_FONT *puf = U_FONT_set(
                           textheight,
                           0,
                           round(rot),
@@ -1438,14 +1440,14 @@ unsigned int PrintWmf::text(Inkscape::Extension::Print * /*mod*/, char const *te
         free(facename);
 
         rec  = wcreatefontindirect_set(&hfont, wht, puf);
-        if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+        if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
             g_error("Fatal programming error in PrintWmf::text at wcreatefontindirect_set");
         }
         free(puf);
     }
 
     rec = wselectobject_set(hfont, wht);
-    if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+    if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
         g_error("Fatal programming error in PrintWmf::text at wselectobject_set");
     }
 
@@ -1455,7 +1457,7 @@ unsigned int PrintWmf::text(Inkscape::Extension::Print * /*mod*/, char const *te
     if (memcmp(htextcolor_rgb, rgb, 3 * sizeof(float))) {
         memcpy(htextcolor_rgb, rgb, 3 * sizeof(float));
         rec = U_WMRSETTEXTCOLOR_set(U_RGB(255 * rgb[0], 255 * rgb[1], 255 * rgb[2]));
-        if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+        if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
             g_error("Fatal programming error in PrintWmf::text at U_WMRSETTEXTCOLOR_set");
         }
     }
@@ -1522,12 +1524,12 @@ unsigned int PrintWmf::text(Inkscape::Extension::Print * /*mod*/, char const *te
     }
     free(latin1_text);
     free(adx);
-    if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+    if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
         g_error("Fatal programming error in PrintWmf::text at U_WMREXTTEXTOUTW_set");
     }
 
     rec = wdeleteobject_set(&hfont, wht);
-    if (!rec || wmf_append((PU_METARECORD)rec, wt, U_REC_FREE)) {
+    if (!rec || wmf_append((U_METARECORD *)rec, wt, U_REC_FREE)) {
         g_error("Fatal programming error in PrintWmf::text at wdeleteobject_set");
     }
 

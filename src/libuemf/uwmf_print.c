@@ -1,11 +1,13 @@
 /**
-  @file uwmf_print.c Functions for printing WMF records
+  @file uwmf_print.c
+  
+  @brief Functions for printing WMF records
 */
 
 /*
 File:      uwmf_print.c
-Version:   0.0.2
-Date:      18-FEB-2013
+Version:   0.0.3
+Date:      17-OCT-2013
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
 Copyright: 2012 David Mathog and California Institute of Technology (Caltech)
@@ -20,6 +22,10 @@ extern "C" {
 #include <stddef.h> /* for offsetof() macro */
 #include <string.h>
 #include "uwmf_print.h"
+
+//! \cond
+
+#define UNUSED(x) (void)(x)
 
 /* **********************************************************************************************
    These functions print standard objects used in the WMR records.
@@ -112,7 +118,7 @@ void pltntry_print(
     \param PalEntries Array of Palette Entries
 */
 void palette_print(
-      const PU_PALETTE  p,
+      const U_PALETTE  *p,
       const char       *PalEntries
    ){
    int            i;
@@ -374,8 +380,6 @@ int wmfheader_print(
 
 
 
-// hide these from Doxygen
-//! @cond
 /* **********************************************************************************************
 These functions contain shared code used by various U_WMR*_print functions.  These should NEVER be called
 by end user code and to further that end prototypes are NOT provided and they are hidden from Doxygen.   
@@ -395,8 +399,6 @@ void wcore_points_print(uint16_t nPoints, const char *aPoints){
 
 
 
-//! @endcond
-
 /* **********************************************************************************************
 These are the core WMR functions, each creates a particular type of record.  
 All return these records via a char* pointer, which is NULL if the call failed.  
@@ -408,12 +410,12 @@ They are listed in order by the corresponding U_WMR_* index number.
     \param contents   pointer to a buffer holding a WMR record
 */
 void U_WMRNOTIMPLEMENTED_print(const char *contents){
-   (void) contents;
+   UNUSED(contents);
    printf("   Not Implemented!\n");
 }
 
 void U_WMREOF_print(const char *contents){
-   (void) contents;
+   UNUSED(contents);
 }
 
 void U_WMRSETBKCOLOR_print(const char *contents){
@@ -449,7 +451,7 @@ void U_WMRSETROP2_print(const char *contents){
 }
 
 void U_WMRSETRELABS_print(const char *contents){
-   (void) contents;
+   UNUSED(contents);
    /* This record type has only the common 6 bytes, so nothing (else) to print */
 }
 
@@ -685,7 +687,7 @@ void U_WMRPATBLT_print(const char *contents){
 }
 
 void U_WMRSAVEDC_print(const char *contents){
-   (void) contents;
+   UNUSED(contents);
    /* This record type has only the common 6 bytes, so nothing (else) to print */
 }
 
@@ -790,7 +792,7 @@ void U_WMRESCAPE_print(const char *contents){
 }
 
 void U_WMRRESTOREDC_print(const char *contents){
-   (void) contents;
+   UNUSED(contents);
    /* This record type has only the common 6 bytes, so nothing (else) to print */
 }
 
@@ -933,7 +935,7 @@ void U_WMRSELECTPALETTE_print(const char *contents){
 }
 
 void U_WMRREALIZEPALETTE_print(const char *contents){
-   (void) contents;
+   UNUSED(contents);
    /* This record type has only the common 6 bytes, so nothing (else) to print */
 }
 
@@ -1324,6 +1326,8 @@ void U_WMRCREATEREGION_print(const char *contents){
    }
 }
 
+//! \endcond
+
 /**
     \brief Print any record in a wmf
     \returns record length for a normal record, 0 for WMREOF, -1 for a bad record
@@ -1347,11 +1351,11 @@ int U_wmf_onerec_print(const char *contents, const char *blimit, int recnum, siz
 
     iType     = *(uint8_t *)(contents + offsetof(U_METARECORD, iType )  );
 
-#if 1 /* show record checksums, this is NOT portable, result changes with endian type, useful for debugging */
-   printf("%-30srecord:%5d type:%3u offset:%8d size:%8u\n",
+#if 1
+   printf("%-30srecord:%5d type:%-4u offset:%8d rsize:%8u\n",
       U_wmr_names(iType), recnum, iType, (int) off, (int) size);
-#else
-   printf("%-30srecord:%5d type:%3u offset:%8d size:%8u recchecksum:%u\n",
+#else /* show record checksums, this is NOT portable, result changes with endian type, useful for debugging */
+   printf("%-30srecord:%5d type:%-4u offset:%8d size:%8u recchecksum:%u\n",
       U_wmr_names(iType), recnum, iType, (int) off, (int) size, U_16_checksum((int16_t *)contents, size));
 #endif
 

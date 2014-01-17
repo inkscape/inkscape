@@ -1,5 +1,7 @@
 /**
-  @file uwmf_print.h Functions for printing records from WMF files.
+  @file uwmf_print.h
+  
+  @brief Prototypes for functions for printing records from WMF files.
 */
 
 /*
@@ -20,11 +22,12 @@ extern "C" {
 #include "uwmf.h"
 #include "uemf_print.h"
 
+//! \cond
 /* prototypes for objects used in WMR records (other than those defined in uemf_print.h) */
 void brush_print(U_BRUSH b);
 void font_print(const char *font);
 void pltntry_print(U_PLTNTRY pny);
-void palette_print(const PU_PALETTE  p, const char *PalEntries);
+void palette_print(const U_PALETTE *p, const char *PalEntries);
 void pen_print(U_PEN p);
 void rect16_ltrb_print(U_RECT16 rect);
 void rect16_brtl_print(U_RECT16 rect);
@@ -40,6 +43,7 @@ void dibheader_print(const void *dh);
 int  wmfheader_print(const char *contents, const char *blimit);
 void U_WMRNOTIMPLEMENTED_print(const char *contents);
 int  U_wmf_onerec_print(const char *contents, const char *blimit, int recnum,  size_t  off);
+//! \endcond
 
 #ifdef __cplusplus
 }

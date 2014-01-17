@@ -1,5 +1,7 @@
 /**
-  @file uemf_utf.c Functions for manipulating UTF and various types of text.
+  @file uemf_utf.c
+  
+  @brief Functions for manipulating UTF and various types of text.
 
   
   Compile with "U_VALGRIND" defined defined to enable code which lets valgrind check each record for
@@ -32,10 +34,12 @@ extern "C" {
 #include <math.h>   // for U_ROUND()
 #include "uemf_utf.h"
 
+//! \cond
 /* Prototypes for functions used here and defined in uemf_endian.c, but which are not supposed
 to be used in end user code. */
 
 void U_swap2(void *ul, unsigned int count);
+//! \endcond
 
 /* ******************************************************************************************** */
       

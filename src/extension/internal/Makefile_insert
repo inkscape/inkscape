@@ -162,6 +162,8 @@ ink_common_sources +=	\
 	extension/internal/emf-print.cpp \
 	extension/internal/emf-inout.h \
 	extension/internal/emf-inout.cpp \
+	extension/internal/metafile-inout.h \
+	extension/internal/metafile-inout.cpp \
 	extension/internal/metafile-print.h \
 	extension/internal/metafile-print.cpp \
 	extension/internal/wmf-print.h \

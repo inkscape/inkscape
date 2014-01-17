@@ -70,9 +70,8 @@ namespace Internal {
 
 
 /* globals */
-static double       PX2WORLD = 20.0f;
-static U_XFORM      worldTransform;
-static bool         FixPPTCharPos, FixPPTDashLine, FixPPTGrad2Polys, FixPPTPatternAsHatch, FixImageRot;
+static double       PX2WORLD;
+static bool         FixPPTCharPos, FixPPTDashLine, FixPPTGrad2Polys, FixPPTLinGrad, FixPPTPatternAsHatch, FixImageRot;
 static EMFTRACK    *et               = NULL;
 static EMFHANDLES  *eht              = NULL;
 
@@ -125,9 +124,12 @@ unsigned int PrintEmf::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
     char           *rec;
     gchar const    *utf8_fn = mod->get_param_string("destination");
 
+    // Typially PX2WORLD is 1200/90, using inkscape's default dpi
+    PX2WORLD             = 1200.0 / Inkscape::Util::Quantity::convert(1.0, "in", "px");
     FixPPTCharPos        = mod->get_param_bool("FixPPTCharPos");
     FixPPTDashLine       = mod->get_param_bool("FixPPTDashLine");
     FixPPTGrad2Polys     = mod->get_param_bool("FixPPTGrad2Polys");
+    FixPPTLinGrad        = mod->get_param_bool("FixPPTLinGrad");
     FixPPTPatternAsHatch = mod->get_param_bool("FixPPTPatternAsHatch");
     FixImageRot          = mod->get_param_bool("FixImageRot");
 
@@ -179,12 +181,12 @@ unsigned int PrintEmf::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
     float dwInchesX = d.width();
     float dwInchesY = d.height();
 
-    // dwInchesX x dwInchesY in micrometer units, dpi=90 -> 3543.3 dpm
-    (void) drawing_size((int) ceil(dwInchesX * 25.4), (int) ceil(dwInchesY * 25.4), 3.543307, &rclBounds, &rclFrame);
+    // dwInchesX x dwInchesY in micrometer units, 1200 dpi/25.4 -> dpmm
+    (void) drawing_size((int) ceil(dwInchesX * 25.4), (int) ceil(dwInchesY * 25.4),1200.0/25.4, &rclBounds, &rclFrame);
 
     // set up the reference device as 100 X A4 horizontal, (1200 dpi/25.4 -> dpmm).  Extra digits maintain dpi better in EMF
-    int MMX = 21600;
-    int MMY = 27900;
+    int MMX = 216;
+    int MMY = 279;
     (void) device_size(MMX, MMY, 1200.0 / 25.4, &szlDev, &szlMm);
     int PixelsX = szlDev.cx;
     int PixelsY = szlDev.cy;
@@ -220,13 +222,16 @@ unsigned int PrintEmf::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
     }
 
 
-    //  Correct for dpi in EMF (1200) vs dpi in Inkscape (always 90).
-    //  Also correct for the scaling in PX2WORLD, which is set to 20.
+    //  In earlier versions this was used to scale from inkscape's dpi of 90 to
+    //  the files 1200 dpi, taking into account PX2WORLD which was 20.  Now PX2WORLD
+    //  is set so that this matrix is unitary.  The usual value of PX2WORLD is 1200/90,
+    //  but might be different if the internal dpi is changed.
 
-    worldTransform.eM11 = 1200. / (90.0 * PX2WORLD);
+    U_XFORM worldTransform;
+    worldTransform.eM11 = 1.0;
     worldTransform.eM12 = 0.0;
     worldTransform.eM21 = 0.0;
-    worldTransform.eM22 = 1200. / (90.0 * PX2WORLD);
+    worldTransform.eM22 = 1.0;
     worldTransform.eDx  = 0;
     worldTransform.eDy  = 0;
 
@@ -420,7 +425,7 @@ int PrintEmf::create_brush(SPStyle const *style, PU_COLORREF fcolor)
                     hatchColor = avg_stop_color(rg);
                 }
             } else if (lg) {
-                if (FixPPTGrad2Polys) {
+                if (FixPPTGrad2Polys || FixPPTLinGrad) {
                     return hold_gradient(lg, fill_mode);
                 } else {
                     hatchColor = avg_stop_color(lg);
@@ -696,7 +701,7 @@ int PrintEmf::create_pen(SPStyle const *style, const Geom::Affine &transform)
                     n_dash = style->stroke_dash.n_dash;
                     dash = new uint32_t[n_dash];
                     for (i = 0; i < style->stroke_dash.n_dash; i++) {
-                        dash[i] = (uint32_t)(style->stroke_dash.dash[i]);
+                        dash[i] = (uint32_t)(Inkscape::Util::Quantity::convert(1, "mm", "px") * style->stroke_dash.dash[i]);
                     }
                 }
             }
@@ -780,6 +785,182 @@ void PrintEmf::destroy_pen()
     }
 }
 
+/* Return a Path consisting of just the corner points of the single path in a a PathVector.  If the
+PathVector has more than one path, or that one path is open, or any of its segments are curved, then the
+returned PathVector is .  If the input path is already just straight lines and vertices the output will be the
+same as the sole path in the input. */
+
+Geom::Path PrintEmf::pathv_to_simple_polygon(Geom::PathVector const &pathv, int *vertices)
+{
+    Geom::Point P1_trail;
+    Geom::Point P1;
+    Geom::Point P1_lead;
+    Geom::Point v1,v2;
+    Geom::Path output;
+    Geom::Path bad;
+    Geom::PathVector pv = pathv_to_linear_and_cubic_beziers(pathv);
+    Geom::PathVector::const_iterator pit  = pv.begin();
+    Geom::PathVector::const_iterator pit2 = pv.begin();
+    ++pit2;
+    *vertices = 0;
+    if(pit->end_closed() != pit->end_default())return(bad); // path must be closed
+    if(pit2 != pv.end())return(bad); // there may only be one path
+    P1_trail = pit->finalPoint();
+    Geom::Path::const_iterator cit = pit->begin();
+    P1 = cit->initialPoint();
+    for(;cit != pit->end_closed();++cit) {
+        if (!is_straight_curve(*cit)) {
+            *vertices = 0;
+            return(bad);
+        }
+        P1_lead = cit->finalPoint();
+        if(Geom::are_near(P1_lead,P1))continue;  // duplicate points at the same coordinate
+        v1 = unit_vector(P1      - P1_trail);
+        v2 = unit_vector(P1_lead - P1      );
+        if(Geom::are_near(dot(v1,v2),1.0)){ // P1 is within a straight line
+            P1 = P1_lead;
+            continue;  
+        }
+        // P1 is the center point of a turn of some angle
+        if(!*vertices){
+            output.start( P1 );
+            output.close( pit->closed() );
+        }
+        *vertices += 1;
+        Geom::LineSegment ls(P1_trail, P1);
+        output.append(ls);
+        P1_trail = P1;
+        P1 = P1_lead;
+    }    
+    return(output);
+}
+
+/*  Returns the simplified PathVector (no matter what).
+    Sets is_rect if it is a rectangle.
+    Sets angle that will rotate side closest to horizontal onto horizontal.
+*/
+Geom::Path PrintEmf::pathv_to_rect(Geom::PathVector const &pathv, bool *is_rect, double *angle)
+{
+    Geom::Point P1_trail;
+    Geom::Point P1;
+    Geom::Point P1_lead;
+    Geom::Point v1,v2;
+    int vertices;
+    Geom::Path pR = pathv_to_simple_polygon(pathv, &vertices);
+    *is_rect = false;
+    if(vertices==4){ // or else it cannot be a rectangle rectangle
+        int  vertex_count=0;
+        /* Get the ends of the LAST line segment.
+           Find minimum rotation to align rectangle with X,Y axes.  (Very degenerate if it is rotated 45 degrees.) */
+        *angle = 10.0;  /* must be > than the actual angle in radians. */
+        for(Geom::Path::const_iterator cit  = pR.begin(); cit != pR.end_open(); ++cit){
+            P1_trail = cit->initialPoint();
+            P1       = cit->finalPoint();
+            v1 = unit_vector(P1 - P1_trail);
+            if(v1[Geom::X] > 0){                 // only check the 1 or 2 points on vectors aimed the same direction as unit X
+                double ang = asin(v1[Geom::Y]);  // because component is rotation by ang of {1,0| vector
+                if(fabs(ang) < fabs(*angle))*angle = -ang; // y increases down, flips sign on angle
+            }
+        }
+
+        for(Geom::Path::const_iterator cit  = pR.begin(); cit != pR.end_open();++cit) {
+            P1_lead = cit->finalPoint();
+            v1 = unit_vector(P1      - P1_trail);
+            v2 = unit_vector(P1_lead - P1      );
+            if(!Geom::are_near(dot(v1,v2),0.0))break; // P1 is center of a turn that is not 90 degrees
+            P1_trail = P1;
+            P1 = P1_lead;
+            vertex_count++;
+        }
+        if(vertex_count == 4){
+            *is_rect=true;
+        }
+    }
+    return(pR);
+}
+
+/*  Compare a vector with a rectangle's orientation (angle needed to rotate side(s)
+    closest to horizontal to exactly horizontal) and return:
+    0 none of the following
+    1 parallel to horizontal
+    2 parallel to vertical
+    3 antiparallel to horizontal
+    4 antiparallel to vertical
+*/
+int PrintEmf::vector_rect_alignment(double angle, Geom::Point vtest){
+    int stat = 0;
+    Geom::Point v1 = Geom::unit_vector(vtest);                 // unit vector to test alignment
+    Geom::Point v2 = Geom::Point(1,0) * Geom::Rotate(-angle);  // unit horizontal side (sign change because Y increases DOWN)
+    if(     Geom::are_near(dot(v1,v2), 1.0)){ stat = 1; }
+    else if(Geom::are_near(dot(v1,v2),-1.0)){ stat = 2; }
+    if(!stat){
+        v2 = Geom::Point(0,1) * Geom::Rotate(-angle);    // unit vertical side
+        if(     Geom::are_near(dot(v1,v2), 1.0)){ stat = 3; }
+        else if(Geom::are_near(dot(v1,v2),-1.0)){ stat = 4; }
+    }
+    return(stat);
+}
+
+/* retrieve the point at the indicated corner:
+    0 UL (and default)
+    1 UR
+    2 LR
+    3 LL
+    Needed because the start can be any point, and the direction could run either
+    clockwise or counterclockwise. This should work even if the corners of the rectangle
+    are slightly displaced.
+*/
+Geom::Point PrintEmf::get_pathrect_corner(Geom::Path pathRect, double angle, int corner){
+    Geom::Point v1 = Geom::Point(1,0) * Geom::Rotate(-angle);  // unit horizontal side (sign change because Y increases DOWN)
+    Geom::Point v2 = Geom::Point(0,1) * Geom::Rotate(-angle);  // unit vertical side (sign change because Y increases DOWN)
+    Geom::Point center, P1;
+    int LR; // 1 if Left, 0 if Right
+    int UL; // 1 if Lower, 0 if Upper (as viewed on screen, y coordinates increase downwards)
+    center = Geom::Point(0,0);
+    Geom::Path::const_iterator cit  = pathRect.begin();
+    for(; cit != pathRect.end_open();++cit) {
+        center += cit->initialPoint()/4.0;
+    }
+
+    switch(corner){
+       case 1: //UR
+          LR = 0;
+          UL = 0;
+          break;
+       case 2: //LR
+          LR = 0;
+          UL = 1;
+          break;
+       case 3: //LL
+          LR = 1;
+          UL = 1;
+          break;
+       default: //UL
+          LR = 1;
+          UL = 0;
+          break;
+    }
+    cit  = pathRect.begin();
+    for(int i; cit != pathRect.end_open();++cit,i++) {
+        P1 = cit->initialPoint();
+        if((LR == (dot(P1 - center,v1)> 0 ? 0 : 1)) &&
+           (UL == (dot(P1 - center,v2)> 0 ? 1 : 0)))break;
+    }
+    return(P1);
+}
+
+U_TRIVERTEX PrintEmf::make_trivertex(Geom::Point Pt, U_COLORREF uc){
+    U_TRIVERTEX tv;
+    using Geom::X;
+    using Geom::Y;
+    tv.x     = (int32_t) round(Pt[X]);            
+    tv.y     = (int32_t) round(Pt[Y]);          
+    tv.Red   = uc.Red      << 8;            
+    tv.Green = uc.Green    << 8;          
+    tv.Blue  = uc.Blue     << 8;           
+    tv.Alpha = uc.Reserved << 8;          // EMF will ignore this
+    return(tv);
+}
 
 unsigned int PrintEmf::fill(
     Inkscape::Extension::Print * /*mod*/,
@@ -795,8 +976,27 @@ unsigned int PrintEmf::fill(
     use_stroke = false;
 
     fill_transform = tf;
+    
+    int brush_stat = create_brush(style, NULL);
+    
+    /* native linear gradients are only used if the object is a rectangle AND the gradient is parallel to the sides of the object */
+    bool is_Rect = false;
+    double angle;
+    int  rectDir=0;
+    Geom::Path pathRect;
+    if(FixPPTLinGrad  && brush_stat && gv.mode == DRAW_LINEAR_GRADIENT){
+        pathRect = pathv_to_rect(pathv, &is_Rect, &angle);
+        if(is_Rect){
+            /* Gradientfill records can only be used if the gradient is parallel to the sides of the rectangle.
+               That must be checked here so that we can fall back to another form of gradient fill if it is not
+               the case. */
+            rectDir = vector_rect_alignment(angle, gv.p2 - gv.p1);
+            if(!rectDir)is_Rect = false;
+        }
+        if(!is_Rect && !FixPPTGrad2Polys)brush_stat=0;  // fall all the way back to a solid fill
+    }
 
-    if (create_brush(style, NULL)) { // only happens if the style is a gradient
+    if (brush_stat) { // only happens if the style is a gradient
         /*
             Handle gradients.  Uses modified livarot as 2geom boolops is currently broken.
             Can handle gradients with multiple stops.
@@ -819,10 +1019,10 @@ unsigned int PrintEmf::fill(
         SPRadialGradient *tg = (SPRadialGradient *)(gv.grad);   // linear/radial are the same here
         nstops = tg->vector.stops.size();
         sp_color_get_rgb_floatv(&tg->vector.stops[0].color, rgb);
-        opa    = tg->vector.stops[0].opacity;
+        opa    = tg->vector.stops[0].opacity;  // first stop
         c1     = U_RGBA(255 * rgb[0], 255 * rgb[1], 255 * rgb[2], 255 * opa);
         sp_color_get_rgb_floatv(&tg->vector.stops[nstops - 1].color, rgb);
-        opa    = tg->vector.stops[nstops - 1].opacity;
+        opa    = tg->vector.stops[nstops - 1].opacity;  // last stop
         c2     = U_RGBA(255 * rgb[0], 255 * rgb[1], 255 * rgb[2], 255 * opa);
 
         doff       = 0.0;
@@ -868,9 +1068,10 @@ unsigned int PrintEmf::fill(
                 pathvr = sp_pathvector_boolop(pathvc, pathv, bool_op_inters, (FillRule) fill_nonZero, frb);
                 print_pathv(pathvr, fill_transform);  // show the intersection
 
-                if (doff >= doff_range - doff_base) {
+                if (doff >= doff_range) {
                     istop++;
                     if (istop >= nstops) {
+                        istop = nstops - 1;
                         continue;    // could happen on a rounding error
                     }
                     doff_base  = doff_range;
@@ -882,56 +1083,145 @@ unsigned int PrintEmf::fill(
                 }
             }
         } else if (gv.mode == DRAW_LINEAR_GRADIENT) {
-            Geom::Point uv  = Geom::unit_vector(gv.p2 - gv.p1);  // unit vector
-            Geom::Point puv = uv.cw();                           // perp. to unit vector
-            double range    = Geom::distance(gv.p1, gv.p2);      // length along the gradient
-            double step     = range / divisions;                 // adequate approximation for gradient
-            double overlap  = step / 4.0;                        // overlap slices slightly
-            double start;
-            double stop;
-            Geom::PathVector pathvc, pathvr;
+            if(is_Rect){
+                char *rec;
+                int gMode;
+                Geom::Point ul, ur, lr;
+                Geom::Point outUL, outLR; // UL,LR corners of a stop rectangle, in OUTPUT coordinates
+                U_TRIVERTEX ut[2];
+                U_GRADIENT4 ug4;
+                U_RECTL rcb;
+                Geom::Affine tf2;
+                U_XFORM tmpTransform;
+                double wRect, hRect;
 
-            /* before lower end of gradient, overlap first slice position */
-            wc = weight_opacity(c1);
-            (void) create_brush(style, &wc);
-            pathvc = rect_cutter(gv.p1, uv * (overlap), uv * (-50000.0), puv * 50000.0);
-            pathvr = sp_pathvector_boolop(pathvc, pathv, bool_op_inters, (FillRule) fill_nonZero, frb);
-            print_pathv(pathvr, fill_transform);
+                /* coordinates, w,h and transform for the ENTIRE retangle */
+                ul = get_pathrect_corner(pathRect, angle, 0) * fill_transform * PX2WORLD;
+                ur = get_pathrect_corner(pathRect, angle, 1) * fill_transform * PX2WORLD;
+                lr = get_pathrect_corner(pathRect, angle, 2) * fill_transform * PX2WORLD;
+                wRect = Geom::distance(ul,ur);
+                hRect = Geom::distance(ur,lr);
 
-            /* after high end of gradient, overlap last slice poosition */
-            wc = weight_opacity(c2);
-            (void) create_brush(style, &wc);
-            pathvc = rect_cutter(gv.p2, uv * (-overlap), uv * (50000.0), puv * 50000.0);
-            pathvr = sp_pathvector_boolop(pathvc, pathv, bool_op_inters, (FillRule) fill_nonZero, frb);
-            print_pathv(pathvr, fill_transform);
+                /*  The basic rectangle for all of these is placed with its UL corner at 0,0 with a size wRect,hRect.
+                    Apply a world transform to place/scale it into the appropriate position on the drawing.
+                    Actual gradientfill records are either this entire rectangle or slices of it as defined by the stops.
+                */
 
-            sp_color_get_rgb_floatv(&tg->vector.stops[istop].color, rgb);
-            opa = tg->vector.stops[istop].opacity;
-            c2 = U_RGBA(255 * rgb[0], 255 * rgb[1], 255 * rgb[2], 255 * opa);
+                tf2 = Geom::Rotate(-angle);
+                tmpTransform.eM11 = tf2[0];
+                tmpTransform.eM12 = tf2[1];
+                tmpTransform.eM21 = tf2[2];
+                tmpTransform.eM22 = tf2[3];
+                tmpTransform.eDx  = (ul)[Geom::X];
+                tmpTransform.eDy  = (ul)[Geom::Y];
 
-            for (start = 0.0; start < range; start += step, doff += 1. / divisions) {
-                stop = start + step + overlap;
-                if (stop > range) {
-                    stop = range;
+                rec = U_EMRSAVEDC_set();
+                if (!rec || emf_append((PU_ENHMETARECORD)rec, et, U_REC_FREE)) {
+                    g_error("Fatal programming error in PrintEmf::image at U_EMRSAVEDC_set");
                 }
-                pathvc = rect_cutter(gv.p1, uv * start, uv * stop, puv * 50000.0);
 
-                wc = weight_colors(c1, c2, (doff - doff_base) / (doff_range - doff_base));
+                rec = U_EMRMODIFYWORLDTRANSFORM_set(tmpTransform, U_MWT_LEFTMULTIPLY);
+                if (!rec || emf_append((PU_ENHMETARECORD)rec, et, U_REC_FREE)) {
+                    g_error("Fatal programming error in PrintEmf::image at EMRMODIFYWORLDTRANSFORM");
+                }
+                
+                for(;istop<nstops;istop++){
+                     doff_range = tg->vector.stops[istop].offset;  // next or last stop
+                     if(rectDir == 1 || rectDir == 2){ 
+                         outUL = Geom::Point(doff_base *wRect, 0    ); 
+                         outLR = Geom::Point(doff_range*wRect, hRect); 
+                         gMode = U_GRADIENT_FILL_RECT_H;
+                     }
+                     else {
+                         outUL = Geom::Point(0,    doff_base *hRect); 
+                         outLR = Geom::Point(wRect,doff_range*hRect); 
+                         gMode = U_GRADIENT_FILL_RECT_V;
+                     }
+                     doff_base  = doff_range;
+                     rcb.left   = outUL[X];
+                     rcb.top    = outUL[Y];
+                     rcb.right  = outLR[X];
+                     rcb.bottom = outLR[Y];
+                     sp_color_get_rgb_floatv(&tg->vector.stops[istop].color, rgb);
+                     opa = tg->vector.stops[istop].opacity;
+                     c2 = U_RGBA(255 * rgb[0], 255 * rgb[1], 255 * rgb[2], 255 * opa);
+
+                     if(rectDir == 2 || rectDir == 4){ // gradient is reversed, so swap colors
+                         ut[0] = make_trivertex(outUL, c2);
+                         ut[1] = make_trivertex(outLR, c1);
+                     }
+                     else {
+                         ut[0] = make_trivertex(outUL, c1);
+                         ut[1] = make_trivertex(outLR, c2);
+                     }
+                     c1 = c2;  // for next stop
+                     ug4.UpperLeft = 0;
+                     ug4.LowerRight= 1;
+                     /* NEED to push world transform here for rotations */
+                     rec = U_EMRGRADIENTFILL_set(rcb, 2, 1, gMode, ut, (uint32_t *) &ug4 );
+                     if (!rec || emf_append((PU_ENHMETARECORD)rec, et, U_REC_FREE)) {
+                         g_error("Fatal programming error in PrintEmf::fill at U_EMRGRADIENTFILL_set");
+                     }
+                }
+
+                rec = U_EMRRESTOREDC_set(-1);
+                if (!rec || emf_append((PU_ENHMETARECORD)rec, et, U_REC_FREE)) {
+                    g_error("Fatal programming error in PrintEmf::fill at U_EMRRESTOREDC_set");
+                }
+            }
+            else {
+                Geom::Point uv  = Geom::unit_vector(gv.p2 - gv.p1);  // unit vector
+                Geom::Point puv = uv.cw();                           // perp. to unit vector
+                double range    = Geom::distance(gv.p1, gv.p2);      // length along the gradient
+                double step     = range / divisions;                 // adequate approximation for gradient
+                double overlap  = step / 4.0;                        // overlap slices slightly
+                double start;
+                double stop;
+                Geom::PathVector pathvc, pathvr;
+
+                /* before lower end of gradient, overlap first slice position */
+                wc = weight_opacity(c1);
                 (void) create_brush(style, &wc);
-                Geom::PathVector pathvr = sp_pathvector_boolop(pathvc, pathv, bool_op_inters, (FillRule) fill_nonZero, frb);
-                print_pathv(pathvr, fill_transform);  // show the intersection
+                pathvc = rect_cutter(gv.p1, uv * (overlap), uv * (-50000.0), puv * 50000.0);
+                pathvr = sp_pathvector_boolop(pathvc, pathv, bool_op_inters, (FillRule) fill_nonZero, frb);
+                print_pathv(pathvr, fill_transform);
 
-                if (doff >= doff_range - doff_base) {
-                    istop++;
-                    if (istop >= nstops) {
-                        continue;    // could happen on a rounding error
+                /* after high end of gradient, overlap last slice position */
+                wc = weight_opacity(c2);
+                (void) create_brush(style, &wc);
+                pathvc = rect_cutter(gv.p2, uv * (-overlap), uv * (50000.0), puv * 50000.0);
+                pathvr = sp_pathvector_boolop(pathvc, pathv, bool_op_inters, (FillRule) fill_nonZero, frb);
+                print_pathv(pathvr, fill_transform);
+
+                sp_color_get_rgb_floatv(&tg->vector.stops[istop].color, rgb);
+                opa = tg->vector.stops[istop].opacity;
+                c2 = U_RGBA(255 * rgb[0], 255 * rgb[1], 255 * rgb[2], 255 * opa);
+
+                for (start = 0.0; start < range; start += step, doff += 1. / divisions) {
+                    stop = start + step + overlap;
+                    if (stop > range) {
+                        stop = range;
                     }
-                    doff_base  = doff_range;
-                    doff_range = tg->vector.stops[istop].offset;  // next or last stop
-                    c1 = c2;
-                    sp_color_get_rgb_floatv(&tg->vector.stops[istop].color, rgb);
-                    opa = tg->vector.stops[istop].opacity;
-                    c2 = U_RGBA(255 * rgb[0], 255 * rgb[1], 255 * rgb[2], 255 * opa);
+                    pathvc = rect_cutter(gv.p1, uv * start, uv * stop, puv * 50000.0);
+
+                    wc = weight_colors(c1, c2, (doff - doff_base) / (doff_range - doff_base));
+                    (void) create_brush(style, &wc);
+                    Geom::PathVector pathvr = sp_pathvector_boolop(pathvc, pathv, bool_op_inters, (FillRule) fill_nonZero, frb);
+                    print_pathv(pathvr, fill_transform);  // show the intersection
+
+                    if (doff >= doff_range) {
+                        istop++;
+                        if (istop >= nstops) {
+                            istop = nstops - 1;
+                            continue;    // could happen on a rounding error
+                        }
+                        doff_base  = doff_range;
+                        doff_range = tg->vector.stops[istop].offset;  // next or last stop
+                        c1 = c2;
+                        sp_color_get_rgb_floatv(&tg->vector.stops[istop].color, rgb);
+                        opa = tg->vector.stops[istop].opacity;
+                        c2 = U_RGBA(255 * rgb[0], 255 * rgb[1], 255 * rgb[2], 255 * opa);
+                    }
                 }
             }
         } else {
@@ -1301,6 +1591,10 @@ unsigned int PrintEmf::image(
     U_POINTL cDest = pointl_set(round(dw * PX2WORLD), round(dh * PX2WORLD));
     U_POINTL Src   = pointl_set(0, 0);
     U_POINTL cSrc  = pointl_set(w, h);
+    /* map the integer Dest coordinates back into pLL2, so that the rounded part does not destabilize the transform offset below */
+    pLL2[Geom::X] = Dest.x;
+    pLL2[Geom::Y] = Dest.y;
+    pLL2 /= PX2WORLD;
     if (!FixImageRot) { /* Rotate images - some programs cannot read them in correctly if they are rotated */
         tf[4] = tf[5] = 0.0;  // get rid of the offset in the transform
         Geom::Point pLL2prime = pLL2 * tf;
@@ -1309,7 +1603,7 @@ unsigned int PrintEmf::image(
         tmpTransform.eM12 =  tf[1];
         tmpTransform.eM21 =  tf[2];
         tmpTransform.eM22 =  tf[3];
-        tmpTransform.eDx  = (pLL2[Geom::X] - pLL2prime[Geom::X]) * PX2WORLD;   //map pLL2 (now in EMF coordinates) back onto itself after the rotation
+        tmpTransform.eDx  = (pLL2[Geom::X] - pLL2prime[Geom::X]) * PX2WORLD;
         tmpTransform.eDy  = (pLL2[Geom::Y] - pLL2prime[Geom::Y]) * PX2WORLD;
 
         rec = U_EMRSAVEDC_set();
@@ -1734,6 +2028,7 @@ void PrintEmf::init(void)
         "<param name=\"FixPPTCharPos\" type=\"boolean\">false</param>\n"
         "<param name=\"FixPPTDashLine\" type=\"boolean\">false</param>\n"
         "<param name=\"FixPPTGrad2Polys\" type=\"boolean\">false</param>\n"
+        "<param name=\"FixPPTLinGrad\" type=\"boolean\">false</param>\n"
         "<param name=\"FixPPTPatternAsHatch\" type=\"boolean\">false</param>\n"
         "<param name=\"FixImageRot\" type=\"boolean\">false</param>\n"
         "<print/>\n"

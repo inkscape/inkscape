@@ -1,5 +1,7 @@
 /**
-  @file uwmf.c Functions for manipulating WMF files and structures.
+  @file uwmf.c
+  
+  @brief Functions for manipulating WMF files and structures.
 
   [U_WMR*]_set all take data and return a pointer to memory holding the constructed record.  
     If something goes wrong a NULL pointer is returned.
@@ -17,8 +19,8 @@
 
 /*
 File:      uwmf.c
-Version:   0.0.11
-Date:      19-MAR-2013
+Version:   0.0.12
+Date:      25-NOV-2013
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
 Copyright: 2013 David Mathog and California Institute of Technology (Caltech)
@@ -665,17 +667,19 @@ char *U_wmr_escnames(int idx){
    return(name);
 }
 
+//! \cond
 /* one prototype from uwmf_endian.  Put it here because end user should never need to see it, so
 not in uemf.h or uwmf_endian.h */
 void U_swap2(void *ul, unsigned int count);
+//! \endcond
 
 /**
     \brief Derive from bounding box and start and end arc, for WMF arc, chord, or pie records, the center, start, and end points, and the bounding rectangle.
     
     \return 0 on success, other values on errors.
-    \param rclBox     Bounding box of Arc
-    \param ArcStart   Coordinates for Start of Arc
-    \param ArcEnd     Coordinates for End of Arc
+    \param rclBox16   Bounding box of Arc
+    \param ArcStart16 Coordinates for Start of Arc
+    \param ArcEnd16   Coordinates for End of Arc
     \param f1         1 if rotation angle >= 180, else 0
     \param f2         Rotation direction, 1 if counter clockwise, else 0
     \param center     Center coordinates
@@ -689,10 +693,10 @@ int wmr_arc_points(
        U_POINT16         ArcEnd16,
        int              *f1,
        int               f2,
-       PU_PAIRF          center,
-       PU_PAIRF          start,
-       PU_PAIRF          end,
-       PU_PAIRF          size
+       U_PAIRF          *center,
+       U_PAIRF          *start,
+       U_PAIRF          *end,
+       U_PAIRF          *size
     ){
     U_RECTL rclBox;
     U_POINTL ArcStart,ArcEnd;
@@ -737,6 +741,7 @@ uint32_t U_wmr_size(const U_METARECORD *record){
    return(2*Size16); 
 }
 
+//! \cond    should never be called directly
 #define SET_CB_FROM_PXBMI(A,B,C,D,E,F)    /* A=Px, B=Bmi, C=cbImage, D=cbImage4, E=cbBmi, F=cbPx */ \
    if(A){\
      if(!B)return(NULL);  /* size is derived from U_BITMAPINFO, but NOT from its size field, go figure*/ \
@@ -745,7 +750,7 @@ uint32_t U_wmr_size(const U_METARECORD *record){
      E    = U_SIZE_BITMAPINFOHEADER +  4 * get_real_color_count((char *)&(B->bmiHeader));  /*  bmiheader + colortable*/ \
    }\
    else { C = 0; D = 0; E=0; }
-
+//! \endcond
 
 /**
     \brief Create and return a U_FONT structure.
@@ -765,7 +770,7 @@ uint32_t U_wmr_size(const U_METARECORD *record){
     \param PitchAndFamily  LF_PitchAndFamily Enumeration
     \param FaceName        Name of font.  ANSI Latin1, null terminated.
 */
-PU_FONT U_FONT_set(
+U_FONT *U_FONT_set(
        int16_t  Height,             //!< Height in Logical units
        int16_t  Width,              //!< Average Width in Logical units
        int16_t  Escapement,         //!< Angle in 0.1 degrees betweem escapement vector and X axis
@@ -781,10 +786,10 @@ PU_FONT U_FONT_set(
        uint8_t  PitchAndFamily,     //!< LF_PitchAndFamily Enumeration
        char    *FaceName            //!< Name of font.  ANSI Latin1, null terminated.
     ){
-    PU_FONT font;
+    U_FONT *font;
     int slen = 1 + strlen(FaceName);  /* include terminator  */
     if(slen & 1)slen++;               /* storage length even */ 
-    font = (PU_FONT) calloc(1,slen + U_SIZE_FONT_CORE); /* use calloc to auto fill in terminating '\0'*/
+    font = (U_FONT *) calloc(1,slen + U_SIZE_FONT_CORE); /* use calloc to auto fill in terminating '\0'*/
     if(font){
        font->Height         =  Height;           
        font->Width          =  Width;           
@@ -825,12 +830,12 @@ U_PLTNTRY U_PLTNTRY_set(U_COLORREF Color){
     \param NumEntries  Number of U_LOGPLTNTRY objects
     \param PalEntries  Pointer to array of PaletteEntry Objects
 */
-PU_PALETTE U_PLTENTRY_set(
+U_PALETTE *U_PLTENTRY_set(
        uint16_t            Start,              //!< Either 0x0300 or an offset into the Palette table
        uint16_t            NumEntries,         //!< Number of U_LOGPLTNTRY objects
-       PU_PLTNTRY          PalEntries          //!< Pointer to array of PaletteEntry Objects
+       U_PLTNTRY          *PalEntries          //!< Pointer to array of PaletteEntry Objects
     ){
-    PU_PALETTE Palette = NULL;
+    U_PALETTE *Palette = NULL;
     if(NumEntries){
        Palette = malloc(4 + 4*NumEntries);
        if(Palette){
@@ -892,7 +897,7 @@ U_RECT16 U_RECT16_set(
     \param BitsPixel  number of adjacent color bits on each plane (R bits + G bits + B bits ????)
     \param Bits       bitmap pixel data. Bytes contained = (((Width * BitsPixel + 15) >> 4) << 1) * Height
 */
-PU_BITMAP16 U_BITMAP16_set(
+U_BITMAP16 *U_BITMAP16_set(
       const int16_t      Type,
       const int16_t      Width,
       const int16_t      Height,
@@ -900,11 +905,11 @@ PU_BITMAP16 U_BITMAP16_set(
       const uint8_t      BitsPixel,
       const char        *Bits
    ){
-   PU_BITMAP16 bm16;
-   uint32_t   irecsize;
-   int        cbBits,iHeight;
-   int        usedbytes;
-   int16_t    WidthBytes;                                            //  total bytes per scan line (used and padding).
+   U_BITMAP16 *bm16;
+   uint32_t    irecsize;
+   int         cbBits,iHeight;
+   int         usedbytes;
+   int16_t     WidthBytes;                                           //  total bytes per scan line (used and padding).
 
    usedbytes  = (Width * BitsPixel + 7)/8;                           // width of line in fully and partially occupied bytes
    WidthBytes =  (LineN * ((usedbytes + (LineN - 1) ) / LineN));     // Account for padding required by line alignment in the pixel array
@@ -913,7 +918,7 @@ PU_BITMAP16 U_BITMAP16_set(
    cbBits = WidthBytes * iHeight;
    if(!Bits || cbBits<=0)return(NULL);
    irecsize = U_SIZE_BITMAP16 + cbBits;
-   bm16 = (PU_BITMAP16) malloc(irecsize);
+   bm16 = (U_BITMAP16 *) malloc(irecsize);
    if(bm16){
       bm16->Type       = Type;          
       bm16->Width      = Width;         
@@ -934,13 +939,13 @@ PU_BITMAP16 U_BITMAP16_set(
     \param bottom     Y coordinate of the bottom scanline
     \param ScanLines  Array of 16 bit left/right pairs, array has 2*count entries
 */
-PU_SCAN U_SCAN_set(
+U_SCAN *U_SCAN_set(
        uint16_t  count,                         //!< Number of entries in the ScanLines array
        uint16_t  top,                           //!< Y coordinate of the top scanline
        uint16_t  bottom,                        //!< Y coordinate of the bottom scanline
        uint16_t *ScanLines                      //!< Array of 16 bit left/right pairs, array has 2*count entries
     ){
-    PU_SCAN scan=NULL;
+    U_SCAN *scan=NULL;
     int size = 6 + count*4;
     scan = malloc(size);
     if(scan){
@@ -961,19 +966,19 @@ PU_SCAN U_SCAN_set(
     \param  sRect   bounding rectangle
     \param  aScans  series of U_SCAN objects to append. This is also an array of uint16_t, but should be handled as a bunch of U_SCAN objects tightly packed into the buffer.
 */
-PU_REGION U_REGION_set(
+U_REGION *U_REGION_set(
        int16_t             Size,               //!< aScans in bytes + regions size in bytes (size of this header plus all U_SCAN objects?)
        int16_t             sCount,             //!< number of scan objects in region (docs say scanlines, but then no way to add sizes)
        int16_t             sMax,               //!< largest number of points in any scan
        U_RECT16            sRect,              //!< bounding rectangle
        uint16_t           *aScans              //!< series of U_SCAN objects to append. This is also an array of uint16_t, but should be handled as a bunch of U_SCAN objects tightly packed into the buffer.
    ){
-   PU_REGION region=NULL;
+   U_REGION *region=NULL;
    char *psc;
    int scansize,i,off;
    psc = (char *)aScans;
    for(scansize=i=0; i<sCount; i++){
-      off       = 6 + 4*(((PU_SCAN)psc)->count);
+      off       = 6 + 4*(((U_SCAN *)psc)->count);
       scansize += off;
       psc      += off;
    }
@@ -1021,11 +1026,11 @@ U_WLOGBRUSH U_WLOGBRUSH_set(
     \param  x  x value
     \param  y  y value
 */
-PU_PAIRF U_PAIRF_set(
+U_PAIRF *U_PAIRF_set(
       float  x,              //!< x value
       float  y               //!< y value
    ){
-   PU_PAIRF pf=malloc(U_SIZE_PAIRF);
+   U_PAIRF *pf=malloc(U_SIZE_PAIRF);
    if(pf){
       pf->x = x;
       pf->y = y;
@@ -1496,7 +1501,7 @@ int  wmf_finish(
    // Set the header fields which were unknown up until this point
   
    
-   if(((PU_WMRPLACEABLE) wt->buf)->Key == 0x9AC6CDD7){ off = U_SIZE_WMRPLACEABLE; }
+   if(((U_WMRPLACEABLE *) wt->buf)->Key == 0x9AC6CDD7){ off = U_SIZE_WMRPLACEABLE; }
    else {                                              off = 0;                   }
    
    record = (wt->buf + off);
@@ -1617,14 +1622,14 @@ int  wmf_append(
     \param freerec If true, free rec after append    
 */
 int  wmf_header_append(
-      PU_METARECORD     rec,
+      U_METARECORD     *rec,
       WMFTRACK         *wt,
       int               freerec
    ){
    size_t deficit;
    unsigned int hsize;
    
-   hsize = (((PU_WMRPLACEABLE) rec)->Key == 0x9AC6CDD7 ? U_SIZE_WMRHEADER + U_SIZE_WMRPLACEABLE: U_SIZE_WMRHEADER);
+   hsize = (((U_WMRPLACEABLE *) rec)->Key == 0x9AC6CDD7 ? U_SIZE_WMRHEADER + U_SIZE_WMRPLACEABLE: U_SIZE_WMRHEADER);
    
 #ifdef U_VALGRIND
    printf("\nbefore \n");
@@ -1764,7 +1769,7 @@ These functions create standard structures used in the WMR records.
 *********************************************************************************************** */
 
 // hide these from Doxygen
-//! @cond
+//! \cond
 /* **********************************************************************************************
 These functions contain shared code used by various U_WMR*_print functions.  These should NEVER be called
 by end user code and to further that end prototypes are NOT provided and they are hidden from Doxygen.   
@@ -1789,8 +1794,8 @@ void U_WMRCORE_SETRECHEAD(char *record, uint32_t irecsize, int iType){
    uint32_t  Size16;
    Size16 = irecsize/2;
    memcpy(record,&Size16,4); /*Size16_4 is at offset 0 in the record */
-   ((PU_METARECORD) record)->iType   = iType;
-   ((PU_METARECORD) record)->xb      = U_WMR_XB_FROM_TYPE(iType);
+   ((U_METARECORD *) record)->iType   = iType;
+   ((U_METARECORD *) record)->xb      = U_WMR_XB_FROM_TYPE(iType);
 }
 
 /* records that have no arguments */
@@ -1832,7 +1837,7 @@ char *U_WMRCORE_1U16_CRF_2U16_set(
    return(record);
 }
 
-/* records that have a single uint16_t argument like PU_WMRSETMAPMODE
+/* records that have a single uint16_t argument like U_WMRSETMAPMODE
    May also be used with int16_t with appropriate casts */
 char *U_WMRCORE_1U16_set(
       int        iType,
@@ -2016,7 +2021,7 @@ char *U_WMRCORE_2U16_N16_set(
    May also be used with int16_t with appropriate casts  */
 char *U_WMRCORE_PALETTE_set(
       int        iType,
-      PU_PALETTE Palette
+      const U_PALETTE *Palette
 ){
    char *record=NULL;
    uint32_t  irecsize, off, nPE;
@@ -2034,7 +2039,7 @@ char *U_WMRCORE_PALETTE_set(
    return(record);
 }
 
-//! @endcond
+//! \endcond
 
 /* **********************************************************************************************
 These functions are simpler or more convenient ways to generate the specified types of WMR records.  
@@ -2141,7 +2146,7 @@ char *wcreatedibpatternbrush_srcdib_set(
       uint32_t            *ihBrush,
       WMFHANDLES          *wht,
       const uint32_t       iUsage, 
-      PU_BITMAPINFO        Bmi,
+      const U_BITMAPINFO  *Bmi,
       const uint32_t       cbPx,
       const char          *Px
       
@@ -2164,7 +2169,7 @@ char *wcreatedibpatternbrush_srcbm16_set(
       uint32_t            *ihBrush,
       WMFHANDLES          *wht,
       const uint32_t       iUsage, 
-      PU_BITMAP16          Bm16
+      const U_BITMAP16    *Bm16
    ){
    if(wmf_htable_insert(ihBrush, wht))return(NULL);
    *ihBrush -= 1;  /* 1->N+1 --> 0->N */
@@ -2184,7 +2189,7 @@ char *wcreatedibpatternbrush_srcbm16_set(
 char *wcreatepatternbrush_set(
       uint32_t            *ihBrush,
       WMFHANDLES          *wht,
-      PU_BITMAP16          Bm16,
+      U_BITMAP16          *Bm16,
       char                *Pattern       
    ){
    if(wmf_htable_insert(ihBrush, wht))return(NULL);
@@ -2199,12 +2204,12 @@ char *wcreatepatternbrush_set(
     \return pointer to the U_WMRCREATEFONTINDIRECT record, or NULL on error.
     \param ihFont  Font handle, will be created and returned
     \param wht     Pointer to structure holding all WMF handles
-    \param uf      Pointer to Font parameters as PU_FONT
+    \param uf      Pointer to Font parameters as U_FONT *
 */
 char *wcreatefontindirect_set(
       uint32_t   *ihFont,
       WMFHANDLES *wht,
-      PU_FONT     uf
+      U_FONT     *uf
    ){
    if(wmf_htable_insert(ihFont, wht))return(NULL);
    *ihFont -= 1;  /* 1->N+1 --> 0->N */
@@ -2223,7 +2228,7 @@ char *wcreatefontindirect_set(
 char *wcreatepalette_set(
       uint32_t     *ihPal,
       WMFHANDLES   *wht,
-      PU_PALETTE   up
+      U_PALETTE    *up
    ){
    if(wmf_htable_insert(ihPal, wht))return(NULL);
    *ihPal -= 1;  /* 1->N+1 --> 0->N */
@@ -2242,7 +2247,7 @@ char *wcreatepalette_set(
 char *wsetpaletteentries_set(
       uint32_t               *ihPal,
       WMFHANDLES             *wht,
-      const PU_PALETTE       Palettes
+      const U_PALETTE        *Palettes
    ){
    if(wmf_htable_insert(ihPal, wht))return(NULL);
    *ihPal -= 1;  /* 1->N+1 --> 0->N */
@@ -2261,7 +2266,7 @@ char *wsetpaletteentries_set(
 char *wcreateregion_set(
       uint32_t               *ihReg,
       WMFHANDLES             *wht,
-      const PU_REGION         Region
+      const U_REGION         *Region
    ){
    if(wmf_htable_insert(ihReg, wht))return(NULL);
    *ihReg -= 1;  /* 1->N+1 --> 0->N */
@@ -2349,7 +2354,7 @@ They are listed in order by the corresponding U_WMR_* index number.
     \param dpi     Logical units/inch.  If 0 defaults to 1440.
 */
 char *U_WMRHEADER_set(
-      PU_PAIRF     size,
+      U_PAIRF     *size,
       unsigned int dpi
    ){
    char *record=NULL;
@@ -2370,20 +2375,20 @@ char *U_WMRHEADER_set(
          }
          xm16 = xmax;
          ym16 = ymax;
-         ((PU_WMRPLACEABLE) record)->Key         = 0x9AC6CDD7;
-         ((PU_WMRPLACEABLE) record)->HWmf        = 0;  /* Manual says number of 16 bit words in record, but all WMF examples had it as 0 */
-         ((PU_WMRPLACEABLE) record)->Dst.left    = 0;
-         ((PU_WMRPLACEABLE) record)->Dst.top     = 0;
-         ((PU_WMRPLACEABLE) record)->Dst.right   = xm16;
-         ((PU_WMRPLACEABLE) record)->Dst.bottom  = ym16;
-         ((PU_WMRPLACEABLE) record)->Inch        = dpi;
-         ((PU_WMRPLACEABLE) record)->Reserved    = 0;
-         ((PU_WMRPLACEABLE) record)->Checksum    = U_16_checksum((int16_t *)record,10);
+         ((U_WMRPLACEABLE *) record)->Key         = 0x9AC6CDD7;
+         ((U_WMRPLACEABLE *) record)->HWmf        = 0;  /* Manual says number of 16 bit words in record, but all WMF examples had it as 0 */
+         ((U_WMRPLACEABLE *) record)->Dst.left    = 0;
+         ((U_WMRPLACEABLE *) record)->Dst.top     = 0;
+         ((U_WMRPLACEABLE *) record)->Dst.right   = xm16;
+         ((U_WMRPLACEABLE *) record)->Dst.bottom  = ym16;
+         ((U_WMRPLACEABLE *) record)->Inch        = dpi;
+         ((U_WMRPLACEABLE *) record)->Reserved    = 0;
+         ((U_WMRPLACEABLE *) record)->Checksum    = U_16_checksum((int16_t *)record,10);
          off = U_SIZE_WMRPLACEABLE;
       }
-      ((PU_WMRHEADER) (record + off))->iType     = 1;
-      ((PU_WMRHEADER) (record + off))->version   = U_METAVERSION300;
-      ((PU_WMRHEADER) (record + off))->Size16w   = U_SIZE_WMRHEADER/2;
+      ((U_WMRHEADER *) (record + off))->iType     = 1;
+      ((U_WMRHEADER *) (record + off))->version   = U_METAVERSION300;
+      ((U_WMRHEADER *) (record + off))->Size16w   = U_SIZE_WMRHEADER/2;
    }
    return(record);
 }
@@ -2731,13 +2736,13 @@ char *U_WMRPATBLT_set(
    ){
    char *record=NULL;
    uint32_t  irecsize;
-   PU_WMRPATBLT pmr;
+   U_WMRPATBLT *pmr;
 
    irecsize = U_SIZE_WMRPATBLT;
    record   = malloc(irecsize);
    if(record){
       U_WMRCORE_SETRECHEAD(record,irecsize,U_WMR_PATBLT);
-      pmr = (PU_WMRPATBLT) record;
+      pmr = (U_WMRPATBLT *) record;
       memcpy(pmr->rop3w, &dwRop3, 4);
       pmr->Height   = cwh.y;
       pmr->Width    = cwh.x;
@@ -2755,16 +2760,27 @@ char *U_WMRSAVEDC_set(void){
    return U_WMRCORE_NOARGS_set(U_WMR_SAVEDC);
 }
 
-char *U_WMRSETPIXEL_set(U_COLORREF Color, U_POINT16 coord){
+/**
+    \brief Allocate and construct a U_WMRSETPIXEL record
+    \return pointer to the U_WMRSETPIXEL record, or NULL on error.
+    \param  Color   U_COLORREF color of the pixel
+    \param  Coord   U_POINT16 coordinates of the pixel
+*/
+char *U_WMRSETPIXEL_set(U_COLORREF Color, U_POINT16 Coord){
    return  U_WMRCORE_1U16_CRF_2U16_set(
       U_WMR_SETPIXEL,
       NULL,
       Color,
-      U_P16(coord.y),
-      U_P16(coord.x)
+      U_P16(Coord.y),
+      U_P16(Coord.x)
    );
 }
 
+/**
+    \brief Allocate and construct a U_WMROFFSETCLIPRGN record
+    \return pointer to the U_WMROFFSETCLIPRGN record, or NULL on error.
+    \param  offset  U_POINT16 x,y offset to apply to the clipping region.
+*/
 char *U_WMROFFSETCLIPRGN_set(U_POINT16 offset){
    return U_WMRCORE_2U16_set(U_WMR_OFFSETCLIPRGN, U_U16(offset.y), U_U16(offset.x));
 }
@@ -2815,13 +2831,13 @@ char *U_WMRBITBLT_set(
       U_POINT16            cwh,
       U_POINT16            Src,
       uint32_t             dwRop3,
-      const PU_BITMAP16    Bm16
+      const U_BITMAP16    *Bm16
    ){
    char *record=NULL;
    uint32_t  irecsize;
    int   cbBm16,cbBm164,off;
-   PU_WMRBITBLT_PX pmr_px;
-   PU_WMRBITBLT_NOPX pmr_nopx;
+   U_WMRBITBLT_PX   *pmr_px;
+   U_WMRBITBLT_NOPX *pmr_nopx;
 
    if(Bm16){
       cbBm16  = U_SIZE_BITMAP16 + (((Bm16->Width * Bm16->BitsPixel + 15) >> 4) << 1) * Bm16->Height;
@@ -2830,7 +2846,7 @@ char *U_WMRBITBLT_set(
       record   = malloc(irecsize);
       if(record){
          U_WMRCORE_SETRECHEAD(record,irecsize,U_WMR_BITBLT);
-         pmr_px = (PU_WMRBITBLT_PX) record;
+         pmr_px = (U_WMRBITBLT_PX *) record;
          memcpy(pmr_px->rop3w, &dwRop3, 4);
          pmr_px->ySrc     = Src.y;
          pmr_px->xSrc     = Src.x;
@@ -2848,7 +2864,7 @@ char *U_WMRBITBLT_set(
       record   = malloc(irecsize);
       if(record){
          U_WMRCORE_SETRECHEAD(record,irecsize,U_WMR_BITBLT);
-         pmr_nopx = (PU_WMRBITBLT_NOPX) record;
+         pmr_nopx = (U_WMRBITBLT_NOPX *) record;
          memcpy(pmr_nopx->rop3w, &dwRop3, 4);
          pmr_nopx->ySrc     = Src.y;
          pmr_nopx->xSrc     = Src.x;
@@ -2878,13 +2894,13 @@ char *U_WMRSTRETCHBLT_set(
       U_POINT16            Src,
       U_POINT16            cSrc,
       uint32_t             dwRop3,
-      const PU_BITMAP16    Bm16
+      const U_BITMAP16    *Bm16
    ){
    char *record=NULL;
    uint32_t  irecsize;
    int   cbBm16,cbBm164,off;
-   PU_WMRSTRETCHBLT_PX pmr_px;
-   PU_WMRSTRETCHBLT_NOPX pmr_nopx;
+   U_WMRSTRETCHBLT_PX   *pmr_px;
+   U_WMRSTRETCHBLT_NOPX *pmr_nopx;
 
    if(Bm16){
       cbBm16  = U_SIZE_BITMAP16 + (((Bm16->Width * Bm16->BitsPixel + 15) >> 4) << 1) * Bm16->Height;
@@ -2893,7 +2909,7 @@ char *U_WMRSTRETCHBLT_set(
       record   = malloc(irecsize);
       if(record){
          U_WMRCORE_SETRECHEAD(record,irecsize,U_WMR_STRETCHBLT);
-         pmr_px = (PU_WMRSTRETCHBLT_PX) record;
+         pmr_px = (U_WMRSTRETCHBLT_PX *) record;
          memcpy(pmr_px->rop3w, &dwRop3, 4);
          pmr_px->hSrc     = cSrc.y;
          pmr_px->wSrc     = cSrc.x;
@@ -2913,7 +2929,7 @@ char *U_WMRSTRETCHBLT_set(
       record   = malloc(irecsize);
       if(record){
          U_WMRCORE_SETRECHEAD(record,irecsize,U_WMR_STRETCHBLT);
-         pmr_nopx = (PU_WMRSTRETCHBLT_NOPX) record;
+         pmr_nopx = (U_WMRSTRETCHBLT_NOPX *) record;
          memcpy(pmr_nopx->rop3w, &dwRop3, 4);
          pmr_nopx->hSrc     = cSrc.y;
          pmr_nopx->wSrc     = cSrc.x;
@@ -2935,7 +2951,7 @@ char *U_WMRSTRETCHBLT_set(
     \param Length    Number of points in the Polygon
     \param Data      Array of Length points
 */
-char *U_WMRPOLYGON_set(uint16_t Length, const PU_POINT16 Data){
+char *U_WMRPOLYGON_set(uint16_t Length, const U_POINT16 *Data){
    return U_WMRCORE_2U16_N16_set(U_WMR_POLYGON, NULL, &Length, 2*Length, Data);
 }
 
@@ -2945,7 +2961,7 @@ char *U_WMRPOLYGON_set(uint16_t Length, const PU_POINT16 Data){
     \param Length    Number of points in the Polyline
     \param Data      Array of Length points
 */
-char *U_WMRPOLYLINE_set(uint16_t Length, const PU_POINT16 Data){
+char *U_WMRPOLYLINE_set(uint16_t Length, const U_POINT16 *Data){
    return U_WMRCORE_2U16_N16_set(U_WMR_POLYLINE, NULL, &Length, 2*Length, Data);
 }
 
@@ -3042,8 +3058,9 @@ char *U_WMRSETTEXTALIGN_set(uint16_t Mode){
    return U_WMRCORE_2U16_set(U_WMR_SETTEXTALIGN, Mode, 0);
 }
 
-/* in Wine, not in WMF PDF. */
- char *U_WMRDRAWTEXT_set(void){  /* in Wine, not in WMF PDF. */
+/** in GDI and Wine, not in WMF manual..
+*/
+ char *U_WMRDRAWTEXT_set(void){
    return U_WMRCORENONE_set("U_WMRDRAWTEXT");
 }
 
@@ -3155,7 +3172,7 @@ char *U_WMRREALIZEPALETTE_set(void){
     \return pointer to the U_WMRSETPALENTRIES record, or NULL on error.
     \param Palette  Redefines a set of RGB values for the current active Palette.
 */
-char *U_WMRANIMATEPALETTE_set(PU_PALETTE Palette){
+char *U_WMRANIMATEPALETTE_set(U_PALETTE *Palette){
    return U_WMRCORE_PALETTE_set(U_WMR_ANIMATEPALETTE, Palette);
 }
 
@@ -3164,7 +3181,7 @@ char *U_WMRANIMATEPALETTE_set(PU_PALETTE Palette){
     \return pointer to the U_WMRSETPALENTRIES record, or NULL on error.
     \param Palette  Defines a set of RGB values for the current active Palette.
 */
-char *U_WMRSETPALENTRIES_set(PU_PALETTE Palette){
+char *U_WMRSETPALENTRIES_set(const U_PALETTE *Palette){
    return U_WMRCORE_PALETTE_set(U_WMR_SETPALENTRIES, Palette);
 }
 
@@ -3178,7 +3195,7 @@ char *U_WMRSETPALENTRIES_set(PU_PALETTE Palette){
 char *U_WMRPOLYPOLYGON_set(
       const uint16_t   nPolys,
       const uint16_t  *aPolyCounts,
-      const PU_POINT16 Points
+      const U_POINT16 *Points
    ){
    char      *record;
    uint32_t   irecsize;
@@ -3210,6 +3227,7 @@ char *U_WMRRESIZEPALETTE_set(uint16_t Palette){
    return U_WMRCORE_1U16_set(U_WMR_RESIZEPALETTE, Palette);
 }
 
+//! \cond
 char *U_WMR3A_set(void){
    return U_WMRCORENONE_set("U_WMR3A");
 }
@@ -3233,6 +3251,7 @@ char *U_WMR3E_set(void){
 char *U_WMR3F_set(void){
    return U_WMRCORENONE_set("U_WMR3F");
 }
+//! \endcond
 
 // U_WMRDIBBITBLT_set
 /**
@@ -3251,15 +3270,15 @@ char *U_WMRDIBBITBLT_set(
       U_POINT16            cwh,
       U_POINT16            Src,
       uint32_t             dwRop3,
-      const PU_BITMAPINFO  Bmi,
+      const U_BITMAPINFO  *Bmi,
       uint32_t             cbPx,
       const char          *Px
    ){
    char *record=NULL;
    uint32_t  irecsize;
    int   cbImage,cbImage4,cbBmi,off;
-   PU_WMRDIBBITBLT_PX pmr_px;
-   PU_WMRDIBBITBLT_NOPX pmr_nopx;
+   U_WMRDIBBITBLT_PX   *pmr_px;
+   U_WMRDIBBITBLT_NOPX *pmr_nopx;
 
 
    if(Px && Bmi){
@@ -3268,7 +3287,7 @@ char *U_WMRDIBBITBLT_set(
       record   = malloc(irecsize);
       if(record){
          U_WMRCORE_SETRECHEAD(record,irecsize,U_WMR_DIBBITBLT);
-         pmr_px = (PU_WMRDIBBITBLT_PX) record;
+         pmr_px = (U_WMRDIBBITBLT_PX *) record;
          memcpy(pmr_px->rop3w, &dwRop3, 4);
          pmr_px->ySrc     = Src.y;
          pmr_px->xSrc     = Src.x;
@@ -3287,7 +3306,7 @@ char *U_WMRDIBBITBLT_set(
       record   = malloc(irecsize);
       if(record){
          U_WMRCORE_SETRECHEAD(record,irecsize,U_WMR_DIBBITBLT);
-         pmr_nopx = (PU_WMRDIBBITBLT_NOPX) record;
+         pmr_nopx = (U_WMRDIBBITBLT_NOPX *) record;
          memcpy(pmr_nopx->rop3w, &dwRop3, 4);
          pmr_nopx->ySrc     = Src.y;
          pmr_nopx->xSrc     = Src.x;
@@ -3319,22 +3338,22 @@ char *U_WMRDIBSTRETCHBLT_set(
       U_POINT16            Src,
       U_POINT16            cSrc,
       uint32_t             dwRop3,
-      const PU_BITMAPINFO  Bmi,
+      const U_BITMAPINFO  *Bmi,
       uint32_t             cbPx,
       const char          *Px
    ){
    char *record=NULL;
    uint32_t  irecsize;
    int   cbImage,cbImage4,cbBmi,off;
-   PU_WMRDIBSTRETCHBLT_PX pmr_px;
-   PU_WMRDIBSTRETCHBLT_NOPX pmr_nopx;
+   U_WMRDIBSTRETCHBLT_PX   *pmr_px;
+   U_WMRDIBSTRETCHBLT_NOPX *pmr_nopx;
    if(Px && Bmi){
       SET_CB_FROM_PXBMI(Px,Bmi,cbImage,cbImage4,cbBmi,cbPx);
       irecsize = U_SIZE_WMRDIBSTRETCHBLT_PX + cbBmi + cbImage4;
       record   = malloc(irecsize);
       if(record){
          U_WMRCORE_SETRECHEAD(record,irecsize,U_WMR_DIBSTRETCHBLT);
-         pmr_px = (PU_WMRDIBSTRETCHBLT_PX) record;
+         pmr_px = (U_WMRDIBSTRETCHBLT_PX *) record;
          memcpy(pmr_px->rop3w, &dwRop3, 4);
          pmr_px->hSrc     = cSrc.y;
          pmr_px->wSrc     = cSrc.x;
@@ -3355,7 +3374,7 @@ char *U_WMRDIBSTRETCHBLT_set(
       record   = malloc(irecsize);
       if(record){
          U_WMRCORE_SETRECHEAD(record,irecsize,U_WMR_DIBSTRETCHBLT);
-         pmr_nopx = (PU_WMRDIBSTRETCHBLT_NOPX) record;
+         pmr_nopx = (U_WMRDIBSTRETCHBLT_NOPX *) record;
          memcpy(pmr_nopx->rop3w, &dwRop3, 4);
          pmr_nopx->hSrc     = cSrc.y;
          pmr_nopx->wSrc     = cSrc.x;
@@ -3385,10 +3404,10 @@ char *U_WMRDIBSTRETCHBLT_set(
 char *U_WMRDIBCREATEPATTERNBRUSH_set(
        const uint16_t      Style, 
        const uint16_t      iUsage,
-       PU_BITMAPINFO       Bmi,   
+       const U_BITMAPINFO *Bmi,   
        const uint32_t      cbPx,  
        const char         *Px,     
-       PU_BITMAP16         Bm16  
+       const U_BITMAP16   *Bm16  
    ){
    char *record=NULL;
    uint32_t  irecsize;
@@ -3445,14 +3464,14 @@ char *U_WMRSTRETCHDIB_set(
       U_POINT16            cSrc,
       uint16_t             cUsage,
       uint32_t             dwRop3,
-      const PU_BITMAPINFO  Bmi,
+      const U_BITMAPINFO  *Bmi,
       uint32_t             cbPx,
       const char          *Px
    ){
    char *record;
    uint32_t  irecsize;
    int   cbImage,cbImage4,cbBmi,off;
-   PU_WMRSTRETCHDIB pmr;
+   U_WMRSTRETCHDIB *pmr;
 
    SET_CB_FROM_PXBMI(Px,Bmi,cbImage,cbImage4,cbBmi,cbPx);
    
@@ -3460,7 +3479,7 @@ char *U_WMRSTRETCHDIB_set(
    record   = malloc(irecsize);
    if(record){
       U_WMRCORE_SETRECHEAD(record,irecsize,U_WMR_STRETCHDIB);
-      pmr = (PU_WMRSTRETCHDIB) record;
+      pmr = (U_WMRSTRETCHDIB *) record;
       memcpy(pmr->rop3w, &dwRop3, 4);
       pmr->cUsage   = cUsage;
       pmr->hSrc     = cSrc.y;
@@ -3481,6 +3500,7 @@ char *U_WMRSTRETCHDIB_set(
    return(record);
 }
 
+//! \cond
 char *U_WMR44_set(void){
    return U_WMRCORENONE_set("U_WMR44");
 }
@@ -3496,6 +3516,7 @@ char *U_WMR46_set(void){
 char *U_WMR47_set(void){
    return U_WMRCORENONE_set("U_WMR47");
 }
+//! \endcond
 
 /**
     \brief Create and return a U_WMREXTFLOODFILL record
@@ -3514,6 +3535,7 @@ char *U_WMREXTFLOODFILL_set(uint16_t Mode, U_COLORREF Color, U_POINT16 coord){
    );
 }
 
+//! \cond
 char *U_WMR49_set(void){
    return U_WMRCORENONE_set("U_WMR49");
 }
@@ -4181,6 +4203,7 @@ char *U_WMREE_set(void){
 char *U_WMREF_set(void){
    return U_WMRCORENONE_set("U_WMREF");
 }
+//! \endcond
 
 /**
     \brief Create and return a U_WMRDELETEOBJECT record
@@ -4191,6 +4214,7 @@ char *U_WMRDELETEOBJECT_set(uint16_t object){
    return U_WMRCORE_1U16_set(U_WMR_DELETEOBJECT, object);
 }
 
+//! \cond
 char *U_WMRF1_set(void){
    return U_WMRCORENONE_set("U_WMRF1");
 }
@@ -4214,19 +4238,22 @@ char *U_WMRF5_set(void){
 char *U_WMRF6_set(void){
    return U_WMRCORENONE_set("U_WMRF6");
 }
+//! \endcond
 
 /**
     \brief Create and return a U_WMRCREATEPALETTE record
     \return pointer to the U_WMRCREATEPALETTE record, or NULL on error
     \param Palette Create a Palette object.
 */
-char *U_WMRCREATEPALETTE_set(PU_PALETTE Palette){
+char *U_WMRCREATEPALETTE_set(U_PALETTE *Palette){
    return U_WMRCORE_PALETTE_set(U_WMR_CREATEPALETTE, Palette);
 }
 
+//! \cond
 char *U_WMRF8_set(void){
    return U_WMRCORENONE_set("U_WMRF8");
 }
+//! \endcond
 
 /**
     \brief Allocate and construct a U_WMRCREATEPATTERNBRUSH record.
@@ -4236,7 +4263,7 @@ char *U_WMRF8_set(void){
     \param Pattern      byte array pattern, described by Bm16, for brush
 */
 char *U_WMRCREATEPATTERNBRUSH_set(
-     PU_BITMAP16 Bm16,
+     U_BITMAP16 *Bm16,
      char       *Pattern
    ){
    char *record;
@@ -4271,7 +4298,7 @@ char *U_WMRCREATEPENINDIRECT_set(U_PEN pen){
     \return pointer to the U_WMRCREATEFONTINDIRECT record, or NULL on error.
     \param font Parameters of the font object to create.
 */
-char *U_WMRCREATEFONTINDIRECT_set(PU_FONT font){
+char *U_WMRCREATEFONTINDIRECT_set(U_FONT *font){
    char *record=NULL;
    uint32_t  irecsize,off,flen;
    flen = 1 + strlen((char *)font->FaceName); /* include the null terminator in the count */
@@ -4295,12 +4322,14 @@ char *U_WMRCREATEBRUSHINDIRECT_set(U_WLOGBRUSH brush){
     return U_WMRCORE_2U16_N16_set(U_WMR_CREATEBRUSHINDIRECT, NULL, NULL, U_SIZE_WLOGBRUSH/2, &brush);
 }
 
- /* in Wine, not in WMF PDF */
- char *U_WMRCREATEBITMAPINDIRECT_set(void){
+/** in GDI and Wine, not in WMF manual.
+*/
+char *U_WMRCREATEBITMAPINDIRECT_set(void){
    return U_WMRCORENONE_set("U_WMRCREATEBITMAPINDIRECT");
 }
 
- /* in Wine, not in WMF PDF */
+/** in GDI and Wine, not in WMF manual.
+*/
  char *U_WMRCREATEBITMAP_set(void){
    return U_WMRCORENONE_set("U_WMRCREATEBITMAP");
 }
@@ -4310,7 +4339,7 @@ char *U_WMRCREATEBRUSHINDIRECT_set(U_WLOGBRUSH brush){
     \return pointer to the U_WMRCREATEREGION record, or NULL on error.
     \param region Parameters of the region object to create.
 */
-char *U_WMRCREATEREGION_set(PU_REGION region){
+char *U_WMRCREATEREGION_set(const U_REGION *region){
    char *record=NULL;
    uint32_t  irecsize,off;
    irecsize  = U_SIZE_METARECORD + region->Size;
@@ -4391,7 +4420,7 @@ These functions create standard structures used in the WMR records.
 *********************************************************************************************** */
 
 // hide these from Doxygen
-//! @cond
+//! \cond
 /* **********************************************************************************************
 These functions contain shared code used by various U_WMR*_get functions.  These should NEVER be called
 by end user code and to further that end prototypes are NOT provided and they are hidden from Doxygen.   
@@ -4424,7 +4453,7 @@ int U_WMRCORE_1U16_CRF_2U16_get(
       const char *contents,
       int         minsize,
       uint16_t   *arg1,
-      PU_COLORREF Color,
+      U_COLORREF *Color,
       uint16_t   *arg2,
       uint16_t   *arg3
    ){
@@ -4442,7 +4471,7 @@ int U_WMRCORE_1U16_CRF_2U16_get(
    return(size);
 }
 
-/* records that have a single uint16_t argument like PU_WMRSETMAPMODE
+/* records that have a single uint16_t argument like U_WMRSETMAPMODE
    May also be used with int16_t with appropriate casts */
 int U_WMRCORE_1U16_get(
       const char *contents, 
@@ -4596,7 +4625,7 @@ int U_WMRCORE_2U16_N16_get(
 int U_WMRCORE_PALETTE_get(
       const char *contents,
       int         minsize,
-      PU_PALETTE  Palette,
+      U_PALETTE  *Palette,
       const char **PalEntries 
    ){
    int  size = U_WMRCORE_RECSAFE_get(contents, minsize);
@@ -4608,14 +4637,14 @@ int U_WMRCORE_PALETTE_get(
    return(size);
 }
 
-//! @endcond
+//! \endcond
 
 /**
     \brief Return parameters from a bitmapcoreheader.
     All are returned as 32 bit integers, regardless of their internal representation.
     
     \param BmiCh       char * pointer to a U_BITMAPCOREHEADER.    Note, data may not be properly aligned.
-    \param Size_4      size of the coreheader in bytes
+    \param Size        size of the coreheader in bytes
     \param Width;      Width of pixel array
     \param Height;     Height of pixel array
     \param BitCount    Pixel Format (BitCount Enumeration)
@@ -4731,7 +4760,7 @@ int wget_DIB_params(
    if(bic == U_BI_RGB){
       *numCt     = get_real_color_count(dib);
       if(*numCt){ 
-         *ct = (PU_RGBQUAD) (dib + U_SIZE_BITMAPINFOHEADER); 
+         *ct = (U_RGBQUAD *) (dib + U_SIZE_BITMAPINFOHEADER); 
          *px += U_SIZE_COLORREF * (*numCt);
       }
       else {      *ct = NULL;                                            }
@@ -4767,8 +4796,8 @@ They are listed in order by the corresponding U_WMR_* index number.
 int wmfheader_get(
       const char      *contents, 
       const char      *blimit,
-      PU_WMRPLACEABLE  Placeable,
-      PU_WMRHEADER     Header
+      U_WMRPLACEABLE  *Placeable,
+      U_WMRHEADER     *Header
    ){
    uint32_t Key;
    int size=0;
@@ -4810,7 +4839,7 @@ int U_WMREOF_get(
 */
 int U_WMRSETBKCOLOR_get(
       const char  *contents, 
-      PU_COLORREF  Color
+      U_COLORREF  *Color
    ){
    int size = U_WMRCORE_RECSAFE_get(contents, (U_SIZE_WMRSETBKCOLOR));
    if(!size)return(0);
@@ -4915,7 +4944,7 @@ int U_WMRSETTEXTCHAREXTRA_get(
 */
 int U_WMRSETTEXTCOLOR_get(
       const char  *contents, 
-      PU_COLORREF  Color
+      U_COLORREF  *Color
    ){
    int size = U_WMRCORE_RECSAFE_get(contents, (U_SIZE_WMRSETTEXTCOLOR));
    if(!size)return(0);
@@ -4946,7 +4975,7 @@ int U_WMRSETTEXTJUSTIFICATION_get(
 */
 int U_WMRSETWINDOWORG_get(
       const char *contents, 
-      PU_POINT16  coord
+      U_POINT16 * coord
    ){
    return(U_WMRCORE_2U16_get(contents, (U_SIZE_WMRSETWINDOWORG), U_P16(coord->y), U_P16(coord->x)));
 }
@@ -4959,7 +4988,7 @@ int U_WMRSETWINDOWORG_get(
 */
 int U_WMRSETWINDOWEXT_get(
       const char *contents, 
-      PU_POINT16  extent
+      U_POINT16 * extent
    ){
    return(U_WMRCORE_2U16_get(contents, (U_SIZE_WMRSETWINDOWEXT), U_P16(extent->y), U_P16(extent->x)));
 }
@@ -4972,7 +5001,7 @@ int U_WMRSETWINDOWEXT_get(
 */
 int U_WMRSETVIEWPORTORG_get(
       const char *contents, 
-      PU_POINT16  coord
+      U_POINT16 * coord
    ){
    return(U_WMRCORE_2U16_get(contents, (U_SIZE_WMRSETVIEWPORTORG), U_P16(coord->y), U_P16(coord->x)));
 
@@ -4986,7 +5015,7 @@ int U_WMRSETVIEWPORTORG_get(
 */
 int U_WMRSETVIEWPORTEXT_get(
       const char *contents, 
-      PU_POINT16  extent
+      U_POINT16 * extent
    ){
    return(U_WMRCORE_2U16_get(contents, (U_SIZE_WMRSETVIEWPORTEXT), U_P16(extent->y), U_P16(extent->x)));
 }
@@ -4999,7 +5028,7 @@ int U_WMRSETVIEWPORTEXT_get(
 */
 int U_WMROFFSETWINDOWORG_get(
       const char *contents, 
-      PU_POINT16  offset
+      U_POINT16 * offset
    ){
    return(U_WMRCORE_2U16_get(contents, (U_SIZE_WMROFFSETWINDOWORG), U_P16(offset->y), U_P16(offset->x)));
 }
@@ -5013,8 +5042,8 @@ int U_WMROFFSETWINDOWORG_get(
 */
 int U_WMRSCALEWINDOWEXT_get(
       const char *contents, 
-     PU_POINT16   Denom, 
-     PU_POINT16   Num
+     U_POINT16 *  Denom, 
+     U_POINT16 *  Num
    ){
    return(U_WMRCORE_4U16_get(contents, (U_SIZE_WMRSCALEWINDOWEXT), U_P16(Denom->y), U_P16(Denom->x), U_P16(Num->y), U_P16(Num->x)));
 }
@@ -5027,7 +5056,7 @@ int U_WMRSCALEWINDOWEXT_get(
 */
 int U_WMROFFSETVIEWPORTORG_get(
       const char *contents,
-      PU_POINT16  offset
+      U_POINT16 * offset
    ){
    return(U_WMRCORE_2U16_get(contents, (U_SIZE_WMROFFSETVIEWPORTORG), U_P16(offset->y), U_P16(offset->x)));
 }
@@ -5041,8 +5070,8 @@ int U_WMROFFSETVIEWPORTORG_get(
 */
 int U_WMRSCALEVIEWPORTEXT_get(
       const char *contents, 
-     PU_POINT16   Denom, 
-     PU_POINT16   Num
+     U_POINT16 *  Denom, 
+     U_POINT16 *  Num
    ){
    return(U_WMRCORE_4U16_get(contents, (U_SIZE_WMRSCALEVIEWPORTEXT), U_P16(Denom->y), U_P16(Denom->x), U_P16(Num->y), U_P16(Num->x)));
 }
@@ -5055,7 +5084,7 @@ int U_WMRSCALEVIEWPORTEXT_get(
 */
 int U_WMRLINETO_get(
       const char *contents, 
-      PU_POINT16  coord
+      U_POINT16 * coord
    ){
    return(U_WMRCORE_2U16_get(contents, (U_SIZE_WMRLINETO), U_P16(coord->y), U_P16(coord->x)));
 }
@@ -5068,7 +5097,7 @@ int U_WMRLINETO_get(
 */
 int U_WMRMOVETO_get(
       const char *contents, 
-      PU_POINT16  coord
+      U_POINT16 * coord
    ){
    return(U_WMRCORE_2U16_get(contents, (U_SIZE_WMRMOVETO), U_P16(coord->y), U_P16(coord->x)));
 }
@@ -5081,7 +5110,7 @@ int U_WMRMOVETO_get(
 */
 int U_WMREXCLUDECLIPRECT_get(
       const char *contents,
-      PU_RECT16   rect
+      U_RECT16   *rect
    ){
    return(U_WMRCORE_4U16_get(contents, (U_SIZE_WMREXCLUDECLIPRECT), U_P16(rect->bottom), U_P16(rect->right), U_P16(rect->top), U_P16(rect->left)));
 }
@@ -5094,7 +5123,7 @@ int U_WMREXCLUDECLIPRECT_get(
 */
 int U_WMRINTERSECTCLIPRECT_get(
       const char *contents, 
-      PU_RECT16   rect
+      U_RECT16   *rect
    ){
    return(U_WMRCORE_4U16_get(contents, (U_SIZE_WMRINTERSECTCLIPRECT), U_P16(rect->bottom), U_P16(rect->right), U_P16(rect->top), U_P16(rect->left)));
 }
@@ -5109,9 +5138,9 @@ int U_WMRINTERSECTCLIPRECT_get(
 */
 int U_WMRARC_get(
       const char *contents, 
-      PU_POINT16  StartArc,
-      PU_POINT16  EndArc,
-      PU_RECT16   rect
+      U_POINT16  *StartArc,
+      U_POINT16  *EndArc,
+      U_RECT16   *rect
    ){
    return U_WMRCORE_8U16_get(
       contents,
@@ -5135,7 +5164,7 @@ int U_WMRARC_get(
 */
 int U_WMRELLIPSE_get(
       const char *contents,
-      PU_RECT16   rect
+      U_RECT16   *rect
    ){
    return U_WMRCORE_4U16_get(
       contents,
@@ -5158,8 +5187,8 @@ int U_WMRELLIPSE_get(
 int U_WMRFLOODFILL_get(
       const char *contents,
       uint16_t   *Mode, 
-      PU_COLORREF Color, 
-      PU_POINT16  coord
+      U_COLORREF *Color, 
+      U_POINT16  *coord
    ){
    return  U_WMRCORE_1U16_CRF_2U16_get(
       contents,
@@ -5181,9 +5210,9 @@ int U_WMRFLOODFILL_get(
 */
 int U_WMRPIE_get(
       const char *contents,
-      PU_POINT16 Radial1,
-      PU_POINT16 Radial2,
-      PU_RECT16 rect
+      U_POINT16 *Radial1,
+      U_POINT16 *Radial2,
+      U_RECT16  *rect
    ){
    return U_WMRCORE_8U16_get(
       contents,
@@ -5207,7 +5236,7 @@ int U_WMRPIE_get(
 */
 int U_WMRRECTANGLE_get(
       const char *contents,
-      PU_RECT16   rect
+      U_RECT16   *rect
    ){
    return U_WMRCORE_4U16_get(
       contents,
@@ -5231,7 +5260,7 @@ int U_WMRROUNDRECT_get(
       const char *contents,
       int16_t    *Width, 
       int16_t    *Height,
-      PU_RECT16   rect
+      U_RECT16   *rect
    ){
    return U_WMRCORE_6U16_get(
       contents,
@@ -5255,8 +5284,8 @@ int U_WMRROUNDRECT_get(
 */
 int U_WMRPATBLT_get(
       const char     *contents,
-      PU_POINT16      Dst,
-      PU_POINT16      cwh,
+      U_POINT16 *     Dst,
+      U_POINT16 *     cwh,
       uint32_t       *dwRop3
    ){
    int  size = U_WMRCORE_RECSAFE_get(contents, (U_SIZE_WMRPATBLT));
@@ -5280,23 +5309,36 @@ int U_WMRSAVEDC_get(
    return(U_WMRCORE_RECSAFE_get(contents, (U_SIZE_WMRSAVEDC)));
 }
 
+/**
+    \brief Get data from a  U_WMRSETPIXEL record
+    \return length of the U_WMRSETPIXEL record in bytes, or 0 on error
+    \param  contents   record to extract data from
+    \param  Color      pointer to a U_COLORREF variable where the color will be stored.
+    \param  Coord      pointer to a U_POINT16 variable where the coordinates will be stored.
+*/
 int U_WMRSETPIXEL_get(
       const char *contents,
-      PU_COLORREF Color, 
-      PU_POINT16  coord){
+      U_COLORREF *Color, 
+      U_POINT16  *Coord){
    return  U_WMRCORE_1U16_CRF_2U16_get(
       contents,
       (U_SIZE_WMRSETPIXEL),
       NULL,
       Color,
-      U_P16(coord->y),
-      U_P16(coord->x)
+      U_P16(Coord->y),
+      U_P16(Coord->x)
    );
 }
 
+/**
+    \brief Get data from a  U_WMROFFSETCLIPRGN record
+    \return length of the U_WMROFFSETCLIPRGN record in bytes, or 0 on error
+    \param  contents   record to extract data from
+    \param  offset     pointer to a U_POINT16 variable where the x,y offsets will be stored.
+*/
 int U_WMROFFSETCLIPRGN_get(
       const char *contents,
-      PU_POINT16 offset
+      U_POINT16  *offset
    ){
    return U_WMRCORE_2U16_get(contents, (U_SIZE_WMROFFSETCLIPRGN), U_P16(offset->y), U_P16(offset->x));
 }
@@ -5311,7 +5353,7 @@ int U_WMROFFSETCLIPRGN_get(
 */
 int U_WMRTEXTOUT_get(
       const char  *contents,
-      PU_POINT16   Dst, 
+      U_POINT16 *  Dst, 
       int16_t     *Length,
       const char **string
    ){
@@ -5344,11 +5386,11 @@ int U_WMRTEXTOUT_get(
 */
 int U_WMRBITBLT_get(
       const char  *contents,
-      PU_POINT16   Dst,
-      PU_POINT16   cwh,
-      PU_POINT16   Src,
+      U_POINT16 *  Dst,
+      U_POINT16 *  cwh,
+      U_POINT16 *  Src,
       uint32_t    *dwRop3,
-      PU_BITMAP16  Bm16,
+      U_BITMAP16  *Bm16,
       const char **px
    ){
    uint8_t   xb;
@@ -5394,12 +5436,12 @@ int U_WMRBITBLT_get(
 */
 int U_WMRSTRETCHBLT_get(
       const char  *contents,
-      PU_POINT16   Dst,
-      PU_POINT16   cDst,
-      PU_POINT16   Src,
-      PU_POINT16   cSrc,
+      U_POINT16 *  Dst,
+      U_POINT16 *  cDst,
+      U_POINT16 *  Src,
+      U_POINT16 *  cSrc,
       uint32_t    *dwRop3,
-      PU_BITMAP16  Bm16,
+      U_BITMAP16  *Bm16,
       const char **px
    ){
    uint8_t   xb;
@@ -5601,7 +5643,8 @@ int U_WMRSETTEXTALIGN_get(
    return U_WMRCORE_1U16_get(contents, (U_SIZE_WMRSETTEXTALIGN), Mode);
 }
 
-/* in Wine, not in WMF PDF. */
+/** in GDI and Wine, not in WMF manual.
+*/
 int U_WMRDRAWTEXT_get(void){  /* in Wine, not in WMF PDF. */
    return U_WMRCORENONE_get("U_WMRDRAWTEXT");
 }
@@ -5616,9 +5659,9 @@ int U_WMRDRAWTEXT_get(void){  /* in Wine, not in WMF PDF. */
 */
 int U_WMRCHORD_get(
       const char *contents,
-      PU_POINT16  Radial1, 
-      PU_POINT16  Radial2, 
-      PU_RECT16   rect
+      U_POINT16  *Radial1, 
+      U_POINT16  *Radial2, 
+      U_RECT16   *rect
    ){
    return U_WMRCORE_8U16_get(
       contents,
@@ -5663,12 +5706,12 @@ int U_WMRSETMAPPERFLAGS_get(
 */
 int U_WMREXTTEXTOUT_get(
       const char      *contents, 
-      PU_POINT16       Dst,
+      U_POINT16 *      Dst,
       int16_t         *Length,
       uint16_t        *Opts, 
       const char     **string, 
       const int16_t  **dx, 
-      PU_RECT16        rect
+      U_RECT16        *rect
    ){
    int  size = U_WMRCORE_RECSAFE_get(contents, (U_SIZE_WMREXTTEXTOUT));
    int  off  = U_SIZE_METARECORD;
@@ -5701,9 +5744,9 @@ int U_WMREXTTEXTOUT_get(
 */
 int U_WMRSETDIBTODEV_get(
       const char  *contents, 
-      PU_POINT16   Dst,
-      PU_POINT16   cwh,
-      PU_POINT16   Src,
+      U_POINT16 *  Dst,
+      U_POINT16 *  cwh,
+      U_POINT16 *  Src,
       uint16_t    *cUsage,
       uint16_t    *ScanCount,
       uint16_t    *StartScan,
@@ -5757,7 +5800,7 @@ int U_WMRREALIZEPALETTE_get(
 */
 int U_WMRANIMATEPALETTE_get(
       const char  *contents,
-      PU_PALETTE   Palette,
+      U_PALETTE   *Palette,
       const char **PalEntries 
    ){
    return U_WMRCORE_PALETTE_get(contents, (U_SIZE_WMRANIMATEPALETTE), Palette, PalEntries);
@@ -5772,7 +5815,7 @@ int U_WMRANIMATEPALETTE_get(
 */
 int U_WMRSETPALENTRIES_get(
       const char  *contents, 
-      PU_PALETTE   Palette,
+      U_PALETTE   *Palette,
       const char **PalEntries 
    ){
    return U_WMRCORE_PALETTE_get(contents, (U_SIZE_WMRSETPALENTRIES), Palette, PalEntries);
@@ -5814,6 +5857,7 @@ int U_WMRRESIZEPALETTE_get(
    return U_WMRCORE_1U16_get(contents, (U_SIZE_WMRRESIZEPALETTE), Palette);
 }
 
+//! \cond
 int U_WMR3A_get(void){
    return U_WMRCORENONE_get("U_WMR3A");
 }
@@ -5837,6 +5881,7 @@ int U_WMR3E_get(void){
 int U_WMR3F_get(void){
    return U_WMRCORENONE_get("U_WMR3F");
 }
+//! \endcond
 
 // U_WMRDIBBITBLT_get
 /**
@@ -5851,9 +5896,9 @@ int U_WMR3F_get(void){
 */
 int U_WMRDIBBITBLT_get(
       const char  *contents, 
-      PU_POINT16   Dst,
-      PU_POINT16   cwh,
-      PU_POINT16   Src,
+      U_POINT16 *  Dst,
+      U_POINT16 *  cwh,
+      U_POINT16 *  Src,
       uint32_t    *dwRop3,
       const char **dib
    ){
@@ -5897,10 +5942,10 @@ int U_WMRDIBBITBLT_get(
 */
 int U_WMRDIBSTRETCHBLT_get(
       const char  *contents, 
-      PU_POINT16   Dst,
-      PU_POINT16   cDst,
-      PU_POINT16   Src,
-      PU_POINT16   cSrc,
+      U_POINT16 *  Dst,
+      U_POINT16 *  cDst,
+      U_POINT16 *  Src,
+      U_POINT16 *  cSrc,
       uint32_t    *dwRop3,
       const char **dib
    ){
@@ -5993,10 +6038,10 @@ int U_WMRDIBCREATEPATTERNBRUSH_get(
 */
 int U_WMRSTRETCHDIB_get(
       const char  *contents, 
-      PU_POINT16   Dst,
-      PU_POINT16   cDst,
-      PU_POINT16   Src,
-      PU_POINT16   cSrc,
+      U_POINT16 *  Dst,
+      U_POINT16 *  cDst,
+      U_POINT16 *  Src,
+      U_POINT16 *  cSrc,
       uint16_t    *cUsage,
       uint32_t    *dwRop3,
       const char **dib
@@ -6018,6 +6063,7 @@ int U_WMRSTRETCHDIB_get(
    return(size);
 }
 
+//! \cond
 int U_WMR44_get(void){
    return U_WMRCORENONE_get("U_WMR44");
 }
@@ -6033,6 +6079,7 @@ int U_WMR46_get(void){
 int U_WMR47_get(void){
    return U_WMRCORENONE_get("U_WMR47");
 }
+//! \endcond
 
 /**
     \brief Retrieve values from a U_WMREXTFLOODFILL record
@@ -6045,8 +6092,8 @@ int U_WMR47_get(void){
 int U_WMREXTFLOODFILL_get(
       const char  *contents, 
       uint16_t    *Mode, 
-      PU_COLORREF  Color, 
-      PU_POINT16   coord
+      U_COLORREF  *Color, 
+      U_POINT16 *  coord
    ){
    return  U_WMRCORE_1U16_CRF_2U16_get(
       contents,
@@ -6058,6 +6105,7 @@ int U_WMREXTFLOODFILL_get(
    );
 }
 
+//! \cond
 int U_WMR49_get(void){
    return U_WMRCORENONE_get("U_WMR49");
 }
@@ -6725,6 +6773,7 @@ int U_WMREE_get(void){
 int U_WMREF_get(void){
    return U_WMRCORENONE_get("U_WMREF");
 }
+//! \endcond
 
 /**
     \brief Get data from a  U_WMRDELETEOBJECT record.
@@ -6739,6 +6788,7 @@ int U_WMRDELETEOBJECT_get(
    return U_WMRCORE_1U16_get(contents, (U_SIZE_WMRDELETEOBJECT), Object);
 }
 
+//! \cond
 int U_WMRF1_get(void){
    return U_WMRCORENONE_get("U_WMRF1");
 }
@@ -6762,6 +6812,7 @@ int U_WMRF5_get(void){
 int U_WMRF6_get(void){
    return U_WMRCORENONE_get("U_WMRF6");
 }
+//! \endcond
 
 /**
     \brief Retrieve values from a U_WMRCREATEPALETTE record
@@ -6772,15 +6823,17 @@ int U_WMRF6_get(void){
 */
 int U_WMRCREATEPALETTE_get(
       const char  *contents,
-      PU_PALETTE   Palette,
+      U_PALETTE   *Palette,
       const char **PalEntries 
    ){
    return U_WMRCORE_PALETTE_get(contents, (U_SIZE_WMRCREATEPALETTE), Palette, PalEntries);
 }
 
+//! \cond
 int U_WMRF8_get(void){
    return U_WMRCORENONE_get("U_WMRF8");
 }
+//! \endcond
 
 /**
     \brief Get data from a  U_WMRCREATEPATTERNBRUSH record.
@@ -6793,7 +6846,7 @@ int U_WMRF8_get(void){
 */
 int U_WMRCREATEPATTERNBRUSH_get(
       const char   *contents,
-      PU_BITMAP16   Bm16,
+      U_BITMAP16   *Bm16,
       int          *pasize,
       const char  **Pattern
    ){
@@ -6816,7 +6869,7 @@ int U_WMRCREATEPATTERNBRUSH_get(
 */
 int U_WMRCREATEPENINDIRECT_get(
       const char   *contents,
-      PU_PEN        pen
+      U_PEN        *pen
    ){
    int  size = U_WMRCORE_RECSAFE_get(contents, (U_SIZE_WMRCREATEPENINDIRECT));
    if(!size)return(0);
@@ -6850,12 +6903,14 @@ int U_WMRCREATEBRUSHINDIRECT_get(
     return U_WMRCORE_2U16_N16_get(contents, (U_SIZE_WMRCREATEBRUSHINDIRECT), NULL, NULL, brush);
 }
 
- /* in Wine, not in WMF PDF */
+/** in GDI and Wine, not in WMF manual.
+*/
 int U_WMRCREATEBITMAPINDIRECT_get(void){
    return U_WMRCORENONE_get("U_WMRCREATEBITMAPINDIRECT");
 }
 
- /* in Wine, not in WMF PDF */
+/** in GDI and Wine, not in WMF manual.
+*/
 int U_WMRCREATEBITMAP_get(void){
    return U_WMRCORENONE_get("U_WMRCREATEBITMAP");
 }

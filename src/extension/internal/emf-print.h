@@ -68,6 +68,11 @@ public:
 protected:
     static void  smuggle_adxkyrtl_out(const char *string, uint32_t **adx, double *ky, int *rtl, int *ndx, float scale);
 
+    Geom::Path  pathv_to_simple_polygon(Geom::PathVector const &pathv, int *vertices);
+    Geom::Path  pathv_to_rect(Geom::PathVector const &pathv, bool *is_rect, double *angle);
+    Geom::Point get_pathrect_corner(Geom::Path pathRect, double angle, int corner);
+    U_TRIVERTEX make_trivertex(Geom::Point Pt, U_COLORREF uc);
+    int         vector_rect_alignment(double angle, Geom::Point vtest);
     int         create_brush(SPStyle const *style, PU_COLORREF fcolor);
     void        destroy_brush();
     int         create_pen(SPStyle const *style, const Geom::Affine &transform);

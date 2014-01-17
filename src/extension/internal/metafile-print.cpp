@@ -187,7 +187,6 @@ U_COLORREF PrintMetafile::avg_stop_color(SPGradient *gr)
     return cr;
 }
 
-#define clrweight(a,b,t) ((1-t)*((double) a) + (t)*((double) b))
 U_COLORREF PrintMetafile::weight_opacity(U_COLORREF c1)
 {
     float opa = c1.Reserved / 255.0;
@@ -199,9 +198,12 @@ U_COLORREF PrintMetafile::weight_opacity(U_COLORREF c1)
     return result;
 }
 
+/* t between 0 and 1, values outside that range use the nearest limit */
 U_COLORREF PrintMetafile::weight_colors(U_COLORREF c1, U_COLORREF c2, double t)
 {
+#define clrweight(a,b,t) ((1-t)*((double) a) + (t)*((double) b))
     U_COLORREF result;
+    t = ( t > 1.0 ? 1.0 : ( t < 0.0 ? 0.0 : t));
     result.Red      = clrweight(c1.Red,      c2.Red,      t);
     result.Green    = clrweight(c1.Green,    c2.Green,    t);
     result.Blue     = clrweight(c1.Blue,     c2.Blue,     t);
