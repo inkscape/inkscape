@@ -538,7 +538,8 @@ void SymbolsDialog::get_symbols() {
 
     gchar *fullname = g_build_filename((*it).c_str(), filename, NULL);
 
-    if ( !Inkscape::IO::file_test( fullname, G_FILE_TEST_IS_DIR ) ) {
+    if ( !Inkscape::IO::file_test( fullname, G_FILE_TEST_IS_DIR )
+         && ( Glib::str_has_suffix(fullname, ".svg") || Glib::str_has_suffix(fullname, ".vss") ) ) {
 
       Glib::ustring fn( filename );
       Glib::ustring tag = fn.substr( fn.find_last_of(".") + 1 );
@@ -560,7 +561,7 @@ void SymbolsDialog::get_symbols() {
 
         symbol_doc = SPDocument::createNewDoc( fullname, FALSE );
         if( symbol_doc ) {
-              gchar *title = symbol_doc->getRoot()->title();
+              const gchar *title = g_dpgettext2(NULL, "Symbol", symbol_doc->getRoot()->title());
               if( title == NULL ) {
                   title = _("Unnamed Symbols");
               }
@@ -675,7 +676,7 @@ void SymbolsDialog::add_symbol( SPObject* symbol ) {
   if( pixbuf ) {
     Gtk::ListStore::iterator row = store->append();
     (*row)[columns->symbol_id]    = Glib::ustring( id );
-    (*row)[columns->symbol_title] = Glib::ustring( title );
+    (*row)[columns->symbol_title] = Glib::ustring( g_dpgettext2(NULL, "Symbol", title) );
     (*row)[columns->symbol_image] = pixbuf;
   }
 

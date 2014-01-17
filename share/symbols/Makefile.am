@@ -2,7 +2,16 @@
 symbolsdir = $(datadir)/inkscape/symbols
 
 # Adding srcdir allows out-of-src builds to work
-symbols_DATA = $(wildcard $(srcdir)/*.svg)
+symbols_DATA = \
+    README \
+    $(wildcard $(srcdir)/*.svg) \
+    symbols.h
 
-EXTRA_DIST = $(symbols_DATA)
+symbols_i18n = $(wildcard $(srcdir)/*.svg)
+
+symbols.h: i18n.py $(symbols_i18n)
+	$(srcdir)/i18n.py $(foreach i,$(symbols_i18n),$(srcdir)/$(i)) > $(srcdir)/symbols.h
+
+EXTRA_DIST = $(symbols_DATA) \
+             i18n.py
 

@@ -40,8 +40,9 @@ IGNORE = (
     # header files
     "share/filters/filters.svg.h",
     "share/palettes/palettes.h",
-    "share/palettes/palettes.h",
     "share/patterns/patterns.svg.h",
+    "share/templates/templates.h",
+    "share/symbols/symbols.h",
     "src/libcola/cycle_detector.h",
     "src/libnr/in-svg-plane-test.h",
     "src/libnr/nr-point-fns-test.h",
