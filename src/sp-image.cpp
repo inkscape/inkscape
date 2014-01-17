@@ -24,6 +24,7 @@
 #include <2geom/rect.h>
 #include <2geom/transforms.h>
 #include <glibmm/i18n.h>
+#include <glibmm/miscutils.h>
 
 #include "display/drawing-image.h"
 #include "display/cairo-utils.h"
@@ -75,7 +76,7 @@
 
 static void sp_image_set_curve(SPImage *image);
 
-static Inkscape::Pixbuf *sp_image_repr_read_image(gchar const *href, gchar const *absref, gchar const *base );
+gchar const *sp_image_repr_read_filename(gchar const *href, gchar const *absref, gchar const *base );
 static void sp_image_update_arenaitem (SPImage *img, Inkscape::DrawingImage *ai);
 static void sp_image_update_canvas_image (SPImage *image);
 
@@ -333,11 +334,26 @@ void SPImage::update(SPCtx *ctx, unsigned int flags) {
 
         if (this->href) {
             Inkscape::Pixbuf *pixbuf = NULL;
-            pixbuf = sp_image_repr_read_image (
+
+            gchar const* filename = sp_image_repr_read_filename (
                 this->getRepr()->attribute("xlink:href"),
                 this->getRepr()->attribute("sodipodi:absref"),
                 doc->getBase());
-            
+
+            if(filename && g_str_has_suffix(filename, ".svg")) {
+                // TODO: We want to deal with svg images properly. This
+                // space allows us to do so later.
+                g_warning("Including svg images tags is not yet supported.");
+            } else if (filename) {
+                pixbuf = Inkscape::Pixbuf::create_from_file(filename);
+            } else {
+                /* Nope: We do not find any valid pixmap file :-( */
+                pixbuf = new Inkscape::Pixbuf(
+                    gdk_pixbuf_new_from_xpm_data((const gchar **) brokenimage_xpm));
+
+                /* If the xpm doesn't load, our libraries are broken */
+                g_assert (pixbuf != NULL);
+            }
             if (pixbuf) {
 // BLIP
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
@@ -646,9 +662,8 @@ Inkscape::DrawingItem* SPImage::show(Inkscape::Drawing &drawing, unsigned int /*
     return ai;
 }
 
-Inkscape::Pixbuf *sp_image_repr_read_image(gchar const *href, gchar const *absref, gchar const *base)
+gchar const *sp_image_repr_read_filename(gchar const *href, gchar const *absref, gchar const *base)
 {
-    Inkscape::Pixbuf *inkpb = 0;
     gchar const *filename = href;
 
     if (filename != NULL) {
@@ -666,37 +681,20 @@ Inkscape::Pixbuf *sp_image_repr_read_image(gchar const *href, gchar const *absre
     }
 
     if (filename && g_file_test(filename, G_FILE_TEST_EXISTS) ) {
-        inkpb = Inkscape::Pixbuf::create_from_file(filename);
-        if (inkpb != NULL) {
-            // g_free filename?
-            return inkpb;
-        }
+        return filename;
     }
 
     /* at last try to load from sp absolute path name */
-    filename = absref;
-    if (filename != NULL) {
+    if (absref != NULL && g_file_test(absref, G_FILE_TEST_EXISTS)) {
         // using absref is outside of SVG rules, so we must at least warn the user
         if ( base != NULL && href != NULL ) {
             g_warning ("<image xlink:href=\"%s\"> did not resolve to a valid image file (base dir is %s), now trying sodipodi:absref=\"%s\"", href, base, absref);
         } else {
             g_warning ("xlink:href did not resolve to a valid image file, now trying sodipodi:absref=\"%s\"", absref);
         }
-
-        inkpb = Inkscape::Pixbuf::create_from_file(filename);
-        if (inkpb != NULL) {
-            return inkpb;
-        }
+        return absref;
     }
-    /* Nope: We do not find any valid pixmap file :-( */
-    GdkPixbuf *pixbuf = gdk_pixbuf_new_from_xpm_data((const gchar **) brokenimage_xpm);
-    inkpb = new Inkscape::Pixbuf(pixbuf);
-
-    /* It should be included xpm, so if it still does not does load, */
-    /* our libraries are broken */
-    g_assert (inkpb != NULL);
-
-    return inkpb;
+    return NULL;
 }
 
 /* We assert that realpixbuf is either NULL or identical size to pixbuf */
