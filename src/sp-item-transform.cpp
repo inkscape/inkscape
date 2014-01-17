@@ -132,7 +132,7 @@ Geom::Affine get_scale_transform_for_uniform_stroke(Geom::Rect const &bbox_visua
     // We will now try to calculate the affine transformation required to transform the first visual bounding box into
     // the second one, while accounting for strokewidth
 
-    if ((fabs(w0 - r0) < 1e-6) && (fabs(h0 - r0) < 1e-6)) {
+    if ((fabs(w0 - stroke_x) < 1e-6) && (fabs(h0 - stroke_y) < 1e-6)) {
         return Geom::Affine();
     }
 
@@ -140,11 +140,11 @@ Geom::Affine get_scale_transform_for_uniform_stroke(Geom::Rect const &bbox_visua
     gdouble scale_y = 1;
     gdouble r1 = r0;
 
-    if ((fabs(w0 - r0) < 1e-6) || w1 == 0) { // We have a vertical line at hand
+    if ((fabs(w0 - stroke_x) < 1e-6) || w1 == 0) { // We have a vertical line at hand
         r1 = transform_stroke ? r0 * sqrt(h1/h0) : r0;
         scale_x = 1;
         scale_y = preserve ? h1/h0 : (h1 - r1)/(h0 - r0);
-    } else if ((fabs(h0 - r0) < 1e-6) || h1 == 0) { // We have a horizontal line at hand
+    } else if ((fabs(h0 - stroke_y) < 1e-6) || h1 == 0) { // We have a horizontal line at hand
         r1 = transform_stroke ? r0 * sqrt(w1/w0) : r0;
         scale_x = preserve ? w1/w0 : (w1 - r1)/(w0 - r0);
         scale_y = 1;
