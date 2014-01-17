@@ -49,6 +49,7 @@
 
 #include "symbols.h"
 
+#include "filedialog.h"
 #include "selection.h"
 #include "desktop.h"
 #include "desktop-handles.h"
@@ -539,7 +540,7 @@ void SymbolsDialog::get_symbols() {
     gchar *fullname = g_build_filename((*it).c_str(), filename, NULL);
 
     if ( !Inkscape::IO::file_test( fullname, G_FILE_TEST_IS_DIR )
-         && ( Glib::str_has_suffix(fullname, ".svg") || Glib::str_has_suffix(fullname, ".vss") ) ) {
+         && ( hasSuffix(fullname, ".svg") || hasSuffix(fullname, ".vss") ) ) {
 
       Glib::ustring fn( filename );
       Glib::ustring tag = fn.substr( fn.find_last_of(".") + 1 );
