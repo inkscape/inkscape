@@ -155,7 +155,7 @@ void Inkscape::DocumentUndo::maybeDone(SPDocument *doc, const gchar *key, const 
 {
 	g_assert (doc != NULL);
 	g_assert (doc->priv != NULL);
-	g_assert (doc->priv->sensitive);
+        g_return_if_fail(doc->priv->sensitive);
         if ( key && !*key ) {
             g_warning("Blank undo key specified.");
         }
@@ -204,7 +204,7 @@ void Inkscape::DocumentUndo::cancel(SPDocument *doc)
 {
 	g_assert (doc != NULL);
 	g_assert (doc->priv != NULL);
-	g_assert (doc->priv->sensitive);
+        g_return_if_fail(doc->priv->sensitive);
 
 	sp_repr_rollback (doc->rdoc);
 
@@ -287,7 +287,7 @@ gboolean Inkscape::DocumentUndo::redo(SPDocument *doc)
 
 	g_assert (doc != NULL);
 	g_assert (doc->priv != NULL);
-	g_assert (doc->priv->sensitive);
+        g_return_val_if_fail(doc->priv->sensitive, FALSE);
 
 	doc->priv->sensitive = FALSE;
         doc->priv->seeking = true;
