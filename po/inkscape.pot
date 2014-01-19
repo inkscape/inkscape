@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2014-01-19 16:23+0100\n"
+"POT-Creation-Date: 2014-01-19 16:41+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20979,10 +20979,6 @@ msgstr ""
 
 #: ../src/ui/dialog/template-widget.cpp:36
 msgid "More info"
-msgstr ""
-
-#: ../src/ui/dialog/template-widget.cpp:37
-msgid " "
 msgstr ""
 
 #: ../src/ui/dialog/template-widget.cpp:38
