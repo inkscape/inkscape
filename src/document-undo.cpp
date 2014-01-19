@@ -242,7 +242,7 @@ gboolean Inkscape::DocumentUndo::undo(SPDocument *doc)
 
 	g_assert (doc != NULL);
 	g_assert (doc->priv != NULL);
-	g_assert (doc->priv->sensitive);
+	g_return_val_if_fail (doc->priv->sensitive, FALSE);
 
 	doc->priv->sensitive = FALSE;
         doc->priv->seeking = true;

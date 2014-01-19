@@ -57,6 +57,7 @@
 #include "shape-editor.h"
 #include "sp-guide.h"
 #include "color.h"
+#include "document-undo.h"
 
 // globals for temporary switching to selector by space
 static bool selector_toggled = FALSE;
@@ -977,9 +978,16 @@ gint sp_event_context_root_handler(ToolBase * event_context,
 
 gint sp_event_context_virtual_root_handler(ToolBase * event_context, GdkEvent * event) {
     gint ret = false;
-    if (event_context) {    // If no event-context is available then do nothing, otherwise Inkscape would crash
-                            // (see the comment in SPDesktop::set_event_context, and bug LP #622350)
-        //ret = (SP_EVENT_CONTEXT_CLASS(G_OBJECT_GET_CLASS(event_context)))->root_handler(event_context, event);
+    if (event_context) {
+        // We want to disable undo while we drag anything
+        SPDocument *document = sp_desktop_document(event_context->desktop);
+        if (event->type == GDK_BUTTON_PRESS) {
+            event_context->undo_sensitive = DocumentUndo::getUndoSensitive(document);
+            DocumentUndo::setUndoSensitive(document, false);
+        } else if (event->type == GDK_BUTTON_RELEASE) {
+            DocumentUndo::setUndoSensitive(document, event_context->undo_sensitive);
+        }
+
     	ret = event_context->root_handler(event);
 
         set_event_location(event_context->desktop, event);
