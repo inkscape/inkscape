@@ -110,6 +110,9 @@ Geom::Affine get_scale_transform_for_uniform_stroke(Geom::Rect const &bbox_visua
     // -> The width and height of the geometric bounding box will therefore be (w0 - 2*0.5*r0) and (h0 - 2*0.5*r0)
     // 4) If preserve transforms is true, then stroke_x != stroke_y, since these are the apparent stroke widths, after transforming
 
+    if ((stroke_x == Geom::infinity()) || (fabs(stroke_x) < 1e-6)) stroke_x = 0;
+    if ((stroke_y == Geom::infinity()) || (fabs(stroke_y) < 1e-6)) stroke_y = 0;
+
     gdouble w0 = bbox_visual.width(); // will return a value >= 0, as required further down the road
     gdouble h0 = bbox_visual.height();
     gdouble r0 = sqrt(stroke_x*stroke_y); // r0 is redundant, used only for those cases where stroke_x = stroke_y
