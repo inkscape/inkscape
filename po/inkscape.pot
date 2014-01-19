@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2014-01-17 20:14+0100\n"
+"POT-Creation-Date: 2014-01-19 16:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6329,8 +6329,8 @@ msgstr ""
 #: ../src/extension/internal/cairo-ps-out.cpp:333
 #: ../src/extension/internal/cairo-ps-out.cpp:372
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:250
-#: ../src/extension/internal/emf-inout.cpp:3551
-#: ../src/extension/internal/wmf-inout.cpp:3236
+#: ../src/extension/internal/emf-inout.cpp:3520
+#: ../src/extension/internal/wmf-inout.cpp:3088
 msgid "Convert texts to paths"
 msgstr ""
 
@@ -6498,70 +6498,74 @@ msgstr ""
 msgid "Open presentation exchange files saved in Corel DRAW"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3535
+#: ../src/extension/internal/emf-inout.cpp:3504
 msgid "EMF Input"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3540
+#: ../src/extension/internal/emf-inout.cpp:3509
 msgid "Enhanced Metafiles (*.emf)"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3541
+#: ../src/extension/internal/emf-inout.cpp:3510
 msgid "Enhanced Metafiles"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3549
+#: ../src/extension/internal/emf-inout.cpp:3518
 msgid "EMF Output"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3552
-#: ../src/extension/internal/wmf-inout.cpp:3237
+#: ../src/extension/internal/emf-inout.cpp:3521
+#: ../src/extension/internal/wmf-inout.cpp:3089
 msgid "Map Unicode to Symbol font"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3553
-#: ../src/extension/internal/wmf-inout.cpp:3238
+#: ../src/extension/internal/emf-inout.cpp:3522
+#: ../src/extension/internal/wmf-inout.cpp:3090
 msgid "Map Unicode to Wingdings"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3554
-#: ../src/extension/internal/wmf-inout.cpp:3239
+#: ../src/extension/internal/emf-inout.cpp:3523
+#: ../src/extension/internal/wmf-inout.cpp:3091
 msgid "Map Unicode to Zapf Dingbats"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3555
-#: ../src/extension/internal/wmf-inout.cpp:3240
+#: ../src/extension/internal/emf-inout.cpp:3524
+#: ../src/extension/internal/wmf-inout.cpp:3092
 msgid "Use MS Unicode PUA (0xF020-0xF0FF) for converted characters"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3556
-#: ../src/extension/internal/wmf-inout.cpp:3241
+#: ../src/extension/internal/emf-inout.cpp:3525
+#: ../src/extension/internal/wmf-inout.cpp:3093
 msgid "Compensate for PPT font bug"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3557
-#: ../src/extension/internal/wmf-inout.cpp:3242
+#: ../src/extension/internal/emf-inout.cpp:3526
+#: ../src/extension/internal/wmf-inout.cpp:3094
 msgid "Convert dashed/dotted lines to single lines"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3558
-#: ../src/extension/internal/wmf-inout.cpp:3243
+#: ../src/extension/internal/emf-inout.cpp:3527
+#: ../src/extension/internal/wmf-inout.cpp:3095
 msgid "Convert gradients to colored polygon series"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3559
+#: ../src/extension/internal/emf-inout.cpp:3528
+msgid "Use native rectangular linear gradients"
+msgstr ""
+
+#: ../src/extension/internal/emf-inout.cpp:3529
 msgid "Map all fill patterns to standard EMF hatches"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3560
+#: ../src/extension/internal/emf-inout.cpp:3530
 msgid "Ignore image rotations"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3564
+#: ../src/extension/internal/emf-inout.cpp:3534
 msgid "Enhanced Metafile (*.emf)"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3565
+#: ../src/extension/internal/emf-inout.cpp:3535
 msgid "Enhanced Metafile"
 msgstr ""
 
@@ -7072,7 +7076,7 @@ msgstr ""
 
 #: ../src/extension/internal/filter/bumps.h:322
 #: ../src/extension/internal/filter/transparency.h:57
-#: ../src/filter-enums.cpp:29 ../src/sp-image.cpp:632
+#: ../src/filter-enums.cpp:29 ../src/sp-image.cpp:637
 msgid "Image"
 msgstr ""
 
@@ -8758,33 +8762,33 @@ msgstr ""
 msgid "Microsoft Visio 2013 drawing (*.vsdx)"
 msgstr ""
 
-#: ../src/extension/internal/wmf-inout.cpp:3220
+#: ../src/extension/internal/wmf-inout.cpp:3072
 msgid "WMF Input"
 msgstr ""
 
-#: ../src/extension/internal/wmf-inout.cpp:3225
+#: ../src/extension/internal/wmf-inout.cpp:3077
 msgid "Windows Metafiles (*.wmf)"
 msgstr ""
 
-#: ../src/extension/internal/wmf-inout.cpp:3226
+#: ../src/extension/internal/wmf-inout.cpp:3078
 msgid "Windows Metafiles"
 msgstr ""
 
-#: ../src/extension/internal/wmf-inout.cpp:3234
+#: ../src/extension/internal/wmf-inout.cpp:3086
 msgid "WMF Output"
 msgstr ""
 
-#: ../src/extension/internal/wmf-inout.cpp:3244
+#: ../src/extension/internal/wmf-inout.cpp:3096
 msgid "Map all fill patterns to standard WMF hatches"
 msgstr ""
 
-#: ../src/extension/internal/wmf-inout.cpp:3248
+#: ../src/extension/internal/wmf-inout.cpp:3100
 #: ../share/extensions/wmf_input.inx.h:2
 #: ../share/extensions/wmf_output.inx.h:2
 msgid "Windows Metafile (*.wmf)"
 msgstr ""
 
-#: ../src/extension/internal/wmf-inout.cpp:3249
+#: ../src/extension/internal/wmf-inout.cpp:3101
 msgid "Windows Metafile"
 msgstr ""
 
@@ -10124,11 +10128,13 @@ msgid "Specifies the right end of the bisector"
 msgstr ""
 
 #: ../src/live_effects/lpe-angle_bisector.cpp:86
+#: ../src/live_effects/lpe-perp_bisector.cpp:159
 msgid "Adjust the \"left\" end of the bisector"
 msgstr ""
 
 #: ../src/live_effects/lpe-angle_bisector.cpp:92
-msgid "Adjust the \"right\" of the bisector"
+#: ../src/live_effects/lpe-perp_bisector.cpp:165
+msgid "Adjust the \"right\" end of the bisector"
 msgstr ""
 
 #: ../src/live_effects/lpe-bendpath.cpp:53
@@ -10936,14 +10942,6 @@ msgstr ""
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:77
 msgid "Fuse ends closer than this number. 0 means don't fuse."
-msgstr ""
-
-#: ../src/live_effects/lpe-perp_bisector.cpp:159
-msgid "Adjust the bisector's \"left\" end"
-msgstr ""
-
-#: ../src/live_effects/lpe-perp_bisector.cpp:165
-msgid "Adjust the bisector's \"right\" end"
 msgstr ""
 
 #. initialise your parameters here:
@@ -13171,16 +13169,16 @@ msgstr ""
 msgid "at %d degrees, through (%s,%s)"
 msgstr ""
 
-#: ../src/sp-image.cpp:640
+#: ../src/sp-image.cpp:645
 msgid "embedded"
 msgstr ""
 
-#: ../src/sp-image.cpp:648
+#: ../src/sp-image.cpp:653
 #, c-format
 msgid "[bad reference]: %s"
 msgstr ""
 
-#: ../src/sp-image.cpp:649
+#: ../src/sp-image.cpp:654
 #, c-format
 msgid "%d &#215; %d: %s"
 msgstr ""
@@ -22752,7 +22750,7 @@ msgstr[1] ""
 msgid "Type text"
 msgstr ""
 
-#: ../src/ui/tools/tool-base.cpp:697
+#: ../src/ui/tools/tool-base.cpp:698
 msgid "<b>Space+mouse move</b> to pan canvas"
 msgstr ""
 

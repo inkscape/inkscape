@@ -89,7 +89,7 @@ LPEAngleBisector::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *deskt
     {
         KnotHolderEntity *e = new AB::KnotHolderEntityRightEnd(this);
         e->create( desktop, item, knotholder, Inkscape::CTRL_TYPE_UNKNOWN,
-                   _("Adjust the \"right\" of the bisector") );
+                   _("Adjust the \"right\" end of the bisector") );
         knotholder->add(e);
     }
 };

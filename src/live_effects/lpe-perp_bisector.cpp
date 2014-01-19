@@ -156,13 +156,13 @@ LPEPerpBisector::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *deskto
     {
         KnotHolderEntity *e = new PB::KnotHolderEntityLeftEnd(this);
         e->create( desktop, item, knotholder, Inkscape::CTRL_TYPE_UNKNOWN,
-                   _("Adjust the bisector's \"left\" end") );
+                   _("Adjust the \"left\" end of the bisector") );
         knotholder->add(e);
     }
     {
         KnotHolderEntity *e = new PB::KnotHolderEntityRightEnd(this);
         e->create( desktop, item, knotholder, Inkscape::CTRL_TYPE_UNKNOWN,
-                   _("Adjust the bisector's \"right\" end") );
+                   _("Adjust the \"right\" end of the bisector") );
         knotholder->add(e);
     }
 };
