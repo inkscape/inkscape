@@ -1083,6 +1083,9 @@ void sp_selection_lower_to_bottom(Inkscape::Selection *selection, SPDesktop *des
 void
 sp_undo(SPDesktop *desktop, SPDocument *)
 {
+    // No re/undo while dragging, too dangerous.
+    if(desktop->getEventContext()->is_dragging) return;
+
     if (!DocumentUndo::undo(sp_desktop_document(desktop))) {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Nothing to undo."));
     }
@@ -1091,6 +1094,9 @@ sp_undo(SPDesktop *desktop, SPDocument *)
 void
 sp_redo(SPDesktop *desktop, SPDocument *)
 {
+    // No re/undo while dragging, too dangerous.
+    if(desktop->getEventContext()->is_dragging) return;
+
     if (!DocumentUndo::redo(sp_desktop_document(desktop))) {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Nothing to redo."));
     }

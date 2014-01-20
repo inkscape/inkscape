@@ -57,7 +57,6 @@
 #include "shape-editor.h"
 #include "sp-guide.h"
 #include "color.h"
-#include "document-undo.h"
 
 // globals for temporary switching to selector by space
 static bool selector_toggled = FALSE;
@@ -99,6 +98,7 @@ ToolBase::ToolBase() {
 	this->hot_x = 0;
 	this->yp = 0;
 	this->within_tolerance = false;
+        this->is_dragging = false;
 	this->tolerance = 0;
 	//this->key = 0;
 	this->item_to_select = 0;
@@ -979,18 +979,14 @@ gint sp_event_context_root_handler(ToolBase * event_context,
 gint sp_event_context_virtual_root_handler(ToolBase * event_context, GdkEvent * event) {
     gint ret = false;
     if (event_context) {
-        // We want to disable undo while we drag anything
-        SPDocument *document = sp_desktop_document(event_context->desktop);
-        if (event->type == GDK_BUTTON_PRESS) {
-            event_context->undo_sensitive = DocumentUndo::getUndoSensitive(document);
-            DocumentUndo::setUndoSensitive(document, false);
-        } else if (event->type == GDK_BUTTON_RELEASE) {
-            DocumentUndo::setUndoSensitive(document, event_context->undo_sensitive);
-        }
+        if(event->type == GDK_BUTTON_PRESS)
+            event_context->is_dragging = true;
 
     	ret = event_context->root_handler(event);
-
         set_event_location(event_context->desktop, event);
+
+        if(event->type == GDK_BUTTON_RELEASE)
+            event_context->is_dragging = false;
     }
     return ret;
 }

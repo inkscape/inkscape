@@ -118,8 +118,9 @@ public:
 
     gint xp, yp;           ///< where drag started
     gint tolerance;
+    bool is_dragging;      // Is a tool currently dragging something
+
     bool within_tolerance;  ///< are we still within tolerance of origin
-    bool undo_sensitive;    /// Was undo previously sensitive before drag
 
     SPItem *item_to_select; ///< the item where mouse_press occurred, to
                             ///< be selected if this is a click not drag
