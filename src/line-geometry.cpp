@@ -28,8 +28,9 @@ namespace Box3D {
  * of the segment. Otherwise interpret it as the direction of the line.
  * FIXME: Think of a better way to distinguish between the two constructors of lines.
  */
-Line::Line(Geom::Point const &start, Geom::Point const &vec, bool is_endpoint) {
-    pt = start;
+Line::Line(Geom::Point const &start, Geom::Point const &vec, bool is_endpoint):
+    pt(start)
+{
     if (is_endpoint)
         v_dir = vec - start;
     else
@@ -38,11 +39,12 @@ Line::Line(Geom::Point const &start, Geom::Point const &vec, bool is_endpoint) {
     d0 = Geom::dot(normal, pt);
 }
 
-Line::Line(Line const &line) {
-    pt = line.pt;
-    v_dir = line.v_dir;
-    normal = line.normal;
-    d0 = line.d0;
+Line::Line(Line const &line):
+    pt(line.pt),
+    v_dir(line.v_dir),
+    normal(line.normal),
+    d0(line.d0)
+{
 }
 
 Line &Line::operator=(Line const &line) {

@@ -220,12 +220,9 @@ TemplateLoadTab::TemplateData TemplateLoadTab::_processTemplateFile(const std::s
     n =  result.display_name.rfind(".svg");
     result.display_name.replace(n, 4, 1, ' ');
     
-    Inkscape::XML::Document *rdoc;
-    rdoc = sp_repr_read_file(path.data(), SP_SVG_NS_URI);
-    Inkscape::XML::Node *myRoot;
-
+    Inkscape::XML::Document *rdoc = sp_repr_read_file(path.data(), SP_SVG_NS_URI);
     if (rdoc){
-        myRoot = rdoc->root();
+        Inkscape::XML::Node *myRoot = rdoc->root();
         if (strcmp(myRoot->name(), "svg:svg") != 0){     // Wrong file format
             return result;
         }

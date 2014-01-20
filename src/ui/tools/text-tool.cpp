@@ -1335,7 +1335,7 @@ bool sp_text_paste_inline(ToolBase *ec)
         	       paste_string_uchar == 0x00000009 ||
         	       paste_string_uchar == 0x0000000A ||
         	       paste_string_uchar == 0x0000000D) {
-        	    	itr++;
+        	    	++itr;
         	    } else {
         	        itr = text.erase(itr);
         	    }
@@ -1637,7 +1637,7 @@ static void sp_text_context_update_text_selection(TextTool *tc)
     // the selection update (can't do both atomically, alas)
     if (!tc->desktop) return;
 
-    for (std::vector<SPCanvasItem*>::iterator it = tc->text_selection_quads.begin() ; it != tc->text_selection_quads.end() ; it++) {
+    for (std::vector<SPCanvasItem*>::iterator it = tc->text_selection_quads.begin() ; it != tc->text_selection_quads.end() ; ++it) {
         sp_canvas_item_hide(*it);
         sp_canvas_item_destroy(*it);
     }

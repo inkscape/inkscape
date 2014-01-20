@@ -1310,11 +1310,11 @@ guchar *IconImpl::load_svg_pixels(std::list<Glib::ustring> const &names,
 }
 
 static void addToIconSet(GdkPixbuf* pb, gchar const* name, GtkIconSize lsize, unsigned psize) {
-    static bool dump = Inkscape::Preferences::get()->getBool("/debug/icons/dumpGtk");
     Glib::RefPtr<Gtk::IconTheme> icon_theme = Gtk::IconTheme::get_default();
     bool icon_found = icon_theme->has_icon(name);
     if ( !icon_found ) {
         Gtk::IconTheme::add_builtin_icon( name, psize, Glib::wrap(pb) );
+        static bool dump = Inkscape::Preferences::get()->getBool("/debug/icons/dumpGtk");
         if (dump) {
             g_message("    set in a builtin for %s:%d:%d", name, lsize, psize);
         }
@@ -1354,7 +1354,6 @@ static std::string getDestDir( unsigned psize )
 bool IconImpl::prerenderIcon(gchar const *name, GtkIconSize lsize, unsigned psize)
 {
     bool loadNeeded = false;
-    static bool dump = Inkscape::Preferences::get()->getBool("/debug/icons/dumpGtk");
     static bool useCache = Inkscape::Preferences::get()->getBool("/debug/icons/useCache", true);
     static bool cacheValidated = false;
     if (!cacheValidated) {
@@ -1366,6 +1365,7 @@ bool IconImpl::prerenderIcon(gchar const *name, GtkIconSize lsize, unsigned psiz
 
     Glib::ustring key = icon_cache_key(name, psize);
     if ( !get_cached_pixbuf(key) ) {
+        static bool dump = Inkscape::Preferences::get()->getBool("/debug/icons/dumpGtk");
         if ((internalNames.find(name) != internalNames.end())
             || (!gtk_icon_theme_has_icon(gtk_icon_theme_get_default(), name))) {
             if (dump) {
