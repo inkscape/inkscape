@@ -668,6 +668,7 @@ void SPDesktop::set_event_context2(const std::string& toolName)
             old_tool->finish();
             delete old_tool;
         } else {
+            _event_context_changed_signal.emit(this, event_context);
             return;
         }
     }
