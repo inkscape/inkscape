@@ -144,13 +144,11 @@ Geom::Affine get_scale_transform_for_uniform_stroke(Geom::Rect const &bbox_visua
     gdouble r1 = r0;
 
     if ((fabs(w0 - stroke_x) < 1e-6) || w1 == 0) { // We have a vertical line at hand
-        r1 = transform_stroke ? r0 * sqrt(h1/h0) : r0;
-        scale_x = 1;
-        scale_y = preserve ? h1/h0 : (h1 - r1)/(h0 - r0);
+        scale_y = h1/h0;
+        scale_x = transform_stroke ? 1 : scale_y;
     } else if ((fabs(h0 - stroke_y) < 1e-6) || h1 == 0) { // We have a horizontal line at hand
-        r1 = transform_stroke ? r0 * sqrt(w1/w0) : r0;
-        scale_x = preserve ? w1/w0 : (w1 - r1)/(w0 - r0);
-        scale_y = 1;
+        scale_x = w1/w0;
+        scale_y = transform_stroke ? 1 : scale_x;
     } else { // We have a true 2D object at hand
         if (transform_stroke && !preserve) {
             /* Initial area of the geometric bounding box: A0 = (w0-r0)*(h0-r0)
@@ -297,13 +295,13 @@ Geom::Affine get_scale_transform_for_variable_stroke(Geom::Rect const &bbox_visu
     gdouble r1w = r0w;
 
     if ((fabs(w0 - r0w) < 1e-6) || w1 == 0) { // We have a vertical line at hand
-        r1h = transform_stroke ? r0h * sqrt(h1/h0) : r0h;
-        scale_x = 1;
-        scale_y = preserve ? h1/h0 : (h1 - r1h)/(h0 - r0h);
+        scale_y = h1/h0;
+        scale_x = transform_stroke ? 1 : scale_y;
+        unbudge *= Geom::Translate (flip_x * 0.5 * (w1 - w0), 0); // compensate for the fact that this operation cannot be performed
     } else if ((fabs(h0 - r0h) < 1e-6) || h1 == 0) { // We have a horizontal line at hand
-        r1w = transform_stroke ? r0w * sqrt(w1/w0) : r0w;
-        scale_x = preserve ? w1/w0 : (w1 - r1w)/(w0 - r0w);
-        scale_y = 1;
+        scale_x = w1/w0;
+        scale_y = transform_stroke ? 1 : scale_x;
+        unbudge *= Geom::Translate (0, flip_y * 0.5 * (h1 - h0)); // compensate for the fact that this operation cannot be performed
     } else { // We have a true 2D object at hand
         if (transform_stroke && !preserve) {
             /* Initial area of the geometric bounding box: A0 = (w0-r0w)*(h0-r0h)
