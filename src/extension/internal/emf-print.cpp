@@ -814,10 +814,10 @@ Geom::Path PrintEmf::pathv_to_simple_polygon(Geom::PathVector const &pathv, int 
             return(bad);
         }
         P1_lead = cit->finalPoint();
-        if(Geom::are_near(P1_lead,P1))continue;  // duplicate points at the same coordinate
+        if(Geom::are_near(P1_lead, P1, 1e-5))continue;  // duplicate points at the same coordinate
         v1 = unit_vector(P1      - P1_trail);
         v2 = unit_vector(P1_lead - P1      );
-        if(Geom::are_near(dot(v1,v2),1.0)){ // P1 is within a straight line
+        if(Geom::are_near(dot(v1,v2), 1.0, 1e-5)){ // P1 is within a straight line
             P1 = P1_lead;
             continue;  
         }
@@ -867,7 +867,7 @@ Geom::Path PrintEmf::pathv_to_rect(Geom::PathVector const &pathv, bool *is_rect,
             P1_lead = cit->finalPoint();
             v1 = unit_vector(P1      - P1_trail);
             v2 = unit_vector(P1_lead - P1      );
-            if(!Geom::are_near(dot(v1,v2),0.0))break; // P1 is center of a turn that is not 90 degrees
+            if(!Geom::are_near(dot(v1,v2), 0.0, 1e-5))break; // P1 is center of a turn that is not 90 degrees
             P1_trail = P1;
             P1 = P1_lead;
             vertex_count++;
@@ -891,12 +891,12 @@ int PrintEmf::vector_rect_alignment(double angle, Geom::Point vtest){
     int stat = 0;
     Geom::Point v1 = Geom::unit_vector(vtest);                 // unit vector to test alignment
     Geom::Point v2 = Geom::Point(1,0) * Geom::Rotate(-angle);  // unit horizontal side (sign change because Y increases DOWN)
-    if(     Geom::are_near(dot(v1,v2), 1.0)){ stat = 1; }
-    else if(Geom::are_near(dot(v1,v2),-1.0)){ stat = 2; }
+    if(     Geom::are_near(dot(v1,v2), 1.0, 1e-5)){ stat = 1; }
+    else if(Geom::are_near(dot(v1,v2),-1.0, 1e-5)){ stat = 2; }
     if(!stat){
         v2 = Geom::Point(0,1) * Geom::Rotate(-angle);    // unit vertical side
-        if(     Geom::are_near(dot(v1,v2), 1.0)){ stat = 3; }
-        else if(Geom::are_near(dot(v1,v2),-1.0)){ stat = 4; }
+        if(     Geom::are_near(dot(v1,v2), 1.0, 1e-5)){ stat = 3; }
+        else if(Geom::are_near(dot(v1,v2),-1.0, 1e-5)){ stat = 4; }
     }
     return(stat);
 }
@@ -1091,7 +1091,6 @@ unsigned int PrintEmf::fill(
                 U_TRIVERTEX ut[2];
                 U_GRADIENT4 ug4;
                 U_RECTL rcb;
-                Geom::Affine tf2;
                 U_XFORM tmpTransform;
                 double wRect, hRect;
 
@@ -1107,7 +1106,8 @@ unsigned int PrintEmf::fill(
                     Actual gradientfill records are either this entire rectangle or slices of it as defined by the stops.
                 */
 
-                tf2 = Geom::Rotate(-angle);
+                Geom::Affine tf2 = Geom::Rotate(-angle);  // the rectangle may be drawn skewed to the coordinate system
+                tf2 *= tf; // the coordinate system of the rectangular path may be rotated
                 tmpTransform.eM11 = tf2[0];
                 tmpTransform.eM12 = tf2[1];
                 tmpTransform.eM21 = tf2[2];
