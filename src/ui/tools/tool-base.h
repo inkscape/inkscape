@@ -118,7 +118,6 @@ public:
 
     gint xp, yp;           ///< where drag started
     gint tolerance;
-    bool is_dragging;      // Is a tool currently dragging something
 
     bool within_tolerance;  ///< are we still within tolerance of origin
 

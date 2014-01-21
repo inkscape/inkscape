@@ -1545,6 +1545,11 @@ int SPCanvasImpl::emitEvent(SPCanvas *canvas, GdkEvent *event)
     default:
         break;
     }
+    // Block Undo and Redo while we drag /anything/
+    if(event->type == GDK_BUTTON_PRESS)
+        canvas->is_dragging = true;
+    else if(event->type == GDK_BUTTON_RELEASE)
+        canvas->is_dragging = false;
 
     // Choose where we send the event
 

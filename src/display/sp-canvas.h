@@ -124,6 +124,7 @@ struct SPCanvas {
 
     SPCanvasItem *root;
 
+    bool is_dragging;
     double dx0;
     double dy0;
     int x0;

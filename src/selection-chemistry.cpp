@@ -56,6 +56,7 @@ SPCycleType SP_CYCLING = SP_CYCLE_FOCUS;
 #include "sp-polyline.h"
 #include "sp-line.h"
 #include "text-editing.h"
+#include "display/sp-canvas.h"
 #include "ui/tools/text-tool.h"
 #include "ui/tools/connector-tool.h"
 #include "sp-path.h"
@@ -1084,7 +1085,7 @@ void
 sp_undo(SPDesktop *desktop, SPDocument *)
 {
     // No re/undo while dragging, too dangerous.
-    if(desktop->getEventContext()->is_dragging) return;
+    if(desktop->getCanvas()->is_dragging) return;
 
     if (!DocumentUndo::undo(sp_desktop_document(desktop))) {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Nothing to undo."));
@@ -1095,7 +1096,7 @@ void
 sp_redo(SPDesktop *desktop, SPDocument *)
 {
     // No re/undo while dragging, too dangerous.
-    if(desktop->getEventContext()->is_dragging) return;
+    if(desktop->getCanvas()->is_dragging) return;
 
     if (!DocumentUndo::redo(sp_desktop_document(desktop))) {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Nothing to redo."));
