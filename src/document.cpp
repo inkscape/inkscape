@@ -315,7 +315,8 @@ SPDocument *SPDocument::createDoc(Inkscape::XML::Document *rdoc,
                                   gchar const *uri,
                                   gchar const *base,
                                   gchar const *name,
-                                  unsigned int keepalive)
+                                  unsigned int keepalive,
+                                  SPDocument *parent)
 {
     SPDocument *document = new SPDocument();
 
@@ -326,6 +327,7 @@ SPDocument *SPDocument::createDoc(Inkscape::XML::Document *rdoc,
 
     document->rdoc = rdoc;
     document->rroot = rroot;
+    document->parent_document = parent;
 
     if (document->uri){
         g_free(document->uri);
@@ -474,7 +476,7 @@ SPDocument *SPDocument::createDoc(Inkscape::XML::Document *rdoc,
  * Fetches document from URI, or creates new, if NULL; public document
  * appears in document list.
  */
-SPDocument *SPDocument::createNewDoc(gchar const *uri, unsigned int keepalive, bool make_new)
+SPDocument *SPDocument::createNewDoc(gchar const *uri, unsigned int keepalive, bool make_new, SPDocument *parent)
 {
     SPDocument *doc;
     Inkscape::XML::Document *rdoc;
@@ -519,7 +521,7 @@ SPDocument *SPDocument::createNewDoc(gchar const *uri, unsigned int keepalive, b
     //# These should be set by now
     g_assert(name);
 
-    doc = createDoc(rdoc, uri, base, name, keepalive);
+    doc = createDoc(rdoc, uri, base, name, keepalive, parent);
 
     g_free(base);
     g_free(name);
@@ -540,7 +542,7 @@ SPDocument *SPDocument::createNewDocFromMem(gchar const *buffer, gint length, un
             // TODO fixme: destroy document
         } else {
             Glib::ustring name = Glib::ustring::compose( _("Memory document %1"), ++doc_mem_count );
-            doc = createDoc(rdoc, NULL, NULL, name.c_str(), keepalive);
+            doc = createDoc(rdoc, NULL, NULL, name.c_str(), keepalive, NULL);
         }
     }
 

@@ -221,7 +221,8 @@ public:
     sigc::connection connectResourcesChanged(const gchar *key, SPDocument::ResourcesChangedSignal::slot_type slot);
 
     void fitToRect(Geom::Rect const &rect, bool with_margins = false);
-    static SPDocument *createNewDoc(const gchar *uri, unsigned int keepalive, bool make_new = false);
+    static SPDocument *createNewDoc(const gchar *uri, unsigned int keepalive,
+            bool make_new = false, SPDocument *parent=NULL );
     static SPDocument *createNewDocFromMem(const gchar *buffer, gint length, unsigned int keepalive);
 
     /**
@@ -229,8 +230,9 @@ public:
      */
     static SPItem *getItemFromListAtPointBottom(unsigned int dkey, SPGroup *group, const GSList *list, Geom::Point const &p, bool take_insensitive = false);
 
-    // ToDo - Merge createDoc with createNewDoc
-    static SPDocument *createDoc(Inkscape::XML::Document *rdoc, gchar const *uri, gchar const *base, gchar const *name, unsigned int keepalive);
+    static SPDocument *createDoc(Inkscape::XML::Document *rdoc, gchar const *uri,
+            gchar const *base, gchar const *name, unsigned int keepalive,
+            SPDocument *parent);
 
     SPDocument *doRef();
     SPDocument *doUnref();
