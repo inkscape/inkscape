@@ -106,6 +106,7 @@ SPDocument::SPDocument() :
     profileManager(0), // deferred until after other initialization
     router(new Avoid::Router(Avoid::PolyLineRouting|Avoid::OrthogonalRouting)),
     _collection_queue(0),
+    parent_document(NULL),
     oldSignalsConnected(false),
     current_persp3d(NULL),
     current_persp3d_impl(NULL)

@@ -58,17 +58,36 @@ void URIReference::attach(const URI &uri) throw(BadURIException)
 
     // The path contains references to seperate document files to load.
     const char *path = uri.getPath();
-    if(path) {
-        if(document != NULL) {
-            // Calculate the absolute path from an available document
-            std::string basePath = std::string( document->getBase() );
-            std::string absPath = Glib::build_filename(basePath, std::string( path ) );
-            path = absPath.c_str();
+    if(path && document != NULL) {
+        // Calculate the absolute path from an available document
+        std::string basePath = std::string( document->getBase() );
+        std::string absPath = Glib::build_filename(basePath, std::string( path ) );
+        path = absPath.c_str();
+
+        // We look at existing children and parents
+        SPDocument *parent = document;
+        SPDocument *original = document;
+        document = NULL;
+
+        while(parent != NULL) {
+            boost::ptr_list<SPDocument>::iterator iter;
+            for (iter = parent->child_documents.begin();
+                iter != parent->child_documents.end(); ++iter) {
+                if(strcmp(iter->getURI(), path)==0)
+                    document = &*iter;
+            }
+            parent = parent->parent_document;
         }
-        // TODO: This is inefficient because it will load the same svg file
-        // many times if it's used many times. A global list of documents would
-        // be useful for tracking linked items.
-        document = SPDocument::createNewDoc(path, FALSE);
+        // Load a fresh document from the svg source.
+        if(!document) {
+            document = SPDocument::createNewDoc(path, FALSE);
+            if(document) {
+                document->parent_document = original;
+                original->child_documents.push_back(document);
+            } else {
+                g_warning("Could not load svg file: %s", path);
+            }
+        }
     }
     g_return_if_fail(document != NULL);
 

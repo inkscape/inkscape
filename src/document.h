@@ -25,6 +25,7 @@
 #include "gc-finalized.h"
 #include "gc-anchored.h"
 #include <glibmm/ustring.h>
+#include <boost/ptr_container/ptr_list.hpp>
 #include <vector>
 
 namespace Avoid {
@@ -119,6 +120,10 @@ public:
     Avoid::Router *router;
 
     GSList *_collection_queue;
+
+    // A list of svg documents being used or shown within this document
+    boost::ptr_list<SPDocument> child_documents;
+    SPDocument *parent_document;
 
     bool oldSignalsConnected;
 
