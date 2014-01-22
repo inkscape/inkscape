@@ -121,10 +121,6 @@ public:
 
     GSList *_collection_queue;
 
-    // A list of svg documents being used or shown within this document
-    boost::ptr_list<SPDocument> child_documents;
-    SPDocument *parent_document;
-
     bool oldSignalsConnected;
 
     /** Returns our SPRoot */
@@ -207,6 +203,11 @@ private:
     Persp3D *current_persp3d; /**< Currently 'active' perspective (to which, e.g., newly created boxes are attached) */
     Persp3DImpl *current_persp3d_impl;
 
+    // A list of svg documents being used or shown within this document
+    boost::ptr_list<SPDocument> _child_documents;
+    // Conversely this is a parent document because this is a child.
+    SPDocument *_parent_document;
+
 public:
     sigc::connection connectReconstructionStart(ReconstructionStart::slot_type slot);
     sigc::connection connectReconstructionFinish(ReconstructionFinish::slot_type slot);
@@ -224,6 +225,7 @@ public:
     static SPDocument *createNewDoc(const gchar *uri, unsigned int keepalive,
             bool make_new = false, SPDocument *parent=NULL );
     static SPDocument *createNewDocFromMem(const gchar *buffer, gint length, unsigned int keepalive);
+           SPDocument *createChildDoc(gchar const *uri);
 
     /**
      * Returns the bottommost item from the list which is at the point, or NULL if none.

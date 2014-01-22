@@ -59,42 +59,7 @@ void URIReference::attach(const URI &uri) throw(BadURIException)
     // The path contains references to seperate document files to load.
     const char *path = uri.getPath();
     if(path && document != NULL) {
-        // Calculate the absolute path from an available document
-        std::string basePath = std::string( document->getBase() );
-        std::string absPath = Glib::build_filename(basePath, std::string( path ) );
-        path = absPath.c_str();
-
-        SPDocument *parent = document;
-        SPDocument *original = document;
-        document = NULL;
-
-        while(parent != NULL && document == NULL) {
-            // Check myself and any parents int he chain
-            if(strcmp(parent->getURI(), path)==0) {
-                document = parent;
-                break;
-            }
-            // Then check children of those.
-            boost::ptr_list<SPDocument>::iterator iter;
-            for (iter = parent->child_documents.begin();
-                iter != parent->child_documents.end(); ++iter) {
-                if(strcmp(iter->getURI(), path)==0) {
-                    document = &*iter;
-                    break;
-                }
-            }
-            parent = parent->parent_document;
-        }
-
-        // Load a fresh document from the svg source.
-        if(!document) {
-            document = SPDocument::createNewDoc(path, false, false, original);
-            if(document) {
-                original->child_documents.push_back(document);
-            } else {
-                g_warning("Could not load svg file: %s", path);
-            }
-        }
+        document = document->createChildDoc(path);
     }
     g_return_if_fail(document != NULL);
 
