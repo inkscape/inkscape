@@ -61,7 +61,10 @@ void URIReference::attach(const URI &uri) throw(BadURIException)
     if(path && document != NULL) {
         document = document->createChildDoc(path);
     }
-    g_return_if_fail(document != NULL);
+    if(!document) {
+        g_warning("Can't get document for referenced URI: %s", uri.toString());
+        return;
+    }
 
     gchar const *fragment = uri.getFragment();
     if ( !uri.isRelative() || uri.getQuery() || !fragment ) {

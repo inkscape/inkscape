@@ -334,7 +334,10 @@ Document *sp_repr_read_file (const gchar * filename, const gchar *default_ns)
     xmlSubstituteEntitiesDefault(1);
 
     g_return_val_if_fail (filename != NULL, NULL);
-    g_return_val_if_fail (Inkscape::IO::file_test( filename, G_FILE_TEST_EXISTS ), NULL);
+    if (!Inkscape::IO::file_test( filename, G_FILE_TEST_EXISTS )) {
+        g_warning("Can't open file: %s (doesn't exist)", filename);
+        return NULL;
+    }
     /* fixme: A file can disappear at any time, including between now and when we actually try to
      * open it.  Get rid of the above test once we're sure that we correctly handle
      * non-existence. */
