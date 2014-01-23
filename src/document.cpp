@@ -481,16 +481,19 @@ SPDocument *SPDocument::createDoc(Inkscape::XML::Document *rdoc,
 SPDocument *SPDocument::createChildDoc(gchar const *uri) {
 
     // Calculate the absolute path from an available document
-    std::string basePath = std::string( this->getBase() );
-    std::string absPath = Glib::build_filename(basePath, std::string( uri ) );
-    const char *path = absPath.c_str();
+    if(strncmp(uri, "/", 1)!=0) {
+        std::string basePath = std::string( this->getBase() );
+        std::string absPath = Glib::build_filename(basePath, std::string( uri ) );
+        // free uri first?
+        uri = absPath.c_str();
+    }
 
     SPDocument *parent = this;
     SPDocument *document = NULL;
 
     while(parent != NULL && document == NULL) {
         // Check myself and any parents int he chain
-        if(strcmp(parent->getURI(), path)==0) {
+        if(strcmp(parent->getURI(), uri)==0) {
             document = parent;
             break;
         }
@@ -498,7 +501,7 @@ SPDocument *SPDocument::createChildDoc(gchar const *uri) {
         boost::ptr_list<SPDocument>::iterator iter;
         for (iter = parent->_child_documents.begin();
             iter != parent->_child_documents.end(); ++iter) {
-            if(strcmp(iter->getURI(), path)==0) {
+            if(strcmp(iter->getURI(), uri)==0) {
                 document = &*iter;
                 break;
             }
@@ -508,7 +511,7 @@ SPDocument *SPDocument::createChildDoc(gchar const *uri) {
 
     // Load a fresh document from the svg source.
     if(!document) {
-        document = createNewDoc(path, false, false, this);
+        document = createNewDoc(uri, false, false, this);
     }
     return document;
 }
