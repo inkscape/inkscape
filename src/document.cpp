@@ -67,6 +67,8 @@
 #include "xml/rebase-hrefs.h"
 #include "libcroco/cr-cascade.h"
 
+#include <glibmm/miscutils.h>
+
 using Inkscape::DocumentUndo;
 using Inkscape::Util::unit_table;
 
