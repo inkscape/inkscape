@@ -67,8 +67,6 @@
 #include "xml/rebase-hrefs.h"
 #include "libcroco/cr-cascade.h"
 
-#include <glibmm/miscutils.h>
-
 using Inkscape::DocumentUndo;
 using Inkscape::Util::unit_table;
 
@@ -480,22 +478,14 @@ SPDocument *SPDocument::createDoc(Inkscape::XML::Document *rdoc,
 /**
  * Fetches a document and attaches it to the current document as a child href
  */
-SPDocument *SPDocument::createChildDoc(gchar const *uri) {
-
-    // Calculate the absolute path from an available document
-    if(strncmp(uri, "/", 1)!=0) {
-        std::string basePath = std::string( this->getBase() );
-        std::string absPath = Glib::build_filename(basePath, std::string( uri ) );
-        // free uri first?
-        uri = absPath.c_str();
-    }
-
+SPDocument *SPDocument::createChildDoc(std::string const uri)
+{
     SPDocument *parent = this;
     SPDocument *document = NULL;
 
     while(parent != NULL && document == NULL) {
         // Check myself and any parents int he chain
-        if(strcmp(parent->getURI(), uri)==0) {
+        if(uri.compare(parent->getURI())==0) {
             document = parent;
             break;
         }
@@ -503,7 +493,7 @@ SPDocument *SPDocument::createChildDoc(gchar const *uri) {
         boost::ptr_list<SPDocument>::iterator iter;
         for (iter = parent->_child_documents.begin();
             iter != parent->_child_documents.end(); ++iter) {
-            if(strcmp(iter->getURI(), uri)==0) {
+            if(uri.compare(iter->getURI())==0) {
                 document = &*iter;
                 break;
             }
@@ -513,7 +503,8 @@ SPDocument *SPDocument::createChildDoc(gchar const *uri) {
 
     // Load a fresh document from the svg source.
     if(!document) {
-        document = createNewDoc(uri, false, false, this);
+        const char *path = g_strdup(uri.c_str());
+        document = createNewDoc(path, false, false, this);
     }
     return document;
 }

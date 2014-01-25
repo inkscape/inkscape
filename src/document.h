@@ -225,7 +225,7 @@ public:
     static SPDocument *createNewDoc(const gchar *uri, unsigned int keepalive,
             bool make_new = false, SPDocument *parent=NULL );
     static SPDocument *createNewDocFromMem(const gchar *buffer, gint length, unsigned int keepalive);
-           SPDocument *createChildDoc(gchar const *uri);
+           SPDocument *createChildDoc(std::string const uri);
 
     /**
      * Returns the bottommost item from the list which is at the point, or NULL if none.

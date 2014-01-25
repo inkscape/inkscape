@@ -10,7 +10,9 @@
 
 #include <glib.h>
 #include "uri.h"
+#include <string>
 #include <glibmm/ustring.h>
+#include <glibmm/miscutils.h>
 
 namespace Inkscape {
 
@@ -133,6 +135,17 @@ gchar *URI::to_native_filename(gchar const* uri) throw(BadURIException)
     filename = tmp.toNativeFilename();
     return filename;
 }
+
+const std::string URI::getFullPath(std::string const base) const {
+    std::string path = std::string(_impl->getPath());
+    // Calculate the absolute path from an available base
+    if(!path.empty() && !base.empty() && path.compare(0, 1, "/") != 0) {
+        path = Glib::build_filename(base, path);
+    }
+    // TODO: Check existance of file here
+    return path;
+}
+
 
 /* TODO !!! proper error handling */
 gchar *URI::toNativeFilename() const throw(BadURIException) {
