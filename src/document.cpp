@@ -478,22 +478,22 @@ SPDocument *SPDocument::createDoc(Inkscape::XML::Document *rdoc,
 /**
  * Fetches a document and attaches it to the current document as a child href
  */
-SPDocument *SPDocument::createChildDoc(std::string const uri)
+SPDocument *SPDocument::createChildDoc(std::string const &uri)
 {
     SPDocument *parent = this;
     SPDocument *document = NULL;
 
     while(parent != NULL && document == NULL) {
         // Check myself and any parents int he chain
-        if(uri.compare(parent->getURI())==0) {
+        if(uri == parent->getURI()) {
             document = parent;
             break;
         }
         // Then check children of those.
         boost::ptr_list<SPDocument>::iterator iter;
         for (iter = parent->_child_documents.begin();
-            iter != parent->_child_documents.end(); ++iter) {
-            if(uri.compare(iter->getURI())==0) {
+          iter != parent->_child_documents.end(); ++iter) {
+            if(uri == iter->getURI()) {
                 document = &*iter;
                 break;
             }
@@ -503,7 +503,7 @@ SPDocument *SPDocument::createChildDoc(std::string const uri)
 
     // Load a fresh document from the svg source.
     if(!document) {
-        const char *path = g_strdup(uri.c_str());
+        const char *path = uri.c_str();
         document = createNewDoc(path, false, false, this);
     }
     return document;

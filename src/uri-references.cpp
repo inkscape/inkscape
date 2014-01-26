@@ -58,10 +58,12 @@ void URIReference::attach(const URI &uri) throw(BadURIException)
 
     // The path contains references to seperate document files to load.
     if(document && uri.getPath()) {
-        std::string base = std::string(g_strdup(document->getBase()));
+        std::string base = std::string(document->getBase());
         std::string path = uri.getFullPath(base);
         if(!path.empty())
             document = document->createChildDoc(path);
+        else
+            document = NULL;
     }
     if(!document) {
         g_warning("Can't get document for referenced URI: %s", uri.toString());
