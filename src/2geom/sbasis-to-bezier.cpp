@@ -242,24 +242,38 @@ void sbasis_to_cubic_bezier (std::vector<Point> & bz, D2<SBasis> const& sb)
 
 //  calculate Bezier control arms
 
-    if (std::abs(xprime[1]*yprime[0] - yprime[1]*xprime[0]) > 1.e-5) {	// general case : fit mid fxn value
+    if ((std::abs(xprime[0]) < EPSILON) && (std::abs(yprime[0]) < EPSILON)
+    && ((std::abs(xprime[1]) > EPSILON) || (std::abs(yprime[1]) > EPSILON)))  { // degenerate handle at 0 : use distance of closest approach
+        numer = midx*xprime[1] + midy*yprime[1];
+        denom = 3.0*(xprime[1]*xprime[1] + yprime[1]*yprime[1]);
+        delx[0] = 0;
+        dely[0] = 0;
+        delx[1] = -xprime[1]*numer/denom;
+        dely[1] = -yprime[1]*numer/denom;
+    } else if ((std::abs(xprime[1]) < EPSILON) && (std::abs(yprime[1]) < EPSILON)
+           && ((std::abs(xprime[0]) > EPSILON) || (std::abs(yprime[0]) > EPSILON)))  { // degenerate handle at 1 : ditto
+        numer = midx*xprime[0] + midy*yprime[0];
+        denom = 3.0*(xprime[0]*xprime[0] + yprime[0]*yprime[0]);
+        delx[0] = xprime[0]*numer/denom;
+        dely[0] = yprime[0]*numer/denom;
+        delx[1] = 0;
+        dely[1] = 0;
+    } else if (std::abs(xprime[1]*yprime[0] - yprime[1]*xprime[0]) > EPSILON) { // general case : fit mid fxn value
         denom = xprime[1]*yprime[0] - yprime[1]*xprime[0];
         for (int i = 0; i < 2; ++i) {
             numer = xprime[1 - i]*midy - yprime[1 - i]*midx;
             delx[i] = xprime[i]*numer/denom/3;
             dely[i] = yprime[i]*numer/denom/3;
         }
-    }
-    else if ((xprime[0]*xprime[1] < 0) || (yprime[0]*yprime[1] < 0)) {	// symmetric case : use distance of closest approach
+    } else if ((xprime[0]*xprime[1] < 0) || (yprime[0]*yprime[1] < 0)) { // symmetric case : use distance of closest approach
         numer = midx*xprime[0] + midy*yprime[0];
         denom = 6.0*(xprime[0]*xprime[0] + yprime[0]*yprime[0]);
         delx[0] = xprime[0]*numer/denom;
         dely[0] = yprime[0]*numer/denom;
         delx[1] = -delx[0];
         dely[1] = -dely[0];
-    }
-    else {						// anti-symmetric case : fit mid slope
-							// calculate slope at t = 0.5
+    } else {                                    // anti-symmetric case : fit mid slope
+                                                // calculate slope at t = 0.5
         midx = 0;
         div = 1;
         for (size_t i = 0; i < sb[X].size(); ++i) {
@@ -279,8 +293,7 @@ void sbasis_to_cubic_bezier (std::vector<Point> & bz, D2<SBasis> const& sb)
                 delx[i] = xprime[0]*numer/denom;
                 dely[i] = yprime[0]*numer/denom;
             }
-        }
-        else {					// linear case
+        } else {                                // linear case
             for (int i = 0; i < 2; ++i) {
                 delx[i] = (bz[3][X] - bz[0][X])/3;
                 dely[i] = (bz[3][Y] - bz[0][Y])/3;
