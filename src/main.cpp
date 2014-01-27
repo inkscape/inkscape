@@ -1515,7 +1515,7 @@ static int sp_do_export_png(SPDocument *doc)
 
     // set filename and dpi from options, if not yet set from the hints
     if (filename.empty()) {
-        if (!sp_export_png) {
+        if (!sp_export_png || sp_export_png[0] == '\0') {
             g_warning ("No export filename given and no filename hint. Nothing exported.");
             return 1;
         }
@@ -1771,6 +1771,11 @@ static int do_export_ps_pdf(SPDocument* doc, gchar const* uri, char const* mime)
         }
     }
 
+    if(!uri || uri[0] == '\0') {
+        g_warning ("No export filename given. Nothing exported.");
+        return 0;
+    }
+
     //check if specified directory exists
     if (!Inkscape::IO::file_directory_exists(uri)) {
         g_warning("File path \"%s\" includes directory that doesn't exist.\n", uri);
@@ -1837,6 +1842,10 @@ static int do_export_win_metafile_common(SPDocument* doc, gchar const* uri, char
 
 static int do_export_emf(SPDocument* doc, gchar const* uri, char const* mime)
 {
+    if(!uri || uri[0] == '\0') {
+        g_warning("No filename provided for emf export.");
+        return 0;
+    }
     return do_export_win_metafile_common(doc, uri, mime);
 }
 
@@ -1850,6 +1859,10 @@ static int do_export_emf(SPDocument* doc, gchar const* uri, char const* mime)
 
 static int do_export_wmf(SPDocument* doc, gchar const* uri, char const* mime)
 {
+    if(!uri || uri[0] == '\0') {
+        g_warning("No filename provided for wmf export.");
+        return 0;
+    }
     return do_export_win_metafile_common(doc, uri, mime);
 }
 
