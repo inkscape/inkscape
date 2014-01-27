@@ -1632,10 +1632,13 @@ static int sp_do_export_png(SPDocument *doc)
 
         g_print("Area %g:%g:%g:%g exported to %lu x %lu pixels (%g dpi)\n", area[Geom::X][0], area[Geom::Y][0], area[Geom::X][1], area[Geom::Y][1], width, height, dpi);
 
-        g_print("Bitmap saved as: %s\n", filename.c_str());
-
         if ((width >= 1) && (height >= 1) && (width <= PNG_UINT_31_MAX) && (height <= PNG_UINT_31_MAX)) {
-            sp_export_png_file(doc, path.c_str(), area, width, height, dpi, dpi, bgcolor, NULL, NULL, true, sp_export_id_only ? items : NULL);
+            if( sp_export_png_file(doc, path.c_str(), area, width, height, dpi,
+              dpi, bgcolor, NULL, NULL, true, sp_export_id_only ? items : NULL) == 1 ) {
+                g_print("Bitmap saved as: %s\n", filename.c_str());
+            } else {
+                g_warning("Bitmap failed to save to: %s", filename.c_str());
+            }
         } else {
             g_warning("Calculated bitmap dimensions %lu %lu are out of range (1 - %lu). Nothing exported.", width, height, (unsigned long int)PNG_UINT_31_MAX);
         }
@@ -1794,7 +1797,11 @@ static int do_export_ps_pdf(SPDocument* doc, gchar const* uri, char const* mime)
                              ? "PostScript level 3" : "PostScript level 2");
     }
 
-    (*i)->save(doc, uri);
+    try {
+        (*i)->save(doc, uri);
+    } catch(...) {
+        g_warning("Failed to save pdf to: %s", uri);
+    }
     return 0;
 }
 

@@ -142,7 +142,7 @@ sp_png_write_rgba_striped(SPDocument *doc,
 
     Inkscape::IO::dump_fopen_call(filename, "M");
     fp = Inkscape::IO::fopen_utf8name(filename, "wb");
-    g_return_val_if_fail(fp != NULL, false);
+    if(fp == NULL) return false;
 
     /* Create and initialize the png_struct with the desired error handler
      * functions.  If you want to use the default stderr and longjump method,
