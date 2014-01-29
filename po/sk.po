@@ -3,25 +3,23 @@
 # This file is distributed under the same license as the Inkscape package.
 # Zdenko Podobný <zdpo@mailbox.sk>, 2003, 2004.
 # Ján Pulmann <jan.pulmann@gmail.com>, 2012.
-# Ivan Masár <helix84@centrum.sk>, 2007, 2008, 2009, 2010, 2011, 2012.
-#
+# Ivan Masár <helix84@centrum.sk>, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014.
 # Slovak terminology used in Inkscape:
 # http://wiki.inkscape.org/wiki/index.php/InkscapeTerminology/sk
-#
 #: ../share/filters/filters.svg.h:1
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2012-10-08 22:42+0200\n"
-"PO-Revision-Date: 2012-04-14 01:23+0100\n"
+"PO-Revision-Date: 2014-01-29 11:42+0200\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: ../inkscape.desktop.in.h:1
 msgid "Create and edit Scalable Vector Graphics images"
@@ -36,16 +34,14 @@ msgid "Inkscape Vector Graphics Editor"
 msgstr "Inkscape - editor vektorovej grafiky"
 
 #: ../inkscape.desktop.in.h:4
-#, fuzzy
 msgid "New Drawing"
-msgstr "Kresba"
+msgstr "Nová kresba"
 
 #: ../inkscape.desktop.in.h:5
 msgid "Vector Graphics Editor"
 msgstr "editor vektorovej grafiky"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Smart Jelly"
 msgstr "Inteligentné želé"
 
@@ -61,7 +57,6 @@ msgid "Same as Matte jelly but with more controls"
 msgstr "Rovnaké ako matné želé, ale s viacerými parametrami"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Metal Casting"
 msgstr "Odlievanie kovu"
 
@@ -87,7 +82,6 @@ msgid "Edges are partly feathered out"
 msgstr "Okraje sú čiastočne rozmazané"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Jigsaw Piece"
 msgstr "Kúsok skladačky"
 
@@ -96,7 +90,6 @@ msgid "Low, sharp bevel"
 msgstr "Nízke, ostré vrstvenie"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Rubber Stamp"
 msgstr "Pečiatka"
 
@@ -187,7 +180,6 @@ msgid "Flake-like white splotches"
 msgstr "Vločkovité biele špliechance"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Leopard Fur"
 msgstr "Leopardia koža"
 
@@ -222,7 +214,6 @@ msgstr "Zaostriť"
 
 #: ../share/filters/filters.svg.h:1
 #: ../src/extension/internal/filter/image.h:62
-#, fuzzy
 msgid "Image Effects"
 msgstr "Obrazové efekty"
 
@@ -231,7 +222,6 @@ msgid "Sharpen edges and boundaries within the object, force=0.15"
 msgstr "Zaostriť hrany a hranice v rámci objektu, sila=0.15"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Sharpen More"
 msgstr "Viac zaostriť"
 
@@ -253,7 +243,7 @@ msgstr "Olejomaľba"
 #: ../src/extension/internal/filter/paint.h:879
 #: ../src/extension/internal/filter/paint.h:983
 msgid "Image Paint and Draw"
-msgstr ""
+msgstr "Maľovanie a kreslenie obrázka"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Simulate oil painting style"
@@ -298,7 +288,6 @@ msgid "Bulging, knotty, slick 3D surface"
 msgstr "Vydutý, hrčovitý, hladký 3D povrch"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Barbed Wire"
 msgstr "Ostnatý drôt"
 
@@ -307,7 +296,6 @@ msgid "Gray bevelled wires with drop shadows"
 msgstr "Šedé vrstvené drôty s vrhanými tieňmi"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Swiss Cheese"
 msgstr "Švajčiarsky syr"
 
@@ -316,7 +304,6 @@ msgid "Random inner-bevel holes"
 msgstr "Náhodné diery s vnútorným vrstvením"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Blue Cheese"
 msgstr "Modrý syr"
 
@@ -354,7 +341,6 @@ msgid "Random paint streaks downwards"
 msgstr "Náhodné ťahy farbou smerom dolu"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Jam Spread"
 msgstr "Rozmazaný džem"
 
@@ -363,7 +349,6 @@ msgid "Glossy clumpy jam spread"
 msgstr "Lesklý zhlukovitý rozmazaný džem"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Pixel Smear"
 msgstr "Rozmazanie pixelov"
 
@@ -372,7 +357,6 @@ msgid "Van Gogh painting effect for bitmaps"
 msgstr "Efekt Van Goghovej maľby pre bitmapy"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Cracked Glass"
 msgstr "Popraskané sklo"
 
@@ -395,9 +379,8 @@ msgid "Flexible bubbles effect with some displacement"
 msgstr "Efekt flexibilných bublín s určitým posunutím"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Glowing Bubble"
-msgstr "Rastúca bublina"
+msgstr "Žiariaca bublina"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Ridges"
@@ -416,7 +399,6 @@ msgid "Neon light effect"
 msgstr "Efekt neónového svetla"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Molten Metal"
 msgstr "Roztavený kov"
 
@@ -425,7 +407,6 @@ msgid "Melting parts of object together, with a glossy bevel and a glow"
 msgstr "Roztopenie častí objektu dohromady s lesklým vrstvením a žiarou"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Pressed Steel"
 msgstr "Lisovaná oceľ"
 
@@ -434,7 +415,6 @@ msgid "Pressed metal with a rolled edge"
 msgstr "Lisovaná oceľ s valcovaným okrajom"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Matte Bevel"
 msgstr "Matné vrstvenie"
 
@@ -451,7 +431,6 @@ msgid "Thin like a soap membrane"
 msgstr "Tenká ako mydlová membrána"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Matte Ridge"
 msgstr "Matný hrebeň"
 
@@ -460,7 +439,6 @@ msgid "Soft pastel ridge"
 msgstr "Mäkké pastelové nárožie"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Glowing Metal"
 msgstr "Žiariaci kov"
 
@@ -490,7 +468,6 @@ msgid "Illuminated translucent plastic or glass effect"
 msgstr "Osvetlený priesvitný plastový alebo sklenený efekt"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Iridescent Beeswax"
 msgstr "Perleťový včelí vosk"
 
@@ -499,7 +476,6 @@ msgid "Waxy texture which keeps its iridescence through color fill change"
 msgstr "Vosková textúra, ktorá si ponecháva perleťovosť zmenou farebnej výplne"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Eroded Metal"
 msgstr "Erodovaný kov"
 
@@ -524,7 +500,6 @@ msgid "Bark texture, vertical; use with deep colors"
 msgstr "Textúra kôry, zvislá; použite s hlbokými farbami"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Lizard Skin"
 msgstr "Jašteričia koža"
 
@@ -533,7 +508,6 @@ msgid "Stylized reptile skin texture"
 msgstr "Štylizovaná textúra kože plaza"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Stone Wall"
 msgstr "Kamenný múr"
 
@@ -542,7 +516,6 @@ msgid "Stone wall texture to use with not too saturated colors"
 msgstr "Textúra kamenného múru na použitie s nie príliš nasýtenými farbami"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Silk Carpet"
 msgstr "Hodvábny koberec"
 
@@ -551,7 +524,6 @@ msgid "Silk carpet texture, horizontal stripes"
 msgstr "Textúra hodvábneho koberca, vodorovné prúžky"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Refractive Gel A"
 msgstr "Refraktívny gél A"
 
@@ -560,7 +532,6 @@ msgid "Gel effect with light refraction"
 msgstr "Gélový efekt s refrakciou svetla"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Refractive Gel B"
 msgstr "Refraktívny gél B"
 
@@ -569,7 +540,6 @@ msgid "Gel effect with strong refraction"
 msgstr "Gélový efekt so silnou refrakciou"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Metallized Paint"
 msgstr "Metalizovaná farba"
 
@@ -587,7 +557,6 @@ msgid "Gel Ridge with a pearlescent look"
 msgstr "Gélové nárožie s perličkovým výzorom"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Raised Border"
 msgstr "Vyvýšený okraj"
 
@@ -605,7 +574,6 @@ msgid "Gel Ridge metallized at its top"
 msgstr "Gélové nárožie navrchu metalizované"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Fat Oil"
 msgstr "Tučný olej"
 
@@ -614,7 +582,6 @@ msgid "Fat oil with some adjustable turbulence"
 msgstr "Tučný olej s prispôsobiteľnou turbulenciou"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Black Hole"
 msgstr "Čierna diera"
 
@@ -639,7 +606,6 @@ msgstr ""
 "Roztrúsené kocky; nastavením primitívy Morfológia môžete meniť ich veľkosť"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Peel Off"
 msgstr "Olupovanie"
 
@@ -648,7 +614,6 @@ msgid "Peeling painting on a wall"
 msgstr "Olupujúca sa farba na stene"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Gold Splatter"
 msgstr "Zlatý špliechanec"
 
@@ -657,7 +622,6 @@ msgid "Splattered cast metal, with golden highlights"
 msgstr "Kovové špliechance so zlatým zvýraznením"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Gold Paste"
 msgstr "Zlatá pasta"
 
@@ -666,7 +630,6 @@ msgid "Fat pasted cast metal, with golden highlights"
 msgstr "Tučne prilepený kov so zlatým zvýraznením"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Crumpled Plastic"
 msgstr "Pokrčený plast"
 
@@ -675,7 +638,6 @@ msgid "Crumpled matte plastic, with melted edge"
 msgstr "Pokrčený matný plast s roztaveným okrajom"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Enamel Jewelry"
 msgstr "Smaltované klenoty"
 
@@ -684,7 +646,6 @@ msgid "Slightly cracked enameled texture"
 msgstr "Mierne popraskaná smaltovaná textúra"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Rough Paper"
 msgstr "Drsný papier"
 
@@ -694,7 +655,6 @@ msgstr ""
 "Efekt akvarelového papiera, ktorý možno použiť na obrázky ako na objekty"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Rough and Glossy"
 msgstr "Drsná a lesklá"
 
@@ -714,7 +674,6 @@ msgid "Inner colorized shadow, outer black shadow"
 msgstr "Vnútorný vyfarbený tieň, vonkajší čierny tieň"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Air Spray"
 msgstr "Sprej"
 
@@ -723,7 +682,6 @@ msgid "Convert to small scattered particles with some thickness"
 msgstr "Previesť na malé roztrúsené častice s určitou hrúbkou"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Warm Inside"
 msgstr "Teplo vnútri"
 
@@ -732,7 +690,6 @@ msgid "Blurred colorized contour, filled inside"
 msgstr "Rozostrené zafarbené obrysy, vnútri vyplnené"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Cool Outside"
 msgstr "Chladno vonku"
 
@@ -741,7 +698,6 @@ msgid "Blurred colorized contour, empty inside"
 msgstr "Rozostrená zafarbená textúra, vnútri prázdna"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Electronic Microscopy"
 msgstr "Elektrónová mikroskopia"
 
@@ -760,7 +716,6 @@ msgid "Checkered tartan pattern"
 msgstr "Kockovaný vzor tartan"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Shaken Liquid"
 msgstr "Roztrasená tekutina"
 
@@ -778,16 +733,14 @@ msgid "Glowing image content without blurring it"
 msgstr "Žiarenie obsahu obrázka bez toho, aby bol rozmazaný"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Stained Glass"
-msgstr "Vitraj"
+msgstr "Vitráž"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Illuminated stained glass effect"
 msgstr "Efekt osvietenej vitraje"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Dark Glass"
 msgstr "Tmavé sklo"
 
@@ -796,7 +749,6 @@ msgid "Illuminated glass effect with light coming from beneath"
 msgstr "Efekt osvieteného skla, svetlo prichádza zospodu"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "HSL Bumps Alpha"
 msgstr "HSL hrče, priesvitnosť"
 
@@ -805,7 +757,6 @@ msgid "Same as HSL Bumps but with transparent highlights"
 msgstr "Rovnaké ako HSL hrče, ale s priesvitným zvýraznením"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Bubbly Bumps Alpha"
 msgstr "Bublinové hrče, priesvitnosť"
 
@@ -814,9 +765,8 @@ msgid "Same as Bubbly Bumps but with transparent highlights"
 msgstr "Rovnaké ako Bublinové hrče, ale s priesvitným zvýraznením"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Torn Edges"
-msgstr "Trhané okraje"
+msgstr "Roztrhané hrany"
 
 #: ../share/filters/filters.svg.h:1
 msgid ""
@@ -824,7 +774,6 @@ msgid ""
 msgstr "Posunúť vonkajšok tvarov a obrázkov bez zmeny ich obsahu"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Roughen Inside"
 msgstr "Zdrsnenie vovnútri"
 
@@ -845,7 +794,6 @@ msgstr ""
 "priesvitnosti na okrajoch"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Chalk and Sponge"
 msgstr "Krieda a špongia"
 
@@ -897,7 +845,6 @@ msgid "Emboss effect : 3D relief where white is replaced by black"
 msgstr "Efekt reliéfu: 3D reliéf kde je biela nahradená čiernou"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Bubbly Bumps Matte"
 msgstr "Bublinové hrče, matné"
 
@@ -906,7 +853,6 @@ msgid "Same as Bubbly Bumps but with a diffuse light instead of a specular one"
 msgstr "Rovnaké ako Bublinové hrče ale s difúznym svetlom namiesto zrkadlového"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Blotting Paper"
 msgstr "Pijavý papier"
 
@@ -915,7 +861,6 @@ msgid "Inkblot on blotting paper"
 msgstr "Atramentové škvrny na pijaku"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Wax Print"
 msgstr "Voskový odtlačok"
 
@@ -941,7 +886,6 @@ msgid ""
 msgstr "Páperovitá textúra s turbulenciou farieb mierne tmavšia na okrajoch"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Ink Paint"
 msgstr "Atramentová farba"
 
@@ -950,7 +894,6 @@ msgid "Ink paint on paper with some turbulent color shift"
 msgstr "Atramentová maľba na papieri s turbulentným farebným posunom"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Tinted Rainbow"
 msgstr "Sfarbená dúha"
 
@@ -959,7 +902,6 @@ msgid "Smooth rainbow colors melted along the edges and colorizable"
 msgstr "Jemné dúhové farby prelínajúce sa na okrajoch a sfarbiteľné"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Melted Rainbow"
 msgstr "Roztopená dúha"
 
@@ -977,7 +919,6 @@ msgid "Bright, polished uneven metal casting, colorizable"
 msgstr "Jasný vyleštený nerovnomerný kovový odliatok, sfarbiteľný"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Wavy Tartan"
 msgstr "Vlnitý tartan"
 
@@ -986,7 +927,6 @@ msgid "Tartan pattern with a wavy displacement and bevel around the edges"
 msgstr "Vzor tartan s vlnitým posunutím a vrstvením na okrajoch"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "3D Marble"
 msgstr "3D mramor"
 
@@ -1003,7 +943,6 @@ msgid "3D warped, fibered wood texture"
 msgstr "3D deformovaná textúra vláknitého dreva"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "3D Mother of Pearl"
 msgstr "3D perleť"
 
@@ -1012,7 +951,6 @@ msgid "3D warped, iridescent pearly shell texture"
 msgstr "3D deformovaná perleťová textúra lastúry"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Tiger Fur"
 msgstr "Tigria koža"
 
@@ -1087,7 +1025,6 @@ msgid "Light areas turn to black"
 msgstr "Svetlé oblasti zmenené na čierne"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Film Grain"
 msgstr "Filmové zrno"
 
@@ -1096,14 +1033,12 @@ msgid "Adds a small scale graininess"
 msgstr "Pridáva zrnitosť v malej miere"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Plaster Color"
-msgstr "Vložiť farbu"
+msgstr "Farba omietky"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Colored plaster emboss effect"
-msgstr "Efekt oblačných vodových farieb"
+msgstr "Reliéfny efekt farebnej omietky"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Velvet Bumps"
@@ -1114,7 +1049,6 @@ msgid "Gives Smooth Bumps velvet like"
 msgstr "Dáva jemné akoby zamatové hrče"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Comics Cream"
 msgstr "Komiksový krém"
 
@@ -1127,7 +1061,6 @@ msgid "Comics shader with creamy waves transparency"
 msgstr "Komiksové tieňovanie s priesvitnosťou krémových vĺn"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Chewing Gum"
 msgstr "Žuvačka"
 
@@ -1140,7 +1073,6 @@ msgstr ""
 "priesečníkoch"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Dark And Glow"
 msgstr "Tma a žiara"
 
@@ -1149,7 +1081,6 @@ msgid "Darkens the edge with an inner blur and adds a flexible glow"
 msgstr "Stmaví okraj s vnútorným rozostrením a pridá flexibilnú žiaru"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Warped Rainbow"
 msgstr "Posunutá dúha"
 
@@ -1158,7 +1089,6 @@ msgid "Smooth rainbow colors warped along the edges and colorizable"
 msgstr "Jemné dúhové farby posunuté po okrajoch a vyfarbiteľné"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Rough and Dilate"
 msgstr "Drsné a rozšírené"
 
@@ -1167,7 +1097,6 @@ msgid "Create a turbulent contour around"
 msgstr "Vytvorí turbulentnú kontúru"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Old Postcard"
 msgstr "Stará pohľadnica"
 
@@ -1177,7 +1106,6 @@ msgstr ""
 "Jemná posterizácia a nakreslenie okrajov aké majú staré tlačené fotografie"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Dots Transparency"
 msgstr "Bodová priesvitnosť"
 
@@ -1186,17 +1114,14 @@ msgid "Gives a pointillist HSL sensitive transparency"
 msgstr "Dáva pointillistickú priesvitnosť citlivú na HSL"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Canvas Transparency"
 msgstr "Plátnová priesvitnosť"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Gives a canvas like HSL sensitive transparency."
-msgstr "Dáva priesvitnosť citlivú na HSL podobnú plátnu"
+msgstr "Dáva priesvitnosť citlivú na HSL podobnú plátnu."
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Smear Transparency"
 msgstr "Rozmazaná priesvitnosť"
 
@@ -1208,7 +1133,6 @@ msgstr ""
 "farieb"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Thick Paint"
 msgstr "Hrubá farba"
 
@@ -1225,7 +1149,6 @@ msgid "Burst balloon texture crumpled and with holes"
 msgstr "Popraskaná zmačkaná textúra s dierami"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Embossed Leather"
 msgstr "Reliéfna koža"
 
@@ -1266,7 +1189,6 @@ msgid ""
 msgstr "Kombinácia HSL detekcie hrán s efektom matného a pokrčeného povrchu"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Rough Transparency"
 msgstr "Hrubá priesvitnosť"
 
@@ -1283,7 +1205,6 @@ msgid "Partly opaque water color effect with bleed"
 msgstr "Efekt čiastočne nepriesvitných vodových farieb so spadávkou"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Alpha Engraving"
 msgstr "Alfa rytina"
 
@@ -1292,7 +1213,6 @@ msgid "Gives a transparent engraving effect with rough line and filling"
 msgstr "Dáva efekt priesvitnej rytiny s hrubými obrysmi a výplňou"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Alpha Draw Liquid"
 msgstr "Alfa kresba, tekutá"
 
@@ -1301,16 +1221,14 @@ msgid "Gives a transparent fluid drawing effect with rough line and filling"
 msgstr "Dáva efekt priesvitnej tekutiny s hrubými obrysmi a výplňou"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Liquid Drawing"
-msgstr "Tekutá kresba kresba"
+msgstr "Tekutá kresba"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Gives a fluid and wavy expressionist drawing effect to images"
 msgstr "Dáva obrázkom efekt tekutiny a vlnitej expresionistickej kresby"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Marbled Ink"
 msgstr "Mramorový atrament"
 
@@ -1320,7 +1238,6 @@ msgstr ""
 "Efekt mramorovej priesvitnosti, ktorý zodpovedá zisteným hranám na obrázku"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Thick Acrylic"
 msgstr "Hrubá akrylová"
 
@@ -1329,7 +1246,6 @@ msgid "Thick acrylic paint texture with high texture depth"
 msgstr "Hrubá akrylová textúra kresby s vysokou hĺbkou textúry"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Alpha Engraving B"
 msgstr "Alfa rytina B"
 
@@ -1347,7 +1263,6 @@ msgid "Something like a water noise"
 msgstr "Niečo ako vodný šum"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Monochrome Transparency"
 msgstr "Jednofarebná priesvitnosť"
 
@@ -1357,16 +1272,14 @@ msgstr "Jednofarebná priesvitnosť"
 #: ../src/extension/internal/filter/transparency.h:215
 #: ../src/extension/internal/filter/transparency.h:288
 #: ../src/extension/internal/filter/transparency.h:350
-#, fuzzy
 msgid "Fill and Transparency"
-msgstr "Priesvitnosť dialógu:"
+msgstr "Výplň a priesvitnosť"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Convert to a colorizable transparent positive or negative"
 msgstr "Previesť na zafarbiteľný priesvitný pozitív alebo negatív"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Saturation Map"
 msgstr "Mapa sýtosti"
 
@@ -1386,7 +1299,6 @@ msgid "Riddle the surface and add bump to images"
 msgstr "Prederaviť povrch a pridať obrazu hrče"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Wrinkled Varnish"
 msgstr "Vrásčitá glazúra"
 
@@ -1403,7 +1315,6 @@ msgid "Canvas texture with an HSL sensitive height map"
 msgstr "Textúra plátna s výškovou mapou citlivou na HSL"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Canvas Bumps Matte"
 msgstr "Hrče plátna, matné"
 
@@ -1412,7 +1323,6 @@ msgid "Same as Canvas Bumps but with a diffuse light instead of a specular one"
 msgstr "Rovnaké ako Hrče plátna ale s difúznym svetlom namiesto zrkadlového"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Canvas Bumps Alpha"
 msgstr "Hrče plátna, priesvitnosť"
 
@@ -1421,7 +1331,6 @@ msgid "Same as Canvas Bumps but with transparent highlights"
 msgstr "Rovnaké ako Hrče plátna, ale s priesvitným zvýraznením"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Bright Metal"
 msgstr "Svetlý kov"
 
@@ -1430,7 +1339,6 @@ msgid "Bright metallic effect for any color"
 msgstr "Jasný kovový efekt pre ľubovoľnú farbu"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Deep Colors Plastic"
 msgstr "Plast s hlbokými farbami"
 
@@ -1439,7 +1347,6 @@ msgid "Transparent plastic with deep colors"
 msgstr "Priesvitný plast s hlbokými farbami"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Melted Jelly Matte"
 msgstr "Roztopené želé, matné"
 
@@ -1448,7 +1355,6 @@ msgid "Matte bevel with blurred edges"
 msgstr "Matné vrstvenie s rozostrenými okrajmi"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Melted Jelly"
 msgstr "Roztopené želé"
 
@@ -1457,7 +1363,6 @@ msgid "Glossy bevel with blurred edges"
 msgstr "Lesklé vrstvenie s rozostrenými okrajmi"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Combined Lighting"
 msgstr "Kombinované osvetlenie"
 
@@ -1476,7 +1381,6 @@ msgstr ""
 "Efekt kovovej fólie kombinujúci dva typy osvetlenia a variabilné pokrčenie"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Soft Colors"
 msgstr "Mäkké farby"
 
@@ -1485,7 +1389,6 @@ msgid "Adds a colorizable edges glow inside objects and pictures"
 msgstr "Pridáva dovnútra objektov a obrázkov vyfarbiteľnú žiaru"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Relief Print"
 msgstr "Reliéfny odtlačok"
 
@@ -1494,7 +1397,6 @@ msgid "Bumps effect with a bevel, color flood and complex lighting"
 msgstr "Efekt hŕč s vrstvením, vyplnením farbou a komplexným osvetlením"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Growing Cells"
 msgstr "Rastúce bunky"
 
@@ -1511,64 +1413,56 @@ msgid "Oversaturate colors which can be fluorescent in real world"
 msgstr "Presýtiť farby, ktoré môžu byť v skutočnom svete fluorescentné"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Pixellize"
-msgstr "bod"
+msgstr "Pixelizovať"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Pixel tools"
-msgstr "body"
+msgstr "Nástroje na prácu s pixlami"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Reduce or remove antialiasing around shapes"
 msgstr "Znížiť alebo vypnúť prekladanie okolo tvarov."
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Set Resolution"
-msgstr "Rozlíšenie:"
+msgstr "Nastaviť rozlíšenie"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Set filter resolution"
-msgstr "Štandardné rozlíšenie pre export:"
+msgstr "Nastaviť rozlíšenie filtra"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Basic Diffuse Bump"
 msgstr "Základný difúzny reliéf"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Matte emboss effect"
-msgstr "Žiadny efekt"
+msgstr "Matný reliéfny efekt"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Basic Specular Bump"
-msgstr "Spekulárny exponent"
+msgstr "Základné nerovnosti s odrazom"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Specular emboss effect"
-msgstr "Žiadny efekt"
+msgstr "Reliéfny efekt s odrazom"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Basic Two Lights Bump"
-msgstr ""
+msgstr "Základné nerovnosti s dvomi svetlami"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Two types of lighting emboss effect"
-msgstr ""
+msgstr "Dva typy reliéfneho efektu s osvetlením"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Linen Canvas"
-msgstr "Plátno"
+msgstr "Ľanové plátno"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Painting canvas emboss effect"
-msgstr ""
+msgstr "Reliéfny efekt maliarskeho plátna"
 
 #: ../share/filters/filters.svg.h:1
 #, fuzzy
@@ -1576,9 +1470,8 @@ msgid "Plasticine"
 msgstr "Sadra"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Matte modeling paste emboss effect"
-msgstr "Vložiť efekt živej cesty"
+msgstr "Reliéfny efekt matnej modelíny"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Rough Canvas Painting"
@@ -1589,33 +1482,28 @@ msgid "Paper Bump"
 msgstr "Papierový reliéf"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Paper like emboss effect"
-msgstr "Vložiť efekt živej cesty"
+msgstr "Reliéfny efekt podobný papieru"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Jelly Bump"
-msgstr "Kvapka želé"
+msgstr "Gélové nerovnosti"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Convert pictures to thick jelly"
-msgstr "Konvertovať texty na cesty"
+msgstr "Previesť obrázky na husté želé"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Blend Opposites"
-msgstr "_Režim zmiešania:"
+msgstr "Zmiešať protiklady"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Blend an image with its hue opposite"
 msgstr "Zmieša obrázok a jeho odtieňový opak"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Hue to White"
-msgstr "Otočiť odtieň"
+msgstr "Odtieň na bielu"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Fades hue progressively to white"
@@ -1627,7 +1515,6 @@ msgid "Swirl"
 msgstr "Vírenie"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid ""
 "Paint objects with a transparent turbulence which wraps around color edges"
 msgstr ""
@@ -1635,14 +1522,12 @@ msgstr ""
 "farieb"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Pointillism"
-msgstr "body"
+msgstr "Pointillizmus"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Gives a turbulent pointillist HSL sensitive transparency"
-msgstr "Dáva pointillistickú priesvitnosť citlivú na HSL"
+msgstr "Dáva turbulentnú pointillistickú priesvitnosť citlivú na HSL"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Silhouette Marbled"
@@ -1653,29 +1538,24 @@ msgid "Basic noise transparency texture"
 msgstr "Základná textúra šumovej priesvitnosti"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Fill Background"
-msgstr "Pozadie"
+msgstr "Vyplniť pozadie"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Adds a colorizable opaque background"
-msgstr "Pridáva dovnútra vyfarbiteľný vrhaný tieň"
+msgstr "Pridá vyfarbiteľné nepriehľadné pozadie"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Flatten Transparency"
-msgstr "Priesvitnosť dialógu:"
+msgstr "Sploštiť priesvitnosť"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Adds a white opaque background"
-msgstr "štandard pozadie"
+msgstr "Pridá biele nepriehľadné pozadie"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Fill Area"
-msgstr "Jednoduchá farba:"
+msgstr "Vyplniť oblasť"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Fills object bounding box with color"
