@@ -53,10 +53,7 @@ public:
     gchar *color_profile;
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
-    // When image is a raster image, we use pixbuf
     Inkscape::Pixbuf *pixbuf;
-    // When it's an svg file, we use an SPItem similar to sp-use
-    SPItem *child;
 
     virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
     virtual void release();
@@ -72,8 +69,6 @@ public:
     virtual Inkscape::DrawingItem* show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
     virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) const;
     virtual Geom::Affine set_transform(Geom::Affine const &transform);
-private:
-    void clear_image();
 };
 
 /* Return duplicate of curve or NULL */
