@@ -654,7 +654,7 @@ sp_marker_view_remove (SPMarker *marker, SPMarkerView *view, unsigned int destro
     delete view;
 }
 
-const gchar *generate_marker(GSList *reprs, Geom::Rect bounds, SPDocument *document, Geom::Affine /*transform*/, Geom::Affine move)
+const gchar *generate_marker(GSList *reprs, Geom::Rect bounds, SPDocument *document, Geom::Point center, Geom::Affine move)
 {
     Inkscape::XML::Document *xml_doc = document->getReprDoc();
     Inkscape::XML::Node *defsrepr = document->getDefs()->getRepr();
@@ -668,6 +668,8 @@ const gchar *generate_marker(GSList *reprs, Geom::Rect bounds, SPDocument *docum
 
     sp_repr_set_svg_double(repr, "markerWidth", bounds.dimensions()[Geom::X]);
     sp_repr_set_svg_double(repr, "markerHeight", bounds.dimensions()[Geom::Y]);
+    sp_repr_set_svg_double(repr, "refX", center[Geom::X]);
+    sp_repr_set_svg_double(repr, "refY", center[Geom::Y]);
 
     repr->setAttribute("orient", "auto");
 
@@ -676,7 +678,7 @@ const gchar *generate_marker(GSList *reprs, Geom::Rect bounds, SPDocument *docum
     SPObject *mark_object = document->getObjectById(mark_id);
 
     for (GSList *i = reprs; i != NULL; i = i->next) {
-            Inkscape::XML::Node *node = (Inkscape::XML::Node *)(i->data);
+        Inkscape::XML::Node *node = (Inkscape::XML::Node *)(i->data);
         SPItem *copy = SP_ITEM(mark_object->appendChildRepr(node));
 
         Geom::Affine dup_transform;

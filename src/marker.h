@@ -97,7 +97,7 @@ Inkscape::DrawingItem *sp_marker_show_instance (SPMarker *marker, Inkscape::Draw
 				      unsigned int key, unsigned int pos,
 				      Geom::Affine const &base, float linewidth);
 void sp_marker_hide (SPMarker *marker, unsigned int key);
-const gchar *generate_marker (GSList *reprs, Geom::Rect bounds, SPDocument *document, Geom::Affine transform, Geom::Affine move);
+const gchar *generate_marker (GSList *reprs, Geom::Rect bounds, SPDocument *document, Geom::Point center, Geom::Affine move);
 SPObject *sp_marker_fork_if_necessary(SPObject *marker);
 
 #endif

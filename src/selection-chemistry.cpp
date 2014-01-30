@@ -2804,6 +2804,7 @@ void sp_selection_clone_original_path_lpe(SPDesktop *desktop)
 
 void sp_selection_to_marker(SPDesktop *desktop, bool apply)
 {
+    // sp_selection_tile has similar code
     if (desktop == NULL) {
         return;
     }
@@ -2826,25 +2827,28 @@ void sp_selection_to_marker(SPDesktop *desktop, bool apply)
         return;
     }
 
+    // FIXME: Inverted Y coodinate
+    Geom::Point doc_height( 0, doc->getHeight().value("px"));
+
     // calculate the transform to be applied to objects to move them to 0,0
-    Geom::Point move_p = Geom::Point(0, doc->getHeight().value("px")) - *c;
+    Geom::Point corner( r->min()[Geom::X], r->max()[Geom::Y] ); // FIXME: Inverted Y coodinate  
+    Geom::Point move_p = doc_height - corner;
     move_p[Geom::Y] = -move_p[Geom::Y];
     Geom::Affine move = Geom::Affine(Geom::Translate(move_p));
 
+    Geom::Point center( *c - corner ); // As defined by rotation center
+    center[Geom::Y] = -center[Geom::Y];
+
     GSList *items = g_slist_copy(const_cast<GSList *>(selection->itemList()));
 
-    items = g_slist_sort(items, (GCompareFunc) sp_object_compare_position);
+    items = g_slist_sort(items, (GCompareFunc) sp_object_compare_position);  // Why needed?
 
     // bottommost object, after sorting
     SPObject *parent = SP_OBJECT(items->data)->parent;
 
     Geom::Affine parent_transform(SP_ITEM(parent)->i2doc_affine());
 
-    // remember the position of the first item
-    gint pos = SP_OBJECT(items->data)->getRepr()->position();
-    (void)pos; // TODO check why this was remembered
-
-    // create a list of duplicates
+    // Create a list of duplicates, to be pasted inside marker element.
     GSList *repr_copies = NULL;
     for (GSList *i = items; i != NULL; i = i->next) {
         Inkscape::XML::Node *dup = SP_OBJECT(i->data)->getRepr()->duplicate(xml_doc);
@@ -2854,7 +2858,8 @@ void sp_selection_to_marker(SPDesktop *desktop, bool apply)
     Geom::Rect bbox(desktop->dt2doc(r->min()), desktop->dt2doc(r->max()));
 
     if (apply) {
-        // delete objects so that their clones don't get alerted; this object will be restored shortly
+        // Delete objects so that their clones don't get alerted;
+        // the objects will be restored inside the marker element.
         for (GSList *i = items; i != NULL; i = i->next) {
             SPObject *item = reinterpret_cast<SPObject*>(i->data);
             item->deleteObject(false);
@@ -2868,12 +2873,7 @@ void sp_selection_to_marker(SPDesktop *desktop, bool apply)
     int saved_compensation = prefs->getInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
     prefs->setInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
 
-    gchar const *mark_id = generate_marker(repr_copies, bbox, doc,
-                                           ( Geom::Affine(Geom::Translate(desktop->dt2doc(
-                                                                              Geom::Point(r->min()[Geom::X],
-                                                                                          r->max()[Geom::Y]))))
-                                             * parent_transform.inverse() ),
-                                           parent_transform * move);
+    gchar const *mark_id = generate_marker(repr_copies, bbox, doc, center, parent_transform * move);
     (void)mark_id;
 
     // restore compensation setting
@@ -3099,6 +3099,7 @@ void sp_selection_unsymbol(SPDesktop *desktop)
 void
 sp_selection_tile(SPDesktop *desktop, bool apply)
 {
+    // sp_selection_to_marker has similar code
     if (desktop == NULL) {
         return;
     }
