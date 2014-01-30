@@ -2841,7 +2841,7 @@ void sp_selection_to_marker(SPDesktop *desktop, bool apply)
 
     GSList *items = g_slist_copy(const_cast<GSList *>(selection->itemList()));
 
-    items = g_slist_sort(items, (GCompareFunc) sp_object_compare_position);  // Why needed?
+    //items = g_slist_sort(items, (GCompareFunc) sp_object_compare_position);  // Why needed?
 
     // bottommost object, after sorting
     SPObject *parent = SP_OBJECT(items->data)->parent;
