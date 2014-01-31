@@ -246,7 +246,7 @@ Geom::Affine get_scale_transform_for_variable_stroke(Geom::Rect const &bbox_visu
 
     // 1) We start with a visual bounding box (w0, h0) which we want to transfer into another visual bounding box (w1, h1)
     // 2) We will also know the geometric bounding box, which can be used to calculate the strokewidth. The strokewidth will however
-    //      be different for each of the four sides (left/right/top/bottom: r0l, r0r, r0t, r0b)
+    //    be different for each of the four sides (left/right/top/bottom: r0l, r0r, r0t, r0b)
 
     gdouble w0 = bbox_visual.width(); // will return a value >= 0, as required further down the road
     gdouble h0 = bbox_visual.height();
@@ -258,8 +258,10 @@ Geom::Affine get_scale_transform_for_variable_stroke(Geom::Rect const &bbox_visu
 
     // We will now try to calculate the affine transformation required to transform the first visual bounding box into
     // the second one, while accounting for strokewidth
-    gdouble r0w = w0 - bbox_geom.width(); // r0w is the average strokewidth of the left and right edges, i.e. 0.5*(r0l + r0r)
+    gdouble r0w = w0 - bbox_geom.width();  // r0w is the average strokewidth of the left and right edges, i.e. 0.5*(r0l + r0r)
     gdouble r0h = h0 - bbox_geom.height(); // r0h is the average strokewidth of the top and bottom edges, i.e. 0.5*(r0t + r0b)
+    if ((r0w == Geom::infinity()) || (fabs(r0w) < 1e-6)) r0w = 0;
+    if ((r0h == Geom::infinity()) || (fabs(r0h) < 1e-6)) r0h = 0;
 
     int flip_x = (w1 > 0) ? 1 : -1;
     int flip_y = (h1 > 0) ? 1 : -1;
@@ -308,38 +310,21 @@ Geom::Affine get_scale_transform_for_variable_stroke(Geom::Rect const &bbox_visu
              * Desired area of the geometric bounding box: A1 = (w1-r1w)*(h1-r1h)
              * This is how the stroke should scale:     r1w^2 = A1/A0 * r0w^2, AND
              *                                          r1h^2 = A1/A0 * r0h^2
-             * Now we have to solve this set of two equations and find r1w and r1h; this too complicated to do by hand,
-             * so I used wxMaxima for that (http://wxmaxima.sourceforge.net/). These lines can be copied into Maxima
-             *
-             * A1: (w1-r1w)*(h1-r1h);
-             * s: A1/A0;
-             * expr1a: r1w^2 = s*r0w^2;
-             * expr1b: r1h^2 = s*r0h^2;
-             * sol: solve([expr1a, expr1b], [r1h, r1w]);
-             * sol[1][1]; sol[2][1]; sol[3][1]; sol[4][1];
-             * sol[1][2]; sol[2][2]; sol[3][2]; sol[4][2];
-             *
-             * PS1: The last two lines are only needed for readability of the output, and can be omitted if desired
-             * PS2: A0 is known beforehand and assumed to be constant, instead of using A0 = (w0-r0w)*(h0-r0h). This reduces the
-             * length of the results significantly
-             * PS3: You'll get 8 solutions, 4 for each of the strokewidths r1w and r1h. Some experiments quickly showed which of the solutions
-             * lead to meaningful strokewidths
+             * These can be re-expressed as : r1w/r0w = r1h/r0h
+             * and : r1w*r1w*(w0 - r0w)*(h0 - r0h) = r0w*r0w*(w1 - r1w)*(h1 - r1h)
+             * This leads to a quadratic equation in r1w, solved as follows:
              * */
-            gdouble r0h2 = r0h*r0h;
-            gdouble r0h3 = r0h2*r0h;
-            gdouble r0w2 = r0w*r0w;
-            gdouble w12 = w1*w1;
-            gdouble h12 = h1*h1;
-            gdouble A0 = bbox_geom.area();
-            gdouble A02 = A0*A0;
 
-            gdouble operant = 4*h1*w1*A0+r0h2*w12-2*h1*r0h*r0w*w1+h12*r0w2;
-            if (operant < 0) {
+            gdouble A = w0*h0 - r0h*w0 - r0w*h0;
+            gdouble B = r0h*w1 + r0w*h1;
+            gdouble C = -w1*h1;
+
+            if (B*B - 4*A*C < 0) {
                 g_message("variable stroke scaling error : %d, %d, %f, %f, %f, %f, %f, %f", transform_stroke, preserve, r0w, r0h, w0, h0, w1, h1);
             } else {
-                // Of the eight roots, I verified experimentally that these are the two we need
-                r1h = fabs((r0h*sqrt(operant)-r0h2*w1-h1*r0h*r0w)/(2*A0-2*r0h*r0w));
-                r1w = fabs(-((h1*r0w*A0+r0h2*r0w*w1)*sqrt(operant)+(-3*h1*r0h*r0w*w1-h12*r0w2)*A0-r0h3*r0w*w12+h1*r0h2*r0w2*w1)/((r0h*A0-r0h2*r0w)*sqrt(operant)-2*h1*A02+(3*h1*r0h*r0w-r0h2*w1)*A0+r0h3*r0w*w1-h1*r0h2*r0w2));
+                gdouble det = (-B + sqrt(B*B - 4*A*C))/(2*A);
+                r1w = r0w*det;
+                r1h = r0h*det;
                 // If w1 < 0 then the scale will be wrong if we just assume that scale_x = (w1 - r1)/(w0 - r0);
                 // Therefore we here need the absolute values of w0, w1, h0, h1, and r0, as taken care of earlier
                 scale_x = (w1 - r1w)/(w0 - r0w);
