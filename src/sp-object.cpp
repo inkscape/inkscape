@@ -585,23 +585,22 @@ SPObject *SPObject::get_child_by_repr(Inkscape::XML::Node *repr)
 void SPObject::child_added(Inkscape::XML::Node *child, Inkscape::XML::Node *ref) {
     SPObject* object = this;
 
-    try {
-        const std::string typeString = NodeTraits::get_type_string(*child);
+    const std::string type_string = NodeTraits::get_type_string(*child);
 
-        SPObject* ochild = SPFactory::instance().createObject(typeString);
-
-        SPObject *prev = ref ? object->get_child_by_repr(ref) : NULL;
-        object->attach(ochild, prev);
-        sp_object_unref(ochild, NULL);
-
-        ochild->invoke_build(object->document, child, object->cloned);
-    } catch (const FactoryExceptions::TypeNotRegistered& e) {
+    SPObject* ochild = SPFactory::instance().createObject(type_string);
+    if (ochild == NULL) {
         // Currenty, there are many node types that do not have
         // corresponding classes in the SPObject tree.
         // (rdf:RDF, inkscape:clipboard, ...)
         // Thus, simply ignore this case for now.
         return;
     }
+
+    SPObject *prev = ref ? object->get_child_by_repr(ref) : NULL;
+    object->attach(ochild, prev);
+    sp_object_unref(ochild, NULL);
+
+    ochild->invoke_build(object->document, child, object->cloned);
 }
 
 void SPObject::release() {
@@ -645,21 +644,20 @@ void SPObject::build(SPDocument *document, Inkscape::XML::Node *repr) {
     object->readAttr("inkscape:collect");
 
     for (Inkscape::XML::Node *rchild = repr->firstChild() ; rchild != NULL; rchild = rchild->next()) {
-        try {
-            const std::string typeString = NodeTraits::get_type_string(*rchild);
+        const std::string typeString = NodeTraits::get_type_string(*rchild);
 
-            SPObject* child = SPFactory::instance().createObject(typeString);
-
-            object->attach(child, object->lastChild());
-            sp_object_unref(child, NULL);
-            child->invoke_build(document, rchild, object->cloned);
-        } catch (const FactoryExceptions::TypeNotRegistered& e) {
+        SPObject* child = SPFactory::instance().createObject(typeString);
+        if (child == NULL) {
             // Currenty, there are many node types that do not have
             // corresponding classes in the SPObject tree.
             // (rdf:RDF, inkscape:clipboard, ...)
             // Thus, simply ignore this case for now.
             continue;
         }
+
+        object->attach(child, object->lastChild());
+        sp_object_unref(child, NULL);
+        child->invoke_build(document, rchild, object->cloned);
     }
 }
 

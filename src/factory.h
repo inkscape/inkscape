@@ -63,7 +63,9 @@ public:
         typename std::map<std::string const, CreateFunction *>::const_iterator it = this->_object_map.find(id);
 
         if (it == this->_object_map.end()) {
-            throw FactoryExceptions::TypeNotRegistered(id);
+            //throw FactoryExceptions::TypeNotRegistered(id);
+            g_warning("unknown type: %s", id.c_str());
+            return NULL;
         }
 
         return it->second();
