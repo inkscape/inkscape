@@ -563,16 +563,14 @@ void SymbolsDialog::get_symbols() {
         symbol_doc = SPDocument::createNewDoc( fullname, FALSE );
         if( symbol_doc ) {
 
-              const gchar *title = symbol_doc->getRoot()->title();
+          const gchar *title = symbol_doc->getRoot()->title();
 
-	      // A user provided file may not have a title
-	      if( title != NULL ) {
-		title = g_dpgettext2(NULL, "Symbol", title); // Translate
-	      }
-
-              if( title == NULL ) {
-                  title = _("Unnamed Symbols");
-              }
+          // A user provided file may not have a title
+          if( title != NULL ) {
+              title = g_dpgettext2(NULL, "Symbol", title); // Translate
+          } else {
+              title = _("Unnamed Symbols");
+          }
 
           symbolSets[Glib::ustring(title)] = symbol_doc;
           symbolSet->append(title);
