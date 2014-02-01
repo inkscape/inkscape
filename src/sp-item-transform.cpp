@@ -146,9 +146,13 @@ Geom::Affine get_scale_transform_for_uniform_stroke(Geom::Rect const &bbox_visua
     if ((fabs(w0 - stroke_x) < 1e-6) || w1 == 0) { // We have a vertical line at hand
         scale_y = h1/h0;
         scale_x = transform_stroke ? 1 : scale_y;
+        unbudge *= Geom::Translate (-flip_x * 0.5 * (scale_x - 1.0) * w0, 0);
+        unbudge *= Geom::Translate ( flip_x * 0.5 * (w1 - w0), 0); // compensate for the fact that this operation cannot be performed
     } else if ((fabs(h0 - stroke_y) < 1e-6) || h1 == 0) { // We have a horizontal line at hand
         scale_x = w1/w0;
         scale_y = transform_stroke ? 1 : scale_x;
+        unbudge *= Geom::Translate (0, -flip_y * 0.5 * (scale_y - 1.0) * h0);
+        unbudge *= Geom::Translate (0,  flip_y * 0.5 * (h1 - h0)); // compensate for the fact that this operation cannot be performed
     } else { // We have a true 2D object at hand
         if (transform_stroke && !preserve) {
             /* Initial area of the geometric bounding box: A0 = (w0-r0)*(h0-r0)
@@ -299,11 +303,13 @@ Geom::Affine get_scale_transform_for_variable_stroke(Geom::Rect const &bbox_visu
     if ((fabs(w0 - r0w) < 1e-6) || w1 == 0) { // We have a vertical line at hand
         scale_y = h1/h0;
         scale_x = transform_stroke ? 1 : scale_y;
-        unbudge *= Geom::Translate (flip_x * 0.5 * (w1 - w0), 0); // compensate for the fact that this operation cannot be performed
+        unbudge *= Geom::Translate (-flip_x * 0.5 * (scale_x - 1.0) * w0, 0);
+        unbudge *= Geom::Translate ( flip_x * 0.5 * (w1 - w0), 0); // compensate for the fact that this operation cannot be performed
     } else if ((fabs(h0 - r0h) < 1e-6) || h1 == 0) { // We have a horizontal line at hand
         scale_x = w1/w0;
         scale_y = transform_stroke ? 1 : scale_x;
-        unbudge *= Geom::Translate (0, flip_y * 0.5 * (h1 - h0)); // compensate for the fact that this operation cannot be performed
+        unbudge *= Geom::Translate (0, -flip_y * 0.5 * (scale_y - 1.0) * h0);
+        unbudge *= Geom::Translate (0,  flip_y * 0.5 * (h1 - h0)); // compensate for the fact that this operation cannot be performed
     } else { // We have a true 2D object at hand
         if (transform_stroke && !preserve) {
             /* Initial area of the geometric bounding box: A0 = (w0-r0w)*(h0-r0h)
