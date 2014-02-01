@@ -76,7 +76,7 @@ namespace UI {
 
 namespace Dialog {
 
-  // See: http://developer.gnome.org/gtkmm/stable/classGtk_1_1TreeModelColumnRecord.html
+// See: http://developer.gnome.org/gtkmm/stable/classGtk_1_1TreeModelColumnRecord.html
 class SymbolColumns : public Gtk::TreeModel::ColumnRecord
 {
 public:
@@ -399,11 +399,13 @@ SPDocument* SymbolsDialog::selectedSymbols() {
 }
 
 Glib::ustring SymbolsDialog::selectedSymbolId() {
-  #if WITH_GTKMM_3_0
-    std::vector<Gtk::TreePath> iconArray = iconView->get_selected_items();
-  #else
-    Gtk::IconView::ArrayHandle_TreePaths iconArray = iconView->get_selected_items();
-  #endif
+
+#if WITH_GTKMM_3_0
+  std::vector<Gtk::TreePath> iconArray = iconView->get_selected_items();
+#else
+  Gtk::IconView::ArrayHandle_TreePaths iconArray = iconView->get_selected_items();
+#endif
+
   if( !iconArray.empty() ) {
     Gtk::TreeModel::Path const & path = *iconArray.begin();
     Gtk::ListStore::iterator row = store->get_iter(path);
@@ -428,12 +430,12 @@ void SymbolsDialog::iconChanged() {
     // First look for default style stored in <symbol>
     gchar const* style = symbol->getAttribute("inkscape:symbol-style");
     if( !style ) {
-    // If no default style in <symbol>, look in documents.
-    if( symbolDocument == currentDocument ) {
-      style = style_from_use( symbol_id.c_str(), currentDocument );
-    } else {
-      style = symbolDocument->getReprRoot()->attribute("style");
-    }
+      // If no default style in <symbol>, look in documents.
+      if( symbolDocument == currentDocument ) {
+        style = style_from_use( symbol_id.c_str(), currentDocument );
+      } else {
+        style = symbolDocument->getReprRoot()->attribute("style");
+      }
     }
 
     ClipboardManager *cm = ClipboardManager::get();
@@ -497,8 +499,8 @@ SPDocument* read_vss( gchar* fullname, gchar* filename ) {
     while( std::getline( iss, line ) ) {
       // std::cout << line << std::endl;
       if( line.find( "svg:svg" ) == std::string::npos ) {
-  tmpSVGOutput += line;
-  tmpSVGOutput += "\n";
+        tmpSVGOutput += line;
+        tmpSVGOutput += "\n";
       }
     }
 
@@ -519,11 +521,11 @@ void SymbolsDialog::get_symbols() {
   std::list<Glib::ustring> directories;
 
   if( Inkscape::IO::file_test( INKSCAPE_SYMBOLSDIR, G_FILE_TEST_EXISTS ) &&
-  Inkscape::IO::file_test( INKSCAPE_SYMBOLSDIR, G_FILE_TEST_IS_DIR ) ) {
+      Inkscape::IO::file_test( INKSCAPE_SYMBOLSDIR, G_FILE_TEST_IS_DIR ) ) {
     directories.push_back( INKSCAPE_SYMBOLSDIR );
   }
   if( Inkscape::IO::file_test( profile_path("symbols"), G_FILE_TEST_EXISTS ) &&
-  Inkscape::IO::file_test( profile_path("symbols"), G_FILE_TEST_IS_DIR ) ) {
+      Inkscape::IO::file_test( profile_path("symbols"), G_FILE_TEST_IS_DIR ) ) {
     directories.push_back( profile_path("symbols") );
   }
 
@@ -534,53 +536,53 @@ void SymbolsDialog::get_symbols() {
     GDir *dir = g_dir_open( (*it).c_str(), 0, &err );
     if( dir ) {
 
-  gchar *filename = 0;
-  while( (filename = (gchar *)g_dir_read_name( dir ) ) != NULL) {
+      gchar *filename = 0;
+      while( (filename = (gchar *)g_dir_read_name( dir ) ) != NULL) {
 
-    gchar *fullname = g_build_filename((*it).c_str(), filename, NULL);
+        gchar *fullname = g_build_filename((*it).c_str(), filename, NULL);
 
-    if ( !Inkscape::IO::file_test( fullname, G_FILE_TEST_IS_DIR )
-         && ( Glib::str_has_suffix(fullname, ".svg") || Glib::str_has_suffix(fullname, ".vss") ) ) {
+        if ( !Inkscape::IO::file_test( fullname, G_FILE_TEST_IS_DIR )
+             && ( Glib::str_has_suffix(fullname, ".svg") || Glib::str_has_suffix(fullname, ".vss") ) ) {
 
-      Glib::ustring fn( filename );
-      Glib::ustring tag = fn.substr( fn.find_last_of(".") + 1 );
+          Glib::ustring fn( filename );
+          Glib::ustring tag = fn.substr( fn.find_last_of(".") + 1 );
 
-      SPDocument* symbol_doc = NULL;
+          SPDocument* symbol_doc = NULL;
 
 #ifdef WITH_LIBVISIO
-      if( tag.compare( "vss" ) == 0 ) {
+          if( tag.compare( "vss" ) == 0 ) {
 
-        symbol_doc = read_vss( fullname, filename );
-        if( symbol_doc ) {
-    symbolSets[Glib::ustring(filename)]= symbol_doc;
-    symbolSet->append(filename);
-        }
-      }
+            symbol_doc = read_vss( fullname, filename );
+            if( symbol_doc ) {
+              symbolSets[Glib::ustring(filename)]= symbol_doc;
+              symbolSet->append(filename);
+            }
+          }
 #endif
-      // Try to read all remaining files as SVG
-      if( !symbol_doc ) {
+          // Try to read all remaining files as SVG
+          if( !symbol_doc ) {
 
-        symbol_doc = SPDocument::createNewDoc( fullname, FALSE );
-        if( symbol_doc ) {
+            symbol_doc = SPDocument::createNewDoc( fullname, FALSE );
+            if( symbol_doc ) {
 
-          const gchar *title = symbol_doc->getRoot()->title();
+              const gchar *title = symbol_doc->getRoot()->title();
 
-          // A user provided file may not have a title
-          if( title != NULL ) {
-              title = g_dpgettext2(NULL, "Symbol", title); // Translate
-          } else {
-              title = _("Unnamed Symbols");
+              // A user provided file may not have a title
+              if( title != NULL ) {
+                title = g_dpgettext2(NULL, "Symbol", title); // Translate
+              } else {
+                title = _("Unnamed Symbols");
+              }
+
+              symbolSets[Glib::ustring(title)] = symbol_doc;
+              symbolSet->append(title);
+            }
           }
 
-          symbolSets[Glib::ustring(title)] = symbol_doc;
-          symbolSet->append(title);
         }
+        g_free( fullname );
       }
-
-    }
-    g_free( fullname );
-  }
-  g_dir_close( dir );
+      g_dir_close( dir );
     }
   }
 }
@@ -642,16 +644,16 @@ gchar const* SymbolsDialog::style_from_use( gchar const* id, SPDocument* documen
   for( ; l != NULL; l = l->next ) {
     SPObject* use = SP_OBJECT(l->data);
     if( SP_IS_USE( use ) ) {
-  gchar const *href = use->getRepr()->attribute("xlink:href");
-  if( href ) {
-    Glib::ustring href2(href);
-    Glib::ustring id2(id);
-    id2 = "#" + id2;
-    if( !href2.compare(id2) ) {
-      style = use->getRepr()->attribute("style");
-      break;
-    }
-  }
+      gchar const *href = use->getRepr()->attribute("xlink:href");
+      if( href ) {
+        Glib::ustring href2(href);
+        Glib::ustring id2(id);
+        id2 = "#" + id2;
+        if( !href2.compare(id2) ) {
+          style = use->getRepr()->attribute("style");
+          break;
+        }
+      }
     }
   }
   return style;
@@ -808,8 +810,8 @@ void SymbolsDialog::setTargetDesktop(SPDesktop *desktop)
   if (this->currentDesktop != desktop) {
     this->currentDesktop = desktop;
     if( !symbolSets[symbolSet->get_active_text()] ) {
-  // Symbol set is from Current document, update
-  rebuild();
+      // Symbol set is from Current document, update
+      rebuild();
     }
   }
 }
@@ -817,3 +819,15 @@ void SymbolsDialog::setTargetDesktop(SPDesktop *desktop)
 } //namespace Dialogs
 } //namespace UI
 } //namespace Inkscape
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-basic-offset:2
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=2:tabstop=8:softtabstop=2:fileencoding=utf-8:textwidth=99 :
