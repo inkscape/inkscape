@@ -61,15 +61,18 @@ class hpglEncoder:
                 "precut":bool
                 "offsetX":float
                 "offsetY":float
+                "autoAlign":bool
                 "debug":bool
         '''
-        self.doc = effect.document.getroot()
         self.options = effect.options
+        self.doc = effect.document.getroot()
         self.documentUnit = self.doc.xpath('//sodipodi:namedview/@inkscape:document-units', namespaces=inkex.NSS)
         if self.documentUnit:
             self.documentUnit = self.documentUnit[0]
         else:
             self.documentUnit = 'px'
+        self.docWidth = self.unitToUserUnit(self.doc.get('width'), True)
+        self.docHeight = self.unitToUserUnit(self.doc.get('height'), True)
         self.divergenceX = 'False'
         self.divergenceY = 'False'
         self.sizeX = 'False'
@@ -93,13 +96,12 @@ class hpglEncoder:
             self.mirrorY = 1.0
         if self.options.debug:
             self.debugValues = [0, 0, 0, 0, 0, 0, 0, 0]
+            self.debugValues[0] = self.docWidth
+            self.debugValues[1] = self.docHeight
         # process viewBox attribute to correct page scaling
-        viewBox = self.doc.get('viewBox')
         self.viewBoxTransformX = 1
         self.viewBoxTransformY = 1
-        if self.options.debug:
-            self.debugValues[0] = self.unitToUserUnit(self.doc.get('width'), True)
-            self.debugValues[1] = self.unitToUserUnit(self.doc.get('height'), True)
+        viewBox = self.doc.get('viewBox')
         if viewBox:
             viewBox = string.split(viewBox, ' ')
             if viewBox[2] and viewBox[3]:
@@ -108,8 +110,8 @@ class hpglEncoder:
             if self.options.debug:
                 self.debugValues[2] = self.unitToUserUnit(viewBox[0])
                 self.debugValues[3] = self.unitToUserUnit(viewBox[1])
-            self.viewBoxTransformX = self.unitToUserUnit(self.doc.get('width'), True) / self.unitToUserUnit(viewBox[0])
-            self.viewBoxTransformY = self.unitToUserUnit(self.doc.get('height'), True) / self.unitToUserUnit(viewBox[1])
+            self.viewBoxTransformX = self.docWidth / self.unitToUserUnit(viewBox[0])
+            self.viewBoxTransformY = self.docHeight / self.unitToUserUnit(viewBox[1])
 
     def getHpgl(self):
         # dryRun to find edges
@@ -126,12 +128,39 @@ class hpglEncoder:
             self.debugValues[5] = self.sizeY - self.divergenceY
             self.debugValues[6] = self.unitToUserUnit(str(self.debugValues[4] / self.scaleX))
             self.debugValues[7] = self.unitToUserUnit(str(self.debugValues[5] / self.scaleY))
-        if self.options.center:
-            self.divergenceX += (self.sizeX - self.divergenceX) / 2
-            self.divergenceY += (self.sizeY - self.divergenceY) / 2
-        elif self.options.useToolOffset:
+        # move drawing according to various modifiers
+        if self.options.autoAlign:
+            if self.options.center:
+                self.divergenceX += (self.sizeX - self.divergenceX) / 2
+                self.divergenceY += (self.sizeY - self.divergenceY) / 2
+        else:
+            self.divergenceX = 0.0
+            self.divergenceY = 0.0
+            if self.options.center:
+                if self.options.orientation == '0':
+                    self.offsetX -= (self.docWidth * self.scaleX) / 2
+                    self.offsetY += (self.docHeight * self.scaleY) / 2
+                if self.options.orientation == '90':
+                    self.offsetY += (self.docWidth * self.scaleX) / 2
+                    self.offsetX += (self.docHeight * self.scaleY) / 2
+                if self.options.orientation == '180':
+                    self.offsetX += (self.docWidth * self.scaleX) / 2
+                    self.offsetY -= (self.docHeight * self.scaleY) / 2
+                if self.options.orientation == '270':
+                    self.offsetY -= (self.docWidth * self.scaleX) / 2
+                    self.offsetX -= (self.docHeight * self.scaleY) / 2
+            else:
+                if self.options.orientation == '0':
+                    self.offsetY += self.docHeight * self.scaleY
+                if self.options.orientation == '90':
+                    self.offsetY += self.docWidth * self.scaleX
+                    self.offsetX += self.docHeight * self.scaleY
+                if self.options.orientation == '180':
+                    self.offsetX += self.docWidth * self.scaleX
+        if not self.options.center and self.options.useToolOffset:
             self.offsetX += self.toolOffset
             self.offsetY += self.toolOffset
+        # initialize transformation matrix and cache
         groupmat = [[self.mirrorX * self.scaleX * self.viewBoxTransformX, 0.0, - self.divergenceX + self.offsetX],
             [0.0, self.mirrorY * self.scaleY * self.viewBoxTransformY, - self.divergenceY + self.offsetY]]
         groupmat = simpletransform.composeTransform(groupmat, simpletransform.parseTransform('rotate(' + self.options.orientation + ')'))

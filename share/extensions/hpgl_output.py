@@ -49,6 +49,7 @@ class MyEffect(inkex.Effect):
         self.OptionParser.add_option('--precut',        action='store', type='inkbool', dest='precut',        default='TRUE',  help='Use precut')
         self.OptionParser.add_option('--offsetX',       action='store', type='float',   dest='offsetX',       default=0.0,     help='X offset (mm)')
         self.OptionParser.add_option('--offsetY',       action='store', type='float',   dest='offsetY',       default=0.0,     help='Y offset (mm)')
+        self.OptionParser.add_option('--autoAlign',     action='store', type='inkbool', dest='autoAlign',     default='TRUE',  help='Auto align')
 
     def effect(self):
         self.options.debug = False

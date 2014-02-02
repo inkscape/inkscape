@@ -36,6 +36,10 @@ class MyEffect(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
         self.OptionParser.add_option('--tab',             action='store', type='string',  dest='tab')
+        self.OptionParser.add_option('--serialPort',      action='store', type='string',  dest='serialPort',      default='COM1',  help='Serial port')
+        self.OptionParser.add_option('--serialBaudRate',  action='store', type='string',  dest='serialBaudRate',  default='9600',  help='Serial Baud rate')
+        self.OptionParser.add_option('--flowControl',     action='store', type='string',  dest='flowControl',     default='0',     help='Flow control')
+        self.OptionParser.add_option('--commandLanguage', action='store', type='string',  dest='commandLanguage', default='hpgl',  help='Command Language')
         self.OptionParser.add_option('--resolutionX',     action='store', type='float',   dest='resolutionX',     default=1016.0,  help='Resolution X (dpi)')
         self.OptionParser.add_option('--resolutionY',     action='store', type='float',   dest='resolutionY',     default=1016.0,  help='Resolution Y (dpi)')
         self.OptionParser.add_option('--pen',             action='store', type='int',     dest='pen',             default=1,       help='Pen number')
@@ -53,10 +57,7 @@ class MyEffect(inkex.Effect):
         self.OptionParser.add_option('--precut',          action='store', type='inkbool', dest='precut',          default='TRUE',  help='Use precut')
         self.OptionParser.add_option('--offsetX',         action='store', type='float',   dest='offsetX',         default=0.0,     help='X offset (mm)')
         self.OptionParser.add_option('--offsetY',         action='store', type='float',   dest='offsetY',         default=0.0,     help='Y offset (mm)')
-        self.OptionParser.add_option('--serialPort',      action='store', type='string',  dest='serialPort',      default='COM1',  help='Serial port')
-        self.OptionParser.add_option('--serialBaudRate',  action='store', type='string',  dest='serialBaudRate',  default='9600',  help='Serial Baud rate')
-        self.OptionParser.add_option('--flowControl',     action='store', type='string',  dest='flowControl',     default='0',     help='Flow control')
-        self.OptionParser.add_option('--commandLanguage', action='store', type='string',  dest='commandLanguage', default='hpgl',  help='Command Language')
+        self.OptionParser.add_option('--autoAlign',       action='store', type='inkbool', dest='autoAlign',     default='TRUE',  help='Auto align')
         self.OptionParser.add_option('--debug',           action='store', type='inkbool', dest='debug',           default='FALSE', help='Show debug information')
 
     def effect(self):
@@ -181,6 +182,7 @@ class MyEffect(inkex.Effect):
         inkex.errormsg('  Curve flatness: ' + str(self.options.flat))
         inkex.errormsg('  X offset (mm): ' + str(self.options.offsetX))
         inkex.errormsg('  Y offset (mm): ' + str(self.options.offsetY))
+        inkex.errormsg('  Auto align: ' + str(self.options.autoAlign))
         inkex.errormsg('  Show debug information: ' + str(self.options.debug))
         inkex.errormsg("\nDocument properties:\n")
         version = self.document.getroot().xpath('//@inkscape:version', namespaces=inkex.NSS)
