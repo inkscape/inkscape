@@ -1080,7 +1080,12 @@ cc_generic_knot_handler(SPCanvasItem *, GdkEvent *event, SPKnot *knot)
         case GDK_LEAVE_NOTIFY:
             sp_knot_set_flag(knot, SP_KNOT_MOUSEOVER, FALSE);
 
-            cc->active_handle = NULL;
+            /* FIXME: the following test is a workaround for LP Bug #1273510.
+             * It seems that a signal is not correctly disconnected, maybe
+             * something missing in cc_clear_active_conn()? */
+            if (cc) {
+                cc->active_handle = NULL;
+            } 
 
             if (knot_tip) {
                 knot->desktop->event_context->defaultMessageContext()->clear();
