@@ -64,7 +64,12 @@ public:
 
         if (it == this->_object_map.end()) {
             //throw FactoryExceptions::TypeNotRegistered(id);
-            g_warning("unknown type: %s", id.c_str());
+            if (!(id.empty() // comments, usually
+                  or id == "rdf:RDF" // no SP node yet
+                  or id == "inkscape:clipboard" // SP node not necessary
+                  or id == "inkscape:_templateinfo")) {
+                g_warning("unknown type: %s", id.c_str());
+            }
             return NULL;
         }
 
