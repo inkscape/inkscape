@@ -59,7 +59,7 @@ msgstr ""
 "Project-Id-Version: inkscape 0.49\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2014-01-19 16:41+0100\n"
-"PO-Revision-Date: 2014-01-19 22:01+0100\n"
+"PO-Revision-Date: 2014-02-05 19:58+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch\n"
 "MIME-Version: 1.0\n"
@@ -3742,49 +3742,49 @@ msgstr "Tekstballonnen"
 #: ../share/symbols/symbols.h:134
 msgctxt "Symbol"
 msgid "Thought Balloon"
-msgstr ""
+msgstr "Gedachtenballon"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:135
 msgctxt "Symbol"
 msgid "Dream Speaking"
-msgstr ""
+msgstr "Wensballon"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:136
 msgctxt "Symbol"
 msgid "Flow Chart Shapes"
-msgstr ""
+msgstr "Stroomdiagramvormen"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:137
 msgctxt "Symbol"
 msgid "Process"
-msgstr ""
+msgstr "Proces"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:138
 msgctxt "Symbol"
 msgid "Predefined Process"
-msgstr ""
+msgstr "Voorgedefinieerd proces"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:139
 msgctxt "Symbol"
 msgid "Alternate Process"
-msgstr ""
+msgstr "Alternatief proces"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:140
 msgctxt "Symbol"
 msgid "Extract"
-msgstr ""
+msgstr "Extraheren"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:141
 msgctxt "Symbol"
 msgid "Manual Input"
-msgstr ""
+msgstr "Manuele invoer"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:142
@@ -3796,25 +3796,25 @@ msgstr "Samenvoegen"
 #: ../share/symbols/symbols.h:143
 msgctxt "Symbol"
 msgid "Delay"
-msgstr ""
+msgstr "Vertraging"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:144
 msgctxt "Symbol"
 msgid "Data I/O"
-msgstr ""
+msgstr "Data I/O"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:145
 msgctxt "Symbol"
 msgid "Internal Storage"
-msgstr ""
+msgstr "Interne opslag"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:146
 msgctxt "Symbol"
 msgid "Card"
-msgstr ""
+msgstr "Kaart"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:147
@@ -3826,49 +3826,49 @@ msgstr "Document"
 #: ../share/symbols/symbols.h:148
 msgctxt "Symbol"
 msgid "Direct Access Storage"
-msgstr ""
+msgstr "Opslag met directe toegang"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:149
 msgctxt "Symbol"
 msgid "Stored Data"
-msgstr ""
+msgstr "Opgeslagen data"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:150
 msgctxt "Symbol"
 msgid "Magnetic Disk (Database)"
-msgstr ""
+msgstr "Magneetschijf (database)"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:151
 msgctxt "Symbol"
 msgid "Punched Tape"
-msgstr ""
+msgstr "Ponskaart"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:152
 msgctxt "Symbol"
 msgid "Terminator"
-msgstr ""
+msgstr "Terminator"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:153
 msgctxt "Symbol"
 msgid "Thick Arrow"
-msgstr ""
+msgstr "Dikke pijl"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:154
 msgctxt "Symbol"
 msgid "Transfer"
-msgstr ""
+msgstr "Transfer"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:155
 msgctxt "Symbol"
 msgid "Decision"
-msgstr ""
+msgstr "Beslissing"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:156
@@ -3892,19 +3892,19 @@ msgstr ""
 #: ../share/symbols/symbols.h:159
 msgctxt "Symbol"
 msgid "Connector"
-msgstr ""
+msgstr "Verbinding"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:160
 msgctxt "Symbol"
 msgid "Logical Or"
-msgstr ""
+msgstr "Logische of"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:161
 msgctxt "Symbol"
 msgid "Logical And"
-msgstr ""
+msgstr "Logische en"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:162
@@ -3922,7 +3922,7 @@ msgstr "Voorbereiding"
 #: ../share/symbols/symbols.h:164
 msgctxt "Symbol"
 msgid "Display"
-msgstr ""
+msgstr "Display"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:165
@@ -3934,7 +3934,7 @@ msgstr "Sorteren"
 #: ../share/symbols/symbols.h:166
 msgctxt "Symbol"
 msgid "Collate"
-msgstr ""
+msgstr "Vergelijken"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:167
@@ -3946,61 +3946,61 @@ msgstr "Logicasymbolen"
 #: ../share/symbols/symbols.h:168
 msgctxt "Symbol"
 msgid "Xnor Gate"
-msgstr ""
+msgstr "Xnor-poort"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:169
 msgctxt "Symbol"
 msgid "Xor Gate"
-msgstr ""
+msgstr "Xor-poort"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:170
 msgctxt "Symbol"
 msgid "Nor Gate"
-msgstr ""
+msgstr "Nor-poort"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:171
 msgctxt "Symbol"
 msgid "Or Gate"
-msgstr ""
+msgstr "Of-poort"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:172
 msgctxt "Symbol"
 msgid "Nand Gate"
-msgstr ""
+msgstr "Nand-poort"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:173
 msgctxt "Symbol"
 msgid "And Gate"
-msgstr ""
+msgstr "En-poort"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:174
 msgctxt "Symbol"
 msgid "Buffer"
-msgstr ""
+msgstr "Buffer"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:175
 msgctxt "Symbol"
 msgid "Not Gate"
-msgstr ""
+msgstr "Not-poort"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:176
 msgctxt "Symbol"
 msgid "Buffer Small"
-msgstr ""
+msgstr "Buffer klein"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:177
 msgctxt "Symbol"
 msgid "Not Gate Small"
-msgstr ""
+msgstr "Not-poort klein"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:178
@@ -4024,13 +4024,13 @@ msgstr "Jeugdhotel"
 #: ../share/symbols/symbols.h:181
 msgctxt "Symbol"
 msgid "Shelter"
-msgstr ""
+msgstr "Onderdak"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:182
 msgctxt "Symbol"
 msgid "Motel"
-msgstr ""
+msgstr "Motel"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:183
@@ -4054,7 +4054,7 @@ msgstr "Chalet"
 #: ../share/symbols/symbols.h:186
 msgctxt "Symbol"
 msgid "Caravan Park"
-msgstr ""
+msgstr "Camperplaats"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:187
@@ -4096,49 +4096,49 @@ msgstr "Bibliotheek"
 #: ../share/symbols/symbols.h:193
 msgctxt "Symbol"
 msgid "Town Hall"
-msgstr "Stadshuis"
+msgstr "Stadhuis"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:194
 msgctxt "Symbol"
 msgid "Court"
-msgstr ""
+msgstr "Gerechtsgebouw"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:195
 msgctxt "Symbol"
 msgid "Fire Station / House"
-msgstr ""
+msgstr "Brandweer"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:196
 msgctxt "Symbol"
 msgid "Police Station"
-msgstr ""
+msgstr "Politiekantoor"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:197
 msgctxt "Symbol"
 msgid "Prison"
-msgstr ""
+msgstr "Gevangenis"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:198
 msgctxt "Symbol"
 msgid "Post Office"
-msgstr ""
+msgstr "Postkantoor"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:199
 msgctxt "Symbol"
 msgid "Public Building"
-msgstr ""
+msgstr "Publiek gebouw"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:200
 msgctxt "Symbol"
 msgid "Recycling"
-msgstr ""
+msgstr "Recyclage"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:201
@@ -26602,7 +26602,7 @@ msgstr "Selecteer een overgang voor het huidige kleurverloop"
 
 #: ../src/widgets/gradient-toolbar.cpp:1162
 msgid "Stops:"
-msgstr "Overgangen:"
+msgstr "Overgang:"
 
 #. Label
 #: ../src/widgets/gradient-toolbar.cpp:1174
