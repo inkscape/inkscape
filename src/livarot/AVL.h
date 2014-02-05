@@ -30,7 +30,7 @@ public:
 
 protected:    
 
-    AVLTree *son[2];
+    AVLTree *child[2];
 
     AVLTree();
     virtual ~AVLTree();
@@ -57,7 +57,7 @@ protected:
 
 private:
 
-    AVLTree *dad;
+    AVLTree *parent;
 
     int balance;
 
@@ -78,7 +78,7 @@ private:
     void insertOn(Side s, AVLTree *of);
     void insertBetween(AVLTree *l, AVLTree *r);
     AVLTree *leaf(AVLTree *from, Side s);
-    AVLTree *leafFromDad(AVLTree *from, Side s);
+    AVLTree *leafFromParent(AVLTree *from, Side s);
 };
 
 #endif

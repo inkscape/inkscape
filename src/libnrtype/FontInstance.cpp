@@ -174,7 +174,7 @@ font_instance::font_instance(void) :
     pFont(0),
     descr(0),
     refCount(0),
-    daddy(0),
+    parent(0),
     nbGlyph(0),
     maxGlyph(0),
     glyphs(0),
@@ -185,9 +185,9 @@ font_instance::font_instance(void) :
 
 font_instance::~font_instance(void)
 {
-    if ( daddy ) {
-        daddy->UnrefFace(this);
-        daddy = 0;
+    if ( parent ) {
+        parent->UnrefFace(this);
+        parent = 0;
     }
 
     //printf("font instance death\n");
@@ -389,13 +389,13 @@ void font_instance::InitTheFace()
     if ( !theFace ) {
         LOGFONT *lf=pango_win32_font_logfont(pFont);
         g_assert(lf != NULL);
-        theFace=pango_win32_font_cache_load(daddy->pangoFontCache,lf);
+        theFace=pango_win32_font_cache_load(parent->pangoFontCache,lf);
         g_free(lf);
     }
     XFORM identity = {1.0, 0.0, 0.0, 1.0, 0.0, 0.0};
-    SetWorldTransform(daddy->hScreenDC, &identity);
-    SetGraphicsMode(daddy->hScreenDC, GM_COMPATIBLE);
-    SelectObject(daddy->hScreenDC,theFace);
+    SetWorldTransform(parent->hScreenDC, &identity);
+    SetGraphicsMode(parent->hScreenDC, GM_COMPATIBLE);
+    SelectObject(parent->hScreenDC,theFace);
 #else
     theFace=pango_fc_font_lock_face(PANGO_FC_FONT(pFont));
     if ( theFace ) {
@@ -408,8 +408,8 @@ void font_instance::InitTheFace()
 void font_instance::FreeTheFace()
 {
 #ifdef USE_PANGO_WIN32
-    SelectObject(daddy->hScreenDC,GetStockObject(SYSTEM_FONT));
-    pango_win32_font_cache_unload(daddy->pangoFontCache,theFace);
+    SelectObject(parent->hScreenDC,GetStockObject(SYSTEM_FONT));
+    pango_win32_font_cache_unload(parent->pangoFontCache,theFace);
 #else
     pango_fc_font_unlock_face(PANGO_FC_FONT(pFont));
 #endif
@@ -443,7 +443,7 @@ bool font_instance::IsOutlineFont(void)
     InitTheFace();
 #ifdef USE_PANGO_WIN32
     TEXTMETRIC tm;
-    return GetTextMetrics(daddy->hScreenDC,&tm) && tm.tmPitchAndFamily&(TMPF_TRUETYPE|TMPF_DEVICE);
+    return GetTextMetrics(parent->hScreenDC,&tm) && tm.tmPitchAndFamily&(TMPF_TRUETYPE|TMPF_DEVICE);
 #else
     return FT_IS_SCALABLE(theFace);
 #endif
@@ -513,10 +513,10 @@ void font_instance::LoadGlyph(int glyph_id)
 
         MAT2 identity = {{0,1},{0,0},{0,0},{0,1}};
         OUTLINETEXTMETRIC otm;
-        GetOutlineTextMetrics(daddy->hScreenDC, sizeof(otm), &otm);
+        GetOutlineTextMetrics(parent->hScreenDC, sizeof(otm), &otm);
         GLYPHMETRICS metrics;
-        DWORD bufferSize=GetGlyphOutline (daddy->hScreenDC, glyph_id, GGO_GLYPH_INDEX | GGO_NATIVE | GGO_UNHINTED, &metrics, 0, NULL, &identity);
-        double scale=1.0/daddy->fontSize;
+        DWORD bufferSize=GetGlyphOutline (parent->hScreenDC, glyph_id, GGO_GLYPH_INDEX | GGO_NATIVE | GGO_UNHINTED, &metrics, 0, NULL, &identity);
+        double scale=1.0/parent->fontSize;
         n_g.h_advance=metrics.gmCellIncX*scale;
         n_g.v_advance=otm.otmTextMetrics.tmHeight*scale;
         n_g.h_width=metrics.gmBlackBoxX*scale;
@@ -528,7 +528,7 @@ void font_instance::LoadGlyph(int glyph_id)
             doAdd=true;
         } else {
             char *buffer = new char[bufferSize];
-            if ( GetGlyphOutline (daddy->hScreenDC, glyph_id, GGO_GLYPH_INDEX | GGO_NATIVE | GGO_UNHINTED, &metrics, bufferSize, buffer, &identity) <= 0 ) {
+            if ( GetGlyphOutline (parent->hScreenDC, glyph_id, GGO_GLYPH_INDEX | GGO_NATIVE | GGO_UNHINTED, &metrics, bufferSize, buffer, &identity) <= 0 ) {
                 // shit happened
             } else {
                 // Platform SDK is rubbish, read KB87115 instead
@@ -655,10 +655,10 @@ bool font_instance::FontMetrics(double &ascent,double &descent,double &leading)
     }
 #ifdef USE_PANGO_WIN32
     OUTLINETEXTMETRIC otm;
-    if ( !GetOutlineTextMetrics(daddy->hScreenDC,sizeof(otm),&otm) ) {
+    if ( !GetOutlineTextMetrics(parent->hScreenDC,sizeof(otm),&otm) ) {
         return false;
     }
-    double scale=1.0/daddy->fontSize;
+    double scale=1.0/parent->fontSize;
     ascent=fabs(otm.otmAscent*scale);
     descent=fabs(otm.otmDescent*scale);
     leading=fabs(otm.otmLineGap*scale);
@@ -688,10 +688,10 @@ bool font_instance::FontDecoration(
     }
 #ifdef USE_PANGO_WIN32
     OUTLINETEXTMETRIC otm;
-    if ( !GetOutlineTextMetrics(daddy->hScreenDC,sizeof(otm),&otm) ) {
+    if ( !GetOutlineTextMetrics(parent->hScreenDC,sizeof(otm),&otm) ) {
         return false;
     }
-    double scale=1.0/daddy->fontSize;
+    double scale=1.0/parent->fontSize;
     underline_position    = fabs(otm.otmUnderscorePosition *scale);
     underline_thickness   = fabs(otm.otmUnderscoreSize     *scale);
     linethrough_position  = fabs(otm.otmStrikeoutPosition  *scale);
@@ -725,7 +725,7 @@ bool font_instance::FontSlope(double &run, double &rise)
 
 #ifdef USE_PANGO_WIN32
     OUTLINETEXTMETRIC otm;
-    if ( !GetOutlineTextMetrics(daddy->hScreenDC,sizeof(otm),&otm) ) return false;
+    if ( !GetOutlineTextMetrics(parent->hScreenDC,sizeof(otm),&otm) ) return false;
     run=otm.otmsCharSlopeRun;
     rise=otm.otmsCharSlopeRise;
 #else

@@ -131,8 +131,8 @@ SweepTree::Find(Geom::Point const &px, SweepTree *newOne, SweepTree *&insertL,
         }
     }
     if (y < 0) {
-        if (son[LEFT]) {
-            return (static_cast<SweepTree *>(son[LEFT]))->Find(px, newOne,
+        if (child[LEFT]) {
+            return (static_cast<SweepTree *>(child[LEFT]))->Find(px, newOne,
                                                                insertL, insertR,
                                                                sweepSens);
 	} else {
@@ -145,8 +145,8 @@ SweepTree::Find(Geom::Point const &px, SweepTree *newOne, SweepTree *&insertL,
 	    }
 	}
     } else {
-        if (son[RIGHT]) {
-            return (static_cast<SweepTree *>(son[RIGHT]))->Find(px, newOne,
+        if (child[RIGHT]) {
+            return (static_cast<SweepTree *>(child[RIGHT]))->Find(px, newOne,
                                                                 insertL, insertR,
                                                                 sweepSens);
 	} else {
@@ -189,9 +189,9 @@ SweepTree::Find(Geom::Point const &px, SweepTree * &insertL,
     }
   if (y < 0)
     {
-      if (son[LEFT])
+      if (child[LEFT])
 	{
-	  return (static_cast<SweepTree *>(son[LEFT]))->Find(px, insertL,
+	  return (static_cast<SweepTree *>(child[LEFT]))->Find(px, insertL,
 							    insertR);
 	}
       else
@@ -210,9 +210,9 @@ SweepTree::Find(Geom::Point const &px, SweepTree * &insertL,
     }
   else
     {
-      if (son[RIGHT])
+      if (child[RIGHT])
 	{
-	  return (static_cast<SweepTree *>(son[RIGHT]))->Find(px, insertL,
+	  return (static_cast<SweepTree *>(child[RIGHT]))->Find(px, insertL,
 							    insertR);
 	}
       else

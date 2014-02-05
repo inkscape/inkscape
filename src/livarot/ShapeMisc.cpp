@@ -373,7 +373,7 @@ Shape::ConvertToFormeNested (Path * dest, int nbP, Path * *orig, int /*wildPath*
   int lastPtUsed = 0;
   do
   {
-    int dadContour=-1;
+    int parentContour=-1;
     int childEdge = -1;
     bool foundChild = false;
     int startBord = -1;
@@ -387,10 +387,10 @@ Shape::ConvertToFormeNested (Path * dest, int nbP, Path * *orig, int /*wildPath*
       {
         int askTo = pData[fi].askForWindingB;
         if (askTo < 0 || askTo >= numberOfEdges() ) {
-          dadContour=-1;
+          parentContour=-1;
         } else {
-          dadContour = GPOINTER_TO_INT(swdData[askTo].misc);
-          dadContour-=1; // pour compenser le decalage
+          parentContour = GPOINTER_TO_INT(swdData[askTo].misc);
+          parentContour-=1; // pour compenser le decalage
           childEdge = getPoint(fi).incidentEdge[FIRST];
         }
       }
@@ -463,7 +463,7 @@ Shape::ConvertToFormeNested (Path * dest, int nbP, Path * *orig, int /*wildPath*
               contStart=(int*)g_realloc(contStart,(nbNest+1)*sizeof(int));
               contStart[nbNest]=dest->descr_cmd.size();
               if (foundChild) {
-                nesting[nbNest++]=dadContour;
+                nesting[nbNest++]=parentContour;
                 foundChild = false;
               } else {
                 nesting[nbNest++]=-1; // contient des bouts de coupure -> a part
@@ -504,7 +504,7 @@ Shape::ConvertToFormeNested (Path * dest, int nbP, Path * *orig, int /*wildPath*
               contStart=(int*)g_realloc(contStart,(nbNest+1)*sizeof(int));
               contStart[nbNest]=dest->descr_cmd.size();
               if (foundChild) {
-                nesting[nbNest++]=dadContour;
+                nesting[nbNest++]=parentContour;
                 foundChild = false;
               } else {
                 nesting[nbNest++]=-1; // contient des bouts de coupure -> a part

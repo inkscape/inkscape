@@ -641,21 +641,21 @@ Path**      Path::SubPathsWithNesting(int &outNb,bool killNoSurf,int nbNest,int*
           }
           curAdd=NULL;
         }
-        Path*  hasDad=NULL;
+        Path*  hasParent=NULL;
         for (int j=0;j<nbNest;j++) {
           if ( conts[j] == i && nesting[j] >= 0 ) {
-            int  dadMvt=conts[nesting[j]];
+            int  parentMvt=conts[nesting[j]];
             for (int k=0;k<nbRes;k++) {
-              if ( res[k] && res[k]->descr_cmd.empty() == false && res[k]->descr_cmd[0]->associated == dadMvt ) {
-                hasDad=res[k];
+              if ( res[k] && res[k]->descr_cmd.empty() == false && res[k]->descr_cmd[0]->associated == parentMvt ) {
+                hasParent=res[k];
                 break;
               }
             }
           }
           if ( conts[j] > i  ) break;
         }
-        if ( hasDad ) {
-          curAdd=hasDad;
+        if ( hasParent ) {
+          curAdd=hasParent;
           increment=true;
         } else {
           curAdd=new Path;

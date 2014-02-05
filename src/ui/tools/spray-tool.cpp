@@ -404,7 +404,7 @@ static bool sp_spray_recursive(SPDesktop *desktop,
             SPItem *item_copied;
             if(_fid <= population)
             {
-                // duplicate
+                // Duplicate
                 SPDocument *doc = item->document;
                 Inkscape::XML::Document* xml_doc = doc->getReprDoc();
                 Inkscape::XML::Node *old_repr = item->getRepr();
@@ -413,13 +413,13 @@ static bool sp_spray_recursive(SPDesktop *desktop,
                 parent->appendChild(copy);
 
                 SPObject *new_obj = doc->getObjectByRepr(copy);
-                item_copied = SP_ITEM(new_obj);   //convertion object->item
+                item_copied = SP_ITEM(new_obj);   // Convertion object->item
                 Geom::Point center=item->getCenter();
                 sp_spray_scale_rel(center,desktop, item_copied, Geom::Scale(_scale,_scale));
                 sp_spray_scale_rel(center,desktop, item_copied, Geom::Scale(scale,scale));
 
                 sp_spray_rotate_rel(center,desktop,item_copied, Geom::Rotate(angle));
-                //Move the cursor p
+                // Move the cursor p
                 Geom::Point move = (Geom::Point(cos(tilt)*cos(dp)*dr/(1-ratio)+sin(tilt)*sin(dp)*dr/(1+ratio), -sin(tilt)*cos(dp)*dr/(1-ratio)+cos(tilt)*sin(dp)*dr/(1+ratio)))+(p-a->midpoint());
                 sp_item_move_rel(item_copied, Geom::Translate(move[Geom::X], -move[Geom::Y]));
                 did = true;
@@ -427,10 +427,10 @@ static bool sp_spray_recursive(SPDesktop *desktop,
         }
     } else if (mode == SPRAY_MODE_SINGLE_PATH) {
 
-        SPItem *father = NULL;         //initial Object
-        SPItem *item_copied = NULL;    //Projected Object
-        SPItem *unionResult = NULL;    //previous union
-        SPItem *son = NULL;            //father copy
+        SPItem *parent_item = NULL;    // Initial object
+        SPItem *item_copied = NULL;    // Projected object
+        SPItem *unionResult = NULL;    // Previous union
+        SPItem *child_item = NULL;     // Parent copy
 
         int i=1;
         for (GSList *items = g_slist_copy(const_cast<GSList *>(selection->itemList()));
@@ -439,31 +439,31 @@ static bool sp_spray_recursive(SPDesktop *desktop,
 
             SPItem *item1 = SP_ITEM(items->data);
             if (i == 1) {
-                father = item1;
+                parent_item = item1;
             }
             if (i == 2) {
                 unionResult = item1;
             }
             i++;
         }
-        SPDocument *doc = father->document;
+        SPDocument *doc = parent_item->document;
         Inkscape::XML::Document* xml_doc = doc->getReprDoc();
-        Inkscape::XML::Node *old_repr = father->getRepr();
+        Inkscape::XML::Node *old_repr = parent_item->getRepr();
         Inkscape::XML::Node *parent = old_repr->parent();
 
-        Geom::OptRect a = father->documentVisualBounds();
+        Geom::OptRect a = parent_item->documentVisualBounds();
         if (a) {
             if (i == 2) {
                 Inkscape::XML::Node *copy1 = old_repr->duplicate(xml_doc);
                 parent->appendChild(copy1);
                 SPObject *new_obj1 = doc->getObjectByRepr(copy1);
-                son = SP_ITEM(new_obj1);   // conversion object->item
-                unionResult = son;
+                child_item = SP_ITEM(new_obj1);   // Conversion object->item
+                unionResult = child_item;
                 Inkscape::GC::release(copy1);
             }
 
             if (_fid <= population) { // Rules the population of objects sprayed
-                // duplicates the father
+                // Duplicates the parent item
                 Inkscape::XML::Node *copy2 = old_repr->duplicate(xml_doc);
                 parent->appendChild(copy2);
                 SPObject *new_obj2 = doc->getObjectByRepr(copy2);
@@ -472,18 +472,18 @@ static bool sp_spray_recursive(SPDesktop *desktop,
                 // Move around the cursor
                 Geom::Point move = (Geom::Point(cos(tilt)*cos(dp)*dr/(1-ratio)+sin(tilt)*sin(dp)*dr/(1+ratio), -sin(tilt)*cos(dp)*dr/(1-ratio)+cos(tilt)*sin(dp)*dr/(1+ratio)))+(p-a->midpoint()); 
 
-                Geom::Point center=father->getCenter();
+                Geom::Point center = parent_item->getCenter();
                 sp_spray_scale_rel(center, desktop, item_copied, Geom::Scale(_scale, _scale));
                 sp_spray_scale_rel(center, desktop, item_copied, Geom::Scale(scale, scale));
                 sp_spray_rotate_rel(center, desktop, item_copied, Geom::Rotate(angle));
                 sp_item_move_rel(item_copied, Geom::Translate(move[Geom::X], -move[Geom::Y]));
 
-                // union and duplication
+                // Union and duplication
                 selection->clear();
                 selection->add(item_copied);
                 selection->add(unionResult);
                 sp_selected_path_union_skip_undo(selection, selection->desktop());
-                selection->add(father);
+                selection->add(parent_item);
                 Inkscape::GC::release(copy2);
                 did = true;
             }
@@ -500,15 +500,15 @@ static bool sp_spray_recursive(SPDesktop *desktop,
 
                 // Creation of the clone
                 Inkscape::XML::Node *clone = xml_doc->createElement("svg:use");
-                // Ad the clone to the list of the father's sons
+                // Ad the clone to the list of the parent's children
                 parent->appendChild(clone);
-                // Generates the link between father and son attributes
+                // Generates the link between parent and child attributes
                 gchar *href_str = g_strdup_printf("#%s", old_repr->attribute("id"));
                 clone->setAttribute("xlink:href", href_str, false); 
                 g_free(href_str);
 
                 SPObject *clone_object = doc->getObjectByRepr(clone);
-                // conversion object->item
+                // Conversion object->item
                 item_copied = SP_ITEM(clone_object);
                 Geom::Point center = item->getCenter();
                 sp_spray_scale_rel(center, desktop, item_copied, Geom::Scale(_scale, _scale));
@@ -582,9 +582,9 @@ static void sp_spray_update_area(SprayTool *tc)
 
 static void sp_spray_switch_mode(SprayTool *tc, gint mode, bool with_shift)
 {
-    // select the button mode
+    // Select the button mode
     SP_EVENT_CONTEXT(tc)->desktop->setToolboxSelectOneValue("spray_tool_mode", mode); 
-    // need to set explicitly, because the prefs may not have changed by the previous
+    // Need to set explicitly, because the prefs may not have changed by the previous
     tc->mode = mode;
     tc->update_cursor(with_shift);
 }
@@ -631,7 +631,7 @@ bool SprayTool::root_handler(GdkEvent* event) {
             Geom::Point motion_doc(desktop->dt2doc(motion_dt));
             sp_spray_extinput(this, event);
 
-            // draw the dilating cursor
+            // Draw the dilating cursor
             double radius = get_dilate_radius(this);
             Geom::Affine const sm (Geom::Scale(radius/(1-this->ratio), radius/(1+this->ratio)) );
             sp_canvas_item_affine_absolute(this->dilate_area, (sm*Geom::Rotate(this->tilt))*Geom::Translate(desktop->w2d(motion_w)));
@@ -645,19 +645,19 @@ bool SprayTool::root_handler(GdkEvent* event) {
                 this->message_context->flash(Inkscape::ERROR_MESSAGE, _("<b>Nothing selected!</b> Select objects to spray."));
             }
 
-            // dilating:
+            // Dilating:
             if (this->is_drawing && ( event->motion.state & GDK_BUTTON1_MASK )) {
                 sp_spray_dilate(this, motion_w, motion_doc, motion_doc - this->last_push, event->button.state & GDK_SHIFT_MASK? true : false);
                 //this->last_push = motion_doc;
                 this->has_dilated = true;
 
-                // it's slow, so prevent clogging up with events
+                // It's slow, so prevent clogging up with events
                 gobble_motion_events(GDK_BUTTON1_MASK);
                 return TRUE;
             }
         }
         break;
-        /*Spray with the scroll*/
+        /* Spray with the scroll */
         case GDK_SCROLL: {
             if (event->scroll.state & GDK_BUTTON1_MASK) {
                 double temp ;
@@ -708,7 +708,7 @@ bool SprayTool::root_handler(GdkEvent* event) {
 
             if (this->is_dilating && event->button.button == 1 && !this->space_panning) {
                 if (!this->has_dilated) {
-                    // if we did not rub, do a light tap
+                    // If we did not rub, do a light tap
                     this->pressure = 0.03;
                     sp_spray_dilate(this, motion_w, desktop->dt2doc(motion_dt), Geom::Point(0,0), MOD__SHIFT(event));
                 }
@@ -784,7 +784,7 @@ bool SprayTool::root_handler(GdkEvent* event) {
                         if (this->width > 1.0) {
                             this->width = 1.0;
                         }
-                        // the same spinbutton is for alt+x
+                        // The same spinbutton is for alt+x
                         desktop->setToolboxAdjustmentValue("altx-spray", this->width * 100);
                         sp_spray_update_area(this);
                         ret = TRUE;

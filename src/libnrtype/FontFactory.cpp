@@ -973,12 +973,12 @@ font_instance *font_factory::Face(PangoFontDescription *descr, bool canFail)
             // point) whether loadedFaces[that_descr] is free or not (and overwriting
             // an entry will bring deallocation problems)
             res->descr = pango_font_description_copy(descr);
-            res->daddy = this;
+            res->parent = this;
             res->InstallFace(nFace);
             if ( res->pFont == NULL ) {
                 // failed to install face -> bitmap font
                 // printf("face failed\n");
-                res->daddy = NULL;
+                res->parent = NULL;
                 delete res;
                 res = NULL;
                 if ( canFail ) {

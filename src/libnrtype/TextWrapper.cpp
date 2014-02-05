@@ -327,7 +327,7 @@ void text_wrapper::DoLayout(void)
     for (int i = 0; i < glyph_length; i++) {
         glyph_text[i].uni_st = uni32_codepoint[glyph_text[i].uni_st];
         glyph_text[i].uni_en = uni32_codepoint[glyph_text[i].uni_en];
-        glyph_text[i].x /= 512; // why is this not default_font->daddy->fontsize?
+        glyph_text[i].x /= 512; // why is this not default_font->parent->fontsize?
         glyph_text[i].y /= 512;
     }
     if ( glyph_length > 0 ) {

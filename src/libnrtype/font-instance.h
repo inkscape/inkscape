@@ -29,7 +29,7 @@ public:
     // refcount
     int                   refCount;
     // font_factory owning this font_instance
-    font_factory*         daddy;
+    font_factory*         parent;
 
     // common glyph definitions for all the rasterfonts
     std::map<int, int>    id_to_no;

@@ -146,11 +146,11 @@ void SweepEventQueue::remove(SweepEvent *e)
     }
     
     while (2 * curInd + 1 < nbEvt) {
-	int const son1 = 2 * curInd + 1;
-	int const son2 = son1 + 1;
-	int const no1 = inds[son1];
-	int const no2 = inds[son2];
-	if (son2 < nbEvt) {
+	int const child1 = 2 * curInd + 1;
+	int const child2 = child1 + 1;
+	int const no1 = inds[child1];
+	int const no2 = inds[child2];
+	if (child2 < nbEvt) {
 	    if (px[1] > events[no1].posx[1]
 		|| (px[1] == events[no1].posx[1]
 		    && px[0] > events[no1].posx[0]))
@@ -159,28 +159,28 @@ void SweepEventQueue::remove(SweepEvent *e)
 		    || (events[no2].posx[1] == events[no1].posx[1]
 			&& events[no2].posx[0] > events[no1].posx[0]))
 		{
-		    events[to].ind = son1;
+		    events[to].ind = child1;
 		    events[no1].ind = curInd;
-		    inds[son1] = to;
+		    inds[child1] = to;
 		    inds[curInd] = no1;
-		    curInd = son1;
+		    curInd = child1;
 		} else {
-		    events[to].ind = son2;
+		    events[to].ind = child2;
 		    events[no2].ind = curInd;
-		    inds[son2] = to;
+		    inds[child2] = to;
 		    inds[curInd] = no2;
-		    curInd = son2;
+		    curInd = child2;
 		}
 	    } else {
 		if (px[1] > events[no2].posx[1]
 		    || (px[1] == events[no2].posx[1]
 			&& px[0] > events[no2].posx[0]))
 		{
-		    events[to].ind = son2;
+		    events[to].ind = child2;
 		    events[no2].ind = curInd;
-		    inds[son2] = to;
+		    inds[child2] = to;
 		    inds[curInd] = no2;
-		    curInd = son2;
+		    curInd = child2;
 		} else {
 		    break;
 		}
@@ -190,9 +190,9 @@ void SweepEventQueue::remove(SweepEvent *e)
 		|| (px[1] == events[no1].posx[1]
 		    && px[0] > events[no1].posx[0]))
 	    {
-		events[to].ind = son1;
+		events[to].ind = child1;
 		events[no1].ind = curInd;
-		inds[son1] = to;
+		inds[child1] = to;
 		inds[curInd] = no1;
 	    }
 	    
