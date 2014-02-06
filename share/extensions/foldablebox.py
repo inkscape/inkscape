@@ -70,7 +70,7 @@ class FoldableBox(inkex.Effect):
         box_id = self.uniqueId('box')
         self.box = g = inkex.etree.SubElement(self.current_layer, 'g', {'id':box_id})
 
-        line_style = simplestyle.formatStyle({ 'stroke': '#000000', 'fill': 'none' })
+        line_style = simplestyle.formatStyle({ 'stroke': '#000000', 'fill': 'none', 'stroke-width': str(self.unittouu('1px')) })
 
         #self.createGuide( 0, docH, 0 );
 

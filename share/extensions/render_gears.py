@@ -164,7 +164,7 @@ class Gears(inkex.Effect):
         g = inkex.etree.SubElement(self.current_layer, 'g', g_attribs)
 
         # Create SVG Path for gear
-        style = { 'stroke': '#000000', 'fill': 'none' }
+        style = { 'stroke': '#000000', 'fill': 'none', 'stroke-width': str(self.unittouu('1px')) }
         gear_attribs = {'style':simplestyle.formatStyle(style), 'd':path}
         gear = inkex.etree.SubElement(g, inkex.addNS('path','svg'), gear_attribs )
         if(centerdiameter > 0.0):

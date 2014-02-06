@@ -514,7 +514,7 @@ class AlphabetSoup(inkex.Effect):
 						help="Generate random (unreadable) text")
 
 	def effect(self):
-		zoom = self.options.zoom
+		zoom = self.unittouu( str(self.options.zoom) + 'px')
 
 		if self.options.randomize:
 			imagelist = generate_random_string(self.options.text, zoom)

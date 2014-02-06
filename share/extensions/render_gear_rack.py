@@ -65,8 +65,8 @@ class RackGear(inkex.Effect):
             help="Contact Angle")
 
     def effect(self):
-        length = self.options.length
-        spacing = self.options.spacing
+        length = self.unittouu(str(self.options.length) + 'px')
+        spacing = self.unittouu(str(self.options.spacing) + 'px')
         angle = radians(self.options.angle)
 
         # generate points: list of (x, y) pairs
@@ -93,7 +93,7 @@ class RackGear(inkex.Effect):
         g = inkex.etree.SubElement(self.current_layer, 'g', g_attribs)
 
         # Create SVG Path for gear
-        style = {'stroke': '#000000', 'fill': 'none'}
+        style = {'stroke': '#000000', 'fill': 'none', 'stroke-width': str(self.unittouu('1px'))}
         gear_attribs = {
             'style': simplestyle.formatStyle(style),
             'd': path}
