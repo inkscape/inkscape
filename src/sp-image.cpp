@@ -119,14 +119,12 @@ SPObject* createImage() {
 bool imageRegistered = SPFactory::instance().registerObject("svg:image", createImage);
 }
 
-SPImage::SPImage() : SPItem() {
-    this->aspect_clip = 0;
+SPImage::SPImage() : SPItem(), SPViewBox() {
 
     this->x.unset();
     this->y.unset();
     this->width.unset();
     this->height.unset();
-    this->aspect_align = SP_ASPECT_NONE;
     this->clipbox = Geom::Rect();
     this->sx = this->sy = 1.0;
     this->ox = this->oy = 0.0;
@@ -195,8 +193,8 @@ void SPImage::set(unsigned int key, const gchar* value) {
             break;
 
         case SP_ATTR_X:
-            if (!this->x.readAbsolute(value)) {
-                /* fixme: em, ex, % are probably valid, but require special treatment (Lauris) */
+            /* ex, em not handled correctly. */
+            if (!this->x.read(value)) {
                 this->x.unset();
             }
 
@@ -204,8 +202,8 @@ void SPImage::set(unsigned int key, const gchar* value) {
             break;
 
         case SP_ATTR_Y:
-            if (!this->y.readAbsolute(value)) {
-                /* fixme: em, ex, % are probably valid, but require special treatment (Lauris) */
+            /* ex, em not handled correctly. */
+            if (!this->y.read(value)) {
                 this->y.unset();
             }
 
@@ -213,8 +211,8 @@ void SPImage::set(unsigned int key, const gchar* value) {
             break;
 
         case SP_ATTR_WIDTH:
-            if (!this->width.readAbsolute(value)) {
-                /* fixme: em, ex, % are probably valid, but require special treatment (Lauris) */
+            /* ex, em not handled correctly. */
+            if (!this->width.read(value)) {
                 this->width.unset();
             }
 
@@ -222,8 +220,8 @@ void SPImage::set(unsigned int key, const gchar* value) {
             break;
 
         case SP_ATTR_HEIGHT:
-            if (!this->height.readAbsolute(value)) {
-                /* fixme: em, ex, % are probably valid, but require special treatment (Lauris) */
+            /* ex, em not handled correctly. */
+            if (!this->height.read(value)) {
                 this->height.unset();
             }
 
@@ -231,67 +229,8 @@ void SPImage::set(unsigned int key, const gchar* value) {
             break;
 
         case SP_ATTR_PRESERVEASPECTRATIO:
-            /* Do setup before, so we can use break to escape */
-            this->aspect_align = SP_ASPECT_NONE;
-            this->aspect_clip = SP_ASPECT_MEET;
+            set_preserveAspectRatio( value );
             this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG);
-
-            if (value) {
-                int len;
-                gchar c[256];
-                const gchar *p, *e;
-                unsigned int align, clip;
-                p = value;
-                while (*p && *p == 32) p += 1;
-                if (!*p) break;
-                e = p;
-                while (*e && *e != 32) e += 1;
-                len = e - p;
-                if (len > 8) break;
-                memcpy (c, value, len);
-                c[len] = 0;
-                /* Now the actual part */
-                if (!strcmp (c, "none")) {
-                    align = SP_ASPECT_NONE;
-                } else if (!strcmp (c, "xMinYMin")) {
-                    align = SP_ASPECT_XMIN_YMIN;
-                } else if (!strcmp (c, "xMidYMin")) {
-                    align = SP_ASPECT_XMID_YMIN;
-                } else if (!strcmp (c, "xMaxYMin")) {
-                    align = SP_ASPECT_XMAX_YMIN;
-                } else if (!strcmp (c, "xMinYMid")) {
-                    align = SP_ASPECT_XMIN_YMID;
-                } else if (!strcmp (c, "xMidYMid")) {
-                    align = SP_ASPECT_XMID_YMID;
-                } else if (!strcmp (c, "xMaxYMid")) {
-                    align = SP_ASPECT_XMAX_YMID;
-                } else if (!strcmp (c, "xMinYMax")) {
-                    align = SP_ASPECT_XMIN_YMAX;
-                } else if (!strcmp (c, "xMidYMax")) {
-                    align = SP_ASPECT_XMID_YMAX;
-                } else if (!strcmp (c, "xMaxYMax")) {
-                    align = SP_ASPECT_XMAX_YMAX;
-                } else {
-                    break;
-                }
-
-                clip = SP_ASPECT_MEET;
-
-                while (*e && *e == 32) e += 1;
-
-                if (*e) {
-                    if (!strcmp (e, "meet")) {
-                        clip = SP_ASPECT_MEET;
-                    } else if (!strcmp (e, "slice")) {
-                        clip = SP_ASPECT_SLICE;
-                    } else {
-                        break;
-                    }
-                }
-
-                this->aspect_align = align;
-                this->aspect_clip = clip;
-            }
             break;
 
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
@@ -322,7 +261,79 @@ void SPImage::set(unsigned int key, const gchar* value) {
     sp_image_set_curve(this); //creates a curve at the image's boundary for snapping
 }
 
+// BLIP
+#if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
+void SPImage::apply_profile(Inkscape::Pixbuf *pixbuf) {
+
+    // TODO: this will prevent using MIME data when exporting.
+    // Integrate color correction into loading.
+    pixbuf->ensurePixelFormat(Inkscape::Pixbuf::PF_GDK);
+    int imagewidth = pixbuf->width();
+    int imageheight = pixbuf->height();
+    int rowstride = pixbuf->rowstride();;
+    guchar* px = pixbuf->pixels();
+
+    if ( px ) {
+        DEBUG_MESSAGE( lcmsFive, "in <image>'s sp_image_update. About to call colorprofile_get_handle()" );
+
+        guint profIntent = Inkscape::RENDERING_INTENT_UNKNOWN;
+        cmsHPROFILE prof = Inkscape::CMSSystem::getHandle( this->document,
+                                                           &profIntent,
+                                                           this->color_profile );
+        if ( prof ) {
+            cmsProfileClassSignature profileClass = cmsGetDeviceClass( prof );
+            if ( profileClass != cmsSigNamedColorClass ) {
+                int intent = INTENT_PERCEPTUAL;
+                                
+                switch ( profIntent ) {
+                    case Inkscape::RENDERING_INTENT_RELATIVE_COLORIMETRIC:
+                        intent = INTENT_RELATIVE_COLORIMETRIC;
+                        break;
+                    case Inkscape::RENDERING_INTENT_SATURATION:
+                        intent = INTENT_SATURATION;
+                        break;
+                    case Inkscape::RENDERING_INTENT_ABSOLUTE_COLORIMETRIC:
+                        intent = INTENT_ABSOLUTE_COLORIMETRIC;
+                        break;
+                    case Inkscape::RENDERING_INTENT_PERCEPTUAL:
+                    case Inkscape::RENDERING_INTENT_UNKNOWN:
+                    case Inkscape::RENDERING_INTENT_AUTO:
+                    default:
+                        intent = INTENT_PERCEPTUAL;
+                }
+                                
+                cmsHPROFILE destProf = cmsCreate_sRGBProfile();
+                cmsHTRANSFORM transf = cmsCreateTransform( prof,
+                                                           TYPE_RGBA_8,
+                                                           destProf,
+                                                           TYPE_RGBA_8,
+                                                           intent, 0 );
+                if ( transf ) {
+                    guchar* currLine = px;
+                    for ( int y = 0; y < imageheight; y++ ) {
+                        // Since the types are the same size, we can do the transformation in-place
+                        cmsDoTransform( transf, currLine, currLine, imagewidth );
+                        currLine += rowstride;
+                    }
+
+                    cmsDeleteTransform( transf );
+                } else {
+                    DEBUG_MESSAGE( lcmsSix, "in <image>'s sp_image_update. Unable to create LCMS transform." );
+                }
+
+                cmsCloseProfile( destProf );
+            } else {
+                DEBUG_MESSAGE( lcmsSeven, "in <image>'s sp_image_update. Profile type is named color. Can't transform." );
+            }
+        } else {
+            DEBUG_MESSAGE( lcmsEight, "in <image>'s sp_image_update. No profile found." );
+        }
+    }
+}
+#endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
+
 void SPImage::update(SPCtx *ctx, unsigned int flags) {
+
     SPDocument *doc = this->document;
 
     SPItem::update(ctx, flags);
@@ -339,170 +350,84 @@ void SPImage::update(SPCtx *ctx, unsigned int flags) {
                 doc->getBase());
             
             if (pixbuf) {
-// BLIP
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
-                if ( this->color_profile )
-                {
-                    // TODO: this will prevent using MIME data when exporting.
-                    // Integrate color correction into loading.
-                    pixbuf->ensurePixelFormat(Inkscape::Pixbuf::PF_GDK);
-                    int imagewidth = pixbuf->width();
-                    int imageheight = pixbuf->height();
-                    int rowstride = pixbuf->rowstride();;
-                    guchar* px = pixbuf->pixels();
-
-                    if ( px ) {
-                        DEBUG_MESSAGE( lcmsFive, "in <image>'s sp_image_update. About to call colorprofile_get_handle()" );
-
-                        guint profIntent = Inkscape::RENDERING_INTENT_UNKNOWN;
-                        cmsHPROFILE prof = Inkscape::CMSSystem::getHandle( this->document,
-                                                                           &profIntent,
-                                                                           this->color_profile );
-                        if ( prof ) {
-                            cmsProfileClassSignature profileClass = cmsGetDeviceClass( prof );
-                            if ( profileClass != cmsSigNamedColorClass ) {
-                                int intent = INTENT_PERCEPTUAL;
-                                
-                                switch ( profIntent ) {
-                                    case Inkscape::RENDERING_INTENT_RELATIVE_COLORIMETRIC:
-                                        intent = INTENT_RELATIVE_COLORIMETRIC;
-                                        break;
-                                    case Inkscape::RENDERING_INTENT_SATURATION:
-                                        intent = INTENT_SATURATION;
-                                        break;
-                                    case Inkscape::RENDERING_INTENT_ABSOLUTE_COLORIMETRIC:
-                                        intent = INTENT_ABSOLUTE_COLORIMETRIC;
-                                        break;
-                                    case Inkscape::RENDERING_INTENT_PERCEPTUAL:
-                                    case Inkscape::RENDERING_INTENT_UNKNOWN:
-                                    case Inkscape::RENDERING_INTENT_AUTO:
-                                    default:
-                                        intent = INTENT_PERCEPTUAL;
-                                }
-                                
-                                cmsHPROFILE destProf = cmsCreate_sRGBProfile();
-                                cmsHTRANSFORM transf = cmsCreateTransform( prof,
-                                                                           TYPE_RGBA_8,
-                                                                           destProf,
-                                                                           TYPE_RGBA_8,
-                                                                           intent, 0 );
-                                if ( transf ) {
-                                    guchar* currLine = px;
-                                    for ( int y = 0; y < imageheight; y++ ) {
-                                        // Since the types are the same size, we can do the transformation in-place
-                                        cmsDoTransform( transf, currLine, currLine, imagewidth );
-                                        currLine += rowstride;
-                                    }
-
-                                    cmsDeleteTransform( transf );
-                                } else {
-                                    DEBUG_MESSAGE( lcmsSix, "in <image>'s sp_image_update. Unable to create LCMS transform." );
-                                }
-
-                                cmsCloseProfile( destProf );
-                            } else {
-                                DEBUG_MESSAGE( lcmsSeven, "in <image>'s sp_image_update. Profile type is named color. Can't transform." );
-                            }
-                        } else {
-                            DEBUG_MESSAGE( lcmsEight, "in <image>'s sp_image_update. No profile found." );
-                        }
-                    }
-                }
-#endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
-
+                if ( this->color_profile ) apply_profile( pixbuf );
+#endif
                 this->pixbuf = pixbuf;
             }
         }
     }
 
+    SPItemCtx *ictx = (SPItemCtx *) ctx;
+
+    // Why continue without a pixbuf? So we can display "Missing Image" png.
+    // Eventually, we should properly support SVG image type (i.e. render it ourselves).
+
     if (this->pixbuf) {
-        /* fixme: We are slightly violating spec here (Lauris) */
+        if (!this->x._set) {
+            this->x.unit = SVGLength::PX;
+            this->x.computed = 0;
+        }
+
+        if (!this->y._set) {
+            this->y.unit = SVGLength::PX;
+            this->y.computed = 0;
+        }
+
         if (!this->width._set) {
+            this->width.unit = SVGLength::PX;
             this->width.computed = this->pixbuf->width();
         }
 
         if (!this->height._set) {
+            this->height.unit = SVGLength::PX;
             this->height.computed = this->pixbuf->height();
         }
     }
 
-    this->clipbox = Geom::Rect::from_xywh(
-        this->x.computed, this->y.computed,
-        this->width.computed, this->height.computed);
+
+    // Calculate x, y, width, height from parent/initial viewport, see sp-root.cpp
+    if (this->x.unit == SVGLength::PERCENT) {
+        this->x.computed = this->x.value * ictx->viewport.width();
+    }
+
+    if (this->y.unit == SVGLength::PERCENT) {
+        this->y.computed = this->y.value * ictx->viewport.height();
+    }
+
+    if (this->width.unit == SVGLength::PERCENT) {
+        this->width.computed = this->width.value * ictx->viewport.width();
+    }
+
+    if (this->height.unit == SVGLength::PERCENT) {
+        this->height.computed = this->height.value * ictx->viewport.height();
+    }
+
+    // Image creates a new viewport
+    ictx->viewport= Geom::Rect::from_xywh( this->x.computed, this->y.computed,
+                                           this->width.computed, this->height.computed);
+ 
+    this->clipbox = ictx->viewport;
 
     this->ox = this->x.computed;
     this->oy = this->y.computed;
 
     if (this->pixbuf) {
-        int pixwidth = this->pixbuf->width();
-        int pixheight = this->pixbuf->height();
 
-        this->sx = this->width.computed / pixwidth;
-        this->sy = this->height.computed / pixheight;
+        // Viewbox is either from SVG (not supported) or dimensions of pixbuf (PNG, JPG)
+        this->viewBox = Geom::Rect::from_xywh(0, 0, this->pixbuf->width(), this->pixbuf->height()); 
+        this->viewBox_set = true;
 
-        // preserveAspectRatio calculate bounds / clipping rectangle -- EAF
-        if (this->aspect_align != SP_ASPECT_NONE) {
-            double x, y;
+        // SPItemCtx rctx =
+        get_rctx( ictx );
 
-            switch (this->aspect_align) {
-                case SP_ASPECT_XMIN_YMIN:
-                    x = 0.0;
-                    y = 0.0;
-                    break;
-                case SP_ASPECT_XMID_YMIN:
-                    x = 0.5;
-                    y = 0.0;
-                    break;
-                case SP_ASPECT_XMAX_YMIN:
-                    x = 1.0;
-                    y = 0.0;
-                    break;
-                case SP_ASPECT_XMIN_YMID:
-                    x = 0.0;
-                    y = 0.5;
-                    break;
-                case SP_ASPECT_XMID_YMID:
-                    x = 0.5;
-                    y = 0.5;
-                    break;
-                case SP_ASPECT_XMAX_YMID:
-                    x = 1.0;
-                    y = 0.5;
-                    break;
-                case SP_ASPECT_XMIN_YMAX:
-                    x = 0.0;
-                    y = 1.0;
-                    break;
-                case SP_ASPECT_XMID_YMAX:
-                    x = 0.5;
-                    y = 1.0;
-                    break;
-                case SP_ASPECT_XMAX_YMAX:
-                    x = 1.0;
-                    y = 1.0;
-                    break;
-                default:
-                    x = 0.0;
-                    y = 0.0;
-                    break;
-            }
-
-            if (this->aspect_clip == SP_ASPECT_SLICE) {
-                double scale = std::max(this->sx, this->sy);
-                this->sx = scale;
-                this->sy = scale;
-            } else {
-                double scale = std::min(this->sx, this->sy);
-                this->sx = scale;
-                this->sy = scale;
-            }
-
-            double vw = pixwidth * this->sx;
-            double vh = pixheight * this->sy;
-            this->ox += x * (this->width.computed - vw);
-            this->oy += y * (this->height.computed - vh);
-        }
+        this->ox = c2p[4];
+        this->oy = c2p[5];
+        this->sx = c2p[0];
+        this->sy = c2p[3];
     }
+
+    // TODO: eliminate ox, oy, sx, sy
     sp_image_update_canvas_image ((SPImage *) this);
 }
 

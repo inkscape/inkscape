@@ -42,12 +42,9 @@ SPObject *createRoot()
 bool rootRegistered = SPFactory::instance().registerObject("svg:svg", createRoot);
 }
 
-SPRoot::SPRoot() : SPGroup()
+SPRoot::SPRoot() : SPGroup(), SPViewBox()
 {
-    this->aspect_set = 0;
-    this->aspect_align = 0;
     this->onload = NULL;
-    this->aspect_clip = 0;
 
     static Inkscape::Version const zero_version(0, 0);
 
@@ -57,14 +54,10 @@ SPRoot::SPRoot() : SPGroup()
     this->version.inkscape = zero_version;
     this->original.inkscape = zero_version;
 
-    this->x.unset();
-    this->y.unset();
+    this->x.unset(SVGLength::PERCENT, 0.0, 0.0); // Ignored for root SVG element
+    this->y.unset(SVGLength::PERCENT, 0.0, 0.0);
     this->width.unset(SVGLength::PERCENT, 1.0, 1.0);
     this->height.unset(SVGLength::PERCENT, 1.0, 1.0);
-
-    this->viewBox_set = false;
-
-    this->c2p.setIdentity();
 
     this->defs = NULL;
 }
@@ -129,9 +122,9 @@ void SPRoot::set(unsigned int key, const gchar *value)
         break;
 
     case SP_ATTR_X:
-        if (!this->x.readAbsolute(value)) {
-            /* fixme: em, ex, % are probably valid, but require special treatment (Lauris) */
-            this->x.unset();
+        /* Valid for non-root SVG elements; ex, em not handled correctly. */
+        if (!this->x.read(value)) {
+            this->x.unset(SVGLength::PERCENT, 0.0, 0.0);
         }
 
         /* fixme: I am almost sure these do not require viewport flag (Lauris) */
@@ -139,9 +132,9 @@ void SPRoot::set(unsigned int key, const gchar *value)
         break;
 
     case SP_ATTR_Y:
-        if (!this->y.readAbsolute(value)) {
-            /* fixme: em, ex, % are probably valid, but require special treatment (Lauris) */
-            this->y.unset();
+        /* Valid for non-root SVG elements; ex, em not handled correctly. */
+        if (!this->y.read(value)) {
+            this->y.unset(SVGLength::PERCENT, 0.0, 0.0);
         }
 
         /* fixme: I am almost sure these do not require viewport flag (Lauris) */
@@ -149,153 +142,27 @@ void SPRoot::set(unsigned int key, const gchar *value)
         break;
 
     case SP_ATTR_WIDTH:
-        if (!this->width.readAbsolute(value) || !(this->width.computed > 0.0)) {
-            /* fixme: em, ex, % are probably valid, but require special treatment (Lauris) */
+        if (!this->width.read(value) || !(this->width.computed > 0.0)) {
             this->width.unset(SVGLength::PERCENT, 1.0, 1.0);
         }
-
         this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG);
         break;
 
     case SP_ATTR_HEIGHT:
-        if (!this->height.readAbsolute(value) || !(this->height.computed > 0.0)) {
-            /* fixme: em, ex, % are probably valid, but require special treatment (Lauris) */
+        if (!this->height.read(value) || !(this->height.computed > 0.0)) {
             this->height.unset(SVGLength::PERCENT, 1.0, 1.0);
         }
-
         this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG);
         break;
 
     case SP_ATTR_VIEWBOX:
-        if (value) {
-            double x, y, width, height;
-            char *eptr;
-
-            /* fixme: We have to take original item affine into account */
-            /* fixme: Think (Lauris) */
-            eptr = (gchar *) value;
-            x = g_ascii_strtod(eptr, &eptr);
-
-            while (*eptr && ((*eptr == ',') || (*eptr == ' '))) {
-                eptr++;
-            }
-
-            y = g_ascii_strtod(eptr, &eptr);
-
-            while (*eptr && ((*eptr == ',') || (*eptr == ' '))) {
-                eptr++;
-            }
-
-            width = g_ascii_strtod(eptr, &eptr);
-
-            while (*eptr && ((*eptr == ',') || (*eptr == ' '))) {
-                eptr++;
-            }
-
-            height = g_ascii_strtod(eptr, &eptr);
-
-            while (*eptr && ((*eptr == ',') || (*eptr == ' '))) {
-                eptr++;
-            }
-
-            if ((width > 0) && (height > 0)) {
-                /* Set viewbox */
-                this->viewBox = Geom::Rect::from_xywh(x, y, width, height);
-                this->viewBox_set = TRUE;
-            } else {
-                this->viewBox_set = FALSE;
-            }
-        } else {
-            this->viewBox_set = FALSE;
-        }
-
+        set_viewBox( value );
         this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG);
         break;
 
     case SP_ATTR_PRESERVEASPECTRATIO:
-        /* Do setup before, so we can use break to escape */
-        this->aspect_set = FALSE;
-        this->aspect_align = SP_ASPECT_XMID_YMID;
-        this->aspect_clip = SP_ASPECT_MEET;
-
+        set_preserveAspectRatio( value );
         this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG);
-
-        if (value) {
-            int len;
-            gchar c[256];
-            gchar const *p, *e;
-            unsigned int align, clip;
-            p = value;
-
-            while (*p && *p == 32) {
-                p += 1;
-            }
-
-            if (!*p) {
-                break;
-            }
-
-            e = p;
-
-            while (*e && *e != 32) {
-                e += 1;
-            }
-
-            len = e - p;
-
-            if (len > 8) {
-                break;
-            }
-
-            memcpy(c, value, len);
-
-            c[len] = 0;
-
-            /* Now the actual part */
-            if (!strcmp(c, "none")) {
-                align = SP_ASPECT_NONE;
-            } else if (!strcmp(c, "xMinYMin")) {
-                align = SP_ASPECT_XMIN_YMIN;
-            } else if (!strcmp(c, "xMidYMin")) {
-                align = SP_ASPECT_XMID_YMIN;
-            } else if (!strcmp(c, "xMaxYMin")) {
-                align = SP_ASPECT_XMAX_YMIN;
-            } else if (!strcmp(c, "xMinYMid")) {
-                align = SP_ASPECT_XMIN_YMID;
-            } else if (!strcmp(c, "xMidYMid")) {
-                align = SP_ASPECT_XMID_YMID;
-            } else if (!strcmp(c, "xMaxYMid")) {
-                align = SP_ASPECT_XMAX_YMID;
-            } else if (!strcmp(c, "xMinYMax")) {
-                align = SP_ASPECT_XMIN_YMAX;
-            } else if (!strcmp(c, "xMidYMax")) {
-                align = SP_ASPECT_XMID_YMAX;
-            } else if (!strcmp(c, "xMaxYMax")) {
-                align = SP_ASPECT_XMAX_YMAX;
-            } else {
-                break;
-            }
-
-            clip = SP_ASPECT_MEET;
-
-            while (*e && *e == 32) {
-                e += 1;
-            }
-
-            if (*e) {
-                if (!strcmp(e, "meet")) {
-                    clip = SP_ASPECT_MEET;
-                } else if (!strcmp(e, "slice")) {
-                    clip = SP_ASPECT_SLICE;
-                } else {
-                    break;
-                }
-            }
-
-            this->aspect_set = TRUE;
-            this->aspect_align = align;
-            this->aspect_clip = clip;
-        }
         break;
 
     case SP_ATTR_ONLOAD:
@@ -356,9 +223,55 @@ void SPRoot::update(SPCtx *ctx, guint flags)
 {
     SPItemCtx *ictx = (SPItemCtx *) ctx;
 
-    /* fixme: This will be invoked too often (Lauris) */
-    /* fixme: We should calculate only if parent viewport has changed (Lauris) */
-    /* If position is specified as percentage, calculate actual values */
+    if( !this->parent ) {
+
+        /*
+         * This is the root SVG element:
+         *
+         * x, y, width, and height apply to positioning the SVG element inside a parent.
+         * For the root SVG in Inkscape there is no parent, thus special rules apply:
+         *   If width, height not set, width = 100%, height = 100% (as always).
+         *   If width and height are in percent, they are percent of viewBox width/height.
+         *   If width, height, and viewBox are not set... pick "random" width/height.
+         *   x, y are ignored.
+         *   initial viewport = (0 0 width height)
+         */
+        if( this->viewBox_set ) {
+
+            if( this->width._set ) {
+                // Check if this is necessary
+                if (this->width.unit == SVGLength::PERCENT) {
+                    this->width.computed  = this->width.value  * this->viewBox.width();
+                }
+            } else {
+                this->width.set( SVGLength::PX, this->viewBox.width(),  this->viewBox.width()  );
+            }
+
+            if( this->height._set ) {
+                if (this->height.unit == SVGLength::PERCENT) {
+                    this->height.computed = this->height.value * this->viewBox.height();
+                }
+            } else {
+                this->height.set(SVGLength::PX, this->viewBox.height(), this->viewBox.height() );
+            }
+
+        } else {
+
+            if( !this->width._set ) {
+                this->width.set(  SVGLength::PX, 100,  100 ); // Random default
+            }
+
+            if( !this->height._set ) {
+                this->height.set( SVGLength::PX, 100,  100 ); // Random default
+            }
+        }
+
+        // Ignore x, y values for root element
+        this->x.unset(SVGLength::PERCENT, 0.0, 0.0);
+        this->y.unset(SVGLength::PERCENT, 0.0, 0.0);
+    }
+
+    // Calculate x, y, width, height from parent/initial viewport
     if (this->x.unit == SVGLength::PERCENT) {
         this->x.computed = this->x.value * ictx->viewport.width();
     }
@@ -375,122 +288,10 @@ void SPRoot::update(SPCtx *ctx, guint flags)
         this->height.computed = this->height.value * ictx->viewport.height();
     }
 
-    /* Create copy of item context */
-    SPItemCtx rctx = *ictx;
-
-    /* Calculate child to parent transformation */
-    this->c2p.setIdentity();
-
-    if (this->parent) {
-        /*
-         * fixme: I am not sure whether setting x and y does or does not
-         * fixme: translate the content of inner SVG.
-         * fixme: Still applying translation and setting viewport to width and
-         * fixme: height seems natural, as this makes the inner svg element
-         * fixme: self-contained. The spec is vague here.
-         */
-        this->c2p = Geom::Affine(Geom::Translate(this->x.computed, this->y.computed));
-    }
-
-    if (this->viewBox_set) {
-        double x, y, width, height;
-        /* Determine actual viewbox in viewport coordinates */
-        if (this->aspect_align == SP_ASPECT_NONE) {
-            x = 0.0;
-            y = 0.0;
-            width = this->width.computed;
-            height = this->height.computed;
-        } else {
-            double scalex, scaley, scale;
-            /* Things are getting interesting */
-            scalex = this->width.computed / this->viewBox.width();
-            scaley = this->height.computed / this->viewBox.height();
-            scale = (this->aspect_clip == SP_ASPECT_MEET) ? MIN(scalex, scaley) : MAX(scalex, scaley);
-            width = this->viewBox.width() * scale;
-            height = this->viewBox.height() * scale;
-
-            /* Now place viewbox to requested position */
-            /* todo: Use an array lookup to find the 0.0/0.5/1.0 coefficients,
-               as is done for dialogs/align.cpp. */
-            switch (this->aspect_align) {
-            case SP_ASPECT_XMIN_YMIN:
-                x = 0.0;
-                y = 0.0;
-                break;
-
-            case SP_ASPECT_XMID_YMIN:
-                x = 0.5 * (this->width.computed - width);
-                y = 0.0;
-                break;
-
-            case SP_ASPECT_XMAX_YMIN:
-                x = 1.0 * (this->width.computed - width);
-                y = 0.0;
-                break;
-
-            case SP_ASPECT_XMIN_YMID:
-                x = 0.0;
-                y = 0.5 * (this->height.computed - height);
-                break;
-
-            case SP_ASPECT_XMID_YMID:
-                x = 0.5 * (this->width.computed - width);
-                y = 0.5 * (this->height.computed - height);
-                break;
-
-            case SP_ASPECT_XMAX_YMID:
-                x = 1.0 * (this->width.computed - width);
-                y = 0.5 * (this->height.computed - height);
-                break;
-
-            case SP_ASPECT_XMIN_YMAX:
-                x = 0.0;
-                y = 1.0 * (this->height.computed - height);
-                break;
-
-            case SP_ASPECT_XMID_YMAX:
-                x = 0.5 * (this->width.computed - width);
-                y = 1.0 * (this->height.computed - height);
-                break;
-
-            case SP_ASPECT_XMAX_YMAX:
-                x = 1.0 * (this->width.computed - width);
-                y = 1.0 * (this->height.computed - height);
-                break;
-
-            default:
-                x = 0.0;
-                y = 0.0;
-                break;
-            }
-        }
-
-        /* Compose additional transformation from scale and position */
-        Geom::Scale const viewBox_length(this->viewBox.dimensions());
-        Geom::Scale const new_length(width, height);
-
-        /* Append viewbox transformation */
-        /* TODO: The below looks suspicious to me (pjrm): I wonder whether the RHS
-           expression should have c2p at the beginning rather than at the end.  Test it. */
-        this->c2p = Geom::Translate(-this->viewBox.min()) * (new_length * viewBox_length.inverse()) * Geom::Translate(x, y) * this->c2p;
-    }
-
-    rctx.i2doc = this->c2p * rctx.i2doc;
-
-    /* Initialize child viewport */
-    if (this->viewBox_set) {
-        rctx.viewport = this->viewBox;
-    } else {
-        /* fixme: I wonder whether this logic is correct (Lauris) */
-        Geom::Point minp(0, 0);
-        if (this->parent) {
-            minp = Geom::Point(this->x.computed, this->y.computed);
-        }
-
-        rctx.viewport = Geom::Rect::from_xywh(minp[Geom::X], minp[Geom::Y], this->width.computed, this->height.computed);
-    }
-
-    rctx.i2vp = Geom::identity();
+    // Calculate new viewport
+    ictx->viewport = Geom::Rect::from_xywh( this->x.computed, this->y.computed,
+                                            this->width.computed, this->height.computed );
+    SPItemCtx rctx = get_rctx( ictx );
 
     /* And invoke parent method */
     SPGroup::update((SPCtx *) &rctx, flags);

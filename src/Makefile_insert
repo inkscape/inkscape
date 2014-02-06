@@ -228,7 +228,8 @@ ink_common_sources +=	\
 	uri-references.cpp uri-references.h	\
 	vanishing-point.cpp vanishing-point.h	\
 	verbs.cpp verbs.h			\
-	version.cpp version.h
+	version.cpp version.h			\
+	viewbox.cpp viewbox.h
 
 # Additional dependencies
 

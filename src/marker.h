@@ -31,8 +31,9 @@ struct SPMarkerView;
 #include "sp-item-group.h"
 #include "sp-marker-loc.h"
 #include "uri-references.h"
+#include "viewbox.h"
 
-class SPMarker : public SPGroup {
+class SPMarker : public SPGroup, public SPViewBox {
 public:
 	SPMarker();
 	virtual ~SPMarker();
@@ -53,17 +54,6 @@ public:
 	unsigned int orient_set : 1;
 	unsigned int orient_auto : 1;
 	float orient;
-
-    /* viewBox; */
-    Geom::OptRect viewBox;
-
-	/* preserveAspectRatio */
-	unsigned int aspect_set : 1;
-	unsigned int aspect_align : 4;
-	unsigned int aspect_clip : 1;
-
-	/* Child to parent additional transform */
-	Geom::Affine c2p;
 
 	/* Private views */
 	SPMarkerView *views;

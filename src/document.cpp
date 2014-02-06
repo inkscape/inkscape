@@ -381,16 +381,6 @@ SPDocument *SPDocument::createDoc(Inkscape::XML::Document *rdoc,
     rroot->setAttribute("inkscape:version", Inkscape::version_string);
     /* fixme: Again, I moved these here to allow version determining in ::build (Lauris) */
 
-    /* Quick hack 2 - get default image size into document */
-    if (!rroot->attribute("width")) rroot->setAttribute("width", "100%");
-    if (!rroot->attribute("height")) rroot->setAttribute("height", "100%");
-    /* End of quick hack 2 */
-
-    /* Quick hack 3 - Set uri attributes */
-//    if (uri) {					// this is done in do_change_uri()
-//        rroot->setAttribute("sodipodi:docname", uri);
-//    }
-    /* End of quick hack 3 */
 
     /* Eliminate obsolete sodipodi:docbase, for privacy reasons */
     rroot->setAttribute("sodipodi:docbase", NULL);

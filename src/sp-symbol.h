@@ -25,23 +25,12 @@
 #include "svg/svg-length.h"
 #include "enums.h"
 #include "sp-item-group.h"
+#include "viewbox.h"
 
-class SPSymbol : public SPGroup {
+class SPSymbol : public SPGroup, public SPViewBox {
 public:
 	SPSymbol();
 	virtual ~SPSymbol();
-
-	/* viewBox; */
-	unsigned int viewBox_set : 1;
-	Geom::Rect viewBox;
-
-	/* preserveAspectRatio */
-	unsigned int aspect_set : 1;
-	unsigned int aspect_align : 4;
-	unsigned int aspect_clip : 1;
-
-	/* Child to parent additional transform */
-	Geom::Affine c2p;
 
 	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
 	virtual void release();

@@ -18,6 +18,7 @@
 #include <glibmm/ustring.h>
 #include "svg/svg-length.h"
 #include "sp-shape.h"
+#include "viewbox.h"
 
 #define SP_IMAGE(obj) (dynamic_cast<SPImage*>((SPObject*)obj))
 #define SP_IS_IMAGE(obj) (dynamic_cast<const SPImage*>((SPObject*)obj) != NULL)
@@ -25,7 +26,7 @@
 #define SP_IMAGE_HREF_MODIFIED_FLAG SP_OBJECT_USER_MODIFIED_FLAG_A
 
 namespace Inkscape { class Pixbuf; }
-class SPImage : public SPItem {
+class SPImage : public SPItem, public SPViewBox {
 public:
     SPImage();
     virtual ~SPImage();
@@ -38,13 +39,6 @@ public:
     Geom::Rect clipbox;
     double sx, sy;
     double ox, oy;
-
-    // Added by EAF
-    /* preserveAspectRatio */
-    unsigned int aspect_align : 4;
-    unsigned int aspect_clip : 1;
-    //int trimx, trimy, trimwidth, trimheight;
-    //double viewx, viewy, viewwidth, viewheight;
 
     SPCurve *curve; // This curve is at the image's boundary for snapping
 
@@ -69,6 +63,10 @@ public:
     virtual Inkscape::DrawingItem* show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
     virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) const;
     virtual Geom::Affine set_transform(Geom::Affine const &transform);
+
+#if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
+    void apply_profile(Inkscape::Pixbuf *pixbuf);
+#endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 };
 
 /* Return duplicate of curve or NULL */

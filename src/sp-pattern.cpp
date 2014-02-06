@@ -53,7 +53,7 @@ namespace {
 	bool patternRegistered = SPFactory::instance().registerObject("svg:pattern", createPattern);
 }
 
-SPPattern::SPPattern() : SPPaintServer() {
+SPPattern::SPPattern() : SPPaintServer(), SPViewBox() {
 	this->href = NULL;
 
 	this->ref = new SPPatternReference(this);
@@ -72,8 +72,6 @@ SPPattern::SPPattern() : SPPaintServer() {
 	this->y.unset();
 	this->width.unset();
 	this->height.unset();
-
-	this->viewBox_set = FALSE;
 }
 
 SPPattern::~SPPattern() {
@@ -90,6 +88,7 @@ void SPPattern::build(SPDocument* doc, Inkscape::XML::Node* repr) {
 	this->readAttr( "width" );
 	this->readAttr( "height" );
 	this->readAttr( "viewBox" );
+        this->readAttr( "preserveAspectRatio" );
 	this->readAttr( "xlink:href" );
 
 	/* Register ourselves */
@@ -180,50 +179,16 @@ void SPPattern::set(unsigned int key, const gchar* value) {
 		this->requestModified(SP_OBJECT_MODIFIED_FLAG);
 		break;
 
-	case SP_ATTR_VIEWBOX: {
-		/* fixme: Think (Lauris) */
-		double x, y, width, height;
-		char *eptr;
+	case SP_ATTR_VIEWBOX:
+            set_viewBox( value );
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG);
+            break;
 
-		if (value) {
-			eptr = (gchar *) value;
-			x = g_ascii_strtod (eptr, &eptr);
+        case SP_ATTR_PRESERVEASPECTRATIO:
+            set_preserveAspectRatio( value );
+            this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG);
+            break;
 
-			while (*eptr && ((*eptr == ',') || (*eptr == ' '))) {
-				eptr++;
-			}
-
-			y = g_ascii_strtod (eptr, &eptr);
-
-			while (*eptr && ((*eptr == ',') || (*eptr == ' '))) {
-				eptr++;
-			}
-
-			width = g_ascii_strtod (eptr, &eptr);
-
-			while (*eptr && ((*eptr == ',') || (*eptr == ' '))) {
-				eptr++;
-			}
-
-			height = g_ascii_strtod (eptr, &eptr);
-
-			while (*eptr && ((*eptr == ',') || (*eptr == ' '))) {
-				eptr++;
-			}
-
-			if ((width > 0) && (height > 0)) {
-			    this->viewBox = Geom::Rect::from_xywh(x, y, width, height);
-			    this->viewBox_set = TRUE;
-			} else {
-				this->viewBox_set = FALSE;
-			}
-		} else {
-			this->viewBox_set = FALSE;
-		}
-
-		this->requestModified(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG);
-		break;
-	}
 	case SP_ATTR_XLINK_HREF:
 		if ( value && this->href && ( strcmp(value, this->href) == 0 ) ) {
 			/* Href unchanged, do nothing. */

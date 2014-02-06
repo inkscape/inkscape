@@ -47,18 +47,15 @@ namespace {
 	bool markerRegistered = SPFactory::instance().registerObject("svg:marker", createMarker);
 }
 
-SPMarker::SPMarker() : SPGroup() {
-	this->aspect_clip = 0;
-	this->aspect_align = 0;
-	this->aspect_set = 0;
-	this->markerUnits = 0;
-	this->orient_auto = 0;
-	this->markerUnits_set = 0;
-	this->orient_set = 0;
-	this->orient = 0;
+SPMarker::SPMarker() : SPGroup(), SPViewBox() {
 
-    this->viewBox = Geom::OptRect();
-    this->c2p.setIdentity();
+    this->markerUnits = 0;
+    this->markerUnits_set = 0;
+
+    this->orient_auto = 0;
+    this->orient_set = 0;
+    this->orient = 0;
+
     this->views = NULL;
 }
 
@@ -177,133 +174,14 @@ void SPMarker::set(unsigned int key, const gchar* value) {
 		break;
 
 	case SP_ATTR_VIEWBOX:
-        this->viewBox = Geom::OptRect();
-
-		if (value) {
-			double x, y, width, height;
-			char *eptr;
-
-			/* fixme: We have to take original item affine into account */
-			/* fixme: Think (Lauris) */
-			eptr = (gchar *) value;
-			x = g_ascii_strtod (eptr, &eptr);
-
-			while (*eptr && ((*eptr == ',') || (*eptr == ' '))) {
-				eptr++;
-			}
-
-			y = g_ascii_strtod (eptr, &eptr);
-
-			while (*eptr && ((*eptr == ',') || (*eptr == ' '))) {
-				eptr++;
-			}
-
-			width = g_ascii_strtod (eptr, &eptr);
-
-			while (*eptr && ((*eptr == ',') || (*eptr == ' '))) {
-				eptr++;
-			}
-
-			height = g_ascii_strtod (eptr, &eptr);
-
-			while (*eptr && ((*eptr == ',') || (*eptr == ' '))) {
-				eptr++;
-			}
-
-			if ((width > 0) && (height > 0)) {
-				/* Set viewbox */
-                this->viewBox = Geom::Rect(Geom::Point(x, y), Geom::Point(x + width, y + height));
-			}
-		}
-
-		this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG);
-		break;
+            set_viewBox( value );
+            this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG);
+            break;
 
 	case SP_ATTR_PRESERVEASPECTRATIO:
-		/* Do setup before, so we can use break to escape */
-		this->aspect_set = FALSE;
-		this->aspect_align = SP_ASPECT_NONE;
-		this->aspect_clip = SP_ASPECT_MEET;
-
-		this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG);
-
-		if (value) {
-			int len;
-			gchar c[256];
-			const gchar *p, *e;
-			unsigned int align, clip;
-			p = value;
-
-			while (*p && *p == 32) {
-				p += 1;
-			}
-
-			if (!*p) {
-				break;
-			}
-
-			e = p;
-
-			while (*e && *e != 32) {
-				e += 1;
-			}
-
-			len = e - p;
-
-			if (len > 8) {
-				break;
-			}
-
-			memcpy (c, value, len);
-
-			c[len] = 0;
-
-			/* Now the actual part */
-			if (!strcmp (c, "none")) {
-				align = SP_ASPECT_NONE;
-			} else if (!strcmp (c, "xMinYMin")) {
-				align = SP_ASPECT_XMIN_YMIN;
-			} else if (!strcmp (c, "xMidYMin")) {
-				align = SP_ASPECT_XMID_YMIN;
-			} else if (!strcmp (c, "xMaxYMin")) {
-				align = SP_ASPECT_XMAX_YMIN;
-			} else if (!strcmp (c, "xMinYMid")) {
-				align = SP_ASPECT_XMIN_YMID;
-			} else if (!strcmp (c, "xMidYMid")) {
-				align = SP_ASPECT_XMID_YMID;
-			} else if (!strcmp (c, "xMaxYMid")) {
-				align = SP_ASPECT_XMAX_YMID;
-			} else if (!strcmp (c, "xMinYMax")) {
-				align = SP_ASPECT_XMIN_YMAX;
-			} else if (!strcmp (c, "xMidYMax")) {
-				align = SP_ASPECT_XMID_YMAX;
-			} else if (!strcmp (c, "xMaxYMax")) {
-				align = SP_ASPECT_XMAX_YMAX;
-			} else {
-				break;
-			}
-
-			clip = SP_ASPECT_MEET;
-
-			while (*e && *e == 32) {
-				e += 1;
-			}
-
-			if (*e) {
-				if (!strcmp (e, "meet")) {
-					clip = SP_ASPECT_MEET;
-				} else if (!strcmp (e, "slice")) {
-					clip = SP_ASPECT_SLICE;
-				} else {
-					break;
-				}
-			}
-
-			this->aspect_set = TRUE;
-			this->aspect_align = align;
-			this->aspect_clip = clip;
-		}
-		break;
+            set_preserveAspectRatio( value );
+            this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG);
+            break;
 
 	default:
 		SPGroup::set(key, value);
@@ -312,112 +190,23 @@ void SPMarker::set(unsigned int key, const gchar* value) {
 }
 
 void SPMarker::update(SPCtx *ctx, guint flags) {
-    SPItemCtx rctx;
 
-    // fixme: We have to set up clip here too
+    SPItemCtx ictx;
 
     // Copy parent context
-    rctx.flags = ctx->flags;
+    ictx.flags = ctx->flags;
 
     // Initialize transformations
-    rctx.i2doc = Geom::identity();
-    rctx.i2vp = Geom::identity();
+    ictx.i2doc = Geom::identity();
+    ictx.i2vp = Geom::identity();
 
     // Set up viewport
-    rctx.viewport = Geom::Rect::from_xywh(0, 0, this->markerWidth.computed, this->markerHeight.computed);
+    ictx.viewport = Geom::Rect::from_xywh(0, 0, this->markerWidth.computed, this->markerHeight.computed);
 
-    // Start with identity transform
-    this->c2p.setIdentity();
+    SPItemCtx rctx = get_rctx( &ictx );
 
-    // Viewbox is always present, either implicitly or explicitly
-    Geom::Rect vb;
-    if (this->viewBox) {
-        vb = *this->viewBox;
-    } else {
-        vb = rctx.viewport;
-    }
-
-    // Now set up viewbox transformation
-
-    // Determine actual viewbox in viewport coordinates
-    // double x = 0;
-    // double y = 0;
-    double width = 0;
-    double height = 0;
-
-    if (this->aspect_align == SP_ASPECT_NONE) {
-        // x = 0.0;
-        // y = 0.0;
-        width = rctx.viewport.width();
-        height = rctx.viewport.height();
-    } else {
-        double scalex, scaley, scale;
-        // Things are getting interesting
-        scalex = rctx.viewport.width() / (vb.width());
-        scaley = rctx.viewport.height() / (vb.height());
-        scale = (this->aspect_clip == SP_ASPECT_MEET) ? MIN (scalex, scaley) : MAX (scalex, scaley);
-        width = (vb.width()) * scale;
-        height = (vb.height()) * scale;
-
-        // Now place viewbox to requested position
-        /*switch (marker->aspect_align) {
-            case SP_ASPECT_XMIN_YMIN:
-                x = 0.0;
-                y = 0.0;
-                break;
-            case SP_ASPECT_XMID_YMIN:
-                x = 0.5 * (rctx.viewport.width() - width);
-                y = 0.0;
-                break;
-            case SP_ASPECT_XMAX_YMIN:
-                x = 1.0 * (rctx.viewport.width() - width);
-                y = 0.0;
-                break;
-            case SP_ASPECT_XMIN_YMID:
-                x = 0.0;
-                y = 0.5 * (rctx.viewport.height() - height);
-                break;
-            case SP_ASPECT_XMID_YMID:
-                x = 0.5 * (rctx.viewport.width() - width);
-                y = 0.5 * (rctx.viewport.height() - height);
-                break;
-            case SP_ASPECT_XMAX_YMID:
-                x = 1.0 * (rctx.viewport.width() - width);
-                y = 0.5 * (rctx.viewport.height() - height);
-                break;
-            case SP_ASPECT_XMIN_YMAX:
-                x = 0.0;
-                y = 1.0 * (rctx.viewport.height() - height);
-                break;
-            case SP_ASPECT_XMID_YMAX:
-                x = 0.5 * (rctx.viewport.width() - width);
-                y = 1.0 * (rctx.viewport.height() - height);
-                break;
-            case SP_ASPECT_XMAX_YMAX:
-                x = 1.0 * (rctx.viewport.width() - width);
-                y = 1.0 * (rctx.viewport.height() - height);
-                break;
-            default:
-                x = 0.0;
-                y = 0.0;
-                break;
-        }*/
-    }
-
-    // TODO fixme: all that work is done to figure out x and y, which are just ignored. Check why.
-
-    // viewbox transformation and reference translation
-    this->c2p = Geom::Translate(-this->refX.computed, -this->refY.computed) *
-        Geom::Scale(width / vb.width(), height / vb.height());
-
-    rctx.i2doc = this->c2p * rctx.i2doc;
-
-    // If viewBox is set reinitialize child viewport
-    // Otherwise it already correct
-    if (this->viewBox) {
-        rctx.viewport = *this->viewBox;
-        rctx.i2vp = Geom::identity();
-    }
+    // Shift according to refX, refY
+    this->c2p = Geom::Translate(this->viewBox.left()-this->refX.computed, this->viewBox.top()-this->refY.computed) * this->c2p;
 
     // And invoke parent method
     SPGroup::update((SPCtx *) &rctx, flags);

@@ -78,7 +78,7 @@ set(sp_SRC
 	sp-use-reference.cpp
 	sp-use.cpp
 	splivarot.cpp
-
+	viewbox.cpp
 
 	# -------
 	# Headers
@@ -163,6 +163,7 @@ set(sp_SRC
 	sp-tspan.h
 	sp-use-reference.h
 	sp-use.h
+	viewbox.h
 )
 
 set(inkscape_SRC

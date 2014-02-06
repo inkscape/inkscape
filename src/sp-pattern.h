@@ -25,12 +25,13 @@ class SPPatternReference;
 #include "svg/svg-length.h"
 #include "sp-paint-server.h"
 #include "uri-references.h"
+#include "viewbox.h"
 
 #include <stddef.h>
 #include <sigc++/connection.h>
 
 
-class SPPattern : public SPPaintServer {
+class SPPattern : public SPPaintServer, public SPViewBox {
 public:
 	SPPattern();
 	virtual ~SPPattern();
@@ -52,9 +53,6 @@ public:
     SVGLength y;
     SVGLength width;
     SVGLength height;
-    /* VieBox */
-    Geom::Rect viewBox;
-    guint viewBox_set : 1;
 
     sigc::connection modified_connection;
 
