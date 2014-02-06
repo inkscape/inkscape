@@ -283,8 +283,12 @@ Inkscape::XML::Node* SPMarker::write(Inkscape::XML::Document *xml_doc, Inkscape:
 }
 
 Inkscape::DrawingItem* SPMarker::show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags) {
-	// CPPIFY: correct?
-	return SPGroup::show(drawing, key, flags);
+    // Markers in tree are never shown directly even if outside of <defs>.
+    return  0;
+}
+
+Inkscape::DrawingItem* SPMarker::private_show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags) {
+    return SPGroup::show(drawing, key, flags);
 }
 
 void SPMarker::hide(unsigned int key) {
@@ -364,7 +368,7 @@ sp_marker_show_instance ( SPMarker *marker, Inkscape::DrawingItem *parent,
             }
             if (!v->items[pos]) {
                 /* Parent class ::show method */
-            	v->items[pos] = marker->show(parent->drawing(), key, SP_ITEM_REFERENCE_FLAGS);
+            	v->items[pos] = marker->private_show(parent->drawing(), key, SP_ITEM_REFERENCE_FLAGS);
 
                 if (v->items[pos]) {
                     /* fixme: Position (Lauris) */

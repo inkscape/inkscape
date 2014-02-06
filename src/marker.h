@@ -65,6 +65,7 @@ public:
 	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
 
 	virtual Inkscape::DrawingItem* show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
+	virtual Inkscape::DrawingItem* private_show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
 	virtual void hide(unsigned int key);
 
 	virtual Geom::OptRect bbox(Geom::Affine const &transform, SPItem::BBoxType type) const;
