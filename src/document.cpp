@@ -473,7 +473,7 @@ SPDocument *SPDocument::createChildDoc(std::string const &uri)
     SPDocument *parent = this;
     SPDocument *document = NULL;
 
-    while(parent != NULL && document == NULL) {
+    while(parent != NULL && parent->getURI() != NULL && document == NULL) {
         // Check myself and any parents int he chain
         if(uri == parent->getURI()) {
             document = parent;
