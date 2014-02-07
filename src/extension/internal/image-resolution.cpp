@@ -322,6 +322,12 @@ void ImageResolution::readjfif(char const *fn) {
             y_ = cinfo.Y_density * 2.54;
             ok_ = true;
         }
+        /* According to http://www.jpeg.org/public/jfif.pdf (page 7):
+         * "Xdensity and Ydensity should always be non-zero".
+         * but in some cases, they are (see LP bug #1275443) */
+        if (x_ == 0 or y_ == 0) {
+            ok_ = false;
+        }
     }
     jpeg_destroy_decompress(&cinfo);
     fclose(ifd);
