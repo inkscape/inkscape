@@ -44,7 +44,9 @@ class RTreeTurtle(inkex.Effect):
                         dest="minimum", default=4.0,
                         help="minimum branch size")
     def effect(self):
-        s = {'stroke-linejoin': 'miter', 'stroke-width': '1.0px', 
+        self.options.size = self.unittouu(str(self.options.size) + 'px')
+        self.options.minimum = self.unittouu(str(self.options.minimum) + 'px')
+        s = {'stroke-linejoin': 'miter', 'stroke-width': str(self.unittouu('1px')), 
             'stroke-opacity': '1.0', 'fill-opacity': '1.0', 
             'stroke': '#000000', 'stroke-linecap': 'butt', 
             'fill': 'none'}

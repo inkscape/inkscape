@@ -104,7 +104,8 @@ class LSystem(inkex.Effect):
         return level_string
             
     def effect(self):
-        s = {'stroke-linejoin': 'miter', 'stroke-width': '1.0px', 
+        self.options.step = self.unittouu(str(self.options.step) + 'px')
+        s = {'stroke-linejoin': 'miter', 'stroke-width': str(self.unittouu('1px')), 
             'stroke-opacity': '1.0', 'fill-opacity': '1.0', 
             'stroke': '#000000', 'stroke-linecap': 'butt', 
             'fill': 'none'}

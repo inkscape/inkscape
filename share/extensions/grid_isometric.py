@@ -84,6 +84,12 @@ class Grid_Polar(inkex.Effect):
 
     def effect(self):
 
+        self.options.dx = self.unittouu(str(self.options.dx) + 'px')
+        self.options.divs_th = self.unittouu(str(self.options.divs_th) + 'px')
+        self.options.subdivs_th = self.unittouu(str(self.options.subdivs_th) + 'px')
+        self.options.subsubdivs_th = self.unittouu(str(self.options.subsubdivs_th) + 'px')
+        self.options.border_th = self.unittouu(str(self.options.border_th) + 'px')
+
         #Can't generate a grid too flat
         #If the Y dimension is smallest than half the X dimension, fix it.
         if self.options.y_divs<((self.options.x_divs+1)/2):

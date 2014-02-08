@@ -122,7 +122,17 @@ class Grid_Polar(inkex.Effect):
 
 
     def effect(self):
-        
+
+        self.options.border_th = self.unittouu(str(self.options.border_th) + 'px')
+        self.options.dx = self.unittouu(str(self.options.dx) + 'px')
+        self.options.x_divs_th = self.unittouu(str(self.options.x_divs_th) + 'px')
+        self.options.x_subdivs_th = self.unittouu(str(self.options.x_subdivs_th) + 'px')
+        self.options.x_subsubdivs_th = self.unittouu(str(self.options.x_subsubdivs_th) + 'px')
+        self.options.dy = self.unittouu(str(self.options.dy) + 'px')
+        self.options.y_divs_th = self.unittouu(str(self.options.y_divs_th) + 'px')
+        self.options.y_subdivs_th = self.unittouu(str(self.options.y_subdivs_th) + 'px')
+        self.options.y_subsubdivs_th = self.unittouu(str(self.options.y_subsubdivs_th) + 'px')
+
         #find the pixel dimensions of the overall grid
         ymax = self.options.dy * self.options.y_divs
         xmax = self.options.dx * self.options.x_divs

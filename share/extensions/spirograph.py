@@ -47,6 +47,9 @@ class Spirograph(inkex.Effect):
                         help="The quality of the calculated output")
 
     def effect(self):
+        self.options.primaryr = self.unittouu(str(self.options.primaryr) + 'px')
+        self.options.secondaryr = self.unittouu(str(self.options.secondaryr) + 'px')
+        self.options.penr = self.unittouu(str(self.options.penr) + 'px')
 
         if self.options.secondaryr == 0:
             return
@@ -68,7 +71,7 @@ class Spirograph(inkex.Effect):
         rotation = - math.pi * self.options.rotation / 180;
 
         new = inkex.etree.Element(inkex.addNS('path','svg'))
-        s = { 'stroke': '#000000', 'fill': 'none' }
+        s = { 'stroke': '#000000', 'fill': 'none', 'stroke-width': str(self.unittouu('1px')) }
         new.set('style', simplestyle.formatStyle(s))
 
         pathString = ''
