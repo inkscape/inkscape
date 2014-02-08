@@ -4,6 +4,7 @@
 /* Authors:
  *   Ulf Erikson <ulferikson@users.sf.net>
  *   Jon A. Cruz <jon@joncruz.org>
+ *   David Mathog
  *   Abhishek Sharma
  *
  * Copyright (C) 2006-2008 Authors
@@ -1079,6 +1080,28 @@ Wmf::select_brush(PWMF_CALLBACK_DATA d, int index)
             g_message("Please send WMF file to developers - select_brush U_WMR_DIBCREATEPATTERNBRUSH not bm16 or dib, not handled");
         }
     }
+    else if(iType == U_WMR_CREATEPATTERNBRUSH){
+        uint32_t    tidx;
+        int         cbPx;
+        U_BITMAP16  Bm16h;
+        const char *px;
+        if(U_WMRCREATEPATTERNBRUSH_get(record, &Bm16h, &cbPx, &px)){
+            tidx = add_bm16_image(d, Bm16h, px);
+            if(tidx == 0xFFFFFFFF){  // Problem with the image, for instance, an unsupported bitmap16 type
+                double r, g, b;
+                r = SP_COLOR_U_TO_F( U_RGBAGetR(d->dc[d->level].textColor));
+                g = SP_COLOR_U_TO_F( U_RGBAGetG(d->dc[d->level].textColor));
+                b = SP_COLOR_U_TO_F( U_RGBAGetB(d->dc[d->level].textColor));
+                d->dc[d->level].style.fill.value.color.set( r, g, b );
+                d->dc[d->level].fill_mode = DRAW_PAINT;
+            }
+            else {
+                d->dc[d->level].fill_idx  = tidx;
+                d->dc[d->level].fill_mode = DRAW_IMAGE;
+            }
+            d->dc[d->level].fill_set = true;
+        }
+    }
 }
 
 
@@ -1488,6 +1511,7 @@ int Wmf::myMetaFileProc(const char *contents, unsigned int length, PWMF_CALLBACK
     tsp.vadvance   = 0.0;  /* meaningful only when a complex contains two or more lines */
     tsp.taln       = ALILEFT + ALIBASE;
     tsp.ldir       = LDIR_LR;
+    tsp.spaces     = 0; // this field is only used for debugging
     tsp.color.Red       = 0;    /* RGB Black */
     tsp.color.Green     = 0;    /* RGB Black */
     tsp.color.Blue      = 0;    /* RGB Black */
@@ -1498,6 +1522,7 @@ int Wmf::myMetaFileProc(const char *contents, unsigned int length, PWMF_CALLBACK
     tsp.condensed  = 100;
     tsp.co         = 0;
     tsp.fi_idx     = -1;  /* set to an invalid */
+    tsp.rt_tidx    = -1;  /* set to an invalid */
 
     SVGOStringStream dbg_str;
 
@@ -1568,7 +1593,10 @@ int Wmf::myMetaFileProc(const char *contents, unsigned int length, PWMF_CALLBACK
         d->dc[d->level].sizeView.x = d->dc[d->level].sizeWnd.x = 0;
         d->dc[d->level].sizeView.y = d->dc[d->level].sizeWnd.y = 0;
 
-        // Upper left corner in device units, usually both 0, but not always
+        /* Upper left corner in device units, usually both 0, but not always.
+        If a placeable header is used, and later a windoworg/windowext are found, then
+        the placeable information will be ignored.
+        */
         d->ulCornerInX  = Placeable.Dst.left;
         d->ulCornerInY  = Placeable.Dst.top;
 
@@ -1805,6 +1833,8 @@ std::cout << "BEFORE DRAW"
         {
             dbg_str << "<!-- U_WMR_SETWINDOWORG -->\n";
             nSize = U_WMRSETWINDOWORG_get(contents, &d->dc[d->level].winorg);
+            d->ulCornerOutX = 0.0; // In the examples seen to date if this record is used with a placeable header, that header is ignored
+            d->ulCornerOutY = 0.0;
             break;
         }
         case U_WMR_SETWINDOWEXT:
@@ -2322,12 +2352,12 @@ std::cout << "BEFORE DRAW"
                         break;
                     case U_WMR_CREATEBRUSHINDIRECT:
                     case U_WMR_DIBCREATEPATTERNBRUSH:
+                    case U_WMR_CREATEPATTERNBRUSH: // <- this one did not display properly on XP, DIBCREATEPATTERNBRUSH works
                         select_brush(d, index);
                         break;
                     case U_WMR_CREATEFONTINDIRECT:
                         select_font(d, index);
                         break;
-                    case U_WMR_CREATEPATTERNBRUSH: // <- this one did not display properly on XP, DIBCREATEPATTERNBRUSH works
                     case U_WMR_CREATEPALETTE:
                     case U_WMR_CREATEBITMAPINDIRECT:
                     case U_WMR_CREATEBITMAP:
@@ -2376,6 +2406,7 @@ std::cout << "BEFORE DRAW"
             if(iType == U_WMR_TEXTOUT){
                 dbg_str << "<!-- U_WMR_TEXTOUT -->\n";
                 nSize = U_WMRTEXTOUT_get(contents, &Dst, &tlen, &text);
+                Opts=0;
             }
             else {
                 dbg_str << "<!-- U_WMR_EXTTEXTOUT -->\n";
@@ -3053,7 +3084,14 @@ Wmf::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
         // Scale and translate objects
         double scale = Inkscape::Util::Quantity::convert(1, "px", doc_unit);
         ShapeEditor::blockSetItem(true);
-        doc->getRoot()->scaleChildItemsRec(Geom::Scale(scale), Geom::Point(0, doc->getHeight().value("px")));
+        double dh;
+        if(SP_ACTIVE_DOCUMENT){ // for file menu open or import, or paste from clipboard
+            dh = SP_ACTIVE_DOCUMENT->getHeight().value("px");
+        }
+        else { // for open via --file on command line
+            dh = doc->getHeight().value("px");
+        }
+        doc->getRoot()->scaleChildItemsRec(Geom::Scale(scale), Geom::Point(0, dh));
         ShapeEditor::blockSetItem(false);
 
         Inkscape::DocumentUndo::setUndoSensitive(doc, saved);

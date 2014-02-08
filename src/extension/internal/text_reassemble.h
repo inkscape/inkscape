@@ -4,11 +4,11 @@
 See text_reassemble.c for notes
 
 File:      text_reassemble.h
-Version:   0.0.12
-Date:      14-MAY-2013
+Version:   0.0.13
+Date:      06-FEB-2014
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
-Copyright: 2013 David Mathog and California Institute of Technology (Caltech)
+Copyright: 2014 David Mathog and California Institute of Technology (Caltech)
 */
 
 #ifndef _TEXT_REASSEMBLE_
@@ -189,6 +189,7 @@ typedef struct {
    int         weight;      /**< weight, as in FontConfig                                             */
    int         condensed;   /**< condensed, as in FontConfig                                          */
    int         decoration;  /**< text decorations, ignored during assembly, used during output        */
+   int         spaces;      /**< count of spaces converted from wide kerning (1 or 2)                 */
    TRCOLORREF  decColor;    /**< text decoration color, ignored during assembly, used during output   */
    int         co;          /**< condensed override, if set Font name included narrow                 */
    int         rt_tidx;     /**< index of rectangle that contains it                                  */

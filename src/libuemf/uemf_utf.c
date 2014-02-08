@@ -12,11 +12,11 @@
 
 /*
 File:      uemf_utf.c
-Version:   0.0.4
-Date:      19-MAR-2013
+Version:   0.0.5
+Date:      29-JAN-2014
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
-Copyright: 2013 David Mathog and California Institute of Technology (Caltech)
+Copyright: 2014 David Mathog and California Institute of Technology (Caltech)
 */
 
 #ifdef __cplusplus
@@ -68,9 +68,14 @@ These functions are used for development and debugging and should be be includie
 void wchar8show(
       const char *src
    ){
-   printf("char show\n");
-   size_t srclen = 0;
-   while(*src){ printf("%d %d %x\n",(int) srclen,*src,*src); srclen++; src++; }
+   if(!src){
+      printf("char show <NULL>\n");
+   }
+   else {
+      printf("char show\n");
+      size_t srclen = 0;
+      while(*src){ printf("%d %d %x\n",(int) srclen,*src,*src); srclen++; src++; }
+   }
 }
 
 /**
@@ -80,9 +85,14 @@ void wchar8show(
 void wchar16show(
       const uint16_t *src
    ){
-   printf("uint16_t show\n");
-   size_t srclen = 0;
-   while(*src){ printf("%d %d %x\n",(int) srclen,*src,*src); srclen++; src++; }
+   if(!src){
+      printf("uint16_t show <NULL>\n");
+   }
+   else {
+      printf("uint16_t show\n");
+      size_t srclen = 0;
+      while(*src){ printf("%d %d %x\n",(int) srclen,*src,*src); srclen++; src++; }
+   }
 }
 
 /** 
@@ -91,9 +101,14 @@ void wchar16show(
 void wchar32show(
       const uint32_t *src
    ){
-   printf("uint32_t show\n");
-   size_t srclen = 0;
-   while(*src){ printf("%d %d %x\n",(int) srclen,*src,*src); srclen++; src++; }
+   if(!src){
+      printf("uint32_t show <NULL>\n");
+   }
+   else {
+      printf("uint32_t show\n");
+      size_t srclen = 0;
+      while(*src){ printf("%d %d %x\n",(int) srclen,*src,*src); srclen++; src++; }
+   }
 }
 
 /**
@@ -104,13 +119,19 @@ void wchartshow(
       const wchar_t *src
    ){
    uint32_t val;
-   printf("wchar_t show\n");
-   size_t srclen = 0;
-   while(*src){
-      val = *src;  // because *src is wchar_t is not strictly an integer type, can cause warnings on next line
-      printf("%d %d %x\n",(int) srclen,val,val); 
-      srclen++; 
-      src++;
+   if(!src){
+      printf("wchar_t show <NULL>\n");
+   }
+   else {
+      printf("wchar_t show\n");
+      size_t srclen = 0;
+      if(!src)return;
+      while(*src){
+         val = *src;  // because *src is wchar_t is not strictly an integer type, can cause warnings on next line
+         printf("%d %d %x\n",(int) srclen,val,val); 
+         srclen++; 
+         src++;
+      }
    }
 }
 
@@ -127,7 +148,9 @@ size_t wchar16len(
       const uint16_t *src
    ){
    size_t srclen = 0;
-   while(*src){ srclen++; src++; }
+   if(src){
+      while(*src){ srclen++; src++; }
+   }
    return(srclen);
 }
 
@@ -139,7 +162,9 @@ size_t wchar32len(
       const uint32_t *src
    ){
    size_t srclen = 0;
-   while(*src){ srclen++; src++; }
+   if(src){
+      while(*src){ srclen++; src++; }
+   }
    return(srclen);
 }
 
@@ -154,9 +179,11 @@ void   wchar16strncpy(
       const uint16_t *src,
       size_t          nchars
    ){
-   for(;nchars;nchars--,dst++,src++){
-     *dst = *src;
-     if(!*src)break;
+   if(src){
+      for(;nchars;nchars--,dst++,src++){
+        *dst = *src;
+        if(!*src)break;
+      }
    }
 }
 
@@ -172,8 +199,10 @@ void   wchar16strncpypad(
       const uint16_t *src,
       size_t          nchars
    ){
-   for(;*src && nchars;nchars--,dst++,src++){ *dst = *src; }
-   for(;nchars;nchars--,dst++){               *dst = 0;    }  // Pad the remainder
+   if(src){
+      for(;*src && nchars;nchars--,dst++,src++){ *dst = *src; }
+      for(;nchars;nchars--,dst++){               *dst = 0;    }  // Pad the remainder
+   }
 }
 
 /*  For the following converstion functions, remember that iconv() modifies ALL of its parameters,
@@ -197,6 +226,7 @@ uint16_t *U_Utf32leToUtf16le(
    char *dst,*dst2;
    size_t srclen,dstlen,status;
 
+   if(!src)return(NULL);
    if(max){ srclen = 4*max; }
    else {   srclen = 4 + 4*wchar32len(src); } //include terminator, length in BYTES
    
@@ -226,6 +256,8 @@ uint32_t *U_Utf16leToUtf32le(
    char *dst,*dst2;
    char *src2 = (char *) src;
    size_t srclen,dstlen,status;
+
+   if(!src)return(NULL);
    if(max){ srclen = 2*max; }
    else {   srclen = 2*wchar16len(src)+2; } // include terminator, length in BYTES
    dstlen = 2*(2 + srclen);                 // This should always work
@@ -261,6 +293,8 @@ uint32_t *U_Latin1ToUtf32le(
    char *dst,*dst2;
    char *src2 = (char *) src;
    size_t srclen,dstlen,status;
+
+   if(!src)return(NULL);
    if(max){ srclen = max; }
    else {   srclen = strlen(src)+1; }       // include terminator, length in BYTES
    dstlen = sizeof(uint32_t)*(1 + srclen);  // This should always work but might waste some space
@@ -290,6 +324,8 @@ uint32_t *U_Utf8ToUtf32le(
    char *dst,*dst2;
    char *src2 = (char *) src;
    size_t srclen,dstlen,status;
+
+   if(!src)return(NULL);
    if(max){ srclen = max; }
    else {   srclen = strlen(src)+1; }       // include terminator, length in BYTES
    dstlen = sizeof(uint32_t)*(1 + srclen);  // This should always work but might waste some space
@@ -319,6 +355,8 @@ char *U_Utf32leToUtf8(
    char *dst,*dst2;
    char *src2 = (char *) src;
    size_t srclen,dstlen,status;
+
+   if(!src)return(NULL);
    if(max){ srclen = 4*max; }
    else {   srclen = 4*(1 + wchar32len(src)); } //include terminator, length in BYTES
    dstlen = 1 + srclen;                         // This should always work but might waste some space
@@ -349,6 +387,7 @@ uint16_t *U_Utf8ToUtf16le(
    size_t srclen,dstlen,status;
    iconv_t conv;
 
+   if(!src)return(NULL);
    if(max){ srclen = max; }
    else {   srclen = strlen(src)+1; }       // include terminator, length in BYTES
    dstlen = 2 * (1 + srclen);               // this will always work, but may waste space
@@ -378,6 +417,8 @@ char *U_Utf16leToUtf8(
    char *dst, *dst2;
    char *ret=NULL;
    size_t srclen,dstlen,status;
+
+   if(!src)return(NULL);
    if(max){ srclen = 2*max; }
    else {   srclen = 2*(1 +wchar16len(src)); } //include terminator, length in BYTES
    dstlen = 1 + 2*srclen;                      // this will always work, but may waste space
@@ -410,6 +451,8 @@ char *U_Utf16leToLatin1(
    char *dst, *dst2;
    char *ret=NULL;
    size_t srclen,dstlen,status;
+
+   if(!src)return(NULL);
    if(max){ srclen = 2*max; }
    else {   srclen = 2*(1 +wchar16len(src)); } //include terminator, length in BYTES
    dstlen = 1 + srclen;                        // this will always work as latin1 is always 1 byte/character

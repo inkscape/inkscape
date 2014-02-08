@@ -124,7 +124,7 @@ unsigned int PrintEmf::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
     char           *rec;
     gchar const    *utf8_fn = mod->get_param_string("destination");
 
-    // Typially PX2WORLD is 1200/90, using inkscape's default dpi
+    // Typically PX2WORLD is 1200/90, using inkscape's default dpi
     PX2WORLD             = 1200.0 / Inkscape::Util::Quantity::convert(1.0, "in", "px");
     FixPPTCharPos        = mod->get_param_bool("FixPPTCharPos");
     FixPPTDashLine       = mod->get_param_bool("FixPPTDashLine");
@@ -848,7 +848,7 @@ Geom::Path PrintEmf::pathv_to_rect(Geom::PathVector const &pathv, bool *is_rect,
     int vertices;
     Geom::Path pR = pathv_to_simple_polygon(pathv, &vertices);
     *is_rect = false;
-    if(vertices==4){ // or else it cannot be a rectangle rectangle
+    if(vertices==4){ // or else it cannot be a rectangle
         int  vertex_count=0;
         /* Get the ends of the LAST line segment.
            Find minimum rotation to align rectangle with X,Y axes.  (Very degenerate if it is rotated 45 degrees.) */
@@ -862,12 +862,17 @@ Geom::Path PrintEmf::pathv_to_rect(Geom::PathVector const &pathv, bool *is_rect,
                 if(fabs(ang) < fabs(*angle))*angle = -ang; // y increases down, flips sign on angle
             }
         }
+        
+        /*  For increased numerical stability, snap the angle to the nearest 1/100th of a degree. */
+        double convert = 36000.0/ (2.0 * M_PI);
+        *angle = round(*angle * convert)/convert;
 
         for(Geom::Path::const_iterator cit  = pR.begin(); cit != pR.end_open();++cit) {
             P1_lead = cit->finalPoint();
             v1 = unit_vector(P1      - P1_trail);
             v2 = unit_vector(P1_lead - P1      );
-            if(!Geom::are_near(dot(v1,v2), 0.0, 1e-5))break; // P1 is center of a turn that is not 90 degrees
+            // P1 is center of a turn that is not 90 degrees.  Limit comes from cos(89.9) = .001745
+            if(!Geom::are_near(dot(v1,v2), 0.0, 2e-3))break;
             P1_trail = P1;
             P1 = P1_lead;
             vertex_count++;
@@ -985,12 +990,13 @@ unsigned int PrintEmf::fill(
     int  rectDir=0;
     Geom::Path pathRect;
     if(FixPPTLinGrad  && brush_stat && gv.mode == DRAW_LINEAR_GRADIENT){
-        pathRect = pathv_to_rect(pathv, &is_Rect, &angle);
+        Geom::PathVector pvr = pathv * fill_transform;
+        pathRect = pathv_to_rect(pvr, &is_Rect, &angle);
         if(is_Rect){
             /* Gradientfill records can only be used if the gradient is parallel to the sides of the rectangle.
                That must be checked here so that we can fall back to another form of gradient fill if it is not
                the case. */
-            rectDir = vector_rect_alignment(angle, gv.p2 - gv.p1);
+            rectDir = vector_rect_alignment(angle, (gv.p2 - gv.p1) * fill_transform);
             if(!rectDir)is_Rect = false;
         }
         if(!is_Rect && !FixPPTGrad2Polys)brush_stat=0;  // fall all the way back to a solid fill
@@ -1094,26 +1100,27 @@ unsigned int PrintEmf::fill(
                 U_XFORM tmpTransform;
                 double wRect, hRect;
 
-                /* coordinates, w,h and transform for the ENTIRE retangle */
-                ul = get_pathrect_corner(pathRect, angle, 0) * fill_transform * PX2WORLD;
-                ur = get_pathrect_corner(pathRect, angle, 1) * fill_transform * PX2WORLD;
-                lr = get_pathrect_corner(pathRect, angle, 2) * fill_transform * PX2WORLD;
+                /* coordinates: upper left, upper right, and lower right corners of the rectangle.
+                   inkscape transform already applied, but needs to be scaled to EMF coordinates. */
+                ul = get_pathrect_corner(pathRect, angle, 0) * PX2WORLD;
+                ur = get_pathrect_corner(pathRect, angle, 1) * PX2WORLD;
+                lr = get_pathrect_corner(pathRect, angle, 2) * PX2WORLD;
                 wRect = Geom::distance(ul,ur);
                 hRect = Geom::distance(ur,lr);
 
                 /*  The basic rectangle for all of these is placed with its UL corner at 0,0 with a size wRect,hRect.
                     Apply a world transform to place/scale it into the appropriate position on the drawing.
                     Actual gradientfill records are either this entire rectangle or slices of it as defined by the stops.
+                    This rectangle has already been transformed by tf (whatever rotation/scale) Inkscape had applied to it.
                 */
 
                 Geom::Affine tf2 = Geom::Rotate(-angle);  // the rectangle may be drawn skewed to the coordinate system
-                tf2 *= tf; // the coordinate system of the rectangular path may be rotated
                 tmpTransform.eM11 = tf2[0];
                 tmpTransform.eM12 = tf2[1];
                 tmpTransform.eM21 = tf2[2];
                 tmpTransform.eM22 = tf2[3];
-                tmpTransform.eDx  = (ul)[Geom::X];
-                tmpTransform.eDy  = (ul)[Geom::Y];
+                tmpTransform.eDx  = round((ul)[Geom::X]); // use explicit round for better stability
+                tmpTransform.eDy  = round((ul)[Geom::Y]);
 
                 rec = U_EMRSAVEDC_set();
                 if (!rec || emf_append((PU_ENHMETARECORD)rec, et, U_REC_FREE)) {
@@ -1138,10 +1145,10 @@ unsigned int PrintEmf::fill(
                          gMode = U_GRADIENT_FILL_RECT_V;
                      }
                      doff_base  = doff_range;
-                     rcb.left   = outUL[X];
-                     rcb.top    = outUL[Y];
-                     rcb.right  = outLR[X];
-                     rcb.bottom = outLR[Y];
+                     rcb.left   = round(outUL[X]); // use explicit round for better stability
+                     rcb.top    = round(outUL[Y]);
+                     rcb.right  = round(outLR[X]);
+                     rcb.bottom = round(outLR[Y]);
                      sp_color_get_rgb_floatv(&tg->vector.stops[istop].color, rgb);
                      opa = tg->vector.stops[istop].opacity;
                      c2 = U_RGBA(255 * rgb[0], 255 * rgb[1], 255 * rgb[2], 255 * opa);
@@ -1157,7 +1164,6 @@ unsigned int PrintEmf::fill(
                      c1 = c2;  // for next stop
                      ug4.UpperLeft = 0;
                      ug4.LowerRight= 1;
-                     /* NEED to push world transform here for rotations */
                      rec = U_EMRGRADIENTFILL_set(rcb, 2, 1, gMode, ut, (uint32_t *) &ug4 );
                      if (!rec || emf_append((PU_ENHMETARECORD)rec, et, U_REC_FREE)) {
                          g_error("Fatal programming error in PrintEmf::fill at U_EMRGRADIENTFILL_set");

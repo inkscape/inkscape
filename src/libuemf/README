@@ -366,6 +366,12 @@ History
   (Note, version numbers in files represent the libUEMF release where it was last modified, so not
   all files will show the same version numbers in each release.)
 
+0.1.11 2014-01-29
+  Fixed bug in uwmf.c (wrong minimum record size on U_WMRTEXTOUT)
+  Fixed bug in uwmf.c (U_WMRCREATEPATTERNBRUSH not right)
+  Added error handling to uemf_utf.c for cases where src is a null pointer.
+  Added a test of createpatternbrush to testlib_wmf
+  
 0.1.10 2014-01-14
   Slight changes in documentation for uemf.h.
   Fixed typo in uemf_endian.c.

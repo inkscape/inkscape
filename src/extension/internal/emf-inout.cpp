@@ -4,6 +4,7 @@
 /* Authors:
  *   Ulf Erikson <ulferikson@users.sf.net>
  *   Jon A. Cruz <jon@joncruz.org>
+ *   David Mathog
  *   Abhishek Sharma
  *
  * Copyright (C) 2006-2008 Authors
@@ -1563,6 +1564,7 @@ int Emf::myEnhMetaFileProc(char *contents, unsigned int length, PEMF_CALLBACK_DA
     tsp.vadvance   = 0.0;  /* meaningful only when a complex contains two or more lines */
     tsp.taln       = ALILEFT + ALIBASE;
     tsp.ldir       = LDIR_LR;
+    tsp.spaces     = 0; // this field is only used for debugging
     tsp.color.Red       = 0;    /* RGB Black */
     tsp.color.Green     = 0;    /* RGB Black */
     tsp.color.Blue      = 0;    /* RGB Black */

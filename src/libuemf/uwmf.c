@@ -19,11 +19,11 @@
 
 /*
 File:      uwmf.c
-Version:   0.0.12
-Date:      25-NOV-2013
+Version:   0.0.13
+Date:      30-JAN-2014
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
-Copyright: 2013 David Mathog and California Institute of Technology (Caltech)
+Copyright: 2014 David Mathog and California Institute of Technology (Caltech)
 */
 
 #ifdef __cplusplus
@@ -4271,13 +4271,12 @@ char *U_WMRCREATEPATTERNBRUSH_set(
    if(!Bm16 || !Pattern)return(NULL);
    
    cbPat =  (((Bm16->Width * Bm16->BitsPixel + 15) >> 4) << 1) * Bm16->Height;
-   irecsize  = U_SIZE_METARECORD + 14 + 4 + 18 + cbPat;  /* core WMR + truncated Bm16 + pattern */
+   irecsize  = U_SIZE_METARECORD + 14 + 18 + cbPat;  /* core WMR + truncated Bm16 + 18 spaces bytes + pattern */
    record = malloc(irecsize);
    if(record){
       U_WMRCORE_SETRECHEAD(record,irecsize,U_WMR_CREATEPATTERNBRUSH);
       off = U_SIZE_METARECORD;
-      memcpy(record + off, Bm16,        14);       off+=14;  /* Truncated bitmap16 object*/
-      memset(record + off, 0,            4);       off+=4;   /* 4  bytes of its "bits", which are ignored */
+      memcpy(record + off, Bm16,        14);       off+=14;  /* Truncated bitmap16 object, last 4 bytes are to be ignored*/
       memset(record + off, 0,           18);       off+=18;  /* 18 bytes of zero, which are ignored */
       memcpy(record + off, Pattern,  cbPat);                 /* The pattern array */
    }
@@ -5359,7 +5358,7 @@ int U_WMRTEXTOUT_get(
    ){
    int16_t L2;
    int  off;
-   int  size = U_WMRCORE_RECSAFE_get(contents, (U_SIZE_WMRPATBLT));
+   int  size = U_WMRCORE_RECSAFE_get(contents, (U_SIZE_WMRTEXTOUT));
    if(!size)return(0);
    *Length = *(int16_t *)(contents + offsetof(U_WMRTEXTOUT, Length));
    *string = contents + offsetof(U_WMRTEXTOUT, String);  /* May not be null terminated!!! */
@@ -6851,12 +6850,15 @@ int U_WMRCREATEPATTERNBRUSH_get(
       const char  **Pattern
    ){
    int off = U_SIZE_METARECORD;
-   int  size = U_WMRCORE_RECSAFE_get(contents, (U_SIZE_WMRSETDIBTODEV));
+   /* size in next one is 
+      6 (core header) + 14 (truncated bitmap16) + 18 bytes reserved + 2 bytes (at least) for data */
+   int  size = U_WMRCORE_RECSAFE_get(contents, (U_SIZE_METARECORD + 14 + 18 + 2));
    if(!size)return(0);
    memset(Bm16, 0, U_SIZE_BITMAP16); 
-   memcpy(Bm16, contents + off, 14);  /* BM16 is truncated in this record type  */
+   /* BM16 is truncated in this record type to 14 bytes, last 4 bytes must be ignored, so they are not even copied */
+   memcpy(Bm16, contents + off, 10);  
    *pasize = (((Bm16->Width * Bm16->BitsPixel + 15) >> 4) << 1) * Bm16->Height;
-   off += 36;  /* skip [truncated bitmap16 object and 18 bytes of reserved */
+   off += 32;  /* skip [14 bytes of truncated bitmap16 object and 18 bytes of reserved */
    *Pattern = (contents + off); 
    return(size);
 }

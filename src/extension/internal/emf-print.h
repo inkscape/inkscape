@@ -1,8 +1,9 @@
 /** @file
  * @brief Enhanced Metafile printing - implementation
  */
-/* Author:
+/* Authors:
  *   Ulf Erikson <ulferikson@users.sf.net>
+ *   David Mathog
  *
  * Copyright (C) 2006-2008 Authors
  *
