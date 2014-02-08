@@ -66,7 +66,7 @@ inkex.localize()
 def draw_SVG_ellipse((rx, ry), (cx, cy), parent, start_end=(0,2*pi),transform='' ):
 
     style = {   'stroke'        : '#000000',
-                'stroke-width'  : str(Wireframe_Sphere.unittouu(e, '1px')),
+                'stroke-width'  : '1',
                 'fill'          : 'none'            }
     circ_attribs = {'style':simplestyle.formatStyle(style),
         inkex.addNS('cx','sodipodi')        :str(cx),
@@ -120,7 +120,6 @@ class Wireframe_Sphere(inkex.Effect):
             else:
                 flip = '' #no flip
 
-            so.RADIUS     = self.unittouu(str(so.RADIUS) + 'px')
             so.TILT       =  abs(so.TILT)*(pi/180)  #Convert to radians
             so.ROT_OFFSET = so.ROT_OFFSET*(pi/180)  #Convert to radians
             

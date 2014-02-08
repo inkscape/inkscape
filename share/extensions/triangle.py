@@ -82,7 +82,7 @@ def draw_tri_from_3_sides(s_a, s_b, s_c, offset, parent): #draw a triangle from 
         offy = c[1]/2 #c is the highest point
         offset = ( offset[0]-offx , offset[1]-offy ) #add the centre of the triangle to the offset
                
-        draw_SVG_tri(a, b, c , offset, Grid_Polar.unittouu(e, '2px'), 'Triangle', parent)
+        draw_SVG_tri(a, b, c , offset, 2, 'Triangle', parent)
     else:
         sys.stderr.write('Error:Invalid Triangle Specifications.\n')
 
@@ -122,10 +122,7 @@ class Grid_Polar(inkex.Effect):
         
         tri = self.current_layer
         offset = (self.view_center[0],self.view_center[1]) #the offset require to centre the triangle
-        self.options.s_a = self.unittouu(str(self.options.s_a) + 'px')
-        self.options.s_b = self.unittouu(str(self.options.s_b) + 'px')
-        self.options.s_c = self.unittouu(str(self.options.s_c) + 'px')
-
+        
         if self.options.mode == '3_sides':
             s_a = self.options.s_a
             s_b = self.options.s_b
