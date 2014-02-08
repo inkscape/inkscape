@@ -453,7 +453,7 @@ static bool sp_spray_recursive(SPDesktop *desktop,
 
         Geom::OptRect a = parent_item->documentVisualBounds();
         if (a) {
-            if (i == 2) {
+            if (i == 1) {
                 Inkscape::XML::Node *copy1 = old_repr->duplicate(xml_doc);
                 parent->appendChild(copy1);
                 SPObject *new_obj1 = doc->getObjectByRepr(copy1);
