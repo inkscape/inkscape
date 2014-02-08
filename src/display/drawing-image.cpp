@@ -102,22 +102,22 @@ DrawingImage::_updateItem(Geom::IntRect const &, UpdateContext const &, unsigned
     return STATE_ALL;
 }
 
-unsigned DrawingImage::_renderItem(DrawingContext &ct, Geom::IntRect const &/*area*/, unsigned /*flags*/, DrawingItem * /*stop_at*/)
+unsigned DrawingImage::_renderItem(DrawingContext &dc, Geom::IntRect const &/*area*/, unsigned /*flags*/, DrawingItem * /*stop_at*/)
 {
     bool outline = _drawing.outline();
 
     if (!outline) {
         if (!_pixbuf) return RENDER_OK;
 
-        Inkscape::DrawingContext::Save save(ct);
-        ct.transform(_ctm);
-        ct.newPath();
-        ct.rectangle(_clipbox);
-        ct.clip();
+        Inkscape::DrawingContext::Save save(dc);
+        dc.transform(_ctm);
+        dc.newPath();
+        dc.rectangle(_clipbox);
+        dc.clip();
 
-        ct.translate(_origin);
-        ct.scale(_scale);
-        ct.setSource(_pixbuf->getSurfaceRaw(), 0, 0);
+        dc.translate(_origin);
+        dc.scale(_scale);
+        dc.setSource(_pixbuf->getSurfaceRaw(), 0, 0);
 
         if (_style) {
             // See: http://www.w3.org/TR/SVG/painting.html#ImageRenderingProperty
@@ -128,24 +128,24 @@ unsigned DrawingImage::_renderItem(DrawingContext &ct, Geom::IntRect const &/*ar
                     // Do nothing
                     break;
                 case SP_CSS_COLOR_RENDERING_OPTIMIZEQUALITY:
-                    ct.patternSetFilter( CAIRO_FILTER_BEST );
+                    dc.patternSetFilter( CAIRO_FILTER_BEST );
                     break;
                 case SP_CSS_COLOR_RENDERING_OPTIMIZESPEED:
                 default:
-                    ct.patternSetFilter( CAIRO_FILTER_NEAREST );
+                    dc.patternSetFilter( CAIRO_FILTER_NEAREST );
                     break;
             }
         }
 
-        ct.paint(_opacity);
+        dc.paint(_opacity);
 
     } else { // outline; draw a rect instead
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         guint32 rgba = prefs->getInt("/options/wireframecolors/images", 0xff0000ff);
 
-        {   Inkscape::DrawingContext::Save save(ct);
-            ct.transform(_ctm);
-            ct.newPath();
+        {   Inkscape::DrawingContext::Save save(dc);
+            dc.transform(_ctm);
+            dc.newPath();
 
             Geom::Rect r = bounds();
             Geom::Point c00 = r.corner(0);
@@ -153,21 +153,21 @@ unsigned DrawingImage::_renderItem(DrawingContext &ct, Geom::IntRect const &/*ar
             Geom::Point c11 = r.corner(2);
             Geom::Point c10 = r.corner(1);
 
-            ct.moveTo(c00);
+            dc.moveTo(c00);
             // the box
-            ct.lineTo(c10);
-            ct.lineTo(c11);
-            ct.lineTo(c01);
-            ct.lineTo(c00);
+            dc.lineTo(c10);
+            dc.lineTo(c11);
+            dc.lineTo(c01);
+            dc.lineTo(c00);
             // the diagonals
-            ct.lineTo(c11);
-            ct.moveTo(c10);
-            ct.lineTo(c01);
+            dc.lineTo(c11);
+            dc.moveTo(c10);
+            dc.lineTo(c01);
         }
 
-        ct.setLineWidth(0.5);
-        ct.setSource(rgba);
-        ct.stroke();
+        dc.setLineWidth(0.5);
+        dc.setSource(rgba);
+        dc.stroke();
     }
     return RENDER_OK;
 }

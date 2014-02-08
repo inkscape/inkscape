@@ -639,25 +639,25 @@ cairo_pattern_t* SPPattern::pattern_new(cairo_t *base_ct, Geom::OptRect const &b
     // Create drawing surface with size of pattern tile (in tile space) but with number of pixels
     // based on required resolution (c).
     Inkscape::DrawingSurface pattern_surface(pattern_tile, c.ceil());
-    Inkscape::DrawingContext ct(pattern_surface);
+    Inkscape::DrawingContext dc(pattern_surface);
 
     pattern_tile *= pattern_surface.drawingTransform();
     Geom::IntRect one_tile = pattern_tile.roundOutwards();
 
     // render pattern.
     if (needs_opacity) {
-        ct.pushGroup(); // this group is for pattern + opacity
+        dc.pushGroup(); // this group is for pattern + opacity
     }
 
     // TODO: make sure there are no leaks.
     Inkscape::UpdateContext ctx;  // UpdateContext is structure with only ctm!
     ctx.ctm = vb2ps * pattern_surface.drawingTransform();
-    ct.transform( pattern_surface.drawingTransform().inverse() );
+    dc.transform( pattern_surface.drawingTransform().inverse() );
     drawing.update(Geom::IntRect::infinite(), ctx);
 
     // Render drawing to pattern_surface via drawing context, this calls root->render
     // which is really DrawingItem->render().
-    drawing.render(ct, one_tile);
+    drawing.render(dc, one_tile);
     for (SPObject *child = shown->firstChild() ; child != NULL; child = child->getNext() ) {
         if (SP_IS_ITEM (child)) {
             SP_ITEM(child)->invoke_hide(dkey);
@@ -673,8 +673,8 @@ cairo_pattern_t* SPPattern::pattern_new(cairo_t *base_ct, Geom::OptRect const &b
     // cairo_surface_write_to_png( pattern_surface.raw(), "sp-pattern.png" );
 
     if (needs_opacity) {
-        ct.popGroupToSource(); // pop raw pattern
-        ct.paint(opacity); // apply opacity
+        dc.popGroupToSource(); // pop raw pattern
+        dc.paint(opacity); // apply opacity
     }
 
     cairo_pattern_t *cp = cairo_pattern_create_for_surface(pattern_surface.raw());

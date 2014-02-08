@@ -98,12 +98,12 @@ DrawingGroup::_updateItem(Geom::IntRect const &area, UpdateContext const &ctx, u
 }
 
 unsigned
-DrawingGroup::_renderItem(DrawingContext &ct, Geom::IntRect const &area, unsigned flags, DrawingItem *stop_at)
+DrawingGroup::_renderItem(DrawingContext &dc, Geom::IntRect const &area, unsigned flags, DrawingItem *stop_at)
 {
     if (stop_at == NULL) {
         // normal rendering
         for (ChildrenList::iterator i = _children.begin(); i != _children.end(); ++i) {
-            i->render(ct, area, flags, stop_at);
+            i->render(dc, area, flags, stop_at);
         }
     } else {
         // background rendering
@@ -111,11 +111,11 @@ DrawingGroup::_renderItem(DrawingContext &ct, Geom::IntRect const &area, unsigne
             if (&*i == stop_at) return RENDER_OK; // do not render the stop_at item at all
             if (i->isAncestorOf(stop_at)) {
                 // render its ancestors without masks, opacity or filters
-                i->render(ct, area, flags | RENDER_FILTER_BACKGROUND, stop_at);
+                i->render(dc, area, flags | RENDER_FILTER_BACKGROUND, stop_at);
                 // stop further rendering
                 return RENDER_OK;
             } else {
-                i->render(ct, area, flags, stop_at);
+                i->render(dc, area, flags, stop_at);
             }
         }
     }
@@ -123,10 +123,10 @@ DrawingGroup::_renderItem(DrawingContext &ct, Geom::IntRect const &area, unsigne
 }
 
 void
-DrawingGroup::_clipItem(DrawingContext &ct, Geom::IntRect const &area)
+DrawingGroup::_clipItem(DrawingContext &dc, Geom::IntRect const &area)
 {
     for (ChildrenList::iterator i = _children.begin(); i != _children.end(); ++i) {
-        i->clip(ct, area);
+        i->clip(dc, area);
     }
 }
 

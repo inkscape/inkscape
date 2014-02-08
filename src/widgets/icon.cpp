@@ -1190,9 +1190,9 @@ sp_icon_doc_icon( SPDocument *doc, Inkscape::Drawing &drawing,
                 /* Render */
                 cairo_surface_t *s = cairo_image_surface_create_for_data(px,
                     CAIRO_FORMAT_ARGB32, psize, psize, stride);
-                Inkscape::DrawingContext ct(s, ua.min());
+                Inkscape::DrawingContext dc(s, ua.min());
 
-                drawing.render(ct, ua);
+                drawing.render(dc, ua);
                 cairo_surface_destroy(s);
 
                 // convert to GdkPixbuf format

@@ -28,7 +28,7 @@ namespace Filters {
 class FilterSlot {
 public:
     /** Creates a new FilterSlot object. */
-    FilterSlot(DrawingItem *item, DrawingContext *bgct,
+    FilterSlot(DrawingItem *item, DrawingContext *bgdc,
         DrawingContext &graphic, FilterUnits const &u);
     /** Destroys the FilterSlot object and all its contents */
     virtual ~FilterSlot();

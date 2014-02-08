@@ -24,60 +24,60 @@
 namespace Inkscape {
 
 #ifdef WITH_CSSBLEND
-void set_cairo_blend_operator( DrawingContext &ct, unsigned blend_mode ) {
+void set_cairo_blend_operator( DrawingContext &dc, unsigned blend_mode ) {
 
     // All of the blend modes are implemented in Cairo as of 1.10.
     // For a detailed description, see:
     // http://cairographics.org/operators/
     switch (blend_mode) {
     case SP_CSS_BLEND_MULTIPLY:
-        ct.setOperator(CAIRO_OPERATOR_MULTIPLY);
+        dc.setOperator(CAIRO_OPERATOR_MULTIPLY);
         break;
     case SP_CSS_BLEND_SCREEN:
-        ct.setOperator(CAIRO_OPERATOR_SCREEN);
+        dc.setOperator(CAIRO_OPERATOR_SCREEN);
         break;
     case SP_CSS_BLEND_DARKEN:
-        ct.setOperator(CAIRO_OPERATOR_DARKEN);
+        dc.setOperator(CAIRO_OPERATOR_DARKEN);
         break;
     case SP_CSS_BLEND_LIGHTEN:
-        ct.setOperator(CAIRO_OPERATOR_LIGHTEN);
+        dc.setOperator(CAIRO_OPERATOR_LIGHTEN);
         break;
     case SP_CSS_BLEND_OVERLAY:   
-        ct.setOperator(CAIRO_OPERATOR_OVERLAY);
+        dc.setOperator(CAIRO_OPERATOR_OVERLAY);
         break;
     case SP_CSS_BLEND_COLORDODGE:
-        ct.setOperator(CAIRO_OPERATOR_COLOR_DODGE);
+        dc.setOperator(CAIRO_OPERATOR_COLOR_DODGE);
         break;
     case SP_CSS_BLEND_COLORBURN:
-        ct.setOperator(CAIRO_OPERATOR_COLOR_BURN);
+        dc.setOperator(CAIRO_OPERATOR_COLOR_BURN);
         break;
     case SP_CSS_BLEND_HARDLIGHT:
-        ct.setOperator(CAIRO_OPERATOR_HARD_LIGHT);
+        dc.setOperator(CAIRO_OPERATOR_HARD_LIGHT);
         break;
     case SP_CSS_BLEND_SOFTLIGHT:
-        ct.setOperator(CAIRO_OPERATOR_SOFT_LIGHT);
+        dc.setOperator(CAIRO_OPERATOR_SOFT_LIGHT);
         break;
     case SP_CSS_BLEND_DIFFERENCE:
-        ct.setOperator(CAIRO_OPERATOR_DIFFERENCE);
+        dc.setOperator(CAIRO_OPERATOR_DIFFERENCE);
         break;
     case SP_CSS_BLEND_EXCLUSION:
-        ct.setOperator(CAIRO_OPERATOR_EXCLUSION);
+        dc.setOperator(CAIRO_OPERATOR_EXCLUSION);
         break;
     case SP_CSS_BLEND_HUE:       
-        ct.setOperator(CAIRO_OPERATOR_HSL_HUE);
+        dc.setOperator(CAIRO_OPERATOR_HSL_HUE);
         break;
     case SP_CSS_BLEND_SATURATION:
-        ct.setOperator(CAIRO_OPERATOR_HSL_SATURATION);
+        dc.setOperator(CAIRO_OPERATOR_HSL_SATURATION);
         break;
     case SP_CSS_BLEND_COLOR:
-        ct.setOperator(CAIRO_OPERATOR_HSL_COLOR);
+        dc.setOperator(CAIRO_OPERATOR_HSL_COLOR);
         break;
     case SP_CSS_BLEND_LUMINOSITY:
-        ct.setOperator(CAIRO_OPERATOR_HSL_LUMINOSITY);
+        dc.setOperator(CAIRO_OPERATOR_HSL_LUMINOSITY);
         break;
     case SP_CSS_BLEND_NORMAL:
     default:
-        ct.setOperator(CAIRO_OPERATOR_OVER);
+        dc.setOperator(CAIRO_OPERATOR_OVER);
         break;
     }
 }
@@ -545,7 +545,7 @@ struct MaskLuminanceToAlpha {
  * @param flags Rendering options. This deals mainly with cache control.
  */
 unsigned
-DrawingItem::render(DrawingContext &ct, Geom::IntRect const &area, unsigned flags, DrawingItem *stop_at)
+DrawingItem::render(DrawingContext &dc, Geom::IntRect const &area, unsigned flags, DrawingItem *stop_at)
 {
     bool outline = _drawing.outline();
     bool render_filters = _drawing.renderFilters();
@@ -560,7 +560,7 @@ DrawingItem::render(DrawingContext &ct, Geom::IntRect const &area, unsigned flag
 
     // TODO convert outline rendering to a separate virtual function
     if (outline) {
-        _renderOutline(ct, area, flags);
+        _renderOutline(dc, area, flags);
         return RENDER_OK;
     }
 
@@ -573,9 +573,9 @@ DrawingItem::render(DrawingContext &ct, Geom::IntRect const &area, unsigned flag
         if (_cache) {
             _cache->prepare();
 #ifdef WITH_CSSBLEND
-            set_cairo_blend_operator( ct, _blend_mode );
+            set_cairo_blend_operator( dc, _blend_mode );
 #endif
-            _cache->paintFromCache(ct, carea);
+            _cache->paintFromCache(dc, carea);
             if (!carea) return RENDER_OK;
         } else {
             // There is no cache. This could be because caching of this item
@@ -625,7 +625,7 @@ DrawingItem::render(DrawingContext &ct, Geom::IntRect const &area, unsigned flag
     // filters and opacity do not apply when rendering the ancestors of the filtered
     // element
     if ((flags & RENDER_FILTER_BACKGROUND) || !needs_intermediate_rendering) {
-        return _renderItem(ct, *carea, flags & ~RENDER_FILTER_BACKGROUND, stop_at);
+        return _renderItem(dc, *carea, flags & ~RENDER_FILTER_BACKGROUND, stop_at);
     }
 
     // iarea is the bounding box for intermediate rendering
@@ -688,9 +688,9 @@ DrawingItem::render(DrawingContext &ct, Geom::IntRect const &area, unsigned flag
             }
             if (bg_root) {
                 DrawingSurface bg(*iarea);
-                DrawingContext bgct(bg);
-                bg_root->render(bgct, *iarea, flags | RENDER_FILTER_BACKGROUND, this);
-                _filter->render(this, ict, &bgct);
+                DrawingContext bgdc(bg);
+                bg_root->render(bgdc, *iarea, flags | RENDER_FILTER_BACKGROUND, this);
+                _filter->render(this, ict, &bgdc);
                 rendered = true;
             }
         }
@@ -716,20 +716,20 @@ DrawingItem::render(DrawingContext &ct, Geom::IntRect const &area, unsigned flag
         cachect.fill();
         _cache->markClean(*carea);
     }
-    ct.rectangle(*carea);
-    ct.setSource(&intermediate);
+    dc.rectangle(*carea);
+    dc.setSource(&intermediate);
 #ifdef WITH_CSSBLEND
-    set_cairo_blend_operator( ct, _blend_mode );
+    set_cairo_blend_operator( dc, _blend_mode );
 #endif
-    ct.fill();
-    ct.setSource(0,0,0,0);
-    // the call above is to clear a ref on the intermediate surface held by ct
+    dc.fill();
+    dc.setSource(0,0,0,0);
+    // the call above is to clear a ref on the intermediate surface held by dc
 
     return render_result;
 }
 
 void
-DrawingItem::_renderOutline(DrawingContext &ct, Geom::IntRect const &area, unsigned flags)
+DrawingItem::_renderOutline(DrawingContext &dc, Geom::IntRect const &area, unsigned flags)
 {
     // intersect with bbox rather than drawbox, as we want to render things outside
     // of the clipping path as well
@@ -738,7 +738,7 @@ DrawingItem::_renderOutline(DrawingContext &ct, Geom::IntRect const &area, unsig
 
     // just render everything: item, clip, mask
     // First, render the object itself
-    _renderItem(ct, *carea, flags, NULL);
+    _renderItem(dc, *carea, flags, NULL);
 
     // render clip and mask, if any
     guint32 saved_rgba = _drawing.outlinecolor; // save current outline color
@@ -746,12 +746,12 @@ DrawingItem::_renderOutline(DrawingContext &ct, Geom::IntRect const &area, unsig
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (_clip) {
         _drawing.outlinecolor = prefs->getInt("/options/wireframecolors/clips", 0x00ff00ff); // green clips
-        _clip->render(ct, *carea, flags);
+        _clip->render(dc, *carea, flags);
     }
     // render mask as an object, using a different color
     if (_mask) {
         _drawing.outlinecolor = prefs->getInt("/options/wireframecolors/masks", 0x0000ffff); // blue masks
-        _mask->render(ct, *carea, flags);
+        _mask->render(dc, *carea, flags);
     }
     _drawing.outlinecolor = saved_rgba; // restore outline color
 }
@@ -765,31 +765,31 @@ DrawingItem::_renderOutline(DrawingContext &ct, Geom::IntRect const &area, unsig
  * of render() for details.
  */
 void
-DrawingItem::clip(Inkscape::DrawingContext &ct, Geom::IntRect const &area)
+DrawingItem::clip(Inkscape::DrawingContext &dc, Geom::IntRect const &area)
 {
     // don't bother if the object does not implement clipping (e.g. DrawingImage)
     if (!_canClip()) return;
     if (!_visible) return;
     if (!area.intersects(_bbox)) return;
 
-    ct.setSource(0,0,0,1);
-    ct.pushGroup();
+    dc.setSource(0,0,0,1);
+    dc.pushGroup();
     // rasterize the clipping path
-    _clipItem(ct, area);
+    _clipItem(dc, area);
     if (_clip) {
         // The item used as the clipping path itself has a clipping path.
         // Render this item's clipping path onto a temporary surface, then composite it
         // with the item using the IN operator
-        ct.pushGroup();
-        _clip->clip(ct, area);
-        ct.popGroupToSource();
-        ct.setOperator(CAIRO_OPERATOR_IN);
-        ct.paint();
+        dc.pushGroup();
+        _clip->clip(dc, area);
+        dc.popGroupToSource();
+        dc.setOperator(CAIRO_OPERATOR_IN);
+        dc.paint();
     }
-    ct.popGroupToSource();
-    ct.setOperator(CAIRO_OPERATOR_OVER);
-    ct.paint();
-    ct.setSource(0,0,0,0);
+    dc.popGroupToSource();
+    dc.setOperator(CAIRO_OPERATOR_OVER);
+    dc.paint();
+    dc.setSource(0,0,0,0);
 }
 
 /**

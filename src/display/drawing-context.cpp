@@ -25,27 +25,27 @@ using Geom::Y;
  */
 
 DrawingContext::Save::Save()
-    : _ct(NULL)
+    : _dc(NULL)
 {}
-DrawingContext::Save::Save(DrawingContext &ct)
-    : _ct(&ct)
+DrawingContext::Save::Save(DrawingContext &dc)
+    : _dc(&dc)
 {
-    _ct->save();
+    _dc->save();
 }
 DrawingContext::Save::~Save()
 {
-    if (_ct) {
-        _ct->restore();
+    if (_dc) {
+        _dc->restore();
     }
 }
-void DrawingContext::Save::save(DrawingContext &ct)
+void DrawingContext::Save::save(DrawingContext &dc)
 {
-    if (_ct) {
+    if (_dc) {
         // TODO: it might be better to treat this occurence as a bug
-        _ct->restore();
+        _dc->restore();
     }
-    _ct = &ct;
-    _ct->save();
+    _dc = &dc;
+    _dc->save();
 }
 
 /**

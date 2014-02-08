@@ -65,7 +65,7 @@ public:
     void markClean(Geom::IntRect const &area = Geom::IntRect::infinite());
     void scheduleTransform(Geom::IntRect const &new_area, Geom::Affine const &trans);
     void prepare();
-    void paintFromCache(DrawingContext &ct, Geom::OptIntRect &area);
+    void paintFromCache(DrawingContext &dc, Geom::OptIntRect &area);
 
 protected:
     cairo_region_t *_clean_region;

@@ -267,7 +267,7 @@ DrawingCache::prepare()
  * parameter to the bounds of the region that must be repainted.
  */
 void
-DrawingCache::paintFromCache(DrawingContext &ct, Geom::OptIntRect &area)
+DrawingCache::paintFromCache(DrawingContext &dc, Geom::OptIntRect &area)
 {
     if (!area) return;
 
@@ -296,10 +296,10 @@ DrawingCache::paintFromCache(DrawingContext &ct, Geom::OptIntRect &area)
         cairo_rectangle_int_t tmp;
         for (int i = 0; i < nr; ++i) {
             cairo_region_get_rectangle(cache_region, i, &tmp);
-            ct.rectangle(_convertRect(tmp));
+            dc.rectangle(_convertRect(tmp));
         }
-        ct.setSource(this);
-        ct.fill();
+        dc.setSource(this);
+        dc.fill();
     }
     cairo_region_destroy(cache_region);
 }
@@ -310,21 +310,21 @@ DrawingCache::_dumpCache(Geom::OptIntRect const &area)
 {
     static int dumpnr = 0;
     cairo_surface_t *surface = ink_cairo_surface_copy(_surface);
-    DrawingContext ct(surface, _origin);
+    DrawingContext dc(surface, _origin);
     if (!cairo_region_is_empty(_clean_region)) {
-        Inkscape::DrawingContext::Save save(ct);
+        Inkscape::DrawingContext::Save save(dc);
         int nr = cairo_region_num_rectangles(_clean_region);
         cairo_rectangle_int_t tmp;
         for (int i = 0; i < nr; ++i) {
             cairo_region_get_rectangle(_clean_region, i, &tmp);
-            ct.rectangle(_convertRect(tmp));
+            dc.rectangle(_convertRect(tmp));
         }
-        ct.setSource(0,1,0,0.1);
-        ct.fill();
+        dc.setSource(0,1,0,0.1);
+        dc.fill();
     }
-    ct.rectangle(*area);
-    ct.setSource(1,0,0,0.1);
-    ct.fill();
+    dc.rectangle(*area);
+    dc.setSource(1,0,0,0.1);
+    dc.fill();
     char *fn = g_strdup_printf("dump%d.png", dumpnr++);
     cairo_surface_write_to_png(surface, fn);
     cairo_surface_destroy(surface);

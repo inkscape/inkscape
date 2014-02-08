@@ -216,10 +216,10 @@ sp_canvas_arena_render (SPCanvasItem *item, SPCanvasBuf *buf)
     Geom::OptIntRect r = buf->rect;
     if (!r || r->hasZeroArea()) return;
 
-    Inkscape::DrawingContext ct(buf->ct, r->min());
+    Inkscape::DrawingContext dc(buf->ct, r->min());
 
     arena->drawing.update(Geom::IntRect::infinite(), arena->ctx);
-    arena->drawing.render(ct, *r);
+    arena->drawing.render(dc, *r);
 }
 
 static double
@@ -386,9 +386,9 @@ sp_canvas_arena_render_surface (SPCanvasArena *ca, cairo_surface_t *surface, Geo
     g_return_if_fail (ca != NULL);
     g_return_if_fail (SP_IS_CANVAS_ARENA (ca));
 
-    Inkscape::DrawingContext ct(surface, r.min());
+    Inkscape::DrawingContext dc(surface, r.min());
     ca->drawing.update(Geom::IntRect::infinite(), ca->ctx);
-    ca->drawing.render(ct, r);
+    ca->drawing.render(dc, r);
 }
 
 /*

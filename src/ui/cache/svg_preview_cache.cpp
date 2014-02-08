@@ -56,9 +56,9 @@ GdkPixbuf* render_pixbuf(Inkscape::Drawing &drawing, double scale_factor, Geom::
     /* Render */
     cairo_surface_t *s = cairo_image_surface_create(
         CAIRO_FORMAT_ARGB32, psize, psize);
-    Inkscape::DrawingContext ct(s, area.min());
+    Inkscape::DrawingContext dc(s, area.min());
 
-    drawing.render(ct, area, Inkscape::DrawingItem::RENDER_BYPASS_CACHE);
+    drawing.render(dc, area, Inkscape::DrawingItem::RENDER_BYPASS_CACHE);
     cairo_surface_flush(s);
 
     GdkPixbuf* pixbuf = ink_pixbuf_create_from_cairo_surface(s);

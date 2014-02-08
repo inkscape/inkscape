@@ -1925,10 +1925,10 @@ guint SPMeshNodeArray::color_pick( std::vector<guint> icorners, SPItem* item ) {
 
         /* Find visible area */
         cairo_surface_t *s = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, ibox.width(), ibox.height());
-        Inkscape::DrawingContext ct(s, ibox.min());
+        Inkscape::DrawingContext dc(s, ibox.min());
 
         /* Render copy and pick color */
-        pick_drawing->render(ct, ibox);
+        pick_drawing->render(dc, ibox);
         double R = 0, G = 0, B = 0, A = 0;
         ink_cairo_surface_average_color(s, R, G, B, A);
         cairo_surface_destroy(s);

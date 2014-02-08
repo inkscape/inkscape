@@ -207,14 +207,14 @@ void NRStyle::set(SPStyle *style)
     update();
 }
 
-bool NRStyle::prepareFill(Inkscape::DrawingContext &ct, Geom::OptRect const &paintbox)
+bool NRStyle::prepareFill(Inkscape::DrawingContext &dc, Geom::OptRect const &paintbox)
 {
     // update fill pattern
     if (!fill_pattern) {
         switch (fill.type) {
         case PAINT_SERVER: {
-            //fill_pattern = sp_paint_server_create_pattern(fill.server, ct.raw(), paintbox, fill.opacity);
-        	fill_pattern = fill.server->pattern_new(ct.raw(), paintbox, fill.opacity);
+            //fill_pattern = sp_paint_server_create_pattern(fill.server, dc.raw(), paintbox, fill.opacity);
+        	fill_pattern = fill.server->pattern_new(dc.raw(), paintbox, fill.opacity);
 
 		} break;
         case PAINT_COLOR: {
@@ -229,19 +229,19 @@ bool NRStyle::prepareFill(Inkscape::DrawingContext &ct, Geom::OptRect const &pai
     return true;
 }
 
-void NRStyle::applyFill(Inkscape::DrawingContext &ct)
+void NRStyle::applyFill(Inkscape::DrawingContext &dc)
 {
-    ct.setSource(fill_pattern);
-    ct.setFillRule(fill_rule);
+    dc.setSource(fill_pattern);
+    dc.setFillRule(fill_rule);
 }
 
-bool NRStyle::prepareStroke(Inkscape::DrawingContext &ct, Geom::OptRect const &paintbox)
+bool NRStyle::prepareStroke(Inkscape::DrawingContext &dc, Geom::OptRect const &paintbox)
 {
     if (!stroke_pattern) {
         switch (stroke.type) {
         case PAINT_SERVER: {
-            //stroke_pattern = sp_paint_server_create_pattern(stroke.server, ct.raw(), paintbox, stroke.opacity);
-        	stroke_pattern = stroke.server->pattern_new(ct.raw(), paintbox, stroke.opacity);
+            //stroke_pattern = sp_paint_server_create_pattern(stroke.server, dc.raw(), paintbox, stroke.opacity);
+        	stroke_pattern = stroke.server->pattern_new(dc.raw(), paintbox, stroke.opacity);
 
 		} break;
         case PAINT_COLOR: {
@@ -256,14 +256,14 @@ bool NRStyle::prepareStroke(Inkscape::DrawingContext &ct, Geom::OptRect const &p
     return true;
 }
 
-void NRStyle::applyStroke(Inkscape::DrawingContext &ct)
+void NRStyle::applyStroke(Inkscape::DrawingContext &dc)
 {
-    ct.setSource(stroke_pattern);
-    ct.setLineWidth(stroke_width);
-    ct.setLineCap(line_cap);
-    ct.setLineJoin(line_join);
-    ct.setMiterLimit(miter_limit);
-    cairo_set_dash(ct.raw(), dash, n_dash, dash_offset); // fixme
+    dc.setSource(stroke_pattern);
+    dc.setLineWidth(stroke_width);
+    dc.setLineCap(line_cap);
+    dc.setLineJoin(line_join);
+    dc.setMiterLimit(miter_limit);
+    cairo_set_dash(dc.raw(), dash, n_dash, dash_offset); // fixme
 }
 
 void NRStyle::update()

@@ -34,9 +34,9 @@ public:
 protected:
     virtual unsigned _updateItem(Geom::IntRect const &area, UpdateContext const &ctx,
                                  unsigned flags, unsigned reset);
-    virtual unsigned _renderItem(DrawingContext &ct, Geom::IntRect const &area, unsigned flags,
+    virtual unsigned _renderItem(DrawingContext &dc, Geom::IntRect const &area, unsigned flags,
                                  DrawingItem *stop_at);
-    virtual void _clipItem(DrawingContext &ct, Geom::IntRect const &area);
+    virtual void _clipItem(DrawingContext &dc, Geom::IntRect const &area);
     virtual DrawingItem *_pickItem(Geom::Point const &p, double delta, unsigned flags);
     virtual bool _canClip();
 

@@ -150,7 +150,7 @@ DrawingShape::_updateItem(Geom::IntRect const &area, UpdateContext const &ctx, u
 }
 
 unsigned
-DrawingShape::_renderItem(DrawingContext &ct, Geom::IntRect const &area, unsigned flags, DrawingItem *stop_at)
+DrawingShape::_renderItem(DrawingContext &dc, Geom::IntRect const &area, unsigned flags, DrawingItem *stop_at)
 {
     if (!_curve || !_style) return RENDER_OK;
     if (!area.intersects(_bbox)) return RENDER_OK; // skip if not within bounding box
@@ -160,67 +160,67 @@ DrawingShape::_renderItem(DrawingContext &ct, Geom::IntRect const &area, unsigne
     if (outline) {
         guint32 rgba = _drawing.outlinecolor;
 
-        {   Inkscape::DrawingContext::Save save(ct);
-            ct.transform(_ctm);
-            ct.path(_curve->get_pathvector());
+        {   Inkscape::DrawingContext::Save save(dc);
+            dc.transform(_ctm);
+            dc.path(_curve->get_pathvector());
         }
-        {   Inkscape::DrawingContext::Save save(ct);
-            ct.setSource(rgba);
-            ct.setLineWidth(0.5);
-            ct.setTolerance(0.5);
-            ct.stroke();
+        {   Inkscape::DrawingContext::Save save(dc);
+            dc.setSource(rgba);
+            dc.setLineWidth(0.5);
+            dc.setTolerance(0.5);
+            dc.stroke();
         }
     } else {
         bool has_stroke, has_fill;
         // we assume the context has no path
-        Inkscape::DrawingContext::Save save(ct);
-        ct.transform(_ctm);
+        Inkscape::DrawingContext::Save save(dc);
+        dc.transform(_ctm);
 
         // update fill and stroke paints.
         // this cannot be done during nr_arena_shape_update, because we need a Cairo context
         // to render svg:pattern
-        has_fill   = _nrstyle.prepareFill(ct, _item_bbox);
-        has_stroke = _nrstyle.prepareStroke(ct, _item_bbox);
+        has_fill   = _nrstyle.prepareFill(dc, _item_bbox);
+        has_stroke = _nrstyle.prepareStroke(dc, _item_bbox);
         has_stroke &= (_nrstyle.stroke_width != 0);
 
         if (has_fill || has_stroke) {
             // TODO: remove segments outside of bbox when no dashes present
-            ct.path(_curve->get_pathvector());
+            dc.path(_curve->get_pathvector());
             if (has_fill) {
-                _nrstyle.applyFill(ct);
-                ct.fillPreserve();
+                _nrstyle.applyFill(dc);
+                dc.fillPreserve();
             }
             if (has_stroke) {
-                _nrstyle.applyStroke(ct);
-                ct.strokePreserve();
+                _nrstyle.applyStroke(dc);
+                dc.strokePreserve();
             }
-            ct.newPath(); // clear path
+            dc.newPath(); // clear path
         } // has fill or stroke pattern
     }
 
     // marker rendering
     for (ChildrenList::iterator i = _children.begin(); i != _children.end(); ++i) {
-        i->render(ct, area, flags, stop_at);
+        i->render(dc, area, flags, stop_at);
     }
     return RENDER_OK;
 }
 
-void DrawingShape::_clipItem(DrawingContext &ct, Geom::IntRect const & /*area*/)
+void DrawingShape::_clipItem(DrawingContext &dc, Geom::IntRect const & /*area*/)
 {
     if (!_curve) return;
 
-    Inkscape::DrawingContext::Save save(ct);
+    Inkscape::DrawingContext::Save save(dc);
     // handle clip-rule
     if (_style) {
         if (_style->clip_rule.computed == SP_WIND_RULE_EVENODD) {
-            ct.setFillRule(CAIRO_FILL_RULE_EVEN_ODD);
+            dc.setFillRule(CAIRO_FILL_RULE_EVEN_ODD);
         } else {
-            ct.setFillRule(CAIRO_FILL_RULE_WINDING);
+            dc.setFillRule(CAIRO_FILL_RULE_WINDING);
         }
     }
-    ct.transform(_ctm);
-    ct.path(_curve->get_pathvector());
-    ct.fill();
+    dc.transform(_ctm);
+    dc.path(_curve->get_pathvector());
+    dc.fill();
 }
 
 DrawingItem *

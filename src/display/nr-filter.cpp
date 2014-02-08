@@ -98,7 +98,7 @@ Filter::~Filter()
 }
 
 
-int Filter::render(Inkscape::DrawingItem const *item, DrawingContext &graphic, DrawingContext *bgct)
+int Filter::render(Inkscape::DrawingItem const *item, DrawingContext &graphic, DrawingContext *bgdc)
 {
     if (_primitive.empty()) {
         // when no primitives are defined, clear source graphic
@@ -150,7 +150,7 @@ int Filter::render(Inkscape::DrawingItem const *item, DrawingContext &graphic, D
         }
     }
 
-    FilterSlot slot(const_cast<Inkscape::DrawingItem*>(item), bgct, graphic, units);
+    FilterSlot slot(const_cast<Inkscape::DrawingItem*>(item), bgdc, graphic, units);
     slot.set_quality(filterquality);
     slot.set_blurquality(blurquality);
 

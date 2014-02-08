@@ -28,12 +28,12 @@ namespace Filters {
 
 class Filter {
 public:
-    /** Given background state from @a bgct and an intermediate rendering from the surface
+    /** Given background state from @a bgdc and an intermediate rendering from the surface
      * backing @a graphic, modify the contents of the surface backing @a graphic to represent
      * the results of filter rendering. @a bgarea and @a area specify bounding boxes
      * of both surfaces in world coordinates; Cairo contexts are assumed to be in default state
      * (0,0 = surface origin, no path, OVER operator) */
-    int render(Inkscape::DrawingItem const *item, DrawingContext &graphic, DrawingContext *bgct);
+    int render(Inkscape::DrawingItem const *item, DrawingContext &graphic, DrawingContext *bgdc);
 
     /**
      * Creates a new filter primitive under this filter object.

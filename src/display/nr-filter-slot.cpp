@@ -25,13 +25,13 @@
 namespace Inkscape {
 namespace Filters {
 
-FilterSlot::FilterSlot(DrawingItem *item, DrawingContext *bgct,
+FilterSlot::FilterSlot(DrawingItem *item, DrawingContext *bgdc,
         DrawingContext &graphic, FilterUnits const &u)
     : _item(item)
     , _source_graphic(graphic.rawTarget())
-    , _background_ct(bgct ? bgct->raw() : NULL)
+    , _background_ct(bgdc ? bgdc->raw() : NULL)
     , _source_graphic_area(graphic.targetLogicalBounds().roundOutwards()) // fixme
-    , _background_area(bgct ? bgct->targetLogicalBounds().roundOutwards() : Geom::IntRect()) // fixme
+    , _background_area(bgdc ? bgdc->targetLogicalBounds().roundOutwards() : Geom::IntRect()) // fixme
     , _units(u)
     , _last_out(NR_FILTER_SOURCEGRAPHIC)
     , filterquality(FILTER_QUALITY_BEST)

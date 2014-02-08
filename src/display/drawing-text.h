@@ -62,14 +62,14 @@ public:
 protected:
     virtual unsigned _updateItem(Geom::IntRect const &area, UpdateContext const &ctx,
                                  unsigned flags, unsigned reset);
-    virtual unsigned _renderItem(DrawingContext &ct, Geom::IntRect const &area, unsigned flags,
+    virtual unsigned _renderItem(DrawingContext &dc, Geom::IntRect const &area, unsigned flags,
                                  DrawingItem *stop_at);
-    virtual void _clipItem(DrawingContext &ct, Geom::IntRect const &area);
+    virtual void _clipItem(DrawingContext &dc, Geom::IntRect const &area);
     virtual DrawingItem *_pickItem(Geom::Point const &p, double delta, unsigned flags);
     virtual bool _canClip();
 
-    double decorateItem(DrawingContext &ct, Geom::Affine const &aff, double phase_length);
-    void decorateStyle(DrawingContext &ct, double vextent, double xphase, Geom::Point const &p1, Geom::Point const &p2);
+    double decorateItem(DrawingContext &dc, Geom::Affine const &aff, double phase_length);
+    void decorateStyle(DrawingContext &dc, double vextent, double xphase, Geom::Point const &p1, Geom::Point const &p2);
     NRStyle _nrstyle;
 
     friend class DrawingGlyphs;

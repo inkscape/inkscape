@@ -31,11 +31,11 @@ public:
     class Save {
     public:
         Save();
-        Save(DrawingContext &ct);
+        Save(DrawingContext &dc);
         ~Save();
-        void save(DrawingContext &ct);
+        void save(DrawingContext &dc);
     private:
-        DrawingContext *_ct;
+        DrawingContext *_dc;
     };
 
     DrawingContext(cairo_t *ct, Geom::Point const &origin);

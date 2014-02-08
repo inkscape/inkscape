@@ -108,17 +108,17 @@ void FilterImage::render_cairo(FilterSlot &slot)
         Geom::Rect sa = slot.get_slot_area();
         cairo_surface_t *out = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
             sa.width(), sa.height());
-        Inkscape::DrawingContext ct(out, sa.min());
-        ct.transform(user2pb); // we are now in primitive units
-        ct.translate(feImageX, feImageY);
-//        ct.scale(scaleX, scaleY);  No scaling should be done
+        Inkscape::DrawingContext dc(out, sa.min());
+        dc.transform(user2pb); // we are now in primitive units
+        dc.translate(feImageX, feImageY);
+//        dc.scale(scaleX, scaleY);  No scaling should be done
 
         Geom::IntRect render_rect = area.roundOutwards();
-        ct.translate(render_rect.min());
+        dc.translate(render_rect.min());
 
         // Update to renderable state
         drawing.update(render_rect);
-        drawing.render(ct, render_rect);
+        drawing.render(dc, render_rect);
         SVGElem->invoke_hide(key);
 
         // For the moment, we'll assume that any image is in sRGB color space

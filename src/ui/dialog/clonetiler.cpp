@@ -2063,9 +2063,9 @@ guint32 CloneTiler::clonetiler_trace_pick(Geom::Rect box)
 
     /* Find visible area */
     cairo_surface_t *s = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, ibox.width(), ibox.height());
-    Inkscape::DrawingContext ct(s, ibox.min());
+    Inkscape::DrawingContext dc(s, ibox.min());
     /* Render */
-    trace_drawing->render(ct, ibox);
+    trace_drawing->render(dc, ibox);
     double R = 0, G = 0, B = 0, A = 0;
     ink_cairo_surface_average_color(s, R, G, B, A);
     cairo_surface_destroy(s);

@@ -167,22 +167,22 @@ Drawing::update(Geom::IntRect const &area, UpdateContext const &ctx, unsigned fl
 }
 
 void
-Drawing::render(DrawingContext &ct, Geom::IntRect const &area, unsigned flags)
+Drawing::render(DrawingContext &dc, Geom::IntRect const &area, unsigned flags)
 {
     if (_root) {
-        _root->render(ct, area, flags);
+        _root->render(dc, area, flags);
     }
 
     if (colorMode() == COLORMODE_GRAYSCALE) {
         // apply grayscale filter on top of everything
-        cairo_surface_t *input = ct.rawTarget();
+        cairo_surface_t *input = dc.rawTarget();
         cairo_surface_t *out = ink_cairo_surface_create_identical(input);
         ink_cairo_surface_filter(input, out, _grayscale_colormatrix);
-        Geom::Point origin = ct.targetLogicalBounds().min();
-        ct.setSource(out, origin[Geom::X], origin[Geom::Y]);
-        ct.setOperator(CAIRO_OPERATOR_SOURCE);
-        ct.paint();
-        ct.setOperator(CAIRO_OPERATOR_OVER);
+        Geom::Point origin = dc.targetLogicalBounds().min();
+        dc.setSource(out, origin[Geom::X], origin[Geom::Y]);
+        dc.setOperator(CAIRO_OPERATOR_SOURCE);
+        dc.paint();
+        dc.setOperator(CAIRO_OPERATOR_OVER);
     
         cairo_surface_destroy(out);
     }

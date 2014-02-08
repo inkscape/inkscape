@@ -28,10 +28,10 @@ struct NRStyle {
     ~NRStyle();
 
     void set(SPStyle *);
-    bool prepareFill(Inkscape::DrawingContext &ct, Geom::OptRect const &paintbox);
-    bool prepareStroke(Inkscape::DrawingContext &ct, Geom::OptRect const &paintbox);
-    void applyFill(Inkscape::DrawingContext &ct);
-    void applyStroke(Inkscape::DrawingContext &ct);
+    bool prepareFill(Inkscape::DrawingContext &dc, Geom::OptRect const &paintbox);
+    bool prepareStroke(Inkscape::DrawingContext &dc, Geom::OptRect const &paintbox);
+    void applyFill(Inkscape::DrawingContext &dc);
+    void applyStroke(Inkscape::DrawingContext &dc);
     void update();
 
     enum PaintType {
