@@ -587,11 +587,15 @@ objects_query_fillstroke (GSList *objects, SPStyle *style_res, bool const isfill
        paint_res->colorSet = paint->colorSet;
        paint_res->currentcolor = paint->currentcolor;
        if (paint_res->set && paint_effectively_set && paint->isPaintserver()) { // copy the server
+           gchar const *string = NULL; // memory leak results if style->get* called inside sp_style_set_to_uri_string.
            if (isfill) {
-               sp_style_set_to_uri_string (style_res, true, style->getFillURI());
+               string = style->getFillURI();
+               sp_style_set_to_uri_string (style_res, true, string);
            } else {
-               sp_style_set_to_uri_string (style_res, false, style->getStrokeURI());
+               string = style->getStrokeURI();
+               sp_style_set_to_uri_string (style_res, false, string);
            }
+           if(string)g_free((void *) string);
        }
        paint_res->set = paint_effectively_set;
        style_res->fill_rule.computed = style->fill_rule.computed; // no averaging on this, just use the last one
