@@ -315,14 +315,14 @@ inline GenericOptInterval<C> operator&(GenericInterval<C> const &a, GenericInter
     return GenericOptInterval<C>(a) & GenericOptInterval<C>(b);
 }
 
-#ifdef _GLIBCXX_IOSTREAM
+//#ifdef _GLIBCXX_IOSTREAM
 template <typename C>
 inline std::ostream &operator<< (std::ostream &os, 
                                  Geom::GenericInterval<C> const &I) {
     os << "Interval("<<I.min() << ", "<<I.max() << ")";
     return os;
 }
-#endif
+//#endif
 
 } // namespace Geom
 #endif // !LIB2GEOM_SEEN_GENERIC_INTERVAL_H
