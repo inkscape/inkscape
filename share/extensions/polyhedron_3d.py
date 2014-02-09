@@ -459,6 +459,7 @@ class Poly_3D(inkex.Effect):
         get_obj_data(obj, file)#load data from the obj file
         obj.set_type(so)#set the type (face or edge) as per the settings
         
+        scale = self.unittouu('1px')    # convert to document units
         st = Style(so) #initialise style
         fill_col = (so.f_r, so.f_g, so.f_b) #colour tuple for the face fill
         lighting = normalise( (so.lv_x,-so.lv_y,so.lv_z) ) #unit light vector
@@ -467,6 +468,8 @@ class Poly_3D(inkex.Effect):
         
         #Put in in the centre of the current view
         poly_transform = 'translate(' + str( self.view_center[0]) + ',' + str( self.view_center[1]) + ')'
+        if scale != 1:
+            poly_transform += ' scale(' + str(scale) + ')'
         #we will put all the rotations in the object name, so it can be repeated in 
         poly_name = obj.name+':'+make_rotation_log(so)
         poly_attribs = {inkex.addNS('label','inkscape'):poly_name,

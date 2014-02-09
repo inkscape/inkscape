@@ -1047,6 +1047,7 @@ class QRCodeInkscape(inkex.Effect):
             
     def effect(self):
         
+        scale = self.unittouu('1px')    # convert to document units
         so = self.options
         
         if so.TEXT == '':  #abort if converting blank text
@@ -1057,7 +1058,7 @@ class QRCodeInkscape(inkex.Effect):
             
             so.TEXT = unicode(so.TEXT, so.input_encode)
             centre = self.view_center   #Put in in the centre of the current view
-            grp_transform = 'translate' + str( centre )
+            grp_transform = 'translate' + str( centre ) + ' scale(%f)' % scale
             grp_name = 'QR Code: '+so.TEXT
             grp_attribs = {inkex.addNS('label','inkscape'):grp_name,
                            'transform':grp_transform }

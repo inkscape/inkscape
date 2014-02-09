@@ -45,6 +45,7 @@ class InsertBarcode(inkex.Effect):
 			'document' : self.document,
 			'x'        : x,
 			'y'        : y,
+			'scale'    : self.unittouu('1px'),
 		} )
 		if bargen is not None:
 			barcode = bargen.generate()

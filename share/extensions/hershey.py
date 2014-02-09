@@ -63,6 +63,7 @@ class Hershey( inkex.Effect ):
         g_attribs = {inkex.addNS('label','inkscape'):'Hershey Text' }
         g = inkex.etree.SubElement(self.current_layer, 'g', g_attribs)
 
+        scale = self.unittouu('1px')    # convert to document units
         font = eval('hersheydata.' + str(self.options.fontface))
         clearfont = hersheydata.futural  
         #Baseline: modernized roman simplex from JHF distribution.
@@ -97,7 +98,9 @@ class Hershey( inkex.Effect ):
             w = wmax
             
         #  Translate group to center of view, approximately
-        t = 'translate(' + str( self.view_center[0] - w/2) + ',' + str( self.view_center[1] ) + ')'
+        t = 'translate(' + str( self.view_center[0] - scale*w/2) + ',' + str( self.view_center[1] ) + ')'
+        if scale != 1:
+            t += ' scale(' + str(scale) + ')'
         g.set( 'transform',t)
 
 
