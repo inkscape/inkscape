@@ -4,8 +4,9 @@
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com> (code extracted from symbol.cpp)
  *   Tavmjong Bah <tavmjong@free.fr>
+ *   Johan Engelen
  *
- * Copyright (C) 2013 Tavmjong Bah, authors
+ * Copyright (C) 2013-2014 Tavmjong Bah, authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  *
@@ -18,46 +19,40 @@
 #include "enums.h"
 #include "sp-item.h"
 
-SPViewBox::SPViewBox() {
-
-  this->viewBox_set  = FALSE;
-
-  this->aspect_set   = FALSE;
-  this->aspect_align = SP_ASPECT_XMID_YMID; // Default per spec;
-  this->aspect_clip  = SP_ASPECT_MEET;
-
-  this->c2p = Geom::identity();
-}
-
-SPViewBox::~SPViewBox() {
+SPViewBox::SPViewBox()
+    : viewBox_set(false)
+    , viewBox()
+    , aspect_set(false)
+    , aspect_align(SP_ASPECT_XMID_YMID) // Default per spec
+    , aspect_clip(SP_ASPECT_MEET)
+    , c2p(Geom::identity())
+{
 }
 
 void SPViewBox::set_viewBox(const gchar* value) {
 
   if (value) {
-    double x, y, width, height;
-    char *eptr;
+    gchar *eptr = const_cast<gchar*>(value); // const-cast necessary because of const-incorrect interface definition of g_ascii_strtod
 
-    eptr = (gchar *) value;
-    x = g_ascii_strtod (eptr, &eptr);
+    double x = g_ascii_strtod (eptr, &eptr);
 
     while (*eptr && ((*eptr == ',') || (*eptr == ' '))) {
       eptr++;
     }
 
-    y = g_ascii_strtod (eptr, &eptr);
+    double y = g_ascii_strtod (eptr, &eptr);
 
     while (*eptr && ((*eptr == ',') || (*eptr == ' '))) {
       eptr++;
     }
 
-    width = g_ascii_strtod (eptr, &eptr);
+    double width = g_ascii_strtod (eptr, &eptr);
 
     while (*eptr && ((*eptr == ',') || (*eptr == ' '))) {
       eptr++;
     }
 
-    height = g_ascii_strtod (eptr, &eptr);
+    double height = g_ascii_strtod (eptr, &eptr);
 
     while (*eptr && ((*eptr == ',') || (*eptr == ' '))) {
       eptr++;
@@ -66,15 +61,15 @@ void SPViewBox::set_viewBox(const gchar* value) {
     if ((width > 0) && (height > 0)) {
       /* Set viewbox */
       this->viewBox = Geom::Rect::from_xywh(x, y, width, height);
-      this->viewBox_set = TRUE;
+      this->viewBox_set = true;
     } else {
-      this->viewBox_set = FALSE;
+      this->viewBox_set = false;
     }
   } else {
-    this->viewBox_set = FALSE;
+    this->viewBox_set = false;
   }
 
-  // The C++ way?
+  // The C++ way?  -- not necessarily using iostreams
   // std::string sv( value );
   // std::replace( sv.begin(), sv.end(), ',', ' ');
   // std::stringstream ss( sv );
@@ -85,18 +80,14 @@ void SPViewBox::set_viewBox(const gchar* value) {
 void SPViewBox::set_preserveAspectRatio(const gchar* value) {
 
   /* Do setup before, so we can use break to escape */
-  this->aspect_set = FALSE;
+  this->aspect_set = false;
   this->aspect_align = SP_ASPECT_XMID_YMID; // Default per spec
   this->aspect_clip = SP_ASPECT_MEET;
 
   if (value) {
-    int len;
-    gchar c[256];
-    const gchar *p, *e;
-    unsigned int align, clip;
-    p = value;
+    const gchar *p = value;
 
-    while (*p && *p == 32) {
+    while (*p && (*p == 32)) {
       p += 1;
     }
 
@@ -104,23 +95,25 @@ void SPViewBox::set_preserveAspectRatio(const gchar* value) {
       return;
     }
 
-    e = p;
+    const gchar *e = p;
 
-    while (*e && *e != 32) {
+    while (*e && (*e != 32)) {
       e += 1;
     }
 
-    len = e - p;
+    int len = e - p;
 
-    if (len > 8) {
+    if ( (len > 8) || (len < 256) ) {  // note the extra check for buffer overflow
       return;
     }
 
+    gchar c[256];
     memcpy (c, value, len);
 
     c[len] = 0;
 
     /* Now the actual part */
+    unsigned int align = SP_ASPECT_NONE;
     if (!strcmp (c, "none")) {
       align = SP_ASPECT_NONE;
     } else if (!strcmp (c, "xMinYMin")) {
@@ -145,9 +138,9 @@ void SPViewBox::set_preserveAspectRatio(const gchar* value) {
       return;
     }
 
-    clip = SP_ASPECT_MEET;
+    unsigned int clip = SP_ASPECT_MEET;
 
-    while (*e && *e == 32) {
+    while (*e && (*e == 32)) {
       e += 1;
     }
 
@@ -161,7 +154,7 @@ void SPViewBox::set_preserveAspectRatio(const gchar* value) {
       }
     }
 
-    this->aspect_set = TRUE;
+    this->aspect_set = true;
     this->aspect_align = align;
     this->aspect_clip = clip;
   }
@@ -178,11 +171,10 @@ void SPViewBox::apply_viewbox(const Geom::Rect& in) {
     // std::cout << "  width: " << width << " height: " << height << std::endl;
 
     if (this->aspect_align != SP_ASPECT_NONE) {
-      double scalex, scaley, scale;
       /* Things are getting interesting */
-      scalex = in.width() / this->viewBox.width();
-      scaley = in.height() / this->viewBox.height();
-      scale = (this->aspect_clip == SP_ASPECT_MEET) ? MIN (scalex, scaley) : MAX (scalex, scaley);
+      double scalex = in.width() / this->viewBox.width();
+      double scaley = in.height() / this->viewBox.height();
+      double scale = (this->aspect_clip == SP_ASPECT_MEET) ? MIN (scalex, scaley) : MAX (scalex, scaley);
       width  = this->viewBox.width()  * scale;
       height = this->viewBox.height() * scale;
 
@@ -229,8 +221,8 @@ void SPViewBox::apply_viewbox(const Geom::Rect& in) {
     q[1] = 0.0;
     q[2] = 0.0;
     q[3] = height / this->viewBox.height();
-    q[4] = -this->viewBox.left() * q[0] + x;
-    q[5] = -this->viewBox.top()  * q[3] + y;
+    q[4] = x - q[0] * this->viewBox.left();
+    q[5] = y - q[3] * this->viewBox.top();
 
     // std::cout << "  q\n" << q << std::endl;
 

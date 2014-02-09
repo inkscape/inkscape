@@ -7,8 +7,9 @@
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com> (code extracted from sp-symbol.h)
  *   Tavmjong Bah
+ *   Johan Engelen
  *
- * Copyright (C) 2013 Tavmjong Bah, authors
+ * Copyright (C) 2013-2014 Tavmjong Bah, authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  *
@@ -17,26 +18,21 @@
 #include <2geom/rect.h>
 #include <glib.h>
 
-namespace Geom {
-class Rect;
-}
 class SPItemCtx;
 
 class SPViewBox {
 
- public:
-
+public:
   SPViewBox();
-  ~SPViewBox();
 
   /* viewBox; */
-  unsigned int viewBox_set : 1;
+  bool viewBox_set;
   Geom::Rect viewBox;  // Could use optrect
 
   /* preserveAspectRatio */
-  unsigned int aspect_set : 1;
-  unsigned int aspect_align : 4;
-  unsigned int aspect_clip : 1;
+  bool aspect_set;
+  unsigned int aspect_align;  // enum
+  unsigned int aspect_clip;   // enum
 
   /* Child to parent additional transform */
   Geom::Affine c2p;
