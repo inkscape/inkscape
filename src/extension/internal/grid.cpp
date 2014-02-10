@@ -112,11 +112,13 @@ Grid::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *doc
         bounding_area = temprec;
     }
 
-    float spacings[2] = { module->get_param_float("xspacing"),
-                          module->get_param_float("yspacing") };
-    float line_width = module->get_param_float("lineWidth");
-    float offsets[2] = { module->get_param_float("xoffset"),
-                         module->get_param_float("yoffset") };
+    gdouble scale = Inkscape::Util::Quantity::convert(1, "px", (document->doc())->getDefaultUnit());
+    bounding_area *= Geom::Scale(scale);
+    float spacings[2] = { scale*module->get_param_float("xspacing"),
+                          scale*module->get_param_float("yspacing") };
+    float line_width = scale*module->get_param_float("lineWidth");
+    float offsets[2] = { scale*module->get_param_float("xoffset"),
+                         scale*module->get_param_float("yoffset") };
 
     Glib::ustring path_data("");
 
