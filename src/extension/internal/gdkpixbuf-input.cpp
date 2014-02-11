@@ -95,6 +95,11 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
         Inkscape::XML::Node *image_node = xml_doc->createElement("svg:image");
         sp_repr_set_svg_double(image_node, "width", width);
         sp_repr_set_svg_double(image_node, "height", height);
+
+        // Added 11 Feb 2014 as we now honor "preserveAspectRatio" and this is
+        // what Inkscaper's expect.
+        image_node->setAttribute("preserveAspectRatio", "none");
+
         if( scale.compare( "auto" ) != 0 ) {
             SPCSSAttr *css = sp_repr_css_attr_new();
             sp_repr_css_set_property(css, "image-rendering", scale.c_str());
@@ -122,6 +127,7 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
         
         // Set viewBox if it doesn't exist
         if (!doc->getRoot()->viewBox_set) {
+            std::cout << "Viewbox not set, setting" << std::endl;
             doc->setViewBox(Geom::Rect::from_xywh(0, 0, doc->getWidth().value(doc->getDefaultUnit()), doc->getHeight().value(doc->getDefaultUnit())));
         }
         
