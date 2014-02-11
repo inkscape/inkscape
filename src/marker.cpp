@@ -282,7 +282,7 @@ Inkscape::XML::Node* SPMarker::write(Inkscape::XML::Document *xml_doc, Inkscape:
 	return repr;
 }
 
-Inkscape::DrawingItem* SPMarker::show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags) {
+Inkscape::DrawingItem* SPMarker::show(Inkscape::Drawing &/*drawing*/, unsigned int /*key*/, unsigned int /*flags*/) {
     // Markers in tree are never shown directly even if outside of <defs>.
     return  0;
 }
