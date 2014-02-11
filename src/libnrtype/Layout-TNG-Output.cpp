@@ -538,17 +538,10 @@ Glib::ustring Layout::getFontFamily(unsigned span_index) const
 Glib::ustring Layout::dumpAsText() const
 {
     Glib::ustring result;
-    char line[256];
-
     Glib::ustring::const_iterator icc;
+    char line[256];
     
-    snprintf(line, sizeof(line), "spans     %zu\n", _spans.size());
-    result += line;
-    snprintf(line, sizeof(line), "chars     %zu\n", _characters.size());
-    result += line;
-    snprintf(line, sizeof(line), "glyphs    %zu\n", _glyphs.size());
-    result += line;
-    
+    result = Glib::ustring::compose("spans     %1\nchars     %2\nglyphs    %3\n", _spans.size(), _characters.size(), _glyphs.size());
     if(_characters.size() > 1){
         unsigned lastspan=5000;
         for(unsigned j = 0; j < _characters.size() ; j++){
@@ -570,32 +563,23 @@ Glib::ustring Layout::dumpAsText() const
     }
 
     for (unsigned span_index = 0 ; span_index < _spans.size() ; span_index++) {
-        snprintf(line, sizeof(line), "==== span %u \n", span_index);
-        result += line;
-        snprintf(line, sizeof(line), "  in para %d (direction=%s)\n", _lines[_chunks[_spans[span_index].in_chunk].in_line].in_paragraph,
-                 direction_to_text(_paragraphs[_lines[_chunks[_spans[span_index].in_chunk].in_line].in_paragraph].base_direction));
-        result += line;
-        snprintf(line, sizeof(line), "  in source %d (type=%d, cookie=%p)\n", _spans[span_index].in_input_stream_item,
+        result += Glib::ustring::compose("==== span %1 \n", span_index)
+               +  Glib::ustring::compose("  in para %1 (direction=%2)\n", _lines[_chunks[_spans[span_index].in_chunk].in_line].in_paragraph,
+                 direction_to_text(_paragraphs[_lines[_chunks[_spans[span_index].in_chunk].in_line].in_paragraph].base_direction))
+               +  Glib::ustring::compose("  in source %1 (type=%2, cookie=%3)\n", _spans[span_index].in_input_stream_item,
                  _input_stream[_spans[span_index].in_input_stream_item]->Type(),
-                 _input_stream[_spans[span_index].in_input_stream_item]->source_cookie);
-        result += line;
-        snprintf(line, sizeof(line), "  in line %d (baseline=%f, shape=%d)\n", _chunks[_spans[span_index].in_chunk].in_line,
+                 _input_stream[_spans[span_index].in_input_stream_item]->source_cookie)
+               +  Glib::ustring::compose("  in line %1 (baseline=%2, shape=%3)\n", _chunks[_spans[span_index].in_chunk].in_line,
                  _lines[_chunks[_spans[span_index].in_chunk].in_line].baseline_y,
-                 _lines[_chunks[_spans[span_index].in_chunk].in_line].in_shape);
-        result += line;
-        snprintf(line, sizeof(line), "  in chunk %d (x=%f, baselineshift=%f)\n", _spans[span_index].in_chunk, _chunks[_spans[span_index].in_chunk].left_x, _spans[span_index].baseline_shift);
-        result += line;
+                 _lines[_chunks[_spans[span_index].in_chunk].in_line].in_shape)
+               +  Glib::ustring::compose("  in chunk %1 (x=%2, baselineshift=%3)\n", _spans[span_index].in_chunk, _chunks[_spans[span_index].in_chunk].left_x, _spans[span_index].baseline_shift);
         if (_spans[span_index].font) {
-            snprintf(line, sizeof(line), "    font '%s' %f %s %s\n", sp_font_description_get_family(_spans[span_index].font->descr), _spans[span_index].font_size, style_to_text(pango_font_description_get_style(_spans[span_index].font->descr)), weight_to_text(pango_font_description_get_weight(_spans[span_index].font->descr)));
-            result += line;
+            result += Glib::ustring::compose("    font '%1' %2 %3 %4\n", sp_font_description_get_family(_spans[span_index].font->descr), _spans[span_index].font_size, style_to_text(pango_font_description_get_style(_spans[span_index].font->descr)), weight_to_text(pango_font_description_get_weight(_spans[span_index].font->descr)));
         }
-        snprintf(line, sizeof(line), "    x_start = %f, x_end = %f\n", _spans[span_index].x_start, _spans[span_index].x_end);
-        result += line;
-        snprintf(line, sizeof(line), "    line height: ascent %f, descent %f leading %f\n", _spans[span_index].line_height.ascent, _spans[span_index].line_height.descent, _spans[span_index].line_height.leading);
-        result += line;
-        snprintf(line, sizeof(line), "    direction %s, block-progression %s\n", direction_to_text(_spans[span_index].direction), direction_to_text(_spans[span_index].block_progression));
-        result += line;
-        result += "    ** characters:\n";
+        result += Glib::ustring::compose("    x_start = %1, x_end = %2\n", _spans[span_index].x_start, _spans[span_index].x_end)
+               +  Glib::ustring::compose("    line height: ascent %1, descent %2 leading %3\n", _spans[span_index].line_height.ascent, _spans[span_index].line_height.descent, _spans[span_index].line_height.leading)
+               +  Glib::ustring::compose("    direction %1, block-progression %2\n", direction_to_text(_spans[span_index].direction), direction_to_text(_spans[span_index].block_progression))
+               +  "    ** characters:\n";
         Glib::ustring::const_iterator iter_char = _spans[span_index].input_stream_first_character;
         // very inefficent code. what the hell, it's only debug stuff.
         for (unsigned char_index = 0 ; char_index < _characters.size() ; char_index++) {
