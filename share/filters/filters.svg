@@ -419,7 +419,7 @@ sodipodi:docname="filters.svg">
 </feSpecularLighting>
 <feComposite in2="fbSourceGraphic" in="result1" result="result2" operator="in" />
 <feComposite in="fbSourceGraphic" result="result4" operator="arithmetic" k2="2" k3="1" in2="result2" />
-<feComposite in2="result4" in="result9" operator="in" result="result91" />
+<feComposite in2="result4" in="result4" operator="in" result="result91" />
 <feBlend mode="darken" in2="result91" />
 </filter>
 <filter id="f041" inkscape:label="Matte Bevel" inkscape:menu="Bevels" inkscape:menu-tooltip="Soft, pastel-colored, blurry bevel" x="-0.25" y="-0.25" width="1.5" height="1.5" style="color-interpolation-filters:sRGB;">
@@ -450,7 +450,7 @@ sodipodi:docname="filters.svg">
 </feSpecularLighting>
 <feComposite operator="in" result="result2" in="result1" in2="fbSourceGraphicAlpha" />
 <feComposite k3="2" k2="1" operator="arithmetic" result="result4" in="fbSourceGraphic" in2="result2" />
-<feComposite operator="in" in="result9" result="result9" in2="result4" />
+<feComposite operator="in" in="result4" result="result9" in2="result4" />
 <feBlend mode="multiply" in="result9" in2="result4" />
 </filter>
 <filter id="f043" inkscape:label="Matte Ridge" inkscape:menu="Ridges" inkscape:menu-tooltip="Soft pastel ridge" style="color-interpolation-filters:sRGB;">
@@ -756,14 +756,12 @@ sodipodi:docname="filters.svg">
 <filter id="f067" inkscape:label="Gold Splatter" x="-0.25" y="-0.25" height="1.5" width="1.5" inkscape:menu="Materials" inkscape:menu-tooltip="Splattered cast metal, with golden highlights" style="color-interpolation-filters:sRGB;">
 <feGaussianBlur in="SourceAlpha" stdDeviation="1" result="result91" />
 <feComposite result="fbSourceGraphic" operator="in" in="SourceGraphic" in2="result91" />
-<feColorMatrix values="0" in="fbSourceGraphic" result="fbSourceGraphicAlpha" type="saturate" />
 <feGaussianBlur result="result1" in="fbSourceGraphic" stdDeviation="1" />
 <feTurbulence result="result0" numOctaves="7" baseFrequency="0.074 0.084" type="fractalNoise" />
 <feDisplacementMap result="result2" scale="80" yChannelSelector="G" xChannelSelector="A" in="result1" in2="result0" />
 <feColorMatrix type="saturate" values="1" result="result3" />
 <feGaussianBlur result="result4" in="fbSourceGraphic" stdDeviation="1" />
 <feComposite operator="atop" result="fbSourceGraphic" in="result4" in2="result3" />
-<feColorMatrix values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0" in="fbSourceGraphic" result="fbSourceGraphicAlpha" />
 <feGaussianBlur result="result0" in="fbSourceGraphic" stdDeviation="1" />
 <feTurbulence baseFrequency="0.062" seed="488" numOctaves="8" result="result1" type="fractalNoise" />
 <feComposite result="result2" operator="out" in2="result1" in="result0" />
@@ -776,14 +774,12 @@ sodipodi:docname="filters.svg">
 <filter id="f068" inkscape:label="Gold Paste" x="-0.25" y="-0.25" height="1.5" width="1.5" inkscape:menu="Materials" inkscape:menu-tooltip="Fat pasted cast metal, with golden highlights" style="color-interpolation-filters:sRGB;">
 <feGaussianBlur in="SourceAlpha" stdDeviation="0.01" result="result91" />
 <feComposite result="fbSourceGraphic" operator="in" in="SourceGraphic" in2="result91" />
-<feColorMatrix values="1" in="fbSourceGraphic" result="fbSourceGraphicAlpha" type="saturate" />
 <feGaussianBlur result="result1" in="fbSourceGraphic" stdDeviation="0.01" />
 <feTurbulence result="result0" numOctaves="4" baseFrequency="0.04" type="fractalNoise" seed="20" />
 <feDisplacementMap result="result2" scale="30" yChannelSelector="G" xChannelSelector="R" in="result1" in2="result0" />
 <feColorMatrix type="saturate" values="1" result="result3" />
 <feGaussianBlur result="result4" in="fbSourceGraphic" stdDeviation="0.01" />
 <feComposite operator="atop" result="fbSourceGraphic" in="result4" in2="result3" />
-<feColorMatrix values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0" in="fbSourceGraphic" result="fbSourceGraphicAlpha" />
 <feGaussianBlur result="result0" in="fbSourceGraphic" stdDeviation="1.5" />
 <feTurbulence baseFrequency="0.02" seed="20" numOctaves="8" result="result1" type="fractalNoise" />
 <feComposite result="result2" operator="out" in2="result1" in="result0" />
@@ -999,7 +995,6 @@ sodipodi:docname="filters.svg">
 </filter>
 <filter id="f094" inkscape:label="Chalk and Sponge" inkscape:menu="Distort" inkscape:menu-tooltip="Low turbulence gives sponge look and high turbulence chalk" width="1.6" height="2" y="-0.5" x="-0.3" style="color-interpolation-filters:sRGB;">
 <feTurbulence baseFrequency="0.4" type="fractalNoise" seed="0" numOctaves="5" result="result1" />
-<feOffset dx="-5" dy="-5" result="result2" />
 <feDisplacementMap xChannelSelector="R" yChannelSelector="G" scale="30" in="SourceGraphic" in2="result1" />
 </filter>
 <filter id="f095" inkscape:label="People" inkscape:menu="Overlays" inkscape:menu-tooltip="Colorized blotches, like a crowd of people" style="color-interpolation-filters:sRGB;">
@@ -1701,7 +1696,6 @@ sodipodi:docname="filters.svg">
 </filter>
 <filter id="f166" inkscape:label="Tinfoil" inkscape:menu-tooltip="Metallic foil effect combining two lighting types and variable crumple" inkscape:menu="Bumps" height="1.4" width="1.4" x="-0.2" y="-0.2" style="color-interpolation-filters:sRGB;">
 <feGaussianBlur in="SourceGraphic" result="result14" stdDeviation="0.5" />
-<feFlood flood-color="rgb(127,126,123)" result="result15" flood-opacity="1" />
 <feTurbulence type="fractalNoise" seed="25" baseFrequency="0.004 0.008" numOctaves="1" result="result5" />
 <feDisplacementMap scale="100" xChannelSelector="R" in="result5" result="result8" yChannelSelector="B" in2="result14" />
 <feGaussianBlur stdDeviation="0.5" result="result17" />
@@ -1769,7 +1763,9 @@ sodipodi:docname="filters.svg">
 <filter id="f171" inkscape:label="Pixellize" inkscape:menu="Pixel tools" inkscape:menu-tooltip="Reduce or remove antialiasing around shapes" style="color-interpolation-filters:sRGB;">
 <feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1000 -500 " />
 </filter>
+<!-- empty filter
 <filter id="f172" inkscape:label="Set Resolution" inkscape:menu="Pixel tools" inkscape:menu-tooltip="Set filter resolution" filterRes="1000 1000" style="color-interpolation-filters:sRGB;" />
+-->
 <filter id="f173" inkscape:label="Basic Diffuse Bump" inkscape:menu="Bumps" inkscape:menu-tooltip="Matte emboss effect" style="color-interpolation-filters:sRGB;">
 <feColorMatrix result="result2" type="luminanceToAlpha" in="SourceGraphic" />
 <feDiffuseLighting lighting-color="#ffffff" in="result2" diffuseConstant="0.5" result="result1" surfaceScale="15">
@@ -1952,11 +1948,6 @@ sodipodi:docname="filters.svg">
 <feMergeNode in="SourceGraphic" />
 </feMerge>
 </filter>
-<filter id="f192" inkscape:label="Fill Area" inkscape:menu="Fill and Transparency" inkscape:menu-tooltip="Fills object bounding box with color" style="color-interpolation-filters:sRGB;">
-<feImage xlink:href="" result="result2" />
-<feFlood flood-color="rgb(76,141,122)" flood-opacity="1" result="result1" />
-<feBlend in2="result2" mode="normal" />
-</filter>
 <filter id="f193" inkscape:label="Blur Double" inkscape:menu="Blurs" inkscape:menu-tooltip="Overlays two copies with different blur amounts and modifiable blend and composite" style="color-interpolation-filters:sRGB;">
 <feGaussianBlur stdDeviation="5" result="fbSourceGraphic" />
 <feGaussianBlur stdDeviation="0.01" in="SourceGraphic" result="result1" />
@@ -2103,7 +2094,7 @@ sodipodi:docname="filters.svg">
 <feColorMatrix in="result5" type="saturate" values="0" result="result4" />
 <feComposite in2="result6" result="result2" k3="0.5" k2="0.5" k1="1.5" operator="arithmetic" in="result4" />
 <feBlend result="result7" mode="normal" in2="result4" />
-<feComposite in2="SourceGraphic" result="result3" operator="in" in="result8" />
+<feComposite in2="SourceGraphic" result="result3" operator="in" in="result7" />
 </filter>
 <filter id="f205" inkscape:label="Cross Noise" inkscape:menu="Overlays" inkscape:menu-tooltip="Adds a small scale screen like graininess" style="color-interpolation-filters:sRGB;">
 <feTurbulence type="fractalNoise" numOctaves="5" baseFrequency="1" seed="0" result="result0" />
@@ -2129,7 +2120,6 @@ sodipodi:docname="filters.svg">
 <feComposite in2="SourceGraphic" operator="in" />
 </filter>
 <filter id="f207" inkscape:label="Light Eraser Cracked" style="color-interpolation-filters:sRGB;" inkscape:menu-tooltip="Basic noise fill texture; adjust color in Flood" inkscape:menu="Overlays">
-<feBlend in2="SourceGraphic" mode="normal" />
 <feColorMatrix result="fbSourceGraphic" type="luminanceToAlpha" in="SourceGraphic" />
 <feColorMatrix result="result6" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 " />
 <feComposite in2="result6" result="result2" operator="out" in="SourceGraphic" k2="0" k1="1" k3="0" />
@@ -2225,7 +2215,6 @@ sodipodi:docname="filters.svg">
 <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="result8" />
 <feComposite in2="result8" operator="xor" result="result19" />
 <feComposite k2="1" operator="arithmetic" result="result17" in2="result8" />
-<feComposite in2="result17" result="result6" operator="xor" in="result17" />
 <feOffset result="result18" in="SourceGraphic" />
 <feDisplacementMap in2="result17" in="result18" xChannelSelector="A" yChannelSelector="A" scale="100" result="result4" />
 <feComposite in2="result4" result="result2" operator="arithmetic" in="SourceGraphic" k3="1" />
@@ -2249,7 +2238,6 @@ sodipodi:docname="filters.svg">
 <feGaussianBlur stdDeviation="5" result="result8" in="SourceGraphic" />
 <feComposite operator="xor" result="result18" in2="result8" />
 <feComposite k2="1" operator="arithmetic" result="result16" in2="result18" in="result8" />
-<feComposite in2="result16" result="result6" operator="xor" in="result16" />
 <feOffset result="result17" in="SourceGraphic" />
 <feDisplacementMap in2="result18" in="result17" xChannelSelector="A" yChannelSelector="A" scale="100" result="result4" />
 <feComposite in2="result4" result="result2" operator="arithmetic" in="SourceGraphic" k1="0" k3="1" />
@@ -2261,7 +2249,6 @@ sodipodi:docname="filters.svg">
 <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="result8" />
 <feComposite in2="result8" operator="xor" result="result19" />
 <feComposite k2="1" operator="arithmetic" result="result17" in2="result8" />
-<feComposite in2="result17" result="result6" operator="xor" in="result17" />
 <feOffset result="result18" in="result8" />
 <feDisplacementMap in2="result17" in="result18" xChannelSelector="A" yChannelSelector="A" scale="100" result="result4" />
 <feComposite in2="result4" result="result2" operator="arithmetic" in="SourceGraphic" k1="0" k3="1" />
@@ -2285,7 +2272,6 @@ sodipodi:docname="filters.svg">
 <feGaussianBlur stdDeviation="5" result="result8" in="SourceGraphic" />
 <feComposite in2="result8" operator="xor" />
 <feComposite k2="1" operator="arithmetic" result="result17" in2="result8" />
-<feComposite in2="result17" result="result6" operator="xor" in="result17" />
 <feOffset result="result18" in="result17" />
 <feDisplacementMap in2="result17" in="result18" xChannelSelector="A" yChannelSelector="A" scale="100" result="result4" />
 <feComposite in2="result4" result="fbSourceGraphic" operator="arithmetic" in="result4" k1="1" k3="1" />
@@ -2297,7 +2283,6 @@ sodipodi:docname="filters.svg">
 <feGaussianBlur result="result8" stdDeviation="5" in="SourceGraphic" />
 <feComposite result="result19" operator="xor" in2="result8" />
 <feComposite in2="result8" result="result17" operator="arithmetic" k2="1" />
-<feComposite in="result17" operator="xor" result="result6" in2="result17" />
 <feOffset in="result8" result="result18" />
 <feDisplacementMap result="result4" scale="100" yChannelSelector="A" xChannelSelector="A" in="result18" in2="result17" />
 <feComposite k3="1" k1="1" in="SourceGraphic" operator="arithmetic" result="result2" in2="result4" />
@@ -2309,7 +2294,6 @@ sodipodi:docname="filters.svg">
 <feGaussianBlur result="result8" stdDeviation="5" in="SourceGraphic" />
 <feComposite result="result19" operator="xor" in2="result8" />
 <feComposite in2="result8" result="result17" operator="arithmetic" k2="1" />
-<feComposite in="result17" operator="xor" result="result6" in2="result17" />
 <feOffset in="result8" result="result18" />
 <feDisplacementMap result="result4" scale="100" yChannelSelector="A" xChannelSelector="A" in="result18" in2="result17" />
 <feComposite k3="0.5" k1="0.5" in="result4" operator="arithmetic" result="result2" in2="result4" />
@@ -2497,7 +2481,6 @@ sodipodi:docname="filters.svg">
 </feComponentTransfer>
 <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.21 -0.72 -0.07 1 0 " in="fbSourceGraphic" result="result1" />
 <feFlood flood-color="rgb(144,7,7)" result="result3" flood-opacity="1" />
-<feComposite in2="result1" operator="in" result="result5" />
 <feBlend in2="fbSourceGraphic" mode="screen" in="result3" result="result4" />
 <feComposite in2="SourceGraphic" operator="in" in="result4" result="result2" />
 </filter>
