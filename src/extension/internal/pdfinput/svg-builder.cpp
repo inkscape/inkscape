@@ -1657,6 +1657,10 @@ Inkscape::XML::Node *SvgBuilder::_createImage(Stream *str, int width, int height
     Inkscape::XML::Node *image_node = _xml_doc->createElement("svg:image");
     sp_repr_set_svg_double(image_node, "width", 1);
     sp_repr_set_svg_double(image_node, "height", 1);
+
+    // PS/PDF images are placed via a transformation matrix, no preserveAspectRatio used
+    image_node->setAttribute("preserveAspectRatio", "none");
+
     // Set transformation
 
         svgSetTransform(image_node, 1.0, 0.0, 0.0, -1.0, 0.0, 1.0);
