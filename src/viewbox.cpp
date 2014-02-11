@@ -103,7 +103,7 @@ void SPViewBox::set_preserveAspectRatio(const gchar* value) {
 
     int len = e - p;
 
-    if ( (len > 8) || (len < 256) ) {  // note the extra check for buffer overflow
+    if (len > 8) {  // Can't have buffer overflow as 8 < 256
       return;
     }
 
