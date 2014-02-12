@@ -30,22 +30,31 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool ask = prefs->getBool("/dialogs/import/ask");
     Glib::ustring link  = prefs->getString("/dialogs/import/link");
+    bool forcexdpi = prefs->getBool("/dialogs/import/forcexdpi");
     Glib::ustring scale = prefs->getString("/dialogs/import/scale");
     // std::cout << "GkdpixbufInput::open: "
     //           << " ask: " << ask
     //           << ", link: " << link 
+    //           << ", forcexdpi: " << forcexdpi 
     //           << ", scale: " << scale << std::endl;
     // std::cout << "     in  preferences: "
     //           << " ask: " << !mod->get_param_bool("do_not_ask")
     //           << ", link: " << mod->get_param_optiongroup("link")
+    //           << ", mod_dpi: " << mod->get_param_optiongroup("dpi")
     //           << ", scale: " << mod->get_param_optiongroup("scale") << std::endl;
     if( ask ) {
         Glib::ustring mod_link = mod->get_param_optiongroup("link");
+        Glib::ustring mod_dpi = mod->get_param_optiongroup("dpi");
+        bool mod_forcexdpi = ( mod_dpi.compare( "from_default" ) == 0 );
         Glib::ustring mod_scale = mod->get_param_optiongroup("scale");
         if( link.compare( mod_link ) != 0 ) {
             link = mod_link;
         }
         prefs->setString("/dialogs/import/link", link );
+        if( forcexdpi != mod_forcexdpi ) {
+            forcexdpi = mod_forcexdpi;
+        }
+        prefs->setBool("/dialogs/import/forcexdpi", forcexdpi );
         if( scale.compare( mod_scale ) != 0 ) {
             scale = mod_scale;
         }
@@ -68,7 +77,7 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
         double width = pb->width();
         double height = pb->height();
         double defaultxdpi = prefs->getDouble("/dialogs/import/defaultxdpi/value", Inkscape::Util::Quantity::convert(1, "in", "px"));
-        bool forcexdpi = prefs->getBool("/dialogs/import/forcexdpi");
+        //bool forcexdpi = prefs->getBool("/dialogs/import/forcexdpi");
         ImageResolution *ir = 0;
         double xscale = 1;
         double yscale = 1;
@@ -179,18 +188,21 @@ GdkpixbufInput::init(void)
                   "<name>%s</name>\n"
                   "<id>org.inkscape.input.gdkpixbuf.%s</id>\n"
 
-                  "<param name='link' type='optiongroup' appearance='full' _gui-text='" N_("Link or embed image:") "' >\n"
+                  "<param name='link' type='optiongroup' appearance='full' _gui-text='" N_("Image Import Type:") "' _gui-description='" N_("Embed results in stand-alone, larger SVG files. Link references a file outside this SVG document and all files must be moved together.") "' >\n"
                     "<_option value='embed' >" N_("Embed") "</_option>\n"
                     "<_option value='link' >" N_("Link") "</_option>\n"
                   "</param>\n"
-                  "<_param name='help' type='description'>" N_("Embed results in stand-alone, larger SVG files. Link references a file outside this SVG document and all files must be moved together.") "</_param>\n"
 
-                  "<param name='scale' type='optiongroup' appearance='full' _gui-text='" N_("Scale image preference (image-rendering):") "' >\n"
+                  "<param name='dpi' type='optiongroup' appearance='full' _gui-text='" N_("Image DPI:") "' _gui-description='" N_("Take information from file or use default bitmap import resolution as defined in the preferences.") "' >\n"
+                    "<_option value='from_file' >" N_("From file") "</_option>\n"
+                    "<_option value='from_default' >" N_("Default import resolution") "</_option>\n"
+                  "</param>\n"
+
+                  "<param name='scale' type='optiongroup' appearance='full' _gui-text='" N_("Image Rendering Mode:") "' _gui-description='" N_("When an image is upscaled, apply smoothing or keep blocky (pixelated). (Will not work in all browsers.)") "' >\n"
                     "<_option value='auto' >" N_("None (auto)") "</_option>\n"
                     "<_option value='optimizeQuality' >" N_("Smooth (optimizeQuality)") "</_option>\n"
                     "<_option value='optimizeSpeed' >" N_("Blocky (optimizeSpeed)") "</_option>\n"
                   "</param>\n"
-                  "<_param name='help' type='description'>" N_("When an image is upscaled, apply smoothing or keep blocky (pixelated). (Will not work in all browsers.)") "</_param>\n"
 
                   "<param name=\"do_not_ask\" _gui-description='" N_("Hide the dialog next time and always apply the same actions.") "' gui-text=\"" N_("Don't ask again") "\" type=\"boolean\" >false</param>\n"
                   "<input>\n"
