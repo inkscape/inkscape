@@ -1433,7 +1433,7 @@ CairoRenderContext::renderPathVector(Geom::PathVector const & pathv, SPStyle con
 }
 
 bool CairoRenderContext::renderImage(Inkscape::Pixbuf *pb,
-                                     Geom::Affine const &image_transform, SPStyle const * /*style*/)
+                                     Geom::Affine const &image_transform, SPStyle const *style)
 {
     g_assert( _is_valid );
 
@@ -1468,6 +1468,27 @@ bool CairoRenderContext::renderImage(Inkscape::Pixbuf *pb,
         cairo_rectangle(_cr, 0, 0, w, h);
         cairo_clip(_cr);
     }
+        
+    // Cairo filter method will be mapped to PS/PDF 'interpolate' true/false).
+    // See cairo-pdf-surface.c
+    if (style) {
+        // See: http://www.w3.org/TR/SVG/painting.html#ImageRenderingProperty
+        //      http://www.w3.org/TR/css4-images/#the-image-rendering
+        //      style.h/style.cpp
+        switch (style->image_rendering.computed) {
+            case SP_CSS_COLOR_RENDERING_AUTO:
+                // Do nothing
+                break;
+            case SP_CSS_COLOR_RENDERING_OPTIMIZEQUALITY:
+                cairo_pattern_set_filter(cairo_get_source(_cr), CAIRO_FILTER_BEST );
+                break;
+            case SP_CSS_COLOR_RENDERING_OPTIMIZESPEED:
+            default:
+                cairo_pattern_set_filter(cairo_get_source(_cr), CAIRO_FILTER_NEAREST );
+                break;
+        }
+    }
+
     cairo_paint_with_alpha(_cr, opacity);
 
     cairo_restore(_cr);
