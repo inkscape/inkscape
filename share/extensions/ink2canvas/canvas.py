@@ -23,11 +23,12 @@ import simplestyle
 class Canvas:
     """Canvas API helper class"""
 
-    def __init__(self, width, height, context = "ctx"):
+    def __init__(self, parent, width, height, context = "ctx"):
         self.obj = context
         self.code = []  #stores the code
         self.style = {}
         self.styleCache = {}  #stores the previous style applied
+        self.parent = parent
         self.width = width
         self.height = height
 
@@ -117,7 +118,7 @@ class Canvas:
         self.write("ctx.strokeStyle = %s;" % self.getColor(value, alpha))
 
     def setStrokeWidth(self, value):
-        self.write("ctx.lineWidth = %f;" % inkex.unittouu(value))
+        self.write("ctx.lineWidth = %f;" % self.parent.unittouu(value))
 
     def setStrokeLinecap(self, value):
         self.write("ctx.lineCap = '%s';" % value)

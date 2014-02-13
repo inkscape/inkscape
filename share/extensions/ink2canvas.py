@@ -80,7 +80,7 @@ class Ink2Canvas(inkex.Effect):
         svg_root = self.document.getroot()
         width = self.unittouu(svg_root.get("width"))
         height = self.unittouu(svg_root.get("height"))
-        self.canvas = Canvas(width, height)
+        self.canvas = Canvas(self, width, height)
         self.walk_tree(svg_root)
 
 
