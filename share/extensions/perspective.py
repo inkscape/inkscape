@@ -54,6 +54,7 @@ class Project(inkex.Effect):
             exit()            
             
         #obj is selected second
+        scale = self.unittouu('1px')    # convert to document units
         obj = self.selected[self.options.ids[0]]
         envelope = self.selected[self.options.ids[1]]
         if obj.get(inkex.addNS('type','sodipodi')):
@@ -80,11 +81,11 @@ class Project(inkex.Effect):
                     if bsubprocess:
                         p = Popen('inkscape --query-%s --query-id=%s "%s"' % (query,id,file), shell=True, stdout=PIPE, stderr=PIPE)
                         rc = p.wait()
-                        q[query] = float(p.stdout.read())
+                        q[query] = scale*float(p.stdout.read())
                         err = p.stderr.read()
                     else:
                         f,err = os.popen3('inkscape --query-%s --query-id=%s "%s"' % (query,id,file))[1:]
-                        q[query] = float(f.read())
+                        q[query] = scale*float(f.read())
                         f.close()
                         err.close()
                 sp = array([[q['x'], q['y']+q['height']],[q['x'], q['y']],[q['x']+q['width'], q['y']],[q['x']+q['width'], q['y']+q['height']]], dtype=float64)

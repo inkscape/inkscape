@@ -191,20 +191,21 @@ class Printing_Marks (inkex.Effect):
                 i += 0.1
 
     def get_selection_area(self):
+        scale = self.unittouu('1px')    # convert to document units
         sel_area = {}
         min_x, min_y, max_x, max_y = False, False, False, False
         for id in self.options.ids:
             sel_area[id] = {}
             for att in [ "x", "y", "width", "height" ]:
                 args = [ "inkscape", "-I", id, "--query-"+att, self.svg_file ]
-                sel_area[id][att] = \
-                    Popen(args, stdout=PIPE, stderr=PIPE).communicate()[0]
-            current_min_x = float( sel_area[id]["x"] )
-            current_min_y = float( sel_area[id]["y"] )
-            current_max_x = float( sel_area[id]["x"] ) + \
-                            float( sel_area[id]["width"] )
-            current_max_y = float( sel_area[id]["y"] ) + \
-                            float( sel_area[id]["height"] )
+                sel_area[id][att] = scale* \
+                    float(Popen(args, stdout=PIPE, stderr=PIPE).communicate()[0])
+            current_min_x = sel_area[id]["x"]
+            current_min_y = sel_area[id]["y"]
+            current_max_x = sel_area[id]["x"] + \
+                            sel_area[id]["width"]
+            current_max_y = sel_area[id]["y"] + \
+                            sel_area[id]["height"]
             if not min_x: min_x = current_min_x
             if not min_y: min_y = current_min_y
             if not max_x: max_x = current_max_x

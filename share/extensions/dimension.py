@@ -100,8 +100,9 @@ class Dimension(pathmodifier.PathModifier):
         return line
 
     def effect(self):
-        self.xoffset = self.options.xoffset
-        self.yoffset = self.options.yoffset
+        scale = self.unittouu('1px')    # convert to document units
+        self.xoffset = scale*self.options.xoffset
+        self.yoffset = scale*self.options.yoffset
 
         # query inkscape about the bounding box
         if len(self.options.ids) == 0:
@@ -117,11 +118,11 @@ class Dimension(pathmodifier.PathModifier):
                 if bsubprocess:
                     p = Popen('inkscape --query-%s --query-id=%s "%s"' % (query,id,file), shell=True, stdout=PIPE, stderr=PIPE)
                     rc = p.wait()
-                    q[query] = float(p.stdout.read())
+                    q[query] = scale*float(p.stdout.read())
                     err = p.stderr.read()
                 else:
                     f,err = os.popen3('inkscape --query-%s --query-id=%s "%s"' % (query,id,file))[1:]
-                    q[query] = float(f.read())
+                    q[query] = scale*float(f.read())
                     f.close()
                     err.close()
             self.bbox = (q['x'], q['x']+q['width'], q['y'], q['y']+q['height'])
@@ -146,29 +147,29 @@ class Dimension(pathmodifier.PathModifier):
         line = self.dimHLine(self.bbox[2], [0, 1])
         line.set('marker-start', 'url(#Arrow1Lstart)')
         line.set('marker-end', 'url(#Arrow1Lend)')
-        line.set('stroke-width', '1')
+        line.set('stroke-width', str(scale))
         group.append(line)
 
         line = self.dimVLine(self.bbox[0], [0, 2])
-        line.set('stroke-width', '0.5')
+        line.set('stroke-width', str(0.5*scale))
         group.append(line)
         
         line = self.dimVLine(self.bbox[1], [0, 2])
-        line.set('stroke-width', '0.5')
+        line.set('stroke-width', str(0.5*scale))
         group.append(line)
         
         line = self.dimVLine(self.bbox[0], [1, 0])
         line.set('marker-start', 'url(#Arrow1Lstart)')
         line.set('marker-end', 'url(#Arrow1Lend)')
-        line.set('stroke-width', '1')
+        line.set('stroke-width', str(scale))
         group.append(line)
         
         line = self.dimHLine(self.bbox[2], [2, 0])
-        line.set('stroke-width', '0.5')
+        line.set('stroke-width', str(0.5*scale))
         group.append(line)
 
         line = self.dimHLine(self.bbox[3], [2, 0])
-        line.set('stroke-width', '0.5')
+        line.set('stroke-width', str(0.5*scale))
         group.append(line)
 
         for id, node in self.selected.iteritems():
