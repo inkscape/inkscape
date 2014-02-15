@@ -57,13 +57,13 @@ void SPSymbol::set(unsigned int key, const gchar* value) {
     switch (key) {
     case SP_ATTR_VIEWBOX:
         set_viewBox( value );
-        std::cout << "Symbol: ViewBox: " << viewBox << std::endl;
+        // std::cout << "Symbol: ViewBox: " << viewBox << std::endl;
         this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG);
         break;
 
     case SP_ATTR_PRESERVEASPECTRATIO:
         set_preserveAspectRatio( value );
-        std::cout << "Symbol: Preserve aspect ratio: " << aspect_align << ", " << aspect_clip << std::endl;
+        // std::cout << "Symbol: Preserve aspect ratio: " << aspect_align << ", " << aspect_clip << std::endl;
         this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG);
         break;
 
