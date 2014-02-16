@@ -112,7 +112,7 @@ class Dots(inkex.Effect):
 
     def addText(self,node,x,y,text):
                 new = inkex.etree.SubElement(node,inkex.addNS('text','svg'))
-                s = {'font-size': self.options.fontsize, 'fill-opacity': '1.0', 'stroke': 'none',
+                s = {'font-size': self.unittouu(self.options.fontsize), 'fill-opacity': '1.0', 'stroke': 'none',
                     'font-weight': 'normal', 'font-style': 'normal', 'fill': '#999'}
                 new.set('style', simplestyle.formatStyle(s))
                 new.set('x', str(x))

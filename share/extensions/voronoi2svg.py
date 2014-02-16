@@ -220,15 +220,15 @@ class Voronoi2svg(inkex.Effect):
     #{{{ Drawing styles
 
     linestyle = {
-        'stroke'    : '#000000',
-        'linewidth' : '1',
-        'fill'      : 'none'
+        'stroke'       : '#000000',
+        'stroke-width' : str(self.unittouu('1px')),
+        'fill'         : 'none'
         }
 
     facestyle = {
-        'stroke'    : '#ff0000',
-        'linewidth' : '1',
-        'fill'      : 'none'
+        'stroke'       : '#ff0000',
+        'stroke-width' : str(self.unittouu('1px')),
+        'fill'         : 'none'
         }
 
     #}}}

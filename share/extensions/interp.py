@@ -60,10 +60,6 @@ def tweenstylefloat(property, start, end, time):
     sp = float(start[property])
     ep = float(end[property])
     return str(sp + (time * (ep - sp)))
-def tweenstyleunit(property, start, end, time):
-    sp = self.unittouu(start[property])
-    ep = self.unittouu(end[property])
-    return str(sp + (time * (ep - sp)))
 def tweenstylecolor(property, start, end, time):
     sr,sg,sb = parsecolor(start[property])
     er,eg,eb = parsecolor(end[property])
@@ -107,6 +103,12 @@ class Interp(inkex.Effect):
                         action="store", type="inkbool", 
                         dest="style", default=True,
                         help="try interpolation of some style properties")    
+
+    def tweenstyleunit(self, property, start, end, time): # moved here so we can call 'unittouu'
+        sp = self.unittouu(start[property])
+        ep = self.unittouu(end[property])
+        return str(sp + (time * (ep - sp)))
+
     def effect(self):
         exponent = self.options.exponent
         if exponent>= 0:
@@ -137,6 +139,8 @@ class Interp(inkex.Effect):
             sst = copy.deepcopy(styles[self.options.ids[i-1]])
             est = copy.deepcopy(styles[self.options.ids[i]])
             basestyle = copy.deepcopy(sst)
+            if basestyle.has_key('stroke-width'):
+                basestyle['stroke-width'] = self.tweenstyleunit('stroke-width',sst,est,0)
 
             #prepare for experimental style tweening
             if self.options.style:
@@ -303,7 +307,7 @@ class Interp(inkex.Effect):
                     basestyle['opacity'] = tweenstylefloat('opacity',sst,est,time)
                     if dostroke:
                         basestyle['stroke-opacity'] = tweenstylefloat('stroke-opacity',sst,est,time)
-                        basestyle['stroke-width'] = tweenstyleunit('stroke-width',sst,est,time)
+                        basestyle['stroke-width'] = self.tweenstyleunit('stroke-width',sst,est,time)
                         basestyle['stroke'] = tweenstylecolor('stroke',sst,est,time)
                     if dofill:
                         basestyle['fill-opacity'] = tweenstylefloat('fill-opacity',sst,est,time)

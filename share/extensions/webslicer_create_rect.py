@@ -100,6 +100,7 @@ class WebSlicer_CreateRect(WebSlicer_Effect):
             self.options.dimension
 
     def effect(self):
+        scale = self.unittouu('1px')    # convert to document units
         self.validate_options()
         layer = self.get_slicer_layer(True)
         #TODO: get selected elements to define location and size
@@ -110,10 +111,10 @@ class WebSlicer_CreateRect(WebSlicer_Effect):
         rect.set('id', self.options.name)
         rect.set('fill', 'red')
         rect.set('opacity', '0.5')
-        rect.set('x', '-100')
-        rect.set('y', '-100')
-        rect.set('width', '200')
-        rect.set('height', '200')
+        rect.set('x', str(-scale*100))
+        rect.set('y', str(-scale*100))
+        rect.set('width', str(scale*200))
+        rect.set('height', str(scale*200))
         desc = inkex.etree.SubElement(rect, 'desc')
         conf_txt = "format:"+ self.options.format +"\n"
         if not is_empty(self.options.dpi):
