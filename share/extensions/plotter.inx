@@ -80,7 +80,7 @@
     <effect needs-live-preview="false">
         <object-type>path</object-type>
         <effects-menu>
-            <submenu _name="Plotter"/>
+            <submenu _name="Export"/>
         </effects-menu>
     </effect>
     <script>

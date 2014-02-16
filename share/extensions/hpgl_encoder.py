@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 import math
 import re
 import string
+#from StringIO import StringIO
 # local libraries
 import bezmisc
 import cspsubdiv
@@ -36,11 +37,6 @@ import simpletransform
 class hpglEncoder:
     PI = math.pi
     TWO_PI = PI * 2
-    # a dictionary of arbitrary unit to user unit conversion factors
-    # in = Inch; pt = PostScript Point; px = Pixel; mm = Millimeter; cm = Centimeter;
-    # km = Kilometer; pc = PostScript Pica; yd = Yard; ft = Feet; m = Meter
-    __USER_UNIT_CONVERSION = {'in':90.0, 'pt':1.25, 'px':1, 'mm':3.5433070866, 'cm':35.433070866,
-                'km':3543307.0866, 'pc':15.0, 'yd':3240 , 'ft':1080, 'm':3543.3070866}
 
     def __init__(self, effect):
         ''' options:
@@ -66,26 +62,21 @@ class hpglEncoder:
         '''
         self.options = effect.options
         self.doc = effect.document.getroot()
-        self.documentUnit = self.doc.xpath('//sodipodi:namedview/@inkscape:document-units', namespaces=inkex.NSS)
-        if self.documentUnit:
-            self.documentUnit = self.documentUnit[0]
-        else:
-            self.documentUnit = 'px'
-        self.docWidth = self.unitToUserUnit(self.doc.get('width'), True)
-        self.docHeight = self.unitToUserUnit(self.doc.get('height'), True)
+        self.docWidth = effect.unittouu(self.doc.get('width'))
+        self.docHeight = effect.unittouu(self.doc.get('height'))
         self.divergenceX = 'False'
         self.divergenceY = 'False'
         self.sizeX = 'False'
         self.sizeY = 'False'
         self.dryRun = True
         self.lastPoint = [0, 0, 0]
-        self.scaleX = self.options.resolutionX / self.unitToUserUnit("1.0in") # dots per inch to dots per user unit
-        self.scaleY = self.options.resolutionY / self.unitToUserUnit("1.0in") # dots per inch to dots per user unit
+        self.scaleX = self.options.resolutionX / effect.unittouu("1.0in") # dots per inch to dots per user unit
+        self.scaleY = self.options.resolutionY / effect.unittouu("1.0in") # dots per inch to dots per user unit
         scaleXY = (self.scaleX + self.scaleY) / 2
-        self.offsetX = self.unitToUserUnit(str(self.options.offsetX) + "mm") * self.scaleX # mm to dots (plotter coordinate system)
-        self.offsetY = self.unitToUserUnit(str(self.options.offsetY) + "mm") * self.scaleY # mm to dots
-        self.overcut = self.unitToUserUnit(str(self.options.overcut) + "mm") * scaleXY # mm to dots
-        self.toolOffset = self.unitToUserUnit(str(self.options.toolOffset) + "mm") * scaleXY # mm to dots
+        self.offsetX = effect.unittouu(str(self.options.offsetX) + "mm") * self.scaleX # mm to dots (plotter coordinate system)
+        self.offsetY = effect.unittouu(str(self.options.offsetY) + "mm") * self.scaleY # mm to dots
+        self.overcut = effect.unittouu(str(self.options.overcut) + "mm") * scaleXY # mm to dots
+        self.toolOffset = effect.unittouu(str(self.options.toolOffset) + "mm") * scaleXY # mm to dots
         self.flat = self.options.flat / (1016 / ((self.options.resolutionX + self.options.resolutionY) / 2)) # scale flatness to resolution
         self.toolOffsetFlat = self.flat / self.toolOffset * 4.5 # scale flatness to offset
         self.mirrorX = 1.0
@@ -95,23 +86,25 @@ class hpglEncoder:
         if self.options.mirrorY:
             self.mirrorY = 1.0
         if self.options.debug:
-            self.debugValues = [0, 0, 0, 0, 0, 0, 0, 0]
-            self.debugValues[0] = self.docWidth
-            self.debugValues[1] = self.docHeight
+            self.debugValues = {}
+            self.debugValues['docWidth'] = self.docWidth
+            self.debugValues['docHeight'] = self.docHeight
         # process viewBox attribute to correct page scaling
         self.viewBoxTransformX = 1
         self.viewBoxTransformY = 1
+        if self.options.debug:
+            self.debugValues['viewBoxWidth'] = "-"
+            self.debugValues['viewBoxHeight'] = "-"
         viewBox = self.doc.get('viewBox')
         if viewBox:
-            viewBox = string.split(viewBox, ' ')
-            if viewBox[2] and viewBox[3]:
-                viewBox[0] = viewBox[2]
-                viewBox[1] = viewBox[3]
+            viewBox2 = string.split(viewBox, ',')
+            if len(viewBox2) < 4:
+                viewBox2 = string.split(viewBox, ' ')
             if self.options.debug:
-                self.debugValues[2] = self.unitToUserUnit(viewBox[0])
-                self.debugValues[3] = self.unitToUserUnit(viewBox[1])
-            self.viewBoxTransformX = self.docWidth / self.unitToUserUnit(viewBox[0])
-            self.viewBoxTransformY = self.docHeight / self.unitToUserUnit(viewBox[1])
+                self.debugValues['viewBoxWidth'] = viewBox2[2]
+                self.debugValues['viewBoxHeight'] = viewBox2[3]
+            self.viewBoxTransformX = self.docWidth / effect.unittouu(effect.addDocumentUnit(viewBox2[2]))
+            self.viewBoxTransformY = self.docHeight / effect.unittouu(effect.addDocumentUnit(viewBox2[3]))
 
     def getHpgl(self):
         # dryRun to find edges
@@ -124,10 +117,10 @@ class hpglEncoder:
         # live run
         self.dryRun = False
         if self.options.debug:
-            self.debugValues[4] = self.sizeX - self.divergenceX
-            self.debugValues[5] = self.sizeY - self.divergenceY
-            self.debugValues[6] = self.unitToUserUnit(str(self.debugValues[4] / self.scaleX))
-            self.debugValues[7] = self.unitToUserUnit(str(self.debugValues[5] / self.scaleY))
+            self.debugValues['drawingWidth'] = self.sizeX - self.divergenceX
+            self.debugValues['drawingHeight'] = self.sizeY - self.divergenceY
+            self.debugValues['drawingWidthUU'] = self.debugValues['drawingWidth'] / self.scaleX
+            self.debugValues['drawingHeightUU'] = self.debugValues['drawingHeight'] / self.scaleY
         # move drawing according to various modifiers
         if self.options.autoAlign:
             if self.options.center:
@@ -161,20 +154,30 @@ class hpglEncoder:
             self.offsetX += self.toolOffset
             self.offsetY += self.toolOffset
         # initialize transformation matrix and cache
-        groupmat = [[self.mirrorX * self.scaleX * self.viewBoxTransformX, 0.0, - self.divergenceX + self.offsetX],
-            [0.0, self.mirrorY * self.scaleY * self.viewBoxTransformY, - self.divergenceY + self.offsetY]]
+        groupmat = [[self.mirrorX * self.scaleX * self.viewBoxTransformX, 0.0, -self.divergenceX + self.offsetX],
+            [0.0, self.mirrorY * self.scaleY * self.viewBoxTransformY, -self.divergenceY + self.offsetY]]
         groupmat = simpletransform.composeTransform(groupmat, simpletransform.parseTransform('rotate(' + self.options.orientation + ')'))
         self.vData = [['', -1.0, -1.0], ['', -1.0, -1.0], ['', -1.0, -1.0], ['', -1.0, -1.0]]
-        # store first hpgl commands
+        # store initial hpgl commands
         self.hpgl = 'IN;SP%d' % self.options.pen
         if self.options.force > 0:
             self.hpgl += ';FS%d' % self.options.force
         if self.options.speed > 0:
             self.hpgl += ';VS%d' % self.options.speed
-        # add precut
+        # add move to zero point and precut
+        self.processOffset('PU', 0, 0)
         if self.options.useToolOffset and self.options.precut:
-            self.processOffset('PU', 0, 0)
-            self.processOffset('PD', 0, self.toolOffset * 8)
+            if self.options.center:
+                # TODO: get this FU to work or remove precut functionality
+                '''
+                newDoc = inkex.etree.parse(StringIO('<svg xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" width="10" height="' + str(10 * 3.5433070866) + '"></svg>'))
+                newLayer = inkex.etree.SubElement(newDoc.getroot(), 'g', {inkex.addNS('groupmode', 'inkscape'): 'layer', inkex.addNS('label', 'inkscape'): 'null'})
+                newPath = inkex.etree.SubElement(newLayer, 'path', {'d': 'M ' + str(oldDivergenceX) + ',' + str(oldDivergenceY) + ' L ' + str(oldDivergenceX) + ',' + str(oldDivergenceY + (self.options.toolOffset * 8 * 3.5433070866)), 'style': 'stroke:#000000; stroke-width:0.4; fill:none;'})
+                self.processPath(newPath, groupmat)
+                '''
+                pass
+            else:
+                self.processOffset('PD', 0, self.toolOffset * 8)
         # start conversion
         self.processGroups(self.doc, groupmat)
         # shift an empty node in in order to process last node in cache
@@ -186,20 +189,8 @@ class hpglEncoder:
         else:
             return self.hpgl, ""
 
-    def unitToUserUnit(self, string, isPixels=False):
-        '''Returns userunits given a string representation of units in another system'''
-        matches = re.match('^(.*?)(in|pt|px|mm|cm|km|pc|yd|ft|m)?$', string.strip())
-        value = float(matches.group(1))
-        unit = matches.group(2)
-        if unit is None:
-            if isPixels:
-                unit = "px"
-            else:
-                unit = self.documentUnit
-        return value * self.__USER_UNIT_CONVERSION[unit] / self.__USER_UNIT_CONVERSION[self.documentUnit]
-
     def processGroups(self, doc, groupmat):
-        # flatten groups to avoid recursion
+        # flatten layers and groups to avoid recursion
         paths = []
         for node in doc:
             if (node.tag == inkex.addNS('g', 'svg') and self.isGroupVisible(node)) or node.tag == inkex.addNS('path', 'svg'):
@@ -290,12 +281,6 @@ class hpglEncoder:
         x = x2 + (x2 - x1) / self.getLength(x1, y1, x2, y2, False) * offset
         y = y2 + (y2 - y1) / self.getLength(x1, y1, x2, y2, False) * offset
         return [x, y]
-
-    def getAlpha(self, x1, y1, x2, y2, x3, y3):
-        # get alpha of point 2
-        temp1 = (x1 - x2) ** 2 + (y1 - y2) ** 2 + (x3 - x2) ** 2 + (y3 - y2) ** 2 - (x1 - x3) ** 2 - (y1 - y3) ** 2
-        temp2 = 2 * math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2) * math.sqrt((x3 - x2) ** 2 + (y3 - y2) ** 2)
-        return math.acos(max(min(temp1 / temp2, 1.0), -1.0))
 
     def processOffset(self, cmd, posX, posY):
         # calculate offset correction (or dont)

@@ -311,5 +311,12 @@ class Effect:
     def uutounit(self, val, unit):
         return val / (self.__uuconv[unit] / self.__uuconv[self.getDocumentUnit()])
 
+    def addDocumentUnit(self, value):
+        ''' Add document unit when no unit is specified in the string '''
+        try:
+            float(value)
+            return value + self.getDocumentUnit()
+        except ValueError:
+            return value
 
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 fileencoding=utf-8 textwidth=99
