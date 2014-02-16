@@ -430,7 +430,6 @@ static bool sp_spray_recursive(SPDesktop *desktop,
         SPItem *parent_item = NULL;    // Initial object
         SPItem *item_copied = NULL;    // Projected object
         SPItem *unionResult = NULL;    // Previous union
-        SPItem *child_item = NULL;     // Parent copy
 
         int i=1;
         for (GSList *items = g_slist_copy(const_cast<GSList *>(selection->itemList()));
@@ -453,21 +452,12 @@ static bool sp_spray_recursive(SPDesktop *desktop,
 
         Geom::OptRect a = parent_item->documentVisualBounds();
         if (a) {
-            if (i == 1) {
-                Inkscape::XML::Node *copy1 = old_repr->duplicate(xml_doc);
-                parent->appendChild(copy1);
-                SPObject *new_obj1 = doc->getObjectByRepr(copy1);
-                child_item = SP_ITEM(new_obj1);   // Conversion object->item
-                unionResult = child_item;
-                Inkscape::GC::release(copy1);
-            }
-
             if (_fid <= population) { // Rules the population of objects sprayed
                 // Duplicates the parent item
-                Inkscape::XML::Node *copy2 = old_repr->duplicate(xml_doc);
-                parent->appendChild(copy2);
-                SPObject *new_obj2 = doc->getObjectByRepr(copy2);
-                item_copied = SP_ITEM(new_obj2);
+                Inkscape::XML::Node *copy = old_repr->duplicate(xml_doc);
+                parent->appendChild(copy);
+                SPObject *new_obj = doc->getObjectByRepr(copy);
+                item_copied = SP_ITEM(new_obj);
 
                 // Move around the cursor
                 Geom::Point move = (Geom::Point(cos(tilt)*cos(dp)*dr/(1-ratio)+sin(tilt)*sin(dp)*dr/(1+ratio), -sin(tilt)*cos(dp)*dr/(1-ratio)+cos(tilt)*sin(dp)*dr/(1+ratio)))+(p-a->midpoint()); 
@@ -481,10 +471,12 @@ static bool sp_spray_recursive(SPDesktop *desktop,
                 // Union and duplication
                 selection->clear();
                 selection->add(item_copied);
-                selection->add(unionResult);
+                if (unionResult) { // No need to add the very first item (initialized with NULL).
+                    selection->add(unionResult);
+                }
                 sp_selected_path_union_skip_undo(selection, selection->desktop());
                 selection->add(parent_item);
-                Inkscape::GC::release(copy2);
+                Inkscape::GC::release(copy);
                 did = true;
             }
         }
