@@ -1703,9 +1703,14 @@ void DocumentProperties::onDocUnitChange()
     repr->setAttribute("inkscape:document-units", os.str().c_str());
     
     // Set viewBox
-    Inkscape::Util::Quantity width = doc->getWidth();
-    Inkscape::Util::Quantity height = doc->getHeight();
-    doc->setViewBox(Geom::Rect::from_xywh(0, 0, width.value(doc_unit), height.value(doc_unit)));
+    if (doc->getRoot()->viewBox_set) {
+        gdouble scale = Inkscape::Util::Quantity::convert(1, old_doc_unit, doc_unit);
+        doc->setViewBox(doc->getRoot()->viewBox*Geom::Scale(scale));
+    } else {
+        Inkscape::Util::Quantity width = doc->getWidth();
+        Inkscape::Util::Quantity height = doc->getHeight();
+        doc->setViewBox(Geom::Rect::from_xywh(0, 0, width.value(doc_unit), height.value(doc_unit)));
+    }
     
     // TODO: Fix bug in nodes tool instead of switching away from it
     if (tools_active(getDesktop()) == TOOLS_NODES) {
