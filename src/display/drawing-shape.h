@@ -39,6 +39,13 @@ protected:
     virtual DrawingItem *_pickItem(Geom::Point const &p, double delta, unsigned flags);
     virtual bool _canClip();
 
+#ifdef WITH_SVG2
+    void _renderFill(DrawingContext &dc);
+    void _renderStroke(DrawingContext &dc);
+#endif
+    void _renderMarkers(DrawingContext &dc, Geom::IntRect const &area, unsigned flags,
+                        DrawingItem *stop_at);
+
     SPCurve *_curve;
     SPStyle *_style;
     NRStyle _nrstyle;
