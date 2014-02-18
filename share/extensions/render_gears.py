@@ -35,9 +35,9 @@ def point_on_circle(radius, angle):
 def points_to_svgd(p):
     f = p[0]
     p = p[1:]
-    svgd = 'M%.3f,%.3f' % f
+    svgd = 'M%.5f,%.5f' % f
     for x in p:
-        svgd += 'L%.3f,%.3f' % x
+        svgd += ' L%.5f,%.5f' % x
     svgd += 'z'
     return svgd
 
