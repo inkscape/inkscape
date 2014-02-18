@@ -90,6 +90,8 @@ static void sp_style_read_istring(SPIString *val, gchar const *str);
 static void sp_style_read_ilength(SPILength *val, gchar const *str);
 static void sp_style_read_ilengthornormal(SPILengthOrNormal *val, gchar const *str);
 
+static void sp_style_read_ipaintorder(SPIPaintOrder *val, gchar const *str);
+
 static void sp_style_read_itextdecoration(SPITextDecorationLine *line, SPITextDecorationStyle *style, SPIPaint *color, gchar const *str);
 static void sp_style_read_itextdecorationLine(SPITextDecorationLine *line, gchar const *str);
 static void sp_style_read_itextdecorationStyle(SPITextDecorationStyle *style, gchar const *str);
@@ -112,6 +114,8 @@ static gint sp_style_write_ienum(gchar *p, gint len, gchar const *key, SPStyleEn
 static gint sp_style_write_istring(gchar *p, gint len, gchar const *key, SPIString const *val, SPIString const *base, guint flags);
 static gint sp_style_write_ilength(gchar *p, gint len, gchar const *key, SPILength const *val, SPILength const *base, guint flags);
 static gint sp_style_write_ipaint(gchar *b, gint len, gchar const *key, SPIPaint const *paint, SPIPaint const *base, guint flags);
+static gint sp_style_write_ipaintorder(gchar *p, gint len, gchar const *key, SPIPaintOrder const *paint_order, SPIPaintOrder const *base, guint flags);
+
 static gint sp_style_write_ifontsize(gchar *p, gint len, gchar const *key, SPIFontSize const *val, SPIFontSize const *base, guint flags);
 static gint sp_style_write_ibaselineshift(gchar *p, gint len, gchar const *key, SPIBaselineShift const *val, SPIBaselineShift const *base, guint flags);
 static gint sp_style_write_ilengthornormal(gchar *p, gint const len, gchar const *const key, SPILengthOrNormal const *const val, SPILengthOrNormal const *const base, guint const flags);
@@ -666,6 +670,8 @@ sp_style_read(SPStyle *style, SPObject *object, Inkscape::XML::Node *repr)
     }
 
     /* 2. Presentation attributes */
+    /* Attributes are only read in if not already set in a style sheet or style attribute above. */
+
     /* CSS2 */
     SPS_READ_PENUM_IF_UNSET(&style->visibility, repr, "visibility", enum_visibility, true);
     SPS_READ_PENUM_IF_UNSET(&style->display, repr, "display", enum_display, true);
@@ -816,6 +822,16 @@ sp_style_read(SPStyle *style, SPObject *object, Inkscape::XML::Node *repr)
             style->stroke_dashoffset_inherit = TRUE;
         } else {
             style->stroke_dashoffset_set = FALSE;
+        }
+    }
+
+    /* paint-order */
+    if (!style->paint_order.set) {
+        val = repr->attribute("paint-order");
+        if (val) {
+            sp_style_read_ipaintorder(&style->paint_order, val);
+        } else {
+            style->paint_order.layer[0] = SP_CSS_PAINT_ORDER_NORMAL;
         }
     }
 
@@ -1435,6 +1451,11 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
                 sp_style_read_iscale24(&style->stroke_opacity, val);
             }
             break;
+        case SP_PROP_PAINT_ORDER:
+            if (!style->paint_order.set) {
+                sp_style_read_ipaintorder(&style->paint_order, val);
+            }
+            break;
 
         default:
             g_warning("Invalid style property id: %d value: %s", id, val);
@@ -1887,6 +1908,15 @@ sp_style_merge_from_parent(SPStyle *const style, SPStyle const *const parent)
 
     if (!style->stroke_opacity.set || style->stroke_opacity.inherit) {
         style->stroke_opacity.value = parent->stroke_opacity.value;
+    }
+
+    if (!style->paint_order.set || style->paint_order.inherit) {
+        g_free(style->paint_order.value);
+        style->paint_order.value = g_strdup(parent->paint_order.value);
+        for (unsigned i = 0; i < PAINT_ORDER_LAYERS; ++i) {
+            style->paint_order.layer[i]     = parent->paint_order.layer[i];
+            style->paint_order.layer_set[i] = parent->paint_order.layer_set[i];
+        }
     }
 
     if (style->text && parent->text) {
@@ -2802,6 +2832,12 @@ sp_style_write_string(SPStyle const *const style, guint const flags)
         }
     }
 
+    if (style->paint_order.set) {
+        p += sp_style_write_ipaintorder(p, c + BMAX - p, "paint-order", &style->paint_order, NULL, flags);
+    } else if (flags == SP_STYLE_FLAG_ALWAYS) {
+        p += g_snprintf(p, c + BMAX - p, "paint-order:normal;");
+    }
+
     bool marker_none = false;
     gchar *master = style->marker[SP_MARKER_LOC].value;
     if (style->marker[SP_MARKER_LOC].set) {
@@ -2972,6 +3008,11 @@ sp_style_write_difference(SPStyle const *const from, SPStyle const *const to)
             }
         }
         p += sp_style_write_iscale24(p, c + BMAX - p, "stroke-opacity", &from->stroke_opacity, &to->stroke_opacity, SP_STYLE_FLAG_IFDIFF);
+    }
+
+    /* paint-order */
+    if( from->paint_order.set) {
+        p += sp_style_write_ipaintorder(p, c + BMAX - p, "paint-order", &from->paint_order, &to->paint_order, SP_STYLE_FLAG_IFDIFF);
     }
 
     /* markers */
@@ -3276,6 +3317,15 @@ sp_style_clear(SPStyle *style)
         style->marker[i].data = 0;
         style->marker[i].value = NULL;
     }
+
+    /* SVG 2 */
+    style->paint_order.set = FALSE;
+    style->paint_order.inherit = FALSE; // For now
+    for (unsigned i = 0; i < PAINT_ORDER_LAYERS; ++i) {
+        style->paint_order.layer[i] = SP_CSS_PAINT_ORDER_NORMAL;
+        style->paint_order.layer_set[i] = false;
+    }
+    style->paint_order.value = NULL;
 
     style->filter.set = FALSE;
     style->filter.inherit = FALSE;
@@ -3643,6 +3693,77 @@ sp_style_read_ilengthornormal(SPILengthOrNormal *val, gchar const *str)
         val->computed = length.computed;
     }
 }
+
+/**
+ * Set SPIPaintOrder object from string.
+ */
+static void
+sp_style_read_ipaintorder(SPIPaintOrder *val, gchar const *str)
+{
+    g_free(val->value);
+
+    if (!strcmp(str, "inherit")) {
+        // NEED TO CHECK FINAL SPEC
+        val->set = TRUE;
+        val->inherit = TRUE;
+        val->value = NULL;
+    } else {
+        val->set = TRUE;
+        val->inherit = FALSE;
+        val->value = g_strdup(str);
+
+        if (!strcmp(str, "normal")) {
+            val->layer[0] = SP_CSS_PAINT_ORDER_NORMAL;
+            val->layer_set[0] = true;
+        } else {
+            // This certainly can be done more efficiently
+            gchar** c = g_strsplit(str, " ", PAINT_ORDER_LAYERS + 1);
+            bool used[3] = {false, false, false};
+            unsigned int i = 0;
+            for( ; i < PAINT_ORDER_LAYERS; ++i ) {
+                if( c[i] ) {
+                    val->layer_set[i] = false;
+                    if( !strcmp( c[i], "fill")) {
+                        val->layer[i] = SP_CSS_PAINT_ORDER_FILL;
+                        val->layer_set[i] = true;
+                        used[0] = true;
+                    } else if( !strcmp( c[i], "stroke")) {
+                        val->layer[i] = SP_CSS_PAINT_ORDER_STROKE;
+                        val->layer_set[i] = true;
+                        used[1] = true;
+                    } else if( !strcmp( c[i], "marker")) {
+                        val->layer[i] = SP_CSS_PAINT_ORDER_MARKER;
+                        val->layer_set[i] = true;
+                        used[2] = true;
+                    } else {
+                        break;
+                    }
+                } else {
+                    break;
+                }
+            }
+            g_strfreev(c);
+
+            // Fill out rest of the layers using the default order
+            if( !used[0] && i < PAINT_ORDER_LAYERS ) {
+                val->layer[i] = SP_CSS_PAINT_ORDER_FILL;
+                val->layer_set[i] = false;
+                ++i;
+            }
+            if( !used[1] && i < PAINT_ORDER_LAYERS ) {
+                val->layer[i] = SP_CSS_PAINT_ORDER_STROKE;
+                val->layer_set[i] = false;
+                ++i;
+            }
+            if( !used[2] && i < PAINT_ORDER_LAYERS ) {
+                val->layer[i] = SP_CSS_PAINT_ORDER_MARKER;
+                val->layer_set[i] = false;
+            }
+        }
+    }
+}
+
+
 
 /**
  * Set SPITextDecoration object from string.
@@ -4557,6 +4678,81 @@ sp_style_write_ipaint(gchar *b, gint const len, gchar const *const key,
  *
  */
 static bool
+sp_paint_order_differ(SPIPaintOrder const *const a, SPIPaintOrder const *const b)
+{
+    if( (a->set != b->set) ||
+        (a->inherit!= b->inherit) ) {
+        return true;
+    }
+
+    // Check this works when paint-order value is 'normal'
+    for (unsigned i = 0; i < PAINT_ORDER_LAYERS; ++i ) {
+        if( (a->layer[i]     != b->layer[i]) ||
+            (a->layer_set[i] != b->layer_set[i]) ) {
+            return true;
+        }
+    }
+    return false;
+}
+
+
+
+/**
+ * Write SPIPaintOrder object into string.
+ */
+static gint
+sp_style_write_ipaintorder(gchar *p, gint len, gchar const *key, SPIPaintOrder const *paint_order, SPIPaintOrder const *base, guint flags)
+{
+    int retval = 0;
+
+    if ((flags & SP_STYLE_FLAG_ALWAYS)
+        || ((flags & SP_STYLE_FLAG_IFSET) && paint_order->set)
+        || ((flags & SP_STYLE_FLAG_IFDIFF) && paint_order->set
+            && (!base->set || sp_paint_order_differ(paint_order, base))))
+    {
+        CSSOStringStream css;
+
+        if (paint_order->inherit) {
+            css << "inherit";
+        } else {
+            for( unsigned i = 0; i < PAINT_ORDER_LAYERS; ++i ) {
+                if( paint_order->layer_set[i] == true ) {
+                    switch (paint_order->layer[i]) {
+                        case SP_CSS_PAINT_ORDER_NORMAL:
+                            css << "normal";
+                            assert( i == 0 );
+                            break;
+                        case SP_CSS_PAINT_ORDER_FILL:
+                            if (i!=0) css << " ";
+                            css << "fill";
+                            break;
+                        case SP_CSS_PAINT_ORDER_STROKE:
+                            if (i!=0) css << " ";
+                            css << "stroke";
+                            break;
+                        case SP_CSS_PAINT_ORDER_MARKER:
+                            if (i!=0) css << " ";
+                            css << "marker";
+                            break;
+                    }
+                } else {
+                    break;
+                }
+            }
+        }
+
+        if ( !css.str().empty() ) {
+            retval = g_snprintf( p, len, "%s:%s;", key, css.str().c_str() );
+        }
+    }
+
+    return retval;
+}
+
+/**
+ *
+ */
+static bool
 sp_fontsize_differ(SPIFontSize const *const a, SPIFontSize const *const b)
 {
     if (a->type != b->type)
@@ -4841,6 +5037,9 @@ sp_style_unset_property_attrs(SPObject *o)
     }
     if (style->stroke_dashoffset_set) {
         repr->setAttribute("stroke-dashoffset", NULL);
+    }
+    if (style->paint_order.set) {
+        repr->setAttribute("paint-order", NULL);
     }
     if (style->text_private && style->text->font_specification.set) {
         repr->setAttribute("-inkscape-font-specification", NULL);

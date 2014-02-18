@@ -173,6 +173,23 @@ struct SPIFilter {
     SPFilterReference *href;
 };
 
+// SVG 2
+enum SPPaintOrderLayer {
+    SP_CSS_PAINT_ORDER_NORMAL,
+    SP_CSS_PAINT_ORDER_FILL,
+    SP_CSS_PAINT_ORDER_STROKE,
+    SP_CSS_PAINT_ORDER_MARKER
+};
+
+const size_t PAINT_ORDER_LAYERS = 3;
+struct SPIPaintOrder {
+    unsigned set : 1;
+    unsigned inherit : 1;
+    SPPaintOrderLayer layer[PAINT_ORDER_LAYERS];
+    bool layer_set[PAINT_ORDER_LAYERS];
+    gchar *value;  // Raw string
+};
+
 enum {
     SP_FONT_SIZE_LITERAL,
     SP_FONT_SIZE_LENGTH,
@@ -404,6 +421,8 @@ struct SPStyle {
 
     /** Marker list */
     SPIString marker[SP_MARKER_LOC_QTY];
+
+    SPIPaintOrder paint_order;
 
     /** Filter effect */
     SPIFilter filter;
