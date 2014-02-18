@@ -450,7 +450,20 @@ unsigned DrawingText::_renderItem(DrawingContext &dc, Geom::IntRect const &/*are
         // we need to apply this object's ctm again
         Inkscape::DrawingContext::Save save(dc);
         dc.transform(_ctm);
+
+#ifdef WITH_SVG2
+        // Text doesn't have markers, we can do paint-order quick and dirty.
+        bool fill_first = false;
+        if( _nrstyle.paint_order_layer[0] == NRStyle::PAINT_ORDER_NORMAL ||
+            _nrstyle.paint_order_layer[0] == NRStyle::PAINT_ORDER_FILL   ||
+            _nrstyle.paint_order_layer[2] == NRStyle::PAINT_ORDER_STROKE ) {
+            fill_first = true;
+        } // Won't get "stroke fill stroke" but that isn't 'valid'
+
+        if (has_fill && fill_first) {
+#else
         if (has_fill) {
+#endif
             _nrstyle.applyFill(dc);
             dc.fillPreserve();
         }
@@ -458,6 +471,12 @@ unsigned DrawingText::_renderItem(DrawingContext &dc, Geom::IntRect const &/*are
             _nrstyle.applyStroke(dc);
             dc.strokePreserve();
         }
+#ifdef WITH_SVG2
+        if (has_fill && !fill_first) {
+            _nrstyle.applyFill(dc);
+            dc.fillPreserve();
+        }
+#endif
         dc.newPath(); // clear path
 
         // draw text decoration
