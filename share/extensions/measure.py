@@ -121,7 +121,7 @@ class Length(inkex.Effect):
         self.OptionParser.add_option("-s", "--scale",
                         action="store", type="float", 
                         dest="scale", default=1,
-                        help="The distance above the curve")
+                        help="Scale Factor (Drawing:Real Length)")
         self.OptionParser.add_option("-r", "--orient",
                         action="store", type="inkbool", 
                         dest="orient", default=True,
@@ -138,6 +138,7 @@ class Length(inkex.Effect):
     def effect(self):
         # get number of digits
         prec = int(self.options.precision)
+        self.options.offset *= self.unittouu('1px')
         factor = 1.0
         doc = self.document.getroot()
         if doc.get('viewBox'):
@@ -154,7 +155,7 @@ class Length(inkex.Effect):
                 mat = simpletransform.composeParents(node, [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]])
                 p = cubicsuperpath.parsePath(node.get('d'))
                 simpletransform.applyTransformToPath(mat, p)
-                factor = factor/self.unittouu('1'+self.options.unit)
+                factor *= self.unittouu('1px')/self.unittouu('1'+self.options.unit)
                 if self.options.type == "length":
                     slengths, stotal = csplength(p)
                 else:
