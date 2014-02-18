@@ -68,7 +68,11 @@ NRStyle::NRStyle()
     , line_through_thickness(0)
     , line_through_position(0)
     , font_size(0)
-{}
+{
+#ifdef WITH_SVG2
+    paint_order_layer[0] = PAINT_ORDER_NORMAL;
+#endif
+}
 
 NRStyle::~NRStyle()
 {
@@ -159,6 +163,26 @@ void NRStyle::set(SPStyle *style)
         dash_offset = 0.0;
         dash = NULL;
     }
+
+
+#ifdef WITH_SVG2
+    for( unsigned i = 0; i < PAINT_ORDER_LAYERS; ++i) {
+        switch (style->paint_order.layer[i]) {
+            case SP_CSS_PAINT_ORDER_NORMAL:
+                paint_order_layer[i]=PAINT_ORDER_NORMAL;
+                break;
+            case SP_CSS_PAINT_ORDER_FILL:
+                paint_order_layer[i]=PAINT_ORDER_FILL;
+                break;
+            case SP_CSS_PAINT_ORDER_STROKE:
+                paint_order_layer[i]=PAINT_ORDER_STROKE;
+                break;
+            case SP_CSS_PAINT_ORDER_MARKER:
+                paint_order_layer[i]=PAINT_ORDER_MARKER;
+                break;
+        }
+    }
+#endif
 
     text_decoration_line = TEXT_DECORATION_LINE_CLEAR;
     if(style->text_decoration_line.inherit     ){ text_decoration_line |= TEXT_DECORATION_LINE_INHERIT;                                }
