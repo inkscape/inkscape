@@ -1166,8 +1166,6 @@ void ImportDialog::on_xml_file_read(const Glib::RefPtr<Gio::AsyncResult>& result
 
     // free the document
     xmlFreeDoc(doc);
-    // free the global variables that may have been allocated by the parser
-    xmlCleanupParser();
 }
 
 
@@ -1336,7 +1334,8 @@ ImportDialog::ImportDialog(Gtk::Window& parent_window, FileDialogType file_types
  */
 ImportDialog::~ImportDialog()
 {
-
+    // free the global variables that may have been allocated by the parser
+    xmlCleanupParser();
 }
 
 /**
