@@ -194,6 +194,12 @@ push @{$properties{ "isolation" }->{elements}}, @graphics_elements;
 $properties{ "isolation" }->{default} = "auto";
 $properties{ "isolation" }->{inherit} = "no";
 
+# SVG2
+push @{$properties{ "paint-order" }->{elements}}, @container_elements;
+push @{$properties{ "paint-order" }->{elements}}, @graphics_elements;
+$properties{ "paint-order" }->{default} = "normal";
+$properties{ "paint-order" }->{inherit} = "yes";
+
 
 # Output
 

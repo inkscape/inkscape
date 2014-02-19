@@ -88,6 +88,8 @@
 
 "overflow" - "hidden" - "no"
 
+"paint-order" - "normal" - "yes"
+
 "pointer-events" - "visiblePainted" - "yes"
 
 "shape-rendering" - "auto" - "yes"
