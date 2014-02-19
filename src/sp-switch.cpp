@@ -82,16 +82,22 @@ gchar *SPSwitch::description() const {
         ngettext(_("of <b>%d</b> object"), _("of <b>%d</b> objects"), len), len);
 }
 
-void SPSwitch::child_added(Inkscape::XML::Node* /*child*/, Inkscape::XML::Node* /*ref*/) {
+void SPSwitch::child_added(Inkscape::XML::Node* child, Inkscape::XML::Node* ref) {
+    SPGroup::child_added(child, ref);
+
     this->_reevaluate(true);
 }
 
-void SPSwitch::remove_child(Inkscape::XML::Node *) {
-	this->_reevaluate();
+void SPSwitch::remove_child(Inkscape::XML::Node *child) {
+    SPGroup::remove_child(child);
+
+    this->_reevaluate();
 }
 
-void SPSwitch::order_changed (Inkscape::XML::Node *, Inkscape::XML::Node *, Inkscape::XML::Node *)
+void SPSwitch::order_changed (Inkscape::XML::Node *child, Inkscape::XML::Node *old_ref, Inkscape::XML::Node *new_ref)
 {
+    SPGroup::order_changed(child, old_ref, new_ref);
+
 	this->_reevaluate();
 }
 
