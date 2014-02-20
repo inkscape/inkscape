@@ -203,26 +203,43 @@ change_clashing_ids(SPDocument *imported_doc, SPDocument *current_doc,
                     id_changelist_type *id_changes)
 {
     const gchar *id = elem->getId();
+    bool fix_clashing_ids = true;
 
     if (id && current_doc->getObjectById(id)) {
         // Choose a new ID.
         // To try to preserve any meaningfulness that the original ID
         // may have had, the new ID is the old ID followed by a hyphen
         // and one or more digits.
-        std::string old_id(id);
-        std::string new_id(old_id + '-');
-        for (;;) {
-            new_id += "0123456789"[std::rand() % 10];
-            const char *str = new_id.c_str();
-            if (current_doc->getObjectById(str) == NULL &&
-                imported_doc->getObjectById(str) == NULL) break;
+        
+        if (SP_IS_GRADIENT(elem)) {
+            SPObject *cd_obj =  current_doc->getObjectById(id);
+
+            if (cd_obj && SP_IS_GRADIENT(cd_obj)) {
+                 SPGradient *cd_gr = SP_GRADIENT(cd_obj);
+                 if (cd_gr->isEquivalent(SP_GRADIENT(elem))) {
+                     fix_clashing_ids = false;
+                 }
+             }
         }
-        // Change to the new ID
-        elem->getRepr()->setAttribute("id", new_id.c_str());
-        // Make a note of this change, if we need to fix up refs to it
-        if (refmap->find(old_id) != refmap->end())
+        
+        if (fix_clashing_ids) {
+            std::string old_id(id);
+            std::string new_id(old_id + '-');
+            for (;;) {
+                new_id += "0123456789"[std::rand() % 10];
+                const char *str = new_id.c_str();
+                if (current_doc->getObjectById(str) == NULL &&
+                    imported_doc->getObjectById(str) == NULL) break;
+            }
+            // Change to the new ID
+
+            elem->getRepr()->setAttribute("id", new_id.c_str());
+                // Make a note of this change, if we need to fix up refs to it
+            if (refmap->find(old_id) != refmap->end())
             id_changes->push_back(id_changeitem_type(elem, old_id));
+        }
     }
+
 
     // recurse
     for (SPObject *child = elem->firstChild(); child; child = child->getNext() )

@@ -1544,15 +1544,13 @@ void SPDocument::importDefs(SPDocument *source)
         // Prevent duplicates of solid swatches by checking if equivalent swatch already exists
         if (src && SP_IS_GRADIENT(src)) {
             SPGradient *gr = SP_GRADIENT(src);
-            if (gr->isSolid() || gr->getVector()->isSolid()) {
-                for (SPObject *trg = this->getDefs()->firstChild() ; trg ; trg = trg->getNext()) {
-                    if (trg && SP_IS_GRADIENT(trg) && src != trg) {
-                        if (gr->isEquivalent(SP_GRADIENT(trg))) {
-                            // Change object references to the existing equivalent gradient
-                            change_def_references(src, trg);
-                            duplicate = true;
-                            break;
-                        }
+            for (SPObject *trg = this->getDefs()->firstChild() ; trg ; trg = trg->getNext()) {
+                if (trg && SP_IS_GRADIENT(trg) && src != trg) {
+                    if (gr->isEquivalent(SP_GRADIENT(trg))) {
+                        // Change object references to the existing equivalent gradient
+                        change_def_references(src, trg);
+                        duplicate = true;
+                        break;
                     }
                 }
             }
