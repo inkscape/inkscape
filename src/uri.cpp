@@ -11,6 +11,8 @@
 #include <glib.h>
 #include "uri.h"
 #include <string>
+#include <cstring>
+#include <iostream> // XXX
 #include <glibmm/ustring.h>
 #include <glibmm/miscutils.h>
 
@@ -25,6 +27,10 @@ URI::URI(gchar const *preformed) throw(BadURIException) {
     xmlURIPtr uri;
     if (!preformed) {
         throw MalformedURIException();
+    }
+    if( strncmp(preformed, "data:", 5)==0 ) {
+        parseDataUri( preformed + 5 );
+        preformed = ""; // g_free?
     }
     uri = xmlParseURI(preformed);
     if (!uri) {
@@ -135,6 +141,38 @@ gchar *URI::to_native_filename(gchar const* uri) throw(BadURIException)
     filename = tmp.toNativeFilename();
     return filename;
 }
+
+/*
+ * Parse data:... uris so we can access their data transparently.
+ * otherwise data: is considered a malformed protocol like http:
+ * and two // as appended and the data is stored in the path of the uri.
+ */
+bool URI::parseDataUri(const char *uri) {
+
+    int len = (strchr(uri, ',') - uri) * sizeof(char);
+
+    const char *data;
+    std::string head;
+    if (len > 0) {
+        head = std::string(uri, len);
+        data = uri + len;
+    } else {
+        head = "text/plain";
+        data = uri;
+    }
+
+    //bool base64 = false;
+    std::cout << "Header: " << head << "\n";
+    std::cout << "Data: " << data << "\n";
+    /*while(uri < data) {
+        if (strncmp(uri,"base64",6) == 0)
+            base64 = true;
+        if (strncmp(uri,"image/",
+        data = strchr(uri, ';');
+    }*/
+    return true;
+}
+
 /*
  * Returns the absolute path to an existing file referenced in this URI,
  * if the uri is data, the path is empty or the file doesn't exist, then
@@ -149,12 +187,16 @@ const std::string URI::getFullPath(std::string const base) const {
     if(!base.empty() && !path.empty() && path[0] != '/') {
         path = Glib::build_filename(base, path);
     }
-    // Check the existance of the file
-    if(! g_file_test(path.c_str(), G_FILE_TEST_EXISTS) 
-      || g_file_test(path.c_str(), G_FILE_TEST_IS_DIR) ) {
+    // Normalise path, this only works if all parts of the path exist
+    char *output = realpath(path.c_str(), NULL);
+    if(output == NULL) {
+        path.clear();
+    } else // Re-check the existance of the file (make damn sure)
+    if(! g_file_test(output, G_FILE_TEST_EXISTS) 
+      || g_file_test(output, G_FILE_TEST_IS_DIR) ) {
         path.clear();
     }
-    return path;
+    return std::string( output );
 }
 
 
