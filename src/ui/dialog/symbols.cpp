@@ -381,8 +381,10 @@ void SymbolsDialog::selectionChanged(Inkscape::Selection *selection) {
   }
 }
 
-void SymbolsDialog::documentReplaced(SPDesktop */*desktop*/, SPDocument */*document*/)
+void SymbolsDialog::documentReplaced(SPDesktop *desktop, SPDocument *document)
 {
+  currentDesktop  = desktop;
+  currentDocument = document;
   rebuild();
 }
 
