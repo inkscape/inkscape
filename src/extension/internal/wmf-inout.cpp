@@ -525,6 +525,7 @@ uint32_t Wmf::add_dib_image(PWMF_CALLBACK_DATA d, const char *dib, uint32_t iUsa
         else {                         *(d->defs) += "       xlink:href=\"data:image/png;base64,";  }
         *(d->defs) += base64String;
         *(d->defs) += "\"\n";
+        *(d->defs) += " preserveAspectRatio=\"none\"\n";
         *(d->defs) += "   />\n";
 
 
@@ -619,6 +620,7 @@ uint32_t Wmf::add_bm16_image(PWMF_CALLBACK_DATA d, U_BITMAP16 Bm16, const char *
         *(d->defs) += "       xlink:href=\"data:image/png;base64,";
         *(d->defs) += base64String;
         *(d->defs) += "\"\n";
+        *(d->defs) += " preserveAspectRatio=\"none\"\n";
         *(d->defs) += "   />\n";
 
 
@@ -1269,6 +1271,7 @@ void Wmf::common_dib_to_image(PWMF_CALLBACK_DATA d, const char *dib,
     SVGOStringStream tmp_image;
     int  dibparams;
 
+    tmp_image << "\n\t <image\n";
     tmp_image << " y=\"" << dy << "\"\n x=\"" << dx <<"\"\n ";
 
     // The image ID is filled in much later when tmp_image is converted
@@ -1355,12 +1358,11 @@ void Wmf::common_dib_to_image(PWMF_CALLBACK_DATA d, const char *dib,
     }
 
     tmp_image << "\"\n height=\"" << dh << "\"\n width=\"" << dw << "\"\n";
-
     tmp_image << " transform=" << current_matrix(d, 0.0, 0.0, 0); // returns an identity matrix, no offsets.
-    *(d->outsvg) += "\n\t <image\n";
-    *(d->outsvg) += tmp_image.str().c_str();
+    tmp_image << " preserveAspectRatio=\"none\"\n";
+    tmp_image << "/> \n";
 
-    *(d->outsvg) += "/> \n";
+    *(d->outsvg) += tmp_image.str().c_str();
     *(d->path) = "";
 }
 

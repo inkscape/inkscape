@@ -554,6 +554,7 @@ uint32_t Emf::add_image(PEMF_CALLBACK_DATA d,  void *pEmr, uint32_t cbBits, uint
         else {                         *(d->defs) += "       xlink:href=\"data:image/png;base64,";  }
         *(d->defs) += base64String;
         *(d->defs) += "\"\n";
+        *(d->defs) += "    preserveAspectRatio=\"none\"\n";
         *(d->defs) += "    />\n";
 
 
@@ -1531,6 +1532,7 @@ void Emf::common_image_extraction(PEMF_CALLBACK_DATA d, void *pEmr,
     tmp_image << "\"\n height=\"" << dh << "\"\n width=\"" << dw << "\"\n";
 
     tmp_image << " transform=" << current_matrix(d, dx, dy, 1); // calculate appropriate offset
+    tmp_image << " preserveAspectRatio=\"none\"\n";
     tmp_image <<  "/> \n";
 
     *(d->outsvg) += tmp_image.str().c_str();

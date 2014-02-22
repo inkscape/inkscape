@@ -1103,7 +1103,7 @@ unsigned int PrintWmf::image(
     unsigned int w,      /** width of bitmap */
     unsigned int h,      /** height of bitmap */
     unsigned int rs,     /** row stride (normally w*4) */
-    Geom::Affine const & /*tf_ignore*/,  /** WRONG affine transform, use the one from m_tr_stack */
+    Geom::Affine const &tf_rect,  /** affine transform only used for defining location and size of rect, for all other tranforms, use the one from m_tr_stack */
     SPStyle const *style)  /** provides indirect link to image object */
 {
     double x1, y1, dw, dh;
@@ -1115,15 +1115,19 @@ unsigned int PrintWmf::image(
         g_error("Fatal programming error in PrintWmf::image at EMRHEADER");
     }
 
-    x1 = g_ascii_strtod(style->object->getAttribute("x"), NULL);
-    y1 = g_ascii_strtod(style->object->getAttribute("y"), NULL);
-    dw = g_ascii_strtod(style->object->getAttribute("width"), NULL);
-    dh = g_ascii_strtod(style->object->getAttribute("height"), NULL);
+    x1 = tf_rect[4];
+    y1 = tf_rect[5];
+    dw = ((double) w) * tf_rect[0];
+    dh = ((double) h) * tf_rect[3];
     Geom::Point pLL(x1, y1);
     Geom::Point pLL2 = pLL * tf;  //location of LL corner in Inkscape coordinates
 
+    /* adjust scale of w and h.  This works properly when there is no rotation. The values are
+    a bit strange when there is rotation, but since WMF cannot handle rotation in any case, all
+    answers are equally wrong.
+    */
     Geom::Point pWH(dw, dh);
-    Geom::Point pWH2 = pWH * tf.withoutTranslation();  //adjust scale
+    Geom::Point pWH2 = pWH * tf.withoutTranslation();
 
     char                *px;
     uint32_t             cbPx;

@@ -500,39 +500,15 @@ void SPImage::print(SPPrintContext *ctx) {
         int w = pb->width();
         int h = pb->height();
         int rs = pb->rowstride();
-        //int pixskip = gdk_pixbuf_get_n_channels(pb) * gdk_pixbuf_get_bits_per_sample(pb) / 8;
-        int pixskip = 4;
 
-        if (this->aspect_align == SP_ASPECT_NONE) {
-            Geom::Affine t;
-            Geom::Translate tp(this->x.computed, this->y.computed);
-            Geom::Scale s(this->width.computed, -this->height.computed);
-            Geom::Translate ti(0.0, -1.0);
-            t = s * tp;
-            t = ti * t;
-            sp_print_image_R8G8B8A8_N(ctx, px, w, h, rs, t, this->style);
-        } else { // preserveAspectRatio
-            double vw = this->width.computed / this->sx;
-            double vh = this->height.computed / this->sy;
+        double vx = this->ox;
+        double vy = this->oy;
 
-            int trimwidth = std::min<int>(w, ceil(this->width.computed / vw * w));
-            int trimheight = std::min<int>(h, ceil(this->height.computed / vh * h));
-            int trimx = std::max<int>(0, floor((this->x.computed - this->ox) / vw * w));
-            int trimy = std::max<int>(0, floor((this->y.computed - this->oy) / vh * h));
-
-            double vx = std::max<double>(this->ox, this->x.computed);
-            double vy = std::max<double>(this->oy, this->y.computed);
-            double vcw = std::min<double>(this->width.computed, vw);
-            double vch = std::min<double>(this->height.computed, vh);
-
-            Geom::Affine t;
-            Geom::Translate tp(vx, vy);
-            Geom::Scale s(vcw, -vch);
-            Geom::Translate ti(0.0, -1.0);
-            t = s * tp;
-            t = ti * t;
-            sp_print_image_R8G8B8A8_N(ctx, px + trimx*pixskip + trimy*rs, trimwidth, trimheight, rs, t, this->style);
-        }
+        Geom::Affine t;
+        Geom::Translate tp(vx, vy);
+        Geom::Scale s(this->sx, this->sy);
+        t = s * tp;
+        sp_print_image_R8G8B8A8_N(ctx, px, w, h, rs, t, this->style);
         delete pb;
     }
 }

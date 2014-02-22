@@ -1562,7 +1562,7 @@ unsigned int PrintEmf::image(
     unsigned int w,      /** width of bitmap */
     unsigned int h,      /** height of bitmap */
     unsigned int rs,     /** row stride (normally w*4) */
-    Geom::Affine const &/*tf_ignore*/,  /** WRONG affine transform, use the one from m_tr_stack */
+    Geom::Affine const &tf_rect,  /** affine transform only used for defining location and size of rect, for all other tranforms, use the one from m_tr_stack */
     SPStyle const *style)  /** provides indirect link to image object */
 {
     double x1, y1, dw, dh;
@@ -1574,10 +1574,10 @@ unsigned int PrintEmf::image(
         g_error("Fatal programming error in PrintEmf::image at EMRHEADER");
     }
 
-    x1 = atof(style->object->getAttribute("x"));
-    y1 = atof(style->object->getAttribute("y"));
-    dw = atof(style->object->getAttribute("width"));
-    dh = atof(style->object->getAttribute("height"));
+    x1 = tf_rect[4];
+    y1 = tf_rect[5];
+    dw = ((double) w) * tf_rect[0];
+    dh = ((double) h) * tf_rect[3];
     Geom::Point pLL(x1, y1);
     Geom::Point pLL2 = pLL * tf;  //location of LL corner in Inkscape coordinates
 
