@@ -1734,8 +1734,14 @@ void DocumentProperties::onDocUnitChange()
     prefs->setBool("/options/transform/gradient", true);
     {
         ShapeEditor::blockSetItem(true);
+        gdouble viewscale = doc->getWidth().value("px")/doc->getRoot()->viewBox.width();
+        if (doc->getHeight().value("px")/doc->getRoot()->viewBox.height() < viewscale)
+            viewscale = doc->getHeight().value("px")/doc->getRoot()->viewBox.height();
         gdouble scale = Inkscape::Util::Quantity::convert(1, old_doc_unit, doc_unit);
-        doc->getRoot()->scaleChildItemsRec(Geom::Scale(scale), Geom::Point(0, doc->getHeight().value("px")));
+        doc->getRoot()->scaleChildItemsRec(Geom::Scale(scale), Geom::Point(-viewscale*doc->getRoot()->viewBox.min()[Geom::X] +
+                                                                            (doc->getWidth().value("px") - viewscale*doc->getRoot()->viewBox.width())/2,
+                                                                            viewscale*doc->getRoot()->viewBox.min()[Geom::Y] +
+                                                                            (doc->getHeight().value("px") + viewscale*doc->getRoot()->viewBox.height())/2));
         ShapeEditor::blockSetItem(false);
     }
     prefs->setBool("/options/transform/stroke",      transform_stroke);
