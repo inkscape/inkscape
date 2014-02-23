@@ -266,6 +266,8 @@ void TextTool::finish() {
     }
     
     this->text_selection_quads.clear();
+
+    ToolBase::finish();
 }
 
 bool TextTool::item_handler(SPItem* item, GdkEvent* event) {

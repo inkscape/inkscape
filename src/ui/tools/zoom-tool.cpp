@@ -63,6 +63,8 @@ void ZoomTool::finish() {
         sp_canvas_item_ungrab(this->grabbed, GDK_CURRENT_TIME);
         this->grabbed = NULL;
     }
+
+    ToolBase::finish();
 }
 
 void ZoomTool::setup() {

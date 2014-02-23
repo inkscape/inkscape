@@ -167,6 +167,8 @@ void FreehandBase::finish() {
     }
 
     spdc_free_colors(this);
+
+    ToolBase::finish();
 }
 
 void FreehandBase::set(const Inkscape::Preferences::Entry& /*value*/) {

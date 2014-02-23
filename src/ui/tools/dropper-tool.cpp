@@ -152,6 +152,8 @@ void DropperTool::finish() {
 #endif
         cursor_dropper_fill = NULL;
     }
+
+    ToolBase::finish();
 }
 
 /**

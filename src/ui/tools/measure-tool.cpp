@@ -254,6 +254,8 @@ void MeasureTool::finish() {
         sp_canvas_item_ungrab(this->grabbed, GDK_CURRENT_TIME);
         this->grabbed = NULL;
     }
+
+    ToolBase::finish();
 }
 
 //void MeasureTool::setup() {
