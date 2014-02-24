@@ -547,36 +547,40 @@ PageSizer::updateFitMarginsUI(Inkscape::XML::Node *nv_repr)
 
 /**
  * Returns an iterator pointing to a row in paperSizeListStore which
- * contains a paper of the specified size (specified in px), or
+ * contains a paper of the specified size, or
  * paperSizeListStore->children().end() if no such paper exists.
+ *
+ * The code is not tested for the case where w and h have different units.
  */
 Gtk::ListStore::iterator
 PageSizer::find_paper_size (Inkscape::Util::Quantity w, Inkscape::Util::Quantity h) const
 {
-    double smaller = w.quantity;
-    double larger  = h.quantity;
-    if ( h.quantity < w.quantity ) {
-        smaller = h.quantity; larger = w.quantity;
+    using Inkscape::Util::Quantity;
+    using std::swap;
+
+    // The code below assumes that w < h, so make sure that's the case:
+    if ( h < w ) {
+        swap(h,w);
     }
 
-    g_return_val_if_fail(smaller <= larger, _paperSizeListStore->children().end());
+    g_return_val_if_fail(w <= h, _paperSizeListStore->children().end());
 
     std::map<Glib::ustring, PaperSize>::const_iterator iter;
     for (iter = _paperSizeTable.begin() ;
          iter != _paperSizeTable.end() ; ++iter) {
         PaperSize paper = iter->second;
-        double smallX = Inkscape::Util::Quantity::convert(paper.smaller, paper.unit, w.unit);
-        double largeX = Inkscape::Util::Quantity::convert(paper.larger, paper.unit, w.unit);
+        Quantity smallX (paper.smaller, paper.unit);
+        Quantity largeX (paper.larger, paper.unit);
 
-        g_return_val_if_fail(smallX < largeX + 0.001, _paperSizeListStore->children().end());
+        g_return_val_if_fail(smallX.quantity < largeX.quantity + 0.001, _paperSizeListStore->children().end());
 
-        if ((std::abs(smaller - smallX) <= 0.1) &&
-            (std::abs(larger  - largeX) <= 0.1)   ) {
-            Gtk::ListStore::iterator p;
+        if ( are_near(w, smallX, 0.1) && are_near(h, largeX, 0.1) ) {
+            Gtk::ListStore::iterator p = _paperSizeListStore->children().begin();
+            Gtk::ListStore::iterator pend = _paperSizeListStore->children().end();
             // We need to search paperSizeListStore explicitly for the
             // specified paper size because it is sorted in a different
             // way than paperSizeTable (which is sorted alphabetically)
-            for (p = _paperSizeListStore->children().begin(); p != _paperSizeListStore->children().end(); ++p) {
+            for ( ; p != pend; ++p) {
                 if ((*p)[_paperSizeListColumns.nameColumn] == paper.name) {
                     return p;
                 }
@@ -601,7 +605,7 @@ PageSizer::fire_fit_canvas_to_selection_or_drawing()
     SPDocument *doc;
     SPNamedView *nv;
     Inkscape::XML::Node *nv_repr;
-	
+  
     if ((doc = sp_desktop_document(SP_ACTIVE_DESKTOP))
         && (nv = sp_document_namedview(doc, 0))
         && (nv_repr = nv->getRepr())) {

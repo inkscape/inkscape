@@ -505,16 +505,23 @@ double Quantity::convert(double from_dist, char const *from, char const *to)
     return convert(from_dist, unit_table.getUnit(from), unit_table.getUnit(to));
 }
 
-bool Quantity::operator<(Quantity const &other) const
+bool Quantity::operator<(Quantity const &rhs) const
 {
+    if (unit->type != rhs.unit->type) {
+        g_warning("Incompatible units");
+        return false;
+    }
+    return quantity < rhs.value(unit);
+}
+bool Quantity::operator==(Quantity const &other) const
+{
+    /** \fixme  This is overly strict. I think we should change this to:
     if (unit->type != other.unit->type) {
         g_warning("Incompatible units");
         return false;
     }
-    return quantity < other.value(unit);
-}
-bool Quantity::operator==(Quantity const &other) const
-{
+    return are_near(quantity, other.value(unit));
+    */
     return (*unit == *other.unit) && (quantity == other.quantity);
 }
 

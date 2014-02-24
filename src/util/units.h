@@ -16,6 +16,7 @@
 #include <map>
 #include <boost/operators.hpp>
 #include <glibmm/ustring.h>
+#include <2geom/coord.h>
 #include "svg/svg-length.h"
 #include "unordered-containers.h"
 
@@ -112,9 +113,14 @@ public:
     static double convert(double from_dist, char const *from, char const *to);
 
     /** Comparison operators. */
-    bool operator<(Quantity const &other) const;
+    bool operator<(Quantity const &rhs) const;
     bool operator==(Quantity const &other) const;
 };
+
+inline bool are_near(Quantity const &a, Quantity const &b, double eps=Geom::EPSILON)
+{
+    return Geom::are_near(a.quantity, b.value(a.unit), eps);
+}
 
 class UnitTable {
 public:
