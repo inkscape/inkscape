@@ -555,7 +555,7 @@ PageSizer::find_paper_size (Inkscape::Util::Quantity w, Inkscape::Util::Quantity
 {
     double smaller = w.quantity;
     double larger  = h.quantity;
-    if ( h < w ) {
+    if ( h.quantity < w.quantity ) {
         smaller = h.quantity; larger = w.quantity;
     }
 
@@ -568,7 +568,7 @@ PageSizer::find_paper_size (Inkscape::Util::Quantity w, Inkscape::Util::Quantity
         double smallX = Inkscape::Util::Quantity::convert(paper.smaller, paper.unit, w.unit);
         double largeX = Inkscape::Util::Quantity::convert(paper.larger, paper.unit, w.unit);
 
-        g_return_val_if_fail(smallX <= largeX, _paperSizeListStore->children().end());
+        g_return_val_if_fail(smallX < largeX + 0.001, _paperSizeListStore->children().end());
 
         if ((std::abs(smaller - smallX) <= 0.1) &&
             (std::abs(larger  - largeX) <= 0.1)   ) {
