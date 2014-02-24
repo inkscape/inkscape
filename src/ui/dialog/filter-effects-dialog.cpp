@@ -1515,11 +1515,16 @@ void FilterEffectsDialog::FilterModifier::on_name_edited(const Glib::ustring& pa
 }
 
 void FilterEffectsDialog::FilterModifier::on_filter_reorder(const Gtk::TreeModel::Path& /*path*/) {
+/* The code below is bugged. Use of "object->getRepr()->setPosition(0)" is dangerous!
+   Writing back the reordered list to XML (reordering XML nodes) should be implemented differently.
+   Note that the dialog does also not update its list of filters when the order is manually changed
+   using the XML dialog
   for(Gtk::TreeModel::iterator i = _model->children().begin(); i != _model->children().end(); ++i) {
       SPObject* object = (*i)[_columns.filter];
-      if(object && object->getRepr())
+      if(object && object->getRepr()) ;
         object->getRepr()->setPosition(0);
   }
+*/
 }
 
 void FilterEffectsDialog::FilterModifier::on_selection_toggled(const Glib::ustring& path)
