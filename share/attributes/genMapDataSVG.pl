@@ -82,7 +82,7 @@ push @{$attributes{ "class" }->{elements}}, "flowRoot","flowPara","flowSpan","fl
 push @{$attributes{ "id"    }->{elements}}, "flowRoot","flowPara","flowSpan","flowRect","flowRegion";
 push @{$attributes{ "style" }->{elements}}, "flowRoot","flowPara","flowSpan","flowRect","flowRegion";
 push @{$attributes{ "xml:space" }->{elements}}, "flowRoot","flowPara","flowSpan";
-
+push @{$attributes{ "transform" }->{elements}}, "flowRoot","flowPara","flowSpan";
 
 
 # Output

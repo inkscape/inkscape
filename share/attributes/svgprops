@@ -340,7 +340,7 @@
 
 "to" - "set","animate","animateColor","animateMotion","animateTransform"
 
-"transform" - "a","circle","clipPath","defs","ellipse","foreignObject","g","image","line","path","polygon","polyline","rect","switch","text","use"
+"transform" - "a","circle","clipPath","defs","ellipse","foreignObject","g","image","line","path","polygon","polyline","rect","switch","text","use","flowRoot","flowPara","flowSpan"
 
 "type" - "animateTransform","feColorMatrix","feTurbulence","script","style","feFuncA","feFuncB","feFuncG","feFuncR"
 
@@ -490,6 +490,8 @@
 
 "image-rendering" - "pattern","image","feImage","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
 
+"isolation" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","circle","ellipse","image","line","path","polygon","polyline","rect","text","use"
+
 "kerning" - "altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
 
 "letter-spacing" - "altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
@@ -508,9 +510,13 @@
 
 "mask" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","circle","ellipse","image","line","path","polygon","polyline","rect","text","use"
 
+"mix-blend-mode" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","circle","ellipse","image","line","path","polygon","polyline","rect","text","use"
+
 "opacity" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","circle","ellipse","image","line","path","polygon","polyline","rect","text","use"
 
 "overflow" - "svg","symbol","foreignObject","pattern","marker"
+
+"paint-order" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","circle","ellipse","image","line","path","polygon","polyline","rect","text","use","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
 
 "pointer-events" - "circle","ellipse","image","line","path","polygon","polyline","rect","text","use","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
 
