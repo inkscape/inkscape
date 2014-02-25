@@ -1363,11 +1363,9 @@ FilterEffectsDialog::FilterModifier::FilterModifier(FilterEffectsDialog& d)
     sw->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
     _list.get_column(1)->set_resizable(true);
     _list.set_reorderable(true);
+    _list.enable_model_drag_dest (Gdk::ACTION_MOVE);
 
-    // We can track the drag/drop reordering from the row_delete (occurs after
-    // row_inserted and may occur many times when adding a new item)
-    _model->signal_row_deleted().connect(
-            sigc::mem_fun(*this, &FilterModifier::on_filter_reorder));
+    _list.signal_drag_drop().connect( sigc::mem_fun(*this, &FilterModifier::on_filter_move), false );
 
     sw->set_shadow_type(Gtk::SHADOW_IN);
     show_all_children();
@@ -1514,7 +1512,9 @@ void FilterEffectsDialog::FilterModifier::on_name_edited(const Glib::ustring& pa
     }
 }
 
-void FilterEffectsDialog::FilterModifier::on_filter_reorder(const Gtk::TreeModel::Path& /*path*/) {
+bool FilterEffectsDialog::FilterModifier::on_filter_move(const Glib::RefPtr<Gdk::DragContext>& /*context*/, int x, int y, guint /*time*/) {
+
+//const Gtk::TreeModel::Path& /*path*/) {
 /* The code below is bugged. Use of "object->getRepr()->setPosition(0)" is dangerous!
    Writing back the reordered list to XML (reordering XML nodes) should be implemented differently.
    Note that the dialog does also not update its list of filters when the order is manually changed
@@ -1525,6 +1525,7 @@ void FilterEffectsDialog::FilterModifier::on_filter_reorder(const Gtk::TreeModel
         object->getRepr()->setPosition(0);
   }
 */
+  return false;
 }
 
 void FilterEffectsDialog::FilterModifier::on_selection_toggled(const Glib::ustring& path)
