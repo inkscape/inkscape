@@ -2934,96 +2934,145 @@ void sp_selection_to_guides(SPDesktop *desktop)
 }
 
 /*
- * Convert <g> to <symbol>, leaving all <use> elements referencing group unchanged.
+ * Convert objects to <symbol>. How that happens depends on what is selected:
+ * 
+ * 1) A random selection of objects will be embedded into a single <symbol> element.
+ *
+ * 2) Except, a single <g> will have its content directly embedded into a <symbol>; the 'id' and
+ *    'style' of the <g> are transferred to the <symbol>.
+ *
+ * 3) Except, a single <g> with a transform that isn't a translation will keep the group when
+ *    embedded into a <symbol> (with 'id' and 'style' transferred to <symbol>). This is because a
+ *    <symbol> cannot have a transform. (If the transform is a pure translation, the translation
+ *    is moved to the referencing <use> element that is created.)
+ *
+ * Possible improvements:
+ *
+ *   Move objects inside symbol so bbox corner at 0,0 (see marker/pattern)
+ *
+ *   For SVG2, set 'refX' 'refY' to object center (with compensating shift in <use>
+ *   transformation).
  */
-void sp_selection_symbols(SPDesktop *desktop, bool /*apply*/ )
+void sp_selection_symbol(SPDesktop *desktop, bool /*apply*/ )
 {
     if (desktop == NULL) {
         return;
     }
 
     SPDocument *doc = sp_desktop_document(desktop);
-    doc->ensureUpToDate();
+    Inkscape::XML::Document *xml_doc = doc->getReprDoc();
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     // Check if something is selected.
     if (selection->isEmpty()) {
-      desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>groups</b> to convert to symbols."));
+      desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>objects</b> to convert to symbol."));
       return;
     }
+
+    doc->ensureUpToDate();
 
     GSList *items = g_slist_copy(const_cast<GSList *>(selection->list()));
-    bool hasWorked = false;
 
-    for ( GSList const *iter=items; iter != NULL ; iter = iter->next ) {
-      SPObject *object = reinterpret_cast<SPObject *>( iter->data );
+    // Keep track of parent, this is where <use> will be inserted.
+    Inkscape::XML::Node *the_first_repr = reinterpret_cast<SPObject *>( items->data )->getRepr();
+    Inkscape::XML::Node *the_parent_repr = the_first_repr->parent();
 
-      // Require that we really have a group.
-      if( SP_IS_GROUP( object ) ) {
-        sp_selection_symbol( doc, object );
-        hasWorked = true;
-      }
+    // Find out if we have a single group
+    bool single_group = false;
+    SPObject *the_group = NULL;
+    Geom::Affine transform;
+    if( g_slist_length( items ) == 1 ) {
+        SPObject *object = reinterpret_cast<SPObject *>( items->data );
+        if( SP_IS_GROUP( object ) ) {
+            single_group = true;
+            the_group = object;
+
+            if( !sp_svg_transform_read( object->getAttribute("transform"), &transform ))
+                transform = Geom::identity();
+
+            if( transform.isTranslation() ) {
+
+                // Create new list from group children.
+                g_slist_free(items);
+                items = object->childList(false);
+
+                // Hack: Temporarily set clone compensation to unmoved, so that we can move clone-originals
+                // without disturbing clones.
+                // See ActorAlign::on_button_click() in src/ui/dialog/align-and-distribute.cpp
+                Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+                int saved_compensation = prefs->getInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
+                prefs->setInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
+
+                // Remove transform on group, updating clones.
+                SP_ITEM(object)->doWriteTransform(object->getRepr(), Geom::identity());
+
+                // restore compensation setting
+                prefs->setInt("/options/clonecompensation/value", saved_compensation);
+            }
+        }
     }
 
-    g_slist_free(items);
+    // Create new <symbol>
+    Inkscape::XML::Node *defsrepr = doc->getDefs()->getRepr();
+    Inkscape::XML::Node *symbol_repr = xml_doc->createElement("svg:symbol");
+    defsrepr->appendChild(symbol_repr);
 
-    if( !hasWorked ) {
-      desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("No <b>groups</b> converted to symbols."));
-      return;
+    // For a single group, copy relevant attributes.
+    if( single_group ) {
+
+        symbol_repr->setAttribute("style",  the_group->getAttribute("style"));
+        symbol_repr->setAttribute("class",  the_group->getAttribute("class"));
+        symbol_repr->setAttribute("id",     the_group->getAttribute("id")   );
+
+        // This should eventually be replaced by 'refX' and 'refY' once SVG WG approves it.
+        // It is done here for round-tripping
+        symbol_repr->setAttribute("inkscape:transform-center-x",
+                                  the_group->getAttribute("inkscape:transform-center-x"));
+        symbol_repr->setAttribute("inkscape:transform-center-y",
+                                  the_group->getAttribute("inkscape:transform-center-y"));
+
+        the_group->setAttribute("style", NULL);
+        std::string id = symbol_repr->attribute("id");
+        id += "_transform";
+        the_group->setAttribute("id", id.c_str());
+
     }
 
-    selection->clear();
-    // Group just disappears, nothing to select.
-
-    DocumentUndo::done(doc, SP_VERB_EDIT_SYMBOL, _("Group to symbol"));
-}
-
-void sp_selection_symbol(SPDocument *doc, SPObject *group)
-{
-    Inkscape::XML::Document *xml_doc = doc->getReprDoc();
-
-    Inkscape::XML::Node *symbol = xml_doc->createElement("svg:symbol");
-    symbol->setAttribute("style",     group->getAttribute("style"));
-    symbol->setAttribute("title",     group->getAttribute("title"));
-    symbol->setAttribute("transform", group->getAttribute("transform"));
-
-    Glib::ustring id = group->getAttribute("id");
-
-    // Now we need to copy all children of group
-    GSList* children = group->childList(false);
-    children = g_slist_reverse(children);
-    for (GSList* i = children; i != NULL; i = i->next ) {
-        SPObject* child = SP_OBJECT(i->data);
-        Inkscape::XML::Node *dup = child->getRepr()->duplicate(xml_doc);
-        symbol->appendChild(dup);
-        child->deleteObject(true);
+    // Move selected items to new <symbol>
+    for (GSList *i = items; i != NULL; i = i->next) {
+      Inkscape::XML::Node *repr = SP_OBJECT(i->data)->getRepr();
+      repr->parent()->removeChild(repr);
+      symbol_repr->addChild(repr,NULL);
     }
 
-    // Need to delete <g>; all <use> elements that referenced <g> should
-    // auto-magically reference <symbol>.
-    doc->getDefs()->getRepr()->appendChild(symbol);
-    // Mysterious, must set symbol ID before deleting group or all <use> items
-    // get turned into groups. (Linked to unlinking clones?)
-    symbol->setAttribute("id",id.c_str());
+    if( single_group && transform.isTranslation() ) {
+        the_group->deleteObject(true);
+    }
 
-    // Create a clone of the symbol to replace the deleted group.
+    // Create <use> pointing to new symbol (to replace the moved objects).
     Inkscape::XML::Node *clone = xml_doc->createElement("svg:use");
-    clone->setAttribute("x", "0", false);
-    clone->setAttribute("y", "0", false);
-    gchar *href_str = g_strdup_printf("#%s", id.c_str());
+
+    const gchar *symbol_id = symbol_repr->attribute("id");
+    gchar *href_str = g_strdup_printf("#%s", symbol_id);
     clone->setAttribute("xlink:href", href_str, false);
     g_free(href_str);
 
-    clone->setAttribute("inkscape:transform-center-x", group->getAttribute("inkscape:transform-center-x"), false);
-    clone->setAttribute("inkscape:transform-center-y", group->getAttribute("inkscape:transform-center-y"), false);
-    group->parent->getRepr()->appendChild(clone);
+    the_parent_repr->appendChild(clone);
 
-    group->deleteObject(true);
+    if( single_group && transform.isTranslation() ) {
+        if( !transform.isIdentity() )
+            clone->setAttribute("transform", sp_svg_transform_write( transform ));
+    }
 
-    g_slist_free(children);
+    // Change selection to new <use> element.
+    selection->set(clone);
 
-    Inkscape::GC::release(symbol);
+    // Clean up
+    Inkscape::GC::release(symbol_repr);
+    g_slist_free(items);
+
+    DocumentUndo::done(doc, SP_VERB_EDIT_SYMBOL, _("Group to symbol"));
 }
 
 /*
@@ -3049,48 +3098,64 @@ void sp_selection_unsymbol(SPDesktop *desktop)
     SPObject* symbol = selection->single();
  
     // Make sure we have only one object in selection.
-    // Require that we really have a <use> that references a <symbol>.
+    // Require that we really have a <symbol>.
     if( symbol == NULL || !SP_IS_SYMBOL( symbol ))  {
-        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select only one <b>symbol</b> to convert to group."));
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select only one <b>symbol</b> in Symbol dialog to convert to group."));
         return;
     }
 
     doc->ensureUpToDate();
 
+    // Create new <g> and insert in current layer
     Inkscape::XML::Node *group = xml_doc->createElement("svg:g");
-    group->setAttribute("style",     symbol->getAttribute("style"));
-    group->setAttribute("title",     symbol->getAttribute("title"));
-    group->setAttribute("transform", symbol->getAttribute("transform"));
+    desktop->currentLayer()->getRepr()->appendChild(group);
 
-    Glib::ustring id = symbol->getAttribute("id");
-
-    // Now we need to copy all children of symbol
+    // Move all children of symbol to group
     GSList* children = symbol->childList(false);
-    children = g_slist_reverse(children);
+
+    // Converting a group to a symbol inserts a group for non-translational transform.
+    // In converting a symbol back to a group we strip out the inserted group (or any other
+    // group that only adds a transform to the symbol content).
+    if( g_slist_length( children ) == 1 ) {
+        SPObject *object = reinterpret_cast<SPObject *>( children->data );
+        if( SP_IS_GROUP( object ) ) {
+            if( object->getAttribute("style") == NULL ||
+                object->getAttribute("class") == NULL ) {
+
+                group->setAttribute("transform", object->getAttribute("transform"));
+                g_slist_free(children);
+                children = object->childList(false);
+            }
+        }
+    }
+        
     for (GSList* i = children; i != NULL; i = i->next ) {
-        SPObject* child = SP_OBJECT(i->data);
-        Inkscape::XML::Node *dup = child->getRepr()->duplicate(xml_doc);
-        group->appendChild(dup);
-        child->deleteObject(true);
+        Inkscape::XML::Node *repr = SP_OBJECT(i->data)->getRepr();
+        repr->parent()->removeChild(repr);
+        group->addChild(repr,NULL);
     }
 
-    // So we insert <g> inside the current layer
-    SPObject *parent = desktop->currentLayer();
+    // Copy relevant attributes
+    group->setAttribute("style", symbol->getAttribute("style"));
+    group->setAttribute("class", symbol->getAttribute("class"));
+    group->setAttribute("inkscape:transform-center-x",
+                        symbol->getAttribute("inkscape:transform-center-x"));
+    group->setAttribute("inkscape:transform-center-y",
+                        symbol->getAttribute("inkscape:transform-center-y"));
 
-    // Need to delete <symbol>; all other <use> elements that referenced <symbol> should
-    // auto-magically reference <g>.
-    symbol->setAttribute("id","todelete");
-    group->setAttribute("id",id.c_str()); // After we delete symbol with same id.
+
+    // Need to delete <symbol>; all <use> elements that referenced <symbol> should
+    // auto-magically reference <g> (if <symbol> deleted after setting <g> 'id').
+    Glib::ustring id = symbol->getAttribute("id");
+    group->setAttribute("id",id.c_str());
     symbol->deleteObject(true);
-    parent->getRepr()->appendChild(group);
 
+    // Change selection to new <g> element.
     SPItem *group_item = static_cast<SPItem *>(sp_desktop_document(desktop)->getObjectByRepr(group));
-    Inkscape::GC::release(group);
-    selection->clear();
     selection->set(group_item);
 
-    // Need to signal Symbol dialog to update
-
+    // Clean up
+    Inkscape::GC::release(group);
     g_slist_free(children);
 
     DocumentUndo::done(doc, SP_VERB_EDIT_UNSYMBOL, _("Group from symbol"));

@@ -77,8 +77,8 @@
 #include <cairo-ps.h>
 #endif
 
-//#define TRACE(_args) g_printf _args
-#define TRACE(_args)
+#define TRACE(_args) g_printf _args
+//#define TRACE(_args)
 //#define TEST(_args) _args
 #define TEST(_args)
 
@@ -628,7 +628,7 @@ CairoRenderer::setupDocument(CairoRenderContext *ctx, SPDocument *doc, bool page
     ctx->_width = d.width();
     ctx->_height = d.height();
 
-    TRACE(("setupDocument: %f x %f\n", ctx->_width, ctx->_height));
+    TRACE(("Cairo Renderer: setupDocument: %f x %f\n", ctx->_width, ctx->_height));
 
     bool ret = ctx->setupSurface(ctx->_width, ctx->_height);
 

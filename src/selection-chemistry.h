@@ -69,8 +69,7 @@ void sp_selection_clone_original_path_lpe(SPDesktop *desktop);
 void sp_selection_to_marker(SPDesktop *desktop, bool apply = true);
 void sp_selection_to_guides(SPDesktop *desktop);
 
-void sp_selection_symbols(SPDesktop *desktop, bool apply = true);
-void sp_selection_symbol(SPDocument *doc, SPObject *group);
+void sp_selection_symbol(SPDesktop *desktop, bool apply = true);
 void sp_selection_unsymbol(SPDesktop *desktop);
 
 void sp_selection_tile(SPDesktop *desktop, bool apply = true);
