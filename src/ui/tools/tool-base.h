@@ -215,9 +215,31 @@ void sp_toggle_dropper(SPDesktop *dt);
 
 bool sp_event_context_knot_mouseover(ToolBase *ec);
 
+} // namespace Tools
+
+//#include <type_traits>
+
+namespace Tool {
+
+template<class Derived, typename T>
+bool is_a(const T* t) {
+    //static_assert(std::is_base_of<Tools::ToolBase, Derived>(), "Destination type not derived from ToolBase.");
+    //static_assert(std::is_convertible<const Tools::ToolBase*, const T*>(), "Cannot cast passed pointer to ToolBase*.");
+
+    return dynamic_cast<const Derived*>(static_cast<const Tools::ToolBase*>(t)) != NULL;
 }
+
+template<class Derived, typename T>
+Derived* to(T* t) {
+    //static_assert(std::is_base_of<Tools::ToolBase, Derived>(), "Destination type not derived from ToolBase.");
+    //static_assert(std::is_convertible<Tools::ToolBase*, T*>(), "Cannot cast passed pointer to ToolBase*.");
+
+    return dynamic_cast<Derived*>(static_cast<Tools::ToolBase*>(t));
 }
-}
+
+} // namespace Tool
+} // namespace UI
+} // namespace Inkscape
 
 #endif // SEEN_SP_EVENT_CONTEXT_H
 
