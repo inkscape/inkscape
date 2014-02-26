@@ -81,16 +81,14 @@ const std::string& LpeTool::getPrefsPath() {
 
 const std::string LpeTool::prefsPath = "/tools/lpetool";
 
-LpeTool::LpeTool() : PenTool() {
-	this->mode = Inkscape::LivePathEffect::BEND_PATH;
-	this->shape_editor = 0;
-
-	this->cursor_shape = cursor_crosshairs_xpm;
-    this->hot_x = 7;
-    this->hot_y = 7;
-
-    this->canvas_bbox = NULL;
-    this->measuring_items = new std::map<SPPath *, SPCanvasItem*>;
+LpeTool::LpeTool()
+    : PenTool(cursor_crosshairs_xpm, 7, 7)
+    , shape_editor(NULL)
+    , canvas_bbox(NULL)
+    , mode(Inkscape::LivePathEffect::BEND_PATH)
+// TODO: pointer?
+    , measuring_items(new std::map<SPPath *, SPCanvasItem*>)
+{
 }
 
 LpeTool::~LpeTool() {

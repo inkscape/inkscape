@@ -91,37 +91,26 @@ const std::string& TextTool::getPrefsPath() {
 const std::string TextTool::prefsPath = "/tools/text";
 
 
-TextTool::TextTool() : ToolBase() {
-	this->preedit_string = 0;
-	this->unipos = 0;
-
-    this->cursor_shape = cursor_text_xpm;
-    this->hot_x = 7;
-    this->hot_y = 7;
-
-    this->xp = 0;
-    this->yp = 0;
-    this->tolerance = 0;
-    this->within_tolerance = false;
-
-    this->imc = NULL;
-
-    this->text = NULL;
-    this->pdoc = Geom::Point(0, 0);
-
-    this->unimode = false;
-
-    this->cursor = NULL;
-    this->indicator = NULL;
-    this->frame = NULL;
-    this->grabbed = NULL;
-    this->timeout = 0;
-    this->show = FALSE;
-    this->phase = 0;
-    this->nascent_object = 0;
-    this->over_text = 0;
-    this->dragging = 0;
-    this->creating = 0;
+TextTool::TextTool()
+    : ToolBase(cursor_text_xpm, 7, 7)
+    , imc(NULL)
+    , text(NULL)
+    , pdoc(0, 0)
+    , unimode(false)
+    , unipos(0)
+    , cursor(NULL)
+    , indicator(NULL)
+    , frame(NULL)
+    , timeout(0)
+    , show(false)
+    , phase(false)
+    , nascent_object(false)
+    , over_text(false)
+    , dragging(0)
+    , creating(false)
+    , grabbed(NULL)
+    , preedit_string(NULL)
+{
 }
 
 TextTool::~TextTool() {

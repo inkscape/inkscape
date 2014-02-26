@@ -50,9 +50,9 @@ public:
     gdouble pressure;
 
     /* attributes */
-    guint dragging : 1;           /* mouse state: mouse is dragging */
-    guint usepressure : 1;
-    guint usetilt : 1;
+    bool dragging;           /* mouse state: mouse is dragging */
+    bool usepressure;
+    bool usetilt;
 
     double width;
     double force;

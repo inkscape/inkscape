@@ -75,20 +75,18 @@ const std::string& MeshTool::getPrefsPath() {
 
 const std::string MeshTool::prefsPath = "/tools/mesh";
 
-MeshTool::MeshTool() : ToolBase() {
-	this->selcon = 0;
-	this->node_added = false;
-	this->subselcon = 0;
+// TODO: The gradient tool class looks like a 1:1 copy.
 
-    this->cursor_addnode = false;
-    this->cursor_shape = cursor_gradient_xpm;
-    this->hot_x = 4;
-    this->hot_y = 4;
-    this->xp = 0;
-    this->yp = 0;
+MeshTool::MeshTool()
+    : ToolBase(cursor_gradient_xpm, 4, 4)
+    , cursor_addnode(false)
+    , node_added(false)
+// TODO: Why are these connections stored as pointers?
+    , selcon(NULL)
+    , subselcon(NULL)
+{
+    // TODO: This value is overwritten in the root handler
     this->tolerance = 6;
-    this->within_tolerance = false;
-    this->item_to_select = NULL;
 }
 
 MeshTool::~MeshTool() {

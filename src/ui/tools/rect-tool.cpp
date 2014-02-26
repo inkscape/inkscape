@@ -66,20 +66,12 @@ const std::string& RectTool::getPrefsPath() {
 
 const std::string RectTool::prefsPath = "/tools/shapes/rect";
 
-RectTool::RectTool() : ToolBase() {
-    this->cursor_shape = cursor_rect_xpm;
-    this->hot_x = 4;
-    this->hot_y = 4;
-    this->xp = 0;
-    this->yp = 0;
-    this->tolerance = 0;
-    this->within_tolerance = false;
-    this->item_to_select = NULL;
-
-    this->rect = NULL;
-
-    this->rx = 0.0;
-    this->ry = 0.0;
+RectTool::RectTool()
+    : ToolBase(cursor_rect_xpm, 4, 4)
+    , rect(NULL)
+    , rx(0)
+    , ry(0)
+{
 }
 
 void RectTool::finish() {

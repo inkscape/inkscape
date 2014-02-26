@@ -134,35 +134,30 @@ static void sp_spray_scale_rel(Geom::Point c, SPDesktop */*desktop*/, SPItem *it
     item->doWriteTransform(item->getRepr(), item->transform);
 }
 
-SprayTool::SprayTool() : ToolBase() {
-	this->usetilt = 0;
-	this->dilate_area = 0;
-	this->usetext = false;
-	this->population = 0;
-	this->is_drawing = false;
-	this->mode = 0;
-	this->usepressure = 0;
-
-    this->cursor_shape = cursor_spray_xpm;
-    this->hot_x = 4;
-    this->hot_y = 4;
-
-    /* attributes */
-    this->dragging = FALSE;
-    this->distrib = 1;
-    this->width = 0.2;
-    this->force = 0.2;
-    this->ratio = 0;
-    this->tilt = 0;
-    this->mean = 0.2;
-    this->rotation_variation = 0;
-    this->standard_deviation = 0.2;
-    this->scale = 1;
-    this->scale_variation = 1;
-    this->pressure = TC_DEFAULT_PRESSURE;
-
-    this->is_dilating = false;
-    this->has_dilated = false;
+SprayTool::SprayTool()
+    : ToolBase(cursor_spray_xpm, 4, 4)
+    , pressure(TC_DEFAULT_PRESSURE)
+    , dragging(false)
+    , usepressure(0)
+    , usetilt(0)
+    , usetext(false)
+    , width(0.2)
+    , ratio(0)
+    , tilt(0)
+    , rotation_variation(0)
+    , force(0.2)
+    , population(0)
+    , scale_variation(1)
+    , scale(1)
+    , mean(0.2)
+    , standard_deviation(0.2)
+    , distrib(1)
+    , mode(0)
+    , is_drawing(false)
+    , is_dilating(false)
+    , has_dilated(false)
+    , dilate_area(NULL)
+{
 }
 
 SprayTool::~SprayTool() {

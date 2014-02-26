@@ -23,40 +23,41 @@ namespace Inkscape {
 namespace UI {
 namespace Tools {
 
-DynamicBase::DynamicBase() :
-    ToolBase(),
-    accumulated(NULL),
-    segments(NULL),
-    currentshape(NULL),
-    currentcurve(NULL),
-    cal1(NULL),
-    cal2(NULL),
-    point1(),
-    point2(),
-    repr(NULL),
-    cur(0,0),
-    vel(0,0),
-    vel_max(0),
-    acc(0,0),
-    ang(0,0),
-    last(0,0),
-    del(0,0),
-    pressure(DEFAULT_PRESSURE),
-    xtilt(0),
-    ytilt(0),
-    dragging(FALSE),
-    usepressure(FALSE),
-    usetilt(FALSE),
-    mass(0.3),
-    drag(DRAG_DEFAULT),
-    angle(30.0),
-    width(0.2),
-    vel_thin(0.1),
-    flatness(0.9),
-    tremor(0),
-    cap_rounding(0),
-    is_drawing(false),
-    abs_width(false)
+DynamicBase::DynamicBase(gchar const *const *cursor_shape, gint hot_x, gint hot_y)
+    : ToolBase(cursor_shape, hot_x, hot_y)
+    , accumulated(NULL)
+    , segments(NULL)
+    , currentshape(NULL)
+    , currentcurve(NULL)
+    , cal1(NULL)
+    , cal2(NULL)
+    , point1()
+    , point2()
+    , npoints(0)
+    , repr(NULL)
+    , cur(0, 0)
+    , vel(0, 0)
+    , vel_max(0)
+    , acc(0, 0)
+    , ang(0, 0)
+    , last(0, 0)
+    , del(0, 0)
+    , pressure(DEFAULT_PRESSURE)
+    , xtilt(0)
+    , ytilt(0)
+    , dragging(false)
+    , usepressure(false)
+    , usetilt(false)
+    , mass(0.3)
+    , drag(DRAG_DEFAULT)
+    , angle(30.0)
+    , width(0.2)
+    , vel_thin(0.1)
+    , flatness(0.9)
+    , tremor(0)
+    , cap_rounding(0)
+    , is_drawing(false)
+    , abs_width(false)
 {
 }
 

@@ -182,54 +182,39 @@ const std::string& ConnectorTool::getPrefsPath() {
 
 const std::string ConnectorTool::prefsPath = "/tools/connector";
 
-ConnectorTool::ConnectorTool() : ToolBase() {
-	this->red_curve = 0;
-	this->isOrthogonal = false;
-	this->c1 = 0;
-	this->red_bpath = 0;
-	this->green_curve = 0;
-	this->selection = 0;
-	this->cl0 = 0;
-	this->cl1 = 0;
-	this->c0 = 0;
-
-    this->cursor_shape = cursor_connector_xpm;
-    this->hot_x = 1;
-    this->hot_y = 1;
-    this->xp = 0;
-    this->yp = 0;
-
-    this->red_color = 0xff00007f;
-
-    this->newconn = NULL;
-    this->newConnRef = NULL;
-    this->curvature = 0.0;
-
-    this->sel_changed_connection = sigc::connection();
-
-    this->active_shape = NULL;
-    this->active_shape_repr = NULL;
-    this->active_shape_layer_repr = NULL;
-
-    this->active_conn = NULL;
-    this->active_conn_repr = NULL;
-
-    this->active_handle = NULL;
-
-    this->selected_handle = NULL;
-
-    this->clickeditem = NULL;
-    this->clickedhandle = NULL;
-
+ConnectorTool::ConnectorTool()
+    : ToolBase(cursor_connector_xpm, 1, 1)
+    , selection(NULL)
+    , npoints(0)
+    , state(SP_CONNECTOR_CONTEXT_IDLE)
+    , red_bpath(NULL)
+    , red_curve(NULL)
+    , red_color(0xff00007f)
+    , green_curve(NULL)
+    , newconn(NULL)
+    , newConnRef(NULL)
+    , curvature(0.0)
+    , isOrthogonal(false)
+    , active_shape(NULL)
+    , active_shape_repr(NULL)
+    , active_shape_layer_repr(NULL)
+    , active_conn(NULL)
+    , active_conn_repr(NULL)
+    , active_handle(NULL)
+    , selected_handle(NULL)
+    , clickeditem(NULL)
+    , clickedhandle(NULL)
+    , shref(NULL)
+    , ehref(NULL)
+    , c0(NULL)
+    , c1(NULL)
+    , cl0(NULL)
+    , cl1(NULL)
+{
     for (int i = 0; i < 2; ++i) {
         this->endpt_handle[i] = NULL;
         this->endpt_handler_id[i] = 0;
     }
-    
-    this->shref = NULL;
-    this->ehref = NULL;
-    this->npoints = 0;
-    this->state = SP_CONNECTOR_CONTEXT_IDLE;
 }
 
 ConnectorTool::~ConnectorTool() {

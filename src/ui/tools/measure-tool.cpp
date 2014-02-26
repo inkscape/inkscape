@@ -236,12 +236,10 @@ void createAngleDisplayCurve(SPDesktop *desktop, Geom::Point const &center, Geom
 } // namespace
 
 
-MeasureTool::MeasureTool() : ToolBase() {
-	this->grabbed = 0;
-
-    this->cursor_shape = cursor_measure_xpm;
-    this->hot_x = 4;
-    this->hot_y = 4;
+MeasureTool::MeasureTool()
+    : ToolBase(cursor_measure_xpm, 4, 4)
+    , grabbed(NULL)
+{
 }
 
 MeasureTool::~MeasureTool() {

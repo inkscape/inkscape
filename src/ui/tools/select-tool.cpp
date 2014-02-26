@@ -90,24 +90,24 @@ sp_load_handles(int start, int count, char const **xpm) {
     }
 }
 
-SelectTool::SelectTool() : ToolBase() {
-	this->grabbed = 0;
-	this->item = 0;
-
-    this->dragging = FALSE;
-    this->moved = FALSE;
-    this->button_press_shift = false;
-    this->button_press_ctrl = false;
-    this->button_press_alt = false;
-    this->cycling_items = NULL;
-    this->cycling_items_cmp = NULL;
-    this->cycling_items_selected_before = NULL;
-    this->cycling_cur_item = NULL;
-    this->cycling_wrap = true;
-    this->_seltrans = NULL;
-    this->_describer = NULL;
-
-
+SelectTool::SelectTool()
+    // Don't load a default cursor
+    : ToolBase(NULL, 0, 0)
+    , dragging(false)
+    , moved(false)
+    , button_press_shift(false)
+    , button_press_ctrl(false)
+    , button_press_alt(false)
+    , cycling_items(NULL)
+    , cycling_items_cmp(NULL)
+    , cycling_items_selected_before(NULL)
+    , cycling_cur_item(NULL)
+    , cycling_wrap(true)
+    , item(NULL)
+    , grabbed(NULL)
+    , _seltrans(NULL)
+    , _describer(NULL)
+{
     // cursors in select context
     CursorSelectMouseover = sp_cursor_new_from_xpm(cursor_select_m_xpm , 1, 1);
     CursorSelectDragging = sp_cursor_new_from_xpm(cursor_select_d_xpm , 1, 1);

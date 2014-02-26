@@ -89,29 +89,44 @@ const std::string& PenTool::getPrefsPath() {
 
 const std::string PenTool::prefsPath = "/tools/freehand/pen";
 
-PenTool::PenTool() : FreehandBase() {
-	this->polylines_only = false;
-	this->polylines_paraxial = false;
-	this->expecting_clicks_for_LPE = 0;
+PenTool::PenTool()
+    : FreehandBase(cursor_pen_xpm, 4, 4)
+    , p()
+    , npoints(0)
+    , mode(MODE_CLICK)
+    , state(POINT)
+    , polylines_only(false)
+    , polylines_paraxial(false)
+    , num_clicks(0)
+    , expecting_clicks_for_LPE(0)
+    , waiting_LPE(NULL)
+    , waiting_item(NULL)
+    , c0(NULL)
+    , c1(NULL)
+    , cl0(NULL)
+    , cl1(NULL)
+    , events_disabled(false)
+{
+}
 
-    this->cursor_shape = cursor_pen_xpm;
-    this->hot_x = 4;
-    this->hot_y = 4;
-
-    this->npoints = 0;
-    this->mode = MODE_CLICK;
-    this->state = POINT;
-
-    this->c0 = NULL;
-    this->c1 = NULL;
-    this->cl0 = NULL;
-    this->cl1 = NULL;
-
-    this->events_disabled = 0;
-
-    this->num_clicks = 0;
-    this->waiting_LPE = NULL;
-    this->waiting_item = NULL;
+PenTool::PenTool(gchar const *const *cursor_shape, gint hot_x, gint hot_y)
+    : FreehandBase(cursor_shape, hot_x, hot_y)
+    , p()
+    , npoints(0)
+    , mode(MODE_CLICK)
+    , state(POINT)
+    , polylines_only(false)
+    , polylines_paraxial(false)
+    , num_clicks(0)
+    , expecting_clicks_for_LPE(0)
+    , waiting_LPE(NULL)
+    , waiting_item(NULL)
+    , c0(NULL)
+    , c1(NULL)
+    , cl0(NULL)
+    , cl1(NULL)
+    , events_disabled(false)
+{
 }
 
 PenTool::~PenTool() {
@@ -1305,13 +1320,13 @@ static void spdc_pen_finish(PenTool *const pc, gboolean const closed)
 }
 
 static void pen_disable_events(PenTool *const pc) {
-  pc->events_disabled++;
+    pc->events_disabled = true;
 }
 
 static void pen_enable_events(PenTool *const pc) {
-  g_return_if_fail(pc->events_disabled != 0);
+    g_return_if_fail(pc->events_disabled != 0);
 
-  pc->events_disabled--;
+    pc->events_disabled = false;
 }
 
 void sp_pen_context_wait_for_LPE_mouse_clicks(PenTool *pc, Inkscape::LivePathEffect::EffectType effect_type,

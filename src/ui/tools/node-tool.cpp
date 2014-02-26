@@ -126,30 +126,27 @@ const std::string NodeTool::prefsPath = "/tools/nodes";
 
 SPCanvasGroup *create_control_group(SPDesktop *d);
 
-NodeTool::NodeTool() : ToolBase() {
-	this->show_handles = false;
-	this->single_node_transform_handles = false;
-	this->show_transform_handles = false;
-	this->cursor_drag = false;
-	this->live_objects = false;
-	this->edit_clipping_paths = false;
-	this->live_outline = false;
-	this->flashed_item = 0;
-	this->_transform_handle_group = 0;
-	this->show_path_direction = false;
-	this->_last_over = 0;
-	this->edit_masks = false;
-	this->show_outline = false;
-	this->flash_tempitem = 0;
-
-    this->cursor_shape = cursor_node_xpm;
-    this->hot_x = 1;
-    this->hot_y = 1;
-
-    this->_selected_nodes = 0;
-    this->_multipath = 0;
-    this->_selector = 0;
-    this->_path_data = 0;
+NodeTool::NodeTool()
+    : ToolBase(cursor_node_xpm, 1, 1)
+    , _selected_nodes(NULL)
+    , _multipath(NULL)
+    , edit_clipping_paths(false)
+    , edit_masks(false)
+    , flashed_item(NULL)
+    , flash_tempitem(NULL)
+    , _selector(NULL)
+    , _path_data(NULL)
+    , _transform_handle_group(NULL)
+    , _last_over(NULL)
+    , cursor_drag(false)
+    , show_handles(false)
+    , show_outline(false)
+    , live_outline(false)
+    , live_objects(false)
+    , show_path_direction(false)
+    , show_transform_handles(false)
+    , single_node_transform_handles(false)
+{
 }
 
 SPCanvasGroup *create_control_group(SPDesktop *d)

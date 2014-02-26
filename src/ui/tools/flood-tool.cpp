@@ -94,17 +94,12 @@ const std::string& FloodTool::getPrefsPath() {
 
 const std::string FloodTool::prefsPath = "/tools/paintbucket";
 
-FloodTool::FloodTool() : ToolBase() {
-    this->cursor_shape = cursor_paintbucket_xpm;
-    this->hot_x = 11;
-    this->hot_y = 30;
-    this->xp = 0;
-    this->yp = 0;
+FloodTool::FloodTool()
+    : ToolBase(cursor_paintbucket_xpm, 11, 30)
+    , item(NULL)
+{
+    // TODO: Why does the flood tool use a hardcoded tolerance instead of a pref?
     this->tolerance = 4;
-    this->within_tolerance = false;
-    this->item_to_select = NULL;
-
-    this->item = NULL;
 }
 
 FloodTool::~FloodTool() {

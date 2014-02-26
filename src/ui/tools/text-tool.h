@@ -61,15 +61,15 @@ public:
     SPCanvasItem *frame; // hiliting the first frame of flowtext; FIXME: make this a list to accommodate arbitrarily many chained shapes
     std::vector<SPCanvasItem*> text_selection_quads;
     gint timeout;
-    guint show : 1;
-    guint phase : 1;
-    guint nascent_object : 1; // true if we're clicked on canvas to put cursor, but no text typed yet so ->text is still NULL
+    bool show;
+    bool phase;
+    bool nascent_object; // true if we're clicked on canvas to put cursor, but no text typed yet so ->text is still NULL
 
-    guint over_text : 1; // true if cursor is over a text object
+    bool over_text; // true if cursor is over a text object
 
     guint dragging : 2; // dragging selection over text
 
-    guint creating : 1; // dragging rubberband to create flowtext
+    bool creating; // dragging rubberband to create flowtext
     SPCanvasItem *grabbed; // we grab while we are creating, to get events even if the mouse goes out of the window
     Geom::Point p0; // initial point if the flowtext rect
 

@@ -105,30 +105,24 @@ const std::string& CalligraphicTool::getPrefsPath() {
 
 const std::string CalligraphicTool::prefsPath = "/tools/calligraphic";
 
-CalligraphicTool::CalligraphicTool() : DynamicBase() {
-    this->cursor_shape = cursor_calligraphy_xpm;
-    this->hot_x = 4;
-    this->hot_y = 4;
-
+CalligraphicTool::CalligraphicTool()
+    : DynamicBase(cursor_calligraphy_xpm, 4, 4)
+    , keep_selected(true)
+    , hatch_spacing(0)
+    , hatch_spacing_step(0)
+    , hatch_item(NULL)
+    , hatch_livarot_path(NULL)
+    , hatch_last_nearest(Geom::Point(0,0))
+    , hatch_last_pointer(Geom::Point(0,0))
+    , hatch_escaped(false)
+    , hatch_area(NULL)
+    , just_started_drawing(false)
+    , trace_bg(false)
+{
     this->vel_thin = 0.1;
     this->flatness = 0.9;
     this->cap_rounding = 0.0;
-
     this->abs_width = false;
-    this->keep_selected = true;
-
-    this->hatch_spacing = 0;
-    this->hatch_spacing_step = 0;
-
-    this->hatch_last_nearest = Geom::Point(0,0);
-    this->hatch_last_pointer = Geom::Point(0,0);
-    this->hatch_escaped = false;
-    this->hatch_area = NULL;
-    this->hatch_item = NULL;
-    this->hatch_livarot_path = NULL;
-
-    this->trace_bg = false;
-    this->just_started_drawing = false;
 }
 
 CalligraphicTool::~CalligraphicTool() {

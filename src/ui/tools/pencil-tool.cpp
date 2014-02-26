@@ -83,20 +83,15 @@ const std::string& PencilTool::getPrefsPath() {
 
 const std::string PencilTool::prefsPath = "/tools/freehand/pencil";
 
-PencilTool::PencilTool() :
-    FreehandBase(),
-    p(),
-    npoints(0),
-    state(SP_PENCIL_CONTEXT_IDLE),
-    req_tangent(0,0),
-    is_drawing(false),
-    ps(),
-    sketch_interpolation(Geom::Piecewise<Geom::D2<Geom::SBasis> >())// since PencilTool is not properly constructed...
+PencilTool::PencilTool()
+    : FreehandBase(cursor_pencil_xpm, 4, 4)
+    , p()
+    , npoints(0)
+    , state(SP_PENCIL_CONTEXT_IDLE)
+    , req_tangent(0, 0)
+    , is_drawing(false)
+    , sketch_n(0)
 {
-    this->cursor_shape = cursor_pencil_xpm;
-    this->hot_x = 4;
-    this->hot_y = 4;
-    this->sketch_n = 0;
 }
 
 void PencilTool::setup() {

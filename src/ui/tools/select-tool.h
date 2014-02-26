@@ -35,8 +35,8 @@ public:
 	SelectTool();
 	virtual ~SelectTool();
 
-	guint dragging : 1;
-	guint moved : 1;
+	bool dragging;
+	bool moved;
 	bool button_press_shift;
 	bool button_press_ctrl;
 	bool button_press_alt;

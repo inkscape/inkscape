@@ -74,20 +74,16 @@ const std::string& GradientTool::getPrefsPath() {
 const std::string GradientTool::prefsPath = "/tools/gradient";
 
 
-GradientTool::GradientTool() : ToolBase() {
-	this->node_added = false;
-	this->subselcon = 0;
-	this->selcon = 0;
-
-    this->cursor_addnode = false;
-    this->cursor_shape = cursor_gradient_xpm;
-    this->hot_x = 4;
-    this->hot_y = 4;
-    this->xp = 0;
-    this->yp = 0;
+GradientTool::GradientTool()
+    : ToolBase(cursor_gradient_xpm, 4, 4)
+    , cursor_addnode(false)
+    , node_added(false)
+// TODO: Why are these connections stored as pointers?
+    , selcon(NULL)
+    , subselcon(NULL)
+{
+	// TODO: This value is overwritten in the root handler
     this->tolerance = 6;
-    this->within_tolerance = false;
-    this->item_to_select = NULL;
 }
 
 GradientTool::~GradientTool() {

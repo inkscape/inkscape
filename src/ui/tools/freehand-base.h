@@ -37,13 +37,13 @@ namespace Tools {
 
 class FreehandBase : public ToolBase {
 public:
-	FreehandBase();
+	FreehandBase(gchar const *const *cursor_shape, gint hot_x, gint hot_y);
 	virtual ~FreehandBase();
 
     Inkscape::Selection *selection;
     SPCanvasItem *grab;
 
-    guint attach : 1;
+    bool attach;
 
     guint32 red_color;
     guint32 blue_color;

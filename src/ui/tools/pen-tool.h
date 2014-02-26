@@ -23,6 +23,7 @@ namespace Tools {
 class PenTool : public FreehandBase {
 public:
 	PenTool();
+	PenTool(gchar const *const *cursor_shape, gint hot_x, gint hot_y);
 	virtual ~PenTool();
 
 	enum Mode {
@@ -60,7 +61,7 @@ public:
     SPCtrlLine *cl0;
     SPCtrlLine *cl1;
     
-    unsigned int events_disabled : 1;
+    bool events_disabled;
 
 	static const std::string prefsPath;
 

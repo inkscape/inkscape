@@ -111,32 +111,25 @@ const std::string& TweakTool::getPrefsPath() {
 
 const std::string TweakTool::prefsPath = "/tools/tweak";
 
-TweakTool::TweakTool() : ToolBase() {
-	this->mode = 0;
-	this->dilate_area = 0;
-	this->usetilt = 0;
-	this->usepressure = 0;
-	this->is_drawing = false;
-	this->fidelity = 0;
-
-    this->cursor_shape = cursor_push_xpm;
-    this->hot_x = 4;
-    this->hot_y = 4;
-
-    /* attributes */
-    this->dragging = FALSE;
-
-    this->width = 0.2;
-    this->force = 0.2;
-    this->pressure = TC_DEFAULT_PRESSURE;
-
-    this->is_dilating = false;
-    this->has_dilated = false;
-
-    this->do_h = true;
-    this->do_s = true;
-    this->do_l = true;
-    this->do_o = false;
+TweakTool::TweakTool()
+    : ToolBase(cursor_push_xpm, 4, 4)
+    , pressure(TC_DEFAULT_PRESSURE)
+    , dragging(false)
+    , usepressure(false)
+    , usetilt(false)
+    , width(0.2)
+    , force(0.2)
+    , fidelity(0)
+    , mode(0)
+    , is_drawing(false)
+    , is_dilating(false)
+    , has_dilated(false)
+    , dilate_area(NULL)
+    , do_h(true)
+    , do_s(true)
+    , do_l(true)
+    , do_o(false)
+{
 }
 
 TweakTool::~TweakTool() {

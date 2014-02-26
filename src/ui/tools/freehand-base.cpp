@@ -70,37 +70,31 @@ static void spdc_flush_white(FreehandBase *dc, SPCurve *gc);
 static void spdc_reset_white(FreehandBase *dc);
 static void spdc_free_colors(FreehandBase *dc);
 
-FreehandBase::FreehandBase() : ToolBase() {
-	this->selection = 0;
-	this->grab = 0;
-	this->anchor_statusbar = false;
-
-    this->attach = FALSE;
-
-    this->red_color = 0xff00007f;
-    this->blue_color = 0x0000ff7f;
-    this->green_color = 0x00ff007f;
-    this->red_curve_is_valid = false;
-
-    this->red_bpath = NULL;
-    this->red_curve = NULL;
-
-    this->blue_bpath = NULL;
-    this->blue_curve = NULL;
-
-    this->green_bpaths = NULL;
-    this->green_curve = NULL;
-    this->green_anchor = NULL;
-    this->green_closed = false;
-
-    this->white_item = NULL;
-    this->white_curves = NULL;
-    this->white_anchors = NULL;
-
-    this->sa = NULL;
-    this->ea = NULL;
-
-    this->waiting_LPE_type = Inkscape::LivePathEffect::INVALID_LPE;
+FreehandBase::FreehandBase(gchar const *const *cursor_shape, gint hot_x, gint hot_y)
+    : ToolBase(cursor_shape, hot_x, hot_y)
+    , selection(NULL)
+    , grab(NULL)
+    , attach(false)
+    , red_color(0xff00007f)
+    , blue_color(0x0000ff7f)
+    , green_color(0x00ff007f)
+    , red_bpath(NULL)
+    , red_curve(NULL)
+    , blue_bpath(NULL)
+    , blue_curve(NULL)
+    , green_bpaths(NULL)
+    , green_curve(NULL)
+    , green_anchor(NULL)
+    , green_closed(false)
+    , white_item(NULL)
+    , white_curves(NULL)
+    , white_anchors(NULL)
+    , sa(NULL)
+    , ea(NULL)
+    , waiting_LPE_type(Inkscape::LivePathEffect::INVALID_LPE)
+    , red_curve_is_valid(false)
+    , anchor_statusbar(false)
+{
 }
 
 FreehandBase::~FreehandBase() {

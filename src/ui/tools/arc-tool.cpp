@@ -69,18 +69,10 @@ const std::string& ArcTool::getPrefsPath() {
 const std::string ArcTool::prefsPath = "/tools/shapes/arc";
 
 
-ArcTool::ArcTool() : ToolBase() {
-    this->cursor_shape = cursor_ellipse_xpm;
-    this->hot_x = 4;
-    this->hot_y = 4;
-    this->xp = 0;
-    this->yp = 0;
-    this->tolerance = 0;
-    this->within_tolerance = false;
-    this->item_to_select = NULL;
-    //this->tool_url = "/tools/shapes/arc";
-
-    this->arc = NULL;
+ArcTool::ArcTool()
+    : ToolBase(cursor_ellipse_xpm, 4, 4)
+    , arc(NULL)
+{
 }
 
 void ArcTool::finish() {
@@ -142,13 +134,10 @@ void ArcTool::setup() {
 }
 
 bool ArcTool::item_handler(SPItem* item, GdkEvent* event) {
-    gint ret = FALSE;
-
     switch (event->type) {
         case GDK_BUTTON_PRESS:
             if (event->button.button == 1 && !this->space_panning) {
                 Inkscape::setup_for_drag_start(desktop, this, event);
-                ret = TRUE;
             }
             break;
             // motion and release are always on root (why?)
@@ -156,13 +145,7 @@ bool ArcTool::item_handler(SPItem* item, GdkEvent* event) {
             break;
     }
 
-//    if ((SP_EVENT_CONTEXT_CLASS(sp_arc_context_parent_class))->item_handler) {
-//        ret = (SP_EVENT_CONTEXT_CLASS(sp_arc_context_parent_class))->item_handler(event_context, item, event);
-//    }
-    // CPPIFY: ret is overwritten...
-    ret = ToolBase::item_handler(item, event);
-
-    return ret;
+    return ToolBase::item_handler(item, event);
 }
 
 bool ArcTool::root_handler(GdkEvent* event) {
@@ -173,7 +156,7 @@ bool ArcTool::root_handler(GdkEvent* event) {
 
     this->tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
 
-    gint ret = FALSE;
+    bool handled = false;
 
     switch (event->type) {
         case GDK_BUTTON_PRESS:
@@ -191,7 +174,7 @@ bool ArcTool::root_handler(GdkEvent* event) {
                                     GDK_KEY_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
                                     GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK,
                                     NULL, event->button.time);
-                ret = TRUE;
+                handled = true;
                 m.unSetup();
             }
             break;
@@ -214,7 +197,7 @@ bool ArcTool::root_handler(GdkEvent* event) {
 
                 gobble_motion_events(GDK_BUTTON1_MASK);
 
-                ret = TRUE;
+                handled = true;
             } else if (!sp_event_context_knot_mouseover(this)){
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop);
@@ -249,7 +232,7 @@ bool ArcTool::root_handler(GdkEvent* event) {
                 this->xp = 0;
                 this->yp = 0;
                 this->item_to_select = NULL;
-                ret = TRUE;
+                handled = true;
             }
             sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), event->button.time);
             break;
@@ -278,14 +261,14 @@ bool ArcTool::root_handler(GdkEvent* event) {
                 case GDK_KEY_KP_Down:
                     // prevent the zoom field from activation
                     if (!MOD__CTRL_ONLY(event))
-                        ret = TRUE;
+                        handled = true;
                     break;
 
                 case GDK_KEY_x:
                 case GDK_KEY_X:
                     if (MOD__ALT_ONLY(event)) {
                         desktop->setToolboxFocusTo ("altx-arc");
-                        ret = TRUE;
+                        handled = true;
                     }
                     break;
 
@@ -295,7 +278,7 @@ bool ArcTool::root_handler(GdkEvent* event) {
                         sp_event_context_discard_delayed_snap_event(this);
                         // if drawing, cancel, otherwise pass it up for deselecting
                         this->cancel();
-                        ret = TRUE;
+                        handled = true;
                     }
                     break;
 
@@ -316,7 +299,7 @@ bool ArcTool::root_handler(GdkEvent* event) {
                 case GDK_KEY_Delete:
                 case GDK_KEY_KP_Delete:
                 case GDK_KEY_BackSpace:
-                    ret = this->deleteSelectedDrag(MOD__CTRL_ONLY(event));
+                    handled = this->deleteSelectedDrag(MOD__CTRL_ONLY(event));
                     break;
 
                 default:
@@ -346,11 +329,11 @@ bool ArcTool::root_handler(GdkEvent* event) {
             break;
     }
 
-    if (!ret) {
-    	ret = ToolBase::root_handler(event);
+    if (!handled) {
+    	handled = ToolBase::root_handler(event);
     }
 
-    return ret;
+    return handled;
 }
 
 void ArcTool::drag(Geom::Point pt, guint state) {

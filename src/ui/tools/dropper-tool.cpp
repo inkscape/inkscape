@@ -72,21 +72,17 @@ const std::string& DropperTool::getPrefsPath() {
 
 const std::string DropperTool::prefsPath = "/tools/dropper";
 
-DropperTool::DropperTool() : ToolBase() {
-	this->R = 0;
-	this->G = 0;
-	this->B = 0;
-	this->alpha = 0;
-	this->dragging = false;
-
-	this->grabbed = 0;
-	this->area = 0;
-	this->centre = Geom::Point(0, 0);
-
-    this->cursor_shape = cursor_dropper_f_xpm;
-    this->hot_x = 7;
-    this->hot_y = 7;
-
+DropperTool::DropperTool()
+    : ToolBase(cursor_dropper_f_xpm, 7, 7)
+	, R(0)
+	, G(0)
+	, B(0)
+	, alpha(0)
+	, dragging(false)
+	, grabbed(NULL)
+	, area(NULL)
+	, centre(0, 0)
+{
     cursor_dropper_fill = sp_cursor_new_from_xpm(cursor_dropper_f_xpm , 7, 7);
     cursor_dropper_stroke = sp_cursor_new_from_xpm(cursor_dropper_s_xpm , 7, 7);
 }

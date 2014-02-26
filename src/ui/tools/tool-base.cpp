@@ -90,28 +90,26 @@ SPDesktop const& ToolBase::getDesktop() const {
     return *desktop;
 }
 
-ToolBase::ToolBase() {
-	this->hot_y = 0;
-	this->xp = 0;
-	this->cursor_shape = 0;
-	this->pref_observer = 0;
-	this->hot_x = 0;
-	this->yp = 0;
-	this->within_tolerance = false;
-	this->tolerance = 0;
-	//this->key = 0;
-	this->item_to_select = 0;
-
-    this->desktop = NULL;
-    this->cursor = NULL;
-    this->message_context = NULL;
-    this->_selcue = NULL;
-    this->_grdrag = NULL;
-    this->space_panning = false;
-    this->shape_editor = NULL;
-    this->_delayed_snap_event = NULL;
-    this->_dse_callback_in_process = false;
-    //this->tool_url = NULL;
+ToolBase::ToolBase(gchar const *const *cursor_shape, gint hot_x, gint hot_y)
+    : pref_observer(NULL)
+    , cursor(NULL)
+    , xp(0)
+    , yp(0)
+    , tolerance(0)
+    , within_tolerance(false)
+    , item_to_select(NULL)
+    , message_context(NULL)
+    , _selcue(NULL)
+    , _grdrag(NULL)
+    , shape_editor(NULL)
+    , space_panning(false)
+    , _delayed_snap_event(NULL)
+    , _dse_callback_in_process(false)
+    , desktop(NULL)
+    , cursor_shape(cursor_shape)
+    , hot_x(hot_x)
+    , hot_y(hot_y)
+{
 }
 
 ToolBase::~ToolBase() {

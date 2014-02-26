@@ -110,7 +110,8 @@ public:
     void enableGrDrag (bool enable=true);
     bool deleteSelectedDrag(bool just_one);
 
-    ToolBase();
+    ToolBase(gchar const *const *cursor_shape, gint hot_x, gint hot_y);
+
     virtual ~ToolBase();
 
     Inkscape::Preferences::Observer *pref_observer;
@@ -179,8 +180,11 @@ public:
 	SPDesktop *desktop;
 
 protected:
+	/// An xpm containing the shape of the tool's cursor.
     gchar const *const *cursor_shape;
-    gint hot_x, hot_y; ///< indicates the cursor's hot spot
+
+    /// The cursor's hot spot
+    gint hot_x, hot_y;
 
 private:
 	ToolBase(const ToolBase&);
