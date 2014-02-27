@@ -1387,8 +1387,13 @@ void SPCanvasImpl::realize(GtkWidget *widget)
     gdk_window_set_user_data (window, widget);
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    if ( prefs->getBool("/options/useextinput/value", true) )
+    if (prefs->getBool("/options/useextinput/value", true)) {
         gtk_widget_set_events(widget, attributes.event_mask);
+#if !GTK_CHECK_VERSION(3,0,0)
+        gtk_widget_set_extension_events(widget, GDK_EXTENSION_EVENTS_ALL);
+        // TODO: Extension event stuff has been deprecated in GTK+ 3
+#endif
+    }
 
 #if !GTK_CHECK_VERSION(3,0,0)
     // This does nothing in GTK+ 3

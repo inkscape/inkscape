@@ -552,11 +552,6 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     GtkStyle *style = gtk_style_copy(gtk_widget_get_style(GTK_WIDGET(dtw->canvas)));
     style->bg[GTK_STATE_NORMAL] = style->white;
     gtk_widget_set_style (GTK_WIDGET (dtw->canvas), style);
-    
-    // TODO: Extension event stuff has been removed from public API in GTK+ 3
-    // Need to check that this hasn't broken anything
-    if ( prefs->getBool("/options/useextinput/value", true) )
-      gtk_widget_set_extension_events(GTK_WIDGET (dtw->canvas) , GDK_EXTENSION_EVENTS_ALL); //set extension events for tablets, unless disabled in preferences
 #endif
 
     g_signal_connect (G_OBJECT (dtw->canvas), "event", G_CALLBACK (sp_desktop_widget_event), dtw);
