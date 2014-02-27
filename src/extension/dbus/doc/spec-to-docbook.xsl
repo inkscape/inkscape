@@ -491,7 +491,7 @@ See also:
 
 <xsl:template name="pad-spaces">
   <xsl:param name="width"/>
-  <xsl:variable name="spaces" xml:space="preserve">                                                                        </xsl:variable>
+  <xsl:variable name="spaces" select="'                                                                        '" ></xsl:variable>
   <xsl:value-of select="substring($spaces,1,$width)"/>
 </xsl:template>
 
