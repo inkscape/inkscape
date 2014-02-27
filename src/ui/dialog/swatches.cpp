@@ -777,6 +777,7 @@ public:
             defsChanged.disconnect();
             defsModified.disconnect();
             doc->doUnref();
+            doc = NULL;
         }
     }
 
@@ -859,7 +860,7 @@ bool DocTrack::queueUpdateIfNeeded( SPDocument *doc )
 
 void SwatchesPanel::_trackDocument( SwatchesPanel *panel, SPDocument *document )
 {
-    SPDocument *oldDoc = 0;
+    SPDocument *oldDoc = NULL;
     if (docPerPanel.find(panel) != docPerPanel.end()) {
         oldDoc = docPerPanel[panel];
         if (!oldDoc) {
@@ -868,7 +869,7 @@ void SwatchesPanel::_trackDocument( SwatchesPanel *panel, SPDocument *document )
     }
     if (oldDoc != document) {
         if (oldDoc) {
-            docPerPanel[panel] = 0;
+            docPerPanel[panel] = NULL;
             bool found = false;
             for (std::map<SwatchesPanel*, SPDocument*>::iterator it = docPerPanel.begin(); (it != docPerPanel.end()) && !found; ++it) {
                 found = (it->second == document);
@@ -905,11 +906,6 @@ void SwatchesPanel::_trackDocument( SwatchesPanel *panel, SPDocument *document )
                 }
             }
         }
-    }
-
-    std::set<SPDocument*> docs;
-    for (std::map<SwatchesPanel*, SPDocument*>::iterator it = docPerPanel.begin(); it != docPerPanel.end(); ++it) {
-        docs.insert(it->second);
     }
 }
 
