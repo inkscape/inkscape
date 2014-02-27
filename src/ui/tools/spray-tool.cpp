@@ -114,9 +114,9 @@ inline double NormalDistribution(double mu, double sigma)
 static void sp_spray_rotate_rel(Geom::Point c, SPDesktop */*desktop*/, SPItem *item, Geom::Rotate const &rotation)
 {
     Geom::Translate const s(c);
-    Geom::Affine affine = Geom::Affine(s).inverse() * Geom::Affine(rotation) * Geom::Affine(s);
+    Geom::Affine affine = s.inverse() * rotation * s;
     // Rotate item.
-    item->set_i2d_affine(item->i2dt_affine() * (Geom::Affine)affine);
+    item->set_i2d_affine(item->i2dt_affine() * affine);
     // Use each item's own transform writer, consistent with sp_selection_apply_affine()
     item->doWriteTransform(item->getRepr(), item->transform);
     // Restore the center position (it's changed because the bbox center changed)
@@ -516,8 +516,8 @@ static bool sp_spray_recursive(SPDesktop *desktop,
 
 static bool sp_spray_dilate(SprayTool *tc, Geom::Point /*event_p*/, Geom::Point p, Geom::Point vector, bool reverse)
 {
-    Inkscape::Selection *selection = sp_desktop_selection(SP_EVENT_CONTEXT(tc)->desktop);
-    SPDesktop *desktop = SP_EVENT_CONTEXT(tc)->desktop;
+    SPDesktop *desktop = tc->desktop;
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     if (selection->isEmpty()) {
         return false;
