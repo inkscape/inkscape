@@ -300,6 +300,23 @@ SPItem const *SPUse::root() const {
 }
 
 /**
+ * Get the number of dereferences or calls to get_original() needed to get an object
+ * which is not an svg:use. Returns -1 if there is no original object.
+ */
+int SPUse::cloneDepth() const {
+    unsigned depth = 1;
+    SPItem *orig = this->child;
+
+    while (orig && SP_IS_USE(orig)) {
+        ++depth;
+        orig = SP_USE(orig)->child;
+    }
+
+    if (!orig) return -1;
+    return depth;
+}
+
+/**
  * Returns the effective transform that goes from the ultimate original to given SPUse, both ends
  * included.
  */

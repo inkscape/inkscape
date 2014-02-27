@@ -53,6 +53,7 @@ SPCycleType SP_CYCLING = SP_CYCLE_FOCUS;
 #include "sp-ellipse.h"
 #include "sp-star.h"
 #include "sp-spiral.h"
+#include "sp-switch.h"
 #include "sp-polyline.h"
 #include "sp-line.h"
 #include "text-editing.h"
@@ -767,57 +768,95 @@ void sp_selection_group(Inkscape::Selection *selection, SPDesktop *desktop)
     Inkscape::GC::release(group);
 }
 
+static gint clone_depth_descending(gconstpointer a, gconstpointer b) {
+    SPUse *use_a = static_cast<SPUse *>(const_cast<gpointer>(a));
+    SPUse *use_b = static_cast<SPUse *>(const_cast<gpointer>(b));
+    int depth_a = use_a->cloneDepth();
+    int depth_b = use_b->cloneDepth();
+    if (depth_a < depth_b) {
+        return 1;
+    } else if (depth_a == depth_b) {
+        return 0;
+    } else {
+        return -1;
+    }
+}
+
 void sp_selection_ungroup(Inkscape::Selection *selection, SPDesktop *desktop)
 {
     if (selection->isEmpty()) {
         selection_display_message(desktop, Inkscape::WARNING_MESSAGE, _("Select a <b>group</b> to ungroup."));
+    }
+
+    // first check whether there is anything to ungroup
+    GSList *old_select = const_cast<GSList *>(selection->itemList());
+    GSList *new_select = NULL;
+    GSList *groups = NULL;
+    for (GSList *item = old_select; item; item = item->next) {
+        SPItem *obj = static_cast<SPItem*>(item->data);
+        if (SP_IS_GROUP(obj) && !SP_IS_SWITCH(obj)) {
+            groups = g_slist_prepend(groups, obj);
+        }
+    }
+
+    if (groups == NULL) {
+        selection_display_message(desktop, Inkscape::ERROR_MESSAGE, _("<b>No groups</b> to ungroup in the selection."));
+        g_slist_free(groups);
         return;
     }
 
-    GSList *items = g_slist_copy(const_cast<GSList *>(selection->itemList()));
+    GSList *items = g_slist_copy(old_select);
     selection->clear();
 
-    // Get a copy of current selection.
-    GSList *new_select = NULL;
-    bool ungrouped = false;
-    for (GSList *i = items;
-         i != NULL;
-         i = i->next)
-    {
-        SPItem *group = static_cast<SPItem *>(i->data);
+    // If any of the clones refer to the groups, unlink them and replace them with successors
+    // in the items list.
+    GSList *clones_to_unlink = NULL;
+    for (GSList *item = items; item; item = item->next) {
+        SPUse *use = dynamic_cast<SPUse *>(static_cast<SPItem *>(item->data));
 
-        // when ungrouping cloned groups with their originals, some objects that were selected may no more exist due to unlinking
-        if (!SP_IS_OBJECT(group) || !group->getRepr()) {
-            continue;
+        SPItem *original = use;
+        while (SP_IS_USE(original)) {
+            original = SP_USE(original)->get_original();
         }
 
-        // This check reflects the g_return_if_fail in sp_item_group_ungroup and
-        // may be a redundent. It also allows ungrouping of 'a' tags and we dont
-        if (strcmp(group->getRepr()->name(), "svg:g") && strcmp(group->getRepr()->name(), "svg:switch") &&
-                strcmp(group->getRepr()->name(), "svg:svg")) {
-            // keep the non-group item in the new selection
-            new_select = g_slist_append(new_select, group);
-            continue;
+        if (g_slist_find(groups, original) != NULL) {
+            clones_to_unlink = g_slist_prepend(clones_to_unlink, item->data);
         }
-
-        GSList *children = NULL;
-        /* This is not strictly required, but is nicer to rely on group ::destroy (lauris) */
-        sp_item_group_ungroup(SP_GROUP(group), &children, false);
-        ungrouped = true;
-        // Add ungrouped items to the new selection.
-        new_select = g_slist_concat(new_select, children);
     }
 
-    if (new_select) { // Set new selection.
-        selection->addList(new_select);
-        g_slist_free(new_select);
+    // Unlink clones beginning from those with highest clone depth.
+    // This way we can be sure than no additional automatic unlinking happens,
+    // and the items in the list remain valid
+    clones_to_unlink = g_slist_sort(clones_to_unlink, clone_depth_descending);
+
+    for (GSList *item = clones_to_unlink; item; item = item->next) {
+        SPUse *use = static_cast<SPUse *>(item->data);
+        GSList *items_node = g_slist_find(items, item->data);
+        items_node->data = use->unlink();
     }
-    if (!ungrouped) {
-        selection_display_message(desktop, Inkscape::ERROR_MESSAGE, _("<b>No groups</b> to ungroup in the selection."));
+    g_slist_free(clones_to_unlink);
+
+    // do the actual work
+    for (GSList *item = items; item; item = item->next) {
+        SPItem *obj = static_cast<SPItem *>(item->data);
+
+        // do not ungroup switches
+        if (SP_IS_GROUP(obj) && !SP_IS_SWITCH(obj)) {
+            GSList *children = NULL;
+            sp_item_group_ungroup(SP_GROUP(obj), &children, false);
+            // add the items resulting from ungrouping to the selection
+            new_select = g_slist_concat(new_select, children);
+            item->data = NULL; // zero out the original pointer, which is no longer valid
+        } else {
+            // if not a group, keep in the selection
+            new_select = g_slist_append(new_select, item->data);
+        }
     }
 
+    selection->addList(new_select);
+    g_slist_free(new_select);
     g_slist_free(items);
-    
+
     DocumentUndo::done(selection->layers()->getDocument(), SP_VERB_SELECTION_UNGROUP,
                        _("Ungroup"));
 }

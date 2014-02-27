@@ -66,6 +66,7 @@ public:
 
 	SPItem *root();
 	SPItem const *root() const;
+    int cloneDepth() const;
 
 	SPItem *unlink();
 	SPItem *get_original();
