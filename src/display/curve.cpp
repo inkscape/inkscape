@@ -34,7 +34,6 @@ SPCurve::SPCurve()
   : _refcount(1),
     _pathv()
 {
-    _pathv.clear();
 }
 
 SPCurve::SPCurve(Geom::PathVector const& pathv)
