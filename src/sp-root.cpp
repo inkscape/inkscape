@@ -221,7 +221,7 @@ void SPRoot::remove_child(Inkscape::XML::Node *child)
 
 void SPRoot::update(SPCtx *ctx, guint flags)
 {
-    SPItemCtx *ictx = (SPItemCtx *) ctx;
+    SPItemCtx const *ictx = (SPItemCtx const *) ctx;
 
     if( !this->parent ) {
 
@@ -288,10 +288,17 @@ void SPRoot::update(SPCtx *ctx, guint flags)
         this->height.computed = this->height.value * ictx->viewport.height();
     }
 
+    // std::cout << "SPRoot::update: final:"
+    //           << " x: " << x.computed
+    //           << " y: " << y.computed
+    //           << " width: " << width.computed
+    //           << " height: " << height.computed << std::endl;
+
     // Calculate new viewport
-    ictx->viewport = Geom::Rect::from_xywh( this->x.computed, this->y.computed,
-                                            this->width.computed, this->height.computed );
-    SPItemCtx rctx = get_rctx( ictx );
+    SPItemCtx rctx = *ictx;
+    rctx.viewport = Geom::Rect::from_xywh( this->x.computed, this->y.computed,
+                                           this->width.computed, this->height.computed );
+    rctx = get_rctx( &rctx );
 
     /* And invoke parent method */
     SPGroup::update((SPCtx *) &rctx, flags);
