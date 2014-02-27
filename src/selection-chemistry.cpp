@@ -840,8 +840,8 @@ void sp_selection_ungroup(Inkscape::Selection *selection, SPDesktop *desktop)
     for (GSList *item = items; item; item = item->next) {
         SPItem *obj = static_cast<SPItem *>(item->data);
 
-        // do not ungroup switches
-        if (SP_IS_GROUP(obj) && !SP_IS_SWITCH(obj)) {
+        // ungroup only the groups marked earlier
+        if (g_slist_find(groups, item->data) != NULL) {
             GSList *children = NULL;
             sp_item_group_ungroup(SP_GROUP(obj), &children, false);
             // add the items resulting from ungrouping to the selection
