@@ -746,7 +746,7 @@ class DocTrack
 {
 public:
     DocTrack(SPDocument *doc, sigc::connection &gradientRsrcChanged, sigc::connection &defsChanged, sigc::connection &defsModified) :
-        doc(doc),
+        doc(doc->doRef()),
         updatePending(false),
         lastGradientUpdate(0.0),
         gradientRsrcChanged(gradientRsrcChanged),
@@ -776,6 +776,7 @@ public:
             gradientRsrcChanged.disconnect();
             defsChanged.disconnect();
             defsModified.disconnect();
+            doc->doUnref();
         }
     }
 
