@@ -222,14 +222,19 @@ void Filter::area_enlarge(Geom::IntRect &bbox, Inkscape::DrawingItem const *item
 Geom::OptRect Filter::filter_effect_area(Geom::OptRect const &bbox)
 {
     Geom::Point minp, maxp;
-    double len_x = bbox ? bbox->width() : 0;
-    double len_y = bbox ? bbox->height() : 0;
-    /* TODO: fetch somehow the object ex and em lengths */
-    _region_x.update(12, 6, len_x);
-    _region_y.update(12, 6, len_y);
-    _region_width.update(12, 6, len_x);
-    _region_height.update(12, 6, len_y);
+
     if (_filter_units == SP_FILTER_UNITS_OBJECTBOUNDINGBOX) {
+
+        double len_x = bbox ? bbox->width() : 0;
+        double len_y = bbox ? bbox->height() : 0;
+        /* TODO: fetch somehow the object ex and em lengths */
+
+        // Update for em, ex, and % values
+        _region_x.update(12, 6, len_x);
+        _region_y.update(12, 6, len_y);
+        _region_width.update(12, 6, len_x);
+        _region_height.update(12, 6, len_y);
+
         if (!bbox) return Geom::OptRect();
 
         if (_region_x.unit == SVGLength::PERCENT) {
@@ -254,7 +259,7 @@ Geom::OptRect Filter::filter_effect_area(Geom::OptRect const &bbox)
             maxp[Y] = minp[Y] + _region_height.computed * len_y;
         }
     } else if (_filter_units == SP_FILTER_UNITS_USERSPACEONUSE) {
-        /* TODO: make sure bbox and fe region are in same coordinate system */
+        // Region already set in sp-filter.cpp
         minp[X] = _region_x.computed;
         maxp[X] = minp[X] + _region_width.computed;
         minp[Y] = _region_y.computed;
@@ -262,7 +267,9 @@ Geom::OptRect Filter::filter_effect_area(Geom::OptRect const &bbox)
     } else {
         g_warning("Error in Inkscape::Filters::Filter::filter_effect_area: unrecognized value of _filter_units");
     }
+
     Geom::OptRect area(minp, maxp);
+    // std::cout << "Filter::filter_effect_area: area: " << *area << std::endl;
     return area;
 }
 

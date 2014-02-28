@@ -28,6 +28,7 @@ using std::pair;
 #include "sp-filter.h"
 #include "sp-filter-reference.h"
 #include "sp-filter-primitive.h"
+#include "sp-item.h"
 #include "uri.h"
 #include "xml/repr.h"
 #include <cstring>
@@ -206,6 +207,33 @@ void SPFilter::update(SPCtx *ctx, guint flags) {
     if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG |
                  SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
 
+        SPItemCtx *ictx = (SPItemCtx *) ctx;
+
+        // Do here since we know viewport (Bounding box case handled during rendering)
+        // Note: This only works for root viewport since this routine is not called after
+        // setting a new viewport. A true fix requires a strategy like SPItemView or SPMarkerView.
+        if(this->filterUnits == SP_FILTER_UNITS_USERSPACEONUSE) {
+            std::cout << "  userSpaceOnUse" << std::endl;
+            if (this->x.unit == SVGLength::PERCENT) {
+                this->x._set = true;
+                this->x.computed = this->x.value * ictx->viewport.width();
+            }
+
+            if (this->y.unit == SVGLength::PERCENT) {
+                this->y._set = true;
+                this->y.computed = this->y.value * ictx->viewport.height();
+            }
+
+            if (this->width.unit == SVGLength::PERCENT) {
+                this->width._set = true;
+                this->width.computed = this->width.value * ictx->viewport.width();
+            }
+
+            if (this->height.unit == SVGLength::PERCENT) {
+                this->height._set = true;
+                this->height.computed = this->height.value * ictx->viewport.height();
+            }
+        }
         /* do something to trigger redisplay, updates? */
 
     }
