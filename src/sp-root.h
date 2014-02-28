@@ -63,6 +63,7 @@ public:
 
 	virtual Inkscape::DrawingItem* show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
 	virtual void print(SPPrintContext *ctx);
+    virtual const char* displayName() const;
 };
 
 #endif /* !SP_ROOT_H_SEEN */

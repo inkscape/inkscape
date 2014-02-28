@@ -387,6 +387,9 @@ void SPRoot::print(SPPrintContext *ctx)
     sp_print_release(ctx);
 }
 
+const char *SPRoot::displayName() const {
+    return "SVG";  // Do not translate
+}
 
 /*
   Local Variables:
