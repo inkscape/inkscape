@@ -1529,23 +1529,22 @@ int SPCanvasImpl::emitEvent(SPCanvas *canvas, GdkEvent *event)
 
     // Convert to world coordinates -- we have two cases because of different
     // offsets of the fields in the event structures.
-    //
 
-    GdkEvent ev = *event;
+    GdkEvent *ev = gdk_event_copy(event);
 
-    switch (ev.type) {
+    switch (ev->type) {
     case GDK_ENTER_NOTIFY:
     case GDK_LEAVE_NOTIFY:
-        ev.crossing.x += canvas->x0;
-        ev.crossing.y += canvas->y0;
+        ev->crossing.x += canvas->x0;
+        ev->crossing.y += canvas->y0;
         break;
     case GDK_MOTION_NOTIFY:
     case GDK_BUTTON_PRESS:
     case GDK_2BUTTON_PRESS:
     case GDK_3BUTTON_PRESS:
     case GDK_BUTTON_RELEASE:
-        ev.motion.x += canvas->x0;
-        ev.motion.y += canvas->y0;
+        ev->motion.x += canvas->x0;
+        ev->motion.y += canvas->y0;
         break;
     default:
         break;
@@ -1598,11 +1597,13 @@ int SPCanvasImpl::emitEvent(SPCanvas *canvas, GdkEvent *event)
 
     while (item && !finished) {
         g_object_ref (item);
-        g_signal_emit (G_OBJECT (item), item_signals[ITEM_EVENT], 0, &ev, &finished);
+        g_signal_emit (G_OBJECT (item), item_signals[ITEM_EVENT], 0, ev, &finished);
         SPCanvasItem *parent = item->parent;
         g_object_unref (item);
         item = parent;
     }
+
+    gdk_event_free(ev);
 
     return finished;
 }
