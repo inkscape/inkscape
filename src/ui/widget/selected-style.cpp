@@ -1267,6 +1267,11 @@ RotateableSwatch::color_adjust(float *hsla, double by, guint32 cc, guint modifie
     } else if (modifier == 3) { // alpha
         double old = hsla[3];
         hsla[3] += by/2;
+        if (hsla[3] < 0) {
+            hsla[3] = 0;
+        } else if (hsla[3] > 1) {
+            hsla[3] = 1;
+        }
         diff = hsla[3] - old;
     } else { // hue
         double old = hsla[0];
