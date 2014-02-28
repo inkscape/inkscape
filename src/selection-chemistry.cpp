@@ -1497,6 +1497,13 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Affine cons
     for (GSList const *l = selection->itemList(); l != NULL; l = l->next) {
         SPItem *item = SP_ITEM(l->data);
 
+        if( SP_IS_ROOT(item) ) {
+            // An SVG element cannot have a transform. We could change 'x' and 'y' in response
+            // to a translation... but leave that for another day.
+            selection->desktop()->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Cannot transform an embedded SVG."));
+            break;
+        }
+
         Geom::Point old_center(0,0);
         if (set_i2d && item->isCenterSet())
             old_center = item->getCenter();

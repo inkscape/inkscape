@@ -29,11 +29,13 @@
 #include "desktop-handles.h"
 #include "desktop-style.h"
 #include "knot.h"
+#include "message-stack.h"
 #include "snap.h"
 #include "selection.h"
 #include "ui/tools/select-tool.h"
 #include "sp-item.h"
 #include "sp-item-transform.h"
+#include "sp-root.h"
 #include "seltrans-handles.h"
 #include "seltrans.h"
 #include "selection-chemistry.h"
@@ -381,6 +383,10 @@ void Inkscape::SelTrans::transform(Geom::Affine const &rel_affine, Geom::Point c
         // update the content
         for (unsigned i = 0; i < _items.size(); i++) {
             SPItem &item = *_items[i];
+            if( SP_IS_ROOT(&item) ) {
+                _desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Cannot transform an embedded SVG."));
+                break;
+            }
             Geom::Affine const &prev_transform = _items_affines[i];
             item.set_i2d_affine(prev_transform * affine);
         }
