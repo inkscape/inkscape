@@ -52,6 +52,7 @@
 #include "display/sp-canvas.h"
 #include "display/sp-canvas-util.h"
 #include "document.h"
+#include "document-undo.h"
 #include "event-log.h"
 #include "helper/action-context.h"
 #include "interface.h"
@@ -167,8 +168,23 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas, Inkscape::UI::View::EditWid
     canvas = aCanvas;
 
     SPDocument *document = namedview->document;
-    /* Kill flicker */
+    /* XXX:
+     * ensureUpToDate() sends a 'modified' signal to the root element.
+     * This is reportedly required to prevent flickering after the document
+     * loads. However, many SPObjects write to their repr in response
+     * to this signal. This is apparently done to support live path effects,
+     * which rewrite their result paths after each modification of the base object.
+     * This causes the generation of an incomplete undo transaction,
+     * which causes problems down the line, including crashes in the
+     * Undo History dialog.
+     *
+     * For now, this is handled by disabling undo tracking during this call.
+     * A proper fix would involve modifying the way ensureUpToDate() works,
+     * so that the LPE results are not rewritten.
+     */
+    Inkscape::DocumentUndo::setUndoSensitive(document, false);
     document->ensureUpToDate();
+    Inkscape::DocumentUndo::setUndoSensitive(document, true);
 
     /* Setup Dialog Manager */
     _dlg_mgr = &Inkscape::UI::Dialog::DialogManager::getInstance();
