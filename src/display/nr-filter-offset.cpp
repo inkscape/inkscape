@@ -40,8 +40,20 @@ void FilterOffset::render_cairo(FilterSlot &slot)
 
     cairo_t *ct = cairo_create(out);
 
-    Geom::Affine trans = slot.get_units().get_matrix_primitiveunits2pb();
-    Geom::Point offset(dx, dy);
+    // Handle bounding box case
+    double x = dx;
+    double y = dy;
+    if( slot.get_units().get_primitive_units() == SP_FILTER_UNITS_OBJECTBOUNDINGBOX ) {
+        Geom::OptRect bbox = slot.get_units().get_item_bbox();
+        if( bbox ) {
+            x *= (*bbox).width();
+            y *= (*bbox).height();
+        }
+    }
+
+    Geom::Affine trans = slot.get_units().get_matrix_user2pb();
+
+    Geom::Point offset(x, y);
     offset *= trans;
     offset[X] -= trans[4];
     offset[Y] -= trans[5];

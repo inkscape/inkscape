@@ -568,12 +568,21 @@ void FilterGaussian::render_cairo(FilterSlot &slot)
         return;
     }
 
-    Geom::Affine trans = slot.get_units().get_matrix_primitiveunits2pb();
+    // Handle bounding box case.
+    double dx = _deviation_x;
+    double dy = _deviation_y;
+    if( slot.get_units().get_primitive_units() == SP_FILTER_UNITS_OBJECTBOUNDINGBOX ) {
+        Geom::OptRect const bbox = slot.get_units().get_item_bbox();
+        if( bbox ) {
+            dx *= (*bbox).width();
+            dy *= (*bbox).height();
+        }
+    }
 
-    int w_orig = ink_cairo_surface_get_width(in);
-    int h_orig = ink_cairo_surface_get_height(in);
-    double deviation_x_orig = _deviation_x * trans.expansionX();
-    double deviation_y_orig = _deviation_y * trans.expansionY();
+    Geom::Affine trans = slot.get_units().get_matrix_user2pb();
+
+    double deviation_x_orig = dx * trans.expansionX();
+    double deviation_y_orig = dy * trans.expansionY();
     cairo_format_t fmt = cairo_image_surface_get_format(in);
     int bytes_per_pixel = 0;
     switch (fmt) {
@@ -595,6 +604,8 @@ void FilterGaussian::render_cairo(FilterSlot &slot)
     int x_step = 1 << _effect_subsample_step_log2(deviation_x_orig, quality);
     int y_step = 1 << _effect_subsample_step_log2(deviation_y_orig, quality);
     bool resampling = x_step > 1 || y_step > 1;
+    int w_orig = ink_cairo_surface_get_width(in);
+    int h_orig = ink_cairo_surface_get_height(in);
     int w_downsampled = resampling ? static_cast<int>(ceil(static_cast<double>(w_orig)/x_step))+1 : w_orig;
     int h_downsampled = resampling ? static_cast<int>(ceil(static_cast<double>(h_orig)/y_step))+1 : h_orig;
     double deviation_x = deviation_x_orig / x_step;
