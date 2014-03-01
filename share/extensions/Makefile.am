@@ -159,6 +159,7 @@ extensions = \
 	synfig_prepare.py \
 	text_extract.py \
 	svg_transform.py \
+    tar_layers.py \
 	text_uppercase.py \
 	text_lowercase.py \
 	text_sentencecase.py \
@@ -342,6 +343,7 @@ modules = \
 	svg_and_media_zip_output.inx \
 	svgcalendar.inx \
 	synfig_output.inx \
+    tar_layers.inx \
 	text_extract.inx \
 	text_uppercase.inx\
 	text_lowercase.inx \
