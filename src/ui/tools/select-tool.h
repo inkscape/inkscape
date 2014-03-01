@@ -64,6 +64,7 @@ public:
 private:
 	bool sp_select_context_abort();
 	void sp_select_context_cycle_through_items(Inkscape::Selection *selection, GdkEventScroll *scroll_event, bool shift_pressed);
+	void sp_select_context_reset_opacities();
 };
 
 }

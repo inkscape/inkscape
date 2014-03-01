@@ -125,7 +125,6 @@ SelectTool::SelectTool()
 //static bool within_tolerance = false;
 static bool is_cycling = false;
 static bool moved_while_cycling = false;
-ToolBase *prev_event_context = NULL;
 
 
 SelectTool::~SelectTool() {
@@ -441,24 +440,20 @@ void SelectTool::sp_select_context_cycle_through_items(Inkscape::Selection *sele
     }
 }
 
+void SelectTool::sp_select_context_reset_opacities() {
+    for (GList *l = this->cycling_items; l != NULL; l = g_list_next(l)) {
+        Inkscape::DrawingItem *arenaitem = SP_ITEM(l->data)->get_arenaitem(this->desktop->dkey);
+        arenaitem->setOpacity(SP_SCALE24_TO_FLOAT(SP_ITEM(l->data)->style->opacity.value));
+    }
 
-static void
-sp_select_context_reset_opacities(ToolBase *event_context)
-{
-    // SPDesktop *desktop = event_context->desktop;
-	SelectTool *sc = SP_SELECT_CONTEXT(event_context);
-	Inkscape::DrawingItem *arenaitem;
-	for (GList *l = sc->cycling_items; l != NULL; l = g_list_next(l)) {
-		arenaitem = SP_ITEM(l->data)->get_arenaitem(event_context->desktop->dkey);
-		arenaitem->setOpacity(SP_SCALE24_TO_FLOAT(SP_ITEM(l->data)->style->opacity.value));
-		}
-	g_list_free(sc->cycling_items);
-	g_list_free(sc->cycling_items_selected_before);
-	g_list_free(sc->cycling_items_cmp);
-	sc->cycling_items = NULL;
-	sc->cycling_items_selected_before = NULL;
-	sc->cycling_cur_item = NULL;
-	sc->cycling_items_cmp = NULL;
+    g_list_free(this->cycling_items);
+    g_list_free(this->cycling_items_selected_before);
+    g_list_free(this->cycling_items_cmp);
+
+    this->cycling_items = NULL;
+    this->cycling_items_selected_before = NULL;
+    this->cycling_cur_item = NULL;
+    this->cycling_items_cmp = NULL;
 }
 
 bool SelectTool::root_handler(GdkEvent* event) {
@@ -545,11 +540,9 @@ bool SelectTool::root_handler(GdkEvent* event) {
 
         case GDK_MOTION_NOTIFY:
         {
-		if (is_cycling)
-			{
-			moved_while_cycling = true;
-			prev_event_context = this;
-			}
+            if (is_cycling) {
+                moved_while_cycling = true;
+            }
             
 			tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
 
@@ -811,14 +804,12 @@ bool SelectTool::root_handler(GdkEvent* event) {
             GdkEventScroll *scroll_event = (GdkEventScroll*) event;
 
             if (scroll_event->state & GDK_MOD1_MASK) { // alt modified pressed
-        if (moved_while_cycling) 
-            {
-            moved_while_cycling = false;
-            sp_select_context_reset_opacities(prev_event_context);
-            prev_event_context = NULL;
-            }
+                if (moved_while_cycling) {
+                    moved_while_cycling = false;
+                    this->sp_select_context_reset_opacities();
+                }
 
-        is_cycling = true;
+                is_cycling = true;
         
                 bool shift_pressed = scroll_event->state & GDK_SHIFT_MASK;
 
@@ -1205,18 +1196,15 @@ bool SelectTool::root_handler(GdkEvent* event) {
                     Inkscape::Rubberband::get(desktop)->setMode(RUBBERBAND_MODE_RECT);
                 }
             } else {
-                if (alt) { // TODO: Should we have a variable like is_cycling or is it harmless to run this piece of code each time?
+                if (alt) {
                     // quit cycle-selection and reset opacities
-			if (is_cycling)
-				{
-				sp_select_context_reset_opacities(this);
-				is_cycling = false;	
-				}
-
+                    if (is_cycling) {
+                        this->sp_select_context_reset_opacities();
+                        is_cycling = false;
+                    }
                 }
             }
 
-            }
             // set cursor to default.
             if (!desktop->isWaitingCursor()) {
                 // Do we need to reset the cursor here on key release ?
@@ -1224,7 +1212,7 @@ bool SelectTool::root_handler(GdkEvent* event) {
                 //gdk_window_set_cursor(window, event_context->cursor);
             }
             break;
-
+        }
         default:
             break;
     }
