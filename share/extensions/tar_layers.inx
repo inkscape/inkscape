@@ -8,7 +8,7 @@
   <output>
     <extension>.tar</extension>
     <mimetype>application/tar</mimetype>
-    <_filetypename>Layers as Seperate SVG (*.tar)</_filetypename>
+    <_filetypename>Layers as Separate SVG (*.tar)</_filetypename>
     <_filetypetooltip>Each layer split into it's own svg file and collected as a tape archive (tar file)</_filetypetooltip>
     <dataloss>false</dataloss>
   </output>

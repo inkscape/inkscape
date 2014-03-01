@@ -27,6 +27,8 @@ import copy
 import tarfile
 import StringIO
 
+from datetime import datetime
+
 # Inkscape Libraries
 import inkex
 import simplestyle
@@ -85,7 +87,8 @@ class LayersOutput(inkex.Effect):
         doc.write(string)
         string.seek(0)
         info = tarfile.TarInfo(name=name+'.svg')
-        info.size=len(string.buf)
+        info.mtime = int(datetime.now().strftime('%s'))
+        info.size  = len(string.buf)
         return dict(tarinfo=info, fileobj=string)
 
     def effect(self):
