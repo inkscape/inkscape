@@ -336,6 +336,10 @@ bool DropperTool::root_handler(GdkEvent* event) {
                 if (prefs->getBool("/tools/dropper/onetimepick", false)) {
                     prefs->setBool("/tools/dropper/onetimepick", false);
                     sp_toggle_dropper(desktop);
+
+                    // sp_toggle_dropper will delete ourselves.
+                    // Thus, make sure we return immediately.
+                    return true;
                 }
 
                 ret = TRUE;

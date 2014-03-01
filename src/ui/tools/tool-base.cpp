@@ -739,10 +739,12 @@ bool ToolBase::root_handler(GdkEvent* event) {
             if (within_tolerance == true) {
                 // Space was pressed, but not panned
                 sp_toggle_selector(desktop);
-                ret = TRUE;
+
+                // Be careful, sp_toggle_selector will delete ourselves.
+                // Thus, make sure we return immediately.
+                return true;
             }
 
-            within_tolerance = false;
             break;
 
         case GDK_KEY_Q:
@@ -975,10 +977,18 @@ gint sp_event_context_root_handler(ToolBase * event_context,
 
 gint sp_event_context_virtual_root_handler(ToolBase * event_context, GdkEvent * event) {
     gint ret = false;
+
     if (event_context) {
-    	ret = event_context->root_handler(event);
-        set_event_location(event_context->desktop, event);
+        // The root handler also handles pressing the space key.
+        // This will toggle the current tool and delete the current one.
+        // Thus, save a pointer to the desktop before calling it.
+        SPDesktop* desktop = event_context->desktop;
+
+        ret = event_context->root_handler(event);
+
+        set_event_location(desktop, event);
     }
+
     return ret;
 }
 
