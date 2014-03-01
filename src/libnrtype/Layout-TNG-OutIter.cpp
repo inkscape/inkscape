@@ -181,9 +181,10 @@ Layout::iterator Layout::sourceToIterator(void *source_cookie /*, Glib::ustring:
     if (_input_stream[source_index]->Type() != TEXT_SOURCE)
         return iterator(this, char_index);
 
-    InputStreamTextSource const *text_source = static_cast<InputStreamTextSource const *>(_input_stream[source_index]);
     return iterator(this, char_index);
     /* This code was never used, the text_iterator argument was "NULL" in all calling code
+    InputStreamTextSource const *text_source = static_cast<InputStreamTextSource const *>(_input_stream[source_index]);
+
     if (text_iterator <= text_source->text_begin) return iterator(this, char_index);
     if (text_iterator >= text_source->text_end) {
         if (source_index == _input_stream.size() - 1) return end();
