@@ -121,30 +121,10 @@ Geom::Rect FilterPrimitive::filter_primitive_area(FilterUnits const &units)
         fa = *fa_opt;
     }
 
-    // This is definitely a hack... but what else to do?
-    // Current viewport might not be document viewport... but how to find?
-    SPDocument* document = inkscape_active_document();
-    SPRoot*     root = document->getRoot();
-    Geom::Rect  viewport;
-    if( root->viewBox_set ) {
-        viewport = root->viewBox;
-    } else {
-        // Pick some random values
-        viewport = Geom::Rect::from_xywh(0,0,480,360);
-    }
-
-    /* Update computed values for ex, em, %. For %, assumes primitive unit is objectBoundingBox. */
-    /* TODO: fetch somehow the object ex and em lengths; 12, 6 are just dummy values. */
-    double len_x = bb.width();
-    double len_y = bb.height();
-    _subregion_x.update(12, 6, len_x);
-    _subregion_y.update(12, 6, len_y);
-    _subregion_width.update(12, 6, len_x);
-    _subregion_height.update(12, 6, len_y);
 
     // x, y, width, and height are independently defined (i.e. one can be defined, by default, to
-    // the filter area while another is defined relative to the bounding box). It is better to keep
-    // track of them separately and then compose the Rect at the end.
+    // the filter area (via default value ) while another is defined relative to the bounding
+    // box). It is better to keep track of them separately and then compose the Rect at the end.
     double x = 0;
     double y = 0;
     double width = 0;
@@ -157,10 +137,21 @@ Geom::Rect FilterPrimitive::filter_primitive_area(FilterUnits const &units)
     if( !_subregion_height._set ) height = fa.height();
 
     if( units.get_primitive_units() == SP_FILTER_UNITS_OBJECTBOUNDINGBOX ) {
+
+        // Update computed values for ex, em, %.
+        // For %, assumes primitive unit is objectBoundingBox.
+        // TODO: fetch somehow the object ex and em lengths; 12, 6 are just dummy values.
+        double len_x = bb.width();
+        double len_y = bb.height();
+        _subregion_x.update(12, 6, len_x);
+        _subregion_y.update(12, 6, len_y);
+        _subregion_width.update(12, 6, len_x);
+        _subregion_height.update(12, 6, len_y);
+
         // Values are in terms of fraction of bounding box.
         if( _subregion_x._set      && (_subregion_x.unit      != SVGLength::PERCENT) )      x = bb.min()[X] + bb.width()  * _subregion_x.value;
         if( _subregion_y._set      && (_subregion_y.unit      != SVGLength::PERCENT) )      y = bb.min()[Y] + bb.height() * _subregion_y.value;
-        if( _subregion_width._set  && (_subregion_width.unit  != SVGLength::PERCENT) )  width = bb.width() *  _subregion_width.value;
+        if( _subregion_width._set  && (_subregion_width.unit  != SVGLength::PERCENT) )  width = bb.width()  * _subregion_width.value;
         if( _subregion_height._set && (_subregion_height.unit != SVGLength::PERCENT) ) height = bb.height() * _subregion_height.value;
         // Values are in terms of percent                                                         
         if( _subregion_x._set      && (_subregion_x.unit      == SVGLength::PERCENT) )      x = bb.min()[X] + _subregion_x.computed;
@@ -168,17 +159,11 @@ Geom::Rect FilterPrimitive::filter_primitive_area(FilterUnits const &units)
         if( _subregion_width._set  && (_subregion_width.unit  == SVGLength::PERCENT) )  width = _subregion_width.computed;
         if( _subregion_height._set && (_subregion_height.unit == SVGLength::PERCENT) ) height = _subregion_height.computed;
     } else {
-        // Values are in terms of user space coordinates or percent of viewbox (yuck!),
-        // which is usually the size of SVG drawing.  Default.
-        if( _subregion_x._set      && (_subregion_x.unit      != SVGLength::PERCENT) )      x = _subregion_x.computed;
-        if( _subregion_y._set      && (_subregion_y.unit      != SVGLength::PERCENT) )      y = _subregion_y.computed;
-        if( _subregion_width._set  && (_subregion_width.unit  != SVGLength::PERCENT) )  width = _subregion_width.computed;
-        if( _subregion_height._set && (_subregion_height.unit != SVGLength::PERCENT) ) height = _subregion_height.computed;
-        // Percent of viewport
-        if( _subregion_x._set      && (_subregion_x.unit      == SVGLength::PERCENT) )      x = _subregion_x.value      * viewport.width();
-        if( _subregion_y._set      && (_subregion_y.unit      == SVGLength::PERCENT) )      y = _subregion_y.value      * viewport.height();
-        if( _subregion_width._set  && (_subregion_width.unit  == SVGLength::PERCENT) )  width = _subregion_width.value  * viewport.width();
-        if( _subregion_height._set && (_subregion_height.unit == SVGLength::PERCENT) ) height = _subregion_height.value * viewport.height();
+        // Values are in terms of user space coordinates or percent of viewport (already calculated in sp-filter-primitive.cpp).
+        if( _subregion_x._set      )      x = _subregion_x.computed;
+        if( _subregion_y._set      )      y = _subregion_y.computed;
+        if( _subregion_width._set  )  width = _subregion_width.computed;
+        if( _subregion_height._set ) height = _subregion_height.computed;
     }
 
     return Geom::Rect (Geom::Point(x,y), Geom::Point(x + width, y + height));

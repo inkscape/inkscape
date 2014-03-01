@@ -24,6 +24,7 @@
 #include "sp-filter-primitive.h"
 #include "xml/repr.h"
 #include "sp-filter.h"
+#include "sp-item.h"
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-types.h"
 
@@ -135,6 +136,33 @@ void SPFilterPrimitive::set(unsigned int key, gchar const *value) {
  */
 void SPFilterPrimitive::update(SPCtx *ctx, guint flags) {
 
+    SPItemCtx *ictx = (SPItemCtx *) ctx;
+
+    // Do here since we know viewport (Bounding box case handled during rendering)
+    SPFilter *parent = SP_FILTER(this->parent);
+
+    if( parent->primitiveUnits == SP_FILTER_UNITS_USERSPACEONUSE ) {
+        if (this->x.unit == SVGLength::PERCENT) {
+            this->x._set = true;
+            this->x.computed = this->x.value * ictx->viewport.width();
+        }
+
+        if (this->y.unit == SVGLength::PERCENT) {
+            this->y._set = true;
+            this->y.computed = this->y.value * ictx->viewport.height();
+        }
+
+        if (this->width.unit == SVGLength::PERCENT) {
+            this->width._set = true;
+            this->width.computed = this->width.value * ictx->viewport.width();
+        }
+
+        if (this->height.unit == SVGLength::PERCENT) {
+            this->height._set = true;
+            this->height.computed = this->height.value * ictx->viewport.height();
+        }
+    }
+
     SPObject::update(ctx, flags);
 }
 
@@ -244,6 +272,7 @@ void sp_filter_primitive_renderer_common(SPFilterPrimitive *sp_prim, Inkscape::F
     nr_prim->set_output(sp_prim->image_out);
 
     /* TODO: place here code to handle input images, filter area etc. */
+    // We don't know current viewport or bounding box, this is wrong approach.
     nr_prim->set_subregion( sp_prim->x, sp_prim->y, sp_prim->width, sp_prim->height );
 
     // Give renderer access to filter properties

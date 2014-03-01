@@ -213,7 +213,6 @@ void SPFilter::update(SPCtx *ctx, guint flags) {
         // Note: This only works for root viewport since this routine is not called after
         // setting a new viewport. A true fix requires a strategy like SPItemView or SPMarkerView.
         if(this->filterUnits == SP_FILTER_UNITS_USERSPACEONUSE) {
-            std::cout << "  userSpaceOnUse" << std::endl;
             if (this->x.unit == SVGLength::PERCENT) {
                 this->x._set = true;
                 this->x.computed = this->x.value * ictx->viewport.width();
@@ -236,6 +235,25 @@ void SPFilter::update(SPCtx *ctx, guint flags) {
         }
         /* do something to trigger redisplay, updates? */
 
+    }
+
+    // Update filter primitives in order to update filter primitive area
+    // (SPObject::ActionUpdate is not actually used)
+    unsigned childflags = flags;
+
+    if (flags & SP_OBJECT_MODIFIED_FLAG) {
+      childflags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
+    }
+    childflags &= SP_OBJECT_MODIFIED_CASCADE;
+
+    GSList *l = g_slist_reverse(this->childList(true, SPObject::ActionUpdate));
+    while (l) {
+        SPObject *child = SP_OBJECT (l->data);
+        l = g_slist_remove (l, child);
+        if( SP_IS_FILTER_PRIMITIVE( child ) ) {
+            child->updateDisplay(ctx, childflags);
+        }
+        sp_object_unref(child);
     }
 
     SPObject::update(ctx, flags);
