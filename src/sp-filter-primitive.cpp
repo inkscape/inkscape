@@ -30,7 +30,7 @@
 
 // CPPIFY: Make pure virtual.
 //void SPFilterPrimitive::build_renderer(Inkscape::Filters::Filter* filter) {
-	// throw;
+// throw;
 //}
 
 SPFilterPrimitive::SPFilterPrimitive() : SPObject() {
@@ -57,75 +57,72 @@ SPFilterPrimitive::~SPFilterPrimitive() {
  * sp-object-repr.cpp's repr_name_entries array.
  */
 void SPFilterPrimitive::build(SPDocument *document, Inkscape::XML::Node *repr) {
-	SPFilterPrimitive* object = this;
+    SPFilterPrimitive* object = this;
 
     object->readAttr( "style" ); // struct not derived from SPItem, we need to do this ourselves.
-	object->readAttr( "in" );
-	object->readAttr( "result" );
-	object->readAttr( "x" );
-	object->readAttr( "y" );
-	object->readAttr( "width" );
-	object->readAttr( "height" );
+    object->readAttr( "in" );
+    object->readAttr( "result" );
+    object->readAttr( "x" );
+    object->readAttr( "y" );
+    object->readAttr( "width" );
+    object->readAttr( "height" );
 
-	SPObject::build(document, repr);
+    SPObject::build(document, repr);
 }
 
 /**
  * Drops any allocated memory.
  */
 void SPFilterPrimitive::release() {
-	SPObject::release();
+    SPObject::release();
 }
 
 /**
  * Sets a specific value in the SPFilterPrimitive.
  */
 void SPFilterPrimitive::set(unsigned int key, gchar const *value) {
-	SPFilterPrimitive* object = this;
 
-    SPFilterPrimitive *filter_primitive = SP_FILTER_PRIMITIVE(object);
-    (void)filter_primitive;
     int image_nr;
     switch (key) {
         case SP_ATTR_IN:
             if (value) {
-                image_nr = sp_filter_primitive_read_in(filter_primitive, value);
+                image_nr = sp_filter_primitive_read_in(this, value);
             } else {
                 image_nr = Inkscape::Filters::NR_FILTER_SLOT_NOT_SET;
             }
-            if (image_nr != filter_primitive->image_in) {
-                filter_primitive->image_in = image_nr;
-                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            if (image_nr != this->image_in) {
+                this->image_in = image_nr;
+                this->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         case SP_ATTR_RESULT:
             if (value) {
-                image_nr = sp_filter_primitive_read_result(filter_primitive, value);
+                image_nr = sp_filter_primitive_read_result(this, value);
             } else {
                 image_nr = Inkscape::Filters::NR_FILTER_SLOT_NOT_SET;
             }
-            if (image_nr != filter_primitive->image_out) {
-                filter_primitive->image_out = image_nr;
-                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            if (image_nr != this->image_out) {
+                this->image_out = image_nr;
+                this->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
 
         /* Filter primitive sub-region */
         case SP_ATTR_X:
-            filter_primitive->x.readOrUnset(value);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->x.readOrUnset(value);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_ATTR_Y:
-            filter_primitive->y.readOrUnset(value);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->y.readOrUnset(value);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_ATTR_WIDTH:
-            filter_primitive->width.readOrUnset(value);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->width.readOrUnset(value);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_ATTR_HEIGHT:
-            filter_primitive->height.readOrUnset(value);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            this->height.readOrUnset(value);
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     }
 
@@ -137,20 +134,6 @@ void SPFilterPrimitive::set(unsigned int key, gchar const *value) {
  * Receives update notifications.
  */
 void SPFilterPrimitive::update(SPCtx *ctx, guint flags) {
-	SPFilterPrimitive* object = this;
-
-    //SPFilterPrimitive *filter_primitive = SP_FILTER_PRIMITIVE(object);
-
-    // Is this required?
-    if (flags & SP_OBJECT_MODIFIED_FLAG) {
-        object->readAttr( "style" );
-        object->readAttr( "in" );
-        object->readAttr( "result" );
-        object->readAttr( "x" );
-        object->readAttr( "y" );
-        object->readAttr( "width" );
-        object->readAttr( "height" );
-    }
 
     SPObject::update(ctx, flags);
 }
@@ -159,7 +142,7 @@ void SPFilterPrimitive::update(SPCtx *ctx, guint flags) {
  * Writes its settings to an incoming repr object, if any.
  */
 Inkscape::XML::Node* SPFilterPrimitive::write(Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags) {
-	SPFilterPrimitive* object = this;
+    SPFilterPrimitive* object = this;
 
     SPFilterPrimitive *prim = SP_FILTER_PRIMITIVE(object);
     SPFilter *parent = SP_FILTER(object->parent);
