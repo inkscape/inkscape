@@ -43,11 +43,13 @@ public:
     virtual int getSelectedIndex() {return _currentIndex;} // temporary
 
 protected:
+    static void handleDocumentDestroy(SPDocument *document);
     static void handleGradientsChange(SPDocument *document);
 
     virtual void _updateFromSelection();
     virtual void _handleAction( int setId, int itemId );
     virtual void _setDocument( SPDocument *document );
+    virtual void _setSelectedIndex( int index );
     virtual void _rebuild();
 
     virtual std::vector<SwatchPage*> _getSwatchSets() const;
