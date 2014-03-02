@@ -30,7 +30,6 @@ import inkex
 inkex.localize()
 
 
-# TODO: Unittests
 class MyEffect(inkex.Effect):
 
     def __init__(self):
@@ -49,14 +48,10 @@ class MyEffect(inkex.Effect):
         self.OptionParser.add_option('--mirrorX',         action='store', type='inkbool', dest='mirrorX',         default='FALSE', help='Mirror X axis')
         self.OptionParser.add_option('--mirrorY',         action='store', type='inkbool', dest='mirrorY',         default='FALSE', help='Mirror Y axis')
         self.OptionParser.add_option('--center',          action='store', type='inkbool', dest='center',          default='FALSE', help='Center zero point')
-        self.OptionParser.add_option('--flat',            action='store', type='float',   dest='flat',            default=1.2,     help='Curve flatness')
-        self.OptionParser.add_option('--useOvercut',      action='store', type='inkbool', dest='useOvercut',      default='TRUE',  help='Use overcut')
         self.OptionParser.add_option('--overcut',         action='store', type='float',   dest='overcut',         default=1.0,     help='Overcut (mm)')
-        self.OptionParser.add_option('--useToolOffset',   action='store', type='inkbool', dest='useToolOffset',   default='TRUE',  help='Correct tool offset')
         self.OptionParser.add_option('--toolOffset',      action='store', type='float',   dest='toolOffset',      default=0.25,    help='Tool offset (mm)')
         self.OptionParser.add_option('--precut',          action='store', type='inkbool', dest='precut',          default='TRUE',  help='Use precut')
-        self.OptionParser.add_option('--offsetX',         action='store', type='float',   dest='offsetX',         default=0.0,     help='X offset (mm)')
-        self.OptionParser.add_option('--offsetY',         action='store', type='float',   dest='offsetY',         default=0.0,     help='Y offset (mm)')
+        self.OptionParser.add_option('--flat',            action='store', type='float',   dest='flat',            default=1.2,     help='Curve flatness')
         self.OptionParser.add_option('--autoAlign',       action='store', type='inkbool', dest='autoAlign',     default='TRUE',  help='Auto align')
         self.OptionParser.add_option('--debug',           action='store', type='inkbool', dest='debug',           default='FALSE', help='Show debug information')
 
@@ -174,14 +169,10 @@ class MyEffect(inkex.Effect):
         inkex.errormsg('  Mirror X axis: ' + str(self.options.mirrorX))
         inkex.errormsg('  Mirror Y axis: ' + str(self.options.mirrorY))
         inkex.errormsg('  Center zero point: ' + str(self.options.center))
-        inkex.errormsg('  Use overcut: ' + str(self.options.useOvercut))
         inkex.errormsg('  Overcut (mm): ' + str(self.options.overcut))
-        inkex.errormsg('  Use tool offset correction: ' + str(self.options.useToolOffset))
         inkex.errormsg('  Tool offset (mm): ' + str(self.options.toolOffset))
         inkex.errormsg('  Use precut: ' + str(self.options.precut))
         inkex.errormsg('  Curve flatness: ' + str(self.options.flat))
-        inkex.errormsg('  X offset (mm): ' + str(self.options.offsetX))
-        inkex.errormsg('  Y offset (mm): ' + str(self.options.offsetY))
         inkex.errormsg('  Auto align: ' + str(self.options.autoAlign))
         inkex.errormsg('  Show debug information: ' + str(self.options.debug))
         inkex.errormsg("\nDocument properties:\n")

@@ -28,7 +28,6 @@ import sys
 inkex.localize()
 
 
-# TODO: Unittests
 # parse options
 parser = inkex.optparse.OptionParser(usage='usage: %prog [options] HPGLfile', option_class=inkex.InkOption)
 parser.add_option('--resolutionX',   action='store', type='float',   dest='resolutionX',   default=1016.0,  help='Resolution X (dpi)')

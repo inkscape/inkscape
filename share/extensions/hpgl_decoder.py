@@ -25,7 +25,6 @@ from StringIO import StringIO
 import inkex
 
 
-# TODO: Unittests
 class hpglDecoder:
 
     def __init__(self, hpglString, options):

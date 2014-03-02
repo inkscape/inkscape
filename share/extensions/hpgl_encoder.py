@@ -33,7 +33,6 @@ import simplestyle
 import simpletransform
 
 
-# TODO: Unittests
 class hpglEncoder:
     PI = math.pi
     TWO_PI = PI * 2
@@ -50,13 +49,9 @@ class hpglEncoder:
                 "mirrorY":bool
                 "center":bool
                 "flat":float
-                "useOvercut":bool
                 "overcut":float
-                "useToolOffset":bool
                 "toolOffset":float
                 "precut":bool
-                "offsetX":float
-                "offsetY":float
                 "autoAlign":bool
                 "debug":bool
         '''
@@ -70,15 +65,18 @@ class hpglEncoder:
         self.sizeY = 'False'
         self.dryRun = True
         self.lastPoint = [0, 0, 0]
+        self.offsetX = 0
+        self.offsetY = 0
         self.scaleX = self.options.resolutionX / effect.unittouu("1.0in") # dots per inch to dots per user unit
         self.scaleY = self.options.resolutionY / effect.unittouu("1.0in") # dots per inch to dots per user unit
         scaleXY = (self.scaleX + self.scaleY) / 2
-        self.offsetX = effect.unittouu(str(self.options.offsetX) + "mm") * self.scaleX # mm to dots (plotter coordinate system)
-        self.offsetY = effect.unittouu(str(self.options.offsetY) + "mm") * self.scaleY # mm to dots
-        self.overcut = effect.unittouu(str(self.options.overcut) + "mm") * scaleXY # mm to dots
+        self.overcut = effect.unittouu(str(self.options.overcut) + "mm") * scaleXY # mm to dots (plotter coordinate system)
         self.toolOffset = effect.unittouu(str(self.options.toolOffset) + "mm") * scaleXY # mm to dots
         self.flat = self.options.flat / (1016 / ((self.options.resolutionX + self.options.resolutionY) / 2)) # scale flatness to resolution
-        self.toolOffsetFlat = self.flat / self.toolOffset * 4.5 # scale flatness to offset
+        if self.toolOffset > 0.0:
+            self.toolOffsetFlat = self.flat / self.toolOffset * 4.5 # scale flatness to offset
+        else:
+            self.toolOffsetFlat = 0.0
         self.mirrorX = 1.0
         if self.options.mirrorX:
             self.mirrorX = -1.0
@@ -150,7 +148,7 @@ class hpglEncoder:
                     self.offsetX += self.docHeight * self.scaleY
                 if self.options.orientation == '180':
                     self.offsetX += self.docWidth * self.scaleX
-        if not self.options.center and self.options.useToolOffset:
+        if not self.options.center and self.toolOffset > 0.0:
             self.offsetX += self.toolOffset
             self.offsetY += self.toolOffset
         # initialize transformation matrix and cache
@@ -166,7 +164,7 @@ class hpglEncoder:
             self.hpgl += ';VS%d' % self.options.speed
         # add move to zero point and precut
         self.processOffset('PU', 0, 0)
-        if self.options.useToolOffset and self.options.precut:
+        if self.toolOffset > 0.0 and self.options.precut:
             if self.options.center:
                 # TODO: get this FU to work or remove precut functionality
                 '''
@@ -237,7 +235,6 @@ class hpglEncoder:
             # path to HPGL commands
             oldPosX = 0.0
             oldPosY = 0.0
-            # TODO: Plot smallest parts first to avid plotter dragging parts of foil around (on text)
             for singlePath in path:
                 cmd = 'PU'
                 for singlePathPoint in singlePath:
@@ -249,7 +246,7 @@ class hpglEncoder:
                         oldPosX = posX
                         oldPosY = posY
                 # perform overcut
-                if self.options.useOvercut and not self.dryRun:
+                if self.overcut > 0.0 and not self.dryRun:
                     # check if last and first points are the same, otherwise the path is not closed and no overcut can be performed
                     if int(round(oldPosX)) == int(round(singlePath[0][1][0])) and int(round(oldPosY)) == int(round(singlePath[0][1][1])):
                         overcutLength = 0
@@ -284,7 +281,7 @@ class hpglEncoder:
 
     def processOffset(self, cmd, posX, posY):
         # calculate offset correction (or dont)
-        if not self.options.useToolOffset or self.dryRun:
+        if self.toolOffset == 0.0 or self.dryRun:
             self.storePoint(cmd, posX, posY)
         else:
             # insert data into cache
