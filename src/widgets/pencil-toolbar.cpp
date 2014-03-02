@@ -28,55 +28,26 @@
 # include "config.h"
 #endif
 
-#include "ui/widget/spinbutton.h"
 #include <glibmm/i18n.h>
-#include "toolbox.h"
+
 #include "pencil-toolbar.h"
-
-#include "../desktop.h"
-#include "../desktop-handles.h"
-#include "../desktop-style.h"
-#include "../document-private.h"
+#include "desktop.h"
 #include "document-undo.h"
-#include "../verbs.h"
-#include "../inkscape.h"
-//#include "../interface.h"
-//#include "../connection-pool.h"
-#include "../selection-chemistry.h"
-#include "../selection.h"
-
-#include <gtk/gtk.h>
-
-#include "../ege-adjustment-action.h"
-#include "../ege-output-action.h"
-#include "../ege-select-one-action.h"
-#include "../ink-action.h"
-#include "../ink-comboboxentry-action.h"
-
-#include "../widgets/button.h"
-#include "../widgets/spinbutton-events.h"
-#include "../widgets/spw-utilities.h"
-#include "../widgets/widget-sizes.h"
-//#include "../xml/attribute-record.h"
-#include "../xml/node-event-vector.h"
-#include "../xml/repr.h"
-#include "ui/uxmanager.h"
-
-//#include "../ui/tool/control-point-selection.h"
-//#include "ui/tools/node-tool.h"
-//#include "../ui/tool/multi-path-manipulator.h"
-#include "../ui/icon-names.h"
-
+#include "ege-adjustment-action.h"
+#include "ege-select-one-action.h"
+#include "ink-action.h"
+#include "preferences.h"
+#include "toolbox.h"
+#include "tools-switch.h"
+#include "ui/icon-names.h"
 #include "ui/tools/pen-tool.h"
-//#include "../sp-namedview.h"
-#include "../tools-switch.h"
+#include "ui/uxmanager.h"
+#include "widgets/spinbutton-events.h"
 
 using Inkscape::UI::UXManager;
 using Inkscape::DocumentUndo;
 using Inkscape::UI::ToolboxFactory;
 using Inkscape::UI::PrefPusher;
-
-
 
 //########################
 //##     Pen/Pencil     ##

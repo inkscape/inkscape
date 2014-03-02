@@ -27,8 +27,10 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <gtk/gtk.h>
 class SPDesktop;
+
+typedef struct _GtkActionGroup GtkActionGroup;
+typedef struct _GObject GObject;
 
 void       sp_zoom_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 

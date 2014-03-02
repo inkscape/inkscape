@@ -28,37 +28,20 @@
 # include "config.h"
 #endif
 
-#include "ui/widget/spinbutton.h"
 #include <glibmm/i18n.h>
-#include "toolbox.h"
+
 #include "eraser-toolbar.h"
-#include "calligraphy-toolbar.h"
-
-#include "../desktop.h"
-#include "../desktop-handles.h"
+#include "calligraphy-toolbar.h" // TODO: needed for update_presets_list
+#include "desktop-handles.h"
+#include "desktop.h"
 #include "document-undo.h"
-#include "../verbs.h"
-#include "../inkscape.h"
-#include "../selection-chemistry.h"
-#include "../selection.h"
-#include "../ege-adjustment-action.h"
-#include "../ege-output-action.h"
-#include "../ege-select-one-action.h"
-#include "../ink-action.h"
-#include "../ink-comboboxentry-action.h"
+#include "ege-adjustment-action.h"
+#include "ege-select-one-action.h"
+#include "ink-action.h"
+#include "preferences.h"
+#include "toolbox.h"
+#include "ui/icon-names.h"
 
-#include "../widgets/button.h"
-#include "../widgets/spinbutton-events.h"
-#include "../widgets/spw-utilities.h"
-#include "../widgets/widget-sizes.h"
-#include "../xml/node-event-vector.h"
-#include "../xml/repr.h"
-#include "ui/uxmanager.h"
-#include "../ui/icon-names.h"
-#include "ui/tools/pen-tool.h"
-
-
-using Inkscape::UI::UXManager;
 using Inkscape::DocumentUndo;
 using Inkscape::UI::ToolboxFactory;
 using Inkscape::UI::PrefPusher;

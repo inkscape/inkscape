@@ -17,47 +17,31 @@
 #endif
 
 #include "ui/widget/color-preview.h"
-#include "verbs.h"
-
-#include "macros.h"
-#include "widgets/button.h"
-#include "widgets/widget-sizes.h"
-#include "widgets/spw-utilities.h"
-#include "widgets/spinbutton-events.h"
-#include "widgets/gradient-vector.h"
-#include "widgets/gradient-image.h"
-#include "style.h"
-
-#include "preferences.h"
-#include "document-private.h"
-#include "document-undo.h"
-#include "desktop.h"
-#include "desktop-handles.h"
 #include <glibmm/i18n.h>
-
-#include "ui/tools/gradient-tool.h"
+#include "desktop-handles.h"
+#include "desktop.h"
+#include "document-undo.h"
+#include "document.h"
+#include "ege-adjustment-action.h"
+#include "ege-select-one-action.h"
+#include "gradient-chemistry.h"
 #include "gradient-drag.h"
+#include "gradient-toolbar.h"
+#include "ink-action.h"
+#include "macros.h"
+#include "preferences.h"
+#include "selection.h"
+#include "sp-defs.h"
 #include "sp-linear-gradient.h"
 #include "sp-radial-gradient.h"
-#include "gradient-chemistry.h"
-#include "gradient-selector.h"
-#include "selection.h"
-#include "ui/icon-names.h"
-
-#include "../ege-adjustment-action.h"
-#include "../ege-output-action.h"
-#include "../ege-select-one-action.h"
-#include "../ink-action.h"
-#include "../ink-comboboxentry-action.h"
-
 #include "sp-stop.h"
-#include "svg/css-ostringstream.h"
-#include "svg/svg-color.h"
-#include "desktop-style.h"
-#include "ui/tools/gradient-tool.h"
-#include "gradient-toolbar.h"
-
+#include "style.h"
 #include "toolbox.h"
+#include "ui/icon-names.h"
+#include "ui/tools/gradient-tool.h"
+#include "verbs.h"
+#include "widgets/gradient-image.h"
+#include "widgets/gradient-vector.h"
 
 using Inkscape::DocumentUndo;
 using Inkscape::UI::ToolboxFactory;

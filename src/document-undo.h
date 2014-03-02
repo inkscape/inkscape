@@ -1,9 +1,14 @@
 #ifndef SEEN_SP_DOCUMENT_UNDO_H
 #define SEEN_SP_DOCUMENT_UNDO_H
 
+namespace Glib {
+    class ustring;
+}
+
 typedef struct _GObject GObject;
 
 class SPDesktop;
+class SPDocument;
 
 namespace Inkscape {
 

@@ -19,6 +19,7 @@
 #include <sigc++/connection.h>
 
 class  SPDesktop;
+class SPObject;
 class  SPItem;
 namespace Avoid { class ShapeRef; }
 

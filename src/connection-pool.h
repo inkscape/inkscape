@@ -1,8 +1,10 @@
 #ifndef CONNECTION_POOL_H
 #define CONNECTION_POOL_H
 
+#include <map>
 #include <glib-object.h>
 #include <stddef.h>
+#include <string>
 #include <sigc++/sigc++.h>
 
 namespace Inkscape

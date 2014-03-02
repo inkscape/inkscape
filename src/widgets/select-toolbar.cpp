@@ -16,44 +16,36 @@
 # include "config.h"
 #endif
 
+#include <2geom/rect.h>
+
 #include "ui/widget/spinbutton.h"
-#include <gtk/gtk.h>
-
-#include "widgets/button.h"
-#include "widgets/spw-utilities.h"
-#include "widgets/widget-sizes.h"
-#include "widgets/spinbutton-events.h"
-#include "widgets/icon.h"
-#include "widgets/sp-widget.h"
-
+#include <glibmm/i18n.h>
+#include "select-toolbar.h"
+#include "desktop-handles.h"
+#include "desktop.h"
+#include "display/sp-canvas.h"
+#include "document-undo.h"
+#include "document.h"
+#include "ege-adjustment-action.h"
+#include "helper/action-context.h"
+#include "helper/action.h"
+#include "ink-action.h"
+#include "inkscape.h"
+#include "message-stack.h"
 #include "preferences.h"
 #include "selection-chemistry.h"
-#include "document.h"
-#include "document-undo.h"
-#include "inkscape.h"
-#include "desktop-style.h"
-#include "desktop.h"
-#include "desktop-handles.h"
+#include "selection.h"
+#include "sp-item-transform.h"
 #include "sp-namedview.h"
 #include "toolbox.h"
-#include <glibmm/i18n.h>
-#include "helper/action.h"
-#include "helper/action-context.h"
-#include "util/units.h"
-#include "inkscape.h"
-#include "verbs.h"
-#include "selection.h"
-#include "selection-chemistry.h"
-#include "sp-item-transform.h"
-#include "message-stack.h"
-#include "display/sp-canvas.h"
-#include "ui/widget/unit-tracker.h"
-#include "ege-adjustment-action.h"
-#include "ege-output-action.h"
-#include "ink-action.h"
-#include <2geom/rect.h>
 #include "ui/icon-names.h"
-#include "select-toolbar.h"
+#include "ui/widget/unit-tracker.h"
+#include "util/units.h"
+#include "verbs.h"
+#include "widgets/icon.h"
+#include "widgets/sp-widget.h"
+#include "widgets/spw-utilities.h"
+#include "widgets/widget-sizes.h"
 
 using Inkscape::UI::Widget::UnitTracker;
 using Inkscape::Util::Unit;
