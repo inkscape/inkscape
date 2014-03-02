@@ -52,6 +52,7 @@ struct SPDocumentPrivate {
 	GHashTable *resources;
 	ResourcesChangedSignalMap resources_changed_signals;
 
+        sigc::signal<void> destroySignal;
 	SPDocument::ModifiedSignal modified_signal;
 	SPDocument::URISetSignal uri_set_signal;
 	SPDocument::ResizedSignal resized_signal;

@@ -85,6 +85,9 @@ public:
     SPDocument();
     virtual ~SPDocument();
 
+    sigc::connection connectDestroy(sigc::signal<void>::slot_type slot);
+
+
     unsigned int keepalive : 1;
     unsigned int virgin    : 1; ///< Has the document never been touched?
     unsigned int modified_since_save : 1;

@@ -141,6 +141,8 @@ SPDocument::SPDocument() :
 }
 
 SPDocument::~SPDocument() {
+    priv->destroySignal.emit();
+
     // kill/unhook this first
     if ( profileManager ) {
         delete profileManager;
@@ -228,6 +230,11 @@ SPDocument::~SPDocument() {
     collectOrphans();
 
     //delete this->_whiteboard_session_manager;
+}
+
+sigc::connection SPDocument::connectDestroy(sigc::signal<void>::slot_type slot)
+{
+    return priv->destroySignal.connect(slot);
 }
 
 SPDefs *SPDocument::getDefs()
