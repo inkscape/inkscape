@@ -1430,7 +1430,10 @@ void FilterEffectsDialog::FilterModifier::on_document_replaced(SPDesktop * /*des
     if (_resource_changed) {
         _resource_changed.disconnect();
     }
-    _resource_changed = document->connectResourcesChanged("filter",sigc::mem_fun(*this, &FilterModifier::update_filters));
+    if (document)
+    {
+        _resource_changed = document->connectResourcesChanged("filter",sigc::mem_fun(*this, &FilterModifier::update_filters));
+    }
 
     update_filters();
 }
