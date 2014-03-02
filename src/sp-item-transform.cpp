@@ -115,7 +115,6 @@ Geom::Affine get_scale_transform_for_uniform_stroke(Geom::Rect const &bbox_visua
 
     gdouble w0 = bbox_visual.width(); // will return a value >= 0, as required further down the road
     gdouble h0 = bbox_visual.height();
-    gdouble r0 = sqrt(stroke_x*stroke_y); // r0 is redundant, used only for those cases where stroke_x = stroke_y
 
     // We also know the width and height of the new visual bounding box
     gdouble w1 = x1 - x0; // can have any sign
@@ -131,6 +130,16 @@ Geom::Affine get_scale_transform_for_uniform_stroke(Geom::Rect const &bbox_visua
     w1 = fabs(w1);
     h1 = fabs(h1);
     // w0 and h0 will always be positive due to the definition of the width() and height() methods.
+
+    // Check whether the stroke is negative; i.e. the geometric bounding box is larger than the visual bounding box, which
+    // occurs for example for clipped objects (see launchpad bug #811819)
+    if (stroke_x < 0 || stroke_y < 0) {
+        Geom::Affine direct = Geom::Scale(flip_x * w1 / w0, flip_y* h1 / h0); // Scaling of the visual bounding box
+        // How should we handle the stroke width scaling of clipped object? I don't know if we can/should handle this,
+        // so for now we simply return the direct scaling
+        return (p2o * direct * o2n);
+    }
+    gdouble r0 = sqrt(stroke_x*stroke_y); // r0 is redundant, used only for those cases where stroke_x = stroke_y
 
     // We will now try to calculate the affine transformation required to transform the first visual bounding box into
     // the second one, while accounting for strokewidth
