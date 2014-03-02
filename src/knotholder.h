@@ -57,7 +57,7 @@ public:
 
     const SPItem *getItem() { return item; }
 
-    bool knot_mouseover();
+    bool knot_mouseover() const;
 
     friend class ShapeEditor;
     friend class Inkscape::LivePathEffect::PowerStrokePointArrayParamKnotHolderEntity;

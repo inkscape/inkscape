@@ -103,10 +103,10 @@ void KnotHolder::update_knots()
 /**
  * Returns true if at least one of the KnotHolderEntities has the mouse hovering above it.
  */
-bool KnotHolder::knot_mouseover()
-{
-    for(std::list<KnotHolderEntity *>::iterator i = entity.begin(); i != entity.end(); ++i) {
-        SPKnot *knot = (*i)->knot;
+bool KnotHolder::knot_mouseover() const {
+    for (std::list<KnotHolderEntity *>::const_iterator i = entity.begin(); i != entity.end(); ++i) {
+        const SPKnot *knot = (*i)->knot;
+
         if (knot && (knot->flags & SP_KNOT_MOUSEOVER)) {
             return true;
         }

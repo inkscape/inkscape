@@ -186,9 +186,14 @@ protected:
     /// The cursor's hot spot
     gint hot_x, hot_y;
 
+    bool sp_event_context_knot_mouseover() const;
+
 private:
 	ToolBase(const ToolBase&);
 	ToolBase& operator=(const ToolBase&);
+
+	void sp_event_context_set_cursor(GdkCursorType cursor_type);
+
 };
 
 void sp_event_context_read(ToolBase *ec, gchar const *key);

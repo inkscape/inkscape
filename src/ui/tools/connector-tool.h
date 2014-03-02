@@ -108,8 +108,31 @@ public:
 
 	virtual const std::string& getPrefsPath();
 
+    void cc_clear_active_shape();
+    void cc_set_active_conn(SPItem *item);
+    void cc_clear_active_conn();
+
 private:
-	void selection_changed(Inkscape::Selection *selection);
+	void _selectionChanged(Inkscape::Selection *selection);
+
+	gint _handleButtonPress(GdkEventButton const &bevent);
+	gint _handleMotionNotify(GdkEventMotion const &mevent);
+	gint _handleButtonRelease(GdkEventButton const &revent);
+	gint _handleKeyPress(guint const keyval);
+
+	void _setInitialPoint(Geom::Point const p);
+	void _setSubsequentPoint(Geom::Point const p);
+	void _finishSegment(Geom::Point p);
+	void _resetColors();
+	void _finish();
+	void _concatColorsAndFlush();
+	void _flushWhite(SPCurve *gc);
+
+	void _activeShapeAddKnot(SPItem* item);
+	void _setActiveShape(SPItem *item);
+	bool _ptHandleTest(Geom::Point& p, gchar **href);
+
+	void _reroutingFinish(Geom::Point *const p);
 };
 
 void cc_selection_set_avoid(bool const set_ignore);

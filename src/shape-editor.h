@@ -64,7 +64,7 @@ public:
     // this one is only public because it's called from non-C++ repr changed callback
     void shapeeditor_event_attr_changed(gchar const *name);
 
-    bool knot_mouseover();
+    bool knot_mouseover() const;
     
     static void blockSetItem(bool b) {_blockSetItem = b;}
 

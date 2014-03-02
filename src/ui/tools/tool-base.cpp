@@ -143,9 +143,9 @@ ToolBase::~ToolBase() {
 /**
  * Set the cursor to a standard GDK cursor
  */
-static void sp_event_context_set_cursor(ToolBase *event_context, GdkCursorType cursor_type) {
+void ToolBase::sp_event_context_set_cursor(GdkCursorType cursor_type) {
 
-    GtkWidget *w = GTK_WIDGET(sp_desktop_canvas(event_context->desktop));
+    GtkWidget *w = GTK_WIDGET(sp_desktop_canvas(this->desktop));
     GdkDisplay *display = gdk_display_get_default();
     GdkCursor *cursor = gdk_cursor_new_for_display(display, cursor_type);
 
@@ -480,7 +480,7 @@ bool ToolBase::root_handler(GdkEvent* event) {
 
                 if (panning_cursor == 0) {
                     panning_cursor = 1;
-                    sp_event_context_set_cursor(this, GDK_FLEUR);
+                    this->sp_event_context_set_cursor(GDK_FLEUR);
                 }
 
                 Geom::Point const motion_w(event->motion.x, event->motion.y);
@@ -876,10 +876,9 @@ bool ToolBase::item_handler(SPItem* item, GdkEvent* event) {
 /**
  * Returns true if we're hovering above a knot (needed because we don't want to pre-snap in that case).
  */
-bool sp_event_context_knot_mouseover(ToolBase *ec)
-{
-    if (ec->shape_editor) {
-        return ec->shape_editor->knot_mouseover();
+bool ToolBase::sp_event_context_knot_mouseover() const {
+    if (this->shape_editor) {
+        return this->shape_editor->knot_mouseover();
     }
 
     return false;

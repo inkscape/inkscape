@@ -313,7 +313,7 @@ bool Box3dTool::root_handler(GdkEvent* event) {
             this->drag(event->motion.state);
 
             ret = TRUE;
-        } else if (!sp_event_context_knot_mouseover(this)) {
+        } else if (!this->sp_event_context_knot_mouseover()) {
             SnapManager &m = desktop->namedview->snap_manager;
             m.setup(desktop);
 

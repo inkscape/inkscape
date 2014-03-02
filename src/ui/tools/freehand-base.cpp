@@ -331,7 +331,7 @@ static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item,
             }
         }
         if (SP_IS_PEN_CONTEXT(dc)) {
-            sp_pen_context_set_polyline_mode(SP_PEN_CONTEXT(dc));
+            SP_PEN_CONTEXT(dc)->setPolylineMode();
         }
     }
 }

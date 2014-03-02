@@ -198,7 +198,7 @@ bool ArcTool::root_handler(GdkEvent* event) {
                 gobble_motion_events(GDK_BUTTON1_MASK);
 
                 handled = true;
-            } else if (!sp_event_context_knot_mouseover(this)){
+            } else if (!this->sp_event_context_knot_mouseover()){
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop);
 

@@ -48,6 +48,24 @@ public:
 protected:
 	virtual void setup();
 	virtual bool root_handler(GdkEvent* event);
+
+private:
+	gint _handleButtonPress(GdkEventButton const &bevent);
+	gint _handleMotionNotify(GdkEventMotion const &mevent);
+	gint _handleButtonRelease(GdkEventButton const &revent);
+	gint _handleKeyPress(guint const keyval, guint const state);
+	gint _handleKeyRelease(guint const keyval, guint const state);
+
+	void _setStartpoint(Geom::Point const &p);
+	void _setEndpoint(Geom::Point const &p);
+	void _finishEndpoint();
+	void _addFreehandPoint(Geom::Point const &p, guint state);
+	void _fitAndSplit();
+	void _interpolate();
+	void _sketchInterpolate();
+
+	void _cancel();
+	void _endpointSnap(Geom::Point &p, guint const state);
 };
 
 }

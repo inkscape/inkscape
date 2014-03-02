@@ -191,7 +191,7 @@ bool LpeTool::root_handler(GdkEvent* event) {
 
     bool ret = false;
 
-    if (sp_pen_context_has_waiting_LPE(this)) {
+    if (this->hasWaitingLPE()) {
         // quit when we are waiting for a LPE to be applied
         //ret = ((ToolBaseClass *) sp_lpetool_context_parent_class)->root_handler(event_context, event);
 	return PenTool::root_handler(event);
@@ -222,7 +222,7 @@ bool LpeTool::root_handler(GdkEvent* event) {
 
                 //bool over_stroke = lc->shape_editor->is_over_stroke(Geom::Point(event->button.x, event->button.y), true);
 
-                sp_pen_context_wait_for_LPE_mouse_clicks(this, type, Inkscape::LivePathEffect::Effect::acceptsNumClicks(type));
+                this->waitForLPEMouseClicks(type, Inkscape::LivePathEffect::Effect::acceptsNumClicks(type));
 
                 // we pass the mouse click on to pen tool as the first click which it should collect
                 //ret = ((ToolBaseClass *) sp_lpetool_context_parent_class)->root_handler(event_context, event);

@@ -112,7 +112,7 @@ static void freehand_mode_changed(EgeSelectOneAction* act, GObject* tbl)
 
     if (Tool::is_a<PenTool>(desktop->event_context)) {
         PenTool* pc = Tool::to<PenTool>(desktop->event_context);
-        sp_pen_context_set_polyline_mode(pc);
+        pc->setPolylineMode();
     }
 }
 

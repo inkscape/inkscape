@@ -235,11 +235,11 @@ bool ShapeEditor::has_selection() {
 /**
  * Returns true if this ShapeEditor has a knot above which the mouse currently hovers.
  */
-bool ShapeEditor::knot_mouseover()
-{
+bool ShapeEditor::knot_mouseover() const {
     if (this->knotholder) {
         return knotholder->knot_mouseover();
     }
+
     return false;
 }
 

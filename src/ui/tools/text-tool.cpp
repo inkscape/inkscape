@@ -602,7 +602,7 @@ bool TextTool::root_handler(GdkEvent* event) {
                 g_string_free(xs, FALSE);
                 g_string_free(ys, FALSE);
 
-            } else if (!sp_event_context_knot_mouseover(this)) {
+            } else if (!this->sp_event_context_knot_mouseover()) {
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop);
 
