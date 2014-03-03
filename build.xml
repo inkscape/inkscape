@@ -315,8 +315,6 @@
             <!--<exclude name="test-src.cpp"/>-->
             <exclude name="display/test-display.cpp"/>
             <exclude name="display/testnr.cpp"/>
-            <exclude name="dom/work/.*"/>
-            <exclude name="dom/odf/SvgOdg.cpp"/>
             <exclude name="extension/api.cpp"/>
             <exclude name="extension/dbus/.*"/>
             <exclude name="extension/dxf2svg/.*"/>
@@ -444,9 +442,6 @@
        </flags>
        <fileset dir="${build}/obj">
            <exclude name="winconsole.o"/>
-           <exclude name="dom/prop-css.o"/>
-           <exclude name="dom/prop-css2.o"/>
-           <exclude name="dom/prop-svg.o"/>
            <exclude name="inkview.o"/>
            <exclude name="inkviewres.o"/>
            <!-- CxxTest -->
@@ -532,10 +527,6 @@
            <exclude name="winmain.o"/>
            <exclude name="winconsole.o"/>
            <exclude name="inkres.o"/>
-           <!-- broken files -->
-           <exclude name="dom/prop-css.o"/>
-           <exclude name="dom/prop-css2.o"/>
-           <exclude name="dom/prop-svg.o"/>
            <!-- CxxTest -->
            <exclude name="test-main.o"/>
            <exclude name="test-src.o"/>
@@ -594,10 +585,6 @@
            <exclude name="inkres.o"/>
            <exclude name="inkviewres.o"/>
            <exclude name="inkview.o"/>
-           <!-- broken files -->
-           <exclude name="dom/prop-css.o"/>
-           <exclude name="dom/prop-css2.o"/>
-           <exclude name="dom/prop-svg.o"/>
        </fileset>
        <libs>
            -L${devlibs}/lib

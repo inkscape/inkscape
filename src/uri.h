@@ -25,6 +25,9 @@ namespace Inkscape {
 class URI {
 public:
 
+    /* Blank constructor */
+    URI();
+
     /**
      * Copy constructor.
      */

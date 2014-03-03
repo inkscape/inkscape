@@ -46,7 +46,7 @@
 #include "document.h"
 #include "preferences.h"
 
-#include "dom/uri.h"
+#include "uri.h"
 
 #ifdef WIN32
 #include <icm.h>
@@ -331,13 +331,17 @@ void ColorProfile::set(unsigned key, gchar const *value) {
                     gchar* escaped = g_uri_escape_string(this->href, "!*'();:@=+$,/?#[]", TRUE);
 
                     //g_message("docbase:%s\n", docbase);
-                    org::w3c::dom::URI docUri(docbase);
+                    //org::w3c::dom::URI docUri(docbase);
+                    Inkscape::URI docUri(docbase);
+
                     //# 2. Get href of icc file.  we don't care if it's rel or abs
-                    org::w3c::dom::URI hrefUri(escaped);
+                    //org::w3c::dom::URI hrefUri(escaped);
+                    Inkscape::URI hrefUri(escaped);
                     //# 3.  Resolve the href according the docBase.  This follows
                     //      the w3c specs.  All absolute and relative issues are considered
-                    org::w3c::dom::URI cprofUri = docUri.resolve(hrefUri);
-                    gchar* fullname = g_uri_unescape_string(cprofUri.getNativePath().c_str(), "");
+                    std::string fullpath = docUri.getFullPath(hrefUri.getFullPath(""));
+
+                    gchar* fullname = g_uri_unescape_string(fullpath.c_str(), "");
                     this->impl->_clearProfile();
                     this->impl->_profHandle = cmsOpenProfileFromFile( fullname, "r" );
                     if ( this->impl->_profHandle ) {

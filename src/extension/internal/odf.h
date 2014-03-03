@@ -23,18 +23,16 @@
 #ifndef EXTENSION_INTERNAL_ODG_OUT_H
 #define EXTENSION_INTERNAL_ODG_OUT_H
 
-#include <dom/dom.h>
 #include <io/stringstream.h>
-#include <dom/uri.h>
+#include <util/ziptool.h>
 
 #include "extension/implementation/implementation.h"
 
 #include <xml/repr.h>
-
 #include <string>
 #include <map>
 
-#include <dom/util/ziptool.h>
+#include "uri.h"
 #include "sp-item.h"
 
 #include <glibmm/ustring.h>
@@ -46,7 +44,6 @@ namespace Extension
 namespace Internal
 {
 
-typedef org::w3c::dom::URI URI;
 typedef Inkscape::IO::Writer Writer;
 
 class StyleInfo
@@ -279,7 +276,7 @@ public:
 
 private:
 
-    URI documentUri;
+    Inkscape::URI documentUri;
 
     void reset();
 

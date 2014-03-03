@@ -220,8 +220,6 @@
             <exclude name="test-all.cpp"/>
             <exclude name="display/testnr.cpp"/>
             <exclude name="display/bezier-utils-test.cpp"/>
-            <exclude name="dom/work/.*"/>
-            <exclude name="dom/odf/SvgOdg.cpp"/>
             <exclude name="extension/api.cpp"/>
             <exclude name="extension/dxf2svg/.*"/>
             <exclude name="extension/implementation/plugin.cpp"/>

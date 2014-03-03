@@ -77,12 +77,7 @@
 #include "text-editing.h"
 #include "util/units.h"
 
-
-//# DOM-specific includes
-#include "dom/dom.h"
-#include "dom/util/ziptool.h"
-//#include "dom/io/domstream.h"
-
+#include "uri.h"
 
 #include "inkscape-version.h"
 #include "document.h"
@@ -90,6 +85,7 @@
 
 #include "io/inkscapestream.h"
 #include "io/bufferstream.h"
+#include <util/ziptool.h>
 #include <iomanip>
 namespace Inkscape
 {
@@ -98,7 +94,6 @@ namespace Extension
 namespace Internal
 {
 //# Shorthand notation
-typedef org::w3c::dom::DOMString DOMString;
 typedef Inkscape::IO::BufferOutputStream BufferOutputStream;
 typedef Inkscape::IO::OutputStreamWriter OutputStreamWriter;
 typedef Inkscape::IO::StringOutputStream StringOutputStream;
@@ -1026,6 +1021,7 @@ static void gatherText(Inkscape::XML::Node *node, Glib::ustring &buf)
 
 }
 
+
 /**
  * FIRST PASS.
  * Method descends into the repr tree, converting image, style, and gradient info
@@ -1086,10 +1082,9 @@ void OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
                 imageTable[oldName] = newName;
                 Glib::ustring comment = "old name was: ";
                 comment.append(oldName);
-                URI oldUri(oldName);
+                Inkscape::URI oldUri(oldName.c_str());
                 //# if relative to the documentURI, get proper path
-                URI resUri = documentUri.resolve(oldUri);
-                DOMString pathName = resUri.getNativePath();
+                std::string pathName = documentUri.getFullPath(oldUri.getFullPath(""));
                 ZipEntry *ze = zf.addFile(pathName, comment);
                 if (ze)
                     {
@@ -2105,9 +2100,7 @@ void OdfOutput::save(Inkscape::Extension::Output */*mod*/, SPDocument *doc, gcha
 {
     reset();
 
-    documentUri = URI(filename);
-    /* fixme: It looks like we really are using documentUri as a URI, so we ought to call
-     * g_filename_to_uri for the URI constructor. */
+    documentUri = Inkscape::URI(filename);
 
     ZipFile zf;
     preprocess(zf, doc->rroot);

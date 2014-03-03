@@ -16,6 +16,11 @@
 
 namespace Inkscape {
 
+URI::URI() {
+    const gchar *in = "";
+    _impl = Impl::create(xmlParseURI(in));
+}
+
 URI::URI(const URI &uri) {
     uri._impl->reference();
     _impl = uri._impl;
