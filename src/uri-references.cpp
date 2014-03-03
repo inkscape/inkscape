@@ -56,8 +56,19 @@ void URIReference::attach(const URI &uri) throw(BadURIException)
         document = _owner_document;
     }
 
+    // createChildDoc() assumes that the referenced file is an SVG.
+    // PNG and JPG files are allowed (in the case of feImage).
+    gchar *filename = uri.toString();
+    bool skip = false;
+    if( g_str_has_suffix( filename, ".jpg" ) ||
+        g_str_has_suffix( filename, ".JPG" ) ||
+        g_str_has_suffix( filename, ".png" ) ||
+        g_str_has_suffix( filename, ".PNG" ) ) {
+        skip = true;
+    }
+ 
     // The path contains references to seperate document files to load.
-    if(document && uri.getPath()) {
+    if(document && uri.getPath() && !skip ) {
         std::string base = document->getBase() ? document->getBase() : "";
         std::string path = uri.getFullPath(base);
         if(!path.empty())
@@ -66,9 +77,10 @@ void URIReference::attach(const URI &uri) throw(BadURIException)
             document = NULL;
     }
     if(!document) {
-        g_warning("Can't get document for referenced URI: %s", uri.toString());
+        g_warning("Can't get document for referenced URI: %s", filename);
         return;
     }
+    g_free( filename );
 
     gchar const *fragment = uri.getFragment();
     if ( !uri.isRelative() || uri.getQuery() || !fragment ) {

@@ -134,7 +134,7 @@ void SPFeImage::set(unsigned int key, gchar const *value) {
                     this->requestModified(SP_OBJECT_MODIFIED_FLAG);
                     break;
                 } else {
-                    g_warning("SVG element URI was not found in the document while loading this");
+                    g_warning("SVG element URI was not found in the document while loading this: %s", value);
                 }
             }
             // catches either MalformedURIException or UnsupportedURIException
