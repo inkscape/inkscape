@@ -171,8 +171,11 @@ SPConnEndPair::writeRepr(Inkscape::XML::Node *const repr) const
 {
     char const * const attr_strs[] = {"inkscape:connection-start", "inkscape:connection-end"};
     for (unsigned handle_ix = 0; handle_ix < 2; ++handle_ix) {
-        if (this->_connEnd[handle_ix]->ref.getURI()) {
-            repr->setAttribute(attr_strs[handle_ix], this->_connEnd[handle_ix]->ref.getURI()->toString());
+        const Inkscape::URI* U = this->_connEnd[handle_ix]->ref.getURI();
+        if (U) {
+            gchar *str = U->toString();
+            repr->setAttribute(attr_strs[handle_ix], str);
+            g_free(str);
         }
     }
     repr->setAttribute("inkscape:connector-curvature", Glib::Ascii::dtostr(_connCurvature).c_str());
