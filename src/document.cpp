@@ -92,20 +92,20 @@ SPDocument::SPDocument() :
     keepalive(FALSE),
     virgin(TRUE),
     modified_since_save(FALSE),
-    rdoc(0),
-    rroot(0),
-    root(0),
+    rdoc(NULL),
+    rroot(NULL),
+    root(NULL),
     style_cascade(cr_cascade_new(NULL, NULL, NULL)),
-    uri(0),
-    base(0),
-    name(0),
-    priv(0), // reset in ctor
+    uri(NULL),
+    base(NULL),
+    name(NULL),
+    priv(NULL), // reset in ctor
     actionkey(),
     modified_id(0),
     rerouting_handler_id(0),
-    profileManager(0), // deferred until after other initialization
+    profileManager(NULL), // deferred until after other initialization
     router(new Avoid::Router(Avoid::PolyLineRouting|Avoid::OrthogonalRouting)),
-    _collection_queue(0),
+    _collection_queue(NULL),
     oldSignalsConnected(false),
     current_persp3d(NULL),
     current_persp3d_impl(NULL),
@@ -124,7 +124,7 @@ SPDocument::SPDocument() :
 
     p->resources = g_hash_table_new(g_str_hash, g_str_equal);
 
-    p->sensitive = FALSE;
+    p->sensitive = false;
     p->partial = NULL;
     p->history_size = 0;
     p->undo = NULL;
@@ -511,8 +511,7 @@ SPDocument *SPDocument::createChildDoc(std::string const &uri)
  */
 SPDocument *SPDocument::createNewDoc(gchar const *uri, unsigned int keepalive, bool make_new, SPDocument *parent)
 {
-    SPDocument *doc;
-    Inkscape::XML::Document *rdoc;
+    Inkscape::XML::Document *rdoc = NULL;
     gchar *base = NULL;
     gchar *name = NULL;
 
@@ -554,7 +553,7 @@ SPDocument *SPDocument::createNewDoc(gchar const *uri, unsigned int keepalive, b
     //# These should be set by now
     g_assert(name);
 
-    doc = createDoc(rdoc, uri, base, name, keepalive, parent);
+    SPDocument *doc = createDoc(rdoc, uri, base, name, keepalive, parent);
 
     g_free(base);
     g_free(name);
@@ -564,7 +563,7 @@ SPDocument *SPDocument::createNewDoc(gchar const *uri, unsigned int keepalive, b
 
 SPDocument *SPDocument::createNewDocFromMem(gchar const *buffer, gint length, unsigned int keepalive)
 {
-    SPDocument *doc = 0;
+    SPDocument *doc = NULL;
 
     Inkscape::XML::Document *rdoc = sp_repr_read_mem(buffer, length, SP_SVG_NS_URI);
     if ( rdoc ) {
@@ -762,7 +761,7 @@ void SPDocument::setBase( gchar const* base )
 {
     if (this->base) {
         g_free(this->base);
-        this->base = 0;
+        this->base = NULL;
     }
     if (base) {
         this->base = g_strdup(base);
@@ -771,9 +770,9 @@ void SPDocument::setBase( gchar const* base )
 
 void SPDocument::do_change_uri(gchar const *const filename, bool const rebase)
 {
-    gchar *new_base = 0;
-    gchar *new_name = 0;
-    gchar *new_uri = 0;
+    gchar *new_base = NULL;
+    gchar *new_name = NULL;
+    gchar *new_uri = NULL;
     if (filename) {
 
 #ifndef WIN32
