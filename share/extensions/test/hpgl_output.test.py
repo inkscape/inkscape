@@ -12,13 +12,13 @@ sys.path.append('..') # this line allows to import the extension code
 import unittest
 from hpgl_output import *
 
-class MyEffectBasicTest(unittest.TestCase):
+class HPGLOuputBasicTest(unittest.TestCase):
 
   #def setUp(self):
 
   def test_run_without_parameters(self):
     args = [ 'minimal-blank.svg' ]
-    e = MyEffect()
+    e = HpglOutput()
     e.affect( args, False )
     #self.assertEqual( e.something, 'some value', 'A commentary about that.' )
 
