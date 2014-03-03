@@ -172,7 +172,7 @@ void URIReference::_release(SPObject *obj)
 
 SPObject* sp_css_uri_reference_resolve( SPDocument *document, const gchar *uri )
 {
-    SPObject* ref = 0;
+    SPObject* ref = NULL;
 
     if ( document && uri && ( strncmp(uri, "url(", 4) == 0 ) ) {
         gchar *trimmed = extract_uri( uri );
@@ -188,7 +188,7 @@ SPObject* sp_css_uri_reference_resolve( SPDocument *document, const gchar *uri )
 SPObject *
 sp_uri_reference_resolve (SPDocument *document, const gchar *uri)
 {
-    SPObject* ref = 0;
+    SPObject* ref = NULL;
 
     if ( uri && (*uri == '#') ) {
         ref = document->getObjectById( uri + 1 );

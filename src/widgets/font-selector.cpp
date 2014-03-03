@@ -295,7 +295,7 @@ static void sp_font_selector_family_select_row(GtkTreeSelection *selection,
 
     // Next get family name with its style list
     gchar        *family;
-    GList        *list=0;
+    GList        *list=NULL;
     gtk_tree_model_get (model, &iter, 0, &family, 1, &list, -1);
 
     // Find best style match for selected family with current style (e.g. of selected text).
@@ -418,7 +418,7 @@ static void sp_font_selector_emit_set (SPFontSelector *fsel)
     GtkTreeModel     *model_style;
     GtkTreeIter       iter_family;
     GtkTreeIter       iter_style;
-    char             *family=0, *style=0;
+    char             *family=NULL, *style=NULL;
 
     //We need to check this here since most GtkTreeModel operations are not atomic
     //See GtkListStore documenation, Chapter "Atomic Operations" --mderezynski

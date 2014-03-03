@@ -685,18 +685,18 @@ public:
 
     unsigned getPosition();
 
-    gchar const * getAttribute(gchar const *name,SPException *ex=0) const;
+    gchar const * getAttribute(gchar const *name,SPException *ex=NULL) const;
 
     void appendChild(Inkscape::XML::Node *child);
 
-    void addChild(Inkscape::XML::Node *child,Inkscape::XML::Node *prev=0);
+    void addChild(Inkscape::XML::Node *child,Inkscape::XML::Node *prev=NULL);
 
     /**
      * Call virtual set() function of object.
      */
     void setKeyValue(unsigned int key, gchar const *value);
 
-    void setAttribute(gchar const *key, gchar const *value, SPException *ex=0);
+    void setAttribute(gchar const *key, gchar const *value, SPException *ex=NULL);
 
     /**
      * Read value of key attribute from XML node into object.
@@ -705,7 +705,7 @@ public:
 
     gchar const *getTagName(SPException *ex) const;
 
-    void removeAttribute(gchar const *key, SPException *ex=0);
+    void removeAttribute(gchar const *key, SPException *ex=NULL);
 
     /**
      * Returns an object style property.
