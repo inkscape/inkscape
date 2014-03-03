@@ -114,7 +114,7 @@ void FilterImage::render_cairo(FilterSlot &slot)
 //        dc.scale(scaleX, scaleY);  No scaling should be done
 
         Geom::IntRect render_rect = area.roundOutwards();
-        dc.translate(render_rect.min());
+//        dc.translate(render_rect.min());  This seems incorrect
 
         // Update to renderable state
         drawing.update(render_rect);
@@ -174,7 +174,8 @@ void FilterImage::render_cairo(FilterSlot &slot)
         sa.width(), sa.height());
 
     // For the moment, we'll assume that any image is in sRGB color space
-    set_cairo_surface_ci(out, SP_CSS_COLOR_INTERPOLATION_SRGB);
+    // set_cairo_surface_ci(out, SP_CSS_COLOR_INTERPOLATION_SRGB);
+    // This seemed like a sensible thing to do but it breaks filters-displace-01-f.svg
 
     cairo_t *ct = cairo_create(out);
     cairo_translate(ct, -sa.min()[Geom::X], -sa.min()[Geom::Y]);
