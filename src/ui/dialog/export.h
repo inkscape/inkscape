@@ -56,7 +56,9 @@ public:
     Export ();
     ~Export ();
 
-    static Export &getInstance() { return *new Export(); }
+    static Export &getInstance() {
+        return *new Export();
+    }
 
 private:
 
@@ -97,7 +99,7 @@ private:
     float getValue (Gtk::Adjustment *adj);
     float getValuePx (Gtk::Adjustment *adj);
 #endif
-    
+
     /**
      * Helper function to create, style and pack spinbuttons for the export dialog.
      *
@@ -121,20 +123,20 @@ private:
      */
 #if WITH_GTKMM_3_0
     Glib::RefPtr<Gtk::Adjustment> createSpinbutton( gchar const *key, float val, float min, float max,
-                                          float step, float page,
-                                          Gtk::Grid *t, int x, int y,
-                                          const Glib::ustring ll, const Glib::ustring lr,
-                                          int digits, unsigned int sensitive,
-                                          void (Export::*cb)() );
+                                                    float step, float page,
+                                                    Gtk::Grid *t, int x, int y,
+                                                    const Glib::ustring& ll, const Glib::ustring& lr,
+                                                    int digits, unsigned int sensitive,
+                                                    void (Export::*cb)() );
 #else
     Gtk::Adjustment * createSpinbutton( gchar const *key, float val, float min, float max,
-                                          float step, float page,
-                                          Gtk::Table *t, int x, int y,
-                                          const Glib::ustring ll, const Glib::ustring lr,
-                                          int digits, unsigned int sensitive,
-                                          void (Export::*cb)() );
+                                        float step, float page,
+                                        Gtk::Table *t, int x, int y,
+                                        const Glib::ustring& ll, const Glib::ustring& lr,
+                                        int digits, unsigned int sensitive,
+                                        void (Export::*cb)() );
 #endif
-    
+
     /**
      * One of the area select radio buttons was pressed
      */
@@ -153,8 +155,12 @@ private:
     /**
      * Area X value changed callback
      */
-    void onAreaX0Change() {areaXChange(x0_adj);} ;
-    void onAreaX1Change() {areaXChange(x1_adj);} ;
+    void onAreaX0Change() {
+        areaXChange(x0_adj);
+    } ;
+    void onAreaX1Change() {
+        areaXChange(x1_adj);
+    } ;
 #if WITH_GTKMM_3_0
     void areaXChange(Glib::RefPtr<Gtk::Adjustment>& adj);
 #else
@@ -164,8 +170,12 @@ private:
     /**
      * Area Y value changed callback
      */
-    void onAreaY0Change() {areaYChange(y0_adj);} ;
-    void onAreaY1Change() {areaYChange(y1_adj);} ;
+    void onAreaY0Change() {
+        areaYChange(y0_adj);
+    } ;
+    void onAreaY1Change() {
+        areaYChange(y1_adj);
+    } ;
 #if WITH_GTKMM_3_0
     void areaYChange(Glib::RefPtr<Gtk::Adjustment>& adj);
 #else
@@ -235,14 +245,14 @@ private:
 
     /**
      * Creates progress dialog for batch exporting.
-     * 
+     *
      * @param progress_text Text to be shown in the progress bar
      */
     Gtk::Dialog * create_progress_dialog (Glib::ustring progress_text);
 
     /**
      * Callback to be used in for loop to update the progress bar.
-     * 
+     *
      * @param value number between 0 and 1 indicating the fraction of progress (0.17 = 17 % progress)
      * @param dlg void pointer to the Gtk::Dialog progress dialog
      */
