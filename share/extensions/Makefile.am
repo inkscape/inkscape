@@ -13,7 +13,7 @@ otherstuffdir = $(datadir)/inkscape/extensions
 
 moduledir = $(datadir)/inkscape/extensions
 
-extension_SCRIPTS = $(wildcard $(extensiondir)/*.py)
+extension_SCRIPTS = $(wildcard $(srcdir)/*.py)
 
 otherstuff_DATA = \
 	fontfix.conf \
@@ -28,7 +28,7 @@ otherstuff_DATA = \
 	svg2xaml.xsl \
 	xaml2svg.xsl
 
-module_DATA = $(wildcard $(moduledir)/*.inx)
+module_DATA = $(wildcard $(srcdir)/*.inx)
 
 EXTRA_DIST = \
 	$(extension_SCRIPTS) $(otherstuff_DATA) $(module_DATA)
