@@ -13,9 +13,7 @@ otherstuffdir = $(datadir)/inkscape/extensions
 
 moduledir = $(datadir)/inkscape/extensions
 
-# If you remove an extension from here, either add it to EXTRA_DIST
-# below, or remove all mention of it from po/inkscape.pot as well.
-module_DATA = $(wildcard $(extensiondir)/*.py)
+extension_SCRIPTS = $(wildcard $(extensiondir)/*.py)
 
 otherstuff_DATA = \
 	fontfix.conf \
