@@ -2472,7 +2472,7 @@ Verb *Verb::_base_verbs[] = {
     new EditVerb(SP_VERB_EDIT_DESELECT, "EditDeselect", N_("D_eselect"),
                  N_("Deselect any selected objects or nodes"), INKSCAPE_ICON("edit-select-none")),
     new EditVerb(SP_VERB_EDIT_DELETE_ALL_GUIDES, "EditRemoveAllGuides", N_("Delete All Guides"),
-                 N_("Create four guides aligned with the page borders"), NULL),
+                 N_("Delete all the guides in the document"), NULL),
     new EditVerb(SP_VERB_EDIT_GUIDES_AROUND_PAGE, "EditGuidesAroundPage", N_("Create _Guides Around the Page"),
                  N_("Create four guides aligned with the page borders"), NULL),
     new EditVerb(SP_VERB_EDIT_NEXT_PATHEFFECT_PARAMETER, "EditNextPathEffectParameter", N_("Next path effect parameter"),
@@ -2609,11 +2609,11 @@ Verb *Verb::_base_verbs[] = {
                   N_("Toggle visibility of current layer"), NULL),
 
     // Object
-    new ObjectVerb(SP_VERB_OBJECT_ROTATE_90_CW, "ObjectRotate90", N_("Rotate _90&#176; CW"),
+    new ObjectVerb(SP_VERB_OBJECT_ROTATE_90_CW, "ObjectRotate90", N_("Rotate _90\xc2\xb0 CW"),
                    // This is shared between tooltips and statusbar, so they
                    // must use UTF-8, not HTML entities for special characters.
                    N_("Rotate selection 90\xc2\xb0 clockwise"), INKSCAPE_ICON("object-rotate-right")),
-    new ObjectVerb(SP_VERB_OBJECT_ROTATE_90_CCW, "ObjectRotate90CCW", N_("Rotate 9_0&#176; CCW"),
+    new ObjectVerb(SP_VERB_OBJECT_ROTATE_90_CCW, "ObjectRotate90CCW", N_("Rotate 9_0\xc2\xb0 CCW"),
                    // This is shared between tooltips and statusbar, so they
                    // must use UTF-8, not HTML entities for special characters.
                    N_("Rotate selection 90\xc2\xb0 counter-clockwise"), INKSCAPE_ICON("object-rotate-left")),

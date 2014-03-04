@@ -1747,7 +1747,7 @@ void sp_selection_rotate_90(SPDesktop *desktop, bool ccw)
 
     DocumentUndo::done(sp_desktop_document(desktop),
                        ccw ? SP_VERB_OBJECT_ROTATE_90_CCW : SP_VERB_OBJECT_ROTATE_90_CW,
-                       ccw ? _("Rotate 90&#176; CCW") : _("Rotate 90&#176; CW"));
+                       ccw ? _("Rotate 90\xc2\xb0 CCW") : _("Rotate 90\xc2\xb0 CW"));
 }
 
 void
