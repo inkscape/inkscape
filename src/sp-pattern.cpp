@@ -595,8 +595,7 @@ cairo_pattern_t* SPPattern::pattern_new(cairo_t *base_ct, Geom::OptRect const &b
     // the pattern onto a surface with that size and at that resolution.
 
     // Pattern server to user
-    Geom::Affine ps2user;
-    ps2user = pattern_patternTransform(this);
+    Geom::Affine ps2user = pattern_patternTransform(this);
     if (!this->viewBox_set && pattern_patternContentUnits (this) == SP_PATTERN_UNITS_OBJECTBOUNDINGBOX) {
         /* BBox to user coordinate system */
         Geom::Affine bbox2user (bbox->width(), 0.0, 0.0, bbox->height(), bbox->left(), bbox->top());
@@ -631,7 +630,7 @@ cairo_pattern_t* SPPattern::pattern_new(cairo_t *base_ct, Geom::OptRect const &b
     //       to find the optimum tile size for rendering
     // c is number of pixels in buffer x and y.
     // Scale factor of 1.1 is too small... see bug #1251039
-    Geom::Point c(pattern_tile.dimensions()*vb2ps.descrim()*ps2user.descrim()*full.descrim()*2.0);
+    Geom::Point c(pattern_tile.dimensions()*vb2ps.descrim()*full.descrim()*2.0);
 
     c[Geom::X] = ceil(c[Geom::X]);
     c[Geom::Y] = ceil(c[Geom::Y]);
@@ -651,7 +650,7 @@ cairo_pattern_t* SPPattern::pattern_new(cairo_t *base_ct, Geom::OptRect const &b
 
     // TODO: make sure there are no leaks.
     Inkscape::UpdateContext ctx;  // UpdateContext is structure with only ctm!
-    ctx.ctm = vb2ps * pattern_surface.drawingTransform();
+    ctx.ctm = ps2user * pattern_surface.drawingTransform();  // vb2ps?
     dc.transform( pattern_surface.drawingTransform().inverse() );
     drawing.update(Geom::IntRect::infinite(), ctx);
 
@@ -679,7 +678,7 @@ cairo_pattern_t* SPPattern::pattern_new(cairo_t *base_ct, Geom::OptRect const &b
 
     cairo_pattern_t *cp = cairo_pattern_create_for_surface(pattern_surface.raw());
     // Apply transformation to user space. Also compensate for oversampling.
-    ink_cairo_pattern_set_matrix(cp, ps2user.inverse() * pattern_surface.drawingTransform());
+    ink_cairo_pattern_set_matrix(cp, pattern_surface.drawingTransform() );
 
     cairo_pattern_set_extend(cp, CAIRO_EXTEND_REPEAT);
 

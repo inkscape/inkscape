@@ -123,7 +123,7 @@ DrawingSurface::scale() const
 Geom::Affine
 DrawingSurface::drawingTransform() const
 {
-    Geom::Affine ret = _scale * Geom::Translate(-_origin);
+    Geom::Affine ret = Geom::Translate(-_origin) * _scale;
     return ret;
 }
 
