@@ -1047,7 +1047,6 @@ src/check-header-compile
 src/debug/makefile
 src/dialogs/makefile
 src/display/makefile
-src/dom/makefile
 src/extension/implementation/makefile
 src/extension/internal/makefile
 src/extension/makefile
