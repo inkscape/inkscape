@@ -206,7 +206,9 @@ void SPMarker::update(SPCtx *ctx, guint flags) {
     SPItemCtx rctx = get_rctx( &ictx );
 
     // Shift according to refX, refY
-    this->c2p = Geom::Translate(this->viewBox.left()-this->refX.computed, this->viewBox.top()-this->refY.computed) * this->c2p;
+    Geom::Point ref( this->refX.computed, this->refY.computed );
+    ref *= c2p;
+    this->c2p = this->c2p * Geom::Translate( -ref );
 
     // And invoke parent method
     SPGroup::update((SPCtx *) &rctx, flags);
