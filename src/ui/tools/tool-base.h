@@ -14,6 +14,7 @@
 
 #include <glib-object.h>
 #include <gdk/gdk.h>
+#include <sigc++/trackable.h>
 #include "knot.h"
 
 #include "2geom/forward.h"
@@ -104,7 +105,9 @@ void sp_event_context_snap_delay_handler(ToolBase *ec, gpointer const dse_item, 
  * plus few abstract base classes. Writing a new tool involves
  * subclassing ToolBase.
  */
-class ToolBase {
+class ToolBase
+    : public sigc::trackable
+{
 public:
     void enableSelectionCue (bool enable=true);
     void enableGrDrag (bool enable=true);

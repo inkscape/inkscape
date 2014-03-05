@@ -84,6 +84,12 @@ public:
 	virtual bool item_handler(SPItem* item, GdkEvent* event);
 
 	virtual const std::string& getPrefsPath();
+
+private:
+    void _selectionChanged(Inkscape::Selection *selection);
+    void _selectionModified(Inkscape::Selection *selection, guint flags);
+    bool _styleSet(SPCSSAttr const *css);
+    int _styleQueried(SPStyle *style, int property);
 };
 
 bool sp_text_paste_inline(ToolBase *ec);
