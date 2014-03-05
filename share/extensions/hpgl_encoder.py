@@ -122,8 +122,8 @@ class hpglEncoder:
         # move drawing according to various modifiers
         if self.options.autoAlign:
             if self.options.center:
-                self.divergenceX += (self.sizeX - self.divergenceX) / 2
-                self.divergenceY += (self.sizeY - self.divergenceY) / 2
+                self.offsetX -= (self.sizeX - self.divergenceX) / 2
+                self.offsetY -= (self.sizeY - self.divergenceY) / 2
         else:
             self.divergenceX = 0.0
             self.divergenceY = 0.0
@@ -163,19 +163,24 @@ class hpglEncoder:
         if self.options.speed > 0:
             self.hpgl += ';VS%d' % self.options.speed
         # add move to zero point and precut
-        self.processOffset('PU', 0, 0)
         if self.toolOffset > 0.0 and self.options.precut:
             if self.options.center:
-                # TODO: get this FU to work or remove precut functionality
-                '''
-                newDoc = inkex.etree.parse(StringIO('<svg xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" width="10" height="' + str(10 * 3.5433070866) + '"></svg>'))
-                newLayer = inkex.etree.SubElement(newDoc.getroot(), 'g', {inkex.addNS('groupmode', 'inkscape'): 'layer', inkex.addNS('label', 'inkscape'): 'null'})
-                newPath = inkex.etree.SubElement(newLayer, 'path', {'d': 'M ' + str(oldDivergenceX) + ',' + str(oldDivergenceY) + ' L ' + str(oldDivergenceX) + ',' + str(oldDivergenceY + (self.options.toolOffset * 8 * 3.5433070866)), 'style': 'stroke:#000000; stroke-width:0.4; fill:none;'})
-                self.processPath(newPath, groupmat)
-                '''
-                pass
+                # position precut outside of drawing plus one times the tooloffset
+                if self.offsetX >= 0.0:
+                    precutX = self.offsetX + self.toolOffset
+                else:
+                    precutX = self.offsetX - self.toolOffset
+                if self.offsetY >= 0.0:
+                    precutY = self.offsetY + self.toolOffset
+                else:
+                    precutY = self.offsetY - self.toolOffset
+                self.processOffset('PU', precutX, precutY)
+                self.processOffset('PD', precutX, precutY + self.toolOffset * 8)
             else:
+                self.processOffset('PU', 0, 0)
                 self.processOffset('PD', 0, self.toolOffset * 8)
+        else:
+            self.processOffset('PU', 0, 0)
         # start conversion
         self.processGroups(self.doc, groupmat)
         # shift an empty node in in order to process last node in cache
