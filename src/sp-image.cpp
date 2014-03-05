@@ -813,9 +813,7 @@ void sp_image_refresh_if_outdated( SPImage* image )
         if ( !val ) {
             // stat call worked. Check time now
             if ( st.st_mtime != image->pixbuf->modificationTime() ) {
-                SPCtx *ctx = 0;
-                unsigned int flags = SP_IMAGE_HREF_MODIFIED_FLAG;
-                image->update(ctx, flags);
+                image->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_IMAGE_HREF_MODIFIED_FLAG);
             }
         }
     }
