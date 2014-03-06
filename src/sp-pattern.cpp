@@ -606,16 +606,11 @@ cairo_pattern_t* SPPattern::pattern_new(cairo_t *base_ct, Geom::OptRect const &b
     // Content to tile (pattern space)
     Geom::Affine content2ps;
     if (this->viewBox_set) {
-        // viewBox to pattern server
-        Geom::Rect vb = *pattern_viewBox(this);
-        gdouble tmp_x = tile_width  / vb.width();
-        gdouble tmp_y = tile_height / vb.height();
-
-        // FIXME: preserveAspectRatio must be taken into account here too!
-        Geom::Affine vb2ps = Geom::Affine(tmp_x, 0.0, 0.0, tmp_y,
-                                           /*tile_x*/ - vb.left() * tmp_x,
-                                           /*tile_y*/ - vb.top()  * tmp_y);
-        content2ps = vb2ps;
+        // viewBox to pattern server (using SPViewBox) 
+        viewBox = *pattern_viewBox(this);
+        c2p.setIdentity();
+        apply_viewbox( pattern_tile );
+        content2ps = c2p;
     } else {
 
         // Content to bbox
