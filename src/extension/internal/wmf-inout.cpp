@@ -455,58 +455,45 @@ uint32_t Wmf::add_dib_image(PWMF_CALLBACK_DATA d, const char *dib, uint32_t iUsa
     char            *rgba_px = NULL;     // RGBA pixels
     const char      *px      = NULL;     // DIB pixels
     const U_RGBQUAD *ct      = NULL;     // DIB color table
-    int32_t  width, height, colortype, numCt, invert;
-    if((iUsage != U_DIB_RGB_COLORS) ||
-        !(dibparams = wget_DIB_params(  // this returns pointers and values, but allocates no memory
-            dib,
-            &px,
-            &ct,
-            &numCt,
-            &width,
-            &height,
-            &colortype,
-            &invert
-        ))
-    ){
-
-        if(!DIB_to_RGBA(
-            px,         // DIB pixel array
-            ct,         // DIB color table
-            numCt,      // DIB color table number of entries
-            &rgba_px,   // U_RGBA pixel array (32 bits), created by this routine, caller must free.
-            width,      // Width of pixel array in record
-            height,     // Height of pixel array in record
-            colortype,  // DIB BitCount Enumeration
-            numCt,      // Color table used if not 0
-            invert      // If DIB rows are in opposite order from RGBA rows
-            ) &&
-            rgba_px
-        ){
-            toPNG(         // Get the image from the RGBA px into mempng
-                &mempng,
-                width, height,    // of the SRC bitmap
-                rgba_px
-            );
-            free(rgba_px);
+    int32_t  width, height, colortype, numCt, invert; // if needed these values will be set by wget_DIB_params
+    if(iUsage == U_DIB_RGB_COLORS){
+        // next call returns pointers and values, but allocates no memory
+        dibparams = wget_DIB_params(dib, &px, &ct, &numCt, &width, &height, &colortype, &invert);
+        if(dibparams == U_BI_RGB){
+            if(!DIB_to_RGBA(
+                px,         // DIB pixel array
+                ct,         // DIB color table
+                numCt,      // DIB color table number of entries
+                &rgba_px,   // U_RGBA pixel array (32 bits), created by this routine, caller must free.
+                width,      // Width of pixel array in record
+                height,     // Height of pixel array in record
+                colortype,  // DIB BitCount Enumeration
+                numCt,      // Color table used if not 0
+                invert      // If DIB rows are in opposite order from RGBA rows
+            )){
+                toPNG(         // Get the image from the RGBA px into mempng
+                    &mempng,
+                    width, height,    // of the SRC bitmap
+                    rgba_px
+                );
+                free(rgba_px);
+            }
         }
     }
-    gchar *base64String;
-    if(dibparams == U_BI_JPEG || dibparams==U_BI_PNG){
+    gchar *base64String=NULL;
+    if(dibparams == U_BI_JPEG || dibparams==U_BI_PNG){  // image was binary png or jpg in source file
         base64String = g_base64_encode((guchar*) px, numCt );
-        idx = in_images(d, (char *) base64String);
     }
-    else if(mempng.buffer){
+    else if(mempng.buffer){                             // image was DIB in source file, converted to png in this routine
         base64String = g_base64_encode((guchar*) mempng.buffer, mempng.size );
         free(mempng.buffer);
-        idx = in_images(d, (char *) base64String);
     }
-    else {
-        // insert a random 3x4 blotch otherwise
+    else {                         // failed conversion, insert the common bad image picture
         width  = 3;
         height = 4;
-        base64String = g_strdup("iVBORw0KGgoAAAANSUhEUgAAAAQAAAADCAIAAAA7ljmRAAAAA3NCSVQICAjb4U/gAAAALElEQVQImQXBQQ2AMAAAsUJQMSWI2H8qME1yMshojwrvGB8XcHKvR1XtOTc/8HENumHCsOMAAAAASUVORK5CYII=");
-        idx = in_images(d, (char *) base64String);
+        base64String = bad_image_png();
     }
+    idx = in_images(d, (char *) base64String);
     if(!idx){  // add it if not already present - we looked at the actual data for comparison
         if(d->images.count == d->images.size){  enlarge_images(d); }
         idx = d->images.count;
@@ -545,7 +532,7 @@ uint32_t Wmf::add_dib_image(PWMF_CALLBACK_DATA d, const char *dib, uint32_t iUsa
         *(d->defs) += "    ";
         *(d->defs) += "   </pattern>\n";
     }
-    g_free(base64String);
+    g_free(base64String); //wait until this point to free because it might be a duplicate image
     return(idx-1);
 }
 
@@ -563,16 +550,16 @@ uint32_t Wmf::add_bm16_image(PWMF_CALLBACK_DATA d, U_BITMAP16 Bm16, const char *
     mempng.buffer = NULL;
 
     char            *rgba_px = NULL;     // RGBA pixels
-    const U_RGBQUAD *ct = NULL;          // color table, always NULL here
+    const U_RGBQUAD *ct      = NULL;     // color table, always NULL here
     int32_t    width, height, colortype, numCt, invert;
     numCt     = 0;
     width     = Bm16.Width;              //  bitmap width in pixels.
     height    = Bm16.Height;             //  bitmap height in scan lines.
     colortype = Bm16.BitsPixel;          //  seems to be BitCount Enumeration
     invert    = 0;
-    if(colortype < 16)return(0xFFFFFFFF);  // these would need a colortable if they were a dib, no idea what bm16 is supposed to do instead.
+    if(colortype < 16)return(U_WMR_INVALID);  // these would need a colortable if they were a dib, no idea what bm16 is supposed to do instead.
 
-    if(!DIB_to_RGBA(// This is not really a dib, but close enough...
+    if(!DIB_to_RGBA(// This is not really a dib, but close enough so that it still works.
         px,         // DIB pixel array
         ct,         // DIB color table (always NULL here)
         numCt,      // DIB color table number of entries (always 0)
@@ -582,8 +569,7 @@ uint32_t Wmf::add_bm16_image(PWMF_CALLBACK_DATA d, U_BITMAP16 Bm16, const char *
         colortype,  // DIB BitCount Enumeration
         numCt,      // Color table used if not 0
         invert      // If DIB rows are in opposite order from RGBA rows
-        ) &&  rgba_px)
-    {
+    )){
         toPNG(         // Get the image from the RGBA px into mempng
             &mempng,
             width, height,    // of the SRC bitmap
@@ -591,17 +577,18 @@ uint32_t Wmf::add_bm16_image(PWMF_CALLBACK_DATA d, U_BITMAP16 Bm16, const char *
         );
         free(rgba_px);
     }
-    gchar *base64String;
-    if(mempng.buffer){
+
+    gchar *base64String=NULL;
+    if(mempng.buffer){             // image was Bm16 in source file, converted to png in this routine
         base64String = g_base64_encode((guchar*) mempng.buffer, mempng.size );
         free(mempng.buffer);
     }
-    else {
-        // insert a random 3x4 blotch otherwise
+    else {                         // failed conversion, insert the common bad image picture
         width  = 3;
         height = 4;
-        base64String = g_strdup("iVBORw0KGgoAAAANSUhEUgAAAAQAAAADCAIAAAA7ljmRAAAAA3NCSVQICAjb4U/gAAAALElEQVQImQXBQQ2AMAAAsUJQMSWI2H8qME1yMshojwrvGB8XcHKvR1XtOTc/8HENumHCsOMAAAAASUVORK5CYII=");
+        base64String = bad_image_png();
     }
+
     idx = in_images(d, (char *) base64String);
     if(!idx){  // add it if not already present - we looked at the actual data for comparison
         if(d->images.count == d->images.size){  enlarge_images(d); }
@@ -639,7 +626,7 @@ uint32_t Wmf::add_bm16_image(PWMF_CALLBACK_DATA d, U_BITMAP16 Bm16, const char *
         *(d->defs) += "\" />\n";
         *(d->defs) += "   </pattern>\n";
     }
-    g_free(base64String);
+    g_free(base64String); //wait until this point to free because it might be a duplicate image
     return(idx-1);
 }
 
@@ -883,16 +870,13 @@ double
 Wmf::pix_to_x_point(PWMF_CALLBACK_DATA d, double px, double /*py*/)
 {
     double x   = _pix_x_to_point(d, px);
-
     return x;
 }
 
 double
 Wmf::pix_to_y_point(PWMF_CALLBACK_DATA d, double /*px*/, double py)
 {
-
     double y   = _pix_y_to_point(d, py);
-
     return y;
 
 }
@@ -1054,7 +1038,6 @@ Wmf::select_brush(PWMF_CALLBACK_DATA d, int index)
         const char *Bm16h;  // Pointer to Bitmap16 header (px follows)
         const char *dib;    // Pointer to DIB
         (void) U_WMRDIBCREATEPATTERNBRUSH_get(record, &Style, &cUsage, &Bm16h, &dib);
-        // Bm16 not handled yet
         if(dib || Bm16h){
             if(dib){ tidx = add_dib_image(d, dib, cUsage); }
             else if(Bm16h){
@@ -1064,7 +1047,7 @@ Wmf::select_brush(PWMF_CALLBACK_DATA d, int index)
                 px = Bm16h + U_SIZE_BITMAP16;
                 tidx = add_bm16_image(d, Bm16, px);
             }
-            if(tidx == 0xFFFFFFFF){  // Problem with the image, for instance, an unsupported bitmap16 type
+            if(tidx == U_WMR_INVALID){  // Problem with the image, for instance, an unsupported bitmap16 type
                 double r, g, b;
                 r = SP_COLOR_U_TO_F( U_RGBAGetR(d->dc[d->level].textColor));
                 g = SP_COLOR_U_TO_F( U_RGBAGetG(d->dc[d->level].textColor));
@@ -1384,9 +1367,8 @@ void Wmf::common_bm16_to_image(PWMF_CALLBACK_DATA d, U_BITMAP16 Bm16, const char
 
     SVGOStringStream tmp_image;
 
+    tmp_image << "\n\t <image\n";
     tmp_image << " y=\"" << dy << "\"\n x=\"" << dx <<"\"\n ";
-
-    // The image ID is filled in much later when tmp_image is converted
 
     MEMPNG mempng; // PNG in memory comes back in this
     mempng.buffer = NULL;
@@ -1408,7 +1390,8 @@ void Wmf::common_bm16_to_image(PWMF_CALLBACK_DATA d, U_BITMAP16 Bm16, const char
     }
 
     if(colortype < 16)return;  // these would need a colortable if they were a dib, no idea what bm16 is supposed to do instead.
-    if(!DIB_to_RGBA(  // This is not really a dib, but close enough...
+
+    if(!DIB_to_RGBA(// This is not really a dib, but close enough so that it still works.
         px,         // DIB pixel array
         ct,         // DIB color table (always NULL here)
         numCt,      // DIB color table number of entries (always 0)
@@ -1418,15 +1401,13 @@ void Wmf::common_bm16_to_image(PWMF_CALLBACK_DATA d, U_BITMAP16 Bm16, const char
         colortype,  // DIB BitCount Enumeration
         numCt,      // Color table used if not 0
         invert      // If DIB rows are in opposite order from RGBA rows
-        ) &&
-        rgba_px
-    ){
-        sub_px = RGBA_to_RGBA(
-            rgba_px,    // full pixel array from DIB
-            width,      // Width of pixel array
-            height,     // Height of pixel array
-            sx,sy,      // starting point in pixel array
-            &sw,&sh     // columns/rows to extract from the pixel array (output array size)
+    )){
+        sub_px = RGBA_to_RGBA( // returns either a subset (side effect: frees rgba_px) or NULL (for subset == entire image)
+            rgba_px,           // full pixel array from DIB
+            width,             // Width of pixel array
+            height,            // Height of pixel array
+            sx,sy,             // starting point in pixel array
+            &sw,&sh            // columns/rows to extract from the pixel array (output array size)
         );
 
         if(!sub_px)sub_px=rgba_px;
@@ -1437,26 +1418,26 @@ void Wmf::common_bm16_to_image(PWMF_CALLBACK_DATA d, U_BITMAP16 Bm16, const char
         );
         free(sub_px);
     }
-    if(mempng.buffer){
+
+    gchar *base64String=NULL;
+    if(mempng.buffer){             // image was Bm16 in source file, converted to png in this routine
         tmp_image << " xlink:href=\"data:image/png;base64,";
-        gchar *base64String = g_base64_encode((guchar*) mempng.buffer, mempng.size );
+        base64String = g_base64_encode((guchar*) mempng.buffer, mempng.size );
         free(mempng.buffer);
-        tmp_image << base64String;
-        g_free(base64String);
     }
-    else {
+    else {                         // unknown or unsupported image type or failed conversion, insert the common bad image picture
         tmp_image << " xlink:href=\"data:image/png;base64,";
-        // insert a random 3x4 blotch otherwise
-        tmp_image << "iVBORw0KGgoAAAANSUhEUgAAAAQAAAADCAIAAAA7ljmRAAAAA3NCSVQICAjb4U/gAAAALElEQVQImQXBQQ2AMAAAsUJQMSWI2H8qME1yMshojwrvGB8XcHKvR1XtOTc/8HENumHCsOMAAAAASUVORK5CYII=";
+        base64String = bad_image_png();
     }
+    tmp_image << base64String;
+    g_free(base64String);
 
     tmp_image << "\"\n height=\"" << dh << "\"\n width=\"" << dw << "\"\n";
-
     tmp_image << " transform=" << current_matrix(d, 0.0, 0.0, 0); // returns an identity matrix, no offsets.
-    *(d->outsvg) += "\n\t <image\n";
-    *(d->outsvg) += tmp_image.str().c_str();
+    tmp_image << " preserveAspectRatio=\"none\"\n";
+    tmp_image << "/> \n";
 
-    *(d->outsvg) += "/> \n";
+    *(d->outsvg) += tmp_image.str().c_str();
     *(d->path) = "";
 }
 
@@ -1669,7 +1650,7 @@ int Wmf::myMetaFileProc(const char *contents, unsigned int length, PWMF_CALLBACK
     // incompatible change to text drawing detected (color or background change) forces out existing text
     //    OR
     // next record is valid type and forces pending text to be drawn immediately
-    if ((d->dc[d->level].dirty & DIRTY_TEXT) || ((wmr_mask != 0xFFFFFFFF)   &&   (wmr_mask & U_DRAW_TEXT) && d->tri->dirty)){
+    if ((d->dc[d->level].dirty & DIRTY_TEXT) || ((wmr_mask != U_WMR_INVALID) && (wmr_mask & U_DRAW_TEXT) && d->tri->dirty)){
         TR_layout_analyze(d->tri);
         TR_layout_2_svg(d->tri);
         SVGOStringStream ts;
@@ -1712,7 +1693,7 @@ std::cout << "BEFORE DRAW"
 */
 
     if(
-        (wmr_mask != 0xFFFFFFFF)                                &&              // next record is valid type
+        (wmr_mask != U_WMR_INVALID)                             &&              // next record is valid type
         (d->mask & U_DRAW_VISIBLE)                              &&              // This record is drawable
         (
             (d->mask & U_DRAW_FORCE)                            ||              // This draw is forced by STROKE/FILL/STROKEANDFILL PATH
@@ -1852,6 +1833,20 @@ std::cout << "BEFORE DRAW"
                     d->dc[d->level].sizeWnd.y = d->PixelsOutY;
                 }
             }
+            else {
+                /* There are a lot WMF files in circulation with the x,y values in the  setwindowext reversed.  If this is detected, swap them.
+                   There is a remote possibility that the strange scaling this implies was intended, and those will be rendered incorrectly */
+                double Ox = d->PixelsOutX;
+                double Oy = d->PixelsOutY;
+                double Wx = d->dc[d->level].sizeWnd.x;
+                double Wy = d->dc[d->level].sizeWnd.y;
+                if(Wx != Wy && Geom::are_near(Ox/Wy, Oy/Wx, 1.01/MIN(Wx,Wy)) ){
+                    int tmp;
+                    tmp = d->dc[d->level].sizeWnd.x;
+                    d->dc[d->level].sizeWnd.x = d->dc[d->level].sizeWnd.y;
+                    d->dc[d->level].sizeWnd.y = tmp;
+                }
+            }
 
             if (!d->dc[d->level].sizeView.x || !d->dc[d->level].sizeView.y) {
                 /* Previously it used sizeWnd, but that always resulted in scale = 1 if no viewport ever appeared, and in most files, it did not */
@@ -1984,7 +1979,7 @@ std::cout << "BEFORE DRAW"
             int stat = wmr_arc_points(rc, ArcStart, ArcEnd,&f1, f2, &center, &start, &end, &size);
             if(!stat){
                 tmp_path <<  "\n\tM " << pix_to_xy(d, start.x, start.y);
-                tmp_path <<  " A "    << pix_to_abs_size(d, size.x)/2.0      << ","  << pix_to_abs_size(d, size.y)/2.0 ;
+                tmp_path <<  " A "    << pix_to_abs_size(d, size.x)/2.0      << ","  << pix_to_abs_size(d, size.y)/2.0;
                 tmp_path <<  " ";
                 tmp_path <<  180.0 * current_rotation(d)/M_PI;
                 tmp_path <<  " ";
@@ -2036,7 +2031,7 @@ std::cout << "BEFORE DRAW"
             if(!wmr_arc_points(rc, ArcStart, ArcEnd, &f1, f2, &center, &start, &end, &size)){
                 tmp_path <<  "\n\tM " << pix_to_xy(d, center.x, center.y);
                 tmp_path <<  "\n\tL " << pix_to_xy(d, start.x, start.y);
-                tmp_path <<  " A "    << pix_to_abs_size(d, size.x)/2.0      << ","  << pix_to_abs_size(d, size.y)/2.0 ;
+                tmp_path <<  " A "    << pix_to_abs_size(d, size.x)/2.0      << ","  << pix_to_abs_size(d, size.y)/2.0;
                 tmp_path <<  " ";
                 tmp_path <<  180.0 * current_rotation(d)/M_PI;
                 tmp_path <<  " ";
