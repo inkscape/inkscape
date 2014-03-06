@@ -17,7 +17,7 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """
-An extention to export multiple svg files from a single svg file containing layers.
+An extension to export multiple svg files from a single svg file containing layers.
 
 Each defs is duplicated for each svg outputed.
 """
@@ -26,8 +26,8 @@ import sys
 import copy
 import tarfile
 import StringIO
-
-from datetime import datetime
+import calendar
+import time
 
 # Inkscape Libraries
 import inkex
@@ -87,13 +87,18 @@ class LayersOutput(inkex.Effect):
         doc.write(string)
         string.seek(0)
         info = tarfile.TarInfo(name=name+'.svg')
-        info.mtime = int(datetime.now().strftime('%s'))
+        info.mtime = calendar.timegm(time.gmtime())
         info.size  = len(string.buf)
         return dict(tarinfo=info, fileobj=string)
 
     def effect(self):
         # open output tar file as a stream (to stdout)
         tar = tarfile.open(fileobj=sys.stdout, mode='w|')
+
+        # Switch stdout to binary on Windows.
+        if sys.platform == "win32":
+            import msvcrt
+            msvcrt.setmode(sys.stdout.fileno(), os.O_BINARY)
 
         template = self.make_template()
 
