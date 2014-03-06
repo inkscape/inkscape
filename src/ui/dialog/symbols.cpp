@@ -687,7 +687,7 @@ void SymbolsDialog::add_symbol( SPObject* symbol ) {
   if( pixbuf ) {
     Gtk::ListStore::iterator row = store->append();
     (*row)[columns->symbol_id]    = Glib::ustring( id );
-    (*row)[columns->symbol_title] = Glib::ustring( g_dpgettext2(NULL, "Symbol", title) );
+    (*row)[columns->symbol_title] = Glib::Markup::escape_text(Glib::ustring( g_dpgettext2(NULL, "Symbol", title) ));
     (*row)[columns->symbol_image] = pixbuf;
   }
 

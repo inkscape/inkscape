@@ -22,6 +22,7 @@
 
 #include <2geom/transforms.h>
 #include <glibmm/i18n.h>
+#include <glibmm/markup.h>
 #include "display/drawing-group.h"
 #include "attributes.h"
 #include "document.h"
@@ -219,7 +220,7 @@ const char* SPUse::displayName() const {
 gchar* SPUse::description() const {
     if (this->child) {
         if( SP_IS_SYMBOL( this->child ) ) {
-            return g_strdup_printf(_("called %s"), this->child->title());
+            return g_strdup_printf(_("called %s"), Glib::Markup::escape_text(Glib::ustring( g_dpgettext2(NULL, "Symbol", this->child->title()))).c_str());
         }
 
         static unsigned recursion_depth = 0;
