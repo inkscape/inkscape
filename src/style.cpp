@@ -3731,7 +3731,7 @@ sp_style_read_ipaintorder(SPIPaintOrder *val, gchar const *str)
                         val->layer[i] = SP_CSS_PAINT_ORDER_STROKE;
                         val->layer_set[i] = true;
                         used[1] = true;
-                    } else if( !strcmp( c[i], "marker")) {
+                    } else if( !strcmp( c[i], "markers")) {
                         val->layer[i] = SP_CSS_PAINT_ORDER_MARKER;
                         val->layer_set[i] = true;
                         used[2] = true;
