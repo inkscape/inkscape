@@ -39,7 +39,7 @@
 #include <gtkmm/treemodelcolumn.h>
 #include <gtkmm/clipboard.h>
 #include <glibmm/stringutils.h>
-
+#include <glibmm/markup.h>
 #include <glibmm/i18n.h>
 #include "path-prefix.h"
 #include "io/sys.h"
