@@ -128,7 +128,8 @@ unsigned DrawingImage::_renderItem(DrawingContext &dc, Geom::IntRect const &/*ar
                     // Do nothing
                     break;
                 case SP_CSS_COLOR_RENDERING_OPTIMIZEQUALITY:
-                    dc.patternSetFilter( CAIRO_FILTER_BEST );
+                    // In recent Cairo, BEST used Lanczos3, which is prohibitively slow
+                    dc.patternSetFilter( CAIRO_FILTER_GOOD );
                     break;
                 case SP_CSS_COLOR_RENDERING_OPTIMIZESPEED:
                 default:
