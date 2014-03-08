@@ -636,13 +636,13 @@ GrDrag::GrDrag(SPDesktop *desktop) :
     style_set_connection(),
     style_query_connection()
 {
-    sel_changed_connection = selection->connectChanged(
+    sel_changed_connection = selection->connectChangedFirst(
         sigc::bind(
             sigc::ptr_fun(&gr_drag_sel_changed),
             (gpointer)this )
 
         );
-    sel_modified_connection = selection->connectModified(
+    sel_modified_connection = selection->connectModifiedFirst(
         sigc::bind(
             sigc::ptr_fun(&gr_drag_sel_modified),
             (gpointer)this )

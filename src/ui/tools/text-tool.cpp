@@ -180,10 +180,10 @@ void TextTool::setup() {
         this->shape_editor->set_item(item, SH_KNOTHOLDER);
     }
 
-    this->sel_changed_connection = sp_desktop_selection(desktop)->connectChanged(
+    this->sel_changed_connection = sp_desktop_selection(desktop)->connectChangedFirst(
         sigc::mem_fun(*this, &TextTool::_selectionChanged)
     );
-    this->sel_modified_connection = sp_desktop_selection(desktop)->connectModified(
+    this->sel_modified_connection = sp_desktop_selection(desktop)->connectModifiedFirst(
         sigc::mem_fun(*this, &TextTool::_selectionModified)
     );
     this->style_set_connection = desktop->connectSetStyle(

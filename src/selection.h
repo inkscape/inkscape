@@ -302,6 +302,10 @@ public:
     sigc::connection connectChanged(sigc::slot<void, Selection *> const &slot) {
         return _changed_signal.connect(slot);
     }
+    sigc::connection connectChangedFirst(sigc::slot<void, Selection *> const &slot)
+    {
+        return _changed_signal.slots().insert(_changed_signal.slots().begin(), slot);
+    }
 
     /**
      * Connects a slot to be notified of selected object modifications.
@@ -318,6 +322,10 @@ public:
     sigc::connection connectModified(sigc::slot<void, Selection *, guint> const &slot)
     {
         return _modified_signal.connect(slot);
+    }
+    sigc::connection connectModifiedFirst(sigc::slot<void, Selection *, guint> const &slot)
+    {
+        return _modified_signal.slots().insert(_modified_signal.slots().begin(), slot);
     }
 
 private:
