@@ -4785,7 +4785,7 @@ sp_style_write_ifontsize(gchar *p, gint const len, gchar const *key,
             return g_snprintf(p, len, "%s:inherit;", key);
         } else if (val->type == SP_FONT_SIZE_LITERAL) {
             for (unsigned i = 0; enum_font_size[i].key; i++) {
-                if (enum_font_size[i].value == static_cast< gint > (val->value) ) {
+                if (enum_font_size[i].value == static_cast< gint > (val->literal) ) {
                     return g_snprintf(p, len, "%s:%s;", key, enum_font_size[i].key);
                 }
             }

@@ -86,6 +86,59 @@ public:
 
 //             TestCase("fill:url(#painter) inherit", 0, "#painter"),
             TestCase("fill:inherit"),
+
+// General tests (in order of appearance in sp_style_read), SPIPaint tested above
+            TestCase("visibility:hidden"),                       // SPIEnum
+            TestCase("visibility:collapse"),
+            TestCase("visibility:visible"),
+            TestCase("display:none"),                            // SPIEnum
+            TestCase("overflow:visible"),                        // SPIEnum
+            TestCase("overflow:auto"),                           // SPIEnum
+            TestCase("font-size:12",     "font-size:12px"),      // SPIFontSize
+            TestCase("font-size:12px"),
+            TestCase("font-size:12pt",   "font-size:15px"),
+            TestCase("font-size:medium"),
+            TestCase("font-style:italic"),                       // SPIEnum
+            TestCase("font-variant:small-caps"),                 // SPIEnum
+            TestCase("font-weight:100"),                         // SPIEnum
+            TestCase("font-weight:normal"),
+            TestCase("font-weight:bolder"),
+            TestCase("font-stretch:condensed"),                  // SPIEnum
+            TestCase("text-indent:12em"),                        // SPILength?
+            TestCase("text-align:center"),                       // SPIEnum
+            TestCase("text-decoration: underline"),              // SPITextDecoration
+            TestCase("line-height:24px"),                        // SPILengthOrNormal
+            TestCase("letter-spacing:2px"),                      // SPILengthOrNormal
+            TestCase("word-spacing:2px"),                        // SPILengthOrNormal
+            TestCase("text-transform:lowercase"),                // SPIEnum
+            // ...
+            TestCase("baseline-shift:baseline"),                 // SPIBaselineShift
+            TestCase("baseline-shift:sub"),
+            TestCase("baseline-shift:12.5%"),
+            TestCase("baseline-shift:2px"),
+            TestCase("opacity:0.1"),                             // SPIScale24
+            // ...
+            TestCase("stroke-width:2px"),                        // SPILength
+            TestCase("stroke-linecap:round"),                    // SPIEnum
+            TestCase("stroke-linejoin:round"),                   // SPIEnum
+            TestCase("stroke-miterlimit:4"),                     // SPIFloat
+            TestCase("marker:url(#Arrow)"),                      // SPIString
+            TestCase("marker-start:url(#Arrow)"),
+            TestCase("marker-mid:url(#Arrow)"),
+            TestCase("marker-end:url(#Arrow)"),
+            TestCase("stroke-opacity:0.5"),                      // SPIScale24
+            TestCase("stroke-dasharray:0, 1, 0, 1"),             // NRVpathDash
+            TestCase("stroke-dasharray:0 1 0 1","stroke-dasharray:0, 1, 0, 1"),
+            TestCase("stroke-dashoffset:13"),                    // NRVpathDash
+            // ...
+            TestCase("font-family:sans-serif"),                  // SPIString, text_private
+            //TestCase("filter:url(#myfilter)"),                 // filter
+
+            TestCase("opacity:0.1;fill:#ff0000;stroke:#0000ff;stroke-width:2px"),
+
+#ifdef WITH_SVG2
+            TestCase("paint-order:stroke"),                      // SPIPaintOrder
+#endif
             TestCase(0)
         };
 
@@ -107,8 +160,10 @@ public:
                 gchar *str0_set = sp_style_write_string( style, SP_STYLE_FLAG_IFSET );
                 //printf("<<%s>>\n", str0_set);
                 if ( cases[i].dst ) {
+                    //std::cout << "  " << std::string(str0_set) << " " << std::string(cases[i].dst) << std::endl;
                     TS_ASSERT_EQUALS( std::string(str0_set), std::string(cases[i].dst) );
                 } else {
+                    //std::cout << "  " << std::string(str0_set) << " " << std::string(cases[i].src) << std::endl;
                     TS_ASSERT_EQUALS( std::string(str0_set), std::string(cases[i].src) );
                 }
 
