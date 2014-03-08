@@ -3,8 +3,9 @@
  */
 /* Author:
  *   Gustav Broberg <broberg@kth.se>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
- * Copyright (C) 2006 Authors
+ * Copyright (C) 2014 Authors
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
 
@@ -134,6 +135,7 @@ public:
 
 protected:
 
+    SPDesktop *_desktop;
     SPDocument *_document;
     EventLog *_event_log;
 
@@ -146,12 +148,17 @@ protected:
     Gtk::TreeView _event_list_view;
     Glib::RefPtr<Gtk::TreeSelection> _event_list_selection;
 
-    SPDesktop *_desktop;
     DesktopTracker _deskTrack;
     sigc::connection _desktopChangeConn;
 
     EventLog::CallbackMap _callback_connections;
 
+    static void *_handleEventLogDestroyCB(void *data);
+
+    void _connectDocument(SPDesktop* desktop, SPDocument *document);
+    void _connectEventLog();
+    void _handleDocumentReplaced(SPDesktop* desktop, SPDocument *document);
+    void *_handleEventLogDestroy();
     void _onListSelectionChange();
     void _onExpandEvent(const Gtk::TreeModel::iterator &iter, const Gtk::TreeModel::Path &path);
     void _onCollapseEvent(const Gtk::TreeModel::iterator &iter, const Gtk::TreeModel::Path &path);

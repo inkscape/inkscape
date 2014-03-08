@@ -5,8 +5,9 @@
 /* Author:
  *   Gustav Broberg <broberg@kth.se>
  *   Abhishek Sharma
+ *   Jon A. Cruz <jon@joncruz.org>
  *
- * Copyright (C) 2006 Authors
+ * Copyright (C) 2014 Authors
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
 
@@ -24,6 +25,7 @@
 #include "inkscape.h"
 #include "verbs.h"
 #include "desktop-handles.h"
+#include "util/signal-blocker.h"
 
 #include "desktop.h"
 #include <gtkmm/invisible.h>
@@ -131,39 +133,19 @@ UndoHistory& UndoHistory::getInstance()
     return *new UndoHistory();
 }
 
-void
-UndoHistory::setDesktop(SPDesktop* desktop)
-{
-    Panel::setDesktop(desktop);
-
-    if (!desktop) return;
-
-    _document = sp_desktop_document(desktop);
-
-    _event_log = desktop->event_log;
-
-    _callback_connections[EventLog::CALLB_SELECTION_CHANGE].block();
-
-    _event_list_store = _event_log->getEventListStore();
-    _event_list_view.set_model(_event_list_store);
-    _event_list_selection = _event_list_view.get_selection();
-
-    _event_log->connectWithDialog(&_event_list_view, &_callback_connections);
-    _event_list_view.scroll_to_row(_event_list_store->get_path(_event_list_selection->get_selected()));
-
-    _callback_connections[EventLog::CALLB_SELECTION_CHANGE].block(false);
-}
-
 UndoHistory::UndoHistory()
     : UI::Widget::Panel ("", "/dialogs/undo-history", SP_VERB_DIALOG_UNDO_HISTORY),
-      _document (sp_desktop_document(getDesktop())),
-      _event_log (getDesktop() ? getDesktop()->event_log : NULL),
-      _columns (_event_log ? &_event_log->getColumns() : NULL),
-      _event_list_selection (_event_list_view.get_selection()),
-      _desktop(NULL),
+      _document_replaced_connection(),
+      _desktop(getDesktop()),
+      _document(_desktop ? _desktop->doc() : NULL),
+      _event_log(_desktop ? _desktop->event_log : NULL),
+      _columns(_event_log ? &_event_log->getColumns() : NULL),
+      _scrolled_window(),
+      _event_list_store(),
+      _event_list_selection(_event_list_view.get_selection()),
       _deskTrack(),
-      _desktopChangeConn()
-
+      _desktopChangeConn(),
+      _callback_connections()
 {
     if ( !_document || !_event_log || !_columns ) return;
 
@@ -172,9 +154,9 @@ UndoHistory::UndoHistory()
     _getContents()->pack_start(_scrolled_window);
     _scrolled_window.set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
 
-    _event_list_store = _event_log->getEventListStore();
+    // connect with the EventLog
+    _connectEventLog();
 
-    _event_list_view.set_model(_event_list_store);
     _event_list_view.set_rules_hint(false);
     _event_list_view.set_enable_search(false);
     _event_list_view.set_headers_visible(false);
@@ -221,11 +203,11 @@ UndoHistory::UndoHistory()
     _callback_connections[EventLog::CALLB_COLLAPSE] =
         _event_list_view.signal_row_collapsed().connect(sigc::mem_fun(*this, &Inkscape::UI::Dialog::UndoHistory::_onCollapseEvent));
 
-    // connect with the EventLog
-    _event_log->connectWithDialog(&_event_list_view, &_callback_connections);
-
     _desktopChangeConn = _deskTrack.connectDesktopChanged( sigc::mem_fun(*this, &UndoHistory::setDesktop) );
     _deskTrack.connect(GTK_WIDGET(gobj()));
+
+    // connect to be informed of document changes
+    signalDocumentReplaced().connect(sigc::mem_fun(*this, &UndoHistory::_handleDocumentReplaced));
 
     show_all_children();
 
@@ -238,6 +220,82 @@ UndoHistory::~UndoHistory()
     _desktopChangeConn.disconnect();
 }
 
+
+void UndoHistory::setDesktop(SPDesktop* desktop)
+{
+    Panel::setDesktop(desktop);
+
+    EventLog *newEventLog = desktop ? desktop->event_log : NULL;
+    if ((_desktop == desktop) && (_event_log == newEventLog)) {
+        // same desktop set
+    }
+    else
+    {
+        _connectDocument(desktop, desktop ? desktop->doc() : NULL);
+    }
+}
+
+void UndoHistory::_connectDocument(SPDesktop* desktop, SPDocument *document)
+{
+    // disconnect from prior
+    if (_event_log) {
+        _event_log->removeDialogConnection(&_event_list_view, &_callback_connections);
+    }
+
+    SignalBlocker blocker(&_callback_connections[EventLog::CALLB_SELECTION_CHANGE]);
+
+    _event_list_view.unset_model();
+
+    // connect to new EventLog/Desktop
+    _desktop = desktop;
+    _event_log = desktop ? desktop->event_log : NULL;
+    _document = desktop ? desktop->doc() : NULL;
+    _connectEventLog();
+}
+
+void UndoHistory::_connectEventLog()
+{
+    if (_event_log) {
+        _event_log->add_destroy_notify_callback(this, &_handleEventLogDestroyCB);
+        _event_list_store = _event_log->getEventListStore();
+
+        _event_list_view.set_model(_event_list_store);
+
+        _event_log->addDialogConnection(&_event_list_view, &_callback_connections);
+        _event_list_view.scroll_to_row(_event_list_store->get_path(_event_list_selection->get_selected()));        
+    }
+}
+
+void UndoHistory::_handleDocumentReplaced(SPDesktop* desktop, SPDocument *document)
+{
+    if ((desktop != _desktop) || (document != _document)) {
+        _connectDocument(desktop, document);
+    }
+}
+
+void *UndoHistory::_handleEventLogDestroyCB(void *data)
+{
+    void *result = NULL;
+    if (data) {
+        UndoHistory *self = reinterpret_cast<UndoHistory*>(data);
+        result = self->_handleEventLogDestroy();
+    }
+    return result;
+}
+
+// called *after* _event_log has been destroyed.
+void *UndoHistory::_handleEventLogDestroy()
+{
+    if (_event_log) {
+        SignalBlocker blocker(&_callback_connections[EventLog::CALLB_SELECTION_CHANGE]);
+
+        _event_list_view.unset_model();
+        _event_list_store.reset();
+        _event_log = NULL;
+    }
+
+    return NULL;
+}
 
 void
 UndoHistory::_onListSelectionChange()

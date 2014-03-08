@@ -1,34 +1,182 @@
 /*
  * Author:
  *   Gustav Broberg <broberg@kth.se>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
- * Copyright (c) 2006, 2007 Authors
+ * Copyright (c) 2014 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "util/signal-blocker.h"
+
 #include "event-log.h"
 #include <glibmm/i18n.h>
+#include <gtkmm/treemodel.h>
+#include <boost/shared_ptr.hpp>
+#include <boost/make_shared.hpp>
 
 #include "desktop.h"
 #include "inkscape.h"
+#include "util/signal-blocker.h"
 #include "util/ucompose.hpp"
 #include "document.h"
 #include "xml/repr.h"
 #include "sp-object.h"
 
+namespace
+{
+
+class DialogConnection
+{
+public:
+    DialogConnection(Gtk::TreeView *event_list_view, Inkscape::EventLog::CallbackMap *callback_connections) :
+        _event_list_view(event_list_view),
+        _callback_connections(callback_connections),
+        _event_list_selection(_event_list_view->get_selection())
+    {            
+    }
+
+    Gtk::TreeView *_event_list_view;
+
+    // Map of connections used to temporary block/unblock callbacks in a TreeView
+    Inkscape::EventLog::CallbackMap *_callback_connections;
+
+    Glib::RefPtr<Gtk::TreeSelection> _event_list_selection; /// @todo remove this and use _event_list_view's call
+};
+
+class ConnectionMatcher
+{
+public:
+    ConnectionMatcher(Gtk::TreeView *view,
+                      Inkscape::EventLog::CallbackMap *callbacks) :
+        _view(view),
+        _callbacks(callbacks)
+    {
+    }
+
+    bool operator() (DialogConnection const &dlg)
+    {
+        return (_view == dlg._event_list_view) && (_callbacks == dlg._callback_connections);
+    }
+
+    Gtk::TreeView *_view;
+    Inkscape::EventLog::CallbackMap *_callbacks;
+};
+
+void addBlocker(std::vector<boost::shared_ptr<SignalBlocker> > &blockers, sigc::connection *connection)
+{
+    blockers.push_back(boost::make_shared<SignalBlocker>(connection));
+}
+
+
+} // namespace
+
 namespace Inkscape {
+
+class EventLogPrivate
+{
+public:
+    EventLogPrivate() :
+        _connections()
+    {
+    }
+
+    bool isConnected() const
+    {
+        return !_connections.empty();
+    }
+
+    void addDialogConnection(Gtk::TreeView *event_list_view,
+                             Inkscape::EventLog::CallbackMap *callback_connections,
+                             Glib::RefPtr<Gtk::TreeStore> event_list_store,
+                             Inkscape::EventLog::iterator &curr_event)
+    {
+        if (std::find_if(_connections.begin(), _connections.end(), ConnectionMatcher(event_list_view, callback_connections)) != _connections.end()) {
+            // skipping
+        }
+        else
+        {
+            DialogConnection dlg(event_list_view, callback_connections);
+
+            dlg._event_list_selection->set_mode(Gtk::SELECTION_SINGLE);
+
+            {
+                std::vector<boost::shared_ptr<SignalBlocker> > blockers;
+                addBlocker(blockers, &(*dlg._callback_connections)[Inkscape::EventLog::CALLB_SELECTION_CHANGE]);
+                addBlocker(blockers, &(*dlg._callback_connections)[Inkscape::EventLog::CALLB_EXPAND]);
+
+                dlg._event_list_view->expand_to_path(event_list_store->get_path(curr_event));
+                dlg._event_list_selection->select(curr_event);
+            }
+            _connections.push_back(dlg);
+        }
+    }
+
+    void removeDialogConnection(Gtk::TreeView *event_list_view, Inkscape::EventLog::CallbackMap *callback_connections)
+    {
+        std::vector<DialogConnection>::iterator it = std::find_if(_connections.begin(), _connections.end(), ConnectionMatcher(event_list_view, callback_connections));
+        if (it != _connections.end()) {
+            _connections.erase(it);
+        }
+    }
+
+    void collapseRow(Gtk::TreeModel::Path const &path)
+    {
+        std::vector<boost::shared_ptr<SignalBlocker> > blockers;
+        for (std::vector<DialogConnection>::iterator it(_connections.begin()); it != _connections.end(); ++it)
+        {
+            addBlocker(blockers, &(*it->_callback_connections)[Inkscape::EventLog::CALLB_SELECTION_CHANGE]);
+            addBlocker(blockers, &(*it->_callback_connections)[Inkscape::EventLog::CALLB_COLLAPSE]);
+        }
+
+        for (std::vector<DialogConnection>::iterator it(_connections.begin()); it != _connections.end(); ++it)
+        {
+            it->_event_list_view->collapse_row(path);
+        }
+    }
+
+    void selectRow(Gtk::TreeModel::Path const &path)
+    {
+        std::vector<boost::shared_ptr<SignalBlocker> > blockers;
+        for (std::vector<DialogConnection>::iterator it(_connections.begin()); it != _connections.end(); ++it)
+        {
+            addBlocker(blockers, &(*it->_callback_connections)[Inkscape::EventLog::CALLB_SELECTION_CHANGE]);
+            addBlocker(blockers, &(*it->_callback_connections)[Inkscape::EventLog::CALLB_EXPAND]);
+        }
+
+        for (std::vector<DialogConnection>::iterator it(_connections.begin()); it != _connections.end(); ++it)
+        {
+            it->_event_list_view->expand_to_path(path);
+            it->_event_list_selection->select(path);
+            it->_event_list_view->scroll_to_row(path);
+        }
+    }
+
+    void clearEventList(Glib::RefPtr<Gtk::TreeStore> eventListStore)
+    {
+        if (eventListStore) {
+            std::vector<boost::shared_ptr<SignalBlocker> > blockers;
+            for (std::vector<DialogConnection>::iterator it(_connections.begin()); it != _connections.end(); ++it)
+            {
+                addBlocker(blockers, &(*it->_callback_connections)[Inkscape::EventLog::CALLB_SELECTION_CHANGE]);
+                addBlocker(blockers, &(*it->_callback_connections)[Inkscape::EventLog::CALLB_EXPAND]);
+            }
+
+            eventListStore->clear();
+        }
+    }
+
+    std::vector<DialogConnection> _connections;
+};
 
 EventLog::EventLog(SPDocument* document) :
     UndoStackObserver(),
-    _connected (false),
+    _priv(new EventLogPrivate()),
     _document (document),
     _event_list_store (Gtk::TreeStore::create(_columns)),
-    _event_list_selection (NULL),
-    _event_list_view (NULL),
     _curr_event_parent (NULL),
-    _notifications_blocked (false),
-    _callback_connections (NULL)
+    _notifications_blocked (false)
 {
     // add initial pseudo event
     Gtk::TreeRow curr_row = *(_event_list_store->append());
@@ -39,16 +187,11 @@ EventLog::EventLog(SPDocument* document) :
 }
 
 EventLog::~EventLog() {
-	// avoid crash by clearing entries here (see bug #1071082)
-    if (_connected) {
-        (*_callback_connections)[CALLB_SELECTION_CHANGE].block();
-        (*_callback_connections)[CALLB_EXPAND].block();
+    // avoid crash by clearing entries here (see bug #1071082)
+    _priv->clearEventList(_event_list_store);
 
-		_event_list_store->clear();
-
-        (*_callback_connections)[CALLB_EXPAND].block(false);
-        (*_callback_connections)[CALLB_SELECTION_CHANGE].block(false);
-    }
+    delete _priv;
+    _priv = 0;
 }
 
 void
@@ -70,10 +213,8 @@ EventLog::notifyUndoEvent(Event* log)
 	} else {
 
             // if we're about to leave a branch, collapse it
-            if ( !_curr_event->children().empty() && _connected ) {
-                (*_callback_connections)[CALLB_COLLAPSE].block();
-                _event_list_view->collapse_row(_event_list_store->get_path(_curr_event));
-                (*_callback_connections)[CALLB_COLLAPSE].block(false);
+            if ( !_curr_event->children().empty() ) {
+                _priv->collapseRow(_event_list_store->get_path(_curr_event));
             }
 
             --_curr_event;
@@ -89,17 +230,9 @@ EventLog::notifyUndoEvent(Event* log)
         checkForVirginity();
 
         // update the view
-        if (_connected) {
-            (*_callback_connections)[CALLB_SELECTION_CHANGE].block();
-            (*_callback_connections)[CALLB_EXPAND].block();
-
+        if (_priv->isConnected()) {
             Gtk::TreePath curr_path = _event_list_store->get_path(_curr_event);
-            _event_list_view->expand_to_path(curr_path);
-            _event_list_selection->select(curr_path);
-            _event_list_view->scroll_to_row(curr_path);
-
-            (*_callback_connections)[CALLB_EXPAND].block(false);
-            (*_callback_connections)[CALLB_SELECTION_CHANGE].block(false);
+            _priv->selectRow(curr_path);
         }
 
         updateUndoVerbs();
@@ -132,13 +265,7 @@ EventLog::notifyRedoEvent(Event* log)
             {
 
                 // ...collapse it
-                if (_connected) {
-                    (*_callback_connections)[CALLB_SELECTION_CHANGE].block();
-                    (*_callback_connections)[CALLB_COLLAPSE].block();
-                    _event_list_view->collapse_row(_event_list_store->get_path(_curr_event->parent()));
-                    (*_callback_connections)[CALLB_COLLAPSE].block(false);
-                    (*_callback_connections)[CALLB_SELECTION_CHANGE].block(false);
-                }
+                _priv->collapseRow(_event_list_store->get_path(_curr_event->parent()));
 
                 // ...and move to the next event at parent level
                 _curr_event = _curr_event->parent();
@@ -151,18 +278,9 @@ EventLog::notifyRedoEvent(Event* log)
         checkForVirginity();
 
         // update the view
-        if (_connected) {
+        if (_priv->isConnected()) {
             Gtk::TreePath curr_path = _event_list_store->get_path(_curr_event);
-
-            (*_callback_connections)[CALLB_SELECTION_CHANGE].block();
-            (*_callback_connections)[CALLB_EXPAND].block();
-
-            _event_list_view->expand_to_path(curr_path);
-            _event_list_selection->select(curr_path);
-            _event_list_view->scroll_to_row(curr_path);
-
-            (*_callback_connections)[CALLB_EXPAND].block(false);
-            (*_callback_connections)[CALLB_SELECTION_CHANGE].block(false);
+            _priv->selectRow(curr_path);
         }
 
         updateUndoVerbs();
@@ -193,10 +311,8 @@ EventLog::notifyUndoCommitEvent(Event* log)
         _curr_event = _last_event = curr_row;
 
         // collapse if we're leaving a branch
-        if (_curr_event_parent && _connected) {
-            (*_callback_connections)[CALLB_COLLAPSE].block();
-            _event_list_view->collapse_row(_event_list_store->get_path(_curr_event_parent));
-            (*_callback_connections)[CALLB_COLLAPSE].block(false);
+        if (_curr_event_parent) {
+            _priv->collapseRow(_event_list_store->get_path(_curr_event_parent));
         }
 
         _curr_event_parent = (iterator)(NULL);
@@ -211,18 +327,9 @@ EventLog::notifyUndoCommitEvent(Event* log)
     checkForVirginity();
 
     // update the view
-    if (_connected) {
+    if (_priv->isConnected()) {
         Gtk::TreePath curr_path = _event_list_store->get_path(_curr_event);
-
-        (*_callback_connections)[CALLB_SELECTION_CHANGE].block();
-        (*_callback_connections)[CALLB_EXPAND].block();
-
-        _event_list_view->expand_to_path(curr_path);
-        _event_list_selection->select(curr_path);
-        _event_list_view->scroll_to_row(curr_path);
-
-        (*_callback_connections)[CALLB_EXPAND].block(false);
-        (*_callback_connections)[CALLB_SELECTION_CHANGE].block(false);
+        _priv->selectRow(curr_path);
     }
 
     updateUndoVerbs();
@@ -242,25 +349,14 @@ EventLog::notifyClearRedoEvent()
     updateUndoVerbs();
 }
 
-void 
-EventLog::connectWithDialog(Gtk::TreeView *event_list_view, CallbackMap *callback_connections)
+void  EventLog::addDialogConnection(Gtk::TreeView *event_list_view, CallbackMap *callback_connections)
 {
-    _event_list_view = event_list_view;
-    _event_list_selection = event_list_view->get_selection();
-    _event_list_selection->set_mode(Gtk::SELECTION_SINGLE);
+    _priv->addDialogConnection(event_list_view, callback_connections, _event_list_store, _curr_event);
+}
 
-    _callback_connections = callback_connections;
-
-    (*_callback_connections)[CALLB_SELECTION_CHANGE].block();
-    (*_callback_connections)[CALLB_EXPAND].block();
-
-    _event_list_view->expand_to_path(_event_list_store->get_path(_curr_event));
-    _event_list_selection->select(_curr_event);
-
-    (*_callback_connections)[CALLB_EXPAND].block(false);
-    (*_callback_connections)[CALLB_SELECTION_CHANGE].block(false);
-
-    _connected = true;
+void EventLog::removeDialogConnection(Gtk::TreeView *event_list_view, CallbackMap *callback_connections)
+{
+    _priv->removeDialogConnection(event_list_view, callback_connections);
 }
 
 void

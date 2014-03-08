@@ -1,8 +1,9 @@
 /*
  * Author:
  *   Gustav Broberg <broberg@kth.se>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
- * Copyright (c) 2006, 2007 Authors
+ * Copyright (c) 2014 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -22,11 +23,14 @@
 #include <glibmm/refptr.h>
 #include <gtkmm/treeselection.h>
 #include <gtkmm/treeview.h>
+#include <sigc++/trackable.h>
 
 #include "undo-stack-observer.h"
 #include "event.h"
 
 namespace Inkscape {
+
+class EventLogPrivate;
 
 /**
  * A simple log for maintaining a history of commited, undone and redone events along with their
@@ -41,7 +45,7 @@ namespace Inkscape {
  * expanded/collapsed state will be updated as events are commited, undone and redone. Whenever
  * this happens, the event log will block the TreeView's callbacks to prevent circular updates.
  */
-class EventLog : public UndoStackObserver
+class EventLog : public UndoStackObserver, public sigc::trackable
 {
         
 public:
@@ -104,7 +108,12 @@ public:
     /**
      * Connect with a TreeView.
      */
-    void connectWithDialog(Gtk::TreeView *event_list_view, CallbackMap *callback_connections);
+    void addDialogConnection(Gtk::TreeView *event_list_view, CallbackMap *callback_connections);
+
+    /**
+     * Disconnect from a TreeView.
+     */
+    void removeDialogConnection(Gtk::TreeView *event_list_view, CallbackMap *callback_connections);
 
     /*
      * Updates the sensitivity and names of SP_VERB_EDIT_UNDO and SP_VERB_EDIT_REDO to reflect the
@@ -113,14 +122,13 @@ public:
     void updateUndoVerbs();
 
 private:
-    bool _connected;             //< connected with dialog
+    EventLogPrivate *_priv;
+
     SPDocument *_document;       //< document that is logged
 
     const EventModelColumns _columns;
 
     Glib::RefPtr<Gtk::TreeStore> _event_list_store; 
-    Glib::RefPtr<Gtk::TreeSelection> _event_list_selection;
-    Gtk::TreeView *_event_list_view;
 
     iterator _curr_event;        //< current event in _event_list_store
     iterator _last_event;        //< end position in _event_list_store
@@ -129,9 +137,6 @@ private:
     iterator _last_saved;        //< position where last document save occurred
 
     bool _notifications_blocked; //< if notifications should be handled
-
-    // Map of connections used to temporary block/unblock callbacks in a TreeView
-    CallbackMap *_callback_connections;
 
     // Helper functions
 
@@ -146,7 +151,6 @@ private:
     // noncopyable, nonassignable
     EventLog(EventLog const &other);
     EventLog& operator=(EventLog const &other);
-
 };
 
 } // namespace Inkscape
