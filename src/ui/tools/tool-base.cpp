@@ -90,7 +90,7 @@ SPDesktop const& ToolBase::getDesktop() const {
     return *desktop;
 }
 
-ToolBase::ToolBase(gchar const *const *cursor_shape, gint hot_x, gint hot_y)
+ToolBase::ToolBase(gchar const *const *cursor_shape, gint hot_x, gint hot_y, bool uses_snap)
     : pref_observer(NULL)
     , cursor(NULL)
     , xp(0)
@@ -106,6 +106,7 @@ ToolBase::ToolBase(gchar const *const *cursor_shape, gint hot_x, gint hot_y)
     , _delayed_snap_event(NULL)
     , _dse_callback_in_process(false)
     , desktop(NULL)
+    , _uses_snap(uses_snap)
     , cursor_shape(cursor_shape)
     , hot_x(hot_x)
     , hot_y(hot_y)
@@ -384,7 +385,9 @@ bool ToolBase::root_handler(GdkEvent* event) {
         case 1:
             if (this->space_panning) {
                 // When starting panning, make sure there are no snap events pending because these might disable the panning again
-                sp_event_context_discard_delayed_snap_event(this);
+                if (_uses_snap) {
+                    sp_event_context_discard_delayed_snap_event(this);
+                }
                 panning = 1;
 
                 sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
@@ -402,7 +405,9 @@ bool ToolBase::root_handler(GdkEvent* event) {
                 zoom_rb = 2;
             } else {
                 // When starting panning, make sure there are no snap events pending because these might disable the panning again
-                sp_event_context_discard_delayed_snap_event(this);
+                if (_uses_snap) {
+                    sp_event_context_discard_delayed_snap_event(this);
+                }
                 panning = 2;
 
                 sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
@@ -418,7 +423,9 @@ bool ToolBase::root_handler(GdkEvent* event) {
         case 3:
             if ((event->button.state & GDK_SHIFT_MASK) || (event->button.state & GDK_CONTROL_MASK)) {
                 // When starting panning, make sure there are no snap events pending because these might disable the panning again
-                sp_event_context_discard_delayed_snap_event(this);
+                if (_uses_snap) {
+                    sp_event_context_discard_delayed_snap_event(this);
+                }
                 panning = 3;
 
                 sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
@@ -946,6 +953,10 @@ void sp_event_context_read(ToolBase *ec, gchar const *key) {
 gint sp_event_context_root_handler(ToolBase * event_context,
         GdkEvent * event)
 {
+    if (!event_context->_uses_snap) {
+        return sp_event_context_virtual_root_handler(event_context, event);
+    }
+
     switch (event->type) {
     case GDK_MOTION_NOTIFY:
         sp_event_context_snap_delay_handler(event_context, NULL, NULL,
@@ -995,7 +1006,12 @@ gint sp_event_context_virtual_root_handler(ToolBase * event_context, GdkEvent * 
  * Calls virtual item_handler(), the item event handling function.
  */
 gint sp_event_context_item_handler(ToolBase * event_context,
-        SPItem * item, GdkEvent * event) {
+        SPItem * item, GdkEvent * event)
+{
+    if (!event_context->_uses_snap) {
+        return sp_event_context_virtual_item_handler(event_context, item, event);
+    }
+
     switch (event->type) {
     case GDK_MOTION_NOTIFY:
         sp_event_context_snap_delay_handler(event_context, (gpointer) item, NULL, (GdkEventMotion *) event, DelayedSnapEvent::EVENTCONTEXT_ITEM_HANDLER);
@@ -1232,7 +1248,7 @@ void sp_event_context_snap_delay_handler(ToolBase *ec,
     static guint32 prev_time;
     static boost::optional<Geom::Point> prev_pos;
 
-    if (ec->_dse_callback_in_process) {
+    if (!ec->_uses_snap || ec->_dse_callback_in_process) {
         return;
     }
 

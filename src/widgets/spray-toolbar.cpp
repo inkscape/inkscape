@@ -47,7 +47,7 @@ using Inkscape::UI::PrefPusher;
 // Disabled in 0.91 because of Bug #1274831 (crash, spraying an object 
 // with the mode: spray object in single path)
 // Please enable again when working on 1.0
-//#define ENABLE_SPRAY_MODE_SINGLE_PATH
+#define ENABLE_SPRAY_MODE_SINGLE_PATH
 
 //########################
 //##       Spray        ##

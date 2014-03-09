@@ -113,7 +113,7 @@ public:
     void enableGrDrag (bool enable=true);
     bool deleteSelectedDrag(bool just_one);
 
-    ToolBase(gchar const *const *cursor_shape, gint hot_x, gint hot_y);
+    ToolBase(gchar const *const *cursor_shape, gint hot_x, gint hot_y, bool uses_snap = true);
 
     virtual ~ToolBase();
 
@@ -181,6 +181,7 @@ public:
 	void sp_event_context_update_cursor();
 
 	SPDesktop *desktop;
+    bool _uses_snap; // TODO: make protected or private
 
 protected:
 	/// An xpm containing the shape of the tool's cursor.
@@ -188,6 +189,7 @@ protected:
 
     /// The cursor's hot spot
     gint hot_x, hot_y;
+    /// Whether the tool should receive delayed snap events
 
     bool sp_event_context_knot_mouseover() const;
 

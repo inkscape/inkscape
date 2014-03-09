@@ -82,7 +82,7 @@ using namespace std;
 // Disabled in 0.91 because of Bug #1274831 (crash, spraying an object 
 // with the mode: spray object in single path)
 // Please enable again when working on 1.0
-//#define ENABLE_SPRAY_MODE_SINGLE_PATH
+#define ENABLE_SPRAY_MODE_SINGLE_PATH
 
 #include "tool-factory.h"
 
@@ -140,7 +140,7 @@ static void sp_spray_scale_rel(Geom::Point c, SPDesktop */*desktop*/, SPItem *it
 }
 
 SprayTool::SprayTool()
-    : ToolBase(cursor_spray_xpm, 4, 4)
+    : ToolBase(cursor_spray_xpm, 4, 4, false)
     , pressure(TC_DEFAULT_PRESSURE)
     , dragging(false)
     , usepressure(0)
