@@ -23,9 +23,7 @@
 #include "gc-finalized.h"
 #include "gc-anchored.h"
 #include "gc-soft-ptr.h"
-#include "util/list.h"
 #include "sp-item.h"
-#include "snapped-point.h"
 
 
 class SPDesktop;

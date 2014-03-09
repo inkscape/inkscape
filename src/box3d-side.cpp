@@ -19,6 +19,7 @@
 #include "attributes.h"
 #include "inkscape.h"
 #include "persp3d.h"
+#include "persp3d-reference.h"
 #include "ui/tools/box3d-tool.h"
 #include "preferences.h"
 #include "desktop-style.h"

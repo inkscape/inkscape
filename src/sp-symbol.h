@@ -22,8 +22,6 @@
 #define SP_IS_SYMBOL(obj) (dynamic_cast<const SPSymbol*>((SPObject*)obj) != NULL)
 
 #include <2geom/affine.h>
-#include "svg/svg-length.h"
-#include "enums.h"
 #include "sp-item-group.h"
 #include "viewbox.h"
 

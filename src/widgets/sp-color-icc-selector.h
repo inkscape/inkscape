@@ -4,7 +4,6 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
-#include "../color.h"
 #include "sp-color-selector.h"
 
 namespace Inkscape {

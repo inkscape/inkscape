@@ -25,7 +25,6 @@
 
 #include "combo-enums.h"
 #include "filter-enums.h"
-#include "spin-slider.h"
 #include "spin-scale.h"
 
 namespace Inkscape {

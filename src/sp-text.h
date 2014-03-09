@@ -16,8 +16,8 @@
 #include <glib.h>
 #include <stddef.h>
 #include <sigc++/sigc++.h>
+#include "sp-string.h" // Provides many other headers with SP_IS_STRING
 #include "sp-item.h"
-#include "sp-string.h"
 #include "text-tag-attributes.h"
 #include "libnrtype/Layout-TNG.h"
 

@@ -17,7 +17,8 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <glibmm/ustring.h>
 #include "svg/svg-length.h"
-#include "sp-shape.h"
+#include "display/curve.h"
+#include "sp-item.h"
 #include "viewbox.h"
 
 #define SP_IMAGE(obj) (dynamic_cast<SPImage*>((SPObject*)obj))

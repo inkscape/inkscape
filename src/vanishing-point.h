@@ -16,11 +16,8 @@
 #include <2geom/point.h>
 #include "knot.h"
 #include "selection.h"
-#include "axis-manip.h"
-#include "inkscape.h"
 #include "persp3d.h"
 #include "box3d.h"
-#include "persp3d-reference.h"
 #include "ui/control-manager.h" // TODO break enums out separately
 
 class SPBox3D;

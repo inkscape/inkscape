@@ -14,8 +14,6 @@
 
 #include <stdio.h>
 #include <gtk/gtk.h>
-#include "../xml/repr.h"
-
 
 
 #define SP_TYPE_XMLVIEW_ATTR_LIST (sp_xmlview_attr_list_get_type ())

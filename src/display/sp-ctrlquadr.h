@@ -12,9 +12,7 @@
  * Released under GNU GPL
  */
 
-#include "sp-canvas.h"
-
-
+#include <2geom/geom.h>
 
 #define SP_TYPE_CTRLQUADR (sp_ctrlquadr_get_type ())
 #define SP_CTRLQUADR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_CTRLQUADR, SPCtrlQuadr))

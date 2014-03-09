@@ -27,7 +27,6 @@
 #include <gtkmm/enums.h>
 
 #include "desktop.h"
-#include "button.h"
 #include "preferences.h"
 
 struct SPStyle;

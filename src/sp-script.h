@@ -12,7 +12,8 @@
  * Released under GNU GPL version 2 or later, read the file 'COPYING' for more information
  */
 
-#include "sp-item.h"
+#include "sp-object.h"
+#include "document.h"
 
 #define SP_SCRIPT(obj) (dynamic_cast<SPScript*>((SPObject*)obj))
 #define SP_IS_SCRIPT(obj) (dynamic_cast<const SPScript*>((SPObject*)obj) != NULL)

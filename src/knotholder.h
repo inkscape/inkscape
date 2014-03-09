@@ -18,7 +18,6 @@
  */
 
 #include <glib.h>
-#include "knot-enums.h"
 #include <2geom/forward.h>
 #include <list>
 #include <sigc++/connection.h>

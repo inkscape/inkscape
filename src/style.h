@@ -19,9 +19,8 @@
 #include "sp-marker-loc.h"
 #include "sp-filter.h"
 #include "sp-filter-reference.h"
-#include "uri-references.h"
-#include "uri.h"
 #include "sp-paint-server-reference.h"
+#include "uri.h"
 
 #include <stddef.h>
 #include <sigc++/connection.h>

@@ -17,8 +17,6 @@
 
 #include <gtkmm/dialog.h>
 
-#include "extension.h"
-
 namespace Inkscape {
 
 namespace UI {

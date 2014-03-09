@@ -18,10 +18,10 @@
 #include <list>
 #include <vector>
 #include <map>
-#include "sp-item.h"
 #include "transf_mat_3x4.h"
 #include "document.h"
-#include "inkscape.h"
+#include "inkscape.h" // for SP_ACTIVE_DOCUMENT
+#include "sp-object.h"
 
 class SPBox3D;
 

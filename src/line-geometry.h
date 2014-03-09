@@ -16,8 +16,7 @@
 #include "glib.h"
 #include "axis-manip.h" // FIXME: This is only for Box3D::epsilon; move that to a better location
 #include "2geom/point.h"
-#include "document.h"
-#include "ui/view/view.h"
+#include "persp3d.h"
 
 class SPDesktop;
 

@@ -24,6 +24,7 @@
 #include "svg/svg-color.h"
 #include "util/units.h"
 #include "ui/widget/unit-menu.h"
+#include "desktop-widget.h"
 
 using Inkscape::DocumentUndo;
 using Inkscape::Util::unit_table;

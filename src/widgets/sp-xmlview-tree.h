@@ -13,10 +13,7 @@
  */
 
 #include <gtk/gtk.h>
-#include "../xml/repr.h"
-
 #include <glib.h>
-
 
 
 #define SP_TYPE_XMLVIEW_TREE (sp_xmlview_tree_get_type ())

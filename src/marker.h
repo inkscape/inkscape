@@ -29,7 +29,6 @@ struct SPMarkerView;
 #include "svg/svg-length.h"
 #include "enums.h"
 #include "sp-item-group.h"
-#include "sp-marker-loc.h"
 #include "uri-references.h"
 #include "viewbox.h"
 

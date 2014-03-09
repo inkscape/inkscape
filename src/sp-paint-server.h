@@ -18,7 +18,6 @@
 #include <cairo.h>
 #include <2geom/rect.h>
 #include "sp-object.h"
-#include "uri-references.h"
 
 #define SP_PAINT_SERVER(obj) (dynamic_cast<SPPaintServer*>((SPObject*)obj))
 #define SP_IS_PAINT_SERVER(obj) (dynamic_cast<const SPPaintServer*>((SPObject*)obj) != NULL)

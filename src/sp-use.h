@@ -17,6 +17,7 @@
 #include <sigc++/sigc++.h>
 #include "svg/svg-length.h"
 #include "sp-item.h"
+#include "enums.h"
 
 #define SP_USE(obj) (dynamic_cast<SPUse*>((SPObject*)obj))
 #define SP_IS_USE(obj) (dynamic_cast<const SPUse*>((SPObject*)obj) != NULL)

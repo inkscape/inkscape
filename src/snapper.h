@@ -20,7 +20,6 @@
 #include "snapped-point.h"
 #include "snapped-line.h"
 #include "snapped-curve.h"
-#include "snap-preferences.h"
 #include "snap-candidate.h"
 
 struct IntermSnapResults {

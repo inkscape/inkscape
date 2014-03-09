@@ -9,7 +9,6 @@
  */
 
 #include "glibmm/ustring.h"
-#include "xml/node.h"
 #include "xml/sp-css-attr.h"
 
 using Inkscape::XML::Node;

@@ -16,7 +16,6 @@
 
 #include "version.h"
 #include "svg/svg-length.h"
-#include "enums.h"
 #include "sp-item-group.h"
 #include "viewbox.h"
 

@@ -37,7 +37,6 @@
 #include "sp-gradient.h"
 #include "sp-gradient-spread.h"
 #include "sp-gradient-units.h"
-#include "gradient-image.h"
 
 class SPGradient;
 
