@@ -98,6 +98,7 @@ public:
             TestCase("font-size:12px"),
             TestCase("font-size:12pt",   "font-size:15px"),
             TestCase("font-size:medium"),
+            TestCase("font-size:smaller"),
             TestCase("font-style:italic"),                       // SPIEnum
             TestCase("font-variant:small-caps"),                 // SPIEnum
             TestCase("font-weight:100"),                         // SPIEnum
@@ -107,9 +108,13 @@ public:
             TestCase("text-indent:12em"),                        // SPILength?
             TestCase("text-align:center"),                       // SPIEnum
             TestCase("text-decoration: underline"),              // SPITextDecoration
+            TestCase("text-decoration: underline wavy #0000ff"), // SPITextDecoration CSS3
+            TestCase("text-decoration: overline double #ff0000"),
             TestCase("line-height:24px"),                        // SPILengthOrNormal
+            TestCase("line-height:1.5"),
             TestCase("letter-spacing:2px"),                      // SPILengthOrNormal
             TestCase("word-spacing:2px"),                        // SPILengthOrNormal
+            TestCase("word-spacing:normal"),
             TestCase("text-transform:lowercase"),                // SPIEnum
             // ...
             TestCase("baseline-shift:baseline"),                 // SPIBaselineShift
@@ -127,17 +132,24 @@ public:
             TestCase("marker-mid:url(#Arrow)"),
             TestCase("marker-end:url(#Arrow)"),
             TestCase("stroke-opacity:0.5"),                      // SPIScale24
-            TestCase("stroke-dasharray:0, 1, 0, 1"),             // NRVpathDash
+            TestCase("stroke-dasharray:0, 1, 0, 1"),             // SPIDashArray
             TestCase("stroke-dasharray:0 1 0 1","stroke-dasharray:0, 1, 0, 1"),
-            TestCase("stroke-dashoffset:13"),                    // NRVpathDash
+            TestCase("stroke-dasharray:0  1  2  3","stroke-dasharray:0, 1, 2, 3"),
+            TestCase("stroke-dashoffset:13"),                    // SPILength
+            TestCase("stroke-dashoffset:10px"),
             // ...
             TestCase("font-family:sans-serif"),                  // SPIString, text_private
-            //TestCase("filter:url(#myfilter)"),                 // filter
+            //TestCase("filter:url(#myfilter)"),                   // SPIFilter segfault in read
+            TestCase("filter:inherit"),
 
             TestCase("opacity:0.1;fill:#ff0000;stroke:#0000ff;stroke-width:2px"),
+            TestCase("opacity:0.1;fill:#ff0000;stroke:#0000ff;stroke-width:2px;stroke-dasharray:1, 2, 3, 4;stroke-dashoffset:15"),
+
 
 #ifdef WITH_SVG2
             TestCase("paint-order:stroke"),                      // SPIPaintOrder
+            TestCase("paint-order:normal"),
+            TestCase("paint-order: markers stroke   fill", "paint-order:markers stroke fill"),
 #endif
             TestCase(0)
         };
