@@ -683,25 +683,24 @@ int PrintEmf::create_pen(SPStyle const *style, const Geom::Affine &transform)
             linejoin = U_PS_JOIN_BEVEL;
         }
 
-        if (style->stroke_dash.n_dash   &&
-                style->stroke_dash.dash) {
+        if (!style->stroke_dasharray.values.empty()) {
             if (FixPPTDashLine) { // will break up line into many smaller lines.  Override gradient if that was set, cannot do both.
                 brushStyle = U_BS_SOLID;
                 hatchType  = U_HS_HORIZONTAL;
             } else {
-                int i = 0;
-                while ((linestyle != U_PS_USERSTYLE) && (i < style->stroke_dash.n_dash)) {
-                    if (style->stroke_dash.dash[i] > 0.00000001) {
+                unsigned i = 0;
+                while ((linestyle != U_PS_USERSTYLE) && (i < style->stroke_dasharray.values.size())) {
+                    if (style->stroke_dasharray.values[i] > 0.00000001) {
                         linestyle = U_PS_USERSTYLE;
                     }
                     i++;
                 }
 
                 if (linestyle == U_PS_USERSTYLE) {
-                    n_dash = style->stroke_dash.n_dash;
+                    n_dash = style->stroke_dasharray.values.size();
                     dash = new uint32_t[n_dash];
-                    for (i = 0; i < style->stroke_dash.n_dash; i++) {
-                        dash[i] = (uint32_t)(Inkscape::Util::Quantity::convert(1, "mm", "px") * style->stroke_dash.dash[i]);
+                    for (i = 0; i < n_dash; i++) {
+                        dash[i] = (uint32_t)(Inkscape::Util::Quantity::convert(1, "mm", "px") * style->stroke_dasharray.values[i]);
                     }
                 }
             }
@@ -1259,7 +1258,7 @@ unsigned int PrintEmf::fill(
         }
         if (
             (style->stroke.isNone() || style->stroke.noneSet || style->stroke_width.computed == 0.0) ||
-            (style->stroke_dash.n_dash   &&  style->stroke_dash.dash  && FixPPTDashLine)             ||
+            (!style->stroke_dasharray.values.empty() && FixPPTDashLine)             ||
             !all_closed
         ) {
             print_pathv(pathv, fill_transform);  // do any fills. side effect: clears fill_pathv
@@ -1287,13 +1286,13 @@ unsigned int PrintEmf::stroke(
         return 0;
     }
 
-    if (style->stroke_dash.n_dash   &&  style->stroke_dash.dash  && FixPPTDashLine) {
+    if (!style->stroke_dasharray.values.empty()  && FixPPTDashLine) {
         // convert the path, gets its complete length, and then make a new path with parameter length instead of t
         Geom::Piecewise<Geom::D2<Geom::SBasis> > tmp_pathpw;  // pathv-> sbasis
         Geom::Piecewise<Geom::D2<Geom::SBasis> > tmp_pathpw2; // sbasis using arc length parameter
         Geom::Piecewise<Geom::D2<Geom::SBasis> > tmp_pathpw3; // new (discontinuous) path, composed of dots/dashes
         Geom::Piecewise<Geom::D2<Geom::SBasis> > first_frag;  // first fragment, will be appended at end
-        int n_dash = style->stroke_dash.n_dash;
+        int n_dash = style->stroke_dasharray.values.size();
         int i = 0; //dash index
         double tlength;                                       // length of tmp_pathpw
         double slength = 0.0;                                 // start of gragment
@@ -1306,7 +1305,7 @@ unsigned int PrintEmf::stroke(
 
         // go around the dash array repeatedly until the entire path is consumed (but not beyond).
         while (slength < tlength) {
-            elength = slength + style->stroke_dash.dash[i++];
+            elength = slength + style->stroke_dasharray.values[i++];
             if (elength > tlength) {
                 elength = tlength;
             }
@@ -1317,7 +1316,7 @@ unsigned int PrintEmf::stroke(
                 first_frag = fragment;
             }
             slength = elength;
-            slength += style->stroke_dash.dash[i++];  // the gap
+            slength += style->stroke_dasharray.values[i++];  // the gap
             if (i >= n_dash) {
                 i = 0;
             }

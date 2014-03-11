@@ -39,7 +39,7 @@ static double dash_4_1[] = {4.0, 1.0, -1.0};
 static double dash_1_2[] = {1.0, 2.0, -1.0};
 static double dash_1_4[] = {1.0, 4.0, -1.0};
 
-#define bd_len 7  // must correspond to the number of entries in the next line
+static size_t BD_LEN = 7;  // must correspond to the number of entries in the next line
 static double *builtin_dashes[] = {dash_0, dash_1_1, dash_2_1, dash_4_1, dash_1_2, dash_1_4, NULL};
 
 static double **dashes = NULL;
@@ -124,12 +124,12 @@ void SPDashSelector::init_dashes() {
             for (std::vector<Glib::ustring>::iterator i = dash_prefs.begin(); i != dash_prefs.end(); ++i) {
                 sp_style_read_from_prefs(style, *i);
                 
-                if (style->stroke_dash.n_dash > 0) {
-                    dashes[pos] = g_new (double, style->stroke_dash.n_dash + 1);
+                if (!style->stroke_dasharray.values.empty()) {
+                    dashes[pos] = g_new (double, style->stroke_dasharray.values.size() + 1);
                     double *d = dashes[pos];
-                    int i = 0;
-                    for (; i < style->stroke_dash.n_dash; i++) {
-                        d[i] = style->stroke_dash.dash[i];
+                    unsigned i = 0;
+                    for (; i < style->stroke_dasharray.values.size(); i++) {
+                        d[i] = style->stroke_dasharray.values[i];
                     }
                     d[i] = -1;
                 } else {
@@ -138,12 +138,12 @@ void SPDashSelector::init_dashes() {
                 pos += 1;
             }
         } else {  //  This code may never execute - a new preferences.xml is created for a new user.  Maybe if the user deletes dashes from preferences.xml?
-            dashes = g_new (double *, bd_len + 2); // +1 for custom slot, +1 for terminator slot
-            int i;
-            for(i=0;i<bd_len;i++) {
+            dashes = g_new (double *, BD_LEN + 2); // +1 for custom slot, +1 for terminator slot
+            unsigned i;
+            for(i=0;i<BD_LEN;i++) {
                dashes[i] = builtin_dashes[i];
             }
-            pos = bd_len;
+            pos = BD_LEN;
         }
         // make a place to hold the custom dashes, up to 15 positions long (+ terminator)
         dashes[pos] = g_new (double, 16);

@@ -820,14 +820,14 @@ Wmf::output_style(PWMF_CALLBACK_DATA d)
         tmp_style << "stroke-miterlimit:" <<
             MAX( 2.0, d->dc[d->level].style.stroke_miterlimit.value ) << ";";
 
-        if (d->dc[d->level].style.stroke_dasharray_set &&
-            d->dc[d->level].style.stroke_dash.n_dash && d->dc[d->level].style.stroke_dash.dash)
+        if (d->dc[d->level].style.stroke_dasharray.set &&
+            !d->dc[d->level].style.stroke_dasharray.values.empty())
         {
             tmp_style << "stroke-dasharray:";
-            for (int i=0; i<d->dc[d->level].style.stroke_dash.n_dash; i++) {
+            for (unsigned i=0; i<d->dc[d->level].style.stroke_dasharray.values.size(); i++) {
                 if (i)
                     tmp_style << ",";
-                tmp_style << d->dc[d->level].style.stroke_dash.dash[i];
+                tmp_style << d->dc[d->level].style.stroke_dasharray.values[i];
             }
             tmp_style << ";";
             tmp_style << "stroke-dashoffset:0;";
@@ -920,34 +920,30 @@ Wmf::select_pen(PWMF_CALLBACK_DATA d, int index)
         case U_PS_DASHDOT:
         case U_PS_DASHDOTDOT:
         {
-            int i = 0;
             int penstyle = (up.Style & U_PS_STYLE_MASK);
-            d->dc[d->level].style.stroke_dash.n_dash =
-                penstyle == U_PS_DASHDOTDOT ? 6 : penstyle == U_PS_DASHDOT ? 4 : 2;
-            if (d->dc[d->level].style.stroke_dash.dash && (d->level==0 || (d->level>0 && d->dc[d->level].style.stroke_dash.dash!=d->dc[d->level-1].style.stroke_dash.dash)))
-                delete[] d->dc[d->level].style.stroke_dash.dash;
-            d->dc[d->level].style.stroke_dash.dash = new double[d->dc[d->level].style.stroke_dash.n_dash];
+            if (!d->dc[d->level].style.stroke_dasharray.values.empty() && (d->level==0 || (d->level>0 && d->dc[d->level].style.stroke_dasharray.values!=d->dc[d->level-1].style.stroke_dasharray.values)))
+                d->dc[d->level].style.stroke_dasharray.values.clear();
             if (penstyle==U_PS_DASH || penstyle==U_PS_DASHDOT || penstyle==U_PS_DASHDOTDOT) {
-                d->dc[d->level].style.stroke_dash.dash[i++] = 3;
-                d->dc[d->level].style.stroke_dash.dash[i++] = 1;
+                d->dc[d->level].style.stroke_dasharray.values.push_back( 3 );
+                d->dc[d->level].style.stroke_dasharray.values.push_back( 1 );
             }
             if (penstyle==U_PS_DOT || penstyle==U_PS_DASHDOT || penstyle==U_PS_DASHDOTDOT) {
-                d->dc[d->level].style.stroke_dash.dash[i++] = 1;
-                d->dc[d->level].style.stroke_dash.dash[i++] = 1;
+                d->dc[d->level].style.stroke_dasharray.values.push_back( 1 );
+                d->dc[d->level].style.stroke_dasharray.values.push_back( 1 );
             }
             if (penstyle==U_PS_DASHDOTDOT) {
-                d->dc[d->level].style.stroke_dash.dash[i++] = 1;
-                d->dc[d->level].style.stroke_dash.dash[i++] = 1;
+                d->dc[d->level].style.stroke_dasharray.values.push_back( 1 );
+                d->dc[d->level].style.stroke_dasharray.values.push_back( 1 );
             }
 
-            d->dc[d->level].style.stroke_dasharray_set = 1;
+            d->dc[d->level].style.stroke_dasharray.set = 1;
             break;
         }
 
         case U_PS_SOLID:
         default:
         {
-            d->dc[d->level].style.stroke_dasharray_set = 0;
+            d->dc[d->level].style.stroke_dasharray.set = 0;
             break;
         }
     }
@@ -1174,7 +1170,7 @@ Wmf::delete_object(PWMF_CALLBACK_DATA d, int index)
         // If the active object is deleted set default draw values
         if(index == d->dc[d->level].active_pen){  // Use default pen: solid, black, 1 pixel wide
             d->dc[d->level].active_pen                     = -1;
-            d->dc[d->level].style.stroke_dasharray_set     = 0;
+            d->dc[d->level].style.stroke_dasharray.set     = 0;
             d->dc[d->level].style.stroke_linecap.computed  = 2; // U_PS_ENDCAP_SQUARE
             d->dc[d->level].style.stroke_linejoin.computed = 0; // U_PS_JOIN_MITER;
             d->dc[d->level].stroke_set                     = true;
@@ -2310,8 +2306,8 @@ std::cout << "BEFORE DRAW"
                     d->level = d->level + DC;
             }
             while (old_level > d->level) {
-                if (d->dc[old_level].style.stroke_dash.dash && (old_level==0 || (old_level>0 && d->dc[old_level].style.stroke_dash.dash!=d->dc[old_level-1].style.stroke_dash.dash))){
-                    delete[] d->dc[old_level].style.stroke_dash.dash;
+                if (!d->dc[old_level].style.stroke_dasharray.values.empty() && (old_level==0 || (old_level>0 && d->dc[old_level].style.stroke_dasharray.values!=d->dc[old_level-1].style.stroke_dasharray.values))){
+                    d->dc[old_level].style.stroke_dasharray.values.clear();
                 }
                 if(d->dc[old_level].font_name){
                     free(d->dc[old_level].font_name); // else memory leak
@@ -2976,7 +2972,7 @@ Wmf::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
     d.dc[0].bkMode                             = U_TRANSPARENT;
     d.dc[0].dirty                              = 0;
     // Default pen, WMF files that do not specify a pen are unlikely to look very good!
-    d.dc[0].style.stroke_dasharray_set         = 0;
+    d.dc[0].style.stroke_dasharray.set         = 0;
     d.dc[0].style.stroke_linecap.computed      = 2; // U_PS_ENDCAP_SQUARE;
     d.dc[0].style.stroke_linejoin.computed     = 0; // U_PS_JOIN_MITER;
     d.dc[0].stroke_set                         = true;
@@ -3051,8 +3047,7 @@ Wmf::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
         delete[] d.wmf_obj;
     }
 
-    if (d.dc[0].style.stroke_dash.dash)
-        delete[] d.dc[0].style.stroke_dash.dash;
+    d.dc[0].style.stroke_dasharray.values.clear();
 
     for(int i=0; i<=d.level;i++){
       if(d.dc[i].font_name)free(d.dc[i].font_name);

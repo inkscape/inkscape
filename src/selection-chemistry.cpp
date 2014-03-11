@@ -2067,17 +2067,9 @@ GSList *sp_get_same_stroke_style(SPItem *sel, GSList *src, SPSelectStrokeStyleTy
             }
         }
         else if (type == SP_STROKE_STYLE_DASHES ) {
-            match = (sel_style->stroke_dasharray_set == iter_style->stroke_dasharray_set);
-            if (sel_style->stroke_dasharray_set && iter_style->stroke_dasharray_set) {
-                match = (sel_style->stroke_dash.n_dash == iter_style->stroke_dash.n_dash);
-                if (sel_style->stroke_dash.n_dash == iter_style->stroke_dash.n_dash) {
-                    for (int i = 0; i < sel_style->stroke_dash.n_dash; i++) {
-                        if (sel_style->stroke_dash.dash[i] != iter_style->stroke_dash.dash[i]) {
-                            match = false;
-                            break;
-                        }
-                    }
-                }
+            match = (sel_style->stroke_dasharray.set == iter_style->stroke_dasharray.set);
+            if (sel_style->stroke_dasharray.set && iter_style->stroke_dasharray.set) {
+                match = (sel_style->stroke_dasharray.values == iter_style->stroke_dasharray.values);
             }
         }
         else if (type == SP_STROKE_STYLE_MARKERS) {

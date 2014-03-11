@@ -1297,10 +1297,14 @@ CairoRenderContext::_setStrokeStyle(SPStyle const *style, Geom::OptRect const &p
         }
     }
 
-    if (style->stroke_dash.n_dash   &&
-        style->stroke_dash.dash       )
+    if (!style->stroke_dasharray.values.empty())
     {
-        cairo_set_dash(_cr, style->stroke_dash.dash, style->stroke_dash.n_dash, style->stroke_dash.offset);
+        size_t ndashes = style->stroke_dasharray.values.size();
+        double* dashes =(double*)malloc(ndashes*sizeof(double));
+        for( unsigned i = 0; i < ndashes; ++i ) {
+            dashes[i] = style->stroke_dasharray.values[i];
+        }
+        cairo_set_dash(_cr, dashes, ndashes, style->stroke_dashoffset.value);
     } else {
         cairo_set_dash(_cr, NULL, 0, 0.0);  // disable dashing
     }

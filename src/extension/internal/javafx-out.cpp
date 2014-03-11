@@ -418,10 +418,8 @@ bool JavaFXOutput::doStyle(SPStyle *style)
      * SPIEnum stroke_linecap;
      * SPIEnum stroke_linejoin;
      * SPIFloat stroke_miterlimit;
-     * NRVpathDash stroke_dash;
-     * unsigned stroke_dasharray_set : 1;
-     * unsigned stroke_dasharray_inherit : 1;
-     * unsigned stroke_dashoffset_set : 1;
+     * SPIDashArray stroke_dasharray;
+     * SPILength stroke_dashoffset;
      * SPIScale24 stroke_opacity;
      */
     if (style->stroke_opacity.value > 0)
@@ -436,16 +434,16 @@ bool JavaFXOutput::doStyle(SPStyle *style)
         out("            strokeLineCap: %s\n",    getStrokeLineCap(linecap).c_str());
         out("            strokeLineJoin: %s\n",   getStrokeLineJoin(linejoin).c_str());
         out("            strokeMiterLimit: %s\n", DSTR(style->stroke_miterlimit.value));
-        if (style->stroke_dasharray_set) {
-           if (style->stroke_dashoffset_set) {
-               out("            strokeDashOffset: %s\n", DSTR(style->stroke_dash.offset));
+        if (style->stroke_dasharray.set) {
+           if (style->stroke_dashoffset.set) {
+               out("            strokeDashOffset: %s\n", DSTR(style->stroke_dashoffset.value));
            }
            out("            strokeDashArray: [ ");
-           for(int i = 0; i < style->stroke_dash.n_dash; i++ ) {
+           for(unsigned i = 0; i < style->stroke_dasharray.values.size(); i++ ) {
                if (i > 0) {
-                   out(", %.2lf", style->stroke_dash.dash[i]);
+                   out(", %.2lf", style->stroke_dasharray.values[i]);
                }else {
-                   out(" %.2lf", style->stroke_dash.dash[i]);
+                   out(" %.2lf", style->stroke_dasharray.values[i]);
                }
            }
            out(" ]\n");

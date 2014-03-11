@@ -1168,11 +1168,11 @@ void SPItem::adjust_stroke( gdouble ex )
         style->stroke_width.computed *= ex;
         style->stroke_width.set = TRUE;
 
-        if ( style->stroke_dash.n_dash != 0 ) {
-            for (int i = 0; i < style->stroke_dash.n_dash; i++) {
-                style->stroke_dash.dash[i] *= ex;
+        if ( !style->stroke_dasharray.values.empty() ) {
+            for (unsigned i = 0; i < style->stroke_dasharray.values.size(); i++) {
+                style->stroke_dasharray.values[i] *= ex;
             }
-            style->stroke_dash.offset *= ex;
+            style->stroke_dashoffset.value *= ex;
         }
 
         updateRepr();

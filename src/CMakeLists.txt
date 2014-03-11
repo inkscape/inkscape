@@ -417,6 +417,8 @@ set(inkscape_SRC
 	strneq.h
 	style-test.h
 	style.h
+	style-enums.h
+	style-internal.h
 	svg-profile.h
 	svg-view-widget.h
 	svg-view.h

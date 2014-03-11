@@ -239,16 +239,13 @@ unsigned int PrintLatex::stroke(Inkscape::Extension::Print * /*mod*/,
             os<<",strokeopacity="<<stroke_opacity;
         }
 
-        if (style->stroke_dasharray_set &&
-                style->stroke_dash.n_dash &&
-                style->stroke_dash.dash) {
-            int i;
+        if (style->stroke_dasharray.set &&  !style->stroke_dasharray.values.empty()) {
             os << ",linestyle=dashed,dash=";
-            for (i = 0; i < style->stroke_dash.n_dash; i++) {
+            for (unsigned i = 0; i < style->stroke_dasharray.values.size(); i++) {
                 if ((i)) {
                     os << " ";
                 }
-                os << style->stroke_dash.dash[i];
+                os << style->stroke_dasharray.values[i];
             }
         }
 

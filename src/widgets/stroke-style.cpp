@@ -727,18 +727,18 @@ StrokeStyle::getItemColorForMarker(SPItem *item, Inkscape::PaintTarget fill_or_s
 void
 StrokeStyle::setDashSelectorFromStyle(SPDashSelector *dsel, SPStyle *style)
 {
-    if (style->stroke_dash.n_dash > 0) {
+    if (!style->stroke_dasharray.values.empty()) {
         double d[64];
-        int len = MIN(style->stroke_dash.n_dash, 64);
-        for (int i = 0; i < len; i++) {
+        size_t len = MIN(style->stroke_dasharray.values.size(), 64);
+        for (unsigned i = 0; i < len; i++) {
             if (style->stroke_width.computed != 0)
-                d[i] = style->stroke_dash.dash[i] / style->stroke_width.computed;
+                d[i] = style->stroke_dasharray.values[i] / style->stroke_width.computed;
             else
-                d[i] = style->stroke_dash.dash[i]; // is there a better thing to do for stroke_width==0?
+                d[i] = style->stroke_dasharray.values[i]; // is there a better thing to do for stroke_width==0?
         }
         dsel->set_dash(len, d, style->stroke_width.computed != 0 ?
-                       style->stroke_dash.offset / style->stroke_width.computed  :
-                       style->stroke_dash.offset);
+                       style->stroke_dashoffset.value / style->stroke_width.computed  :
+                       style->stroke_dashoffset.value);
     } else {
         dsel->set_dash(0, NULL, 0.0);
     }

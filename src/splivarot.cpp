@@ -1004,7 +1004,7 @@ Geom::PathVector* item_outline(SPItem const *item, bool bbox_only)
     Path *res = new Path;
     res->SetBackData(false);
 
-    if (i_style->stroke_dash.n_dash) {
+    if (!i_style->stroke_dasharray.values.empty()) {
         // For dashed strokes, use Stroke method, because Outline can't do dashes
         // However Stroke adds lots of extra nodes _or_ makes the path crooked, so consider this a temporary workaround
 
@@ -1273,7 +1273,7 @@ sp_selected_path_outline(SPDesktop *desktop)
         Path *res = new Path;
         res->SetBackData(false);
 
-        if (i_style->stroke_dash.n_dash) {
+        if (!i_style->stroke_dasharray.values.empty()) {
             // For dashed strokes, use Stroke method, because Outline can't do dashes
             // However Stroke adds lots of extra nodes _or_ makes the path crooked, so consider this a temporary workaround
 
