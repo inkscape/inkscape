@@ -4732,7 +4732,7 @@ sp_style_write_ipaintorder(gchar *p, gint len, gchar const *key, SPIPaintOrder c
                             break;
                         case SP_CSS_PAINT_ORDER_MARKER:
                             if (i!=0) css << " ";
-                            css << "marker";
+                            css << "markers";
                             break;
                     }
                 } else {
