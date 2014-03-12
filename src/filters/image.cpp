@@ -42,7 +42,6 @@ namespace {
 }
 
 SPFeImage::SPFeImage() : SPFilterPrimitive() {
-	this->document = NULL;
 	this->href = NULL;
 	this->from_element = 0;
 	this->SVGElemRef = NULL;
@@ -60,10 +59,8 @@ SPFeImage::~SPFeImage() {
  * our name must be associated with a repr via "sp_object_type_register".  Best done through
  * sp-object-repr.cpp's repr_name_entries array.
  */
-void SPFeImage::build(SPDocument *document, Inkscape::XML::Node *repr) {
-    // Save document reference so we can load images with relative paths.
-    this->document = document;
-
+void SPFeImage::build(SPDocument *document, Inkscape::XML::Node *repr)
+{
     SPFilterPrimitive::build(document, repr);
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/

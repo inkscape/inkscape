@@ -32,7 +32,6 @@ public:
     unsigned int aspect_align : 4;
     unsigned int aspect_clip : 1;
 
-    SPDocument *document;
     bool from_element;
     SPItem* SVGElem;
     Inkscape::URIReference* SVGElemRef;
