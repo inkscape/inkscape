@@ -249,6 +249,7 @@ DrawingCache::prepare()
         }
         cairo_set_source_surface(ct, old_surface, old_origin[X], old_origin[Y]);
         cairo_set_operator(ct, CAIRO_OPERATOR_SOURCE);
+        cairo_pattern_set_filter(cairo_get_source(ct), CAIRO_FILTER_NEAREST);
         cairo_paint(ct);
         cairo_destroy(ct);
 
