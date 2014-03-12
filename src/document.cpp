@@ -1552,7 +1552,8 @@ void SPDocument::importDefs(SPDocument *source)
             SPGradient *gr = SP_GRADIENT(src);
             for (SPObject *trg = this->getDefs()->firstChild() ; trg ; trg = trg->getNext()) {
                 if (trg && SP_IS_GRADIENT(trg) && src != trg) {
-                    if (gr->isEquivalent(SP_GRADIENT(trg))) {
+                    if (gr->isEquivalent(SP_GRADIENT(trg)) &&
+                        gr->isAligned(SP_GRADIENT(trg))) {
                         // Change object references to the existing equivalent gradient
                         change_def_references(src, trg);
                         duplicate = true;

@@ -135,6 +135,25 @@ gboolean SPGradient::isEquivalent(SPGradient *that)
     return TRUE;
 }
 
+/**
+ * return true if this gradient is "aligned" to that gradient.
+ * Aligned means that they have exactly the same transform.
+ * @param that - A gradient to compare this to
+ */
+gboolean SPGradient::isAligned(SPGradient *that)
+{
+    bool status = FALSE;
+    
+    while(1){ // not really a loop, used to avoid deep nesting or multiple exit points from function
+        if(this->gradientTransform_set != that->gradientTransform_set) { break; }
+        if(this->gradientTransform_set && 
+            (this->gradientTransform != that->gradientTransform)) { break; }
+        status = TRUE;
+        break;
+    }
+    return status;
+}
+
 
 /*
  * Gradient

@@ -215,9 +215,10 @@ change_clashing_ids(SPDocument *imported_doc, SPDocument *current_doc,
             SPObject *cd_obj =  current_doc->getObjectById(id);
 
             if (cd_obj && SP_IS_GRADIENT(cd_obj)) {
-                 SPGradient *cd_gr = SP_GRADIENT(cd_obj);
-                 if (cd_gr->isEquivalent(SP_GRADIENT(elem))) {
-                     fix_clashing_ids = false;
+                SPGradient *cd_gr = SP_GRADIENT(cd_obj);
+                if ( cd_gr->isEquivalent(SP_GRADIENT(elem)) &&
+                    cd_gr->isAligned(SP_GRADIENT(elem))) {
+                    fix_clashing_ids = false;
                  }
              }
         }

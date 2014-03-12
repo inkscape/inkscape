@@ -147,6 +147,7 @@ public:
     int getStopCount() const;
 
     gboolean isEquivalent(SPGradient *b);
+    gboolean isAligned(SPGradient *b);
 
     /** Mesh Gradients **************/
 
