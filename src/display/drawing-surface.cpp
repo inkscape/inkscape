@@ -215,7 +215,7 @@ DrawingCache::prepare()
     bool is_identity = _pending_transform.isIdentity();
     if (is_identity && _pending_area == old_area) return; // no change
 
-    bool is_integer_translation = false;
+    bool is_integer_translation = is_identity;
     if (!is_identity && _pending_transform.isTranslation()) {
         Geom::IntPoint t = _pending_transform.translation().round();
         if (Geom::are_near(Geom::Point(t), _pending_transform.translation())) {
@@ -224,6 +224,7 @@ DrawingCache::prepare()
             if (old_area + t == _pending_area) {
                 // if the areas match, the only thing to do
                 // is to ensure that the clean area is not too large
+                // we can exit early
                 cairo_rectangle_int_t limit = _convertRect(_pending_area);
                 cairo_region_intersect_rectangle(_clean_region, &limit);
                 _origin += t;
@@ -232,33 +233,35 @@ DrawingCache::prepare()
             }
         }
     }
-    // otherwise, we need to transform the cache
+
+    // the area has changed, so the cache content needs to be copied
     Geom::IntPoint old_origin = old_area.min();
     cairo_surface_t *old_surface = _surface;
     _surface = NULL;
     _pixels = _pending_area.dimensions();
     _origin = _pending_area.min();
 
-    cairo_t *ct = createRawContext();
-    if (!is_identity) {
-        ink_cairo_transform(ct, _pending_transform);
-    }
-    cairo_set_source_surface(ct, old_surface, old_origin[X], old_origin[Y]);
-    cairo_set_operator(ct, CAIRO_OPERATOR_SOURCE);
-    cairo_paint(ct);
+    if (is_integer_translation) {
+        // transform the cache only for integer translations and identities
+        cairo_t *ct = createRawContext();
+        if (!is_identity) {
+            ink_cairo_transform(ct, _pending_transform);
+        }
+        cairo_set_source_surface(ct, old_surface, old_origin[X], old_origin[Y]);
+        cairo_set_operator(ct, CAIRO_OPERATOR_SOURCE);
+        cairo_paint(ct);
+        cairo_destroy(ct);
 
-    cairo_surface_destroy(old_surface);
-    cairo_destroy(ct);
-
-    if (!is_identity && !is_integer_translation) {
+        cairo_rectangle_int_t limit = _convertRect(_pending_area);
+        cairo_region_intersect_rectangle(_clean_region, &limit);
+    } else {
         // dirty everything
         cairo_region_destroy(_clean_region);
         _clean_region = cairo_region_create();
-    } else {
-        cairo_rectangle_int_t limit = _convertRect(_pending_area);
-        cairo_region_intersect_rectangle(_clean_region, &limit);
     }
+
     //std::cout << _pending_transform << old_area << _pending_area << std::endl;
+    cairo_surface_destroy(old_surface);
     _pending_transform.setIdentity();
 }
 
