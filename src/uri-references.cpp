@@ -115,10 +115,10 @@ void URIReference::attach(const URI &uri) throw(BadURIException)
 
     /* FIXME !!! validate id as an NCName somewhere */
 
+    _connection.disconnect();
     delete _uri;
     _uri = new URI(uri);
 
-    _connection.disconnect();
     _setObject(document->getObjectById(id));
     _connection = document->connectIdChanged(id, sigc::mem_fun(*this, &URIReference::_setObject));
 
