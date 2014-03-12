@@ -794,7 +794,7 @@ void sp_selection_ungroup(Inkscape::Selection *selection, SPDesktop *desktop)
     GSList *groups = NULL;
     for (GSList *item = old_select; item; item = item->next) {
         SPItem *obj = static_cast<SPItem*>(item->data);
-        if (SP_IS_GROUP(obj) && !SP_IS_SWITCH(obj)) {
+        if (SP_IS_GROUP(obj)) {
             groups = g_slist_prepend(groups, obj);
         }
     }
