@@ -35,6 +35,7 @@
 #include "sp-namedview.h"
 #include "sp-root.h"
 #include "sp-script.h"
+#include "style.h"
 #include "svg/stringstream.h"
 #include "tools-switch.h"
 #include "ui/widget/color-picker.h"
@@ -106,7 +107,7 @@ DocumentProperties::DocumentProperties()
       _page_metadata1(Gtk::manage(new UI::Widget::NotebookPage(1, 1))),
       _page_metadata2(Gtk::manage(new UI::Widget::NotebookPage(1, 1))),
     //---------------------------------------------------------------
-      _rcb_antialias(_("Use antialiasing"), _("If unset, no antialiasing will be done on the drawing"), "inkscape:antialiasing", _wr, false),
+      _rcb_antialias(_("Use antialiasing"), _("If unset, no antialiasing will be done on the drawing"), "shape-rendering", _wr, false, NULL, NULL, NULL, "crispEdges"),
       _rcb_canb(_("Show page _border"), _("If set, rectangular page border is shown"), "showborder", _wr, false),
       _rcb_bord(_("Border on _top of drawing"), _("If set, border is always on top of the drawing"), "borderlayer", _wr, false),
       _rcb_shad(_("_Show border shadow"), _("If set, page border shows a shadow on its right and lower side"), "inkscape:showpageshadow", _wr, false),
@@ -1474,7 +1475,10 @@ void DocumentProperties::update()
     _rcb_bord.setActive (nv->borderlayer == SP_BORDER_LAYER_TOP);
     _rcp_bord.setRgba32 (nv->bordercolor);
     _rcb_shad.setActive (nv->showpageshadow);
-    _rcb_antialias.setActive(nv->antialiasing);
+
+    SPRoot *root = dt->getDocument()->getRoot();
+    _rcb_antialias.set_xml_target(root->getRepr(), dt->getDocument());
+    _rcb_antialias.setActive(root->style->shape_rendering.computed != SP_CSS_SHAPE_RENDERING_CRISPEDGES);
 
     if (nv->doc_units) {
         _rum_deflt.setUnit (nv->doc_units->abbr);

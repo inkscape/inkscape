@@ -30,7 +30,6 @@ public:
 
     void setStyle(SPStyle *style);
     void setChildTransform(Geom::Affine const &new_trans);
-    void setAntialiasing(bool a);
 
 protected:
     virtual unsigned _updateItem(Geom::IntRect const &area, UpdateContext const &ctx,
@@ -43,7 +42,6 @@ protected:
 
     SPStyle *_style;
     Geom::Affine *_child_transform;
-    bool _uses_antialiasing;
 };
 
 bool is_drawing_group(DrawingItem *item);

@@ -1736,8 +1736,6 @@ static void _namedview_modified (SPObject *obj, guint flags, SPDesktop *desktop)
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
 
-        desktop->getDocument()->getRoot()->setAntialiasing(nv->antialiasing);
-
         /* Show/hide page background */
         if (nv->pagecolor | (0xff != 0xffffffff)) {
             sp_canvas_item_show (desktop->table);

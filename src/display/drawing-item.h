@@ -108,6 +108,7 @@ public:
     void setCached(bool c, bool persistent = false);
 
     void setOpacity(float opacity);
+    void setAntialiasing(bool a);
     void setIsolation(unsigned isolation); // CSS Compositing and Blending
     void setBlendMode(unsigned blend_mode);
     void setTransform(Geom::Affine const &trans);
@@ -205,6 +206,7 @@ protected:
     //unsigned _renders_opacity : 1; ///< Whether object needs temporary surface for opacity
     unsigned _pick_children : 1; ///< For groups: if true, children are returned from pick(),
                                  ///  otherwise the group is returned
+    unsigned _antialias : 1; ///< Whether to use antialiasing
 
     unsigned _isolation : 1;
     unsigned _blend_mode : 4;

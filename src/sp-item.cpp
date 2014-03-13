@@ -599,6 +599,7 @@ void SPItem::update(SPCtx* /*ctx*/, guint flags) {
         if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
             for (SPItemView *v = item->display; v != NULL; v = v->next) {
                 v->arenaitem->setOpacity(SP_SCALE24_TO_FLOAT(object->style->opacity.value));
+                v->arenaitem->setAntialiasing(object->style->shape_rendering.computed != SP_CSS_SHAPE_RENDERING_CRISPEDGES);
                 v->arenaitem->setIsolation( object->style->isolation.value );
                 v->arenaitem->setBlendMode( object->style->blend_mode.value );
                 v->arenaitem->setVisible(!item->isHidden());

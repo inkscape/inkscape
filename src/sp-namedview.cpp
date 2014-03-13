@@ -90,7 +90,6 @@ SPNamedView::SPNamedView() : SPObjectGroup(), snap_manager(this) {
     this->grids_visible = false;
     this->showborder = TRUE;
     this->showpageshadow = TRUE;
-    this->antialiasing = TRUE;
 
     this->guides = NULL;
     this->viewcount = 0;
@@ -249,7 +248,6 @@ void SPNamedView::build(SPDocument *document, Inkscape::XML::Node *repr) {
     this->readAttr( "inkscape:snap-page" );
     this->readAttr( "inkscape:current-layer" );
     this->readAttr( "inkscape:connector-spacing" );
-    this->readAttr( "inkscape:antialiasing" );
 
     /* Construct guideline list */
     for (SPObject *o = this->firstChild() ; o; o = o->getNext() ) {
@@ -605,10 +603,6 @@ void SPNamedView::set(unsigned int key, const gchar* value) {
             this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     }
-    case SP_ATTR_INKSCAPE_ANTIALIASING:
-        this->antialiasing = value ? sp_str_to_bool(value) : TRUE;
-        this->requestModified(SP_OBJECT_MODIFIED_FLAG);
-        break;
     default:
             SPObjectGroup::set(key, value);
             break;

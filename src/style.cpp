@@ -1936,7 +1936,15 @@ sp_style_merge_from_parent(SPStyle *const style, SPStyle const *const parent)
     if (!style->color_rendering.set || style->color_rendering.inherit) {
         style->color_rendering.computed = parent->color_rendering.computed;
     }
-
+    if (!style->image_rendering.set || style->image_rendering.inherit) {
+        style->image_rendering.computed = parent->image_rendering.computed;
+    }
+    if (!style->shape_rendering.set || style->shape_rendering.inherit) {
+        style->shape_rendering.computed = parent->shape_rendering.computed;
+    }
+    if (!style->text_rendering.set || style->text_rendering.inherit) {
+        style->text_rendering.computed = parent->text_rendering.computed;
+    }
 }
 
 template <typename T>

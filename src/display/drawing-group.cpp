@@ -22,7 +22,6 @@ DrawingGroup::DrawingGroup(Drawing &drawing)
     : DrawingItem(drawing)
     , _style(NULL)
     , _child_transform(NULL)
-    , _uses_antialiasing(true)
 {}
 
 DrawingGroup::~DrawingGroup()
@@ -46,15 +45,6 @@ void
 DrawingGroup::setStyle(SPStyle *style)
 {
     _setStyleCommon(_style, style);
-}
-
-void
-DrawingGroup::setAntialiasing(bool a)
-{
-    if (_uses_antialiasing != a) {
-        _uses_antialiasing = a;
-        _markForUpdate(STATE_ALL, true);
-    }
 }
 
 /**
@@ -110,13 +100,6 @@ DrawingGroup::_updateItem(Geom::IntRect const &area, UpdateContext const &ctx, u
 unsigned
 DrawingGroup::_renderItem(DrawingContext &dc, Geom::IntRect const &area, unsigned flags, DrawingItem *stop_at)
 {
-    DrawingContext::Save aa_save;
-
-    if (!_uses_antialiasing) {
-        aa_save.save(dc);
-        cairo_set_antialias(dc.raw(), CAIRO_ANTIALIAS_NONE);
-    }
-        
     if (stop_at == NULL) {
         // normal rendering
         for (ChildrenList::iterator i = _children.begin(); i != _children.end(); ++i) {

@@ -127,6 +127,7 @@ DrawingItem::DrawingItem(Drawing &drawing)
     , _propagate(0)
 //    , _renders_opacity(0)
     , _pick_children(0)
+    , _antialias(1)
     , _isolation(SP_CSS_ISOLATION_AUTO)
     , _blend_mode(SP_CSS_BLEND_NORMAL)
 {}
@@ -229,6 +230,8 @@ DrawingItem::prependChild(DrawingItem *item)
 void
 DrawingItem::clearChildren()
 {
+    if (_children.empty()) return;
+
     _markForRendering();
     // prevent children from referencing the parent during deletion
     // this way, children won't try to remove themselves from a list
@@ -266,8 +269,19 @@ DrawingItem::setTransform(Geom::Affine const &new_trans)
 void
 DrawingItem::setOpacity(float opacity)
 {
-    _opacity = opacity;
-    _markForRendering();
+    if (_opacity != opacity) {
+        _opacity = opacity;
+        _markForRendering();
+    }
+}
+
+void
+DrawingItem::setAntialiasing(bool a)
+{
+    if (_antialias != a) {
+        _antialias = a;
+        _markForRendering();
+    }
 }
 
 void
@@ -289,8 +303,10 @@ DrawingItem::setBlendMode(unsigned blend_mode)
 void
 DrawingItem::setVisible(bool v)
 {
-    _visible = v;
-    _markForRendering();
+    if (_visible != v) {
+        _visible = v;
+        _markForRendering();
+    }
 }
 
 /// This is currently unused
@@ -567,6 +583,12 @@ DrawingItem::render(DrawingContext &dc, Geom::IntRect const &area, unsigned flag
     // carea is the area to paint
     Geom::OptIntRect carea = Geom::intersect(area, _drawbox);
     if (!carea) return RENDER_OK;
+
+    if (_antialias) {
+        cairo_set_antialias(dc.raw(), CAIRO_ANTIALIAS_DEFAULT);
+    } else {
+        cairo_set_antialias(dc.raw(), CAIRO_ANTIALIAS_NONE);
+    }
 
     // render from cache if possible
     if (_cached) {
