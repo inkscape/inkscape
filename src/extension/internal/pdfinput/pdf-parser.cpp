@@ -718,10 +718,7 @@ void PdfParser::opSetMiterLimit(Object args[], int /*numArgs*/)
 // TODO not good that numArgs is ignored but args[] is used:
 void PdfParser::opSetLineWidth(Object args[], int /*numArgs*/)
 {
-  if (args[0].getNum() > 0.0)
-    state->setLineWidth(args[0].getNum());
-  else
-    state->setLineWidth(1.0);      // default
+  state->setLineWidth(args[0].getNum());
   builder->updateStyle(state);
 }
 

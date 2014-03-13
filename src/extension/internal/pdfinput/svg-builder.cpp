@@ -298,14 +298,6 @@ static gchar *svgInterpretPath(GfxPath *path) {
  * Uses the given SPCSSAttr for storing the style properties
  */
 void SvgBuilder::_setStrokeStyle(SPCSSAttr *css, GfxState *state) {
-
-    // Check line width
-    if ( state->getLineWidth() <= 0.0 ) {
-        // Ignore stroke
-        sp_repr_css_set_property(css, "stroke", "none");
-        return;
-    }
-
     // Stroke color/pattern
     if ( state->getStrokeColorSpace()->getMode() == csPattern ) {
         gchar *urltext = _createPattern(state->getStrokePattern(), state, true);
@@ -326,7 +318,14 @@ void SvgBuilder::_setStrokeStyle(SPCSSAttr *css, GfxState *state) {
 
     // Line width
     Inkscape::CSSOStringStream os_width;
-    os_width << state->getLineWidth();
+    double lw = state->getLineWidth();
+    if (lw > 0.0) {
+        os_width << lw;
+    } else {
+        // emit a stroke which is 1px in toplevel user units
+        double pxw = Inkscape::Util::Quantity::convert(1.0, "pt", "px");
+        os_width << 1.0 / state->transformWidth(pxw);
+    }
     sp_repr_css_set_property(css, "stroke-width", os_width.str().c_str());
 
     // Line cap
