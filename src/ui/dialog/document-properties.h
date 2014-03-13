@@ -117,6 +117,7 @@ protected:
 
     UI::Widget::Registry _wr;
     //---------------------------------------------------------------
+    UI::Widget::RegisteredCheckButton _rcb_antialias;
     UI::Widget::RegisteredCheckButton _rcb_canb;
     UI::Widget::RegisteredCheckButton _rcb_bord;
     UI::Widget::RegisteredCheckButton _rcb_shad;

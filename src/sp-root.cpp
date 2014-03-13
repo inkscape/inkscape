@@ -25,6 +25,7 @@
 #include "document.h"
 #include "inkscape-version.h"
 #include "sp-defs.h"
+#include "sp-namedview.h"
 #include "sp-root.h"
 #include "display/drawing-group.h"
 #include "svg/stringstream.h"
@@ -307,6 +308,7 @@ void SPRoot::update(SPCtx *ctx, guint flags)
     for (SPItemView *v = this->display; v != NULL; v = v->next) {
         Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
         g->setChildTransform(this->c2p);
+        g->setAntialiasing(sp_document_namedview(this->document, NULL)->antialiasing);
     }
 }
 
@@ -373,6 +375,7 @@ Inkscape::DrawingItem *SPRoot::show(Inkscape::Drawing &drawing, unsigned int key
     if (ai) {
         Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(ai);
         g->setChildTransform(this->c2p);
+        g->setAntialiasing(sp_document_namedview(this->document, NULL)->antialiasing); 
     }
 
     return ai;
@@ -389,6 +392,13 @@ void SPRoot::print(SPPrintContext *ctx)
 
 const char *SPRoot::displayName() const {
     return "SVG";  // Do not translate
+}
+
+void SPRoot::setAntialiasing(bool s) {
+    for (SPItemView *v = this->display; v != NULL; v = v->next) {
+        Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
+        g->setAntialiasing(s);
+    }
 }
 
 /*

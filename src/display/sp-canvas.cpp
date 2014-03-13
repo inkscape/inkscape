@@ -35,7 +35,6 @@
 #include "display/cairo-utils.h"
 #include "debug/gdk-event-latency-tracker.h"
 #include "desktop.h"
-#include "sp-namedview.h"
 
 using Inkscape::Debug::GdkEventLatencyTracker;
 

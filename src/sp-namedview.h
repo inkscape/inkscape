@@ -44,6 +44,7 @@ public:
     unsigned int showborder : 1;
     unsigned int showpageshadow : 1;
     unsigned int borderlayer : 2;
+    unsigned int antialiasing : 1;
 
     double zoom;
     double cx;

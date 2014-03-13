@@ -106,6 +106,7 @@ DocumentProperties::DocumentProperties()
       _page_metadata1(Gtk::manage(new UI::Widget::NotebookPage(1, 1))),
       _page_metadata2(Gtk::manage(new UI::Widget::NotebookPage(1, 1))),
     //---------------------------------------------------------------
+      _rcb_antialias(_("Use antialiasing"), _("If unset, no antialiasing will be done on the drawing"), "inkscape:antialiasing", _wr, false),
       _rcb_canb(_("Show page _border"), _("If set, rectangular page border is shown"), "showborder", _wr, false),
       _rcb_bord(_("Border on _top of drawing"), _("If set, border is always on top of the drawing"), "borderlayer", _wr, false),
       _rcb_shad(_("_Show border shadow"), _("If set, page border shows a shadow on its right and lower side"), "inkscape:showpageshadow", _wr, false),
@@ -239,7 +240,8 @@ inline void attach_all(Gtk::Table &table, Gtk::Widget *const arr[], unsigned con
                     yoptions = Gtk::FILL|Gtk::EXPAND;
                 }
                 if (docum_prop_flag) {
-                    if( i==(n-4) || i==(n-6) ) {
+                    // this sets the padding for subordinate widgets on the "Page" page
+                    if( i==(n-8) || i==(n-10) ) {
 #if WITH_GTKMM_3_0
                         arr[i+1]->set_hexpand();
                         arr[i+1]->set_margin_left(20);
@@ -316,28 +318,28 @@ void DocumentProperties::build_page()
 
     Gtk::Label* label_gen = manage (new Gtk::Label);
     label_gen->set_markup (_("<b>General</b>"));
-    Gtk::Label* label_col = manage (new Gtk::Label);
-    label_col->set_markup (_("<b>Color</b>"));
-    Gtk::Label* label_bor = manage (new Gtk::Label);
-    label_bor->set_markup (_("<b>Border</b>"));
     Gtk::Label *label_for = manage (new Gtk::Label);
     label_for->set_markup (_("<b>Page Size</b>"));
+    Gtk::Label* label_dsp = manage (new Gtk::Label);
+    label_dsp->set_markup (_("<b>Display</b>"));
     _page_sizer.init();
 
     Gtk::Widget *const widget_array[] =
     {
         label_gen,         0,
         0,                 &_rum_deflt,
-        label_col,         0,
-        _rcp_bg._label,    &_rcp_bg,
+        //label_col,         0,
+        //_rcp_bg._label,    &_rcp_bg,
         0,                 0,
         label_for,         0,
         0,                 &_page_sizer,
         0,                 0,
-        label_bor,         0,
+        label_dsp,         0,
         0,                 &_rcb_canb,
         0,                 &_rcb_bord,
         0,                 &_rcb_shad,
+        0,                 &_rcb_antialias,
+        _rcp_bg._label,    &_rcp_bg,
         _rcp_bord._label,  &_rcp_bord,
     };
 
@@ -1472,6 +1474,7 @@ void DocumentProperties::update()
     _rcb_bord.setActive (nv->borderlayer == SP_BORDER_LAYER_TOP);
     _rcp_bord.setRgba32 (nv->bordercolor);
     _rcb_shad.setActive (nv->showpageshadow);
+    _rcb_antialias.setActive(nv->antialiasing);
 
     if (nv->doc_units) {
         _rum_deflt.setUnit (nv->doc_units->abbr);

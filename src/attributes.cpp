@@ -117,6 +117,7 @@ static SPStyleProp const props[] = {
     {SP_ATTR_INKSCAPE_DOCUMENT_UNITS, "inkscape:document-units"},
     {SP_ATTR_UNITS, "units"},
     {SP_ATTR_INKSCAPE_CONNECTOR_SPACING, "inkscape:connector-spacing"},
+    {SP_ATTR_INKSCAPE_ANTIALIASING, "inkscape:antialiasing"},
     /* SPColorProfile */
     {SP_ATTR_LOCAL, "local"},
     {SP_ATTR_NAME, "name"},

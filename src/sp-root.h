@@ -50,6 +50,8 @@ public:
      */
     SPDefs *defs;
 
+    void setAntialiasing(bool a);
+
 	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
 	virtual void release();
 	virtual void set(unsigned int key, gchar const* value);
