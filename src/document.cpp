@@ -1133,12 +1133,11 @@ static gint
 sp_document_idle_handler(gpointer data)
 {
     SPDocument *doc = static_cast<SPDocument *>(data);
-    if (doc->_updateDocument()) {
+    bool status = !doc->_updateDocument(); // method TRUE if it does NOT need further modification, so invert
+    if (!status) {
         doc->modified_id = 0;
-        return false;
-    } else {
-        return true;
     }
+    return status;
 }
 
 /**

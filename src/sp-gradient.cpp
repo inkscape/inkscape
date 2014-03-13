@@ -111,33 +111,45 @@ gboolean SPGradient::isEquivalent(SPGradient *that)
 {
     //TODO Make this work for mesh gradients
 
-    if (this->getStopCount() != that->getStopCount())
-        return FALSE;
-
-    if (this->hasStops() != that->hasStops())
-        return FALSE;
-
-    if (!this->getVector() || !that->getVector())
-        return FALSE;
-
-    SPStop *as = this->getVector()->getFirstStop();
-    SPStop *bs = that->getVector()->getFirstStop();
-
-    while (as && bs) {
-        if (!as->getEffectiveColor().isClose(bs->getEffectiveColor(), 0.001) ||
-                as->offset != bs->offset) {
-            return FALSE;
+    bool status = FALSE;
+    
+    while(1){ // not really a loop, used to avoid deep nesting or multiple exit points from function
+        if (this->getStopCount() != that->getStopCount()) { break; }
+        if (this->hasStops() != that->hasStops()) { break; }
+        if (!this->getVector() || !that->getVector()) { break; }
+        if ( (SP_IS_LINEARGRADIENT(this) && SP_IS_LINEARGRADIENT(that)) ||
+             (SP_IS_RADIALGRADIENT(this) && SP_IS_RADIALGRADIENT(that)) ||
+             (SP_IS_MESHGRADIENT(this) && SP_IS_MESHGRADIENT(that))) {
+             /* OK! */ 
         }
-        as = as->getNextStop();
-        bs = bs->getNextStop();
-    }
+        else { break; }
 
-    return TRUE;
+        SPStop *as = this->getVector()->getFirstStop();
+        SPStop *bs = that->getVector()->getFirstStop();
+
+        bool effective = TRUE;
+        while (effective && (as && bs)) {
+            if (!as->getEffectiveColor().isClose(bs->getEffectiveColor(), 0.001) ||
+                    as->offset != bs->offset) {
+                effective = FALSE;
+                break;
+            } 
+            else {
+                as = as->getNextStop();
+                bs = bs->getNextStop();
+            }
+        }
+        if(!effective)break;
+
+        status = TRUE;
+        break;
+    }
+    return status;
 }
 
 /**
  * return true if this gradient is "aligned" to that gradient.
- * Aligned means that they have exactly the same transform.
+ * Aligned means that they have exactly the same coordinates and transform.
  * @param that - A gradient to compare this to
  */
 gboolean SPGradient::isAligned(SPGradient *that)
@@ -148,12 +160,43 @@ gboolean SPGradient::isAligned(SPGradient *that)
         if(this->gradientTransform_set != that->gradientTransform_set) { break; }
         if(this->gradientTransform_set && 
             (this->gradientTransform != that->gradientTransform)) { break; }
+        if (SP_IS_LINEARGRADIENT(this) && SP_IS_LINEARGRADIENT(that)) {
+            SPLinearGradient *sg=SP_LINEARGRADIENT(this);
+            SPLinearGradient *tg=SP_LINEARGRADIENT(that);
+ 
+            if( !sg->x1._set     ||    !tg->x1._set  || // assume that if these are set so will be all the others
+                (sg->x1.computed != tg->x1.computed) ||
+                (sg->y1.computed != tg->y1.computed) ||
+                (sg->x2.computed != tg->x2.computed) ||
+                (sg->y2.computed != tg->y2.computed)
+            ) { break; }
+        } else if (SP_IS_RADIALGRADIENT(this) && SP_IS_LINEARGRADIENT(that)) {
+            SPRadialGradient *sg=SP_RADIALGRADIENT(this);
+            SPRadialGradient *tg=SP_RADIALGRADIENT(that);
+            if( !sg->cx._set     ||    !tg->cx._set  || // assume that if these are set so will be all the others
+                (sg->cx.computed != tg->cx.computed) ||
+                (sg->cy.computed != tg->cy.computed) ||
+                (sg->r.computed  != tg->r.computed ) ||
+                (sg->fx.computed != tg->fx.computed) ||
+                (sg->fy.computed != tg->fy.computed)
+            ) { break; }
+        } else if (SP_IS_MESHGRADIENT(this) && SP_IS_MESHGRADIENT(that)) {
+            SPMeshGradient *sg=SP_MESHGRADIENT(this);
+            SPMeshGradient *tg=SP_MESHGRADIENT(that);
+ 
+            if( !sg->x._set     ||    !tg->x._set  ||
+                !sg->y._set     ||    !tg->y._set  ||
+                (sg->x.computed != tg->x.computed) ||
+                (sg->y.computed != tg->y.computed)
+            ) { break; }
+         } else {
+            break;
+        }
         status = TRUE;
         break;
     }
     return status;
 }
-
 
 /*
  * Gradient
