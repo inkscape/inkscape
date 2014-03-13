@@ -223,6 +223,8 @@ private:
     Inkscape::XML::Node *_preferences;  // Preferences container node
     double _width;       // Document size in px
     double _height;       // Document size in px
+    double _ttm[6]; ///< temporary transform matrix
+    bool _ttm_is_set;
 };
 
 

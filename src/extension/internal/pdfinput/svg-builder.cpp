@@ -56,9 +56,6 @@ namespace Internal {
 
 #define TRACE(_args) IFTRACE(g_print _args)
 
-static double ttm[6] = {1, 0, 0, 1, 0, 0};	// temporary transform matrix
-static bool ttm_is_set = false;             // flag to forbid setting ttm
-
 /**
  * \struct SvgTransparencyGroup
  * \brief Holds information about a PDF transparency group
@@ -94,6 +91,9 @@ SvgBuilder::SvgBuilder(SPDocument *document, gchar *docname, XRef *xref)
     _preferences = _xml_doc->createElement("svgbuilder:prefs");
     _preferences->setAttribute("embedImages", "1");
     _preferences->setAttribute("localFonts", "1");
+
+    _ttm[0] = 1; _ttm[1] = 0; _ttm[2] = 0; _ttm[3] = 1; _ttm[4] = 0; _ttm[5] = 0;
+    _ttm_is_set = false;
 }
 
 SvgBuilder::SvgBuilder(SvgBuilder *parent, Inkscape::XML::Node *root) {
@@ -216,9 +216,9 @@ Inkscape::XML::Node *SvgBuilder::pushGroup() {
         }
     }
     if (_container->parent()->attribute("inkscape:groupmode") != NULL) {
-        ttm[0] = ttm[3] = 1.0;    // clear ttm if parent is a layer
-        ttm[1] = ttm[2] = ttm[4] = ttm[5] = 0.0;
-        ttm_is_set = false;
+        _ttm[0] = _ttm[3] = 1.0;    // clear ttm if parent is a layer
+        _ttm[1] = _ttm[2] = _ttm[4] = _ttm[5] = 0.0;
+        _ttm_is_set = false;
     }
     return _container;
 }
@@ -570,14 +570,14 @@ bool SvgBuilder::getTransform(double *transform) {
 void SvgBuilder::setTransform(double c0, double c1, double c2, double c3,
                               double c4, double c5) {
     // do not remember the group which is a layer
-    if ((_container->attribute("inkscape:groupmode") == NULL) && !ttm_is_set) {
-        ttm[0] = c0;
-        ttm[1] = c1;
-        ttm[2] = c2;
-        ttm[3] = c3;
-        ttm[4] = c4;
-        ttm[5] = c5;
-        ttm_is_set = true;
+    if ((_container->attribute("inkscape:groupmode") == NULL) && !_ttm_is_set) {
+        _ttm[0] = c0;
+        _ttm[1] = c1;
+        _ttm[2] = c2;
+        _ttm[3] = c3;
+        _ttm[4] = c4;
+        _ttm[5] = c5;
+        _ttm_is_set = true;
     }
 
     // Avoid transforming a group with an already set clip-path
@@ -633,15 +633,15 @@ gchar *SvgBuilder::_createPattern(GfxPattern *pattern, GfxState *state, bool is_
             // construct a (pattern space) -> (current space) transform matrix
 
             ptm = shading_pattern->getMatrix();
-            det = ttm[0] * ttm[3] - ttm[1] * ttm[2];
+            det = _ttm[0] * _ttm[3] - _ttm[1] * _ttm[2];
             if (det) {
                 double ittm[6];	// invert ttm
-                ittm[0] =  ttm[3] / det;
-                ittm[1] = -ttm[1] / det;
-                ittm[2] = -ttm[2] / det;
-                ittm[3] =  ttm[0] / det;
-                ittm[4] = (ttm[2] * ttm[5] - ttm[3] * ttm[4]) / det;
-                ittm[5] = (ttm[1] * ttm[4] - ttm[0] * ttm[5]) / det;
+                ittm[0] =  _ttm[3] / det;
+                ittm[1] = -_ttm[1] / det;
+                ittm[2] = -_ttm[2] / det;
+                ittm[3] =  _ttm[0] / det;
+                ittm[4] = (_ttm[2] * _ttm[5] - _ttm[3] * _ttm[4]) / det;
+                ittm[5] = (_ttm[1] * _ttm[4] - _ttm[0] * _ttm[5]) / det;
                 m[0] = ptm[0] * ittm[0] + ptm[1] * ittm[2];
                 m[1] = ptm[0] * ittm[1] + ptm[1] * ittm[3];
                 m[2] = ptm[2] * ittm[0] + ptm[3] * ittm[2];
@@ -676,15 +676,15 @@ gchar *SvgBuilder::_createTilingPattern(GfxTilingPattern *tiling_pattern,
     double *p2u = tiling_pattern->getMatrix();
     double m[6] = {1, 0, 0, 1, 0, 0};
     double det;
-    det = ttm[0] * ttm[3] - ttm[1] * ttm[2];    // see LP Bug 1168908
+    det = _ttm[0] * _ttm[3] - _ttm[1] * _ttm[2];    // see LP Bug 1168908
     if (det) {
         double ittm[6];	// invert ttm
-        ittm[0] =  ttm[3] / det;
-        ittm[1] = -ttm[1] / det;
-        ittm[2] = -ttm[2] / det;
-        ittm[3] =  ttm[0] / det;
-        ittm[4] = (ttm[2] * ttm[5] - ttm[3] * ttm[4]) / det;
-        ittm[5] = (ttm[1] * ttm[4] - ttm[0] * ttm[5]) / det;
+        ittm[0] =  _ttm[3] / det;
+        ittm[1] = -_ttm[1] / det;
+        ittm[2] = -_ttm[2] / det;
+        ittm[3] =  _ttm[0] / det;
+        ittm[4] = (_ttm[2] * _ttm[5] - _ttm[3] * _ttm[4]) / det;
+        ittm[5] = (_ttm[1] * _ttm[4] - _ttm[0] * _ttm[5]) / det;
         m[0] = p2u[0] * ittm[0] + p2u[1] * ittm[2];
         m[1] = p2u[0] * ittm[1] + p2u[1] * ittm[3];
         m[2] = p2u[2] * ittm[0] + p2u[3] * ittm[2];
