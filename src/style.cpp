@@ -4373,7 +4373,7 @@ sp_style_write_ilengthornormal(gchar *p, gint const len, gchar const *const key,
  * Write SPIDashArray object into string.
  */
 static gint
-sp_style_write_idasharray(gchar *p, gint const len, gchar const *const key,
+sp_style_write_idasharray(gchar *p, gint const len, gchar const *const /*key*/,
                           SPIDashArray const *const val, SPIDashArray const *const base, guint const flags)
 {
     if ((flags & SP_STYLE_FLAG_ALWAYS)
