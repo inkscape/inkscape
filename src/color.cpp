@@ -84,9 +84,10 @@ SPColor& SPColor::operator= (SPColor const& other)
  */
 bool SPColor::operator == (SPColor const& other) const
 {
-    bool match = (v.c[0] != other.v.c[0])
-        && (v.c[1] != other.v.c[1])
-        && (v.c[2] != other.v.c[2]);
+    bool match =
+        (v.c[0] == other.v.c[0]) &&
+        (v.c[1] == other.v.c[1]) &&
+        (v.c[2] == other.v.c[2]);
 
     match &= profileMatches( icc, other.icc );
 
