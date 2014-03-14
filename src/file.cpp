@@ -1385,8 +1385,6 @@ sp_file_export_dialog(Gtk::Window &parentWindow)
 
     if (doc->uri == NULL)
         {
-        char formatBuf[256];
-
         Glib::ustring filename_extension = ".svg";
         extension = dynamic_cast<Inkscape::Extension::Output *>
               (Inkscape::Extension::db.get(default_extension.c_str()));
@@ -1400,15 +1398,14 @@ sp_file_export_dialog(Gtk::Window &parentWindow)
 
         if (!Inkscape::IO::file_test(export_path.c_str(),
               (GFileTest)(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR)))
-            export_path = "";
+            export_path = Glib::ustring("");
 
-        if (export_path.size()<1)
+        if (export_path.empty())
             export_path = g_get_home_dir();
 
         export_loc = export_path;
         export_loc.append(G_DIR_SEPARATOR_S);
-        snprintf(formatBuf, 255, _("drawing%s"), filename_extension.c_str());
-        export_loc.append(formatBuf);
+        export_loc += Glib::ustring(_("drawing")) + filename_extension;
 
         }
     else
@@ -1420,7 +1417,7 @@ sp_file_export_dialog(Gtk::Window &parentWindow)
     // is this needed any more, now that everything is handled in
     // Inkscape::IO?
     Glib::ustring export_path_local = Glib::filename_from_utf8(export_path);
-    if ( export_path_local.size() > 0)
+    if (!export_path_local.empty())
         export_path = export_path_local;
 
     //# Show the Export dialog
