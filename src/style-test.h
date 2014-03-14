@@ -87,13 +87,25 @@ public:
 //             TestCase("fill:url(#painter) inherit", 0, "#painter"),
             TestCase("fill:inherit"),
 
-// General tests (in order of appearance in sp_style_read), SPIPaint tested above
+// General tests (in general order of appearance in sp_style_read), SPIPaint tested above
             TestCase("visibility:hidden"),                       // SPIEnum
             TestCase("visibility:collapse"),
             TestCase("visibility:visible"),
             TestCase("display:none"),                            // SPIEnum
             TestCase("overflow:visible"),                        // SPIEnum
             TestCase("overflow:auto"),                           // SPIEnum
+
+            // Not directly read
+            TestCase("font:bold 12px Arial",
+                     "font-size:12px;font-style:normal;font-variant:normal;font-weight:bold;font-family:Arial"),
+            // line-height not read in
+            //TestCase("font:bold 12px/24px 'Times New Roman'",
+            //         "font-size:12px;font-style:normal;font-variant:normal;font-weight:bold;line-height:24px;font-family:Times New Roman"),
+            TestCase("font-family:sans-serif"),                  // SPIString, text_private
+            TestCase("font-family:Arial"),
+            TestCase("font-variant:normal;font-stretch:normal;-inkscape-font-specification:Nimbus Roman No9 L Bold Italic"),
+            // Needs to be fixed (quotes should be around each font-family):
+            TestCase("font-family:Georgia, 'Minion Web'","font-family:'Georgia, \"Minion Web\"'"),
             TestCase("font-size:12",     "font-size:12px"),      // SPIFontSize
             TestCase("font-size:12px"),
             TestCase("font-size:12pt",   "font-size:15px"),
@@ -105,11 +117,15 @@ public:
             TestCase("font-weight:normal"),
             TestCase("font-weight:bolder"),
             TestCase("font-stretch:condensed"),                  // SPIEnum
+
+            // Should be moved down
             TestCase("text-indent:12em"),                        // SPILength?
             TestCase("text-align:center"),                       // SPIEnum
             TestCase("text-decoration: underline"),              // SPITextDecoration
             TestCase("text-decoration: underline wavy #0000ff"), // SPITextDecoration CSS3
             TestCase("text-decoration: overline double #ff0000"),
+
+            // Should be moved up
             TestCase("line-height:24px"),                        // SPILengthOrNormal
             TestCase("line-height:1.5"),
             TestCase("letter-spacing:2px"),                      // SPILengthOrNormal
@@ -121,6 +137,7 @@ public:
             TestCase("baseline-shift:sub"),
             TestCase("baseline-shift:12.5%"),
             TestCase("baseline-shift:2px"),
+
             TestCase("opacity:0.1"),                             // SPIScale24
             // ...
             TestCase("stroke-width:2px"),                        // SPILength
@@ -138,7 +155,6 @@ public:
             TestCase("stroke-dashoffset:13"),                    // SPILength
             TestCase("stroke-dashoffset:10px"),
             // ...
-            TestCase("font-family:sans-serif"),                  // SPIString, text_private
             //TestCase("filter:url(#myfilter)"),                   // SPIFilter segfault in read
             TestCase("filter:inherit"),
 
