@@ -75,8 +75,7 @@ bool sp_export_jpg_file(SPDocument *doc, gchar const *filename,
     gchar c[32];
     g_snprintf(c, 32, "%f", quality);
     gboolean saved = gdk_pixbuf_save(pixbuf->getPixbufRaw(), filename, "jpeg", NULL, "quality", c, NULL);
-    g_free(c);
-
+ 
     return saved;
 }
 
