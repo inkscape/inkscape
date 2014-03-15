@@ -100,6 +100,9 @@ XmlTree::XmlTree (void) :
     status.set_alignment( 0.0, 0.5);
     status.set_size_request(1, -1);
     status.set_markup("");
+#if WITH_GTKMM_3_0
+    status.set_line_wrap(true);
+#endif
     status_box.pack_start( status, TRUE, TRUE, 0);
     contents->pack_end(status_box, false, false, 2);
 
