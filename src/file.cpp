@@ -690,7 +690,7 @@ file_save(Gtk::Window &parentWindow, SPDocument *doc, const Glib::ustring &uri,
         SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("Document not saved."));
         return FALSE;
     } catch (Inkscape::Extension::Output::no_overwrite &e) {
-        return sp_file_save_dialog(parentWindow, doc, Inkscape::Extension::FILE_SAVE_METHOD_SAVE_AS);
+        return sp_file_save_dialog(parentWindow, doc, save_method);
     } catch (...) {
         SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("Document not saved."));
         return FALSE;
