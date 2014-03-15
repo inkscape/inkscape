@@ -90,11 +90,6 @@ ObjectProperties::ObjectProperties()
     );
     _desktop_tracker.connect(GTK_WIDGET(gobj()));
 
-#if WITH_GTKMM_3_0
-    CheckTable->set_row_homogeneous();
-    CheckTable->set_column_homogeneous(true);
-#endif
-    
     _init();
 }
 
@@ -285,6 +280,8 @@ void ObjectProperties::_init()
 
 #if WITH_GTKMM_3_0
     Gtk::Grid *grid_cb = Gtk::manage(new Gtk::Grid());
+    grid_cb->set_row_homogeneous();
+    grid_cb->set_column_homogeneous(true);
 #else
     Gtk::Table *grid_cb = Gtk::manage(new Gtk::Table(1, 2, true));
 #endif
