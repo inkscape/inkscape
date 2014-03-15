@@ -69,98 +69,64 @@ namespace Dialog {
  */
 class ObjectProperties : public Widget::Panel {
 public:
-    ObjectProperties ();
-    ~ObjectProperties ();
+    ObjectProperties();
+    ~ObjectProperties();
     
     static ObjectProperties &getInstance() { return *new ObjectProperties(); }
     
-    /**
-     * Updates entries and other child widgets on selection change, object modification, etc.
-     */
-    void widget_setup(void);
+    /// Updates entries and other child widgets on selection change, object modification, etc.
+    void update();
 
 private:
-    bool blocked;
-    SPItem *CurrentItem; //to store the current item, for not wasting resources
-    std::vector<Glib::ustring> int_attrs;
-    std::vector<Glib::ustring> int_labels;
-    
-#if WITH_GTKMM_3_0
-    Gtk::Grid  *TopTable; //the table with the object properties
-#else
-    Gtk::Table *TopTable; //the table with the object properties
-#endif
+    bool _blocked;
+    SPItem *_current_item; //to store the current item, for not wasting resources
+    std::vector<Glib::ustring> _int_attrs;
+    std::vector<Glib::ustring> _int_labels;
 
-    Gtk::Label LabelID; //the label for the object ID
-    Gtk::Entry EntryID; //the entry for the object ID
-    Gtk::Label LabelLabel; //the label for the object label
-    Gtk::Entry EntryLabel; //the entry for the object label
-    Gtk::Label LabelTitle; //the label for the object title
-    Gtk::Entry EntryTitle; //the entry for the object title
-    Gtk::Label LabelImageRendering; // the label for 'image-rendering'
-    Gtk::ComboBoxText ComboBoxTextImageRendering; // the combo box text for 'image-rendering'
+    Gtk::Label _label_id; //the label for the object ID
+    Gtk::Entry _entry_id; //the entry for the object ID
+    Gtk::Label _label_label; //the label for the object label
+    Gtk::Entry _entry_label; //the entry for the object label
+    Gtk::Label _label_title; //the label for the object title
+    Gtk::Entry _entry_title; //the entry for the object title
+    Gtk::Label _label_image_rendering; // the label for 'image-rendering'
+    Gtk::ComboBoxText _combo_image_rendering; // the combo box text for 'image-rendering'
     
-    Gtk::Label LabelDescription; //the label for the object description
-    UI::Widget::Frame FrameDescription; //the frame for the object description
-    Gtk::Frame  FrameTextDescription; //the frame for the text of the object description
-    Gtk::TextView TextViewDescription; //the text view object showing the object description
-    
-    Gtk::HBox HBoxCheck; // the HBox for the check boxes
+    Gtk::Frame  _ft_description; //the frame for the text of the object description
+    Gtk::TextView _tv_description; //the text view object showing the object description
 
-#if WITH_GTKMM_3_0
-    Gtk::Grid  *CheckTable; //the table for the check boxes
-#else
-    Gtk::Table *CheckTable; //the table for the check boxes
-#endif
+    Gtk::CheckButton _cb_hide; //the check button hide
+    Gtk::CheckButton _cb_lock; //the check button lock
 
-    Gtk::CheckButton CBHide; //the check button hide
-    Gtk::CheckButton CBLock; //the check button lock
-    Gtk::Button BSet; //the button set
+    Gtk::Expander _exp_interactivity; //the expander for interactivity
+    SPAttributeTable *_attr_table; //the widget for showing the on... names at the bottom
     
-    Gtk::Label LabelInteractivity; //the label for interactivity
-    Gtk::Expander EInteractivity; //the label for interactivity
-    SPAttributeTable *attrTable; //the widget for showing the on... names at the bottom
+    SPDesktop *_desktop;
+    DesktopTracker _desktop_tracker;
+    sigc::connection _desktop_changed_connection;
+    sigc::connection _selection_changed_connection;
+    sigc::connection _subselection_changed_connection;
     
-    SPDesktop *desktop;
-    DesktopTracker deskTrack;
-    sigc::connection desktopChangeConn;
-    sigc::connection selectChangedConn;
-    sigc::connection subselChangedConn;
-    
-    /**
-     * Constructor auxiliary function creating the child widgets.
-     */
-    void MakeWidget(void);
-    
-    /**
-     * Sets object properties (ID, label, title, description) on user input.
-     */
-    void label_changed(void);
-    
-    /**
-     * Callback for 'image-rendering'.
-     */
-    void image_rendering_changed(void);
+    /// Constructor auxiliary function creating the child widgets.
+    void _init();
 
-	/**
-     * Callback for checkbox Lock.
-     */
-    void sensitivity_toggled (void);
+    /// Sets object properties (ID, label, title, description) on user input.
+    void _labelChanged();
+
+    /// Callback for 'image-rendering'.
+    void _imageRenderingChanged();
+
+    /// Callback for checkbox Lock.
+    void _sensitivityToggled();
+
+    /// Callback for checkbox Hide.
+    void _hiddenToggled();
+
+    /// Can be invoked for setting the desktop. Currently not used.
+    void _setDesktop(SPDesktop *desktop);
     
-	/**
-     * Callback for checkbox Hide.
-     */
-    void hidden_toggled(void);
-    
-    /**
-     * Can be invoked for setting the desktop. Currently not used.
-     */
-    void setDesktop(SPDesktop *desktop);
-    
-    /**
-     * Is invoked by the desktop tracker when the desktop changes.
-     */
-    void setTargetDesktop(SPDesktop *desktop);
+    /// Is invoked by the desktop tracker when the desktop changes.
+    void _setTargetDesktop(SPDesktop *desktop);
 };
 
 }
