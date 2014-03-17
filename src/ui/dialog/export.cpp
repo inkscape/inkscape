@@ -1049,7 +1049,7 @@ void Export::onExport ()
                 dpi = atof(dpi_hint);
             }
             if (dpi == 0.0) {
-                dpi = DPI_BASE;
+                dpi = getValue(xdpi_adj);
             }
 
             Geom::OptRect area = item->desktopVisualBounds();
