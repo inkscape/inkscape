@@ -1103,7 +1103,7 @@ unsigned int PrintWmf::image(
     unsigned int h,      /** height of bitmap */
     unsigned int rs,     /** row stride (normally w*4) */
     Geom::Affine const &tf_rect,  /** affine transform only used for defining location and size of rect, for all other tranforms, use the one from m_tr_stack */
-    SPStyle const *style)  /** provides indirect link to image object */
+    SPStyle const * /*style*/)  /** provides indirect link to image object */
 {
     double x1, y1, dw, dh;
     char *rec = NULL;

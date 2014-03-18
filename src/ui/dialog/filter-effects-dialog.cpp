@@ -1515,7 +1515,7 @@ void FilterEffectsDialog::FilterModifier::on_name_edited(const Glib::ustring& pa
     }
 }
 
-bool FilterEffectsDialog::FilterModifier::on_filter_move(const Glib::RefPtr<Gdk::DragContext>& /*context*/, int x, int y, guint /*time*/) {
+bool FilterEffectsDialog::FilterModifier::on_filter_move(const Glib::RefPtr<Gdk::DragContext>& /*context*/, int /*x*/, int /*y*/, guint /*time*/) {
 
 //const Gtk::TreeModel::Path& /*path*/) {
 /* The code below is bugged. Use of "object->getRepr()->setPosition(0)" is dangerous!

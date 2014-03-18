@@ -235,7 +235,7 @@ void UndoHistory::setDesktop(SPDesktop* desktop)
     }
 }
 
-void UndoHistory::_connectDocument(SPDesktop* desktop, SPDocument *document)
+void UndoHistory::_connectDocument(SPDesktop* desktop, SPDocument * /*document*/)
 {
     // disconnect from prior
     if (_event_log) {
