@@ -65,7 +65,7 @@ class Style(dict):
         """Removes any elements that aren't the same using a weighted threshold"""
         for attr in self.keys():
             if self.weights[attr] < len(self.total) - threshold:
-                common.pop(attr)
+                self.pop(attr)
 
     def all_matches(self):
         """Returns an iter for each added element who's style matches this style"""
