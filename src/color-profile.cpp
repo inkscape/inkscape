@@ -339,7 +339,7 @@ void ColorProfile::set(unsigned key, gchar const *value) {
                     Inkscape::URI hrefUri(escaped);
                     //# 3.  Resolve the href according the docBase.  This follows
                     //      the w3c specs.  All absolute and relative issues are considered
-                    std::string fullpath = docUri.getFullPath(hrefUri.getFullPath(""));
+                    std::string fullpath = hrefUri.getFullPath(docUri.getFullPath(""));
 
                     gchar* fullname = g_uri_unescape_string(fullpath.c_str(), "");
                     this->impl->_clearProfile();

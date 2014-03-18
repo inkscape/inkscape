@@ -149,6 +149,9 @@ gchar *URI::to_native_filename(gchar const* uri) throw(BadURIException)
  * and thus redundent. Caller is expected to check against the document's path.
  */
 const std::string URI::getFullPath(std::string const base) const {
+    if (!_impl->getPath()) {
+        return "";
+    }
     std::string path = std::string(_impl->getPath());
     // Calculate the absolute path from an available base
     if(!base.empty() && !path.empty() && path[0] != '/') {
