@@ -59,30 +59,30 @@ Grid::load (Inkscape::Extension::Extension */*module*/)
 namespace {
 
 Glib::ustring build_lines(Geom::Rect bounding_area,
-                          float offset[], float spacing[])
+                          Geom::Point const &offset, Geom::Point const &spacing)
 {
     Geom::Point point_offset(0.0, 0.0);
 
     SVG::PathString path_data;
 
-    for ( int axis = 0 ; axis < 2 ; ++axis ) {
+    for ( int axis = Geom::X ; axis <= Geom::Y ; ++axis ) {
         point_offset[axis] = offset[axis];
 
         for (Geom::Point start_point = bounding_area.min();
-                start_point[axis] + offset[axis] <= (bounding_area.max())[axis];
-                start_point[axis] += spacing[axis]) {
+             start_point[axis] + offset[axis] <= (bounding_area.max())[axis];
+             start_point[axis] += spacing[axis]) {
             Geom::Point end_point = start_point;
             end_point[1-axis] = (bounding_area.max())[1-axis];
 
             path_data.moveTo(start_point + point_offset)
-                     .lineTo(end_point + point_offset);
+                .lineTo(end_point + point_offset);
         }
     }
-        // std::cout << "Path data:" << path_data.c_str() << std::endl;
-        return path_data;
-    }
-
+    // std::cout << "Path data:" << path_data.c_str() << std::endl;
+    return path_data;
 }
+
+} // namespace
 
 /**
     \brief  This actually draws the grid.
@@ -115,16 +115,15 @@ Grid::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *doc
 
     gdouble scale = Inkscape::Util::Quantity::convert(1, "px", (document->doc())->getDefaultUnit());
     bounding_area *= Geom::Scale(scale);
-    float spacings[2] = { scale*module->get_param_float("xspacing"),
-                          scale*module->get_param_float("yspacing") };
-    float line_width = scale*module->get_param_float("lineWidth");
-    float offsets[2] = { scale*module->get_param_float("xoffset"),
-                         scale*module->get_param_float("yoffset") };
+    Geom::Point spacings( scale * module->get_param_float("xspacing"),
+                          scale * module->get_param_float("yspacing") );
+    gdouble line_width = scale * module->get_param_float("lineWidth");
+    Geom::Point offsets( scale * module->get_param_float("xoffset"),
+                         scale * module->get_param_float("yoffset") );
 
     Glib::ustring path_data("");
 
-    path_data = build_lines(bounding_area,
-                                 offsets, spacings);
+    path_data = build_lines(bounding_area, offsets, spacings);
     Inkscape::XML::Document * xml_doc = document->doc()->getReprDoc();
 
     //XML Tree being used directly here while it shouldn't be.
@@ -144,9 +143,7 @@ Grid::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *doc
     path->setAttribute("style", style.c_str());
 
     current_layer->appendChild(path);
-		Inkscape::GC::release(path);
-
-    return;
+    Inkscape::GC::release(path);
 }
 
 /** \brief  A class to make an adjustment that uses Extension params */
