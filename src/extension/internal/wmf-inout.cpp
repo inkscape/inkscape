@@ -445,9 +445,9 @@ int Wmf::in_images(PWMF_CALLBACK_DATA d, char *test){
 uint32_t Wmf::add_dib_image(PWMF_CALLBACK_DATA d, const char *dib, uint32_t iUsage){
 
     uint32_t idx;
-    char imagename[64]; // big enough
-    char xywh[64]; // big enough
-    int  dibparams;
+    char imagename[64];             // big enough
+    char xywh[64];                  // big enough
+    int  dibparams = U_BI_UNKNOWN;  // type of image not yet determined
 
     MEMPNG mempng; // PNG in memory comes back in this
     mempng.buffer = NULL;
@@ -480,6 +480,7 @@ uint32_t Wmf::add_dib_image(PWMF_CALLBACK_DATA d, const char *dib, uint32_t iUsa
             }
         }
     }
+
     gchar *base64String=NULL;
     if(dibparams == U_BI_JPEG || dibparams==U_BI_PNG){  // image was binary png or jpg in source file
         base64String = g_base64_encode((guchar*) px, numCt );
@@ -1248,12 +1249,10 @@ void Wmf::common_dib_to_image(PWMF_CALLBACK_DATA d, const char *dib,
         double dx, double dy, double dw, double dh, int sx, int sy, int sw, int sh, uint32_t iUsage){
 
     SVGOStringStream tmp_image;
-    int  dibparams;
+    int  dibparams = U_BI_UNKNOWN;  // type of image not yet determined
 
     tmp_image << "\n\t <image\n";
     tmp_image << " y=\"" << dy << "\"\n x=\"" << dx <<"\"\n ";
-
-    // The image ID is filled in much later when tmp_image is converted
 
     MEMPNG mempng; // PNG in memory comes back in this
     mempng.buffer = NULL;
@@ -1262,79 +1261,65 @@ void Wmf::common_dib_to_image(PWMF_CALLBACK_DATA d, const char *dib,
     char            *sub_px  = NULL;        // RGBA pixels, subarray
     const char      *px      = NULL;        // DIB pixels
     const U_RGBQUAD *ct      = NULL;        // color table
-    int32_t width, height, colortype, numCt, invert;
-    if( (iUsage != U_DIB_RGB_COLORS) ||
-        !(dibparams = wget_DIB_params(  // this returns pointers and values, but allocates no memory
-            dib,
-            &px,
-            &ct,
-            &numCt,
-            &width,
-            &height,
-            &colortype,
-            &invert
-        ))
-    ){
-        if(sw == 0 || sh == 0){
-            sw = width;
-            sh = height;
-        }
-
-        if(!DIB_to_RGBA(
-            px,         // DIB pixel array
-            ct,         // DIB color table
-            numCt,      // DIB color table number of entries
-            &rgba_px,   // U_RGBA pixel array (32 bits), created by this routine, caller must free.
-            width,      // Width of pixel array
-            height,     // Height of pixel array
-            colortype,  // DIB BitCount Enumeration
-            numCt,      // Color table used if not 0
-            invert      // If DIB rows are in opposite order from RGBA rows
-            ) &&
-            rgba_px
-        ){
-            sub_px = RGBA_to_RGBA(
-                rgba_px,    // full pixel array from DIB
+    int32_t width, height, colortype, numCt, invert;  // if needed these values will be set in wget_DIB_params
+    if(iUsage == U_DIB_RGB_COLORS){
+        // next call returns pointers and values, but allocates no memory
+        dibparams = wget_DIB_params(dib, &px, &ct, &numCt, &width, &height, &colortype, &invert);
+        if(dibparams == U_BI_RGB){
+            if(sw == 0 || sh == 0){
+                sw = width;
+                sh = height;
+            }
+            if(!DIB_to_RGBA(
+                px,         // DIB pixel array
+                ct,         // DIB color table
+                numCt,      // DIB color table number of entries
+                &rgba_px,   // U_RGBA pixel array (32 bits), created by this routine, caller must free.
                 width,      // Width of pixel array
                 height,     // Height of pixel array
-                sx,sy,      // starting point in pixel array
-                &sw,&sh     // columns/rows to extract from the pixel array (output array size)
-            );
+                colortype,  // DIB BitCount Enumeration
+                numCt,      // Color table used if not 0
+                invert      // If DIB rows are in opposite order from RGBA rows
+            )){
+                sub_px = RGBA_to_RGBA( // returns either a subset (side effect: frees rgba_px) or NULL (for subset == entire image)
+                    rgba_px,           // full pixel array from DIB
+                    width,             // Width of pixel array
+                    height,            // Height of pixel array
+                    sx,sy,             // starting point in pixel array
+                    &sw,&sh            // columns/rows to extract from the pixel array (output array size)
+                );
 
-            if(!sub_px)sub_px=rgba_px;
-            toPNG(         // Get the image from the RGBA px into mempng
-                &mempng,
-                sw, sh,    // size of the extracted pixel array
-                sub_px
-            );
-            free(sub_px);
+                if(!sub_px)sub_px=rgba_px;
+                toPNG(         // Get the image from the RGBA px into mempng
+                    &mempng,
+                    sw, sh,    // size of the extracted pixel array
+                    sub_px
+                );
+                free(sub_px);
+            }
         }
     }
-    gchar *base64String;
-    if(dibparams == U_BI_JPEG){
+
+    gchar *base64String=NULL;
+    if(dibparams == U_BI_JPEG){    // image was binary jpg in source file
         tmp_image << " xlink:href=\"data:image/jpeg;base64,";
         base64String = g_base64_encode((guchar*) px, numCt );
-        tmp_image << base64String ;
-        g_free(base64String);
     }
-    else if(dibparams==U_BI_PNG){
+    else if(dibparams==U_BI_PNG){  // image was binary png in source file
         tmp_image << " xlink:href=\"data:image/png;base64,";
         base64String = g_base64_encode((guchar*) px, numCt );
-        tmp_image << base64String ;
-        g_free(base64String);
     }
-    else if(mempng.buffer){
+    else if(mempng.buffer){        // image was DIB in source file, converted to png in this routine
         tmp_image << " xlink:href=\"data:image/png;base64,";
-        gchar *base64String = g_base64_encode((guchar*) mempng.buffer, mempng.size );
+        base64String = g_base64_encode((guchar*) mempng.buffer, mempng.size );
         free(mempng.buffer);
-        tmp_image << base64String ;
-        g_free(base64String);
     }
-    else {
+    else {                         // unknown or unsupported image type or failed conversion, insert the common bad image picture
         tmp_image << " xlink:href=\"data:image/png;base64,";
-        // insert a random 3x4 blotch otherwise
-        tmp_image << "iVBORw0KGgoAAAANSUhEUgAAAAQAAAADCAIAAAA7ljmRAAAAA3NCSVQICAjb4U/gAAAALElEQVQImQXBQQ2AMAAAsUJQMSWI2H8qME1yMshojwrvGB8XcHKvR1XtOTc/8HENumHCsOMAAAAASUVORK5CYII=";
+        base64String = bad_image_png();
     }
+    tmp_image << base64String;
+    g_free(base64String);
 
     tmp_image << "\"\n height=\"" << dh << "\"\n width=\"" << dw << "\"\n";
     tmp_image << " transform=" << current_matrix(d, 0.0, 0.0, 0); // returns an identity matrix, no offsets.
