@@ -59,6 +59,7 @@ class hpglEncoder:
         self.doc = effect.document.getroot()
         self.docWidth = effect.unittouu(self.doc.get('width'))
         self.docHeight = effect.unittouu(self.doc.get('height'))
+        self.hpgl = ''
         self.divergenceX = 'False'
         self.divergenceY = 'False'
         self.sizeX = 'False'
@@ -156,12 +157,6 @@ class hpglEncoder:
             [0.0, self.mirrorY * self.scaleY * self.viewBoxTransformY, -self.divergenceY + self.offsetY]]
         groupmat = simpletransform.composeTransform(groupmat, simpletransform.parseTransform('rotate(' + self.options.orientation + ')'))
         self.vData = [['', -1.0, -1.0], ['', -1.0, -1.0], ['', -1.0, -1.0], ['', -1.0, -1.0]]
-        # store initial hpgl commands
-        self.hpgl = 'IN;SP%d' % self.options.pen
-        if self.options.force > 0:
-            self.hpgl += ';FS%d' % self.options.force
-        if self.options.speed > 0:
-            self.hpgl += ';VS%d' % self.options.speed
         # add move to zero point and precut
         if self.toolOffset > 0.0 and self.options.precut:
             if self.options.center:
@@ -185,8 +180,6 @@ class hpglEncoder:
         self.processGroups(self.doc, groupmat)
         # shift an empty node in in order to process last node in cache
         self.processOffset('PU', 0, 0)
-        # add return to zero point
-        self.hpgl += ';PU0,0;'
         if self.options.debug:
             return self.hpgl, self
         else:

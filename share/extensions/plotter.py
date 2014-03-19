@@ -83,6 +83,8 @@ class Plot(inkex.Effect):
         else:
         '''
         # convert to other formats
+        if self.options.commandLanguage == 'HPGL':
+            self.convertToHpgl()
         if self.options.commandLanguage == 'DMPL':
             self.convertToDmpl()
         if self.options.commandLanguage == 'ZING':
@@ -92,6 +94,15 @@ class Plot(inkex.Effect):
             self.showDebugInfo(debugObject)
         else:
             self.sendHpglToSerial()
+
+    def convertToHpgl(self):
+        # convert raw HPGL to HPGL
+        hpglInit = 'IN;SP%d' % self.options.pen
+        if self.options.force > 0:
+            hpglInit += ';FS%d' % self.options.force
+        if self.options.speed > 0:
+            hpglInit += ';VS%d' % self.options.speed
+        self.hpgl = hpglInit + self.hpgl + ';PU0,0;SP0;IN;'
 
     def convertToDmpl(self):
         # convert HPGL to DMPL
@@ -109,16 +120,20 @@ class Plot(inkex.Effect):
         self.hpgl = self.hpgl.replace(';', ',')
         self.hpgl = self.hpgl.replace('PU', 'U')
         self.hpgl = self.hpgl.replace('PD', 'D')
-        velocity = ''
+        dmplInit = ';:HAL0P%d' % self.options.pen
         if self.options.speed > 0:
-            velocity = 'V' + str(self.options.speed)
-        self.hpgl = re.sub(r'IN,SP[0-9]+(,FS[0-9]+)?(,VS[0-9]+)?,', r';:HAL0P' + str(self.options.pen) + velocity + 'EC1', self.hpgl)
-        self.hpgl += 'Z'
+            dmplInit += 'V%d' % self.options.speed
+        dmplInit += 'EC1'
+        self.hpgl = dmplInit + self.hpgl[1:] + ',U0,0,P0Z'
 
     def convertToZing(self):
         # convert HPGL to Zing
-        self.hpgl = self.hpgl.replace('IN;', 'ZG;')
-        self.hpgl += '@'
+        hpglInit = 'ZG;SP%d' % self.options.pen
+        if self.options.force > 0:
+            hpglInit += ';FS%d' % self.options.force
+        if self.options.speed > 0:
+            hpglInit += ';VS%d' % self.options.speed
+        self.hpgl = hpglInit + self.hpgl + ';PU0,0;SP0;@'
 
     def sendHpglToSerial(self):
         # gracefully exit script when pySerial is missing
