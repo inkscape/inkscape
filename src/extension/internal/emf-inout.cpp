@@ -2163,9 +2163,9 @@ std::cout << "BEFORE DRAW"
             tmp_rectangle << "\n   x=\""      << dx << "\" ";
             tmp_rectangle << "\n   y=\""      << dy << "\" ";
             tmp_rectangle << "\n   width=\""  << dw << "\" ";
-            tmp_rectangle << "\n   height=\"" << dh << "\" />";
+            tmp_rectangle << "\n   height=\"" << dh << "\" ";
             tmp_rectangle << "\n   transform=" << current_matrix(d, dx, dy, 1); // calculate appropriate offset
-            tmp_rectangle << "\n</clipPath>";
+            tmp_rectangle << "/>\n</clipPath>";
 
             *(d->outdef) += tmp_rectangle.str().c_str();
             *(d->path) = "";
