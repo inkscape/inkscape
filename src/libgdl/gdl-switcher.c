@@ -255,12 +255,12 @@ button_toggled_callback (GtkToggleButton *toggle_button,
 static int
 layout_buttons (GdlSwitcher *switcher)
 {
-    GtkRequisition client_requisition = {0,};
+    GtkRequisition client_requisition = {0,0};
     GtkAllocation allocation;
     GdlSwitcherStyle switcher_style;
     gboolean icons_only;
     int num_btns = g_slist_length (switcher->priv->buttons);
-    int btns_per_row;
+    unsigned int btns_per_row;
     GSList **rows, *p;
     Button *button;
     int row_number;
@@ -790,7 +790,6 @@ gdl_switcher_add_button (GdlSwitcher *switcher, const gchar *label,
 			 GdkPixbuf *pixbuf_icon,
                          gint switcher_id, GtkWidget* page)
 {
-    GtkWidget *event_box;
     GtkWidget *button_widget;
     GtkWidget *hbox;
     GtkWidget *icon_widget;

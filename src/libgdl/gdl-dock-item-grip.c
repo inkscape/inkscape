@@ -536,10 +536,9 @@ gdl_dock_item_grip_size_allocate (GtkWidget     *widget,
                                   GtkAllocation *allocation)
 {
     GdlDockItemGrip *grip;
-    GtkRequisition   close_requisition = { 0, };
-    GtkRequisition   iconify_requisition = { 0, };
+    GtkRequisition   close_requisition = { 0, 0 };
+    GtkRequisition   iconify_requisition = { 0, 0 };
     GtkAllocation    child_allocation;
-    GdkRectangle     label_area;
     guint            border_width;
 
     g_return_if_fail (GDL_IS_DOCK_ITEM_GRIP (widget));

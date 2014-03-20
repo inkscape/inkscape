@@ -135,8 +135,8 @@ static void
 gdl_dock_item_button_image_class_init (
     GdlDockItemButtonImageClass *klass)
 {
-    GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
-    GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
+    //GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
+    //GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
     GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
     
     widget_class->expose_event =

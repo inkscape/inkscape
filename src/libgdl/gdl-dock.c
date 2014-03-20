@@ -311,8 +311,6 @@ gdl_dock_constructor (GType                  type,
         }
 
         if (dock->_priv->floating) {
-            GdlDockObject *controller;
-
             /* create floating window for this dock */
             dock->_priv->window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
             g_object_set_data (G_OBJECT (dock->_priv->window), "dock", dock);
@@ -832,17 +830,17 @@ gdl_dock_dock_request (GdlDockObject  *object,
             my_request.target = dock->root;
 
             /* See if it's in the border_width band. */
-            if (rel_x < bw) {
+            if (rel_x < (gint)bw) {
                 my_request.position = GDL_DOCK_LEFT;
                 my_request.rect.width *= SPLIT_RATIO;
-            } else if (rel_x > alloc.width - bw) {
+            } else if (rel_x > alloc.width - (gint)bw) {
                 my_request.position = GDL_DOCK_RIGHT;
                 my_request.rect.x += my_request.rect.width * (1 - SPLIT_RATIO);
                 my_request.rect.width *= SPLIT_RATIO;
-            } else if (rel_y < bw) {
+            } else if (rel_y < (gint)bw) {
                 my_request.position = GDL_DOCK_TOP;
                 my_request.rect.height *= SPLIT_RATIO;
-            } else if (rel_y > alloc.height - bw) {
+            } else if (rel_y > alloc.height - (gint)bw) {
                 my_request.position = GDL_DOCK_BOTTOM;
                 my_request.rect.y += my_request.rect.height * (1 - SPLIT_RATIO);
                 my_request.rect.height *= SPLIT_RATIO;
@@ -1215,7 +1213,6 @@ gdl_dock_add_item (GdlDock          *dock,
         /* Non-floating item. */
         if (dock->root) {
             GdlDockPlacement local_placement;
-            GtkRequisition preferred_size;
             
             best_dock_item =
                 gdl_dock_find_best_placement_item (GDL_DOCK_ITEM (dock->root),

@@ -869,7 +869,7 @@ gdl_dock_param_get_type (void)
     static GType our_type = 0;
 
     if (our_type == 0) {
-        GTypeInfo tinfo = { 0, };
+        GTypeInfo tinfo = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         our_type = g_type_register_static (G_TYPE_STRING, "GdlDockParam", &tinfo, 0);
 
         /* register known transform functions */

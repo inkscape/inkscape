@@ -436,20 +436,20 @@ gdl_dock_paned_dock_request (GdlDockObject  *object,
         my_request.target = object;
 
         /* See if it's in the border_width band. */
-        if (rel_x < bw) {
+        if (rel_x < (gint)bw) {
             my_request.position = GDL_DOCK_LEFT;
             my_request.rect.width *= SPLIT_RATIO;
             divider = other.width;
-        } else if (rel_x > alloc.width - bw) {
+        } else if (rel_x > alloc.width - (gint)bw) {
             my_request.position = GDL_DOCK_RIGHT;
             my_request.rect.x += my_request.rect.width * (1 - SPLIT_RATIO);
             my_request.rect.width *= SPLIT_RATIO;
             divider = MAX (0, my.width - other.width);
-        } else if (rel_y < bw) {
+        } else if (rel_y < (gint)bw) {
             my_request.position = GDL_DOCK_TOP;
             my_request.rect.height *= SPLIT_RATIO;
             divider = other.height;
-        } else if (rel_y > alloc.height - bw) {
+        } else if (rel_y > alloc.height - (gint)bw) {
             my_request.position = GDL_DOCK_BOTTOM;
             my_request.rect.y += my_request.rect.height * (1 - SPLIT_RATIO);
             my_request.rect.height *= SPLIT_RATIO;
