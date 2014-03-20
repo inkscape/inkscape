@@ -39,6 +39,9 @@ struct _CROMParserPriv {
 
 #define PRIVATE(a_this) ((a_this)->priv)
 
+// Unfortunately, C does not allow unnamed function arguments, so use this macro instead...
+#define UNUSED(x) (void)(x)
+
 /*
  *Forward declaration of a type defined later
  *in this file.
@@ -207,6 +210,8 @@ static void
 start_font_face (CRDocHandler * a_this,
                  CRParsingLocation *a_location)
 {
+    UNUSED(a_location);
+
         enum CRStatus status = CR_OK;
         ParsingContext *ctxt = NULL;
         ParsingContext **ctxtptr = NULL;
@@ -302,6 +307,8 @@ static void
 charset (CRDocHandler * a_this, CRString * a_charset,
          CRParsingLocation *a_location)
 {
+    UNUSED(a_location);
+
         enum CRStatus status = CR_OK;
         CRStatement *stmt = NULL,
                 *stmt2 = NULL;
@@ -340,6 +347,8 @@ start_page (CRDocHandler * a_this,
             CRString * a_pseudo,
             CRParsingLocation *a_location)
 {
+    UNUSED(a_location);
+
         enum CRStatus status = CR_OK;
         ParsingContext *ctxt = NULL;
         ParsingContext **ctxtptr = NULL;
@@ -381,6 +390,9 @@ end_page (CRDocHandler * a_this,
           CRString * a_page, 
           CRString * a_pseudo_page)
 {
+    UNUSED(a_page);
+    UNUSED(a_pseudo_page);
+
         enum CRStatus status = CR_OK;
         ParsingContext *ctxt = NULL;
         ParsingContext **ctxtptr = NULL;
@@ -407,8 +419,6 @@ end_page (CRDocHandler * a_this,
                 cr_statement_destroy (ctxt->cur_stmt);
                 ctxt->cur_stmt = NULL;
         }
-        a_page = NULL;          /*keep compiler happy */
-        a_pseudo_page = NULL;   /*keep compiler happy */
 }
 
 static void
@@ -416,6 +426,8 @@ start_media (CRDocHandler * a_this,
              GList * a_media_list,
              CRParsingLocation *a_location)
 {
+    UNUSED(a_location);
+
         enum CRStatus status = CR_OK;
         ParsingContext *ctxt = NULL;
         ParsingContext **ctxtptr = NULL;
@@ -444,6 +456,8 @@ start_media (CRDocHandler * a_this,
 static void
 end_media (CRDocHandler * a_this, GList * a_media_list)
 {
+    UNUSED(a_media_list);
+
         enum CRStatus status = CR_OK;
         ParsingContext *ctxt = NULL;
         ParsingContext **ctxtptr = NULL;
@@ -470,7 +484,6 @@ end_media (CRDocHandler * a_this, GList * a_media_list)
 
         ctxt->cur_stmt = NULL ;
         ctxt->cur_media_stmt = NULL ;
-        a_media_list = NULL;
 }
 
 static void
@@ -480,6 +493,9 @@ import_style (CRDocHandler * a_this,
               CRString * a_uri_default_ns,
               CRParsingLocation *a_location)
 {
+    UNUSED(a_uri_default_ns);
+    UNUSED(a_location);
+
         enum CRStatus status = CR_OK;
         CRString *uri = NULL;
         CRStatement *stmt = NULL,
@@ -530,7 +546,6 @@ import_style (CRDocHandler * a_this,
                 cr_statement_destroy (stmt);
                 stmt = NULL;
         }
-        a_uri_default_ns = NULL; /*keep compiler happy */
 }
 
 static void
@@ -557,6 +572,8 @@ start_selector (CRDocHandler * a_this, CRSelector * a_selector_list)
 static void
 end_selector (CRDocHandler * a_this, CRSelector * a_selector_list)
 {
+    UNUSED(a_selector_list);
+
         enum CRStatus status = CR_OK;
         ParsingContext *ctxt = NULL;
         ParsingContext **ctxtptr = NULL;
@@ -604,7 +621,6 @@ end_selector (CRDocHandler * a_this, CRSelector * a_selector_list)
                 }
 
         }
-        a_selector_list = NULL; /*keep compiler happy */
 }
 
 static void
