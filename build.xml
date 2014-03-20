@@ -351,7 +351,7 @@
         </excludeinc>
         <flags>
             <!-- -std=gnu++0x -DCPP11  -->
-            -Wall -Wformat -Werror=format-security -W -Wpointer-arith -Wcast-align -Wsign-compare -Woverloaded-virtual -Wswitch
+            -Wall -Wformat -Werror=format-security -W -Wpointer-arith -Wcast-align -Wsign-compare -Woverloaded-virtual -Werror=switch
             -Werror=return-type
             -O2
             -mms-bitfields

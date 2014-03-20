@@ -89,11 +89,14 @@ if test "$GCC" = "yes"; then
   # enforced in Gtk+ 3, so it is important to check this in Gtk+ 2 builds
   CPPFLAGS="-DGSEAL_ENABLE $CPPFLAGS"
 
+  # Unfortunately, we cannot (yet) build with -Werror, so we have to manually
+  # change a ton of warnings into errors.
+  # After some more work on fixing warning-inducing code, we can change this set into
+  # it's complement and use -Wno-error=...
   # Test for -Werror=... (introduced some time post-4.0)
-  # If we hit a format error -- it should be fatal.
-  AC_MSG_CHECKING([compiler support for -Werror=format-security])
+  AC_MSG_CHECKING([compiler support for -Werror=...])
   ink_svd_CPPFLAGS="$CPPFLAGS"
-  CPPFLAGS="-Werror=format-security $CPPFLAGS"
+  CPPFLAGS="-Werror=format-security -Werror=switch -Werror=return-type $CPPFLAGS"
   AC_COMPILE_IFELSE([AC_LANG_PROGRAM([])], [ink_opt_ok=yes], [ink_opt_ok=no])
   AC_MSG_RESULT([$ink_opt_ok])
   if test "x$ink_opt_ok" != "xyes"; then
