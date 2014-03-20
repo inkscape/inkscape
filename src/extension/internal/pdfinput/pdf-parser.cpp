@@ -76,10 +76,6 @@ extern "C" {
 // Operator table
 //------------------------------------------------------------------------
 
-#ifdef WIN32 // this works around a bug in the VC7 compiler
-#  pragma optimize("",off)
-#endif
-
 PdfOperator PdfParser::opTab[] = {
   {"\"",  3, {tchkNum,    tchkNum,    tchkString},
           &PdfParser::opMoveSetShowText},
@@ -248,10 +244,6 @@ PdfOperator PdfParser::opTab[] = {
   {"y",   4, {tchkNum,    tchkNum,    tchkNum,    tchkNum},
           &PdfParser::opCurveTo2}
 };
-
-#ifdef WIN32 // this works around a bug in the VC7 compiler
-#  pragma optimize("",on)
-#endif
 
 #define numOps (sizeof(opTab) / sizeof(PdfOperator))
 
