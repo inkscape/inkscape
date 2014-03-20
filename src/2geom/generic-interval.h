@@ -274,10 +274,12 @@ public:
 
     /** @brief Union with another interval, gracefully handling empty ones. */
     void unionWith(GenericOptInterval<C> const &a) {
-        if (*this) { // check that we are not empty
-            (*this)->unionWith(*a);
-        } else if (a) {
-            *this = *a;
+        if (a) {
+            if (*this) { // check that we are not empty
+                (*this)->unionWith(*a);
+            } else {
+                *this = *a;
+            }
         }
     }
     void intersectWith(GenericOptInterval<C> const &o) {
