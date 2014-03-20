@@ -194,6 +194,8 @@ void ControlPointSelection::align(Geom::Dim2 axis)
         bound.unionWith(Geom::OptInterval((*i)->position()[d]));
     }
 
+    if (!bound) { return; }
+
     double new_coord = bound->middle();
     for (iterator i = _points.begin(); i != _points.end(); ++i) {
         Geom::Point pos = (*i)->position();
@@ -219,6 +221,8 @@ void ControlPointSelection::distribute(Geom::Dim2 d)
         sm.insert(std::make_pair(pos[d], (*i)));
         bound.unionWith(Geom::OptInterval(pos[d]));
     }
+
+    if (!bound) { return; }
 
     // now we iterate over the multimap and set aligned positions.
     double step = size() == 1 ? 0 : bound->extent() / (size() - 1);
