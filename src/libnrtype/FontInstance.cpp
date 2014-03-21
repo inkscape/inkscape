@@ -8,10 +8,12 @@
  *
  */
 
-#define PANGO_ENABLE_ENGINE
-
 #ifdef HAVE_CONFIG_H
 # include "config.h"
+#endif
+
+#ifndef PANGO_ENABLE_ENGINE
+#define PANGO_ENABLE_ENGINE
 #endif
 
 #include <ft2build.h>

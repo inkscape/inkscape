@@ -9,7 +9,13 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
+
+#ifndef PANGO_ENABLE_ENGINE
 #define PANGO_ENABLE_ENGINE
+#endif
 
 #include <gtk/gtk.h>
 #include "Layout-TNG.h"
@@ -25,8 +31,10 @@ namespace Text {
 
 void Layout::_clearInputObjects()
 {
-    for(std::vector<InputStreamItem*>::iterator it = _input_stream.begin() ; it != _input_stream.end() ; ++it)
+    for(std::vector<InputStreamItem*>::iterator it = _input_stream.begin() ; it != _input_stream.end() ; ++it) {
         delete *it;
+    }
+
     _input_stream.clear();
     _input_wrap_shapes.clear();
 }
