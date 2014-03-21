@@ -72,8 +72,8 @@
 #include <cairo-ft.h>
 #endif
 #ifdef CAIRO_HAS_WIN32_FONT
-#include <cairo-win32.h>
 #include <pango/pangowin32.h>
+#include <cairo-win32.h>
 #endif
 
 #include <pango/pangofc-fontmap.h>
