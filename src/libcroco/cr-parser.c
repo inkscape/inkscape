@@ -78,7 +78,7 @@ typedef struct _CRParserError CRParserError;
  *parsing routines.
  */
 struct _CRParserError {
-        guchar *msg;
+        gchar *msg;
         enum CRStatus status;
         glong line;
         glong column;
@@ -374,11 +374,11 @@ static enum CRStatus cr_parser_parse_simple_selector (CRParser * a_this,
 static enum CRStatus cr_parser_parse_simple_sels (CRParser * a_this,
                                                   CRSimpleSel ** a_sel);
 
-static CRParserError *cr_parser_error_new (const guchar * a_msg,
+static CRParserError *cr_parser_error_new (const gchar * a_msg,
                                            enum CRStatus);
 
 static void cr_parser_error_set_msg (CRParserError * a_this,
-                                     const guchar * a_msg);
+                                     const gchar * a_msg);
 
 static void cr_parser_error_dump (CRParserError * a_this);
 
@@ -392,7 +392,7 @@ static void
   cr_parser_error_destroy (CRParserError * a_this);
 
 static enum CRStatus cr_parser_push_error (CRParser * a_this,
-                                           const guchar * a_msg,
+                                           const gchar * a_msg,
                                            enum CRStatus a_status);
 
 static enum CRStatus cr_parser_dump_err_stack (CRParser * a_this,
@@ -411,7 +411,7 @@ static enum CRStatus
  *@return the newly built instance of #CRParserError.
  */
 static CRParserError *
-cr_parser_error_new (const guchar * a_msg, enum CRStatus a_status)
+cr_parser_error_new (const gchar * a_msg, enum CRStatus a_status)
 {
         CRParserError *result = NULL;
 
@@ -436,7 +436,7 @@ cr_parser_error_new (const guchar * a_msg, enum CRStatus a_status)
  *@param a_msg the new message.
  */
 static void
-cr_parser_error_set_msg (CRParserError * a_this, const guchar * a_msg)
+cr_parser_error_set_msg (CRParserError * a_this, const gchar * a_msg)
 {
         g_return_if_fail (a_this);
 
@@ -515,7 +515,7 @@ cr_parser_error_destroy (CRParserError * a_this)
  */
 static enum CRStatus
 cr_parser_push_error (CRParser * a_this,
-                      const guchar * a_msg, enum CRStatus a_status)
+                      const gchar * a_msg, enum CRStatus a_status)
 {
         enum CRStatus status = CR_OK;
 
