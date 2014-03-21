@@ -49,11 +49,14 @@ void U_swap2(void *ul, unsigned int count);
    on another funky system this code may need to be modified, or define ICONV_CAST
    on the compile line(but it may be tricky).
 */
+#if _LIBICONV_VERSION == 0x0109
+# define ICONV_CAST (const char **)
+#endif  // _LIBICONV_VERSION 0x0109
 #ifdef SOL8
-#define ICONV_CAST (const char **)
+# define ICONV_CAST (const char **)
 #endif  //SOL8
 #if !defined(ICONV_CAST)
-#define ICONV_CAST (char **)
+# define ICONV_CAST (char **)
 #endif  //ICONV_CAST
 /** \endcond */
 
