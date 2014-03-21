@@ -191,6 +191,9 @@ class Merge(inkex.Effect):
                 newspan.text = node.text
             for child in node:
                 self.recurse(child, newspan)
+            if (node.tail and node.tag != '{http://www.w3.org/2000/svg}text'):
+                newspan.tail = node.tail
+                
 
 if __name__ == '__main__':
     e = Merge()

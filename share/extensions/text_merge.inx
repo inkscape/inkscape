@@ -20,7 +20,7 @@
     <_item value="m">Middle</_item>
     <_item value="b">Bottom</_item>
   </param>
-  <param name="flowtext" type="boolean" _gui-text="Flow text">false</param>
+<!--  <param name="flowtext" type="boolean" _gui-text="Flow text">false</param> -->
   <param name="keepstyle" type="boolean" _gui-text="Keep style">true</param>
   <effect>
     <object-type>all</object-type>

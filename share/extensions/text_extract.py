@@ -22,13 +22,21 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 """
-import inkex, os, csv, math, chardataeffect, string
-
+# standard library
+import chardataeffect
+from copy import deepcopy
+import csv
+import math
+import os
+import string
 try:
     from subprocess import Popen, PIPE
     bsubprocess = True
 except:
     bsubprocess = False
+
+# local library
+import inkex
 
 class Extract(inkex.Effect):
     def __init__(self):
@@ -137,14 +145,19 @@ class Extract(inkex.Effect):
             objlist.sort()
             #move them to the top of the object stack in this order.
             for item in objlist:
-                self.recurse(self.selected[item[1]])
+                self.recurse(deepcopy(self.selected[item[1]]))
                 
     def recurse(self, node):
         istext = (node.tag == '{http://www.w3.org/2000/svg}flowPara' or node.tag == '{http://www.w3.org/2000/svg}flowDiv' or node.tag == '{http://www.w3.org/2000/svg}text')
-        if node.text != None:
-            inkex.errormsg(node.text)
-        for child in node:
-            self.recurse(child)
+        if node.text != None or node.tail != None:
+            for child in node:
+                if child.get('{http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd}role'):
+                    child.tail = "\n"
+            inkex.errormsg(inkex.etree.tostring(node, method='text').strip())
+        else:
+            for child in node:
+                self.recurse(child)
+
 
 if __name__ == '__main__':
     e = Extract()
