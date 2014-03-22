@@ -36,6 +36,10 @@ extern "C" {
 #include "uemf.h"
 #include "uemf_endian.h"
 
+// Unfortunately, C does not allow unnamed function arguments, so use this macro instead...
+#define UNUSED(x) (void)(x)
+
+
 // hide almost everuything in here from Doxygen
 //! \cond
 
@@ -425,7 +429,8 @@ by end user code and to further that end prototypes are NOT provided and they ar
 // all core*_swap call this, U_EMRSETMARGN_swap and some others all it directly
 // numbered as core5 to be consistent with uemf.c, but must appear before the others as there is no prototype
 void core5_swap(char *record, int torev){
-   torev = torev;  // shuts up compiler warnings about unused parameters
+   UNUSED(torev);
+
    PU_ENHMETARECORD pEMR = (PU_ENHMETARECORD)(record);
    U_swap4(pEMR,2);                         // iType nSize
 }
