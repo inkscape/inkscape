@@ -2430,14 +2430,14 @@ cr_parser_parse_stylesheet (CRParser * a_this)
                                                  import_string,
                                                  NULL, &location) ;
 
-                                        if ((PRIVATE (a_this)->sac_handler->resolve_import == TRUE)) {
+                                        if (PRIVATE (a_this)->sac_handler->resolve_import == TRUE) {
                                                 /*
                                                  *TODO: resolve the
                                                  *import rule.
                                                  */
                                         }
 
-                                        if ((PRIVATE (a_this)->sac_handler->import_style_result)) {
+                                        if (PRIVATE (a_this)->sac_handler->import_style_result) {
                                                 PRIVATE (a_this)->sac_handler->import_style_result
                                                         (PRIVATE (a_this)->sac_handler,
                                                          media_list, import_string,
