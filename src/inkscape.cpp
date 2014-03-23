@@ -32,7 +32,10 @@
 # define HAS_PROC_SELF_EXE  //to get path of executable
 #else
 
-#define _WIN32_IE 0x0400
+#if !defined(_WIN32_IE) || (_WIN32_IE < 0x0400)
+# undef _WIN32_IE 
+# define _WIN32_IE 0x0400
+#endif
 //#define HAS_SHGetSpecialFolderPath
 #define HAS_SHGetSpecialFolderLocation
 #define HAS_GetModuleFileName
