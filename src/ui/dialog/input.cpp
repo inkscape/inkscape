@@ -53,10 +53,10 @@
 /* XPM */
 static char const * core_xpm[] = {
 "16 16 4 1",
-" 	c None",
-".	c #808080",
-"+	c #000000",
-"@	c #FFFFFF",
+"   c None",
+".  c #808080",
+"+  c #000000",
+"@  c #FFFFFF",
 "                ",
 "                ",
 "                ",
@@ -291,9 +291,9 @@ static char const *button_on[] = {
 /* XPM */
 static char const * axis_none_xpm[] = {
 "24 8 3 1",
-" 	c None",
-".	c #000000",
-"+	c #808080",
+"   c None",
+".  c #000000",
+"+  c #808080",
 "                        ",
 "  .++++++++++++++++++.  ",
 " .+               . .+. ",
@@ -305,10 +305,10 @@ static char const * axis_none_xpm[] = {
 /* XPM */
 static char const * axis_off_xpm[] = {
 "24 8 4 1",
-" 	c None",
-".	c #808080",
-"+	c #000000",
-"@	c #FFFFFF",
+"   c None",
+".  c #808080",
+"+  c #000000",
+"@  c #FFFFFF",
 "                        ",
 "  .++++++++++++++++++.  ",
 " .+@@@@@@@@@@@@@@@@@@+. ",
@@ -320,9 +320,9 @@ static char const * axis_off_xpm[] = {
 /* XPM */
 static char const * axis_on_xpm[] = {
 "24 8 3 1",
-" 	c None",
-".	c #000000",
-"+	c #00FF00",
+"   c None",
+".  c #000000",
+"+  c #00FF00",
 "                        ",
 "  ....................  ",
 " ..++++++++++++++++++.. ",
@@ -1707,9 +1707,9 @@ void InputDialogImpl::updateTestAxes( Glib::ustring const& key, GdkDevice* dev )
                     axesValues[i].set_sensitive(true);
                     if ( dev && (i < static_cast<gint>(G_N_ELEMENTS(axesValues)) ) ) {
                        // FIXME: Device axis ranges are inaccessible in GTK+ 3 and
-		       // are deprecated in GTK+ 2. Progress-bar ranges are disabled
-		       // until we find an alternative solution
-		     
+               // are deprecated in GTK+ 2. Progress-bar ranges are disabled
+               // until we find an alternative solution
+             
                        //   if ( (dev->axes[i].max - dev->axes[i].min) > epsilon ) {
                             axesValues[i].set_sensitive(true);
                        //       axesValues[i].set_fraction( (axesMap[key][i].second- dev->axes[i].min) / (dev->axes[i].max - dev->axes[i].min) );
@@ -1726,10 +1726,10 @@ void InputDialogImpl::updateTestAxes( Glib::ustring const& key, GdkDevice* dev )
                     if ( dev && (i < static_cast<gint>(G_N_ELEMENTS(axesValues)) ) ) {
                        
                        // FIXME: Device axis ranges are inaccessible in GTK+ 3 and
-		       // are deprecated in GTK+ 2. Progress-bar ranges are disabled
-		       // until we find an alternative solution
+               // are deprecated in GTK+ 2. Progress-bar ranges are disabled
+               // until we find an alternative solution
                        
-		       // if ( (dev->axes[i].max - dev->axes[i].min) > epsilon ) {
+               // if ( (dev->axes[i].max - dev->axes[i].min) > epsilon ) {
                             axesValues[i].set_sensitive(true);
                        //     axesValues[i].set_fraction( (axesMap[key][i].second- dev->axes[i].min) / (dev->axes[i].max - dev->axes[i].min) );
                        // }
@@ -1860,8 +1860,8 @@ bool InputDialogImpl::eventSnoop(GdkEvent* event)
             GdkEventButton* btnEvt = reinterpret_cast<GdkEventButton*>(event);
             if ( btnEvt->device ) {
                 key = getKeyFor(btnEvt->device);
-		source = gdk_device_get_source(btnEvt->device);
-		devName = gdk_device_get_name(btnEvt->device);
+        source = gdk_device_get_source(btnEvt->device);
+        devName = gdk_device_get_name(btnEvt->device);
                 mapAxesValues(key, btnEvt->axes, btnEvt->device);
 
                 if ( buttonMap[key].find(btnEvt->button) == buttonMap[key].end() ) {
@@ -1889,8 +1889,8 @@ bool InputDialogImpl::eventSnoop(GdkEvent* event)
             GdkEventMotion* btnMtn = reinterpret_cast<GdkEventMotion*>(event);
             if ( btnMtn->device ) {
                 key = getKeyFor(btnMtn->device);
-		source = gdk_device_get_source(btnMtn->device);
-		devName = gdk_device_get_name(btnMtn->device);
+        source = gdk_device_get_source(btnMtn->device);
+        devName = gdk_device_get_name(btnMtn->device);
                 mapAxesValues(key, btnMtn->axes, btnMtn->device);
             }
             gchar* name = gtk_accelerator_name(0, static_cast<GdkModifierType>(btnMtn->state));
@@ -1915,19 +1915,16 @@ bool InputDialogImpl::eventSnoop(GdkEvent* event)
 
     if ( (lastSourceSeen != source) || (lastDevnameSeen != devName) ) {
         switch (source) {
-            case GDK_SOURCE_MOUSE:
-            {
+            case GDK_SOURCE_MOUSE: {
                 testThumb.set(getPix(PIX_CORE));
+                break;
             }
-            break;
-            case GDK_SOURCE_CURSOR:
-            {
-//                 g_message("flip to cursor");
+            case GDK_SOURCE_CURSOR: {
+//                g_message("flip to cursor");
                 testThumb.set(getPix(PIX_MOUSE));
+                break;
             }
-            break;
-            case GDK_SOURCE_PEN:
-            {
+            case GDK_SOURCE_PEN: {
                 if (devName == _("pad")) {
 //                     g_message("flip to pad");
                     testThumb.set(getPix(PIX_SIDEBUTTONS));
@@ -1935,17 +1932,24 @@ bool InputDialogImpl::eventSnoop(GdkEvent* event)
 //                     g_message("flip to pen");
                     testThumb.set(getPix(PIX_TIP));
                 }
+                break;
             }
-            break;
-            case GDK_SOURCE_ERASER:
-            {
+            case GDK_SOURCE_ERASER: {
 //                 g_message("flip to eraser");
                 testThumb.set(getPix(PIX_ERASER));
+                break;
             }
-            break;
-//             default:
-//                 g_message("gurgle");
+#if WITH_GTKMM_3_0
+            /// \fixme GTK3 added new GDK_SOURCEs that should be handled here!
+            case GDK_SOURCE_KEYBOARD:
+            case GDK_SOURCE_TOUCHSCREEN:
+            case GDK_SOURCE_TOUCHPAD: {
+                 g_warning("InputDialogImpl::eventSnoop : unhandled GDK_SOURCE type!");
+                 break;
+            }
+#endif
         }
+
         updateTestButtons(key, hotButton);
         lastSourceSeen = source;
         lastDevnameSeen = devName;
