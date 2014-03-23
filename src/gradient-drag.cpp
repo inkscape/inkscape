@@ -2387,7 +2387,7 @@ void GrDrag::selected_move(double x, double y, bool write_repr, bool scale_radia
         gr_midpoint_limits(dragger, server, &begin, &end, &low_lim, &high_lim, &moving);
 
         Geom::LineSegment ls(low_lim, high_lim);
-        Geom::Point p = ls.pointAt(ls.nearestPoint(dragger->point + p));
+        Geom::Point p = ls.pointAt(ls.nearestPoint(dragger->point + Geom::Point(x,y)));
         Geom::Point displacement = p - dragger->point;
 
         for (GSList const* i = moving; i != NULL; i = i->next) {
