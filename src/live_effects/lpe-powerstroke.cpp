@@ -305,7 +305,6 @@ static Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::
                                                  Geom::Piecewise<Geom::SBasis> const & y, // width path
                                                  LineJoinType jointype,
                                                  double miter_limit,
-                                                 bool /*forward_direction*/,
                                                  double tol=Geom::EPSILON)
 {
 /* per definition, each discontinuity should be fixed with a join-ending, as defined by linejoin_type
@@ -608,7 +607,7 @@ LPEPowerStroke::doEffect_path (std::vector<Geom::Path> const & path_in)
     Piecewise<D2<SBasis> > pwd2_out   = compose(pwd2_in,x) + y*compose(n,x);
     Piecewise<D2<SBasis> > mirrorpath = reverse(compose(pwd2_in,x) - y*compose(n,x));
 
-    Geom::Path fixed_path       = path_from_piecewise_fix_cusps( pwd2_out,   y, jointype, miter_limit, LPE_CONVERSION_TOLERANCE);
+    Geom::Path fixed_path       = path_from_piecewise_fix_cusps( pwd2_out,   y,          jointype, miter_limit, LPE_CONVERSION_TOLERANCE);
     Geom::Path fixed_mirrorpath = path_from_piecewise_fix_cusps( mirrorpath, reverse(y), jointype, miter_limit, LPE_CONVERSION_TOLERANCE);
 
     if (path_in[0].closed()) {
