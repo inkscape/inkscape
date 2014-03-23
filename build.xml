@@ -351,8 +351,15 @@
         </excludeinc>
         <flags>
             <!-- -std=gnu++0x -DCPP11  -->
-            -Wall -Wformat -Werror=format-security -W -Wpointer-arith -Wcast-align -Wsign-compare -Woverloaded-virtual -Werror=switch
+            -Wall -Wformat -Werror=format-security -Wextra -Wpointer-arith -Wcast-align -Wsign-compare -Woverloaded-virtual -Werror=switch
             -Werror=return-type
+            <!-- - ->  -Werror <!-- -->
+            <!-- A list of warnings that should not error *yet*, any help is welcome in fixing the code generating these warnings! -->
+            <!-- libcroco is using guchar where it should use gchar, so we need: --> -Wno-error=pointer-sign
+            -Wno-error=unused-parameter -Wno-error=unused-but-set-variable -Wno-error=strict-overflow -Wno-error=write-strings
+            <!-- Format warnings are obviously bad errors, but with the current old compiler on Windows (gcc 4.6.) we run into a problem with long long ints...
+                 The errors can be restored by removing these flags after updating to a newer compiler (soon after 0.91 release hopefully)  -->
+            -Wno-error=format -Wno-error=format-extra-args
             -O2
             -mms-bitfields
             -fopenmp
@@ -437,7 +444,7 @@
               stripcommand="${archutil}strip"
               objcopycommand="${archutil}objcopy">
        <flags>
-           -mwindows
+           -mconsole
            -mthreads
        </flags>
        <fileset dir="${build}/obj">
