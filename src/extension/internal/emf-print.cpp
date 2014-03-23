@@ -915,17 +915,13 @@ int PrintEmf::vector_rect_alignment(double angle, Geom::Point vtest){
     are slightly displaced.
 */
 Geom::Point PrintEmf::get_pathrect_corner(Geom::Path pathRect, double angle, int corner){
-    Geom::Point v1 = Geom::Point(1,0) * Geom::Rotate(-angle);  // unit horizontal side (sign change because Y increases DOWN)
-    Geom::Point v2 = Geom::Point(0,1) * Geom::Rotate(-angle);  // unit vertical side (sign change because Y increases DOWN)
-    Geom::Point center, P1;
-    int LR; // 1 if Left, 0 if Right
-    int UL; // 1 if Lower, 0 if Upper (as viewed on screen, y coordinates increase downwards)
-    center = Geom::Point(0,0);
-    Geom::Path::const_iterator cit  = pathRect.begin();
-    for(; cit != pathRect.end_open();++cit) {
+    Geom::Point center(0,0);
+    for(Geom::Path::const_iterator cit = pathRect.begin(); cit != pathRect.end_open(); ++cit) {
         center += cit->initialPoint()/4.0;
     }
 
+    int LR; // 1 if Left, 0 if Right
+    int UL; // 1 if Lower, 0 if Upper (as viewed on screen, y coordinates increase downwards)
     switch(corner){
        case 1: //UR
           LR = 0;
@@ -944,11 +940,15 @@ Geom::Point PrintEmf::get_pathrect_corner(Geom::Path pathRect, double angle, int
           UL = 0;
           break;
     }
-    cit  = pathRect.begin();
-    for(int i; cit != pathRect.end_open();++cit,i++) {
+
+    Geom::Point v1 = Geom::Point(1,0) * Geom::Rotate(-angle);  // unit horizontal side (sign change because Y increases DOWN)
+    Geom::Point v2 = Geom::Point(0,1) * Geom::Rotate(-angle);  // unit vertical side (sign change because Y increases DOWN)
+    Geom::Point P1;
+    for(Geom::Path::const_iterator cit = pathRect.begin(); cit != pathRect.end_open(); ++cit) {
         P1 = cit->initialPoint();
-        if((LR == (dot(P1 - center,v1)> 0 ? 0 : 1)) &&
-           (UL == (dot(P1 - center,v2)> 0 ? 1 : 0)))break;
+
+        if (   ( LR == (dot(P1 - center,v1) > 0 ? 0 : 1) )
+            && ( UL == (dot(P1 - center,v2) > 0 ? 1 : 0) ) ) break;
     }
     return(P1);
 }
