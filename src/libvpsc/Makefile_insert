@@ -11,7 +11,6 @@ libvpsc_libvpsc_a_SOURCES = libvpsc/block.cpp\
 	libvpsc/pairingheap/PairingHeap.cpp\
 	libvpsc/remove_rectangle_overlap.cpp\
 	libvpsc/solve_VPSC.cpp\
-	libvpsc/csolve_VPSC.cpp\
 	libvpsc/variable.cpp\
 	libvpsc/block.h\
 	libvpsc/blocks.h\
@@ -21,5 +20,4 @@ libvpsc_libvpsc_a_SOURCES = libvpsc/block.cpp\
 	libvpsc/pairingheap/dsexceptions.h\
 	libvpsc/remove_rectangle_overlap.h\
 	libvpsc/solve_VPSC.h\
-	libvpsc/csolve_VPSC.h\
 	libvpsc/variable.h

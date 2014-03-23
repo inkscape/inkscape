@@ -3,7 +3,6 @@ set(libvpsc_SRC
 	block.cpp
 	blocks.cpp
 	constraint.cpp
-	csolve_VPSC.cpp
 	generate-constraints.cpp
 	remove_rectangle_overlap.cpp
 	solve_VPSC.cpp
@@ -16,7 +15,6 @@ set(libvpsc_SRC
 	block.h
 	blocks.h
 	constraint.h
-	csolve_VPSC.h
 	generate-constraints.h
 	pairingheap/PairingHeap.h
 	pairingheap/dsexceptions.h
