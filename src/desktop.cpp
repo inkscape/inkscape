@@ -663,8 +663,8 @@ SPDesktop::change_document (SPDocument *theDocument)
     SPDesktopWidget *dtw = (SPDesktopWidget *) parent->get_data("desktopwidget");
     if (dtw) {
         dtw->desktop = this;
+        dtw->updateNamedview();
     }
-    dtw->updateNamedview();
 
     _namedview_modified (namedview, SP_OBJECT_MODIFIED_FLAG, this);
     _document_replaced_signal.emit (this, theDocument);
