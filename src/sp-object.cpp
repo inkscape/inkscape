@@ -972,7 +972,7 @@ Inkscape::XML::Node* SPObject::write(Inkscape::XML::Document *doc, Inkscape::XML
         if (!( flags & SP_OBJECT_WRITE_EXT )) {
             repr->setAttribute("inkscape:collect", NULL);
         }
-    } else {
+    } else if (repr) {
         repr->setAttribute("id", this->getId());
 
         if (this->xml_space.set) {
