@@ -1537,7 +1537,9 @@ SPDesktop::updateCanvasNow()
 void
 SPDesktop::setDocument (SPDocument *doc)
 {
-    if (this->doc() && doc) {
+    if (!doc) return;
+
+    if (this->doc()) {
         namedview->hide(this);
         this->doc()->getRoot()->invoke_hide(dkey);
     }
