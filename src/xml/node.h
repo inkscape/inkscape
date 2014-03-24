@@ -207,7 +207,7 @@ public:
      */
     virtual void setAttribute(gchar const *key, gchar const *value, bool is_interactive=false)=0;
 
-    void setAttribute(gchar const *key, Glib::ustring const &value, bool is_interactive=false)
+    void setAttribute(char const *key, Glib::ustring const &value, bool is_interactive=false)
     {
         setAttribute(key, value.empty() ? NULL : value.c_str(), is_interactive);
     }
