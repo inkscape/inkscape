@@ -119,35 +119,35 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
                             _findCandidates(obj, it, false, bbox_to_snap, true, item->i2doc_affine());
                         }
                     }
-                }
 
-                if (SP_IS_GROUP(o)) {
-                    _findCandidates(o, it, false, bbox_to_snap, clip_or_mask, additional_affine);
-                } else {
-                    Geom::OptRect bbox_of_item;
-                    Preferences *prefs = Preferences::get();
-                    int prefs_bbox = prefs->getBool("/tools/bounding_box", 0);
-                    // We'll only need to obtain the visual bounding box if the user preferences tell
-                    // us to, AND if we are snapping to the bounding box itself. If we're snapping to
-                    // paths only, then we can just as well use the geometric bounding box (which is faster)
-                    SPItem::BBoxType bbox_type = (!prefs_bbox && _snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_BBOX_CATEGORY)) ?
-                        SPItem::VISUAL_BBOX : SPItem::GEOMETRIC_BBOX;
-                    if (clip_or_mask) {
-                        // Oh oh, this will get ugly. We cannot use sp_item_i2d_affine directly because we need to
-                        // insert an additional transformation in document coordinates (code copied from sp_item_i2d_affine)
-                        bbox_of_item = item->bounds(bbox_type, item->i2doc_affine() * additional_affine * dt->doc2dt());
+                    if (SP_IS_GROUP(o)) {
+                        _findCandidates(o, it, false, bbox_to_snap, clip_or_mask, additional_affine);
                     } else {
-                        bbox_of_item = item->desktopBounds(bbox_type);
-                    }
-                    if (bbox_of_item) {
-                        // See if the item is within range
-                        if (bbox_to_snap_incl.intersects(*bbox_of_item)
-                                || (_snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_ROTATION_CENTER) && bbox_to_snap_incl.contains(item->getCenter()))) { // rotation center might be outside of the bounding box
-                            // This item is within snapping range, so record it as a candidate
-                            _candidates->push_back(SnapCandidateItem(item, clip_or_mask, additional_affine));
-                            // For debugging: print the id of the candidate to the console
-                            // SPObject *obj = (SPObject*)item;
-                            // std::cout << "Snap candidate added: " << obj->getId() << std::endl;
+                        Geom::OptRect bbox_of_item;
+                        Preferences *prefs = Preferences::get();
+                        int prefs_bbox = prefs->getBool("/tools/bounding_box", 0);
+                        // We'll only need to obtain the visual bounding box if the user preferences tell
+                        // us to, AND if we are snapping to the bounding box itself. If we're snapping to
+                        // paths only, then we can just as well use the geometric bounding box (which is faster)
+                        SPItem::BBoxType bbox_type = (!prefs_bbox && _snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_BBOX_CATEGORY)) ?
+                            SPItem::VISUAL_BBOX : SPItem::GEOMETRIC_BBOX;
+                        if (clip_or_mask) {
+                            // Oh oh, this will get ugly. We cannot use sp_item_i2d_affine directly because we need to
+                            // insert an additional transformation in document coordinates (code copied from sp_item_i2d_affine)
+                            bbox_of_item = item->bounds(bbox_type, item->i2doc_affine() * additional_affine * dt->doc2dt());
+                        } else {
+                            bbox_of_item = item->desktopBounds(bbox_type);
+                        }
+                        if (bbox_of_item) {
+                            // See if the item is within range
+                            if (bbox_to_snap_incl.intersects(*bbox_of_item)
+                                    || (_snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_ROTATION_CENTER) && bbox_to_snap_incl.contains(item->getCenter()))) { // rotation center might be outside of the bounding box
+                                // This item is within snapping range, so record it as a candidate
+                                _candidates->push_back(SnapCandidateItem(item, clip_or_mask, additional_affine));
+                                // For debugging: print the id of the candidate to the console
+                                // SPObject *obj = (SPObject*)item;
+                                // std::cout << "Snap candidate added: " << obj->getId() << std::endl;
+                            }
                         }
                     }
                 }
