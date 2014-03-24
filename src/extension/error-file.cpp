@@ -39,7 +39,7 @@ namespace Extension {
     probably good to check anyway).
 */
 ErrorFileNotice::ErrorFileNotice (void) :
-    Gtk::MessageDialog::MessageDialog(
+    Gtk::MessageDialog(
             "",                    /* message */
             false,                 /* use markup */
             Gtk::MESSAGE_WARNING,  /* dialog type */

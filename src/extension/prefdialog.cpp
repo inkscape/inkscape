@@ -42,9 +42,9 @@ namespace Extension {
 */
 PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * controls, Effect * effect) :
 #if WITH_GTKMM_3_0
-    Gtk::Dialog::Dialog(_(name.c_str()), true),
+    Gtk::Dialog(_(name.c_str()), true),
 #else
-    Gtk::Dialog::Dialog(_(name.c_str()), true, true),
+    Gtk::Dialog(_(name.c_str()), true, true),
 #endif
     _help(help),
     _name(name),
