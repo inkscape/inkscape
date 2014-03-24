@@ -83,10 +83,10 @@ sp_selected_path_combine(SPDesktop *desktop)
     gint position = 0;
     char const *id = NULL;
     char const *transform = NULL;
-    gchar *style = NULL;
-    gchar *path_effect = NULL;
+    Glib::ustring style;
+    Glib::ustring path_effect;
 
-    SPCurve* curve = 0;
+    SPCurve* curve = NULL;
     SPItem *first = NULL;
     Inkscape::XML::Node *parent = NULL; 
 
@@ -114,18 +114,15 @@ sp_selected_path_combine(SPDesktop *desktop)
             id = first->getRepr()->attribute("id");
             transform = first->getRepr()->attribute("transform");
             // FIXME: merge styles of combined objects instead of using the first one's style
-            style = g_strdup(first->getRepr()->attribute("style"));
-            path_effect = g_strdup(first->getRepr()->attribute("inkscape:path-effect"));
+            style = first->getRepr()->attribute("style");
+            path_effect = first->getRepr()->attribute("inkscape:path-effect");
             //c->transform(item->transform);
             curve = c;
         } else {
             c->transform(item->getRelativeTransform(first));
             curve->append(c, false);
             c->unref();
-        }
 
-        // unless this is the topmost object,
-        if (item != first) {
             // reduce position only if the same parent
             if (item->getRepr()->parent() == parent) {
                 position--;
@@ -149,16 +146,14 @@ sp_selected_path_combine(SPDesktop *desktop)
         if (transform) {
             repr->setAttribute("transform", transform);
         }
-        repr->setAttribute("style", style);
-        g_free(style);
+        repr->setAttribute("style", style.c_str());
 
-        repr->setAttribute("inkscape:path-effect", path_effect);
-        g_free(path_effect);
+        repr->setAttribute("inkscape:path-effect", path_effect.c_str());
 
         // set path data corresponding to new curve
         gchar *dstring = sp_svg_write_path(curve->get_pathvector());
         curve->unref();
-        if (path_effect) {
+        if (!path_effect.empty()) {
             repr->setAttribute("inkscape:original-d", dstring);
         } else {
             repr->setAttribute("d", dstring);
