@@ -39,7 +39,7 @@ int UnicodeRange::add_range(gchar* val){
         while(val[i]!='\0' && val[i]!='-' && val[i]!=' ' && val[i]!=','){
             i++;
         }
-        r.start = (gchar*) malloc((i+1)*sizeof(gchar*));
+        r.start = (gchar*) malloc((i+1)*sizeof(gchar));
         strncpy(r.start, val, i);
         r.start[i] = '\0';
         val+=i;
@@ -48,7 +48,7 @@ int UnicodeRange::add_range(gchar* val){
         if (val[0]=='-'){
             val++;
             while(val[i]!='\0' && val[i]!='-' && val[i]!=' ' && val[i]!=',') i++;
-            r.end = (gchar*) malloc((i+1)*sizeof(gchar*));
+            r.end = (gchar*) malloc((i+1)*sizeof(gchar));
             strncpy(r.end, val, i);
             r.end[i] = '\0';
             // val+=i;
