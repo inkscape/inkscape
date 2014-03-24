@@ -146,9 +146,9 @@ sp_selected_path_combine(SPDesktop *desktop)
         if (transform) {
             repr->setAttribute("transform", transform);
         }
-        repr->setAttribute("style", style.c_str());
+        repr->setAttribute("style", style);
 
-        repr->setAttribute("inkscape:path-effect", path_effect.c_str());
+        repr->setAttribute("inkscape:path-effect", path_effect);
 
         // set path data corresponding to new curve
         gchar *dstring = sp_svg_write_path(curve->get_pathvector());

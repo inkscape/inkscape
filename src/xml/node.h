@@ -19,6 +19,7 @@
 #define SEEN_INKSCAPE_XML_NODE_H
 
 #include <glibmm/value.h>
+#include <glibmm/ustring.h>
 #include "gc-anchored.h"
 #include "util/list.h"
 
@@ -194,6 +195,7 @@ public:
      */
     virtual void setContent(gchar const *value)=0;
     
+    //@{
     /**
      * @brief Change an attribute of this node
      *
@@ -204,7 +206,19 @@ public:
      * @param is_interactive Ignored
      */
     virtual void setAttribute(gchar const *key, gchar const *value, bool is_interactive=false)=0;
-    
+
+    void setAttribute(gchar const *key, Glib::ustring const &value, bool is_interactive=false)
+    {
+        setAttribute(key, value.empty() ? NULL : value.c_str(), is_interactive);
+    }
+
+    void setAttribute(Glib::ustring const &key, Glib::ustring const &value, bool is_interactive=false)
+    {
+        setAttribute( key.empty()   ? NULL : key.c_str(),
+                      value.empty() ? NULL : value.c_str(), is_interactive);
+    }
+    //@}
+
     /**
      * @brief Directly set the integer GQuark code for the name of the node
      *
