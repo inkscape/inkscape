@@ -288,7 +288,7 @@ private:
     static double constexpr PerlinOffset = 4096.0;
 #else    
 #if (__cplusplus < 201103L)
-    static double const PerlinOffset = 4096.0;
+    static double const PerlinOffset;
 #else
     static double constexpr PerlinOffset = 4096.0;
 #endif
@@ -308,6 +308,10 @@ private:
     bool _inited;
     bool _fractalnoise;
 };
+
+#if !defined(CPP11) && __cplusplus < 201103L
+    double const TurbulenceGenerator::PerlinOffset = 4096.0;
+#endif
 
 FilterTurbulence::FilterTurbulence()
     : gen(new TurbulenceGenerator())
