@@ -31,7 +31,6 @@
 #include <glibmm/threads.h>
 #endif
 
-#include <utility>
 #include <algorithm>
 #include "kopftracer2011.h"
 #include "priv/colorspace.h"
@@ -39,6 +38,11 @@
 #include "priv/branchless.h"
 #include "priv/splines-kopf2011.h"
 #include "priv/iterator.h"
+
+#ifdef LIBDEPIXELIZE_PROFILE_KOPF2011
+#include <glibmm/datetime.h>
+#include <iostream>
+#endif // LIBDEPIXELIZE_PROFILE_KOPF2011
 
 namespace Tracer {
 namespace Heuristics {
@@ -86,7 +90,95 @@ Splines Kopf2011::to_voronoi(const std::string &filename,
 Splines Kopf2011::to_voronoi(const Glib::RefPtr<Gdk::Pixbuf const> &buf,
                              const Options &options)
 {
+#ifdef LIBDEPIXELIZE_PROFILE_KOPF2011
+    SimplifiedVoronoi<Precision, false> voronoi
+        = _voronoi<Precision, false>(buf, options);
+
+    Glib::DateTime profiling_info[2];
+    profiling_info[0] = Glib::DateTime::create_now_utc();
+
+    Splines ret(voronoi);
+
+    profiling_info[1] = Glib::DateTime::create_now_utc();
+    std::cerr << "Tracer::Splines construction time: "
+        << profiling_info[1].difference(profiling_info[0])
+        << std::endl;
+
+    return ret;
+#else // LIBDEPIXELIZE_PROFILE_KOPF2011
     return Splines(_voronoi<Precision, false>(buf, options));
+#endif // LIBDEPIXELIZE_PROFILE_KOPF2011
+}
+
+Splines Kopf2011::to_grouped_voronoi(const std::string &filename,
+                             const Options &options)
+{
+    return to_grouped_voronoi(Gdk::Pixbuf::create_from_file(filename), options);
+}
+
+Splines Kopf2011::to_grouped_voronoi(const Glib::RefPtr<Gdk::Pixbuf const> &buf,
+                             const Options &options)
+{
+#ifdef LIBDEPIXELIZE_PROFILE_KOPF2011
+    SimplifiedVoronoi<Precision, false> voronoi
+        = _voronoi<Precision, false>(buf, options);
+
+    Glib::DateTime profiling_info[2];
+    profiling_info[0] = Glib::DateTime::create_now_utc();
+
+    HomogeneousSplines<Precision> splines(voronoi);
+
+#else // LIBDEPIXELIZE_PROFILE_KOPF2011
+    HomogeneousSplines<Precision> splines(_voronoi<Precision, false>
+                                          (buf, options));
+#endif // LIBDEPIXELIZE_PROFILE_KOPF2011
+
+#ifdef LIBDEPIXELIZE_PROFILE_KOPF2011
+    profiling_info[1] = Glib::DateTime::create_now_utc();
+    std::cerr << "Tracer::HomogeneousSplines<" << typeid(Precision).name()
+              << ">(Tracer::SimplifiedVoronoi<" << typeid(Precision).name()
+              << ",false>) construction time: "
+              << profiling_info[1].difference(profiling_info[0])
+              << std::endl;
+    profiling_info[0] = Glib::DateTime::create_now_utc();
+#endif // LIBDEPIXELIZE_PROFILE_KOPF2011
+
+    for ( HomogeneousSplines<Precision>::iterator it = splines.begin(),
+              end = splines.end() ; it != end ; ++it ) {
+        for ( HomogeneousSplines<Precision>::Polygon::points_iter
+                  it2 = it->vertices.begin(), end2 = it->vertices.end()
+                  ; it2 != end2 ; ++it2 ) {
+            it2->smooth = false;
+        }
+        for ( HomogeneousSplines<Precision>::Polygon::holes_iter
+                  it2 = it->holes.begin(), end2 = it->holes.end()
+                  ; it2 != end2 ; ++it2 ) {
+            for ( HomogeneousSplines<Precision>::Polygon::points_iter
+                      it3 = it2->begin(), end3 = it2->end()
+                      ; it3 != end3 ; ++it3 ) {
+                it3->smooth = false;
+            }
+        }
+    }
+
+#ifdef LIBDEPIXELIZE_PROFILE_KOPF2011
+    profiling_info[1] = Glib::DateTime::create_now_utc();
+    std::cerr << "Tracer::Kopf2011::to_grouped_voronoi internal work time: "
+              << profiling_info[1].difference(profiling_info[0])
+              << std::endl;
+    profiling_info[0] = Glib::DateTime::create_now_utc();
+
+    Splines ret(splines, false, options.nthreads);
+
+    profiling_info[1] = Glib::DateTime::create_now_utc();
+    std::cerr << "Tracer::Splines construction time: "
+        << profiling_info[1].difference(profiling_info[0])
+        << std::endl;
+
+    return ret;
+#else // LIBDEPIXELIZE_PROFILE_KOPF2011
+    return Splines(splines, false, options.nthreads);
+#endif // LIBDEPIXELIZE_PROFILE_KOPF2011
 }
 
 Splines Kopf2011::to_splines(const std::string &filename,
@@ -98,9 +190,36 @@ Splines Kopf2011::to_splines(const std::string &filename,
 Splines Kopf2011::to_splines(const Glib::RefPtr<Gdk::Pixbuf const> &buf,
                              const Options &options)
 {
+#ifdef LIBDEPIXELIZE_PROFILE_KOPF2011
+    SimplifiedVoronoi<Precision, true> voronoi
+        = _voronoi<Precision, true>(buf, options);
+
+    Glib::DateTime profiling_info[2];
+    profiling_info[0] = Glib::DateTime::create_now_utc();
+
+    HomogeneousSplines<Precision> splines(voronoi);
+
+    profiling_info[1] = Glib::DateTime::create_now_utc();
+    std::cerr << "Tracer::HomogeneousSplines<" << typeid(Precision).name()
+        << "> construction time: "
+        << profiling_info[1].difference(profiling_info[0])
+        << std::endl;
+
+    profiling_info[0] = Glib::DateTime::create_now_utc();
+
+    Splines ret(splines, options.optimize, options.nthreads);
+
+    profiling_info[1] = Glib::DateTime::create_now_utc();
+    std::cerr << "Tracer::Splines construction time: "
+        << profiling_info[1].difference(profiling_info[0])
+        << std::endl;
+
+    return ret;
+#else // LIBDEPIXELIZE_PROFILE_KOPF2011
     HomogeneousSplines<Precision> splines(_voronoi<Precision, true>
                                           (buf, options));
     return Splines(splines, options.optimize, options.nthreads);
+#endif // LIBDEPIXELIZE_PROFILE_KOPF2011
 }
 
 template<class T, bool adjust_splines>
@@ -108,47 +227,131 @@ SimplifiedVoronoi<T, adjust_splines>
 Kopf2011::_voronoi(const Glib::RefPtr<Gdk::Pixbuf const> &buf,
                    const Options &options)
 {
+#ifdef LIBDEPIXELIZE_PROFILE_KOPF2011
+    Glib::DateTime profiling_info[2];
+    profiling_info[0] = Glib::DateTime::create_now_utc();
+#endif // LIBDEPIXELIZE_PROFILE_KOPF2011
+
     PixelGraph graph(buf);
 
-    /*if ( !graph.width() || !graph.height() )
-        return;*/
+#ifdef LIBDEPIXELIZE_PROFILE_KOPF2011
+    profiling_info[1] = Glib::DateTime::create_now_utc();
+    std::cerr << "Tracer::PixelGraph creation time: "
+              << profiling_info[1].difference(profiling_info[0]) << std::endl;
+#endif // LIBDEPIXELIZE_PROFILE_KOPF2011
+
+    // gdk-pixbuf2 already checks if image size is meaningful, but asserts state
+    // preconditions and will be useful if gdk-pixbuf is replaced later
+    assert(graph.width() > 0);
+    assert(graph.height() > 0);
 
 #ifndef NDEBUG
     graph.checkConsistency();
 #endif
+
+#ifdef LIBDEPIXELIZE_PROFILE_KOPF2011
+    profiling_info[0] = Glib::DateTime::create_now_utc();
+#endif // LIBDEPIXELIZE_PROFILE_KOPF2011
 
     // This step could be part of the initialization of PixelGraph
     // and decrease the necessary number of passes
     graph.connectAllNeighbors();
 
+#ifdef LIBDEPIXELIZE_PROFILE_KOPF2011
+    profiling_info[1] = Glib::DateTime::create_now_utc();
+    std::cerr << "Tracer::PixelGraph::connectAllNeighbors() time: "
+              << profiling_info[1].difference(profiling_info[0]) << std::endl;
+#endif // LIBDEPIXELIZE_PROFILE_KOPF2011
+
 #ifndef NDEBUG
     graph.checkConsistency();
 #endif
+
+#ifdef LIBDEPIXELIZE_PROFILE_KOPF2011
+    profiling_info[0] = Glib::DateTime::create_now_utc();
+#endif // LIBDEPIXELIZE_PROFILE_KOPF2011
 
     // This step can't be part of PixelGraph initilization without adding some
     // cache misses due to random access patterns that might be injected
     _disconnect_neighbors_with_dissimilar_colors(graph);
 
-#ifndef NDEBUG
-    graph.checkConsistency();
-#endif
-
-    // This and below steps must be executed in separate.
-    // Otherwise, there will be colateral effects due to misassumption about the
-    // data being read.
-    _remove_crossing_edges_safe(graph);
+#ifdef LIBDEPIXELIZE_PROFILE_KOPF2011
+    profiling_info[1] = Glib::DateTime::create_now_utc();
+    std::cerr << "Tracer::Kopf2011::"
+        "_disconnect_neighbors_with_dissimilar_colors(Tracer::PixelGraph) time: "
+              << profiling_info[1].difference(profiling_info[0]) << std::endl;
+#endif // LIBDEPIXELIZE_PROFILE_KOPF2011
 
 #ifndef NDEBUG
     graph.checkConsistency();
 #endif
 
-    _remove_crossing_edges_unsafe(graph, options);
+#ifdef LIBDEPIXELIZE_PROFILE_KOPF2011
+    profiling_info[0] = Glib::DateTime::create_now_utc();
+#endif // LIBDEPIXELIZE_PROFILE_KOPF2011
+
+    {
+        // edges_safe and edges_unsafe must be executed in separate.
+        // Otherwise, there will be colateral effects due to misassumption about
+        // the data being read.
+        PixelGraph::EdgePairContainer edges = graph.crossingEdges();
+
+#ifdef LIBDEPIXELIZE_PROFILE_KOPF2011
+    profiling_info[1] = Glib::DateTime::create_now_utc();
+    std::cerr << "Tracer::PixelGraph::crossingEdges() time: "
+              << profiling_info[1].difference(profiling_info[0]) << std::endl;
+    profiling_info[0] = Glib::DateTime::create_now_utc();
+#endif // LIBDEPIXELIZE_PROFILE_KOPF2011
+
+        _remove_crossing_edges_safe(edges);
+
+#ifdef LIBDEPIXELIZE_PROFILE_KOPF2011
+        profiling_info[1] = Glib::DateTime::create_now_utc();
+        std::cerr << "Tracer::Kopf2011::_remove_crossing_edges_safe"
+            "(Tracer::PixelGraph) time: "
+                  << profiling_info[1].difference(profiling_info[0])
+                  << std::endl;
+#endif // LIBDEPIXELIZE_PROFILE_KOPF2011
+
+#ifndef NDEBUG
+        graph.checkConsistency();
+#endif
+
+#ifdef LIBDEPIXELIZE_PROFILE_KOPF2011
+        profiling_info[0] = Glib::DateTime::create_now_utc();
+#endif // LIBDEPIXELIZE_PROFILE_KOPF2011
+
+        _remove_crossing_edges_unsafe(graph, edges, options);
+    }
+
+#ifdef LIBDEPIXELIZE_PROFILE_KOPF2011
+    profiling_info[1] = Glib::DateTime::create_now_utc();
+    std::cerr << "Tracer::Kopf2011::_remove_crossing_edges_unsafe"
+        "(Tracer::PixelGraph) time: "
+              << profiling_info[1].difference(profiling_info[0]) << std::endl;
+#endif // LIBDEPIXELIZE_PROFILE_KOPF2011
 
 #ifndef NDEBUG
     graph.checkConsistency();
 #endif
 
+    assert(graph.crossingEdges().size() == 0);
+
+#ifdef LIBDEPIXELIZE_PROFILE_KOPF2011
+    profiling_info[0] = Glib::DateTime::create_now_utc();
+
+    SimplifiedVoronoi<T, adjust_splines> ret(graph);
+
+    profiling_info[1] = Glib::DateTime::create_now_utc();
+    std::cerr << "Tracer::SimplifiedVoronoi<" << typeid(T).name() << ','
+              << (adjust_splines ? "true" : "false")
+              << ">(Tracer::PixelGraph) construction time: "
+              << profiling_info[1].difference(profiling_info[0]) << std::endl;
+
+    return ret;
+#else // LIBDEPIXELIZE_PROFILE_KOPF2011
     return SimplifiedVoronoi<T, adjust_splines>(graph);
+#endif // LIBDEPIXELIZE_PROFILE_KOPF2011
 }
 
 // TODO: move this function (plus connectAllNeighbors) to PixelGraph constructor
@@ -192,123 +395,115 @@ Kopf2011::_disconnect_neighbors_with_dissimilar_colors(PixelGraph &graph)
  *
  * In this case the two diagonal connections can be safely removed without
  * affecting the final result.
- *
- * \TODO: It should remember/cache who are the unsafe crossing edges?
  */
-inline void Kopf2011::_remove_crossing_edges_safe(PixelGraph &graph)
+template<class T>
+void Kopf2011::_remove_crossing_edges_safe(T &container)
 {
-    if ( graph.width() < 2 || graph.height() < 2 )
-        return;
+    for ( typename T::reverse_iterator it = container.rbegin(),
+              end = container.rend() ; it != end ; ) {
+        /* A | B
+           --+--
+           C | D */
+        PixelGraph::iterator a = it->first.first;
+        PixelGraph::iterator b = it->second.first;
+        PixelGraph::iterator c = it->second.second;
+        PixelGraph::iterator d = it->first.second;
 
-    PixelGraph::iterator it = graph.begin();
-    for ( int i = 0 ; i != graph.height() - 1 ; ++i, ++it ) {
-        for ( int j = 0 ; j != graph.width() - 1 ; ++j, ++it ) {
-            // this <-> right
-            if ( !it->adj.right )
-                continue;
-
-            // this <-> down
-            if ( !it->adj.bottom )
-                continue;
-
-            PixelGraph::iterator down_right = it + graph.width() + 1;
-
-            // down_right <-> right
-            if ( !down_right->adj.top )
-                continue;
-
-            // down_right <-> down
-            if ( !down_right->adj.left )
-                continue;
-
-            // main diagonal
-            // this <-> down_right
-            it->adj.bottomright = 0;
-            down_right->adj.topleft = 0;
-
-            // secondary diagonal
-            // right <-> down
-            (it + 1)->adj.bottomleft = 0;
-            (it + graph.width())->adj.topright = 0;
+        if ( !a->adj.right || !a->adj.bottom || !b->adj.bottom
+             || !c->adj.right ) {
+            ++it;
+            continue;
         }
+
+        // main diagonal
+        a->adj.bottomright = 0;
+        d->adj.topleft = 0;
+
+        // secondary diagonal
+        b->adj.bottomleft = 0;
+        c->adj.topright = 0;
+
+        // base iterator is always past one
+        typename T::iterator current = --(it.base());
+        ++it;
+        container.erase(current);
     }
 }
 
 /**
  * This method removes crossing edges using the heuristics.
  */
-inline
-void Kopf2011::_remove_crossing_edges_unsafe(PixelGraph &graph,
+template<class T>
+void Kopf2011::_remove_crossing_edges_unsafe(PixelGraph &graph, T &edges,
                                              const Options &options)
 {
-    if ( graph.width() < 2 || graph.height() < 2 )
-        return;
+    std::vector< std::pair<int, int> > weights(edges.size(),
+                                               std::make_pair(0, 0));
 
-    // Iterate over the graph, 2x2 blocks at time
-    PixelGraph::iterator it = graph.begin();
-    for (int i = 0 ; i != graph.height() - 1 ; ++i, ++it ) {
-        for ( int j = 0 ; j != graph.width() - 1 ; ++j, ++it ) {
-            using std::pair;
-            using std::make_pair;
+    // Compute weights
+    for ( typename T::size_type i = 0 ; i != edges.size() ; ++i ) {
+        /* A | B
+           --+--
+           C | D */
+        PixelGraph::iterator a = edges[i].first.first;
+        PixelGraph::iterator b = edges[i].second.first;
+        PixelGraph::iterator c = edges[i].second.second;
+        PixelGraph::iterator d = edges[i].first.second;
 
-            typedef pair<PixelGraph::iterator, PixelGraph::iterator> Edge;
-            typedef pair<Edge, int> EdgeWeight;
+        // Curves heuristic
+        weights[i].first += Heuristics::curves(graph, a, d)
+            * options.curvesMultiplier;
+        weights[i].second += Heuristics::curves(graph, b, c)
+            * options.curvesMultiplier;
 
-            EdgeWeight diagonals[2] = {
-                make_pair(make_pair(it, graph.nodeBottomRight(it)), 0),
-                make_pair(make_pair(graph.nodeRight(it), graph.nodeBottom(it)),
-                          0)
-            };
+        // Islands heuristic
+        weights[i].first += Heuristics::islands(a, d) * options.islandsWeight;
+        weights[i].second += Heuristics::islands(b, c) * options.islandsWeight;
 
-            // Check if there are crossing edges
-            if ( !diagonals[0].first.first->adj.bottomright
-                 || !diagonals[1].first.first->adj.bottomleft ) {
-                continue;
-            }
+        // Sparse pixels heuristic
+        using Heuristics::SparsePixels;
+        SparsePixels sparse_pixels;
 
-            // Compute weights
-            for ( int i = 0 ; i != 2 ; ++i ) {
-                // Curves and islands heuristics
-                PixelGraph::const_iterator a = diagonals[i].first.first;
-                PixelGraph::const_iterator b = diagonals[i].first.second;
+        sparse_pixels.diagonals[SparsePixels::MAIN_DIAGONAL].first
+            = edges[i].first;
+        sparse_pixels.diagonals[SparsePixels::SECONDARY_DIAGONAL].first
+            = edges[i].second;
 
-                diagonals[i].second += Heuristics::curves(graph, a, b)
-                    * options.curvesMultiplier;
+        sparse_pixels(graph, options.sparsePixelsRadius);
 
-                diagonals[i].second += Heuristics::islands(a, b)
-                    * options.islandsWeight;
-            }
+        weights[i].first
+            += sparse_pixels.diagonals[SparsePixels::MAIN_DIAGONAL].second
+            * options.sparsePixelsMultiplier;
+        weights[i].second
+            += sparse_pixels.diagonals[SparsePixels::SECONDARY_DIAGONAL].second
+            * options.sparsePixelsMultiplier;
+    }
 
-            {
-                // Sparse pixels heuristic
-                Heuristics::SparsePixels sparse_pixels;
+    // Remove edges with lower weight
+    for ( typename T::size_type i = 0 ; i != edges.size() ; ++i ) {
+        /* A | B
+           --+--
+           C | D */
+        PixelGraph::iterator a = edges[i].first.first;
+        PixelGraph::iterator b = edges[i].second.first;
+        PixelGraph::iterator c = edges[i].second.second;
+        PixelGraph::iterator d = edges[i].first.second;
 
-                for ( int i = 0 ; i != 2 ; ++i )
-                    sparse_pixels.diagonals[i] = diagonals[i];
-
-                sparse_pixels(graph, options.sparsePixelsRadius);
-
-                for ( int i = 0 ; i != 2 ; ++i ) {
-                    diagonals[i].second += sparse_pixels.diagonals[i].second
-                        * options.sparsePixelsMultiplier;
-                }
-            }
-
-            // Remove edges with lower weight
-            if ( diagonals[0].second > diagonals[1].second ) {
-                diagonals[1].first.first->adj.bottomleft = 0;
-                diagonals[1].first.second->adj.topright = 0;
-            } else if ( diagonals[0].second < diagonals[1].second ) {
-                diagonals[0].first.first->adj.bottomright = 0;
-                diagonals[0].first.second->adj.topleft = 0;
-            } else {
-                diagonals[0].first.first->adj.bottomright = 0;
-                diagonals[0].first.second->adj.topleft = 0;
-                diagonals[1].first.first->adj.bottomleft = 0;
-                diagonals[1].first.second->adj.topright = 0;
-            }
+        if ( weights[i].first > weights[i].second ) {
+            b->adj.bottomleft = 0;
+            c->adj.topright = 0;
+        } else if ( weights[i].first < weights[i].second ) {
+            a->adj.bottomright = 0;
+            d->adj.topleft = 0;
+        } else {
+            a->adj.bottomright = 0;
+            b->adj.bottomleft = 0;
+            c->adj.topright = 0;
+            d->adj.topleft = 0;
         }
     }
+
+    edges.clear();
 }
 
 inline int Heuristics::curves(const PixelGraph &graph,

@@ -296,21 +296,40 @@ SimplifiedVoronoi<T, adjust_splines>
         PixelGraph::const_iterator graph_it = graph.begin() + 1;
         Cell *cells_it = &_cells.front() + 1;
 
-        for ( int i = 1 ; i != _width - 1 ; ++i, ++graph_it, ++cells_it ) {
-            for ( int j = 0 ; j != 4 ; ++j )
-                cells_it->rgba[j] = graph_it->rgba[j];
+        if ( _height > 1 ) {
+            for ( int i = 1 ; i != _width - 1 ; ++i, ++graph_it, ++cells_it ) {
+                for ( int j = 0 ; j != 4 ; ++j )
+                    cells_it->rgba[j] = graph_it->rgba[j];
 
-            // Top-left
-            cells_it->vertices.push_back(Point<T>(i, 0, false));
+                // Top-left
+                cells_it->vertices.push_back(Point<T>(i, 0, false));
 
-            // Top-right
-            cells_it->vertices.push_back(Point<T>(i + 1, 0, false));
+                // Top-right
+                cells_it->vertices.push_back(Point<T>(i + 1, 0, false));
 
-            // Bottom-right
-            _complexBottomRight(graph, graph_it, cells_it, i, 0);
+                // Bottom-right
+                _complexBottomRight(graph, graph_it, cells_it, i, 0);
 
-            // Bottom-left
-            _complexBottomLeft(graph, graph_it, cells_it, i, 0);
+                // Bottom-left
+                _complexBottomLeft(graph, graph_it, cells_it, i, 0);
+            }
+        } else {
+            for ( int i = 1 ; i != _width - 1 ; ++i, ++graph_it, ++cells_it ) {
+                for ( int j = 0 ; j != 4 ; ++j )
+                    cells_it->rgba[j] = graph_it->rgba[j];
+
+                // Top-left
+                cells_it->vertices.push_back(Point<T>(i, 0, false));
+
+                // Top-right
+                cells_it->vertices.push_back(Point<T>(i + 1, 0, false));
+
+                // Bottom-right
+                cells_it->vertices.push_back(Point<T>(i + 1, 1, false));
+
+                // Bottom-left
+                cells_it->vertices.push_back(Point<T>(i, 1, false));
+            }
         }
     }
 
@@ -344,24 +363,46 @@ SimplifiedVoronoi<T, adjust_splines>
         PixelGraph::const_iterator graph_it = graph.begin() + _width;
         Cell *cells_it = &_cells.front() + _width;
 
-        for ( int i = 1 ; i != _height - 1 ; ++i) {
-            for ( int j = 0 ; j != 4 ; ++j )
-                cells_it->rgba[j] = graph_it->rgba[j];
+        if ( _width > 1 ) {
+            for ( int i = 1 ; i != _height - 1 ; ++i) {
+                for ( int j = 0 ; j != 4 ; ++j )
+                    cells_it->rgba[j] = graph_it->rgba[j];
 
-            // Top-left
-            cells_it->vertices.push_back(Point<T>(0, i, false));
+                // Top-left
+                cells_it->vertices.push_back(Point<T>(0, i, false));
 
-            // Top-right
-            _complexTopRight(graph, graph_it, cells_it, 0, i);
+                // Top-right
+                _complexTopRight(graph, graph_it, cells_it, 0, i);
 
-            // Bottom-right
-            _complexBottomRight(graph, graph_it, cells_it, 0, i);
+                // Bottom-right
+                _complexBottomRight(graph, graph_it, cells_it, 0, i);
 
-            // Bottom-left
-            cells_it->vertices.push_back(Point<T>(0, i + 1, false));
+                // Bottom-left
+                cells_it->vertices.push_back(Point<T>(0, i + 1, false));
 
-            graph_it += _width;
-            cells_it += _width;
+                graph_it += _width;
+                cells_it += _width;
+            }
+        } else {
+            for ( int i = 1 ; i != _height - 1 ; ++i) {
+                for ( int j = 0 ; j != 4 ; ++j )
+                    cells_it->rgba[j] = graph_it->rgba[j];
+
+                // Top-left
+                cells_it->vertices.push_back(Point<T>(0, i, false));
+
+                // Top-right
+                cells_it->vertices.push_back(Point<T>(1, i, false));
+
+                // Bottom-right
+                cells_it->vertices.push_back(Point<T>(1, i, false));
+
+                // Bottom-left
+                cells_it->vertices.push_back(Point<T>(0, i + 1, false));
+
+                graph_it += _width;
+                cells_it += _width;
+            }
         }
     }
 
@@ -890,7 +931,11 @@ SimplifiedVoronoi<T, adjust_splines>
         }
 
         if ( !smooth[0] && adjust_splines ) {
-            cells_it->vertices.push_back(vertices[0].invisible());
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_1ST_IS_INVISIBLE
+           cells_it->vertices.push_back(vertices[0].invisible());
+#else
+           cells_it->vertices.push_back(vertices[0]);
+#endif
             {
                 Point<T> another = vertices[0];
                 transform(another,
@@ -899,7 +944,11 @@ SimplifiedVoronoi<T, adjust_splines>
                           // y
                           - ( 0.5625
                               - ( topright(a_it) + topleft(b_it) ) * 0.1875 ));
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_2ND_IS_INVISIBLE
                 cells_it->vertices.push_back(another.invisible());
+#else
+                cells_it->vertices.push_back(another);
+#endif
             }
             {
                 Point<T> another = vertices[0];
@@ -910,7 +959,11 @@ SimplifiedVoronoi<T, adjust_splines>
                           - ( 0.1875
                               - ( topright(a_it) + topleft(b_it) ) * 0.0625) );
                 another.smooth = true;
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_3RD_IS_INVISIBLE
+                cells_it->vertices.push_back(another.invisible());
+#else
                 cells_it->vertices.push_back(another);
+#endif
             }
             {
                 Point<T> another = vertices[0];
@@ -920,7 +973,11 @@ SimplifiedVoronoi<T, adjust_splines>
                           // y
                           0.0625
                           + ( bottomright(b_it) - topright(d_it) ) * 0.0625);
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_4TH_IS_INVISIBLE
                 cells_it->vertices.push_back(another.invisible());
+#else
+                cells_it->vertices.push_back(another);
+#endif
             }
             {
                 transform(vertices[0],
@@ -932,7 +989,9 @@ SimplifiedVoronoi<T, adjust_splines>
                               + ( topright(d_it) - topright(a_it)
                                   - topleft(b_it) - bottomright(b_it) )
                               * 0.03125 ));
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_5TH_IS_INVISIBLE
                 vertices[0].visible = false;
+#endif
             }
         }
 
@@ -950,7 +1009,11 @@ SimplifiedVoronoi<T, adjust_splines>
                           0.0625
                           + ( bottomleft(a_it) - bottomleft(d_it)
                               - topleft(c_it) - bottomright(c_it) ) * 0.03125);
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_1ST_IS_INVISIBLE
                 cells_it->vertices.push_back(another.invisible());
+#else
+                cells_it->vertices.push_back(another);
+#endif
             }
             {
                 Point<T> another = vertices[1];
@@ -960,7 +1023,11 @@ SimplifiedVoronoi<T, adjust_splines>
                           // y
                           0.1875
                           - ( bottomright(c_it) + bottomleft(d_it) ) * 0.0625);
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_2ND_IS_INVISIBLE
                 cells_it->vertices.push_back(another.invisible());
+#else
+                cells_it->vertices.push_back(another);
+#endif
             }
             {
                 Point<T> another = vertices[1];
@@ -973,7 +1040,11 @@ SimplifiedVoronoi<T, adjust_splines>
                               - ( bottomleft(a_it) - topleft(c_it) )
                               * 0.0625 ));
                 another.smooth = true;
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_3RD_IS_INVISIBLE
+                cells_it->vertices.push_back(another.invisible());
+#else
                 cells_it->vertices.push_back(another);
+#endif
             }
             {
                 Point<T> another = vertices[1];
@@ -985,9 +1056,15 @@ SimplifiedVoronoi<T, adjust_splines>
                           - ( 0.1875
                               - ( bottomleft(a_it) - topleft(c_it) )
                               * 0.1875 ));
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_4TH_IS_INVISIBLE
                 cells_it->vertices.push_back(another.invisible());
+#else
+                cells_it->vertices.push_back(another);
+#endif
             }
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_5TH_IS_INVISIBLE
             vertices[1].visible = false;
+#endif
         }
 
         cells_it->vertices.push_back(vertices[1]);
@@ -1029,13 +1106,21 @@ SimplifiedVoronoi<T, adjust_splines>
                                     - ( ( bottomright(c_it) + topleft(c_it) )
                                         * 0.03125 );
                                 transform(another, - amount, amount);
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_1ST_IS_INVISIBLE
                                 cells_it->vertices.push_back(another.invisible());
+#else
+                                cells_it->vertices.push_back(another);
+#endif
                             }
                             {
                                 Point<T> another = vertex;
                                 T amount = 0.0625 * bottomright(c_it);
                                 transform(another, amount, 0.25 - amount);
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_2ND_IS_INVISIBLE
                                 cells_it->vertices.push_back(another.invisible());
+#else
+                                cells_it->vertices.push_back(another);
+#endif
                             }
                             {
                                 Point<T> another = vertex;
@@ -1043,16 +1128,26 @@ SimplifiedVoronoi<T, adjust_splines>
                                 transform(another, - ( 0.25 - amount ),
                                           - amount);
                                 another.smooth = true;
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_3RD_IS_INVISIBLE
+                                cells_it->vertices.push_back(another.invisible());
+#else
                                 cells_it->vertices.push_back(another);
+#endif
                             }
                             {
                                 Point<T> another = vertex;
                                 T amount = 0.1875 * topleft(c_it);
                                 transform(another, - ( 0.75 - amount ),
                                           - amount);
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_4TH_IS_INVISIBLE
                                 cells_it->vertices.push_back(another.invisible());
+#else
+                                cells_it->vertices.push_back(another);
+#endif
                             }
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_5TH_IS_INVISIBLE
                             vertex.visible = false;
+#endif
                         } else if ( twin_is_contour ) {
                             T amount = 0.125
                                 - ( ( bottomleft(d_it) + topright(d_it) )
@@ -1076,7 +1171,11 @@ SimplifiedVoronoi<T, adjust_splines>
                                       - amount
                                       * ( topleft(c_it) + topright(d_it)
                                           - bottomleft(a_it) - bottomright(b_it) ));
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_1ST_IS_INVISIBLE
                             cells_it->vertices.push_back(another.invisible());
+#else
+                            cells_it->vertices.push_back(another);
+#endif
                         }
                         {
                             Point<T> another = vertex;
@@ -1087,7 +1186,11 @@ SimplifiedVoronoi<T, adjust_splines>
                                       // y
                                       - amount
                                       * ( topright(d_it) - bottomright(b_it) ));
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_2ND_IS_INVISIBLE
                             cells_it->vertices.push_back(another.invisible());
+#else
+                            cells_it->vertices.push_back(another);
+#endif
                         }
                         {
                             Point<T> another = vertex;
@@ -1099,7 +1202,11 @@ SimplifiedVoronoi<T, adjust_splines>
                                       - amount
                                       * ( topleft(c_it) - bottomleft(a_it) ));
                             another.smooth = true;
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_3RD_IS_INVISIBLE
+                            cells_it->vertices.push_back(another.invisible());
+#else
                             cells_it->vertices.push_back(another);
+#endif
                         }
                         {
                             Point<T> another = vertex;
@@ -1110,9 +1217,15 @@ SimplifiedVoronoi<T, adjust_splines>
                                       // y
                                       -  amount
                                       * ( topleft(c_it) - bottomleft(a_it) ));
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_4TH_IS_INVISIBLE
                             cells_it->vertices.push_back(another.invisible());
+#else
+                            cells_it->vertices.push_back(another);
+#endif
                         }
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_5TH_IS_INVISIBLE
                         vertex.visible = false;
+#endif
                     }
                 } else {
                     // {this, right} is the pair with the angle
@@ -1146,13 +1259,21 @@ SimplifiedVoronoi<T, adjust_splines>
 
                     if ( !vertex.smooth ) {
                         if ( another_is_contour ) {
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_1ST_IS_INVISIBLE
                             cells_it->vertices.push_back(vertex.invisible());
+#else
+                            cells_it->vertices.push_back(vertex);
+#endif
                             {
                                 Point<T> another = vertex;
                                 T amount = 0.1875 * topleft(b_it);
                                 transform(another, - amount,
                                           - ( 0.75 - amount ));
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_2ND_IS_INVISIBLE
                                 cells_it->vertices.push_back(another.invisible());
+#else
+                                cells_it->vertices.push_back(another);
+#endif
                             }
                             {
                                 Point<T> another = vertex;
@@ -1160,20 +1281,30 @@ SimplifiedVoronoi<T, adjust_splines>
                                 transform(another, - amount,
                                           - ( 0.25 - amount ));
                                 another.smooth = true;
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_3RD_IS_INVISIBLE
+                                cells_it->vertices.push_back(another.invisible());
+#else
                                 cells_it->vertices.push_back(another);
+#endif
                             }
                             {
                                 Point<T> another = vertex;
                                 T amount = 0.0625 * bottomright(b_it);
                                 transform(another, 0.25 - amount, amount);
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_4TH_IS_INVISIBLE
                                 cells_it->vertices.push_back(another.invisible());
+#else
+                                cells_it->vertices.push_back(another);
+#endif
                             }
                             {
                                 T amount = 0.125
                                     - (bottomright(b_it) + topleft(b_it))
                                     * 0.03125;
                                 transform(vertex, amount, - amount);
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_5TH_IS_INVISIBLE
                                 vertex.visible = false;
+#endif
                             }
                         } else if ( twin_is_contour ) {
                             T amount = 0.125
@@ -1187,7 +1318,11 @@ SimplifiedVoronoi<T, adjust_splines>
                         // I REALLY NEED lambdas to improve this code without
                         // creating yet another interface that takes a million
                         // of function parameters and keep code locality
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_1ST_IS_INVISIBLE
                         cells_it->vertices.push_back(vertex.invisible());
+#else
+                        cells_it->vertices.push_back(vertex);
+#endif
                         {
                             Point<T> another = vertex;
                             T amount = 0.1875;
@@ -1197,7 +1332,11 @@ SimplifiedVoronoi<T, adjust_splines>
                                       - ( 0.75
                                           - ( topleft(b_it) + topright(a_it) )
                                           * amount ));
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_2ND_IS_INVISIBLE
                             cells_it->vertices.push_back(another.invisible());
+#else
+                            cells_it->vertices.push_back(another);
+#endif
                         }
                         {
                             Point<T> another = vertex;
@@ -1209,7 +1348,11 @@ SimplifiedVoronoi<T, adjust_splines>
                                           - ( topleft(b_it) + topright(a_it) )
                                           * amount ));
                             another.smooth = true;
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_3RD_IS_INVISIBLE
+                            cells_it->vertices.push_back(another.invisible());
+#else
                             cells_it->vertices.push_back(another);
+#endif
                         }
                         {
                             Point<T> another = vertex;
@@ -1219,7 +1362,11 @@ SimplifiedVoronoi<T, adjust_splines>
                                       // y
                                       0.25 - amount
                                       * ( bottomleft(d_it) + bottomright(c_it) ));
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_4TH_IS_INVISIBLE
                             cells_it->vertices.push_back(another.invisible());
+#else
+                            cells_it->vertices.push_back(another);
+#endif
                         }
                         {
                             transform(vertex,
@@ -1230,7 +1377,9 @@ SimplifiedVoronoi<T, adjust_splines>
                                       ( topleft(b_it) - bottomleft(d_it)
                                         + topright(a_it) - bottomright(c_it) )
                                       * 0.03125);
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_5TH_IS_INVISIBLE
                             vertex.visible = false;
+#endif
                         }
                     }
                 } else {
@@ -1273,28 +1422,46 @@ SimplifiedVoronoi<T, adjust_splines>
                                 - ( topleft(c_it) + bottomright(c_it) )
                                 * 0.03125;
                             transform(another, - amount, amount);
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_1ST_IS_INVISIBLE
                             cells_it->vertices.push_back(another.invisible());
+#else
+                            cells_it->vertices.push_back(another);
+#endif
                         }
                         {
                             Point<T> another = vertex;
                             T amount = 0.0625 * bottomright(c_it);
                             transform(another, amount, 0.25 - amount);
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_2ND_IS_INVISIBLE
                             cells_it->vertices.push_back(another.invisible());
+#else
+                            cells_it->vertices.push_back(another);
+#endif
                         }
                         {
                             Point<T> another = vertex;
                             T amount = 0.0625 * topleft(c_it);
                             transform(another, - ( 0.25 - amount ), - amount);
                             another.smooth = true;
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_3RD_IS_INVISIBLE
+                            cells_it->vertices.push_back(another.invisible());
+#else
                             cells_it->vertices.push_back(another);
+#endif
                         }
                         {
                             Point<T> another = vertex;
                             T amount = 0.1875 * topleft(c_it);
                             transform(another, - ( 0.75 - amount ), - amount);
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_4TH_IS_INVISIBLE
                             cells_it->vertices.push_back(another.invisible());
+#else
+                            cells_it->vertices.push_back(another);
+#endif
                         }
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_5TH_IS_INVISIBLE
                         vertex.visible = false;
+#endif
                     } else {
                         special = true;
                     }
@@ -1308,7 +1475,11 @@ SimplifiedVoronoi<T, adjust_splines>
             }
 
             if ( special ) {
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_1ST_IS_INVISIBLE
                 cells_it->vertices.push_back(vertex.invisible());
+#else
+                cells_it->vertices.push_back(vertex);
+#endif
                 {
                     Point<T> another = vertex;
                     T amount = 0.1875;
@@ -1318,7 +1489,11 @@ SimplifiedVoronoi<T, adjust_splines>
                               - ( 0.75
                                   - ( topleft(b_it) + topright(a_it) )
                                   * amount ));
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_2ND_IS_INVISIBLE
                     cells_it->vertices.push_back(another.invisible());
+#else
+                    cells_it->vertices.push_back(another);
+#endif
                 }
                 {
                     Point<T> another = vertex;
@@ -1330,7 +1505,11 @@ SimplifiedVoronoi<T, adjust_splines>
                                   - ( topleft(b_it) + topright(a_it) )
                                   * amount ));
                     another.smooth = true;
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_3RD_IS_INVISIBLE
+                    cells_it->vertices.push_back(another.invisible());
+#else
                     cells_it->vertices.push_back(another);
+#endif
                 }
                 {
                     Point<T> another = vertex;
@@ -1340,7 +1519,11 @@ SimplifiedVoronoi<T, adjust_splines>
                               // y
                               0.25 - amount
                               * ( bottomleft(d_it) + bottomright(c_it) ));
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_4TH_IS_INVISIBLE
                     cells_it->vertices.push_back(another.invisible());
+#else
+                    cells_it->vertices.push_back(another);
+#endif
                 }
                 {
                     transform(vertex,
@@ -1351,7 +1534,9 @@ SimplifiedVoronoi<T, adjust_splines>
                               ( topleft(b_it) - bottomleft(d_it)
                                 + topright(a_it) - bottomright(c_it) )
                               * 0.03125);
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_5TH_IS_INVISIBLE
                     vertex.visible = false;
+#endif
                 }
             }
         } else if ( right(c_it) && adjust_splines ) {
@@ -1372,31 +1557,49 @@ SimplifiedVoronoi<T, adjust_splines>
 
                 if ( !vertex.smooth ) {
                     if ( similar_neighbor_is_contour ) {
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_1ST_IS_INVISIBLE
                         cells_it->vertices.push_back(vertex.invisible());
+#else
+                        cells_it->vertices.push_back(vertex);
+#endif
                         {
                             Point<T> another = vertex;
                             T amount = 0.1875 * topleft(b_it);
                             transform(another, - amount, - ( 0.75 - amount ));
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_2ND_IS_INVISIBLE
                             cells_it->vertices.push_back(another.invisible());
+#else
+                            cells_it->vertices.push_back(another);
+#endif
                         }
                         {
                             Point<T> another = vertex;
                             T amount = 0.0625 * topleft(b_it);
                             transform(another, - amount, - ( 0.25 - amount ));
                             another.smooth = true;
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_3RD_IS_INVISIBLE
+                            cells_it->vertices.push_back(another.invisible());
+#else
                             cells_it->vertices.push_back(another);
+#endif
                         }
                         {
                             Point<T> another = vertex;
                             T amount = 0.0625 * bottomright(b_it);
                             transform(another, 0.25 - amount, amount);
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_4TH_IS_INVISIBLE
                             cells_it->vertices.push_back(another.invisible());
+#else
+                            cells_it->vertices.push_back(another);
+#endif
                         }
                         {
                             T amount = 0.125
                                 - 0.03125 * (topleft(b_it) + bottomright(b_it));
                             transform(vertex, amount, - amount);
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_5TH_IS_INVISIBLE
                             vertex.visible = false;
+#endif
                         }
                     } else {
                         special = true;
@@ -1422,7 +1625,11 @@ SimplifiedVoronoi<T, adjust_splines>
                               - amount
                               * ( topleft(c_it) + topright(d_it)
                                   - bottomleft(a_it) - bottomright(b_it) ));
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_1ST_IS_INVISIBLE
                     cells_it->vertices.push_back(another.invisible());
+#else
+                    cells_it->vertices.push_back(another);
+#endif
                 }
                 {
                     Point<T> another = vertex;
@@ -1433,7 +1640,11 @@ SimplifiedVoronoi<T, adjust_splines>
                               // y
                               - amount
                               * ( topright(d_it) - bottomright(b_it) ));
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_2ND_IS_INVISIBLE
                     cells_it->vertices.push_back(another.invisible());
+#else
+                    cells_it->vertices.push_back(another);
+#endif
                 }
                 {
                     Point<T> another = vertex;
@@ -1445,7 +1656,11 @@ SimplifiedVoronoi<T, adjust_splines>
                               - amount
                               * ( topleft(c_it) - bottomleft(a_it) ));
                     another.smooth = true;
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_3RD_IS_INVISIBLE
+                    cells_it->vertices.push_back(another.invisible());
+#else
                     cells_it->vertices.push_back(another);
+#endif
                 }
                 {
                     Point<T> another = vertex;
@@ -1456,9 +1671,15 @@ SimplifiedVoronoi<T, adjust_splines>
                               // y
                               -  amount
                               * ( topleft(c_it) - bottomleft(a_it) ));
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_4TH_IS_INVISIBLE
                     cells_it->vertices.push_back(another.invisible());
+#else
+                    cells_it->vertices.push_back(another);
+#endif
                 }
+#ifdef LIBDEPIXELIZE_ENABLE_EXPERIMENTAL_FEATURES_5TH_IS_INVISIBLE
                 vertex.visible = false;
+#endif
             }
         } else {
             // there is a 4-color pattern, where the current node

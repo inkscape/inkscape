@@ -88,6 +88,23 @@ public:
     /**
      * # Exceptions
      *
+     * \p options.optimize and options.nthreads will be ignored
+     *
+     * Glib::FileError
+     * Gdk::PixbufError
+     */
+    static Splines to_grouped_voronoi(const std::string &filename,
+                                      const Options &options = Options());
+
+    /*
+     * \p options.optimize and options.nthreads will be ignored
+     */
+    static Splines to_grouped_voronoi(const Glib::RefPtr<Gdk::Pixbuf const> &buf,
+                                      const Options &options = Options());
+
+    /**
+     * # Exceptions
+     *
      * Glib::FileError
      * Gdk::PixbufError
      */
@@ -106,8 +123,13 @@ private:
              const Options &options);
 
     static void _disconnect_neighbors_with_dissimilar_colors(PixelGraph &graph);
-    static void _remove_crossing_edges_safe(PixelGraph &graph);
-    static void _remove_crossing_edges_unsafe(PixelGraph &graph,
+
+    // here, T/template is only used as an easy way to not expose internal
+    // symbols
+    template<class T>
+    static void _remove_crossing_edges_safe(T &container);
+    template<class T>
+    static void _remove_crossing_edges_unsafe(PixelGraph &graph, T &edges,
                                               const Options &options);
 };
 

@@ -28,6 +28,7 @@
 #include <gdkmm/pixbuf.h>
 #include <vector>
 #include <cassert>
+#include <utility>
 
 namespace Tracer {
 
@@ -75,6 +76,10 @@ public:
     typedef std::vector<Node>::const_iterator const_iterator;
     typedef std::vector<Node>::reverse_iterator reverse_iterator;
     typedef std::vector<Node>::const_reverse_iterator const_reverse_iterator;
+
+    typedef std::pair<iterator, iterator> Edge;
+    typedef std::pair<Edge, Edge> EdgePair;
+    typedef std::vector<EdgePair> EdgePairContainer;
 
     class ColumnView
     {
@@ -162,6 +167,7 @@ public:
 
     // Algorithms
     void connectAllNeighbors();
+    EdgePairContainer crossingEdges();
 
     int toX(const_iterator n) const
     {
@@ -389,14 +395,23 @@ inline void PixelGraph::connectAllNeighbors()
     //  ...then the "top" nodes...
     if ( _width > 2 ) {
         Node *it = &_nodes[1];
-        for ( int i = 1 ; i != _width - 1 ; ++i ) {
-            it->adj.right = 1;
-            it->adj.bottomright = 1;
-            it->adj.bottom = 1;
-            it->adj.bottomleft = 1;
-            it->adj.left = 1;
+        if ( _height > 1 ) {
+            for ( int i = 1 ; i != _width - 1 ; ++i ) {
+                it->adj.right = 1;
+                it->adj.bottomright = 1;
+                it->adj.bottom = 1;
+                it->adj.bottomleft = 1;
+                it->adj.left = 1;
 
-            ++it;
+                ++it;
+            }
+        } else {
+            for ( int i = 1 ; i != _width - 1 ; ++i ) {
+                it->adj.right = 1;
+                it->adj.left = 1;
+
+                ++it;
+            }
         }
     }
 
@@ -417,14 +432,23 @@ inline void PixelGraph::connectAllNeighbors()
     //  ...then the "left" nodes...
     if ( _height > 2 ) {
         iterator it = nodeBottom(begin()); // [0][1]
-        for ( int i = 1 ; i != _height - 1 ; ++i ) {
-            it->adj.top = 1;
-            it->adj.topright = 1;
-            it->adj.right = 1;
-            it->adj.bottomright = 1;
-            it->adj.bottom = 1;
+        if ( _width > 1 ) {
+            for ( int i = 1 ; i != _height - 1 ; ++i ) {
+                it->adj.top = 1;
+                it->adj.topright = 1;
+                it->adj.right = 1;
+                it->adj.bottomright = 1;
+                it->adj.bottom = 1;
 
-            it = nodeBottom(it);
+                it = nodeBottom(it);
+            }
+        } else {
+            for ( int i = 1 ; i != _height - 1 ; ++i ) {
+                it->adj.top = 1;
+                it->adj.bottom = 1;
+
+                it = nodeBottom(it);
+            }
         }
     }
 
@@ -480,6 +504,34 @@ inline void PixelGraph::connectAllNeighbors()
         down_right->adj.topleft = 1;
         down_right->adj.top = 1;
     }
+}
+
+PixelGraph::EdgePairContainer PixelGraph::crossingEdges()
+{
+    EdgePairContainer ret;
+
+    if ( width() < 2 || height() < 2 )
+        return ret;
+
+    // Iterate over the graph, 2x2 blocks at time
+    PixelGraph::iterator it = begin();
+    for (int i = 0 ; i != height() - 1 ; ++i, ++it ) {
+        for ( int j = 0 ; j != width() - 1 ; ++j, ++it ) {
+            EdgePair diagonals(
+                Edge(it, nodeBottomRight(it)),
+                Edge(nodeRight(it), nodeBottom(it)));
+
+            // Check if there are crossing edges
+            if ( !diagonals.first.first->adj.bottomright
+                 || !diagonals.second.first->adj.bottomleft ) {
+                continue;
+            }
+
+            ret.push_back(diagonals);
+        }
+    }
+
+    return ret;
 }
 
 inline PixelGraph::Node &PixelGraph::ColumnView::operator[](int line)

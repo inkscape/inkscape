@@ -38,6 +38,12 @@ class HomogeneousSplines
 public:
     struct Polygon
     {
+        typedef std::vector< Point<T> > Points;
+        typedef typename Points::iterator points_iter;
+        typedef typename Points::const_iterator const_points_iter;
+        typedef typename std::vector<Points>::iterator holes_iter;
+        typedef typename std::vector<Points>::const_iterator const_holes_iter;
+
         Polygon() {}
         Polygon(const guint8 (&rgba)[4])
         {
@@ -59,7 +65,8 @@ public:
     typedef typename std::vector<Polygon>::const_iterator const_iterator;
     typedef typename std::vector<Polygon>::size_type size_type;
 
-    HomogeneousSplines(const SimplifiedVoronoi<T> &voronoi);
+    template<bool adjust_splines>
+    HomogeneousSplines(const SimplifiedVoronoi<T, adjust_splines> &voronoi);
 
     // Iterators
     iterator begin()
@@ -98,12 +105,7 @@ public:
     }
 
 private:
-    typedef typename SimplifiedVoronoi<T>::Cell Cell;
     typedef std::vector< Point<T> > Points;
-
-    typedef typename SimplifiedVoronoi<T>::iterator voronoi_iter;
-    typedef typename SimplifiedVoronoi<T>::const_iterator voronoi_citer;
-
     typedef typename Points::iterator points_iter;
     typedef typename Points::const_iterator points_citer;
     typedef typename Points::reverse_iterator points_riter;
@@ -171,13 +173,18 @@ private:
 };
 
 template<class T>
-HomogeneousSplines<T>::HomogeneousSplines(const SimplifiedVoronoi<T> &voronoi) :
+template<bool adjust_splines>
+HomogeneousSplines<T>::HomogeneousSplines(const SimplifiedVoronoi<T,
+                                          adjust_splines> &voronoi) :
     _width(voronoi.width()),
     _height(voronoi.height())
 {
     //if (!voronoi.size())
     //    return;
     using colorspace::same_color;
+
+    typedef typename SimplifiedVoronoi<T, adjust_splines>::const_iterator
+        voronoi_citer;
 
     // Identify visible edges (group polygons with the same color)
     for ( voronoi_citer cell_it = voronoi.begin(), cell_end = voronoi.end()
