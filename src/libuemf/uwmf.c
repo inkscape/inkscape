@@ -19,8 +19,8 @@
 
 /*
 File:      uwmf.c
-Version:   0.0.13
-Date:      30-JAN-2014
+Version:   0.0.14
+Date:      24-MAR-2014
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
 Copyright: 2014 David Mathog and California Institute of Technology (Caltech)
@@ -327,9 +327,9 @@ uint32_t U_wmr_values(int idx){
     \param idx WMR record type. 
     
 */
-char *U_wmr_names(int idx){
+const char *U_wmr_names(int idx){
    int ret;
-   static char *U_WMR_NAMES[257]={
+   static const char *U_WMR_NAMES[257]={
       "U_WMR_EOF",
       "U_WMR_SETBKCOLOR",
       "U_WMR_SETBKMODE",
@@ -597,8 +597,8 @@ char *U_wmr_names(int idx){
     \return name of the WMR record, "UNKNOWN_ESCAPE" if out of range.
     \param idx Escape record type.     
 */
-char *U_wmr_escnames(int idx){
-   char *name;
+const char *U_wmr_escnames(int idx){
+   const char *name;
    if(idx>=0 && idx <= 0x0023){
       switch(idx){
           case    0x0001:  name = "NEWFRAME";                      break;
@@ -1461,6 +1461,7 @@ int  wmf_start(
    wtl->chunk      =  chunksize;
    wtl->largest    =  0;            /* only used by WMF */
    wtl->sumObjects =  0;            /* only used by WMF */
+   (void) wmf_highwater(U_HIGHWATER_CLEAR);
    *wt=wtl;
    return(0);
 }
@@ -1480,6 +1481,7 @@ int wmf_free(
    free(wtl->buf);
    free(wtl);
    *wt=NULL;
+   (void)wmf_highwater(U_HIGHWATER_CLEAR);
    return(0);
 }
 
@@ -1509,8 +1511,9 @@ int  wmf_finish(
    memcpy(record + offsetof(U_WMRHEADER,Sizew),      &tmp, 4);    /* 16 bit words in file. not aligned */
    tmp = (wt->largest)/2;
    memcpy(record + offsetof(U_WMRHEADER,maxSize), &tmp, 4);   /*  16 bit words in largest record, not aligned */
-   if(wt->sumObjects > UINT16_MAX)return(3);
-   tmp16 = wt->sumObjects;
+   uint32_t maxobj = wmf_highwater(U_HIGHWATER_READ);
+   if(maxobj > UINT16_MAX)return(3);
+   tmp16 = maxobj;
    memcpy(record + offsetof(U_WMRHEADER,nObjects), &tmp16, 2);   /*  Total number of brushes, pens, and other graphics objects defined in this file */
   
 #if U_BYTE_SWAP
@@ -1654,6 +1657,28 @@ int  wmf_header_append(
 }
 
 /**
+    \brief Keep track of the largest number used.
+    \return The largest object number used.
+    \param setval U_HIGHWATER_READ only return value, U_HIGHWATER_CLEAR also set value to 0, anything else, set to this if higher than stored.
+*/
+int wmf_highwater(uint32_t setval){
+   static uint32_t value=0;
+   uint32_t retval;
+   if(setval == U_HIGHWATER_READ){
+      retval = value;
+   }
+   else if(setval == U_HIGHWATER_CLEAR){
+      retval = value;
+      value = 0;
+   }
+   else {
+      if(setval > value)value = setval; 
+      retval = value;
+   }
+   return(retval);
+}
+
+/**
     \brief Create a handle table. Entries filled with 0 are empty, entries >0 hold a handle.
     \return 0 for success, >=1 for failure.
     \param initsize Initialize with space for this number of handles
@@ -1736,8 +1761,13 @@ int wmf_htable_insert(
    }
    *ih = wht->lolimit;              // handle that is inserted in first available slot
    wht->table[*ih] = *ih;           // handle goes into preexisting (but zero) slot in table, handle number is the same as the slot number
-   if(*ih > wht->hilimit){    wht->hilimit = *ih;  }
-   if(*ih > wht->peak){       wht->peak    = *ih;  }
+   if(*ih > wht->hilimit){    
+      wht->hilimit = *ih;
+      (void) wmf_highwater(wht->hilimit);
+   }
+   if(*ih > wht->peak){
+      wht->peak    = *ih;
+   }
    /* Find the next available slot, it will be at least one higher than the present position, and will have a zero in it. */
    wht->lolimit++;
    while(wht->lolimit<= wht->hilimit && wht->table[wht->lolimit]){ wht->lolimit++; }
@@ -2034,7 +2064,7 @@ char *U_WMRCORE_PALETTE_set(
       off = U_SIZE_METARECORD;
          memcpy(record+off, &Palette->Start,      2);   off+=2;
          memcpy(record+off, &Palette->NumEntries, 2);   off+=2;
-         memcpy(record+off, &Palette->PalEntries, nPE); off+=2;
+         memcpy(record+off, &Palette->PalEntries, nPE);
    }
    return(record);
 }
@@ -2157,9 +2187,9 @@ char *wcreatedibpatternbrush_srcdib_set(
 }
 
 /**
-    \brief Allocate and construct a U_WMRCREATEPATTERNBRUSH record from a U_BITMAP16 object.
-    Use this function instead of calling U_WMRCREATEPATTERNBRUSH_set() directly.
-    \return pointer to the U_WMRCREATEPATTERNBRUSH record, or NULL on error.
+    \brief Allocate and construct a U_WMRDIBCREATEPATTERNBRUSH record from a U_BITMAP16 object.
+    Use this function instead of calling U_WMRDIBCREATEPATTERNBRUSH_set() directly.
+    \return pointer to the U_WMRDIBCREATEPATTERNBRUSH record, or NULL on error.
     \param ihBrush handle to be used by new object 
     \param wht     WMF handle table 
     \param iUsage  DIBColors enumeration
@@ -2179,7 +2209,8 @@ char *wcreatedibpatternbrush_srcbm16_set(
 /**
     \brief Allocate and construct a U_WMRCREATEPATTERNBRUSH record, create a handle and returns it
     Use this function instead of calling U_WMRCREATEPATTERNBRUSH_set() directly.
-    Warning - application support for U_WMRCREATEPATTERNBRUSH is spotty, better to use U_WMRDIBCREATEPATTERNBRUSH.
+    WARNING - U_WMRCREATEPATTERNBRUSH has been declared obsolete and application support is spotty -
+    use U_WMRDIBCREATEPATTERNBRUSH instead.
     \return pointer to the U_WMRCREATEPATTERNBRUSH record, or NULL on error.
     \param ihBrush handle to be used by new object 
     \param wht     WMF handle table 
@@ -2804,13 +2835,13 @@ char *U_WMRTEXTOUT_set(U_POINT16 Dst, char *string){
    if(record){
       U_WMRCORE_SETRECHEAD(record,irecsize,U_WMR_TEXTOUT);
       off = U_SIZE_METARECORD;
-         memcpy(record+off,&Length,2);             off+=2;
-         memcpy(record+off,string,Length);         off+=Length;
+         memcpy(record+off,&Length,2);          off+=2;
+         memcpy(record+off,string,Length);      off+=Length;
       if(Length!=L2){ 
-         memset(record+off,0,1);                   off+=1;
+         memset(record+off,0,1);                off+=1;
       }
-         memcpy(record+off,&Dst.y,2);              off+=2;
-         memcpy(record+off,&Dst.x,2);              off+=2;
+      memcpy(record+off,&Dst.y,2);              off+=2;
+      memcpy(record+off,&Dst.x,2);
    }
    return(record);
 }
@@ -3427,7 +3458,7 @@ char *U_WMRDIBCREATEPATTERNBRUSH_set(
          if(cbBm164 - cbBm16)memset(record+off,0,cbBm164 - cbBm16);
       }
    }
-   else if(Bmi){
+   else if(Bmi && Px){
       SET_CB_FROM_PXBMI(Px,Bmi,cbImage,cbImage4,cbBmi,cbPx);
       irecsize = U_SIZE_WMRDIBCREATEPATTERNBRUSH + cbBmi + cbImage4;
       record   = malloc(irecsize);
@@ -4257,7 +4288,8 @@ char *U_WMRF8_set(void){
 
 /**
     \brief Allocate and construct a U_WMRCREATEPATTERNBRUSH record.
-    Warning - application support for U_WMRCREATEPATTERNBRUSH is spotty, better to use U_WMRDIBCREATEPATTERNBRUSH.
+    WARNING - U_WMRCREATEPATTERNBRUSH has been declared obsolete and application support is spotty -
+    use U_WMRDIBCREATEPATTERNBRUSH instead.
     \return pointer to the U_WMRCREATEPATTERNBRUSH record, or NULL on error.
     \param Bm16         Pointer to a Bitmap16 Object, only the first 10 bytes are used.
     \param Pattern      byte array pattern, described by Bm16, for brush
@@ -4450,23 +4482,17 @@ int U_WMRCORE_RECSAFE_get(
 /* records like U_WMRFLOODFILL and others. all args are optional, Color is not */
 int U_WMRCORE_1U16_CRF_2U16_get(
       const char *contents,
-      int         minsize,
       uint16_t   *arg1,
       U_COLORREF *Color,
       uint16_t   *arg2,
       uint16_t   *arg3
    ){
-   int  size = U_WMRCORE_RECSAFE_get(contents, minsize);
-   int  irecsize,off;
-   irecsize  = U_SIZE_METARECORD + U_SIZE_COLORREF;
-   if(arg1)irecsize+=2;
-   if(arg2)irecsize+=2;
-   if(arg3)irecsize+=2;
-   off = U_SIZE_METARECORD;
-   if(arg1){  memcpy(arg1,   contents + off, 2); off+=2; }
-              memcpy(Color,  contents + off, 4); off+=4;
-   if(arg2){  memcpy(arg2,   contents + off, 2); off+=2; }
-   if(arg3){  memcpy(arg3,   contents + off, 2); off+=2; }
+   int  size = 0;
+   int  off  = U_SIZE_METARECORD;
+   if(arg1){  memcpy(arg1,   contents + off, 2); off+=2; size+=2;}
+              memcpy(Color,  contents + off, 4); off+=4; size+=4;
+   if(arg2){  memcpy(arg2,   contents + off, 2); off+=2; size+=2;}
+   if(arg3){  memcpy(arg3,   contents + off, 2);         size+=2;}
    return(size);
 }
 
@@ -5191,7 +5217,6 @@ int U_WMRFLOODFILL_get(
    ){
    return  U_WMRCORE_1U16_CRF_2U16_get(
       contents,
-      (U_SIZE_WMRFLOODFILL),
       Mode,
       Color,
       U_P16(coord->y),
@@ -5321,7 +5346,6 @@ int U_WMRSETPIXEL_get(
       U_POINT16  *Coord){
    return  U_WMRCORE_1U16_CRF_2U16_get(
       contents,
-      (U_SIZE_WMRSETPIXEL),
       NULL,
       Color,
       U_P16(Coord->y),
@@ -5366,7 +5390,7 @@ int U_WMRTEXTOUT_get(
    if(L2 & 1)L2++;
    off = U_SIZE_METARECORD + 2 + L2;
    memcpy(&Dst->y, contents + off, 2); off+=2;
-   memcpy(&Dst->x, contents + off, 2); off+=2;
+   memcpy(&Dst->x, contents + off, 2);
    return(size);
 }
 
@@ -5982,6 +6006,8 @@ int U_WMRDIBSTRETCHBLT_get(
 /**
     \brief Get data from a  U_WMRDIBCREATEPATTERNBRUSH record.
       Returns an image as either a DIB (Bmi/CbPx/Px defined) or a Bitmap16 (Bm16 defined).
+      WARNING - U_WMRCREATEPATTERNBRUSH has been declared obsolete and application support is spotty -
+      this function is still valid though, for those instances where old WMF input files are encountered.
     \return length of the U_WMRDIBCREATEPATTERNBRUSH record in bytes, or 0 on error
     \param  contents   record to extract data from
     \param  Style      BrushStyle Enumeration                                                                                              
@@ -6096,7 +6122,6 @@ int U_WMREXTFLOODFILL_get(
    ){
    return  U_WMRCORE_1U16_CRF_2U16_get(
       contents,
-      (U_SIZE_WMREXTFLOODFILL),
       Mode,
       Color,
       U_P16(coord->y),

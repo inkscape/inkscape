@@ -67,8 +67,8 @@ Optional compiler switches for development:
 
 
 File:      text_reassemble.c
-Version:   0.0.12
-Date:      07-FEB-2014
+Version:   0.0.13
+Date:      24-MAR-2014
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
 Copyright: 2014 David Mathog and California Institute of Technology (Caltech)
@@ -2055,7 +2055,6 @@ void TR_layout_2_svg(TR_INFO *tri){
    }
 
 
-   tsp  = tpi->chunks;
    /* over all complex members from phase2.  Paragraphs == TR_PARA_*  */
    for(i=cxi->phase1; i<cxi->used;i++){
       csp    = &(cxi->cx[i]);

@@ -19,8 +19,8 @@
 
 /*
 File:      uemf_endian.c
-Version:   0.0.14
-Date:      15-JAN-2014
+Version:   0.0.15
+Date:      24-MAR-2014
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
 Copyright: 2014 David Mathog and California Institute of Technology (Caltech)
@@ -1193,10 +1193,8 @@ void U_EMREXTSELECTCLIPRGN_swap(char *record, int torev){
    int nextroff=0;
    int limit=0;
    PU_EMREXTSELECTCLIPRGN pEmr = (PU_EMREXTSELECTCLIPRGN) (record);
-   roff = 0;
    if(torev){
       limit    = pEmr->emr.nSize;
-      nextroff = 0; 
    }
    core5_swap(record, torev);
    if(!torev){

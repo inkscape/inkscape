@@ -123,7 +123,7 @@ Emf::print_document_to_file(SPDocument *doc, const gchar *filename)
         throw Inkscape::Extension::Output::save_failed();
     }
     mod->base->invoke_print(&context);
-    ret = mod->finish();
+    (void) mod->finish();
     /* Release arena */
     mod->base->invoke_hide(mod->dkey);
     mod->base = NULL;

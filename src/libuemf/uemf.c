@@ -16,8 +16,8 @@
 
 /*
 File:      uemf.c
-Version:   0.0.25
-Date:      15-JAN-2014
+Version:   0.0.26
+Date:      24-MAR-2014
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
 Copyright: 2014 David Mathog and California Institute of Technology (Caltech)
@@ -660,7 +660,6 @@ int RGBA_to_DIB(
 
    bs = colortype/8;
    if(bs<1){
-      bs=1;
       usedbytes = (w*colortype + 7)/8;      // width of line in fully and partially occupied bytes
    }
    else {
@@ -956,7 +955,6 @@ int DIB_to_RGBA(
    cbRgba_px = stride * h;
    bs = colortype/8;
    if(bs<1){
-      bs=1;
       usedbytes = (w*colortype + 7)/8;      // width of line in fully and partially occupied bytes
    }
    else {

@@ -36,11 +36,11 @@
 
 /*
 File:      uwmf.h
-Version:   0.0.8
-Date:      27-FEB-2013
+Version:   0.0.10
+Date:      24-MAR-2014
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
-Copyright: 2013 David Mathog and California Institute of Technology (Caltech)
+Copyright: 2014 David Mathog and California Institute of Technology (Caltech)
 */
 
 #ifndef _UWMF_
@@ -59,6 +59,13 @@ extern "C" {
 #include "uemf_utf.h"
 #include "uwmf_endian.h"
 
+
+/** HighWater Enumeration               not in WMF manual
+  @{
+*/
+#define U_HIGHWATER_READ  0x00000000 //!< nondestructive read of highwater value
+#define U_HIGHWATER_CLEAR 0xFFFFFFFF //!< destructive read, value is reset to 0
+/** @} */
 
 
 
@@ -1959,6 +1966,9 @@ typedef struct {
 /* Index F9 U_WMRCREATEPATTERNBRUSH         WMF manual 2.3.4.4 */ 
 /** WMF manual 2.3.4.4
 
+  WARNING - U_WMRCREATEPATTERNBRUSH has been declared obsolete and application support is spotty -
+  use U_WMRDIBCREATEPATTERNBRUSH instead.
+
   This record is peculiar...
   
   After the core structure there is:
@@ -2040,7 +2050,7 @@ typedef struct {
     uint32_t            chunk;              //!< Number of bytes to add when more space is needed
     char               *buf;                //!< Buffer for constructing the EMF in memory 
     uint32_t            largest;            //!< Largest record size, in bytes (used by WMF, not by EMF)
-    uint32_t            sumObjects;         //!< Number of objects created  (used by WMF, not by EMF)
+    uint32_t            sumObjects;         //!< Number of objects appended  (used by WMF, not by EMF) [ also see wmf_highwater() ]
 } WMFTRACK;
 
 /**
@@ -2072,6 +2082,7 @@ int          wmf_append(U_METARECORD *rec, WMFTRACK *wt, int freerec);
 int          wmf_header_append(U_METARECORD *rec,WMFTRACK *et, int freerec);
 int          wmf_readdata(const char *filename, char **contents, size_t*length);
 #define      wmf_fopen    emf_fopen
+int          wmf_highwater(uint32_t setval);
 int          wmf_htable_create(uint32_t initsize, uint32_t chunksize, WMFHANDLES **wht);
 int          wmf_htable_delete(uint32_t *ih, WMFHANDLES *wht);
 int          wmf_htable_insert(uint32_t *ih, WMFHANDLES *wht);
@@ -2082,8 +2093,8 @@ uint32_t     U_wmr_properties(uint32_t type);
 
 uint32_t     U_wmr_size(const U_METARECORD *record);
 uint32_t     U_wmr_values(int idx);
-char        *U_wmr_names(int idx);
-char        *U_wmr_escnames(int idx);
+const char  *U_wmr_names(int idx);
+const char  *U_wmr_escnames(int idx);
 
 void         U_sanerect16(U_RECT16 rc, double *left, double *top, double *right, double *bottom);
 

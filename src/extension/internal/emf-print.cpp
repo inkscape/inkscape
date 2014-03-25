@@ -366,11 +366,13 @@ int PrintEmf::create_brush(SPStyle const *style, PU_COLORREF fcolor)
     if (!fcolor && style) {
         if (style->fill.isColor()) {
             fill_mode = DRAW_PAINT;
+#if 0
+// opacity not supported by EMF
             float opacity = SP_SCALE24_TO_FLOAT(style->fill_opacity.value);
             if (opacity <= 0.0) {
                 opacity = 0.0;    // basically the same as no fill
             }
-
+#endif
             sp_color_get_rgb_floatv(&style->fill.value.color, rgb);
             hatchColor = U_RGB(255 * rgb[0], 255 * rgb[1], 255 * rgb[2]);
 

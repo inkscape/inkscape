@@ -21,11 +21,11 @@
 
 /*
 File:      upmf.c
-Version:   0.0.4
-Date:      27-NOV-2013
+Version:   0.0.5
+Date:      24-MAR-2014
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
-Copyright: 2013 David Mathog and California Institute of Technology (Caltech)
+Copyright: 2014 David Mathog and California Institute of Technology (Caltech)
 */
 
 #ifdef __cplusplus
@@ -608,7 +608,7 @@ int U_PO_free(U_PSEUDO_OBJ **po){
    Data fields: an array of a basic type of Units bytes repeated Reps times with the target byte order
       described in TE. 
    
-   Ptrs:  Address of the first byte of the data fields.  
+   Ptrs:  Address of the first byte of the data fields.
 
    Units: Number of bytes of in each data field unit
 
@@ -1303,8 +1303,9 @@ uint8_t *U_LOAD_GUID(char *string){
       if(3 != sscanf(string +  0,"%8X",&Data1)  + 
               sscanf(string +  8,"%4X",&tData2) + 
               sscanf(string + 12,"%4X",&tData3)){
-         free(lf);
-         return(NULL);
+         free(hold);
+         hold = NULL;
+         goto bye;
       }
       Data2=tData2;
       Data3=tData3;
@@ -1318,12 +1319,14 @@ uint8_t *U_LOAD_GUID(char *string){
       /* remainder is converted byte by byte and stored in that order */
       for(i=0;i<8;i++,Data4+=2,lf++){
          if(1 != sscanf(Data4,"%2X",&tByte)){
-            free(lf);
-            return(NULL);
+            free(hold);
+            hold = NULL;
+            goto bye;
          }
          *lf=tByte;
       }
    }
+bye:
    return(hold);
 }
 
@@ -1767,7 +1770,7 @@ U_PSEUDO_OBJ *U_PMF_PEN_set(uint32_t Version, const U_PSEUDO_OBJ *PenData, const
     EMF+ manual 2.2.1.8, Microsoft name: EmfPlusRegion Object
 */
 U_PSEUDO_OBJ *U_PMF_REGION_set(uint32_t Version, uint32_t Count, const U_PSEUDO_OBJ *Nodes){
-   if(Nodes->Type  != U_PMF_REGIONNODE_OID)return(NULL);
+   if(!Nodes || Nodes->Type  != U_PMF_REGIONNODE_OID)return(NULL);
    const U_SERIAL_DESC List[] = {
       {&Version,    4,           1, U_LE},
       {&Count,      4,           1, U_LE},
@@ -1787,6 +1790,7 @@ U_PSEUDO_OBJ *U_PMF_REGION_set(uint32_t Version, uint32_t Count, const U_PSEUDO_
     EMF+ manual 2.2.1.9, Microsoft name: EmfPlusStringFormat Object
 */
 U_PSEUDO_OBJ *U_PMF_STRINGFORMAT_set(U_PMF_STRINGFORMAT *Sfs, const U_PSEUDO_OBJ *Sfd){
+   if(!Sfs){ return(NULL); }
    if(Sfd){
      if((!Sfs->TabStopCount && !Sfs->RangeCount) || (Sfd->Type  != U_PMF_STRINGFORMATDATA_OID))return(NULL);
    }
@@ -1901,6 +1905,7 @@ U_PMF_ARGB U_PMF_ARGBOBJ_set(uint8_t Alpha, uint8_t Red, uint8_t Green, uint8_t 
     EMF+ manual 2.2.2.2, Microsoft name: EmfPlusBitmap Object
 */
 U_PSEUDO_OBJ *U_PMF_BITMAP_set(const U_PMF_BITMAP *Bs, const U_PSEUDO_OBJ *Bm){
+   if(!Bs)return(NULL);
    if(Bm->Type  != U_PMF_BITMAPDATA_OID &&
       Bm->Type  != U_PMF_COMPRESSEDIMAGE_OID )return(NULL);
    uint32_t Pad = UP4(Bm->Used) - Bm->Used;  /* undocumented padding, must be present for at least PNG */
@@ -1925,6 +1930,7 @@ U_PSEUDO_OBJ *U_PMF_BITMAP_set(const U_PMF_BITMAP *Bs, const U_PSEUDO_OBJ *Bm){
 */
 U_PSEUDO_OBJ *U_PMF_BITMAPDATA_set( const U_PSEUDO_OBJ *Ps, int cbBm, const char *Bm){
    if(Ps && (Ps->Type  != U_PMF_PALETTE_OID))return(NULL);
+   if(!Bm && cbBm)return(NULL);
    const U_SERIAL_DESC List[] = {
       {(Ps ? Ps->Data : NULL), (Ps  ? Ps->Used : 0), (Ps ? 1 : 0), U_LE},
       {Bm,                     cbBm,                 1,            U_XE},
@@ -2020,7 +2026,7 @@ U_PSEUDO_OBJ *U_PMF_BLENDCOLORS_linear_set(uint32_t Elements, U_PMF_ARGB StartCo
     \return Pointer to PseudoObject, NULL on error
     \param  Elements   members in each array
     \param  Positions  positions along gradient line.  The first position MUST be 0.0 and the last MUST be 1.0.
-    \param  Factors    blending factors, 0.0->1.0 values, inclusiv
+    \param  Factors    blending factors, 0.0->1.0 values, inclusive
 
     EMF+ manual 2.2.2.5, Microsoft name: EmfPlusBlendFactors Object
 */
@@ -2088,7 +2094,7 @@ U_PSEUDO_OBJ *U_PMF_BLENDFACTORS_linear_set(uint32_t Elements, U_FLOAT StartFact
     EMF+ manual 2.2.2.6, Microsoft name: EmfPlusBoundaryPathData Object
 */
 U_PSEUDO_OBJ *U_PMF_BOUNDARYPATHDATA_set(const U_PSEUDO_OBJ *Path){
-   if(Path->Type  != U_PMF_PATH_OID)return(NULL);
+   if(!Path || Path->Type  != U_PMF_PATH_OID)return(NULL);
    /* PO Used is size_t, might be 8 bytes, value in record must be 4 bytes */
    uint32_t Used = Path->Used;
    const U_SERIAL_DESC List[] = {
@@ -2183,7 +2189,7 @@ U_PSEUDO_OBJ *U_PMF_COMPRESSEDIMAGE_set(int32_t cbImage, const char *Image){
     EMF+ manual 2.2.2.11, Microsoft name: EmfPlusCustomEndCapData Object
 */
 U_PSEUDO_OBJ *U_PMF_CUSTOMENDCAPDATA_set(const U_PSEUDO_OBJ *Clc){
-   if(Clc->Type  != U_PMF_CUSTOMLINECAP_OID)return(NULL);
+   if(!Clc || Clc->Type  != U_PMF_CUSTOMLINECAP_OID)return(NULL);
    /* PO Used is size_t, might be 8 bytes, value in record must be 4 bytes */
    uint32_t Used = Clc->Used;
    const U_SERIAL_DESC List[] = {
@@ -2252,7 +2258,7 @@ U_PSEUDO_OBJ *U_PMF_CUSTOMLINECAPDATA_set(uint32_t Flags, uint32_t Cap,
       uint32_t Join, U_FLOAT MiterLimit, U_FLOAT WidthScale, 
       const U_PSEUDO_OBJ *Clcod
    ){
-   if(Clcod->Type  != U_PMF_CUSTOMLINECAPOPTIONALDATA_OID)return(NULL);
+   if(!Clcod || Clcod->Type  != U_PMF_CUSTOMLINECAPOPTIONALDATA_OID)return(NULL);
    const U_SERIAL_DESC List[] = {
       {&Flags,      4,           1, U_LE},
       {&Cap,        4,           1, U_LE},
@@ -2282,8 +2288,8 @@ U_PSEUDO_OBJ *U_PMF_CUSTOMLINECAPOPTIONALDATA_set(const U_PSEUDO_OBJ *Fill, cons
    if(Fill && (Fill->Type  != U_PMF_FILLPATHOBJ_OID))return(NULL);
    if(Line && (Line->Type  != U_PMF_LINEPATH_OID))return(NULL);
    const U_SERIAL_DESC List[] = {
-      {Fill->Data, Fill->Used, 1, U_XE},
-      {Line->Data, Line->Used, 1, U_XE},
+      {(Fill ? Fill->Data : NULL), (Fill ? Fill->Used : 0), 1, U_XE},
+      {(Line ? Line->Data : NULL), (Line ? Line->Used : 0), 1, U_XE},
       {NULL,0,0,U_XX}
    };
    U_PSEUDO_OBJ *po = U_PMF_SERIAL_set(U_PMF_CUSTOMLINECAPOPTIONALDATA_OID, List);
@@ -2298,7 +2304,7 @@ U_PSEUDO_OBJ *U_PMF_CUSTOMLINECAPOPTIONALDATA_set(const U_PSEUDO_OBJ *Fill, cons
     EMF+ manual 2.2.2.15, Microsoft name: EmfPlusCustomStartCapData Object
 */
 U_PSEUDO_OBJ *U_PMF_CUSTOMSTARTCAPDATA_set(const U_PSEUDO_OBJ *Clc){
-   if(Clc && (Clc->Type  != U_PMF_CUSTOMLINECAP_OID))return(NULL);
+   if(!Clc || Clc->Type  != U_PMF_CUSTOMLINECAP_OID)return(NULL);
    const U_SERIAL_DESC List[] = {
       {Clc->Data, Clc->Used, 1, U_XE},
       {NULL,0,0,U_XX}
@@ -2464,7 +2470,7 @@ U_PSEUDO_OBJ *U_PMF_DASHEDLINEDATA_set3(U_FLOAT Unit, uint32_t BitPat){
     EMF+ manual 2.2.2.17, Microsoft name: EmfPlusFillPath Object
 */
 U_PSEUDO_OBJ *U_PMF_FILLPATHOBJ_set(const U_PSEUDO_OBJ *Path){
-   if(Path && (Path->Type  != U_PMF_PATH_OID))return(NULL);
+   if(!Path || (Path->Type  != U_PMF_PATH_OID))return(NULL);
    const U_SERIAL_DESC List[] = {
       {Path->Data, Path->Used, 1, U_XE},
       {NULL,0,0,U_XX}
@@ -2642,10 +2648,10 @@ U_PSEUDO_OBJ *U_PMF_LINEARGRADIENTBRUSHDATA_set(const U_PMF_LINEARGRADIENTBRUSHD
     \brief  Create and set a U_PMF_LINEARGRADIENTBRUSHOPTIONALDATA PseudoObject
     \return Pointer to PseudoObject, NULL on error
     \param  Flags      Bits are set that indicate which of the following were included. The caller must clear before passing it in.
-    \param  Tm         U_PSEUDO_OBJ containing a U_PMF_TRANSFORMMATRIX object
-    \param  Bc         U_PSEUDO_OBJ containing a U_PMF_BLENDCOLORS object or NULL
-    \param  BfH        U_PSEUDO_OBJ containing a U_PMF_BLENDFACTORS (H) object or NULL
-    \param  BfV        U_PSEUDO_OBJ containing a U_PMF_BLENDFACTORS (V) object or NULL (WARNING, GDI+ defines this field but does not render it.  DO NOT USE.)
+    \param  Tm         (optional) U_PSEUDO_OBJ containing a U_PMF_TRANSFORMMATRIX object
+    \param  Bc         (optional) U_PSEUDO_OBJ containing a U_PMF_BLENDCOLORS object or NULL
+    \param  BfH        (optional) U_PSEUDO_OBJ containing a U_PMF_BLENDFACTORS (H) object or NULL
+    \param  BfV        (optional) U_PSEUDO_OBJ containing a U_PMF_BLENDFACTORS (V) object or NULL (WARNING, GDI+ defines this field but does not render it.  DO NOT USE.)
      
 
     EMF+ manual 2.2.2.25, Microsoft name: EmfPlusLinearGradientBrushOptionalData Object
@@ -2746,7 +2752,7 @@ U_PSEUDO_OBJ *U_PMF_PATHGRADIENTBRUSHDATA_set(uint32_t Flags, int32_t WrapMode, 
       const U_PSEUDO_OBJ *Gradient, const U_PSEUDO_OBJ *Boundary, const U_PSEUDO_OBJ *Data){
    if( (Flags & U_BD_Path) && (!Boundary || (Boundary->Type != U_PMF_BOUNDARYPATHDATA_OID)))return(NULL);
    if(!(Flags & U_BD_Path) && (!Boundary || (Boundary->Type != U_PMF_BOUNDARYPOINTDATA_OID)))return(NULL);
-   if(!(Gradient) || (Gradient->Type != (U_PMF_ARGB_OID | U_PMF_ARRAY_OID)))return(NULL);
+   if(!Gradient || (Gradient->Type != (U_PMF_ARGB_OID | U_PMF_ARRAY_OID)))return(NULL);
    if(!(Flags & U_BD_Transform) && 
       !(Flags & U_BD_PresetColors) && 
       !(Flags & U_BD_BlendFactorsH) && 
@@ -2925,7 +2931,7 @@ U_PSEUDO_OBJ *U_PMF_PENOPTIONALDATA_set(uint32_t Flags, U_PSEUDO_OBJ *Tm, int32_
    if((Flags & U_PD_DLData)         && (!DLData        || (DLData->Type        != U_PMF_DASHEDLINEDATA_OID))    )return(NULL);
    if((Flags & U_PD_CLData)         && (!CmpndLineData || (CmpndLineData->Type != U_PMF_COMPOUNDLINEDATA_OID))  )return(NULL);
    if((Flags & U_PD_CustomStartCap) && (!CSCapData     || (CSCapData->Type     != U_PMF_CUSTOMSTARTCAPDATA_OID)))return(NULL); 
-   if((Flags & U_PD_CustomEndCap)   &&(!CECapData      || (CECapData->Type     != U_PMF_CUSTOMENDCAPDATA_OID))  )return(NULL);
+   if((Flags & U_PD_CustomEndCap)   && (!CECapData     || (CECapData->Type     != U_PMF_CUSTOMENDCAPDATA_OID))  )return(NULL);
    
    /* prepend the Flags field to the PseudoObject proper */
    const U_SERIAL_DESC List[] = {
@@ -3092,13 +3098,15 @@ U_PSEUDO_OBJ *U_PMF_RECT_set(U_PMF_RECT *Rect){
 U_PSEUDO_OBJ *U_PMF_RECTN_set(uint32_t Elements, U_PMF_RECT *Rects){
    if(!Rects){ return(NULL); }
    uint32_t count = Elements;
-   U_SERIAL_DESC *Lptr = (U_SERIAL_DESC *) malloc(4 + (Elements * 2 * 4) + 4);
-   U_SERIAL_DESC *List = List;
+   U_SERIAL_DESC *List = (U_SERIAL_DESC *) malloc((Elements + 2) * sizeof(U_SERIAL_DESC));
+   U_SERIAL_DESC *Lptr = List;
    if(!List){ return(NULL); }
    *Lptr++ = (U_SERIAL_DESC){&Elements, 4, 1, U_LE};
-   for(; count; count--, Lptr++, Rects++){ *Lptr = (U_SERIAL_DESC){Rects, 2, 4, U_LE}; }
+   for(; count; count--, Lptr++, Rects++){
+      *Lptr = (U_SERIAL_DESC){Rects, 2, 4, U_LE};
+   }
    *Lptr = (U_SERIAL_DESC){NULL,0,0,U_XX};
-   U_PSEUDO_OBJ *po = U_PMF_SERIAL_set(U_PMF_RECTF_OID | U_PMF_ARRAY_OID, List);
+   U_PSEUDO_OBJ *po = U_PMF_SERIAL_set(U_PMF_RECT_OID | U_PMF_ARRAY_OID, List);
    free(List);
    return(po);
 }
@@ -3777,6 +3785,7 @@ U_PSEUDO_OBJ *U_PMR_SETCLIPREGION_set(uint32_t PathID, uint32_t CMenum){
 */
 U_PSEUDO_OBJ *U_PMR_COMMENT_set(size_t cbData, const void *Data){
    if(UP4(cbData) != cbData){ return(NULL); }
+   if(cbData && !Data){       return(NULL); }
    int Size=cbData;
 
    U_PSEUDO_OBJ *ph = U_PMR_CMN_HDR_set(U_PMR_COMMENT,0,Size);
@@ -4365,6 +4374,7 @@ U_PSEUDO_OBJ *U_PMR_DRAWSTRING_set(uint32_t FontID, const U_PSEUDO_OBJ *BrushID,
    int btype; 
    if(FontID>63){                                 return(NULL); }
    if(!Length){                                   return(NULL); }
+   else if (!Text){                               return(NULL); }
    if(!Rect || Rect->Type != U_PMF_RECTF_OID){    return(NULL); }
    if(BrushID){  
       if(      BrushID->Used != 4){               return(NULL); }
@@ -4668,6 +4678,7 @@ U_PSEUDO_OBJ *U_PMR_FILLREGION_set(uint32_t RgnID, const U_PSEUDO_OBJ *BrushID){
     \param  Po          U_PSEUDO_OBJ containing an object type that may be stored in the EMF+ object table
 */
 U_PSEUDO_OBJ *U_PMR_OBJECT_PO_set(uint32_t ObjID, U_PSEUDO_OBJ *Po){
+   if(!Po){ return(NULL); }
    int otype = U_OID_To_OT(Po->Type); /* This will return 0 if the type is not valid for an object */
    if(!otype){ return(NULL); } 
    U_PSEUDO_OBJ *po = U_PMR_OBJECT_set(ObjID, otype, 0, 0, Po->Used, Po->Data); /* 0,0 = rec. not continued, TSize value (ignored)  */
@@ -4703,6 +4714,7 @@ U_PSEUDO_OBJ *U_PMR_OBJECT_set(uint32_t ObjID, int otype, int ntype, uint32_t TS
    int      Pad   = UP4(TSize) - TSize;   
    if((otype < U_OT_Brush) || (otype > U_OT_CustomLineCap)){ return(NULL); }
    if(ntype && (cbData > U_OBJRECLIM)){                      return(NULL); }
+   if(!Data){                                                return(NULL); }
    U_PSEUDO_OBJ *po;
    
    if(!ntype && !TSize && (cbData > U_OBJRECLIM)){  
@@ -6268,11 +6280,11 @@ int U_PMF_POINTR_get(const char **contents, U_FLOAT *X, U_FLOAT *Y){
     \param  Points     Caller must free.  Array of U_PMF_POINTF coordinates.
 */
 int U_PMF_VARPOINTS_get(const char **contents, uint16_t Flags, int Elements, U_PMF_POINTF **Points){
+   if(!contents || !*contents || !Points || !Elements){ return(0); }
    U_PMF_POINTF *pts = (U_PMF_POINTF *)malloc(Elements * sizeof(U_PMF_POINTF));
    U_FLOAT XF, YF;
    U_FLOAT XFS, YFS;
    
-   if(!contents || !*contents || !Points){ return(0); }
    *Points = pts;
    for(XFS = YFS = 0.0; Elements; Elements--, pts++){
       if(Flags & U_PPF_P){ 

@@ -1527,7 +1527,7 @@ int Wmf::myMetaFileProc(const char *contents, unsigned int length, PWMF_CALLBACK
                     iType = *(uint8_t *)(contents + off + offsetof(U_METARECORD, iType )  );
                     if(iType ==  U_WMR_SETWINDOWEXT){
                         OK=0;
-                        nSize = U_WMRSETWINDOWEXT_get(contents + off, &Dst);
+                        (void) U_WMRSETWINDOWEXT_get(contents + off, &Dst);
                         Placeable.Dst.right  = Dst.x;
                         Placeable.Dst.bottom = Dst.y;
                     }

@@ -6,11 +6,11 @@
 
 /*
 File:      uwmf_print.c
-Version:   0.0.3
-Date:      17-OCT-2013
+Version:   0.0.4
+Date:      05-FEB-2014
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
-Copyright: 2012 David Mathog and California Institute of Technology (Caltech)
+Copyright: 2014 David Mathog and California Institute of Technology (Caltech)
 */
 
 #ifdef __cplusplus
@@ -715,7 +715,7 @@ void U_WMRTEXTOUT_print(const char *contents){
    U_POINT16       Dst;
    int       size = U_WMRTEXTOUT_get(contents, &Dst, &Length, &string);
    if(size > 0){
-      printf("   X,Y:{%d,%d}\n", Dst.y,Dst.x);  /* y/x order in record is reversed, fix that here */
+      printf("   X,Y:{%d,%d}\n", Dst.x,Dst.y);
       printf("   Length:%d\n", Length);
       printf("   String:<%.*s>\n", Length, string); /* May not be null terminated */
    }

@@ -239,8 +239,13 @@ uint16_t *U_Utf32leToUtf16le(
    iconv_t conv = iconv_open("UTF-16LE", "UTF-32LE");
    status = iconv(conv, ICONV_CAST &src, &srclen, &dst, &dstlen);
    iconv_close(conv);
-   if(status == (size_t) -1)return(NULL);
-   if(len)*len=wchar16len((uint16_t *)dst2);
+   if(status == (size_t) -1){
+      free(dst2);
+      dst2 = NULL;
+   }
+   else if(len){
+      *len=wchar16len((uint16_t *)dst2);
+   }
    return((uint16_t *)dst2);
 }
 
@@ -270,8 +275,13 @@ uint32_t *U_Utf16leToUtf32le(
    if ( conv == (iconv_t)-1)return(NULL);
    status = iconv(conv, ICONV_CAST &src2, &srclen, &dst, &dstlen);
    iconv_close(conv);
-   if(status == (size_t) -1)return(NULL);
-   if(len)*len=wchar32len((uint32_t *)dst2);
+   if(status == (size_t) -1){
+      free(dst2);
+      dst2 = NULL;
+   }
+   else if(len){
+      *len=wchar32len((uint32_t *)dst2);
+   }
    return((uint32_t *) dst2);
 }
 
@@ -307,8 +317,13 @@ uint32_t *U_Latin1ToUtf32le(
    if ( conv == (iconv_t) -1)return(NULL);
    status = iconv(conv, ICONV_CAST &src2, &srclen, &dst, &dstlen);
    iconv_close(conv);
-   if(status == (size_t) -1)return(NULL);
-   if(len)*len=wchar32len((uint32_t *)dst2);
+   if(status == (size_t) -1){
+      free(dst2);
+      dst2 = NULL;
+   }
+   else if(len){
+      *len=wchar32len((uint32_t *)dst2);
+   }
    return((uint32_t *) dst2);
 }
 
@@ -338,8 +353,13 @@ uint32_t *U_Utf8ToUtf32le(
    if ( conv == (iconv_t) -1)return(NULL);
    status = iconv(conv, ICONV_CAST &src2, &srclen, &dst, &dstlen);
    iconv_close(conv);
-   if(status == (size_t) -1)return(NULL);
-   if(len)*len=wchar32len((uint32_t *)dst2);
+   if(status == (size_t) -1){
+      free(dst2);
+      dst2 = NULL;
+   }
+   else if(len){
+      *len=wchar32len((uint32_t *)dst2);
+   }
    return((uint32_t *) dst2);
 }
 
@@ -369,8 +389,13 @@ char *U_Utf32leToUtf8(
    if ( conv == (iconv_t)-1)return(NULL);
    status = iconv(conv, ICONV_CAST &src2, &srclen, &dst, &dstlen);
    iconv_close(conv);
-   if(status == (size_t) -1)return(NULL);
-   if(len)*len=strlen(dst2);
+   if(status == (size_t) -1){
+      free(dst2);
+      dst2 = NULL;
+   }
+   else if(len){
+      *len=strlen(dst2);
+   }
    return(dst2);
 }
 
@@ -400,8 +425,13 @@ uint16_t *U_Utf8ToUtf16le(
    if (conv == (iconv_t) -1)return(NULL);
    status = iconv(conv, ICONV_CAST &src, &srclen, &dst, &dstlen);
    iconv_close(conv);
-   if(status == (size_t) -1)return(NULL);
-   if(len)*len=wchar16len((uint16_t *)dst2);
+   if(status == (size_t) -1){
+      free(dst2);
+      dst2 = NULL;
+   }
+   else if(len){
+      *len=wchar16len((uint16_t *)dst2);
+   }
    return((uint16_t *)dst2);
 }
 
@@ -514,8 +544,13 @@ char *U_Utf8ToLatin1(
    if ( conv == (iconv_t) -1)return(NULL);
    status = iconv(conv, ICONV_CAST &src, &srclen, &dst, &dstlen);
    iconv_close(conv);
-   if(status == (size_t) -1)return(NULL);
-   if(len)*len=strlen(dst2);
+   if(status == (size_t) -1){
+      free(dst2);
+      dst2 = NULL;
+   }
+   else if(len){
+      *len=strlen(dst2);
+   }
    return((char *) dst2);
 }
 
@@ -546,8 +581,13 @@ char *U_Latin1ToUtf8(
    if ( conv == (iconv_t) -1)return(NULL);
    status = iconv(conv, ICONV_CAST &src, &srclen, &dst, &dstlen);
    iconv_close(conv);
-   if(status == (size_t) -1)return(NULL);
-   if(len)*len=strlen(dst2);
+   if(status == (size_t) -1){
+      free(dst2);
+      dst2 = NULL;
+   }
+   else if(len){
+      *len=strlen(dst2);
+   }
    return((char *) dst2);
 }
 

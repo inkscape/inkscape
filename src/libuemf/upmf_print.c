@@ -6,11 +6,11 @@
 
 /*
 File:      upmf_print.c
-Version:   0.0.2
-Date:      17-OCT-2013
+Version:   0.0.3
+Date:      24-MAR-2014
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
-Copyright: 2013 David Mathog and California Institute of Technology (Caltech)
+Copyright: 2014 David Mathog and California Institute of Technology (Caltech)
 */
 
 /* compiler options:
@@ -790,7 +790,6 @@ int U_PMF_BLENDCOLORS_print(const char *contents){
    const char  *Colors;
    int status = U_PMF_BLENDCOLORS_get(contents, &Elements, &Positions, &Colors);
    if(status){
-      status = 0;
       printf("   +  BlendColors:  Entries:%d (entry,pos,color): ", Elements);
       for(i=0; i<Elements; i++){
          printf(" (%d,%f,", i, Positions[i]);
