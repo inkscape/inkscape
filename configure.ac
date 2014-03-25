@@ -96,7 +96,7 @@ if test "$GCC" = "yes"; then
   # Test for -Werror=... (introduced some time post-4.0)
   AC_MSG_CHECKING([compiler support for -Werror=...])
   ink_svd_CPPFLAGS="$CPPFLAGS"
-  CPPFLAGS="-Werror=format-security -Werror=switch -Werror=return-type $CPPFLAGS"
+  CPPFLAGS="-Werror=format-security -Wswitch -Werror=return-type $CPPFLAGS"
   AC_COMPILE_IFELSE([AC_LANG_PROGRAM([])], [ink_opt_ok=yes], [ink_opt_ok=no])
   AC_MSG_RESULT([$ink_opt_ok])
   if test "x$ink_opt_ok" != "xyes"; then
