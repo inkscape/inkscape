@@ -83,8 +83,8 @@ sp_selected_path_combine(SPDesktop *desktop)
     gint position = 0;
     char const *id = NULL;
     char const *transform = NULL;
-    Glib::ustring style;
-    Glib::ustring path_effect;
+    char const *style = NULL;
+    char const *path_effect = NULL;
 
     SPCurve* curve = NULL;
     SPItem *first = NULL;
@@ -153,7 +153,7 @@ sp_selected_path_combine(SPDesktop *desktop)
         // set path data corresponding to new curve
         gchar *dstring = sp_svg_write_path(curve->get_pathvector());
         curve->unref();
-        if (!path_effect.empty()) {
+        if (path_effect) {
             repr->setAttribute("inkscape:original-d", dstring);
         } else {
             repr->setAttribute("d", dstring);
@@ -365,7 +365,7 @@ sp_item_list_to_curves(const GSList *items, GSList **selected, GSList **to_selec
          items = items->next) {
 
         SPItem *item = SP_ITEM(items->data);
-    	SPDocument *document = item->document;
+        SPDocument *document = item->document;
 
         if ( skip_all_lpeitems &&
              SP_IS_LPE_ITEM(item) && 
@@ -443,12 +443,12 @@ sp_item_list_to_curves(const GSList *items, GSList **selected, GSList **to_selec
         parent->appendChild(repr);
         SPObject* newObj = document->getObjectByRepr(repr);
         if (title && newObj) {
-        	newObj->setTitle(title);
-        	g_free(title);
+            newObj->setTitle(title);
+            g_free(title);
         }
         if (desc && newObj) {
-        	newObj->setDesc(desc);
-        	g_free(desc);
+            newObj->setDesc(desc);
+            g_free(desc);
         }
 
         // move to the saved position
