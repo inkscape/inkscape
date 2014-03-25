@@ -3677,7 +3677,7 @@ sp_style_read_itextdecoration(SPITextDecorationLine *line, SPITextDecorationStyl
             int slen = str - hstr;
             gchar *frag = g_strndup(hstr,slen+1); // only send one piece at a time, since keywords may be intermixed
             sp_style_read_itextdecorationColor(color, frag);
-            free(frag);
+            g_free(frag);
             if(color->set)break;
             if(*str == '\0')break;
             hstr = str + 1;
