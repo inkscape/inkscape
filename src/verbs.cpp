@@ -2743,7 +2743,7 @@ Verb *Verb::_base_verbs[] = {
     new ZoomVerb(SP_VERB_ZOOM_OUT, "ZoomOut", N_("Zoom Out"), N_("Zoom out"), INKSCAPE_ICON("zoom-out")),
     new ZoomVerb(SP_VERB_TOGGLE_RULERS, "ToggleRulers", N_("_Rulers"), N_("Show or hide the canvas rulers"), NULL),
     new ZoomVerb(SP_VERB_TOGGLE_SCROLLBARS, "ToggleScrollbars", N_("Scroll_bars"), N_("Show or hide the canvas scrollbars"), NULL),
-    new ZoomVerb(SP_VERB_TOGGLE_GRID, "ToggleGrid", N_("_Grid"), N_("Show or hide the grid"), INKSCAPE_ICON("show-grid")),
+    new ZoomVerb(SP_VERB_TOGGLE_GRID, "ToggleGrid", N_("Page _Grid"), N_("Show or hide the page grid"), INKSCAPE_ICON("show-grid")),
     new ZoomVerb(SP_VERB_TOGGLE_GUIDES, "ToggleGuides", N_("G_uides"), N_("Show or hide guides (drag from a ruler to create a guide)"), INKSCAPE_ICON("show-guides")),
     new ZoomVerb(SP_VERB_TOGGLE_SNAPPING, "ToggleSnapGlobal", N_("Snap"), N_("Enable snapping"), INKSCAPE_ICON("snap")),
     new ZoomVerb(SP_VERB_TOGGLE_COMMANDS_TOOLBAR, "ToggleCommandsToolbar", N_("_Commands Bar"), N_("Show or hide the Commands bar (under the menu)"), NULL),

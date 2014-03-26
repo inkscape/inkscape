@@ -230,6 +230,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                     // Ruler click (without drag) toggle the guide visibility on and off
                     Inkscape::XML::Node *repr = desktop->namedview->getRepr();
                     sp_namedview_toggle_guides(sp_desktop_document(desktop), repr);
+                    
                 }
 
                 clicked = false;

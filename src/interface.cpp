@@ -580,9 +580,6 @@ static gboolean checkitem_update(GtkWidget *widget, GdkEventExpose * /*event*/, 
         else if (!strcmp(action->id, "ToggleGuides")) {
             ison = dt->namedview->getGuides();
         }
-        else if (!strcmp(action->id, "ToggleSnapGlobal")) {
-            ison = dt->namedview->getSnapGlobal();
-        }
         else if (!strcmp(action->id, "ViewCmsToggle")) {
             ison = dt->colorProfAdjustEnabled();
         }

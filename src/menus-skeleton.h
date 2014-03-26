@@ -131,7 +131,6 @@ static char const menus_skeleton[] =
 "       <separator/>\n"
 "       <verb verb-id=\"ToggleGrid\" check=\"yes\" />\n"
 "       <verb verb-id=\"ToggleGuides\" check=\"yes\" />\n"
-"       <verb verb-id=\"ToggleSnapGlobal\" check=\"yes\" />\n"
 "       <verb verb-id=\"ViewCmsToggle\" check=\"yes\" />\n"
 "       <separator/>\n"
 "       <submenu name=\"" N_("Sh_ow/Hide") "\">\n"
