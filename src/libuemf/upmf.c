@@ -6360,7 +6360,7 @@ int U_PMF_VARPOINTS_get(const char **contents, uint16_t Flags, int Elements, U_P
       }
    }
    if(Elements){ /* some error in the preceding */
-      free(pts);
+      free(*Points);
       *Points = NULL;
    }
    else {
