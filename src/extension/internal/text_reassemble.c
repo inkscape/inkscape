@@ -67,8 +67,8 @@ Optional compiler switches for development:
 
 
 File:      text_reassemble.c
-Version:   0.0.13
-Date:      24-MAR-2014
+Version:   0.0.14
+Date:      25-MAR-2014
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
 Copyright: 2014 David Mathog and California Institute of Technology (Caltech)
@@ -601,10 +601,13 @@ FT_INFO *ftinfo_init(void){
 */
 int ftinfo_make_insertable(FT_INFO *fti){
    int status=0;
+   FNT_SPECS *tmp;
    if(!fti)return(2);
    if(fti->used >= fti->space){
       fti->space += ALLOCINFO_CHUNK;
-      if((fti->fonts = (FNT_SPECS *) realloc(fti->fonts, fti->space * sizeof(FNT_SPECS) ))){
+      tmp = (FNT_SPECS *) realloc(fti->fonts, fti->space * sizeof(FNT_SPECS) );
+      if(tmp){
+         fti->fonts = tmp;
          memset(&fti->fonts[fti->used],0,(fti->space - fti->used)*sizeof(FNT_SPECS));
       }
       else {
@@ -844,10 +847,13 @@ void ftinfo_dump(const FT_INFO *fti){
 */
 int fsp_alts_make_insertable(FNT_SPECS *fsp){
    int status=0;
+   ALT_SPECS *tmp;
    if(!fsp)return(2);
    if(fsp->used >= fsp->space){
       fsp->space += ALLOCINFO_CHUNK;
-      if((fsp->alts = (ALT_SPECS *) realloc(fsp->alts, fsp->space * sizeof(ALT_SPECS) ))){
+      tmp = (ALT_SPECS *) realloc(fsp->alts, fsp->space * sizeof(ALT_SPECS) );
+      if(tmp){
+         fsp->alts = tmp;
          memset(&fsp->alts[fsp->used],0,(fsp->space - fsp->used)*sizeof(ALT_SPECS));
       }
       else {
@@ -912,10 +918,13 @@ int fsp_alts_weight(FNT_SPECS *fsp, uint32_t a_idx){
 */
 int csp_make_insertable(CHILD_SPECS *csp){
    int status=0;
+   int *tmp;
    if(!csp)return(2);
    if(csp->used >= csp->space){
       csp->space += ALLOCINFO_CHUNK;
-      if((csp->members = (int *) realloc(csp->members, csp->space * sizeof(int) ))){
+      tmp = (int *) realloc(csp->members, csp->space * sizeof(int) );
+      if(tmp){
+         csp->members = tmp;
          memset(&csp->members[csp->used],0,(csp->space - csp->used)*sizeof(int));
       }
       else {
@@ -1007,9 +1016,12 @@ CX_INFO *cxinfo_init(void){
 */
 int cxinfo_make_insertable(CX_INFO *cxi){
    int status=0;
+   CX_SPECS *tmp;
    if(cxi->used >= cxi->space){
       cxi->space += ALLOCINFO_CHUNK;
-      if((cxi->cx = (CX_SPECS *) realloc(cxi->cx, cxi->space * sizeof(CX_SPECS) ))){
+      tmp = (CX_SPECS *) realloc(cxi->cx, cxi->space * sizeof(CX_SPECS) );
+      if(tmp){
+         cxi->cx = tmp;
          memset(&cxi->cx[cxi->used],0,(cxi->space - cxi->used)*sizeof(CX_SPECS));
       }
       else {
@@ -1178,9 +1190,12 @@ TP_INFO *tpinfo_init(void){
 */
 int tpinfo_make_insertable(TP_INFO *tpi){
    int status=0;
+   TCHUNK_SPECS *tmp;
    if(tpi->used >= tpi->space){
       tpi->space += ALLOCINFO_CHUNK;
-      if((tpi->chunks = (TCHUNK_SPECS *) realloc(tpi->chunks, tpi->space * sizeof(TCHUNK_SPECS) ))){
+      tmp = (TCHUNK_SPECS *) realloc(tpi->chunks, tpi->space * sizeof(TCHUNK_SPECS) );
+      if(tmp){
+         tpi->chunks = tmp;
          memset(&tpi->chunks[tpi->used],0,(tpi->space - tpi->used)*sizeof(TCHUNK_SPECS));
       }
       else {
@@ -1251,10 +1266,13 @@ BR_INFO *brinfo_init(void){
 */
 int brinfo_make_insertable(BR_INFO *bri){
    int status=0;
+   BRECT_SPECS *tmp;
    if(!bri)return(2);
    if(bri->used >= bri->space){
       bri->space += ALLOCINFO_CHUNK;
-      if(!(bri->rects = (BRECT_SPECS *) realloc(bri->rects, bri->space * sizeof(BRECT_SPECS) ))){ status = 1; }
+      tmp = (BRECT_SPECS *) realloc(bri->rects, bri->space * sizeof(BRECT_SPECS) );
+      if(tmp){ bri->rects = tmp; }
+      else { status = 1;}
    }
    return(status);
 }
@@ -1680,11 +1698,14 @@ int trinfo_load_ft_opts(TR_INFO *tri, int use_kern, int load_flags, int kern_mod
 */
 int trinfo_append_out(TR_INFO *tri, const char *src){
    size_t slen;
+   uint8_t *tmp;
    if(!src)return(-1);
    slen = strlen(src);
    if(tri->outused + (int) slen + 1 >= tri->outspace){
       tri->outspace += TEREMAX(ALLOCOUT_CHUNK,slen+1);
-      if(!(tri->out = realloc(tri->out, tri->outspace )))return(-1);
+      tmp = realloc(tri->out, tri->outspace * sizeof(uint8_t) );
+      if(tmp){ tri->out = tmp; }
+      else { return(-1); }
    }
    memcpy(tri->out + tri->outused, src, slen+1); /* copy the terminator                       */
    tri->outused += slen;                         /* do not count the terminator in the length */

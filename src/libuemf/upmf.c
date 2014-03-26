@@ -70,18 +70,25 @@ void U_swap4(void *ul, unsigned int count);
 
 /**
     \brief  Utility function for writing one or more EMF+ records in a PseudoObject to the EMF output file
-    \param  po          U_PSEUDO_OBJ to write 
+    \return 1 on success, 0 on error.
+    \param  po          U_PSEUDO_OBJ to write, it is deleted after it is written
     \param  sum         U_PSEUDO_OBJ to use for scratch space
     \param  et          EMFTRACK used to write records to EMF file
 */
-void U_PMR_write(U_PSEUDO_OBJ *po, U_PSEUDO_OBJ *sum, EMFTRACK *et){
+int U_PMR_write(U_PSEUDO_OBJ *po, U_PSEUDO_OBJ *sum, EMFTRACK *et){
    char *rec;
+   int status = 0;
    sum->Used = 0;                                          /* clean it out, retaining allocated memory         */
    sum       = U_PO_append(sum, "EMF+", 4);                /* indicates that this comment holds an EMF+ record */
+   if(!sum)goto end;
    sum       = U_PO_append(sum,  po->Data, po->Used);      /* the EMF+ record itself                           */
+   if(!sum)goto end;
+   U_PO_free(&po);                                         /* delete the PseudoObject                          */
    rec       = U_EMRCOMMENT_set(sum->Used, sum->Data);     /* stuff it into the EMF comment                    */
-   (void) emf_append((PU_ENHMETARECORD)rec, et, 1);        /* write it to the EMF file                         */
-   U_PO_free(&po);                                         /* delete the PseudoObjects                         */
+   if(!emf_append((PU_ENHMETARECORD)rec, et, 1))goto end;  /* write it to the EMF file, delete the record, check status */
+   status = 1;
+end:
+   return(status);
 }
 
 /**
@@ -442,8 +449,12 @@ int U_OA_append(U_OBJ_ACCUM *oa, const char *data, int size, int Type, int Id){
    tail = oa->used;
    if(oa->used + size >= oa->space){
       oa->space += size;
-      oa->accum = (char *) realloc(oa->accum, oa->space);
-      if(!oa->accum)return(1);
+      char *newaccum = (char *) realloc(oa->accum, oa->space);
+      if(!newaccum){
+         oa->space -= size; /* put it back the way it was */
+         return(1);
+      }
+      oa->accum = newaccum;
    }
    memcpy(oa->accum + tail,data,size);
    oa->used += size;
@@ -525,18 +536,21 @@ U_PSEUDO_OBJ *U_PO_create(char *Data, size_t Size, size_t Use, uint32_t Type){
 U_PSEUDO_OBJ *U_PO_append(U_PSEUDO_OBJ *po, const char *Data, size_t Size){
    /* po cannot be NULL,as in U_PO_po_append(), because there would be no way to determine the TYPE of the resulting PO */
    if(po){
-      if(po->Used + Size > po->Size){
+      if(!po->Data || po->Used + Size > po->Size){
          po->Size = po->Used + Size;
-         po->Data = realloc(po->Data, po->Size);
+         char *newData = realloc(po->Data, po->Size);
+         if(!newData){
+            po->Size -= Size; /* put it back the way it was*/
+            po=NULL;          /* skip the rest of the actions, does not affect po in caller */
+         }
+         else {
+            po->Data = newData;
+         }
       }
-      if(po->Data){
+      if(po){ /* po->Data ready to append new data */
          if(Data){ memcpy(po->Data + po->Used, Data, Size); }
          else {    memset(po->Data + po->Used, 0,    Size); }
          po->Used += Size;
-      }
-      if(!po->Data){
-         free(po);
-         po=NULL;
       }
    }
    return(po);
@@ -551,33 +565,35 @@ U_PSEUDO_OBJ *U_PO_append(U_PSEUDO_OBJ *po, const char *Data, size_t Size){
 */
 U_PSEUDO_OBJ *U_PO_po_append(U_PSEUDO_OBJ *po, U_PSEUDO_OBJ *Src, int StripE){
    if(!Src){ return(NULL); }
+   if((StripE && (Src->Used == 4)) || !Src->Used){ return(po); } /* appending nothing is not an error */
    char   *Data = Src->Data;
-   size_t  Size = Src->Size;
+   size_t  Size = Src->Used;  /* append only what is used */
+   U_PSEUDO_OBJ *ipo = po;
    if(StripE){ Size -= 4; }
-   if(!po){
-      po = U_PO_create(NULL, 0, 0, Src->Type); /* create an empty pseudoobject */
+   if(!ipo){
+      ipo = U_PO_create(NULL, 0, 0, Src->Type); /* create an empty pseudoobject */
    }
-   if(po){
-      if(po->Data){
-         if(po->Used + Size > po->Size){
-            po->Size = po->Used + Size;
-            po->Data = realloc(po->Data, po->Size);
+   if(ipo){
+      if(!ipo->Data || ipo->Used + Size > ipo->Size){
+         ipo->Size = ipo->Used + Size;
+         char *newData = realloc(ipo->Data, ipo->Size);
+         if(!newData){
+            if(ipo != po)U_PO_free(&ipo);
          }
-         if(po->Data){
-            if(Data){
-               if(StripE){  memcpy(po->Data + po->Used, Data + 4, Size); } /* Size is already 4 less, skip the leading Elements value */
-               else {       memcpy(po->Data + po->Used, Data,     Size); } /* copy everything */
-            }
-            else {          memset(po->Data + po->Used, 0,        Size); } /* set everything  */
-            po->Used += Size;
+         else {
+            ipo->Data = newData;
          }
       }
-      if(!po->Data){
-         free(po);
-         po=NULL;
+      if(ipo){
+         if(Data){
+            if(StripE){  memcpy(ipo->Data + ipo->Used, Data + 4, Size); } /* Size is already 4 less, skip the leading Elements value */
+            else {       memcpy(ipo->Data + ipo->Used, Data,     Size); } /* copy everything */
+         }
+         else {          memset(ipo->Data + ipo->Used, 0,        Size); } /* set everything  */
+         ipo->Used += Size;
       }
    }
-   return(po);
+   return(ipo);
 }
 
 /**
@@ -672,7 +688,7 @@ U_DPSEUDO_OBJ *U_PATH_create(int Elements, const U_PMF_POINTF *Points, uint8_t F
       if(!(Others & U_PPT_Bezier)){              return(NULL); } /* will pass if either line or bezier is set */
    }
     
-   U_DPSEUDO_OBJ *Path = (U_DPSEUDO_OBJ *)malloc(sizeof(U_DPSEUDO_OBJ));
+   U_DPSEUDO_OBJ *Path = (U_DPSEUDO_OBJ *)calloc(sizeof(U_DPSEUDO_OBJ),1); /* make poTypes and poPoints NULL */
    const U_SERIAL_DESC List[] = { {NULL,0,0,U_XX} };
    if(Path){
       Path->Elements = Elements;
@@ -733,17 +749,23 @@ int U_DPO_clear(U_DPSEUDO_OBJ *dpo){
 int U_PATH_moveto(U_DPSEUDO_OBJ *Path, U_PMF_POINTF Point, uint8_t Flags){
    if(!Path){ return(0); }
    U_PSEUDO_OBJ *tpo;
+   U_PSEUDO_OBJ *tpo2;
    uint8_t Type = (Flags & U_PTP_NotClose) | U_PPT_Start;
 
    tpo = U_PMF_POINTF_set(1, &Point);
    if(!tpo){ return(0); }
-   Path->poPoints = U_PO_po_append(Path->poPoints, tpo, U_PMF_DROP_ELEMENTS);
+   tpo2 = U_PO_po_append(Path->poPoints, tpo, U_PMF_DROP_ELEMENTS);
    U_PO_free(&tpo);
+   if(!tpo2)return(0);
+   Path->poPoints = tpo2;
+   
 
    tpo  = U_PMF_PATHPOINTTYPE_set(1, &Type);
    if(!tpo){ return(0); }
-   Path->poTypes = U_PO_po_append(Path->poTypes, tpo, U_PMF_DROP_ELEMENTS);
+   tpo2= U_PO_po_append(Path->poTypes, tpo, U_PMF_DROP_ELEMENTS);
    U_PO_free(&tpo);
+   if(!tpo2)return(0);
+   Path->poTypes = tpo2;
 
    Path->Elements++;
    return(1);
@@ -760,16 +782,22 @@ int U_PATH_lineto(U_DPSEUDO_OBJ *Path,  U_PMF_POINTF Point, uint8_t Flags){
    if(!Path || !Path->Elements){ return(0); }  /* must be at least one point to extend from */
    if(Path->poTypes->Data[Path->Elements - 1] & U_PTP_CloseSubpath){ return(0); }  /* cannot extend a closed subpath */
    U_PSEUDO_OBJ *tpo;
+   U_PSEUDO_OBJ *tpo2;
    uint8_t Type = (Flags & U_PTP_NotClose) | U_PPT_Line;
    tpo = U_PMF_POINTF_set(1, &Point);
    if(!tpo){ return(0); }
-   Path->poPoints = U_PO_po_append(Path->poPoints, tpo, U_PMF_DROP_ELEMENTS);
+   tpo2 = U_PO_po_append(Path->poPoints, tpo, U_PMF_DROP_ELEMENTS);
    U_PO_free(&tpo);
+   if(!tpo2)return(0);
+   Path->poPoints  = tpo2;
+   
 
    tpo  = U_PMF_PATHPOINTTYPE_set(1, &Type);
    if(!tpo){ return(0); }
-   Path->poTypes = U_PO_po_append(Path->poTypes, tpo, U_PMF_DROP_ELEMENTS);
+   tpo2 = U_PO_po_append(Path->poTypes, tpo, U_PMF_DROP_ELEMENTS);
    U_PO_free(&tpo);
+   if(!tpo2)return(0);
+   Path->poTypes  = tpo2;
 
    Path->Elements++;
    return(1);
@@ -802,18 +830,24 @@ int U_PATH_polylineto(U_DPSEUDO_OBJ *Path, uint32_t Elements, const U_PMF_POINTF
    if(!Path || !Points){ return(0); }
    if(!Elements){ return(1); } /* harmless - do nothing */
    U_PSEUDO_OBJ *tpo;
+   U_PSEUDO_OBJ *tpo2;
    uint8_t First, Others;
 
    tpo = U_PMF_POINTF_set(Elements, Points);
-   Path->poPoints = U_PO_po_append(Path->poPoints, tpo, U_PMF_DROP_ELEMENTS);
+   tpo2 = U_PO_po_append(Path->poPoints, tpo, U_PMF_DROP_ELEMENTS);
    U_PO_free(&tpo);
+   if(!tpo2)return(0);
+   Path->poPoints = tpo2;
+   
    if(StartSeg){ First  = (Flags & U_PTP_NotClose) | U_PPT_Start; }
    else {        First  = (Flags & U_PTP_NotClose) | U_PPT_Line;  }
                  Others = (Flags & U_PTP_NotClose) | U_PPT_Line;  
    tpo  = U_PMF_PATHPOINTTYPE_set2(Elements, First, Others);
    if(!tpo){ return(0); }
-   Path->poTypes = U_PO_po_append(Path->poTypes, tpo, U_PMF_DROP_ELEMENTS);
+   tpo2 = U_PO_po_append(Path->poTypes, tpo, U_PMF_DROP_ELEMENTS);
    U_PO_free(&tpo);
+   if(!tpo2)return(0);
+   Path->poTypes = tpo2;
 
    Path->Elements += Elements;
    return(1);
@@ -842,19 +876,24 @@ int U_PATH_polybezierto(U_DPSEUDO_OBJ *Path, uint32_t Elements, const U_PMF_POIN
    if(StartSeg  && ((Elements - 1) % 3)){ return(0); }    /* new segment    must be 1 + N*3 points */
    if(!StartSeg && (Elements % 3)){       return(0); }    /* extend segment must be     N*3 points */
    U_PSEUDO_OBJ *tpo;
+   U_PSEUDO_OBJ *tpo2;
    uint8_t First, Others;
 
    tpo = U_PMF_POINTF_set(Elements, Points);
-   Path->poPoints = U_PO_po_append(Path->poPoints, tpo, U_PMF_DROP_ELEMENTS);
+   tpo2 = U_PO_po_append(Path->poPoints, tpo, U_PMF_DROP_ELEMENTS);
    U_PO_free(&tpo);
+   if(!tpo2)return(0);
+   Path->poPoints = tpo2;
  
    if(StartSeg){ First  = (Flags & U_PTP_NotClose) | U_PPT_Start;  }
    else {        First  = (Flags & U_PTP_NotClose) | U_PPT_Bezier; }
                  Others = (Flags & U_PTP_NotClose) | U_PPT_Bezier;
    tpo  = U_PMF_PATHPOINTTYPE_set2(Elements, First, Others);
    if(!tpo){ return(0); }
-   Path->poTypes = U_PO_po_append(Path->poTypes, tpo, U_PMF_DROP_ELEMENTS);
+   tpo2 = U_PO_po_append(Path->poTypes, tpo, U_PMF_DROP_ELEMENTS);
    U_PO_free(&tpo);
+   if(!tpo2)return(0);
+   Path->poTypes = tpo2;
 
    Path->Elements += Elements;
    return(1);
@@ -2856,23 +2895,28 @@ U_PSEUDO_OBJ *U_PMF_PATHPOINTTYPERLE_set(uint32_t Elements, const uint8_t *Bz, c
    if(!Bz || !RL || !Ppte)return(NULL);
    /* allocate space in the structure but put no data in */
    U_PSEUDO_OBJ *po =  U_PO_create(NULL, 4 + 2*Elements, 0, U_PMF_PATHPOINTTYPERLE_OID | U_PMF_ARRAY_OID);
-
-   U_PSEUDO_OBJ *poi = U_PMF_4NUM_set(Elements);
-   po = U_PO_append(po, poi->Data, poi->Used);      
-   U_PO_free(&poi);
-
+   U_PSEUDO_OBJ *holdpo = po; 
    if(po){
+      U_PSEUDO_OBJ *poi = U_PMF_4NUM_set(Elements);
+      if(!poi)goto end;
+      po = U_PO_append(po, poi->Data, poi->Used);   
+      U_PO_free(&poi);
+      if(!po)goto end;
+
       for( ;Elements; Elements--, Bz++, RL++, Ppte++){
          po = U_PO_append(po, (char *)Ppte, 1);
-         if(*RL > 0x3F){ /* run length too big for field */
-            U_PO_free(&po);
-            return(NULL);
-         }
+         if(!po)goto end;
+         
+         if(*RL > 0x3F) goto end; /* run length too big for field */
+           
          utmp = (*Bz ? 1 : 0) | ((*RL & 0x3F)<<2); /* bit 1 is not used and is set to 0 */
          po = U_PO_append(po, (char *)&utmp, 1);
+         if(!po)goto end;
       }
    }
-   return(po);
+end:
+   if(!po)U_PO_free(&holdpo);
+   return(holdpo);
 }
 
 /**
@@ -3007,10 +3051,13 @@ U_PSEUDO_OBJ *U_PMF_POINTR_set(uint32_t Elements, const U_PMF_POINTF *Coords){
    U_PSEUDO_OBJ *poi;
    /* Worst case scenario it is 4 bytes per coord, plus the count  */
    U_PSEUDO_OBJ *po =  U_PO_create(NULL, 4 + 4*Elements, 0, U_PMF_POINTR_OID); /* not exactly an array, so no U_PMF_ARRAY_OID */
+   U_PSEUDO_OBJ *holdpo = po;
+   if(!po)goto end;
 
    poi = U_PMF_4NUM_set(Elements);
    po = U_PO_append(po, poi->Data, poi->Used);      
    U_PO_free(&poi);
+   if(po)goto end;
 
    for(Xf = Yf = 0.0 ;Elements; Elements--, Coords++){
       Xf = U_ROUND(Coords->X) - Xf;
@@ -3026,27 +3073,27 @@ U_PSEUDO_OBJ *U_PMF_POINTR_set(uint32_t Elements, const U_PMF_POINTF *Coords){
       if(!poi)poi = U_PMF_INTEGER15_set(X); /* This one must work because of the range checking, above */
       po = U_PO_append(po, poi->Data, poi->Used);      
       U_PO_free(&poi);
+      if(!po)goto end;
 
       poi = U_PMF_INTEGER7_set(Y);
       if(!poi)poi = U_PMF_INTEGER15_set(Y); /* This one must work because of the range checking, above */
       po = U_PO_append(po, poi->Data, poi->Used);      
       U_PO_free(&poi);
+      if(!po)goto end;
    }
    /* Because the values stored were some unpredictable combination of 1 and 2 bytes, the last byte may not end
    on a 4 byte boundary.  Make it do so by padding with up to 3 zero bytes.  */
-#if 1
+
    int residual;
-   unsigned long int us, uu;
-   us = po->Size; /* printing size_t portably is a pain, this avoids the issue */
-   uu = po->Used;
    residual = 3 & po->Used;
-printf("DEBUG Used:%lu residual:%d\n",uu, residual);fflush(stdout);
    if(residual){ 
-      po = U_PO_append(po, NULL, (4 - residual));      
+      po = U_PO_append(po, NULL, (4 - residual));
+      if(!po)goto end;     
    }
-printf("DEBUG Size:%lu Used:%lu \n",us,uu);fflush(stdout);
-#endif
-   return(po);
+
+end:
+   if(!po)U_PO_free(&holdpo);
+   return(holdpo);
 }
 
 /**
@@ -4714,22 +4761,29 @@ U_PSEUDO_OBJ *U_PMR_OBJECT_set(uint32_t ObjID, int otype, int ntype, uint32_t TS
    int      Pad   = UP4(TSize) - TSize;   
    if((otype < U_OT_Brush) || (otype > U_OT_CustomLineCap)){ return(NULL); }
    if(ntype && (cbData > U_OBJRECLIM)){                      return(NULL); }
-   if(!Data){                                                return(NULL); }
+   if(!Data || !cbData){                                     return(NULL); }
    U_PSEUDO_OBJ *po;
    
    if(!ntype && !TSize && (cbData > U_OBJRECLIM)){  
       ntype = 1;
       TSize = cbData;
       po = U_PO_create(NULL, TSize + 16 * (1 + (TSize/cbData)), 0, U_PMR_OBJECT_OID);
-      if(!po)return(po);
-      while(cbData){
-        CSize = (cbData > U_OBJRECLIM ? U_OBJRECLIM : cbData);
-        U_PSEUDO_OBJ *pot = U_PMR_OBJECT_set(ObjID, otype, ntype, TSize, CSize, Data);
-        po = U_PO_po_append(po, pot, U_PMF_KEEP_ELEMENTS);
-        U_PO_free(&pot);
-        Data   += U_OBJRECLIM;
-        cbData -= CSize;
-     }
+      if(po){
+         while(cbData){
+            CSize = (cbData > U_OBJRECLIM ? U_OBJRECLIM : cbData);
+            U_PSEUDO_OBJ *pot = U_PMR_OBJECT_set(ObjID, otype, ntype, TSize, CSize, Data);
+            if(!pot)break;
+            U_PSEUDO_OBJ *newpo = U_PO_po_append(po, pot, U_PMF_KEEP_ELEMENTS);
+            U_PO_free(&pot);
+            if(!newpo)break;
+            po = newpo; 
+            Data   += U_OBJRECLIM;
+            cbData -= CSize;
+         }
+         if(cbData){ /* some error */
+            U_PO_free(&po);
+         }
+      }
    }
    else {
       /* Send in DataSize, U_PMR_CMN_HDR_set will adjust Header Size with 1-3 pad bytes if needed */
@@ -6280,22 +6334,24 @@ int U_PMF_POINTR_get(const char **contents, U_FLOAT *X, U_FLOAT *Y){
     \param  Points     Caller must free.  Array of U_PMF_POINTF coordinates.
 */
 int U_PMF_VARPOINTS_get(const char **contents, uint16_t Flags, int Elements, U_PMF_POINTF **Points){
-   if(!contents || !*contents || !Points || !Elements){ return(0); }
+   int status = 0;
+   if(!contents || !*contents || !Points || !Elements){ return(status); }
    U_PMF_POINTF *pts = (U_PMF_POINTF *)malloc(Elements * sizeof(U_PMF_POINTF));
+   if(!pts){ return(status); }
+   *Points = pts;
    U_FLOAT XF, YF;
    U_FLOAT XFS, YFS;
    
-   *Points = pts;
    for(XFS = YFS = 0.0; Elements; Elements--, pts++){
       if(Flags & U_PPF_P){ 
-         U_PMF_POINTR_get(contents, &XF, &YF);
+         if(!U_PMF_POINTR_get(contents, &XF, &YF))break; /* this should never happen */
          XFS      += XF; /* position relative to previous point, first point is always 0,0 */
          YFS      += YF;
          pts->X    = XFS;
          pts->Y    = YFS; 
       }
       else if(Flags & U_PPF_C){
-         (void) U_PMF_POINT_get(contents, &XF, &XF);  
+         if(!U_PMF_POINT_get(contents, &XF, &XF))break; /* this should never happen */
          pts->X    = XF;
          pts->Y    = YF; 
       }
@@ -6303,7 +6359,14 @@ int U_PMF_VARPOINTS_get(const char **contents, uint16_t Flags, int Elements, U_P
          (void) U_PMF_POINTF_get(contents, &(pts->X), &(pts->Y)); 
       }
    }
-   return(1);
+   if(Elements){ /* some error in the preceding */
+      free(pts);
+      *Points = NULL;
+   }
+   else {
+      status = 1;
+   }
+   return(status);
 }
 
 /**

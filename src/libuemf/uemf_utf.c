@@ -227,6 +227,7 @@ uint16_t *U_Utf32leToUtf16le(
       size_t         *len
    ){
    char *dst,*dst2;
+   char *src2 = (char *) src;
    size_t srclen,dstlen,status;
 
    if(!src)return(NULL);
@@ -235,16 +236,23 @@ uint16_t *U_Utf32leToUtf16le(
    
    dstlen = 2 + srclen;                     // this will always work, but may waste space
    dst2  = dst = calloc(dstlen,1);          // so there will be at least one terminator
-   if(!dst)return(NULL);
-   iconv_t conv = iconv_open("UTF-16LE", "UTF-32LE");
-   status = iconv(conv, ICONV_CAST &src, &srclen, &dst, &dstlen);
-   iconv_close(conv);
-   if(status == (size_t) -1){
-      free(dst2);
-      dst2 = NULL;
-   }
-   else if(len){
-      *len=wchar16len((uint16_t *)dst2);
+   if(dst){
+      iconv_t conv = iconv_open("UTF-16LE", "UTF-32LE");
+      if ( conv == (iconv_t) -1){
+         free(dst2);
+         dst2=NULL;
+      }
+      else {
+         status = iconv(conv, ICONV_CAST &src2, &srclen, &dst, &dstlen);
+         iconv_close(conv);
+         if(status == (size_t) -1){
+            free(dst2);
+            dst2 = NULL;
+         }
+         else if(len){
+            *len=wchar16len((uint16_t *)dst2);
+         }
+      }
    }
    return((uint16_t *)dst2);
 }
@@ -270,17 +278,23 @@ uint32_t *U_Utf16leToUtf32le(
    else {   srclen = 2*wchar16len(src)+2; } // include terminator, length in BYTES
    dstlen = 2*(2 + srclen);                 // This should always work
    dst2 = dst = calloc(dstlen,1);
-   if(!dst)return(NULL);
-   iconv_t conv = iconv_open("UTF-32LE",   "UTF-16LE");
-   if ( conv == (iconv_t)-1)return(NULL);
-   status = iconv(conv, ICONV_CAST &src2, &srclen, &dst, &dstlen);
-   iconv_close(conv);
-   if(status == (size_t) -1){
-      free(dst2);
-      dst2 = NULL;
-   }
-   else if(len){
-      *len=wchar32len((uint32_t *)dst2);
+   if(dst){
+      iconv_t conv = iconv_open("UTF-32LE",   "UTF-16LE");
+      if ( conv == (iconv_t) -1){
+         free(dst2);
+         dst2=NULL;
+      }
+      else {
+         status = iconv(conv, ICONV_CAST &src2, &srclen, &dst, &dstlen);
+         iconv_close(conv);
+         if(status == (size_t) -1){
+            free(dst2);
+            dst2 = NULL;
+         }
+         else if(len){
+            *len=wchar32len((uint32_t *)dst2);
+         }
+      }
    }
    return((uint32_t *) dst2);
 }
@@ -312,17 +326,23 @@ uint32_t *U_Latin1ToUtf32le(
    else {   srclen = strlen(src)+1; }       // include terminator, length in BYTES
    dstlen = sizeof(uint32_t)*(1 + srclen);  // This should always work but might waste some space
    dst2 = dst = calloc(dstlen,1);
-   if(!dst)return(NULL);
-   iconv_t conv = iconv_open("UTF-32LE",   "LATIN1");
-   if ( conv == (iconv_t) -1)return(NULL);
-   status = iconv(conv, ICONV_CAST &src2, &srclen, &dst, &dstlen);
-   iconv_close(conv);
-   if(status == (size_t) -1){
-      free(dst2);
-      dst2 = NULL;
-   }
-   else if(len){
-      *len=wchar32len((uint32_t *)dst2);
+   if(dst){
+      iconv_t conv = iconv_open("UTF-32LE",   "LATIN1");
+      if ( conv == (iconv_t) -1){
+         free(dst2);
+         dst2=NULL;
+      }
+      else {
+         status = iconv(conv, ICONV_CAST &src2, &srclen, &dst, &dstlen);
+         iconv_close(conv);
+         if(status == (size_t) -1){
+            free(dst2);
+            dst2 = NULL;
+         }
+         else if(len){
+            *len=wchar32len((uint32_t *)dst2);
+         }
+      }
    }
    return((uint32_t *) dst2);
 }
@@ -348,17 +368,23 @@ uint32_t *U_Utf8ToUtf32le(
    else {   srclen = strlen(src)+1; }       // include terminator, length in BYTES
    dstlen = sizeof(uint32_t)*(1 + srclen);  // This should always work but might waste some space
    dst2 = dst = calloc(dstlen,1);
-   if(!dst)return(NULL);
-   iconv_t conv = iconv_open("UTF-32LE",   "UTF-8");
-   if ( conv == (iconv_t) -1)return(NULL);
-   status = iconv(conv, ICONV_CAST &src2, &srclen, &dst, &dstlen);
-   iconv_close(conv);
-   if(status == (size_t) -1){
-      free(dst2);
-      dst2 = NULL;
-   }
-   else if(len){
-      *len=wchar32len((uint32_t *)dst2);
+   if(dst){
+      iconv_t conv = iconv_open("UTF-32LE",   "UTF-8");
+      if ( conv == (iconv_t) -1){
+         free(dst2);
+         dst2=NULL;
+      }
+      else {
+         status = iconv(conv, ICONV_CAST &src2, &srclen, &dst, &dstlen);
+         iconv_close(conv);
+         if(status == (size_t) -1){
+            free(dst2);
+            dst2 = NULL;
+         }
+         else if(len){
+            *len=wchar32len((uint32_t *)dst2);
+         }
+      }
    }
    return((uint32_t *) dst2);
 }
@@ -384,17 +410,23 @@ char *U_Utf32leToUtf8(
    else {   srclen = 4*(1 + wchar32len(src)); } //include terminator, length in BYTES
    dstlen = 1 + srclen;                         // This should always work but might waste some space
    dst2 = dst = calloc(dstlen,1);
-   if(!dst)return(NULL);
-   iconv_t conv = iconv_open("UTF-8",   "UTF-32LE");
-   if ( conv == (iconv_t)-1)return(NULL);
-   status = iconv(conv, ICONV_CAST &src2, &srclen, &dst, &dstlen);
-   iconv_close(conv);
-   if(status == (size_t) -1){
-      free(dst2);
-      dst2 = NULL;
-   }
-   else if(len){
-      *len=strlen(dst2);
+   if(dst){
+      iconv_t conv = iconv_open("UTF-8",   "UTF-32LE");
+      if ( conv == (iconv_t) -1){
+         free(dst2);
+         dst2=NULL;
+      }
+      else {
+         status = iconv(conv, ICONV_CAST &src2, &srclen, &dst, &dstlen);
+         iconv_close(conv);
+         if(status == (size_t) -1){
+            free(dst2);
+            dst2 = NULL;
+         }
+         else if(len){
+            *len=strlen(dst2);
+         }
+      }
    }
    return(dst2);
 }
@@ -412,25 +444,31 @@ uint16_t *U_Utf8ToUtf16le(
       size_t       *len
    ){
    char *dst,*dst2;
+   char *src2 = (char *) src;
    size_t srclen,dstlen,status;
-   iconv_t conv;
 
    if(!src)return(NULL);
    if(max){ srclen = max; }
    else {   srclen = strlen(src)+1; }       // include terminator, length in BYTES
    dstlen = 2 * (1 + srclen);               // this will always work, but may waste space
    dst2 = dst =calloc(dstlen,1);            // so there will always be a terminator
-   if(!dst)return(NULL);
-   conv = iconv_open("UTF-16LE", "UTF-8");
-   if (conv == (iconv_t) -1)return(NULL);
-   status = iconv(conv, ICONV_CAST &src, &srclen, &dst, &dstlen);
-   iconv_close(conv);
-   if(status == (size_t) -1){
-      free(dst2);
-      dst2 = NULL;
-   }
-   else if(len){
-      *len=wchar16len((uint16_t *)dst2);
+   if(dst){
+      iconv_t conv = iconv_open("UTF-16LE", "UTF-8");
+      if ( conv == (iconv_t) -1){
+         free(dst2);
+         dst2=NULL;
+      }
+      else {
+         status = iconv(conv, ICONV_CAST &src2, &srclen, &dst, &dstlen);
+         iconv_close(conv);
+         if(status == (size_t) -1){
+            free(dst2);
+            dst2 = NULL;
+         }
+         else if(len){
+            *len=wchar16len((uint16_t *)dst2);
+         }
+      }
    }
    return((uint16_t *)dst2);
 }
@@ -448,7 +486,7 @@ char *U_Utf16leToUtf8(
       size_t         *len
    ){
    char *dst, *dst2;
-   char *ret=NULL;
+   char *src2 = (char *) src;
    size_t srclen,dstlen,status;
 
    if(!src)return(NULL);
@@ -457,16 +495,28 @@ char *U_Utf16leToUtf8(
    dstlen = 1 + 2*srclen;                      // this will always work, but may waste space
                                                // worst case is all glyphs (==max) need 4 UTF-8 encoded bytes + terminator.
    dst2 = dst = (char *) calloc(dstlen,1);
-   if(!dst)return(NULL);
-   iconv_t conv = iconv_open("UTF-8", "UTF-16LE");
-   status = iconv(conv, ICONV_CAST &src, &srclen, &dst, &dstlen);
-   iconv_close(conv);
-   if(status != (size_t) -1){
-      if(len)*len=strlen(dst2);
-      ret=U_strdup(dst2);                     // make a string of exactly the right size
+   if(dst){
+      iconv_t conv = iconv_open("UTF-8", "UTF-16LE");
+      if ( conv == (iconv_t) -1){
+         free(dst2);
+         dst2=NULL;
+      }
+      else {
+         status = iconv(conv, ICONV_CAST &src2, &srclen, &dst, &dstlen);
+         iconv_close(conv);
+         if(status == (size_t) -1){
+            free(dst2);
+            dst2 = NULL;
+         }
+         else if(len){
+            *len=strlen(dst2);
+            dst = dst2;
+            dst2 = U_strdup(dst); // make a string of exactly the right size
+            free(dst);            // free the one which was probably too big
+         }
+      }
    }
-   free(dst2);                                // free the one which was probably too big
-   return(ret);
+   return(dst2);
 }
 
 /**
@@ -482,22 +532,36 @@ char *U_Utf16leToLatin1(
       size_t         *len
    ){
    char *dst, *dst2;
-   char *ret=NULL;
+   char *src2 = (char *) src;
    size_t srclen,dstlen,status;
 
    if(!src)return(NULL);
    if(max){ srclen = 2*max; }
    else {   srclen = 2*(1 +wchar16len(src)); } //include terminator, length in BYTES
    dstlen = 1 + srclen;                        // this will always work as latin1 is always 1 byte/character
-   ret = dst2 = dst = (char *) calloc(dstlen,1);
-   if(!dst)return(NULL);
-   iconv_t conv = iconv_open("LATIN1//TRANSLIT",   "UTF-16LE"); // translate what can be, fill in with something close for the rest
-   status = iconv(conv, ICONV_CAST &src, &srclen, &dst, &dstlen);
-   iconv_close(conv);
-   if(status != (size_t) -1){
-      if(len)*len=strlen(dst2);
+   dst2 = dst = (char *) calloc(dstlen,1);
+   if(dst){
+      iconv_t conv = iconv_open("LATIN1//TRANSLIT",   "UTF-16LE");
+      if ( conv == (iconv_t) -1){
+         free(dst2);
+         dst2=NULL;
+      }
+      else {
+         status = iconv(conv, ICONV_CAST &src2, &srclen, &dst, &dstlen);
+         iconv_close(conv);
+         if(status == (size_t) -1){
+            free(dst2);
+            dst2 = NULL;
+         }
+         else if(len){
+            *len=strlen(dst2);
+            dst = dst2;
+            dst2 = U_strdup(dst); // make a string of exactly the right size
+            free(dst);            // free the one which was probably too big
+         }
+      }
    }
-   return(ret);
+   return(dst2);
 }
 /**
     \brief Put a single 16 bit character into UTF-16LE form.
@@ -534,22 +598,29 @@ char *U_Utf8ToLatin1(
       size_t     *len
    ){
    char *dst,*dst2;
+   char *src2 = (char *) src;
    size_t srclen,dstlen,status;
    if(max){ srclen = max; }
    else {   srclen = strlen(src)+1; }       // include terminator, length in BYTES
    dstlen = (1 + srclen);                   // This should always work but might waste some space
    dst2 = dst = calloc(dstlen,1);
-   if(!dst)return(NULL);
-   iconv_t conv = iconv_open("LATIN1//TRANSLIT",   "UTF-8"); // translate what can be, fill in with something close for the rest
-   if ( conv == (iconv_t) -1)return(NULL);
-   status = iconv(conv, ICONV_CAST &src, &srclen, &dst, &dstlen);
-   iconv_close(conv);
-   if(status == (size_t) -1){
-      free(dst2);
-      dst2 = NULL;
-   }
-   else if(len){
-      *len=strlen(dst2);
+   if(dst){
+      iconv_t conv = iconv_open("LATIN1//TRANSLIT",   "UTF-8"); // translate what can be, fill in with something close for the rest
+      if ( conv == (iconv_t) -1){
+         free(dst2);
+         dst2=NULL;
+      }
+      else {
+         status = iconv(conv, ICONV_CAST &src2, &srclen, &dst, &dstlen);
+         iconv_close(conv);
+         if(status == (size_t) -1){
+            free(dst2);
+            dst2 = NULL;
+         }
+         else if(len){
+            *len=strlen(dst2);
+         }
+      }
    }
    return((char *) dst2);
 }
@@ -571,22 +642,29 @@ char *U_Latin1ToUtf8(
       size_t     *len
    ){
    char *dst,*dst2;
+   char *src2 = (char *) src;
    size_t srclen,dstlen,status;
    if(max){ srclen = max; }
    else {   srclen = strlen(src)+1; }       // include terminator, will waste some space
    dstlen = (1 + 2*srclen);                 // This should always work because all latin1 convert to 1 or 2 byte UTF8, it might waste some space
    dst2 = dst = calloc(dstlen,1);
-   if(!dst)return(NULL);
-   iconv_t conv = iconv_open("UTF-8", "LATIN1"); // everything should translate
-   if ( conv == (iconv_t) -1)return(NULL);
-   status = iconv(conv, ICONV_CAST &src, &srclen, &dst, &dstlen);
-   iconv_close(conv);
-   if(status == (size_t) -1){
-      free(dst2);
-      dst2 = NULL;
-   }
-   else if(len){
-      *len=strlen(dst2);
+   if(dst){
+      iconv_t conv = iconv_open("UTF-8", "LATIN1"); // everything should translate
+      if ( conv == (iconv_t) -1){
+         free(dst2);
+         dst2=NULL;
+      }
+      else {
+         status = iconv(conv, ICONV_CAST &src2, &srclen, &dst, &dstlen);
+         iconv_close(conv);
+         if(status == (size_t) -1){
+            free(dst2);
+            dst2 = NULL;
+         }
+         else if(len){
+            *len=strlen(dst2);
+         }
+      }
    }
    return((char *) dst2);
 }

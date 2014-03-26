@@ -2820,7 +2820,7 @@ typedef struct {
 //! \cond
 
 /* EMF+ prototypes (helper functions) */
-void U_PMR_write(U_PSEUDO_OBJ *po, U_PSEUDO_OBJ *sum, EMFTRACK *et);
+int U_PMR_write(U_PSEUDO_OBJ *po, U_PSEUDO_OBJ *sum, EMFTRACK *et);
 int U_PMR_drawline(uint32_t PenID, uint32_t PathID, U_PMF_POINTF Start, U_PMF_POINTF End, int Dashed, U_PSEUDO_OBJ *sum, EMFTRACK *et);
 int U_PMR_drawstring( const char *string, int Vpos, uint32_t FontID, const U_PSEUDO_OBJ *BrushID, uint32_t FormatID,
       U_PMF_STRINGFORMAT  Sfs, const char *FontName, U_FLOAT Height, U_FontInfoParams *fip, uint32_t FontFlags,

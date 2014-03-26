@@ -599,7 +599,7 @@ const char *U_wmr_names(int idx){
 */
 const char *U_wmr_escnames(int idx){
    const char *name;
-   if(idx>=0 && idx <= 0x0023){
+   if(idx>=1 && idx <= 0x0023){
       switch(idx){
           case    0x0001:  name = "NEWFRAME";                      break;
           case    0x0002:  name = "ABORTDOC";                      break;
