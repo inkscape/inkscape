@@ -263,7 +263,7 @@ void PenTool::_endpointSnapHandle(Geom::Point &p, guint const state) const {
 }
 
 bool PenTool::item_handler(SPItem* item, GdkEvent* event) {
-    gint ret = FALSE;
+    bool ret = false;
 
     switch (event->type) {
         case GDK_BUTTON_PRESS:
@@ -287,7 +287,7 @@ bool PenTool::item_handler(SPItem* item, GdkEvent* event) {
  * Callback to handle all pen events.
  */
 bool PenTool::root_handler(GdkEvent* event) {
-    gint ret = FALSE;
+    bool ret = false;
 
     switch (event->type) {
         case GDK_BUTTON_PRESS:
@@ -327,22 +327,20 @@ bool PenTool::root_handler(GdkEvent* event) {
 gint PenTool::_handleButtonPress(GdkEventButton const &bevent) {
     if (this->events_disabled) {
         // skip event processing if events are disabled
-        return FALSE;
+        return false;
     }
 
-    FreehandBase * const dc = SP_DRAW_CONTEXT(this);
-    SPDesktop * const desktop = dc->desktop;
     Geom::Point const event_w(bevent.x, bevent.y);
     Geom::Point event_dt(desktop->w2d(event_w));
-    ToolBase *event_context = SP_EVENT_CONTEXT(this);
 
-    gint ret = FALSE;
-    if (bevent.button == 1 && !event_context->space_panning
+    bool ret = false;
+
+    if (bevent.button == 1 && !this->space_panning
         // make sure this is not the last click for a waiting LPE (otherwise we want to finish the path)
         && this->expecting_clicks_for_LPE != 1) {
 
-        if (Inkscape::have_viable_layer(desktop, dc->message_context) == false) {
-            return TRUE;
+        if (Inkscape::have_viable_layer(desktop, this->message_context) == false) {
+            return true;
         }
 
         if (!this->grab ) {
@@ -392,8 +390,8 @@ gint PenTool::_handleButtonPress(GdkEventButton const &bevent) {
                                     m.freeSnapReturnByRef(p, Inkscape::SNAPSOURCE_NODE_HANDLE);
                                     m.unSetup();
                                 }
-                              spdc_create_single_dot(event_context, p, "/tools/freehand/pen", bevent.state);
-                              ret = TRUE;
+                              spdc_create_single_dot(this, p, "/tools/freehand/pen", bevent.state);
+                              ret = true;
                               break;
                             }
 
@@ -441,9 +439,9 @@ gint PenTool::_handleButtonPress(GdkEventButton const &bevent) {
                                 if (this->green_anchor && this->green_anchor->active) {
                                     // we clicked on the current curve start, so close it even if
                                     // we drag a handle away from it
-                                    dc->green_closed = TRUE;
+                                    this->green_closed = TRUE;
                                 }
-                                ret = TRUE;
+                                ret = true;
                                 break;
 
                             } else {
@@ -454,7 +452,7 @@ gint PenTool::_handleButtonPress(GdkEventButton const &bevent) {
                         }
 
                         this->state = this->polylines_only ? PenTool::POINT : PenTool::CONTROL;
-                        ret = TRUE;
+                        ret = true;
                         break;
                     case PenTool::CONTROL:
                         g_warning("Button down in CONTROL state");
@@ -474,17 +472,17 @@ gint PenTool::_handleButtonPress(GdkEventButton const &bevent) {
         this->_finishSegment(event_dt, bevent.state);
         if (this->green_closed) {
             // finishing at the start anchor, close curve
-            this->_finish(TRUE);
+            this->_finish(true);
         } else {
             // finishing at some other anchor, finish curve but not close
-            this->_finish(FALSE);
+            this->_finish(false);
         }
 
-        ret = TRUE;
+        ret = true;
     } else if (bevent.button == 3 && this->npoints != 0) {
         // right click - finish path
-        this->_finish(FALSE);
-        ret = TRUE;
+        this->_finish(false);
+        ret = true;
     }
 
     if (this->expecting_clicks_for_LPE > 0) {
@@ -498,28 +496,25 @@ gint PenTool::_handleButtonPress(GdkEventButton const &bevent) {
  * Handle motion_notify event.
  */
 gint PenTool::_handleMotionNotify(GdkEventMotion const &mevent) {
-    gint ret = FALSE;
+    bool ret = false;
 
-    ToolBase *event_context = SP_EVENT_CONTEXT(this);
-    SPDesktop * const dt = event_context->desktop;
-
-    if (event_context->space_panning || mevent.state & GDK_BUTTON2_MASK || mevent.state & GDK_BUTTON3_MASK) {
+    if (this->space_panning || mevent.state & GDK_BUTTON2_MASK || mevent.state & GDK_BUTTON3_MASK) {
         // allow scrolling
-        return FALSE;
+        return false;
     }
 
     if (this->events_disabled) {
         // skip motion events if pen events are disabled
-        return FALSE;
+        return false;
     }
 
-    Geom::Point const event_w(mevent.x,
-                            mevent.y);
+    Geom::Point const event_w(mevent.x, mevent.y);
+
     if (pen_within_tolerance) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         gint const tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
         if ( Geom::LInfty( event_w - pen_drag_origin_w ) < tolerance ) {
-            return FALSE;   // Do not drag if we're within tolerance from origin.
+            return false;   // Do not drag if we're within tolerance from origin.
         }
     }
     // Once the user has moved farther than tolerance from the original location
@@ -528,7 +523,7 @@ gint PenTool::_handleMotionNotify(GdkEventMotion const &mevent) {
     pen_within_tolerance = false;
 
     // Find desktop coordinates
-    Geom::Point p = dt->w2d(event_w);
+    Geom::Point p = desktop->w2d(event_w);
 
     // Test, whether we hit any anchor
     SPDrawAnchor *anchor = spdc_test_inside(this, event_w);
@@ -543,8 +538,8 @@ gint PenTool::_handleMotionNotify(GdkEventMotion const &mevent) {
                         this->_setSubsequentPoint(p, true);
                         ret = TRUE;
                     } else if (!this->sp_event_context_knot_mouseover()) {
-                        SnapManager &m = dt->namedview->snap_manager;
-                        m.setup(dt);
+                        SnapManager &m = desktop->namedview->snap_manager;
+                        m.setup(desktop);
                         m.preSnap(Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_NODE_HANDLE));
                         m.unSetup();
                     }
@@ -554,7 +549,7 @@ gint PenTool::_handleMotionNotify(GdkEventMotion const &mevent) {
                     // Placing controls is last operation in CLOSE state
                     this->_endpointSnap(p, mevent.state);
                     this->_setCtrl(p, mevent.state);
-                    ret = TRUE;
+                    ret = true;
                     break;
                 case PenTool::STOP:
                     // This is perfectly valid
@@ -584,7 +579,7 @@ gint PenTool::_handleMotionNotify(GdkEventMotion const &mevent) {
                             this->anchor_statusbar = false;
                         }
 
-                        ret = TRUE;
+                        ret = true;
                     } else {
                         if (anchor && !this->anchor_statusbar) {
                             this->message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Click</b> or <b>click and drag</b> to continue the path from this point."));
@@ -594,8 +589,8 @@ gint PenTool::_handleMotionNotify(GdkEventMotion const &mevent) {
                             this->anchor_statusbar = false;
                         }
                         if (!this->sp_event_context_knot_mouseover()) {
-                            SnapManager &m = dt->namedview->snap_manager;
-                            m.setup(dt);
+                            SnapManager &m = desktop->namedview->snap_manager;
+                            m.setup(desktop);
                             m.preSnap(Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_NODE_HANDLE));
                             m.unSetup();
                         }
@@ -614,15 +609,15 @@ gint PenTool::_handleMotionNotify(GdkEventMotion const &mevent) {
                         this->_setCtrl(this->p[1], mevent.state);
                     }
                     gobble_motion_events(GDK_BUTTON1_MASK);
-                    ret = TRUE;
+                    ret = true;
                     break;
                 case PenTool::STOP:
                     // This is perfectly valid
                     break;
                 default:
                     if (!this->sp_event_context_knot_mouseover()) {
-                        SnapManager &m = dt->namedview->snap_manager;
-                        m.setup(dt);
+                        SnapManager &m = desktop->namedview->snap_manager;
+                        m.setup(desktop);
                         m.preSnap(Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_NODE_HANDLE));
                         m.unSetup();
                     }
@@ -641,17 +636,14 @@ gint PenTool::_handleMotionNotify(GdkEventMotion const &mevent) {
 gint PenTool::_handleButtonRelease(GdkEventButton const &revent) {
     if (this->events_disabled) {
         // skip event processing if events are disabled
-        return FALSE;
+        return false;
     }
 
-    gint ret = FALSE;
-    ToolBase *event_context = SP_EVENT_CONTEXT(this);
-    if ( revent.button == 1  && !event_context->space_panning) {
+    bool ret = false;
 
-        FreehandBase *dc = SP_DRAW_CONTEXT (this);
+    if (revent.button == 1 && !this->space_panning) {
+        Geom::Point const event_w(revent.x, revent.y);
 
-        Geom::Point const event_w(revent.x,
-                                revent.y);
         // Find desktop coordinates
         Geom::Point p = this->desktop->w2d(event_w);
 
@@ -677,14 +669,14 @@ gint PenTool::_handleButtonRelease(GdkEventButton const &revent) {
                             }
                         }
                         this->state = PenTool::CONTROL;
-                        ret = TRUE;
+                        ret = true;
                         break;
                     case PenTool::CONTROL:
                         // End current segment
                         this->_endpointSnap(p, revent.state);
                         this->_finishSegment(p, revent.state);
                         this->state = PenTool::POINT;
-                        ret = TRUE;
+                        ret = true;
                         break;
                     case PenTool::CLOSE:
                         // End current segment
@@ -692,14 +684,14 @@ gint PenTool::_handleButtonRelease(GdkEventButton const &revent) {
                             this->_endpointSnap(p, revent.state);
                         }
                         this->_finishSegment(p, revent.state);
-                        this->_finish(TRUE);
+                        this->_finish(true);
                         this->state = PenTool::POINT;
-                        ret = TRUE;
+                        ret = true;
                         break;
                     case PenTool::STOP:
                         // This is allowed, if we just canceled curve
                         this->state = PenTool::POINT;
-                        ret = TRUE;
+                        ret = true;
                         break;
                     default:
                         break;
@@ -717,10 +709,10 @@ gint PenTool::_handleButtonRelease(GdkEventButton const &revent) {
                         this->_finishSegment(p, revent.state);
                         if (this->green_closed) {
                             // finishing at the start anchor, close curve
-                            this->_finish(TRUE);
+                            this->_finish(true);
                         } else {
                             // finishing at some other anchor, finish curve but not close
-                            this->_finish(FALSE);
+                            this->_finish(false);
                         }
                         break;
                     case PenTool::STOP:
@@ -730,7 +722,7 @@ gint PenTool::_handleButtonRelease(GdkEventButton const &revent) {
                         break;
                 }
                 this->state = PenTool::POINT;
-                ret = TRUE;
+                ret = true;
                 break;
             default:
                 break;
@@ -742,9 +734,9 @@ gint PenTool::_handleButtonRelease(GdkEventButton const &revent) {
             this->grab = NULL;
         }
 
-        ret = TRUE;
+        ret = true;
 
-        dc->green_closed = FALSE;
+        this->green_closed = FALSE;
     }
 
     // TODO: can we be sure that the path was created correctly?
@@ -752,13 +744,12 @@ gint PenTool::_handleButtonRelease(GdkEventButton const &revent) {
     if (this->expecting_clicks_for_LPE == 0 && this->hasWaitingLPE()) {
         this->setPolylineMode();
 
-        ToolBase *ec = SP_EVENT_CONTEXT(this);
-        Inkscape::Selection *selection = sp_desktop_selection (ec->desktop);
+        Inkscape::Selection *selection = sp_desktop_selection(this->desktop);
 
         if (this->waiting_LPE) {
             // we have an already created LPE waiting for a path
             this->waiting_LPE->acceptParamPath(SP_PATH(selection->singleItem()));
-            selection->add(SP_OBJECT(this->waiting_item));
+            selection->add(this->waiting_item);
             this->waiting_LPE = NULL;
         } else {
             // the case that we need to create a new LPE and apply it to the just-drawn path is
@@ -770,11 +761,11 @@ gint PenTool::_handleButtonRelease(GdkEventButton const &revent) {
 }
 
 gint PenTool::_handle2ButtonPress(GdkEventButton const &bevent) {
-    gint ret = FALSE;
+    bool ret = false;
     // only end on LMB double click. Otherwise horizontal scrolling causes ending of the path
     if (this->npoints != 0 && bevent.button == 1) {
         this->_finish(FALSE);
-        ret = TRUE;
+        ret = true;
     }
     return ret;
 }
@@ -881,67 +872,97 @@ void PenTool::_lastpointToLine() {
 
 
 gint PenTool::_handleKeyPress(GdkEvent *event) {
-
-    gint ret = FALSE;
+    bool ret = false;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     gdouble const nudge = prefs->getDoubleLimited("/options/nudgedistance/value", 2, 0, 1000, "px"); // in px
 
     switch (get_group0_keyval (&event->key)) {
-
         case GDK_KEY_Left: // move last point left
         case GDK_KEY_KP_Left:
             if (!MOD__CTRL(event)) { // not ctrl
                 if (MOD__ALT(event)) { // alt
-                    if (MOD__SHIFT(event)) this->_lastpointMoveScreen(-10, 0); // shift
-                    else this->_lastpointMoveScreen(-1, 0); // no shift
+                    if (MOD__SHIFT(event)) {
+                        this->_lastpointMoveScreen(-10, 0); // shift
+                    }
+                    else {
+                        this->_lastpointMoveScreen(-1, 0); // no shift
+                    }
                 }
                 else { // no alt
-                    if (MOD__SHIFT(event)) this->_lastpointMove(-10*nudge, 0); // shift
-                    else this->_lastpointMove(-nudge, 0); // no shift
+                    if (MOD__SHIFT(event)) {
+                        this->_lastpointMove(-10*nudge, 0); // shift
+                    }
+                    else {
+                        this->_lastpointMove(-nudge, 0); // no shift
+                    }
                 }
-                ret = TRUE;
+                ret = true;
             }
             break;
         case GDK_KEY_Up: // move last point up
         case GDK_KEY_KP_Up:
             if (!MOD__CTRL(event)) { // not ctrl
                 if (MOD__ALT(event)) { // alt
-                    if (MOD__SHIFT(event)) this->_lastpointMoveScreen(0, 10); // shift
-                    else this->_lastpointMoveScreen(0, 1); // no shift
+                    if (MOD__SHIFT(event)) {
+                        this->_lastpointMoveScreen(0, 10); // shift
+                    }
+                    else {
+                        this->_lastpointMoveScreen(0, 1); // no shift
+                    }
                 }
                 else { // no alt
-                    if (MOD__SHIFT(event)) this->_lastpointMove(0, 10*nudge); // shift
-                    else this->_lastpointMove(0, nudge); // no shift
+                    if (MOD__SHIFT(event)) {
+                        this->_lastpointMove(0, 10*nudge); // shift
+                    }
+                    else {
+                        this->_lastpointMove(0, nudge); // no shift
+                    }
                 }
-                ret = TRUE;
+                ret = true;
             }
             break;
         case GDK_KEY_Right: // move last point right
         case GDK_KEY_KP_Right:
             if (!MOD__CTRL(event)) { // not ctrl
                 if (MOD__ALT(event)) { // alt
-                    if (MOD__SHIFT(event)) this->_lastpointMoveScreen(10, 0); // shift
-                    else this->_lastpointMoveScreen(1, 0); // no shift
+                    if (MOD__SHIFT(event)) {
+                        this->_lastpointMoveScreen(10, 0); // shift
+                    }
+                    else {
+                        this->_lastpointMoveScreen(1, 0); // no shift
+                    }
                 }
                 else { // no alt
-                    if (MOD__SHIFT(event)) this->_lastpointMove(10*nudge, 0); // shift
-                    else this->_lastpointMove(nudge, 0); // no shift
+                    if (MOD__SHIFT(event)) {
+                        this->_lastpointMove(10*nudge, 0); // shift
+                    }
+                    else {
+                        this->_lastpointMove(nudge, 0); // no shift
+                    }
                 }
-                ret = TRUE;
+                ret = true;
             }
             break;
         case GDK_KEY_Down: // move last point down
         case GDK_KEY_KP_Down:
             if (!MOD__CTRL(event)) { // not ctrl
                 if (MOD__ALT(event)) { // alt
-                    if (MOD__SHIFT(event)) this->_lastpointMoveScreen(0, -10); // shift
-                    else this->_lastpointMoveScreen(0, -1); // no shift
+                    if (MOD__SHIFT(event)) {
+                        this->_lastpointMoveScreen(0, -10); // shift
+                    }
+                    else {
+                        this->_lastpointMoveScreen(0, -1); // no shift
+                    }
                 }
                 else { // no alt
-                    if (MOD__SHIFT(event)) this->_lastpointMove(0, -10*nudge); // shift
-                    else this->_lastpointMove(0, -nudge); // no shift
+                    if (MOD__SHIFT(event)) {
+                        this->_lastpointMove(0, -10*nudge); // shift
+                    }
+                    else {
+                        this->_lastpointMove(0, -nudge); // no shift
+                    }
                 }
-                ret = TRUE;
+                ret = true;
             }
             break;
 
@@ -983,29 +1004,29 @@ gint PenTool::_handleKeyPress(GdkEvent *event) {
         case GDK_KEY_u:
             if (MOD__SHIFT_ONLY(event)) {
                 this->_lastpointToCurve();
-                ret = TRUE;
+                ret = true;
             }
             break;
         case GDK_KEY_L:
         case GDK_KEY_l:
             if (MOD__SHIFT_ONLY(event)) {
                 this->_lastpointToLine();
-                ret = TRUE;
+                ret = true;
             }
             break;
 
         case GDK_KEY_Return:
         case GDK_KEY_KP_Enter:
             if (this->npoints != 0) {
-                this->_finish(FALSE);
-                ret = TRUE;
+                this->_finish(false);
+                ret = true;
             }
             break;
         case GDK_KEY_Escape:
             if (this->npoints != 0) {
                 // if drawing, cancel, otherwise pass it up for deselecting
                 this->_cancel ();
-                ret = TRUE;
+                ret = true;
             }
             break;
         case GDK_KEY_z:
@@ -1013,13 +1034,13 @@ gint PenTool::_handleKeyPress(GdkEvent *event) {
             if (MOD__CTRL_ONLY(event) && this->npoints != 0) {
                 // if drawing, cancel, otherwise pass it up for undo
                 this->_cancel ();
-                ret = TRUE;
+                ret = true;
             }
             break;
         case GDK_KEY_g:
         case GDK_KEY_G:
             if (MOD__SHIFT_ONLY(event)) {
-                sp_selection_to_guides(SP_EVENT_CONTEXT(this)->desktop);
+                sp_selection_to_guides(this->desktop);
                 ret = true;
             }
             break;
@@ -1029,7 +1050,7 @@ gint PenTool::_handleKeyPress(GdkEvent *event) {
             if ( this->green_curve->is_empty() || (this->green_curve->last_segment() == NULL) ) {
                 if (!this->red_curve->is_empty()) {
                     this->_cancel ();
-                    ret = TRUE;
+                    ret = true;
                 } else {
                     // do nothing; this event should be handled upstream
                 }
@@ -1067,7 +1088,7 @@ gint PenTool::_handleKeyPress(GdkEvent *event) {
                 this->state = PenTool::POINT;
                 this->_setSubsequentPoint(pt, true);
                 pen_last_paraxial_dir = !pen_last_paraxial_dir;
-                ret = TRUE;
+                ret = true;
             }
             break;
         default:
@@ -1120,7 +1141,6 @@ void PenTool::_setAngleDistanceStatusMessage(Geom::Point const p, int pc_point_t
     g_assert((pc_point_to_compare == 0) || (pc_point_to_compare == 3)); // exclude control handles
     g_assert(message != NULL);
 
-    SPDesktop *desktop = SP_EVENT_CONTEXT(this)->desktop;
     Geom::Point rel = p - this->p[pc_point_to_compare];
     Inkscape::Util::Quantity q = Inkscape::Util::Quantity(Geom::L2(rel), "px");
     GString *dist = g_string_new(q.string(desktop->namedview->doc_units).c_str());
@@ -1257,7 +1277,6 @@ void PenTool::_finish(gboolean const closed) {
 
     this->_disableEvents();
 
-    SPDesktop *const desktop = this->desktop;
     this->message_context->clear();
     desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Drawing finished"));
 
@@ -1277,7 +1296,6 @@ void PenTool::_finish(gboolean const closed) {
     if (this->green_anchor) {
         this->green_anchor = sp_draw_anchor_destroy(this->green_anchor);
     }
-
 
     this->desktop->canvas->endForcedFullRedraws();
 

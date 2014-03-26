@@ -379,7 +379,7 @@ cc_deselect_handle(SPKnot* knot)
 }
 
 bool ConnectorTool::item_handler(SPItem* item, GdkEvent* event) {
-    gint ret = FALSE;
+    bool ret = false;
 
     Geom::Point p(event->button.x, event->button.y);
 
@@ -412,7 +412,7 @@ bool ConnectorTool::item_handler(SPItem* item, GdkEvent* event) {
                     }
                 }
 
-                ret = TRUE;
+                ret = true;
             }
             break;
 
@@ -422,7 +422,7 @@ bool ConnectorTool::item_handler(SPItem* item, GdkEvent* event) {
                     this->_setActiveShape(item);
                 }
 
-                ret = TRUE;
+                ret = true;
             }
             break;
 
@@ -434,7 +434,7 @@ bool ConnectorTool::item_handler(SPItem* item, GdkEvent* event) {
 }
 
 bool ConnectorTool::root_handler(GdkEvent* event) {
-    gint ret = FALSE;
+    bool ret = false;
 
     switch (event->type) {
         case GDK_BUTTON_PRESS:
@@ -469,20 +469,15 @@ gint ConnectorTool::_handleButtonPress(GdkEventButton const &bevent) {
     Geom::Point const event_w(bevent.x, bevent.y);
     /* Find desktop coordinates */
     Geom::Point p = this->desktop->w2d(event_w);
-    ToolBase *event_context = SP_EVENT_CONTEXT(this);
 
-    gint ret = FALSE;
+    bool ret = false;
 
-        if ( bevent.button == 1 && !event_context->space_panning ) {
-
-            SPDesktop *desktop = this->desktop;
-
+        if ( bevent.button == 1 && !this->space_panning ) {
             if (Inkscape::have_viable_layer(desktop, this->message_context) == false) {
-                return TRUE;
+                return true;
             }
 
-            Geom::Point const event_w(bevent.x,
-                                    bevent.y);
+            Geom::Point const event_w(bevent.x, bevent.y);
 
             this->xp = bevent.x;
             this->yp = bevent.y;
@@ -520,7 +515,7 @@ gint ConnectorTool::_handleButtonPress(GdkEventButton const &bevent) {
 
                     }
                     this->state = SP_CONNECTOR_CONTEXT_DRAGGING;
-                    ret = TRUE;
+                    ret = true;
                     break;
                 }
                 case SP_CONNECTOR_CONTEXT_DRAGGING:
@@ -539,7 +534,7 @@ gint ConnectorTool::_handleButtonPress(GdkEventButton const &bevent) {
                     }
                     this->cc_set_active_conn(this->newconn);
                     this->state = SP_CONNECTOR_CONTEXT_IDLE;
-                    ret = TRUE;
+                    ret = true;
                     break;
                 }
                 case SP_CONNECTOR_CONTEXT_CLOSE:
@@ -564,20 +559,19 @@ gint ConnectorTool::_handleButtonPress(GdkEventButton const &bevent) {
             else if (this->npoints != 0) {
                 this->_finish();
                 this->state = SP_CONNECTOR_CONTEXT_IDLE;
-                ret = TRUE;
+                ret = true;
             }
         }
     return ret;
 }
 
 gint ConnectorTool::_handleMotionNotify(GdkEventMotion const &mevent) {
-    gint ret = FALSE;
-    ToolBase *event_context = SP_EVENT_CONTEXT(this);
+    bool ret = false;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
-    if (event_context->space_panning || mevent.state & GDK_BUTTON2_MASK || mevent.state & GDK_BUTTON3_MASK) {
+    if (this->space_panning || mevent.state & GDK_BUTTON2_MASK || mevent.state & GDK_BUTTON3_MASK) {
         // allow middle-button scrolling
-        return FALSE;
+        return false;
     }
 
     Geom::Point const event_w(mevent.x, mevent.y);
@@ -586,7 +580,7 @@ gint ConnectorTool::_handleMotionNotify(GdkEventMotion const &mevent) {
         this->tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
         if ( ( abs( (gint) mevent.x - this->xp ) < this->tolerance ) &&
              ( abs( (gint) mevent.y - this->yp ) < this->tolerance ) ) {
-            return FALSE;   // Do not drag if we're within tolerance from origin.
+            return false;   // Do not drag if we're within tolerance from origin.
         }
     }
     // Once the user has moved farther than tolerance from the original location
@@ -594,12 +588,10 @@ gint ConnectorTool::_handleMotionNotify(GdkEventMotion const &mevent) {
     // the motion notify coordinates as given (no snapping back to origin)
     this->within_tolerance = false;
 
-    SPDesktop *const dt = this->desktop;
-
     /* Find desktop coordinates */
-    Geom::Point p = dt->w2d(event_w);
+    Geom::Point p = desktop->w2d(event_w);
 
-        SnapManager &m = dt->namedview->snap_manager;
+        SnapManager &m = desktop->namedview->snap_manager;
 
         switch (this->state) {
             case SP_CONNECTOR_CONTEXT_DRAGGING:
@@ -607,12 +599,12 @@ gint ConnectorTool::_handleMotionNotify(GdkEventMotion const &mevent) {
                 gobble_motion_events(mevent.state);
                 // This is movement during a connector creation.
                 if ( this->npoints > 0 ) {
-                    m.setup(dt);
+                    m.setup(desktop);
                     m.freeSnapReturnByRef(p, Inkscape::SNAPSOURCE_OTHER_HANDLE);
                     m.unSetup();
                     this->selection->clear();
                     this->_setSubsequentPoint(p);
-                    ret = TRUE;
+                    ret = true;
                 }
                 break;
             }
@@ -621,7 +613,7 @@ gint ConnectorTool::_handleMotionNotify(GdkEventMotion const &mevent) {
                 gobble_motion_events(GDK_BUTTON1_MASK);
                 g_assert( SP_IS_PATH(this->clickeditem));
 
-                m.setup(dt);
+                m.setup(desktop);
                 m.freeSnapReturnByRef(p, Inkscape::SNAPSOURCE_OTHER_HANDLE);
                 m.unSetup();
 
@@ -645,7 +637,7 @@ gint ConnectorTool::_handleMotionNotify(GdkEventMotion const &mevent) {
                 this->red_curve->transform(i2d);
 
                 sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->red_bpath), this->red_curve);
-                ret = TRUE;
+                ret = true;
                 break;
             }
             case SP_CONNECTOR_CONTEXT_STOP:
@@ -653,7 +645,7 @@ gint ConnectorTool::_handleMotionNotify(GdkEventMotion const &mevent) {
                 break;
             default:
                 if (!this->sp_event_context_knot_mouseover()) {
-                    m.setup(dt);
+                    m.setup(desktop);
                     m.preSnap(Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_OTHER_HANDLE));
                     m.unSetup();
                 }
@@ -663,13 +655,10 @@ gint ConnectorTool::_handleMotionNotify(GdkEventMotion const &mevent) {
 }
 
 gint ConnectorTool::_handleButtonRelease(GdkEventButton const &revent) {
-    gint ret = FALSE;
-    ToolBase *event_context = SP_EVENT_CONTEXT(this);
-    if ( revent.button == 1 && !event_context->space_panning ) {
+    bool ret = false;
 
-        SPDesktop *desktop = this->desktop;
+    if ( revent.button == 1 && !this->space_panning ) {
         SPDocument *doc = sp_desktop_document(desktop);
-
         SnapManager &m = desktop->namedview->snap_manager;
 
         Geom::Point const event_w(revent.x, revent.y);
@@ -688,7 +677,7 @@ gint ConnectorTool::_handleButtonRelease(GdkEventButton const &revent) {
                     if (this->within_tolerance)
                     {
                         this->_finishSegment(p);
-                        return TRUE;
+                        return true;
                     }
                     // Connector has been created via a drag, end it now.
                     this->_setSubsequentPoint(p);
@@ -711,7 +700,7 @@ gint ConnectorTool::_handleButtonRelease(GdkEventButton const &revent) {
 
                     doc->ensureUpToDate();
                     this->state = SP_CONNECTOR_CONTEXT_IDLE;
-                    return TRUE;
+                    return true;
                     break;
                 }
                 case SP_CONNECTOR_CONTEXT_STOP:
@@ -720,13 +709,13 @@ gint ConnectorTool::_handleButtonRelease(GdkEventButton const &revent) {
                 default:
                     break;
             }
-            ret = TRUE;
+            ret = true;
         }
     return ret;
 }
 
 gint ConnectorTool::_handleKeyPress(guint const keyval) {
-    gint ret = FALSE;
+    bool ret = false;
 
         switch (keyval) {
             case GDK_KEY_Return:
@@ -734,13 +723,11 @@ gint ConnectorTool::_handleKeyPress(guint const keyval) {
                 if (this->npoints != 0) {
                     this->_finish();
                     this->state = SP_CONNECTOR_CONTEXT_IDLE;
-                    ret = TRUE;
+                    ret = true;
                 }
                 break;
             case GDK_KEY_Escape:
                 if (this->state == SP_CONNECTOR_CONTEXT_REROUTING) {
-
-                    SPDesktop *desktop = this->desktop;
                     SPDocument *doc = sp_desktop_document(desktop);
 
                     this->_reroutingFinish(NULL);
@@ -750,13 +737,13 @@ gint ConnectorTool::_handleKeyPress(guint const keyval) {
                     this->state = SP_CONNECTOR_CONTEXT_IDLE;
                     desktop->messageStack()->flash( Inkscape::NORMAL_MESSAGE,
                             _("Connector endpoint drag cancelled."));
-                    ret = TRUE;
+                    ret = true;
                 }
                 else if (this->npoints != 0) {
                     // if drawing, cancel, otherwise pass it up for deselecting
                     this->state = SP_CONNECTOR_CONTEXT_STOP;
                     this->_resetColors();
-                    ret = TRUE;
+                    ret = true;
                 }
                 break;
             default:
@@ -766,7 +753,6 @@ gint ConnectorTool::_handleKeyPress(guint const keyval) {
 }
 
 void ConnectorTool::_reroutingFinish(Geom::Point *const p) {
-    SPDesktop *desktop = this->desktop;
     SPDocument *doc = sp_desktop_document(desktop);
 
     // Clear the temporary path:
@@ -819,14 +805,13 @@ void ConnectorTool::_setInitialPoint(Geom::Point const p) {
 void ConnectorTool::_setSubsequentPoint(Geom::Point const p) {
     g_assert( this->npoints != 0 );
 
-    SPDesktop *dt = this->desktop;
-    Geom::Point o = dt->dt2doc(this->p[0]);
-    Geom::Point d = dt->dt2doc(p);
+    Geom::Point o = desktop->dt2doc(this->p[0]);
+    Geom::Point d = desktop->dt2doc(p);
     Avoid::Point src(o[Geom::X], o[Geom::Y]);
     Avoid::Point dst(d[Geom::X], d[Geom::Y]);
 
     if (!this->newConnRef) {
-        Avoid::Router *router = sp_desktop_document(dt)->router;
+        Avoid::Router *router = sp_desktop_document(desktop)->router;
         this->newConnRef = new Avoid::ConnRef(router);
         this->newConnRef->setEndpoint(Avoid::VertID::src, src);
         if (this->isOrthogonal)
@@ -841,7 +826,7 @@ void ConnectorTool::_setSubsequentPoint(Geom::Point const p) {
     this->newConnRef->router()->processTransaction();
     // Recreate curve from libavoid route.
     recreateCurve( this->red_curve, this->newConnRef, this->curvature );
-    this->red_curve->transform(dt->doc2dt());
+    this->red_curve->transform(desktop->doc2dt());
     sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->red_bpath), this->red_curve);
 }
 
@@ -890,7 +875,6 @@ void ConnectorTool::_flushWhite(SPCurve *gc) {
     /* Now we have to go back to item coordinates at last */
     c->transform(this->desktop->dt2doc());
 
-    SPDesktop *desktop = this->desktop;
     SPDocument *doc = sp_desktop_document(desktop);
     Inkscape::XML::Document *xml_doc = doc->getReprDoc();
 
@@ -965,7 +949,6 @@ void ConnectorTool::_finishSegment(Geom::Point const /*p*/) {
 }
 
 void ConnectorTool::_finish() {
-    SPDesktop *const desktop = this->desktop;
     desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Finishing connector"));
 
     this->red_curve->reset();
@@ -1083,7 +1066,6 @@ endpt_handler(SPKnot */*knot*/, GdkEvent *event, ConnectorTool *cc)
 }
 
 void ConnectorTool::_activeShapeAddKnot(SPItem* item) {
-        SPDesktop *desktop = this->desktop;
         SPKnot *knot = sp_knot_new(desktop, 0);
 
         knot->owner = item;
@@ -1096,10 +1078,12 @@ void ConnectorTool::_activeShapeAddKnot(SPItem* item) {
         // We don't want to use the standard knot handler.
         g_signal_handler_disconnect(G_OBJECT(knot->item),
                 knot->_event_handler_id);
+
         knot->_event_handler_id = 0;
 
         g_signal_connect(G_OBJECT(knot->item), "event",
                 G_CALLBACK(cc_generic_knot_handler), knot);
+
         sp_knot_set_position(knot, item->avoidRef->getConnectionPointPos() * desktop->doc2dt(), 0);
         sp_knot_show(knot);
         this->knots[knot] = 1;
@@ -1198,7 +1182,6 @@ void ConnectorTool::cc_set_active_conn(SPItem *item) {
     }
 
     for (int i = 0; i < 2; ++i) {
-
         // Create the handle if it doesn't exist
         if ( this->endpt_handle[i] == NULL ) {
             SPKnot *knot = sp_knot_new(this->desktop,
@@ -1215,6 +1198,7 @@ void ConnectorTool::cc_set_active_conn(SPItem *item) {
             // since we don't want this knot to be draggable.
             g_signal_handler_disconnect(G_OBJECT(knot->item),
                     knot->_event_handler_id);
+
             knot->_event_handler_id = 0;
 
             g_signal_connect(G_OBJECT(knot->item), "event",
@@ -1228,6 +1212,7 @@ void ConnectorTool::cc_set_active_conn(SPItem *item) {
             g_signal_handlers_disconnect_by_func(
                     G_OBJECT(this->endpt_handle[i]->item),
                     (void*)G_CALLBACK(endpt_handler), (gpointer) this );
+
             this->endpt_handler_id[i] = 0;
         }
 
@@ -1264,10 +1249,13 @@ void cc_create_connection_point(ConnectorTool* cc)
         {
             cc_deselect_handle( cc->selected_handle );
         }
+
         SPKnot *knot = sp_knot_new(cc->desktop, 0);
+
         // We do not process events on this knot.
         g_signal_handler_disconnect(G_OBJECT(knot->item),
                                     knot->_event_handler_id);
+
         knot->_event_handler_id = 0;
 
         cc_select_handle( knot );
