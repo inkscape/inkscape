@@ -19,6 +19,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <2geom/point.h>
+
 #include "ui/tools/dynamic-base.h"
 
 #define ERC_MIN_PRESSURE      0.0

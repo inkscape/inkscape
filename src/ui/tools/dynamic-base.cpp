@@ -10,6 +10,7 @@
 #include "preferences.h"
 #include "display/sp-canvas-item.h"
 #include "desktop.h"
+#include "display/curve.h"
 
 #define MIN_PRESSURE      0.0
 #define MAX_PRESSURE      1.0

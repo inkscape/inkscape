@@ -57,6 +57,7 @@
 #include "shape-editor.h"
 #include "sp-guide.h"
 #include "color.h"
+#include "knot.h"
 
 // globals for temporary switching to selector by space
 static bool selector_toggled = FALSE;

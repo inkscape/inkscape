@@ -16,12 +16,18 @@
  */
 
 #include <stddef.h>
-#include <sigc++/connection.h>
 
 #include <2geom/point.h>
+#include <sigc++/connection.h>
+
 #include "ui/tools/tool-base.h"
 
-#include "sp-ellipse.h"
+class SPItem;
+class SPGenericEllipse;
+
+namespace Inkscape {
+    class Selection;
+}
 
 #define SP_ARC_CONTEXT(obj) (dynamic_cast<Inkscape::UI::Tools::ArcTool*>((Inkscape::UI::Tools::ToolBase*)obj))
 #define SP_IS_ARC_CONTEXT(obj) (dynamic_cast<const Inkscape::UI::Tools::ArcTool*>(const Inkscape::UI::Tools::ToolBase*(obj)) != NULL)

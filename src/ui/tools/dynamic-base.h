@@ -20,8 +20,15 @@
  */
 
 #include "ui/tools/tool-base.h"
-#include "display/curve.h"
-#include <2geom/point.h>
+
+struct SPCanvasItem;
+class SPCurve;
+
+namespace Inkscape {
+    namespace XML {
+        class Node;
+    }
+}
 
 #define SAMPLING_SIZE 8        /* fixme: ?? */
 

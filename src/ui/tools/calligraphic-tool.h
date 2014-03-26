@@ -18,8 +18,16 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <list>
+#include <string>
+
+#include <2geom/point.h>
+
 #include "ui/tools/dynamic-base.h"
-#include "splivarot.h"
+
+class SPItem;
+class Path;
+struct SPCanvasItem;
 
 #define DDC_MIN_PRESSURE      0.0
 #define DDC_MAX_PRESSURE      1.0

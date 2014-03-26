@@ -43,6 +43,7 @@
 #include "sp-namedview.h"
 #include "enums.h"
 #include "ui/control-manager.h"
+#include "knot-enums.h"
 
 using Inkscape::ControlManager;
 using Inkscape::CTLINE_SECONDARY;

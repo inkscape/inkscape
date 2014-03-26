@@ -12,7 +12,11 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <2geom/point.h>
+
 #include "ui/tools/tool-base.h"
+
+struct SPCanvasItem;
 
 #define SP_DROPPER_CONTEXT(obj) (dynamic_cast<Inkscape::UI::Tools::DropperTool*>((Inkscape::UI::Tools::ToolBase*)obj))
 #define SP_IS_DROPPER_CONTEXT(obj) (dynamic_cast<const Inkscape::UI::Tools::DropperTool*>((const Inkscape::UI::Tools::ToolBase*)obj) != NULL)

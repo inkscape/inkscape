@@ -28,12 +28,15 @@
 # include "config.h"
 #endif
 
+#include <glibmm/i18n.h>
+
 #include "connector-toolbar.h"
 #include "conn-avoid-ref.h"
 #include "desktop-handles.h"
 #include "desktop.h"
 #include "document-undo.h"
 #include "ege-adjustment-action.h"
+#include "enums.h"
 #include "graphlayout.h"
 #include "ink-action.h"
 #include "inkscape.h"

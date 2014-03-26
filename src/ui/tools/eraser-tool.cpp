@@ -66,6 +66,7 @@
 #include "verbs.h"
 #include <2geom/math-utils.h>
 #include <2geom/pathvector.h>
+#include "display/curve.h"
 
 #include "ui/tools/eraser-tool.h"
 

@@ -7,6 +7,10 @@
 
 #include "ui/tools/freehand-base.h"
 
+#include <2geom/piecewise.h>
+#include <2geom/d2.h>
+#include <2geom/sbasis.h>
+
 #define SP_PENCIL_CONTEXT(obj) (dynamic_cast<Inkscape::UI::Tools::PencilTool*>((ToolBase*)obj))
 #define SP_IS_PENCIL_CONTEXT(obj) (dynamic_cast<const Inkscape::UI::Tools::PencilTool*>((const ToolBase*)obj) != NULL)
 

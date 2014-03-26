@@ -16,12 +16,25 @@
  */
 
 #include <stddef.h>
-#include <sigc++/sigc++.h>
-#include "ui/tools/tool-base.h"
+
+#include <2geom/point.h>
+#include <sigc++/connection.h>
+
 #include "proj_pt.h"
 #include "vanishing-point.h"
 
-#include "box3d.h"
+#include "ui/tools/tool-base.h"
+
+class SPItem;
+class SPBox3D;
+
+namespace Box3D {
+    struct VPDrag;
+}
+
+namespace Inkscape {
+    class Selection;
+}
 
 #define SP_BOX3D_CONTEXT(obj) (dynamic_cast<Inkscape::UI::Tools::Box3dTool*>((Inkscape::UI::Tools::ToolBase*)obj))
 #define SP_IS_BOX3D_CONTEXT(obj) (dynamic_cast<const Inkscape::UI::Tools::Box3dTool*>((const Inkscape::UI::Tools::ToolBase*)obj) != NULL)
