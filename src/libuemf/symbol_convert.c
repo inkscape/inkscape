@@ -988,8 +988,8 @@ int i;
     if(hold_symb != new_symb || hold_wing != new_wing 
        || hold_zdng != new_zdng || hold_pua != new_pua ){ // must (re)generate tables
        if(!from_unicode){ // create arrays
-          from_unicode = (unsigned char *) calloc(0x10000,sizeof(char));
-          to_font      = (unsigned char *) calloc(0x10000,sizeof(char));
+          from_unicode = (unsigned char *) calloc(0x10000,sizeof(unsigned char));
+          to_font      = (unsigned char *) calloc(0x10000,sizeof(unsigned char));
           // should check here for malloc error
        }
        hold_symb = new_symb;
