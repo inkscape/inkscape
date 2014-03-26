@@ -237,7 +237,7 @@ gint PencilTool::_handleMotionNotify(GdkEventMotion const &mevent) {
 
     bool ret = false;
 
-    if (this->space_panning || mevent.state & GDK_BUTTON2_MASK || mevent.state & GDK_BUTTON3_MASK) {
+    if (this->space_panning || (mevent.state & GDK_BUTTON2_MASK) || (mevent.state & GDK_BUTTON3_MASK)) {
         // allow scrolling
         return false;
     }
@@ -285,7 +285,7 @@ gint PencilTool::_handleMotionNotify(GdkEventMotion const &mevent) {
             break;
         default:
             /* We may be idle or already freehand */
-            if ( mevent.state & GDK_BUTTON1_MASK && this->is_drawing ) {
+            if ( (mevent.state & GDK_BUTTON1_MASK) && this->is_drawing ) {
                 if (this->state == SP_PENCIL_CONTEXT_IDLE) {
                     sp_event_context_discard_delayed_snap_event(this);
                 }
@@ -641,37 +641,31 @@ void PencilTool::_interpolate() {
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     double const tol = prefs->getDoubleLimited("/tools/freehand/pencil/tolerance", 10.0, 1.0, 100.0) * 0.4;
-    double const tolerance_sq = 0.02 * square( this->desktop->w2d().descrim() *
-                                               tol) * exp(0.2*tol - 2);
+    double const tolerance_sq = 0.02 * square(this->desktop->w2d().descrim() * tol) * exp(0.2 * tol - 2);
 
-    g_assert(is_zero(this->req_tangent)
-             || is_unit_vector(this->req_tangent));
-    Geom::Point const tHatEnd(0, 0);
+    g_assert(is_zero(this->req_tangent) || is_unit_vector(this->req_tangent));
 
-    guint n_points  = this->ps.size();
     this->green_curve->reset();
     this->red_curve->reset();
     this->red_curve_is_valid = false;
 
-    Geom::Point * b = g_new(Geom::Point, 4*n_points);
-    Geom::Point * points = g_new(Geom::Point, 4*n_points);
-    for (unsigned int i = 0; i < this->ps.size(); i++) {
-        points[i] = this->ps[i];
-    }
+    int n_points = this->ps.size();
 
     // worst case gives us a segment per point
-    int max_segs = 4*n_points;
+    int max_segs = 4 * n_points;
 
-    int const n_segs = Geom::bezier_fit_cubic_r(b, points, n_points,
-                                             tolerance_sq, max_segs);
+    std::vector<Geom::Point> b(max_segs);
 
-    if ( n_segs > 0)
-    {
+    int const n_segs = Geom::bezier_fit_cubic_r(b.data(), this->ps.data(), n_points, tolerance_sq, max_segs);
+
+    if (n_segs > 0) {
         /* Fit and draw and reset state */
         this->green_curve->moveto(b[0]);
+
         for (int c = 0; c < n_segs; c++) {
-            this->green_curve->curveto(b[4*c+1], b[4*c+2], b[4*c+3]);
+            this->green_curve->curveto(b[4 * c + 1], b[4 * c + 2], b[4 * c + 3]);
         }
+
         sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->red_bpath), this->green_curve);
 
         /* Fit and draw and copy last point */
@@ -691,8 +685,7 @@ void PencilTool::_interpolate() {
                                 : Geom::unit_vector(req_vec) );
         }
     }
-    g_free(b);
-    g_free(points);
+
     this->ps.clear();
 }
 
@@ -705,41 +698,36 @@ void PencilTool::_sketchInterpolate() {
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     double const tol = prefs->getDoubleLimited("/tools/freehand/pencil/tolerance", 10.0, 1.0, 100.0) * 0.4;
-    double const tolerance_sq = 0.02 * square( this->desktop->w2d().descrim() *
-                                               tol) * exp(0.2*tol - 2);
+    double const tolerance_sq = 0.02 * square(this->desktop->w2d().descrim() * tol) * exp(0.2 * tol - 2);
 
     bool average_all_sketches = prefs->getBool("/tools/freehand/pencil/average_all_sketches", true);
 
-    g_assert(is_zero(this->req_tangent)
-             || is_unit_vector(this->req_tangent));
-    Geom::Point const tHatEnd(0, 0);
+    g_assert(is_zero(this->req_tangent) || is_unit_vector(this->req_tangent));
 
-    guint n_points  = this->ps.size();
     this->red_curve->reset();
     this->red_curve_is_valid = false;
 
-    Geom::Point * b = g_new(Geom::Point, 4*n_points);
-    Geom::Point * points = g_new(Geom::Point, 4*n_points);
-    for (unsigned i = 0; i < this->ps.size(); i++) {
-        points[i] = this->ps[i];
-    }
+    int n_points = this->ps.size();
 
     // worst case gives us a segment per point
-    int max_segs = 4*n_points;
+    int max_segs = 4 * n_points;
 
-    int const n_segs = Geom::bezier_fit_cubic_r(b, points, n_points,
-                                             tolerance_sq, max_segs);
+    std::vector<Geom::Point> b(max_segs);
 
-    if ( n_segs > 0)
-    {
+    int const n_segs = Geom::bezier_fit_cubic_r(b.data(), this->ps.data(), n_points, tolerance_sq, max_segs);
+
+    if (n_segs > 0) {
         Geom::Path fit(b[0]);
+
         for (int c = 0; c < n_segs; c++) {
-            fit.appendNew<Geom::CubicBezier>(b[4*c+1], b[4*c+2], b[4*c+3]);
+            fit.appendNew<Geom::CubicBezier>(b[4 * c + 1], b[4 * c + 2], b[4 * c + 3]);
         }
+
         Geom::Piecewise<Geom::D2<Geom::SBasis> > fit_pwd2 = fit.toPwSb();
 
-        if ( this->sketch_n > 0 ) {
-            double t =0.;
+        if (this->sketch_n > 0) {
+            double t;
+
             if (average_all_sketches) {
                 // Average = (sum of all) / n
                 //         = (sum of all + new one) / n+1
@@ -748,18 +736,21 @@ void PencilTool::_sketchInterpolate() {
             } else {
                 t = 0.5;
             }
+
             this->sketch_interpolation = Geom::lerp(t, fit_pwd2, this->sketch_interpolation);
+
             // simplify path, to eliminate small segments
-            Path *path = new Path;
-            path->LoadPathVector(Geom::path_from_piecewise(this->sketch_interpolation, 0.01));
-            path->Simplify(0.5);
-            Geom::PathVector *pathv = path->MakePathVector();
+            Path path;
+            path.LoadPathVector(Geom::path_from_piecewise(this->sketch_interpolation, 0.01));
+            path.Simplify(0.5);
+
+            Geom::PathVector *pathv = path.MakePathVector();
             this->sketch_interpolation = (*pathv)[0].toPwSb();
-            delete path;
             delete pathv;
         } else {
             this->sketch_interpolation = fit_pwd2;
         }
+
         this->sketch_n++;
 
         this->green_curve->reset();
@@ -783,8 +774,7 @@ void PencilTool::_sketchInterpolate() {
                                 : Geom::unit_vector(req_vec) );
         }
     }
-    g_free(b);
-    g_free(points);
+
     this->ps.clear();
 }
 
