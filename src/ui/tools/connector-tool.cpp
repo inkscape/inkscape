@@ -465,7 +465,7 @@ bool ConnectorTool::root_handler(GdkEvent* event) {
 }
 
 
-gint ConnectorTool::_handleButtonPress(GdkEventButton const &bevent) {
+bool ConnectorTool::_handleButtonPress(GdkEventButton const &bevent) {
     Geom::Point const event_w(bevent.x, bevent.y);
     /* Find desktop coordinates */
     Geom::Point p = this->desktop->w2d(event_w);
@@ -565,7 +565,7 @@ gint ConnectorTool::_handleButtonPress(GdkEventButton const &bevent) {
     return ret;
 }
 
-gint ConnectorTool::_handleMotionNotify(GdkEventMotion const &mevent) {
+bool ConnectorTool::_handleMotionNotify(GdkEventMotion const &mevent) {
     bool ret = false;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
@@ -654,7 +654,7 @@ gint ConnectorTool::_handleMotionNotify(GdkEventMotion const &mevent) {
     return ret;
 }
 
-gint ConnectorTool::_handleButtonRelease(GdkEventButton const &revent) {
+bool ConnectorTool::_handleButtonRelease(GdkEventButton const &revent) {
     bool ret = false;
 
     if ( revent.button == 1 && !this->space_panning ) {
@@ -714,7 +714,7 @@ gint ConnectorTool::_handleButtonRelease(GdkEventButton const &revent) {
     return ret;
 }
 
-gint ConnectorTool::_handleKeyPress(guint const keyval) {
+bool ConnectorTool::_handleKeyPress(guint const keyval) {
     bool ret = false;
 
         switch (keyval) {

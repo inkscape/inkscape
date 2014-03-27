@@ -324,7 +324,7 @@ bool PenTool::root_handler(GdkEvent* event) {
 /**
  * Handle mouse button press event.
  */
-gint PenTool::_handleButtonPress(GdkEventButton const &bevent) {
+bool PenTool::_handleButtonPress(GdkEventButton const &bevent) {
     if (this->events_disabled) {
         // skip event processing if events are disabled
         return false;
@@ -495,7 +495,7 @@ gint PenTool::_handleButtonPress(GdkEventButton const &bevent) {
 /**
  * Handle motion_notify event.
  */
-gint PenTool::_handleMotionNotify(GdkEventMotion const &mevent) {
+bool PenTool::_handleMotionNotify(GdkEventMotion const &mevent) {
     bool ret = false;
 
     if (this->space_panning || mevent.state & GDK_BUTTON2_MASK || mevent.state & GDK_BUTTON3_MASK) {
@@ -633,7 +633,7 @@ gint PenTool::_handleMotionNotify(GdkEventMotion const &mevent) {
 /**
  * Handle mouse button release event.
  */
-gint PenTool::_handleButtonRelease(GdkEventButton const &revent) {
+bool PenTool::_handleButtonRelease(GdkEventButton const &revent) {
     if (this->events_disabled) {
         // skip event processing if events are disabled
         return false;
@@ -760,7 +760,7 @@ gint PenTool::_handleButtonRelease(GdkEventButton const &revent) {
     return ret;
 }
 
-gint PenTool::_handle2ButtonPress(GdkEventButton const &bevent) {
+bool PenTool::_handle2ButtonPress(GdkEventButton const &bevent) {
     bool ret = false;
     // only end on LMB double click. Otherwise horizontal scrolling causes ending of the path
     if (this->npoints != 0 && bevent.button == 1) {
@@ -871,7 +871,7 @@ void PenTool::_lastpointToLine() {
 }
 
 
-gint PenTool::_handleKeyPress(GdkEvent *event) {
+bool PenTool::_handleKeyPress(GdkEvent *event) {
     bool ret = false;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     gdouble const nudge = prefs->getDoubleLimited("/options/nudgedistance/value", 2, 0, 1000, "px"); // in px

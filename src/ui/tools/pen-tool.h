@@ -80,11 +80,11 @@ protected:
 	virtual bool item_handler(SPItem* item, GdkEvent* event);
 
 private:
-	gint _handleButtonPress(GdkEventButton const &bevent);
-	gint _handleMotionNotify(GdkEventMotion const &mevent);
-	gint _handleButtonRelease(GdkEventButton const &revent);
-	gint _handle2ButtonPress(GdkEventButton const &bevent);
-	gint _handleKeyPress(GdkEvent *event);
+	bool _handleButtonPress(GdkEventButton const &bevent);
+	bool _handleMotionNotify(GdkEventMotion const &mevent);
+	bool _handleButtonRelease(GdkEventButton const &revent);
+	bool _handle2ButtonPress(GdkEventButton const &bevent);
+	bool _handleKeyPress(GdkEvent *event);
 
 	void _setInitialPoint(Geom::Point const p);
 	void _setSubsequentPoint(Geom::Point const p, bool statusbar, guint status = 0);

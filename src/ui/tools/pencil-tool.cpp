@@ -149,7 +149,7 @@ bool PencilTool::root_handler(GdkEvent* event) {
     return ret;
 }
 
-gint PencilTool::_handleButtonPress(GdkEventButton const &bevent) {
+bool PencilTool::_handleButtonPress(GdkEventButton const &bevent) {
     bool ret = false;
 
     if ( bevent.button == 1  && !this->space_panning) {
@@ -227,7 +227,7 @@ gint PencilTool::_handleButtonPress(GdkEventButton const &bevent) {
     return ret;
 }
 
-gint PencilTool::_handleMotionNotify(GdkEventMotion const &mevent) {
+bool PencilTool::_handleMotionNotify(GdkEventMotion const &mevent) {
     if ((mevent.state & GDK_CONTROL_MASK) && (mevent.state & GDK_BUTTON1_MASK)) {
         // mouse was accidentally moved during Ctrl+click;
         // ignore the motion and create a single point
@@ -345,7 +345,7 @@ gint PencilTool::_handleMotionNotify(GdkEventMotion const &mevent) {
     return ret;
 }
 
-gint PencilTool::_handleButtonRelease(GdkEventButton const &revent) {
+bool PencilTool::_handleButtonRelease(GdkEventButton const &revent) {
     bool ret = false;
 
     if ( revent.button == 1 && this->is_drawing && !this->space_panning) {
@@ -467,7 +467,7 @@ void PencilTool::_cancel() {
     this->desktop->canvas->endForcedFullRedraws();
 }
 
-gint PencilTool::_handleKeyPress(guint const keyval, guint const state) {
+bool PencilTool::_handleKeyPress(guint const keyval, guint const state) {
     bool ret = false;
 
     switch (keyval) {
@@ -520,7 +520,7 @@ gint PencilTool::_handleKeyPress(guint const keyval, guint const state) {
     return ret;
 }
 
-gint PencilTool::_handleKeyRelease(guint const keyval, guint const /*state*/) {
+bool PencilTool::_handleKeyRelease(guint const keyval, guint const /*state*/) {
     bool ret = false;
     switch (keyval) {
         case GDK_KEY_Alt_L:

@@ -124,10 +124,10 @@ public:
 private:
 	void _selectionChanged(Inkscape::Selection *selection);
 
-	gint _handleButtonPress(GdkEventButton const &bevent);
-	gint _handleMotionNotify(GdkEventMotion const &mevent);
-	gint _handleButtonRelease(GdkEventButton const &revent);
-	gint _handleKeyPress(guint const keyval);
+	bool _handleButtonPress(GdkEventButton const &bevent);
+	bool _handleMotionNotify(GdkEventMotion const &mevent);
+	bool _handleButtonRelease(GdkEventButton const &revent);
+	bool _handleKeyPress(guint const keyval);
 
 	void _setInitialPoint(Geom::Point const p);
 	void _setSubsequentPoint(Geom::Point const p);
