@@ -1,6 +1,8 @@
 ## Makefile.am fragment sourced by src/Makefile.am.
 
 ink_common_sources +=	\
+	ui/widget/anchor-selector.h	\
+	ui/widget/anchor-selector.cpp	\
 	ui/widget/attr-widget.h	\
 	ui/widget/button.h	\
 	ui/widget/button.cpp	\

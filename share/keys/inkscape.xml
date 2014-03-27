@@ -44,9 +44,6 @@ override) the bindings in the main default.xml.
   <bind key="n" modifiers="Ctrl" action="FileNew" display="true" />
   <bind key="N" modifiers="Ctrl" action="FileNew" />
 
-  <bind key="n" modifiers="Ctrl,Alt" action="FileTemplates" display="true" />
-  <bind key="N" modifiers="Ctrl,Alt" action="FileTemplates" />
-
   <bind key="o" modifiers="Ctrl" action="FileOpen" display="true" />
   <bind key="O" modifiers="Ctrl" action="FileOpen" />
 
@@ -67,16 +64,16 @@ override) the bindings in the main default.xml.
   <bind key="i" modifiers="Ctrl" action="FileImport" display="true" />
   <bind key="I" modifiers="Ctrl" action="FileImport" />
 
-  <bind key="e" modifiers="Ctrl,Shift" action="DialogExport" display="true" />
-  <bind key="E" modifiers="Ctrl,Shift" action="DialogExport" />
+  <bind key="e" modifiers="Ctrl,Shift" action="FileExport" display="true" />
+  <bind key="E" modifiers="Ctrl,Shift" action="FileExport" />
 
   <bind action="FileVacuum" />
 
   <bind key="w" modifiers="Ctrl" action="FileClose" display="true" />
-  <bind key="W" modifiers="Ctrl" action="FileClose" />
+  <bind key="W" modifiers="Ctrl" action="FileClose" display="true" />
 
   <bind key="q" modifiers="Ctrl" action="FileQuit" display="true" />
-  <bind key="Q" modifiers="Ctrl" action="FileQuit" />
+  <bind key="Q" modifiers="Ctrl" action="FileQuit" display="true" />
 
 <!-- Tools -->
 
@@ -121,11 +118,6 @@ override) the bindings in the main default.xml.
   <bind key="E" action="ToolArc" />
 
   <bind action="ArcPrefs" />
-
-  <bind key="m" action="ToolMeasure" />
-  <bind key="M" action="ToolMeasure" display="true" />
-
-  <bind action="MeasurePrefs" />
 
   <bind key="F9" modifiers="Shift" action="ToolStar" />
   <bind key="asterisk" modifiers="Shift" action="ToolStar" /> 	 
@@ -198,6 +190,7 @@ override) the bindings in the main default.xml.
 
   <bind action="SprayPrefs" />
 
+
 <!-- Zoom -->
 
   <bind key="plus" action="ZoomIn" display="true" />
@@ -237,34 +230,17 @@ override) the bindings in the main default.xml.
 
   <bind key="grave" modifiers="Shift" action="ZoomNext" display="true" /> <!-- ` -->
   <bind key="asciitilde" modifiers="Shift" action="ZoomNext" /> <!-- ~ -->
-  <bind key="KP_9" action="ZoomNext" />
   <bind key="grave" action="ZoomPrev" display="true" /> <!-- ` -->
-  <bind key="KP_8" action="ZoomPrev" />
-  
+
 <!-- View -->
 
   <bind key="F11" action="FullScreen" display="true" /> 
   <bind key="F11" action="FocusToggle" modifiers="Shift" display="true" /> 
-  <bind key="F11" action="FullScreenFocus" modifiers="Ctrl" display="true" /> 
 
   <bind key="Tab" modifiers="Ctrl" action="NextWindow" display="true" />
   <bind key="ISO_Left_Tab" modifiers="Ctrl" action="NextWindow" />
   <bind key="Tab" modifiers="Ctrl,Shift" action="PrevWindow" display="true" />
   <bind key="ISO_Left_Tab" modifiers="Ctrl,Shift" action="PrevWindow" />
-
-  <bind key="numbersign" modifiers="Shift" action="ToggleGrid" /> <!-- # -->
-  <bind key="numbersign" action="ToggleGrid" display="true" />
-  
-  <bind key="bar" modifiers="Shift" action="ToggleGuides" /> <!-- | -->
-  <bind key="bar" action="ToggleGuides" display="true" />
-
-  <bind key="percent" action="ToggleSnapGlobal" display="true" /> <!-- % -->
-  <bind key="percent" modifiers="Shift" action="ToggleSnapGlobal" />
-
-  <bind action="ToggleCommandsToolbar" />
-  <bind action="ToggleSnapToolbar" />
-  <bind action="ToggleToolToolbar" />
-  <bind action="ToggleToolbox" />
 
   <bind key="r" modifiers="Ctrl" action="ToggleRulers" display="true" />
   <bind key="R" modifiers="Ctrl" action="ToggleRulers" />
@@ -272,29 +248,30 @@ override) the bindings in the main default.xml.
   <bind key="b" modifiers="Ctrl" action="ToggleScrollbars" display="true" />
   <bind key="B" modifiers="Ctrl" action="ToggleScrollbars" />
 
-  <bind key="p" modifiers="Shift,Alt" action="TogglePalette" display="true" />
-  <bind key="P" modifiers="Shift,Alt" action="TogglePalette" />
+  <bind key="bar" modifiers="Shift" action="ToggleGuides" /> <!-- | -->
+  <bind key="bar" action="ToggleGuides" display="true" />
 
-  <bind action="ToggleStatusbar" />
+  <bind key="numbersign" modifiers="Shift" action="ToggleGrid" /> <!-- # -->
+  <bind key="numbersign" action="ToggleGrid" display="true" />
   
+  <bind key="percent" action="ToggleSnapGlobal" display="true" /> <!-- % -->
+  <bind key="percent" modifiers="Shift" action="ToggleSnapGlobal" />
+
   <bind action="ViewNew" />
   <bind action="ViewNewPreview" />
   <bind action="ViewIconPreview" />
 
-  <bind key="KP_5" modifiers="Ctrl" action="ViewModeToggle" display="true" />
-  <bind key="KP_Begin" modifiers="Ctrl" action="ViewModeToggle" />
-
   <bind action="ViewModeNormal" />
-  <bind action="ViewModeNoFilters" />
   <bind action="ViewModeOutline" />
-
-  <bind key="KP_5" modifiers="Shift" action="ViewColorModeToggle" display="true" />
-
   <bind action="ViewColorModeNormal" />
   <bind action="ViewColorModeGrayscale" />
 
+  <bind key="KP_5" modifiers="Ctrl" action="ViewModeToggle" display="true" />
+  <bind key="KP_Begin" modifiers="Ctrl" action="ViewModeToggle" />
+  <bind key="KP_5" modifiers="Shift" action="ViewColorModeToggle" display="true" />
+
 <!-- Edit -->
-  
+
   <bind key="z" modifiers="Ctrl" action="EditUndo" display="true" />
   <bind key="Z" modifiers="Ctrl" action="EditUndo" />
   <bind key="y" modifiers="Ctrl,Shift" action="EditUndo" />
@@ -306,19 +283,16 @@ override) the bindings in the main default.xml.
   <bind key="Y" modifiers="Ctrl" action="EditRedo" />
 
   <bind key="h" modifiers="Ctrl,Shift" action="DialogUndoHistory" display="true" />
-  <bind key="H" modifiers="Ctrl,Shift" action="DialogUndoHistory" />
+  <bind key="H" modifiers="Ctrl,Shift" action="DialogUndoHistory" display="true" />
 
   <bind key="x" modifiers="Ctrl" action="EditCut" display="true" />
   <bind key="X" modifiers="Ctrl" action="EditCut" />
-  <bind key="Delete" modifiers="Shift" action="EditCut"/>
-  
+
   <bind key="c" modifiers="Ctrl" action="EditCopy" display="true" />
   <bind key="C" modifiers="Ctrl" action="EditCopy" />
-  <bind key="Insert" modifiers="Ctrl" action="EditCopy"/>
 
   <bind key="v" modifiers="Ctrl" action="EditPaste" display="true" />
   <bind key="V" modifiers="Ctrl" action="EditPaste" />
-  <bind key="Insert" modifiers="Shift" action="EditPaste"/>
 
   <bind key="v" modifiers="Ctrl,Shift" action="EditPasteStyle" display="true" />
   <bind key="V" modifiers="Ctrl,Shift" action="EditPasteStyle" />
@@ -346,12 +320,8 @@ override) the bindings in the main default.xml.
   <bind key="d" modifiers="Alt,Shift" action="EditUnlinkClone" display="true" />
   <bind key="D" modifiers="Alt,Shift" action="EditUnlinkClone" />
 
-  <bind action="EditRelinkClone" />
-
   <bind key="d" modifiers="Shift" action="EditCloneSelectOriginal" display="true" />
   <bind key="D" modifiers="Shift" action="EditCloneSelectOriginal" />
-
-  <bind action="EditCloneOriginalPathLPE" />
 
   <bind key="a" modifiers="Ctrl" action="EditSelectAll" display="true" />
   <bind key="A" modifiers="Ctrl" action="EditSelectAll" />
@@ -360,14 +330,6 @@ override) the bindings in the main default.xml.
 
   <bind key="a" modifiers="Ctrl,Alt" action="EditSelectAllInAllLayers" display="true" />
   <bind key="A" modifiers="Ctrl,Alt" action="EditSelectAllInAllLayers" />
-
-  <bind action="EditSelectSameFillStroke" />  
-  <bind action="EditSelectSameFillColor" />  
-  <bind action="EditSelectSameStrokeColor" />  
-  <bind action="EditSelectSameStrokeStyle" />  
-
-  <bind key="a" modifiers="Shift,Alt" action="EditSelectSameObjectType" display="true" />
-  <bind key="A" modifiers="Shift,Alt" action="EditSelectSameObjectType" />
 
   <bind key="exclam" action="EditInvert" display="true" />
   <bind key="exclam" modifiers="Shift" action="EditInvert" />
@@ -420,8 +382,6 @@ override) the bindings in the main default.xml.
   <bind key="b" modifiers="Alt,Shift" action="SelectionTrace" display="true" />
   <bind key="B" modifiers="Alt,Shift" action="SelectionTrace" />
 
-  <bind action="SelectionPixelArt" />
-
   <bind key="i" modifiers="Alt" action="ObjectsToPattern" display="true" />
   <bind key="I" modifiers="Alt" action="ObjectsToPattern" />
 
@@ -442,10 +402,6 @@ override) the bindings in the main default.xml.
   <bind action="ObjectRotate90CCW" /> 
 
   <bind action="ObjectRemoveTransform" /> 
-
-  <bind action="FitCanvasToSelection" /> 
-  <bind action="FitCanvasToDrawing" /> 
-  <bind action="FitCanvasToSelectionOrDrawing" /> 
 
 <!-- Path -->
 
@@ -565,24 +521,8 @@ override) the bindings in the main default.xml.
   <bind key="Page_Down" modifiers="Shift" action="LayerMoveToPrev" display="true" />
   <bind key="KP_Page_Down" modifiers="Shift" action="LayerMoveToPrev" />
 
-  <bind action="LayerMoveTo" />  
-
   <bind key="l" modifiers="Ctrl,Shift" action="DialogLayers" display="true" />
   <bind key="L" modifiers="Ctrl,Shift" action="DialogLayers" />  
-
-  <bind action="LayerDuplicate" />  
-  <bind action="LayerDelete" />  
-
-  <bind action="LayerHideAll" />  
-  <bind action="LayerSolo" />  
-  <bind action="LayerShowAll" />  
-
-  <bind action="LayerLockAll" />  
-  <bind action="LayerLockOthers" />  
-  <bind action="LayerUnlockAll" />  
-
-  <bind action="LayerToggleHide" />  
-  <bind action="LayerToggleLock" />  
 
 <!-- Dialogs -->
 
@@ -613,13 +553,8 @@ override) the bindings in the main default.xml.
   <bind key="o" modifiers="Ctrl,Shift" action="DialogObjectProperties" display="true" />
   <bind key="O" modifiers="Ctrl,Shift" action="DialogObjectProperties" />
 
-  <bind action="DialogObjectAttributes" />
-
   <bind key="w" modifiers="Ctrl,Shift" action="DialogSwatches" display="true" />
   <bind key="W" modifiers="Ctrl,Shift" action="DialogSwatches" />
-
-  <bind key="y" modifiers="Ctrl,Shift" action="DialogSymbols" display="true" />
-  <bind key="Y" modifiers="Ctrl,Shift" action="DialogSymbols" />
 
   <bind key="ampersand" modifiers="Ctrl,Shift" action="DialogLivePathEffect" />
   <bind key="7" modifiers="Ctrl,Shift" action="DialogLivePathEffect" display="true" />
@@ -631,32 +566,11 @@ override) the bindings in the main default.xml.
 
   <bind action="DialogMetadata" />
   <bind action="DialogClonetiler" />
-  <bind action="DialogGridArrange" />
+  <bind action="DialogArrange" />
   <bind action="DialogDebug" />
   <bind action="DialogInput" />
 
   <bind key="F12" action="DialogsToggle" display="true" />
-
-  <bind key="h" modifiers="Ctrl,Alt" action="AlignHorizontalCenter" display="true" />
-  <bind key="H" modifiers="Ctrl,Alt" action="AlignHorizontalCenter" />
-
-  <bind key="t" modifiers="Ctrl,Alt" action="AlignVerticalCenter" display="true" />
-  <bind key="T" modifiers="Ctrl,Alt" action="AlignVerticalCenter" />
-
-  <bind key="KP_2" modifiers="Ctrl,Alt" action="AlignVerticalBottom" display="true" />
-  <bind key="KP_2" modifiers="Ctrl,Alt" action="AlignVerticalBottom" />
-
-  <bind key="KP_4" modifiers="Ctrl,Alt" action="AlignHorizontalLeft" display="true" />
-  <bind key="KP_4" modifiers="Ctrl,Alt" action="AlignHorizontalLeft" />
-
-  <bind key="KP_5" modifiers="Ctrl,Alt" action="AlignVerticalHorizontalCenter" display="true" />
-  <bind key="KP_5" modifiers="Ctrl,Alt" action="AlignVerticalHorizontalCenter" />
-
-  <bind key="KP_6" modifiers="Ctrl,Alt" action="AlignHorizontalRight" display="true" />
-  <bind key="KP_6" modifiers="Ctrl,Alt" action="AlignHorizontalRight" />
-
-  <bind key="KP_8" modifiers="Ctrl,Alt" action="AlignVerticalTop" display="true" />
-  <bind key="KP_8" modifiers="Ctrl,Alt" action="AlignVerticalTop" />
 
 <!-- Help -->
 
@@ -668,24 +582,10 @@ override) the bindings in the main default.xml.
 
 <!-- Effects -->
 
-  <bind key="q" modifiers="Alt" action="EffectLast" display="true" /> 
-  <bind key="Q" modifiers="Alt" action="EffectLast" /> 
-  <bind key="q" modifiers="Shift,Alt" action="EffectLastPref" display="true" />
-  <bind key="Q" modifiers="Shift,Alt" action="EffectLastPref" />
-  
+  <bind action="EffectLast" /> 
+  <bind action="EffectLastPref" /> 
   <!-- You can also assign keys to individual effects. The action should be set to he
   effect id from the .inx file, for example "org.ekips.filter.addnodes" for the Add
   Nodes effect. -->
-
-  <bind key="g" modifiers="Ctrl,Alt" action="org.inkscape.typography.newglyphlayer" display="true"/>
-  <bind key="G" modifiers="Ctrl,Alt" action="org.inkscape.typography.newglyphlayer"/>
-
-<!-- 
-  <bind key="h" modifiers="Ctrl,Alt" action="org.inkscape.typography.previousglyphlayer" display="true"/>
-  <bind key="H" modifiers="Ctrl,Alt" action="org.inkscape.typography.previousglyphlayer"/>
- -->
- 
-  <bind key="j" modifiers="Ctrl,Alt" action="org.inkscape.typography.nextglyphlayer" display="true"/>
-  <bind key="J" modifiers="Ctrl,Alt" action="org.inkscape.typography.nextglyphlayer"/>
 
 </keys>

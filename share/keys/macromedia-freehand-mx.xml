@@ -412,7 +412,7 @@ File, Edit, View, Modify, Text, Xtras, Window, Help.
 
   <bind action="DialogMetadata" />
   <bind action="DialogClonetiler" />
-  <bind action="DialogGridArrange" />
+  <bind action="DialogArrange" />
   <bind action="DialogDebug" />
   <bind action="DialogInput" />
 

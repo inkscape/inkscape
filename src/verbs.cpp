@@ -1187,9 +1187,9 @@ void SelectionVerb::perform(SPAction *action, void *data)
         case SP_VERB_SELECTION_BREAK_APART:
             sp_selected_path_break_apart(dt);
             break;
-        case SP_VERB_SELECTION_GRIDTILE:
+        case SP_VERB_SELECTION_ARRANGE:
             inkscape_dialogs_unhide();
-            dt->_dlg_mgr->showDialog("TileDialog");
+            dt->_dlg_mgr->showDialog("TileDialog"); //FIXME: denis: What's this string (to be changed)
             break;
         default:
             break;
@@ -2562,8 +2562,8 @@ Verb *Verb::_base_verbs[] = {
     // Advanced tutorial for more info
     new SelectionVerb(SP_VERB_SELECTION_BREAK_APART, "SelectionBreakApart", N_("Break _Apart"),
                       N_("Break selected paths into subpaths"), INKSCAPE_ICON("path-break-apart")),
-    new SelectionVerb(SP_VERB_SELECTION_GRIDTILE, "DialogGridArrange", N_("Ro_ws and Columns..."),
-                      N_("Arrange selected objects in a table"), INKSCAPE_ICON("dialog-rows-and-columns")),
+    new SelectionVerb(SP_VERB_SELECTION_ARRANGE, "DialogArrange", N_("_Arrange..."),
+                      N_("Arrange selected objects in a table or circle"), INKSCAPE_ICON("dialog-rows-and-columns")),
     // Layer
     new LayerVerb(SP_VERB_LAYER_NEW, "LayerNew", N_("_Add Layer..."),
                   N_("Create a new layer"), INKSCAPE_ICON("layer-new")),

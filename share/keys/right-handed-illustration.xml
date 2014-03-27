@@ -529,7 +529,7 @@ Future improvements:
 
   <bind action="DialogMetadata" />
   <bind action="DialogClonetiler" />
-  <bind action="DialogGridArrange" />
+  <bind action="DialogArrange" />
   <bind action="DialogDebug" />
   <bind action="DialogInput" />
 

@@ -69,6 +69,7 @@ set(ui_SRC
 	dialog/floating-behavior.cpp
 	dialog/font-substitution.cpp
 	dialog/glyphs.cpp
+	dialog/grid-arrange-tab.cpp
 	dialog/guides.cpp
 	dialog/icon-preview.cpp
 	dialog/inkscape-preferences.cpp
@@ -83,6 +84,7 @@ set(ui_SRC
 	dialog/object-attributes.cpp
 	dialog/object-properties.cpp
 	dialog/ocaldialogs.cpp
+	dialog/polar-arrange-tab.cpp
 	dialog/print-colors-preview-dialog.cpp
 	dialog/print.cpp
 	dialog/symbols.cpp
@@ -103,6 +105,7 @@ set(ui_SRC
 	# dialog/whiteboard-sharewithchat.cpp
 	# dialog/whiteboard-sharewithuser.cpp
 
+	widget/anchor-selector.cpp
 	widget/button.cpp
 	widget/color-picker.cpp
 	widget/color-preview.cpp
@@ -162,6 +165,7 @@ set(ui_SRC
 
 	dialog/aboutbox.h
 	dialog/align-and-distribute.h
+	dialog/arrange-tab.h
 	dialog/behavior.h
 	dialog/calligraphic-profile-rename.h
 	dialog/color-item.h
@@ -186,6 +190,7 @@ set(ui_SRC
 	dialog/font-substitution.h
 	dialog/glyphs.h
 	dialog/guides.h
+	dialog/grid-arrange-tab.h
 	dialog/icon-preview.h
 	dialog/inkscape-preferences.h
 	dialog/input.h
@@ -200,6 +205,7 @@ set(ui_SRC
 	dialog/object-properties.h
 	dialog/ocaldialogs.h
 	dialog/panel-dialog.h
+	dialog/polar-arrange-tab.h
 	dialog/pixelartdialog.h
 	dialog/print-colors-preview-dialog.h
 	dialog/print.h
@@ -259,6 +265,7 @@ set(ui_SRC
 	tools/tweak-tool.h
 	tools/zoom-tool.h
 
+	widget/anchor-selector.h
 	widget/attr-widget.h
 	widget/button.h
 	widget/color-picker.h

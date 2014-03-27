@@ -116,8 +116,8 @@ DialogManager::DialogManager() {
 //        registerFactory("PrintColorsPreviewDialog",      &create<PrintColorsPreviewDialog,       FloatingBehavior>);
         registerFactory("SvgFontsDialog",      &create<SvgFontsDialog,       FloatingBehavior>);
         registerFactory("Swatches",            &create<SwatchesPanel,        FloatingBehavior>);
+        registerFactory("TileDialog",          &create<ArrangeDialog,        FloatingBehavior>);
         registerFactory("Symbols",             &create<SymbolsDialog,        FloatingBehavior>);
-        registerFactory("TileDialog",          &create<TileDialog,           FloatingBehavior>);
         registerFactory("Trace",               &create<TraceDialog,          FloatingBehavior>);
         registerFactory("PixelArt",            &create<PixelArtDialog,       FloatingBehavior>);
         registerFactory("Transformation",      &create<Transformation,       FloatingBehavior>);
@@ -150,8 +150,8 @@ DialogManager::DialogManager() {
 //        registerFactory("PrintColorsPreviewDialog",      &create<PrintColorsPreviewDialog,       DockBehavior>);
         registerFactory("SvgFontsDialog",      &create<SvgFontsDialog,       DockBehavior>);
         registerFactory("Swatches",            &create<SwatchesPanel,        DockBehavior>);
+        registerFactory("TileDialog",          &create<ArrangeDialog,        DockBehavior>);
         registerFactory("Symbols",             &create<SymbolsDialog,        DockBehavior>);
-        registerFactory("TileDialog",          &create<TileDialog,           DockBehavior>);
         registerFactory("Trace",               &create<TraceDialog,          DockBehavior>);
         registerFactory("PixelArt",            &create<PixelArtDialog,       DockBehavior>);
         registerFactory("Transformation",      &create<Transformation,       DockBehavior>);
