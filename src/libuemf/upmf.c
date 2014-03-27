@@ -21,8 +21,8 @@
 
 /*
 File:      upmf.c
-Version:   0.0.5
-Date:      24-MAR-2014
+Version:   0.0.6
+Date:      26-MAR-2014
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
 Copyright: 2014 David Mathog and California Institute of Technology (Caltech)

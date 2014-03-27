@@ -95,8 +95,8 @@ these WMF enumerations is by referencing the following table:
 
 /*
 File:      uemf.h
-Version:   0.0.25
-Date:      15-JAN-2014
+Version:   0.0.26
+Date:      27-MAR-2014
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
 Copyright: 2014 David Mathog and California Institute of Technology (Caltech)
@@ -129,6 +129,8 @@ extern "C" {
 #define U_SYSPAL_NOSTATIC 2
 
 #define U_ELF_VENDOR_SIZE 4
+
+#define UNUSED_PARAMETER(x) (void)(x)
 /** \endcond */
 
 //  ***************************************************************************

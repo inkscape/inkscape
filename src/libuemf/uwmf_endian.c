@@ -6,11 +6,11 @@
 
 /*
 File:      uwmf_endian.c
-Version:   0.1.2
-Date:      18-FEB-2013
+Version:   0.1.3
+Date:      27-MAR-2014
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
-Copyright: 2012 David Mathog and California Institute of Technology (Caltech)
+Copyright: 2014 David Mathog and California Institute of Technology (Caltech)
 */
 
 #ifdef __cplusplus
@@ -23,8 +23,6 @@ extern "C" {
 #include <string.h>
 #include "uwmf.h"
 #include "uwmf_endian.h"
-
-#define UNUSED(x) (void)(x)
 
 // hide almost everything in this file from Doxygen
 //! \cond
@@ -284,7 +282,7 @@ by end user code and to further that end prototypes are NOT provided and they ar
 
 /* Size16 EVERY record type should call this, directly or indirectly*/
 void U_WMRCORE_SIZE16_swap(char *record, int torev){
-   UNUSED(torev);
+   UNUSED_PARAMETER(torev);
    U_swap4(record, 1); /* Size16_4 is at offset 0 in U_METARECORD */
 }
 
@@ -309,7 +307,7 @@ void U_WMRCORE_U16_N16_swap(char *record, int torev){
 
 /* all records that specify palette objects */
 void U_WMRCORE_PALETTE_swap(char *record, int torev){
-   UNUSED(torev);
+   UNUSED_PARAMETER(torev);
    U_WMRCORE_SIZE16_swap(record, torev);
    palette_swap(record + offsetof(U_WMRANIMATEPALETTE,Palette));
 }
@@ -702,7 +700,7 @@ void U_WMRDIBCREATEPATTERNBRUSH_swap(char *record, int torev){
 }
 
 void U_WMRSTRETCHDIB_swap(char *record, int torev){
-   UNUSED(torev);
+   UNUSED_PARAMETER(torev);
    U_WMRCORE_U32_N16_swap(record,9,torev);
    dibheader_swap(record + offsetof(U_WMRSTRETCHDIB,dib), torev);
 }

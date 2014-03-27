@@ -19,8 +19,8 @@
 
 /*
 File:      uemf_endian.c
-Version:   0.0.15
-Date:      24-MAR-2014
+Version:   0.0.16
+Date:      27-MAR-2014
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
 Copyright: 2014 David Mathog and California Institute of Technology (Caltech)
@@ -35,10 +35,6 @@ extern "C" {
 #include <string.h>
 #include "uemf.h"
 #include "uemf_endian.h"
-
-// Unfortunately, C does not allow unnamed function arguments, so use this macro instead...
-#define UNUSED(x) (void)(x)
-
 
 // hide almost everuything in here from Doxygen
 //! \cond
@@ -429,8 +425,7 @@ by end user code and to further that end prototypes are NOT provided and they ar
 // all core*_swap call this, U_EMRSETMARGN_swap and some others all it directly
 // numbered as core5 to be consistent with uemf.c, but must appear before the others as there is no prototype
 void core5_swap(char *record, int torev){
-   UNUSED(torev);
-
+   UNUSED_PARAMETER(torev);
    PU_ENHMETARECORD pEMR = (PU_ENHMETARECORD)(record);
    U_swap4(pEMR,2);                         // iType nSize
 }
