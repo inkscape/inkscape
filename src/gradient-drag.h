@@ -87,7 +87,13 @@ struct GrDragger {
     Geom::Point point_original;
 
     /** Connection to \a knot's "moved" signal, for blocking it (unused?). */
-    guint handler_id;
+    //guint handler_id;
+
+    sigc::connection _moved_connection;
+    sigc::connection _clicked_connection;
+    sigc::connection _doubleclicked_connection;
+    sigc::connection _grabbed_connection;
+    sigc::connection _ungrabbed_connection;
 
     GSList *draggables;
 

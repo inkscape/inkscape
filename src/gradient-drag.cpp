@@ -803,7 +803,7 @@ static void gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, gui
         m.unSetup();
         if (s.getSnapped()) {
             p = s.getPoint();
-            sp_knot_moveto (knot, p);
+            knot->moveto(p);
         }
     } else if (state & GDK_CONTROL_MASK) {
         IntermSnapResults isr;
@@ -888,7 +888,7 @@ static void gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, gui
         }
         //p = isr.points.front().getPoint();
         p = bsp.getPoint();
-        sp_knot_moveto (knot, p);
+        knot->moveto(p);
     }
 
     drag->keep_selection = (bool) g_list_find(drag->selected, dragger);
@@ -989,8 +989,6 @@ static void gr_midpoint_limits(GrDragger *dragger, SPObject *server, Geom::Point
     *high_lim = dragger->point - (highest_dragger->point - *end);
 }
 
-
-
 /**
  * Called when a midpoint knot is dragged.
  */
@@ -1046,7 +1044,7 @@ static void gr_knot_moved_midpoint_handler(SPKnot */*knot*/, Geom::Point const &
             }
         }
         drg->point += this_move;
-        sp_knot_moveto (drgknot, drg->point);
+        drgknot->moveto(drg->point);
         drg->fireDraggables (false);
         drg->updateDependencies(false);
     }
@@ -1388,7 +1386,7 @@ GrDragger::updateHandles ( Geom::Point pc_old,  MeshNodeOperation op )
              GrDragger *handle = drag->getDraggerFor( item, POINT_MG_HANDLE, i, fill_or_stroke ); 
             SPKnot *knot = handle->knot;
             Geom::Point pk = getGradientCoords( item, POINT_MG_HANDLE, i, fill_or_stroke );
-            sp_knot_moveto( knot, pk );
+            knot->moveto(pk);
 
         }
 
@@ -1397,7 +1395,7 @@ GrDragger::updateHandles ( Geom::Point pc_old,  MeshNodeOperation op )
             GrDragger *handle = drag->getDraggerFor( item, POINT_MG_TENSOR, i, fill_or_stroke ); 
             SPKnot *knot = handle->knot;
             Geom::Point pk = getGradientCoords( item, POINT_MG_TENSOR, i, fill_or_stroke );
-            sp_knot_moveto( knot, pk );
+            knot->moveto(pk);
 
         }
 
@@ -1483,7 +1481,7 @@ void GrDragger::moveThisToDraggable(SPItem *item, GrPointType point_type, gint p
     this->point = getGradientCoords(dr_first->item, dr_first->point_type, dr_first->point_i, dr_first->fill_or_stroke);
     this->point_original = this->point;
 
-    sp_knot_moveto(this->knot, this->point);
+    this->knot->moveto(this->point);
 
     for (GSList const* i = draggables; i != NULL; i = i->next) {
         GrDraggable *da = (GrDraggable *) i->data;
@@ -1593,15 +1591,15 @@ GrDragger::GrDragger(GrDrag *parent, Geom::Point p, GrDraggable *draggable)
     this->parent = parent;
 
     // create the knot
-    this->knot = sp_knot_new (parent->desktop, NULL);
+    this->knot = new SPKnot(parent->desktop, NULL);
     this->knot->setMode(SP_KNOT_MODE_XOR);
     this->knot->setFill(GR_KNOT_COLOR_NORMAL, GR_KNOT_COLOR_MOUSEOVER, GR_KNOT_COLOR_MOUSEOVER);
     this->knot->setStroke(0x0000007f, 0x0000007f, 0x0000007f);
-    sp_knot_update_ctrl(this->knot);
+    this->knot->update_ctrl();
 
     // move knot to the given point
-    sp_knot_set_position (this->knot, p, SP_KNOT_STATE_NORMAL);
-    sp_knot_show (this->knot);
+    this->knot->set_position(p, SP_KNOT_STATE_NORMAL);
+    this->knot->show();
 
     // connect knot's signals
     if ( (draggable)  // it can be NULL if a node in unsnapped (eg. focus point unsnapped from center)
@@ -1610,18 +1608,21 @@ GrDragger::GrDragger(GrDrag *parent, Geom::Point p, GrDraggable *draggable)
               || (draggable->point_type == POINT_RG_MID1)
               || (draggable->point_type == POINT_RG_MID2) ) )
     {
-        this->handler_id = g_signal_connect (G_OBJECT (this->knot), "moved", G_CALLBACK (gr_knot_moved_midpoint_handler), this);
+        this->_moved_connection = this->knot->_moved_signal.connect(sigc::bind(sigc::ptr_fun(gr_knot_moved_midpoint_handler), this));
     } else {
-        this->handler_id = g_signal_connect (G_OBJECT (this->knot), "moved", G_CALLBACK (gr_knot_moved_handler), this);
+        this->_moved_connection = this->knot->_moved_signal.connect(sigc::bind(sigc::ptr_fun(gr_knot_moved_handler), this));
     }
-    g_signal_connect (G_OBJECT (this->knot), "clicked", G_CALLBACK (gr_knot_clicked_handler), this);
-    g_signal_connect (G_OBJECT (this->knot), "doubleclicked", G_CALLBACK (gr_knot_doubleclicked_handler), this);
-    g_signal_connect (G_OBJECT (this->knot), "grabbed", G_CALLBACK (gr_knot_grabbed_handler), this);
-    g_signal_connect (G_OBJECT (this->knot), "ungrabbed", G_CALLBACK (gr_knot_ungrabbed_handler), this);
+
+    this->_clicked_connection = this->knot->_click_signal.connect(sigc::bind(sigc::ptr_fun(gr_knot_clicked_handler), this));
+    this->_doubleclicked_connection = this->knot->_doubleclicked_signal.connect(sigc::bind(sigc::ptr_fun(gr_knot_doubleclicked_handler), this));
+    this->_grabbed_connection = this->knot->_grabbed_signal.connect(sigc::bind(sigc::ptr_fun(gr_knot_grabbed_handler), this));
+    this->_ungrabbed_connection = this->knot->_ungrabbed_signal.connect(sigc::bind(sigc::ptr_fun(gr_knot_ungrabbed_handler), this));
 
     // add the initial draggable
-    if (draggable)
+    if (draggable) {
         this->addDraggable (draggable);
+    }
+
     updateKnotShape();
 }
 
@@ -1634,19 +1635,20 @@ GrDragger::~GrDragger()
     //this->parent->setDeselected(this);
 
     // disconnect signals
-    g_signal_handlers_disconnect_by_func(G_OBJECT(this->knot), (gpointer) G_CALLBACK (gr_knot_moved_handler), this);
-    g_signal_handlers_disconnect_by_func(G_OBJECT(this->knot), (gpointer) G_CALLBACK (gr_knot_clicked_handler), this);
-    g_signal_handlers_disconnect_by_func(G_OBJECT(this->knot), (gpointer) G_CALLBACK (gr_knot_doubleclicked_handler), this);
-    g_signal_handlers_disconnect_by_func(G_OBJECT(this->knot), (gpointer) G_CALLBACK (gr_knot_grabbed_handler), this);
-    g_signal_handlers_disconnect_by_func(G_OBJECT(this->knot), (gpointer) G_CALLBACK (gr_knot_ungrabbed_handler), this);
+    this->_moved_connection.disconnect();
+    this->_clicked_connection.disconnect();
+    this->_doubleclicked_connection.disconnect();
+    this->_grabbed_connection.disconnect();
+    this->_ungrabbed_connection.disconnect();
 
     /* unref should call destroy */
-    g_object_unref (G_OBJECT (this->knot));
+    knot_unref(this->knot);
 
     // delete all draggables
     for (GSList const* i = this->draggables; i != NULL; i = i->next) {
         delete ((GrDraggable *) i->data);
     }
+
     g_slist_free (this->draggables);
     this->draggables = NULL;
 }
@@ -2043,7 +2045,7 @@ void GrDrag::addDraggersMesh(SPMeshGradient *mg, SPItem *item, Inkscape::PaintTa
 void GrDrag::grabKnot(GrDragger *dragger, gint x, gint y, guint32 etime)
 {
     if (dragger) {
-        sp_knot_start_dragging (dragger->knot, dragger->point, x, y, etime);
+        dragger->knot->start_dragging(dragger->point, x, y, etime);
     }
 }
 
@@ -2055,7 +2057,7 @@ void GrDrag::grabKnot(SPItem *item, GrPointType point_type, gint point_i, Inksca
 {
     GrDragger *dragger = getDraggerFor(item, point_type, point_i, fill_or_stroke);
     if (dragger) {
-        sp_knot_start_dragging (dragger->knot, dragger->point, x, y, etime);
+        dragger->knot->start_dragging(dragger->point, x, y, etime);
     }
 }
 
@@ -2358,7 +2360,7 @@ void GrDrag::selected_move(double x, double y, bool write_repr, bool scale_radia
             Geom::Point p_old = d->point;
             d->point += Geom::Point (x, y);
             d->point_original = d->point;
-            sp_knot_moveto (d->knot, d->point);
+            d->knot->moveto(d->point);
 
             d->fireDraggables (write_repr, scale_radial);
             d->updateHandles( p_old, MG_NODE_NO_SCALE );
@@ -2394,7 +2396,7 @@ void GrDrag::selected_move(double x, double y, bool write_repr, bool scale_radia
             GrDragger *drg = (GrDragger*) i->data;
             SPKnot *drgknot = drg->knot;
             drg->point += displacement;
-            sp_knot_moveto (drgknot, drg->point);
+            drgknot->moveto(drg->point);
             drg->fireDraggables (true);
             drg->updateDependencies(true);
             did = true;

@@ -26,11 +26,8 @@
 class SPDesktop;
 struct SPCanvasItem;
 
-#define SP_TYPE_KNOT            (sp_knot_get_type())
-#define SP_KNOT(obj)            (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_KNOT, SPKnot))
-#define SP_KNOT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_KNOT, SPKnotClass))
-#define SP_IS_KNOT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_KNOT))
-#define SP_IS_KNOT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_KNOT))
+#define SP_KNOT(obj) (dynamic_cast<SPKnot*>(static_cast<SPKnot*>(obj)))
+#define SP_IS_KNOT(obj) (dynamic_cast<const SPKnot*>(static_cast<const SPKnot*>(obj)) != NULL)
 
 
 /**
@@ -39,7 +36,15 @@ struct SPCanvasItem;
  * A knot is a draggable object, with callbacks to change something by
  * dragging it, visuably represented by a canvas item (mostly square).
  */
-struct SPKnot : GObject {
+class SPKnot {
+public:
+    SPKnot(SPDesktop *desktop, const gchar *tip);
+    virtual ~SPKnot();
+
+
+    int ref_count;
+
+
     SPDesktop *desktop;   /**< Desktop we are on. */
     SPCanvasItem *item;   /**< Our CanvasItem. */
     SPItem *owner;        /**< Optional Owner Item */
@@ -69,179 +74,93 @@ struct SPKnot : GObject {
 
     double pressure; /**< The tablet pen pressure when the knot is being dragged. */
 
-    // C++ signals
-    /**
-    sigc::signal<void, Geom::Point const &, Geom::Point const &, guint> _moved_signal;
-    sigc::signal<void, guint> _click_signal;
-    sigc::signal<Geom::Point> _ungrabbed_signal;
-    **/
-    sigc::signal<void, SPKnot *, Geom::Point const &, guint> _moved_signal;
     sigc::signal<void, SPKnot *, guint> _click_signal;
-    sigc::signal<void, SPKnot *> _ungrabbed_signal;
+    sigc::signal<void, SPKnot*, guint> _doubleclicked_signal;
+    sigc::signal<void, SPKnot*, guint> _grabbed_signal;
+    sigc::signal<void, SPKnot *, guint> _ungrabbed_signal;
+    sigc::signal<void, SPKnot *, Geom::Point const &, guint> _moved_signal;
+    sigc::signal<bool, SPKnot*, GdkEvent*> _event_signal;
+
+    sigc::signal<bool, SPKnot*, Geom::Point*, guint> _request_signal;
+
 
     //TODO: all the members above should eventualle become private, accessible via setters/getters
-    inline void setSize (guint i) {size = i;}
-    inline void setShape (guint i) {shape = (SPKnotShapeType) i;}
-    inline void setAnchor (guint i) {anchor = (SPAnchorType) i;}
-    inline void setMode (guint i) {mode = (SPKnotModeType) i;}
-    inline void setPixbuf (gpointer p) {pixbuf = p;}
-    inline void setFill (guint32 normal, guint32 mouseover, guint32 dragging) {
-        fill[SP_KNOT_STATE_NORMAL] = normal;
-        fill[SP_KNOT_STATE_MOUSEOVER] = mouseover;
-        fill[SP_KNOT_STATE_DRAGGING] = dragging;
-    }
-    inline void setStroke (guint32 normal, guint32 mouseover, guint32 dragging) {
-        stroke[SP_KNOT_STATE_NORMAL] = normal;
-        stroke[SP_KNOT_STATE_MOUSEOVER] = mouseover;
-        stroke[SP_KNOT_STATE_DRAGGING] = dragging;
-    }
-    inline void setImage (guchar* normal, guchar* mouseover, guchar* dragging) {
-        image[SP_KNOT_STATE_NORMAL] = normal;
-        image[SP_KNOT_STATE_MOUSEOVER] = mouseover;
-        image[SP_KNOT_STATE_DRAGGING] = dragging;
-    }
-    inline void setCursor (GdkCursor* normal, GdkCursor* mouseover, GdkCursor* dragging) {
-        if (cursor[SP_KNOT_STATE_NORMAL]) {
-#if GTK_CHECK_VERSION(3,0,0)
-            g_object_unref(cursor[SP_KNOT_STATE_NORMAL]);
-#else
-            gdk_cursor_unref(cursor[SP_KNOT_STATE_NORMAL]);
-#endif
-        }
-        cursor[SP_KNOT_STATE_NORMAL] = normal;
-        if (normal) {
-#if GTK_CHECK_VERSION(3,0,0)
-            g_object_ref(normal);
-#else
-            gdk_cursor_ref(normal);
-#endif
-        }
+    void setSize(guint i);
+    void setShape(guint i);
+    void setAnchor(guint i);
+    void setMode(guint i);
+    void setPixbuf(gpointer p);
 
-        if (cursor[SP_KNOT_STATE_MOUSEOVER]) {
-#if GTK_CHECK_VERSION(3,0,0)
-            g_object_unref(cursor[SP_KNOT_STATE_MOUSEOVER]);
-#else
-            gdk_cursor_unref(cursor[SP_KNOT_STATE_MOUSEOVER]);
-#endif
-        }
-        cursor[SP_KNOT_STATE_MOUSEOVER] = mouseover;
-        if (mouseover) {
-#if GTK_CHECK_VERSION(3,0,0)
-            g_object_ref(mouseover);
-#else
-            gdk_cursor_ref(mouseover);
-#endif
-        }
+    void setFill(guint32 normal, guint32 mouseover, guint32 dragging);
+    void setStroke(guint32 normal, guint32 mouseover, guint32 dragging);
+    void setImage(guchar* normal, guchar* mouseover, guchar* dragging);
 
-        if (cursor[SP_KNOT_STATE_DRAGGING]) {
-#if GTK_CHECK_VERSION(3,0,0)
-            g_object_unref(cursor[SP_KNOT_STATE_DRAGGING]);
-#else
-            gdk_cursor_unref(cursor[SP_KNOT_STATE_DRAGGING]);
-#endif
-        }
-        cursor[SP_KNOT_STATE_DRAGGING] = dragging;
-        if (dragging) {
-#if GTK_CHECK_VERSION(3,0,0)
-            g_object_ref(dragging);
-#else
-            gdk_cursor_ref(dragging);
-#endif
-        }
-    }
+    void setCursor(GdkCursor* normal, GdkCursor* mouseover, GdkCursor* dragging);
 
-};
-
-/// The SPKnot vtable.
-struct SPKnotClass {
-    GObjectClass parent_class;
-    gint (* event) (SPKnot *knot, GdkEvent *event);
-
-    /*
-     * These are unconditional.
+    /**
+     * Show knot on its canvas.
      */
+    void show();
 
-    void (* clicked) (SPKnot *knot, guint state);
-    void (* doubleclicked) (SPKnot *knot, guint state);
-    void (* grabbed) (SPKnot *knot, guint state);
-    void (* ungrabbed) (SPKnot *knot, guint state);
-    void (* moved) (SPKnot *knot, Geom::Point const &position, guint state);
-    void (* stamped) (SPKnot *know, guint state);
+    /**
+     * Hide knot on its canvas.
+     */
+    void hide();
 
-    /** Request knot to move to absolute position. */
-    bool (* request) (SPKnot *knot, Geom::Point const &pos, guint state);
+    /**
+     * Set flag in knot, with side effects.
+     */
+    void set_flag(guint flag, bool set);
 
-    /** Find complex distance from knot to point. */
-    gdouble (* distance) (SPKnot *knot, Geom::Point const &pos, guint state);
+    /**
+     * Update knot's pixbuf and set its control state.
+     */
+    void update_ctrl();
+
+    /**
+     * Request or set new position for knot.
+     */
+    void request_position(Geom::Point const &pos, guint state);
+
+    /**
+     * Update knot for dragging and tell canvas an item was grabbed.
+     */
+    void start_dragging(Geom::Point const &p, gint x, gint y, guint32 etime);
+
+    /**
+     * Move knot to new position and emits "moved" signal.
+     */
+    void set_position(Geom::Point const &p, guint state);
+
+    /**
+     * Move knot to new position, without emitting a MOVED signal.
+     */
+    void moveto(Geom::Point const &p);
+
+    /**
+     * Returns position of knot.
+     */
+    Geom::Point position() const;
+
+private:
+    SPKnot(const SPKnot&);
+    SPKnot& operator=(const SPKnot&);
+
+    /**
+     * Set knot control state (dragging/mouseover/normal).
+     */
+    void set_ctrl_state();
 };
 
-/**
- * Registers SPKnot class and returns its type number.
- */
-GType sp_knot_get_type();
-
-/**
- * Return new knot object.
- */
-SPKnot *sp_knot_new(SPDesktop *desktop, gchar const *tip = NULL);
+void knot_ref(SPKnot* knot);
+void knot_unref(SPKnot* knot);
 
 #define SP_KNOT_IS_VISIBLE(k) ((k->flags & SP_KNOT_VISIBLE) != 0)
 #define SP_KNOT_IS_MOUSEOVER(k) ((k->flags & SP_KNOT_MOUSEOVER) != 0)
 #define SP_KNOT_IS_DRAGGING(k) ((k->flags & SP_KNOT_DRAGGING) != 0)
 #define SP_KNOT_IS_GRABBED(k) ((k->flags & SP_KNOT_GRABBED) != 0)
 
-/**
- * Show knot on its canvas.
- */
-void sp_knot_show(SPKnot *knot);
-
-/**
- * Hide knot on its canvas.
- */
-void sp_knot_hide(SPKnot *knot);
-
-/**
- * Set flag in knot, with side effects.
- */
-void sp_knot_set_flag(SPKnot *knot, guint flag, bool set);
-
-/**
- * Update knot's pixbuf and set its control state.
- */
-void sp_knot_update_ctrl(SPKnot *knot);
-
-/**
- * Request or set new position for knot.
- */
-void sp_knot_request_position(SPKnot *knot, Geom::Point const &pos, guint state);
-
-/**
- * Return distance of point to knot's position; unused.
- */
-gdouble sp_knot_distance(SPKnot *knot, Geom::Point const &p, guint state);
-
-/**
- * Update knot for dragging and tell canvas an item was grabbed.
- */
-void sp_knot_start_dragging(SPKnot *knot, Geom::Point const &p, gint x, gint y, guint32 etime);
-
-/**
- * Move knot to new position and emits "moved" signal.
- */
-void sp_knot_set_position(SPKnot *knot, Geom::Point const &p, guint state);
-
-/**
- * Move knot to new position, without emitting a MOVED signal.
- */
-void sp_knot_moveto(SPKnot *knot, Geom::Point const &p);
-
 void sp_knot_handler_request_position(GdkEvent *event, SPKnot *knot);
-
-/**
- * Returns position of knot.
- */
-Geom::Point sp_knot_position(SPKnot const *knot);
-
 
 #endif // SEEN_SP_KNOT_H
 

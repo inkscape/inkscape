@@ -34,7 +34,7 @@ void KnotHolderEntity::create(SPDesktop *desktop, SPItem *item, KnotHolder *pare
                               const gchar *tip,
                               SPKnotShapeType shape, SPKnotModeType mode, guint32 color)
 {
-    knot = sp_knot_new(desktop, tip);
+    knot = new SPKnot(desktop, tip);
 
     this->parent_holder = parent;
     this->item = item; // TODO: remove the item either from here or from knotholder.cpp
@@ -52,7 +52,7 @@ void KnotHolderEntity::create(SPDesktop *desktop, SPItem *item, KnotHolder *pare
     g_object_set (G_OBJECT(knot->item), "fill_color", color, NULL);
 
     update_knot();
-    sp_knot_show(knot);
+    knot->show();
 
     _moved_connection = knot->_moved_signal.connect(sigc::mem_fun(*parent_holder, &KnotHolder::knot_moved_handler));
     _click_connection = knot->_click_signal.connect(sigc::mem_fun(*parent_holder, &KnotHolder::knot_clicked_handler));
@@ -68,7 +68,8 @@ KnotHolderEntity::~KnotHolderEntity()
 
     /* unref should call destroy */
     if (knot) {
-        g_object_unref(knot);
+        //g_object_unref(knot);
+        knot_unref(knot);
     } else {
         // FIXME: This shouldn't occur. Perhaps it is caused by LPE PointParams being knotholder entities, too
         //        If so, it will likely be fixed with upcoming refactoring efforts.
@@ -84,7 +85,7 @@ KnotHolderEntity::update_knot()
     Geom::Point dp(knot_get() * i2dt);
 
     _moved_connection.block();
-    sp_knot_set_position(knot, dp, SP_KNOT_STATE_NORMAL);
+    knot->set_position(dp, SP_KNOT_STATE_NORMAL);
     _moved_connection.unblock();
 }
 

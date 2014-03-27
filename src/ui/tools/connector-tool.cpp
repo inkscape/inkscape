@@ -201,7 +201,8 @@ ConnectorTool::~ConnectorTool() {
 
     for (int i = 0; i < 2; ++i) {
         if (this->endpt_handle[1]) {
-            g_object_unref(this->endpt_handle[i]);
+            //g_object_unref(this->endpt_handle[i]);
+            knot_unref(this->endpt_handle[i]);
             this->endpt_handle[i] = NULL;
         }
     }
@@ -319,7 +320,7 @@ cc_clear_active_knots(SPKnotList k)
     // Hide the connection points if they exist.
     if (k.size()) {
         for (SPKnotList::iterator it = k.begin(); it != k.end(); ++it) {
-            sp_knot_hide(it->first);
+            it->first->hide();
         }
     }
 }
@@ -341,7 +342,7 @@ void ConnectorTool::cc_clear_active_conn() {
     // Hide the endpoint handles.
     for (int i = 0; i < 2; ++i) {
         if (this->endpt_handle[i]) {
-            sp_knot_hide(this->endpt_handle[i]);
+            this->endpt_handle[i]->hide();
         }
     }
 }
@@ -365,7 +366,7 @@ cc_select_handle(SPKnot* knot)
     knot->setSize(10);
     knot->setAnchor(SP_ANCHOR_CENTER);
     knot->setFill(0x0000ffff, 0x0000ffff, 0x0000ffff);
-    sp_knot_update_ctrl(knot);
+    knot->update_ctrl();
 }
 
 static void
@@ -375,7 +376,7 @@ cc_deselect_handle(SPKnot* knot)
     knot->setSize(8);
     knot->setAnchor(SP_ANCHOR_CENTER);
     knot->setFill(0xffffff00, 0xff0000ff, 0xff0000ff);
-    sp_knot_update_ctrl(knot);
+    knot->update_ctrl();
 }
 
 bool ConnectorTool::item_handler(SPItem* item, GdkEvent* event) {
@@ -969,7 +970,8 @@ cc_generic_knot_handler(SPCanvasItem *, GdkEvent *event, SPKnot *knot)
 {
     g_assert (knot != NULL);
 
-    g_object_ref(knot);
+    //g_object_ref(knot);
+    knot_ref(knot);
 
     ConnectorTool *cc = SP_CONNECTOR_CONTEXT(
             knot->desktop->event_context);
@@ -979,7 +981,7 @@ cc_generic_knot_handler(SPCanvasItem *, GdkEvent *event, SPKnot *knot)
     gchar const *knot_tip = "Click to join at this point";
     switch (event->type) {
         case GDK_ENTER_NOTIFY:
-            sp_knot_set_flag(knot, SP_KNOT_MOUSEOVER, TRUE);
+            knot->set_flag(SP_KNOT_MOUSEOVER, TRUE);
 
             cc->active_handle = knot;
             if (knot_tip)
@@ -991,7 +993,7 @@ cc_generic_knot_handler(SPCanvasItem *, GdkEvent *event, SPKnot *knot)
             consumed = TRUE;
             break;
         case GDK_LEAVE_NOTIFY:
-            sp_knot_set_flag(knot, SP_KNOT_MOUSEOVER, FALSE);
+            knot->set_flag(SP_KNOT_MOUSEOVER, FALSE);
 
             /* FIXME: the following test is a workaround for LP Bug #1273510.
              * It seems that a signal is not correctly disconnected, maybe
@@ -1010,7 +1012,8 @@ cc_generic_knot_handler(SPCanvasItem *, GdkEvent *event, SPKnot *knot)
             break;
     }
 
-    g_object_unref(knot);
+    //g_object_unref(knot);
+    knot_unref(knot);
 
     return consumed;
 }
@@ -1066,14 +1069,14 @@ endpt_handler(SPKnot */*knot*/, GdkEvent *event, ConnectorTool *cc)
 }
 
 void ConnectorTool::_activeShapeAddKnot(SPItem* item) {
-        SPKnot *knot = sp_knot_new(desktop, 0);
+        SPKnot *knot = new SPKnot(desktop, 0);
 
         knot->owner = item;
         knot->setShape(SP_KNOT_SHAPE_SQUARE);
         knot->setSize(8);
         knot->setAnchor(SP_ANCHOR_CENTER);
         knot->setFill(0xffffff00, 0xff0000ff, 0xff0000ff);
-        sp_knot_update_ctrl(knot);
+        knot->update_ctrl();
 
         // We don't want to use the standard knot handler.
         g_signal_handler_disconnect(G_OBJECT(knot->item),
@@ -1084,8 +1087,8 @@ void ConnectorTool::_activeShapeAddKnot(SPItem* item) {
         g_signal_connect(G_OBJECT(knot->item), "event",
                 G_CALLBACK(cc_generic_knot_handler), knot);
 
-        sp_knot_set_position(knot, item->avoidRef->getConnectionPointPos() * desktop->doc2dt(), 0);
-        sp_knot_show(knot);
+        knot->set_position(item->avoidRef->getConnectionPointPos() * desktop->doc2dt(), 0);
+        knot->show();
         this->knots[knot] = 1;
 }
 
@@ -1149,17 +1152,17 @@ void ConnectorTool::cc_set_active_conn(SPItem *item) {
         {
             // Connector is invisible because it is clipped to the boundary of
             // two overlpapping shapes.
-            sp_knot_hide(this->endpt_handle[0]);
-            sp_knot_hide(this->endpt_handle[1]);
+            this->endpt_handle[0]->hide();
+            this->endpt_handle[1]->hide();
         }
         else
         {
             // Just adjust handle positions.
             Geom::Point startpt = *(curve->first_point()) * i2dt;
-            sp_knot_set_position(this->endpt_handle[0], startpt, 0);
+            this->endpt_handle[0]->set_position(startpt, 0);
 
             Geom::Point endpt = *(curve->last_point()) * i2dt;
-            sp_knot_set_position(this->endpt_handle[1], endpt, 0);
+            this->endpt_handle[1]->set_position(endpt, 0);
         }
 
         return;
@@ -1184,7 +1187,7 @@ void ConnectorTool::cc_set_active_conn(SPItem *item) {
     for (int i = 0; i < 2; ++i) {
         // Create the handle if it doesn't exist
         if ( this->endpt_handle[i] == NULL ) {
-            SPKnot *knot = sp_knot_new(this->desktop,
+            SPKnot *knot = new SPKnot(this->desktop,
                     _("<b>Connector endpoint</b>: drag to reroute or connect to new shapes"));
 
             knot->setShape(SP_KNOT_SHAPE_SQUARE);
@@ -1192,7 +1195,7 @@ void ConnectorTool::cc_set_active_conn(SPItem *item) {
             knot->setAnchor(SP_ANCHOR_CENTER);
             knot->setFill(0xffffff00, 0xff0000ff, 0xff0000ff);
             knot->setStroke(0x000000ff, 0x000000ff, 0x000000ff);
-            sp_knot_update_ctrl(knot);
+            knot->update_ctrl();
 
             // We don't want to use the standard knot handler,
             // since we don't want this knot to be draggable.
@@ -1232,13 +1235,13 @@ void ConnectorTool::cc_set_active_conn(SPItem *item) {
     }
 
     Geom::Point startpt = *(curve->first_point()) * i2dt;
-    sp_knot_set_position(this->endpt_handle[0], startpt, 0);
+    this->endpt_handle[0]->set_position(startpt, 0);
 
     Geom::Point endpt = *(curve->last_point()) * i2dt;
-    sp_knot_set_position(this->endpt_handle[1], endpt, 0);
+    this->endpt_handle[1]->set_position(endpt, 0);
 
-    sp_knot_show(this->endpt_handle[0]);
-    sp_knot_show(this->endpt_handle[1]);
+    this->endpt_handle[0]->show();
+    this->endpt_handle[1]->show();
 }
 
 void cc_create_connection_point(ConnectorTool* cc)
@@ -1250,7 +1253,7 @@ void cc_create_connection_point(ConnectorTool* cc)
             cc_deselect_handle( cc->selected_handle );
         }
 
-        SPKnot *knot = sp_knot_new(cc->desktop, 0);
+        SPKnot *knot = new SPKnot(cc->desktop, 0);
 
         // We do not process events on this knot.
         g_signal_handler_disconnect(G_OBJECT(knot->item),
@@ -1260,7 +1263,7 @@ void cc_create_connection_point(ConnectorTool* cc)
 
         cc_select_handle( knot );
         cc->selected_handle = knot;
-        sp_knot_show(cc->selected_handle);
+        cc->selected_handle->show();
         cc->state = SP_CONNECTOR_CONTEXT_NEWCONNPOINT;
     }
 }

@@ -85,12 +85,12 @@ have_VPs_of_same_perspective (VPDragger *dr1, VPDragger *dr2)
 }
 
 static void
-vp_knot_moved_handler (SPKnot *knot, Geom::Point const *ppointer, guint state, gpointer data)
+vp_knot_moved_handler (SPKnot *knot, Geom::Point const &ppointer, guint state, gpointer data)
 {
     VPDragger *dragger = (VPDragger *) data;
     VPDrag *drag = dragger->parent;
 
-    Geom::Point p = *ppointer;
+    Geom::Point p = ppointer;
 
     // FIXME: take from prefs
     double snap_dist = SNAP_DIST / inkscape_active_desktop()->current_zoom();
@@ -188,7 +188,7 @@ vp_knot_moved_handler (SPKnot *knot, Geom::Point const *ppointer, guint state, g
         m.unSetup();
         if (s.getSnapped()) {
             p = s.getPoint();
-            sp_knot_moveto(knot, p);
+            knot->moveto(p);
         }
     }
 
@@ -277,22 +277,22 @@ VPDragger::VPDragger(VPDrag *parent, Geom::Point p, VanishingPoint &vp)
 
     if (vp.is_finite()) {
         // create the knot
-        this->knot = sp_knot_new(inkscape_active_desktop(), NULL);
+        this->knot = new SPKnot(inkscape_active_desktop(), NULL);
         this->knot->setMode(SP_KNOT_MODE_XOR);
         this->knot->setFill(VP_KNOT_COLOR_NORMAL, VP_KNOT_COLOR_NORMAL, VP_KNOT_COLOR_NORMAL);
         this->knot->setStroke(0x000000ff, 0x000000ff, 0x000000ff);
-        sp_knot_update_ctrl(this->knot);
+        this->knot->update_ctrl();
         knot->item->ctrlType = CTRL_TYPE_ANCHOR;
         ControlManager::getManager().track(knot->item);
 
         // move knot to the given point
-        sp_knot_set_position (this->knot, this->point, SP_KNOT_STATE_NORMAL);
-        sp_knot_show (this->knot);
+        this->knot->set_position(this->point, SP_KNOT_STATE_NORMAL);
+        this->knot->show();
 
         // connect knot's signals
-        g_signal_connect (G_OBJECT (this->knot), "moved", G_CALLBACK (vp_knot_moved_handler), this);
-        g_signal_connect (G_OBJECT (this->knot), "grabbed", G_CALLBACK (vp_knot_grabbed_handler), this);
-        g_signal_connect (G_OBJECT (this->knot), "ungrabbed", G_CALLBACK (vp_knot_ungrabbed_handler), this);
+        this->_moved_connection = this->knot->_moved_signal.connect(sigc::bind(sigc::ptr_fun(vp_knot_moved_handler), this));
+        this->_grabbed_connection = this->knot->_grabbed_signal.connect(sigc::bind(sigc::ptr_fun(vp_knot_grabbed_handler), this));
+        this->_ungrabbed_connection = this->knot->_ungrabbed_signal.connect(sigc::bind(sigc::ptr_fun(vp_knot_ungrabbed_handler), this));
 
         // add the initial VP (which may be NULL!)
         this->addVP (vp);
@@ -302,11 +302,12 @@ VPDragger::VPDragger(VPDrag *parent, Geom::Point p, VanishingPoint &vp)
 VPDragger::~VPDragger()
 {
     // disconnect signals
-    g_signal_handlers_disconnect_by_func(G_OBJECT(this->knot), (gpointer) G_CALLBACK (vp_knot_moved_handler), this);
-    g_signal_handlers_disconnect_by_func(G_OBJECT(this->knot), (gpointer) G_CALLBACK (vp_knot_grabbed_handler), this);
-    g_signal_handlers_disconnect_by_func(G_OBJECT(this->knot), (gpointer) G_CALLBACK (vp_knot_ungrabbed_handler), this);
+    this->_moved_connection.disconnect();
+    this->_grabbed_connection.disconnect();
+    this->_ungrabbed_connection.disconnect();
+
     /* unref should call destroy */
-    g_object_unref (G_OBJECT (this->knot));
+    knot_unref(this->knot);
 }
 
 /**
