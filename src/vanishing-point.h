@@ -133,10 +133,6 @@ public:
 
     bool dragging_started;
 
-    sigc::connection _moved_connection;
-    sigc::connection _grabbed_connection;
-    sigc::connection _ungrabbed_connection;
-
     std::list<VanishingPoint> vps;
 
     void addVP(VanishingPoint &vp, bool update_pos = false);
@@ -156,6 +152,11 @@ public:
     void updateZOrders();
 
     void printVPs();
+
+private:
+    sigc::connection _moved_connection;
+    sigc::connection _grabbed_connection;
+    sigc::connection _ungrabbed_connection;
 };
 
 struct VPDrag {

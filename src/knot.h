@@ -38,7 +38,7 @@ struct SPCanvasItem;
  */
 class SPKnot {
 public:
-    SPKnot(SPDesktop *desktop, const gchar *tip);
+    SPKnot(SPDesktop *desktop, gchar const *tip);
     virtual ~SPKnot();
 
 
@@ -74,14 +74,14 @@ public:
 
     double pressure; /**< The tablet pen pressure when the knot is being dragged. */
 
-    sigc::signal<void, SPKnot *, guint> _click_signal;
-    sigc::signal<void, SPKnot*, guint> _doubleclicked_signal;
-    sigc::signal<void, SPKnot*, guint> _grabbed_signal;
-    sigc::signal<void, SPKnot *, guint> _ungrabbed_signal;
-    sigc::signal<void, SPKnot *, Geom::Point const &, guint> _moved_signal;
-    sigc::signal<bool, SPKnot*, GdkEvent*> _event_signal;
+    sigc::signal<void, SPKnot *, guint> click_signal;
+    sigc::signal<void, SPKnot*, guint> doubleclicked_signal;
+    sigc::signal<void, SPKnot*, guint> grabbed_signal;
+    sigc::signal<void, SPKnot *, guint> ungrabbed_signal;
+    sigc::signal<void, SPKnot *, Geom::Point const &, guint> moved_signal;
+    sigc::signal<bool, SPKnot*, GdkEvent*> event_signal;
 
-    sigc::signal<bool, SPKnot*, Geom::Point*, guint> _request_signal;
+    sigc::signal<bool, SPKnot*, Geom::Point*, guint> request_signal;
 
 
     //TODO: all the members above should eventualle become private, accessible via setters/getters
@@ -110,27 +110,27 @@ public:
     /**
      * Set flag in knot, with side effects.
      */
-    void set_flag(guint flag, bool set);
+    void setFlag(guint flag, bool set);
 
     /**
      * Update knot's pixbuf and set its control state.
      */
-    void update_ctrl();
+    void updateCtrl();
 
     /**
      * Request or set new position for knot.
      */
-    void request_position(Geom::Point const &pos, guint state);
+    void requestPosition(Geom::Point const &pos, guint state);
 
     /**
      * Update knot for dragging and tell canvas an item was grabbed.
      */
-    void start_dragging(Geom::Point const &p, gint x, gint y, guint32 etime);
+    void startDragging(Geom::Point const &p, gint x, gint y, guint32 etime);
 
     /**
      * Move knot to new position and emits "moved" signal.
      */
-    void set_position(Geom::Point const &p, guint state);
+    void setPosition(Geom::Point const &p, guint state);
 
     /**
      * Move knot to new position, without emitting a MOVED signal.
@@ -143,13 +143,13 @@ public:
     Geom::Point position() const;
 
 private:
-    SPKnot(const SPKnot&);
-    SPKnot& operator=(const SPKnot&);
+    SPKnot(SPKnot const&);
+    SPKnot& operator=(SPKnot const&);
 
     /**
      * Set knot control state (dragging/mouseover/normal).
      */
-    void set_ctrl_state();
+    void _setCtrlState();
 };
 
 void knot_ref(SPKnot* knot);

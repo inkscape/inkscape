@@ -366,7 +366,7 @@ cc_select_handle(SPKnot* knot)
     knot->setSize(10);
     knot->setAnchor(SP_ANCHOR_CENTER);
     knot->setFill(0x0000ffff, 0x0000ffff, 0x0000ffff);
-    knot->update_ctrl();
+    knot->updateCtrl();
 }
 
 static void
@@ -376,7 +376,7 @@ cc_deselect_handle(SPKnot* knot)
     knot->setSize(8);
     knot->setAnchor(SP_ANCHOR_CENTER);
     knot->setFill(0xffffff00, 0xff0000ff, 0xff0000ff);
-    knot->update_ctrl();
+    knot->updateCtrl();
 }
 
 bool ConnectorTool::item_handler(SPItem* item, GdkEvent* event) {
@@ -981,7 +981,7 @@ cc_generic_knot_handler(SPCanvasItem *, GdkEvent *event, SPKnot *knot)
     gchar const *knot_tip = "Click to join at this point";
     switch (event->type) {
         case GDK_ENTER_NOTIFY:
-            knot->set_flag(SP_KNOT_MOUSEOVER, TRUE);
+            knot->setFlag(SP_KNOT_MOUSEOVER, TRUE);
 
             cc->active_handle = knot;
             if (knot_tip)
@@ -993,7 +993,7 @@ cc_generic_knot_handler(SPCanvasItem *, GdkEvent *event, SPKnot *knot)
             consumed = TRUE;
             break;
         case GDK_LEAVE_NOTIFY:
-            knot->set_flag(SP_KNOT_MOUSEOVER, FALSE);
+            knot->setFlag(SP_KNOT_MOUSEOVER, FALSE);
 
             /* FIXME: the following test is a workaround for LP Bug #1273510.
              * It seems that a signal is not correctly disconnected, maybe
@@ -1076,7 +1076,7 @@ void ConnectorTool::_activeShapeAddKnot(SPItem* item) {
         knot->setSize(8);
         knot->setAnchor(SP_ANCHOR_CENTER);
         knot->setFill(0xffffff00, 0xff0000ff, 0xff0000ff);
-        knot->update_ctrl();
+        knot->updateCtrl();
 
         // We don't want to use the standard knot handler.
         g_signal_handler_disconnect(G_OBJECT(knot->item),
@@ -1087,7 +1087,7 @@ void ConnectorTool::_activeShapeAddKnot(SPItem* item) {
         g_signal_connect(G_OBJECT(knot->item), "event",
                 G_CALLBACK(cc_generic_knot_handler), knot);
 
-        knot->set_position(item->avoidRef->getConnectionPointPos() * desktop->doc2dt(), 0);
+        knot->setPosition(item->avoidRef->getConnectionPointPos() * desktop->doc2dt(), 0);
         knot->show();
         this->knots[knot] = 1;
 }
@@ -1159,10 +1159,10 @@ void ConnectorTool::cc_set_active_conn(SPItem *item) {
         {
             // Just adjust handle positions.
             Geom::Point startpt = *(curve->first_point()) * i2dt;
-            this->endpt_handle[0]->set_position(startpt, 0);
+            this->endpt_handle[0]->setPosition(startpt, 0);
 
             Geom::Point endpt = *(curve->last_point()) * i2dt;
-            this->endpt_handle[1]->set_position(endpt, 0);
+            this->endpt_handle[1]->setPosition(endpt, 0);
         }
 
         return;
@@ -1195,7 +1195,7 @@ void ConnectorTool::cc_set_active_conn(SPItem *item) {
             knot->setAnchor(SP_ANCHOR_CENTER);
             knot->setFill(0xffffff00, 0xff0000ff, 0xff0000ff);
             knot->setStroke(0x000000ff, 0x000000ff, 0x000000ff);
-            knot->update_ctrl();
+            knot->updateCtrl();
 
             // We don't want to use the standard knot handler,
             // since we don't want this knot to be draggable.
@@ -1235,10 +1235,10 @@ void ConnectorTool::cc_set_active_conn(SPItem *item) {
     }
 
     Geom::Point startpt = *(curve->first_point()) * i2dt;
-    this->endpt_handle[0]->set_position(startpt, 0);
+    this->endpt_handle[0]->setPosition(startpt, 0);
 
     Geom::Point endpt = *(curve->last_point()) * i2dt;
-    this->endpt_handle[1]->set_position(endpt, 0);
+    this->endpt_handle[1]->setPosition(endpt, 0);
 
     this->endpt_handle[0]->show();
     this->endpt_handle[1]->show();

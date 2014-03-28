@@ -54,9 +54,9 @@ void KnotHolderEntity::create(SPDesktop *desktop, SPItem *item, KnotHolder *pare
     update_knot();
     knot->show();
 
-    _moved_connection = knot->_moved_signal.connect(sigc::mem_fun(*parent_holder, &KnotHolder::knot_moved_handler));
-    _click_connection = knot->_click_signal.connect(sigc::mem_fun(*parent_holder, &KnotHolder::knot_clicked_handler));
-    _ungrabbed_connection = knot->_ungrabbed_signal.connect(sigc::mem_fun(*parent_holder, &KnotHolder::knot_ungrabbed_handler));
+    _moved_connection = knot->moved_signal.connect(sigc::mem_fun(*parent_holder, &KnotHolder::knot_moved_handler));
+    _click_connection = knot->click_signal.connect(sigc::mem_fun(*parent_holder, &KnotHolder::knot_clicked_handler));
+    _ungrabbed_connection = knot->ungrabbed_signal.connect(sigc::mem_fun(*parent_holder, &KnotHolder::knot_ungrabbed_handler));
 }
 
 
@@ -85,7 +85,7 @@ KnotHolderEntity::update_knot()
     Geom::Point dp(knot_get() * i2dt);
 
     _moved_connection.block();
-    knot->set_position(dp, SP_KNOT_STATE_NORMAL);
+    knot->setPosition(dp, SP_KNOT_STATE_NORMAL);
     _moved_connection.unblock();
 }
 

@@ -1595,10 +1595,10 @@ GrDragger::GrDragger(GrDrag *parent, Geom::Point p, GrDraggable *draggable)
     this->knot->setMode(SP_KNOT_MODE_XOR);
     this->knot->setFill(GR_KNOT_COLOR_NORMAL, GR_KNOT_COLOR_MOUSEOVER, GR_KNOT_COLOR_MOUSEOVER);
     this->knot->setStroke(0x0000007f, 0x0000007f, 0x0000007f);
-    this->knot->update_ctrl();
+    this->knot->updateCtrl();
 
     // move knot to the given point
-    this->knot->set_position(p, SP_KNOT_STATE_NORMAL);
+    this->knot->setPosition(p, SP_KNOT_STATE_NORMAL);
     this->knot->show();
 
     // connect knot's signals
@@ -1608,15 +1608,15 @@ GrDragger::GrDragger(GrDrag *parent, Geom::Point p, GrDraggable *draggable)
               || (draggable->point_type == POINT_RG_MID1)
               || (draggable->point_type == POINT_RG_MID2) ) )
     {
-        this->_moved_connection = this->knot->_moved_signal.connect(sigc::bind(sigc::ptr_fun(gr_knot_moved_midpoint_handler), this));
+        this->_moved_connection = this->knot->moved_signal.connect(sigc::bind(sigc::ptr_fun(gr_knot_moved_midpoint_handler), this));
     } else {
-        this->_moved_connection = this->knot->_moved_signal.connect(sigc::bind(sigc::ptr_fun(gr_knot_moved_handler), this));
+        this->_moved_connection = this->knot->moved_signal.connect(sigc::bind(sigc::ptr_fun(gr_knot_moved_handler), this));
     }
 
-    this->_clicked_connection = this->knot->_click_signal.connect(sigc::bind(sigc::ptr_fun(gr_knot_clicked_handler), this));
-    this->_doubleclicked_connection = this->knot->_doubleclicked_signal.connect(sigc::bind(sigc::ptr_fun(gr_knot_doubleclicked_handler), this));
-    this->_grabbed_connection = this->knot->_grabbed_signal.connect(sigc::bind(sigc::ptr_fun(gr_knot_grabbed_handler), this));
-    this->_ungrabbed_connection = this->knot->_ungrabbed_signal.connect(sigc::bind(sigc::ptr_fun(gr_knot_ungrabbed_handler), this));
+    this->_clicked_connection = this->knot->click_signal.connect(sigc::bind(sigc::ptr_fun(gr_knot_clicked_handler), this));
+    this->_doubleclicked_connection = this->knot->doubleclicked_signal.connect(sigc::bind(sigc::ptr_fun(gr_knot_doubleclicked_handler), this));
+    this->_grabbed_connection = this->knot->grabbed_signal.connect(sigc::bind(sigc::ptr_fun(gr_knot_grabbed_handler), this));
+    this->_ungrabbed_connection = this->knot->ungrabbed_signal.connect(sigc::bind(sigc::ptr_fun(gr_knot_ungrabbed_handler), this));
 
     // add the initial draggable
     if (draggable) {
@@ -2045,7 +2045,7 @@ void GrDrag::addDraggersMesh(SPMeshGradient *mg, SPItem *item, Inkscape::PaintTa
 void GrDrag::grabKnot(GrDragger *dragger, gint x, gint y, guint32 etime)
 {
     if (dragger) {
-        dragger->knot->start_dragging(dragger->point, x, y, etime);
+        dragger->knot->startDragging(dragger->point, x, y, etime);
     }
 }
 
@@ -2057,7 +2057,7 @@ void GrDrag::grabKnot(SPItem *item, GrPointType point_type, gint point_i, Inksca
 {
     GrDragger *dragger = getDraggerFor(item, point_type, point_i, fill_or_stroke);
     if (dragger) {
-        dragger->knot->start_dragging(dragger->point, x, y, etime);
+        dragger->knot->startDragging(dragger->point, x, y, etime);
     }
 }
 

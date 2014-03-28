@@ -281,18 +281,18 @@ VPDragger::VPDragger(VPDrag *parent, Geom::Point p, VanishingPoint &vp)
         this->knot->setMode(SP_KNOT_MODE_XOR);
         this->knot->setFill(VP_KNOT_COLOR_NORMAL, VP_KNOT_COLOR_NORMAL, VP_KNOT_COLOR_NORMAL);
         this->knot->setStroke(0x000000ff, 0x000000ff, 0x000000ff);
-        this->knot->update_ctrl();
+        this->knot->updateCtrl();
         knot->item->ctrlType = CTRL_TYPE_ANCHOR;
         ControlManager::getManager().track(knot->item);
 
         // move knot to the given point
-        this->knot->set_position(this->point, SP_KNOT_STATE_NORMAL);
+        this->knot->setPosition(this->point, SP_KNOT_STATE_NORMAL);
         this->knot->show();
 
         // connect knot's signals
-        this->_moved_connection = this->knot->_moved_signal.connect(sigc::bind(sigc::ptr_fun(vp_knot_moved_handler), this));
-        this->_grabbed_connection = this->knot->_grabbed_signal.connect(sigc::bind(sigc::ptr_fun(vp_knot_grabbed_handler), this));
-        this->_ungrabbed_connection = this->knot->_ungrabbed_signal.connect(sigc::bind(sigc::ptr_fun(vp_knot_ungrabbed_handler), this));
+        this->_moved_connection = this->knot->moved_signal.connect(sigc::bind(sigc::ptr_fun(vp_knot_moved_handler), this));
+        this->_grabbed_connection = this->knot->grabbed_signal.connect(sigc::bind(sigc::ptr_fun(vp_knot_grabbed_handler), this));
+        this->_ungrabbed_connection = this->knot->ungrabbed_signal.connect(sigc::bind(sigc::ptr_fun(vp_knot_ungrabbed_handler), this));
 
         // add the initial VP (which may be NULL!)
         this->addVP (vp);

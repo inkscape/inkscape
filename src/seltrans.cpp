@@ -650,14 +650,14 @@ void Inkscape::SelTrans::_makeHandles()
         knots[i]->setFill(info.color[0], info.color[1], info.color[2]);
         knots[i]->setStroke(info.color[3], info.color[4], info.color[5]);
         knots[i]->setPixbuf(handles[hands[i].control]);
-        knots[i]->update_ctrl();
+        knots[i]->updateCtrl();
 
-        knots[i]->_request_signal.connect(sigc::bind(sigc::ptr_fun(sp_sel_trans_handle_request), &hands[i]));
-        knots[i]->_moved_signal.connect(sigc::bind(sigc::ptr_fun(sp_sel_trans_handle_new_event), &hands[i]));
-        knots[i]->_grabbed_signal.connect(sigc::bind(sigc::ptr_fun(sp_sel_trans_handle_grab), &hands[i]));
-        knots[i]->_ungrabbed_signal.connect(sigc::bind(sigc::ptr_fun(sp_sel_trans_handle_ungrab), &hands[i]));
-        knots[i]->_click_signal.connect(sigc::bind(sigc::ptr_fun(sp_sel_trans_handle_click), &hands[i]));
-        knots[i]->_event_signal.connect(sigc::bind(sigc::ptr_fun(sp_sel_trans_handle_event), &hands[i]));
+        knots[i]->request_signal.connect(sigc::bind(sigc::ptr_fun(sp_sel_trans_handle_request), &hands[i]));
+        knots[i]->moved_signal.connect(sigc::bind(sigc::ptr_fun(sp_sel_trans_handle_new_event), &hands[i]));
+        knots[i]->grabbed_signal.connect(sigc::bind(sigc::ptr_fun(sp_sel_trans_handle_grab), &hands[i]));
+        knots[i]->ungrabbed_signal.connect(sigc::bind(sigc::ptr_fun(sp_sel_trans_handle_ungrab), &hands[i]));
+        knots[i]->click_signal.connect(sigc::bind(sigc::ptr_fun(sp_sel_trans_handle_click), &hands[i]));
+        knots[i]->event_signal.connect(sigc::bind(sigc::ptr_fun(sp_sel_trans_handle_event), &hands[i]));
     }
 }
 
@@ -796,7 +796,7 @@ gboolean Inkscape::SelTrans::handleRequest(SPKnot *knot, Geom::Point *position, 
         return TRUE;
     }
     if (request(handle, *position, state)) {
-        knot->set_position(*position, state);
+        knot->setPosition(*position, state);
         SP_CTRL(_grip)->moveto(*position);
         if (handle.type == HANDLE_CENTER) {
             SP_CTRL(_norm)->moveto(*position);

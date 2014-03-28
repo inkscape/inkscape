@@ -86,15 +86,6 @@ struct GrDragger {
     // position of the knot before it began to drag; updated when released
     Geom::Point point_original;
 
-    /** Connection to \a knot's "moved" signal, for blocking it (unused?). */
-    //guint handler_id;
-
-    sigc::connection _moved_connection;
-    sigc::connection _clicked_connection;
-    sigc::connection _doubleclicked_connection;
-    sigc::connection _grabbed_connection;
-    sigc::connection _ungrabbed_connection;
-
     GSList *draggables;
 
     void addDraggable(GrDraggable *draggable);
@@ -123,6 +114,13 @@ struct GrDragger {
     bool isA(SPItem *item, GrPointType point_type, gint point_i, Inkscape::PaintTarget fill_or_stroke);
 
     void fireDraggables(bool write_repr, bool scale_radial = false, bool merging_focus = false);
+
+private:
+    sigc::connection _moved_connection;
+    sigc::connection _clicked_connection;
+    sigc::connection _doubleclicked_connection;
+    sigc::connection _grabbed_connection;
+    sigc::connection _ungrabbed_connection;
 };
 
 /**
