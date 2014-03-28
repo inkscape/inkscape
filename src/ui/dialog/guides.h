@@ -67,7 +67,6 @@ protected:
 
     void _response(gint response);
     void _modeChanged();
-    void _colorChanged();
 
 private:
     GuidelinePropertiesDialog(GuidelinePropertiesDialog const &); // no copy

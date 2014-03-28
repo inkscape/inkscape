@@ -183,6 +183,8 @@ void SPGuide::release() {
 void SPGuide::set(unsigned int key, const gchar *value) {
     switch (key) {
     case SP_ATTR_INKSCAPE_LABEL:
+        if (this->label) g_free(this->label);
+        
         if (value) {
             this->label = g_strdup(value);
         } else {

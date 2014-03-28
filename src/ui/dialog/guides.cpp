@@ -68,20 +68,6 @@ void GuidelinePropertiesDialog::showDialog(SPGuide *guide, SPDesktop *desktop) {
     dialog.run();
 }
 
-void GuidelinePropertiesDialog::_colorChanged()
-{
-#if WITH_GTKMM_3_0
-    const Gdk::RGBA c = _color.get_rgba();
-    unsigned r = c.get_red_u()/257, g = c.get_green_u()/257, b = c.get_blue_u()/257;
-#else
-    const Gdk::Color c = _color.get_color();
-    unsigned r = c.get_red()/257, g = c.get_green()/257, b = c.get_blue()/257;
-#endif
-    //TODO: why 257? verify this!
-
-    sp_guide_set_color(*_guide, r, g, b, true);
-}
-
 void GuidelinePropertiesDialog::_modeChanged()
 {
     _mode = !_relative_toggle.get_active();
@@ -124,9 +110,21 @@ void GuidelinePropertiesDialog::_onOK()
 
     sp_guide_moveto(*_guide, newpos, true);
 
-    const gchar* name = _label_entry.getEntry()->get_text().c_str();
+    const gchar* name = g_strdup( _label_entry.getEntry()->get_text().c_str() );
 
-    sp_guide_set_label(*_guide, g_strdup(name), true);
+    sp_guide_set_label(*_guide, name, true);
+    g_free((gpointer) name);
+
+#if WITH_GTKMM_3_0
+    const Gdk::RGBA c = _color.get_rgba();
+    unsigned r = c.get_red_u()/257, g = c.get_green_u()/257, b = c.get_blue_u()/257;
+#else
+    const Gdk::Color c = _color.get_color();
+    unsigned r = c.get_red()/257, g = c.get_green()/257, b = c.get_blue()/257;
+#endif
+    //TODO: why 257? verify this!
+
+    sp_guide_set_color(*_guide, r, g, b, true);
 
     DocumentUndo::done(_guide->document, SP_VERB_NONE, 
                        _("Set guide properties"));
@@ -213,9 +211,6 @@ void GuidelinePropertiesDialog::_setup() {
     _layout_table.attach(_color,
                          1, 3, 3, 4, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
 #endif
-
-    _color.signal_color_set().connect(sigc::mem_fun(*this, &GuidelinePropertiesDialog::_colorChanged));
-
 
     // unitmenus
     /* fixme: We should allow percents here too, as percents of the canvas size */
