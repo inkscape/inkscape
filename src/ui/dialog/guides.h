@@ -62,7 +62,6 @@ public:
 protected:
     void _setup();
 
-    void _onApply();
     void _onOK();
     void _onDelete();
 

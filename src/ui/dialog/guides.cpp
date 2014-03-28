@@ -100,7 +100,7 @@ void GuidelinePropertiesDialog::_modeChanged()
     }
 }
 
-void GuidelinePropertiesDialog::_onApply()
+void GuidelinePropertiesDialog::_onOK()
 {
     double deg_angle = _spin_angle.getValue(DEG);
     if (!_mode)
@@ -125,15 +125,11 @@ void GuidelinePropertiesDialog::_onApply()
     sp_guide_moveto(*_guide, newpos, true);
 
     const gchar* name = _label_entry.getEntry()->get_text().c_str();
-    sp_guide_set_label(*_guide, name, true);
+
+    sp_guide_set_label(*_guide, g_strdup(name), true);
 
     DocumentUndo::done(_guide->document, SP_VERB_NONE, 
                        _("Set guide properties"));
-}
-
-void GuidelinePropertiesDialog::_onOK()
-{
-    _onApply();
 }
 
 void GuidelinePropertiesDialog::_onDelete()
@@ -157,10 +153,6 @@ void GuidelinePropertiesDialog::_response(gint response)
             break;
 	case Gtk::RESPONSE_DELETE_EVENT:
             break;
-/*	case GTK_RESPONSE_APPLY:
-        _onApply();
-        break;
-*/
 	default:
             g_assert_not_reached();
     }
