@@ -16,6 +16,16 @@
 # include <config.h>
 #endif
 
+#ifdef GLIBMM_DISABLE_DEPRECATED
+#  undef GLIBMM_DISABLE_DEPRECATED
+#  include <glibmm/thread.h>
+#  include <glibmm/dispatcher.h>
+#  define GLIBMM_DISABLE_DEPRECATED 1
+#else // GLIBMM_DISABLE_DEPRECATED
+#  include <glibmm/thread.h>
+#  include <glibmm/dispatcher.h>
+#endif // GLIBMM_DISABLE_DEPRECATED
+
 #include "pixelartdialog.h"
 #include <gtkmm/radiobutton.h>
 #include <gtkmm/stock.h>
@@ -54,18 +64,6 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-template<class T>
-T move(T &obj)
-{
-#ifdef LIBDEPIXELIZE_ENABLE_CPP11
-    return std::move(obj);
-#else
-    T ret;
-    std::swap(obj, ret);
-    return ret;
-#endif // LIBDEPIXELIZE_ENABLE_CPP11
-}
-
 /**
  * A dialog for adjusting pixel art -> vector tracing parameters
  */
@@ -77,6 +75,23 @@ public:
     ~PixelArtDialogImpl();
 
 private:
+    struct Input
+    {
+        Glib::RefPtr<Gdk::Pixbuf> pixbuf;
+        SVGLength x;
+        SVGLength y;
+    };
+    struct Output
+    {
+        Output(Tracer::Splines splines, SVGLength x, SVGLength y) :
+            splines(splines), x(x), y(y)
+        {}
+
+        Tracer::Splines splines;
+        SVGLength x;
+        SVGLength y;
+    };
+
     void setDesktop(SPDesktop *desktop);
     void setTargetDesktop(SPDesktop *desktop);
 
@@ -89,7 +104,8 @@ private:
     Tracer::Kopf2011::Options options();
 
     void vectorize();
-    void processLibdepixelize(SPImage *img);
+    void processLibdepixelize(const Input &image);
+    void importOutput(const Output &out);
     void setDefaults();
     void updatePreview();
 
@@ -133,9 +149,21 @@ private:
     Gtk::RadioButton optimizeRadioButton;
 #endif // LIBDEPIXELIZE_INKSCAPE_ENABLE_SMOOTH
 
+    //############ UI Logic data
+
     SPDesktop *desktop;
     DesktopTracker deskTrack;
     sigc::connection desktopChangeConn;
+
+    //############ Threads
+    void workerThread();
+    void onWorkerThreadFinished();
+    Glib::Thread *thread;
+    volatile gint abortThread; // C++11's atomic stuff is sooo much nicer
+    Glib::Dispatcher dispatcher;
+    std::vector<Input> queue;
+    std::vector<Output> output;
+    Tracer::Kopf2011::Options lastOptions;
 };
 
 void PixelArtDialogImpl::setDesktop(SPDesktop *desktop)
@@ -288,6 +316,9 @@ PixelArtDialogImpl::PixelArtDialogImpl() :
     deskTrack.connect(GTK_WIDGET(gobj()));
 
     signalResponse().connect(sigc::mem_fun(*this, &PixelArtDialogImpl::responseCallback));
+
+    dispatcher.connect(
+        sigc::mem_fun(*this, &PixelArtDialogImpl::onWorkerThreadFinished) );
 }
 
 void PixelArtDialogImpl::responseCallback(int response_id)
@@ -295,7 +326,8 @@ void PixelArtDialogImpl::responseCallback(int response_id)
     if (response_id == GTK_RESPONSE_OK) {
         vectorize();
     } else if (response_id == GTK_RESPONSE_CANCEL) {
-        // TODO
+        // libdepixelize's interface need to be extended to allow aborts
+        g_atomic_int_set(&abortThread, true);
     } else if (response_id == GTK_RESPONSE_HELP) {
         setDefaults();
     } else {
@@ -340,39 +372,53 @@ void PixelArtDialogImpl::vectorize()
         return;
     }
 
-    bool found = false;
-
     for ( GSList const *list = desktop->selection->itemList() ; list
               ; list = list->next ) {
         if ( !SP_IS_IMAGE(list->data) )
             continue;
 
-        found = true;
+        SPImage *img = SP_IMAGE(list->data);
+        Input input;
+        input.pixbuf = Glib::wrap(img->pixbuf->getPixbufRaw(), true);
+        input.x = img->x;
+        input.y = img->y;
 
-        processLibdepixelize(SP_IMAGE(list->data));
+        if ( input.pixbuf->get_width() > 256
+             || input.pixbuf->get_height() > 256 ) {
+            char *msg = _("Image looks too big. Process may take a while and is"
+                          " wise to save your document before continue."
+                          "\n\nContinue the procedure (without saving)?");
+            Gtk::MessageDialog dialog(msg, false, Gtk::MESSAGE_WARNING,
+                                      Gtk::BUTTONS_OK_CANCEL, true);
+
+            if ( dialog.run() != Gtk::RESPONSE_OK )
+                continue;
+        }
+
+        queue.push_back(input);
     }
 
-    if ( !found ) {
+    if ( !queue.size() ) {
         char *msg = _("Select an <b>image</b> to trace");
         msgStack->flash(Inkscape::ERROR_MESSAGE, msg);
         return;
     }
 
-    DocumentUndo::done(desktop->doc(), SP_VERB_SELECTION_PIXEL_ART,
-                       _("Trace pixel art"));
+    mainCancelButton->set_sensitive(true);
+    mainOkButton->set_sensitive(false);
 
-    // Flush pending updates
-    desktop->doc()->ensureUpToDate();
+    lastOptions = options();
+
+    g_atomic_int_set(&abortThread, false);
+    thread = Glib::Thread::create(
+        sigc::mem_fun(*this, &PixelArtDialogImpl::workerThread) );
 }
 
-void PixelArtDialogImpl::processLibdepixelize(SPImage *img)
+void PixelArtDialogImpl::processLibdepixelize(const Input &input)
 {
     Tracer::Splines out;
 
-    Glib::RefPtr<Gdk::Pixbuf> pixbuf
-        = Glib::wrap(img->pixbuf->getPixbufRaw(), true);
-
-    if ( pixbuf->get_width() > 256 || pixbuf->get_height() > 256 ) {
+    if ( input.pixbuf->get_width() > 256 || input.pixbuf->get_height() > 256 ) {
         char *msg = _("Image looks too big. Process may take a while and it is"
                       " wise to save your document before continuing."
                       "\n\nContinue the procedure (without saving)?");
@@ -384,16 +430,23 @@ void PixelArtDialogImpl::processLibdepixelize(SPImage *img)
     }
 
     if ( voronoiRadioButton.get_active() ) {
-        out = Tracer::Kopf2011::to_voronoi(pixbuf, options());
+        output.push_back(Output(Tracer::Kopf2011::to_voronoi(input.pixbuf,
+                                                             lastOptions),
+                                input.x, input.y));
     } else {
-        out = Tracer::Kopf2011::to_splines(pixbuf, options());
+        output.push_back(Output(Tracer::Kopf2011::to_splines(input.pixbuf,
+                                                             lastOptions),
+                                input.x, input.y));
     }
+}
 
+void PixelArtDialogImpl::importOutput(const Output &output)
+{
     Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
     Inkscape::XML::Node *group = xml_doc->createElement("svg:g");
 
-    for ( Tracer::Splines::iterator it = out.begin(), end = out.end()
-              ; it != end ; ++it ) {
+    for ( Tracer::Splines::const_iterator it = output.splines.begin(),
+              end = output.splines.end() ; it != end ; ++it ) {
         Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
 
         {
@@ -421,7 +474,7 @@ void PixelArtDialogImpl::processLibdepixelize(SPImage *img)
             sp_repr_css_attr_unref(css);
         }
 
-        gchar *str = sp_svg_write_path(Dialog::move(it->pathVector));
+        gchar *str = sp_svg_write_path(it->pathVector);
         repr->setAttribute("d", str);
         g_free(str);
 
@@ -433,14 +486,20 @@ void PixelArtDialogImpl::processLibdepixelize(SPImage *img)
     {
         group->setAttribute("transform",
                             (std::string("translate(")
-                             + sp_svg_length_write_with_units(img->x)
-                             + ' ' + sp_svg_length_write_with_units(img->y)
+                             + sp_svg_length_write_with_units(output.x)
+                             + ' ' + sp_svg_length_write_with_units(output.y)
                              + ')').c_str());
     }
 
     desktop->currentLayer()->appendChildRepr(group);
 
     Inkscape::GC::release(group);
+
+    DocumentUndo::done(desktop->doc(), SP_VERB_SELECTION_PIXEL_ART,
+                       _("Trace pixel art"));
+
+    // Flush pending updates
+    desktop->doc()->ensureUpToDate();
 }
 
 void PixelArtDialogImpl::setDefaults()
@@ -479,6 +538,29 @@ void PixelArtDialogImpl::updatePreview()
 
     // TODO: update preview
     pendingPreview = false;
+}
+
+void PixelArtDialogImpl::workerThread()
+{
+    for ( std::vector<Input>::iterator it = queue.begin(), end = queue.end()
+              ; it != end && !g_atomic_int_get(&abortThread) ; ++it ) {
+        processLibdepixelize(*it);
+    }
+    queue.clear();
+    dispatcher();
+}
+
+void PixelArtDialogImpl::onWorkerThreadFinished()
+{
+    thread->join();
+    thread = NULL;
+    for ( std::vector<Output>::const_iterator it = output.begin(),
+              end = output.end() ; it != end ; ++it ) {
+        importOutput(*it);
+    }
+    output.clear();
+    mainCancelButton->set_sensitive(false);
+    mainOkButton->set_sensitive(true);
 }
 
 /**
