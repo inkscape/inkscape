@@ -244,7 +244,7 @@ gint gobble_motion_events(gint mask);
 void sp_event_show_modifier_tip(Inkscape::MessageContext *message_context, GdkEvent *event,
                                 gchar const *ctrl_tip, gchar const *shift_tip, gchar const *alt_tip);
 
-guint get_group0_keyval(GdkEventKey *event);
+guint get_group0_keyval(GdkEventKey const *event);
 
 SPItem *sp_event_context_find_item (SPDesktop *desktop, Geom::Point const &p, bool select_under, bool into_groups);
 SPItem *sp_event_context_over_item (SPDesktop *desktop, SPItem *item, Geom::Point const &p);

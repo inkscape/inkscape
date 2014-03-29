@@ -1132,7 +1132,7 @@ void sp_event_show_modifier_tip(Inkscape::MessageContext *message_context,
  * Use this instead of simply event->keyval, so that your keyboard shortcuts
  * work regardless of layouts (e.g., in Cyrillic).
  */
-guint get_group0_keyval(GdkEventKey *event) {
+guint get_group0_keyval(GdkEventKey const *event) {
     guint keyval = 0;
 
     gdk_keymap_translate_keyboard_state(gdk_keymap_get_for_display(

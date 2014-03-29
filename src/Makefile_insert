@@ -94,7 +94,6 @@ ink_common_sources +=	\
 	message.h							\
 	message-stack.cpp message-stack.h				\
 	mod360.cpp mod360.h						\
-	modifier-fns.h							\
 	object-edit.cpp object-edit.h					\
 	object-hierarchy.cpp object-hierarchy.h				\
 	object-snapper.cpp object-snapper.h				\

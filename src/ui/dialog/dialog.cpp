@@ -26,11 +26,11 @@
 #include "ui/tools/tool-base.h"
 #include "desktop.h"
 #include "desktop-handles.h"
-#include "modifier-fns.h"
 #include "shortcuts.h"
 #include "preferences.h"
 #include "interface.h"
 #include "verbs.h"
+#include "ui/tool/event-utils.h"
 
 #include <gtk/gtk.h>
 
@@ -279,7 +279,7 @@ bool Dialog::_onEvent(GdkEvent *event)
                 case GDK_KEY_F4:
                 case GDK_KEY_w:
                 case GDK_KEY_W: {
-                    if (mod_ctrl_only(event->key.state)) {
+                    if (Inkscape::UI::held_only_control(event->key)) {
                         _close();
                         ret = true;
                     }

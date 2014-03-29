@@ -369,7 +369,6 @@ set(inkscape_SRC
 	message.h
 	mod360-test.h
 	mod360.h
-	modifier-fns.h
 	number-opt-number.h
 	object-edit.h
 	object-hierarchy.h

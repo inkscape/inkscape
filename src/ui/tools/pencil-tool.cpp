@@ -26,7 +26,6 @@
 #include "draw-anchor.h"
 #include "message-stack.h"
 #include "message-context.h"
-#include "modifier-fns.h"
 #include "sp-path.h"
 #include "preferences.h"
 #include "snap.h"
@@ -45,6 +44,7 @@
 #include "display/curve.h"
 #include "livarot/Path.h"
 #include "tool-factory.h"
+#include "ui/tool/event-utils.h"
 
 namespace Inkscape {
 namespace UI {
@@ -131,11 +131,11 @@ bool PencilTool::root_handler(GdkEvent* event) {
             break;
 
         case GDK_KEY_PRESS:
-            ret = this->_handleKeyPress(get_group0_keyval (&event->key), event->key.state);
+            ret = this->_handleKeyPress(event->key);
             break;
 
         case GDK_KEY_RELEASE:
-            ret = this->_handleKeyRelease(get_group0_keyval (&event->key), event->key.state);
+            ret = this->_handleKeyRelease(event->key);
             break;
 
         default:
@@ -467,16 +467,16 @@ void PencilTool::_cancel() {
     this->desktop->canvas->endForcedFullRedraws();
 }
 
-bool PencilTool::_handleKeyPress(guint const keyval, guint const state) {
+bool PencilTool::_handleKeyPress(GdkEventKey const &event) {
     bool ret = false;
 
-    switch (keyval) {
+    switch (get_group0_keyval(&event)) {
         case GDK_KEY_Up:
         case GDK_KEY_Down:
         case GDK_KEY_KP_Up:
         case GDK_KEY_KP_Down:
             // Prevent the zoom field from activation.
-            if (!mod_ctrl_only(state)) {
+            if (!Inkscape::UI::held_only_control(event)) {
                 ret = true;
             }
             break;
@@ -491,7 +491,7 @@ bool PencilTool::_handleKeyPress(guint const keyval, guint const state) {
             break;
         case GDK_KEY_z:
         case GDK_KEY_Z:
-            if (mod_ctrl_only(state) && this->npoints != 0) {
+            if (Inkscape::UI::held_only_control(event) && this->npoints != 0) {
                 // if drawing, cancel, otherwise pass it up for undo
                 if (this->state != SP_PENCIL_CONTEXT_IDLE) {
                     this->_cancel();
@@ -501,7 +501,7 @@ bool PencilTool::_handleKeyPress(guint const keyval, guint const state) {
             break;
         case GDK_KEY_g:
         case GDK_KEY_G:
-            if (mod_shift_only(state)) {
+            if (Inkscape::UI::held_only_shift(event)) {
                 sp_selection_to_guides(this->desktop);
                 ret = true;
             }
@@ -520,9 +520,10 @@ bool PencilTool::_handleKeyPress(guint const keyval, guint const state) {
     return ret;
 }
 
-bool PencilTool::_handleKeyRelease(guint const keyval, guint const /*state*/) {
+bool PencilTool::_handleKeyRelease(GdkEventKey const &event) {
     bool ret = false;
-    switch (keyval) {
+
+    switch (get_group0_keyval(&event)) {
         case GDK_KEY_Alt_L:
         case GDK_KEY_Alt_R:
         case GDK_KEY_Meta_L:

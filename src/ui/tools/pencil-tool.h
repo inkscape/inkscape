@@ -57,8 +57,8 @@ private:
 	bool _handleButtonPress(GdkEventButton const &bevent);
 	bool _handleMotionNotify(GdkEventMotion const &mevent);
 	bool _handleButtonRelease(GdkEventButton const &revent);
-	bool _handleKeyPress(guint const keyval, guint const state);
-	bool _handleKeyRelease(guint const keyval, guint const state);
+	bool _handleKeyPress(GdkEventKey const &event);
+	bool _handleKeyRelease(GdkEventKey const &event);
 
 	void _setStartpoint(Geom::Point const &p);
 	void _setEndpoint(Geom::Point const &p);
