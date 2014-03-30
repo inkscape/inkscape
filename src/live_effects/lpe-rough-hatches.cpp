@@ -319,7 +319,7 @@ LPERoughHatches::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const &
         transformed_pwd2_in = transformed_pwd2_in * bend_mat;
         tilter = Piecewise<SBasis>(shift(Linear(-bend_amount),1));
         OptRect bbox = bounds_exact( transformed_pwd2_in );
-        if (not(bbox)) return pwd2_in;
+        if (!(bbox)) return pwd2_in;
         tilter.setDomain((*bbox)[Y]);
         transformed_pwd2_in = bend(transformed_pwd2_in, tilter);
         transformed_pwd2_in = transformed_pwd2_in * bend_mat.inverse();
@@ -381,7 +381,7 @@ LPERoughHatches::linearSnake(Piecewise<D2<SBasis> > const &f, Point const &org){
     Piecewise<SBasis> dx = derivative(x);
     OptInterval range = bounds_exact(x);
 
-    if (not range) return result;
+    if (!range) return result;
     std::vector<double> levels = generateLevels(*range, org[X]);
     std::vector<std::vector<double> > times;
     times = multi_roots(x,levels);

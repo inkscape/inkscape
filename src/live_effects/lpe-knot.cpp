@@ -493,7 +493,7 @@ LPEKnot::doEffect_path (std::vector<Geom::Path> const &path_in)
             }
         }
         for (unsigned comp = beg_comp; comp < end_comp; comp++){
-            assert(dom.at(comp).min() >=0 and dom.at(comp).max() <= size_nondegenerate(gpaths.at(i0)));
+            assert(dom.at(comp).min() >=0 && dom.at(comp).max() <= size_nondegenerate(gpaths.at(i0)));
             path_out.push_back(gpaths[i0].portion(dom.at(comp)));
         }
     }

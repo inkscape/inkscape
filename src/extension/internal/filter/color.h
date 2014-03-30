@@ -941,7 +941,7 @@ Invert::get_filter_text (Inkscape::Extension::Extension * ext)
     std::ostringstream transparency;
     std::ostringstream hue;
 
-    if (ext->get_param_bool("hue") xor ext->get_param_bool("lightness")) {
+    if (ext->get_param_bool("hue") ^ ext->get_param_bool("lightness")) {
         hue << "<feColorMatrix type=\"hueRotate\" values=\"180\" result=\"color1\" />\n";
     } else {
         hue << "";

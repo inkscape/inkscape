@@ -298,7 +298,7 @@ sp_conn_end_href_changed(SPObject */*old_ref*/, SPObject */*ref*/,
             // This allows the connector tool to dive into a group's children
             // And connect to their children's centers.
             SPObject *parent = refobj->parent;
-            if (SP_IS_GROUP(parent) and ! SP_IS_LAYER(parent)) {
+            if (SP_IS_GROUP(parent) && ! SP_IS_LAYER(parent)) {
                 connEnd._group_connection
                     = SP_ITEM(parent)->connectTransformed(sigc::bind(sigc::ptr_fun(&sp_conn_end_shape_move),
                                                                  path));

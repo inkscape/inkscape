@@ -99,7 +99,7 @@ SPDocument *open(Extension *key, gchar const *filename)
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         bool ask = prefs->getBool("/dialogs/import/ask");
         Glib::ustring id = Glib::ustring(imod->get_id(), 28);
-        if (!ask and id.compare( "org.inkscape.input.gdkpixbuf") == 0) {
+        if (!ask && id.compare( "org.inkscape.input.gdkpixbuf") == 0) {
             show = false;
             imod->set_gui(false);
         }
