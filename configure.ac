@@ -854,7 +854,7 @@ if test "x$cairo_pdf" = "xyes"; then
 fi
 
 dnl Shouldn't we test for libz?
-INKSCAPE_LIBS="$INKSCAPE_LIBS -lz -lxml2 -ldl"
+INKSCAPE_LIBS="$INKSCAPE_LIBS -lz"
 if test "x$openmp_ok" = "xyes"; then
 	INKSCAPE_LIBS="$INKSCAPE_LIBS -lgomp"
 fi
