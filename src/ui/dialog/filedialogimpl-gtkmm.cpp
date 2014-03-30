@@ -514,10 +514,11 @@ void SVGPreview::showTooLarge(long fileLength)
 bool SVGPreview::set(Glib::ustring &fileName, int dialogType)
 {
 
-    if (!Glib::file_test(fileName, Glib::FILE_TEST_EXISTS))
+    if (!Glib::file_test(fileName, Glib::FILE_TEST_EXISTS)) {
+        showNoPreview();
         return false;
+    }
 
-    //g_message("fname:%s", fileName.c_str());
 
     if (Glib::file_test(fileName, Glib::FILE_TEST_IS_DIR)) {
         showNoPreview();
@@ -525,24 +526,22 @@ bool SVGPreview::set(Glib::ustring &fileName, int dialogType)
     }
 
     if (Glib::file_test(fileName, Glib::FILE_TEST_IS_REGULAR))
-        {
+    {
         Glib::ustring fileNameUtf8 = Glib::filename_to_utf8(fileName);
-        gchar *fName = const_cast<gchar *>(fileNameUtf8.c_str());
+        gchar *fName = const_cast<gchar *>(fileNameUtf8.c_str()); // const-cast probably not necessary? (not necessary on Windows version of stat())
         struct stat info;
-        if (g_file_test (fName, G_FILE_TEST_EXISTS) && g_stat(fName, &info))
-            {
-            g_warning("SVGPreview::set() : %s : %s",
-                           fName, strerror(errno));
-            return FALSE;
-            }
-        long fileLen = info.st_size;
-        if (fileLen > 0xA00000L)
-            {
-            showingNoPreview = false;
-            showTooLarge(fileLen);
-            return FALSE;
-            }
+        if (g_stat(fName, &info)) // stat returns 0 upon success
+        {
+            g_warning("SVGPreview::set() : %s : %s", fName, strerror(errno));
+            return false;
         }
+        if (info.st_size > 0xA00000L)
+        {
+            showingNoPreview = false;
+            showTooLarge(info.st_size);
+            return false;
+        }
+    }
 
     Glib::ustring svg = ".svg";
     Glib::ustring svgz = ".svgz";

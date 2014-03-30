@@ -369,60 +369,47 @@ isValidImageIconFile(const Glib::ustring &fileName)
     return false;
 }
 
+/// \fixme This function is almost an exact duplicate of SVGPreview::set() in ui/dialog/filedialogimpl-gtkmm.cpp.
 bool ImageIcon::show(const Glib::ustring &fileName)
 {
-
-    if (!Glib::file_test(fileName, Glib::FILE_TEST_EXISTS))
+    if (!Glib::file_test(fileName, Glib::FILE_TEST_EXISTS)) {
+        showBrokenImage("File does not exist");
         return false;
+    }
 
-    gchar *fName = const_cast<gchar *>(fileName.c_str());
-    //g_message("fname:%s\n", fName);
-
-
-    if (Glib::file_test(fileName, Glib::FILE_TEST_IS_REGULAR))
-        {
+    if (Glib::file_test(fileName, Glib::FILE_TEST_IS_REGULAR)) {
+        gchar *fName = const_cast<gchar *>(fileName.c_str()); // this const-cast seems not necessary, was it put there because of older sys/stat.h version?
         struct stat info;
-        if (g_file_test (fName, G_FILE_TEST_EXISTS) && stat(fName, &info))
-            {
-            Glib::ustring err = "cannot get file info";
-            showBrokenImage(err);
+        if (stat(fName, &info)) // stat returns 0 upon success
+        {
+            showBrokenImage("Cannot get file info");
             return false;
-            }
-        long fileLen = info.st_size;
-        if (fileLen > 0x150000L)
-            {
-            Glib::ustring err = "File too large";
-            showBrokenImage(err);
-            return false;
-            }
         }
+        if (info.st_size > 0x150000L) {
+            showBrokenImage("File too large");
+            return false;
+        }
+    }
 
     Glib::ustring svg = ".svg";
     Glib::ustring svgz = ".svgz";
 
-    if (hasSuffix(fileName, svg) || hasSuffix(fileName, svgz)   )
-        {
-        if (!showSvgFile(fileName))
-            {
+    if (hasSuffix(fileName, svg) || hasSuffix(fileName, svgz)) {
+        if (!showSvgFile(fileName)) {
             showBrokenImage(bitmapError);
             return false;
-            }
-        return true;
         }
-    else if (isValidImageIconFile(fileName))
-        {
-        if (!showBitmap(fileName))
-            {
+        return true;
+    } else if (isValidImageIconFile(fileName)) {
+        if (!showBitmap(fileName)) {
             showBrokenImage(bitmapError);
             return false;
-            }
-        return true;
         }
-    else
-        {
+        return true;
+    } else {
         showBrokenImage("unsupported file type");
         return false;
-        }
+    }
 }
 
 
