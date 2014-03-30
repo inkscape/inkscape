@@ -118,7 +118,7 @@ bool lies_in_sector (Geom::Point const &v1, Geom::Point const &v2, Geom::Point c
         // FIXME: Can we assume that it's safe to return true if the vectors point in different directions?
         return (Geom::dot (v1, v2) < 0);
     }
-    return (coords.first >= 0 and coords.second >= 0);
+    return (coords.first >= 0 && coords.second >= 0);
 }
 
 bool lies_in_quadrangle (Geom::Point const &A, Geom::Point const &B, Geom::Point const &C, Geom::Point const &D, Geom::Point const &pt)
