@@ -69,37 +69,6 @@ struct hash<Glib::ustring> : public std::unary_function<Glib::ustring, std::size
     }
 };
 } // namespace boost
-
-#elif defined(HAVE_EXT_HASH_SET)
-
-# include <functional>
-# include <ext/hash_set>
-# include <ext/hash_map>
-# define INK_UNORDERED_SET __gnu_cxx::hash_set
-# define INK_UNORDERED_MAP __gnu_cxx::hash_map
-# define INK_HASH __gnu_cxx::hash
-
-#include <cstddef>
-
-namespace __gnu_cxx {
-// hash function for pointers
-// TR1 and Boost have this defined by default, __gnu_cxx doesn't
-template<typename T>
-struct hash<T *> : public std::unary_function<T *, std::size_t> {
-    std::size_t operator()(T *p) const {
-        // Taken from Boost
-        std::size_t x = static_cast<std::size_t>(reinterpret_cast<std::ptrdiff_t>(p));
-        return x + (x >> 3);
-    }
-};
-
-template <>
-struct hash<Glib::ustring> : public std::unary_function<Glib::ustring, std::size_t> {
-    std::size_t operator()(Glib::ustring const &s) const {
-        return hash<std::string>()(s.raw());
-    }
-};
-} // namespace __gnu_cxx
 #endif
 
 #else
