@@ -20,9 +20,8 @@
 #include "snapper.h"
 #include "display/sp-canvas-item.h"
 
-class  SPItem;
-struct SPKnot;
-
+class SPItem;
+class SPKnot;
 class SPDesktop;
 class KnotHolder;
 

@@ -28,7 +28,7 @@
 #include "sp-gradient.h" // TODO refactor enums to external .h file
 #include "sp-mesh-array.h"
 
-struct SPKnot;
+class SPKnot;
 
 class SPDesktop;
 class SPCSSAttr;

@@ -27,7 +27,7 @@
 #include "sp-item.h"
 #include "seltrans-handles.h"
 
-struct SPKnot;
+class  SPKnot;
 class  SPDesktop;
 struct SPCanvasItem;
 struct SPCtrlLine;

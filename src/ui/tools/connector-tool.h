@@ -22,7 +22,7 @@
 
 class SPItem;
 class SPCurve;
-struct SPKnot;
+class SPKnot;
 struct SPCanvasItem;
 
 namespace Avoid {

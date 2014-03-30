@@ -34,7 +34,7 @@ class PowerStrokePointArrayParamKnotHolderEntity;
 class KnotHolderEntity;
 class SPItem;
 class SPDesktop;
-struct SPKnot;
+class SPKnot;
 
 /* fixme: Think how to make callbacks most sensitive (Lauris) */
 typedef void (* SPKnotHolderReleasedFunc) (SPItem *item);
