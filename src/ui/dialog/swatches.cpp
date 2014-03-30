@@ -645,7 +645,7 @@ SwatchesPanel::SwatchesPanel(gchar const* prefsPath) :
         std::vector<SwatchPage*> swatchSets = _getSwatchSets();
         for ( std::vector<SwatchPage*>::iterator it = swatchSets.begin(); it != swatchSets.end(); ++it) {
             SwatchPage* curr = *it;
-            Gtk::RadioMenuItem* single = manage(new Gtk::RadioMenuItem(groupOne, curr->_name));
+            Gtk::RadioMenuItem* single = Gtk::manage(new Gtk::RadioMenuItem(groupOne, curr->_name));
             if ( curr == first ) {
                 hotItem = single;
             }

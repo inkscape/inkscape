@@ -115,8 +115,8 @@ void Panel::_init()
         Gtk::RadioMenuItem::Group group;
         Glib::ustring one_label(_("List"));
         Glib::ustring two_label(_("Grid"));
-        Gtk::RadioMenuItem *one = manage(new Gtk::RadioMenuItem(group, one_label));
-        Gtk::RadioMenuItem *two = manage(new Gtk::RadioMenuItem(group, two_label));
+        Gtk::RadioMenuItem *one = Gtk::manage(new Gtk::RadioMenuItem(group, one_label));
+        Gtk::RadioMenuItem *two = Gtk::manage(new Gtk::RadioMenuItem(group, two_label));
 
         if (panel_mode == 0) {
             one->set_active(true);
@@ -128,7 +128,7 @@ void Panel::_init()
         _non_horizontal.push_back(one);
         _menu->append(*two);
         _non_horizontal.push_back(two);
-        Gtk::MenuItem* sep = manage(new Gtk::SeparatorMenuItem());
+        Gtk::MenuItem* sep = Gtk::manage(new Gtk::SeparatorMenuItem());
         _menu->append(*sep);
         _non_horizontal.push_back(sep);
         one->signal_activate().connect(sigc::bind<int, int>(sigc::mem_fun(*this, &Panel::_bounceCall), PANEL_SETTING_MODE, 0));
@@ -147,14 +147,14 @@ void Panel::_init()
             NC_("Swatches height", "Huge")
         };
 
-        Gtk::MenuItem *sizeItem = manage(new Gtk::MenuItem(heightItemLabel));
-        Gtk::Menu *sizeMenu = manage(new Gtk::Menu());
+        Gtk::MenuItem *sizeItem = Gtk::manage(new Gtk::MenuItem(heightItemLabel));
+        Gtk::Menu *sizeMenu = Gtk::manage(new Gtk::Menu());
         sizeItem->set_submenu(*sizeMenu);
 
         Gtk::RadioMenuItem::Group heightGroup;
         for (unsigned int i = 0; i < G_N_ELEMENTS(heightLabels); i++) {
             Glib::ustring _label(g_dpgettext2(NULL, "Swatches height", heightLabels[i]));
-            Gtk::RadioMenuItem* _item = manage(new Gtk::RadioMenuItem(heightGroup, _label));
+            Gtk::RadioMenuItem* _item = Gtk::manage(new Gtk::RadioMenuItem(heightGroup, _label));
             sizeMenu->append(*_item);
             if (i == panel_size) {
                 _item->set_active(true);
@@ -177,8 +177,8 @@ void Panel::_init()
             NC_("Swatches width", "Wider")
         };
 
-        Gtk::MenuItem *item = manage( new Gtk::MenuItem(widthItemLabel));
-        Gtk::Menu *type_menu = manage(new Gtk::Menu());
+        Gtk::MenuItem *item = Gtk::manage( new Gtk::MenuItem(widthItemLabel));
+        Gtk::Menu *type_menu = Gtk::manage(new Gtk::Menu());
         item->set_submenu(*type_menu);
         _menu->append(*item);
 
@@ -194,7 +194,7 @@ void Panel::_init()
         }
         for ( guint i = 0; i < G_N_ELEMENTS(widthLabels); ++i ) {
             Glib::ustring _label(g_dpgettext2(NULL, "Swatches width", widthLabels[i]));
-            Gtk::RadioMenuItem *_item = manage(new Gtk::RadioMenuItem(widthGroup, _label));
+            Gtk::RadioMenuItem *_item = Gtk::manage(new Gtk::RadioMenuItem(widthGroup, _label));
             type_menu->append(*_item);
             if ( i <= hot_index ) {
                 _item->set_active(true);
@@ -213,8 +213,8 @@ void Panel::_init()
             NC_("Swatches border", "Wide"),
         };
 
-        Gtk::MenuItem *item = manage( new Gtk::MenuItem(widthItemLabel));
-        Gtk::Menu *type_menu = manage(new Gtk::Menu());
+        Gtk::MenuItem *item = Gtk::manage( new Gtk::MenuItem(widthItemLabel));
+        Gtk::Menu *type_menu = Gtk::manage(new Gtk::Menu());
         item->set_submenu(*type_menu);
         _menu->append(*item);
 
@@ -230,7 +230,7 @@ void Panel::_init()
         }
         for ( guint i = 0; i < G_N_ELEMENTS(widthLabels); ++i ) {
             Glib::ustring _label(g_dpgettext2(NULL, "Swatches border", widthLabels[i]));
-            Gtk::RadioMenuItem *_item = manage(new Gtk::RadioMenuItem(widthGroup, _label));
+            Gtk::RadioMenuItem *_item = Gtk::manage(new Gtk::RadioMenuItem(widthGroup, _label));
             type_menu->append(*_item);
             if ( i <= hot_index ) {
                 _item->set_active(true);
@@ -242,7 +242,7 @@ void Panel::_init()
     {
         //TRANSLATORS: "Wrap" indicates how colour swatches are displayed
         Glib::ustring wrap_label(C_("Swatches","Wrap"));
-        Gtk::CheckMenuItem *check = manage(new Gtk::CheckMenuItem(wrap_label));
+        Gtk::CheckMenuItem *check = Gtk::manage(new Gtk::CheckMenuItem(wrap_label));
         check->set_active(panel_wrap);
         _menu->append(*check);
         _non_vertical.push_back(check);
@@ -251,7 +251,7 @@ void Panel::_init()
     }
 
     Gtk::SeparatorMenuItem *sep;
-    sep = manage(new Gtk::SeparatorMenuItem());
+    sep = Gtk::manage(new Gtk::SeparatorMenuItem());
     _menu->append(*sep);
 
     _menu->show_all_children();
@@ -284,7 +284,7 @@ void Panel::_init()
 
     pack_start(_top_bar, false, false);
 
-    Gtk::HBox* boxy = manage(new Gtk::HBox());
+    Gtk::HBox* boxy = Gtk::manage(new Gtk::HBox());
 
     boxy->pack_start(_contents, true, true);
     boxy->pack_start(_right_bar, false, true);

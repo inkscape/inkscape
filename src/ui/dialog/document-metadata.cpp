@@ -122,7 +122,7 @@ DocumentMetadata::build_metadata()
 
     _page_metadata1.show();
 
-    Gtk::Label *label = manage (new Gtk::Label);
+    Gtk::Label *label = Gtk::manage (new Gtk::Label);
     label->set_markup (_("<b>Dublin Core Entities</b>"));
     label->set_alignment (0.0);
 
@@ -140,7 +140,7 @@ DocumentMetadata::build_metadata()
         if ( entity->editable == RDF_EDIT_GENERIC ) {
             EntityEntry *w = EntityEntry::create (entity, _wr);
             _rdflist.push_back (w);
-            Gtk::HBox *space = manage (new Gtk::HBox);
+            Gtk::HBox *space = Gtk::manage (new Gtk::HBox);
             space->set_size_request (SPACE_SIZE_X, SPACE_SIZE_Y);
 
 #if WITH_GTKMM_3_0
@@ -164,7 +164,7 @@ DocumentMetadata::build_metadata()
     _page_metadata2.show();
 
     row = 0;
-    Gtk::Label *llabel = manage (new Gtk::Label);
+    Gtk::Label *llabel = Gtk::manage (new Gtk::Label);
     llabel->set_markup (_("<b>License</b>"));
     llabel->set_alignment (0.0);
 
@@ -178,7 +178,7 @@ DocumentMetadata::build_metadata()
     /* add license selector pull-down and URI */
     ++row;
     _licensor.init (_wr);
-    Gtk::HBox *space = manage (new Gtk::HBox);
+    Gtk::HBox *space = Gtk::manage (new Gtk::HBox);
     space->set_size_request (SPACE_SIZE_X, SPACE_SIZE_Y);
 
 #if WITH_GTKMM_3_0

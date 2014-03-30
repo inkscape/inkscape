@@ -213,7 +213,7 @@ LayerPropertiesDialog::_setup_layers_controls() {
     _tree.set_model( _store );
     _tree.set_headers_visible(false);
 
-    Inkscape::UI::Widget::ImageToggler *eyeRenderer = manage( new Inkscape::UI::Widget::ImageToggler(
+    Inkscape::UI::Widget::ImageToggler *eyeRenderer = Gtk::manage( new Inkscape::UI::Widget::ImageToggler(
         INKSCAPE_ICON("object-visible"), INKSCAPE_ICON("object-hidden")) );
     int visibleColNum = _tree.append_column("vis", *eyeRenderer) - 1;
     Gtk::TreeViewColumn* col = _tree.get_column(visibleColNum);
@@ -221,7 +221,7 @@ LayerPropertiesDialog::_setup_layers_controls() {
         col->add_attribute( eyeRenderer->property_active(), _model->_colVisible );
     }
 
-    Inkscape::UI::Widget::ImageToggler * renderer = manage( new Inkscape::UI::Widget::ImageToggler(
+    Inkscape::UI::Widget::ImageToggler * renderer = Gtk::manage( new Inkscape::UI::Widget::ImageToggler(
         INKSCAPE_ICON("object-locked"), INKSCAPE_ICON("object-unlocked")) );
     int lockedColNum = _tree.append_column("lock", *renderer) - 1;
     col = _tree.get_column(lockedColNum);
@@ -229,7 +229,7 @@ LayerPropertiesDialog::_setup_layers_controls() {
         col->add_attribute( renderer->property_active(), _model->_colLocked );
     }
 
-    Gtk::CellRendererText *_text_renderer = manage(new Gtk::CellRendererText());
+    Gtk::CellRendererText *_text_renderer = Gtk::manage(new Gtk::CellRendererText());
     int nameColNum = _tree.append_column("Name", *_text_renderer) - 1;
     Gtk::TreeView::Column *_name_column = _tree.get_column(nameColNum);
     _name_column->add_attribute(_text_renderer->property_text(), _model->_colLabel);

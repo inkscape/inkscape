@@ -49,25 +49,25 @@ PreviewHolder::PreviewHolder() :
     _wrap(false),
     _border(BORDER_NONE)
 {
-    _scroller = manage(new Gtk::ScrolledWindow());
+    _scroller = Gtk::manage(new Gtk::ScrolledWindow());
     ((Gtk::ScrolledWindow *)_scroller)->set_policy(Gtk::POLICY_AUTOMATIC,
                                                    Gtk::POLICY_AUTOMATIC);
 
 #if WITH_GTKMM_3_0
-    _insides = manage(new Gtk::Grid());
+    _insides = Gtk::manage(new Gtk::Grid());
     _insides->set_column_spacing(8);
     
     // Add a container with the scroller and a spacer
-    Gtk::Grid* spaceHolder = manage(new Gtk::Grid());
+    Gtk::Grid* spaceHolder = Gtk::manage(new Gtk::Grid());
 
     _scroller->set_hexpand();
     _scroller->set_vexpand();
 #else
-    _insides = manage(new Gtk::Table( 1, 2 ));
+    _insides = Gtk::manage(new Gtk::Table( 1, 2 ));
     _insides->set_col_spacings( 8 );
     
     // Add a container with the scroller and a spacer
-    Gtk::Table* spaceHolder = manage( new Gtk::Table(1, 2) );
+    Gtk::Table* spaceHolder = Gtk::manage( new Gtk::Table(1, 2) );
 #endif
 
     _scroller->add( *_insides );
@@ -134,8 +134,8 @@ void PreviewHolder::addPreview( Previewable* preview )
         switch(_view) {
             case VIEW_TYPE_LIST:
                 {
-                    Gtk::Widget* label = manage(preview->getPreview(PREVIEW_STYLE_BLURB, VIEW_TYPE_LIST, _baseSize, _ratio, _border));
-                    Gtk::Widget* thing = manage(preview->getPreview(PREVIEW_STYLE_PREVIEW, VIEW_TYPE_LIST, _baseSize, _ratio, _border));
+                    Gtk::Widget* label = Gtk::manage(preview->getPreview(PREVIEW_STYLE_BLURB, VIEW_TYPE_LIST, _baseSize, _ratio, _border));
+                    Gtk::Widget* thing = Gtk::manage(preview->getPreview(PREVIEW_STYLE_PREVIEW, VIEW_TYPE_LIST, _baseSize, _ratio, _border));
 
 #if WITH_GTKMM_3_0
                     thing->set_hexpand();
@@ -154,7 +154,7 @@ void PreviewHolder::addPreview( Previewable* preview )
                 break;
             case VIEW_TYPE_GRID:
                 {
-                    Gtk::Widget* thing = manage(items[i]->getPreview(PREVIEW_STYLE_PREVIEW, VIEW_TYPE_GRID, _baseSize, _ratio, _border));
+                    Gtk::Widget* thing = Gtk::manage(items[i]->getPreview(PREVIEW_STYLE_PREVIEW, VIEW_TYPE_GRID, _baseSize, _ratio, _border));
 
                     int width = 1;
                     int height = 1;
@@ -408,10 +408,10 @@ void PreviewHolder::rebuildUI()
             {
 
 #if WITH_GTKMM_3_0
-                _insides = manage(new Gtk::Grid());
+                _insides = Gtk::manage(new Gtk::Grid());
                 _insides->set_column_spacing(8);
 #else
-                _insides = manage(new Gtk::Table( 1, 2 ));
+                _insides = Gtk::manage(new Gtk::Table( 1, 2 ));
                 _insides->set_col_spacings( 8 );
 #endif
 
@@ -424,10 +424,10 @@ void PreviewHolder::rebuildUI()
                 }
 
                 for ( unsigned int i = 0; i < items.size(); i++ ) {
-                    Gtk::Widget* label = manage(items[i]->getPreview(PREVIEW_STYLE_BLURB, _view, _baseSize, _ratio, _border));
+                    Gtk::Widget* label = Gtk::manage(items[i]->getPreview(PREVIEW_STYLE_BLURB, _view, _baseSize, _ratio, _border));
                     //label->set_alignment(Gtk::ALIGN_LEFT, Gtk::ALIGN_CENTER);
 
-                    Gtk::Widget* thing = manage(items[i]->getPreview(PREVIEW_STYLE_PREVIEW, _view, _baseSize, _ratio, _border));
+                    Gtk::Widget* thing = Gtk::manage(items[i]->getPreview(PREVIEW_STYLE_PREVIEW, _view, _baseSize, _ratio, _border));
 
 #if WITH_GTKMM_3_0
                     thing->set_hexpand();
@@ -458,19 +458,19 @@ void PreviewHolder::rebuildUI()
 
                     // If this is the last row, flag so the previews can draw a bottom
                     ::BorderStyle border = ((row == height -1) && (_border == BORDER_SOLID)) ? BORDER_SOLID_LAST_ROW : _border;
-                    Gtk::Widget* thing = manage(items[i]->getPreview(PREVIEW_STYLE_PREVIEW, _view, _baseSize, _ratio, border));
+                    Gtk::Widget* thing = Gtk::manage(items[i]->getPreview(PREVIEW_STYLE_PREVIEW, _view, _baseSize, _ratio, border));
 
                     if ( !_insides ) {
                         calcGridSize( thing, items.size(), width, height );
 
 #if WITH_GTKMM_3_0
-                        _insides = manage(new Gtk::Grid());
+                        _insides = Gtk::manage(new Gtk::Grid());
                         if (_border == BORDER_WIDE) {
                             _insides->set_column_spacing(1);
                             _insides->set_row_spacing(1);
                         }
 #else
-                        _insides = manage(new Gtk::Table( height, width ));
+                        _insides = Gtk::manage(new Gtk::Table( height, width ));
                         if (_border == BORDER_WIDE) {
                             _insides->set_col_spacings( 1 );
                             _insides->set_row_spacings( 1 );
@@ -493,9 +493,9 @@ void PreviewHolder::rebuildUI()
                 }
                 if ( !_insides ) {
 #if WITH_GTKMM_3_0
-                    _insides = manage(new Gtk::Grid());
+                    _insides = Gtk::manage(new Gtk::Grid());
 #else
-                    _insides = manage(new Gtk::Table( 1, 2 ));
+                    _insides = Gtk::manage(new Gtk::Table( 1, 2 ));
 #endif
                 }
 

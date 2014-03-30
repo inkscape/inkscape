@@ -469,7 +469,7 @@ static inline void attach_all(Gtk::Table &table, Gtk::Widget const *const arr[],
                               Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
 #endif
             } else {
-                Gtk::HBox *space = manage (new Gtk::HBox);
+                Gtk::HBox *space = Gtk::manage (new Gtk::HBox);
                 space->set_size_request (SPACE_SIZE_X, SPACE_SIZE_Y);
 #if WITH_GTKMM_3_0
                 space->set_halign(Gtk::ALIGN_CENTER);

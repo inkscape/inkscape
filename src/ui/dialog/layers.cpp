@@ -92,7 +92,7 @@ void LayersPanel::_styleButton( Gtk::Button& btn, SPDesktop *desktop, unsigned i
     if ( iconName ) {
         GtkWidget *child = sp_icon_new( Inkscape::ICON_SIZE_SMALL_TOOLBAR, iconName );
         gtk_widget_show( child );
-        btn.add( *manage(Glib::wrap(child)) );
+        btn.add( *Gtk::manage(Glib::wrap(child)) );
         btn.set_relief(Gtk::RELIEF_NONE);
         set = true;
     }
@@ -104,7 +104,7 @@ void LayersPanel::_styleButton( Gtk::Button& btn, SPDesktop *desktop, unsigned i
             if ( !set && action && action->image ) {
                 GtkWidget *child = sp_icon_new( Inkscape::ICON_SIZE_SMALL_TOOLBAR, action->image );
                 gtk_widget_show( child );
-                btn.add( *manage(Glib::wrap(child)) );
+                btn.add( *Gtk::manage(Glib::wrap(child)) );
                 set = true;
             }
 
@@ -149,7 +149,7 @@ Gtk::MenuItem& LayersPanel::_addPopupItem( SPDesktop *desktop, unsigned int code
 
     Gtk::Widget* wrapped = 0;
     if ( iconWidget ) {
-        wrapped = manage(Glib::wrap(iconWidget));
+        wrapped = Gtk::manage(Glib::wrap(iconWidget));
         wrapped->show();
     }
 
@@ -809,7 +809,7 @@ LayersPanel::LayersPanel() :
     _tree.set_reorderable(true);
     _tree.enable_model_drag_dest (Gdk::ACTION_MOVE);
 
-    Inkscape::UI::Widget::ImageToggler *eyeRenderer = manage( new Inkscape::UI::Widget::ImageToggler(
+    Inkscape::UI::Widget::ImageToggler *eyeRenderer = Gtk::manage( new Inkscape::UI::Widget::ImageToggler(
         INKSCAPE_ICON("object-visible"), INKSCAPE_ICON("object-hidden")) );
     int visibleColNum = _tree.append_column("vis", *eyeRenderer) - 1;
     eyeRenderer->signal_pre_toggle().connect( sigc::mem_fun(*this, &LayersPanel::_preToggle) );
@@ -821,7 +821,7 @@ LayersPanel::LayersPanel() :
     }
 
 
-    Inkscape::UI::Widget::ImageToggler * renderer = manage( new Inkscape::UI::Widget::ImageToggler(
+    Inkscape::UI::Widget::ImageToggler * renderer = Gtk::manage( new Inkscape::UI::Widget::ImageToggler(
         INKSCAPE_ICON("object-locked"), INKSCAPE_ICON("object-unlocked")) );
     int lockedColNum = _tree.append_column("lock", *renderer) - 1;
     renderer->signal_pre_toggle().connect( sigc::mem_fun(*this, &LayersPanel::_preToggle) );
@@ -832,7 +832,7 @@ LayersPanel::LayersPanel() :
         col->add_attribute( renderer->property_active(), _model->_colLocked );
     }
 
-    _text_renderer = manage(new Gtk::CellRendererText());
+    _text_renderer = Gtk::manage(new Gtk::CellRendererText());
     int nameColNum = _tree.append_column("Name", *_text_renderer) - 1;
     _name_column = _tree.get_column(nameColNum);
     _name_column->add_attribute(_text_renderer->property_text(), _model->_colLabel);
@@ -880,40 +880,40 @@ LayersPanel::LayersPanel() :
 
     SPDesktop* targetDesktop = getDesktop();
 
-    Gtk::Button* btn = manage( new Gtk::Button() );
+    Gtk::Button* btn = Gtk::manage( new Gtk::Button() );
     _styleButton( *btn, targetDesktop, SP_VERB_LAYER_NEW, INKSCAPE_ICON("list-add"), C_("Layers", "New") );
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), (int)BUTTON_NEW) );
     _buttonsSecondary.pack_start(*btn, Gtk::PACK_SHRINK);
 
-    btn = manage( new Gtk::Button() );
+    btn = Gtk::manage( new Gtk::Button() );
     _styleButton( *btn, targetDesktop, SP_VERB_LAYER_TO_BOTTOM, INKSCAPE_ICON("go-bottom"), C_("Layers", "Bot") );
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), (int)BUTTON_BOTTOM) );
     _watchingNonBottom.push_back( btn );
     _buttonsPrimary.pack_end(*btn, Gtk::PACK_SHRINK);
     
-    btn = manage( new Gtk::Button() );
+    btn = Gtk::manage( new Gtk::Button() );
     _styleButton( *btn, targetDesktop, SP_VERB_LAYER_LOWER, INKSCAPE_ICON("go-down"), C_("Layers", "Dn") );
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), (int)BUTTON_DOWN) );
     _watchingNonBottom.push_back( btn );
     _buttonsPrimary.pack_end(*btn, Gtk::PACK_SHRINK);
     
-    btn = manage( new Gtk::Button() );
+    btn = Gtk::manage( new Gtk::Button() );
     _styleButton( *btn, targetDesktop, SP_VERB_LAYER_RAISE, INKSCAPE_ICON("go-up"), C_("Layers", "Up") );
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), (int)BUTTON_UP) );
     _watchingNonTop.push_back( btn );
     _buttonsPrimary.pack_end(*btn, Gtk::PACK_SHRINK);
     
-    btn = manage( new Gtk::Button() );
+    btn = Gtk::manage( new Gtk::Button() );
     _styleButton( *btn, targetDesktop, SP_VERB_LAYER_TO_TOP, INKSCAPE_ICON("go-top"), C_("Layers", "Top") );
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), (int)BUTTON_TOP) );
     _watchingNonTop.push_back( btn );
     _buttonsPrimary.pack_end(*btn, Gtk::PACK_SHRINK);
 
-//     btn = manage( new Gtk::Button("Dup") );
+//     btn = Gtk::manage( new Gtk::Button("Dup") );
 //     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), (int)BUTTON_DUPLICATE) );
 //     _buttonsRow.add( *btn );
 
-    btn = manage( new Gtk::Button() );
+    btn = Gtk::manage( new Gtk::Button() );
     _styleButton( *btn, targetDesktop, SP_VERB_LAYER_DELETE, INKSCAPE_ICON("list-remove"), _("X") );
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), (int)BUTTON_DELETE) );
     _watching.push_back( btn );
@@ -930,19 +930,19 @@ LayersPanel::LayersPanel() :
         _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_DUPLICATE, 0, "Duplicate", (int)BUTTON_DUPLICATE ) );
         _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_NEW, 0, "New", (int)BUTTON_NEW ) );
 
-        _popupMenu.append(*manage(new Gtk::SeparatorMenuItem()));
+        _popupMenu.append(*Gtk::manage(new Gtk::SeparatorMenuItem()));
 
         _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_SOLO, 0, "Solo", (int)BUTTON_SOLO ) );
         _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_SHOW_ALL, 0, "Show All", (int)BUTTON_SHOW_ALL ) );
         _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_HIDE_ALL, 0, "Hide All", (int)BUTTON_HIDE_ALL ) );
 
-        _popupMenu.append(*manage(new Gtk::SeparatorMenuItem()));
+        _popupMenu.append(*Gtk::manage(new Gtk::SeparatorMenuItem()));
 
         _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_LOCK_OTHERS, 0, "Lock Others", (int)BUTTON_LOCK_OTHERS ) );
         _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_LOCK_ALL, 0, "Lock All", (int)BUTTON_LOCK_ALL ) );
         _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_UNLOCK_ALL, 0, "Unlock All", (int)BUTTON_UNLOCK_ALL ) );
 
-        _popupMenu.append(*manage(new Gtk::SeparatorMenuItem()));
+        _popupMenu.append(*Gtk::manage(new Gtk::SeparatorMenuItem()));
 
         _watchingNonTop.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_RAISE, INKSCAPE_ICON("go-up"), "Up", (int)BUTTON_UP ) );
         _watchingNonBottom.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_LOWER, INKSCAPE_ICON("go-down"), "Down", (int)BUTTON_DOWN ) );

@@ -297,7 +297,7 @@ inline void attach_all(Gtk::Table &table, Gtk::Widget *const arr[], unsigned con
                 table.attach (label, 0, 3, r, r+1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
 #endif
             } else {
-                Gtk::HBox *space = manage (new Gtk::HBox);
+                Gtk::HBox *space = Gtk::manage (new Gtk::HBox);
                 space->set_size_request (SPACE_SIZE_X, SPACE_SIZE_Y);
 
 #if WITH_GTKMM_3_0
@@ -317,11 +317,11 @@ void DocumentProperties::build_page()
 {
     _page_page->show();
 
-    Gtk::Label* label_gen = manage (new Gtk::Label);
+    Gtk::Label* label_gen = Gtk::manage (new Gtk::Label);
     label_gen->set_markup (_("<b>General</b>"));
-    Gtk::Label *label_for = manage (new Gtk::Label);
+    Gtk::Label *label_for = Gtk::manage (new Gtk::Label);
     label_for->set_markup (_("<b>Page Size</b>"));
-    Gtk::Label* label_dsp = manage (new Gtk::Label);
+    Gtk::Label* label_dsp = Gtk::manage (new Gtk::Label);
     label_dsp->set_markup (_("<b>Display</b>"));
     _page_sizer.init();
 
@@ -356,7 +356,7 @@ void DocumentProperties::build_guides()
 {
     _page_guides->show();
 
-    Gtk::Label *label_gui = manage (new Gtk::Label);
+    Gtk::Label *label_gui = Gtk::manage (new Gtk::Label);
     label_gui->set_markup (_("<b>Guides</b>"));
 
     Gtk::Widget *const widget_array[] =
@@ -374,13 +374,13 @@ void DocumentProperties::build_snap()
 {
     _page_snap->show();
 
-    Gtk::Label *label_o = manage (new Gtk::Label);
+    Gtk::Label *label_o = Gtk::manage (new Gtk::Label);
     label_o->set_markup (_("<b>Snap to objects</b>"));
-    Gtk::Label *label_gr = manage (new Gtk::Label);
+    Gtk::Label *label_gr = Gtk::manage (new Gtk::Label);
     label_gr->set_markup (_("<b>Snap to grids</b>"));
-    Gtk::Label *label_gu = manage (new Gtk::Label);
+    Gtk::Label *label_gu = Gtk::manage (new Gtk::Label);
     label_gu->set_markup (_("<b>Snap to guides</b>"));
-    Gtk::Label *label_m = manage (new Gtk::Label);
+    Gtk::Label *label_m = Gtk::manage (new Gtk::Label);
     label_m->set_markup (_("<b>Miscellaneous</b>"));
 
     Gtk::Widget *const array[] =
@@ -607,9 +607,9 @@ void DocumentProperties::removeSelectedProfile(){
 void DocumentProperties::build_cms()
 {
     _page_cms->show();
-    Gtk::Label *label_link= manage (new Gtk::Label("", Gtk::ALIGN_START));
+    Gtk::Label *label_link= Gtk::manage (new Gtk::Label("", Gtk::ALIGN_START));
     label_link->set_markup (_("<b>Linked Color Profiles:</b>"));
-    Gtk::Label *label_avail = manage (new Gtk::Label("", Gtk::ALIGN_START));
+    Gtk::Label *label_avail = Gtk::manage (new Gtk::Label("", Gtk::ALIGN_START));
     label_avail->set_markup (_("<b>Available Color Profiles:</b>"));
 
     _link_btn.set_tooltip_text(_("Link Profile"));
@@ -746,7 +746,7 @@ void DocumentProperties::build_scripting()
 
     //# External scripts tab
     _page_external_scripts->show();
-    Gtk::Label *label_external= manage (new Gtk::Label("", Gtk::ALIGN_START));
+    Gtk::Label *label_external= Gtk::manage (new Gtk::Label("", Gtk::ALIGN_START));
     label_external->set_markup (_("<b>External script files:</b>"));
 
     _external_add_btn.set_tooltip_text(_("Add the current file name or browse for a file"));
@@ -835,7 +835,7 @@ void DocumentProperties::build_scripting()
 
     //# Embedded scripts tab
     _page_embedded_scripts->show();
-    Gtk::Label *label_embedded= manage (new Gtk::Label("", Gtk::ALIGN_START));
+    Gtk::Label *label_embedded= Gtk::manage (new Gtk::Label("", Gtk::ALIGN_START));
     label_embedded->set_markup (_("<b>Embedded script files:</b>"));
 
     _embed_new_btn.set_tooltip_text(_("New"));
@@ -922,7 +922,7 @@ void DocumentProperties::build_scripting()
 // TODO restore?    _EmbeddedScriptsList.set_fixed_height_mode(true);
 
     //# Set up the Embedded Scripts content box
-    Gtk::Label *label_embedded_content= manage (new Gtk::Label("", Gtk::ALIGN_START));
+    Gtk::Label *label_embedded_content= Gtk::manage (new Gtk::Label("", Gtk::ALIGN_START));
     label_embedded_content->set_markup (_("<b>Content:</b>"));
 
     label_embedded_content->set_alignment(0.0);
@@ -1001,7 +1001,7 @@ void DocumentProperties::build_metadata()
 
     _page_metadata1->show();
 
-    Gtk::Label *label = manage (new Gtk::Label);
+    Gtk::Label *label = Gtk::manage (new Gtk::Label);
     label->set_markup (_("<b>Dublin Core Entities</b>"));
     label->set_alignment (0.0);
 
@@ -1019,7 +1019,7 @@ void DocumentProperties::build_metadata()
         if ( entity->editable == RDF_EDIT_GENERIC ) {
             EntityEntry *w = EntityEntry::create (entity, _wr);
             _rdflist.push_back (w);
-            Gtk::HBox *space = manage (new Gtk::HBox);
+            Gtk::HBox *space = Gtk::manage (new Gtk::HBox);
             space->set_size_request (SPACE_SIZE_X, SPACE_SIZE_Y);
 
 #if WITH_GTKMM_3_0
@@ -1040,15 +1040,15 @@ void DocumentProperties::build_metadata()
         }
     }
 
-    Gtk::Button *button_save = manage (new Gtk::Button(_("_Save as default"),1));
+    Gtk::Button *button_save = Gtk::manage (new Gtk::Button(_("_Save as default"),1));
     button_save->set_tooltip_text(_("Save this metadata as the default metadata"));
-    Gtk::Button *button_load = manage (new Gtk::Button(_("Use _default"),1));
+    Gtk::Button *button_load = Gtk::manage (new Gtk::Button(_("Use _default"),1));
     button_load->set_tooltip_text(_("Use the previously saved default metadata here"));
 
 #if WITH_GTKMM_3_0
-    Gtk::ButtonBox *box_buttons = manage (new Gtk::ButtonBox);
+    Gtk::ButtonBox *box_buttons = Gtk::manage (new Gtk::ButtonBox);
 #else
-    Gtk::HButtonBox *box_buttons = manage (new Gtk::HButtonBox);
+    Gtk::HButtonBox *box_buttons = Gtk::manage (new Gtk::HButtonBox);
 #endif
 
     box_buttons->set_layout(Gtk::BUTTONBOX_END);
@@ -1063,7 +1063,7 @@ void DocumentProperties::build_metadata()
     _page_metadata2->show();
 
     row = 0;
-    Gtk::Label *llabel = manage (new Gtk::Label);
+    Gtk::Label *llabel = Gtk::manage (new Gtk::Label);
     llabel->set_markup (_("<b>License</b>"));
     llabel->set_alignment (0.0);
 
@@ -1077,7 +1077,7 @@ void DocumentProperties::build_metadata()
     /* add license selector pull-down and URI */
     ++row;
     _licensor.init (_wr);
-    Gtk::HBox *space = manage (new Gtk::HBox);
+    Gtk::HBox *space = Gtk::manage (new Gtk::HBox);
     space->set_size_request (SPACE_SIZE_X, SPACE_SIZE_Y);
 
 #if WITH_GTKMM_3_0
@@ -1545,12 +1545,12 @@ void DocumentProperties::update()
 Gtk::HBox&
 DocumentProperties::_createPageTabLabel(const Glib::ustring& label, const char *label_image)
 {
-    Gtk::HBox *_tab_label_box = manage(new Gtk::HBox(false, 0));
+    Gtk::HBox *_tab_label_box = Gtk::manage(new Gtk::HBox(false, 0));
     _tab_label_box->set_spacing(4);
     _tab_label_box->pack_start(*Glib::wrap(sp_icon_new(Inkscape::ICON_SIZE_DECORATION,
                                                        label_image)));
 
-    Gtk::Label *_tab_label = manage(new Gtk::Label(label, true));
+    Gtk::Label *_tab_label = Gtk::manage(new Gtk::Label(label, true));
     _tab_label_box->pack_start(*_tab_label);
     _tab_label_box->show_all();
 

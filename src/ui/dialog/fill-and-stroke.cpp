@@ -131,7 +131,7 @@ FillAndStroke::_savePagePref(guint page_num)
 void
 FillAndStroke::_layoutPageFill()
 {
-    fillWdgt = manage(sp_fill_style_widget_new());
+    fillWdgt = Gtk::manage(sp_fill_style_widget_new());
 
 #if WITH_GTKMM_3_0
     _page_fill->table().attach(*fillWdgt, 0, 0, 1, 1);
@@ -143,7 +143,7 @@ FillAndStroke::_layoutPageFill()
 void
 FillAndStroke::_layoutPageStrokePaint()
 {
-    strokeWdgt = manage(sp_stroke_style_paint_widget_new());
+    strokeWdgt = Gtk::manage(sp_stroke_style_paint_widget_new());
 
 #if WITH_GTKMM_3_0
     _page_stroke_paint->table().attach(*strokeWdgt, 0, 0, 1, 1);
@@ -195,11 +195,11 @@ FillAndStroke::showPageStrokeStyle()
 Gtk::HBox&
 FillAndStroke::_createPageTabLabel(const Glib::ustring& label, const char *label_image)
 {
-    Gtk::HBox *_tab_label_box = manage(new Gtk::HBox(false, 4));
+    Gtk::HBox *_tab_label_box = Gtk::manage(new Gtk::HBox(false, 4));
     _tab_label_box->pack_start(*Glib::wrap(sp_icon_new(Inkscape::ICON_SIZE_DECORATION,
                                                        label_image)));
 
-    Gtk::Label *_tab_label = manage(new Gtk::Label(label, true));
+    Gtk::Label *_tab_label = Gtk::manage(new Gtk::Label(label, true));
     _tab_label_box->pack_start(*_tab_label);
     _tab_label_box->show_all();
 

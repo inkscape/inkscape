@@ -71,19 +71,19 @@ void ToleranceSlider::init (const Glib::ustring& label1, const Glib::ustring& la
     //           hbox
     
     _vbox = new Gtk::VBox;
-    _hbox = manage (new Gtk::HBox);
+    _hbox = Gtk::manage(new Gtk::HBox);
     
-    Gtk::Label *theLabel1 = manage (new Gtk::Label (label1));
+    Gtk::Label *theLabel1 = Gtk::manage(new Gtk::Label(label1));
     theLabel1->set_use_underline();
     theLabel1->set_alignment(0, 0.5);
     // align the label with the checkbox text above by indenting 22 px.
     _hbox->pack_start(*theLabel1, Gtk::PACK_EXPAND_WIDGET, 22);
 
 #if WITH_GTKMM_3_0
-    _hscale = manage(new Gtk::Scale(Gtk::ORIENTATION_HORIZONTAL));
+    _hscale = Gtk::manage(new Gtk::Scale(Gtk::ORIENTATION_HORIZONTAL));
     _hscale->set_range(1.0, 51.0);
 #else 
-    _hscale = manage (new Gtk::HScale (1.0, 51, 1.0));
+    _hscale = Gtk::manage (new Gtk::HScale (1.0, 51, 1.0));
 #endif
 
     theLabel1->set_mnemonic_widget (*_hscale);
@@ -96,13 +96,13 @@ void ToleranceSlider::init (const Glib::ustring& label1, const Glib::ustring& la
     _hbox->add (*_hscale);    
     
     
-    Gtk::Label *theLabel2 = manage (new Gtk::Label (label2));
+    Gtk::Label *theLabel2 = Gtk::manage(new Gtk::Label(label2));
     theLabel2->set_use_underline();
-    Gtk::Label *theLabel3 = manage (new Gtk::Label (label3));
+    Gtk::Label *theLabel3 = Gtk::manage(new Gtk::Label(label3));
     theLabel3->set_use_underline();    
-    _button1 = manage (new Gtk::RadioButton);
+    _button1 = Gtk::manage(new Gtk::RadioButton);
     _radio_button_group = _button1->get_group();
-    _button2 = manage (new Gtk::RadioButton);
+    _button2 = Gtk::manage(new Gtk::RadioButton);
     _button2->set_group(_radio_button_group);    
     _button1->set_tooltip_text (tip2);
     _button2->set_tooltip_text (tip3);    

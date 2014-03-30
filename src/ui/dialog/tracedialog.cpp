@@ -778,7 +778,7 @@ TraceDialogImpl::TraceDialogImpl() :
     rightVBox.pack_start(sioxBox, false, false, 0);
 
     //## preview
-    Gtk::HBox *previewButtonHBox = manage(new Gtk::HBox(false, MARGIN ));
+    Gtk::HBox *previewButtonHBox = Gtk::manage(new Gtk::HBox(false, MARGIN ));
     previewLiveButton.set_label(_("Live Preview"));
     previewLiveButton.set_use_underline(true);
     previewLiveCallback();

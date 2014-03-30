@@ -1151,9 +1151,9 @@ InputDialogImpl::ConfPanel::ConfPanel() :
     useExt.signal_toggled().connect(sigc::mem_fun(*this, &InputDialogImpl::ConfPanel::useExtToggled));
 
 #if WITH_GTKMM_3_0
-    Gtk::ButtonBox *buttonBox = manage(new Gtk::ButtonBox);
+    Gtk::ButtonBox *buttonBox = Gtk::manage(new Gtk::ButtonBox);
 #else
-    Gtk::HButtonBox *buttonBox = manage (new Gtk::HButtonBox);
+    Gtk::HButtonBox *buttonBox = Gtk::manage (new Gtk::HButtonBox);
 #endif
 
     buttonBox->set_layout (Gtk::BUTTONBOX_END);
