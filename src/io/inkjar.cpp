@@ -104,7 +104,7 @@ bool JarFile::init_inflation()
 
 bool JarFile::open()
 {
-    if ((fd = fopen(_filename, O_RDONLY)) < 0) {
+    if ((fd = fopen(_filename, "r")) < 0) {
 	fprintf(stderr, "open failed.\n");
 	return false;
     }
