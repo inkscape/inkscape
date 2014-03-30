@@ -64,12 +64,11 @@
 
 namespace Inkjar {
 
-JarFile::JarFile(gchar const*new_filename)
-{
-    _filename = g_strdup(new_filename);
-    _last_filename = NULL;
-    fd = NULL;
-}
+JarFile::JarFile(gchar const*new_filename) :
+    _file(NULL),
+    _filename(g_strdup(new_filename)),
+    _last_filename(NULL)
+{}
 
 //fixme: the following should probably just return a const gchar* and not 
 //       use strdup
@@ -104,7 +103,7 @@ bool JarFile::init_inflation()
 
 bool JarFile::open()
 {
-    if ((fd = fopen(_filename, "r")) < 0) {
+    if ((_file = fopen(_filename, "r")) == NULL) {
 	fprintf(stderr, "open failed.\n");
 	return false;
     }
@@ -116,7 +115,7 @@ bool JarFile::open()
 
 bool JarFile::close()
 {
-    if (fd >= 0 && !fclose(fd)) {
+    if (_file != NULL && (fclose(_file) == 0)) {
 	inflateEnd(&_zs);
 	return true;
     }
@@ -257,7 +256,7 @@ GByteArray *JarFile::get_next_file_contents()
     
     if (method == 8 || flags & 0x0008) {
 	unsigned int file_length = 0;//uncompressed file length
-	fseek(fd, eflen, SEEK_CUR);
+	fseek(_file, eflen, SEEK_CUR);
 	guint8 *file_data = get_compressed_file(compressed_size, file_length, 
 						crc, flags);
 	if (file_data == NULL) {
@@ -275,7 +274,7 @@ GByteArray *JarFile::get_next_file_contents()
 	}
 	g_byte_array_append(gba, file_data, compressed_size);
     } else {
-	fseek(fd, compressed_size+eflen, SEEK_CUR);
+	fseek(_file, compressed_size+eflen, SEEK_CUR);
 	g_byte_array_free(gba, FALSE);
 	return NULL;
     }
@@ -314,7 +313,7 @@ guint8 *JarFile::get_uncompressed_file(guint32 compressed_size, guint32 crc,
 	std::printf("%u bytes written\n", out_a);
 #endif
     }
-    fseek(fd, eflen, SEEK_CUR);
+    fseek(_file, eflen, SEEK_CUR);
     g_free(bytes);
 
     if (!check_crc(crc, crc2, flags)) {
@@ -326,10 +325,10 @@ guint8 *JarFile::get_uncompressed_file(guint32 compressed_size, guint32 crc,
     return bytes;
 }
 
-int JarFile::read(guint8 *buf, int count)
+int JarFile::read(guint8 *buf, unsigned int count)
 {
-    int nbytes;
-    if ((nbytes = fread(buf, 1, count, fd)) != count) {
+    size_t nbytes;
+    if ((nbytes = fread(buf, 1, count, _file)) != count) {
 	fprintf(stderr, "read error\n");
 	exit(1);
 	return 0;
@@ -347,22 +346,22 @@ guint8 *JarFile::get_compressed_file(guint32 compressed_size,
     
     guint8 in_buffer[RDSZ];
     guint8 out_buffer[RDSZ];
-    int nbytes;
+    size_t nbytes;
     unsigned int leftover_in = compressed_size;
     GByteArray *gba = g_byte_array_new();
     
     _zs.avail_in = 0;
     guint32 crc = crc32(0, Z_NULL, 0);
     
-    do {
-		
+    do {		
 	if (!_zs.avail_in) {
-	
-	    if ((nbytes = fread(in_buffer, 1, 
-				 (leftover_in < RDSZ ? leftover_in : RDSZ), fd)) 
-		< 0) {
+	    nbytes = fread(in_buffer, 1, 
+				 (leftover_in < RDSZ ? leftover_in : RDSZ), _file);
+
+            if(ferror(_file) != 0) {
 		fprintf(stderr, "jarfile read error");
 	    }
+
 	    _zs.avail_in = nbytes;
 	    _zs.next_in = in_buffer;
 	    crc = crc32(crc, in_buffer, _zs.avail_in);
@@ -453,7 +452,7 @@ JarFile& JarFile::operator=(JarFile const& rhs)
 	_last_filename = NULL;
     else 
 	_last_filename = g_strdup(rhs._last_filename);
-    fd = rhs.fd;
+    _file = rhs._file;
     
     return *this;
 }
@@ -545,3 +544,4 @@ int main(int argc, char *argv[])
     return 0;
 }
 #endif
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
