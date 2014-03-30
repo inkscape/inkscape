@@ -27,6 +27,7 @@
 #endif
 
 #include <glib.h>
+#include <cstdio>
 
 namespace Inkjar {
 
@@ -87,11 +88,10 @@ typedef uint32_t ub4;
  *
  * All memory allocations are done with g_malloc.
  */
-
 class JarFile {
 public:
 
-    JarFile() : fd(-1), _filename(NULL), _last_filename(NULL) {}
+    JarFile() : fd(NULL), _filename(NULL), _last_filename(NULL) {}
     virtual ~JarFile();
     JarFile(gchar const *new_filename);
     
@@ -106,7 +106,7 @@ public:
 
 private:
 
-    int fd;
+    FILE  *fd; // File descriptor
     gchar *_filename;
     z_stream _zs;
     gchar *_last_filename;

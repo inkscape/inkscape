@@ -68,7 +68,7 @@ JarFile::JarFile(gchar const*new_filename)
 {
     _filename = g_strdup(new_filename);
     _last_filename = NULL;
-    fd = -1;
+    fd = NULL;
 }
 
 //fixme: the following should probably just return a const gchar* and not 
@@ -104,7 +104,7 @@ bool JarFile::init_inflation()
 
 bool JarFile::open()
 {
-    if ((fd = ::open(_filename, O_RDONLY)) < 0) {
+    if ((fd = fopen(_filename, O_RDONLY)) < 0) {
 	fprintf(stderr, "open failed.\n");
 	return false;
     }
@@ -116,7 +116,7 @@ bool JarFile::open()
 
 bool JarFile::close()
 {
-    if (fd >= 0 && !::close(fd)) {
+    if (fd >= 0 && !fclose(fd)) {
 	inflateEnd(&_zs);
 	return true;
     }
@@ -257,7 +257,7 @@ GByteArray *JarFile::get_next_file_contents()
     
     if (method == 8 || flags & 0x0008) {
 	unsigned int file_length = 0;//uncompressed file length
-	lseek(fd, eflen, SEEK_CUR);
+	fseek(fd, eflen, SEEK_CUR);
 	guint8 *file_data = get_compressed_file(compressed_size, file_length, 
 						crc, flags);
 	if (file_data == NULL) {
@@ -275,7 +275,7 @@ GByteArray *JarFile::get_next_file_contents()
 	}
 	g_byte_array_append(gba, file_data, compressed_size);
     } else {
-	lseek(fd, compressed_size+eflen, SEEK_CUR);
+	fseek(fd, compressed_size+eflen, SEEK_CUR);
 	g_byte_array_free(gba, FALSE);
 	return NULL;
     }
@@ -314,7 +314,7 @@ guint8 *JarFile::get_uncompressed_file(guint32 compressed_size, guint32 crc,
 	std::printf("%u bytes written\n", out_a);
 #endif
     }
-    lseek(fd, eflen, SEEK_CUR);
+    fseek(fd, eflen, SEEK_CUR);
     g_free(bytes);
 
     if (!check_crc(crc, crc2, flags)) {
@@ -329,7 +329,7 @@ guint8 *JarFile::get_uncompressed_file(guint32 compressed_size, guint32 crc,
 int JarFile::read(guint8 *buf, int count)
 {
     int nbytes;
-    if ((nbytes = ::read(fd, buf, count)) != count) {
+    if ((nbytes = fread(buf, 1, count, fd)) != count) {
 	fprintf(stderr, "read error\n");
 	exit(1);
 	return 0;
@@ -358,8 +358,8 @@ guint8 *JarFile::get_compressed_file(guint32 compressed_size,
 		
 	if (!_zs.avail_in) {
 	
-	    if ((nbytes = ::read(fd, in_buffer, 
-				 (leftover_in < RDSZ ? leftover_in : RDSZ))) 
+	    if ((nbytes = fread(in_buffer, 1, 
+				 (leftover_in < RDSZ ? leftover_in : RDSZ), fd)) 
 		< 0) {
 		fprintf(stderr, "jarfile read error");
 	    }
