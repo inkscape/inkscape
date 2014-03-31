@@ -410,8 +410,8 @@ void PixelArtDialogImpl::vectorize()
     lastOptions = options();
 
     g_atomic_int_set(&abortThread, false);
-    thread = Glib::Thread::create(
-        sigc::mem_fun(*this, &PixelArtDialogImpl::workerThread) );
+    thread = Glib::Thread::create(sigc::mem_fun(*this, &PixelArtDialogImpl::workerThread),
+                                  /*joinable =*/true);
 }
 
 void PixelArtDialogImpl::processLibdepixelize(const Input &input)
