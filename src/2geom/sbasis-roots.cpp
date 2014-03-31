@@ -114,7 +114,7 @@ OptInterval bounds_fast(const SBasis &sb, int order) {
             res[1]=lerp(t, a+v*t, b);
         }
     }
-    if (order>0) res*=pow(.25,order);
+    if (order>0) res*=std::pow(.25,order);
     return res;
 }
 
@@ -151,7 +151,7 @@ OptInterval bounds_local(const SBasis &sb, const OptInterval &i, int order) {
         }
     }
     Interval res = Interval(lo,hi);
-    if (order>0) res*=pow(.25,order);
+    if (order>0) res*=std::pow(.25,order);
     return res;
 }
 
