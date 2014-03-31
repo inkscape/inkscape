@@ -229,6 +229,13 @@ public:
     virtual int degreesOfFreedom() const { return 7; }
     virtual Curve *derivative() const;
     virtual Curve *transformed(Affine const &m) const;
+    virtual Curve &operator*=(Translate const &m) {
+        _initial_point += m.vector();
+        _final_point += m.vector();
+        _center += m.vector();
+        return *this;
+    }
+
 
     /**
     *  The size of the returned vector equals n+1.

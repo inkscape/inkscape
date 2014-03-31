@@ -39,6 +39,7 @@
 #include <2geom/curve.h>
 #include <2geom/sbasis-curve.h> // for non-native winding method
 #include <2geom/bezier.h>
+#include <2geom/transforms.h>
 
 namespace Geom 
 {
@@ -118,6 +119,7 @@ public:
     virtual Curve *reverse() const {
         return new BezierCurve(Geom::reverse(inner));
     }
+
     virtual Curve *transformed(Affine const &m) const {
         BezierCurve *ret = new BezierCurve();
         std::vector<Point> ps = points();
@@ -127,6 +129,11 @@ public:
         ret->setPoints(ps);
         return ret;
     }
+    virtual Curve &operator*=(Translate const &m) {
+        inner += m.vector();
+        return *this;
+    };
+
     virtual Curve *derivative() const {
         return new BezierCurve(Geom::derivative(inner[X]), Geom::derivative(inner[Y]));
     }
@@ -247,6 +254,10 @@ public:
             ret->setPoints(ps);
             return ret;
         }
+    }
+    virtual Curve &operator*=(Translate const &m) {
+        inner += m.vector();
+        return *this;
     }
     virtual Curve *derivative() const;
     

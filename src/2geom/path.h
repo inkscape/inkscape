@@ -40,6 +40,7 @@
 #include <boost/shared_ptr.hpp>
 #include <2geom/curve.h>
 #include <2geom/bezier-curve.h>
+#include <2geom/transforms.h>
 
 namespace Geom {
 
@@ -205,11 +206,14 @@ public:
   
   // Path &operator=(Path const &other) - use default assignment operator
 
+  /// \todo Add noexcept specifiers for C++11
   void swap(Path &other) {
-    std::swap(other.curves_, curves_);
-    std::swap(other.final_, final_);
-    std::swap(other.closed_, closed_);
+    using std::swap;
+    swap(other.curves_, curves_);
+    swap(other.final_, final_);
+    swap(other.closed_, closed_);
   }
+  friend inline void swap(Path &a, Path &b) { a.swap(b); }
 
   Curve const &operator[](unsigned i) const { return *get_curves()[i]; }
   Curve const &at_index(unsigned i) const { return *get_curves()[i]; }
@@ -289,8 +293,14 @@ public:
     ret *= m;
     return ret;
   }
+  Path operator*(Translate const &m) const { // specialization over Affine, for faster computation
+    Path ret(*this);
+    ret *= m;
+    return ret;
+  }
 
   Path &operator*=(Affine const &m);
+  Path &operator*=(Translate const &m); // specialization over Affine, for faster computation
   
   Point pointAt(double t) const 
   {
@@ -686,14 +696,6 @@ Coord nearest_point(Point const& p, Path const& c)
 
 }  // end namespace Geom
 
-namespace std {
-
-template <>
-inline void swap<Geom::Path>(Geom::Path &a, Geom::Path &b) {
-  a.swap(b);
-}
-
-}  // end namespace std
 
 #endif // LIB2GEOM_SEEN_PATH_H
 

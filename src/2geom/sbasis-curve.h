@@ -39,6 +39,7 @@
 #include <2geom/curve.h>
 #include <2geom/nearest-point.h>
 #include <2geom/sbasis-geometric.h>
+#include <2geom/transforms.h>
 
 namespace Geom 
 {
@@ -117,7 +118,13 @@ public:
     virtual Curve *portion(Coord f, Coord t) const {
         return new SBasisCurve(Geom::portion(inner, f, t));
     }
+
     virtual Curve *transformed(Affine const &m) const { return new SBasisCurve(inner * m); }
+    virtual Curve &operator*=(Translate const &m) {
+        inner += m.vector();
+        return *this;
+    };
+
     virtual Curve *derivative() const {
         return new SBasisCurve(Geom::derivative(inner));
     }
