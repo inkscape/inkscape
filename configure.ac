@@ -699,6 +699,19 @@ if test "x$enable_gtk3" = "xyes"; then
 		AC_MSG_ERROR([Some dependencies were not fulfilled for the experimental GTK+ 3 build. One possible cause for this is a new dependency on the gdl-3.0 development package.])
 	fi
 
+	# Check whether we can use new features in Gtkmm 3.10
+	# TODO: Drop this test and bump the version number in the GTK test above
+	#       as soon as all supported distributions provide Gtkmm >= 3.10
+	PKG_CHECK_MODULES(GTKMM_3_10,
+			  gtkmm-3.0 >= 3.10,
+			  with_gtkmm_3_10=yes,
+			  with_gtkmm_3_10=no)
+
+	if test "x$with_gtkmm_3_10" = "xyes"; then
+		AC_MSG_RESULT([Using Gtkmm 3.10 build])
+		AC_DEFINE(WITH_GTKMM_3_10,1,[Build with Gtkmm 3.10.x or higher])
+	fi
+
 	# Check whether we are using Gdl >= 3.6.  This version introduced an API/ABI change.
 	# TODO: We should drop support for older versions of Gdl once all supported distros
 	#       provide Gdl 3.6 or higher

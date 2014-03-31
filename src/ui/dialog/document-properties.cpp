@@ -613,7 +613,7 @@ void DocumentProperties::build_cms()
     label_avail->set_markup (_("<b>Available Color Profiles:</b>"));
 
     _link_btn.set_tooltip_text(_("Link Profile"));
-#if GTK_CHECK_VERSION(3,10,0)
+#if WITH_GTKMM_3_10
     _link_btn.set_image_from_icon_name(INKSCAPE_ICON("list-add"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
 #else
     Gtk::Image *image_link = Gtk::manage(new Gtk::Image());
@@ -622,7 +622,7 @@ void DocumentProperties::build_cms()
 #endif
 
     _unlink_btn.set_tooltip_text(_("Unlink Profile"));
-#if GTK_CHECK_VERSION(3,10,0)
+#if WITH_GTKMM_3_10
     _unlink_btn.set_image_from_icon_name(INKSCAPE_ICON("list-remove"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
 #else
     Gtk::Image *image_unlink = Gtk::manage(new Gtk::Image());
@@ -750,7 +750,7 @@ void DocumentProperties::build_scripting()
     label_external->set_markup (_("<b>External script files:</b>"));
 
     _external_add_btn.set_tooltip_text(_("Add the current file name or browse for a file"));
-#if GTK_CHECK_VERSION(3,10,0)
+#if WITH_GTKMM_3_10
     _external_add_btn.set_image_from_icon_name(INKSCAPE_ICON("list-add"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
 #else
     Gtk::Image *image_ext_add = Gtk::manage(new Gtk::Image());
@@ -759,7 +759,7 @@ void DocumentProperties::build_scripting()
 #endif
 
     _external_remove_btn.set_tooltip_text(_("Remove"));
-#if GTK_CHECK_VERSION(3,10,0)
+#if WITH_GTKMM_3_10
     _external_remove_btn.set_image_from_icon_name(INKSCAPE_ICON("list-remove"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
 #else
     Gtk::Image *image_ext_rm = Gtk::manage(new Gtk::Image());
@@ -839,7 +839,7 @@ void DocumentProperties::build_scripting()
     label_embedded->set_markup (_("<b>Embedded script files:</b>"));
 
     _embed_new_btn.set_tooltip_text(_("New"));
-#if GTK_CHECK_VERSION(3,10,0)
+#if WITH_GTKMM_3_10
     _embed_new_btn.set_image_from_icon_name(INKSCAPE_ICON("list-add"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
 #else
     Gtk::Image *image_embed_new = Gtk::manage(new Gtk::Image());
@@ -848,7 +848,7 @@ void DocumentProperties::build_scripting()
 #endif
 
     _embed_remove_btn.set_tooltip_text(_("Remove"));
-#if GTK_CHECK_VERSION(3,10,0)
+#if WITH_GTKMM_3_10
     _embed_remove_btn.set_image_from_icon_name(INKSCAPE_ICON("list-remove"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
 #else
     Gtk::Image *image_embed_rm = Gtk::manage(new Gtk::Image());

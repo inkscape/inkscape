@@ -10,9 +10,8 @@
 #ifndef INKSCAPE_UI_DIALOG_POLAR_ARRANGE_TAB_H
 #define INKSCAPE_UI_DIALOG_POLAR_ARRANGE_TAB_H
 
-#include "ui/dialog/arrange-tab.h"
-
 #include "ui/widget/anchor-selector.h"
+#include "ui/dialog/arrange-tab.h"
 #include "ui/widget/scalar-unit.h"
 
 namespace Inkscape {

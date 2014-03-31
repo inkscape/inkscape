@@ -107,7 +107,7 @@ LivePathEffectEditor::LivePathEffectEditor()
     effectcontrol_frame.add(effectcontrol_vbox);
 
     button_add.set_tooltip_text(_("Add path effect"));
-#if GTK_CHECK_VERSION(3,10,0)
+#if WITH_GTKMM_3_10
     button_add.set_image_from_icon_name(INKSCAPE_ICON("list-add"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
 #else
     Gtk::Image *image_add = Gtk::manage(new Gtk::Image());
@@ -117,7 +117,7 @@ LivePathEffectEditor::LivePathEffectEditor()
     button_add.set_relief(Gtk::RELIEF_NONE);
 
     button_remove.set_tooltip_text(_("Delete current path effect"));
-#if GTK_CHECK_VERSION(3,10,0)
+#if WITH_GTKMM_3_10
     button_remove.set_image_from_icon_name(INKSCAPE_ICON("list-remove"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
 #else
     Gtk::Image *image_remove = Gtk::manage(new Gtk::Image());
@@ -127,7 +127,7 @@ LivePathEffectEditor::LivePathEffectEditor()
     button_remove.set_relief(Gtk::RELIEF_NONE);
 
     button_up.set_tooltip_text(_("Raise the current path effect"));
-#if GTK_CHECK_VERSION(3,10,0)
+#if WITH_GTKMM_3_10
     button_up.set_image_from_icon_name(INKSCAPE_ICON("go-up"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
 #else
     Gtk::Image *image_up = Gtk::manage(new Gtk::Image());
@@ -137,7 +137,7 @@ LivePathEffectEditor::LivePathEffectEditor()
     button_up.set_relief(Gtk::RELIEF_NONE);
 
     button_down.set_tooltip_text(_("Lower the current path effect"));
-#if GTK_CHECK_VERSION(3,10,0)
+#if WITH_GTKMM_3_10
     button_down.set_image_from_icon_name(INKSCAPE_ICON("go-down"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
 #else
     Gtk::Image *image_down = Gtk::manage(new Gtk::Image());
