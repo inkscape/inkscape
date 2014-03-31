@@ -1144,7 +1144,7 @@ static const char _svg_path_trans_actions[] = {
 static const int svg_path_start = 1;
 static const int svg_path_first_final = 270;
 
-static const int svg_path_en_main = 1;
+//static const int svg_path_en_main = 1;
 
 
 #line 144 "/home/tweenk/src/lib2geom/src/2geom/svg-path-parser.rl"
