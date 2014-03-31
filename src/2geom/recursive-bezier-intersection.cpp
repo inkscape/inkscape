@@ -13,6 +13,8 @@
 unsigned intersect_steps = 0;
 
 using std::vector;
+using std::swap;
+
 namespace Geom {
 
 class OldBezier {
@@ -31,7 +33,7 @@ public:
         minax = p[0][X];	 // These are the most likely to be extremal
         maxax = p.back()[X];
         if( minax > maxax )
-            std::swap(minax, maxax);
+            swap(minax, maxax);
         for(unsigned i = 1; i < p.size()-1; i++) {
             if( p[i][X] < minax )
                 minax = p[i][X];
@@ -42,7 +44,7 @@ public:
         minay = p[0][Y];	 // These are the most likely to be extremal
         maxay = p.back()[Y];
         if( minay > maxay )
-            std::swap(minay, maxay);
+            swap(minay, maxay);
         for(unsigned i = 1; i < p.size()-1; i++) {
             if( p[i][Y] < minay )
                 minay = p[i][Y];
@@ -70,9 +72,6 @@ find_intersections_bezier_recursive( std::vector<std::pair<double, double> > &xs
     return find_intersections_bezier_recursive(xs, a,b);
 }
 
-
-/* The value of 1.0 / (1L<<14) is enough for most applications */
-const double INV_EPS = (1L<<14);
 
 /*
  * split the curve at the midpoint, returning an array with the two parts
@@ -318,9 +317,14 @@ double Lmax(Point p) {
     return std::max(fabs(p[X]), fabs(p[Y]));
 }
 
+
 unsigned wangs_theorem(OldBezier /*a*/) {
     return 6; // seems a good approximation!
-    /*double la1 = Lmax( ( a.p[2] - a.p[1] ) - (a.p[1] - a.p[0]) );
+
+    /*
+    const double INV_EPS = (1L<<14); // The value of 1.0 / (1L<<14) is enough for most applications
+
+    double la1 = Lmax( ( a.p[2] - a.p[1] ) - (a.p[1] - a.p[0]) );
     double la2 = Lmax( ( a.p[3] - a.p[2] ) - (a.p[2] - a.p[1]) );
     double l0 = std::max(la1, la2);
     unsigned ra;
