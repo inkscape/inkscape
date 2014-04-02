@@ -9,6 +9,7 @@
 			<param name="type" type="enum" _gui-text="Measurement Type: ">
 				<_item value="length">Length</_item>
 				<_item msgctxt="measure extension" value="area">Area</_item>
+				<_item msgctxt="measure extension" value="cofm">Center of Mass</_item>
 			</param>
 			<param name="format" type="enum" _gui-text="Text Orientation: ">
 				<_item msgctxt="measure extension" value="textonpath">Text On Path</_item>
@@ -32,9 +33,9 @@
 			</param>
 		</page>
 		<page name="desc" _gui-text="Help">
-			<_param name="measurehelp" type="description" xml:space="preserve">This effect measures the length, or area, of the selected paths and adds it as a text object with the selected units.
-            
-  * Display format can be either Text-On-Path, or stand-alone text at a specified angle.
+			<_param name="measurehelp" type="description" xml:space="preserve">This effect measures the length, area, or center-of-mass of the selected paths. Length and area are added as a text object with the selected units. Center-of-mass is shown as a cross symbol.
+
+  * Text display format can be either Text-On-Path, or stand-alone text at a specified angle.
   * The number of significant digits can be controlled by the Precision field.
   * The Offset field controls the distance from the text to the path.
   * The Scale factor can be used to make measurements in scaled drawings. For example, if 1 cm in the drawing equals 2.5 m in the real world, Scale must be set to 250.
