@@ -322,17 +322,15 @@ void ColorProfile::set(unsigned key, gchar const *value) {
                     }
                     //# 1.  Get complete URI of document
                     gchar const *docbase = doc->getURI();
-                    if (!docbase)
-                    {
-                        // Normal for files that have not yet been saved.
-                        docbase = "";
-                    }
 
                     gchar* escaped = g_uri_escape_string(this->href, "!*'();:@=+$,/?#[]", TRUE);
 
                     //g_message("docbase:%s\n", docbase);
                     //org::w3c::dom::URI docUri(docbase);
-                    Inkscape::URI docUri(docbase);
+                    Inkscape::URI docUri("");
+                    if (docbase) { // The file has already been saved
+                        docUri = Inkscape::URI::from_native_filename(docbase);
+                    }
 
                     //# 2. Get href of icc file.  we don't care if it's rel or abs
                     //org::w3c::dom::URI hrefUri(escaped);
