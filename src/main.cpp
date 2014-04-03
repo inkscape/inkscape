@@ -1145,7 +1145,8 @@ static int sp_process_file_list(GSList *fl)
 
             if (!sp_export_svg && (sp_vacuum_defs || has_performed_actions)) {
                 // save under the name given in the command line
-                sp_repr_save_file(doc->rdoc, filename, SP_SVG_NS_URI);
+                Inkscape::Extension::save(Inkscape::Extension::db.get("org.inkscape.output.svg.inkscape"), doc, filename, false,
+                            false, false, Inkscape::Extension::FILE_SAVE_METHOD_INKSCAPE_SVG);
             }
             if (sp_global_printer) {
                 sp_print_document_to_file(doc, sp_global_printer);
@@ -1177,13 +1178,8 @@ static int sp_process_file_list(GSList *fl)
                     g_slist_free (to_select);
                 }
 
-                Inkscape::XML::Document *rdoc;
-                Inkscape::XML::Node *repr;
-                rdoc = sp_repr_document_new("svg:svg");
-                repr = rdoc->root();
-                repr = doc->getRoot()->updateRepr(rdoc, repr, SP_OBJECT_WRITE_BUILD);
-                sp_repr_save_rebased_file(repr->document(), sp_export_svg, SP_SVG_NS_URI,
-                                          doc->getBase(), sp_export_svg);
+                Inkscape::Extension::save(Inkscape::Extension::db.get("org.inkscape.output.svg.plain"), doc, sp_export_svg, false,
+                            false, false, Inkscape::Extension::FILE_SAVE_METHOD_SAVE_COPY);
             }
             if (sp_export_ps) {
                 retVal |= do_export_ps_pdf(doc, sp_export_ps, "image/x-postscript");
