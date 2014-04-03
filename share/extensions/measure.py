@@ -203,6 +203,7 @@ class Length(inkex.Effect):
                 else:
                     xc, yc = cspcofm(p)
                     self.group = inkex.etree.SubElement(node.getparent(),inkex.addNS('path','svg'))
+                    self.group.set('id', 'MassCenter_' + node.get('id'))
                     self.addCross(self.group, xc, yc, scale)
                     continue
                 # Format the length as string
@@ -220,8 +221,8 @@ class Length(inkex.Effect):
 
     def addCross(self, node, x, y, scale):
         l = 3*scale         # 3 pixels in document units
-        node.set('d', 'm %s,%s %s,0 m %s,%s 0,%s' % (str(x-l), str(y), str(2*l), str(-l), str(-l), str(2*l)))
-        node.set('style', 'stroke:#000000;stroke-width:%s' % str(0.5*scale))
+        node.set('d', 'm %s,%s %s,0 %s,0 m %s,%s 0,%s 0,%s' % (str(x-l), str(y), str(l), str(l), str(-l), str(-l), str(l), str(l)))
+        node.set('style', 'stroke:#000000;fill:none;stroke-width:%s' % str(0.5*scale))
 
     def addTextOnPath(self, node, x, y, text, id, anchor, startOffset, dy = 0):
                 new = inkex.etree.SubElement(node,inkex.addNS('textPath','svg'))
