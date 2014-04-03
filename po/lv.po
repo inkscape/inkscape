@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2014-03-04 13:58+0100\n"
-"PO-Revision-Date: 2014-04-03 00:11+0200\n"
+"PO-Revision-Date: 2014-04-03 11:55+0200\n"
 "Last-Translator: Jānis Eisaks <jancs@dv.lv>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "Language: lv\n"
@@ -5197,7 +5197,7 @@ msgstr "Sā_kums X:"
 #: ../src/ui/dialog/inkscape-preferences.cpp:735
 #: ../src/ui/dialog/inkscape-preferences.cpp:760
 msgid "X coordinate of grid origin"
-msgstr "Tīkla sākuma X koordināte"
+msgstr "Režģa sākuma X koordināte"
 
 #: ../src/display/canvas-axonomgrid.cpp:321 ../src/display/canvas-grid.cpp:697
 msgid "O_rigin Y:"
@@ -5207,7 +5207,7 @@ msgstr "Sāku_ms Y:"
 #: ../src/ui/dialog/inkscape-preferences.cpp:736
 #: ../src/ui/dialog/inkscape-preferences.cpp:761
 msgid "Y coordinate of grid origin"
-msgstr "Tīkla sākuma Y koordināte"
+msgstr "Režģa sākuma Y koordināte"
 
 #: ../src/display/canvas-axonomgrid.cpp:323 ../src/display/canvas-grid.cpp:701
 msgid "Spacing _Y:"
@@ -5268,7 +5268,7 @@ msgstr "Režģa pamatlīniju (izcelto) krāsa"
 
 #: ../src/display/canvas-axonomgrid.cpp:341 ../src/display/canvas-grid.cpp:715
 msgid "_Major grid line every:"
-msgstr "Tīkla pa_matlīnija ik pēc:"
+msgstr "Režģa pa_matlīnija ik pēc:"
 
 #: ../src/display/canvas-axonomgrid.cpp:341 ../src/display/canvas-grid.cpp:715
 msgid "lines"
@@ -5276,15 +5276,15 @@ msgstr "rindas"
 
 #: ../src/display/canvas-grid.cpp:63
 msgid "Rectangular grid"
-msgstr "Taisnstūrveida tīkls"
+msgstr "Taisnstūrveida režģis"
 
 #: ../src/display/canvas-grid.cpp:64
 msgid "Axonometric grid"
-msgstr "Aksonometriskais tīkls"
+msgstr "Aksonometriskais režģis"
 
 #: ../src/display/canvas-grid.cpp:275
 msgid "Create new grid"
-msgstr "Izveidot Jaunu tīklu"
+msgstr "Izveidot jaunu režģi"
 
 #: ../src/display/canvas-grid.cpp:341
 msgid "_Enabled"
@@ -5352,7 +5352,7 @@ msgstr "NENOTEIKTS"
 
 #: ../src/display/snap-indicator.cpp:78
 msgid "grid line"
-msgstr "tīkla līnija"
+msgstr "režģa līnija"
 
 #: ../src/display/snap-indicator.cpp:81
 msgid "grid intersection"
@@ -5360,7 +5360,7 @@ msgstr "režģa krustpunkts"
 
 #: ../src/display/snap-indicator.cpp:84
 msgid "grid line (perpendicular)"
-msgstr "tīkla līnija (perpendikulārā)"
+msgstr "režģa līnija (perpendikulārā)"
 
 #: ../src/display/snap-indicator.cpp:87
 msgid "guide"
@@ -14020,7 +14020,7 @@ msgid ""
 "<b>drag handles</b> to adjust meshes."
 msgstr ""
 "<b>Velciet</b> vai <b>dubultklikšķiniet</b>, lai atlasītajiem objektiem "
-"izveidotu režģtīklu,<b>velciet turus</b> režģtīkla pieskaņošanai."
+"izveidotu tīklu,<b>velciet turus</b> tīkla pieskaņošanai."
 
 #: ../src/tools-switch.cpp:106
 msgid ""
@@ -23061,17 +23061,17 @@ msgstr "Izvēlieties konstruēšanas rīku no rīkjoslas."
 #, c-format
 msgid " out of %d mesh handle"
 msgid_plural " out of %d mesh handles"
-msgstr[0] " no %d režgtīkla tura"
-msgstr[1] " no %d režgtīkla turiem"
-msgstr[2] " no %d režgtīkla turiem"
+msgstr[0] " no %d tīkla tura"
+msgstr[1] " no %d tīkla turiem"
+msgstr[2] " no %d tīkla turiem"
 
 #: ../src/ui/tools/mesh-tool.cpp:150
 #, c-format
 msgid "<b>%d</b> mesh handle selected out of %d"
 msgid_plural "<b>%d</b> mesh handles selected out of %d"
-msgstr[0] "atlasīts <b>%d</b> režgtīkla turis no %d"
-msgstr[1] "atlasīti <b>%d</b> režgtīkla turi no %d"
-msgstr[2] "atlasīti <b>%d</b> režgtīkla turi no %d"
+msgstr[0] "atlasīts <b>%d</b> tīkla turis no %d"
+msgstr[1] "atlasīti <b>%d</b> tīkla turi no %d"
+msgstr[2] "atlasīti <b>%d</b> tīkla turi no %d"
 
 #. TRANSLATORS: The plural refers to number of selected objects
 #: ../src/ui/tools/mesh-tool.cpp:157
@@ -23079,19 +23079,19 @@ msgstr[2] "atlasīti <b>%d</b> režgtīkla turi no %d"
 msgid "<b>No</b> mesh handles selected out of %d on %d selected object"
 msgid_plural "<b>No</b> mesh handles selected out of %d on %d selected objects"
 msgstr[0] ""
-"Nav atlasīts <b>neviens</b> režgtīkla turis no  %d  %d atlasītajā objektā"
+"Nav atlasīts <b>neviens</b> tīkla turis no  %d  %d atlasītajā objektā"
 msgstr[1] ""
-"Nav atlasīts <b>neviens</b> režgtīkla turis no  %d  %d atlasītajos objektos"
+"Nav atlasīts <b>neviens</b> tīkla turis no  %d  %d atlasītajos objektos"
 msgstr[2] ""
-"Nav atlasīts <b>neviens</b> režgtīkla turis no  %d  %d atlasītajos objektos"
+"Nav atlasīts <b>neviens</b> tīkla turis no  %d  %d atlasītajos objektos"
 
 #: ../src/ui/tools/mesh-tool.cpp:321
 msgid "Split mesh row/column"
-msgstr "Sadalīt režģtīkla rindu/sleju"
+msgstr "Sadalīt tīkla rindu/sleju"
 
 #: ../src/ui/tools/mesh-tool.cpp:407
 msgid "Toggled mesh path type."
-msgstr "Pārslēgts režģtīkla ceļa tips."
+msgstr "Pārslēgts tīkla ceļa tips."
 
 #: ../src/ui/tools/mesh-tool.cpp:411
 msgid "Approximated arc for mesh side."
@@ -23099,27 +23099,27 @@ msgstr "Tīkla malai tuvinātais loks."
 
 #: ../src/ui/tools/mesh-tool.cpp:415
 msgid "Toggled mesh tensors."
-msgstr "Pārslēgtie režģtīkla tenzori."
+msgstr "Pārslēgtie tīkla tenzori."
 
 #: ../src/ui/tools/mesh-tool.cpp:419
 msgid "Smoothed mesh corner color."
-msgstr "Nogludinātā režģtīkla stūra krāsa."
+msgstr "Nogludinātā tīkla stūra krāsa."
 
 #: ../src/ui/tools/mesh-tool.cpp:423
 msgid "Picked mesh corner color."
-msgstr "Izvēlētā režģtīkla stūra krāsa."
+msgstr "Izvēlētā tīkla stūra krāsa."
 
 #: ../src/ui/tools/mesh-tool.cpp:498
 msgid "Create default mesh"
-msgstr "Izveidot noklusēto režģtīklu"
+msgstr "Izveidot noklusēto tīklu"
 
 #: ../src/ui/tools/mesh-tool.cpp:718
 msgid "FIXME<b>Ctrl</b>: snap mesh angle"
-msgstr "LABOT<b>Ctrl</b>: piesaistes režģtīkla leņķis"
+msgstr "LABOT<b>Ctrl</b>: piesaistes tīkla leņķis"
 
 #: ../src/ui/tools/mesh-tool.cpp:719
 msgid "FIXME<b>Shift</b>: draw mesh around the starting point"
-msgstr "LABOT<b>Shift</b>: zīmēt režģtīklu apkārt sākumpunktam"
+msgstr "LABOT<b>Shift</b>: zīmēt tīklu apkārt sākumpunktam"
 
 #: ../src/ui/tools/node-tool.cpp:554
 msgctxt "Node tool tip"
@@ -26173,7 +26173,7 @@ msgstr "Tīkla iestatījumi"
 
 #: ../src/verbs.cpp:2726
 msgid "Open Preferences for the Mesh tool"
-msgstr "Atvērt iestatījumus režģtīkla rīkam"
+msgstr "Atvērt iestatījumus tīkla rīkam"
 
 #: ../src/verbs.cpp:2727
 msgid "Zoom Preferences"
@@ -26266,11 +26266,11 @@ msgstr "Parādīt vai paslēpt audekla ritjoslas"
 
 #: ../src/verbs.cpp:2746
 msgid "_Grid"
-msgstr "_Tīkls"
+msgstr "_Režģis"
 
 #: ../src/verbs.cpp:2746
 msgid "Show or hide the grid"
-msgstr "Rādīt vai slēpt tīklu."
+msgstr "Rādīt vai slēpt režģi."
 
 #: ../src/verbs.cpp:2747
 msgid "G_uides"
@@ -27972,7 +27972,7 @@ msgstr "normāls"
 
 #: ../src/widgets/mesh-toolbar.cpp:204
 msgid "Create mesh gradient"
-msgstr "Izveidot režģtīkla krāsu pāreju"
+msgstr "Izveidot tīkla krāsu pāreju"
 
 #: ../src/widgets/mesh-toolbar.cpp:208
 msgid "conical"
@@ -27993,7 +27993,7 @@ msgstr "Rindas:"
 
 #: ../src/widgets/mesh-toolbar.cpp:263
 msgid "Number of rows in new mesh"
-msgstr "Rindu skaits jaunajā režģtīklā"
+msgstr "Rindu skaits jaunajā tīklā"
 
 #: ../src/widgets/mesh-toolbar.cpp:279
 #: ../share/extensions/guides_creator.inx.h:4
@@ -28006,7 +28006,7 @@ msgstr "Slejas:"
 
 #: ../src/widgets/mesh-toolbar.cpp:279
 msgid "Number of columns in new mesh"
-msgstr "Sleju skaits jaunajā režģtīklā"
+msgstr "Sleju skaits jaunajā tīklā"
 
 #: ../src/widgets/mesh-toolbar.cpp:293
 msgid "Edit Fill"
@@ -28014,7 +28014,7 @@ msgstr "Labot aizpildījumu"
 
 #: ../src/widgets/mesh-toolbar.cpp:294
 msgid "Edit fill mesh"
-msgstr "Labot aizpildījuma režģtīklu"
+msgstr "Labot aizpildījuma tīklu"
 
 #: ../src/widgets/mesh-toolbar.cpp:305
 msgid "Edit Stroke"
@@ -28022,7 +28022,7 @@ msgstr "Labot apmali"
 
 #: ../src/widgets/mesh-toolbar.cpp:306
 msgid "Edit stroke mesh"
-msgstr "Labot apmales režgtīklu"
+msgstr "Labot apmales tīklu"
 
 #: ../src/widgets/mesh-toolbar.cpp:317 ../src/widgets/node-toolbar.cpp:521
 msgid "Show Handles"
@@ -33587,7 +33587,7 @@ msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:35
 msgid "Export an HP Graphics Language file"
-msgstr "Eksportēt HP Graphics Language failu"
+msgstr "Eksportēt HP Graphics Language datni"
 
 #: ../share/extensions/ink2canvas.inx.h:1
 msgid "Convert to html5 canvas"
@@ -33915,7 +33915,7 @@ msgid ""
 "Creates a zip file containing pdfs or pngs of all slides of a JessyInk "
 "presentation."
 msgstr ""
-"Izveido zip failu, kas satur visus JessyInk prezentācijas slaidu pdf vai png."
+"Izveido zip datni, kas satur visus JessyInk prezentācijas slaidu pdf vai png."
 
 #: ../share/extensions/jessyInk_install.inx.h:1
 msgid "Install/update"
@@ -33928,7 +33928,7 @@ msgid ""
 "jessyink for more details."
 msgstr ""
 "Šis paplašinājums ļauj uzstādīt un atsvaidzināt  JessyInk skriptu, kas ļauj "
-"pārvērst SVG failu par prezentāciju. Plašākai informācijai skat.: code."
+"pārvērst SVG datni par prezentāciju. Plašākai informācijai skat.: code."
 "google.com/p/jessyink."
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:1
@@ -34163,7 +34163,7 @@ msgid ""
 "com/p/jessyink for more details."
 msgstr ""
 "Šis paplašinājums ļauj iegūt informāciju par  JessyInk skriptu, efektiem un "
-"pārejām šajā SVG failā. Plašākai informācijai skat.: code.google.com/p/"
+"pārejām šajā SVG datnē. Plašākai informācijai skat.: code.google.com/p/"
 "jessyink."
 
 #: ../share/extensions/jessyInk_transitions.inx.h:1
@@ -35007,11 +35007,11 @@ msgstr "AutoCAD Plot ievade"
 #: ../share/extensions/plt_input.inx.h:2
 #: ../share/extensions/plt_output.inx.h:2
 msgid "HP Graphics Language Plot file [AutoCAD] (*.plt)"
-msgstr "HP Graphics Language plotera fails [AutoCAD] (*.plt)"
+msgstr "HP Graphics Language plotera datne [AutoCAD] (*.plt)"
 
 #: ../share/extensions/plt_input.inx.h:3
 msgid "Open HPGL plotter files"
-msgstr "Atvērt HPGL plotera failus"
+msgstr "Atvērt HPGL plotera datnes"
 
 #: ../share/extensions/plt_output.inx.h:1
 msgid "AutoCAD Plot Output"
@@ -35019,7 +35019,7 @@ msgstr "AutoCAD Plot izvade"
 
 #: ../share/extensions/plt_output.inx.h:3
 msgid "Save a file for plotters"
-msgstr "Saglabāt failu ploteriem"
+msgstr "Saglabāt datni ploteriem"
 
 #: ../share/extensions/polyhedron_3d.inx.h:1
 msgid "3D Polyhedron"
@@ -35027,7 +35027,7 @@ msgstr "3D daudzskaldnis"
 
 #: ../share/extensions/polyhedron_3d.inx.h:2
 msgid "Model file"
-msgstr "Modeļa fails"
+msgstr "Modeļa datne"
 
 #: ../share/extensions/polyhedron_3d.inx.h:3
 msgid "Object:"
@@ -35035,7 +35035,7 @@ msgstr "Objekts:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:4
 msgid "Filename:"
-msgstr "Faila nosaukums:"
+msgstr "Datnes nosaukums:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:5
 msgid "Object Type:"
@@ -35111,7 +35111,7 @@ msgstr "Lielais zvaigznes dodekaedrs"
 
 #: ../share/extensions/polyhedron_3d.inx.h:23
 msgid "Load from file"
-msgstr "Ielādēt no faila"
+msgstr "Ielādēt no datnes"
 
 #: ../share/extensions/polyhedron_3d.inx.h:24
 msgid "Face-Specified"
@@ -35699,7 +35699,7 @@ msgid ""
 "Space to use one space per nesting level, or Tab to use one tab per nesting "
 "level."
 msgstr ""
-"Šis paplašinājums optimizē SVG failu atbilstoši sekojošām iespējām:\n"
+"Šis paplašinājums optimizē SVG datni atbilstoši sekojošām iespējām:\n"
 "    * Saīsināt krāsu nosaukumus: pārvērš visas krāsas #RRGGBB vai #RGB "
 "formātā.\n"
 "    * Pārvērst CSS atribūtus par XML atribūtiem: pārvērst stilus no stilu "
@@ -35717,7 +35717,7 @@ msgstr ""
 "informāciju, kas var saturēt licences metadatus, alternatīvās versijas "
 "pārlūkiem  bez SVG atbalsta, utt.\n"
 "    * Aizvākt komentārus: aizvākt komentāru tagus.\n"
-"    * Apstrādāt renderēšanas kļūdas: izveido nedaudz lielāku SVG failu, taču "
+"    * Apstrādāt renderēšanas kļūdas: izveido nedaudz lielāku SVG datni, taču "
 "apiet kļūdu librsvg renderētājā, ko izmanto Eye of GNOME un dažas citas "
 "lietotnes.\n"
 "    * Izmantot skatrāmi: mērogot attēlu 100%/100% un izmantot skatrāmi.\n"
@@ -35801,24 +35801,24 @@ msgstr "Apakšgarums:"
 
 #: ../share/extensions/sk1_input.inx.h:1
 msgid "sK1 vector graphics files input"
-msgstr "sK1 vektoru grafikas failu ievade"
+msgstr "sK1 vektoru grafikas datņu ievade"
 
 #: ../share/extensions/sk1_input.inx.h:2
 #: ../share/extensions/sk1_output.inx.h:2
 msgid "sK1 vector graphics files (*.sk1)"
-msgstr "sK1 vektoru grafikas faili (.sk1)"
+msgstr "sK1 vektoru grafikas datnes (.sk1)"
 
 #: ../share/extensions/sk1_input.inx.h:3
 msgid "Open files saved in sK1 vector graphics editor"
-msgstr "Atver ar sK1 vektoru grafikas redaktoru saglabātus failus"
+msgstr "Atver ar sK1 vektoru grafikas redaktoru saglabātas datnes"
 
 #: ../share/extensions/sk1_output.inx.h:1
 msgid "sK1 vector graphics files output"
-msgstr "sK1 vektoru grafikas failu izvade"
+msgstr "sK1 vektoru grafikas datņu izvade"
 
 #: ../share/extensions/sk1_output.inx.h:3
 msgid "File format for use in sK1 vector graphics editor"
-msgstr "sK1 vektoru grafikas redaktorā izmantojamais failu formāts"
+msgstr "sK1 vektoru grafikas redaktorā izmantojamais datņu formāts"
 
 #: ../share/extensions/sk_input.inx.h:1
 msgid "Sketch Input"
@@ -35921,7 +35921,7 @@ msgstr "Flash XML grafika (*.fxg)"
 
 #: ../share/extensions/svg2fxg.inx.h:3
 msgid "Adobe's XML Graphics file format"
-msgstr "Adobe's XML Graphics faila formāts"
+msgstr "Adobe's XML Graphics datņu formāts"
 
 #: ../share/extensions/svg2xaml.inx.h:1
 msgid "XAML Output"
@@ -35956,8 +35956,8 @@ msgid ""
 "Inkscape's native file format compressed with Zip and including all media "
 "files"
 msgstr ""
-"Inkscape oriģinālais faila formāts, saspiests ar zip saturošs visus mēdiju "
-"failus."
+"Inkscape oriģinālais datņu formāts, saspiests ar zip un saturošs visas "
+"mēdiju datnes."
 
 #: ../share/extensions/svgcalendar.inx.h:1
 msgid "Calendar"
