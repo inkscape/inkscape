@@ -1002,7 +1002,7 @@ AlignAndDistribute::AlignAndDistribute()
     _combo.append(_("Smallest object"));
     _combo.append(_("Page"));
     _combo.append(_("Drawing"));
-    _combo.append(_("Selection"));
+    _combo.append(_("Selection Area"));
     _combo.set_active(prefs->getInt("/dialogs/align/align-to", 6));
     _combo.signal_changed().connect(sigc::mem_fun(*this, &AlignAndDistribute::on_ref_change));
 
