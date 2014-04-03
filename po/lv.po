@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2014-03-04 13:58+0100\n"
-"PO-Revision-Date: 2014-03-30 22:14+0200\n"
+"PO-Revision-Date: 2014-04-03 00:11+0200\n"
 "Last-Translator: Jānis Eisaks <jancs@dv.lv>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "Language: lv\n"
@@ -3765,7 +3765,7 @@ msgstr "Magnētiskais disks (datubāze)"
 #: ../share/symbols/symbols.h:151
 msgctxt "Symbol"
 msgid "Punched Tape"
-msgstr ""
+msgstr "Perfolente"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:152
@@ -4067,7 +4067,7 @@ msgstr "Sabiedriska ēka"
 #: ../share/symbols/symbols.h:200
 msgctxt "Symbol"
 msgid "Recycling"
-msgstr ""
+msgstr "Reciklēšana"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:201
@@ -4363,7 +4363,7 @@ msgstr "Kalnu pāreja"
 #: ../share/symbols/symbols.h:252
 msgctxt "Symbol"
 msgid "Mine"
-msgstr ""
+msgstr "Raktuves"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:253
@@ -4429,7 +4429,7 @@ msgstr "Florists"
 #: ../share/symbols/symbols.h:263
 msgctxt "Symbol"
 msgid "Fish Monger"
-msgstr ""
+msgstr "Zivju tirgotājs"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:264
@@ -4603,7 +4603,7 @@ msgstr "Zoodārzs"
 #: ../share/symbols/symbols.h:292
 msgctxt "Symbol"
 msgid "Wreck"
-msgstr ""
+msgstr "Vraks"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:293
@@ -5103,7 +5103,7 @@ msgstr "Tipogrāfijas audekls"
 
 #: ../share/templates/templates.h:1
 msgid "Empty typography canvas with helping guidelines."
-msgstr ""
+msgstr "Tukšs tipogrāfiskais audekls ar palīglīnijām."
 
 #: ../share/templates/templates.h:1
 msgid "guidelines typography canvas"
@@ -5643,7 +5643,7 @@ msgid ""
 "  This is caused by an improper .inx file for this extension.  An improper ."
 "inx file could have been caused by a faulty installation of Inkscape."
 msgstr ""
-"  Tā cēlonis ir nederīgs paplašinājuma .inx fails.  Nederīgs .inx fails "
+"  Tā cēlonis ir nederīga datne ar paplašinājumu .inx.  Nederīga .inx datne "
 "varētu būt kļūdainais Inkscape uzstādīšanas rezultāts."
 
 #: ../src/extension/extension.cpp:266
@@ -5678,7 +5678,7 @@ msgstr "\" neizdevās ielādēt, jo "
 #: ../src/extension/extension.cpp:654
 #, c-format
 msgid "Could not create extension error log file '%s'"
-msgstr "Nav iespējams izveidot paplašinājuma kļūdu žurnāla failu '%s'"
+msgstr "Nav iespējams izveidot paplašinājuma kļūdu žurnāla datni '%s'"
 
 #: ../src/extension/extension.cpp:762
 #: ../share/extensions/webslicer_create_rect.inx.h:2
@@ -6407,7 +6407,7 @@ msgstr "Pārvērst tekstus par ceļiem"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:334
 msgid "PS+LaTeX: Omit text in PS, and create LaTeX file"
-msgstr "PS+LaTeX: izlaist tekstu PS un izveidot  LaTeX failu"
+msgstr "PS+LaTeX: izlaist tekstu PS un izveidot  LaTeX datni"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:335
 #: ../src/extension/internal/cairo-ps-out.cpp:374
@@ -6456,7 +6456,7 @@ msgstr "PostScript (*.ps)"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:347
 msgid "PostScript File"
-msgstr "PostScript fails"
+msgstr "PostScript datne"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:366
 #: ../share/extensions/eps_input.inx.h:3
@@ -6465,7 +6465,7 @@ msgstr "Encapsulated PostScript"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:373
 msgid "EPS+LaTeX: Omit text in EPS, and create LaTeX file"
-msgstr "EPS+LaTeX: izlaist tekstu EPS un izveidot  LaTeX failu"
+msgstr "EPS+LaTeX: izlaist tekstu EPS un izveidot  LaTeX datni"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:380
 msgid "Bleed/margin (mm)"
@@ -6478,7 +6478,7 @@ msgstr "Encapsulated PostScript (*.eps)"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:386
 msgid "Encapsulated PostScript File"
-msgstr "Encapsulated PostScript fails"
+msgstr "Encapsulated PostScript datne"
 
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:244
 msgid "Restrict to PDF version:"
@@ -6494,7 +6494,7 @@ msgstr "PDF 1.4"
 
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:251
 msgid "PDF+LaTeX: Omit text in PDF, and create LaTeX file"
-msgstr "PDF+LaTeX:  izlaist tekstu PDF un izveidot  LaTeX failu"
+msgstr "PDF+LaTeX:  izlaist tekstu PDF un izveidot  LaTeX datni"
 
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:254
 msgid "Output page size:"
@@ -6527,11 +6527,11 @@ msgstr "Corel DRAW ievade"
 
 #: ../src/extension/internal/cdr-input.cpp:279
 msgid "Corel DRAW 7-X4 files (*.cdr)"
-msgstr "Corel DRAW 7-X4 faili (*.cdr)"
+msgstr "Corel DRAW 7-X4 datnes (*.cdr)"
 
 #: ../src/extension/internal/cdr-input.cpp:280
 msgid "Open files saved in Corel DRAW 7-X4"
-msgstr "Atver Corel DRAW 7-X4 formātā saglabātos failus"
+msgstr "Atver Corel DRAW 7-X4 formātā saglabātās datnes"
 
 #: ../src/extension/internal/cdr-input.cpp:287
 msgid "Corel DRAW templates input"
@@ -6539,35 +6539,35 @@ msgstr "Corel DRAW veidņu ievade"
 
 #: ../src/extension/internal/cdr-input.cpp:292
 msgid "Corel DRAW 7-13 template files (*.cdt)"
-msgstr "Corel DRAW 7-13 veidņu faili (.cdt)"
+msgstr "Corel DRAW 7-13 veidņu datnes (.cdt)"
 
 #: ../src/extension/internal/cdr-input.cpp:293
 msgid "Open files saved in Corel DRAW 7-13"
-msgstr "Atver Corel DRAW 7-13 formātā saglabātos failus"
+msgstr "Atver Corel DRAW 7-13 formātā saglabātās datnes"
 
 #: ../src/extension/internal/cdr-input.cpp:300
 msgid "Corel DRAW Compressed Exchange files input"
-msgstr "Corel DRAW Compressed Exchange failu ievade"
+msgstr "Corel DRAW Compressed Exchange datņuu ievade"
 
 #: ../src/extension/internal/cdr-input.cpp:305
 msgid "Corel DRAW Compressed Exchange files (*.ccx)"
-msgstr "Corel DRAW saspiestie apmaiņas faili (Compressed Exchange) (.ccx)"
+msgstr "Corel DRAW saspiestās apmaiņas datnes (Compressed Exchange) (.ccx)"
 
 #: ../src/extension/internal/cdr-input.cpp:306
 msgid "Open compressed exchange files saved in Corel DRAW"
-msgstr "Atver Corel DRAW saglabātos saspiestos apmaiņas failus"
+msgstr "Atver Corel DRAW saglabātās saspiestās apmaiņas datnes"
 
 #: ../src/extension/internal/cdr-input.cpp:313
 msgid "Corel DRAW Presentation Exchange files input"
-msgstr "Corel DRAW Presentation Exchange failu ievade"
+msgstr "Corel DRAW Presentation Exchange datņu ievade"
 
 #: ../src/extension/internal/cdr-input.cpp:318
 msgid "Corel DRAW Presentation Exchange files (*.cmx)"
-msgstr "Corel DRAW Presentation Exchange faili (.cmx)"
+msgstr "Corel DRAW Presentation Exchange datnes (.cmx)"
 
 #: ../src/extension/internal/cdr-input.cpp:319
 msgid "Open presentation exchange files saved in Corel DRAW"
-msgstr "Atver Corel DRAW saglabātos Presentation Exchange failus"
+msgstr "Atver Corel DRAW saglabātos Presentation Exchange datnes"
 
 #: ../src/extension/internal/emf-inout.cpp:3508
 msgid "EMF Input"
@@ -8418,8 +8418,8 @@ msgid ""
 "Embed results in stand-alone, larger SVG files. Link references a file "
 "outside this SVG document and all files must be moved together."
 msgstr ""
-"Iegult rezultātus atsevišķā, lielā SVG failā. Saite atsaucas uz failu ārpus "
-"šī SVG dokumenta, līdz ar to visi faili ir jāpārvieto vienkop."
+"Iegult rezultātus atsevišķā, lielā SVG datnē. Saite atsaucas uz datni ārpus "
+"šī SVG dokumenta, līdz ar to visas datnes ir jāpārvieto vienkop."
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:192
 #: ../src/ui/dialog/inkscape-preferences.cpp:1445
@@ -8570,7 +8570,7 @@ msgstr "Cordless TrackMan FX"
 
 #: ../src/extension/internal/javafx-out.cpp:974
 msgid "JavaFX Raytracer File"
-msgstr "JavaFX Raytracer fails"
+msgstr "JavaFX Raytracer datne"
 
 #: ../src/extension/internal/latex-pstricks.cpp:334
 msgid "LaTeX Print"
@@ -8586,7 +8586,7 @@ msgstr "LaTeX ar PSTricks makro (*.tex)"
 
 #: ../src/extension/internal/latex-pstricks-out.cpp:101
 msgid "LaTeX PSTricks File"
-msgstr "LaTeX PSTricks fails"
+msgstr "LaTeX PSTricks datne"
 
 #: ../src/extension/internal/odf.cpp:2142
 msgid "OpenDocument Drawing Output"
@@ -8598,7 +8598,7 @@ msgstr "OpenDocument zīmejums (*.odg)"
 
 #: ../src/extension/internal/odf.cpp:2148
 msgid "OpenDocument drawing file"
-msgstr "OpenDocument zīmējuma fails"
+msgstr "OpenDocument zīmējuma datne"
 
 #. TRANSLATORS: The following are document crop settings for PDF import
 #. more info: http://www.acrobatusers.com/tech_corners/javascript_corner/tips/2006/page_bounds/
@@ -8650,7 +8650,7 @@ msgid ""
 "and slow performance."
 msgstr ""
 "<b>Piezīme</b>: iestatot pārāk augstu precizitāti var iegūt liela izmēra SVG "
-"failu, kas ievērojami ietekmēs veiktspēju."
+"datni, kas ievērojami ietekmēs veiktspēju."
 
 #: ../src/extension/internal/pdf-input-cairo.cpp:121
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:135
@@ -8745,7 +8745,8 @@ msgstr "Adobe Illustrator 9.0 un augstāk (*.ai)"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:787
 msgid "Open files saved in Adobe Illustrator 9.0 and newer versions"
-msgstr "Atveriet failus, kas saglabāti ar Adobe Illustrator 9.0 vai jaunāku"
+msgstr ""
+"Atveriet ar Adobe Illustrator 9.0 vai jaunāku versiju saglabātas datnes"
 
 #: ../src/extension/internal/pov-out.cpp:715
 msgid "PovRay Output"
@@ -8757,7 +8758,7 @@ msgstr "PovRay (*.pov) (tikai ceļi un figūras)"
 
 #: ../src/extension/internal/pov-out.cpp:721
 msgid "PovRay Raytracer File"
-msgstr "PovRay Raytracer fails"
+msgstr "PovRay Raytracer datne"
 
 #: ../src/extension/internal/svg.cpp:89
 msgid "SVG Input"
@@ -8769,7 +8770,7 @@ msgstr "Mērogojamo vektoru grafika (*.svg)"
 
 #: ../src/extension/internal/svg.cpp:95
 msgid "Inkscape native file format and W3C standard"
-msgstr "Inkscape faila formāts un W3C standartas"
+msgstr "Inkscape datnes formāts un W3C standarta"
 
 #: ../src/extension/internal/svg.cpp:103
 msgid "SVG Output Inkscape"
@@ -8805,7 +8806,7 @@ msgstr "Saspiests Inkscape SVG (*.svgz)"
 
 #: ../src/extension/internal/svgz.cpp:53
 msgid "SVG file format compressed with GZip"
-msgstr "SVG faila formāts, saspiests ar GZip"
+msgstr "SVG datnes formāts, saspiests ar GZip"
 
 #: ../src/extension/internal/svgz.cpp:61 ../src/extension/internal/svgz.cpp:75
 msgid "SVGZ Output"
@@ -8813,7 +8814,7 @@ msgstr "SVGZ Izvade"
 
 #: ../src/extension/internal/svgz.cpp:67
 msgid "Inkscape's native file format compressed with GZip"
-msgstr "Inkscape  faila formāts, saspiests ar GZip"
+msgstr "Inkscape datnes formāts, saspiests ar GZip"
 
 #: ../src/extension/internal/svgz.cpp:80
 msgid "Compressed plain SVG (*.svgz)"
@@ -8833,7 +8834,7 @@ msgstr "Microsoft Visio diagramma (*.vsd)"
 
 #: ../src/extension/internal/vsd-input.cpp:280
 msgid "File format used by Microsoft Visio 6 and later"
-msgstr "Faila formāts, ko izmanto Microsoft Visio 6 un jaunākos"
+msgstr "Datnes formāts, ko izmanto Microsoft Visio 6 un jaunākos"
 
 #: ../src/extension/internal/vsd-input.cpp:287
 msgid "VDX Input"
@@ -8845,7 +8846,7 @@ msgstr "Microsoft Visio XML diagramma (*vdx)"
 
 #: ../src/extension/internal/vsd-input.cpp:293
 msgid "File format used by Microsoft Visio 2010 and later"
-msgstr "Faila formāts, ko izmanto Microsoft Visio 2010 un jaunākos"
+msgstr "Datnes formāts, ko izmanto Microsoft Visio 2010 un jaunākos"
 
 #: ../src/extension/internal/vsd-input.cpp:300
 msgid "VSDM Input"
@@ -8858,7 +8859,7 @@ msgstr "Microsoft Visio 2013 zīmējums (*.vsdm)"
 #: ../src/extension/internal/vsd-input.cpp:306
 #: ../src/extension/internal/vsd-input.cpp:319
 msgid "File format used by Microsoft Visio 2013 and later"
-msgstr "Faila formāts, ko izmanto Microsoft Visio 2013 un jaunākos"
+msgstr "Datnes formāts, ko izmanto Microsoft Visio 2013 un jaunākos"
 
 #: ../src/extension/internal/vsd-input.cpp:313
 msgid "VSDX Input"
@@ -8920,7 +8921,7 @@ msgstr "Vai efekts tiek priekšskatīts \"dzīvajā\" uz audekla?"
 
 #: ../src/extension/system.cpp:125 ../src/extension/system.cpp:127
 msgid "Format autodetect failed. The file is being opened as SVG."
-msgstr "Neizdevās automātiski noteikt formātu. Fails atvērts kā SVG."
+msgstr "Neizdevās automātiski noteikt formātu. Datne atvērta kā SVG."
 
 #: ../src/file.cpp:181
 msgid "default.svg"
@@ -8928,12 +8929,12 @@ msgstr "default.svg"
 
 #: ../src/file.cpp:320
 msgid "Broken links have been changed to point to existing files."
-msgstr "Nederīgās saites ir izlabotas un norāda uz pastāvošiem failiem."
+msgstr "Nederīgās saites ir izlabotas un norāda uz pastāvošām datnēm."
 
 #: ../src/file.cpp:331 ../src/file.cpp:1247
 #, c-format
 msgid "Failed to load the requested file %s"
-msgstr "Neizdevās ielādēt pieprasīto failu %s"
+msgstr "Neizdevās ielādēt pieprasīto datni %s"
 
 #: ../src/file.cpp:357
 msgid "Document not saved yet.  Cannot revert."
@@ -8954,7 +8955,7 @@ msgstr "Dokumenta Iepriekš saglabātā versija nav Ielādēta."
 
 #: ../src/file.cpp:541
 msgid "Select file to open"
-msgstr "Izvēlieties atveramo failu"
+msgstr "Izvēlieties atveramo datni"
 
 #: ../src/file.cpp:623
 msgid "Clean up document"
@@ -8979,7 +8980,7 @@ msgid ""
 "caused by an unknown filename extension."
 msgstr ""
 "Dokumenta (%s) saglabāšanai nepieciešamais Inkscape paplašinājums nav "
-"atrasts. Cēlonis var būt nezināms faila nosaukuma paplašinājums."
+"atrasts. Cēlonis var būt nezināms datnes nosaukuma paplašinājums."
 
 #: ../src/file.cpp:668 ../src/file.cpp:676 ../src/file.cpp:684
 #: ../src/file.cpp:690 ../src/file.cpp:695
@@ -8991,13 +8992,13 @@ msgstr "Dokumentu nav saglabāts."
 msgid ""
 "File %s is write protected. Please remove write protection and try again."
 msgstr ""
-"Fails %s ir aizsargāts pret ierakstu. Lūdzu, noņemiet aizsardzību pret "
+"Datne %s ir aizsargāta pret ierakstu. Lūdzu, noņemiet aizsardzību pret "
 "ierakstu un mēģiniet vēlreiz."
 
 #: ../src/file.cpp:683
 #, c-format
 msgid "File %s could not be saved."
-msgstr "Failu %s nav iespējams saglabāt."
+msgstr "Datni %s nav iespējams saglabāt."
 
 #: ../src/file.cpp:713 ../src/file.cpp:715
 msgid "Document saved."
@@ -9014,11 +9015,11 @@ msgstr "zīmējums-%1"
 
 #: ../src/file.cpp:880
 msgid "Select file to save a copy to"
-msgstr "Izvēlieties failu, kurā saglabāt kopiju"
+msgstr "Izvēlieties datni, kurā saglabāt kopiju"
 
 #: ../src/file.cpp:882
 msgid "Select file to save to"
-msgstr "Izvēlieties failu, kurā saglabāt"
+msgstr "Izvēlieties datni, kurā saglabāt"
 
 #: ../src/file.cpp:987 ../src/file.cpp:989
 msgid "No changes need to be saved."
@@ -9035,7 +9036,7 @@ msgstr "Importēt"
 
 #: ../src/file.cpp:1294
 msgid "Select file to import"
-msgstr "Izvēlieties importējamo failu"
+msgstr "Izvēlieties importējamo datni"
 
 #: ../src/file.cpp:1410
 #, c-format
@@ -9044,7 +9045,7 @@ msgstr "zīmējums%s"
 
 #: ../src/file.cpp:1432
 msgid "Select file to export to"
-msgstr "Izvēlieties failu, uz kuru eksportēt"
+msgstr "Izvēlieties datni, uz kuru eksportēt"
 
 #: ../src/file.cpp:1685
 msgid "Import Clip Art"
@@ -9405,7 +9406,7 @@ msgstr ""
 #: ../src/inkscape.cpp:442 ../src/inkscape.cpp:449
 #, c-format
 msgid "Autosave failed! File %s could not be saved."
-msgstr "Automātiskā saglabāšana neizdevās! Failu %s neizdevās saglabāt."
+msgstr "Automātiskā saglabāšana neizdevās! Datni %s neizdevās saglabāt."
 
 #: ../src/inkscape.cpp:464
 msgid "Autosave complete."
@@ -9501,10 +9502,10 @@ msgid ""
 "\n"
 "The file already exists in \"%s\". Replacing it will overwrite its contents."
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">Fails ar nosaukumu \"%s\" jau pastāv. "
+"<span weight=\"bold\" size=\"larger\">Datne ar nosaukumu \"%s\" jau pastāv. "
 "Vai vēlaties to aizvietot?</span>\n"
 "\n"
-"Fails šobrīd atrodas \"%s\". Aizvietojot iepriekšējais saturs tiks "
+"Datne šobrīd atrodas \"%s\". Aizvietojot iepriekšējais saturs tiks "
 "pārrakstīts."
 
 #: ../src/interface.cpp:1395 ../src/ui/dialog/export.cpp:1298
@@ -9703,7 +9704,7 @@ msgstr ""
 
 #: ../src/libgdl/gdl-dock-bar.c:105
 msgid "Master"
-msgstr "Galvenais"
+msgstr "Pamata"
 
 #: ../src/libgdl/gdl-dock-bar.c:106
 msgid "GdlDockMaster object which the dockbar widget is attached to"
@@ -9890,7 +9891,7 @@ msgid ""
 "If is set to 1, all the dock items bound to the master are locked; if it's "
 "0, all are unlocked; -1 indicates inconsistency among the items"
 msgstr ""
-"Ja iestatīts 1, visi galvenajam piesaistītie dokojamie elementi ir slēgti, "
+"Ja iestatīts 1, visi pamatdokam piesaistītie dokojamie elementi ir slēgti, "
 "ja 0 - visi ar atslēgti, -1 norāda uz neviendabību elementu starpā"
 
 #: ../src/libgdl/gdl-dock-master.c:157 ../src/libgdl/gdl-switcher.c:737
@@ -9907,7 +9908,7 @@ msgid ""
 "master %p: unable to add object %p[%s] to the hash.  There already is an "
 "item with that name (%p)."
 msgstr ""
-"galvenais %p: objektu %p[%s] nav iespējams pievienot hešam. Tas jau satur "
+"pamatdoks %p: objektu %p[%s] nav iespējams pievienot hešam. Tas jau satur "
 "vienu ar tādu pašu nosaukumu (%p)."
 
 #: ../src/libgdl/gdl-dock-master.c:955
@@ -9970,11 +9971,11 @@ msgstr "Dokojamā objekta Pixbuf ikona"
 
 #: ../src/libgdl/gdl-dock-object.c:153
 msgid "Dock master"
-msgstr "Galvenais doks"
+msgstr "Pamatdoks"
 
 #: ../src/libgdl/gdl-dock-object.c:154
 msgid "Dock master this dock object is bound to"
-msgstr "Galvenais doks, kuram ir piesaistīts šis dokojamis objekts"
+msgstr "Pamatdoks, kuram ir piesaistīts šis dokojamis objekts"
 
 #: ../src/libgdl/gdl-dock-object.c:463
 #, c-format
@@ -9997,8 +9998,7 @@ msgstr ""
 #: ../src/libgdl/gdl-dock-object.c:609
 #, c-format
 msgid "Cannot dock %p to %p because they belong to different masters"
-msgstr ""
-"Nav iespējas dokot %p pie %p, jo tie pieder dažādiem galvenajiem dokiem"
+msgstr "Nav iespējas dokot %p pie %p, jo tie pieder dažādiem pamatdokiem"
 
 #: ../src/libgdl/gdl-dock-object.c:651
 #, c-format
@@ -10006,7 +10006,7 @@ msgid ""
 "Attempt to bind to %p an already bound dock object %p (current master: %p)"
 msgstr ""
 "Mēģināts pie %p piesaistīt jau piesaistītu dokojamo objektu %p (pašreizējais "
-"galvenais doks: %p)"
+"pamatdoks: %p)"
 
 #: ../src/libgdl/gdl-dock-paned.c:130 ../src/widgets/ruler.cpp:229
 msgid "Position"
@@ -11828,7 +11828,7 @@ msgstr "Ja atspējots, zīmēt tikai pēdējo ģenerāciju"
 #. ,draw_boxes(_("Display boxes"), _("Display boxes instead of paths only"), "draw_boxes", &wr, this, true)
 #: ../src/live_effects/lpe-vonkoch.cpp:52
 msgid "Reference segment:"
-msgstr "Atsauces segments:"
+msgstr "Atsauces posms:"
 
 # bbox=robežrāmis???
 #: ../src/live_effects/lpe-vonkoch.cpp:52
@@ -11933,7 +11933,7 @@ msgstr "Izdrukāt Inkscape versijas numuru"
 
 #: ../src/main.cpp:300
 msgid "Do not use X server (only process files from console)"
-msgstr "Neizmantot X serveri (apstrādāt failus tikai no komandrindas)"
+msgstr "Neizmantot X serveri (apstrādāt datnes tikai no komandrindas)"
 
 #: ../src/main.cpp:305
 msgid "Try to use X server (even if $DISPLAY is not set)"
@@ -11947,17 +11947,17 @@ msgstr "Atvērt norādīto(s) dokumentu(s)  (atslēgu virkne var tikt ignorēta)
 #: ../src/main.cpp:393 ../src/main.cpp:398 ../src/main.cpp:403
 #: ../src/main.cpp:414 ../src/main.cpp:430 ../src/main.cpp:435
 msgid "FILENAME"
-msgstr "FAILA NOSAUKUMS"
+msgstr "DATNES NOSAUKUMS"
 
 #: ../src/main.cpp:315
 msgid "Print document(s) to specified output file (use '| program' for pipe)"
 msgstr ""
-"Drukāt dokumentu(s) uz norādīto izvades failu (izmantojiet ' | programma' "
+"Drukāt dokumentu(s) uz norādīto izvades datni (izmantojiet ' | programma' "
 "konveijerapstrādei) "
 
 #: ../src/main.cpp:320
 msgid "Export document to a PNG file"
-msgstr "Eksportēt dokumentu PNG failā"
+msgstr "Eksportēt dokumentu PNG datnē"
 
 #: ../src/main.cpp:325
 msgid ""
@@ -12043,7 +12043,7 @@ msgstr "Eksportēt tikai objektus ar uzstādītu export-id, slēpt visus pārēj
 #: ../src/main.cpp:377
 msgid "Use stored filename and DPI hints when exporting (only with export-id)"
 msgstr ""
-"Eksportējot izmantot saglabāto faila nosaukumu un DPI norādes (tikai ar "
+"Eksportējot izmantot saglabāto datnes nosaukumu un DPI norādes (tikai ar "
 "export-id)"
 
 #: ../src/main.cpp:382
@@ -12063,16 +12063,16 @@ msgstr ""
 #: ../src/main.cpp:392
 msgid "Export document to plain SVG file (no sodipodi or inkscape namespaces)"
 msgstr ""
-"Eksportēt dokumentu kā vienkāršu SVG failu (bez sodipodi vai inkscape vārdu "
+"Eksportēt dokumentu kā vienkāršu SVG datni (bez sodipodi vai inkscape vārdu "
 "laukiem)"
 
 #: ../src/main.cpp:397
 msgid "Export document to a PS file"
-msgstr "Eksportēt dokumentu PS failā"
+msgstr "Eksportēt dokumentu PS datnē"
 
 #: ../src/main.cpp:402
 msgid "Export document to an EPS file"
-msgstr "Eksportēt dokumentu EPS failā"
+msgstr "Eksportēt dokumentu EPS datnē"
 
 #: ../src/main.cpp:407
 msgid ""
@@ -12088,7 +12088,7 @@ msgstr "PS Līmenis"
 
 #: ../src/main.cpp:413
 msgid "Export document to a PDF file"
-msgstr "Eksportēt dokumentu PDF failā"
+msgstr "Eksportēt dokumentu PDF datnē"
 
 #. TRANSLATORS: "--export-pdf-version" is an Inkscape command line option; see "inkscape --help"
 #: ../src/main.cpp:419
@@ -12110,18 +12110,18 @@ msgid ""
 "exported, putting the text on top of the PDF/PS/EPS file. Include the result "
 "in LaTeX like: \\input{latexfile.tex}"
 msgstr ""
-"Eksportēt PDF/PS/EPS bez teksta. Papildu PDF/PS/EPS failam, tiek eksportēts "
-"LaTeX fails, kas novieto tekstu virs  PDF/PS/EPS faila. Iekļaut rezultātu "
+"Eksportēt PDF/PS/EPS bez teksta. Papildu PDF/PS/EPS datnei tiek eksportēts "
+"LaTeX fails, kas novieto tekstu virs  PDF/PS/EPS datnes. Iekļaut rezultātu "
 "LaTeX failā sekojošā formā: \\input{latexfile.tex}"
 
 #: ../src/main.cpp:429
 msgid "Export document to an Enhanced Metafile (EMF) File"
 msgstr ""
-"Eksportēt dokumentu Paplašinātā metafaila formātā  (Enhanced Metafile, EMF)"
+"Eksportēt dokumentu Paplašinātās metadatnes formātā  (Enhanced Metafile, EMF)"
 
 #: ../src/main.cpp:434
 msgid "Export document to a Windows Metafile (WMF) File"
-msgstr "Eksportēt dokumentu Windows metafaila formātā  (WMF)"
+msgstr "Eksportēt dokumentu Windows metadatnes formātā  (WMF)"
 
 #: ../src/main.cpp:439
 msgid "Convert text object to paths on export (PS, EPS, PDF, SVG)"
@@ -12227,14 +12227,14 @@ msgid ""
 "\n"
 "Available options:"
 msgstr ""
-"[Iespējas...] [Fails...]\n"
+"[Iespējas...] [Datne...]\n"
 "\n"
 "Pieejamās iespējas:"
 
 #. ## Add a menu for clear()
 #: ../src/menus-skeleton.h:16 ../src/ui/dialog/debug.cpp:83
 msgid "_File"
-msgstr "_Fails"
+msgstr "_Datne"
 
 #: ../src/menus-skeleton.h:17
 msgid "_New"
@@ -12391,9 +12391,9 @@ msgid ""
 "snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for "
 "segment"
 msgstr ""
-"Novietojiet loka vai sektora <b>sākumpunktu</b>; ar <b>Ctrl</b> - piesaistīt "
-"leņķim; lai iegūtu loku, velciet elipses <b>iekšpusē</b>; lai iegūtu sektoru "
-"- <b>ārpusē</b>"
+"Novietojiet loka vai segmenta <b>sākumpunktu</b>; ar <b>Ctrl</b> - "
+"piesaistīt leņķim; lai iegūtu loku, velciet elipses <b>iekšpusē</b>; lai "
+"iegūtu sektoru - <b>ārpusē</b>"
 
 #: ../src/object-edit.cpp:961
 msgid ""
@@ -12401,7 +12401,7 @@ msgid ""
 "snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for "
 "segment"
 msgstr ""
-"Novietojiet loka vai sektora <b>beigu punktu</b>; ar <b>Ctrl</b> - "
+"Novietojiet loka vai segmenta <b>beigu punktu</b>; ar <b>Ctrl</b> - "
 "piesaistīt leņķim; lai iegūtu loku, velciet elipses <b>iekšpusē</b>; lai "
 "iegūtu sektoru - <b>ārpusē</b>"
 
@@ -12547,27 +12547,27 @@ msgstr "%s nav derīga mape."
 #: ../src/preferences.cpp:178
 #, c-format
 msgid "Failed to create the preferences file %s."
-msgstr "Neizdevās izveidot iestatījumu failu %s."
+msgstr "Neizdevās izveidot iestatījumu datni %s."
 
 #: ../src/preferences.cpp:214
 #, c-format
 msgid "The preferences file %s is not a regular file."
-msgstr "Iestatījumu fails %s nav parasts fails."
+msgstr "Iestatījumu datne %s nav parasta datne."
 
 #: ../src/preferences.cpp:224
 #, c-format
 msgid "The preferences file %s could not be read."
-msgstr "Iestatījumu fails %s nav nolasāms."
+msgstr "Iestatījumu datne %s nav nolasāma."
 
 #: ../src/preferences.cpp:235
 #, c-format
 msgid "The preferences file %s is not a valid XML document."
-msgstr "Iestatījumu fails %s nav derīgs XML dokuments."
+msgstr "Iestatījumu datne %s nav derīgs XML dokuments."
 
 #: ../src/preferences.cpp:244
 #, c-format
 msgid "The file %s is not a valid Inkscape preferences file."
-msgstr "Fails %s nav derīgs Inkscape iestatījumu fails."
+msgstr "Datne %s nav derīga Inkscape iestatījumu datne."
 
 #: ../src/preferences-skeleton.h:101
 msgid "Dip pen"
@@ -12655,7 +12655,7 @@ msgstr "Formāts:"
 
 #: ../src/rdf.cpp:242
 msgid "The file format, physical medium, or dimensions of the resource"
-msgstr "Resursa faila formāts, fiziskais nesējs vai dimensijas"
+msgstr "Resursa datnes formāts, fiziskais nesējs vai dimensijas"
 
 #: ../src/rdf.cpp:245
 msgid "The nature or genre of the resource"
@@ -13382,11 +13382,11 @@ msgstr "Klaviatūras mape (%s) nav pieejama."
 #: ../src/shortcuts.cpp:337 ../src/ui/dialog/export.cpp:1295
 #: ../src/ui/dialog/export.cpp:1329
 msgid "Select a filename for exporting"
-msgstr "Izvēlieties jeksportējamā faila nosaukumu"
+msgstr "Izvēlieties eksportējamās datnes nosaukumu"
 
 #: ../src/shortcuts.cpp:370
 msgid "Select a file to import"
-msgstr "Izvēlieties importējamo failu"
+msgstr "Izvēlieties importējamo datni"
 
 #: ../src/sp-anchor.cpp:125
 #, c-format
@@ -13399,7 +13399,7 @@ msgstr "bez URI"
 
 #: ../src/sp-ellipse.cpp:374
 msgid "Segment"
-msgstr "Līnijas posms"
+msgstr "Segments"
 
 #: ../src/sp-ellipse.cpp:376
 msgid "Arc"
@@ -13953,7 +13953,7 @@ msgid ""
 "segment. <b>Click</b> to select."
 msgstr ""
 "<b>Velciet</b>, lai izveidotu elipsi <b>Velciet vadīklas</b>, lai izveidotu "
-"loku vai sektoru. <b>Uzklikšķiniet</b>, lai atlasītu."
+"loku vai segmentu. <b>Uzklikšķiniet</b>, lai atlasītu."
 
 #: ../src/tools-switch.cpp:98
 msgid ""
@@ -15575,11 +15575,11 @@ msgstr "Iegultie skripti"
 
 #: ../src/ui/dialog/document-properties.cpp:747
 msgid "<b>External script files:</b>"
-msgstr "<b>Ārējo skriptu faili:</b>"
+msgstr "<b>Ārējo skriptu datnes:</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:749
 msgid "Add the current file name or browse for a file"
-msgstr "Pievienot pašreizējo faila nosaukumu vai sameklēt failu"
+msgstr "Pievienot pašreizējo datnes nosaukumu vai sameklēt datni"
 
 #: ../src/ui/dialog/document-properties.cpp:758
 #: ../src/ui/dialog/document-properties.cpp:847
@@ -15589,11 +15589,11 @@ msgstr "Aizvākt"
 
 #: ../src/ui/dialog/document-properties.cpp:828
 msgid "Filename"
-msgstr "Faila nosaukums"
+msgstr "Datnes nosaukums"
 
 #: ../src/ui/dialog/document-properties.cpp:836
 msgid "<b>Embedded script files:</b>"
-msgstr "<b>Iegultie skriptu faili:</b>"
+msgstr "<b>Iegulto skriptu datnes:</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:838
 msgid "New"
@@ -15704,8 +15704,8 @@ msgid ""
 "Export each selected object into its own PNG file, using export hints if any "
 "(caution, overwrites without asking!)"
 msgstr ""
-"Eksportēt katru atlasīto objektu atsevišķā PNG failā, izmantojot eksport "
-"padomus, ja tādi ir (Uzmanību: faili tiek pārrakstīti bez jautāšanas!)"
+"Eksportēt katru atlasīto objektu atsevišķā PNG datnē, izmantojot eksport "
+"padomus, ja tādi ir (Uzmanību: datnes tiek pārrakstītas bez jautāšanas!)"
 
 #: ../src/ui/dialog/export.cpp:175
 msgid "Hide a_ll except selected"
@@ -15781,7 +15781,7 @@ msgstr "dpi"
 
 #: ../src/ui/dialog/export.cpp:315
 msgid "<b>_Filename</b>"
-msgstr "<b>_Faila nosaukums</b>"
+msgstr "<b>_Datnes nosaukums</b>"
 
 #: ../src/ui/dialog/export.cpp:357
 msgid "Export the bitmap file with these settings"
@@ -15805,36 +15805,36 @@ msgstr "Nav atlasītu objektu."
 
 #: ../src/ui/dialog/export.cpp:1018 ../src/ui/dialog/export.cpp:1020
 msgid "Exporting %1 files"
-msgstr "Eksportē %1 failus"
+msgstr "Eksportē %1 datnes"
 
 #: ../src/ui/dialog/export.cpp:1060 ../src/ui/dialog/export.cpp:1062
 #, c-format
 msgid "Exporting file <b>%s</b>..."
-msgstr "Eksportē failu <b>%s</b>..."
+msgstr "Eksportē datni <b>%s</b>..."
 
 #: ../src/ui/dialog/export.cpp:1071 ../src/ui/dialog/export.cpp:1162
 #, c-format
 msgid "Could not export to filename %s.\n"
-msgstr "Nav iespējams eksportēt uz failu ar nosaukumu %s.\n"
+msgstr "Nav iespējams eksportēt uz datni ar nosaukumu %s.\n"
 
 #: ../src/ui/dialog/export.cpp:1074
 #, c-format
 msgid "Could not export to filename <b>%s</b>."
-msgstr "Nav iespējams eksportēt uz failu ar nosaukumu <b>%s</b>."
+msgstr "Nav iespējams eksportēt uz datni ar nosaukumu <b>%s</b>."
 
 #: ../src/ui/dialog/export.cpp:1089
 #, c-format
 msgid "Successfully exported <b>%d</b> files from <b>%d</b> selected items."
 msgstr ""
-"Veiksmīgi eksportēti <b>%d</b> faili no <b>%d</b> atlasītajiem objektiem."
+"Veiksmīgi eksportētas <b>%d</b> datnes no <b>%d</b> atlasītajiem objektiem."
 
 #: ../src/ui/dialog/export.cpp:1100
 msgid "You have to enter a filename."
-msgstr "Jums jāievada faila nosaukums."
+msgstr "Jums jāievada datnes nosaukums."
 
 #: ../src/ui/dialog/export.cpp:1101
 msgid "You have to enter a filename"
-msgstr "Jums jāievada faila nosaukums"
+msgstr "Jums jāievada datnes nosaukums"
 
 #: ../src/ui/dialog/export.cpp:1115
 msgid "The chosen area to be exported is invalid."
@@ -15947,14 +15947,14 @@ msgstr "Atļaut priekšskatījumu"
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:289
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:420
 msgid "All Files"
-msgstr "Visi faili"
+msgstr "Visas datnes"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:776
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:792
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:807
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:290
 msgid "All Inkscape Files"
-msgstr "Visi Inkscape faili"
+msgstr "Visas Inkscape datnes"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:783
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:799
@@ -15982,7 +15982,7 @@ msgstr "Visas bitkartes"
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1048
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1616
 msgid "Append filename extension automatically"
-msgstr "Automātiski pievienot faila nosaukuma &paplašinājumu"
+msgstr "Automātiski pievienot datnes nosaukuma &paplašinājumu"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1226
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1480
@@ -16052,7 +16052,7 @@ msgstr "Kropļojumnovērse"
 
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:421
 msgid "All Executable Files"
-msgstr "Visi izpildāmie faili"
+msgstr "Visas izpildāmās datnes"
 
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:613
 msgid "Show Preview"
@@ -16060,7 +16060,7 @@ msgstr "Rādīt priekšskatījumu"
 
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:751
 msgid "No file selected"
-msgstr "Nav izvēlēts neviens fails"
+msgstr "Nav izvēlēta neviena datne"
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:62
 msgid "_Fill"
@@ -16090,7 +16090,7 @@ msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:656
 msgid "Image File"
-msgstr "Attēla fails"
+msgstr "Attēla datne"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:659
 msgid "Selected SVG Element"
@@ -18406,7 +18406,7 @@ msgid ""
 "Always convert the text size units above into pixels (px) before saving to "
 "file"
 msgstr ""
-"Vienmēr pirms saglabāšanas failā pārvērst augstāk norādītās teksta izmēra "
+"Vienmēr pirms saglabāšanas datnē pārvērst augstāk norādītās teksta izmēra "
 "vienības pikseļos (px)"
 
 #. Spray
@@ -18835,7 +18835,7 @@ msgid ""
 "Set the maximum length of the Open Recent list in the File menu, or clear "
 "the list"
 msgstr ""
-"Iestatiet maksimālo Nesen lietoto failu saraksta garumu izvēlnē 'Faili' vai "
+"Iestatiet maksimālo Nesen lietoto datņu saraksta garumu izvēlnē 'Datnes' vai "
 "attīriet sarakstu"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:591
@@ -19088,7 +19088,7 @@ msgid ""
 "sharing version controlled files."
 msgstr ""
 "Saglabāt dokumenta skatu (tālummaiņu un panorāmēšanas pozīciju). Lietderīgi "
-"atslēgt, ja koplietojat versiju kontrolei pakļautus failus."
+"atslēgt, ja koplietojat versiju kontrolei pakļautas datnes."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:713
 msgid "Whether dialog windows have a close button (requires restart)"
@@ -19381,7 +19381,7 @@ msgstr "_Skaitliskā precizitāte:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:895
 msgid "Significant figures of the values written to the SVG file"
-msgstr "Vērtību zīmīgie cipari, ko ieraksta SVG failā"
+msgstr "Vērtību zīmīgie cipari, ko ieraksta SVG datnē"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:898
 msgid "Minimum _exponent:"
@@ -19413,7 +19413,7 @@ msgid ""
 "located in inkscape_data_dir/attributes."
 msgstr ""
 "Izvadīt paziņojumu, ja ir atrasts nederīgs vai neizmantojams atribūts. "
-"Datubāzes faili atrodas mapē inkscape_data_dir/attributes."
+"Datubāzes datnes atrodas mapē inkscape_data_dir/attributes."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:907
 msgid "Remove attributes"
@@ -19434,7 +19434,7 @@ msgid ""
 "set on a <rect>). Database files located in inkscape_data_dir/attributes."
 msgstr ""
 "Rādīt paziņojumu, ja atrastas nederīgas stila īpašības (piem. 'font-family' "
-"piemērots <rect>). Datubāžu faili atrodas mapē inkscape_data_dir/attributes."
+"piemērots <rect>). Datubāzu datnes atrodas mapē inkscape_data_dir/attributes."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:915
 #: ../src/ui/dialog/inkscape-preferences.cpp:923
@@ -19459,7 +19459,7 @@ msgid ""
 msgstr ""
 "Rādīt paziņojumu, ja atrastas liekas stila īpašības (piem., ja īpašībai ir "
 "noklusētā vērtība un atšķirīgā vērtība nav mantota vai arī vērtība "
-"neatšķiras no mantojamās). Datubāžu faili atrodas mapē inkscape_data_dir/"
+"neatšķiras no mantojamās). Datubāzu datnes atrodas mapē inkscape_data_dir/"
 "attributes."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:924
@@ -19479,7 +19479,7 @@ msgid ""
 "Check attributes and style properties on reading in SVG files (including "
 "those internal to Inkscape which will slow down startup)"
 msgstr ""
-"Pārbaudīt atribūtus un stila īpašības atverot SVG failus (ieskaitot Inkscape "
+"Pārbaudīt atribūtus un stila īpašības atverot SVG datnes (ieskaitot Inkscape "
 "iekšējos, palielinot darba sākšanai nepieciešamo laiku)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:930
@@ -19491,7 +19491,7 @@ msgid ""
 "Check attributes and style properties while editing SVG files (may slow down "
 "Inkscape, mostly useful for debugging)"
 msgstr ""
-"Pārbaudīt atribūtus un stila īpašības SVG failu rediģēšanas laikā (var "
+"Pārbaudīt atribūtus un stila īpašības SVG datņu rediģēšanas laikā (var "
 "palēnināt Inkscape darbību, pamatā noderīgs atkļūdošanai)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:932
@@ -19500,7 +19500,7 @@ msgstr "Raksta"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:933
 msgid "Check attributes and style properties on writing out SVG files"
-msgstr "Pārbaudīt atribūtus un stila īpašības saglabājot SVG failus"
+msgstr "Pārbaudīt atribūtus un stila īpašības saglabājot SVG datnes"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:935
 msgid "SVG output"
@@ -19676,7 +19676,7 @@ msgstr "_Maksimālais automātisko saglabājumu skaits:"
 msgid ""
 "Maximum number of autosaved files; use this to limit the storage space used"
 msgstr ""
-"Maksimālais automātiski saglabāto failu skaits; izmantojiet šo iestatījumu, "
+"Maksimālais automātiski saglabāto datņuu skaits; izmantojiet šo iestatījumu, "
 "lai ierobežotu diska vietas izmantošanu"
 
 #. When changing the interval or enabling/disabling the autosave function,
@@ -20444,7 +20444,8 @@ msgstr "Automātiski atsvaidzināt bitkartes attēlus"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1426
 msgid "Automatically reload linked images when file is changed on disk"
-msgstr "Automātiski pārlādēt saistītos attēlus, ja fails uz diska ir mainījies"
+msgstr ""
+"Automātiski pārlādēt saistītos attēlus, ja datne uz diska ir mainījusies"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1428
 msgid "_Bitmap editor:"
@@ -20504,12 +20505,12 @@ msgstr "Noklusētā bitkartes izšķirtspēja (punktos uz collu) bitkartes impor
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1462
 msgid "Override file resolution"
-msgstr "Neņemt vērā faila izšķirtspēju"
+msgstr "Neņemt vērā datnes izšķirtspēju"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1464
 msgid "Use default bitmap resolution in favor of information from file"
 msgstr ""
-"Dot priekšroku noklusētajai bitkartes izšķirtspējai attiecībā pret failā "
+"Dot priekšroku noklusētajai bitkartes izšķirtspējai attiecībā pret datnē "
 "esošo informāciju"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1466
@@ -20521,12 +20522,12 @@ msgid ""
 "Select a file of predefined shortcuts to use. Any customized shortcuts you "
 "create will be added seperately to "
 msgstr ""
-"Izvēlieties failu ar iepriekš definētām saīsnēm. Visas Jūsu izveidotās "
-"pielāgotās saīsnes tiks pievienotas pie"
+"Izvēlieties datni ar iepriekš definētām saīsnēm. Visas Jūsu izveidotās "
+"pielāgotās saīsnes tiks pievienotas pie "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1481
 msgid "Shortcut file:"
-msgstr "Saīsņu fails:"
+msgstr "Saīsņu datne:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1484
 #: ../src/ui/dialog/template-load-tab.cpp:48
@@ -20555,8 +20556,8 @@ msgid ""
 "Remove all your customized keyboard shortcuts, and revert to the shortcuts "
 "in the shortcut file listed above"
 msgstr ""
-"Aizvākt visas Jūsu pielāgotās klaviatūras saīsnes un aizvietot ar saīsnēm ne "
-"zemāk norādītā faila"
+"Aizvākt visas Jūsu pielāgotās klaviatūras saīsnes un aizvietot ar saīsnēm no "
+"zemāk norādītās datnes"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1556
 msgid "Import ..."
@@ -20564,7 +20565,7 @@ msgstr "Importēt ..."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1556
 msgid "Import custom keyboard shortcuts from a file"
-msgstr "Importēt pielāgotās klaviatūras saīsnes no faila"
+msgstr "Importēt pielāgotās klaviatūras saīsnes no datnes"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1559
 msgid "Export ..."
@@ -20572,7 +20573,7 @@ msgstr "Eksportēt ..."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1559
 msgid "Export custom keyboard shortcuts to a file"
-msgstr "Eksportēt pielāgotos klaviatūras īsinājumtaustiņus failā"
+msgstr "Eksportēt pielāgotos klaviatūras īsinājumtaustiņus datnē"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1569
 msgid "Keyboard Shortcuts"
@@ -20674,7 +20675,7 @@ msgstr "Lietotāja iestatījumi:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1910
 msgid "Location of the users preferences file"
-msgstr "Lietotāja iestatījumu faila atrašanās vieta"
+msgstr "Lietotāja iestatījumu datnes atrašanās vieta"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1914
 msgid "User extensions: "
@@ -20694,11 +20695,11 @@ msgstr "Lietotāja kešatmiņas atrašanās vieta"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1926
 msgid "Temporary files: "
-msgstr "Pagaidu faili:"
+msgstr "Pagaidu datnes:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1926
 msgid "Location of the temporary files used for autosave"
-msgstr "Automātiskās saglabāšanas pagaidu failu atrašanās vieta"
+msgstr "Automātiskās saglabāšanas pagaidu datņu atrašanās vieta"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1930
 msgid "Inkscape data: "
@@ -22042,7 +22043,7 @@ msgstr "Optimizēt ceļus"
 
 #: ../src/ui/dialog/tracedialog.cpp:729
 msgid "Try to optimize paths by joining adjacent Bezier curve segments"
-msgstr "Mēģināt optimizēt ceļus savienojot blakusesošos Bezjē līkņu segmentus"
+msgstr "Mēģināt optimizēt ceļus savienojot blakusesošos Bezjē līkņu posmus"
 
 #: ../src/ui/dialog/tracedialog.cpp:737
 msgid ""
@@ -22408,9 +22409,8 @@ msgid ""
 "<b>Linear segment</b>: drag to convert to a Bezier segment, doubleclick to "
 "insert node, click to select (more: Shift, Ctrl+Alt)"
 msgstr ""
-"<b>Lineārais segments</b>: velciet, lai pārvērstu Bezjē segmentā, "
-"dubultklikšķis - lai pievienotu mezglu, klikšķis - lai atlasītu (vairāk: "
-"Shift, Ctrl+Alt)"
+"<b>Lineārais posms</b>: velciet, lai pārvērstu Bezjē posmā, dubultklikšķis - "
+"lai pievienotu mezglu, klikšķis - lai atlasītu (vairāk: Shift, Ctrl+Alt)"
 
 #: ../src/ui/tool/curve-drag-point.cpp:179
 msgctxt "Path segment tip"
@@ -22418,7 +22418,7 @@ msgid ""
 "<b>Bezier segment</b>: drag to shape the segment, doubleclick to insert "
 "node, click to select (more: Shift, Ctrl+Alt)"
 msgstr ""
-"<b>Bezjē segments</b>: velciet, lai veidotu segmentu, dubultklikšķis - lai "
+"<b>Bezjē posms</b>: velciet, lai veidotu posmu, dubultklikšķis - lai "
 "pievienotu mezglu, klikšķis - lai atlasītu (vairāk: Shift, Ctrl+Alt)"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:315
@@ -22431,11 +22431,11 @@ msgstr "Mainīt mezgla tipu"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:323
 msgid "Straighten segments"
-msgstr "Iztaisnot segmentus"
+msgstr "Iztaisnot posmus"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:325
 msgid "Make segments curves"
-msgstr "Pārveidot segmentus par līknēm"
+msgstr "Pārveidot posmus par līknēm"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:333
 msgid "Add nodes"
@@ -22601,7 +22601,7 @@ msgstr "<b>Auto mezgla turis</b>: velciet, lai pārvērstu par gludo mezglu (%s)
 #, c-format
 msgctxt "Path handle tip"
 msgid "<b>%s</b>: drag to shape the segment (%s)"
-msgstr "<b>%s</b>: velciet, lai veidotu posmu (sektoru)  (%s)"
+msgstr "<b>%s</b>: velciet, lai veidotu posmu (segmentu)  (%s)"
 
 #: ../src/ui/tool/node.cpp:500
 #, c-format
@@ -22708,7 +22708,7 @@ msgid ""
 "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
 msgstr ""
 "<b>Ctrl</b>: izveidot riņķi vai veselu skaitļu attiecību elipsi, piesaistīt "
-"loka/sektora leņķi"
+"loka/segmenta leņķi"
 
 #: ../src/ui/tools/arc-tool.cpp:253 ../src/ui/tools/rect-tool.cpp:289
 msgid "<b>Shift</b>: draw around the starting point"
@@ -24629,7 +24629,7 @@ msgstr[2] ""
 
 #: ../src/verbs.cpp:137
 msgid "File"
-msgstr "Fails"
+msgstr "Datne"
 
 #: ../src/verbs.cpp:232
 msgid "Context"
@@ -26995,7 +26995,7 @@ msgstr "Izveidot veselu"
 
 #: ../src/widgets/arc-toolbar.cpp:388
 msgid "Make the shape a whole ellipse, not arc or segment"
-msgstr "Izveidot figūru kā pilnu elipsi. nevis loku vai sektoru"
+msgstr "Izveidot figūru kā pilnu elipsi. nevis loku vai segmentu"
 
 #. TODO: use the correct axis here, too
 #: ../src/widgets/box3d-toolbar.cpp:232
@@ -27549,10 +27549,10 @@ msgid ""
 "\n"
 "Do you want to save this file as Inkscape SVG?"
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">Fails \"%s\" tika saglabāts formātā, "
+"<span weight=\"bold\" size=\"larger\">Datne \"%s\" tika saglabāta formātā, "
 "kas var būt saistīts ar dažu datu zudumu!</span>\n"
 "\n"
-"Vai vēlaties saglabāt šo failu kā  Inkscape SVG?"
+"Vai vēlaties saglabāt šo datni kā  Inkscape SVG?"
 
 #: ../src/widgets/desktop-widget.cpp:1179
 msgid "_Save as Inkscape SVG"
@@ -28118,7 +28118,7 @@ msgstr "Savienot atlasītos galu mezglus ar jaunu posmu"
 
 #: ../src/widgets/node-toolbar.cpp:440
 msgid "Delete segment"
-msgstr "Dzēst segmentu"
+msgstr "Dzēst posmu"
 
 #: ../src/widgets/node-toolbar.cpp:441
 msgid "Delete segment between two non-endpoint nodes"
@@ -28384,7 +28384,7 @@ msgstr "Zigzag"
 
 #: ../src/widgets/pencil-toolbar.cpp:120
 msgid "Create a sequence of straight line segments"
-msgstr "Izveidot taisnas līnijas posmu sekvenci"
+msgstr "Izveidot taisnas līnijas posmu secību"
 
 #: ../src/widgets/pencil-toolbar.cpp:126
 msgid "Paraxial"
@@ -30035,7 +30035,7 @@ msgid ""
 "an existing file! Unable to embed image."
 msgstr ""
 "Nav atrasti xlink:href vai sodipodi:absref atribūti vai arī tie nenorāda uz "
-"pastāvošu failu! Attēlu iegult nav iespējams."
+"pastāvošu datni! Attēlu iegult nav iespējams."
 
 #: ../share/extensions/embedimage.py:86
 #, python-format
@@ -30109,7 +30109,7 @@ msgid ""
 "Can not write to specified file!\n"
 "%s"
 msgstr ""
-"Norādītajā failā ierakstīt nav iespējams!\n"
+"Norādītajā datnē ierakstīt nav iespējams!\n"
 "%s"
 
 #: ../share/extensions/gcodetools.py:4040
@@ -30143,8 +30143,8 @@ msgid ""
 "Warning! Found bad orientation points in '%s' layer. Resulting Gcode could "
 "be corrupt!"
 msgstr ""
-"Uzmanību! Atrasti nederīgi izvietojuma punkti '%s' slānī. Iegūtais G-code "
-"fails var būt neizmantojams!"
+"Uzmanību! Atrasti nederīgi izvietojuma punkti '%s' slānī. Iegūtā G-code "
+"datne var būt neizmantojama!"
 
 #: ../share/extensions/gcodetools.py:4263
 #, python-format
@@ -30152,8 +30152,8 @@ msgid ""
 "Warning! Found bad graffiti reference point in '%s' layer. Resulting Gcode "
 "could be corrupt!"
 msgstr ""
-"Uzmanību! Atrasts nederīgs grafiti atsauces punkts '%s' slānī. Iegūtais G-"
-"code fails var būt neizmantojams!"
+"Uzmanību! Atrasts nederīgs grafiti atsauces punkts '%s' slānī. Iegūtā G-code "
+"datne var būt neizmantojama!"
 
 #. xgettext:no-pango-format
 #: ../share/extensions/gcodetools.py:4284
@@ -30169,8 +30169,8 @@ msgstr ""
 "grupām! Citi objekti netiek ņemti vērā!\n"
 "Risinājums 1: nospiediet Ceļš->Objektu par ceļu vai Shift+Ctrl+C.\n"
 "Risinājums 2: Ceļš->Dinamiskā nobīde vai Ctrl+J.\n"
-"Risinājums 3: eksportēt visas kontūras kā PostScript level 2 (Fails-"
-">Saglabāt kā->.ps) un Fails->Importēt šo failu."
+"Risinājums 3: eksportēt visas kontūras kā PostScript level 2 (Datne-"
+">Saglabāt kā->.ps) un Datne->Importēt šo datni."
 
 #: ../share/extensions/gcodetools.py:4290
 msgid ""
@@ -30359,7 +30359,7 @@ msgstr ""
 
 #: ../share/extensions/gimp_xcf.py:43
 msgid "An error occurred while processing the XCF file."
-msgstr "Apstrādājot XCF failu radās kļūda."
+msgstr "Apstrādājot XCF datni radās kļūda."
 
 #: ../share/extensions/gimp_xcf.py:177
 msgid "This extension requires at least one non empty layer."
@@ -30421,7 +30421,7 @@ msgstr ""
 #: ../share/extensions/inkex.py:162 ../share/extensions/inkex.py:171
 #, python-format
 msgid "Unable to open specified file: %s"
-msgstr "Nav iespējams atvērt norādīto failu: %s"
+msgstr "Nav iespējams atvērt norādīto datni: %s"
 
 #: ../share/extensions/inkex.py:276
 #, python-format
@@ -30449,7 +30449,7 @@ msgid ""
 "update the JessyInk script.\n"
 "\n"
 msgstr ""
-"JessyInk skripts nav uzstādīts šajā SVG failā vai arī tā versija atšķiras no "
+"JessyInk skripts nav uzstādīts šajā SVG datnē vai arī tā versija atšķiras no "
 "JessyInk paplašinājuma versijas. Lūdzu izvēlieties \"uzstādīt/atsvaidzināt..."
 "\" no \"JessyInk\" apakšizvēlnes izvēlnē \"Paplašinājumi\", lai uzstādītu "
 "vai atsvaidzinātu JessyInk skriptu.\n"
@@ -30753,19 +30753,19 @@ msgstr ""
 
 #: ../share/extensions/polyhedron_3d.py:336
 msgid "No face data found in specified file."
-msgstr "Norādītajā failā nav atrodami šķautņu dati."
+msgstr "Norādītajā datnē nav atrodami šķautņu dati."
 
 #: ../share/extensions/polyhedron_3d.py:337
 msgid "Try selecting \"Edge Specified\" in the Model File tab.\n"
-msgstr "Mēģiniet izvēlēties \"Norādīta mala\" Modeļa fails šķirklī.\n"
+msgstr "Mēģiniet izvēlēties \"Norādīta mala\" Modeļa datnes šķirklī.\n"
 
 #: ../share/extensions/polyhedron_3d.py:343
 msgid "No edge data found in specified file."
-msgstr "Norādītajā failā nav atrasti malu dati."
+msgstr "Norādītajā datnē nav atrasti malu dati."
 
 #: ../share/extensions/polyhedron_3d.py:344
 msgid "Try selecting \"Face Specified\" in the Model File tab.\n"
-msgstr "Mēģiniet izvēlēties \"Norādīta šķautne\" Modeļa fails šķirklī.\n"
+msgstr "Mēģiniet izvēlēties \"Norādīta šķautne\" Modeļa datnes šķirklī.\n"
 
 #. we cannot generate a list of faces from the edges without a lot of computation
 #: ../share/extensions/polyhedron_3d.py:522
@@ -30773,9 +30773,9 @@ msgid ""
 "Face Data Not Found. Ensure file contains face data, and check the file is "
 "imported as \"Face-Specified\" under the \"Model File\" tab.\n"
 msgstr ""
-"Šķautņu dati nav atrasti. Pārliecinieties, ka fails satur šķautņu datus un "
-"pārliecinieties, ka fails ir importēts kā \"Norādīta šķautne\" šķirklī "
-"Modeļa fails.\n"
+"Šķautņu dati nav atrasti. Pārliecinieties, ka datne satur šķautņu datus un "
+"pārliecinieties, ka datne ir importēta kā \"Norādīta šķautne\" šķirklī "
+"Modeļa datne.\n"
 
 #: ../share/extensions/polyhedron_3d.py:524
 msgid "Internal Error. No view type selected\n"
@@ -30864,7 +30864,7 @@ msgstr ""
 #: ../share/extensions/svg_and_media_zip_output.py:128
 #, python-format
 msgid "Could not locate file: %s"
-msgstr "Nav iespējams atrast failu: %s"
+msgstr "Nav iespējams atrast datni: %s"
 
 #: ../share/extensions/svgcalendar.py:266
 #: ../share/extensions/svgcalendar.py:288
@@ -30949,19 +30949,19 @@ msgstr "Dalīšanas metode:"
 
 #: ../share/extensions/addnodes.inx.h:3
 msgid "By max. segment length"
-msgstr "Pēc maks. segmenta garuma"
+msgstr "Pēc maks. posma garuma"
 
 #: ../share/extensions/addnodes.inx.h:4
 msgid "By number of segments"
-msgstr "Pēc segmentu skaita"
+msgstr "Pēc posmu skaita"
 
 #: ../share/extensions/addnodes.inx.h:5
 msgid "Maximum segment length (px):"
-msgstr "Maksimālais segmenta garums (px):"
+msgstr "Maksimālais posmaa garums (px):"
 
 #: ../share/extensions/addnodes.inx.h:6
 msgid "Number of segments:"
-msgstr "Segmentu skaits:"
+msgstr "Posmu skaits:"
 
 #: ../share/extensions/addnodes.inx.h:7
 #: ../share/extensions/convert2dashes.inx.h:2
@@ -30988,7 +30988,7 @@ msgstr "Adobe Illustrator 8.0 un mazāk (*.ai)"
 
 #: ../share/extensions/ai_input.inx.h:3
 msgid "Open files saved with Adobe Illustrator 8.0 or older"
-msgstr "Atver failus, kas saglabāti Adobe Illustrator 8.0 vai vecākā formātā"
+msgstr "Atver Adobe Illustrator 8.0 vai vecākas versijas formāta datnes"
 
 #: ../share/extensions/aisvg.inx.h:1
 msgid "AI SVG Input"
@@ -31001,19 +31001,20 @@ msgstr "Adobe Illustrator SVG (*.ai.svg)"
 #: ../share/extensions/aisvg.inx.h:3
 msgid "Cleans the cruft out of Adobe Illustrator SVGs before opening"
 msgstr ""
-"Tīra nederīgo informāciju no Adobe Illustrator SVG failiem pirms atvēršanas"
+"Tīra nederīgo informāciju no Adobe Illustrator SVG datnēm pirms atvēršanas"
 
 #: ../share/extensions/ccx_input.inx.h:1
 msgid "Corel DRAW Compressed Exchange files input (UC)"
-msgstr "Corel DRAW Compressed Exchange failu ievade (UC)"
+msgstr "Corel DRAW Compressed Exchange datņu ievade (UC)"
 
 #: ../share/extensions/ccx_input.inx.h:2
 msgid "Corel DRAW Compressed Exchange files (UC) (*.ccx)"
-msgstr "Corel DRAW saspiestie apmaiņas faili (Compressed Exchange) (UC) (.ccx)"
+msgstr ""
+"Corel DRAW saspiestās apmaiņas datnes (Compressed Exchange) (UC) (.ccx)"
 
 #: ../share/extensions/ccx_input.inx.h:3
 msgid "Open compressed exchange files saved in Corel DRAW (UC)"
-msgstr "Atver Corel DRAW saglabātos saspiestos apmaiņas failus (UC)"
+msgstr "Atver Corel DRAW saglabātos saspiestās apmaiņas datnes (UC)"
 
 #: ../share/extensions/cdr_input.inx.h:1
 msgid "Corel DRAW Input (UC)"
@@ -31021,11 +31022,11 @@ msgstr "Corel DRAW ievade (UC)"
 
 #: ../share/extensions/cdr_input.inx.h:2
 msgid "Corel DRAW 7-X4 files (UC) (*.cdr)"
-msgstr "Corel DRAW 7-X4 faili (UC) (*.cdr)"
+msgstr "Corel DRAW 7-X4 datnes (UC) (*.cdr)"
 
 #: ../share/extensions/cdr_input.inx.h:3
 msgid "Open files saved in Corel DRAW 7-X4 (UC)"
-msgstr "Atver Corel DRAW 7-X4 (UC) formātā saglabātos failus"
+msgstr "Atver Corel DRAW 7-X4 (UC) formātā saglabātās datness"
 
 #: ../share/extensions/cdt_input.inx.h:1
 msgid "Corel DRAW templates input (UC)"
@@ -31033,35 +31034,35 @@ msgstr "Corel DRAW veidņu ievade (UC)"
 
 #: ../share/extensions/cdt_input.inx.h:2
 msgid "Corel DRAW 7-13 template files (UC) (*.cdt)"
-msgstr "Corel DRAW 7-13 veidņu faili (UC) (.cdt)"
+msgstr "Corel DRAW 7-13 veidņu datnes (UC) (.cdt)"
 
 #: ../share/extensions/cdt_input.inx.h:3
 msgid "Open files saved in Corel DRAW 7-13 (UC)"
-msgstr "Atver Corel DRAW 7-13 (UC) formātā saglabātos failus"
+msgstr "Atver Corel DRAW 7-13 (UC) formātā saglabātās datnes"
 
 #: ../share/extensions/cgm_input.inx.h:1
 msgid "Computer Graphics Metafile files input"
-msgstr "Computer Graphics Metafile failu ievade"
+msgstr "Computer Graphics Metafile datņu ievade"
 
 #: ../share/extensions/cgm_input.inx.h:2
 msgid "Computer Graphics Metafile files (*.cgm)"
-msgstr "Computer Graphics Metafile faili (.cgm)"
+msgstr "Computer Graphics Metafile datnes (.cgm)"
 
 #: ../share/extensions/cgm_input.inx.h:3
 msgid "Open Computer Graphics Metafile files"
-msgstr "Atver Computer Graphics Metafile failus"
+msgstr "Atver Computer Graphics Metafile datnes"
 
 #: ../share/extensions/cmx_input.inx.h:1
 msgid "Corel DRAW Presentation Exchange files input (UC)"
-msgstr "Corel DRAW Presentation Exchange failu ievade (UC)"
+msgstr "Corel DRAW Presentation Exchange datņu ievade (UC)"
 
 #: ../share/extensions/cmx_input.inx.h:2
 msgid "Corel DRAW Presentation Exchange files (UC) (*.cmx)"
-msgstr "Corel DRAW Presentation Exchange faili (UC) (.cmx)"
+msgstr "Corel DRAW Presentation Exchange datnes (UC) (.cmx)"
 
 #: ../share/extensions/cmx_input.inx.h:3
 msgid "Open presentation exchange files saved in Corel DRAW (UC)"
-msgstr "Atver Corel DRAW saglabātos Presentation Exchange failus (UC)"
+msgstr "Atver Corel DRAW saglabātās Presentation Exchange datnes (UC)"
 
 #: ../share/extensions/color_blackandwhite.inx.h:1
 msgid "Black and White"
@@ -31260,15 +31261,15 @@ msgstr "Pārveidot par strīpiņām"
 
 #: ../share/extensions/dhw_input.inx.h:1
 msgid "DHW file input"
-msgstr "DHW faila ievade"
+msgstr "DHW datnes ievade"
 
 #: ../share/extensions/dhw_input.inx.h:2
 msgid "ACECAD Digimemo File (*.dhw)"
-msgstr "ACECAD Digimemo fails (.dhw)"
+msgstr "ACECAD Digimemo datne (.dhw)"
 
 #: ../share/extensions/dhw_input.inx.h:3
 msgid "Open files from ACECAD Digimemo"
-msgstr "Atvērt ACECAD Digimemo failus"
+msgstr "Atvēr ACECAD Digimemo datnes"
 
 #: ../share/extensions/dia.inx.h:1
 msgid "Dia Input"
@@ -31289,7 +31290,7 @@ msgid ""
 "In order to import Dia files, Dia itself must be installed.  You can get Dia "
 "at http://live.gnome.org/Dia"
 msgstr ""
-"Lai varētu importēt Dia failus, jābūt uzstādītai Dia. Lietotni varat atrast "
+"Lai varētu importēt Dia datnes, jābūt uzstādītai Dia. Lietotni varat atrast "
 "http://live.gnome.org/Dia"
 
 #: ../share/extensions/dia.inx.h:4
@@ -31607,7 +31608,7 @@ msgstr ""
 "- pieņemt, ka dxf rasējums ir mm.\n"
 "- pieņemt, ka svg rasējums ir pikseļos ar izšķirtspēju 90 dpi.\n"
 "- mēroga koeficients un izejas punkts attiecas tikai uz rokas mērogošanu.\n"
-"- slāņi tiek saglabāti tikai Fails->Atvērt gadījumā, Importēt - nē.\n"
+"- slāņi tiek saglabāti tikai Datne->Atvērt gadījumā, Importēt - nē.\n"
 "- ierobežots BLOCKS atbalsts, nepieciešamības gadījumā izmantojiet AutoCAD "
 "Explode Blocks."
 
@@ -31772,7 +31773,7 @@ msgstr "AutoCAD DXF R12 (*.dxf)"
 
 #: ../share/extensions/dxf_output.inx.h:4
 msgid "DXF file written by pstoedit"
-msgstr "DXF fails, izveidots ar pstoedit"
+msgstr "DXF datne, izveidots ar pstoedit"
 
 #: ../share/extensions/edge3d.inx.h:1
 msgid "Edge 3D"
@@ -31873,8 +31874,8 @@ msgid ""
 "* A relative path (or a filename without path) is relative to the user's "
 "home directory."
 msgstr ""
-"* Faila paplašinājums nav jāievada, tas tiks pievienots automātiski.\n"
-"* Relatīvais ceļš (vai faila nosaukums bez ceļa) ir pakārtots lietotāja "
+"* Datnes paplašinājums nav jāievada, tas tiks pievienots automātiski.\n"
+"* Relatīvais ceļš (vai datnes nosaukums bez ceļa) ir pakārtots lietotāja "
 "mājas mapei."
 
 #: ../share/extensions/extrude.inx.h:3
@@ -31891,11 +31892,11 @@ msgstr "XFIG ievade"
 
 #: ../share/extensions/fig_input.inx.h:2
 msgid "XFIG Graphics File (*.fig)"
-msgstr "XFIG grafiskie faili (*.fig)"
+msgstr "XFIG grafiskās datnes (*.fig)"
 
 #: ../share/extensions/fig_input.inx.h:3
 msgid "Open files saved with XFIG"
-msgstr "Atvērt ar XFIG saglabātus failus"
+msgstr "Atvērt ar XFIG saglabātas datnes"
 
 #: ../share/extensions/flatten.inx.h:1
 msgid "Flatten Beziers"
@@ -32351,7 +32352,7 @@ msgstr "Iestatījumi"
 #: ../share/extensions/gcodetools_lathe.inx.h:30
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:19
 msgid "File:"
-msgstr "Fails:"
+msgstr "Datne:"
 
 #: ../share/extensions/gcodetools_area.inx.h:38
 #: ../share/extensions/gcodetools_dxf_points.inx.h:10
@@ -32360,7 +32361,7 @@ msgstr "Fails:"
 #: ../share/extensions/gcodetools_lathe.inx.h:31
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:20
 msgid "Add numeric suffix to filename"
-msgstr "Pievienot skaitlisku piedēkli faila nosaukumam"
+msgstr "Pievienot skaitlisku piedēkli datnes nosaukumam"
 
 #: ../share/extensions/gcodetools_area.inx.h:39
 #: ../share/extensions/gcodetools_dxf_points.inx.h:11
@@ -32415,7 +32416,7 @@ msgstr "Papildu pēcapstrāde:"
 #: ../share/extensions/gcodetools_lathe.inx.h:37
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:26
 msgid "Generate log file"
-msgstr "Veidot žurnāla failu"
+msgstr "Veidot žurnāla datni"
 
 #: ../share/extensions/gcodetools_area.inx.h:45
 #: ../share/extensions/gcodetools_dxf_points.inx.h:17
@@ -32424,7 +32425,7 @@ msgstr "Veidot žurnāla failu"
 #: ../share/extensions/gcodetools_lathe.inx.h:38
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:27
 msgid "Full path to log file:"
-msgstr "Pilnais ceļš līdz žurnāla failam:"
+msgstr "Pilnais ceļš līdz žurnāla datnei:"
 
 #: ../share/extensions/gcodetools_area.inx.h:49
 #: ../share/extensions/gcodetools_dxf_points.inx.h:21
@@ -32552,7 +32553,7 @@ msgstr "Grafiti"
 
 #: ../share/extensions/gcodetools_graffiti.inx.h:2
 msgid "Maximum segment length:"
-msgstr "Maksimālais segmenta garums:"
+msgstr "Maksimālais posma garums:"
 
 #: ../share/extensions/gcodetools_graffiti.inx.h:3
 msgid "Minimal connector radius:"
@@ -32848,7 +32849,7 @@ msgstr "Saglabāt fonu"
 
 #: ../share/extensions/gimp_xcf.inx.h:6
 msgid "File Resolution:"
-msgstr "Faila izšķirtspēja:"
+msgstr "Datnes izšķirtspēja:"
 
 #: ../share/extensions/gimp_xcf.inx.h:8
 msgid ""
@@ -32871,7 +32872,7 @@ msgstr ""
 "    * Saglabāt režģi: pārvērš pirmo taisnstūraino režģi Gimp režģī (ņemiet "
 "vērā, ka noklusētais Inkscape režģis attēlojot Gimp ir ļoti sīks).\n"
 "    * Saglabāt fonu: pievieno dokumenta fonu katram pārveidotajam slānim.\n"
-"    * Saglabāt izšķirtspēju: XCF faila izšķirtspēja, DPI.\n"
+"    * Saglabāt izšķirtspēju: XCF datnes izšķirtspēja, DPI.\n"
 "\n"
 "Katrs pirmā līmeņa slānis tiek pārvērsts par Gimp slāni. Apakšslāņi tiek "
 "apvienoti un pārvērsti kopā ar to virsslāni par vienu Gimp slāni."
@@ -33339,8 +33340,8 @@ msgid ""
 "other HPGL files please change their file extension to .plt, make sure you "
 "have UniConverter installed and open them again."
 msgstr ""
-"Lūdzu, ņemiet vērā, ka ir iespējams atvērt tikai ar Inkscape izveidotos HPGL "
-"failus. Lai atvērtu citus HPGL formāta failus, pārdēvējiet tos par .plt, "
+"Lūdzu, ņemiet vērā, ka ir iespējams atvērt tikai ar Inkscape izveidotās HPGL "
+"datness. Lai atvērtu citas HPGL formāta datnes, pārdēvējiet tās par .plt, "
 "pārliecinieties, ka ir uzstādīts UniConverter un tad mēģiniet atvērt vēlreiz."
 
 #: ../share/extensions/hpgl_input.inx.h:3
@@ -33386,11 +33387,11 @@ msgstr "Rādīt pārvietojumus starp ceļiem. (Noklusētais: neatzīmēts)"
 #: ../share/extensions/hpgl_input.inx.h:9
 #: ../share/extensions/hpgl_output.inx.h:34
 msgid "HP Graphics Language file (*.hpgl)"
-msgstr "HP Graphics Language fails (*.hpgl)"
+msgstr "HP Graphics Language datne (*.hpgl)"
 
 #: ../share/extensions/hpgl_input.inx.h:10
 msgid "Import an HP Graphics Language file"
-msgstr "Importēt HP Graphics Language failu"
+msgstr "Importēt HP Graphics Language datni"
 
 #: ../share/extensions/hpgl_output.inx.h:1
 msgid "HPGL Output"
