@@ -46,6 +46,7 @@ icons_DATA = \
 	\
 	icons.svg \
 	tango_icons.svg \
+	symbolic_icons.svg \
 	\
 	inkscape.file.svg \
 	inkscape.file.png \
