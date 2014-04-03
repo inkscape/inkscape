@@ -31,6 +31,7 @@ ink_common_sources += \
 	util/reverse-list.h \
 	util/share.h \
 	util/share.cpp \
+	util/signal-blocker.h \
 	util/tuple.h \
 	util/ucompose.hpp \
 	util/units.cpp \
