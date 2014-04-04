@@ -378,6 +378,11 @@ SPFilter *modify_filter_gaussian_blur_from_item(SPDocument *document, SPItem *it
     }
 
     SPFilter *filter = SP_FILTER(item->style->getFilter());
+    if (!filter) {
+        // We reach here when filter.set is true, but the href is not found in the document
+        return new_filter_simple_from_item(document, item, "normal", radius);
+    }
+
     Inkscape::XML::Document *xml_doc = document->getReprDoc();
 
     // If there are more users for this filter, duplicate it
