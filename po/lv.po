@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2014-03-04 13:58+0100\n"
-"PO-Revision-Date: 2014-04-03 11:55+0200\n"
+"PO-Revision-Date: 2014-04-03 16:16+0200\n"
 "Last-Translator: Jānis Eisaks <jancs@dv.lv>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "Language: lv\n"
@@ -3274,7 +3274,7 @@ msgstr "Valūtas maiņa - Eiro"
 #: ../share/symbols/symbols.h:11 ../share/symbols/symbols.h:12
 msgctxt "Symbol"
 msgid "Cashier"
-msgstr ""
+msgstr "Kasieris"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:13 ../share/symbols/symbols.h:14
@@ -3366,7 +3366,7 @@ msgstr "Tualetes"
 #: ../share/symbols/symbols.h:217
 msgctxt "Symbol"
 msgid "Nursery"
-msgstr ""
+msgstr "Bērnistaba"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:43 ../share/symbols/symbols.h:44
@@ -3638,19 +3638,19 @@ msgstr "Pa labi un lejup bulta"
 #: ../share/symbols/symbols.h:127 ../share/symbols/symbols.h:128
 msgctxt "Symbol"
 msgid "NPS Wheelchair Accessible - 1996"
-msgstr ""
+msgstr "Pieejams NPS ratiņkrēsliem -1996"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:129 ../share/symbols/symbols.h:130
 msgctxt "Symbol"
 msgid "NPS Wheelchair Accessible"
-msgstr ""
+msgstr "Pieejams NPS ratiņkrēsliem"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:131 ../share/symbols/symbols.h:132
 msgctxt "Symbol"
 msgid "New Wheelchair Accessible"
-msgstr ""
+msgstr "Pieejams jauniem ratiņkrēsliem"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:133
@@ -3668,7 +3668,7 @@ msgstr "Domu baloni"
 #: ../share/symbols/symbols.h:135
 msgctxt "Symbol"
 msgid "Dream Speaking"
-msgstr ""
+msgstr "Sapņošana"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:136
@@ -3735,7 +3735,7 @@ msgstr "Iekšējā uzglabāšana"
 #: ../share/symbols/symbols.h:146
 msgctxt "Symbol"
 msgid "Card"
-msgstr ""
+msgstr "Kartīte"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:147
@@ -3769,10 +3769,9 @@ msgstr "Perfolente"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:152
-#, fuzzy
 msgctxt "Symbol"
 msgid "Terminator"
-msgstr "_Tulkotāji"
+msgstr "Terminators"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:153
@@ -3782,10 +3781,9 @@ msgstr "Bieza bulta"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:154
-#, fuzzy
 msgctxt "Symbol"
 msgid "Transfer"
-msgstr "Pārveidojumi"
+msgstr "Pārvietojumi"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:155
@@ -3795,24 +3793,21 @@ msgstr "Lēmums"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:156
-#, fuzzy
 msgctxt "Symbol"
 msgid "Flow Arrow"
-msgstr "Datu plūsmas vadība"
+msgstr "Plūsmas bulta"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:157
-#, fuzzy
 msgctxt "Symbol"
 msgid "Circle Arrow"
-msgstr "Aplis"
+msgstr "Riņķveida bulta"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:158
-#, fuzzy
 msgctxt "Symbol"
 msgid "Off-Page Connector"
-msgstr "Savienotājs"
+msgstr "Ārpuslapas savienotājs"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:159
@@ -3974,10 +3969,9 @@ msgstr "Hostelis"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:185
-#, fuzzy
 msgctxt "Symbol"
 msgid "Chalet"
-msgstr "Palete"
+msgstr "Vasarnīca"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:186
@@ -3995,7 +3989,7 @@ msgstr "Kempings"
 #: ../share/symbols/symbols.h:188
 msgctxt "Symbol"
 msgid "Alpine Hut"
-msgstr ""
+msgstr "Kalnu būdiņa"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:189
@@ -4071,16 +4065,15 @@ msgstr "Reciklēšana"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:201
-#, fuzzy
 msgctxt "Symbol"
 msgid "Survey Point"
-msgstr "Gergona punkts"
+msgstr "Apskates punkts"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:202
 msgctxt "Symbol"
 msgid "Toll Booth"
-msgstr ""
+msgstr "Nodevu kase"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:203
@@ -4098,7 +4091,7 @@ msgstr "Soļi"
 #: ../share/symbols/symbols.h:205
 msgctxt "Symbol"
 msgid "Stile"
-msgstr ""
+msgstr "Pakāpiens"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:206
@@ -4110,7 +4103,7 @@ msgstr "Skūpstu vārti"
 #: ../share/symbols/symbols.h:207
 msgctxt "Symbol"
 msgid "Gate"
-msgstr ""
+msgstr "Vārti"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:209
@@ -4126,16 +4119,15 @@ msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:211
-#, fuzzy
 msgctxt "Symbol"
 msgid "Cattle Grid"
-msgstr "Dekarta režģis"
+msgstr "Liellopu aploks"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:212
 msgctxt "Symbol"
 msgid "Bollard"
-msgstr ""
+msgstr "Pietauvošanās pālis"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:213
@@ -4225,7 +4217,7 @@ msgstr "Veterinārs"
 #: ../share/symbols/symbols.h:229
 msgctxt "Symbol"
 msgid "Drugs Dispensary"
-msgstr ""
+msgstr "Labdarības aptieka"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:230
@@ -4255,7 +4247,7 @@ msgstr "Ārsti"
 #: ../share/symbols/symbols.h:234
 msgctxt "Symbol"
 msgid "Scrub Land"
-msgstr ""
+msgstr "Krūmājs"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:235
@@ -4267,7 +4259,7 @@ msgstr "Purvs"
 #: ../share/symbols/symbols.h:236
 msgctxt "Symbol"
 msgid "Hills"
-msgstr ""
+msgstr "Pakalni"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:237
@@ -4279,7 +4271,7 @@ msgstr "Pļava"
 #: ../share/symbols/symbols.h:238
 msgctxt "Symbol"
 msgid "Deciduous Forest"
-msgstr ""
+msgstr "Lapu koku mežs"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:239
@@ -4291,7 +4283,7 @@ msgstr "Jaukts mežs"
 #: ../share/symbols/symbols.h:240
 msgctxt "Symbol"
 msgid "Coniferous Forest"
-msgstr ""
+msgstr "Skuju koku mežs"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:241
@@ -4333,13 +4325,13 @@ msgstr "Ciemats"
 #: ../share/symbols/symbols.h:247
 msgctxt "Symbol"
 msgid "Town"
-msgstr ""
+msgstr "Pilsēta"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:248
 msgctxt "Symbol"
 msgid "Hamlet"
-msgstr ""
+msgstr "Ciemats"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:249
@@ -4507,7 +4499,7 @@ msgstr "Beķeris"
 #: ../share/symbols/symbols.h:276
 msgctxt "Symbol"
 msgid "Off License / Liquor Store"
-msgstr ""
+msgstr "Alkohola veikals"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:277
@@ -4561,7 +4553,7 @@ msgstr "Slidotava"
 #: ../share/symbols/symbols.h:285
 msgctxt "Symbol"
 msgid "Equine Sports"
-msgstr ""
+msgstr "Zirgu sports"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:286
@@ -4691,10 +4683,9 @@ msgstr "Palu slūžas"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:311
-#, fuzzy
 msgctxt "Symbol"
 msgid "Shipping"
-msgstr "Pilēšana"
+msgstr "Transportēšana"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:312
@@ -4822,7 +4813,7 @@ msgstr "Tukšs CD kastītes vāks."
 
 #: ../share/templates/templates.h:1
 msgid "CD cover disc disk 300dpi box"
-msgstr ""
+msgstr "CD uzlīme, disks, 300 dpi rāmis"
 
 #: ../share/templates/templates.h:1
 msgid "CD Label 120x120 "
@@ -4862,27 +4853,27 @@ msgstr "DVD vāks, plānais, 300 dpi"
 
 #: ../share/templates/templates.h:1
 msgid "DVD Cover Superslim 300dpi "
-msgstr ""
+msgstr "DVD vāciņi, superplānie, 300 dpi"
 
 #: ../share/templates/templates.h:1
 msgid "Template for both-sides DVD superslim covers."
-msgstr ""
+msgstr "Veidne abām superplāno DVD vāciņu pusēm."
 
 #: ../share/templates/templates.h:1
 msgid "DVD cover superslim 300dpi"
-msgstr ""
+msgstr "DVD vāciņi, superplānie, 300 dpi"
 
 #: ../share/templates/templates.h:1
 msgid "DVD Cover Ultraslim 300dpi "
-msgstr ""
+msgstr "DVD vāciņi, ultraplānie, 300 dpi"
 
 #: ../share/templates/templates.h:1
 msgid "Template for both-sides DVD ultraslim covers."
-msgstr ""
+msgstr "Veidne abām ultraplāno DVD vāciņu pusēm."
 
 #: ../share/templates/templates.h:1
 msgid "DVD cover ultraslim 300dpi"
-msgstr ""
+msgstr "DVD vāciņi, ultraplānie, 300 dpi"
 
 #: ../share/templates/templates.h:1
 msgid "Desktop 1024x768"
@@ -5090,12 +5081,14 @@ msgid "LaTeX Beamer"
 msgstr "LaTeX druka"
 
 #: ../share/templates/templates.h:1
+#, fuzzy
 msgid "LaTeX beamer template with helping grid."
-msgstr ""
+msgstr "LaTeX beamer template with helping grid."
 
 #: ../share/templates/templates.h:1
+#, fuzzy
 msgid "LaTex LaTeX latex grid beamer"
-msgstr ""
+msgstr "LaTex LaTeX latex grid beamer"
 
 #: ../share/templates/templates.h:1
 msgid "Typography Canvas"
@@ -6621,9 +6614,8 @@ msgid "Convert gradients to colored polygon series"
 msgstr "Pārvērst krāsu pārejas krāsas izkrāsotu daudzstūru rindās"
 
 #: ../src/extension/internal/emf-inout.cpp:3532
-#, fuzzy
 msgid "Use native rectangular linear gradients"
-msgstr "Izveidot lineāru krāsu pāreju"
+msgstr "Izmantot iebūvētās taisnstūrainas lineārās krāsu pārejas"
 
 #: ../src/extension/internal/emf-inout.cpp:3533
 msgid "Map all fill patterns to standard EMF hatches"
@@ -8469,12 +8461,12 @@ msgstr "Nekas (auto)"
 #: ../src/extension/internal/gdkpixbuf-input.cpp:203
 #: ../src/ui/dialog/inkscape-preferences.cpp:1452
 msgid "Smooth (optimizeQuality)"
-msgstr ""
+msgstr "Nogludināta (optimizēt kvalitāti)"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:204
 #: ../src/ui/dialog/inkscape-preferences.cpp:1452
 msgid "Blocky (optimizeSpeed)"
-msgstr ""
+msgstr "Graudaina (optimizēt ātrumu)"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:207
 msgid "Hide the dialog next time and always apply the same actions."
@@ -9154,7 +9146,7 @@ msgstr "Tonis"
 
 #: ../src/filter-enums.cpp:68
 msgid "Luminosity"
-msgstr ""
+msgstr "Mirdzums"
 
 #: ../src/filter-enums.cpp:75
 msgid "Matrix"
@@ -16110,9 +16102,8 @@ msgid "This SVG filter effect is not yet implemented in Inkscape."
 msgstr "Šis SVG efekts vēl nav ieviests Inkscape."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1041
-#, fuzzy
 msgid "Slope"
-msgstr "Aploksne"
+msgstr "Slīpums"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1042
 msgid "Intercept"
@@ -20481,11 +20472,13 @@ msgstr "Izšķirtspēja komandai 'Izveidot bitkartes kopiju'"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1440
 msgid "Ask about linking and scaling when importing"
-msgstr ""
+msgstr "Importējot jautāt par piesaistīšanu un mērogošanu"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1442
 msgid "Pop-up linking and scaling dialog when importing bitmap image."
 msgstr ""
+"Importējot bitkartes attēlu atvērt piesaistīšanas un mērogošanas "
+"dialoglodziņu."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1448
 msgid "Bitmap link:"
@@ -23622,7 +23615,7 @@ msgid "Paste text"
 msgstr "Ielīmet tekstu"
 
 #: ../src/ui/tools/text-tool.cpp:1608
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Type or edit flowed text (%d character%s); <b>Enter</b> to start new "
 "paragraph."
@@ -23630,7 +23623,7 @@ msgid_plural ""
 "Type or edit flowed text (%d characters%s); <b>Enter</b> to start new "
 "paragraph."
 msgstr[0] ""
-"Ievadiet vai labojiet teksta aizpildījumu (%d zīmes%s); <b>Enter</b> - lai "
+"Ievadiet vai labojiet teksta aizpildījumu (%d zīme%s); <b>Enter</b> - lai "
 "sāktu jaunu rindkopu."
 msgstr[1] ""
 "Ievadiet vai labojiet teksta aizpildījumu (%d zīmes%s); <b>Enter</b> - lai "
@@ -23640,12 +23633,12 @@ msgstr[2] ""
 "sāktu jaunu rindkopu."
 
 #: ../src/ui/tools/text-tool.cpp:1610
-#, fuzzy, c-format
+#, c-format
 msgid "Type or edit text (%d character%s); <b>Enter</b> to start new line."
 msgid_plural ""
 "Type or edit text (%d characters%s); <b>Enter</b> to start new line."
 msgstr[0] ""
-"Ievadiet vai labojiet tekstu (%d rakstzīmes%s); nospiediet <b>Enter</b> "
+"Ievadiet vai labojiet tekstu (%d rakstzīme%s); nospiediet <b>Enter</b> "
 "jaunas rindas sākšanai."
 msgstr[1] ""
 "Ievadiet vai labojiet tekstu (%d rakstzīmes%s); nospiediet <b>Enter</b> "
@@ -25301,9 +25294,8 @@ msgid "Deselect any selected objects or nodes"
 msgstr "Atcelt visu objektu vai mezglu izvēli"
 
 #: ../src/verbs.cpp:2475
-#, fuzzy
 msgid "Delete all the guides in the document"
-msgstr "Dzēst visus objektus dokumentā"
+msgstr "Dzēst visas dokumentā esošās palīglīnijas"
 
 #: ../src/verbs.cpp:2476
 msgid "Create _Guides Around the Page"
@@ -27799,9 +27791,8 @@ msgid "Repeat:"
 msgstr "Atkārtot:"
 
 #: ../src/widgets/gradient-toolbar.cpp:1143
-#, fuzzy
 msgid "No stops"
-msgstr "Nav apmales"
+msgstr "Nav pieturpunktu"
 
 #: ../src/widgets/gradient-toolbar.cpp:1145
 msgid "Stops"
@@ -27818,7 +27809,6 @@ msgstr "Atbalsta punkti:"
 #. Label
 #: ../src/widgets/gradient-toolbar.cpp:1158
 #: ../src/widgets/gradient-vector.cpp:926
-#, fuzzy
 msgctxt "Gradient"
 msgid "Offset:"
 msgstr "Nobīde:"
@@ -33398,16 +33388,14 @@ msgid "HPGL Output"
 msgstr "HPGL Izvade"
 
 #: ../share/extensions/hpgl_output.inx.h:2
-#, fuzzy
 msgid ""
 "Please make sure that all objects you want to save are converted to paths. "
 "Please use the plotter extension (Extensions menu) to plot directly over a "
 "serial connection."
 msgstr ""
 "Lūdzu, pārliecinieties, ka visi saglabājamie objekti ir pārvērsti par "
-"ceļiem. Plotēšana automātiski tiks pieskaņota nulles punktam. Lūdzu, "
-"izmantojiet plotera paplašinājumu (Paplašinājumu izvēlnē), lai plotētu uz "
-"ploteri tieši."
+"ceļiem. Lūdzu, izmantojiet plotera paplašinājumu (Paplašinājumu izvēlnē), "
+"lai plotētu tieši ploteri izmantojot seriālo savienojumu."
 
 #: ../share/extensions/hpgl_output.inx.h:3
 #: ../share/extensions/plotter.inx.h:19
@@ -33431,13 +33419,12 @@ msgstr "Spalvas spiediena spēks (g)"
 
 #: ../share/extensions/hpgl_output.inx.h:11
 #: ../share/extensions/plotter.inx.h:27
-#, fuzzy
 msgid ""
 "The amount of force pushing down the pen in grams, set to 0 to omit command. "
 "Most plotters ignore this command. (Default: 0)"
 msgstr ""
-"Spēks, ar kādu tis piespiesta spalva, gramos. Ievadiet 0, lai to apietu. "
-"Lielākā ploteru daļa šo komandu neņem vērā. (Noklusētais: 24)"
+"Spēks, ar kādu tiks piespiesta spalva, gramos. Ievadiet 0, lai to apietu. "
+"Lielākā ploteru daļa šo komandu neņem vērā. (Noklusētais: 0)"
 
 #: ../share/extensions/hpgl_output.inx.h:12
 #: ../share/extensions/plotter.inx.h:28
@@ -33502,9 +33489,8 @@ msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:22
 #: ../share/extensions/plotter.inx.h:38
-#, fuzzy
 msgid "Plot Features "
-msgstr "Filca spalvas"
+msgstr "Plotēšanas īpatnības"
 
 #: ../share/extensions/hpgl_output.inx.h:23
 #: ../share/extensions/plotter.inx.h:39
@@ -34911,9 +34897,8 @@ msgstr ""
 "par ceļiem."
 
 #: ../share/extensions/plotter.inx.h:3
-#, fuzzy
 msgid "Connection Settings "
-msgstr "Savienojumi"
+msgstr "Savienojumu iestatījumi"
 
 #: ../share/extensions/plotter.inx.h:4
 msgid "Serial port"
@@ -36126,7 +36111,7 @@ msgstr "Synfig Animation uzrakstīta izmantojot sif-file eksporta paplašinājum
 
 #: ../share/extensions/tar_layers.inx.h:1
 msgid "Collection of SVG files One per root layer"
-msgstr ""
+msgstr "SVG datņu kolekcija, pa vienam katram pamatslānim"
 
 #: ../share/extensions/tar_layers.inx.h:2
 msgid "Layers as Separate SVG (*.tar)"
@@ -36137,6 +36122,7 @@ msgid ""
 "Each layer split into it's own svg file and collected as a tape archive (tar "
 "file)"
 msgstr ""
+"Katrs slānis tiek saglabāts savā datnē un apvienots lentas arhīvā (tar datne)"
 
 #: ../share/extensions/text_braille.inx.h:1
 msgid "Convert to Braille"
