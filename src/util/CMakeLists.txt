@@ -5,6 +5,7 @@ set(util_SRC
 	expression-evaluator.cpp
 	share.cpp
 	units.cpp
+	ziptool.cpp
 
 
 	# -------

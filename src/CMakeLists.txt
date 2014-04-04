@@ -485,7 +485,6 @@ list(APPEND inkscape_SRC
 add_subdirectory(debug)
 add_subdirectory(dialogs)
 add_subdirectory(display)
-add_subdirectory(dom)
 add_subdirectory(extension)
 add_subdirectory(filters)
 add_subdirectory(helper)
@@ -539,7 +538,6 @@ target_link_libraries(inkscape
 	#sp_LIB # annoying, we need both!
 	nrtype_LIB # annoying, we need both!
 
-	dom_LIB
 	croco_LIB
 	avoid_LIB
 	gdl_LIB

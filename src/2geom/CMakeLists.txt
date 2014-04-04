@@ -21,6 +21,7 @@ set(2geom_SRC
 	nearest-point.cpp
 	numeric/matrix.cpp
 	path-intersection.cpp
+	path-sink.cpp
 	path.cpp
 	pathvector.cpp
 	piecewise.cpp
@@ -43,7 +44,6 @@ set(2geom_SRC
 	solve-bezier-parametric.cpp
 	svg-elliptical-arc.cpp
 	svg-path-parser.cpp
-	svg-path.cpp
 	sweep.cpp
 	toposweep.cpp
 	transforms.cpp
