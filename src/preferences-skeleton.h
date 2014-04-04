@@ -293,6 +293,7 @@ static char const preferences_skeleton[] =
 #ifdef WIN32 // FIXME: Temporary Win32 special code to enable transient dialogs
 "    <group id=\"dialogsontopwin32\" value=\"0\"/>\n"
 #endif
+"    <group id=\"defaultwindowsize\" value=\"2\" />\n"
 "    <group id=\"arenatilescachesize\" value=\"8192\"/>\n"
 "    <group id=\"preservetransform\" value=\"0\"/>\n"
 "    <group id=\"clonecompensation\" value=\"1\"/>\n"
