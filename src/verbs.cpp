@@ -1777,6 +1777,13 @@ void ZoomVerb::perform(SPAction *action, void *data)
     gdouble zoom_inc =
         prefs->getDoubleLimited( "/options/zoomincrement/value", 1.414213562, 1.01, 10 );
 
+    double zcorr = 1.0;
+    Glib::ustring abbr = prefs->getString("/options/zoomcorrection/unit");
+    if (dt->namedview->doc_units && dt->namedview->doc_units->abbr == abbr)
+        zcorr = prefs->getDouble("/options/zoomcorrection/value", 1.0);
+
+    Geom::Rect const d = dt->get_display_area();
+            
     switch (reinterpret_cast<std::size_t>(data)) {
         case SP_VERB_ZOOM_IN:
         {
@@ -1792,7 +1799,6 @@ void ZoomVerb::perform(SPAction *action, void *data)
                 }
             }
 
-            Geom::Rect const d = dt->get_display_area();
             dt->zoom_relative( d.midpoint()[Geom::X], d.midpoint()[Geom::Y], mul*zoom_inc);
             break;
         }
@@ -1810,31 +1816,18 @@ void ZoomVerb::perform(SPAction *action, void *data)
                 }
             }
 
-            Geom::Rect const d = dt->get_display_area();
             dt->zoom_relative( d.midpoint()[Geom::X], d.midpoint()[Geom::Y], 1 / (mul*zoom_inc) );
             break;
         }
         case SP_VERB_ZOOM_1_1:
-        {
-            double zcorr = prefs->getDouble("/options/zoomcorrection/value", 1.0);
-            Geom::Rect const d = dt->get_display_area();
             dt->zoom_absolute( d.midpoint()[Geom::X], d.midpoint()[Geom::Y], 1.0 * zcorr );
             break;
-        }
         case SP_VERB_ZOOM_1_2:
-        {
-            double zcorr = prefs->getDouble("/options/zoomcorrection/value", 1.0);
-            Geom::Rect const d = dt->get_display_area();
             dt->zoom_absolute( d.midpoint()[Geom::X], d.midpoint()[Geom::Y], 0.5 * zcorr );
             break;
-        }
         case SP_VERB_ZOOM_2_1:
-        {
-            double zcorr = prefs->getDouble("/options/zoomcorrection/value", 1.0);
-            Geom::Rect const d = dt->get_display_area();
             dt->zoom_absolute( d.midpoint()[Geom::X], d.midpoint()[Geom::Y], 2.0 * zcorr );
             break;
-        }
         case SP_VERB_ZOOM_PAGE:
             dt->zoom_page();
             break;
