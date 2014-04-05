@@ -96,8 +96,8 @@ DialogManager::DialogManager() {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int dialogs_type = prefs->getIntLimited("/options/dialogtype/value", DOCK, 0, 1);
 
+    // The preferences dialog is broken, the DockBehavior code resizes it's floating window to the smallest size
     registerFactory("InkscapePreferences", &create<InkscapePreferences,  FloatingBehavior>);
-    registerFactory("XmlTree",             &create<XmlTree,              FloatingBehavior>);
 
     if (dialogs_type == FLOATING) {
         registerFactory("AlignAndDistribute",  &create<AlignAndDistribute,   FloatingBehavior>);
@@ -129,6 +129,7 @@ DialogManager::DialogManager() {
         registerFactory("SpellCheck",          &create<SpellCheck,           FloatingBehavior>);
         registerFactory("Export",              &create<Export,               FloatingBehavior>);
         registerFactory("CloneTiler",          &create<CloneTiler,           FloatingBehavior>);
+        registerFactory("XmlTree",             &create<XmlTree,              FloatingBehavior>);
 
     } else {
 
@@ -161,6 +162,7 @@ DialogManager::DialogManager() {
         registerFactory("SpellCheck",          &create<SpellCheck,           DockBehavior>);
         registerFactory("Export",              &create<Export,               DockBehavior>);
         registerFactory("CloneTiler",          &create<CloneTiler,           DockBehavior>);
+        registerFactory("XmlTree",             &create<XmlTree,              DockBehavior>);
 
     }
 }
