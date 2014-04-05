@@ -50,20 +50,21 @@ typedef std::list<std::string> HRefList;
 static std::string patheffectlist_write_svg(PathEffectList const & list);
 static std::string hreflist_write_svg(HRefList const & list);
 
-SPLPEItem::SPLPEItem() : SPItem() {
-    this->path_effects_enabled = 1;
-
-    this->path_effect_list = new PathEffectList();
-    this->current_path_effect = NULL;
-
-    this->lpe_modified_connection_list = new std::list<sigc::connection>();
+SPLPEItem::SPLPEItem()
+    : SPItem()
+    , path_effects_enabled(1)
+    , path_effect_list(new PathEffectList())
+    , lpe_modified_connection_list(new std::list<sigc::connection>())
+    , current_path_effect(NULL)
+    , lpe_helperpaths()
+{
 }
 
 SPLPEItem::~SPLPEItem() {
 }
 
 void SPLPEItem::build(SPDocument *document, Inkscape::XML::Node *repr) {
-	this->readAttr( "inkscape:path-effect" );
+    this->readAttr( "inkscape:path-effect" );
 
     SPItem::build(document, repr);
 }
@@ -166,9 +167,9 @@ void SPLPEItem::set(unsigned int key, gchar const* value) {
 }
 
 void SPLPEItem::update(SPCtx* ctx, unsigned int flags) {
-	SPItem::update(ctx, flags);
+    SPItem::update(ctx, flags);
 
-	// update the helperpaths of all LPEs applied to the item
+    // update the helperpaths of all LPEs applied to the item
     // TODO: re-add for the new node tool
 }
 
@@ -200,11 +201,11 @@ Inkscape::XML::Node* SPLPEItem::write(Inkscape::XML::Document *xml_doc, Inkscape
  */
 bool SPLPEItem::performPathEffect(SPCurve *curve) {
     if (!this) {
-    	return false;
+        return false;
     }
 
     if (!curve) {
-    	return false;
+        return false;
     }
 
     if (this->hasPathEffect() && this->pathEffectsEnabled()) {
@@ -259,7 +260,7 @@ bool SPLPEItem::performPathEffect(SPCurve *curve) {
 
 // CPPIFY: make pure virtual
 void SPLPEItem::update_patheffect(bool /*write*/) {
-	//throw;
+    //throw;
 }
 
 /**
