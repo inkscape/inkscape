@@ -462,18 +462,18 @@ void SPObject::deleteObject(bool propagate, bool propagate_descendants)
 
 void SPObject::cropToObject(SPObject *except)
 {
-    GSList *toDelete = NULL;
+    std::vector<SPObject*> toDelete;
     for ( SPObject *child = this->firstChild(); child; child = child->getNext() ) {
         if (SP_IS_ITEM(child)) {
             if (child->isAncestorOf(except)) {
                 child->cropToObject(except);
             } else if(child != except) {
-                toDelete = g_slist_append(toDelete, child);
+                toDelete.push_back(child);
             }
         }
     }
-    for (GSList *item = toDelete; item; item = item->next) {
-        SP_OBJECT(item->data)->deleteObject(true, true);
+    for (std::size_t i = 0; i < toDelete.size(); ++i) {
+        (toDelete[i])->deleteObject(true, true);
     }
 }
 
