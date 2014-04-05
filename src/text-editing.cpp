@@ -776,7 +776,7 @@ sp_te_delete (SPItem *item, Inkscape::Text::Layout::iterator const &start,
 
     bool has_text_decoration = false;
     gchar const *root_style = (item)->getRepr()->attribute("style");
-    if(strstr(root_style,"text-decoration"))has_text_decoration = true;
+    if(root_style && strstr(root_style,"text-decoration"))has_text_decoration = true;
 
     if (start_item == end_item) {
         // the quick case where we're deleting stuff all from the same string
@@ -2035,7 +2035,7 @@ void sp_te_apply_style(SPItem *text, Inkscape::Text::Layout::iterator const &sta
     roundtrippability. */
     bool has_text_decoration = false;
     gchar const *root_style = (text)->getRepr()->attribute("style");
-    if(strstr(root_style,"text-decoration"))has_text_decoration = true;
+    if(root_style && strstr(root_style,"text-decoration")) has_text_decoration = true;
     while (tidy_xml_tree_recursively(common_ancestor, has_text_decoration)){};
 
     // if we only modified subobjects this won't have been automatically sent
