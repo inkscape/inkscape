@@ -465,6 +465,11 @@ public:
     }
 
     /**
+     * Removes all children except for the given object, it's children and it's ancesstors.
+     */
+     void cropToObject(SPObject *except);
+
+    /**
      * Connects a slot to be called when an object is deleted.
      *
      * This connects a slot to an object's internal delete signal, which is invoked when the object

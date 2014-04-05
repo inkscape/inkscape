@@ -460,6 +460,23 @@ void SPObject::deleteObject(bool propagate, bool propagate_descendants)
     sp_object_unref(this, NULL);
 }
 
+void SPObject::cropToObject(SPObject *except)
+{
+    GSList *toDelete = NULL;
+    for ( SPObject *child = this->firstChild(); child; child = child->getNext() ) {
+        if (SP_IS_ITEM(child)) {
+            if (child->isAncestorOf(except)) {
+                child->cropToObject(except);
+            } else if(child != except) {
+                toDelete = g_slist_append(toDelete, child);
+            }
+        }
+    }
+    for (GSList *item = toDelete; item; item = item->next) {
+        SP_OBJECT(item->data)->deleteObject(true, true);
+    }
+}
+
 void SPObject::attach(SPObject *object, SPObject *prev)
 {
     //g_return_if_fail(parent != NULL);

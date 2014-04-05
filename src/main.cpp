@@ -1177,6 +1177,22 @@ static int sp_process_file_list(GSList *fl)
                     g_slist_free (selected);
                     g_slist_free (to_select);
                 }
+                if(sp_export_id) {
+                    doc->ensureUpToDate();
+
+                    // "crop" the document to the specified object, cleaning as we go.
+                    SPObject *obj = doc->getObjectById(sp_export_id);
+                    Geom::OptRect const bbox(SP_ITEM(obj)->visualBounds());
+
+                    if (bbox) {
+                        doc->fitToRect(*bbox, false);
+                    }
+
+                    if (sp_export_id_only) {
+                        // If -j then remove all other objects to complete the "crop"
+                        doc->getRoot()->cropToObject(obj);
+                    }
+                }
 
                 Inkscape::Extension::save(Inkscape::Extension::db.get("org.inkscape.output.svg.plain"), doc, sp_export_svg, false,
                             false, false, Inkscape::Extension::FILE_SAVE_METHOD_SAVE_COPY);
