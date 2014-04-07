@@ -1,6 +1,6 @@
 # Latvian translation for Inkscape.
 # This file is distributed under the same license as the Inkscape package.
-# Jānis Eisaks <jancs@dv.lv>, 2012, 2014.
+# Jānis Eisaks <jancs@dv.lv>, 2012-2014.
 # Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>, 2014.
 #
 msgid ""
@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2014-03-04 13:58+0100\n"
-"PO-Revision-Date: 2014-04-03 16:16+0200\n"
+"PO-Revision-Date: 2014-04-07 22:06+0200\n"
 "Last-Translator: Jānis Eisaks <jancs@dv.lv>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "Language: lv\n"
@@ -3292,7 +3292,7 @@ msgstr "Pazaudēts un atrasts"
 #: ../share/symbols/symbols.h:17 ../share/symbols/symbols.h:18
 msgctxt "Symbol"
 msgid "Coat Check"
-msgstr ""
+msgstr "Pakaramie"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:19 ../share/symbols/symbols.h:20
@@ -3841,10 +3841,9 @@ msgstr "Sagatavošana"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:164
-#, fuzzy
 msgctxt "Symbol"
 msgid "Display"
-msgstr "Ekrāna vienības"
+msgstr "Ekrāns"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:165
@@ -3854,10 +3853,9 @@ msgstr "Šķirošana"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:166
-#, fuzzy
 msgctxt "Symbol"
 msgid "Collate"
-msgstr "Šokolāde 1"
+msgstr "Kolāža"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:167
@@ -3869,37 +3867,37 @@ msgstr "Loģiskie simboli"
 #: ../share/symbols/symbols.h:168
 msgctxt "Symbol"
 msgid "Xnor Gate"
-msgstr ""
+msgstr "XNOR vārti"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:169
 msgctxt "Symbol"
 msgid "Xor Gate"
-msgstr ""
+msgstr "XOR vārti"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:170
 msgctxt "Symbol"
 msgid "Nor Gate"
-msgstr ""
+msgstr "NOR vārti"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:171
 msgctxt "Symbol"
 msgid "Or Gate"
-msgstr ""
+msgstr "OR vārti"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:172
 msgctxt "Symbol"
 msgid "Nand Gate"
-msgstr ""
+msgstr "NAND vārti"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:173
 msgctxt "Symbol"
 msgid "And Gate"
-msgstr ""
+msgstr "AND vārti"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:174
@@ -3911,7 +3909,7 @@ msgstr "Buferis"
 #: ../share/symbols/symbols.h:175
 msgctxt "Symbol"
 msgid "Not Gate"
-msgstr ""
+msgstr "NOT vārti"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:176
@@ -3923,7 +3921,7 @@ msgstr "Buferis, neliels"
 #: ../share/symbols/symbols.h:177
 msgctxt "Symbol"
 msgid "Not Gate Small"
-msgstr ""
+msgstr "NOT vārti, mazi"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:178
@@ -4079,7 +4077,7 @@ msgstr "Nodevu kase"
 #: ../share/symbols/symbols.h:203
 msgctxt "Symbol"
 msgid "Lift Gate"
-msgstr ""
+msgstr "Paceļamā barjera"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:204
@@ -4115,7 +4113,7 @@ msgstr "Ieeja"
 #: ../share/symbols/symbols.h:210
 msgctxt "Symbol"
 msgid "Cycle Barrier"
-msgstr ""
+msgstr "Velosipēdu barjera"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:211
@@ -4607,7 +4605,7 @@ msgstr "Ūdens rats"
 #: ../share/symbols/symbols.h:294
 msgctxt "Symbol"
 msgid "Point of Interest"
-msgstr ""
+msgstr "Apskates vieta"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:295
@@ -4673,7 +4671,7 @@ msgstr "Velosipēdu noma"
 #: ../share/symbols/symbols.h:309
 msgctxt "Symbol"
 msgid "Carpool"
-msgstr ""
+msgstr "Pilnas mašīnas"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:310
@@ -5076,19 +5074,16 @@ msgid "web banner 728x90 empty"
 msgstr "tīmekļa reklāmkarogs 728x90, tukšs"
 
 #: ../share/templates/templates.h:1
-#, fuzzy
 msgid "LaTeX Beamer"
-msgstr "LaTeX druka"
+msgstr "LaTeX Beamer"
 
 #: ../share/templates/templates.h:1
-#, fuzzy
 msgid "LaTeX beamer template with helping grid."
-msgstr "LaTeX beamer template with helping grid."
+msgstr "LaTeX beamer veidne ar palīglīniju režģi."
 
 #: ../share/templates/templates.h:1
-#, fuzzy
 msgid "LaTex LaTeX latex grid beamer"
-msgstr "LaTex LaTeX latex grid beamer"
+msgstr "LaTex LaTeX latex prezentācijas veidnes režģis"
 
 #: ../share/templates/templates.h:1
 msgid "Typography Canvas"
@@ -6028,7 +6023,7 @@ msgstr "Mala"
 
 #: ../src/extension/internal/bitmap/edge.cpp:45
 msgid "Highlight edges of selected bitmap(s)"
-msgstr "Izcelt atlasītā(o) attēla(u)  malas"
+msgstr "Izcelt atlasītās(-o) bitkartes(-šu) malas"
 
 #: ../src/extension/internal/bitmap/emboss.cpp:38
 msgid "Emboss"
@@ -6067,7 +6062,7 @@ msgstr "Reizinātājs:"
 
 #: ../src/extension/internal/bitmap/gaussianBlur.cpp:47
 msgid "Gaussian blur selected bitmap(s)"
-msgstr "Apstrādāt atlasīto(s) attēlu(s) ar Gausa aizmiglojumu"
+msgstr "Apstrādāt atlasīto(-ās) bitkarti(-es) ar Gausa aizmiglojumu"
 
 #: ../src/extension/internal/bitmap/implode.cpp:37
 msgid "Implode"
@@ -6154,7 +6149,7 @@ msgstr "Spilgtums:"
 msgid ""
 "Adjust the amount of hue, saturation, and brightness in selected bitmap(s)"
 msgstr ""
-"Pieskaņojiet atlasītā(-o) attēla(-u) nokrāsu, piesātinājumu un spilgtumu"
+"Pieskaņojiet atlasītās(-o) bitkartes(-šu) nokrāsu, piesātinājumu un spilgtumu"
 
 #: ../src/extension/internal/bitmap/negate.cpp:36
 msgid "Negate"
@@ -6325,8 +6320,7 @@ msgstr "Izplūduma maska"
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:52
 msgid "Sharpen selected bitmap(s) using unsharp mask algorithms"
 msgstr ""
-"Palielināt bitkartes attēla (-u) izšķirtspēju izmantojot asum samazināšanas "
-"algoritmus"
+"Palielināt bitkartes(-šu) asumu izmantojot asuma samazināšanas algoritmus"
 
 #: ../src/extension/internal/bitmap/wave.cpp:38
 msgid "Wave"
@@ -7063,7 +7057,7 @@ msgstr "Vieta"
 
 #: ../src/extension/internal/filter/bumps.h:109
 msgid "Distant light options"
-msgstr "Attāla gaismas avota iestatījumi"
+msgstr "Attāla gaismas avota papildiespējas"
 
 #: ../src/extension/internal/filter/bumps.h:110
 #: ../src/extension/internal/filter/bumps.h:332
@@ -7079,7 +7073,7 @@ msgstr "Pacēlums"
 
 #: ../src/extension/internal/filter/bumps.h:112
 msgid "Point light options"
-msgstr "Punktveida gaismas avota iestatījumi"
+msgstr "Punktveida gaismas avota papildiespējas"
 
 #: ../src/extension/internal/filter/bumps.h:113
 #: ../src/extension/internal/filter/bumps.h:117
@@ -7098,7 +7092,7 @@ msgstr "Z novietojums"
 
 #: ../src/extension/internal/filter/bumps.h:116
 msgid "Spot light options"
-msgstr "Starmeša iestatījumi"
+msgstr "Starmeša papildiespējas"
 
 #: ../src/extension/internal/filter/bumps.h:120
 msgid "X target"
@@ -7959,7 +7953,7 @@ msgstr "Aizpildīt ar troksni"
 #: ../share/extensions/webslicer_export.inx.h:2
 #: ../share/extensions/web-transmit-att.inx.h:2
 msgid "Options"
-msgstr "Opcijas"
+msgstr "Papildiespējas"
 
 #: ../src/extension/internal/filter/overlays.h:64
 msgid "Horizontal frequency:"
@@ -8314,7 +8308,7 @@ msgstr "Izvēles"
 
 #: ../src/extension/internal/filter/textures.h:83
 msgid "Custom stroke options"
-msgstr "Pielāgotas apmales iespējas"
+msgstr "Pielāgotas apmales papildiespējas"
 
 #: ../src/extension/internal/filter/textures.h:84
 msgid "k1:"
@@ -8448,10 +8442,13 @@ msgid "Image Rendering Mode:"
 msgstr "Attēla renderēšanas režīms:"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:201
+#, fuzzy
 msgid ""
 "When an image is upscaled, apply smoothing or keep blocky (pixelated). (Will "
 "not work in all browsers.)"
 msgstr ""
+"Ja attēls ir palielināts, pielietot izlīdzināšanu vai atstāt kvadrātainu "
+"(pikselētu). (Nedarbojas visos pārlūkos.)"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:202
 #: ../src/ui/dialog/inkscape-preferences.cpp:1452
@@ -9109,14 +9106,12 @@ msgid "Overlay"
 msgstr "Pārklājums"
 
 #: ../src/filter-enums.cpp:59
-#, fuzzy
 msgid "Color Dodge"
-msgstr "Tikai krāsu"
+msgstr "Krāsu izgaismošana"
 
 #: ../src/filter-enums.cpp:60
-#, fuzzy
 msgid "Color Burn"
-msgstr "Krāsu joslas"
+msgstr "Krāsu aptumšošana"
 
 #: ../src/filter-enums.cpp:61
 msgid "Hard Light"
@@ -11933,7 +11928,8 @@ msgstr "Mēģiniet izmantot X serveri (pat ja $DISPLAY nav iestatīts)"
 
 #: ../src/main.cpp:310
 msgid "Open specified document(s) (option string may be excluded)"
-msgstr "Atvērt norādīto(s) dokumentu(s)  (atslēgu virkne var tikt ignorēta)"
+msgstr ""
+"Atvērt norādīto(s) dokumentu(s)  (papildiespēju virkne var tikt ignorēta)"
 
 #: ../src/main.cpp:311 ../src/main.cpp:316 ../src/main.cpp:321
 #: ../src/main.cpp:393 ../src/main.cpp:398 ../src/main.cpp:403
@@ -12219,9 +12215,9 @@ msgid ""
 "\n"
 "Available options:"
 msgstr ""
-"[Iespējas...] [Datne...]\n"
+"[Papildiespējas...] [Datne...]\n"
 "\n"
-"Pieejamās iespējas:"
+"Pieejamās papildiespējas:"
 
 #. ## Add a menu for clear()
 #: ../src/menus-skeleton.h:16 ../src/ui/dialog/debug.cpp:83
@@ -13291,7 +13287,7 @@ msgstr "Zīmogs"
 
 #: ../src/seltrans.cpp:717
 msgid "Reset center"
-msgstr "Atstatīt centru"
+msgstr "Atiestatīt centru"
 
 #: ../src/seltrans.cpp:944 ../src/seltrans.cpp:1041
 #, c-format
@@ -15117,7 +15113,7 @@ msgid ""
 "to zero"
 msgstr ""
 "Visas dialoglodziņā ievadītās pārbīdes, mērogus, pagriezienus, "
-"necaurpīdīgumu un krāsu maiņas atstatīt par 0"
+"necaurpīdīgumu un krāsu maiņas atiestatīt par 0"
 
 #: ../src/ui/dialog/clonetiler.cpp:1359
 msgid "<small>Nothing selected.</small>"
@@ -19181,10 +19177,10 @@ msgid ""
 "always open in the directory where the currently open document is; when it's "
 "off, each will open in the directory where you last saved a file using it"
 msgstr ""
-"Ja šis iestatījums ir iestatīts, \"Saglabāt kā...\" un \"Saglabāt kopiju\" "
+"Ja ir izvēlēta šī papildiespēja, \"Saglabāt kā...\" un \"Saglabāt kopiju\" "
 "dialoglodziņi vienmēr tiks atvērti mapē, kurā atrodas pašreiz atvērtais "
-"dokuments; ja atstatīts, katrs tiks atvērts mapē, kurā pēdējo reizi "
-"saglabājāt dokumentu ar to palīdzību"
+"dokuments; ja atiestatīta, katrs tiks atvērts mapē, kurā pēdējo reizi "
+"saglabājāt dokumentu ar tās palīdzību"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:839
 msgid "Add label comments to printing output"
@@ -20486,7 +20482,7 @@ msgstr "Bitkartes saite:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1455
 msgid "Bitmap scale (image-rendering):"
-msgstr ""
+msgstr "Bitkartes mērogošana (attēla renderēšana)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1460
 msgid "Default _import resolution:"
@@ -20542,7 +20538,7 @@ msgstr "Apraksts"
 #: ../src/ui/dialog/tracedialog.cpp:813
 #: ../src/ui/widget/preferences-widget.cpp:749
 msgid "Reset"
-msgstr "Atstatīt"
+msgstr "Atiestatīt"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1552
 msgid ""
@@ -20954,11 +20950,11 @@ msgstr "Dzēst pašreizējo ceļa efektu"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:129
 msgid "Raise the current path effect"
-msgstr "Paaugstināt pašreizējo ceļa efektu"
+msgstr "Pastiprināt pašreizējo ceļa efektu"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:139
 msgid "Lower the current path effect"
-msgstr "Pazemināt pašreizējo ceļa efektu"
+msgstr "Samazināt pašreizējo ceļa efektu"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:313
 msgid "Unknown effect is applied"
@@ -21362,7 +21358,7 @@ msgstr "Izvade"
 #: ../src/ui/dialog/pixelartdialog.cpp:269
 #: ../src/ui/dialog/tracedialog.cpp:814
 msgid "Reset all settings to defaults"
-msgstr "Atstatīt visus iestatījumus uz noklusētajiem"
+msgstr "Atiestatīt visus iestatījumus uz noklusētajiem"
 
 #: ../src/ui/dialog/pixelartdialog.cpp:274
 #: ../src/ui/dialog/tracedialog.cpp:819
@@ -21392,7 +21388,7 @@ msgstr ""
 
 #: ../src/ui/dialog/print.cpp:104
 msgid "Could not open temporary PNG for bitmap printing"
-msgstr "Nav iespējams atvērt pagaidu PNG attēla drukāšanai"
+msgstr "Nav iespējams atvērt pagaidu PNG bitkartes drukāšanai"
 
 #: ../src/ui/dialog/print.cpp:147
 msgid "Could not set up Document"
@@ -21531,7 +21527,7 @@ msgstr "Iestatīt glifa līknes"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:606
 msgid "Reset missing-glyph"
-msgstr "Atstatīt iztrūkstošo glifu"
+msgstr "Atiestatīt iztrūkstošo glifu"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:622
 msgid "Edit glyph name"
@@ -22008,7 +22004,7 @@ msgstr "Nerādīt raibumu_s"
 
 #: ../src/ui/dialog/tracedialog.cpp:692
 msgid "Ignore small spots (speckles) in the bitmap"
-msgstr "Neņemt vērā nelietus laukumus (traipus) attēlā"
+msgstr "Neņemt vērā nelietus laukumus (traipus) bitkartē"
 
 #: ../src/ui/dialog/tracedialog.cpp:700
 msgid "Speckles of up to this many pixels will be suppressed"
@@ -22242,7 +22238,7 @@ msgstr "Matri_ca"
 
 #: ../src/ui/dialog/transformation.cpp:150
 msgid "Reset the values on the current tab to defaults"
-msgstr "Atstatīt vērtības pašreizējā šķirklī uz noklusētajām"
+msgstr "Atiestatīt vērtības pašreizējā šķirklī uz noklusētajām"
 
 #: ../src/ui/dialog/transformation.cpp:157
 msgid "Apply transformation to selection"
@@ -22317,12 +22313,12 @@ msgstr "Palielināt mezgla atkāpi"
 #: ../src/ui/dialog/xml-tree.cpp:159 ../src/ui/dialog/xml-tree.cpp:160
 #: ../src/ui/dialog/xml-tree.cpp:1060
 msgid "Raise node"
-msgstr "Paaugstināt mezglu"
+msgstr "Pacelt mezglu"
 
 #: ../src/ui/dialog/xml-tree.cpp:164 ../src/ui/dialog/xml-tree.cpp:165
 #: ../src/ui/dialog/xml-tree.cpp:1078
 msgid "Lower node"
-msgstr "Pazemināt mezglu"
+msgstr "Nolaist mezglu"
 
 #: ../src/ui/dialog/xml-tree.cpp:205
 msgid "Attribute name"
@@ -24157,7 +24153,7 @@ msgstr "Bitkarte"
 
 #: ../src/ui/widget/rendering-options.cpp:33
 msgid "Bitmap options"
-msgstr "Bitkartes iestatījumi"
+msgstr "Bitkartes papildiespējas"
 
 #: ../src/ui/widget/rendering-options.cpp:35
 msgid "Preferred resolution of rendering, in dots per inch."
@@ -24279,7 +24275,7 @@ msgstr "Atšķirīgas apmales"
 #: ../src/ui/widget/selected-style.cpp:217
 #: ../src/ui/widget/style-swatch.cpp:325
 msgid "<b>Unset</b>"
-msgstr "<b>atstatīts</b>"
+msgstr "<b>atiestatīts</b>"
 
 #. TRANSLATORS COMMENT: unset is a verb here
 #: ../src/ui/widget/selected-style.cpp:220
@@ -24287,14 +24283,14 @@ msgstr "<b>atstatīts</b>"
 #: ../src/ui/widget/selected-style.cpp:559
 #: ../src/ui/widget/style-swatch.cpp:327 ../src/widgets/fill-style.cpp:712
 msgid "Unset fill"
-msgstr "Atstatīt aizpildījumu"
+msgstr "Atiestatīt aizpildījumu"
 
 #: ../src/ui/widget/selected-style.cpp:220
 #: ../src/ui/widget/selected-style.cpp:278
 #: ../src/ui/widget/selected-style.cpp:575
 #: ../src/ui/widget/style-swatch.cpp:327 ../src/widgets/fill-style.cpp:712
 msgid "Unset stroke"
-msgstr "Atstatīt apmali"
+msgstr "Atiestatīt apmali"
 
 #: ../src/ui/widget/selected-style.cpp:223
 msgid "Flat color fill"
@@ -24683,7 +24679,7 @@ msgstr "Pacelt slāni"
 #: ../src/verbs.cpp:1300 ../src/verbs.cpp:1304
 #, c-format
 msgid "Lowered layer <b>%s</b>."
-msgstr "Pazeminātais slānis <b>%s</b>."
+msgstr "Nolaistais slānis <b>%s</b>."
 
 #: ../src/verbs.cpp:1301
 msgid "Layer to bottom"
@@ -26566,11 +26562,11 @@ msgstr "Līdzināt un izkliedēt objektus"
 
 #: ../src/verbs.cpp:2831
 msgid "_Spray options..."
-msgstr "_Smidzināšanas iestatījumi..."
+msgstr "_Smidzināšanas papildiespējas..."
 
 #: ../src/verbs.cpp:2832
 msgid "Some options for the spray"
-msgstr "Daži smidzināšanas iestaījumi"
+msgstr "Dažas smidzināšanas papildiespējas"
 
 #: ../src/verbs.cpp:2833
 msgid "Undo _History..."
@@ -27057,7 +27053,7 @@ msgstr "Pārslēdziet SP Z virzienā starp 'galīgs' un 'bezgalīgs' (=paralēls
 #: ../src/widgets/calligraphy-toolbar.cpp:262
 #: ../src/widgets/calligraphy-toolbar.cpp:267
 msgid "No preset"
-msgstr "Nav sākumiestatījuma"
+msgstr "Nav priekšiestatījuma"
 
 #. Width
 #: ../src/widgets/calligraphy-toolbar.cpp:427
@@ -27327,7 +27323,7 @@ msgstr "Izmantot ievadierīces slīpumu spalvas gala leņķa maiņai"
 
 #: ../src/widgets/calligraphy-toolbar.cpp:607
 msgid "Choose a preset"
-msgstr "Izvēlieties sākumiestaījumu"
+msgstr "Izvēlieties priekšiestatījumu"
 
 #: ../src/widgets/calligraphy-toolbar.cpp:622
 msgid "Add/Edit Profile"
@@ -28268,7 +28264,7 @@ msgid ""
 "Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools "
 "to change defaults)"
 msgstr ""
-"Atstatīt krāsas spaiņa parametrus uz noklusētajiem (izmantojiet Inkscape "
+"Atiestatīt krāsas spaiņa parametrus uz noklusētajiem (izmantojiet Inkscape "
 "Iestatījumi > Rīki, lai manītu noklusētās vērtības)"
 
 #: ../src/widgets/paint-selector.cpp:234
@@ -28290,7 +28286,7 @@ msgstr "Radiāla krāsu pāreja"
 #: ../src/widgets/paint-selector.cpp:246
 msgid "Unset paint (make it undefined so it can be inherited)"
 msgstr ""
-"Atstatīt krāsu (iestatīt to kā nenoteiktu, lai to būtu iespējams pārmantot)"
+"Atiestatīt krāsu (iestatīt to kā nenoteiktu, lai to būtu iespējams pārmantot)"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
 #: ../src/widgets/paint-selector.cpp:263
@@ -28433,7 +28429,7 @@ msgid ""
 "Reset pencil parameters to defaults (use Inkscape Preferences > Tools to "
 "change defaults)"
 msgstr ""
-"Atstatīt zīmuļa parametrus uz noklusētajiem (izmantojiet Inkscape "
+"Atiestatīt zīmuļa parametrus uz noklusētajiem (izmantojiet Inkscape "
 "Iestatījumi > Rīki, lai mainītu noklusētos)"
 
 #: ../src/widgets/rect-toolbar.cpp:122
@@ -28895,7 +28891,7 @@ msgid ""
 "Reset shape parameters to defaults (use Inkscape Preferences > Tools to "
 "change defaults)"
 msgstr ""
-"Atstatīt figūras parametrus uz noklusētajiem (izmantojiet Inkscape "
+"Atiestatīt figūras parametrus uz noklusētajiem (izmantojiet Inkscape "
 "Iestatījumi > Rīki, lai mainītu noklusētos)"
 
 #. Width
@@ -30012,7 +30008,7 @@ msgid ""
 "option"
 msgstr ""
 "Kļūda: laukam 'Slāņa nosaukuma atbilstība' jābūt aizpildītam, ja izmantojat "
-"'Pēc nosaukuma atbilstības' iespēju"
+"'Pēc nosaukuma atbilstības' papildiespēju"
 
 #: ../share/extensions/dxf_outlines.py:341
 #, python-format
@@ -30475,7 +30471,7 @@ msgstr "Neizdevās atrast Inkscape komandu.\n"
 
 #: ../share/extensions/jessyInk_masterSlide.py:56
 msgid "Layer not found. Removed current master slide selection.\n"
-msgstr "Slānis nav atrasts. Aizvākta pašreizējā galvenā slaida izvēle.\n"
+msgstr "Slānis nav atrasts. Aizvākta pašreizējā pamatslaida izvēle.\n"
 
 #: ../share/extensions/jessyInk_masterSlide.py:58
 msgid ""
@@ -30483,7 +30479,7 @@ msgid ""
 "selection.\n"
 msgstr ""
 "Ar šādu nosaukumu atrasts vairāk nekā viens slānis. Aizvākta pašreizējā "
-"galvenā slaida izvēle.\n"
+"pamatslaida izvēle.\n"
 
 #: ../share/extensions/jessyInk_summary.py:69
 msgid "JessyInk script version {0} installed."
@@ -30499,7 +30495,7 @@ msgid ""
 "Master slide:"
 msgstr ""
 "\n"
-"Galvenais slaids:"
+"Pamatslaids:"
 
 #: ../share/extensions/jessyInk_summary.py:89
 msgid ""
@@ -30645,8 +30641,8 @@ msgid ""
 "The 'stretch' option requires that the pattern must have non-zero width :\n"
 "Please edit the pattern width."
 msgstr ""
-"Iespējai 'izstiept' ir nepieciešams, lai faktūras platums nebūt vienāds ar "
-"0 :\n"
+"Papildiespējai 'izstiept' ir nepieciešams, lai faktūras platums nebūt "
+"vienāds ar 0 :\n"
 "lūdzu, izlabojiet faktūras platumu."
 
 #: ../share/extensions/pathmodifier.py:237
@@ -31160,7 +31156,7 @@ msgid ""
 msgstr ""
 "Pieskaņo atlasītā objekta krāsas nokrāsu, piesātinājumu un gaišumu "
 "atbilstoši HLS modelim..\n"
-"Iespējas:\n"
+"Papildiespējas:\n"
 "    * Nokrāsa: pagriezt par grādiem (uz riņķi).\n"
 "    * Piesātinājums: palielināt/samazināt % (min.=-100, maks.=100).\n"
 "    * Gaišums: palielināt/samazināt % (min.=-100, maks.=100).\n"
@@ -31347,7 +31343,7 @@ msgid ""
 "    * Step: numbering step between two nodes."
 msgstr ""
 "Šis paplašinājums aizvieto atlasītajā esošos mezglus ar numurētiem punktiem "
-"saskaņā ar sekojošiem iestatījumiem:\n"
+"saskaņā ar sekojošām papildiespējām:\n"
 "    * Fonta izmērs: mezgla numura iezīmes fonta izmērs (20px, 12pt...).\n"
 "    * Punkta izmērs: ceļa mezglos novietojamo punktu izmērs (10px, 2mm...).\n"
 "    * Numerācijas sākums: pirmajam ceļa mezglam piešķirtais kārtas numurs.\n"
@@ -31447,7 +31443,7 @@ msgstr "Nāgela punkts"
 
 #: ../share/extensions/draw_from_triangle.inx.h:24
 msgid "Custom Points and Options"
-msgstr "Pielāgotie punkti un iespējas"
+msgstr "Pielāgotie punkti un papildiespējas"
 
 #: ../share/extensions/draw_from_triangle.inx.h:25
 msgid "Custom Point Specified By:"
@@ -32856,7 +32852,7 @@ msgid ""
 "Gimp layer."
 msgstr ""
 "Šis paplašinājums eksportē dokumentu Gimp XCF formātā, atbilstoši sekojošām "
-"iespējām:\n"
+"papildiespējām:\n"
 "    * Saglabāt palīglīnijas: pārvērš visas palīglīnijas par Gimp "
 "palīglīnijām.\n"
 "    * Saglabāt režģi: pārvērš pirmo taisnstūraino režģi Gimp režģī (ņemiet "
@@ -33088,7 +33084,7 @@ msgstr "Regulāras palīglīnijas"
 
 #: ../share/extensions/guides_creator.inx.h:3
 msgid "Guides preset"
-msgstr "Palīglīniju iestatījumi"
+msgstr "Palīglīniju priekšiestatījumi"
 
 #: ../share/extensions/guides_creator.inx.h:6
 msgid "Start from edges"
@@ -33124,7 +33120,7 @@ msgstr "Malas"
 
 #: ../share/extensions/guides_creator.inx.h:14
 msgid "Margins preset"
-msgstr "Malu iestatījumi"
+msgstr "Malu priekšiestatījumi"
 
 #: ../share/extensions/guides_creator.inx.h:15
 msgid "Header margin"
@@ -33499,13 +33495,12 @@ msgstr "Pārgriezums (mm):"
 
 #: ../share/extensions/hpgl_output.inx.h:24
 #: ../share/extensions/plotter.inx.h:40
-#, fuzzy
 msgid ""
 "The distance in mm that will be cut over the starting point of the path to "
 "prevent open paths, set to 0.0 to omit command. (Default: 1.00)"
 msgstr ""
 "Attālums mm, kas tiks griezts pāri ceļa sākumpunktam, lai nepieļautu  "
-"nenoslēgtus ceļus. (noklusētais: 1.00)"
+"nenoslēgtus ceļus; ievadiet 0.0, lai izlaistu šo komandu. (noklusētais: 1.00)"
 
 #: ../share/extensions/hpgl_output.inx.h:25
 #: ../share/extensions/plotter.inx.h:41
@@ -33514,11 +33509,12 @@ msgstr "Rīka nobīde (mm):"
 
 #: ../share/extensions/hpgl_output.inx.h:26
 #: ../share/extensions/plotter.inx.h:42
-#, fuzzy
 msgid ""
 "The offset from the tool tip to the tool axis in mm, set to 0.0 to omit "
 "command. (Default: 0.25)"
-msgstr "Rīka gala nobīde pret rīka asi mm. (Noklusētais: 0.25)"
+msgstr ""
+"Rīka gala nobīde pret rīka asi mm; ievadiet 0.0, lai izlaistu šo komandu. "
+"(Noklusētais: 0.25)"
 
 #: ../share/extensions/hpgl_output.inx.h:27
 #: ../share/extensions/plotter.inx.h:43
@@ -33527,13 +33523,12 @@ msgstr "Izmantot priekšgriezumu"
 
 #: ../share/extensions/hpgl_output.inx.h:28
 #: ../share/extensions/plotter.inx.h:44
-#, fuzzy
 msgid ""
 "Check this to cut a small line before the real drawing starts to correctly "
 "align the tool orientation. (Default: Checked)"
 msgstr ""
-"Atzīmējiet šo, lai zīmētu tievu līniju pirms plotējuma, rīka orientācijai "
-"pirms pirmā īstā plotējuma. (Noklusētais - atzīmēts)"
+"Atzīmējiet šo, lai iegrieztu tievu līniju rīka orientācijai pirms īstā "
+"plotējuma. (Noklusētais - atzīmēts)"
 
 #: ../share/extensions/hpgl_output.inx.h:29
 #: ../share/extensions/plotter.inx.h:45
@@ -33597,7 +33592,7 @@ msgstr "Uzdodiet jautājumu"
 
 #: ../share/extensions/inkscape_help_commandline.inx.h:1
 msgid "Command Line Options"
-msgstr "Komandrindas opcijas"
+msgstr "Komandrindas papildiespējas"
 
 #. i18n. Please don't translate it unless a page exists in your language
 #: ../share/extensions/inkscape_help_commandline.inx.h:3
@@ -33971,7 +33966,7 @@ msgstr "Pārslēgt izpildes gaitas indikatoru"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:14
 msgid "Reset timer:"
-msgstr "Atstatīt taimeri:"
+msgstr "Atiestatīt taimeri:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:15
 msgid "Export presentation:"
@@ -34083,7 +34078,7 @@ msgstr "Palielināt sleju skaitu:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:43
 msgid "Set number of columns to default:"
-msgstr "Atstatīt sleju skaitu uz noklusēto:"
+msgstr "Atiestatīt sleju skaitu uz noklusēto:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:45
 msgid ""
@@ -34104,14 +34099,14 @@ msgstr "Slāņa nosaukums:"
 
 #: ../share/extensions/jessyInk_masterSlide.inx.h:4
 msgid "If no layer name is supplied, the master slide is unset."
-msgstr "Ja slāņa nosaukums nav norādīts, galvenais slaids tiek atstatīts."
+msgstr "Ja slāņa nosaukums nav norādīts, pamatslaids tiek atiestatīts."
 
 #: ../share/extensions/jessyInk_masterSlide.inx.h:6
 msgid ""
 "This extension allows you to change the master slide JessyInk uses. Please "
 "see code.google.com/p/jessyink for more details."
 msgstr ""
-"Šis paplašinājums ļauj mainīt JessyInk izmantoto galveno slaidu. Plašākai "
+"Šis paplašinājums ļauj mainīt JessyInk izmantoto pamatslaidu. Plašākai "
 "informācijai skat. code.google.com/p/jessyink."
 
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:1
@@ -34190,7 +34185,7 @@ msgstr "Aizvākt efektus"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:5
 msgid "Remove master slide assignment"
-msgstr "Aizvākt galvenā slaida pazīmi"
+msgstr "Aizvākt pamatslaida pazīmi"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:6
 msgid "Remove transitions"
@@ -34548,7 +34543,7 @@ msgstr "Teksta orientācija:"
 
 #: ../share/extensions/measure.inx.h:5
 msgid "Angle [with Fixed Angle option only] (°):"
-msgstr "Leņķis [tikai ar Fiksēta leņķa iestatījumu] (°):"
+msgstr "Leņķis [tikai ar Fiksēta leņķa papildiespēju] (°):"
 
 #: ../share/extensions/measure.inx.h:6
 msgid "Font size (px):"
@@ -35651,7 +35646,7 @@ msgstr "Saglabāt ID nosaukums, kas sākas ar:"
 
 #: ../share/extensions/scour.inx.h:25
 msgid "Help (Options)"
-msgstr "Palīdzība (opcijas)"
+msgstr "Palīdzība (papildiespējas)"
 
 #: ../share/extensions/scour.inx.h:27
 #, no-c-format
@@ -35684,7 +35679,7 @@ msgid ""
 "Space to use one space per nesting level, or Tab to use one tab per nesting "
 "level."
 msgstr ""
-"Šis paplašinājums optimizē SVG datni atbilstoši sekojošām iespējām:\n"
+"Šis paplašinājums optimizē SVG datni atbilstoši sekojošām papildiespējām:\n"
 "    * Saīsināt krāsu nosaukumus: pārvērš visas krāsas #RRGGBB vai #RGB "
 "formātā.\n"
 "    * Pārvērst CSS atribūtus par XML atribūtiem: pārvērst stilus no stilu "
@@ -35743,14 +35738,14 @@ msgstr ""
 "izmanto 100 reizes, var kļūt par #a.\n"
 "    * Saglabāt lietotāja izveidotos ID nosaukumus, kas nebeidzas ar skaitli: "
 "parasti optimizētā SVG izvade tos aizvāc, taču ja tie ir nepieciešami "
-"atsaucēm (piem. #middledot), varat izmantot šo iestatījumu.\n"
+"atsaucēm (piem. #middledot), varat izmantot šo papildiespēju.\n"
 "    * Saglabāt šos, ar komatu atdalītos ID nosaukumus: varat izmantot šo "
-"kopā ar citiem saglabāšanas iestatījumiem, ja vēlaties saglabāt kādus "
+"kopā ar citiem saglabāšanas papildiespējām, ja vēlaties saglabāt kādus "
 "specifiskus ID nosaukumus.\n"
 "    * Saglabāt ID nosaukumus, kas sākas ar: parasti optimizētā SVG izvade "
 "aizvāc visu neizmantoto ID nosaukumus, taču, ja visu Jūsu saglabājamo ID "
 "nosaukumi sākas ar vienu un to pašu virkni (piem. #flag-mx, #flag-pt), varat "
-"izmantot šo iestatījumu."
+"izmantot šo papildiespēju."
 
 #: ../share/extensions/scour.inx.h:47
 msgid "Optimized SVG (*.svg)"
@@ -36007,7 +36002,7 @@ msgstr "Mēneša mala"
 #: ../share/extensions/svgcalendar.inx.h:18
 msgid "The options below have no influence when the above is checked."
 msgstr ""
-"Zemāk esošajiem iestatījumiem nav ietekmes, ja ir atzīmēts augstāk esošais."
+"Zemāk esošajām papildiespējām nav ietekmes, ja ir atzīmētas augstāk esošās."
 
 #: ../share/extensions/svgcalendar.inx.h:20
 msgid "Year color:"
@@ -36282,7 +36277,7 @@ msgstr "Voronojs un Delonē"
 
 #: ../share/extensions/voronoi2svg.inx.h:8
 msgid "Options for Voronoi diagram"
-msgstr "Voronoja diagrammas iestatījumi"
+msgstr "Voronoja diagrammas papildiespējas"
 
 #: ../share/extensions/voronoi2svg.inx.h:10
 msgid "Automatic from selected objects"
@@ -36506,7 +36501,7 @@ msgstr "Ja iestatīts, tas aizvietos DPI."
 
 #: ../share/extensions/webslicer_create_rect.inx.h:10
 msgid "JPG specific options"
-msgstr "JPG specifiskie iestatījumi"
+msgstr "JPG specifiskās papildiespējas"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:11
 msgid "Quality:"
@@ -36522,7 +36517,7 @@ msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:13
 msgid "GIF specific options"
-msgstr "GIF specifiskie iestatījumi"
+msgstr "GIF specifiskās papildiespējas"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:16
 msgid "Palette"
@@ -36534,7 +36529,7 @@ msgstr "Paletes izmērs:"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:20
 msgid "Options for HTML export"
-msgstr "Iestatījumi HTML eksportam"
+msgstr "Papildiespējas HTML eksportam"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:21
 msgid "Layout disposition:"
