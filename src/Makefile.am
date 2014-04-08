@@ -250,7 +250,9 @@ check_PROGRAMS = cxxtests
 # "make distcheck".
 
 # List of all tests to be run.
-TESTS = $(check_PROGRAMS) ../share/extensions/test/run-all-extension-tests
+TESTS = $(check_PROGRAMS)
+check-local:
+	$(top_srcdir)/share/extensions/test/run-all-extension-tests
 
 # FIXME: Currently, a number of cxxtest tests fail.  These should be fixed and
 #        the XFAIL_TESTS build target should be removed.
