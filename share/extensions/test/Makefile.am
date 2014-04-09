@@ -44,6 +44,7 @@ EXTRA_DIST = \
 		radiusrand.test.py \
 		render_alphabetsoup.test.py \
 		render_barcode.test.py \
+		render_barcode.data \
 		render_gears.test.py \
 		restack.test.py \
 		rtree.test.py \
