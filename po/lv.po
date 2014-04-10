@@ -5283,12 +5283,12 @@ msgid ""
 "Determines whether to snap to this grid or not. Can be 'on' for invisible "
 "grids."
 msgstr ""
-"Nosaka, vai piesaistīt šim režģim vai nē. Var būt ieslēgts arī neredzamiem "
+"Nosaka, vai pievilkt šim režģim vai nē. Var būt ieslēgts arī neredzamiem "
 "režģiem."
 
 #: ../src/display/canvas-grid.cpp:346
 msgid "Snap to visible _grid lines only"
-msgstr "Piesaistīt tikai red_zamām režģa līnijām"
+msgstr "Pievilkt tikai red_zamām režģa līnijām"
 
 #: ../src/display/canvas-grid.cpp:347
 msgid ""
@@ -6280,7 +6280,7 @@ msgstr ""
 
 #: ../src/extension/internal/bitmap/spread.cpp:37
 msgid "Dither"
-msgstr "Pustoņu imitēšana"
+msgstr "Tonēšana"
 
 #: ../src/extension/internal/bitmap/spread.cpp:45
 msgid ""
@@ -9687,7 +9687,7 @@ msgstr "<b>Mērogot</b> faktūras aizpildījumu; vienādā mērā - ar <b>Ctrl</
 #: ../src/knotholder.cpp:268
 msgid "<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"
 msgstr ""
-"<b>Griezt</b> faktūras aizpildījumu; ar <b>Ctrl</b> - piesaistīt leņķim"
+"<b>Griezt</b> faktūras aizpildījumu; ar <b>Ctrl</b> - pievilkt leņķim"
 
 #: ../src/libgdl/gdl-dock-bar.c:105
 msgid "Master"
@@ -9695,7 +9695,7 @@ msgstr "Pamata"
 
 #: ../src/libgdl/gdl-dock-bar.c:106
 msgid "GdlDockMaster object which the dockbar widget is attached to"
-msgstr "GdlDockMaster objekts, kuram piesaistīta dokošanas joslas logdaļa"
+msgstr "GdlDockMaster objekts, kuram pievilkta dokošanas joslas logdaļa"
 
 #: ../src/libgdl/gdl-dock-bar.c:113
 msgid "Dockbar style"
@@ -9850,7 +9850,7 @@ msgstr "Slēgt"
 #: ../src/libgdl/gdl-dock-item.c:1904
 #, c-format
 msgid "Attempt to bind an unbound item %p"
-msgstr "Mēģinājums piesaistīt nepiesaistītu objektu %p"
+msgstr "Mēģinājums pievilkt nepiesaistītu objektu %p"
 
 #: ../src/libgdl/gdl-dock-item-grip.c:399
 msgid "Iconify this dock"
@@ -11993,7 +11993,7 @@ msgid ""
 "Snap the bitmap export area outwards to the nearest integer values (in SVG "
 "user units)"
 msgstr ""
-"Piesaistīt bitkartes eksportējamo apgabalu tuvākajai veselajai vērtībai (SVG "
+"Pievilkt bitkartes eksportējamo apgabalu tuvākajai veselajai vērtībai (SVG "
 "lietotāja vienībās)"
 
 #: ../src/main.cpp:355
@@ -12380,7 +12380,7 @@ msgid ""
 "segment"
 msgstr ""
 "Novietojiet loka vai segmenta <b>sākumpunktu</b>; ar <b>Ctrl</b> - "
-"piesaistīt leņķim; lai iegūtu loku, velciet elipses <b>iekšpusē</b>; lai "
+"pievilkt leņķim; lai iegūtu loku, velciet elipses <b>iekšpusē</b>; lai "
 "iegūtu sektoru - <b>ārpusē</b>"
 
 #: ../src/object-edit.cpp:961
@@ -12390,7 +12390,7 @@ msgid ""
 "segment"
 msgstr ""
 "Novietojiet loka vai segmenta <b>beigu punktu</b>; ar <b>Ctrl</b> - "
-"piesaistīt leņķim; lai iegūtu loku, velciet elipses <b>iekšpusē</b>; lai "
+"pievilkt leņķim; lai iegūtu loku, velciet elipses <b>iekšpusē</b>; lai "
 "iegūtu sektoru - <b>ārpusē</b>"
 
 #: ../src/object-edit.cpp:1101
@@ -12415,7 +12415,7 @@ msgid ""
 "Roll/unroll the spiral from <b>inside</b>; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to converge/diverge"
 msgstr ""
-"Satīt/attīt spirāli no <b>iekšpuses</b>; ar <b>Ctrl</b> - piesaistīt leņķim; "
+"Satīt/attīt spirāli no <b>iekšpuses</b>; ar <b>Ctrl</b> - pievilkt leņķim; "
 "ar <b>Alt</b> - savirzīt/atvirzīt"
 
 #: ../src/object-edit.cpp:1303
@@ -12423,7 +12423,7 @@ msgid ""
 "Roll/unroll the spiral from <b>outside</b>; with <b>Ctrl</b> to snap angle; "
 "with <b>Shift</b> to scale/rotate; with <b>Alt</b> to lock radius"
 msgstr ""
-"Satīt/attīt spirāli no <b>ārpuses</b>; ar <b>Ctrl</b> - piesaistīt leņķim; "
+"Satīt/attīt spirāli no <b>ārpuses</b>; ar <b>Ctrl</b> - pievilkt leņķim; "
 "ar <b>Shift</b> - mērogot/griezt; ar <b>Alt</b> - fiksēt rādiusu"
 
 #: ../src/object-edit.cpp:1348
@@ -13299,14 +13299,14 @@ msgstr "<b>Mērogot</b>: %0.2f%% x %0.2f%%; ar <b>Ctrl</b> - slēgt attiecību"
 #: ../src/seltrans.cpp:1173
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
-msgstr "<b>Šķiebt</b>: %0.2f&#176;; ar <b>Ctrl</b> - piesaistīt leņķim"
+msgstr "<b>Šķiebt</b>: %0.2f&#176;; ar <b>Ctrl</b> - pievilkt leņķim"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
 #: ../src/seltrans.cpp:1248
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
-msgstr "<b>Griezt</b>: %0.2f&#176;; ar <b>Ctrl</b> - piesaistīt leņķim"
+msgstr "<b>Griezt</b>: %0.2f&#176;; ar <b>Ctrl</b> - pievilkt leņķim"
 
 #: ../src/seltrans.cpp:1285
 #, c-format
@@ -13343,7 +13343,7 @@ msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
 msgstr ""
-"<b>Šķiebt</b> atlasīto; ar <b>Ctrl</b> - piesaistīt leņķim; ar <b>Shift</b> "
+"<b>Šķiebt</b> atlasīto; ar <b>Ctrl</b> - pievilkt leņķim; ar <b>Shift</b> "
 "- šķiebt gar pretējo malu"
 
 #: ../src/seltrans-handles.cpp:12
@@ -13351,7 +13351,7 @@ msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
 msgstr ""
-"<b>Griezt</b> atlasīto; ar <b>Ctrl</b> - piesaistīt leņķim; ar <b>Shift</b> "
+"<b>Griezt</b> atlasīto; ar <b>Ctrl</b> - pievilkt leņķim; ar <b>Shift</b> "
 "- griezt ap pretējo stūri"
 
 #: ../src/seltrans-handles.cpp:13
@@ -15345,13 +15345,13 @@ msgstr "Piesais_tes attālums"
 
 #: ../src/ui/dialog/document-properties.cpp:122
 msgid "Snap only when _closer than:"
-msgstr "Piesaistīt tikai tad, ja attālums ir _mazāks par:"
+msgstr "Pievilkt tikai tad, ja attālums ir _mazāks par:"
 
 #: ../src/ui/dialog/document-properties.cpp:122
 #: ../src/ui/dialog/document-properties.cpp:127
 #: ../src/ui/dialog/document-properties.cpp:132
 msgid "Always snap"
-msgstr "Vienmēr piesaistīt"
+msgstr "Vienmēr pievilkt"
 
 #: ../src/ui/dialog/document-properties.cpp:123
 msgid "Snapping distance, in screen pixels, for snapping to objects"
@@ -15359,14 +15359,14 @@ msgstr "Piesaistes attālums ekrāna pikseļos piesaistei pie objektiem"
 
 #: ../src/ui/dialog/document-properties.cpp:123
 msgid "Always snap to objects, regardless of their distance"
-msgstr "Vienmēr piesaistīt objektiem, neskatoties uz attālu"
+msgstr "Vienmēr pievilkt objektiem, neskatoties uz attālu"
 
 #: ../src/ui/dialog/document-properties.cpp:124
 msgid ""
 "If set, objects only snap to another object when it's within the range "
 "specified below"
 msgstr ""
-"Ja iestatīts, objekti tiek piesaistīti citam objektam tikai tad, ja tie "
+"Ja iestatīts, objekti tiek pievilkti citam objektam tikai tad, ja tie "
 "atrodas norādītajā attālumā vai tuvāk"
 
 #. Options for snapping to grids
@@ -15376,7 +15376,7 @@ msgstr "P_iesaistes attālums"
 
 #: ../src/ui/dialog/document-properties.cpp:127
 msgid "Snap only when c_loser than:"
-msgstr "Piesaistīt tikai tad, ja attā_lums ir mazāks par:"
+msgstr "Pievilkt tikai tad, ja attā_lums ir mazāks par:"
 
 #: ../src/ui/dialog/document-properties.cpp:128
 msgid "Snapping distance, in screen pixels, for snapping to grid"
@@ -15384,14 +15384,14 @@ msgstr "Piesaistes attālums ekrāna pikseļos piesaistei pie režģa"
 
 #: ../src/ui/dialog/document-properties.cpp:128
 msgid "Always snap to grids, regardless of the distance"
-msgstr "Vienmēr piesaistīt režģim, neskatoties uz attālumu"
+msgstr "Vienmēr pievilkt režģim, neskatoties uz attālumu"
 
 #: ../src/ui/dialog/document-properties.cpp:129
 msgid ""
 "If set, objects only snap to a grid line when it's within the range "
 "specified below"
 msgstr ""
-"Ja iestatīts, objekti tiek piesaistīti režģim tikai tad, ja tie atrodas "
+"Ja iestatīts, objekti tiek pievilkti režģim tikai tad, ja tie atrodas "
 "norādītajā attālumā vai tuvāk"
 
 #. Options for snapping to guides
@@ -15401,7 +15401,7 @@ msgstr "Pies_aistes attālums"
 
 #: ../src/ui/dialog/document-properties.cpp:132
 msgid "Snap only when close_r than:"
-msgstr "Piesaistīt tikai tad, ja attālums ir mazāks pa_r:"
+msgstr "Pievilkt tikai tad, ja attālums ir mazāks pa_r:"
 
 #: ../src/ui/dialog/document-properties.cpp:133
 msgid "Snapping distance, in screen pixels, for snapping to guides"
@@ -15409,50 +15409,50 @@ msgstr "Piesaistes attālums ekrāna pikseļos piesaistei pie palīglīnijām"
 
 #: ../src/ui/dialog/document-properties.cpp:133
 msgid "Always snap to guides, regardless of the distance"
-msgstr "Vienmēr piesaistīt palīglīnijām, neskatoties uz attālumu"
+msgstr "Vienmēr pievilkt palīglīnijām, neskatoties uz attālumu"
 
 #: ../src/ui/dialog/document-properties.cpp:134
 msgid ""
 "If set, objects only snap to a guide when it's within the range specified "
 "below"
 msgstr ""
-"Ja iestatīts, objekti tiek piesaistīti palīglīnijām tikai tad, ja tie "
+"Ja iestatīts, objekti tiek pievilkti palīglīnijām tikai tad, ja tie "
 "atrodas norādītajā attālumā vai tuvāk"
 
 #. ---------------------------------------------------------------
 #: ../src/ui/dialog/document-properties.cpp:137
 msgid "Snap to clip paths"
-msgstr "Piesaistīt izgriešanas ceļiem"
+msgstr "Pievilkt izgriešanas ceļiem"
 
 #: ../src/ui/dialog/document-properties.cpp:137
 msgid "When snapping to paths, then also try snapping to clip paths"
-msgstr "Piesaistot ceļiem, censties piesaistīt arī izgriešanas ceļiem"
+msgstr "Piesaistot ceļiem, censties pievilkt arī izgriešanas ceļiem"
 
 #: ../src/ui/dialog/document-properties.cpp:138
 msgid "Snap to mask paths"
-msgstr "Piesaistīt maskas ceļam"
+msgstr "Pievilkt maskas ceļam"
 
 #: ../src/ui/dialog/document-properties.cpp:138
 msgid "When snapping to paths, then also try snapping to mask paths"
-msgstr "Piesaistot ceļiem censties piesaistīt arī masku ceļiem"
+msgstr "Piesaistot ceļiem censties pievilkt arī masku ceļiem"
 
 #: ../src/ui/dialog/document-properties.cpp:139
 msgid "Snap perpendicularly"
-msgstr "Piesaistīt perpendikulāri"
+msgstr "Pievilkt perpendikulāri"
 
 #: ../src/ui/dialog/document-properties.cpp:139
 msgid ""
 "When snapping to paths or guides, then also try snapping perpendicularly"
 msgstr ""
-"Piesaistot ceļiem vai palīglīnijām censties piesaistīt arī perpendikulāri"
+"Piesaistot ceļiem vai palīglīnijām censties pievilkt arī perpendikulāri"
 
 #: ../src/ui/dialog/document-properties.cpp:140
 msgid "Snap tangentially"
-msgstr "Piesaistīt tangenciāli"
+msgstr "Pievilkt tangenciāli"
 
 #: ../src/ui/dialog/document-properties.cpp:140
 msgid "When snapping to paths or guides, then also try snapping tangentially"
-msgstr "Piesaistot ceļiem vai palīglīnijām censties piesaistīt arī tangenciāli"
+msgstr "Piesaistot ceļiem vai palīglīnijām censties pievilkt arī tangenciāli"
 
 #: ../src/ui/dialog/document-properties.cpp:143
 msgctxt "Grid"
@@ -15479,7 +15479,7 @@ msgstr "Palīglīnijas"
 
 #: ../src/ui/dialog/document-properties.cpp:153 ../src/verbs.cpp:2748
 msgid "Snap"
-msgstr "Piesaistīt"
+msgstr "Pievilkt"
 
 #: ../src/ui/dialog/document-properties.cpp:155
 msgid "Scripting"
@@ -15507,15 +15507,15 @@ msgstr "<b>Palīglīnijas</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:375
 msgid "<b>Snap to objects</b>"
-msgstr "<b>Piesaistīt objektiem</b>"
+msgstr "<b>Pievilkt objektiem</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:377
 msgid "<b>Snap to grids</b>"
-msgstr "<b>Piesaistīt režģiem</b>"
+msgstr "<b>Pievilkt režģiem</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:379
 msgid "<b>Snap to guides</b>"
-msgstr "<b>Piesaistīt palīglīnijām</b>"
+msgstr "<b>Pievilkt palīglīnijām</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:381
 msgid "<b>Miscellaneous</b>"
@@ -20009,12 +20009,12 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1229
 msgid "Only snap the node closest to the pointer"
-msgstr "Piesaistīt tikai vistuvāk kursoram esošajam mezglam"
+msgstr "Pievilkt tikai vistuvāk kursoram esošajam mezglam"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1231
 msgid ""
 "Only try to snap the node that is initially closest to the mouse pointer"
-msgstr "Piesaistīt tikai sākotnēji vistuvāk peles kursoram esošajam mezglam"
+msgstr "Pievilkt tikai sākotnēji vistuvāk peles kursoram esošajam mezglam"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1234
 msgid "_Weight factor:"
@@ -20032,7 +20032,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1237
 msgid "Snap the mouse pointer when dragging a constrained knot"
-msgstr "Piesaistīt peles kursoru velkot ierobežotu mezglu"
+msgstr "Pievilkt peles kursoru velkot ierobežotu mezglu"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1239
 msgid ""
@@ -20040,8 +20040,8 @@ msgid ""
 "mouse pointer instead of snapping the projection of the knot onto the "
 "constraint line"
 msgstr ""
-"Velkot mezglu gar ierobežojošo līniju, piesaistīt mezglu peles kursora "
-"atrašanās vietai, nevis piesaistīt ierobežojošajai līnijai mezgla projekciju"
+"Velkot mezglu gar ierobežojošo līniju, pievilkt mezglu peles kursora "
+"atrašanās vietai, nevis pievilkt ierobežojošajai līnijai mezgla projekciju"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1241
 msgid "Snapping"
@@ -20105,7 +20105,7 @@ msgid ""
 "Rotating with Ctrl pressed snaps every that much degrees; also, pressing "
 "[ or ] rotates by this amount"
 msgstr ""
-"Griešana ar nospiestu Ctrl piesaistīta norādītajiem grādiem (solim);  "
+"Griešana ar nospiestu Ctrl pievilkta norādītajiem grādiem (solim);  "
 "[ vai ] nospiešana tāpat pagriež par norādīto lielumu"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1265
@@ -22535,7 +22535,7 @@ msgid ""
 "<b>Shift+Ctrl+Alt</b>: preserve length and snap rotation angle to %g° "
 "increments while rotating both handles"
 msgstr ""
-"<b>Shift+Ctrl+Alt</b>: saglabāt garumu un piesaistīt griešanas leņķi ik %g° "
+"<b>Shift+Ctrl+Alt</b>: saglabāt garumu un pievilkt griešanas leņķi ik %g° "
 "pieaugumam, griežot abus turus"
 
 #: ../src/ui/tool/node.cpp:445
@@ -22544,7 +22544,7 @@ msgctxt "Path handle tip"
 msgid ""
 "<b>Ctrl+Alt</b>: preserve length and snap rotation angle to %g° increments"
 msgstr ""
-"<b>Ctrl+Alt</b>: saglabāt garumu un piesaistīt griešanas leņķi ik %g° "
+"<b>Ctrl+Alt</b>: saglabāt garumu un pievilkt griešanas leņķi ik %g° "
 "pieaugumam"
 
 #: ../src/ui/tool/node.cpp:451
@@ -22564,7 +22564,7 @@ msgid ""
 "<b>Shift+Ctrl</b>: snap rotation angle to %g° increments and rotate both "
 "handles"
 msgstr ""
-"<b>Shift+Ctrl</b>: piesaistīt griešanas leņķi ik %g° pieaugumam un griezt "
+"<b>Shift+Ctrl</b>: pievilkt griešanas leņķi ik %g° pieaugumam un griezt "
 "abus turus"
 
 #: ../src/ui/tool/node.cpp:465
@@ -22572,7 +22572,7 @@ msgstr ""
 msgctxt "Path handle tip"
 msgid "<b>Ctrl</b>: snap rotation angle to %g° increments, click to retract"
 msgstr ""
-"<b>Ctrl</b>: piesaistīt griešanas leņķi ik %g° pieaugumam, uzklikšķiniet - "
+"<b>Ctrl</b>: pievilkt griešanas leņķi ik %g° pieaugumam, uzklikšķiniet - "
 "lai atsauktu"
 
 #: ../src/ui/tool/node.cpp:470
@@ -22696,7 +22696,7 @@ msgstr "Atsaukt turi"
 msgid ""
 "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
 msgstr ""
-"<b>Ctrl</b>: izveidot riņķi vai veselu skaitļu attiecību elipsi, piesaistīt "
+"<b>Ctrl</b>: izveidot riņķi vai veselu skaitļu attiecību elipsi, pievilkt "
 "loka/segmenta leņķi"
 
 #: ../src/ui/tools/arc-tool.cpp:253 ../src/ui/tools/rect-tool.cpp:289
@@ -23023,7 +23023,7 @@ msgstr "<b>Velciet apkārt</b> turiem, lai tos atlasītu"
 
 #: ../src/ui/tools/gradient-tool.cpp:698
 msgid "<b>Ctrl</b>: snap gradient angle"
-msgstr "<b>Ctrl</b>: piesaistīt krāsu pārejas leņķi"
+msgstr "<b>Ctrl</b>: pievilkt krāsu pārejas leņķi"
 
 #: ../src/ui/tools/gradient-tool.cpp:699
 msgid "<b>Shift</b>: draw gradient around the starting point"
@@ -23033,9 +23033,9 @@ msgstr "<b>Shift</b>: zīmēt krāsu pāreju apkārt sākumpunktam"
 #, c-format
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
 msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
-msgstr[0] "<b>Krāsu pāreja</b> %d objektam; ar <b>Ctrl</b> piesaistīt leņķi"
-msgstr[1] "<b>Krāsu pāreja</b> %d objektiem; ar <b>Ctrl</b> piesaistīt leņķi"
-msgstr[2] "<b>Krāsu pāreja</b> %d objektiem; ar <b>Ctrl</b> piesaistīt leņķi"
+msgstr[0] "<b>Krāsu pāreja</b> %d objektam; ar <b>Ctrl</b> pievilkt leņķi"
+msgstr[1] "<b>Krāsu pāreja</b> %d objektiem; ar <b>Ctrl</b> pievilkt leņķi"
+msgstr[2] "<b>Krāsu pāreja</b> %d objektiem; ar <b>Ctrl</b> pievilkt leņķi"
 
 #: ../src/ui/tools/gradient-tool.cpp:957 ../src/ui/tools/mesh-tool.cpp:997
 msgid "Select <b>objects</b> on which to create gradient."
@@ -23234,7 +23234,7 @@ msgid ""
 "snap angle, <b>Enter</b> to finish the path"
 msgstr ""
 "<b>Līknes posms</b>: leņķis %3.2f&#176;, attālums %s; ar <b>Ctrl</b>-"
-"piesaistīt leņķim, <b>Enter</b> - pabeigt ceļu"
+"pievilkt leņķim, <b>Enter</b> - pabeigt ceļu"
 
 #: ../src/ui/tools/pen-tool.cpp:1179
 #, c-format
@@ -23243,7 +23243,7 @@ msgid ""
 "snap angle, <b>Enter</b> to finish the path"
 msgstr ""
 "<b>Līnijas posms</b>: leņķis %3.2f&#176;, attālums %s; ar <b>Ctrl</b> - "
-"piesaistīt leņķim, <b>Enter</b> - pabeigt ceļu"
+"pievilkt leņķim, <b>Enter</b> - pabeigt ceļu"
 
 #: ../src/ui/tools/pen-tool.cpp:1195
 #, c-format
@@ -23252,7 +23252,7 @@ msgid ""
 "angle"
 msgstr ""
 "<b>Līknes turis</b>: leņķis %3.2f&#176;, garums %s; ar <b>Ctrl</b> - "
-"piesaistīt leņķim"
+"pievilkt leņķim"
 
 #: ../src/ui/tools/pen-tool.cpp:1217
 #, c-format
@@ -23261,7 +23261,7 @@ msgid ""
 "b> to snap angle, with <b>Shift</b> to move this handle only"
 msgstr ""
 "<b>Līknes turis, simetrisks</b>: leņķis %3.2f&#176;, garums %s; ar <b>Ctrl</"
-"b> - piesaistīt leņķim, ar <b>Shift</b> - pārvietot tikai šo turi"
+"b> - pievilkt leņķim, ar <b>Shift</b> - pārvietot tikai šo turi"
 
 #: ../src/ui/tools/pen-tool.cpp:1218
 #, c-format
@@ -23270,7 +23270,7 @@ msgid ""
 "angle, with <b>Shift</b> to move this handle only"
 msgstr ""
 "<b>Līknes turis</b>: leņķis %3.2f&#176;, garums %s; ar <b>Ctrl</b> - "
-"piesaistīt leņķim, ar <b>Shift</b> - pārvietot tikai šo turi"
+"pievilkt leņķim, ar <b>Shift</b> - pārvietot tikai šo turi"
 
 #: ../src/ui/tools/pen-tool.cpp:1262
 msgid "Drawing finished"
@@ -23398,7 +23398,7 @@ msgstr "<b>Alt</b>: slēgt spirāles rādiusu"
 msgid ""
 "<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
-"<b>Spirāle</b>: rādiuss %s, leņķis %5g&#176;; ar <b>Ctrl</b> - piesaistīt "
+"<b>Spirāle</b>: rādiuss %s, leņķis %5g&#176;; ar <b>Ctrl</b> - pievilkt "
 "leņķim"
 
 #: ../src/ui/tools/spiral-tool.cpp:421
@@ -23462,7 +23462,7 @@ msgstr "Izsmidzināt vienā ceļā"
 
 #: ../src/ui/tools/star-tool.cpp:271
 msgid "<b>Ctrl</b>: snap angle; keep rays radial"
-msgstr "<b>Ctrl</b>: piesaistīt leņķim; saglabāt starus radiālus"
+msgstr "<b>Ctrl</b>: pievilkt leņķim; saglabāt starus radiālus"
 
 #: ../src/ui/tools/star-tool.cpp:417
 #, c-format
@@ -23470,13 +23470,13 @@ msgid ""
 "<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 "<b>Daudzstūris</b>: rādiuss %s, leņķis %5g&#176;; ar <b>Ctrl</b> - "
-"piesaistīt leņķim"
+"pievilkt leņķim"
 
 #: ../src/ui/tools/star-tool.cpp:418
 #, c-format
 msgid "<b>Star</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
-"<b>Zvaigzne</b>: rādiuss %s, leņķis %5g&#176;; ar <b>Ctrl</b> - piesaistīt "
+"<b>Zvaigzne</b>: rādiuss %s, leņķis %5g&#176;; ar <b>Ctrl</b> - pievilkt "
 "leņkim"
 
 #: ../src/ui/tools/star-tool.cpp:446
@@ -23833,7 +23833,7 @@ msgid ""
 "<b>Shift+Ctrl</b>: rotate around the opposite corner and snap angle to %f° "
 "increments"
 msgstr ""
-"<b>Shift+Ctrl</b>: griezt ap pretējo stūri un piesaistīt leņķi  %f° solim"
+"<b>Shift+Ctrl</b>: griezt ap pretējo stūri un pievilkt leņķi  %f° solim"
 
 #: ../src/ui/tool/transform-handle-set.cpp:441
 msgctxt "Transform handle tip"
@@ -23844,7 +23844,7 @@ msgstr "<b>Shift</b>: griezt apkārt pretējam stūrim"
 #, c-format
 msgctxt "Transform handle tip"
 msgid "<b>Ctrl</b>: snap angle to %f° increments"
-msgstr "<b>Ctrl</b>: piesaistīt leņķi ar %f° soli"
+msgstr "<b>Ctrl</b>: pievilkt leņķi ar %f° soli"
 
 #: ../src/ui/tool/transform-handle-set.cpp:447
 msgctxt "Transform handle tip"
@@ -23878,7 +23878,7 @@ msgstr "<b>Shift</b>: šķiebt ap griešanās centru"
 #, c-format
 msgctxt "Transform handle tip"
 msgid "<b>Ctrl</b>: snap skew angle to %f° increments"
-msgstr "<b>Ctrl</b>: piesaistīt šķiebšanas leņķi %f° solim"
+msgstr "<b>Ctrl</b>: pievilkt šķiebšanas leņķi %f° solim"
 
 #: ../src/ui/tool/transform-handle-set.cpp:588
 msgctxt "Transform handle tip"
@@ -29601,7 +29601,7 @@ msgstr "Robežrāmis"
 
 #: ../src/widgets/toolbox.cpp:1681
 msgid "Snap bounding boxes"
-msgstr "Piesaistīt robežrāmjus"
+msgstr "Pievilkt robežrāmjus"
 
 #: ../src/widgets/toolbox.cpp:1690
 msgid "Bounding box edges"
@@ -29609,7 +29609,7 @@ msgstr "Robežrāmju malas"
 
 #: ../src/widgets/toolbox.cpp:1690
 msgid "Snap to edges of a bounding box"
-msgstr "Piesaistīt robežrāmju malām"
+msgstr "Pievilkt robežrāmju malām"
 
 #: ../src/widgets/toolbox.cpp:1699
 msgid "Bounding box corners"
@@ -29617,7 +29617,7 @@ msgstr "Robežrāmju stūri"
 
 #: ../src/widgets/toolbox.cpp:1699
 msgid "Snap bounding box corners"
-msgstr "Piesaistīt robežrāmju stūriem"
+msgstr "Pievilkt robežrāmju stūriem"
 
 #: ../src/widgets/toolbox.cpp:1708
 msgid "BBox Edge Midpoints"
@@ -29625,7 +29625,7 @@ msgstr "Robežrāmju malu viduspunktiem"
 
 #: ../src/widgets/toolbox.cpp:1708
 msgid "Snap midpoints of bounding box edges"
-msgstr "Piesaistīt robežrāmju malu viduspunktiem"
+msgstr "Pievilkt robežrāmju malu viduspunktiem"
 
 #: ../src/widgets/toolbox.cpp:1718
 msgid "BBox Centers"
@@ -29633,15 +29633,15 @@ msgstr "Robežrāmju centriem"
 
 #: ../src/widgets/toolbox.cpp:1718
 msgid "Snapping centers of bounding boxes"
-msgstr "Piesaistīt robežrāmju centriem"
+msgstr "Pievilkt robežrāmju centriem"
 
 #: ../src/widgets/toolbox.cpp:1727
 msgid "Snap nodes, paths, and handles"
-msgstr "Piesaistīt mezglus, ceļus un turus"
+msgstr "Pievilkt mezglus, ceļus un turus"
 
 #: ../src/widgets/toolbox.cpp:1735
 msgid "Snap to paths"
-msgstr "Piesaistīt ceļiem"
+msgstr "Pievilkt ceļiem"
 
 #: ../src/widgets/toolbox.cpp:1744
 msgid "Path intersections"
@@ -29649,7 +29649,7 @@ msgstr "Ceļu krustpunkti"
 
 #: ../src/widgets/toolbox.cpp:1744
 msgid "Snap to path intersections"
-msgstr "Piesaistīt ceļu krustpunktiem"
+msgstr "Pievilkt ceļu krustpunktiem"
 
 #: ../src/widgets/toolbox.cpp:1753
 msgid "To nodes"
@@ -29657,7 +29657,7 @@ msgstr "Pie mezgliem"
 
 #: ../src/widgets/toolbox.cpp:1753
 msgid "Snap cusp nodes, incl. rectangle corners"
-msgstr "Piesaistīt asos mezglus, ieskaitot taisnstūru stūrus"
+msgstr "Pievilkt asos mezglus, ieskaitot taisnstūru stūrus"
 
 #: ../src/widgets/toolbox.cpp:1762
 msgid "Smooth nodes"
@@ -29665,7 +29665,7 @@ msgstr "Gludi mezgli"
 
 #: ../src/widgets/toolbox.cpp:1762
 msgid "Snap smooth nodes, incl. quadrant points of ellipses"
-msgstr "Piesaistīt gludos mezglus, ieskaitot elipšu kvadrantu punktus"
+msgstr "Pievilkt gludos mezglus, ieskaitot elipšu kvadrantu punktus"
 
 #: ../src/widgets/toolbox.cpp:1771
 msgid "Line Midpoints"
@@ -29673,7 +29673,7 @@ msgstr "Līnijas viduspunkti"
 
 #: ../src/widgets/toolbox.cpp:1771
 msgid "Snap midpoints of line segments"
-msgstr "Piesaistīt līnijas posmu viduspunktus"
+msgstr "Pievilkt līnijas posmu viduspunktus"
 
 #: ../src/widgets/toolbox.cpp:1780
 msgid "Others"
@@ -29682,7 +29682,7 @@ msgstr "Citi"
 #: ../src/widgets/toolbox.cpp:1780
 msgid "Snap other points (centers, guide origins, gradient handles, etc.)"
 msgstr ""
-"Piesaistīt citus punktus (centrus, vadlīniju sākumus, krāsu pāreju turus "
+"Pievilkt citus punktus (centrus, vadlīniju sākumus, krāsu pāreju turus "
 "utt.)"
 
 #: ../src/widgets/toolbox.cpp:1788
@@ -29691,7 +29691,7 @@ msgstr "Objekta centri"
 
 #: ../src/widgets/toolbox.cpp:1788
 msgid "Snap centers of objects"
-msgstr "Piesaistīt objektu centrus"
+msgstr "Pievilkt objektu centrus"
 
 #: ../src/widgets/toolbox.cpp:1797
 msgid "Rotation Centers"
@@ -29699,7 +29699,7 @@ msgstr "Griešanās centrs"
 
 #: ../src/widgets/toolbox.cpp:1797
 msgid "Snap an item's rotation center"
-msgstr "Piesaistīt objekta griešanās centram"
+msgstr "Pievilkt objekta griešanās centram"
 
 #: ../src/widgets/toolbox.cpp:1806
 msgid "Text baseline"
@@ -29707,7 +29707,7 @@ msgstr "Teksta bāzes līnija"
 
 #: ../src/widgets/toolbox.cpp:1806
 msgid "Snap text anchors and baselines"
-msgstr "Piesaistīt teksta enkurus un bāzes līnijas"
+msgstr "Pievilkt teksta enkurus un bāzes līnijas"
 
 #: ../src/widgets/toolbox.cpp:1816
 msgid "Page border"
@@ -29715,11 +29715,11 @@ msgstr "Lapas robeža"
 
 #: ../src/widgets/toolbox.cpp:1816
 msgid "Snap to the page border"
-msgstr "Piesaistīt lapas robežām"
+msgstr "Pievilkt lapas robežām"
 
 #: ../src/widgets/toolbox.cpp:1825
 msgid "Snap to grids"
-msgstr "Piesaistīt režģim"
+msgstr "Pievilkt režģim"
 
 #: ../src/widgets/toolbox.cpp:1834
 msgid "Snap guides"
@@ -34877,7 +34877,7 @@ msgid ""
 "Snap all paths in selection to pixels. Snaps borders to half-points and "
 "fills to full points."
 msgstr ""
-"Piesaistīt visus ceļus atlasītajā pie pikseļiem. Piesaista malas pie "
+"Pievilkt visus ceļus atlasītajā pie pikseļiem. Piesaista malas pie "
 "puspunktiem un aizpildījumu - pilnajiem punktiem."
 
 #: ../share/extensions/plotter.inx.h:1
