@@ -616,7 +616,7 @@ PdfInputCairo::open(Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
                                                                    output, width, height);
     cairo_t* cr = cairo_create(surface);
 
-    poppler_page_render(page, cr);
+    poppler_page_render_for_printing(page, cr);
     cairo_show_page(cr);
 
     cairo_destroy(cr);
