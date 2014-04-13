@@ -115,7 +115,6 @@ ShowUninstDetails hide
   !insertmacro MUI_LANGUAGE "${_LANG}"
   !insertmacro LANGFILE_INCLUDE_WITHDEFAULT "languages\${_LANG}.nsh" "languages\English.nsh"
 !macroend
-!insertmacro INKLANGFILE BrazilianPortuguese
 !insertmacro INKLANGFILE Breton
 !insertmacro INKLANGFILE Catalan
 !insertmacro INKLANGFILE Czech
@@ -129,6 +128,7 @@ ShowUninstDetails hide
 !insertmacro INKLANGFILE Italian
 !insertmacro INKLANGFILE Japanese
 !insertmacro INKLANGFILE Polish
+!insertmacro INKLANGFILE PortugueseBR
 !insertmacro INKLANGFILE Romanian
 !insertmacro INKLANGFILE Russian
 !insertmacro INKLANGFILE Slovak
@@ -315,14 +315,23 @@ Section $(Core) SecCore ; Mandatory Inkscape core files section {{{
   File /nonfatal /a /r /x *.??*.???* /x examples /x tutorials ..\..\inkscape\share
   !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
   ; this files are added because it slips through the filter
-  SetOutPath $INSTDIR\share\clipart
+  SetOutPath $INSTDIR\share\branding
   !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-  File /a ..\..\inkscape\share\clipart\inkscape.logo.svg
+  File /a ..\..\inkscape\share\branding\draw-freely.ru.svg
   !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
   SetOutPath $INSTDIR\share\icons
   !insertmacro UNINSTALL.LOG_OPEN_INSTALL
   File /a ..\..\inkscape\share\icons\inkscape.file.png
   File /a ..\..\inkscape\share\icons\inkscape.file.svg
+  !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+  SetOutPath $INSTDIR\share\extensions
+  !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+  File /a ..\..\inkscape\share\extensions\inkscape.extension.rng
+  !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+  SetOutPath $INSTDIR\share\extensions\test
+  !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+  File /a ..\..\inkscape\share\extensions\test\inkwebjs-move.test.svg
+  File /a ..\..\inkscape\share\extensions\test\test_template.py.txt
   !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
   SetOutPath $INSTDIR\modules
   !insertmacro UNINSTALL.LOG_OPEN_INSTALL
@@ -532,6 +541,7 @@ SectionGroup "$(Languages)" SecLanguages ; Languages sections {{{
   !insertmacro Language Hebrew            he
   !insertmacro Language Croatian          hr
   !insertmacro Language Hungarian         hu
+  !insertmacro Language Armenian          hy
   !insertmacro Language Indonesian        id
   !insertmacro Language Italian           it
   !insertmacro Language Japanese          ja
@@ -651,7 +661,7 @@ Function .onInit ; initialise the installer {{{2
   !macroend
 
   ; No need for English to be detected as it's the default
-  !insertmacro LanguageAutoSelect BrPortuguese  1046
+  !insertmacro LanguageAutoSelect PortugueseBrazil  1046
   !insertmacro LanguageAutoSelect Breton        1150
   !insertmacro LanguageAutoSelect Catalan       1027
   !insertmacro LanguageAutoSelect Czech         1029
@@ -794,6 +804,7 @@ Function .onInit ; initialise the installer {{{2
   !insertmacro Parameter he             ${SecHebrew}
   !insertmacro Parameter hr             ${SecCroatian}
   !insertmacro Parameter hu             ${SecHungarian}
+  !insertmacro Parameter hy             ${SecArmenian}
   !insertmacro Parameter id             ${SecIndonesian}
   !insertmacro Parameter it             ${SecItalian}
   !insertmacro Parameter ja             ${SecJapanese}
