@@ -1699,7 +1699,6 @@ _layer_hierarchy_changed(SPObject */*top*/, SPObject *bottom,
 /// Called when document is starting to be rebuilt.
 static void _reconstruction_start(SPDesktop * desktop)
 {
-    g_debug("Desktop, starting reconstruction\n");
     desktop->_reconstruction_old_layer_id = desktop->currentLayer()->getId() ? desktop->currentLayer()->getId() : "";
     desktop->layers->reset();
 
@@ -1710,8 +1709,6 @@ static void _reconstruction_start(SPDesktop * desktop)
     }
     */
     desktop->selection->clear();
-
-    g_debug("Desktop, starting reconstruction end\n");
 }
 
 /// Called when document rebuild is finished.
