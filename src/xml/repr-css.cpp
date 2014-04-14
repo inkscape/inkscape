@@ -382,7 +382,10 @@ static void sp_repr_css_merge_from_decl(SPCSSAttr *css, CRDeclaration const *con
     std::string characters;
     std::string temp;
     bool number_valid = !(ss >> number).fail();
-    if( !number_valid ) ss.clear();
+    if (!number_valid) {
+        ss.clear();
+        ss.seekg(0); // work-around for a bug in libc++ (see lp:1300271)
+    }
     while( !(ss >> temp).eof() ) {
         characters += temp;
         characters += " ";
