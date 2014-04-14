@@ -960,16 +960,17 @@ Geom::PathVector* item_outline(SPItem const *item, bool bbox_only)
     Geom::Affine const transform(item->transform);
     float const scale = transform.descrim();
 
-    float o_width, o_miter;
+    float o_width = i_style->stroke_width.computed;
+    if (o_width < Geom::EPSILON) {
+        // This may result in rounding errors for very small stroke widths (happens e.g. when user unit is large).
+        // See bug lp:1244861
+        o_width = Geom::EPSILON;
+    }
+    float o_miter = i_style->stroke_miterlimit.value * o_width;
+
     JoinType o_join;
     ButtType o_butt;
     {
-        o_width = i_style->stroke_width.computed;
-        if (o_width < 0.01) {
-            o_width = 0.01;
-        }
-        o_miter = i_style->stroke_miterlimit.value * o_width;
-
         switch (i_style->stroke_linejoin.computed) {
             case SP_STROKE_LINEJOIN_MITER:
                 o_join = join_pointy;
