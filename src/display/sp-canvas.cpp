@@ -2153,6 +2153,8 @@ gboolean SPCanvasImpl::handleDraw(GtkWidget *widget, cairo_t *cr) {
             canvas->requestRedraw(r.left(), r.top(), r.right(), r.bottom());
         }
 
+        cairo_rectangle_list_destroy(rects);
+
 	return FALSE;
 }
 #else
