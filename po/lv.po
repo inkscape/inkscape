@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2014-03-04 13:58+0100\n"
-"PO-Revision-Date: 2014-04-07 22:06+0200\n"
+"PO-Revision-Date: 2014-04-17 22:48+0200\n"
 "Last-Translator: Jānis Eisaks <jancs@dv.lv>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "Language: lv\n"
@@ -3696,7 +3696,6 @@ msgstr "Alternatīvas process"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:140
-#, fuzzy
 msgctxt "Symbol"
 msgid "Extract"
 msgstr "Atspiest"
@@ -4707,7 +4706,7 @@ msgstr "Velosipēdu novietne"
 #: ../share/symbols/symbols.h:316
 msgctxt "Symbol"
 msgid "Marina"
-msgstr ""
+msgstr "Jūras pasaule"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:317
@@ -8442,12 +8441,11 @@ msgid "Image Rendering Mode:"
 msgstr "Attēla renderēšanas režīms:"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:201
-#, fuzzy
 msgid ""
 "When an image is upscaled, apply smoothing or keep blocky (pixelated). (Will "
 "not work in all browsers.)"
 msgstr ""
-"Ja attēls ir palielināts, pielietot izlīdzināšanu vai atstāt kvadrātainu "
+"Ja attēls ir palielināts, pielietot izlīdzināšanu vai atstāt graudainu "
 "(pikselētu). (Nedarbojas visos pārlūkos.)"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:202
@@ -9309,7 +9307,7 @@ msgstr "Pārvietot krāsu pārejas turi"
 
 #: ../src/gradient-drag.cpp:1162 ../src/widgets/gradient-vector.cpp:847
 msgid "Delete gradient stop"
-msgstr "Dzēst krāsu pārejas beigas"
+msgstr "Dzēst krāsu pārejas pieturpunktu"
 
 #: ../src/gradient-drag.cpp:1425
 #, c-format
@@ -9318,7 +9316,7 @@ msgid ""
 "+Alt</b> to delete stop"
 msgstr ""
 "%s %d objektam: %s%s; velciet ar <b>Ctrl</b>, lai piesaistītu novirzei; "
-"uzklikšķiniet ar <b>Ctrl+Alt</b>, lai dzēstu pārtraukumu"
+"uzklikšķiniet ar <b>Ctrl+Alt</b>, lai dzēstu pieturpunktu"
 
 #: ../src/gradient-drag.cpp:1429 ../src/gradient-drag.cpp:1436
 msgid " (stroke)"
@@ -9366,11 +9364,11 @@ msgstr "Pārvietot krāsu pārejas turi(-us)"
 
 #: ../src/gradient-drag.cpp:2408
 msgid "Move gradient mid stop(s)"
-msgstr "Pārvietot krāsu pārejas vidus punktu(s)"
+msgstr "Pārvietot krāsu pārejas viduspunktu(s)"
 
 #: ../src/gradient-drag.cpp:2697
 msgid "Delete gradient stop(s)"
-msgstr "Dzēst krāsu pārejas beigas"
+msgstr "Dzēst krāsu pārejas pieturpunktu(s)"
 
 #: ../src/inkscape.cpp:341
 msgid "Autosave failed! Cannot create directory %1."
@@ -9686,8 +9684,7 @@ msgstr "<b>Mērogot</b> faktūras aizpildījumu; vienādā mērā - ar <b>Ctrl</
 
 #: ../src/knotholder.cpp:268
 msgid "<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"
-msgstr ""
-"<b>Griezt</b> faktūras aizpildījumu; ar <b>Ctrl</b> - pievilkt leņķim"
+msgstr "<b>Griezt</b> faktūras aizpildījumu; ar <b>Ctrl</b> - pievilkt leņķim"
 
 #: ../src/libgdl/gdl-dock-bar.c:105
 msgid "Master"
@@ -12379,9 +12376,9 @@ msgid ""
 "snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for "
 "segment"
 msgstr ""
-"Novietojiet loka vai segmenta <b>sākumpunktu</b>; ar <b>Ctrl</b> - "
-"pievilkt leņķim; lai iegūtu loku, velciet elipses <b>iekšpusē</b>; lai "
-"iegūtu sektoru - <b>ārpusē</b>"
+"Novietojiet loka vai segmenta <b>sākumpunktu</b>; ar <b>Ctrl</b> - pievilkt "
+"leņķim; lai iegūtu loku, velciet elipses <b>iekšpusē</b>; lai iegūtu sektoru "
+"- <b>ārpusē</b>"
 
 #: ../src/object-edit.cpp:961
 msgid ""
@@ -12389,9 +12386,9 @@ msgid ""
 "snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for "
 "segment"
 msgstr ""
-"Novietojiet loka vai segmenta <b>beigu punktu</b>; ar <b>Ctrl</b> - "
-"pievilkt leņķim; lai iegūtu loku, velciet elipses <b>iekšpusē</b>; lai "
-"iegūtu sektoru - <b>ārpusē</b>"
+"Novietojiet loka vai segmenta <b>beigu punktu</b>; ar <b>Ctrl</b> - pievilkt "
+"leņķim; lai iegūtu loku, velciet elipses <b>iekšpusē</b>; lai iegūtu sektoru "
+"- <b>ārpusē</b>"
 
 #: ../src/object-edit.cpp:1101
 msgid ""
@@ -12423,8 +12420,8 @@ msgid ""
 "Roll/unroll the spiral from <b>outside</b>; with <b>Ctrl</b> to snap angle; "
 "with <b>Shift</b> to scale/rotate; with <b>Alt</b> to lock radius"
 msgstr ""
-"Satīt/attīt spirāli no <b>ārpuses</b>; ar <b>Ctrl</b> - pievilkt leņķim; "
-"ar <b>Shift</b> - mērogot/griezt; ar <b>Alt</b> - fiksēt rādiusu"
+"Satīt/attīt spirāli no <b>ārpuses</b>; ar <b>Ctrl</b> - pievilkt leņķim; ar "
+"<b>Shift</b> - mērogot/griezt; ar <b>Alt</b> - fiksēt rādiusu"
 
 #: ../src/object-edit.cpp:1348
 msgid "Adjust the <b>offset distance</b>"
@@ -12793,7 +12790,7 @@ msgstr "Dzēst visu"
 
 #: ../src/selection-chemistry.cpp:750
 msgid "Select <b>some objects</b> to group."
-msgstr "Grupēšanai atlasiet <b>dažus objektus</b>."
+msgstr "Atlasiet <b>dažus objektus</b> grupēšanai."
 
 #: ../src/selection-chemistry.cpp:765 ../src/sp-item-group.cpp:331
 msgid "Group"
@@ -12813,7 +12810,7 @@ msgstr "Atgrupēt"
 
 #: ../src/selection-chemistry.cpp:942
 msgid "Select <b>object(s)</b> to raise."
-msgstr "Izvēlieties <b>objektu(s)</b>, kurus pacelt augstāk."
+msgstr "Atlasiet <b>objektu(s)</b>, kurus pacelt augstāk."
 
 #: ../src/selection-chemistry.cpp:948 ../src/selection-chemistry.cpp:1004
 #: ../src/selection-chemistry.cpp:1032 ../src/selection-chemistry.cpp:1093
@@ -12831,7 +12828,7 @@ msgstr "Pacelt"
 
 #: ../src/selection-chemistry.cpp:996
 msgid "Select <b>object(s)</b> to raise to top."
-msgstr "Izvēlieties <b>objektu(s)</b>, kurus pacelt pašā augšā."
+msgstr "Atlasiet <b>objektu(s)</b>, kurus pacelt pašā augšā."
 
 #: ../src/selection-chemistry.cpp:1019
 msgid "Raise to top"
@@ -12839,7 +12836,7 @@ msgstr "Pacelt pašā augšā"
 
 #: ../src/selection-chemistry.cpp:1026
 msgid "Select <b>object(s)</b> to lower."
-msgstr "Izvēlieties <b>objektu(s)</b>, kurus nolaist zemāk."
+msgstr "Atlasiet <b>objektu(s)</b>, kurus nolaist zemāk."
 
 #. TRANSLATORS: "Lower" means "to lower an object" in the undo history
 #: ../src/selection-chemistry.cpp:1077
@@ -12849,7 +12846,7 @@ msgstr "Nolaist zemāk"
 
 #: ../src/selection-chemistry.cpp:1085
 msgid "Select <b>object(s)</b> to lower to bottom."
-msgstr "Izvēlieties <b>objektu(s)</b>, kurus nolaist pašā apakšā."
+msgstr "Atlasiet <b>objektu(s)</b>, kurus nolaist pašā apakšā."
 
 #: ../src/selection-chemistry.cpp:1120
 msgid "Lower to bottom"
@@ -12996,7 +12993,7 @@ msgstr "Atlasītajam nav pielietots neviens ceļa efekts."
 
 #: ../src/selection-chemistry.cpp:2550 ../src/ui/dialog/clonetiler.cpp:2218
 msgid "Select an <b>object</b> to clone."
-msgstr "Izvēlieties klonējamo <b>objektu</b>."
+msgstr "Atlasiet klonējamo <b>objektu</b>."
 
 #: ../src/selection-chemistry.cpp:2586
 msgctxt "Action"
@@ -13048,7 +13045,7 @@ msgid ""
 "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, "
 "flowed text?)"
 msgstr ""
-"<b>Nevar atrast</b> atlasāma objektu (pamests klons, nobīde, teksta ceļš, "
+"<b>Nevar atrast</b> atlasāmo objektu (pamests klons, nobīde, teksta ceļš, "
 "teksta aizpildījums?)"
 
 #: ../src/selection-chemistry.cpp:2760
@@ -13115,7 +13112,7 @@ msgstr "Objektus par faktūru"
 #: ../src/selection-chemistry.cpp:3331
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr ""
-"Izvēlieties <b>objektu ar faktūras aizpildījumu</b>, no kura ekstraģēt  "
+"Atlasiet <b>objektu ar faktūras aizpildījumu</b>, no kura ekstraģēt  "
 "objektus."
 
 #: ../src/selection-chemistry.cpp:3386
@@ -13343,16 +13340,16 @@ msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
 msgstr ""
-"<b>Šķiebt</b> atlasīto; ar <b>Ctrl</b> - pievilkt leņķim; ar <b>Shift</b> "
-"- šķiebt gar pretējo malu"
+"<b>Šķiebt</b> atlasīto; ar <b>Ctrl</b> - pievilkt leņķim; ar <b>Shift</b> - "
+"šķiebt gar pretējo malu"
 
 #: ../src/seltrans-handles.cpp:12
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
 msgstr ""
-"<b>Griezt</b> atlasīto; ar <b>Ctrl</b> - pievilkt leņķim; ar <b>Shift</b> "
-"- griezt ap pretējo stūri"
+"<b>Griezt</b> atlasīto; ar <b>Ctrl</b> - pievilkt leņķim; ar <b>Shift</b> - "
+"griezt ap pretējo stūri"
 
 #: ../src/seltrans-handles.cpp:13
 msgid ""
@@ -14067,7 +14064,7 @@ msgstr "TVektorizēšana: %1.  %2 mezgli"
 #: ../src/ui/dialog/pixelartdialog.cpp:338
 #: ../src/ui/dialog/pixelartdialog.cpp:356
 msgid "Select an <b>image</b> to trace"
-msgstr "Atlasiet vektorizējamo <b>attēlu</b>"
+msgstr "Izvēlieties vektorizējamo <b>attēlu</b>"
 
 #: ../src/trace/trace.cpp:94
 msgid "Select only one <b>image</b> to trace"
@@ -14075,7 +14072,7 @@ msgstr "Vektorizēšanai izvēlieties tikai vienu <b>attēlu</b>"
 
 #: ../src/trace/trace.cpp:112
 msgid "Select one image and one or more shapes above it"
-msgstr "atlasiet vienu attēlu un vienu vai vairākas figūras virs tā"
+msgstr "Atlasiet vienu attēlu un vienu vai vairākas figūras virs tā"
 
 #: ../src/trace/trace.cpp:216
 msgid "Trace: No active desktop"
@@ -15134,8 +15131,7 @@ msgstr "<small>Objekts nesatur klonētus raksta elementus.</small>"
 
 #: ../src/ui/dialog/clonetiler.cpp:2097
 msgid "Select <b>one object</b> whose tiled clones to unclump."
-msgstr ""
-"Izvēlieties <b>vienu objektu</b>, kura klonu raksta elementus izretināt."
+msgstr "Atlasiet <b>vienu objektu</b>, kura klonu raksta elementus izretināt."
 
 #: ../src/ui/dialog/clonetiler.cpp:2119
 msgid "Unclump tiled clones"
@@ -15144,7 +15140,7 @@ msgstr "Izretināt klonētos raksta elementus"
 #: ../src/ui/dialog/clonetiler.cpp:2148
 msgid "Select <b>one object</b> whose tiled clones to remove."
 msgstr ""
-"Izvēlieties <b>vienu objektu</b>, kura klonētos raksta elementus vēlaties "
+"Atlasiet <b>vienu objektu</b>, kura klonētos raksta elementus vēlaties "
 "aizvākt."
 
 #: ../src/ui/dialog/clonetiler.cpp:2171
@@ -15416,8 +15412,8 @@ msgid ""
 "If set, objects only snap to a guide when it's within the range specified "
 "below"
 msgstr ""
-"Ja iestatīts, objekti tiek pievilkti palīglīnijām tikai tad, ja tie "
-"atrodas norādītajā attālumā vai tuvāk"
+"Ja iestatīts, objekti tiek pievilkti palīglīnijām tikai tad, ja tie atrodas "
+"norādītajā attālumā vai tuvāk"
 
 #. ---------------------------------------------------------------
 #: ../src/ui/dialog/document-properties.cpp:137
@@ -17023,7 +17019,7 @@ msgstr "_Meklēt"
 
 #: ../src/ui/dialog/find.cpp:114
 msgid "Select all objects matching the selection criteria"
-msgstr "Izvēlēties visus objektus, kas atbilst izvēles kritērijam"
+msgstr "Atlasīt visus objektus, kas atbilst izvēles kritērijam"
 
 #: ../src/ui/dialog/find.cpp:115
 msgid "_Replace All"
@@ -19752,7 +19748,7 @@ msgstr "Atlasīt visos slāņos"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1139
 msgid "Select only within current layer"
-msgstr "Iezīmēt tikai pašreizējā slānī"
+msgstr "Atlasīt tikai pašreizējā slānī"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1140
 msgid "Select in current layer and sublayers"
@@ -20105,8 +20101,8 @@ msgid ""
 "Rotating with Ctrl pressed snaps every that much degrees; also, pressing "
 "[ or ] rotates by this amount"
 msgstr ""
-"Griešana ar nospiestu Ctrl pievilkta norādītajiem grādiem (solim);  "
-"[ vai ] nospiešana tāpat pagriež par norādīto lielumu"
+"Griešana ar nospiestu Ctrl pievilkta norādītajiem grādiem (solim);  [ vai ] "
+"nospiešana tāpat pagriež par norādīto lielumu"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1265
 msgid "Relative snapping of guideline angles"
@@ -20972,7 +20968,7 @@ msgstr "Nospiediet pievienošanas pogu, lai pārvērstu klonu"
 #: ../src/ui/dialog/livepatheffect-editor.cpp:338
 #: ../src/ui/dialog/livepatheffect-editor.cpp:346
 msgid "Select a path or shape"
-msgstr "Izvēlieties ceļu vai figūru"
+msgstr "Atlasiet ceļu vai figūru"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:342
 msgid "Only one item can be selected"
@@ -21167,6 +21163,13 @@ msgid ""
 "Note that this behaviour is not defined in the SVG 1.1 specification and not "
 "all browsers follow this interpretation."
 msgstr ""
+"'image-rendering' īpašība var ietekmēt veidu, kādā tiek palielināta "
+"bitkarte:\n"
+"\t'auto' nav priekšrokas;\n"
+"\t'optimizeQuality' izlīdzināta;\n"
+"\t'optimizeSpeed' graudaina.\n"
+"Ņemiet vērā, ka šāds mehānisms nav definēts SVG 1.1 specifikācijā un ne visi "
+"pārlūki atbalsta šādu interpretāciju."
 
 #. Hide
 #: ../src/ui/dialog/object-properties.cpp:293
@@ -21297,9 +21300,8 @@ msgid "Avoid single disconnected pixels"
 msgstr "Izvairīties no atsevišķiem nesavienotiem pikseļiem"
 
 #: ../src/ui/dialog/pixelartdialog.cpp:181
-#, fuzzy
 msgid "A constant vote value"
-msgstr "ierobežots leņķis"
+msgstr "Konstanta svara vērtība"
 
 #: ../src/ui/dialog/pixelartdialog.cpp:191
 msgid "Sparse pixels (window _radius):"
@@ -21321,7 +21323,7 @@ msgstr "Dod priekšroku savienojumiem, kas ir priekšplāna krāsas daļa"
 # 'heuristic' vote: voters base their decisions on their feelings towards those promoting a Yes or a No vote, rather than on the issue itself.
 #: ../src/ui/dialog/pixelartdialog.cpp:218
 msgid "The heuristic computed vote will be multiplied by this value"
-msgstr ""
+msgstr "Heiristiski aprēķinātais svars tiks reizināts ar šo vērtību"
 
 #: ../src/ui/dialog/pixelartdialog.cpp:231
 msgid "Heuristics"
@@ -21648,7 +21650,7 @@ msgstr "Teksta priekšskatījums:"
 #: ../src/ui/tools/gradient-tool.cpp:465
 #: ../src/widgets/gradient-vector.cpp:814
 msgid "Add gradient stop"
-msgstr "Pievienot krāsu pārejas beigas"
+msgstr "Pievienot krāsu pārejas pieturpunktu"
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
 #: ../src/ui/dialog/swatches.cpp:258
@@ -22564,16 +22566,16 @@ msgid ""
 "<b>Shift+Ctrl</b>: snap rotation angle to %g° increments and rotate both "
 "handles"
 msgstr ""
-"<b>Shift+Ctrl</b>: pievilkt griešanas leņķi ik %g° pieaugumam un griezt "
-"abus turus"
+"<b>Shift+Ctrl</b>: pievilkt griešanas leņķi ik %g° pieaugumam un griezt abus "
+"turus"
 
 #: ../src/ui/tool/node.cpp:465
 #, c-format
 msgctxt "Path handle tip"
 msgid "<b>Ctrl</b>: snap rotation angle to %g° increments, click to retract"
 msgstr ""
-"<b>Ctrl</b>: pievilkt griešanas leņķi ik %g° pieaugumam, uzklikšķiniet - "
-"lai atsauktu"
+"<b>Ctrl</b>: pievilkt griešanas leņķi ik %g° pieaugumam, uzklikšķiniet - lai "
+"atsauktu"
 
 #: ../src/ui/tool/node.cpp:470
 msgctxt "Path hande tip"
@@ -22796,7 +22798,7 @@ msgstr ""
 
 #: ../src/ui/tools/connector-tool.cpp:1345
 msgid "Select <b>at least one non-connector object</b>."
-msgstr "Izvēlieties <b>vismaz vienu objektu, kas nav savienotājs</b>."
+msgstr "Atlasiet <b>vismaz vienu objektu, kas nav savienotājs</b>."
 
 #: ../src/ui/tools/connector-tool.cpp:1350
 #: ../src/widgets/connector-toolbar.cpp:311
@@ -22976,13 +22978,13 @@ msgid ""
 msgid_plural ""
 "One handle merging %d stops (drag with <b>Shift</b> to separate) selected"
 msgstr[0] ""
-"Atlasīts viens, %d pārtraukumu apvienojošs turis (velciet ar <b>Shift</b> "
+"Atlasīts viens, %d pieturpunktu apvienojošs turis (velciet ar <b>Shift</b> "
 "lai atdalītu)"
 msgstr[1] ""
-"Atlasīts viens, %d pārtraukumus apvienojošs turis (velciet ar <b>Shift</b> "
+"Atlasīts viens, %d pieturpunktus apvienojošs turis (velciet ar <b>Shift</b> "
 "lai atdalītu)"
 msgstr[2] ""
-"Atlasīts viens, %d pārtraukumus apvienojošs turis (velciet ar <b>Shift</b> "
+"Atlasīts viens, %d pieturpunktus apvienojošs turis (velciet ar <b>Shift</b> "
 "lai atdalītu)"
 
 #. TRANSLATORS: The plural refers to number of selected gradient handles. This is part of a compound message (part two indicates selected object count)
@@ -23469,8 +23471,8 @@ msgstr "<b>Ctrl</b>: pievilkt leņķim; saglabāt starus radiālus"
 msgid ""
 "<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
-"<b>Daudzstūris</b>: rādiuss %s, leņķis %5g&#176;; ar <b>Ctrl</b> - "
-"pievilkt leņķim"
+"<b>Daudzstūris</b>: rādiuss %s, leņķis %5g&#176;; ar <b>Ctrl</b> - pievilkt "
+"leņķim"
 
 #: ../src/ui/tools/star-tool.cpp:418
 #, c-format
@@ -25184,19 +25186,19 @@ msgstr "Dzēst visus objektus dokumentā"
 
 #: ../src/verbs.cpp:2450
 msgid "Select Al_l"
-msgstr "Izvēlēties _visu"
+msgstr "Atlasīt _visu"
 
 #: ../src/verbs.cpp:2451
 msgid "Select all objects or all nodes"
-msgstr "Iezīmēt visus objektus vai mezglus"
+msgstr "Atlasīt visus objektus vai mezglus"
 
 #: ../src/verbs.cpp:2452
 msgid "Select All in All La_yers"
-msgstr "Iezīmēt visu visos s_lāņos"
+msgstr "Atlasīt visu visos s_lāņos"
 
 #: ../src/verbs.cpp:2453
 msgid "Select all objects in all visible and unlocked layers"
-msgstr "Izvēlēties visus objektus visos redzamajos un atvērtajos slāņos"
+msgstr "Atlasīt visus objektus visos redzamajos un atvērtajos slāņos"
 
 #: ../src/verbs.cpp:2454
 msgid "Fill _and Stroke"
@@ -25255,7 +25257,7 @@ msgstr "In_vertēt izvēlēto"
 
 #: ../src/verbs.cpp:2465
 msgid "Invert selection (unselect what is selected and select everything else)"
-msgstr "Invertēt iezīmēto (atceļ iepriekšējo izvēli un izvēlas visu pārējo)"
+msgstr "Invertēt atlasīto (atceļ iepriekšējo atlasi un atlasa visu pārējo)"
 
 #: ../src/verbs.cpp:2466
 msgid "Invert in All Layers"
@@ -25263,23 +25265,23 @@ msgstr "Invertēt visus slāņus"
 
 #: ../src/verbs.cpp:2467
 msgid "Invert selection in all visible and unlocked layers"
-msgstr "Invertēt iezīmēto visos redzamajos un atvērtajos slāņos"
+msgstr "Invertēt atlasīto visos redzamajos un atvērtajos slāņos"
 
 #: ../src/verbs.cpp:2468
 msgid "Select Next"
-msgstr "Izvēlēties nākošo"
+msgstr "Atlasīt nākošo"
 
 #: ../src/verbs.cpp:2469
 msgid "Select next object or node"
-msgstr "Izvēlēties nākošo objektu vai mezglu"
+msgstr "Atlasīt nākošo objektu vai mezglu"
 
 #: ../src/verbs.cpp:2470
 msgid "Select Previous"
-msgstr "Izvēlēties iepriekšējo"
+msgstr "Atlasīt iepriekšējo"
 
 #: ../src/verbs.cpp:2471
 msgid "Select previous object or node"
-msgstr "Izvēlēties iepriekšējo objektu vai mezglu"
+msgstr "Atlasīt iepriekšējo objektu vai mezglu"
 
 #: ../src/verbs.cpp:2472
 msgid "D_eselect"
@@ -25287,7 +25289,7 @@ msgstr "Atc_elt atlasi"
 
 #: ../src/verbs.cpp:2473
 msgid "Deselect any selected objects or nodes"
-msgstr "Atcelt visu objektu vai mezglu izvēli"
+msgstr "Atcelt visu objektu vai mezglu atlasi"
 
 #: ../src/verbs.cpp:2475
 msgid "Delete all the guides in the document"
@@ -27697,7 +27699,7 @@ msgstr "Iestatīt krāsu pārejas atkārtojumu"
 #: ../src/widgets/gradient-toolbar.cpp:992
 #: ../src/widgets/gradient-vector.cpp:740
 msgid "Change gradient stop offset"
-msgstr "Mainīt krāsu pārejas pieturvietas nobīdi"
+msgstr "Mainīt krāsu pārejas pieturpunkta nobīdi"
 
 #: ../src/widgets/gradient-toolbar.cpp:1036
 msgid "linear"
@@ -27796,7 +27798,7 @@ msgstr "atbalsta punkti"
 
 #: ../src/widgets/gradient-toolbar.cpp:1145
 msgid "Select a stop for the current gradient"
-msgstr "Atlasiet pašreizējās krāsu pārejas atbalsta punktu"
+msgstr "Atlasiet pašreizējās krāsu pārejas pieturpunktu"
 
 #: ../src/widgets/gradient-toolbar.cpp:1146
 msgid "Stops:"
@@ -27811,18 +27813,18 @@ msgstr "Nobīde:"
 
 #: ../src/widgets/gradient-toolbar.cpp:1158
 msgid "Offset of selected stop"
-msgstr "Atlasītā atbalsta punkta nobīde"
+msgstr "Atlasītā pieturpunkta nobīde"
 
 #: ../src/widgets/gradient-toolbar.cpp:1176
 #: ../src/widgets/gradient-toolbar.cpp:1177
 msgid "Insert new stop"
-msgstr "Ievietot jaunu atbalsta punktu"
+msgstr "Ievietot jaunu pieturpunktu"
 
 #: ../src/widgets/gradient-toolbar.cpp:1190
 #: ../src/widgets/gradient-toolbar.cpp:1191
 #: ../src/widgets/gradient-vector.cpp:908
 msgid "Delete stop"
-msgstr "Dzēst atbalsta punktu"
+msgstr "Dzēst pieturpunktu"
 
 #: ../src/widgets/gradient-toolbar.cpp:1204
 msgid "Reverse"
@@ -27857,20 +27859,20 @@ msgstr "Nav atlasītu krāsu pāreju"
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
 #: ../src/widgets/gradient-vector.cpp:903
 msgid "Add stop"
-msgstr "Pievienot atbalsta punktu"
+msgstr "Pievienot pieturpunktu"
 
 #: ../src/widgets/gradient-vector.cpp:906
 msgid "Add another control stop to gradient"
-msgstr "Pievienot vēl vienu krāsu pārejas atbalsta punktu"
+msgstr "Pievienot vēl vienu krāsu pārejas pieturpunktu"
 
 #: ../src/widgets/gradient-vector.cpp:911
 msgid "Delete current control stop from gradient"
-msgstr "Dzēst pašreizējo krāsu pārejas atbalsta punktu"
+msgstr "Dzēst pašreizējo krāsu pārejas pieturpunktu"
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
 #: ../src/widgets/gradient-vector.cpp:979
 msgid "Stop Color"
-msgstr "Atbalsta punkta krāsa"
+msgstr "Pieturpunkta krāsa"
 
 #: ../src/widgets/gradient-vector.cpp:1007
 msgid "Gradient editor"
@@ -27878,7 +27880,7 @@ msgstr "Krāsu pāreju redaktors"
 
 #: ../src/widgets/gradient-vector.cpp:1307
 msgid "Change gradient stop color"
-msgstr "Mainīt krāsu pārejas atbalsta punkta krāsu"
+msgstr "Mainīt krāsu pārejas pieturpunkta krāsu"
 
 #: ../src/widgets/lpe-toolbar.cpp:298
 msgid "All inactive"
@@ -29682,8 +29684,7 @@ msgstr "Citi"
 #: ../src/widgets/toolbox.cpp:1780
 msgid "Snap other points (centers, guide origins, gradient handles, etc.)"
 msgstr ""
-"Pievilkt citus punktus (centrus, vadlīniju sākumus, krāsu pāreju turus "
-"utt.)"
+"Pievilkt citus punktus (centrus, vadlīniju sākumus, krāsu pāreju turus utt.)"
 
 #: ../src/widgets/toolbox.cpp:1788
 msgid "Object Centers"
@@ -29945,7 +29946,7 @@ msgstr ""
 
 #: ../share/extensions/dimension.py:109
 msgid "Please select an object."
-msgstr "Lūdzu izvēlieties kādu objektu."
+msgstr "Lūdzu, atlasiet kādu objektu."
 
 #: ../share/extensions/dimension.py:134
 msgid "Unable to process this object.  Try changing it into a path first."
@@ -30069,7 +30070,7 @@ msgstr ""
 
 #: ../share/extensions/funcplot.py:315
 msgid "Please select a rectangle"
-msgstr "Lūdzu, izvēlieties taisnstūri"
+msgstr "Lūdzu, atlasiet taisnstūri"
 
 #: ../share/extensions/gcodetools.py:3321
 #: ../share/extensions/gcodetools.py:4526
@@ -30081,7 +30082,7 @@ msgstr "Nav atlasīts neviens ceļš! Mēģina apstrādāt visus pieejamos ceļu
 
 #: ../share/extensions/gcodetools.py:3324
 msgid "Noting is selected. Please select something."
-msgstr "Nekas nav izvēlēts. Lūdzu, izvēlieties kaut ko."
+msgstr "Nekas nav atlasīts. Lūdzu, atlasiet kaut ko."
 
 #: ../share/extensions/gcodetools.py:3864
 msgid ""
@@ -30238,7 +30239,7 @@ msgstr "Uzmanību: izlaiž ne-ceļu "
 
 #: ../share/extensions/gcodetools.py:5511
 msgid "Please select at least one path to engrave and run again."
-msgstr "Lūdzu, izvēlieties vismaz vienu gravējamu ceļu un palaidiet vēlreiz."
+msgstr "Lūdzu, atlasiet vismaz vienu gravējamu ceļu un palaidiet vēlreiz."
 
 #: ../share/extensions/gcodetools.py:5519
 msgid "Unknown unit selected. mm assumed"
@@ -30304,8 +30305,8 @@ msgid ""
 " Current active tab id is %s"
 msgstr ""
 "Izvēlieties vienu no darbību cilnēm - ceļu par G-code, laukums, gravēšana, "
-"DXF punkti, izvietojum, pārbīde, virpa vai rīku bibliotēka .\n"
-" Šobrīd aktīvā cilne ir  %s"
+"DXF punkti, izvietojums, pārbīde, virpa vai rīku bibliotēka .\n"
+" Šobrīd aktīvā cilne ir %s"
 
 #: ../share/extensions/gcodetools.py:6668
 msgid ""
@@ -30600,8 +30601,7 @@ msgstr ""
 
 #: ../share/extensions/jessyInk_view.py:75
 msgid "More than one object selected. Please select only one object.\n"
-msgstr ""
-"Ir izvēlēts vairāk nekā viens objekts. Lūdzu, izvēlieties tikai vienu.\n"
+msgstr "Ir atlasīts vairāk nekā viens objekts. Lūdzu, atlasiet tikai vienu.\n"
 
 #: ../share/extensions/jessyInk_view.py:79
 msgid ""
@@ -30864,19 +30864,19 @@ msgstr "Jums nepieciešams uzstādīt UniConvertor programmatūru.\n"
 
 #: ../share/extensions/voronoi2svg.py:215
 msgid "Please select objects!"
-msgstr "Lūdzu, izvēlieties objektus!"
+msgstr "Lūdzu, atlasiet objektus!"
 
 #: ../share/extensions/web-set-att.py:58
 #: ../share/extensions/web-transmit-att.py:54
 msgid "You must select at least two elements."
-msgstr "Ir jāizvēlas vismaz divi elementi."
+msgstr "Ir jāatlasa vismaz divi elementi."
 
 #: ../share/extensions/webslicer_create_group.py:57
 msgid ""
 "You must create and select some \"Slicer rectangles\" before trying to group."
 msgstr ""
-"Jums ir jāizveido un jāatlasa daži \"Griezēja taisnstūri\" pirms "
-"pielietošanas grupai."
+"Jums ir jāizveido un jāatlasa daži \"Griezēja taisnstūri\" pirms mēģinājuma "
+"grupēt."
 
 #: ../share/extensions/webslicer_create_group.py:72
 msgid ""
@@ -31986,7 +31986,7 @@ msgid ""
 "   Isotropic scaling is disabled.\n"
 "   First derivative is always determined numerically."
 msgstr ""
-"Pirms paplašinājuma izsaukšanas izvēlieties taisnstūri,\n"
+"Pirms paplašinājuma izsaukšanas atlasiet taisnstūri,\n"
 "tas noteiks X un Y izmērus. Ja vēlaties aizpildīt laukumu, pievienojiet x-"
 "ass galapunktus.\n"
 "\n"
@@ -32200,8 +32200,8 @@ msgid ""
 "colored arrows."
 msgstr ""
 "Lietošana: 1. Atlasiet visas laukuma nobīdes (pelēkās aprises) 2. Objekts/"
-"Atgrupēt (Shift+Ctrl+G) 3. Nospiediet 'Pielietot';  Aizdomas turētie sīkie "
-"objekti tiks atzīmēti ar krāsainām bultiņām."
+"Atgrupēt (Shift+Ctrl+G) 3. Nospiediet 'Pielietot';  Aizdomīgi sīkie objekti "
+"tiks atzīmēti ar krāsainām bultiņām."
 
 #: ../share/extensions/gcodetools_area.inx.h:19
 #: ../share/extensions/gcodetools_lathe.inx.h:12
@@ -32810,7 +32810,7 @@ msgid ""
 "of the pattern and get an empty border."
 msgstr ""
 "Izveidot nejaušu Voronoja šūnu faktūru. Faktūra būs pieejama Aizpildījuma un "
-"apmales dialoglodziņā. Jums ir jāizvēlas kāds objekts vai grupa.\n"
+"apmales dialoglodziņā. Jums ir jāatlasa kāds objekts vai grupa.\n"
 "\n"
 "Ja apmale ir 0, faktūra tiks pārtraukta pie malām Izmantojiet pozitīvu "
 "apmales lielumu, vēlams, lielāku par šūnas izmēru, lai panāktu gludu "
@@ -33455,9 +33455,8 @@ msgstr "Atspoguļot X asi"
 
 #: ../share/extensions/hpgl_output.inx.h:17
 #: ../share/extensions/plotter.inx.h:33
-#, fuzzy
 msgid "Check this to mirror the X axis. (Default: Unchecked)"
-msgstr "Rādīt pārvietojumus starp ceļiem (Noklusētais: neatzīmēts)"
+msgstr "Atzīmējiet šo, lai atspoguļot X asi. (Noklusētais - neatzīmēts)"
 
 #: ../share/extensions/hpgl_output.inx.h:18
 #: ../share/extensions/plotter.inx.h:34
@@ -33466,9 +33465,8 @@ msgstr "Atspoguļot Y asi"
 
 #: ../share/extensions/hpgl_output.inx.h:19
 #: ../share/extensions/plotter.inx.h:35
-#, fuzzy
 msgid "Check this to mirror the Y axis. (Default: Unchecked)"
-msgstr "Rādīt pārvietojumus starp ceļiem (Noklusētais: neatzīmēts)"
+msgstr "Atzīmējiet šo, lai atspoguļotu Y asi. (Noklusētais - neatzīmēts)"
 
 #: ../share/extensions/hpgl_output.inx.h:20
 #: ../share/extensions/plotter.inx.h:36
@@ -33556,6 +33554,9 @@ msgid ""
 "if used). If unchecked you have to make sure that all parts of your drawing "
 "are within the document border! (Default: Checked)"
 msgstr ""
+"Atzīmējiet šo, lai automātiski pieskaņotu zīmējumu nulles punktam (plus rīka "
+"nobīde, ja tiek izmantota). Ja nav atzīmēts, Jums ir jāpārliecinās, ka visas "
+"zīmējuma daļas atrodas dokumenta robežās (noklusētais - atzīmēts)"
 
 #: ../share/extensions/hpgl_output.inx.h:33
 #: ../share/extensions/plotter.inx.h:51
@@ -34046,19 +34047,19 @@ msgstr "Saraksta režīms"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:35
 msgid "Select the slide to the left:"
-msgstr "Izvēlēties slaidu pa kreisi:"
+msgstr "Atlasīt slaidu pa kreisi:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:36
 msgid "Select the slide to the right:"
-msgstr "Izvēlēties slaidu pa labi"
+msgstr "Atlasīt slaidu pa labi"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:37
 msgid "Select the slide above:"
-msgstr "Izvēlieties slaidu virs:"
+msgstr "Atlasīt slaidu virs:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:38
 msgid "Select the slide below:"
-msgstr "Izvēlieties slaidu zem:"
+msgstr "Atlasīt slaidu zem:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:39
 msgid "Previous page:"
@@ -34677,7 +34678,7 @@ msgid ""
 "scales.\n"
 "First derivatives are always determined numerically."
 msgstr ""
-"Izvēlieties taisnstūri pirms paplašinājuma izsaukšanas, tas noteiks X un Y "
+"Atlasiet taisnstūri pirms paplašinājuma izsaukšanas, tas noteiks X un Y "
 "izmērus.\n"
 "Pirmie atvasinājumi vienmēr tiek noteikti skaitliski."
 
@@ -36471,7 +36472,7 @@ msgid ""
 "it). To use this, you must to select some \"Slicer rectangles\" first."
 msgstr ""
 "Izkārtojuma grupas mērķis ir tikai veicināt labāka koda veidošanai (ja tas "
-"nepieciešams). Lai to izmantotu, Jums vispirms ir jāizvēlas daži \"Griezēja "
+"nepieciešams). Lai to izmantotu, Jums vispirms ir jāatlasa daži \"Griezēja "
 "taisnstūri\"."
 
 #: ../share/extensions/webslicer_create_group.inx.h:14
