@@ -35,12 +35,14 @@
 #include "display/rendermode.h"
 #include <glibmm/ustring.h>
 
+#include "preferences.h"
 #include "sp-gradient.h" // TODO refactor enums out to their own .h file
 
 class SPCSSAttr;
 struct SPCanvas;
 struct SPCanvasItem;
 struct SPCanvasGroup;
+struct DesktopPrefObserver;
 
 namespace Inkscape {
 namespace UI {
@@ -206,7 +208,7 @@ public:
     /// Emitted when the zoom factor changes (not emitted when scrolling).
     /// The parameter is the new zoom factor
     sigc::signal<void, double> signal_zoom_changed;
-    
+
     sigc::connection connectDestroy(const sigc::slot<void, SPDesktop*> &slot)
     {
         return _destroy_signal.connect(slot);
@@ -255,6 +257,8 @@ public:
 
     Inkscape::Display::TemporaryItem * add_temporary_canvasitem (SPCanvasItem *item, guint lifetime, bool move_to_bottom = true);
     void remove_temporary_canvasitem (Inkscape::Display::TemporaryItem * tempitem);
+
+    void redrawDesktop();
 
     void _setDisplayMode(Inkscape::RenderMode mode);
     void setDisplayModeNormal() {
@@ -425,6 +429,26 @@ private:
     Geom::Affine _w2d;
     Geom::Affine _d2w;
     Geom::Affine _doc2dt;
+
+    /*
+     * Allow redrawing or refreshing if preferences change
+     */
+    class DesktopPrefObserver : public Inkscape::Preferences::Observer {
+      public:
+        DesktopPrefObserver(SPDesktop *desktop, Glib::ustring const &path)
+            : Inkscape::Preferences::Observer(path)
+            , _desktop(desktop) {
+            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+            prefs->addObserver(*this);
+        }
+      private:
+        void notify(Inkscape::Preferences::Entry const &val) {
+            _desktop->redrawDesktop();
+        }
+        SPDesktop *_desktop;
+    };
+
+    DesktopPrefObserver _image_render_observer;
 
     bool grids_visible; /* don't set this variable directly, use the method below */
     void set_grids_visible(bool visible);

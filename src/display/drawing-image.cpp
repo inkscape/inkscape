@@ -106,7 +106,10 @@ unsigned DrawingImage::_renderItem(DrawingContext &dc, Geom::IntRect const &/*ar
 {
     bool outline = _drawing.outline();
 
-    if (!outline) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool imgoutline = prefs->getBool("/options/rendering/imageinoutlinemode", false);
+
+    if (!outline || imgoutline) {
         if (!_pixbuf) return RENDER_OK;
 
         Inkscape::DrawingContext::Save save(dc);
@@ -141,7 +144,7 @@ unsigned DrawingImage::_renderItem(DrawingContext &dc, Geom::IntRect const &/*ar
         dc.paint(_opacity);
 
     } else { // outline; draw a rect instead
-        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+
         guint32 rgba = prefs->getInt("/options/wireframecolors/images", 0xff0000ff);
 
         {   Inkscape::DrawingContext::Save save(dc);

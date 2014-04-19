@@ -138,6 +138,8 @@ SPDesktop::SPDesktop() :
     _w2d(),
     _d2w(),
     _doc2dt( Geom::Scale(1, -1) ),
+    // This doesn't work I don't know why.
+    _image_render_observer(this, "/options/rendering/imageinoutlinemode"),
     grids_visible( false )
 {
     _d2w.setIdentity();
@@ -499,11 +501,15 @@ SPDesktop::remove_temporary_canvasitem (Inkscape::Display::TemporaryItem * tempi
     }
 }
 
+void SPDesktop::redrawDesktop() {
+    sp_canvas_item_affine_absolute (SP_CANVAS_ITEM (main), _d2w); // redraw
+}
+
 void SPDesktop::_setDisplayMode(Inkscape::RenderMode mode) {
     SP_CANVAS_ARENA (drawing)->drawing.setRenderMode(mode);
     canvas->rendermode = mode;
     _display_mode = mode;
-    sp_canvas_item_affine_absolute (SP_CANVAS_ITEM (main), _d2w); // redraw
+    redrawDesktop();
     _widget->setTitle( sp_desktop_document(this)->getName() );
 }
 void SPDesktop::_setDisplayColorMode(Inkscape::ColorMode mode) {
@@ -524,7 +530,7 @@ void SPDesktop::_setDisplayColorMode(Inkscape::ColorMode mode) {
     SP_CANVAS_ARENA (drawing)->drawing.setColorMode(mode);
     canvas->colorrendermode = mode;
     _display_color_mode = mode;
-    sp_canvas_item_affine_absolute (SP_CANVAS_ITEM (main), _d2w); // redraw
+    redrawDesktop();
     _widget->setTitle( sp_desktop_document(this)->getName() );
 }
 
@@ -819,7 +825,7 @@ SPDesktop::set_display_area (double x0, double y0, double x1, double y1, double 
         // zoom changed - set new zoom factors
         _d2w = Geom::Scale(newscale, -newscale);
         _w2d = Geom::Scale(1/newscale, 1/-newscale);
-        sp_canvas_item_affine_absolute(SP_CANVAS_ITEM(main), _d2w);
+        redrawDesktop();
         clear = TRUE;
         zoomChanged = true;
     }
