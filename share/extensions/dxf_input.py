@@ -279,14 +279,14 @@ def export_INSERT():
     if vals[groups['2']] and vals[groups['10']] and vals[groups['20']]:
         x = vals[groups['10']][0] + scale*xmin
         y = vals[groups['20']][0] - scale*ymin - height
-        attribs = {'x': '%f' % x, 'y': '%f' % y, inkex.addNS('href','xlink'): '#' + quote(vals[groups['2']][0].encode("utf-8"))}
+        attribs = {'x': '%f' % x, 'y': '%f' % y, inkex.addNS('href','xlink'): '#' + quote(vals[groups['2']][0].replace(" ", "_").encode("utf-8"))}
         inkex.etree.SubElement(layer, 'use', attribs)
 
 def export_BLOCK():
     # mandatory group codes : (2) (block name)
     if vals[groups['2']]:
         global block
-        block = inkex.etree.SubElement(defs, 'symbol', {'id': vals[groups['2']][0]})
+        block = inkex.etree.SubElement(defs, 'symbol', {'id': vals[groups['2']][0].replace(" ", "_")})
 
 def export_ENDBLK():
     global block
