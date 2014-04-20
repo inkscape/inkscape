@@ -581,6 +581,8 @@ XML::Node *Preferences::_findObserverNode(Glib::ustring const &pref_path, Glib::
 
     // find the node corresponding to the "directory".
     Inkscape::XML::Node *node = _getNode(node_key, create), *child;
+    if (!node) return node;
+
     for (child = node->firstChild(); child; child = child->next()) {
         // If there is a node with id corresponding to the attr key,
         // this means that the last part of the path is actually a key (folder).
@@ -601,7 +603,7 @@ void Preferences::addObserver(Observer &o)
     if ( _observer_map.find(&o) == _observer_map.end() ) {
         Glib::ustring node_key, attr_key;
         Inkscape::XML::Node *node;
-        node = _findObserverNode(o.observed_path, node_key, attr_key, false);
+        node = _findObserverNode(o.observed_path, node_key, attr_key, true);
         if (node) {
             // set additional data
             if (o._data) {

@@ -138,7 +138,6 @@ SPDesktop::SPDesktop() :
     _w2d(),
     _d2w(),
     _doc2dt( Geom::Scale(1, -1) ),
-    // This doesn't work I don't know why.
     _image_render_observer(this, "/options/rendering/imageinoutlinemode"),
     grids_visible( false )
 {
