@@ -112,7 +112,7 @@ class hpglDecoder:
     def getParameters(self, parameterString):
         # process coordinates
         if parameterString.strip() == '':
-            return []
+            parameterString = '0,0;'
         # remove command delimiter
         parameterString = parameterString.replace(';', '').strip()
         # split parameter
