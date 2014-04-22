@@ -136,8 +136,9 @@ lang_pseudo_class_handler (CRSelEng *const a_this,
 
         node_iface = PRIVATE(a_this)->node_iface;
 
-        if (strqcmp (a_sel->content.pseudo->name->stryng->str, 
-                     "lang", 4)
+        /* "xml:lang" needed for SVG */
+        if ( (strqcmp (a_sel->content.pseudo->name->stryng->str, "lang", 4 ) &&
+              (strqcmp (a_sel->content.pseudo->name->stryng->str, "xml:lang", 8 ) ) )
             || !a_sel->content.pseudo->type == FUNCTION_PSEUDO) {
                 cr_utils_trace_info ("This handler is for :lang only");
                 return FALSE;
@@ -149,6 +150,7 @@ lang_pseudo_class_handler (CRSelEng *const a_this,
                 return FALSE;
         for (; node; node = get_next_parent_element_node (node_iface, node)) {
                 char *val = node_iface->getProp (node, "lang");
+                if (!val) val = node_iface->getProp (node, "xml:lang");
                 if (val) {
                         if (!strcasecmp(val, a_sel->content.pseudo->extra->stryng->str)) {
                                 result = TRUE;
