@@ -146,6 +146,13 @@ static void sp_text_fontfamily_value_changed( Ink_ComboBoxEntry_Action *act, GOb
     std::cout << "  New active: " << act->active << std::endl;
 #endif
     if( new_family.compare( fontlister->get_font_family() ) != 0 ) {
+        // Changed font-family
+
+        if( act->active == -1 ) {
+            // New font-family, not in document, not on system (could be fallback list)
+            fontlister->insert_font_family( new_family );
+            act->active = 0; // New family is always at top of list.
+        }
 
         std::pair<Glib::ustring,Glib::ustring> ui = fontlister->set_font_family( act->active );
         // active text set in sp_text_toolbox_selection_changed()

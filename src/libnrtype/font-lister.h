@@ -127,6 +127,12 @@ namespace Inkscape
                         const Glib::RefPtr<Gtk::ListStore>
                         get_style_list () const;
 
+                        /** Inserts a font family or font-fallback list (for use when not
+                         *  already in document or on system).
+                         */
+                        void
+                        insert_font_family ( Glib::ustring new_family );
+
                         /** Updates font list to include fonts in document
                          *
                          */
