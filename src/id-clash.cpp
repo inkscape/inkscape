@@ -53,7 +53,7 @@ const char *href_like_attributes[] = {
 #define NUM_HREF_LIKE_ATTRIBUTES (sizeof(href_like_attributes) / sizeof(*href_like_attributes))
 
 const SPIPaint SPStyle::* SPIPaint_members[] = {
-    &SPStyle::color,
+    //&SPStyle::color,
     &SPStyle::fill,
     &SPStyle::stroke,
 };

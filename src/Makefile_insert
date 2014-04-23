@@ -210,7 +210,8 @@ ink_common_sources +=	\
 	streq.h					\
 	strneq.h				\
 	style.cpp style.h			\
-	style-enums.h style-internal.h		\
+	style-enums.h				\
+	style-internal.cpp style-internal.h	\
 	svg-profile.h				\
 	svg-view.cpp svg-view.h			\
 	svg-view-widget.cpp svg-view-widget.h	\

@@ -15,7 +15,9 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-/* SPTextStyle */
+/* SPFontStyle */
+
+#include "display/canvas-bpath.h"
 
 enum SPCSSFontSize {
     SP_CSS_FONT_SIZE_XX_SMALL,
@@ -214,6 +216,267 @@ enum SPTextRendering {
     SP_CSS_TEXT_RENDERING_OPTIMIZELEGIBILITY,
     SP_CSS_TEXT_RENDERING_GEOMETRICPRECISION
 };
+
+
+struct SPStyleEnum {
+    gchar const *key;
+    gint value;
+};
+
+static SPStyleEnum const enum_fill_rule[] = {
+    {"nonzero", SP_WIND_RULE_NONZERO},
+    {"evenodd", SP_WIND_RULE_EVENODD},
+    {NULL, -1}
+};
+
+static SPStyleEnum const enum_stroke_linecap[] = {
+    {"butt", SP_STROKE_LINECAP_BUTT},
+    {"round", SP_STROKE_LINECAP_ROUND},
+    {"square", SP_STROKE_LINECAP_SQUARE},
+    {NULL, -1}
+};
+
+static SPStyleEnum const enum_stroke_linejoin[] = {
+    {"miter", SP_STROKE_LINEJOIN_MITER},
+    {"round", SP_STROKE_LINEJOIN_ROUND},
+    {"bevel", SP_STROKE_LINEJOIN_BEVEL},
+    {NULL, -1}
+};
+
+static SPStyleEnum const enum_font_style[] = {
+    {"normal", SP_CSS_FONT_STYLE_NORMAL},
+    {"italic", SP_CSS_FONT_STYLE_ITALIC},
+    {"oblique", SP_CSS_FONT_STYLE_OBLIQUE},
+    {NULL, -1}
+};
+
+static SPStyleEnum const enum_font_size[] = {
+    {"xx-small", SP_CSS_FONT_SIZE_XX_SMALL},
+    {"x-small", SP_CSS_FONT_SIZE_X_SMALL},
+    {"small", SP_CSS_FONT_SIZE_SMALL},
+    {"medium", SP_CSS_FONT_SIZE_MEDIUM},
+    {"large", SP_CSS_FONT_SIZE_LARGE},
+    {"x-large", SP_CSS_FONT_SIZE_X_LARGE},
+    {"xx-large", SP_CSS_FONT_SIZE_XX_LARGE},
+    {"smaller", SP_CSS_FONT_SIZE_SMALLER},
+    {"larger", SP_CSS_FONT_SIZE_LARGER},
+    {NULL, -1}
+};
+
+static SPStyleEnum const enum_font_variant[] = {
+    {"normal", SP_CSS_FONT_VARIANT_NORMAL},
+    {"small-caps", SP_CSS_FONT_VARIANT_SMALL_CAPS},
+    {NULL, -1}
+};
+
+static SPStyleEnum const enum_font_weight[] = {
+    {"100", SP_CSS_FONT_WEIGHT_100},
+    {"200", SP_CSS_FONT_WEIGHT_200},
+    {"300", SP_CSS_FONT_WEIGHT_300},
+    {"400", SP_CSS_FONT_WEIGHT_400},
+    {"500", SP_CSS_FONT_WEIGHT_500},
+    {"600", SP_CSS_FONT_WEIGHT_600},
+    {"700", SP_CSS_FONT_WEIGHT_700},
+    {"800", SP_CSS_FONT_WEIGHT_800},
+    {"900", SP_CSS_FONT_WEIGHT_900},
+    {"normal", SP_CSS_FONT_WEIGHT_NORMAL},
+    {"bold", SP_CSS_FONT_WEIGHT_BOLD},
+    {"lighter", SP_CSS_FONT_WEIGHT_LIGHTER},
+    {"bolder", SP_CSS_FONT_WEIGHT_BOLDER},
+    {NULL, -1}
+};
+
+static SPStyleEnum const enum_font_stretch[] = {
+    {"ultra-condensed", SP_CSS_FONT_STRETCH_ULTRA_CONDENSED},
+    {"extra-condensed", SP_CSS_FONT_STRETCH_EXTRA_CONDENSED},
+    {"condensed", SP_CSS_FONT_STRETCH_CONDENSED},
+    {"semi-condensed", SP_CSS_FONT_STRETCH_SEMI_CONDENSED},
+    {"normal", SP_CSS_FONT_STRETCH_NORMAL},
+    {"semi-expanded", SP_CSS_FONT_STRETCH_SEMI_EXPANDED},
+    {"expanded", SP_CSS_FONT_STRETCH_EXPANDED},
+    {"extra-expanded", SP_CSS_FONT_STRETCH_EXTRA_EXPANDED},
+    {"ultra-expanded", SP_CSS_FONT_STRETCH_ULTRA_EXPANDED},
+    {"narrower", SP_CSS_FONT_STRETCH_NARROWER},
+    {"wider", SP_CSS_FONT_STRETCH_WIDER},
+    {NULL, -1}
+};
+
+static SPStyleEnum const enum_text_align[] = {
+    {"start", SP_CSS_TEXT_ALIGN_START},
+    {"end", SP_CSS_TEXT_ALIGN_END},
+    {"left", SP_CSS_TEXT_ALIGN_LEFT},
+    {"right", SP_CSS_TEXT_ALIGN_RIGHT},
+    {"center", SP_CSS_TEXT_ALIGN_CENTER},
+    {"justify", SP_CSS_TEXT_ALIGN_JUSTIFY},
+    {NULL, -1}
+};
+
+static SPStyleEnum const enum_text_transform[] = {
+    {"capitalize", SP_CSS_TEXT_TRANSFORM_CAPITALIZE},
+    {"uppercase", SP_CSS_TEXT_TRANSFORM_UPPERCASE},
+    {"lowercase", SP_CSS_TEXT_TRANSFORM_LOWERCASE},
+    {"none", SP_CSS_TEXT_TRANSFORM_NONE},
+    {NULL, -1}
+};
+
+static SPStyleEnum const enum_text_anchor[] = {
+    {"start", SP_CSS_TEXT_ANCHOR_START},
+    {"middle", SP_CSS_TEXT_ANCHOR_MIDDLE},
+    {"end", SP_CSS_TEXT_ANCHOR_END},
+    {NULL, -1}
+};
+
+static SPStyleEnum const enum_direction[] = {
+    {"ltr", SP_CSS_DIRECTION_LTR},
+    {"rtl", SP_CSS_DIRECTION_RTL},
+    {NULL, -1}
+};
+
+static SPStyleEnum const enum_block_progression[] = {
+    {"tb", SP_CSS_BLOCK_PROGRESSION_TB},
+    {"rl", SP_CSS_BLOCK_PROGRESSION_RL},
+    {"lr", SP_CSS_BLOCK_PROGRESSION_LR},
+    {NULL, -1}
+};
+
+static SPStyleEnum const enum_writing_mode[] = {
+    /* Note that using the same enumerator for lr as lr-tb means we write as lr-tb even if the
+     * input file said lr.  We prefer writing lr-tb on the grounds that the spec says the initial
+     * value is lr-tb rather than lr.
+     *
+     * ECMA scripts may be surprised to find tb-rl in DOM if they set the attribute to rl, so
+     * sharing enumerators for different strings may be a bug (once we support ecma script).
+     */
+    {"lr-tb", SP_CSS_WRITING_MODE_LR_TB},
+    {"rl-tb", SP_CSS_WRITING_MODE_RL_TB},
+    {"tb-rl", SP_CSS_WRITING_MODE_TB_RL},
+    {"lr", SP_CSS_WRITING_MODE_LR_TB},
+    {"rl", SP_CSS_WRITING_MODE_RL_TB},
+    {"tb", SP_CSS_WRITING_MODE_TB_RL},
+    {NULL, -1}
+};
+
+static SPStyleEnum const enum_baseline_shift[] = {
+    {"baseline", SP_CSS_BASELINE_SHIFT_BASELINE},
+    {"sub",      SP_CSS_BASELINE_SHIFT_SUB},
+    {"super",    SP_CSS_BASELINE_SHIFT_SUPER},
+    {NULL, -1}
+};
+
+static SPStyleEnum const enum_visibility[] = {
+    {"hidden", SP_CSS_VISIBILITY_HIDDEN},
+    {"collapse", SP_CSS_VISIBILITY_COLLAPSE},
+    {"visible", SP_CSS_VISIBILITY_VISIBLE},
+    {NULL, -1}
+};
+
+static SPStyleEnum const enum_overflow[] = {
+    {"visible", SP_CSS_OVERFLOW_VISIBLE},
+    {"hidden", SP_CSS_OVERFLOW_HIDDEN},
+    {"scroll", SP_CSS_OVERFLOW_SCROLL},
+    {"auto", SP_CSS_OVERFLOW_AUTO},
+    {NULL, -1}
+};
+
+// CSS Compositing and Blending Level 1
+static SPStyleEnum const enum_isolation[] = {
+    {"auto",             SP_CSS_ISOLATION_AUTO},
+    {"isolate",          SP_CSS_ISOLATION_ISOLATE},
+    {NULL, -1}
+};
+
+static SPStyleEnum const enum_blend_mode[] = {
+    {"normal",           SP_CSS_BLEND_NORMAL},
+    {"multiply",         SP_CSS_BLEND_MULTIPLY},
+    {"screen",           SP_CSS_BLEND_SCREEN},
+    {"darken",           SP_CSS_BLEND_DARKEN},
+    {"lighten",          SP_CSS_BLEND_LIGHTEN},
+    {"overlay",          SP_CSS_BLEND_OVERLAY},
+    {"color-dodge",      SP_CSS_BLEND_COLORDODGE},
+    {"color-burn",       SP_CSS_BLEND_COLORBURN},
+    {"hard-light",       SP_CSS_BLEND_HARDLIGHT},
+    {"soft-light",       SP_CSS_BLEND_SOFTLIGHT},
+    {"difference",       SP_CSS_BLEND_DIFFERENCE},
+    {"exclusion",        SP_CSS_BLEND_EXCLUSION},
+    {"hue",              SP_CSS_BLEND_HUE},
+    {"saturation",       SP_CSS_BLEND_SATURATION},
+    {"color",            SP_CSS_BLEND_COLOR},
+    {"luminosity",       SP_CSS_BLEND_LUMINOSITY},
+    {NULL, -1}
+};
+
+static SPStyleEnum const enum_display[] = {
+    {"none",      SP_CSS_DISPLAY_NONE},
+    {"inline",    SP_CSS_DISPLAY_INLINE},
+    {"block",     SP_CSS_DISPLAY_BLOCK},
+    {"list-item", SP_CSS_DISPLAY_LIST_ITEM},
+    {"run-in",    SP_CSS_DISPLAY_RUN_IN},
+    {"compact",   SP_CSS_DISPLAY_COMPACT},
+    {"marker",    SP_CSS_DISPLAY_MARKER},
+    {"table",     SP_CSS_DISPLAY_TABLE},
+    {"inline-table",  SP_CSS_DISPLAY_INLINE_TABLE},
+    {"table-row-group",    SP_CSS_DISPLAY_TABLE_ROW_GROUP},
+    {"table-header-group", SP_CSS_DISPLAY_TABLE_HEADER_GROUP},
+    {"table-footer-group", SP_CSS_DISPLAY_TABLE_FOOTER_GROUP},
+    {"table-row",     SP_CSS_DISPLAY_TABLE_ROW},
+    {"table-column-group", SP_CSS_DISPLAY_TABLE_COLUMN_GROUP},
+    {"table-column",  SP_CSS_DISPLAY_TABLE_COLUMN},
+    {"table-cell",    SP_CSS_DISPLAY_TABLE_CELL},
+    {"table-caption", SP_CSS_DISPLAY_TABLE_CAPTION},
+    {NULL, -1}
+};
+
+static SPStyleEnum const enum_shape_rendering[] = {
+    {"auto",                SP_CSS_SHAPE_RENDERING_AUTO},
+    {"optimizeSpeed",       SP_CSS_SHAPE_RENDERING_OPTIMIZESPEED},
+    {"crispEdges",          SP_CSS_SHAPE_RENDERING_CRISPEDGES},
+    {"geometricPrecision",  SP_CSS_SHAPE_RENDERING_GEOMETRICPRECISION},
+    {NULL, -1}
+};
+
+static SPStyleEnum const enum_color_rendering[] = {
+    {"auto",            SP_CSS_COLOR_RENDERING_AUTO},
+    {"optimizeSpeed",   SP_CSS_COLOR_RENDERING_OPTIMIZESPEED},
+    {"optimizeQuality", SP_CSS_COLOR_RENDERING_OPTIMIZEQUALITY},
+    {NULL, -1}
+};
+
+static SPStyleEnum const enum_image_rendering[] = {
+    {"auto",                  SP_CSS_IMAGE_RENDERING_AUTO},
+    {"optimizeSpeed",         SP_CSS_IMAGE_RENDERING_OPTIMIZESPEED},
+    {"optimizeQuality",       SP_CSS_IMAGE_RENDERING_OPTIMIZEQUALITY},
+    {"-inkscape-crisp-edges", SP_CSS_IMAGE_RENDERING_CRISPEDGES},
+    {"-inkscape-pixelated",   SP_CSS_IMAGE_RENDERING_PIXELATED},
+    {NULL, -1}
+};
+
+static SPStyleEnum const enum_text_rendering[] = {
+    {"auto",               SP_CSS_TEXT_RENDERING_AUTO},
+    {"optimizeSpeed",      SP_CSS_TEXT_RENDERING_OPTIMIZESPEED},
+    {"optimizeLegibility", SP_CSS_TEXT_RENDERING_OPTIMIZELEGIBILITY},
+    {"geometricPrecision", SP_CSS_TEXT_RENDERING_GEOMETRICPRECISION},
+    {NULL, -1}
+};
+
+static SPStyleEnum const enum_enable_background[] = {
+    {"accumulate", SP_CSS_BACKGROUND_ACCUMULATE},
+    {"new", SP_CSS_BACKGROUND_NEW},
+    {NULL, -1}
+};
+
+static SPStyleEnum const enum_clip_rule[] = {
+    {"nonzero", SP_WIND_RULE_NONZERO},
+    {"evenodd", SP_WIND_RULE_EVENODD},
+    {NULL, -1}
+};
+
+static SPStyleEnum const enum_color_interpolation[] = {
+    {"auto", SP_CSS_COLOR_INTERPOLATION_AUTO},
+    {"sRGB", SP_CSS_COLOR_INTERPOLATION_SRGB},
+    {"linearRGB", SP_CSS_COLOR_INTERPOLATION_LINEARRGB},
+    {NULL, -1}
+};
+
 
 #endif // SEEN_SP_STYLE_ENUMS_H
 

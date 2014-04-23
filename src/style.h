@@ -7,7 +7,9 @@
 /* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Jon A. Cruz <jon@joncruz.org>
+ *   Tavmjong Bah <tavmjong@free.fr>
  *
+ * Copyright (C) 2014 Tavmjong Bah
  * Copyright (C) 2010 Jon A. Cruz
  * Copyright (C) 2001-2002 Lauris Kaplinski
  * Copyright (C) 2001 Ximian, Inc.
@@ -20,6 +22,15 @@
 
 #include <stddef.h>
 #include <sigc++/connection.h>
+#include <iostream>
+#include <vector>
+// #include <map>
+
+// Define SPIBasePtr, a Pointer to a data member of SPStyle of type SPIBase;
+typedef SPIBase SPStyle::*SPIBasePtr;
+
+// Define SPPropMap, a map linking property name to property data
+// typedef std::map<std::string, SPIBasePtr> SPPropMap;
 
 namespace Inkscape {
 namespace XML {
@@ -27,24 +38,67 @@ class Node;
 }
 }
 
-/// An SVG style object.
-struct SPStyle {
-    int refcount;
+#include "libcroco/cr-declaration.h"
+#include "libcroco/cr-prop-list.h"
+//struct CRDeclaration;
+//struct CRPropList;
 
+
+/// An SVG style object.
+class SPStyle {
+
+public:
+    
+    SPStyle(SPDocument *document = NULL, SPObject *object = NULL);// document is ignored if valid object given
+    ~SPStyle();
+    void clear();
+    void read(SPObject *object, Inkscape::XML::Node *repr);
+    void readFromObject(SPObject *object);
+    void readFromPrefs(Glib::ustring const &path);
+    void readIfUnset( gint id, gchar const *val );
+    Glib::ustring write( guint const flags, SPStyle const *const base = NULL ) const;
+    void cascade( SPStyle const *const parent );
+    void merge(   SPStyle const *const parent );
+    bool operator==(const SPStyle& rhs);
+
+    int ref()   { ++_refcount; return _refcount; }
+    int unref() { --_refcount; return _refcount; }
+
+//FIXME: Make private
+public:
+    void _mergeString( gchar const *const p );  // Rename to readFromString?
+private:
+    void _mergeDeclList( CRDeclaration const *const decl_list );
+    void _mergeDecl(      CRDeclaration const *const decl );
+    void _mergeProps( CRPropList *const props );
+    void _mergeObjectStylesheet( SPObject const *const object );
+
+private:
+    int _refcount;
+    static int _count; // Poor man's leak detector
+
+// FIXME: Make private
+public:
     /** Object we are attached to */
     SPObject *object;
     /** Document we are associated with */
     SPDocument *document;
 
-    /** Our text style component */
-    SPTextStyle *text;
-    unsigned text_private : 1;
+private:
+    /// Pointers to all the properties (for looping through them)
+    std::vector<SPIBase *> _properties;
+    // static SPPropMap _propmap;
+
+public:
+
+    /* ----------------------- THE PROPERTIES ------------------------- */
+
+    /** Our font style component */
+    SPFontStyle *text; // FIXME: Break into font, font-family, ...
 
     /* CSS2 */
     /* Font */
-    /** Size of the font */
-    SPIFontSize font_size;
-    /** Style of the font */
+    /** Font style */
     SPIEnum font_style;
     /** Which substyle of the font */
     SPIEnum font_variant;
@@ -52,26 +106,30 @@ struct SPStyle {
     SPIEnum font_weight;
     /** Stretch of the font */
     SPIEnum font_stretch;
+    /** Size of the font */
+    SPIFontSize font_size;
+    /** Line height (css2 10.8.1) */
+    SPILengthOrNormal line_height;
+    /** Font shorthand */
+    SPIFont font;
 
     /** First line indent of paragraphs (css2 16.1) */
     SPILength text_indent;
     /** text alignment (css2 16.2) (not to be confused with text-anchor) */
     SPIEnum text_align;
-    /** text decoration (css2 16.3.1) is now handled as a subset of css3 2.4 */
-    //    SPITextDecoration      text_decoration; 
-    
+
+    /** text decoration (css2 16.3.1) */
+    SPITextDecoration      text_decoration; 
     /** CSS 3 2.1, 2.2, 2.3 */
     /** Not done yet, test_decoration3        = css3 2.4*/
     SPITextDecorationLine  text_decoration_line;
-    SPIPaint               text_decoration_color;
-    SPITextDecorationStyle text_decoration_style;
-
+    SPITextDecorationStyle text_decoration_style;  // SPIEnum? Only one can be set at time.
+    SPIColor               text_decoration_color;
     // used to implement text_decoration, not saved to or read from SVG file
     SPITextDecorationData  text_decoration_data;
 
     // 16.3.2 is text-shadow. That's complicated.
-    /** Line spacing (css2 10.8.1) */
-    SPILengthOrNormal line_height;
+
     /** letter spacing (css2 16.4) */
     SPILengthOrNormal letter_spacing;
     /** word spacing (also css2 16.4) */
@@ -93,14 +151,6 @@ struct SPStyle {
     /** Anchor of the text (svg1.1 10.9.1) */
     SPIEnum text_anchor;
 
-    /* Misc attributes */
-    unsigned clip_set : 1;
-    unsigned color_set : 1;
-    unsigned cursor_set : 1;
-    unsigned overflow_set : 1;
-    unsigned clip_path_set : 1;
-    unsigned mask_set : 1;
-
     /** clip-rule: 0 nonzero, 1 evenodd */
     SPIEnum clip_rule;
 
@@ -121,8 +171,10 @@ struct SPStyle {
     // Could be shared with Filter blending mode
     SPIEnum blend_mode;
 
+    SPIPaintOrder paint_order;
+
     /** color */
-    SPIPaint color;
+    SPIColor color;
     /** color-interpolation */
     SPIEnum color_interpolation;
     /** color-interpolation-filters */
@@ -155,16 +207,17 @@ struct SPStyle {
     /** Marker list */
     SPIString marker[SP_MARKER_LOC_QTY];
 
-    SPIPaintOrder paint_order;
 
     /** Filter effect */
     SPIFilter filter;
-
+    /** Filter blend mode */
     SPIEnum filter_blend_mode;
-
-   /** normally not used, but duplicates the Gaussian blur deviation (if any) from the attached
+    /** normally not used, but duplicates the Gaussian blur deviation (if any) from the attached
         filter when the style is used for querying */
     SPILength filter_gaussianBlur_deviation;
+    /** enable-background, used for defining where filter effects get their background image */
+    SPIEnum enable_background;
+
 
     /** hints on how to render: e.g. speed vs. accuracy.
      * As of April, 2013, only image_rendering used. */
@@ -173,9 +226,7 @@ struct SPStyle {
     SPIEnum shape_rendering;
     SPIEnum text_rendering;
 
-    /** enable-background, used for defining where filter effects get
-     * their background image */
-    SPIEnum enable_background;
+    /* ----------------------- END PROPERTIES ------------------------- */
 
     /// style belongs to a cloned object
     bool cloned;
@@ -186,46 +237,46 @@ struct SPStyle {
     sigc::connection fill_ps_modified_connection;
     sigc::connection stroke_ps_modified_connection;
 
-    SPObject *getFilter() { return (filter.href) ? filter.href->getObject() : NULL; }
-    SPObject const *getFilter() const { return (filter.href) ? filter.href->getObject() : NULL; }
-    gchar const *getFilterURI() const { return (filter.href) ? filter.href->getURI()->toString() : NULL; }
+    SPObject       *getFilter()          { return (filter.href) ? filter.href->getObject() : NULL; }
+    SPObject const *getFilter()    const { return (filter.href) ? filter.href->getObject() : NULL; }
+    gchar    const *getFilterURI() const { return (filter.href) ? filter.href->getURI()->toString() : NULL; }
 
-    SPPaintServer *getFillPaintServer() { return (fill.value.href) ? fill.value.href->getObject() : NULL; }
-    SPPaintServer const *getFillPaintServer() const { return (fill.value.href) ? fill.value.href->getObject() : NULL; }
-    gchar const *getFillURI() const { return (fill.value.href) ? fill.value.href->getURI()->toString() : NULL; }
+    SPPaintServer       *getFillPaintServer()         { return (fill.value.href) ? fill.value.href->getObject() : NULL; }
+    SPPaintServer const *getFillPaintServer()   const { return (fill.value.href) ? fill.value.href->getObject() : NULL; }
+    gchar         const *getFillURI()           const { return (fill.value.href) ? fill.value.href->getURI()->toString() : NULL; }
 
-    SPPaintServer *getStrokePaintServer() { return (stroke.value.href) ? stroke.value.href->getObject() : NULL; }
+    SPPaintServer       *getStrokePaintServer()       { return (stroke.value.href) ? stroke.value.href->getObject() : NULL; }
     SPPaintServer const *getStrokePaintServer() const { return (stroke.value.href) ? stroke.value.href->getObject() : NULL; }
-    gchar const  *getStrokeURI() const { return (stroke.value.href) ? stroke.value.href->getURI()->toString() : NULL; }
+    gchar        const  *getStrokeURI()         const { return (stroke.value.href) ? stroke.value.href->getURI()->toString() : NULL; }
 };
 
-SPStyle *sp_style_new(SPDocument *document);
+SPStyle *sp_style_new(SPDocument *document); // SPStyle::SPStyle( SPDocument *document = NULL );
 
-SPStyle *sp_style_new_from_object(SPObject *object);
+SPStyle *sp_style_new_from_object(SPObject *object); // SPStyle::SPStyle( SPObject *object );
 
-SPStyle *sp_style_ref(SPStyle *style);
+SPStyle *sp_style_ref(SPStyle *style); // SPStyle::ref();
 
-SPStyle *sp_style_unref(SPStyle *style);
+SPStyle *sp_style_unref(SPStyle *style); // SPStyle::unref();
 
-void sp_style_read_from_object(SPStyle *style, SPObject *object);
+void sp_style_read_from_object(SPStyle *style, SPObject *object); //SPStyle::read( SPObject * object);
 
-void sp_style_read_from_prefs(SPStyle *style, Glib::ustring const &path);
+void sp_style_read_from_prefs(SPStyle *style, Glib::ustring const &path); // SPStyle::read( ... );
 
-void sp_style_merge_from_style_string(SPStyle *style, gchar const *p);
+void sp_style_merge_from_style_string(SPStyle *style, gchar const *p); // SPStyle::merge( ... );?
 
-void sp_style_merge_from_parent(SPStyle *style, SPStyle const *parent);
+void sp_style_merge_from_parent(SPStyle *style, SPStyle const *parent); // SPStyle::cascade( ... );
 
-void sp_style_merge_from_dying_parent(SPStyle *style, SPStyle const *parent);
+void sp_style_merge_from_dying_parent(SPStyle *style, SPStyle const *parent); // SPStyle::merge( ... )
 
-gchar *sp_style_write_string(SPStyle const *style, guint flags = SP_STYLE_FLAG_IFSET);
+gchar *sp_style_write_string(SPStyle const *style, guint flags = SP_STYLE_FLAG_IFSET);//SPStyle::write
 
-gchar *sp_style_write_difference(SPStyle const *from, SPStyle const *to);
+gchar *sp_style_write_difference(SPStyle const *from, SPStyle const *to); // SPStyle::write
 
-void sp_style_set_to_uri_string (SPStyle *style, bool isfill, const gchar *uri);
+void sp_style_set_to_uri_string (SPStyle *style, bool isfill, const gchar *uri); // ?
 
-gchar const *sp_style_get_css_unit_string(int unit);
-double sp_style_css_size_px_to_units(double size, int unit);
-double sp_style_css_size_units_to_px(double size, int unit);
+gchar const *sp_style_get_css_unit_string(int unit);  // No change?
+double sp_style_css_size_px_to_units(double size, int unit); // No change?
+double sp_style_css_size_units_to_px(double size, int unit); // No change?
 
 
 SPCSSAttr *sp_css_attr_from_style (SPStyle const *const style, guint flags);
@@ -254,3 +305,4 @@ Glib::ustring css2_escape_quote(gchar const *val);
   End:
 */
 // vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :
+ 

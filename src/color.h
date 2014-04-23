@@ -46,6 +46,7 @@ struct SPColor {
     SPColor& operator= (SPColor const& other);
 
     bool operator == ( SPColor const& other ) const;
+    bool operator != ( SPColor const& other ) const { return !(*this == other); };
     bool isClose( SPColor const& other, float epsilon ) const;
 
     void set( float r, float g, float b );

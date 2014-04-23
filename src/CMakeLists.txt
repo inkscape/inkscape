@@ -259,6 +259,7 @@ set(inkscape_SRC
 	snapped-point.cpp
 	snapper.cpp
 	style.cpp
+	style-internal.cpp
 	svg-view-widget.cpp
 	svg-view.cpp
 	text-chemistry.cpp

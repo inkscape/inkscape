@@ -201,8 +201,7 @@ void NRStyle::set(SPStyle *style)
  
     if( style->text_decoration_color.set          ||
         style->text_decoration_color.inherit      || 
-        style->text_decoration_color.currentcolor ||
-        style->text_decoration_color.colorSet){
+        style->text_decoration_color.currentcolor ){
         text_decoration_color.set(style->text_decoration_color.value.color);
         text_decoration_useColor = true;
     }
