@@ -205,8 +205,11 @@ public:
     SPIScale24 stroke_opacity;
 
     /** Marker list */
-    SPIString marker[SP_MARKER_LOC_QTY];
-
+    SPIString marker;
+    SPIString marker_start;
+    SPIString marker_mid;
+    SPIString marker_end;
+    SPIString* marker_ptrs[SP_MARKER_LOC_QTY]; 
 
     /** Filter effect */
     SPIFilter filter;

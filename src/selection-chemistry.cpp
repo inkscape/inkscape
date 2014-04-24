@@ -2076,9 +2076,9 @@ GSList *sp_get_same_stroke_style(SPItem *sel, GSList *src, SPSelectStrokeStyleTy
                 match = true;
                 int len = sizeof(sel_style->marker)/sizeof(SPIString);
                 for (int i = 0; i < len; i++) {
-                    match = (sel_style->marker[i].set == iter_style->marker[i].set);
-                    if (sel_style->marker[i].set && iter_style->marker[i].set &&
-                        (strcmp(sel_style->marker[i].value, iter_style->marker[i].value))) {
+                    match = (sel_style->marker_ptrs[i]->set == iter_style->marker_ptrs[i]->set);
+                    if (sel_style->marker_ptrs[i]->set && iter_style->marker_ptrs[i]->set &&
+                        (strcmp(sel_style->marker_ptrs[i]->value, iter_style->marker_ptrs[i]->value))) {
                         match = false;
                         break;
                     }

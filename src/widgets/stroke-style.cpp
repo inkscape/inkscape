@@ -581,7 +581,8 @@ StrokeStyle::forkMarker(SPObject *marker, int loc, SPItem *item)
     Glib::ustring urlId = Glib::ustring::format("url(#", marker->getRepr()->attribute("id"), ")");
     unsigned int refs = 0;
     for (int i = SP_MARKER_LOC_START; i < SP_MARKER_LOC_QTY; i++) {
-        if (item->style->marker[i].set && !strcmp(urlId.c_str(), item->style->marker[i].value)) {
+        if (item->style->marker_ptrs[i]->set &&
+            !strcmp(urlId.c_str(), item->style->marker_ptrs[i]->value)) {
             refs++;
         }
     }
@@ -1176,11 +1177,11 @@ StrokeStyle::updateAllMarkers(GSList const *objects)
 
         combo->setDesktop(desktop);
 
-        if (object->style->marker[keyloc[i].loc].value != NULL && !all_texts) {
+        if (object->style->marker_ptrs[keyloc[i].loc]->value != NULL && !all_texts) {
             // If the object has this type of markers,
 
             // Extract the name of the marker that the object uses
-            SPObject *marker = getMarkerObj(object->style->marker[keyloc[i].loc].value, object->document);
+            SPObject *marker = getMarkerObj(object->style->marker_ptrs[keyloc[i].loc]->value, object->document);
             // Scroll the combobox to that marker
             combo->set_current(marker);
 

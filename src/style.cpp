@@ -165,9 +165,12 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     stroke_dasharray(),                                          // SPIDashArray
     stroke_dashoffset("stroke-dashoffset", 0.0               ),  // SPILength for now
 
-    stroke_opacity(   "stroke-opacity",    SP_SCALE24_MAX),
+    stroke_opacity(   "stroke-opacity",    SP_SCALE24_MAX    ),
 
-//  marker({ "marker", "marker-start", "marker-mid", "marker-end" }), C++11 
+    marker(           "marker"                               ),  // SPIString
+    marker_start(     "marker-start"                         ),  // SPIString
+    marker_mid(       "marker-mid"                           ),  // SPIString
+    marker_end(       "marker-end"                           ),  // SPIString
 
     // Filter properties
     filter(),
@@ -252,10 +255,11 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     // for setting up signals...  'fill', 'stroke' already done
     filter.setStylePointer( this );
 
-    marker[SP_MARKER_LOC]       = SPIString( "marker"       );
-    marker[SP_MARKER_LOC_START] = SPIString( "marker-start" );
-    marker[SP_MARKER_LOC_MID]   = SPIString( "marker-mid"   );
-    marker[SP_MARKER_LOC_END]   = SPIString( "marker-end"   );
+    // Used to iterate over markers
+    marker_ptrs[SP_MARKER_LOC]       = &marker;
+    marker_ptrs[SP_MARKER_LOC_START] = &marker_start;
+    marker_ptrs[SP_MARKER_LOC_MID]   = &marker_mid;
+    marker_ptrs[SP_MARKER_LOC_END]   = &marker_end;
 
 
     // This might be too resource hungary... but for now it possible to loop over properties
@@ -318,10 +322,10 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     _properties.push_back( &stroke_dashoffset );
     _properties.push_back( &stroke_opacity );
 
-    _properties.push_back( &marker[SP_MARKER_LOC] );      
-    _properties.push_back( &marker[SP_MARKER_LOC_START] );
-    _properties.push_back( &marker[SP_MARKER_LOC_MID] );  
-    _properties.push_back( &marker[SP_MARKER_LOC_END] );  
+    _properties.push_back( &marker );
+    _properties.push_back( &marker_start );
+    _properties.push_back( &marker_mid );
+    _properties.push_back( &marker_end );
 
     _properties.push_back( &paint_order );
 
@@ -397,10 +401,10 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     //     _propmap.insert( std::make_pair( stroke_dashoffset.name,     reinterpret_cast<SPIBasePtr>(&SPStyle::stroke_dashoffset     ) ) );
     //     _propmap.insert( std::make_pair( stroke_opacity.name,        reinterpret_cast<SPIBasePtr>(&SPStyle::stroke_opacity        ) ) );
 
-    //     //_propmap.insert( std::make_pair( marker[SP_MARKER_LOC].name, reinterpret_cast<SPIBasePtr>(&SPStyle::marker[SP_MARKER_LOC] ) ) );      
-    //     //_propmap.insert( std::make_pair( marker[SP_MARKER_LOC_START].name, reinterpret_cast<SPIBasePtr>(&SPStyle::marker[SP_MARKER_LOC_START] ) ) );
-    //     //_propmap.insert( std::make_pair( marker[SP_MARKER_LOC_MID].name, reinterpret_cast<SPIBasePtr>(&SPStyle::marker[SP_MARKER_LOC_MID] ) ) );  
-    //     //_propmap.insert( std::make_pair( marker[SP_MARKER_LOC_END].name, reinterpret_cast<SPIBasePtr>(&SPStyle::marker[SP_MARKER_LOC_END] ) ) );  
+    //     _propmap.insert( std::make_pair( marker.name,                reinterpret_cast<SPIBasePtr>(&SPStyle::marker                ) ) );
+    //     _propmap.insert( std::make_pair( marker_start.name,          reinterpret_cast<SPIBasePtr>(&SPStyle::marker_start          ) ) );
+    //     _propmap.insert( std::make_pair( marker_mid.name,            reinterpret_cast<SPIBasePtr>(&SPStyle::marker_mid            ) ) );
+    //     _propmap.insert( std::make_pair( marker_end.name,            reinterpret_cast<SPIBasePtr>(&SPStyle::marker_end            ) ) );
 
     //     _propmap.insert( std::make_pair( paint_order.name,           reinterpret_cast<SPIBasePtr>(&SPStyle::paint_order           ) ) );
 
@@ -798,19 +802,19 @@ SPStyle::readIfUnset( gint id, gchar const *val ) {
             break;
         case SP_PROP_MARKER:
             /* TODO:  Call sp_uri_reference_resolve(SPDocument *document, guchar const *uri) */ 
-            marker[SP_MARKER_LOC].readIfUnset( val );
+            marker.readIfUnset( val );
             break;
         case SP_PROP_MARKER_START:
             /* TODO:  Call sp_uri_reference_resolve(SPDocument *document, guchar const *uri) */
-            marker[SP_MARKER_LOC_START].readIfUnset( val );
+            marker_start.readIfUnset( val );
             break;
         case SP_PROP_MARKER_MID:
             /* TODO:  Call sp_uri_reference_resolve(SPDocument *document, guchar const *uri) */
-            marker[SP_MARKER_LOC_MID].readIfUnset( val );
+            marker_mid.readIfUnset( val );
             break;
         case SP_PROP_MARKER_END:
             /* TODO:  Call sp_uri_reference_resolve(SPDocument *document, guchar const *uri) */
-            marker[SP_MARKER_LOC_END].readIfUnset( val );
+            marker_end.readIfUnset( val );
             break;
         case SP_PROP_SHAPE_RENDERING:
             shape_rendering.readIfUnset( val );
@@ -1572,16 +1576,16 @@ sp_style_unset_property_attrs(SPObject *o)
     if (style->stroke_linejoin.set) {
         repr->setAttribute("stroke-linejoin", NULL);
     }
-    if (style->marker[SP_MARKER_LOC].set) {
+    if (style->marker.set) {
         repr->setAttribute("marker", NULL);
     }
-    if (style->marker[SP_MARKER_LOC_START].set) {
+    if (style->marker_start.set) {
         repr->setAttribute("marker-start", NULL);
     }
-    if (style->marker[SP_MARKER_LOC_MID].set) {
+    if (style->marker_mid.set) {
         repr->setAttribute("marker-mid", NULL);
     }
-    if (style->marker[SP_MARKER_LOC_END].set) {
+    if (style->marker_end.set) {
         repr->setAttribute("marker-end", NULL);
     }
     if (style->stroke_opacity.set) {

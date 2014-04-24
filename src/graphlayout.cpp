@@ -195,8 +195,8 @@ void graphlayout(GSList const *const items) {
                 unsigned v=v_pair->second;
                 //cout << "Edge: (" << u <<","<<v<<")"<<endl;
                 es.push_back(make_pair(u,v));
-                if(conn->style->marker[SP_MARKER_LOC_END].set) {
-                    if(directed && strcmp(conn->style->marker[SP_MARKER_LOC_END].value,"none")) {
+                if(conn->style->marker_end.set) {
+                    if(directed && strcmp(conn->style->marker_end.value,"none")) {
                         scy.push_back(new SimpleConstraint(v, u,
                                     (ideal_connector_length * directed_edge_height_modifier)));
                     }

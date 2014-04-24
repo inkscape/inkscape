@@ -137,7 +137,7 @@ class SPIBase {
 
   // To do: make private
   public:
-    Glib::ustring name;  // Make const when we switch to C++11 and change marker[] initializer
+    Glib::ustring name;       // Make const
     unsigned inherits : 1;    // Property inherits by default from parent.
     unsigned set : 1;         // Property has been explicitly set (vs. inherited).
     unsigned inherit : 1;     // Property value set to 'inherit'.

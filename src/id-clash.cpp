@@ -161,7 +161,7 @@ find_references(SPObject *elem, refmap_type *refmap)
     /* check for url(#...) references in markers */
     const gchar *markers[4] = { "", "marker-start", "marker-mid", "marker-end" };
     for (unsigned i = SP_MARKER_LOC_START; i < SP_MARKER_LOC_QTY; i++) {
-        const gchar *value = style->marker[i].value;
+        const gchar *value = style->marker_ptrs[i]->value;
         if (value) {
             gchar *uri = extract_uri(value);
             if (uri && uri[0] == '#') {

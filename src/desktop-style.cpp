@@ -722,10 +722,10 @@ objects_query_strokewidth (GSList *objects, SPStyle *style_res)
         }
 
         if ( style->stroke.isNone() && !(
-                 style->marker[SP_MARKER_LOC].set || // stroke width affects markers, so if there's no stroke but only markers then we should
-                 style->marker[SP_MARKER_LOC_START].set || // still calculate the stroke width
-                 style->marker[SP_MARKER_LOC_MID].set ||
-                 style->marker[SP_MARKER_LOC_END].set))
+                 style->marker.set       || // stroke width affects markers, so if there's no
+                 style->marker_start.set || // stroke but only markers then we should
+                 style->marker_mid.set   || // still calculate the stroke width
+                 style->marker_end.set))
         {
             continue;
         }
