@@ -358,8 +358,8 @@ namespace Inkscape
 	sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
 
       //std::cout << "  Attempting selected style" << std::endl;
-      if( result != QUERY_STYLE_NOTHING && query->text->font_specification.set ) {
-	fontspec = query->text->font_specification.value;
+      if( result != QUERY_STYLE_NOTHING && query->font_specification.set ) {
+	fontspec = query->font_specification.value;
 	//std::cout << "   fontspec from query   :" << fontspec << ":" << std::endl;
       }
 
@@ -693,15 +693,15 @@ std::pair<Glib::ustring, Glib::ustring> FontLister::new_font_family (Glib::ustri
       if (style) {
 
 	//  First try to use the font specification if it is set
-        if (style->text->font_specification.set
-            && style->text->font_specification.value
-            && *style->text->font_specification.value) {
+        if (style->font_specification.set
+            && style->font_specification.value
+            && *style->font_specification.value) {
 
-	  fontspec = style->text->font_specification.value;
+	  fontspec = style->font_specification.value;
 
         } else {
 
-	  fontspec = style->text->font_family.value;
+	  fontspec = style->font_family.value;
 	  fontspec += ",";
 
 	  switch (style->font_weight.computed) {

@@ -286,16 +286,15 @@ font_instance *Layout::InputStreamTextSource::styleGetFontInstance() const
 
 PangoFontDescription *Layout::InputStreamTextSource::styleGetFontDescription() const
 {
-    if (style->text == NULL) return NULL;
     PangoFontDescription *descr = pango_font_description_new();
     // Pango can't cope with spaces before or after the commas - let's remove them.
     // this code is not exactly unicode-safe, but it's similar to what's done in
     // pango, so it's not the limiting factor
     Glib::ustring family;
-    if (style->text->font_family.value == NULL) {
+    if (style->font_family.value == NULL) {
         family = "sans-serif";
     } else {
-        gchar **families = g_strsplit(style->text->font_family.value, ",", -1);
+        gchar **families = g_strsplit(style->font_family.value, ",", -1);
         if (families) {
             for (gchar **f = families ; *f ; ++f) {
                 g_strstrip(*f);

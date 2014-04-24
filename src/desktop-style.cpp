@@ -1227,11 +1227,11 @@ objects_query_fontfamily (GSList *objects, SPStyle *style_res)
     bool different = false;
     int texts = 0;
 
-    if (style_res->text->font_family.value) {
-        g_free(style_res->text->font_family.value);
-        style_res->text->font_family.value = NULL;
+    if (style_res->font_family.value) {
+        g_free(style_res->font_family.value);
+        style_res->font_family.value = NULL;
     }
-    style_res->text->font_family.set = FALSE;
+    style_res->font_family.set = FALSE;
 
     for (GSList const *i = objects; i != NULL; i = i->next) {
         SPObject *obj = SP_OBJECT (i->data);
@@ -1250,21 +1250,21 @@ objects_query_fontfamily (GSList *objects, SPStyle *style_res)
 
         texts ++;
 
-        if (style_res->text->font_family.value && style->text->font_family.value &&
-            strcmp (style_res->text->font_family.value, style->text->font_family.value)) {
+        if (style_res->font_family.value && style->font_family.value &&
+            strcmp (style_res->font_family.value, style->font_family.value)) {
             different = true;  // different fonts
         }
 
-        if (style_res->text->font_family.value) {
-            g_free(style_res->text->font_family.value);
-            style_res->text->font_family.value = NULL;
+        if (style_res->font_family.value) {
+            g_free(style_res->font_family.value);
+            style_res->font_family.value = NULL;
         }
 
-        style_res->text->font_family.set = TRUE;
-        style_res->text->font_family.value = g_strdup(style->text->font_family.value);
+        style_res->font_family.set = TRUE;
+        style_res->font_family.value = g_strdup(style->font_family.value);
     }
 
-    if (texts == 0 || !style_res->text->font_family.set) {
+    if (texts == 0 || !style_res->font_family.set) {
         return QUERY_STYLE_NOTHING;
     }
 
@@ -1285,11 +1285,11 @@ objects_query_fontspecification (GSList *objects, SPStyle *style_res)
     bool different = false;
     int texts = 0;
 
-    if (style_res->text->font_specification.value) {
-        g_free(style_res->text->font_specification.value);
-        style_res->text->font_specification.value = NULL;
+    if (style_res->font_specification.value) {
+        g_free(style_res->font_specification.value);
+        style_res->font_specification.value = NULL;
     }
-    style_res->text->font_specification.set = FALSE;
+    style_res->font_specification.set = FALSE;
 
     for (GSList const *i = objects; i != NULL; i = i->next) {
         SPObject *obj = SP_OBJECT (i->data);
@@ -1308,21 +1308,21 @@ objects_query_fontspecification (GSList *objects, SPStyle *style_res)
 
         texts ++;
 
-        if (style_res->text->font_specification.value && style_res->text->font_specification.set &&
-            style->text->font_specification.value && style->text->font_specification.set &&
-            strcmp (style_res->text->font_specification.value, style->text->font_specification.value)) {
+        if (style_res->font_specification.value && style_res->font_specification.set &&
+            style->font_specification.value && style->font_specification.set &&
+            strcmp (style_res->font_specification.value, style->font_specification.value)) {
             different = true;  // different fonts
         }
 
-        if (style->text->font_specification.set) {
+        if (style->font_specification.set) {
 
-            if (style_res->text->font_specification.value) {
-                g_free(style_res->text->font_specification.value);
-                style_res->text->font_specification.value = NULL;
+            if (style_res->font_specification.value) {
+                g_free(style_res->font_specification.value);
+                style_res->font_specification.value = NULL;
             }
 
-            style_res->text->font_specification.set = TRUE;
-            style_res->text->font_specification.value = g_strdup(style->text->font_specification.value);
+            style_res->font_specification.set = TRUE;
+            style_res->font_specification.value = g_strdup(style->font_specification.value);
         }
     }
 

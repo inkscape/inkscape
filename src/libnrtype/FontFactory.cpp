@@ -825,17 +825,17 @@ font_instance* font_factory::FaceFromStyle(SPStyle const *style)
     if (style) {
 
         //  First try to use the font specification if it is set
-        if (style->text->font_specification.set
-            && style->text->font_specification.value
-            && *style->text->font_specification.value) {
+        if (style->font_specification.set
+            && style->font_specification.value
+            && *style->font_specification.value) {
 
-            font = FaceFromFontSpecification(style->text->font_specification.value);
+            font = FaceFromFontSpecification(style->font_specification.value);
         }
 
         // If that failed, try using the CSS information in the style
         if (!font) {
 
-            font = Face(style->text->font_family.value, font_style_to_pos(*style));
+            font = Face(style->font_family.value, font_style_to_pos(*style));
 
             // That was a hatchet job... so we need to check if this font exists!!
             Glib::ustring fontSpec = font_factory::Default()->ConstructFontSpecification(font);

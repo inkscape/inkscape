@@ -72,20 +72,20 @@ using Inkscape::UI::PrefPusher;
 
 static void       sp_print_font( SPStyle *query ) {
 
-    bool family_set   = query->text->font_family.set;
+    bool family_set   = query->font_family.set;
     bool style_set    = query->font_style.set;
-    bool fontspec_set = query->text->font_specification.set;
+    bool fontspec_set = query->font_specification.set;
 
     std::cout << "    Family set? " << family_set
               << "    Style set? "  << style_set
               << "    FontSpec set? " << fontspec_set
               << std::endl;
     std::cout << "    Family: "
-              << (query->text->font_family.value ? query->text->font_family.value : "No value")
+              << (query->font_family.value ? query->font_family.value : "No value")
               << "    Style: "    <<  query->font_style.computed
               << "    Weight: "   <<  query->font_weight.computed
               << "    FontSpec: "
-              << (query->text->font_specification.value ? query->text->font_specification.value : "No value")
+              << (query->font_specification.value ? query->font_specification.value : "No value")
               << std::endl;
     std::cout << "    LineHeight: "    << query->line_height.computed
               << "    WordSpacing: "   << query->word_spacing.computed
@@ -930,7 +930,6 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
     }
 
     // If we have valid query data for text (font-family, font-specification) set toolbar accordingly.
-    if (query->text)
     {
         // Size (average of text selected)
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -1058,11 +1057,11 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
         ege_select_one_action_set_active( textOrientationAction, activeButton2 );
 
 
-    } // if( query->text )
+    }
 
 #ifdef DEBUG_TEXT
     std::cout << "    GUI: fontfamily.value: "
-              << (query->text->font_family.value ? query->text->font_family.value : "No value")
+              << (query->font_family.value ? query->font_family.value : "No value")
               << std::endl;
     std::cout << "    GUI: font_size.computed: "   << query->font_size.computed   << std::endl;
     std::cout << "    GUI: font_weight.computed: " << query->font_weight.computed << std::endl;
@@ -1174,15 +1173,15 @@ static void sp_text_toolbox_select_cb( GtkEntry* entry, GtkEntryIconPosition /*p
     SPItem *item = SP_ITEM(i->data);
     SPStyle *style = item->style;
 
-    if (style && style->text) {
+    if (style) {
 
       Glib::ustring family_style;
-      if (style->text->font_family.set) {
-	family_style = style->text->font_family.value;
+      if (style->font_family.set) {
+	family_style = style->font_family.value;
 	//std::cout << " family style from font_family: " << family_style << std::endl;
       }
-      else if (style->text->font_specification.set) {
-	family_style = style->text->font_specification.value;
+      else if (style->font_specification.set) {
+	family_style = style->font_specification.value;
 	//std::cout << " family style from font_spec: " << family_style << std::endl;
       }
 

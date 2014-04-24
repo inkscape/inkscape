@@ -1887,7 +1887,7 @@ SPIFont::read( gchar const *str ) {
         std::string str_s = str; // Why this extra step?
         std::string family = str_s.substr( str_s.find( param ) );
 
-        style->text->font_family.readIfUnset( family.c_str() );
+        style->font_family.readIfUnset( family.c_str() );
 
         // Everything in shorthand is set per CSS rules, this works since
         // properties are read backwards from end to start.
@@ -1897,7 +1897,7 @@ SPIFont::read( gchar const *str ) {
         style->font_stretch.set = true;
         style->font_size.set = true;
         style->line_height.set = true;
-        style->text->font_family.set = true;
+        style->font_family.set = true;
         // style->font_size_adjust.set = true;
         // style->font_kerning.set = true;
         // style->font_language_override.set = true;;

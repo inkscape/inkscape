@@ -93,10 +93,6 @@ public:
 
     /* ----------------------- THE PROPERTIES ------------------------- */
 
-    /** Our font style component */
-    SPFontStyle *text; // FIXME: Break into font, font-family, ...
-
-    /* CSS2 */
     /* Font */
     /** Font style */
     SPIEnum font_style;
@@ -110,8 +106,12 @@ public:
     SPIFontSize font_size;
     /** Line height (css2 10.8.1) */
     SPILengthOrNormal line_height;
+    /** Font family */
+    SPIString font_family;
     /** Font shorthand */
     SPIFont font;
+    /** Full font name, as font_factory::ConstructFontSpecification would give, for internal use. */
+    SPIString font_specification;
 
     /** First line indent of paragraphs (css2 16.1) */
     SPILength text_indent;

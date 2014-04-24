@@ -112,7 +112,9 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     font_stretch(     "font-stretch",    enum_font_stretch,    SP_CSS_FONT_STRETCH_NORMAL ), 
     font_size(),
     line_height(      "line-height",                     1.0 ),  // SPILengthOrNormal
+    font_family(      "font-family"                          ),  // SPIString
     font(),                                                      // SPIFont
+    font_specification( "-inkscape-font-specification"       ),  // SPIString
 
     // Text related properties
     text_indent(      "text-indent",                     0.0 ),  // SPILength
@@ -225,11 +227,6 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     new (&fill_ps_modified_connection) sigc::connection();
     new (&stroke_ps_modified_connection) sigc::connection();
 
-
-    // FIX-ME Remove SPFontStyle
-    text = new SPFontStyle();
-    text->font_family           = SPIString( "font-family"  );
-    text->font_specification    = SPIString( "-inkscape-font-specification" );
     // 'font' shorthand requires access to included properties.
     font.setStylePointer(              this );
 
@@ -274,7 +271,9 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     _properties.push_back( &font_stretch );
     _properties.push_back( &font_size ); 
     _properties.push_back( &line_height );
+    _properties.push_back( &font_family );
     _properties.push_back( &font );
+    _properties.push_back( &font_specification );
 
     _properties.push_back( &text_indent );
     _properties.push_back( &text_align );
@@ -337,9 +336,6 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
 
     _properties.push_back( &enable_background );
 
-    _properties.push_back( &text->font_family ); // Must be first as other values depend on it ('ex')
-    _properties.push_back( &text->font_specification );
-
     // MAP -------------------------------------------
 
     // if( _propmap.size() == 0 ) {
@@ -348,13 +344,15 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     //     _propmap.insert( std::make_pair( color.name,                 reinterpret_cast<SPIBasePtr>(&SPStyle::color                 ) ) );
 
     //     // 'font-size' must be before properties that need to know em, ex size (SPILength, SPILenghtOrNormal)
-    //     _propmap.insert( std::make_pair( font.name,                  reinterpret_cast<SPIBasePtr>(&SPStyle::font                  ) ) ); 
     //     _propmap.insert( std::make_pair( font_style.name,            reinterpret_cast<SPIBasePtr>(&SPStyle::font_style            ) ) );
     //     _propmap.insert( std::make_pair( font_variant.name,          reinterpret_cast<SPIBasePtr>(&SPStyle::font_variant          ) ) );
     //     _propmap.insert( std::make_pair( font_weight.name,           reinterpret_cast<SPIBasePtr>(&SPStyle::font_weight           ) ) );
     //     _propmap.insert( std::make_pair( font_stretch.name,          reinterpret_cast<SPIBasePtr>(&SPStyle::font_stretch          ) ) );
     //     _propmap.insert( std::make_pair( font_size.name,             reinterpret_cast<SPIBasePtr>(&SPStyle::font_size             ) ) ); 
     //     _propmap.insert( std::make_pair( line_height.name,           reinterpret_cast<SPIBasePtr>(&SPStyle::line_height           ) ) );
+    //     _propmap.insert( std::make_pair( font_family.name,           reinterpret_cast<SPIBasePtr>(&SPStyle::font_family           ) ) ); 
+    //     _propmap.insert( std::make_pair( font.name,                  reinterpret_cast<SPIBasePtr>(&SPStyle::font                  ) ) ); 
+    //     _propmap.insert( std::make_pair( font_specification.name,    reinterpret_cast<SPIBasePtr>(&SPStyle::font_specification    ) ) ); 
 
     //     _propmap.insert( std::make_pair( text_indent.name,           reinterpret_cast<SPIBasePtr>(&SPStyle::text_indent           ) ) );
     //     _propmap.insert( std::make_pair( text_align.name,            reinterpret_cast<SPIBasePtr>(&SPStyle::text_align            ) ) );
@@ -448,7 +446,6 @@ SPStyle::~SPStyle() {
 
     _properties.clear();
     //_propmap.clear();
-    delete text;
 
     // std::cout << "SPStyle::~SPstyle(): Exit\n" << std::endl;
 }
@@ -594,10 +591,10 @@ SPStyle::readIfUnset( gint id, gchar const *val ) {
 
     switch (id) {
         case SP_PROP_INKSCAPE_FONT_SPEC:
-            text->font_specification.readIfUnset( val );
+            font_specification.readIfUnset( val );
             break;
         case SP_PROP_FONT_FAMILY:
-            text->font_family.readIfUnset( val );
+            font_family.readIfUnset( val );
             break;
         case SP_PROP_FONT_SIZE:
             font_size.readIfUnset( val );
@@ -1599,10 +1596,10 @@ sp_style_unset_property_attrs(SPObject *o)
     if (style->paint_order.set) {
         repr->setAttribute("paint-order", NULL);
     }
-    if (style->text->font_specification.set) {
+    if (style->font_specification.set) {
         repr->setAttribute("-inkscape-font-specification", NULL);
     }
-    if (style->text->font_family.set) {
+    if (style->font_family.set) {
         repr->setAttribute("font-family", NULL);
     }
     if (style->text_anchor.set) {
@@ -1855,9 +1852,6 @@ attribute_unquote(gchar const *val)
  * Quote and/or escape string for writing to CSS (style=). Returned value must be g_free'd.
  */
 Glib::ustring css2_escape_quote(gchar const *val) {
-
-    std::cout << "css2_escape_quote: " << (val?val:"null") << std::endl;
-    //return val;
 
     Glib::ustring t;
     bool quote = false;
