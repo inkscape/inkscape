@@ -38,6 +38,7 @@ LivePathEffectAdd::LivePathEffectAdd() :
     scrolled_window.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
     scrolled_window.set_shadow_type(Gtk::SHADOW_IN);
     scrolled_window.set_size_request(250, 200);
+    scrolled_window.set_can_focus();
 
     /**
      * Effect Store and Tree
@@ -83,10 +84,12 @@ LivePathEffectAdd::LivePathEffectAdd() :
     add_action_widget(close_button, Gtk::RESPONSE_CLOSE);
     add_action_widget(add_button, Gtk::RESPONSE_APPLY);
 
+    
     /**
      * Signal handlers
      */
     effectlist_treeview.signal_button_press_event().connect_notify( sigc::mem_fun(*this, &LivePathEffectAdd::onButtonEvent) );
+    effectlist_treeview.signal_key_press_event().connect_notify(sigc::mem_fun(*this, &LivePathEffectAdd::onKeyEvent));
     close_button.signal_clicked().connect(sigc::mem_fun(*this, &LivePathEffectAdd::onClose));
     add_button.signal_clicked().connect(sigc::mem_fun(*this, &LivePathEffectAdd::onAdd));
     signal_delete_event().connect( sigc::bind_return(sigc::hide(sigc::mem_fun(*this, &LivePathEffectAdd::onClose)), true ) );
@@ -105,6 +108,16 @@ void LivePathEffectAdd::onAdd()
 void LivePathEffectAdd::onClose()
 {
     hide();
+}
+
+void LivePathEffectAdd::onKeyEvent(GdkEventKey* evt)
+{
+    if (evt->keyval == GDK_KEY_Return) {
+         onAdd();
+    }
+    if (evt->keyval == GDK_KEY_Escape) {
+         onClose();
+    }
 }
 
 void LivePathEffectAdd::onButtonEvent(GdkEventButton* evt)
@@ -135,6 +148,7 @@ void LivePathEffectAdd::show(SPDesktop *desktop)
     dial.set_modal(true);
     desktop->setWindowTransient (dial.gobj());
     dial.property_destroy_with_parent() = true;
+    dial.effectlist_treeview.grab_focus();
     dial.run();
 }
 

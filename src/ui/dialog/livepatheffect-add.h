@@ -74,6 +74,10 @@ protected:
      */
     void onButtonEvent(GdkEventButton* evt);
 
+    /**
+     * Key event
+     */
+    void onKeyEvent(GdkEventKey* evt);
 private:
 
     Gtk::TreeView     effectlist_treeview;
