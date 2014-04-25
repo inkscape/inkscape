@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2014-03-04 13:58+0100\n"
-"PO-Revision-Date: 2014-03-04 13:53+0100\n"
+"PO-Revision-Date: 2014-04-25 11:12+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "Language: \n"
@@ -3317,7 +3317,7 @@ msgstr "Peinture vieillie (bitmap)"
 #: ../share/symbols/symbols.h:2
 msgctxt "Symbol"
 msgid "AIGA Symbol Signs"
-msgstr ""
+msgstr "Panneaux signalétiques AIGA"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:3 ../share/symbols/symbols.h:4
@@ -3333,34 +3333,30 @@ msgstr "Courriel"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:7 ../share/symbols/symbols.h:8
-#, fuzzy
 msgctxt "Symbol"
 msgid "Currency Exchange"
-msgstr "Calque courant"
+msgstr "Bureau de change"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:9 ../share/symbols/symbols.h:10
-#, fuzzy
 msgctxt "Symbol"
 msgid "Currency Exchange - Euro"
-msgstr "Calque courant"
+msgstr "Bureau de changes - Euro"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:11 ../share/symbols/symbols.h:12
 msgctxt "Symbol"
 msgid "Cashier"
-msgstr ""
+msgstr "Caisse"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:13 ../share/symbols/symbols.h:14
-#, fuzzy
 msgctxt "Symbol"
 msgid "First Aid"
-msgstr "Première diapositive :"
+msgstr "Premiers secours"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:15 ../share/symbols/symbols.h:16
-#, fuzzy
 msgctxt "Symbol"
 msgid "Lost and Found"
 msgstr "Objets trouvés"
@@ -3369,13 +3365,13 @@ msgstr "Objets trouvés"
 #: ../share/symbols/symbols.h:17 ../share/symbols/symbols.h:18
 msgctxt "Symbol"
 msgid "Coat Check"
-msgstr ""
+msgstr "Vestiaire"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:19 ../share/symbols/symbols.h:20
 msgctxt "Symbol"
 msgid "Baggage Lockers"
-msgstr ""
+msgstr "Casiers à bagages"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:21 ../share/symbols/symbols.h:22
@@ -3415,10 +3411,9 @@ msgstr "Escaliers montants"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:33 ../share/symbols/symbols.h:34
-#, fuzzy
 msgctxt "Symbol"
 msgid "Elevator"
-msgstr "Élévation"
+msgstr "Ascenseur"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:35 ../share/symbols/symbols.h:36
@@ -3444,13 +3439,13 @@ msgstr "Toilettes"
 #: ../share/symbols/symbols.h:217
 msgctxt "Symbol"
 msgid "Nursery"
-msgstr ""
+msgstr "Garderie"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:43 ../share/symbols/symbols.h:44
 msgctxt "Symbol"
 msgid "Drinking Fountain"
-msgstr ""
+msgstr "Fontaine d'eau potable"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:45 ../share/symbols/symbols.h:46
@@ -3471,23 +3466,21 @@ msgstr "Information"
 #, fuzzy
 msgctxt "Symbol"
 msgid "Hotel Information"
-msgstr "Information sur la page"
+msgstr "Information sur l'hotel"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:51 ../share/symbols/symbols.h:52
-#, fuzzy
 msgctxt "Symbol"
 msgid "Air Transportation"
-msgstr "Transformation"
+msgstr "Transport aérien"
 
 #. Symbols: ./AigaSymbols.svg
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:53 ../share/symbols/symbols.h:54
 #: ../share/symbols/symbols.h:308
-#, fuzzy
 msgctxt "Symbol"
 msgid "Heliport"
-msgstr "Port sériel :"
+msgstr "Héliport"
 
 #. Symbols: ./AigaSymbols.svg
 #. Symbols: ./MapSymbols.svg
@@ -3512,26 +3505,23 @@ msgstr "Transformation"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:61 ../share/symbols/symbols.h:62
-#, fuzzy
 msgctxt "Symbol"
 msgid "Rail Transportation"
-msgstr "Transformation"
+msgstr "Transport ferroviaire"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:63 ../share/symbols/symbols.h:64
-#, fuzzy
 msgctxt "Symbol"
 msgid "Water Transportation"
-msgstr "Transformation"
+msgstr "Transport maritime"
 
 #. Symbols: ./AigaSymbols.svg
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:65 ../share/symbols/symbols.h:66
 #: ../share/symbols/symbols.h:306
-#, fuzzy
 msgctxt "Symbol"
 msgid "Car Rental"
-msgstr "Location de vélo"
+msgstr "Location de voiture"
 
 #. Symbols: ./AigaSymbols.svg
 #. Symbols: ./MapSymbols.svg
@@ -3545,7 +3535,7 @@ msgstr "Restaurant"
 #: ../share/symbols/symbols.h:69 ../share/symbols/symbols.h:70
 msgctxt "Symbol"
 msgid "Coffeeshop"
-msgstr ""
+msgstr "Café"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:71 ../share/symbols/symbols.h:72
@@ -3561,16 +3551,15 @@ msgstr "Boutiques"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:75 ../share/symbols/symbols.h:76
-#, fuzzy
 msgctxt "Symbol"
 msgid "Barber Shop - Beauty Salon"
-msgstr "Salon de beauté"
+msgstr "Salon de beauté - salon de coiffure"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:77 ../share/symbols/symbols.h:78
 msgctxt "Symbol"
 msgid "Barber Shop"
-msgstr ""
+msgstr "Salon de coiffure"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:79 ../share/symbols/symbols.h:80
@@ -3582,19 +3571,19 @@ msgstr "Salon de beauté"
 #: ../share/symbols/symbols.h:81 ../share/symbols/symbols.h:82
 msgctxt "Symbol"
 msgid "Ticket Purchase"
-msgstr ""
+msgstr "Achat de billets"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:83 ../share/symbols/symbols.h:84
 msgctxt "Symbol"
 msgid "Baggage Check In"
-msgstr ""
+msgstr "Enregistrement des bagages"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:85 ../share/symbols/symbols.h:86
 msgctxt "Symbol"
 msgid "Baggage Claim"
-msgstr ""
+msgstr "Réception des bagages"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:87 ../share/symbols/symbols.h:88
@@ -3610,17 +3599,15 @@ msgstr "Immigration"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:91 ../share/symbols/symbols.h:92
-#, fuzzy
 msgctxt "Symbol"
 msgid "Departing Flights"
-msgstr "Hauteur de destination"
+msgstr "Vols au départ"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:93 ../share/symbols/symbols.h:94
-#, fuzzy
 msgctxt "Symbol"
 msgid "Arriving Flights"
-msgstr "Luminosité du grain"
+msgstr "Vols à l'arrivée"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:95 ../share/symbols/symbols.h:96
@@ -3630,7 +3617,6 @@ msgstr "Fumeur"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:97 ../share/symbols/symbols.h:98
-#, fuzzy
 msgctxt "Symbol"
 msgid "No Smoking"
 msgstr "Non fumeur"
@@ -3639,10 +3625,9 @@ msgstr "Non fumeur"
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:99 ../share/symbols/symbols.h:100
 #: ../share/symbols/symbols.h:315
-#, fuzzy
 msgctxt "Symbol"
 msgid "Parking"
-msgstr "Désactivé"
+msgstr "Parking"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:101 ../share/symbols/symbols.h:102
@@ -3660,7 +3645,7 @@ msgstr "Interdit aux chiens"
 #: ../share/symbols/symbols.h:105 ../share/symbols/symbols.h:106
 msgctxt "Symbol"
 msgid "No Entry"
-msgstr ""
+msgstr "Entrée interdite"
 
 #. Symbols: ./AigaSymbols.svg
 #. Symbols: ./MapSymbols.svg
@@ -3674,7 +3659,7 @@ msgstr "Sortie"
 #: ../share/symbols/symbols.h:109 ../share/symbols/symbols.h:110
 msgctxt "Symbol"
 msgid "Fire Extinguisher"
-msgstr ""
+msgstr "Extincteur"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:111 ../share/symbols/symbols.h:112
@@ -3736,43 +3721,43 @@ msgstr "Flèche vers la droite"
 #: ../share/symbols/symbols.h:127 ../share/symbols/symbols.h:128
 msgctxt "Symbol"
 msgid "NPS Wheelchair Accessible - 1996"
-msgstr ""
+msgstr "Accessible en fauteuil roulant (NPS - 1996)"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:129 ../share/symbols/symbols.h:130
 msgctxt "Symbol"
 msgid "NPS Wheelchair Accessible"
-msgstr ""
+msgstr "Accessible en fauteuil roulant (NPS)"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:131 ../share/symbols/symbols.h:132
 msgctxt "Symbol"
 msgid "New Wheelchair Accessible"
-msgstr ""
+msgstr "Accessible en fauteuil roulant (Nouveau)"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:133
 msgctxt "Symbol"
 msgid "Word Balloons"
-msgstr ""
+msgstr "Bulles de bandes dessinées"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:134
 msgctxt "Symbol"
 msgid "Thought Balloon"
-msgstr ""
+msgstr "Bulle de pensée"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:135
 msgctxt "Symbol"
 msgid "Dream Speaking"
-msgstr ""
+msgstr "Rêve parlé"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:136
 msgctxt "Symbol"
 msgid "Flow Chart Shapes"
-msgstr ""
+msgstr "Éléments d'organigrammes"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:137
@@ -3785,13 +3770,13 @@ msgstr "Post-processeur :"
 #: ../share/symbols/symbols.h:138
 msgctxt "Symbol"
 msgid "Predefined Process"
-msgstr ""
+msgstr "Processus prédéfini"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:139
 msgctxt "Symbol"
 msgid "Alternate Process"
-msgstr ""
+msgstr "Processus alternatif"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:140
@@ -3818,13 +3803,13 @@ msgstr "Fusionner"
 #: ../share/symbols/symbols.h:143
 msgctxt "Symbol"
 msgid "Delay"
-msgstr ""
+msgstr "Temporisation"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:144
 msgctxt "Symbol"
 msgid "Data I/O"
-msgstr ""
+msgstr "Entrée/sortie de données"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:145
@@ -3837,7 +3822,7 @@ msgstr "Pages intérieures"
 #: ../share/symbols/symbols.h:146
 msgctxt "Symbol"
 msgid "Card"
-msgstr ""
+msgstr "Carte"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:147
@@ -3850,25 +3835,25 @@ msgstr "Document"
 #: ../share/symbols/symbols.h:148
 msgctxt "Symbol"
 msgid "Direct Access Storage"
-msgstr ""
+msgstr "Stockage à accès direct"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:149
 msgctxt "Symbol"
 msgid "Stored Data"
-msgstr ""
+msgstr "Données stockées"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:150
 msgctxt "Symbol"
 msgid "Magnetic Disk (Database)"
-msgstr ""
+msgstr "Disque magnétique (base de données)"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:151
 msgctxt "Symbol"
 msgid "Punched Tape"
-msgstr ""
+msgstr "Bande perforée"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:152
@@ -3921,21 +3906,18 @@ msgstr "Connecteur"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:159
-#, fuzzy
 msgctxt "Symbol"
 msgid "Connector"
 msgstr "Connecteur"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:160
-#, fuzzy
 msgctxt "Symbol"
 msgid "Logical Or"
 msgstr "Ou logique"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:161
-#, fuzzy
 msgctxt "Symbol"
 msgid "Logical And"
 msgstr "Et logique"
@@ -3982,84 +3964,75 @@ msgstr "Symboles logiques"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:168
-#, fuzzy
 msgctxt "Symbol"
 msgid "Xnor Gate"
-msgstr "Porte "
+msgstr "Porte non-ou exclusif"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:169
-#, fuzzy
 msgctxt "Symbol"
 msgid "Xor Gate"
 msgstr "Porte ou exclusif"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:170
-#, fuzzy
 msgctxt "Symbol"
 msgid "Nor Gate"
-msgstr "Porte ou exclusif"
+msgstr "Porte non-ou"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:171
-#, fuzzy
 msgctxt "Symbol"
 msgid "Or Gate"
 msgstr "Porte ou"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:172
-#, fuzzy
 msgctxt "Symbol"
 msgid "Nand Gate"
-msgstr "Porte "
+msgstr "Porte non-et"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:173
-#, fuzzy
 msgctxt "Symbol"
 msgid "And Gate"
-msgstr "Porte "
+msgstr "Porte et"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:174
 msgctxt "Symbol"
 msgid "Buffer"
-msgstr ""
+msgstr "Tampon"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:175
-#, fuzzy
 msgctxt "Symbol"
 msgid "Not Gate"
-msgstr "Porte ou exclusif"
+msgstr "Porte non"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:176
 msgctxt "Symbol"
 msgid "Buffer Small"
-msgstr ""
+msgstr "Tampon (petit)"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:177
 msgctxt "Symbol"
 msgid "Not Gate Small"
-msgstr ""
+msgstr "Porte non (petite)"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:178
-#, fuzzy
 msgctxt "Symbol"
 msgid "Map Symbols"
-msgstr "Déposer le symbole"
+msgstr "Symboles cartographiques"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:179
-#, fuzzy
 msgctxt "Symbol"
 msgid "Bed and Breakfast"
-msgstr "Rouge et vert"
+msgstr "Chambres d'hôtes"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:180
@@ -4069,10 +4042,9 @@ msgstr "Auberge de jeunesse"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:181
-#, fuzzy
 msgctxt "Symbol"
 msgid "Shelter"
-msgstr "filtre"
+msgstr "Abri"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:182
@@ -4088,17 +4060,15 @@ msgstr "Hôtel"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:184
-#, fuzzy
 msgctxt "Symbol"
 msgid "Hostel"
-msgstr "Hôte"
+msgstr "Auberge"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:185
-#, fuzzy
 msgctxt "Symbol"
 msgid "Chalet"
-msgstr "Palette"
+msgstr "Chalet"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:186
@@ -4108,10 +4078,9 @@ msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:187
-#, fuzzy
 msgctxt "Symbol"
 msgid "Camping"
-msgstr "Clapotis"
+msgstr "Camping"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:188
@@ -4127,17 +4096,15 @@ msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:190
-#, fuzzy
 msgctxt "Symbol"
 msgid "Playground"
-msgstr "Fond"
+msgstr "Aire de jeux"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:191
-#, fuzzy
 msgctxt "Symbol"
 msgid "Fountain"
-msgstr "Vitrail"
+msgstr "Fontaine"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:192
@@ -4159,10 +4126,9 @@ msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:195
-#, fuzzy
 msgctxt "Symbol"
 msgid "Fire Station / House"
-msgstr "Relation :"
+msgstr "Poste de pompiers"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:196
@@ -4192,7 +4158,7 @@ msgstr ""
 #: ../share/symbols/symbols.h:200
 msgctxt "Symbol"
 msgid "Recycling"
-msgstr ""
+msgstr "Recyclage"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:201
@@ -4209,17 +4175,15 @@ msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:203
-#, fuzzy
 msgctxt "Symbol"
 msgid "Lift Gate"
-msgstr "Porte ou"
+msgstr "Porte à barrière"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:204
-#, fuzzy
 msgctxt "Symbol"
 msgid "Steps"
-msgstr "Incréments"
+msgstr "Pas"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:205
@@ -4229,24 +4193,21 @@ msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:206
-#, fuzzy
 msgctxt "Symbol"
 msgid "Kissing Gate"
-msgstr "Glyphe manquant :"
+msgstr "Portillon à chicanes"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:207
-#, fuzzy
 msgctxt "Symbol"
 msgid "Gate"
-msgstr "Porte ou"
+msgstr "Porte"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:209
-#, fuzzy
 msgctxt "Symbol"
 msgid "Entrance"
-msgstr "Améliorer"
+msgstr "Entrée"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:210
@@ -4256,10 +4217,9 @@ msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:211
-#, fuzzy
 msgctxt "Symbol"
 msgid "Cattle Grid"
-msgstr "Grille cartésienne"
+msgstr "Grille à bétail"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:212
@@ -4275,10 +4235,9 @@ msgstr "Université"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:214
-#, fuzzy
 msgctxt "Symbol"
 msgid "High/Secondary School"
-msgstr "Flou secondaire :"
+msgstr "Lycée"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:215
@@ -4366,10 +4325,9 @@ msgstr "Pharmacie"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:231
-#, fuzzy
 msgctxt "Symbol"
 msgid "Accident & Emergency"
-msgstr "Centre du cercle inscrit"
+msgstr "Accident & urgence"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:232
@@ -4439,10 +4397,9 @@ msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:243
-#, fuzzy
 msgctxt "Symbol"
 msgid "Power Lines"
-msgstr "Rectiligne"
+msgstr "Lignes électriques"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:244
@@ -4452,10 +4409,9 @@ msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:245
-#, fuzzy
 msgctxt "Symbol"
 msgid "Transmitter"
-msgstr "Transformer les motifs de remplissage"
+msgstr "Antenne"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:246
@@ -4465,10 +4421,9 @@ msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:247
-#, fuzzy
 msgctxt "Symbol"
 msgid "Town"
-msgstr "Mairie"
+msgstr "Ville"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:248
@@ -4484,10 +4439,9 @@ msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:250
-#, fuzzy
 msgctxt "Symbol"
 msgid "Peak"
-msgstr "En arête"
+msgstr "Sommet"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:251
@@ -4540,17 +4494,15 @@ msgstr "Coiffeur"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:259
-#, fuzzy
 msgctxt "Symbol"
 msgid "Greengrocer"
-msgstr "Vert"
+msgstr "Marchand de légumes"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:260
-#, fuzzy
 msgctxt "Symbol"
 msgid "Gift Shop"
-msgstr "Boutique"
+msgstr "Boutique de cadeaux"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:261
@@ -4579,10 +4531,9 @@ msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:265
-#, fuzzy
 msgctxt "Symbol"
 msgid "Hardware / DIY"
-msgstr "Matériel"
+msgstr "Matériel et bricolage"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:266
@@ -4639,7 +4590,7 @@ msgstr "Boutique"
 #: ../share/symbols/symbols.h:274
 msgctxt "Symbol"
 msgid "Bicycle Shop"
-msgstr "Magasin de jouets"
+msgstr "Magasin de vélos"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:275
@@ -4691,17 +4642,15 @@ msgstr "Voile"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:283
-#, fuzzy
 msgctxt "Symbol"
 msgid "Leisure Center"
-msgstr "Rétablir le centre"
+msgstr "Centre de loisir"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:284
-#, fuzzy
 msgctxt "Symbol"
 msgid "Ice Skating"
-msgstr "Satin"
+msgstr "Patinoire"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:285
@@ -4729,10 +4678,9 @@ msgstr "Golf"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:289
-#, fuzzy
 msgctxt "Symbol"
 msgid "Diving"
-msgstr "Division"
+msgstr "Plongée"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:290
@@ -4750,20 +4698,19 @@ msgstr "Zoo"
 #: ../share/symbols/symbols.h:292
 msgctxt "Symbol"
 msgid "Wreck"
-msgstr ""
+msgstr "Naufrage"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:293
-#, fuzzy
 msgctxt "Symbol"
 msgid "Water Wheel"
-msgstr "Roue"
+msgstr "Roue à eau"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:294
 msgctxt "Symbol"
 msgid "Point of Interest"
-msgstr ""
+msgstr "Point d'intérêt"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:295
@@ -4775,7 +4722,7 @@ msgstr "Théatre"
 #: ../share/symbols/symbols.h:296
 msgctxt "Symbol"
 msgid "Park / Picnic Area"
-msgstr ""
+msgstr "Parc, zone de picnic"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:297
@@ -4791,22 +4738,21 @@ msgstr "Plage"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:300
-#, fuzzy
 msgctxt "Symbol"
 msgid "Battle Location"
-msgstr "Localisation :"
+msgstr "Lieu de bataille"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:301
 msgctxt "Symbol"
 msgid "Archaeology / Ruins"
-msgstr ""
+msgstr "Archéologie, ruines"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:302
 msgctxt "Symbol"
 msgid "Walking"
-msgstr ""
+msgstr "Promenade"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:303
@@ -4818,7 +4764,7 @@ msgstr "Train"
 #: ../share/symbols/symbols.h:305
 msgctxt "Symbol"
 msgid "Underground Rail"
-msgstr ""
+msgstr "Métro"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:307
@@ -4834,72 +4780,63 @@ msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:310
-#, fuzzy
 msgctxt "Symbol"
 msgid "Flood Gate"
-msgstr "Remplissage"
+msgstr "Écluse"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:311
-#, fuzzy
 msgctxt "Symbol"
 msgid "Shipping"
-msgstr "Ruissellement"
+msgstr "Transport maritime"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:312
-#, fuzzy
 msgctxt "Symbol"
 msgid "Disabled Parking"
-msgstr "Désactivé"
+msgstr "Parking handicapés"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:313
-#, fuzzy
 msgctxt "Symbol"
 msgid "Paid Parking"
-msgstr "Désactivé"
+msgstr "Parking payant"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:314
-#, fuzzy
 msgctxt "Symbol"
 msgid "Bike Parking"
-msgstr "Désactivé"
+msgstr "Parc à vélos"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:316
 msgctxt "Symbol"
 msgid "Marina"
-msgstr ""
+msgstr "Marina"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:317
-#, fuzzy
 msgctxt "Symbol"
 msgid "Fuel Station"
-msgstr "Relation :"
+msgstr "Station d'essence"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:318
-#, fuzzy
 msgctxt "Symbol"
 msgid "Bus Stop"
-msgstr "_Arrêter"
+msgstr "Arrêt de bus"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:319
-#, fuzzy
 msgctxt "Symbol"
 msgid "Bus Station"
-msgstr "Diminuer la saturation"
+msgstr "Gare routière"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:320
-#, fuzzy
 msgctxt "Symbol"
 msgid "Airport"
-msgstr "Importer"
+msgstr "Aéroport"
 
 #: ../share/templates/templates.h:1
 msgid "A4 Landscape Page"
@@ -5134,7 +5071,6 @@ msgid "icon 64x64 empty"
 msgstr ""
 
 #: ../share/templates/templates.h:1
-#, fuzzy
 msgid "Letter Landscape"
 msgstr "Letter Paysage"
 
@@ -5147,9 +5083,8 @@ msgid "letter landscape 792x612 empty"
 msgstr ""
 
 #: ../share/templates/templates.h:1
-#, fuzzy
 msgid "Letter"
-msgstr "Lettre :"
+msgstr "Letter"
 
 #: ../share/templates/templates.h:1
 msgid "Standard letter sheet - 612x792"
@@ -6797,7 +6732,6 @@ msgstr "Inverser les couleurs du dégradé"
 
 #: ../src/extension/internal/emf-inout.cpp:3532
 #, fuzzy
-#| msgid "Create linear gradient"
 msgid "Use native rectangular linear gradients"
 msgstr "Créer un dégradé linéaire"
 
@@ -8592,7 +8526,7 @@ msgstr "Import d'une image matricielle %s"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:191
 msgid "Image Import Type:"
-msgstr ""
+msgstr "Type d'importation d'image :"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:191
 msgid ""
@@ -8614,33 +8548,28 @@ msgid "Link"
 msgstr "Lier"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:196
-#, fuzzy
-#| msgid "Image"
 msgid "Image DPI:"
-msgstr "Image"
+msgstr "Résolution de l'image (ppp) :"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:196
 msgid ""
 "Take information from file or use default bitmap import resolution as "
 "defined in the preferences."
 msgstr ""
+"Récupère les informations dans le fichier ou utilise la résolution "
+"d'importation telle que définie dans les préférences."
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:197
-#, fuzzy
-#| msgid "Load from file"
 msgid "From file"
-msgstr "Charger depuis un fichier"
+msgstr "Déduire du fichier"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:198
-#, fuzzy
-#| msgid "Default _import resolution:"
 msgid "Default import resolution"
-msgstr "Résolution par défaut d'_importation :"
+msgstr "Résolution d'importation par défaut"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:201
-#, fuzzy
 msgid "Image Rendering Mode:"
-msgstr "Rendu"
+msgstr "Mode de rendu de l'image :"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:201
 msgid ""
@@ -8650,22 +8579,20 @@ msgstr ""
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:202
 #: ../src/ui/dialog/inkscape-preferences.cpp:1452
-#, fuzzy
 msgid "None (auto)"
 msgstr "Aucun (défaut)"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:203
 #: ../src/ui/dialog/inkscape-preferences.cpp:1452
 msgid "Smooth (optimizeQuality)"
-msgstr ""
+msgstr "Lisse (optimisé pour la qualité)"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:204
 #: ../src/ui/dialog/inkscape-preferences.cpp:1452
 msgid "Blocky (optimizeSpeed)"
-msgstr ""
+msgstr "Bloc (optimisé pour la vitesse)"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:207
-#, fuzzy
 msgid "Hide the dialog next time and always apply the same actions."
 msgstr ""
 "Masquer cette boîte de dialogue la prochaine fois et toujours appliquer la "
@@ -9029,6 +8956,7 @@ msgstr "Diagramme Microsoft Visio (*.vsd)"
 #: ../src/extension/internal/vsd-input.cpp:280
 msgid "File format used by Microsoft Visio 6 and later"
 msgstr ""
+"Format de fichier utilisé par Microsoft Visio 6 et les versions suivantes"
 
 #: ../src/extension/internal/vsd-input.cpp:287
 msgid "VDX Input"
@@ -9041,6 +8969,7 @@ msgstr "Diagramme Microsoft Visio XML (*.vdx)"
 #: ../src/extension/internal/vsd-input.cpp:293
 msgid "File format used by Microsoft Visio 2010 and later"
 msgstr ""
+"Format de fichier utilisé par Microsoft Visio 2010 et les versions suivantes"
 
 #: ../src/extension/internal/vsd-input.cpp:300
 msgid "VSDM Input"
@@ -9048,12 +8977,13 @@ msgstr "Entrée VSDM"
 
 #: ../src/extension/internal/vsd-input.cpp:305
 msgid "Microsoft Visio 2013 drawing (*.vsdm)"
-msgstr ""
+msgstr "Dessin Microsoft Visio 2013 (*.vsdm)"
 
 #: ../src/extension/internal/vsd-input.cpp:306
 #: ../src/extension/internal/vsd-input.cpp:319
 msgid "File format used by Microsoft Visio 2013 and later"
 msgstr ""
+"Format de fichier utilisé par Microsoft Visio 2013 et les versions suivantes"
 
 #: ../src/extension/internal/vsd-input.cpp:313
 msgid "VSDX Input"
@@ -9061,7 +8991,7 @@ msgstr "Entrée VSDX"
 
 #: ../src/extension/internal/vsd-input.cpp:318
 msgid "Microsoft Visio 2013 drawing (*.vsdx)"
-msgstr ""
+msgstr "Dessin Microsoft Visio 2013 (*.vsdx)"
 
 #: ../src/extension/internal/wmf-inout.cpp:3112
 msgid "WMF Input"
@@ -9076,9 +9006,8 @@ msgid "Windows Metafiles"
 msgstr "Métafichier Windows"
 
 #: ../src/extension/internal/wmf-inout.cpp:3126
-#, fuzzy
 msgid "WMF Output"
-msgstr "Sortie EMF"
+msgstr "Sortie WMF"
 
 #: ../src/extension/internal/wmf-inout.cpp:3136
 msgid "Map all fill patterns to standard WMF hatches"
@@ -9091,7 +9020,6 @@ msgid "Windows Metafile (*.wmf)"
 msgstr "Métafichier Windows (*.wmf)"
 
 #: ../src/extension/internal/wmf-inout.cpp:3141
-#, fuzzy
 msgid "Windows Metafile"
 msgstr "Métafichier Windows"
 
@@ -9140,11 +9068,10 @@ msgid "Document not saved yet.  Cannot revert."
 msgstr "Document non enregistré. Impossible de le recharger."
 
 #: ../src/file.cpp:363
-#, fuzzy
 msgid "Changes will be lost! Are you sure you want to reload document %1?"
 msgstr ""
 "Les changements seront perdus ! Êtes-vous sûr de vouloir recharger le "
-"document %s ?"
+"document %1 ?"
 
 #: ../src/file.cpp:389
 msgid "Document reverted."
@@ -9208,14 +9135,12 @@ msgstr "Document enregistré."
 
 #. We are saving for the first time; create a unique default filename
 #: ../src/file.cpp:858
-#, fuzzy
 msgid "drawing"
-msgstr "dessin%s"
+msgstr "dessin"
 
 #: ../src/file.cpp:863
-#, fuzzy
 msgid "drawing-%1"
-msgstr "dessin%s"
+msgstr "dessin-%1"
 
 #: ../src/file.cpp:880
 msgid "Select file to save a copy to"
@@ -9317,19 +9242,16 @@ msgstr "Remplissage du contour"
 
 #. New in Compositing and Blending Level 1
 #: ../src/filter-enums.cpp:58
-#, fuzzy
 msgid "Overlay"
-msgstr "Superpositions"
+msgstr "Superposition"
 
 #: ../src/filter-enums.cpp:59
-#, fuzzy
 msgid "Color Dodge"
-msgstr "Couleur seulement"
+msgstr "Estompage de couleur"
 
 #: ../src/filter-enums.cpp:60
-#, fuzzy
 msgid "Color Burn"
-msgstr "Barres de couleur"
+msgstr "Brûlage de couleur"
 
 #: ../src/filter-enums.cpp:61
 #, fuzzy
@@ -10652,7 +10574,6 @@ msgid "The size of the grid in Y direction."
 msgstr "La dimension de la grille dans la direction Y."
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:51
-#, fuzzy
 msgid "Starting:"
 msgstr "Début :"
 
@@ -10661,44 +10582,36 @@ msgid "Angle of the first copy"
 msgstr ""
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:52
-#, fuzzy
 msgid "Rotation angle:"
-msgstr "Rotation :"
+msgstr "Angle de rotation :"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:52
-#, fuzzy
 msgid "Angle between two successive copies"
-msgstr "Distance entre deux graduations successives"
+msgstr "Angle entre deux copies successives"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:53
-#, fuzzy
 msgid "Number of copies:"
-msgstr "Nombre d'échantillons :"
+msgstr "Nombre de copies :"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:53
-#, fuzzy
 msgid "Number of copies of the original path"
-msgstr "Nombre de sommets du polygone ou de l'étoile"
+msgstr "Nombre de copies du chemin original"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:54
-#, fuzzy
 msgid "Origin"
-msgstr "Origine X :"
+msgstr "Origine"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:54
-#, fuzzy
 msgid "Origin of the rotation"
-msgstr "Orientation"
+msgstr "Origine de la rotation"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:135
-#, fuzzy
 msgid "Adjust the starting angle"
-msgstr "Ajuster le crénage"
+msgstr "Ajuster l'angle de départ"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:141
-#, fuzzy
 msgid "Adjust the rotation angle"
-msgstr "Ajuster la saturation"
+msgstr "Ajuster l'angle de rotation"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:41
 msgid "Stitch path:"
@@ -10783,9 +10696,8 @@ msgstr ""
 "longueur"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:35
-#, fuzzy
 msgid "Elliptic Pen"
-msgstr "Ellipse"
+msgstr "Stylo elliptique"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:36
 msgid "Thick-Thin strokes (fast)"
@@ -10796,9 +10708,8 @@ msgid "Thick-Thin strokes (slow)"
 msgstr ""
 
 #: ../src/live_effects/lpe-dynastroke.cpp:42
-#, fuzzy
 msgid "Sharp"
-msgstr "Netteté"
+msgstr "Précis"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:43
 #: ../src/live_effects/lpe-powerstroke.cpp:205
@@ -10809,27 +10720,23 @@ msgstr "Arrondie"
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-dynastroke.cpp:50
 msgid "Method:"
-msgstr ""
+msgstr "Méthode :"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:50
-#, fuzzy
 msgid "Choose pen type"
-msgstr "Sélectionner un type de segment"
+msgstr "Sélectionner un type de stylo"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:51
-#, fuzzy
 msgid "Pen width:"
-msgstr "Largeur du stylo"
+msgstr "Largeur du stylo :"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:51
-#, fuzzy
 msgid "Maximal stroke width"
-msgstr "Redimensionner l'épaisseur du contour"
+msgstr "Épaisseur du contour maximale"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:52
-#, fuzzy
 msgid "Pen roundness:"
-msgstr "Caractère aléatoire du placement :"
+msgstr "Rondeur du stylo :"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:52
 msgid "Min/Max width ratio"
@@ -10853,9 +10760,8 @@ msgid "Start:"
 msgstr "Début :"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:55
-#, fuzzy
 msgid "Choose start capping type"
-msgstr "Sélectionner un type de segment"
+msgstr "Sélectionner le type du raccord de départ"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:56
 #: ../src/widgets/arc-toolbar.cpp:339
@@ -10863,9 +10769,8 @@ msgid "End:"
 msgstr "Fin :"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:56
-#, fuzzy
 msgid "Choose end capping type"
-msgstr "Sélectionner un type de segment"
+msgstr "Sélectionner le type du raccord de fin"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:57
 #, fuzzy
@@ -10886,24 +10791,20 @@ msgid "Make the stroke thinner near it's end"
 msgstr ""
 
 #: ../src/live_effects/lpe-dynastroke.cpp:59
-#, fuzzy
 msgid "Round ends"
-msgstr "Arrondi"
+msgstr "terminaisons arrondies"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:59
-#, fuzzy
 msgid "Strokes end with a round end"
-msgstr "Métal embouti au bord arrondi"
+msgstr "Les contours se terminent en arrondi"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:60
-#, fuzzy
 msgid "Capping:"
-msgstr "Clapotis"
+msgstr "Raccord :"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:60
-#, fuzzy
 msgid "left capping"
-msgstr "Activer le magnétisme"
+msgstr "raccord gauche"
 
 #: ../src/live_effects/lpe-envelope.cpp:31
 msgid "Top bend path:"
@@ -11080,164 +10981,132 @@ msgstr "Modifier le croisement de l'entrelacs"
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-lattice.cpp:45
-#, fuzzy
 msgid "Control handle 0:"
-msgstr "Taille des icônes de la barre de contrôle des outils :"
+msgstr "Poignée de contrôle 0 :"
 
 #: ../src/live_effects/lpe-lattice.cpp:45
-#, fuzzy
 msgid "Control handle 0"
-msgstr "Poignée de point de rebroussement"
+msgstr "Poignée de contrôle 0"
 
 #: ../src/live_effects/lpe-lattice.cpp:46
-#, fuzzy
 msgid "Control handle 1:"
-msgstr "Taille des icônes de la barre de contrôle des outils :"
+msgstr "Poignée de contrôle 1 :"
 
 #: ../src/live_effects/lpe-lattice.cpp:46
-#, fuzzy
 msgid "Control handle 1"
-msgstr "Poignée de point de rebroussement"
+msgstr "Poignée de contrôle 1"
 
 #: ../src/live_effects/lpe-lattice.cpp:47
-#, fuzzy
 msgid "Control handle 2:"
-msgstr "Taille des icônes de la barre de contrôle des outils :"
+msgstr "Poignée de contrôle 2 :"
 
 #: ../src/live_effects/lpe-lattice.cpp:47
-#, fuzzy
 msgid "Control handle 2"
-msgstr "Poignée de point de rebroussement"
+msgstr "Poignée de contrôle 2"
 
 #: ../src/live_effects/lpe-lattice.cpp:48
-#, fuzzy
 msgid "Control handle 3:"
-msgstr "Taille des icônes de la barre de contrôle des outils :"
+msgstr "Poignée de contrôle 3 :"
 
 #: ../src/live_effects/lpe-lattice.cpp:48
-#, fuzzy
 msgid "Control handle 3"
-msgstr "Poignée de point de rebroussement"
+msgstr "Poignée de contrôle 3"
 
 #: ../src/live_effects/lpe-lattice.cpp:49
-#, fuzzy
 msgid "Control handle 4:"
-msgstr "Taille des icônes de la barre de contrôle des outils :"
+msgstr "Poignée de contrôle 4 :"
 
 #: ../src/live_effects/lpe-lattice.cpp:49
-#, fuzzy
 msgid "Control handle 4"
-msgstr "Poignée de point de rebroussement"
+msgstr "Poignée de contrôle 4"
 
 #: ../src/live_effects/lpe-lattice.cpp:50
-#, fuzzy
 msgid "Control handle 5:"
-msgstr "Taille des icônes de la barre de contrôle des outils :"
+msgstr "Poignée de contrôle 5 :"
 
 #: ../src/live_effects/lpe-lattice.cpp:50
-#, fuzzy
 msgid "Control handle 5"
-msgstr "Poignée de point de rebroussement"
+msgstr "Poignée de contrôle 5"
 
 #: ../src/live_effects/lpe-lattice.cpp:51
-#, fuzzy
 msgid "Control handle 6:"
-msgstr "Taille des icônes de la barre de contrôle des outils :"
+msgstr "Poignée de contrôle 6 :"
 
 #: ../src/live_effects/lpe-lattice.cpp:51
-#, fuzzy
 msgid "Control handle 6"
-msgstr "Poignée de point de rebroussement"
+msgstr "Poignée de contrôle 6"
 
 #: ../src/live_effects/lpe-lattice.cpp:52
-#, fuzzy
 msgid "Control handle 7:"
-msgstr "Taille des icônes de la barre de contrôle des outils :"
+msgstr "Poignée de contrôle 7 :"
 
 #: ../src/live_effects/lpe-lattice.cpp:52
-#, fuzzy
 msgid "Control handle 7"
-msgstr "Poignée de point de rebroussement"
+msgstr "Poignée de contrôle 7"
 
 #: ../src/live_effects/lpe-lattice.cpp:53
-#, fuzzy
 msgid "Control handle 8:"
-msgstr "Taille des icônes de la barre de contrôle des outils :"
+msgstr "Poignée de contrôle 8 :"
 
 #: ../src/live_effects/lpe-lattice.cpp:53
-#, fuzzy
 msgid "Control handle 8"
-msgstr "Poignée de point de rebroussement"
+msgstr "Poignée de contrôle 8"
 
 #: ../src/live_effects/lpe-lattice.cpp:54
-#, fuzzy
 msgid "Control handle 9:"
-msgstr "Taille des icônes de la barre de contrôle des outils :"
+msgstr "Poignée de contrôle 9 :"
 
 #: ../src/live_effects/lpe-lattice.cpp:54
-#, fuzzy
 msgid "Control handle 9"
-msgstr "Poignée de point de rebroussement"
+msgstr "Poignée de contrôle 9"
 
 #: ../src/live_effects/lpe-lattice.cpp:55
-#, fuzzy
 msgid "Control handle 10:"
-msgstr "Taille des icônes de la barre de contrôle des outils :"
+msgstr "Poignée de contrôle 10 :"
 
 #: ../src/live_effects/lpe-lattice.cpp:55
-#, fuzzy
 msgid "Control handle 10"
-msgstr "Poignée de point de rebroussement"
+msgstr "Poignée de contrôle 10"
 
 #: ../src/live_effects/lpe-lattice.cpp:56
-#, fuzzy
 msgid "Control handle 11:"
-msgstr "Taille des icônes de la barre de contrôle des outils :"
+msgstr "Poignée de contrôle 11 :"
 
 #: ../src/live_effects/lpe-lattice.cpp:56
-#, fuzzy
 msgid "Control handle 11"
-msgstr "Poignée de point de rebroussement"
+msgstr "Poignée de contrôle 11"
 
 #: ../src/live_effects/lpe-lattice.cpp:57
-#, fuzzy
 msgid "Control handle 12:"
-msgstr "Taille des icônes de la barre de contrôle des outils :"
+msgstr "Poignée de contrôle 12 :"
 
 #: ../src/live_effects/lpe-lattice.cpp:57
-#, fuzzy
 msgid "Control handle 12"
-msgstr "Poignée de point de rebroussement"
+msgstr "Poignée de contrôle 12"
 
 #: ../src/live_effects/lpe-lattice.cpp:58
-#, fuzzy
 msgid "Control handle 13:"
-msgstr "Taille des icônes de la barre de contrôle des outils :"
+msgstr "Poignée de contrôle 13 :"
 
 #: ../src/live_effects/lpe-lattice.cpp:58
-#, fuzzy
 msgid "Control handle 13"
-msgstr "Poignée de point de rebroussement"
+msgstr "Poignée de contrôle 13"
 
 #: ../src/live_effects/lpe-lattice.cpp:59
-#, fuzzy
 msgid "Control handle 14:"
-msgstr "Taille des icônes de la barre de contrôle des outils :"
+msgstr "Poignée de contrôle 14 :"
 
 #: ../src/live_effects/lpe-lattice.cpp:59
-#, fuzzy
 msgid "Control handle 14"
-msgstr "Poignée de point de rebroussement"
+msgstr "Poignée de contrôle 14"
 
 #: ../src/live_effects/lpe-lattice.cpp:60
-#, fuzzy
 msgid "Control handle 15:"
-msgstr "Taille des icônes de la barre de contrôle des outils :"
+msgstr "Poignée de contrôle 15 :"
 
 #: ../src/live_effects/lpe-lattice.cpp:60
-#, fuzzy
 msgid "Control handle 15"
-msgstr "Poignée de point de rebroussement"
+msgstr "Poignée de contrôle 15"
 
 #: ../src/live_effects/lpe-line_segment.cpp:25
 #: ../src/widgets/lpe-toolbar.cpp:233
@@ -11260,9 +11129,8 @@ msgid "Open both"
 msgstr "Les deux ouverts"
 
 #: ../src/live_effects/lpe-line_segment.cpp:34
-#, fuzzy
 msgid "End type:"
-msgstr "Type de fondu :"
+msgstr "Type de terminaison :"
 
 #: ../src/live_effects/lpe-line_segment.cpp:34
 msgid "Determines on which side the line or line segment is infinite."
@@ -11340,9 +11208,8 @@ msgid "Unit"
 msgstr "Unité"
 
 #: ../src/live_effects/lpe-path_length.cpp:29
-#, fuzzy
 msgid "Display unit"
-msgstr "Ajustement de l'affichage"
+msgstr "Unité d'affichage"
 
 #: ../src/live_effects/lpe-path_length.cpp:29
 #, fuzzy
@@ -11450,44 +11317,36 @@ msgstr ""
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-perspective_path.cpp:47
-#, fuzzy
 msgid "Scale x"
-msgstr "Échelle"
+msgstr "Échelle x"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:47
-#, fuzzy
 msgid "Scale factor in x direction"
-msgstr "État du point de fuite dans la direction X"
+msgstr "Facteur d'échelle dans la direction X"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:48
-#, fuzzy
 msgid "Scale y"
-msgstr "Échelle"
+msgstr "Échelle y"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:48
-#, fuzzy
 msgid "Scale factor in y direction"
-msgstr "État du point de fuite dans la direction X"
+msgstr "Facteur d'échelle dans la direction Y"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:49
-#, fuzzy
 msgid "Offset x"
-msgstr "Offset"
+msgstr "Offset x"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:49
-#, fuzzy
 msgid "Offset in x direction"
-msgstr "Angle dans la direction X"
+msgstr "Décalage dans la direction X"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:50
-#, fuzzy
 msgid "Offset y"
-msgstr "Offset"
+msgstr "Offset y"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:50
-#, fuzzy
 msgid "Offset in y direction"
-msgstr "Angle dans la direction X"
+msgstr "Décalage dans la direction Y"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:51
 msgid "Uses XY plane?"
@@ -11500,24 +11359,20 @@ msgid ""
 msgstr ""
 
 #: ../src/live_effects/lpe-perspective_path.cpp:145
-#, fuzzy
 msgid "Adjust the origin"
-msgstr "Ajuster la teinte"
+msgstr "Ajuster l'origine"
 
 #: ../src/live_effects/lpe-powerstroke.cpp:189
-#, fuzzy
 msgid "CubicBezierFit"
-msgstr "Bézier"
+msgstr "CubicBezierFit"
 
 #: ../src/live_effects/lpe-powerstroke.cpp:190
-#, fuzzy
 msgid "CubicBezierJohan"
-msgstr "Bézier"
+msgstr "CubicBezierJohan"
 
 #: ../src/live_effects/lpe-powerstroke.cpp:191
-#, fuzzy
 msgid "SpiroInterpolator"
-msgstr "Interpoler"
+msgstr "SpiroInterpolator"
 
 #: ../src/live_effects/lpe-powerstroke.cpp:203
 msgid "Butt"
@@ -11639,7 +11494,7 @@ msgstr "Saturation :"
 
 #: ../src/live_effects/lpe-recursiveskeleton.cpp:30
 msgid "recursivity"
-msgstr ""
+msgstr "récursivité"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:225
 msgid "Frequency randomness:"
@@ -13221,7 +13076,6 @@ msgstr "Sélectionner un ou des <b>objet(s)</b> à descendre."
 
 #. TRANSLATORS: "Lower" means "to lower an object" in the undo history
 #: ../src/selection-chemistry.cpp:1077
-#, fuzzy
 msgctxt "Undo action"
 msgid "Lower"
 msgstr "Descendre"
@@ -13479,7 +13333,6 @@ msgstr "Sélectionner un <b>symbole</b> pour en extraire des objets."
 
 #: ../src/selection-chemistry.cpp:3149
 #, fuzzy
-#| msgid "Select only one <b>symbol</b> to convert to group."
 msgid "Select only one <b>symbol</b> in Symbol dialog to convert to group."
 msgstr "Sélectionner un seul <b>symbole(s)</b> à convertir en groupe."
 
@@ -13605,9 +13458,8 @@ msgid " in %s"
 msgstr " dans %s"
 
 #: ../src/selection-describer.cpp:152
-#, fuzzy
 msgid " hidden in definitions"
-msgstr "Interdire le partage des définitions de dégradé"
+msgstr " caché dans les définitions"
 
 #: ../src/selection-describer.cpp:154
 #, c-format
@@ -13615,9 +13467,9 @@ msgid " in group %s (%s)"
 msgstr " dans le groupe %s (%s)"
 
 #: ../src/selection-describer.cpp:156
-#, fuzzy, c-format
+#, c-format
 msgid " in unnamed group (%s)"
-msgstr " dans le groupe %s (%s)"
+msgstr " dans un groupe anonyme (%s)"
 
 #: ../src/selection-describer.cpp:158
 #, fuzzy, c-format
@@ -13774,19 +13626,16 @@ msgid "to %s"
 msgstr ""
 
 #: ../src/sp-anchor.cpp:129
-#, fuzzy
 msgid "without URI"
-msgstr "<b>Lien</b> sans URI"
+msgstr "sans URI"
 
 #: ../src/sp-ellipse.cpp:374
-#, fuzzy
 msgid "Segment"
-msgstr "Segment de ligne"
+msgstr "Segment"
 
 #: ../src/sp-ellipse.cpp:376
-#, fuzzy
 msgid "Arc"
-msgstr "Arabe"
+msgstr "Arc"
 
 #. Ellipse
 #: ../src/sp-ellipse.cpp:379 ../src/sp-ellipse.cpp:386
@@ -13801,7 +13650,6 @@ msgstr "Cercle"
 
 #. TRANSLATORS: "Flow region" is an area where text is allowed to flow
 #: ../src/sp-flowregion.cpp:193
-#, fuzzy
 msgid "Flow Region"
 msgstr "Région d'encadrement"
 
@@ -13815,7 +13663,6 @@ msgid "Flow Excluded Region"
 msgstr "Région d'encadrement exclue"
 
 #: ../src/sp-flowtext.cpp:289
-#, fuzzy
 msgid "Flowed Text"
 msgstr "Texte encadré"
 
@@ -14043,14 +13890,12 @@ msgid "An exception occurred during execution of the Path Effect."
 msgstr "Exception pendant l'exécution de l'effet de chemin."
 
 #: ../src/sp-offset.cpp:344
-#, fuzzy
 msgid "Linked Offset"
-msgstr "Offset _lié"
+msgstr "Offset lié"
 
 #: ../src/sp-offset.cpp:346
-#, fuzzy
 msgid "Dynamic Offset"
-msgstr "Offset d_ynamique"
+msgstr "Offset dynamique"
 
 #. TRANSLATORS COMMENT: %s is either "outset" or "inset" depending on sign
 #: ../src/sp-offset.cpp:352
@@ -14187,7 +14032,6 @@ msgid "Text Span"
 msgstr "Ancre de texte"
 
 #: ../src/sp-use.cpp:213
-#, fuzzy
 msgid "Symbol"
 msgstr "Symbole"
 
@@ -16787,9 +16631,8 @@ msgid "Value(s):"
 msgstr "Valeur(s) :"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2847
-#, fuzzy
 msgid "R:"
-msgstr "Rx :"
+msgstr "R :"
 
 # Green (in RGB)
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2848
@@ -16799,15 +16642,13 @@ msgstr "V :"
 
 # Blue (in RGB)
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2849
-#, fuzzy
 msgid "B:"
-msgstr "_B :"
+msgstr "B :"
 
 # Alpha (opacity)
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2850
-#, fuzzy
 msgid "A:"
-msgstr "_A :"
+msgstr "A :"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2853
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2893
@@ -21680,9 +21521,8 @@ msgid "Y:"
 msgstr "Y :"
 
 #: ../src/ui/dialog/object-attributes.cpp:70
-#, fuzzy
 msgid "Image Rendering:"
-msgstr "Rendu"
+msgstr "Rendu de l'image :"
 
 #: ../src/ui/dialog/object-properties.cpp:63
 #: ../src/ui/dialog/object-properties.cpp:398
@@ -21696,9 +21536,8 @@ msgid "_Title:"
 msgstr "_Titre :"
 
 #: ../src/ui/dialog/object-properties.cpp:66
-#, fuzzy
 msgid "_Image Rendering:"
-msgstr "Rendu"
+msgstr "Rendu de l'_image :"
 
 #: ../src/ui/dialog/object-properties.cpp:67
 msgid "_Description:"
@@ -21903,9 +21742,8 @@ msgid "Heuristics"
 msgstr ""
 
 #: ../src/ui/dialog/pixelartdialog.cpp:238
-#, fuzzy
 msgid "_Voronoi diagram"
-msgstr "Diagramme de Voronoï"
+msgstr "Diagramme de _Voronoï"
 
 #: ../src/ui/dialog/pixelartdialog.cpp:239
 msgid "Output composed of straight lines"
@@ -25907,7 +25745,6 @@ msgstr "Désélectionner tous les objets ou nœuds"
 
 #: ../src/verbs.cpp:2475
 #, fuzzy
-#| msgid "Delete all objects from document"
 msgid "Delete all the guides in the document"
 msgstr "Supprimer tous les objets du document"
 
@@ -26350,7 +26187,6 @@ msgstr "Afficher le calque courant uniquement"
 
 #. Object
 #: ../src/verbs.cpp:2612
-#| msgid "Rotate 90° CW"
 msgid "Rotate _90° CW"
 msgstr "Tourner de _90° dans le sens horaire"
 
@@ -26361,7 +26197,6 @@ msgid "Rotate selection 90° clockwise"
 msgstr "Tourner la sélection de 90° dans le sens horaire"
 
 #: ../src/verbs.cpp:2616
-#| msgid "Rotate 90° CCW"
 msgid "Rotate 9_0° CCW"
 msgstr "Tourner de 9_0° dans le sens anti-horaire"
 
@@ -28450,8 +28285,6 @@ msgstr "Stops :"
 #. Label
 #: ../src/widgets/gradient-toolbar.cpp:1158
 #: ../src/widgets/gradient-vector.cpp:926
-#, fuzzy
-#| msgid "Offset:"
 msgctxt "Gradient"
 msgid "Offset:"
 msgstr "Décalage :"
@@ -31919,7 +31752,7 @@ msgstr "Entrée métafichier Windows (*.wmf)"
 
 #: ../share/extensions/dhw_input.inx.h:2
 msgid "ACECAD Digimemo File (*.dhw)"
-msgstr ""
+msgstr "Fichier ACECAD Digimemo (*.dhw)"
 
 #: ../share/extensions/dhw_input.inx.h:3
 msgid "Open files from ACECAD Digimemo"
@@ -33780,9 +33613,8 @@ msgid "Lower right corner"
 msgstr "Descendre le calque courant"
 
 #: ../share/extensions/guides_creator.inx.h:13
-#, fuzzy
 msgid "Margins"
-msgstr "Boîte de marge"
+msgstr "Marges"
 
 #: ../share/extensions/guides_creator.inx.h:14
 #, fuzzy
@@ -33790,31 +33622,26 @@ msgid "Margins preset"
 msgstr "Guide de marge"
 
 #: ../share/extensions/guides_creator.inx.h:15
-#, fuzzy
 msgid "Header margin"
-msgstr "Marges de la page"
+msgstr "Marge de l'en-tête"
 
 #: ../share/extensions/guides_creator.inx.h:16
-#, fuzzy
 msgid "Footer margin"
-msgstr "Marge supérieure"
+msgstr "Marge du pied de page"
 
 #: ../share/extensions/guillotine.inx.h:1
 msgid "Guillotine"
 msgstr "Guillotine"
 
 #: ../share/extensions/guillotine.inx.h:2
-#, fuzzy
 msgid "Directory to save images to:"
 msgstr "Dossier où enregistrer l'image :"
 
 #: ../share/extensions/guillotine.inx.h:3
-#, fuzzy
 msgid "Image name (without extension):"
-msgstr "Nom de l'image (sans extension)"
+msgstr "Nom de l'image (sans extension) :"
 
 #: ../share/extensions/guillotine.inx.h:4
-#, fuzzy
 msgid "Ignore these settings and use export hints"
 msgstr "Ignorer ces paramètres et utiliser les suggestions d'exportation"
 
@@ -33982,9 +33809,8 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/hpgl_input.inx.h:1
-#, fuzzy
 msgid "HPGL Input"
-msgstr "Entrée WPG"
+msgstr "Entrée HPGL"
 
 #: ../share/extensions/hpgl_input.inx.h:2
 msgid ""
@@ -33996,9 +33822,8 @@ msgstr ""
 #: ../share/extensions/hpgl_input.inx.h:3
 #: ../share/extensions/hpgl_output.inx.h:4
 #: ../share/extensions/plotter.inx.h:20
-#, fuzzy
 msgid "Resolution X (dpi)"
-msgstr "Résolution (ppp) :"
+msgstr "Résolution X (ppp)"
 
 #: ../share/extensions/hpgl_input.inx.h:4
 #: ../share/extensions/hpgl_output.inx.h:5
@@ -34011,9 +33836,8 @@ msgstr ""
 #: ../share/extensions/hpgl_input.inx.h:5
 #: ../share/extensions/hpgl_output.inx.h:6
 #: ../share/extensions/plotter.inx.h:22
-#, fuzzy
 msgid "Resolution Y (dpi)"
-msgstr "Résolution (ppp) :"
+msgstr "Résolution Y (ppp)"
 
 #: ../share/extensions/hpgl_input.inx.h:6
 #: ../share/extensions/hpgl_output.inx.h:7
@@ -34060,7 +33884,6 @@ msgstr "Propriétés de la page"
 
 #: ../share/extensions/hpgl_output.inx.h:8
 #: ../share/extensions/plotter.inx.h:24
-#, fuzzy
 msgid "Pen number"
 msgstr "Numéro de stylo"
 
@@ -34096,7 +33919,6 @@ msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:14
 #: ../share/extensions/plotter.inx.h:30
-#, fuzzy
 msgid "Rotation (Clockwise)"
 msgstr "Rotation en sens horaire"
 
@@ -34107,7 +33929,6 @@ msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:16
 #: ../share/extensions/plotter.inx.h:32
-#, fuzzy
 msgid "Mirror X axis"
 msgstr "Refléter sur l'axe Y"
 
@@ -34118,7 +33939,6 @@ msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:18
 #: ../share/extensions/plotter.inx.h:34
-#, fuzzy
 msgid "Mirror Y axis"
 msgstr "Refléter sur l'axe Y"
 
@@ -34142,7 +33962,6 @@ msgstr ""
 #: ../share/extensions/hpgl_output.inx.h:22
 #: ../share/extensions/plotter.inx.h:38
 #, fuzzy
-#| msgid "Felt Feather"
 msgid "Plot Features "
 msgstr "Estompage du pourtour"
 
@@ -34201,7 +34020,6 @@ msgstr ""
 #: ../share/extensions/hpgl_output.inx.h:31
 #: ../share/extensions/plotter.inx.h:47
 #, fuzzy
-#| msgid "Align"
 msgid "Auto align"
 msgstr "Aligner"
 
@@ -35543,14 +35361,13 @@ msgstr ""
 
 #: ../share/extensions/plotter.inx.h:3
 #, fuzzy
-#| msgid "Connections"
 msgid "Connection Settings "
 msgstr "Connecteurs"
 
 #: ../share/extensions/plotter.inx.h:4
 #, fuzzy
 msgid "Serial port"
-msgstr "Port sériel :"
+msgstr "Port sériel"
 
 #: ../share/extensions/plotter.inx.h:5
 msgid ""
@@ -35579,26 +35396,24 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/plotter.inx.h:10
-#, fuzzy
 msgid "Command language"
-msgstr "Deuxième langue :"
+msgstr "Langage de commande"
 
 #: ../share/extensions/plotter.inx.h:11
 msgid "The command language to use. (Default: HPGL)"
-msgstr ""
+msgstr "Langage de commande à utiliser (par défaut HPGL)."
 
 #: ../share/extensions/plotter.inx.h:12
 msgid "Software (XON/XOFF)"
-msgstr ""
+msgstr "Logiciel (XON/XOFF)"
 
 #: ../share/extensions/plotter.inx.h:13
-#, fuzzy
 msgid "Hardware (RTS/CTS)"
-msgstr "Matériel"
+msgstr "Matériel (RTS/CTS)"
 
 #: ../share/extensions/plotter.inx.h:14
 msgid "Hardware (DSR/DTR + RTS/CTS)"
-msgstr ""
+msgstr "Matériel (DSR/DTR + RTS/CTS)"
 
 #: ../share/extensions/plotter.inx.h:16
 msgid ""
@@ -35617,9 +35432,8 @@ msgid "Parallel (LPT) connections are not supported."
 msgstr ""
 
 #: ../share/extensions/plotter.inx.h:49
-#, fuzzy
 msgid "Show debug information"
-msgstr "Information sur l'utilisation de la mémoire"
+msgstr "Afficher les informations de débogage"
 
 #: ../share/extensions/plotter.inx.h:50
 msgid ""
@@ -36441,7 +36255,6 @@ msgstr "Fichiers d'entrée graphiques vectoriels sK1"
 
 #: ../share/extensions/sk1_input.inx.h:2
 #: ../share/extensions/sk1_output.inx.h:2
-#, fuzzy
 msgid "sK1 vector graphics files (*.sk1)"
 msgstr "Fichiers graphiques vectoriels sK1 (.sk1)"
 
@@ -36837,14 +36650,12 @@ msgid "lowercase"
 msgstr "minuscules"
 
 #: ../share/extensions/text_merge.inx.h:14
-#, fuzzy
 msgid "Flow text"
 msgstr "Texte encadré"
 
 #: ../share/extensions/text_merge.inx.h:15
-#, fuzzy
 msgid "Keep style"
-msgstr "Appliquer un style à un texte"
+msgstr "Conserver le style"
 
 #: ../share/extensions/text_randomcase.inx.h:1
 msgid "rANdOm CasE"
