@@ -58,7 +58,7 @@ const SPIPaint SPStyle::* SPIPaint_members[] = {
     &SPStyle::stroke,
 };
 const char* SPIPaint_properties[] = {
-    "color",
+    //"color",
     "fill",
     "stroke",
 };
@@ -76,7 +76,7 @@ const char* other_url_properties[] = {
 #define NUM_OTHER_URL_PROPERTIES (sizeof(other_url_properties) / sizeof(*other_url_properties))
 
 const char* clipboard_properties[] = {
-    "color",
+    //"color",
     "fill",
     "filter",
     "stroke",
