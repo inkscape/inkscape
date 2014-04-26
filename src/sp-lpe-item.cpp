@@ -424,11 +424,9 @@ void SPLPEItem::addPathEffect(gchar *value, bool reset)
         sp_lpe_item_update_patheffect(this, true, true);
         
         //fix bug 1219324
-        Inkscape::UI::Tools::NodeTool *tool = 0;
         if (SP_ACTIVE_DESKTOP ) {
         Inkscape::UI::Tools::ToolBase *ec = SP_ACTIVE_DESKTOP->event_context;
             if (INK_IS_NODE_TOOL(ec)) {
-                tool = static_cast<Inkscape::UI::Tools::NodeTool*>(ec);
                 tools_switch(SP_ACTIVE_DESKTOP, TOOLS_LPETOOL); //mhh
                 tools_switch(SP_ACTIVE_DESKTOP, TOOLS_NODES);
             }
