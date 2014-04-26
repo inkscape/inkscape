@@ -18,7 +18,7 @@ class Window;
 }
 
 class SPDocument;
-struct SPStyle;
+class SPStyle;
 
 namespace Inkscape {
 namespace Extension {

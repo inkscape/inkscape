@@ -18,11 +18,11 @@
 #include "libnrtype/Layout-TNG.h"
 #include "text-tag-attributes.h"
 
-class  SPCSSAttr;
-class  SPDesktop;
-class  SPItem;
-class  SPObject;
-struct SPStyle;
+class SPCSSAttr;
+class SPDesktop;
+class SPItem;
+class SPObject;
+class SPStyle;
 
 typedef std::pair<Inkscape::Text::Layout::iterator, Inkscape::Text::Layout::iterator> iterator_pair; 
 

@@ -16,10 +16,10 @@
 #include <glib.h>
 
 class ColorRGBA;
-class  SPCSSAttr;
-class  SPDesktop;
-class  SPObject;
-struct SPStyle;
+class SPCSSAttr;
+class SPDesktop;
+class SPObject;
+class SPStyle;
 namespace Inkscape {
 namespace XML {
 class Node;

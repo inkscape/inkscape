@@ -15,7 +15,7 @@
 #include "display/drawing-group.h"
 #include "display/nr-style.h"
 
-struct SPStyle;
+class SPStyle;
 class font_instance;
 
 namespace Inkscape {

@@ -20,7 +20,7 @@
 #include <2geom/rect.h>
 #include <2geom/affine.h>
 
-struct SPStyle;
+class SPStyle;
 
 namespace Inkscape {
 

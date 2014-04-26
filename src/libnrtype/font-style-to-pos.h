@@ -3,7 +3,7 @@
 
 #include <libnrtype/nr-type-pos-def.h>
 
-struct SPStyle;
+class SPStyle;
 
 NRTypePosDef font_style_to_pos(SPStyle const &style);
 

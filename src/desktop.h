@@ -54,10 +54,10 @@ class ToolBase;
 }
 }
 
-class  SPItem;
+class SPItem;
 class SPNamedView;
-class  SPObject;
-struct SPStyle;
+class SPObject;
+class SPStyle;
 typedef struct _DocumentInterface DocumentInterface;//struct DocumentInterface;
 
 namespace Gtk

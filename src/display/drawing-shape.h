@@ -15,7 +15,7 @@
 #include "display/drawing-item.h"
 #include "display/nr-style.h"
 
-struct SPStyle;
+class SPStyle;
 class SPCurve;
 
 namespace Inkscape {

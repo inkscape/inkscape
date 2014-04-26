@@ -39,7 +39,7 @@ typedef struct {
 } WMF_STRINGS, *PWMF_STRINGS;
 
 typedef struct wmf_device_context {
-    struct SPStyle  style;
+    class SPStyle   style;
     char           *font_name;
     bool            stroke_set;
     int             stroke_mode;  // enumeration from drawmode, not used if fill_set is not True

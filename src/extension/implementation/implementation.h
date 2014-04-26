@@ -29,7 +29,7 @@ namespace Gtk {
 }
 
 class SPDocument;
-struct SPStyle;
+class SPStyle;
 
 namespace Inkscape {
 

@@ -17,7 +17,7 @@
 #include "color.h"
 
 class SPPaintServer;
-struct SPStyle;
+class SPStyle;
 
 namespace Inkscape {
 class DrawingContext;

@@ -26,7 +26,7 @@
 class SPObject;
 class SPDocument;
 class SPCSSAttr;
-struct SPStyle;
+class SPStyle;
 
 namespace Inkscape
 {

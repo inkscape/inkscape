@@ -20,7 +20,7 @@ struct PathDescrCubicTo;
 struct PathDescrBezierTo;
 struct PathDescrIntermBezierTo;
 
-struct SPStyle;
+class SPStyle;
 
 /*
  * the Path class: a structure to hold path description and their polyline approximation (not kept in sync)

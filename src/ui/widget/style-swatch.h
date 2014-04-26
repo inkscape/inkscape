@@ -29,7 +29,7 @@
 #include "desktop.h"
 #include "preferences.h"
 
-struct SPStyle;
+class SPStyle;
 class SPCSSAttr;
 
 namespace Gtk {
