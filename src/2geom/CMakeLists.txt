@@ -115,7 +115,6 @@ set(2geom_SRC
 	solver.h
 	svg-elliptical-arc.h
 	svg-path-parser.h
-	svg-path.h
 	sweep.h
 	toposweep.h
 	transforms.h
