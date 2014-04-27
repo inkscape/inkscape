@@ -26,20 +26,54 @@ namespace Internal {
 #define DIRTY_FILL   0x02
 #define DIRTY_STROKE 0x04 // not used currently
 
-typedef struct {
+typedef struct wmf_object {
+    wmf_object() :
+        type(0),
+        level(0),
+        record(NULL)
+    {};
     int type;
     int level;
     char *record;
 } WMF_OBJECT, *PWMF_OBJECT;
 
-typedef struct {
+typedef struct wmf_strings {
+    wmf_strings() :
+        size(0),
+        count(0),
+        strings(NULL)
+    {};
     int size;         // number of slots allocated in strings
     int count;        // number of slots used in strings
     char **strings;   // place to store strings
 } WMF_STRINGS, *PWMF_STRINGS;
 
 typedef struct wmf_device_context {
-    class SPStyle   style;
+    wmf_device_context() :
+        // SPStyle: class with constructor
+        font_name(NULL),
+        stroke_set(false), stroke_mode(0), stroke_idx(0), stroke_recidx(0),
+        fill_set(false),   fill_mode(0),   fill_idx(0),   fill_recidx(0),
+        dirty(0),
+        active_pen(-1), active_brush(-1), active_font(-1),  // -1 when the default is used
+        // sizeWnd, sizeView, winorg, vieworg,
+        ScaleInX(0), ScaleInY(0),
+        ScaleOutX(0), ScaleOutY(0),
+        bkMode(U_TRANSPARENT),
+        // bkColor, textColor
+        textAlign(0)
+        // worldTransform, cur
+    {
+        font_name = strdup("Arial"); // Default font, WMF spec says device can pick whatever it wants
+        sizeWnd = point16_set( 0.0, 0.0 );
+        sizeView = point16_set( 0.0, 0.0 );
+        winorg = point16_set( 0.0, 0.0 );
+        vieworg = point16_set( 0.0, 0.0 );
+        bkColor = U_RGB(255, 255, 255); // default foreground color (white)
+        textColor = U_RGB(0, 0, 0);     // default foreground color (black)
+        cur = point16_set( 0.0, 0.0 );
+    };
+    SPStyle         style;
     char           *font_name;
     bool            stroke_set;
     int             stroke_mode;  // enumeration from drawmode, not used if fill_set is not True
@@ -74,11 +108,32 @@ typedef struct wmf_device_context {
 // this fixes it, so some confusion between this struct and the one in emf-inout???
 //typedef struct wmf_callback_data {
 // as does this
-typedef struct {
-    Glib::ustring *outsvg;
-    Glib::ustring *path;
-    Glib::ustring *outdef;
-    Glib::ustring *defs;
+typedef struct wmf_callback_data {
+
+    wmf_callback_data() :
+        // dc: array, structure w/ constructor
+        level(0),
+        E2IdirY(1.0),
+        D2PscaleX(1.0), D2PscaleY(1.0),
+        PixelsInX(0), PixelsInY(0),
+        PixelsOutX(0), PixelsOutY(0),
+        ulCornerInX(0), ulCornerInY(0),
+        ulCornerOutX(0), ulCornerOutY(0),
+        mask(0),
+        arcdir(U_AD_COUNTERCLOCKWISE),
+        dwRop2(U_R2_COPYPEN), dwRop3(0),
+        id(0), drawtype(0),
+        // hatches, images, gradients,  struct w/ constructor
+        tri(NULL),
+        n_obj(0),
+        low_water(0)
+        //wmf_obj
+    {};
+
+    Glib::ustring outsvg;
+    Glib::ustring path;
+    Glib::ustring outdef;
+    Glib::ustring defs;
 
     WMF_DEVICE_CONTEXT dc[WMF_MAX_DC+1]; // FIXME: This should be dynamic..
     int level;

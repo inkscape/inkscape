@@ -251,54 +251,54 @@ uint32_t Wmf::add_hatch(PWMF_CALLBACK_DATA d, uint32_t hatchType, U_COLORREF hat
         if(d->hatches.count == d->hatches.size){  enlarge_hatches(d); }
         d->hatches.strings[d->hatches.count++]=strdup(hpathname);
 
-        *(d->defs) += "\n";
+        d->defs += "\n";
         switch(hatchType){
             case U_HS_HORIZONTAL:
-                *(d->defs) += "   <path id=\"";
-                *(d->defs) += hpathname;
-                *(d->defs) += "\" d=\"M 0 0 6 0\" style=\"fill:none;stroke:#";
-                *(d->defs) += tmpcolor;
-                *(d->defs) += "\" />\n";
+                d->defs += "   <path id=\"";
+                d->defs += hpathname;
+                d->defs += "\" d=\"M 0 0 6 0\" style=\"fill:none;stroke:#";
+                d->defs += tmpcolor;
+                d->defs += "\" />\n";
                 break;
             case U_HS_VERTICAL:
-                *(d->defs) += "   <path id=\"";
-                *(d->defs) += hpathname;
-                *(d->defs) += "\" d=\"M 0 0 0 6\" style=\"fill:none;stroke:#";
-                *(d->defs) += tmpcolor;
-                *(d->defs) += "\" />\n";
+                d->defs += "   <path id=\"";
+                d->defs += hpathname;
+                d->defs += "\" d=\"M 0 0 0 6\" style=\"fill:none;stroke:#";
+                d->defs += tmpcolor;
+                d->defs += "\" />\n";
                 break;
             case U_HS_FDIAGONAL:
-                *(d->defs) += "   <line  id=\"sub";
-                *(d->defs) += hpathname;
-                *(d->defs) += "\" x1=\"-1\" y1=\"-1\" x2=\"7\" y2=\"7\" stroke=\"#";
-                *(d->defs) += tmpcolor;
-                *(d->defs) += "\"/>\n";
+                d->defs += "   <line  id=\"sub";
+                d->defs += hpathname;
+                d->defs += "\" x1=\"-1\" y1=\"-1\" x2=\"7\" y2=\"7\" stroke=\"#";
+                d->defs += tmpcolor;
+                d->defs += "\"/>\n";
                 break;
             case U_HS_BDIAGONAL:
-                *(d->defs) += "   <line  id=\"sub";
-                *(d->defs) += hpathname;
-                *(d->defs) += "\" x1=\"-1\" y1=\"7\" x2=\"7\" y2=\"-1\" stroke=\"#";
-                *(d->defs) += tmpcolor;
-                *(d->defs) += "\"/>\n";
+                d->defs += "   <line  id=\"sub";
+                d->defs += hpathname;
+                d->defs += "\" x1=\"-1\" y1=\"7\" x2=\"7\" y2=\"-1\" stroke=\"#";
+                d->defs += tmpcolor;
+                d->defs += "\"/>\n";
                 break;
             case U_HS_CROSS:
-                *(d->defs) += "   <path   id=\"";
-                *(d->defs) += hpathname;
-                *(d->defs) += "\" d=\"M 0 0 6 0 M 0 0 0 6\" style=\"fill:none;stroke:#";
-                *(d->defs) += tmpcolor;
-                *(d->defs) += "\" />\n";
+                d->defs += "   <path   id=\"";
+                d->defs += hpathname;
+                d->defs += "\" d=\"M 0 0 6 0 M 0 0 0 6\" style=\"fill:none;stroke:#";
+                d->defs += tmpcolor;
+                d->defs += "\" />\n";
                  break;
             case U_HS_DIAGCROSS:
-                *(d->defs) += "   <line   id=\"subfd";
-                *(d->defs) += hpathname;
-                *(d->defs) += "\" x1=\"-1\" y1=\"-1\" x2=\"7\" y2=\"7\" stroke=\"#";
-                *(d->defs) += tmpcolor;
-                *(d->defs) += "\"/>\n";
-                *(d->defs) += "   <line   id=\"subbd";
-                *(d->defs) += hpathname;
-                *(d->defs) += "\" x1=\"-1\" y1=\"7\" x2=\"7\" y2=\"-1\" stroke=\"#";
-                *(d->defs) += tmpcolor;
-                *(d->defs) += "\"/>\n";
+                d->defs += "   <line   id=\"subfd";
+                d->defs += hpathname;
+                d->defs += "\" x1=\"-1\" y1=\"-1\" x2=\"7\" y2=\"7\" stroke=\"#";
+                d->defs += tmpcolor;
+                d->defs += "\"/>\n";
+                d->defs += "   <line   id=\"subbd";
+                d->defs += hpathname;
+                d->defs += "\" x1=\"-1\" y1=\"7\" x2=\"7\" y2=\"-1\" stroke=\"#";
+                d->defs += tmpcolor;
+                d->defs += "\"/>\n";
                 break;
             case U_HS_SOLIDCLR:
             case U_HS_DITHEREDCLR:
@@ -307,12 +307,12 @@ uint32_t Wmf::add_hatch(PWMF_CALLBACK_DATA d, uint32_t hatchType, U_COLORREF hat
             case U_HS_SOLIDBKCLR:
             case U_HS_DITHEREDBKCLR:
             default:
-                *(d->defs) += "   <path   id=\"";
-                *(d->defs) += hpathname;
-                *(d->defs) += "\" d=\"M 0 0 6 0 6 6 0 6 z\" style=\"fill:#";
-                *(d->defs) += tmpcolor;
-                *(d->defs) += ";stroke:none";
-                *(d->defs) += "\" />\n";
+                d->defs += "   <path   id=\"";
+                d->defs += hpathname;
+                d->defs += "\" d=\"M 0 0 6 0 6 6 0 6 z\" style=\"fill:#";
+                d->defs += tmpcolor;
+                d->defs += ";stroke:none";
+                d->defs += "\" />\n";
                 break;
         }
     }
@@ -374,12 +374,12 @@ uint32_t Wmf::add_hatch(PWMF_CALLBACK_DATA d, uint32_t hatchType, U_COLORREF hat
         if(!idx){  // add it if not already present
             if(d->hatches.count == d->hatches.size){  enlarge_hatches(d); }
             d->hatches.strings[d->hatches.count++]=strdup(hatchname);
-            *(d->defs) += "\n";
-            *(d->defs) += "   <pattern id=\"";
-            *(d->defs) += hatchname;
-            *(d->defs) += "\"  xlink:href=\"#WMFhbasepattern\">\n";
-            *(d->defs) += refpath;
-            *(d->defs) += "   </pattern>\n";
+            d->defs += "\n";
+            d->defs += "   <pattern id=\"";
+            d->defs += hatchname;
+            d->defs += "\"  xlink:href=\"#WMFhbasepattern\">\n";
+            d->defs += refpath;
+            d->defs += "   </pattern>\n";
             idx = d->hatches.count;
         }
     }
@@ -392,12 +392,12 @@ uint32_t Wmf::add_hatch(PWMF_CALLBACK_DATA d, uint32_t hatchType, U_COLORREF hat
             if(d->hatches.count == d->hatches.size){  enlarge_hatches(d); }
             d->hatches.strings[d->hatches.count++]=strdup(hbkname);
 
-            *(d->defs) += "\n";
-            *(d->defs) += "   <rect id=\"";
-            *(d->defs) += hbkname;
-            *(d->defs) += "\" x=\"0\" y=\"0\" width=\"6\" height=\"6\" fill=\"#";
-            *(d->defs) += bkcolor;
-            *(d->defs) += "\" />\n";
+            d->defs += "\n";
+            d->defs += "   <rect id=\"";
+            d->defs += hbkname;
+            d->defs += "\" x=\"0\" y=\"0\" width=\"6\" height=\"6\" fill=\"#";
+            d->defs += bkcolor;
+            d->defs += "\" />\n";
         }
 
         // this is the pattern, its name will show up in Inkscape's pattern selector
@@ -406,15 +406,15 @@ uint32_t Wmf::add_hatch(PWMF_CALLBACK_DATA d, uint32_t hatchType, U_COLORREF hat
         if(!idx){  // add it if not already present
             if(d->hatches.count == d->hatches.size){  enlarge_hatches(d); }
             d->hatches.strings[d->hatches.count++]=strdup(hatchname);
-            *(d->defs) += "\n";
-            *(d->defs) += "   <pattern id=\"";
-            *(d->defs) += hatchname;
-            *(d->defs) += "\"  xlink:href=\"#WMFhbasepattern\">\n";
-            *(d->defs) += "      <use xlink:href=\"#";
-            *(d->defs) += hbkname;
-            *(d->defs) += "\" />\n";
-            *(d->defs) += refpath;
-            *(d->defs) += "   </pattern>\n";
+            d->defs += "\n";
+            d->defs += "   <pattern id=\"";
+            d->defs += hatchname;
+            d->defs += "\"  xlink:href=\"#WMFhbasepattern\">\n";
+            d->defs += "      <use xlink:href=\"#";
+            d->defs += hbkname;
+            d->defs += "\" />\n";
+            d->defs += refpath;
+            d->defs += "   </pattern>\n";
             idx = d->hatches.count;
         }
     }
@@ -503,35 +503,35 @@ uint32_t Wmf::add_dib_image(PWMF_CALLBACK_DATA d, const char *dib, uint32_t iUsa
         sprintf(imagename,"WMFimage%d",idx++);
         sprintf(xywh," x=\"0\" y=\"0\" width=\"%d\" height=\"%d\" ",width,height); // reuse this buffer
 
-        *(d->defs) += "\n";
-        *(d->defs) += "   <image id=\"";
-        *(d->defs) += imagename;
-        *(d->defs) += "\"\n      ";
-        *(d->defs) += xywh;
-        *(d->defs) += "\n";
-        if(dibparams == U_BI_JPEG){    *(d->defs) += "       xlink:href=\"data:image/jpeg;base64,"; }
-        else {                         *(d->defs) += "       xlink:href=\"data:image/png;base64,";  }
-        *(d->defs) += base64String;
-        *(d->defs) += "\"\n";
-        *(d->defs) += " preserveAspectRatio=\"none\"\n";
-        *(d->defs) += "   />\n";
+        d->defs += "\n";
+        d->defs += "   <image id=\"";
+        d->defs += imagename;
+        d->defs += "\"\n      ";
+        d->defs += xywh;
+        d->defs += "\n";
+        if(dibparams == U_BI_JPEG){    d->defs += "       xlink:href=\"data:image/jpeg;base64,"; }
+        else {                         d->defs += "       xlink:href=\"data:image/png;base64,";  }
+        d->defs += base64String;
+        d->defs += "\"\n";
+        d->defs += " preserveAspectRatio=\"none\"\n";
+        d->defs += "   />\n";
 
 
-        *(d->defs) += "\n";
-        *(d->defs) += "   <pattern id=\"";
-        *(d->defs) += imagename;
-        *(d->defs) += "_ref\"\n      ";
-        *(d->defs) += xywh;
-        *(d->defs) += "\n       patternUnits=\"userSpaceOnUse\"";
-        *(d->defs) += " >\n";
-        *(d->defs) += "      <use id=\"";
-        *(d->defs) += imagename;
-        *(d->defs) += "_ign\" ";
-        *(d->defs) += " xlink:href=\"#";
-        *(d->defs) += imagename;
-        *(d->defs) += "\" />\n";
-        *(d->defs) += "    ";
-        *(d->defs) += "   </pattern>\n";
+        d->defs += "\n";
+        d->defs += "   <pattern id=\"";
+        d->defs += imagename;
+        d->defs += "_ref\"\n      ";
+        d->defs += xywh;
+        d->defs += "\n       patternUnits=\"userSpaceOnUse\"";
+        d->defs += " >\n";
+        d->defs += "      <use id=\"";
+        d->defs += imagename;
+        d->defs += "_ign\" ";
+        d->defs += " xlink:href=\"#";
+        d->defs += imagename;
+        d->defs += "\" />\n";
+        d->defs += "    ";
+        d->defs += "   </pattern>\n";
     }
     g_free(base64String); //wait until this point to free because it might be a duplicate image
     return(idx-1);
@@ -599,33 +599,33 @@ uint32_t Wmf::add_bm16_image(PWMF_CALLBACK_DATA d, U_BITMAP16 Bm16, const char *
         sprintf(imagename,"WMFimage%d",idx++);
         sprintf(xywh," x=\"0\" y=\"0\" width=\"%d\" height=\"%d\" ",width,height); // reuse this buffer
 
-        *(d->defs) += "\n";
-        *(d->defs) += "   <image id=\"";
-        *(d->defs) += imagename;
-        *(d->defs) += "\"\n      ";
-        *(d->defs) += xywh;
-        *(d->defs) += "\n";
-        *(d->defs) += "       xlink:href=\"data:image/png;base64,";
-        *(d->defs) += base64String;
-        *(d->defs) += "\"\n";
-        *(d->defs) += " preserveAspectRatio=\"none\"\n";
-        *(d->defs) += "   />\n";
+        d->defs += "\n";
+        d->defs += "   <image id=\"";
+        d->defs += imagename;
+        d->defs += "\"\n      ";
+        d->defs += xywh;
+        d->defs += "\n";
+        d->defs += "       xlink:href=\"data:image/png;base64,";
+        d->defs += base64String;
+        d->defs += "\"\n";
+        d->defs += " preserveAspectRatio=\"none\"\n";
+        d->defs += "   />\n";
 
 
-        *(d->defs) += "\n";
-        *(d->defs) += "   <pattern id=\"";
-        *(d->defs) += imagename;
-        *(d->defs) += "_ref\"\n      ";
-        *(d->defs) += xywh;
-        *(d->defs) += "\n       patternUnits=\"userSpaceOnUse\"";
-        *(d->defs) += " >\n";
-        *(d->defs) += "      <use id=\"";
-        *(d->defs) += imagename;
-        *(d->defs) += "_ign\" ";
-        *(d->defs) += " xlink:href=\"#";
-        *(d->defs) += imagename;
-        *(d->defs) += "\" />\n";
-        *(d->defs) += "   </pattern>\n";
+        d->defs += "\n";
+        d->defs += "   <pattern id=\"";
+        d->defs += imagename;
+        d->defs += "_ref\"\n      ";
+        d->defs += xywh;
+        d->defs += "\n       patternUnits=\"userSpaceOnUse\"";
+        d->defs += " >\n";
+        d->defs += "      <use id=\"";
+        d->defs += imagename;
+        d->defs += "_ign\" ";
+        d->defs += " xlink:href=\"#";
+        d->defs += imagename;
+        d->defs += "\" />\n";
+        d->defs += "   </pattern>\n";
     }
     g_free(base64String); //wait until this point to free because it might be a duplicate image
     return(idx-1);
@@ -714,8 +714,8 @@ Wmf::output_style(PWMF_CALLBACK_DATA d)
 
 
 //    tmp_id << "\n\tid=\"" << (d->id++) << "\"";
-//    *(d->outsvg) += tmp_id.str().c_str();
-    *(d->outsvg) += "\n\tstyle=\"";
+//    d->outsvg += tmp_id.str().c_str();
+    d->outsvg += "\n\tstyle=\"";
     if (!d->dc[d->level].fill_set ||  ( d->mask & U_DRAW_NOFILL)) { // nofill are lines and arcs
         tmp_style << "fill:none;";
     } else {
@@ -842,7 +842,7 @@ Wmf::output_style(PWMF_CALLBACK_DATA d)
         tmp_style << "\n\tclip-path=\"url(#clipWmfPath" << d->id << ")\" ";
     clipset = false;
 
-    *(d->outsvg) += tmp_style.str().c_str();
+    d->outsvg += tmp_style.str().c_str();
 }
 
 
@@ -1326,8 +1326,8 @@ void Wmf::common_dib_to_image(PWMF_CALLBACK_DATA d, const char *dib,
     tmp_image << " preserveAspectRatio=\"none\"\n";
     tmp_image << "/> \n";
 
-    *(d->outsvg) += tmp_image.str().c_str();
-    *(d->path) = "";
+    d->outsvg += tmp_image.str().c_str();
+    d->path = "";
 }
 
 /**
@@ -1418,8 +1418,8 @@ void Wmf::common_bm16_to_image(PWMF_CALLBACK_DATA d, U_BITMAP16 Bm16, const char
     tmp_image << " preserveAspectRatio=\"none\"\n";
     tmp_image << "/> \n";
 
-    *(d->outsvg) += tmp_image.str().c_str();
-    *(d->path) = "";
+    d->outsvg += tmp_image.str().c_str();
+    d->path = "";
 }
 
 /**
@@ -1579,7 +1579,7 @@ int Wmf::myMetaFileProc(const char *contents, unsigned int length, PWMF_CALLBACK
         d->dc[0].style.stroke_width.value =  pix_to_abs_size( d, 1 ); // This could not be set until the size of the WMF was known
         dbg_str << "<!-- U_WMR_HEADER -->\n";
 
-        *(d->outdef) += "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n";
+        d->outdef += "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n";
 
         SVGOStringStream tmp_outdef;
         tmp_outdef << "<svg\n";
@@ -1592,8 +1592,8 @@ int Wmf::myMetaFileProc(const char *contents, unsigned int length, PWMF_CALLBACK
         tmp_outdef <<
             "  width=\"" << Inkscape::Util::Quantity::convert(d->PixelsOutX, "px", "mm") << "mm\"\n" <<
             "  height=\"" << Inkscape::Util::Quantity::convert(d->PixelsOutY, "px", "mm")  << "mm\">\n";
-        *(d->outdef) += tmp_outdef.str().c_str();
-        *(d->outdef) += "<defs>";                           // temporary end of header
+        d->outdef += tmp_outdef.str().c_str();
+        d->outdef += "<defs>";                           // temporary end of header
 
         // d->defs holds any defines which are read in.
 
@@ -1636,7 +1636,7 @@ int Wmf::myMetaFileProc(const char *contents, unsigned int length, PWMF_CALLBACK
         TR_layout_2_svg(d->tri);
         SVGOStringStream ts;
         ts << d->tri->out;
-        *(d->outsvg) += ts.str().c_str();
+        d->outsvg += ts.str().c_str();
         d->tri = trinfo_clear(d->tri);
     }
     if(d->dc[d->level].dirty){  //Apply the delayed background changes, clear the flag
@@ -1688,13 +1688,13 @@ std::cout << "BEFORE DRAW"
         )
     ){
 //  std::cout << "PATH DRAW at TOP <<+++++++++++++++++++++++++++++++++++++" << std::endl;
-        *(d->outsvg) += "   <path ";    // this is the ONLY place <path should be used!!!!
+        d->outsvg += "   <path ";    // this is the ONLY place <path should be used!!!!
         output_style(d);
-        *(d->outsvg) += "\n\t";
-        *(d->outsvg) += "\n\td=\"";      // this is the ONLY place d=" should be used!!!!
-        *(d->outsvg) += *(d->path);
-        *(d->outsvg) += " \" /> \n";
-        *(d->path) = ""; //reset the path
+        d->outsvg += "\n\t";
+        d->outsvg += "\n\td=\"";      // this is the ONLY place d=" should be used!!!!
+        d->outsvg += d->path;
+        d->outsvg += " \" /> \n";
+        d->path = ""; //reset the path
         // reset the flags
         d->mask = 0;
         d->drawtype = 0;
@@ -1706,7 +1706,7 @@ std::cout << "BEFORE DRAW"
         {
             dbg_str << "<!-- U_WMR_EOF -->\n";
 
-            *(d->outsvg) = *(d->outdef) + *(d->defs) + "\n</defs>\n\n" + *(d->outsvg) + "</svg>\n";
+            d->outsvg = d->outdef + d->defs + "\n</defs>\n\n" + d->outsvg + "</svg>\n";
             OK=0;
             break;
         }
@@ -1944,8 +1944,8 @@ std::cout << "BEFORE DRAW"
             tmp_rectangle << "\n   height=\"" << dh << "\" />";
             tmp_rectangle << "\n</clipPath>";
 
-            *(d->outdef) += tmp_rectangle.str().c_str();
-            *(d->path) = "";
+            d->outdef += tmp_rectangle.str().c_str();
+            d->path = "";
             break;
         }
         case U_WMR_ARC:
@@ -1992,12 +1992,12 @@ std::cout << "BEFORE DRAW"
 
             d->mask |= wmr_mask;
 
-            *(d->outsvg) += "   <ellipse ";
+            d->outsvg += "   <ellipse ";
             output_style(d);
-            *(d->outsvg) += "\n\t";
-            *(d->outsvg) += tmp_ellipse.str().c_str();
-            *(d->outsvg) += "/> \n";
-            *(d->path) = "";
+            d->outsvg += "\n\t";
+            d->outsvg += tmp_ellipse.str().c_str();
+            d->outsvg += "/> \n";
+            d->path = "";
             break;
         }
         case U_WMR_FLOODFILL:             dbg_str << "<!-- U_WMR_EXTFLOODFILL -->\n";         break;
@@ -2503,7 +2503,7 @@ std::cout << "BEFORE DRAW"
                     TR_layout_analyze(d->tri);
                     TR_layout_2_svg(d->tri);
                     ts << d->tri->out;
-                    *(d->outsvg) += ts.str().c_str();
+                    d->outsvg += ts.str().c_str();
                     d->tri = trinfo_clear(d->tri);
                     (void) trinfo_load_textrec(d->tri, &tsp, tsp.ori,TR_EMFBOT); // ignore return status, it must work
                 }
@@ -2910,13 +2910,13 @@ std::cout << "BEFORE DRAW"
             break;
     }  //end of switch
 // When testing, uncomment the following to place a comment for each processed WMR record in the SVG
-//    *(d->outsvg) += dbg_str.str().c_str();
-    *(d->path)   += tmp_path.str().c_str();
+//    d->outsvg += dbg_str.str().c_str();
+    d->path   += tmp_path.str().c_str();
     if(!nSize){ OK=0; std::cout << "nSize == 0, oops!!!" << std::endl; }     // There was some problem with this record, it is not safe to continue
 
     }  //end of while
 // When testing, uncomment the following to show the final SVG derived from the WMF
-// std::cout << *(d->outsvg) << std::endl;
+// std::cout << d->outsvg << std::endl;
     (void) U_wmr_properties(U_WMR_INVALID);  // force the release of the lookup table memory, returned value is irrelevant
 
     return 1;
@@ -2935,70 +2935,36 @@ Wmf::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
 
     WMF_CALLBACK_DATA d;
 
-    memset(&d, 0, sizeof(WMF_CALLBACK_DATA));
-
-    for(int i = 0; i < WMF_MAX_DC+1; i++){  // be sure all values and pointers are empty to start with
-        memset(&(d.dc[i]),0,sizeof(WMF_DEVICE_CONTEXT));
-    }
-    // set default drawing objects, these are active if no object has been selected
-    d.dc[0].active_pen                         = -1;  // -1 when the default is used instead of a selected object
-    d.dc[0].active_brush                       = -1;
-    d.dc[0].active_font                        = -1;
-    // Default font, WMF spec says device can pick whatever it wants.  WMF files that do not specify a font are unlikely to look very good!
-    d.dc[0].font_name = strdup("Arial");
+    // Default font, WMF spec says device can pick whatever it wants. 
+    // WMF files that do not specify a  font are unlikely to look very good!
     d.dc[0].style.font_size.computed           = 16.0;
     d.dc[0].style.font_weight.value            = SP_CSS_FONT_WEIGHT_400;
     d.dc[0].style.font_style.value             = SP_CSS_FONT_STYLE_NORMAL;
     d.dc[0].style.text_decoration_line.underline    = 0;
     d.dc[0].style.text_decoration_line.line_through = 0;
     d.dc[0].style.baseline_shift.value         = 0;
-    d.dc[0].textColor                          = U_RGB(0, 0, 0);        // default foreground color (black)
-    d.dc[0].bkColor                            = U_RGB(255, 255, 255);  // default background color (white)
-    d.dc[0].bkMode                             = U_TRANSPARENT;
-    d.dc[0].dirty                              = 0;
+
     // Default pen, WMF files that do not specify a pen are unlikely to look very good!
     d.dc[0].style.stroke_dasharray.set         = 0;
     d.dc[0].style.stroke_linecap.computed      = 2; // U_PS_ENDCAP_SQUARE;
     d.dc[0].style.stroke_linejoin.computed     = 0; // U_PS_JOIN_MITER;
-    d.dc[0].stroke_set                         = true;
     d.dc[0].style.stroke_width.value           = 1.0; // will be reset to something reasonable once WMF draying size is known
     d.dc[0].style.stroke.value.color.set( 0, 0, 0 );
-    // Default brush = none, WMF files that do not specify a brush are unlikely to look very good!
-    d.dc[0].fill_set                           = false;
 
     if (uri == NULL) {
         return NULL;
     }
 
-    d.outsvg            = new Glib::ustring("");
-    d.path              = new Glib::ustring("");
-    d.outdef            = new Glib::ustring("");
-    d.defs              = new Glib::ustring("");
-    d.mask              = 0;
-    d.drawtype          = 0;
-    d.arcdir            = U_AD_COUNTERCLOCKWISE;
-    d.dwRop2            = U_R2_COPYPEN;
-    d.dwRop3            = 0;
-    d.E2IdirY           = 1.0;
-    d.D2PscaleX         = 1.0;
-    d.D2PscaleY         = 1.0;
-    d.hatches.size      = 0;
-    d.hatches.count     = 0;
-    d.hatches.strings   = NULL;
-    d.images.size       = 0;
-    d.images.count      = 0;
-    d.images.strings    = NULL;
-
     // set up the size default for patterns in defs.  This might not be referenced if there are no patterns defined in the drawing.
 
-    *(d.defs) += "\n";
-    *(d.defs) += "   <pattern id=\"WMFhbasepattern\"     \n";
-    *(d.defs) += "        patternUnits=\"userSpaceOnUse\"\n";
-    *(d.defs) += "        width=\"6\"                    \n";
-    *(d.defs) += "        height=\"6\"                   \n";
-    *(d.defs) += "        x=\"0\"                        \n";
-    *(d.defs) += "        y=\"0\">                       \n";
-    *(d.defs) += "   </pattern>                          \n";
+    d.defs += "\n";
+    d.defs += "   <pattern id=\"WMFhbasepattern\"     \n";
+    d.defs += "        patternUnits=\"userSpaceOnUse\"\n";
+    d.defs += "        width=\"6\"                    \n";
+    d.defs += "        height=\"6\"                   \n";
+    d.defs += "        x=\"0\"                        \n";
+    d.defs += "        y=\"0\">                       \n";
+    d.defs += "   </pattern>                          \n";
 
 
     size_t length;
@@ -3016,12 +2982,8 @@ Wmf::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
 
 //    std::cout << "SVG Output: " << std::endl << *(d.outsvg) << std::endl;
 
-    SPDocument *doc = SPDocument::createNewDocFromMem(d.outsvg->c_str(), strlen(d.outsvg->c_str()), TRUE);
+    SPDocument *doc = SPDocument::createNewDocFromMem(d.outsvg.c_str(), strlen(d.outsvg.c_str()), TRUE);
 
-    delete d.outsvg;
-    delete d.path;
-    delete d.outdef;
-    delete d.defs;
     free_wmf_strings(d.hatches);
     free_wmf_strings(d.images);
 

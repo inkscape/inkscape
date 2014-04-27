@@ -125,7 +125,9 @@ typedef struct emf_callback_data {
         id(0), drawtype(0),
         pDesc(NULL),
         // hatches, images, gradients,  struct w/ constructor
-        tri(NULL)
+        tri(NULL),
+        n_obj(0)
+        // emf_obj;
     {};
 
     Glib::ustring outsvg;
