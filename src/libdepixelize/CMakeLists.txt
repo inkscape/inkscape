@@ -7,11 +7,11 @@ set(libdepixelize_SRC
 	kopftracer2011.h
 	splines.h
 
-        priv/branchless.h
+	priv/branchless.h
 	priv/colorspace.h
 	priv/curvature.h
 	priv/homogeneoussplines.h
-	priv/integral
+	priv/integral.h
 	priv/iterator.h
 	priv/optimization-kopf2011.h
 	priv/pixelgraph.h

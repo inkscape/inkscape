@@ -94,6 +94,7 @@ set(2geom_SRC
 	nearest-point.h
 	ord.h
 	path-intersection.h
+	path-sink.h
 	path.h
 	pathvector.h
 	piecewise.h

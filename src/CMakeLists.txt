@@ -434,6 +434,7 @@ set(inkscape_SRC
 	undo-stack-observer.h
 	unicoderange.h
 	uri-references.h
+	uri-test.h
 	uri.h
 	vanishing-point.h
 	verbs-test.h

@@ -130,6 +130,7 @@ set(extension_SRC
 	internal/latex-pstricks-out.h
 	internal/latex-pstricks.h
 	internal/latex-text-renderer.h
+	internal/metafile-inout.h
 	internal/metafile-print.h
 	internal/odf.h
 	internal/pdf-input-cairo.h
