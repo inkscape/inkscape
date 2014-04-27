@@ -27,20 +27,59 @@ namespace Internal {
 #define DIRTY_FILL   0x02
 #define DIRTY_STROKE 0x04
 
-typedef struct {
+typedef struct emf_object {
+    emf_object() :
+        type(0),
+        level(0),
+        lpEMFR(NULL)
+    {};
     int type;
     int level;
     char *lpEMFR;
 } EMF_OBJECT, *PEMF_OBJECT;
 
-typedef struct {
+typedef struct emf_strings {
+    emf_strings() :
+        size(0),
+        count(0),
+        strings(NULL)
+    {};
     int size;         // number of slots allocated in strings
     int count;        // number of slots used in strings
     char **strings;   // place to store strings
 } EMF_STRINGS, *PEMF_STRINGS;
 
 typedef struct emf_device_context {
-    class SPStyle   style;
+    emf_device_context() :
+        // SPStyle: class with constructor
+        font_name(NULL),
+        stroke_set(false), stroke_mode(0), stroke_idx(0), stroke_recidx(0),
+        fill_set(false),   fill_mode(0),   fill_idx(0),   fill_recidx(0),
+        dirty(0),
+        // sizeWnd, sizeView, winorg, vieworg,
+        ScaleInX(0), ScaleInY(0),
+        ScaleOutX(0), ScaleOutY(0),
+        bkMode(U_TRANSPARENT),
+        // bkColor, textColor
+        textAlign(0)
+        // worldTransform, cur
+    {
+        font_name = strdup("Arial"); // Default font, EMF spec says device can pick whatever it wants
+        sizeWnd  = sizel_set( 0.0, 0.0 );
+        sizeView = sizel_set( 0.0, 0.0 );
+        winorg  = point32_set( 0.0, 0.0 );
+        vieworg = point32_set( 0.0, 0.0 );
+        bkColor = U_RGB(255, 255, 255); // default foreground color (white)
+        textColor = U_RGB(0, 0, 0);     // default foreground color (black)
+        worldTransform.eM11 = 1.0;
+        worldTransform.eM12 = 0.0;
+        worldTransform.eM21 = 0.0;
+        worldTransform.eM22 = 1.0;
+        worldTransform.eDx = 0.0;
+        worldTransform.eDy = 0.0;
+        cur = point32_set( 0, 0 );
+    };        
+    SPStyle         style;
     char           *font_name;
     bool            stroke_set;
     int             stroke_mode;  // enumeration from drawmode, not used if fill_set is not True
@@ -67,11 +106,32 @@ typedef struct emf_device_context {
 
 #define EMF_MAX_DC 128
 
-typedef struct {
-    Glib::ustring *outsvg;
-    Glib::ustring *path;
-    Glib::ustring *outdef;
-    Glib::ustring *defs;
+typedef struct emf_callback_data {
+
+    emf_callback_data() :
+        // dc: array, structure w/ constructor
+        level(0),
+        E2IdirY(1.0),
+        D2PscaleX(1.0), D2PscaleY(1.0),
+        MM100InX(0), MM100InY(0),
+        PixelsInX(0), PixelsInY(0),
+        PixelsOutX(0), PixelsOutY(0),
+        ulCornerInX(0), ulCornerInY(0),
+        ulCornerOutX(0), ulCornerOutY(0),
+        mask(0),
+        arcdir(U_AD_COUNTERCLOCKWISE),
+        dwRop2(U_R2_COPYPEN), dwRop3(0),
+        MMX(0),MMY(0),
+        id(0), drawtype(0),
+        pDesc(NULL),
+        // hatches, images, gradients,  struct w/ constructor
+        tri(NULL)
+    {};
+
+    Glib::ustring outsvg;
+    Glib::ustring path;
+    Glib::ustring outdef;
+    Glib::ustring defs;
 
     EMF_DEVICE_CONTEXT dc[EMF_MAX_DC+1]; // FIXME: This should be dynamic..
     int level;
