@@ -442,6 +442,9 @@ void SPLPEItem::addPathEffect(LivePathEffectObject * new_lpeobj)
     g_free(hrefstr);
 }
 
+/**
+ *  If keep_path == true, the item should not be updated, effectively 'flattening' the LPE.
+ */
 void SPLPEItem::removeCurrentPathEffect(bool keep_paths)
 {
     Inkscape::LivePathEffect::LPEObjectReference* lperef = this->getCurrentLPEReference();
@@ -456,27 +459,31 @@ void SPLPEItem::removeCurrentPathEffect(bool keep_paths)
         this->getRepr()->setAttribute("inkscape:path-effect", r.c_str());
     } else {
         this->getRepr()->setAttribute("inkscape:path-effect", NULL);
+    }
+
+    if (!keep_paths) {
         // Make sure that ellipse is stored as <svg:circle> or <svg:ellipse> if possible.
         if( SP_IS_GENERICELLIPSE(this)) {
             SP_GENERICELLIPSE(this)->write( this->getRepr()->document(), this->getRepr(), SP_OBJECT_WRITE_EXT );
         }
-    }
 
-    if (!keep_paths) {
         sp_lpe_item_cleanup_original_path_recursive(this);
     }
 }
 
+/**
+ *  If keep_path == true, the item should not be updated, effectively 'flattening' the LPE.
+ */
 void SPLPEItem::removeAllPathEffects(bool keep_paths)
 {
     this->getRepr()->setAttribute("inkscape:path-effect", NULL);
 
-    // Make sure that ellipse is stored as <svg:circle> or <svg:ellipse> if possible.
-    if( SP_IS_GENERICELLIPSE(this)) {
-        SP_GENERICELLIPSE(this)->write( this->getRepr()->document(), this->getRepr(), SP_OBJECT_WRITE_EXT );
-    }
-
     if (!keep_paths) {
+        // Make sure that ellipse is stored as <svg:circle> or <svg:ellipse> if possible.
+        if (SP_IS_GENERICELLIPSE(this)) {
+            SP_GENERICELLIPSE(this)->write(this->getRepr()->document(), this->getRepr(), SP_OBJECT_WRITE_EXT);
+        }
+
         sp_lpe_item_cleanup_original_path_recursive(this);
     }
 }
