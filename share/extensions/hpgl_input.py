@@ -36,8 +36,8 @@ parser.add_option('--showMovements', action='store', type='inkbool', dest='showM
 (options, args) = parser.parse_args(inkex.sys.argv[1:])
 
 # needed to initialize the document
-options.docWidth = 210.0 * 3.5433070866 # 210mm to pixels (DIN A4)
-options.docHeight = 297.0 * 3.5433070866 # 297mm to pixels (DIN A4)
+options.docWidth = 210.0 # 210mm (DIN A4)
+options.docHeight = 297.0 # 297mm (DIN A4)
 
 # read file
 fobj = open(args[0], 'r')

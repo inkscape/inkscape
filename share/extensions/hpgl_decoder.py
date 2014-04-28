@@ -37,20 +37,21 @@ class hpglDecoder:
         '''
         self.hpglString = hpglString
         self.options = options
-        self.scaleX = options.resolutionX / 90.0 # dots/inch to dots/pixels
-        self.scaleY = options.resolutionY / 90.0 # dots/inch to dots/pixels
+        self.scaleX = options.resolutionX / 25.4 # dots/inch to dots/mm
+        self.scaleY = options.resolutionY / 25.4 # dots/inch to dots/mm
         self.warning = ''
         self.textMovements = _("Movements")
         self.textPenNumber = _("Pen #")
 
     def getSvg(self):
         # prepare document
-        self.doc = inkex.etree.parse(StringIO('<svg xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" width="%s" height="%s"></svg>' %
-            (self.options.docWidth, self.options.docHeight)))
+        self.doc = inkex.etree.parse(StringIO('<svg xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="%smm" height="%smm" viewBox="0 0 %s %s"></svg>' %
+            (self.options.docWidth, self.options.docHeight, self.options.docWidth, self.options.docHeight)))
+        inkex.etree.SubElement(self.doc.getroot(), inkex.addNS('namedview', 'sodipodi'), {inkex.addNS('document-units', 'inkscape'): 'mm'})
         actualLayer = 0
         self.layers = {}
         if self.options.showMovements:
-            self.layers[0] = inkex.etree.SubElement(self.doc.getroot(), 'g', {inkex.addNS('groupmode', 'inkscape'): 'layer', inkex.addNS('label', 'inkscape'): self.textMovements})
+            self.layers[0] = inkex.etree.SubElement(self.doc.getroot(), 'g', {inkex.addNS('groupmode', 'inkscape'): 'layer', inkex.addNS('label', 'inkscape'): self.textMovements, 'id': self.textMovements})
         # parse paths
         hpglData = self.hpglString.split(';')
         if len(hpglData) < 3:
@@ -101,7 +102,7 @@ class hpglDecoder:
             self.layers[layerNumber]
         except KeyError:
             self.layers[layerNumber] = inkex.etree.SubElement(self.doc.getroot(), 'g',
-                {inkex.addNS('groupmode', 'inkscape'): 'layer', inkex.addNS('label', 'inkscape'): self.textPenNumber + layerNumber})
+                {inkex.addNS('groupmode', 'inkscape'): 'layer', inkex.addNS('label', 'inkscape'): self.textPenNumber + layerNumber, 'id': self.textPenNumber + layerNumber})
 
     def addPathToLayer(self, path, layerNumber):
         lineColor = '000000'
