@@ -385,13 +385,15 @@ class SPIString : public SPIBase {
   public:
     SPIString() :
         SPIBase( "anonymous_string" ), value(NULL) {};
-    SPIString( Glib::ustring name ) :
-        SPIBase( name ) , value(NULL) {};
+    SPIString( Glib::ustring name, gchar* value_default_in = NULL ) :
+        SPIBase( name ) , value(NULL) , value_default(NULL) {
+        value_default = value_default_in?g_strdup(value_default_in):NULL;
+    };
     virtual ~SPIString() { g_free(value); };
     virtual void read( gchar const *str );
     virtual const Glib::ustring write( guint const flags = SP_STYLE_FLAG_IFSET,
                                        SPIBase const *const base = NULL ) const;
-    virtual void clear() { SPIBase::clear(); g_free( value ); value = NULL; };
+    virtual void clear();
     virtual void cascade( const SPIBase* const parent );
     virtual void merge(   const SPIBase* const parent );
 
@@ -407,6 +409,7 @@ class SPIString : public SPIBase {
   // To do: make private, convert value to Glib::ustring
   public:
     gchar *value;
+    gchar *value_default;
 };
 
 /// Color type interal to SPStyle, FIXME Add string value to store SVG named color.

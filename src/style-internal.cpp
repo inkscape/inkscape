@@ -693,6 +693,14 @@ SPIString::write( guint const flags, SPIBase const *const base) const {
 }
 
 void
+SPIString::clear() {
+    SPIBase::clear();
+    g_free( value );
+    value = NULL;
+    if( value_default ) value = strdup( value_default );
+}
+
+void
 SPIString::cascade( const SPIBase* const parent ) {
     if( const SPIString* p = dynamic_cast<const SPIString*>(parent) ) {
         if( inherits && (!set || inherit) ) {
