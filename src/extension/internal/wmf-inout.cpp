@@ -33,9 +33,8 @@
 #include <stdint.h>
 #include <libuemf/symbol_convert.h>
 
-#include "sp-root.h"
+#include "sp-root.h" // even though it is included indirectly by wmf-inout.h
 #include "sp-path.h"
-#include "style.h"
 #include "print.h"
 #include "extension/system.h"
 #include "extension/print.h"
@@ -44,13 +43,9 @@
 #include "extension/output.h"
 #include "display/drawing.h"
 #include "display/drawing-item.h"
-#include "util/units.h"
 #include "clear-n_.h"
-#include "document.h"
-#include "shape-editor.h"
-#include "sp-namedview.h"
-#include "document-undo.h"
-#include "inkscape.h"
+#include "util/units.h" // even though it is included indirectly by wmf-inout.h
+#include "inkscape.h" // even though it is included indirectly by wmf-inout.h
 
 
 #include "wmf-inout.h"
@@ -3002,39 +2997,7 @@ Wmf::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
 
     d.tri = trinfo_release_except_FC(d.tri);
 
-    // Set viewBox if it doesn't exist
-    if (doc && !doc->getRoot()->viewBox_set) {
-        bool saved = Inkscape::DocumentUndo::getUndoSensitive(doc);
-        Inkscape::DocumentUndo::setUndoSensitive(doc, false);
-        
-        doc->ensureUpToDate();
-        
-        // Set document unit
-        Inkscape::XML::Node *repr = sp_document_namedview(doc, 0)->getRepr();
-        Inkscape::SVGOStringStream os;
-        Inkscape::Util::Unit const* doc_unit = doc->getWidth().unit;
-        os << doc_unit->abbr;
-        repr->setAttribute("inkscape:document-units", os.str().c_str());
-        
-        // Set viewBox
-        doc->setViewBox(Geom::Rect::from_xywh(0, 0, doc->getWidth().value(doc_unit), doc->getHeight().value(doc_unit)));
-        doc->ensureUpToDate();
-
-        // Scale and translate objects
-        double scale = Inkscape::Util::Quantity::convert(1, "px", doc_unit);
-        ShapeEditor::blockSetItem(true);
-        double dh;
-        if(SP_ACTIVE_DOCUMENT){ // for file menu open or import, or paste from clipboard
-            dh = SP_ACTIVE_DOCUMENT->getHeight().value("px");
-        }
-        else { // for open via --file on command line
-            dh = doc->getHeight().value("px");
-        }
-        doc->getRoot()->scaleChildItemsRec(Geom::Scale(scale), Geom::Point(0, dh));
-        ShapeEditor::blockSetItem(false);
-
-        Inkscape::DocumentUndo::setUndoSensitive(doc, saved);
-    }
+    setViewBoxIfMissing(doc);
 
     return doc;
 }

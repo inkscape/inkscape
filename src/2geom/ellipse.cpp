@@ -36,6 +36,7 @@
 #include <2geom/numeric/fitting-tool.h>
 #include <2geom/numeric/fitting-model.h>
 
+using std::swap;
 
 namespace Geom
 {
@@ -102,7 +103,7 @@ void Ellipse::set(double A, double B, double C, double D, double E, double F)
 
     // the solution is not unique so we choose always the ellipse
     // with a rotation angle between 0 and PI/2
-    if ( swap_axes ) std::swap(rx, ry);
+    if ( swap_axes ) swap(rx, ry);
     if (    are_near(rot,  M_PI/2)
          || are_near(rot, -M_PI/2)
          || are_near(rx, ry)       )
@@ -233,7 +234,7 @@ Ellipse Ellipse::transformed(Affine const& m) const
     Point new_center = center() * m;
     Affine M = m.withoutTranslation();
     Affine AM = A * M;
-    if ( are_near(AM.det(), 0) )
+    if ( are_near(std::sqrt(fabs(AM.det())), 0) )
     {
         double angle;
         if (AM[0] != 0)
@@ -262,7 +263,7 @@ Ellipse Ellipse::transformed(Affine const& m) const
 
     Affine invm = M.inverse();
     Q = invm * Q ;
-    std::swap( invm[1], invm[2] );
+    swap( invm[1], invm[2] );
     Q *= invm;
     Ellipse e(Q[0], 2*Q[1], Q[3], 0, 0, -1);
     e.m_centre = new_center;

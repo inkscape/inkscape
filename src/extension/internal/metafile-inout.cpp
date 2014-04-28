@@ -17,6 +17,7 @@
 #include <glib.h>
 #include <glibmm/miscutils.h>
 
+#include "sp-root.h"
 #include "display/curve.h"
 #include "extension/internal/metafile-inout.h" // picks up PNG
 #include "extension/print.h"
@@ -27,6 +28,13 @@
 #include "sp-pattern.h"
 #include "sp-radial-gradient.h"
 #include "style.h"
+#include "document.h"
+#include "util/units.h"
+#include "shape-editor.h"
+#include "sp-namedview.h"
+#include "document-undo.h"
+#include "inkscape.h"
+#include "preferences.h"
 
 namespace Inkscape {
 namespace Extension {
@@ -193,6 +201,61 @@ gchar *Metafile::bad_image_png(void){
     return(gstring);
 }
 
+/*  If the viewBox is missing, set one 
+*/
+void Metafile::setViewBoxIfMissing(SPDocument *doc) {
+
+    if (doc && !doc->getRoot()->viewBox_set) {
+        bool saved = Inkscape::DocumentUndo::getUndoSensitive(doc);
+        Inkscape::DocumentUndo::setUndoSensitive(doc, false);
+        
+        doc->ensureUpToDate();
+        
+        // Set document unit
+        Inkscape::XML::Node *repr = sp_document_namedview(doc, 0)->getRepr();
+        Inkscape::SVGOStringStream os;
+        Inkscape::Util::Unit const* doc_unit = doc->getWidth().unit;
+        os << doc_unit->abbr;
+        repr->setAttribute("inkscape:document-units", os.str().c_str());
+
+        // Set viewBox
+        doc->setViewBox(Geom::Rect::from_xywh(0, 0, doc->getWidth().value(doc_unit), doc->getHeight().value(doc_unit)));
+        doc->ensureUpToDate();
+
+        // Scale and translate objects
+        double scale = Inkscape::Util::Quantity::convert(1, "px", doc_unit);
+        ShapeEditor::blockSetItem(true);
+        double dh;
+        if(SP_ACTIVE_DOCUMENT){ // for file menu open or import, or paste from clipboard
+            dh = SP_ACTIVE_DOCUMENT->getHeight().value("px");
+        }
+        else { // for open via --file on command line
+            dh = doc->getHeight().value("px");
+        }
+
+        // These should not affect input, but they do, so set them to a neutral state
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        bool transform_stroke      = prefs->getBool("/options/transform/stroke", true);
+        bool transform_rectcorners = prefs->getBool("/options/transform/rectcorners", true);
+        bool transform_pattern     = prefs->getBool("/options/transform/pattern", true);
+        bool transform_gradient    = prefs->getBool("/options/transform/gradient", true);
+        prefs->setBool("/options/transform/stroke", true);
+        prefs->setBool("/options/transform/rectcorners", true);
+        prefs->setBool("/options/transform/pattern", true);
+        prefs->setBool("/options/transform/gradient", true);
+        
+        doc->getRoot()->scaleChildItemsRec(Geom::Scale(scale), Geom::Point(0, dh));
+        ShapeEditor::blockSetItem(false);
+
+        // restore options
+        prefs->setBool("/options/transform/stroke",      transform_stroke);
+        prefs->setBool("/options/transform/rectcorners", transform_rectcorners);
+        prefs->setBool("/options/transform/pattern",     transform_pattern);
+        prefs->setBool("/options/transform/gradient",    transform_gradient);
+
+        Inkscape::DocumentUndo::setUndoSensitive(doc, saved);
+    }
+}
 
 
 } // namespace Internal

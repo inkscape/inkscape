@@ -71,6 +71,7 @@ protected:
     static void        my_png_write_data(png_structp png_ptr, png_bytep data, png_size_t length);
     static void        toPNG(PMEMPNG accum, int width, int height, const char *px);
     static gchar      *bad_image_png(void);
+    static void        setViewBoxIfMissing(SPDocument *doc);
 
 
 private:
