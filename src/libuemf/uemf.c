@@ -16,8 +16,8 @@
 
 /*
 File:      uemf.c
-Version:   0.0.26
-Date:      24-MAR-2014
+Version:   0.0.28
+Date:      04-APR-2014
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
 Copyright: 2014 David Mathog and California Institute of Technology (Caltech)
@@ -417,7 +417,7 @@ uint32_t emr_properties(uint32_t type){
          table[ 64] = 0x90;     //   U_EMRSTROKEPATH                1    0    0    1    0    0    0    0
          table[ 65] = 0xA0;     //   U_EMRFLATTENPATH               1    0    1    0    0    0    0    0
          table[ 66] = 0xA0;     //   U_EMRWIDENPATH                 1    0    1    0    0    0    0    0
-         table[ 67] = 0xA0;     //   U_EMRSELECTCLIPPATH            1    0    1    0    0    0    0    0
+         table[ 67] = 0x80;     //   U_EMRSELECTCLIPPATH            1    0    0    0    0    0    0    0  consumes the path, draws nothing
          table[ 68] = 0xA0;     //   U_EMRABORTPATH                 1    0    1    0    0    0    0    0
          table[ 69] = 0xA0;     //   U_EMRUNDEF69                   1    0    1    0    0    0    0    0
          table[ 70] = 0x00;     //   U_EMRCOMMENT                   0    0    0    0    0    0    0    0

@@ -179,28 +179,6 @@ void Metafile::toPNG(PMEMPNG accum, int width, int height, const char *px){
 
 }
 
-
-/* convert an EMF RGB(A) color to 0RGB
-inverse of gethexcolor() in emf-print.cpp
-*/
-uint32_t Metafile::sethexcolor(U_COLORREF color){
-
-    uint32_t out;
-    out = (U_RGBAGetR(color) << 16) +
-          (U_RGBAGetG(color) << 8 ) +
-          (U_RGBAGetB(color)      );
-    return(out);
-}
-
-/* Return the base64 encoded png which is shown for all bad images.
-Currently a random 3x4 blotch.
-Caller must free.
-*/
-gchar *Metafile::bad_image_png(void){
-    gchar *gstring = g_strdup("iVBORw0KGgoAAAANSUhEUgAAAAQAAAADCAIAAAA7ljmRAAAAA3NCSVQICAjb4U/gAAAALElEQVQImQXBQQ2AMAAAsUJQMSWI2H8qME1yMshojwrvGB8XcHKvR1XtOTc/8HENumHCsOMAAAAASUVORK5CYII=");
-    return(gstring);
-}
-
 /*  If the viewBox is missing, set one 
 */
 void Metafile::setViewBoxIfMissing(SPDocument *doc) {
@@ -256,6 +234,55 @@ void Metafile::setViewBoxIfMissing(SPDocument *doc) {
         Inkscape::DocumentUndo::setUndoSensitive(doc, saved);
     }
 }
+
+/**
+    \fn Convert EMF/WMF region combining ops to livarot region combining ops
+    \return combination operators in livarot enumeration, or -1 on no match
+    \param  ops      (int) combination operator (Inkscape)
+*/
+int Metafile::combine_ops_to_livarot(const int op)
+{
+    int ret = -1; 
+    switch(op) {
+        case U_RGN_AND:
+           ret = bool_op_inters;
+           break;
+        case U_RGN_OR:
+           ret = bool_op_union;
+           break;
+        case U_RGN_XOR:
+           ret = bool_op_symdiff;
+           break;
+        case U_RGN_DIFF:
+           ret = bool_op_diff;
+           break;
+    }
+    return(ret);
+}
+
+
+
+/* convert an EMF RGB(A) color to 0RGB
+inverse of gethexcolor() in emf-print.cpp
+*/
+uint32_t Metafile::sethexcolor(U_COLORREF color){
+
+    uint32_t out;
+    out = (U_RGBAGetR(color) << 16) +
+          (U_RGBAGetG(color) << 8 ) +
+          (U_RGBAGetB(color)      );
+    return(out);
+}
+
+/* Return the base64 encoded png which is shown for all bad images.
+Currently a random 3x4 blotch.
+Caller must free.
+*/
+gchar *Metafile::bad_image_png(void){
+    gchar *gstring = g_strdup("iVBORw0KGgoAAAANSUhEUgAAAAQAAAADCAIAAAA7ljmRAAAAA3NCSVQICAjb4U/gAAAALElEQVQImQXBQQ2AMAAAsUJQMSWI2H8qME1yMshojwrvGB8XcHKvR1XtOTc/8HENumHCsOMAAAAASUVORK5CYII=");
+    return(gstring);
+}
+
 
 
 } // namespace Internal

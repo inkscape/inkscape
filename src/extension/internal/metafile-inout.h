@@ -72,6 +72,7 @@ protected:
     static void        toPNG(PMEMPNG accum, int width, int height, const char *px);
     static gchar      *bad_image_png(void);
     static void        setViewBoxIfMissing(SPDocument *doc);
+    static int         combine_ops_to_livarot(const int op);
 
 
 private:

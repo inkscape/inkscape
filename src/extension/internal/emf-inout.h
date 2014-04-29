@@ -53,6 +53,7 @@ typedef struct emf_device_context {
     emf_device_context() :
         // SPStyle: class with constructor
         font_name(NULL),
+        clip_id(0),
         stroke_set(false), stroke_mode(0), stroke_idx(0), stroke_recidx(0),
         fill_set(false),   fill_mode(0),   fill_idx(0),   fill_recidx(0),
         dirty(0),
@@ -81,6 +82,7 @@ typedef struct emf_device_context {
     };        
     SPStyle         style;
     char           *font_name;
+    int             clip_id;      // 0 if none, else 1 + index into clips
     bool            stroke_set;
     int             stroke_mode;  // enumeration from drawmode, not used if fill_set is not True
     int             stroke_idx;   // used with DRAW_PATTERN and DRAW_IMAGE to return the appropriate fill
@@ -122,7 +124,7 @@ typedef struct emf_callback_data {
         arcdir(U_AD_COUNTERCLOCKWISE),
         dwRop2(U_R2_COPYPEN), dwRop3(0),
         MMX(0),MMY(0),
-        id(0), drawtype(0),
+        drawtype(0),
         pDesc(NULL),
         // hatches, images, gradients,  struct w/ constructor
         tri(NULL),
@@ -154,13 +156,13 @@ typedef struct emf_callback_data {
     float MMX;
     float MMY;
 
-    unsigned int id;
     unsigned int drawtype;  // one of 0 or U_EMR_FILLPATH, U_EMR_STROKEPATH, U_EMR_STROKEANDFILLPATH
     char *pDesc;
                               // both of these end up in <defs> under the names shown here.  These structures allow duplicates to be avoided.
     EMF_STRINGS hatches;      // hold pattern names, all like EMFhatch#_$$$$$$ where # is the EMF hatch code and $$$$$$ is the color
     EMF_STRINGS images;       // hold images, all like Image#, where # is the slot the image lives.
     EMF_STRINGS gradients;    // hold gradient  names, all like EMF[HV]_$$$$$$_$$$$$$ where $$$$$$ are the colors
+    EMF_STRINGS clips;        // hold clipping paths, referred to be the slot where the clipping path lives
     TR_INFO    *tri;          // Text Reassembly data structure
 
 
@@ -199,12 +201,17 @@ protected:
     static int         in_hatches(PEMF_CALLBACK_DATA d, char *test);
     static uint32_t    add_hatch(PEMF_CALLBACK_DATA d, uint32_t hatchType, U_COLORREF hatchColor);
     static void        enlarge_images(PEMF_CALLBACK_DATA d);
-    static int         in_images(PEMF_CALLBACK_DATA d, char *test);
+    static int         in_images(PEMF_CALLBACK_DATA d, const char *test);
     static uint32_t    add_image(PEMF_CALLBACK_DATA d,  void *pEmr, uint32_t cbBits, uint32_t cbBmi, 
                             uint32_t iUsage, uint32_t offBits, uint32_t offBmi);
     static void        enlarge_gradients(PEMF_CALLBACK_DATA d);
-    static int         in_gradients(PEMF_CALLBACK_DATA d, char *test);
+    static int         in_gradients(PEMF_CALLBACK_DATA d, const char *test);
     static uint32_t    add_gradient(PEMF_CALLBACK_DATA d, uint32_t gradientType, U_TRIVERTEX tv1, U_TRIVERTEX tv2);
+
+    static void        enlarge_clips(PEMF_CALLBACK_DATA d);
+    static int         in_clips(PEMF_CALLBACK_DATA d, const char *test);
+    static void        add_clips(PEMF_CALLBACK_DATA d, const char *clippath, unsigned int logic);
+
     static void        output_style(PEMF_CALLBACK_DATA d, int iType);
     static double      _pix_x_to_point(PEMF_CALLBACK_DATA d, double px);
     static double      _pix_y_to_point(PEMF_CALLBACK_DATA d, double py);

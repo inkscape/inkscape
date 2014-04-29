@@ -44,6 +44,7 @@
 #include "display/drawing.h"
 #include "display/drawing-item.h"
 #include "clear-n_.h"
+#include "svg/svg.h"
 #include "util/units.h" // even though it is included indirectly by wmf-inout.h
 #include "inkscape.h" // even though it is included indirectly by wmf-inout.h
 
@@ -60,8 +61,6 @@ namespace Inkscape {
 namespace Extension {
 namespace Internal {
 
-static U_RECTL  rc_old  = rectl_set(pointl_set(-1,-1),pointl_set(-1,-1));
-static bool     clipset = false;
 static uint32_t ICMmode = 0;  // not used yet, but code to read it from EMF implemented
 static uint32_t BLTmode = 0;
 
@@ -447,7 +446,7 @@ void Emf::enlarge_images(PEMF_CALLBACK_DATA d){
 
 /*  See if the image string is already in the list.  If it is return its position (1->n, not 1-n-1)
 */
-int Emf::in_images(PEMF_CALLBACK_DATA d, char *test){
+int Emf::in_images(PEMF_CALLBACK_DATA d, const char *test){
     int i;
     for(i=0; i<d->images.count; i++){
         if(strcmp(test,d->images.strings[i])==0)return(i+1);
@@ -618,7 +617,7 @@ void Emf::enlarge_gradients(PEMF_CALLBACK_DATA d){
 
 /*  See if the gradient name is already in the list.  If it is return its position (1->n, not 1-n-1)
 */
-int Emf::in_gradients(PEMF_CALLBACK_DATA d, char *test){
+int Emf::in_gradients(PEMF_CALLBACK_DATA d, const char *test){
     int i;
     for(i=0; i<d->gradients.count; i++){
         if(strcmp(test,d->gradients.strings[i])==0)return(i+1);
@@ -715,6 +714,65 @@ uint32_t Emf::add_gradient(PEMF_CALLBACK_DATA d, uint32_t gradientType, U_TRIVER
     }
 
     return(idx-1);
+}
+
+/*  Add another 100 blank slots to the clips array.
+*/
+void Emf::enlarge_clips(PEMF_CALLBACK_DATA d){
+    d->clips.size += 100;
+    d->clips.strings = (char **) realloc(d->clips.strings,d->clips.size * sizeof(char *));
+}
+
+/*  See if the pattern name is already in the list.  If it is return its position (1->n, not 1-n-1)
+*/
+int Emf::in_clips(PEMF_CALLBACK_DATA d, const char *test){
+    int i;
+    for(i=0; i<d->clips.count; i++){
+        if(strcmp(test,d->clips.strings[i])==0)return(i+1);
+    }
+    return(0);
+}
+
+/*  (Conditionally) add a clip.  
+    If a matching clip already exists nothing happens  
+    If one does exist it is added to the clips list, entered into <defs>.
+*/
+void Emf::add_clips(PEMF_CALLBACK_DATA d, const char *clippath, unsigned int logic){
+    int op = combine_ops_to_livarot(logic);
+    Geom::PathVector combined_vect;
+    char *combined = NULL;
+    if (op >= 0 && d->dc[d->level].clip_id) {
+        unsigned int real_idx = d->dc[d->level].clip_id - 1;
+        Geom::PathVector old_vect = sp_svg_read_pathv(d->clips.strings[real_idx]);
+        Geom::PathVector new_vect = sp_svg_read_pathv(clippath);
+        combined_vect = sp_pathvector_boolop(new_vect, old_vect, (bool_op) op , (FillRule) fill_oddEven, (FillRule) fill_oddEven);
+        combined = sp_svg_write_path(combined_vect);
+    }
+    else {
+        combined = strdup(clippath);  // COPY operation, erases everything and starts a new one
+    }
+
+    uint32_t  idx = in_clips(d, combined);
+    if(!idx){  // add clip if not already present
+        if(d->clips.count == d->clips.size){  enlarge_clips(d); }
+        d->clips.strings[d->clips.count++]=strdup(combined);
+        d->dc[d->level].clip_id = d->clips.count;  // one more than the slot where it is actually stored
+        SVGOStringStream tmp_clippath;
+        tmp_clippath << "\n<clipPath";
+        tmp_clippath << "\n\tclipPathUnits=\"userSpaceOnUse\" ";
+        tmp_clippath << "\n\tid=\"clipEmfPath" << d->dc[d->level].clip_id << "\"";
+        tmp_clippath << " >";
+        tmp_clippath << "\n\t<path d=\"";
+        tmp_clippath << combined;
+        tmp_clippath << "\"";
+        tmp_clippath << "\n\t/>";
+        tmp_clippath << "\n</clipPath>";
+        d->outdef += tmp_clippath.str().c_str();
+    }
+    else {
+        d->dc[d->level].clip_id = idx;
+    }
+    free(combined);
 }
 
 
@@ -927,9 +985,8 @@ Emf::output_style(PEMF_CALLBACK_DATA d, int iType)
         tmp_style << "stroke-opacity:1;";
     }
     tmp_style << "\" ";
-    if (clipset)
-        tmp_style << "\n\tclip-path=\"url(#clipEmfPath" << d->id << ")\" ";
-    clipset = false;
+    if (d->dc[d->level].clip_id)
+        tmp_style << "\n\tclip-path=\"url(#clipEmfPath" << d->dc[d->level].clip_id << ")\" ";
 
     d->outsvg += tmp_style.str().c_str();
 }
@@ -1565,7 +1622,7 @@ int Emf::myEnhMetaFileProc(char *contents, unsigned int length, PEMF_CALLBACK_DA
 
     lpEMFR = (PU_ENHMETARECORD)(contents + off);
 //  Uncomment the following to track down toxic records
-//std::cout << "record type: " << lpEMFR->iType << " length: " << lpEMFR->nSize << " offset: " << off <<std::endl;
+// std::cout << "record type: " << lpEMFR->iType  << " name " << U_emr_names(lpEMFR->iType) << " length: " << lpEMFR->nSize << " offset: " << off <<std::endl;
     off += lpEMFR->nSize;
 
     SVGOStringStream tmp_outsvg;
@@ -1616,7 +1673,7 @@ int Emf::myEnhMetaFileProc(char *contents, unsigned int length, PEMF_CALLBACK_DA
         d->dc[d->level].dirty = 0;
     }
 
-//std::cout << "BEFORE DRAW logic d->mask: " << std::hex << d->mask << " emr_mask: " << emr_mask << std::dec << std::endl;
+// std::cout << "BEFORE DRAW logic d->mask: " << std::hex << d->mask << " emr_mask: " << emr_mask << std::dec << std::endl;
 /*
 std::cout << "BEFORE DRAW"
  << " test0 " << ( d->mask & U_DRAW_VISIBLE)
@@ -1643,7 +1700,7 @@ std::cout << "BEFORE DRAW"
             )
         )
     ){
-// std::cout << "PATH DRAW at TOP" << std::endl;
+// std::cout << "PATH DRAW at TOP path" << *(d->path) << std::endl;
         d->outsvg += "   <path ";     // this is the ONLY place <path should be used!!!  One exception, gradientfill.
         if(d->drawtype){                 // explicit draw type EMR record
             output_style(d, d->drawtype);
@@ -2115,7 +2172,24 @@ std::cout << "BEFORE DRAW"
             }
             break;
         }
-        case U_EMR_OFFSETCLIPRGN:        dbg_str << "<!-- U_EMR_OFFSETCLIPRGN -->\n";      break;
+        case U_EMR_OFFSETCLIPRGN:
+        {
+            dbg_str << "<!-- U_EMR_OFFSETCLIPRGN -->\n"; 
+            if (d->dc[d->level].clip_id) { // can only offsetan existing clipping path
+                PU_EMROFFSETCLIPRGN pEmr = (PU_EMROFFSETCLIPRGN) lpEMFR;
+                U_POINTL off = pEmr->ptlOffset;
+                unsigned int real_idx = d->dc[d->level].clip_id - 1;
+                Geom::PathVector tmp_vect = sp_svg_read_pathv(d->clips.strings[real_idx]);
+                double ox = pix_to_x_point(d, off.x, off.y) - pix_to_x_point(d, 0, 0); // take into account all active transforms
+                double oy = pix_to_y_point(d, off.x, off.y) - pix_to_y_point(d, 0, 0);
+                Geom::Affine tf = Geom::Translate(ox,oy);
+                tmp_vect *= tf;
+                char *tmp_path = sp_svg_write_path(tmp_vect);
+                add_clips(d, tmp_path, U_RGN_COPY);
+                free(tmp_path);
+            }
+            break;
+        }
         case U_EMR_MOVETOEX:
         {
             dbg_str << "<!-- U_EMR_MOVETOEX -->\n";
@@ -2131,36 +2205,52 @@ std::cout << "BEFORE DRAW"
             break;
         }
         case U_EMR_SETMETARGN:           dbg_str << "<!-- U_EMR_SETMETARGN -->\n";         break;
-        case U_EMR_EXCLUDECLIPRECT:      dbg_str << "<!-- U_EMR_EXCLUDECLIPRECT -->\n";    break;
+        case U_EMR_EXCLUDECLIPRECT:
+        {
+            dbg_str << "<!-- U_EMR_EXCLUDECLIPRECT -->\n";
+
+            PU_EMREXCLUDECLIPRECT pEmr = (PU_EMREXCLUDECLIPRECT) lpEMFR;
+            U_RECTL rc = pEmr->rclClip;
+
+            SVGOStringStream tmp_path;
+            float faraway = 10000000; // hopefully well outside any real drawing!
+            //outer rect, clockwise 
+            tmp_path << "M " <<  faraway << "," <<  faraway << " ";
+            tmp_path << "L " <<  faraway << "," << -faraway << " ";
+            tmp_path << "L " << -faraway << "," << -faraway << " ";
+            tmp_path << "L " << -faraway << "," <<  faraway << " ";
+            tmp_path << "z ";
+            //inner rect, counterclockwise (sign of Y is reversed)
+            tmp_path << "M " << pix_to_xy( d, rc.left , rc.top )     << " ";
+            tmp_path << "L " << pix_to_xy( d, rc.right, rc.top )     << " ";
+            tmp_path << "L " << pix_to_xy( d, rc.right, rc.bottom )  << " ";
+            tmp_path << "L " << pix_to_xy( d, rc.left,  rc.bottom )  << " ";
+            tmp_path << "z";
+            
+            add_clips(d, tmp_path.str().c_str(), U_RGN_AND);
+
+            d->path = "";
+            d->drawtype = 0;
+            break;
+        }
         case U_EMR_INTERSECTCLIPRECT:
         {
             dbg_str << "<!-- U_EMR_INTERSECTCLIPRECT -->\n";
 
             PU_EMRINTERSECTCLIPRECT pEmr = (PU_EMRINTERSECTCLIPRECT) lpEMFR;
             U_RECTL rc = pEmr->rclClip;
-            clipset = true;
-            if ((rc.left == rc_old.left) && (rc.top == rc_old.top) && (rc.right == rc_old.right) && (rc.bottom == rc_old.bottom))
-                break;
-            rc_old = rc;
 
-            double dx = pix_to_x_point( d, rc.left, rc.top );
-            double dy = pix_to_y_point( d, rc.left, rc.top );
-            double dw = pix_to_abs_size( d, rc.right  - rc.left + 1);
-            double dh = pix_to_abs_size( d, rc.bottom - rc.top  + 1);
+            SVGOStringStream tmp_path;
+            tmp_path << "M " << pix_to_xy( d, rc.left , rc.top )     << " ";
+            tmp_path << "L " << pix_to_xy( d, rc.right, rc.top )     << " ";
+            tmp_path << "L " << pix_to_xy( d, rc.right, rc.bottom )  << " ";
+            tmp_path << "L " << pix_to_xy( d, rc.left,  rc.bottom )  << " ";
+            tmp_path << "z";
+            
+            add_clips(d, tmp_path.str().c_str(), U_RGN_AND);
 
-            SVGOStringStream tmp_rectangle;
-            tmp_rectangle << "\n<clipPath\n\tclipPathUnits=\"userSpaceOnUse\" ";
-            tmp_rectangle << "\nid=\"clipEmfPath" << ++(d->id) << "\" >";
-            tmp_rectangle << "\n<rect ";
-            tmp_rectangle << "\n   x=\""      << dx << "\" ";
-            tmp_rectangle << "\n   y=\""      << dy << "\" ";
-            tmp_rectangle << "\n   width=\""  << dw << "\" ";
-            tmp_rectangle << "\n   height=\"" << dh << "\" ";
-            tmp_rectangle << "\n   transform=" << current_matrix(d, dx, dy, 1); // calculate appropriate offset
-            tmp_rectangle << "/>\n</clipPath>";
-
-            d->outdef += tmp_rectangle.str().c_str();
             d->path = "";
+            d->drawtype = 0;
             break;
         }
         case U_EMR_SCALEVIEWPORTEXTEX:   dbg_str << "<!-- U_EMR_SCALEVIEWPORTEXTEX -->\n"; break;
@@ -2171,7 +2261,7 @@ std::cout << "BEFORE DRAW"
             if (d->level < EMF_MAX_DC) {
                 d->dc[d->level + 1] = d->dc[d->level];
                 if(d->dc[d->level].font_name){
-                  d->dc[d->level + 1].font_name = strdup(d->dc[d->level].font_name); // or memory access problems because font name pointer duplicated
+                    d->dc[d->level + 1].font_name = strdup(d->dc[d->level].font_name); // or memory access problems because font name pointer duplicated
                 }
                 d->level = d->level + 1;
             }
@@ -2727,7 +2817,18 @@ std::cout << "BEFORE DRAW"
         }
         case U_EMR_FLATTENPATH:          dbg_str << "<!-- U_EMR_FLATTENPATH -->\n";          break;
         case U_EMR_WIDENPATH:            dbg_str << "<!-- U_EMR_WIDENPATH -->\n";            break;
-        case U_EMR_SELECTCLIPPATH:       dbg_str << "<!-- U_EMR_SELECTCLIPPATH -->\n";       break;
+        case U_EMR_SELECTCLIPPATH:
+        {
+            dbg_str << "<!-- U_EMR_SELECTCLIPPATH -->\n";
+            PU_EMRSELECTCLIPPATH pEmr = (PU_EMRSELECTCLIPPATH) lpEMFR;
+            int logic = pEmr->iMode;
+
+            if ((logic < U_RGN_MIN) || (logic > U_RGN_MAX)){ break; }
+            add_clips(d, d->path.c_str(), logic); // finds an existing one or stores this, sets clip_id
+            d->path = "";
+            d->drawtype = 0;
+            break;
+        }
         case U_EMR_ABORTPATH:
         {
             dbg_str << "<!-- U_EMR_ABORTPATH -->\n";
@@ -2770,8 +2871,10 @@ std::cout << "BEFORE DRAW"
             dbg_str << "<!-- U_EMR_EXTSELECTCLIPRGN -->\n";
 
             PU_EMREXTSELECTCLIPRGN pEmr = (PU_EMREXTSELECTCLIPRGN) lpEMFR;
-            if (pEmr->iMode == U_RGN_COPY)
-                clipset = false;
+            // the only mode we implement - this clears the clipping region
+            if (pEmr->iMode == U_RGN_COPY) {
+                d->dc[d->level].clip_id = 0;
+            }
             break;
         }
         case U_EMR_BITBLT:
@@ -3334,6 +3437,8 @@ void Emf::free_emf_strings(EMF_STRINGS name){
         for(int i=0; i< name.count; i++){ free(name.strings[i]); }
         free(name.strings);
     }
+    name.count = 0;
+    name.size = 0;
 }
 
 SPDocument *
@@ -3381,6 +3486,7 @@ Emf::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
     free_emf_strings(d.hatches);
     free_emf_strings(d.images);
     free_emf_strings(d.gradients);
+    free_emf_strings(d.clips);
 
     if (d.emf_obj) {
         int i;

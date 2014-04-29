@@ -52,6 +52,7 @@ typedef struct wmf_device_context {
     wmf_device_context() :
         // SPStyle: class with constructor
         font_name(NULL),
+        clip_id(0),
         stroke_set(false), stroke_mode(0), stroke_idx(0), stroke_recidx(0),
         fill_set(false),   fill_mode(0),   fill_idx(0),   fill_recidx(0),
         dirty(0),
@@ -75,6 +76,7 @@ typedef struct wmf_device_context {
     };
     SPStyle         style;
     char           *font_name;
+    int             clip_id;      // 0 if none, else 1 + index into clips
     bool            stroke_set;
     int             stroke_mode;  // enumeration from drawmode, not used if fill_set is not True
     int             stroke_idx;   // used with DRAW_PATTERN and DRAW_IMAGE to return the appropriate fill
@@ -155,6 +157,7 @@ typedef struct wmf_callback_data {
                               // both of these end up in <defs> under the names shown here.  These structures allow duplicates to be avoided.
     WMF_STRINGS hatches;      // hold pattern names, all like WMFhatch#_$$$$$$ where # is the WMF hatch code and $$$$$$ is the color
     WMF_STRINGS images;       // hold images, all like Image#, where # is the slot the image lives.
+    WMF_STRINGS clips;        // hold clipping paths, referred to be the slot where the clipping path lives
     TR_INFO    *tri;          // Text Reassembly data structure
 
 
@@ -195,6 +198,11 @@ protected:
    static int         in_images(PWMF_CALLBACK_DATA d, char *test);
    static uint32_t    add_dib_image(PWMF_CALLBACK_DATA d, const char *dib, uint32_t iUsage);
    static uint32_t    add_bm16_image(PWMF_CALLBACK_DATA d, U_BITMAP16 Bm16, const char *px);
+
+   static void        enlarge_clips(PWMF_CALLBACK_DATA d);
+   static int         in_clips(PWMF_CALLBACK_DATA d, const char *test);
+   static void        add_clips(PWMF_CALLBACK_DATA d, const char *clippath, unsigned int logic);
+
    static void        output_style(PWMF_CALLBACK_DATA d);
    static double      _pix_x_to_point(PWMF_CALLBACK_DATA d, double px);
    static double      _pix_y_to_point(PWMF_CALLBACK_DATA d, double py);

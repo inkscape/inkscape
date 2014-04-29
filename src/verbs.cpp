@@ -1372,6 +1372,10 @@ void LayerVerb::perform(SPAction *action, void *data)
                     survivor = Inkscape::previous_layer(dt->currentRoot(), old_layer);
                 }
 
+                if (survivor == old_layer->lastChild()) {
+                    //oops: layer_fns messed up. BADLY.
+		    survivor = NULL;
+	       	}
                 // Deleting the old layer before switching layers is a hack to trigger the
                 // listeners of the deletion event (as happens when old_layer is deleted using the
                 // xml editor).  See

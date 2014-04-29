@@ -34,6 +34,7 @@
 #include <2geom/pathvector.h>
 #include <2geom/rect.h>
 #include <2geom/curves.h>
+#include <sp-clippath.h>
 
 #include "helper/geom.h"
 #include "helper/geom-curves.h"
@@ -975,6 +976,9 @@ unsigned int PrintEmf::fill(
 {
     using Geom::X;
     using Geom::Y;
+    
+    SPItem *item = SP_ITEM(style->object);
+    SPClipPath *scp = (item->clip_ref ? item->clip_ref->getObject() : NULL);
 
     Geom::Affine tf = m_tr_stack.top();
 

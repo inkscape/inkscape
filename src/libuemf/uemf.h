@@ -95,8 +95,8 @@ these WMF enumerations is by referencing the following table:
 
 /*
 File:      uemf.h
-Version:   0.0.26
-Date:      27-MAR-2014
+Version:   0.0.27
+Date:      28-MAR-2014
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
 Copyright: 2014 David Mathog and California Institute of Technology (Caltech)
@@ -1167,6 +1167,7 @@ typedef struct {
   EMF manual 2.1.29
   @{
 */
+#define U_RGN_NONE 0          //!< not part of EMF standard, may be used by others
 #define U_RGN_AND  1          //!< Region becomes intersection of existing region and new region.
 #define U_RGN_OR   2          //!< Region becomes union of existing region and new region.
 #define U_RGN_XOR  3          //!< Region becomes XOR of existing and new regions.

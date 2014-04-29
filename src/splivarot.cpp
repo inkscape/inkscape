@@ -1457,13 +1457,21 @@ sp_selected_path_outline(SPDesktop *desktop)
                                                              g_repr, xml_doc, doc );
                     }
                 }
+                //bug lp:1290573 : completely destroy the old object first
+                curve->unref();
+                selection->remove(item);
+                item->deleteObject(false);
 
                 selection->add(g_repr);
 
                 Inkscape::GC::release(g_repr);
 
-
-            } else {
+            } else
+            {
+                //lp:1290573
+                curve->unref();
+                selection->remove(item);
+                item->deleteObject(false);
 
                 // add the new repr to the parent
                 parent->appendChild(repr);
@@ -1488,10 +1496,6 @@ sp_selected_path_outline(SPDesktop *desktop)
             }
 
             Inkscape::GC::release(repr);
-
-            curve->unref();
-            selection->remove(item);
-            item->deleteObject(false);
 
         }
         if (title) {

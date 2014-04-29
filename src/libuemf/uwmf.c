@@ -19,8 +19,8 @@
 
 /*
 File:      uwmf.c
-Version:   0.0.14
-Date:      24-MAR-2014
+Version:   0.0.15
+Date:      11-APR-2014
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
 Copyright: 2014 David Mathog and California Institute of Technology (Caltech)
@@ -3019,7 +3019,7 @@ char *U_WMRESCAPE_set(uint16_t Escape, uint16_t Length, const void *Data){
     \param  DC  Drawing Context to restore.  (negative is relative to current, positive is absolute)
 */
 char *U_WMRRESTOREDC_set(int16_t DC){
-   return U_WMRCORE_1U16_set(U_WMR_SETMAPMODE, DC);
+   return U_WMRCORE_1U16_set(U_WMR_RESTOREDC, DC);
 }
 
 /**

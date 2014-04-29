@@ -44,6 +44,7 @@
 #include "display/drawing.h"
 #include "display/drawing-item.h"
 #include "clear-n_.h"
+#include "svg/svg.h"
 #include "util/units.h" // even though it is included indirectly by wmf-inout.h
 #include "inkscape.h" // even though it is included indirectly by wmf-inout.h
 
@@ -626,6 +627,67 @@ uint32_t Wmf::add_bm16_image(PWMF_CALLBACK_DATA d, U_BITMAP16 Bm16, const char *
     return(idx-1);
 }
 
+/*  Add another 100 blank slots to the clips array.
+*/
+void Wmf::enlarge_clips(PWMF_CALLBACK_DATA d){
+    d->clips.size += 100;
+    d->clips.strings = (char **) realloc(d->clips.strings,d->clips.size * sizeof(char *));
+}
+
+/*  See if the pattern name is already in the list.  If it is return its position (1->n, not 1-n-1)
+*/
+int Wmf::in_clips(PWMF_CALLBACK_DATA d, const char *test){
+    int i;
+    for(i=0; i<d->clips.count; i++){
+        if(strcmp(test,d->clips.strings[i])==0)return(i+1);
+    }
+    return(0);
+}
+
+/*  (Conditionally) add a clip.  
+    If a matching clip already exists nothing happens  
+    If one does exist it is added to the clips list, entered into <defs>.
+*/
+void Wmf::add_clips(PWMF_CALLBACK_DATA d, const char *clippath, unsigned int logic){
+    int op = combine_ops_to_livarot(logic);
+    Geom::PathVector combined_vect;
+    char *combined = NULL;
+    if (op >= 0 && d->dc[d->level].clip_id) {
+        unsigned int real_idx = d->dc[d->level].clip_id - 1;
+        Geom::PathVector old_vect = sp_svg_read_pathv(d->clips.strings[real_idx]);
+        Geom::PathVector new_vect = sp_svg_read_pathv(clippath);
+        combined_vect = sp_pathvector_boolop(new_vect, old_vect, (bool_op) op , (FillRule) fill_oddEven, (FillRule) fill_oddEven);
+        combined = sp_svg_write_path(combined_vect);
+    }
+    else {
+        combined = strdup(clippath);  // COPY operation, erases everything and starts a new one
+    }
+
+    uint32_t  idx = in_clips(d, combined);
+    if(!idx){  // add clip if not already present
+        if(d->clips.count == d->clips.size){  enlarge_clips(d); }
+        d->clips.strings[d->clips.count++]=strdup(combined);
+        d->dc[d->level].clip_id = d->clips.count;  // one more than the slot where it is actually stored
+        SVGOStringStream tmp_clippath;
+        tmp_clippath << "\n<clipPath";
+        tmp_clippath << "\n\tclipPathUnits=\"userSpaceOnUse\" ";
+        tmp_clippath << "\n\tid=\"clipEmfPath" << d->dc[d->level].clip_id << "\"";
+        tmp_clippath << " >";
+        tmp_clippath << "\n\t<path d=\"";
+        tmp_clippath << combined;
+        tmp_clippath << "\"";
+        tmp_clippath << "\n\t/>";
+        tmp_clippath << "\n</clipPath>";
+        d->outdef += tmp_clippath.str().c_str();
+    }
+    else {
+        d->dc[d->level].clip_id = idx;
+    }
+    free(combined);
+}
+
+
+
 void
 Wmf::output_style(PWMF_CALLBACK_DATA d)
 {
@@ -833,9 +895,8 @@ Wmf::output_style(PWMF_CALLBACK_DATA d)
         tmp_style << "stroke-opacity:1;";
     }
     tmp_style << "\" ";
-    if (clipset)
-        tmp_style << "\n\tclip-path=\"url(#clipWmfPath" << d->id << ")\" ";
-    clipset = false;
+    if (d->dc[d->level].clip_id)
+        tmp_style << "\n\tclip-path=\"url(#clipEmfPath" << d->dc[d->level].clip_id << ")\" ";
 
     d->outsvg += tmp_style.str().c_str();
 }
@@ -1913,34 +1974,51 @@ std::cout << "BEFORE DRAW"
                 "\n\tM " << pix_to_xy( d, pt16.x, pt16.y ) << " ";
             break;
         }
-        case U_WMR_EXCLUDECLIPRECT:       dbg_str << "<!-- U_WMR_EXCLUDECLIPRECT -->\n";    break;
+        case U_WMR_EXCLUDECLIPRECT:
+        {
+            dbg_str << "<!-- U_WMR_EXCLUDECLIPRECT -->\n";
+
+            U_RECT16   rc;
+            nSize = U_WMREXCLUDECLIPRECT_get(contents, &rc);
+
+            SVGOStringStream tmp_path;
+            float faraway = 10000000; // hopefully well outside any real drawing!
+            //outer rect, clockwise 
+            tmp_path << "M " <<  faraway << "," <<  faraway << " ";
+            tmp_path << "L " <<  faraway << "," << -faraway << " ";
+            tmp_path << "L " << -faraway << "," << -faraway << " ";
+            tmp_path << "L " << -faraway << "," <<  faraway << " ";
+            tmp_path << "z ";
+            //inner rect, counterclockwise (sign of Y is reversed)
+            tmp_path << "M " << pix_to_xy( d, rc.left , rc.top )     << " ";
+            tmp_path << "L " << pix_to_xy( d, rc.right, rc.top )     << " ";
+            tmp_path << "L " << pix_to_xy( d, rc.right, rc.bottom )  << " ";
+            tmp_path << "L " << pix_to_xy( d, rc.left,  rc.bottom )  << " ";
+            tmp_path << "z";
+            
+            add_clips(d, tmp_path.str().c_str(), U_RGN_AND);
+
+            d->path = "";
+            d->drawtype = 0;
+            break;
+        }
         case U_WMR_INTERSECTCLIPRECT:
         {
             dbg_str << "<!-- U_WMR_INTERSECTCLIPRECT -->\n";
 
             nSize = U_WMRINTERSECTCLIPRECT_get(contents, &rc);
-            clipset = true;
-            if ((rc.left == rc_old.left) && (rc.top == rc_old.top) && (rc.right == rc_old.right) && (rc.bottom == rc_old.bottom))
-                break;
-            rc_old = rc;
 
-            double dx = pix_to_x_point(  d, rc.left,    rc.top     );
-            double dy = pix_to_y_point(  d, rc.left,    rc.top     );
-            double dw = pix_to_abs_size( d, rc.right  - rc.left + 1);
-            double dh = pix_to_abs_size( d, rc.bottom - rc.top  + 1);
+            SVGOStringStream tmp_path;
+            tmp_path << "M " << pix_to_xy( d, rc.left , rc.top )     << " ";
+            tmp_path << "L " << pix_to_xy( d, rc.right, rc.top )     << " ";
+            tmp_path << "L " << pix_to_xy( d, rc.right, rc.bottom )  << " ";
+            tmp_path << "L " << pix_to_xy( d, rc.left,  rc.bottom )  << " ";
+            tmp_path << "z";
+            
+            add_clips(d, tmp_path.str().c_str(), U_RGN_AND);
 
-            SVGOStringStream tmp_rectangle;
-            tmp_rectangle << "\n<clipPath\n\tclipPathUnits=\"userSpaceOnUse\" ";
-            tmp_rectangle << "\nid=\"clipWmfPath" << ++(d->id) << "\" >";
-            tmp_rectangle << "\n<rect ";
-            tmp_rectangle << "\n   x=\""      << dx << "\" ";
-            tmp_rectangle << "\n   y=\""      << dy << "\" ";
-            tmp_rectangle << "\n   width=\""  << dw << "\" ";
-            tmp_rectangle << "\n   height=\"" << dh << "\" />";
-            tmp_rectangle << "\n</clipPath>";
-
-            d->outdef += tmp_rectangle.str().c_str();
             d->path = "";
+            d->drawtype = 0;
             break;
         }
         case U_WMR_ARC:
@@ -2134,7 +2212,24 @@ std::cout << "BEFORE DRAW"
             break;
         }
         case U_WMR_SETPIXEL:              dbg_str << "<!-- U_WMR_SETPIXEL -->\n";                break;
-        case U_WMR_OFFSETCLIPRGN:         dbg_str << "<!-- U_WMR_OFFSETCLIPRGN/POLYLINE -->\n";  break;
+        case U_WMR_OFFSETCLIPRGN:
+        {
+            dbg_str << "<!-- U_EMR_OFFSETCLIPRGN -->\n"; 
+            U_POINT16  off;
+            nSize = U_WMROFFSETCLIPRGN_get(contents,&off);
+            if (d->dc[d->level].clip_id) { // can only offset an existing clipping path
+                unsigned int real_idx = d->dc[d->level].clip_id - 1;
+                Geom::PathVector tmp_vect = sp_svg_read_pathv(d->clips.strings[real_idx]);
+                double ox = pix_to_x_point(d, off.x, off.y) - pix_to_x_point(d, 0, 0); // take into account all active transforms
+                double oy = pix_to_y_point(d, off.x, off.y) - pix_to_y_point(d, 0, 0);
+                Geom::Affine tf = Geom::Translate(ox,oy);
+                tmp_vect *= tf;
+                char *tmp_path = sp_svg_write_path(tmp_vect);
+                add_clips(d, tmp_path, U_RGN_COPY);
+                free(tmp_path);
+            }
+            break;
+        }
         // U_WMR_TEXTOUT should be here, but has been moved down to merge with U_WMR_EXTTEXTOUT
         case U_WMR_BITBLT:
         {
@@ -2922,6 +3017,8 @@ void Wmf::free_wmf_strings(WMF_STRINGS name){
         for(int i=0; i< name.count; i++){ free(name.strings[i]); }
         free(name.strings);
     }
+    name.count = 0;
+    name.size = 0;
 }
 
 SPDocument *
@@ -2981,6 +3078,7 @@ Wmf::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
 
     free_wmf_strings(d.hatches);
     free_wmf_strings(d.images);
+    free_wmf_strings(d.clips);
 
     if (d.wmf_obj) {
         int i;
