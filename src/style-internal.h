@@ -229,7 +229,8 @@ class SPIScale24 : public SPIBase {
 
     SPIScale24& operator=(const SPIScale24& rhs) {
         SPIBase::operator=(rhs);
-        value = rhs.value;
+        value         = rhs.value;
+        value_default = rhs.value_default;
         return *this;
     }
 
@@ -400,6 +401,7 @@ class SPIString : public SPIBase {
     SPIString& operator=(const SPIString& rhs) {
         SPIBase::operator=(rhs);
         value            = rhs.value?g_strdup(rhs.value):NULL;
+        value_default    = rhs.value_default?g_strdup(rhs.value_default):NULL;
         return *this;
     }
 
