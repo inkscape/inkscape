@@ -128,6 +128,7 @@ class SPIBase {
         set         = rhs.set;
         inherit     = rhs.inherit;
         style_att   = rhs.style_att;
+        style       = rhs.style;
         return *this;
     }
 
@@ -390,7 +391,7 @@ class SPIString : public SPIBase {
         SPIBase( name ) , value(NULL) , value_default(NULL) {
         value_default = value_default_in?g_strdup(value_default_in):NULL;
     };
-    virtual ~SPIString() { g_free(value); };
+    virtual ~SPIString() { g_free(value); g_free(value_default); };
     virtual void read( gchar const *str );
     virtual const Glib::ustring write( guint const flags = SP_STYLE_FLAG_IFSET,
                                        SPIBase const *const base = NULL ) const;
@@ -400,6 +401,8 @@ class SPIString : public SPIBase {
 
     SPIString& operator=(const SPIString& rhs) {
         SPIBase::operator=(rhs);
+        g_free(value);
+        g_free(value_default);
         value            = rhs.value?g_strdup(rhs.value):NULL;
         value_default    = rhs.value_default?g_strdup(rhs.value_default):NULL;
         return *this;
@@ -430,7 +433,8 @@ class SPIColor : public SPIBase {
 
     SPIColor& operator=(const SPIColor& rhs) {
         SPIBase::operator=(rhs);
-        value.color = rhs.value.color;
+        currentcolor = rhs.currentcolor;
+        value.color  = rhs.value.color;
         return *this;
     }
 
@@ -558,6 +562,7 @@ class SPIPaintOrder : public SPIBase {
             layer[i]     = rhs.layer[i];
             layer_set[i] = rhs.layer_set[i];
         }
+        g_free(value);
         value            = g_strdup(rhs.value);
         return *this;
     }
