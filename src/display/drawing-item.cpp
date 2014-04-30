@@ -23,7 +23,6 @@
 
 namespace Inkscape {
 
-#ifdef WITH_CSSBLEND
 void set_cairo_blend_operator( DrawingContext &dc, unsigned blend_mode ) {
 
     // All of the blend modes are implemented in Cairo as of 1.10.
@@ -81,7 +80,6 @@ void set_cairo_blend_operator( DrawingContext &dc, unsigned blend_mode ) {
         break;
     }
 }
-#endif
 
 /**
  * @class DrawingItem
@@ -594,9 +592,8 @@ DrawingItem::render(DrawingContext &dc, Geom::IntRect const &area, unsigned flag
     if (_cached) {
         if (_cache) {
             _cache->prepare();
-#ifdef WITH_CSSBLEND
             set_cairo_blend_operator( dc, _blend_mode );
-#endif
+
             _cache->paintFromCache(dc, carea);
             if (!carea) return RENDER_OK;
         } else {
@@ -625,10 +622,8 @@ DrawingItem::render(DrawingContext &dc, Geom::IntRect const &area, unsigned flag
     nir |= (_filter != NULL && render_filters); // 3. it has a filter
     nir |= needs_opacity; // 4. it is non-opaque
     nir |= (_cache != NULL); // 5. it is cached
-#ifdef WITH_CSSBLEND
     nir |= (_blend_mode != SP_CSS_BLEND_NORMAL); // 6. Blend mode not normal
     nir |= (_isolation == SP_CSS_ISOLATION_ISOLATE); // 7. Explicit isolatiom
-#endif
 
     /* How the rendering is done.
      *
@@ -740,9 +735,7 @@ DrawingItem::render(DrawingContext &dc, Geom::IntRect const &area, unsigned flag
     }
     dc.rectangle(*carea);
     dc.setSource(&intermediate);
-#ifdef WITH_CSSBLEND
     set_cairo_blend_operator( dc, _blend_mode );
-#endif
     dc.fill();
     dc.setSource(0,0,0,0);
     // the call above is to clear a ref on the intermediate surface held by dc
