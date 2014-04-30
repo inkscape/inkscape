@@ -419,62 +419,35 @@ void SPGenericEllipse::set_shape()
     // For simplicity, we use a circle with center (0, 0) and radius 1 for our calculations.
     Geom::Circle circle(0, 0, 1);
 
-    if (this->_isSlice()) {
-        Geom::Point center(0, 0);
-        Geom::Point start_point = Geom::Point::polar(start);
-        Geom::Point end_point = Geom::Point::polar(end);
-        Geom::Point middle_point = make_angle_bisector_ray(Geom::Ray(center, start), Geom::Ray(center, end)).versor();
-
-        Geom::EllipticalArc *arc = circle.arc(start_point, middle_point, end_point);
-
-        Geom::Path path(start_point);
-        path.append(*arc);
-
-        delete arc;
-
-        Geom::PathBuilder pb;
-        pb.append(path);
-
-        if (this->_closed) {
-            // "pizza slice"
-            pb.lineTo(center);
-            pb.closePath();
-        } else {
-            // arc only
-            pb.flush();
-        }
-
-        curve = new SPCurve(pb.peek());
-    } else {
-        // Full ellipse
-        // This code converts the circle to four elliptical arcs explicitly.
-        // Circle::getPath currently creates cubic bezier curves, these are not suitable here
-        // as a circle should have four mid markers at 0, 90, 180, 270 degrees.
-        Geom::Path path(Geom::Point::polar(0));
-        Geom::EllipticalArc* arc;
-
-        arc = circle.arc(Geom::Point::polar(0), Geom::Point::polar(M_PI / 4.0), Geom::Point::polar(M_PI / 2.0));
-        path.append(*arc);
-        delete arc;
-
-        arc = circle.arc(Geom::Point::polar(M_PI / 2.0), Geom::Point::polar(3.0 * M_PI / 4.0), Geom::Point::polar(M_PI));
-        path.append(*arc);
-        delete arc;
-
-        arc = circle.arc(Geom::Point::polar(M_PI), Geom::Point::polar(5.0 * M_PI / 4.0), Geom::Point::polar(3.0 * M_PI / 2.0));
-        path.append(*arc);
-        delete arc;
-
-        arc = circle.arc(Geom::Point::polar(3.0 * M_PI / 2.0), Geom::Point::polar(7.0 * M_PI / 4.0), Geom::Point::polar(2.0 * M_PI));
-        path.append(*arc);
-        delete arc;
-
-        Geom::PathBuilder pb;
-        pb.append(path);
-        pb.closePath();
-
-        curve = new SPCurve(pb.peek());
+    if (!this->_isSlice()) {
+        start = 0.0;
+        end = 2.0*M_PI;
     }
+    double incr = end - start; // arc angle
+    if (incr < 0.0) incr += 2.0*M_PI;    
+
+    int numsegs = 1 + int(incr*2.0/M_PI); // number of arc segments
+    if (numsegs > 4) numsegs = 4;
+
+    incr = incr/numsegs; // limit arc angle to less than 90 degrees
+    Geom::Path path(Geom::Point::polar(start));
+    Geom::EllipticalArc* arc;
+    for (int seg = 0; seg < numsegs; seg++) {
+        arc = circle.arc(Geom::Point::polar(start + seg*incr), Geom::Point::polar(start + (seg + 0.5)*incr), Geom::Point::polar(start + (seg + 1.0)*incr));
+        path.append(*arc);
+        delete arc;
+    }
+    Geom::PathBuilder pb;
+    pb.append(path);
+    if (this->_isSlice() && this->_closed) {
+        pb.lineTo(Geom::Point(0, 0));
+    }
+    if (this->_closed) {
+        pb.closePath();
+    } else {
+        pb.flush();
+    }
+    curve = new SPCurve(pb.peek());
 
     // gchar *str = sp_svg_write_path(curve->get_pathvector());
     // std::cout << "  path: " << str << std::endl;
