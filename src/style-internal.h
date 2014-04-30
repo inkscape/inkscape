@@ -166,7 +166,7 @@ class SPIFloat : public SPIBase {
     SPIFloat& operator=(const SPIFloat& rhs) {
         SPIBase::operator=(rhs);
         value         = rhs.value;
-        value_default = value_default;
+        value_default = rhs.value_default;
         return *this;
     }
 
