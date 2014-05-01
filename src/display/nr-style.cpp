@@ -69,9 +69,7 @@ NRStyle::NRStyle()
     , line_through_position(0)
     , font_size(0)
 {
-#ifdef WITH_SVG2
     paint_order_layer[0] = PAINT_ORDER_NORMAL;
-#endif
 }
 
 NRStyle::~NRStyle()
@@ -165,7 +163,6 @@ void NRStyle::set(SPStyle *style)
     }
 
 
-#ifdef WITH_SVG2
     for( unsigned i = 0; i < PAINT_ORDER_LAYERS; ++i) {
         switch (style->paint_order.layer[i]) {
             case SP_CSS_PAINT_ORDER_NORMAL:
@@ -182,7 +179,6 @@ void NRStyle::set(SPStyle *style)
                 break;
         }
     }
-#endif
 
     text_decoration_line = TEXT_DECORATION_LINE_CLEAR;
     if(style->text_decoration_line.inherit     ){ text_decoration_line |= TEXT_DECORATION_LINE_INHERIT;                                }

@@ -68,7 +68,6 @@ struct NRStyle {
     cairo_pattern_t *fill_pattern;
     cairo_pattern_t *stroke_pattern;
 
-#ifdef WITH_SVG2
     enum PaintOrderType {
         PAINT_ORDER_NORMAL,
         PAINT_ORDER_FILL,
@@ -78,7 +77,6 @@ struct NRStyle {
 
     static const size_t PAINT_ORDER_LAYERS = 3;
     PaintOrderType paint_order_layer[PAINT_ORDER_LAYERS];
-#endif
 
 #define TEXT_DECORATION_LINE_CLEAR        0x00
 #define TEXT_DECORATION_LINE_SET          0x01
