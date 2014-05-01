@@ -149,7 +149,6 @@ DrawingShape::_updateItem(Geom::IntRect const &area, UpdateContext const &ctx, u
     return STATE_ALL;
 }
 
-#ifdef WITH_SVG2
 void
 DrawingShape::_renderFill(DrawingContext &dc)
 {
@@ -183,7 +182,6 @@ DrawingShape::_renderStroke(DrawingContext &dc)
         dc.newPath(); // clear path
     }
 }
-#endif
 
 void
 DrawingShape::_renderMarkers(DrawingContext &dc, Geom::IntRect const &area, unsigned flags, DrawingItem *stop_at)
@@ -222,10 +220,9 @@ DrawingShape::_renderItem(DrawingContext &dc, Geom::IntRect const &area, unsigne
 
     }
 
-#ifdef WITH_SVG2
     if( _nrstyle.paint_order_layer[0] == NRStyle::PAINT_ORDER_NORMAL ) {
         // This is the most common case, special case so we don't call get_pathvector(), etc. twice
-#endif
+
         {
             // we assume the context has no path
             Inkscape::DrawingContext::Save save(dc);
@@ -255,7 +252,6 @@ DrawingShape::_renderItem(DrawingContext &dc, Geom::IntRect const &area, unsigne
         _renderMarkers(dc, area, flags, stop_at);
         return RENDER_OK;
 
-#ifdef WITH_SVG2
     }
 
     // Handle different paint orders
@@ -276,7 +272,6 @@ DrawingShape::_renderItem(DrawingContext &dc, Geom::IntRect const &area, unsigne
         }
     }
     return RENDER_OK;
-#endif
 }
 
 void DrawingShape::_clipItem(DrawingContext &dc, Geom::IntRect const & /*area*/)
