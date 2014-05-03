@@ -227,7 +227,7 @@ sp_canvas_arena_point (SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_
 {
     SPCanvasArena *arena = SP_CANVAS_ARENA (item);
 
-    arena->drawing.update(Geom::IntRect::infinite(), arena->ctx, DrawingItem::STATE_PICK);
+    arena->drawing.update(Geom::IntRect::infinite(), arena->ctx, DrawingItem::STATE_PICK | DrawingItem::STATE_BBOX);
     DrawingItem *picked = arena->drawing.pick(p, arena->drawing.delta, arena->sticky);
 
     arena->picked = picked;

@@ -407,7 +407,7 @@ DrawingItem::setItemBounds(Geom::OptRect const &bounds)
  * @param reset State fields that should be reset before processing them. This is
  *              a means to force a recomputation of internal data even if the item
  *              considers it up to date. Mainly for internal use, such as
- *              propagating bunding box recomputation to children when the item's
+ *              propagating bounding box recomputation to children when the item's
  *              transform changes.
  */
 void

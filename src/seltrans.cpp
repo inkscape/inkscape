@@ -377,6 +377,12 @@ void Inkscape::SelTrans::transform(Geom::Affine const &rel_affine, Geom::Point c
     g_return_if_fail(_grabbed);
     g_return_if_fail(!_empty);
 
+    // E.g. scaling a perfectly vertical line in horizontal direction will not work, and will produce an identity affine
+
+    if (rel_affine.isIdentity()) {
+        return;
+    }
+
     Geom::Affine const affine( Geom::Translate(-norm) * rel_affine * Geom::Translate(norm) );
 
     if (_show == SHOW_CONTENT) {
@@ -389,6 +395,7 @@ void Inkscape::SelTrans::transform(Geom::Affine const &rel_affine, Geom::Point c
             }
             Geom::Affine const &prev_transform = _items_affines[i];
             item.set_i2d_affine(prev_transform * affine);
+            // The new affine will only have been applied if the transformation is different from the previous one, see SPItem::set_item_transform
         }
     } else {
         if (_bbox) {
@@ -439,21 +446,25 @@ void Inkscape::SelTrans::ungrab()
     _message_context.clear();
 
     if (!_empty && _changed) {
-        sp_selection_apply_affine(selection, _current_relative_affine, (_show == SHOW_OUTLINE)? true : false);
-        if (_center) {
-            *_center *= _current_relative_affine;
-            _center_is_set = true;
-        }
+        if (!_current_relative_affine.isIdentity()) { // we can have a identity affine
+            // when trying to stretch a perfectly vertical line in horizontal direction, which will not be allowed by the handles;
 
-// If dragging showed content live, sp_selection_apply_affine cannot change the centers
-// appropriately - it does not know the original positions of the centers (all objects already have
-// the new bboxes). So we need to reset the centers from our saved array.
-        if (_show != SHOW_OUTLINE && !_current_relative_affine.isTranslation()) {
-            for (unsigned i = 0; i < _items_centers.size(); i++) {
-                SPItem *currentItem = _items[i];
-                if (currentItem->isCenterSet()) { // only if it's already set
-                    currentItem->setCenter (_items_centers[i] * _current_relative_affine);
-                    currentItem->updateRepr();
+            sp_selection_apply_affine(selection, _current_relative_affine, (_show == SHOW_OUTLINE)? true : false);
+            if (_center) {
+                *_center *= _current_relative_affine;
+                _center_is_set = true;
+            }
+
+            // If dragging showed content live, sp_selection_apply_affine cannot change the centers
+            // appropriately - it does not know the original positions of the centers (all objects already have
+            // the new bboxes). So we need to reset the centers from our saved array.
+            if (_show != SHOW_OUTLINE && !_current_relative_affine.isTranslation()) {
+                for (unsigned i = 0; i < _items_centers.size(); i++) {
+                    SPItem *currentItem = _items[i];
+                    if (currentItem->isCenterSet()) { // only if it's already set
+                        currentItem->setCenter (_items_centers[i] * _current_relative_affine);
+                        currentItem->updateRepr();
+                    }
                 }
             }
         }
@@ -463,18 +474,22 @@ void Inkscape::SelTrans::ungrab()
         _items_affines.clear();
         _items_centers.clear();
 
-        if (_current_relative_affine.isTranslation()) {
-            DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
-                               _("Move"));
-        } else if (_current_relative_affine.withoutTranslation().isScale()) {
-            DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
-                               _("Scale"));
-        } else if (_current_relative_affine.withoutTranslation().isRotation()) {
-            DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
-                               _("Rotate"));
-        } else {
-            DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
-                               _("Skew"));
+        if (!_current_relative_affine.isIdentity()) { // we can have a identity affine
+            // when trying to stretch a perfectly vertical line in horizontal direction, which will not be allowed
+            // by the handles; this would be identified as a (zero) translation by isTranslation()
+            if (_current_relative_affine.isTranslation()) {
+                DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
+                                   _("Move"));
+            } else if (_current_relative_affine.withoutTranslation().isScale()) {
+                DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
+                                   _("Scale"));
+            } else if (_current_relative_affine.withoutTranslation().isRotation()) {
+                DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
+                                   _("Rotate"));
+            } else {
+                DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
+                                   _("Skew"));
+            }
         }
 
     } else {
@@ -506,7 +521,7 @@ void Inkscape::SelTrans::stamp()
 
     bool fixup = !_grabbed;
     if ( fixup && _stamp_cache ) {
-        // TODO - give a proper fix. Simple temproary work-around for the grab() issue
+        // TODO - give a proper fix. Simple temporary work-around for the grab() issue
         g_slist_free(_stamp_cache);
         _stamp_cache = NULL;
     }
@@ -565,7 +580,7 @@ void Inkscape::SelTrans::stamp()
     }
 
     if ( fixup && _stamp_cache ) {
-        // TODO - give a proper fix. Simple temproary work-around for the grab() issue
+        // TODO - give a proper fix. Simple temporary work-around for the grab() issue
         g_slist_free(_stamp_cache);
         _stamp_cache = NULL;
     }
