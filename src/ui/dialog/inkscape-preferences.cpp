@@ -500,10 +500,12 @@ void InkscapePreferences::initPageTools()
     _page_connector.add_line(false, "", _connector_ignore_text, "",
             _("If on, connector attachment points will not be shown for text objects"));
 
+#ifdef WITH_LPETOOL
     //LPETool
-    // commented out, because the LPETool is not finished yet.
+    //disabled, because the LPETool is not finished yet.
     //this->AddPage(_page_lpetool, _("LPE Tool"), iter_tools, PREFS_PAGE_TOOLS_LPETOOL);
     //this->AddNewObjectsStyle(_page_lpetool, "/tools/lpetool");
+#endif // WITH_LPETOOL
 }
 
 void InkscapePreferences::initPageUI()
