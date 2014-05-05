@@ -503,8 +503,8 @@ void InkscapePreferences::initPageTools()
 #ifdef WITH_LPETOOL
     //LPETool
     //disabled, because the LPETool is not finished yet.
-    //this->AddPage(_page_lpetool, _("LPE Tool"), iter_tools, PREFS_PAGE_TOOLS_LPETOOL);
-    //this->AddNewObjectsStyle(_page_lpetool, "/tools/lpetool");
+    this->AddPage(_page_lpetool, _("LPE Tool"), iter_tools, PREFS_PAGE_TOOLS_LPETOOL);
+    this->AddNewObjectsStyle(_page_lpetool, "/tools/lpetool");
 #endif // WITH_LPETOOL
 }
 
