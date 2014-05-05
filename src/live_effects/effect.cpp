@@ -5,8 +5,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-//#define LPE_ENABLE_TEST_EFFECTS
-
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif

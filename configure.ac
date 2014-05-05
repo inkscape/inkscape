@@ -106,6 +106,9 @@ if test "$GCC" = "yes"; then
   # Uncomment for SVG2 stuff
   # CPPFLAGS="-DWITH_MESH -DWITH_CSSBLEND -DWITH_CSSCOMPOSITE -DWITH_SVG2 $CPPFLAGS"
 
+  # Uncomment for LPE Tool and All LPEs
+  # CPPFLAGS="-DWITH_LPETOOL -DLPE_ENABLE_TEST_EFFECTS $CPPFLAGS"
+
   ####
   # C-specific flags...
 

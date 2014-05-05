@@ -1301,8 +1301,9 @@ void setup_tool_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
         "    <toolitem action='ToolDropper' />"
 
         "    <toolitem action='ToolConnector' />"
-
-//        "    <toolitem action='ToolLPETool' />"
+#ifdef WITH_LPETOOL
+        "    <toolitem action='ToolLPETool' />"
+#endif
         "  </toolbar>"
         "</ui>";
 

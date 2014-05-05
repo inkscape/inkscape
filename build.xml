@@ -211,6 +211,12 @@
         /* Do we want experimental, unsupported, unguaranteed, etc., LivePathEffects enabled? */
         //#define LPE_ENABLE_TEST_EFFECTS    1
 
+        /* Do we want experimental, unsupported, unguaranteed, etc., SVG2 features enabled? */
+        //#define WITH_SVG2                  1
+        //#define WITH_CSSCOMPOSITE          1
+        //#define WITH_CSSBLEND              1
+        //#define WITH_MESH                  1
+
         #define HAVE_ASPELL                   1
 
         #endif /* _CONFIG_H_ */
