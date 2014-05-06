@@ -169,7 +169,7 @@ selection_get_center_x (Inkscape::Selection *sel){
 gdouble
 selection_get_center_y (Inkscape::Selection *sel){
     Geom::OptRect box = sel->documentBounds(SPItem::GEOMETRIC_BBOX);
-    return box ? box->midpoint()[Geom::X] : 0;
+    return box ? box->midpoint()[Geom::Y] : 0;
 }
 
 /* 
