@@ -65,13 +65,13 @@ SPIFloat::read( gchar const *str ) {
     if( !str ) return;
 
     if ( !strcmp(str, "inherit") ) {
-        set = TRUE;
-        inherit = TRUE;
+        set = true;
+        inherit = true;
     } else {
         gfloat value_tmp;
         if (sp_svg_number_read_f(str, &value_tmp)) {
-            set = TRUE;
-            inherit = FALSE;
+            set = true;
+            inherit = false;
             value = value_tmp;
         }
     }
@@ -140,13 +140,13 @@ SPIScale24::read( gchar const *str ) {
     if( !str ) return;
 
     if ( !strcmp(str, "inherit") ) {
-        set = TRUE;
-        inherit = TRUE;
+        set = true;
+        inherit = true;
     } else {
         gfloat value_in;
         if (sp_svg_number_read_f(str, &value_in)) {
-            set = TRUE;
-            inherit = FALSE;
+            set = true;
+            inherit = false;
             value_in = CLAMP(value_in, 0.0, 1.0);
             value = SP_SCALE24_FROM_FLOAT( value_in );
         }
@@ -228,8 +228,8 @@ SPILength::read( gchar const *str ) {
     if( !str ) return;
 
     if (!strcmp(str, "inherit")) {
-        set = TRUE;
-        inherit = TRUE;
+        set = true;
+        inherit = true;
         unit = SP_CSS_UNIT_NONE;
         value = computed = 0.0;
     } else {
@@ -291,8 +291,8 @@ SPILength::read( gchar const *str ) {
                 /* Invalid */
                 return;
             }
-            set = TRUE;
-            inherit = FALSE;
+            set = true;
+            inherit = false;
         }
     }
 }
@@ -439,11 +439,11 @@ SPILengthOrNormal::read( gchar const *str ) {
     if( !str ) return;
 
     if ( !strcmp(str, "normal") ) {
-        set = TRUE;
-        inherit = FALSE;
+        set = true;
+        inherit = false;
         unit = SP_CSS_UNIT_NONE;
         value = computed = 0.0;
-        normal = TRUE;
+        normal = true;
     } else {
         SPILength::read( str );
         normal = false;
@@ -501,13 +501,13 @@ SPIEnum::read( gchar const *str ) {
     if( !str ) return;
 
     if( !strcmp(str, "inherit") ) {
-        set = TRUE;
-        inherit = TRUE;
+        set = true;
+        inherit = true;
     } else {
         for (unsigned i = 0; enums[i].key; i++) {
             if (!strcmp(str, enums[i].key)) {
-                set = TRUE;
-                inherit = FALSE;
+                set = true;
+                inherit = false;
                 value = enums[i].value;
                 /* Save copying for values not needing it */
                 computed = value;
@@ -651,12 +651,12 @@ SPIString::read( gchar const *str ) {
     g_free(value);
 
     if (!strcmp(str, "inherit")) {
-        set = TRUE;
-        inherit = TRUE;
+        set = true;
+        inherit = true;
         value = NULL;
     } else {
-        set = TRUE;
-        inherit = FALSE;
+        set = true;
+        inherit = false;
         value = g_strdup(str);
     }
 }
@@ -762,13 +762,13 @@ void SPIColor::read( gchar const *str ) {
         if( name.compare( "color") == 0 ) {
             inherit = true;  // CSS3
         } else {
-            value.color = style->color.value.color;
+            setColor( style->color.value.color );
         }
     } else {
         guint32 const rgb0 = sp_svg_read_color(str, 0xff);
         if (rgb0 != 0xff) {
             setColor(rgb0);
-            set = TRUE;
+            set = true;
         }
     }
 }
@@ -821,7 +821,7 @@ SPIColor::cascade( const SPIBase* const parent ) {
     if( const SPIColor* p = dynamic_cast<const SPIColor*>(parent) ) {
         if( (inherits && !set) || inherit) { // FIXME verify for 'color'
             if( !(inherit && currentcolor) ) currentcolor = p->currentcolor;
-            value.color  = p->value.color;
+            setColor( p->value.color );
         } else {
             // Add CSS4 Color: Lighter, Darker
         }
@@ -910,8 +910,8 @@ SPIPaint::read( gchar const *str ) {
     }
 
     if (streq(str, "inherit")) {
-        set = TRUE;
-        inherit = TRUE;
+        set = true;
+        inherit = true;
     } else {
         // Read any URL first. The other values can be stand-alone or backup to the URL.
 
@@ -924,7 +924,7 @@ SPIPaint::read( gchar const *str ) {
             } else if (!style ) {
                 std::cerr << "SPIPaint::read: url with empty SPStyle pointer" << std::endl;
             } else {
-                set = TRUE;
+                set = true;
                 SPDocument *document = (style->object) ? style->object->document : NULL;
 
                 // Create href if not done already
@@ -946,17 +946,17 @@ SPIPaint::read( gchar const *str ) {
         }
 
         if (streq(str, "currentColor")) {
-            set = TRUE;
-            currentcolor = TRUE;
-            value.color = style->color.value.color;
+            set = true;
+            currentcolor = true;
+            setColor( style->color.value.color );
         } else if (streq(str, "none")) {
-            set = TRUE;
-            noneSet = TRUE;
+            set = true;
+            noneSet = true;
         } else {
             guint32 const rgb0 = sp_svg_read_color(str, &str, 0xff);
             if (rgb0 != 0xff) {
                 setColor( rgb0 );
-                set = TRUE;
+                set = true;
 
                 while (g_ascii_isspace(*str)) {
                     ++str;
@@ -1076,7 +1076,7 @@ SPIPaint::reset( bool init ) {
             setColor(0.0, 0.0, 0.0);
         }
         if( name.compare( "text-decoration-color" ) == 0 ) {
-            currentcolor = true;
+            // currentcolor = true;
         }
     }
 }
@@ -1100,10 +1100,10 @@ SPIPaint::cascade( const SPIBase* const parent ) {
             } else if( p->isColor() ) {
                 setColor( p->value.color );
             } else if( p->isNoneSet() ) {
-                noneSet = TRUE;
+                noneSet = true;
             } else if( p->currentcolor ) {
-                currentcolor = TRUE;
-                value.color = style->color.value.color;
+                currentcolor = true;
+                setColor( style->color.value.color );
             } else if( isNone() ) {
                 //
             } else {
@@ -1112,7 +1112,7 @@ SPIPaint::cascade( const SPIBase* const parent ) {
         } else {
             if( currentcolor ) {
                 // Update in case color value changed.
-                value.color = style->color.value.color;
+                setColor( style->color.value.color );
             }
         }
 
@@ -1179,14 +1179,14 @@ SPIPaintOrder::read( gchar const *str ) {
     if( !str ) return;
 
     g_free(value);
-    set = FALSE;
-    inherit = FALSE;
+    set = false;
+    inherit = false;
 
     if (!strcmp(str, "inherit")) {
-        set = TRUE;
-        inherit = TRUE;
+        set = true;
+        inherit = true;
     } else {
-        set = TRUE;
+        set = true;
         value = g_strdup(str);
 
         if (!strcmp(value, "normal")) {
@@ -1347,10 +1347,10 @@ SPIFilter::read( gchar const *str ) {
     clear();
 
     if ( streq(str, "inherit") ) {
-        set = TRUE;
-        inherit = TRUE;
+        set = true;
+        inherit = true;
     } else if(streq(str, "none")) {
-        set = TRUE;
+        set = true;
     } else if (strneq(str, "url", 3)) {
         gchar *uri = extract_uri(str);
         if(uri == NULL || uri[0] == '\0') {
@@ -1360,7 +1360,7 @@ SPIFilter::read( gchar const *str ) {
             std::cerr << "SPIFilter::read: url with empty SPStyle pointer" << std::endl;
             return;
         }
-        set = TRUE;
+        set = true;
 
         // Create href if not already done.
         if (!href && style->object) {
@@ -1592,14 +1592,14 @@ SPIFontSize::read( gchar const *str ) {
     if( !str ) return;
 
     if (!strcmp(str, "inherit")) {
-        set = TRUE;
-        inherit = TRUE;
+        set = true;
+        inherit = true;
     } else if ((*str == 'x') || (*str == 's') || (*str == 'm') || (*str == 'l')) {
         // xx-small, x-small, etc.
         for (unsigned i = 0; enum_font_size[i].key; i++) {
             if (!strcmp(str, enum_font_size[i].key)) {
-                set = TRUE;
-                inherit = FALSE;
+                set = true;
+                inherit = false;
                 type = SP_FONT_SIZE_LITERAL;
                 literal = enum_font_size[i].value;
                 return;
@@ -1609,10 +1609,10 @@ SPIFontSize::read( gchar const *str ) {
         return;
     } else {
         SPILength length("temp");
-        length.set = FALSE;
+        length.set = false;
         length.read( str );
         if( length.set ) {
-            set      = TRUE;
+            set      = true;
             inherit  = length.inherit;
             unit     = length.unit;
             value    = length.value;
@@ -1824,8 +1824,8 @@ SPIFont::read( gchar const *str ) {
     }
 
     if ( !strcmp(str, "inherit") ) {
-        set = TRUE;
-        inherit = TRUE;
+        set = true;
+        inherit = true;
     } else {
 
         // Break string into white space separated tokens
@@ -1957,14 +1957,14 @@ SPIBaselineShift::read( gchar const *str ) {
     if( !str ) return;
 
     if (!strcmp(str, "inherit")) {
-        set = TRUE;
-        inherit = TRUE;
+        set = true;
+        inherit = true;
     } else if ((*str == 'b') || (*str == 's')) {
         // baseline or sub or super
         for (unsigned i = 0; enum_baseline_shift[i].key; i++) {
             if (!strcmp(str, enum_baseline_shift[i].key)) {
-                set = TRUE;
-                inherit = FALSE;
+                set = true;
+                inherit = false;
                 type = SP_BASELINE_SHIFT_LITERAL;
                 literal = enum_baseline_shift[i].value;
                 return;
