@@ -2425,10 +2425,20 @@ SPITextDecoration::read( gchar const *str ) {
             free(frag);
             if( style->text_decoration_color.set ) break;
             style->text_decoration_color.read( "currentColor" );  // Default value
+            style->text_decoration_color.set = false;
             if( *str == '\0' )break;
             hstr = str + 1;
         }
         str++;
+    }
+
+    // If we read a style or color then we have CSS3 which require any non-set values to be
+    // set to their default values.
+    if( style->text_decoration_style.set == true ||
+        style->text_decoration_style.set == true ) {
+        style->text_decoration_line.set = true;
+        style->text_decoration_style.set = true;
+        style->text_decoration_color.set = true;
     }
 }
 
