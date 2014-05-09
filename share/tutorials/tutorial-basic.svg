@@ -36,16 +36,16 @@
    <path id="path1793" d="m510.36 306.93c10.237-2.5598 33.886 0 30.119 15.058-3.7633 15.062-35.764 9.4119-56.473 1.8852-1.8823-15.061 21.529-15.737 26.354-16.943z" stroke-width="1pt"/>
    <path id="path831" d="m359.24 21.363c-11.313 0-22.606 4.3206-31.275 12.99l-154.09 154.06c-8.4969 8.4967-12.762 19.543-12.931 30.631h-0.0585c0 0.0395 0.0566 0.0774 0.0585 0.11702-0.002 0.18609-0.0585 0.36977-0.0585 0.55586h0.2633c2.9491 11.221 79.15 25.523 87.651 34.025 12.839 12.839-49.233 22.268-36.395 35.107 12.839 12.839 77.59 24.843 90.43 37.682 12.839 12.839-26.238 26.51-13.399 39.349s55.967-3.2094 48.155 30.28c17.338 17.338 53.512 9.0588 77.733-8.2795 12.839-12.839-24.629-11.707-11.79-24.546s45.247-12.908 72.555-43.621c-10.992-17.095-46.981-24.375-34.142-37.214s37.8-6.3179 91.659-30.777c26.292-11.941 24.12-21.01 24.019-32.006-0.002-0.23138 0-0.43973 0-0.67288h-0.0585c-0.16-11.07-4.46-22.12-12.95-30.62l-154.07-154.06c-8.66-8.667-19.99-12.987-31.3-12.987zm-1.3165 20.04c5.0295 0.13102 9.0916 3.9651 17.056 9.1279l72.789 53.977c0.79681 0.51671 1.5557 1.0557 2.2527 1.6091 0.69703 0.55327 1.3337 1.1401 1.9309 1.7261 0.5972 0.58495 1.14 1.1721 1.6383 1.7846 0.49726 0.61244 0.94845 1.2385 1.3458 1.8724 0.39844 0.6349 0.75476 1.2798 1.0532 1.9309 0.29867 0.65226 0.53281 1.325 0.7314 1.9894 0.19976 0.66341 0.36832 1.319 0.46811 1.9894 0.0999 0.67165 0.14627 1.3452 0.14627 2.0187l-43.123-20.83-4.3006 32.562-23.727-11.117-36.629 24.458-14.014-48.331-18.051 42.275-50.408 5.032 0.55587-22.439c0-5.3897 29.057-43.122 46.751-52.105l32.386-23.259c4.7787-3.0977 8.1289-4.35 11.147-4.2714zm-66.996 220.21c22.944 5.9503 48.476 13.757 68.957 13.897l0.87768 9.2157c-17.538-1.8078-54.648-10.276-63.398-14.745l-6.4363-8.3672z" stroke-width="1pt"/>
   </g>
-  <use id="use2086" style="color:#000000" xlink:href="#path1124" transform="matrix(3.7991 0 0 3.7991 -428.74 -36.475)" height="1052.3622" fill-opacity=".11077" width="320.00000" y="0.0000000" x="0.0000000" font-family="Sans" fill="#ffffff"/>
-  <text id="text7519" opacity=".5" line-height="125%" xml:space="preserve" transform="rotate(90)" font-size="6.9693px" y="-326.81229" x="3.6203015" font-family="Sans" sodipodi:linespacing="125%" fill="#000000"><tspan id="tspan7521" sodipodi:role="line" x="3.6203015" style="letter-spacing:.29056" y="-326.81229">Use <tspan id="tspan7523" font-weight="bold">Ctrl+down arrow</tspan> to scroll </tspan></text>
+  <use id="use2086" style="color:#000000" xlink:href="#path1124" transform="matrix(3.7991 0 0 3.7991 -428.74 -36.475)" height="1052.3622" fill-opacity=".11077" width="320.00000" y="0.0000000" x="0.0000000" font-family="sans-serif" fill="#ffffff"/>
+  <text id="text7519" opacity=".5" line-height="125%" xml:space="preserve" transform="rotate(90)" font-size="6.9693px" y="-326.81229" x="3.6203015" font-family="sans-serif" sodipodi:linespacing="125%" fill="#000000"><tspan id="tspan7521" sodipodi:role="line" x="3.6203015" style="letter-spacing:.29056" y="-326.81229">Use <tspan id="tspan7523" font-weight="bold">Ctrl+down arrow</tspan> to scroll </tspan></text>
   <path id="path7527" opacity=".5" style="color:#000000" d="m338.53 197.82-13.108-1.2709 7.6547-10.717z" fill-rule="evenodd" transform="matrix(.61496 .045496 .061919 -.45186 112.46 201.6)"/>
  </g>
- <text id="text1920" font-family="Sans" font-size="7" transform="scale(1.1307)" y="18.25828" x="176.24451" fill="#ffffff">
+ <text id="text1920" font-family="sans-serif" font-size="7" transform="scale(1.1307)" y="18.25828" x="176.24451" fill="#ffffff">
   <tspan id="tspan1668" style="letter-spacing:2.1813" fill="#ffffff" dx="0 -0.57057059 0 0 0 0 0">::BASIC</tspan>
  </text>
 <!--Author: bulia byak, buliabyak@users.sf.net-->
  <rect id="d0e15" display="none" height="1e3px" width="264" y="36" x="35"/>
- <flowRoot font-family="Sans" font-size="7.2" font-style="italic" line-height="150%" fill="#000000">
+ <flowRoot font-family="sans-serif" font-size="7.2" font-style="italic" line-height="150%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e15"/>
   </flowRegion>
@@ -54,7 +54,7 @@ regular Inkscape document that you can view, edit, copy from, or save.
 </flowDiv>
  </flowRoot>
  <rect id="d0e18" display="none" height="1e3px" width="264" y="59.768" x="35"/>
- <flowRoot font-family="Sans" font-size="7.2" font-style="italic" line-height="150%" fill="#000000">
+ <flowRoot font-family="sans-serif" font-size="7.2" font-style="italic" line-height="150%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e18"/>
   </flowRegion>
@@ -64,11 +64,11 @@ and stroke, alignment, and z-order. For more advanced topics, check out the othe
 tutorials in the Help menu.
 </flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="123.93593399999999" x="10" font-family="Sans" fill="#000000">
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="123.93593399999999" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="123.93593399999999" x="10">Panning the canvas</tspan>
  </text>
  <rect id="d0e27" display="none" height="1e3px" width="288" y="129.14" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e27"/>
   </flowRegion>
@@ -79,11 +79,11 @@ button. Or, you can use the scrollbars (press <flowSpan font-weight="bold">Ctrl+
 them). The <flowSpan font-weight="bold">wheel</flowSpan> on your mouse also works for scrolling vertically;
 press <flowSpan font-weight="bold">Shift</flowSpan> with the wheel to scroll horizontally.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="213.070249" x="10" font-family="Sans" fill="#000000">
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="213.070249" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="213.070249" x="10">Zooming in or out</tspan>
  </text>
  <rect id="d0e48" display="none" height="1e3px" width="288" y="218.27" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e48"/>
   </flowRegion>
@@ -98,7 +98,7 @@ dragging around it.
 </flowDiv>
  </flowRoot>
  <rect id="d0e75" display="none" height="1e3px" width="288" y="309" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e75"/>
   </flowRegion>
@@ -107,11 +107,11 @@ session. Press the <flowSpan font-weight="bold">`</flowSpan> key to go back to t
 <flowSpan font-weight="bold">Shift+`</flowSpan> to go forward.
 </flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="360.975683" x="10" font-family="Sans" fill="#000000">
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="360.975683" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="360.975683" x="10">Inkscape tools</tspan>
  </text>
  <rect id="d0e90" display="none" height="1e3px" width="288" y="366.18" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e90"/>
   </flowRegion>
@@ -123,39 +123,39 @@ bar</flowSpan> at the bottom of the window will display useful hints and message
 you work.</flowDiv>
  </flowRoot>
  <rect id="d0e102" display="none" height="1e3px" width="288" y="435.57" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e102"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Many operations are available through keyboard shortcuts. Open
 Help &gt; Keys and Mouse to see the complete reference.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="476.86255900000003" x="10" font-family="Sans" fill="#000000">
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="476.86255900000003" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="476.86255900000003" x="10">Creating and managing documents</tspan>
  </text>
  <rect id="d0e111" display="none" height="1e3px" width="288" y="482.06" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e111"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">To create a new empty document, use <flowSpan font-family="Sans">File &gt; New &gt; Default</flowSpan> 
+  <flowDiv xml:space="preserve">To create a new empty document, use <flowSpan font-family="sans-serif">File &gt; New &gt; Default</flowSpan> 
 or press <flowSpan font-weight="bold">Ctrl+N</flowSpan>. To create a new document from one of Inkscape&apos;s many 
-templates, use <flowSpan font-family="Sans">File &gt; New &gt; Templates...</flowSpan> or press 
+templates, use <flowSpan font-family="sans-serif">File &gt; New &gt; Templates...</flowSpan> or press 
 <flowSpan font-weight="bold">Ctrl+Alt+N</flowSpan></flowDiv>
  </flowRoot>
  <rect id="d0e125" display="none" height="1e3px" width="288" y="521.12" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e125"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">To open an existing SVG document, use <flowSpan font-family="Sans">File &gt;
-Open</flowSpan> (<flowSpan font-weight="bold">Ctrl+O</flowSpan>). To save, use <flowSpan font-family="Sans">File &gt; Save</flowSpan>
-(<flowSpan font-weight="bold">Ctrl+S</flowSpan>), or <flowSpan font-family="Sans">Save As</flowSpan> (<flowSpan font-weight="bold">Shift+Ctrl+S</flowSpan>)
+  <flowDiv xml:space="preserve">To open an existing SVG document, use <flowSpan font-family="sans-serif">File &gt;
+Open</flowSpan> (<flowSpan font-weight="bold">Ctrl+O</flowSpan>). To save, use <flowSpan font-family="sans-serif">File &gt; Save</flowSpan>
+(<flowSpan font-weight="bold">Ctrl+S</flowSpan>), or <flowSpan font-family="sans-serif">Save As</flowSpan> (<flowSpan font-weight="bold">Shift+Ctrl+S</flowSpan>)
 to save under a new name.  (Inkscape may still be unstable, so remember to save
 often!)</flowDiv>
  </flowRoot>
  <rect id="d0e146" display="none" height="1e3px" width="288" y="570.39" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e146"/>
   </flowRegion>
@@ -165,7 +165,7 @@ text or XML editor (apart from Inkscape, that is). Besides SVG,
 Inkscape can import and export several other formats (EPS, PNG).</flowDiv>
  </flowRoot>
  <rect id="d0e149" display="none" height="1e3px" width="288" y="630.69" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e149"/>
   </flowRegion>
@@ -178,11 +178,11 @@ the <flowSpan font-weight="bold">Ctrl+Tab</flowSpan> shortcut only works with do
 process. If you open multiple files from a file browser or launch more than
 one Inkscape process from an icon it will not work.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="746.411616" x="10" font-family="Sans" fill="#000000">
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="746.411616" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="746.411616" x="10">Creating shapes</tspan>
  </text>
  <rect id="d0e167" display="none" height="1e3px" width="288" y="751.61" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e167"/>
   </flowRegion>
@@ -202,7 +202,7 @@ right here:</flowDiv>
  <rect id="basic-f01-en.svgrect744" fill-rule="evenodd" transform="translate(10 798.77)" height="1.7641" width="4.1162" stroke="#000" y="20.472" x="247.49" xmlns:cc="http://creativecommons.org/ns#" stroke-width="1pt" fill="#00f"/>
  <rect id="basic-f01-en.svgrect745" fill-rule="evenodd" transform="translate(10 798.77)" height="1.1761" width="2.9402" stroke="#000" y="17.532" x="259.25" xmlns:cc="http://creativecommons.org/ns#" stroke-width="1pt" fill="#00f"/>
  <rect id="d0e183" display="none" height="1e3px" width="288" y="860.5" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e183"/>
   </flowRegion>
@@ -227,7 +227,7 @@ also create ellipses, stars, and spirals:</flowDiv>
  <path id="basic-f02-en.svgpath1314" sodipodi:sides="5" fill-opacity=".75" inkscape:flatsided="false" stroke="#000" stroke-width="1pt" fill="#ff0" style="color:#000000" fill-rule="evenodd" transform="translate(26.429 862.64)" inkscape:rounded="0.0000000" sodipodi:r1="7.9859571" sodipodi:r2="3.9929783" sodipodi:arg1="0.46364761" sodipodi:arg2="1.0919661" sodipodi:type="star" d="m162.5 66.648l-5.3-0.028-3.03 4.353-1.61-5.052-5.08-1.535 4.31-3.095-0.11-5.302 4.27 3.139 5.01-1.741-1.66 5.035 3.2 4.226z" inkscape:randomized="0.0000000" sodipodi:cy="63.076466" sodipodi:cx="155.35715"/>
  <path id="basic-f02-en.svgpath1316" sodipodi:sides="5" fill-opacity=".75" inkscape:flatsided="false" stroke="#000" stroke-width="1pt" fill="#ff0" style="color:#000000" fill-rule="evenodd" transform="translate(26.429 862.64)" inkscape:rounded="0.0000000" sodipodi:r1="5.8138647" sodipodi:r2="2.9069321" sodipodi:arg1="0.74194727" sodipodi:arg2="1.3702658" sodipodi:type="star" d="m180 69.505l-3.71-1.08-2.99 2.441-0.12-3.859-3.24-2.09 3.63-1.305 0.99-3.733 2.36 3.052 3.85-0.216-2.17 3.191 1.4 3.599z" inkscape:randomized="0.0000000" sodipodi:cy="65.576469" sodipodi:cx="175.71429"/>
  <rect id="d0e199" display="none" height="1e3px" width="288" y="980.11" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e199"/>
   </flowRegion>
@@ -238,7 +238,7 @@ these controls affect the currently selected shapes (i.e. those that display the
 <flowSpan font-style="italic">and</flowSpan> set the default that will apply to newly created shapes.</flowDiv>
  </flowRoot>
  <rect id="d0e211" display="none" height="1e3px" width="288" y="1051.2" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e211"/>
   </flowRegion>
@@ -246,11 +246,11 @@ these controls affect the currently selected shapes (i.e. those that display the
 <flowSpan font-weight="bold">Ctrl+Z</flowSpan>. (Or, if you change your mind again, you can
 <flowSpan font-style="italic">redo</flowSpan> the undone action by <flowSpan font-weight="bold">Shift+Ctrl+Z</flowSpan>.)</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="1092.480625" x="10" font-family="Sans" fill="#000000">
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="1092.480625" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="1092.480625" x="10">Moving, scaling, rotating</tspan>
  </text>
  <rect id="d0e232" display="none" height="1e3px" width="288" y="1097.7" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e232"/>
   </flowRegion>
@@ -261,7 +261,7 @@ any object on the canvas. Click on the rectangle below.</flowDiv>
  </flowRoot>
  <rect id="basic-f03-en.svgrect804" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1153.8)" height="38.81" width="40.574" stroke="#000" y="-.47140" x="25.427" stroke-width="1pt" fill="#00f"/>
  <rect id="d0e254" display="none" height="1e3px" width="288" y="1205.9" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e254"/>
   </flowRegion>
@@ -270,7 +270,7 @@ Now you can:</flowDiv>
  </flowRoot>
  <circle cy="0" cx="0" r="2" transform="translate(15 1240.4)"/>
  <rect id="d0e261" display="none" height="1e3px" width="258" y="1234.4" x="20"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e261"/>
   </flowRegion>
@@ -279,7 +279,7 @@ to horizontal and vertical.)</flowDiv>
  </flowRoot>
  <circle cy="0" cx="0" r="2" transform="translate(15 1268.3)"/>
  <rect id="d0e272" display="none" height="1e3px" width="258" y="1262.3" x="20"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e272"/>
   </flowRegion>
@@ -288,7 +288,7 @@ the original height/width ratio.)
 </flowDiv>
  </flowRoot>
  <rect id="d0e281" display="none" height="1e3px" width="288" y="1290.8" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e281"/>
   </flowRegion>
@@ -296,7 +296,7 @@ the original height/width ratio.)
  </flowRoot>
  <circle cy="0" cx="0" r="2" transform="translate(15 1314.7)"/>
  <rect id="d0e288" display="none" height="1e3px" width="258" y="1308.7" x="20"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e288"/>
   </flowRegion>
@@ -306,7 +306,7 @@ position the center of rotation.)</flowDiv>
  </flowRoot>
  <circle cy="0" cx="0" r="2" transform="translate(15 1353.7)"/>
  <rect id="d0e299" display="none" height="1e3px" width="258" y="1347.7" x="20"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e299"/>
   </flowRegion>
@@ -315,7 +315,7 @@ handles. (Press <flowSpan font-weight="bold">Ctrl</flowSpan> to restrict skewing
 steps.)</flowDiv>
  </flowRoot>
  <rect id="d0e308" display="none" height="1e3px" width="288" y="1376.2" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e308"/>
   </flowRegion>
@@ -323,11 +323,11 @@ steps.)</flowDiv>
 (above the canvas) to set exact values for coordinates (X and Y) and size (W and H) of
 the selection.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="1427.6239778" x="10" font-family="Sans" fill="#000000">
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="1427.6239778" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="1427.6239778" x="10">Transforming by keys</tspan>
  </text>
  <rect id="d0e317" display="none" height="1e3px" width="288" y="1432.8" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e317"/>
   </flowRegion>
@@ -336,7 +336,7 @@ emphasis on keyboard accessibility. There&apos;s hardly any command or action th
 impossible to do from keyboard, and transforming objects is no exception.</flowDiv>
  </flowRoot>
  <rect id="d0e320" display="none" height="1e3px" width="288" y="1482.6" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e320"/>
   </flowRegion>
@@ -349,7 +349,7 @@ respectively.  Default rotates are by 15 degrees; with <flowSpan font-weight="bo
 by 90 degrees.</flowDiv>
  </flowRoot>
  <rect id="d0e350" display="none" height="1e3px" width="288" y="1543.1" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e350"/>
   </flowRegion>
@@ -364,7 +364,7 @@ nudge on your screen. It is thus possible to position objects with arbitrary pre
 simply by zooming in or out as needed.</flowDiv>
  </flowRoot>
  <rect id="d0e374" display="none" height="1e3px" width="288" y="1644.5" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e374"/>
   </flowRegion>
@@ -374,17 +374,17 @@ scale selection so that its visible size changes by one screen pixel, and
 farthest-from-center point moves by one screen pixel.</flowDiv>
  </flowRoot>
  <rect id="d0e389" display="none" height="1e3px" width="288" y="1683.6" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e389"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Note: Linux users may not get the expected results with the <flowSpan font-weight="bold">Alt+arrow</flowSpan> and a few other key combinations if their Window Manager catches those key events before they reach the inkscape application. One solution would be to change the WM&apos;s configuration accordingly.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="1746.2146758" x="10" font-family="Sans" fill="#000000">
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="1746.2146758" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="1746.2146758" x="10">Multiple selections</tspan>
  </text>
  <rect id="d0e401" display="none" height="1e3px" width="288" y="1751.4" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e401"/>
   </flowRegion>
@@ -400,7 +400,7 @@ the shapes below:</flowDiv>
  <path id="basic-f04-en.svgpath879" d="m134.86 1251.7c0 9.8339-9.8015 17.806-21.892 17.806-12.091 0-21.892-7.9719-21.892-17.806 0-9.8338 9.8015-17.806 21.892-17.806 12.091 0 21.892 7.9719 21.892 17.806z" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1830.5) matrix(.80106 0 0 .80106 32.311 -983.83)" stroke="#000" xmlns:cc="http://creativecommons.org/ns#" stroke-width="1pt" fill="#f00"/>
  <path id="basic-f04-en.svgpath1290" style="color:#000000" d="m182.84 29.583-13.183-3.2184-10.125 9.0355-1.013-13.533-11.722-6.8373 12.557-5.1452 2.8804-13.261 8.7737 10.353 13.502-1.3585-7.1347 11.543z" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1830.5) matrix(.87302 0 0 .87302 27.6 4.0534)" stroke="#000" xmlns:cc="http://creativecommons.org/ns#" stroke-width=".91757pt" fill="#ff0"/>
  <rect id="d0e426" display="none" height="1e3px" width="288" y="1878.5" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e426"/>
   </flowRegion>
@@ -411,7 +411,7 @@ but not the rectangle:</flowDiv>
  <path id="basic-f05-en.svgpath1290" style="color:#000000" d="m94.643 25.041c0 6.9036-2.9581 12.5-6.6071 12.5s-6.6071-5.5964-6.6071-12.5 2.9581-12.5 6.6071-12.5 6.6071 5.5964 6.6071 12.5z" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1915) matrix(.70711 -.70711 .70711 .70711 28.793 65.478)" stroke="#000" xmlns:cc="http://creativecommons.org/ns#" stroke-width=".48693pt" fill="#f00"/>
  <path id="basic-f05-en.svgpath1292" style="color:#000000" d="m94.643 25.041c0 6.9036-2.9581 12.5-6.6071 12.5s-6.6071-5.5964-6.6071-12.5 2.9581-12.5 6.6071-12.5 6.6071 5.5964 6.6071 12.5z" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1915) matrix(.70711 -.70711 .70711 .70711 56.471 65.835)" stroke="#000" xmlns:cc="http://creativecommons.org/ns#" stroke-width=".48693pt" fill="#f00"/>
  <rect id="d0e442" display="none" height="1e3px" width="288" y="1967.9" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e442"/>
   </flowRegion>
@@ -422,7 +422,7 @@ ellipses and the rectangle, without the cues you would have hard time guessing w
 the ellipses are selected or not.</flowDiv>
  </flowRoot>
  <rect id="d0e448" display="none" height="1e3px" width="288" y="2028.3" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e448"/>
   </flowRegion>
@@ -431,7 +431,7 @@ Select all three objects above, then use <flowSpan font-weight="bold">Shift+clic
 ellipses from the selection leaving only the rectangle selected.</flowDiv>
  </flowRoot>
  <rect id="d0e456" display="none" height="1e3px" width="288" y="2067.4" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e456"/>
   </flowRegion>
@@ -439,11 +439,11 @@ ellipses from the selection leaving only the rectangle selected.</flowDiv>
 objects. <flowSpan font-weight="bold">Ctrl+A</flowSpan> selects all objects in the current layer (if you did
 not create layers, this is the same as all objects in the document).</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2119.3774168000004" x="10" font-family="Sans" fill="#000000">
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2119.3774168000004" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="2119.3774168000004" x="10">Grouping</tspan>
  </text>
  <rect id="d0e471" display="none" height="1e3px" width="288" y="2124.6" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e471"/>
   </flowRegion>
@@ -461,7 +461,7 @@ the group.</flowDiv>
   <path id="basic-f06-en.svgpolygon1375" d="m184.48 1254.9-15.238-3.72-11.703 10.444-1.1708-15.642-13.549-7.9029 14.514-5.9471 3.3293-15.328 10.141 11.966 15.607-1.5703-8.2467 13.343z" transform="translate(86.386 261.2)" fill="#ff0"/>
  </g>
  <rect id="d0e487" display="none" height="1e3px" width="288" y="2260.6" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e487"/>
   </flowRegion>
@@ -474,7 +474,7 @@ selection; you&apos;ll need to press <flowSpan font-weight="bold">Ctrl+U</flowSp
 completely ungroup a deep group-in-group.</flowDiv>
  </flowRoot>
  <rect id="d0e502" display="none" height="1e3px" width="288" y="2342.3" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e502"/>
   </flowRegion>
@@ -486,11 +486,11 @@ grouping. Try to move or transform the individual shapes in the
 group (above right) without ungrouping it, then deselect and select
 the group normally to see that it still remains grouped.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2436.870596800001" x="10" font-family="Sans" fill="#000000">
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2436.870596800001" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="2436.870596800001" x="10">Fill and stroke</tspan>
  </text>
  <rect id="d0e517" display="none" height="1e3px" width="288" y="2442.1" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e517"/>
   </flowRegion>
@@ -500,7 +500,7 @@ View menu (or press <flowSpan font-weight="bold">Shift+Ctrl+W</flowSpan>), selec
 it (change its fill color).</flowDiv>
  </flowRoot>
  <rect id="d0e526" display="none" height="1e3px" width="288" y="2491.9" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e526"/>
   </flowRegion>
@@ -510,7 +510,7 @@ dialog.</flowDiv>
  </flowRoot>
  <path id="basic-f07-en.svgpath930" d="m190.32 1450.2c0 9.0277-29.666 16.346-66.261 16.346s-66.261-7.3185-66.261-16.346c0-9.0278 29.666-16.346 66.261-16.346s66.261 7.3185 66.261 16.346z" fill-rule="evenodd" fill-opacity=".75" transform="translate(13.066 1106.7)" stroke="#000" xmlns:cc="http://creativecommons.org/ns#" stroke-width="1pt" fill="#f00"/>
  <rect id="d0e545" display="none" height="1e3px" width="288" y="2585" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e545"/>
   </flowRegion>
@@ -521,7 +521,7 @@ including no fill (the button with the X), flat color fill, as well as linear or
 gradients. For the above shape, the flat fill button will be activated.</flowDiv>
  </flowRoot>
  <rect id="d0e551" display="none" height="1e3px" width="288" y="2654.4" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e551"/>
   </flowRegion>
@@ -532,7 +532,7 @@ a shade of that hue within the triangle. All color pickers contain a slider to s
 <flowSpan font-style="italic">alpha</flowSpan> (opacity) of the selected object(s).</flowDiv>
  </flowRoot>
  <rect id="d0e560" display="none" height="1e3px" width="288" y="2725.4" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e560"/>
   </flowRegion>
@@ -548,7 +548,7 @@ fill and stroke (for multiple selected objects, the dialog shows their
  <path id="basic-f08-en.svgpath974" d="m67.136 1653c0 9.8338-12.415 17.806-27.73 17.806s-27.73-7.9719-27.73-17.806c0-9.8338 12.415-17.806 27.73-17.806s27.73 7.9719 27.73 17.806z" fill-rule="evenodd" fill-opacity=".74902" transform="translate(10 2781.5) matrix(.99777 0 0 .93574 167.81 -1529)" stroke="#000" xmlns:cc="http://creativecommons.org/ns#" stroke-width="1pt" fill="#6fe225"/>
  <path id="basic-f08-en.svgpath975" d="m67.136 1653c0 9.8338-12.415 17.806-27.73 17.806s-27.73-7.9719-27.73-17.806c0-9.8338 12.415-17.806 27.73-17.806s27.73 7.9719 27.73 17.806z" fill-rule="evenodd" transform="translate(10 2781.5) matrix(.99777 0 0 .93574 199.63 -1529)" stroke="#000" xmlns:cc="http://creativecommons.org/ns#" stroke-width="1pt" fill="#ff3077"/>
  <rect id="d0e576" display="none" height="1e3px" width="288" y="2828.6" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e576"/>
   </flowRegion>
@@ -564,7 +564,7 @@ fill and stroke (for multiple selected objects, the dialog shows their
  <path id="basic-f09-en.svgpath1016" d="m67.136 1653c0 9.8338-12.415 17.806-27.73 17.806s-27.73-7.9719-27.73-17.806c0-9.8338 12.415-17.806 27.73-17.806s27.73 7.9719 27.73 17.806z" fill-rule="evenodd" transform="translate(10 2865.1) matrix(.99850 0 0 .93643 176.67 -1530.2)" stroke="#7c7016" xmlns:cc="http://creativecommons.org/ns#" stroke-width="1pt" fill="#dbdbdb"/>
  <path id="basic-f09-en.svgpath1017" d="m67.136 1653c0 9.8338-12.415 17.806-27.73 17.806s-27.73-7.9719-27.73-17.806c0-9.8338 12.415-17.806 27.73-17.806s27.73 7.9719 27.73 17.806z" fill-rule="evenodd" transform="translate(10 2865.1) matrix(.99850 0 0 .93643 203.21 -1530.2)" xmlns:cc="http://creativecommons.org/ns#" fill="#dbdbdb"/>
  <rect id="d0e592" display="none" height="1e3px" width="288" y="2911.6" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e592"/>
   </flowRegion>
@@ -579,7 +579,7 @@ of the stroke:</flowDiv>
  <path id="basic-f10-en.svgpath1038" d="m67.136 1653c0 9.8338-12.415 17.806-27.73 17.806s-27.73-7.9719-27.73-17.806c0-9.8338 12.415-17.806 27.73-17.806s27.73 7.9719 27.73 17.806z" fill-rule="evenodd" transform="translate(10 2946.4) matrix(.98881 0 0 .92734 168.1 -1511.2)" stroke="#000" stroke-dasharray="7.26312, 3.63156, 1.81578, 3.63156" xmlns:cc="http://creativecommons.org/ns#" stroke-width="1.8158" fill="#dbdbdb"/>
  <path id="basic-f10-en.svgpath1039" d="m67.136 1653c0 9.8338-12.415 17.806-27.73 17.806s-27.73-7.9719-27.73-17.806c0-9.8338 12.415-17.806 27.73-17.806s27.73 7.9719 27.73 17.806z" fill-rule="evenodd" transform="translate(10 2946.4) matrix(.98881 0 0 .92734 204.24 -1511.2)" stroke="#000" stroke-dasharray="0.847366, 0.847366" xmlns:cc="http://creativecommons.org/ns#" stroke-width=".84737" fill="#dbdbdb"/>
  <rect id="d0e605" display="none" height="1e3px" width="288" y="3000.4" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e605"/>
   </flowRegion>
@@ -631,7 +631,7 @@ fills and/or strokes:</flowDiv>
  <path id="basic-f11-en.svgpath1075" d="m67.136 1653c0 9.8338-12.415 17.806-27.73 17.806s-27.73-7.9719-27.73-17.806c0-9.8338 12.415-17.806 27.73-17.806s27.73 7.9719 27.73 17.806z" fill-rule="evenodd" transform="translate(10 3035.2) matrix(-1.0663 0 0 -1 263.1 1673.3)" stroke="url(#basic-f11-en.svgradialGradient1076)" xmlns:cc="http://creativecommons.org/ns#" stroke-width="3.6437" fill="url(#basic-f11-en.svgradialGradient1083)"/>
  <path id="basic-f11-en.svgpath1084" d="m67.136 1653c0 9.8338-12.415 17.806-27.73 17.806s-27.73-7.9719-27.73-17.806c0-9.8338 12.415-17.806 27.73-17.806s27.73 7.9719 27.73 17.806z" fill-rule="evenodd" transform="translate(10 3035.2) matrix(1.0663 0 0 1 214.49 -1632.8)" stroke="url(#basic-f11-en.svgradialGradient1085)" stroke-dasharray="3.64368, 3.64368" xmlns:cc="http://creativecommons.org/ns#" stroke-width="3.6437" fill="url(#basic-f11-en.svgradialGradient1086)"/>
  <rect id="d0e621" display="none" height="1e3px" width="288" y="3086.5" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e621"/>
   </flowRegion>
@@ -644,7 +644,7 @@ Stroke dialog sets the color of that handle instead of the color of the entire s
 object.</flowDiv>
  </flowRoot>
  <rect id="d0e630" display="none" height="1e3px" width="288" y="3178.9" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e630"/>
   </flowRegion>
@@ -653,11 +653,11 @@ tool (<flowSpan font-weight="bold">F7</flowSpan>). Just <flowSpan font-weight="b
 that tool, and the picked color will be assigned to the selected object&apos;s fill
 (<flowSpan font-weight="bold">Shift+click</flowSpan> will assign stroke color).</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3241.4909438000013" x="10" font-family="Sans" fill="#000000">
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3241.4909438000013" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="3241.4909438000013" x="10">Duplication, alignment, distribution</tspan>
  </text>
  <rect id="d0e648" display="none" height="1e3px" width="288" y="3246.7" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e648"/>
   </flowRegion>
@@ -668,7 +668,7 @@ the line with copies of this black square:</flowDiv>
  </flowRoot>
  <rect id="basic-f12-en.svgrect1117" fill-rule="evenodd" transform="translate(10 3304.4)" height="11.092" width="11.092" y=".90725" x="-.11450"/>
  <rect id="d0e667" display="none" height="1e3px" width="288" y="3327.4" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e667"/>
   </flowRegion>
@@ -738,11 +738,11 @@ examples:</flowDiv>
  <path id="basic-f13-en.svgpath1687" d="m233.97 52.063c0 0.158-0.21 1.613 0.74 2.238" transform="translate(10 3427.7)" stroke="#000" xmlns:cc="http://creativecommons.org/ns#" stroke-width=".36291pt" fill="none"/>
  <path id="basic-f13-en.svgpath1688" d="m238.47 51.84c1.06 1.233 1.13 2.685 6.63 3.58" transform="translate(10 3427.7)" stroke="#000" xmlns:cc="http://creativecommons.org/ns#" stroke-width=".36291pt" fill="none"/>
  <path id="basic-f13-en.svgpath1689" d="m248.88 52.511c0 0.84-0.1 1.67 0.74 2.461" transform="translate(10 3427.7)" stroke="#000" xmlns:cc="http://creativecommons.org/ns#" stroke-width=".36291pt" fill="none"/>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3508.5262758000013" x="10" font-family="Sans" fill="#000000">
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3508.5262758000013" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="3508.5262758000013" x="10">Z-order</tspan>
  </text>
  <rect id="d0e692" display="none" height="1e3px" width="288" y="3513.7" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e692"/>
   </flowRegion>
@@ -757,7 +757,7 @@ selection count; if nothing overlaps the selection, Raise and Lower move it all 
 to the top or bottom correspondingly).</flowDiv>
  </flowRoot>
  <rect id="d0e713" display="none" height="1e3px" width="288" y="3627.4" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e713"/>
   </flowRegion>
@@ -772,7 +772,7 @@ one is at the bottom:</flowDiv>
  <path id="basic-f14-en.svgpath1131" d="m142.61 2347.1c0 4.2135-5.2549 7.6291-11.737 7.6291-6.4822 0-11.737-3.4156-11.737-7.6291 0-4.2134 5.2549-7.6291 11.737-7.6291 6.4822 0 11.737 3.4157 11.737 7.6291z" fill-rule="evenodd" transform="translate(10 3672.9) matrix(1 0 0 1.0513 37.632 -2444.9)" stroke="#000" xmlns:cc="http://creativecommons.org/ns#" stroke-width="0.6" fill="#f90"/>
  <path id="basic-f14-en.svgpath1132" d="m150.23 2347.4c0 3.079-3.2843 5.5751-7.3357 5.5751s-7.3357-2.4961-7.3357-5.5751c0-3.0791 3.2843-5.5751 7.3357-5.5751s7.3357 2.496 7.3357 5.5751z" fill-rule="evenodd" transform="translate(10 3672.9) matrix(1 0 0 1.0513 37.045 -2450.2)" stroke="#000" xmlns:cc="http://creativecommons.org/ns#" stroke-width="0.6" fill="#f90"/>
  <rect id="d0e726" display="none" height="1e3px" width="288" y="3737.7" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e726"/>
   </flowRegion>
@@ -785,11 +785,11 @@ nothing selected will conveniently select the object you created <flowSpan font-
 the <flowSpan font-weight="bold">Tab</flowSpan> and <flowSpan font-weight="bold">Shift+Tab</flowSpan> keys on the stack of ellipses
 above.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3832.2203438000015" x="10" font-family="Sans" fill="#000000">
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3832.2203438000015" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="3832.2203438000015" x="10">Selecting under and dragging selected</tspan>
  </text>
  <rect id="d0e756" display="none" height="1e3px" width="288" y="3837.4" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e756"/>
   </flowRegion>
@@ -799,7 +799,7 @@ transparent, but clicking on it will select the top object, not the
 one you need.</flowDiv>
  </flowRoot>
  <rect id="d0e759" display="none" height="1e3px" width="288" y="3876.6" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e759"/>
   </flowRegion>
@@ -812,7 +812,7 @@ z-order stack of objects at the click point. When the bottom object is reached, 
 <flowSpan font-weight="bold">Alt+click</flowSpan> will, naturally, again select the topmost object.</flowDiv>
  </flowRoot>
  <rect id="d0e780" display="none" height="1e3px" width="288" y="3958.3" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e780"/>
   </flowRegion>
@@ -826,7 +826,7 @@ Inkscape and other applications may use the Alt key freely.]
 </flowDiv>
  </flowRoot>
  <rect id="d0e786" display="none" height="1e3px" width="288" y="4040" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e786"/>
   </flowRegion>
@@ -839,7 +839,7 @@ is selected now</flowSpan> without selecting anything else, use <flowSpan font-w
 This will move the current selection no matter where you drag your mouse.</flowDiv>
  </flowRoot>
  <rect id="d0e795" display="none" height="1e3px" width="288" y="4132.4" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e795"/>
   </flowRegion>
@@ -849,17 +849,17 @@ shapes under the green transparent rectangle:</flowDiv>
  <path id="basic-f15-en.svgpath2575" sodipodi:sides="7" inkscape:flatsided="false" fill="#ac7335" style="color:#000000" transform="translate(10 4168.9) matrix(.39512 .68437 -.68437 .39512 2780 -1592.9)" inkscape:rounded="0.21000000" sodipodi:r1="28.739008" sodipodi:r2="16.983238" sodipodi:arg1="0.52143444" sodipodi:arg2="0.97023339" sodipodi:type="star" d="m126.89 3940.5c-1.71 2.8-13.23-2-15.92-0.2-2.69 1.7-2.72 13.9-5.86 14.5-3.14 0.5-6.349-10.3-9.539-11.1s-13.307 5.7-15.627 3.5 6.076-11.8 4.656-14.7c-1.419-3-12.432-3.1-12.315-6.3s12.009-3.8 13.505-6.6c1.495-2.7-2.945-13.2-0.399-15.1 2.547-1.8 10.874 5.7 14.077 5.1 3.202-0.6 7.302-9.5 10.362-8.7 3.07 0.9 0.25 11.3 2.78 13.4 2.53 2 12.65-0.8 13.8 2.2 1.16 3.1-8.72 9.8-8.76 13-0.04 3.1 10.95 8.3 9.24 11z" inkscape:randomized="0.047000000" sodipodi:cy="3927.1016" sodipodi:cx="100.73942"/>
  <path id="basic-f15-en.svgpath2574" sodipodi:sides="6" inkscape:flatsided="false" fill="#ff9400" style="color:#000000" transform="translate(10 4168.9) matrix(.83260 .48070 -.48070 .83260 1947.5 -3288.4)" inkscape:rounded="0.21000000" sodipodi:r1="19.212250" sodipodi:r2="9.3934679" sodipodi:arg1="0.48833395" sodipodi:arg2="0.77161843" sodipodi:type="star" d="m107.62 3941.6c-0.53 2.1-9.076-3.5-10.951-2.4-2.497 1.5-1.972 11.9-4.862 12.6-2.17 0.6-1.585-8.5-3.563-9.5-2.636-1.2-11.029 4.1-13.221 2.2-1.646-1.5 6.95-5.7 6.894-8-0.075-3-9.644-9.8-9.082-12.7 0.421-2.2 9.473 5.2 11.397 4 2.564-1.5 2.337-12.6 5.229-13.2 2.17-0.5 1.693 9 3.66 10.1 2.621 1.3 12.059-3.4 14.219-1.4 1.61 1.6-7.377 4.8-7.27 7 0.15 3 8.25 8.5 7.55 11.3z" inkscape:randomized="0.047000000" sodipodi:cy="3933.4641" sodipodi:cx="90.665482"/>
  <rect id="basic-f15-en.svgrect3197" ry="10.424" style="color:#000000" fill-opacity=".29609" rx="10.424" transform="translate(10 4168.9)" height="56.564" width="171.79" y="-.21458" x="44.416" fill="#2dd268"/>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="4250.220696800001" x="10" font-family="Sans" fill="#000000">
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="4250.220696800001" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="4250.220696800001" x="10">Selecting similar objects</tspan>
  </text>
  <rect id="d0e820" display="none" height="1e3px" width="288" y="4255.4" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e820"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Inkscape can select other objects similar to the object currently selected. 
 For example, if you want to select all the blue squares below first select one of the 
-blue squares, and use <flowSpan font-family="Sans">Edit &gt; Select Same &gt; 
+blue squares, and use <flowSpan font-family="sans-serif">Edit &gt; Select Same &gt; 
 Fill Color</flowSpan> from the menu. All the objects with a fill color the same 
 shade of blue are now selected.</flowDiv>
  </flowRoot>
@@ -903,25 +903,25 @@ shade of blue are now selected.</flowDiv>
  <rect id="basic-f16-en.svgrect4179" opacity="0.924" ry="0" style="color-rendering:auto;color:#000000;isolation:auto;shape-rendering:auto;image-rendering:auto" rx="0" transform="translate(10 4322.2)" height="14.205" width="15.152" y="38.895" x="28.789" xmlns:cc="http://creativecommons.org/ns#" fill="#204a87"/>
  <rect id="basic-f16-en.svgrect4167" opacity="0.924" style="color-rendering:auto;color:#000000;isolation:auto;shape-rendering:auto;image-rendering:auto" rx="0" transform="translate(10 4322.2)" ry="0" width="15.152" y="38.895" x="233.85" xmlns:cc="http://creativecommons.org/ns#" height="14.205" fill="#204a87"/>
  <rect id="d0e836" display="none" height="1e3px" width="288" y="4383.2" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e836"/>
   </flowRegion>
   <flowDiv xml:space="preserve">In addition to selecting by fill color, you can select multiple similar objects
 by stroke color, stroke style, fill &amp; stroke, and object type.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="4424.523106800001" x="10" font-family="Sans" fill="#000000">
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="4424.523106800001" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="4424.523106800001" x="10">Conclusion</tspan>
  </text>
  <rect id="d0e845" display="none" height="1e3px" width="288" y="4429.7" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e845"/>
   </flowRegion>
   <flowDiv xml:space="preserve">This concludes the Basic tutorial. There&apos;s much more than that to Inkscape, but
 with the techniques described here, you will already be able to create simple yet useful
 graphics. For more complicated stuff, go through the Advanced and other tutorials in
-<flowSpan font-family="Sans">Help &gt; Tutorials</flowSpan>.
+<flowSpan font-family="sans-serif">Help &gt; Tutorials</flowSpan>.
 </flowDiv>
  </flowRoot>
  <g transform="translate(0 4479.5)">
@@ -954,8 +954,8 @@ graphics. For more complicated stuff, go through the Advanced and other tutorial
     <path id="path1520" d="m510.36 306.93c10.237-2.5598 33.886 0 30.119 15.058-3.7633 15.062-35.764 9.4119-56.473 1.8852-1.8823-15.061 21.529-15.737 26.354-16.943z" stroke-width="1pt"/>
     <path id="path1521" d="m359.24 21.363c-11.313 0-22.606 4.3206-31.275 12.99l-154.09 154.06c-8.4969 8.4967-12.762 19.543-12.931 30.631h-0.0585c0 0.0395 0.0566 0.0774 0.0585 0.11702-0.002 0.18609-0.0585 0.36977-0.0585 0.55586h0.2633c2.9491 11.221 79.15 25.523 87.651 34.025 12.839 12.839-49.233 22.268-36.395 35.107 12.839 12.839 77.59 24.843 90.43 37.682 12.839 12.839-26.238 26.51-13.399 39.349s55.967-3.2094 48.155 30.28c17.338 17.338 53.512 9.0588 77.733-8.2795 12.839-12.839-24.629-11.707-11.79-24.546s45.247-12.908 72.555-43.621c-10.992-17.095-46.981-24.375-34.142-37.214s37.8-6.3179 91.659-30.777c26.292-11.941 24.12-21.01 24.019-32.006-0.002-0.23138 0-0.43973 0-0.67288h-0.0585c-0.16-11.07-4.46-22.12-12.95-30.62l-154.07-154.06c-8.66-8.667-19.99-12.987-31.3-12.987zm-1.3165 20.04c5.0295 0.13102 9.0916 3.9651 17.056 9.1279l72.789 53.977c0.79681 0.51671 1.5557 1.0557 2.2527 1.6091 0.69703 0.55327 1.3337 1.1401 1.9309 1.7261 0.5972 0.58495 1.14 1.1721 1.6383 1.7846 0.49726 0.61244 0.94845 1.2385 1.3458 1.8724 0.39844 0.6349 0.75476 1.2798 1.0532 1.9309 0.29867 0.65226 0.53281 1.325 0.7314 1.9894 0.19976 0.66341 0.36832 1.319 0.46811 1.9894 0.0999 0.67165 0.14627 1.3452 0.14627 2.0187l-43.123-20.83-4.3006 32.562-23.727-11.117-36.629 24.458-14.014-48.331-18.051 42.275-50.408 5.032 0.55587-22.439c0-5.3897 29.057-43.122 46.751-52.105l32.386-23.259c4.7787-3.0977 8.1289-4.35 11.147-4.2714zm-66.996 220.21c22.944 5.9503 48.476 13.757 68.957 13.897l0.87768 9.2157c-17.538-1.8078-54.648-10.276-63.398-14.745l-6.4363-8.3672z" stroke-width="1pt"/>
    </g>
-   <use id="use1328" style="color:#000000" xlink:href="#path1508" transform="matrix(5.1767 0 0 5.1767 -102.7 -256.62)" height="1052.3622" fill-opacity=".064615" width="744.09448" y="0" x="0" font-family="Sans" fill="#ffffff"/>
-   <text id="text7519" opacity=".5" line-height="125%" xml:space="preserve" transform="rotate(-90)" font-size="6.9693px" y="-6.5672836" x="-70.83046" font-family="Sans" sodipodi:linespacing="125%" fill="#000000"><tspan id="tspan7521" sodipodi:role="line" x="-70.83046" style="letter-spacing:.29056" y="-6.5672836">Use <tspan id="tspan7523" font-weight="bold">Ctrl+up arrow</tspan> to scroll </tspan></text>
+   <use id="use1328" style="color:#000000" xlink:href="#path1508" transform="matrix(5.1767 0 0 5.1767 -102.7 -256.62)" height="1052.3622" fill-opacity=".064615" width="744.09448" y="0" x="0" font-family="sans-serif" fill="#ffffff"/>
+   <text id="text7519" opacity=".5" line-height="125%" xml:space="preserve" transform="rotate(-90)" font-size="6.9693px" y="-6.5672836" x="-70.83046" font-family="sans-serif" sodipodi:linespacing="125%" fill="#000000"><tspan id="tspan7521" sodipodi:role="line" x="-70.83046" style="letter-spacing:.29056" y="-6.5672836">Use <tspan id="tspan7523" font-weight="bold">Ctrl+up arrow</tspan> to scroll </tspan></text>
    <path id="path7527" opacity=".5" style="color:#000000" d="m338.53 197.82-13.108-1.2709 7.6547-10.717z" fill-rule="evenodd" transform="matrix(-.61496 -.045496 -.061919 .45186 207.79 -117.15)"/>
   </g>
  </g>

@@ -36,15 +36,15 @@
    <path id="path1793" d="m510.36 306.93c10.237-2.5598 33.886 0 30.119 15.058-3.7633 15.062-35.764 9.4119-56.473 1.8852-1.8823-15.061 21.529-15.737 26.354-16.943z" stroke-width="1pt"/>
    <path id="path831" d="m359.24 21.363c-11.313 0-22.606 4.3206-31.275 12.99l-154.09 154.06c-8.4969 8.4967-12.762 19.543-12.931 30.631h-0.0585c0 0.0395 0.0566 0.0774 0.0585 0.11702-0.002 0.18609-0.0585 0.36977-0.0585 0.55586h0.2633c2.9491 11.221 79.15 25.523 87.651 34.025 12.839 12.839-49.233 22.268-36.395 35.107 12.839 12.839 77.59 24.843 90.43 37.682 12.839 12.839-26.238 26.51-13.399 39.349s55.967-3.2094 48.155 30.28c17.338 17.338 53.512 9.0588 77.733-8.2795 12.839-12.839-24.629-11.707-11.79-24.546s45.247-12.908 72.555-43.621c-10.992-17.095-46.981-24.375-34.142-37.214s37.8-6.3179 91.659-30.777c26.292-11.941 24.12-21.01 24.019-32.006-0.002-0.23138 0-0.43973 0-0.67288h-0.0585c-0.16-11.07-4.46-22.12-12.95-30.62l-154.07-154.06c-8.66-8.667-19.99-12.987-31.3-12.987zm-1.3165 20.04c5.0295 0.13102 9.0916 3.9651 17.056 9.1279l72.789 53.977c0.79681 0.51671 1.5557 1.0557 2.2527 1.6091 0.69703 0.55327 1.3337 1.1401 1.9309 1.7261 0.5972 0.58495 1.14 1.1721 1.6383 1.7846 0.49726 0.61244 0.94845 1.2385 1.3458 1.8724 0.39844 0.6349 0.75476 1.2798 1.0532 1.9309 0.29867 0.65226 0.53281 1.325 0.7314 1.9894 0.19976 0.66341 0.36832 1.319 0.46811 1.9894 0.0999 0.67165 0.14627 1.3452 0.14627 2.0187l-43.123-20.83-4.3006 32.562-23.727-11.117-36.629 24.458-14.014-48.331-18.051 42.275-50.408 5.032 0.55587-22.439c0-5.3897 29.057-43.122 46.751-52.105l32.386-23.259c4.7787-3.0977 8.1289-4.35 11.147-4.2714zm-66.996 220.21c22.944 5.9503 48.476 13.757 68.957 13.897l0.87768 9.2157c-17.538-1.8078-54.648-10.276-63.398-14.745l-6.4363-8.3672z" stroke-width="1pt"/>
   </g>
-  <use id="use2086" style="color:#000000" xlink:href="#path1124" transform="matrix(3.7991 0 0 3.7991 -428.74 -36.475)" height="1052.3622" fill-opacity=".11077" width="320.00000" y="0.0000000" x="0.0000000" font-family="Sans" fill="#ffffff"/>
-  <text id="text7519" opacity=".5" line-height="125%" xml:space="preserve" transform="rotate(90)" font-size="6.9693px" y="-326.81229" x="3.6203015" font-family="Sans" sodipodi:linespacing="125%" fill="#000000"><tspan id="tspan7521" sodipodi:role="line" x="3.6203015" style="letter-spacing:.29056" y="-326.81229">Use <tspan id="tspan7523" font-weight="bold">Ctrl+down arrow</tspan> to scroll </tspan></text>
+  <use id="use2086" style="color:#000000" xlink:href="#path1124" transform="matrix(3.7991 0 0 3.7991 -428.74 -36.475)" height="1052.3622" fill-opacity=".11077" width="320.00000" y="0.0000000" x="0.0000000" font-family="sans-serif" fill="#ffffff"/>
+  <text id="text7519" opacity=".5" line-height="125%" xml:space="preserve" transform="rotate(90)" font-size="6.9693px" y="-326.81229" x="3.6203015" font-family="sans-serif" sodipodi:linespacing="125%" fill="#000000"><tspan id="tspan7521" sodipodi:role="line" x="3.6203015" style="letter-spacing:.29056" y="-326.81229">Use <tspan id="tspan7523" font-weight="bold">Ctrl+down arrow</tspan> to scroll </tspan></text>
   <path id="path7527" opacity=".5" style="color:#000000" d="m338.53 197.82-13.108-1.2709 7.6547-10.717z" fill-rule="evenodd" transform="matrix(.61496 .045496 .061919 -.45186 112.46 201.6)"/>
  </g>
- <text id="text1920" font-family="Sans" font-size="7" transform="scale(1.1307)" y="18.25828" x="176.24451" fill="#ffffff">
+ <text id="text1920" font-family="sans-serif" font-size="7" transform="scale(1.1307)" y="18.25828" x="176.24451" fill="#ffffff">
   <tspan id="tspan1668" style="letter-spacing:2.1813" fill="#ffffff" dx="0 -0.57057059 0 0 0 0 0">::TIPS AND TRICKS</tspan>
  </text>
  <rect id="d0e10" display="none" height="1e3px" width="264" y="36" x="35"/>
- <flowRoot font-family="Sans" font-size="7.2" font-style="italic" line-height="150%" fill="#000000">
+ <flowRoot font-family="sans-serif" font-size="7.2" font-style="italic" line-height="150%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e10"/>
   </flowRegion>
@@ -53,21 +53,21 @@ the use of Inkscape and some “hidden” features that can help you speed up pr
 tasks.
 </flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="89.367967" x="10" font-family="Sans" fill="#000000">
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="89.367967" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="89.367967" x="10">Radial placement with Tile Clones</tspan>
  </text>
  <rect id="d0e19" display="none" height="1e3px" width="288" y="94.568" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e19"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">It&apos;s easy to see how to use the <flowSpan font-family="Sans">Create Tile Clones</flowSpan> dialog for rectangular grids and
+  <flowDiv xml:space="preserve">It&apos;s easy to see how to use the <flowSpan font-family="sans-serif">Create Tile Clones</flowSpan> dialog for rectangular grids and
 patterns. But what if you need <flowSpan font-style="italic">radial</flowSpan> placement, where objects
 share a common center of rotation? It&apos;s possible too!
 </flowDiv>
  </flowRoot>
  <rect id="d0e28" display="none" height="1e3px" width="288" y="144.23" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e28"/>
   </flowRegion>
@@ -77,15 +77,15 @@ and the like. A more general method, however, is as follows.
 </flowDiv>
  </flowRoot>
  <rect id="d0e31" display="none" height="1e3px" width="288" y="193.32" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e31"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Choose the P1 symmetry (simple translation) and then <flowSpan font-style="italic">compensate</flowSpan> for
-that translation by going to the <flowSpan font-family="Sans">Shift</flowSpan> tab and setting <flowSpan font-family="Sans">Per
-row/Shift Y</flowSpan> and <flowSpan font-family="Sans">Per column/Shift X</flowSpan> both to -100%. Now all
+that translation by going to the <flowSpan font-family="sans-serif">Shift</flowSpan> tab and setting <flowSpan font-family="sans-serif">Per
+row/Shift Y</flowSpan> and <flowSpan font-family="sans-serif">Per column/Shift X</flowSpan> both to -100%. Now all
 clones will be stacked exactly on top of the original. All that remains to do is to go
-to the <flowSpan font-family="Sans">Rotation</flowSpan> tab and set some rotation angle per column, then
+to the <flowSpan font-family="sans-serif">Rotation</flowSpan> tab and set some rotation angle per column, then
 create the pattern with one row and multiple columns. For example, here&apos;s a pattern made
 out of a horizontal line, with 30 columns, each column rotated 6 degrees:
 </flowDiv>
@@ -121,7 +121,7 @@ out of a horizontal line, with 30 columns, each column rotated 6 degrees:
  <use id="tips-f01-en.svguse82" xlink:href="#tips-f01-en.svgpath25" transform="translate(10 293.65) matrix(-.97815 .20791 -.20791 -.97815 289.68 87.353) translate(-10 -293.65)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#path25" y="0.0000000" x="0.0000000"/>
  <use id="tips-f01-en.svguse83" xlink:href="#tips-f01-en.svgpath25" transform="translate(10 293.65) matrix(-.99452 .10453 -.10453 -.99452 285.89 102.82) translate(-10 -293.65)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#path25" y="0.0000000" x="0.0000000"/>
  <rect id="d0e59" display="none" height="1e3px" width="288" y="423.15" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e59"/>
   </flowRegion>
@@ -130,7 +130,7 @@ central part by a white circle (to do boolean operations on clones, unlink them 
 </flowDiv>
  </flowRoot>
  <rect id="d0e62" display="none" height="1e3px" width="288" y="461.76" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e62"/>
   </flowRegion>
@@ -221,14 +221,14 @@ other; within each column, individual lines are 2 degrees apart:
  <use id="tips-f02-en.svguse1550" xlink:href="#tips-f02-en.svgpath92" transform="translate(10 530.17) matrix(-.98769 .15643 -.15643 -.98769 297.44 119.89) translate(-10 -530.17)" height="2150.5000" width="320.00000" inkscape:tiled-clone-of="#path92" y="0.0000000" x="0.0000000"/>
  <use id="tips-f02-en.svguse1551" xlink:href="#tips-f02-en.svgpath92" transform="translate(10 530.17) matrix(-.99144 .13053 -.13053 -.99144 296.12 123.89) translate(-10 -530.17)" height="2150.5000" width="320.00000" inkscape:tiled-clone-of="#path92" y="0.0000000" x="0.0000000"/>
  <rect id="d0e75" display="none" height="1e3px" width="288" y="685.17" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e75"/>
   </flowRegion>
   <flowDiv xml:space="preserve">In the above examples, the line was rotated around its center. But what if you want the
 center to be outside of your shape? Just create an invisible (no fill, no stroke)
 rectangle which would cover your shape and whose center is in the point you need, group
-the shape and the rectangle together, and then use <flowSpan font-family="Sans">Create Tile Clones</flowSpan> on
+the shape and the rectangle together, and then use <flowSpan font-family="sans-serif">Create Tile Clones</flowSpan> on
 that group. This is how you can do nice “explosions” or “starbursts” by randomizing
 scale, rotation, and possibly opacity:
 </flowDiv>
@@ -308,18 +308,18 @@ scale, rotation, and possibly opacity:
  <use id="tips-f03-en.svguse5895" xlink:href="#tips-f03-en.svgg1768" transform="translate(10 774.87) matrix(1.1627 -.63770 .63770 1.1627 -71.718 76.115) translate(-10 -774.87)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
  <use id="tips-f03-en.svguse5896" xlink:href="#tips-f03-en.svgg1768" transform="translate(10 774.87) matrix(1.5217 -.57461 .57461 1.5217 -116.77 39.695) translate(-10 -774.87)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
  <use id="tips-f03-en.svguse5897" xlink:href="#tips-f03-en.svgg1768" transform="translate(10 774.87) matrix(.54625 -.90456 .90456 .54625 -6.5852 160.68) translate(-10 -774.87)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="953.6795169999999" x="10" font-family="Sans" fill="#000000">
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="953.6795169999999" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="953.6795169999999" x="10">How to do slicing (multiple rectangular export areas)?</tspan>
  </text>
  <rect id="d0e97" display="none" height="1e3px" width="288" y="958.88" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e97"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Create a new layer, in that layer create invisible rectangles covering parts of your
 image. Make sure your document uses the px unit (default), turn on grid and snap the
 rects to the grid so that each one spans a whole number of px units. Assign meaningful
-ids to the rects, and export each one to its own file (<flowSpan font-family="Sans">File
+ids to the rects, and export each one to its own file (<flowSpan font-family="sans-serif">File
 &gt; Export PNG Image</flowSpan> (<flowSpan font-weight="bold">Shift+Ctrl+E</flowSpan>)). Then the rects will remember
 their export filenames. After that, it&apos;s very easy to re-export some of the rects:
 switch to the export layer, use Tab to select the one you need (or use Find by id), and
@@ -328,7 +328,7 @@ all of your areas, with a command like:
 </flowDiv>
  </flowRoot>
  <rect id="d0e106" display="none" height="1e3px" width="288" y="1072.5" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e106"/>
   </flowRegion>
@@ -336,20 +336,20 @@ all of your areas, with a command like:
 </flowDiv>
  </flowRoot>
  <rect id="d0e109" display="none" height="1e3px" width="288" y="1090.4" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e109"/>
   </flowRegion>
   <flowDiv xml:space="preserve">for each exported area. The -t switch tells it to use the remembered filename hint,
 otherwise you can provide the export filename with the -e switch. Alternatively, you can
-use the <flowSpan font-family="Sans">Extensions &gt; Web &gt; Slicer</flowSpan> extensions, or <flowSpan font-family="Sans">Extensions &gt; Export &gt; Guillotine</flowSpan> for similar results.
+use the <flowSpan font-family="sans-serif">Extensions &gt; Web &gt; Slicer</flowSpan> extensions, or <flowSpan font-family="sans-serif">Extensions &gt; Export &gt; Guillotine</flowSpan> for similar results.
 </flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="1152.8520647999997" x="10" font-family="Sans" fill="#000000">
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="1152.8520647999997" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="1152.8520647999997" x="10">Non-linear gradients</tspan>
  </text>
  <rect id="d0e124" display="none" height="1e3px" width="288" y="1158.1" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e124"/>
   </flowRegion>
@@ -358,7 +358,7 @@ non-linear translations between colors).  You can, however, emulate them by
 <flowSpan font-style="italic">multistop</flowSpan> gradients. </flowDiv>
  </flowRoot>
  <rect id="d0e130" display="none" height="1e3px" width="288" y="1197.2" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e130"/>
   </flowRegion>
@@ -377,7 +377,7 @@ make the resulting gradient. Here&apos;s the initial black-white gradient with t
  </defs>
  <rect id="tips-f04-en.svgrect1511" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1286.8) matrix(9.0277e-18 -1 -1 -5.3334e-18 0 0)" height="286.4" width="16.125" y="-305.42" x="-16.125" fill="url(#tips-f04-en.svglinearGradient844)"/>
  <rect id="d0e143" display="none" height="1e3px" width="288" y="1314.9" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e143"/>
   </flowRegion>
@@ -474,11 +474,11 @@ Editor):
  <rect id="tips-f05-en.svgrect879" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1350.9) matrix(9.0277e-18 -1 -1 -5.3334e-18 0 0)" height="286.4" width="16.125" y="-305.42" x="-31.223" fill="url(#tips-f05-en.svglinearGradient3985)"/>
  <rect id="tips-f05-en.svgrect890" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1350.9) matrix(9.0277e-18 -1 -1 -5.3334e-18 0 0)" height="286.4" width="16.125" y="-305.42" x="-15.167" fill="url(#tips-f05-en.svglinearGradient3982)"/>
  <rect id="tips-f05-en.svgrect901" fill-opacity=".75" fill-rule="evenodd" transform="translate(10 1350.9) matrix(9.0277e-18 -1 -1 -5.3334e-18 0 0)" height="286.4" width="16.125" y="-305.42" x="-127.56" fill="url(#tips-f05-en.svglinearGradient3979)"/>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="1504.1794937999998" x="10" font-family="Sans" fill="#000000">
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="1504.1794937999998" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="1504.1794937999998" x="10">Excentric radial gradients</tspan>
  </text>
  <rect id="d0e162" display="none" height="1e3px" width="288" y="1509.4" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e162"/>
   </flowRegion>
@@ -500,38 +500,38 @@ need it, you can snap the focus back by dragging it close to the center.
  </defs>
  <rect id="tips-f06-en.svgrect1569" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1576.2)" height="68.187" width="74.385" stroke="#000" y=".55902" x="70.82" stroke-width=".89427pt" fill="url(#tips-f06-en.svgradialGradient4034)"/>
  <rect id="tips-f06-en.svgrect1570" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1576.2)" height="68.187" width="74.385" stroke="#000" y=".55902" x="153.67" stroke-width=".89427pt" fill="url(#tips-f06-en.svgradialGradient4031)"/>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="1670.2550707999997" x="10" font-family="Sans" fill="#000000">
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="1670.2550707999997" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="1670.2550707999997" x="10">Aligning to the center of the page</tspan>
  </text>
  <rect id="d0e187" display="none" height="1e3px" width="288" y="1675.5" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e187"/>
   </flowRegion>
   <flowDiv xml:space="preserve">To align something to the center or side of a page, select the object or group and then
-choose <flowSpan font-family="Sans">Page</flowSpan> from the <flowSpan font-family="Sans">Relative to:</flowSpan> list in the
+choose <flowSpan font-family="sans-serif">Page</flowSpan> from the <flowSpan font-family="sans-serif">Relative to:</flowSpan> list in the
 Align and Distribute dialog (<flowSpan font-weight="bold">Shift+Ctrl+A</flowSpan>). 
 </flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="1727.4102507999996" x="10" font-family="Sans" fill="#000000">
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="1727.4102507999996" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="1727.4102507999996" x="10">Cleaning up the document</tspan>
  </text>
  <rect id="d0e205" display="none" height="1e3px" width="288" y="1732.6" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e205"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Many of the no-longer-used gradients, patterns, and markers (more precisely, those which
 you edited manually) remain in the corresponding palettes and can be reused for new
-objects. However if you want to optimize your document, use the <flowSpan font-family="Sans">Clean up Document</flowSpan> command in File menu. It will remove any gradients, patterns, or markers
+objects. However if you want to optimize your document, use the <flowSpan font-family="sans-serif">Clean up Document</flowSpan> command in File menu. It will remove any gradients, patterns, or markers
 which are not used by anything in the document, making the file smaller.
 </flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="1825.4416567999997" x="10" font-family="Sans" fill="#000000">
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="1825.4416567999997" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="1825.4416567999997" x="10">Hidden features and the XML editor</tspan>
  </text>
  <rect id="d0e217" display="none" height="1e3px" width="288" y="1830.6" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e217"/>
   </flowRegion>
@@ -541,11 +541,11 @@ more SVG features than are accessible from the GUI. The XML editor is one way to
 access to these features (if you know SVG).
 </flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="1903.8571267999996" x="10" font-family="Sans" fill="#000000">
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="1903.8571267999996" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="1903.8571267999996" x="10">Changing the rulers&apos; unit of measure</tspan>
  </text>
  <rect id="d0e229" display="none" height="1e3px" width="288" y="1909.1" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e229"/>
   </flowRegion>
@@ -553,16 +553,16 @@ access to these features (if you know SVG).
 in Inkscape it&apos;s equal to 0.8pt or 1/90 of the inch). This is also the unit used in
 displaying coordinates at the lower-left corner and preselected in all units menus. (You
 can always hover your mouse over a ruler to see the tooltip with the units it uses.) To
-change this, open <flowSpan font-family="Sans">Document Preferences</flowSpan>
-(<flowSpan font-weight="bold">Shift+Ctrl+D</flowSpan>) and change the <flowSpan font-family="Sans">Default units</flowSpan> on the
-<flowSpan font-family="Sans">Page</flowSpan> tab.
+change this, open <flowSpan font-family="sans-serif">Document Preferences</flowSpan>
+(<flowSpan font-weight="bold">Shift+Ctrl+D</flowSpan>) and change the <flowSpan font-family="sans-serif">Default units</flowSpan> on the
+<flowSpan font-family="sans-serif">Page</flowSpan> tab.
 </flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2003.4590247999997" x="10" font-family="Sans" fill="#000000">
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2003.4590247999997" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="2003.4590247999997" x="10">Stamping</tspan>
  </text>
  <rect id="d0e250" display="none" height="1e3px" width="288" y="2008.7" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e250"/>
   </flowRegion>
@@ -572,11 +572,11 @@ drag an object (or scale or rotate it), and while holding the mouse button down,
 repeat it as many times as you wish.
 </flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2071.2542058" x="10" font-family="Sans" fill="#000000">
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2071.2542058" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="2071.2542058" x="10">Pen tool tricks</tspan>
  </text>
  <rect id="d0e265" display="none" height="1e3px" width="288" y="2076.5" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e265"/>
   </flowRegion>
@@ -585,7 +585,7 @@ repeat it as many times as you wish.
  </flowRoot>
  <circle cy="0" cx="0" r="2" transform="translate(15 2109.3)"/>
  <rect id="d0e271" display="none" height="1e3px" width="258" y="2103.3" x="20"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e271"/>
   </flowRegion>
@@ -594,7 +594,7 @@ repeat it as many times as you wish.
  </flowRoot>
  <circle cy="0" cx="0" r="2" transform="translate(15 2125.2)"/>
  <rect id="d0e278" display="none" height="1e3px" width="258" y="2119.2" x="20"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e278"/>
   </flowRegion>
@@ -603,7 +603,7 @@ repeat it as many times as you wish.
  </flowRoot>
  <circle cy="0" cx="0" r="2" transform="translate(15 2141.4)"/>
  <rect id="d0e282" display="none" height="1e3px" width="258" y="2135.4" x="20"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e282"/>
   </flowRegion>
@@ -612,7 +612,7 @@ repeat it as many times as you wish.
  </flowRoot>
  <circle cy="0" cx="0" r="2" transform="translate(15 2157.6)"/>
  <rect id="d0e286" display="none" height="1e3px" width="258" y="2151.6" x="20"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e286"/>
   </flowRegion>
@@ -620,18 +620,18 @@ repeat it as many times as you wish.
 </flowDiv>
  </flowRoot>
  <rect id="d0e290" display="none" height="1e3px" width="288" y="2167.8" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e290"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Note that while the path is unfinished (i.e. is shown green, with the current segment
 red) it does not yet exist as an object in the document. Therefore, to cancel it, use
 either <flowSpan font-weight="bold">Esc</flowSpan> (cancel the whole path) or <flowSpan font-weight="bold">Backspace</flowSpan>
-(remove the last segment of the unfinished path) instead of <flowSpan font-family="Sans">Undo</flowSpan>.
+(remove the last segment of the unfinished path) instead of <flowSpan font-family="sans-serif">Undo</flowSpan>.
 </flowDiv>
  </flowRoot>
  <rect id="d0e302" display="none" height="1e3px" width="288" y="2226.6" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e302"/>
   </flowRegion>
@@ -641,11 +641,11 @@ either <flowSpan font-weight="bold">Esc</flowSpan> (cancel the whole path) or <f
 drawing from one of the end anchors of the selected path.
 </flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2289.1911579000002" x="10" font-family="Sans" fill="#000000">
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2289.1911579000002" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="2289.1911579000002" x="10">Entering Unicode values</tspan>
  </text>
  <rect id="d0e317" display="none" height="1e3px" width="288" y="2294.4" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e317"/>
   </flowRegion>
@@ -659,35 +659,35 @@ an em-dash (—). To quit the Unicode mode without inserting anything press
 </flowDiv>
  </flowRoot>
  <rect id="d0e332" display="none" height="1e3px" width="288" y="2376.1" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e332"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">You can also use the <flowSpan font-family="Sans">Text &gt; Glyphs</flowSpan> dialog to search for and insert 
+  <flowDiv xml:space="preserve">You can also use the <flowSpan font-family="sans-serif">Text &gt; Glyphs</flowSpan> dialog to search for and insert 
 glyphs into your document.
 </flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2417.4215209000004" x="10" font-family="Sans" fill="#000000">
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2417.4215209000004" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="2417.4215209000004" x="10">Using the grid for drawing icons</tspan>
  </text>
  <rect id="d0e344" display="none" height="1e3px" width="288" y="2422.6" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e344"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Suppose you want to create a 24x24 pixel icon. Create a 24x24 px canvas (use the
-<flowSpan font-family="Sans">Document Preferences</flowSpan>) and set the grid to 0.5 px (48x48 gridlines).
+<flowSpan font-family="sans-serif">Document Preferences</flowSpan>) and set the grid to 0.5 px (48x48 gridlines).
 Now, if you align filled objects to <flowSpan font-style="italic">even</flowSpan> gridlines, and stroked
 objects to <flowSpan font-style="italic">odd</flowSpan> gridlines with the stroke width in px being an even
 number, and export it at the default 90dpi (so that 1 px becomes 1 bitmap pixel), you
 get a crisp bitmap image without unneeded antialiasing.
 </flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2517.1169899000006" x="10" font-family="Sans" fill="#000000">
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2517.1169899000006" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="2517.1169899000006" x="10">Object rotation</tspan>
  </text>
  <rect id="d0e362" display="none" height="1e3px" width="288" y="2522.3" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e362"/>
   </flowRegion>
@@ -700,7 +700,7 @@ rotation center to any place.
 </flowDiv>
  </flowRoot>
  <rect id="d0e374" display="none" height="1e3px" width="288" y="2593.4" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e374"/>
   </flowRegion>
@@ -710,20 +710,20 @@ degrees). The same <flowSpan font-weight="bold">[]</flowSpan> keys with <flowSpa
 pixel-size rotation.
 </flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2645.2537799000006" x="10" font-family="Sans" fill="#000000">
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2645.2537799000006" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="2645.2537799000006" x="10">Drop shadows</tspan>
  </text>
  <rect id="d0e401" display="none" height="1e3px" width="288" y="2650.5" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e401"/>
   </flowRegion>
   <flowDiv xml:space="preserve">To quickly create drop shadows for objects, use the 
-<flowSpan font-family="Sans">Filters &gt; Shadows and Glows &gt; Drop Shadow...</flowSpan> feature.
+<flowSpan font-family="sans-serif">Filters &gt; Shadows and Glows &gt; Drop Shadow...</flowSpan> feature.
 </flowDiv>
  </flowRoot>
  <rect id="d0e407" display="none" height="1e3px" width="288" y="2678.8" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e407"/>
   </flowRegion>
@@ -734,26 +734,26 @@ and lower than original object. Now open Fill And Stroke dialog and change Blur 
 say, 5.0. That&apos;s it!
 </flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2752.0908629000005" x="10" font-family="Sans" fill="#000000">
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2752.0908629000005" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="2752.0908629000005" x="10">Placing text on a path</tspan>
  </text>
  <rect id="d0e422" display="none" height="1e3px" width="288" y="2757.3" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e422"/>
   </flowRegion>
   <flowDiv xml:space="preserve">To place text along a curve, select the text and the curve together and choose
-<flowSpan font-family="Sans">Put on Path</flowSpan> from the Text menu. The text will start at the beginning
+<flowSpan font-family="sans-serif">Put on Path</flowSpan> from the Text menu. The text will start at the beginning
 of the path. In general it is best to create an explicit path that you want the text to
 be fitted to, rather than fitting it to some other drawing element — this will give you
 more control without screwing over your drawing.
 </flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2841.1463329000003" x="10" font-family="Sans" fill="#000000">
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2841.1463329000003" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="2841.1463329000003" x="10">Selecting the original</tspan>
  </text>
  <rect id="d0e434" display="none" height="1e3px" width="288" y="2846.3" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e434"/>
   </flowRegion>
@@ -764,11 +764,11 @@ offset, or clone, and press <flowSpan font-weight="bold">Shift+D</flowSpan> to m
 corresponding path, offset source, or clone original.
 </flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2930.2609419000005" x="10" font-family="Sans" fill="#000000">
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2930.2609419000005" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="2930.2609419000005" x="10">Window off-screen recovery</tspan>
  </text>
  <rect id="d0e449" display="none" height="1e3px" width="288" y="2935.5" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e449"/>
   </flowRegion>
@@ -776,15 +776,15 @@ corresponding path, offset source, or clone original.
 you may find Inkscape has saved a window position that places the window out of reach on
 your screen. Simply maximise the window (which will bring it back into view, use the
 task bar), save and reload. You can avoid this altogether by unchecking the global
-option to save window geometry (<flowSpan font-family="Sans">Inkscape Preferences</flowSpan>,
-<flowSpan font-family="Sans">Interface &gt; Windows</flowSpan> section).
+option to save window geometry (<flowSpan font-family="sans-serif">Inkscape Preferences</flowSpan>,
+<flowSpan font-family="sans-serif">Interface &gt; Windows</flowSpan> section).
 </flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3029.4251609000003" x="10" font-family="Sans" fill="#000000">
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3029.4251609000003" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="3029.4251609000003" x="10">Transparency, gradients, and PostScript export</tspan>
  </text>
  <rect id="d0e464" display="none" height="1e3px" width="288" y="3034.6" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e464"/>
   </flowRegion>
@@ -829,8 +829,8 @@ apply this procedure to each piece.
     <path id="path1520" d="m510.36 306.93c10.237-2.5598 33.886 0 30.119 15.058-3.7633 15.062-35.764 9.4119-56.473 1.8852-1.8823-15.061 21.529-15.737 26.354-16.943z" stroke-width="1pt"/>
     <path id="path1521" d="m359.24 21.363c-11.313 0-22.606 4.3206-31.275 12.99l-154.09 154.06c-8.4969 8.4967-12.762 19.543-12.931 30.631h-0.0585c0 0.0395 0.0566 0.0774 0.0585 0.11702-0.002 0.18609-0.0585 0.36977-0.0585 0.55586h0.2633c2.9491 11.221 79.15 25.523 87.651 34.025 12.839 12.839-49.233 22.268-36.395 35.107 12.839 12.839 77.59 24.843 90.43 37.682 12.839 12.839-26.238 26.51-13.399 39.349s55.967-3.2094 48.155 30.28c17.338 17.338 53.512 9.0588 77.733-8.2795 12.839-12.839-24.629-11.707-11.79-24.546s45.247-12.908 72.555-43.621c-10.992-17.095-46.981-24.375-34.142-37.214s37.8-6.3179 91.659-30.777c26.292-11.941 24.12-21.01 24.019-32.006-0.002-0.23138 0-0.43973 0-0.67288h-0.0585c-0.16-11.07-4.46-22.12-12.95-30.62l-154.07-154.06c-8.66-8.667-19.99-12.987-31.3-12.987zm-1.3165 20.04c5.0295 0.13102 9.0916 3.9651 17.056 9.1279l72.789 53.977c0.79681 0.51671 1.5557 1.0557 2.2527 1.6091 0.69703 0.55327 1.3337 1.1401 1.9309 1.7261 0.5972 0.58495 1.14 1.1721 1.6383 1.7846 0.49726 0.61244 0.94845 1.2385 1.3458 1.8724 0.39844 0.6349 0.75476 1.2798 1.0532 1.9309 0.29867 0.65226 0.53281 1.325 0.7314 1.9894 0.19976 0.66341 0.36832 1.319 0.46811 1.9894 0.0999 0.67165 0.14627 1.3452 0.14627 2.0187l-43.123-20.83-4.3006 32.562-23.727-11.117-36.629 24.458-14.014-48.331-18.051 42.275-50.408 5.032 0.55587-22.439c0-5.3897 29.057-43.122 46.751-52.105l32.386-23.259c4.7787-3.0977 8.1289-4.35 11.147-4.2714zm-66.996 220.21c22.944 5.9503 48.476 13.757 68.957 13.897l0.87768 9.2157c-17.538-1.8078-54.648-10.276-63.398-14.745l-6.4363-8.3672z" stroke-width="1pt"/>
    </g>
-   <use id="use1328" style="color:#000000" xlink:href="#path1508" transform="matrix(5.1767 0 0 5.1767 -102.7 -256.62)" height="1052.3622" fill-opacity=".064615" width="744.09448" y="0" x="0" font-family="Sans" fill="#ffffff"/>
-   <text id="text7519" opacity=".5" line-height="125%" xml:space="preserve" transform="rotate(-90)" font-size="6.9693px" y="-6.5672836" x="-70.83046" font-family="Sans" sodipodi:linespacing="125%" fill="#000000"><tspan id="tspan7521" sodipodi:role="line" x="-70.83046" style="letter-spacing:.29056" y="-6.5672836">Use <tspan id="tspan7523" font-weight="bold">Ctrl+up arrow</tspan> to scroll </tspan></text>
+   <use id="use1328" style="color:#000000" xlink:href="#path1508" transform="matrix(5.1767 0 0 5.1767 -102.7 -256.62)" height="1052.3622" fill-opacity=".064615" width="744.09448" y="0" x="0" font-family="sans-serif" fill="#ffffff"/>
+   <text id="text7519" opacity=".5" line-height="125%" xml:space="preserve" transform="rotate(-90)" font-size="6.9693px" y="-6.5672836" x="-70.83046" font-family="sans-serif" sodipodi:linespacing="125%" fill="#000000"><tspan id="tspan7521" sodipodi:role="line" x="-70.83046" style="letter-spacing:.29056" y="-6.5672836">Use <tspan id="tspan7523" font-weight="bold">Ctrl+up arrow</tspan> to scroll </tspan></text>
    <path id="path7527" opacity=".5" style="color:#000000" d="m338.53 197.82-13.108-1.2709 7.6547-10.717z" fill-rule="evenodd" transform="matrix(-.61496 -.045496 -.061919 .45186 207.79 -117.15)"/>
   </g>
  </g>
