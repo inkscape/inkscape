@@ -45,7 +45,10 @@ options:
     -P, --export-ps=FILENAME
     -E, --export-eps=FILENAME
     -A, --export-pdf=FILENAME
+        --export-pdf-version=VERSION-STRING
         --export-latex
+
+    --export-ps-level {2,3}
 
     -T, --export-text-to-path
         --export-ignore-filters
@@ -152,7 +155,7 @@ PNG エクスポート時のファイル名を指定します。同名のファ�
 =item B<-f> I<FILENAME>, B<--file>=I<FILENAME>
 
 指定されたドキュメントを開きます。オプション文字 (-f) は省略できます。すなわち、オプション文字が与えられていない場合は -f
-が指定され、パラメータはすべてファイル名とみなされます。
+が指定され、パラメーターはすべてファイル名とみなされます。
 
 =item B<-g>, B<--with-gui>
 
@@ -165,16 +168,17 @@ GUI の使用を試みます (Unix の場合、$DISPLAY が設定されていな
 
 =item B<-i> I<ID>, B<--export-id>=I<ID>
 
-PNG、PS、EPS、および PDF エクスポートにおいて、ドキュメント内のエクスポートしたいオブジェクトの id
-属性値を指定します。その他のオブジェクトはエクスポートされません。デフォルトのエクスポート領域はオブジェクトの境界枠になり、--export-area
-(PNG のみ) または --export-area-page が指定された場合はその値が優先されます。
+For PNG, PS, EPS, PDF and plain SVG export, the id attribute value of the
+object that you want to export from the document; all other objects are not
+exported.  By default the exported area is the bounding box of the object;
+you can override this using --export-area (PNG only) or --export-area-page.
 
 =item B<-j>, B<--export-id-only>
 
---export-id で指定されたオブジェクトのみ PNG
-にエクスポートします。その他のオブジェクトは、エクスポートするオブジェクト上に重なっているものであってもエクスポート PNG
-には出力されません。--export-id が指定されていない場合はこのオプションは無視されます。PDF
-エクスポートではこの挙動がデフォルトとなるため、このオプションは意味を持ちません。
+For PNG and plain SVG, only export the object whose id is given in
+--export-id. All other objects are hidden and won't show in export even if
+they overlay the exported object.  Without --export-id, this option is
+ignored. For PDF export, this is the default, so this option has no effect.
 
 =item B<-l>, B<--export-plain-svg>=I<FILENAME>
 
@@ -262,6 +266,13 @@ inkscape:pageopacity= 属性)が使用されます。このオプションを指
 (その他はすべてエクスポートされません)、その場合はエクスポート領域はそのオブジェクトの境界枠になりますが、--export-area-page
 でそのページに指定できます。"
 
+=item B<--export-pdf-version>=I<PDF-VERSION>
+
+Select the PDF version of the exported PDF file. This option basically
+exposes the PDF version selector found in the PDF-export dialog of the
+GUI. You must provide one of the versions from that combo-box,
+e.g. "1.4". The default pdf export version is "1.4".
+
 =item B<--export-latex>
 
 (PS、EPS、および PDF エクスポート用) LaTeX ドキュメント用のイメージを作成し、イメージ内のテキストは LaTeX
@@ -274,7 +285,7 @@ LaTeX ファイルを入力 (\input{image.tex}) すると、イメージと共�
 
 =item B<-T>, B<--export-text-to-path>
 
-該当する場合は、テキストオブジェクトをパスに変換します (PS、EPS、および PDF エクスポート用)。
+該当する場合は、テキストオブジェクトをパスに変換します (PS、EPS、PDF、および SVG エクスポート用)。
 
 =item B<--export-ignore-filters>
 
@@ -420,6 +431,9 @@ B<DISPLAY> デフォルトのホストおよびディスプレイ番号を指定
 
 B<TMPDIR> 一時ファイル用ディレクトリのデフォルトパスを指定します。ディレクトリは存在していなければなりません。
 
+B<INKSCAPE_PROFILE_DIR> to set the path of the directory to use for the user
+profile.
+
 =head1 テーマ
 
 読み込むアイコンセットは B<$HOME>/.config/inkscape/icons/ 配下から参照され、存在しない場合はシステムデフォルトの
@@ -470,8 +484,8 @@ Inkscape は SVG 以外にも、ほとんどのビットマップ形式 (PNG、B
 が必要)、PS および EPS (Ghostscript が必要)、PDF および AI 形式 (AI バージョン 9.0 以降) をインポートできます
 (「ファイル」>「インポート」)。
 
-Inkscape は 32-bit PNG 画像へのエクスポートを行える (「ファイル」>「エクスポート」)
-他、AI、PS、EPS、PDF、DXF、その他の形式へも「ファイル」>「名前を付けて保存」で保存できます。
+Inkscape exports 32-bit PNG images (File > Export PNG Image) as well as AI,
+PS, EPS, PDF, DXF, and several other formats via File > Save as.
 
 Inkscape はグラフィックタブレットの筆圧および傾き検出に対応しており、カリグラフィツールなどでペンの幅、角度、および動きに利用できます。
 
@@ -499,12 +513,12 @@ Inkscape は外部スクリプト (標準入力から標準出力へのフィル
 
 [% INCLUDE "AUTHORS" %]
 
-この man page は Bryce Harrington E<lt>brycehar@bryceharrington.comE<gt>
-によって執筆されました。
+This man page was put together by Bryce Harrington
+E<lt>brycehar@bryceharrington.orgE<gt>.
 
 =head1 沿革
 
-後に Inkscape となるコードベースは 1999 年、GNOME イラストレータアプリケーション Gill として Raph Leiven
+後に Inkscape となるコードベースは 1999 年、GNOME イラストレーターアプリケーション Gill として Raph Leiven
 によって製作が開始されました。Gill の当初の目標は最終的に SVG のすべてをサポートすることでした。Raph
 は、ストロークとフィル、線のキャップ方式、線の連結方式、テキストなどを含む PostScript ベジエイメージングモデルを実装しました。Raph の
 Gill のウェブページは http://www.levien.com/svg/ です。Gill の開発は 2000

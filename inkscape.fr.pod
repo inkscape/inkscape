@@ -45,7 +45,10 @@ options:
     -P, --export-ps=NOMDEFICHIER
     -E, --export-eps=NOMDEFICHIER
     -A, --export-pdf=NOMDEFICHIER
+        --export-pdf-version=NUMERODEVERSION
         --export-latex
+
+    --export-ps-level {2,3}
 
     -T, --export-text-to-path
         --export-ignore-filters
@@ -196,18 +199,19 @@ est aussi utilisé).
 
 =item B<-i> I<ID>, B<--export-id>=I<ID>
 
-Lors des exportations PNG, PS, EPS et PDF, valeur de l'attribut id de
-l'objet que vous voulez exporter depuis le document (aucun autre objet n'est
-exporté). Par défaut la zone exportée est la boîte englobante de l'objet ;
-vous pouvez préempter ce comportement en utilisant --export-area (pour le
-PNG seulement) ou --export-area-page.
+Lors des exportations PNG, PS, EPS, PDF et SVG simple, valeur de l'attribut
+id de l'objet que vous voulez exporter depuis le document (aucun autre objet
+n'est exporté). Par défaut la zone exportée est la boîte englobante de
+l'objet ; vous pouvez préempter ce comportement en utilisant --export-area
+(pour le PNG seulement) ou --export-area-page.
 
 =item B<-j>, B<--export-id-only>
 
-N'exporte que l'objet dont l'id est spécifiée avec avec l'option
---export-id. Tout les autres objets seront cachés et n'apparaîtront pas dans
-le fichier exporté même s'ils chevauchent l'objet effectivement
-exporté. Cette option est ignorée si --export-id n'est pas aussi utilisé.
+Pour les formats PNG et SVG simple, n'exporte que l'objet dont l'id est
+spécifiée avec avec l'option --export-id. Tout les autres objets seront
+cachés et n'apparaîtront pas dans le fichier exporté même s'ils chevauchent
+l'objet effectivement exporté. Cette option est ignorée si --export-id n'est
+pas aussi utilisé.
 
 =item B<-l>, B<--export-plain-svg>=I<NOMDEFICHIER>
 
@@ -326,6 +330,14 @@ qu'un objet en spécifiant --export-id (tous les autres objets sont
 cachés). Dans ce cas, la zone d'exportation correspond à celle de l'objet
 choisi, à moins que vous n'ajoutiez l'option --export-area-page pour que
 cette zone prenne la taille de la page.
+
+=item B<--export-pdf-version>=I<VERSION-PDF>
+
+Sélectionne la version PDF utilisée pour exporter le fichier. Cette option
+ne fait que réutiliser le sélecteur de version PDF présent dans la boîte de
+dialogue d'exportation en PDF de l'interface graphique. Vous devez donc
+fournir une des versions proposées par ce sélecteur (par exemple « 1.4 ». La
+version par défaut est « 1.4 ».
 
 =item B<--export-latex>
 
@@ -515,6 +527,9 @@ B<DISPLAY> pour obtenir l'hôte par défaut et le numéro d'affichage.
 B<TMPDIR> pour définir le chemin par défaut du répertoire à utiliser pour
 stocker les fichier temporaires. Le répertoire doit exister.
 
+B<INKSCAPE_PROFILE_DIR> pour définir le chemin du répertoire à utiliser pour
+le profil utilisateur.
+
 =head1 THÈMES
 
 Vous pouvez remplacer le fichier d'icônes par défaut
@@ -575,9 +590,9 @@ bitmaps  PNG, BMP, JPG, XPM, GIF, etc.), du texte brut (nécessite Perl), PS
 et EPS (nécessite Ghostscript) et les formats PDF et AI (documents Adobe
 Illustrato 9.0 ou plus récent).
 
-Inkscape permet d'exporter (Fichier > Exporter) des images PNG 32-bits, mais
-aussi aux formats AI, PS, EPS, PDF, DXF et plusieurs autres formats (via
-Fichier > Enregistrer sous). 
+Inkscape permet d'exporter (Fichier > Exporter une image PNG) des images PNG
+32-bits, mais aussi aux formats AI, PS, EPS, PDF, DXF et plusieurs autres
+formats (via Fichier > Enregistrer sous). 
 
 Inkscape supporte la pression et l'inclinaison du stylet d'une tablette
 graphique pour la largeur, la force et l'angle de plusieurs outils dont la
@@ -617,7 +632,7 @@ cette application s'est S<appuyée :>
 [% INCLUDE "AUTHORS" %]
 
 Cette page de manuel a été créée par Bryce Harrington
-E<lt>brycehar@bryceharrington.comE<gt>.
+E<lt>brycehar@bryceharrington.orgE<gt>.
 
 =head1 HISTORIQUE
 

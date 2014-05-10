@@ -46,7 +46,10 @@ C<inkscape [επιλογές [όνομα_αρχείου ...]>
     -P, --export-ps=FILENAME
     -E, --export-eps=FILENAME
     -A, --export-pdf=FILENAME
+        --export-pdf-version=VERSION-STRING
         --export-latex
+
+    --export-ps-level {2,3}
 
     -T, --export-text-to-path
         --export-ignore-filters
@@ -196,19 +199,17 @@ X ακόμα κι αν το $DISPLAY δεν καθορίζεται).
 
 =item B<-i> I<ID>, B<--export-id>=I<ID>
 
-Για εξαγωγή PNG, PS, EPS και PDF, η τιμή γνωρίσματος id του αντικειμένου που
-θέλετε να εξάγετε από το έγγραφο. Όλα τα άλλα αντικείμενα δεν εξάγονται. Από
-προεπιλογή η εξαγόμενη περιοχή είναι το οριακό πλαίσιο του
-αντικειμένου. Μπορείτε να το παρακάμψετε χρησιμοποιώντας --export-area (μόνο
-PNG) ή --export-area-page.
+For PNG, PS, EPS, PDF and plain SVG export, the id attribute value of the
+object that you want to export from the document; all other objects are not
+exported.  By default the exported area is the bounding box of the object;
+you can override this using --export-area (PNG only) or --export-area-page.
 
 =item B<-j>, B<--export-id-only>
 
-Εξαγωγή μόνο σε PNG του αντικειμένου του οποίου το id δίνεται στο
---export-id. Όλα τα άλλα αντικείμενα κρύβονται και δεν θα εμφανιστούν στην
-εξαγωγή ακόμα κι αν επικαλύπτουν το εξαγόμενο αντικείμενο. Χωρίς
---export-id, αυτή η επιλογή αγνοείται. Για εξαγωγή PDF, αυτό είναι η
-προεπιλογή, έτσι αυτή η επιλογή δεν έχει επίδραση.
+For PNG and plain SVG, only export the object whose id is given in
+--export-id. All other objects are hidden and won't show in export even if
+they overlay the exported object.  Without --export-id, this option is
+ignored. For PDF export, this is the default, so this option has no effect.
 
 =item B<-l>, B<--export-plain-svg>=I<FILENAME>
 
@@ -322,6 +323,13 @@ SVG. Οι χρησιμοποιούμενες γραμματοσειρές είν
 --export-id για να εξάγετε ένα μονό αντικείμενο (όλα τα άλλα κρύβονται). Σε
 αυτή την περίπτωση περιοχή εξαγωγής είναι αυτή του οριακού πλαισίου
 αντικειμένου, αλλά μπορεί να οριστεί σε σελίδα με --export-area-page.
+
+=item B<--export-pdf-version>=I<PDF-VERSION>
+
+Select the PDF version of the exported PDF file. This option basically
+exposes the PDF version selector found in the PDF-export dialog of the
+GUI. You must provide one of the versions from that combo-box,
+e.g. "1.4". The default pdf export version is "1.4".
 
 =item B<--export-latex>
 
@@ -514,6 +522,9 @@ B<DISPLAY> για λήψη του προεπιλεγμένου αριθμού υ
 B<TMPDIR> για ορισμό του προεπιλεγμένου μονοπατιού του καταλόγου για χρήση
 των προσωρινών αρχείων. Ο κατάλογος πρέπει να υπάρχει.
 
+B<INKSCAPE_PROFILE_DIR> to set the path of the directory to use for the user
+profile.
+
 =head1 ΘΕΜΑΤΑ
 
 Για φόρτωση διαφορετικών εικονιδίων καθορίζει αντί για το προεπιλεγμένο
@@ -573,8 +584,8 @@ W3C> L<http://www.w3.org/TR/DOM-Level-2-Core/>
 κείμενο (απαιτεί Perl), PS και EPS (απαιτεί Ghostscript), PDF και μορφή AI
 (AI έκδοση 9.0 ή νεότερη).
 
-Το Inkscape εξάγει εικόνες PNG 32-δυαδικών (Αρχείο > Εξαγωγή) καθώς και AI,
-PS, EPS, PDF, DXF και πολλές άλλες μορφές μέσα από Αρχείο > Αποθήκευση ως. 
+Inkscape exports 32-bit PNG images (File > Export PNG Image) as well as AI,
+PS, EPS, PDF, DXF, and several other formats via File > Save as.
 
 Το Inkscape μπορεί να χρησιμοποιήσει την πίεση και κλίση μιας πένας γραφικής
 πινακίδας για πλάτος, γωνία και εξαναγκασμό της επενέργειας πολλών
@@ -612,8 +623,8 @@ stdin-to-stdout) που αναπαριστάνονται από εντολές �
 
 [% INCLUDE "AUTHORS" %]
 
-Αυτή η σελίδα του εγχειριδίου έγινε από Bryce Harrington
-E<lt>brycehar@bryceharrington.comE<gt>.
+This man page was put together by Bryce Harrington
+E<lt>brycehar@bryceharrington.orgE<gt>.
 
 =head1 ΙΣΤΟΡΙΚΟ
 

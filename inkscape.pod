@@ -171,14 +171,14 @@ This value overrides the --export-dpi setting (or the DPI hint if used with --ex
 
 =item B<-i> I<ID>, B<--export-id>=I<ID>
 
-For PNG, PS, EPS, and PDF export, the id attribute value of the object that you want 
+For PNG, PS, EPS, PDF and plain SVG export, the id attribute value of the object that you want 
 to export from the document; all other objects are not exported.  By
 default the exported area is the bounding box of the object; you can override this using
 --export-area (PNG only) or --export-area-page.
 
 =item B<-j>, B<--export-id-only>
 
-Only export to PNG the object whose id is given in --export-id. All other objects are hidden and won't 
+For PNG and plain SVG, only export the object whose id is given in --export-id. All other objects are hidden and won't 
 show in export even if they overlay the exported object. 
 Without --export-id, this option is ignored. For PDF export, this is the default, so this option has no effect.
 
@@ -440,6 +440,9 @@ B<DISPLAY> to get the default host and display number.
 B<TMPDIR> to set the default path of the directory to use for temporary
 files.  The directory must exist.
 
+B<INKSCAPE_PROFILE_DIR> to set the path of the directory to use for the
+user profile.
+
 =head1 THEMES
 
 To load different icons sets instead of the default
@@ -497,7 +500,7 @@ Apart from SVG, Inkscape can import (File > Import) most bitmap formats
 (PNG, BMP, JPG, XPM, GIF, etc.), plain text (requires Perl), PS and EPS (requires Ghostscript), PDF 
 and AI format (AI version 9.0 or newer).
 
-Inkscape exports 32-bit PNG images (File > Export) as well as AI, PS, EPS, PDF, DXF, 
+Inkscape exports 32-bit PNG images (File > Export PNG Image) as well as AI, PS, EPS, PDF, DXF, 
 and several other formats via File > Save as.
 
 Inkscape can use the pressure and tilt of a graphic tablet pen for width, angle,

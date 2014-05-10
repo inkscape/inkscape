@@ -42,10 +42,13 @@ C<inkscape [選項] [檔名 ...]>
     -w, --export-width=寬度          
     -h, --export-height=高度        
 
-    -P, --export-ps=檔名
-    -E, --export-eps=檔名
-    -A, --export-pdf=檔名
+    -P, --export-ps=FILENAME
+    -E, --export-eps=FILENAME
+    -A, --export-pdf=FILENAME
+        --export-pdf-version=VERSION-STRING
         --export-latex
+
+    --export-ps-level {2,3}
 
     -T, --export-text-to-path
         --export-ignore-filters
@@ -158,13 +161,17 @@ DPI 內定值)。
 
 =item B<-i> I<ID>, B<--export-id>=I<ID>
 
-匯出 PNG、PS、EPS 和 PDF 時, 你想要從文件中匯出的物件的 ID 屬性值；其他剩下的物件都不會被匯出。預設
-情形下匯出的範圍是物件的外框邊界；你可用 --export-area (僅 PNG) 或 --export-area-canvas 覆蓋這 個值。
+For PNG, PS, EPS, PDF and plain SVG export, the id attribute value of the
+object that you want to export from the document; all other objects are not
+exported.  By default the exported area is the bounding box of the object;
+you can override this using --export-area (PNG only) or --export-area-page.
 
 =item B<-j>, B<--export-id-only>
 
-只把在 --export-id 給定 ID 的物件匯出成 PNG。其餘全部會被隱藏且不會顯示在匯出圖片中，即使這些物件和 匯出的物件重疊。 沒有
---export-id 會忽略這個選項。對匯出 PDF 來說，這是預設值，所以這選項不會有任何效果。
+For PNG and plain SVG, only export the object whose id is given in
+--export-id. All other objects are hidden and won't show in export even if
+they overlay the exported object.  Without --export-id, this option is
+ignored. For PDF export, this is the default, so this option has no effect.
 
 =item B<-l>, B<--export-plain-svg>=I<檔名>
 
@@ -237,6 +244,13 @@ DPI 內定值)。
 --export-area-drawing 將匯出範圍設定成繪圖部份。你可以指定 --export-id 來匯出單一物 件 (其餘全部隱藏);
 假如那樣的話匯出範圍就是物件的外框邊界，但可用 --export-area-canvas 設定成畫布。
 
+=item B<--export-pdf-version>=I<PDF-VERSION>
+
+Select the PDF version of the exported PDF file. This option basically
+exposes the PDF version selector found in the PDF-export dialog of the
+GUI. You must provide one of the versions from that combo-box,
+e.g. "1.4". The default pdf export version is "1.4".
+
 =item B<--export-latex>
 
 (PS、EPS 和 PDF 匯出) 用來建立 LaTeX 文件的圖片，而圖片的文字則由 LaTeX 排版。當匯出成 PDF/PS/EPS
@@ -247,7 +261,8 @@ PDF/PS/EPS 檔案裡，但會出現在 LaTeX 檔案。這個 LaTeX 檔案包含 
 
 =item B<-T>, B<--export-text-to-path>
 
-匯出時將文字物件轉換成路徑，匯出成 PS、EPS 和 PDF 時適用。
+Convert text objects to paths on export, where applicable (for PS, EPS, PDF
+and SVG export).
 
 =item B<--export-ignore-filters>
 
@@ -380,6 +395,9 @@ B<DISPLAY> 可取得預設主機和顯示編號。
 
 B<TMPDIR> 可設定暫存檔使用的預設目錄的路徑。目錄必須存在。
 
+B<INKSCAPE_PROFILE_DIR> to set the path of the directory to use for the user
+profile.
+
 =head1 主題
 
 可從目錄 B<$HOME>/.inkscape/icons/
@@ -428,8 +446,8 @@ W3C> L<http://www.w3.org/TR/DOM-Level-2-Core/>
 除了 SVG 外，Inkscape 可以匯入 (檔案 > 匯入) 多數的點陣圖格式 (PNG、BMP、JPG、XPM、GIF 等)、 普通純文字檔
 (需要 Perl)、PS 和 EPS (需要 Ghostscript)、PDF 和 AI 格式 (AI 版本 9.0 或更新)。
 
-Inkscape 可匯出 32-位元 PNG 圖片 (檔案 > 匯出)，也可經由 檔案 > 另存 儲存成 AI、PS、EPS、PDF、 DXF
-及一些其他格式。
+Inkscape exports 32-bit PNG images (File > Export PNG Image) as well as AI,
+PS, EPS, PDF, DXF, and several other formats via File > Save as.
 
 Inkscape 能用繪圖板畫筆的壓力及傾斜感應來變化寬度、角度和一些工具的作用力，包括美工筆。
 
@@ -453,7 +471,8 @@ Inkscape 能使用外部腳本 (stdin-to-stdout 過濾器)，腳本會以擴充�
 
 [% INCLUDE "AUTHORS" %]
 
-這份使用說明由 Bryce Harrington E<lt>brycehar@bryceharrington.comE<gt> 彙集整合。
+This man page was put together by Bryce Harrington
+E<lt>brycehar@bryceharrington.orgE<gt>.
 
 =head1 歷史
 
