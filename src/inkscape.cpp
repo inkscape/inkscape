@@ -1445,6 +1445,11 @@ profile_path(const char *filename)
         if (val) {
             prefdir = g_strdup(val);
         }
+        // Then check for a custom user environment variable
+        gchar const *userenv = g_getenv("INKSCAPE_PROFILE_DIR");
+        if (userenv) {
+            prefdir = g_strdup(userenv);
+        }
 
 #ifdef HAS_SHGetSpecialFolderLocation
         // prefer c:\Documents and Settings\UserName\Application Data\ to
