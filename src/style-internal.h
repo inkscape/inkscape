@@ -837,19 +837,20 @@ class SPITextDecorationStyle : public SPIBase {
 // the right style. (See http://www.w3.org/TR/css-text-decor-3/#text-decoration-property )
 
 /// Text decoration type internal to SPStyle.
-class SPITextDecoration: public SPIBase {
+class SPITextDecoration : public SPIBase {
 
   public:
-    SPITextDecoration() : SPIBase( "text-decoration" ) {};
+    SPITextDecoration() : SPIBase( "text-decoration" ), style_td( NULL ) {};
     virtual ~SPITextDecoration() {};
     virtual void read( gchar const *str );
     virtual const Glib::ustring write( guint const flags = SP_STYLE_FLAG_IFSET,
                                        SPIBase const *const base = NULL ) const;
     virtual void clear() {
         SPIBase::clear();
+        style_td = NULL;
     };
-    virtual void cascade( const SPIBase* const parent ) {}; // Done in SPITextDecorationLine
-    virtual void merge(   const SPIBase* const parent ) {}; // Done in SPITextDecorationLine
+    virtual void cascade( const SPIBase* const parent );
+    virtual void merge(   const SPIBase* const parent ) {}; // FIX ME
 
     SPITextDecoration& operator=(const SPITextDecoration& rhs) {
         SPIBase::operator=(rhs);
@@ -859,6 +860,9 @@ class SPITextDecoration: public SPIBase {
     // Use CSS2 value
     virtual bool operator==(const SPIBase& rhs);
     virtual bool operator!=(const SPIBase& rhs) { return !(*this == rhs); };
+
+  public:
+    SPStyle* style_td;   // Style to be used for drawing CSS2 text decorations 
 };
 
 

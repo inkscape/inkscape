@@ -2440,6 +2440,11 @@ SPITextDecoration::read( gchar const *str ) {
         style->text_decoration_style.set = true;
         style->text_decoration_color.set = true;
     }
+
+    // If we set text_decoration_line, then update style_td (for CSS2 text-decoration)
+    if( style->text_decoration_line.set == true ) {
+        style_td = style;
+    }
 }
 
 // Returns CSS2 'text-decoration' (using settings in SPTextDecorationLine)
@@ -2474,10 +2479,17 @@ SPITextDecoration::write( guint const flags, SPIBase const *const base) const {
     return Glib::ustring("");
 }
 
-// Done in SPITextDecorationLine
-// void
-// SPITextDecoration::cascade( const SPIBase* const parent ) {
-// }
+void
+SPITextDecoration::cascade( const SPIBase* const parent ) {
+    if( const SPITextDecoration* p = dynamic_cast<const SPITextDecoration*>(parent) ) {
+        if( style_td == NULL ) {
+            style_td = p->style_td;
+        }
+    } else {
+        std::cerr << "SPITextDecoration::cascade(): Incorrect parent type" << std::endl;
+    }
+
+}
 
 // void
 // SPITextDecoration::merge( const SPIBase* const parent ) {
