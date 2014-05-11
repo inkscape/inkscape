@@ -13,6 +13,8 @@
 # include "config.h"
 #endif
 
+#include <glibmm.h>
+
 #ifdef WIN32
 #if WITH_GLIBMM_2_32
 #if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
