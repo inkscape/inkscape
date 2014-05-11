@@ -1000,7 +1000,7 @@ public:
 
     virtual ~Element()
         {
-        for (unsigned int i=0 ; i<children.size() ; i++)
+        for (std::size_t i=0 ; i<children.size() ; i++)
             delete children[i];
         }
 
@@ -1215,7 +1215,7 @@ void Element::findElementsRecursive(std::vector<Element *>&res, const String &na
         {
         res.push_back(this);
         }
-    for (unsigned int i=0; i<children.size() ; i++)
+    for (std::size_t i=0; i<children.size() ; i++)
         children[i]->findElementsRecursive(res, name);
 }
 
@@ -1228,7 +1228,7 @@ std::vector<Element *> Element::findElements(const String &name)
 
 String Element::getAttribute(const String &name)
 {
-    for (unsigned int i=0 ; i<attributes.size() ; i++)
+    for (std::size_t i=0 ; i<attributes.size() ; i++)
         if (attributes[i].getName() ==name)
             return attributes[i].getValue();
     return "";
@@ -1282,13 +1282,13 @@ void Element::writeIndentedRecursive(FILE *f, int indent)
     for (i=0;i<indent;i++)
         fputc(' ',f);
     fprintf(f,"<%s",name.c_str());
-    for (unsigned int i=0 ; i<attributes.size() ; i++)
+    for (std::size_t i=0 ; i<attributes.size() ; i++)
         {
         fprintf(f," %s=\"%s\"",
               attributes[i].getName().c_str(),
               attributes[i].getValue().c_str());
         }
-    for (unsigned int i=0 ; i<namespaces.size() ; i++)
+    for (std::size_t i=0 ; i<namespaces.size() ; i++)
         {
         fprintf(f," xmlns:%s=\"%s\"",
               namespaces[i].getPrefix().c_str(),
@@ -1304,7 +1304,7 @@ void Element::writeIndentedRecursive(FILE *f, int indent)
         fprintf(f," %s\n", value.c_str());
         }
 
-    for (unsigned int i=0 ; i<children.size() ; i++)
+    for (std::size_t i=0 ; i<children.size() ; i++)
         children[i]->writeIndentedRecursive(f, indent+2);
 
     //Closing tag
@@ -1357,7 +1357,7 @@ String Parser::trim(const String &s)
         return s;
     
     //Find first non-ws char
-    unsigned int begin = 0;
+    std::size_t begin = 0;
     for ( ; begin < s.size() ; begin++)
         {
         if (!isspace(s[begin]))
@@ -1365,7 +1365,7 @@ String Parser::trim(const String &s)
         }
 
     //Find first non-ws char, going in reverse
-    unsigned int end = s.size() - 1;
+    std::size_t end = s.size() - 1;
     for ( ; end > begin ; end--)
         {
         if (!isspace(s[end]))
@@ -1442,7 +1442,7 @@ int Parser::peek(int pos)
 String Parser::encode(const String &str)
 {
     String ret;
-    for (unsigned int i=0 ; i<str.size() ; i++)
+    for (std::size_t i=0 ; i<str.size() ; i++)
         {
         XMLCh ch = (XMLCh)str[i];
         if (ch == '&')
@@ -2264,7 +2264,7 @@ String URI::getNativePath() const
 {
     String npath;
 #ifdef __WIN32__
-    unsigned int firstChar = 0;
+    std::size_t firstChar = 0;
     if (path.size() >= 3)
         {
         if (path[0] == '/' &&
@@ -2272,7 +2272,7 @@ String URI::getNativePath() const
             path[2] == ':')
             firstChar++;
          }
-    for (unsigned int i=firstChar ; i<path.size() ; i++)
+    for (std::size_t i=firstChar ; i<path.size() ; i++)
         {
         XMLCh ch = (XMLCh) path[i];
         if (ch == '/')
@@ -2356,7 +2356,7 @@ URI URI::resolve(const URI &other) const
             }
         else
             {
-            unsigned int pos = path.find_last_of('/');
+            std::size_t pos = path.find_last_of('/');
             if (pos != path.npos)
                 {
                 String tpath = path.substr(0, pos+1);
@@ -2395,7 +2395,7 @@ void URI::normalize()
     if (path.size()<2)
         return;
     bool abs = false;
-    unsigned int pos=0;
+    std::size_t pos=0;
     if (path[0]=='/')
         {
         abs = true;
@@ -2403,7 +2403,7 @@ void URI::normalize()
         }
     while (pos < path.size())
         {
-        unsigned int pos2 = path.find('/', pos);
+        std::size_t pos2 = path.find('/', pos);
         if (pos2==path.npos)
             {
             String seg = path.substr(pos);
@@ -2706,7 +2706,7 @@ bool URI::parse(const String &str)
     parselen = str.size();
 
     String tmp;
-    for (unsigned int i=0 ; i<str.size() ; i++)
+    for (std::size_t i=0 ; i<str.size() ; i++)
         {
         XMLCh ch = (XMLCh) str[i];
         if (ch == '\\')
@@ -2923,7 +2923,7 @@ public:
     /**
      *
      */
-    unsigned int size() const
+    std::size_t size() const
         { return files.size(); }
         
     /**
@@ -3022,7 +3022,7 @@ public:
     /**
      *
      */
-    unsigned int size()
+    std::size_t size()
         { return files.size(); }
         
     /**
@@ -3896,7 +3896,7 @@ String MakeBase::getSuffix(const String &fname)
 {
     if (fname.size() < 2)
         return "";
-    unsigned int pos = fname.find_last_of('.');
+    std::size_t pos = fname.find_last_of('.');
     if (pos == fname.npos)
         return "";
     pos++;
@@ -3918,7 +3918,7 @@ std::vector<String> MakeBase::tokenize(const String &str,
     std::vector<String> res;
     char *del = (char *)delimiters.c_str();
     String dmp;
-    for (unsigned int i=0 ; i<str.size() ; i++)
+    for (std::size_t i=0 ; i<str.size() ; i++)
         {
         char ch = str[i];
         char *p = (char *)0;
@@ -4031,7 +4031,7 @@ String MakeBase::trim(const String &s)
         return s;
     
     //Find first non-ws char
-    unsigned int begin = 0;
+    std::size_t begin = 0;
     for ( ; begin < s.size() ; begin++)
         {
         if (!isspace(s[begin]))
@@ -4039,7 +4039,7 @@ String MakeBase::trim(const String &s)
         }
 
     //Find first non-ws char, going in reverse
-    unsigned int end = s.size() - 1;
+    std::size_t end = s.size() - 1;
     for ( ; end > begin ; end--)
         {
         if (!isspace(s[end]))
@@ -4061,7 +4061,7 @@ String MakeBase::toLower(const String &s)
         return s;
 
     String ret;
-    for(unsigned int i=0; i<s.size() ; i++)
+    for(std::size_t i=0; i<s.size() ; i++)
         {
         ret.push_back(tolower(s[i]));
         }
@@ -4077,7 +4077,7 @@ String MakeBase::getNativePath(const String &path)
 {
 #ifdef __WIN32__
     String npath;
-    unsigned int firstChar = 0;
+    std::size_t firstChar = 0;
     if (path.size() >= 3)
         {
         if (path[0] == '/' &&
@@ -4085,7 +4085,7 @@ String MakeBase::getNativePath(const String &path)
             path[2] == ':')
             firstChar++;
         }
-    for (unsigned int i=firstChar ; i<path.size() ; i++)
+    for (std::size_t i=firstChar ; i<path.size() ; i++)
         {
         char ch = path[i];
         if (ch == '/')
@@ -4667,7 +4667,7 @@ bool MakeBase::pkgConfigRecursive(const String packageName,
         result = pkgConfig.getLibs();
     deplist.insert(packageName);
     std::vector<String> list = pkgConfig.getRequireList();
-    for (unsigned int i = 0 ; i<list.size() ; i++)
+    for (std::size_t i = 0 ; i<list.size() ; i++)
         {
         String depPkgName = list[i];
         if (deplist.find(depPkgName) != deplist.end())
@@ -4942,7 +4942,7 @@ bool MakeBase::parsePatternSet(Element *elem,
                           )
 {
     std::vector<Element *> children  = elem->getChildren();
-    for (unsigned int i=0 ; i<children.size() ; i++)
+    for (std::size_t i=0 ; i<children.size() ; i++)
         {
         Element *child = children[i];
         String tagName = child->getName();
@@ -4996,7 +4996,7 @@ bool MakeBase::parseFileSet(Element *elem,
         }
     //Look for child tags, including more patternsets
     std::vector<Element *> children  = elem->getChildren();
-    for (unsigned int i=0 ; i<children.size() ; i++)
+    for (std::size_t i=0 ; i<children.size() ; i++)
         {
         Element *child = children[i];
         String tagName = child->getName();
@@ -5033,7 +5033,7 @@ bool MakeBase::parseFileSet(Element *elem,
 
     
     /*
-    for (unsigned int i=0 ; i<result.size() ; i++)
+    for (std::size_t i=0 ; i<result.size() ; i++)
         {
         trace("RES:%s", result[i].c_str());
         }
@@ -5055,7 +5055,7 @@ bool MakeBase::parseFileList(Element *elem,
     std::vector<String> fnames;
     //Look for child tags, namely "file"
     std::vector<Element *> children  = elem->getChildren();
-    for (unsigned int i=0 ; i<children.size() ; i++)
+    for (std::size_t i=0 ; i<children.size() ; i++)
         {
         Element *child = children[i];
         String tagName = child->getName();
@@ -5119,7 +5119,7 @@ bool MakeBase::createDirectory(const String &dirname)
 
     //## 2: pull off the last path segment, if any,
     //## to make the dir 'above' this one, if necessary
-    unsigned int pos = dirname.find_last_of('/');
+    std::size_t pos = dirname.find_last_of('/');
     if (pos>0 && pos != dirname.npos)
         {
         String subpath = dirname.substr(0, pos);
@@ -5251,7 +5251,7 @@ bool MakeBase::copyFile(const String &srcFile, const String &destFile)
         }
         
     //# 2 prepare a destination directory if necessary
-    unsigned int pos = destFile.find_last_of('/');
+    std::size_t pos = destFile.find_last_of('/');
     if (pos != destFile.npos)
         {
         String subpath = destFile.substr(0, pos);
@@ -5554,8 +5554,8 @@ void PkgConfig::parseVersion()
     if (version.size() == 0)
         return;
     String s1, s2, s3;
-    unsigned int pos = 0;
-    unsigned int pos2 = version.find('.', pos);
+    std::size_t pos = 0;
+    std::size_t pos2 = version.find('.', pos);
     if (pos2 == version.npos)
         {
         s1 = version;
@@ -5702,7 +5702,7 @@ bool PkgConfig::parse(const String &buf)
 
     String line;
     int lineNr = 0;
-    for (unsigned int p=0 ; p<buf.size() ; p++)
+    for (std::size_t p=0 ; p<buf.size() ; p++)
         {
         int ch = buf[p];
         if (ch == '\n' || ch == '\r')
@@ -6185,7 +6185,7 @@ void DepTool::parseName(const String &fullname,
     if (fullname.size() < 2)
         return;
 
-    unsigned int pos = fullname.find_last_of('/');
+    std::size_t pos = fullname.find_last_of('/');
     if (pos != fullname.npos && pos<fullname.size()-1)
         {
         path = fullname.substr(0, pos);
@@ -6217,7 +6217,7 @@ void DepTool::parseName(const String &fullname,
 bool DepTool::createFileList()
 {
 
-    for (unsigned int i=0 ; i<fileList.size() ; i++)
+    for (std::size_t i=0 ; i<fileList.size() ; i++)
         {
         String fileName = fileList[i];
         //trace("## FileName:%s", fileName.c_str());
@@ -6642,7 +6642,7 @@ std::vector<DepRec> DepTool::loadDepFile(const String &depFile)
     Element *depList = root->getChildren()[0];
 
     std::vector<Element *> objects = depList->getChildren();
-    for (unsigned int i=0 ; i<objects.size() ; i++)
+    for (std::size_t i=0 ; i<objects.size() ; i++)
         {
         Element *objectElem = objects[i];
         String tagName = objectElem->getName();
@@ -6659,7 +6659,7 @@ std::vector<DepRec> DepTool::loadDepFile(const String &depFile)
         depObject.suffix = objectElem->getAttribute("suffix");
         //########## DESCRIPTION
         std::vector<Element *> depElems = objectElem->getChildren();
-        for (unsigned int i=0 ; i<depElems.size() ; i++)
+        for (std::size_t i=0 ; i<depElems.size() ; i++)
             {
             Element *depElem = depElems[i];
             tagName = depElem->getName();
@@ -6901,7 +6901,7 @@ public:
         
     virtual bool isExcludedInc(const String &dirname)
         {
-        for (unsigned int i=0 ; i<excludeInc.size() ; i++)
+        for (std::size_t i=0 ; i<excludeInc.size() ; i++)
             {
             String fname = excludeInc[i];
             if (fname == dirname)
@@ -6986,7 +6986,7 @@ public:
             }
 
 // First create all directories, fails if done in OpenMP parallel loop below... goes superfast anyway, so don't optimize
-        for (unsigned int fi = 0; fi < deps.size() ; ++fi)
+        for (std::size_t fi = 0; fi < deps.size() ; ++fi)
         {
             DepRec dep = deps[fi];
  
@@ -7018,7 +7018,7 @@ public:
 #       pragma omp parallel for num_threads(numThreads)
 #endif
 
-        for (unsigned int fi = 0; fi < deps.size() ; ++fi)
+        for (std::size_t fi = 0; fi < deps.size() ; ++fi)
         {
             DepRec dep = deps[fi];
 
@@ -7073,7 +7073,7 @@ public:
                 {
                 //# secondly, we check if any of the included dependencies
                 //# of the .c/.cpp is newer than the .o
-                for (unsigned int i=0 ; i<dep.files.size() ; i++)
+                for (std::size_t i=0 ; i<dep.files.size() ; i++)
                     {
                     String depName;
                     if (source.size()>0)
@@ -7124,7 +7124,7 @@ public:
                              srcFullName.c_str());
                 fprintf(f, "#### COMMAND ###\n");
                 int col = 0;
-                for (unsigned int i = 0 ; i < cmd.size() ; i++)
+                for (std::size_t i = 0 ; i < cmd.size() ; i++)
                     {
                     char ch = cmd[i];
                     if (isspace(ch)  && col > 63)
@@ -7193,7 +7193,7 @@ public:
             return false;
 
         std::vector<Element *> children = elem->getChildren();
-        for (unsigned int i=0 ; i<children.size() ; i++)
+        for (std::size_t i=0 ; i<children.size() ; i++)
             {
             Element *child = children[i];
             String tagName = child->getName();
@@ -7322,7 +7322,7 @@ public:
                        fileSetDir.c_str(), toDirName.c_str());
 
                    int nrFiles = 0;
-                   for (unsigned int i=0 ; i<fileSet.size() ; i++)
+                   for (std::size_t i=0 ; i<fileSet.size() ; i++)
                        {
                        String fileName = fileSet[i];
 
@@ -7337,7 +7337,7 @@ public:
                        
                        //Get the immediate parent directory's base name
                        String baseFileSetDir = fileSetDir;
-                       unsigned int pos = baseFileSetDir.find_last_of('/');
+                       std::size_t pos = baseFileSetDir.find_last_of('/');
                        if (pos!=baseFileSetDir.npos &&
                                   pos < baseFileSetDir.size()-1)
                            baseFileSetDir =
@@ -7380,7 +7380,7 @@ public:
                    taskstatus("%s to %s", 
                        fileName.c_str(), toDirName.c_str());
                    String baseName = fileName;
-                   unsigned int pos = baseName.find_last_of('/');
+                   std::size_t pos = baseName.find_last_of('/');
                    if (pos!=baseName.npos && pos<baseName.size()-1)
                        baseName = baseName.substr(pos+1, baseName.size());
                    String fullSource = parent.resolve(fileName);
@@ -7434,7 +7434,7 @@ public:
         haveFileSet = false;
         
         std::vector<Element *> children = elem->getChildren();
-        for (unsigned int i=0 ; i<children.size() ; i++)
+        for (std::size_t i=0 ; i<children.size() ; i++)
             {
             Element *child = children[i];
             String tagName = child->getName();
@@ -7520,7 +7520,7 @@ public:
         cmd.append(fullDest);
 
         unsigned int newFiles = 0;
-        for (unsigned int i=0 ; i<fileSet.size() ; i++)
+        for (std::size_t i=0 ; i<fileSet.size() ; i++)
             {
             String fileName = fileSet[i];
             if (getSuffix(fileName) != "h")
@@ -7567,7 +7567,7 @@ public:
             return false;
             
         std::vector<Element *> children = elem->getChildren();
-        for (unsigned int i=0 ; i<children.size() ; i++)
+        for (std::size_t i=0 ; i<children.size() ; i++)
             {
             Element *child = children[i];
             String tagName = child->getName();
@@ -7624,7 +7624,7 @@ public:
             if (isNewerThan(fullTemplate, fullDest)) newFiles++;
         }
 
-        for (unsigned int i=0 ; i<fileSet.size() ; i++)
+        for (std::size_t i=0 ; i<fileSet.size() ; i++)
             {
             String fileName = fileSet[i];
             if (getSuffix(fileName) != "h")
@@ -7673,7 +7673,7 @@ public:
             return false;
             
         std::vector<Element *> children = elem->getChildren();
-        for (unsigned int i=0 ; i<children.size() ; i++)
+        for (std::size_t i=0 ; i<children.size() ; i++)
             {
             Element *child = children[i];
             String tagName = child->getName();
@@ -8046,7 +8046,7 @@ public:
         String fname = "javalist.btool";
         FILE *f = fopen(fname.c_str(), "w");
         int count = 0;
-        for (unsigned int i=0 ; i<fileList.size() ; i++)
+        for (std::size_t i=0 ; i<fileList.size() ; i++)
             {
             String fname = fileList[i];
             String srcName = fname;
@@ -8187,7 +8187,7 @@ public:
         cmd.append(fullTarget);
         cmd.append(" ");
         cmd.append(flags);
-        for (unsigned int i=0 ; i<fileSet.size() ; i++)
+        for (std::size_t i=0 ; i<fileSet.size() ; i++)
             {
             cmd.append(" ");
             String obj;
@@ -8274,7 +8274,7 @@ public:
             return false;
             
         std::vector<Element *> children = elem->getChildren();
-        for (unsigned int i=0 ; i<children.size() ; i++)
+        for (std::size_t i=0 ; i<children.size() ; i++)
             {
             Element *child = children[i];
             String tagName = child->getName();
@@ -8351,7 +8351,7 @@ public:
                 fullName.c_str(), strerror(errno));
             return false;
             }
-        for (unsigned int i=0 ; i<text.size() ; i++)
+        for (std::size_t i=0 ; i<text.size() ; i++)
             fputc(text[i], f);
         fputc('\n', f);
         fclose(f);
@@ -8455,7 +8455,7 @@ public:
         String fileSetDir = fileSet.getDirectory();
 
         //trace("msgfmt: %d", fileSet.size());
-        for (unsigned int i=0 ; i<fileSet.size() ; i++)
+        for (std::size_t i=0 ; i<fileSet.size() ; i++)
             {
             String fileName = fileSet[i];
             if (getSuffix(fileName) != "po")
@@ -8478,7 +8478,7 @@ public:
             if (owndir)
                 {
                 String subdir = fileName;
-                unsigned int pos = subdir.find_last_of('.');
+                std::size_t pos = subdir.find_last_of('.');
                 if (pos != subdir.npos)
                     subdir = subdir.substr(0, pos);
                 destPath.append(subdir);
@@ -8543,7 +8543,7 @@ public:
             return false;
             
         std::vector<Element *> children = elem->getChildren();
-        for (unsigned int i=0 ; i<children.size() ; i++)
+        for (std::size_t i=0 ; i<children.size() ; i++)
             {
             Element *child = children[i];
             String tagName = child->getName();
@@ -8778,7 +8778,7 @@ public:
         if (!parent.getAttribute(elem, "out", outNameOpt))
             return false;
         std::vector<Element *> children = elem->getChildren();
-        for (unsigned int i=0 ; i<children.size() ; i++)
+        for (std::size_t i=0 ; i<children.size() ; i++)
             {
             Element *child = children[i];
             String tagName = child->getName();
@@ -8833,7 +8833,7 @@ public:
             return false;
         String fileSetDir = parent.eval(fileSet.getDirectory(), ".");
 
-        for (unsigned int i=0 ; i<fileSet.size() ; i++)
+        for (std::size_t i=0 ; i<fileSet.size() ; i++)
             {
             String fname;
             if (fileSetDir.size()>0)
@@ -8868,7 +8868,7 @@ public:
             cmd.append(impFileName);
             cmd.append(" ");
             }
-        for (unsigned int i=0 ; i<fileSet.size() ; i++)
+        for (std::size_t i=0 ; i<fileSet.size() ; i++)
             {
             String fname;
             if (fileSetDir.size()>0)
@@ -8907,7 +8907,7 @@ public:
             return false;
             
         std::vector<Element *> children = elem->getChildren();
-        for (unsigned int i=0 ; i<children.size() ; i++)
+        for (std::size_t i=0 ; i<children.size() ; i++)
             {
             Element *child = children[i];
             String tagName = child->getName();
@@ -8968,7 +8968,7 @@ public:
         String fileSetDir = parent.eval(fileSet.getDirectory(), ".");
         //trace("###########HERE %s", fileSetDir.c_str());
 
-        for (unsigned int i=0 ; i<fileSet.size() ; i++)
+        for (std::size_t i=0 ; i<fileSet.size() ; i++)
             {
             String fname;
             if (fileSetDir.size()>0)
@@ -8991,7 +8991,7 @@ public:
         String cmd = command;
         cmd.append(" ");
         cmd.append(fullOut);
-        for (unsigned int i=0 ; i<fileSet.size() ; i++)
+        for (std::size_t i=0 ; i<fileSet.size() ; i++)
             {
             String fname;
             if (fileSetDir.size()>0)
@@ -9025,7 +9025,7 @@ public:
             return false;
             
         std::vector<Element *> children = elem->getChildren();
-        for (unsigned int i=0 ; i<children.size() ; i++)
+        for (std::size_t i=0 ; i<children.size() ; i++)
             {
             Element *child = children[i];
             String tagName = child->getName();
@@ -9623,7 +9623,7 @@ void Make::init()
     pclPrefix       = "pcl.";
     bzrPrefix       = "bzr.";
     properties.clear();
-    for (unsigned int i = 0 ; i < allTasks.size() ; i++)
+    for (std::size_t i = 0 ; i < allTasks.size() ; i++)
         delete allTasks[i];
     allTasks.clear();
 }
@@ -9635,7 +9635,7 @@ void Make::init()
  */
 void Make::cleanup()
 {
-    for (unsigned int i = 0 ; i < allTasks.size() ; i++)
+    for (std::size_t i = 0 ; i < allTasks.size() ; i++)
         delete allTasks[i];
     allTasks.clear();
 }
@@ -9690,7 +9690,7 @@ bool Make::executeTarget(Target &target,
 
     //First get any dependencies for this target
     std::vector<String> deps = target.getDependencies();
-    for (unsigned int i=0 ; i<deps.size() ; i++)
+    for (std::size_t i=0 ; i<deps.size() ; i++)
         {
         String dep = deps[i];
         //Did we do it already?  Skip
@@ -9719,7 +9719,7 @@ bool Make::executeTarget(Target &target,
 
     //Now let's do the tasks
     std::vector<Task *> &tasks = target.getTasks();
-    for (unsigned int i=0 ; i<tasks.size() ; i++)
+    for (std::size_t i=0 ; i<tasks.size() ; i++)
         {
         Task *task = tasks[i];
         status("--- %s / %s", name.c_str(), task->getName().c_str());
@@ -9793,7 +9793,7 @@ bool Make::checkTargetDependencies(Target &target,
     depList.push_back(tgtName);
 
     std::vector<String> deps = target.getDependencies();
-    for (unsigned int i=0 ; i<deps.size() ; i++)
+    for (std::size_t i=0 ; i<deps.size() ; i++)
         {
         String dep = deps[i];
         //First thing entered was the starting Target
@@ -9956,7 +9956,7 @@ bool Make::parsePropertyFile(const String &fileName,
 bool Make::parseProperty(Element *elem)
 {
     std::vector<Attribute> &attrs = elem->getAttributes();
-    for (unsigned int i=0 ; i<attrs.size() ; i++)
+    for (std::size_t i=0 ; i<attrs.size() ; i++)
         {
         String attrName = attrs[i].getName();
         String attrVal  = attrs[i].getValue();
@@ -10101,7 +10101,7 @@ bool Make::parseFile()
 
     //######### PARSE MEMBERS
     std::vector<Element *> children = project->getChildren();
-    for (unsigned int i=0 ; i<children.size() ; i++)
+    for (std::size_t i=0 ; i<children.size() ; i++)
         {
         Element *elem = children[i];
         setLine(elem->getLine());
@@ -10135,7 +10135,7 @@ bool Make::parseFile()
             target.setIf(tif);
             target.setUnless(tunless);
             std::vector<Element *> telems = elem->getChildren();
-            for (unsigned int i=0 ; i<telems.size() ; i++)
+            for (std::size_t i=0 ; i<telems.size() ; i++)
                 {
                 Element *telem = telems[i];
                 Task breeder(*this);
