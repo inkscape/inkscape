@@ -1468,7 +1468,7 @@ void InkscapePreferences::initPageBitmaps()
     _page_bitmaps.add_group_header( _("Render"));
     // rendering outlines for pixmap image tags
     _rendering_image_outline.init( _("Images in Outline Mode"), "/options/rendering/imageinoutlinemode", false);
-    _page_bitmaps.add_line(false, _(""), _rendering_image_outline, "", _("When active will render images while in outline mode instead of a red box with an x. This is useful for manual tracing."));
+    _page_bitmaps.add_line(false, "", _rendering_image_outline, "", _("When active will render images while in outline mode instead of a red box with an x. This is useful for manual tracing."));
 
     this->AddPage(_page_bitmaps, _("Bitmaps"), PREFS_PAGE_BITMAPS);
 }

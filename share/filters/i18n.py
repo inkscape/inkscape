@@ -10,14 +10,17 @@ filters = doc.getElementsByTagName('filter')
 sys.stdout.write("char * stringlst = [")
 
 for filter in filters:
-	label = filter.getAttribute('inkscape:label')
-	menu = filter.getAttribute('inkscape:menu')
-	desc = filter.getAttribute('inkscape:menu-tooltip')
-	comment = ""
+    label = "N_(\"" + filter.getAttribute('inkscape:label') + "\")"
+    menu = "N_(\"" + filter.getAttribute('inkscape:menu') + "\")"
+    if (filter.getAttribute('inkscape:menu-tooltip')):
+        desc = "N_(\"" + filter.getAttribute('inkscape:menu-tooltip') + "\")"
+    else:
+        desc = ""
+    comment = ""
 
-	if "NR" in label:
-		comment = '/* TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders */\n'
-	
-	sys.stdout.write(comment + "N_(\"" + label + "\"), N_(\"" + menu + "\"), N_(\"" + desc + "\"),")
+    if "NR" in label:
+        comment = '/* TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders */\n'
+    
+    sys.stdout.write(comment + "\n" + label + ",\n" + menu + ",\n" + desc + ",\n")
 
 sys.stdout.write("];")
