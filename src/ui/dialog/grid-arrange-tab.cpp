@@ -708,7 +708,7 @@ GridArrangeTab::GridArrangeTab(ArrangeDialog *parent)
     HorizAlign = prefs->getInt("/dialogs/gridtiler/HorizAlign", 1);
 
     // Anchor selection widget
-    AlignLabel.set_label("Alignment:");
+    AlignLabel.set_label(_("Alignment:"));
     AlignLabel.set_alignment(Gtk::ALIGN_START, Gtk::ALIGN_CENTER);
     AlignmentSelector.setAlignment(HorizAlign, VertAlign);
     AlignmentSelector.on_selectionChanged().connect(sigc::mem_fun(*this, &GridArrangeTab::Align_changed));

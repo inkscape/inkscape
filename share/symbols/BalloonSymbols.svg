@@ -75,6 +75,7 @@
     </symbol>
 
     <symbol id="RoundedBalloon" style="stroke-linejoin:miter;stroke-miterlimit:10">
+      <title>Rounded Balloon</title>
       <rect x="80" y="65" width="250" height="120" rx="32" style="stroke:none" />
       <path d="m 124,179 -30,53 78,-53"                    style="stroke:none" />
       <rect x="75" y="60" width="250" height="120" rx="30" style="fill:#eeeeee;stroke-width:3.5"/>
@@ -84,6 +85,7 @@
     </symbol>
 
     <symbol id="SquaredBalloon" style="stroke-linejoin:miter;stroke-miterlimit:10">
+      <title>Squared Balloon</title>
       <rect x="80" y="65" width="250" height="140" rx="17" style="stroke:none" />
       <path d="m 126,199  25,43 30,-43"                    style="stroke:none" />
       <rect x="75" y="60" width="250" height="140" rx="15" style="fill:#eeeeee;stroke-width:3.5"/>
@@ -93,6 +95,7 @@
     </symbol>
 
     <symbol id="OverThePhone" style="stroke-linejoin:miter;stroke-miterlimit:10">
+      <title>Over the Phone</title>
       <rect x="80" y="65" width="250" height="120"                  style="stroke:none" />
       <path d="m 124,179 -15,41 -21,-16 -35,76 40,-49 32,17 53,-70" style="stroke:none" />
       <rect x="75" y="60" width="250" height="120"                  style="fill:#eeeeee;stroke-width:3.5"/>
@@ -102,6 +105,7 @@
     </symbol>
 
     <symbol id="HipBalloon" style="stroke-linejoin:miter;stroke-miterlimit:10">
+      <title>Hip Balloon</title>
       <path d="m 97,65 216,0 c 9,0 17,7.6 17,17 0,0 -14,35 -14,53 0,18 14,53 14,53 0,9 -8,17 -17,17 l -216,0 c -9.4,0 -17,-8 -17,-17 0,0 14,-35 14,-53 0,-18 -14,-53 -14,-53 0,-9.4 7.6,-17 17,-17 z" style="stroke:none"/>
       <path d="m 126,199 -5,43 60,-43" style="stroke:none"/>
       <path d="m 90,60 216,0 c 9,0 17,7.6 17,17 0,0 -14,35 -14,53 0,18 14,53 14,53 0,9 -8,17 -17,17 l -216,0 c -9.4,0 -17,-8 -17,-17 0,0 14,-35 14,-53 0,-18 -14,-53 -14,-53 0,-9.4 7.6,-17 17,-17 z" style="fill:#eeeeee;stroke-width:3.5"/>
@@ -111,6 +115,7 @@
     </symbol>
 
     <symbol id="CircleBalloon" style="stroke-linejoin:miter;stroke-miterlimit:10">
+      <title>Circle Balloon</title>
       <ellipse cx="205" cy="125" rx="125" ry="70"                   style="stroke:none" />
       <path d="m 110,166 c 11,21 -10,30 -22,43 32,-3 59,-7 70,-26"  style="stroke:none" />
       <ellipse cx="200" cy="120" rx="125" ry="70"                   style="fill:#eeeeee;stroke-width:3.5"/>
@@ -120,6 +125,7 @@
     </symbol>
 
     <symbol id="ExclaimBalloon" style="stroke-linejoin:miter;stroke-miterlimit:10">
+      <title>Exclaim Balloon</title>
       <path d="m 117,183 -88,110 146,-98 10,31 53,-46 39,49 0,-46 69,28 -29,-57 66,-33 -68,-23.9 29,-58 -58,29 -15,-46 -48,46 -18,-42 -35,42 -20,-42 -33,40 -36.2,-42 0,50 -55,-2 42,42 -42,29 48,9 -24,46 z" style="stroke:none"/>
       <path d="m 110,177 -88,110 146,-98 10,31 53,-46 39,49 0,-46 69,28 -29,-57 66,-33 -68,-23.9 29,-58 -58,29 -15,-46 -48,46 -18,-42 -35,42 -20,-42 -33,40 -36.2,-42 0,50 -55,-2 42,42 -42,29 48,9 -24,46 z" style="fill:#eeeeee;stroke-width:3.5"/>
       <path d="m 122,166 -82,102 129,-89 9,28 52,-45 30,39 0,-38 58,23 -24,-45 57,-28 -56,-20 23,-47 -47,23 -14,-42 -47,44 -17,-40 -33,40 -21,-44 -31,38 -32.9,-38 0,43 -46,-2 38,38 -36,25 43,8 -21,41 z" style="fill:white;stroke:none"/>

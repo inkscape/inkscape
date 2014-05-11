@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2014-05-11 14:44+0200\n"
+"POT-Creation-Date: 2014-05-11 15:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3424,7 +3424,7 @@ msgstr ""
 #. Symbols: ./AigaSymbols.svg
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:41 ../share/symbols/symbols.h:42
-#: ../share/symbols/symbols.h:217
+#: ../share/symbols/symbols.h:223
 msgctxt "Symbol"
 msgid "Nursery"
 msgstr ""
@@ -3444,7 +3444,7 @@ msgstr ""
 #. Symbols: ./AigaSymbols.svg
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:47 ../share/symbols/symbols.h:48
-#: ../share/symbols/symbols.h:298
+#: ../share/symbols/symbols.h:304
 msgctxt "Symbol"
 msgid "Information"
 msgstr ""
@@ -3464,7 +3464,7 @@ msgstr ""
 #. Symbols: ./AigaSymbols.svg
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:53 ../share/symbols/symbols.h:54
-#: ../share/symbols/symbols.h:308
+#: ../share/symbols/symbols.h:314
 msgctxt "Symbol"
 msgid "Heliport"
 msgstr ""
@@ -3472,7 +3472,7 @@ msgstr ""
 #. Symbols: ./AigaSymbols.svg
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:55 ../share/symbols/symbols.h:56
-#: ../share/symbols/symbols.h:304
+#: ../share/symbols/symbols.h:310
 msgctxt "Symbol"
 msgid "Taxi"
 msgstr ""
@@ -3504,7 +3504,7 @@ msgstr ""
 #. Symbols: ./AigaSymbols.svg
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:65 ../share/symbols/symbols.h:66
-#: ../share/symbols/symbols.h:306
+#: ../share/symbols/symbols.h:312
 msgctxt "Symbol"
 msgid "Car Rental"
 msgstr ""
@@ -3512,7 +3512,7 @@ msgstr ""
 #. Symbols: ./AigaSymbols.svg
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:67 ../share/symbols/symbols.h:68
-#: ../share/symbols/symbols.h:218
+#: ../share/symbols/symbols.h:224
 msgctxt "Symbol"
 msgid "Restaurant"
 msgstr ""
@@ -3610,7 +3610,7 @@ msgstr ""
 #. Symbols: ./AigaSymbols.svg
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:99 ../share/symbols/symbols.h:100
-#: ../share/symbols/symbols.h:315
+#: ../share/symbols/symbols.h:321
 msgctxt "Symbol"
 msgid "Parking"
 msgstr ""
@@ -3636,7 +3636,7 @@ msgstr ""
 #. Symbols: ./AigaSymbols.svg
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:107 ../share/symbols/symbols.h:108
-#: ../share/symbols/symbols.h:208
+#: ../share/symbols/symbols.h:214
 msgctxt "Symbol"
 msgid "Exit"
 msgstr ""
@@ -3731,1064 +3731,1100 @@ msgctxt "Symbol"
 msgid "Dream Speaking"
 msgstr ""
 
-#. Symbols: ./FlowSymbols.svg
+#. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:136
 msgctxt "Symbol"
-msgid "Flow Chart Shapes"
+msgid "Rounded Balloon"
 msgstr ""
 
-#. Symbols: ./FlowSymbols.svg
+#. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:137
 msgctxt "Symbol"
-msgid "Process"
+msgid "Squared Balloon"
 msgstr ""
 
-#. Symbols: ./FlowSymbols.svg
+#. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:138
 msgctxt "Symbol"
-msgid "Predefined Process"
+msgid "Over the Phone"
 msgstr ""
 
-#. Symbols: ./FlowSymbols.svg
+#. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:139
 msgctxt "Symbol"
-msgid "Alternate Process"
+msgid "Hip Balloon"
 msgstr ""
 
-#. Symbols: ./FlowSymbols.svg
+#. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:140
 msgctxt "Symbol"
-msgid "Extract"
+msgid "Circle Balloon"
 msgstr ""
 
-#. Symbols: ./FlowSymbols.svg
+#. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:141
 msgctxt "Symbol"
-msgid "Manual Input"
+msgid "Exclaim Balloon"
 msgstr ""
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:142
 msgctxt "Symbol"
-msgid "Merge"
+msgid "Flow Chart Shapes"
 msgstr ""
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:143
 msgctxt "Symbol"
-msgid "Delay"
+msgid "Process"
 msgstr ""
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:144
 msgctxt "Symbol"
-msgid "Data I/O"
+msgid "Predefined Process"
 msgstr ""
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:145
 msgctxt "Symbol"
-msgid "Internal Storage"
+msgid "Alternate Process"
 msgstr ""
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:146
 msgctxt "Symbol"
-msgid "Card"
+msgid "Extract"
 msgstr ""
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:147
 msgctxt "Symbol"
-msgid "Document"
+msgid "Manual Input"
 msgstr ""
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:148
 msgctxt "Symbol"
-msgid "Direct Access Storage"
+msgid "Merge"
 msgstr ""
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:149
 msgctxt "Symbol"
-msgid "Stored Data"
+msgid "Delay"
 msgstr ""
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:150
 msgctxt "Symbol"
-msgid "Magnetic Disk (Database)"
+msgid "Data I/O"
 msgstr ""
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:151
 msgctxt "Symbol"
-msgid "Punched Tape"
+msgid "Internal Storage"
 msgstr ""
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:152
 msgctxt "Symbol"
-msgid "Terminator"
+msgid "Card"
 msgstr ""
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:153
 msgctxt "Symbol"
-msgid "Thick Arrow"
+msgid "Document"
 msgstr ""
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:154
 msgctxt "Symbol"
-msgid "Transfer"
+msgid "Direct Access Storage"
 msgstr ""
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:155
 msgctxt "Symbol"
-msgid "Decision"
+msgid "Stored Data"
 msgstr ""
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:156
 msgctxt "Symbol"
-msgid "Flow Arrow"
+msgid "Magnetic Disk (Database)"
 msgstr ""
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:157
 msgctxt "Symbol"
-msgid "Circle Arrow"
+msgid "Punched Tape"
 msgstr ""
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:158
 msgctxt "Symbol"
-msgid "Off-Page Connector"
+msgid "Terminator"
 msgstr ""
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:159
 msgctxt "Symbol"
-msgid "Connector"
+msgid "Thick Arrow"
 msgstr ""
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:160
 msgctxt "Symbol"
-msgid "Logical Or"
+msgid "Transfer"
 msgstr ""
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:161
 msgctxt "Symbol"
-msgid "Logical And"
+msgid "Decision"
 msgstr ""
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:162
 msgctxt "Symbol"
-msgid "Manual Operation"
+msgid "Flow Arrow"
 msgstr ""
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:163
 msgctxt "Symbol"
-msgid "Preparation"
+msgid "Circle Arrow"
 msgstr ""
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:164
 msgctxt "Symbol"
-msgid "Display"
+msgid "Off-Page Connector"
 msgstr ""
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:165
 msgctxt "Symbol"
-msgid "Sort"
+msgid "Connector"
 msgstr ""
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:166
 msgctxt "Symbol"
-msgid "Collate"
+msgid "Logical Or"
 msgstr ""
 
-#. Symbols: ./LogicSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:167
 msgctxt "Symbol"
-msgid "Logic Symbols"
+msgid "Logical And"
 msgstr ""
 
-#. Symbols: ./LogicSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:168
 msgctxt "Symbol"
-msgid "Xnor Gate"
+msgid "Manual Operation"
 msgstr ""
 
-#. Symbols: ./LogicSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:169
 msgctxt "Symbol"
-msgid "Xor Gate"
+msgid "Preparation"
 msgstr ""
 
-#. Symbols: ./LogicSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:170
 msgctxt "Symbol"
-msgid "Nor Gate"
+msgid "Display"
 msgstr ""
 
-#. Symbols: ./LogicSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:171
 msgctxt "Symbol"
-msgid "Or Gate"
+msgid "Sort"
 msgstr ""
 
-#. Symbols: ./LogicSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:172
 msgctxt "Symbol"
-msgid "Nand Gate"
+msgid "Collate"
 msgstr ""
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:173
 msgctxt "Symbol"
-msgid "And Gate"
+msgid "Logic Symbols"
 msgstr ""
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:174
 msgctxt "Symbol"
-msgid "Buffer"
+msgid "Xnor Gate"
 msgstr ""
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:175
 msgctxt "Symbol"
-msgid "Not Gate"
+msgid "Xor Gate"
 msgstr ""
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:176
 msgctxt "Symbol"
-msgid "Buffer Small"
+msgid "Nor Gate"
 msgstr ""
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:177
 msgctxt "Symbol"
-msgid "Not Gate Small"
+msgid "Or Gate"
 msgstr ""
 
-#. Symbols: ./MapSymbols.svg
+#. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:178
 msgctxt "Symbol"
-msgid "Map Symbols"
+msgid "Nand Gate"
 msgstr ""
 
-#. Symbols: ./MapSymbols.svg
+#. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:179
 msgctxt "Symbol"
-msgid "Bed and Breakfast"
+msgid "And Gate"
 msgstr ""
 
-#. Symbols: ./MapSymbols.svg
+#. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:180
 msgctxt "Symbol"
-msgid "Youth Hostel"
+msgid "Buffer"
 msgstr ""
 
-#. Symbols: ./MapSymbols.svg
+#. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:181
 msgctxt "Symbol"
-msgid "Shelter"
+msgid "Not Gate"
 msgstr ""
 
-#. Symbols: ./MapSymbols.svg
+#. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:182
 msgctxt "Symbol"
-msgid "Motel"
+msgid "Buffer Small"
 msgstr ""
 
-#. Symbols: ./MapSymbols.svg
+#. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:183
 msgctxt "Symbol"
-msgid "Hotel"
+msgid "Not Gate Small"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:184
 msgctxt "Symbol"
-msgid "Hostel"
+msgid "Map Symbols"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:185
 msgctxt "Symbol"
-msgid "Chalet"
+msgid "Bed and Breakfast"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:186
 msgctxt "Symbol"
-msgid "Caravan Park"
+msgid "Youth Hostel"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:187
 msgctxt "Symbol"
-msgid "Camping"
+msgid "Shelter"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:188
 msgctxt "Symbol"
-msgid "Alpine Hut"
+msgid "Motel"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:189
 msgctxt "Symbol"
-msgid "Bench or Park"
+msgid "Hotel"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:190
 msgctxt "Symbol"
-msgid "Playground"
+msgid "Hostel"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:191
 msgctxt "Symbol"
-msgid "Fountain"
+msgid "Chalet"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:192
 msgctxt "Symbol"
-msgid "Library"
+msgid "Caravan Park"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:193
 msgctxt "Symbol"
-msgid "Town Hall"
+msgid "Camping"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:194
 msgctxt "Symbol"
-msgid "Court"
+msgid "Alpine Hut"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:195
 msgctxt "Symbol"
-msgid "Fire Station / House"
+msgid "Bench or Park"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:196
 msgctxt "Symbol"
-msgid "Police Station"
+msgid "Playground"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:197
 msgctxt "Symbol"
-msgid "Prison"
+msgid "Fountain"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:198
 msgctxt "Symbol"
-msgid "Post Office"
+msgid "Library"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:199
 msgctxt "Symbol"
-msgid "Public Building"
+msgid "Town Hall"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:200
 msgctxt "Symbol"
-msgid "Recycling"
+msgid "Court"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:201
 msgctxt "Symbol"
-msgid "Survey Point"
+msgid "Fire Station / House"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:202
 msgctxt "Symbol"
-msgid "Toll Booth"
+msgid "Police Station"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:203
 msgctxt "Symbol"
-msgid "Lift Gate"
+msgid "Prison"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:204
 msgctxt "Symbol"
-msgid "Steps"
+msgid "Post Office"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:205
 msgctxt "Symbol"
-msgid "Stile"
+msgid "Public Building"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:206
 msgctxt "Symbol"
-msgid "Kissing Gate"
+msgid "Recycling"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:207
 msgctxt "Symbol"
-msgid "Gate"
+msgid "Survey Point"
+msgstr ""
+
+#. Symbols: ./MapSymbols.svg
+#: ../share/symbols/symbols.h:208
+msgctxt "Symbol"
+msgid "Toll Booth"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:209
 msgctxt "Symbol"
-msgid "Entrance"
+msgid "Lift Gate"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:210
 msgctxt "Symbol"
-msgid "Cycle Barrier"
+msgid "Steps"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:211
 msgctxt "Symbol"
-msgid "Cattle Grid"
+msgid "Stile"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:212
 msgctxt "Symbol"
-msgid "Bollard"
+msgid "Kissing Gate"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:213
 msgctxt "Symbol"
-msgid "University"
-msgstr ""
-
-#. Symbols: ./MapSymbols.svg
-#: ../share/symbols/symbols.h:214
-msgctxt "Symbol"
-msgid "High/Secondary School"
+msgid "Gate"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:215
 msgctxt "Symbol"
-msgid "School"
+msgid "Entrance"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:216
 msgctxt "Symbol"
-msgid "Kindergarten"
+msgid "Cycle Barrier"
+msgstr ""
+
+#. Symbols: ./MapSymbols.svg
+#: ../share/symbols/symbols.h:217
+msgctxt "Symbol"
+msgid "Cattle Grid"
+msgstr ""
+
+#. Symbols: ./MapSymbols.svg
+#: ../share/symbols/symbols.h:218
+msgctxt "Symbol"
+msgid "Bollard"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:219
 msgctxt "Symbol"
-msgid "Pub"
+msgid "University"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:220
 msgctxt "Symbol"
-msgid "Desserts/Cakes Shop"
+msgid "High/Secondary School"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:221
 msgctxt "Symbol"
-msgid "Fast Food"
+msgid "School"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:222
 msgctxt "Symbol"
-msgid "Public Tap/Water"
-msgstr ""
-
-#. Symbols: ./MapSymbols.svg
-#: ../share/symbols/symbols.h:223
-msgctxt "Symbol"
-msgid "Cafe"
-msgstr ""
-
-#. Symbols: ./MapSymbols.svg
-#: ../share/symbols/symbols.h:224
-msgctxt "Symbol"
-msgid "Beer Garden"
+msgid "Kindergarten"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:225
 msgctxt "Symbol"
-msgid "Wine Bar"
+msgid "Pub"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:226
 msgctxt "Symbol"
-msgid "Opticians/Eye Doctors"
+msgid "Desserts/Cakes Shop"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:227
 msgctxt "Symbol"
-msgid "Dentist"
+msgid "Fast Food"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:228
 msgctxt "Symbol"
-msgid "Veterinarian"
+msgid "Public Tap/Water"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:229
 msgctxt "Symbol"
-msgid "Drugs Dispensary"
+msgid "Cafe"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:230
 msgctxt "Symbol"
-msgid "Pharmacy"
+msgid "Beer Garden"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:231
 msgctxt "Symbol"
-msgid "Accident & Emergency"
+msgid "Wine Bar"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:232
 msgctxt "Symbol"
-msgid "Hospital"
+msgid "Opticians/Eye Doctors"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:233
 msgctxt "Symbol"
-msgid "Doctors"
+msgid "Dentist"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:234
 msgctxt "Symbol"
-msgid "Scrub Land"
+msgid "Veterinarian"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:235
 msgctxt "Symbol"
-msgid "Swamp"
+msgid "Drugs Dispensary"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:236
 msgctxt "Symbol"
-msgid "Hills"
+msgid "Pharmacy"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:237
 msgctxt "Symbol"
-msgid "Grass Land"
+msgid "Accident & Emergency"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:238
 msgctxt "Symbol"
-msgid "Deciduous Forest"
+msgid "Hospital"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:239
 msgctxt "Symbol"
-msgid "Mixed Forest"
+msgid "Doctors"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:240
 msgctxt "Symbol"
-msgid "Coniferous Forest"
+msgid "Scrub Land"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:241
 msgctxt "Symbol"
-msgid "Church or Place of Worship"
+msgid "Swamp"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:242
 msgctxt "Symbol"
-msgid "Bank"
+msgid "Hills"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:243
 msgctxt "Symbol"
-msgid "Power Lines"
+msgid "Grass Land"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:244
 msgctxt "Symbol"
-msgid "Watch Tower"
+msgid "Deciduous Forest"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:245
 msgctxt "Symbol"
-msgid "Transmitter"
+msgid "Mixed Forest"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:246
 msgctxt "Symbol"
-msgid "Village"
+msgid "Coniferous Forest"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:247
 msgctxt "Symbol"
-msgid "Town"
+msgid "Church or Place of Worship"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:248
 msgctxt "Symbol"
-msgid "Hamlet"
+msgid "Bank"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:249
 msgctxt "Symbol"
-msgid "City"
+msgid "Power Lines"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:250
 msgctxt "Symbol"
-msgid "Peak"
+msgid "Watch Tower"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:251
 msgctxt "Symbol"
-msgid "Mountain Pass"
+msgid "Transmitter"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:252
 msgctxt "Symbol"
-msgid "Mine"
+msgid "Village"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:253
 msgctxt "Symbol"
-msgid "Military Complex"
+msgid "Town"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:254
 msgctxt "Symbol"
-msgid "Embassy"
+msgid "Hamlet"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:255
 msgctxt "Symbol"
-msgid "Toy Shop"
+msgid "City"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:256
 msgctxt "Symbol"
-msgid "Supermarket"
+msgid "Peak"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:257
 msgctxt "Symbol"
-msgid "Jewlers"
+msgid "Mountain Pass"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:258
 msgctxt "Symbol"
-msgid "Hairdressers"
+msgid "Mine"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:259
 msgctxt "Symbol"
-msgid "Greengrocer"
+msgid "Military Complex"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:260
 msgctxt "Symbol"
-msgid "Gift Shop"
+msgid "Embassy"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:261
 msgctxt "Symbol"
-msgid "Garden Center"
+msgid "Toy Shop"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:262
 msgctxt "Symbol"
-msgid "Florist"
+msgid "Supermarket"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:263
 msgctxt "Symbol"
-msgid "Fish Monger"
+msgid "Jewlers"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:264
 msgctxt "Symbol"
-msgid "Real Estate"
+msgid "Hairdressers"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:265
 msgctxt "Symbol"
-msgid "Hardware / DIY"
+msgid "Greengrocer"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:266
 msgctxt "Symbol"
-msgid "Shop"
+msgid "Gift Shop"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:267
 msgctxt "Symbol"
-msgid "Confectioner"
+msgid "Garden Center"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:268
 msgctxt "Symbol"
-msgid "Computer Shop"
+msgid "Florist"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:269
 msgctxt "Symbol"
-msgid "Clothing"
+msgid "Fish Monger"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:270
 msgctxt "Symbol"
-msgid "Mechanic"
+msgid "Real Estate"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:271
 msgctxt "Symbol"
-msgid "Car Dealer"
+msgid "Hardware / DIY"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:272
 msgctxt "Symbol"
-msgid "Butcher"
+msgid "Shop"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:273
 msgctxt "Symbol"
-msgid "Meat Shop"
+msgid "Confectioner"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:274
 msgctxt "Symbol"
-msgid "Bicycle Shop"
+msgid "Computer Shop"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:275
 msgctxt "Symbol"
-msgid "Baker"
+msgid "Clothing"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:276
 msgctxt "Symbol"
-msgid "Off License / Liquor Store"
+msgid "Mechanic"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:277
 msgctxt "Symbol"
-msgid "Wind Surfing"
+msgid "Car Dealer"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:278
 msgctxt "Symbol"
-msgid "Tennis"
+msgid "Butcher"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:279
 msgctxt "Symbol"
-msgid "Outdoor Pool"
+msgid "Meat Shop"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:280
 msgctxt "Symbol"
-msgid "Indoor Pool"
+msgid "Bicycle Shop"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:281
 msgctxt "Symbol"
-msgid "Skiing"
+msgid "Baker"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:282
 msgctxt "Symbol"
-msgid "Sailing"
+msgid "Off License / Liquor Store"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:283
 msgctxt "Symbol"
-msgid "Leisure Center"
+msgid "Wind Surfing"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:284
 msgctxt "Symbol"
-msgid "Ice Skating"
+msgid "Tennis"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:285
 msgctxt "Symbol"
-msgid "Equine Sports"
+msgid "Outdoor Pool"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:286
 msgctxt "Symbol"
-msgid "Rock Climbing"
+msgid "Indoor Pool"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:287
 msgctxt "Symbol"
-msgid "Gym"
+msgid "Skiing"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:288
 msgctxt "Symbol"
-msgid "Golf"
+msgid "Sailing"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:289
 msgctxt "Symbol"
-msgid "Diving"
+msgid "Leisure Center"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:290
 msgctxt "Symbol"
-msgid "Archery"
+msgid "Ice Skating"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:291
 msgctxt "Symbol"
-msgid "Zoo"
+msgid "Equine Sports"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:292
 msgctxt "Symbol"
-msgid "Wreck"
+msgid "Rock Climbing"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:293
 msgctxt "Symbol"
-msgid "Water Wheel"
+msgid "Gym"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:294
 msgctxt "Symbol"
-msgid "Point of Interest"
+msgid "Golf"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:295
 msgctxt "Symbol"
-msgid "Theater"
+msgid "Diving"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:296
 msgctxt "Symbol"
-msgid "Park / Picnic Area"
+msgid "Archery"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:297
 msgctxt "Symbol"
-msgid "Monument"
+msgid "Zoo"
+msgstr ""
+
+#. Symbols: ./MapSymbols.svg
+#: ../share/symbols/symbols.h:298
+msgctxt "Symbol"
+msgid "Wreck"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:299
 msgctxt "Symbol"
-msgid "Beach"
+msgid "Water Wheel"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:300
 msgctxt "Symbol"
-msgid "Battle Location"
+msgid "Point of Interest"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:301
 msgctxt "Symbol"
-msgid "Archaeology / Ruins"
+msgid "Theater"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:302
 msgctxt "Symbol"
-msgid "Walking"
+msgid "Park / Picnic Area"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:303
 msgctxt "Symbol"
-msgid "Train"
+msgid "Monument"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:305
 msgctxt "Symbol"
-msgid "Underground Rail"
+msgid "Beach"
+msgstr ""
+
+#. Symbols: ./MapSymbols.svg
+#: ../share/symbols/symbols.h:306
+msgctxt "Symbol"
+msgid "Battle Location"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:307
 msgctxt "Symbol"
-msgid "Bike Rental"
+msgid "Archaeology / Ruins"
+msgstr ""
+
+#. Symbols: ./MapSymbols.svg
+#: ../share/symbols/symbols.h:308
+msgctxt "Symbol"
+msgid "Walking"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:309
 msgctxt "Symbol"
-msgid "Carpool"
-msgstr ""
-
-#. Symbols: ./MapSymbols.svg
-#: ../share/symbols/symbols.h:310
-msgctxt "Symbol"
-msgid "Flood Gate"
+msgid "Train"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:311
 msgctxt "Symbol"
-msgid "Shipping"
-msgstr ""
-
-#. Symbols: ./MapSymbols.svg
-#: ../share/symbols/symbols.h:312
-msgctxt "Symbol"
-msgid "Disabled Parking"
+msgid "Underground Rail"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:313
 msgctxt "Symbol"
-msgid "Paid Parking"
+msgid "Bike Rental"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
-#: ../share/symbols/symbols.h:314
+#: ../share/symbols/symbols.h:315
 msgctxt "Symbol"
-msgid "Bike Parking"
+msgid "Carpool"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:316
 msgctxt "Symbol"
-msgid "Marina"
+msgid "Flood Gate"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:317
 msgctxt "Symbol"
-msgid "Fuel Station"
+msgid "Shipping"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:318
 msgctxt "Symbol"
-msgid "Bus Stop"
+msgid "Disabled Parking"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:319
 msgctxt "Symbol"
-msgid "Bus Station"
+msgid "Paid Parking"
 msgstr ""
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:320
+msgctxt "Symbol"
+msgid "Bike Parking"
+msgstr ""
+
+#. Symbols: ./MapSymbols.svg
+#: ../share/symbols/symbols.h:322
+msgctxt "Symbol"
+msgid "Marina"
+msgstr ""
+
+#. Symbols: ./MapSymbols.svg
+#: ../share/symbols/symbols.h:323
+msgctxt "Symbol"
+msgid "Fuel Station"
+msgstr ""
+
+#. Symbols: ./MapSymbols.svg
+#: ../share/symbols/symbols.h:324
+msgctxt "Symbol"
+msgid "Bus Stop"
+msgstr ""
+
+#. Symbols: ./MapSymbols.svg
+#: ../share/symbols/symbols.h:325
+msgctxt "Symbol"
+msgid "Bus Station"
+msgstr ""
+
+#. Symbols: ./MapSymbols.svg
+#: ../share/symbols/symbols.h:326
 msgctxt "Symbol"
 msgid "Airport"
 msgstr ""
@@ -5190,8 +5226,9 @@ msgstr ""
 #: ../share/extensions/gcodetools_graffiti.inx.h:37
 #: ../share/extensions/gcodetools_lathe.inx.h:41
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:30
-#: ../share/extensions/grid_polar.inx.h:4 ../share/extensions/plotter.inx.h:15
-#: ../share/extensions/scour.inx.h:18
+#: ../share/extensions/grid_polar.inx.h:4
+#: ../share/extensions/guides_creator.inx.h:24
+#: ../share/extensions/plotter.inx.h:15 ../share/extensions/scour.inx.h:18
 msgid "None"
 msgstr ""
 
@@ -8519,7 +8556,7 @@ msgstr ""
 #: ../share/extensions/grid_cartesian.inx.h:23
 #: ../share/extensions/grid_isometric.inx.h:11
 #: ../share/extensions/grid_polar.inx.h:22
-#: ../share/extensions/guides_creator.inx.h:19
+#: ../share/extensions/guides_creator.inx.h:25
 #: ../share/extensions/hershey.inx.h:52
 #: ../share/extensions/layout_nup.inx.h:35
 #: ../share/extensions/lindenmayer.inx.h:34
@@ -16946,6 +16983,11 @@ msgstr ""
 msgid "If not set, each column has the width of the widest object in it"
 msgstr ""
 
+#. Anchor selection widget
+#: ../src/ui/dialog/grid-arrange-tab.cpp:711
+msgid "Alignment:"
+msgstr ""
+
 #. #### Radio buttons to control spacing manually or to fit selection bbox ####
 #: ../src/ui/dialog/grid-arrange-tab.cpp:720
 msgid "_Fit into selection box"
@@ -22698,7 +22740,6 @@ msgid "L_eft:"
 msgstr ""
 
 #: ../src/ui/widget/page-sizer.cpp:239
-#: ../share/extensions/guides_creator.inx.h:17
 msgid "Left margin"
 msgstr ""
 
@@ -22707,7 +22748,6 @@ msgid "Ri_ght:"
 msgstr ""
 
 #: ../src/ui/widget/page-sizer.cpp:240
-#: ../share/extensions/guides_creator.inx.h:18
 msgid "Right margin"
 msgstr ""
 
@@ -26599,11 +26639,12 @@ msgid "Create conical gradient"
 msgstr ""
 
 #: ../src/widgets/mesh-toolbar.cpp:263
-#: ../share/extensions/guides_creator.inx.h:5
 msgid "Rows"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:263 ../share/extensions/layout_nup.inx.h:12
+#: ../src/widgets/mesh-toolbar.cpp:263
+#: ../share/extensions/guides_creator.inx.h:5
+#: ../share/extensions/layout_nup.inx.h:12
 msgid "Rows:"
 msgstr ""
 
@@ -26612,11 +26653,11 @@ msgid "Number of rows in new mesh"
 msgstr ""
 
 #: ../src/widgets/mesh-toolbar.cpp:279
-#: ../share/extensions/guides_creator.inx.h:4
 msgid "Columns"
 msgstr ""
 
 #: ../src/widgets/mesh-toolbar.cpp:279
+#: ../share/extensions/guides_creator.inx.h:4
 msgid "Columns:"
 msgstr ""
 
@@ -31356,7 +31397,7 @@ msgid "Regular guides"
 msgstr ""
 
 #: ../share/extensions/guides_creator.inx.h:3
-msgid "Guides preset"
+msgid "Guides preset:"
 msgstr ""
 
 #: ../share/extensions/guides_creator.inx.h:6
@@ -31368,39 +31409,67 @@ msgid "Delete existing guides"
 msgstr ""
 
 #: ../share/extensions/guides_creator.inx.h:8
-msgid "Diagonal guides"
+msgid "Custom..."
 msgstr ""
 
 #: ../share/extensions/guides_creator.inx.h:9
-msgid "Upper left corner"
+msgid "Golden ratio"
 msgstr ""
 
 #: ../share/extensions/guides_creator.inx.h:10
-msgid "Upper right corner"
+msgid "Rule-of-third"
 msgstr ""
 
 #: ../share/extensions/guides_creator.inx.h:11
-msgid "Lower left corner"
+msgid "Diagonal guides"
 msgstr ""
 
 #: ../share/extensions/guides_creator.inx.h:12
-msgid "Lower right corner"
+msgid "Upper left corner"
 msgstr ""
 
 #: ../share/extensions/guides_creator.inx.h:13
-msgid "Margins"
+msgid "Upper right corner"
 msgstr ""
 
 #: ../share/extensions/guides_creator.inx.h:14
-msgid "Margins preset"
+msgid "Lower left corner"
 msgstr ""
 
 #: ../share/extensions/guides_creator.inx.h:15
-msgid "Header margin"
+msgid "Lower right corner"
 msgstr ""
 
 #: ../share/extensions/guides_creator.inx.h:16
-msgid "Footer margin"
+msgid "Margins"
+msgstr ""
+
+#: ../share/extensions/guides_creator.inx.h:17
+msgid "Margins preset:"
+msgstr ""
+
+#: ../share/extensions/guides_creator.inx.h:18
+msgid "Header margin:"
+msgstr ""
+
+#: ../share/extensions/guides_creator.inx.h:19
+msgid "Footer margin:"
+msgstr ""
+
+#: ../share/extensions/guides_creator.inx.h:20
+msgid "Left margin:"
+msgstr ""
+
+#: ../share/extensions/guides_creator.inx.h:21
+msgid "Right margin:"
+msgstr ""
+
+#: ../share/extensions/guides_creator.inx.h:22
+msgid "Left book page"
+msgstr ""
+
+#: ../share/extensions/guides_creator.inx.h:23
+msgid "Right book page"
 msgstr ""
 
 #: ../share/extensions/guillotine.inx.h:1
