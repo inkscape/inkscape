@@ -64,6 +64,8 @@ BUILT_SOURCES =
 EXTRA_DIST =
 
 AM_CPPFLAGS =	\
+	-I$(top_srcdir)/cxxtest \
+	-I$(builddir)/extension/dbus   \
 	$(EXIF_CFLAGS) \
 	$(FREETYPE_CFLAGS)	\
 	$(GNOME_PRINT_CFLAGS)	\
@@ -80,9 +82,7 @@ AM_CPPFLAGS =	\
 	$(POPPLER_GLIB_CFLAGS)	\
 	-DPOTRACE=\"potrace\"	\
 	$(INKSCAPE_CFLAGS) \
-	-I$(top_srcdir)/cxxtest \
 	$(WIN32_CFLAGS) \
-	-I$(builddir)/extension/dbus   \
 	$(X11_CFLAGS)
 
 CXXTEST_TEMPLATE = $(srcdir)/cxxtest-template.tpl
