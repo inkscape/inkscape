@@ -53,6 +53,7 @@ TopoGraph::Edge TopoGraph::remove_edge(unsigned ix, unsigned jx) {
         }
     }
     assert(0);
+    return Edge; // if assert is disabled, return empty Edge.
 }
 
 void TopoGraph::cannonize() {
