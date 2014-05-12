@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2014-04-28 18:26+0200\n"
-"PO-Revision-Date: 2014-05-07 22:11+0200\n"
+"PO-Revision-Date: 2014-05-12 09:14+0200\n"
 "Last-Translator: Jānis Eisaks <jancs@dv.lv>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "Language: lv\n"
@@ -9175,24 +9175,20 @@ msgid "Destination"
 msgstr "Mērķis"
 
 #: ../src/filter-enums.cpp:95
-#, fuzzy
 msgid "Destination Over"
-msgstr "Mērķis"
+msgstr "Mērķis pāri"
 
 #: ../src/filter-enums.cpp:96
-#, fuzzy
 msgid "Destination In"
-msgstr "Mērķis"
+msgstr "Mērķis avotā"
 
 #: ../src/filter-enums.cpp:97
-#, fuzzy
 msgid "Destination Out"
-msgstr "Mērķis"
+msgstr "Mērķis ārpus avota"
 
 #: ../src/filter-enums.cpp:98
-#, fuzzy
 msgid "Destination Atop"
-msgstr "Mērķis"
+msgstr "Mērķis virs"
 
 #: ../src/filter-enums.cpp:99
 msgid "Lighter"
@@ -13880,7 +13876,6 @@ msgid "Smallest object"
 msgstr "Mazākais objekts"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:1005
-#, fuzzy
 msgid "Selection Area"
 msgstr "Atlasītais laukums"
 
@@ -20029,15 +20024,16 @@ msgstr ""
 
 #. rendering outlines for pixmap image tags
 #: ../src/ui/dialog/inkscape-preferences.cpp:1468
-#, fuzzy
 msgid "Images in Outline Mode"
-msgstr "Attēla renderēšanas režīms:"
+msgstr "Attēli aprišu režīmā"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1469
 msgid ""
 "When active will render images while in outline mode instead of a red box "
 "with an x. This is useful for manual tracing."
 msgstr ""
+"Ja iespējots, attēli tiks renderēti aprišu režīmā, nevis kā sarkans rāmis ar "
+"X vidū. Tas ir noderīgi vektorizēšanai rokas režīmā."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1471
 msgid "Bitmaps"
@@ -20948,10 +20944,9 @@ msgid "Object's rotational center"
 msgstr "Objekta griešanās centrs"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:59
-#, fuzzy
 msgctxt "Polar arrange tab"
 msgid "Arrange on:"
-msgstr "Sakārtot"
+msgstr "Sakārtot gar:"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:63
 msgctxt "Polar arrange tab"
@@ -34222,7 +34217,6 @@ msgid "Merge Styles into CSS"
 msgstr "Apvienot stilus CSS"
 
 #: ../share/extensions/merge_styles.inx.h:2
-#, fuzzy
 msgid ""
 "All selected nodes will be grouped together and their common style "
 "attributes will create a new class, this class will replace the existing "
@@ -34230,9 +34224,9 @@ msgid ""
 "objects and their common context for best effect."
 msgstr ""
 "Visi atlasītie mezgli tiks sagrupēti un to kopēji stilu atribūti izveidos "
-"jaunu klasi, aizvietojot pastāvošos inline style attributes. Please use a "
-"name which best describes the kinds of objects and their common context for "
-"best effect."
+"jaunu klasi, aizvietojot pastāvošos iekļautos stilu atribūtus. Labākam "
+"rezultātam izmantojiet nosaukumu, kas vislabāk raksturo objektu veidus un to "
+"kopējo kontekstu."
 
 #: ../share/extensions/merge_styles.inx.h:3
 msgid "New Class Name:"
