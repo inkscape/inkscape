@@ -666,7 +666,6 @@
     <copy todir="${dist}" file="${devlibs}/bin/libpango-1.0-0.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libpangoft2-1.0-0.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libpangowin32-1.0-0.dll"/>
-    <copy todir="${dist}" file="${devlibs}/bin/freetype6.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libfontconfig-1.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libxml2.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libxslt.dll"/>
