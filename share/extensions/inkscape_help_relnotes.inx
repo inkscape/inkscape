@@ -4,7 +4,7 @@
   <id>org.inkscape.help.relnotes</id>
   <dependency type="executable" location="extensions">launch_webbrowser.py</dependency>
   <!-- i18n. Please don't translate it unless a page exists in your language -->
-  <_param name="url" gui-hidden="true" type="string">http://wiki.inkscape.org/wiki/index.php/Release_notes/0.49</_param>
+  <_param name="url" gui-hidden="true" type="string">http://wiki.inkscape.org/wiki/index.php/Release_notes/0.91</_param>
   <effect needs-document="false">
     <object-type>all</object-type>
     <effects-menu hidden="true" />
