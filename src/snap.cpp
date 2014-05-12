@@ -239,7 +239,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapCandidatePoint
         // Snapping the mouse pointer instead of the constrained position of the knot allows
         // to snap to things which don't intersect with the constraint line; this is basically
         // then just a freesnap with the constraint applied afterwards
-        // We'll only to this if we're dragging a single handle, and for example not when transforming an object in the selector tool
+        // We'll only do this if we're dragging a single handle, and for example not when transforming an object in the selector tool
         result = freeSnap(p, bbox_to_snap);
         if (result.getSnapped()) {
             // only change the snap indicator if we really snapped to something
@@ -570,7 +570,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                 // be collected. Therefore we enforce that the first SnapCandidatePoint that is to be freeSnapped always
                 // has source_num == 0;
                 // TODO: This is a bit ugly so fix this; do we need sourcenum for anything else? if we don't then get rid
-                // of it and explicitely communicate to the object snapper that this is a first point
+                // of it and explicitly communicate to the object snapper that this is a first point
                 if (first_free_snap) {
                     (*j).setSourceNum(0);
                     first_free_snap = false;
@@ -616,8 +616,8 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                 // and the scaling factor for the other direction should remain
                 // untouched (unless scaling is uniform of course)
                 for (int index = 0; index < 2; index++) {
-                    if (fabs(b[index]) > 1e-6) { // if SCALING CAN occur in this direction
-                        if (fabs(fabs(a[index]/b[index]) - fabs(transformation[index])) > 1e-12) { // if SNAPPING DID occur in this direction
+                    if (fabs(b[index]) > 1e-4) { // if SCALING CAN occur in this direction
+                        if (fabs(fabs(a[index]/b[index]) - fabs(transformation[index])) > 1e-7) { // if SNAPPING DID occur in this direction
                             result[index] = a[index] / b[index]; // then calculate it!
                         }
                         // we might have left result[1-index] = Geom::infinity()
@@ -669,7 +669,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
             case ROTATE:
                 // a is vector to snapped point; b is vector to original point; now lets calculate angle between a and b
                 result[0] = atan2(Geom::dot(Geom::rot90(b), a), Geom::dot(b, a));
-                result[1] = result[1]; // how else should we store an angle in a point ;-)
+                result[1] = result[0]; // dummy value; how else should we store an angle in a point ;-)
                 if (Geom::L2(b) < 1e-9) { // points too close to the rotation center will not move. Don't try to snap these
                     // as they will always yield a perfect snap result if they're already snapped beforehand (e.g.
                     // when the transformation center has been snapped to a grid intersection in the selector tool)

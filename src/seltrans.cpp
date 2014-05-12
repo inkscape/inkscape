@@ -929,23 +929,29 @@ gboolean Inkscape::SelTrans::scaleRequest(Geom::Point &pt, guint state)
             sn = m.freeSnapScale(_snap_points, _point, geom_scale, _origin_for_specpoints);
         }
 
-        if (!(bb.getSnapped() || sn.getSnapped())) {
+        std::cout << bb.getSnapped() << " | " << sn.getSnapped() << std::endl;
+        // These lines below are duplicated in stretchRequest
+        if (bb.getSnapped() || sn.getSnapped()) {
+            if (bb.getSnapped()) {
+                if (!bb.isOtherSnapBetter(sn, false)) {
+                    // We snapped the bbox (which is either visual or geometric)
+                    _desktop->snapindicator->set_new_snaptarget(bb);
+                    default_scale = Geom::Scale(bb.getTransformation());
+                    // Calculate the new transformation and update the handle position
+                    pt = _calcAbsAffineDefault(default_scale);
+                }
+            } else if (sn.getSnapped()) {
+                _desktop->snapindicator->set_new_snaptarget(sn);
+                // We snapped the special points (e.g. nodes), which are not at the visual bbox
+                // The handle location however (pt) might however be at the visual bbox, so we
+                // will have to calculate pt taking the stroke width into account
+                geom_scale = Geom::Scale(sn.getTransformation());
+                pt = _calcAbsAffineGeom(geom_scale);
+            }
+        } else {
             // We didn't snap at all! Don't update the handle position, just calculate the new transformation
             _calcAbsAffineDefault(default_scale);
             _desktop->snapindicator->remove_snaptarget();
-        } else if (bb.getSnapped() && !bb.isOtherSnapBetter(sn, false)) {
-            // We snapped the bbox (which is either visual or geometric)
-            _desktop->snapindicator->set_new_snaptarget(bb);
-            default_scale = Geom::Scale(bb.getTransformation());
-            // Calculate the new transformation and update the handle position
-            pt = _calcAbsAffineDefault(default_scale);
-        } else {
-            _desktop->snapindicator->set_new_snaptarget(sn);
-            // We snapped the special points (e.g. nodes), which are not at the visual bbox
-            // The handle location however (pt) might however be at the visual bbox, so we
-            // will have to calculate pt taking the stroke width into account
-            geom_scale = Geom::Scale(sn.getTransformation());
-            pt = _calcAbsAffineGeom(geom_scale);
         }
         m.unSetup();
     }
@@ -1028,20 +1034,28 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, Geom
             geom_scale[perp] = fabs(geom_scale[axis]);
         }
 
-        if (!(bb.getSnapped() || sn.getSnapped())) {
+        // These lines below are duplicated in scaleRequest
+        if (bb.getSnapped() || sn.getSnapped()) {
+            if (bb.getSnapped()) {
+                if (!bb.isOtherSnapBetter(sn, false)) {
+                    // We snapped the bbox (which is either visual or geometric)
+                    _desktop->snapindicator->set_new_snaptarget(bb);
+                    default_scale = Geom::Scale(bb.getTransformation());
+                    // Calculate the new transformation and update the handle position
+                    pt = _calcAbsAffineDefault(default_scale);
+                }
+            } else if (sn.getSnapped()) {
+                _desktop->snapindicator->set_new_snaptarget(sn);
+                // We snapped the special points (e.g. nodes), which are not at the visual bbox
+                // The handle location however (pt) might however be at the visual bbox, so we
+                // will have to calculate pt taking the stroke width into account
+                geom_scale = Geom::Scale(sn.getTransformation());
+                pt = _calcAbsAffineGeom(geom_scale);
+            }
+        } else {
             // We didn't snap at all! Don't update the handle position, just calculate the new transformation
             _calcAbsAffineDefault(default_scale);
             _desktop->snapindicator->remove_snaptarget();
-        } else if (bb.getSnapped() && !bb.isOtherSnapBetter(sn, false)) {
-            _desktop->snapindicator->set_new_snaptarget(bb);
-            // Calculate the new transformation and update the handle position
-            pt = _calcAbsAffineDefault(default_scale);
-        } else {
-            _desktop->snapindicator->set_new_snaptarget(sn);
-            // We snapped the special points (e.g. nodes), which are not at the visual bbox
-            // The handle location however (pt) might however be at the visual bbox, so we
-            // will have to calculate pt taking the stroke width into account
-            pt = _calcAbsAffineGeom(geom_scale);
         }
 
         m.unSetup();

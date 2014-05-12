@@ -73,6 +73,7 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
         switch (p.getTarget()) {
             case SNAPTARGET_UNDEFINED:
                 target_name = _("UNDEFINED");
+                g_warning("Snap target has not been specified");
                 break;
             case SNAPTARGET_GRID:
                 target_name = _("grid line");
@@ -172,7 +173,7 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
                 target_name = _("constraint");
                 break;
             default:
-                g_warning("Snap target has not yet been defined!");
+                g_warning("Snap target not in SnapTargetType enum");
                 break;
         }
 
@@ -180,6 +181,7 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
         switch (p.getSource()) {
             case SNAPSOURCE_UNDEFINED:
                 source_name = _("UNDEFINED");
+                g_warning("Snap source has not been specified");
                 break;
             case SNAPSOURCE_BBOX_CORNER:
                 source_name = _("Bounding box corner");
@@ -235,7 +237,7 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
                 source_name = _("Multiple of grid spacing");
                 break;
             default:
-                g_warning("Snap source has not yet been defined!");
+                g_warning("Snap source not in SnapSourceType enum");
                 break;
         }
         //std::cout << "Snapped " << source_name << " to " << target_name << std::endl;
