@@ -1,0 +1,30 @@
+
+APPLICATION_ICON    ICON          DISCARDABLE     "../inkscape.ico"
+1                   24            DISCARDABLE     "./inkscape-manifest-x64.xml"
+
+1 VERSIONINFO
+    FILEVERSION     0,48,0,9
+    PRODUCTVERSION  0,48,0,9
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040901b5"
+        BEGIN
+            VALUE "Comments", "Published under the GNU GPL"
+            VALUE "CompanyName", "inkscape.org"
+            VALUE "FileDescription", "Inkscape"
+            VALUE "FileVersion", "0.48+devel"
+            VALUE "InternalName", "Inkscape"
+            VALUE "LegalCopyright", "© 2014 Inkscape"
+            VALUE "ProductName", "Inkscape"
+            VALUE "ProductVersion", "0.48+devel"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 1033, 437
+    END
+END
+
+1000		BITMAP	"./show-preview.bmp"
+
