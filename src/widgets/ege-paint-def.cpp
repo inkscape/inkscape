@@ -44,7 +44,6 @@
 #include <string>
 #include <iostream>
 #include <sstream>
-#include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #include <glibmm/i18n.h>
