@@ -30,8 +30,12 @@ struct NRStyle {
     void set(SPStyle *);
     bool prepareFill(Inkscape::DrawingContext &dc, Geom::OptRect const &paintbox);
     bool prepareStroke(Inkscape::DrawingContext &dc, Geom::OptRect const &paintbox);
+    bool prepareTextDecorationFill(Inkscape::DrawingContext &dc, Geom::OptRect const &paintbox);
+    bool prepareTextDecorationStroke(Inkscape::DrawingContext &dc, Geom::OptRect const &paintbox);
     void applyFill(Inkscape::DrawingContext &dc);
     void applyStroke(Inkscape::DrawingContext &dc);
+    void applyTextDecorationFill(Inkscape::DrawingContext &dc);
+    void applyTextDecorationStroke(Inkscape::DrawingContext &dc);
     void update();
 
     enum PaintType {
@@ -67,6 +71,8 @@ struct NRStyle {
 
     cairo_pattern_t *fill_pattern;
     cairo_pattern_t *stroke_pattern;
+    cairo_pattern_t *text_decoration_fill_pattern;
+    cairo_pattern_t *text_decoration_stroke_pattern;
 
     enum PaintOrderType {
         PAINT_ORDER_NORMAL,
@@ -97,8 +103,9 @@ struct NRStyle {
 
     int   text_decoration_line;
     int   text_decoration_style;
-    Paint text_decoration_color;
-    bool  text_decoration_useColor;      // if false, use whatever the glyph color was
+    Paint text_decoration_fill;
+    Paint text_decoration_stroke;
+    float text_decoration_stroke_width;
     // These are the same as in style.h
     float phase_length;
     bool  tspan_line_start;

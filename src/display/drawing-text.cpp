@@ -67,16 +67,14 @@ unsigned DrawingGlyphs::_updateItem(Geom::IntRect const &/*area*/, UpdateContext
     _pick_bbox = Geom::IntRect();
     _bbox = Geom::IntRect();
 
-/* orignally it did the one line below,
-    but it did not handle ws characters at all, and it had problems with scaling for overline/underline.
-    Replaced with the section below, which seems to be much more stable.
-
-    Geom::OptRect b  = bounds_exact_transformed(*_font->PathVector(_glyph), ctx.ctm);
-*/
-    /* Make a bounding box that is a little taller and lower (currently 10% extra) than the font's drawing box.  Extra space is
-    to hold overline or underline, if present.  All characters in a font use the same ascent and descent,
-    but different widths. This lets leading and trailing spaces have text decorations. If it is not done 
-    the bounding box is limited to the box surrounding the drawn parts of visible glyphs only, and draws outside are ignored.
+    /*
+      Make a bounding box for drawing that is a little taller and lower (currently 10% extra) than
+      the font's drawing box.  Extra space is to hold overline or underline, if present.  All
+      characters in a font use the same ascent and descent, but different widths. This lets leading
+      and trailing spaces have text decorations. If it is not done the bounding box is limited to
+      the box surrounding the drawn parts of visible glyphs only, and draws outside are ignored.
+      The box is also a hair wider than the text, since the glyphs do not always start or end at
+      the left and right edges of the box defined in the font.
     */
 
     float scale_bigbox = 1.0;
@@ -84,8 +82,44 @@ unsigned DrawingGlyphs::_updateItem(Geom::IntRect const &/*area*/, UpdateContext
         scale_bigbox /= _transform->descrim();
     }
 
-    Geom::Rect bigbox(Geom::Point(0.0, _asc*scale_bigbox*1.1),Geom::Point(_width*scale_bigbox, -_dsc*scale_bigbox*1.1));
+    Geom::Rect bigbox(Geom::Point(-_width*scale_bigbox*0.1, _asc*scale_bigbox*1.1),Geom::Point(_width*scale_bigbox, -_dsc*scale_bigbox*1.1));
     Geom::Rect b = bigbox * ctx.ctm;
+
+    /*
+      The pick box matches the characters as best as it can, leaving no extra space above or below
+      for decorations.  The pathvector may include spaces, and spaces have no drawable glyph.
+      Catch those and do not pass them to bounds_exact_transformed(), which crashes Inkscape if it
+      sees a nondrawable glyph. Instead mock up a pickbox for them using font characteristics.
+      There may also be some other similar white space characters in some other unforeseen context
+      which should be handled by this code as well..
+    */
+
+    Geom::OptRect pb;
+    if(_drawable){
+        pb  = bounds_exact_transformed(*_font->PathVector(_glyph), ctx.ctm);
+    }
+    if(!pb){ // Fallback
+        Geom::Rect pbigbox(Geom::Point(0.0, _asc*scale_bigbox*0.66),Geom::Point(_width*scale_bigbox, 0.0));
+        pb = pbigbox * ctx.ctm;
+    }
+
+#if 0
+    /* FIXME  if this is commented out then not even an approximation of pick on decorations */
+    /* adjust the pick box up or down to include the decorations.  
+       This is only approximate since at this point we don't know how wide that line is, if it has
+       an unusual offset, and so forth.  The selection point is set at what is roughly the center of
+       the decoration (vertically) for the wide ones, like wavy and double line.
+       The text decorations are not actually selectable.
+    */
+    if (_decorations.overline || _decorations.underline) {
+        double top = _asc*scale_bigbox*0.66;
+        double bot = 0;
+        if (_decorations.overline) {  top =   _asc * scale_bigbox * 1.025; }
+        if (_decorations.underline) { bot =  -_dsc * scale_bigbox * 0.2;   }
+        Geom::Rect padjbox(Geom::Point(0.0, top),Geom::Point(_width*scale_bigbox, bot));
+        pb.unionWith(padjbox * ctx.ctm);
+    }
+#endif   
 
     if (ggroup->_nrstyle.stroke.type != NRStyle::PAINT_NONE) {
         // this expands the selection box for cases where the stroke is "thick"
@@ -96,10 +130,11 @@ unsigned DrawingGlyphs::_updateItem(Geom::IntRect const &/*area*/, UpdateContext
         float width = MAX(0.125, ggroup->_nrstyle.stroke_width * scale);
         if ( fabs(ggroup->_nrstyle.stroke_width * scale) > 0.01 ) { // FIXME: this is always true
             b.expandBy(0.5 * width);
+            pb->expandBy(0.5 * width);
         }
 
        // save bbox without miters for picking
-        _pick_bbox = b.roundOutwards();
+        _pick_bbox = pb->roundOutwards();
 
         float miterMax = width * ggroup->_nrstyle.miter_limit;
         if ( miterMax > 0.01 ) {
@@ -110,14 +145,8 @@ unsigned DrawingGlyphs::_updateItem(Geom::IntRect const &/*area*/, UpdateContext
         _bbox = b.roundOutwards();
     } else {
         _bbox = b.roundOutwards();
-        _pick_bbox = *_bbox;
+        _pick_bbox = pb->roundOutwards();
     }
-/*
-std::cout << "DEBUG _bbox"
-<< " { " << _bbox->min()[Geom::X] << " , " << _bbox->min()[Geom::Y]
-<< " } , { " << _bbox->max()[Geom::X] << " , " << _bbox->max()[Geom::Y]
-<< " }" << std::endl;
-*/
     return STATE_ALL;
 }
 
@@ -136,7 +165,8 @@ DrawingGlyphs::_pickItem(Geom::Point const &p, double delta, unsigned /*flags*/)
 
     // With text we take a simple approach: pick if the point is in a character bbox
     Geom::Rect expanded(_pick_bbox);
-    expanded.expandBy(delta);
+    // FIXME, why expand by delta?  When is the next line needed?
+    // expanded.expandBy(delta);
     if (expanded.contains(p)) return this;
     return NULL;
 }
@@ -195,7 +225,7 @@ DrawingText::_updateItem(Geom::IntRect const &area, UpdateContext const &ctx, un
     return DrawingGroup::_updateItem(area, ctx, flags, reset);
 }
 
-void DrawingText::decorateStyle(DrawingContext &dc, double vextent, double xphase, Geom::Point const &p1, Geom::Point const &p2)
+void DrawingText::decorateStyle(DrawingContext &dc, double vextent, double xphase, Geom::Point const &p1, Geom::Point const &p2, double thickness)
 {
     double wave[16]={
         0.000000,  0.382499,  0.706825,  0.923651,   1.000000,  0.923651,  0.706825,  0.382499, 
@@ -213,7 +243,6 @@ void DrawingText::decorateStyle(DrawingContext &dc, double vextent, double xphas
         4,     3,   2,   1,
         -4,   -3,  -2,  -1
     };
-    Geom::Point p3,p4,ps,pf;
     double   step = vextent/32.0;
     unsigned i  = 15 & (unsigned) round(xphase/step);  // xphase is >= 0.0
 
@@ -221,26 +250,19 @@ void DrawingText::decorateStyle(DrawingContext &dc, double vextent, double xphas
        This allows decoration continuity within the line, and does not step outside the clip box off the end
        For the first/last section on the line though, stay well clear of the edge, or when the 
        text is dragged it may "spray" pixels.
-    if(_nrstyle.tspan_line_end){    pf = p2 - Geom::Point(2*step, 0.0); }
-    else {                          pf = p2;                            }
-    if(_nrstyle.tspan_line_start){  ps = p1 + Geom::Point(2*step, 0.0);
-                                    i  = 15 & (i + 2); 
-    }
-    else {                          ps = p1;                            }
     */
     /* snap to nearest step in X */
-ps = Geom::Point(step * round(p1[Geom::X]/step),p1[Geom::Y]);
-pf = Geom::Point(step * round(p2[Geom::X]/step),p2[Geom::Y]);
+    Geom::Point ps = Geom::Point(step * round(p1[Geom::X]/step),p1[Geom::Y]);
+    Geom::Point pf = Geom::Point(step * round(p2[Geom::X]/step),p2[Geom::Y]);
+    Geom::Point poff = Geom::Point(0,thickness/2.0);
 
     if(_nrstyle.text_decoration_style & TEXT_DECORATION_STYLE_ISDOUBLE){
         ps -= Geom::Point(0, vextent/12.0);
         pf -= Geom::Point(0, vextent/12.0);
-        dc.moveTo(ps);
-        dc.lineTo(pf);
+        dc.rectangle( Geom::Rect(ps + poff, pf - poff));
         ps += Geom::Point(0, vextent/6.0);
         pf += Geom::Point(0, vextent/6.0);
-        dc.moveTo(ps);
-        dc.lineTo(pf);
+        dc.rectangle( Geom::Rect(ps + poff, pf - poff));
     }
     /* The next three have a problem in that they are phase dependent.  The bits of a line are not
     necessarily passing through this routine in order, so we have to use the xphase information
@@ -248,43 +270,52 @@ pf = Geom::Point(step * round(p2[Geom::X]/step),p2[Geom::Y]);
     Huge possitive offset should keep the phase calculation from ever being negative.
     */
     else if(_nrstyle.text_decoration_style & TEXT_DECORATION_STYLE_DOTTED){
+        // FIXME: Per spec, this should produce round dots.
+        Geom::Point pv = ps;
         while(1){
+            Geom::Point pvlast = pv;
             if(dots[i]>0){
-                if(ps[Geom::X]> pf[Geom::X])break;
-                dc.moveTo(ps);
-                ps += Geom::Point(step * (double)dots[i], 0.0);
-                if(ps[Geom::X]>= pf[Geom::X]){
-                    dc.lineTo(pf);
+                if(pv[Geom::X] > pf[Geom::X]) break;
+
+                pv += Geom::Point(step * (double)dots[i], 0.0);
+
+                if(pv[Geom::X]>= pf[Geom::X]){
+                    // Last dot
+                    dc.rectangle( Geom::Rect(pvlast + poff, pf - poff));
                     break;
+                } else {
+                    dc.rectangle( Geom::Rect(pvlast + poff, pv - poff));
                 }
-                else {
-                    dc.lineTo(ps);
-                }
-                ps += Geom::Point(step * 4.0, 0.0);
-            }
-            else {
-                ps += Geom::Point(step * -(double)dots[i], 0.0);
+
+                pv += Geom::Point(step * 4.0, 0.0);
+
+            } else {
+                pv += Geom::Point(step * -(double)dots[i], 0.0);
             }
             i = 0;  // once in phase, it stays in phase
         }
     } 
     else if(_nrstyle.text_decoration_style & TEXT_DECORATION_STYLE_DASHED){
+        Geom::Point pv = ps;
         while(1){
+            Geom::Point pvlast = pv;
             if(dashes[i]>0){
-                if(ps[Geom::X]> pf[Geom::X])break;
-                dc.moveTo(ps);
-                ps += Geom::Point(step * (double)dashes[i], 0.0);
-                if(ps[Geom::X]>= pf[Geom::X]){
-                    dc.lineTo(pf);
+                if(pv[Geom::X]> pf[Geom::X]) break;
+
+                pv += Geom::Point(step * (double)dashes[i], 0.0);
+
+                if(pv[Geom::X]>= pf[Geom::X]){
+                    // Last dash
+                    dc.rectangle( Geom::Rect(pvlast + poff, pf - poff));
                     break;
+                } else {
+                    dc.rectangle( Geom::Rect(pvlast + poff, pv - poff));
                 }
-                else {
-                    dc.lineTo(ps);
-                }
-                ps += Geom::Point(step * 8.0, 0.0);
-            }
-            else {
-                ps += Geom::Point(step * -(double)dashes[i], 0.0);
+
+                pv += Geom::Point(step * 8.0, 0.0);
+
+            } else {
+                pv += Geom::Point(step * -(double)dashes[i], 0.0);
             }
             i = 0;  // once in phase, it stays in phase
         }
@@ -292,7 +323,7 @@ pf = Geom::Point(step * round(p2[Geom::X]/step),p2[Geom::Y]);
     else if(_nrstyle.text_decoration_style & TEXT_DECORATION_STYLE_WAVY){
         double   amp  = vextent/10.0;
         double   x    = ps[Geom::X];
-        double   y    = ps[Geom::Y];
+        double   y    = ps[Geom::Y] + poff[Geom::Y];
         dc.moveTo(Geom::Point(x, y + amp * wave[i]));
         while(1){
            i = ((i + 1) & 15);
@@ -300,17 +331,25 @@ pf = Geom::Point(step * round(p2[Geom::X]/step),p2[Geom::Y]);
            dc.lineTo(Geom::Point(x, y + amp * wave[i]));
            if(x >= pf[Geom::X])break;
         }
-   }  
+        y = ps[Geom::Y] - poff[Geom::Y];
+        dc.lineTo(Geom::Point(x, y + amp * wave[i]));
+        while(1){
+           i = ((i - 1) & 15);
+           x -= step;
+           dc.lineTo(Geom::Point(x, y + amp * wave[i]));
+           if(x <= ps[Geom::X])break;
+        }
+        dc.closePath();
+    }  
     else { // TEXT_DECORATION_STYLE_SOLID, also default in case it was not set for some reason
-         dc.moveTo(ps);
-         dc.lineTo(pf);
-//         dc.revrectangle(Geom::Rect(ps,pf));
+        dc.rectangle( Geom::Rect(ps + poff, pf - poff));
     } 
 }
 
 /* returns scaled line thickness */
-double DrawingText::decorateItem(DrawingContext &dc, Geom::Affine const &aff, double phase_length)
+void DrawingText::decorateItem(DrawingContext &dc, double phase_length, bool under)
 {
+    if (_nrstyle.font_size < 1.0e-32)return;  // would cause a divide by zero and nothing would be visible anyway
     double tsp_width_adj                = _nrstyle.tspan_width                     / _nrstyle.font_size;
     double tsp_asc_adj                  = _nrstyle.ascender                        / _nrstyle.font_size;
     double tsp_size_adj                 = (_nrstyle.ascender + _nrstyle.descender) / _nrstyle.font_size;
@@ -318,49 +357,54 @@ double DrawingText::decorateItem(DrawingContext &dc, Geom::Affine const &aff, do
     double final_underline_thickness    = CLAMP(_nrstyle.underline_thickness,    tsp_size_adj/30.0, tsp_size_adj/10.0);
     double final_line_through_thickness = CLAMP(_nrstyle.line_through_thickness, tsp_size_adj/30.0, tsp_size_adj/10.0);
 
-    double scale = aff.descrim();
     double xphase = phase_length/ _nrstyle.font_size; // used to figure out phase of patterns
-
-    Inkscape::DrawingContext::Save save(dc);
-    dc.transform(aff);  // must be leftmost affine in span
 
     Geom::Point p1;
     Geom::Point p2;
     // All lines must be the same thickness, in combinations, line_through trumps underline
     double thickness = final_underline_thickness;
-    if(_nrstyle.text_decoration_line & TEXT_DECORATION_LINE_UNDERLINE){
-        p1 = Geom::Point(0.0,          -_nrstyle.underline_position);
-        p2 = Geom::Point(tsp_width_adj,-_nrstyle.underline_position);
-        decorateStyle(dc, tsp_size_adj, xphase, p1, p2);
+    dc.setTolerance(0.5); // Is this really necessary... could effect dots.
+
+    if( under ) {
+
+        if(_nrstyle.text_decoration_line & TEXT_DECORATION_LINE_UNDERLINE){
+            p1 = Geom::Point(0.0,          -_nrstyle.underline_position);
+            p2 = Geom::Point(tsp_width_adj,-_nrstyle.underline_position);
+            decorateStyle(dc, tsp_size_adj, xphase, p1, p2, thickness);
+        }
+
+        if(_nrstyle.text_decoration_line & TEXT_DECORATION_LINE_OVERLINE){
+            p1 = Geom::Point(0.0,          tsp_asc_adj -_nrstyle.underline_position + 1 * final_underline_thickness);
+            p2 = Geom::Point(tsp_width_adj,tsp_asc_adj -_nrstyle.underline_position + 1 * final_underline_thickness);
+            decorateStyle(dc, tsp_size_adj, xphase,  p1, p2, thickness);
+        }
+
+    } else {
+        // Over
+
+        if(_nrstyle.text_decoration_line & TEXT_DECORATION_LINE_LINETHROUGH){
+            thickness = final_line_through_thickness;
+            p1 = Geom::Point(0.0,          _nrstyle.line_through_position);
+            p2 = Geom::Point(tsp_width_adj,_nrstyle.line_through_position);
+            decorateStyle(dc, tsp_size_adj, xphase,  p1, p2, thickness);
+        }
+
+        // Obviously this does not blink, but it does indicate which text has been set with that attribute
+        if(_nrstyle.text_decoration_line & TEXT_DECORATION_LINE_BLINK){
+            thickness = final_line_through_thickness;
+            p1 = Geom::Point(0.0,          _nrstyle.line_through_position - 2*final_line_through_thickness);
+            p2 = Geom::Point(tsp_width_adj,_nrstyle.line_through_position - 2*final_line_through_thickness);
+            decorateStyle(dc, tsp_size_adj, xphase,  p1, p2, thickness);
+            p1 = Geom::Point(0.0,          _nrstyle.line_through_position + 2*final_line_through_thickness);
+            p2 = Geom::Point(tsp_width_adj,_nrstyle.line_through_position + 2*final_line_through_thickness);
+            decorateStyle(dc, tsp_size_adj, xphase,  p1, p2, thickness);
+        }
     }
-    if(_nrstyle.text_decoration_line & TEXT_DECORATION_LINE_OVERLINE){
-        p1 = Geom::Point(0.0,          tsp_asc_adj -_nrstyle.underline_position + 1 * final_underline_thickness);
-        p2 = Geom::Point(tsp_width_adj,tsp_asc_adj -_nrstyle.underline_position + 1 * final_underline_thickness);
-        decorateStyle(dc, tsp_size_adj, xphase,  p1, p2);
-    }
-    if(_nrstyle.text_decoration_line & TEXT_DECORATION_LINE_LINETHROUGH){
-        thickness = final_line_through_thickness;
-        p1 = Geom::Point(0.0,          _nrstyle.line_through_position);
-        p2 = Geom::Point(tsp_width_adj,_nrstyle.line_through_position);
-        decorateStyle(dc, tsp_size_adj, xphase,  p1, p2);
-    }
-    // Obviously this does not blink, but it does indicate which text has been set with that attribute
-    if(_nrstyle.text_decoration_line & TEXT_DECORATION_LINE_BLINK){
-        thickness = final_line_through_thickness;
-        p1 = Geom::Point(0.0,          _nrstyle.line_through_position - 2*final_line_through_thickness);
-        p2 = Geom::Point(tsp_width_adj,_nrstyle.line_through_position - 2*final_line_through_thickness);
-        decorateStyle(dc, tsp_size_adj, xphase,  p1, p2);
-        p1 = Geom::Point(0.0,          _nrstyle.line_through_position + 2*final_line_through_thickness);
-        p2 = Geom::Point(tsp_width_adj,_nrstyle.line_through_position + 2*final_line_through_thickness);
-        decorateStyle(dc, tsp_size_adj, xphase,  p1, p2);
-    }
-    thickness *= scale;
-    return(thickness);
 }
 
 unsigned DrawingText::_renderItem(DrawingContext &dc, Geom::IntRect const &/*area*/, unsigned /*flags*/, DrawingItem * /*stop_at*/)
 {
-   if (_drawing.outline()) {
+    if (_drawing.outline()) {
         guint32 rgba = _drawing.outlinecolor;
         Inkscape::DrawingContext::Save save(dc);
         dc.setSource(rgba);
@@ -382,75 +426,37 @@ unsigned DrawingText::_renderItem(DrawingContext &dc, Geom::IntRect const &/*are
         return RENDER_OK;
     }
 
-    // NOTE: this is very similar to drawing-shape.cpp; the only difference is in path feeding
-    double leftmost     = DBL_MAX;
-    double phase_length = 0.0;
-    bool   firsty       = true;
-    bool   decorate     = true;
-    double starty       = 0.0;
-    Geom::Affine aff;
-    using Geom::X;
-    using Geom::Y;
+    // NOTE: This is very similar to drawing-shape.cpp; the only differences are in path feeding
+    // and in applying text decorations.
 
-    // NOTE:
+
+    // Do we have text decorations?
+    bool decorate = (_nrstyle.text_decoration_line != TEXT_DECORATION_LINE_CLEAR );
+
     // prepareFill / prepareStroke need to be called with _ctm in effect.
     // However, we might need to apply a different ctm for glyphs.
     // Therefore, only apply this ctm temporarily.
-    bool has_stroke, has_fill;
+    bool has_stroke    = false;
+    bool has_fill      = false;
+    bool has_td_fill   = false;
+    bool has_td_stroke = false;
     {
         Inkscape::DrawingContext::Save save(dc);
         dc.transform(_ctm);
 
-        has_fill   = _nrstyle.prepareFill(  dc, _item_bbox);
-        has_stroke = _nrstyle.prepareStroke(dc, _item_bbox);
+        has_fill      = _nrstyle.prepareFill(                dc, _item_bbox);
+        has_stroke    = _nrstyle.prepareStroke(              dc, _item_bbox);
+
+        // Avoid creating patterns if not needed
+        if( decorate ) {
+            has_td_fill   = _nrstyle.prepareTextDecorationFill(  dc, _item_bbox);
+            has_td_stroke = _nrstyle.prepareTextDecorationStroke(dc, _item_bbox);
+        }
     }
 
-    if (has_fill || has_stroke) {
-        Geom::Affine rotinv;
-        bool invset = false;
+    if (has_fill || has_stroke || has_td_fill || has_td_stroke) {
 
-        // accumulate the path that represents the glyphs
-        for (ChildrenList::iterator i = _children.begin(); i != _children.end(); ++i) {
-            DrawingGlyphs *g = dynamic_cast<DrawingGlyphs *>(&*i);
-            if (!g) throw InvalidItemException();
-            if (!invset) {
-                rotinv = g->_ctm.withoutTranslation().inverse();
-                invset = true;
-            }
-
-            Inkscape::DrawingContext::Save save(dc);
-            if (g->_ctm.isSingular()) continue;
-            dc.transform(g->_ctm);
-            if (g->_drawable) {
-                dc.path(*g->_font->PathVector(g->_glyph));
-            }
-            // get the leftmost affine transform (leftmost defined with respect to the x axis of the first transform).  
-            // That way the decoration will work no matter what mix of L->R, R->L text is in the span.
-            if (_nrstyle.text_decoration_line != TEXT_DECORATION_LINE_CLEAR) {
-                Geom::Point pt = g->_ctm.translation() * rotinv;
-                if (pt[X] < leftmost) {
-                    leftmost     = pt[X];
-                    aff          = g->_ctm;
-                    phase_length = g->_pl;
-                }
-                /* If the text has been mapped onto a path, which causes y to vary, drop the text decorations.
-                   To handle that properly would need a conformal map
-                */
-                if (firsty) {
-                    firsty = false;
-                    starty = pt[Y];
-                }
-                else if (fabs(pt[Y] - starty) > 1.0e-6) {
-                    decorate = false;
-                }
-            }
-        }
-
-        // draw the text itself
-        // we need to apply this object's ctm again
-        Inkscape::DrawingContext::Save save(dc);
-        dc.transform(_ctm);
-
+        // Determine order for fill and stroke.
         // Text doesn't have markers, we can do paint-order quick and dirty.
         bool fill_first = false;
         if( _nrstyle.paint_order_layer[0] == NRStyle::PAINT_ORDER_NORMAL ||
@@ -459,47 +465,148 @@ unsigned DrawingText::_renderItem(DrawingContext &dc, Geom::IntRect const &/*are
             fill_first = true;
         } // Won't get "stroke fill stroke" but that isn't 'valid'
 
-        if (has_fill && fill_first) {
-            _nrstyle.applyFill(dc);
-            dc.fillPreserve();
-        }
 
-        if (has_stroke) {
-            _nrstyle.applyStroke(dc);
-            dc.strokePreserve();
-        }
+        // Determine geometry of text decoration
+        double phase_length = 0.0;
+        Geom::Affine aff;
+        if( decorate ) {
 
-        if (has_fill && !fill_first) {
-            _nrstyle.applyFill(dc);
-            dc.fillPreserve();
-        }
+            Geom::Affine rotinv;
+            bool   invset    = false;
+            double leftmost  = DBL_MAX;
+            bool   first_y   = true;
+            double start_y   = 0.0;
+            for (ChildrenList::iterator i = _children.begin(); i != _children.end(); ++i) {
 
-        dc.newPath(); // clear path
+                DrawingGlyphs *g = dynamic_cast<DrawingGlyphs *>(&*i);
+                if (!g) throw InvalidItemException();
 
-        // draw text decoration
-        if (_nrstyle.text_decoration_line != TEXT_DECORATION_LINE_CLEAR && decorate) {
-            guint32 ergba;
-            if (_nrstyle.text_decoration_useColor) { // color different from the glyph
-                ergba =  SP_RGBA32_F_COMPOSE(
-                    _nrstyle.text_decoration_color.color.v.c[0],
-                    _nrstyle.text_decoration_color.color.v.c[1],
-                    _nrstyle.text_decoration_color.color.v.c[2],
-                    1.0);
+                if (!invset) {
+                    rotinv = g->_ctm.withoutTranslation().inverse();
+                    invset = true;
+                }
+
+                Geom::Point pt = g->_ctm.translation() * rotinv;
+                if (pt[Geom::X] < leftmost) {
+                    leftmost     = pt[Geom::X];
+                    aff          = g->_ctm;
+                    phase_length = g->_pl;
+                }
+
+                // Check for text on a path. FIXME: This needs better test (and probably not here).
+                if (first_y) {
+                    first_y = false;
+                    start_y = pt[Geom::Y];
+                }
+                else if (fabs(pt[Geom::Y] - start_y) > 1.0e-6) {
+                    //  If the text has been mapped onto a path, which causes y to vary, drop the
+                    //  text decorations.  To handle that properly would need a conformal map.
+                    decorate = false;
+                }
             }
-            else { // whatever the current fill color is
-                ergba =  SP_RGBA32_F_COMPOSE(
-                    _nrstyle.fill.color.v.c[0],
-                    _nrstyle.fill.color.v.c[1],
-                    _nrstyle.fill.color.v.c[2],
-                    1.0);
-            }
-            dc.setSource(ergba);
-            dc.setTolerance(0.5);
-            double thickness = decorateItem(dc, aff, phase_length);
-            dc.setLineWidth(thickness);
-            dc.strokePreserve();
-            dc.newPath(); // clear path
         }
+
+        // Draw text decorations that go UNDER the text (underline, over-line)
+        if( decorate ) {
+
+            {
+                Inkscape::DrawingContext::Save save(dc);
+                dc.transform(aff);  // must be leftmost affine in span
+                decorateItem(dc, phase_length, true);
+            }
+
+            {
+                Inkscape::DrawingContext::Save save(dc);
+                dc.transform(_ctm);  // Needed so that fill pattern rotates with text
+
+                if (has_td_fill && fill_first) {
+                    _nrstyle.applyTextDecorationFill(dc);
+                    dc.fillPreserve();
+                }
+
+                if (has_td_stroke) {
+                    _nrstyle.applyTextDecorationStroke(dc);
+                    dc.strokePreserve();
+                }
+
+                if (has_td_fill && !fill_first) {
+                    _nrstyle.applyTextDecorationFill(dc);
+                    dc.fillPreserve();
+                }
+
+            }
+
+            dc.newPath(); // Clear text-decoration path
+        }
+
+        // accumulate the path that represents the glyphs
+        for (ChildrenList::iterator i = _children.begin(); i != _children.end(); ++i) {
+            DrawingGlyphs *g = dynamic_cast<DrawingGlyphs *>(&*i);
+            if (!g) throw InvalidItemException();
+
+            Inkscape::DrawingContext::Save save(dc);
+            if (g->_ctm.isSingular()) continue;
+            dc.transform(g->_ctm);
+            if (g->_drawable) {
+                dc.path(*g->_font->PathVector(g->_glyph));
+            }
+        }
+
+        // Draw the glyphs.
+        {
+            Inkscape::DrawingContext::Save save(dc);
+            dc.transform(_ctm);
+
+            if (has_fill && fill_first) {
+                _nrstyle.applyFill(dc);
+                dc.fillPreserve();
+            }
+
+            if (has_stroke) {
+                _nrstyle.applyStroke(dc);
+                dc.strokePreserve();
+            }
+
+            if (has_fill && !fill_first) {
+                _nrstyle.applyFill(dc);
+                dc.fillPreserve();
+            }
+        }
+        dc.newPath(); // Clear glyphs path
+
+        // Draw text decorations that go OVER the text (line through, blink)
+        if (decorate) {
+
+            {
+                Inkscape::DrawingContext::Save save(dc);
+                dc.transform(aff);  // must be leftmost affine in span
+                decorateItem(dc, phase_length, false);
+            }
+
+            {
+                Inkscape::DrawingContext::Save save(dc);
+                dc.transform(_ctm);  // Needed so that fill pattern rotates with text
+                
+                if (has_td_fill && fill_first) {
+                    _nrstyle.applyTextDecorationFill(dc);
+                    dc.fillPreserve();
+                }
+
+                if (has_td_stroke) {
+                    _nrstyle.applyTextDecorationStroke(dc);
+                    dc.strokePreserve();
+                }
+
+                if (has_td_fill && !fill_first) {
+                    _nrstyle.applyTextDecorationFill(dc);
+                    dc.fillPreserve();
+                }
+
+            }
+
+            dc.newPath(); // Clear text-decoration path
+        }
+
     }
     return RENDER_OK;
 }

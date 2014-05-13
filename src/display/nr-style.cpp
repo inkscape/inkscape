@@ -54,8 +54,13 @@ NRStyle::NRStyle()
     , line_join(CAIRO_LINE_JOIN_MITER)
     , fill_pattern(NULL)
     , stroke_pattern(NULL)
+    , text_decoration_fill_pattern(NULL)
+    , text_decoration_stroke_pattern(NULL)
     , text_decoration_line(TEXT_DECORATION_LINE_CLEAR)
     , text_decoration_style(TEXT_DECORATION_STYLE_CLEAR)
+    , text_decoration_fill()
+    , text_decoration_stroke()
+    , text_decoration_stroke_width(0.0)
     , phase_length(0.0)
     , tspan_line_start(false)
     , tspan_line_end(false)
@@ -76,11 +81,15 @@ NRStyle::~NRStyle()
 {
     if (fill_pattern) cairo_pattern_destroy(fill_pattern);
     if (stroke_pattern) cairo_pattern_destroy(stroke_pattern);
+    if (text_decoration_fill_pattern) cairo_pattern_destroy(text_decoration_fill_pattern);
+    if (text_decoration_stroke_pattern) cairo_pattern_destroy(text_decoration_stroke_pattern);
     if (dash){
         delete [] dash;
     }
     fill.clear();
     stroke.clear();
+    text_decoration_fill.clear();
+    text_decoration_stroke.clear();
 }
 
 void NRStyle::set(SPStyle *style)
@@ -195,15 +204,65 @@ void NRStyle::set(SPStyle *style)
     if(style->text_decoration_style.dashed       ){ text_decoration_style |= TEXT_DECORATION_STYLE_DASHED   + TEXT_DECORATION_STYLE_SET; }
     if(style->text_decoration_style.wavy         ){ text_decoration_style |= TEXT_DECORATION_STYLE_WAVY     + TEXT_DECORATION_STYLE_SET; }
  
+    /* FIXME
+       The meaning of text-decoration-color in CSS3 for SVG is ambiguous (2014-05-06).  Set
+       it for fill, for stroke, for both?  Both would seem like the obvious choice but what happens
+       is that for text which is just fill (very common) it makes the lines fatter because it
+       enables stroke on the decorations when it wasn't present on the text.  That contradicts the
+       usual behavior where the text and decorations by default have the same fill/stroke.
+       
+       The behavior here is that if color is defined it is applied to text_decoration_fill/stroke
+       ONLY if the corresponding fill/stroke is also present.
+       
+       Hopefully the standard will be clarified to resolve this issue.
+    */
+
+    SPStyle* style_td = style;
+    if ( style->text_decoration.style_td ) style_td = style->text_decoration.style_td;
+    text_decoration_stroke.opacity = SP_SCALE24_TO_FLOAT(style_td->stroke_opacity.value);
+    text_decoration_stroke_width = style_td->stroke_width.computed;
+
     if( style->text_decoration_color.set          ||
         style->text_decoration_color.inherit      || 
-        style->text_decoration_color.currentcolor ){
-        text_decoration_color.set(style->text_decoration_color.value.color);
-        text_decoration_useColor = true;
-    }
-    else {
-        text_decoration_color.clear();
-        text_decoration_useColor = false;
+        style->text_decoration_color.currentcolor ) {
+
+        if(style->fill.isPaintserver() || style->fill.isColor()) {
+            // SVG sets color specifically
+            text_decoration_fill.set(style->text_decoration_color.value.color);
+        } else {
+            // No decoration fill because no text fill
+            text_decoration_fill.clear();
+        }
+
+        if(style->stroke.isPaintserver() || style->stroke.isColor()) {
+            // SVG sets color specifically
+            text_decoration_stroke.set(style->text_decoration_color.value.color);
+        } else {
+            // No decoration stroke because no text stroke
+            text_decoration_stroke.clear();
+        }
+
+    } else {
+        // Pick color/pattern from text
+        if ( style_td->fill.isPaintserver() ) {
+            text_decoration_fill.set(style_td->getFillPaintServer());
+        } else if ( style_td->fill.isColor() ) {
+            text_decoration_fill.set(style_td->fill.value.color);
+        } else if ( style_td->fill.isNone() ) {
+            text_decoration_fill.clear();
+        } else {
+            g_assert_not_reached();
+        }
+
+        if ( style_td->stroke.isPaintserver() ) {
+            text_decoration_stroke.set(style_td->getStrokePaintServer());
+        } else if ( style_td->stroke.isColor() ) {
+            text_decoration_stroke.set(style_td->stroke.value.color);
+        } else if ( style_td->stroke.isNone() ) {
+            text_decoration_stroke.clear();
+        } else {
+            g_assert_not_reached();
+        }
     }
 
     if(text_decoration_line != TEXT_DECORATION_LINE_CLEAR){
@@ -232,10 +291,8 @@ bool NRStyle::prepareFill(Inkscape::DrawingContext &dc, Geom::OptRect const &pai
     if (!fill_pattern) {
         switch (fill.type) {
         case PAINT_SERVER: {
-            //fill_pattern = sp_paint_server_create_pattern(fill.server, dc.raw(), paintbox, fill.opacity);
-        	fill_pattern = fill.server->pattern_new(dc.raw(), paintbox, fill.opacity);
-
-		} break;
+            fill_pattern = fill.server->pattern_new(dc.raw(), paintbox, fill.opacity);
+            } break;
         case PAINT_COLOR: {
             SPColor const &c = fill.color;
             fill_pattern = cairo_pattern_create_rgba(
@@ -254,14 +311,38 @@ void NRStyle::applyFill(Inkscape::DrawingContext &dc)
     dc.setFillRule(fill_rule);
 }
 
+bool NRStyle::prepareTextDecorationFill(Inkscape::DrawingContext &dc, Geom::OptRect const &paintbox)
+{
+    // update text decoration pattern
+    if (!text_decoration_fill_pattern) {
+        switch (text_decoration_fill.type) {
+        case PAINT_SERVER: {
+        	text_decoration_fill_pattern = text_decoration_fill.server->pattern_new(dc.raw(), paintbox, text_decoration_fill.opacity);
+		} break;
+        case PAINT_COLOR: {
+            SPColor const &c = text_decoration_fill.color;
+            text_decoration_fill_pattern = cairo_pattern_create_rgba(
+                c.v.c[0], c.v.c[1], c.v.c[2], text_decoration_fill.opacity);
+            } break;
+        default: break;
+        }
+    }
+    if (!text_decoration_fill_pattern) return false;
+    return true;
+}
+
+void NRStyle::applyTextDecorationFill(Inkscape::DrawingContext &dc)
+{
+    dc.setSource(text_decoration_fill_pattern);
+    // Fill rule does not matter, no intersections.
+}
+
 bool NRStyle::prepareStroke(Inkscape::DrawingContext &dc, Geom::OptRect const &paintbox)
 {
     if (!stroke_pattern) {
         switch (stroke.type) {
         case PAINT_SERVER: {
-            //stroke_pattern = sp_paint_server_create_pattern(stroke.server, dc.raw(), paintbox, stroke.opacity);
         	stroke_pattern = stroke.server->pattern_new(dc.raw(), paintbox, stroke.opacity);
-
 		} break;
         case PAINT_COLOR: {
             SPColor const &c = stroke.color;
@@ -285,13 +366,46 @@ void NRStyle::applyStroke(Inkscape::DrawingContext &dc)
     cairo_set_dash(dc.raw(), dash, n_dash, dash_offset); // fixme
 }
 
+bool NRStyle::prepareTextDecorationStroke(Inkscape::DrawingContext &dc, Geom::OptRect const &paintbox)
+{
+    if (!text_decoration_stroke_pattern) {
+        switch (text_decoration_stroke.type) {
+        case PAINT_SERVER: {
+        	text_decoration_stroke_pattern = text_decoration_stroke.server->pattern_new(dc.raw(), paintbox, text_decoration_stroke.opacity);
+		} break;
+        case PAINT_COLOR: {
+            SPColor const &c = text_decoration_stroke.color;
+            text_decoration_stroke_pattern = cairo_pattern_create_rgba(
+                c.v.c[0], c.v.c[1], c.v.c[2], text_decoration_stroke.opacity);
+            } break;
+        default: break;
+        }
+    }
+    if (!text_decoration_stroke_pattern) return false;
+    return true;
+}
+
+void NRStyle::applyTextDecorationStroke(Inkscape::DrawingContext &dc)
+{
+    dc.setSource(text_decoration_stroke_pattern);
+    dc.setLineWidth(text_decoration_stroke_width);
+    dc.setLineCap(CAIRO_LINE_CAP_BUTT);
+    dc.setLineJoin(CAIRO_LINE_JOIN_MITER);
+    dc.setMiterLimit(miter_limit);
+    cairo_set_dash(dc.raw(), 0, 0, 0.0); // fixme (no dash)
+}
+
 void NRStyle::update()
 {
     // force pattern update
     if (fill_pattern) cairo_pattern_destroy(fill_pattern);
     if (stroke_pattern) cairo_pattern_destroy(stroke_pattern);
+    if (text_decoration_fill_pattern) cairo_pattern_destroy(text_decoration_fill_pattern);
+    if (text_decoration_stroke_pattern) cairo_pattern_destroy(text_decoration_stroke_pattern);
     fill_pattern = NULL;
     stroke_pattern = NULL;
+    text_decoration_fill_pattern = NULL;
+    text_decoration_stroke_pattern = NULL;
 }
 
 /*
