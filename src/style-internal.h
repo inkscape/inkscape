@@ -116,8 +116,8 @@ class SPIBase {
     virtual const Glib::ustring write( guint const flags = SP_STYLE_FLAG_IFSET,
                                        SPIBase const *const base = NULL ) const = 0;
     virtual void clear() { set = false, inherit = false; };
-    virtual void cascade( const SPIBase* const parent ) {};
-    virtual void merge(   const SPIBase* const parent ) {}; // To do: Set to 0
+    virtual void cascade( const SPIBase* const parent ) = 0;
+    virtual void merge(   const SPIBase* const parent ) = 0;
 
     virtual void setStylePointer( SPStyle *style_in  ) { style = style_in; };
 
@@ -698,8 +698,8 @@ class SPIFont : public SPIBase {
     virtual void clear() {
         SPIBase::clear();
     };
-    virtual void cascade( const SPIBase* const parent ) {}; // Done in dependent properties
-    virtual void merge(   const SPIBase* const parent ) {};
+    virtual void cascade( const SPIBase* const parent ) { (void)parent; }; // Done in dependent properties
+    virtual void merge(   const SPIBase* const parent ) { (void)parent; };
 
     SPIFont& operator=(const SPIFont& rhs) {
         SPIBase::operator=(rhs);
@@ -850,7 +850,7 @@ class SPITextDecoration : public SPIBase {
         style_td = NULL;
     };
     virtual void cascade( const SPIBase* const parent );
-    virtual void merge(   const SPIBase* const parent ) {}; // FIX ME
+    virtual void merge(   const SPIBase* const parent );
 
     SPITextDecoration& operator=(const SPITextDecoration& rhs) {
         SPIBase::operator=(rhs);

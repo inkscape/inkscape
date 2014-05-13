@@ -2405,27 +2405,47 @@ SPITextDecoration::read( gchar const *str ) {
 
     if( !str ) return;
 
-    style->text_decoration_line.read( str );
-    style->text_decoration_style.read( str );
+    bool is_css3 = false;
+
+    SPITextDecorationLine test_line;
+    test_line.read( str );
+    if( test_line.set ) {
+        style->text_decoration_line = test_line;
+    }
+
+    SPITextDecorationStyle test_style;
+    test_style.read( str );
+    if( test_style.set ) {
+        style->text_decoration_style = test_style;
+        is_css3 = true;
+    }
+
     // the color routine must be fed one token at a time - if multiple colors are found the LAST
     // one is used  ???? then why break on set?
-    const gchar *hstr = str;
 
-    style->text_decoration_color.read( "currentColor" );  // Default value
-    style->text_decoration_color.set = false;
+    // This could certainly be designed better
+    SPIColor test_color("text-decoration-color");
+    test_color.setStylePointer( style );
+    test_color.read( "currentColor" );  // Default value
+    test_color.set = false;
+    const gchar *hstr = str;
     while (1) {
         if (*str == ' ' || *str == ',' || *str == '\0'){
             int slen = str - hstr;
             gchar *frag = g_strndup(hstr,slen+1); // only send one piece at a time, since keywords may be intermixed
 
             if( strcmp( frag, "none" ) != 0 ) { // 'none' not allowed
-                style->text_decoration_color.read( frag );
+                test_color.read( frag );
             }
 
             free(frag);
-            if( style->text_decoration_color.set ) break;
-            style->text_decoration_color.read( "currentColor" );  // Default value
-            style->text_decoration_color.set = false;
+            if( test_color.set ) {
+                style->text_decoration_color = test_color;
+                is_css3 = true;
+                break;
+            }
+            test_color.read( "currentColor" );  // Default value
+            test_color.set = false;
             if( *str == '\0' )break;
             hstr = str + 1;
         }
@@ -2434,8 +2454,7 @@ SPITextDecoration::read( gchar const *str ) {
 
     // If we read a style or color then we have CSS3 which require any non-set values to be
     // set to their default values.
-    if( style->text_decoration_style.set == true ||
-        style->text_decoration_style.set == true ) {
+    if( is_css3 ) {
         style->text_decoration_line.set = true;
         style->text_decoration_style.set = true;
         style->text_decoration_color.set = true;
@@ -2491,9 +2510,17 @@ SPITextDecoration::cascade( const SPIBase* const parent ) {
 
 }
 
-// void
-// SPITextDecoration::merge( const SPIBase* const parent ) {
-// }
+void
+SPITextDecoration::merge( const SPIBase* const parent ) {
+    if( const SPITextDecoration* p = dynamic_cast<const SPITextDecoration*>(parent) ) {
+        if( style_td == NULL ) {
+            style_td = p->style_td;
+        }
+    } else {
+        std::cerr << "SPITextDecoration::merge(): Incorrect parent type" << std::endl;
+    }
+
+}
 
 // Use CSS2 value
 bool
