@@ -553,7 +553,7 @@ access to these features (if you know SVG).
 in Inkscape it&apos;s equal to 0.8pt or 1/90 of the inch). This is also the unit used in
 displaying coordinates at the lower-left corner and preselected in all units menus. (You
 can always hover your mouse over a ruler to see the tooltip with the units it uses.) To
-change this, open <flowSpan font-family="sans-serif">Document Preferences</flowSpan>
+change this, open <flowSpan font-family="sans-serif">Document Properties</flowSpan>
 (<flowSpan font-weight="bold">Shift+Ctrl+D</flowSpan>) and change the <flowSpan font-family="sans-serif">Default units</flowSpan> on the
 <flowSpan font-family="sans-serif">Page</flowSpan> tab.
 </flowDiv>

@@ -673,7 +673,7 @@ the line with copies of this black square:</flowDiv>
    <use y="0" x="0" xlink:href="#d0e667"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Chances are, your copies of the square are placed more or less randomly. This is
-where the Align dialog (<flowSpan font-weight="bold">Shift+Ctrl+A</flowSpan>) is useful. Select all the squares
+where the Align and Distribute dialog (<flowSpan font-weight="bold">Shift+Ctrl+A</flowSpan>) is useful. Select all the squares
 (<flowSpan font-weight="bold">Shift+click</flowSpan> or drag a rubberband), open the dialog and press the
 “Center on horizontal axis” button, then the “Make horizontal gaps between objects
 equal” button (read the button tooltips). The objects are now neatly aligned and
