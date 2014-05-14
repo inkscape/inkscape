@@ -56,6 +56,21 @@ char* collect_terms (GSList *items)
     return g_strdup(ss.str().c_str());
 }
 
+// Returns the number of terms in the list
+static int count_terms (GSList *items)
+{
+    GSList *check = NULL;
+    int count=0;
+    for (GSList *i = (GSList *)items; i != NULL; i = i->next) {
+        const char *term = SP_ITEM(i->data)->displayName();
+        if (term != NULL && g_slist_find (check, term) == NULL) {
+            check = g_slist_prepend (check, (void *) term);
+            count++;
+        }
+    }
+    return count;
+}
+
 // Returns the number of filtered items in the list
 static int count_filtered (GSList *items)
 {
@@ -194,9 +209,12 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
         } else { // multiple items
             int objcount = g_slist_length((GSList *)items);
             char *terms = collect_terms ((GSList *)items);
-
-            gchar *objects_str = g_strdup_printf(
-                "<b>%i</b> objects selected of types %s", objcount, terms);
+            int n_terms = count_terms((GSList *)items);
+            
+            gchar *objects_str = g_strdup_printf(ngettext(
+                "<b>%i</b> objects selected of type %s",
+                "<b>%i</b> objects selected of types %s", n_terms),
+                 objcount, terms);
 
             g_free(terms);
 

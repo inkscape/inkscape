@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2014-05-12 18:39+0200\n"
+"POT-Creation-Date: 2014-05-14 18:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5421,207 +5421,207 @@ msgstr ""
 
 #. TRANSLATORS: undefined target for snapping
 #: ../src/display/snap-indicator.cpp:72 ../src/display/snap-indicator.cpp:75
-#: ../src/display/snap-indicator.cpp:179 ../src/display/snap-indicator.cpp:182
+#: ../src/display/snap-indicator.cpp:180 ../src/display/snap-indicator.cpp:183
 msgid "UNDEFINED"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:78
+#: ../src/display/snap-indicator.cpp:79
 msgid "grid line"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:81
+#: ../src/display/snap-indicator.cpp:82
 msgid "grid intersection"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:84
+#: ../src/display/snap-indicator.cpp:85
 msgid "grid line (perpendicular)"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:87
+#: ../src/display/snap-indicator.cpp:88
 msgid "guide"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:90
+#: ../src/display/snap-indicator.cpp:91
 msgid "guide intersection"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:93
+#: ../src/display/snap-indicator.cpp:94
 msgid "guide origin"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:96
+#: ../src/display/snap-indicator.cpp:97
 msgid "guide (perpendicular)"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:99
+#: ../src/display/snap-indicator.cpp:100
 msgid "grid-guide intersection"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:102
+#: ../src/display/snap-indicator.cpp:103
 msgid "cusp node"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:105
+#: ../src/display/snap-indicator.cpp:106
 msgid "smooth node"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:108
+#: ../src/display/snap-indicator.cpp:109
 msgid "path"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:111
+#: ../src/display/snap-indicator.cpp:112
 msgid "path (perpendicular)"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:114
+#: ../src/display/snap-indicator.cpp:115
 msgid "path (tangential)"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:117
+#: ../src/display/snap-indicator.cpp:118
 msgid "path intersection"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:120
+#: ../src/display/snap-indicator.cpp:121
 msgid "guide-path intersection"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:123
+#: ../src/display/snap-indicator.cpp:124
 msgid "clip-path"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:126
+#: ../src/display/snap-indicator.cpp:127
 msgid "mask-path"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:129
+#: ../src/display/snap-indicator.cpp:130
 msgid "bounding box corner"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:132
+#: ../src/display/snap-indicator.cpp:133
 msgid "bounding box side"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:135
+#: ../src/display/snap-indicator.cpp:136
 msgid "page border"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:138
+#: ../src/display/snap-indicator.cpp:139
 msgid "line midpoint"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:141
+#: ../src/display/snap-indicator.cpp:142
 msgid "object midpoint"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:144
+#: ../src/display/snap-indicator.cpp:145
 msgid "object rotation center"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:147
+#: ../src/display/snap-indicator.cpp:148
 msgid "bounding box side midpoint"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:150
+#: ../src/display/snap-indicator.cpp:151
 msgid "bounding box midpoint"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:153
+#: ../src/display/snap-indicator.cpp:154
 msgid "page corner"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:156
+#: ../src/display/snap-indicator.cpp:157
 msgid "quadrant point"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:160
+#: ../src/display/snap-indicator.cpp:161
 msgid "corner"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:163
+#: ../src/display/snap-indicator.cpp:164
 msgid "text anchor"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:166
+#: ../src/display/snap-indicator.cpp:167
 msgid "text baseline"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:169
+#: ../src/display/snap-indicator.cpp:170
 msgid "constrained angle"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:172
+#: ../src/display/snap-indicator.cpp:173
 msgid "constraint"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:185
+#: ../src/display/snap-indicator.cpp:187
 msgid "Bounding box corner"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:188
+#: ../src/display/snap-indicator.cpp:190
 msgid "Bounding box midpoint"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:191
+#: ../src/display/snap-indicator.cpp:193
 msgid "Bounding box side midpoint"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:194 ../src/ui/tool/node.cpp:1319
+#: ../src/display/snap-indicator.cpp:196 ../src/ui/tool/node.cpp:1319
 msgid "Smooth node"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:197 ../src/ui/tool/node.cpp:1318
+#: ../src/display/snap-indicator.cpp:199 ../src/ui/tool/node.cpp:1318
 msgid "Cusp node"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:200
+#: ../src/display/snap-indicator.cpp:202
 msgid "Line midpoint"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:203
+#: ../src/display/snap-indicator.cpp:205
 msgid "Object midpoint"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:206
+#: ../src/display/snap-indicator.cpp:208
 msgid "Object rotation center"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:210
+#: ../src/display/snap-indicator.cpp:212
 msgid "Handle"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:213
+#: ../src/display/snap-indicator.cpp:215
 msgid "Path intersection"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:216
+#: ../src/display/snap-indicator.cpp:218
 msgid "Guide"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:219
+#: ../src/display/snap-indicator.cpp:221
 msgid "Guide origin"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:222
+#: ../src/display/snap-indicator.cpp:224
 msgid "Convex hull corner"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:225
+#: ../src/display/snap-indicator.cpp:227
 msgid "Quadrant point"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:229
+#: ../src/display/snap-indicator.cpp:231
 msgid "Corner"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:232
+#: ../src/display/snap-indicator.cpp:234
 msgid "Text anchor"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:235
+#: ../src/display/snap-indicator.cpp:237
 msgid "Multiple of grid spacing"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:266
+#: ../src/display/snap-indicator.cpp:268
 msgid " to "
 msgstr ""
 
@@ -12473,84 +12473,91 @@ msgstr ""
 msgid "Fit Page to Selection or Drawing"
 msgstr ""
 
-#: ../src/selection-describer.cpp:113
+#: ../src/selection-describer.cpp:128
 msgid "root"
 msgstr ""
 
-#: ../src/selection-describer.cpp:115 ../src/widgets/ege-paint-def.cpp:67
-#: ../src/widgets/ege-paint-def.cpp:91
+#: ../src/selection-describer.cpp:130 ../src/widgets/ege-paint-def.cpp:66
+#: ../src/widgets/ege-paint-def.cpp:90
 msgid "none"
 msgstr ""
 
-#: ../src/selection-describer.cpp:127
+#: ../src/selection-describer.cpp:142
 #, c-format
 msgid "layer <b>%s</b>"
 msgstr ""
 
-#: ../src/selection-describer.cpp:129
+#: ../src/selection-describer.cpp:144
 #, c-format
 msgid "layer <b><i>%s</i></b>"
 msgstr ""
 
-#: ../src/selection-describer.cpp:140
+#: ../src/selection-describer.cpp:155
 #, c-format
 msgid "<i>%s</i>"
 msgstr ""
 
-#: ../src/selection-describer.cpp:150
+#: ../src/selection-describer.cpp:165
 #, c-format
 msgid " in %s"
 msgstr ""
 
-#: ../src/selection-describer.cpp:152
+#: ../src/selection-describer.cpp:167
 msgid " hidden in definitions"
 msgstr ""
 
-#: ../src/selection-describer.cpp:154
+#: ../src/selection-describer.cpp:169
 #, c-format
 msgid " in group %s (%s)"
 msgstr ""
 
-#: ../src/selection-describer.cpp:156
+#: ../src/selection-describer.cpp:171
 #, c-format
 msgid " in unnamed group (%s)"
 msgstr ""
 
-#: ../src/selection-describer.cpp:158
+#: ../src/selection-describer.cpp:173
 #, c-format
 msgid " in <b>%i</b> parent (%s)"
 msgid_plural " in <b>%i</b> parents (%s)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/selection-describer.cpp:161
+#: ../src/selection-describer.cpp:176
 #, c-format
 msgid " in <b>%i</b> layer"
 msgid_plural " in <b>%i</b> layers"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/selection-describer.cpp:172
+#: ../src/selection-describer.cpp:187
 msgid "Convert symbol to group to edit"
 msgstr ""
 
-#: ../src/selection-describer.cpp:176
+#: ../src/selection-describer.cpp:191
 msgid "Remove from symbols tray to edit symbol"
 msgstr ""
 
-#: ../src/selection-describer.cpp:180
+#: ../src/selection-describer.cpp:195
 msgid "Use <b>Shift+D</b> to look up original"
 msgstr ""
 
-#: ../src/selection-describer.cpp:184
+#: ../src/selection-describer.cpp:199
 msgid "Use <b>Shift+D</b> to look up path"
 msgstr ""
 
-#: ../src/selection-describer.cpp:188
+#: ../src/selection-describer.cpp:203
 msgid "Use <b>Shift+D</b> to look up frame"
 msgstr ""
 
-#: ../src/selection-describer.cpp:207
+#: ../src/selection-describer.cpp:215
+#, c-format
+msgid "<b>%i</b> objects selected of type %s"
+msgid_plural "<b>%i</b> objects selected of types %s"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/selection-describer.cpp:225
 #, c-format
 msgid "; <i>%d filtered object</i> "
 msgid_plural "; <i>%d filtered objects</i> "
@@ -12603,31 +12610,31 @@ msgstr ""
 msgid "Reset center"
 msgstr ""
 
-#: ../src/seltrans.cpp:955 ../src/seltrans.cpp:1052
+#: ../src/seltrans.cpp:961 ../src/seltrans.cpp:1066
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1184
+#: ../src/seltrans.cpp:1198
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1259
+#: ../src/seltrans.cpp:1273
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
-#: ../src/seltrans.cpp:1296
+#: ../src/seltrans.cpp:1310
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr ""
 
-#: ../src/seltrans.cpp:1450
+#: ../src/seltrans.cpp:1464
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -26241,7 +26248,7 @@ msgstr ""
 msgid "Assign"
 msgstr ""
 
-#: ../src/widgets/ege-paint-def.cpp:88
+#: ../src/widgets/ege-paint-def.cpp:87
 msgid "remove"
 msgstr ""
 
