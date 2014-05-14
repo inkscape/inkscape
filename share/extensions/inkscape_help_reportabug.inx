@@ -3,7 +3,7 @@
     <_name>Report a Bug</_name>
     <id>org.inkscape.help.reportabug</id>
 	<dependency type="executable" location="extensions">launch_webbrowser.py</dependency>
-	<param name="url" gui-hidden="true" type="string">http://inkscape.org/report_bugs.php</param>
+	<param name="url" gui-hidden="true" type="string">http://inkscape.org/contribute/report-bugs/</param>
     <effect needs-document="false">
 		<object-type>all</object-type>
 		<effects-menu hidden="true"/>
