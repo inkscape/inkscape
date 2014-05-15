@@ -6920,7 +6920,6 @@ public:
         String dest            = parent.eval(destOpt, ".");
         String ccflags         = parent.eval(flagsOpt, "");
         String cxxflags        = parent.eval(cxxflagsOpt, "");
-        String flags           = ccflags;
         String defines         = parent.eval(definesOpt, "");
         String includes        = parent.eval(includesOpt, "");
         bool continueOnError   = parent.evalBool(continueOnErrorOpt, true);
@@ -7027,6 +7026,7 @@ public:
             //## Select command
             String sfx = dep.suffix;
             String command = ccCommand;
+            String flags = ccflags;
             if (sfx == "cpp" || sfx == "cxx" || sfx == "c++" ||
                  sfx == "cc" || sfx == "CC")
             {
