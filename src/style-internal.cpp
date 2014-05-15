@@ -648,7 +648,8 @@ SPIString::read( gchar const *str ) {
 
     if( !str ) return;
 
-    g_free(value);
+    // libcroco puts quotes around some strings... remove
+    gchar *str_unquoted = attribute_unquote(str);
 
     if (!strcmp(str, "inherit")) {
         set = true;
@@ -657,8 +658,10 @@ SPIString::read( gchar const *str ) {
     } else {
         set = true;
         inherit = false;
-        value = g_strdup(str);
+        value = g_strdup(str_unquoted);
     }
+
+    g_free( str_unquoted );
 }
 
 
