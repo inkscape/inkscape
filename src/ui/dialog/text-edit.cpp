@@ -404,12 +404,12 @@ void TextEdit::setPreviewText (Glib::ustring font_spec, Glib::ustring phrase)
     double pt_size = Inkscape::Util::Quantity::convert(sp_style_css_size_units_to_px(sp_font_selector_get_size(fsel), unit), "px", "pt");
 
     // Pango font size is in 1024ths of a point
-    // C++11: Glib::ustring size = std::to_string( pt_size * PANGO_SCALE );
+    // C++11: Glib::ustring size = std::to_string( int(pt_size * PANGO_SCALE) );
     std::ostringstream size_st;
-    size_st << pt_size * PANGO_SCALE;
+    size_st << int(pt_size * PANGO_SCALE); // Markup code expects integers
 
-    Glib::ustring markup = "<span font=\"" + font_spec +
-        "\" size=\"" + size_st.str() + "\">" + phrase_escaped + "</span>";
+    Glib::ustring markup = "<span font=\'" + font_spec +
+        "\' size=\'" + size_st.str() + "\'>" + phrase_escaped + "</span>";
 
     preview_label.set_markup(markup.c_str());
 }
