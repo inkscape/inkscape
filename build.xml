@@ -356,8 +356,7 @@
             <file name="extension/param"/>
         </excludeinc>
         <flags>
-            <!-- -std=gnu++0x -DCPP11  -Wno-unused-local-typedefs -->
-            -Wall -Wformat -Werror=format-security -Wextra -Wpointer-arith -Wcast-align -Wsign-compare -Woverloaded-virtual -Wswitch
+            -Wall -Wformat -Werror=format-security -Wextra -Wpointer-arith -Wcast-align -Wsign-compare -Wswitch
             -Werror=return-type
             <!-- - ->  -Werror <!-- -->
             <!-- A list of warnings that should not error *yet*, any help is welcome in fixing the code generating these warnings! -->
@@ -370,6 +369,10 @@
             -mms-bitfields
             -fopenmp
         </flags>
+        <cxxflags>
+            <!-- -std=gnu++0x -DCPP11  -Wno-unused-local-typedefs -->
+            -Woverloaded-virtual 
+        </cxxflags>
         <defines>
             -DVERSION=\"${version}\"
             -DHAVE_CONFIG_H

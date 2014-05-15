@@ -6918,7 +6918,9 @@ public:
         String cxxCommand      = parent.eval(cxxCommandOpt, "g++");
         String source          = parent.eval(sourceOpt, ".");
         String dest            = parent.eval(destOpt, ".");
-        String flags           = parent.eval(flagsOpt, "");
+        String ccflags         = parent.eval(flagsOpt, "");
+        String cxxflags        = parent.eval(cxxflagsOpt, "");
+        String flags           = ccflags;
         String defines         = parent.eval(definesOpt, "");
         String includes        = parent.eval(includesOpt, "");
         bool continueOnError   = parent.evalBool(continueOnErrorOpt, true);
@@ -7027,7 +7029,10 @@ public:
             String command = ccCommand;
             if (sfx == "cpp" || sfx == "cxx" || sfx == "c++" ||
                  sfx == "cc" || sfx == "CC")
+            {
                 command = cxxCommand;
+                flags += " " + cxxflags;
+            }
  
             //## Make paths
             String destPath = dest;
@@ -7203,6 +7208,12 @@ public:
                     return false;
                 flagsOpt = strip(flagsOpt);
                 }
+            else if (tagName == "cxxflags")
+                {
+                if (!parent.getValue(child, cxxflagsOpt))
+                    return false;
+                cxxflagsOpt = strip(cxxflagsOpt);
+                }
             else if (tagName == "includes")
                 {
                 if (!parent.getValue(child, includesOpt))
@@ -7239,6 +7250,7 @@ protected:
     String   sourceOpt;
     String   destOpt;
     String   flagsOpt;
+    String   cxxflagsOpt;
     String   definesOpt;
     String   includesOpt;
     String   continueOnErrorOpt;
