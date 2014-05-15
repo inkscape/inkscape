@@ -442,7 +442,7 @@ private:
             prefs->addObserver(*this);
         }
       private:
-        void notify(Inkscape::Preferences::Entry const &val) {
+        void notify(Inkscape::Preferences::Entry const &) {
             _desktop->redrawDesktop();
         }
         SPDesktop *_desktop;
