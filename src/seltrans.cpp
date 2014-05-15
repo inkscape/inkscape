@@ -929,7 +929,6 @@ gboolean Inkscape::SelTrans::scaleRequest(Geom::Point &pt, guint state)
             sn = m.freeSnapScale(_snap_points, _point, geom_scale, _origin_for_specpoints);
         }
 
-        std::cout << bb.getSnapped() << " | " << sn.getSnapped() << std::endl;
         // These lines below are duplicated in stretchRequest
         if (bb.getSnapped() || sn.getSnapped()) {
             if (bb.getSnapped()) {
