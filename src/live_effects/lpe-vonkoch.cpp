@@ -4,11 +4,10 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <cstdio>
+#include "live_effects/lpe-vonkoch.h"
 
 #include <glibmm/i18n.h>
 
-#include "live_effects/lpe-vonkoch.h"
 #include <2geom/transforms.h>
 
 //using std::vector;
