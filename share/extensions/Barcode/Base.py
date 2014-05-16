@@ -40,6 +40,7 @@ class Barcode(object):
         self.document = param.get('document', None)
         self.x        = int(param.get('x', 0))
         self.y        = int(param.get('y', 0))
+        self.scale    = param.get('scale', 1)
         self.height   = param.get('height', 30)
         self.label    = param.get('text', None)
         self.string   = self.encode( self.label )
@@ -82,7 +83,7 @@ class Barcode(object):
         barcode = etree.Element('{%s}%s' % (svg_uri,'g'))
         barcode.set('id', name)
         barcode.set('style', 'fill: black;')
-        barcode.set('transform', 'translate(%d,%d)' % (self.x, self.y))
+        barcode.set('transform', 'translate(%d,%d) scale(%f)' % (self.x, self.y, self.scale))
 
         bar_offset = 0
         bar_id     = 1
