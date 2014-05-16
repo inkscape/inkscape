@@ -5,17 +5,17 @@
   <dependency type="executable" location="extensions">inkex.py</dependency>
   <dependency type="executable" location="extensions">render_barcode.py</dependency>
   <param name="type" type="enum" _gui-text="Barcode Type:">
-    <item value="ean5">EAN5</item>
-    <item value="ean8">EAN8</item>
-    <item value="ean13">EAN13</item>
-    <item value="upca">UPC-A</item>
-    <item value="upce">UPC-E</item>
-    <item value="code25i">Code25 Interleaved 2 of 5</item>
-    <item value="code39">Code39</item>
-    <item value="code39ext">Code39 Extended</item>
-    <item value="code93">Code93</item>
-    <item value="code128">Code128</item>
-    <item value="rm4scc">RM4CC / RM4SCC</item>
+    <item value="Ean5">EAN5</item>
+    <item value="Ean8">EAN8</item>
+    <item value="Ean13">EAN13</item>
+    <item value="Upca">UPC-A</item>
+    <item value="Upce">UPC-E</item>
+    <item value="Code25i">Code25 Interleaved 2 of 5</item>
+    <item value="Code39">Code39</item>
+    <item value="Code39Ext">Code39 Extended</item>
+    <item value="Code93">Code93</item>
+    <item value="Code128">Code128</item>
+    <item value="Rm4scc">RM4CC / RM4SCC</item>
   </param>
   <param name="text" type="string" _gui-text="Barcode Data:"></param>
   <param name="height" type="int" _gui-text="Bar Height:" min="20" max="80">30</param>

@@ -26,41 +26,52 @@ import sys
 from Barcode import getBarcode
 
 class InsertBarcode(inkex.Effect):
-	def __init__(self):
-		inkex.Effect.__init__(self)
-		self.OptionParser.add_option("-l", "--height",
-						action="store", type="int",
-						dest="height", default=30,
-						help="Barcode Height")
-		self.OptionParser.add_option("-t", "--type",
-						action="store", type="string",
-						dest="type", default='',
-						help="Barcode Type")
-		self.OptionParser.add_option("-d", "--text",
-						action="store", type="string",
-						dest="text", default='',
-						help="Text to print on barcode")
+    def __init__(self):
+        inkex.Effect.__init__(self)
+        self.OptionParser.add_option("-l", "--height",
+                        action="store", type="int",
+                        dest="height", default=30,
+                        help="Barcode Height")
+        self.OptionParser.add_option("-t", "--type",
+                        action="store", type="string",
+                        dest="type", default='',
+                        help="Barcode Type")
+        self.OptionParser.add_option("-d", "--text",
+                        action="store", type="string",
+                        dest="text", default='',
+                        help="Text to print on barcode")
 
-	def effect(self):
-		x, y = self.view_center
-		bargen = getBarcode( self.options.type, {
-			'text'     : self.options.text,
-			'height'   : self.options.height,
-			'document' : self.document,
-			'x'        : x,
-			'y'        : y,
-			'scale'    : self.unittouu('1px'),
-		} )
-		if bargen is not None:
-			barcode = bargen.generate()
-			if barcode is not None:
-				self.current_layer.append(barcode)
-			else:
-				sys.stderr.write("No barcode was generated\n")
-		else:
-			sys.stderr.write("Unable to make barcode with: " + str(self.options) + "\n")
+    def effect(self):
+        x, y = self.view_center
+        bargen = getBarcode( self.options.type,
+            text=self.options.text,
+            height=self.options.height,
+            document=self.document,
+            x=x, y=y,
+            scale=self.unittouu('1px'),
+        )
+        if bargen is not None:
+            barcode = bargen.generate()
+            if barcode is not None:
+                self.current_layer.append(barcode)
+            else:
+                sys.stderr.write("No barcode was generated\n")
+        else:
+            sys.stderr.write("Unable to make barcode with: " + str(self.options) + "\n")
+
+def test_barcode():
+    bargen = getBarcode("Ean13", text="123456789101")
+    if bargen is not None:
+        barcode = bargen.generate()
+    if barcode:
+        print inkex.etree.tostring(barcode, pretty_print=True)
+
 
 if __name__ == '__main__':
-        e = InsertBarcode()
-        e.affect()
+    if len(sys.argv) == 1:
+        # Debug mode without inkex
+        test_barcode()
+        exit(0)
+    e = InsertBarcode()
+    e.affect()
 

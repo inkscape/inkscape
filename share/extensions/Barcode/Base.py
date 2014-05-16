@@ -34,12 +34,12 @@ class Barcode(object):
         """Cause an error to be reported"""
         sys.stderr.write(
             "Error encoding '%s' as %s barcode: %s\n" % (bar, self.name, msg))
+        return "ERROR"
 
     def __init__(self, param={}):
         self.document = param.get('document', None)
         self.x        = int(param.get('x', 0))
         self.y        = int(param.get('y', 0))
-        self.scale    = param.get('scale', 1)
         self.height   = param.get('height', 30)
         self.label    = param.get('text', None)
         self.string   = self.encode( self.label )
@@ -50,35 +50,39 @@ class Barcode(object):
         self.width  = len(self.string)
         self.data   = self.graphicalArray(self.string)
 
-    def generate(self):
-        """Generate the actual svg from the coding"""
-        svg_uri = u'http://www.w3.org/2000/svg'
-        if not self.string or not self.data:
-            return
+    def get_id(self):
+        """Get the next useful id"""
         if not self.document:
-            return self.error("No document defined")
-        
-        data = self.data
-        # Collect document ids
+            return "barcode"
         doc_ids = {}
         docIdNodes = self.document.xpath('//@id')
         for m in docIdNodes:
             doc_ids[m] = 1
 
-        # We don't have svg documents so lets do something raw:
         name  = 'barcode'
 
-        # Make sure that the id/name is inique
         index = 0
         while (doc_ids.has_key(name)):
-            name = 'barcode' + str(index)
-            index = index + 1
+            index += 1
+            name = 'barcode%d' % index
+        return name
+
+    def generate(self):
+        """Generate the actual svg from the coding"""
+        svg_uri = u'http://www.w3.org/2000/svg'
+        if self.string == 'ERROR':
+            return
+        if not self.string or not self.data:
+            raise ValueError("No string specified for barcode.")
+
+        data = self.data
+        name = self.get_id()
 
         # use an svg group element to contain the barcode
         barcode = etree.Element('{%s}%s' % (svg_uri,'g'))
         barcode.set('id', name)
         barcode.set('style', 'fill: black;')
-        barcode.set('transform', 'translate(%d,%d) scale(%f)' % (self.x, self.y, self.scale))
+        barcode.set('transform', 'translate(%d,%d)' % (self.x, self.y))
 
         bar_offset = 0
         bar_id     = 1

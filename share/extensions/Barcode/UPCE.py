@@ -27,7 +27,7 @@ import sys
 FAMS  = [ '111000', '110100', '110010', '110001', '101100',
           '100110', '100011', '101010', '101001', '100101' ]
 
-class Object(EanBarcode):
+class Upce(EanBarcode):
     """Generate EAN6/UPC-E barcode generator"""
     name    = 'upce'
     lengths = [ 6, 11 ]
@@ -56,7 +56,7 @@ class Object(EanBarcode):
         # All UPC-E Numbers use number system 0
         if number[0] != '0' or len(number)!=11:
             # If not then the code is invalid
-            return None
+            raise ValueError("Invalid UPC Number")
 
         # Most of the conversions deal
         # with the specific code parts
@@ -83,7 +83,7 @@ class Object(EanBarcode):
             return manufacturer + product[4]
         else:
             # Invalid UPC-A Numbe
-            return None
+            raise ValueError("Invalid UPC Number")
 
     def ConvertEtoA(self, number):
         """Convert UPC-E to UPC-A by padding with zeros"""

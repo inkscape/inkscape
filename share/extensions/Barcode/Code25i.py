@@ -34,14 +34,13 @@ encoding = {
     '7' : '00011',
     '8' : '10010',
     '9' : '01010',
-    
 }
 
 # Start and stop code are already encoded into white (0) and black(1) bars
 start_code = '1010'
 stop_code = '1101'
 
-class Object(Barcode):
+class Code25i(Barcode):
     # Convert a text into string binary of black and white markers
     def encode(self, number):
         self.label = number

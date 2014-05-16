@@ -68,7 +68,7 @@ encoding = {
     ' ' : '011000100',
 }
 
-class Object(Barcode):
+class Code39(Barcode):
     # Convert a text into string binary of black and white markers
     def encode(self, text):
         text       = text.upper()
@@ -93,10 +93,7 @@ class Object(Barcode):
                 encoded = encoded + colour + colour
             else:
                 encoded = encoded + colour
-            if colour == '1':
-                colour = '0'
-            else:
-                colour = '1'
+            colour = colour == '1' and '0' or '1'
 
         self.inclabel = text
         return encoded;

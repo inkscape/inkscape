@@ -65,7 +65,7 @@ map = {
 check = ['ZUVWXY','501234','B6789A','HCDEFG','NIJKLM','TOPQRS']
 (BAR_TRACK, BAR_DOWN, BAR_UP, BAR_FULL, BAR_NONE, WHITE_SPACE) = range(6)
 
-class Object(Barcode):
+class Rm4scc(Barcode):
     def encode(self, text):
         result = ''
 

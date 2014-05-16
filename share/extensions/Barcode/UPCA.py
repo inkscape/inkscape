@@ -21,7 +21,7 @@ Python barcode renderer for UPCA barcodes. Designed for use with Inkscape.
 
 from BaseEan import EanBarcode
 
-class Object(EanBarcode):
+class Upca(EanBarcode):
     """Provides a renderer for EAN12 aka UPC-A Barcodes"""
     name    = 'upca'
     lengths = [ 11 ]

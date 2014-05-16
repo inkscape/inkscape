@@ -19,7 +19,7 @@
 Python barcode renderer for Code39 Extended barcodes. Designed for Inkscape.
 """
 
-import Code39
+from Code39 import Code39
 
 encode = list('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
 
@@ -46,7 +46,7 @@ mapB = getMap(range(1, 26)) # $
 mapC = getMap(range(33, 58)) # /
 mapD = getMap(range(97, 122)) # +
 
-class Object(Code39.Object):
+class Code39Ext(Code39):
     def encode(self, text):
         # We are only going to extend the Code39 barcodes
         result = ''
@@ -61,5 +61,5 @@ class Object(Code39.Object):
                 char = '+' + mapD[char]
             result = result + char
 
-        return Code39.Object.encode(self, result);
+        return Code39.encode(self, result);
 
