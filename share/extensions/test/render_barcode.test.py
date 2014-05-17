@@ -14,11 +14,6 @@ sys.path.append('..')
 
 from render_barcode import *
 
-import Barcode.Ean5
-import Barcode.Ean8
-import Barcode.Ean13
-import Barcode.Upca
-import Barcode.Upce
 
 digits = [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' ]
 
@@ -35,39 +30,40 @@ class InsertBarcodeBasicTest(unittest.TestCase):
       self.data[btype].append( [ text, code ] )
     fhl.close()
 
-  def test_run_without_parameters(self):
-    args = [ 'minimal-blank.svg' ]
-    e = InsertBarcode()
-    e.affect( args, False )
+  #def test_run_without_parameters(self):
+  #  args = [ 'minimal-blank.svg', '-t', 'Ean5' ]
+  #  e = InsertBarcode()
+  #  e.affect( args, False )
     #self.assertEqual( e.something, 'some value', 'A commentary about that.' )
 
   def test_render_barcode_ian5(self):
     """Barcode IAN5"""
-    self.barcode_test( 'ean5', Barcode.Ean5 )
+    self.barcode_test( 'Ean5' )
 
   def test_render_barcode_ian8(self):
     """Barcode IAN5"""
-    self.barcode_test( 'ean8', Barcode.Ean8 )
+    self.barcode_test( 'Ean8' )
 
   def test_render_barcode_ian13(self):
     """Barcode IAN5"""
-    self.barcode_test( 'ean13', Barcode.Ean13 )
+    self.barcode_test( 'Ean13' )
 
   def test_render_barcode_upca(self):
     """Barcode IAN5"""
-    self.barcode_test( 'upca', Barcode.Upca )
+    self.barcode_test( 'Upca' )
 
   def test_render_barcode_upce(self):
     """Barcode UPCE"""
-    self.barcode_test( 'upce', Barcode.Upce )
+    self.barcode_test( 'Upce' )
 
-  def barcode_test(self, name, module):
+  def barcode_test(self, name):
     """Base module for all barcode testing"""
-    for datum in self.data[name]:
+    for datum in self.data[name.lower()]:
       (text, code) = datum
       if not text or not code:
         continue
-      code2 = module.Object( {'text': text} ).encode(text)
+      coder = getBarcode( name, text=text)
+      code2 = coder.encode( text )
       self.assertEqual(code, code2)
 
 
