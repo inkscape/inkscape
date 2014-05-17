@@ -186,8 +186,9 @@
         #define HAVE_POPPLER                  1
         #define HAVE_POPPLER_GLIB             1
         #define HAVE_POPPLER_CAIRO            1
-        #define POPPLER_NEW_ERRORAPI          1
+        #define POPPLER_NEW_ERRORAPI          1 <!-- poppler changed the error api >= 0.20.0 -->
         #define POPPLER_NEW_GFXPATCH          1
+        #define POPPLER_NEW_GFXFONT           1 <!-- poppler changed the api for 0.8.3 -->
 
         /* do we want bitmap manipulation? */
         #define WITH_IMAGE_MAGICK             1
@@ -197,28 +198,28 @@
         #define HAVE_JPEG                     1
 
         /* Allow reading WordPerfect? */
-        //#define WITH_LIBWPG                   1
+        #define WITH_LIBWPG                   1
 
         /* Default  to libwpg 0.2.x */
-        //#define WITH_LIBWPG02                 1
+        #define WITH_LIBWPG02                 1
 
         /* Visio import filter */
-        //#define WITH_LIBVISIO                 1
+        #define WITH_LIBVISIO                 1
 
         /* Corel Draw import filter */
-        //#define WITH_LIBCDR                   1
+        #define WITH_LIBCDR                   1
 
         /* Do we support SVG Fonts? */
         #define ENABLE_SVG_FONTS              1
 
         /* Do we want experimental, unsupported, unguaranteed, etc., LivePathEffects enabled? */
-        //#define LPE_ENABLE_TEST_EFFECTS    1
+        #define LPE_ENABLE_TEST_EFFECTS    1
 
         /* Do we want experimental, unsupported, unguaranteed, etc., SVG2 features enabled? */
-        //#define WITH_SVG2                  1
-        //#define WITH_CSSCOMPOSITE          1
-        //#define WITH_CSSBLEND              1
-        //#define WITH_MESH                  1
+        #define WITH_SVG2                  1
+        #define WITH_CSSCOMPOSITE          1
+        #define WITH_CSSBLEND              1
+        #define WITH_MESH                  1
 
         //#define HAVE_ASPELL                   1
 
@@ -384,9 +385,6 @@
             -D_INTL_REDIRECT_INLINE
             -DHAVE_SSL
             -DRELAYTOOL_SSL="static const int libssl_is_present=1; static int __attribute__((unused)) libssl_symbol_is_present(char *s){ return 1; }" <!-- inkboard -->
-            -DPOPPLER_NEW_GFXFONT <!-- poppler changed the api for 0.8.3 -->
-	    <!-- uncomment below for future devlibs, if poppler >= 0.20.0 -->
-	    <!-- -DPOPPLER_NEW_ERRORAPI --> <!-- poppler changed the error api for 0.20.0 -->
             <!-- GTK+3 migration -->
             -DGLIBMM_DISABLE_DEPRECATED
             -DG_DISABLE_DEPRECATED
@@ -412,7 +410,7 @@
             ${pcc.cairo}
             ${pcc.poppler}
             -I${devlibs}/include/gc
-            <!-- ${pcc.libwpg-0.2} ${pcc.libvisio-0.0} ${pcc.libcdr-0.0} -->
+            ${pcc.libwpg-0.2} ${pcc.libvisio-0.0} ${pcc.libcdr-0.0}
             -I${cxxtest}
             <!-- PERL -->
             <!-- -Wno-comment -I${devlibs}/perl/lib/CORE -->
@@ -488,7 +486,7 @@
            ${devlibs}/bin/libxslt-1.dll
            ${devlibs}/bin/libexslt-0.dll
            ${pcl.cairo} ${pcl.cairomm-1.0}
-           <!-- ${pcl.libwpg-0.2} ${pcl.libvisio-0.0} ${pcl.libcdr-0.0} -->
+           ${pcl.libwpg-0.2} ${pcl.libvisio-0.0} ${pcl.libcdr-0.0}
            ${pcl.glibmm-2.4}
            ${pcl.gtk+-2.0}
            ${pcl.gdkmm-2.4}
@@ -576,7 +574,7 @@
            ${devlibs}/bin/libxslt-1.dll
            ${devlibs}/bin/libexslt-0.dll
            ${pcl.cairo} ${pcl.cairomm-1.0}
-           <!-- ${pcl.libwpg-0.2} ${pcl.libvisio-0.0} ${pcl.libcdr-0.0} -->
+           ${pcl.libwpg-0.2} ${pcl.libvisio-0.0} ${pcl.libcdr-0.0}
            ${pcl.glibmm-2.4}
            ${pcl.gtk+-2.0}
            ${pcl.gdkmm-2.4}
@@ -632,7 +630,7 @@
            ${devlibs}/bin/libxslt-1.dll
            ${devlibs}/bin/libexslt-0.dll
            ${pcl.cairo} ${pcl.cairomm-1.0}
-           <!-- ${pcl.libwpg-0.2} ${pcl.libvisio-0.0} ${pcl.libcdr-0.0} -->
+           ${pcl.libwpg-0.2} ${pcl.libvisio-0.0} ${pcl.libcdr-0.0}
            -liconv
            ${pcl.Magick++}
            ${pcl.fontconfig} ${pcl.freetype2}
@@ -702,20 +700,17 @@
     <copy todir="${dist}" file="${devlibs}/bin/libxml2-2.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libxslt-1.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libexslt-0.dll"/>
-<!--
-    <copy todir="${dist}" file="${devlibs}/bin/libexpat-1.dll"/>
-    <!--
+    <!-- <copy todir="${dist}" file="${devlibs}/bin/libexpat-1.dll"/> -->
+
     <copy todir="${dist}" file="${devlibs}/bin/libwpg-0.2.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libwpd-0.9.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libwpd-stream-0.9.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libvisio-0.0.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libcdr-0.0.dll"/>
-  -->
-  <!--
-    <copy todir="${dist}" file="${devlibs}/bin/icui18n50.dll"/>
-    <copy todir="${dist}" file="${devlibs}/bin/icudata50.dll"/>
-    <copy todir="${dist}" file="${devlibs}/bin/icuuc50.dll"/>
-  -->
+    <copy todir="${dist}" file="${devlibs}/bin/icuin53.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/icudt53.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/icuuc53.dll"/>
+
     <copy todir="${dist}" file="${devlibs}/bin/libjpeg-9.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libpng16-16.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libtiff-5.dll"/>
