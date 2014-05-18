@@ -8,11 +8,14 @@
 #
 #  This file is part of Scour, http://www.codedread.com/scour/
 #
-#   Licensed under the Apache License, Version 2.0 (the "License");
-#   you may not use this file except in compliance with the License.
-#   You may obtain a copy of the License at
+#   This library is free software; you can redistribute it and/or modify
+#   it either under the terms of the Apache License, Version 2.0, or, at
+#   your option, under the terms and conditions of the GNU General
+#   Public License, Version 2 or newer as published by the Free Software
+#   Foundation.  You may obtain a copy of these Licenses at:
 #
 #       http://www.apache.org/licenses/LICENSE-2.0
+#       https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 #   Unless required by applicable law or agreed to in writing, software
 #   distributed under the License is distributed on an "AS IS" BASIS,
