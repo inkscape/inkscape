@@ -183,6 +183,7 @@ CrossingSet reverse_ta(CrossingSet const &cr, unsigned split, std::vector<double
 CrossingSet reverse_tb(CrossingSet const &cr, unsigned split, std::vector<double> max);
 
 void clean(Crossings &cr_a, Crossings &cr_b);
+void delete_duplicates(Crossings &crs);
 
 }
 

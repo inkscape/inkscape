@@ -154,7 +154,6 @@ Crossings reverse_tb(Crossings const &cr, unsigned split, std::vector<double> ma
     Crossings ret;
     for(Crossings::const_iterator i = cr.begin(); i != cr.end(); ++i) {
         double mx = max[i->b - split];
-        std::cout << i->b << "\n";
         ret.push_back(Crossing(i->ta, i->tb > mx+0.01 ? (1 - (i->tb - mx) + mx) : mx - i->tb,
                                !i->dir));
     }
@@ -179,6 +178,25 @@ CrossingSet reverse_tb(CrossingSet const &cr, unsigned split, std::vector<double
         ret.push_back(res);
     }
     return ret;
+}
+
+// Delete any duplicates in a vector of crossings
+// A crossing is considered to be a duplicate when it has both t_a and t_b near to another crossing's t_a and t_b
+// For example, duplicates will be found when calculating the intersections of a linesegment with a polygon, if the
+// endpoint of that line coincides with a cusp node of the polygon. In that case, an intersection will be found of
+// the linesegment with each of the polygon's linesegments extending from the cusp node (i.e. two intersections)
+void delete_duplicates(Crossings &crs) {
+    Crossings::reverse_iterator rit = crs.rbegin();
+
+    for (rit = crs.rbegin(); rit!= crs.rend(); ++rit) {
+        Crossings::reverse_iterator rit2 = rit;
+        while (++rit2 != crs.rend()) {
+            if (Geom::are_near((*rit).ta, (*rit2).ta) && Geom::are_near((*rit).tb, (*rit2).tb)) {
+                crs.erase((rit + 1).base()); // This +1 and .base() construction is needed to convert to a regular iterator
+                break; // out of while loop, and continue with next iteration of for loop
+            }
+        }
+    }
 }
 
 void clean(Crossings &/*cr_a*/, Crossings &/*cr_b*/) {

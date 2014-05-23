@@ -164,20 +164,35 @@ void append(T &a, T const &b) {
 bool
 linear_intersect(Point A0, Point A1, Point B0, Point B1,
                  double &tA, double &tB, double &det) {
-    // kramers rule as cross products
+    bool both_lines_non_zero = (!are_near(A0, A1)) && (!are_near(B0, B1));
+
+    // Cramer's rule as cross products
     Point Ad = A1 - A0,
           Bd = B1 - B0,
            d = B0 - A0;
     det = cross(Ad, Bd);
-    if( 1.0 + det == 1.0 )
-        return false;
-    else
-    {
-        double detinv = 1.0 / det;
-        tA = cross(d, Bd) * detinv;
-        tB = cross(d, Ad) * detinv;
-        return tA >= 0. && tA <= 1. && tB >= 0. && tB <= 1.;
+
+    double det_rel = det; // Calculate the determinant of the normalized vectors
+    if (both_lines_non_zero) {
+        det_rel /= Ad.length();
+        det_rel /= Bd.length();
     }
+
+    if( fabs(det_rel) < 1e-12 ) { // If the cross product is NEARLY zero,
+        // Then one of the linesegments might have length zero
+        if (both_lines_non_zero) {
+            // If that's not the case, then we must have either:
+            // - parallel lines, with no intersections, or
+            // - coincident lines, with an infinite number of intersections
+            // Either is quite useless, so we'll just bail out
+            return false;
+        } // Else, one of the linesegments is zero, and we might still be able to calculate a single intersection point
+    } // Else we haven't bailed out, and we'll try to calculate the intersections
+
+    double detinv = 1.0 / det;
+    tA = cross(d, Bd) * detinv;
+    tB = cross(d, Ad) * detinv;
+    return (tA >= 0.) && (tA <= 1.) && (tB >= 0.) && (tB <= 1.);
 }
 
 

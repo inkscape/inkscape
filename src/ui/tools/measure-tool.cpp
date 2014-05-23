@@ -277,21 +277,13 @@ void MeasureTool::finish() {
 //    return ret;
 //}
 
-static bool GeomPointSortPredicate(const Geom::Point& p1, const Geom::Point& p2)
+static void calculate_intersections(SPDesktop * /*desktop*/, SPItem* item, Geom::PathVector const &lineseg, SPCurve *curve, std::vector<double> &intersections)
 {
-    if (p1[Geom::Y] == p2[Geom::Y]) {
-        return p1[Geom::X] < p2[Geom::X];
-    } else {
-        return p1[Geom::Y] < p2[Geom::Y];
-    }
-}
 
-static void calculate_intersections(SPDesktop * /*desktop*/, SPItem* item, Geom::PathVector const &lineseg, SPCurve *curve, std::vector<Geom::Point> &intersections)
-{
     curve->transform(item->i2doc_affine());
-
     // Find all intersections of the control-line with this shape
     Geom::CrossingSet cs = Geom::crossings(lineseg, curve->get_pathvector());
+    Geom::delete_duplicates(cs[0]);
 
     // Reconstruct and store the points of intersection
     for (Geom::Crossings::const_iterator m = cs[0].begin(); m != cs[0].end(); ++m) {
@@ -304,10 +296,11 @@ static void calculate_intersections(SPDesktop * /*desktop*/, SPItem* item, Geom:
              item == doc->getItemAtPoint(desktop->dkey, lineseg[0].pointAt((*m).ta - eps), false, NULL)) ||
             ((*m).ta + eps < 1 &&
              item == doc->getItemAtPoint(desktop->dkey, lineseg[0].pointAt((*m).ta + eps), false, NULL)) ) {
-            intersections.push_back(intersection);
+            intersections.push_back((*m).ta);
         }
 #else
-        intersections.push_back(lineseg[0].pointAt((*m).ta));
+        intersections.push_back((*m).ta);
+
 #endif
     }
 }
@@ -441,28 +434,20 @@ bool MeasureTool::root_handler(GdkEvent* event) {
                     points.push_back(desktop->d2w(start_point + (i / NPOINTS) * (end_point - start_point)));
                 }
 
-// TODO: Felipe, why don't you simply iterate over all items, and test whether their bounding boxes intersect
-// with the measurement line, instead of interpolating? E.g. bbox_of_measurement_line.intersects(*bbox_of_item).
-// That's also how the object-snapper works, see _findCandidates() in object-snapper.cpp.
+                // TODO: Felipe, why don't you simply iterate over all items, and test whether their bounding boxes intersect
+                // with the measurement line, instead of interpolating over 800 points? E.g. bbox_of_measurement_line.intersects(*bbox_of_item).
+                // That's also how the object-snapper works, see _findCandidates() in object-snapper.cpp.
+
+                // TODO switch to a different variable name. The single letter 'l' is easy to misread.
 
                 //select elements crossed by line segment:
                 GSList *items = sp_desktop_document(desktop)->getItemsAtPoints(desktop->dkey, points);
-                std::vector<Geom::Point> intersections;
-                Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-                bool ignore_1st_and_last = prefs->getBool("/tools/measure/ignore_1st_and_last", true);
-
-                if (!ignore_1st_and_last) {
-                    intersections.push_back(desktop->dt2doc(start_point));
-                }
-
-                std::vector<LabelPlacement> placements;
-
-                // TODO switch to a different variable name. The single letter 'l' is easy to misread.
+                std::vector<double> intersection_times;
                 for (GSList *l = items; l != NULL; l = l->next) {
                     SPItem *item = static_cast<SPItem*>(l->data);
 
                     if (SP_IS_SHAPE(item)) {
-                       calculate_intersections(desktop, item, lineseg, SP_SHAPE(item)->getCurve(), intersections);
+                       calculate_intersections(desktop, item, lineseg, SP_SHAPE(item)->getCurve(), intersection_times);
                     } else {
                         if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item)) {
                             Inkscape::Text::Layout::iterator iter = te_get_layout(item)->begin();
@@ -486,7 +471,7 @@ bool MeasureTool::root_handler(GdkEvent* event) {
 
                                 curve->transform(item->i2doc_affine());
 
-                                calculate_intersections(desktop, item, lineseg, curve, intersections);
+                                calculate_intersections(desktop, item, lineseg, curve, intersection_times);
 
                                 if (iter == te_get_layout(item)->end()) {
                                     break;
@@ -496,13 +481,10 @@ bool MeasureTool::root_handler(GdkEvent* event) {
                     }
                 }
 
-                if (!ignore_1st_and_last) {
-                    intersections.push_back(desktop->dt2doc(end_point));
-                }
-
-                //sort intersections
-                if (intersections.size() > 2) {
-                    std::sort(intersections.begin(), intersections.end(), GeomPointSortPredicate);
+                Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+                if (!prefs->getBool("/tools/measure/ignore_1st_and_last", true)) {
+                    intersection_times.push_back(0);
+                    intersection_times.push_back(1);
                 }
 
                 Glib::ustring unit_name = prefs->getString("/tools/measure/unit");
@@ -516,6 +498,13 @@ bool MeasureTool::root_handler(GdkEvent* event) {
                 Geom::Point windowNormal = Geom::unit_vector(Geom::rot90(desktop->d2w(end_point - start_point)));
                 Geom::Point normal = desktop->w2d(windowNormal);
 
+                std::vector<Geom::Point> intersections;
+                std::sort(intersection_times.begin(), intersection_times.end());
+                for (std::vector<double>::iterator iter_t = intersection_times.begin(); iter_t != intersection_times.end(); iter_t++) {
+                    intersections.push_back(lineseg[0].pointAt(*iter_t));
+                }
+
+                std::vector<LabelPlacement> placements;
                 for (size_t idx = 1; idx < intersections.size(); ++idx) {
                     LabelPlacement placement;
                     placement.lengthVal = (intersections[idx] - intersections[idx - 1]).length();
