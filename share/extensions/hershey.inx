@@ -10,42 +10,40 @@
     <page name="splash" _gui-text="Render Text">
       <param name="text" type="string" _gui-text="Text:">Hershey Text for Inkscape</param>
 
-      <param name="action" type="optiongroup" appearance="minimal"
-        _gui-text="               Action: ">
-        <_option value="render">Typeset that text</_option>
-        <_option value="table" >Write glyph table</_option> 
+      <param name="action" type="enum" _gui-text="Action: ">
+        <_item value="render">Typeset that text</_item>
+        <_item value="table" >Write glyph table</_item> 
       </param>
 
-      <param name="fontface" type="optiongroup" appearance="minimal"
-        _gui-text="           Font face: ">
-        <_option value="futural">Sans 1-stroke</_option>
-        <_option value="futuram">Sans bold</_option> 
+      <param name="fontface" type="enum" _gui-text="Font face: ">
+        <_item value="futural">Sans 1-stroke</_item>
+        <_item value="futuram">Sans bold</_item> 
 
-        <_option value="timesr">Serif medium</_option>
-        <_option value="timesi">Serif medium italic</_option>
-        <_option value="timesib">Serif bold italic</_option>
-        <_option value="timesrb">Serif bold</_option>
+        <_item value="timesr">Serif medium</_item>
+        <_item value="timesi">Serif medium italic</_item>
+        <_item value="timesib">Serif bold italic</_item>
+        <_item value="timesrb">Serif bold</_item>
 
-        <_option value="scripts">Script 1-stroke</_option>
-        <_option value="cursive">Script 1-stroke (alt)</_option>
-        <_option value="scriptc">Script medium</_option>
+        <_item value="scripts">Script 1-stroke</_item>
+        <_item value="cursive">Script 1-stroke (alt)</_item>
+        <_item value="scriptc">Script medium</_item>
 
-        <_option value="gothiceng">Gothic English</_option>
-        <_option value="gothicger">Gothic German</_option>
-        <_option value="gothicita">Gothic Italian</_option>	   
+        <_item value="gothiceng">Gothic English</_item>
+        <_item value="gothicger">Gothic German</_item>
+        <_item value="gothicita">Gothic Italian</_item>	   
 
-        <_option value="greek">Greek 1-stroke</_option>
-        <_option value="timesg">Greek medium</_option>
-        <_option value="cyrillic">Cyrillic</_option>		
-        <_option value="japanese">Japanese</_option> 
+        <_item value="greek">Greek 1-stroke</_item>
+        <_item value="timesg">Greek medium</_item>
+        <_item value="cyrillic">Cyrillic</_item>		
+        <_item value="japanese">Japanese</_item> 
 
-        <_option value="astrology">Astrology</_option>
-        <_option value="mathlow">Math (lower)</_option>
-        <_option value="mathupp">Math (upper)</_option>
-        <_option value="markers">Markers</_option> 
-        <_option value="meteorology">Meteorology</_option>
-        <_option value="music">Music</_option>
-        <_option value="symbolic">Symbolic</_option>
+        <_item value="astrology">Astrology</_item>
+        <_item value="mathlow">Math (lower)</_item>
+        <_item value="mathupp">Math (upper)</_item>
+        <_item value="markers">Markers</_item> 
+        <_item value="meteorology">Meteorology</_item>
+        <_item value="music">Music</_item>
+        <_item value="symbolic">Symbolic</_item>
 
       </param>
       <_param name="emptyspace" type="description" xml:space="preserve"> 

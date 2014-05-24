@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2014-05-14 18:38+0200\n"
-"PO-Revision-Date: 2014-05-14 18:49+0100\n"
+"POT-Creation-Date: 2014-05-24 15:14+0200\n"
+"PO-Revision-Date: 2014-05-24 15:29+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "Language: \n"
@@ -1938,9 +1938,8 @@ msgid "Satiny and embossed contour effect"
 msgstr "Effet de contour satiné et bosselé"
 
 #: ../share/filters/filters.svg.h:778
-#, fuzzy
 msgid "Sharp Deco"
-msgstr "Netteté"
+msgstr "Déco net"
 
 #: ../share/filters/filters.svg.h:780
 #, fuzzy
@@ -2055,14 +2054,12 @@ msgid "Render Cyan, Magenta and Yellow channels with a colorizable background"
 msgstr "Rendu des canaux cyan, magenta et jaune avec un fond que l'on peut colorer"
 
 #: ../share/filters/filters.svg.h:834
-#, fuzzy
 msgid "Contouring table"
-msgstr "Triangle inscrit"
+msgstr "Table de contours"
 
 #: ../share/filters/filters.svg.h:836
-#, fuzzy
 msgid "Blurred multiple contours for objects"
-msgstr "Contour flou coloré, vide à l'intérieur"
+msgstr "Contours multiples flous"
 
 #: ../share/filters/filters.svg.h:838
 msgid "Posterized Blur"
@@ -2073,14 +2070,12 @@ msgid "Converts blurred contour to posterized steps"
 msgstr "Convertit un contour flou en bandes postérisées"
 
 #: ../share/filters/filters.svg.h:842
-#, fuzzy
 msgid "Contouring discrete"
-msgstr "Élément détachable de contrôle"
+msgstr "Contours discrets"
 
 #: ../share/filters/filters.svg.h:844
-#, fuzzy
 msgid "Sharp multiple contour for objects"
-msgstr "Aimanter au centre des objets"
+msgstr "Contour multiples nets"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:2
@@ -3590,10 +3585,9 @@ msgstr "Information"
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:49
 #: ../share/symbols/symbols.h:50
-#, fuzzy
 msgctxt "Symbol"
 msgid "Hotel Information"
-msgstr "Information sur l'hotel"
+msgstr "Espace information de l’hôtel"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:51
@@ -3820,7 +3814,6 @@ msgstr "Extincteur"
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:111
 #: ../share/symbols/symbols.h:112
-#, fuzzy
 msgctxt "Symbol"
 msgid "Right Arrow"
 msgstr "Flèche vers la droite"
@@ -3828,15 +3821,13 @@ msgstr "Flèche vers la droite"
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:113
 #: ../share/symbols/symbols.h:114
-#, fuzzy
 msgctxt "Symbol"
 msgid "Forward and Right Arrow"
-msgstr "Flèche vers la droite"
+msgstr "Flèche vers l'avant et la droite"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:115
 #: ../share/symbols/symbols.h:116
-#, fuzzy
 msgctxt "Symbol"
 msgid "Up Arrow"
 msgstr "Flèche vers le haut"
@@ -3844,15 +3835,13 @@ msgstr "Flèche vers le haut"
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:117
 #: ../share/symbols/symbols.h:118
-#, fuzzy
 msgctxt "Symbol"
 msgid "Forward and Left Arrow"
-msgstr "Flèche vers la gauche"
+msgstr "Flèche vers l'avant et la gauche"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:119
 #: ../share/symbols/symbols.h:120
-#, fuzzy
 msgctxt "Symbol"
 msgid "Left Arrow"
 msgstr "Flèche vers la gauche"
@@ -3860,15 +3849,13 @@ msgstr "Flèche vers la gauche"
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:121
 #: ../share/symbols/symbols.h:122
-#, fuzzy
 msgctxt "Symbol"
 msgid "Left and Down Arrow"
-msgstr "Flèche vers le bas"
+msgstr "Flèche vers le bas et la gauche"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:123
 #: ../share/symbols/symbols.h:124
-#, fuzzy
 msgctxt "Symbol"
 msgid "Down Arrow"
 msgstr "Flèche vers le bas"
@@ -3876,10 +3863,9 @@ msgstr "Flèche vers le bas"
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:125
 #: ../share/symbols/symbols.h:126
-#, fuzzy
 msgctxt "Symbol"
 msgid "Right and Down Arrow"
-msgstr "Flèche vers la droite"
+msgstr "Flèche vers la droite et le bas"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:127
@@ -3964,10 +3950,9 @@ msgstr "Éléments d'organigrammes"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:143
-#, fuzzy
 msgctxt "Symbol"
 msgid "Process"
-msgstr "Post-processeur :"
+msgstr "Processus"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:144
@@ -3983,24 +3968,21 @@ msgstr "Processus alternatif"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:146
-#, fuzzy
 msgctxt "Symbol"
 msgid "Extract"
-msgstr "Extraire"
+msgstr "Extraction"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:147
-#, fuzzy
 msgctxt "Symbol"
 msgid "Manual Input"
-msgstr "Entrée EMF"
+msgstr "Entrée manuelle"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:148
-#, fuzzy
 msgctxt "Symbol"
 msgid "Merge"
-msgstr "Fusionner"
+msgstr "Fusion"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:149
@@ -4016,10 +3998,9 @@ msgstr "Entrée/sortie de données"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:151
-#, fuzzy
 msgctxt "Symbol"
 msgid "Internal Storage"
-msgstr "Pages intérieures"
+msgstr "Stockage interne"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:152
@@ -4059,38 +4040,33 @@ msgstr "Bande perforée"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:158
-#, fuzzy
 msgctxt "Symbol"
 msgid "Terminator"
-msgstr "_Traducteurs"
+msgstr "Terminateur"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:159
-#, fuzzy
 msgctxt "Symbol"
 msgid "Thick Arrow"
-msgstr "Acrylique épaisse"
+msgstr "Flèche épaisse"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:160
-#, fuzzy
 msgctxt "Symbol"
 msgid "Transfer"
-msgstr "Transformations"
+msgstr "Transfert"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:161
-#, fuzzy
 msgctxt "Symbol"
 msgid "Decision"
-msgstr "Précision"
+msgstr "Décision"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:162
-#, fuzzy
 msgctxt "Symbol"
 msgid "Flow Arrow"
-msgstr "Région d'encadrement"
+msgstr "Flèche de flux"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:163
@@ -4126,24 +4102,21 @@ msgstr "Et logique"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:168
-#, fuzzy
 msgctxt "Symbol"
 msgid "Manual Operation"
-msgstr "Opérateurs mathématiques"
+msgstr "Opération manuelle"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:169
-#, fuzzy
 msgctxt "Symbol"
 msgid "Preparation"
-msgstr "Pré-saturation"
+msgstr "Préparation"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:170
-#, fuzzy
 msgctxt "Symbol"
 msgid "Display"
-msgstr "Ajustement de l'affichage"
+msgstr "Affichage"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:171
@@ -4153,10 +4126,9 @@ msgstr "Tri"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:172
-#, fuzzy
 msgctxt "Symbol"
 msgid "Collate"
-msgstr "Chocolat 1"
+msgstr "Collationnement"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:173
@@ -5133,7 +5105,7 @@ msgstr "Boîtier de DVD normal, 300 ppp"
 
 #: ../share/templates/templates.h:1
 msgid "Template for both-sides DVD covers."
-msgstr ""
+msgstr "Modèle pour boîtier DVD double."
 
 #: ../share/templates/templates.h:1
 msgid "DVD cover regular 300dpi"
@@ -5145,7 +5117,7 @@ msgstr "Boîtier de DVD fin, 300 ppp"
 
 #: ../share/templates/templates.h:1
 msgid "Template for both-sides DVD slim covers."
-msgstr ""
+msgstr "Modèle pour boîtier DVD fin double."
 
 #: ../share/templates/templates.h:1
 msgid "DVD cover slim 300dpi"
@@ -5157,7 +5129,7 @@ msgstr "Boîtier de DVD extra-fin, 300 ppp"
 
 #: ../share/templates/templates.h:1
 msgid "Template for both-sides DVD superslim covers."
-msgstr ""
+msgstr "Modèle pour boîtier DVD extra-fin double."
 
 #: ../share/templates/templates.h:1
 msgid "DVD cover superslim 300dpi"
@@ -5169,7 +5141,7 @@ msgstr "Boîtier de DVD ultra-fin, 300 ppp"
 
 #: ../share/templates/templates.h:1
 msgid "Template for both-sides DVD ultraslim covers."
-msgstr ""
+msgstr "Modèle pour boîtier DVD ultra-fin double."
 
 #: ../share/templates/templates.h:1
 msgid "DVD cover ultraslim 300dpi"
@@ -5181,7 +5153,7 @@ msgstr "Bureau 1024x768"
 
 #: ../share/templates/templates.h:1
 msgid "Empty desktop size sheet"
-msgstr ""
+msgstr "Modèle de fond d'écran vide"
 
 #: ../share/templates/templates.h:1
 msgid "desktop 1024x768 wallpaper"
@@ -5225,47 +5197,47 @@ msgstr "Icône 16x16"
 
 #: ../share/templates/templates.h:1
 msgid "Small 16x16 icon template."
-msgstr ""
+msgstr "Modèle de petite icône 16x16."
 
 #: ../share/templates/templates.h:1
 msgid "icon 16x16 empty"
-msgstr ""
+msgstr "icône 16x16 vide"
 
 #: ../share/templates/templates.h:1
 msgid "Icon 32x32"
-msgstr ""
+msgstr "Icône 32x32"
 
 #: ../share/templates/templates.h:1
 msgid "32x32 icon template."
-msgstr ""
+msgstr "Modèle d'icône 32x32."
 
 #: ../share/templates/templates.h:1
 msgid "icon 32x32 empty"
-msgstr ""
+msgstr "icône 32x32 vide"
 
 #: ../share/templates/templates.h:1
 msgid "Icon 48x48"
-msgstr ""
+msgstr "Icône 48x48"
 
 #: ../share/templates/templates.h:1
 msgid "48x48 icon template."
-msgstr ""
+msgstr "Modèle d'icône 48x48."
 
 #: ../share/templates/templates.h:1
 msgid "icon 48x48 empty"
-msgstr ""
+msgstr "icône 16x16 vide"
 
 #: ../share/templates/templates.h:1
 msgid "Icon 64x64"
-msgstr ""
+msgstr "Icône 64x64"
 
 #: ../share/templates/templates.h:1
 msgid "64x64 icon template."
-msgstr ""
+msgstr "Modèle d'icône 64x64."
 
 #: ../share/templates/templates.h:1
 msgid "icon 64x64 empty"
-msgstr ""
+msgstr "icône 64x64 vide"
 
 #: ../share/templates/templates.h:1
 msgid "Letter Landscape"
@@ -5277,7 +5249,7 @@ msgstr ""
 
 #: ../share/templates/templates.h:1
 msgid "letter landscape 792x612 empty"
-msgstr ""
+msgstr "letter paysage 792x612 vide"
 
 #: ../share/templates/templates.h:1
 msgid "Letter"
@@ -5289,7 +5261,7 @@ msgstr ""
 
 #: ../share/templates/templates.h:1
 msgid "letter 612x792 empty"
-msgstr ""
+msgstr "letter 612x792 vide"
 
 #: ../share/templates/templates.h:1
 msgid "No Borders"
@@ -5297,11 +5269,11 @@ msgstr "Sans bordure"
 
 #: ../share/templates/templates.h:1
 msgid "Empty sheet with no borders"
-msgstr ""
+msgstr "Feuille vide sans bordures"
 
 #: ../share/templates/templates.h:1
 msgid "no borders empty"
-msgstr ""
+msgstr "sans bordure vide"
 
 #: ../share/templates/templates.h:1
 msgid "No Layers"
@@ -5309,11 +5281,11 @@ msgstr "Sans calque"
 
 #: ../share/templates/templates.h:1
 msgid "Empty sheet with no layers"
-msgstr ""
+msgstr "Feuille vide sans calques"
 
 #: ../share/templates/templates.h:1
 msgid "no layers empty"
-msgstr ""
+msgstr "sans calque vide"
 
 #: ../share/templates/templates.h:1
 msgid "Video HDTV 1920x1080"
@@ -5361,7 +5333,7 @@ msgstr ""
 
 #: ../share/templates/templates.h:1
 msgid "web banner 468x60 empty"
-msgstr ""
+msgstr "bannière web 468x60 vide"
 
 #: ../share/templates/templates.h:1
 msgid "Web Banner 728x90"
@@ -5373,7 +5345,7 @@ msgstr ""
 
 #: ../share/templates/templates.h:1
 msgid "web banner 728x90 empty"
-msgstr ""
+msgstr "bannière web 728x90 vide"
 
 #: ../share/templates/templates.h:1
 #, fuzzy
@@ -5949,7 +5921,7 @@ msgstr " C'est le résultat d'un fichier .inx incorrect pour cette extension. Un
 
 #: ../src/extension/extension.cpp:273
 msgid "the extension is designed for Windows only."
-msgstr ""
+msgstr "l'extension ne fonctionne qu'avec Windows."
 
 #: ../src/extension/extension.cpp:278
 msgid "an ID was not defined for it."
@@ -6851,32 +6823,32 @@ msgstr "Sortie EMF"
 #: ../src/extension/internal/emf-inout.cpp:3535
 #: ../src/extension/internal/wmf-inout.cpp:3127
 msgid "Map Unicode to Symbol font"
-msgstr ""
+msgstr "Associer les caractères Unicode à la police Symbol"
 
 #: ../src/extension/internal/emf-inout.cpp:3536
 #: ../src/extension/internal/wmf-inout.cpp:3128
 msgid "Map Unicode to Wingdings"
-msgstr ""
+msgstr "Associer les caractères Unicode à la police Wingdings"
 
 #: ../src/extension/internal/emf-inout.cpp:3537
 #: ../src/extension/internal/wmf-inout.cpp:3129
 msgid "Map Unicode to Zapf Dingbats"
-msgstr ""
+msgstr "Associer les caractères Unicode à la police Zapf Dingbats"
 
 #: ../src/extension/internal/emf-inout.cpp:3538
 #: ../src/extension/internal/wmf-inout.cpp:3130
 msgid "Use MS Unicode PUA (0xF020-0xF0FF) for converted characters"
-msgstr ""
+msgstr "Utiliser MS Unicode PUA (0xF020-0xF0FF) pour les caractères convertis"
 
 #: ../src/extension/internal/emf-inout.cpp:3539
 #: ../src/extension/internal/wmf-inout.cpp:3131
 msgid "Compensate for PPT font bug"
-msgstr ""
+msgstr "Corriger le défaut de police PPT"
 
 #: ../src/extension/internal/emf-inout.cpp:3540
 #: ../src/extension/internal/wmf-inout.cpp:3132
 msgid "Convert dashed/dotted lines to single lines"
-msgstr ""
+msgstr "Convertir les pointillés et tirets en lignes simples"
 
 #: ../src/extension/internal/emf-inout.cpp:3541
 #: ../src/extension/internal/wmf-inout.cpp:3133
@@ -6891,7 +6863,7 @@ msgstr "Créer un dégradé linéaire"
 
 #: ../src/extension/internal/emf-inout.cpp:3543
 msgid "Map all fill patterns to standard EMF hatches"
-msgstr ""
+msgstr "Associer tous les motifs de remplissage en hachures EMF"
 
 #: ../src/extension/internal/emf-inout.cpp:3544
 #, fuzzy
@@ -9155,7 +9127,7 @@ msgstr "Sortie WMF"
 
 #: ../src/extension/internal/wmf-inout.cpp:3134
 msgid "Map all fill patterns to standard WMF hatches"
-msgstr ""
+msgstr "Associer tous les motifs de remplissage en hachures WMF"
 
 #: ../src/extension/internal/wmf-inout.cpp:3138
 #: ../share/extensions/wmf_input.inx.h:2
@@ -9913,7 +9885,7 @@ msgstr "Vec_toriser le bitmap..."
 #. Trace Pixel Art
 #: ../src/interface.cpp:1988
 msgid "Trace Pixel Art"
-msgstr ""
+msgstr "Vectoriser en Pixel Art"
 
 #: ../src/interface.cpp:1998
 msgctxt "Context menu"
@@ -11390,55 +11362,55 @@ msgstr "k_max :"
 msgid "max curvature"
 msgstr "courbure max."
 
-#: ../src/live_effects/lpe-vonkoch.cpp:47
+#: ../src/live_effects/lpe-vonkoch.cpp:46
 msgid "N_r of generations:"
 msgstr "Nomb_re d'itérations :"
 
-#: ../src/live_effects/lpe-vonkoch.cpp:47
+#: ../src/live_effects/lpe-vonkoch.cpp:46
 msgid "Depth of the recursion --- keep low!!"
 msgstr "Niveau de récursion (garder une valeur faible !)"
 
-#: ../src/live_effects/lpe-vonkoch.cpp:48
+#: ../src/live_effects/lpe-vonkoch.cpp:47
 msgid "Generating path:"
 msgstr "Chemin générateur :"
 
-#: ../src/live_effects/lpe-vonkoch.cpp:48
+#: ../src/live_effects/lpe-vonkoch.cpp:47
 msgid "Path whose segments define the iterated transforms"
 msgstr "La fractale est obtenue en itérant les transformations qui envoient le chemin de référence sur chaque segment de celui-ci (un segment isolé définit une transformation préservant les proportions, deux segments attachés définissent une transformation générale)"
 
-#: ../src/live_effects/lpe-vonkoch.cpp:49
+#: ../src/live_effects/lpe-vonkoch.cpp:48
 msgid "_Use uniform transforms only"
 msgstr "_Utiliser uniquement les transformations uniformes"
 
-#: ../src/live_effects/lpe-vonkoch.cpp:49
+#: ../src/live_effects/lpe-vonkoch.cpp:48
 msgid "2 consecutive segments are used to reverse/preserve orientation only (otherwise, they define a general transform)."
 msgstr "N'utiliser que des transformations qui préservent les proportions (rotations, symétries, redimensionnements)."
 
-#: ../src/live_effects/lpe-vonkoch.cpp:50
+#: ../src/live_effects/lpe-vonkoch.cpp:49
 msgid "Dra_w all generations"
 msgstr "Dessiner _toutes les génération"
 
-#: ../src/live_effects/lpe-vonkoch.cpp:50
+#: ../src/live_effects/lpe-vonkoch.cpp:49
 msgid "If unchecked, draw only the last generation"
 msgstr "Si décoché, dessine seulement la dernière génération"
 
 #. ,draw_boxes(_("Display boxes"), _("Display boxes instead of paths only"), "draw_boxes", &wr, this, true)
-#: ../src/live_effects/lpe-vonkoch.cpp:52
+#: ../src/live_effects/lpe-vonkoch.cpp:51
 msgid "Reference segment:"
 msgstr "Segment de référence :"
 
-#: ../src/live_effects/lpe-vonkoch.cpp:52
+#: ../src/live_effects/lpe-vonkoch.cpp:51
 msgid "The reference segment. Defaults to the horizontal midline of the bbox."
 msgstr "Segment de référence. Par défaut centré horizontalement sur la boîte englobante."
 
 #. refA(_("Ref Start"), _("Left side middle of the reference box"), "refA", &wr, this),
 #. refB(_("Ref End"), _("Right side middle of the reference box"), "refB", &wr, this),
 #. FIXME: a path is used here instead of 2 points to work around path/point param incompatibility bug.
-#: ../src/live_effects/lpe-vonkoch.cpp:56
+#: ../src/live_effects/lpe-vonkoch.cpp:55
 msgid "_Max complexity:"
 msgstr "Complexité _maximale :"
 
-#: ../src/live_effects/lpe-vonkoch.cpp:56
+#: ../src/live_effects/lpe-vonkoch.cpp:55
 msgid "Disable effect if the output is too complex"
 msgstr "Désactive l'effet lorsque le résultat est trop complexe"
 
@@ -12832,32 +12804,32 @@ msgstr "Tamponner"
 msgid "Reset center"
 msgstr "Rétablir le centre"
 
-#: ../src/seltrans.cpp:961
-#: ../src/seltrans.cpp:1066
+#: ../src/seltrans.cpp:960
+#: ../src/seltrans.cpp:1065
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr "<b>Redimensionnement</b> : %0.2f%% x %0.2f%% ; <b>Ctrl</b> pour préserver le ratio"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1198
+#: ../src/seltrans.cpp:1197
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Inclinaison</b> : %0.2f&#176; ; <b>Ctrl</b> pour incliner par incréments"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1273
+#: ../src/seltrans.cpp:1272
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Rotation</b> : %0.2f&#176; ; <b>Ctrl</b> pour tourner par incréments"
 
-#: ../src/seltrans.cpp:1310
+#: ../src/seltrans.cpp:1309
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Déplacer le <b>centre</b> en %s, %s"
 
-#: ../src/seltrans.cpp:1464
+#: ../src/seltrans.cpp:1463
 #, c-format
 msgid "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; with <b>Shift</b> to disable snapping"
 msgstr "<b>Déplacer</b> de %s, %s ; <b>Ctrl</b> restreindre à l'horizontale/verticale; <b>Maj</b> désactiver le magnétisme"
@@ -15356,36 +15328,36 @@ msgstr "Activer l'aperçu"
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:743
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:759
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:774
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:289
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:420
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:282
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:413
 msgid "All Files"
 msgstr "Tous les fichiers"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:740
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:756
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:771
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:290
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:283
 msgid "All Inkscape Files"
 msgstr "Tous les fichiers Inkscape"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:747
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:763
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:777
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:291
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:284
 msgid "All Images"
 msgstr "Toutes les images"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:750
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:766
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:780
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:292
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:285
 msgid "All Vectors"
 msgstr "Tous les formats vectoriels"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:753
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:769
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:783
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:293
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:286
 msgid "All Bitmaps"
 msgstr "Toutes les images bitmap"
 
@@ -15469,15 +15441,15 @@ msgstr "Cairo"
 msgid "Antialias"
 msgstr "Antialias"
 
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:421
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:414
 msgid "All Executable Files"
 msgstr "Tous les fichiers exécutables"
 
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:613
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:606
 msgid "Show Preview"
 msgstr "Aperçu"
 
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:751
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:744
 msgid "No file selected"
 msgstr "Aucun fichier sélectionné"
 
@@ -15520,29 +15492,24 @@ msgid "This SVG filter effect is not yet implemented in Inkscape."
 msgstr "Ce filtre SVG n'est pas encore implémenté dans Inkscape."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1041
-#, fuzzy
 msgid "Slope"
-msgstr "Enveloppe"
+msgstr "Pente"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1042
-#, fuzzy
 msgid "Intercept"
 msgstr "Intersection"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1045
-#, fuzzy
 msgid "Amplitude"
-msgstr "Amplitude :"
+msgstr "Amplitude"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1046
-#, fuzzy
 msgid "Exponent"
-msgstr "Exposant :"
+msgstr "Exposant"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1143
-#, fuzzy
 msgid "New transfer function type"
-msgstr "Type de transfert :"
+msgstr "Nouveau type de fonction de transfert"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1178
 msgid "Light Source:"
@@ -16359,9 +16326,8 @@ msgid "Font substitution"
 msgstr ""
 
 #: ../src/ui/dialog/font-substitution.cpp:109
-#, fuzzy
 msgid "Select all the affected items"
-msgstr "Sélectionnez un type d'objet"
+msgstr "Sélectionnez tous les éléments concernés"
 
 #: ../src/ui/dialog/font-substitution.cpp:114
 msgid "Don't show this warning again"
@@ -16441,7 +16407,7 @@ msgstr "Géorgien"
 
 #: ../src/ui/dialog/glyphs.cpp:74
 msgid "Gothic"
-msgstr "Gotique"
+msgstr "Gothique"
 
 #: ../src/ui/dialog/glyphs.cpp:75
 msgid "Greek"
@@ -17212,9 +17178,8 @@ msgstr "Si décoché, chaque ligne a la même largeur que l'objet le plus large 
 
 #. Anchor selection widget
 #: ../src/ui/dialog/grid-arrange-tab.cpp:711
-#, fuzzy
 msgid "Alignment:"
-msgstr "Alignement"
+msgstr "Alignement : "
 
 #. #### Radio buttons to control spacing manually or to fit selection bbox ####
 #: ../src/ui/dialog/grid-arrange-tab.cpp:720
@@ -17769,7 +17734,6 @@ msgstr "Si coché, les points d'accroche de connecteur ne sont pas montrés pour
 #. LPETool
 #. disabled, because the LPETool is not finished yet.
 #: ../src/ui/dialog/inkscape-preferences.cpp:506
-#, fuzzy
 msgid "LPE Tool"
 msgstr "Outil effets de chemin en direct"
 
@@ -19473,7 +19437,7 @@ msgstr "Éditeur de _bitmap :"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1432
 #: ../share/extensions/guillotine.inx.h:5
-#: ../share/extensions/plotter.inx.h:52
+#: ../share/extensions/plotter.inx.h:55
 #: ../share/extensions/print_win32_vector.inx.h:2
 msgid "Export"
 msgstr "Exporter"
@@ -20402,9 +20366,8 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/pixelartdialog.cpp:499
-#, fuzzy
 msgid "Trace pixel art"
-msgstr "pixels à"
+msgstr "Vectoriser en pixel art"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:43
 msgctxt "Polar arrange tab"
@@ -24226,9 +24189,8 @@ msgid "Create one or more paths from a bitmap by tracing it"
 msgstr "Créer un ou plusieurs chemin en vectorisant un bitmap"
 
 #: ../src/verbs.cpp:2551
-#, fuzzy
 msgid "Trace Pixel Art..."
-msgstr "Vec_toriser le bitmap..."
+msgstr "Vec_toriser en pixel art..."
 
 #: ../src/verbs.cpp:2552
 msgid "Create paths using Kopf-Lischinski algorithm to vectorize pixel art"
@@ -25468,9 +25430,8 @@ msgstr "Vectorisation de bitmap"
 
 #. "tutorial_tracing"
 #: ../src/verbs.cpp:2887
-#, fuzzy
 msgid "Inkscape: Tracing Pixel Art"
-msgstr "Inkscape : _vectorisation"
+msgstr "Inkscape : vectorisation en pixel art"
 
 #: ../src/verbs.cpp:2888
 msgid "Using Trace Pixel Art dialog"
@@ -28640,9 +28601,9 @@ msgid "Error: Field 'Layer match name' must be filled when using 'By name match'
 msgstr ""
 
 #: ../share/extensions/dxf_outlines.py:341
-#, fuzzy, python-format
+#, python-format
 msgid "Warning: Layer '%s' not found!"
-msgstr "Calque introuvable.\n"
+msgstr "Attention : calque '%s' introuvable !"
 
 #: ../share/extensions/embedimage.py:84
 msgid "No xlink:href or sodipodi:absref attributes found, or they do not point to an existing file! Unable to embed image."
@@ -28672,9 +28633,8 @@ msgid "Unable to find image data."
 msgstr "Les données de l'image sont introuvables."
 
 #: ../share/extensions/extrude.py:43
-#, fuzzy
 msgid "Need at least 2 paths selected"
-msgstr "Aucune sélection"
+msgstr "Au moins deux chemins doivent être sélectionnés"
 
 #: ../share/extensions/funcplot.py:48
 msgid "x-interval cannot be zero. Please modify 'Start X' or 'End X'"
@@ -28905,14 +28865,12 @@ msgid "The sliced bitmaps have been saved as:"
 msgstr "L'image découpée a été enregistrée sous :"
 
 #: ../share/extensions/hpgl_decoder.py:43
-#, fuzzy
 msgid "Movements"
-msgstr "Déplacer les dégradés"
+msgstr "Déplacements"
 
 #: ../share/extensions/hpgl_decoder.py:44
-#, fuzzy
 msgid "Pen #"
-msgstr "Inertie du stylo"
+msgstr "Numéro du stylo"
 
 #. issue error if no hpgl data found
 #: ../share/extensions/hpgl_input.py:58
@@ -30696,7 +30654,7 @@ msgstr "Rayon d'arc minimum :"
 #: ../share/extensions/gcodetools_lathe.inx.h:27
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:16
 msgid "Comment Gcode:"
-msgstr ""
+msgstr "Commenter le Gcode :"
 
 #: ../share/extensions/gcodetools_area.inx.h:35
 #: ../share/extensions/gcodetools_engraving.inx.h:13
@@ -30704,7 +30662,7 @@ msgstr ""
 #: ../share/extensions/gcodetools_lathe.inx.h:28
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:17
 msgid "Get additional comments from object's properties"
-msgstr ""
+msgstr "Obtenir des commentaires supplémentaire des propriétés de l'objet"
 
 #: ../share/extensions/gcodetools_area.inx.h:36
 #: ../share/extensions/gcodetools_dxf_points.inx.h:8
@@ -31524,12 +31482,11 @@ msgstr "Dessiner les poignées"
 
 #: ../share/extensions/hershey.inx.h:1
 msgid "Hershey Text"
-msgstr ""
+msgstr "Texte Hershey"
 
 #: ../share/extensions/hershey.inx.h:2
-#, fuzzy
 msgid "Render Text"
-msgstr "Rendu"
+msgstr "Rendu du texte"
 
 #: ../share/extensions/hershey.inx.h:3
 #: ../share/extensions/render_alphabetsoup.inx.h:2
@@ -31539,27 +31496,24 @@ msgid "Text:"
 msgstr "Texte :"
 
 #: ../share/extensions/hershey.inx.h:4
-msgid "               Action: "
-msgstr ""
+msgid "Action: "
+msgstr "Action :"
 
 #: ../share/extensions/hershey.inx.h:5
-msgid "           Font face: "
-msgstr ""
+msgid "Font face: "
+msgstr "Type de police :"
 
 #: ../share/extensions/hershey.inx.h:6
-#, fuzzy
 msgid "Typeset that text"
-msgstr "Taper du texte"
+msgstr "Composer le texte"
 
 #: ../share/extensions/hershey.inx.h:7
-#, fuzzy
 msgid "Write glyph table"
-msgstr "Modifier le nom du glyphe"
+msgstr "Écrire la table des glyphes"
 
 #: ../share/extensions/hershey.inx.h:8
-#, fuzzy
 msgid "Sans 1-stroke"
-msgstr "Ne pas définir le contour"
+msgstr "Sans 1 pixel"
 
 #: ../share/extensions/hershey.inx.h:9
 msgid "Sans bold"
@@ -31567,53 +31521,47 @@ msgstr "Sans gras"
 
 #: ../share/extensions/hershey.inx.h:10
 msgid "Serif medium"
-msgstr "Sérif moyen"
+msgstr "Serif moyen"
 
 #: ../share/extensions/hershey.inx.h:11
 msgid "Serif medium italic"
-msgstr ""
+msgstr "Serif moyen italique"
 
 #: ../share/extensions/hershey.inx.h:12
 msgid "Serif bold italic"
-msgstr ""
+msgstr "Serif gras italique"
 
 #: ../share/extensions/hershey.inx.h:13
 msgid "Serif bold"
-msgstr "Sérif gras"
+msgstr "Serif gras"
 
 #: ../share/extensions/hershey.inx.h:14
-#, fuzzy
 msgid "Script 1-stroke"
-msgstr "Définir le contour"
+msgstr "Script 1 pixel"
 
 #: ../share/extensions/hershey.inx.h:15
 msgid "Script 1-stroke (alt)"
-msgstr ""
+msgstr "Script 1 pixel (alt)"
 
 #: ../share/extensions/hershey.inx.h:16
-#, fuzzy
 msgid "Script medium"
-msgstr "Identifiant du script"
+msgstr "Script moyen"
 
 #: ../share/extensions/hershey.inx.h:17
-#, fuzzy
 msgid "Gothic English"
-msgstr "Gotique"
+msgstr "Gothique anglais"
 
 #: ../share/extensions/hershey.inx.h:18
-#, fuzzy
 msgid "Gothic German"
-msgstr "Gotique"
+msgstr "Gothique allemand"
 
 #: ../share/extensions/hershey.inx.h:19
-#, fuzzy
 msgid "Gothic Italian"
-msgstr "Gotique"
+msgstr "Gothique italien"
 
 #: ../share/extensions/hershey.inx.h:20
-#, fuzzy
 msgid "Greek 1-stroke"
-msgstr "Définir le contour"
+msgstr "Grec 1 pixel"
 
 #: ../share/extensions/hershey.inx.h:21
 msgid "Greek medium"
@@ -31629,7 +31577,7 @@ msgstr "Astrologie"
 
 #: ../share/extensions/hershey.inx.h:25
 msgid "Math (lower)"
-msgstr ""
+msgstr "Math (inférieur)"
 
 #: ../share/extensions/hershey.inx.h:26
 msgid "Math (upper)"
@@ -31641,7 +31589,7 @@ msgstr "Météorologie"
 
 #: ../share/extensions/hershey.inx.h:29
 msgid "Music"
-msgstr ""
+msgstr "Musique"
 
 #: ../share/extensions/hershey.inx.h:30
 msgid "Symbolic"
@@ -31654,6 +31602,10 @@ msgid ""
 "\n"
 "\n"
 msgstr ""
+" \n"
+"\n"
+"\n"
+"\n"
 
 #: ../share/extensions/hershey.inx.h:36
 msgid "About..."
@@ -31677,6 +31629,13 @@ msgid ""
 "For additional information, please visit:\n"
 "  www.evilmadscientist.com/go/hershey"
 msgstr ""
+"\n"
+"Cette extension compose une ligne de texte en utilisant les fontes « Hershey » pour traceurs, dérivées de NBS SP-424 1976-04,  « A contribution to computer typesetting techniques: Tables of Coordinates for Hershey's Repertory of Occidental Type Fonts and Graphic Symbols. »\n"
+"\n"
+"Il ne s'agit pas de fontes de contour traditionnelles, mais de fontes à contour simple ou de fontes de gravure ou les caractères sont formés par leur contour (et sans remplissage).\n"
+"\n"
+"Des information supplémentaires sont disponible sur le site :\n"
+"www.evilmadscientist.com/go/hershey"
 
 #: ../share/extensions/hpgl_input.inx.h:1
 msgid "HPGL Input"
@@ -31684,39 +31643,39 @@ msgstr "Entrée HPGL"
 
 #: ../share/extensions/hpgl_input.inx.h:2
 msgid "Please note that you can only open HPGL files written by Inkscape, to open other HPGL files please change their file extension to .plt, make sure you have UniConverter installed and open them again."
-msgstr ""
+msgstr "Notez que vous ne pouvez ouvrir que des fichiers HPGL écrits avec Inkscape. Pour utiliser un autre fichier HPGL, modifiez son extension en .plt (assurez-vous qu'UniConvertor est installé sur votre machine)."
 
 #: ../share/extensions/hpgl_input.inx.h:3
 #: ../share/extensions/hpgl_output.inx.h:4
-#: ../share/extensions/plotter.inx.h:20
-msgid "Resolution X (dpi)"
-msgstr "Résolution X (ppp)"
+#: ../share/extensions/plotter.inx.h:23
+msgid "Resolution X (dpi):"
+msgstr "Résolution X (ppp) :"
 
 #: ../share/extensions/hpgl_input.inx.h:4
 #: ../share/extensions/hpgl_output.inx.h:5
-#: ../share/extensions/plotter.inx.h:21
-msgid "The amount of steps the plotter moves if it moves for 1 inch on the X axis. (Default: 1016.0)"
-msgstr ""
+#: ../share/extensions/plotter.inx.h:24
+msgid "The amount of steps the plotter moves if it moves for 1 inch on the X axis (Default: 1016.0)"
+msgstr "Le nombre de pas effectués par votre traceur lorsqu'il se déplace d'un pouce sur l'axe X (par défaut, 1016)"
 
 #: ../share/extensions/hpgl_input.inx.h:5
 #: ../share/extensions/hpgl_output.inx.h:6
-#: ../share/extensions/plotter.inx.h:22
-msgid "Resolution Y (dpi)"
-msgstr "Résolution Y (ppp)"
+#: ../share/extensions/plotter.inx.h:25
+msgid "Resolution Y (dpi):"
+msgstr "Résolution Y (ppp) :"
 
 #: ../share/extensions/hpgl_input.inx.h:6
 #: ../share/extensions/hpgl_output.inx.h:7
-#: ../share/extensions/plotter.inx.h:23
-msgid "The amount of steps the plotter moves if it moves for 1 inch on the Y axis. (Default: 1016.0)"
-msgstr ""
+#: ../share/extensions/plotter.inx.h:26
+msgid "The amount of steps the plotter moves if it moves for 1 inch on the Y axis (Default: 1016.0)"
+msgstr "Le nombre de pas effectués par votre traceur lorsqu'il se déplace d'un pouce sur l'axe Y (par défaut, 1016)"
 
 #: ../share/extensions/hpgl_input.inx.h:7
 msgid "Show movements between paths"
-msgstr ""
+msgstr "Montrer les déplacements entre les chemins"
 
 #: ../share/extensions/hpgl_input.inx.h:8
-msgid "Check this to show movements between paths. (Default: Unchecked)"
-msgstr ""
+msgid "Check this to show movements between paths (Default: Unchecked)"
+msgstr "Cocher pour montrer les déplacements entre les chemins (décoché par défaut)"
 
 #: ../share/extensions/hpgl_input.inx.h:9
 #: ../share/extensions/hpgl_output.inx.h:34
@@ -31734,153 +31693,143 @@ msgstr "Sortie HPGL"
 
 #: ../share/extensions/hpgl_output.inx.h:2
 msgid "Please make sure that all objects you want to save are converted to paths. Please use the plotter extension (Extensions menu) to plot directly over a serial connection."
-msgstr ""
+msgstr "Assurez-vous que tous les objets que vous souhaitez enregistrer sont convertis en chemins. Veuillez utiliser l'extension Traceur (dans le menu Extensions>Exporter) pour tracer directement au travers du port série."
 
 #: ../share/extensions/hpgl_output.inx.h:3
-#: ../share/extensions/plotter.inx.h:19
-#, fuzzy
+#: ../share/extensions/plotter.inx.h:22
 msgid "Plotter Settings "
-msgstr "Propriétés de la page"
+msgstr "Paramètres du traceur"
 
 #: ../share/extensions/hpgl_output.inx.h:8
-#: ../share/extensions/plotter.inx.h:24
-msgid "Pen number"
-msgstr "Numéro de stylo"
+#: ../share/extensions/plotter.inx.h:27
+msgid "Pen number:"
+msgstr "Numéro de stylo :"
 
 #: ../share/extensions/hpgl_output.inx.h:9
-#: ../share/extensions/plotter.inx.h:25
-msgid "The number of the pen (tool) to use. (Standard: '1')"
-msgstr ""
+#: ../share/extensions/plotter.inx.h:28
+msgid "The number of the pen (tool) to use (Standard: '1')"
+msgstr "Le numéro du stylo (outil) à utiliser (en standard : 1)"
 
 #: ../share/extensions/hpgl_output.inx.h:10
-#: ../share/extensions/plotter.inx.h:26
-msgid "Pen force (g)"
-msgstr ""
+#: ../share/extensions/plotter.inx.h:29
+msgid "Pen force (g):"
+msgstr "Force du stylo (g) :"
 
 #: ../share/extensions/hpgl_output.inx.h:11
-#: ../share/extensions/plotter.inx.h:27
-msgid "The amount of force pushing down the pen in grams, set to 0 to omit command. Most plotters ignore this command. (Default: 0)"
-msgstr ""
+#: ../share/extensions/plotter.inx.h:30
+msgid "The amount of force pushing down the pen in grams, set to 0 to omit command; most plotters ignore this command (Default: 0)"
+msgstr "La force d'appui du stylo, en grammes, ignorée lorsque la valeur est à 0 ; la plupart des traceurs ignorent cette commande (par défaut : 0)"
 
 #: ../share/extensions/hpgl_output.inx.h:12
-#: ../share/extensions/plotter.inx.h:28
-msgid "Pen speed (cm/s or mm/s)"
-msgstr ""
+#: ../share/extensions/plotter.inx.h:31
+msgid "Pen speed (cm/s or mm/s):"
+msgstr "Vitesse du stylo (cm/s ou mm/s) :"
 
 #: ../share/extensions/hpgl_output.inx.h:13
-#: ../share/extensions/plotter.inx.h:29
-msgid "The speed the pen will move with in centimeters or millimeters per second (depending on your plotter model), set to 0 to omit command. Most plotters ignore this command. (Default: 0)"
-msgstr ""
+#, fuzzy
+msgid "The speed the pen will move with in centimeters or millimeters per second (depending on your plotter model), set to 0 to omit command; most plotters ignore this command (Default: 0)"
+msgstr "La force d'appui du stylo, en grammes, ignorée lorsque la valeur est à 0 ; la plupart des traceurs ignorent cette commande (par défaut : 0)"
 
 #: ../share/extensions/hpgl_output.inx.h:14
-#: ../share/extensions/plotter.inx.h:30
-msgid "Rotation (Clockwise)"
-msgstr "Rotation en sens horaire"
+msgid "Rotation (°, Clockwise):"
+msgstr "Rotation (°, sens horaire) :"
 
 #: ../share/extensions/hpgl_output.inx.h:15
-#: ../share/extensions/plotter.inx.h:31
-msgid "Rotation of the drawing. (Default: 0°)"
-msgstr ""
+#: ../share/extensions/plotter.inx.h:34
+msgid "Rotation of the drawing (Default: 0°)"
+msgstr "Rotation du dessin (par défaut : 0 °)"
 
 #: ../share/extensions/hpgl_output.inx.h:16
-#: ../share/extensions/plotter.inx.h:32
+#: ../share/extensions/plotter.inx.h:35
 msgid "Mirror X axis"
 msgstr "Refléter sur l'axe Y"
 
 #: ../share/extensions/hpgl_output.inx.h:17
-#: ../share/extensions/plotter.inx.h:33
-msgid "Check this to mirror the X axis. (Default: Unchecked)"
-msgstr ""
+#: ../share/extensions/plotter.inx.h:36
+msgid "Check this to mirror the X axis (Default: Unchecked)"
+msgstr "Cocher pour refléter l'axe X (décoché par défaut)"
 
 #: ../share/extensions/hpgl_output.inx.h:18
-#: ../share/extensions/plotter.inx.h:34
+#: ../share/extensions/plotter.inx.h:37
 msgid "Mirror Y axis"
 msgstr "Refléter sur l'axe Y"
 
 #: ../share/extensions/hpgl_output.inx.h:19
-#: ../share/extensions/plotter.inx.h:35
-msgid "Check this to mirror the Y axis. (Default: Unchecked)"
-msgstr ""
+#: ../share/extensions/plotter.inx.h:38
+msgid "Check this to mirror the Y axis (Default: Unchecked)"
+msgstr "Cocher pour refléter l'axe Y (décoché par défaut)"
 
 #: ../share/extensions/hpgl_output.inx.h:20
-#: ../share/extensions/plotter.inx.h:36
-#, fuzzy
+#: ../share/extensions/plotter.inx.h:39
 msgid "Center zero point"
-msgstr "Centrer les lignes"
+msgstr "Centrer le point zéro"
 
 #: ../share/extensions/hpgl_output.inx.h:21
-#: ../share/extensions/plotter.inx.h:37
-msgid "Check this if your plotter uses a centered zero point. (Default: Unchecked)"
-msgstr ""
+#: ../share/extensions/plotter.inx.h:40
+msgid "Check this if your plotter uses a centered zero point (Default: Unchecked)"
+msgstr "Cocher si votre traceur utilise un point zéro centré (décoché par défaut)"
 
 #: ../share/extensions/hpgl_output.inx.h:22
-#: ../share/extensions/plotter.inx.h:38
-#, fuzzy
+#: ../share/extensions/plotter.inx.h:41
 msgid "Plot Features "
-msgstr "Estompage du pourtour"
+msgstr "Fonctionnalités du traceur"
 
 #: ../share/extensions/hpgl_output.inx.h:23
-#: ../share/extensions/plotter.inx.h:39
-#, fuzzy
-msgid "Overcut (mm)"
-msgstr "Utiliser les valeurs par défaut"
+#: ../share/extensions/plotter.inx.h:42
+msgid "Overcut (mm):"
+msgstr "Surcoupe (mm) :"
 
 #: ../share/extensions/hpgl_output.inx.h:24
-#: ../share/extensions/plotter.inx.h:40
-msgid "The distance in mm that will be cut over the starting point of the path to prevent open paths, set to 0.0 to omit command. (Default: 1.00)"
+#: ../share/extensions/plotter.inx.h:43
+msgid "The distance in mm that will be cut over the starting point of the path to prevent open paths, set to 0.0 to omit command (Default: 1.00)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:25
-#: ../share/extensions/plotter.inx.h:41
-#, fuzzy
-msgid "Tool offset (mm)"
+#: ../share/extensions/plotter.inx.h:44
+msgid "Tool offset (mm):"
 msgstr "Décalage de l'outil (mm) :"
 
 #: ../share/extensions/hpgl_output.inx.h:26
-#: ../share/extensions/plotter.inx.h:42
-msgid "The offset from the tool tip to the tool axis in mm, set to 0.0 to omit command. (Default: 0.25)"
+#: ../share/extensions/plotter.inx.h:45
+msgid "The offset from the tool tip to the tool axis in mm, set to 0.0 to omit command (Default: 0.25)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:27
-#: ../share/extensions/plotter.inx.h:43
-#, fuzzy
+#: ../share/extensions/plotter.inx.h:46
 msgid "Use precut"
-msgstr "Utiliser les valeurs par défaut"
+msgstr "Prédécouper"
 
 #: ../share/extensions/hpgl_output.inx.h:28
-#: ../share/extensions/plotter.inx.h:44
+#: ../share/extensions/plotter.inx.h:47
 msgid "Check this to cut a small line before the real drawing starts to correctly align the tool orientation. (Default: Checked)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:29
-#: ../share/extensions/plotter.inx.h:45
-#, fuzzy
-msgid "Curve flatness"
-msgstr "Aplatissement :"
+#: ../share/extensions/plotter.inx.h:48
+msgid "Curve flatness:"
+msgstr "Écrasement des courbes :"
 
 #: ../share/extensions/hpgl_output.inx.h:30
-#: ../share/extensions/plotter.inx.h:46
-msgid "Curves are divided into lines, this number controls how fine the curves will be reproduced, the smaller the finer. (Default: '1.2')"
-msgstr ""
+#: ../share/extensions/plotter.inx.h:49
+msgid "Curves are divided into lines, this number controls how fine the curves will be reproduced, the smaller the finer (Default: '1.2')"
+msgstr "Les courbes étant divisées en lignes, ce nombre contrôle la finesse de la courbe qui sera reproduite ; plus le nombre est petit, plus la courbe est précise (par défaut : 1.2)"
 
 #: ../share/extensions/hpgl_output.inx.h:31
-#: ../share/extensions/plotter.inx.h:47
-#, fuzzy
+#: ../share/extensions/plotter.inx.h:50
 msgid "Auto align"
-msgstr "Aligner"
+msgstr "Aligner automatiquement"
 
 #: ../share/extensions/hpgl_output.inx.h:32
-#: ../share/extensions/plotter.inx.h:48
+#: ../share/extensions/plotter.inx.h:51
 msgid "Check this to auto align the drawing to the zero point (Plus the tool offset if used). If unchecked you have to make sure that all parts of your drawing are within the document border! (Default: Checked)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:33
-#: ../share/extensions/plotter.inx.h:51
+#: ../share/extensions/plotter.inx.h:54
 msgid "All these settings depend on the plotter you use, for more information please consult the manual or homepage for your plotter."
-msgstr ""
+msgstr "Tous ces paramètres dépendent du traceur que vous utilisez. Pour de plus amples informations, veuillez consulter le manuel ou la documentation en ligne de votre traceur.."
 
 #: ../share/extensions/hpgl_output.inx.h:35
-#, fuzzy
 msgid "Export an HP Graphics Language file"
 msgstr "Exporter vers un fichier HP Graphics Language"
 
@@ -32586,6 +32535,7 @@ msgid "Margin box"
 msgstr "Boîte de marge"
 
 #: ../share/extensions/layout_nup.inx.h:25
+#, fuzzy
 msgid ""
 "\n"
 "Parameters:\n"
@@ -32598,6 +32548,15 @@ msgid ""
 "    * Layout padding: inner padding for each part of the layout.\n"
 "      "
 msgstr ""
+"\n"
+"Paramètres :\n"
+"    * Page size: width and height.\n"
+"    * Page margins: extra space around each page.\n"
+"    * Layout rows and cols.\n"
+"    * Layout size: width and height, auto calculated if one is 0.\n"
+"    * Auto calculate layout size: don't use the layout size values.\n"
+"    * Layout margins: white space around each part of the layout.\n"
+"    * Layout padding: inner padding for each part of the layout.\n"
 
 #: ../share/extensions/layout_nup.inx.h:36
 #: ../share/extensions/perfectboundcover.inx.h:20
@@ -32770,7 +32729,7 @@ msgstr "Précision :"
 
 #: ../share/extensions/measure.inx.h:9
 msgid "Scale Factor (Drawing:Real Length) = 1:"
-msgstr "Facteur d'échelle (Dessin:Longueur réelle) = 1"
+msgstr "Facteur d'échelle (Dessin:Longueur réelle) :"
 
 #: ../share/extensions/measure.inx.h:10
 msgid "Length Unit:"
@@ -32818,7 +32777,7 @@ msgstr ""
 
 #: ../share/extensions/merge_styles.inx.h:1
 msgid "Merge Styles into CSS"
-msgstr ""
+msgstr "Fusionner les styles dans une feuille de styles"
 
 #: ../share/extensions/merge_styles.inx.h:2
 msgid "All selected nodes will be grouped together and their common style attributes will create a new class, this class will replace the existing inline style attributes. Please use a name which best describes the kinds of objects and their common context for best effect."
@@ -32826,7 +32785,7 @@ msgstr ""
 
 #: ../share/extensions/merge_styles.inx.h:3
 msgid "New Class Name:"
-msgstr ""
+msgstr "Nouveau nom de classe :"
 
 #: ../share/extensions/merge_styles.inx.h:4
 msgid "Stylesheet"
@@ -33089,47 +33048,47 @@ msgstr "Aligne les chemins de la sélection sur les pixels. Les bordures sont al
 
 #: ../share/extensions/plotter.inx.h:1
 msgid "Plot"
-msgstr ""
+msgstr "Traceur"
 
 #: ../share/extensions/plotter.inx.h:2
 msgid "Please make sure that all objects you want to plot are converted to paths."
-msgstr ""
+msgstr "Veuillez vous assurer que tous les objets à tracer sont convertis en chemins."
 
 #: ../share/extensions/plotter.inx.h:3
 msgid "Connection Settings "
 msgstr "Paramètres de la connexion"
 
 #: ../share/extensions/plotter.inx.h:4
-msgid "Serial port"
-msgstr "Port série"
+msgid "Serial port:"
+msgstr "Port série :"
 
 #: ../share/extensions/plotter.inx.h:5
-msgid "The port of your serial connection, on Windows something like 'COM1', on Linux something like: '/dev/ttyUSB0'. (Default: COM1)"
-msgstr ""
+msgid "The port of your serial connection, on Windows something like 'COM1', on Linux something like: '/dev/ttyUSB0' (Default: COM1)"
+msgstr "Le port de votre connexion série ; avec Windows, quelque-chose comme « COM1 » ; avec Linux, comme « /dev/ttyUSB0 » (par défaut : COM1)"
 
 #: ../share/extensions/plotter.inx.h:6
-msgid "Serial baud rate"
-msgstr "Vitesse de transmission série"
+msgid "Serial baud rate:"
+msgstr "Vitesse de transmission série :"
 
 #: ../share/extensions/plotter.inx.h:7
-msgid "The Baud rate of your serial connection. (Default: 9600)"
-msgstr ""
+msgid "The Baud rate of your serial connection (Default: 9600)"
+msgstr "La vitesse de votre connexion série (en Bauds, par défaut 9600)"
 
 #: ../share/extensions/plotter.inx.h:8
-msgid "Flow control"
-msgstr "Contrôle de flux"
+msgid "Flow control:"
+msgstr "Contrôle de flux :"
 
 #: ../share/extensions/plotter.inx.h:9
-msgid "The Software / Hardware flow control of your serial connection. (Default: Software)"
-msgstr ""
+msgid "The Software / Hardware flow control of your serial connection (Default: Software)"
+msgstr "Le type de contrôle de flux de votre connexion série (par défaut : logiciel)"
 
 #: ../share/extensions/plotter.inx.h:10
-msgid "Command language"
-msgstr "Langage de commande"
+msgid "Command language:"
+msgstr "Langage de commande :"
 
 #: ../share/extensions/plotter.inx.h:11
-msgid "The command language to use. (Default: HPGL)"
-msgstr "Langage de commande à utiliser (par défaut HPGL)."
+msgid "The command language to use (Default: HPGL)"
+msgstr "Langage de commande à utiliser (par défaut HPGL)"
 
 #: ../share/extensions/plotter.inx.h:12
 msgid "Software (XON/XOFF)"
@@ -33144,23 +33103,43 @@ msgid "Hardware (DSR/DTR + RTS/CTS)"
 msgstr "Matériel (DSR/DTR + RTS/CTS)"
 
 #: ../share/extensions/plotter.inx.h:16
-msgid "Using wrong settings can under certain circumstances cause Inkscape to freeze. Always save your work before plotting!"
-msgstr ""
+msgid "HPGL"
+msgstr "HPGL"
 
 #: ../share/extensions/plotter.inx.h:17
-msgid "This can be a physical serial connection or a USB-to-Serial bridge. Ask your plotter manufacturer for drivers if needed."
-msgstr ""
+msgid "DMPL"
+msgstr "DMPL"
 
 #: ../share/extensions/plotter.inx.h:18
+msgid "KNK Zing (HPGL variant)"
+msgstr "KNK Zing (une variante d'HPGL)"
+
+#: ../share/extensions/plotter.inx.h:19
+msgid "Using wrong settings can under certain circumstances cause Inkscape to freeze. Always save your work before plotting!"
+msgstr "L'utilisation de mauvais paramètres peut dans certaines circonstances causer des plantages de l'application. Sauvegardez toujours votre travail avant d'utiliser cette extension !"
+
+#: ../share/extensions/plotter.inx.h:20
+msgid "This can be a physical serial connection or a USB-to-Serial bridge. Ask your plotter manufacturer for drivers if needed."
+msgstr "La connexion peut s'effectuer par l'intermédiaire d'un port série ou d'un pont USB-série. Si besoin, demandez les pilotes de périphérique au fabriquant de votre traceur."
+
+#: ../share/extensions/plotter.inx.h:21
 msgid "Parallel (LPT) connections are not supported."
+msgstr "Les connexions sur port parallèle (LPT) ne sont pas supportées."
+
+#: ../share/extensions/plotter.inx.h:32
+msgid "The speed the pen will move with in centimeters or millimeters per second (depending on your plotter model), set to 0 to omit command. Most plotters ignore this command. (Default: 0)"
 msgstr ""
 
-#: ../share/extensions/plotter.inx.h:49
+#: ../share/extensions/plotter.inx.h:33
+msgid "Rotation (°, clockwise):"
+msgstr "Rotation (°, sens horaire) :"
+
+#: ../share/extensions/plotter.inx.h:52
 msgid "Show debug information"
 msgstr "Afficher les informations de débogage"
 
-#: ../share/extensions/plotter.inx.h:50
-msgid "Check this to get verbose information about the plot without actually sending something to the plotter (A.k.a. data dump). (Default: Unchecked)"
+#: ../share/extensions/plotter.inx.h:53
+msgid "Check this to get verbose information about the plot without actually sending something to the plotter (A.k.a. data dump) (Default: Unchecked)"
 msgstr ""
 
 #: ../share/extensions/plt_input.inx.h:1
@@ -34791,6 +34770,30 @@ msgstr "Un format graphique populaire pour les cliparts"
 #: ../share/extensions/xaml2svg.inx.h:1
 msgid "XAML Input"
 msgstr "Entrée XAML"
+
+#~ msgid "Resolution X (dpi)"
+#~ msgstr "Résolution X (ppp)"
+
+#~ msgid "Resolution Y (dpi)"
+#~ msgstr "Résolution Y (ppp)"
+
+#~ msgid "Pen number"
+#~ msgstr "Numéro de stylo"
+
+#~ msgid "Rotation (Clockwise)"
+#~ msgstr "Rotation en sens horaire"
+
+#, fuzzy
+#~ msgid "Overcut (mm)"
+#~ msgstr "Utiliser les valeurs par défaut"
+
+#, fuzzy
+#~ msgid "Tool offset (mm)"
+#~ msgstr "Décalage de l'outil (mm) :"
+
+#, fuzzy
+#~ msgid "Curve flatness"
+#~ msgstr "Aplatissement :"
 
 #~ msgid "drawing%s"
 #~ msgstr "dessin%s"

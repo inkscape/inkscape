@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2014-05-14 18:38+0200\n"
+"POT-Creation-Date: 2014-05-24 15:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -11149,57 +11149,57 @@ msgstr ""
 msgid "max curvature"
 msgstr ""
 
-#: ../src/live_effects/lpe-vonkoch.cpp:47
+#: ../src/live_effects/lpe-vonkoch.cpp:46
 msgid "N_r of generations:"
 msgstr ""
 
-#: ../src/live_effects/lpe-vonkoch.cpp:47
+#: ../src/live_effects/lpe-vonkoch.cpp:46
 msgid "Depth of the recursion --- keep low!!"
 msgstr ""
 
-#: ../src/live_effects/lpe-vonkoch.cpp:48
+#: ../src/live_effects/lpe-vonkoch.cpp:47
 msgid "Generating path:"
 msgstr ""
 
-#: ../src/live_effects/lpe-vonkoch.cpp:48
+#: ../src/live_effects/lpe-vonkoch.cpp:47
 msgid "Path whose segments define the iterated transforms"
 msgstr ""
 
-#: ../src/live_effects/lpe-vonkoch.cpp:49
+#: ../src/live_effects/lpe-vonkoch.cpp:48
 msgid "_Use uniform transforms only"
 msgstr ""
 
-#: ../src/live_effects/lpe-vonkoch.cpp:49
+#: ../src/live_effects/lpe-vonkoch.cpp:48
 msgid ""
 "2 consecutive segments are used to reverse/preserve orientation only "
 "(otherwise, they define a general transform)."
 msgstr ""
 
-#: ../src/live_effects/lpe-vonkoch.cpp:50
+#: ../src/live_effects/lpe-vonkoch.cpp:49
 msgid "Dra_w all generations"
 msgstr ""
 
-#: ../src/live_effects/lpe-vonkoch.cpp:50
+#: ../src/live_effects/lpe-vonkoch.cpp:49
 msgid "If unchecked, draw only the last generation"
 msgstr ""
 
 #. ,draw_boxes(_("Display boxes"), _("Display boxes instead of paths only"), "draw_boxes", &wr, this, true)
-#: ../src/live_effects/lpe-vonkoch.cpp:52
+#: ../src/live_effects/lpe-vonkoch.cpp:51
 msgid "Reference segment:"
 msgstr ""
 
-#: ../src/live_effects/lpe-vonkoch.cpp:52
+#: ../src/live_effects/lpe-vonkoch.cpp:51
 msgid "The reference segment. Defaults to the horizontal midline of the bbox."
 msgstr ""
 
 #. refA(_("Ref Start"), _("Left side middle of the reference box"), "refA", &wr, this),
 #. refB(_("Ref End"), _("Right side middle of the reference box"), "refB", &wr, this),
 #. FIXME: a path is used here instead of 2 points to work around path/point param incompatibility bug.
-#: ../src/live_effects/lpe-vonkoch.cpp:56
+#: ../src/live_effects/lpe-vonkoch.cpp:55
 msgid "_Max complexity:"
 msgstr ""
 
-#: ../src/live_effects/lpe-vonkoch.cpp:56
+#: ../src/live_effects/lpe-vonkoch.cpp:55
 msgid "Disable effect if the output is too complex"
 msgstr ""
 
@@ -12610,31 +12610,31 @@ msgstr ""
 msgid "Reset center"
 msgstr ""
 
-#: ../src/seltrans.cpp:961 ../src/seltrans.cpp:1066
+#: ../src/seltrans.cpp:960 ../src/seltrans.cpp:1065
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1198
+#: ../src/seltrans.cpp:1197
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1273
+#: ../src/seltrans.cpp:1272
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
-#: ../src/seltrans.cpp:1310
+#: ../src/seltrans.cpp:1309
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr ""
 
-#: ../src/seltrans.cpp:1464
+#: ../src/seltrans.cpp:1463
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -15117,36 +15117,36 @@ msgstr ""
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:743
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:759
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:774
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:289
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:420
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:282
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:413
 msgid "All Files"
 msgstr ""
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:740
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:756
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:771
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:290
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:283
 msgid "All Inkscape Files"
 msgstr ""
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:747
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:763
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:777
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:291
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:284
 msgid "All Images"
 msgstr ""
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:750
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:766
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:780
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:292
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:285
 msgid "All Vectors"
 msgstr ""
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:753
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:769
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:783
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:293
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:286
 msgid "All Bitmaps"
 msgstr ""
 
@@ -15229,15 +15229,15 @@ msgstr ""
 msgid "Antialias"
 msgstr ""
 
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:421
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:414
 msgid "All Executable Files"
 msgstr ""
 
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:613
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:606
 msgid "Show Preview"
 msgstr ""
 
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:751
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:744
 msgid "No file selected"
 msgstr ""
 
@@ -19412,7 +19412,7 @@ msgid "_Bitmap editor:"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1432
-#: ../share/extensions/guillotine.inx.h:5 ../share/extensions/plotter.inx.h:52
+#: ../share/extensions/guillotine.inx.h:5 ../share/extensions/plotter.inx.h:55
 #: ../share/extensions/print_win32_vector.inx.h:2
 msgid "Export"
 msgstr ""
@@ -31515,11 +31515,11 @@ msgid "Text:"
 msgstr ""
 
 #: ../share/extensions/hershey.inx.h:4
-msgid "               Action: "
+msgid "Action: "
 msgstr ""
 
 #: ../share/extensions/hershey.inx.h:5
-msgid "           Font face: "
+msgid "Font face: "
 msgstr ""
 
 #: ../share/extensions/hershey.inx.h:6
@@ -31658,29 +31658,29 @@ msgstr ""
 
 #: ../share/extensions/hpgl_input.inx.h:3
 #: ../share/extensions/hpgl_output.inx.h:4
-#: ../share/extensions/plotter.inx.h:20
-msgid "Resolution X (dpi)"
+#: ../share/extensions/plotter.inx.h:23
+msgid "Resolution X (dpi):"
 msgstr ""
 
 #: ../share/extensions/hpgl_input.inx.h:4
 #: ../share/extensions/hpgl_output.inx.h:5
-#: ../share/extensions/plotter.inx.h:21
+#: ../share/extensions/plotter.inx.h:24
 msgid ""
-"The amount of steps the plotter moves if it moves for 1 inch on the X axis. "
+"The amount of steps the plotter moves if it moves for 1 inch on the X axis "
 "(Default: 1016.0)"
 msgstr ""
 
 #: ../share/extensions/hpgl_input.inx.h:5
 #: ../share/extensions/hpgl_output.inx.h:6
-#: ../share/extensions/plotter.inx.h:22
-msgid "Resolution Y (dpi)"
+#: ../share/extensions/plotter.inx.h:25
+msgid "Resolution Y (dpi):"
 msgstr ""
 
 #: ../share/extensions/hpgl_input.inx.h:6
 #: ../share/extensions/hpgl_output.inx.h:7
-#: ../share/extensions/plotter.inx.h:23
+#: ../share/extensions/plotter.inx.h:26
 msgid ""
-"The amount of steps the plotter moves if it moves for 1 inch on the Y axis. "
+"The amount of steps the plotter moves if it moves for 1 inch on the Y axis "
 "(Default: 1016.0)"
 msgstr ""
 
@@ -31689,7 +31689,7 @@ msgid "Show movements between paths"
 msgstr ""
 
 #: ../share/extensions/hpgl_input.inx.h:8
-msgid "Check this to show movements between paths. (Default: Unchecked)"
+msgid "Check this to show movements between paths (Default: Unchecked)"
 msgstr ""
 
 #: ../share/extensions/hpgl_input.inx.h:9
@@ -31713,146 +31713,144 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:3
-#: ../share/extensions/plotter.inx.h:19
+#: ../share/extensions/plotter.inx.h:22
 msgid "Plotter Settings "
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:8
-#: ../share/extensions/plotter.inx.h:24
-msgid "Pen number"
+#: ../share/extensions/plotter.inx.h:27
+msgid "Pen number:"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:9
-#: ../share/extensions/plotter.inx.h:25
-msgid "The number of the pen (tool) to use. (Standard: '1')"
+#: ../share/extensions/plotter.inx.h:28
+msgid "The number of the pen (tool) to use (Standard: '1')"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:10
-#: ../share/extensions/plotter.inx.h:26
-msgid "Pen force (g)"
+#: ../share/extensions/plotter.inx.h:29
+msgid "Pen force (g):"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:11
-#: ../share/extensions/plotter.inx.h:27
+#: ../share/extensions/plotter.inx.h:30
 msgid ""
-"The amount of force pushing down the pen in grams, set to 0 to omit command. "
-"Most plotters ignore this command. (Default: 0)"
+"The amount of force pushing down the pen in grams, set to 0 to omit command; "
+"most plotters ignore this command (Default: 0)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:12
-#: ../share/extensions/plotter.inx.h:28
-msgid "Pen speed (cm/s or mm/s)"
+#: ../share/extensions/plotter.inx.h:31
+msgid "Pen speed (cm/s or mm/s):"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:13
-#: ../share/extensions/plotter.inx.h:29
 msgid ""
 "The speed the pen will move with in centimeters or millimeters per second "
-"(depending on your plotter model), set to 0 to omit command. Most plotters "
-"ignore this command. (Default: 0)"
+"(depending on your plotter model), set to 0 to omit command; most plotters "
+"ignore this command (Default: 0)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:14
-#: ../share/extensions/plotter.inx.h:30
-msgid "Rotation (Clockwise)"
+msgid "Rotation (°, Clockwise):"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:15
-#: ../share/extensions/plotter.inx.h:31
-msgid "Rotation of the drawing. (Default: 0°)"
+#: ../share/extensions/plotter.inx.h:34
+msgid "Rotation of the drawing (Default: 0°)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:16
-#: ../share/extensions/plotter.inx.h:32
+#: ../share/extensions/plotter.inx.h:35
 msgid "Mirror X axis"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:17
-#: ../share/extensions/plotter.inx.h:33
-msgid "Check this to mirror the X axis. (Default: Unchecked)"
+#: ../share/extensions/plotter.inx.h:36
+msgid "Check this to mirror the X axis (Default: Unchecked)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:18
-#: ../share/extensions/plotter.inx.h:34
+#: ../share/extensions/plotter.inx.h:37
 msgid "Mirror Y axis"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:19
-#: ../share/extensions/plotter.inx.h:35
-msgid "Check this to mirror the Y axis. (Default: Unchecked)"
+#: ../share/extensions/plotter.inx.h:38
+msgid "Check this to mirror the Y axis (Default: Unchecked)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:20
-#: ../share/extensions/plotter.inx.h:36
+#: ../share/extensions/plotter.inx.h:39
 msgid "Center zero point"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:21
-#: ../share/extensions/plotter.inx.h:37
+#: ../share/extensions/plotter.inx.h:40
 msgid ""
-"Check this if your plotter uses a centered zero point. (Default: Unchecked)"
+"Check this if your plotter uses a centered zero point (Default: Unchecked)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:22
-#: ../share/extensions/plotter.inx.h:38
+#: ../share/extensions/plotter.inx.h:41
 msgid "Plot Features "
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:23
-#: ../share/extensions/plotter.inx.h:39
-msgid "Overcut (mm)"
+#: ../share/extensions/plotter.inx.h:42
+msgid "Overcut (mm):"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:24
-#: ../share/extensions/plotter.inx.h:40
+#: ../share/extensions/plotter.inx.h:43
 msgid ""
 "The distance in mm that will be cut over the starting point of the path to "
-"prevent open paths, set to 0.0 to omit command. (Default: 1.00)"
+"prevent open paths, set to 0.0 to omit command (Default: 1.00)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:25
-#: ../share/extensions/plotter.inx.h:41
-msgid "Tool offset (mm)"
+#: ../share/extensions/plotter.inx.h:44
+msgid "Tool offset (mm):"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:26
-#: ../share/extensions/plotter.inx.h:42
+#: ../share/extensions/plotter.inx.h:45
 msgid ""
 "The offset from the tool tip to the tool axis in mm, set to 0.0 to omit "
-"command. (Default: 0.25)"
+"command (Default: 0.25)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:27
-#: ../share/extensions/plotter.inx.h:43
+#: ../share/extensions/plotter.inx.h:46
 msgid "Use precut"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:28
-#: ../share/extensions/plotter.inx.h:44
+#: ../share/extensions/plotter.inx.h:47
 msgid ""
 "Check this to cut a small line before the real drawing starts to correctly "
 "align the tool orientation. (Default: Checked)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:29
-#: ../share/extensions/plotter.inx.h:45
-msgid "Curve flatness"
+#: ../share/extensions/plotter.inx.h:48
+msgid "Curve flatness:"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:30
-#: ../share/extensions/plotter.inx.h:46
+#: ../share/extensions/plotter.inx.h:49
 msgid ""
 "Curves are divided into lines, this number controls how fine the curves will "
-"be reproduced, the smaller the finer. (Default: '1.2')"
+"be reproduced, the smaller the finer (Default: '1.2')"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:31
-#: ../share/extensions/plotter.inx.h:47
+#: ../share/extensions/plotter.inx.h:50
 msgid "Auto align"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:32
-#: ../share/extensions/plotter.inx.h:48
+#: ../share/extensions/plotter.inx.h:51
 msgid ""
 "Check this to auto align the drawing to the zero point (Plus the tool offset "
 "if used). If unchecked you have to make sure that all parts of your drawing "
@@ -31860,7 +31858,7 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:33
-#: ../share/extensions/plotter.inx.h:51
+#: ../share/extensions/plotter.inx.h:54
 msgid ""
 "All these settings depend on the plotter you use, for more information "
 "please consult the manual or homepage for your plotter."
@@ -33127,39 +33125,39 @@ msgid "Connection Settings "
 msgstr ""
 
 #: ../share/extensions/plotter.inx.h:4
-msgid "Serial port"
+msgid "Serial port:"
 msgstr ""
 
 #: ../share/extensions/plotter.inx.h:5
 msgid ""
 "The port of your serial connection, on Windows something like 'COM1', on "
-"Linux something like: '/dev/ttyUSB0'. (Default: COM1)"
+"Linux something like: '/dev/ttyUSB0' (Default: COM1)"
 msgstr ""
 
 #: ../share/extensions/plotter.inx.h:6
-msgid "Serial baud rate"
+msgid "Serial baud rate:"
 msgstr ""
 
 #: ../share/extensions/plotter.inx.h:7
-msgid "The Baud rate of your serial connection. (Default: 9600)"
+msgid "The Baud rate of your serial connection (Default: 9600)"
 msgstr ""
 
 #: ../share/extensions/plotter.inx.h:8
-msgid "Flow control"
+msgid "Flow control:"
 msgstr ""
 
 #: ../share/extensions/plotter.inx.h:9
 msgid ""
-"The Software / Hardware flow control of your serial connection. (Default: "
+"The Software / Hardware flow control of your serial connection (Default: "
 "Software)"
 msgstr ""
 
 #: ../share/extensions/plotter.inx.h:10
-msgid "Command language"
+msgid "Command language:"
 msgstr ""
 
 #: ../share/extensions/plotter.inx.h:11
-msgid "The command language to use. (Default: HPGL)"
+msgid "The command language to use (Default: HPGL)"
 msgstr ""
 
 #: ../share/extensions/plotter.inx.h:12
@@ -33175,29 +33173,52 @@ msgid "Hardware (DSR/DTR + RTS/CTS)"
 msgstr ""
 
 #: ../share/extensions/plotter.inx.h:16
+msgid "HPGL"
+msgstr ""
+
+#: ../share/extensions/plotter.inx.h:17
+msgid "DMPL"
+msgstr ""
+
+#: ../share/extensions/plotter.inx.h:18
+msgid "KNK Zing (HPGL variant)"
+msgstr ""
+
+#: ../share/extensions/plotter.inx.h:19
 msgid ""
 "Using wrong settings can under certain circumstances cause Inkscape to "
 "freeze. Always save your work before plotting!"
 msgstr ""
 
-#: ../share/extensions/plotter.inx.h:17
+#: ../share/extensions/plotter.inx.h:20
 msgid ""
 "This can be a physical serial connection or a USB-to-Serial bridge. Ask your "
 "plotter manufacturer for drivers if needed."
 msgstr ""
 
-#: ../share/extensions/plotter.inx.h:18
+#: ../share/extensions/plotter.inx.h:21
 msgid "Parallel (LPT) connections are not supported."
 msgstr ""
 
-#: ../share/extensions/plotter.inx.h:49
+#: ../share/extensions/plotter.inx.h:32
+msgid ""
+"The speed the pen will move with in centimeters or millimeters per second "
+"(depending on your plotter model), set to 0 to omit command. Most plotters "
+"ignore this command. (Default: 0)"
+msgstr ""
+
+#: ../share/extensions/plotter.inx.h:33
+msgid "Rotation (°, clockwise):"
+msgstr ""
+
+#: ../share/extensions/plotter.inx.h:52
 msgid "Show debug information"
 msgstr ""
 
-#: ../share/extensions/plotter.inx.h:50
+#: ../share/extensions/plotter.inx.h:53
 msgid ""
 "Check this to get verbose information about the plot without actually "
-"sending something to the plotter (A.k.a. data dump). (Default: Unchecked)"
+"sending something to the plotter (A.k.a. data dump) (Default: Unchecked)"
 msgstr ""
 
 #: ../share/extensions/plt_input.inx.h:1
