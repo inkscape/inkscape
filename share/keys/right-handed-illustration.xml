@@ -539,7 +539,6 @@ Future improvements:
 
 <!-- Help -->
 
-  <bind action="HelpKeys" />
   <bind action="HelpAboutExtensions" />
   <bind action="HelpAboutMemory" />
   <bind action="HelpAbout" />

@@ -542,7 +542,6 @@ Hom/end keys-select minimum or maximum feather values
 
 <!-- Help -->
 
-  <bind key="F1" action="HelpKeys" />
   <bind action="HelpAboutExtensions" />
   <bind action="HelpAboutMemory" />
   <bind action="HelpAbout" />
