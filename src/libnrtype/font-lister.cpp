@@ -83,6 +83,15 @@ namespace Inkscape
 	font_list_store->thaw_notify();
 
         style_list_store       = Gtk::ListStore::create (FontStyleList);
+
+        // Initialize style store with defaults
+        style_list_store->freeze_notify();
+        style_list_store->clear();
+        for (GList *l=default_styles; l; l = l->next) {
+            Gtk::TreeModel::iterator treeModelIter = style_list_store->append();
+            (*treeModelIter)[FontStyleList.styles] = (char*)l->data;
+        }
+        style_list_store->thaw_notify();
     }
 
     // Example of how to use "foreach_iter"
