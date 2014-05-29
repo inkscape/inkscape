@@ -240,37 +240,12 @@ namespace Inkscape
       font_list_store->thaw_notify();
     }
 
-    // FIXME: why do we parse the style attribute instead of the object's SPStyle?
     void
     FontLister::update_font_list_recursive( SPObject *r, std::list<Glib::ustring> *l ) {
 
-      const gchar *style = r->getRepr()->attribute("style");
-      if( style != NULL ) {
-
-        std::vector<Glib::ustring> tokens = Glib::Regex::split_simple(";", style );
-        for( size_t i=0; i < tokens.size(); ++i ) {
-
-	  Glib::ustring token = tokens[i];
-	  size_t found = token.find("font-family:");
-
-	  if( found != Glib::ustring::npos ) {
-
-	    // Remove "font-family:"
-	    token.erase(found,12);
-
-	    // Remove any leading single or double quote
-	    if( token[0] == '\'' || token[0] == '"' ) {
-	      token.erase(0,1);
-	    }
-
-	    // Remove any trailing single or double quote
-	    if( token[token.length()-1] == '\'' || token[token.length()-1] == '"' ) {
-	      token.erase(token.length()-1);
-	    }
-
-	    l->push_back( token );
-	  }
-        }
+      const gchar *font_family = r->style->font_family.value;
+      if( font_family ) {
+          l->push_back( Glib::ustring( font_family ) );
       }
 
       for (SPObject *child = r->firstChild(); child; child = child->getNext()) {
