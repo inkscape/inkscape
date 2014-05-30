@@ -58,6 +58,8 @@
 
 #include <2geom/math-utils.h>
 
+#include <glibmm/regex.h>
+
 using Inkscape::CSSOStringStream;
 using std::vector;
 
@@ -1824,31 +1826,43 @@ sp_css_attr_scale(SPCSSAttr *css, double ex)
 }
 
 
-// Called in style.cpp, xml/repr-css.cpp
+// Called in style-internal.cpp, xml/repr-css.cpp
 /**
- * Remove quotes and escapes from a string. Returned value must be g_free'd.
+ * Remove paired single and double quotes from a string, changing string in place.
  * Note: in CSS (in style= and in stylesheets), unquoting and unescaping is done
  * by libcroco, our CSS parser, though it adds a new pair of "" quotes for the strings
- * it parsed for us. So this function is only used to remove those quotes and for
- * presentation attributes, without any unescaping. (XML unescaping
- * (&amp; etc) is done by XML parser.)
+ * it parsed for us.
  */
-gchar *
-attribute_unquote(gchar const *val)
+void
+css_unquote(Glib::ustring &val)
 {
-    if (val) {
-        if (*val == '\'' || *val == '"') {
-            int l = strlen(val);
-            if (l >= 2) {
-                if ( ( val[0] == '"' && val[l - 1] == '"' )  ||
-                     ( val[0] == '\'' && val[l - 1] == '\'' )  ) {
-                    return (g_strndup (val+1, l-2));
-                }
-            }
-        }
-    }
+  if( val.size() > 1 &&
+      ( (val[0] == '"'  && val[val.size()-1] == '"'  ) ||
+	(val[0] == '\'' && val[val.size()-1] == '\'' ) ) ) {
 
-    return (val? g_strdup (val) : NULL);
+    val.erase( 0, 1 );
+    val.erase( val.size()-1 );
+  }
+}
+
+// Called in style-internal.cpp, text-toolbar.cpp
+/**
+ * Remove paired single and double quotes from font names in font-family lists,
+ * changing string in place.
+ * Pango expects unquoted font family names. We use unquoted names in interface.
+ */
+void
+css_font_family_unquote(Glib::ustring &val)
+{
+    std::vector<Glib::ustring> tokens = Glib::Regex::split_simple("\\s*,\\s*", val );
+
+    val.erase();
+    for( unsigned i=0; i < tokens.size(); ++i ) {
+        css_unquote( tokens[i] );
+        val += tokens[i] + ", ";
+    }
+    if( val.size() > 1 )
+        val.erase( val.size() - 2 ); // Remove trailing ", "
 }
 
 // Called in style.cpp, xml/repr-css.cpp

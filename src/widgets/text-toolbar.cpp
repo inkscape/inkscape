@@ -134,6 +134,7 @@ static void sp_text_fontfamily_value_changed( Ink_ComboBoxEntry_Action *act, GOb
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
 
     Glib::ustring new_family = ink_comboboxentry_action_get_active_text( act );
+    css_font_family_unquote( new_family ); // Remove quotes around font family names.
 
     // TODO: Think about how to handle handle multiple selections. While
     // the font-family may be the same for all, the styles might be different.

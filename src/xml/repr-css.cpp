@@ -12,7 +12,7 @@
  * changing an item in the List. Utility functions are provided to go back and forth between the
  * two ways of representing properties (by a string or by a list).
  *
- * Use sp_repr_write_string to go from a property list to a style string.
+ * Use sp_repr_css_write_string to go from a property list to a style string.
  *
  */
 
@@ -350,9 +350,10 @@ void sp_repr_css_merge(SPCSSAttr *dst, SPCSSAttr *src)
 static void sp_repr_css_merge_from_decl(SPCSSAttr *css, CRDeclaration const *const decl)
 {
     guchar *const str_value_unsigned = cr_term_to_string(decl->value);
-    gchar *const str_value = reinterpret_cast<gchar *>(str_value_unsigned);
-    gchar *value_unquoted = attribute_unquote (str_value); // libcroco returns strings quoted in ""
-    Glib::ustring value_unquoted2 = value_unquoted ? value_unquoted : Glib::ustring();
+
+    Glib::ustring value_unquoted( reinterpret_cast<gchar *>(str_value_unsigned ) );
+    css_unquote( value_unquoted );  // libcroco returns strings quoted in "", remove
+
     Glib::ustring units;
 
     /*
@@ -362,11 +363,11 @@ static void sp_repr_css_merge_from_decl(SPCSSAttr *css, CRDeclaration const *con
     *
     * HACK for now is to strip off em and ex units and add them back at the end
     */
-    int le = value_unquoted2.length();
+    int le = value_unquoted.length();
     if (le > 2) {
-        units = value_unquoted2.substr(le-2, 2);
+        units = value_unquoted.substr(le-2, 2);
         if ((units == "em") || (units == "ex")) {
-            value_unquoted2 = value_unquoted2.substr(0, le-2);
+            value_unquoted = value_unquoted.substr(0, le-2);
         }
         else {
             units.clear();
@@ -377,7 +378,7 @@ static void sp_repr_css_merge_from_decl(SPCSSAttr *css, CRDeclaration const *con
     // CSSOStringStream is used here to write valid CSS (as in sp_style_write_string). This has
     // the additional benefit of respecting the numerical precission set in the SVG Output
     // preferences. We assume any numerical part comes first (if not, the whole string is copied).
-    std::stringstream ss( value_unquoted2 );
+    std::stringstream ss( value_unquoted );
     double number = 0;
     std::string characters;
     std::string temp;
@@ -399,8 +400,7 @@ static void sp_repr_css_merge_from_decl(SPCSSAttr *css, CRDeclaration const *con
         //g_message("sp_repr_css_merge_from_decl looks like em or ex units %s --> %s", str_value, os.str().c_str());
     }
     ((Node *) css)->setAttribute(decl->property->stryng->str, os.str().c_str(), false);
-    g_free(value_unquoted);
-    g_free(str_value);
+    g_free(str_value_unsigned);
 }
 
 /**

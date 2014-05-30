@@ -292,7 +292,9 @@ void sp_style_unset_property_attrs(SPObject *o);
 
 void sp_style_set_property_url (SPObject *item, gchar const *property, SPObject *linked, bool recursive);
 
-gchar *attribute_unquote(gchar const *val);
+void css_unquote( Glib::ustring &val ); // Remove quotes from CSS values (style-internal.cpp, xml/repr-css.cpp)
+void css_font_family_unquote( Glib::ustring &val ); // style-internal.cpp, text-toolbar.cpp
+
 Glib::ustring css2_escape_quote(gchar const *val);
 
 #endif // SEEN_SP_STYLE_H

@@ -648,9 +648,6 @@ SPIString::read( gchar const *str ) {
 
     if( !str ) return;
 
-    // libcroco puts quotes around some strings... remove
-    gchar *str_unquoted = attribute_unquote(str);
-
     if (!strcmp(str, "inherit")) {
         set = true;
         inherit = true;
@@ -658,10 +655,18 @@ SPIString::read( gchar const *str ) {
     } else {
         set = true;
         inherit = false;
-        value = g_strdup(str_unquoted);
-    }
 
-    g_free( str_unquoted );
+        // libcroco puts quotes around some strings... remove
+        Glib::ustring str_unquoted(str);
+        css_unquote( str_unquoted );
+
+        // Unquote individual family names, Pango always uses unquoted names.
+        if( name.compare( "font-family" ) == 0 ) {
+            css_font_family_unquote( str_unquoted );
+        }
+
+        value = g_strdup(str_unquoted.c_str());
+    }
 }
 
 
