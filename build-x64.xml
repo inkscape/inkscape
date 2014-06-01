@@ -221,7 +221,7 @@
         //#define WITH_CSSBLEND              1
         //#define WITH_MESH                  1
 
-        //#define HAVE_ASPELL                   1
+        #define HAVE_ASPELL                   1
 
         #endif /* _CONFIG_H_ */
     </makefile>
@@ -501,7 +501,7 @@
            -lgc
            -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
            -lgomp -lwinpthread-1
-           <!-- laspell -->
+           -laspell
            -lmscms  <!-- required for color profiles -->
        </libs>
     </link>
@@ -589,7 +589,7 @@
            -lgc
            -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
            -lgomp -lwinpthread
-           <!-- laspell -->
+           -laspell
            -lmscms  <!-- required for color profiles -->
        </libs>
     </link>
@@ -640,7 +640,7 @@
            -lgc
            -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
            -lgomp -lwinpthread-1
-           <!-- laspell -->
+           -laspell
            -lmscms  <!-- required for color profiles -->
        </libs>
     </link>
@@ -679,6 +679,7 @@
 <copy todir="${dist}" file="${devlibs}/bin/libharfbuzz-0.dll"/>
 <copy todir="${dist}" file="${devlibs}/bin/liblzma-5.dll"/>
 
+    <copy todir="${dist}" file="${devlibs}/bin/libaspell-15.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libatk-1.0-0.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libgdk-win32-2.0-0.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libgdk_pixbuf-2.0-0.dll"/>
@@ -771,10 +772,10 @@
         </fileset>
     </copy>
 <!--    <copy todir="${dist}/share"> <fileset dir="${devlibs}/share/poppler"/> </copy> -->
-    <copy todir="${dist}" file="${mingw_bin}/gdb.exe"/>
+    <copy todir="${dist}" file="${devlibs}/bin/gdb.exe"/>
 
     <!-- Aspell dictionaries -->
- <!--   <copy todir="${dist}/lib"> <fileset dir="${devlibs}/lib/aspell-0.60"/> </copy> -->
+    <copy todir="${dist}/lib"> <fileset dir="${devlibs}/lib/aspell-0.60"/> </copy>
 
     <!-- Necessary to run extensions on windows if it is not in the path -->
     <copy todir="${dist}" file="${devlibs}/bin/gspawn-win64-helper.exe"/>
