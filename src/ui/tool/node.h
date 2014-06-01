@@ -41,14 +41,6 @@ template <typename> class NodeIterator;
 }
 }
 
-#if HAVE_TR1_UNORDERED_SET
-namespace std {
-namespace tr1 {
-template <typename N> struct hash< Inkscape::UI::NodeIterator<N> >;
-}
-}
-#endif
-
 namespace Inkscape {
 namespace UI {
 
