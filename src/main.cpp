@@ -1158,6 +1158,7 @@ static int sp_process_file_list(GSList *fl)
                 if (sp_export_text_to_path) {
                     GSList *items = NULL;
                     SPRoot *root = doc->getRoot();
+                    doc->ensureUpToDate();
                     for ( SPObject *iter = root->firstChild(); iter ; iter = iter->getNext()) {
                         SPItem* item = (SPItem*) iter;
                         if (! (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item) || SP_IS_GROUP(item))) {

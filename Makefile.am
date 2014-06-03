@@ -177,11 +177,13 @@ EXTRA_DIST = \
 	packaging/win32/languages/French.nsh	\
 	packaging/win32/languages/Galician.nsh	\
 	packaging/win32/languages/German.nsh	\
+	packaging/win32/languages/Greek.nsh	\
 	packaging/win32/languages/Hebrew.nsh	\
 	packaging/win32/languages/Indonesian.nsh \
 	packaging/win32/languages/Italian.nsh	\
 	packaging/win32/languages/Japanese.nsh	\
 	packaging/win32/languages/Polish.nsh	\
+	packaging/win32/languages/PortugueseBR.nsh \
 	packaging/win32/languages/Romanian.nsh	\
 	packaging/win32/languages/Russian.nsh	\
 	packaging/win32/languages/Slovak.nsh	\

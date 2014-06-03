@@ -26,7 +26,8 @@ otherstuff_DATA = \
 	jessyInk_video.svg \
 	svg2fxg.xsl \
 	svg2xaml.xsl \
-	xaml2svg.xsl
+	xaml2svg.xsl \
+	inkscape.extension.rng
 
 module_DATA = $(wildcard $(srcdir)/*.inx)
 
