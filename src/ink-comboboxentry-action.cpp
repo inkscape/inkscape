@@ -38,7 +38,7 @@ static GtkWidget* create_tool_item( GtkAction* action );
 static GtkWidget* create_menu_item( GtkAction* action );
 
 // Internal
-static gint get_active_row_from_text( Ink_ComboBoxEntry_Action* action, const gchar* target_text, gboolean exclude = false );
+static gint get_active_row_from_text( Ink_ComboBoxEntry_Action* action, const gchar* target_text, gboolean exclude = false, gboolean ignore_case = false );
 static Glib::ustring check_comma_separated_text( Ink_ComboBoxEntry_Action* action );
 
 // Callbacks
@@ -732,7 +732,8 @@ void     ink_comboboxentry_action_set_altx_name( Ink_ComboBoxEntry_Action* actio
 // use 3d colunm if available to exclude row from checking (useful to
 // skip rows added for font-families included in doc and not on
 // system)
-gint get_active_row_from_text( Ink_ComboBoxEntry_Action* action, const gchar* target_text, gboolean exclude ) {
+gint get_active_row_from_text( Ink_ComboBoxEntry_Action* action, const gchar* target_text,
+			       gboolean exclude, gboolean ignore_case ) {
 
   // Check if text in list
   gint row = 0;
@@ -752,10 +753,23 @@ gint get_active_row_from_text( Ink_ComboBoxEntry_Action* action, const gchar* ta
       gchar* text = 0;
       gtk_tree_model_get( action->model, &iter, 0, &text, -1 ); // Column 0
 
-      // Check for match
-      if( strcmp( target_text, text ) == 0 ){
-	found = true;
-	break;
+      if( !ignore_case ) {
+	// Case sensitive compare
+	if( strcmp( target_text, text ) == 0 ){
+	  found = true;
+	  break;
+	}
+      } else {
+	// Case insensitive compare
+	gchar* target_text_casefolded = g_utf8_casefold( target_text, -1 );
+	gchar* text_casefolded        = g_utf8_casefold( text, -1 );
+	gboolean equal = (strcmp( target_text_casefolded, text_casefolded ) == 0 );
+	g_free( text_casefolded );
+	g_free( target_text_casefolded );
+	if( equal ) {
+	  found = true;
+	  break;
+	}
       }
     }
 
@@ -794,7 +808,7 @@ static Glib::ustring check_comma_separated_text( Ink_ComboBoxEntry_Action* actio
     // Remove any surrounding white space.
     g_strstrip( tokens[i] );
 
-    if( get_active_row_from_text( action, tokens[i], true ) == -1 ) {
+    if( get_active_row_from_text( action, tokens[i], true, true ) == -1 ) {
       missing += tokens[i];
       missing += ", ";
     }
