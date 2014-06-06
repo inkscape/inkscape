@@ -5,7 +5,7 @@
  * Authors:
  *   Ted Gould <ted@gould.cx>
  *   Ulf Erikson <ulferikson@users.sf.net>
- *   Adib Taraben <theAdib@yahoo.com>
+ *   Adib Taraben <theAdib@gmail.com>
  *   Abhishek Sharma
  *
  * Copyright (C) 2004-2006 Authors

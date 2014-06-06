@@ -13387,7 +13387,7 @@ msgstr "about.svg"
 #: ../src/ui/dialog/aboutbox.cpp:416
 msgid "translator-credits"
 msgstr ""
-"Adib Taraben (theadib@yahoo.com)\n"
+"Adib Taraben (theadib@gmail.com)\n"
 "Alexander Senger (neutronenspalter@freenet.de)\n"
 "Benedikt Roth (Benedikt.Roth@gmx.net)\n"
 "Christian Meyer (chrisime@gnome.org)\n"

@@ -1,5 +1,5 @@
 ;Language: German (1031, CP1252)
-;By Adib Taraben <theadib@googlemail.com>
+;By Adib Taraben <theadib@gmail.com>
 ${LangFileString} CaptionDescription "Open Source SVG-Vektorillustrator"
 ${LangFileString} LICENSE_BOTTOM_TEXT "$(^Name) wird unter der GNU General Public License (GPL) veröffentlicht. Die Lizenz dient hier nur der Information. $_CLICK"
 ${LangFileString} WANT_UNINSTALL_BEFORE "$R1 wurde bereits installiert. $\nSoll die vorhergehende Version vor dem Installieren von $(^Name) zuerst deinstalliert werden?"

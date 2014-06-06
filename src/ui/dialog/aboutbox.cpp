@@ -442,7 +442,7 @@ void AboutBox::initStrings() {
      */          
     gchar const *allTranslators =
 "3ARRANO.com <3arrano@3arrano.com>, 2005.\n"
-"Adib Taraben <theadib@googlemail.com>, 2004.\n"
+"Adib Taraben <theadib@gmail.com>, 2004.\n"
 "Alan Monfort <alan.monfort@free.fr>, 2009-2010.\n"
 "Alastair McKinstry <mckinstry@computer.org>, 2000.\n"
 "Aleksandar Urošević <urke@users.sourceforge.net>, 2004-2006.\n"
