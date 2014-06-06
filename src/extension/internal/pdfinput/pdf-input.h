@@ -75,6 +75,7 @@ public:
 
     bool showDialog();
     int getSelectedPage();
+    int getImportMethod();
     void getImportSettings(Inkscape::XML::Node *prefs);
 
 private:
@@ -103,6 +104,9 @@ private:
     class Inkscape::UI::Widget::Frame * _pageSettingsFrame;
     class Gtk::Label * _labelPrecision;
     class Gtk::Label * _labelPrecisionWarning;
+#ifdef HAVE_POPPLER_CAIRO
+    class Gtk::CheckButton * _importviaPopplerCheck; // using poppler_cairo for importing
+#endif
 #if WITH_GTKMM_3_0
     class Gtk::Scale * _fallbackPrecisionSlider;
     Glib::RefPtr<Gtk::Adjustment> _fallbackPrecisionSlider_adj;

@@ -124,6 +124,9 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     _labelPrecision = Gtk::manage(new class Gtk::Label(_("Precision of approximating gradient meshes:")));
     _labelPrecisionWarning = Gtk::manage(new class Gtk::Label(_("<b>Note</b>: setting the precision too high may result in a large SVG file and slow performance.")));
 
+#ifdef HAVE_POPPLER_CAIRO
+    _importviaPopplerCheck = Gtk::manage(new class Gtk::CheckButton(_("import via Poppler")));
+#endif
 #if WITH_GTKMM_3_0
     _fallbackPrecisionSlider_adj = Gtk::Adjustment::create(2, 1, 256, 1, 10, 10);
     _fallbackPrecisionSlider = Gtk::manage(new class Gtk::Scale(_fallbackPrecisionSlider_adj));
@@ -199,6 +202,12 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     _labelPrecisionWarning->set_line_wrap(true);
     _labelPrecisionWarning->set_use_markup(true);
     _labelPrecisionWarning->set_selectable(false);
+#ifdef HAVE_POPPLER_CAIRO
+    _importviaPopplerCheck->set_can_focus();
+    _importviaPopplerCheck->set_relief(Gtk::RELIEF_NORMAL);
+    _importviaPopplerCheck->set_mode(true);
+    _importviaPopplerCheck->set_active(false);
+#endif
     _fallbackPrecisionSlider->set_size_request(180,-1);
     _fallbackPrecisionSlider->set_can_focus();
     _fallbackPrecisionSlider->set_inverted(false);
@@ -230,6 +239,9 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     _embedImagesCheck->set_relief(Gtk::RELIEF_NORMAL);
     _embedImagesCheck->set_mode(true);
     _embedImagesCheck->set_active(true);
+#ifdef HAVE_POPPLER_CAIRO
+    vbox3->pack_start(*_importviaPopplerCheck, Gtk::PACK_SHRINK, 0);
+#endif    
     vbox3->pack_start(*_labelPrecision, Gtk::PACK_SHRINK, 0);
     vbox3->pack_start(*hbox6, Gtk::PACK_SHRINK, 0);
     vbox3->pack_start(*_labelPrecisionWarning, Gtk::PACK_SHRINK, 0);
@@ -274,6 +286,9 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     _pageSettingsFrame->show();
     _labelPrecision->show();
     _labelPrecisionWarning->show();
+#ifdef HAVE_POPPLER_CAIRO
+    _importviaPopplerCheck->show();
+#endif
     _fallbackPrecisionSlider->show();
     _labelPrecisionComment->show();
     hbox6->show();
@@ -358,6 +373,14 @@ int PdfImportDialog::getSelectedPage() {
     return _current_page;
 }
 
+int PdfImportDialog::getImportMethod() {
+#ifdef HAVE_POPPLER_CAIRO
+    return (_importviaPopplerCheck->get_active()) ? 1 : 0;
+#else
+    return 0;
+#endif
+}
+
 /**
  * \brief Retrieves the current settings into a repr which SvgBuilder will use
  *        for determining the behaviour desired by the user
@@ -389,6 +412,13 @@ void PdfImportDialog::getImportSettings(Inkscape::XML::Node *prefs) {
     } else {
         prefs->setAttribute("embedImages", "0");
     }
+#ifdef HAVE_POPPLER_CAIRO
+    if (_importviaPopplerCheck->get_active()) {
+        prefs->setAttribute("importviapoppler", "1");
+    } else {
+        prefs->setAttribute("importviapoppler", "0");
+    }
+#endif
 }
 
 /**
@@ -595,6 +625,18 @@ PdfInput::wasCancelled () {
     return _cancelled;
 }
 
+#ifdef HAVE_POPPLER_CAIRO
+/// helper method
+static cairo_status_t
+        _write_ustring_cb(void *closure, const unsigned char *data, unsigned int length)
+{
+    Glib::ustring* stream = static_cast<Glib::ustring*>(closure);
+    stream->append(reinterpret_cast<const char*>(data), length);
+
+    return CAIRO_STATUS_SUCCESS;
+}
+#endif
+
 /**
  * Parses the selected page of the given PDF document using PdfParser.
  */
@@ -672,79 +714,146 @@ PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
         page_num = 1;
     Catalog *catalog = pdf_doc->getCatalog();
     Page *page = catalog->getPage(page_num);
-
-    SPDocument *doc = SPDocument::createNewDoc(NULL, TRUE, TRUE);
-    bool saved = DocumentUndo::getUndoSensitive(doc);
-    DocumentUndo::setUndoSensitive(doc, false); // No need to undo in this temporary document
-
-    // Create builder
-    gchar *docname = g_path_get_basename(uri);
-    gchar *dot = g_strrstr(docname, ".");
-    if (dot) {
-        *dot = 0;
+    
+    int is_importvia_poppler = 0;
+    if(dlg)
+    {
+#ifdef HAVE_POPPLER_CAIRO
+        is_importvia_poppler = dlg->getImportMethod();
+#endif
     }
-    SvgBuilder *builder = new SvgBuilder(doc, docname, pdf_doc->getXRef());
 
-    // Get preferences
-    Inkscape::XML::Node *prefs = builder->getPreferences();
-    if (dlg)
-        dlg->getImportSettings(prefs);
+    SPDocument *doc = NULL;
+    bool saved = false;
+    if(is_importvia_poppler == 0)
+    {
+        // native importer
+        doc = SPDocument::createNewDoc(NULL, TRUE, TRUE);
+        saved = DocumentUndo::getUndoSensitive(doc);
+        DocumentUndo::setUndoSensitive(doc, false); // No need to undo in this temporary document
 
-    // Apply crop settings
-    PDFRectangle *clipToBox = NULL;
-    double crop_setting;
-    sp_repr_get_double(prefs, "cropTo", &crop_setting);
-    if ( crop_setting >= 0.0 ) {    // Do page clipping
-        int crop_choice = (int)crop_setting;
-        switch (crop_choice) {
-            case 0: // Media box
-                clipToBox = page->getMediaBox();
-                break;
-            case 1: // Crop box
-                clipToBox = page->getCropBox();
-                break;
-            case 2: // Bleed box
-                clipToBox = page->getBleedBox();
-                break;
-            case 3: // Trim box
-                clipToBox = page->getTrimBox();
-                break;
-            case 4: // Art box
-                clipToBox = page->getArtBox();
-                break;
-            default:
-                break;
+        // Create builder
+        gchar *docname = g_path_get_basename(uri);
+        gchar *dot = g_strrstr(docname, ".");
+        if (dot) {
+            *dot = 0;
         }
-    }
+        SvgBuilder *builder = new SvgBuilder(doc, docname, pdf_doc->getXRef());
 
-    // Create parser
-    PdfParser *pdf_parser = new PdfParser(pdf_doc->getXRef(), builder, page_num-1, page->getRotate(),
-                                          page->getResourceDict(), page->getCropBox(), clipToBox);
+        // Get preferences
+        Inkscape::XML::Node *prefs = builder->getPreferences();
+        if (dlg)
+            dlg->getImportSettings(prefs);
 
-    // Set up approximation precision for parser
-    double color_delta;
-    sp_repr_get_double(prefs, "approximationPrecision", &color_delta);
-    if ( color_delta <= 0.0 ) {
-        color_delta = 1.0 / 2.0;
-    } else {
-        color_delta = 1.0 / color_delta;
-    }
-    for ( int i = 1 ; i <= pdfNumShadingTypes ; i++ ) {
-        pdf_parser->setApproximationPrecision(i, color_delta, 6);
-    }
+        printf("pdf import via %s.", (is_importvia_poppler != 0) ? "poppler" : "native");
 
-    // Parse the document structure
-    Object obj;
-    page->getContents(&obj);
-    if (!obj.isNull()) {
-        pdf_parser->parse(&obj);
+        // Apply crop settings
+        PDFRectangle *clipToBox = NULL;
+        double crop_setting;
+        sp_repr_get_double(prefs, "cropTo", &crop_setting);
+        if ( crop_setting >= 0.0 ) {    // Do page clipping
+            int crop_choice = (int)crop_setting;
+            switch (crop_choice) {
+                case 0: // Media box
+                    clipToBox = page->getMediaBox();
+                    break;
+                case 1: // Crop box
+                    clipToBox = page->getCropBox();
+                    break;
+                case 2: // Bleed box
+                    clipToBox = page->getBleedBox();
+                    break;
+                case 3: // Trim box
+                    clipToBox = page->getTrimBox();
+                    break;
+                case 4: // Art box
+                    clipToBox = page->getArtBox();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        // Create parser
+        PdfParser *pdf_parser = new PdfParser(pdf_doc->getXRef(), builder, page_num-1, page->getRotate(),
+                                              page->getResourceDict(), page->getCropBox(), clipToBox);
+
+        // Set up approximation precision for parser
+        double color_delta;
+        sp_repr_get_double(prefs, "approximationPrecision", &color_delta);
+        if ( color_delta <= 0.0 ) {
+            color_delta = 1.0 / 2.0;
+        } else {
+            color_delta = 1.0 / color_delta;
+        }
+        for ( int i = 1 ; i <= pdfNumShadingTypes ; i++ ) {
+            pdf_parser->setApproximationPrecision(i, color_delta, 6);
+        }
+
+        // Parse the document structure
+        Object obj;
+        page->getContents(&obj);
+        if (!obj.isNull()) {
+            pdf_parser->parse(&obj);
+        }
+
+        // Cleanup
+        obj.free();
+        delete pdf_parser;
+        delete builder;
+        g_free(docname);
+    }
+    else
+    {
+#ifdef HAVE_POPPLER_CAIRO
+        // the poppler import
+        gchar* filename_uri = g_filename_to_uri(uri, NULL, NULL);
+        GError *error = NULL;
+        /// @todo handle passwort
+        /// @todo check if win32 unicode needs special attention
+        PopplerDocument* document = poppler_document_new_from_file(filename_uri, NULL, &error);
+
+        if(error != NULL) {
+            g_error_free (error);
+        }
+
+        if (document != NULL)
+        {
+            double width, height;
+            PopplerPage* page = poppler_document_get_page(document, page_num - 1);
+            poppler_page_get_size(page, &width, &height);
+
+            Glib::ustring output;
+            cairo_surface_t* surface = cairo_svg_surface_create_for_stream(Inkscape::Extension::Internal::_write_ustring_cb,
+                                                                           &output, width, height);
+            cairo_t* cr = cairo_create(surface);
+
+            poppler_page_render_for_printing(page, cr);
+            cairo_show_page(cr);
+
+            cairo_destroy(cr);
+            cairo_surface_destroy(surface);
+
+            doc = SPDocument::createNewDocFromMem(output.c_str(), output.length(), TRUE);
+            
+            // Cleanup
+            // delete output;
+            g_object_unref(G_OBJECT(page));
+            g_object_unref(G_OBJECT(document));
+        }
+        else
+        {
+            doc = SPDocument::createNewDoc(NULL, TRUE, TRUE);   // fallback create empthy document
+        }
+        saved = DocumentUndo::getUndoSensitive(doc);
+        DocumentUndo::setUndoSensitive(doc, false); // No need to undo in this temporary document
+
+        // Cleanup
+        g_free(filename_uri);
+#endif
     }
 
     // Cleanup
-    obj.free();
-    delete pdf_parser;
-    delete builder;
-    g_free(docname);
     delete pdf_doc;
     delete dlg;
 

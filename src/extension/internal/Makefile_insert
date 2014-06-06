@@ -106,8 +106,6 @@ ink_common_sources +=	\
 	extension/internal/svg.cpp	\
 	extension/internal/svgz.h	\
 	extension/internal/svgz.cpp	\
-	extension/internal/pdf-input-cairo.cpp \
-	extension/internal/pdf-input-cairo.h \
 	extension/internal/cairo-ps-out.h	\
 	extension/internal/cairo-ps-out.cpp	\
 	extension/internal/cairo-render-context.h	\

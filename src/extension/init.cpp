@@ -19,9 +19,6 @@
 #ifdef HAVE_POPPLER
 # include "internal/pdfinput/pdf-input.h"
 #endif
-#ifdef HAVE_POPPLER_GLIB
-# include "internal/pdf-input-cairo.h"
-#endif
 
 #include "path-prefix.h"
 
@@ -173,11 +170,6 @@ init()
 #endif
 #ifdef HAVE_POPPLER
     Internal::PdfInput::init();
-#endif
-#ifdef HAVE_POPPLER_GLIB
-    if (1) {
-    Internal::PdfInputCairo::init();
-    }
 #endif
     Internal::PrintEmf::init();
     Internal::Emf::init();
