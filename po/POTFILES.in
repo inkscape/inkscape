@@ -89,7 +89,6 @@ src/extension/internal/javafx-out.cpp
 src/extension/internal/latex-pstricks-out.cpp
 src/extension/internal/latex-pstricks.cpp
 src/extension/internal/odf.cpp
-src/extension/internal/pdf-input-cairo.cpp
 src/extension/internal/pdfinput/pdf-input.cpp
 src/extension/internal/pov-out.cpp
 src/extension/internal/svg.cpp
