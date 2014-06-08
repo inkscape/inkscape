@@ -54,224 +54,9 @@ bool  font_descr_equal::operator()( PangoFontDescription *const&a, PangoFontDesc
 
 /////////////////// helper functions
 
-/**
- * A wrapper for strcasestr that also provides an implementation for Win32.
- */
-static bool
-ink_strstr(char const *haystack, char const *pneedle)
-{
-    // windows has no strcasestr implementation, so here is ours...
-    // stolen from nmap
-    /* FIXME: This is broken for e.g. ink_strstr("aab", "ab").  Report to nmap.
-     *
-     * Also, suggest use of g_ascii_todown instead of buffer stuff, and g_ascii_tolower instead
-     * of tolower.  Given that haystack is a font name (i.e. fairly short), it should be ok to
-     * do g_ascii_strdown on both haystack and pneedle, and do normal strstr.
-     *
-     * Rather than fixing in inkscape, consider getting rid of this routine, instead using
-     * strdown and plain strstr at caller.  We have control over the needle values, so we can
-     * modify the callers rather than calling strdown there.
-     */
-    char buf[512];
-    register char const *p;
-    char *needle, *q, *foundto;
-    if (!*pneedle) return true;
-    if (!haystack) return false;
-
-    needle = buf;
-    p = pneedle; q = needle;
-    while ((*q++ = tolower(*p++)))
-        ;
-    p = haystack - 1; foundto = needle;
-    while (*++p) {
-        if (tolower(*p) == *foundto) {
-            if (!*++foundto) {
-                /* Yeah, we found it */
-                return true;
-            }
-        } else foundto = needle;
-    }
-    return false;
-}
-
-/**
- * Regular fonts are 'Regular', 'Roman', 'Normal', or 'Plain'
- */
-// FIXME: make this UTF8, add non-English style names
-static bool
-is_regular(char const *s)
-{
-    if (ink_strstr(s, "Regular")) return true;
-    if (ink_strstr(s, "Roman")) return true;
-    if (ink_strstr(s, "Normal")) return true;
-    if (ink_strstr(s, "Plain")) return true;
-    return false;
-}
-
-/**
- * Non-bold fonts are 'Medium' or 'Book'
- */
-static bool
-is_nonbold(char const *s)
-{
-    if (ink_strstr(s, "Medium")) return true;
-    if (ink_strstr(s, "Book")) return true;
-    return false;
-}
-
-/**
- * Italic fonts are 'Italic', 'Oblique', or 'Slanted'
- */
-static bool
-is_italic(char const *s)
-{
-    if (ink_strstr(s, "Italic")) return true;
-    if (ink_strstr(s, "Oblique")) return true;
-    if (ink_strstr(s, "Slanted")) return true;
-    return false;
-}
-
-/**
- * Bold fonts are 'Bold'
- */
-static bool
-is_bold(char const *s)
-{
-    if (ink_strstr(s, "Bold")) return true;
-    return false;
-}
-
-/**
- * Caps fonts are 'Caps'
- */
-static bool
-is_caps(char const *s)
-{
-    if (ink_strstr(s, "Caps")) return true;
-    return false;
-}
-
-#if 0 /* FIXME: These are all unused.  Please delete them or use them (presumably in
-* style_name_compare). */
-/**
- * Monospaced fonts are 'Mono'
- */
-static bool
-is_mono(char const *s)
-{
-    if (ink_strstr(s, "Mono")) return true;
-    return false;
-}
-
-/**
- * Rounded fonts are 'Round'
- */
-static bool
-is_round(char const *s)
-{
-    if (ink_strstr(s, "Round")) return true;
-    return false;
-}
-
-/**
- * Outline fonts are 'Outline'
- */
-static bool
-is_outline(char const *s)
-{
-    if (ink_strstr(s, "Outline")) return true;
-    return false;
-}
-
-/**
- * Swash fonts are 'Swash'
- */
-static bool
-is_swash(char const *s)
-{
-    if (ink_strstr(s, "Swash")) return true;
-    return false;
-}
-#endif
-
-/**
- * Determines if two style names match.  This allows us to match
- * based on the type of style rather than simply doing string matching,
- * because for instance 'Plain' and 'Normal' mean the same thing.
- *
- * Q:  Shouldn't this include the other tests such as is_outline, etc.?
- * Q:  Is there a problem with strcasecmp on Win32?  Should it use stricmp?
- */
-int
-style_name_compare(char const *aa, char const *bb)
-{
-    char const *a = (char const *) aa;
-    char const *b = (char const *) bb;
-
-    if (is_regular(a) && !is_regular(b)) return -1;
-    if (is_regular(b) && !is_regular(a)) return 1;
-
-    if (is_bold(a) && !is_bold(b)) return 1;
-    if (is_bold(b) && !is_bold(a)) return -1;
-
-    if (is_italic(a) && !is_italic(b)) return 1;
-    if (is_italic(b) && !is_italic(a)) return -1;
-
-    if (is_nonbold(a) && !is_nonbold(b)) return 1;
-    if (is_nonbold(b) && !is_nonbold(a)) return -1;
-
-    if (is_caps(a) && !is_caps(b)) return 1;
-    if (is_caps(b) && !is_caps(a)) return -1;
-
-    return strcasecmp(a, b);
-}
-
-/*
- defined but not used:
-
-static int
-style_record_compare(void const *aa, void const *bb)
-{
-    NRStyleRecord const *a = (NRStyleRecord const *) aa;
-    NRStyleRecord const *b = (NRStyleRecord const *) bb;
-
-    return (style_name_compare(a->name, b->name));
-}
-
-static void font_factory_name_list_destructor(NRNameList *list)
-{
-    for (unsigned int i = 0; i < list->length; i++)
-        g_free(list->names[i]);
-    if ( list->names ) g_free(list->names);
-}
-
-static void font_factory_style_list_destructor(NRStyleList *list)
-{
-    for (unsigned int i = 0; i < list->length; i++) {
-        g_free((void *) (list->records)[i].name);
-        g_free((void *) (list->records)[i].descr);
-    }
-    if ( list->records ) g_free(list->records);
-}
-*/
-
-/**
- * On Win32 performs a stricmp(a,b), otherwise does a strcasecmp(a,b)
- */
-int
-family_name_compare(char const *a, char const *b)
-{
-#ifndef WIN32
-    return strcasecmp((*((char const **) a)), (*((char const **) b)));
-#else
-    return stricmp((*((char const **) a)), (*((char const **) b)));
-#endif
-}
-
 static void noop(...) {}
 //#define PANGO_DEBUG g_print
 #define PANGO_DEBUG noop
-
 
 
 ///////////////////// FontFactory
@@ -708,9 +493,24 @@ Glib::ustring font_factory::FontSpecificationBestMatch(const Glib::ustring & fon
 
 /////
 
-static bool StyleNameCompareInternal(Glib::ustring style1, Glib::ustring style2)
+// Calculate a Style "value" based on CSS values for ordering styles.
+static int StyleNameValue( const Glib::ustring &style )
 {
-    return (style_name_compare(style1.c_str(), style2.c_str()) < 0);
+
+    PangoFontDescription *pfd = pango_font_description_from_string ( style.c_str() );
+    int value =
+        pango_font_description_get_weight ( pfd ) * 1000000 +
+        pango_font_description_get_style  ( pfd ) *   10000 +
+        pango_font_description_get_stretch( pfd ) *     100 +
+        pango_font_description_get_variant( pfd );
+    pango_font_description_free ( pfd );
+    return value;
+}
+
+// Determines order in which styles are presented (sorted by CSS style values)
+static bool StyleNameCompareInternal(const Glib::ustring &style1, const Glib::ustring &style2)
+{
+    return( StyleNameValue( style1 ) < StyleNameValue( style2 ) );
 }
 
 void font_factory::GetUIFamiliesAndStyles(FamilyToStylesMap *map)
