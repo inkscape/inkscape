@@ -64,11 +64,13 @@ namespace Inkscape
                 
                 // Now go through the styles
                 GList *styles = NULL;
-                std::list<Glib::ustring> &styleStrings = familyStyleMap[familyName];
-                for (std::list<Glib::ustring>::iterator it=styleStrings.begin();
+                std::list<StyleNames> &styleStrings = familyStyleMap[familyName];
+                for (std::list<StyleNames>::iterator it=styleStrings.begin();
                         it != styleStrings.end();
                         ++it) {
-                    styles = g_list_append(styles, g_strdup((*it).c_str()));
+                    // Our own copy
+                    StyleNames *copy = new StyleNames( *it );
+                    styles = g_list_append(styles, copy);
                 }
                 
                 (*treeModelIter)[FontList.styles] = styles;
@@ -81,11 +83,11 @@ namespace Inkscape
 	current_fontspec = "sans-serif";  // Empty style -> Normal
 	current_fontspec_system = "Sans";
 
-	/* Create default styles for use when font-family is unknown on system. */
-	default_styles = g_list_append( NULL,           g_strdup("Normal") );
-	default_styles = g_list_append( default_styles, g_strdup("Italic") );
-	default_styles = g_list_append( default_styles, g_strdup("Bold") );
-	default_styles = g_list_append( default_styles, g_strdup("Bold Italic") );
+        /* Create default styles for use when font-family is unknown on system. */
+        default_styles = g_list_append( NULL,           new StyleNames( "Normal" ) );
+        default_styles = g_list_append( default_styles, new StyleNames( "Italic" ) );
+        default_styles = g_list_append( default_styles, new StyleNames( "Bold"   ) );
+        default_styles = g_list_append( default_styles, new StyleNames( "Bold Italic" ) );
 
 	font_list_store->thaw_notify();
 
@@ -96,9 +98,29 @@ namespace Inkscape
         style_list_store->clear();
         for (GList *l=default_styles; l; l = l->next) {
             Gtk::TreeModel::iterator treeModelIter = style_list_store->append();
-            (*treeModelIter)[FontStyleList.styles] = (char*)l->data;
+            (*treeModelIter)[FontStyleList.cssStyle]     = ((StyleNames*)l->data)->CssName;
+            (*treeModelIter)[FontStyleList.displayStyle] = ((StyleNames*)l->data)->DisplayName;
         }
         style_list_store->thaw_notify();
+    }
+
+    FontLister::~FontLister() {
+
+        // Delete default_styles
+        for (GList *l=default_styles; l; l = l->next) {
+            delete ((StyleNames*)l->data);
+        }
+
+        // Delete other styles
+        Gtk::TreeModel::iterator iter = font_list_store->get_iter( "0" );
+        while( iter != font_list_store->children().end() ) {
+            Gtk::TreeModel::Row row = *iter;
+            GList *styles = row[FontList.styles];
+            for (GList *l=styles; l; l = l->next) {
+                delete ((StyleNames*)l->data);
+            }
+            ++iter;
+        }
     }
 
     // Example of how to use "foreach_iter"
@@ -112,7 +134,6 @@ namespace Inkscape
     //   return true;
     // }
     // font_list_store->foreach_iter( sigc::mem_fun(*this, &FontLister::print_document_font ));
-
 
     /* Used to insert a font that was not in the document and not on the system into the font list. */
     void
@@ -471,7 +492,8 @@ std::pair<Glib::ustring, Glib::ustring> FontLister::new_font_family (Glib::ustri
 
     for (GList *l=styles; l; l = l->next) {
 	Gtk::TreeModel::iterator treeModelIter = style_list_store->append();
-	(*treeModelIter)[FontStyleList.styles] = (char*)l->data;
+        (*treeModelIter)[FontStyleList.cssStyle]     = ((StyleNames*)l->data)->CssName;
+        (*treeModelIter)[FontStyleList.displayStyle] = ((StyleNames*)l->data)->DisplayName;
     }
 
     style_list_store->thaw_notify();
@@ -856,7 +878,7 @@ std::pair<Glib::ustring, Glib::ustring> FontLister::new_font_family (Glib::ustri
 
 	Gtk::TreeModel::Row row = *iter;
 
-	if( familyNamesAreEqual( style, row[FontStyleList.styles] ) ) {
+	if( familyNamesAreEqual( style, row[FontStyleList.cssStyle] ) ) {
 	  return row;
 	}
 
@@ -982,10 +1004,6 @@ std::pair<Glib::ustring, Glib::ustring> FontLister::new_font_family (Glib::ustri
 #endif
       return best_style;
     }
-
-    FontLister::~FontLister ()
-    {
-    };
 
     const Glib::RefPtr<Gtk::ListStore>
     FontLister::get_font_list () const

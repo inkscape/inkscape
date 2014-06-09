@@ -508,9 +508,9 @@ static int StyleNameValue( const Glib::ustring &style )
 }
 
 // Determines order in which styles are presented (sorted by CSS style values)
-static bool StyleNameCompareInternal(const Glib::ustring &style1, const Glib::ustring &style2)
+static bool StyleNameCompareInternal(const StyleNames &style1, const StyleNames &style2)
 {
-    return( StyleNameValue( style1 ) < StyleNameValue( style2 ) );
+    return( StyleNameValue( style1.CssName ) < StyleNameValue( style2.CssName ) );
 }
 
 void font_factory::GetUIFamiliesAndStyles(FamilyToStylesMap *map)
@@ -536,7 +536,8 @@ void font_factory::GetUIFamiliesAndStyles(FamilyToStylesMap *map)
                 // If the face has a name, describe it, and then use the
                 // description to get the UI family and face strings
 
-                if (pango_font_face_get_face_name(faces[currentFace]) == NULL) {
+                const gchar* displayName = pango_font_face_get_face_name(faces[currentFace]);
+                if (displayName == NULL) {
                     continue;
                 }
 
@@ -566,26 +567,26 @@ void font_factory::GetUIFamiliesAndStyles(FamilyToStylesMap *map)
 
                         // Insert new family
                         if (iter == map->end()) {
-                            map->insert(std::make_pair(familyUIName, std::list<Glib::ustring>()));
+                            map->insert(std::make_pair(familyUIName, std::list<StyleNames>()));
                         }
 
                         // Insert into the style list and save the info in the reference maps
                         // only if the style does not yet exist
 
                         bool exists = false;
-                        std::list<Glib::ustring> &styleList = (*map)[familyUIName];
+                        std::list<StyleNames> &styleList = (*map)[familyUIName];
 
-                        for (std::list<Glib::ustring>::iterator it=styleList.begin();
+                        for (std::list<StyleNames>::iterator it=styleList.begin();
                                  it != styleList.end();
                                  ++it) {
-                            if (*it == styleUIName) {
+                            if ( (*it).CssName == styleUIName) {
                                 exists = true;
                                 break;
                             }
                         }
 
                         if (!exists) {
-                            styleList.push_back(styleUIName);
+                            styleList.push_back( StyleNames(styleUIName,displayName) );
 
                             // Add the string info needed in the reference maps
                             fontStringMap.insert(

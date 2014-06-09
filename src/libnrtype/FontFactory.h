@@ -51,15 +51,26 @@ struct font_descr_equal : public std::binary_function<PangoFontDescription*, Pan
     bool operator()(PangoFontDescription *const &a, PangoFontDescription *const &b) const;
 };
 
-// Comparison functions for style names
-int style_name_compare(char const *aa, char const *bb);
-int family_name_compare(char const *a, char const *b);
-
 // Wraps calls to pango_font_description_get_family with some name substitution
 const char *sp_font_description_get_family(PangoFontDescription const *fontDescr);
 
-// Map type for gathering UI family and style strings
-typedef std::map<Glib::ustring, std::list<Glib::ustring> > FamilyToStylesMap;
+// Class for style strings: both CSS and as suggested by font.
+class StyleNames {
+
+public:
+    StyleNames() {};
+    StyleNames( Glib::ustring name ) :
+        CssName( name ), DisplayName( name ) {};
+    StyleNames( Glib::ustring cssname, Glib::ustring displayname ) :
+        CssName( cssname ), DisplayName( displayname ) {};
+
+public:
+    Glib::ustring CssName;     // Style as Pango/CSS would write it.
+    Glib::ustring DisplayName; // Style as Font designer named it.
+};
+
+// Map type for gathering UI family and style names
+typedef std::map<Glib::ustring, std::list<StyleNames> > FamilyToStylesMap;
 
 class font_factory {
 public:

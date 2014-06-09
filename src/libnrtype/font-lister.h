@@ -100,13 +100,18 @@ namespace Inkscape
                             : public Gtk::TreeModelColumnRecord
                         {
                             public:
-                                /** Column containing the styles
+                                /** Column containing the styles as Font designer used.
                                  */
-                                Gtk::TreeModelColumn<Glib::ustring> styles; 
+                                Gtk::TreeModelColumn<Glib::ustring> displayStyle; 
+
+                                /** Column containing the styles in CSS/Pango format.
+                                 */
+                                Gtk::TreeModelColumn<Glib::ustring> cssStyle; 
 
                                 FontStyleListClass ()
                                 {
-                                    add (styles);
+                                    add (cssStyle);
+                                    add (displayStyle);
                                 }
                         };
 
@@ -276,7 +281,7 @@ namespace Inkscape
                     private:
 
                         FontLister ();
-       
+
                         NRNameList families;
 
                         Glib::RefPtr<Gtk::ListStore> font_list_store;

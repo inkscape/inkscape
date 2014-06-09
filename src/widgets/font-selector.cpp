@@ -179,6 +179,7 @@ static void sp_font_selector_init(SPFontSelector *fsel)
         Inkscape::FontLister* fontlister = Inkscape::FontLister::get_instance();
         Glib::RefPtr<Gtk::ListStore> store = fontlister->get_font_list();
         gtk_tree_view_set_model (GTK_TREE_VIEW(fsel->family_treeview), GTK_TREE_MODEL (Glib::unwrap (store)));
+        //gtk_tree_view_set_tooltip_column(GTK_TREE_VIEW(fsel->family_treeview),2);
         gtk_container_add(GTK_CONTAINER(sw), fsel->family_treeview);
         gtk_widget_show_all (sw);
 
@@ -210,12 +211,22 @@ static void sp_font_selector_init(SPFontSelector *fsel)
         gtk_box_pack_start(GTK_BOX (vb), sw, TRUE, TRUE, 0);
 
         fsel->style_treeview = gtk_tree_view_new ();
-        column = gtk_tree_view_column_new ();
+
+        // CSS Style name
         cell = gtk_cell_renderer_text_new ();
-        gtk_tree_view_column_pack_start (column, cell, FALSE);
-        gtk_tree_view_column_set_attributes (column, cell, "text", 0, NULL);
+        column = gtk_tree_view_column_new_with_attributes ("CSS", cell, "text", 0, NULL );
+        //gtk_tree_view_column_pack_start (column, cell, FALSE);
+        gtk_tree_view_column_set_resizable (column, TRUE);
         gtk_tree_view_append_column (GTK_TREE_VIEW(fsel->style_treeview), column);
-        gtk_tree_view_set_headers_visible (GTK_TREE_VIEW(fsel->style_treeview), FALSE);
+
+        // Display Style name
+        cell = gtk_cell_renderer_text_new ();
+        column = gtk_tree_view_column_new_with_attributes (_("Face"), cell, "text", 1, NULL );
+        //gtk_tree_view_column_pack_start (column, cell, FALSE);
+        gtk_tree_view_append_column (GTK_TREE_VIEW(fsel->style_treeview), column);
+
+        //gtk_tree_view_set_tooltip_column(GTK_TREE_VIEW(fsel->style_treeview), 1);
+        gtk_tree_view_set_headers_visible (GTK_TREE_VIEW(fsel->style_treeview), TRUE);
         gtk_container_add(GTK_CONTAINER(sw), fsel->style_treeview);
         gtk_widget_show_all (sw);
 
@@ -306,13 +317,15 @@ static void sp_font_selector_family_select_row(GtkTreeSelection *selection,
     // Create our own store of styles for selected font-family and find index of best style match
     int path_index = 0;
     int index = 0;
-    GtkListStore *store = gtk_list_store_new (1, G_TYPE_STRING); // Where is this deleted?
+    GtkListStore *store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING); // Where is this deleted?
     for ( ; list ; list = list->next )
     {
         gtk_list_store_append (store, &iter);
-        gtk_list_store_set (store, &iter, 0, (char*)list->data, -1);
-
-        if( best.compare( (char*)list->data ) == 0 ) {
+        gtk_list_store_set (store, &iter,
+                            0, ((StyleNames*)list->data)->CssName.c_str(),
+                            1, ((StyleNames*)list->data)->DisplayName.c_str(),
+                            -1);
+        if( best.compare( ((StyleNames*)list->data)->CssName ) == 0 ) {
             path_index = index;
         }
         ++index;
@@ -320,6 +333,7 @@ static void sp_font_selector_family_select_row(GtkTreeSelection *selection,
 
     // Attach store to tree view. Can trigger style changed signal (but not FONT_SET):
     gtk_tree_view_set_model (GTK_TREE_VIEW (fsel->style_treeview), GTK_TREE_MODEL (store));
+    //gtk_tree_view_set_tooltip_column(GTK_TREE_VIEW(fsel->style_treeview),1);
 
     // Get path to best style
     GtkTreePath *path = gtk_tree_path_new ();
