@@ -211,10 +211,16 @@ sp_desktop_set_style(SPDesktop *desktop, SPCSSAttr *css, bool change, bool write
 
         for (GSList const *i = desktop->selection->itemList(); i != NULL; i = i->next) {
 
-            // If not text, don't apply text attributes (can a group have text attributes?)
+            // If not text, don't apply text attributes (can a group have text attributes? Yes! FIXME)
             if ( SP_IS_TEXT(i->data) || SP_IS_FLOWTEXT(i->data)
                 || SP_IS_TSPAN(i->data) || SP_IS_TREF(i->data) || SP_IS_TEXTPATH(i->data)
                 || SP_IS_FLOWDIV(i->data) || SP_IS_FLOWPARA(i->data) || SP_IS_FLOWTSPAN(i->data)) {
+
+                // If any font property has changed, then we have written out the font
+                // properties in longhand and we need to remove the 'font' shorthand.
+                if( !sp_repr_css_property_is_unset(css, "font-family") ) {
+                    sp_repr_css_unset_property(css, "font");
+                }
 
                 sp_desktop_apply_css_recursive(SP_OBJECT(i->data), css, true);
 
