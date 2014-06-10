@@ -1826,12 +1826,67 @@ sp_css_attr_scale(SPCSSAttr *css, double ex)
 }
 
 
+/**
+ * Quote and/or escape string for writing to CSS, changing strings in place.
+ * See: http://www.w3.org/TR/CSS21/syndata.html#value-def-identifier
+ */
+void
+css_quote(Glib::ustring &val)
+{
+    Glib::ustring out;
+    bool quote = false;
+
+    // Can't wait for C++11!
+    for( Glib::ustring::iterator it = val.begin(); it != val.end(); ++it) {
+        if(g_ascii_isalnum(*it) || *it=='-' || *it=='_' || *it > 0xA0) {
+            out += *it;
+        } else if (*it == '\'') {
+            // Single quotes require escaping and quotes.
+            out += '\\';
+            out += *it;
+            quote = true;
+        } else {
+            // Quote everything else including spaces.
+            // (CSS Fonts Level 3 recommends quoting with spaces.)
+            out += *it;
+            quote = true;
+        }
+        if( it == val.begin() && !g_ascii_isalpha(*it) ) {
+            // A non-ASCII/non-alpha initial value on any indentifier needs quotes.
+            // (Actually it's a bit more complicated but as it never hurts to quote...)
+            quote = true;
+        }
+    }
+    if( quote ) {
+        out.insert( out.begin(), '\'' );
+        out += '\'';
+    }
+    val = out;
+}
+
+
+/**
+ * Quote font names in font-family lists, changing string in place.
+ * We use unquoted names internally but some need to be quoted in CSS.
+ */
+void
+css_font_family_quote(Glib::ustring &val)
+{
+    std::vector<Glib::ustring> tokens = Glib::Regex::split_simple("\\s*,\\s*", val );
+
+    val.erase();
+    for( unsigned i=0; i < tokens.size(); ++i ) {
+        css_quote( tokens[i] );
+        val += tokens[i] + ", ";
+    }
+    if( val.size() > 1 )
+        val.erase( val.size() - 2 ); // Remove trailing ", "
+}
+
+
 // Called in style-internal.cpp, xml/repr-css.cpp
 /**
  * Remove paired single and double quotes from a string, changing string in place.
- * Note: in CSS (in style= and in stylesheets), unquoting and unescaping is done
- * by libcroco, our CSS parser, though it adds a new pair of "" quotes for the strings
- * it parsed for us.
  */
 void
 css_unquote(Glib::ustring &val)
@@ -1849,7 +1904,7 @@ css_unquote(Glib::ustring &val)
 /**
  * Remove paired single and double quotes from font names in font-family lists,
  * changing string in place.
- * Pango expects unquoted font family names. We use unquoted names in interface.
+ * We use unquoted family names internally but CSS sometimes uses quoted names.
  */
 void
 css_font_family_unquote(Glib::ustring &val)
@@ -1863,57 +1918,6 @@ css_font_family_unquote(Glib::ustring &val)
     }
     if( val.size() > 1 )
         val.erase( val.size() - 2 ); // Remove trailing ", "
-}
-
-// Called in style.cpp, xml/repr-css.cpp
-/**
- * Quote and/or escape string for writing to CSS (style=). Returned value must be g_free'd.
- */
-Glib::ustring css2_escape_quote(gchar const *val) {
-
-    Glib::ustring t;
-    bool quote = false;
-    bool last_was_space = false;
-
-    for (gchar const *i = val; *i; i++) {
-        bool is_space = ( *i == ' ' );
-        if (g_ascii_isalnum(*i) || *i=='-' || *i=='_') {
-            // ASCII alphanumeric, - and _ don't require quotes
-            t.push_back(*i);
-        } else if ( is_space && !last_was_space ) {
-            // non-consecutive spaces don't require quotes
-            t.push_back(*i);
-        } else if (*i=='\'') {
-            // single quotes require escaping and quotes
-            t.push_back('\\');
-            t.push_back(*i);
-            quote = true;
-        } else {
-            // everything else requires quotes
-            t.push_back(*i);
-            quote = true;
-        }
-        if (i == val && !g_ascii_isalpha(*i)) {
-            // a non-ASCII/non-alpha initial character requires quotes
-            quote = true;
-        }
-        last_was_space = is_space;
-    }
-
-    if (last_was_space) {
-        // a trailing space requires quotes
-        quote = true;
-    }
-
-    if (quote) {
-        // we use single quotes so the result can be stored in an XML
-        // attribute without incurring un-aesthetic additional quoting
-        // (our XML emitter always uses double quotes)
-        t.insert(t.begin(), '\'');
-        t.push_back('\'');
-    }
-
-    return t;
 }
 
 /*

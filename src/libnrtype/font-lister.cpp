@@ -601,8 +601,15 @@ std::pair<Glib::ustring, Glib::ustring> FontLister::new_font_family (Glib::ustri
 
       Glib::ustring family = ui.first;
 
-      sp_repr_css_set_property (css, "-inkscape-font-specification", fontspec.c_str() );
-      sp_repr_css_set_property (css, "font-family", family.c_str() ); //Canonized w/ spaces
+
+      // Font spec is single quoted... for the moment
+      Glib::ustring fontspec_quoted( fontspec );
+      css_quote( fontspec_quoted );
+      sp_repr_css_set_property (css, "-inkscape-font-specification", fontspec_quoted.c_str() );
+
+      // Font families needs to be properly quoted in CSS (used unquoted in font-lister)
+      css_font_family_quote( family );
+      sp_repr_css_set_property (css, "font-family", family.c_str() );
 
       PangoFontDescription *desc = pango_font_description_from_string( fontspec.c_str() );
       PangoWeight weight = pango_font_description_get_weight( desc );

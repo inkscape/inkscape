@@ -656,20 +656,21 @@ SPIString::read( gchar const *str ) {
         set = true;
         inherit = false;
 
-        // libcroco puts quotes around some strings... remove
-        Glib::ustring str_unquoted(str);
-        css_unquote( str_unquoted );
-
-        // Unquote individual family names, Pango always uses unquoted names.
+        Glib::ustring str_temp(str);
         if( name.compare( "font-family" ) == 0 ) {
-            css_font_family_unquote( str_unquoted );
+            // Family names may be quoted in CSS, internally we use unquoted names.
+            css_font_family_unquote( str_temp );
+        } else if( name.compare( "-inkscape-font-specification" ) == 0 ) {
+            css_unquote( str_temp );
         }
 
-        value = g_strdup(str_unquoted.c_str());
+        value = g_strdup(str_temp.c_str());
     }
 }
 
 
+// This routine is actually rarely used. Writing is done usually
+// in sp_repr_css_write_string...
 const Glib::ustring
 SPIString::write( guint const flags, SPIBase const *const base) const {
 
@@ -684,13 +685,13 @@ SPIString::write( guint const flags, SPIBase const *const base) const {
         } else {
             if( this->value ) {
                 if( name.compare( "font-family" ) == 0 ) {
-                    // This is for compatibilty with the C version of code.
-                    // This is incorrect as it puts single quotes around the
-                    // entire string rather around the individule font names.
-                    // This should be handled by the routines that extract
-                    // out the font family names and reassembles them into a
-                    // font fallback list. FIXME
-                    return (name + ":" + css2_escape_quote(this->value) + ";");
+                    Glib::ustring font_family( this->value );
+                    css_font_family_quote( font_family );
+                    return (name + ":" + font_family + ";");
+                } else if( name.compare( "-inkscape-font-specification" ) == 0 ) {
+                    Glib::ustring font_spec( this->value );
+                    css_quote( font_spec );
+                    return (name + ":" + font_spec + ";");
                 } else {
                     return (name + ":" + this->value + ";");
                 }
