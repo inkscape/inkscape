@@ -111,6 +111,9 @@ Extension::Extension (Inkscape::XML::Node * in_repr, Implementation::Implementat
             if (!strcmp(chname, "dependency")) {
                 _deps.push_back(new Dependency(child_repr));
             } /* dependency */
+            if (!strcmp(chname, "script")) {
+                _deps.push_back(new Dependency(child_repr->firstChild()));
+            } /* check command as a dependency (see LP #505920)  */
             if (!strcmp(chname, "options")) {
                 silent = !strcmp( child_repr->attribute("silent"), "true" );
             }

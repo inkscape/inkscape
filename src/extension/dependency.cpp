@@ -57,14 +57,22 @@ Dependency::Dependency (Inkscape::XML::Node * in_repr)
 
     Inkscape::GC::anchor(_repr);
 
-    const gchar * location = _repr->attribute("location");
-    for (int i = 0; i < LOCATION_CNT && location != NULL; i++) {
-        if (!strcmp(location, _location_str[i])) {
-            _location = (location_t)i;
-            break;
+    if (const gchar * location = _repr->attribute("location")) {
+        for (int i = 0; i < LOCATION_CNT && location != NULL; i++) {
+            if (!strcmp(location, _location_str[i])) {
+                _location = (location_t)i;
+                break;
+            }
+        }
+    } else if (const gchar * location = _repr->attribute("reldir")) {
+        for (int i = 0; i < LOCATION_CNT && location != NULL; i++) {
+            if (!strcmp(location, _location_str[i])) {
+                _location = (location_t)i;
+                break;
+            }
         }
     }
-
+    
     const gchar * type = _repr->attribute("type");
     for (int i = 0; i < TYPE_CNT && type != NULL; i++) {
         if (!strcmp(type, _type_str[i])) {
