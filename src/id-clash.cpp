@@ -92,7 +92,7 @@ const char* clipboard_properties[] = {
  *         (e.g., ID selectors in CSS stylesheets, and references in scripts).
  */
 static void
-find_references(SPObject *elem, refmap_type *refmap)
+find_references(SPObject *elem, refmap_type &refmap)
 {
     if (elem->cloned) return;
     Inkscape::XML::Node *repr_elem = elem->getRepr();
@@ -110,7 +110,7 @@ find_references(SPObject *elem, refmap_type *refmap)
                     gchar *uri = extract_uri(value);
                     if (uri && uri[0] == '#') {
                         IdReference idref = { REF_CLIPBOARD, elem, attr };
-                        (*refmap)[uri+1].push_back(idref);
+                        refmap[uri+1].push_back(idref);
                     }
                     g_free(uri);
                 }
@@ -127,7 +127,7 @@ find_references(SPObject *elem, refmap_type *refmap)
         if (val && val[0] == '#') {
             std::string id(val+1);
             IdReference idref = { REF_HREF, elem, attr };
-            (*refmap)[id].push_back(idref);
+            refmap[id].push_back(idref);
         }
     }
 
@@ -142,7 +142,7 @@ find_references(SPObject *elem, refmap_type *refmap)
             if (obj) {
                 const gchar *id = obj->getId();
                 IdReference idref = { REF_STYLE, elem, SPIPaint_properties[i] };
-                (*refmap)[id].push_back(idref);
+                refmap[id].push_back(idref);
             }
         }
     }
@@ -154,7 +154,7 @@ find_references(SPObject *elem, refmap_type *refmap)
         if (obj) {
             const gchar *id = obj->getId();
             IdReference idref = { REF_STYLE, elem, "filter" };
-            (*refmap)[id].push_back(idref);
+            refmap[id].push_back(idref);
         }
     }
 
@@ -166,7 +166,7 @@ find_references(SPObject *elem, refmap_type *refmap)
             gchar *uri = extract_uri(value);
             if (uri && uri[0] == '#') {
                 IdReference idref = { REF_STYLE, elem, markers[i] };
-                (*refmap)[uri+1].push_back(idref);
+                refmap[uri+1].push_back(idref);
             }
             g_free(uri);
         }
@@ -180,7 +180,7 @@ find_references(SPObject *elem, refmap_type *refmap)
             gchar *uri = extract_uri(value);
             if (uri && uri[0] == '#') {
                 IdReference idref = { REF_URL, elem, attr };
-                (*refmap)[uri+1].push_back(idref);
+                refmap[uri+1].push_back(idref);
             }
             g_free(uri);
         }
@@ -199,7 +199,7 @@ find_references(SPObject *elem, refmap_type *refmap)
  */
 static void
 change_clashing_ids(SPDocument *imported_doc, SPDocument *current_doc,
-                    SPObject *elem, const refmap_type *refmap,
+                    SPObject *elem, refmap_type const &refmap,
                     id_changelist_type *id_changes)
 {
     const gchar *id = elem->getId();
@@ -233,9 +233,9 @@ change_clashing_ids(SPDocument *imported_doc, SPDocument *current_doc,
             }
             // Change to the new ID
 
-            elem->getRepr()->setAttribute("id", new_id.c_str());
+            elem->getRepr()->setAttribute("id", new_id);
                 // Make a note of this change, if we need to fix up refs to it
-            if (refmap->find(old_id) != refmap->end())
+            if (refmap.find(old_id) != refmap.end())
             id_changes->push_back(id_changeitem_type(elem, old_id));
         }
     }
@@ -252,36 +252,43 @@ change_clashing_ids(SPDocument *imported_doc, SPDocument *current_doc,
  *  Fix up references to changed IDs.
  */
 static void
-fix_up_refs(const refmap_type *refmap, const id_changelist_type &id_changes)
+fix_up_refs(refmap_type const &refmap, const id_changelist_type &id_changes)
 {
     id_changelist_type::const_iterator pp;
     const id_changelist_type::const_iterator pp_end = id_changes.end();
     for (pp = id_changes.begin(); pp != pp_end; ++pp) {
         SPObject *obj = pp->first;
-        refmap_type::const_iterator pos = refmap->find(pp->second);
+        refmap_type::const_iterator pos = refmap.find(pp->second);
         std::list<IdReference>::const_iterator it;
         const std::list<IdReference>::const_iterator it_end = pos->second.end();
         for (it = pos->second.begin(); it != it_end; ++it) {
-            if (it->type == REF_HREF) {
-                gchar *new_uri = g_strdup_printf("#%s", obj->getId());
-                it->elem->getRepr()->setAttribute(it->attr, new_uri);
-                g_free(new_uri);
-            } else if (it->type == REF_STYLE) {
-                sp_style_set_property_url(it->elem, it->attr, obj, false);
-            } else if (it->type == REF_URL) {
-                gchar *url = g_strdup_printf("url(#%s)", obj->getId());
-                it->elem->getRepr()->setAttribute(it->attr, url);
-                g_free(url);
-            } else if (it->type == REF_CLIPBOARD) {
-                SPCSSAttr *style = sp_repr_css_attr(it->elem->getRepr(), "style");
-                gchar *url = g_strdup_printf("url(#%s)", obj->getId());
-                sp_repr_css_set_property(style, it->attr, url);
-                g_free(url);
-                Glib::ustring style_string;
-                sp_repr_css_write_string(style, style_string);
-                it->elem->getRepr()->setAttribute("style", style_string.c_str());
-            } else {
-                g_assert(0); // shouldn't happen
+            switch (it->type) {
+                case REF_HREF: {
+                    gchar *new_uri = g_strdup_printf("#%s", obj->getId());
+                    it->elem->getRepr()->setAttribute(it->attr, new_uri);
+                    g_free(new_uri);
+                    break;
+                }
+                case REF_STYLE: {
+                    sp_style_set_property_url(it->elem, it->attr, obj, false);
+                    break;
+                }
+                case REF_URL: {
+                    gchar *url = g_strdup_printf("url(#%s)", obj->getId());
+                    it->elem->getRepr()->setAttribute(it->attr, url);
+                    g_free(url);
+                    break;
+                }
+                case REF_CLIPBOARD: {
+                    SPCSSAttr *style = sp_repr_css_attr(it->elem->getRepr(), "style");
+                    gchar *url = g_strdup_printf("url(#%s)", obj->getId());
+                    sp_repr_css_set_property(style, it->attr, url);
+                    g_free(url);
+                    Glib::ustring style_string;
+                    sp_repr_css_write_string(style, style_string);
+                    it->elem->getRepr()->setAttribute("style", style_string);
+                    break;
+                }
             }
         }
     }
@@ -296,7 +303,7 @@ fix_up_refs(const refmap_type *refmap, const id_changelist_type &id_changes)
 void
 prevent_id_clashes(SPDocument *imported_doc, SPDocument *current_doc)
 {
-    refmap_type *refmap = new refmap_type;
+    refmap_type refmap;
     id_changelist_type id_changes;
     SPObject *imported_root = imported_doc->getRoot();
         
@@ -304,8 +311,6 @@ prevent_id_clashes(SPDocument *imported_doc, SPDocument *current_doc)
     change_clashing_ids(imported_doc, current_doc, imported_root, refmap,
                         &id_changes);
     fix_up_refs(refmap, id_changes);
-
-    delete refmap;
 }
 
 /*
@@ -314,42 +319,47 @@ prevent_id_clashes(SPDocument *imported_doc, SPDocument *current_doc)
 void
 change_def_references(SPObject *from_obj, SPObject *to_obj)
 {
-    refmap_type *refmap = new refmap_type;
+    refmap_type refmap;
     SPDocument *current_doc = from_obj->document;
     std::string old_id(from_obj->getId());
 
     find_references(current_doc->getRoot(), refmap);
 
-    refmap_type::const_iterator pos = refmap->find(old_id);
-    if (pos != refmap->end()) {
+    refmap_type::const_iterator pos = refmap.find(old_id);
+    if (pos != refmap.end()) {
         std::list<IdReference>::const_iterator it;
         const std::list<IdReference>::const_iterator it_end = pos->second.end();
         for (it = pos->second.begin(); it != it_end; ++it) {
-            if (it->type == REF_HREF) {
-                gchar *new_uri = g_strdup_printf("#%s", to_obj->getId());
-                it->elem->getRepr()->setAttribute(it->attr, new_uri);
-                g_free(new_uri);
-            } else if (it->type == REF_STYLE) {
-                sp_style_set_property_url(it->elem, it->attr, to_obj, false);
-            } else if (it->type == REF_URL) {
-                gchar *url = g_strdup_printf("url(#%s)", to_obj->getId());
-                it->elem->getRepr()->setAttribute(it->attr, url);
-                g_free(url);
-            } else if (it->type == REF_CLIPBOARD) {
-                SPCSSAttr *style = sp_repr_css_attr(it->elem->getRepr(), "style");
-                gchar *url = g_strdup_printf("url(#%s)", to_obj->getId());
-                sp_repr_css_set_property(style, it->attr, url);
-                g_free(url);
-                Glib::ustring style_string;
-                sp_repr_css_write_string(style, style_string);
-                it->elem->getRepr()->setAttribute("style", style_string.c_str());
-            } else {
-                g_assert(0); // shouldn't happen
-            }
+            switch (it->type) {
+                case REF_HREF: {
+                    gchar *new_uri = g_strdup_printf("#%s", to_obj->getId());
+                    it->elem->getRepr()->setAttribute(it->attr, new_uri);
+                    g_free(new_uri);
+                    break;
+                }
+                case REF_STYLE: {
+                    sp_style_set_property_url(it->elem, it->attr, to_obj, false);
+                    break;
+                }
+                case REF_URL: {
+                    gchar *url = g_strdup_printf("url(#%s)", to_obj->getId());
+                    it->elem->getRepr()->setAttribute(it->attr, url);
+                    g_free(url);
+                    break;
+                }
+                case REF_CLIPBOARD: {
+                    SPCSSAttr *style = sp_repr_css_attr(it->elem->getRepr(), "style");
+                    gchar *url = g_strdup_printf("url(#%s)", to_obj->getId());
+                    sp_repr_css_set_property(style, it->attr, url);
+                    g_free(url);
+                    Glib::ustring style_string;
+                    sp_repr_css_write_string(style, style_string);
+                    it->elem->getRepr()->setAttribute("style", style_string);
+                    break;
+                }
+            } 
         }
     }
-
-    delete refmap;
 }
 
 /*
@@ -372,8 +382,7 @@ void rename_id(SPObject *elem, Glib::ustring const &new_name)
     }
 
     SPDocument *current_doc = elem->document;
-    refmap_type *refmap = new refmap_type;
-    id_changelist_type id_changes;
+    refmap_type refmap;
     find_references(current_doc->getRoot(), refmap);
 
     std::string old_id(elem->getId());
@@ -391,14 +400,14 @@ void rename_id(SPObject *elem, Glib::ustring const &new_name)
     }
 
     // Change to the new ID
-    elem->getRepr()->setAttribute("id", new_name2.c_str());
+    elem->getRepr()->setAttribute("id", new_name2);
     // Make a note of this change, if we need to fix up refs to it
-    if (refmap->find(old_id) != refmap->end()) {
+    id_changelist_type id_changes;
+    if (refmap.find(old_id) != refmap.end()) {
         id_changes.push_back(id_changeitem_type(elem, old_id));
     }
 
     fix_up_refs(refmap, id_changes);
-    delete refmap;
 }
 
 /*
