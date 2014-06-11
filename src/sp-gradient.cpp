@@ -117,12 +117,17 @@ gboolean SPGradient::isEquivalent(SPGradient *that)
         if (this->getStopCount() != that->getStopCount()) { break; }
         if (this->hasStops() != that->hasStops()) { break; }
         if (!this->getVector() || !that->getVector()) { break; }
-        if ( (SP_IS_LINEARGRADIENT(this) && SP_IS_LINEARGRADIENT(that)) ||
-             (SP_IS_RADIALGRADIENT(this) && SP_IS_RADIALGRADIENT(that)) ||
-             (SP_IS_MESHGRADIENT(this) && SP_IS_MESHGRADIENT(that))) {
-             /* OK! */ 
+        if (this->isSwatch() != that->isSwatch()) {  break; }
+        if ( this->isSwatch() ){
+           // drop down to check stops.
         }
-        else { break; }
+        else if (
+            (SP_IS_LINEARGRADIENT(this) && SP_IS_LINEARGRADIENT(that)) ||
+            (SP_IS_RADIALGRADIENT(this) && SP_IS_RADIALGRADIENT(that)) ||
+            (SP_IS_MESHGRADIENT(this) && SP_IS_MESHGRADIENT(that))) {
+            if(!this->isAligned(that))break;
+        }
+        else { break; }  // this should never happen, some unhandled type of gradient
 
         SPStop *as = this->getVector()->getFirstStop();
         SPStop *bs = that->getVector()->getFirstStop();
@@ -156,6 +161,18 @@ gboolean SPGradient::isAligned(SPGradient *that)
 {
     bool status = FALSE;
     
+   /*  Some gradients have coordinates/other values specified, some don't.  
+           yes/yes check the coordinates/other values
+           no/no   aligned (because both have all default values)
+           yes/no  not aligned
+           no/yes  not aligned
+       It is NOT safe to just compare the computed values because if that field has
+       not been set the computed value could be full of garbage.
+       
+       In theory the yes/no and no/yes cases could be aligned if the specified value
+       matches the default value.
+    */
+
     while(1){ // not really a loop, used to avoid deep nesting or multiple exit points from function
         if(this->gradientTransform_set != that->gradientTransform_set) { break; }
         if(this->gradientTransform_set && 
@@ -164,31 +181,45 @@ gboolean SPGradient::isAligned(SPGradient *that)
             SPLinearGradient *sg=SP_LINEARGRADIENT(this);
             SPLinearGradient *tg=SP_LINEARGRADIENT(that);
  
-            if( !sg->x1._set     ||    !tg->x1._set  || // assume that if these are set so will be all the others
-                (sg->x1.computed != tg->x1.computed) ||
-                (sg->y1.computed != tg->y1.computed) ||
-                (sg->x2.computed != tg->x2.computed) ||
-                (sg->y2.computed != tg->y2.computed)
-            ) { break; }
+            if( sg->x1._set != tg->x1._set) { break; }
+            if( sg->y1._set != tg->y1._set) { break; }
+            if( sg->x2._set != tg->x2._set) { break; }
+            if( sg->y2._set != tg->y2._set) { break; }
+            if( sg->x1._set && sg->y1._set && sg->x2._set && sg->y2._set) {
+                if( (sg->x1.computed != tg->x1.computed) ||
+                    (sg->y1.computed != tg->y1.computed) ||
+                    (sg->x2.computed != tg->x2.computed) ||
+                    (sg->y2.computed != tg->y2.computed) )  { break; }
+            } else if( sg->x1._set || sg->y1._set || sg->x2._set || sg->y2._set) { break; } // some mix of set and not set
+            // none set? assume aligned and fall through
         } else if (SP_IS_RADIALGRADIENT(this) && SP_IS_LINEARGRADIENT(that)) {
             SPRadialGradient *sg=SP_RADIALGRADIENT(this);
             SPRadialGradient *tg=SP_RADIALGRADIENT(that);
-            if( !sg->cx._set     ||    !tg->cx._set  || // assume that if these are set so will be all the others
-                (sg->cx.computed != tg->cx.computed) ||
-                (sg->cy.computed != tg->cy.computed) ||
-                (sg->r.computed  != tg->r.computed ) ||
-                (sg->fx.computed != tg->fx.computed) ||
-                (sg->fy.computed != tg->fy.computed)
-            ) { break; }
+
+            if( sg->cx._set != tg->cx._set) { break; }
+            if( sg->cy._set != tg->cy._set) { break; }
+            if( sg->r._set  != tg->r._set)  { break; }
+            if( sg->fx._set != tg->fx._set) { break; }
+            if( sg->fy._set != tg->fy._set) { break; }
+            if( sg->cx._set && sg->cy._set && sg->fx._set && sg->fy._set && sg->r._set) {
+                if( (sg->cx.computed != tg->cx.computed) ||
+                    (sg->cy.computed != tg->cy.computed) ||
+                    (sg->r.computed  != tg->r.computed ) ||
+                    (sg->fx.computed != tg->fx.computed) ||
+                    (sg->fy.computed != tg->fy.computed)  ) { break; }
+            } else if(  sg->cx._set || sg->cy._set || sg->fx._set || sg->fy._set || sg->r._set ) { break; } // some mix of set and not set
+            // none set? assume aligned and fall through
         } else if (SP_IS_MESHGRADIENT(this) && SP_IS_MESHGRADIENT(that)) {
             SPMeshGradient *sg=SP_MESHGRADIENT(this);
             SPMeshGradient *tg=SP_MESHGRADIENT(that);
  
-            if( !sg->x._set     ||    !tg->x._set  ||
-                !sg->y._set     ||    !tg->y._set  ||
-                (sg->x.computed != tg->x.computed) ||
-                (sg->y.computed != tg->y.computed)
-            ) { break; }
+            if( sg->x._set  !=  !tg->x._set) { break; }
+            if( sg->y._set  !=  !tg->y._set) { break; }
+            if( sg->x._set  &&  sg->y._set) { 
+                if( (sg->x.computed != tg->x.computed) ||
+                    (sg->y.computed != tg->y.computed) ) { break; }
+            } else if( sg->x._set || sg->y._set) { break; } // some mix of set and not set
+            // none set? assume aligned and fall through
          } else {
             break;
         }

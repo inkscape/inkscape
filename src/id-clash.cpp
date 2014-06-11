@@ -216,8 +216,7 @@ change_clashing_ids(SPDocument *imported_doc, SPDocument *current_doc,
 
             if (cd_obj && SP_IS_GRADIENT(cd_obj)) {
                 SPGradient *cd_gr = SP_GRADIENT(cd_obj);
-                if ( cd_gr->isEquivalent(SP_GRADIENT(elem)) &&
-                    cd_gr->isAligned(SP_GRADIENT(elem))) {
+                if ( cd_gr->isEquivalent(SP_GRADIENT(elem))) {
                     fix_clashing_ids = false;
                  }
              }
@@ -326,8 +325,26 @@ change_def_references(SPObject *from_obj, SPObject *to_obj)
         std::list<IdReference>::const_iterator it;
         const std::list<IdReference>::const_iterator it_end = pos->second.end();
         for (it = pos->second.begin(); it != it_end; ++it) {
-            if (it->type == REF_STYLE) {
+            if (it->type == REF_HREF) {
+                gchar *new_uri = g_strdup_printf("#%s", to_obj->getId());
+                it->elem->getRepr()->setAttribute(it->attr, new_uri);
+                g_free(new_uri);
+            } else if (it->type == REF_STYLE) {
                 sp_style_set_property_url(it->elem, it->attr, to_obj, false);
+            } else if (it->type == REF_URL) {
+                gchar *url = g_strdup_printf("url(#%s)", to_obj->getId());
+                it->elem->getRepr()->setAttribute(it->attr, url);
+                g_free(url);
+            } else if (it->type == REF_CLIPBOARD) {
+                SPCSSAttr *style = sp_repr_css_attr(it->elem->getRepr(), "style");
+                gchar *url = g_strdup_printf("url(#%s)", to_obj->getId());
+                sp_repr_css_set_property(style, it->attr, url);
+                g_free(url);
+                Glib::ustring style_string;
+                sp_repr_css_write_string(style, style_string);
+                it->elem->getRepr()->setAttribute("style", style_string.c_str());
+            } else {
+                g_assert(0); // shouldn't happen
             }
         }
     }

@@ -1529,7 +1529,7 @@ void SPDocument::setModifiedSinceSave(bool modified) {
 
 
 /**
- * Paste SVG defs from the document retrieved from the clipboard into the active document.
+ * Paste SVG defs from the document retrieved from the clipboard or imported document into the active document.
  * @param clipdoc The document to paste.
  * @pre @c clipdoc != NULL and pasting into the active document is possible.
  */
@@ -1540,27 +1540,117 @@ void SPDocument::importDefs(SPDocument *source)
     Inkscape::XML::Node *target_defs = this->getDefs()->getRepr();
 
     prevent_id_clashes(source, this);
+    
+    int stagger=0;
 
+    /*  Note, "clipboard" throughout the comments means "the document that is either the clipboard
+        or an imported document", as importDefs is called in both contexts.
+        
+        The order of the records in the clipboard is unpredictable and there may be both
+        forward and backwards references to other records within it.  There may be definitions in
+        the clipboard that duplicate definitions in the present document OR that duplicate other
+        definitions in the clipboard.  (Inkscape will not have created these, but they may be read
+        in from other SVG sources.)
+         
+        There are 3 passes to clean this up:
+
+        In the first find and mark definitions in the clipboard that are duplicates of those in the
+        present document.  Change the ID to "RESERVED_FOR_INKSCAPE_DUPLICATE_DEF_XXXXXXXXX".
+        (Inkscape will not reuse an ID, and the XXXXXXXXX keeps it from automatically creating new ones.)
+        References in the clipboard to the old clipboard name are converted to the name used
+        in the current document. 
+
+        In the second find and mark definitions in the clipboard that are duplicates of earlier 
+        definitions in the clipbard.  Unfortunately this is O(n^2) and could be very slow for a large
+        SVG with thousands of definitions.  As before, references are adjusted to reflect the name
+        going forward.
+
+        In the final cycle copy over those records not marked with that ID.
+
+        If an SVG file uses the special ID it will cause problems!
+        
+        If this function is called because of the paste of a true clipboard the caller will have passed in a
+        COPY of the clipboard items.  That is good, because this routine modifies that document.  If the calling
+        behavior ever changes, so that the same document is passed in on multiple pastes, this routine will break
+        as in the following example:
+        1.  Paste clipboard containing B same as A into document containing A.  Result, B is dropped
+        and all references to it will point to A.
+        2.  Paste same clipboard into a new document.  It will not contain A, so there will be unsatisfied
+        references in that window.
+    */
+
+    std::string DuplicateDefString = "RESERVED_FOR_INKSCAPE_DUPLICATE_DEF";
+    
+    /* First pass: remove duplicates in clipboard of definitions in document */
     for (Inkscape::XML::Node *def = defs->firstChild() ; def ; def = def->next()) {
 
-        gboolean duplicate = false;
+        /* If this  clipboard has been pasted into one document, and is now being pasted into another,
+        or pasted again into the same, it will already have been processed.  If we detect that then 
+        skip the rest of this pass. */
+
+        Glib::ustring defid = def->attribute("id");
+        if( defid.find( DuplicateDefString ) != Glib::ustring::npos )break;
+
         SPObject *src = source->getObjectByRepr(def);
 
         // Prevent duplicates of solid swatches by checking if equivalent swatch already exists
         if (src && SP_IS_GRADIENT(src)) {
-            SPGradient *gr = SP_GRADIENT(src);
+            SPGradient *s_gr = SP_GRADIENT(src);
             for (SPObject *trg = this->getDefs()->firstChild() ; trg ; trg = trg->getNext()) {
-                if (trg && SP_IS_GRADIENT(trg) && src != trg) {
-                    if (gr->isEquivalent(SP_GRADIENT(trg)) &&
-                        gr->isAligned(SP_GRADIENT(trg))) {
-                        // Change object references to the existing equivalent gradient
-                        change_def_references(src, trg);
-                        duplicate = true;
-                        break;
+                if (trg && (src != trg) && SP_IS_GRADIENT(trg)) {
+                    SPGradient *t_gr = SP_GRADIENT(trg);
+                    if (t_gr && s_gr->isEquivalent(t_gr)) {
+                         // Change object references to the existing equivalent gradient
+                         Glib::ustring newid = trg->getId();
+                         if(newid != defid){  // id could be the same if it is a second paste into the same document
+                             change_def_references(src, trg);
+                         }
+                         gchar *longid = g_strdup_printf("%s_%9.9d", DuplicateDefString.c_str(), stagger++);
+                         def->setAttribute("id", longid );
+                         g_free(longid);
+                         // do NOT break here, there could be more than 1 duplicate!
                     }
                 }
             }
         }
+    }
+
+    /* Second pass: remove duplicates in clipboard of earlier definitions in clipboard */
+    for (Inkscape::XML::Node *def = defs->firstChild() ; def ; def = def->next()) {
+        Glib::ustring defid = def->attribute("id");
+        if( defid.find( DuplicateDefString ) != Glib::ustring::npos )continue; // this one already handled
+        SPObject *src = source->getObjectByRepr(def);
+        if (src && SP_IS_GRADIENT(src)) {
+            SPGradient *s_gr = SP_GRADIENT(src);
+            for (Inkscape::XML::Node *laterDef = def->next() ; laterDef ; laterDef = laterDef->next()) {
+                SPObject *trg = source->getObjectByRepr(laterDef);
+                if(trg && (src != trg) && SP_IS_GRADIENT(trg)) {
+                     Glib::ustring newid = trg->getId();
+                     if( newid.find( DuplicateDefString ) != Glib::ustring::npos )continue; // this one already handled
+                     SPGradient *t_gr = SP_GRADIENT(trg);
+                     if (t_gr && s_gr->isEquivalent(t_gr)) {
+                         // Change object references to the existing equivalent gradient
+                         // two id's in the clipboard should never be the same, so always change references
+                         change_def_references(trg, src);
+                         gchar *longid = g_strdup_printf("%s_%9.9d", DuplicateDefString.c_str(), stagger++);
+                         laterDef->setAttribute("id", longid );
+                         g_free(longid);
+                         // do NOT break here, there could be more than 1 duplicate!
+                     }
+                }
+            }
+        }
+    }
+
+    /* Final pass: copy over those parts which are not duplicates  */
+    for (Inkscape::XML::Node *def = defs->firstChild() ; def ; def = def->next()) {
+
+        /* Ignore duplicate defs marked in the first pass */
+        Glib::ustring defid = def->attribute("id");
+        if( defid.find( DuplicateDefString ) != Glib::ustring::npos )continue;
+
+        bool duplicate = false;
+        SPObject *src = source->getObjectByRepr(def);
 
         // Prevent duplication of symbols... could be more clever.
         // The tag "_inkscape_duplicate" is added to "id" by ClipboardManagerImpl::copySymbol(). 
@@ -1597,7 +1687,6 @@ void SPDocument::importDefs(SPDocument *source)
             Inkscape::GC::release(dup);
         }
     }
-
 }
 
 /*

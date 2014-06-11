@@ -97,6 +97,8 @@ public:
     void editNextParamOncanvas(SPDesktop *dt);
 };
 
+void sp_lpe_item_apply_to_mask(SPItem * item);
+void sp_lpe_item_apply_to_clippath(SPItem * item);
 void sp_lpe_item_update_patheffect (SPLPEItem *lpeitem, bool wholetree, bool write); // careful, class already has method with *very* similar name!
 
 #endif /* !SP_LPE_ITEM_H_SEEN */

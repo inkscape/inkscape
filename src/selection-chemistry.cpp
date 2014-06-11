@@ -3950,6 +3950,10 @@ void sp_selection_unset_mask(SPDesktop *desktop, bool apply_clip_path) {
         for ( SPObject *child = obj->firstChild() ; child; child = child->getNext() ) {
             // Collect all clipped paths and masks within a single group
             Inkscape::XML::Node *copy = SP_OBJECT(child)->getRepr()->duplicate(xml_doc);
+            if(copy->attribute("inkscape:original-d"))
+            {
+                copy->setAttribute("d", copy->attribute("inkscape:original-d"));
+            }
             items_to_move = g_slist_prepend(items_to_move, copy);
         }
 
