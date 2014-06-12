@@ -1,271 +1,321 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:cc="http://creativecommons.org/ns#"
+    width="900"
+    height="900"
+    viewBox="0,0,900,900"
+    version="1.1"
+    style="fill:#aaccee;stroke:black">
+  <metadata>
+    <rdf:RDF>
+      <cc:Work rdf:about="">
+	<dc:format>image/svg+xml</dc:format>
+	<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+	<dc:title>Flow Chart Shapes</dc:title>
+	<dc:date>2013-04-18</dc:date>
+	<dc:creator>
+	  <cc:Agent>
+	    <dc:title>Tavmjong Bah</dc:title>
+	  </cc:Agent>
+	</dc:creator>
+	<dc:rights>
+	  <cc:Agent>
+	    <dc:title />
+	  </cc:Agent>
+	</dc:rights>
+	<dc:publisher>
+	  <cc:Agent>
+	    <dc:title>Martin Owens</dc:title>
+	  </cc:Agent>
+	</dc:publisher>
+	<dc:language>English</dc:language>
+	<dc:description>Basic Flowchart Symbols</dc:description>
+	<cc:license rdf:resource="http://creativecommons.org/licenses/publicdomain/" />
+      </cc:Work>
+      <cc:License rdf:about="http://creativecommons.org/licenses/publicdomain/">
+	<cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction" />
+	<cc:permits rdf:resource="http://creativecommons.org/ns#Distribution" />
+	<cc:permits rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <title>Flow Chart Shapes</title>
+  <defs>
 
-<!-- Created by Tavmjong Bah -->
+    <!--
+	Based on IBM Flowsharting Template X20-8020, 1970 Revision.
+	Also DIN 66001 and ISO 5807.
+	Original grid is 1/10", Basic height = 8 units, Basic width = 12 units.
+	Drawn at 1 unit = 10 px (slightly larger that actual template).
+	Symbols are centered in a 150x150px square.
+    -->
 
-<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="512.5" height="522.5" version="1.1" style="fill:none;stroke:#000000;stroke-width:2" id="svg8045" inkscape:version="0.48+devel r12282" sodipodi:docname="FlowSymbols.svg">
-<metadata id="metadata8183">
-<rdf:RDF>
-<cc:Work rdf:about="">
-<dc:format>image/svg+xml</dc:format>
-<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-<dc:title>Flow Chart Shapes</dc:title>
-<dc:date>2013-04-18</dc:date>
-<dc:creator>
-<cc:Agent>
-<dc:title>Martin Owens</dc:title>
-</cc:Agent>
-</dc:creator>
-<dc:rights>
-<cc:Agent>
-<dc:title />
-</cc:Agent>
-</dc:rights>
-<dc:publisher>
-<cc:Agent>
-<dc:title>Martin Owens</dc:title>
-</cc:Agent>
-</dc:publisher>
-<dc:language>English</dc:language>
-<dc:description>Basic Flowchart Symbols</dc:description>
-<cc:license rdf:resource="http://creativecommons.org/licenses/publicdomain/" />
-</cc:Work>
-<cc:License rdf:about="http://creativecommons.org/licenses/publicdomain/">
-<cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction" />
-<cc:permits rdf:resource="http://creativecommons.org/ns#Distribution" />
-<cc:permits rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
-</cc:License>
-</rdf:RDF>
-</metadata>
-<sodipodi:namedview pagecolor="#ffffff" bordercolor="#666666" borderopacity="1" objecttolerance="10" gridtolerance="10" guidetolerance="10" inkscape:pageopacity="0" inkscape:pageshadow="2" inkscape:window-width="1301" inkscape:window-height="744" id="namedview8181" showgrid="false" inkscape:zoom="1" inkscape:cx="199.8151" inkscape:cy="276.2787" inkscape:window-x="65" inkscape:window-y="24" inkscape:window-maximized="1" inkscape:current-layer="svg8045" fit-margin-top="0" fit-margin-left="0" fit-margin-right="0" fit-margin-bottom="0" />
-<title id="title8047">Flow Chart Shapes</title>
-<defs id="defs8049">
-<marker inkscape:stockid="DotM" orient="auto" refY="0" refX="0" id="DotM" style="overflow:visible" inkscape:isstock="true">
-<path id="path15937" d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 C -4.74,-6 -2.5,-3.76 -2.5,-1 Z" style="fill:#eeeeee;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1" transform="matrix(0.4,0,0,0.4,2.96,0.4)" inkscape:connector-curvature="0" />
-</marker>
-<marker inkscape:stockid="Arrow2Mstart" orient="auto" refY="0" refX="0" id="Arrow2Mstart" style="overflow:visible" inkscape:isstock="true">
-<path id="path15897" style="fill:#eeeeee;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1" d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 C 6.97309,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 Z" transform="scale(0.6,0.6)" inkscape:connector-curvature="0" />
-</marker>
-<marker inkscape:stockid="Arrow2Mstart" orient="auto" refY="0" refX="0" id="Arrow2Mstart-1" style="overflow:visible" inkscape:isstock="true">
-<path inkscape:connector-curvature="0" id="path15897-1" style="fill:#eeeeee;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1" d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 C 6.97309,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 Z" transform="scale(0.6,0.6)" />
-</marker>
-<symbol style="stroke-width:1.66112018" transform="matrix(1.2040057,0,0,1.2040079,-470.35928,5.67678)" id="process">
-<desc id="desc16867">An operation or action step</desc>
-<title id="title16865">Process</title>
-<rect style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#aaccee;stroke:#000000;stroke-width:1.66112018;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" id="rect1738" width="51.494774" height="51.480068" x="425.19449" y="27.805664" inkscape:label="Process" />
-<text xml:space="preserve" style="font-size:8.30560112px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.08305602;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans" x="450.68307" y="56.485222" id="text2344" sodipodi:linespacing="125%" transform="scale(1.0001428,0.99985722)"><tspan sodipodi:role="line" id="tspan2346" x="450.68307" y="56.485222" style="font-size:8.30560112px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.08305602;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans">Process</tspan></text>
-</symbol>
-<symbol style="fill:none;stroke:#000000;stroke-width:1.66112018" transform="matrix(1.2040057,0,0,1.2040079,-452.31547,71.89277)" id="pprocess">
-<desc id="desc16887">A formally defined sub-process.</desc>
-<title id="title16885">Predefined Process</title>
-<rect inkscape:label="Process" y="49.041424" x="410.20801" height="30.24431" width="51.494774" id="rect15309" style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#aaccee;stroke:#000000;stroke-width:1.66112018;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" />
-<rect style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#6699cc;stroke:#000000;stroke-width:1.66112018;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" id="rect1738-8" width="37.386806" height="30.24431" x="417.26199" y="49.041424" inkscape:label="Process" />
-<text xml:space="preserve" style="font-size:8.30560112px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.08305602;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans" x="435.69876" y="61.926075" id="text2344-9" sodipodi:linespacing="125%" transform="scale(1.0001428,0.99985722)"><tspan sodipodi:role="line" id="tspan2346-4" x="435.69876" y="61.926075" style="font-size:8.30560112px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.08305602;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans">Defined</tspan><tspan sodipodi:role="line" x="435.69876" y="72.308075" style="font-size:8.30560112px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.08305602;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans" id="tspan15317">Process</tspan></text>
-</symbol>
-<symbol style="fill:none;stroke:#000000;stroke-width:1.66112018" transform="matrix(1.2040057,0,0,1.2040079,-547.03458,150.51031)" id="aproc">
-<desc id="desc16907">An alternate to the normal process step.</desc>
-<title id="title16905">Alternate Process</title>
-<rect inkscape:label="Process" y="49.359077" x="488.87799" height="30.244308" width="51.494774" id="rect15309-7" style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#6699cc;stroke:#000000;stroke-width:1.66112018;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" ry="5.1461339" />
-<text transform="scale(1.0001428,0.99985722)" sodipodi:linespacing="125%" id="text2344-9-1" y="61.600418" x="514.35754" style="font-size:8.30560112px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.08305602;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans" xml:space="preserve"><tspan id="tspan15317-7" style="font-size:8.30560112px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.08305602;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans" y="61.600418" x="514.35754" sodipodi:role="line">Alternate</tspan><tspan style="font-size:8.30560112px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.08305602;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans" y="71.982422" x="514.35754" sodipodi:role="line" id="tspan15370">Process</tspan></text>
-</symbol>
-<symbol transform="translate(-289.32377,-61.515372)" id="extract">
-<desc id="desc16871">Split processes or a measurement or finished goods.</desc>
-<title id="title16869">Extract</title>
-<path sodipodi:type="star" style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#aaccee;stroke:#000000;stroke-width:4.53201246;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" id="path1762" sodipodi:sides="3" sodipodi:cx="196.97975" sodipodi:cy="102.81879" sodipodi:r1="79.185905" sodipodi:r2="39.592953" sodipodi:arg1="0.52359878" sodipodi:arg2="1.5707963" inkscape:flatsided="false" inkscape:rounded="0" inkscape:randomized="0" d="m 265.5568,142.4117 -68.577,0 -68.5771,0 L 162.6912,83.02231 196.9798,23.63288 231.2683,83.02231 Z" transform="matrix(0.44136809,0,0,0.44124208,365.13681,95.528587)" inkscape:label="Extract" />
-<text xml:space="preserve" style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans" x="451.70932" y="145.59412" id="text2312" sodipodi:linespacing="125%" transform="scale(1.0001428,0.99985722)"><tspan sodipodi:role="line" id="tspan2314" x="451.70932" y="145.59412" style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans">Extract</tspan></text>
-</symbol>
-<symbol transform="translate(-521.74938,22.99095)" id="minput">
-<desc id="desc16879">Manually input into a system.</desc>
-<title id="title16877">Manual Input</title>
-<path sodipodi:nodetypes="ccccc" inkscape:connector-curvature="0" style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#aaccee;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" d="m 743.68117,75.17848 61.99823,0 0,-55.783134 L 743.76102,33.997942 Z" id="path3054" inkscape:label="ManualInput" />
-<text xml:space="preserve" style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans" x="774.52301" y="50.447914" id="text2328" sodipodi:linespacing="125%" transform="scale(1.0001428,0.99985722)"><tspan sodipodi:role="line" id="tspan2330" x="774.52301" y="50.447914" style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans">Manual</tspan><tspan sodipodi:role="line" x="774.52301" y="62.947914" style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans" id="tspan14761">Input</tspan></text>
-</symbol>
-<symbol transform="translate(-268.21448,-62.515268)" id="merge">
-<desc id="desc16875">Merge multiple processes into one or raw material storage.</desc>
-<title id="title16873">Merge</title>
-<path sodipodi:type="star" style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#aaccee;stroke:#000000;stroke-width:4.53201246;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" id="path2808" sodipodi:sides="3" sodipodi:cx="196.97975" sodipodi:cy="102.81879" sodipodi:r1="79.185905" sodipodi:r2="39.592953" sodipodi:arg1="0.52359878" sodipodi:arg2="1.5707963" inkscape:flatsided="false" inkscape:rounded="0" inkscape:randomized="0" d="m 265.5568,142.4117 -68.577,0 -68.5771,0 L 162.6912,83.02231 196.9798,23.63288 231.2683,83.02231 Z" transform="matrix(-0.44136809,0,0,-0.44124208,698.2613,168.7945)" inkscape:label="Merge" />
-<text xml:space="preserve" style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans" x="610.98444" y="124.93257" id="text2320" sodipodi:linespacing="125%" transform="scale(1.0001428,0.99985722)"><tspan sodipodi:role="line" id="tspan2322" x="610.98444" y="124.93257" style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans">Merge</tspan></text>
-</symbol>
-<symbol transform="translate(282.54638,-20.64998)" id="delay">
-<desc id="desc16883">A waiting period.</desc>
-<title id="title16881">Delay</title>
-<path style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#aaccee;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" d="m 123.73618,114.12043 0,-46.648458 22.89125,0 C 188.53652,67.471972 187.67278,114.12043 146.62743,114.12043 Z" id="path15200-3" inkscape:connector-curvature="0" sodipodi:nodetypes="ccssc" />
-<text xml:space="preserve" style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans" x="146.86577" y="94.339165" id="text2375-0" sodipodi:linespacing="125%" transform="scale(1.0001428,0.99985722)"><tspan sodipodi:role="line" id="tspan2377-3" x="146.86577" y="94.339165" style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans">Delay</tspan></text>
-</symbol>
-<symbol transform="translate(-107.14137,96.80508)" id="data">
-<desc id="desc16891">Indicates data inputs and outputs to and from a process.</desc>
-<title id="title16889">Data I/O</title>
-<rect inkscape:label="Process" y="31.435099" x="265.58328" height="48.066864" width="45.347401" id="rect1738-1" style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#ccff99;stroke:#000000;stroke-width:2.05888343;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" transform="matrix(1,0,-0.33103436,0.9436187,0,0)" />
-<text transform="scale(1.0001419,0.99985813)" sodipodi:linespacing="125%" id="text2344-8" y="55.878571" x="269.55655" style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans" xml:space="preserve"><tspan style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans" y="55.878571" x="269.55655" id="tspan2346-0" sodipodi:role="line">Data</tspan></text>
-</symbol>
-<symbol transform="translate(-63.07007,-286.84938)" id="istorage">
-<desc id="desc16895">Data stored in memory.</desc>
-<title id="title16893">Internal Storage</title>
-<g transform="translate(50,-97)" id="g15839">
-<rect inkscape:label="Process" y="502.00879" x="235" height="61.98241" width="62" id="rect1738-0" style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#ccff99;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" />
-<text transform="scale(1.0001419,0.99985813)" sodipodi:linespacing="125%" id="text2344-0" y="536.60553" x="273.72705" style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans" xml:space="preserve"><tspan style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans" y="536.60553" x="273.72705" id="tspan2346-9" sodipodi:role="line">Internal</tspan><tspan style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans" y="549.10553" x="273.72705" sodipodi:role="line" id="tspan15837">Storage</tspan></text>
-<path inkscape:connector-curvature="0" id="path15777" d="m 250,563 0,-61 -1,0 1,0" style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#6699cc;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" />
-<path inkscape:connector-curvature="0" id="path15779" d="m 235,518 62,0" style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#6699cc;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" />
-</g>
-</symbol>
-<symbol style="fill:none;stroke:#000000;stroke-width:1.66112018" transform="matrix(1.2040057,0,0,1.2040079,-196.83034,87.67678)" id="card">
-<desc id="desc16899">Old computer punch card</desc>
-<title id="title16897">Card</title>
-<path sodipodi:nodetypes="cccccc" inkscape:connector-curvature="0" id="rect1738-4" d="m 438.06818,27.805664 33.63771,0 0,46.496712 -46.5114,0 L 425.19449,40.675681 Z" style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#ccff99;stroke:#000000;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" />
-<text xml:space="preserve" style="font-size:8.30560112px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.08305602;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans" x="448.46753" y="54.043022" id="text2344-3" sodipodi:linespacing="125%" transform="scale(1.0001428,0.99985722)"><tspan sodipodi:role="line" id="tspan2346-1" x="448.46753" y="54.043022" style="font-size:8.30560112px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.08305602;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans">Card</tspan></text>
-</symbol>
-<symbol transform="translate(-259.26254,-146.9955)" id="doc">
-<desc id="desc16903">A document or report</desc>
-<title id="title16901">Document</title>
-<path sodipodi:nodetypes="ccsccc" inkscape:connector-curvature="0" style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#ccff99;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" d="m 664.05943,271.13949 0,48.46273 c 0.15644,-0.16804 5.34098,-5.50818 27.77334,-1.78093 22.43234,3.72728 28.9984,-3.56857 29.198,-3.79732 L 721.03077,271.13949 Z" id="path3082" inkscape:label="Document" />
-<text xml:space="preserve" style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans" x="692.1427" y="299.71402" id="text2292" sodipodi:linespacing="125%" transform="scale(1.0001428,0.99985722)"><tspan sodipodi:role="line" id="tspan2294" x="692.1427" y="299.71402" style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans">Document</tspan></text>
-</symbol>
-<symbol transform="translate(-3.74542,-307.85859)" id="dastore">
-<desc id="desc16911">Storage on a hard drive</desc>
-<title id="title16909">Direct Access Storage</title>
-<g id="g3140-9" transform="matrix(0,0.45151541,-0.50222367,0,262.80673,328.38817)" style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:none;stroke:#000000;stroke-width:4.19995975;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto">
-<path inkscape:connector-curvature="0" inkscape:label="MagneticStorage" id="path1774-7" d="m 399.27296,142.26965 0,99.625 c -0.007,0.11709 0,0.25738 0,0.375 0,0.11762 -0.007,0.22666 0,0.34375 l 0,0.65625 0.0937,0 c 1.75969,9.56464 28.20983,17.1875 60.53125,17.1875 32.32143,0 58.74032,-7.62285 60.5,-17.1875 l 0.0937,0 0,-0.53125 c 0.0132,-0.15588 0,-0.31192 0,-0.46875 0,-0.15683 0.0132,-0.31287 0,-0.46875 l 0,-99.53125 L 399.27296,142.26965 Z" style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#ccff99;stroke:#000000;stroke-width:4.19995975;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" />
-<path transform="matrix(0.991803,0,0,1,374.0872,77.83652)" d="m 147.4823,63.42284 c 0,10.04205 -27.3618,18.18275 -61.11426,18.18275 -33.75245,0 -61.11423,-8.1407 -61.11423,-18.18275 0,-10.04205 27.36178,-18.18274 61.11423,-18.18274 C 120.1205,45.2401 147.4823,53.38079 147.4823,63.42284 Z" sodipodi:ry="18.182745" sodipodi:rx="61.114227" sodipodi:cy="63.42284" sodipodi:cx="86.368042" id="path1772-8" style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#ccff99;stroke:#000000;stroke-width:4.21727943;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" sodipodi:type="arc" />
-</g>
-<text xml:space="preserve" style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans" x="158.72659" y="532.38654" id="text2316-7" sodipodi:linespacing="125%" transform="scale(1.0001428,0.99985722)"><tspan sodipodi:role="line" x="158.72659" y="532.38654" style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans" id="tspan2361-5">Direct</tspan><tspan id="tspan16915" sodipodi:role="line" x="158.72659" y="544.88654" style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans">Access</tspan></text>
-</symbol>
-<symbol transform="translate(-442.60333,16.65882)" id="stored">
-<desc id="desc16919">A general data storage flowchart symbol.</desc>
-<title id="title16917">Stored Data</title>
-<path inkscape:connector-curvature="0" style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#ccff99;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" d="m 726.36321,184.49018 -51.97557,0 c -0.0611,-0.003 -0.1343,0 -0.19569,0 -0.0612,0 -0.11828,-0.003 -0.17934,0 l -0.34236,0 0,0.0416 c -4.98998,0.7838 -8.96693,12.56513 -8.96693,26.96163 0,14.3965 3.97695,26.16391 8.96693,26.94771 l 0,0.0416 0.27721,0 c 0.0813,0.006 0.16266,0 0.24449,0 0.0818,-1e-5 0.16326,0.006 0.24456,0 l 51.63327,0 c -5.09509,-0.45976 -9.17884,-12.37755 -9.17884,-26.98946 0,-14.90298 4.23596,-26.98946 9.47227,-26.98946 L 726.36321,184.49018 Z" id="path3037" inkscape:label="Transaction" />
-<text xml:space="preserve" style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:center;text-decoration:none;line-height:125%;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:middle;baseline-shift:baseline;color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.10000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;font-family:FreeSans;-inkscape-font-specification:FreeSans" x="690.9895" y="215.1076" id="text2371" sodipodi:linespacing="125%" transform="scale(1.0001428,0.99985722)"><tspan sodipodi:role="line" id="tspan2373" x="690.9895" y="215.1076" style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:center;text-decoration:none;line-height:125%;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:middle;baseline-shift:baseline;color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.10000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;font-family:FreeSans;-inkscape-font-specification:FreeSans">Stored</tspan></text>
-</symbol>
-<symbol transform="translate(-189.08032,96.83018)" id="mstore">
-<desc id="desc16923">A database</desc>
-<title id="title16921">Magnetic Disk (Database)</title>
-<g id="g3140" transform="matrix(0.45151541,0,0,0.45127326,324.56977,44.778837)" style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:none;stroke:#000000;stroke-width:4.43071604;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto">
-<path inkscape:connector-curvature="0" inkscape:label="MagneticStorage" id="path1774" d="m 399.27296,142.26965 0,99.625 c -0.007,0.11709 0,0.25738 0,0.375 0,0.11762 -0.007,0.22666 0,0.34375 l 0,0.65625 0.0937,0 c 1.75969,9.56464 28.20983,17.1875 60.53125,17.1875 32.32143,0 58.74032,-7.62285 60.5,-17.1875 l 0.0937,0 0,-0.53125 c 0.0132,-0.15588 0,-0.31192 0,-0.46875 0,-0.15683 0.0132,-0.31287 0,-0.46875 l 0,-99.53125 L 399.27296,142.26965 Z" style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#ccff99;stroke:#000000;stroke-width:4.43071604;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" />
-<path transform="matrix(0.991803,0,0,1,374.0872,77.83652)" d="m 147.4823,63.42284 c 0,10.04205 -27.3618,18.18275 -61.11426,18.18275 -33.75245,0 -61.11423,-8.1407 -61.11423,-18.18275 0,-10.04205 27.36178,-18.18274 61.11423,-18.18274 C 120.1205,45.2401 147.4823,53.38079 147.4823,63.42284 Z" sodipodi:ry="18.182745" sodipodi:rx="61.114227" sodipodi:cy="63.42284" sodipodi:cx="86.368042" id="path1772" style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#ccff99;stroke:#000000;stroke-width:4.44898748;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" sodipodi:type="arc" />
-</g>
-<text xml:space="preserve" style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans" x="531.85986" y="134.82974" id="text2316" sodipodi:linespacing="125%" transform="scale(1.0001428,0.99985722)"><tspan sodipodi:role="line" id="tspan2318" x="531.85986" y="134.82974" style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans">Magnetic</tspan><tspan sodipodi:role="line" x="531.85986" y="147.32974" style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans" id="tspan2361">Storage</tspan></text>
-</symbol>
-<symbol transform="translate(198.63092,312.196)" id="tape">
-<desc id="desc16927">Old computer punched tape input.</desc>
-<title id="title16925">Punched Tape</title>
-<path sodipodi:nodetypes="cscccccscccccc" inkscape:connector-curvature="0" style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#ccff99;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" d="m 265.65164,-109.58642 c 0,0 -5.4249,6.14841 -30.22479,1.98124 -24.7999,-4.16718 -31.7752,4.16602 -31.7752,4.16602 l 0,3.06682 0,33.161001 0,1.764119 0,7.015731 c 0.17023,-0.184959 5.81238,-6.069723 30.2248,-1.967654 24.41241,4.10207 31.558,-3.92785 31.77519,-4.179585 l 0,-0.868492 0,-2.198359 0,-33.161001 L 265.65164,-103.43916 Z" id="rect2921" inkscape:label="PaperTape" />
-<text xml:space="preserve" style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.22499999;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans" x="234.61916" y="-81.506783" id="text2300" sodipodi:linespacing="125%" transform="scale(1.0001428,0.99985722)"><tspan sodipodi:role="line" id="tspan2302" x="234.61916" y="-81.506783" style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.22499999;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans">Tape</tspan></text>
-</symbol>
-<symbol transform="translate(-55.50095,267.22175)" id="term">
-<desc id="desc16931">A start or stop point in a process.</desc>
-<title id="title16929">Terminator</title>
-<path style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#eeeeee;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" d="m 105.14401,53.478192 c -12.723391,0 -12.788458,-27.107441 0,-27.107441 l 46.08265,0 C 163.36709,26.370751 164.02264,53.478192 151.22666,53.478192 Z" id="path15200" inkscape:connector-curvature="0" sodipodi:nodetypes="sssss" />
-<text xml:space="preserve" style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans" x="128.21051" y="43.460175" id="text2375" sodipodi:linespacing="125%" transform="scale(1.0001428,0.99985722)"><tspan sodipodi:role="line" id="tspan2377" x="128.21051" y="43.460175" style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans">Termination</tspan></text>
-</symbol>
-<symbol id="tarrow">
-<title id="title2283">Thick Arrow</title>
-<desc id="desc2281">Indicates movement of blocks.</desc>
-<path inkscape:connector-curvature="0" id="internalt" d="m 146.78332,233.23184 -9.38314,13.27679 5.66399,0 0,47.28792 7.4383,0 0,-47.28792 L 156.11336,246.50863 Z" style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#eeeeee;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" sodipodi:nodetypes="cccccccc" inkscape:label="#thickinternal" />
-</symbol>
-<symbol style="fill:#eeeeee;stroke-width:1.80955124" transform="matrix(1.1014632,0,0,1.1090426,-228.80291,173.3747)" id="transfer">
-<desc id="desc16965">Transfer of materials.</desc>
-<title id="title16963">Transfer</title>
-<path sodipodi:nodetypes="cccccccc" style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#eeeeee;stroke:#000000;stroke-width:1.80955112;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" d="m 628.78052,120.56386 -20.39208,18.12317 0,-10.93978 -35.43572,0 0,-14.36678 35.43572,0 L 608.38844,102.54325 Z" id="path2672-1" inkscape:connector-curvature="0" />
-</symbol>
-<symbol transform="translate(-531.78115,326.77543)" id="dec">
-<desc id="desc16969">A question or branch in the process.</desc>
-<title id="title16967">Decision</title>
-<rect style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#eeeeee;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" id="rect1748" width="43.248375" height="43.248375" x="447.64825" y="-406.92166" transform="matrix(0.70720774,0.70700581,-0.70720774,0.70700581,0,0)" inkscape:label="Decision" />
-<text xml:space="preserve" style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans" x="604.17273" y="62.909267" id="text2336" sodipodi:linespacing="125%" transform="scale(1.0001428,0.99985722)"><tspan sodipodi:role="line" id="tspan2338" x="604.17273" y="62.909267" style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans">Decision</tspan></text>
-</symbol>
-<symbol id="arrow">
-<desc id="desc16945">Shows flow from one block to another.</desc>
-<title id="title16943">Flow Arrow</title>
-<path id="path192" inkscape:connector-curvature="0" d="m 222.67855,276.29885 63,46" style="fill:#eeeeee;stroke:#000000;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:url(#Arrow2Mstart)" />
-</symbol>
-<symbol id="carrow">
-<desc id="desc16961">Arrow with additional circle.</desc>
-<title id="title16959">Circle Arrow</title>
-<path id="path197" inkscape:label="#circle-arrow" inkscape:connector-curvature="0" d="m 309.86158,273.28761 63,46" style="fill:#eeeeee;stroke:#000000;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:url(#Arrow2Mstart-1);marker-end:url(#DotM)" />
-</symbol>
-<symbol style="fill:none;stroke:#000000;stroke-width:2" transform="translate(-201.73482,156.11026)" id="page">
-<desc id="desc16973">Continuation on another page</desc>
-<title id="title16971">Off-Page Connector</title>
-<path sodipodi:nodetypes="cccccc" inkscape:connector-curvature="0" id="path15445-6" d="m 333.38546,239.7364 0.013,-36.16948 62.19282,0.0281 -0.0129,36.16949 L 364.47541,256.37157 Z" inkscape:transform-center-y="-6.8590643" inkscape:transform-center-x="-4.1596926" style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#eeeeee;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" />
-<text transform="scale(1.0001428,0.99985722)" sodipodi:linespacing="125%" id="text2292-0-9" y="226.62294" x="364.33694" style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans" xml:space="preserve"><tspan style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans" y="226.62294" x="364.33694" id="tspan2294-7-5" sodipodi:role="line">Page ...</tspan></text>
-</symbol>
-<symbol transform="translate(-441.91488,337.637)" id="conn">
-<desc id="desc16977">A jump from one point to another.</desc>
-<title id="title16975">Connector</title>
-<path sodipodi:type="arc" style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#eeeeee;stroke:#000000;stroke-width:3.94343448;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" id="path1768" sodipodi:cx="514.67273" sodipodi:cy="106.35432" sodipodi:rx="61.114227" sodipodi:ry="61.114227" d="m 575.787,106.3543 c 0,33.7525 -27.3618,61.1142 -61.1143,61.1142 -33.7524,0 -61.1142,-27.3617 -61.1142,-61.1142 0,-33.75244 27.3618,-61.11421 61.1142,-61.11421 C 548.4252,45.24009 575.787,72.60186 575.787,106.3543 Z" inkscape:label="Connector" transform="matrix(0.50724453,0,0,0.50709971,433.77989,-5.423025)" />
-<text xml:space="preserve" style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans" x="694.64575" y="52.106144" id="text2332" sodipodi:linespacing="125%" transform="scale(1.0001428,0.99985722)"><tspan sodipodi:role="line" id="tspan2334" x="694.64575" y="52.106144" style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans">Connector</tspan></text>
-</symbol>
-<symbol style="fill:#eeeeee;stroke:#000000;stroke-width:1.67472553" transform="matrix(0.84444487,-0.84444487,0.84444487,0.84444487,-351.81177,721.76382)" id="or">
-<title id="title15627">Logical Or</title>
-<path sodipodi:type="arc" style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#eeeeee;stroke:#000000;stroke-width:3.94285369;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" id="path2798-5" sodipodi:cx="514.67273" sodipodi:cy="106.35432" sodipodi:rx="61.114227" sodipodi:ry="61.114227" d="m 575.787,106.3543 c 0,33.7525 -27.3618,61.1142 -61.1143,61.1142 -33.7524,0 -61.1142,-27.3617 -61.1142,-61.1142 0,-33.75244 27.3618,-61.11421 61.1142,-61.11421 C 548.4252,45.24009 575.787,72.60186 575.787,106.3543 Z" transform="matrix(0.30038626,0.3003005,-0.30038626,0.3003005,487.53201,26.248832)" />
-<rect style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#eeeeee;stroke:#000000;stroke-width:1.67472553;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" id="rect2800-6" width="1.0726552" height="51.278145" x="581.83026" y="-306.55136" transform="matrix(0.70720773,0.70700582,-0.70720773,0.70700582,0,0)" />
-<rect style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#eeeeee;stroke:#000000;stroke-width:1.67472553;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" id="rect2802-5" width="1.0726552" height="51.278145" x="-281.34137" y="-607.48657" transform="matrix(-0.70720773,0.70700582,-0.70720773,-0.70700582,0,0)" />
-</symbol>
-<symbol style="fill:#eeeeee;stroke-width:1.67463279" transform="matrix(1.1942916,0,0,1.1942916,-295.45656,132.06837)" id="and">
-<desc id="desc16979">Summing Junction</desc>
-<title id="title15629">Logical And</title>
-<path sodipodi:type="arc" style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#eeeeee;stroke:#000000;stroke-width:3.94263458;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" id="path2798" sodipodi:cx="514.67273" sodipodi:cy="106.35432" sodipodi:rx="61.114227" sodipodi:ry="61.114227" d="m 575.787,106.3543 c 0,33.7525 -27.3618,61.1142 -61.1143,61.1142 -33.7524,0 -61.1142,-27.3617 -61.1142,-61.1142 0,-33.75244 27.3618,-61.11421 61.1142,-61.11421 C 548.4252,45.24009 575.787,72.60186 575.787,106.3543 Z" transform="matrix(0.30038626,0.3003005,-0.30038626,0.3003005,487.53201,26.248832)" />
-<rect style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#eeeeee;stroke:#000000;stroke-width:1.67463279;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" id="rect2800" width="1.0726552" height="51.278145" x="581.83026" y="-306.55136" transform="matrix(0.70720773,0.70700582,-0.70720773,0.70700582,0,0)" />
-<rect style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#eeeeee;stroke:#000000;stroke-width:1.67463279;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" id="rect2802" width="1.0726552" height="51.278145" x="-281.34137" y="-607.48657" transform="matrix(-0.70720773,0.70700582,-0.70720773,-0.70700582,0,0)" />
-</symbol>
-<symbol style="fill:none;stroke:#000000;stroke-width:1.66112018" transform="matrix(1.2040057,0,0,1.2040079,-470.35928,392.67678)" id="manual">
-<desc id="desc16983">A process step that isn't automated.</desc>
-<title id="title16981">Manual Operation</title>
-<path sodipodi:nodetypes="ccccc" inkscape:connector-curvature="0" id="rect1738-82" d="m 425.19449,41.094613 51.49477,0 -9.96673,38.191119 L 435.16122,79.285732 Z" style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#fdd99b;stroke:#000000;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" />
-<text xml:space="preserve" style="font-size:8.30560112px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.08305602;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans" x="450.68307" y="57.129848" id="text2344-6" sodipodi:linespacing="125%" transform="scale(1.0001428,0.99985722)"><tspan sodipodi:role="line" id="tspan2346-5" x="450.68307" y="57.129848" style="font-size:8.30560112px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.08305602;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans">Manual</tspan><tspan id="tspan15536" sodipodi:role="line" x="450.68307" y="67.511848" style="font-size:8.30560112px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.08305602;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans">Operation</tspan></text>
-</symbol>
-<symbol transform="translate(-189.40744,233.66195)" id="prep">
-<desc id="desc16987">A preparation or setup process step.</desc>
-<title id="title16985">Preparation</title>
-<path sodipodi:type="star" style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#fdd99b;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:3.2332437;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" id="path15445" sodipodi:sides="6" sodipodi:cx="323.353" sodipodi:cy="232.61865" sodipodi:r1="44.52523" sodipodi:r2="22.262615" sodipodi:arg1="0.87160374" sodipodi:arg2="1.3952025" inkscape:flatsided="true" inkscape:rounded="0" inkscape:randomized="0" d="m 352.0094,266.6966 -43.8405,7.7782 -28.6565,-34.0779 15.1842,-41.8562 43.8405,-7.7782 L 367.1936,224.8404 Z" inkscape:transform-center-x="4.6863777" inkscape:transform-center-y="-2.8612843" transform="matrix(0.67912477,0.09710304,-0.12074373,0.54615741,160.65128,73.039317)" />
-<text transform="scale(1.0001428,0.99985722)" sodipodi:linespacing="125%" id="text2292-0" y="234.07233" x="352.01132" style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans" xml:space="preserve"><tspan style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans" y="234.07233" x="352.01132" id="tspan2294-7" sodipodi:role="line">Preparation</tspan></text>
-</symbol>
-<symbol style="fill:none;stroke:#000000;stroke-width:2" transform="translate(-99.78792,233.66204)" id="display">
-<desc id="desc16991">A machine display.</desc>
-<title id="title16989">Display</title>
-<path sodipodi:nodetypes="scccss" inkscape:connector-curvature="0" id="path15445-4" d="m 352.00943,266.69658 -43.84056,7.77823 -28.65644,-34.07792 15.18413,-41.85616 43.84057,-7.77824 C 370.43074,185.10389 383.46451,261.11579 352.00943,266.69658 Z" inkscape:transform-center-y="-2.8612843" inkscape:transform-center-x="4.6863777" style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#fdd99b;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:3.2332437;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" transform="matrix(0.67912477,0.09710304,-0.12074373,0.54615741,160.65128,73.039317)" />
-<text transform="scale(1.0001428,0.99985722)" sodipodi:linespacing="125%" id="text2292-0-5" y="234.07233" x="352.01132" style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans" xml:space="preserve"><tspan style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.10000001;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:FreeSans;-inkscape-font-specification:FreeSans" y="234.07233" x="352.01132" id="tspan2294-7-0" sodipodi:role="line">Display</tspan></text>
-</symbol>
-<symbol style="fill:#fdd99b;stroke-width:1.76906455" transform="matrix(1.1325502,0,0,1.1285354,202.01424,414.38018)" id="sort">
-<desc id="desc15677">Sorting of data into a pre-defined order.</desc>
-<title id="title15675">Sort</title>
-<path inkscape:connector-curvature="0" id="path15673" d="m 124.5625,18.40625 -26.09375,26.125 52.21875,0 L 124.5625,18.40625 Z" style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#fdd99b;stroke:#000000;stroke-width:1.76906455;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" />
-<path inkscape:connector-curvature="0" id="rect1748-3" d="m 98.4375,45.4375 26.125,26.125 26.15625,-26.125 L 98.4375,45.4375 Z" style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#fdd99b;stroke:#000000;stroke-width:1.76906455;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" />
-</symbol>
-<symbol style="fill:#fdd99b;stroke-width:1.76993906" transform="matrix(1.1328602,0,0,1.1271119,130.80902,-76.995081)" id="collate">
-<desc id="desc16993">Organising data into a standard format or arrangement.</desc>
-<title id="title15669">Collate</title>
-<path style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#fdd99b;stroke:#000000;stroke-width:1.76993906;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" d="m 266.98335,481.4223 -26.09375,26.125 52.21875,0 L 266.98335,481.4223 Z" id="path15663" inkscape:connector-curvature="0" />
-<path inkscape:connector-curvature="0" style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#fdd99b;stroke:#000000;stroke-width:1.76993906;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" d="m 240.85835,454.45355 26.125,26.125 26.15625,-26.125 L 240.85835,454.45355 Z" id="rect1748-3-4" />
-</symbol>
-</defs>
-<use id="use3390" xlink:href="#process" x="0" y="0" transform="translate(-0.076101,-8.646224)" />
-<use id="use3421" xlink:href="#extract" x="0" y="0" transform="translate(-0.076096,-8.646224)" />
-<use id="use3453" xlink:href="#minput" x="0" y="0" transform="translate(-0.0761,-8.646229)" />
-<use id="use3485" xlink:href="#merge" x="0" y="0" transform="translate(-0.076095,-8.646224)" />
-<use id="use3516" xlink:href="#delay" x="0" y="0" transform="translate(-0.076098,-8.646221)" />
-<use id="use3549" xlink:href="#pprocess" x="0" y="0" transform="translate(-0.076103,-8.646227)" />
-<use id="use3583" xlink:href="#aproc" x="0" y="0" transform="translate(-0.076101,-8.646223)" />
-<use id="use3615" xlink:href="#data" x="0" y="0" transform="translate(-0.076102,-8.646223)" />
-<use id="use3650" xlink:href="#istorage" x="0" y="0" transform="translate(-0.076096,-8.64622)" />
-<use id="use3685" xlink:href="#card" x="0" y="0" transform="translate(-0.076097,-8.646224)" />
-<use id="use3716" xlink:href="#doc" x="0" y="0" transform="translate(-0.076099,-8.646222)" />
-<use id="use3750" xlink:href="#dastore" x="0" y="0" transform="translate(-0.076096,-8.646228)" />
-<use id="use3784" xlink:href="#stored" x="0" y="0" transform="translate(-0.076101,-8.646228)" />
-<use id="use3818" xlink:href="#mstore" x="0" y="0" transform="translate(-0.076102,-8.646223)" />
-<use id="use3852" xlink:href="#tape" x="0" y="0" transform="translate(-0.076104,-8.646224)" />
-<use id="use3883" xlink:href="#term" x="0" y="0" transform="translate(-0.0761,-8.646223)" />
-<use id="use3912" xlink:href="#tarrow" x="0" y="0" transform="translate(15.923903,35.353776)" />
-<use id="use3939" xlink:href="#transfer" x="0" y="0" transform="translate(-0.076097,-8.646227)" />
-<use id="use3968" xlink:href="#dec" x="0" y="0" transform="translate(-0.076101,-8.646222)" />
-<use id="use3999" xlink:href="#page" x="0" y="0" transform="translate(-0.0761,-8.646222)" />
-<use id="use4030" xlink:href="#conn" x="0" y="0" transform="translate(-0.076102,-8.64622)" />
-<use id="use4060" xlink:href="#or" x="0" y="0" transform="translate(-0.076099,-8.646228)" />
-<use id="use4090" xlink:href="#and" x="0" y="0" transform="translate(-0.076098,-8.646224)" />
-<use id="use4122" xlink:href="#manual" x="0" y="0" transform="translate(-0.0761,-8.646225)" />
-<use id="use4154" xlink:href="#prep" x="0" y="0" transform="translate(-0.076105,-8.646228)" />
-<use id="use4185" xlink:href="#display" x="0" y="0" transform="translate(-0.076104,-8.646227)" />
-<use id="use4215" xlink:href="#sort" x="0" y="0" transform="translate(-0.076095,-8.646219)" />
-<use id="use4244" xlink:href="#collate" x="0" y="0" transform="translate(-0.076095,-8.646224)" />
-<use id="use3337" xlink:href="#carrow" x="0" y="0" transform="translate(-87.03015,2.000003)" />
-<use id="use3364" xlink:href="#arrow" x="0" y="0" transform="translate(94.146162,0.99999688)" />
+    <symbol id="Process">
+      <title>Process</title>
+      <desc>Any processing function.</desc>
+      <rect x="15" y="35" width="120" height="80" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="InputOutput">
+      <title>Input/Output</title>
+      <desc>General input/output functions.</desc>
+      <path d="m 35,35 100,0 -20,80 -100,0 z" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="Document">
+      <title>Document</title>
+      <desc>A document or report</desc>
+      <path d="m 15,35 120,0 0,60 c -50,-5 -70,35 -120,10 z" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="ManualOperation">
+      <title>Manual Operation</title>
+      <desc>An offline process (at "human speed").</desc>
+      <path d="m 15,35 120,0 -30,80 -60,0 z" style="stroke-width:2px"/>
+    </symbol>
+
+    <symbol id="Preparation">
+      <title>Preparation</title>
+      <desc>A preparation or setup process step. (ISO)</desc>
+      <path d="m 35,35 80,0 20,40 -20,40 -80,0 -20,-40 z" style="stroke-width:2px"/>
+    </symbol>
+
+    <symbol id="Merge">
+      <title>Merge</title>
+      <desc>Combine two or more sets of items into one set. (ISO)</desc>
+      <path d="m 35,35 80,0 -40,70 z" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="Decision">
+      <title>Decision</title>
+      <desc>A decision or switching type operation.</desc>
+      <path d="m 15,75 60,-40 60,40 -60,40 z" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="MagneticTape">
+      <title>Magnetic Tape</title>
+      <desc>Magnetic tape storage</desc>
+      <circle cx="75" cy="75" r="40" style="stroke-width:2"/>
+      <path d="m 75,115 40,0" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="Display">
+      <title>Display</title>
+      <desc>Information display by online indicators, video devices, printers, etc.</desc>
+      <path d="m 15,75 a 100,100 0 0 1 40,-40 l 65,0 a 60,60 0 0 1 0,80 l -65,0 a 100,100 0 0 1 -40,-40 z" style="stroke-width:2px"/>
+    </symbol>
+
+    <symbol id="AuxillaryOp">
+      <title>Auxillary Operation</title>
+      <desc>Offline operation.</desc>
+      <rect x="35" y="35" width="80" height="80" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="ManualInput">
+      <title>Manual Input</title>
+      <desc>Information input by online keyboards, switches, etc.</desc>
+      <path d="m 15,65 120,-20 0,60 -120,0 z" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="Extract">
+      <title>Extract</title>
+      <desc>Removel of one or more specific sets of times from a set. (ISO)</desc>
+      <path d="m 35,115 40,-70 40,70 z" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="Terminal">
+      <title>Terminal/Interupt</title>
+      <desc>A terminal point in a flowchart: start, stop, halt, etc.</desc>
+      <path d="m 35,95 a 20,20 0 0 1 0,-40 l 80,0 a 20,20 0 0 1 0,40 z" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="PunchedCard">
+      <title>Punched Card</title>
+      <desc>Input/output function in card medium.</desc>
+      <path d="m 15,55 10,-10 110,0 0,60 -120,0 z" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="PunchedTape">
+      <title>Punch Tape</title>
+      <desc>Punched tape.</desc>
+      <path d="m 15,50 c 50,20 70,-20 120,0 l 0,50 c -50,-20 -70,20 -120,0 z" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="OnlineStorage">
+      <title>Online Storage</title>
+      <desc>Input/output using any kind of online storage.</desc>
+      <path d="m 25,115 a 65,65 0 0 1 0,-80 l 110,0 a 65,65 0 0 0 0,80 z" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="Keying">
+      <title>Keying</title>
+      <desc>Operation using a key-driven device, e.g. typing. (IBM)</desc>
+      <path d="m 25,115 a 65,65 0 0 1 0,-80 l 100,0 a 65,65 0 0 1 0,80 z" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="Sort">
+      <title>Sort</title>
+      <desc>Arrange a set of items into sequence. (ISO)</desc>
+      <path d="m 35,75 40,-75 40,75 -40,75 z m 0,0 80,0" style="stroke-width:2px"/>
+    </symbol>
+
+    <symbol id="Connector">
+      <title>Connector</title>
+      <desc>Exit to or entry from another part of chart.</desc>
+      <circle cx="75" cy="75" r="20" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="Offpage">
+      <title>Off-Page Connector</title>
+      <desc>Exit to or entry from a page. (IBM)</desc>
+      <path d="m 55,55 40,0 0,30 -20,20 -20,-20 z" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="TransmittalTape">
+      <title>Transmittal Tape</title>
+      <desc>Adding machine tape or other batch control information. (IBM)</desc>
+      <path d="m 35,45 40,0 0,80 c -10,-10 -30,-15 -40,-15 z" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="CommunicationLink">
+      <title>Communication Link</title>
+      <desc>Transcommunication link.</desc>
+      <path d="m 65,25 0,60 20,-20 0,60" style="fill:none;stroke-width:2"/>
+    </symbol>
+
+    <symbol id="Collate">
+      <title>Collate</title>
+      <desc>Merge with extracting. (ISO)</desc>
+      <path d="m 75,75 -40,-70 80,0 z m 0,0 40,70 -80,0 z" style="stroke-width:2px"/>
+    </symbol>
+
+    <symbol id="Comment">
+      <title>Comment/Annotation</title>
+      <desc>Additional descriptive clarification (connect by dotted line).</desc>
+      <path d="m 135,115 -120,0 0,-80 120,0" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="Core">
+      <title>Core</title>
+      <desc>Core memory. (ISO)</desc>
+      <rect x="35" y="35" width="80" height="80" style="stroke-width:2"/>
+      <path d="m 35,50 80,0" style="stroke-width:2"/>
+      <path d="m 50,35 0,80" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="PredefinedProcess">
+      <title>Predefined Process</title>
+      <desc>A formally defined sub-process.</desc>
+      <rect x="15" y="35" width="120" height="80" style="stroke-width:2"/>
+      <rect x="35" y="35" width="80" height="80" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="MagneticDisk">
+      <title>Magnetic Disk (Database)</title>
+      <desc>A magnetic disk. (ISO)</desc>
+      <path d="m 35,25 a 65,65 0 0 1 80,0 l 0,100 a 65,65 0 0 1 -80,0 z" style="stroke-width:2"/>
+      <path d="m 115,25 a 65,65 0 0 1 -80,0" style="fill:none;stroke-width:2;stroke-linecap:butt"/>
+      <path d="m 115,40 a 65,65 0 0 1 -80,0" style="fill:none;stroke-width:2;stroke-linecap:butt"/>
+      <path d="m 115,55 a 65,65 0 0 1 -80,0" style="fill:none;stroke-width:2;stroke-linecap:butt"/>
+    </symbol>
+
+    <symbol id="MagneticDrum">
+      <title>Magnetic Drum (Direct Access)</title>
+      <desc>Magnetic drum. (ISO)</desc>
+      <path d="m 25,115 a 65,65 0 0 1 0,-80 l 100,0 a 65,65 1 0 1 0,80 z" style="stroke-width:2"/>
+      <path d="m 125,115 a 65,65 0 0 1 0,-80" style="fill:none;stroke-width:2;stroke-linecap:butt"/>
+    </symbol>
+
+    <symbol id="OfflineStorage">
+      <title>Offline Storage</title>
+      <desc>Offline storage.</desc>
+      <path d="m 35,35 80,0 -40,70 z" style="stroke-width:2"/>
+      <path d="m 60,80 30,0" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="LogicalOr">
+      <title>Logical Or</title>
+      <desc>Shows when a process diverges.</desc>
+      <circle cx="75" cy="75" r="20" style="stroke-width:2"/>
+      <path d="m 55,75 40,0" style="stroke-width:2"/>
+      <path d="m 75,55 0,40" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="LogicalAnd">
+      <title>Logical And</title>
+      <desc>Summing junction. Shows when multiple branches converge.</desc>
+      <circle cx="75" cy="75" r="20" style="stroke-width:2"/>
+      <path d="m 61,61 28,28" style="stroke-width:2"/>
+      <path d="m 61,89 28,-28" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="Delay">
+      <title>Delay</title>
+      <desc>A waiting period.</desc>
+      <path d="m 15,35 60,0 a 60,40 0 0 1 0,80 l -60,0 z" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="LoopLimitBegin">
+      <title>Loop Limit Begin</title>
+      <desc>Start of a loop.</desc>
+      <path d="m 15,75 20,-40 80,0 20,40 0,40 -120,0 z" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="LoopLimitEnd">
+      <title>Loop Limit End</title>
+      <desc>End of a loop.</desc>
+      <path d="m 15,75 0,-40 120,0 0,40 -20,40 -80,0 z" style="stroke-width:2"/>
+    </symbol>
+
+  </defs>
+
+  <use xlink:href="#Process"            x="0"   y="0"   />
+  <use xlink:href="#InputOutput"        x="150" y="0"   />
+  <use xlink:href="#Document"           x="300" y="0"   />
+  <use xlink:href="#ManualOperation"    x="450" y="0"   />
+  <use xlink:href="#Preparation"        x="600" y="0"   />
+  <use xlink:href="#Merge"              x="750" y="0"   />
+
+  <use xlink:href="#Decision"           x="0"   y="150" />
+  <use xlink:href="#MagneticTape"       x="150" y="150" />
+  <use xlink:href="#Display"            x="300" y="150" />
+  <use xlink:href="#AuxillaryOp"        x="450" y="150" />
+  <use xlink:href="#ManualInput"        x="600" y="150" />
+  <use xlink:href="#Extract"            x="750" y="150" />
+
+  <use xlink:href="#Terminal"           x="0"   y="300" />
+  <use xlink:href="#PunchedCard"        x="150" y="300" />
+  <use xlink:href="#PunchedTape"        x="300" y="300" />
+  <use xlink:href="#OnlineStorage"      x="450" y="300" />
+  <use xlink:href="#Keying"             x="600" y="300" />
+
+  <use xlink:href="#Connector"          x="0"   y="450" />
+  <use xlink:href="#Offpage"            x="150" y="450" />
+  <use xlink:href="#TransmittalTape"    x="300" y="450" />
+  <use xlink:href="#CommunicationLink"  x="450" y="450" />
+
+  <!-- Symbols made using the above symbols -->
+  <use xlink:href="#Sort"               x="600" y="450" />
+  <use xlink:href="#Collate"            x="750" y="450" />
+
+  <use xlink:href="#Comment"            x="0"   y="600" />
+  <use xlink:href="#Core"               x="150" y="600" />
+  <use xlink:href="#PredefinedProcess"  x="300" y="600" />
+  <use xlink:href="#MagneticDisk"       x="450" y="600" />
+  <use xlink:href="#MagneticDrum"       x="600" y="600" />
+  <use xlink:href="#OfflineStorage"     x="750" y="600" />
+
+  <!-- Symbols not in IBM Flowcharting Template -->
+  <use xlink:href="#LogicalOr"          x="0"   y="750" />
+  <use xlink:href="#LogicalAnd"         x="150" y="750" />
+  <use xlink:href="#Delay"              x="450" y="750" />
+
+  <!-- ISO 5807 -->
+  <use xlink:href="#LoopLimitBegin"     x="600" y="750" />
+  <use xlink:href="#LoopLimitEnd"       x="750" y="750" />
+
 </svg>
