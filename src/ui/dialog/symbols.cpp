@@ -613,6 +613,7 @@ GSList* SymbolsDialog::symbols_in_doc( SPDocument* symbolDocument ) {
 
   GSList *l = NULL;
   l = symbols_in_doc_recursive (symbolDocument->getRoot(), l );
+  l = g_slist_reverse( l );
   return l;
 }
 
