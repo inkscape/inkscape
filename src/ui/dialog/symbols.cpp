@@ -219,25 +219,27 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
   Gtk::Label* spacer = Gtk::manage(new Gtk::Label(""));
   tools->pack_start(* Gtk::manage(spacer));
 
-  in_sizes = 2; // Default 32px
+  // Pack size (controls display area)
+  pack_size = 2; // Default 32px
   button = Gtk::manage(new Gtk::Button());
   button->add(*Gtk::manage(Glib::wrap(
-      sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_ICON("symbol-bigger")))) );
-  button->set_tooltip_text(_("Make Icons bigger by zooming in."));
+      sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_ICON("pack-more")))) );
+  button->set_tooltip_text(_("Display more icons in row."));
   button->set_relief( Gtk::RELIEF_NONE );
   button->set_focus_on_click( false );
-  button->signal_clicked().connect(sigc::mem_fun(*this, &SymbolsDialog::zoomin));
+  button->signal_clicked().connect(sigc::mem_fun(*this, &SymbolsDialog::packmore));
   tools->pack_start(* button, Gtk::PACK_SHRINK);
 
   button = Gtk::manage(new Gtk::Button());
   button->add(*Gtk::manage(Glib::wrap(
-      sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_ICON("symbol-smaller")))) );
-  button->set_tooltip_text(_("Make Icons smaller by zooming out."));
+      sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_ICON("pack-less")))) );
+  button->set_tooltip_text(_("Display fewer icons in row."));
   button->set_relief( Gtk::RELIEF_NONE );
   button->set_focus_on_click( false );
-  button->signal_clicked().connect(sigc::mem_fun(*this, &SymbolsDialog::zoomout));
+  button->signal_clicked().connect(sigc::mem_fun(*this, &SymbolsDialog::packless));
   tools->pack_start(* button, Gtk::PACK_SHRINK);
 
+  // Toggle scale to fit on/off
   fitSymbol = Gtk::manage(new Gtk::ToggleButton());
   fitSymbol->add(*Gtk::manage(Glib::wrap(
       sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_ICON("symbol-fit")))) );
@@ -247,6 +249,28 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
   fitSymbol->set_active( true );
   fitSymbol->signal_clicked().connect(sigc::mem_fun(*this, &SymbolsDialog::rebuild));
   tools->pack_start(* fitSymbol, Gtk::PACK_SHRINK);
+
+  // Render size (scales symbols within display area)
+  scale_factor = 0; // Default 1:1 * pack_size/pack_size default
+  zoomOut = Gtk::manage(new Gtk::Button());
+  zoomOut->add(*Gtk::manage(Glib::wrap(
+      sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_ICON("symbol-smaller")))) );
+  zoomOut->set_tooltip_text(_("Make symbols smaller by zooming out."));
+  zoomOut->set_relief( Gtk::RELIEF_NONE );
+  zoomOut->set_focus_on_click( false );
+  zoomOut->set_sensitive( false );
+  zoomOut->signal_clicked().connect(sigc::mem_fun(*this, &SymbolsDialog::zoomout));
+  tools->pack_start(* zoomOut, Gtk::PACK_SHRINK);
+
+  zoomIn = Gtk::manage(new Gtk::Button());
+  zoomIn->add(*Gtk::manage(Glib::wrap(
+      sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_ICON("symbol-bigger")))) );
+  zoomIn->set_tooltip_text(_("Make symbols bigger by zooming in."));
+  zoomIn->set_relief( Gtk::RELIEF_NONE );
+  zoomIn->set_focus_on_click( false );
+  zoomIn->set_sensitive( false );
+  zoomIn->signal_clicked().connect(sigc::mem_fun(*this, &SymbolsDialog::zoomin));
+  tools->pack_start(* zoomIn, Gtk::PACK_SHRINK);
 
   ++row;
 
@@ -298,21 +322,43 @@ SymbolsDialog& SymbolsDialog::getInstance()
   return *new SymbolsDialog();
 }
 
+void SymbolsDialog::packless() {
+  if(pack_size < 4) {
+      pack_size++;
+      rebuild();
+  }
+}
+
+void SymbolsDialog::packmore() {
+  if(pack_size > 0) {
+      pack_size--;
+      rebuild();
+  }
+}
+
 void SymbolsDialog::zoomin() {
-  if(in_sizes < 4) {
-      in_sizes++;
+  if(scale_factor < 4) {
+      scale_factor++;
       rebuild();
   }
 }
 
 void SymbolsDialog::zoomout() {
-  if(in_sizes > 0) {
-      in_sizes--;
+  if(scale_factor > -8) {
+      scale_factor--;
       rebuild();
   }
 }
 
 void SymbolsDialog::rebuild() {
+
+  if( fitSymbol->get_active() ) {
+    zoomIn->set_sensitive( false );
+    zoomOut->set_sensitive( false );
+  } else {
+    zoomIn->set_sensitive( true);
+    zoomOut->set_sensitive( true );
+  }
 
   store->clear();
   Glib::ustring symbolSetString = symbolSet->get_active_text();
@@ -757,7 +803,7 @@ SymbolsDialog::draw_symbol(SPObject *symbol)
   previewDocument->ensureUpToDate();
 
   SPItem *item = SP_ITEM(object_temp);
-  unsigned psize = SYMBOL_ICON_SIZES[in_sizes];
+  unsigned psize = SYMBOL_ICON_SIZES[pack_size];
 
   Glib::RefPtr<Gdk::Pixbuf> pixbuf(NULL);
   // We could use cache here, but it doesn't really work with the structure
@@ -779,6 +825,8 @@ SymbolsDialog::draw_symbol(SPObject *symbol)
 
     if( fitSymbol->get_active() )
         scale = psize / std::max(width, height);
+    else
+      scale = pow( 2.0, scale_factor/2.0 ) * psize / 32.0;
 
     pixbuf = Glib::wrap(render_pixbuf(renderDrawing, scale, *dbox, psize));
   }

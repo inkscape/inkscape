@@ -3856,6 +3856,29 @@ http://www.inkscape.org/</dc:description>
 <path transform="matrix(2.894146,0,0,2.833322,-656.743,-353.6308)" d="m 341.3078,163.0209 c 0,2.2716 -1.7745,4.113 -3.9635,4.113 l 0,-4.113 z" sodipodi:ry="4.113043" sodipodi:rx="3.963478" sodipodi:cy="163.0209" sodipodi:cx="337.3443" id="path11111" style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#99b7d6;fill-opacity:0.7019608;fill-rule:evenodd;stroke:#000000;stroke-width:0.3492142;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" sodipodi:type="arc" sodipodi:start="0" sodipodi:end="1.570796" />
 <path sodipodi:type="arc" style="color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:none;stroke:#c80000;stroke-width:0.9166215;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:0.9166215, 0.9166215;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto" id="path11051-8" sodipodi:cx="337.3443" sodipodi:cy="163.0209" sodipodi:rx="3.963478" sodipodi:ry="4.113043" d="m 341.3078,163.0209 c 0,2.2716 -1.7745,4.113 -3.9635,4.113 -2.189,0 -3.9635,-1.8414 -3.9635,-4.113 0,-2.2716 1.7745,-4.113 3.9635,-4.113 2.189,0 3.9635,1.8414 3.9635,4.113 z" transform="matrix(1.101789,0,0,1.080243,-44.03243,-59.90819)" />
 </g>
+<g id="pack-more">
+<rect y="235" x="350" height="16" width="16" style="fill:none" />
+<g style="fill:#98b6d6;fill-opacity:0.70;stroke:#000000">
+  <rect x="351.5" y="236.5" width="3" height="3"/>
+  <rect x="356.5" y="236.5" width="3" height="3"/>
+  <rect x="361.5" y="236.5" width="3" height="3"/>
+  <rect x="351.5" y="241.5" width="3" height="3"/>
+  <rect x="356.5" y="241.5" width="3" height="3"/>
+  <rect x="361.5" y="241.5" width="3" height="3"/>
+  <rect x="351.5" y="246.5" width="3" height="3"/>
+  <rect x="356.5" y="246.5" width="3" height="3"/>
+  <rect x="361.5" y="246.5" width="3" height="3"/>
+</g>
+</g>
+<g id="pack-less">
+<rect y="215" x="350" height="16" width="16" style="fill:none" />
+<g style="fill:#98b6d6;fill-opacity:0.70;stroke:#000000">
+  <rect x="351.5" y="216.5" width="5" height="5"/>
+  <rect x="359.5" y="216.5" width="5" height="5"/>
+  <rect x="351.5" y="224.5" width="5" height="5"/>
+  <rect x="359.5" y="224.5" width="5" height="5"/>
+</g>
+</g>
 <g id="boundingbox_top_left" transform="translate(998.14709,-107)" inkscape:label="#boundingbox_top_left" style="display:inline">
 <rect y="475" x="-262.14709" height="16" width="16" id="rect7835" style="fill:none;stroke:none" />
 <path sodipodi:nodetypes="ccccccc" inkscape:connector-curvature="0" id="path7837" d="m -257.64708,489.5 0,-10 10,0 0,2 -8,0 0,8 z" style="fill:#ffffff;fill-opacity:1;stroke:#888a85;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:round;stroke-opacity:1" />

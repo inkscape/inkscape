@@ -65,6 +65,8 @@ private:
 
     static SymbolColumns *getColumns();
 
+    void packless();
+    void packmore();
     void zoomin();
     void zoomout();
     void rebuild();
@@ -95,13 +97,18 @@ private:
     std::map<Glib::ustring, SPDocument*> symbolSets;
 
     // Index into sizes which is selected
-    int in_sizes;
+    int pack_size;
+
+    // Scale factor
+    int scale_factor;
 
     Glib::RefPtr<Gtk::ListStore> store;
     Gtk::ComboBoxText* symbolSet;
     Gtk::IconView* iconView;
     Gtk::Button* addSymbol;
     Gtk::Button* removeSymbol;
+    Gtk::Button* zoomIn;
+    Gtk::Button* zoomOut;
     Gtk::ToggleButton* fitSymbol;
 
     void setTargetDesktop(SPDesktop *desktop);
