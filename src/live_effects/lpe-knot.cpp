@@ -353,7 +353,11 @@ LPEKnot::LPEKnot(LivePathEffectObject *lpeobject) :
     add_other_stroke_width(_("_Crossing path stroke width"), _("Add crossed stroke width to the interruption size"), "add_other_stroke_width", &wr, this, true),
     switcher_size(_("S_witcher size:"), _("Orientation indicator/switcher size"), "switcher_size", &wr, this, 15),
     crossing_points_vector(_("Crossing Signs"), _("Crossings signs"), "crossing_points_vector", &wr, this),
-    gpaths(),gstroke_widths()
+    crossing_points(),
+    gpaths(),
+    gstroke_widths(),
+    selectedCrossing(0),
+    switcher(0.,0.)
 {
     // register all your parameters here, so Inkscape knows which parameters this effect has:
     registerParameter( dynamic_cast<Parameter *>(&interruption_width) );
@@ -362,10 +366,6 @@ LPEKnot::LPEKnot(LivePathEffectObject *lpeobject) :
     registerParameter( dynamic_cast<Parameter *>(&add_other_stroke_width) );
     registerParameter( dynamic_cast<Parameter *>(&switcher_size) );
     registerParameter( dynamic_cast<Parameter *>(&crossing_points_vector) );
-
-    crossing_points = LPEKnotNS::CrossingPoints();
-    selectedCrossing = 0;
-    switcher = Geom::Point(0,0);
 
     _provides_knotholder_entities = true;
 }
@@ -386,9 +386,7 @@ LPEKnot::updateSwitcher(){
         //std::cout<<"placing switcher at "<<switcher<<" \n";
     }else{
         //std::cout<<"hiding switcher!\n";
-        //TODO: is there a way to properly hide the helper.
-        //switcher = Geom::Point(Geom::infinity(),Geom::infinity());
-        switcher = Geom::Point(1e10,1e10);
+        switcher = Geom::Point(Geom::infinity(),Geom::infinity());
     }
 }
 
@@ -539,8 +537,9 @@ LPEKnot::doBeforeEffect (SPLPEItem const* lpeitem)
     using namespace Geom;
     original_bbox(lpeitem);
 
-    gpaths = std::vector<Geom::Path>();
-    gstroke_widths = std::vector<double>();
+    gpaths.clear();
+    gstroke_widths.clear();
+
     collectPathsAndWidths(lpeitem, gpaths, gstroke_widths);
 
 //     std::cout<<"\nPaths on input:\n";
@@ -586,7 +585,10 @@ LPEKnot::doBeforeEffect (SPLPEItem const* lpeitem)
 //         std::cout<<crossing_points[toto].sign<<"),";
 //     }
     crossing_points.inherit_signs(old_crdata);
-    crossing_points_vector.param_set_and_write_new_value(crossing_points.to_vector());
+
+    // Don't write to XML here, only store it in the param itself. Will be written to SVG later
+    crossing_points_vector.param_setValue(crossing_points.to_vector());
+
     updateSwitcher();
 }
 

@@ -80,13 +80,17 @@ KnotHolderEntity::~KnotHolderEntity()
 void
 KnotHolderEntity::update_knot()
 {
-    Geom::Affine const i2dt(item->i2dt_affine());
+    Geom::Point knot_pos(knot_get());
+    if (knot_pos.isFinite()) {
+        Geom::Point dp(knot_pos * item->i2dt_affine());
 
-    Geom::Point dp(knot_get() * i2dt);
-
-    _moved_connection.block();
-    knot->setPosition(dp, SP_KNOT_STATE_NORMAL);
-    _moved_connection.unblock();
+        _moved_connection.block();
+        knot->setPosition(dp, SP_KNOT_STATE_NORMAL);
+        _moved_connection.unblock();
+    } else {
+        // knot coords are non-finite, hide knot
+        knot->hide();
+    }
 }
 
 Geom::Point

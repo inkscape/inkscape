@@ -74,7 +74,6 @@ private:
   BoolParam  add_stroke_width;
   BoolParam  add_other_stroke_width;
   ScalarParam switcher_size;
-  double stroke_width;
   ArrayParam<double> crossing_points_vector;//svg storage of crossing_points
   
   LPEKnotNS::CrossingPoints crossing_points;//topology representation of the knot.
