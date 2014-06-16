@@ -17,6 +17,7 @@ namespace Inkscape {
 		{
 		public:
 			SignalObserver();
+			~SignalObserver();
 
 			// Add this observer to the SPObject and remove it from any previous object
 			void set(SPObject* o);

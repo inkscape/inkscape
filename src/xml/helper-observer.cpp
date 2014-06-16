@@ -8,6 +8,11 @@ SignalObserver::SignalObserver()
     : _oldsel(NULL)
 {}
 
+SignalObserver::~SignalObserver()
+{
+    set(NULL); // if _oldsel!=nullptr, remove observer and decrease refcount
+}
+
 // Add this observer to the SPObject and remove it from any previous object
 void SignalObserver::set(SPObject* o)
 {
