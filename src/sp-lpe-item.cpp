@@ -50,8 +50,6 @@
 #include <algorithm>
 
 /* LPEItem base class */
-static void sp_lpe_item_enable_path_effects(SPLPEItem *lpeitem, bool enable);
-
 static void lpeobject_ref_modified(SPObject *href, guint flags, SPLPEItem *lpeitem);
 
 static void sp_lpe_item_create_original_path_recursive(SPLPEItem *lpeitem);
@@ -115,7 +113,7 @@ void SPLPEItem::set(unsigned int key, gchar const* value) {
                 this->current_path_effect = NULL;
 
                 // Disable the path effects while populating the LPE list
-                 sp_lpe_item_enable_path_effects(this, false);
+                enablePathEffects(false);
 
                 // disconnect all modified listeners:
                 for ( std::list<sigc::connection>::iterator mod_it = this->lpe_modified_connection_list->begin();
@@ -168,7 +166,7 @@ void SPLPEItem::set(unsigned int key, gchar const* value) {
                     }
                 }
 
-                sp_lpe_item_enable_path_effects(this, true);
+                enablePathEffects(true);
             }
             break;
 
@@ -409,7 +407,7 @@ void SPLPEItem::addPathEffect(gchar *value, bool reset)
         sp_lpe_item_update_patheffect(this, false, true);
 
         // Disable the path effects while preparing the new lpe
-        sp_lpe_item_enable_path_effects(this, false);
+        enablePathEffects(false);
 
         // Add the new reference to the list of LPE references
         HRefList hreflist;
@@ -446,7 +444,7 @@ void SPLPEItem::addPathEffect(gchar *value, bool reset)
         }
 
         //Enable the path effects now that everything is ready to apply the new path effect
-        sp_lpe_item_enable_path_effects(this, true);
+        enablePathEffects(true);
 
         // Apply the path effect
         sp_lpe_item_update_patheffect(this, true, true);
@@ -940,24 +938,6 @@ bool SPLPEItem::forkPathEffectsIfNecessary(unsigned int nr_of_allowed_users)
     }
 
     return forked;
-}
-
-// Enable or disable the path effects of the item.
-// The counter allows nested calls
-static void sp_lpe_item_enable_path_effects(SPLPEItem *lpeitem, bool enable)
-{
-    if (enable) {
-        lpeitem->path_effects_enabled++;
-    }
-    else {
-        lpeitem->path_effects_enabled--;
-    }
-}
-
-// Are the path effects enabled on this item ?
-bool SPLPEItem::pathEffectsEnabled() const
-{
-    return path_effects_enabled > 0;
 }
 
 /*
