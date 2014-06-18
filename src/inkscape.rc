@@ -15,7 +15,7 @@ BEGIN
             VALUE "FileDescription", "Inkscape"
             VALUE "FileVersion", "0.48+devel"
             VALUE "InternalName", "Inkscape"
-            VALUE "LegalCopyright", "© 2012 Inkscape"
+            VALUE "LegalCopyright", "© 2014 Inkscape"
             VALUE "ProductName", "Inkscape"
             VALUE "ProductVersion", "0.48+devel"
         END

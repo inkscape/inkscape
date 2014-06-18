@@ -15,7 +15,7 @@ BEGIN
             VALUE "FileDescription", "Inkview"
             VALUE "FileVersion", "0.48+devel"
             VALUE "InternalName", "Inkview"
-            VALUE "LegalCopyright", "© 2012 Inkscape"
+            VALUE "LegalCopyright", "© 2014 Inkscape"
             VALUE "ProductName", "Inkview"
             VALUE "ProductVersion", "0.48+devel"
         END
