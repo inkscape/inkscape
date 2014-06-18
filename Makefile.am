@@ -53,7 +53,7 @@ EXTRA_DIST = \
 	inkscape.spec		\
 	Info.plist.in	\
 	Info.plist		\
-	buildtool.cpp build.xml	\
+	buildtool.cpp build.xml	build-x64.xml \
 	README README.ca.txt README.de.txt README.es.txt README.fr.txt README.it.txt README.osx.txt README.pt_BR.txt README.sk.txt README.sr.txt	\
 	TRANSLATORS \
 	inkscape.png \
@@ -62,6 +62,7 @@ EXTRA_DIST = \
 	src/helper/sp-marshal.cpp.mingw src/helper/sp-marshal.h.mingw \
 	src/2geom/angle.h \
 	src/inkscape-manifest.xml src/inkview-manifest.xml \
+	src/inkscape-manifest-x64.xml src/inkview-manifest-x64.xml \
 	cxxtest/COPYING	\
 	cxxtest/cxxtestgen.pl \
 	cxxtest/cxxtestgen.py \
@@ -227,7 +228,7 @@ EXTRA_DIST = \
 	packaging/wix/Bitmaps/dialog.svg \
 	po/inkscape.pot \
 	po/update_po_files.sh \
-	src/inkscape.rc	src/inkview.rc
+	src/inkscape.rc	src/inkview.rc	src/inkscape-x64.rc	src/inkview-x64.rc
 
 # We want the built inkscape.1 to go in the distributed .tar.gz so
 # that .tar.gz users don't need a full perl distribution to get a man
