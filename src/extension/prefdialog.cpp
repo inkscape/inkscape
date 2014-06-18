@@ -212,6 +212,9 @@ PrefDialog::preview_toggle (void) {
 void
 PrefDialog::param_change (void) {
     if (_exEnv != NULL) {
+        if (!_effect->loaded()) {
+            _effect->set_state(Extension::STATE_LOADED);
+        }
         _timersig.disconnect();
         _timersig = Glib::signal_timeout().connect(sigc::mem_fun(this, &PrefDialog::param_timer_expire),
                                                    250, /* ms */
