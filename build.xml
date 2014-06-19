@@ -453,7 +453,7 @@
               stripcommand="${archutil}strip"
               objcopycommand="${archutil}objcopy">
        <flags>
-           -mconsole
+           -mwindows
            -mthreads
        </flags>
        <fileset dir="${build}/obj">
