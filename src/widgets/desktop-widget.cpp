@@ -1246,6 +1246,9 @@ SPDesktopWidget::shutdown()
  */
 void
 SPDesktopWidget::requestCanvasUpdate() {
+    // ^^ also this->desktop != 0
+    g_return_if_fail(this->desktop != NULL);
+    g_return_if_fail(this->desktop->main != NULL);
     gtk_widget_queue_draw (GTK_WIDGET (SP_CANVAS_ITEM (this->desktop->main)->canvas));
 }
 
