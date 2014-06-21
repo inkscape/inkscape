@@ -119,6 +119,7 @@
 <color name="plum" hex="#dda0dd" rgb="221,160,221" />
 <color name="powderblue" hex="#b0e0e6" rgb="176,224,230" />
 <color name="purple" hex="#800080" rgb="128,0,128" />
+<color name="rebeccapurple" hex="#663399" rgb="102,51,153" />
 <color name="red" hex="#ff0000" rgb="255,0,0" />
 <color name="rosybrown" hex="#bc8f8f" rgb="188,143,143" />
 <color name="royalblue" hex="#4169e1" rgb="65,105,225" />

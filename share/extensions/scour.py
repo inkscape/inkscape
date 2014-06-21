@@ -250,6 +250,7 @@ colors = {
 	'plum': 'rgb(221, 160, 221)',
 	'powderblue': 'rgb(176, 224, 230)',
 	'purple': 'rgb(128, 0, 128)',
+	'rebeccapurple': 'rgb(102, 51, 153)',
 	'red': 'rgb(255, 0, 0)',
 	'rosybrown': 'rgb(188, 143, 143)',
 	'royalblue': 'rgb( 65, 105, 225)',

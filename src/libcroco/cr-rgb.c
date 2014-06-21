@@ -150,6 +150,7 @@ static const CRRgb gv_standard_colors[] = {
         {(const guchar*)"plum",        221, 160, 221, FALSE, FALSE, FALSE, {0,0,0}},
         {(const guchar*)"powderblue",  176, 224, 230, FALSE, FALSE, FALSE, {0,0,0}},
         {(const guchar*)"purple",      128,   0, 128, FALSE, FALSE, FALSE, {0,0,0}},
+        {(const guchar*)"rebeccapurple",       102,  51, 153, FALSE, FALSE, FALSE, {0,0,0}},
         {(const guchar*)"red",         255,   0,   0, FALSE, FALSE, FALSE, {0,0,0}},
         {(const guchar*)"rosybrown",   188, 143, 143, FALSE, FALSE, FALSE, {0,0,0}},
         {(const guchar*)"royalblue",    65, 105, 225, FALSE, FALSE, FALSE, {0,0,0}},

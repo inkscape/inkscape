@@ -173,6 +173,7 @@ static SPSVGColor const sp_svg_color_named[] = {
     { 0xDDA0DD, "plum" },
     { 0xB0E0E6, "powderblue" },
     { 0x800080, "purple" },
+    { 0x663399, "rebeccapurple" },
     { 0xFF0000, "red" },
     { 0xBC8F8F, "rosybrown" },
     { 0x4169E1, "royalblue" },
