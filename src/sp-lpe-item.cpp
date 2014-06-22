@@ -337,16 +337,24 @@ lpeobject_ref_modified(SPObject */*href*/, guint /*flags*/, SPLPEItem *lpeitem)
 static void
 sp_lpe_item_create_original_path_recursive(SPLPEItem *lpeitem)
 {
+    g_return_if_fail(lpeitem != NULL);
     SPMask * mask = lpeitem->mask_ref->getObject();
-    if(mask)
+
+    if (mask)
     {
-        sp_lpe_item_create_original_path_recursive(SP_LPE_ITEM(mask->firstChild()));
+	if (SPLPEItem* maskChild = dynamic_cast<SPLPEItem*>(mask->firstChild())) {
+            sp_lpe_item_create_original_path_recursive(maskChild);
+	}
     }
+
     SPClipPath * clipPath = lpeitem->clip_ref->getObject();
-    if(clipPath)
+    if (clipPath)
     {
-        sp_lpe_item_create_original_path_recursive(SP_LPE_ITEM(clipPath->firstChild()));
+	if (SPLPEItem* clipChild = dynamic_cast<SPLPEItem*>(clipPath->firstChild())) {
+            sp_lpe_item_create_original_path_recursive(clipChild);
+	}
     }
+
     if (SP_IS_GROUP(lpeitem)) {
         GSList const *item_list = sp_item_group_item_list(SP_GROUP(lpeitem));
         for ( GSList const *iter = item_list; iter; iter = iter->next ) {
@@ -367,15 +375,22 @@ sp_lpe_item_create_original_path_recursive(SPLPEItem *lpeitem)
 static void
 sp_lpe_item_cleanup_original_path_recursive(SPLPEItem *lpeitem)
 {
+    g_return_if_fail(lpeitem != NULL);
     SPMask * mask = lpeitem->mask_ref->getObject();
-    if(mask)
+
+    if (mask)
     {
-        sp_lpe_item_cleanup_original_path_recursive(SP_LPE_ITEM(mask->firstChild()));
+	if (SPLPEItem* maskChild = dynamic_cast<SPLPEItem*>(mask->firstChild())) {
+            sp_lpe_item_cleanup_original_path_recursive(maskChild);
+	}
     }
+
     SPClipPath * clipPath = lpeitem->clip_ref->getObject();
-    if(clipPath)
+    if (clipPath)
     {
-        sp_lpe_item_cleanup_original_path_recursive(SP_LPE_ITEM(clipPath->firstChild()));
+	if (SPLPEItem* clipChild = dynamic_cast<SPLPEItem*>(clipPath->firstChild())) {
+            sp_lpe_item_cleanup_original_path_recursive(clipChild);
+	}
     }
 
     if (SP_IS_GROUP(lpeitem)) {
