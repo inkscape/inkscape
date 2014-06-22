@@ -27,7 +27,7 @@ def directory(root, breadcrumb, level, exclude=[]):
 		file_key = os.path.join(root, file)
 		_id = '_%06d' % (len(file_ids.keys()) + 1)
 		file_ids[file_key] = 'component' + _id
-		wxs.write(indent(level)+ "<Component Id='component" + _id + "' Guid='" + str(uuid.uuid4()) + "' DiskId='1'>\n")
+		wxs.write(indent(level)+ "<Component Id='component" + _id + "' Guid='" + str(uuid.uuid4()) + "' DiskId='1' Win64='$(var.Win64)'>\n")
 		if file == 'inkscape.exe':
 			# we refenrence inkscape.exe in inkscape.wxs
 			_id = '_inkscape_exe'
@@ -62,10 +62,11 @@ def ComponentGroup(name, condition, level):
 with open('files.wxs', 'w') as wxs:
 	wxs.write("<!-- do not edit, this file is created by files.py tool any changes will be lost -->\n")
 	wxs.write("<Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>\n")
+	wxs.write(indent(1) + "<?include version.wxi?>\n")
 	wxs.write(indent(1) + "<Fragment>\n")
 	wxs.write(indent(2) + "<!-- Step 1: Define the directory structure -->\n")
 	wxs.write(indent(2) + "<Directory Id='TARGETDIR' Name='SourceDir'>\n")
-	wxs.write(indent(3) + "<Directory Id='ProgramFilesFolder' Name='PFiles'>\n")
+	wxs.write(indent(3) + "<Directory Id='$(var.ProgramFilesFolder)' Name='PFiles'>\n")
 	wxs.write(indent(4) + "<Directory Id='INSTALLDIR' Name='Inkscape'>\n")
 	print "start parsing ..\..\inkscape"
 	directory('..\..\inkscape', 'inkscape', 5, ['inkscape.dbg', 'inkview.dbg', 'gdb.exe'])
@@ -74,7 +75,7 @@ with open('files.wxs', 'w') as wxs:
 	wxs.write(indent(3) + "</Directory>\n")
 	# link to ProgrmMenu
 	wxs.write(indent(3) + "<Directory Id='ProgramMenuFolder'>\n")
-	wxs.write(indent(4) + "<Directory Id='ApplicationProgramsFolder' Name='Inkscape 0.48'/>\n")
+	wxs.write(indent(4) + "<Directory Id='ApplicationProgramsFolder' Name='$(var.FullProductName)'/>\n")
 	wxs.write(indent(3) + "</Directory>\n")
 	wxs.write(indent(3) + "<Directory Id='DesktopFolder' Name='Desktop' />\n")
 	wxs.write(indent(2) + "</Directory>\n")
