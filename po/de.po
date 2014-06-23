@@ -18,15 +18,15 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-11-07 15:09+0100\n"
-"PO-Revision-Date: 2013-12-21 12:02+0100\n"
-"Last-Translator: Uwe Schoeler <uwesch@gmail.com>\n"
+"PO-Revision-Date: 2014-06-23 20:15+0100\n"
+"Last-Translator: Uwe Schoeler <UweSch@gmail.com>\n"
 "Language-Team:  <de@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.6.1\n"
+"X-Generator: Poedit 1.6.5\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
@@ -9435,9 +9435,8 @@ msgid "Scale:"
 msgstr "Skalierung:"
 
 #: ../src/live_effects/lpe-path_length.cpp:26
-#, fuzzy
 msgid "Scaling factor"
-msgstr "Saklierungs-Faktor"
+msgstr "Saklierungsfaktor"
 
 #: ../src/live_effects/lpe-path_length.cpp:28
 #: ../src/live_effects/lpe-ruler.cpp:42
@@ -9454,9 +9453,8 @@ msgid "Unit"
 msgstr "Einheit"
 
 #: ../src/live_effects/lpe-path_length.cpp:29
-#, fuzzy
 msgid "Display unit"
-msgstr "Anzeige Anpassungen"
+msgstr "Anzeige-Einheit"
 
 #: ../src/live_effects/lpe-path_length.cpp:29
 #, fuzzy
@@ -12213,14 +12211,12 @@ msgid "Flow Excluded Region"
 msgstr "Ausgeschlossenen Bereich umfließen"
 
 #: ../src/sp-flowtext.cpp:289
-#, fuzzy
 msgid "Flowed Text"
 msgstr "Fließtext"
 
 #: ../src/sp-flowtext.cpp:291
-#, fuzzy
 msgid "Linked Flowed Text"
-msgstr "Fließtext"
+msgstr "Verknüpfter Fließtext"
 
 #: ../src/sp-flowtext.cpp:298 ../src/sp-text.cpp:357
 #: ../src/text-context.cpp:1597
@@ -22862,7 +22858,7 @@ msgstr "Zur nächste Ebene wechseln"
 
 #: ../src/verbs.cpp:1228
 msgid "Switched to next layer."
-msgstr "Zur nächsten Ebene gewächselt."
+msgstr "Zur nächsten Ebene gewechselt."
 
 #: ../src/verbs.cpp:1230
 msgid "Cannot go past last layer."
