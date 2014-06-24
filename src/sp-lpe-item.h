@@ -39,13 +39,11 @@ namespace LivePathEffect{
 typedef std::list<Inkscape::LivePathEffect::LPEObjectReference *> PathEffectList;
 
 class SPLPEItem : public SPItem {
-private:
-    mutable bool path_effects_enabled;  // (mutable because preserves logical const-ness)
-
 public:
-  SPLPEItem();
-  virtual ~SPLPEItem();
+	SPLPEItem();
+	virtual ~SPLPEItem();
 
+    int path_effects_enabled;
 
     PathEffectList* path_effect_list;
     std::list<sigc::connection> *lpe_modified_connection_list; // this list contains the connections for listening to lpeobject parameter changes
@@ -74,8 +72,7 @@ public:
 
     bool performPathEffect(SPCurve *curve);
 
-    void enablePathEffects(bool enable) const { path_effects_enabled = enable; }; // (const because logically const)
-    bool pathEffectsEnabled() const { return path_effects_enabled; };
+    bool pathEffectsEnabled() const;
     bool hasPathEffect() const;
     bool hasPathEffectOfType(int const type) const;
     bool hasPathEffectRecursive() const;
