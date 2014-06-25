@@ -140,7 +140,7 @@ def get_parameters(nrow, ncol):
     elif ( nrow ==  20 and ncol ==  20 ):
         return 18, 18, 1, 1, 22, 18, 1
     elif ( nrow ==  22 and ncol ==  22 ):
-        return 18, 18, 1, 1, 30, 20, 1
+        return 20, 20, 1, 1, 30, 20, 1
     elif ( nrow ==  24 and ncol ==  24 ):
         return 22, 22, 1, 1, 36, 24, 1
     elif ( nrow ==  26 and ncol ==  26 ):
