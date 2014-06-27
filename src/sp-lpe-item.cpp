@@ -340,22 +340,6 @@ static void
 sp_lpe_item_create_original_path_recursive(SPLPEItem *lpeitem)
 {
     g_return_if_fail(lpeitem != NULL);
-    SPMask * mask = lpeitem->mask_ref->getObject();
-
-    if (mask)
-    {
-	if (SPLPEItem* maskChild = dynamic_cast<SPLPEItem*>(mask->firstChild())) {
-            sp_lpe_item_create_original_path_recursive(maskChild);
-	}
-    }
-
-    SPClipPath * clipPath = lpeitem->clip_ref->getObject();
-    if (clipPath)
-    {
-	if (SPLPEItem* clipChild = dynamic_cast<SPLPEItem*>(clipPath->firstChild())) {
-            sp_lpe_item_create_original_path_recursive(clipChild);
-	}
-    }
 
     if (SP_IS_GROUP(lpeitem)) {
         GSList const *item_list = sp_item_group_item_list(SP_GROUP(lpeitem));
@@ -378,22 +362,6 @@ static void
 sp_lpe_item_cleanup_original_path_recursive(SPLPEItem *lpeitem)
 {
     g_return_if_fail(lpeitem != NULL);
-    SPMask * mask = lpeitem->mask_ref->getObject();
-
-    if (mask)
-    {
-	if (SPLPEItem* maskChild = dynamic_cast<SPLPEItem*>(mask->firstChild())) {
-            sp_lpe_item_cleanup_original_path_recursive(maskChild);
-	}
-    }
-
-    SPClipPath * clipPath = lpeitem->clip_ref->getObject();
-    if (clipPath)
-    {
-	if (SPLPEItem* clipChild = dynamic_cast<SPLPEItem*>(clipPath->firstChild())) {
-            sp_lpe_item_cleanup_original_path_recursive(clipChild);
-	}
-    }
 
     if (SP_IS_GROUP(lpeitem)) {
         GSList const *item_list = sp_item_group_item_list(SP_GROUP(lpeitem));
@@ -639,6 +607,9 @@ bool SPLPEItem::hasPathEffectRecursive() const
         return hasPathEffect();
     }
 }
+
+//The next 3 functions are because the revert of the bug 1241902
+//for the moment not used
 
 void
 sp_lpe_item_apply_to_clippath(SPItem * item)

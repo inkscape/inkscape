@@ -88,7 +88,7 @@ public:
 
 void sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done = true);
 
-void sp_gslist_update_by_clip_or_mask(GSList *item_list, SPItem * item);
+
 GSList *sp_item_group_item_list (SPGroup *group);
 SPObject *sp_item_group_get_child_by_name (SPGroup *group, SPObject *ref, const gchar *name);
 

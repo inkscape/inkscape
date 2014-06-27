@@ -385,8 +385,6 @@ void SPSpiral::set_shape() {
         bool success = this->performPathEffect(c_lpe);
 
         if (success) {
-            sp_lpe_item_apply_to_mask(this);
-            sp_lpe_item_apply_to_clippath(this);
             this->setCurveInsync( c_lpe, TRUE);
         }
 

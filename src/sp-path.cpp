@@ -310,8 +310,6 @@ g_message("sp_path_update_patheffect");
         bool success = this->performPathEffect(curve);
 
         if (success && write) {
-            sp_lpe_item_apply_to_mask(this);
-            sp_lpe_item_apply_to_clippath(this);
             // could also do this->getRepr()->updateRepr();  but only the d attribute needs updating.
 #ifdef PATH_VERBOSE
 g_message("sp_path_update_patheffect writes 'd' attribute");
