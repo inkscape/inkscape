@@ -442,11 +442,11 @@ void ConnRef::makeActive(void)
 
 void ConnRef::makeInactive(void)
 {
-    COLA_ASSERT(_active);
-    
-    // Remove from connRefs list.
-    _router->connRefs.erase(_pos);
-    _active = false;
+    if (_active) {
+        // Remove from connRefs list.
+        _router->connRefs.erase(_pos);
+        _active = false;
+    }
 }
 
 
@@ -553,8 +553,12 @@ void ConnRef::unInitialise(void)
 
 void ConnRef::removeFromGraph(void)
 {
-    _srcVert->removeFromGraph();
-    _dstVert->removeFromGraph();
+    if (_srcVert) {
+        _srcVert->removeFromGraph();
+    }
+    if (_dstVert) {
+        _dstVert->removeFromGraph();
+    }
 }
 
 
