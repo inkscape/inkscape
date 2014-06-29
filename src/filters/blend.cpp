@@ -96,23 +96,18 @@ static Inkscape::Filters::FilterBlendMode sp_feBlend_readmode(gchar const *value
         case 's':
             if (strncmp(value, "screen", 6) == 0)
                 return Inkscape::Filters::BLEND_SCREEN;
-#ifdef WITH_CSSBLEND
             if (strncmp(value, "saturation", 6) == 0)
                 return Inkscape::Filters::BLEND_SATURATION;
-#endif
             break;
         case 'd':
             if (strncmp(value, "darken", 6) == 0)
                 return Inkscape::Filters::BLEND_DARKEN;
-#ifdef WITH_CSSBLEND
             if (strncmp(value, "difference", 10) == 0)
                 return Inkscape::Filters::BLEND_DIFFERENCE;
-#endif
             break;
         case 'l':
             if (strncmp(value, "lighten", 7) == 0)
                 return Inkscape::Filters::BLEND_LIGHTEN;
-#ifdef WITH_CSSBLEND
             if (strncmp(value, "luminosity", 10) == 0)
                 return Inkscape::Filters::BLEND_LUMINOSITY;
             break;
@@ -137,7 +132,6 @@ static Inkscape::Filters::FilterBlendMode sp_feBlend_readmode(gchar const *value
         case 'e':
             if (strncmp(value, "exclusion", 10) == 0)
                 return Inkscape::Filters::BLEND_EXCLUSION;
-#endif
         default:
             std::cout << "Inkscape::Filters::FilterBlendMode: Unimplemented mode: " << value << std::endl;
             // do nothing by default
@@ -244,7 +238,6 @@ Inkscape::XML::Node* SPFeBlend::write(Inkscape::XML::Document *doc, Inkscape::XM
             mode = "darken";      break;
         case Inkscape::Filters::BLEND_LIGHTEN:
             mode = "lighten";     break;
-#ifdef WITH_CSSBLEND
         // New
         case Inkscape::Filters::BLEND_OVERLAY:
             mode = "overlay";     break;
@@ -268,7 +261,6 @@ Inkscape::XML::Node* SPFeBlend::write(Inkscape::XML::Document *doc, Inkscape::XM
             mode = "color";       break;
         case Inkscape::Filters::BLEND_LUMINOSITY:
             mode = "luminosity";  break;
-#endif
         default:
             mode = 0;
     }

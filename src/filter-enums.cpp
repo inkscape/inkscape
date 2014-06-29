@@ -53,7 +53,6 @@ const EnumData<Inkscape::Filters::FilterBlendMode> BlendModeData[Inkscape::Filte
     {Inkscape::Filters::BLEND_SCREEN,       _("Screen"),      "screen"},
     {Inkscape::Filters::BLEND_DARKEN,       _("Darken"),      "darken"},
     {Inkscape::Filters::BLEND_LIGHTEN,      _("Lighten"),     "lighten"},
-#ifdef WITH_CSSBLEND
 // New in Compositing and Blending Level 1
     {Inkscape::Filters::BLEND_OVERLAY,      _("Overlay"),     "overlay"},
     {Inkscape::Filters::BLEND_COLORDODGE,   _("Color Dodge"), "color-dodge"},
@@ -66,10 +65,13 @@ const EnumData<Inkscape::Filters::FilterBlendMode> BlendModeData[Inkscape::Filte
     {Inkscape::Filters::BLEND_SATURATION,   _("Saturation"),  "saturation"},
     {Inkscape::Filters::BLEND_COLOR,        _("Color"),       "color"},
     {Inkscape::Filters::BLEND_LUMINOSITY,   _("Luminosity"),  "luminosity"}
-#endif
 };
+#ifdef WITH_CSSBLEND
 const EnumDataConverter<Inkscape::Filters::FilterBlendMode> BlendModeConverter(BlendModeData, Inkscape::Filters::BLEND_ENDMODE);
-
+#else
+// Disable new blend modes in GUI until widely implemented.
+const EnumDataConverter<Inkscape::Filters::FilterBlendMode> BlendModeConverter(BlendModeData, Inkscape::Filters::BLEND_OVERLAY);
+#endif
 
 const EnumData<Inkscape::Filters::FilterColorMatrixType> ColorMatrixTypeData[Inkscape::Filters::COLORMATRIX_ENDTYPE] = {
     {Inkscape::Filters::COLORMATRIX_MATRIX,           _("Matrix"),             "matrix"},

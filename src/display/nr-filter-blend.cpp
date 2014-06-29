@@ -83,8 +83,7 @@ void FilterBlend::render_cairo(FilterSlot &slot)
     case BLEND_LIGHTEN:
         cairo_set_operator(out_ct, CAIRO_OPERATOR_LIGHTEN);
         break;
-#ifdef WITH_CSSBLEND
-    // NEW
+    // New in CSS Compositing and Blending Level 1
     case BLEND_OVERLAY:   
         cairo_set_operator(out_ct, CAIRO_OPERATOR_OVERLAY);
         break;
@@ -118,7 +117,6 @@ void FilterBlend::render_cairo(FilterSlot &slot)
     case BLEND_LUMINOSITY:
         cairo_set_operator(out_ct, CAIRO_OPERATOR_HSL_LUMINOSITY);
         break;
-#endif
 
     case BLEND_NORMAL:
     default:
@@ -167,15 +165,12 @@ void FilterBlend::set_input(int input, int slot) {
 void FilterBlend::set_mode(FilterBlendMode mode) {
     if (mode == BLEND_NORMAL     || mode == BLEND_MULTIPLY   ||
         mode == BLEND_SCREEN     || mode == BLEND_DARKEN     ||
-        mode == BLEND_LIGHTEN
-#ifdef WITH_CSSBLEND
-                                 || mode == BLEND_OVERLAY    ||
+        mode == BLEND_LIGHTEN    || mode == BLEND_OVERLAY    ||
         mode == BLEND_COLORDODGE || mode == BLEND_COLORBURN  ||
         mode == BLEND_HARDLIGHT  || mode == BLEND_SOFTLIGHT  ||
         mode == BLEND_DIFFERENCE || mode == BLEND_EXCLUSION  ||
         mode == BLEND_HUE        || mode == BLEND_SATURATION ||
         mode == BLEND_COLOR      || mode == BLEND_LUMINOSITY
-#endif
         )
     {
         _blend_mode = mode;

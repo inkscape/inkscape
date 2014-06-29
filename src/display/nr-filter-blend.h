@@ -28,7 +28,6 @@ enum FilterBlendMode {
     BLEND_SCREEN,
     BLEND_DARKEN,
     BLEND_LIGHTEN,
-#ifdef WITH_CSSBLEND
     // New in CSS Compositing and Blending Level 1
     BLEND_OVERLAY,   
     BLEND_COLORDODGE,
@@ -41,7 +40,6 @@ enum FilterBlendMode {
     BLEND_SATURATION,
     BLEND_COLOR,
     BLEND_LUMINOSITY,
-#endif
     BLEND_ENDMODE,
 };
 
