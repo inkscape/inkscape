@@ -926,9 +926,8 @@ LayersPanel::LayersPanel() :
 
     // -------------------------------------------------------
     {
-        _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_RENAME, 0, "Rename", (int)BUTTON_RENAME ) );
-        _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_DUPLICATE, 0, "Duplicate", (int)BUTTON_DUPLICATE ) );
         _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_NEW, 0, "New", (int)BUTTON_NEW ) );
+        _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_RENAME, 0, "Rename", (int)BUTTON_RENAME ) );
 
         _popupMenu.append(*Gtk::manage(new Gtk::SeparatorMenuItem()));
 
@@ -944,9 +943,14 @@ LayersPanel::LayersPanel() :
 
         _popupMenu.append(*Gtk::manage(new Gtk::SeparatorMenuItem()));
 
-        _watchingNonTop.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_RAISE, INKSCAPE_ICON("go-up"), "Up", (int)BUTTON_UP ) );
-        _watchingNonBottom.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_LOWER, INKSCAPE_ICON("go-down"), "Down", (int)BUTTON_DOWN ) );
+        _watchingNonTop.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_RAISE, INKSCAPE_ICON("layer-raise"), "Up", (int)BUTTON_UP ) );
+        _watchingNonBottom.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_LOWER, INKSCAPE_ICON("layer-lower"), "Down", (int)BUTTON_DOWN ) );
 
+        _popupMenu.append(*Gtk::manage(new Gtk::SeparatorMenuItem()));
+
+        _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_DUPLICATE, 0, "Duplicate", (int)BUTTON_DUPLICATE ) );
+        _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_DELETE, 0, "Delete", (int)BUTTON_DELETE ) );
+        
         _popupMenu.show_all_children();
     }
     // -------------------------------------------------------
