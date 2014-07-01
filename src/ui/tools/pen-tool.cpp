@@ -55,15 +55,15 @@ static bool pen_within_tolerance = false;
 static int pen_last_paraxial_dir = 0; // last used direction in horizontal/vertical mode; 0 = horizontal, 1 = vertical
 
 namespace {
-	ToolBase* createPenContext() {
-		return new PenTool();
-	}
+    ToolBase* createPenContext() {
+        return new PenTool();
+    }
 
-	bool penContextRegistered = ToolFactory::instance().registerObject("/tools/freehand/pen", createPenContext);
+    bool penContextRegistered = ToolFactory::instance().registerObject("/tools/freehand/pen", createPenContext);
 }
 
 const std::string& PenTool::getPrefsPath() {
-	return PenTool::prefsPath;
+    return PenTool::prefsPath;
 }
 
 const std::string PenTool::prefsPath = "/tools/freehand/pen";
@@ -277,7 +277,7 @@ bool PenTool::item_handler(SPItem* item, GdkEvent* event) {
     }
 
     if (!ret) {
-    	ret = FreehandBase::item_handler(item, event);
+        ret = FreehandBase::item_handler(item, event);
     }
 
     return ret;
@@ -315,7 +315,7 @@ bool PenTool::root_handler(GdkEvent* event) {
     }
 
     if (!ret) {
-    	ret = FreehandBase::root_handler(event);
+        ret = FreehandBase::root_handler(event);
     }
 
     return ret;
@@ -1061,8 +1061,9 @@ bool PenTool::_handleKeyPress(GdkEvent *event) {
                 this->red_curve->reset();
                 // Destroy topmost green bpath
                 if (this->green_bpaths) {
-                    if (this->green_bpaths->data)
+                    if (this->green_bpaths->data) {
                         sp_canvas_item_destroy(SP_CANVAS_ITEM(this->green_bpaths->data));
+                    }
                     this->green_bpaths = g_slist_remove(this->green_bpaths, this->green_bpaths->data);
                 }
                 // Get last segment
@@ -1078,11 +1079,21 @@ bool PenTool::_handleKeyPress(GdkEvent *event) {
                 } else {
                     this->p[1] = this->p[0];
                 }
-                Geom::Point const pt(( this->npoints < 4
-                                     ? (Geom::Point)(crv->finalPoint())
-                                     : this->p[3] ));
+                Geom::Point const pt( (this->npoints < 4) ? crv->finalPoint() : this->p[3] );
                 this->npoints = 2;
-                this->green_curve->backspace();
+                // delete the last segment of the green curve
+                if (this->green_curve->get_segment_count() == 1) {
+                    this->npoints = 5;
+                    if (this->green_bpaths) {
+                        if (this->green_bpaths->data) {
+                            sp_canvas_item_destroy(SP_CANVAS_ITEM(this->green_bpaths->data));
+                        }
+                        this->green_bpaths = g_slist_remove(this->green_bpaths, this->green_bpaths->data);
+                    }
+                    this->green_curve->reset();
+                } else {
+                    this->green_curve->backspace();
+                }
                 sp_canvas_item_hide(this->c0);
                 sp_canvas_item_hide(this->c1);
                 sp_canvas_item_hide(this->cl0);
