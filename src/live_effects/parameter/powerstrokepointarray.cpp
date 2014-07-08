@@ -176,7 +176,10 @@ PowerStrokePointArrayParamKnotHolderEntity::knot_get() const
     Piecewise<D2<SBasis> > const & n = _pparam->get_pwd2_normal();
 
     Point offset_point = _pparam->_vector.at(_index);
-
+    if (offset_point[X] > pwd2.size() || offset_point[X] < 0) {
+        g_warning("Broken powerstroke point at %f, I won't try to add that", offset_point[X]);
+        return Geom::Point(infinity(), infinity());
+    }
     Point canvas_point = pwd2.valueAt(offset_point[X]) + offset_point[Y] * n.valueAt(offset_point[X]);
     return canvas_point;
 }
