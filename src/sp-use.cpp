@@ -37,6 +37,7 @@
 #include "sp-symbol.h"
 #include "sp-use.h"
 #include "sp-use-reference.h"
+#include "sp-shape.h"
 
 namespace {
     SPObject* createUse() {
@@ -176,6 +177,8 @@ Inkscape::XML::Node* SPUse::write(Inkscape::XML::Document *xml_doc, Inkscape::XM
         g_free(uri_string);
     }
 
+    if (SP_IS_SHAPE(this->child))
+        SP_SHAPE(this->child)->set_shape(); // evaluate SPCurve of child
     return repr;
 }
 
