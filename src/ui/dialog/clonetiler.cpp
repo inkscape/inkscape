@@ -2242,6 +2242,8 @@ void CloneTiler::clonetiler_apply(GtkWidget */*widget*/, GtkWidget *dlg)
 
     clonetiler_remove (NULL, dlg, false);
 
+    double scale_units = Inkscape::Util::Quantity::convert(1, "px", sp_desktop_document(desktop)->getDefaultUnit());
+
     double shiftx_per_i = 0.01 * prefs->getDoubleLimited(prefs_path + "shiftx_per_i", 0, -10000, 10000);
     double shifty_per_i = 0.01 * prefs->getDoubleLimited(prefs_path + "shifty_per_i", 0, -10000, 10000);
     double shiftx_per_j = 0.01 * prefs->getDoubleLimited(prefs_path + "shiftx_per_j", 0, -10000, 10000);
@@ -2311,8 +2313,8 @@ void CloneTiler::clonetiler_apply(GtkWidget */*widget*/, GtkWidget *dlg)
     int    jmax = prefs->getInt(prefs_path + "jmax", 2);
 
     bool   fillrect = prefs->getBool(prefs_path + "fillrect");
-    double fillwidth = prefs->getDoubleLimited(prefs_path + "fillwidth", 50, 0, 1e6);
-    double fillheight = prefs->getDoubleLimited(prefs_path + "fillheight", 50, 0, 1e6);
+    double fillwidth = scale_units*prefs->getDoubleLimited(prefs_path + "fillwidth", 50, 0, 1e6);
+    double fillheight = scale_units*prefs->getDoubleLimited(prefs_path + "fillheight", 50, 0, 1e6);
 
     bool   dotrace = prefs->getBool(prefs_path + "dotrace");
     int    pick = prefs->getInt(prefs_path + "pick");
@@ -2358,11 +2360,11 @@ void CloneTiler::clonetiler_apply(GtkWidget */*widget*/, GtkWidget *dlg)
             SPItem::VISUAL_BBOX : SPItem::GEOMETRIC_BBOX );
         Geom::OptRect r = item->documentBounds(bbox_type);
         if (r) {
-            w = r->dimensions()[Geom::X];
-            h = r->dimensions()[Geom::Y];
-            x0 = r->min()[Geom::X];
-            y0 = r->min()[Geom::Y];
-            center = desktop->dt2doc(item->getCenter());
+            w = scale_units*r->dimensions()[Geom::X];
+            h = scale_units*r->dimensions()[Geom::Y];
+            x0 = scale_units*r->min()[Geom::X];
+            y0 = scale_units*r->min()[Geom::Y];
+            center = scale_units*desktop->dt2doc(item->getCenter());
 
             sp_repr_set_svg_double(obj_repr, "inkscape:tile-cx", center[Geom::X]);
             sp_repr_set_svg_double(obj_repr, "inkscape:tile-cy", center[Geom::Y]);
@@ -2578,7 +2580,7 @@ void CloneTiler::clonetiler_apply(GtkWidget */*widget*/, GtkWidget *dlg)
             Geom::Point new_center;
             bool center_set = false;
             if (obj_repr->attribute("inkscape:transform-center-x") || obj_repr->attribute("inkscape:transform-center-y")) {
-                new_center = desktop->dt2doc(item->getCenter()) * t;
+                new_center = scale_units*desktop->dt2doc(item->getCenter()) * t;
                 center_set = true;
             }
 
