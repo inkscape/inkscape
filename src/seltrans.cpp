@@ -1321,16 +1321,6 @@ void Inkscape::SelTrans::stretch(SPSelTransHandle const &/*handle*/, Geom::Point
 
 void Inkscape::SelTrans::scale(Geom::Point &/*pt*/, guint /*state*/)
 {
-    // E.g. scaling a perfectly vertical line in horizontal direction will not work, and will produce an identity affine
-    // Applying a transformation is useless, so we will not attempt to do so because this might trigger other bugs
-    // (see https://bugs.launchpad.net/inkscape/+bug/1256597)
-    // We check for this here and not in transform because identity transformations are perfectly fine for for example
-    // translations (e.g. a translation of (0,0), which occurs when snapping a point back to its original location)
-
-    if (_absolute_affine.isIdentity()) {
-        return;
-    }
-
     transform(_absolute_affine, Geom::Point(0, 0)); // we have already accounted for origin, so pass 0,0
 }
 
