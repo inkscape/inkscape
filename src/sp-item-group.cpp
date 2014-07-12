@@ -664,7 +664,8 @@ void SPGroup::scaleChildItemsRec(Geom::Scale const &sc, Geom::Point const &p)
                         
                         Geom::Point old_center(0,0);
                         if (item->isCenterSet()) {
-                            old_center = item->getCenter();
+                            item->scaleCenter(sc.inverse()); // Convert the old relative center position to the new coordinates already now
+                            old_center = item->getCenter(); // because getCenter() will use the bbox midpoint, which is also already in the new coordinates
                         }
                         
                         gchar const *conn_type = NULL;

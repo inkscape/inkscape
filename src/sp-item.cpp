@@ -271,6 +271,11 @@ Geom::Point SPItem::getCenter() const {
     }
 }
 
+void
+SPItem::scaleCenter(Geom::Scale const &sc) {
+    transform_center_x *= sc[Geom::X];
+    transform_center_y *= sc[Geom::Y];
+}
 
 namespace {
 

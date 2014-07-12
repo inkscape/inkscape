@@ -159,6 +159,7 @@ public:
     void unsetCenter();
     bool isCenterSet() const;
     Geom::Point getCenter() const;
+    void scaleCenter(Geom::Scale const &sc);
 
     bool isVisibleAndUnlocked() const;
 
