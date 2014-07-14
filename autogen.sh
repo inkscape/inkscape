@@ -15,16 +15,22 @@ test -n "$srcdir" || srcdir=.
 olddir=`pwd`
 cd $srcdir
 
-AUTORECONF=`which autoreconf`
-if test -z $AUTORECONF; then
+WHICH_AUTORECONF=`which autoreconf`
+if test -z $WHICH_AUTORECONF; then
         echo "*** No autoreconf found, please install it ***"
         exit 1
 fi
 
-INTLTOOLIZE=`which intltoolize`
-if test -z $INTLTOOLIZE; then
+WHICH_INTLTOOLIZE=`which intltoolize`
+if test -z $WHICH_INTLTOOLIZE; then
         echo "*** No intltoolize found, please install the intltool package ***"
         exit 1
+fi
+
+WHICH_AUTOPOINT=`which autopoint`
+if test -z $WHICH_AUTOPOINT; then
+	echo "*** No autopoint found, please install the autopoint package ***"
+	exit 1
 fi
 
 autopoint --force
