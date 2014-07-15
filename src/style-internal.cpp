@@ -1390,9 +1390,8 @@ SPIFilter::read( gchar const *str ) {
     }
 }
 
-const Glib::ustring
-SPIFilter::write( guint const flags, SPIBase const *const base) const {
-
+const Glib::ustring SPIFilter::write( guint const flags, SPIBase const *const /*base*/) const
+{
     // TODO: fix base
     //SPILength const *const my_base = dynamic_cast<const SPILength*>(base);
     if ( (flags & SP_STYLE_FLAG_ALWAYS) ||
@@ -1923,9 +1922,8 @@ SPIFont::read( gchar const *str ) {
     }
 }
 
-const Glib::ustring
-SPIFont::write( guint const flags, SPIBase const *const base) const {
-
+const Glib::ustring SPIFont::write( guint const /*flags*/, SPIBase const *const /*base*/) const
+{
     // At the moment, do nothing. We could add a preference to write out
     // 'font' shorthand rather than longhand properties.
 

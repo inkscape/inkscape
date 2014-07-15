@@ -977,8 +977,8 @@ unsigned int PrintEmf::fill(
     using Geom::X;
     using Geom::Y;
     
-    SPItem *item = SP_ITEM(style->object);
-    SPClipPath *scp = (item->clip_ref ? item->clip_ref->getObject() : NULL);
+    //SPItem *item = SP_ITEM(style->object);
+    //SPClipPath *scp = (item->clip_ref ? item->clip_ref->getObject() : NULL);
 
     Geom::Affine tf = m_tr_stack.top();
 

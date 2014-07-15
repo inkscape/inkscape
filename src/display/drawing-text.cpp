@@ -150,25 +150,26 @@ unsigned DrawingGlyphs::_updateItem(Geom::IntRect const &/*area*/, UpdateContext
     return STATE_ALL;
 }
 
-DrawingItem *
-DrawingGlyphs::_pickItem(Geom::Point const &p, double delta, unsigned /*flags*/)
+DrawingItem *DrawingGlyphs::_pickItem(Geom::Point const &p, double /*delta*/, unsigned /*flags*/)
 {
     DrawingText *ggroup = dynamic_cast<DrawingText *>(_parent);
     if (!ggroup) {
         throw InvalidItemException();
     }
+    DrawingItem *result = NULL;
     bool invisible = (ggroup->_nrstyle.fill.type == NRStyle::PAINT_NONE) &&
         (ggroup->_nrstyle.stroke.type == NRStyle::PAINT_NONE);
-    if (!_font || !_bbox || (!_drawing.outline() && invisible) ) {
-        return NULL;
-    }
 
-    // With text we take a simple approach: pick if the point is in a character bbox
-    Geom::Rect expanded(_pick_bbox);
-    // FIXME, why expand by delta?  When is the next line needed?
-    // expanded.expandBy(delta);
-    if (expanded.contains(p)) return this;
-    return NULL;
+    if (_font && _bbox && (_drawing.outline() || !invisible) ) {
+        // With text we take a simple approach: pick if the point is in a character bbox
+        Geom::Rect expanded(_pick_bbox);
+        // FIXME, why expand by delta?  When is the next line needed?
+        // expanded.expandBy(delta);
+        if (expanded.contains(p)) {
+            result = this;
+        }
+    }
+    return result;
 }
 
 

@@ -63,7 +63,6 @@ namespace Extension {
 namespace Internal {
 
 
-static U_RECT16 rc_old;
 static bool clipset = false;
 static uint32_t BLTmode=0;
 

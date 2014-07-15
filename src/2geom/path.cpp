@@ -110,7 +110,7 @@ Path &Path::operator*=(Translate const &m) {
   Sequence::iterator it;
   Point prev;
   for (it = get_curves().begin() ; it != last ; ++it) {
-    //*(const_cast<Curve*>(&**it)) *= m;
+    // *(const_cast<Curve*>(&**it)) *= m;
     const_cast<Curve*>(it->get())->operator*=(m);
     if ( it != get_curves().begin() && (*it)->initialPoint() != prev ) {
       THROW_CONTINUITYERROR();
