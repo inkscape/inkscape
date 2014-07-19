@@ -1289,8 +1289,7 @@ void sp_event_context_snap_delay_handler(ToolBase *ec,
                 // now, just in case there's no future motion event that drops under the speed limit (when
                 // stopping abruptly)
                 delete ec->_delayed_snap_event;
-                ec->_delayed_snap_event = new DelayedSnapEvent(ec, dse_item, dse_item2,
-                        event, origin); // watchdog is reset, i.e. pushed forward in time
+                ec->_delayed_snap_event = new DelayedSnapEvent(ec, dse_item, dse_item2, event, origin); // watchdog is reset, i.e. pushed forward in time
                 // If the watchdog expires before a new motion event is received, we will snap (as explained
                 // above). This means however that when the timer is too short, we will always snap and that the
                 // speed threshold is ineffective. In the extreme case the delay is set to zero, and snapping will
@@ -1301,15 +1300,13 @@ void sp_event_context_snap_delay_handler(ToolBase *ec,
                 // snap, and set a new watchdog again.
                 if (ec->_delayed_snap_event == NULL) { // no watchdog has been set
                     // it might have already expired, so we'll set a new one; the snapping frequency will be limited this way
-                    ec->_delayed_snap_event = new DelayedSnapEvent(ec, dse_item,
-                            dse_item2, event, origin);
+                    ec->_delayed_snap_event = new DelayedSnapEvent(ec, dse_item, dse_item2, event, origin);
                 } // else: watchdog has been set before and we'll wait for it to expire
             }
         } else {
             // This is the first GDK_MOTION_NOTIFY event, so postpone snapping and set the watchdog
             g_assert(ec->_delayed_snap_event == NULL);
-            ec->_delayed_snap_event = new DelayedSnapEvent(ec, dse_item, dse_item2,
-                    event, origin);
+            ec->_delayed_snap_event = new DelayedSnapEvent(ec, dse_item, dse_item2, event, origin);
         }
 
         prev_pos = event_pos;

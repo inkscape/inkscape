@@ -162,6 +162,9 @@ SPKnot::~SPKnot() {
         g_free(this->tip);
         this->tip = NULL;
     }
+
+    // cannot snap to destroyed knot
+    sp_event_context_discard_delayed_snap_event(this->desktop->event_context);
 }
 
 void SPKnot::startDragging(Geom::Point const &p, gint x, gint y, guint32 etime) {
@@ -282,7 +285,7 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
                     knot->setFlag(SP_KNOT_DRAGGING, TRUE);
                 }
 
-                sp_event_context_snap_delay_handler(knot->desktop->event_context, NULL, (gpointer) knot, (GdkEventMotion *)event, Inkscape::UI::Tools::DelayedSnapEvent::KNOT_HANDLER);
+                sp_event_context_snap_delay_handler(knot->desktop->event_context, NULL, knot, (GdkEventMotion *)event, Inkscape::UI::Tools::DelayedSnapEvent::KNOT_HANDLER);
                 sp_knot_handler_request_position(event, knot);
                 moved = TRUE;
             }
