@@ -110,7 +110,7 @@
     </symbol>
 
     <symbol id="AuxillaryOp">
-      <title>Auxillary Operation</title>
+      <title>Auxiliary Operation</title>
       <desc>Offline operation.</desc>
       <rect x="35" y="35" width="80" height="80" style="stroke-width:2"/>
     </symbol>
@@ -123,12 +123,12 @@
 
     <symbol id="Extract">
       <title>Extract</title>
-      <desc>Removel of one or more specific sets of times from a set. (ISO)</desc>
+      <desc>Removal of one or more specific sets of times from a set. (ISO)</desc>
       <path d="m 35,115 40,-70 40,70 z" style="stroke-width:2"/>
     </symbol>
 
     <symbol id="Terminal">
-      <title>Terminal/Interupt</title>
+      <title>Terminal/Interrupt</title>
       <desc>A terminal point in a flowchart: start, stop, halt, etc.</desc>
       <path d="m 35,95 a 20,20 0 0 1 0,-40 l 80,0 a 20,20 0 0 1 0,40 z" style="stroke-width:2"/>
     </symbol>
