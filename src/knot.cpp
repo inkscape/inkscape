@@ -163,8 +163,8 @@ SPKnot::~SPKnot() {
         this->tip = NULL;
     }
 
-    // cannot snap to destroyed knot
-    sp_event_context_discard_delayed_snap_event(this->desktop->event_context);
+    // FIXME: cannot snap to destroyed knot (lp:1309050)
+    //sp_event_context_discard_delayed_snap_event(this->desktop->event_context);
 }
 
 void SPKnot::startDragging(Geom::Point const &p, gint x, gint y, guint32 etime) {
