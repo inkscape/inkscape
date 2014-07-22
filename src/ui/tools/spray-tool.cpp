@@ -677,7 +677,7 @@ bool SprayTool::root_handler(GdkEvent* event) {
                 desktop->setToolboxAdjustmentValue("population", this->population * 100);
                 Geom::Point const scroll_w(event->button.x, event->button.y);
                 Geom::Point const scroll_dt = desktop->point();;
-                Geom::Point motion_doc(desktop->dt2doc(scroll_dt));
+                
                 switch (event->scroll.direction) {
                     case GDK_SCROLL_DOWN:
                     case GDK_SCROLL_UP: {

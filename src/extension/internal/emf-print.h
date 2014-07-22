@@ -29,7 +29,7 @@ namespace Internal {
 
 class PrintEmf : public PrintMetafile
 {
-    uint32_t hbrush, hbrushOld, hpen, hpenOld;
+    uint32_t hbrush, hbrushOld, hpen;
 
     unsigned int print_pathv (Geom::PathVector const &pathv, const Geom::Affine &transform);
     bool print_simple_shape (Geom::PathVector const &pathv, const Geom::Affine &transform);

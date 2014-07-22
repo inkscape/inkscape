@@ -28,7 +28,7 @@ namespace Internal {
 
 class PrintWmf : public PrintMetafile
 {
-    uint32_t hbrush, hpen, hpenOld, hbrush_null, hpen_null;
+    uint32_t hbrush, hpen, hbrush_null, hpen_null;
     uint32_t hmiterlimit;               // used to minimize redundant records that set this
 
     unsigned int print_pathv (Geom::PathVector const &pathv, const Geom::Affine &transform);

@@ -672,15 +672,6 @@ box3d_aux_set_z_orders (int z_orders[6], int a, int b, int c, int d, int e, int 
     z_orders[5] = f;
 }
 
-static inline void
-box3d_swap_z_orders (int z_orders[6]) {
-    int tmp;
-    for (int i = 0; i < 3; ++i) {
-        tmp = z_orders[i];
-        z_orders[i] = z_orders[5-i];
-        z_orders[5-i] = tmp;
-    }
-}
 
 /*
  * In standard perspective we have:
@@ -695,11 +686,6 @@ box3d_swap_z_orders (int z_orders[6]) {
 /* All VPs infinite */
 static void
 box3d_set_new_z_orders_case0 (SPBox3D *box, int z_orders[6], Box3D::Axis central_axis) {
-    Persp3D *persp = box3d_get_perspective(box);
-    Geom::Point xdir(persp3d_get_infinite_dir(persp, Proj::X));
-    Geom::Point ydir(persp3d_get_infinite_dir(persp, Proj::Y));
-    Geom::Point zdir(persp3d_get_infinite_dir(persp, Proj::Z));
-
     bool swapped = box3d_XY_axes_are_swapped(box);
 
     switch(central_axis) {
@@ -811,12 +797,7 @@ box3d_set_new_z_orders_case1 (SPBox3D *box, int z_orders[6], Box3D::Axis central
 /* Precisely 2 finite VPs */
 static void
 box3d_set_new_z_orders_case2 (SPBox3D *box, int z_orders[6], Box3D::Axis central_axis, Box3D::Axis /*infinite_axis*/) {
-    Persp3D *persp = box3d_get_perspective(box);
-
     Geom::Point c3(box3d_get_corner_screen(box, 3, false));
-    Geom::Point xdir(persp3d_get_PL_dir_from_pt(persp, c3, Proj::X));
-    Geom::Point ydir(persp3d_get_PL_dir_from_pt(persp, c3, Proj::Y));
-    Geom::Point zdir(persp3d_get_PL_dir_from_pt(persp, c3, Proj::Z));
 
     bool swapped = box3d_XY_axes_are_swapped(box);
 
