@@ -120,7 +120,7 @@ void TemplateWidget::_displayTemplateDetails()
     
     if (_current_template.long_description != "")
         message += _("Description: ") + _current_template.long_description + "\n\n";
-    if (~_current_template.keywords.empty()){
+    if (!_current_template.keywords.empty()){
         message += _("Keywords: ");
         for (std::set<Glib::ustring>::iterator it = _current_template.keywords.begin(); it != _current_template.keywords.end(); ++it)
             message += *it + " ";

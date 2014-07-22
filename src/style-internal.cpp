@@ -270,18 +270,18 @@ SPILength::read( gchar const *str ) {
             } else if (!strcmp(e, "em")) {
                 /* EM square */
                 unit = SP_CSS_UNIT_EM;
-                if( style && &style->font_size ) {
+                if( style ) {
                     computed = value * style->font_size.computed;
                 } else {
-                    computed = value * style->font_size.font_size_default;
+                    computed = value * SPIFontSize::font_size_default;
                 }
             } else if (!strcmp(e, "ex")) {
                 /* ex square */
                 unit = SP_CSS_UNIT_EX;
-                if( style && &style->font_size ) {
+                if( style ) {
                     computed = value * style->font_size.computed * 0.5; // FIXME
                 } else {
-                    computed = value * style->font_size.font_size_default * 0.5;
+                    computed = value * SPIFontSize::font_size_default * 0.5;
                 }
             } else if (!strcmp(e, "%")) {
                 /* Percentage */

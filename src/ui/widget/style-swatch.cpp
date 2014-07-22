@@ -261,7 +261,7 @@ void StyleSwatch::setStyle(SPCSSAttr *css)
     Glib::ustring css_string;
     sp_repr_css_write_string (_css, css_string);
     SPStyle *temp_spstyle = sp_style_new(SP_ACTIVE_DOCUMENT);
-    if (~css_string.empty()) {
+    if (!css_string.empty()) {
         sp_style_merge_from_style_string (temp_spstyle, css_string.c_str());
     }
     

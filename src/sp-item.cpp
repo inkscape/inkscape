@@ -1264,7 +1264,7 @@ void SPItem::adjust_paint_recursive (Geom::Affine advertized_transform, Geom::Af
 // Within text, we do not fork gradients, and so must not recurse to avoid double compensation;
 // also we do not recurse into clones, because a clone's child is the ghost of its original -
 // we must not touch it
-    if (!(this && (SP_IS_TEXT(this) || SP_IS_USE(this)))) {
+    if (!(SP_IS_TEXT(this) || SP_IS_USE(this))) {
         for (SPObject *o = children; o != NULL; o = o->next) {
             if (SP_IS_ITEM(o)) {
 // At the level of the transformed item, t_ancestors is identity;
