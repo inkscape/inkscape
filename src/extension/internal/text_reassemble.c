@@ -550,7 +550,7 @@ int TR_check_set_vadvance(TR_INFO *tri, int src, int lines){
          See if the line to be added is compatible.
          All text fields in a complex have the same advance, so just set/check the first one.
          vadvance must be within 1% or do not add a new line */
-      if(fabs(1.0 - (tpi->chunks[trec].vadvance/newV) > 0.01)){
+      if(fabs(1.0 - (tpi->chunks[trec].vadvance/newV)) > 0.01){
           status = 1;
       }
       else {  /* recalculate the weighted vadvance */
