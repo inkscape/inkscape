@@ -1396,7 +1396,7 @@ unsigned int PrintWmf::text(Inkscape::Extension::Print * /*mod*/, char const *te
                 fix90n = 1; //assume vertical
                 rot  = (double)(((int) round(rot)) - irem);
                 rotb =  rot * M_PI / 1800.0;
-                if (abs(rot) == 900.0) {
+                if (std::abs(rot) == 900.0) {
                     fix90n = 2;
                 }
             }

@@ -1185,7 +1185,7 @@ void PenTool::_setSubsequentPoint(Geom::Point const p, bool statusbar, guint sta
         // we are drawing horizontal/vertical lines and hit an anchor;
         Geom::Point const origin = this->p[0];
         // if the previous point and the anchor are not aligned either horizontally or vertically...
-        if ((abs(p[Geom::X] - origin[Geom::X]) > 1e-9) && (abs(p[Geom::Y] - origin[Geom::Y]) > 1e-9)) {
+        if ((std::abs(p[Geom::X] - origin[Geom::X]) > 1e-9) && (std::abs(p[Geom::Y] - origin[Geom::Y]) > 1e-9)) {
             // ...then we should draw an L-shaped path, consisting of two paraxial segments
             Geom::Point intermed = p;
             this->_setToNearestHorizVert(intermed, status, false);

@@ -1394,7 +1394,7 @@ sp_ruler_draw_ticks (SPRuler *ruler)
                 (label_spacing_px > 6*digit_height || tick_index%2 == 0 || cur == 0) && 
                 (label_spacing_px > 3*digit_height || tick_index%4 == 0 || cur == 0))
               {
-                if (fabs((int)cur) >= 2000 && (((int) cur)/1000)*1000 == ((int) cur))
+                if (std::abs((int)cur) >= 2000 && (((int) cur)/1000)*1000 == ((int) cur))
                     sprintf (unit_str, "%dk", ((int) cur)/1000);
                 else
                     sprintf (unit_str, "%d", (int) cur);

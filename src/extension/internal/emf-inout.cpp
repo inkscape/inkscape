@@ -2524,8 +2524,8 @@ std::cout << "BEFORE DRAW"
 
             double cx = pix_to_x_point( d, (rclBox.left + rclBox.right)/2.0, (rclBox.bottom + rclBox.top)/2.0 );
             double cy = pix_to_y_point( d, (rclBox.left + rclBox.right)/2.0, (rclBox.bottom + rclBox.top)/2.0 );
-            double rx = pix_to_abs_size( d, fabs(rclBox.right - rclBox.left  )/2.0 );
-            double ry = pix_to_abs_size( d, fabs(rclBox.top   - rclBox.bottom)/2.0 );
+            double rx = pix_to_abs_size( d, std::abs(rclBox.right - rclBox.left  )/2.0 );
+            double ry = pix_to_abs_size( d, std::abs(rclBox.top   - rclBox.bottom)/2.0 );
 
             SVGOStringStream tmp_ellipse;
             tmp_ellipse << "cx=\"" << cx << "\" ";
