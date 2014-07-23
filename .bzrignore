@@ -160,6 +160,7 @@ src/algorithms/makefile
 src/application/makefile
 src/bind/makefile
 src/check-header-compile
+src/cxxtests.cpp
 src/debug/makefile
 src/dialogs/makefile
 src/display/makefile
