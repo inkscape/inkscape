@@ -168,7 +168,7 @@ class Effect:
             try:
                 stream = open(self.svg_file, 'r')
             except Exception:
-                errormsg(_("Unable to open specified file: %s") % self.svg_file)
+                errormsg(_("Unable to open object member file: %s") % self.svg_file)
                 sys.exit()
 
         # Finally, if the filename was not specified anywhere, use
