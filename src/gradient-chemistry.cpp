@@ -1296,6 +1296,10 @@ Geom::Point getGradientCoords(SPItem *item, GrPointType point_type, guint point_
                 break;
             case POINT_LG_MID:
                 {
+                    if (lg->vector.stops.size() < point_i) {
+                        g_message("POINT_LG_MID bug trigger, see LP bug #453067");
+                        break;
+                    }
                     gdouble offset = lg->vector.stops.at(point_i).offset;
                     p = (1-offset) * Geom::Point(lg->x1.computed, lg->y1.computed) + offset * Geom::Point(lg->x2.computed, lg->y2.computed);
                 }
@@ -1321,12 +1325,20 @@ Geom::Point getGradientCoords(SPItem *item, GrPointType point_type, guint point_
                 break;
             case POINT_RG_MID1:
                 {
+                    if (rg->vector.stops.size() < point_i) {
+                        g_message("POINT_RG_MID1 bug trigger, see LP bug #453067");
+                        break;
+                    }
                     gdouble offset = rg->vector.stops.at(point_i).offset;
                     p = (1-offset) * Geom::Point (rg->cx.computed, rg->cy.computed) + offset * Geom::Point(rg->cx.computed + rg->r.computed, rg->cy.computed);
                 }
                 break;
             case POINT_RG_MID2:
                 {
+                    if (rg->vector.stops.size() < point_i) {
+                        g_message("POINT_RG_MID2 bug trigger, see LP bug #453067");
+                        break;
+                    }
                     gdouble offset = rg->vector.stops.at(point_i).offset;
                     p = (1-offset) * Geom::Point (rg->cx.computed, rg->cy.computed) + offset * Geom::Point(rg->cx.computed, rg->cy.computed - rg->r.computed);
                 }
