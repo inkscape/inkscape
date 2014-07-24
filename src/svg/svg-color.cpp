@@ -310,6 +310,59 @@ static guint32 internal_sp_svg_read_color(gchar const *str, gchar const **end_pt
             *end_ptr = s;
         }
         return val;
+    } else if (strneq(str, "hsl(", 4)) {
+
+        gchar *ptr = (gchar *) str + 4;
+
+        gchar *e; // ptr after read
+
+        double h = g_ascii_strtod(ptr, &e); // Read h (0-360)
+        if (ptr == e) return def; // Read failed
+        ptr = e;
+
+        while (*ptr && g_ascii_isspace(*ptr)) ptr += 1; // Remove any white space
+        if (*ptr != ',') return def; // Need comma
+        ptr += 1;
+        while (*ptr && g_ascii_isspace(*ptr)) ptr += 1; // Remove any white space
+
+        double s = g_ascii_strtod(ptr, &e); // Read s (percent)
+        if (ptr == e) return def; // Read failed
+        ptr = e;
+        while (*ptr && g_ascii_isspace(*ptr)) ptr += 1; // Remove any white space
+        if (*ptr != '%') return def; // Need %
+        ptr += 1;
+
+        while (*ptr && g_ascii_isspace(*ptr)) ptr += 1; // Remove any white space
+        if (*ptr != ',') return def; // Need comma
+        ptr += 1;
+        while (*ptr && g_ascii_isspace(*ptr)) ptr += 1; // Remove any white space
+
+        double l = g_ascii_strtod(ptr, &e); // Read l (percent)
+        if (ptr == e) return def; // Read failed
+        ptr = e;
+        while (*ptr && g_ascii_isspace(*ptr)) ptr += 1; // Remove any white space
+        if (*ptr != '%') return def; // Need %
+        ptr += 1;
+
+        if (end_ptr) {
+            *end_ptr = ptr;
+        }
+
+
+        // Normalize to 0..1
+        h /= 360.0;
+        s /= 100.0;
+        l /= 100.0;
+
+        gfloat rgb[3];
+
+        sp_color_hsl_to_rgb_floatv( rgb, h, s, l );
+
+        val  =  static_cast<guint>(floor(CLAMP(rgb[0], 0.0, 1.0) * 255.9999)) << 24;
+        val |= (static_cast<guint>(floor(CLAMP(rgb[1], 0.0, 1.0) * 255.9999)) << 16);
+        val |= (static_cast<guint>(floor(CLAMP(rgb[2], 0.0, 1.0) * 255.9999)) << 8);
+        return val;
+
     } else {
         gint i;
         if (colors.empty()) {
