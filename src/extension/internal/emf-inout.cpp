@@ -1641,11 +1641,19 @@ int Emf::myEnhMetaFileProc(char *contents, unsigned int length, PEMF_CALLBACK_DA
     // next record is valid type and forces pending text to be drawn immediately
     if ((d->dc[d->level].dirty & DIRTY_TEXT) || ((emr_mask != U_EMR_INVALID)   &&   (emr_mask & U_DRAW_TEXT) && d->tri->dirty)){
         TR_layout_analyze(d->tri);
+        if (d->dc[d->level].clip_id){
+           SVGOStringStream tmp_clip;
+           tmp_clip << "\n<g\n\tclip-path=\"url(#clipEmfPath" << d->dc[d->level].clip_id << ")\"\n>";
+           d->outsvg += tmp_clip.str().c_str();
+        }
         TR_layout_2_svg(d->tri);
         SVGOStringStream ts;
         ts << d->tri->out;
         d->outsvg += ts.str().c_str();
         d->tri = trinfo_clear(d->tri);
+        if (d->dc[d->level].clip_id){
+           d->outsvg += "\n</g>\n";
+        }        
     }
     if(d->dc[d->level].dirty){  //Apply the delayed background changes, clear the flag
         d->dc[d->level].bkMode = tbkMode;
@@ -3141,11 +3149,19 @@ std::cout << "BEFORE DRAW"
                 int status = trinfo_load_textrec(d->tri, &tsp, tsp.ori,TR_EMFBOT);  // ori is actually escapement
                 if(status==-1){ // change of escapement, emit what we have and reset
                     TR_layout_analyze(d->tri);
+                    if (d->dc[d->level].clip_id){
+                       SVGOStringStream tmp_clip;
+                       tmp_clip << "\n<g\n\tclip-path=\"url(#clipEmfPath" << d->dc[d->level].clip_id << ")\"\n>";
+                       d->outsvg += tmp_clip.str().c_str();
+                    }
                     TR_layout_2_svg(d->tri);
                     ts << d->tri->out;
                     d->outsvg += ts.str().c_str();
                     d->tri = trinfo_clear(d->tri);
                     (void) trinfo_load_textrec(d->tri, &tsp, tsp.ori,TR_EMFBOT); // ignore return status, it must work
+                    if (d->dc[d->level].clip_id){
+                       d->outsvg += "\n</g>\n";
+                    }        
                 }
 
                 g_free(escaped_text);
@@ -3479,7 +3495,7 @@ Emf::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
 
     if (d.pDesc){ free( d.pDesc ); }
 
-//    std::cout << "SVG Output: " << std::endl << *(d.outsvg) << std::endl;
+//    std::cout << "SVG Output: " << std::endl << d.outsvg << std::endl;
 
     SPDocument *doc = SPDocument::createNewDocFromMem(d.outsvg.c_str(), strlen(d.outsvg.c_str()), TRUE);
 

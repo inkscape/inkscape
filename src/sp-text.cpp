@@ -278,6 +278,7 @@ Inkscape::XML::Node *SPText::write(Inkscape::XML::Document *xml_doc, Inkscape::X
     }
 
     this->attributes.writeTo(repr);
+    this->rebuildLayout();  // copied from update(), see LP Bug 1339305
 
     // deprecated attribute, but keep it around for backwards compatibility
     if (this->style->line_height.set && !this->style->line_height.inherit && !this->style->line_height.normal && this->style->line_height.unit == SP_CSS_UNIT_PERCENT) {

@@ -38,6 +38,8 @@
 #include "sp-use.h"
 #include "sp-use-reference.h"
 #include "sp-shape.h"
+#include "sp-text.h"
+#include "sp-flowtext.h"
 
 namespace {
     SPObject* createUse() {
@@ -177,8 +179,16 @@ Inkscape::XML::Node* SPUse::write(Inkscape::XML::Document *xml_doc, Inkscape::XM
         g_free(uri_string);
     }
 
-    if (SP_IS_SHAPE(this->child))
+    if (SP_IS_SHAPE(this->child)) {
         SP_SHAPE(this->child)->set_shape(); // evaluate SPCurve of child
+    } else if (SP_IS_TEXT(this->child)) {
+        SP_TEXT(this->child)->rebuildLayout(); // refresh Layout, LP Bug 1339305
+    } else if (SP_IS_FLOWTEXT(this->child)) {
+        if (SP_IS_FLOWREGION(SP_FLOWTEXT(this->child)->firstChild()))
+            SP_FLOWREGION(SP_FLOWTEXT(this->child)->firstChild())->UpdateComputed();
+        SP_FLOWTEXT(this->child)->rebuildLayout();
+    }
+
     return repr;
 }
 

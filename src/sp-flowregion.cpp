@@ -185,6 +185,8 @@ Inkscape::XML::Node *SPFlowregion::write(Inkscape::XML::Document *xml_doc, Inksc
 
     SPItem::write(xml_doc, repr, flags);
 
+    this->UpdateComputed();  // copied from update(), see LP Bug 1339305
+
     return repr;
 }
 
@@ -372,6 +374,8 @@ static void         GetDest(SPObject* child,Shape **computed)
 		tr_mat = SP_ITEM(u_child)->transform;
 	}
 	if ( SP_IS_SHAPE (u_child) ) {
+        if (!(SP_SHAPE(u_child)->_curve))
+            SP_SHAPE (u_child)->set_shape ();
 		curve = SP_SHAPE (u_child)->getCurve ();
 	} else if ( SP_IS_TEXT (u_child) ) {
 	curve = SP_TEXT (u_child)->getNormalizedBpath ();

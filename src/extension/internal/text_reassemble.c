@@ -67,8 +67,8 @@ Optional compiler switches for development:
 
 
 File:      text_reassemble.c
-Version:   0.0.14
-Date:      25-MAR-2014
+Version:   0.0.15
+Date:      24-JUL-2014
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
 Copyright: 2014 David Mathog and California Institute of Technology (Caltech)
@@ -1820,7 +1820,9 @@ printf("Face idx:%d bbox: xMax/Min:%ld,%ld yMax/Min:%ld,%ld UpEM:%d asc/des:%d,%
    fasc = ((double) (fsp->face->ascender) )/64.0;
    fdsc = ((double) (fsp->face->descender))/64.0;
       
-   if(tri->load_flags & FT_LOAD_NO_SCALE) xe *= tsp->fs/32.0;
+   /* originally the denominator was just 32.0, but it broke when units_per_EM wasn't 2048 */
+   double fixscale = tsp->fs/(((double) fsp->face->units_per_EM)/64.0);
+   if(tri->load_flags & FT_LOAD_NO_SCALE) xe *= fixscale;
 
    /* now place the rectangle using ALN information */
    if(      taln & ALIHORI & ALILEFT  ){
@@ -1837,11 +1839,11 @@ printf("Face idx:%d bbox: xMax/Min:%ld,%ld yMax/Min:%ld,%ld UpEM:%d asc/des:%d,%
    }
    tpi->chunks[current].ldir = tsp->ldir;
 
-   if(tri->load_flags & FT_LOAD_NO_SCALE){ 
-      asc  *= tsp->fs/32.0;
-      dsc  *= tsp->fs/32.0;
-      fasc *= tsp->fs/32.0;
-      fdsc *= tsp->fs/32.0;
+   if(tri->load_flags & FT_LOAD_NO_SCALE){
+      asc  *= fixscale;
+      dsc  *= fixscale;
+      fasc *= fixscale;
+      fdsc *= fixscale;
    }
    
 

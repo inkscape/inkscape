@@ -255,6 +255,8 @@ Inkscape::XML::Node* SPFlowtext::write(Inkscape::XML::Document* doc, Inkscape::X
         }
     }
 
+    this->rebuildLayout();  // copied from update(), see LP Bug 1339305
+
     SPItem::write(doc, repr, flags);
 
     return repr;
