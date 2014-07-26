@@ -251,7 +251,7 @@ void DialogManager::showDialog(gchar const *name, bool grabfocus) {
 /**
  * Shows the named dialog, creating it if necessary.
  */
-void DialogManager::showDialog(GQuark name, bool grabfocus) {
+void DialogManager::showDialog(GQuark name, bool /*grabfocus*/) {
     bool wantTiming = Inkscape::Preferences::get()->getBool("/dialogs/debug/trackAppear", false);
     GTimer *timer = (wantTiming) ? g_timer_new() : 0; // if needed, must be created/started before getDialog()
     Dialog *dialog = getDialog(name);
@@ -262,8 +262,8 @@ void DialogManager::showDialog(GQuark name, bool grabfocus) {
             tracker->setAutodelete(true);
             timer = 0;
         }
-        if (grabfocus)
-            dialog->present();
+        // should check for grabfocus, but lp:1348927 prevents it
+        dialog->present();
     }
 
     if ( timer ) {
