@@ -145,7 +145,7 @@ void ShapeEditor::shapeeditor_event_attr_changed(gchar const *name)
         if (changed_kh) {
             // this can happen if an LPEItem's knotholder handle was dragged, in which case we want
             // to keep the knotholder; in all other cases (e.g., if the LPE itself changes) we delete it
-            reset_item(SH_KNOTHOLDER, !strcmp(name, "d") || !strcmp(name, "style"));
+            reset_item(SH_KNOTHOLDER, !strcmp(name, "d"));
         }
     }
 }

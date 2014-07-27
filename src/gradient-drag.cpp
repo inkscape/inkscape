@@ -21,7 +21,6 @@
 #include <glibmm/i18n.h>
 #include <cstring>
 #include <string>
-//#include <2geom/bezier-curve.h>
 
 #include "desktop-handles.h"
 #include "selection.h"
@@ -38,6 +37,7 @@
 #include "svg/css-ostringstream.h"
 #include "svg/svg.h"
 #include "preferences.h"
+#include "inkscape.h"
 #include "sp-item.h"
 #include "style.h"
 #include "knot.h"
@@ -55,6 +55,7 @@
 #include "verbs.h"
 #include "display/sp-canvas.h"
 #include "ui/control-manager.h"
+#include "ui/tools/tool-base.h"
 
 using Inkscape::ControlManager;
 using Inkscape::CtrlLineType;
@@ -783,6 +784,9 @@ static void gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, gui
                 dragger->parent->draggers = g_list_remove (dragger->parent->draggers, dragger);
                 delete dragger;
 
+                // throw out delayed snap context 
+                Inkscape::UI::Tools::sp_event_context_discard_delayed_snap_event(SP_ACTIVE_DESKTOP->event_context);
+
                 // update the new merged dragger
                 d_new->fireDraggables(true, false, true);
                 d_new->parent->updateLines();
@@ -790,8 +794,7 @@ static void gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, gui
                 d_new->updateKnotShape ();
                 d_new->updateTip ();
                 d_new->updateDependencies(true);
-                DocumentUndo::done(sp_desktop_document (d_new->parent->desktop), SP_VERB_CONTEXT_GRADIENT,
-                                   _("Merge gradient handles"));
+                DocumentUndo::done(sp_desktop_document (d_new->parent->desktop), SP_VERB_CONTEXT_GRADIENT, _("Merge gradient handles"));
                 return;
             }
         }
