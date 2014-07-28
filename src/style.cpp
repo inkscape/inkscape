@@ -227,11 +227,6 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
         document = document_in;
     }
 
-    new (&release_connection) sigc::connection();
-    new (&filter_modified_connection) sigc::connection();
-    new (&fill_ps_modified_connection) sigc::connection();
-    new (&stroke_ps_modified_connection) sigc::connection();
-
     // 'font' shorthand requires access to included properties.
     font.setStylePointer(              this );
 
@@ -431,7 +426,6 @@ SPStyle::~SPStyle() {
 
     // Remove connections
     release_connection.disconnect();
-    release_connection.~connection();
 
     // The following shoud be moved into SPIPaint and SPIFilter
     if (fill.value.href) {
@@ -446,12 +440,7 @@ SPStyle::~SPStyle() {
         filter_modified_connection.disconnect();
     }
 
-    filter_modified_connection.~connection();
-    fill_ps_modified_connection.~connection();
-    stroke_ps_modified_connection.~connection();
-
     _properties.clear();
-    //_propmap.clear();
 
     // std::cout << "SPStyle::~SPstyle(): Exit\n" << std::endl;
 }

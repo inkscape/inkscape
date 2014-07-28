@@ -107,11 +107,6 @@ SPOffset::SPOffset() : SPShape() {
     this->sourceRepr = NULL;
     this->sourceObject = NULL;
 
-    new (&this->_modified_connection) sigc::connection();
-    new (&this->_delete_connection) sigc::connection();
-    new (&this->_changed_connection) sigc::connection();
-    new (&this->_transformed_connection) sigc::connection();
-
     // set up the uri reference
     this->sourceRef = new SPUseReference(this);
     this->_changed_connection = this->sourceRef->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_offset_href_changed), this));
