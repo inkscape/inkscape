@@ -262,8 +262,6 @@ SPGradient::SPGradient() : SPPaintServer(), units(),
 
     this->vector.built = false;
     this->vector.stops.clear();
-
-    //new (&this->modified_connection) sigc::connection();
 }
 
 SPGradient::~SPGradient() {

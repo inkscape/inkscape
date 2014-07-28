@@ -70,8 +70,6 @@ namespace {
 #  SPTEXT
 #####################################################*/
 SPText::SPText() : SPItem() {
-    //new (&this->layout) Inkscape::Text::Layout;
-    //new (&this->attributes) TextTagAttributes;
 }
 
 SPText::~SPText() {
@@ -90,9 +88,6 @@ void SPText::build(SPDocument *doc, Inkscape::XML::Node *repr) {
 }
 
 void SPText::release() {
-    //this->attributes.~TextTagAttributes();
-    //this->layout.~Layout();
-
     SPItem::release();
 }
 

@@ -227,8 +227,6 @@ const char* SPTSpan::displayName() const {
 void   refresh_textpath_source(SPTextPath* offset);
 
 SPTextPath::SPTextPath() : SPItem() {
-    //new (&this->attributes) TextTagAttributes;
-
     this->startOffset._set = false;
     this->originalPath = NULL;
     this->isUpdating=false;

@@ -47,7 +47,6 @@ namespace {
 #####################################################*/
 
 SPString::SPString() : SPObject() {
-    //new (&this->string) Glib::ustring();
 }
 
 SPString::~SPString() {

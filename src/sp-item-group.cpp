@@ -70,11 +70,9 @@ namespace {
 
 SPGroup::SPGroup() : SPLPEItem() {
     this->_layer_mode = SPGroup::GROUP;
-    //new (&this->_display_modes) std::map<unsigned int, SPGroup::LayerMode>();
 }
 
 SPGroup::~SPGroup() {
-	//this->_display_modes.~map();
 }
 
 void SPGroup::build(SPDocument *document, Inkscape::XML::Node *repr) {

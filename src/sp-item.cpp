@@ -118,10 +118,6 @@ SPItem::SPItem() : SPObject() {
     mask_ref->changedSignal().connect(sigc::bind(sigc::ptr_fun(mask_ref_changed), this));
 
     avoidRef = new SPAvoidRef(this);
-
-    //new (&constraints) std::vector<SPGuideConstraint>();
-
-    //new (&_transformed_signal) sigc::signal<void, Geom::Affine const *, SPItem *>();
 }
 
 SPItem::~SPItem() {
