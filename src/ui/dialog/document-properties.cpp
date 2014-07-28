@@ -596,6 +596,7 @@ void DocumentProperties::removeSelectedProfile(){
             //XML Tree being used directly here while it shouldn't be.
             sp_repr_unparent(obj->getRepr());
             DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_EDIT_REMOVE_COLOR_PROFILE, _("Remove linked color profile"));
+            break; // removing the color profile likely invalidates part of the traversed list, stop traversing here.
         }
         current = g_slist_next(current);
     }
