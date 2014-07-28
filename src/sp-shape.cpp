@@ -57,8 +57,6 @@ static void sp_shape_update_marker_view (SPShape *shape, Inkscape::DrawingItem *
 
 SPShape::SPShape() : SPLPEItem() {
     for ( int i = 0 ; i < SP_MARKER_LOC_QTY ; i++ ) {
-        new (&this->_release_connect[i]) sigc::connection();
-        new (&this->_modified_connect[i]) sigc::connection();
         this->_marker[i] = NULL;
     }
 
