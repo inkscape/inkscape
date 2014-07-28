@@ -141,7 +141,7 @@ void SPPath::build(SPDocument *document, Inkscape::XML::Node *repr) {
     SPShape::build(document, repr);
 
     // this->readAttr( "inkscape:original-d" ); // lp1299948
-    if ((gchar const* s = this->getRepr()->attribute("inkscape:original-d")))
+    if (gchar const* s = this->getRepr()->attribute("inkscape:original-d"))
     {
         // write it to XML, and to my curve, but don't update patheffects
         Geom::PathVector pv = sp_svg_read_pathv(s);
