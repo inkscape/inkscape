@@ -118,6 +118,11 @@ PathParam::param_readSVGValue(const gchar * strvalue)
             // Now do the attaching, which emits the changed signal.
             try {
                 ref.attach(Inkscape::URI(href));
+                //lp:1299948
+                SPItem* i = ref.getObject();
+                if (i) {
+                    linked_modified_callback(i, SP_OBJECT_MODIFIED_FLAG);
+                } // else: document still processing new events. Repr of the linked object not created yet.
             } catch (Inkscape::BadURIException &e) {
                 g_warning("%s", e.what());
                 ref.detach();
