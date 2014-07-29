@@ -225,6 +225,31 @@ static void spdc_apply_powerstroke_shape(const std::vector<Geom::Point> & points
     Effect* lpe = SP_LPE_ITEM(item)->getCurrentLPE();
     static_cast<LPEPowerStroke*>(lpe)->offset_points.param_set_and_write_new_value(points);
 
+    // find out stroke width (TODO: is there an easier way??)
+    SPDesktop *desktop = dc->desktop;
+    Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
+    Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
+    Inkscape::GC::release(repr);
+
+    char const* tool = SP_IS_PEN_CONTEXT(dc) ? "/tools/freehand/pen" : "/tools/freehand/pencil";
+
+    // apply the tool's current style
+    sp_desktop_apply_style_tool(desktop, repr, tool, false);
+
+    double stroke_width = 1.0;
+    char const *style_str = NULL;
+    style_str = repr->attribute("style");
+    if (style_str) {
+        SPStyle *style = sp_style_new(SP_ACTIVE_DOCUMENT);
+        sp_style_merge_from_style_string(style, style_str);
+        stroke_width = style->stroke_width.computed;
+        style->stroke_width.computed = 0;
+        sp_style_unref(style);
+    }
+
+    char * width_str = new char[50];
+    sprintf(width_str, "0,%f", stroke_width / 2.);
+
     // write powerstroke parameters:
     lpe->getRepr()->setAttribute("start_linecap_type", "zerowidth");
     lpe->getRepr()->setAttribute("end_linecap_type", "zerowidth");
@@ -232,6 +257,9 @@ static void spdc_apply_powerstroke_shape(const std::vector<Geom::Point> & points
     lpe->getRepr()->setAttribute("sort_points", "true");
     lpe->getRepr()->setAttribute("interpolator_type", "CubicBezierJohan");
     lpe->getRepr()->setAttribute("interpolator_beta", "0.2");
+    lpe->getRepr()->setAttribute("offset_points", width_str);
+
+    delete [] width_str;
 }
 
 static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item, SPCurve *curve)
