@@ -475,6 +475,8 @@ static SPStyleProp const props[] = {
     {SP_PROP_MARKER_START, "marker-start"},
     {SP_PROP_PAINT_ORDER, "paint-order" },
     {SP_PROP_SHAPE_RENDERING, "shape-rendering"},
+    {SP_PROP_SOLID_COLOR, "solid-color"},
+    {SP_PROP_SOLID_OPACITY, "solid-opacity"},
     {SP_PROP_STROKE, "stroke"},
     {SP_PROP_STROKE_DASHARRAY, "stroke-dasharray"},
     {SP_PROP_STROKE_DASHOFFSET, "stroke-dashoffset"},

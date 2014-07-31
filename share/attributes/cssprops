@@ -94,6 +94,10 @@
 
 "shape-rendering" - "path","rect","circle","ellipse","line","polyline","polygon","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
 
+"solid-color" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","circle","ellipse","image","line","path","polygon","polyline","rect","text","use"
+
+"solid-opacity" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","circle","ellipse","image","line","path","polygon","polyline","rect","text","use"
+
 "stop-color" - "stop"
 
 "stop-opacity" - "stop"

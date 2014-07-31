@@ -180,6 +180,11 @@ public:
     /** color-interpolation-filters */
     SPIEnum color_interpolation_filters;
 
+    /** solid-color */
+    SPIColor solid_color;
+    /** solid-opacity */
+    SPIScale24 solid_opacity;
+
     /** fill */
     SPIPaint fill;
     /** fill-opacity */

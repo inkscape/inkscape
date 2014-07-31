@@ -94,6 +94,10 @@
 
 "shape-rendering" - "auto" - "yes"
 
+"solid-color" - "#000000" - "no"
+
+"solid-opacity" - "1.0" - "no"
+
 "stop-color" - "black" - "no"
 
 "stop-opacity" - "1" - "no"

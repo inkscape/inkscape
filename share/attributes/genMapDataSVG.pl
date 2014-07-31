@@ -78,9 +78,9 @@ while( my $t = $p->get_token ) {
 
 # Adjustments
 push @{$attributes{ "in" }->{elements}}, "feMergeNode";
-push @{$attributes{ "class" }->{elements}}, "flowRoot","flowPara","flowSpan","flowRect","flowRegion";
-push @{$attributes{ "id"    }->{elements}}, "flowRoot","flowPara","flowSpan","flowRect","flowRegion";
-push @{$attributes{ "style" }->{elements}}, "flowRoot","flowPara","flowSpan","flowRect","flowRegion";
+push @{$attributes{ "class" }->{elements}}, "flowRoot","flowPara","flowSpan","flowRect","flowRegion","solidColor";
+push @{$attributes{ "id"    }->{elements}}, "flowRoot","flowPara","flowSpan","flowRect","flowRegion","solidColor";
+push @{$attributes{ "style" }->{elements}}, "flowRoot","flowPara","flowSpan","flowRect","flowRegion","solidColor";
 push @{$attributes{ "xml:space" }->{elements}}, "flowRoot","flowPara","flowSpan";
 push @{$attributes{ "transform" }->{elements}}, "flowRoot","flowPara","flowSpan";
 

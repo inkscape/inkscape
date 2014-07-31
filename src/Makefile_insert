@@ -192,6 +192,7 @@ ink_common_sources +=	\
 	sp-root.cpp sp-root.h			\
 	sp-script.cpp sp-script.h		\
 	sp-shape.cpp sp-shape.h			\
+	sp-solid-color.cpp sp-solid-color.h	\
 	sp-spiral.cpp sp-spiral.h		\
 	sp-star.cpp sp-star.h			\
 	sp-stop.cpp sp-stop.h			\

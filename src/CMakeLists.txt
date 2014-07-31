@@ -63,6 +63,7 @@ set(sp_SRC
 	sp-root.cpp
 	sp-script.cpp
 	sp-shape.cpp
+	sp-solid-color.cpp
 	sp-spiral.cpp
 	sp-star.cpp
 	sp-stop.cpp
@@ -147,6 +148,7 @@ set(sp_SRC
 	sp-root.h
 	sp-script.h
 	sp-shape.h
+	sp-solid-color.h
 	sp-spiral.h
 	sp-star.h
 	sp-stop.h

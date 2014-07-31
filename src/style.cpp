@@ -153,6 +153,10 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     color_interpolation(        "color-interpolation",         enum_color_interpolation, SP_CSS_COLOR_INTERPOLATION_SRGB),
     color_interpolation_filters("color-interpolation-filters", enum_color_interpolation, SP_CSS_COLOR_INTERPOLATION_LINEARRGB),
 
+    // Solid color properties
+    solid_color(      "solid-color"                          ), // SPIColor
+    solid_opacity(    "solid-opacity",                         SP_SCALE24_MAX             ),
+
     // Fill properties
     fill(             "fill"                                 ),  // SPIPaint
     fill_opacity(     "fill-opacity",                          SP_SCALE24_MAX             ),
@@ -306,6 +310,9 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     _properties.push_back( &color_interpolation );
     _properties.push_back( &color_interpolation_filters );
 
+    _properties.push_back( &solid_color );
+    _properties.push_back( &solid_opacity );
+
     _properties.push_back( &fill );
     _properties.push_back( &fill_opacity );
     _properties.push_back( &fill_rule );
@@ -385,9 +392,13 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     //     _propmap.insert( std::make_pair( color_interpolation.name,   reinterpret_cast<SPIBasePtr>(&SPStyle::color_interpolation   ) ) );
     //     _propmap.insert( std::make_pair( color_interpolation_filters.name, reinterpret_cast<SPIBasePtr>(&SPStyle::color_interpolation_filters ) ) );
 
+    //     _propmap.insert( std::make_pair( solid_color.name,           reinterpret_cast<SPIBasePtr>(&SPStyle::solid_color           ) ) );
+    //     _propmap.insert( std::make_pair( solid_opacity.name,         reinterpret_cast<SPIBasePtr>(&SPStyle::solid_opacity         ) ) );
+
     //     _propmap.insert( std::make_pair( fill.name,                  reinterpret_cast<SPIBasePtr>(&SPStyle::fill                  ) ) );
     //     _propmap.insert( std::make_pair( fill_opacity.name,          reinterpret_cast<SPIBasePtr>(&SPStyle::fill_opacity          ) ) );
     //     _propmap.insert( std::make_pair( fill_rule.name,             reinterpret_cast<SPIBasePtr>(&SPStyle::fill_rule             ) ) );
+
 
     //     _propmap.insert( std::make_pair( stroke.name,                reinterpret_cast<SPIBasePtr>(&SPStyle::stroke                ) ) );
     //     _propmap.insert( std::make_pair( stroke_width.name,          reinterpret_cast<SPIBasePtr>(&SPStyle::stroke_width          ) ) );
@@ -778,6 +789,12 @@ SPStyle::readIfUnset( gint id, gchar const *val ) {
             break;
         case SP_PROP_COLOR_RENDERING:
             color_rendering.readIfUnset( val );
+            break;
+        case SP_PROP_SOLID_COLOR:
+            solid_color.readIfUnset( val );
+            break;
+        case SP_PROP_SOLID_OPACITY:
+            solid_opacity.readIfUnset( val );
             break;
         case SP_PROP_FILL:
             fill.readIfUnset( val );
@@ -1545,6 +1562,12 @@ sp_style_unset_property_attrs(SPObject *o)
     }
     if (style->color_interpolation_filters.set) {
         repr->setAttribute("color-interpolation-filters", NULL);
+    }
+    if (style->solid_color.set) {
+        repr->setAttribute("solid-color", NULL);
+    }
+    if (style->solid_opacity.set) {
+        repr->setAttribute("solid-opacity", NULL);
     }
     if (style->fill.set) {
         repr->setAttribute("fill", NULL);

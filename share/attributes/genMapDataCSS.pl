@@ -200,6 +200,16 @@ push @{$properties{ "paint-order" }->{elements}}, @graphics_elements;
 $properties{ "paint-order" }->{default} = "normal";
 $properties{ "paint-order" }->{inherit} = "yes";
 
+push @{$properties{ "solid-color" }->{elements}}, @container_elements;
+push @{$properties{ "solid-color" }->{elements}}, @graphics_elements;
+$properties{ "solid-color" }->{default} = "#000000";
+$properties{ "solid-color" }->{inherit} = "no";
+
+push @{$properties{ "solid-opacity" }->{elements}}, @container_elements;
+push @{$properties{ "solid-opacity" }->{elements}}, @graphics_elements;
+$properties{ "solid-opacity" }->{default} = "1.0";
+$properties{ "solid-opacity" }->{inherit} = "no";
+
 
 # Output
 
