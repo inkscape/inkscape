@@ -19,6 +19,7 @@
 #include "display/curve.h"
 #include "display/sp-canvas.h"
 #include "document.h"
+#include "live_effects/effect.h"
 #include "live_effects/lpeobject.h"
 #include "message-context.h"
 #include "selection.h"
@@ -166,6 +167,9 @@ NodeTool::~NodeTool() {
     if (this->flash_tempitem) {
         this->desktop->remove_temporary_canvasitem(this->flash_tempitem);
     }
+    if (this->helperpath_tmpitem) {
+        this->desktop->remove_temporary_canvasitem(this->helperpath_tmpitem);
+    }
 
     this->_selection_changed_connection.disconnect();
     //this->_selection_modified_connection.disconnect();
@@ -246,6 +250,7 @@ void NodeTool::setup() {
 		)))
     );
 
+    this->helperpath_tmpitem = NULL;
     this->cursor_drag = false;
     this->show_transform_handles = true;
     this->single_node_transform_handles = false;
@@ -278,6 +283,44 @@ void NodeTool::setup() {
     }
 
     this->desktop->emitToolSubselectionChanged(NULL); // sets the coord entry fields to inactive
+    this->update_helperpath();
+}
+
+// show helper paths of the applied LPE, if any
+void  NodeTool::update_helperpath () {
+    Inkscape::Selection *selection = sp_desktop_selection (this->desktop);
+
+    if (this->helperpath_tmpitem) {
+        this->desktop->remove_temporary_canvasitem(this->helperpath_tmpitem);
+        this->helperpath_tmpitem = NULL;
+    }
+
+    if (SP_IS_LPE_ITEM(selection->singleItem())) {
+        Inkscape::LivePathEffect::Effect *lpe = SP_LPE_ITEM(selection->singleItem())->getCurrentLPE();
+        if (lpe && lpe->isVisible()/* && lpe->showOrigPath()*/) {
+            if (lpe) {
+                SPCurve *c = new SPCurve();
+                SPCurve *cc = new SPCurve();
+                std::vector<Geom::PathVector> cs = lpe->getCanvasIndicators(SP_LPE_ITEM(selection->singleItem()));
+                for (std::vector<Geom::PathVector>::iterator p = cs.begin(); p != cs.end(); ++p) {
+                    cc->set_pathvector(*p);
+                    c->append(cc, false);
+                    cc->reset();
+                }
+                if (!c->is_empty()) {
+                    c->transform(selection->singleItem()->i2dt_affine());
+                    SPCanvasItem *helperpath = sp_canvas_bpath_new(sp_desktop_tempgroup(this->desktop), c);
+                    sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(helperpath),
+                        0x0000ff9A, 1.0,
+                        SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
+                    sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(helperpath), 0, SP_WIND_RULE_NONZERO);
+                    this->helperpath_tmpitem = this->desktop->add_temporary_canvasitem(helperpath,0);
+                }
+                c->unref();
+                cc->unref();
+           }
+        }
+    }
 }
 
 void NodeTool::set(const Inkscape::Preferences::Entry& value) {
@@ -392,7 +435,7 @@ void NodeTool::selection_changed(Inkscape::Selection *sel) {
     for (std::set<ShapeRecord>::iterator i = shapes.begin(); i != shapes.end(); ++i) {
         ShapeRecord const &r = *i;
 
-        if ((SP_IS_SHAPE(r.item) || SP_IS_TEXT(r.item)) &&
+        if ((SP_IS_SHAPE(r.item) || SP_IS_TEXT(r.item) || SP_IS_GROUP(r.item) || SP_IS_OBJECTGROUP(r.item)) &&
             this->_shape_editors.find(r.item) == this->_shape_editors.end())
         {
             ShapeEditor *si = new ShapeEditor(this->desktop);
@@ -432,6 +475,7 @@ bool NodeTool::root_handler(GdkEvent* event) {
     switch (event->type)
     {
     case GDK_MOTION_NOTIFY: {
+	this->update_helperpath();
         combine_motion_events(desktop->canvas, event->motion, 0);
         SPItem *over_item = sp_event_context_find_item (desktop, event_point(event->button),
                 FALSE, TRUE);
