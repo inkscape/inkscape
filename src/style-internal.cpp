@@ -1395,7 +1395,8 @@ const Glib::ustring SPIFilter::write( guint const flags, SPIBase const *const /*
     // TODO: fix base
     //SPILength const *const my_base = dynamic_cast<const SPILength*>(base);
     if ( (flags & SP_STYLE_FLAG_ALWAYS) ||
-         ((flags & SP_STYLE_FLAG_IFSET) && this->set))
+         ((flags & SP_STYLE_FLAG_IFSET) && this->set) ||
+         ((flags & SP_STYLE_FLAG_IFDIFF) && this->set))
     {
         if (this->inherit) {
             return (name + ":inherit;");
