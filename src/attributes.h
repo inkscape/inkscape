@@ -441,7 +441,7 @@ enum SPAttributeEnum {
     SP_PROP_DISPLAY,
     SP_PROP_OVERFLOW,
     SP_PROP_VISIBILITY,
-    SP_PROP_BLEND_MODE,
+    SP_PROP_MIX_BLEND_MODE,
     SP_PROP_ISOLATION,
     /* SVG */
     /* Clip/Mask */

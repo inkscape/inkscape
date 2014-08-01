@@ -602,7 +602,7 @@ void SPItem::update(SPCtx* /*ctx*/, guint flags) {
                 v->arenaitem->setOpacity(SP_SCALE24_TO_FLOAT(object->style->opacity.value));
                 v->arenaitem->setAntialiasing(object->style->shape_rendering.computed != SP_CSS_SHAPE_RENDERING_CRISPEDGES);
                 v->arenaitem->setIsolation( object->style->isolation.value );
-                v->arenaitem->setBlendMode( object->style->blend_mode.value );
+                v->arenaitem->setBlendMode( object->style->mix_blend_mode.value );
                 v->arenaitem->setVisible(!item->isHidden());
             }
         }
@@ -1028,7 +1028,7 @@ Inkscape::DrawingItem *SPItem::invoke_show(Inkscape::Drawing &drawing, unsigned 
         ai->setTransform(transform);
         ai->setOpacity(SP_SCALE24_TO_FLOAT(style->opacity.value));
         ai->setIsolation( style->isolation.value );
-        ai->setBlendMode( style->blend_mode.value );
+        ai->setBlendMode( style->mix_blend_mode.value );
         //ai->setCompositeOperator( style->composite_op.value );
         ai->setVisible(!isHidden());
         ai->setSensitive(sensitive);

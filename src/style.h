@@ -168,8 +168,7 @@ public:
 
     /** mix-blend-mode:  CSS Compositing and Blending Level 1 */
     SPIEnum isolation;
-    // Could be shared with Filter blending mode
-    SPIEnum blend_mode;
+    SPIEnum mix_blend_mode;
 
     SPIPaintOrder paint_order;
 

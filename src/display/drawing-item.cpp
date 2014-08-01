@@ -127,7 +127,7 @@ DrawingItem::DrawingItem(Drawing &drawing)
     , _pick_children(0)
     , _antialias(1)
     , _isolation(SP_CSS_ISOLATION_AUTO)
-    , _blend_mode(SP_CSS_BLEND_NORMAL)
+    , _mix_blend_mode(SP_CSS_BLEND_NORMAL)
 {}
 
 DrawingItem::~DrawingItem()
@@ -291,10 +291,10 @@ DrawingItem::setIsolation(unsigned isolation)
 }
 
 void
-DrawingItem::setBlendMode(unsigned blend_mode)
+DrawingItem::setBlendMode(unsigned mix_blend_mode)
 {
-    _blend_mode = blend_mode;
-    //if( blend_mode != 0 ) std::cout << "setBlendMode: " << blend_mode << std::endl;
+    _mix_blend_mode = mix_blend_mode;
+    //if( mix_blend_mode != 0 ) std::cout << "setBlendMode: " << mix_blend_mode << std::endl;
     _markForRendering();
 }
 
@@ -592,7 +592,7 @@ DrawingItem::render(DrawingContext &dc, Geom::IntRect const &area, unsigned flag
     if (_cached) {
         if (_cache) {
             _cache->prepare();
-            set_cairo_blend_operator( dc, _blend_mode );
+            set_cairo_blend_operator( dc, _mix_blend_mode );
 
             _cache->paintFromCache(dc, carea);
             if (!carea) return RENDER_OK;
@@ -622,7 +622,7 @@ DrawingItem::render(DrawingContext &dc, Geom::IntRect const &area, unsigned flag
     nir |= (_filter != NULL && render_filters); // 3. it has a filter
     nir |= needs_opacity; // 4. it is non-opaque
     nir |= (_cache != NULL); // 5. it is cached
-    nir |= (_blend_mode != SP_CSS_BLEND_NORMAL); // 6. Blend mode not normal
+    nir |= (_mix_blend_mode != SP_CSS_BLEND_NORMAL); // 6. Blend mode not normal
     nir |= (_isolation == SP_CSS_ISOLATION_ISOLATE); // 7. Explicit isolatiom
 
     /* How the rendering is done.
@@ -735,7 +735,7 @@ DrawingItem::render(DrawingContext &dc, Geom::IntRect const &area, unsigned flag
     }
     dc.rectangle(*carea);
     dc.setSource(&intermediate);
-    set_cairo_blend_operator( dc, _blend_mode );
+    set_cairo_blend_operator( dc, _mix_blend_mode );
     dc.fill();
     dc.setSource(0,0,0,0);
     // the call above is to clear a ref on the intermediate surface held by dc

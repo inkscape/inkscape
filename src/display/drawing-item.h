@@ -209,7 +209,7 @@ protected:
     unsigned _antialias : 1; ///< Whether to use antialiasing
 
     unsigned _isolation : 1;
-    unsigned _blend_mode : 4;
+    unsigned _mix_blend_mode : 4;
 
     friend class Drawing;
 };

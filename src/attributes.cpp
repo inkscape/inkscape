@@ -440,7 +440,7 @@ static SPStyleProp const props[] = {
     {SP_PROP_DISPLAY, "display"},
     {SP_PROP_OVERFLOW, "overflow"},
     {SP_PROP_VISIBILITY, "visibility"},
-    {SP_PROP_BLEND_MODE, "mix-blend-mode"}, // CSS Blending and Compositing
+    {SP_PROP_MIX_BLEND_MODE, "mix-blend-mode"}, // CSS Blending and Compositing
     {SP_PROP_ISOLATION, "isolation"},
     /* SVG */
     /* Clip/Mask */
