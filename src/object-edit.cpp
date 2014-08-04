@@ -79,8 +79,8 @@ KnotHolder *createKnotHolder(SPItem *item, SPDesktop *desktop)
         knotholder = new OffsetKnotHolder(desktop, item, NULL);
     } else if (SP_IS_FLOWTEXT(item) && SP_FLOWTEXT(item)->has_internal_frame()) {
         knotholder = new FlowtextKnotHolder(desktop, SP_FLOWTEXT(item)->get_frame(NULL), NULL);
-    } else if ((item->style->fill.isPaintserver())
-               && SP_IS_PATTERN(item->style->getFillPaintServer())) {
+    } else if ((item->style->fill.isPaintserver() && SP_IS_PATTERN(item->style->getFillPaintServer())) ||
+               (item->style->stroke.isPaintserver() && SP_IS_PATTERN(item->style->getStrokePaintServer()))) {
         knotholder = new KnotHolder(desktop, item, NULL);
         knotholder->add_pattern_knotholder();
     }

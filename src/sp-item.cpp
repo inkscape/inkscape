@@ -1109,9 +1109,10 @@ void SPItem::invoke_hide(unsigned key)
 
 // Adjusters
 
-void SPItem::adjust_pattern (Geom::Affine const &postmul, bool set)
+void SPItem::adjust_pattern(Geom::Affine const &postmul, bool set, PatternTransform pt)
 {
-    if (style && (style->fill.isPaintserver())) {
+    bool fill = (pt == TRANSFORM_FILL || pt == TRANSFORM_BOTH);
+    if (fill && style && (style->fill.isPaintserver())) {
         SPObject *server = style->getFillPaintServer();
         if ( SP_IS_PATTERN(server) ) {
             SPPattern *pattern = sp_pattern_clone_if_necessary(this, SP_PATTERN(server), "fill");
@@ -1119,7 +1120,8 @@ void SPItem::adjust_pattern (Geom::Affine const &postmul, bool set)
         }
     }
 
-    if (style && (style->stroke.isPaintserver())) {
+    bool stroke = (pt == TRANSFORM_STROKE || pt == TRANSFORM_BOTH);
+    if (stroke && style && (style->stroke.isPaintserver())) {
         SPObject *server = style->getStrokePaintServer();
         if ( SP_IS_PATTERN(server) ) {
             SPPattern *pattern = sp_pattern_clone_if_necessary(this, SP_PATTERN(server), "stroke");

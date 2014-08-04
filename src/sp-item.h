@@ -51,6 +51,13 @@ enum {
     SP_EVENT_MOUSEOUT
 };
 
+// TODO fix this
+enum PatternTransform {
+    TRANSFORM_BOTH,
+    TRANSFORM_FILL,
+    TRANSFORM_STROKE
+};
+
 /**
  * Event structure.
  *
@@ -199,7 +206,7 @@ public:
     Inkscape::DrawingItem *invoke_show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
     void invoke_hide(unsigned int key);
     void getSnappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs=0) const;
-    void adjust_pattern(/* Geom::Affine const &premul, */ Geom::Affine const &postmul, bool set = false);
+    void adjust_pattern(/* Geom::Affine const &premul, */ Geom::Affine const &postmul, bool set = false, PatternTransform = TRANSFORM_BOTH);
     void adjust_gradient(/* Geom::Affine const &premul, */ Geom::Affine const &postmul, bool set = false);
     void adjust_stroke(gdouble ex);
     void adjust_stroke_width_recursive(gdouble ex);

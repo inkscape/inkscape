@@ -101,20 +101,30 @@ protected:
 
 class PatternKnotHolderEntityXY : public KnotHolderEntity {
 public:
+    PatternKnotHolderEntityXY(bool fill) : KnotHolderEntity(), _fill(fill) {}
     virtual Geom::Point knot_get() const;
     virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
+private:
+    // true if the entity tracks fill, false for stroke 
+    bool _fill;
 };
 
 class PatternKnotHolderEntityAngle : public KnotHolderEntity {
 public:
+    PatternKnotHolderEntityAngle(bool fill) : KnotHolderEntity(), _fill(fill) {}
     virtual Geom::Point knot_get() const;
     virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
+private:
+    bool _fill;
 };
 
 class PatternKnotHolderEntityScale : public KnotHolderEntity {
 public:
+    PatternKnotHolderEntityScale(bool fill) : KnotHolderEntity(), _fill(fill) {}
     virtual Geom::Point knot_get() const;
     virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
+private:
+    bool _fill;
 };
 
 #endif /* !SEEN_KNOT_HOLDER_ENTITY_H */

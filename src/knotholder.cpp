@@ -247,12 +247,32 @@ void KnotHolder::add(KnotHolderEntity *e)
 
 void KnotHolder::add_pattern_knotholder()
 {
-    if ((item->style->fill.isPaintserver())
-        && SP_IS_PATTERN(item->style->getFillPaintServer()))
-    {
-        PatternKnotHolderEntityXY *entity_xy = new PatternKnotHolderEntityXY();
-        PatternKnotHolderEntityAngle *entity_angle = new PatternKnotHolderEntityAngle();
-        PatternKnotHolderEntityScale *entity_scale = new PatternKnotHolderEntityScale();
+    if ((item->style->fill.isPaintserver()) && SP_IS_PATTERN(item->style->getFillPaintServer())) {
+        PatternKnotHolderEntityXY *entity_xy = new PatternKnotHolderEntityXY(true);
+        PatternKnotHolderEntityAngle *entity_angle = new PatternKnotHolderEntityAngle(true);
+        PatternKnotHolderEntityScale *entity_scale = new PatternKnotHolderEntityScale(true);
+        entity_xy->create(desktop, item, this, Inkscape::CTRL_TYPE_POINT,
+                          // TRANSLATORS: This refers to the pattern that's inside the object
+                          _("<b>Move</b> the pattern fill inside the object"),
+                          SP_KNOT_SHAPE_CROSS);
+
+        entity_scale->create(desktop, item, this, Inkscape::CTRL_TYPE_SIZER,
+                             _("<b>Scale</b> the pattern fill; uniformly if with <b>Ctrl</b>"),
+                             SP_KNOT_SHAPE_SQUARE, SP_KNOT_MODE_XOR);
+
+        entity_angle->create(desktop, item, this, Inkscape::CTRL_TYPE_ROTATE,
+                             _("<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"),
+                             SP_KNOT_SHAPE_CIRCLE, SP_KNOT_MODE_XOR);
+
+        entity.push_back(entity_xy);
+        entity.push_back(entity_angle);
+        entity.push_back(entity_scale);
+    }
+
+    if ((item->style->stroke.isPaintserver()) && SP_IS_PATTERN(item->style->getStrokePaintServer())) {
+        PatternKnotHolderEntityXY *entity_xy = new PatternKnotHolderEntityXY(false);
+        PatternKnotHolderEntityAngle *entity_angle = new PatternKnotHolderEntityAngle(false);
+        PatternKnotHolderEntityScale *entity_scale = new PatternKnotHolderEntityScale(false);
         entity_xy->create(desktop, item, this, Inkscape::CTRL_TYPE_POINT,
                           // TRANSLATORS: This refers to the pattern that's inside the object
                           _("<b>Move</b> the pattern fill inside the object"),
