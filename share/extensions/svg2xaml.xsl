@@ -134,10 +134,10 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
           <Canvas.RenderTransform>
             <TranslateTransform>
               <xsl:attribute name="X">
-                <xsl:value-of select="-number(substring-before($viewBox, ' '))" />
+                <xsl:value-of select="format-number(-number(substring-before($viewBox, ' ')), '#.#')" />
               </xsl:attribute>
               <xsl:attribute name="Y">
-                <xsl:value-of select="-number(substring-before(substring-after($viewBox, ' '), ' '))" />
+                <xsl:value-of select="format-number(-number(substring-before(substring-after($viewBox, ' '), ' ')), '#.#')" />
               </xsl:attribute>
             </TranslateTransform>
           </Canvas.RenderTransform>
