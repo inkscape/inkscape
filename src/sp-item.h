@@ -51,7 +51,8 @@ enum {
     SP_EVENT_MOUSEOUT
 };
 
-// TODO fix this
+// TODO make a completely new function that transforms either the fill or
+// stroke of any SPItem  without adding an extra parameter to adjust_pattern.
 enum PatternTransform {
     TRANSFORM_BOTH,
     TRANSFORM_FILL,
