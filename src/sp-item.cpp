@@ -778,6 +778,7 @@ Geom::OptRect SPItem::visualBounds(Geom::Affine const &transform) const
     	bbox = const_cast<SPItem*>(this)->bbox(transform, SPItem::VISUAL_BBOX);
     }
     if (clip_ref->getObject()) {
+        SP_ITEM(clip_ref->getOwner())->bbox_valid = FALSE;  // LP Bug 1349018
         bbox.intersectWith(SP_CLIPPATH(clip_ref->getObject())->geometricBounds(transform));
     }
 
