@@ -128,7 +128,7 @@ private:
     void _arcTo(double rx, double ry, double angle,
                 bool large_arc, bool sweep, Point p)
     {
-        if (_current == p) {
+        if (are_near(_current, p)) {
             return;
         }
         _quad_tangent = _cubic_tangent = _current = p;
