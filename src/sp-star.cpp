@@ -513,9 +513,8 @@ void SPStar::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::
     }
 }
 
-Geom::Affine SPStar::set_transform(Geom::Affine const &tform)
+Geom::Affine SPStar::set_transform(Geom::Affine const &xform)
 {
-    Geom::Affine xform = (randomized == 0 ? tform.withoutTranslation() : tform);
     // Only set transform with proportional scaling
     if (!xform.isUniformScale()) {
         return xform;
@@ -527,7 +526,7 @@ Geom::Affine SPStar::set_transform(Geom::Affine const &tform)
     }
 
     /* Calculate star start in parent coords. */
-    Geom::Point pos( this->center * tform );
+    Geom::Point pos( this->center * xform );
 
     /* This function takes care of translation and scaling, we return whatever parts we can't
        handle. */
