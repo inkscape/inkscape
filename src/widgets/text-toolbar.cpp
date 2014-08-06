@@ -31,7 +31,6 @@
 #include "libnrtype/font-lister.h"
 #include <glibmm/i18n.h>
 #include "text-toolbar.h"
-#include "connection-pool.h"
 #include "desktop-handles.h"
 #include "desktop-style.h"
 #include "desktop.h"
@@ -54,6 +53,7 @@
 #include "toolbox.h"
 #include "ui/icon-names.h"
 #include "ui/tools/text-tool.h"
+#include "ui/tools/tool-base.h"
 #include "verbs.h"
 #include "xml/repr.h"
 
@@ -1200,6 +1200,7 @@ static void sp_text_toolbox_select_cb( GtkEntry* entry, GtkEntryIconPosition /*p
   selection->setList(selectList);
 }
 
+static void text_toolbox_watch_ec(SPDesktop* dt, Inkscape::UI::Tools::ToolBase* ec, GObject* holder);
 
 // Define all the "widgets" in the toolbar.
 void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
@@ -1622,31 +1623,35 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
     // Is this necessary to call? Shouldn't hurt.
     sp_text_toolbox_selection_changed(sp_desktop_selection(desktop), holder);
 
-    // Watch selection
-    Inkscape::ConnectionPool* pool = Inkscape::ConnectionPool::new_connection_pool ("ISTextToolboxGTK");
-
-    sigc::connection *c_selection_changed =
-        new sigc::connection (sp_desktop_selection (desktop)->connectChanged
-                              (sigc::bind (sigc::ptr_fun (sp_text_toolbox_selection_changed), holder)));
-    pool->add_connection ("selection-changed", c_selection_changed);
-
-    sigc::connection *c_selection_modified =
-        new sigc::connection (sp_desktop_selection (desktop)->connectModified
-                              (sigc::bind (sigc::ptr_fun (sp_text_toolbox_selection_modified), holder)));
-    pool->add_connection ("selection-modified", c_selection_modified);
-
-    sigc::connection *c_subselection_changed =
-        new sigc::connection (desktop->connectToolSubselectionChanged
-                              (sigc::bind (sigc::ptr_fun (sp_text_toolbox_subselection_changed), holder)));
-    pool->add_connection ("tool-subselection-changed", c_subselection_changed);
-
-    Inkscape::ConnectionPool::connect_destroy (G_OBJECT (holder), pool);
+    desktop->connectEventContextChanged(sigc::bind(sigc::ptr_fun(text_toolbox_watch_ec), holder));
 
     g_signal_connect( holder, "destroy", G_CALLBACK(purge_repr_listener), holder );
 
 }
 
+static void text_toolbox_watch_ec(SPDesktop* desktop, Inkscape::UI::Tools::ToolBase* ec, GObject* holder) {
+    using sigc::connection;
+    using sigc::bind;
+    using sigc::ptr_fun;
 
+    static connection c_selection_changed;
+    static connection c_selection_modified;
+    static connection c_subselection_changed;
+
+    if (SP_IS_TEXT_CONTEXT(ec)) {
+        // Watch selection
+        c_selection_changed = sp_desktop_selection(desktop)->connectChanged(bind(ptr_fun(sp_text_toolbox_selection_changed), holder));
+        c_selection_modified = sp_desktop_selection (desktop)->connectModified(bind(ptr_fun(sp_text_toolbox_selection_modified), holder));
+        c_subselection_changed = desktop->connectToolSubselectionChanged(bind(ptr_fun(sp_text_toolbox_subselection_changed), holder));
+    } else {
+        if (c_selection_changed)
+            c_selection_changed.disconnect();
+        if (c_selection_modified)
+            c_selection_modified.disconnect();
+        if (c_subselection_changed)
+            c_subselection_changed.disconnect();
+    }
+}
 /*
   Local Variables:
   mode:c++
