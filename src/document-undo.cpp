@@ -255,6 +255,7 @@ gboolean Inkscape::DocumentUndo::undo(SPDocument *doc)
 		Inkscape::Event *log=(Inkscape::Event *)doc->priv->undo->data;
 		doc->priv->undo = g_slist_remove (doc->priv->undo, log);
 		sp_repr_undo_log (log->event);
+                doc->_updateDocument();
 		doc->priv->redo = g_slist_prepend (doc->priv->redo, log);
 
                 doc->setModifiedSinceSave();
