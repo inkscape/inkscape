@@ -1033,6 +1033,7 @@ void XmlTree::cmd_set_attr()
         updated->updateRepr();
     }
 
+    reinterpret_cast<SPObject *>(current_desktop->currentLayer())->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
     DocumentUndo::done(current_document, SP_VERB_DIALOG_XML_EDITOR,
                        _("Change attribute"));
 
