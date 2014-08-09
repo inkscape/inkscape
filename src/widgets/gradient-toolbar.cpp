@@ -448,11 +448,6 @@ static void gr_defs_modified(SPObject * /*defs*/, guint /*flags*/, GtkWidget *wi
     gr_tb_selection_changed(NULL, (gpointer) widget);
 }
 
-static void gr_disconnect_sigc(GObject * /*obj*/, sigc::connection *connection) {
-    connection->disconnect();
-    delete connection;
-}
-
 static SPStop *get_selected_stop( GtkWidget *vb)
 {
     SPStop *stop = NULL;
@@ -1018,6 +1013,9 @@ void check_renderer(GtkWidget *combo)
         g_object_set_data(G_OBJECT(combo), "renderers", renderer);
     }
 }
+
+static void gradient_toolbox_check_ec(SPDesktop* dt, Inkscape::UI::Tools::ToolBase* ec, GObject* holder);
+
 /**
  * Gradient auxiliary toolbar construction and setup.
  *
@@ -1229,34 +1227,51 @@ void sp_gradient_toolbox_prep(SPDesktop * desktop, GtkActionGroup* mainActions, 
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(itact), !linkedmode );
     }
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
-    SPDocument *document = sp_desktop_document(desktop);
-
     g_object_set_data(holder, "desktop", desktop);
 
-    // connect to selection modified and changed signals
-    sigc::connection *conn1 = new sigc::connection(
-            selection->connectChanged(sigc::bind(sigc::ptr_fun(&gr_tb_selection_changed), (gpointer) holder)));
-    sigc::connection *conn2 = new sigc::connection(
-            selection->connectModified(sigc::bind(sigc::ptr_fun(&gr_tb_selection_modified), (gpointer) holder)));
-    sigc::connection *conn3 = new sigc::connection(
-            desktop->connectToolSubselectionChanged( sigc::bind(sigc::ptr_fun(&gr_drag_selection_changed), (gpointer) holder)));
+    desktop->connectEventContextChanged(sigc::bind(sigc::ptr_fun(&gradient_toolbox_check_ec), holder));
+}
 
-    // when holder is destroyed, disconnect
-    g_signal_connect(G_OBJECT(holder), "destroy", G_CALLBACK(gr_disconnect_sigc), conn1);
-    g_signal_connect(G_OBJECT(holder), "destroy", G_CALLBACK(gr_disconnect_sigc), conn2);
-    g_signal_connect(G_OBJECT(holder), "destroy", G_CALLBACK(gr_disconnect_sigc), conn3);
+// lp:1327267
+/**
+ * Checks the current tool and connects gradient aux toolbox signals if it happens to be the gradient tool.
+ * Called every time the current tool changes by signal emission.
+ */
+static void gradient_toolbox_check_ec(SPDesktop* desktop, Inkscape::UI::Tools::ToolBase* ec, GObject* holder)
+{
+    static sigc::connection connChanged;
+    static sigc::connection connModified;
+    static sigc::connection connSubselectionChanged;
+    static sigc::connection connDefsRelease;
+    static sigc::connection connDefsModified;
 
-     // connect to release and modified signals of the defs (i.e. when someone changes gradient)
-    sigc::connection *release_connection = new sigc::connection();
-            *release_connection = document->getDefs()->connectRelease(sigc::bind<1>(sigc::ptr_fun(&gr_defs_release), GTK_WIDGET(holder)));
-    sigc::connection *modified_connection = new sigc::connection();
-            *modified_connection = document->getDefs()->connectModified(sigc::bind<2>(sigc::ptr_fun(&gr_defs_modified), GTK_WIDGET(holder)));
+    if (SP_IS_GRADIENT_CONTEXT(ec)) {
+        Inkscape::Selection *selection = sp_desktop_selection(desktop);
+        SPDocument *document = sp_desktop_document(desktop);
 
-    // when holder is destroyed, disconnect
-    g_signal_connect(G_OBJECT(holder), "destroy", G_CALLBACK(gr_disconnect_sigc), release_connection);
-    g_signal_connect(G_OBJECT(holder), "destroy", G_CALLBACK(gr_disconnect_sigc), modified_connection);
+        // connect to selection modified and changed signals
+        connChanged = selection->connectChanged(sigc::bind(sigc::ptr_fun(&gr_tb_selection_changed), holder));
+        connModified = selection->connectModified(sigc::bind(sigc::ptr_fun(&gr_tb_selection_modified), holder));
+        connSubselectionChanged = desktop->connectToolSubselectionChanged(sigc::bind(sigc::ptr_fun(&gr_drag_selection_changed), holder));
 
+        // Is this necessary? Couldn't hurt.
+        gr_tb_selection_changed(selection, holder);
+
+        // connect to release and modified signals of the defs (i.e. when someone changes gradient)
+        connDefsRelease = document->getDefs()->connectRelease(sigc::bind<1>(sigc::ptr_fun(&gr_defs_release), GTK_WIDGET(holder)));
+        connDefsModified = document->getDefs()->connectModified(sigc::bind<2>(sigc::ptr_fun(&gr_defs_modified), GTK_WIDGET(holder)));
+    } else {
+        if (connChanged)
+            connChanged.disconnect();
+        if (connModified)
+            connModified.disconnect();
+        if (connSubselectionChanged)
+            connSubselectionChanged.disconnect();
+        if (connDefsRelease)
+            connDefsRelease.disconnect();
+        if (connDefsModified)
+            connDefsModified.disconnect();
+    }
 }
 
 /*
