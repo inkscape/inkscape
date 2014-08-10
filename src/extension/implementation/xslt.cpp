@@ -20,6 +20,7 @@
 #include "xslt.h"
 #include "../extension.h"
 #include "../output.h"
+#include "extension/input.h"
 
 #include "xml/repr.h"
 #include "io/sys.h"
@@ -53,8 +54,7 @@ XSLT::XSLT(void) :
 {
 }
 
-Glib::ustring
-XSLT::solve_reldir(Inkscape::XML::Node *reprin) {
+Glib::ustring XSLT::solve_reldir(Inkscape::XML::Node *reprin) {
 
     gchar const *s = reprin->attribute("reldir");
 
@@ -90,8 +90,7 @@ XSLT::solve_reldir(Inkscape::XML::Node *reprin) {
     return "";
 }
 
-bool
-XSLT::check(Inkscape::Extension::Extension *module)
+bool XSLT::check(Inkscape::Extension::Extension *module)
 {
     if (load(module)) {
         unload(module);
@@ -101,8 +100,7 @@ XSLT::check(Inkscape::Extension::Extension *module)
     }
 }
 
-bool
-XSLT::load(Inkscape::Extension::Extension *module)
+bool XSLT::load(Inkscape::Extension::Extension *module)
 {
     if (module->loaded()) { return true; }
 
@@ -130,8 +128,7 @@ XSLT::load(Inkscape::Extension::Extension *module)
     return true;
 }
 
-void
-XSLT::unload(Inkscape::Extension::Extension *module)
+void XSLT::unload(Inkscape::Extension::Extension *module)
 {
     if (!module->loaded()) { return; }
     xsltFreeStylesheet(_stylesheet);
@@ -139,8 +136,8 @@ XSLT::unload(Inkscape::Extension::Extension *module)
     return;
 }
 
-SPDocument *
-XSLT::open(Inkscape::Extension::Input */*module*/, gchar const *filename)
+SPDocument * XSLT::open(Inkscape::Extension::Input */*module*/,
+                        gchar const *filename)
 {
     xmlDocPtr filein = xmlParseFile(filename);
     if (filein == NULL) { return NULL; }
@@ -184,8 +181,7 @@ XSLT::open(Inkscape::Extension::Input */*module*/, gchar const *filename)
     return doc;
 }
 
-void
-XSLT::save(Inkscape::Extension::Output */*module*/, SPDocument *doc, gchar const *filename)
+void XSLT::save(Inkscape::Extension::Output *module, SPDocument *doc, gchar const *filename)
 {
     /* TODO: Should we assume filename to be in utf8 or to be a raw filename?
      * See JavaFXOutput::save for discussion. */
@@ -214,10 +210,24 @@ XSLT::save(Inkscape::Extension::Output */*module*/, SPDocument *doc, gchar const
         return;
     }
 
-    const char * params[1];
-    params[0] = NULL;
+    std::list<std::string> params;
+    module->paramListString(params);
+    const int max_parameters = params.size() * 2;
+    const char * xslt_params[max_parameters+1] ;
 
-    xmlDocPtr newdoc = xsltApplyStylesheet(_stylesheet, svgdoc, params);
+    int count = 0;
+    for(std::list<std::string>::iterator t=params.begin(); t != params.end(); ++t) {
+        std::size_t pos = t->find("=");
+        std::ostringstream parameter;
+        std::ostringstream value;
+        parameter << t->substr(2,pos-2);
+        value << t->substr(pos+1);
+        xslt_params[count++] = g_strdup_printf("%s", parameter.str().c_str());
+        xslt_params[count++] = g_strdup_printf("'%s'", value.str().c_str());
+    }
+    xslt_params[count] = NULL;
+
+    xmlDocPtr newdoc = xsltApplyStylesheet(_stylesheet, svgdoc, xslt_params);
     //xmlSaveFile(filename, newdoc);
     int success = xsltSaveResultToFilename(filename, newdoc, _stylesheet, 0);
 

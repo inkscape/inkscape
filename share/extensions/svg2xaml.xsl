@@ -3,7 +3,7 @@
 <!--
 Copyright (c) 2005-2007 authors:
 Original version: Toine de Greef (a.degreef@chello.nl)
-Modified (2010-2011) by Nicolas Dufour (nicoduf@yahoo.fr) (blur support, units
+Modified (2010-2014) by Nicolas Dufour (nicoduf@yahoo.fr) (blur support, units
 convertion, comments, and some other fixes)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -39,7 +39,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
 <xsl:strip-space elements="*" />
 <xsl:output method="xml" encoding="UTF-8" indent="yes"/>
 
-<xsl:param name="silverlight_compatible" select="2" />
+<xsl:param name="silverlight_compatible" select="$silverlight" />
 
 <!-- 
   // Containers //
@@ -53,10 +53,16 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
 -->
 <xsl:template match="/">
   <xsl:choose>
-    <xsl:when test="$silverlight_compatible = 1">
+    <xsl:when test="$silverlight_compatible = 'true'">
+      <xsl:comment>
+        <xsl:value-of select="'This file is compatible with Silverlight'" />
+      </xsl:comment>
       <xsl:apply-templates mode="forward" />
     </xsl:when>
     <xsl:otherwise>
+      <xsl:comment>
+        <xsl:value-of select="'This file is NOT compatible with Silverlight'" />
+      </xsl:comment>
       <Viewbox Stretch="Uniform">
         <xsl:apply-templates mode="forward" />
       </Viewbox>
@@ -2650,7 +2656,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
     
     <xsl:if test="@d">
       <xsl:choose>
-        <xsl:when test="$silverlight_compatible = 1">
+        <xsl:when test="$silverlight_compatible = 'true'">
           <xsl:attribute name="Data">
             <xsl:value-of select="translate(@d , ',', ' ')" />
           </xsl:attribute>
