@@ -843,7 +843,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
 
 <!-- 
   // Unit to pixel converter //
-  Values with units (except %) are converted to pixels and rounded.
+  Values with units (except %) are converted to pixels.
   Unknown units are kept.
   em, ex and % not implemented
 -->
@@ -851,28 +851,25 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
   <xsl:param name="convert_value" />
   <xsl:choose>
     <xsl:when test="contains($convert_value, 'px')">
-      <xsl:value-of select="round(translate($convert_value, 'px', ''))" />
+      <xsl:value-of select="translate($convert_value, 'px', '')" />
     </xsl:when>
     <xsl:when test="contains($convert_value, 'pt')">
-      <xsl:value-of select="round(translate($convert_value, 'pt', '') * 1.25)" />
+      <xsl:value-of select="translate($convert_value, 'pt', '') * 1.25" />
     </xsl:when>
     <xsl:when test="contains($convert_value, 'pc')">
-      <xsl:value-of select="round(translate($convert_value, 'pc', '') * 15)" />
+      <xsl:value-of select="translate($convert_value, 'pc', '') * 15" />
     </xsl:when>
     <xsl:when test="contains($convert_value, 'mm')">
-      <xsl:value-of select="round(translate($convert_value, 'mm', '') * 3.543307)" />
+      <xsl:value-of select="translate($convert_value, 'mm', '') * 3.543307" />
     </xsl:when>
     <xsl:when test="contains($convert_value, 'cm')">
-      <xsl:value-of select="round(translate($convert_value, 'cm', '') * 35.43307)" />
+      <xsl:value-of select="translate($convert_value, 'cm', '') * 35.43307" />
     </xsl:when>
     <xsl:when test="contains($convert_value, 'in')">
-      <xsl:value-of select="round(translate($convert_value, 'in', '') * 90)" />
+      <xsl:value-of select="translate($convert_value, 'in', '') * 90" />
     </xsl:when>
     <xsl:when test="contains($convert_value, 'ft')">
-      <xsl:value-of select="round(translate($convert_value, 'ft', '') * 1080)" />
-    </xsl:when>
-    <xsl:when test="not(string(number($convert_value))='NaN')">
-      <xsl:value-of select="round($convert_value)" />
+      <xsl:value-of select="translate($convert_value, 'ft', '') * 1080" />
     </xsl:when>
     <xsl:otherwise>
       <xsl:value-of select="$convert_value" />
