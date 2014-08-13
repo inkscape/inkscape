@@ -18,6 +18,7 @@
 #include <windows.h>
 #endif
 
+#include "preferences.h"
 #include "print.h"
 #include <gtkmm/stock.h>
 
@@ -44,14 +45,18 @@ static void draw_page(
                       gint               /*page_nr*/,
                       gpointer           user_data)
 {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     struct workaround_gtkmm *junk = (struct workaround_gtkmm*)user_data;
     //printf("%s %d\n",__FUNCTION__, page_nr);
 
     if (junk->_tab->as_bitmap()) {
         // Render as exported PNG
+        prefs->setBool("/dialogs/printing/asbitmap", true);
         gdouble width = (junk->_doc)->getWidth().value("px");
         gdouble height = (junk->_doc)->getHeight().value("px");
         gdouble dpi = junk->_tab->bitmap_dpi();
+        prefs->setDouble("/dialogs/printing/dpi", dpi);
+        
         std::string tmp_png;
         std::string tmp_base = "inkscape-print-png-XXXXXX";
 
@@ -92,7 +97,7 @@ static void draw_page(
                 cairo_get_matrix(cr, &m);
                 cairo_scale(cr, Inkscape::Util::Quantity::convert(1, "in", "pt") / dpi, Inkscape::Util::Quantity::convert(1, "in", "pt") / dpi);
                 // FIXME: why is the origin offset??
-                cairo_set_source_surface(cr, png->cobj(), -16.0, -16.0);
+                cairo_set_source_surface(cr, png->cobj(), 0, 0);
                 cairo_paint(cr);
                 cairo_set_matrix(cr, &m);
             }
@@ -106,6 +111,7 @@ static void draw_page(
     }
     else {
         // Render as vectors
+        prefs->setBool("/dialogs/printing/asbitmap", false);
         Inkscape::Extension::Internal::CairoRenderer renderer;
         Inkscape::Extension::Internal::CairoRenderContext *ctx = renderer.createContext();
 

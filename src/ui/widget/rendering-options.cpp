@@ -12,6 +12,7 @@
 # include <config.h>
 #endif
 
+#include "preferences.h"
 #include "rendering-options.h"
 #include "util/units.h"
 #include <glibmm/i18n.h>
@@ -38,6 +39,7 @@ RenderingOptions::RenderingOptions () :
             Glib::ustring(""), Glib::ustring(""),
             false)
 {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     // set up tooltips
     _radio_vector.set_tooltip_text(
                         _("Render using Cairo vector operations.  "
@@ -52,15 +54,21 @@ RenderingOptions::RenderingOptions () :
 
     set_border_width(2);
 
-    // default to vector operations
-    _radio_vector.set_active (true);
     Gtk::RadioButtonGroup group = _radio_vector.get_group ();
     _radio_bitmap.set_group (group);
     _radio_bitmap.signal_toggled().connect(sigc::mem_fun(*this, &RenderingOptions::_toggled));
-
+    
+    // default to vector operations
+    if (prefs->getBool("/dialogs/printing/asbitmap", false)) {
+        _radio_bitmap.set_active();
+    } else {
+        _radio_vector.set_active();
+    }
+    
     // configure default DPI
     _dpi.setRange(Inkscape::Util::Quantity::convert(1, "in", "pt"),2400.0);
-    _dpi.setValue(Inkscape::Util::Quantity::convert(1, "in", "pt"));
+    _dpi.setValue(prefs->getDouble("/dialogs/printing/dpi", 
+                                   Inkscape::Util::Quantity::convert(1, "in", "pt")));
     _dpi.setIncrements(1.0,10.0);
     _dpi.setDigits(0);
     _dpi.update();
