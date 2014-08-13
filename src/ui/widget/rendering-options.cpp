@@ -12,6 +12,8 @@
 # include <config.h>
 #endif
 
+#include <gtkmm.h>
+
 #include "preferences.h"
 #include "rendering-options.h"
 #include "util/units.h"

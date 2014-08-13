@@ -149,12 +149,7 @@ namespace Inkscape
                         update_font_list_recursive( SPObject *r, std::list<Glib::ustring> *l );
 
                     public:
-                        static Inkscape::FontLister*
-                        get_instance ()
-                        {
-                            static Inkscape::FontLister* instance = new Inkscape::FontLister(); 
-                            return instance;
-                        }
+                        static Inkscape::FontLister* get_instance ();
 
                         /** Takes a hand written font spec and returns a Pango generated one in
                          *  standard form.
