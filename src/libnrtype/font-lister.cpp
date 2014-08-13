@@ -268,12 +268,6 @@ namespace Inkscape
       font_list_store->thaw_notify();
     }
 
-Inkscape::FontLister* FontLister::get_instance ()
-{
-    static Inkscape::FontLister* instance = new Inkscape::FontLister(); 
-    return instance;
-}
-
     void
     FontLister::update_font_list_recursive( SPObject *r, std::list<Glib::ustring> *l ) {
 
