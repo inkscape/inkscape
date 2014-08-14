@@ -660,12 +660,6 @@ void SPGroup::scaleChildItemsRec(Geom::Scale const &sc, Geom::Point const &p)
                         Geom::Translate const s(p);
                         Geom::Affine final = s.inverse() * sc * s;
                         
-                        Geom::Point old_center(0,0);
-                        if (item->isCenterSet()) {
-                            item->scaleCenter(sc.inverse()); // Convert the old relative center position to the new coordinates already now
-                            old_center = item->getCenter(); // because getCenter() will use the bbox midpoint, which is also already in the new coordinates
-                        }
-                        
                         gchar const *conn_type = NULL;
                         if (SP_IS_TEXT_TEXTPATH(item)) {
                             SP_TEXT(item)->optimizeTextpathText();
@@ -710,7 +704,7 @@ void SPGroup::scaleChildItemsRec(Geom::Scale const &sc, Geom::Point const &p)
                         }
                         
                         if (item->isCenterSet() && !(final.isTranslation() || final.isIdentity())) {
-                            item->setCenter(old_center * final);
+                            item->scaleCenter(sc); // All coordinates have been scaled, so also the center must be scaled
                             item->updateRepr();
                         }
                     }
