@@ -49,7 +49,7 @@ public:
 
     virtual bool param_readSVGValue(const gchar * strvalue) = 0;   // returns true if new value is valid / accepted.
     virtual gchar * param_getSVGValue() const = 0;
-    void write_to_SVG() { param_write_to_repr(param_getSVGValue()); }
+    void write_to_SVG();
  
     virtual void param_set_default() = 0;
 

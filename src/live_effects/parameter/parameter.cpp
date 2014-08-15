@@ -36,11 +36,17 @@ Parameter::Parameter( const Glib::ustring& label, const Glib::ustring& tip,
 {
 }
 
-
 void
 Parameter::param_write_to_repr(const char * svgd)
 {
     param_effect->getRepr()->setAttribute(param_key.c_str(), svgd);
+}
+
+void Parameter::write_to_SVG(void)
+{
+    gchar * str = param_getSVGValue();
+    param_write_to_repr(str);
+    g_free(str);
 }
 
 /*###########################################
