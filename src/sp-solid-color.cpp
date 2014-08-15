@@ -72,7 +72,7 @@ Inkscape::XML::Node* SPSolidColor::write(Inkscape::XML::Document* xml_doc, Inksc
     return repr;
 }
 
-cairo_pattern_t* SPSolidColor::pattern_new(cairo_t * /*ct*/, Geom::OptRect const &bbox, double opacity) {
+cairo_pattern_t* SPSolidColor::pattern_new(cairo_t * /*ct*/, Geom::OptRect const & /*bbox*/, double opacity) {
 
     SPIColor *c = &(this->style->solid_color);
     cairo_pattern_t *cp = cairo_pattern_create_rgba ( c->value.color.v.c[0], c->value.color.v.c[1], c->value.color.v.c[2], SP_SCALE24_TO_FLOAT(this->style->solid_opacity.value) * opacity );
