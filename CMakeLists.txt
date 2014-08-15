@@ -13,7 +13,7 @@ set(CMAKE_BUILD_TYPE_INIT "Release")
 
 project(inkscape)
 
-set(INKSCAPE_VERSION 0.48+devel)
+set(INKSCAPE_VERSION 0.91pre2)
 set(PROJECT_NAME inkscape)
 set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
 

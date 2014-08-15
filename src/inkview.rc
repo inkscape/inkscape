@@ -3,8 +3,8 @@ APPLICATION_ICON    ICON          DISCARDABLE     "../inkscape.ico"
 1                   24            DISCARDABLE     "./inkview-manifest.xml"
 
 1 VERSIONINFO
-    FILEVERSION     0,48,0,9
-    PRODUCTVERSION  0,48,0,9
+    FILEVERSION     0,91pre2,0,0
+    PRODUCTVERSION  0,91pre2,0,0
 BEGIN
     BLOCK "StringFileInfo"
     BEGIN
@@ -13,11 +13,11 @@ BEGIN
             VALUE "Comments", "Published under the GNU GPL"
             VALUE "CompanyName", "inkscape.org"
             VALUE "FileDescription", "Inkview"
-            VALUE "FileVersion", "0.48+devel"
+            VALUE "FileVersion", "0.91pre2"
             VALUE "InternalName", "Inkview"
             VALUE "LegalCopyright", "© 2014 Inkscape"
             VALUE "ProductName", "Inkview"
-            VALUE "ProductVersion", "0.48+devel"
+            VALUE "ProductVersion", "0.91pre2"
         END
     END
     BLOCK "VarFileInfo"
