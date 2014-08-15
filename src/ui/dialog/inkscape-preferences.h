@@ -532,6 +532,7 @@ private:
     InkscapePreferences();
     InkscapePreferences(InkscapePreferences const &d);
     InkscapePreferences operator=(InkscapePreferences const &d);
+    bool _init;
 };
 
 } // namespace Dialog

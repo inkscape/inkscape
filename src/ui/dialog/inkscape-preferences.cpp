@@ -76,7 +76,8 @@ InkscapePreferences::InkscapePreferences()
     : UI::Widget::Panel ("", "/dialogs/preferences", SP_VERB_DIALOG_DISPLAY),
       _max_dialog_width(0),
       _max_dialog_height(0),
-      _current_page(0)
+      _current_page(0),
+      _init(true)
 {
     //get the width of a spinbutton
     Inkscape::UI::Widget::SpinButton* sb = new Inkscape::UI::Widget::SpinButton;
@@ -2000,6 +2001,7 @@ bool InkscapePreferences::PresentPage(const Gtk::TreeModel::iterator& iter)
     Gtk::TreeModel::Row row = *iter;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int desired_page = prefs->getInt("/dialogs/preferences/page", 0);
+    _init = false;
     if (desired_page == row[_page_list_columns._col_id])
     {
         if (desired_page >= PREFS_PAGE_TOOLS && desired_page <= PREFS_PAGE_TOOLS_CONNECTOR)
@@ -2049,7 +2051,9 @@ void InkscapePreferences::on_pagelist_selection_changed()
         Gtk::TreeModel::Row row = *iter;
         _current_page = row[_page_list_columns._col_page];
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->setInt("/dialogs/preferences/page", row[_page_list_columns._col_id]);
+        if (!_init) {
+            prefs->setInt("/dialogs/preferences/page", row[_page_list_columns._col_id]);
+        }
         _page_title.set_markup("<span size='large'><b>" + row[_page_list_columns._col_name] + "</b></span>");
         _page_frame.add(*_current_page);
         _current_page->show();
