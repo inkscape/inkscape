@@ -1,1 +1,522 @@
-Inkscape 0.48 pre-release.  More here later.
+649 lines
+Inkscape 0.91
+
+(not released yet - AnnouncePlanning091)
+
+Release highlights
+
+Released on «YYYY-MM-DD».
+
+  • Cairo rendering for display and PNG export
+  • OpenMP multithreading for all filters
+  • C++ code conversion
+  • Major improvements in the Text tool, typography extensions
+  • Measure tool
+  • Type design features
+  • Symbol library and support for Visio stencils
+  • Cross platform WMF and EMF import and export
+  • Improved support for Corel DRAW documents, Visio importer
+  • Support for real world document and page size units, e.g. millimeters
+  • Numerous usability improvements
+  • Native Windows 64-bit build Partha
+  • Native Mac OS X build? (Valerio Aimale?) Mailing List discussion
+  • See Notable bug fixes
+
+Rendering and performance
+
+Inkscape 0.91 includes a new renderer based on the Cairo library. This work was
+done mainly during Google Summer of Code 2010 and 2011 projects.
+
+  • Improved performance. The new renderer is significantly faster on most
+    drawings. Renderings of the most complex objects are automatically cached
+    to improve responsiveness during editing.
+  • OpenMP multithreading for filters. Filters use all available processor
+    cores for computation. This results in substantial speedups when editing
+    drawings containing large filtered objects on multi-core systems.
+  • Substantial memory savings. Inkscape now uses less memory when opening
+    complex drawings, in some cases using only 25% of the memory used by
+    Inkscape 0.48. Larger files can now be opened.
+  • Responsiveness improvements. The rendering of the SVG drawing is now
+    cached. This results in massive improvements in responsiveness of path
+    highlights, object selection / deselection, and path editing in delayed
+    update mode.
+  • Rendering bug fixes. Most of the rendering glitches in our bug tracker are
+    no longer present in Inkscape 0.91. The following things now render
+    correctly:
+      □ Pattern fills (no more gaps between tiles, regardless of
+        transformation)
+      □ Stroke of transformed objects in patterns
+      □ Patterns containing clipped objects
+      □ Nested clipping paths
+      □ Masked and clipped objects with large masks / clipping paths in Outline
+        view
+      □ Paths with wide strokes and long miters
+      □ Fonts
+
+Color display mode
+
+A grayscale display color mode has been added, that shows a preview of your
+drawing in grayscale. Shift+numpad5 toggles the color display mode between
+normal and grayscale.
+
+Tools
+
+Node tool
+
+The tool control bar for the Node Tool features a new dropdown to insert new
+nodes on the selected segments extreme values. For example, (as demonstrated in
+the image below) it is possible to add a new node at the highest point in a
+curve using Insert Node at Max Y
+
+Add nodes at max.gif
+
+Measurement tool
+
+The Measurement tool is a new feature for the artist to measure the elements in
+their drawing. To use the measurement tool, simply choose the tool, click
+anywhere on the drawing and drag the ruler out. The measurement tool will
+live-update with measurements of length and angles as you pass over objects in
+your drawing.
+
+Ruler.png
+
+Text tool
+
+  • Text size default unit is now points (pt) and is customizable
+    (px,pt,pc,mm,cm,in,em)
+  • Text toolbar shows full list of font style variants for that font
+  • Files with text in em units read correctly
+  • Font substitution warning dialog
+
+Gradients
+
+  • Gradient toolbar enhanced to select and modify gradient stops, invert,
+    repeat, and link gradients
+  • On-canvas gradient editing fixes: double clicking to create stops, correct
+    focus on select
+  • Gradients sortable by color, name and usage in Fill/Stroke
+  • Gradients can be renamed in Fill/Stroke
+
+Dialogs, etc.
+
+Arrange (was rows and columns)
+
+- NEW: renamed to 'Arrange' - NEW: polar arrangement (separate tab) <http://
+issuu.com/ddeclara/docs/inkscape_radial_arrangement>
+
+Align and Distribute
+
+  • The new updated Inkscape features a new set of buttons in the Align and
+    Distribute Dialog called Exchange position of selected objects. It adds the
+    ability to exchange the positions of the objects that the artist has
+    selected.
+      □ In the following example, three objects were selected, and their
+        positions were exchaged with each other (using this new feature)
+        according to their selection order.
+
+Swap-objects.gif
+
+  • 
+      □ There are also two other new buttons in the dialog that allow the
+        artist to exchange the selected objects based on the stacking (z-index)
+        order, or just exchange them clockwise based on the object's position
+        on the page.
+
+  • Keyboard shortcuts (Ctrl+Alt+Keypad numbers) for align operations
+
+Document Properties
+
+Optionally disable antialiasing (bug #170356, interface partially implemented)
+
+Find/Select
+
+  • It is now easier to select items which are not at the top of the Z-order:
+    use Alt+mouse wheel scroll to cycle through all items that are stacked on
+    top of each other at the location of the mouse pointer (use Shift+Alt+mouse
+    wheel scroll to add to the existing selection). At present, groups are not
+    honoured, i.e., only individual items within groups are considered.
+  • New Find/Replace dialog can operate on text or any attribute
+  • "Select Same" is a new feature that allows an artist to select objects that
+    have the same properties as the currently selected object. For example, you
+    could select an object that has a fill of blue. Then, using the new feature
+    select all other objects in the drawing with a fill set to that same shade
+    of blue.
+
+Selectsame.gif
+
+The new feature is a menu choice under Edit ▶︎ Select Same or as a Context menu
+if you right click on a selected object. Also there are other choices available
+to select same, including: matching both Fill and Stroke, matching just stroke,
+matching stroke style, or matching on object type.
+
+Fill and Stroke
+
+  • The Gradient view in the fill and stroke dialog now displays a list of all
+    the gradients in the document. The list displays the gradient, the gradient
+    name, and number of uses of that gradient in the document.
+
+Gradient-fill-stroke.png
+
+  • More compact Markers selectors
+
+Layers
+
+  • Drag and drop to reorder layers and create sublayers
+  • Show/Hide All layers options in context menu
+
+Symbols
+
+Inkscape has a new Symbols dialog. The dialog displays symbols from a symbol
+library. Inkscape 0.91 includes five example libraries: logic symbols, AIGA/DOT
+transportation symbols, map symbols, flow chart shapes and word balloons. The
+dialog will also create a pseudo-library of all existing symbols in the current
+Inkscape drawing. (A symbol is defined by an SVG <symbol> element.) Symbols can
+be dragged from the dialog onto the Inkscape canvas.
+
+Any document with symbols can serve as a source for a symbol library. Simply
+copy it to the symbols directory in your configuration directory (typically
+share/inkscape). If proper care is taken, symbols can be provided with default
+fill and stroke colors that later can be overridden by the user.
+
+Visio Stencil files (.vss) can also be used by dropping them in the same
+symbols directory. Results may not be as satisfactory as using SVG symbol
+libraries.
+
+See the Symbols Dialog Wiki page for more details.
+
+Text and Font
+
+  • NEW: lists fonts used in the current document at the top
+  • NEW: select all text objects with same font as current selection
+  • NEW (to be verified): support list with fallback fonts (CSS2)
+
+Transform
+
+  • Rotation of objects clockwise or counterclockwise
+
+Markers
+
+  • Markers now take objects color
+
+Trace Bitmap
+
+  • Trace bitmap preview updates live and is resizeable
+
+Live Path Effects
+
+An object's Live Path Effects are now forked upon object duplication.
+
+PowerStroke
+
+Here a list of the current state. Note that this is very much work in progress
+and anything can change. I think this is the most efficient place of keeping
+track how the powerstroke LPE works.
+
+  • Stroke knots are purple diamonds
+  • When first applied, 3 stroke knots are added: start, end, and somewhere in
+    the middle along the path
+  • Add nodes: Ctrl+click purple knot
+  • Delete nodes: Ctrl+Alt+click purple knot
+  • "sort points" reorders the stroke knots according to where they lie along
+    the path (where they are closest to the path), instead of keeping them in
+    original order.
+  • Start and end caps can be specified. The SVG cap types are available, as
+    well as an extra type, "Zero width", that is identical to adding a width
+    control knot at the start/end of the path with zero width.
+  • Join type can be specified. In addition to the SVG join types, there are
+    two new types:
+      □ Extrapolated: this extrapolates the contour of the stroked path to
+        obtain a more natural looking miter join.
+      □ Extrapolated arc: Mathematical explanation.
+      □ Spiro: rounds the join using a spiro curve (the rounded type rounds the
+        curve using an elliptical arc).
+
+example screenshot
+
+Clone Original
+
+The Clone original LPE ignores the path data of the path it has been applied
+to; instead, it copies the original-d path data, i.e. the path data before LPE
+calculation, from the path linked to by the Linked path parameter.
+
+The Clone original LPE is made to be used in conjunction with powerstroke.
+Powerstroke creates a path with a variable stroke, but this path can then not
+be filled (because the fill is used as the stroke). To fill a powerstroked
+path, one must create a second path (dummy path), apply the Clone original LPE
+and link it to the powerstroked path. Because this second path clones the
+original path data before the Powerstroke LPE, it can be used to fill the
+powerstroked path.
+
+To quickly create a dummy path and apply this effect, one can select the path
+to 'clone' and click the menu item Edit ▶︎ Clone ▶︎ Clone original path (LPE).
+
+Like for normal clones, pressing Shift+D, when the selected path has the Clone
+original LPE applied, selects the path referred to by the LPE.
+
+Another very useful ability of the Clone original LPE is to create a clone with
+a different style than its referred path. To facilitate this, the LPE dialog
+will add the Clone original LPE when a clone is selected and the "+" button is
+pressed.
+
+Filters
+
+The new Custom predefined filters allow users to create predefined filters with
+custom parameters. See SpecCustomPredefinedFilters.
+
+Trace Pixel Art (libdepixelize)
+
+A new library developed for Inkscape to automatically vectorize raster images
+specialized in Pixel Art was integrated in the form of the "Trace Pixel Art"
+dialog (menu item Path ▶︎ Trace Pixel Art...). Good and old general "Trace
+Bitmap" is still there. Check the supplementary material of the algorithm
+authors to see a preview of how the algorithm behaves.
+
+Other User Interface
+
+General
+
+  • Canvas background color can be set without exporting it (background
+    transparency is only used for export but not the canvas).
+
+
+Guides
+
+  • Guides visibility can be toggled by clicking the ruler
+  • Guides can now have labels, and the colour of individual guides can also be
+    set by the user. To label or colour a guide, double click on the guideline
+    to bring up the guide properties dialog.
+
+Labelled-guides.png
+
+
+Menu/Access
+
+  • The interface elements are accessible through the keyboard with ALT+key in
+    many more dialogs
+  • "Text and Font", "Fill and Stroke", and "Check Spelling" dialogs are added
+    to the text object context menu (right click)
+  • Menu items renamed:
+      □ Edit ▶︎ Preferences
+      □ Edit ▶︎ Input Devices
+      □ File ▶︎ Cleanup Document
+  • Checkboxes to indicated status of View ▶︎ Grid/Guides/Snap/Color Management
+  • Group/Ungroup from the context menu
+
+Preferences
+
+  • New keyboard shortcut editor
+  • Prefs ▶︎ Interface -- New option for dockbar and switcher style (icons,
+    text, icons & text) (bug #1098416)
+  • Prefs ▶︎ Interface ▶︎ Windows -- optionally don't save & restore documents
+    viewport (bug #928205)
+  • Prefs ▶︎ Behavior ▶︎ Steps -- unit selector for steps (move, scale, inset/
+    outset) (bug #170293)
+  • Prefs ▶︎ Behavior ▶︎ Steps -- option for relative snapping of guideline
+    angles (rev 10307)
+  • Prefs ▶︎ Behavior ▶︎ Clones -- optionally relink linked offsets on
+    duplication (bug #686193)
+  • Prefs ▶︎ Input/Output ▶︎ SVG output -- NEW: optionally enforce relative or
+    absolute coordinates (bug #1002230)
+
+Dialogs
+
+  • Dialog status and position is remembered between sessions
+  • Most dialogs now dockable (including "Object properties", "Object
+    attributes", "Text and Font", "Check spelling", "Export PNG image", "XML
+    editor", "Find/Replace", and "Tiled clones")
+  • New preference to allow Windows users to choose between native and Gtk Open
+    /Save dialog
+  • Preferences dialog cleanup
+  • Document Metadata dialog merged into Document Properties
+
+
+Simple calculations in spinboxes
+
+In most spinboxes (a spinbox is an entry field with up and down "spinbuttons"
+next to it) you can now write simple calculations. Some examples:
+
+  • 2 * 3
+  • 50 + 100, or
+  • ((12 + 34) * (5 + 5) - 2) / 2
+
+Moreover, you can use units in entering values, like 2 + 2 cm. The result will
+be converted to the selected unit for the particular entry.
+
+Configurable Control Handles
+
+New preferences have been added to allow for the size of the on-canvas controls
+to be increased or decreased. The "Input Devices" section has been updated to
+control this.
+
+Translations
+
+  • The Keyboard and mouse reference (inkscape-docs project) and the labels of
+    color palettes are now translatable.
+  • New UI translation in Latvian.
+  • New tutorial translations in Galician and Greek.
+  • New man pages in Chinese (zh_TW) Greek (el), Japanese (ja) and Slovak (sk),
+    and updated French translation. [Galician (gl) and Polish (pl) in progress]
+  • Man pages now use PO files for translation (inkscape-docs project).
+  • The tutorial generation system now fully supports RTL languages.
+
+File format support
+
+  • New Flash XML Graphics (FXG) export format.
+  • New Synfig Animation Studio (SIF) export format.
+  • New HTML5 Canvas export format
+  • New Visio (VSD) import format, based on libvisio.
+  • New internal CorelDraw (CDR) import format, based on libcdr.
+  • XAML export improvements (including a new Silverlight compatible mode).
+  • Compressed SVG and media export extension improvements. New options:
+      □ set an image directory in the zip file
+      □ add a text file that lists the fonts used in the SVG document.
+  • New preference to allow users to always link, embed or ask when importing
+    bitmaps.
+  • New preferences that allow the checking of SVG on input and/or export for
+    invalid or not useful elements, attributes, and properties. Options control
+    whether such items generate warnings (when Inkscape is run from the command
+    line) or in removing such items.
+  • The --export-text-to-path option now works with Plain SVG export.
+
+EMF/WMF
+
+EMF and WMF input and output filters have been completely rewritten and are now
+cross-platform. It is now possible to copy and paste EMF files between Windows
+applications running in Wine and a native Linux version of Inkscape.
+
+Gimp XCF
+
+  • The Save Background option allows users to choose if the page background is
+    saved with each GIMP layer.
+  • The exported layers now use the label attribute or, if not set, the id
+    attribute
+  • New Resolution option
+  • New Help tab
+  • Some bugs and warnings fixed
+
+PDF
+
+  • Bleed/margin: Added an option to specify an extra margin by which the
+    bounding box to be exported is expanded. This may be helpful to export a
+    PDF with a small white margin around the drawing, or for exporting a bleed
+    region a few mm outside the area of the page.
+
+PDF/EPS/PS + LaTeX
+
+  • Added the possibility of scaling the image. The calc package must be
+    included in the preamble. Then the image can be scaled by defining \
+    svgscale instead of \svgwidth.
+  • The font shape is now also exported. \textit{} for italic text, \textbf{}
+    for bold text, and \textsl{} (slanted) for oblique text. It is important to
+    note that Arial has an oblique font shape, not italic. Thus, the result in
+    LaTeX will be slanted, instead of italic. It is better to use another font
+    in Inkscape when you want true italics.
+
+Extensions
+
+Units: Breaking change
+
+Due to the implementation of proper document units, the functions
+inkex.unittouu and inkex.uutounit had to be modified and moved to the
+inkex.Effect class.
+
+Unit conversion calls should be replaced with inkex.Effect.unittouu and
+inkex.Effect.uutounit calls (usually self.unittouu and self.uutounit).
+
+New
+
+  • The new guillotine extension is used for exporting PNG slices from a
+    drawing. The slice rectangles are defined by adding horizontal and vertical
+    guides within the canvas boundary, the canvas boundary serves as the
+    outside of the sliced area.
+  • The new G-code tools extension converts paths to G-code (using circular
+    interpolation), makes offset paths and engraves sharp corners using cone
+    cutters.
+  • New QR code generator.
+  • New isometric grid generator.
+  • New bitmap crop extension.
+  • New Extract text extension. Outputs a document’s text elements in a chosen
+    order.
+  • New Merge text extension.
+  • New HSL adjust extension.
+  • New Replace font extension.
+  • New N-Up layout extension.
+  • New Voronoï diagram extension (creates Voronoï diagrams and Delaunay
+    triangulations based on the selected objects' barycenter).
+  • New Interpolate Attribute in a group extension.
+  • New Typography extensions menu.
+
+Improvements
+
+  • Number nodes. New parameters allowing users to choose the starting dot
+    number and the numbering step between two nodes.
+  • Color Markers to Match Stroke extension improvements. The markers can now
+    inherit the fill and stroke colors and alpha channels from the object, or
+    be customized with color selectors in a separate tab.
+  • Optional sliders added on float and int extension parameters (full and
+    minimal modes).
+  • Extension parameters values (except attributes!) can now be contextualized
+    for translation (with msgctxt).
+  • New sub-menus in the Render menu, grouping the bar-codes, grids and layout
+    extensions.
+
+SVG Support
+
+Rendering of the following properties is now supported (without UI except via
+XML editor):
+
+  • clip-rule
+  • color-interpolation-filters: Non-Inkscape filters that specify linearRGB
+    color interpolation will render properly. Filters created inside Inkscape
+    will still use sRGB color interpolation by default.
+  • text-decoration: Underline, strike-through, over line.
+  • text-decoration-line, text-decoration-style: Preliminary support (CSS 3).
+  • paint-order: Allows stroke to be painted under fill; useful for text.
+
+Snapping
+
+  • The snapping preferences and the snap toolbar have been reworked (in the
+    underlying code and in the GUI) to should make the snapping preferences
+    easier to understand, maintain, and find and fix any remaining snapping
+    bugs
+  • Inkscape now also snaps perpendicularly and tangentialy to paths, when
+    creating paths in the pen tool, when dragging nodes, or when manipulating
+    guides. Newly created guides (dragged off the ruler) will snap
+    perpendicularly or tangentialy to any curve that is being snapped to. Two
+    checkboxes have been added to the document properties dialog (on the
+    snapping tab). Please note that snapping perpendicularly or tangetialy will
+    not work in the selector tool when transforming an object or a selection of
+    objects.
+  • Intersections of paths and guides can now be snapped to too
+  • Snapping has been implemented fully for transforming selections of multiple
+    nodes in the node tool
+  • Snapping to text anchors and baselines has been implemented properly
+  • If one has chosen for only snapping the snap source closest to the mouse
+    pointer, then the tab key can be used to cycle to the next closest snap
+    source
+
+Notable bug fixes
+
+Notable bug fixes since last bug fix release (0.48.4):
+
+  • Images are no longer recompressed when embedding or exporting them. [1]
+  • Relative image paths are no longer stored as absolute (regression
+    introduced with 0.47).
+  • Many rendering glitches were fixed.
+  • The rendering of the stroke on transformed objects now matches the SVG
+    specification.
+  • Values entered in the numeric input boxes for the selector tool (X, Y,
+    width, height) are much more accurately applied.
+
+Known issues
+
+  • On MS Windows when the desktop colordepth is set to 16-bit, Inkscape is
+    unusable because of exploding memory usage. Please set the colordepth to
+    32-bit.
+  • The Cairo library used in the new renderer does not implement downscaling,
+    which causes large bitmaps to be pixelated on export. [2] The issue can be
+    fixed with an out-of-tree patch to Cairo. [3]
+
+
+For information on prior releases, please see:
+    http://wiki.inkscape.org/wiki/index.php/Inkscape
