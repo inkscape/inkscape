@@ -1466,7 +1466,7 @@ value of set_i2d==false is only used by seltrans when it's dragging objects live
 that case, items are already in the new position, but the repr is in the old, and this function
 then simply updates the repr from item->transform.
  */
-void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Affine const &affine, bool set_i2d, bool compensate)
+void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Affine const &affine, bool set_i2d, bool compensate, bool adjust_transf_center)
 {
     if (selection->isEmpty())
         return;
@@ -1621,11 +1621,13 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Affine cons
             item->doWriteTransform(item->getRepr(), item->transform, NULL, compensate);
         }
 
-        // if we're moving the actual object, not just updating the repr, we can transform the
-        // center by the same matrix (only necessary for non-translations)
-        if (set_i2d && item->isCenterSet() && !(affine.isTranslation() || affine.isIdentity())) {
-            item->setCenter(old_center * affine);
-            item->updateRepr();
+        if (adjust_transf_center) { // The transformation center should not be touched in case of pasting or importing, which is allowed by this if clause
+            // if we're moving the actual object, not just updating the repr, we can transform the
+            // center by the same matrix (only necessary for non-translations)
+            if (set_i2d && item->isCenterSet() && !(affine.isTranslation() || affine.isIdentity())) {
+                item->setCenter(old_center * affine);
+                item->updateRepr();
+            }
         }
     }
 }

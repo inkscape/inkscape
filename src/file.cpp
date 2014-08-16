@@ -1087,9 +1087,9 @@ void sp_import_document(SPDesktop *desktop, SPDocument *clipdoc, bool in_place)
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     selection->setReprList(pasted_objects);
 
-    // invers apply parent transform
+    // Apply inverse of parent transform
     Geom::Affine doc2parent = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
-    sp_selection_apply_affine(selection, desktop->dt2doc() * doc2parent * desktop->doc2dt(), true, false);
+    sp_selection_apply_affine(selection, desktop->dt2doc() * doc2parent * desktop->doc2dt(), true, false, false);
 
     // Update (among other things) all curves in paths, for bounds() to work
     target_document->ensureUpToDate();
@@ -1226,7 +1226,7 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
             // c2p is identity matrix at this point unless ensureUpToDate is called
             doc->ensureUpToDate();
             Geom::Affine affine = doc->getRoot()->c2p * SP_ITEM(place_to_insert)->i2doc_affine().inverse();
-            sp_selection_apply_affine(selection, desktop->dt2doc() * affine * desktop->doc2dt(), true, false);
+            sp_selection_apply_affine(selection, desktop->dt2doc() * affine * desktop->doc2dt(), true, false, false);
 
             // move to mouse pointer
             {
