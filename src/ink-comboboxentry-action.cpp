@@ -383,6 +383,15 @@ GtkWidget* create_tool_item( GtkAction* action )
 
     g_signal_connect( G_OBJECT(comboBoxEntry), "changed", G_CALLBACK(combo_box_changed_cb), action );
 
+    // Optionally add separator function...
+    if( ink_comboboxentry_action->separator_func != NULL ) {
+       gtk_combo_box_set_row_separator_func( ink_comboboxentry_action->combobox,
+					    GtkTreeViewRowSeparatorFunc (ink_comboboxentry_action->separator_func),
+      					    NULL, NULL );
+    }
+
+    gtk_widget_show_all (comboBoxEntry);
+
     // Optionally add formatting...
     if( ink_comboboxentry_action->cell_data_func != NULL ) {
       GtkCellRenderer *cell = gtk_cell_renderer_text_new();
@@ -391,13 +400,6 @@ GtkWidget* create_tool_item( GtkAction* action )
       gtk_cell_layout_set_cell_data_func (GTK_CELL_LAYOUT( comboBoxEntry ), cell,
                                           GtkCellLayoutDataFunc (ink_comboboxentry_action->cell_data_func),
                                           NULL, NULL );
-    }
-
-    // Optionally add separator function...
-    if( ink_comboboxentry_action->separator_func != NULL ) {
-       gtk_combo_box_set_row_separator_func( ink_comboboxentry_action->combobox,
-					    GtkTreeViewRowSeparatorFunc (ink_comboboxentry_action->separator_func),
-      					    NULL, NULL );
     }
 
     // Optionally widen the combobox width... which widens the drop-down list in list mode.
