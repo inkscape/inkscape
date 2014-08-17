@@ -291,11 +291,15 @@ Quantity UnitTable::parseQuantity(Glib::ustring const &q) const
         std::istringstream tmp_v(match_info.fetch(0));
         tmp_v >> value;
     }
+    int start_pos, end_pos;
+    match_info.fetch_pos(0, end_pos, start_pos);
+    end_pos = q.size() - start_pos;
+    Glib::ustring u = q.substr(start_pos, end_pos);
 
     // Extract unit abbreviation
     Glib::ustring abbr;
     Glib::RefPtr<Glib::Regex> unit_regex = Glib::Regex::create("[A-z%]+");
-    if (unit_regex->match(q, match_info)) {
+    if (unit_regex->match(u, match_info)) {
         abbr = match_info.fetch(0);
     }
 

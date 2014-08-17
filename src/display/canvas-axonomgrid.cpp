@@ -387,6 +387,9 @@ _wr.setUpdating (false);
     _rcp_gmcol->setRgba32 (empcolor);
     _rsi->setValue (empspacing);
 
+    _rsu_ox->setProgrammatically = false;
+    _rsu_oy->setProgrammatically = false;
+
     return table;
 }
 
