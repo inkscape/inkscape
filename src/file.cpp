@@ -148,14 +148,14 @@ SPDesktop *sp_file_new(const std::string &templ)
         DocumentUndo::setUndoSensitive(doc, true);
     }
     
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    if (desktop)
-        desktop->setWaitingCursor();
+    SPDesktop *olddesktop = SP_ACTIVE_DESKTOP;
+    if (olddesktop)
+        olddesktop->setWaitingCursor();
     
     SPViewWidget *dtw = sp_desktop_widget_new(sp_document_namedview(doc, NULL)); // TODO this will trigger broken link warnings, etc.
     g_return_val_if_fail(dtw != NULL, NULL);
     sp_create_window(dtw, TRUE);
-    desktop = static_cast<SPDesktop *>(dtw->view);
+    SPDesktop* desktop = static_cast<SPDesktop *>(dtw->view);
 
     doc->doUnref();
 
@@ -166,6 +166,8 @@ SPDesktop *sp_file_new(const std::string &templ)
     Inkscape::Extension::Dbus::dbus_init_desktop_interface(desktop);
 #endif
     
+    if (olddesktop)
+        olddesktop->clearWaitingCursor();
     if (desktop)
         desktop->clearWaitingCursor();
 
