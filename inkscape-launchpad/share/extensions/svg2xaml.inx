@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <_name>XAML Output</_name>
+    <id>org.inkscape.output.xaml</id>
+    <param name="silverlight" type="boolean" _gui-text="Silverlight compatible XAML">false</param>
+    <output>
+        <extension>.xaml</extension>
+        <mimetype>text/xml+xaml</mimetype>
+        <_filetypename>Microsoft XAML (*.xaml)</_filetypename>
+        <_filetypetooltip>Microsoft's GUI definition format</_filetypetooltip>
+    </output>
+    <xslt>
+        <file reldir="extensions">svg2xaml.xsl</file>
+    </xslt>
+</inkscape-extension>

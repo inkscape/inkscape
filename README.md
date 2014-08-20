@@ -49,6 +49,8 @@ This repository is for casual users that don't want to do all that. Here is how 
  - `bzr update`
  - Hardlink into git working directory
  - `git push`
- 
+ - Set up .gitignore, update script
+
 There is an issue tracker and pull requests are possible. You are welcome to use both of these, however they are not reviewed by anyone. Feel free to use them you want to document bugs but you are too lazy to set up a LaunchPad account to report bugs.
 
+Please contact me at inkscape@phor.net if you need an update here, or if you want to help maintain this repo and bring in the Inkscape historical revisions.

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+  <_name>View</_name>
+  <id>jessyink.view</id>
+  <dependency type="executable" location="extensions">inkex.py</dependency>
+  <dependency type="executable" location="extensions">jessyInk_view.py</dependency>
+  <param name="tab" type="notebook">
+    <page name="settings" _gui-text="Settings">
+			<param name="viewOrder" type="int" min="0" max="100" _gui-text="Order:">1</param>
+			<param name="viewDuration" precision="1" type="float" min="0.1" max="10.0" _gui-text="Duration in seconds:">0.8</param>
+			<param name="removeView" type="boolean" _gui-text="Remove view">false</param>
+      <_param name="help_text" type="description">Choose order number 0 to set the initial view of a slide.</_param>
+		</page>
+    <page name="help" _gui-text="Help">
+      <_param name="help_text" type="description">This extension allows you to set, update and remove views for a JessyInk presentation. Please see code.google.com/p/jessyink for more details.</_param>
+    </page>
+  </param>
+  <effect>
+    <object-type>rect</object-type>
+      <effects-menu>
+        <submenu _name="JessyInk"/>
+      </effects-menu>
+  </effect>
+  <script>
+    <command reldir="extensions" interpreter="python">jessyInk_view.py</command>
+  </script>
+</inkscape-extension>
+

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <_name>Tools library</_name>
+    <id>ru.cnc-club.filter.gcodetools_tools_library_no_options_no_preferences</id>
+	<dependency type="executable" location="extensions">gcodetools.py</dependency>
+	<dependency type="executable" location="extensions">inkex.py</dependency>
+	<param name='active-tab' type="notebook">
+
+		<page name='tools_library' _gui-text='Tools library'>	
+			
+			<param type='optiongroup' name='tools-library-type' _gui-text="Tools type:">
+<_option value='default tool'>default</_option>
+<_option value='cylinder cutter'>cylinder</_option>
+<_option value='cone cutter'>cone</_option>
+<_option value='plasma cutter'>plasma</_option>
+<_option value='tangent knife'>tangent knife</_option>
+<_option value='lathe cutter'>lathe cutter</_option>
+<_option value='graffiti'>graffiti</_option>
+
+
+<_option value='check'>Just check tools</_option>
+
+			</param>
+			
+			<_param name="help" type="description">
+Selected tool type fills appropriate default values. You can change these values using the Text tool later on.
+
+The topmost (z order) tool in the active layer is used. If there is no tool inside the current layer it is taken from the upper layer.
+
+Press Apply to create new tool.
+			</_param>
+	</page>
+
+		<page name='help' _gui-text='Help'>
+			<_param name="fullhelp" type="description">
+Gcodetools plug-in: converts paths to Gcode (using circular interpolation), makes offset paths and engraves sharp corners using cone cutters. 
+This plug-in calculates Gcode for paths using circular interpolation or linear motion when needed.
+
+Tutorials, manuals and support can be found at
+English support forum:
+	http://www.cnc-club.ru/gcodetools
+	
+and Russian support forum:
+	http://www.cnc-club.ru/gcodetoolsru
+
+Credits: Nick Drobchenko, Vladimir Kalyaev, John Brooker, Henry Nicolas, Chris Lusby Taylor.
+
+Gcodetools ver. 1.7
+</_param>	
+
+		</page>
+
+	</param>	
+    <effect>
+		<effects-menu>
+			<submenu _name="Gcodetools"/>
+		</effects-menu>
+		<object-type>path</object-type>
+    </effect>
+    <script>
+        <command reldir="extensions" interpreter="python">gcodetools.py</command>
+    </script>
+</inkscape-extension>

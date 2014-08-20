@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:cc="http://creativecommons.org/ns#"
+    width="900"
+    height="900"
+    viewBox="0,0,900,900"
+    version="1.1"
+    style="fill:#aaccee;stroke:black">
+  <metadata>
+    <rdf:RDF>
+      <cc:Work rdf:about="">
+	<dc:format>image/svg+xml</dc:format>
+	<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+	<dc:title>Flow Chart Shapes</dc:title>
+	<dc:date>2013-04-18</dc:date>
+	<dc:creator>
+	  <cc:Agent>
+	    <dc:title>Tavmjong Bah</dc:title>
+	  </cc:Agent>
+	</dc:creator>
+	<dc:rights>
+	  <cc:Agent>
+	    <dc:title />
+	  </cc:Agent>
+	</dc:rights>
+	<dc:publisher>
+	  <cc:Agent>
+	    <dc:title>Martin Owens</dc:title>
+	  </cc:Agent>
+	</dc:publisher>
+	<dc:language>English</dc:language>
+	<dc:description>Basic Flowchart Symbols</dc:description>
+	<cc:license rdf:resource="http://creativecommons.org/licenses/publicdomain/" />
+      </cc:Work>
+      <cc:License rdf:about="http://creativecommons.org/licenses/publicdomain/">
+	<cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction" />
+	<cc:permits rdf:resource="http://creativecommons.org/ns#Distribution" />
+	<cc:permits rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <title>Flow Chart Shapes</title>
+  <defs>
+
+    <!--
+	Based on IBM Flowcharting Template X20-8020, 1970 Revision.
+	Also DIN 66001 and ISO 5807.
+	Original grid is 1/10", Basic height = 8 units, Basic width = 12 units.
+	Drawn at 1 unit = 10 px (slightly larger that actual template).
+	Symbols are centered in a 150x150px square.
+    -->
+
+    <symbol id="Process">
+      <title>Process</title>
+      <desc>Any processing function.</desc>
+      <rect x="15" y="35" width="120" height="80" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="InputOutput">
+      <title>Input/Output</title>
+      <desc>General input/output functions.</desc>
+      <path d="m 35,35 100,0 -20,80 -100,0 z" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="Document">
+      <title>Document</title>
+      <desc>A document or report</desc>
+      <path d="m 15,35 120,0 0,60 c -50,-5 -70,35 -120,10 z" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="ManualOperation">
+      <title>Manual Operation</title>
+      <desc>An offline process (at "human speed").</desc>
+      <path d="m 15,35 120,0 -30,80 -60,0 z" style="stroke-width:2px"/>
+    </symbol>
+
+    <symbol id="Preparation">
+      <title>Preparation</title>
+      <desc>A preparation or setup process step. (ISO)</desc>
+      <path d="m 35,35 80,0 20,40 -20,40 -80,0 -20,-40 z" style="stroke-width:2px"/>
+    </symbol>
+
+    <symbol id="Merge">
+      <title>Merge</title>
+      <desc>Combine two or more sets of items into one set. (ISO)</desc>
+      <path d="m 35,35 80,0 -40,70 z" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="Decision">
+      <title>Decision</title>
+      <desc>A decision or switching type operation.</desc>
+      <path d="m 15,75 60,-40 60,40 -60,40 z" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="MagneticTape">
+      <title>Magnetic Tape</title>
+      <desc>Magnetic tape storage</desc>
+      <circle cx="75" cy="75" r="40" style="stroke-width:2"/>
+      <path d="m 75,115 40,0" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="Display">
+      <title>Display</title>
+      <desc>Information display by online indicators, video devices, printers, etc.</desc>
+      <path d="m 15,75 a 100,100 0 0 1 40,-40 l 65,0 a 60,60 0 0 1 0,80 l -65,0 a 100,100 0 0 1 -40,-40 z" style="stroke-width:2px"/>
+    </symbol>
+
+    <symbol id="AuxillaryOp">
+      <title>Auxiliary Operation</title>
+      <desc>Offline operation.</desc>
+      <rect x="35" y="35" width="80" height="80" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="ManualInput">
+      <title>Manual Input</title>
+      <desc>Information input by online keyboards, switches, etc.</desc>
+      <path d="m 15,65 120,-20 0,60 -120,0 z" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="Extract">
+      <title>Extract</title>
+      <desc>Removal of one or more specific sets of times from a set. (ISO)</desc>
+      <path d="m 35,115 40,-70 40,70 z" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="Terminal">
+      <title>Terminal/Interrupt</title>
+      <desc>A terminal point in a flowchart: start, stop, halt, etc.</desc>
+      <path d="m 35,95 a 20,20 0 0 1 0,-40 l 80,0 a 20,20 0 0 1 0,40 z" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="PunchedCard">
+      <title>Punched Card</title>
+      <desc>Input/output function in card medium.</desc>
+      <path d="m 15,55 10,-10 110,0 0,60 -120,0 z" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="PunchedTape">
+      <title>Punch Tape</title>
+      <desc>Punched tape.</desc>
+      <path d="m 15,50 c 50,20 70,-20 120,0 l 0,50 c -50,-20 -70,20 -120,0 z" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="OnlineStorage">
+      <title>Online Storage</title>
+      <desc>Input/output using any kind of online storage.</desc>
+      <path d="m 25,115 a 65,65 0 0 1 0,-80 l 110,0 a 65,65 0 0 0 0,80 z" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="Keying">
+      <title>Keying</title>
+      <desc>Operation using a key-driven device, e.g. typing. (IBM)</desc>
+      <path d="m 25,115 a 65,65 0 0 1 0,-80 l 100,0 a 65,65 0 0 1 0,80 z" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="Sort">
+      <title>Sort</title>
+      <desc>Arrange a set of items into sequence. (ISO)</desc>
+      <path d="m 35,75 40,-75 40,75 -40,75 z m 0,0 80,0" style="stroke-width:2px"/>
+    </symbol>
+
+    <symbol id="Connector">
+      <title>Connector</title>
+      <desc>Exit to or entry from another part of chart.</desc>
+      <circle cx="75" cy="75" r="20" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="Offpage">
+      <title>Off-Page Connector</title>
+      <desc>Exit to or entry from a page. (IBM)</desc>
+      <path d="m 55,55 40,0 0,30 -20,20 -20,-20 z" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="TransmittalTape">
+      <title>Transmittal Tape</title>
+      <desc>Adding machine tape or other batch control information. (IBM)</desc>
+      <path d="m 35,45 40,0 0,80 c -10,-10 -30,-15 -40,-15 z" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="CommunicationLink">
+      <title>Communication Link</title>
+      <desc>Transcommunication link.</desc>
+      <path d="m 65,25 0,60 20,-20 0,60" style="fill:none;stroke-width:2"/>
+    </symbol>
+
+    <symbol id="Collate">
+      <title>Collate</title>
+      <desc>Merge with extracting. (ISO)</desc>
+      <path d="m 75,75 -40,-70 80,0 z m 0,0 40,70 -80,0 z" style="stroke-width:2px"/>
+    </symbol>
+
+    <symbol id="Comment">
+      <title>Comment/Annotation</title>
+      <desc>Additional descriptive clarification (connect by dotted line).</desc>
+      <path d="m 135,115 -120,0 0,-80 120,0" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="Core">
+      <title>Core</title>
+      <desc>Core memory. (ISO)</desc>
+      <rect x="35" y="35" width="80" height="80" style="stroke-width:2"/>
+      <path d="m 35,50 80,0" style="stroke-width:2"/>
+      <path d="m 50,35 0,80" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="PredefinedProcess">
+      <title>Predefined Process</title>
+      <desc>A formally defined sub-process.</desc>
+      <rect x="15" y="35" width="120" height="80" style="stroke-width:2"/>
+      <rect x="35" y="35" width="80" height="80" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="MagneticDisk">
+      <title>Magnetic Disk (Database)</title>
+      <desc>A magnetic disk. (ISO)</desc>
+      <path d="m 35,25 a 65,65 0 0 1 80,0 l 0,100 a 65,65 0 0 1 -80,0 z" style="stroke-width:2"/>
+      <path d="m 115,25 a 65,65 0 0 1 -80,0" style="fill:none;stroke-width:2;stroke-linecap:butt"/>
+      <path d="m 115,40 a 65,65 0 0 1 -80,0" style="fill:none;stroke-width:2;stroke-linecap:butt"/>
+      <path d="m 115,55 a 65,65 0 0 1 -80,0" style="fill:none;stroke-width:2;stroke-linecap:butt"/>
+    </symbol>
+
+    <symbol id="MagneticDrum">
+      <title>Magnetic Drum (Direct Access)</title>
+      <desc>Magnetic drum. (ISO)</desc>
+      <path d="m 25,115 a 65,65 0 0 1 0,-80 l 100,0 a 65,65 1 0 1 0,80 z" style="stroke-width:2"/>
+      <path d="m 125,115 a 65,65 0 0 1 0,-80" style="fill:none;stroke-width:2;stroke-linecap:butt"/>
+    </symbol>
+
+    <symbol id="OfflineStorage">
+      <title>Offline Storage</title>
+      <desc>Offline storage.</desc>
+      <path d="m 35,35 80,0 -40,70 z" style="stroke-width:2"/>
+      <path d="m 60,80 30,0" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="LogicalOr">
+      <title>Logical Or</title>
+      <desc>Shows when a process diverges.</desc>
+      <circle cx="75" cy="75" r="20" style="stroke-width:2"/>
+      <path d="m 55,75 40,0" style="stroke-width:2"/>
+      <path d="m 75,55 0,40" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="LogicalAnd">
+      <title>Logical And</title>
+      <desc>Summing junction. Shows when multiple branches converge.</desc>
+      <circle cx="75" cy="75" r="20" style="stroke-width:2"/>
+      <path d="m 61,61 28,28" style="stroke-width:2"/>
+      <path d="m 61,89 28,-28" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="Delay">
+      <title>Delay</title>
+      <desc>A waiting period.</desc>
+      <path d="m 15,35 60,0 a 60,40 0 0 1 0,80 l -60,0 z" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="LoopLimitBegin">
+      <title>Loop Limit Begin</title>
+      <desc>Start of a loop.</desc>
+      <path d="m 15,75 20,-40 80,0 20,40 0,40 -120,0 z" style="stroke-width:2"/>
+    </symbol>
+
+    <symbol id="LoopLimitEnd">
+      <title>Loop Limit End</title>
+      <desc>End of a loop.</desc>
+      <path d="m 15,75 0,-40 120,0 0,40 -20,40 -80,0 z" style="stroke-width:2"/>
+    </symbol>
+
+  </defs>
+
+  <use xlink:href="#Process"            x="0"   y="0"   />
+  <use xlink:href="#InputOutput"        x="150" y="0"   />
+  <use xlink:href="#Document"           x="300" y="0"   />
+  <use xlink:href="#ManualOperation"    x="450" y="0"   />
+  <use xlink:href="#Preparation"        x="600" y="0"   />
+  <use xlink:href="#Merge"              x="750" y="0"   />
+
+  <use xlink:href="#Decision"           x="0"   y="150" />
+  <use xlink:href="#MagneticTape"       x="150" y="150" />
+  <use xlink:href="#Display"            x="300" y="150" />
+  <use xlink:href="#AuxillaryOp"        x="450" y="150" />
+  <use xlink:href="#ManualInput"        x="600" y="150" />
+  <use xlink:href="#Extract"            x="750" y="150" />
+
+  <use xlink:href="#Terminal"           x="0"   y="300" />
+  <use xlink:href="#PunchedCard"        x="150" y="300" />
+  <use xlink:href="#PunchedTape"        x="300" y="300" />
+  <use xlink:href="#OnlineStorage"      x="450" y="300" />
+  <use xlink:href="#Keying"             x="600" y="300" />
+
+  <use xlink:href="#Connector"          x="0"   y="450" />
+  <use xlink:href="#Offpage"            x="150" y="450" />
+  <use xlink:href="#TransmittalTape"    x="300" y="450" />
+  <use xlink:href="#CommunicationLink"  x="450" y="450" />
+
+  <!-- Symbols made using the above symbols -->
+  <use xlink:href="#Sort"               x="600" y="450" />
+  <use xlink:href="#Collate"            x="750" y="450" />
+
+  <use xlink:href="#Comment"            x="0"   y="600" />
+  <use xlink:href="#Core"               x="150" y="600" />
+  <use xlink:href="#PredefinedProcess"  x="300" y="600" />
+  <use xlink:href="#MagneticDisk"       x="450" y="600" />
+  <use xlink:href="#MagneticDrum"       x="600" y="600" />
+  <use xlink:href="#OfflineStorage"     x="750" y="600" />
+
+  <!-- Symbols not in IBM Flowcharting Template -->
+  <use xlink:href="#LogicalOr"          x="0"   y="750" />
+  <use xlink:href="#LogicalAnd"         x="150" y="750" />
+  <use xlink:href="#Delay"              x="450" y="750" />
+
+  <!-- ISO 5807 -->
+  <use xlink:href="#LoopLimitBegin"     x="600" y="750" />
+  <use xlink:href="#LoopLimitEnd"       x="750" y="750" />
+
+</svg>

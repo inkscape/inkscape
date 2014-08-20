@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <_name>FXG Output</_name>
+    <id>org.inkscape.output.fxg</id>
+    <output>
+        <extension>.fxg</extension>
+        <mimetype>text/xml+fxg</mimetype>
+        <_filetypename>Flash XML Graphics (*.fxg)</_filetypename>
+        <_filetypetooltip>Adobe's XML Graphics file format</_filetypetooltip>
+    </output>
+    <xslt>
+        <file reldir="extensions">svg2fxg.xsl</file>
+    </xslt>
+</inkscape-extension>

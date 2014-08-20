@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+  <_name>QR Code</_name>
+  <id>org.inkscape.qrcode</id>
+  <dependency type="executable" location="extensions">render_barcode_qrcode.py</dependency>
+  <dependency type="executable" location="extensions">inkex.py</dependency>
+  <_param name="generalhint" type="description" xml:space="preserve">See http://www.denso-wave.com/qrcode/index-e.html for details</_param>
+  <param name="text" type="string" _gui-text="Text:">www.inkscape.org</param>
+  <param name="typenumber" type="enum" _gui-text="Size, in unit squares:">
+    <_item value="0">Auto</_item>
+    <item value="1">21x21</item>
+    <item value="2">25x25</item>
+    <item value="3">29x29</item>
+    <item value="4">33x33</item>
+    <item value="5">37x37</item>
+    <item value="6">41x41</item>
+    <item value="7">45x45</item>
+    <item value="8">49x49</item>
+    <item value="9">53x53</item>
+    <item value="10">57x37</item>
+    <item value="11">61x61</item>
+    <item value="12">65x65</item>
+    <item value="13">69x69</item>
+    <item value="14">73x73</item>
+    <item value="15">77x77</item>
+    <item value="16">81x81</item>
+    <item value="17">85x85</item>
+    <item value="18">89x89</item>
+    <item value="19">93x93</item>
+    <item value="20">97x97</item>
+    <item value="21">101x101</item>
+    <item value="22">105x105</item>
+    <item value="23">109x109</item>
+    <item value="24">113x113</item>
+    <item value="25">117x117</item>
+    <item value="26">121x121</item>
+    <item value="27">125x125</item>
+    <item value="28">129x129</item>
+    <item value="29">133x133</item>
+    <item value="30">137x137</item>
+    <item value="31">141x141</item>
+    <item value="32">145x145</item>
+    <item value="33">149x149</item>
+    <item value="34">153x153</item>
+    <item value="35">157x157</item>
+    <item value="36">161x161</item>
+    <item value="37">165x165</item>
+    <item value="38">169x169</item>
+    <item value="39">173x173</item>
+    <item value="40">177x177</item>
+  </param>
+  <_param name="sizehint" type="description" xml:space="preserve">With "Auto", the size of the barcode depends on the length of the text and the error correction level</_param>
+  <param name="correctionlevel" type="enum" _gui-text="Error correction level:">
+    <_item value="1">L (Approx. 7%)</_item>
+    <_item value="0">M (Approx. 15%)</_item>
+    <_item value="3">Q (Approx. 25%)</_item>
+    <_item value="2">H (Approx. 30%)</_item>
+  </param>  
+  <param name="encoding" type="enum" _gui-text="Character encoding:">
+    <item value="latin_1">Latin 1</item>
+    <item value="cp1250">CP 1250</item>
+    <item value="cp1252">CP 1252</item>
+    <item value="utf_8">UTF 8</item>
+  </param>
+  <param name="modulesize" type="float" min="0" max="1000" _gui-text="Square size (px):">4</param>
+  <effect>
+    <object-type>all</object-type>
+    <effects-menu>
+      <submenu _name="Render">
+        <submenu _name="Barcode" />
+      </submenu>
+    </effects-menu>
+  </effect>
+  <script>
+    <command reldir="extensions" interpreter="python">render_barcode_qrcode.py</command>
+  </script>
+</inkscape-extension>

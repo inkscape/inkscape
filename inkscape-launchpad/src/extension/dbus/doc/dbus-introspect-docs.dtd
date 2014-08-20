@@ -1,0 +1,33 @@
+<!-- DTD for D-Bus Introspection Documentation -->
+
+<!ELEMENT doc (summary?,description?,errors?,permission?,since?,deprecated,seealso?)>
+
+<!ELEMENT summary (#PCDATA|ref)*>
+<!ELEMENT description (#PCDATA|para|example)*>
+<!ELEMENT errors (error)*>
+<!ELEMENT permission (#PCDATA|ref|para)*>
+<!ELEMENT since EMPTY>
+<!ATTLIST since version CDATA #REQUIRED>
+<!ELEMENT deprecated (#PCDATA|ref)>
+<!ATTLIST deprecated version CDATA #REQUIRED>
+<!ATTLIST deprecated instead CDATA #REQUIRED>
+<!ELEMENT seealso (ref+)>
+
+<!ELEMENT error (#PCDATA|para)*>
+<!ATTLIST error name CDATA #REQUIRED>
+<!ELEMENT para (#PCDATA|example|code|list|ref)*>
+<!ELEMENT example (#PCDATA|para|code|ref)*>
+<!ATTLIST language (c|glib|python|shell) #REQUIRED>
+<!ATTLIST title CDATA #IMPLIED>
+<!ELEMENT list (item*)>
+<!ATTLIST list type (bullet|number) #REQUIRED>
+<!ELEMENT item (term|definition)*>
+<!ELEMENT term (#PCDATA|ref)*>
+<!ELEMENT definition (#PCDATA|para)*>
+
+<!ELEMENT code (#PCDATA)>
+<!ATTLIST code lang CDATA #IMPLIED>
+<!ELEMENT ref CDATA>
+<!ATTLIST ref type (parameter|arg|signal|method|interface) #REQUIRED>
+<!ATTLIST ref to CDATA #REQUIRED>
+

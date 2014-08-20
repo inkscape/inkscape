@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <_name>Spirograph</_name>
+    <id>org.ekips.filter.spirograph</id>
+	<dependency type="executable" location="extensions">spirograph.py</dependency>
+	<dependency type="executable" location="extensions">inkex.py</dependency>
+	<param name="primaryr" type="float" min="0.0" max="1000.0" _gui-text="R - Ring Radius (px):">100.0</param>
+	<param name="secondaryr" type="float" min="0.0" max="1000.0" _gui-text="r - Gear Radius (px):">60.0</param>
+	<param name="penr" type="float" min="0.0" max="1000.0" _gui-text="d - Pen Radius (px):">50.0</param>
+    <param name="gearplacement" type="enum" _gui-text="Gear Placement:">
+        <_item value="inside">Inside (Hypotrochoid)</_item>
+        <_item value="outside">Outside (Epitrochoid)</_item>
+    </param>
+    <param name="rotation" type="float" min="-360.0" max="360.0" _gui-text="Rotation (deg):">0.0</param>
+    <param name="quality" type="int" min="1" max="100" _gui-text="Quality (Default = 16):">16</param>
+	<effect>
+		<object-type>all</object-type>
+		<effects-menu>
+			<submenu _name="Render"/>
+		</effects-menu>						    		
+    </effect>
+    <script>
+        <command reldir="extensions" interpreter="python">spirograph.py</command>
+    </script>
+</inkscape-extension>

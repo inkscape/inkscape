@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY dbus-Application SYSTEM "org.inkscape.application.ref.xml">
+<!ENTITY dbus-Document SYSTEM "org.inkscape.document.ref.xml">
+<!ENTITY dbus-Proposed SYSTEM "org.inkscape.proposed.ref.xml">
+<!ENTITY Terms SYSTEM "inkscapeDbusTerms.xml">
+
+]>
+
+<book id="index">
+  <bookinfo>
+    <title>Inkscape Dbus Documentation</title>
+    <releaseinfo>Version 0.0</releaseinfo>
+    <date>7 July, 2009</date>
+    <authorgroup>
+      <author>
+        <firstname>Soren</firstname>
+        <surname>Berg</surname>
+        <affiliation>
+          <address>
+            <email>glimmer07@gmail.com</email>
+          </address>
+        </affiliation>
+      </author>
+    </authorgroup>
+  </bookinfo>
+
+  <preface>
+    <title>Introduction</title>
+    <para>
+This is the documentation for scripting Inkscape using Dbus.  This framework was developed to let users quickly and easily write scripts to create or manipulate images in a variety of languages.  Once the API has stabilized there will also be a C library that encapsulates the Dbus functionality.
+    </para>
+    <para>
+The guiding principles behind the design of this API were:
+    </para>
+    <para>
+<emphasis>Easy to use:</emphasis>  Use of insider terms was limited where possible, and many functions have been simplified to provide a easy entry point for beginning users.  Ideally one should not need any experience with Inkscape or even vector graphics to begin using the interface.  At the same time, functions that can call arbitrary verbs or manipulate nodes and their attributes directly give knowledgeable users some flexibility.
+    </para>
+    <para>
+<emphasis>Interactive:</emphasis>  Since Dbus ties in with the main loop, users can mix scripting and mouse driven actions seamlessly.  This allows for some unique uses but more importantly makes it easier for people to learn the API since they can play around with it in a scripting console, or even a simple python shell.  
+    </para>
+    <para>
+<emphasis>Responsive:</emphasis>  Since one of the advantages of scripting is the ability to repeat actions many times with great precision it is obvious that the system would have to be fairly fast.  The amount of overhead has been limited where possible and functions have been tested for speed.  A system to pause updates and only refresh the display after a large number of operations have been completed, ensures that even very complicated renders will not take too long.
+    </para>
+  </preface>
+
+  <part>
+    <title>Concepts</title>
+
+    &Terms;
+
+  </part>
+
+  <part>
+    <title>Reference</title>
+
+    <reference id="dbus-reference">
+      <title>D-Bus API Reference</title>
+
+      <partintro>
+        <para>
+        Inkscape provides a D-Bus API for programs to interactivly script vector graphics.
+        </para>
+        <para>
+        This API is not yet stable and is likely to change in the future.
+        </para>
+      </partintro>
+
+      &dbus-Application;
+      &dbus-Document;
+      &dbus-Proposed;
+
+    </reference>
+  </part>
+
+  <index>
+    <title>Index</title>
+  </index>
+
+</book>
+

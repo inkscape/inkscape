@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+  <_name>Datamatrix</_name>
+  <id>il.datamatrix</id>
+  <dependency type="executable" location="extensions">render_barcode_datamatrix.py</dependency>
+  <dependency type="executable" location="extensions">inkex.py</dependency>
+  <param name="text" type="string" _gui-text="Text:">Inkscape</param>
+  <param name="symbol" _gui-text="Size, in unit squares:" type="enum">
+    <item value="sq10">10x10</item>
+    <item value="sq12">12x12</item>
+    <item value="sq14">14x14</item>
+    <item value="sq16">16x16</item>
+    <item value="sq18">18x18</item>
+    <item value="sq20">20x20</item>
+    <item value="sq22">22x22</item>
+    <item value="sq24">24x24</item>
+    <item value="sq26">26x26</item>
+    <item value="sq32">32x32</item>
+    <item value="sq36">36x36</item>
+    <item value="sq40">40x40</item>
+    <item value="sq44">44x44</item>
+    <item value="sq48">48x48</item>
+    <item value="sq52">52x52</item>
+    <item value="sq64">64x64</item>
+    <item value="sq72">72x72</item>
+    <item value="sq80">80x80</item>
+    <item value="sq88">88x88</item>
+    <item value="sq96">96x96</item>
+    <item value="sq104">104x104</item>
+    <item value="sq120">120x120</item>
+    <item value="sq132">132x132</item>
+    <item value="sq144">144x144</item>
+    <item value="rect8x18">8x18</item>
+    <item value="rect8x32">8x32</item>
+    <item value="rect12x26">12x26</item>
+    <item value="rect12x36">12x36</item>
+    <item value="rect16x36">16x36</item>
+    <item value="rect16x48">16x48</item>
+  </param>
+  <param name="size" type="int" min="1" max="1000" _gui-text="Square Size (px):">4</param>
+  <effect>
+    <object-type>all</object-type>
+    <effects-menu>
+      <submenu _name="Render">
+        <submenu _name="Barcode" />
+      </submenu>
+    </effects-menu>
+  </effect>
+  <script>
+    <command reldir="extensions" interpreter="python">render_barcode_datamatrix.py</command>
+  </script>
+</inkscape-extension>

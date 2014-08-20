@@ -1,0 +1,23 @@
+## Makefile.am fragment sourced by src/Makefile.am.
+libvpsc/all: libvpsc/libvpsc.a
+
+libvpsc/clean:
+	rm -f libvpsc/libvpsc.a $(libvpsc_libvpsc_a_OBJECTS)
+
+libvpsc_libvpsc_a_SOURCES = libvpsc/block.cpp\
+	libvpsc/blocks.cpp\
+	libvpsc/constraint.cpp\
+	libvpsc/generate-constraints.cpp\
+	libvpsc/pairingheap/PairingHeap.cpp\
+	libvpsc/remove_rectangle_overlap.cpp\
+	libvpsc/solve_VPSC.cpp\
+	libvpsc/variable.cpp\
+	libvpsc/block.h\
+	libvpsc/blocks.h\
+	libvpsc/constraint.h\
+	libvpsc/generate-constraints.h\
+	libvpsc/pairingheap/PairingHeap.h\
+	libvpsc/pairingheap/dsexceptions.h\
+	libvpsc/remove_rectangle_overlap.h\
+	libvpsc/solve_VPSC.h\
+	libvpsc/variable.h

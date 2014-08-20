@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <_name>Triangle</_name>
+    <id>math.triangle</id>
+    <dependency type="executable" location="extensions">triangle.py</dependency>
+    <dependency type="executable" location="extensions">inkex.py</dependency>
+    <param name="s_a"       type="float"   min="0.01" max="10000" _gui-text="Side Length a (px):">100.0</param>
+    <param name="s_b"       type="float"   min="0.01" max="10000" _gui-text="Side Length b (px):">100.0</param>
+    <param name="s_c"       type="float"   min="0.01" max="10000" _gui-text="Side Length c (px):">100.0</param>
+    <param name="a_a"       type="float"   min="0"    max="180"   _gui-text="Angle a (deg):">60</param>
+    <param name="a_b"       type="float"   min="0"    max="180"   _gui-text="Angle b (deg):">30</param>
+    <param name="a_c"       type="float"   min="0"    max="180"   _gui-text="Angle c (deg):">90</param>
+    <param name="mode"      type="enum"    _gui-text="Mode:">
+        <_item value="3_sides">From Three Sides</_item>
+        <_item value="s_ab_a_c">From Sides a, b and Angle c</_item>
+        <_item value="s_ab_a_a">From Sides a, b and Angle a</_item>
+        <_item value="s_a_a_ab">From Side a and Angles a, b</_item>
+        <_item value="s_c_a_ab">From Side c and Angles a, b</_item>
+    </param>
+    <effect>
+        <object-type>all</object-type>
+        <effects-menu>
+            <submenu _name="Render"/>
+        </effects-menu>
+    </effect>
+    <script>
+        <command reldir="extensions" interpreter="python">triangle.py</command>
+    </script>
+</inkscape-extension>

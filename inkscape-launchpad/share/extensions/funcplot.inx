@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+	<_name>Function Plotter</_name>
+	<id>org.inkscape.effect.funcplot</id>
+	<dependency type="executable" location="extensions">funcplot.py</dependency>
+	<dependency type="executable" location="extensions">inkex.py</dependency>
+	<param name="tab" type="notebook">
+		<page name="sampling" _gui-text="Range and sampling">
+			<param name="xstart" type="float" min="-1000.0" max="1000.0" _gui-text="Start X value:">0.0</param>
+			<param name="xend" type="float" min="-1000.0" max="1000.0" _gui-text="End X value:">1.0</param>
+			<param name="times2pi" type="boolean" _gui-text="Multiply X range by 2*pi">false</param>
+			<param name="ybottom" type="float" min="-1000.0" max="1000.0" _gui-text="Y value of rectangle's bottom:">0.0</param>
+			<param name="ytop" type="float" min="-1000.0" max="1000.0" _gui-text="Y value of rectangle's top:">1.0</param>
+			<param name="samples" type="int" min="2" max="1000" _gui-text="Number of samples:">8</param>
+			<param name="isoscale" type="boolean" _gui-text="Isotropic scaling">false</param>
+			<_param name="isoscaledesc" type="description">When set, Isotropic scaling uses smallest of width/xrange or height/yrange</_param>
+			<param name="polar" type="boolean" _gui-text="Use polar coordinates">true</param>
+		</page>
+		<page name="use" _gui-text="Use">
+			<_param name="funcplotuse" type="description" xml:space="preserve">Select a rectangle before calling the extension,
+it will determine X and Y scales. If you wish to fill the area, then add x-axis endpoints.
+
+With polar coordinates:
+   Start and end X values define the angle range in radians.
+   X scale is set so that left and right edges of rectangle are at +/-1.
+   Isotropic scaling is disabled.
+   First derivative is always determined numerically.</_param>
+		</page>
+		<page name="desc" _gui-text="Functions">
+			<_param name="pythonfunctions" type="description" xml:space="preserve">Standard Python math functions are available:
+
+ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); 
+modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); 
+acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); 
+cos(x); sin(x); tan(x); degrees(x); radians(x); 
+cosh(x); sinh(x); tanh(x).
+
+The constants pi and e are also available.</_param>
+		</page>
+	</param>
+	<param name="fofx" type="string" _gui-text="Function:">exp(-x*x)</param>
+	<param name="fponum" type="boolean" _gui-text="Calculate first derivative numerically">true</param>
+	<param name="fpofx" type="string" _gui-text="First derivative:">x</param>
+	<param name="clip" type="boolean" _gui-text="Clip with rectangle">false</param>
+	<param name="remove" type="boolean" _gui-text="Remove rectangle">true</param>
+	<param name="drawaxis" type="boolean" _gui-text="Draw Axes">false</param>
+	<param name="endpts" type="boolean" _gui-text="Add x-axis endpoints">false</param>
+	<effect>
+		<object-type>rect</object-type>
+		<effects-menu>
+			<submenu _name="Render"/>
+		</effects-menu>
+	</effect>
+	<script>
+		<command reldir="extensions" interpreter="python">funcplot.py</command>
+	</script>
+</inkscape-extension>

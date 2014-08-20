@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <_name>Corel DRAW templates input (UC)</_name>
+    <id>org.inkscape.input.cdt.uniconvertor</id>
+    <dependency type="executable" location="extensions">uniconv-ext.py</dependency>
+    <input>
+        <extension>.cdt</extension>
+        <mimetype>application/x-xcdt</mimetype>
+        <_filetypename>Corel DRAW 7-13 template files (UC) (*.cdt)</_filetypename>
+        <_filetypetooltip>Open files saved in Corel DRAW 7-13 (UC)</_filetypetooltip>
+    </input>
+    <script>
+        <command reldir="extensions" interpreter="python">uniconv-ext.py</command>
+    </script>
+</inkscape-extension>

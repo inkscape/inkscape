@@ -1,0 +1,6 @@
+Internationalization
+
+This file is internationalized the same way as share/filters/filters/svg
+The i18n.py script called from the makefile will extract strings from the *.svg
+into a *.svg.h file. Intltool is then able to extracts these strings just like
+from normal .h files.

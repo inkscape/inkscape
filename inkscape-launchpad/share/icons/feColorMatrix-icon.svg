@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="96" height="96" id="svg2" sodipodi:version="0.32" inkscape:version="0.48+devel r10484 custom" version="1.0" sodipodi:docname="feColorMatrix-icon.svg" inkscape:output_extension="org.inkscape.output.svg.inkscape">
+<defs id="defs4">
+<linearGradient inkscape:collect="always" id="linearGradient2394">
+<stop style="stop-color:#de0000;stop-opacity:1;" offset="0" id="stop2396" />
+<stop id="stop2416" offset="0.09503236" style="stop-color:#fce94f;stop-opacity:1" />
+<stop id="stop2402" offset="0.24177921" style="stop-color:#4e9a06;stop-opacity:1" />
+<stop style="stop-color:#6e7704;stop-opacity:0.77254902;" offset="0.31161356" id="stop2404" />
+<stop id="stop2406" offset="0.4219704" style="stop-color:#fcaf3e;stop-opacity:1" />
+<stop style="stop-color:#f37c2c;stop-opacity:0.70980392;" offset="0.5077222" id="stop2408" />
+<stop id="stop2410" offset="0.61870992" style="stop-color:#729fcf;stop-opacity:1" />
+<stop style="stop-color:#a6516a;stop-opacity:0.51372549;" offset="0.76384193" id="stop2412" />
+<stop id="stop2414" offset="0.87470341" style="stop-color:#ad7fa8;stop-opacity:1" />
+<stop style="stop-color:#de0000;stop-opacity:0;" offset="1" id="stop2398" />
+</linearGradient>
+<filter id="filter2388" inkscape:label="filter1">
+<feColorMatrix id="feColorMatrix2390" type="hueRotate" values="220.90909090909091" />
+</filter>
+<linearGradient inkscape:collect="always" xlink:href="#linearGradient2394" id="linearGradient2420" gradientUnits="userSpaceOnUse" x1="26.033897" y1="8.1355934" x2="26.237288" y2="98.033897" gradientTransform="matrix(0.9320388,0,0,0.977169,47.545829,1.3039239)" />
+<linearGradient inkscape:collect="always" xlink:href="#linearGradient2394" id="linearGradient2426" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0.9320388,0,0,0.977169,1.545829,1.3039239)" x1="26.033897" y1="8.1355934" x2="26.237288" y2="98.033897" />
+</defs>
+<sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="5.270833" inkscape:cx="48" inkscape:cy="48" inkscape:document-units="px" inkscape:current-layer="layer1" showgrid="false" inkscape:window-width="852" inkscape:window-height="717" inkscape:window-x="50" inkscape:window-y="24" inkscape:window-maximized="0" />
+<metadata id="metadata7">
+<rdf:RDF>
+<cc:Work rdf:about="">
+<dc:format>image/svg+xml</dc:format>
+<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+<dc:title />
+<dc:date>2007-07-03</dc:date>
+<dc:creator>
+<cc:Agent>
+<dc:title>Felipe Corrêa da Silva Sanches</dc:title>
+</cc:Agent>
+</dc:creator>
+<dc:rights>
+<cc:Agent>
+<dc:title>Felipe Corrêa da Silva Sanches</dc:title>
+</cc:Agent>
+</dc:rights>
+<dc:publisher>
+<cc:Agent>
+<dc:title>Felipe Corrêa da Silva Sanches</dc:title>
+</cc:Agent>
+</dc:publisher>
+<dc:identifier>c</dc:identifier>
+<dc:source />
+<dc:relation />
+<dc:language />
+<dc:subject>
+<rdf:Bag>
+<rdf:li>hexamines icon</rdf:li>
+</rdf:Bag>
+</dc:subject>
+<dc:coverage />
+<dc:description>this is an image originaly intended to be used in inkscape</dc:description>
+<dc:contributor>
+<cc:Agent>
+<dc:title />
+</cc:Agent>
+</dc:contributor>
+<cc:license rdf:resource="http://creativecommons.org/licenses/by-sa/3.0/" />
+</cc:Work>
+<cc:License rdf:about="http://creativecommons.org/licenses/by-sa/3.0/">
+<cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction" />
+<cc:permits rdf:resource="http://creativecommons.org/ns#Distribution" />
+<cc:requires rdf:resource="http://creativecommons.org/ns#Notice" />
+<cc:requires rdf:resource="http://creativecommons.org/ns#Attribution" />
+<cc:permits rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+<cc:requires rdf:resource="http://creativecommons.org/ns#ShareAlike" />
+</cc:License>
+</rdf:RDF>
+</metadata>
+<g inkscape:label="Camada 1" inkscape:groupmode="layer" id="layer1">
+<g id="g2497" transform="matrix(1.0417683,0,0,1.0174356,-3.0901289,-1.2234494)">
+<rect style="opacity:1;fill:url(#linearGradient2420);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.25999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;filter:url(#filter2388)" id="rect2418" width="39.050846" height="87.05085" x="52.474575" y="4.8813562" />
+<rect y="4.8813562" x="6.474575" height="87.05085" width="39.050846" id="rect2422" style="opacity:1;fill:url(#linearGradient2426);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.25999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+<path sodipodi:nodetypes="cccccccc" id="path2428" d="M 24.835721,42.76764 L 24.835721,58.753411 L 50.752046,57.300159 L 50.025421,70.379425 L 67.706651,50.033898 L 50.26763,29.688372 L 50.509837,44.140155 L 24.835721,42.76764 z" style="fill:#ffe61e;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:2, 2;stroke-dashoffset:0;stroke-opacity:0.66120217" />
+</g>
+</g>
+</svg>

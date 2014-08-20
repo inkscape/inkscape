@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <_name>Corel DRAW Compressed Exchange files input (UC)</_name>
+    <id>org.inkscape.input.ccx.uniconvertor</id>
+    <dependency type="executable" location="extensions">uniconv-ext.py</dependency>
+    <input>
+        <extension>.ccx</extension>
+        <mimetype>application/x-xccx</mimetype>
+        <_filetypename>Corel DRAW Compressed Exchange files (UC) (*.ccx)</_filetypename>
+        <_filetypetooltip>Open compressed exchange files saved in Corel DRAW (UC)</_filetypetooltip>
+    </input>
+    <script>
+        <command reldir="extensions" interpreter="python">uniconv-ext.py</command>
+    </script>
+</inkscape-extension>

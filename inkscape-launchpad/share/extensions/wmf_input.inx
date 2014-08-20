@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <_name>Windows Metafile Input</_name>
+    <id>org.inkscape.input.wmf</id>
+    <dependency type="executable" location="extensions">uniconv-ext.py</dependency>
+    <input>
+        <extension>.wmf</extension>
+        <mimetype>application/x-wmf</mimetype>
+        <_filetypename>Windows Metafile (*.wmf)</_filetypename>
+        <_filetypetooltip>A popular graphics file format for clipart</_filetypetooltip>
+    </input>
+    <script>
+        <command reldir="extensions" interpreter="python">uniconv-ext.py</command>
+    </script>
+</inkscape-extension>

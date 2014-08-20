@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <_name>AutoCAD Plot Output</_name>
+    <id>org.inkscape.output.plt</id>
+    <dependency type="executable" location="extensions">plt_output.py</dependency>
+    <output>
+        <extension>.plt</extension>
+        <mimetype>image/x-plt</mimetype>
+        <_filetypename>HP Graphics Language Plot file [AutoCAD] (*.plt)</_filetypename>
+        <_filetypetooltip>Save a file for plotters</_filetypetooltip>
+    </output>
+    <script>
+        <command reldir="extensions" interpreter="python">plt_output.py</command>
+    </script>
+</inkscape-extension>

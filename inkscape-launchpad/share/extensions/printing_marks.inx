@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+  <_name>Printing Marks</_name>
+  <id>org.inkscape.printing.marks</id>
+  <dependency type="executable" location="extensions">printing_marks.py</dependency>
+  <dependency type="executable" location="extensions">inkex.py</dependency>
+
+  <param name="tab" type="notebook">
+    <page name="marks" _gui-text="Marks">
+      <param name="crop_marks"          type="boolean"    _gui-text="Crop Marks">true</param>
+      <param name="bleed_marks"         type="boolean"    _gui-text="Bleed Marks">false</param>
+      <param name="registration_marks"  type="boolean"    _gui-text="Registration Marks">true</param>
+      <param name="star_target"         type="boolean"    _gui-text="Star Target">false</param>
+      <param name="colour_bars"         type="boolean"    _gui-text="Color Bars">true</param>
+      <param name="page_info"           type="boolean"    _gui-text="Page Information">false</param>
+    </page>
+    <page name="pos" _gui-text="Positioning">
+      <param name="where" type="enum" _gui-text="Set crop marks to:">
+        <_item value="canvas">Canvas</_item>
+        <_item value="selection">Selection</_item>
+      </param>
+      <param name="unit" _gui-text="Unit:" type="enum">
+        <item value="px">px</item>
+        <item value="pt">pt</item>
+        <item value="in">in</item>
+        <item value="cm">cm</item>
+        <item value="mm">mm</item>
+      </param>
+      <param name="crop_offset"     type="float"  min="0.0"  max="9999.0" precision="3" _gui-text="Offset:">5</param>
+      <_param name="bleed_settings" type="description" appearance="header">Bleed Margin</_param>
+      <param name="bleed_top"       type="float"  indent="1" min="0.0"  max="9999.0"  precision="3" _gui-text="Top:">5</param>
+      <param name="bleed_bottom"    type="float"  indent="1" min="0.0"  max="9999.0"  precision="3" _gui-text="Bottom:">5</param>
+      <param name="bleed_left"      type="float"  indent="1" min="0.0"  max="9999.0"  precision="3" _gui-text="Left:">5</param>
+      <param name="bleed_right"     type="float"  indent="1" min="0.0"  max="9999.0"  precision="3" _gui-text="Right:">5</param>
+    </page>
+  </param>
+
+  <effect needs-live-preview="false">
+    <object-type>all</object-type>
+    <effects-menu>
+      <submenu _name="Render">
+        <submenu _name="Layout"/>
+      </submenu>
+    </effects-menu>
+  </effect>
+
+  <script>
+    <command reldir="extensions" interpreter="python">printing_marks.py</command>
+  </script>
+
+</inkscape-extension>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+  <_name>View Next Glyph</_name>
+  <id>org.inkscape.typography.nextglyphlayer</id>
+  <dependency type="executable" location="extensions">inkex.py</dependency>
+  <effect>
+    <object-type>all</object-type>
+    <effects-menu>
+      <submenu _name="Typography"/>
+    </effects-menu>
+  </effect>
+  <script>
+    <command reldir="extensions" interpreter="python">next_glyph_layer.py</command>
+  </script>
+	<options silent="true"></options>
+</inkscape-extension>

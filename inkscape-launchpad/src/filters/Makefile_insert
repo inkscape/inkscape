@@ -1,0 +1,46 @@
+## Makefile.am fragment sourced by src/Makefile.am.
+
+ink_common_sources +=	\
+	filters/blend.cpp				\
+	filters/blend.h					\
+	filters/colormatrix.cpp				\
+	filters/colormatrix.h				\
+	filters/componenttransfer.cpp			\
+	filters/componenttransfer-funcnode.cpp		\
+	filters/componenttransfer-funcnode.h		\
+	filters/componenttransfer.h			\
+	filters/composite.cpp				\
+	filters/composite.h				\
+	filters/convolvematrix.cpp			\
+	filters/convolvematrix.h			\
+	filters/diffuselighting.cpp			\
+	filters/diffuselighting.h			\
+	filters/displacementmap.cpp			\
+	filters/displacementmap.h			\
+	filters/distantlight.cpp			\
+	filters/distantlight.h				\
+	filters/flood.cpp				\
+	filters/flood.h					\
+	filters/gaussian-blur.cpp			\
+	filters/gaussian-blur.h				\
+	filters/image.cpp				\
+	filters/image.h					\
+	filters/merge.cpp				\
+	filters/merge.h					\
+	filters/mergenode.cpp				\
+	filters/mergenode.h				\
+	filters/morphology.cpp				\
+	filters/morphology.h				\
+	filters/offset.cpp				\
+	filters/offset.h				\
+	filters/pointlight.cpp				\
+	filters/pointlight.h				\
+	filters/specularlighting.cpp			\
+	filters/specularlighting.h			\
+	filters/spotlight.cpp				\
+	filters/spotlight.h				\
+	filters/tile.cpp				\
+	filters/tile.h					\
+	filters/turbulence.cpp				\
+	filters/turbulence.h
+

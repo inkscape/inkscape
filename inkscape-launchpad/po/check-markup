@@ -1,0 +1,257 @@
+#! /usr/bin/perl -w
+# Try to detect markup errors in translations.
+
+# Author: Peter Moulder <pmoulder@mail.csse.monash.edu.au>
+# Copyright (C) 2004 Monash University
+# License: GNU GPL v2 or (at your option) any later version.
+
+# Initial egrep version:
+#mydir=`dirname "$0"`
+#egrep '<b>[^<>]*(>|<([^/]|/([^b"]|b[^>])))' "$mydir"/*.po
+# Somewhat simplified by use of negative lookahead in perl.
+# (The egrep version as written can't detect problems that span a line,
+# e.g. unterminated `<b>'.  One way of doing the s/"\n"//g thing would be with
+# tr and sed, but that requires a sed that allows arbitrary line lengths, which
+# many non-GNU seds don't.)
+
+use strict;
+
+my $com = qr/(?:\#[^\n]*\n)/;
+my $str = qr/(?:"(?:[^"\\]|\\.)*")/;
+my $attrsRE = qr/(?: +[^<>]*)?/;
+my $span_attr = qr/(?:\ +(?:font_(?:desc|family)|face|size|style|weight|variant|stretch|(?:fore|back)ground|underline|rise|strikethrough|fallback|lang)\=\\\"[^\\\"]*\\\")/;
+
+my $rc = 0;
+
+sub po_error ($) {
+    my ($msg) = @_;
+    my $name = $ARGV;
+    $name =~ s,.*/,,;
+    print "$name: $msg:\n$_";
+    $rc = 1;
+}
+
+# Returns true iff successful.
+sub check_str ($$) {
+    my ($certainly_pango_str, $str) = @_;
+
+    $str =~ s/\A"// or die "Bug: No leading `\"' in `$str'";
+    $str =~ s/"\Z// or die "Bug: No trailing `\"' in `$str'";
+
+    if ($str =~ /\AProject-Id-Version:.*POT-Creation-Date/
+        or $str =~ /\A<[^<>]*>\Z/) {
+	# Not a Pango string.
+	return 1;
+    }
+
+    my $is_xml = 0;
+
+    # Remove valid sequences.
+    while ($str =~ s{<([bisu]|big|su[bp]|small|tt|span)(${attrsRE})>[^<>]*</\1>}{}) {
+	$is_xml = 1;
+	my ($tag, $attrs) = ($1, $2);
+	if ($tag eq 'span') {
+	    $attrs =~ s/${span_attr}*//g;
+	    if ($attrs ne '') {
+		$attrs =~ s/\A *//;
+		$attrs =~ s/\\"/"/g;
+		po_error("Unexpected <span> attributes `$attrs'");
+		return 0;
+	    }
+	} else {
+	    if ($attrs !~ /\A *\Z/) {
+		po_error("<$tag> can't have attributes in Pango");
+		return 0;
+	    }
+	}
+    }
+
+    if (($str =~ m{&#[^0-9]+;}) or ($str =~ m{&#x[^0-9a-fA-F]+;})) {
+	po_error("Entity declaration error (must look like '&#123;' or '&#x40;' and be in ASCII)");
+	return 0;
+    }
+
+    if (($str =~ m{&#[^0-9]+}) or ($str =~ m{&#x[^0-9a-fA-F]+})) {
+	po_error("Entity declaration error 2 (must look like '&#123;' or '&#x40;' and be in ASCII)");
+	return 0;
+    }
+
+    if (($str =~ m{&#(?![0-9]{2,4};)}) or ($str =~ m{&#x(?![0-9a-fA-F]{2,4};)})) {
+	po_error("Entity declaration error 3 (must look like '&#123;' or '&#x40;' and be in ASCII)");
+	return 0;
+    }
+
+    # Check for attributes etc. in non-<span> element.
+    if ($str =~ m{<([bisu]|big|su[bp]|small|tt)\b(?! *)>}) {
+	po_error("Unexpected characters in <$1> tag");
+	return 0;
+    }
+
+    if ($str =~ m{<([bisu]|big|su[bp]|small|span|tt)${attrsRE}>}) {
+	po_error("unclosed <$1>");
+	return 0;
+    }
+
+    if ($str =~ m{</\ *([bisu]|big|su[bp]|small|span|tt)\ *>}) {
+	po_error("Unmatched closing </$1>");
+	return 0;
+    }
+
+    if (!$is_xml and !$certainly_pango_str) {
+	$str =~ s/<(?:defs|image|rect|svg)>//g;
+	$str =~ s/<[ 01]//g;
+	$str =~ s/\A>+//;
+	$str =~ s/<+\Z//;
+	$str =~ s/\([<>][01]\)//g;
+	$str =~ s/ -> //g;
+
+	# Quoting.
+	$str =~ s/\[[<>]\]//g;
+	$str =~ s/\\"[<>]\\"//g;
+	$str =~ s/\xe2\x80\x9e[<>]\xe2\x80\x9c//g;
+	$str =~ s/\xc2\xab[<>]\xc2\xbb//;
+    }
+
+    $str =~ s/\A[^<>]*//;
+    $str =~ s/[^<>]*\Z//;
+
+    if ($str =~ /\A([<>])\Z/) {
+	if ($is_xml or $certainly_pango_str) {
+	    po_error("Unescaped `$1'");
+	    return 0;
+	} else {
+	    return 1;
+	}
+    }
+
+    if ($str ne '') {
+	po_error("parsing error for `$str'");
+	return 0;
+    }
+
+    return 1;
+}
+
+sub check_strs ($@) {
+    my $is_pango_str = shift(@_);
+    if ($#_ < 1) {
+	die "check_strs: expecting >= 2 strings";
+    }
+    if ((($_[0] eq '""') && ($_[1] =~ /Project-Id-Version:.*POT-Creation-Date:/s))
+    or ($_[0] eq '"> and < _scale by:"')
+    or $is_pango_str == 0)
+    {
+	# Not a Pango string.
+	return 1;
+    }
+    foreach my $str (@_) {
+	$str eq '""' or check_str($is_pango_str - 1, $str) or return 0;
+    }
+    return 1;
+}
+
+$/ = '';
+
+# Reference for the markup language:
+# http://developer.gnome.org/doc/API/2.0/pango/PangoMarkupFormat.html
+# (though not all translation strings will be pango markup strings).
+ENTRY: while(<>) {
+	if (m{\A${com}*\Z}) {
+	    next ENTRY;
+	}
+
+	# Concatenate multi-line string literals.
+	s/"\n\s*"//g;
+
+	if (!m{\A${com}*
+	       (?:msgctxt[^\n]*\n)?
+	       msgid[^\n]*\n
+	       ${com}*
+	       (?:
+	           msgstr[^\n]*\n
+		   ${com}*
+	         | msgid_plural[^\n]*\n
+		   ${com}*
+		   (?:msgstr\[[^\n]*\n${com}*)+
+	        )\Z}x)
+	{
+	    po_error('Not in msg format');
+	    next ENTRY;
+	}
+	if (!m{
+		\A${com}*
+	        (?:msgctxt\ ${str}\s*\n)?
+		msgid\ ${str}\s*\n
+		${com}*
+		(?:
+		    msgstr\ ${str}\s*\n
+		    ${com}*
+		  | msgid_plural\ ${str}\s*\n
+		    ${com}*
+		    (?:msgstr\[\d+\]\ ${str}\s*\n${com}*)+
+		)\Z}x)
+	{
+	    po_error('Mismatched quotes');
+	    next ENTRY;
+	}
+
+	if (m{\n\#(?:,\ [-a-z0-9]+)*,\ fuzzy}) {
+	    # Fuzzy entries aren't used, so ignore them.
+	    # (This prevents warnings about mismatching <>/ pattern.)
+	    next ENTRY;
+	}
+
+	# 0 for known not pango format, 2 for known pango format.
+	my $is_pango_format = 1;
+    	if (m{\n\#\.\ .*\bxgettext:(no-)?pango-format\s}) {
+            $is_pango_format = ( defined($1) ? 0 : 2 );
+	}
+	if (m{\n\#(?:,\ [-a-z0-9+])*,\ (no-)?pango-format[,\n]}) {
+	    $is_pango_format = ( defined($1) ? 0 : 2 );
+	}
+	if (m{\n\#:\ \.\./share/extensions/[-a-zA-Z0-9_]+\.(?:inx|py)(?:\.h)?:}) {
+	    $is_pango_format = 0;
+	}
+
+	if (m{\A
+	        ${com}*
+	        (?:msgctxt\ ${str}\s*\n)?
+	        msgid\ (${str})\n
+	        ${com}*
+	        msgstr\ (${str})\n
+	        ${com}*
+	      \Z}x)
+	{
+	    check_strs($is_pango_format, $1, $2) or next ENTRY;
+	}
+	elsif (m{\A
+	           ${com}*
+	           (?:msgctxt\ ${str}\s*\n)?
+		   msgid\ (${str})\n
+		   ${com}*
+		   msgid_plural\ (${str})\n
+		   ((?:${com}*msgstr\[\d+\]\ ${str}\n${com}*)+)
+		 \Z}x)
+	{
+	    my ($s1, $s2, $rest) = ($1, $2, $3);
+	    my @strs = ($s1, $s2);
+	    while ($rest =~ s/\A${com}*msgstr\[\d+\]\ (${str})\n${com}*//) {
+		push @strs, ($1);
+	    }
+	    $rest eq '' or die "BUG: unparsed plural entries `$rest'";
+	    check_strs($is_pango_format, @strs) or next ENTRY;
+	}
+	elsif (m{$str[ \t]}) {
+	    po_error('Trailing whitespace');
+	    next ENTRY;
+	} else {
+	    po_error("parse error; may be a bug in po/check-markup");
+	}
+}
+
+# Some makefiles (currently the top-level Makefile.am) expect this script to
+# exit 1 if any problems found.
+exit $rc;
+
+
+# vi: set autoindent shiftwidth=4 tabstop=8 encoding=utf-8 softtabstop=4 filetype=perl :

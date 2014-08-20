@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <_name>Orientation points</_name>
+    <id>ru.cnc-club.filter.gcodetools_orientation_no_options_no_preferences</id>
+	<dependency type="executable" location="extensions">gcodetools.py</dependency>
+	<dependency type="executable" location="extensions">inkex.py</dependency>
+	<param name='active-tab' type="notebook">
+
+		<page name='orientation' _gui-text='Orientation'>	
+
+			<param name="orientation-points-count" type="optiongroup" _gui-text="Orientation type:">
+<_option value="2">2-points mode
+(move and rotate,
+maintained aspect ratio X/Y)</_option>
+<_option value="3">3-points mode
+(move, rotate and mirror, 
+different X/Y scale)</_option>
+<_option value="graffiti">graffiti points</_option>
+<_option value="in-out reference point">in-out reference point</_option>
+
+			</param>
+			<param name="Zsurface" type="float" precision="5" min="-1000" max="1000" _gui-text="Z surface:">0</param>
+			<param name="Zdepth" type="float" precision="5" min="-1000" max="1000" _gui-text="Z depth:">-1</param>
+			<param name="unit" type="enum" _gui-text="Units (mm or in):">
+				<_item value="G21 (All units in mm)">mm</_item>
+				<_item value="G20 (All units in inches)">in</_item>
+			</param>
+
+			<_param name="help" type="description">
+Orientation points are used to calculate transformation (offset,scale,mirror,rotation in XY plane) of the path.
+3-points mode only: do not put all three into one line (use 2-points mode instead).
+
+You can modify Z surface, Z depth values later using text tool (3rd coordinates).
+
+If there are no orientation points inside current layer they are taken from the upper layer.
+
+Do not ungroup orientation points! You can select them using double click to enter the group or by Ctrl+Click.
+
+Now press apply to create control points (independent set for each layer).
+			</_param>
+		</page>
+
+		<page name='help' _gui-text='Help'>
+			<_param name="fullhelp" type="description">
+Gcodetools plug-in: converts paths to Gcode (using circular interpolation), makes offset paths and engraves sharp corners using cone cutters. 
+This plug-in calculates Gcode for paths using circular interpolation or linear motion when needed.
+
+Tutorials, manuals and support can be found at
+English support forum:
+	http://www.cnc-club.ru/gcodetools
+	
+and Russian support forum:
+	http://www.cnc-club.ru/gcodetoolsru
+
+Credits: Nick Drobchenko, Vladimir Kalyaev, John Brooker, Henry Nicolas, Chris Lusby Taylor.
+
+Gcodetools ver. 1.7
+</_param>	
+
+		</page>
+
+	</param>	
+    <effect>
+		<effects-menu>
+			<submenu _name="Gcodetools"/>
+		</effects-menu>
+		<object-type>path</object-type>
+    </effect>
+    <script>
+        <command reldir="extensions" interpreter="python">gcodetools.py</command>
+    </script>
+</inkscape-extension>

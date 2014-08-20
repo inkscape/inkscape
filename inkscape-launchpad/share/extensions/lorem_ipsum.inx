@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+	<_name>Lorem ipsum</_name>
+	<id>com.kaioa.lorem_ipsum</id>
+	<dependency type="executable" location="extensions">lorem_ipsum.py</dependency>
+	<dependency type="executable" location="extensions">inkex.py</dependency>
+	<param name="tab" type="notebook">
+        <page name="Options" _gui-text="Options">
+	        <param name="num" type="int" min="1" max="1000" _gui-text="Number of paragraphs:">5</param>
+	        <param name="sentencecount" type="int" min="2" max="100" _gui-text="Sentences per paragraph:">16</param>
+	        <param name="fluctuation" type="int" min="1" max="100" _gui-text="Paragraph length fluctuation (sentences):">4</param>
+        </page>
+        <page name="Help" _gui-text="Help">
+            <_param name="title" type="description">This effect creates the standard "Lorem Ipsum" pseudolatin placeholder text. If a flowed text is selected, Lorem Ipsum is added to it; otherwise a new flowed text object, the size of the page, is created in a new layer.</_param>
+        </page>
+    </param>
+    <effect>
+        <object-type>all</object-type>
+        <effects-menu>
+            <submenu _name="Text"/>
+        </effects-menu>
+    </effect>
+    <script>
+    	<command reldir="extensions" interpreter="python">lorem_ipsum.py</command>
+    </script>
+</inkscape-extension>

@@ -1,0 +1,136 @@
+Refcounting
+-----------
+
+INTRODUCTION
+
+Many objects in Inkscape have lifecycles which are managed by
+"reference counting".  Each such object has a counter associated with it,
+which is supposed to reflect the number of outstanding references to it.
+When that counter falls to zero, the object can be freed.
+
+This releases the programmer from worrying about having freed an object
+while somebody else is still using it (or someone else freeing while
+you're using it!).  Simply "ref" the object (increment the counter) to
+stake your claim, and then "unref" it (decrement the counter) when you don't
+need it anymore.  The ultimate decision to free the object is made safely
+behind the scenes.
+
+You should "ref" an object whenever you plan to hold onto it while
+transferring control to another part of the code (which might otherwise
+end up freeing the object out from under you).
+
+REFCOUNTING FUNCTIONS
+
+Ref and unref functions are provided to manipulate an object's refcount
+(and perhaps make the final decision to free the object), but their names
+will vary depending on the type of object.
+
+Examples include g_object_ref()/g_object_unref() (for most GObject-based
+types), sp_object_ref()/sp_object_unref() (for SPObject-derived classes),
+and GC::anchor()/GC::release (for garbage-collector managed objects deriving
+from GC::Anchored -- more on that later).
+
+[ note: for code underneath the Inkscape namespace, you need only write
+  GC::anchor(), but in other code you will need to write
+  Inkscape::GC::anchor(), or import the GC namespace to your .cpp file
+  with:
+
+    namespace GC = Inkscape::GC;
+
+  Consider this encouragement to start writing new code in the Inkscape
+  namespace. ]
+
+REFCOUNTING POLICY
+
+Refcounted objects start with a reference count of one when they are
+created.  This means that you do not need to manually ref one that you've
+just created.  However, you will still be responsible for unreffing it when
+you're done with it.
+
+This means that during the lifetime of an object, there should be N refs
+and N+1 unrefs on it.  If these become unbalanced, then you are likely to
+experience either transient crashing bugs (the object gets freed while
+someone is still using it) or memory leaks (the object never gets freed).
+
+As a rule, an object should be unreffed by the same class or compilation
+unit that reffed it.  Reffing or unreffing an object on someone else's behalf
+is usually a recipe for confusion (and defeats the point of refcounting,
+really).  If you pass someone a pointer, they should be the ones responsible
+for reffing it if they need to hold onto it.  Similarly, you shouldn't try to
+make the decision to unref it for them.
+
+When you've unreffed the last ref you know about, you should generally
+assume that the object is now gone forever.
+
+CIRCULAR REFERENCES
+
+One disadvantage of reference counting is that a naive application of it
+breaks down in the presence of objects that reference each other.  Common
+examples are elements in a doubly-linked list with "prev" and "next"
+pointers, and nodes in a tree, where a parent keeps a list of children, and
+children keep a pointer to their parent.  If both cases, if there is a "ref"
+in both directions, neither object can ever get freed.
+
+Because of this, circular data structures should be avoided when possible.
+When they are necessary, try only "reffing" in one direction
+(e.g. parent -> child) but not the other (e.g. child -> parent).
+
+This can sometimes be trickier than it sounds -- circular references don't
+have to be direct to cause problems.  A simple example of an indirect circular
+reference would be a circular singly-linked list, where the "last" element
+in the list points back to the "first".  In that case, unidirectional
+reffing isn't sufficient; you'd have no choice but to delegate ref handling to
+some object which encapsuled the circular list, reffing and unreffing entries
+as it added and removed them.
+
+ANCHORED OBJECTS
+
+As a rule of thumb, the garbage collector can see pointers in:
+
+ * global/static variables in the program
+
+ * local variables/parameters
+
+ * objects derived from GC::Managed<>
+
+ * STL containers using GC::Alloc<>
+
+ * objects manually allocated with GC::SCANNED
+
+It cannot see pointers in:
+
+ * global/static variables in shared libraries
+
+ * objects not derived from GC::Managed<>
+
+ * STL containers not using GC::Alloc<>
+
+Since a lot of important objects (e.g. gtkmm widgets or Glib collections)
+fall into the latter category, I've provided the GC::Anchored class from
+which garbage-collector managed classes can be derived if they may be
+remembered in such places.  As noted earlier, the associated ref and unref
+functions are GC::anchor() and GC::release(), respectively.
+
+For most refcounted objects, a nonzero refcount means "this object is in
+use", and a zero refcount means "this object is no longer in use, you can
+free it now".  For GC::Anchored objects, refcounting is merely an override
+to the normal operation of the garbage collector, so the rules are relaxed
+somewhat: a nonzero refcount merely means "the object is in use in places that
+the garbage collector can't see", and a zero refcount asserts that "the garbage
+collector can now see every use that matters".
+
+While GC::Anchored objects start with an initial refcount of one like
+any other refcounted type, in most cases it's safe (and convenient) to
+GC::release the object immediately upon creating it.  This is because the
+garbage collector can see references to the object from parameters or local
+variables.  Trust the collector.
+
+One final note:  when code is converted from pure refcounting to garbage
+collection with GC::Anchored, refs and unrefs between GC::Anchored objects
+should be removed.  Refs are no longer necessary, and when circular references
+are present, reffing will lead to memory leaks.
+
+Normally (unlike pure refcounting) the collector has no problem with freeing
+circular references, but GC::anchor()ing a reference the collector can
+already see overrides the collector's judgement.
+

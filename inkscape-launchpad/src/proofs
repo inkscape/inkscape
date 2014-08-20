@@ -1,0 +1,332 @@
+This file contains some loose proofs of a few properties.  It's somewhat
+ad-hoc.  At least it gives an indication of what assert/g_assert calls have
+been checked by a developer.  If an assertion does trigger, then this file may
+help in debugging that assertion failure.
+
+It's currently ordered by caller.
+
+(Re-ordering to avoid forward references in proofs might be a good idea,
+though this would in some cases require splitting up the proofs for a routine,
+e.g. proving preconditions of g called from f, then proving g's postcondition,
+then using that to prove something else in f again.  Furthermore it may not
+even be possible to avoid forward references for recursive/looping code.)
+
+
+
+src/pencil-context.cpp:fit_and_split
+
+Very loose proof of !sp_curve_empty (pc->red_curve) assertion:
+fit_and_split is called successively with its input varying only by appending a point.
+For the n_segs > 0 && unsigned(pc->npoints) < G_N_ELEMENTS(pc->p) condition to fail,
+we must have at least 3 distinct points, which means that a previous call had 2 distinct points,
+in which case we'd have filled in pc->red_curve to a non-empty curve.
+
+Expansion of the above claim of at least 3 distinct points: We know n_segs <= 0 ||
+unsigned(dc->npoints) >= G_N_ELEMENTS(pc->p) from the negation of the containing `if' condition.
+G_N_ELEMENTS(pc->p) is greater than 3 (in int arithmetic), from PencilTool::p array definition
+in pencil-context.h.  npoints grows by no more than one per fit_and_split invocation; we should be
+able to establish that dc->npoints == G_N_ELEMENTS(pc->p) if unsigned(dc->npoints) >=
+G_N_ELEMENTS(pc->p), in which case 3 <= dc->npoints in int arithmetic.  We know that dc->npoints >=
+2 from assertion at head of fit_and_split; in which case if n_segs <= 0 then fit_and_split has
+failed, which implies that dc->npoints > 2 (since the fitter can always exactly fit 2 points,
+i.e. it never fails if npoints == 2; TODO: add sp_bezier_fit_cubic postcondition for this).
+
+
+src/pencil-context.cpp:fit_and_split
+
+Proof of precondition: The only caller is spdc_add_freehand_point (by
+textual search in that file, and staticness).  See proof for that
+function.
+
+
+src/pencil-context.cpp:spdc_add_freehand_point
+
+Proof of fit_and_split `pc->npoints > 1' requirement:
+It initially unconditionally asserts `pc->npoints > 0'.  There are no function calls or modifications
+of pc or pc->npoints other than incrementing pc->npoints after that assertion.
+We assume that integer overflow doesn't occur during that increment,
+so we get pc->npoints > 1.
+
+
+src/pencil-context.cpp:spdc_set_endpoint
+
+Very loose proof of npoints > 0: Should be preceded by spdc_set_startpoint(pc) according to state
+transitions.  spdc_set_startpoint sets pc->npoints to 0 (handled at beginning of function) or 1.
+
+
+src/display/bezier-utils.cpp:compute_max_error
+
+Proof of postcondition: *splitPoint is set only from i, which goes from 1 to less than last.
+i isn't written to in the loop body: only uses are indexing built-in arrays d and u
+(and RHS of assignment).
+
+
+src/display/bezier-utils.cpp:sp_bezier_fit_cubic_full
+
+Proof of `nsegs1 != 0' assertion: nsegs1 is const.  Have already
+returned in the (nsegs1 < 0) case, so !(nsegs1 < 0), i.e. nsegs1 >= 0
+(given that nsegs1 is gint).  nsegs1 is set to
+sp_bezier_fit_cubic_full(_, _, _, splitPoint + 1, ...).  We will show
+that sp_bezier_fit_cubic_full ensures len < 2 || ret != 0.  splitPoint
+> 0 from compute_max_error postcondition combined with error >=
+precondition and thus having handled the compute_max_error returning 0
+case: if returned 0 for maxError then maxError <= error * 9.0 would be
+true, and we recalculate splitPoint; if the renewed maxError is 0 then
+the maxError <= error test will succeed and we return.  If we don't
+return, then the most recent compute_max_error must have returned
+non-zero, which implies (through compute_max_error postcondition) that
+splitPoint would have been set s.t. 0 < splitPoint.  splitPoint is not
+subsequently written to.  (It is subsequently passed only to
+sp_darray_center_tangent 2nd arg, which is a plain unsigned rather
+than reference.)  0 < splitPoint < last guarantees splitPoint + 1 >=
+2.  (We know splitPoint + 1 won't overflow because last = len - 1 and
+len is of the same type as splitPoint.)  Passing splitPoint + 1 for
+len of the call that sets nsegs1 ensures that nsegs1 is non-zero (from
+the len < 2 || ret != 0 property that we show below).  QED.
+
+Proof that len < 2 || (failed no-dups precondition) || ret != 0: All
+returns are either -1, 0, 1, or nsegs1 + nsegs2.  There are two
+literal 0 cases: one conditional on len < 2, and the other for failed
+precondition (non-uniqued data).  For the nsegs1 + nsegs2 case, we've
+already ruled out nsegs1 < 0 (through conditional return) and nsegs2 <
+0 (same).  The nsegs1 + nsegs2 case occurs only when we recurse; we've
+already shown the desired property for non-recursive case.  In the
+nsegs1 non-recursive case, we have that nsegs1 != 0, which combined
+with !(nsegs1 < 0) and !(nsegs2 < 0) implies that nsegs1 + nsegs2
+either overflows or is greater than 0.  We should be able to show that
+nsegs1 + nsegs2 < len even with exact arithmetic.  (Very loose proof:
+given that len >= 2 (from earlier conditional return), we can fit len
+points using len-1 segments even using straight line segments.)
+nsegs1 and nsegs2 are the same type as len, and we've shown that
+nsegs1 + nsegs2 in exact arithmetic is >= 0 from each operand being
+non-negative, so nsegs1 + nsegs2 doesn't overflow.  Thus nsegs1 +
+nsegs2 > 0.  Thus we have shown for each return point that either the
+return value is -1 or > 0 or occurs when len < 2 or in failure of
+no-dups precondition.  (We should also show that no-dups outer
+precondition being met implies it being met for inner instances of
+sp_bezier_fit_cubic_full, because we pass a subsequence of the data
+array, and don't write to that array.)  QED.
+
+We should also show that the recursion is finite for the inductive
+proof to hold.  The finiteness comes from inner calls having len > 0
+and len less than that of outer calls (from splitPoint calculation and
+0 < splitPoint < last for recursive case and last < len and transitive
+property of < for gint).  If len < 2 then we don't recurse
+(conditional return).
+
+We should go over this proof to make it clear that there are no
+"forward references" other than for recursive case.  We could also be
+more formal in use of inductive proof (e.g. clearly stating what the
+base and inductive premises are; namely the non-recursing and
+recursing cases of sp_bezier_fit_cubic_full).
+
+Better proof sketch that nseg1 + nsegs2 < len: ret < len for each
+recursive case other than where len > 0 precondition fails.  nsegs1 is
+calculated for inner len=splitPoint + 1, nsegs2 for inner len=len -
+splitPoint.  Assuming exact arithmetic we'll transform that to ret <=
+len - 1.  Implies that in exact arithmetic, nsegs1 + nsegs2 <=
+(splitPoint + 1 - 1) + (len - splitPoint - 1).  Simplifying RHS (using
+exact arithmetic): nsegs1 + nsegs2 <= len - 1, i.e. nsegs1 + nsegs2 <
+len.  Presumably we can show that machine arithmetic gets the same
+results as exact arithmetic from similar arguments used so far for
+showing that overflow doesn't occur.  For the recursive case the
+return values are either nsegs1 + nsegs2 or -1.
+
+We should also show that inner preconditions hold, especially the len
+> 0 precondition.  (For nsegs1 call, we use 0 < splitPoint and that
+splitPoint + 1 doesn't overflow.  For nsegs2 call, we pass len -
+splitPoint; combine with splitPoint < last, last = len - 1, and no
+overflow.)  We've already sketched a proof for no-dups precondition.
+The others are fairly simple.
+
+For error >= 0: error is const, and we pass it to all recursions.
+
+For inner max_beziers >= 1: recursions are conditional on outer
+1 < max_beziers before setting rec_max_beziers1 to max_beziers - 1,
+and passing rec_max_beziers1 as inner max_beziers value,
+so we have outer max_beziers >= 2 so inner max_beziers >= 1.
+max_beziers and rec_max_beziers1 are both const.
+
+
+src/display/bezier-utils.cpp:sp_darray_right_tangent(Point const[], unsigned)
+
+Proof of unit_vector precondition that a != Point(0, 0): our unequal precondition.
+
+Loose (incorrect) proof of unit_vector precondition that neither
+coordinate is NaN: our in_svg_plane precondition, and fact that
+in_svg_plane returns false if either argument is infinite.  HOWEVER,
+the unchecked in_svg_plane precondition isn't currently guaranteed, so
+we're just relying on the input points never being infinity (which
+might occur with strange zoom settings).
+
+
+src/display/bezier-utils.cpp:sp_darray_right_tangent(Point const[], unsigned, double)
+
+Loose proof of unit_vector precondition that a != Point(0, 0) for first call to unit_vector:
+
+We've asserted that 0 <= tolerance_sq; combine with tolerance_sq <
+distsq and transitivity of <=/< show that 0 < distsq.  Definition of
+dot should give us that t != 0.0, given that 0.0 * 0.0 == +0.0, and 0
+< +0.0 is false.
+
+Loose proof for the second unit_vector invocation: distsq != 0 from ?:
+condition, which should give us that t != Point(0, 0) in the same way
+as in the above proof.
+
+Proof of sp_darray_right_tangent(Point[], unsigned) preconditions: We
+have the same preconditions, and pass the same arguments.  d, *d and
+len are const.
+
+
+
+src/extension/internal/ps.cpp:PrintPS::print_fill_style:
+
+Proof of the
+   g_return_if_fail( style->fill.type == SP_PAINT_TYPE_COLOR
+                     || ( style->fill.type == SP_PAINT_TYPE_PAINTSERVER
+                          && SP_IS_GRADIENT(SP_STYLE_FILL_SERVER(style)) ) )
+at beginning of function:
+
+rgrep print_fill_style reveals no callers in any other files.  There are two calls in ps.cpp, both
+inside an `if' test of that same condition (with no relevant lines between the test and the call).
+Each call uses `style' as its second argument, and `style' in print_fill_style refers to its second
+parameter.  In both caller & callee, `style' is a const pointer to const, and there is very little
+code between the two tests, so the relevant values are very unlikely to change between the two
+tests.
+
+
+Proof of
+    g_assert( style->fill.type == SP_PAINT_TYPE_PAINTSERVER
+              && SP_IS_GRADIENT(SP_STYLE_FILL_SERVER(style)) ) :
+
+The g_return_if_fail(style->fill.type == SP_PAINT_TYPE_COLOR
+                     || ( style->fill.type == SP_PAINT_TYPE_PAINTSERVER
+                          && SP_IS_GRADIENT(SP_STYLE_FILL_SERVER(style)) ) )
+call at the beginning of the function, and we're in the `else' branch of a test for
+style->fill.type == SP_PAINT_TYPE_COLOR, and style is a const pointer to const, so it's likely that
+style->fill and the gradient object have the same values throughout.
+
+
+
+src/extensions/internal/ps.cpp:PrintPS::fill:
+
+Proof of the two assertions
+  g_assert( style->fill.type == SP_PAINT_TYPE_PAINTSERVER
+            && SP_IS_GRADIENT(SP_STYLE_FILL_SERVER(style)) ) :
+
+Each is in the `else' branch of a test for `style->fill.type == SP_PAINT_TYPE_COLOR',
+within a test for
+  ( style->fill.type == SP_PAINT_TYPE_COLOR
+    || ( style->fill.type == SP_PAINT_TYPE_PAINTSERVER
+         && SP_IS_GRADIENT(SP_STYLE_FILL_SERVER(style)) )  ).
+
+`style' is a const pointer to const, so the values are unlikely to have changed between the tests.
+
+
+
+src/seltrans.cpp:sp_sel_trans_update_handles
+
+Proof of requirements of sp_show_handles:
+
+sp_show_handles requirements: !arg1.empty.
+
+Before any call to sp_show_handles is a test `if (... || seltrans.empty) { ...; return; }'
+(with no `break' etc. call preventing that `return').
+Each subsequent sp_show_handles call uses seltrans as arg1.
+seltrans is a reference.  There are no calls between that failing seltrans.empty test
+and the sp_show_handles calls that pass seltrans.  The sole call is sp_remove_handles,
+probably doesn't have access to seltrans.
+
+
+
+src/seltrans.cpp:sp_show_handles
+
+Proof of precondition:
+
+sp_show_handles is static.  Searching reveals calls only in sp_sel_trans_update_handles (proof above).
+
+
+
+src/sp-spiral.cpp:sp_spiral_fit_and_draw
+
+Proof of postcondition is_unit_vector(*hat2):
+
+hat2 is set by sp_spiral_get_tangent unconditionally, which Ensures is_unit_vector(*hat2).
+We then negate *hat2, which doesn't affect its length.
+We pass it only to sp_bezier_fit_cubic_full, which claims constness of *hat2.
+
+Proof of unconditionalness: Not inside if/for/while.  No previous `return'.
+
+
+src/sp-spiral.cpp:sp_spiral_set_shape
+
+Loose proof of requirements for sp_spiral_fit_and_draw:
+
+ Proof of dstep > 0:
+ 
+  SAMPLE_STEP equals .25.
+  spiral->revo is bounded to [0.05, 20.0] (and non-NaN) by various CLAMP calls.
+  (TODO: Add precondition, given that those CLAMP calls are outside of this function.)
+  SAMPLE_SIZE equals 8.
+  dstep is const and equals SAMPLE_STEP / spiral->revo / (SAMPLE_SIZE - 1),
+  == 1 / (4 * [.05, 20.0] * 7)
+  == 1 / [1.4, 560]
+  dstep in [.0018, .714].
+
+ Proof of is_unit_vector(hat1):
+
+  Initially guaranteed by sp_spiral_get_tangent Ensures.
+  For subsequent calls, hat1 is set from negated hat2 as set by sp_spiral_fit_and_draw,
+  which Ensures is_unit_vector(hat2).
+
+
+
+src/style.cpp:sp_css_attr_from_style:
+
+Proof of sp_style_write_string pre `style != NULL':
+
+Passes style as style argument.  style is const, and has already been checked against NULL.
+
+
+src/style.cpp:sp_css_attr_from_object
+
+Proof of `flags in {IFSET, ALWAYS} precondition:
+
+ $ grep sp_css_attr_from_object `sed 's,#.*,,' make.files `
+ file.cpp:  SPCSSAttr *style = sp_css_attr_from_object (SP_DOCUMENT_ROOT (doc));
+ selection-chemistry.cpp:  SPCSSAttr *css = sp_css_attr_from_object (SP_OBJECT(item), SP_STYLE_FLAG_ALWAYS);
+ selection-chemistry.cpp:  SPCSSAttr *temp = sp_css_attr_from_object (last_element, SP_STYLE_FLAG_IFSET);
+ style.cpp:sp_css_attr_from_object (SPObject *object, guint flags)
+ style.h:SPCSSAttr *sp_css_attr_from_object(SPObject *object, guint flags = SP_STYLE_FLAG_IFSET);
+
+
+src/style.cpp:sp_css_attr_from_style
+
+Proof of precondition `style != NULL':
+
+Callers are selection-chemistry.cpp and style.cpp:
+
+ $ grep sp_css_attr_from_style `sed 's,#.*,,' make.files `
+selection-chemistry.cpp:  SPCSSAttr *css = sp_css_attr_from_style (query, SP_STYLE_FLAG_ALWAYS);
+ style.cpp:sp_css_attr_from_style (SPStyle const *const style, guint flags)
+ style.cpp:  return sp_css_attr_from_style (style, flags);
+ style.h:SPCSSAttr *sp_css_attr_from_style (SPStyle const *const style, guint flags);
+
+selection-chemistry.cpp caller: query is initialized from sp_style_new()
+(which guarantees non-NULL), and is const.
+
+style.cpp caller: preceded by explicit test for NULL:
+
+ $ grep -B2 sp_css_attr_from_style style.cpp|tail -3
+     if (style == NULL)
+         return NULL;
+     return sp_css_attr_from_style (style, flags);
+
+
+
+
+# Local Variables:
+# mode:indented-text
+# fill-column:99
+# End:
+# vim: filetype=text:tabstop=8:fileencoding=utf-8:textwidth=99 :

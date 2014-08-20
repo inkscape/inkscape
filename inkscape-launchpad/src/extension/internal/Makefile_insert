@@ -1,0 +1,173 @@
+## Makefile.am fragment sourced by src/Makefile.am.
+
+if WITH_LIBWPG
+ink_common_sources += \
+	extension/internal/wpg-input.cpp	\
+	extension/internal/wpg-input.h
+endif
+
+if WITH_LIBVISIO
+ink_common_sources += \
+	extension/internal/vsd-input.cpp	\
+	extension/internal/vsd-input.h
+endif
+
+if WITH_LIBCDR
+ink_common_sources += \
+	extension/internal/cdr-input.cpp	\
+	extension/internal/cdr-input.h
+endif
+
+if USE_IMAGE_MAGICK
+ink_common_sources +=			\
+	extension/internal/bitmap/imagemagick.cpp		\
+	extension/internal/bitmap/imagemagick.h			\
+	extension/internal/bitmap/adaptiveThreshold.cpp		\
+	extension/internal/bitmap/adaptiveThreshold.h		\
+	extension/internal/bitmap/addNoise.cpp			\
+	extension/internal/bitmap/addNoise.h			\
+	extension/internal/bitmap/blur.cpp			\
+	extension/internal/bitmap/blur.h			\
+	extension/internal/bitmap/channel.cpp			\
+	extension/internal/bitmap/channel.h			\
+	extension/internal/bitmap/charcoal.cpp			\
+	extension/internal/bitmap/charcoal.h			\
+	extension/internal/bitmap/colorize.cpp			\
+	extension/internal/bitmap/colorize.h			\
+	extension/internal/bitmap/contrast.cpp			\
+	extension/internal/bitmap/contrast.h			\
+	extension/internal/bitmap/crop.cpp			\
+	extension/internal/bitmap/crop.h			\
+	extension/internal/bitmap/cycleColormap.cpp		\
+	extension/internal/bitmap/cycleColormap.h		\
+	extension/internal/bitmap/despeckle.cpp			\
+	extension/internal/bitmap/despeckle.h			\
+	extension/internal/bitmap/edge.cpp			\
+	extension/internal/bitmap/edge.h			\
+	extension/internal/bitmap/emboss.cpp			\
+	extension/internal/bitmap/emboss.h			\
+	extension/internal/bitmap/enhance.cpp			\
+	extension/internal/bitmap/enhance.h			\
+	extension/internal/bitmap/equalize.cpp			\
+	extension/internal/bitmap/equalize.h			\
+	extension/internal/bitmap/gaussianBlur.cpp		\
+	extension/internal/bitmap/gaussianBlur.h		\
+	extension/internal/bitmap/implode.cpp			\
+	extension/internal/bitmap/implode.h			\
+	extension/internal/bitmap/level.cpp			\
+	extension/internal/bitmap/level.h			\
+	extension/internal/bitmap/levelChannel.cpp		\
+	extension/internal/bitmap/levelChannel.h		\
+	extension/internal/bitmap/medianFilter.cpp		\
+	extension/internal/bitmap/medianFilter.h		\
+	extension/internal/bitmap/modulate.cpp			\
+	extension/internal/bitmap/modulate.h			\
+	extension/internal/bitmap/negate.cpp			\
+	extension/internal/bitmap/negate.h			\
+	extension/internal/bitmap/normalize.cpp			\
+	extension/internal/bitmap/normalize.h			\
+	extension/internal/bitmap/oilPaint.cpp			\
+	extension/internal/bitmap/oilPaint.h			\
+	extension/internal/bitmap/opacity.cpp			\
+	extension/internal/bitmap/opacity.h			\
+	extension/internal/bitmap/raise.cpp			\
+	extension/internal/bitmap/raise.h			\
+	extension/internal/bitmap/reduceNoise.cpp		\
+	extension/internal/bitmap/reduceNoise.h			\
+	extension/internal/bitmap/sample.cpp			\
+	extension/internal/bitmap/sample.h			\
+	extension/internal/bitmap/shade.cpp			\
+	extension/internal/bitmap/shade.h			\
+	extension/internal/bitmap/sharpen.cpp			\
+	extension/internal/bitmap/sharpen.h			\
+	extension/internal/bitmap/solarize.cpp			\
+	extension/internal/bitmap/solarize.h			\
+	extension/internal/bitmap/spread.cpp			\
+	extension/internal/bitmap/spread.h			\
+	extension/internal/bitmap/swirl.cpp			\
+	extension/internal/bitmap/swirl.h			\
+	extension/internal/bitmap/threshold.cpp			\
+	extension/internal/bitmap/threshold.h			\
+	extension/internal/bitmap/unsharpmask.cpp		\
+	extension/internal/bitmap/unsharpmask.h			\
+	extension/internal/bitmap/wave.cpp			\
+	extension/internal/bitmap/wave.h
+endif
+
+ink_common_sources +=	\
+	extension/internal/bluredge.h	\
+	extension/internal/bluredge.cpp	\
+	extension/internal/clear-n_.h   \
+	extension/internal/grid.h	\
+	extension/internal/grid.cpp	\
+	extension/internal/gimpgrad.h	\
+	extension/internal/gimpgrad.cpp	\
+	extension/internal/svg.h	\
+	extension/internal/svg.cpp	\
+	extension/internal/svgz.h	\
+	extension/internal/svgz.cpp	\
+	extension/internal/cairo-ps-out.h	\
+	extension/internal/cairo-ps-out.cpp	\
+	extension/internal/cairo-render-context.h	\
+	extension/internal/cairo-render-context.cpp	\
+	extension/internal/cairo-renderer.h \
+	extension/internal/cairo-renderer.cpp \
+	extension/internal/cairo-renderer-pdf-out.h	\
+	extension/internal/cairo-renderer-pdf-out.cpp	\
+	extension/internal/cairo-png-out.h \
+	extension/internal/cairo-png-out.cpp \
+	extension/internal/javafx-out.cpp	\
+	extension/internal/javafx-out.h	\
+	extension/internal/gdkpixbuf-input.h	\
+	extension/internal/gdkpixbuf-input.cpp	\
+	extension/internal/latex-text-renderer.h \
+	extension/internal/latex-text-renderer.cpp \
+	extension/internal/pdfinput/svg-builder.h \
+	extension/internal/pdfinput/svg-builder.cpp \
+	extension/internal/pdfinput/pdf-parser.h \
+	extension/internal/pdfinput/pdf-parser.cpp \
+	extension/internal/pdfinput/pdf-input.h	\
+	extension/internal/pdfinput/pdf-input.cpp	\
+	extension/internal/pov-out.cpp	\
+	extension/internal/pov-out.h	\
+	extension/internal/odf.cpp	\
+	extension/internal/odf.h	\
+	extension/internal/latex-pstricks.cpp	\
+	extension/internal/latex-pstricks.h	\
+	extension/internal/latex-pstricks-out.cpp	\
+	extension/internal/latex-pstricks-out.h	\
+	extension/internal/filter/bevels.h	\
+	extension/internal/filter/blurs.h \
+	extension/internal/filter/bumps.h \
+	extension/internal/filter/color.h \
+	extension/internal/filter/distort.h \
+	extension/internal/filter/filter.h \
+	extension/internal/filter/image.h \
+	extension/internal/filter/morphology.h \
+	extension/internal/filter/overlays.h \
+	extension/internal/filter/paint.h \
+	extension/internal/filter/protrusions.h \
+	extension/internal/filter/shadows.h \
+	extension/internal/filter/textures.h \
+	extension/internal/filter/transparency.h \
+	extension/internal/filter/filter-all.cpp \
+	extension/internal/filter/filter-file.cpp \
+	extension/internal/filter/filter.cpp \
+	extension/internal/filter/filter.h \
+	extension/internal/text_reassemble.c \
+	extension/internal/text_reassemble.h \
+	extension/internal/emf-print.h \
+	extension/internal/emf-print.cpp \
+	extension/internal/emf-inout.h \
+	extension/internal/emf-inout.cpp \
+	extension/internal/metafile-inout.h \
+	extension/internal/metafile-inout.cpp \
+	extension/internal/metafile-print.h \
+	extension/internal/metafile-print.cpp \
+	extension/internal/wmf-print.h \
+	extension/internal/wmf-print.cpp \
+	extension/internal/wmf-inout.h \
+	extension/internal/wmf-inout.cpp \
+	extension/internal/image-resolution.h \
+	extension/internal/image-resolution.cpp
+	

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <_name>Set a layout group</_name>
+    <id>org.inkscape.web.slicer.create-group</id>
+    <dependency type="executable" location="extensions">webslicer_effect.py</dependency>
+    <dependency type="executable" location="extensions">webslicer_create_group.py</dependency>
+    <dependency type="executable" location="extensions">inkex.py</dependency>
+	<param name="tab" type="notebook">
+        <page name="Options" _gui-text="Options">
+            <param name="html-id" type="string" _gui-text="HTML id attribute:"></param>
+            <param name="html-class" type="string" _gui-text="HTML class attribute:"></param>
+            <param name="width-unity" type="enum" _gui-text="Width unit:">
+            <_item value="px">Pixel (fixed)</_item>
+            <_item value="percent">Percent (relative to parent size)</_item>
+            <_item value="undefined">Undefined (relative to non-floating content size)</_item>
+            </param>
+            <param name="height-unity" type="enum" _gui-text="Height unit:">
+            <_item value="px">Pixel (fixed)</_item>
+            <_item value="percent">Percent (relative to parent size)</_item>
+            <_item value="undefined">Undefined (relative to non-floating content size)</_item>
+            </param>
+            <param name="bg-color" type="string" _gui-text="Background color:"></param>
+        </page>
+        <page name="Help" _gui-text="Help">
+            <_param name="about" type="description">Layout Group is only about to help a better code generation (if you need it). To use this, you must to select some "Slicer rectangles" first.</_param>
+        </page>
+    </param>
+    <effect needs-live-preview="false">
+        <object-type>all</object-type>
+        <effects-menu>
+            <submenu _name="Web">
+                <submenu _name="Slicer"/>
+            </submenu>
+        </effects-menu>
+    </effect>
+    <script>
+        <command reldir="extensions" interpreter="python">webslicer_create_group.py</command>
+    </script>
+</inkscape-extension>

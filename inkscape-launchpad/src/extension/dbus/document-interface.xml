@@ -1,0 +1,1529 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+ * This is the master description of the DBus document interface.
+ *
+ * This file is used to generate both glue code and documentation.
+ * The methods are in the same order as the .cpp/.h and the sections are labeled.
+ *
+ * Any change to method prototypes in document-interface.cpp MUST be reflected here.
+ *
+ * This file is the proverbial gold standard for the document interface. 
+ *
+ * Authors:
+ *   Soren Berg <Glimmer07@gmail.com>
+ *
+ * Copyright (C) 2009 Soren Berg
+ *
+ * Released under GNU GPL, read the file 'COPYING' for more information
+-->
+ 
+ 
+<node name="/org/inkscape/document"
+  xmlns:doc="http://www.freedesktop.org/dbus/1.0/doc.dtd"
+>
+c
+  <interface name="org.inkscape.document">
+
+    <!-- MISC FUNCTIONS -->
+
+    <method name="delete_all" >
+    </method>
+
+    <method name="call_verb">
+      <arg type="s" name="verbid" direction="in">
+        <doc:doc>
+          <doc:summary>The string id of a verb.  For example: "EditSelectAll".</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>This method allows you to call any Inkscape verb using it's associated string.  Every button and menu item has an associated verb, so this allows access to some extra functionality if one is willing to do the prerequisite research.  The list of verbs can be found at:</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <!-- CREATION FUNCTIONS -->
+
+    <method name="rectangle">
+      <arg type="i" name="x" direction="in" >
+        <doc:doc>
+          <doc:summary>X coordinate for the top left corner of the rectangle.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="i" name="y" direction="in" >
+        <doc:doc>
+          <doc:summary>Y coordinate for the top left corner of the rectangle.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="i" name="width" direction="in" >
+        <doc:doc>
+          <doc:summary>Width of the rectangle.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="i" name="height" direction="in" >
+        <doc:doc>
+          <doc:summary>Height of the rectangle.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="s" name="object_name" direction="out" >
+        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value="error"/>
+        <doc:doc>
+          <doc:summary>The name of the new rectangle.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>This method creates a rectangle in the current layer using the current document style.</doc:para>
+          <doc:para>It is recommended that you save the return value if you will want to modify this particular shape later.</doc:para>
+          <doc:para>Additional variables include:</doc:para>
+          <doc:para>cx and cy: set these anywhere from zero to half the width or height respectively of the rectangle to give it rounded corners.</doc:para>
+        </doc:description>
+        <doc:seealso><doc:ref type="interface" to="Coordinate System">Coordinate System</doc:ref></doc:seealso>
+      </doc:doc>
+    </method>
+
+    <method name="ellipse">
+      <arg type="i" name="x" direction="in" >
+        <doc:doc>
+          <doc:summary>X coordinate for the top left corner of the ellipse.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="i" name="y" direction="in" >
+        <doc:doc>
+          <doc:summary>Y coordinate for the top left corner of the ellipse.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="i" name="width" direction="in" >
+        <doc:doc>
+          <doc:summary>Width of the ellipse.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="i" name="height" direction="in" >
+        <doc:doc>
+          <doc:summary>Height of the ellipse.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="s" name="object_name" direction="out" >
+        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value="error"/>
+        <doc:doc>
+          <doc:summary>The name of the new ellipse.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>This method creates a ellipse in the current layer using the current document style.</doc:para>
+          <doc:para>It is recommended that you save the return value if you will want to modify this particular shape later.</doc:para>
+          <doc:para>Additional variables include:</doc:para>
+          <doc:para>"sodipodi:start" and "sodipodi:end": set these between 0 and Pi to create wedges or Pacman like shapes.</doc:para>
+        </doc:description>
+        <doc:seealso><doc:ref type="interface" to="Coordinate System">Coordinate System</doc:ref></doc:seealso>
+      </doc:doc>
+    </method>
+
+    <method name="polygon">
+      <arg type="i" name="cx" direction="in" >
+        <doc:doc>
+          <doc:summary>X coordinate for the center of the polygon.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="i" name="cy" direction="in" >
+        <doc:doc>
+          <doc:summary>Y coordinate for the center of the polygon.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="i" name="radius" direction="in" >
+        <doc:doc>
+          <doc:summary>Radius from the center to one of the points.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="i" name="rotation" direction="in" >
+        <doc:doc>
+          <doc:summary>Angle in degrees to rotate.  0 will have the first point pointing straight up.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="i" name="sides" direction="in" >
+        <doc:doc>
+          <doc:summary>Number of sides of the polygon.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="s" name="object_name" direction="out" >
+        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value="error"/>
+        <doc:doc>
+          <doc:summary>The name of the new polygon.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>This method creates a polygon in the current layer using the current document style.</doc:para>
+          <doc:para>It is recommended that you save the return value if you will want to modify this particular shape later.</doc:para>
+          <doc:para>Note: this is actually a <doc:ref type="method" to="document.star">star</doc:ref> with "sodipodi:flatsided" set to true, which causes it to ignore the arg2 and r2 values.</doc:para>
+        </doc:description>
+        <doc:seealso><doc:ref type="interface" to="Coordinate System">Coordinate System</doc:ref></doc:seealso>
+      </doc:doc>
+    </method>
+
+    <method name="star">
+      <arg type="i" name="cx" direction="in" >
+        <doc:doc>
+          <doc:summary>X coordinate for the center of the star.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="i" name="cy" direction="in" >
+        <doc:doc>
+          <doc:summary>Y coordinate for the center of the star.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="i" name="r1" direction="in" >
+        <doc:doc>
+          <doc:summary>distance from the center for the first point.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="i" name="r2" direction="in" >
+        <doc:doc>
+          <doc:summary>distance from the center for the second point.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="d" name="arg1" direction="in" >
+        <doc:doc>
+          <doc:summary>Angle in radians for the first point.  0 is 90 degrees to the right of straight up.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="d" name="arg2" direction="in" >
+        <doc:doc>
+          <doc:summary>Angle in radians for the second point. 0 is 90 degrees to the right of straight up.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="i" name="sides" direction="in" >
+        <doc:doc>
+          <doc:summary>Number of times to repeat the points around the star.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="d" name="rounded" direction="in" >
+        <doc:doc>
+          <doc:summary>How rounded to make the star.  0 to 1 recommended for moderate to medium curves.  10 for extreme curves.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="s" name="object_name" direction="out" >
+        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value="error"/>
+        <doc:doc>
+          <doc:summary>The name of the new star.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>This method creates a star in the current layer using the current document style.</doc:para>
+          <doc:para>It is recommended that you save the return value if you will want to modify this particular shape later.</doc:para>
+          <doc:para>Stars are quite complicated.  Here is how they are represented:  There are two points, represented by sodipodi:arg1 and sodipodi:arg2 for angle in radians and sodipodi:r1 and sodipodi:r2 for respective radius from the center point.  The further one is a point of the star, the shorter one one of the valleys.  This point and valley are repeated according to sodipodi:sides.  sodipodi:rounded controls their control handles.</doc:para>
+        </doc:description>
+        <doc:seealso><doc:ref type="interface" to="Coordinate System">Coordinate System</doc:ref></doc:seealso>
+      </doc:doc>
+    </method>
+
+    <method name="spiral">
+      <arg type="i" name="cx" direction="in" >
+        <doc:doc>
+          <doc:summary>X coordinate for the center of the spiral.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="i" name="cy" direction="in" >
+        <doc:doc>
+          <doc:summary>Y coordinate for the center of the spiral.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="i" name="r" direction="in" >
+        <doc:doc>
+          <doc:summary>Radius of the spiral.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="i" name="revolutions" direction="in" >
+        <doc:doc>
+          <doc:summary>Number of revolutions.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="s" name="object_name" direction="out" >
+        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value="error"/>
+        <doc:doc>
+          <doc:summary>The name of the new spiral.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>This method creates a spiral in the current layer using the current document style.  However, fill is automatically set to "none".  Stroke is unmodified.</doc:para>
+          <doc:para>It is recommended that you save the return value if you will want to modify this particular shape later.</doc:para>
+          <doc:para>Additional variables include:</doc:para>
+          <doc:para>"sodipodi:expansion": at 1 the spiral gets bigger at a constant rate.  Less than one and the loops get tighter and tighter as it goes.  More than one and they get looser and looser.  This affects the number of revolutions so that it might not actually match the "sodipodi:revolutions" argument.</doc:para>
+          <doc:para>"sodipodi:t0": at 0 the entire spiral is drawn, at 0.5 it is only drawn %50 of the way (starting from the outside) etc.</doc:para>
+          <doc:para>"sodipodi:argument": Rotates the spiral.  In radians.</doc:para>
+        </doc:description>
+        <doc:seealso><doc:ref type="interface" to="Coordinate System">Coordinate System</doc:ref></doc:seealso>
+      </doc:doc>
+    </method>
+
+    <method name="line">
+      <arg type="i" name="x" direction="in" >
+        <doc:doc>
+          <doc:summary>X coordinate for the first point.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="i" name="y" direction="in" >
+        <doc:doc>
+          <doc:summary>Y coordinate for the first point.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="i" name="x2" direction="in" >
+        <doc:doc>
+          <doc:summary>X coordinate for the second point.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="i" name="y2" direction="in" >
+        <doc:doc>
+          <doc:summary>Y coordinate for the second point.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="s" name="object_name" direction="out" >
+        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value="error"/>
+        <doc:doc>
+          <doc:summary>The name of the new line.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>This method creates a line in the current layer using the current document style.  It's a path, so the only attribute it will pay any attention to is "transform".</doc:para>
+        </doc:description>
+        <doc:seealso><doc:ref type="interface" to="Coordinate System">Coordinate System</doc:ref></doc:seealso>
+      </doc:doc>
+    </method>
+
+    <method name="text">
+      <arg type="i" name="x" direction="in" >
+        <doc:doc>
+          <doc:summary>The x coordinate to put the text at.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="i" name="y" direction="in" >
+        <doc:doc>
+          <doc:summary>The y coordinate to put the text at.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="s" name="text" direction="in" >
+        <doc:doc>
+          <doc:summary>The text you want.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="s" name="object_name" direction="out" >
+        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value="error"/>
+        <doc:doc>
+          <doc:summary>The name of the new text.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>This method creates some text in the current layer.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+    
+    <method name="image">
+      <arg type="i" name="x" direction="in" >
+        <doc:doc>
+          <doc:summary>The x coordinate to put the image at.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="i" name="y" direction="in" >
+        <doc:doc>
+          <doc:summary>The y coordinate to put the image at.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="s" name="text" direction="in" >
+        <doc:doc>
+          <doc:summary>The full path of the image you want.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="s" name="object_name" direction="out" >
+        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value="error"/>
+        <doc:doc>
+          <doc:summary>The name of the new image.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>This method imports a non-vector image (such as a jpeg, png, etc.) and places it at the given coordinates.  The resulting shape has no style or path but can be treated like a rectangle.  With and height can be set explicitly (will deform image) or transform strings or <doc:ref type="method" to="document.selection_scale">selection_scale()</doc:ref> can scale it relatively.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="import">
+      <arg type="s" name="pathname" direction="in" >
+        <doc:doc>
+          <doc:summary>The path to a valid svg file.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="s" name="object_name" direction="out" >
+        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value="error"/>
+        <doc:doc>
+          <doc:summary>The name of the new image.</doc:summary>
+        </doc:doc>
+      </arg>      
+      <doc:doc>
+        <doc:description>
+          <doc:para>Imports the file at pathname. Similar to the image
+          method.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    
+    <method name="node">
+      <arg type="s" name="svgtype" direction="in" >
+        <doc:doc>
+          <doc:summary>The type of node, probably "svg:path"</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="s" name="node_name" direction="out" >
+        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value="error"/>
+        <doc:doc>
+          <doc:summary>The name of the new node.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Make any kind of node you want.  Mostly for making paths.  (May need to allow updateRepr to be called for it to show up.)</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <!-- ENVIRONMENT FUNCTIONS -->
+
+    <method name="document_get_width">
+      <arg type="d" name="val" direction="out" >
+        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value=""/>
+        <doc:doc>
+          <doc:summary>Document width.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Retrieve the width of the current document. anything outside the boundary will not be printed or exported but will be saved.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="document_get_height">
+      <arg type="d" name="val" direction="out" >
+        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value=""/>
+        <doc:doc>
+          <doc:summary>Document height.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Retrieve the height of the current document. anything outside the boundary will not be printed or exported but will be saved.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="document_get_css">
+      <arg type="s" name="css" direction="out" >
+        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value="error"/>
+        <doc:doc>
+          <doc:summary>CSS attribute string for the document.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Get the current style for the document.  All new shapes will use this style if it exists.</doc:para>
+        </doc:description>
+        <doc:seealso><doc:ref type="interface" to="Style Strings">Style Strings</doc:ref></doc:seealso>
+      </doc:doc>
+    </method>
+
+    <method name="document_set_css">
+      <arg type="s" name="stylestring" direction="in" >
+        <doc:doc>
+          <doc:summary>A new CSS attribute string for the document.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Set the current style for the document.  All new shapes will use this style if it exists.</doc:para>
+        </doc:description>
+        <doc:seealso><doc:ref type="interface" to="Style Strings">Style Strings</doc:ref></doc:seealso>
+      </doc:doc>
+    </method>
+
+    <method name="document_merge_css">
+      <arg type="s" name="stylestring" direction="in" >
+        <doc:doc>
+          <doc:summary>A new CSS attribute string for the document.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Merge this this string with the current style for the document.  All new shapes will use this style if it exists.</doc:para>
+        </doc:description>
+        <doc:seealso><doc:ref type="interface" to="Style Strings">Style Strings</doc:ref>, <doc:ref type="method" to="document.merge_css">merge_css()</doc:ref></doc:seealso>
+      </doc:doc>
+    </method>
+
+    <method name="document_resize_to_fit_selection">
+      <doc:doc>
+        <doc:description>
+          <doc:para>Resize the document to contain all of the currently selected objects.</doc:para>
+          <doc:para>This ensures that the image is not clipped when printing or exporting.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+
+
+    <method name="document_set_display_area">
+      <arg type="d" name="x0" direction="in" >
+        <doc:doc>
+          <doc:summary></doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="d" name="y0" direction="in" >
+        <doc:doc>
+          <doc:summary></doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="d" name="x1" direction="in" >
+        <doc:doc>
+          <doc:summary></doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="d" name="y1" direction="in" >
+        <doc:doc>
+          <doc:summary></doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="d" name="border" direction="in" >
+        <doc:doc>
+          <doc:summary></doc:summary>
+        </doc:doc>
+      </arg>        
+      <doc:doc>
+        <doc:description>
+          <doc:para>Set display area.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="document_get_display_area">
+      <doc:doc>
+        <doc:description>
+          <doc:para>Get display area.</doc:para>
+        </doc:description>
+      </doc:doc>
+      <arg type="ad" name="area" direction="out" >
+        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value=""/>
+        <doc:doc>
+          <doc:summary>area</doc:summary>
+        </doc:doc>
+      </arg>      
+    </method>
+      
+    
+    <!-- OBJECT FUNCTIONS -->
+
+    <method name="set_attribute">
+      <arg type="s" name="shape" direction="in" >
+        <doc:doc>
+          <doc:summary>The id of an object.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="s" name="attribute" direction="in" >
+        <doc:doc>
+          <doc:summary>The name of the attribute.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="s" name="newval" direction="in" >
+        <doc:doc>
+          <doc:summary>The new value of the attribute.  This will overwrite anything already set.  To merge styles, see <doc:ref type="method" to="document.merge_css">merge_css()</doc:ref>. </doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Set any attribute, the available attributes depend on what kind of shape the object node represents.  See <doc:ref type="method" to="document.rectangle">shape creation functions</doc:ref> for more details.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+
+    <method name="set_text">
+      <arg type="s" name="shape" direction="in" >
+        <doc:doc>
+          <doc:summary>The id of an object.</doc:summary>
+        </doc:doc>
+      </arg>
+
+      <arg type="s" name="text" direction="in" >
+        <doc:doc>
+          <doc:summary>The text you want.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>set text of text object.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+
+    <method name="text_apply_style">
+      <arg type="s" name="shape" direction="in" >
+        <doc:doc>
+          <doc:summary>The id of an object.</doc:summary>
+        </doc:doc>
+      </arg>
+
+      <arg type="i" name="start" direction="in" >
+        <doc:doc>
+          <doc:summary>start text pos.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="i" name="end" direction="in" >
+        <doc:doc>
+          <doc:summary>end text pos.</doc:summary>
+        </doc:doc>
+      </arg>
+      
+      <arg type="s" name="css_attrib" direction="in" >
+        <doc:doc>
+          <doc:summary>css attribute.</doc:summary>
+        </doc:doc>
+      </arg>
+
+      <arg type="s" name="css_attrib_val" direction="in" >
+        <doc:doc>
+          <doc:summary>css attribute value.</doc:summary>
+        </doc:doc>
+      </arg>
+      
+      
+      <doc:doc>
+        <doc:description>
+          <doc:para>set styling of partial text object.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+    
+
+    <method name="set_int_attribute">
+      <arg type="s" name="shape" direction="in" >
+        <doc:doc>
+          <doc:summary>The id of an object.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="s" name="attribute" direction="in" >
+        <doc:doc>
+          <doc:summary>The name of the attribute.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="i" name="newval" direction="in" >
+        <doc:doc>
+          <doc:summary>The new value of the attribute.  This will overwrite anything already set.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Set any attribute, the available attributes depend on what kind of shape the object node represents.  See <doc:ref type="method" to="document.rectangle">shape creation functions</doc:ref> for more details.</doc:para>
+          <doc:para>This is a convenience function for <doc:ref type="method" to="document.set_attribute">set_attribute()</doc:ref>.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="set_double_attribute">
+      <arg type="s" name="shape" direction="in" >
+        <doc:doc>
+          <doc:summary>The id of an object.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="s" name="attribute" direction="in" >
+        <doc:doc>
+          <doc:summary>The name of the attribute.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="d" name="newval" direction="in" >
+        <doc:doc>
+          <doc:summary>The new value of the attribute.  This will overwrite anything already set.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Set any attribute, the available attributes depend on what kind of shape the node represents.  See <doc:ref type="method" to="document.rectangle">shape creation functions</doc:ref> for more details.</doc:para>
+          <doc:para>This is a convenience function for <doc:ref type="method" to="document.set_attribute">set_attribute()</doc:ref>.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="get_attribute">
+      <arg type="s" name="shape" direction="in" >
+        <doc:doc>
+          <doc:summary>The id of an object.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="s" name="attribute" direction="in" >
+        <doc:doc>
+          <doc:summary>The name of the attribute.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="s" name="val" direction="out" >
+        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value="error"/>
+        <doc:doc>
+          <doc:summary>The current value of the attribute.  String is a copy and must be freed.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Get the value of any attribute.  Not all objects will have every attribute their type supports, some are optional.   See <doc:ref type="method" to="document.rectangle">shape creation functions</doc:ref> for more details.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="move">
+      <arg type="s" name="shape" direction="in" >
+        <doc:doc>
+          <doc:summary>The id of an object.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="d" name="x" direction="in" >
+        <doc:doc>
+          <doc:summary>Distance to move along the x axis.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="d" name="y" direction="in" >
+        <doc:doc>
+          <doc:summary>Distance to move along the y axis.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>This will move a shape (or any object) relative to it's current location.</doc:para>
+          <doc:para>This may be accomplished with transformation attributes or by changing x and y attributes depending on the state of the object.</doc:para>
+        </doc:description>
+        <doc:seealso><doc:ref type="interface" to="Coordinate System">Coordinate System</doc:ref></doc:seealso>
+      </doc:doc>
+    </method>
+
+    <method name="move_to">
+      <arg type="s" name="shape" direction="in" >
+        <doc:doc>
+          <doc:summary>The id of an object.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="d" name="x" direction="in" >
+        <doc:doc>
+          <doc:summary>the x coordinate of the desired location.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="d" name="y" direction="in" >
+        <doc:doc>
+          <doc:summary>the y coordinate of the desired location.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>This will move a shape (or any object) to an absolute location.  The point moved is the center of the bounding box, which is usually similar to the center of the shape.</doc:para>
+          <doc:para>Note that creating a rectangle or ellipse at 100,100 and calling move_to to move it to 100,100 will not produce the same results.</doc:para>
+          <doc:para>This may be accomplished with transformation attributes or by changing x and y attributes depending on the state of the object.</doc:para>
+        </doc:description>
+        <doc:seealso><doc:ref type="interface" to="Coordinate System">Coordinate System</doc:ref></doc:seealso>
+      </doc:doc>
+    </method>
+
+    <method name="object_to_path">
+      <arg type="s" name="objectname" direction="in" >
+        <doc:doc>
+          <doc:summary>The id of an object.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Turns an object into a path.  Most objects contain paths (except rectangles) but are not paths themselves. </doc:para>
+          <doc:para>This will remove every attribute except d (the path attribute) style and id.  id will not change.  The appearance will be the same as well, it essentially encodes all information about the shape into the path.</doc:para>
+          <doc:para>After doing this you will no longer be able to modify the shape using shape specific attributes (cx, radius etc.) except transform</doc:para>
+          <doc:para>Required for certain functions that work on paths (not yet present in this API.)</doc:para>
+        </doc:description>
+        <doc:seealso><doc:ref type="interface" to="Paths">Paths</doc:ref></doc:seealso>
+      </doc:doc>
+    </method>
+
+    <method name="get_path">
+      <arg type="s" name="shape" direction="in" >
+        <doc:doc>
+          <doc:summary>The id of an object.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="s" name="val" direction="out" >
+        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value="error"/>
+        <doc:doc>
+          <doc:summary>The path of the object.  NULL if the object has no path.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Get the path value of an object.  Equivilent to calling <doc:ref type="method" to="document.get_attribute">get_attribte()</doc:ref> with argument "d".  Will not turn object into a path if it is not already.</doc:para>
+        </doc:description>
+        <doc:seealso><doc:ref type="interface" to="Paths">Paths</doc:ref></doc:seealso>
+      </doc:doc>
+    </method>
+
+    <method name="transform">
+      <arg type="s" name="shape" direction="in" >
+        <doc:doc>
+          <doc:summary>The id of any node or object.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="s" name="transformstr" direction="in" >
+        <doc:doc>
+          <doc:summary>A string that represents a transformation.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Takes a transformation string ("matrix(0.96629885,0.25742286,-0.25742286,0.96629885,0,0)" or "rotate(45)") and applies it to any shape or path.</doc:para>
+          <doc:para>Will merge with existing transformations.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="get_css">
+      <arg type="s" name="shape" direction="in" >
+        <doc:doc>
+          <doc:summary>Any object with a style attribute.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="s" name="css" direction="out" >
+        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value="error"/>
+        <doc:doc>
+          <doc:summary>A CSS Style string</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Retrieve the style of a object.  Equivalent to calling <doc:ref type="method" to="document.get_attribute">get_attribute()</doc:ref> for "style".</doc:para>
+        </doc:description>
+        <doc:seealso><doc:ref type="interface" to="Style Strings">Style Strings</doc:ref></doc:seealso>
+      </doc:doc>
+    </method>
+
+    <method name="modify_css">
+      <arg type="s" name="shape" direction="in" >
+        <doc:doc>
+          <doc:summary>Any object with a style attribute.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="s" name="cssattrib" direction="in" >
+        <doc:doc>
+          <doc:summary>An attribute such as "fill" or "stroke-width".</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="s" name="newval" direction="in" >
+        <doc:doc>
+          <doc:summary>The new value.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Set a particular attribute of a style string.  Overwrites just that part of the style.</doc:para>
+        </doc:description>
+        <doc:seealso><doc:ref type="interface" to="Style Strings">Style Strings</doc:ref></doc:seealso>
+      </doc:doc>
+    </method>
+
+    <method name="merge_css">
+      <arg type="s" name="shape" direction="in" >
+        <doc:doc>
+          <doc:summary>Any object with a style attribute.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="s" name="stylestring" direction="in" >
+        <doc:doc>
+          <doc:summary>A full or partial CSS Style string.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Takes a CSS Style string and merges it with the objects current style, overwriting only the elements present in stylestring.</doc:para>
+        </doc:description>
+        <doc:seealso><doc:ref type="interface" to="Style Strings">Style Strings</doc:ref></doc:seealso>
+      </doc:doc>
+    </method>
+    
+    <method name="set_color">
+      <arg type="s" name="shape" direction="in" >
+        <doc:doc>
+          <doc:summary>Any object, or 'document' to apply to document style.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="i" name="red" direction="in" >
+        <doc:doc>
+          <doc:summary>The red component.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="i" name="green" direction="in" >
+        <doc:doc>
+          <doc:summary>The green component.</doc:summary>
+        </doc:doc>
+      </arg>
+            <arg type="i" name="blue" direction="in" >
+        <doc:doc>
+          <doc:summary>The blue component.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="b" name="fill" direction="in" >
+        <doc:doc>
+          <doc:summary>True to change fill color, false for stroke color.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Modifies the fill or stroke color of an object (or the document style) based on RGB values.</doc:para>
+          <doc:para>Red green and blue must be between 0-255 inclusive.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="move_to_layer">
+      <arg type="s" name="objectname" direction="in" >
+        <doc:doc>
+          <doc:summary>The id of an object.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="s" name="layername" direction="in" >
+        <doc:doc>
+          <doc:summary>A layer name.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Moves an object to a different layer.</doc:para>
+          <doc:para>Will error if layer does not exist.</doc:para>
+        </doc:description>
+        <doc:seealso><doc:ref type="interface" to="document.layer_new">layer_new()</doc:ref></doc:seealso>
+      </doc:doc>
+    </method>
+
+    <method name="get_node_coordinates">
+      <arg type="s" name="shape" direction="in" >
+        <doc:doc>
+          <doc:summary>A object that contains a path ("d") attribute.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="ai" name="points" direction="out" >
+        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value=""/>
+        <doc:doc>
+          <doc:summary>An array of points.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Returns an array of all of the X,Y coordinates of the points in the objects path.</doc:para>
+          <doc:para>If the path is a closed loop the first point is repeated at the end.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <!-- FILE I/O FUNCTIONS -->
+
+    <method name="save" >
+      <doc:doc>
+        <doc:description>
+          <doc:para>Saves the current document with current name or a default name if has not been saved before.</doc:para>
+          <doc:para>Will overwrite without confirmation.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="save_as">
+      <arg type="s" name="pathname" direction="in" >
+        <doc:doc>
+          <doc:summary>The path for the file to be saved as.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Saves the current document as pathname.</doc:para>
+          <doc:para>Will overwrite without confirmation.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="load">
+      <arg type="s" name="pathname" direction="in" >
+        <doc:doc>
+          <doc:summary>The path to a valid svg file.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Loads the file at pathname.</doc:para>
+          <doc:para>Will lose all unsaved work in current document.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="mark_as_unmodified" >
+      <doc:doc>
+        <doc:description>
+          <doc:para>Marks the document as unmodified/saved.</doc:para>
+          <doc:para>Will prevent save confirmation on close if called at end of script.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+
+    
+    <!--
+    <method name="print_to_file" >
+      <doc:doc>
+        <doc:description>
+          <doc:para>Prints the current document with default settings.</doc:para>
+          <doc:para>Will only print things visible within the document boundaries.</doc:para>
+        </doc:description>
+        <doc:seealso><doc:ref type="interface" to="document.document_resize_to_fit_selection">document_resize_to_fit_selection()</doc:ref></doc:seealso>
+      </doc:doc>
+    </method>
+    -->
+
+    <!-- PROGRAM CONTROL FUNCTIONS -->
+
+    <method name="close" >
+      <doc:doc>
+        <doc:description>
+          <doc:para>Close this document.</doc:para>
+          <doc:para>You will not be able to send any more commands on this interface.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="exit" >
+      <doc:doc>
+        <doc:description>
+          <doc:para>Exit Inkscape.</doc:para>
+          <doc:para>You will not be able to send any more commands on any interface.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="undo" >
+      <doc:doc>
+        <doc:description>
+          <doc:para>Undo the last action.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="redo" >
+      <doc:doc>
+        <doc:description>
+          <doc:para>Redo the last undone action.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <!-- UPDATE FUNCTIONS -->
+
+    <method name="pause_updates" >
+      <doc:doc>
+        <doc:description>
+          <doc:para>When updates are paused Inkscape will not draw every change as it is made.  Also you will not be able to undo individual actions made while updates were paused and will only be able to undo them in a group.  Inkscape may refresh the screen every couple of seconds even with updates off.</doc:para>
+          <doc:para>The advantage is a 2-5x speed increase, depending on the type of functions being called.  This is most useful when creating large numbers of shapes.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="resume_updates" >
+      <doc:doc>
+        <doc:description>
+          <doc:para>Resume updates after they have been paused.  If undo is called at this point it will undo everything that happened since pause_updates() was called.</doc:para>
+          <doc:para>This will update the display to show any changes that happened while updates were paused, a separate call to update() is not necessary.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="update" >
+      <doc:doc>
+        <doc:description>
+          <doc:para>This will update the document once if updates are paused but it will not resume updates.</doc:para>
+          <doc:para>This could be used to check on the progress of a complex drawing function, or to add in undo steps at certain points in a render.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <!-- SELECTION FUNCTIONS -->
+
+    <method name="selection_get">
+      <arg type="as" name="listy" direction="out" >
+       <!-- <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value=""/> -->
+        <doc:doc>
+          <doc:summary>List of the ids of currently selected objects.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Returns the current selection in the form of a list of ids of selected objects.</doc:para>
+          <doc:para>Manipulating this list will not affect the selection.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="selection_add">
+      <arg type="s" name="name" direction="in" >
+        <doc:doc>
+          <doc:summary>A object to add to the selection.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Adds a single object to the selection.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="selection_add_list">
+      <arg type="as" name="name" direction="in" >
+        <doc:doc>
+          <doc:summary>An array of object ids to add to the selection.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Adds a list of objects to the selection.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="selection_set">
+      <arg type="s" name="name" direction="in" >
+        <doc:doc>
+          <doc:summary>A object to select.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Replaces the selection with one containing just this object.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="selection_set_list">
+      <arg type="as" name="name" direction="in" >
+        <doc:doc>
+          <doc:summary>A list of objects to select.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Replaces the selection with one containing just these objects.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="selection_rotate">
+      <arg type="i" name="angle" direction="in" >
+        <doc:doc>
+          <doc:summary>Angle in degrees to rotate.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Rotates the selection around the center of it's bounding box.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="selection_delete" >
+      <doc:doc>
+        <doc:description>
+          <doc:para>Delete all objects in the selection.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="selection_clear" >
+      <doc:doc>
+        <doc:description>
+          <doc:para>Deselect everything.  Selection will be empty.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="select_all" >
+      <doc:doc>
+        <doc:description>
+          <doc:para>Select all objects in current layer.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="select_all_in_all_layers" >
+      <doc:doc>
+        <doc:description>
+          <doc:para>Select all objects in every layer.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="selection_box">
+      <arg type="i" name="x" direction="in" >
+        <doc:doc>
+          <doc:summary>X coordinate for the first point.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="i" name="y" direction="in" >
+        <doc:doc>
+          <doc:summary>Y coordinate for the first point.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="i" name="x2" direction="in" >
+        <doc:doc>
+          <doc:summary>X coordinate for the second point.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="i" name="y2" direction="in" >
+        <doc:doc>
+          <doc:summary>Y coordinate for the second point.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="b" name="replace" direction="in" >
+        <doc:doc>
+          <doc:summary>True to replace selection, false to add to selection.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>This method finds all of the objects inside the box and adds them to the current selection.  If replace is true it will clear the old selection first.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="selection_invert" >
+      <doc:doc>
+        <doc:description>
+          <doc:para>Invert the selection in the current layer.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="selection_group" >
+      <doc:doc>
+        <doc:description>
+          <doc:para>Group the selection.</doc:para>
+        </doc:description>
+        <doc:seealso><doc:ref type="interface" to="Groups">Groups</doc:ref></doc:seealso>
+      </doc:doc>
+    </method>
+
+    <method name="selection_ungroup" >
+      <doc:doc>
+        <doc:description>
+          <doc:para>Ungroup the selection.</doc:para>
+        </doc:description>
+        <doc:seealso><doc:ref type="interface" to="Groups">Groups</doc:ref></doc:seealso>
+      </doc:doc>
+    </method>
+
+    <method name="selection_cut" >
+      <doc:doc>
+        <doc:description>
+          <doc:para>Cut the current selection.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="selection_copy" >
+      <doc:doc>
+        <doc:description>
+          <doc:para>Copy the current selection.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="selection_paste" >
+      <doc:doc>
+        <doc:description>
+          <doc:para>Paste the current selection at the same location it was cut from.</doc:para>
+          <doc:para>To paste to a particular location, simply use selection_paste() followed by <doc:ref type="method" to="document.selection_move_to">selection_move_to()</doc:ref>.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="selection_scale">
+      <arg type="d" name="grow" direction="in" >
+        <doc:doc>
+          <doc:summary>The amount to scale the selection, 1 has no effect. Between 0 and 1 will shrink it proportionally.  Greater than one will grow it proportionally.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Scale the selection relative to it's current size.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="selection_move">
+      <arg type="d" name="x" direction="in" >
+        <doc:doc>
+          <doc:summary>Amount to move in the x direction.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="d" name="y" direction="in" >
+        <doc:doc>
+          <doc:summary>Amount to move in the y direction.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>This will move the selection relative to it's current location.</doc:para>
+          <doc:para>This may be accomplished with transformation attributes or by changing x and y attributes depending on the state of the objects in the selection.</doc:para>
+        </doc:description>
+        <doc:seealso><doc:ref type="interface" to="Coordinate System">Coordinate System</doc:ref></doc:seealso>
+      </doc:doc>
+    </method>
+
+    <method name="selection_move_to">
+      <arg type="d" name="x" direction="in" >
+        <doc:doc>
+          <doc:summary>X coordinate to move to.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="d" name="y" direction="in" >
+        <doc:doc>
+          <doc:summary>Y coordinate to move to.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>This will move the center of the selection to a specific location.</doc:para>
+          <doc:para>This may be accomplished with transformation attributes or by changing x and y attributes depending on the state of the objects in the selection.</doc:para>
+        </doc:description>
+        <doc:seealso><doc:ref type="interface" to="Coordinate System">Coordinate System</doc:ref></doc:seealso>
+      </doc:doc>
+    </method>
+
+    <method name="selection_move_to_layer">
+      <arg type="s" name="layer" direction="in" >
+        <doc:doc>
+          <doc:summary>layer to move the selection to.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Move every item in the selection to a different layer.</doc:para>
+          <doc:para>Will error if layer does not exist.</doc:para>
+        </doc:description>
+        <doc:seealso><doc:ref type="interface" to="Layers and Levels">Layers and Levels</doc:ref></doc:seealso>
+      </doc:doc>
+    </method>
+
+    <method name="selection_get_center">
+      <arg type="ad" name="centerpoint" direction="out" >
+        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value=""/>
+        <doc:doc>
+          <doc:summary>Center of the selection.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Gets the center of the selections bounding box in X,Y coordinates.</doc:para>
+        </doc:description>
+        <doc:seealso><doc:ref type="interface" to="Coordinate System">Coordinate System</doc:ref></doc:seealso>
+      </doc:doc>
+    </method>
+
+    <method name="selection_to_path" >
+      <doc:doc>
+        <doc:description>
+          <doc:para>Turns all the objects in the selection into paths.</doc:para>
+        </doc:description>
+        <doc:seealso><doc:ref type="method" to="document.object_to_path">object_to_path()</doc:ref></doc:seealso>
+      </doc:doc>
+    </method>
+
+    <method name="selection_combine" >
+      <arg type="s" name="type" direction="in" >
+        <doc:doc>
+          <doc:summary>Type of combination.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="as" name="newpaths" direction="out" >
+        <doc:doc>
+          <doc:summary>List of the ids of resulting paths after applying the operation.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Will erase all objects in the selection and replace with a single aggregate path.</doc:para>
+          <doc:para>There are 5 types that can be passed in:</doc:para>
+          <doc:para>'union': The new shape is all of the other shapes put together, even if they don't overlap (paths can have multiple non-contiguous areas.)</doc:para>
+          <doc:para>'intersection':  The new shape is composed of the area where ALL the objects in the selection overlap.  If there is no area where all shapes overlap the new shape will be empty.</doc:para>
+          <doc:para>'difference': The area of the second shape is subtracted from the first, only works with two objects.</doc:para>
+          <doc:para>'exclusion': The new shape is the area(s) where none of the objects in the selection overlaped.  Only works with two objects.</doc:para>
+          <doc:para>'division': the first object is split into multiple segments by the second object.  Only works with two objects.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="selection_change_level" >
+      <arg type="s" name="command" direction="in" >
+        <doc:doc>
+          <doc:summary>How to change the level</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="b" name="objectsmoved" direction="out" >
+        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value="error"/>
+        <doc:doc>
+          <doc:summary>True if the objects changed levels.  False if they don't(if they were already on top when being raised for example.)</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Will change the level of a selection, respective of other objects in the same layer.  Will not affect the overlap of objects in different layers.  Will do nothing if the selection contains objects in multiple layers.</doc:para>
+          <doc:para>There are 4 commands that can be passed in:</doc:para>
+          <doc:para>"raise" or "lower": Move the selection one level up, or one level down.</doc:para>
+          <doc:para>"to_top" of "to_bottom": Move the selection above all other objects or below all other objects.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <!-- LAYER FUNCTIONS -->
+
+    <method name="layer_new">
+      <arg type="s" name="layername" direction="out" >
+        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value="error"/>
+        <doc:doc>
+          <doc:summary>The name of the new layer.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Turns all the objects in the selection into paths.</doc:para>
+        </doc:description>
+        <doc:seealso><doc:ref type="interface" to="Layers and Levels">Layers and Levels</doc:ref></doc:seealso>
+      </doc:doc>
+    </method>
+
+    <method name="layer_set">
+      <arg type="s" name="layer" direction="in" >
+        <doc:doc>
+          <doc:summary>The name of any layer.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Sets the layer given as the current layer</doc:para>
+        </doc:description>
+        <doc:seealso><doc:ref type="interface" to="Layers and Levels">Layers and Levels</doc:ref></doc:seealso>
+      </doc:doc>
+    </method>
+
+    <method name="layer_get_all">
+      <arg type="as" name="layers" direction="out" >
+        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value=""/>
+        <doc:doc>
+          <doc:summary>list of layers.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Get a list of all the layers in this document.</doc:para>
+        </doc:description>
+        <doc:seealso><doc:ref type="interface" to="Layers and Levels">Layers and Levels</doc:ref></doc:seealso>
+      </doc:doc>
+    </method>
+
+    <method name="layer_change_level" >
+      <arg type="s" name="command" direction="in" >
+        <doc:doc>
+          <doc:summary>How to change the level</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="b" name="layermoved" direction="out" >
+        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value="error"/>
+        <doc:doc>
+          <doc:summary>True if the layer was moved.  False if it was not (if it was already on top when being raised for example.)</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Will change the level of a layer, respective of other layers.  Will not affect the relative level of objects within the layer.</doc:para>
+          <doc:para>There are 4 commands that can be passed in:</doc:para>
+          <doc:para>"raise" or "lower": Move the layer one level up, or one level down.</doc:para>
+          <doc:para>"to_top" of "to_bottom": Move the layer above all other layers or below all other layers.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="layer_next" >
+      <doc:doc>
+        <doc:description>
+          <doc:para>Sets the next (or higher) layer as active.</doc:para>
+        </doc:description>
+        <doc:seealso><doc:ref type="interface" to="Layers and Levels">Layers and Levels</doc:ref></doc:seealso>
+      </doc:doc>
+    </method>
+
+    <method name="layer_previous" >
+      <doc:doc>
+        <doc:description>
+          <doc:para>Sets the previous (or lower) layer as active.</doc:para>
+        </doc:description>
+        <doc:seealso><doc:ref type="interface" to="Layers and Levels">Layers and Levels</doc:ref></doc:seealso>
+      </doc:doc>
+    </method>
+
+<!-- signals -->
+    <signal name="ObjectMoved">
+      <arg name="object_name" type="s">
+        <doc:doc>
+          <doc:summary>The id of the object.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Emitted when an object has been moved.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </signal>
+<!-- tree -->
+
+    <method name="get_children" >
+      <arg type="s" name="type" direction="in" >
+        <doc:doc>
+          <doc:summary>Any node with an "id" attribute.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="as" name="parentid" direction="out" >
+        <doc:doc>
+          <doc:summary>The ids of this nodes children, NULL if bottom level.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Returns the children of any node.  This function along with <doc:ref type="method" to="get_parent">get_parent()</doc:ref> can be used to navigate the XML tree. </doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+    <method name="get_parent" >
+      <arg type="s" name="type" direction="in" >
+        <doc:doc>
+          <doc:summary>Any node with an "id" attribute.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="s" name="parentid" direction="out" >
+        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value="error"/>
+        <doc:doc>
+          <doc:summary>The id of this nodes parent, NULL if toplevel.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Returns the parent of any node.  This function along with <doc:ref type="method" to="get_children">get_children()</doc:ref> can be used to navigate the XML tree. </doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+</interface>
+</node>

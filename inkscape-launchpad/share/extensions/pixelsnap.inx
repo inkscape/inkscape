@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <_name>PixelSnap</_name>
+    <id>bryhoyt.pixelsnap</id>
+	<dependency type="executable" location="extensions">pixelsnap.py</dependency>
+	<_param name="title" type="description">Snap all paths in selection to pixels. Snaps borders to half-points and fills to full points.</_param>
+    <effect>
+	<effects-menu>
+		<submenu _name="Modify Path"/>
+	</effects-menu>
+    </effect>
+    <script>
+        <command reldir="extensions" interpreter="python">pixelsnap.py</command>
+    </script>
+</inkscape-extension>
+
+ 	  	 
+

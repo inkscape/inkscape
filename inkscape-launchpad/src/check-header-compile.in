@@ -1,0 +1,47 @@
+#! /bin/sh
+# Check that each .h file has all the includes it needs.
+
+# Probably requires gnu find (for -printf '%P\n').
+
+# This script hereby placed into the public domain.
+
+set -e
+mydir=`dirname "$0"`
+cd "$mydir"
+srcdir="@srcdir@"
+CXX="@CXX@"
+INCLUDES="@GNOME_VFS_CFLAGS@ @POPPLER_GLIB_CFLAGS@ @INKSCAPE_CFLAGS@"
+OBJEXT="@OBJEXT@"
+config_h_dir=..
+
+check_compile () {
+	(echo "#include <config.h>"; echo "#include <$1>"; echo "int header_tst_dummy;") > header-tst.cpp
+	$CXX -c -I. -I"$srcdir" -I$config_h_dir $INCLUDES header-tst.cpp
+}
+
+if [ $# = 0 ]; then
+	for i in `find "$srcdir"	\
+		   -name bonobo -prune	\
+		-o -name dom -prune	\
+		-o -name ecma -prune	\
+		-o -name render -prune	\
+		-o -name xpath -prune	\
+		-o -name '*.h' \
+		   \! -name gnome.h \! -name nr-type-gnome.h \! -name Livarot.h \! -name radial.h \
+		   \! -name '*-test.h'	\
+		   \! -name test-helpers.h	\
+		   \! -name PylogFormatter.h	\
+		   \! -name TRPIFormatter.h	\
+		   \! -name win32.h	\
+		   \! -name '*-w32.h'	\
+		   \! -name '*-win32.h'	\
+		   -printf '%P\n'`
+	do
+		check_compile "$i"
+	done
+else
+	for i in "$@"; do
+		check_compile "$i"
+	done
+fi
+rm header-tst.cpp header-tst.$OBJEXT

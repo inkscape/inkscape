@@ -1,0 +1,92 @@
+## Makefile.am fragment sourced by src/Makefile.am.
+
+if WITH_EXT_GDL
+
+EXTRA_DIST += \
+	libgdl/gdl-dock-object.h	\
+	libgdl/gdl-dock-master.h	\
+	libgdl/gdl-dock.h		\
+	libgdl/gdl-dock-item.h		\
+	libgdl/gdl-dock-notebook.h	\
+	libgdl/gdl-dock-paned.h	        \
+	libgdl/gdl-dock-tablabel.h	\
+	libgdl/gdl-dock-placeholder.h	\
+	libgdl/gdl-dock-bar.h		\
+	libgdl/gdl-i18n.h		\
+	libgdl/gdl-i18n.c		\
+	libgdl/gdl-dock-object.c	\
+	libgdl/gdl-dock-master.c	\
+	libgdl/gdl-dock.c		\
+	libgdl/gdl-dock-item.c		\
+	libgdl/gdl-dock-item-button-image.c		\
+	libgdl/gdl-dock-item-button-image.h		\
+	libgdl/gdl-dock-item-grip.h	\
+	libgdl/gdl-dock-item-grip.c	\
+	libgdl/gdl-dock-notebook.c	\
+	libgdl/gdl-dock-paned.c		\
+	libgdl/gdl-dock-tablabel.c	\
+	libgdl/gdl-dock-placeholder.c	\
+	libgdl/gdl-dock-bar.c		\
+	libgdl/gdl-switcher.h		\
+	libgdl/gdl-switcher.c		\
+	libgdl/gdl-win32.h		\
+	libgdl/gdl-win32.c		\
+	libgdl/libgdltypebuiltins.h	\
+	libgdl/libgdltypebuiltins.c	\
+	libgdl/libgdlmarshal.h		\
+	libgdl/libgdlmarshal.c		\
+	libgdl/gdl.h		
+
+else # WITH_EXT_GDL
+
+libgdl/all: libgdl/libgdl.a
+
+libgdl/clean:
+	rm -f libgdl/libgdl.a $(libgdl_gdl_a_OBJECTS)
+
+# Suppress some non-critical warnings for libgdl.  We will drop our forked copy
+# of GDL once we upgrade to Gtk+ 3 so it's more important to minimise the number
+# of changes we make to GDL than to fix these minor issues in trunk.
+
+if CC_WNO_UNUSED_BUT_SET_VARIABLE_SUPPORTED
+libgdl_libgdl_a_CFLAGS = -Wno-unused-parameter -Wno-sign-compare -Wno-unused-variable -Wno-unused-but-set-variable -Wno-missing-field-initializers $(AM_CFLAGS)
+else
+libgdl_libgdl_a_CFLAGS = -Wno-unused-parameter -Wno-sign-compare -Wno-unused-variable -Wno-missing-field-initializers $(AM_CFLAGS)
+endif
+
+libgdl_libgdl_a_SOURCES =	\
+	libgdl/gdl-dock-object.h	\
+	libgdl/gdl-dock-master.h	\
+	libgdl/gdl-dock.h		\
+	libgdl/gdl-dock-item.h		\
+	libgdl/gdl-dock-notebook.h	\
+	libgdl/gdl-dock-paned.h	        \
+	libgdl/gdl-dock-tablabel.h	\
+	libgdl/gdl-dock-placeholder.h	\
+	libgdl/gdl-dock-bar.h		\
+	libgdl/gdl-i18n.h		\
+	libgdl/gdl-i18n.c		\
+	libgdl/gdl-dock-object.c	\
+	libgdl/gdl-dock-master.c	\
+	libgdl/gdl-dock.c		\
+	libgdl/gdl-dock-item.c		\
+	libgdl/gdl-dock-item-button-image.c		\
+	libgdl/gdl-dock-item-button-image.h		\
+	libgdl/gdl-dock-item-grip.h	\
+	libgdl/gdl-dock-item-grip.c	\
+	libgdl/gdl-dock-notebook.c	\
+	libgdl/gdl-dock-paned.c		\
+	libgdl/gdl-dock-tablabel.c	\
+	libgdl/gdl-dock-placeholder.c	\
+	libgdl/gdl-dock-bar.c		\
+	libgdl/gdl-switcher.h		\
+	libgdl/gdl-switcher.c		\
+	libgdl/gdl-win32.h		\
+	libgdl/gdl-win32.c		\
+	libgdl/libgdltypebuiltins.h	\
+	libgdl/libgdltypebuiltins.c	\
+	libgdl/libgdlmarshal.h		\
+	libgdl/libgdlmarshal.c		\
+	libgdl/gdl.h		
+	
+endif

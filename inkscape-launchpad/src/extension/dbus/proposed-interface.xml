@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+ * These are some of the proposed functions for the document interface.
+ *
+ * It is only used in generating documentation.
+ *
+ * None of these methods are implemented.  If someone does code one of 
+ * these methods, remove it from here and add it to document-interface.xml.
+ *
+ * Authors:
+ *   Soren Berg <Glimmer07@gmail.com>
+ *
+ * Copyright (C) 2009 Soren Berg
+ *
+ * Released under GNU GPL, read the file 'COPYING' for more information
+-->
+<node name="/org/inkscape/proposed"
+  xmlns:doc="http://www.freedesktop.org/dbus/1.0/doc.dtd"
+>
+  <interface name="org.inkscape.proposed">
+
+    <signal name="Signals_Proposal">
+      <doc:doc>
+        <doc:description>
+          <doc:para>Signals would undoubtedly be a useful thing to have in many circumstances.  They are in proposed for two reasons: One, they complicate things for script writers and may conflict with the proposed C wrapper library.  Two, I'm not sure how much coding it would take to implement them because I am familiar with neither Dbus signals or Inkscape events.  Until I have done more experimenting I don't want to promise anything I'm not sure can be implemented in a timely fashion.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </signal>
+
+    <signal name="ObjectResized">
+      <arg name="object_name" type="s">
+        <doc:doc>
+          <doc:summary>The id of the object.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Emitted when an object has been resized.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </signal>
+
+    <signal name="ObjectStyleModified">
+      <arg name="object_name" type="s">
+        <doc:doc>
+          <doc:summary>The id of the object.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Emitted when the style of an object has been changed.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </signal>
+
+    <signal name="ObjectCreated">
+      <arg name="object_name" type="s">
+        <doc:doc>
+          <doc:summary>The id of the object.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Emitted when an object has been created.  Possibly useful for working in conjunction with a live user.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </signal>
+
+    <signal name="ObjectAddedToSelection">
+      <arg name="object_name" type="s">
+        <doc:doc>
+          <doc:summary>The id of the object.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Emitted when an object has been added to the selection.  Possibly useful for working in conjunction with a live user.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </signal>
+
+    <method name="path_new" >
+      <arg type="d" name="x" direction="in" >
+        <doc:doc>
+          <doc:summary>The x value to begin the path.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="d" name="y" direction="in" >
+        <doc:doc>
+          <doc:summary>The y value to begin the path.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Begins a new path, extra nodes can be added with path_append().</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="path_append" >
+      <arg type="s" name="path" direction="in" >
+        <doc:doc>
+          <doc:summary>The name of the path to append to.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="s" name="type" direction="in" >
+        <doc:doc>
+          <doc:summary>A single letter denoting what type of node is beeing appended.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="ad" name="arguments" direction="in" >
+        <doc:doc>
+          <doc:summary>An array of numbers that describe the position and attributes of the path node.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Adds to an existing path.  Close the path by sending "z" and no arguments.</doc:para>
+          <doc:para>You can no longer append to a path if it is closed.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+
+<!-- USE document-subset.h FILES -->
+
+    <method name="selection_remove">
+      <arg type="s" name="name" direction="in" >
+        <doc:doc>
+          <doc:summary>A object to remove from the selection.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Removes a single object from the selection.  In proposed because I already have a ton of selection functions and am not sure people would need this.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+  </interface>
+</node>

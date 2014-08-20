@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+  <_name>Uninstall/remove</_name>
+  <id>jessyink.uninstall</id>
+  <dependency type="executable" location="extensions">inkex.py</dependency>
+  <dependency type="executable" location="extensions">jessyInk_uninstall.py</dependency>
+  <param name="tab" type="notebook">
+    <page name="options" _gui-text="Options">
+			<_param name="label" type="description">Please select the parts of JessyInk you want to uninstall/remove.</_param>
+			<param name="remove_script" type="boolean" _gui-text="Remove script">true</param>
+			<param name="remove_effects" type="boolean" _gui-text="Remove effects">true</param>
+			<param name="remove_masterSlide" type="boolean" _gui-text="Remove master slide assignment">true</param>
+			<param name="remove_transitions" type="boolean" _gui-text="Remove transitions">true</param>
+			<param name="remove_autoTexts" type="boolean" _gui-text="Remove auto-texts">true</param>
+			<param name="remove_views" type="boolean" _gui-text="Remove views">true</param>
+		</page>
+    <page name="help" _gui-text="Help">
+			<_param name="help_text" type="description">This extension allows you to uninstall the JessyInk script. Please see code.google.com/p/jessyink for more details.</_param>
+    </page>
+	</param>
+  <effect>
+    <object-type>all</object-type>
+      <effects-menu>
+        <submenu _name="JessyInk"/>
+      </effects-menu>
+  </effect>
+  <script>
+    <command reldir="extensions" interpreter="python">jessyInk_uninstall.py</command>
+  </script>
+</inkscape-extension>
+

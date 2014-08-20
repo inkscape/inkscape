@@ -1,0 +1,25 @@
+howto create windows msi installer
+
+you need:
+1. windows installer XML installed and callable from your path
+   get it from http://wixtoolset.org/
+   Because of a bug in the current version of wix the installer works using version 3.7 only.
+
+build the installer
+1. build inkscape
+2. open command shell "cmd"
+3. change current directory to inkscape\packaging\wix
+4. set environment variables
+   wixenv.bat
+5. create installer using batch
+   install.bat
+
+when completed there should be inkscape.msi in your path
+
+things still todo
+- detailed explanation what to do for new revisions
+- better filenames (nightly builds versus releases)
+- howto remove python .pyc files after deinstallation
+- localisation into the installer
+   
+theAdib

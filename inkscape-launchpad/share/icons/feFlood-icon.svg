@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="96" height="96" id="svg2" sodipodi:version="0.32" inkscape:version="0.48+devel r10484 custom" version="1.0" sodipodi:docname="feFlood-icon.svg" inkscape:output_extension="org.inkscape.output.svg.inkscape" inkscape:export-filename="/home/felipe/devel/inkscape/inkscape/share/icons/feFlood-icon.png" inkscape:export-xdpi="90" inkscape:export-ydpi="90">
+<defs id="defs4">
+<linearGradient id="linearGradient13616">
+<stop style="stop-color:#3465a4;stop-opacity:1;" offset="0" id="stop13618" />
+<stop style="stop-color:#729fcf;stop-opacity:1" offset="0.86907172" id="stop13620" />
+</linearGradient>
+<linearGradient inkscape:collect="always" xlink:href="#linearGradient13616" id="linearGradient13634" gradientUnits="userSpaceOnUse" x1="1180.5682" y1="909.65936" x2="1179.2837" y2="914.67297" />
+</defs>
+<sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="5.270833" inkscape:cx="48" inkscape:cy="48" inkscape:document-units="px" inkscape:current-layer="layer1" showgrid="false" inkscape:window-width="964" inkscape:window-height="717" inkscape:window-x="50" inkscape:window-y="24" inkscape:window-maximized="0" />
+<metadata id="metadata7">
+<rdf:RDF>
+<cc:Work rdf:about="">
+<dc:format>image/svg+xml</dc:format>
+<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+<dc:title>feMorphology Filter Primitive Example</dc:title>
+<dc:date>2007-07-03</dc:date>
+<dc:creator>
+<cc:Agent>
+<dc:title>Felipe Corrêa da Silva Sanches</dc:title>
+</cc:Agent>
+</dc:creator>
+<dc:rights>
+<cc:Agent>
+<dc:title>Felipe Corrêa da Silva Sanches</dc:title>
+</cc:Agent>
+</dc:rights>
+<dc:publisher>
+<cc:Agent>
+<dc:title>Felipe Corrêa da Silva Sanches</dc:title>
+</cc:Agent>
+</dc:publisher>
+<dc:identifier />
+<dc:source />
+<dc:relation />
+<dc:language />
+<dc:subject>
+<rdf:Bag>
+<rdf:li>feMorphology Example</rdf:li>
+</rdf:Bag>
+</dc:subject>
+<dc:coverage />
+<dc:description>this is an image originaly intended to be used in Inkscape</dc:description>
+<dc:contributor>
+<cc:Agent>
+<dc:title />
+</cc:Agent>
+</dc:contributor>
+<cc:license rdf:resource="http://creativecommons.org/licenses/by-sa/3.0/" />
+</cc:Work>
+<cc:License rdf:about="http://creativecommons.org/licenses/by-sa/3.0/">
+<cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction" />
+<cc:permits rdf:resource="http://creativecommons.org/ns#Distribution" />
+<cc:requires rdf:resource="http://creativecommons.org/ns#Notice" />
+<cc:requires rdf:resource="http://creativecommons.org/ns#Attribution" />
+<cc:permits rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+<cc:requires rdf:resource="http://creativecommons.org/ns#ShareAlike" />
+</cc:License>
+</rdf:RDF>
+</metadata>
+<g inkscape:label="Camada 1" inkscape:groupmode="layer" id="layer1" transform="translate(-155.36416,-264.88732)">
+<rect style="opacity:0.43324938;fill:#ffff11;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:2.90045166;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:2.90045164, 5.80090327;stroke-dashoffset:0;stroke-opacity:1" id="rect3279" width="85.424026" height="85.645119" x="160.78661" y="270.00949" />
+<g style="display:inline" id="draw_paintbucket_alt" inkscape:label="#draw_paintbucket" transform="matrix(2.0980395,0,0,2.0980395,-2327.2244,-1605.9813)">
+<rect style="opacity:0.24267782;fill:#ffffff;fill-opacity:0;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;display:inline" id="rect13894" width="23.999989" height="24" x="1200" y="896" />
+<path sodipodi:nodetypes="ccscc" style="fill:#729fcf;fill-opacity:1;stroke:#204a87;stroke-width:0.99999988;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" d="M 1209.602,913.7266 L 1222.1351,908.02219 C 1222.827,907.7073 1222.5725,904.71163 1221.0481,901.8178 C 1219.5237,898.92395 1217.3038,897.22236 1216.612,897.53725 L 1204.0788,903.24163" id="path12994" />
+<path id="path13019" d="M 1210.512,912.2405 L 1221.2123,907.30664 C 1221.9011,906.99058 1221.4784,904.90269 1219.9607,901.99807 C 1218.443,899.09341 1217.1373,898.36765 1216.4486,898.68371 L 1205.902,903.503" style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.50196078" sodipodi:nodetypes="ccscc" />
+<path sodipodi:nodetypes="ccccc" style="fill:#ffffff;fill-opacity:0.45263157;stroke:none;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.58208953" d="M 1205.6217,903.09453 C 1207.1685,904.24358 1208.5063,906.35532 1208.5063,906.35532 C 1217.2531,904.71147 1214.5832,900.6851 1221.5659,904.57418 C 1220.5377,901.49352 1218.4654,898.27752 1216.537,898.10919 L 1205.6217,903.09453 z" id="path16802" />
+<path sodipodi:nodetypes="cs" id="path12998" d="M 1211.9375,903.68752 C 1210,897.19519 1205,897.19519 1206.9198,901.48193" style="fill:none;fill-rule:evenodd;stroke:#2e3436;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+<path transform="matrix(1.5238095,0,0,1.5238095,1192.881,882.83333)" d="m 14.1875,14.875 c 0,0.72487 -0.58763,1.3125 -1.3125,1.3125 -0.72487,0 -1.3125,-0.58763 -1.3125,-1.3125 0,-0.72487 0.58763,-1.3125 1.3125,-1.3125 0.72487,0 1.3125,0.58763 1.3125,1.3125 z" sodipodi:ry="1.3125" sodipodi:rx="1.3125" sodipodi:cy="14.875" sodipodi:cx="12.875" id="path13000" style="fill:#d3d7cf;fill-opacity:1;stroke:#2e3436;stroke-width:0.65625;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" sodipodi:type="arc" />
+<path style="fill:none;fill-rule:evenodd;stroke:#d3d7cf;stroke-width:0.99999994;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" d="M 1212.4375,905.4375 C 1211,897 1205,897.22097 1206.9198,901.37141" id="path13626" sodipodi:nodetypes="cs" />
+<path transform="matrix(0.7582508,-0.3582535,0.5932037,1.0454619,-228.78018,376.45604)" d="m 1181.62,912.9559 c 0,2.7825 -1.049,5.0382 -2.343,5.0382 -1.293,0 -2.342,-2.2557 -2.342,-5.0382 0,-2.7825 1.049,-5.0381 2.342,-5.0381 1.294,0 2.343,2.2556 2.343,5.0381 z" sodipodi:ry="5.038136" sodipodi:rx="2.3422911" sodipodi:cy="912.95593" sodipodi:cx="1179.2773" id="path13632" style="fill:url(#linearGradient13634);fill-opacity:1;fill-rule:nonzero;stroke:#204a87;stroke-width:0.99739033;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" sodipodi:type="arc" />
+<path style="fill:#fce94f;fill-opacity:1;fill-rule:nonzero;stroke:#c4a000;stroke-width:1.00000095;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" d="M 1207.3552,914.42745 C 1202.6903,914.56616 1201.496,915.49699 1201.4852,916.43846 C 1201.4734,917.47374 1203.1018,918.52202 1207.989,918.54381 C 1225.9844,918.62404 1225.3134,914.60281 1210.3955,914.53182 C 1210.1306,913.9348 1209.7348,913 1209.0277,910.29289 C 1208,910 1208.0583,913.0871 1207.3552,914.42745 z" id="path13628" sodipodi:nodetypes="cssccc" />
+<path sodipodi:type="inkscape:offset" inkscape:radius="-0.71500993" inkscape:original="M 1209.0312 910.28125 C 1208.0035 909.98834 1208.0468 913.09715 1207.3438 914.4375 C 1202.6788 914.57623 1201.5108 915.49603 1201.5 916.4375 C 1201.4882 917.47276 1203.1128 918.50946 1208 918.53125 C 1225.9954 918.61147 1225.3241 914.60224 1210.4062 914.53125 C 1210.1413 913.93425 1209.7383 912.98836 1209.0312 910.28125 z " style="fill:#fce94f;fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" id="path14055" d="M 1208.7812,911.8125 C 1208.7711,911.85427 1208.7598,911.86296 1208.75,911.90625 C 1208.554,912.77211 1208.4287,913.90436 1207.9688,914.78125 C 1207.8501,915.00153 1207.6249,915.14375 1207.375,915.15625 C 1205.0877,915.22427 1203.6674,915.47731 1202.9375,915.78125 C 1202.5726,915.93322 1202.3986,916.11538 1202.3125,916.21875 C 1202.2264,916.32212 1202.2198,916.34862 1202.2188,916.4375 C 1202.2179,916.50798 1202.2186,916.58468 1202.3438,916.71875 C 1202.4689,916.85282 1202.7176,917.01849 1203.1562,917.1875 C 1204.0335,917.52552 1205.6066,917.80183 1208,917.8125 C 1212.4723,917.83244 1215.7664,917.6053 1217.9375,917.25 C 1219.023,917.07235 1219.8483,916.85564 1220.3438,916.65625 C 1220.4986,916.59394 1220.5661,916.55247 1220.6562,916.5 C 1220.6354,916.48777 1220.6492,916.48143 1220.625,916.46875 C 1220.2798,916.28755 1219.6207,916.09081 1218.7188,915.90625 C 1216.9148,915.53712 1214.1037,915.2676 1210.4062,915.25 C 1210.1195,915.24887 1209.8613,915.07668 1209.75,914.8125 C 1209.5639,914.39319 1209.1609,913.05309 1208.7812,911.8125 z" />
+</g>
+</g>
+</svg>

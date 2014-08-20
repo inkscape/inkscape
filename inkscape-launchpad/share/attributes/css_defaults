@@ -1,0 +1,138 @@
+"alignment-baseline" - "auto" - "no"
+
+"baseline-shift" - "baseline" - "no"
+
+"clip" - "auto" - "no"
+
+"clip-path" - "none" - "no"
+
+"clip-rule" - "nonzero" - "yes"
+
+"color" - "NO_DEFAULT" - "yes"
+
+"color-interpolation" - "sRGB" - "yes"
+
+"color-interpolation-filters" - "linearRGB" - "yes"
+
+"color-profile" - "auto" - "yes"
+
+"color-rendering" - "auto" - "yes"
+
+"cursor" - "auto" - "yes"
+
+"direction" - "ltr" - "yes"
+
+"display" - "inline" - "no"
+
+"dominant-baseline" - "auto" - "no"
+
+"enable-background" - "accumulate" - "no"
+
+"fill" - "black" - "yes"
+
+"fill-opacity" - "1" - "yes"
+
+"fill-rule" - "nonzero" - "yes"
+
+"filter" - "none" - "no"
+
+"flood-color" - "black" - "no"
+
+"flood-opacity" - "1" - "no"
+
+"font" - "NO_DEFAULT" - "yes"
+
+"font-family" - "NO_DEFAULT" - "yes"
+
+"font-size" - "medium" - "yes, the computed value is inherited"
+
+"font-size-adjust" - "none" - "yes"
+
+"font-stretch" - "normal" - "yes"
+
+"font-style" - "normal" - "yes"
+
+"font-variant" - "normal" - "yes"
+
+"font-weight" - "normal" - "yes"
+
+"glyph-orientation-horizontal" - "0deg" - "yes"
+
+"glyph-orientation-vertical" - "auto" - "yes"
+
+"image-rendering" - "auto" - "yes"
+
+"isolation" - "auto" - "no"
+
+"kerning" - "auto" - "yes"
+
+"letter-spacing" - "normal" - "yes"
+
+"lighting-color" - "white" - "no"
+
+"line-height" - "NO DEFAULT" - "no"
+
+"marker" - "none" - "yes"
+
+"marker-end" - "none" - "yes"
+
+"marker-mid" - "none" - "yes"
+
+"marker-start" - "none" - "yes"
+
+"mask" - "none" - "no"
+
+"mix-blend-mode" - "normal" - "no"
+
+"opacity" - "1" - "no"
+
+"overflow" - "hidden" - "no"
+
+"paint-order" - "normal" - "yes"
+
+"pointer-events" - "visiblePainted" - "yes"
+
+"shape-rendering" - "auto" - "yes"
+
+"solid-color" - "#000000" - "no"
+
+"solid-opacity" - "1.0" - "no"
+
+"stop-color" - "black" - "no"
+
+"stop-opacity" - "1" - "no"
+
+"stroke" - "none" - "yes"
+
+"stroke-dasharray" - "none" - "yes"
+
+"stroke-dashoffset" - "0" - "yes"
+
+"stroke-linecap" - "butt" - "yes"
+
+"stroke-linejoin" - "miter" - "yes"
+
+"stroke-miterlimit" - "4" - "yes"
+
+"stroke-opacity" - "1" - "yes"
+
+"stroke-width" - "1" - "yes"
+
+"text-align" - "start" - "yes"
+
+"text-anchor" - "start" - "yes"
+
+"text-decoration" - "NO_DEFAULT" - "no"
+
+"text-rendering" - "auto" - "yes"
+
+"title" - "NO DEFAULT" - "no"
+
+"unicode-bidi" - "normal" - "no"
+
+"visibility" - "visible" - "yes"
+
+"word-spacing" - "normal" - "yes"
+
+"writing-mode" - "lr-tb" - "yes"
+

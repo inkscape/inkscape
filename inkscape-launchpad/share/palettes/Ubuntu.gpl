@@ -1,0 +1,121 @@
+GIMP Palette
+Name: Ubuntu
+# <http://design.ubuntu.com/brand/colour-palette>
+
+
+0	0	0	Black
+255	255	255	White
+
+
+221	72	20	Ubuntu orange
+224	90	44	Ubuntu orange 90%
+228	109	67	Ubuntu orange 80%
+231	127	91	Ubuntu orange 70%
+235	145	114	Ubuntu orange 60%
+238	164	138	Ubuntu orange 50%
+240	173	149	Ubuntu orange 45%
+241	182	161	Ubuntu orange 40%
+243	191	173	Ubuntu orange 35%
+245	200	185	Ubuntu orange 30%
+247	209	196	Ubuntu orange 25%
+248	218	208	Ubuntu orange 20%
+250	228	220	Ubuntu orange 15%
+252	237	232	Ubuntu orange 10%
+
+
+119	33	111	Light aubergine
+133	55	125	Light aubergine 90%
+146	77	140	Light aubergine 80%
+160	100	154	Light aubergine 70%
+173	122	169	Light aubergine 60%
+187	144	183	Light aubergine 50%
+194	155	190	Light aubergine 45%
+201	166	197	Light aubergine 40%
+207	177	205	Light aubergine 35%
+214	188	212	Light aubergine 30%
+221	200	219	Light aubergine 25%
+228	211	226	Light aubergine 20%
+235	222	233	Light aubergine 15%
+241	233	241	Light aubergine 10%
+
+
+94	39	80	Mid aubergine
+110	61	98	Mid aubergine 90%
+126	82	115	Mid aubergine 80%
+142	104	133	Mid aubergine 70%
+158	125	150	Mid aubergine 60%
+175	147	168	Mid aubergine 50%
+183	158	176	Mid aubergine 45%
+191	169	185	Mid aubergine 40%
+199	179	194	Mid aubergine 35%
+207	190	203	Mid aubergine 30%
+215	201	211	Mid aubergine 25%
+223	212	220	Mid aubergine 20%
+231	223	229	Mid aubergine 15%
+239	233	238	Mid aubergine 10%
+
+
+44	0	30	Dark aubergine
+65	26	53	Dark aubergine 90%
+86	51	75	Dark aubergine 80%
+107	77	98	Dark aubergine 70%
+128	102	120	Dark aubergine 60%
+150	128	143	Dark aubergine 50%
+160	140	154	Dark aubergine 45%
+171	153	165	Dark aubergine 40%
+181	166	176	Dark aubergine 35%
+192	179	188	Dark aubergine 30%
+202	191	199	Dark aubergine 25%
+213	204	210	Dark aubergine 20%
+223	217	221	Dark aubergine 15%
+234	230	233	Dark aubergine 10%
+
+
+174	167	159	Warm grey
+182	176	169	Warm grey 90%
+190	185	178	Warm grey 80%
+198	193	188	Warm grey 70%
+206	202	197	Warm grey 60%
+215	211	207	Warm grey 50%
+219	215	212	Warm grey 45%
+223	220	217	Warm grey 40%
+227	224	221	Warm grey 35%
+231	229	226	Warm grey 30%
+235	233	231	Warm grey 25%
+239	237	236	Warm grey 20%
+243	242	241	Warm grey 15%
+247	246	245	Warm grey 10%
+
+
+51	51	51	Cool grey
+71	71	71	Cool grey 90%
+92	92	92	Cool grey 80%
+112	112	112	Cool grey 70%
+133	133	133	Cool grey 60%
+153	153	153	Cool grey 50%
+163	163	163	Cool grey 45%
+173	173	173	Cool grey 40%
+184	184	184	Cool grey 35%
+194	194	194	Cool grey 30%
+204	204	204	Cool grey 25%
+214	214	214	Cool grey 20%
+224	224	224	Cool grey 15%
+235	235	235	Cool grey 10%
+
+
+119	41	83	Canonical aubergine
+133	62	100	Canonical aubergine 90%
+146	84	117	Canonical aubergine 80%
+160	105	135	Canonical aubergine 70%
+173	127	152	Canonical aubergine 60%
+187	148	169	Canonical aubergine 50%
+194	159	178	Canonical aubergine 45%
+201	169	186	Canonical aubergine 40%
+207	180	195	Canonical aubergine 35%
+214	191	203	Canonical aubergine 30%
+221	202	212	Canonical aubergine 25%
+228	212	221	Canonical aubergine 20%
+235	223	229	Canonical aubergine 15%
+241	234	238	Canonical aubergine 10%
+
+

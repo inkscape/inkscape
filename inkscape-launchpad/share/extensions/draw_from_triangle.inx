@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <_name>Draw From Triangle</_name>
+    <id>il.fromtriangle</id>
+    <dependency type="executable" location="extensions">draw_from_triangle.py</dependency>
+    <dependency type="executable" location="extensions">inkex.py</dependency>
+    <param name="tab" type="notebook">
+        <page name="common1" _gui-text="Common Objects">
+            <param name="circumcircle"    type="boolean" _gui-text="Circumcircle"></param>
+            <param name="circumcentre"    type="boolean" _gui-text="Circumcentre"></param>
+            <param name="incircle"        type="boolean" _gui-text="Incircle"></param>
+            <param name="incentre"        type="boolean" _gui-text="Incentre"></param>
+            <param name="contact_tri"     type="boolean" _gui-text="Contact Triangle"></param>
+            <param name="excircles"       type="boolean" _gui-text="Excircles"></param>
+            <param name="excentres"       type="boolean" _gui-text="Excentres"></param>
+            <param name="extouch_tri"     type="boolean" _gui-text="Extouch Triangle"></param>
+            <param name="excentral_tri"   type="boolean" _gui-text="Excentral Triangle"></param>
+            <param name="orthocentre"     type="boolean" _gui-text="Orthocentre"></param>
+            <param name="orthic_tri"      type="boolean" _gui-text="Orthic Triangle"></param>
+            <param name="altitudes"       type="boolean" _gui-text="Altitudes"></param>
+            <param name="anglebisectors"  type="boolean" _gui-text="Angle Bisectors"></param>
+            <param name="centroid"        type="boolean" _gui-text="Centroid"></param>
+            <param name="ninepointcentre" type="boolean" _gui-text="Nine-Point Centre"></param>
+            <param name="ninepointcircle" type="boolean" _gui-text="Nine-Point Circle"></param>
+            <param name="symmedians"      type="boolean" _gui-text="Symmedians"></param>
+            <param name="sym_point"       type="boolean" _gui-text="Symmedian Point"></param>
+            <param name="sym_tri"         type="boolean" _gui-text="Symmedial Triangle"></param>
+            <param name="gergonne_pt"     type="boolean" _gui-text="Gergonne Point"></param>
+            <param name="nagel_pt"        type="boolean" _gui-text="Nagel Point"></param>
+        </page>
+        <page name="Custom" _gui-text="Custom Points and Options">
+            <param name="mode" type="enum" _gui-text="Custom Point Specified By:">
+                <_item value="trilin">Trilinear Coordinates</_item>
+                <_item value="tcf">Triangle Function</_item>
+            </param>
+            <param name="cust_str"      type="string"  _gui-text="Point At:">cos(a_a):cos(a_b):cos(a_c)</param>
+            <param name="cust_pt"       type="boolean" _gui-text="Draw Marker At This Point"></param>
+            <param name="cust_radius"   type="boolean" _gui-text="Draw Circle Around This Point"></param>
+            <param name="radius"        type="string"  _gui-text="Radius (px):">s_a*s_b*s_c/(4*area)</param>
+            <param name="isogonal_conj" type="boolean" _gui-text="Draw Isogonal Conjugate"></param>
+            <param name="isotomic_conj" type="boolean" _gui-text="Draw Isotomic Conjugate"></param>
+            <param name="report" type="boolean" _gui-text="Report this triangle's properties"></param>
+        </page>
+        <page name="Help" _gui-text="Help">
+            <_param name="instructions" type="description" xml:space="preserve">This extension draws constructions about a triangle defined by the first 3 nodes of a selected path. You may select one of preset objects or create your own ones.
+            
+All units are the Inkscape's pixel unit. Angles are all in radians.
+You can specify a point by trilinear coordinates or by a triangle centre function.
+Enter as functions of the side length or angles.
+Trilinear elements should be separated by a colon: ':'.
+Side lengths are represented as 's_a', 's_b' and 's_c'.
+Angles corresponding to these are 'a_a', 'a_b', and 'a_c'.
+You can also use the semi-perimeter and area of the triangle as constants. Write 'area' or 'semiperim' for these.
+
+You can use any standard Python math function:
+ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); 
+modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); 
+acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); 
+cos(x); sin(x); tan(x); degrees(x); radians(x); 
+cosh(x); sinh(x); tanh(x)
+
+Also available are the inverse trigonometric functions:
+sec(x); csc(x); cot(x)
+
+You can specify the radius of a circle around a custom point using a formula, which may also contain the side lengths, angles, etc. You can also plot the isogonal and isotomic conjugate of the point. Be aware that this may cause a divide-by-zero error for certain points.
+            </_param>
+        </page>
+    </param>
+    <effect>
+        <object-type>all</object-type>
+        <effects-menu>
+            <submenu _name="Render"/>
+        </effects-menu>
+    </effect>
+    <script>
+        <command reldir="extensions" interpreter="python">draw_from_triangle.py</command>
+    </script>
+</inkscape-extension>

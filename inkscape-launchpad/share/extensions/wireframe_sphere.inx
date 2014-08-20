@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+	<_name>Wireframe Sphere</_name>
+	<id>il.wireframesphere</id>
+	<dependency type="executable" location="extensions">wireframe_sphere.py</dependency>
+	<dependency type="executable" location="extensions">inkex.py</dependency>
+	<dependency type="executable" location="extensions">simplestyle.py</dependency>
+	<dependency type="executable" location="extensions">simpletransform.py</dependency>
+	<param name="num_lat" type="int" min="0" max="1000" _gui-text="Lines of latitude:">19</param>
+	<param name="num_long" type="int" min="0" max="1000" _gui-text="Lines of longitude:">24</param>
+	<param name="tilt" type="float" min="-90" max="90" _gui-text="Tilt (deg):">35</param>
+	<param name="rotation" type="float" min="0" max="360" _gui-text="Rotation (deg):">4</param>
+	<param name="radius" type="float" min="1" max="1000" _gui-text="Radius (px):">100.0</param>
+	<param name="hide_back" type="boolean" _gui-text="Hide lines behind the sphere">false</param>
+	<effect>
+		<object-type>all</object-type>
+		<effects-menu>
+			<submenu _name="Render"/>
+		</effects-menu>
+	</effect>
+	<script>
+		<command reldir="extensions" interpreter="python">wireframe_sphere.py</command>
+	</script>
+</inkscape-extension>

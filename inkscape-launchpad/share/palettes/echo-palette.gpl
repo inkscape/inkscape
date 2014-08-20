@@ -1,0 +1,31 @@
+GIMP Palette
+Name: Echo Icon Theme Palette
+Columns: 3
+#
+ 25 174 255     Blue1
+  0 132 200     Blue2
+  0  92 148     Blue3
+255  65  65     Red1
+220   0   0     Red2
+181   0   0     Red3
+255 255  62     Orange1
+255 153   0     Orange2
+255 102   0     Orange3
+255 192  34     Brown1
+184 129   0     Brown2
+128  77   0     Brown3
+204 255  66     Green1
+154 222   0     Green2
+  0 145   0     Green3
+241 202 255     Purple1
+215 108 255     Purple2
+186   0 255     Purple3
+189 205 212     Metalic1
+158 171 176     Metalic2
+ 54  78  89     Metalic3
+ 14  35  46     Metalic4
+255 255 255     Grey1
+204 204 204     Grey2
+153 153 153     Grey3
+102 102 102     Grey4
+ 45  45  45     Grey5

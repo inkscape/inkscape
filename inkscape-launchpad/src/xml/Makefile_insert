@@ -1,0 +1,51 @@
+## Makefile.am fragment sourced by src/Makefile.am.
+
+ink_common_sources +=	\
+	xml/comment-node.h \
+	xml/composite-node-observer.cpp xml/composite-node-observer.h \
+	xml/element-node.h \
+	xml/helper-observer.cpp	\
+	xml/helper-observer.h	\
+	xml/node-observer.h \
+	xml/quote.cpp	\
+	xml/quote.h	\
+	xml/repr-css.cpp	\
+	xml/log-builder.cpp	\
+	xml/log-builder.h	\
+	xml/node-fns.cpp	\
+	xml/node-fns.h	\
+	xml/pi-node.h	\
+	xml/rebase-hrefs.cpp	\
+	xml/rebase-hrefs.h	\
+	xml/repr-io.cpp	\
+	xml/repr-sorting.cpp    \
+	xml/repr-sorting.h      \
+	xml/repr-util.cpp	\
+	xml/repr.cpp	\
+	xml/repr.h	\
+	xml/simple-document.h \
+	xml/simple-document.cpp \
+	xml/simple-node.h \
+	xml/simple-node.cpp \
+	xml/node.h \
+	xml/croco-node-iface.cpp	\
+	xml/croco-node-iface.h	\
+	xml/attribute-record.h \
+	xml/sp-css-attr.h \
+	xml/event.cpp xml/event.h xml/event-fns.h	\
+	xml/document.h \
+	xml/node-event-vector.h \
+	xml/node-iterators.h	\
+	xml/sp-css-attr.h \
+	xml/subtree.cpp	\
+	xml/subtree.h	\
+	xml/text-node.h \
+	xml/invalid-operation-exception.h
+
+# ######################
+# ### CxxTest stuff ####
+# ######################
+CXXTEST_TESTSUITES += \
+	$(srcdir)/xml/rebase-hrefs-test.h	\
+	$(srcdir)/xml/repr-action-test.h	\
+	$(srcdir)/xml/quote-test.h

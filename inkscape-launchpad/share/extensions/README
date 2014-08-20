@@ -1,0 +1,12 @@
+This folder contains Inkscape extensions, i.e. the scripts that
+implement some commands that you can use from within Inkscape. Most of
+these commands are in the Extensions menu.
+
+Each *.inx file describes an extension, listing its name, purpose,
+prerequisites, location within the menu, etc. These files are read by
+Inkscape on launch. Other files are the scripts themselves (Perl,
+Python, and Ruby are supported, as well as shell scripts).
+
+Only include extensions here which are GPL-compatible.  This includes
+Apache-2, MPL 1.1, certain Creative Commons licenses, and more.  See
+https://www.gnu.org/licenses/license-list.html for guidance.

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <_name>Pattern along Path</_name>
+    <id>math.univ-lille1.barraud.pathdeform</id>
+    <dependency type="executable" location="extensions">pathmodifier.py</dependency>
+    <dependency type="executable" location="extensions">pathalongpath.py</dependency>
+    <dependency type="executable" location="extensions">inkex.py</dependency>
+	<param name="tab" type="notebook">
+        <page name="Options" _gui-text="Options">
+        <param name="copymode" type="enum" _gui-text="Copies of the pattern:">
+            <_item value="Single">Single</_item>
+            <_item value="Single, stretched">Single, stretched</_item>
+            <_item value="Repeated">Repeated</_item>
+            <_item value="Repeated, stretched">Repeated, stretched</_item>
+        </param>
+        <param name="kind" type="enum" _gui-text="Deformation type:">
+            <_item value="Snake">Snake</_item>
+            <_item value="Ribbon">Ribbon</_item>
+        </param>
+        <param name="space" type="float" _gui-text="Space between copies:" min="-10000.0" max="10000.0">0.0</param>
+        <param name="noffset" type="float" _gui-text="Normal offset:" min="-10000.0" max="10000.0">0.0</param>
+        <param name="toffset" type="float" _gui-text="Tangential offset:" min="-10000.0" max="10000.0">0.0</param>
+        <param name="vertical" type="boolean" _gui-text="Pattern is vertical">false</param>
+        <param name="duplicate" type="boolean" _gui-text="Duplicate the pattern before deformation">true</param>
+        </page>
+        <page name="Help" _gui-text="Help">
+            <_param name="title" type="description">This effect scatters or bends a pattern along arbitrary "skeleton" paths. The pattern is the topmost object in the selection. Groups of paths, shapes or clones are allowed.</_param>
+        </page>
+    </param>
+    <effect>
+    <object-type>all</object-type>
+        <effects-menu>
+            <submenu _name="Generate from Path"/>
+        </effects-menu>
+    </effect>
+    <script>
+        <command reldir="extensions" interpreter="python">pathalongpath.py</command>
+    </script>
+</inkscape-extension>

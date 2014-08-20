@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <_name>DXF Output</_name>
+    <id>org.inkscape.output.dxf</id>
+    <dependency type="extension">org.inkscape.print.ps.cairo</dependency>
+    <dependency type="executable" location="extensions">ps2dxf.sh</dependency>
+    <dependency type="executable" _description="pstoedit must be installed to run; see http://www.pstoedit.net/pstoedit">pstoedit</dependency>
+    <output>
+        <extension>.dxf</extension>
+        <mimetype>image/dxf</mimetype>
+        <_filetypename>AutoCAD DXF R12 (*.dxf)</_filetypename>
+        <_filetypetooltip>DXF file written by pstoedit</_filetypetooltip>
+    </output>
+    <script>
+        <command reldir="extensions">ps2dxf.sh</command>
+        <helper_extension>org.inkscape.print.ps.cairo</helper_extension>
+    </script>
+</inkscape-extension>

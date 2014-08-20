@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="96" height="96" id="svg2" sodipodi:version="0.32" inkscape:version="0.48+devel r10484 custom" version="1.0" sodipodi:docname="feDisplacementMap-icon.svg" inkscape:output_extension="org.inkscape.output.svg.inkscape" inkscape:export-filename="/home/felipe/devel/inkscape/inkscape/share/icons/feDisplacementMap-icon.png" inkscape:export-xdpi="90" inkscape:export-ydpi="90">
+<defs id="defs4">
+<filter id="filter3342" inkscape:label="filter1">
+<feTurbulence id="feTurbulence3344" baseFrequency="0.038999999999999986" type="turbulence" numOctaves="2" seed="394" />
+</filter>
+<filter id="filter2387" inkscape:label="smudge">
+<feTurbulence id="feTurbulence2389" type="fractalNoise" baseFrequency="0.039" numOctaves="1" seed="394" in="SourceAlpha" result="result1" />
+<feDisplacementMap id="feDisplacementMap2391" yChannelSelector="G" xChannelSelector="R" scale="72.072072072072075" in="SourceGraphic" in2="result1" />
+</filter>
+<linearGradient inkscape:collect="always" id="linearGradient2393">
+<stop style="stop-color:#ff00ff;stop-opacity:1;" offset="0" id="stop2395" />
+<stop id="stop2401" offset="0.51618499" style="stop-color:#7b85ff;stop-opacity:1" />
+<stop style="stop-color:#00ff78;stop-opacity:1" offset="1" id="stop2397" />
+</linearGradient>
+<linearGradient inkscape:collect="always" xlink:href="#linearGradient2393" id="linearGradient2399" x1="189" y1="564.36218" x2="281" y2="470.36218" gradientUnits="userSpaceOnUse" />
+<linearGradient inkscape:collect="always" xlink:href="#linearGradient2393" id="linearGradient2784" gradientUnits="userSpaceOnUse" x1="189" y1="564.36218" x2="281" y2="470.36218" />
+</defs>
+<sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="2.75" inkscape:cx="138.0119" inkscape:cy="80.14565" inkscape:document-units="px" inkscape:current-layer="layer1" showgrid="false" inkscape:window-width="1003" inkscape:window-height="717" inkscape:window-x="21" inkscape:window-y="24" inkscape:window-maximized="0" />
+<metadata id="metadata7">
+<rdf:RDF>
+<cc:Work rdf:about="">
+<dc:format>image/svg+xml</dc:format>
+<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+<dc:title>feDisplacementMap example</dc:title>
+<dc:date>2008-01-21</dc:date>
+<dc:creator>
+<cc:Agent>
+<dc:title>Felipe Corrêa da Silva Sanches</dc:title>
+</cc:Agent>
+</dc:creator>
+<dc:rights>
+<cc:Agent>
+<dc:title>Felipe Corrêa da Silva Sanches</dc:title>
+</cc:Agent>
+</dc:rights>
+<dc:publisher>
+<cc:Agent>
+<dc:title>Felipe Corrêa da Silva Sanches</dc:title>
+</cc:Agent>
+</dc:publisher>
+<dc:identifier />
+<dc:source />
+<dc:relation />
+<dc:language />
+<dc:subject>
+<rdf:Bag>
+<rdf:li>feDisplacementMap example</rdf:li>
+</rdf:Bag>
+</dc:subject>
+<dc:coverage />
+<dc:description>this is an image originaly intended to be used in inkscape</dc:description>
+<dc:contributor>
+<cc:Agent>
+<dc:title />
+</cc:Agent>
+</dc:contributor>
+<cc:license rdf:resource="http://creativecommons.org/licenses/by-sa/3.0/" />
+</cc:Work>
+<cc:License rdf:about="http://creativecommons.org/licenses/by-sa/3.0/">
+<cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction" />
+<cc:permits rdf:resource="http://creativecommons.org/ns#Distribution" />
+<cc:requires rdf:resource="http://creativecommons.org/ns#Notice" />
+<cc:requires rdf:resource="http://creativecommons.org/ns#Attribution" />
+<cc:permits rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+<cc:requires rdf:resource="http://creativecommons.org/ns#ShareAlike" />
+</cc:License>
+</rdf:RDF>
+</metadata>
+<g inkscape:label="Camada 1" inkscape:groupmode="layer" id="layer1">
+<path sodipodi:type="star" style="opacity:1;fill:url(#linearGradient2399);fill-opacity:1;fill-rule:evenodd;marker:none;marker-start:none;marker-mid:none;marker-end:none;visibility:visible;display:inline;overflow:visible;filter:url(#filter2387);enable-background:accumulate" id="path2385" sodipodi:sides="5" sodipodi:cx="239" sodipodi:cy="505.36218" sodipodi:r1="155.55385" sodipodi:r2="71.064049" sodipodi:arg1="1.0380944" sodipodi:arg2="1.666413" inkscape:flatsided="false" inkscape:rounded="0" inkscape:randomized="0" d="M 318,639.36218 L 232.21544,576.10163 L 135.97077,621.90393 L 169.62625,520.76937 L 96.324433,443.38894 L 202.90922,444.14491 L 253.85088,350.51887 L 286.06842,452.12063 L 390.85391,471.63699 L 304.18066,533.67437 L 318,639.36218 z" transform="matrix(0.1436647,0,0,0.1436647,35.561255,-26.01207)" />
+<path style="fill:#ffb31e;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.35788377999999998;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:0.71576755000000003, 0.71576755000000003;stroke-dashoffset:0;stroke-opacity:0.66120217000000003" d="M 36.925294,47.774608 L 36.925294,51.447426 L 46.04451,51.113534 L 45.788832,54.118566 L 52.010352,49.444071 L 45.874058,44.769575 L 45.959283,48.089951 L 36.925294,47.774608 z" id="path2428" sodipodi:nodetypes="cccccccc" />
+<path transform="matrix(0.1436647,0,0,0.1436647,-9.397767,-46.202396)" d="M 318,639.36218 L 232.21544,576.10163 L 135.97077,621.90393 L 169.62625,520.76937 L 96.324433,443.38894 L 202.90922,444.14491 L 253.85088,350.51887 L 286.06842,452.12063 L 390.85391,471.63699 L 304.18066,533.67437 L 318,639.36218 z" inkscape:randomized="0" inkscape:rounded="0" inkscape:flatsided="false" sodipodi:arg2="1.666413" sodipodi:arg1="1.0380944" sodipodi:r2="71.064049" sodipodi:r1="155.55385" sodipodi:cy="505.36218" sodipodi:cx="239" sodipodi:sides="5" id="path2782" style="opacity:1;fill:url(#linearGradient2784);fill-opacity:1;fill-rule:evenodd;marker:none;marker-start:none;marker-mid:none;marker-end:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" sodipodi:type="star" />
+<g id="g3346" transform="matrix(0.3422204,0,0,0.3422204,-45.531148,-32.845379)">
+<rect transform="translate(155.36416,264.88732)" y="4.2753038" x="5.0526314" height="87.060715" width="86.283394" id="rect3338" style="opacity:0.37700536;fill:#000000;fill-opacity:0.12765958;fill-rule:evenodd;stroke:#000000;stroke-width:1.40799999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:4.224, 4.224;stroke-dashoffset:0;stroke-opacity:1" />
+<rect transform="matrix(0.8615096,0,0,0.8615096,28.190903,43.278072)" y="271.07193" x="162.50165" height="82.853432" width="82.113678" id="rect3340" style="opacity:1;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.33952606;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:2.67905219, 2.67905219;stroke-dashoffset:0;stroke-opacity:1;filter:url(#filter3342)" />
+</g>
+<path sodipodi:nodetypes="ccccccccccccc" id="path2790" d="M 18.405548,48.152494 L 18.405548,51.666052 L 22.197433,51.68089 L 22.188205,55.029012 L 26.368227,55.232546 L 26.308053,51.623634 L 30.250365,51.530883 L 30.183194,48.195667 L 26.126566,48.059676 L 26.152647,44.060054 L 22.387668,44.225883 L 22.454244,48.207426 L 18.405548,48.152494 z" style="fill:#ffb31e;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.35788377999999998;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:0.71576755000000003, 0.71576755000000003;stroke-dashoffset:0;stroke-opacity:0.66120217000000003" />
+</g>
+</svg>

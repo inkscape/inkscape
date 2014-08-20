@@ -1,0 +1,5 @@
+## Makefile.am fragment sourced by src/Makefile.am.
+
+ink_common_sources +=	\
+	dialogs/dialog-events.cpp	\
+	dialogs/dialog-events.h	

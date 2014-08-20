@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+  <_name>Command Line Options</_name>
+  <id>org.inkscape.help.commandline</id>
+  <dependency type="executable" location="extensions">launch_webbrowser.py</dependency>
+  <!-- i18n. Please don't translate it unless a page exists in your language -->
+  <_param name="url" gui-hidden="true" type="string">http://inkscape.org/doc/inkscape-man.html</_param>
+  <effect needs-document="false">
+    <object-type>all</object-type>
+    <effects-menu hidden="true" />
+  </effect>
+  <script>
+    <command reldir="extensions" interpreter="python">launch_webbrowser.py</command>
+  </script>
+</inkscape-extension>

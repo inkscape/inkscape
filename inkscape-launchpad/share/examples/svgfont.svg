@@ -1,0 +1,111 @@
+<?xml version="1.0" standalone="yes"?>
+<svg width="400px" height="300px" version="1.1"
+  xmlns = 'http://www.w3.org/2000/svg'>
+
+  <defs>
+
+<!-- Fonts are declared inside defs tag -->
+
+    <font id="FirstExample" horiz-adv-x="1010">
+       <font-face font-family="Super Sans" font-style="oblique" font-stretch="ultra-expanded" />
+
+       <!-- This font has 2 glyphs (one for "@" and one for "!"): -->
+       <glyph unicode="!" glyph-name="Exclamation" d="M0,0h500v500h-500z"> <!--  Currently we only render the path description declared in the d attribute  -->
+          <circle r='500' cx='500' cy='500' style="fill:none;stroke:green;"/> <!-- So... this part of the glyph wont render yet. -->
+       </glyph>
+
+       <glyph unicode="@" glyph-name="At Sign" d="M500,500h500v500h-500z">
+          <circle r='250' cx='500' cy='500' style="fill:blue;"/> <!-- This circle wont render yet -->
+       </glyph>
+
+       <!-- and also a missing-glyph, which is used for every other character on the string that do not have a specific glyph -->
+       <missing-glyph glyph-name="Missing..." d="M0,0h1000v1000h-1000z"></missing-glyph>
+
+       <!-- And every pair of "!" followed by "@" has a kerning of 500 units -->
+       <hkern u1="!" u2="@" k="500" />
+    </font>
+
+
+
+
+    <font id="AnotherSVGFont" horiz-adv-x="1100">
+       <font-face font-family="Super Sans2" font-style="oblique" font-stretch="ultra-expanded" />
+       <glyph unicode="!" glyph-name="exclamation" d="M0,0h500v500h-500v-300h100v200h300v-300h-400z" />
+       <glyph unicode="@!" glyph-name="A ligature glyph" d="M0,0h200L1000,800v200h-200L0,200z" />
+       <glyph unicode="@" glyph-name="At sign" d="M500,500h250v250h-250z" />
+       <missing-glyph glyph-name="The Missing Glyph" d="M0,0h1000v1000z"></missing-glyph>
+       <hkern u1="!" u2="@" k="1000" />
+    </font>
+
+
+  </defs>
+
+
+
+
+
+
+  <text
+     x="7.874177"
+     y="36.833214"
+     transform="scale(0.9668719,1.0342632)"
+     id="text32"
+     style="font-size:29.00615692px;fill:#ff0000;font-family:Super Sans">These text tags are not</text>
+  <text
+     x="6.890748"
+     y="115.90917"
+     transform="scale(0.8031736,1.2450608)"
+     id="text34"
+     style="font-size:29.28532791px;fill:#008000;font-family:Super Sans">Go to Text-&gt;SVG Fonts... menu</text>
+  <text
+     x="29.545364"
+     y="233.2552"
+     id="text36"
+     style="font-size:20px;fill:#ff0000;font-family:Super Sans">(but you will just have the menu</text>
+  <text
+     x="44.293743"
+     y="253.09889"
+     id="text36-0"
+     style="font-size:20px;fill:#ff0000;font-family:Super Sans">if you compile libcairo from git</text>
+  <text
+     x="53.391254"
+     y="140.27116"
+     transform="scale(0.801182,1.2481558)"
+     id="text34-1"
+     style="font-size:29.21271133px;fill:#008000;font-family:Super Sans">to see some actual rendering.</text>
+  <text
+     x="31.479643"
+     y="64.017517"
+     transform="scale(0.9668719,1.0342632)"
+     id="text32-5"
+     style="font-size:29.00615692px;fill:#ff0000;font-family:Super Sans">rendering properly yet :-(</text>
+  <text
+     x="36.78632"
+     y="153.77176"
+     transform="scale(0.7576769,1.3198238)"
+     id="text36-7"
+     style="font-size:13.01065731px;fill:#0000ff;font-family:Super Sans">(try typing strings with the @ and ! characteres on the SVG Fonts dialog!)</text>
+  <text
+     x="110.99423"
+     y="273.37473"
+     id="text36-0-5"
+     style="font-size:20px;fill:#ff0000;font-family:Super Sans">before compiling inkscape)</text>
+  <text
+     x="0.022930607"
+     y="348.74777"
+     transform="scale(1.1755003,0.8507016)"
+     id="text36-0-5-8"
+     style="font-size:14.73784733px;fill:#008000;font-family:Super Sans">if you are really curious about it, you can look</text>
+  <text
+     x="13.972846"
+     y="369.73709"
+     transform="scale(1.1755003,0.8507016)"
+     id="text36-0-5-8-6"
+     style="font-size:14.73784733px;fill:#008000;font-family:Super Sans">at the contents of this SVG file in a text editor.</text>
+  <text
+     x="3.4043651"
+     y="414.45972"
+     transform="scale(1.1755003,0.8507016)"
+     id="text36-0-5-8-2"
+     style="font-size:14.73784733px;fill:#008000;font-family:Super Sans">I have put some nice comments there for you!!!!</text></svg>
+

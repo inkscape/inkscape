@@ -1,0 +1,9 @@
+## Makefile.am fragment sourced by src/Makefile.am.
+
+ink_common_sources +=	\
+	extension/implementation/implementation.cpp	\
+	extension/implementation/implementation.h \
+	extension/implementation/script.cpp	\
+	extension/implementation/script.h \
+	extension/implementation/xslt.cpp \
+	extension/implementation/xslt.h

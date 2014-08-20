@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+  <_name>HSL Adjust</_name>
+  <id>org.inkscape.color.HSL_adjust</id>
+  <dependency type="executable" location="extensions">coloreffect.py</dependency>
+  <dependency type="executable" location="extensions">color_HSL_adjust.py</dependency>
+  <dependency type="executable" location="extensions">simplestyle.py</dependency>
+  <param name="tab" type="notebook">
+    <page name="Options" _gui-text="Options">
+      <param name="hue"        type="int" appearance="full" min="-360" max="360" indent="0" _gui-text="Hue (°)">0</param>
+      <param name="random_h"   type="boolean" _gui-text="Random hue">false</param>
+      <param name="saturation" type="int" appearance="full" min="-100" max="100" indent="0" _gui-text="Saturation (%)">0</param>
+      <param name="random_s"   type="boolean" _gui-text="Random saturation">false</param>
+      <param name="lightness"  type="int" appearance="full" min="-100" max="100" indent="0" _gui-text="Lightness (%)">0</param>
+      <param name="random_l"   type="boolean" _gui-text="Random lightness">false</param>
+    </page>
+    <page name="Help" _gui-text="Help">
+      <_param name="instructions" type="description" xml:space="preserve">Adjusts hue, saturation and lightness in the HSL representation of the selected objects's color.
+Options:
+    * Hue: rotate by degrees (wraps around).
+    * Saturation: add/subtract % (min=-100, max=100).
+    * Lightness: add/subtract % (min=-100, max=100).
+    * Random Hue/Saturation/Lightness: randomize the parameter's value.
+      </_param>
+    </page>
+  </param>    
+  <effect>
+    <object-type>all</object-type>
+    <effects-menu>
+      <submenu _name="Color"/>
+    </effects-menu>
+  </effect>
+  <script>
+    <command reldir="extensions" interpreter="python">color_HSL_adjust.py</command>
+  </script>
+</inkscape-extension>

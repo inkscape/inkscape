@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+  <_name>lowercase</_name>
+  <id>org.inkscape.text.lowercase</id>
+  <dependency type="executable" location="extensions">chardataeffect.py</dependency>
+  <dependency type="executable" location="extensions">text_lowercase.py</dependency>
+  <effect>
+    <object-type>all</object-type>
+    <effects-menu>
+      <submenu _name="Text">
+        <submenu _name="Change Case" />
+      </submenu>
+    </effects-menu>
+  </effect>
+  <script>
+    <command reldir="extensions" interpreter="python">text_lowercase.py</command>
+  </script>
+</inkscape-extension>

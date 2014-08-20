@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+  <_name>Color Markers</_name>
+  <id>org.ekips.filter.markers.strokepaint</id>
+  <dependency type="executable" location="extensions">markers_strokepaint.py</dependency>
+  <dependency type="executable" location="extensions">inkex.py</dependency>
+  
+  <param name='tab' type="notebook">
+    <page name='object' _gui-text="From object">
+      <param name="type" type="enum" _gui-text="Marker type:">
+        <_item value="solid">solid</_item>
+        <_item value="filled">filled</_item>
+      </param>
+      <param name="invert" type="boolean" _gui-text="Invert fill and stroke colors">false</param>
+      <param name="alpha" type="boolean" _gui-text="Assign alpha">true</param>
+    </page>
+    <page name='custom' _gui-text="Custom">
+      <param name="colortab" type="notebook">
+        <page name="fill_page" _gui-text="Fill">
+          <param name="assign_fill" type="boolean" _gui-text="Assign fill color">true</param>
+          <param name="fill_color" gui-text="Fill color" type="color">-1</param>
+        </page>
+        <page name="stroke_page" _gui-text="Stroke">
+          <param name="assign_stroke" type="boolean" _gui-text="Assign stroke color">true</param>
+          <param name="stroke_color" gui-text="Stroke color" type="color">255</param>
+        </page>
+      </param>
+    </page>
+  </param>
+    
+  <effect>
+  <object-type>all</object-type>
+  <effects-menu>
+    <submenu _name="Modify Path"/>
+  </effects-menu>
+  </effect>
+  <script>
+    <command reldir="extensions" interpreter="python">markers_strokepaint.py</command>
+  </script>
+</inkscape-extension>

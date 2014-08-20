@@ -1,0 +1,122 @@
+
+set(live_effects_SRC
+	effect.cpp
+	lpe-angle_bisector.cpp
+	lpe-bendpath.cpp
+	lpe-boolops.cpp
+	lpe-circle_3pts.cpp
+	lpe-circle_with_radius.cpp
+	lpe-clone-original.cpp
+	lpe-constructgrid.cpp
+	lpe-copy_rotate.cpp
+	lpe-curvestitch.cpp
+	lpe-dynastroke.cpp
+	lpe-envelope.cpp
+	lpe-extrude.cpp
+	lpe-gears.cpp
+	lpe-interpolate.cpp
+	lpe-knot.cpp
+	lpe-lattice.cpp
+	lpe-line_segment.cpp
+	lpe-mirror_symmetry.cpp
+	lpe-offset.cpp
+	lpe-parallel.cpp
+	lpe-path_length.cpp
+	lpe-patternalongpath.cpp
+	lpe-perp_bisector.cpp
+	lpe-perspective_path.cpp
+	lpe-powerstroke.cpp
+	lpe-recursiveskeleton.cpp
+	lpe-rough-hatches.cpp
+	lpe-ruler.cpp
+	# lpe-skeleton.cpp
+	lpe-sketch.cpp
+	lpe-spiro.cpp
+	lpe-tangent_to_curve.cpp
+	lpe-test-doEffect-stack.cpp
+	lpe-text_label.cpp
+	lpe-vonkoch.cpp
+	lpegroupbbox.cpp
+	lpeobject-reference.cpp
+	lpeobject.cpp
+	spiro.cpp
+	spiro-converters.cpp
+
+	parameter/array.cpp
+	parameter/bool.cpp
+	parameter/parameter.cpp
+	parameter/path.cpp
+	parameter/originalpath.cpp
+	parameter/path-reference.cpp
+	parameter/point.cpp
+	parameter/powerstrokepointarray.cpp
+	parameter/random.cpp
+	parameter/text.cpp
+	parameter/unit.cpp
+	parameter/vector.cpp
+
+
+	# -------
+	# Headers
+	effect-enum.h
+	effect.h
+	lpe-angle_bisector.h
+	lpe-bendpath.h
+	lpe-boolops.h
+	lpe-circle_3pts.h
+	lpe-circle_with_radius.h
+	lpe-clone-original.h
+	lpe-constructgrid.h
+	lpe-copy_rotate.h
+	lpe-curvestitch.h
+	lpe-dynastroke.h
+	lpe-envelope.h
+	lpe-extrude.h
+	lpe-gears.h
+	lpe-interpolate.h
+	lpe-knot.h
+	lpe-lattice.h
+	lpe-line_segment.h
+	lpe-mirror_symmetry.h
+	lpe-offset.h
+	lpe-parallel.h
+	lpe-path_length.h
+	lpe-patternalongpath.h
+	lpe-perp_bisector.h
+	lpe-perspective_path.h
+	lpe-powerstroke.h
+	lpe-powerstroke-interpolators.h
+	lpe-recursiveskeleton.h
+	lpe-rough-hatches.h
+	lpe-ruler.h
+	lpe-skeleton.h
+	lpe-sketch.h
+	lpe-spiro.h
+	lpe-tangent_to_curve.h
+	lpe-test-doEffect-stack.h
+	lpe-text_label.h
+	lpe-vonkoch.h
+	lpegroupbbox.h
+	lpeobject-reference.h
+	lpeobject.h
+	spiro.h
+	spiro-converters.h
+
+	parameter/array.h
+	parameter/bool.h
+	parameter/enum.h
+	parameter/parameter.h
+	parameter/path-reference.h
+	parameter/path.h
+	parameter/originalpath.h
+	parameter/point.h
+	parameter/powerstrokepointarray.h
+	parameter/random.h
+	parameter/text.h
+	parameter/unit.h
+	parameter/vector.h
+
+)
+
+# add_inkscape_lib(live_effects_LIB "${live_effects_SRC}")
+add_inkscape_source("${live_effects_SRC}")

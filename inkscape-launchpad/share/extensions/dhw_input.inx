@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+	<_name>DHW file input</_name>
+	<id>org.inkscape.input.dhw</id>
+	<dependency type="executable" location="extensions">dm2svg.py</dependency>
+	<input>
+		<extension>.dhw</extension>
+		<mimetype>application/x-extension-DHW</mimetype>
+		<_filetypename>ACECAD Digimemo File (*.dhw)</_filetypename>
+		<_filetypetooltip>Open files from ACECAD Digimemo</_filetypetooltip>
+	</input>
+	<script>
+		<command reldir="extensions" interpreter="python">dm2svg.py</command>
+	</script>
+</inkscape-extension>

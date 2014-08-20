@@ -1,0 +1,367 @@
+<?xml version="1.0"?>
+<keys name="Adobe Illustrator">
+
+<!--  
+This file contains a profile of keyboard shortcuts for Inkscape 
+in the style of Adobe Illustrator.   
+
+See default.xml for more information.  
+-->
+
+<!-- Tools -->
+
+<!-- Selection (arrow) tool -->
+
+  <bind key="V" action="ToolSelector" display="true"/>
+  <bind key="v" action="ToolSelector" />
+  <bind key="E" action="ToolSelector" />
+  <bind key="e" action="ToolSelector" />
+
+<!-- Direct Selection tool -->
+
+  <bind key="A" action="ToolNode" display="true"/>
+  <bind key="a" action="ToolNode" />
+
+<!-- Pen tool -->
+
+  <bind key="P" action="ToolPen" display="true"/>
+  <bind key="p" action="ToolPen" />
+
+<!-- Type tool -->
+
+  <bind key="T" action="ToolText" display="true"/>
+  <bind key="t" action="ToolText" />
+
+<!-- Rectangle tool -->
+
+  <bind key="M" action="ToolRect" display="true"/>
+  <bind key="m" action="ToolRect" />
+
+<!-- Ellipse tool -->
+
+  <bind key="L" action="ToolArc" display="true"/>
+  <bind key="l" action="ToolArc" />
+
+<!-- Paintbrush tool -->
+
+  <bind key="B" action="ToolCalligraphic" display="true"/>
+  <bind key="b" action="ToolCalligraphic" />
+
+<!-- Pencil tool -->
+
+  <bind key="N" action="ToolPencil" display="true"/>
+  <bind key="n" action="ToolPencil" />
+
+<!-- Warp/Pucker/Bloat/Wrinkle tool -->
+
+  <bind key="R" modifiers="Shift" action="ToolTweak" display="true"/>
+  <bind key="r" modifiers="Shift" action="ToolTweak"/>
+
+<!-- Free Transform tool -->
+
+<!--  <bind key="E" action="ToolSelector" display="true"/>
+  <bind key="e" action="ToolSelector" /> -->
+
+<!-- Gradient tool -->
+
+  <bind key="G" action="ToolGradient" display="true"/>
+  <bind key="g" action="ToolGradient" />
+
+<!-- Eye-dropper tool -->
+
+  <bind key="I" action="ToolDropper" display="true"/>
+  <bind key="i" action="ToolDropper" />
+
+<!-- Live Paint Bucket tool -->
+
+  <bind key="K" action="ToolPaintBucket" display="true"/>
+  <bind key="k" action="ToolPaintBucket" />
+
+<!-- Zoom tool -->
+
+  <bind key="Z" action="ToolZoom" display="true"/>
+  <bind key="z" action="ToolZoom" />
+
+<!--
+ToolSelector: Select and transform objects
+ToolNode: Edit paths by nodes
+ToolTweak: Tweak objects by sculpting or painting
+ToolRect: Create rectangles and squares
+Tool3DBox: Create 3D boxes
+ToolArc: Create circles, ellipses, and arcs
+ToolStar: Create stars and polygons
+ToolSpiral: Create spirals
+ToolPencil: Draw freehand lines
+ToolPen: Draw Bezier curves and straight lines
+ToolCalligraphic: Draw calligraphic or brush strokes
+ToolText: Create and edit text objects
+ToolGradient: Create and edit gradients
+ToolZoom: Zoom in or out
+ToolDropper: Pick colors from image
+ToolConnector: Create diagram connectors
+ToolPaintBucket: Fill bounded areas -->
+
+
+<!-- File -->
+
+  <bind key="n" modifiers="Ctrl" action="FileNew" display="true"/>
+  <bind key="N" modifiers="Ctrl" action="FileNew"/>
+
+<!-- New from template, Shift+Ctrl+N -->
+
+  <bind key="o" modifiers="Ctrl" action="FileOpen" display="true"/>
+  <bind key="O" modifiers="Ctrl" action="FileOpen"/>
+
+<!-- Browse, Alt+Ctrl+O -->
+
+  <bind key="w" modifiers="Ctrl" action="FileClose" display="true"/>
+  <bind key="W" modifiers="Ctrl" action="FileClose" display="true"/>
+
+  <bind key="s" modifiers="Ctrl" action="FileSave" display="true"/>
+  <bind key="S" modifiers="Ctrl" action="FileSave"/>
+
+  <bind key="s" modifiers="Ctrl,Shift" action="FileSaveAs" display="true"/>
+  <bind key="S" modifiers="Ctrl,Shift" action="FileSaveAs"/>
+
+  <bind key="s" modifiers="Ctrl,Alt" action="FileSaveACopy" display="true"/>
+  <bind key="S" modifiers="Ctrl,Alt" action="FileSaveACopy" />
+
+<!-- Save for Web, Alt+Shift+Ctrl+S -->
+
+  <bind key="F12" action="FileRevert"/>
+  
+<!--  Scripts - Other Script... Ctrl+F12 -->
+
+  <bind key="p" modifiers="Alt,Ctrl" action="DialogDocumentProperties" display="true"/>
+  <bind key="P" modifiers="Alt,Ctrl" action="DialogDocumentProperties"/>
+  
+<!-- File Info..., Alt+Shift+Ctrl+I -->
+
+  <bind key="p" modifiers="Ctrl" action="FilePrint" display="true"/>
+  <bind key="P" modifiers="Ctrl" action="FilePrint"/>
+  
+  <bind key="q" modifiers="Ctrl" action="FileQuit" display="true"/>
+  <bind key="Q" modifiers="Ctrl" action="FileQuit" display="true"/>
+
+  <!-- Edit -->
+  
+  <bind key="z" modifiers="Ctrl" action="EditUndo" display="true"/>
+  <bind key="Z" modifiers="Ctrl" action="EditUndo"/>
+
+  <bind key="z" modifiers="Ctrl,Shift" action="EditRedo" display="true"/>
+  <bind key="Z" modifiers="Ctrl,Shift" action="EditRedo"/>
+
+  <bind key="x" modifiers="Ctrl" action="EditCut" display="true"/>
+  <bind key="X" modifiers="Ctrl" action="EditCut"/>
+  <bind key="F2" action="EditCut"/>
+
+  <bind key="c" modifiers="Ctrl" action="EditCopy" display="true"/>
+  <bind key="C" modifiers="Ctrl" action="EditCopy"/>
+  <bind key="F3" action="EditCut"/>
+  
+  <bind key="v" modifiers="Ctrl" action="EditPaste" display="true"/>
+  <bind key="V" modifiers="Ctrl" action="EditPaste"/>
+  <bind key="F4" action="EditCut"/>
+    
+  <!--  Paste in Front, Ctrl+F -->
+
+  <bind key="f" modifiers="Ctrl" action="EditPaste"/>
+  <bind key="F" modifiers="Ctrl" action="EditPaste"/>
+
+  <!-- Paste in Back, Ctrl+B -->
+  <!-- Check Spelling, Ctrl+I -->
+  <!-- Color Settings..., Shift+Ctrl+K -->
+  <!-- Keyboard Shortcuts... Shift+Ctrl+K -->
+  
+  <bind key="k" modifiers="Ctrl" action="DialogPreferences" display="true"/>
+  <bind key="K" modifiers="Ctrl" action="DialogPreferences" />
+
+<!-- Object -->
+
+<!-- 
+Transform - Transform Again Ctrl+б
+Transform - Move Shift+Ctrl+M
+Transform - Transform Each Alt+Shift+Ctrl+D 
+-->
+
+  <bind key="bracketright" modifiers="Shift,Ctrl" action="SelectionToFront" display="true"/>
+  <bind key="bracketright" modifiers="Shift,Ctrl" action="SelectionToFront" />
+
+  <bind key="bracketleft" modifiers="Shift,Ctrl" action="SelectionToBack" display="true"/>
+  <bind key="bracketleft" modifiers="Shift,Ctrl" action="SelectionToBack" />
+
+  <bind key="bracketright" modifiers="Ctrl" action="SelectionRaise" display="true"/>
+  <bind key="bracketright" modifiers="Ctrl" action="SelectionRaise" />
+
+  <bind key="bracketleft" modifiers="Ctrl" action="SelectionLower" display="true"/>
+  <bind key="bracketleft" modifiers="Ctrl" action="SelectionLower" />
+
+  <bind key="g" modifiers="Ctrl" action="SelectionGroup" display="true"/>
+  <bind key="G" modifiers="Ctrl" action="SelectionGroup" />
+
+  <bind key="g" modifiers="Ctrl,Shift" action="SelectionUnGroup" display="true"/>
+  <bind key="G" modifiers="Ctrl,Shift" action="SelectionUnGroup" />
+
+<!-- 
+Lock - Selection, Ctrl+2
+Unlock All, Alt+Ctrl+2
+Hide - Selection, Ctrl+3
+Show All, Alt+Ctrl+3
+
+Path - Join, Ctrl+J
+Path - Average, Alt+Ctrl+J
+Blend - Make, Alt+Ctrl+B
+Blend - Release, Alt+Shift+Ctrl+B
+Envelope Distort - Make with Warp, Alt+Shift+Ctrl+W
+Envelope Distort - Make with Mesh, Alt+Ctrl+M
+Envelope Distort - Make with Top Object, Alt+Ctrl+я
+Live Paint - Make, Alt+Ctrl+X
+Compound Path - Make, Ctrl+8
+Compound Path - Release, Alt+Shift+Ctrl+8
+-->
+
+  <bind key="7" modifiers="Ctrl" action="ObjectSetClipPath" />
+  <bind key="7" modifiers="Ctrl,Alt" action="ObjectUnSetClipPath" />
+
+<!-- Add new symbol -->
+
+  <bind key="F8" action="EditClone" display="true"/>
+
+<!-- Type 
+Show Hidden Characters, Alt+Ctrl+I -->
+
+  <bind key="o" modifiers="Ctrl,Shift" action="ObjectToPath"/>
+  <bind key="O" modifiers="Ctrl,Shift" action="ObjectToPath" display="true"/>
+
+<!-- Select -->
+
+  <bind key="a" modifiers="Ctrl" action="EditSelectAll" display="true"/>
+  <bind key="A" modifiers="Ctrl" action="EditSelectAll" />
+
+<!--
+Deselect, Shift+Ctrl+A - this one should work with Esc
+Reselect, Ctrl+6
+-->
+
+  <bind key="bracketright" modifiers="Ctrl,Alt" action="EditSelectNext" display="true"/>
+  <bind key="bracketleft" modifiers="Ctrl,Alt" action="EditSelectPrev" display="true"/>
+
+<!-- Filter -->
+
+<!--
+Apply Last Filter Ctrl+E
+Last Filter Alt+Ctrl+E
+-->
+
+<!-- Effect -->
+<!--
+Apply Last Effect Shift+Ctrl+E
+Last Effect Alt+Shift+Ctrl+E
+-->
+
+<!-- View -->
+
+<!-- Overprint Preview, Alt+Shift+Ctrl+Y -->
+<!-- Pixel Preview Alt+Ctrl+Y -->
+
+  <bind key="y" modifiers="Ctrl" action="ViewModeToggle" />
+  <bind key="Y" modifiers="Ctrl" action="ViewModeToggle" display="true" />
+    
+  <bind key="equal" modifiers="Ctrl" action="ZoomIn" display="true"/>
+  <bind key="minus" modifiers="Ctrl" action="ZoomOut" display="true"/>
+  <bind key="0" modifiers="Ctrl" action="ZoomPage" display="true"/>
+  <bind key="1" modifiers="Ctrl" action="Zoom1:0" display="true"/>
+
+<!--
+  Hide Edges, Ctrl+H
+  Hide Template, Shift+Ctrl+W
+  Hide Bounding Box Shift+Ctrl+B
+  Show Transparency Grid Shift+Ctrl+D
+  Show Text Threads Shift+Ctrl+Y
+-->
+
+  <bind key="semicolon" modifiers="Shift" action="ToggleGuides" />
+  <bind key="semicolon" action="ToggleGuides" display="true"/>
+
+<!--
+  Lock Guides, Alt+Ctrl+;
+  Make Guides Ctrl+5
+  Release Guides Alt+Ctrl+5
+  Smart Edges Ctrl+U
+-->
+
+<!--Show Grid Ctrl+" -->
+
+  <bind key="quotedbl" modifiers="Ctrl,Shift" action="ToggleGrid" />
+  <bind key="quotedbl" modifiers="Ctrl" action="ToggleGrid" display="true"/>
+
+<!--
+Snap To Grid Shift+Ctrl+"
+Snap to Point Alt+Ctrl+"
+-->
+
+  <bind key="r" modifiers="Ctrl" action="ToggleRulers" display="true"/>
+  <bind key="R" modifiers="Ctrl" action="ToggleRulers" />
+
+<!-- Window -->
+
+  <bind key="F7" modifiers="Shift" action="DialogAlignDistribute" display="true"/>
+  <bind key="F7" modifiers="Shift" action="DialogAlignDistribute" />
+
+<!-- Appearance Shift+F6 -->
+
+  <bind key="F11" modifiers="Ctrl" action="DialogObjectProperties" display="true"/>
+  <bind key="F11" modifiers="Ctrl" action="DialogObjectProperties" />
+
+<!-- Brushes F5 -->
+
+  <bind key="F6" action="DialogSwatches" display="true"/>
+  <bind key="F6" action="DialogSwatches" />
+
+<!--
+These are partly equivalent to out Fill'n'Stroke dialog:
+Gradient Ctrl+F9
+Stroke Ctrl+F10
+-->
+
+  <bind key="F9" modifiers="Ctrl" action="DialogFillStroke"/>
+  <bind key="F10" modifiers="Ctrl" action="DialogFillStroke" display="true"/>
+
+<!-- 
+Graphics Styles Shift+F5
+Info F8
+-->
+
+  <bind key="F7" action="DialogLayers" display="true" />
+
+<!-- 
+Pathfinder Shift+Ctrl+F9
+Symbols Shift+Ctrl+F11
+-->
+
+  <bind key="F8" modifiers="Shift" action="DialogTransform" display="true"/>
+  <bind key="F8" modifiers="Shift" action="DialogTransform" />
+
+<!--
+Transparency Shift+Ctrl+F10
+-->
+  <bind key="F10" modifiers="Ctrl,Shift" action="DialogFillStroke" display="true"/>
+
+<!--
+Type
+  Character Ctrl+T
+  OpenType Alt+Shift+Ctrl+T
+  Paragraph Alt+Ctrl+T
+  Tabs Shift+Ctrl+T
+(Character and Paragraph are equivalent to our Text'n'Font dialog)
+-->
+
+  <bind key="t" modifiers="Ctrl" action="DialogText" display="true"/>
+  <bind key="T" modifiers="Ctrl" action="DialogText" />
+  <bind key="t" modifiers="Alt,Ctrl" action="DialogText" />
+  <bind key="T" modifiers="Alt,Ctrl" action="DialogText" />
+
+<!--- Help -->
+<!-- Illustrator Help, F1 -->
+
+</keys>
