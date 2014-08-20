@@ -10,17 +10,18 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
-
+#include <gtkmm.h>
 #include <glibmm/i18n.h>
 
 #include "persp3d.h"
 //#include "transf_mat_3x4.h"
 #include "document.h"
-
+#include "document-private.h"
 #include "live_effects/lpe-perspective_path.h"
 #include "sp-item-group.h"
 #include "knot-holder-entity.h"
 #include "knotholder.h"
+#include "desktop.h"
 
 #include "inkscape.h"
 
@@ -41,6 +42,7 @@ public:
 
 } // namespace PP
 
+static Glib::ustring perspectiveID = _("First perspective");
 LPEPerspectivePath::LPEPerspectivePath(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     // initialise your parameters here:
@@ -59,9 +61,18 @@ LPEPerspectivePath::LPEPerspectivePath(LivePathEffectObject *lpeobject) :
 
     concatenate_before_pwd2 = true; // don't split the path into its subpaths
     _provides_knotholder_entities = true;
-
+    unapply = false;
     Persp3D *persp = persp3d_document_first_persp(inkscape_active_document());
+    if(persp == 0 ){
+        char *msg = _("You need a BOX 3D object");
+        Gtk::MessageDialog dialog(msg, false, Gtk::MESSAGE_INFO,
+                                  Gtk::BUTTONS_OK, true);
+        dialog.run();
+        unapply = true;
+        return;
+    }
     Proj::TransfMat3x4 pmat = persp->perspective_impl->tmat;
+    pmat = pmat * inkscape_active_desktop()->doc2dt();
     pmat.copy_tmat(tmat);
 }
 
@@ -74,7 +85,49 @@ void
 LPEPerspectivePath::doBeforeEffect (SPLPEItem const* lpeitem)
 {
     original_bbox(lpeitem, true);
+    if(unapply){
+        SP_LPE_ITEM(lpeitem)->removeCurrentPathEffect(false);
+        return;
+    }
 }
+
+void LPEPerspectivePath::refresh(Gtk::Entry* perspective) {
+    perspectiveID = perspective->get_text();
+    Persp3D *first = 0;
+    Persp3D *persp = 0;
+    for ( SPObject *child = inkscape_active_document()->getDefs()->firstChild(); child && !persp; child = child->getNext() ) {
+        if (SP_IS_PERSP3D(child) && first == 0) {
+            first = SP_PERSP3D(child);
+        }
+        if (SP_IS_PERSP3D(child) && strcmp(child->getId(), const_cast<const gchar *>(perspectiveID.c_str())) == 0) {
+            persp = SP_PERSP3D(child);
+            break;
+        }
+    }
+    if(first == 0 ){
+        char *msg = _("You need a BOX 3D object");
+        Gtk::MessageDialog dialog(msg, false, Gtk::MESSAGE_INFO,
+                                  Gtk::BUTTONS_OK, true);
+        dialog.run();
+        return;
+    }
+    if(persp == 0){
+        persp = first;
+        char *msg = _("First perspective selected");
+        Gtk::MessageDialog dialog(msg, false, Gtk::MESSAGE_INFO,
+                                      Gtk::BUTTONS_OK, true);
+        dialog.run();
+        perspectiveID = _("First perspective");
+    }else{
+        char *msg = _("Perspective changed");
+        Gtk::MessageDialog dialog(msg, false, Gtk::MESSAGE_INFO,
+                                      Gtk::BUTTONS_OK, true);
+        dialog.run();
+    }
+    Proj::TransfMat3x4 pmat = persp->perspective_impl->tmat;
+    pmat = pmat * inkscape_active_desktop()->doc2dt();
+    pmat.copy_tmat(tmat);
+};
 
 Geom::Piecewise<Geom::D2<Geom::SBasis> >
 LPEPerspectivePath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in)
@@ -137,6 +190,49 @@ LPEPerspectivePath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > cons
     Piecewise<D2<SBasis> > output = sectionize(result);
 
     return output;
+}
+
+Gtk::Widget *
+LPEPerspectivePath::newWidget()
+{
+    // use manage here, because after deletion of Effect object, others might still be pointing to this widget.
+    Gtk::VBox * vbox = Gtk::manage( new Gtk::VBox(Effect::newWidget()) );
+
+    vbox->set_border_width(5);
+    std::vector<Parameter *>::iterator it = param_vector.begin();
+    while (it != param_vector.end()) {
+        if ((*it)->widget_is_visible) {
+            Parameter * param = *it;
+            Gtk::Widget * widg = dynamic_cast<Gtk::Widget *>(param->param_newWidget());
+            Glib::ustring * tip = param->param_getTooltip();
+            if (widg) {
+                vbox->pack_start(*widg, true, true, 2);
+                if (tip) {
+                    widg->set_tooltip_text(*tip);
+                } else {
+                    widg->set_tooltip_text("");
+                    widg->set_has_tooltip(false);
+                }
+            }
+        }
+
+        ++it;
+    }
+    Gtk::HBox * perspectiveId = Gtk::manage(new Gtk::HBox(true,0));
+    Gtk::Label* labelPerspective = Gtk::manage(new Gtk::Label("Perspective ID:", 0., 0.));
+    Gtk::Entry* perspective = Gtk::manage(new Gtk::Entry());
+    perspective->set_text(perspectiveID);
+    perspective->set_tooltip_text("Set the perspective ID to apply");
+    perspectiveId->pack_start(*labelPerspective, true, true, 2);
+    perspectiveId->pack_start(*perspective, true, true, 2);
+    vbox->pack_start(*perspectiveId, true, true, 2);
+    Gtk::Button* apply3D = Gtk::manage(new Gtk::Button(Glib::ustring(_("Refresh perspective"))));
+    apply3D->set_alignment(0.0, 0.5);
+    apply3D->signal_clicked().connect(sigc::bind<Gtk::Entry*>(sigc::mem_fun(*this,&LPEPerspectivePath::refresh),perspective));
+    Gtk::Widget* apply3DWidget = dynamic_cast<Gtk::Widget *>(apply3D);
+    apply3DWidget->set_tooltip_text("Refresh perspective");
+    vbox->pack_start(*apply3DWidget, true, true,2);
+    return dynamic_cast<Gtk::Widget *>(vbox);
 }
 
 void LPEPerspectivePath::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item) {
