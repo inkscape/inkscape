@@ -1,8 +1,10 @@
 #!/bin/bash
 
-cd inkscape-launchpad
 echo UPDATING
-bzr update
+(cd inkscape-launchpad; bzr update)
+REVNO=$(cd inkscape-launchpad; bzr revno)
 
-bzr revno > ../inkscape-revision.txt
+echo PULLED REVISION $REVNO
+git commit -am "Pull revision $REVNO"
 
+echo GIT COMMITTED, READY TO git push
