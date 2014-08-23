@@ -9,7 +9,7 @@
  *   Abhishek Sharma
  *
  * Copyright (C) 1999-2002 Lauris Kaplinski
- * Copyright (C) 1999-2008 Authors
+ * Copyright (C) 1999-2014 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -1109,10 +1109,17 @@ gboolean Inkscape::SelTrans::skewRequest(SPSelTransHandle const &handle, Geom::P
             break;
     }
 
+    // _point and _origin are noisy, ranging from 1 to 1e-9 or even smaller; this is due to the
+    // limited SVG output precision, which can be arbitrarily set in the preferences
     Geom::Point const initial_delta = _point - _origin;
 
-    if (fabs(initial_delta[dim_a]) < 1e-15) {
-        return false;
+    // The handle and the origin shouldn't be too close to each other; let's check for that!
+    // Due to the limited resolution though (see above), we'd better use a relative error here
+    if (_bbox) {
+        Geom::Coord d = (*_bbox).dimensions()[dim_a];
+        if (fabs(initial_delta[dim_a]/d) < 1e-4) {
+            return false;
+        }
     }
 
     // Calculate the scale factors, which can be either visual or geometric
