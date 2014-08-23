@@ -14,12 +14,12 @@
 # include <config.h>
 #endif
 
+#include <gtkmm.h>
+
 #ifdef WIN32
 #include <io.h>
 #include <windows.h>
 #endif
-
-#include <gtkmm.h>
 
 #include "preferences.h"
 #include "print.h"
