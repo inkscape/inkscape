@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2014-08-15 08:52+0200\n"
+"POT-Creation-Date: 2014-08-26 09:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6096,7 +6096,7 @@ msgid "Right (px):"
 msgstr ""
 
 #: ../src/extension/internal/bitmap/crop.cpp:77
-msgid "Crop selected bitmap(s)."
+msgid "Crop selected bitmap(s)"
 msgstr ""
 
 #: ../src/extension/internal/bitmap/cycleColormap.cpp:37
@@ -6293,7 +6293,7 @@ msgid "Opacity:"
 msgstr ""
 
 #: ../src/extension/internal/bitmap/opacity.cpp:46
-msgid "Modify opacity channel(s) of selected bitmap(s)."
+msgid "Modify opacity channel(s) of selected bitmap(s)"
 msgstr ""
 
 #: ../src/extension/internal/bitmap/raise.cpp:40
@@ -8950,120 +8950,120 @@ msgstr ""
 msgid "Format autodetect failed. The file is being opened as SVG."
 msgstr ""
 
-#: ../src/file.cpp:181
+#: ../src/file.cpp:183
 msgid "default.svg"
 msgstr ""
 
-#: ../src/file.cpp:320
+#: ../src/file.cpp:322
 msgid "Broken links have been changed to point to existing files."
 msgstr ""
 
-#: ../src/file.cpp:331 ../src/file.cpp:1247
+#: ../src/file.cpp:333 ../src/file.cpp:1249
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr ""
 
-#: ../src/file.cpp:357
+#: ../src/file.cpp:359
 msgid "Document not saved yet.  Cannot revert."
 msgstr ""
 
-#: ../src/file.cpp:363
+#: ../src/file.cpp:365
 msgid "Changes will be lost! Are you sure you want to reload document %1?"
 msgstr ""
 
-#: ../src/file.cpp:389
+#: ../src/file.cpp:391
 msgid "Document reverted."
 msgstr ""
 
-#: ../src/file.cpp:391
+#: ../src/file.cpp:393
 msgid "Document not reverted."
 msgstr ""
 
-#: ../src/file.cpp:541
+#: ../src/file.cpp:543
 msgid "Select file to open"
 msgstr ""
 
-#: ../src/file.cpp:623
+#: ../src/file.cpp:625
 msgid "Clean up document"
 msgstr ""
 
-#: ../src/file.cpp:630
+#: ../src/file.cpp:632
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/file.cpp:635
+#: ../src/file.cpp:637
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr ""
 
-#: ../src/file.cpp:667
+#: ../src/file.cpp:669
 #, c-format
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
 "caused by an unknown filename extension."
 msgstr ""
 
-#: ../src/file.cpp:668 ../src/file.cpp:676 ../src/file.cpp:684
-#: ../src/file.cpp:690 ../src/file.cpp:695
+#: ../src/file.cpp:670 ../src/file.cpp:678 ../src/file.cpp:686
+#: ../src/file.cpp:692 ../src/file.cpp:697
 msgid "Document not saved."
 msgstr ""
 
-#: ../src/file.cpp:675
+#: ../src/file.cpp:677
 #, c-format
 msgid ""
 "File %s is write protected. Please remove write protection and try again."
 msgstr ""
 
-#: ../src/file.cpp:683
+#: ../src/file.cpp:685
 #, c-format
 msgid "File %s could not be saved."
 msgstr ""
 
-#: ../src/file.cpp:713 ../src/file.cpp:715
+#: ../src/file.cpp:715 ../src/file.cpp:717
 msgid "Document saved."
 msgstr ""
 
 #. We are saving for the first time; create a unique default filename
-#: ../src/file.cpp:858 ../src/file.cpp:1406
+#: ../src/file.cpp:860 ../src/file.cpp:1408
 msgid "drawing"
 msgstr ""
 
-#: ../src/file.cpp:863
+#: ../src/file.cpp:865
 msgid "drawing-%1"
 msgstr ""
 
-#: ../src/file.cpp:880
+#: ../src/file.cpp:882
 msgid "Select file to save a copy to"
 msgstr ""
 
-#: ../src/file.cpp:882
+#: ../src/file.cpp:884
 msgid "Select file to save to"
 msgstr ""
 
-#: ../src/file.cpp:987 ../src/file.cpp:989
+#: ../src/file.cpp:989 ../src/file.cpp:991
 msgid "No changes need to be saved."
 msgstr ""
 
-#: ../src/file.cpp:1008
+#: ../src/file.cpp:1010
 msgid "Saving document..."
 msgstr ""
 
-#: ../src/file.cpp:1244 ../src/ui/dialog/inkscape-preferences.cpp:1442
+#: ../src/file.cpp:1246 ../src/ui/dialog/inkscape-preferences.cpp:1442
 #: ../src/ui/dialog/ocaldialogs.cpp:1244
 msgid "Import"
 msgstr ""
 
-#: ../src/file.cpp:1294
+#: ../src/file.cpp:1296
 msgid "Select file to import"
 msgstr ""
 
-#: ../src/file.cpp:1427
+#: ../src/file.cpp:1429
 msgid "Select file to export to"
 msgstr ""
 
-#: ../src/file.cpp:1680
+#: ../src/file.cpp:1682
 msgid "Import Clip Art"
 msgstr ""
 
@@ -10199,7 +10199,7 @@ msgstr ""
 msgid "Power stroke"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:122 ../src/selection-chemistry.cpp:2835
+#: ../src/live_effects/effect.cpp:122 ../src/selection-chemistry.cpp:2837
 msgid "Clone original path"
 msgstr ""
 
@@ -11221,7 +11221,7 @@ msgstr ""
 msgid "Select original"
 msgstr ""
 
-#: ../src/live_effects/parameter/parameter.cpp:141
+#: ../src/live_effects/parameter/parameter.cpp:147
 msgid "Change scalar parameter"
 msgstr ""
 
@@ -12245,236 +12245,236 @@ msgstr ""
 msgid "Cannot transform an embedded SVG."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1647
+#: ../src/selection-chemistry.cpp:1649
 msgid "Remove transform"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1750
+#: ../src/selection-chemistry.cpp:1752
 msgid "Rotate 90° CCW"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1750
+#: ../src/selection-chemistry.cpp:1752
 msgid "Rotate 90° CW"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1771 ../src/seltrans.cpp:483
+#: ../src/selection-chemistry.cpp:1773 ../src/seltrans.cpp:483
 #: ../src/ui/dialog/transformation.cpp:894
 msgid "Rotate"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2142
+#: ../src/selection-chemistry.cpp:2144
 msgid "Rotate by pixels"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2172 ../src/seltrans.cpp:480
+#: ../src/selection-chemistry.cpp:2174 ../src/seltrans.cpp:480
 #: ../src/ui/dialog/transformation.cpp:869
 #: ../share/extensions/interp_att_g.inx.h:12
 msgid "Scale"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2197
+#: ../src/selection-chemistry.cpp:2199
 msgid "Scale by whole factor"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2212
+#: ../src/selection-chemistry.cpp:2214
 msgid "Move vertically"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2215
+#: ../src/selection-chemistry.cpp:2217
 msgid "Move horizontally"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2218 ../src/selection-chemistry.cpp:2244
+#: ../src/selection-chemistry.cpp:2220 ../src/selection-chemistry.cpp:2246
 #: ../src/seltrans.cpp:477 ../src/ui/dialog/transformation.cpp:807
 msgid "Move"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2238
+#: ../src/selection-chemistry.cpp:2240
 msgid "Move vertically by pixels"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2241
+#: ../src/selection-chemistry.cpp:2243
 msgid "Move horizontally by pixels"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2373
+#: ../src/selection-chemistry.cpp:2375
 msgid "The selection has no applied path effect."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2542 ../src/ui/dialog/clonetiler.cpp:2218
+#: ../src/selection-chemistry.cpp:2544 ../src/ui/dialog/clonetiler.cpp:2218
 msgid "Select an <b>object</b> to clone."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2578
+#: ../src/selection-chemistry.cpp:2580
 msgctxt "Action"
 msgid "Clone"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2594
+#: ../src/selection-chemistry.cpp:2596
 msgid "Select <b>clones</b> to relink."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2601
+#: ../src/selection-chemistry.cpp:2603
 msgid "Copy an <b>object</b> to clipboard to relink clones to."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2625
+#: ../src/selection-chemistry.cpp:2627
 msgid "<b>No clones to relink</b> in the selection."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2628
+#: ../src/selection-chemistry.cpp:2630
 msgid "Relink clone"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2642
+#: ../src/selection-chemistry.cpp:2644
 msgid "Select <b>clones</b> to unlink."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2696
+#: ../src/selection-chemistry.cpp:2698
 msgid "<b>No clones to unlink</b> in the selection."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2700
+#: ../src/selection-chemistry.cpp:2702
 msgid "Unlink clone"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2713
+#: ../src/selection-chemistry.cpp:2715
 msgid ""
 "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> "
 "to go to its source. Select a <b>text on path</b> to go to the path. Select "
 "a <b>flowed text</b> to go to its frame."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2746
+#: ../src/selection-chemistry.cpp:2748
 msgid ""
 "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, "
 "flowed text?)"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2752
+#: ../src/selection-chemistry.cpp:2754
 msgid ""
 "The object you're trying to select is <b>not visible</b> (it is in &lt;"
 "defs&gt;)"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2797
+#: ../src/selection-chemistry.cpp:2799
 msgid "Select <b>one</b> path to clone."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2801
+#: ../src/selection-chemistry.cpp:2803
 msgid "Select one <b>path</b> to clone."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2857
+#: ../src/selection-chemistry.cpp:2859
 msgid "Select <b>object(s)</b> to convert to marker."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2924
+#: ../src/selection-chemistry.cpp:2926
 msgid "Objects to marker"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2948
+#: ../src/selection-chemistry.cpp:2950
 msgid "Select <b>object(s)</b> to convert to guides."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2971
+#: ../src/selection-chemistry.cpp:2973
 msgid "Objects to guides"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3007
+#: ../src/selection-chemistry.cpp:3009
 msgid "Select <b>objects</b> to convert to symbol."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3113
+#: ../src/selection-chemistry.cpp:3115
 msgid "Group to symbol"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3132
+#: ../src/selection-chemistry.cpp:3134
 msgid "Select a <b>symbol</b> to extract objects from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3141
+#: ../src/selection-chemistry.cpp:3143
 msgid "Select only one <b>symbol</b> in Symbol dialog to convert to group."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3199
+#: ../src/selection-chemistry.cpp:3201
 msgid "Group from symbol"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3217
+#: ../src/selection-chemistry.cpp:3219
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3307
+#: ../src/selection-chemistry.cpp:3309
 msgid "Objects to pattern"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3323
+#: ../src/selection-chemistry.cpp:3325
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3378
+#: ../src/selection-chemistry.cpp:3380
 msgid "<b>No pattern fills</b> in the selection."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3381
+#: ../src/selection-chemistry.cpp:3383
 msgid "Pattern to objects"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3472
+#: ../src/selection-chemistry.cpp:3474
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3476
+#: ../src/selection-chemistry.cpp:3478
 msgid "Rendering bitmap..."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3655
+#: ../src/selection-chemistry.cpp:3657
 msgid "Create bitmap"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3687
+#: ../src/selection-chemistry.cpp:3689
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3690
+#: ../src/selection-chemistry.cpp:3692
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3873
+#: ../src/selection-chemistry.cpp:3875
 msgid "Set clipping path"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3875
+#: ../src/selection-chemistry.cpp:3877
 msgid "Set mask"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3890
+#: ../src/selection-chemistry.cpp:3892
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:4001
+#: ../src/selection-chemistry.cpp:4003
 msgid "Release clipping path"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:4003
+#: ../src/selection-chemistry.cpp:4005
 msgid "Release mask"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:4022
+#: ../src/selection-chemistry.cpp:4024
 msgid "Select <b>object(s)</b> to fit canvas to."
 msgstr ""
 
 #. Fit Page
-#: ../src/selection-chemistry.cpp:4042 ../src/verbs.cpp:2905
+#: ../src/selection-chemistry.cpp:4044 ../src/verbs.cpp:2905
 msgid "Fit Page to Selection"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:4071 ../src/verbs.cpp:2907
+#: ../src/selection-chemistry.cpp:4073 ../src/verbs.cpp:2907
 msgid "Fit Page to Drawing"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:4092 ../src/verbs.cpp:2909
+#: ../src/selection-chemistry.cpp:4094 ../src/verbs.cpp:2909
 msgid "Fit Page to Selection or Drawing"
 msgstr ""
 
@@ -12622,24 +12622,24 @@ msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1192
+#: ../src/seltrans.cpp:1199
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1267
+#: ../src/seltrans.cpp:1274
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
-#: ../src/seltrans.cpp:1304
+#: ../src/seltrans.cpp:1311
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr ""
 
-#: ../src/seltrans.cpp:1458
+#: ../src/seltrans.cpp:1465
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -26320,16 +26320,16 @@ msgid "Font family"
 msgstr ""
 
 #. Style frame
-#: ../src/widgets/font-selector.cpp:192
+#: ../src/widgets/font-selector.cpp:193
 msgctxt "Font selector"
 msgid "Style"
 msgstr ""
 
-#: ../src/widgets/font-selector.cpp:224
+#: ../src/widgets/font-selector.cpp:225
 msgid "Face"
 msgstr ""
 
-#: ../src/widgets/font-selector.cpp:253 ../share/extensions/dots.inx.h:3
+#: ../src/widgets/font-selector.cpp:254 ../share/extensions/dots.inx.h:3
 msgid "Font size:"
 msgstr ""
 
