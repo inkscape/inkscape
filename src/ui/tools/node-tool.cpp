@@ -298,27 +298,23 @@ void  NodeTool::update_helperpath () {
     if (SP_IS_LPE_ITEM(selection->singleItem())) {
         Inkscape::LivePathEffect::Effect *lpe = SP_LPE_ITEM(selection->singleItem())->getCurrentLPE();
         if (lpe && lpe->isVisible()/* && lpe->showOrigPath()*/) {
-            if (lpe) {
-                SPCurve *c = new SPCurve();
-                SPCurve *cc = new SPCurve();
-                std::vector<Geom::PathVector> cs = lpe->getCanvasIndicators(SP_LPE_ITEM(selection->singleItem()));
-                for (std::vector<Geom::PathVector>::iterator p = cs.begin(); p != cs.end(); ++p) {
-                    cc->set_pathvector(*p);
-                    c->append(cc, false);
-                    cc->reset();
-                }
-                if (!c->is_empty()) {
-                    c->transform(selection->singleItem()->i2dt_affine());
-                    SPCanvasItem *helperpath = sp_canvas_bpath_new(sp_desktop_tempgroup(this->desktop), c);
-                    sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(helperpath),
-                        0x0000ff9A, 1.0,
-                        SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
-                    sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(helperpath), 0, SP_WIND_RULE_NONZERO);
-                    this->helperpath_tmpitem = this->desktop->add_temporary_canvasitem(helperpath,0);
-                }
-                c->unref();
-                cc->unref();
-           }
+            SPCurve *c = new SPCurve();
+            SPCurve *cc = new SPCurve();
+            std::vector<Geom::PathVector> cs = lpe->getCanvasIndicators(SP_LPE_ITEM(selection->singleItem()));
+            for (std::vector<Geom::PathVector>::iterator p = cs.begin(); p != cs.end(); ++p) {
+                cc->set_pathvector(*p);
+                c->append(cc, false);
+                cc->reset();
+            }
+            if (!c->is_empty()) {
+                SPCanvasItem *helperpath = sp_canvas_bpath_new(sp_desktop_tempgroup(this->desktop), c);
+                sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(helperpath), 0x0000ff9A, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
+                sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(helperpath), 0, SP_WIND_RULE_NONZERO);
+                sp_canvas_item_affine_absolute(helperpath, selection->singleItem()->i2dt_affine());
+                this->helperpath_tmpitem = this->desktop->add_temporary_canvasitem(helperpath, 0);
+            }
+            c->unref();
+            cc->unref();
         }
     }
 }
