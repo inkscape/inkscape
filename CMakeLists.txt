@@ -1,7 +1,7 @@
 # CMake TODO
 # - Remove hard coded defines (see bwelow)
 # - Test on MinGW and OSX
-# - Add configurable options for Python/Perl/Whiteboard, see configure --help
+# - Add configurable options for Python/Perl, see configure --help
 #
 # ideasman42
 

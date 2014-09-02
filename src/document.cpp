@@ -229,7 +229,6 @@ SPDocument::~SPDocument() {
     // This is at the end of the destructor, because preceding code adds new orphans to the queue
     collectOrphans();
 
-    //delete this->_whiteboard_session_manager;
 }
 
 sigc::connection SPDocument::connectDestroy(sigc::signal<void>::slot_type slot)

@@ -161,10 +161,6 @@
         /* internal interpreter */
         #define WITH_PYTHON                   1
 
-        /* shared whiteboard */
-        #undef WITH_INKBOARD
-        #undef HAVE_SSL
-        
         /* use poppler for pdf import? */
         #define HAVE_POPPLER                  1
         #define HAVE_POPPLER_CAIRO            1
@@ -256,21 +252,6 @@
             <exclude name="xml/test-xml.cpp"/>
             <exclude name="xml/test-xml-main.cpp"/>
             <exclude name="io/streamtest.cpp"/>
-            <!--JABBER-->
-            <exclude name="pedro/pedrogui.cpp"/>
-            <exclude name="pedro/pedrogui.h"/>
-            <exclude name="pedro/work/.*"/>
-            <!--WHITEBOARD-->
-            <exclude name="ui/dialog/session-player.cpp"/>
-            <exclude name="ui/dialog/whiteboard-connect.cpp"/>
-            <exclude name="ui/dialog/whiteboard-sharewithchat.cpp"/>
-            <exclude name="ui/dialog/whiteboard-sharewithuser.cpp"/>
-            <exclude name="dialogs/whiteboard-connect-dialog.cpp"/>
-            <exclude name="dialogs/whiteboard-common-dialog.cpp"/>
-            <exclude name="dialogs/whiteboard-sharewithchat-dialog.cpp"/>
-            <exclude name="dialogs/whiteboard-sharewithuser-dialog.cpp"/>
-            <exclude name="jabber_whiteboard/node-tracker.cpp"/>
-            <exclude name="jabber_whiteboard/node-utilities.cpp"/>
             <!--OVERLAP-->
             <exclude name="removeoverlap/placement_SolveVPSC.cpp"/>
             <exclude name="removeoverlap/placement_SolveVPSC.h"/>
