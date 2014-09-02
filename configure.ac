@@ -22,6 +22,8 @@ AC_CANONICAL_HOST
 # obsolete mkinstalldirs script
 AM_INIT_AUTOMAKE([-Wall dist-zip dist-bzip2 tar-pax 1.9])
 
+m4_ifdef([AM_PROG_AR], [AM_PROG_AR]) dnl Workaround for Automake 1.12
+
 AC_ARG_ENABLE([lsb], AS_HELP_STRING([--enable-lsb], [LSB-compatible build configuration]), [
   prefix=/opt/inkscape
   PATH="/opt/lsb/bin:$PATH"
