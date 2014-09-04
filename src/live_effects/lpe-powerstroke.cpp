@@ -188,7 +188,8 @@ static const Util::EnumData<unsigned> InterpolatorTypeData[] = {
     {Geom::Interpolate::INTERP_LINEAR          , N_("Linear"), "Linear"},
     {Geom::Interpolate::INTERP_CUBICBEZIER          , N_("CubicBezierFit"), "CubicBezierFit"},
     {Geom::Interpolate::INTERP_CUBICBEZIER_JOHAN     , N_("CubicBezierJohan"), "CubicBezierJohan"},
-    {Geom::Interpolate::INTERP_SPIRO  , N_("SpiroInterpolator"), "SpiroInterpolator"}
+    {Geom::Interpolate::INTERP_SPIRO  , N_("SpiroInterpolator"), "SpiroInterpolator"},
+    {Geom::Interpolate::INTERP_CENTRIPETAL_CATMULLROM  , N_("Centripetal Catmull-Rom"), "CentripetalCatmullRom"}
 };
 static const Util::EnumDataConverter<unsigned> InterpolatorTypeConverter(InterpolatorTypeData, sizeof(InterpolatorTypeData)/sizeof(*InterpolatorTypeData));
 

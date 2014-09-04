@@ -65,7 +65,7 @@ typedef struct wmf_device_context {
         textAlign(0)
         // worldTransform, cur
     {
-        font_name = strdup("Arial"); // Default font, WMF spec says device can pick whatever it wants
+        font_name = NULL;
         sizeWnd = point16_set( 0.0, 0.0 );
         sizeView = point16_set( 0.0, 0.0 );
         winorg = point16_set( 0.0, 0.0 );

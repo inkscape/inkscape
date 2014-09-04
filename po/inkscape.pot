@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2014-08-26 09:42+0200\n"
+"POT-Creation-Date: 2014-09-04 13:38-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5655,21 +5655,21 @@ msgstr ""
 msgid " to "
 msgstr ""
 
-#: ../src/document.cpp:542
+#: ../src/document.cpp:541
 #, c-format
 msgid "New document %d"
 msgstr ""
 
-#: ../src/document.cpp:547
+#: ../src/document.cpp:546
 #, c-format
 msgid "Memory document %d"
 msgstr ""
 
-#: ../src/document.cpp:576
+#: ../src/document.cpp:575
 msgid "Memory document %1"
 msgstr ""
 
-#: ../src/document.cpp:788
+#: ../src/document.cpp:787
 #, c-format
 msgid "Unnamed document %d"
 msgstr ""
@@ -6474,8 +6474,8 @@ msgstr ""
 #: ../src/extension/internal/cairo-ps-out.cpp:333
 #: ../src/extension/internal/cairo-ps-out.cpp:372
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:250
-#: ../src/extension/internal/emf-inout.cpp:3550
-#: ../src/extension/internal/wmf-inout.cpp:3141
+#: ../src/extension/internal/emf-inout.cpp:3569
+#: ../src/extension/internal/wmf-inout.cpp:3143
 msgid "Convert texts to paths"
 msgstr ""
 
@@ -6641,74 +6641,74 @@ msgstr ""
 msgid "Open presentation exchange files saved in Corel DRAW"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3534
+#: ../src/extension/internal/emf-inout.cpp:3553
 msgid "EMF Input"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3539
+#: ../src/extension/internal/emf-inout.cpp:3558
 msgid "Enhanced Metafiles (*.emf)"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3540
+#: ../src/extension/internal/emf-inout.cpp:3559
 msgid "Enhanced Metafiles"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3548
+#: ../src/extension/internal/emf-inout.cpp:3567
 msgid "EMF Output"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3551
-#: ../src/extension/internal/wmf-inout.cpp:3142
+#: ../src/extension/internal/emf-inout.cpp:3570
+#: ../src/extension/internal/wmf-inout.cpp:3144
 msgid "Map Unicode to Symbol font"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3552
-#: ../src/extension/internal/wmf-inout.cpp:3143
+#: ../src/extension/internal/emf-inout.cpp:3571
+#: ../src/extension/internal/wmf-inout.cpp:3145
 msgid "Map Unicode to Wingdings"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3553
-#: ../src/extension/internal/wmf-inout.cpp:3144
+#: ../src/extension/internal/emf-inout.cpp:3572
+#: ../src/extension/internal/wmf-inout.cpp:3146
 msgid "Map Unicode to Zapf Dingbats"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3554
-#: ../src/extension/internal/wmf-inout.cpp:3145
+#: ../src/extension/internal/emf-inout.cpp:3573
+#: ../src/extension/internal/wmf-inout.cpp:3147
 msgid "Use MS Unicode PUA (0xF020-0xF0FF) for converted characters"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3555
-#: ../src/extension/internal/wmf-inout.cpp:3146
+#: ../src/extension/internal/emf-inout.cpp:3574
+#: ../src/extension/internal/wmf-inout.cpp:3148
 msgid "Compensate for PPT font bug"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3556
-#: ../src/extension/internal/wmf-inout.cpp:3147
+#: ../src/extension/internal/emf-inout.cpp:3575
+#: ../src/extension/internal/wmf-inout.cpp:3149
 msgid "Convert dashed/dotted lines to single lines"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3557
-#: ../src/extension/internal/wmf-inout.cpp:3148
+#: ../src/extension/internal/emf-inout.cpp:3576
+#: ../src/extension/internal/wmf-inout.cpp:3150
 msgid "Convert gradients to colored polygon series"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3558
+#: ../src/extension/internal/emf-inout.cpp:3577
 msgid "Use native rectangular linear gradients"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3559
+#: ../src/extension/internal/emf-inout.cpp:3578
 msgid "Map all fill patterns to standard EMF hatches"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3560
+#: ../src/extension/internal/emf-inout.cpp:3579
 msgid "Ignore image rotations"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3564
+#: ../src/extension/internal/emf-inout.cpp:3583
 msgid "Enhanced Metafile (*.emf)"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3565
+#: ../src/extension/internal/emf-inout.cpp:3584
 msgid "Enhanced Metafile"
 msgstr ""
 
@@ -8896,33 +8896,33 @@ msgstr ""
 msgid "Microsoft Visio 2013 drawing (*.vsdx)"
 msgstr ""
 
-#: ../src/extension/internal/wmf-inout.cpp:3125
+#: ../src/extension/internal/wmf-inout.cpp:3127
 msgid "WMF Input"
 msgstr ""
 
-#: ../src/extension/internal/wmf-inout.cpp:3130
+#: ../src/extension/internal/wmf-inout.cpp:3132
 msgid "Windows Metafiles (*.wmf)"
 msgstr ""
 
-#: ../src/extension/internal/wmf-inout.cpp:3131
+#: ../src/extension/internal/wmf-inout.cpp:3133
 msgid "Windows Metafiles"
 msgstr ""
 
-#: ../src/extension/internal/wmf-inout.cpp:3139
+#: ../src/extension/internal/wmf-inout.cpp:3141
 msgid "WMF Output"
 msgstr ""
 
-#: ../src/extension/internal/wmf-inout.cpp:3149
+#: ../src/extension/internal/wmf-inout.cpp:3151
 msgid "Map all fill patterns to standard WMF hatches"
 msgstr ""
 
-#: ../src/extension/internal/wmf-inout.cpp:3153
+#: ../src/extension/internal/wmf-inout.cpp:3155
 #: ../share/extensions/wmf_input.inx.h:2
 #: ../share/extensions/wmf_output.inx.h:2
 msgid "Windows Metafile (*.wmf)"
 msgstr ""
 
-#: ../src/extension/internal/wmf-inout.cpp:3154
+#: ../src/extension/internal/wmf-inout.cpp:3156
 msgid "Windows Metafile"
 msgstr ""
 
@@ -12779,26 +12779,26 @@ msgstr ""
 msgid "of <b>%d</b> objects"
 msgstr ""
 
-#: ../src/sp-item.cpp:961 ../src/verbs.cpp:213
+#: ../src/sp-item.cpp:969 ../src/verbs.cpp:213
 msgid "Object"
 msgstr ""
 
-#: ../src/sp-item.cpp:978
+#: ../src/sp-item.cpp:986
 #, c-format
 msgid "%s; <i>clipped</i>"
 msgstr ""
 
-#: ../src/sp-item.cpp:984
+#: ../src/sp-item.cpp:992
 #, c-format
 msgid "%s; <i>masked</i>"
 msgstr ""
 
-#: ../src/sp-item.cpp:994
+#: ../src/sp-item.cpp:1002
 #, c-format
 msgid "%s; <i>filtered (%s)</i>"
 msgstr ""
 
-#: ../src/sp-item.cpp:996
+#: ../src/sp-item.cpp:1004
 #, c-format
 msgid "%s; <i>filtered</i>"
 msgstr ""
@@ -13421,7 +13421,7 @@ msgstr ""
 
 #. TRANSLATORS: Put here your name (and other national contributors')
 #. one per line in the form of: name surname (email). Use \n for newline.
-#: ../src/ui/dialog/aboutbox.cpp:416
+#: ../src/ui/dialog/aboutbox.cpp:426
 msgid "translator-credits"
 msgstr ""
 
@@ -14846,7 +14846,7 @@ msgstr ""
 msgid "Remove grid"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:1756
+#: ../src/ui/dialog/document-properties.cpp:1760
 msgid "Changed document unit"
 msgstr ""
 
@@ -21940,24 +21940,24 @@ msgid "<b>Draw over</b> areas to add to fill, hold <b>Alt</b> for touch fill"
 msgstr ""
 
 #. We hit green anchor, closing Green-Blue-Red
-#: ../src/ui/tools/freehand-base.cpp:518
+#: ../src/ui/tools/freehand-base.cpp:517
 msgid "Path is closed."
 msgstr ""
 
 #. We hit bot start and end of single curve, closing paths
-#: ../src/ui/tools/freehand-base.cpp:533
+#: ../src/ui/tools/freehand-base.cpp:532
 msgid "Closing path."
 msgstr ""
 
-#: ../src/ui/tools/freehand-base.cpp:635
+#: ../src/ui/tools/freehand-base.cpp:634
 msgid "Draw path"
 msgstr ""
 
-#: ../src/ui/tools/freehand-base.cpp:792
+#: ../src/ui/tools/freehand-base.cpp:791
 msgid "Creating single dot"
 msgstr ""
 
-#: ../src/ui/tools/freehand-base.cpp:793
+#: ../src/ui/tools/freehand-base.cpp:792
 msgid "Create single dot"
 msgstr ""
 
@@ -22106,53 +22106,53 @@ msgstr ""
 msgid "FIXME<b>Shift</b>: draw mesh around the starting point"
 msgstr ""
 
-#: ../src/ui/tools/node-tool.cpp:598
+#: ../src/ui/tools/node-tool.cpp:594
 msgctxt "Node tool tip"
 msgid ""
 "<b>Shift</b>: drag to add nodes to the selection, click to toggle object "
 "selection"
 msgstr ""
 
-#: ../src/ui/tools/node-tool.cpp:602
+#: ../src/ui/tools/node-tool.cpp:598
 msgctxt "Node tool tip"
 msgid "<b>Shift</b>: drag to add nodes to the selection"
 msgstr ""
 
-#: ../src/ui/tools/node-tool.cpp:614
+#: ../src/ui/tools/node-tool.cpp:610
 #, c-format
 msgid "<b>%u of %u</b> node selected."
 msgid_plural "<b>%u of %u</b> nodes selected."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/ui/tools/node-tool.cpp:620
+#: ../src/ui/tools/node-tool.cpp:616
 #, c-format
 msgctxt "Node tool tip"
 msgid "%s Drag to select nodes, click to edit only this object (more: Shift)"
 msgstr ""
 
-#: ../src/ui/tools/node-tool.cpp:626
+#: ../src/ui/tools/node-tool.cpp:622
 #, c-format
 msgctxt "Node tool tip"
 msgid "%s Drag to select nodes, click clear the selection"
 msgstr ""
 
-#: ../src/ui/tools/node-tool.cpp:635
+#: ../src/ui/tools/node-tool.cpp:631
 msgctxt "Node tool tip"
 msgid "Drag to select nodes, click to edit only this object"
 msgstr ""
 
-#: ../src/ui/tools/node-tool.cpp:638
+#: ../src/ui/tools/node-tool.cpp:634
 msgctxt "Node tool tip"
 msgid "Drag to select nodes, click to clear the selection"
 msgstr ""
 
-#: ../src/ui/tools/node-tool.cpp:643
+#: ../src/ui/tools/node-tool.cpp:639
 msgctxt "Node tool tip"
 msgid "Drag to select objects to edit, click to edit this object (more: Shift)"
 msgstr ""
 
-#: ../src/ui/tools/node-tool.cpp:646
+#: ../src/ui/tools/node-tool.cpp:642
 msgctxt "Node tool tip"
 msgid "Drag to select objects to edit"
 msgstr ""

@@ -651,7 +651,25 @@ void SPGroup::scaleChildItemsRec(Geom::Scale const &sc, Geom::Point const &p)
         for (SPObject *o = firstChild() ; o ; o = o->getNext() ) {
             if ( SP_IS_ITEM(o) ) {
                 if (SP_IS_GROUP(o) && !SP_IS_BOX3D(o)) {
-                    SP_GROUP(o)->scaleChildItemsRec(sc, p);
+                    // Doing it this way breaks clipping because transforms are applied 
+                    // in coordinates for draws but nothing in defs is changed
+                    //    SP_GROUP(o)->scaleChildItemsRec(sc, p);
+                    // instead change the transform on the entire group, and the transform
+                    // is applied after any references to clipping paths.
+                    SPItem *item = SP_ITEM(o);
+                    Geom::Translate const s(p);
+                    Geom::Affine final = s.inverse() * sc * s;
+                    Geom::Affine tAff = item->i2dt_affine() * final;
+                    item->set_i2d_affine(tAff);
+                    tAff = item->transform;
+                    // Eliminate common rounding error affecting EMF/WMF input.
+                    // When the rounding error persists it converts the simple 
+                    //    transform=scale() to transform=matrix().
+                    if(std::abs(tAff[4]) < 1.0e-5 && std::abs(tAff[5]) < 1.0e-5){
+                       tAff[4] = 0.0;
+                       tAff[5] = 0.0;
+                    }
+                    item->doWriteTransform(item->getRepr(), tAff, NULL, true);
                 } else {
                     SPItem *item = SP_ITEM(o);
                     Geom::OptRect bbox = item->desktopVisualBounds();

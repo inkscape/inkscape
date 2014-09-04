@@ -55,6 +55,7 @@
 #include "sp-radial-gradient.h"
 #include "sp-linear-gradient.h"
 #include "display/cairo-utils.h"
+#include "sp-shape.h"
 
 #include "splivarot.h"             // pieces for union on shapes
 #include "2geom/svg-path-parser.h" // to get from SVG text to Geom::Path
@@ -143,6 +144,7 @@ unsigned int PrintEmf::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
     // width and height in px
     _width  = doc->getWidth().value("px");
     _height = doc->getHeight().value("px");
+    _doc_unit_scale = Inkscape::Util::Quantity::convert(1, (doc->getDefaultUnit()), "px");
 
     // initialize a few global variables
     hbrush = hbrushOld = hpen = 0;
@@ -298,6 +300,7 @@ unsigned int PrintEmf::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
 
 unsigned int PrintEmf::finish(Inkscape::Extension::Print * /*mod*/)
 {
+    do_clip_if_present(NULL);  // Terminate any open clip.
     char *rec;
     if (!et) {
         return 0;
@@ -969,18 +972,144 @@ U_TRIVERTEX PrintEmf::make_trivertex(Geom::Point Pt, U_COLORREF uc){
     return(tv);
 }
 
+/*  Examine clip.  If there is a (new) one then apply it.  If there is one and it is the
+    same as the preceding one, leave the preceding one active.  If style is NULL
+    terminate the current clip, if any, and return.
+*/
+void  PrintEmf::do_clip_if_present(SPStyle const *style){
+    char *rec;
+    static SPClipPath *scpActive = NULL;
+    if(!style){
+        if(scpActive){  // clear the existing clip
+            rec = U_EMRRESTOREDC_set(-1);
+            if (!rec || emf_append((PU_ENHMETARECORD)rec, et, U_REC_FREE)) {
+                g_error("Fatal programming error in PrintEmf::fill at U_EMRRESTOREDC_set");
+            }
+            scpActive=NULL;
+        }
+    } else {
+        /* The current implementation converts only one level of clipping.  If there were more
+           clips further up the stack they should be combined with the pathvector using "and".  Since this
+           comes up rarely, and would involve a lot of searching (all the way up the stack for every
+           draw operation), it has not yet been implemented.  
+
+           Note, to debug this section of code use print statements on sp_svg_write_path(combined_pathvector).
+        */
+        /*  find the first clip_ref at object or up the stack.  There may not be one. */
+        SPClipPath *scp = NULL;
+        SPItem *item = SP_ITEM(style->object);
+        while(1) {
+            scp = (item->clip_ref ? item->clip_ref->getObject() : NULL);
+            if(scp)break;
+            item = SP_ITEM(item->parent);
+            if(!item || SP_IS_ROOT(item))break; // this will never be a clipping path
+        }
+        
+        if(scp != scpActive){  // change or remove the clipping
+            if(scpActive){  // clear the existing clip
+                rec = U_EMRRESTOREDC_set(-1);
+                if (!rec || emf_append((PU_ENHMETARECORD)rec, et, U_REC_FREE)) {
+                    g_error("Fatal programming error in PrintEmf::fill at U_EMRRESTOREDC_set");
+                }
+                scpActive = NULL;
+            }
+
+            if (scp) {  // set the new clip
+                /* because of units and who knows what other transforms that might be applied above we
+                   need the full transform all the way to the root.
+                */
+                Geom::Affine tf = item->transform;
+                SPItem *scan_item = item;
+                while(1) {
+                   scan_item = SP_ITEM(scan_item->parent);
+                   if(!scan_item)break;
+                   tf *= scan_item->transform;
+                }
+                tf *= Geom::Scale(_doc_unit_scale);;  // Transform must be in PIXELS, no matter what the document unit is.
+
+                /* find the clipping path */
+                Geom::PathVector combined_pathvector;
+                Geom::Affine tfc;   // clipping transform, generally not the same as item transform
+                for(item = SP_ITEM(scp->firstChild()); item; item=SP_ITEM(item->getNext())){
+                    if (SP_IS_GROUP(item)) {      // not implemented 
+                        // return sp_group_render(item);
+                        combined_pathvector = merge_PathVector_with_group(combined_pathvector, item, tfc);
+                    } else if (SP_IS_SHAPE(item)) {                
+                        combined_pathvector = merge_PathVector_with_shape(combined_pathvector, item, tfc);
+                    } else {        // not implemented           
+                    }                                              
+                }
+
+                if (!combined_pathvector.empty()) { // if clipping path isn't empty, define EMF clipping record
+                    scpActive = scp;    // remember for next time
+                    // the sole purpose of this SAVEDC is to let us clear the clipping region later.
+                    rec = U_EMRSAVEDC_set();
+                    if (!rec || emf_append((PU_ENHMETARECORD)rec, et, U_REC_FREE)) {
+                        g_error("Fatal programming error in PrintEmf::image at U_EMRSAVEDC_set");
+                    }
+                    (void) draw_pathv_to_EMF(combined_pathvector, tf);
+                    rec = U_EMRSELECTCLIPPATH_set(U_RGN_OR);
+                    if (!rec || emf_append((PU_ENHMETARECORD)rec, et, U_REC_FREE)) {
+                        g_error("Fatal programming error in PrintEmf::do_clip_if_present at U_EMRSELECTCLIPPATH_set");
+                    }
+                }
+                else {
+                    scpActive = NULL; // no valid path available to draw, so no DC was saved, so no signal to restore
+                }
+            } // change or remove clipping
+        } // scp exists
+    } // style exists
+}
+
+Geom::PathVector PrintEmf::merge_PathVector_with_group(Geom::PathVector const &combined_pathvector, SPItem const *item, const Geom::Affine &transform)
+{
+    Geom::PathVector new_combined_pathvector;
+    if(!SP_IS_GROUP(item))return(new_combined_pathvector);  // sanity test, only a group should be passed in, return empty if something else happens
+
+    new_combined_pathvector = combined_pathvector;
+    SPGroup *group = SP_GROUP(item);
+    Geom::Affine tfc = item->transform * transform;
+    for(SPItem *item = SP_ITEM(group->firstChild()); item; item=SP_ITEM(item->getNext())){
+        if (SP_IS_GROUP(item)) {
+            new_combined_pathvector = merge_PathVector_with_group(new_combined_pathvector, item, tfc); // could be endlessly recursive on a badly formed SVG
+        } else if (SP_IS_SHAPE(item)) {                
+            new_combined_pathvector = merge_PathVector_with_shape(new_combined_pathvector, item, tfc);
+        } else {        // not implemented           
+        }                                              
+    }
+    return new_combined_pathvector;
+}
+
+Geom::PathVector PrintEmf::merge_PathVector_with_shape(Geom::PathVector const &combined_pathvector, SPItem const *item, const Geom::Affine &transform)
+{
+    Geom::PathVector new_combined_pathvector;
+    if(!SP_IS_SHAPE(item))return(new_combined_pathvector);  // sanity test, only a shape should be passed in, return empty if something else happens
+
+    Geom::Affine tfc = item->transform * transform;
+    SPShape *shape = SP_SHAPE(item);
+    if (shape->_curve) {
+        Geom::PathVector const & new_vect = shape->_curve->get_pathvector();
+        if(combined_pathvector.empty()){
+            new_combined_pathvector = new_vect * tfc;
+        }
+        else {
+            new_combined_pathvector = sp_pathvector_boolop(new_vect * tfc, combined_pathvector, bool_op_union , (FillRule) fill_oddEven, (FillRule) fill_oddEven);
+        }
+    }
+    return new_combined_pathvector;
+}
+
 unsigned int PrintEmf::fill(
     Inkscape::Extension::Print * /*mod*/,
     Geom::PathVector const &pathv, Geom::Affine const & /*transform*/, SPStyle const *style,
     Geom::OptRect const &/*pbox*/, Geom::OptRect const &/*dbox*/, Geom::OptRect const &/*bbox*/)
 {
+    char *rec;
     using Geom::X;
     using Geom::Y;
-    
-    //SPItem *item = SP_ITEM(style->object);
-    //SPClipPath *scp = (item->clip_ref ? item->clip_ref->getObject() : NULL);
-
     Geom::Affine tf = m_tr_stack.top();
+
+    do_clip_if_present(style);  // If clipping is needed set it up
 
     use_fill   = true;
     use_stroke = false;
@@ -1095,7 +1224,6 @@ unsigned int PrintEmf::fill(
             }
         } else if (gv.mode == DRAW_LINEAR_GRADIENT) {
             if(is_Rect){
-                char *rec;
                 int gMode;
                 Geom::Point ul, ur, lr;
                 Geom::Point outUL, outLR; // UL,LR corners of a stop rectangle, in OUTPUT coordinates
@@ -1284,6 +1412,7 @@ unsigned int PrintEmf::stroke(
 
     char *rec = NULL;
     Geom::Affine tf = m_tr_stack.top();
+    do_clip_if_present(style);  // If clipping is needed set it up
 
     use_stroke = true;
     //  use_fill was set in ::fill, if it is needed
@@ -1568,11 +1697,13 @@ unsigned int PrintEmf::image(
     unsigned int h,      /** height of bitmap */
     unsigned int rs,     /** row stride (normally w*4) */
     Geom::Affine const &tf_rect,  /** affine transform only used for defining location and size of rect, for all other tranforms, use the one from m_tr_stack */
-    SPStyle const * /*style*/)  /** provides indirect link to image object */
+    SPStyle const *style)  /** provides indirect link to image object */
 {
     double x1, y1, dw, dh;
     char *rec = NULL;
     Geom::Affine tf = m_tr_stack.top();
+
+    do_clip_if_present(style);  // If clipping is needed set it up
 
     rec = U_EMRSETSTRETCHBLTMODE_set(U_COLORONCOLOR);
     if (!rec || emf_append((PU_ENHMETARECORD)rec, et, U_REC_FREE)) {
@@ -1658,28 +1789,14 @@ unsigned int PrintEmf::image(
     return 0;
 }
 
-// may also be called with a simple_shape or an empty path, whereupon it just returns without doing anything
-unsigned int PrintEmf::print_pathv(Geom::PathVector const &pathv, const Geom::Affine &transform)
-{
-    Geom::Affine tf = transform;
-    char *rec = NULL;
-
-    simple_shape = print_simple_shape(pathv, tf);
-    if (simple_shape || pathv.empty()) {
-        if (use_fill) {
-            destroy_brush();    // these must be cleared even if nothing is drawn or hbrush,hpen fill up
-        }
-        if (use_stroke) {
-            destroy_pen();
-        }
-        return TRUE;
-    }
+unsigned int PrintEmf::draw_pathv_to_EMF(Geom::PathVector const &pathv, const Geom::Affine &transform) {
+    char *rec;
 
     /*  inkscape to EMF scaling is done below, but NOT the rotation/translation transform,
         that is handled by the EMF MODIFYWORLDTRANSFORM record
     */
-
-    Geom::PathVector pv = pathv_to_linear_and_cubic_beziers(pathv * tf);
+    
+    Geom::PathVector pv = pathv_to_linear_and_cubic_beziers(pathv * transform);
 
     rec = U_EMRBEGINPATH_set();
     if (!rec || emf_append((PU_ENHMETARECORD)rec, et, U_REC_FREE)) {
@@ -1781,6 +1898,27 @@ unsigned int PrintEmf::print_pathv(Geom::PathVector const &pathv, const Geom::Af
     if (!rec || emf_append((PU_ENHMETARECORD)rec, et, U_REC_FREE)) {
         g_error("Fatal programming error in PrintEmf::print_pathv at U_EMRENDPATH_set");
     }
+    return(0);
+}
+
+// may also be called with a simple_shape or an empty path, whereupon it just returns without doing anything
+unsigned int PrintEmf::print_pathv(Geom::PathVector const &pathv, const Geom::Affine &transform)
+{
+    Geom::Affine tf = transform;
+    char *rec = NULL;
+
+    simple_shape = print_simple_shape(pathv, tf);
+    if (simple_shape || pathv.empty()) {
+        if (use_fill) {
+            destroy_brush();    // these must be cleared even if nothing is drawn or hbrush,hpen fill up
+        }
+        if (use_stroke) {
+            destroy_pen();
+        }
+        return TRUE;
+    }
+
+    (void) draw_pathv_to_EMF(pathv, tf);
 
     // explicit FILL/STROKE commands are needed for each sub section of the path
     if (use_fill && !use_stroke) {
@@ -1819,6 +1957,7 @@ unsigned int PrintEmf::text(Inkscape::Extension::Print * /*mod*/, char const *te
         return 0;
     }
 
+    do_clip_if_present(style);  // If clipping is needed set it up
     char *rec = NULL;
     int ccount, newfont;
     int fix90n = 0;
