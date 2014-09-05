@@ -220,12 +220,10 @@ enum LineJoinType {
 static const Util::EnumData<unsigned> LineJoinTypeData[] = {
     {LINEJOIN_BEVEL, N_("Beveled"),   "bevel"},
     {LINEJOIN_ROUND, N_("Rounded"),   "round"},
-    {LINEJOIN_EXTRP_MITER,  N_("Extrapolated"),      "extrapolated"},
+//    {LINEJOIN_EXTRP_MITER,  N_("Extrapolated"),      "extrapolated"}, // disabled because doesn't work well
+    {LINEJOIN_EXTRP_MITER_ARC, N_("Extrapolated arc"),     "extrp_arc"}, 
     {LINEJOIN_MITER, N_("Miter"),     "miter"},
     {LINEJOIN_SPIRO, N_("Spiro"),     "spiro"},
-#ifdef LPE_ENABLE_TEST_EFFECTS
-    {LINEJOIN_EXTRP_MITER_ARC, N_("Extrapolated arc"),     "extrp_arc"}, 
-#endif
 };
 static const Util::EnumDataConverter<unsigned> LineJoinTypeConverter(LineJoinTypeData, sizeof(LineJoinTypeData)/sizeof(*LineJoinTypeData));
 
@@ -407,8 +405,9 @@ static Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::
                     break;
                 }
                 case LINEJOIN_EXTRP_MITER_ARC: {
-                    Geom::Circle circle1 = Geom::touching_circle(reverse(B[prev_i]),0.);
-                    Geom::Circle circle2 = Geom::touching_circle(B[i],0.);
+                    // Extrapolate using the curvature at the end of the path segments to join
+                    Geom::Circle circle1 = Geom::touching_circle(reverse(B[prev_i]), 0.0);
+                    Geom::Circle circle2 = Geom::touching_circle(B[i], 0.0);
                     Geom::Point points[2];
                     int solutions = circle_circle_intersection(circle1, circle2, points[0], points[1]);
                     if (solutions == 2) {
