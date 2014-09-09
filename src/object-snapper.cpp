@@ -677,7 +677,7 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(IntermSnapResults &isr,
                 (*p_inters) = dt->doc2dt(*p_inters);
                 // Construct a snapped point
                 Geom::Coord dist = Geom::L2(p.getPoint() - *p_inters);
-                SnappedPoint s = SnappedPoint(*p_inters, p.getSourceType(), p.getSourceNum(), k->target_type, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), true, k->target_bbox);;
+                SnappedPoint s = SnappedPoint(*p_inters, p.getSourceType(), p.getSourceNum(), k->target_type, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), true, false, k->target_bbox);
                 // Store the snapped point
                 if (dist <= tolerance) { // If the intersection is within snapping range, then we might snap to it
                     isr.points.push_back(s);

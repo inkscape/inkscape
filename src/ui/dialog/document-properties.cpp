@@ -1747,7 +1747,8 @@ void DocumentProperties::onDocUnitChange()
         doc->getRoot()->scaleChildItemsRec(Geom::Scale(scale), Geom::Point(-viewscale*doc->getRoot()->viewBox.min()[Geom::X] +
                                                                             (doc->getWidth().value("px") - viewscale*doc->getRoot()->viewBox.width())/2,
                                                                             viewscale*doc->getRoot()->viewBox.min()[Geom::Y] +
-                                                                            (doc->getHeight().value("px") + viewscale*doc->getRoot()->viewBox.height())/2));
+                                                                            (doc->getHeight().value("px") + viewscale*doc->getRoot()->viewBox.height())/2),
+                                                                            false);
         ShapeEditor::blockSetItem(false);
     }
     prefs->setBool("/options/transform/stroke",      transform_stroke);
