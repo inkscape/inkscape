@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-04 13:38-0700\n"
+"POT-Creation-Date: 2014-09-12 20:53+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10626,120 +10626,121 @@ msgstr ""
 msgid "SpiroInterpolator"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:203
-msgid "Butt"
+#: ../src/live_effects/lpe-powerstroke.cpp:192
+msgid "Centripetal Catmull-Rom"
 msgstr ""
 
 #: ../src/live_effects/lpe-powerstroke.cpp:204
-msgid "Square"
+msgid "Butt"
 msgstr ""
 
 #: ../src/live_effects/lpe-powerstroke.cpp:205
+msgid "Square"
+msgstr ""
+
+#: ../src/live_effects/lpe-powerstroke.cpp:206
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:13
 msgid "Round"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:206
+#: ../src/live_effects/lpe-powerstroke.cpp:207
 msgid "Peak"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:207
+#: ../src/live_effects/lpe-powerstroke.cpp:208
 msgid "Zero width"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:220
+#: ../src/live_effects/lpe-powerstroke.cpp:221
 msgid "Beveled"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:221
+#: ../src/live_effects/lpe-powerstroke.cpp:222
 #: ../src/widgets/star-toolbar.cpp:534
 msgid "Rounded"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:222
-msgid "Extrapolated"
+#. {LINEJOIN_EXTRP_MITER,  N_("Extrapolated"),      "extrapolated"}, // disabled because doesn't work well
+#: ../src/live_effects/lpe-powerstroke.cpp:224
+msgid "Extrapolated arc"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:223
+#: ../src/live_effects/lpe-powerstroke.cpp:225
 msgid "Miter"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:224
+#: ../src/live_effects/lpe-powerstroke.cpp:226
 #: ../src/widgets/pencil-toolbar.cpp:103
 msgid "Spiro"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:226
-msgid "Extrapolated arc"
-msgstr ""
-
-#: ../src/live_effects/lpe-powerstroke.cpp:233
+#: ../src/live_effects/lpe-powerstroke.cpp:232
 msgid "Offset points"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:234
+#: ../src/live_effects/lpe-powerstroke.cpp:233
 msgid "Sort points"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:234
+#: ../src/live_effects/lpe-powerstroke.cpp:233
 msgid "Sort offset points according to their time value along the curve"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:235
+#: ../src/live_effects/lpe-powerstroke.cpp:234
 msgid "Interpolator type:"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:235
+#: ../src/live_effects/lpe-powerstroke.cpp:234
 msgid ""
 "Determines which kind of interpolator will be used to interpolate between "
 "stroke width along the path"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:236
+#: ../src/live_effects/lpe-powerstroke.cpp:235
 #: ../share/extensions/fractalize.inx.h:3
 msgid "Smoothness:"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:236
+#: ../src/live_effects/lpe-powerstroke.cpp:235
 msgid ""
 "Sets the smoothness for the CubicBezierJohan interpolator; 0 = linear "
 "interpolation, 1 = smooth"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:237
+#: ../src/live_effects/lpe-powerstroke.cpp:236
 msgid "Start cap:"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:237
+#: ../src/live_effects/lpe-powerstroke.cpp:236
 msgid "Determines the shape of the path's start"
 msgstr ""
 
 #. Join type
 #. TRANSLATORS: The line join style specifies the shape to be used at the
 #. corners of paths. It can be "miter", "round" or "bevel".
-#: ../src/live_effects/lpe-powerstroke.cpp:238
+#: ../src/live_effects/lpe-powerstroke.cpp:237
 #: ../src/widgets/stroke-style.cpp:227
 msgid "Join:"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:238
+#: ../src/live_effects/lpe-powerstroke.cpp:237
 msgid "Determines the shape of the path's corners"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:239
+#: ../src/live_effects/lpe-powerstroke.cpp:238
 msgid "Miter limit:"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:239
+#: ../src/live_effects/lpe-powerstroke.cpp:238
 #: ../src/widgets/stroke-style.cpp:278
 msgid "Maximum length of the miter (in units of stroke width)"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:240
+#: ../src/live_effects/lpe-powerstroke.cpp:239
 msgid "End cap:"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:240
+#: ../src/live_effects/lpe-powerstroke.cpp:239
 msgid "Determines the shape of the path's end"
 msgstr ""
 
@@ -12104,7 +12105,8 @@ msgstr ""
 msgid "Select <b>some objects</b> to group."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:765 ../src/sp-item-group.cpp:329
+#: ../src/selection-chemistry.cpp:765
+msgctxt "Verb"
 msgid "Group"
 msgstr ""
 
@@ -12767,6 +12769,10 @@ msgstr ""
 #: ../src/sp-image.cpp:534
 #, c-format
 msgid "%d &#215; %d: %s"
+msgstr ""
+
+#: ../src/sp-item-group.cpp:329
+msgid "Group"
 msgstr ""
 
 #: ../src/sp-item-group.cpp:335 ../src/sp-switch.cpp:82
@@ -14846,7 +14852,7 @@ msgstr ""
 msgid "Remove grid"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:1760
+#: ../src/ui/dialog/document-properties.cpp:1761
 msgid "Changed document unit"
 msgstr ""
 
