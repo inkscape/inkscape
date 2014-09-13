@@ -19,6 +19,7 @@
 
 #include "inkscape-preferences.h"
 #include <glibmm/i18n.h>
+#include <glibmm/markup.h>
 #include <glibmm/miscutils.h>
 #include <gtkmm/main.h>
 #include <gtkmm/frame.h>
