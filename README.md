@@ -3,6 +3,8 @@ What is Inkscape?
 
 Inkscape is professional quality vector graphics software which runs on Windows, Mac OS X and Linux. It is used by design professionals and hobbyists worldwide, for creating a wide variety of graphics such as illustrations, icons, logos, diagrams, maps and web graphics. Inkscape uses the [W3C][1] open standard [SVG][2] (Scalable Vector Graphics) as its native format, and is free and open-source software.
 
+<a href="http://imgur.com/VGGYiqR"><img src="http://i.imgur.com/VGGYiqR.png" title="Hosted by imgur.com" /></a>
+
 [1]: <http://www.w3.org>
 
 [2]: <http://www.w3.org/Graphics/SVG/>
@@ -30,27 +32,33 @@ Inkscape is a member of the [Software Freedom Conservancy][10], a US 501(c)(3) n
 [10]: <http://sfconservancy.org/>
 
 
+Contributing
+------------
+
+Inkscape contribution documentation is maintained at:
+
+> http://wiki.inkscape.org/wiki/index.php/Frequently_asked_questions#Contributing_to_Inkscape
+
+The primary bug tracker is below, requires LaunchPad/UbuntuOne setup and email confirmation.
+
+> http://www.inkscape.org/en/contribute/report-bugs/
+
+You may also fork / pull request and use the issue tracker here as a simple way to submit changes to the project.
+
 
 This mirror
-===========
+-----------
 
-This GitHub repository is an unofficial mirrory of Inkscape, which is hosted on Launchpad with Bazaar. To check out the code for yourself, do the following:
+This repository is an unofficial mirror of Inkscape, which is hosted on Launchpad with Bazaar. Upstream code can be checkout out if you:
 
- - Set up a UbuntuOne account
+ - Set up a <a href="https://login.ubuntu.com/+login">UbuntuOne account</a>
  - Create a LaunchPad account linked to UbuntuOne
  - Install Bazaar (`bzr`)
  - Link Bazaar to LaunchPad (`bzr launchpad-login`)
  - Confirm your email address
+ - Add your account to the project
  - Download with `bzr branch lp:inkscape`
 
-This repository is for casual users that don't want to do all that. Here is how I created this mirror.
+This GitHub repository is for users that want easier access to the Inkscape repository. For completeness, this mirror was created with the above steps, hardlinking into a git repository and automated updates with <a href="https://github.com/inkscape/inkscape/blob/master/update.bash">update.bash</a>.
 
- - Download as above
- - `bzr update`
- - Hardlink into git working directory
- - `git push`
- - Set up .gitignore, update script
-
-There is an issue tracker and pull requests are possible. You are welcome to use both of these, however they are not reviewed by anyone. Feel free to use them you want to document bugs but you are too lazy to set up a LaunchPad account to report bugs.
-
-Please contact me at inkscape@phor.net if you need an update here, or if you want to help maintain this repo and bring in the Inkscape historical revisions.
+Updates to this mirror are fully automated with <a href="https://github.com/inkscape/inkscape/blob/master/update.bash">update.bash</a>. Any time please contact inkscape@phor.net if you need an immediate refresh.
