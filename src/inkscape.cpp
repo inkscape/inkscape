@@ -945,7 +945,7 @@ bool inkscape_load_menus( Inkscape::Application * inkscape )
         inkscape->menus = sp_repr_read_mem(menus_skeleton, MENUS_SKELETON_SIZE, NULL);
     }
 
-    return (inkscape->menus != 0);
+    return (inkscape->menus != NULL);
 }
 
 

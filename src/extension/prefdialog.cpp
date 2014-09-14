@@ -90,6 +90,10 @@ PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * co
     if (_effect != NULL && !_effect->no_live_preview) {
         if (_param_preview == NULL) {
             XML::Document * doc = sp_repr_read_mem(live_param_xml, strlen(live_param_xml), NULL);
+            if (doc == NULL) {
+                std::cout << "Error encountered loading live parameter XML !!!" << std::endl;
+                return;
+            }
             _param_preview = Parameter::make(doc->root(), _effect);
         }
 

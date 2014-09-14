@@ -556,7 +556,7 @@ build_from_file(gchar const *filename)
 }
 
 /**
- * \return   The module created
+ * \return   The module created, or NULL if buffer is invalid
  * \brief    This function creates a module from a buffer holding an
  *           XML description.
  * \param    buffer  The buffer holding the XML description of the module.
@@ -568,6 +568,7 @@ Extension *
 build_from_mem(gchar const *buffer, Implementation::Implementation *in_imp)
 {
     Inkscape::XML::Document *doc = sp_repr_read_mem(buffer, strlen(buffer), INKSCAPE_EXTENSION_URI);
+    g_return_val_if_fail(doc != NULL, NULL);
     Extension *ext = build_from_reprdoc(doc, in_imp);
     Inkscape::GC::release(doc);
     return ext;
