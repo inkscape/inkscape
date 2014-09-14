@@ -762,7 +762,7 @@ void sp_selection_group(Inkscape::Selection *selection, SPDesktop *desktop)
     sp_selection_group_impl(p, group, xml_doc, doc);
 
     DocumentUndo::done(doc, SP_VERB_SELECTION_GROUP,
-                       _("Group"));
+                       C_("Verb", "Group"));
 
     selection->set(group);
     Inkscape::GC::release(group);

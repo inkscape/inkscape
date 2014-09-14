@@ -234,9 +234,13 @@ void SPItem::setCenter(Geom::Point const &object_centre) {
     document->ensureUpToDate();
 
     // Copied from DocumentProperties::onDocUnitChange()
-    gdouble viewscale_w = this->document->getWidth().value("px") / this->document->getRoot()->viewBox.width();
-    gdouble viewscale_h = this->document->getHeight().value("px")/ this->document->getRoot()->viewBox.height();
-    gdouble viewscale = std::min(viewscale_h, viewscale_w);
+    gdouble viewscale = 1.0;
+    Geom::Rect vb = this->document->getRoot()->viewBox;
+    if ( !vb.hasZeroArea() ) {
+        gdouble viewscale_w = this->document->getWidth().value("px") / vb.width();
+        gdouble viewscale_h = this->document->getHeight().value("px")/ vb.height();
+        viewscale = std::min(viewscale_h, viewscale_w);
+    }
 
     // FIXME this is seriously wrong
     Geom::OptRect bbox = desktopGeometricBounds();
@@ -267,9 +271,13 @@ Geom::Point SPItem::getCenter() const {
     document->ensureUpToDate();
 
     // Copied from DocumentProperties::onDocUnitChange()
-    gdouble viewscale_w = this->document->getWidth().value("px") / this->document->getRoot()->viewBox.width();
-    gdouble viewscale_h = this->document->getHeight().value("px")/ this->document->getRoot()->viewBox.height();
-    gdouble viewscale = std::min(viewscale_h, viewscale_w);
+    gdouble viewscale = 1.0;
+    Geom::Rect vb = this->document->getRoot()->viewBox;
+    if ( !vb.hasZeroArea() ) {
+        gdouble viewscale_w = this->document->getWidth().value("px") / vb.width();
+        gdouble viewscale_h = this->document->getHeight().value("px")/ vb.height();
+        viewscale = std::min(viewscale_h, viewscale_w);
+    }
 
     // FIXME this is seriously wrong
     Geom::OptRect bbox = desktopGeometricBounds();

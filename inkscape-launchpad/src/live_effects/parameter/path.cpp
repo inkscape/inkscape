@@ -143,7 +143,7 @@ gchar *
 PathParam::param_getSVGValue() const
 {
     if (href) {
-        return href;
+        return g_strdup(href);
     } else {
         gchar * svgd = sp_svg_write_path( _pathvector );
         return svgd;

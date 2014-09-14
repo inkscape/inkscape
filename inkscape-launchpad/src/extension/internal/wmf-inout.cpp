@@ -3062,6 +3062,8 @@ Wmf::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
         return NULL;
     }
 
+    d.dc[0].font_name = strdup("Arial"); // Default font, set only on lowest level, it copies up from there WMF spec says device can pick whatever it wants
+
     // set up the size default for patterns in defs.  This might not be referenced if there are no patterns defined in the drawing.
 
     d.defs += "\n";
@@ -3104,7 +3106,7 @@ Wmf::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
 
     d.dc[0].style.stroke_dasharray.values.clear();
 
-    for(int i=0; i<=d.level;i++){
+    for(int i=0; i<=WMF_MAX_DC; i++){
       if(d.dc[i].font_name)free(d.dc[i].font_name);
     }
 

@@ -89,7 +89,6 @@ set(ui_SRC
 	dialog/print.cpp
 	dialog/symbols.cpp
 	dialog/xml-tree.cpp
-	# dialog/session-player.cpp
 	dialog/spellcheck.cpp
 	dialog/svg-fonts-dialog.cpp
 	dialog/swatches.cpp
@@ -101,9 +100,6 @@ set(ui_SRC
 	dialog/pixelartdialog.cpp
 	dialog/transformation.cpp
 	dialog/undo-history.cpp
-	# dialog/whiteboard-connect.cpp
-	# dialog/whiteboard-sharewithchat.cpp
-	# dialog/whiteboard-sharewithuser.cpp
 
 	widget/anchor-selector.cpp
 	widget/button.cpp

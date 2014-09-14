@@ -65,7 +65,7 @@ typedef struct emf_device_context {
         textAlign(0)
         // worldTransform, cur
     {
-        font_name = strdup("Arial"); // Default font, EMF spec says device can pick whatever it wants
+        font_name = NULL;
         sizeWnd  = sizel_set( 0.0, 0.0 );
         sizeView = sizel_set( 0.0, 0.0 );
         winorg  = point32_set( 0.0, 0.0 );
@@ -218,6 +218,7 @@ protected:
     static double      pix_to_x_point(PEMF_CALLBACK_DATA d, double px, double py);
     static double      pix_to_y_point(PEMF_CALLBACK_DATA d, double px, double py);
     static double      pix_to_abs_size(PEMF_CALLBACK_DATA d, double px);
+    static void        snap_to_faraway_pair(double *x, double *y);
     static std::string pix_to_xy(PEMF_CALLBACK_DATA d, double x, double y);
     static void        select_pen(PEMF_CALLBACK_DATA d, int index);
     static void        select_extpen(PEMF_CALLBACK_DATA d, int index);

@@ -69,6 +69,8 @@ protected:
 
     double  _width;
     double  _height;
+    double  _doc_unit_scale;     // to pixels, regardless of the document units
+    
     U_RECTL  rc;
 
     uint32_t htextalignment;

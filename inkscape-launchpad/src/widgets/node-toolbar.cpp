@@ -270,7 +270,7 @@ static void sp_node_path_value_changed(GtkAdjustment *adj, GObject *tbl, Geom::D
     }
 
     // quit if run by the attr_changed listener
-    if (g_object_get_data( tbl, "freeze" )) {
+    if (g_object_get_data( tbl, "freeze" ) || tracker->isUpdating()) {
         return;
     }
 

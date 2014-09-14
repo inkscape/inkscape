@@ -63,6 +63,7 @@ namespace Internal {
 
 static uint32_t ICMmode = 0;  // not used yet, but code to read it from EMF implemented
 static uint32_t BLTmode = 0;
+float           faraway = 10000000; // used in "exclude" clips, hopefully well outside any real drawing!
 
 Emf::Emf (void) // The null constructor
 {
@@ -1040,13 +1041,30 @@ Emf::pix_to_abs_size(PEMF_CALLBACK_DATA d, double px)
     return ppx;
 }
 
-/* returns "x,y" (without the quotes) in inkscape coordinates for a pair of EMF x,y coordinates
+/* snaps coordinate pairs made up of values near +/-faraway, +/-faraway to exactly faraway.
+   This eliminates coordinate drift on repeated clipping cycles which use exclude.  
+   It should not affect internals of normal drawings because the value of faraway is so large.
+*/
+void
+Emf::snap_to_faraway_pair(double *x, double *y)
+{
+    if((abs(abs(*x) - faraway)/faraway <= 1e-4) && (abs(abs(*y) - faraway)/faraway <= 1e-4)){
+        *x = (*x > 0 ? faraway : -faraway);
+        *y = (*y > 0 ? faraway : -faraway);
+    }
+}
+
+/* returns "x,y" (without the quotes) in inkscape coordinates for a pair of EMF x,y coordinates.
+   Since exclude clip can go through here, it calls snap_to_faraway_pair for numerical stability.
 */
 std::string Emf::pix_to_xy(PEMF_CALLBACK_DATA d, double x, double y){
     std::stringstream cxform;
-    cxform << pix_to_x_point(d,x,y);
+    double tx = pix_to_x_point(d,x,y);
+    double ty = pix_to_y_point(d,x,y);
+    snap_to_faraway_pair(&tx,&ty);
+    cxform << tx;
     cxform << ",";
-    cxform << pix_to_y_point(d,x,y);
+    cxform << ty;
     return(cxform.str());
 }
 
@@ -2221,7 +2239,6 @@ std::cout << "BEFORE DRAW"
             U_RECTL rc = pEmr->rclClip;
 
             SVGOStringStream tmp_path;
-            float faraway = 10000000; // hopefully well outside any real drawing!
             //outer rect, clockwise 
             tmp_path << "M " <<  faraway << "," <<  faraway << " ";
             tmp_path << "L " <<  faraway << "," << -faraway << " ";
@@ -3466,6 +3483,8 @@ Emf::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
         return NULL;
     }
 
+    d.dc[0].font_name = strdup("Arial"); // Default font, set only on lowest level, it copies up from there EMF spec says device can pick whatever it wants
+
     // set up the size default for patterns in defs.  This might not be referenced if there are no patterns defined in the drawing.
 
     d.defs += "\n";
@@ -3513,7 +3532,7 @@ Emf::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
 
     d.dc[0].style.stroke_dasharray.values.clear();
 
-    for(int i=0; i<=d.level;i++){
+    for(int i=0; i<=EMF_MAX_DC; i++){
       if(d.dc[i].font_name)free(d.dc[i].font_name);
     }
 

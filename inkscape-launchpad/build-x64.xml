@@ -178,10 +178,6 @@
         /* internal interpreter */
         #define WITH_PYTHON                   1
 
-        /* shared whiteboard */
-        #undef WITH_INKBOARD
-        #undef HAVE_SSL
-
         /* use poppler for pdf import? */
         #define HAVE_POPPLER                  1
         #define HAVE_POPPLER_GLIB             1

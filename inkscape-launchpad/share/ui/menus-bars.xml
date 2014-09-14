@@ -173,13 +173,6 @@
       <separator/>
       <menuitem action='RemoveManualKerns'/>
     </menu>
-	<menu action='MenuWhiteboard'>
-	  <menuitem action='DialogWhiteboardConnect'/>
-	  <separator/>
-	  <menuitem action='DialogWhiteboardShareWithUser'/>
-	  <menuitem action='DialogWhiteboardShareWithChat'/>
-	  <separator/>
-	</menu>
     <menu action='MenuHelp'>
       <menuitem action='KeysAndMouse'/>
       <menu action='Tutorials'>

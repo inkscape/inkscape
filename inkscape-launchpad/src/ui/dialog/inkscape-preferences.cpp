@@ -19,6 +19,7 @@
 
 #include "inkscape-preferences.h"
 #include <glibmm/i18n.h>
+#include <glibmm/markup.h>
 #include <glibmm/miscutils.h>
 #include <gtkmm/main.h>
 #include <gtkmm/frame.h>
@@ -2054,7 +2055,8 @@ void InkscapePreferences::on_pagelist_selection_changed()
         if (!_init) {
             prefs->setInt("/dialogs/preferences/page", row[_page_list_columns._col_id]);
         }
-        _page_title.set_markup("<span size='large'><b>" + row[_page_list_columns._col_name] + "</b></span>");
+        Glib::ustring col_name_escaped = Glib::Markup::escape_text( row[_page_list_columns._col_name] );
+        _page_title.set_markup("<span size='large'><b>" + col_name_escaped + "</b></span>");
         _page_frame.add(*_current_page);
         _current_page->show();
         while (Gtk::Main::events_pending())

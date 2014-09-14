@@ -222,7 +222,7 @@ void Metafile::setViewBoxIfMissing(SPDocument *doc) {
         prefs->setBool("/options/transform/pattern", true);
         prefs->setBool("/options/transform/gradient", true);
         
-        doc->getRoot()->scaleChildItemsRec(Geom::Scale(scale), Geom::Point(0, dh));
+        doc->getRoot()->scaleChildItemsRec(Geom::Scale(scale), Geom::Point(0, dh), true);
         ShapeEditor::blockSetItem(false);
 
         // restore options

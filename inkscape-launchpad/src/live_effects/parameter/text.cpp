@@ -85,7 +85,7 @@ TextParam::param_readSVGValue(const gchar * strvalue)
 gchar *
 TextParam::param_getSVGValue() const
 {
-    return (gchar *) value.c_str();
+    return g_strdup(value.c_str());
 }
 
 Gtk::Widget *

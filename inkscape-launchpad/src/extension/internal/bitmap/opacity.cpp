@@ -43,7 +43,7 @@ Opacity::init(void)
 				"<effects-menu>\n"
 					"<submenu name=\"" N_("Raster") "\" />\n"
 				"</effects-menu>\n"
-				"<menu-tip>" N_("Modify opacity channel(s) of selected bitmap(s).") "</menu-tip>\n"
+				"<menu-tip>" N_("Modify opacity channel(s) of selected bitmap(s)") "</menu-tip>\n"
 			"</effect>\n"
 		"</inkscape-extension>\n", new Opacity());
 }

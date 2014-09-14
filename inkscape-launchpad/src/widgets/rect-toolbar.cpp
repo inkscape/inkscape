@@ -95,7 +95,7 @@ static void sp_rtb_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *
     }
 
     // quit if run by the attr_changed listener
-    if (g_object_get_data( tbl, "freeze" )) {
+    if (g_object_get_data( tbl, "freeze" ) || tracker->isUpdating()) {
         return;
     }
 

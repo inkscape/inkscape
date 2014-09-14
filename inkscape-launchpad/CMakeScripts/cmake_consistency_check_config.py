@@ -5,13 +5,10 @@ IGNORE = (
     "/cxxtest/",
     "/dom/work/",
     "/extension/dbus/",
-    "/pedro/",
     "/src/extension/dxf2svg/",
 
     # files
     "buildtool.cpp",
-    "jabber_whiteboard/node-tracker.cpp",
-    "jabber_whiteboard/node-utilities.cpp",
     "packaging/macosx/ScriptExec/main.c",
     "share/ui/keybindings.rc",
     "src/2geom/conic_section_clipper_impl.cpp",
@@ -31,10 +28,6 @@ IGNORE = (
     "src/libnr/testnr.cp",
     "src/live_effects/lpe-skeleton.cpp",
     "src/svg/test-stubs.cpp",
-    "src/ui/dialog/session-player.cpp",
-    "src/ui/dialog/whiteboard-connect.cpp",
-    "src/ui/dialog/whiteboard-sharewithchat.cpp",
-    "src/ui/dialog/whiteboard-sharewithuser.cpp",
     "src/winconsole.cpp",
 
     # header files

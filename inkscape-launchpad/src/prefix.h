@@ -80,7 +80,7 @@ extern "C" {
 const char *br_thread_local_store (char *str);
 char *br_locate		(void *symbol);
 char *br_locate_prefix	(void *symbol);
-char *br_prepend_prefix	(void *symbol, char *path);
+char *br_prepend_prefix	(void *symbol, char const *path);
 
 
 #endif /* ENABLE_BINRELOC */

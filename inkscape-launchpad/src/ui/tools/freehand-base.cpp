@@ -247,8 +247,9 @@ static void spdc_apply_powerstroke_shape(const std::vector<Geom::Point> & points
         sp_style_unref(style);
     }
 
-    char * width_str = new char[50];
-    sprintf(width_str, "0,%f", stroke_width / 2.);
+    std::ostringstream s;
+    s.imbue(std::locale::classic());
+    s << "0," << stroke_width / 2.;
 
     // write powerstroke parameters:
     lpe->getRepr()->setAttribute("start_linecap_type", "zerowidth");
@@ -257,9 +258,7 @@ static void spdc_apply_powerstroke_shape(const std::vector<Geom::Point> & points
     lpe->getRepr()->setAttribute("sort_points", "true");
     lpe->getRepr()->setAttribute("interpolator_type", "CubicBezierJohan");
     lpe->getRepr()->setAttribute("interpolator_beta", "0.2");
-    lpe->getRepr()->setAttribute("offset_points", width_str);
-
-    delete [] width_str;
+    lpe->getRepr()->setAttribute("offset_points", s.str().c_str());
 }
 
 static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item, SPCurve *curve)

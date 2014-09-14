@@ -69,6 +69,10 @@ public:
 protected:
     static void  smuggle_adxkyrtl_out(const char *string, uint32_t **adx, double *ky, int *rtl, int *ndx, float scale);
 
+    void        do_clip_if_present(SPStyle const *style);
+    Geom::PathVector merge_PathVector_with_group(Geom::PathVector const &combined_pathvector, SPItem const *item, const Geom::Affine &transform);
+    Geom::PathVector merge_PathVector_with_shape(Geom::PathVector const &combined_pathvector, SPItem const *item, const Geom::Affine &transform);
+    unsigned int draw_pathv_to_EMF(Geom::PathVector const &pathv, const Geom::Affine &transform);
     Geom::Path  pathv_to_simple_polygon(Geom::PathVector const &pathv, int *vertices);
     Geom::Path  pathv_to_rect(Geom::PathVector const &pathv, bool *is_rect, double *angle);
     Geom::Point get_pathrect_corner(Geom::Path pathRect, double angle, int corner);
