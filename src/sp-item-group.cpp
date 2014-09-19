@@ -680,7 +680,15 @@ void SPGroup::scaleChildItemsRec(Geom::Scale const &sc, Geom::Point const &p, bo
                         SPItem *item = NULL;
                         if (SP_ITEM(o)->clip_ref->getObject()) {
                             item = SP_ITEM(SP_ITEM(o)->clip_ref->getObject()->firstChild());
-                        } else if (SP_ITEM(o)->mask_ref->getObject()) {
+                        }
+                        if (item != NULL) {
+                            Geom::Affine tdoc2dt = Geom::Scale(1, -1) * Geom::Translate(p); // re-create doc2dt()
+                            Geom::Affine ti2doc = SP_ITEM(o)->i2doc_affine();
+                            item->set_i2d_affine(ti2doc * sc * ti2doc.inverse() * tdoc2dt);
+                            item->doWriteTransform(item->getRepr(), item->transform, NULL, true);
+                        }
+                        item = NULL;
+                        if (SP_ITEM(o)->mask_ref->getObject()) {
                             item = SP_ITEM(SP_ITEM(o)->mask_ref->getObject()->firstChild());
                         }
                         if (item != NULL) {
