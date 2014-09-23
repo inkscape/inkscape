@@ -287,6 +287,14 @@ SPILength::read( gchar const *str ) {
                 /* Percentage */
                 unit = SP_CSS_UNIT_PERCENT;
                 value = value * 0.01;
+                if (name.compare( "line-height" ) == 0) {
+                    // See: http://www.w3.org/TR/CSS2/visudet.html#propdef-line-height
+                    if( style ) {
+                        computed = value * style->font_size.computed;
+                    } else {
+                        computed = value * SPIFontSize::font_size_default;
+                    }
+                }
             } else {
                 /* Invalid */
                 return;
@@ -355,6 +363,7 @@ void
 SPILength::cascade( const SPIBase* const parent ) {
     if( const SPILength* p = dynamic_cast<const SPILength*>(parent) ) {
         if( (inherits && !set) || inherit ) {
+            unit     = p->unit;
             value    = p->value;
             computed = p->computed;
         } else {
@@ -365,6 +374,9 @@ SPILength::cascade( const SPIBase* const parent ) {
             } else if (unit == SP_CSS_UNIT_EX) {
                 // FIXME: Get x height from libnrtype or pango.
                 computed = value * em * 0.5;
+            } else if (unit == SP_CSS_UNIT_PERCENT && name.compare( "line-height" ) == 0 ) {
+                // Special case
+                computed = value * em;
             }
         }
     } else {
@@ -466,6 +478,18 @@ SPILengthOrNormal::write( guint const flags, SPIBase const *const base) const {
         }
     }
     return Glib::ustring("");
+}
+
+void
+SPILengthOrNormal::cascade( const SPIBase* const parent ) {
+    if( const SPILengthOrNormal* p = dynamic_cast<const SPILengthOrNormal*>(parent) ) {
+        if( (inherits && !set) || inherit ) {
+            normal   = p->normal;
+        }
+        SPILength::cascade( parent );
+    } else {
+        std::cerr << "SPILengthOrNormal::cascade(): Incorrect parent type" << std::endl;
+    }
 }
 
 void

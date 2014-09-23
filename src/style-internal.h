@@ -315,7 +315,7 @@ class SPILengthOrNormal : public SPILength {
     virtual const Glib::ustring write( guint const flags = SP_STYLE_FLAG_IFSET,
                                        SPIBase const *const base = NULL ) const;
     virtual void clear() { SPILength::clear(); normal = true; };
-    // virtual void cascade( const SPIBase* const parent );  // Use SPILength::cascade
+    virtual void cascade( const SPIBase* const parent );
     virtual void merge(   const SPIBase* const parent );
 
     SPILengthOrNormal& operator=(const SPILengthOrNormal& rhs) {
