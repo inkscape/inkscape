@@ -44,6 +44,7 @@
 #include "sp-rect.h"
 #include "sp-use.h"
 #include "sp-text.h"
+#include "sp-textpath.h"
 #include "sp-item-rm-unsatisfied-cns.h"
 #include "sp-pattern.h"
 #include "sp-paint-server.h"
@@ -1407,10 +1408,11 @@ void SPItem::doWriteTransform(Inkscape::XML::Node *repr, Geom::Affine const &tra
     // onSetTransform cannot be pure due to the fact that not all visible Items are transformable.
 
     if ( // run the object's set_transform (i.e. embed transform) only if:
-             !preserve && // user did not chose to preserve all transforms
+             SP_IS_TEXT_TEXTPATH(this) ||
+             (!preserve && // user did not chose to preserve all transforms
              (!clip_ref || !clip_ref->getObject()) && // the object does not have a clippath
              (!mask_ref || !mask_ref->getObject()) && // the object does not have a mask
-             !(!transform.isTranslation() && style && style->getFilter()) // the object does not have a filter, or the transform is translation (which is supposed to not affect filters)
+             !(!transform.isTranslation() && style && style->getFilter())) // the object does not have a filter, or the transform is translation (which is supposed to not affect filters)
         )
     {
         transform_attr = this->set_transform(transform);
