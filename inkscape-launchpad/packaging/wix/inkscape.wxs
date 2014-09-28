@@ -74,7 +74,7 @@
 				<ComponentRef Id='DesktopShortcut' />
 			</Feature>
 
-			<Feature Id='RegisterExtension' Level='1' Title='register file extension' Description='register .svg and .svgz file extension to explorer context menu' AllowAdvertise='no'>
+			<Feature Id='RegisterExtension' Level='1' Title='Register file extension' Description='register .svg and .svgz file extension in explorer context menu' AllowAdvertise='no'>
 				<ComponentRef Id='RegisterExtension' />
 			</Feature>
 

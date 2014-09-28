@@ -19,6 +19,7 @@
 #include <gtk/gtk.h>
 #endif // DEBUG_LCMS
 
+#include <unistd.h>
 #include <cstring>
 #include <string>
 #include <io/sys.h>

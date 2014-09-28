@@ -1011,8 +1011,8 @@ objects_query_fontnumbers (GSList *objects, SPStyle *style_res)
         } else if (style->line_height.unit == SP_CSS_UNIT_PERCENT || style->font_size.computed == 0) {
             linespacing_current = style->line_height.value;
             linespacing_normal = false;
-        } else { // we need % here
-            linespacing_current = style->line_height.computed / style->font_size.computed;
+        } else {
+            linespacing_current = style->line_height.computed;
             linespacing_normal = false;
         }
         linespacing += linespacing_current;

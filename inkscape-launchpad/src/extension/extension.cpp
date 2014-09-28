@@ -112,8 +112,13 @@ Extension::Extension (Inkscape::XML::Node * in_repr, Implementation::Implementat
                 _deps.push_back(new Dependency(child_repr));
             } /* dependency */
             if (!strcmp(chname, "script")) {
-                _deps.push_back(new Dependency(child_repr->firstChild()));
-            } /* check command as a dependency (see LP #505920)  */
+                for (Inkscape::XML::Node *child = child_repr->firstChild(); child != NULL ; child = child->next()) {
+                    if (child->type() == Inkscape::XML::ELEMENT_NODE) {
+                        _deps.push_back(new Dependency(child));
+                        break;
+                    } /* skip non-element nodes (see LP #1372200) */
+                }
+            } /* check command as a dependency (see LP #505920) */
             if (!strcmp(chname, "options")) {
                 silent = !strcmp( child_repr->attribute("silent"), "true" );
             }
