@@ -46,6 +46,10 @@ parse_name_for_weight (char const *cc)
 		weight = NR_POS_WEIGHT_ULTRA_LIGHT;
 	} else if (strstr (c, "light")) {
 		weight = NR_POS_WEIGHT_LIGHT;
+	} else if (strstr (c, "semi light")) {
+		weight = NR_POS_WEIGHT_SEMILIGHT;
+	} else if (strstr (c, "semilight")) {
+		weight = NR_POS_WEIGHT_SEMILIGHT;
 	} else if (strstr (c, "book")) {
 		weight = NR_POS_WEIGHT_BOOK;
 	} else if (strstr (c, "medium")) {
