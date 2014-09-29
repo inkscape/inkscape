@@ -2,13 +2,9 @@
 
 ink_common_sources +=	\
 	libnrtype/boundary-type.h	\
-	libnrtype/font-style-to-pos.cpp	\
-	libnrtype/font-style-to-pos.h	\
 	libnrtype/font-glyph.h	\
 	libnrtype/font-instance.h	\
 	libnrtype/font-style.h	\
-	libnrtype/nr-type-pos-def.cpp	\
-	libnrtype/nr-type-pos-def.h	\
 	libnrtype/nr-type-primitives.cpp	\
 	libnrtype/nr-type-primitives.h	\
 	libnrtype/FontFactory.cpp \

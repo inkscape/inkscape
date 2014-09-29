@@ -40,7 +40,6 @@
 #include "sp-tspan.h"
 #include "xml/repr.h"
 #include "xml/sp-css-attr.h"
-#include "libnrtype/font-style-to-pos.h"
 #include "sp-path.h"
 #include "ui/tools/tool-base.h"
 
@@ -1098,7 +1097,10 @@ objects_query_fontstyle (GSList *objects, SPStyle *style_res)
         texts ++;
 
         if (set &&
-            font_style_to_pos(*style_res).signature() != font_style_to_pos(*style).signature() ) {
+            ( ( style_res->font_weight.computed  != style->font_weight.computed  ) ||
+              ( style_res->font_style.computed   != style->font_style.computed   ) ||
+              ( style_res->font_stretch.computed != style->font_stretch.computed ) ||
+              ( style_res->font_variant.computed != style->font_variant.computed ) ) ) {
             different = true;  // different styles
         }
 

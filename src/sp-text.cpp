@@ -30,7 +30,6 @@
 #include <2geom/affine.h>
 #include <libnrtype/FontFactory.h>
 #include <libnrtype/font-instance.h>
-#include <libnrtype/font-style-to-pos.h>
 
 #include <glibmm/i18n.h>
 #include "svg/svg.h"
