@@ -311,6 +311,10 @@ unsigned int font_instance::Attribute(const gchar *key, gchar *str, unsigned int
             res=(char*)"200";
         } else if ( v <= PANGO_WEIGHT_LIGHT ) {
             res=(char*)"300";
+#if PANGO_VERSION_CHECK(1,36,6)
+        } else if ( v <= PANGO_WEIGHT_SEMILIGHT ) {
+            res=(char*)"350";
+#endif
         } else if ( v <= PANGO_WEIGHT_BOOK ) {
             res=(char*)"380";
         } else if ( v <= PANGO_WEIGHT_NORMAL ) {

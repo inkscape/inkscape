@@ -857,6 +857,10 @@ font_instance *font_factory::Face(char const *family, NRTypePosDef apos)
         pango_font_description_set_weight(temp_descr, PANGO_WEIGHT_ULTRALIGHT);
     } else if ( apos.weight <= NR_POS_WEIGHT_LIGHT ) {
         pango_font_description_set_weight(temp_descr, PANGO_WEIGHT_LIGHT);
+#if PANGO_VERSION_CHECK(1,36,6)
+    } else if ( apos.weight <= NR_POS_WEIGHT_SEMILIGHT ) {
+        pango_font_description_set_weight(temp_descr, PANGO_WEIGHT_SEMILIGHT);
+#endif
     } else if ( apos.weight <= NR_POS_WEIGHT_BOOK ) {
         pango_font_description_set_weight(temp_descr, PANGO_WEIGHT_BOOK);
     } else if ( apos.weight <= NR_POS_WEIGHT_NORMAL ) {
