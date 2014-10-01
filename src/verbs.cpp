@@ -1402,7 +1402,7 @@ void LayerVerb::perform(SPAction *action, void *data)
                 dt->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("No current layer."));
             } else {
                 dt->toggleLayerSolo( dt->currentLayer() );
-                DocumentUndo::maybeDone(sp_desktop_document(dt), "layer:solo", SP_VERB_LAYER_SOLO, _("Toggle layer solo"));
+                DocumentUndo::done(sp_desktop_document(dt), SP_VERB_LAYER_SOLO, _("Toggle layer solo"));
             }
             break;
         }
@@ -1426,7 +1426,7 @@ void LayerVerb::perform(SPAction *action, void *data)
                 dt->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("No current layer."));
             } else {
                 dt->toggleLockOtherLayers( dt->currentLayer() );
-                DocumentUndo::maybeDone(sp_desktop_document(dt), "layer:lockothers", SP_VERB_LAYER_LOCK_OTHERS, _("Lock other layers"));
+                DocumentUndo::done(sp_desktop_document(dt), SP_VERB_LAYER_LOCK_OTHERS, _("Lock other layers"));
             }
             break;
         }
