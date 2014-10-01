@@ -526,11 +526,11 @@ void InkscapePreferences::initPageUI()
         _("Mongolian (mn)"), _("Nepali (ne)"), _("Norwegian Bokmål (nb)"), _("Norwegian Nynorsk (nn)"), _("Panjabi (pa)"),
         _("Polish (pl)"), _("Portuguese (pt)"), _("Portuguese/Brazil (pt_BR)"), _("Romanian (ro)"), _("Russian (ru)"),
         _("Serbian (sr)"), _("Serbian in Latin script (sr@latin)"), _("Slovak (sk)"), _("Slovenian (sl)"),  _("Spanish (es)"), _("Spanish/Mexico (es_MX)"),
-        _("Swedish (sv)"),_("Telugu (te_IN)"), _("Thai (th)"), _("Turkish (tr)"), _("Ukrainian (uk)"), _("Vietnamese (vi)")};
+        _("Swedish (sv)"),_("Telugu (te)"), _("Thai (th)"), _("Turkish (tr)"), _("Ukrainian (uk)"), _("Vietnamese (vi)")};
     Glib::ustring langValues[] = {"", "sq", "am", "ar", "hy", "az", "eu", "be", "bg", "bn", "bn_BD", "br", "ca", "ca@valencia", "zh_CN", "zh_TW", "hr", "cs", "da", "nl",
         "dz", "de", "el", "en", "en_AU", "en_CA", "en_GB", "en_US@piglatin", "eo", "et", "fa", "fi", "fr", "ga",
         "gl", "he", "hu", "id", "it", "ja", "km", "rw", "ko", "lt", "lv", "mk", "mn", "ne", "nb", "nn", "pa",
-        "pl", "pt", "pt_BR", "ro", "ru", "sr", "sr@latin", "sk", "sl", "es", "es_MX", "sv", "te_IN", "th", "tr", "uk", "vi" };
+        "pl", "pt", "pt_BR", "ro", "ru", "sr", "sr@latin", "sk", "sl", "es", "es_MX", "sv", "te", "th", "tr", "uk", "vi" };
 
     {
         // sorting languages according to translated name
