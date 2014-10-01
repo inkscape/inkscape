@@ -354,8 +354,15 @@ void ImageResolution::readmagick(char const *fn) {
         return;
     }
 
+    std::string const type = image.magick();
     x_ = image.xResolution();
     y_ = image.yResolution();
+
+// TODO: find out why the hell the following convertion is necessary
+    if (type == "BMP") {
+        x_ = Inkscape::Util::Quantity::convert(x_, "in", "cm");
+        y_ = Inkscape::Util::Quantity::convert(y_, "in", "cm");
+    }
     
     if (x_ != 0 && y_ != 0) {
         ok_ = true;
