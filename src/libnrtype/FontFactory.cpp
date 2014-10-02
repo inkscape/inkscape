@@ -97,6 +97,7 @@ font_factory::font_factory(void) :
     fontSize(512),
     loadedPtr(new FaceMapType())
 {
+    // std::cout << pango_version_string() << std::endl;
 #ifdef USE_PANGO_WIN32
 #else
     pango_ft2_font_map_set_resolution(PANGO_FT2_FONT_MAP(fontServer),
@@ -545,6 +546,7 @@ void font_factory::GetUIFamiliesAndStyles(FamilyToStylesMap *map)
                 if (faceDescr) {
                     Glib::ustring familyUIName = GetUIFamilyString(faceDescr);
                     Glib::ustring styleUIName = GetUIStyleString(faceDescr);
+                    // std::cout << familyUIName << " " << styleUIName << " (" << displayName << ")" << std::endl;
 
                     // Disable synthesized (faux) font faces except for CSS generic faces
                     if (pango_font_face_is_synthesized(faces[currentFace]) ) {
@@ -557,6 +559,35 @@ void font_factory::GetUIFamiliesAndStyles(FamilyToStylesMap *map)
                             continue;
                         }
                     } 
+
+                    // Pango breaks the 1 to 1 mapping between Pango weights and CSS weights by
+                    // adding Semi-Light (as of 1.36.7), Book (as of 1.24), and Ultra-Heavy (as of
+                    // 1.24). We need to map these weights to CSS weights. Book and Ultra-Heavy
+                    // are rarely used. Semi-Light (350) is problematic as it is halfway between
+                    // Light (300) and Normal (400) and if care is not taken it is converted to
+                    // Normal, rather than Light.
+                    //
+                    // Note: The ultimate solution to handling various weight in the same
+                    // font family is to support the @font rules from CSS.
+                    //
+                    // Additional notes, helpful for debugging:
+                    //   Pango's FC backend:
+                    //     Weights defined in fontconfig/fontconfig.h
+                    //     String equivalents in src/fcfreetype.c
+                    //     Weight set from os2->usWeightClass
+                    //   Use Fontforge: Element->Font Info...->OS/2->Misc->Weight Class to check font weight
+                    size_t f = styleUIName.find( "Book" );
+                    if( f != Glib::ustring::npos ) {
+                        styleUIName.replace( f, 4, "Normal" );
+                    }
+                    f = styleUIName.find( "Semi-Light" );
+                    if( f != Glib::ustring::npos ) {
+                        styleUIName.replace( f, 10, "Light" );
+                    }
+                    f = styleUIName.find( "Ultra-Heavy" );
+                    if( f != Glib::ustring::npos ) {
+                        styleUIName.replace( f, 11, "Heavy" );
+                    }
 
                     if (!familyUIName.empty() && !styleUIName.empty()) {
 
@@ -581,6 +612,7 @@ void font_factory::GetUIFamiliesAndStyles(FamilyToStylesMap *map)
                                  ++it) {
                             if ( (*it).CssName == styleUIName) {
                                 exists = true;
+                                std::cerr << "Warning: Font face with same CSS values already added: " << familyUIName << " " << styleUIName << " (" << (*it).DisplayName << ", " << displayName << ")" << std::endl;
                                 break;
                             }
                         }
