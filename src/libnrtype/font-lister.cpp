@@ -796,7 +796,7 @@ std::pair<Glib::ustring, Glib::ustring> FontLister::new_font_family (Glib::ustri
 	  switch (style->font_stretch.computed) {
 
 	  case SP_CSS_FONT_STRETCH_ULTRA_CONDENSED:
-	    fontspec += " extra-condensed";
+	    fontspec += " ultra-condensed";
 	    break;
 
 	  case SP_CSS_FONT_STRETCH_EXTRA_CONDENSED:
@@ -985,7 +985,7 @@ std::pair<Glib::ustring, Glib::ustring> FontLister::new_font_family (Glib::ustri
 
       GList* styles = row[FontList.styles];
       for (GList *l=styles; l; l = l->next) {
-	Glib::ustring fontspec = family + ", " + (char*)l->data;
+        Glib::ustring fontspec = family + ", " + ((StyleNames *)l->data)->CssName;
 	PangoFontDescription* candidate = pango_font_description_from_string( fontspec.c_str() );
 	//font_description_dump( candidate );
 	//std::cout << "           " << font_description_better_match( target, best, candidate ) << std::endl;
