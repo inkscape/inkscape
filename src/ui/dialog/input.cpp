@@ -1622,7 +1622,7 @@ void InputDialogImpl::ConfPanel::setAxis(gint count)
             if (barNum < count) {
                 row[axisColumns.value] = Glib::ustring::format(barNum+1);
             } else {
-                row[axisColumns.value] = _("None");
+                row[axisColumns.value] = C_("Input device axe", "None");
             }
     }
 

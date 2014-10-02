@@ -2346,7 +2346,7 @@ void LockAndHideVerb::perform(SPAction *action, void *data)
 Verb *Verb::_base_verbs[] = {
     // Header
     new Verb(SP_VERB_INVALID, NULL, NULL, NULL, NULL, NULL),
-    new Verb(SP_VERB_NONE, "None", N_("None"), N_("Does nothing"), NULL, NULL),
+    new Verb(SP_VERB_NONE, "None", NC_("Verb", "None"), N_("Does nothing"), NULL, NULL),
 
     // File
     new FileVerb(SP_VERB_FILE_NEW, "FileNew", N_("Default"), N_("Create new document from the default template"),

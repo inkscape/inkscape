@@ -1109,7 +1109,7 @@ void sp_gradient_toolbox_prep(SPDesktop * desktop, GtkActionGroup* mainActions, 
 
         GtkTreeIter iter;
         gtk_list_store_append( model, &iter );
-        gtk_list_store_set( model, &iter, 0, _("None"), 1, SP_GRADIENT_SPREAD_PAD, -1 );
+        gtk_list_store_set( model, &iter, 0, C_("Gradient repeat type", "None"), 1, SP_GRADIENT_SPREAD_PAD, -1 );
 
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter, 0, _("Reflected"), 1, SP_GRADIENT_SPREAD_REFLECT, -1 );

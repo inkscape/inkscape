@@ -118,7 +118,7 @@ const EnumDataConverter<Inkscape::Filters::FilterComponentTransferType> Componen
 const EnumData<Inkscape::Filters::FilterConvolveMatrixEdgeMode> ConvolveMatrixEdgeModeData[Inkscape::Filters::CONVOLVEMATRIX_EDGEMODE_ENDTYPE] = {
     {Inkscape::Filters::CONVOLVEMATRIX_EDGEMODE_DUPLICATE, _("Duplicate"), "duplicate"},
     {Inkscape::Filters::CONVOLVEMATRIX_EDGEMODE_WRAP,      _("Wrap"),      "wrap"},
-    {Inkscape::Filters::CONVOLVEMATRIX_EDGEMODE_NONE,      _("None"),      "none"}
+    {Inkscape::Filters::CONVOLVEMATRIX_EDGEMODE_NONE,      C_("Convolve matrix, edge mode", "None"),      "none"}
 };
 const EnumDataConverter<Inkscape::Filters::FilterConvolveMatrixEdgeMode> ConvolveMatrixEdgeModeConverter(ConvolveMatrixEdgeModeData, Inkscape::Filters::CONVOLVEMATRIX_EDGEMODE_ENDTYPE);
 

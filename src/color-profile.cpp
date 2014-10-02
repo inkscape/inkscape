@@ -911,7 +911,7 @@ Glib::ustring getNameFromProfile(cmsHPROFILE profile)
         if ( name && !g_utf8_validate(name, -1, NULL) ) {
             name = _("(invalid UTF-8 string)");
         }
-        nameStr = (name) ? name : _("None");
+        nameStr = (name) ? name : C_("Profile name", "None");
 #elif HAVE_LIBLCMS2
     cmsUInt32Number byteLen = cmsGetProfileInfo(profile, cmsInfoDescription, "en", "US", NULL, 0);
     if (byteLen > 0) {

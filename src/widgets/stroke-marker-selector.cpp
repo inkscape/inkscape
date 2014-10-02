@@ -385,7 +385,7 @@ void MarkerComboBox::add_markers (GSList *marker_list, SPDocument *source, gbool
     if (history) {
         // add "None"
         Gtk::TreeModel::Row row = *(marker_store->prepend());
-        row[marker_columns.label] = _("None");
+        row[marker_columns.label] = C_("Marker", "None");
         row[marker_columns.stock] = false;
         row[marker_columns.marker] = g_strdup("None");
         row[marker_columns.image] = NULL;

@@ -546,7 +546,7 @@ public:
           _matrix(SP_ATTR_VALUES, _("This matrix determines a linear transform on color space. Each line affects one of the color components. Each column determines how much of each color component from the input is passed to the output. The last column does not depend on input colors, so can be used to adjust a constant component value.")),
           _saturation("", 0, 0, 1, 0.1, 0.01, 2, SP_ATTR_VALUES),
           _angle("", 0, 0, 360, 0.1, 0.01, 1, SP_ATTR_VALUES),
-          _label(_("None"), Gtk::ALIGN_START),
+          _label(C_("Label", "None"), Gtk::ALIGN_START),
           _use_stored(false),
           _saturation_store(0),
           _angle_store(0)
