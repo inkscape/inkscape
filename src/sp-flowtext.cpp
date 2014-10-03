@@ -673,6 +673,21 @@ Geom::Affine SPFlowtext::set_transform (Geom::Affine const &xform)
         return xform;
     }
 
+    SPObject *region = NULL;
+    for ( SPObject *o = this->firstChild() ; o ; o = o->getNext() ) {
+        if (SP_IS_FLOWREGION(o)) {
+            region = o;
+            break;
+        }
+    }
+    if (region) {
+        if (SP_IS_RECT(region->firstChild())) {
+            SPRect *rect = SP_RECT(region->firstChild());
+            rect->set_i2d_affine(xform * rect->i2dt_affine());
+            rect->doWriteTransform(rect->getRepr(), rect->transform, NULL, true);
+        }
+    }
+
     Geom::Affine ret(xform);
     ret[0] /= ex;
     ret[1] /= ex;
@@ -693,7 +708,7 @@ Geom::Affine SPFlowtext::set_transform (Geom::Affine const &xform)
 
     this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_TEXT_LAYOUT_MODIFIED_FLAG);
 
-    return ret;
+    return Geom::Affine();
 }
 
 /*
