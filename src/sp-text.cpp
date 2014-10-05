@@ -326,21 +326,10 @@ const char* SPText::displayName() const {
 }
 
 gchar* SPText::description() const {
+
     SPStyle *style = this->style;
 
-    font_instance *tf = font_factory::Default()->FaceFromStyle(style);
-
-    char *n;
-
-    if (tf) {
-        char name_buf[256];
-        tf->Family(name_buf, sizeof(name_buf));
-        n = xml_quote_strdup(name_buf);
-        tf->Unref();
-    } else {
-        /* TRANSLATORS: For description of font with no name. */
-        n = g_strdup(_("&lt;no name found&gt;"));
-    }
+    char *n = xml_quote_strdup( style->font_family.value );
 
     Inkscape::Util::Quantity q = Inkscape::Util::Quantity(style->font_size.computed, "px");
     GString *xs = g_string_new(q.string(sp_desktop_namedview(SP_ACTIVE_DESKTOP)->doc_units).c_str());
@@ -353,9 +342,8 @@ gchar* SPText::description() const {
     }
 
     char *ret = ( SP_IS_TEXT_TEXTPATH(this)
-                  ? g_strdup_printf(_("on path%s (%s, %s)"), trunc, n, xs->str)
-                  : g_strdup_printf(_("%s (%s, %s)"), trunc, n, xs->str) );
-    g_free(n);
+      ? g_strdup_printf(_("on path%s (%s, %s)"), trunc, n, xs->str)
+      : g_strdup_printf(_("%s (%s, %s)"),        trunc, n, xs->str) );
     return ret;
 }
 
