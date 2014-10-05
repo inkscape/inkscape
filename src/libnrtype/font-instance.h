@@ -65,12 +65,6 @@ public:
                                 // for generating slanted cursors for oblique fonts
     Geom::OptRect             BBox(int glyph_id);
 
-    // attribute queries
-    unsigned             Name(gchar *str, unsigned size);
-    unsigned             PSName(gchar *str, unsigned size);
-    unsigned             Family(gchar *str, unsigned size);
-    unsigned             Attribute(gchar const *key, gchar *str, unsigned size);
-
 private:
     void                 FreeTheFace();
 
