@@ -29,7 +29,7 @@ static const Util::EnumData<MarkDirType> MarkDirData[] = {
 static const Util::EnumDataConverter<MarkDirType> MarkDirTypeConverter(MarkDirData, sizeof(MarkDirData)/sizeof(*MarkDirData));
 
 static const Util::EnumData<BorderMarkType> BorderMarkData[] = {
-    {BORDERMARK_NONE    , N_("None"),  "none"},
+    {BORDERMARK_NONE    , NC_("Border mark", "None"),  "none"},
     {BORDERMARK_START   , N_("Start"), "start"},
     {BORDERMARK_END     , N_("End"),   "end"},
     {BORDERMARK_BOTH    , N_("Both"),  "both"},

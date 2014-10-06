@@ -385,8 +385,8 @@ void PixelArtDialogImpl::vectorize()
 
         if ( input.pixbuf->get_width() > 256
              || input.pixbuf->get_height() > 256 ) {
-            char *msg = _("Image looks too big. Process may take a while and is"
-                          " wise to save your document before continue."
+            char *msg = _("Image looks too big. Process may take a while and it is"
+                          " wise to save your document before continuing."
                           "\n\nContinue the procedure (without saving)?");
             Gtk::MessageDialog dialog(msg, false, Gtk::MESSAGE_WARNING,
                                       Gtk::BUTTONS_OK_CANCEL, true);

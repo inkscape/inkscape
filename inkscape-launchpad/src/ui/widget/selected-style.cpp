@@ -179,7 +179,11 @@ SelectedStyle::SelectedStyle(bool /*layout*/)
         _na[i].show_all();
         __na[i] = (_("Nothing selected"));
 
-        _none[i].set_markup (C_("Fill and stroke", "<i>None</i>"));
+        if (i == SS_FILL) {
+            _none[i].set_markup (C_("Fill", "<i>None</i>"));
+        } else {
+            _none[i].set_markup (C_("Stroke", "<i>None</i>"));
+        }
         sp_set_font_size_smaller (GTK_WIDGET(_none[i].gobj()));
         _none[i].show_all();
         __none[i] = (i == SS_FILL)? (C_("Fill and stroke", "No fill")) : (C_("Fill and stroke", "No stroke"));

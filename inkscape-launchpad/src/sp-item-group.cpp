@@ -725,7 +725,7 @@ void SPGroup::scaleChildItemsRec(Geom::Scale const &sc, Geom::Point const &p, bo
                         
                         if (SP_IS_PERSP3D(item)) {
                             persp3d_apply_affine_transformation(SP_PERSP3D(item), final);
-                        } else if ((SP_IS_TEXT_TEXTPATH(item) || SP_IS_FLOWTEXT(item)) && !item->transform.isIdentity()) {
+                        } else if (SP_IS_TEXT_TEXTPATH(item) && !item->transform.isIdentity()) {
                             // Save and reset current transform
                             Geom::Affine tmp(item->transform);
                             item->transform = Geom::Affine();

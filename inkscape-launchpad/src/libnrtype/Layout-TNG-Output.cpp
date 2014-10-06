@@ -511,6 +511,9 @@ static char const *weight_to_text(PangoWeight w)
         case PANGO_WEIGHT_THIN      : return "thin";
         case PANGO_WEIGHT_ULTRALIGHT: return "ultralight";
         case PANGO_WEIGHT_LIGHT     : return "light";
+#if PANGO_VERSION_CHECK(1,36,6)
+        case PANGO_WEIGHT_SEMILIGHT : return "semilight";
+#endif
         case PANGO_WEIGHT_BOOK      : return "book";
         case PANGO_WEIGHT_NORMAL    : return "normalweight";
         case PANGO_WEIGHT_MEDIUM    : return "medium";

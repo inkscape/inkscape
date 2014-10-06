@@ -68,7 +68,7 @@ For depth function c=color intensity from 0.0 (white) to 1.0 (black), d is the d
 				<_item value="G20 (All units in inches)">in</_item>
 			</param>
 			<param name="postprocessor" type="enum" _gui-text="Post-processor:">
-				<_item value=" ">None</_item>
+				<_item msgctxt="GCode postprocessor" value=" ">None</_item>
 				<_item value="parameterize();">Parameterize Gcode</_item>
 				<_item value="flip(y);parameterize();">Flip y axis and parameterize Gcode</_item>
 				<_item value="round(4);">Round all values to 4 digits</_item>

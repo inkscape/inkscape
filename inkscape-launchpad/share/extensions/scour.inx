@@ -22,7 +22,7 @@
       	    <param name="indent" type="enum" _gui-text="XML indentation (pretty-printing):">
                 <_item value="space">Space</_item>
                 <_item value="tab">Tab</_item>
-                <_item value="none">None</_item>
+                <_item msgctxt="Indent" value="none">None</_item>
             </param>
         </page>
         <page name="Ids" _gui-text="Ids">            

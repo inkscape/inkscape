@@ -152,7 +152,7 @@ static void freehand_change_shape(EgeSelectOneAction* act, GObject *dataKludge) 
 static GList * freehand_shape_dropdown_items_list() {
     GList *glist = NULL;
 
-    glist = g_list_append (glist, _("None"));
+    glist = g_list_append (glist, const_cast<gchar *>(C_("Freehand shape", "None")));
     glist = g_list_append (glist, _("Triangle in"));
     glist = g_list_append (glist, _("Triangle out"));
     glist = g_list_append (glist, _("Ellipse"));

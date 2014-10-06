@@ -568,7 +568,7 @@ SectionGroup "$(Languages)" SecLanguages ; Languages sections {{{
   !insertmacro Language Serbian           sr
   !insertmacro Language SerbianLatin      sr@latin
   !insertmacro Language Swedish           sv
-  !insertmacro Language Telugu            te_IN
+  !insertmacro Language Telugu            te
   !insertmacro Language Thai              th
   !insertmacro Language Turkish           tr
   !insertmacro Language Ukrainian         uk
@@ -831,7 +831,7 @@ Function .onInit ; initialise the installer {{{2
   !insertmacro Parameter sr             ${SecSerbian}
   !insertmacro Parameter sr@latin       ${SecSerbianLatin}
   !insertmacro Parameter sv             ${SecSwedish}
-  !insertmacro Parameter te_IN          ${SecTelugu}
+  !insertmacro Parameter te             ${SecTelugu}
   !insertmacro Parameter th             ${SecThai}
   !insertmacro Parameter tr             ${SecTurkish}
   !insertmacro Parameter uk             ${SecUkrainian}

@@ -6,7 +6,7 @@
   <dependency type="executable" location="extensions">inkex.py</dependency>
   <param name="c_dot_dia"    type="float" min="1" max="1000" _gui-text="Centre Dot Diameter (px):">5.0</param>
   <param name="a_labels"     type="enum"  _gui-text="Circumferential Labels:">
-    <_item value="none">None</_item>
+    <_item msgctxt="Label" value="none">None</_item>
     <_item value="deg">Degrees</_item>
   </param>
   <param name="a_label_size"   type="int"   min="1" max="1000" _gui-text="Circumferential Label Size (px):">18</param>

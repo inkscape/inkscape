@@ -32,7 +32,6 @@ extern "C" {
 
 #include <gtkmm/stock.h>
 #include <libnrtype/font-instance.h>
-#include <libnrtype/font-style-to-pos.h>
 #include <libnrtype/font-lister.h>
 #include <xml/repr.h>
 
