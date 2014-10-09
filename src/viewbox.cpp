@@ -164,6 +164,7 @@ void SPViewBox::set_preserveAspectRatio(const gchar* value) {
 void SPViewBox::apply_viewbox(const Geom::Rect& in) {
 
     /* Determine actual viewbox in viewport coordinates */
+    /* These are floats since SVGLength is a float: See bug 1374614 */
     float x = 0.0;
     float y = 0.0;
     float width = in.width();
