@@ -69,6 +69,7 @@ class SetupTypographyCanvas(inkex.Effect):
 		self.svg = self.document.getroot()
 		self.svg.set("width", str(emsize))
 		self.svg.set("height", str(emsize))
+                self.svg.set("viewBox", "0 0 " + str(emsize) + " " + str(emsize) )
 
 		baseline = descender
 		# Create guidelines
@@ -77,6 +78,12 @@ class SetupTypographyCanvas(inkex.Effect):
 		self.create_horizontal_guideline("caps", baseline+caps)
 		self.create_horizontal_guideline("xheight", baseline+xheight)
 		self.create_horizontal_guideline("descender", baseline-descender)
+
+                namedview = self.svg.find(inkex.addNS('namedview', 'sodipodi'))
+                namedview.set(inkex.addNS('document-units', 'inkscape'), 'px')
+                namedview.set(inkex.addNS('cx', 'inkscape'), str(emsize/2.0 ))
+                namedview.set(inkex.addNS('cy', 'inkscape'), str(emsize/2.0 ))
+
 
 if __name__ == '__main__':
 	e = SetupTypographyCanvas()
