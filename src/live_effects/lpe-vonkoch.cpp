@@ -133,7 +133,7 @@ LPEVonKoch::doEffect_path (std::vector<Geom::Path> const & path_in)
     for (unsigned k = 0; k < path_in.size(); k++){
             path_in_complexity+=path_in[k].size();
     }    
-    double complexity = std::pow(transforms.size(),nbgenerations)*path_in_complexity;
+    double complexity;
     if (drawall.get_value()){
         int k = transforms.size();
         if(k>1){
