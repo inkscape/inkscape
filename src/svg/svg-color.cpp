@@ -511,18 +511,18 @@ sp_svg_create_color_hash()
 
 void icc_color_to_sRGB(SVGICCColor* icc, guchar* r, guchar* g, guchar* b)
 {
-    guchar color_out[4];
-    guchar color_in[4];
     if (icc) {
 g_message("profile name: %s", icc->colorProfile.c_str());
         Inkscape::ColorProfile* prof = SP_ACTIVE_DOCUMENT->profileManager->find(icc->colorProfile.c_str());
         if ( prof ) {
+            guchar color_out[4] = {0,0,0,0};
             cmsHTRANSFORM trans = prof->getTransfToSRGB8();
             if ( trans ) {
                 std::vector<colorspace::Component> comps = colorspace::getColorSpaceInfo( prof );
 
                 size_t count = CMSSystem::getChannelCount( prof );
                 size_t cap = std::min(count, comps.size());
+                guchar color_in[4];
                 for (size_t i = 0; i < cap; i++) {
                     color_in[i] = static_cast<guchar>((((gdouble)icc->colors[i]) * 256.0) * (gdouble)comps[i].scale);
                     g_message("input[%d]: %d", (int)i, (int)color_in[i]);
