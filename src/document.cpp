@@ -706,7 +706,12 @@ void SPDocument::fitToRect(Geom::Rect const &rect, bool with_margins)
     double const h = rect.height();
 
     double const old_height = getHeight().value("px");
-    Inkscape::Util::Unit const *px = unit_table.getUnit("px");
+    Inkscape::Util::Unit const *nv_units = unit_table.getUnit("px");
+    SPNamedView *nv = sp_document_namedview(this, NULL);
+    if (nv != NULL) {
+        if (nv->getAttribute("units"))
+            nv_units = unit_table.getUnit(nv->getAttribute("units"));
+    }
     
     /* in px */
     double margin_top = 0.0;
@@ -714,22 +719,16 @@ void SPDocument::fitToRect(Geom::Rect const &rect, bool with_margins)
     double margin_right = 0.0;
     double margin_bottom = 0.0;
     
-    SPNamedView *nv = sp_document_namedview(this, NULL);
-    
     if (with_margins && nv) {
         if (nv != NULL) {
-            gchar const * const units_abbr = nv->getAttribute("units");
-            Inkscape::Util::Unit const *margin_units = NULL;
-            if (units_abbr) {
-                margin_units = unit_table.getUnit(units_abbr);
-            }
-            if (!margin_units) {
-                margin_units = px;
-            }
-            margin_top = nv->getMarginLength("fit-margin-top",margin_units, px, w, h, false);
-            margin_left = nv->getMarginLength("fit-margin-left",margin_units, px, w, h, true);
-            margin_right = nv->getMarginLength("fit-margin-right",margin_units, px, w, h, true);
-            margin_bottom = nv->getMarginLength("fit-margin-bottom",margin_units, px, w, h, false);
+            margin_top = nv->getMarginLength("fit-margin-top", nv_units, unit_table.getUnit("px"), w, h, false);
+            margin_left = nv->getMarginLength("fit-margin-left", nv_units, unit_table.getUnit("px"), w, h, true);
+            margin_right = nv->getMarginLength("fit-margin-right", nv_units, unit_table.getUnit("px"), w, h, true);
+            margin_bottom = nv->getMarginLength("fit-margin-bottom", nv_units, unit_table.getUnit("px"), w, h, false);
+            margin_top = Inkscape::Util::Quantity::convert(margin_top, nv_units, "px");
+            margin_left = Inkscape::Util::Quantity::convert(margin_left, nv_units, "px");
+            margin_right = Inkscape::Util::Quantity::convert(margin_right, nv_units, "px");
+            margin_bottom = Inkscape::Util::Quantity::convert(margin_bottom, nv_units, "px");
         }
     }
     
@@ -738,8 +737,8 @@ void SPDocument::fitToRect(Geom::Rect const &rect, bool with_margins)
             rect.max() + Geom::Point(margin_right, margin_top));
     
     
-    setWidth(Inkscape::Util::Quantity(rect_with_margins.width(), px));
-    setHeight(Inkscape::Util::Quantity(rect_with_margins.height(), px));
+    setWidth(Inkscape::Util::Quantity(Inkscape::Util::Quantity::convert(rect_with_margins.width(), "px", nv_units), nv_units));
+    setHeight(Inkscape::Util::Quantity(Inkscape::Util::Quantity::convert(rect_with_margins.height(), "px", nv_units), nv_units));
 
     Geom::Translate const tr(
             Geom::Point(0, old_height - rect_with_margins.height())
