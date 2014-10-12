@@ -78,6 +78,7 @@ sp_selected_path_combine(SPDesktop *desktop)
 
     items = g_slist_sort(items, (GCompareFunc) sp_item_repr_compare_position);
     items = g_slist_reverse(items);
+    assert(items); // cannot be NULL because of list length check at top of function
 
     // remember the position, id, transform and style of the topmost path, they will be assigned to the combined one
     gint position = 0;
