@@ -967,7 +967,7 @@ DrawingItem::_setStyleCommon(SPStyle *&_style, SPStyle *style)
     if (_style) sp_style_unref(_style);
     _style = style;
 
-    if (style->filter.set && style->getFilter()) {
+    if (style && style->filter.set && style->getFilter()) {
         if (!_filter) {
             int primitives = sp_filter_primitive_count(SP_FILTER(style->getFilter()));
             _filter = new Inkscape::Filters::Filter(primitives);
