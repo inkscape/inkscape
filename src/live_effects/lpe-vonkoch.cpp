@@ -132,8 +132,8 @@ LPEVonKoch::doEffect_path (std::vector<Geom::Path> const & path_in)
     int path_in_complexity = 0;
     for (unsigned k = 0; k < path_in.size(); k++){
             path_in_complexity+=path_in[k].size();
-    }    
-    double complexity;
+    }
+    double complexity = std::pow(transforms.size(), nbgenerations) * path_in_complexity;
     if (drawall.get_value()){
         int k = transforms.size();
         if(k>1){
@@ -141,8 +141,6 @@ LPEVonKoch::doEffect_path (std::vector<Geom::Path> const & path_in)
         }else{
             complexity = nbgenerations*k*path_in_complexity;
         }
-    }else{
-        complexity = std::pow(transforms.size(),nbgenerations)*path_in_complexity;
     }
     if (complexity > double(maxComplexity)){
         g_warning("VonKoch lpe's output too complex. Effect bypassed.");
