@@ -655,9 +655,8 @@ sp_lpe_item_apply_to_mask(SPItem * item)
 {
     SPMask *mask = item->mask_ref->getObject();
     if(mask) {
-        SPObject * mask_data = mask->firstChild();
+        SPObject *mask_data = mask->firstChild();
         SPCurve * mask_curve = NULL;
-        mask_data = mask->firstChild();
         if (SP_IS_PATH(mask_data)) {
             mask_curve = SP_PATH(mask_data)->get_original_curve();
         } else if(SP_IS_SHAPE(mask_data)) {
