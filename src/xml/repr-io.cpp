@@ -623,7 +623,6 @@ static Node *sp_repr_svg_read_node (Document *xml_doc, xmlNodePtr node, const gc
         repr->setContent(reinterpret_cast<gchar*>(node->content));
     }
 
-    child = node->xmlChildrenNode;
     for (child = node->xmlChildrenNode; child != NULL; child = child->next) {
         Node *crepr = sp_repr_svg_read_node (xml_doc, child, default_ns, prefix_map);
         if (crepr) {
