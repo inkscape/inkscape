@@ -39,21 +39,21 @@
     <name>millimeter</name>
     <plural>millimeters</plural>
     <abbr>mm</abbr>
-    <factor>3.543307</factor>
+    <factor>3.5433071</factor>
     <description>Millimeters (25.4 mm/in)</description>
 </unit>
 <unit type="LINEAR" pri="n">
     <name>centimeter</name>
     <plural>centimeters</plural>
     <abbr>cm</abbr>
-    <factor>35.43307</factor>
+    <factor>35.433071</factor>
     <description>Centimeters (10 mm/cm)</description>
 </unit>
 <unit type="LINEAR" pri="n">
     <name>meter</name>
     <plural>meters</plural>
     <abbr>m</abbr>
-    <factor>3543.307</factor>
+    <factor>3543.3071</factor>
     <description>Meters (100 cm/m)</description>
 </unit>
 <unit type="LINEAR" pri="n">
