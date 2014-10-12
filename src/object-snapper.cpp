@@ -289,7 +289,7 @@ void Inkscape::ObjectSnapper::_snapNodes(IntermSnapResults &isr,
     for (std::vector<SnapCandidatePoint>::const_iterator k = _points_to_snap_to->begin(); k != _points_to_snap_to->end(); ++k) {
         if (_allowSourceToSnapToTarget(p.getSourceType(), (*k).getTargetType(), strict_snapping)) {
             Geom::Point target_pt = (*k).getPoint();
-            Geom::Coord dist = Geom::infinity();
+            Geom::Coord dist = Geom::L2(target_pt - p.getPoint()); // Default: free (unconstrained) snapping
             if (!c.isUndefined()) {
                 // We're snapping to nodes along a constraint only, so find out if this node
                 // is at the constraint, while allowing for a small margin
@@ -299,9 +299,6 @@ void Inkscape::ObjectSnapper::_snapNodes(IntermSnapResults &isr,
                     continue;
                 }
                 dist = Geom::L2(target_pt - p_proj_on_constraint);
-            } else {
-                // Free (unconstrained) snapping
-                dist = Geom::L2(target_pt - p.getPoint());
             }
 
             if (dist < getSnapperTolerance() && dist < s.getSnapDistance()) {
