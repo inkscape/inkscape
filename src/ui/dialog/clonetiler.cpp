@@ -2235,7 +2235,11 @@ void CloneTiler::clonetiler_apply(GtkWidget */*widget*/, GtkWidget *dlg)
     gdk_window_process_all_updates();
 
     SPObject *obj = selection->singleItem();
-    SPItem *item = SP_IS_ITEM(obj) ? SP_ITEM(obj) : 0;
+    if (!obj) {
+        // Should never happen (empty selection checked above).
+        std::cerr << "CloneTiler::clonetile_apply(): No object in single item selection!!!" << std::endl;
+        return;
+    }
     Inkscape::XML::Node *obj_repr = obj->getRepr();
     const char *id_href = g_strdup_printf("#%s", obj_repr->attribute("id"));
     SPObject *parent = obj->parent;
@@ -2326,6 +2330,7 @@ void CloneTiler::clonetiler_apply(GtkWidget */*widget*/, GtkWidget *dlg)
     bool   invert_picked = prefs->getBool(prefs_path + "invert_picked");
     double gamma_picked = prefs->getDoubleLimited(prefs_path + "gamma_picked", 0, -10, 10);
 
+    SPItem *item = SP_IS_ITEM(obj) ? SP_ITEM(obj) : 0;
     if (dotrace) {
         clonetiler_trace_setup (sp_desktop_document(desktop), 1.0, item);
     }
