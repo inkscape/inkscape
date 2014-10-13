@@ -763,6 +763,9 @@ StrokeStyle::setJoinType (unsigned const jointype)
             tb = joinBevel;
             break;
         default:
+            // Should not happen
+            std::cerr << "StrokeStyle::setJoinType(): Invalid value" << std::endl;
+            tb = joinMiter;
             break;
     }
     setJoinButtons(tb);
@@ -786,6 +789,9 @@ StrokeStyle::setCapType (unsigned const captype)
             tb = capSquare;
             break;
         default:
+            // Should not happen
+            std::cerr << "StrokeStyle::setCapType(): Invalid value" << std::endl;
+            tb = capButt;
             break;
     }
     setCapButtons(tb);
