@@ -1405,11 +1405,20 @@ SPIFilter::read( gchar const *str ) {
         set = true;
 
         // Create href if not already done.
-        if (!href && style->object) {
-            href = new SPFilterReference(style->object);
-            href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_filter_ref_changed), style));
+        if (!href) {
+            if (style->object) {
+                href = new SPFilterReference(style->object);
+            }
+            // Do we have href now?
+            if ( href ) {
+                href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_filter_ref_changed), style));
+            } else {
+                std::cerr << "SPIFilter::read(): Could not allocate 'href'" << std::endl;
+                return;
+            }
         }
 
+        // We have href
         try {
             href->attach(Inkscape::URI(uri));
         } catch (Inkscape::BadURIException &e) {
