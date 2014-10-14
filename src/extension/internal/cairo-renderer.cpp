@@ -202,8 +202,10 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
         if ( shape->_marker[i] ) {
             SPMarker* marker = SP_MARKER (shape->_marker[i]);
             Geom::Affine tr;
-            if (marker->orient_auto) {
+            if (marker->orient_mode == MARKER_ORIENT_AUTO) {
                 tr = sp_shape_marker_get_transform_at_start(pathv.begin()->front());
+            } else if (marker->orient_mode == MARKER_ORIENT_AUTO_START_REVERSE) {
+                tr = Geom::Rotate::from_degrees( 180.0 ) * sp_shape_marker_get_transform_at_start(pathv.begin()->front());
             } else {
                 tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(pathv.begin()->front().pointAt(0));
             }
@@ -220,7 +222,7 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
                  && ! ((path_it == (pathv.end()-1)) && (path_it->size_default() == 0)) ) // if this is the last path and it is a moveto-only, there is no mid marker there
             {
                 Geom::Affine tr;
-                if (marker->orient_auto) {
+                if (marker->orient_mode != MARKER_ORIENT_ANGLE) {
                     tr = sp_shape_marker_get_transform_at_start(path_it->front());
                 } else {
                     tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(path_it->front().pointAt(0));
@@ -237,7 +239,7 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
                      * Loop to end_default (so including closing segment), because when a path is closed,
                      * there should be a midpoint marker between last segment and closing straight line segment */
                     Geom::Affine tr;
-                    if (marker->orient_auto) {
+                    if (marker->orient_mode != MARKER_ORIENT_ANGLE) {
                         tr = sp_shape_marker_get_transform(*curve_it1, *curve_it2);
                     } else {
                         tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(curve_it1->pointAt(1));
@@ -253,7 +255,7 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
             if ( path_it != (pathv.end()-1) && !path_it->empty()) {
                 Geom::Curve const &lastcurve = path_it->back_default();
                 Geom::Affine tr;
-                if (marker->orient_auto) {
+                if (marker->orient_mode != MARKER_ORIENT_ANGLE) {
                     tr = sp_shape_marker_get_transform_at_end(lastcurve);
                 } else {
                     tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(lastcurve.pointAt(1));
@@ -277,7 +279,7 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
             Geom::Curve const &lastcurve = path_last[index];
 
             Geom::Affine tr;
-            if (marker->orient_auto) {
+            if (marker->orient_mode != MARKER_ORIENT_ANGLE) {
                 tr = sp_shape_marker_get_transform_at_end(lastcurve);
             } else {
                 tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(lastcurve.pointAt(1));

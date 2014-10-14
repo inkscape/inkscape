@@ -288,8 +288,13 @@ sp_shape_update_marker_view(SPShape *shape, Inkscape::DrawingItem *ai)
         Geom::Affine const m (sp_shape_marker_get_transform_at_start(pathv.begin()->front()));
         for (int i = 0; i < 2; i++) {  // SP_MARKER_LOC and SP_MARKER_LOC_START
             if ( shape->_marker[i] ) {
+                Geom::Affine m_auto = m;
+                // Reverse start marker if necessary.
+                if (SP_MARKER(shape->_marker[i])->orient_mode == MARKER_ORIENT_AUTO_START_REVERSE) {
+                    m_auto = Geom::Rotate::from_degrees( 180.0 ) * m;
+                }
                 sp_marker_show_instance ((SPMarker* ) shape->_marker[i], ai,
-                                         ai->key() + i, counter[i], m,
+                                         ai->key() + i, counter[i], m_auto,
                                          shape->style->stroke_width.computed);
                  counter[i]++;
             }
@@ -425,7 +430,10 @@ Geom::OptRect SPShape::bbox(Geom::Affine const &transform, SPItem::BBoxType bbox
                     if (marker_item) {
                         Geom::Affine tr(sp_shape_marker_get_transform_at_start(pathv.begin()->front()));
 
-                        if (!marker->orient_auto) {
+                        if (marker->orient_mode == MARKER_ORIENT_AUTO_START_REVERSE) {
+                            // Reverse start marker if necessary
+                            tr = Geom::Rotate::from_degrees( 180.0 ) * tr;
+                        } else if (marker->orient_mode == MARKER_ORIENT_ANGLE) {
                             Geom::Point transl = tr.translation();
                             tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(transl);
                         }
@@ -463,7 +471,7 @@ Geom::OptRect SPShape::bbox(Geom::Affine const &transform, SPItem::BBoxType bbox
                     {
                         Geom::Affine tr(sp_shape_marker_get_transform_at_start(path_it->front()));
 
-                        if (!marker->orient_auto) {
+                        if (marker->orient_mode == MARKER_ORIENT_ANGLE) {
                             Geom::Point transl = tr.translation();
                             tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(transl);
                         }
@@ -493,7 +501,7 @@ Geom::OptRect SPShape::bbox(Geom::Affine const &transform, SPItem::BBoxType bbox
                             if (marker_item) {
                                 Geom::Affine tr(sp_shape_marker_get_transform(*curve_it1, *curve_it2));
 
-                                if (!marker->orient_auto) {
+                                if (marker->orient_mode == MARKER_ORIENT_ANGLE) {
                                     Geom::Point transl = tr.translation();
                                     tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(transl);
                                 }
@@ -516,7 +524,7 @@ Geom::OptRect SPShape::bbox(Geom::Affine const &transform, SPItem::BBoxType bbox
                         Geom::Curve const &lastcurve = path_it->back_default();
                         Geom::Affine tr = sp_shape_marker_get_transform_at_end(lastcurve);
 
-                        if (!marker->orient_auto) {
+                        if (marker->orient_mode == MARKER_ORIENT_ANGLE) {
                             Geom::Point transl = tr.translation();
                             tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(transl);
                         }
@@ -551,7 +559,7 @@ Geom::OptRect SPShape::bbox(Geom::Affine const &transform, SPItem::BBoxType bbox
 
                         Geom::Affine tr = sp_shape_marker_get_transform_at_end(lastcurve);
 
-                        if (!marker->orient_auto) {
+                        if (marker->orient_mode == MARKER_ORIENT_ANGLE) {
                             Geom::Point transl = tr.translation();
                             tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(transl);
                         }

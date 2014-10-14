@@ -32,6 +32,12 @@ struct SPMarkerView;
 #include "uri-references.h"
 #include "viewbox.h"
 
+enum markerOrient {
+  MARKER_ORIENT_ANGLE,
+  MARKER_ORIENT_AUTO,
+  MARKER_ORIENT_AUTO_START_REVERSE
+};
+
 class SPMarker : public SPGroup, public SPViewBox {
 public:
 	SPMarker();
@@ -51,7 +57,7 @@ public:
 
 	/* orient */
 	unsigned int orient_set : 1;
-	unsigned int orient_auto : 1;
+	markerOrient orient_mode : 2;
 	float orient;
 
 	/* Private views */

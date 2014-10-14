@@ -52,7 +52,7 @@ SPMarker::SPMarker() : SPGroup(), SPViewBox() {
     this->markerUnits = 0;
     this->markerUnits_set = 0;
 
-    this->orient_auto = 0;
+    this->orient_mode = MARKER_ORIENT_ANGLE;
     this->orient_set = 0;
     this->orient = 0;
 
@@ -158,16 +158,20 @@ void SPMarker::set(unsigned int key, const gchar* value) {
 
 	case SP_ATTR_ORIENT:
 		this->orient_set = FALSE;
-		this->orient_auto = FALSE;
+		this->orient_mode = MARKER_ORIENT_ANGLE;
 		this->orient = 0.0;
 
 		if (value) {
-			if (!strcmp (value, "auto")) {
-				this->orient_auto = TRUE;
-				this->orient_set = TRUE;
-			} else if (sp_svg_number_read_f (value, &this->orient)) {
-				this->orient_set = TRUE;
-			}
+                    if (!strcmp (value, "auto")) {
+                        this->orient_mode = MARKER_ORIENT_AUTO;
+                        this->orient_set = TRUE;
+                    } else if (!strcmp (value, "auto-start-reverse")) {
+                        this->orient_mode = MARKER_ORIENT_AUTO_START_REVERSE;
+                        this->orient_set = TRUE;
+                    } else if (sp_svg_number_read_f (value, &this->orient)) {
+                        this->orient_mode = MARKER_ORIENT_ANGLE;
+                        this->orient_set = TRUE;
+                    }
 		}
 
 		this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
@@ -264,15 +268,17 @@ Inkscape::XML::Node* SPMarker::write(Inkscape::XML::Document *xml_doc, Inkscape:
 	}
 
 	if (this->orient_set) {
-		if (this->orient_auto) {
-			repr->setAttribute("orient", "auto");
-		} else {
-			sp_repr_set_css_double(repr, "orient", this->orient);
-		}
+            if (this->orient_mode == MARKER_ORIENT_AUTO) {
+                repr->setAttribute("orient", "auto");
+            } else if (this->orient_mode == MARKER_ORIENT_AUTO_START_REVERSE) {
+                repr->setAttribute("orient", "auto-start-reverse");
+            } else {
+                sp_repr_set_css_double(repr, "orient", this->orient);
+            }
 	} else {
-		repr->setAttribute("orient", NULL);
+            repr->setAttribute("orient", NULL);
 	}
-
+        
 	/* fixme: */
 	//XML Tree being used directly here while it shouldn't be....
 	repr->setAttribute("viewBox", this->getRepr()->attribute("viewBox"));
@@ -381,7 +387,10 @@ sp_marker_show_instance ( SPMarker *marker, Inkscape::DrawingItem *parent,
             }
             if (v->items[pos]) {
                 Geom::Affine m;
-                if (marker->orient_auto) {
+                if (marker->orient_mode == MARKER_ORIENT_AUTO) {
+                    m = base;
+                } else if (marker->orient_mode == MARKER_ORIENT_AUTO_START_REVERSE) {
+                    m = Geom::Rotate::from_degrees( 180.0 ) * base;
                     m = base;
                 } else {
                     /* fixme: Orient units (Lauris) */
