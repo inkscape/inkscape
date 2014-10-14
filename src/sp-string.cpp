@@ -30,9 +30,13 @@
 
 
 #include "sp-string.h"
+#include "style.h"
+
 #include "xml/repr.h"
 
 #include "sp-factory.h"
+
+#include <iostream>
 
 namespace {
     SPObject* createString() {
@@ -65,45 +69,110 @@ void SPString::release() {
 
 
 void SPString::read_content() {
-    SPString* object = this;
 
+    SPString* object = this;
     SPString *string = SP_STRING(object);
 
     string->string.clear();
 
     //XML Tree being used directly here while it shouldn't be.
     gchar const *xml_string = string->getRepr()->content();
-    // see algorithms described in svg 1.1 section 10.15
-    if (object->xml_space.value == SP_XML_SPACE_PRESERVE) {
-        for ( ; *xml_string ; xml_string = g_utf8_next_char(xml_string) ) {
-            gunichar c = g_utf8_get_char(xml_string);
-            if ((c == 0xa) || (c == 0xd) || (c == '\t')) {
-                c = ' ';
-            }
-            string->string += c;
+
+    // std::cout << ">" << (xml_string?xml_string:"Null") << "<" << std::endl;
+
+    // SVG2/CSS Text Level 3 'white-space' has five values.
+    // See: http://dev.w3.org/csswg/css-text/#white-space
+    //            |  New Lines |  Spaces/Tabs | Text Wrapping
+    //   ---------|------------|--------------|--------------
+    //   normal   |  Collapes  |   Collapse   |     Wrap
+    //   pre      |  Preserve  |   Preserve   |   No Wrap
+    //   nowrap   |  Collapse  |   Collapse   |   No Wrap
+    //   pre-wrap |  Preserve  |   Preserve   |     Wrap
+    //   pre-line |  Preserve  |   Collapse   |     Wrap
+
+    // 'xml:space' has two values:
+    //   'default' which corresponds to 'normal' (without wrapping).
+    //   'preserve' which corresponds to 'pre' except new lines are converted to spaces.
+    //  See algorithms described in svg 1.1 section 10.15
+
+    bool collapse_space = true;
+    bool collapse_line  = true;
+    bool is_css         = false;
+
+    // Strings don't have style, check parent for style
+    if( object->parent && object->parent->style ) {
+        if( object->parent->style->white_space.computed == SP_CSS_WHITE_SPACE_PRE     ||
+            object->parent->style->white_space.computed == SP_CSS_WHITE_SPACE_PREWRAP ||
+            object->parent->style->white_space.computed == SP_CSS_WHITE_SPACE_PRELINE  ) {
+            collapse_line = false;
+        }
+        if( object->parent->style->white_space.computed == SP_CSS_WHITE_SPACE_PRE     ||
+            object->parent->style->white_space.computed == SP_CSS_WHITE_SPACE_PREWRAP ) {
+            collapse_space = false;
+        }
+        if( object->parent->style->white_space.computed != SP_CSS_WHITE_SPACE_NORMAL ) {
+            is_css = true; // If white-space not normal, we assume white-space is set.
         }
     }
-    else {
-        bool whitespace = false;
-        for ( ; *xml_string ; xml_string = g_utf8_next_char(xml_string) ) {
-            gunichar c = g_utf8_get_char(xml_string);
-            if ((c == 0xa) || (c == 0xd)) {
+    if( !is_css ) {
+        // SVG 2: Use 'xml:space' only if 'white-space' not 'normal'.
+        if (object->xml_space.value == SP_XML_SPACE_PRESERVE) {
+            collapse_space = false;
+        }
+    }
+
+    bool white_space = false;
+    for ( ; *xml_string ; xml_string = g_utf8_next_char(xml_string) ) {
+
+        gunichar c = g_utf8_get_char(xml_string);
+        switch (c) {
+            case 0xd: // Carriage return
+                // XML Parsers convert 0xa, 0xd, 0xD 0xA to 0xA. CSS also follows this rule so we
+                // should never see 0xd.
+                std::cerr << "SPString: Carriage Return found! Argh!" << std::endl;
                 continue;
-            }
-            if ((c == ' ') || (c == '\t')) {
-                whitespace = true;
-            } else {
-                if (whitespace && (!string->string.empty() || (object->getPrev() != NULL))) {
+                break;
+            case 0xa: // Line feed
+                if( collapse_line ) {
+                    if( !is_css && collapse_space ) continue; // xml:space == 'default' strips LFs.
+                    white_space = true;        // Convert to space and collapse
+                } else {
+                    string->string += c;       // Preserve line feed
+                    continue;
+                }
+                break;
+            case '\t': // Tab
+                if( collapse_space ) {
+                    white_space = true;        // Convert to space and collapse
+                } else {
+                    string->string += c;       // Preserve tab
+                    continue;
+                }
+                break;
+            case ' ': // Space
+                if( collapse_space ) {
+                    white_space = true;        // Collapse white space
+                } else {
+                    string->string += c;       // Preserve space
+                    continue;
+                }
+                break;
+            default:
+                if( white_space && (!string->string.empty() || (object->getPrev() != NULL))) {
                     string->string += ' ';
                 }
                 string->string += c;
-                whitespace = false;
-            }
-        }
-        if (whitespace && object->getRepr()->next() != NULL) {   // can't use SPObject::getNext() when the SPObject tree is still being built
-            string->string += ' ';
-        }
+                white_space = false;
+
+        } // End switch
+    } // End loop
+
+    // Insert white space at end if more text follows
+    if (white_space && object->getRepr()->next() != NULL) { // can't use SPObject::getNext() when the SPObject tree is still being built
+        string->string += ' ';
     }
+
+    // std::cout << ">" << string->string << "<" << std::endl;
     object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 

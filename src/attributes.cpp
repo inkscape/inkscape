@@ -413,10 +413,6 @@ static SPStyleProp const props[] = {
     /* Text */
     {SP_PROP_TEXT_INDENT, "text-indent"},
     {SP_PROP_TEXT_ALIGN, "text-align"},
-    {SP_PROP_TEXT_DECORATION, "text-decoration"},
-    {SP_PROP_TEXT_DECORATION_LINE, "text-decoration-line"},
-    {SP_PROP_TEXT_DECORATION_STYLE,"text-decoration-style"},
-    {SP_PROP_TEXT_DECORATION_COLOR,"text-decoration-color"},
     {SP_PROP_LINE_HEIGHT, "line-height"},
     {SP_PROP_LETTER_SPACING, "letter-spacing"},
     {SP_PROP_WORD_SPACING, "word-spacing"},
@@ -433,6 +429,12 @@ static SPStyleProp const props[] = {
     {SP_PROP_GLYPH_ORIENTATION_VERTICAL, "glyph-orientation-vertical"},
     {SP_PROP_KERNING, "kerning"},
     {SP_PROP_TEXT_ANCHOR, "text-anchor"},
+    {SP_PROP_WHITE_SPACE, "white-space"},
+    /* Text Decoration */
+    {SP_PROP_TEXT_DECORATION, "text-decoration"},
+    {SP_PROP_TEXT_DECORATION_LINE, "text-decoration-line"},
+    {SP_PROP_TEXT_DECORATION_STYLE,"text-decoration-style"},
+    {SP_PROP_TEXT_DECORATION_COLOR,"text-decoration-color"},
     /* Misc */
     {SP_PROP_CLIP, "clip"},
     {SP_PROP_COLOR, "color"},

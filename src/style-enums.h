@@ -113,6 +113,14 @@ enum SPTextAnchor {
     SP_CSS_TEXT_ANCHOR_END
 };
 
+enum SPWhiteSpace {
+    SP_CSS_WHITE_SPACE_NORMAL,
+    SP_CSS_WHITE_SPACE_PRE,
+    SP_CSS_WHITE_SPACE_NOWRAP,
+    SP_CSS_WHITE_SPACE_PREWRAP,
+    SP_CSS_WHITE_SPACE_PRELINE
+};
+
 enum SPCSSBaselineShift {
   SP_CSS_BASELINE_SHIFT_BASELINE,
   SP_CSS_BASELINE_SHIFT_SUB,
@@ -323,6 +331,15 @@ static SPStyleEnum const enum_text_anchor[] = {
     {"start", SP_CSS_TEXT_ANCHOR_START},
     {"middle", SP_CSS_TEXT_ANCHOR_MIDDLE},
     {"end", SP_CSS_TEXT_ANCHOR_END},
+    {NULL, -1}
+};
+
+static SPStyleEnum const enum_white_space[] = {
+    {"normal",   SP_CSS_WHITE_SPACE_NORMAL },
+    {"pre",      SP_CSS_WHITE_SPACE_PRE    },
+    {"nowrap",   SP_CSS_WHITE_SPACE_NOWRAP },
+    {"pre-wrap", SP_CSS_WHITE_SPACE_PREWRAP},
+    {"pre-line", SP_CSS_WHITE_SPACE_PRELINE},
     {NULL, -1}
 };
 

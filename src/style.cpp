@@ -135,6 +135,7 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     writing_mode(     "writing-mode",    enum_writing_mode,    SP_CSS_WRITING_MODE_LR_TB  ),
     baseline_shift(),
     text_anchor(      "text-anchor",     enum_text_anchor,     SP_CSS_TEXT_ANCHOR_START   ),
+    white_space(      "white-space",     enum_white_space,     SP_CSS_WHITE_SPACE_NORMAL  ),
 
     // General visual properties
     clip_rule(        "clip-rule",       enum_clip_rule,       SP_WIND_RULE_NONZERO       ),
@@ -297,6 +298,7 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     _properties.push_back( &writing_mode );
     _properties.push_back( &baseline_shift );
     _properties.push_back( &text_anchor );
+    _properties.push_back( &white_space );
 
     _properties.push_back( &clip_rule );
     _properties.push_back( &display );
@@ -379,6 +381,7 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     //     _propmap.insert( std::make_pair( writing_mode.name,          reinterpret_cast<SPIBasePtr>(&SPStyle::writing_mode          ) ) );
     //     _propmap.insert( std::make_pair( baseline_shift.name,        reinterpret_cast<SPIBasePtr>(&SPStyle::baseline_shift        ) ) );
     //     _propmap.insert( std::make_pair( text_anchor.name,           reinterpret_cast<SPIBasePtr>(&SPStyle::text_anchor           ) ) );
+    //     _propmap.insert( std::make_pair( white_space.name,           reinterpret_cast<SPIBasePtr>(&SPStyle::white_space           ) ) );
 
     //     _propmap.insert( std::make_pair( clip_rule.name,             reinterpret_cast<SPIBasePtr>(&SPStyle::clip_rule             ) ) );
     //     _propmap.insert( std::make_pair( display.name,               reinterpret_cast<SPIBasePtr>(&SPStyle::display               ) ) );
@@ -669,6 +672,9 @@ SPStyle::readIfUnset( gint id, gchar const *val ) {
             break;
         case SP_PROP_TEXT_ANCHOR:
             text_anchor.readIfUnset( val );
+            break;
+        case SP_PROP_WHITE_SPACE:
+            white_space.readIfUnset( val );
             break;
         case SP_PROP_BASELINE_SHIFT:
             baseline_shift.readIfUnset( val );
@@ -1623,6 +1629,9 @@ sp_style_unset_property_attrs(SPObject *o)
     if (style->text_anchor.set) {
         repr->setAttribute("text-anchor", NULL);
     }
+    if (style->white_space.set) {
+        repr->setAttribute("white_space", NULL);
+    }
     if (style->writing_mode.set) {
         repr->setAttribute("writing_mode", NULL);
     }
@@ -1712,6 +1721,7 @@ sp_css_attr_unset_text(SPCSSAttr *css)
     sp_repr_css_set_property(css, "block-progression", NULL);
     sp_repr_css_set_property(css, "writing-mode", NULL);
     sp_repr_css_set_property(css, "text-anchor", NULL);
+    sp_repr_css_set_property(css, "white_space", NULL);
     sp_repr_css_set_property(css, "kerning", NULL); // not implemented yet
     sp_repr_css_set_property(css, "dominant-baseline", NULL); // not implemented yet
     sp_repr_css_set_property(css, "alignment-baseline", NULL); // not implemented yet

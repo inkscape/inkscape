@@ -399,9 +399,11 @@ enum SPAttributeEnum {
     SP_ATTR_TEXT_EXCLUDE,
     SP_ATTR_LAYOUT_OPTIONS,
 
-    /* CSS2 */
-    /* Custom full font name because Font stuff below is inadequate */
+    /* CSS & SVG Properties */
+
+    /* Custom full font name because Font stuff below is inadequate REMOVE ME */
     SP_PROP_INKSCAPE_FONT_SPEC,
+
     /* Font */
     SP_PROP_FONT,
     SP_PROP_FONT_FAMILY,
@@ -411,18 +413,16 @@ enum SPAttributeEnum {
     SP_PROP_FONT_STYLE,
     SP_PROP_FONT_VARIANT,
     SP_PROP_FONT_WEIGHT,
-    /* Text */
+
+    /* Text Layout */
     SP_PROP_TEXT_INDENT,
     SP_PROP_TEXT_ALIGN,
-    SP_PROP_TEXT_DECORATION,       /* SVG 1 underline etc.( no color or style) OR SVG2 with _LINE, _STYLE, _COLOR values */
-    SP_PROP_TEXT_DECORATION_LINE,  /* SVG 2 underline etc. */
-    SP_PROP_TEXT_DECORATION_STYLE, /* SVG 2 proposed solid [SVG 1], dotted, etc.)*/
-    SP_PROP_TEXT_DECORATION_COLOR, /* SVG 2 proposed same as text [SVG 1], specified*/
+
     SP_PROP_LINE_HEIGHT,
     SP_PROP_LETTER_SPACING,
     SP_PROP_WORD_SPACING,
     SP_PROP_TEXT_TRANSFORM,
-    /* text (css3) */
+
     SP_PROP_DIRECTION,
     SP_PROP_BLOCK_PROGRESSION,
     SP_PROP_WRITING_MODE,
@@ -434,6 +434,14 @@ enum SPAttributeEnum {
     SP_PROP_GLYPH_ORIENTATION_VERTICAL,
     SP_PROP_KERNING,
     SP_PROP_TEXT_ANCHOR,
+    SP_PROP_WHITE_SPACE,
+
+    /* Text Decoration */
+    SP_PROP_TEXT_DECORATION,       /* SVG 1 underline etc.( no color or style) OR SVG2 with _LINE, _STYLE, _COLOR values */
+    SP_PROP_TEXT_DECORATION_LINE,  /* SVG 2 underline etc. */
+    SP_PROP_TEXT_DECORATION_STYLE, /* SVG 2 proposed solid [SVG 1], dotted, etc.)*/
+    SP_PROP_TEXT_DECORATION_COLOR, /* SVG 2 proposed same as text [SVG 1], specified*/
+
     /* Misc */
     SP_PROP_CLIP,
     SP_PROP_COLOR,
@@ -443,24 +451,29 @@ enum SPAttributeEnum {
     SP_PROP_VISIBILITY,
     SP_PROP_MIX_BLEND_MODE,
     SP_PROP_ISOLATION,
+
     /* SVG */
     /* Clip/Mask */
     SP_PROP_CLIP_PATH,
     SP_PROP_CLIP_RULE,
     SP_PROP_MASK,
     SP_PROP_OPACITY,
+
     /* Filter */
     SP_PROP_ENABLE_BACKGROUND,
     SP_PROP_FILTER,
     SP_PROP_FLOOD_COLOR,
     SP_PROP_FLOOD_OPACITY,
     SP_PROP_LIGHTING_COLOR,
+
     /* Gradient */
     SP_PROP_STOP_COLOR,
     SP_PROP_STOP_OPACITY,
     SP_PROP_STOP_PATH,
+
     /* Interactivity */
     SP_PROP_POINTER_EVENTS,
+
     /* Paint */
     SP_PROP_COLOR_INTERPOLATION,
     SP_PROP_COLOR_INTERPOLATION_FILTERS,
@@ -487,10 +500,12 @@ enum SPAttributeEnum {
     SP_PROP_STROKE_OPACITY,
     SP_PROP_STROKE_WIDTH,
     SP_PROP_TEXT_RENDERING,
+
     /* Conditional */
     SP_PROP_SYSTEM_LANGUAGE,
     SP_PROP_REQUIRED_FEATURES,
     SP_PROP_REQUIRED_EXTENSIONS,
+
     /* LivePathEffect */
     SP_PROP_PATH_EFFECT,
 };

@@ -92,8 +92,10 @@ private:
 public:
 
     /* ----------------------- THE PROPERTIES ------------------------- */
+    /*                    Match order in style.cpp.                     */
 
-    /* Font */
+    /* Font ---------------------------- */
+
     /** Font style */
     SPIEnum font_style;
     /** Which substyle of the font */
@@ -113,22 +115,12 @@ public:
     /** Full font name, as font_factory::ConstructFontSpecification would give, for internal use. */
     SPIString font_specification;
 
+    /* Text ----------------------------- */
+
     /** First line indent of paragraphs (css2 16.1) */
     SPILength text_indent;
     /** text alignment (css2 16.2) (not to be confused with text-anchor) */
     SPIEnum text_align;
-
-    /** text decoration (css2 16.3.1) */
-    SPITextDecoration      text_decoration; 
-    /** CSS 3 2.1, 2.2, 2.3 */
-    /** Not done yet, test_decoration3        = css3 2.4*/
-    SPITextDecorationLine  text_decoration_line;
-    SPITextDecorationStyle text_decoration_style;  // SPIEnum? Only one can be set at time.
-    SPIColor               text_decoration_color;
-    // used to implement text_decoration, not saved to or read from SVG file
-    SPITextDecorationData  text_decoration_data;
-
-    // 16.3.2 is text-shadow. That's complicated.
 
     /** letter spacing (css2 16.4) */
     SPILengthOrNormal letter_spacing;
@@ -150,6 +142,25 @@ public:
     /* SVG */
     /** Anchor of the text (svg1.1 10.9.1) */
     SPIEnum text_anchor;
+
+    /** white space (svg2) */
+    SPIEnum white_space;
+
+    /* Text Decoration ----------------------- */
+
+    /** text decoration (css2 16.3.1) */
+    SPITextDecoration      text_decoration; 
+    /** CSS 3 2.1, 2.2, 2.3 */
+    /** Not done yet, test_decoration3        = css3 2.4*/
+    SPITextDecorationLine  text_decoration_line;
+    SPITextDecorationStyle text_decoration_style;  // SPIEnum? Only one can be set at time.
+    SPIColor               text_decoration_color;
+    // used to implement text_decoration, not saved to or read from SVG file
+    SPITextDecorationData  text_decoration_data;
+
+    // 16.3.2 is text-shadow. That's complicated.
+
+    /* General visual properties ------------- */
 
     /** clip-rule: 0 nonzero, 1 evenodd */
     SPIEnum clip_rule;
@@ -215,6 +226,8 @@ public:
     SPIString marker_end;
     SPIString* marker_ptrs[SP_MARKER_LOC_QTY]; 
 
+    /* Filter effects ------------------------ */
+
     /** Filter effect */
     SPIFilter filter;
     /** Filter blend mode */
@@ -225,6 +238,7 @@ public:
     /** enable-background, used for defining where filter effects get their background image */
     SPIEnum enable_background;
 
+    /* Rendering hints ----------------------- */
 
     /** hints on how to render: e.g. speed vs. accuracy.
      * As of April, 2013, only image_rendering used. */
