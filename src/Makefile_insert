@@ -158,6 +158,8 @@ ink_common_sources +=	\
 	sp-guide-attachment.h						\
 	sp-guide-constraint.h						\
 	sp-guide.cpp sp-guide.h						\
+	sp-hatch.cpp sp-hatch.h                     \
+	sp-hatch-path.cpp sp-hatch-path.h           \
 	sp-image.cpp sp-image.h						\
 	sp-item.cpp sp-item.h						\
 	sp-item-group.cpp sp-item-group.h				\

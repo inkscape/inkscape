@@ -32,6 +32,8 @@ set(sp_SRC
 	sp-gradient-reference.cpp
 	sp-gradient.cpp
 	sp-guide.cpp
+	sp-hatch.cpp
+	sp-hatch-path.cpp
 	sp-image.cpp
 	sp-item-group.cpp
 	sp-item-notify-moveto.cpp
@@ -115,6 +117,8 @@ set(sp_SRC
 	sp-guide-attachment.h
 	sp-guide-constraint.h
 	sp-guide.h
+	sp-hatch.h
+	sp-hatch-path.h
 	sp-image.h
 	sp-item-group.h
 	sp-item-notify-moveto.h

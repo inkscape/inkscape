@@ -201,6 +201,7 @@ protected:
     cairo_pattern_t *_createPatternForPaintServer(SPPaintServer const *const paintserver,
                                                   Geom::OptRect const &pbox, float alpha);
     cairo_pattern_t *_createPatternPainter(SPPaintServer const *const paintserver, Geom::OptRect const &pbox);
+    cairo_pattern_t *_createHatchPainter(SPPaintServer const *const paintserver, Geom::OptRect const &pbox);
 
     unsigned int _showGlyphs(cairo_t *cr, PangoFont *font, std::vector<CairoGlyphInfo> const &glyphtext, bool is_stroke);
 

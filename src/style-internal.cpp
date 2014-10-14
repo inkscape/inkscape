@@ -964,7 +964,11 @@ SPIPaint::read( gchar const *str ) {
                 if (!value.href && document) {
                     // std::cout << "  Creating value.href" << std::endl;
                     value.href = new SPPaintServerReference(document);
-                    value.href->changedSignal().connect(sigc::bind(sigc::ptr_fun((this == &style->fill)? sp_style_fill_paint_server_ref_changed : sp_style_stroke_paint_server_ref_changed), style));
+                    if (this == &style->fill) {
+                        style->fill_ps_changed_connection = value.href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_fill_paint_server_ref_changed), style));
+                    } else {
+                        style->stroke_ps_changed_connection = value.href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_stroke_paint_server_ref_changed), style));
+                    }
                 }
 
                 // std::cout << "uri: " << (uri?uri:"null") << std::endl;

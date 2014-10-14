@@ -505,8 +505,7 @@ class SPIPaint : public SPIBase {
     void setColor( float r, float g, float b ) {value.color.set( r, g, b ); colorSet = true;}
     void setColor( guint32 val ) {value.color.set( val ); colorSet = true;}
     void setColor( SPColor const& color ) {value.color = color; colorSet = true;}
-
-
+    void setNone() {noneSet = true; colorSet=false;}
 
   // To do: make private
   public:

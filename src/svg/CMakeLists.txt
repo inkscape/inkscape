@@ -7,6 +7,7 @@ set(svg_SRC
 	strip-trailing-zeros.cpp
 	svg-affine.cpp
 	svg-color.cpp
+	svg-angle.cpp
 	svg-length.cpp
 	svg-path.cpp
 	# test-stubs.cpp
@@ -24,6 +25,7 @@ set(svg_SRC
 	svg-color-test.h
 	svg-color.h
 	svg-icc-color.h
+	svg-angle.h
 	svg-length-test.h
 	svg-length.h
 	svg-path-geom-test.h

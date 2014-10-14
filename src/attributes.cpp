@@ -292,6 +292,11 @@ static SPStyleProp const props[] = {
     {SP_ATTR_PATTERNUNITS, "patternUnits"},
     {SP_ATTR_PATTERNCONTENTUNITS, "patternContentUnits"},
     {SP_ATTR_PATTERNTRANSFORM, "patternTransform"},
+    /* SPHatch */
+    {SP_ATTR_HATCHUNITS, "hatchUnits"},
+    {SP_ATTR_HATCHCONTENTUNITS, "hatchContentUnits"},
+    {SP_ATTR_HATCHTRANSFORM, "hatchTransform"},
+    {SP_ATTR_PITCH, "pitch"},
     /* SPClipPath */
     {SP_ATTR_CLIPPATHUNITS, "clipPathUnits"},
     /* SPMask */

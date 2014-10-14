@@ -440,6 +440,8 @@ SPStyle::~SPStyle() {
 
     // Remove connections
     release_connection.disconnect();
+    fill_ps_changed_connection.disconnect();
+    stroke_ps_changed_connection.disconnect();
 
     // The following shoud be moved into SPIPaint and SPIFilter
     if (fill.value.href) {
@@ -499,10 +501,10 @@ SPStyle::clear() {
         filter.href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_filter_ref_changed), this));
 
         fill.value.href = new SPPaintServerReference(document);
-        fill.value.href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_fill_paint_server_ref_changed), this));
+        fill_ps_changed_connection = fill.value.href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_fill_paint_server_ref_changed), this));
 
         stroke.value.href = new SPPaintServerReference(document);
-        stroke.value.href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_stroke_paint_server_ref_changed), this));
+        stroke_ps_changed_connection = stroke.value.href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_stroke_paint_server_ref_changed), this));
     }
 
     cloned = false;
@@ -1118,6 +1120,7 @@ sp_style_fill_paint_server_ref_changed(SPObject *old_ref, SPObject *ref, SPStyle
            ref->connectModified(sigc::bind(sigc::ptr_fun(&sp_style_paint_server_ref_modified), style));
     }
 
+    style->signal_fill_ps_changed.emit(old_ref, ref);
     sp_style_paint_server_ref_modified(ref, 0, style);
 }
 
@@ -1135,6 +1138,7 @@ sp_style_stroke_paint_server_ref_changed(SPObject *old_ref, SPObject *ref, SPSty
           ref->connectModified(sigc::bind(sigc::ptr_fun(&sp_style_paint_server_ref_modified), style));
     }
 
+    style->signal_stroke_ps_changed.emit(old_ref, ref);
     sp_style_paint_server_ref_modified(ref, 0, style);
 }
 
@@ -1363,7 +1367,11 @@ sp_style_set_ipaint_to_uri(SPStyle *style, SPIPaint *paint, const Inkscape::URI 
     // now that we have a document, we can create it here
     if (!paint->value.href && document) {
         paint->value.href = new SPPaintServerReference(document);
-        paint->value.href->changedSignal().connect(sigc::bind(sigc::ptr_fun((paint == &style->fill)? sp_style_fill_paint_server_ref_changed : sp_style_stroke_paint_server_ref_changed), style));
+        if (paint == &style->fill) {
+            style->fill_ps_changed_connection = paint->value.href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_fill_paint_server_ref_changed), style));
+        } else {
+            style->stroke_ps_changed_connection = paint->value.href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_stroke_paint_server_ref_changed), style));
+        }
     }
 
     if (paint->value.href){

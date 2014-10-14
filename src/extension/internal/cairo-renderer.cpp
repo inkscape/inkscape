@@ -50,6 +50,7 @@
 #include "sp-use.h"
 #include "sp-text.h"
 #include "sp-flowtext.h"
+#include "sp-hatch-path.h"
 #include "sp-image.h"
 #include "sp-symbol.h"
 #include "sp-pattern.h"
@@ -595,6 +596,21 @@ void CairoRenderer::renderItem(CairoRenderContext *ctx, SPItem *item)
     if (state->need_layer)
         ctx->popLayer(); // This applies clipping/masking
 
+    ctx->popState();
+}
+
+void CairoRenderer::renderHatchPath(CairoRenderContext *ctx, SPHatchPath const &hatchPath, unsigned key) {
+    ctx->pushState();
+    ctx->setStateForStyle(hatchPath.style);
+    ctx->transform(Geom::Translate(hatchPath.offset.computed, 0));
+
+    SPCurve *curve = hatchPath.calculateRenderCurve(key);
+    Geom::PathVector const & pathv =curve->get_pathvector();
+    if (!pathv.empty()) {
+        ctx->renderPathVector(pathv, hatchPath.style, Geom::OptRect());
+    }
+
+    curve->unref();
     ctx->popState();
 }
 

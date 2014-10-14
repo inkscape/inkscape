@@ -445,13 +445,13 @@ unsigned DrawingText::_renderItem(DrawingContext &dc, Geom::IntRect const &/*are
         Inkscape::DrawingContext::Save save(dc);
         dc.transform(_ctm);
 
-        has_fill      = _nrstyle.prepareFill(                dc, _item_bbox);
-        has_stroke    = _nrstyle.prepareStroke(              dc, _item_bbox);
+        has_fill      = _nrstyle.prepareFill(                dc, _item_bbox, _fill_pattern);
+        has_stroke    = _nrstyle.prepareStroke(              dc, _item_bbox, _stroke_pattern);
 
         // Avoid creating patterns if not needed
         if( decorate ) {
-            has_td_fill   = _nrstyle.prepareTextDecorationFill(  dc, _item_bbox);
-            has_td_stroke = _nrstyle.prepareTextDecorationStroke(dc, _item_bbox);
+            has_td_fill   = _nrstyle.prepareTextDecorationFill(  dc, _item_bbox, _fill_pattern);
+            has_td_stroke = _nrstyle.prepareTextDecorationStroke(dc, _item_bbox, _stroke_pattern);
         }
     }
 

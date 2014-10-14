@@ -39,6 +39,7 @@
 #include "sp-item.h"
 #include "sp-item-group.h"
 #include "style.h"
+#include "sp-hatch.h"
 #include "sp-linear-gradient.h"
 #include "sp-radial-gradient.h"
 #include "sp-pattern.h"
@@ -1130,6 +1131,82 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
 }
 
 cairo_pattern_t*
+CairoRenderContext::_createHatchPainter(SPPaintServer const *const paintserver, Geom::OptRect const &pbox) {
+    g_assert( SP_IS_HATCH(paintserver) );
+    SPHatch *hatch = SP_HATCH(paintserver);
+
+    g_assert(hatch->pitch() > 0);
+
+    // create drawing and group
+    Inkscape::Drawing drawing;
+    unsigned dkey = SPItem::display_key_new(1);
+
+    hatch->show(drawing, dkey, pbox);
+
+    SPHatch::RenderInfo render_info = hatch->calculateRenderInfo(dkey);
+    Geom::Rect tile_rect = render_info.tile_rect;
+
+    // Cairo requires an integer pattern surface width/height.
+    // Subtract 0.5 to prevent small rounding errors from increasing pattern size by one pixel.
+    // Multiply by SUBPIX_SCALE to allow for less than a pixel precision
+    const int subpix_scale = 10;
+    double surface_width = MAX(ceil(subpix_scale * tile_rect.width() - 0.5), 1);
+    double surface_height = MAX(ceil(subpix_scale * tile_rect.height() - 0.5), 1);
+    Geom::Affine drawing_scale = Geom::Scale(surface_width / tile_rect.width(), surface_height / tile_rect.height());
+    Geom::Affine drawing_transform = Geom::Translate(-tile_rect.min()) * drawing_scale;
+
+    Geom::Affine child_transform = render_info.child_transform;
+    child_transform *= drawing_transform;
+
+    //The rendering of hatch overflow is implemented by repeated drawing
+    //of hatch paths over one strip. Within each iteration paths are moved by pitch value.
+    //The movement progresses from right to left. This gives the same result
+    //as drawing whole strips in left-to-right order.
+    gdouble overflow_right_strip = 0.0;
+    int overflow_steps = 1;
+    Geom::Affine overflow_transform;
+    if (hatch->style->overflow.computed == SP_CSS_OVERFLOW_VISIBLE) {
+        Geom::Interval bounds = hatch->bounds();
+        overflow_right_strip = floor(bounds.max() / hatch->pitch()) * hatch->pitch();
+        overflow_steps = ceil((overflow_right_strip - bounds.min()) / hatch->pitch()) + 1;
+        overflow_transform = Geom::Translate(hatch->pitch(), 0.0);
+    }
+
+    CairoRenderContext *pattern_ctx = cloneMe(surface_width, surface_height);
+    pattern_ctx->setTransform(child_transform);
+    pattern_ctx->transform(Geom::Translate(-overflow_right_strip, 0.0));
+    pattern_ctx->pushState();
+
+    std::vector<SPHatchPath *> children;
+    hatch->hatchPaths(children);
+
+    for (int i = 0; i < overflow_steps; i++) {
+        for (std::vector<SPHatchPath *>::iterator iter = children.begin(); iter != children.end(); iter++) {
+            SPHatchPath *path = *iter;
+            _renderer->renderHatchPath(pattern_ctx, *path, dkey);
+        }
+        pattern_ctx->transform(overflow_transform);
+    }
+
+    pattern_ctx->popState();
+
+    // setup a cairo_pattern_t
+    cairo_surface_t *pattern_surface = pattern_ctx->getSurface();
+    TEST(pattern_ctx->saveAsPng("hatch.png"));
+    cairo_pattern_t *result = cairo_pattern_create_for_surface(pattern_surface);
+    cairo_pattern_set_extend(result, CAIRO_EXTEND_REPEAT);
+
+    Geom::Affine pattern_transform;
+    pattern_transform = render_info.pattern_to_user_transform.inverse() * drawing_transform;
+    ink_cairo_pattern_set_matrix(result, pattern_transform);
+
+    hatch->hide(dkey);
+
+    delete pattern_ctx;
+    return result;
+}
+
+cairo_pattern_t*
 CairoRenderContext::_createPatternForPaintServer(SPPaintServer const *const paintserver,
                                                  Geom::OptRect const &pbox, float alpha)
 {
@@ -1182,8 +1259,9 @@ CairoRenderContext::_createPatternForPaintServer(SPPaintServer const *const pain
             cairo_pattern_add_color_stop_rgba(pattern, rg->vector.stops[i].offset, rgb[0], rgb[1], rgb[2], rg->vector.stops[i].opacity * alpha);
         }
     } else if (SP_IS_PATTERN (paintserver)) {
-
         pattern = _createPatternPainter(paintserver, pbox);
+    } else if (SP_IS_HATCH (paintserver)) {
+        pattern = _createHatchPainter(paintserver, pbox);
     } else {
         return NULL;
     }
@@ -1249,26 +1327,29 @@ CairoRenderContext::_setFillStyle(SPStyle const *const style, Geom::OptRect cons
         TRACE(("merged op=%f\n", alpha));
     }
 
-    if (style->fill.isColor()) {
+    SPPaintServer const *paint_server = style->getFillPaintServer();
+    if (paint_server && paint_server->isValid()) {
+
+        g_assert(SP_IS_GRADIENT(SP_STYLE_FILL_SERVER(style))
+            || SP_IS_PATTERN(SP_STYLE_FILL_SERVER(style))
+            || SP_IS_HATCH(SP_STYLE_FILL_SERVER(style)));
+
+        cairo_pattern_t *pattern = _createPatternForPaintServer(paint_server, pbox, alpha);
+        if (pattern) {
+            cairo_set_source(_cr, pattern);
+            cairo_pattern_destroy(pattern);
+        }
+    } else if (style->fill.colorSet) {
         float rgb[3];
         sp_color_get_rgb_floatv(&style->fill.value.color, rgb);
 
         cairo_set_source_rgba(_cr, rgb[0], rgb[1], rgb[2], alpha);
 
-    } else if (!style->fill.set) { // unset fill is black
+    } else { // unset fill is black
+        g_assert(!style->fill.set
+                || (paint_server && !paint_server->isValid()));
+
         cairo_set_source_rgba(_cr, 0, 0, 0, alpha);
-
-    } else {
-        g_assert( style->fill.isPaintserver()
-                  || SP_IS_GRADIENT(SP_STYLE_FILL_SERVER(style))
-                  || SP_IS_PATTERN(SP_STYLE_FILL_SERVER(style)) );
-
-        cairo_pattern_t *pattern = _createPatternForPaintServer(SP_STYLE_FILL_SERVER(style), pbox, alpha);
-
-        if (pattern) {
-            cairo_set_source(_cr, pattern);
-            cairo_pattern_destroy(pattern);
-        }
     }
 }
 
@@ -1279,7 +1360,7 @@ CairoRenderContext::_setStrokeStyle(SPStyle const *style, Geom::OptRect const &p
     if (_state->merge_opacity)
         alpha *= _state->opacity;
 
-    if (style->stroke.isColor()) {
+    if (style->stroke.isColor() || (style->stroke.isPaintserver() && !style->getStrokePaintServer()->isValid())) {
         float rgb[3];
         sp_color_get_rgb_floatv(&style->stroke.value.color, rgb);
 
@@ -1287,7 +1368,8 @@ CairoRenderContext::_setStrokeStyle(SPStyle const *style, Geom::OptRect const &p
     } else {
         g_assert( style->stroke.isPaintserver()
                   || SP_IS_GRADIENT(SP_STYLE_STROKE_SERVER(style))
-                  || SP_IS_PATTERN(SP_STYLE_STROKE_SERVER(style)) );
+                  || SP_IS_PATTERN(SP_STYLE_STROKE_SERVER(style))
+                  || SP_IS_HATCH(SP_STYLE_STROKE_SERVER(style)));
 
         cairo_pattern_t *pattern = _createPatternForPaintServer(SP_STYLE_STROKE_SERVER(style), pbox, alpha);
 

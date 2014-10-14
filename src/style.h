@@ -257,6 +257,22 @@ public:
     sigc::connection filter_modified_connection;
     sigc::connection fill_ps_modified_connection;
     sigc::connection stroke_ps_modified_connection;
+    sigc::connection fill_ps_changed_connection;
+    sigc::connection stroke_ps_changed_connection;
+
+    /**
+     * Emitted when paint server object, fill paint refers to, is changed. That is
+     * when the reference starts pointing to a different address in memory.
+     *
+     * NB It is different from fill_ps_modified signal. When paint server is modified
+     * it means some of it's attributes or chilren change.
+     */
+    sigc::signal<void, SPObject *, SPObject *> signal_fill_ps_changed;
+    /**
+     * Emitted when paint server object, fill paint refers to, is changed. That is
+     * when the reference starts pointing to a different address in memory.
+     */
+    sigc::signal<void, SPObject *, SPObject *> signal_stroke_ps_changed;
 
     SPObject       *getFilter()          { return (filter.href) ? filter.href->getObject() : NULL; }
     SPObject const *getFilter()    const { return (filter.href) ? filter.href->getObject() : NULL; }

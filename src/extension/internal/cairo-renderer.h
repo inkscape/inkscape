@@ -29,6 +29,7 @@
 
 class SPClipPath;
 class SPMask;
+class SPHatchPath;
 
 namespace Inkscape {
 namespace Extension {
@@ -57,6 +58,7 @@ public:
 
     /** Traverses the object tree and invokes the render methods. */
     void renderItem(CairoRenderContext *ctx, SPItem *item);
+    void renderHatchPath(CairoRenderContext *ctx, SPHatchPath const &hatchPath, unsigned key);
 };
 
 // FIXME: this should be a static method of CairoRenderer

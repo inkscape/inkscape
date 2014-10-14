@@ -13,6 +13,8 @@ ink_common_sources +=	\
 	svg/svg-color.cpp	\
 	svg/svg-color.h 	\
 	svg/svg-icc-color.h \
+	svg/svg-angle.cpp   \
+	svg/svg-angle.h     \
 	svg/svg-length.cpp	\
 	svg/svg-length.h	\
 	svg/svg-path.cpp	\

@@ -33,6 +33,7 @@
 class SPClipPathReference;
 class SPMaskReference;
 class SPAvoidRef;
+class SPPattern;
 struct SPPrintContext;
 
 namespace Inkscape {
@@ -236,12 +237,15 @@ private:
     static SPItemView *sp_item_view_new_prepend(SPItemView *list, SPItem *item, unsigned flags, unsigned key, Inkscape::DrawingItem *arenaitem);
     static void clip_ref_changed(SPObject *old_clip, SPObject *clip, SPItem *item);
     static void mask_ref_changed(SPObject *old_clip, SPObject *clip, SPItem *item);
+    static void fill_ps_ref_changed(SPObject *old_clip, SPObject *clip, SPItem *item);
+    static void stroke_ps_ref_changed(SPObject *old_clip, SPObject *clip, SPItem *item);
 
 public:
 	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
 	virtual void release();
 	virtual void set(unsigned int key, gchar const* value);
 	virtual void update(SPCtx *ctx, guint flags);
+	virtual void modified(unsigned int flags);
 	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
 
 	virtual Geom::OptRect bbox(Geom::Affine const &transform, SPItem::BBoxType type) const;

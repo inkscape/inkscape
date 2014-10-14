@@ -21,6 +21,7 @@ class SPStyle;
 
 namespace Inkscape {
 class DrawingContext;
+class DrawingPattern;
 }
 
 struct NRStyle {
@@ -28,10 +29,10 @@ struct NRStyle {
     ~NRStyle();
 
     void set(SPStyle *);
-    bool prepareFill(Inkscape::DrawingContext &dc, Geom::OptRect const &paintbox);
-    bool prepareStroke(Inkscape::DrawingContext &dc, Geom::OptRect const &paintbox);
-    bool prepareTextDecorationFill(Inkscape::DrawingContext &dc, Geom::OptRect const &paintbox);
-    bool prepareTextDecorationStroke(Inkscape::DrawingContext &dc, Geom::OptRect const &paintbox);
+    bool prepareFill(Inkscape::DrawingContext &dc, Geom::OptRect const &paintbox, Inkscape::DrawingPattern *pattern);
+    bool prepareStroke(Inkscape::DrawingContext &dc, Geom::OptRect const &paintbox, Inkscape::DrawingPattern *pattern);
+    bool prepareTextDecorationFill(Inkscape::DrawingContext &dc, Geom::OptRect const &paintbox, Inkscape::DrawingPattern *pattern);
+    bool prepareTextDecorationStroke(Inkscape::DrawingContext &dc, Geom::OptRect const &paintbox, Inkscape::DrawingPattern *pattern);
     void applyFill(Inkscape::DrawingContext &dc);
     void applyStroke(Inkscape::DrawingContext &dc);
     void applyTextDecorationFill(Inkscape::DrawingContext &dc);

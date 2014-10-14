@@ -28,6 +28,7 @@ class Drawing;
 class DrawingCache;
 class DrawingContext;
 class DrawingItem;
+class DrawingPattern;
 
 namespace Filters {
 
@@ -114,6 +115,8 @@ public:
     void setTransform(Geom::Affine const &trans);
     void setClip(DrawingItem *item);
     void setMask(DrawingItem *item);
+    void setFillPattern(DrawingPattern *pattern);
+    void setStrokePattern(DrawingPattern *pattern);
     void setZOrder(unsigned z);
     void setItemBounds(Geom::OptRect const &bounds);
     void setFilterBounds(Geom::OptRect const &bounds);
@@ -135,8 +138,8 @@ protected:
         CHILD_CLIP = 2, // referenced by _clip member of parent
         CHILD_MASK = 3, // referenced by _mask member of parent
         CHILD_ROOT = 4, // root item of _drawing
-        CHILD_FILL_PATTERN = 5, // not yet implemented: referenced by fill pattern of parent
-        CHILD_STROKE_PATTERN = 6 // not yet implemented: referenced by stroke pattern of parent
+        CHILD_FILL_PATTERN = 5, // referenced by fill pattern of parent
+        CHILD_STROKE_PATTERN = 6 // referenced by stroke pattern of parent
     };
     enum RenderResult {
         RENDER_OK = 0,
@@ -185,6 +188,8 @@ protected:
 
     DrawingItem *_clip;
     DrawingItem *_mask;
+    DrawingPattern *_fill_pattern;
+    DrawingPattern *_stroke_pattern;
     Inkscape::Filters::Filter *_filter;
     void *_user_data; ///< Used to associate DrawingItems with SPItems that created them
     DrawingCache *_cache;

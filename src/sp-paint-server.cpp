@@ -58,6 +58,11 @@ bool SPPaintServer::isSolid() const
     return solid;
 }
 
+bool SPPaintServer::isValid() const
+{
+        return true;
+}
+
 /*
   Local Variables:
   mode:c++

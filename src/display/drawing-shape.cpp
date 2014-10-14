@@ -155,7 +155,7 @@ DrawingShape::_renderFill(DrawingContext &dc)
     Inkscape::DrawingContext::Save save(dc);
     dc.transform(_ctm);
 
-    bool has_fill =  _nrstyle.prepareFill(dc, _item_bbox);
+    bool has_fill =  _nrstyle.prepareFill(dc, _item_bbox, _fill_pattern);
 
     if( has_fill ) {
         dc.path(_curve->get_pathvector());
@@ -171,7 +171,7 @@ DrawingShape::_renderStroke(DrawingContext &dc)
     Inkscape::DrawingContext::Save save(dc);
     dc.transform(_ctm);
 
-    bool has_stroke = _nrstyle.prepareStroke(dc, _item_bbox);
+    bool has_stroke = _nrstyle.prepareStroke(dc, _item_bbox, _stroke_pattern);
     has_stroke &= (_nrstyle.stroke_width != 0);
 
     if( has_stroke ) {
@@ -231,8 +231,8 @@ DrawingShape::_renderItem(DrawingContext &dc, Geom::IntRect const &area, unsigne
             // update fill and stroke paints.
             // this cannot be done during nr_arena_shape_update, because we need a Cairo context
             // to render svg:pattern
-            bool has_fill   = _nrstyle.prepareFill(dc, _item_bbox);
-            bool has_stroke = _nrstyle.prepareStroke(dc, _item_bbox);
+            bool has_fill   = _nrstyle.prepareFill(dc, _item_bbox, _fill_pattern);
+            bool has_stroke = _nrstyle.prepareStroke(dc, _item_bbox, _stroke_pattern);
             has_stroke &= (_nrstyle.stroke_width != 0);
 
             if (has_fill || has_stroke) {

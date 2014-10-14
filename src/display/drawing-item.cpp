@@ -16,6 +16,7 @@
 #include "display/drawing-context.h"
 #include "display/drawing-item.h"
 #include "display/drawing-group.h"
+#include "display/drawing-pattern.h"
 #include "display/drawing-surface.h"
 #include "nr-filter.h"
 #include "preferences.h"
@@ -110,6 +111,8 @@ DrawingItem::DrawingItem(Drawing &drawing)
     , _transform(NULL)
     , _clip(NULL)
     , _mask(NULL)
+    , _fill_pattern(NULL)
+    , _stroke_pattern(NULL)
     , _filter(NULL)
     , _user_data(NULL)
     , _cache(NULL)
@@ -164,6 +167,12 @@ DrawingItem::~DrawingItem()
     case CHILD_ROOT:
         _drawing._root = NULL;
         break;
+    case CHILD_FILL_PATTERN:
+        _parent->_fill_pattern = NULL;
+        break;
+    case CHILD_STROKE_PATTERN:
+        _parent->_stroke_pattern = NULL;
+        break;
     default: ;
     }
 
@@ -172,6 +181,8 @@ DrawingItem::~DrawingItem()
     }
     clearChildren();
     delete _transform;
+    delete _stroke_pattern;
+    delete _fill_pattern;
     delete _clip;
     delete _mask;
     delete _filter;
@@ -366,6 +377,34 @@ DrawingItem::setMask(DrawingItem *item)
     _markForUpdate(STATE_ALL, true);
 }
 
+void
+DrawingItem::setFillPattern(DrawingPattern *pattern)
+{
+    _markForRendering();
+    delete _fill_pattern;
+    _fill_pattern = pattern;
+    if (pattern) {
+        pattern->_parent = this;
+        assert(pattern->_child_type == CHILD_ORPHAN);
+        pattern->_child_type = CHILD_FILL_PATTERN;
+    }
+    _markForUpdate(STATE_ALL, true);
+}
+
+void
+DrawingItem::setStrokePattern(DrawingPattern *pattern)
+{
+    _markForRendering();
+    delete _stroke_pattern;
+    _stroke_pattern = pattern;
+    if (pattern) {
+        pattern->_parent = this;
+        assert(pattern->_child_type == CHILD_ORPHAN);
+        pattern->_child_type = CHILD_STROKE_PATTERN;
+    }
+    _markForUpdate(STATE_ALL, true);
+}
+
 /// Move this item to the given place in the Z order of siblings.
 /// Does nothing if the item has no parent.
 void
@@ -530,6 +569,12 @@ DrawingItem::update(Geom::IntRect const &area, UpdateContext const &ctx, unsigne
     if (to_update & STATE_RENDER) {
         // now that we know drawbox, dirty the corresponding rect on canvas
         // unless filtered, groups do not need to render by themselves, only their members
+        if (_fill_pattern) {
+            _fill_pattern->update(area, child_ctx, flags, reset);
+        }
+        if (_stroke_pattern) {
+            _stroke_pattern->update(area, child_ctx, flags, reset);
+        }
         if (!is_drawing_group(this) || (_filter && render_filters)) {
             _markForRendering();
         }
