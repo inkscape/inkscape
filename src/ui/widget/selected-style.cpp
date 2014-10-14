@@ -1199,7 +1199,9 @@ void SelectedStyle::on_opacity_menu (Gtk::Menu *menu) {
     menu->show_all();
 }
 
-void SelectedStyle::on_opacity_changed () {
+void SelectedStyle::on_opacity_changed ()
+{
+    g_return_if_fail(_desktop); // TODO this shouldn't happen!
     if (_opacity_blocked)
         return;
     _opacity_blocked = true;
