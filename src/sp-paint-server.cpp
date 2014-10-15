@@ -78,6 +78,7 @@ void SPPaintServer::setBBox(unsigned int /*key*/, Geom::OptRect const &/*bbox*/)
 
 cairo_pattern_t* SPPaintServer::pattern_new(cairo_t * /*ct*/, Geom::OptRect const &/*bbox*/, double /*opacity*/)
 {
+    return NULL;
 }
 
 
