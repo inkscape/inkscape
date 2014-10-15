@@ -104,22 +104,45 @@ static const unsigned SP_STYLE_FLAG_IFDIFF (1 << 1);
  */
 
 /// Virtual base class for all SPStyle interal classes
-class SPIBase {
+class SPIBase
+{
 
-  public:
+public:
     SPIBase( Glib::ustring const &name, bool inherits = true )
-        : name(name), inherits(inherits), set(false), inherit(false), style_att(false), style(NULL) {};
-    virtual ~SPIBase() {};
+        : name(name),
+          inherits(inherits),
+          set(false),
+          inherit(false),
+          style_att(false),
+          style(NULL)
+    {}
+
+    virtual ~SPIBase()
+    {}
+
     virtual void read( gchar const *str ) = 0;
-    virtual void readIfUnset( gchar const *str ) { if( !set ) read( str ); }
-    virtual void readAttribute( Inkscape::XML::Node *repr ) { readIfUnset( repr->attribute( name.c_str() ) ); }
+    virtual void readIfUnset( gchar const *str ) {
+        if ( !set ) {
+            read( str );
+        }
+    }
+
+    virtual void readAttribute( Inkscape::XML::Node *repr ) {
+        readIfUnset( repr->attribute( name.c_str() ) );
+    }
+
     virtual const Glib::ustring write( guint const flags = SP_STYLE_FLAG_IFSET,
                                        SPIBase const *const base = NULL ) const = 0;
-    virtual void clear() { set = false, inherit = false; };
+    virtual void clear() {
+        set = false, inherit = false;
+    }
+
     virtual void cascade( const SPIBase* const parent ) = 0;
     virtual void merge(   const SPIBase* const parent ) = 0;
 
-    virtual void setStylePointer( SPStyle *style_in  ) { style = style_in; };
+    virtual void setStylePointer( SPStyle *style_in  ) {
+        style = style_in;
+    }
 
     // Explicit assignment operator required due to templates.
     SPIBase& operator=(const SPIBase& rhs) {
@@ -133,11 +156,16 @@ class SPIBase {
     }
 
     // Check apples being compared to apples
-    virtual bool operator==(const SPIBase& rhs) { return (name == rhs.name); };
-    virtual bool operator!=(const SPIBase& rhs) { return !(*this == rhs); };
+    virtual bool operator==(const SPIBase& rhs) {
+        return (name == rhs.name);
+    }
+
+    virtual bool operator!=(const SPIBase& rhs) {
+        return !(*this == rhs);
+    }
 
   // To do: make private
-  public:
+public:
     Glib::ustring name;       // Make const
     unsigned inherits : 1;    // Property inherits by default from parent.
     unsigned set : 1;         // Property has been explicitly set (vs. inherited).
@@ -145,22 +173,35 @@ class SPIBase {
     unsigned style_att : 2;   // Source (attribute, style attribute, style-sheet). NOT USED YET FIX ME
 
   // To do: make private after g_asserts removed
-  public:
+public:
     SPStyle* style;       // Used by SPIPaint, SPIFilter... to find values of other properties
 };
 
 /// Float type internal to SPStyle. (Only 'stroke-miterlimit')
-class SPIFloat : public SPIBase {
+class SPIFloat : public SPIBase
+{
 
-  public:
-    SPIFloat() : SPIBase( "anonymous_float" ), value(0.0) {};
-    SPIFloat( Glib::ustring name, float value_default  = 0.0 )
-        : SPIBase( name ), value(value_default), value_default(value_default) {};
-    virtual ~SPIFloat() {};
+public:
+    SPIFloat()
+        : SPIBase( "anonymous_float" ),
+          value(0.0)
+    {}
+
+    SPIFloat( Glib::ustring const &name, float value_default  = 0.0 )
+        : SPIBase( name ),
+          value(value_default),
+          value_default(value_default)
+    {}
+
+    virtual ~SPIFloat() {}
     virtual void read( gchar const *str );
     virtual const Glib::ustring write( guint const flags = SP_STYLE_FLAG_IFSET,
                                        SPIBase const *const base = NULL ) const;
-    virtual void clear() { SPIBase::clear(); value = value_default; };
+    virtual void clear() {
+        SPIBase::clear();
+        value = value_default;
+    }
+
     virtual void cascade( const SPIBase* const parent );
     virtual void merge(   const SPIBase* const parent );
 
@@ -172,13 +213,15 @@ class SPIFloat : public SPIBase {
     }
 
     virtual bool operator==(const SPIBase& rhs);
-    virtual bool operator!=(const SPIBase& rhs) { return !(*this == rhs); };
+    virtual bool operator!=(const SPIBase& rhs) {
+        return !(*this == rhs);
+    }
 
   // To do: make private
-  public:
+public:
     float value;
 
-  private:
+private:
     float value_default;
 };
 
@@ -214,17 +257,32 @@ static const unsigned SP_SCALE24_MAX = 0xff0000;
 /// 24 bit data type internal to SPStyle.
 // Used only for opacity, fill-opacity, stroke-opacity.
 // Opacity does not inherit but stroke-opacity and fill-opacity do. 
-class SPIScale24 : public SPIBase {
+class SPIScale24 : public SPIBase
+{
 
-  public:
-    SPIScale24() : SPIBase( "anonymous_scale24" ), value(0) {};
-    SPIScale24( Glib::ustring name, unsigned value = 0, bool inherits = true )
-        : SPIBase( name, inherits ), value(value), value_default(value) {};
-    virtual ~SPIScale24() {};
+public:
+    SPIScale24()
+        : SPIBase( "anonymous_scale24" ),
+          value(0)
+    {}
+
+    SPIScale24( Glib::ustring const &name, unsigned value = 0, bool inherits = true )
+        : SPIBase( name, inherits ),
+          value(value),
+          value_default(value)
+    {}
+
+    virtual ~SPIScale24()
+    {}
+
     virtual void read( gchar const *str );
     virtual const Glib::ustring write( guint const flags = SP_STYLE_FLAG_IFSET,
                                        SPIBase const *const base = NULL ) const;
-    virtual void clear() { SPIBase::clear(); value = value_default; };
+    virtual void clear() {
+        SPIBase::clear();
+        value = value_default;
+    }
+
     virtual void cascade( const SPIBase* const parent );
     virtual void merge(   const SPIBase* const parent );
 
@@ -236,14 +294,16 @@ class SPIScale24 : public SPIBase {
     }
 
     virtual bool operator==(const SPIBase& rhs);
-    virtual bool operator!=(const SPIBase& rhs) { return !(*this == rhs); };
+    virtual bool operator!=(const SPIBase& rhs) {
+        return !(*this == rhs);
+    }
 
 
   // To do: make private
-  public:
+public:
     unsigned value : 24;
 
-  private:
+private:
     unsigned value_default : 24;
 };
 
@@ -265,17 +325,37 @@ enum SPCSSUnit {
 /// Length type internal to SPStyle.
 // Needs access to 'font-size' and 'font-family' for computed values.
 // Used for 'stroke-width' 'stroke-dash-offset' ('none' not handled), text-indent
-class SPILength : public SPIBase {
+class SPILength : public SPIBase
+{
 
-  public:
-    SPILength() : SPIBase( "anonymous_length" ), unit(SP_CSS_UNIT_NONE), value(0), computed(0) {};
-    SPILength( Glib::ustring name, unsigned value = 0 )
-        : SPIBase( name ), unit(SP_CSS_UNIT_NONE), value(value), computed(value), value_default(value) {};
-    virtual ~SPILength() {};
+public:
+    SPILength()
+        : SPIBase( "anonymous_length" ),
+          unit(SP_CSS_UNIT_NONE),
+          value(0),
+          computed(0)
+    {}
+
+    SPILength( Glib::ustring const &name, unsigned value = 0 )
+        : SPIBase( name ),
+          unit(SP_CSS_UNIT_NONE),
+          value(value),
+          computed(value),
+          value_default(value)
+    {}
+
+    virtual ~SPILength()
+    {}
+
     virtual void read( gchar const *str );
     virtual const Glib::ustring write( guint const flags = SP_STYLE_FLAG_IFSET,
                                        SPIBase const *const base = NULL ) const;
-    virtual void clear() { SPIBase::clear(); unit = SP_CSS_UNIT_NONE, value = value_default; computed = value_default; };
+    virtual void clear() {
+        SPIBase::clear();
+        unit = SP_CSS_UNIT_NONE, value = value_default;
+        computed = value_default;
+    }
+
     virtual void cascade( const SPIBase* const parent );
     virtual void merge(   const SPIBase* const parent );
 
@@ -286,35 +366,51 @@ class SPILength : public SPIBase {
         computed      = rhs.computed;
         value_default = rhs.value_default;
         return *this;
-    };
+    }
 
     virtual bool operator==(const SPIBase& rhs);
-    virtual bool operator!=(const SPIBase& rhs) { return !(*this == rhs); };
+    virtual bool operator!=(const SPIBase& rhs) {
+        return !(*this == rhs);
+    }
 
   // To do: make private
-  public:
+public:
     unsigned unit : 4;
     float value;
     float computed;
 
-  private:
+private:
     float value_default;
 };
 
 
 /// Extended length type internal to SPStyle.
 // Used for: line-height, letter-spacing, word-spacing
-class SPILengthOrNormal : public SPILength {
+class SPILengthOrNormal : public SPILength
+{
 
-  public:
-    SPILengthOrNormal() : SPILength( "anonymous_length" ), normal(true) {};
-    SPILengthOrNormal( Glib::ustring name, unsigned value = 0 )
-        : SPILength( name, value ), normal(true) {};
-    virtual ~SPILengthOrNormal() {};
+public:
+    SPILengthOrNormal()
+        : SPILength( "anonymous_length" ),
+          normal(true)
+    {}
+
+    SPILengthOrNormal( Glib::ustring const &name, unsigned value = 0 )
+        : SPILength( name, value ),
+          normal(true)
+    {}
+
+    virtual ~SPILengthOrNormal()
+    {}
+
     virtual void read( gchar const *str );
     virtual const Glib::ustring write( guint const flags = SP_STYLE_FLAG_IFSET,
                                        SPIBase const *const base = NULL ) const;
-    virtual void clear() { SPILength::clear(); normal = true; };
+    virtual void clear() {
+        SPILength::clear();
+        normal = true;
+    }
+
     virtual void cascade( const SPIBase* const parent );
     virtual void merge(   const SPIBase* const parent );
 
@@ -325,33 +421,59 @@ class SPILengthOrNormal : public SPILength {
     }
 
     virtual bool operator==(const SPIBase& rhs);
-    virtual bool operator!=(const SPIBase& rhs) { return !(*this == rhs); };
+    virtual bool operator!=(const SPIBase& rhs) {
+        return !(*this == rhs);
+    }
 
   // To do: make private
-  public:
+public:
     bool normal : 1;
 };
 
 
 /// Enum type internal to SPStyle.
 // Used for many properties. 'font-stretch' and 'font-weight' must be special cased.
-class SPIEnum : public SPIBase {
+class SPIEnum : public SPIBase
+{
 
-  public:
+public:
     SPIEnum() :
-        SPIBase( "anonymous_enum" ), enums( NULL ), value(0), computed(0) {};
-    SPIEnum( Glib::ustring name, SPStyleEnum const *enums, unsigned value = 0, bool inherits = true ) :
-        SPIBase( name, inherits ), enums( enums ), value(value), computed(value),
-        value_default(value), computed_default(value) {};
+        SPIBase( "anonymous_enum" ),
+        enums( NULL ),
+        value(0),
+        computed(0)
+    {}
+
+    SPIEnum( Glib::ustring const &name, SPStyleEnum const *enums, unsigned value = 0, bool inherits = true ) :
+        SPIBase( name, inherits ),
+        enums( enums ),
+        value(value),
+        computed(value),
+        value_default(value),
+        computed_default(value)
+    {}
+
     // Following is needed for font-weight
-    SPIEnum( Glib::ustring name, SPStyleEnum const *enums, SPCSSFontWeight value, SPCSSFontWeight computed ) :
-        SPIBase( name ), enums( enums ), value(value), computed(computed),
-        value_default(value), computed_default(computed) {};
-    virtual ~SPIEnum() {};
+    SPIEnum( Glib::ustring const &name, SPStyleEnum const *enums, SPCSSFontWeight value, SPCSSFontWeight computed ) :
+        SPIBase( name ),
+        enums( enums ),
+        value(value),
+        computed(computed),
+        value_default(value),
+        computed_default(computed)
+    {}
+
+    virtual ~SPIEnum()
+    {}
+
     virtual void read( gchar const *str );
     virtual const Glib::ustring write( guint const flags = SP_STYLE_FLAG_IFSET,
                                        SPIBase const *const base = NULL ) const;
-    virtual void clear() { SPIBase::clear(); value = value_default, computed = computed_default; };
+    virtual void clear() {
+        SPIBase::clear();
+        value = value_default, computed = computed_default;
+    }
+
     virtual void cascade( const SPIBase* const parent );
     virtual void merge(   const SPIBase* const parent );
 
@@ -365,16 +487,18 @@ class SPIEnum : public SPIBase {
     }
 
     virtual bool operator==(const SPIBase& rhs);
-    virtual bool operator!=(const SPIBase& rhs) { return !(*this == rhs); };
+    virtual bool operator!=(const SPIBase& rhs) {
+        return !(*this == rhs);
+    }
 
   // To do: make private
-  public:
+public:
     SPStyleEnum const *enums;
 
     unsigned value : 8;
     unsigned computed: 8;
 
-  private:
+private:
     unsigned value_default : 8;
     unsigned computed_default: 8; // for font-weight
 };
@@ -382,20 +506,31 @@ class SPIEnum : public SPIBase {
 
 /// String type internal to SPStyle.
 // Used for 'marker', ..., 'font', 'font-family', 'inkscape-font-specification'
-class SPIString : public SPIBase {
+class SPIString : public SPIBase
+{
 
-  public:
-    SPIString() :
-        SPIBase( "anonymous_string" ), value(NULL) {};
-    SPIString( Glib::ustring name, gchar* value_default_in = NULL ) :
-        SPIBase( name ) , value(NULL) , value_default(NULL) {
-        value_default = value_default_in?g_strdup(value_default_in):NULL;
-    };
-    virtual ~SPIString() { g_free(value); g_free(value_default); };
+public:
+    SPIString()
+        : SPIBase( "anonymous_string" ),
+          value(NULL)
+    {}
+
+    // TODO probably want to avoid gchar* and c-style strings.
+    SPIString( Glib::ustring const &name, gchar* value_default_in = NULL )
+        : SPIBase( name ),
+          value(NULL),
+          value_default(value_default_in ? g_strdup(value_default_in) : NULL)
+    {}
+
+    virtual ~SPIString() {
+        g_free(value);
+        g_free(value_default);
+    }
+
     virtual void read( gchar const *str );
     virtual const Glib::ustring write( guint const flags = SP_STYLE_FLAG_IFSET,
                                        SPIBase const *const base = NULL ) const;
-    virtual void clear();
+    virtual void clear(); // TODO check about value and value_default
     virtual void cascade( const SPIBase* const parent );
     virtual void merge(   const SPIBase* const parent );
 
@@ -403,31 +538,50 @@ class SPIString : public SPIBase {
         SPIBase::operator=(rhs);
         g_free(value);
         g_free(value_default);
-        value            = rhs.value?g_strdup(rhs.value):NULL;
-        value_default    = rhs.value_default?g_strdup(rhs.value_default):NULL;
+        value            = rhs.value ? g_strdup(rhs.value) : NULL;
+        value_default    = rhs.value_default ? g_strdup(rhs.value_default) : NULL;
         return *this;
     }
 
     virtual bool operator==(const SPIBase& rhs);
-    virtual bool operator!=(const SPIBase& rhs) { return !(*this == rhs); };
+    virtual bool operator!=(const SPIBase& rhs) {
+        return !(*this == rhs);
+    }
 
   // To do: make private, convert value to Glib::ustring
-  public:
+public:
     gchar *value;
     gchar *value_default;
 };
 
 /// Color type interal to SPStyle, FIXME Add string value to store SVG named color.
-class SPIColor : public SPIBase {
+class SPIColor : public SPIBase
+{
 
-  public:
-    SPIColor() : SPIBase( "anonymous_color" ), currentcolor(false) { value.color.set(0); }
-    SPIColor( Glib::ustring name ) : SPIBase( name ), currentcolor(false) { value.color.set(0); }
-    virtual ~SPIColor() {}
+public:
+    SPIColor()
+        : SPIBase( "anonymous_color" ),
+          currentcolor(false) {
+        value.color.set(0);
+    }
+
+    SPIColor( Glib::ustring const &name )
+        : SPIBase( name ),
+          currentcolor(false) {
+        value.color.set(0);
+    }
+
+    virtual ~SPIColor()
+    {}
+
     virtual void read( gchar const *str );
     virtual const Glib::ustring write( guint const flags = SP_STYLE_FLAG_IFSET,
                                        SPIBase const *const base = NULL ) const;
-    virtual void clear() { SPIBase::clear(); value.color.set(0); }
+    virtual void clear() {
+        SPIBase::clear();
+        value.color.set(0);
+    }
+
     virtual void cascade( const SPIBase* const parent );
     virtual void merge(   const SPIBase* const parent );
 
@@ -439,13 +593,23 @@ class SPIColor : public SPIBase {
     }
 
     virtual bool operator==(const SPIBase& rhs);
-    virtual bool operator!=(const SPIBase& rhs) { return !(*this == rhs); }
+    virtual bool operator!=(const SPIBase& rhs) {
+        return !(*this == rhs);
+    }
 
-    void setColor( float r, float g, float b ) { value.color.set( r, g, b ); }
-    void setColor( guint32 val ) {               value.color.set( val );     }
-    void setColor( SPColor const& color ) {      value.color = color;        }
+    void setColor( float r, float g, float b ) {
+        value.color.set( r, g, b );
+    }
 
-  public:
+    void setColor( guint32 val ) {
+        value.color.set( val );
+    }
+
+    void setColor( SPColor const& color ) {
+        value.color = color;
+    }
+
+public:
     bool currentcolor : 1;
     // FIXME: remove structure and derive SPIPaint from this class.
     struct {
@@ -459,18 +623,28 @@ class SPIColor : public SPIBase {
 #define SP_STYLE_STROKE_SERVER(s) ((const_cast<SPStyle *> (s))->getStrokePaintServer())
 
 /// Paint type internal to SPStyle.
-class SPIPaint : public SPIBase {
+class SPIPaint : public SPIBase
+{
 
-  public:
-    SPIPaint() : SPIBase( "anonymous_paint" ), currentcolor(false), colorSet(false), noneSet(false) {
+public:
+    SPIPaint()
+        : SPIBase( "anonymous_paint" ),
+          currentcolor(false),
+          colorSet(false),
+          noneSet(false) {
         value.href = NULL;
         clear();
-    };
-    SPIPaint( Glib::ustring name )
-        : SPIBase( name ), currentcolor(false), colorSet(false), noneSet(false) {
+    }
+
+    SPIPaint( Glib::ustring const &name )
+        : SPIBase( name ),
+          currentcolor(false),
+          colorSet(false),
+          noneSet(false) {
         value.href = NULL;
         clear();  // Sets defaults
-    };
+    }
+
     virtual ~SPIPaint();  // Clear and delete href.
     virtual void read( gchar const *str );
     virtual void read( gchar const *str, SPStyle &style, SPDocument *document = 0);
@@ -492,23 +666,46 @@ class SPIPaint : public SPIBase {
     }
 
     virtual bool operator==(const SPIBase& rhs);
-    virtual bool operator!=(const SPIBase& rhs) { return !(*this == rhs); };
+    virtual bool operator!=(const SPIBase& rhs) {
+        return !(*this == rhs);
+    }
 
-    bool isSameType( SPIPaint const & other ) const {return (isPaintserver() == other.isPaintserver()) && (colorSet == other.colorSet) && (currentcolor == other.currentcolor);}
+    bool isSameType( SPIPaint const & other ) const {
+        return (isPaintserver() == other.isPaintserver()) && (colorSet == other.colorSet) && (currentcolor == other.currentcolor);
+    }
 
-    bool isNoneSet() const {return noneSet;}
+    bool isNoneSet() const {
+        return noneSet;
+    }
 
-    bool isNone() const {return !currentcolor && !colorSet && !isPaintserver();} // TODO refine
-    bool isColor() const {return colorSet && !isPaintserver();}
-    bool isPaintserver() const {return (value.href) ? value.href->getObject():0;}
+    bool isNone() const {
+        return !currentcolor && !colorSet && !isPaintserver();
+    } // TODO refine
 
-    void setColor( float r, float g, float b ) {value.color.set( r, g, b ); colorSet = true;}
-    void setColor( guint32 val ) {value.color.set( val ); colorSet = true;}
-    void setColor( SPColor const& color ) {value.color = color; colorSet = true;}
+    bool isColor() const {
+        return colorSet && !isPaintserver();
+    }
+
+    bool isPaintserver() const {
+        return (value.href) ? value.href->getObject() : 0;
+    }
+
+    void setColor( float r, float g, float b ) {
+        value.color.set( r, g, b ); colorSet = true;
+    }
+
+    void setColor( guint32 val ) {
+        value.color.set( val ); colorSet = true;
+    }
+
+    void setColor( SPColor const& color ) {
+        value.color = color; colorSet = true;
+    }
+
     void setNone() {noneSet = true; colorSet=false;}
 
   // To do: make private
-  public:
+public:
     bool currentcolor : 1;
     bool colorSet : 1;
     bool noneSet : 1;
@@ -535,11 +732,20 @@ enum SPPaintOrderLayer {
 const size_t PAINT_ORDER_LAYERS = 3;
 
 /// Paint order type internal to SPStyle
-class SPIPaintOrder : public SPIBase {
+class SPIPaintOrder : public SPIBase
+{
 
-  public:
-    SPIPaintOrder() : SPIBase( "paint-order" ), value(NULL) { this->clear(); };
-    virtual ~SPIPaintOrder() { g_free( value ); };
+public:
+    SPIPaintOrder()
+        : SPIBase( "paint-order" ),
+          value(NULL) {
+        this->clear();
+    }
+
+    virtual ~SPIPaintOrder() {
+        g_free( value );
+    }
+
     virtual void read( gchar const *str );
     virtual const Glib::ustring write( guint const flags = SP_STYLE_FLAG_IFSET,
                                        SPIBase const *const base = NULL ) const;
@@ -567,11 +773,13 @@ class SPIPaintOrder : public SPIBase {
     }
 
     virtual bool operator==(const SPIBase& rhs);
-    virtual bool operator!=(const SPIBase& rhs) { return !(*this == rhs); };
+    virtual bool operator!=(const SPIBase& rhs) {
+        return !(*this == rhs);
+    }
 
 
   // To do: make private
-  public:
+public:
     SPPaintOrderLayer layer[PAINT_ORDER_LAYERS];
     bool layer_set[PAINT_ORDER_LAYERS];
     gchar *value;  // Raw string
@@ -579,15 +787,25 @@ class SPIPaintOrder : public SPIBase {
 
 
 /// Filter type internal to SPStyle
-class SPIDashArray : public SPIBase {
+class SPIDashArray : public SPIBase
+{
 
-  public:
-    SPIDashArray() : SPIBase( "stroke-dasharray" ) {};  // Only one instance of SPIDashArray
-    virtual ~SPIDashArray() {};
+public:
+    SPIDashArray()
+        : SPIBase( "stroke-dasharray" )
+    {}  // Only one instance of SPIDashArray
+
+    virtual ~SPIDashArray()
+    {}
+
     virtual void read( gchar const *str );
     virtual const Glib::ustring write( guint const flags = SP_STYLE_FLAG_IFSET,
                                        SPIBase const *const base = NULL ) const;
-    virtual void clear() { SPIBase::clear(); values.clear(); };
+    virtual void clear() {
+        SPIBase::clear();
+        values.clear();
+    }
+
     virtual void cascade( const SPIBase* const parent );
     virtual void merge(   const SPIBase* const parent );
 
@@ -598,19 +816,26 @@ class SPIDashArray : public SPIBase {
     }
 
     virtual bool operator==(const SPIBase& rhs);
-    virtual bool operator!=(const SPIBase& rhs) { return !(*this == rhs); };
+    virtual bool operator!=(const SPIBase& rhs) {
+        return !(*this == rhs);
+    }
 
 
   // To do: make private, change double to SVGLength
-  public:
+public:
     std::vector<double> values;
 };
 
 /// Filter type internal to SPStyle
-class SPIFilter : public SPIBase {
+class SPIFilter : public SPIBase
+{
 
-  public:
-    SPIFilter() : SPIBase( "filter", false ), href(NULL) {};
+public:
+    SPIFilter()
+        : SPIBase( "filter", false ),
+          href(NULL)
+    {}
+
     virtual ~SPIFilter();
     virtual void read( gchar const *str );
     virtual const Glib::ustring write( guint const flags = SP_STYLE_FLAG_IFSET,
@@ -626,10 +851,12 @@ class SPIFilter : public SPIBase {
     }
 
     virtual bool operator==(const SPIBase& rhs);
-    virtual bool operator!=(const SPIBase& rhs) { return !(*this == rhs); };
+    virtual bool operator!=(const SPIBase& rhs) {
+        return !(*this == rhs);
+    }
 
   // To do: make private
-  public:
+public:
     SPFilterReference *href;
 };
 
@@ -642,16 +869,27 @@ enum {
 };
 
 /// Fontsize type internal to SPStyle (also used by libnrtype/Layout-TNG-Input.cpp).
-class SPIFontSize : public SPIBase {
+class SPIFontSize : public SPIBase
+{
 
-  public:
-    SPIFontSize() : SPIBase( "font-size" ) { this->clear(); };
-    virtual ~SPIFontSize() {};
+public:
+    SPIFontSize()
+        : SPIBase( "font-size" ) {
+        this->clear();
+    }
+
+    virtual ~SPIFontSize()
+    {}
+
     virtual void read( gchar const *str );
     virtual const Glib::ustring write( guint const flags = SP_STYLE_FLAG_IFSET,
                                        SPIBase const *const base = NULL ) const;
-    virtual void clear() { SPIBase::clear(); type = SP_FONT_SIZE_LITERAL, unit = SP_CSS_UNIT_NONE,
-                           literal = SP_CSS_FONT_SIZE_MEDIUM, value = 12.0, computed = 12.0; }
+    virtual void clear() {
+        SPIBase::clear();
+        type = SP_FONT_SIZE_LITERAL, unit = SP_CSS_UNIT_NONE,
+            literal = SP_CSS_FONT_SIZE_MEDIUM, value = 12.0, computed = 12.0;
+    }
+
     virtual void cascade( const SPIBase* const parent );
     virtual void merge(   const SPIBase* const parent );
 
@@ -666,39 +904,51 @@ class SPIFontSize : public SPIBase {
     }
 
     virtual bool operator==(const SPIBase& rhs);
-    virtual bool operator!=(const SPIBase& rhs) { return !(*this == rhs); };
+    virtual bool operator!=(const SPIBase& rhs) {
+        return !(*this == rhs);
+    }
 
-  public:
+public:
     static float const font_size_default;
 
   // To do: make private
-  public:
+public:
     unsigned type : 2;
     unsigned unit : 4;
     unsigned literal : 4;
     float value;
     float computed;
 
-  private:
+private:
     double relative_fraction() const;
     static float const font_size_table[];
 };
 
 
 /// Font type internal to SPStyle ('font' shorthand)
-class SPIFont : public SPIBase {
+class SPIFont : public SPIBase
+{
 
-  public:
-    SPIFont() : SPIBase( "font" ) {};
-    virtual ~SPIFont() {};
+public:
+    SPIFont()
+        : SPIBase( "font" )
+    {}
+
+    virtual ~SPIFont()
+    {}
+
     virtual void read( gchar const *str );
     virtual const Glib::ustring write( guint const flags = SP_STYLE_FLAG_IFSET,
                                        SPIBase const *const base = NULL ) const;
     virtual void clear() {
         SPIBase::clear();
-    };
-    virtual void cascade( const SPIBase* const parent ) { (void)parent; }; // Done in dependent properties
-    virtual void merge(   const SPIBase* const parent ) { (void)parent; };
+    }
+
+    virtual void cascade( const SPIBase* const /*parent*/ )
+    {} // Done in dependent properties
+
+    virtual void merge(   const SPIBase* const /*parent*/ )
+    {}
 
     SPIFont& operator=(const SPIFont& rhs) {
         SPIBase::operator=(rhs);
@@ -706,7 +956,9 @@ class SPIFont : public SPIBase {
     }
 
     virtual bool operator==(const SPIBase& rhs);
-    virtual bool operator!=(const SPIBase& rhs) { return !(*this == rhs); };
+    virtual bool operator!=(const SPIBase& rhs) {
+        return !(*this == rhs);
+    }
 };
 
 
@@ -717,16 +969,27 @@ enum {
 };
 
 /// Baseline shift type internal to SPStyle. (This is actually just like SPIFontSize)
-class SPIBaselineShift : public SPIBase {
+class SPIBaselineShift : public SPIBase
+{
 
-  public:
-    SPIBaselineShift() : SPIBase( "baseline-shift", false ) { this->clear(); };
-    virtual ~SPIBaselineShift() {};
+public:
+    SPIBaselineShift()
+        : SPIBase( "baseline-shift", false ) {
+        this->clear();
+    }
+
+    virtual ~SPIBaselineShift()
+    {}
+
     virtual void read( gchar const *str );
     virtual const Glib::ustring write( guint const flags = SP_STYLE_FLAG_IFSET,
                                        SPIBase const *const base = NULL ) const;
-    virtual void clear() { SPIBase::clear(); type=SP_BASELINE_SHIFT_LITERAL, unit=SP_CSS_UNIT_NONE,
-                           literal = SP_CSS_BASELINE_SHIFT_BASELINE, value = 0.0, computed = 0.0; }
+    virtual void clear() {
+        SPIBase::clear();
+        type=SP_BASELINE_SHIFT_LITERAL, unit=SP_CSS_UNIT_NONE,
+            literal = SP_CSS_BASELINE_SHIFT_BASELINE, value = 0.0, computed = 0.0;
+    }
+
     virtual void cascade( const SPIBase* const parent );
     virtual void merge(   const SPIBase* const parent );
 
@@ -742,11 +1005,14 @@ class SPIBaselineShift : public SPIBase {
 
     // This is not used but we have it for completeness, it has not been tested.
     virtual bool operator==(const SPIBase& rhs);
-    virtual bool operator!=(const SPIBase& rhs) { return !(*this == rhs); };
+    virtual bool operator!=(const SPIBase& rhs) {
+        return !(*this == rhs);
+    }
+
     bool isZero() const;
 
   // To do: make private
-  public:
+public:
     unsigned type : 2;
     unsigned unit : 4;
     unsigned literal: 2;
@@ -759,15 +1025,26 @@ class SPIBaselineShift : public SPIBase {
 
 // CSS3 2.2
 /// Text decoration line type internal to SPStyle.  THIS SHOULD BE A GENERIC CLASS
-class SPITextDecorationLine : public SPIBase {
+class SPITextDecorationLine : public SPIBase
+{
 
-  public:
-    SPITextDecorationLine() : SPIBase( "text-decoration-line" ) { this->clear(); };
-    virtual ~SPITextDecorationLine() {};
+public:
+    SPITextDecorationLine()
+        : SPIBase( "text-decoration-line" ) {
+        this->clear();
+    }
+
+    virtual ~SPITextDecorationLine()
+    {}
+
     virtual void read( gchar const *str );
     virtual const Glib::ustring write( guint const flags = SP_STYLE_FLAG_IFSET,
                                        SPIBase const *const base = NULL ) const;
-    virtual void clear() { SPIBase::clear(); underline = false, overline = false, line_through = false, blink = false; }
+    virtual void clear() {
+        SPIBase::clear();
+        underline = false, overline = false, line_through = false, blink = false;
+    }
+
     virtual void cascade( const SPIBase* const parent );
     virtual void merge(   const SPIBase* const parent );
 
@@ -781,10 +1058,12 @@ class SPITextDecorationLine : public SPIBase {
     }
 
     virtual bool operator==(const SPIBase& rhs);
-    virtual bool operator!=(const SPIBase& rhs) { return !(*this == rhs); };
+    virtual bool operator!=(const SPIBase& rhs) {
+        return !(*this == rhs);
+    }
 
   // To do: make private
-  public:
+public:
     bool underline : 1;
     bool overline : 1;
     bool line_through : 1;
@@ -793,15 +1072,26 @@ class SPITextDecorationLine : public SPIBase {
 
 // CSS3 2.2
 /// Text decoration style type internal to SPStyle.  THIS SHOULD JUST BE SPIEnum!
-class SPITextDecorationStyle : public SPIBase {
+class SPITextDecorationStyle : public SPIBase
+{
 
-  public:
-    SPITextDecorationStyle() : SPIBase( "text-decoration-style" ) { this->clear(); };
-    virtual ~SPITextDecorationStyle() {};
+public:
+    SPITextDecorationStyle()
+        : SPIBase( "text-decoration-style" ) {
+        this->clear();
+    }
+
+    virtual ~SPITextDecorationStyle()
+    {}
+
     virtual void read( gchar const *str );
     virtual const Glib::ustring write( guint const flags = SP_STYLE_FLAG_IFSET,
                                        SPIBase const *const base = NULL ) const;
-    virtual void clear() { SPIBase::clear(); solid = true, isdouble = false, dotted = false, dashed = false, wavy = false; }
+    virtual void clear() {
+        SPIBase::clear();
+        solid = true, isdouble = false, dotted = false, dashed = false, wavy = false;
+    }
+
     virtual void cascade( const SPIBase* const parent );
     virtual void merge(   const SPIBase* const parent );
 
@@ -816,10 +1106,12 @@ class SPITextDecorationStyle : public SPIBase {
     }
 
     virtual bool operator==(const SPIBase& rhs);
-    virtual bool operator!=(const SPIBase& rhs) { return !(*this == rhs); };
+    virtual bool operator!=(const SPIBase& rhs) {
+        return !(*this == rhs);
+    }
 
   // To do: make private
-  public:
+public:
     bool solid : 1;
     bool isdouble : 1;  // cannot use "double" as it is a reserved keyword
     bool dotted : 1;
@@ -836,18 +1128,26 @@ class SPITextDecorationStyle : public SPIBase {
 // the right style. (See http://www.w3.org/TR/css-text-decor-3/#text-decoration-property )
 
 /// Text decoration type internal to SPStyle.
-class SPITextDecoration : public SPIBase {
+class SPITextDecoration : public SPIBase
+{
 
-  public:
-    SPITextDecoration() : SPIBase( "text-decoration" ), style_td( NULL ) {};
-    virtual ~SPITextDecoration() {};
+public:
+    SPITextDecoration()
+        : SPIBase( "text-decoration" ),
+          style_td( NULL )
+    {}
+
+    virtual ~SPITextDecoration()
+    {}
+
     virtual void read( gchar const *str );
     virtual const Glib::ustring write( guint const flags = SP_STYLE_FLAG_IFSET,
                                        SPIBase const *const base = NULL ) const;
     virtual void clear() {
         SPIBase::clear();
         style_td = NULL;
-    };
+    }
+
     virtual void cascade( const SPIBase* const parent );
     virtual void merge(   const SPIBase* const parent );
 
@@ -858,9 +1158,11 @@ class SPITextDecoration : public SPIBase {
 
     // Use CSS2 value
     virtual bool operator==(const SPIBase& rhs);
-    virtual bool operator!=(const SPIBase& rhs) { return !(*this == rhs); };
+    virtual bool operator!=(const SPIBase& rhs) {
+        return !(*this == rhs);
+    }
 
-  public:
+public:
     SPStyle* style_td;   // Style to be used for drawing CSS2 text decorations 
 };
 

@@ -121,10 +121,6 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     // Text related properties
     text_indent(      "text-indent",                     0.0 ),  // SPILength
     text_align(       "text-align",      enum_text_align,      SP_CSS_TEXT_ALIGN_START    ),
-    text_decoration(),
-    text_decoration_line(),
-    text_decoration_style(),
-    text_decoration_color( "text-decoration-color" ),            // SPIColor
 
     letter_spacing(   "letter-spacing",                  0.0 ),  // SPILengthOrNormal
     word_spacing(     "word-spacing",                    0.0 ),  // SPILengthOrNormal
@@ -136,6 +132,11 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     baseline_shift(),
     text_anchor(      "text-anchor",     enum_text_anchor,     SP_CSS_TEXT_ANCHOR_START   ),
     white_space(      "white-space",     enum_white_space,     SP_CSS_WHITE_SPACE_NORMAL  ),
+
+    text_decoration(),
+    text_decoration_line(),
+    text_decoration_style(),
+    text_decoration_color( "text-decoration-color" ),            // SPIColor
 
     // General visual properties
     clip_rule(        "clip-rule",       enum_clip_rule,       SP_WIND_RULE_NONZERO       ),

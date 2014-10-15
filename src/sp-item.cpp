@@ -708,7 +708,8 @@ void SPItem::update(SPCtx* /*ctx*/, guint flags) {
         item->avoidRef->handleSettingChange();
 }
 
-void SPItem::modified(unsigned int flags) {
+void SPItem::modified(unsigned int /*flags*/)
+{
 }
 
 Inkscape::XML::Node* SPItem::write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags) {

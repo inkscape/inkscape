@@ -647,7 +647,8 @@ Geom::OptInterval SPHatch::_calculateStripExtents(Geom::OptRect bbox) const {
     return extents;
 }
 
-cairo_pattern_t* SPHatch::pattern_new(cairo_t *base_ct, Geom::OptRect const &bbox, double opacity) {
+cairo_pattern_t* SPHatch::pattern_new(cairo_t * /*base_ct*/, Geom::OptRect const &/*bbox*/, double /*opacity*/)
+{
     //this code should not be used
     //it is however required by the fact that SPPaintServer::hatch_new is pure virtual
     return cairo_pattern_create_rgb(0.5, 0.5, 1.0);
