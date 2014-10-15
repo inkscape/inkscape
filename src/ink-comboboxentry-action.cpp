@@ -390,6 +390,8 @@ GtkWidget* create_tool_item( GtkAction* action )
       					    NULL, NULL );
     }
 
+    // FIXME: once gtk3 migration is done this can be removed
+    // https://bugzilla.gnome.org/show_bug.cgi?id=734915
     gtk_widget_show_all (comboBoxEntry);
 
     // Optionally add formatting...

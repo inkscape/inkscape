@@ -819,7 +819,7 @@ static void sp_text_set_sizes(GtkListStore* model_size, int unit)
  * It is called whenever a text selection is changed, including stepping cursor
  * through text, or setting focus to text.
  */
-static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/, GObject *tbl)
+static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/, GObject *tbl, bool subselection = false) // don't bother to update font list if subsel changed
 {
 #ifdef DEBUG_TEXT
     static int count = 0;
@@ -859,7 +859,9 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
         INK_COMBOBOXENTRY_ACTION( g_object_get_data( tbl, "TextFontStyleAction"  ) );
 
     Inkscape::FontLister* fontlister = Inkscape::FontLister::get_instance();
-    fontlister->update_font_list( sp_desktop_document( SP_ACTIVE_DESKTOP ));
+    if (!subselection) {
+        fontlister->update_font_list( sp_desktop_document( SP_ACTIVE_DESKTOP ));
+    }
     fontlister->selection_update();
 
     // Update font list, but only if widget already created.
@@ -1154,7 +1156,7 @@ static void sp_text_toolbox_selection_modified(Inkscape::Selection *selection, g
 static void
 sp_text_toolbox_subselection_changed (gpointer /*tc*/, GObject *tbl)
 {
-    sp_text_toolbox_selection_changed (NULL, tbl);
+    sp_text_toolbox_selection_changed (NULL, tbl, true);
 }
 
 // TODO: possibly share with font-selector by moving most code to font-lister (passing family name)
@@ -1640,7 +1642,7 @@ static void text_toolbox_watch_ec(SPDesktop* desktop, Inkscape::UI::Tools::ToolB
 
     if (SP_IS_TEXT_CONTEXT(ec)) {
         // Watch selection
-        c_selection_changed = sp_desktop_selection(desktop)->connectChanged(bind(ptr_fun(sp_text_toolbox_selection_changed), holder));
+        c_selection_changed = sp_desktop_selection(desktop)->connectChanged(bind(ptr_fun(sp_text_toolbox_selection_changed), holder, false));
         c_selection_modified = sp_desktop_selection (desktop)->connectModified(bind(ptr_fun(sp_text_toolbox_selection_modified), holder));
         c_subselection_changed = desktop->connectToolSubselectionChanged(bind(ptr_fun(sp_text_toolbox_subselection_changed), holder));
     } else {

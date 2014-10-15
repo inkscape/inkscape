@@ -304,6 +304,9 @@ static void sp_font_selector_family_select_row(GtkTreeSelection *selection,
     GtkTreeModel *model;
     GtkTreeIter   iter;
     if (!gtk_tree_selection_get_selected (selection, &model, &iter)) return;
+    
+    Inkscape::FontLister *fontlister = Inkscape::FontLister::get_instance();
+    fontlister->ensureRowStyles(model, &iter);
 
     // Next get family name with its style list
     gchar        *family;
@@ -311,7 +314,6 @@ static void sp_font_selector_family_select_row(GtkTreeSelection *selection,
     gtk_tree_model_get (model, &iter, 0, &family, 1, &list, -1);
 
     // Find best style match for selected family with current style (e.g. of selected text).
-    Inkscape::FontLister *fontlister = Inkscape::FontLister::get_instance();
     Glib::ustring style = fontlister->get_font_style();
     Glib::ustring best  = fontlister->get_best_style_match (family, style);    
 

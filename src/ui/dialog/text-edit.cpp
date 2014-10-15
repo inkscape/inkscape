@@ -343,9 +343,9 @@ void TextEdit::onReadSelection ( gboolean dostyle, gboolean /*docontent*/ )
 
         Inkscape::FontLister* fontlister = Inkscape::FontLister::get_instance();
 
-        // This is done for us by text-toolbar. No need to do it twice.
-        // fontlister->update_font_list( sp_desktop_document( SP_ACTIVE_DESKTOP ));
-        // fontlister->selection_update();
+        // This is normally done for us by text-toolbar but only when we are in text editing context
+        fontlister->update_font_list(sp_desktop_document(this->desktop));
+        fontlister->selection_update();
 
         Glib::ustring fontspec = fontlister->get_fontspec();
 

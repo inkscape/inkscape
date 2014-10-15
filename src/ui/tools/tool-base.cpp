@@ -18,6 +18,8 @@
 # include "config.h"
 #endif
 
+#include "widgets/desktop-widget.h"
+
 #if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
 #include <glibmm/threads.h>
 #endif
@@ -40,7 +42,6 @@
 #include "desktop-handles.h"
 #include "desktop-events.h"
 #include "desktop-style.h"
-#include "widgets/desktop-widget.h"
 #include "sp-namedview.h"
 #include "selection.h"
 #include "interface.h"
