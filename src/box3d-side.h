@@ -7,6 +7,7 @@
  * Authors:
  *   Maximilian Albert <Anhalter42@gmx.de>
  *   Abhishek Sharma
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2007  Authors
  *
@@ -16,9 +17,6 @@
 #include "sp-polygon.h"
 #include "axis-manip.h"
 
-
-#define SP_BOX3D_SIDE(obj) (dynamic_cast<Box3DSide*>((SPObject*)obj))
-#define SP_IS_BOX3D_SIDE(obj) (dynamic_cast<const Box3DSide*>((SPObject*)obj) != NULL)
 
 class SPBox3D;
 class Persp3D;

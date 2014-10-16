@@ -173,8 +173,10 @@ sp_desktop_set_style(SPDesktop *desktop, SPCSSAttr *css, bool change, bool write
 
         for (const GSList *i = desktop->selection->itemList(); i != NULL; i = i->next) {
             /* last used styles for 3D box faces are stored separately */
-            if (SP_IS_BOX3D_SIDE (i->data)) {
-                const char * descr  = box3d_side_axes_string(SP_BOX3D_SIDE(i->data));
+            SPObject *obj = reinterpret_cast<SPObject *>(i->data); // TODO unsafe until Selection is refactored.
+            Box3DSide *side = dynamic_cast<Box3DSide *>(obj);
+            if (side) {
+                const char * descr  = box3d_side_axes_string(side);
                 if (descr != NULL) {
                     prefs->mergeStyle(Glib::ustring("/desktop/") + descr + "/style", css_write);
                 }

@@ -6,6 +6,7 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
  *   Abhishek Sharma
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2007      Authors
  * Copyright (C) 1999-2002 Lauris Kaplinski
@@ -263,9 +264,10 @@ void box3d_position_set(SPBox3D *box)
 {
     /* This draws the curve and calls requestDisplayUpdate() for each side (the latter is done in
        box3d_side_position_set() to avoid update conflicts with the parent box) */
-    for ( SPObject *child = box->firstChild(); child; child = child->getNext() ) {
-        if (SP_IS_BOX3D_SIDE(child)) {
-            box3d_side_position_set(SP_BOX3D_SIDE(child));
+    for ( SPObject *obj = box->firstChild(); obj; obj = obj->getNext() ) {
+        Box3DSide *side = dynamic_cast<Box3DSide *>(obj);
+        if (side) {
+            box3d_side_position_set(side);
         }
     }
 }
@@ -1079,10 +1081,10 @@ box3d_recompute_z_orders (SPBox3D *box) {
 static std::map<int, Box3DSide *> box3d_get_sides(SPBox3D *box)
 {
     std::map<int, Box3DSide *> sides;
-    for ( SPObject *side = box->firstChild(); side; side = side->getNext() ) {
-        if (SP_IS_BOX3D_SIDE(side)){
-            Box3DSide *bside = SP_BOX3D_SIDE(side);
-            sides[Box3D::face_to_int(bside->getFaceId())] = bside;
+    for ( SPObject *obj = box->firstChild(); obj; obj = obj->getNext() ) {
+        Box3DSide *side = dynamic_cast<Box3DSide *>(obj);
+        if (side) {
+            sides[Box3D::face_to_int(side->getFaceId())] = side;
         }
     }
     sides.erase(-1);
@@ -1280,9 +1282,10 @@ SPGroup *box3d_convert_to_group(SPBox3D *box)
     // create a new group and add the sides (converted to ordinary paths) as its children
     Inkscape::XML::Node *grepr = xml_doc->createElement("svg:g");
 
-    for ( SPObject *child = box->firstChild(); child; child = child->getNext() ) {
-        if (SP_IS_BOX3D_SIDE(child)) {
-            Inkscape::XML::Node *repr = box3d_side_convert_to_path(SP_BOX3D_SIDE(child));
+    for ( SPObject *obj = box->firstChild(); obj; obj = obj->getNext() ) {
+        Box3DSide *side = dynamic_cast<Box3DSide *>(obj);
+        if (side) {
+            Inkscape::XML::Node *repr = box3d_side_convert_to_path(side);
             grepr->appendChild(repr);
         } else {
             g_warning("Non-side item encountered as child of a 3D box.");
