@@ -247,30 +247,74 @@ PdfOperator PdfParser::opTab[] = {
 
 #define numOps (sizeof(opTab) / sizeof(PdfOperator))
 
+namespace {
+
+GfxPatch blankPatch()
+{
+    GfxPatch patch;
+    memset(&patch, 0, sizeof(patch)); // quick-n-dirty
+    return patch;
+}
+
+} // namespace
+
+//------------------------------------------------------------------------
+// ClipHistoryEntry
+//------------------------------------------------------------------------
+
+class ClipHistoryEntry {
+public:
+
+    ClipHistoryEntry(GfxPath *clipPath = NULL, GfxClipType clipType = clipNormal);
+    virtual ~ClipHistoryEntry();
+
+    // Manipulate clip path stack
+    ClipHistoryEntry *save();
+    ClipHistoryEntry *restore();
+    GBool hasSaves() { return saved != NULL; }
+    void setClip(GfxPath *newClipPath, GfxClipType newClipType = clipNormal);
+    GfxPath *getClipPath() { return clipPath; }
+    GfxClipType getClipType() { return clipType; }
+
+private:
+
+    ClipHistoryEntry *saved;    // next clip path on stack
+        
+    GfxPath *clipPath;        // used as the path to be filled for an 'sh' operator
+    GfxClipType clipType;
+
+    ClipHistoryEntry(ClipHistoryEntry *other);
+};
+
 //------------------------------------------------------------------------
 // PdfParser
 //------------------------------------------------------------------------
 
-PdfParser::PdfParser(XRef *xrefA, Inkscape::Extension::Internal::SvgBuilder *builderA,
-                     int /*pageNum*/, int rotate, Dict *resDict,
-                     PDFRectangle *box, PDFRectangle *cropBox)
+PdfParser::PdfParser(XRef *xrefA,
+		     Inkscape::Extension::Internal::SvgBuilder *builderA,
+                     int /*pageNum*/,
+		     int rotate,
+		     Dict *resDict,
+                     PDFRectangle *box,
+		     PDFRectangle *cropBox) :
+    xref(xrefA),
+    builder(builderA),
+    subPage(gFalse),
+    printCommands(false),
+    res(new GfxResources(xref, resDict, NULL)), // start the resource stack
+    state(new GfxState(72.0, 72.0, box, rotate, gTrue)),
+    fontChanged(gFalse),
+    clip(clipNone),
+    ignoreUndef(0),
+    baseMatrix(),
+    formDepth(0),
+    parser(NULL),
+    colorDeltas(),
+    maxDepths(),
+    clipHistory(new ClipHistoryEntry()),
+    operatorHistory(NULL)
 {
-  xref = xrefA;
-  subPage = gFalse;
-  printCommands = false;
-
-  // start the resource stack
-  res = new GfxResources(xref, resDict, NULL);
-
-  // initialize
-  state = new GfxState(72.0, 72.0, box, rotate, gTrue);
-  clipHistory = new ClipHistoryEntry();
   setDefaultApproximationPrecision();
-  fontChanged = gFalse;
-  clip = clipNone;
-  ignoreUndef = 0;
-  operatorHistory = NULL;
-  builder = builderA;
   builder->setDocumentSize(Inkscape::Util::Quantity::convert(state->getPageWidth(), "pt", "px"),
                            Inkscape::Util::Quantity::convert(state->getPageHeight(), "pt", "px"));
 
@@ -306,50 +350,62 @@ PdfParser::PdfParser(XRef *xrefA, Inkscape::Extension::Internal::SvgBuilder *bui
   pushOperator("startPage");
 }
 
-PdfParser::PdfParser(XRef *xrefA, Inkscape::Extension::Internal::SvgBuilder *builderA,
-                     Dict *resDict, PDFRectangle *box) {
-
-  int i;
-  parser = NULL;
-
-  xref = xrefA;
-  subPage = gTrue;
-  printCommands = false;
-
-  // start the resource stack
-  res = new GfxResources(xref, resDict, NULL);
-
-  // initialize
-  operatorHistory = NULL;
-  builder = builderA;
-  state = new GfxState(72, 72, box, 0, gFalse);
-  clipHistory = new ClipHistoryEntry();
+PdfParser::PdfParser(XRef *xrefA,
+		     Inkscape::Extension::Internal::SvgBuilder *builderA,
+                     Dict *resDict,
+		     PDFRectangle *box) :
+    xref(xrefA),
+    builder(builderA),
+    subPage(gTrue),
+    printCommands(false),
+    res(new GfxResources(xref, resDict, NULL)), // start the resource stack
+    state(new GfxState(72, 72, box, 0, gFalse)),
+    fontChanged(gFalse),
+    clip(clipNone),
+    ignoreUndef(0),
+    baseMatrix(),
+    formDepth(0),
+    parser(NULL),
+    colorDeltas(),
+    maxDepths(),
+    clipHistory(new ClipHistoryEntry()),
+    operatorHistory(NULL)
+{
   setDefaultApproximationPrecision();
   
-  fontChanged = gFalse;
-  clip = clipNone;
-  ignoreUndef = 0;
-  for (i = 0; i < 6; ++i) {
+  for (int i = 0; i < 6; ++i) {
     baseMatrix[i] = state->getCTM()[i];
   }
   formDepth = 0;
 }
 
 PdfParser::~PdfParser() {
-  while (state->hasSaves()) {
+  while(operatorHistory) {
+    OpHistoryEntry *tmp = operatorHistory->next;
+    delete operatorHistory;
+    operatorHistory = tmp;
+  }
+
+  while (state && state->hasSaves()) {
     restoreState();
   }
+
   if (!subPage) {
     //out->endPage();
   }
+
   while (res) {
     popResources();
   }
+
   if (state) {
     delete state;
+    state = NULL;
   }
+
   if (clipHistory) {
     delete clipHistory;
+    clipHistory = NULL;
   }
 }
 
@@ -460,7 +516,8 @@ void PdfParser::go(GBool /*topLevel*/)
   }
 }
 
-void PdfParser::pushOperator(const char *name) {
+void PdfParser::pushOperator(const char *name)
+{
     OpHistoryEntry *newEntry = new OpHistoryEntry;
     newEntry->name = name;
     newEntry->state = NULL;
@@ -2086,13 +2143,19 @@ void PdfParser::doPatchMeshShFill(GfxPatchMeshShading *shading) {
 }
 
 void PdfParser::fillPatch(GfxPatch *patch, int nComps, int depth) {
-  GfxPatch patch00, patch01, patch10, patch11;
+  GfxPatch patch00 = blankPatch();
+  GfxPatch patch01 = blankPatch();
+  GfxPatch patch10 = blankPatch();
+  GfxPatch patch11 = blankPatch();
 #ifdef POPPLER_NEW_GFXPATCH
-  GfxColor color;
+  GfxColor color = {{0}};
 #endif
-  double xx[4][8], yy[4][8];
-  double xxm, yym;
-  double patchColorDelta = colorDeltas[pdfPatchMeshShading-1];
+  double xx[4][8];
+  double yy[4][8];
+  double xxm;
+  double yym;
+  double patchColorDelta = colorDeltas[pdfPatchMeshShading - 1];
+
   int i;
 
   for (i = 0; i < nComps; ++i) {
@@ -3463,9 +3526,7 @@ void PdfParser::popResources() {
 }
 
 void PdfParser::setDefaultApproximationPrecision() {
-  int i;
-
-  for (i = 1; i <= pdfNumShadingTypes; ++i) {
+  for (int i = 1; i <= pdfNumShadingTypes; ++i) {
     setApproximationPrecision(i, defaultShadingColorDelta, defaultShadingMaxDepth);
   }
 }
@@ -3484,19 +3545,18 @@ void PdfParser::setApproximationPrecision(int shadingType, double colorDelta,
 // ClipHistoryEntry
 //------------------------------------------------------------------------
 
-ClipHistoryEntry::ClipHistoryEntry(GfxPath *clipPathA, GfxClipType clipTypeA) {
-    if (clipPathA) {
-        clipPath = clipPathA->copy();
-    } else {
-        clipPath = NULL;
-    }
-    clipType = clipTypeA;
-    saved = NULL;
+ClipHistoryEntry::ClipHistoryEntry(GfxPath *clipPathA, GfxClipType clipTypeA) :
+  saved(NULL),
+  clipPath((clipPathA) ? clipPathA->copy() : NULL),
+  clipType(clipTypeA)
+{
 }
 
-ClipHistoryEntry::~ClipHistoryEntry() {
+ClipHistoryEntry::~ClipHistoryEntry()
+{
     if (clipPath) {
         delete clipPath;
+	clipPath = NULL;
     }
 }
 
@@ -3510,6 +3570,7 @@ void ClipHistoryEntry::setClip(GfxPath *clipPathA, GfxClipType clipTypeA) {
         clipType = clipTypeA;
     } else {
         clipPath = NULL;
+	clipType = clipNormal;
     }
 }
 
@@ -3526,7 +3587,7 @@ ClipHistoryEntry *ClipHistoryEntry::restore() {
     if (saved) {
         oldEntry = saved;
         saved = NULL;
-        delete this;
+        delete this; // TODO really should avoid deleting from inside.
     } else {
         oldEntry = this;
     }
@@ -3540,6 +3601,7 @@ ClipHistoryEntry::ClipHistoryEntry(ClipHistoryEntry *other) {
         this->clipType = other->clipType;
     } else {
         this->clipPath = NULL;
+	this->clipType = clipNormal;
     }
     saved = NULL;
 }
