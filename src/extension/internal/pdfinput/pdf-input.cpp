@@ -647,7 +647,31 @@ PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
 
     // Initialize the globalParams variable for poppler
     if (!globalParams) {
+#ifdef ENABLE_OSX_APP_LOCATIONS
+        //
+        // data files for poppler are not relocatable (loaded from 
+        // path defined at build time). This fails to work with relocatable
+        // application bundles for OS X. 
+        //
+        // Workaround: 
+        // 1. define $POPPLER_DATADIR env variable in app launcher script
+        // 2. pass custom $POPPLER_DATADIR via poppler's GlobalParams()
+        //
+        // relevant poppler commit:
+        // <http://cgit.freedesktop.org/poppler/poppler/commit/?id=869584a84eed507775ff1c3183fe484c14b6f77b>
+        //
+        // FIXES: Inkscape bug #956282, #1264793
+        // TODO: report RFE upstream (full relocation support for OS X packaging)
+        //
+        gchar const *poppler_datadir = g_getenv("POPPLER_DATADIR");
+        if (poppler_datadir != NULL) {
+            globalParams = new GlobalParams(poppler_datadir);
+        } else {
+            globalParams = new GlobalParams();
+        }
+#else
         globalParams = new GlobalParams();
+#endif // ENABLE_OSX_APP_LOCATIONS
     }
     // poppler does not use glib g_open. So on win32 we must use unicode call. code was copied from glib gstdio.c
 #ifndef WIN32

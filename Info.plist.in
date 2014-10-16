@@ -328,9 +328,13 @@
     <string>Inks</string>
     <key>CFBundleVersion</key>
     <string>@VERSION@</string>
-    <key>NSHumanReadableCopyright</key>
-    <string>Copyright 2009 Inkscape Developers, GNU General Public License.</string>
+    <key>CGDisableCoalescedUpdates</key>
+    <false/>
+    <key>LSApplicationCategoryType</key>
+    <string>public.app-category.graphics-design</string>
     <key>LSMinimumSystemVersion</key>
-    <string>10.3</string>
+    <string>10.5</string>
+    <key>NSHumanReadableCopyright</key>
+    <string>Copyright 2014 Inkscape Developers, GNU General Public License.</string>
 </dict>
 </plist>

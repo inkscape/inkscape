@@ -1,0 +1,124 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id: $
+
+PortSystem                  1.0
+
+name                        inkscape-packaging
+version                     0.91
+revision                    100
+ 
+categories                  devel graphics
+platforms                   darwin
+license                     GPL-2
+supported_archs             noarch
+ 
+maintainers                 users.sf.net:suv-sf
+
+description                 Dependencies for Inkscape.app
+long_description            ${description}
+ 
+homepage                    http://inkscape.org
+
+# this is a metaport - no fetch, configure and build phases
+master_sites
+distfiles
+use_configure no
+build {}
+destroot {
+    # Create a dummy file so the port can be successfully activated
+    xinstall -d ${destroot}${prefix}/share/doc/${name}
+    set docfile [open ${destroot}${prefix}/share/doc/${name}/README.txt "w"]
+    puts $docfile "Inkscape packaging ${version} (meta port for all dependencies)\n"
+    close $docfile
+}
+
+# build dependencies
+depends_build               port:bzr \
+                            port:autoconf \
+                            port:automake \
+                            port:pkgconfig \
+                            port:libtool \
+                            port:intltool \
+                            port:perl5
+
+# core dependencies
+depends_build-append        port:popt \
+                            port:boehmgc \
+                            port:gsl \
+                            port:lcms2 \
+                            port:gtkmm \
+                            port:boost \
+                            port:ImageMagick \
+                            port:gtkspell2 \
+                            port:aspell-dict-en \
+                            port:poppler
+
+# ports for Inkscape.app
+depends_build-append        port:gnome-icon-theme \
+                            port:gnome-icon-theme-symbolic \
+                            port:icon-naming-utils \
+                            port:gnome-themes-standard \
+                            port:gtk-engines2 \
+                            port:gtk2-murrine
+
+# ports for python extensions
+depends_build-append        port:py27-lxml \
+                            port:py27-numpy \
+                            port:py27-Pillow \
+                            port:py27-uniconvertor \
+                            port:py27-pygtk
+
+if {${os.major} <= 10} {
+    # ports for python extensions on Snow Leopard and Leopard
+    depends_build-append    port:py26-lxml \
+                            port:py26-numpy \
+                            port:py26-Pillow \
+                            port:py26-uniconvertor
+}
+if {${os.major} == 9} {
+    # ports for python extensions build deps on Leopard
+    depends_build-append    port:gawk \
+                            port:py25-lxml \
+                            port:py25-numpy \
+                            port:py25-Pillow \
+                            port:py25-uniconvertor
+}
+if {${os.major} < 9} {
+    # we don't support Tiger anymore
+    return -code error "Mac OS X <= 10.4 not supported."
+}
+
+# optional features
+variant libwpd conflicts librevenge description {use libpwd for WPG, CDR, VSD} {
+depends_build-append        port:libcdr \
+                            port:libvisio \
+                            port:libwpg
+}
+
+variant librevenge conflicts libwpd description {use librevenge for WPG, CDR, VSD} {
+depends_build-append        port:libcdr-0.1 \
+                            port:libvisio-0.1 \
+                            port:libwpg-0.3
+}
+
+variant gnome_vfs description {with gnome-vfs (deprecated)} {
+    depends_build-append    port:gnome-vfs
+}
+
+variant gvfs description {with gvfs} {
+    depends_build-append    port:gvfs
+}
+
+variant dbus description {with dbus} {
+    depends_build-append    port:dbus \
+                            port:dbus-glib \
+                            port:dbus-python27
+}
+
+# variants
+universal_variant           no
+
+default_variants-append     +gnome_vfs
+
+# livecheck
+livecheck.type              none

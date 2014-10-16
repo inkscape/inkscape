@@ -1,0 +1,50 @@
+/HAVE_LARGEFILE_SUPPORT/c
+#ifdef __LP64__
+/* #undef HAVE_LARGEFILE_SUPPORT */
+#else
+#define HAVE_LARGEFILE_SUPPORT 1
+#endif
+.
+/SIZEOF_LONG/c
+#ifdef __LP64__
+#define SIZEOF_LONG 8
+#else
+#define SIZEOF_LONG 4
+#endif
+.
+/SIZEOF_PTHREAD_T/c
+#ifdef __LP64__
+#define SIZEOF_PTHREAD_T 8
+#else
+#define SIZEOF_PTHREAD_T 4
+#endif
+.
+/SIZEOF_SIZE_T/c
+#ifdef __LP64__
+#define SIZEOF_SIZE_T 8
+#else
+#define SIZEOF_SIZE_T 4
+#endif
+.
+/SIZEOF_TIME_T/c
+#ifdef __LP64__
+#define SIZEOF_TIME_T 8
+#else
+#define SIZEOF_TIME_T 4
+#endif
+.
+/SIZEOF_UINTPTR_T/c
+#ifdef __LP64__
+#define SIZEOF_UINTPTR_T 8
+#else
+#define SIZEOF_UINTPTR_T 4
+#endif
+.
+/SIZEOF_VOID_P/c
+#ifdef __LP64__
+#define SIZEOF_VOID_P 8
+#else
+#define SIZEOF_VOID_P 4
+#endif
+.
+w

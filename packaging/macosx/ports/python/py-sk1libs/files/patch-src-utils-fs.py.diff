@@ -1,0 +1,26 @@
+--- src/utils/fs.py.orig	2010-05-23 12:46:21.000000000 +0200
++++ src/utils/fs.py	2013-01-18 15:40:02.000000000 +0100
+@@ -220,8 +220,14 @@
+ 			finally:
+ 				_winreg.CloseKey( k )
+ 	if system.get_os_family()==system.MACOSX:
+-		#FIXME: It's a stub. The paths should be more exact.
+-		return ['/',]
++		return ['__PREFIX__/share/fonts',
++			'/usr/share/fonts',
++			'/opt/X11/lib/X11/fonts',
++			'/System/Library/Fonts',
++			'/Network/Library/Fonts',
++			'/Library/Fonts', 
++			os.path.expanduser("~/Library/Fonts"),
++			os.path.expanduser("~/.fonts")]
+ 
+ 
+ DIRECTORY_OBJECT=0
+@@ -311,4 +317,4 @@
+ if __name__ == '__main__':
+     _test()
+ 	
+-	
+\ No newline at end of file
++	

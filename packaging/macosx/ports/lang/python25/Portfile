@@ -1,0 +1,214 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id: Portfile 104926 2013-04-05 04:43:09Z larryv@macports.org $
+
+PortSystem 1.0
+PortGroup select 1.0
+
+name                    python25
+version                 2.5.6
+revision                100
+
+set branch              [join [lrange [split ${version} .] 0 1] .]
+categories              lang
+license                 PSF
+platforms               darwin
+maintainers             nomaintainer
+
+description             An interpreted, object-oriented programming language
+long_description        Python is an interpreted, interactive, object-oriented \
+                        programming language.
+
+homepage                http://www.python.org/
+master_sites            http://ftp.python.org/ftp/python/${version}/
+
+distname                Python-${version}
+use_bzip2               yes
+
+checksums           md5     5d45979c5f30fb2dd5f067c6b06b88e4 \
+                    sha1    29f6dd41bf09c5e04311b367cbb7604fa016e699 \
+                    rmd160  92f0a955971f187a7d50c6422168202ec551bf22
+
+# patch-Lib-distutils-dist.py.diff comes from
+# <http://bugs.python.org/issue1180>
+patchfiles              patch-Makefile.pre.in.diff \
+                        patch-Lib-cgi.py.diff \
+                        patch-Lib-distutils-dist.py.diff \
+                        patch-setup.py.diff \
+                        patch-configure.diff \
+                        patch-64bit.diff \
+                        patch-setup.py-disabled_modules.diff \
+                        patch-mac_ver.diff \
+                        patch-libedit.diff \
+                        patch-fwrapv.diff
+
+depends_lib             port:gettext port:zlib port:openssl \
+                        port:sqlite3 port:db46 port:bzip2 \
+                        port:libedit port:ncurses
+depends_run             port:python_select
+
+configure.args          --enable-shared \
+                        --enable-framework=${frameworks_dir} \
+                        --mandir=${prefix}/share/man \
+                        --enable-ipv6 \
+                        --with-cxx=${configure.cxx}
+
+post-patch {
+        reinplace "s|__PREFIX__|${prefix}|g" ${worksrcpath}/Lib/cgi.py \
+                ${worksrcpath}/setup.py
+        reinplace "s|/Applications/MacPython|${applications_dir}/MacPython|g" \
+                ${worksrcpath}/Mac/Makefile.in \
+                ${worksrcpath}/Mac/IDLE/Makefile.in \
+                ${worksrcpath}/Mac/Tools/Doc/setup.py \
+                ${worksrcpath}/Mac/PythonLauncher/Makefile.in \
+                ${worksrcpath}/Mac/BuildScript/build-installer.py
+        reinplace "s|xargs -0 rm -r|xargs -0 rm -rf|g" \
+                ${worksrcpath}/Mac/PythonLauncher/Makefile.in
+        reinplace "s|__BUILD_ARCH__|${build_arch}|" ${worksrcpath}/configure
+        reinplace "s|__UNIVERSAL_CFLAGS__|${configure.universal_cflags}|" ${worksrcpath}/configure
+        reinplace "s|__UNIVERSAL_LDFLAGS__|${configure.universal_ldflags}|" \
+            ${worksrcpath}/configure \
+            ${worksrcpath}/Makefile.pre.in
+
+        # http://trac.macports.org/ticket/21517
+        system -W ${worksrcpath} "ed - Modules/_localemodule.c < ${filespath}/_localemodule.c.ed"
+        system -W ${worksrcpath} "ed - Lib/locale.py < ${filespath}/locale.py.ed"
+}
+
+build.target            all
+
+# TODO: From python24, do we still need this?
+# Workaround for case-sensitive file systems
+post-build {
+    if { ![file exists ${worksrcpath}/python.exe] } {
+        ln -s python ${worksrcpath}/python.exe
+    }
+}
+
+test.run                yes
+test.target             test
+
+destroot.target         frameworkinstall maninstall
+
+# ensure that correct compiler is used
+build.args-append  MAKE="${build.cmd}" CC="${configure.cc}"
+destroot.args-append  MAKE="${destroot.cmd}" CC="${configure.cc}"
+
+select.group            python
+select.file             ${filespath}/python[string map {. {}} ${branch}]
+
+notes "
+To make python ${branch} the default (i.e. the version you get when you run\
+'python'), please run:
+
+sudo port select --set ${select.group} [file tail ${select.file}]
+"
+
+platform macosx {
+post-destroot {
+
+        set framewpath ${frameworks_dir}/Python.framework
+        set framewdir  ${framewpath}/Versions/${branch}
+
+        # Without this, LINKFORSHARED is set to
+        # ... $(PYTHONFRAMEWORKDIR)/Versions/$(VERSION)/$(PYTHONFRAMEWORK)
+        # (this becomes Python.framework/Versions/2.5/Python) which doesn't
+        # quite work (see ticket #15099); instead specifically list the
+        # full path to the proper Python framework file (which becomes
+        # ${prefix}/Library/Frameworks/Python.framework/Versions/2.5/Python)
+        reinplace {s|^\(LINKFORSHARED=.*\)$(PYTHONFRAMEWORKDIR).*$|\1 $(PYTHONFRAMEWORKINSTALLDIR)/Versions/$(VERSION)/$(PYTHONFRAMEWORK)|} ${destroot}${framewdir}/lib/python${branch}/config/Makefile
+
+        foreach dir { lib include } {
+            file rename ${destroot}${framewdir}/${dir}/python${branch} ${destroot}${prefix}/${dir}
+            ln -s ${prefix}/${dir}/python${branch} ${destroot}${framewdir}/${dir}/python${branch}
+        }
+        ln -s ${prefix}/share ${destroot}${framewdir}/share
+
+        ln -s ${framewdir}/Python ${destroot}${prefix}/lib/libpython${branch}.dylib
+
+        file rename ${destroot}${prefix}/share/man/man1/python.1 ${destroot}${prefix}/share/man/man1/python${branch}.1
+
+        # delete symlinks without version suffix, use python_select instead to choose version
+        foreach bin { python pythonw idle pydoc smtpd.py python-config } {
+            file delete ${destroot}${prefix}/bin/${bin}
+        }
+        foreach bin [list python${branch} pythonw${branch} idle${branch} pydoc${branch} smtpd${branch}.py python${branch}-config] {
+            file rename -force ${destroot}${framewdir}/bin/${bin} ${destroot}${prefix}/bin
+            ln -s ${prefix}/bin/${bin} ${destroot}${framewdir}/bin/${bin}
+        }
+
+        foreach dir { Headers Resources Python Versions/Current } {
+            file delete ${destroot}${framewpath}/${dir}
+        }
+
+        # Fix incorrectly-pointed libpython2.5.a symlink, see
+        # http://trac.macports.org/ticket/19906
+        set python_staticlink ${destroot}${prefix}/lib/python${branch}/config/libpython${branch}.a
+        file delete ${python_staticlink}
+        ln -s ${framewdir}/Python ${python_staticlink}
+}
+}
+
+platform darwin {
+   post-configure {
+      # See http://trac.macports.org/ticket/18376
+      system -W ${worksrcpath} "ed - pyconfig.h < ${filespath}/pyconfig.ed"
+   }
+   if {${os.major} >= 10} {
+    	configure.cppflags-append   -D_DARWIN_C_SOURCE
+        patchfiles-append           patch-pyconfig.h.in.diff
+   }
+   post-patch {
+		if {![file exists /usr/lib/libSystemStubs.a]} {
+			reinplace s/-lSystemStubs//g ${worksrcpath}/configure
+		}
+   }
+   post-destroot {
+      # remove -arch flags from the config
+      reinplace -E {s|-arch [a-z0-9_]+||g} \
+         ${destroot}${prefix}/lib/python${branch}/config/Makefile
+   }
+}
+
+platform darwin 8 {
+    patchfiles-append               patch-FSIORefNum.diff
+}
+
+platform darwin 9 {
+        configure.cppflags-append       -D__DARWIN_UNIX03
+}
+
+platform puredarwin {
+        patchfiles-append       patch-Modules-posixmodule.c.diff
+        configure.args-delete   --enable-framework=${frameworks_dir}
+        configure.args-append   --disable-toolbox-glue --disable-framework
+        destroot.target     install maninstall
+
+post-build {
+    # thin dynamic library to have the same arch as static lib, even after -lSystemStubs
+    system "lipo ${worksrcpath}/libpython${branch}.dylib -output ${worksrcpath}/libpython${branch}.dylib -thin `lipo -info ${worksrcpath}/libpython${branch}.a | tail -n 1 | sed -e 's/.*architecture: \\(.*\\)/\\1/'`"
+}
+
+post-destroot {
+        # delete symlinks without version suffix, use python_select instead to choose version
+        foreach bin { python pythonw idle pydoc smtpd.py python-config } {
+            file delete ${destroot}${prefix}/bin/${bin}
+        }
+
+        file rename ${destroot}${prefix}/share/man/man1/python.1 ${destroot}${prefix}/share/man/man1/python${branch}.1
+}
+}
+
+variant universal {
+   if {${configure.sdkroot} == ""} {
+      configure.args-append   --enable-universalsdk=/
+   } else {
+      configure.args-append   --enable-universalsdk=${configure.sdkroot}
+   }
+   post-configure {
+      system -W ${worksrcpath} "ed - pyconfig.h < ${filespath}/pyconfig.h-universal.ed"
+   }
+}
+
+livecheck.type          regex
+livecheck.url           ${homepage}download/releases/
+livecheck.regex         Python (${branch}.\[0-9\]+)

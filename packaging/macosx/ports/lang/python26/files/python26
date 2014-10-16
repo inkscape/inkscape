@@ -1,0 +1,12 @@
+bin/python2.6
+bin/pythonw2.6
+bin/python2.6-config
+bin/idle2.6
+bin/pydoc2.6
+bin/smtpd2.6.py
+-
+share/man/man1/python2.6.1.gz
+${frameworks_dir}/Library/Frameworks/Python.framework/Versions/2.6
+${frameworks_dir}/Library/Frameworks/Python.framework/Versions/2.6/Headers
+${frameworks_dir}/Library/Frameworks/Python.framework/Versions/2.6/Resources
+${frameworks_dir}/Library/Frameworks/Python.framework/Versions/2.6/Python

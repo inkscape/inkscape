@@ -1,0 +1,64 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem 1.0
+PortGroup python 1.0
+
+name            py-sk1libs
+version         0.9.1
+revision        101
+license         LGPL-2
+maintainers     nomaintainer
+categories      python graphics
+platforms       darwin
+homepage        http://sk1project.org/
+
+description     Set of python non-GUI extensions for sK1 Project
+
+long_description \
+                sk1libs is a set of python non-GUI extensions for sK1 Project. \
+                The package includes multiplatform non-GUI extensions which are \
+                usually native extensions. 
+
+distname        sk1libs-${version}
+# MacPorts does not properly support URLs with a get parameter.
+# Workaround for this bug: https://trac.macports.org/wiki/PortfileRecipes#fetchwithgetparams
+master_sites    http://sk1project.org/dc.php?target=${distfiles}&dummy=
+
+checksums       md5     e18088bbc8a105e7535a96f40b80f284 \
+                sha1    dd948558128bb6547b1f277087bf3066104912da \
+                rmd160  38f22205e0b5b6078e31ec6dc4c1d93845533046
+
+python.versions 25 26 27
+
+if {$subport != $name} {
+
+    depends_lib-append \
+        port:freetype \
+        port:jpeg \
+        port:lcms \
+        port:zlib
+
+    depends_run-append \
+        port:py${python.version}-pil
+
+    variant Pillow { 
+        depends_run-delete port:py${python.version}-pil
+        depends_run-append port:py${python.version}-Pillow
+    }
+
+    patchfiles \
+        patch-src-utils-fs.py.diff \
+        patch-src-imaging-libimagingft-_imagingft.c.diff
+
+    post-patch {
+        reinplace "s|'/usr/include/freetype2'|'${prefix}/include/freetype2'|g" ${worksrcpath}/setup.py
+        reinplace "s|__PREFIX__|${prefix}|g" ${worksrcpath}/src/utils/fs.py
+    }
+}
+
+default_variants        +Pillow
+
+livecheck.type          regex
+livecheck.url           http://sk1project.org/modules.php?name=Products&product=uniconvertor&op=download
+livecheck.regex         "sk1libs-(\\d+(?:\\.\\d+)*)${extract.suffix}"

@@ -1,0 +1,14 @@
+--- _imagingft.c.orig	2013-11-27 16:07:53.000000000 +0400
++++ _imagingft.c	2013-11-27 16:12:01.000000000 +0400
+@@ -70,7 +70,11 @@
+     const char* message;
+ } ft_errors[] =
+ 
++#if defined(USE_FREETYPE_2_1)
++#include FT_ERRORS_H
++#else
+ #include <freetype/fterrors.h>
++#endif
+ 
+ /* -------------------------------------------------------------------- */
+ /* font objects */

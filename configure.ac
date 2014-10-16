@@ -391,10 +391,7 @@ if test "x$enable_lcms" = "xno"; then
     have_lcms2=no
 else
     # Have to test LittleCms presence
-    if test "x${platform_osx}" != "xyes"; then
-       # lcms 2.2 & 2.3 have problems on OSX
-	PKG_CHECK_MODULES(LCMS2, lcms2, have_lcms2="yes", have_lcms2="no")
-    fi
+    PKG_CHECK_MODULES(LCMS2, lcms2, have_lcms2="yes", have_lcms2="no")
 
     if test "x${have_lcms2}" = "xyes"; then
         LIBS="$LIBS $LCMS2_LIBS"

@@ -1,0 +1,46 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem 1.0
+PortGroup python 1.0
+
+name            py-uniconvertor
+version         1.1.5
+revision        100
+license         LGPL-2 GPL-2
+maintainers     nomaintainer
+categories      python graphics 
+platforms       darwin
+homepage        http://sk1project.org/modules.php?name=Products&product=uniconvertor
+
+description     universal vector graphics translator.
+
+long_description \
+                UniConvertor is a universal vector graphics translator. It is a command \
+                line tool which uses sK1 object model to convert one format to another. \
+                Supported input formats include CorelDraw v7-X4 (CDR/CDT/CCX/CDRX/CMX), \
+                Adobe Illustrator v5-9 (AI), PS, EPS, CGM, WMF, XFIG, SVG, SK, SK1, AFF. \
+                Supported output formats include Adobe Illustrator AI, PS, CGM, WMF, \
+                SVG, SK, SK1, PDF.
+
+distname        uniconvertor-${version}
+# MacPorts does not properly support URLs with a get parameter.
+# Workaround for this bug: https://trac.macports.org/wiki/PortfileRecipes#fetchwithgetparams
+master_sites    http://sk1project.org/dc.php?target=${distfiles}&dummy=
+
+checksums       md5     d1272315a58304ece2ff588834e23f72 \
+                sha1    51ec7c4487048c3357ed95cdb4ab3524018a2c9e \
+                rmd160  86211bdb7b7af7611a9db4a2e2f6101995af6850
+
+python.versions 25 26 27
+
+if {$subport != $name} { 
+
+    depends_lib-append \
+        port:py${python.version}-sk1libs
+ 
+} 
+
+livecheck.type          regex
+livecheck.url           http://sk1project.org/modules.php?name=Products&product=uniconvertor&op=download
+livecheck.regex         "uniconvertor-(\\d+(?:\\.\\d+)*)${extract.suffix}"
