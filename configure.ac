@@ -529,27 +529,32 @@ AC_ARG_ENABLE(wpg,
 with_libwpg=no
 
 if test "x$enable_wpg" = "xyes"; then
-	PKG_CHECK_MODULES(LIBWPG01, libwpg-0.1 libwpg-stream-0.1, with_libwpg01=yes, with_libwpg01=no)
-	if test "x$with_libwpg01" = "xyes"; then
-		AC_DEFINE(WITH_LIBWPG01,1,[Build in libwpg 0.1.x])
+        dnl **************************************************************
+        dnl Try using librevenge framework first. Fall back to old libs
+        dnl if unavailable.
+        dnl TODO: Drop subsequent tests once this is widespread in distros
+        dnl **************************************************************
+	PKG_CHECK_MODULES(LIBWPG03, libwpg-0.3 librevenge-0.0 librevenge-stream-0.0, with_libwpg03=yes, with_libwpg03=no)
+	if test "x$with_libwpg03" = "xyes"; then
+		AC_DEFINE(WITH_LIBWPG03,1,[Build using libwpg 0.3.x])
 		with_libwpg=yes
-		AC_SUBST(LIBWPG_LIBS, $LIBWPG01_LIBS)
-		AC_SUBST(LIBWPG_CFLAGS, $LIBWPG01_CFLAGS)
-	fi
-
-	PKG_CHECK_MODULES(LIBWPG02, libwpg-0.2 libwpd-0.9 libwpd-stream-0.9, with_libwpg02=yes, with_libwpg02=no)
-	if test "x$with_libwpg02" = "xyes"; then
-		AC_DEFINE(WITH_LIBWPG02,1,[Build in libwpg 0.2.x])
-		with_libwpg=yes
-		AC_SUBST(LIBWPG_LIBS, $LIBWPG02_LIBS)
-		AC_SUBST(LIBWPG_CFLAGS, $LIBWPG02_CFLAGS)
+		AC_SUBST(LIBWPG_LIBS, $LIBWPG03_LIBS)
+		AC_SUBST(LIBWPG_CFLAGS, $LIBWPG03_CFLAGS)
+	else
+		PKG_CHECK_MODULES(LIBWPG02, libwpg-0.2 libwpd-0.9 libwpd-stream-0.9, with_libwpg02=yes, with_libwpg02=no)
+		if test "x$with_libwpg02" = "xyes"; then
+			AC_DEFINE(WITH_LIBWPG02,1,[Build using libwpg 0.2.x])
+			with_libwpg=yes
+			AC_SUBST(LIBWPG_LIBS, $LIBWPG02_LIBS)
+			AC_SUBST(LIBWPG_CFLAGS, $LIBWPG02_CFLAGS)
+		fi
 	fi
 
 	if test "x$with_libwpg" = "xyes"; then
 		AC_DEFINE(WITH_LIBWPG,1,[Build in libwpg])
 	fi
 fi
-AM_CONDITIONAL(WITH_LIBWPG01, test "x$with_libwpg01" = "xyes")
+AM_CONDITIONAL(WITH_LIBWPG03, test "x$with_libwpg03" = "xyes")
 AM_CONDITIONAL(WITH_LIBWPG02, test "x$with_libwpg02" = "xyes")
 AM_CONDITIONAL(WITH_LIBWPG, test "x$with_libwpg" = "xyes")
 
@@ -564,14 +569,33 @@ AC_ARG_ENABLE(visio,
 with_libvisio=no
 
 if test "x$enable_visio" = "xyes"; then
-	PKG_CHECK_MODULES(LIBVISIO, libvisio-0.0 >= 0.0.20 libwpd-0.9 libwpd-stream-0.9 libwpg-0.2, with_libvisio=yes, with_libvisio=no)
+        dnl **************************************************************
+        dnl Try using librevenge framework first. Fall back to old libs
+        dnl if unavailable.
+        dnl TODO: Drop subsequent tests once this is widespread in distros
+        dnl **************************************************************
+	PKG_CHECK_MODULES(LIBVISIO01, libvisio-0.1 librevenge-0.0 librevenge-stream-0.0, with_libvisio01=yes, with_libvisio01=no)
+	if test "x$with_libvisio01" = "xyes"; then
+		AC_DEFINE(WITH_LIBVISIO01,1,[Build using libvisio 0.1.x])
+		with_libvisio=yes
+		AC_SUBST(LIBVISIO_LIBS, $LIBVISIO01_LIBS)
+		AC_SUBST(LIBVISIO_CFLAGS, $LIBVISIO01_CFLAGS)
+	else
+		PKG_CHECK_MODULES(LIBVISIO00, libvisio-0.0 >= 0.0.20 libwpd-0.9 libwpd-stream-0.9 libwpg-0.2, with_libvisio00=yes, with_libvisio00=no)
+		if test "x$with_libvisio00" = "xyes"; then
+			AC_DEFINE(WITH_LIBVISIO00,1,[Build using libvisio 0.0.x])
+			with_libvisio=yes
+			AC_SUBST(LIBVISIO_LIBS, $LIBVISIO00_LIBS)
+			AC_SUBST(LIBVISIO_CFLAGS, $LIBVISIO00_CFLAGS)
+		fi
+	fi
 
 	if test "x$with_libvisio" = "xyes"; then
 		AC_DEFINE(WITH_LIBVISIO,1,[Build in libvisio])
 	fi
 fi
-AC_SUBST(LIBVISIO_LIBS)
-AC_SUBST(LIBVISIO_CFLAGS)
+AM_CONDITIONAL(WITH_LIBVISIO01, test "x$with_libvisio01" = "xyes")
+AM_CONDITIONAL(WITH_LIBVISIO00, test "x$with_libvisio00" = "xyes")
 AM_CONDITIONAL(WITH_LIBVISIO, test "x$with_libvisio" = "xyes")
 
 dnl ********************************
@@ -585,14 +609,33 @@ AC_ARG_ENABLE(cdr,
 with_libcdr=no
 
 if test "x$enable_cdr" = "xyes"; then
-	PKG_CHECK_MODULES(LIBCDR, libcdr-0.0 >= 0.0.3 libwpd-0.9 libwpd-stream-0.9 libwpg-0.2, with_libcdr=yes, with_libcdr=no)
+        dnl **************************************************************
+        dnl Try using librevenge framework first. Fall back to old libs
+        dnl if unavailable.
+        dnl TODO: Drop subsequent tests once this is widespread in distros
+        dnl **************************************************************
+	PKG_CHECK_MODULES(LIBCDR01, libcdr-0.1 librevenge-0.0 librevenge-stream-0.0, with_libcdr01=yes, with_libcdr01=no)
+	if test "x$with_libcdr01" = "xyes"; then
+		AC_DEFINE(WITH_LIBCDR01,1,[Build using libcdr 0.1.x])
+		with_libcdr=yes
+		AC_SUBST(LIBCDR_LIBS, $LIBCDR01_LIBS)
+		AC_SUBST(LIBCDR_CFLAGS, $LIBCDR01_CFLAGS)
+	else
+		PKG_CHECK_MODULES(LIBCDR00, libcdr-0.0 >= 0.0.3 libwpd-0.9 libwpd-stream-0.9 libwpg-0.2, with_libcdr00=yes, with_libcdr00=no)
+		if test "x$with_libcdr00" = "xyes"; then
+			AC_DEFINE(WITH_LIBCDR00,1,[Build using libcdr 0.0.x])
+			with_libcdr=yes
+			AC_SUBST(LIBCDR_LIBS, $LIBCDR00_LIBS)
+			AC_SUBST(LIBCDR_CFLAGS, $LIBCDR00_CFLAGS)
+		fi
+	fi
 
 	if test "x$with_libcdr" = "xyes"; then
 		AC_DEFINE(WITH_LIBCDR,1,[Build in libcdr])
 	fi
 fi
-AC_SUBST(LIBCDR_LIBS)
-AC_SUBST(LIBCDR_CFLAGS)
+AM_CONDITIONAL(WITH_LIBCDR01, test "x$with_libcdr01" = "xyes")
+AM_CONDITIONAL(WITH_LIBCDR00, test "x$with_libcdr00" = "xyes")
 AM_CONDITIONAL(WITH_LIBCDR, test "x$with_libcdr" = "xyes")
 
 dnl ******************************

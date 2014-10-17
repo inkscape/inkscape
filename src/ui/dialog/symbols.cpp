@@ -62,8 +62,20 @@
 #include "widgets/icon.h"
 
 #ifdef WITH_LIBVISIO
-#include <libvisio/libvisio.h>
-#include <libwpd-stream/libwpd-stream.h>
+  #include <libvisio/libvisio.h>
+
+  // TODO: Drop this check when librevenge is widespread.
+  #if WITH_LIBVISIO01
+    #include <librevenge-stream/librevenge-stream.h>
+
+    using librevenge::RVNGFileStream;
+    using librevenge::RVNGStringVector;
+  #else
+    #include <libwpd-stream/libwpd-stream.h>
+
+    typedef WPXFileStream             RVNGFileStream;
+    typedef libvisio::VSDStringVector RVNGStringVector;
+  #endif
 #endif
 
 #include "verbs.h"
@@ -495,14 +507,20 @@ void SymbolsDialog::iconChanged() {
 // Read Visio stencil files
 SPDocument* read_vss( gchar* fullname, gchar* filename ) {
 
-  WPXFileStream input(fullname);
+  RVNGFileStream input(fullname);
 
   if (!libvisio::VisioDocument::isSupported(&input)) {
     return NULL;
   }
 
-  libvisio::VSDStringVector output;
+  RVNGStringVector output;
+#if WITH_LIBVISIO01
+  librevenge::RVNGSVGDrawingGenerator generator(output, "svg");
+
+  if (!libvisio::VisioDocument::parseStencils(&input, &generator)) {
+#else
   if (!libvisio::VisioDocument::generateSVGStencils(&input, output)) {
+#endif
     return NULL;
   }
 
