@@ -9,17 +9,13 @@
 #include "live_effects/parameter/powerstrokepointarray.h"
 
 #include "live_effects/effect.h"
-#include "svg/svg.h"
-#include "svg/stringstream.h"
 #include "knotholder.h"
 #include "sp-lpe-item.h"
 
 #include <2geom/piecewise.h>
 #include <2geom/sbasis-geometric.h>
 
-// needed for on-canvas editting:
-#include "desktop.h"
-#include "live_effects/lpeobject.h"
+#include "preferences.h" // for proportional stroke/path scaling behavior
 
 namespace Inkscape {
 
@@ -43,28 +39,6 @@ Gtk::Widget *
 PowerStrokePointArrayParam::param_newWidget()
 {
     return NULL;
-/*
-    Inkscape::UI::Widget::RegisteredTransformedPoint * pointwdg = Gtk::manage(
-        new Inkscape::UI::Widget::RegisteredTransformedPoint( param_label,
-                                                              param_tooltip,
-                                                              param_key,
-                                                              *param_wr,
-                                                              param_effect->getRepr(),
-                                                              param_effect->getSPDoc() ) );
-    // TODO: fix to get correct desktop (don't use SP_ACTIVE_DESKTOP)
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    Geom::Affine transf = desktop->doc2dt();
-    pointwdg->setTransform(transf);
-    pointwdg->setValue( *this );
-    pointwdg->clearProgrammatically();
-    pointwdg->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change point parameter"));
-
-    Gtk::HBox * hbox = Gtk::manage( new Gtk::HBox() );
-    static_cast<Gtk::HBox*>(hbox)->pack_start(*pointwdg, true, true);
-    static_cast<Gtk::HBox*>(hbox)->show_all_children();
-
-    return dynamic_cast<Gtk::Widget *> (hbox);
-*/
 }
 
 
