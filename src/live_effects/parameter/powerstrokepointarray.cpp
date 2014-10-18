@@ -68,9 +68,23 @@ PowerStrokePointArrayParam::param_newWidget()
 }
 
 
-void PowerStrokePointArrayParam::param_transform_multiply(Geom::Affine const& /*postmul*/, bool /*set*/)
+void PowerStrokePointArrayParam::param_transform_multiply(Geom::Affine const &postmul, bool /*set*/)
 {
-//    param_set_and_write_new_value( (*this) * postmul );
+    // Check if proportional stroke-width scaling is on
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool transform_stroke = prefs ? prefs->getBool("/options/transform/stroke", true) : true;
+    if (transform_stroke) {
+        std::vector<Geom::Point> result;
+        result.reserve(_vector.size()); // reserve space for the points that will be added in the for loop
+        for (std::vector<Geom::Point>::const_iterator point_it = _vector.begin(), e = _vector.end();
+             point_it != e; ++point_it)
+        {
+            // scale each width knot with the average scaling in X and Y
+            Geom::Coord const A = (*point_it)[Geom::Y] * ((postmul.expansionX() + postmul.expansionY()) / 2);
+            result.push_back(Geom::Point((*point_it)[Geom::X], A));
+        }
+        param_set_and_write_new_value(result);
+    }
 }
 
 
