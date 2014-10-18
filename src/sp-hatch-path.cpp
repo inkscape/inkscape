@@ -1,8 +1,11 @@
-/** @file
+/**
+ * @file
  * SVG <hatchPath> implementation
- *//*
+ */
+/*
  * Author:
  *   Tomasz Boczkowski <penginsbacon@gmail.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2014 Tomasz Boczkowski
  *
@@ -37,24 +40,31 @@
 #include "sp-factory.h"
 
 namespace {
-SPObject* createHatchPath() {
+
+SPObject* createHatchPath()
+{
     return new SPHatchPath();
 }
 
 bool hatchRegistered = SPFactory::instance().registerObject("svg:hatchPath", createHatchPath);
-}
+
+} // namespace
 
 SPHatchPath::SPHatchPath()
-    : _curve(NULL)
-    , _continuous(false)
+    : offset(),
+      _display(),
+      _curve(NULL),
+      _continuous(false)
 {
     offset.unset();
 }
 
-SPHatchPath::~SPHatchPath() {
+SPHatchPath::~SPHatchPath()
+{
 }
 
-void SPHatchPath::setCurve(SPCurve *new_curve, bool owner) {
+void SPHatchPath::setCurve(SPCurve *new_curve, bool owner)
+{
     if (_curve) {
         _curve = _curve->unref();
     }
@@ -67,21 +77,23 @@ void SPHatchPath::setCurve(SPCurve *new_curve, bool owner) {
         }
     }
 
-    this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-void SPHatchPath::build(SPDocument* doc, Inkscape::XML::Node* repr) {
+void SPHatchPath::build(SPDocument* doc, Inkscape::XML::Node* repr)
+{
     SPObject::build(doc, repr);
 
-    this->readAttr("d");
-    this->readAttr("offset");
-    this->readAttr( "style" );
+    readAttr("d");
+    readAttr("offset");
+    readAttr( "style" );
 
     style->fill.setNone();
 }
 
-void SPHatchPath::release() {
-    for (ViewIterator iter = _display.begin(); iter != _display.end(); iter++) {
+void SPHatchPath::release()
+{
+    for (ViewIterator iter = _display.begin(); iter != _display.end(); ++iter) {
         delete iter->arenaitem;
         iter->arenaitem = NULL;
     }
@@ -89,7 +101,8 @@ void SPHatchPath::release() {
     SPObject::release();
 }
 
-void SPHatchPath::set(unsigned int key, const gchar* value) {
+void SPHatchPath::set(unsigned int key, const gchar* value)
+{
     switch (key) {
     case SP_ATTR_D:
         if (value) {
@@ -98,24 +111,24 @@ void SPHatchPath::set(unsigned int key, const gchar* value) {
             SPCurve *curve = new SPCurve(pv);
 
             if (curve) {
-                this->setCurve(curve, true);
+                setCurve(curve, true);
                 curve->unref();
             }
         } else {
-            this->setCurve(NULL, true);
+            setCurve(NULL, true);
         }
 
-        this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+        requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         break;
 
     case SP_ATTR_OFFSET:
         offset.readOrUnset(value);
-        this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+        requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         break;
 
     default:
         if (SP_ATTRIBUTE_IS_CSS(key)) {
-            sp_style_read_from_object(this->style, this);
+            sp_style_read_from_object(style, this);
             requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
         } else {
             SPObject::set(key, value);
@@ -125,41 +138,44 @@ void SPHatchPath::set(unsigned int key, const gchar* value) {
 }
 
 
-void SPHatchPath::update(SPCtx* ctx, unsigned int flags) {
-
+void SPHatchPath::update(SPCtx* ctx, unsigned int flags)
+{
     if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
         flags &= ~SP_OBJECT_USER_MODIFIED_FLAG_B;
     }
 
     if (flags & (SP_OBJECT_STYLE_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
-        if (this->style->stroke_width.unit == SP_CSS_UNIT_PERCENT) {
+        if (style->stroke_width.unit == SP_CSS_UNIT_PERCENT) {
             //TODO: Check specification
 
-            SPItemCtx *ictx = (SPItemCtx *) ctx;
-            double const aw = 1.0 / ictx->i2vp.descrim();
-            this->style->stroke_width.computed = this->style->stroke_width.value * aw;
+            SPItemCtx *ictx = static_cast<SPItemCtx *>(ctx);
+            double const aw = (ictx) ? 1.0 / ictx->i2vp.descrim() : 1.0;
+            style->stroke_width.computed = style->stroke_width.value * aw;
 
-            for (ViewIterator iter = _display.begin(); iter != _display.end(); iter++) {
-                iter->arenaitem->setStyle(this->style);
+            for (ViewIterator iter = _display.begin(); iter != _display.end(); ++iter) {
+                iter->arenaitem->setStyle(style);
             }
         }
     }
 
     if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_PARENT_MODIFIED_FLAG)) {
-        for (ViewIterator iter = _display.begin(); iter != _display.end(); iter++) {
+        for (ViewIterator iter = _display.begin(); iter != _display.end(); ++iter) {
             _updateView(*iter);
         }
     }
 }
 
-bool SPHatchPath::isValid() const {
+bool SPHatchPath::isValid() const
+{
     if (_curve && (_repeatLength() <= 0)) {
         return false;
+    } else {
+        return true;
     }
-    return true;
 }
 
-Inkscape::DrawingItem *SPHatchPath::show(Inkscape::Drawing &drawing, unsigned int key, Geom::OptInterval extents) {
+Inkscape::DrawingItem *SPHatchPath::show(Inkscape::Drawing &drawing, unsigned int key, Geom::OptInterval extents)
+{
     Inkscape::DrawingShape *s = new Inkscape::DrawingShape(drawing);
     _display.push_front(View(s, key));
     _display.front().extents = extents;
@@ -169,8 +185,9 @@ Inkscape::DrawingItem *SPHatchPath::show(Inkscape::Drawing &drawing, unsigned in
     return s;
 }
 
-void SPHatchPath::hide(unsigned int key) {
-    for (ViewIterator iter = _display.begin(); iter != _display.end(); iter++) {
+void SPHatchPath::hide(unsigned int key)
+{
+    for (ViewIterator iter = _display.begin(); iter != _display.end(); ++iter) {
         if (iter->key == key) {
             delete iter->arenaitem;
             _display.erase(iter);
@@ -181,8 +198,9 @@ void SPHatchPath::hide(unsigned int key) {
     g_assert_not_reached();
 }
 
-void SPHatchPath::setStripExtents(unsigned int key, Geom::OptInterval const &extents) {
-    for (ViewIterator iter = _display.begin(); iter != _display.end(); iter++) {
+void SPHatchPath::setStripExtents(unsigned int key, Geom::OptInterval const &extents)
+{
+    for (ViewIterator iter = _display.begin(); iter != _display.end(); ++iter) {
         if (iter->key == key) {
             iter->extents = extents;
             break;
@@ -190,18 +208,19 @@ void SPHatchPath::setStripExtents(unsigned int key, Geom::OptInterval const &ext
     }
 }
 
-Geom::Interval SPHatchPath::bounds() const {
+Geom::Interval SPHatchPath::bounds() const
+{
     Geom::OptRect bbox;
     Geom::Interval result;
 
     Geom::Affine transform = Geom::Translate(offset.computed, 0);
-    if (!this->_curve) {
+    if (!_curve) {
         SPCurve test_curve;
         test_curve.moveto(Geom::Point(0, 0));
         test_curve.moveto(Geom::Point(0, 1));
         bbox = bounds_exact_transformed(test_curve.get_pathvector(), transform);
     } else {
-        bbox = bounds_exact_transformed(this->_curve->get_pathvector(), transform);
+        bbox = bounds_exact_transformed(_curve->get_pathvector(), transform);
     }
 
     gdouble stroke_width = style->stroke_width.computed;
@@ -210,8 +229,9 @@ Geom::Interval SPHatchPath::bounds() const {
     return result;
 }
 
-SPCurve *SPHatchPath::calculateRenderCurve(unsigned key) const {
-    for (ConstViewIterator iter = _display.begin(); iter != _display.end(); iter++) {
+SPCurve *SPHatchPath::calculateRenderCurve(unsigned key) const
+{
+    for (ConstViewIterator iter = _display.begin(); iter != _display.end(); ++iter) {
         if (iter->key == key) {
             return _calculateRenderCurve(*iter);
         }
@@ -220,31 +240,32 @@ SPCurve *SPHatchPath::calculateRenderCurve(unsigned key) const {
     return NULL;
 }
 
-gdouble SPHatchPath::_repeatLength() const {
-    if (!_curve) {
-        return 0;
+gdouble SPHatchPath::_repeatLength() const
+{
+    gdouble val = 0;
+
+    if (_curve && _curve->last_point()) {
+        val = _curve->last_point()->y();
     }
 
-    if (!_curve->last_point()) {
-        return 0;
-    }
-
-    return _curve->last_point()->y();
+    return val;
 }
 
-void SPHatchPath::_updateView(View &view) {
+void SPHatchPath::_updateView(View &view)
+{
     SPCurve *calculated_curve = _calculateRenderCurve(view);
 
     Geom::Affine offset_transform = Geom::Translate(offset.computed, 0);
     view.arenaitem->setTransform(offset_transform);
     style->fill.setNone();
-    view.arenaitem->setStyle(this->style);
+    view.arenaitem->setStyle(style);
     view.arenaitem->setPath(calculated_curve);
 
     calculated_curve->unref();
 }
 
-SPCurve *SPHatchPath::_calculateRenderCurve(View const &view) const {
+SPCurve *SPHatchPath::_calculateRenderCurve(View const &view) const
+{
     SPCurve *calculated_curve = new SPCurve;
 
     if (!view.extents) {
@@ -265,7 +286,7 @@ SPCurve *SPHatchPath::_calculateRenderCurve(View const &view) const {
             segment->transform(Geom::Translate(0, initial_y));
 
             Geom::Affine step_transform = Geom::Translate(0, repeatLength);
-            for (int i = 0; i < segment_cnt; i++) {
+            for (int i = 0; i < segment_cnt; ++i) {
                 if (_continuous) {
                     calculated_curve->append_continuous(segment, 0.0625);
                 } else {
@@ -281,7 +302,8 @@ SPCurve *SPHatchPath::_calculateRenderCurve(View const &view) const {
 }
 
 
-void SPHatchPath::_readHatchPathVector(char const *str, Geom::PathVector &pathv, bool &continous_join) {
+void SPHatchPath::_readHatchPathVector(char const *str, Geom::PathVector &pathv, bool &continous_join)
+{
     if (!str) {
         return;
     }
@@ -314,8 +336,16 @@ void SPHatchPath::_readHatchPathVector(char const *str, Geom::PathVector &pathv,
 }
 
 SPHatchPath::View::View(Inkscape::DrawingShape *arenaitem, int key)
-        : arenaitem(arenaitem), key(key)
+    : arenaitem(arenaitem),
+      extents(),
+      key(key)
 {
+}
+
+SPHatchPath::View::~View()
+{
+    // remember, do not delete arenaitem here
+    arenaitem = NULL;
 }
 
 

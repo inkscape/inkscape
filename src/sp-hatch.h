@@ -1,8 +1,11 @@
-/** @file
+/**
+ * @file
  * SVG <hatch> implementation
- *//*
- * Author:
+ */
+/*
+ * Authors:
  *   Tomasz Boczkowski <penginsbacon@gmail.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2014 Tomasz Boczkowski
  *
@@ -38,9 +41,6 @@ class Node;
 }
 }
 
-#define SP_HATCH(obj) (dynamic_cast<SPHatch*>((SPObject*)obj))
-#define SP_IS_HATCH(obj) (dynamic_cast<const SPHatch*>((SPObject*)obj) != NULL)
-
 class SPHatch : public SPPaintServer {
 public:
     enum HatchUnits {
@@ -48,7 +48,11 @@ public:
         UNITS_OBJECTBOUNDINGBOX
     };
 
-    struct RenderInfo {
+    class RenderInfo {
+    public:
+        RenderInfo();
+        ~RenderInfo();
+
         Geom::Affine child_transform;
         Geom::Affine pattern_to_user_transform;
         Geom::Rect tile_rect;
@@ -59,10 +63,10 @@ public:
     };
 
     SPHatch();
-	virtual ~SPHatch();
+    virtual ~SPHatch();
 
-    /* Reference (href) */
-	Glib::ustring href;
+    // Reference (href)
+    Glib::ustring href;
     SPHatchReference *ref;
 
     gdouble x() const;
@@ -74,31 +78,34 @@ public:
     Geom::Affine const &hatchTransform() const;
     SPHatch *rootHatch(); //TODO: const
 
-    void hatchPaths(std::vector<SPHatchPath*>& l);
-    void hatchPaths(std::vector<SPHatchPath const *>& l) const;
+    std::vector<SPHatchPath *> hatchPaths();
+    std::vector<SPHatchPath const *> hatchPaths() const;
 
     bool isValid() const;
 
     Inkscape::DrawingPattern *show(Inkscape::Drawing &drawing, unsigned int key, Geom::OptRect bbox);
     void hide(unsigned int key);
-	virtual cairo_pattern_t* pattern_new(cairo_t *ct, Geom::OptRect const &bbox, double opacity);
+    virtual cairo_pattern_t* pattern_new(cairo_t *ct, Geom::OptRect const &bbox, double opacity);
 
-	RenderInfo calculateRenderInfo(unsigned key) const;
-	Geom::Interval bounds() const;
-	void setBBox(unsigned int key, Geom::OptRect const &bbox);
+    RenderInfo calculateRenderInfo(unsigned key) const;
+    Geom::Interval bounds() const;
+    void setBBox(unsigned int key, Geom::OptRect const &bbox);
 
 protected:
-	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
-	virtual void release();
-	virtual void child_added(Inkscape::XML::Node* child, Inkscape::XML::Node* ref);
-	virtual void set(unsigned int key, const gchar* value);
-	virtual void update(SPCtx* ctx, unsigned int flags);
-	virtual void modified(unsigned int flags);
+    virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
+    virtual void release();
+    virtual void child_added(Inkscape::XML::Node* child, Inkscape::XML::Node* ref);
+    virtual void set(unsigned int key, const gchar* value);
+    virtual void update(SPCtx* ctx, unsigned int flags);
+    virtual void modified(unsigned int flags);
 
 private:
-    struct View {
+    class View {
+    public:
         View(Inkscape::DrawingPattern *arenaitem, int key);
         //Do not delete arenaitem in destructor.
+
+        ~View();
 
         Inkscape::DrawingPattern *arenaitem;
         Geom::OptRect bbox;
@@ -114,28 +121,30 @@ private:
 
     void _updateView(View &view);
     RenderInfo _calculateRenderInfo(View const &view) const;
-	Geom::OptInterval _calculateStripExtents(Geom::OptRect bbox) const;
+    Geom::OptInterval _calculateStripExtents(Geom::OptRect const &bbox) const;
 
 
-	/**
-	Gets called when the hatch is reattached to another <hatch>
-	*/
-	void _onRefChanged(SPObject *old_ref, SPObject *ref);
+    /**
+     * Gets called when the hatch is reattached to another <hatch>
+     */
+    void _onRefChanged(SPObject *old_ref, SPObject *ref);
 
-	/**
-	Gets called when the referenced <hatch> is changed
-	*/
-	void _onRefModified(SPObject *ref, guint flags);
+    /**
+     * Gets called when the referenced <hatch> is changed
+     */
+    void _onRefModified(SPObject *ref, guint flags);
 
-    /* patternUnits and patternContentUnits attribute */
+    // patternUnits and patternContentUnits attribute
     HatchUnits _hatchUnits : 1;
     bool _hatchUnits_set : 1;
     HatchUnits _hatchContentUnits : 1;
     bool _hatchContentUnits_set : 1;
-    /* hatchTransform attribute */
+
+    // hatchTransform attribute
     Geom::Affine _hatchTransform;
     bool _hatchTransform_set : 1;
-    /* Strip */
+
+    // Strip
     SVGLength _x;
     SVGLength _y;
     SVGLength _pitch;
@@ -149,14 +158,17 @@ private:
 
 class SPHatchReference : public Inkscape::URIReference {
 public:
-    SPHatchReference (SPObject *obj) : URIReference(obj) {}
+    SPHatchReference (SPObject *obj)
+        : URIReference(obj)
+    {}
+
     SPHatch *getObject() const {
         return reinterpret_cast<SPHatch *>(URIReference::getObject());
     }
 
 protected:
     virtual bool _acceptObject(SPObject *obj) const {
-        return SP_IS_HATCH (obj);
+        return dynamic_cast<SPHatch *>(obj) != NULL;
     }
 };
 

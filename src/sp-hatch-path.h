@@ -1,8 +1,11 @@
-/** @file
+/**
+ * @file
  * SVG <hatchPath> implementation
- *//*
+ */
+/*
  * Author:
  *   Tomasz Boczkowski <penginsbacon@gmail.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2014 Tomasz Boczkowski
  *
@@ -26,43 +29,44 @@ class DrawingShape;
 
 }
 
-#define SP_HATCH_PATH(obj) (dynamic_cast<SPHatchPath*>((SPObject*)obj))
-#define SP_IS_HATCH_PATH(obj) (dynamic_cast<const SPHatchPath*>((SPObject*)obj) != NULL)
-
 class SPHatchPath : public SPObject {
 public:
     SPHatchPath();
-	virtual ~SPHatchPath();
+    virtual ~SPHatchPath();
 
-	SVGLength offset;
+    SVGLength offset;
 
-	void setCurve(SPCurve *curve, bool owner);
+    void setCurve(SPCurve *curve, bool owner);
 
     bool isValid() const;
 
     Inkscape::DrawingItem *show(Inkscape::Drawing &drawing, unsigned int key, Geom::OptInterval extents);
     void hide(unsigned int key);
 
-	void setStripExtents(unsigned int key, Geom::OptInterval const &extents);
-	Geom::Interval bounds() const;
+    void setStripExtents(unsigned int key, Geom::OptInterval const &extents);
+    Geom::Interval bounds() const;
 
-	SPCurve *calculateRenderCurve(unsigned key) const;
+    SPCurve *calculateRenderCurve(unsigned key) const;
 
 protected:
-	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
-	virtual void release();
-	virtual void set(unsigned int key, const gchar* value);
-	virtual void update(SPCtx* ctx, unsigned int flags);
+    virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
+    virtual void release();
+    virtual void set(unsigned int key, const gchar* value);
+    virtual void update(SPCtx* ctx, unsigned int flags);
 
 private:
-    struct View {
+    class View {
+    public:
         View(Inkscape::DrawingShape *arenaitem, int key);
         //Do not delete arenaitem in destructor.
+
+        ~View();
 
         Inkscape::DrawingShape *arenaitem;
         Geom::OptInterval extents;
         unsigned int key;
     };
+
     typedef std::list<SPHatchPath::View>::iterator ViewIterator;
     typedef std::list<SPHatchPath::View>::const_iterator ConstViewIterator;
     std::list<View> _display;

@@ -1132,8 +1132,8 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
 
 cairo_pattern_t*
 CairoRenderContext::_createHatchPainter(SPPaintServer const *const paintserver, Geom::OptRect const &pbox) {
-    g_assert( SP_IS_HATCH(paintserver) );
-    SPHatch *hatch = SP_HATCH(paintserver);
+    SPHatch const *hatch = dynamic_cast<SPHatch const *>(paintserver);
+    g_assert( hatch );
 
     g_assert(hatch->pitch() > 0);
 
@@ -1141,7 +1141,9 @@ CairoRenderContext::_createHatchPainter(SPPaintServer const *const paintserver, 
     Inkscape::Drawing drawing;
     unsigned dkey = SPItem::display_key_new(1);
 
-    hatch->show(drawing, dkey, pbox);
+    // TODO need to refactor 'evil' referenced code for const correctness.
+    SPHatch *evil = const_cast<SPHatch *>(hatch);
+    evil->show(drawing, dkey, pbox);
 
     SPHatch::RenderInfo render_info = hatch->calculateRenderInfo(dkey);
     Geom::Rect tile_rect = render_info.tile_rect;
@@ -1177,8 +1179,7 @@ CairoRenderContext::_createHatchPainter(SPPaintServer const *const paintserver, 
     pattern_ctx->transform(Geom::Translate(-overflow_right_strip, 0.0));
     pattern_ctx->pushState();
 
-    std::vector<SPHatchPath *> children;
-    hatch->hatchPaths(children);
+    std::vector<SPHatchPath *> children(evil->hatchPaths());
 
     for (int i = 0; i < overflow_steps; i++) {
         for (std::vector<SPHatchPath *>::iterator iter = children.begin(); iter != children.end(); iter++) {
@@ -1200,7 +1201,7 @@ CairoRenderContext::_createHatchPainter(SPPaintServer const *const paintserver, 
     pattern_transform = render_info.pattern_to_user_transform.inverse() * drawing_transform;
     ink_cairo_pattern_set_matrix(result, pattern_transform);
 
-    hatch->hide(dkey);
+    evil->hide(dkey);
 
     delete pattern_ctx;
     return result;
@@ -1260,7 +1261,7 @@ CairoRenderContext::_createPatternForPaintServer(SPPaintServer const *const pain
         }
     } else if (SP_IS_PATTERN (paintserver)) {
         pattern = _createPatternPainter(paintserver, pbox);
-    } else if (SP_IS_HATCH (paintserver)) {
+    } else if ( dynamic_cast<SPHatch const *>(paintserver) ) {
         pattern = _createHatchPainter(paintserver, pbox);
     } else {
         return NULL;
@@ -1331,8 +1332,8 @@ CairoRenderContext::_setFillStyle(SPStyle const *const style, Geom::OptRect cons
     if (paint_server && paint_server->isValid()) {
 
         g_assert(SP_IS_GRADIENT(SP_STYLE_FILL_SERVER(style))
-            || SP_IS_PATTERN(SP_STYLE_FILL_SERVER(style))
-            || SP_IS_HATCH(SP_STYLE_FILL_SERVER(style)));
+                 || SP_IS_PATTERN(SP_STYLE_FILL_SERVER(style))
+                 || dynamic_cast<SPHatch *>(SP_STYLE_FILL_SERVER(style)));
 
         cairo_pattern_t *pattern = _createPatternForPaintServer(paint_server, pbox, alpha);
         if (pattern) {
@@ -1369,7 +1370,7 @@ CairoRenderContext::_setStrokeStyle(SPStyle const *style, Geom::OptRect const &p
         g_assert( style->stroke.isPaintserver()
                   || SP_IS_GRADIENT(SP_STYLE_STROKE_SERVER(style))
                   || SP_IS_PATTERN(SP_STYLE_STROKE_SERVER(style))
-                  || SP_IS_HATCH(SP_STYLE_STROKE_SERVER(style)));
+                  || dynamic_cast<SPHatch *>(SP_STYLE_STROKE_SERVER(style)));
 
         cairo_pattern_t *pattern = _createPatternForPaintServer(SP_STYLE_STROKE_SERVER(style), pbox, alpha);
 
