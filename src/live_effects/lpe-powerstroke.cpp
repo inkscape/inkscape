@@ -582,6 +582,15 @@ LPEPowerStroke::doEffect_path (std::vector<Geom::Path> const & path_in)
         ts.push_back( Point( pwd2_in.domain().max(),
                              (end_linecap==LINECAP_ZERO_WIDTH) ? 0. : ts.back()[Geom::Y]) );
     }
+
+    // do the interpolation in a coordinate system that is more alike to the on-canvas knots,
+    // instead of the heavily compressed coordinate system of (segment_no offset, Y) in which the knots are stored
+    double pwd2_in_arclength = length(pwd2_in);
+    double xcoord_scaling = pwd2_in_arclength / ts.back()[Geom::X];
+    for (std::size_t i = 0, e = ts.size(); i < e; ++i) {
+        ts[i][Geom::X] *= xcoord_scaling;
+    }
+
     // create stroke path where points (x,y) := (t, offset)
     Geom::Interpolate::Interpolator *interpolator = Geom::Interpolate::Interpolator::create(static_cast<Geom::Interpolate::InterpolatorType>(interpolator_type.get_value()));
     if (Geom::Interpolate::CubicBezierJohan *johan = dynamic_cast<Geom::Interpolate::CubicBezierJohan*>(interpolator)) {
@@ -589,6 +598,9 @@ LPEPowerStroke::doEffect_path (std::vector<Geom::Path> const & path_in)
     }
     Geom::Path strokepath = interpolator->interpolateToPath(ts);
     delete interpolator;
+
+    // apply the inverse knot-xcoord scaling that was applied before the interpolation
+    strokepath *= Scale(1/xcoord_scaling, 1);
 
     D2<Piecewise<SBasis> > patternd2 = make_cuts_independent(strokepath.toPwSb());
     Piecewise<SBasis> x = Piecewise<SBasis>(patternd2[0]);
