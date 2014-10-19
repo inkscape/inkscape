@@ -3342,7 +3342,7 @@
 <path sodipodi:nodetypes="ccsccccccscccccccc" inkscape:connector-curvature="0" id="path20410" d="m 1123.2589,965.26843 c 1.4446,2e-5 2.7254,0.37682 3.8422,1.1304 1.266,0.86352 1.8989,2.02531 1.8989,3.48539 0,1.22462 -0.3872,2.19016 -1.1616,2.89665 l -2.1386,1.68946 C 1125,974.95703 1125,975.48298 1125,976.36218 l -5,0 c -0.2552,-2.15311 0.5885,-2.7475 1.2437,-3.4226 0.1786,-0.18839 1.2937,-0.644 2.1715,-1.45396 0.5473,-0.50486 0.9829,-0.78499 0.9829,-1.3659 0,-0.40818 -0.1564,-0.73788 -0.469,-0.98909 -0.2979,-0.25119 -0.6554,-0.37679 -1.0724,-0.3768 -0.4615,10e-6 -1.8575,0.25336 -1.8797,1.8312 l 0.023,0.77715 -3.9998,-0.065 c 0,-0.94199 0.1786,-2.18228 0.5359,-2.87309 0.3426,-0.70649 0.8564,-1.30309 1.5415,-1.78981 1.1318,-0.81638 2.3204,-1.36587 4.1821,-1.36589" style="font-size:24px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:url(#linearGradient19282);fill-opacity:1;stroke:none;font-family:Hegel-Black" />
 <path sodipodi:nodetypes="ccccc" inkscape:connector-curvature="0" id="text2490" d="m 1120.0496,978.36218 4.9504,0 -0.063,4.90625 -4.8876,0 0,-4.90625" style="font-size:24px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:url(#linearGradient19282);fill-opacity:1;stroke:none;font-family:Hegel-Black" />
 </g>
-<g id="stroke-join-miter-16px" inkscape:label="#join_miter_16px" transform="translate(0,4.0004153)">
+<g id="stroke-join-bevel-16px" inkscape:label="#join_bevel_16px" transform="translate(0,4.0004153)">
 <g inkscape:label="stock-join-bevel" id="g13357" style="display:inline" transform="translate(962.9998,465.36218)">
 <rect style="opacity:0.3;fill:none;stroke:none" id="rect13323" width="16" height="16" x="-160" y="342" transform="translate(241.0002,217)" />
 <path style="fill:url(#linearGradient19282);fill-opacity:1;stroke:none" d="m 86.0002,561 -3,3 0,2 0,3 0,5 3,0 0,-10 2,0 1,0 6,0 0,-3 z m 3,6 0,7 3,0 0,-4 3,0 0,-3 z" id="rect13325" inkscape:connector-curvature="0" sodipodi:nodetypes="ccccccccccccccccccc" />
@@ -3356,9 +3356,8 @@
 <rect style="fill:url(#linearGradient19282);fill-opacity:1;stroke:none" id="rect13355" width="1" height="1" x="87.000198" y="573" />
 </g>
 </g>
-<g id="stroke-join-bevel-16px" inkscape:label="#g24395" transform="translate(4,4.0004153)">
+<g id="stroke-join-miter-16px" inkscape:label="#g24395" transform="translate(4,4.0004153)">
 <g inkscape:label="stock-join-miter" id="g13410" style="display:inline" transform="translate(977.9998,465.36218)">
-<g inkscape:label="stock-join-bevel" id="g13388" transform="translate(20,0)">
 <rect style="opacity:0.3;fill:none;stroke:none" id="rect13390" width="16" height="16" x="-160" y="342" transform="translate(241.0002,217)" />
 <path style="fill:url(#linearGradient19282);fill-opacity:1;stroke:none" d="m 86.0002,561 -3,0 0,5 0,3 0,5 3,0 0,-10 2,0 1,0 6,0 0,-3 z m 3,6 0,7 3,0 0,-4 3,0 0,-3 z" id="path13392" inkscape:connector-curvature="0" sodipodi:nodetypes="ccccccccccccccccccc" />
 <rect style="fill:url(#linearGradient19282);fill-opacity:1;stroke:none" id="rect13394" width="1" height="1" x="93.000198" y="565" />
@@ -3369,7 +3368,6 @@
 <rect style="fill:url(#linearGradient19282);fill-opacity:1;stroke:none" id="rect13404" width="1" height="1" x="87.000198" y="569" />
 <rect style="fill:url(#linearGradient19282);fill-opacity:1;stroke:none" id="rect13406" width="1" height="1" x="87.000198" y="571" />
 <rect style="fill:url(#linearGradient19282);fill-opacity:1;stroke:none" id="rect13408" width="1" height="1" x="87.000198" y="573" />
-</g>
 </g>
 </g>
 <g id="stroke-join-round-16px" inkscape:label="#g24409" transform="translate(7,4.0004153)">
@@ -3387,7 +3385,7 @@
 <path transform="translate(241.0002,217)" style="fill:url(#linearGradient19282);fill-opacity:1;stroke:none" d="m -112,350 6,0 0,1.75 0,1.25 -3,0 0,4 -3,0 z" id="rect13481" inkscape:connector-curvature="0" sodipodi:nodetypes="cccccccc" />
 </g>
 </g>
-<g id="stroke-join-miter" inkscape:label="#join_miter" transform="translate(0,4.1533082e-4)">
+<g id="stroke-join-bevel" inkscape:label="#join_bevel" transform="translate(0,4.1533082e-4)">
 <rect style="opacity:0.3;fill:none;stroke:none" id="rect24338" width="24" height="24.000008" x="1044" y="997.36218" />
 <path style="fill:url(#linearGradient19282);fill-opacity:1;stroke:none" d="m 1052.25,998.47983 -6.25,7.72317 0,13.1592 5,0 0,-16 2.4375,0 1.5625,0 12,0 0,-4.88239 z m 2.75,8.88237 0,12 5,0 0,-7 7,0 0,-5 z" id="path24340" inkscape:connector-curvature="0" sodipodi:nodetypes="ccccccccccccccccc" />
 <rect style="fill:url(#linearGradient19282);fill-opacity:1;stroke:none" id="rect24342" width="2" height="1.9999974" x="1055" y="1004.3622" />
@@ -3400,7 +3398,7 @@
 <rect style="fill:url(#linearGradient19282);fill-opacity:1;stroke:none" id="rect24501" width="2" height="1.9999974" x="1052" y="1013.3622" />
 <rect y="1016.3622" x="1052" height="1.9999974" width="2" id="rect24503" style="fill:url(#linearGradient19282);fill-opacity:1;stroke:none" />
 </g>
-<g id="stroke-join-bevel" inkscape:label="#join_bevel" transform="translate(0,4.1533082e-4)">
+<g id="stroke-join-miter" inkscape:label="#join_miter" transform="translate(0,4.1533082e-4)">
 <rect y="997.36218" x="1083" height="24.000008" width="24" id="rect24507" style="opacity:0.3;fill:none;stroke:none" />
 <path sodipodi:nodetypes="ccccccccccccccccc" inkscape:connector-curvature="0" id="path24509" d="m 1091.25,998.47983 -6.25,-0.11765 0,21.00002 5,0 0,-16 2.4375,0 1.5625,0 12,0 0,-4.88239 z m 2.75,8.88237 0,12 5,0 0,-7 7,0 0,-5 z" style="fill:url(#linearGradient19282);fill-opacity:1;stroke:none" />
 <rect y="1004.3622" x="1094" height="1.9999974" width="2" id="rect24511" style="fill:url(#linearGradient19282);fill-opacity:1;stroke:none" />
