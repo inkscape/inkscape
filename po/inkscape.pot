@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2014-10-02 10:03+0200\n"
+"POT-Creation-Date: 2014-10-19 12:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4132,7 +4132,11 @@ msgid "Food Service"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:219 ../share/symbols/symbols.h:220
+msgctxt "Symbol"
+msgid "Four Wheel Drive Road"
+msgstr ""
+
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:221 ../share/symbols/symbols.h:222
 msgctxt "Symbol"
@@ -4311,13 +4315,6 @@ msgstr ""
 #: ../share/symbols/symbols.h:285 ../share/symbols/symbols.h:286
 msgctxt "Symbol"
 msgid "Wind Surfing"
-msgstr ""
-
-#. Symbols: ./MapSymbolsNPS.svg
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:220 ../share/symbols/symbols.h:219
-msgctxt "Symbol"
-msgid "Four Wheel Drive Road),"
 msgstr ""
 
 #: ../share/templates/templates.h:1
@@ -4685,7 +4682,7 @@ msgid "guidelines typography canvas"
 msgstr ""
 
 #. 3D box
-#: ../src/box3d.cpp:259 ../src/box3d.cpp:1310
+#: ../src/box3d.cpp:260 ../src/box3d.cpp:1313
 #: ../src/ui/dialog/inkscape-preferences.cpp:400
 msgid "3D Box"
 msgstr ""
@@ -5111,7 +5108,7 @@ msgstr ""
 msgid "Memory document %1"
 msgstr ""
 
-#: ../src/document.cpp:787
+#: ../src/document.cpp:786
 #, c-format
 msgid "Unnamed document %d"
 msgstr ""
@@ -5255,7 +5252,7 @@ msgid ""
 "this extension."
 msgstr ""
 
-#: ../src/extension/implementation/script.cpp:1037
+#: ../src/extension/implementation/script.cpp:1057
 msgid ""
 "Inkscape has received additional data from the script executed.  The script "
 "did not return an error, but this may indicate the results will not be as "
@@ -6016,70 +6013,70 @@ msgstr ""
 msgid "Output page size:"
 msgstr ""
 
-#: ../src/extension/internal/cdr-input.cpp:102
+#: ../src/extension/internal/cdr-input.cpp:116
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:87
-#: ../src/extension/internal/vsd-input.cpp:101
+#: ../src/extension/internal/vsd-input.cpp:116
 msgid "Select page:"
 msgstr ""
 
 #. Display total number of pages
-#: ../src/extension/internal/cdr-input.cpp:114
+#: ../src/extension/internal/cdr-input.cpp:128
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:106
-#: ../src/extension/internal/vsd-input.cpp:113
+#: ../src/extension/internal/vsd-input.cpp:128
 #, c-format
 msgid "out of %i"
 msgstr ""
 
-#: ../src/extension/internal/cdr-input.cpp:145
-#: ../src/extension/internal/vsd-input.cpp:144
+#: ../src/extension/internal/cdr-input.cpp:159
+#: ../src/extension/internal/vsd-input.cpp:159
 msgid "Page Selector"
 msgstr ""
 
-#: ../src/extension/internal/cdr-input.cpp:274
+#: ../src/extension/internal/cdr-input.cpp:294
 msgid "Corel DRAW Input"
 msgstr ""
 
-#: ../src/extension/internal/cdr-input.cpp:279
+#: ../src/extension/internal/cdr-input.cpp:299
 msgid "Corel DRAW 7-X4 files (*.cdr)"
 msgstr ""
 
-#: ../src/extension/internal/cdr-input.cpp:280
+#: ../src/extension/internal/cdr-input.cpp:300
 msgid "Open files saved in Corel DRAW 7-X4"
 msgstr ""
 
-#: ../src/extension/internal/cdr-input.cpp:287
+#: ../src/extension/internal/cdr-input.cpp:307
 msgid "Corel DRAW templates input"
 msgstr ""
 
-#: ../src/extension/internal/cdr-input.cpp:292
+#: ../src/extension/internal/cdr-input.cpp:312
 msgid "Corel DRAW 7-13 template files (*.cdt)"
 msgstr ""
 
-#: ../src/extension/internal/cdr-input.cpp:293
+#: ../src/extension/internal/cdr-input.cpp:313
 msgid "Open files saved in Corel DRAW 7-13"
 msgstr ""
 
-#: ../src/extension/internal/cdr-input.cpp:300
+#: ../src/extension/internal/cdr-input.cpp:320
 msgid "Corel DRAW Compressed Exchange files input"
 msgstr ""
 
-#: ../src/extension/internal/cdr-input.cpp:305
+#: ../src/extension/internal/cdr-input.cpp:325
 msgid "Corel DRAW Compressed Exchange files (*.ccx)"
 msgstr ""
 
-#: ../src/extension/internal/cdr-input.cpp:306
+#: ../src/extension/internal/cdr-input.cpp:326
 msgid "Open compressed exchange files saved in Corel DRAW"
 msgstr ""
 
-#: ../src/extension/internal/cdr-input.cpp:313
+#: ../src/extension/internal/cdr-input.cpp:333
 msgid "Corel DRAW Presentation Exchange files input"
 msgstr ""
 
-#: ../src/extension/internal/cdr-input.cpp:318
+#: ../src/extension/internal/cdr-input.cpp:338
 msgid "Corel DRAW Presentation Exchange files (*.cmx)"
 msgstr ""
 
-#: ../src/extension/internal/cdr-input.cpp:319
+#: ../src/extension/internal/cdr-input.cpp:339
 msgid "Open presentation exchange files saved in Corel DRAW"
 msgstr ""
 
@@ -8193,27 +8190,27 @@ msgctxt "PDF input precision"
 msgid "very fine"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:877
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:901
 msgid "PDF Input"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:882
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:906
 msgid "Adobe PDF (*.pdf)"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:883
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:907
 msgid "Adobe Portable Document Format"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:890
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:914
 msgid "AI Input"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:895
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:919
 msgid "Adobe Illustrator 9.0 and above (*.ai)"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:896
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:920
 msgid "Open files saved in Adobe Illustrator 9.0 and newer versions"
 msgstr ""
 
@@ -8293,48 +8290,48 @@ msgstr ""
 msgid "Scalable Vector Graphics format compressed with GZip"
 msgstr ""
 
-#: ../src/extension/internal/vsd-input.cpp:274
+#: ../src/extension/internal/vsd-input.cpp:295
 msgid "VSD Input"
 msgstr ""
 
-#: ../src/extension/internal/vsd-input.cpp:279
+#: ../src/extension/internal/vsd-input.cpp:300
 msgid "Microsoft Visio Diagram (*.vsd)"
 msgstr ""
 
-#: ../src/extension/internal/vsd-input.cpp:280
+#: ../src/extension/internal/vsd-input.cpp:301
 msgid "File format used by Microsoft Visio 6 and later"
 msgstr ""
 
-#: ../src/extension/internal/vsd-input.cpp:287
+#: ../src/extension/internal/vsd-input.cpp:308
 msgid "VDX Input"
 msgstr ""
 
-#: ../src/extension/internal/vsd-input.cpp:292
+#: ../src/extension/internal/vsd-input.cpp:313
 msgid "Microsoft Visio XML Diagram (*.vdx)"
 msgstr ""
 
-#: ../src/extension/internal/vsd-input.cpp:293
+#: ../src/extension/internal/vsd-input.cpp:314
 msgid "File format used by Microsoft Visio 2010 and later"
 msgstr ""
 
-#: ../src/extension/internal/vsd-input.cpp:300
+#: ../src/extension/internal/vsd-input.cpp:321
 msgid "VSDM Input"
 msgstr ""
 
-#: ../src/extension/internal/vsd-input.cpp:305
+#: ../src/extension/internal/vsd-input.cpp:326
 msgid "Microsoft Visio 2013 drawing (*.vsdm)"
 msgstr ""
 
-#: ../src/extension/internal/vsd-input.cpp:306
-#: ../src/extension/internal/vsd-input.cpp:319
+#: ../src/extension/internal/vsd-input.cpp:327
+#: ../src/extension/internal/vsd-input.cpp:340
 msgid "File format used by Microsoft Visio 2013 and later"
 msgstr ""
 
-#: ../src/extension/internal/vsd-input.cpp:313
+#: ../src/extension/internal/vsd-input.cpp:334
 msgid "VSDX Input"
 msgstr ""
 
-#: ../src/extension/internal/vsd-input.cpp:318
+#: ../src/extension/internal/vsd-input.cpp:339
 msgid "Microsoft Visio 2013 drawing (*.vsdx)"
 msgstr ""
 
@@ -8368,15 +8365,15 @@ msgstr ""
 msgid "Windows Metafile"
 msgstr ""
 
-#: ../src/extension/internal/wpg-input.cpp:129
+#: ../src/extension/internal/wpg-input.cpp:144
 msgid "WPG Input"
 msgstr ""
 
-#: ../src/extension/internal/wpg-input.cpp:134
+#: ../src/extension/internal/wpg-input.cpp:149
 msgid "WordPerfect Graphics (*.wpg)"
 msgstr ""
 
-#: ../src/extension/internal/wpg-input.cpp:135
+#: ../src/extension/internal/wpg-input.cpp:150
 msgid "Vector graphics format used by Corel WordPerfect"
 msgstr ""
 
@@ -9169,7 +9166,7 @@ msgstr ""
 
 #. Name
 #: ../src/libgdl/gdl-dock-item.c:298 ../src/widgets/ruler.cpp:191
-#: ../src/widgets/text-toolbar.cpp:1416
+#: ../src/widgets/text-toolbar.cpp:1418
 #: ../share/extensions/gcodetools_graffiti.inx.h:9
 #: ../share/extensions/gcodetools_orientation_points.inx.h:2
 msgid "Orientation"
@@ -9509,7 +9506,7 @@ msgstr ""
 msgid "Dock #%d"
 msgstr ""
 
-#: ../src/libnrtype/FontFactory.cpp:891
+#: ../src/libnrtype/FontFactory.cpp:617
 msgid "Ignoring font without family that will crash Pango"
 msgstr ""
 
@@ -10706,8 +10703,8 @@ msgstr ""
 msgid "Change point parameter"
 msgstr ""
 
+#: ../src/live_effects/parameter/powerstrokepointarray.cpp:217
 #: ../src/live_effects/parameter/powerstrokepointarray.cpp:229
-#: ../src/live_effects/parameter/powerstrokepointarray.cpp:241
 msgid ""
 "<b>Stroke width control point</b>: drag to alter the stroke width. <b>Ctrl"
 "+click</b> adds a control point, <b>Ctrl+Alt+click</b> deletes it."
@@ -11210,59 +11207,59 @@ msgstr ""
 msgid "Combining paths..."
 msgstr ""
 
-#: ../src/path-chemistry.cpp:170
+#: ../src/path-chemistry.cpp:171
 msgid "Combine"
 msgstr ""
 
-#: ../src/path-chemistry.cpp:177
+#: ../src/path-chemistry.cpp:178
 msgid "<b>No path(s)</b> to combine in the selection."
 msgstr ""
 
-#: ../src/path-chemistry.cpp:189
+#: ../src/path-chemistry.cpp:190
 msgid "Select <b>path(s)</b> to break apart."
 msgstr ""
 
-#: ../src/path-chemistry.cpp:193
+#: ../src/path-chemistry.cpp:194
 msgid "Breaking apart paths..."
 msgstr ""
 
-#: ../src/path-chemistry.cpp:284
+#: ../src/path-chemistry.cpp:285
 msgid "Break apart"
 msgstr ""
 
-#: ../src/path-chemistry.cpp:286
+#: ../src/path-chemistry.cpp:287
 msgid "<b>No path(s)</b> to break apart in the selection."
 msgstr ""
 
-#: ../src/path-chemistry.cpp:296
+#: ../src/path-chemistry.cpp:297
 msgid "Select <b>object(s)</b> to convert to path."
 msgstr ""
 
-#: ../src/path-chemistry.cpp:302
+#: ../src/path-chemistry.cpp:303
 msgid "Converting objects to paths..."
 msgstr ""
 
-#: ../src/path-chemistry.cpp:324
+#: ../src/path-chemistry.cpp:325
 msgid "Object to path"
 msgstr ""
 
-#: ../src/path-chemistry.cpp:326
+#: ../src/path-chemistry.cpp:327
 msgid "<b>No objects</b> to convert to path in the selection."
 msgstr ""
 
-#: ../src/path-chemistry.cpp:603
+#: ../src/path-chemistry.cpp:604
 msgid "Select <b>path(s)</b> to reverse."
 msgstr ""
 
-#: ../src/path-chemistry.cpp:612
+#: ../src/path-chemistry.cpp:613
 msgid "Reversing paths..."
 msgstr ""
 
-#: ../src/path-chemistry.cpp:647
+#: ../src/path-chemistry.cpp:648
 msgid "Reverse path"
 msgstr ""
 
-#: ../src/path-chemistry.cpp:649
+#: ../src/path-chemistry.cpp:650
 msgid "<b>No paths</b> to reverse in the selection."
 msgstr ""
 
@@ -12163,7 +12160,7 @@ msgstr ""
 msgid "Linked Flowed Text"
 msgstr ""
 
-#: ../src/sp-flowtext.cpp:298 ../src/sp-text.cpp:352
+#: ../src/sp-flowtext.cpp:298 ../src/sp-text.cpp:341
 #: ../src/ui/tools/text-tool.cpp:1566
 msgid " [truncated]"
 msgstr ""
@@ -12237,26 +12234,26 @@ msgstr ""
 msgid "of <b>%d</b> objects"
 msgstr ""
 
-#: ../src/sp-item.cpp:970 ../src/verbs.cpp:213
+#: ../src/sp-item.cpp:1035 ../src/verbs.cpp:213
 msgid "Object"
 msgstr ""
 
-#: ../src/sp-item.cpp:987
+#: ../src/sp-item.cpp:1052
 #, c-format
 msgid "%s; <i>clipped</i>"
 msgstr ""
 
-#: ../src/sp-item.cpp:993
+#: ../src/sp-item.cpp:1058
 #, c-format
 msgid "%s; <i>masked</i>"
 msgstr ""
 
-#: ../src/sp-item.cpp:1003
+#: ../src/sp-item.cpp:1068
 #, c-format
 msgid "%s; <i>filtered (%s)</i>"
 msgstr ""
 
-#: ../src/sp-item.cpp:1005
+#: ../src/sp-item.cpp:1070
 #, c-format
 msgid "%s; <i>filtered</i>"
 msgstr ""
@@ -12378,17 +12375,12 @@ msgstr ""
 msgid "Text"
 msgstr ""
 
-#. TRANSLATORS: For description of font with no name.
-#: ../src/sp-text.cpp:342
-msgid "&lt;no name found&gt;"
-msgstr ""
-
-#: ../src/sp-text.cpp:356
+#: ../src/sp-text.cpp:345
 #, c-format
 msgid "on path%s (%s, %s)"
 msgstr ""
 
-#: ../src/sp-text.cpp:357
+#: ../src/sp-text.cpp:346
 #, c-format
 msgid "%s (%s, %s)"
 msgstr ""
@@ -13821,19 +13813,19 @@ msgstr ""
 msgid "<small>Creating tiled clones...</small>"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:2640
+#: ../src/ui/dialog/clonetiler.cpp:2645
 msgid "Create tiled clones"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:2873
+#: ../src/ui/dialog/clonetiler.cpp:2878
 msgid "<small>Per row:</small>"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:2891
+#: ../src/ui/dialog/clonetiler.cpp:2896
 msgid "<small>Per column:</small>"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:2899
+#: ../src/ui/dialog/clonetiler.cpp:2904
 msgid "<small>Randomize:</small>"
 msgstr ""
 
@@ -20179,68 +20171,68 @@ msgid "Palettes directory (%s) is unavailable."
 msgstr ""
 
 #. ******************* Symbol Sets ************************
-#: ../src/ui/dialog/symbols.cpp:127
+#: ../src/ui/dialog/symbols.cpp:139
 msgid "Symbol set: "
 msgstr ""
 
 #. Fill in later
-#: ../src/ui/dialog/symbols.cpp:136 ../src/ui/dialog/symbols.cpp:137
+#: ../src/ui/dialog/symbols.cpp:148 ../src/ui/dialog/symbols.cpp:149
 msgid "Current Document"
 msgstr ""
 
-#: ../src/ui/dialog/symbols.cpp:204
+#: ../src/ui/dialog/symbols.cpp:216
 msgid "Add Symbol from the current document."
 msgstr ""
 
-#: ../src/ui/dialog/symbols.cpp:213
+#: ../src/ui/dialog/symbols.cpp:225
 msgid "Remove Symbol from the current document."
 msgstr ""
 
-#: ../src/ui/dialog/symbols.cpp:227
+#: ../src/ui/dialog/symbols.cpp:239
 msgid "Display more icons in row."
 msgstr ""
 
-#: ../src/ui/dialog/symbols.cpp:236
+#: ../src/ui/dialog/symbols.cpp:248
 msgid "Display fewer icons in row."
 msgstr ""
 
-#: ../src/ui/dialog/symbols.cpp:246
+#: ../src/ui/dialog/symbols.cpp:258
 msgid "Toggle 'fit' symbols in icon space."
 msgstr ""
 
-#: ../src/ui/dialog/symbols.cpp:258
+#: ../src/ui/dialog/symbols.cpp:270
 msgid "Make symbols smaller by zooming out."
 msgstr ""
 
-#: ../src/ui/dialog/symbols.cpp:268
+#: ../src/ui/dialog/symbols.cpp:280
 msgid "Make symbols bigger by zooming in."
 msgstr ""
 
-#: ../src/ui/dialog/symbols.cpp:622
+#: ../src/ui/dialog/symbols.cpp:640
 msgid "Unnamed Symbols"
 msgstr ""
 
-#: ../src/ui/dialog/template-widget.cpp:36
+#: ../src/ui/dialog/template-widget.cpp:37
 msgid "More info"
 msgstr ""
 
-#: ../src/ui/dialog/template-widget.cpp:38
+#: ../src/ui/dialog/template-widget.cpp:39
 msgid "no template selected"
 msgstr ""
 
-#: ../src/ui/dialog/template-widget.cpp:119
+#: ../src/ui/dialog/template-widget.cpp:123
 msgid "Path: "
 msgstr ""
 
-#: ../src/ui/dialog/template-widget.cpp:122
+#: ../src/ui/dialog/template-widget.cpp:126
 msgid "Description: "
 msgstr ""
 
-#: ../src/ui/dialog/template-widget.cpp:124
+#: ../src/ui/dialog/template-widget.cpp:128
 msgid "Keywords: "
 msgstr ""
 
-#: ../src/ui/dialog/template-widget.cpp:131
+#: ../src/ui/dialog/template-widget.cpp:135
 msgid "By: "
 msgstr ""
 
@@ -20253,31 +20245,31 @@ msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr ""
 
 #. Align buttons
-#: ../src/ui/dialog/text-edit.cpp:96 ../src/widgets/text-toolbar.cpp:1344
-#: ../src/widgets/text-toolbar.cpp:1345
+#: ../src/ui/dialog/text-edit.cpp:96 ../src/widgets/text-toolbar.cpp:1346
+#: ../src/widgets/text-toolbar.cpp:1347
 msgid "Align left"
 msgstr ""
 
-#: ../src/ui/dialog/text-edit.cpp:97 ../src/widgets/text-toolbar.cpp:1352
-#: ../src/widgets/text-toolbar.cpp:1353
+#: ../src/ui/dialog/text-edit.cpp:97 ../src/widgets/text-toolbar.cpp:1354
+#: ../src/widgets/text-toolbar.cpp:1355
 msgid "Align center"
 msgstr ""
 
-#: ../src/ui/dialog/text-edit.cpp:98 ../src/widgets/text-toolbar.cpp:1360
-#: ../src/widgets/text-toolbar.cpp:1361
+#: ../src/ui/dialog/text-edit.cpp:98 ../src/widgets/text-toolbar.cpp:1362
+#: ../src/widgets/text-toolbar.cpp:1363
 msgid "Align right"
 msgstr ""
 
-#: ../src/ui/dialog/text-edit.cpp:99 ../src/widgets/text-toolbar.cpp:1369
+#: ../src/ui/dialog/text-edit.cpp:99 ../src/widgets/text-toolbar.cpp:1371
 msgid "Justify (only flowed text)"
 msgstr ""
 
 #. Direction buttons
-#: ../src/ui/dialog/text-edit.cpp:108 ../src/widgets/text-toolbar.cpp:1404
+#: ../src/ui/dialog/text-edit.cpp:108 ../src/widgets/text-toolbar.cpp:1406
 msgid "Horizontal text"
 msgstr ""
 
-#: ../src/ui/dialog/text-edit.cpp:109 ../src/widgets/text-toolbar.cpp:1411
+#: ../src/ui/dialog/text-edit.cpp:109 ../src/widgets/text-toolbar.cpp:1413
 msgid "Vertical text"
 msgstr ""
 
@@ -22050,7 +22042,7 @@ msgstr[1] ""
 msgid "Type text"
 msgstr ""
 
-#: ../src/ui/tools/tool-base.cpp:703
+#: ../src/ui/tools/tool-base.cpp:704
 msgid "<b>Space+mouse move</b> to pan canvas"
 msgstr ""
 
@@ -22218,7 +22210,7 @@ msgstr ""
 
 #: ../src/ui/widget/object-composite-settings.cpp:220
 #: ../src/ui/widget/selected-style.cpp:931
-#: ../src/ui/widget/selected-style.cpp:1225
+#: ../src/ui/widget/selected-style.cpp:1227
 msgid "Change opacity"
 msgstr ""
 
@@ -22712,11 +22704,11 @@ msgstr ""
 msgid "100% (opaque)"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1366
+#: ../src/ui/widget/selected-style.cpp:1368
 msgid "Adjust alpha"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1368
+#: ../src/ui/widget/selected-style.cpp:1370
 #, c-format
 msgid ""
 "Adjusting <b>alpha</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with <b>Ctrl</"
@@ -22724,11 +22716,11 @@ msgid ""
 "modifiers to adjust hue"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1372
+#: ../src/ui/widget/selected-style.cpp:1374
 msgid "Adjust saturation"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1374
+#: ../src/ui/widget/selected-style.cpp:1376
 #, c-format
 msgid ""
 "Adjusting <b>saturation</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with "
@@ -22736,11 +22728,11 @@ msgid ""
 "modifiers to adjust hue"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1378
+#: ../src/ui/widget/selected-style.cpp:1380
 msgid "Adjust lightness"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1380
+#: ../src/ui/widget/selected-style.cpp:1382
 #, c-format
 msgid ""
 "Adjusting <b>lightness</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with "
@@ -22748,11 +22740,11 @@ msgid ""
 "modifiers to adjust hue"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1384
+#: ../src/ui/widget/selected-style.cpp:1386
 msgid "Adjust hue"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1386
+#: ../src/ui/widget/selected-style.cpp:1388
 #, c-format
 msgid ""
 "Adjusting <b>hue</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with <b>Shift</"
@@ -22760,12 +22752,12 @@ msgid ""
 "to adjust lightness"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1504
-#: ../src/ui/widget/selected-style.cpp:1518
+#: ../src/ui/widget/selected-style.cpp:1506
+#: ../src/ui/widget/selected-style.cpp:1520
 msgid "Adjust stroke width"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1505
+#: ../src/ui/widget/selected-style.cpp:1507
 #, c-format
 msgid "Adjusting <b>stroke width</b>: was %.3g, now <b>%.3g</b> (diff %.3g)"
 msgstr ""
@@ -25810,8 +25802,8 @@ msgstr ""
 msgid "Set pattern on stroke"
 msgstr ""
 
-#: ../src/widgets/font-selector.cpp:134 ../src/widgets/text-toolbar.cpp:956
-#: ../src/widgets/text-toolbar.cpp:1270
+#: ../src/widgets/font-selector.cpp:134 ../src/widgets/text-toolbar.cpp:958
+#: ../src/widgets/text-toolbar.cpp:1272
 msgid "Font size"
 msgstr ""
 
@@ -26135,7 +26127,7 @@ msgstr ""
 msgid "Open LPE dialog (to adapt parameters numerically)"
 msgstr ""
 
-#: ../src/widgets/measure-toolbar.cpp:86 ../src/widgets/text-toolbar.cpp:1273
+#: ../src/widgets/measure-toolbar.cpp:86 ../src/widgets/text-toolbar.cpp:1275
 msgid "Font Size"
 msgstr ""
 
@@ -27475,11 +27467,11 @@ msgstr ""
 msgid "Set markers"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:1024 ../src/widgets/stroke-style.cpp:1109
+#: ../src/widgets/stroke-style.cpp:1030 ../src/widgets/stroke-style.cpp:1115
 msgid "Set stroke style"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:1197
+#: ../src/widgets/stroke-style.cpp:1203
 msgid "Set marker color"
 msgstr ""
 
@@ -27535,190 +27527,190 @@ msgstr ""
 msgid "Text: Change orientation"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1221
+#: ../src/widgets/text-toolbar.cpp:1223
 msgid "Font Family"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1222
+#: ../src/widgets/text-toolbar.cpp:1224
 msgid "Select Font Family (Alt-X to access)"
 msgstr ""
 
 #. Focus widget
 #. Enable entry completion
-#: ../src/widgets/text-toolbar.cpp:1232
+#: ../src/widgets/text-toolbar.cpp:1234
 msgid "Select all text with this font-family"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1236
+#: ../src/widgets/text-toolbar.cpp:1238
 msgid "Font not found on system"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1295
+#: ../src/widgets/text-toolbar.cpp:1297
 msgid "Font Style"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1296
+#: ../src/widgets/text-toolbar.cpp:1298
 msgid "Font style"
 msgstr ""
 
 #. Name
-#: ../src/widgets/text-toolbar.cpp:1313
+#: ../src/widgets/text-toolbar.cpp:1315
 msgid "Toggle Superscript"
 msgstr ""
 
 #. Label
-#: ../src/widgets/text-toolbar.cpp:1314
+#: ../src/widgets/text-toolbar.cpp:1316
 msgid "Toggle superscript"
 msgstr ""
 
 #. Name
-#: ../src/widgets/text-toolbar.cpp:1326
+#: ../src/widgets/text-toolbar.cpp:1328
 msgid "Toggle Subscript"
 msgstr ""
 
 #. Label
-#: ../src/widgets/text-toolbar.cpp:1327
+#: ../src/widgets/text-toolbar.cpp:1329
 msgid "Toggle subscript"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1368
+#: ../src/widgets/text-toolbar.cpp:1370
 msgid "Justify"
 msgstr ""
 
 #. Name
-#: ../src/widgets/text-toolbar.cpp:1375
+#: ../src/widgets/text-toolbar.cpp:1377
 msgid "Alignment"
 msgstr ""
 
 #. Label
-#: ../src/widgets/text-toolbar.cpp:1376
+#: ../src/widgets/text-toolbar.cpp:1378
 msgid "Text alignment"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1403
+#: ../src/widgets/text-toolbar.cpp:1405
 msgid "Horizontal"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1410
+#: ../src/widgets/text-toolbar.cpp:1412
 msgid "Vertical"
 msgstr ""
 
 #. Label
-#: ../src/widgets/text-toolbar.cpp:1417
+#: ../src/widgets/text-toolbar.cpp:1419
 msgid "Text orientation"
 msgstr ""
 
 #. Drop down menu
-#: ../src/widgets/text-toolbar.cpp:1440
+#: ../src/widgets/text-toolbar.cpp:1442
 msgid "Smaller spacing"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1440 ../src/widgets/text-toolbar.cpp:1471
-#: ../src/widgets/text-toolbar.cpp:1502
+#: ../src/widgets/text-toolbar.cpp:1442 ../src/widgets/text-toolbar.cpp:1473
+#: ../src/widgets/text-toolbar.cpp:1504
 msgctxt "Text tool"
 msgid "Normal"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1440
+#: ../src/widgets/text-toolbar.cpp:1442
 msgid "Larger spacing"
 msgstr ""
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:1445
+#: ../src/widgets/text-toolbar.cpp:1447
 msgid "Line Height"
 msgstr ""
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:1446
+#: ../src/widgets/text-toolbar.cpp:1448
 msgid "Line:"
 msgstr ""
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:1447
+#: ../src/widgets/text-toolbar.cpp:1449
 msgid "Spacing between lines (times font size)"
 msgstr ""
 
 #. Drop down menu
-#: ../src/widgets/text-toolbar.cpp:1471 ../src/widgets/text-toolbar.cpp:1502
+#: ../src/widgets/text-toolbar.cpp:1473 ../src/widgets/text-toolbar.cpp:1504
 msgid "Negative spacing"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1471 ../src/widgets/text-toolbar.cpp:1502
+#: ../src/widgets/text-toolbar.cpp:1473 ../src/widgets/text-toolbar.cpp:1504
 msgid "Positive spacing"
 msgstr ""
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:1476
+#: ../src/widgets/text-toolbar.cpp:1478
 msgid "Word spacing"
 msgstr ""
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:1477
+#: ../src/widgets/text-toolbar.cpp:1479
 msgid "Word:"
 msgstr ""
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:1478
+#: ../src/widgets/text-toolbar.cpp:1480
 msgid "Spacing between words (px)"
 msgstr ""
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:1507
+#: ../src/widgets/text-toolbar.cpp:1509
 msgid "Letter spacing"
 msgstr ""
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:1508
+#: ../src/widgets/text-toolbar.cpp:1510
 msgid "Letter:"
 msgstr ""
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:1509
+#: ../src/widgets/text-toolbar.cpp:1511
 msgid "Spacing between letters (px)"
 msgstr ""
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:1538
+#: ../src/widgets/text-toolbar.cpp:1540
 msgid "Kerning"
 msgstr ""
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:1539
+#: ../src/widgets/text-toolbar.cpp:1541
 msgid "Kern:"
 msgstr ""
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:1540
+#: ../src/widgets/text-toolbar.cpp:1542
 msgid "Horizontal kerning (px)"
 msgstr ""
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:1569
+#: ../src/widgets/text-toolbar.cpp:1571
 msgid "Vertical Shift"
 msgstr ""
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:1570
+#: ../src/widgets/text-toolbar.cpp:1572
 msgid "Vert:"
 msgstr ""
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:1571
+#: ../src/widgets/text-toolbar.cpp:1573
 msgid "Vertical shift (px)"
 msgstr ""
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:1600
+#: ../src/widgets/text-toolbar.cpp:1602
 msgid "Letter rotation"
 msgstr ""
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:1601
+#: ../src/widgets/text-toolbar.cpp:1603
 msgid "Rot:"
 msgstr ""
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:1602
+#: ../src/widgets/text-toolbar.cpp:1604
 msgid "Character rotation (degrees)"
 msgstr ""
 
@@ -28228,7 +28220,7 @@ msgid "No paths are selected! Trying to work on all available paths."
 msgstr ""
 
 #: ../share/extensions/gcodetools.py:3324
-msgid "Noting is selected. Please select something."
+msgid "Nothing is selected. Please select something."
 msgstr ""
 
 #: ../share/extensions/gcodetools.py:3864
@@ -28333,7 +28325,7 @@ msgstr ""
 
 #: ../share/extensions/gcodetools.py:4667
 msgid ""
-"Noting is selected. Please select something to convert to drill point "
+"Nothing is selected. Please select something to convert to drill point "
 "(dxfpoint) or clear point sign."
 msgstr ""
 
