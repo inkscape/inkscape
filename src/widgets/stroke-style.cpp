@@ -764,7 +764,7 @@ StrokeStyle::setJoinType (unsigned const jointype)
             break;
         default:
             // Should not happen
-            std::cerr << "StrokeStyle::setJoinType(): Invalid value" << std::endl;
+            std::cerr << "StrokeStyle::setJoinType(): Invalid value: " << jointype << std::endl;
             tb = joinMiter;
             break;
     }
@@ -790,7 +790,7 @@ StrokeStyle::setCapType (unsigned const captype)
             break;
         default:
             // Should not happen
-            std::cerr << "StrokeStyle::setCapType(): Invalid value" << std::endl;
+            std::cerr << "StrokeStyle::setCapType(): Invalid value: " << captype << std::endl;
             tb = capButt;
             break;
     }
@@ -884,13 +884,15 @@ StrokeStyle::updateLine()
         miterLimitAdj->set_value(query->stroke_miterlimit.value); // TODO: reflect averagedness?
 #endif
 
-    if (result_join != QUERY_STYLE_MULTIPLE_DIFFERENT) {
+    if (result_join != QUERY_STYLE_MULTIPLE_DIFFERENT &&
+        result_join != QUERY_STYLE_NOTHING ) {
         setJoinType(query->stroke_linejoin.value);
     } else {
         setJoinButtons(NULL);
     }
 
-    if (result_cap != QUERY_STYLE_MULTIPLE_DIFFERENT) {
+    if (result_cap != QUERY_STYLE_MULTIPLE_DIFFERENT &&
+        result_cap != QUERY_STYLE_NOTHING ) {
         setCapType (query->stroke_linecap.value);
     } else {
         setCapButtons(NULL);
