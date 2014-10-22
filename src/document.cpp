@@ -618,7 +618,10 @@ Inkscape::Util::Quantity SPDocument::getWidth() const
 
 void SPDocument::setWidth(const Inkscape::Util::Quantity &width)
 {
-    gdouble old_computed = root->width.computed;
+    Inkscape::Util::Unit const *old_units = unit_table.getUnit("px");
+    if (root->width.unit)
+        old_units = unit_table.getUnit(root->width.unit);
+    gdouble old_converted = Inkscape::Util::Quantity::convert(root->width.value, old_units, width.unit);
     root->width.computed = width.value("px");
     /* SVG does not support meters as a unit, so we must translate meters to
      * cm when writing */
@@ -631,7 +634,7 @@ void SPDocument::setWidth(const Inkscape::Util::Quantity &width)
     }
 
     if (root->viewBox_set)
-        root->viewBox.setMax(Geom::Point(root->viewBox.left() + (root->width.computed / old_computed) * root->viewBox.width(), root->viewBox.bottom()));
+        root->viewBox.setMax(Geom::Point(root->viewBox.left() + (root->width.value / old_converted) * root->viewBox.width(), root->viewBox.bottom()));
 
     root->updateRepr();
 }
@@ -656,7 +659,10 @@ Inkscape::Util::Quantity SPDocument::getHeight() const
 
 void SPDocument::setHeight(const Inkscape::Util::Quantity &height)
 {
-    gdouble old_computed = root->height.computed;
+    Inkscape::Util::Unit const *old_units = unit_table.getUnit("px");
+    if (root->height.unit)
+        old_units = unit_table.getUnit(root->height.unit);
+    gdouble old_converted = Inkscape::Util::Quantity::convert(root->height.value, old_units, height.unit);
     root->height.computed = height.value("px");
     /* SVG does not support meters as a unit, so we must translate meters to
      * cm when writing */
@@ -669,7 +675,7 @@ void SPDocument::setHeight(const Inkscape::Util::Quantity &height)
     }
 
     if (root->viewBox_set)
-        root->viewBox.setMax(Geom::Point(root->viewBox.right(), root->viewBox.top() + (root->height.computed / old_computed) * root->viewBox.height()));
+        root->viewBox.setMax(Geom::Point(root->viewBox.right(), root->viewBox.top() + (root->height.value / old_converted) * root->viewBox.height()));
 
     root->updateRepr();
 }
