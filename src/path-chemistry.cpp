@@ -494,7 +494,7 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
         g_repr->setAttribute("inkscape:transform-center-y", item->getRepr()->attribute("inkscape:transform-center-y"), false);
         /* Whole text's style */
         gchar *style_str = sp_style_write_difference(item->style,
-                                                     item->parent->style);
+                                                     item->parent ? item->parent->style : NULL); // TODO investigate posibility
         g_repr->setAttribute("style", style_str);
         g_free(style_str);
         Inkscape::Text::Layout::iterator iter = te_get_layout(item)->begin(); 
@@ -515,7 +515,7 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
                pos_obj = pos_obj->parent;   // SPStrings don't have style
             }
             gchar *style_str = sp_style_write_difference(pos_obj->style,
-                                                         pos_obj->parent->style);
+                                                         pos_obj->parent ? pos_obj->parent->style : NULL); // TODO investigate posibility
 
             // get path from iter to iter_next:
             SPCurve *curve = te_get_layout(item)->convertToCurves(iter, iter_next);
@@ -575,7 +575,7 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
     repr->setAttribute("transform", item->getRepr()->attribute("transform"));
     /* Style */
     gchar *style_str = sp_style_write_difference(item->style,
-                                                 item->parent->style);
+                                                 item->parent ? item->parent->style : NULL); // TODO investigate posibility
     repr->setAttribute("style", style_str);
     g_free(style_str);
 
