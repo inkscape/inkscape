@@ -7,6 +7,12 @@
 #	~suv <suv-sf@users.sourceforge.net>
 #
 
+get_env_current ()
+{
+	env | awk -F= '/[a-zA-Z_][a-zA-Z_0-9]*=/ {if (!system("[ -n \"${" $1 "+y}\" ]")) print $1 }' | sort | uniq
+}
+[ -z "$_env_orig" ] && export _env_orig="$(get_env_current)"
+
 [ -n "$INK_DEBUG_LAUNCHER" ] && set -x
 
 CWD="$(cd "$(dirname "$0")" && pwd)"
@@ -23,7 +29,7 @@ source "${TOP}/alert_fccache.sh"
 # path hack in src/path-prefix.h for osxapp-enabled builds). Until then, below change
 # of working directory is required:
 #
-# Due to changes after 0.48, we have change working directory in the script named 'inkscape':
+# Due to changes after 0.48, we have to change working directory in the script named 'inkscape':
 # recursive calls to inkscape from python-based extensions otherwise cause the app to hang or
 # fail (for python-based extensions, inkscape changes the working directory to the 
 # script's directory, and inkscape launched by python script thus can't find resources

@@ -1,5 +1,3 @@
-#!/bin/bash
-
 ALERT_SCRIPT="$(cat << EOM
 try
 	set parent_path to "$CWD"

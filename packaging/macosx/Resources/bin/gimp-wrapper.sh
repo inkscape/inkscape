@@ -5,6 +5,22 @@
 
 #_DEBUG=true
 
+# --- unset environment inherited from inkscape.app
+get_env_current ()
+{
+    env | awk -F= '/[a-zA-Z_][a-zA-Z_0-9]*=/ {if (!system("[ -n \"${" $1 "+y}\" ]")) print $1 }' | sort | uniq
+}
+
+if [ ! -z "$_env_orig" ]; then
+	keep_env=$_env_orig
+	for i in $(get_env_current); do
+		if [ -z "$(printf %s "$keep_env" | grep $i)" ]; then
+			unset $i
+		fi
+	done
+fi
+
+
 # --- defaults for GIMP.app
 
 app_id="org.gnome.gimp"
@@ -17,23 +33,6 @@ app_exec_default="GIMP"
 PATH_local="/opt/local/bin"
 # launch a specific gimp version? (e.g. gimp-2.9)
 gimp_name="gimp"
-
-
-# --- unset environment inherited from Inkscape.app
-
-unset XDG_CONFIG_HOME XDG_DATA_HOME XDG_CACHE_HOME
-unset XDG_CONFIG_DIRS XDG_DATA_DIRS
-unset GTK_PATH GTK_DATA_PREFIX GTK_EXE_PREFIX GTK_IM_MODULE_FILE GTK2_RC_FILES 
-unset FONTCONFIG_FILE FONTCONFIG_PATH HB_SHAPER_LIST PANGO_RC_FILE PANGO_SYSCONFDIR
-unset GDK_PIXBUF_MODULE_FILE GSETTINGS_SCHEMA_DIR
-unset DBUS_SESSION_BUS_PID DBUS_LAUNCHD_SESSION_BUS_SOCKET DBUS_SESSION_BUS_ADDRESS
-unset GNOME_VFS_MODULE_CONFIG_PATH GNOME_VFS_MODULE_PATH
-unset GIO_MODULE_DIR GVFS_MOUNTABLE_DIR 
-unset ASPELL_CONF 
-unset POPPLER_DATADIR
-unset VERSIONER_PYTHON_VERSION VERSIONER_PYTHON_PREFER_32_BIT PYTHONPATH 
-unset MAGICK_HOME MAGICK_CONFIGURE_PATH MAGICK_CODER_FILTER_PATH MAGICK_CODER_MODULE_PATH
-unset GS_LIB GS_ICC_PROFILES GS_RESOURCE_DIR GS_LIB GS_FONTPATH GS
 
 
 # --- detect installed GIMP.app

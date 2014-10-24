@@ -79,13 +79,18 @@ for size in $gtk_stock_sizes; do
     cp -RP "${stock_src}/$size" "${icon_theme_name}/${size}x${size}/stock"
 done
 
+
 # workarounds for broken icons (bug #1269698)
 #---------------------------------------------------------
 
 for size in $gtk_stock_sizes; do
     cd "${icon_theme_name}/${size}x${size}/stock"
     # directional icons
-    for di in "edit-undo" "edit-redo" "document-revert"; do
+    di_stock="edit-undo edit-redo document-revert gtk-undelete
+    format-indent-less format-indent-more
+    go-first go-jump go-last go-next go-previous
+    media-playback-start media-seek-backward media-seek-forward media-skip-backward media-skip-forward"
+    for di in $di_stock; do
         if [ -f "${di}-ltr.png" ]; then
             if [ ! -e "${di}.png" ]; then
                 ln -s "${di}-ltr.png" "${di}.png"
@@ -93,17 +98,18 @@ for size in $gtk_stock_sizes; do
         fi 
     done
     # misc failed lookups
-    for di in "preferences"; do
-        if [ -f "gtk-${di}.png" ]; then
-            if [ ! -e "${di}-system.png" ]; then
-                ln -s "gtk-${di}.png" "${di}-system.png"
+    for i in "preferences"; do
+        if [ -f "gtk-${i}.png" ]; then
+            if [ ! -e "${i}-system.png" ]; then
+                ln -s "gtk-${i}.png" "${i}-system.png"
             fi
         fi
     done
     cd "$current_dir"
 done
 
-# create links (round 1)
+
+# create links (round 1): legacy mapping
 #---------------------------------------------------------
 
 for size in $gtk_stock_sizes; do
@@ -118,16 +124,36 @@ for size in $gtk_stock_sizes; do
 done
 
 
-# create links (round 2)
+# create links (round 2): directional icons (bug #1269698)
 #---------------------------------------------------------
 
 for size in $gtk_stock_sizes; do
     cd "${icon_theme_name}/${size}x${size}/stock"
-    for icon_file in *.png; do
-        [ -s $icon_file ] && ln -s "$icon_file" "$(basename $icon_file .png)"-symbolic.png
+    # legacy directional icons
+    di_stock="gtk-undo gtk-redo gtk-revert-to-saved
+    gtk-unindent gtk-indent 
+    gtk-goto-first gtk-jump-to gtk-goto-last gtk-go-forward gtk-go-back"
+    for di in $di_stock; do
+        if [ -f "${di}-ltr.png" ]; then
+            if [ ! -e "${di}.png" ]; then
+                ln -s "${di}-ltr.png" "${di}.png"
+            fi
+        fi 
     done
     cd "$current_dir"
 done
+
+
+# create links (round 3): fallbacks for symbolic icon lookup
+#---------------------------------------------------------
+
+# for size in $gtk_stock_sizes; do
+#     cd "${icon_theme_name}/${size}x${size}/stock"
+#     for icon_file in *.png; do
+#         [ -s $icon_file ] && ln -s "$icon_file" "$(basename $icon_file .png)"-symbolic.png
+#     done
+#     cd "$current_dir"
+# done
 
 
 # create new index.theme

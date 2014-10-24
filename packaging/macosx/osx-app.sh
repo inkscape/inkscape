@@ -457,10 +457,9 @@ if [ $_backend = "quartz" ]; then
 	rm "$pkgbin/inkscape"
 fi
 
-# activate wrapper scripts for python and gimp (optional)
+# activate wrapper scripts
 if [ $add_wrapper = "true" ]; then
 	mv "$pkgbin/gimp-wrapper.sh" "$pkgbin/gimp"
-	#mv "$pkgbin/python-wrapper.sh" "$pkgbin/python"
 fi
 
 # Add python modules if requested
