@@ -65,8 +65,9 @@ sp_selected_path_combine(SPDesktop *desktop)
     GSList *to_paths = NULL;
     for (GSList *i = items; i != NULL; i = i->next) {
         SPItem *item = (SPItem *) i->data;
-        if (!SP_IS_PATH(item) && !SP_IS_GROUP(item))
+        if (!dynamic_cast<SPPath *>(item) && !dynamic_cast<SPGroup *>(item)) {
             to_paths = g_slist_prepend(to_paths, item);
+        }
     }
     GSList *converted = NULL;
     bool did = sp_item_list_to_curves(to_paths, &items, &converted);
@@ -98,7 +99,8 @@ sp_selected_path_combine(SPDesktop *desktop)
     for (GSList *i = items; i != NULL; i = i->next) {  // going from top to bottom
 
         SPItem *item = (SPItem *) i->data;
-        if (!SP_IS_PATH(item)) {
+        SPPath *path = dynamic_cast<SPPath *>(item);
+        if (!path) {
             continue;
         }
 
@@ -107,7 +109,7 @@ sp_selected_path_combine(SPDesktop *desktop)
             did = true;
         }
 
-        SPCurve *c = SP_PATH(item)->get_curve_for_edit();
+        SPCurve *c = path->get_curve_for_edit();
         if (first == NULL) {  // this is the topmost path
             first = item;
             parent = first->getRepr()->parent();
@@ -203,11 +205,10 @@ sp_selected_path_break_apart(SPDesktop *desktop)
 
         SPItem *item = (SPItem *) items->data;
 
-        if (!SP_IS_PATH(item)) {
+        SPPath *path = dynamic_cast<SPPath *>(item);
+        if (!path) {
             continue;
         }
-
-        SPPath *path = SP_PATH(item);
 
         SPCurve *curve = path->get_curve_for_edit();
         if (curve == NULL) {
@@ -365,17 +366,20 @@ sp_item_list_to_curves(const GSList *items, GSList **selected, GSList **to_selec
          items != NULL;
          items = items->next) {
 
-        SPItem *item = SP_ITEM(items->data);
+        SPItem *item = dynamic_cast<SPItem *>(static_cast<SPObject *>(items->data));
+        g_assert(item != NULL);
         SPDocument *document = item->document;
 
+        SPGroup *group = dynamic_cast<SPGroup *>(item);
         if ( skip_all_lpeitems &&
-             SP_IS_LPE_ITEM(item) && 
-             !SP_IS_GROUP(item) ) // also convert objects in an SPGroup when skip_all_lpeitems is set.
+             dynamic_cast<SPLPEItem *>(item) && 
+             !group ) // also convert objects in an SPGroup when skip_all_lpeitems is set.
         { 
             continue;
         }
 
-        if (SP_IS_PATH(item) && !SP_SHAPE(item)->_curve_before_lpe) {
+        SPPath *path = dynamic_cast<SPPath *>(item);
+        if (path && !path->_curve_before_lpe) {
             // remove connector attributes
             if (item->getAttribute("inkscape:connector-type") != NULL) {
                 item->removeAttribute("inkscape:connection-start");
@@ -387,9 +391,10 @@ sp_item_list_to_curves(const GSList *items, GSList **selected, GSList **to_selec
             continue; // already a path, and no path effect
         }
 
-        if (SP_IS_BOX3D(item)) {
+        SPBox3D *box = dynamic_cast<SPBox3D *>(item);
+        if (box) {
             // convert 3D box to ordinary group of paths; replace the old element in 'selected' with the new group
-            Inkscape::XML::Node *repr = box3d_convert_to_group(SP_BOX3D(item))->getRepr();
+            Inkscape::XML::Node *repr = box3d_convert_to_group(box)->getRepr();
             
             if (repr) {
                 *to_select = g_slist_prepend (*to_select, repr);
@@ -400,9 +405,9 @@ sp_item_list_to_curves(const GSList *items, GSList **selected, GSList **to_selec
             continue;
         }
         
-        if (SP_IS_GROUP(item)) {
-            SP_LPE_ITEM(item)->removeAllPathEffects(true);
-            GSList *item_list = sp_item_group_item_list(SP_GROUP(item));
+        if (group) {
+            group->removeAllPathEffects(true);
+            GSList *item_list = sp_item_group_item_list(group);
             
             GSList *item_to_select = NULL;
             GSList *item_selected = NULL;
@@ -472,7 +477,7 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
 
     Inkscape::XML::Document *xml_doc = item->getRepr()->document();
 
-    if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item)) {
+    if (dynamic_cast<SPText *>(item) || dynamic_cast<SPFlowtext *>(item)) {
         // Special treatment for text: convert each glyph to separate path, then group the paths
         Inkscape::XML::Node *g_repr = xml_doc->createElement("svg:g");
         g_repr->setAttribute("transform", item->getRepr()->attribute("transform"));
@@ -506,7 +511,7 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
             if (!rawptr || !SP_IS_OBJECT(rawptr)) // no source for glyph, abort
                 break;
             pos_obj = SP_OBJECT(rawptr);
-            while (SP_IS_STRING(pos_obj) && pos_obj->parent) {
+            while (dynamic_cast<SPString const *>(pos_obj) && pos_obj->parent) {
                pos_obj = pos_obj->parent;   // SPStrings don't have style
             }
             gchar *style_str = sp_style_write_difference(pos_obj->style,
@@ -547,8 +552,11 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
     }
 
     SPCurve *curve = NULL;
-    if (SP_IS_SHAPE(item)) {
-        curve = SP_SHAPE(item)->getCurve();
+    {
+        SPShape *shape = dynamic_cast<SPShape *>(item);
+        if (shape) {
+            curve = shape->getCurve();
+        }
     } 
 
     if (!curve)
@@ -614,12 +622,12 @@ sp_selected_path_reverse(SPDesktop *desktop)
 
     for (GSList *i = items; i != NULL; i = i->next) {
 
-        if (!SP_IS_PATH(i->data)) {
+        SPPath *path = dynamic_cast<SPPath *>(static_cast<SPObject *>(i->data));
+        if (!path) {
             continue;
         }
 
         did = true;
-        SPPath *path = SP_PATH(i->data);
 
         SPCurve *rcurve = path->get_curve_reference()->create_reverse();
 

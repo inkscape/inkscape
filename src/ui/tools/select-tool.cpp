@@ -264,15 +264,16 @@ sp_select_context_up_one_layer(SPDesktop *desktop)
     SPObject *const current_layer = desktop->currentLayer();
     if (current_layer) {
         SPObject *const parent = current_layer->parent;
+        SPGroup *current_group = dynamic_cast<SPGroup *>(current_layer);
         if ( parent
              && ( parent->parent
-                  || !( SP_IS_GROUP(current_layer)
-                        && ( SPGroup::LAYER
-                             == SP_GROUP(current_layer)->layerMode() ) ) ) )
+                  || !( current_group
+                        && ( SPGroup::LAYER == current_group->layerMode() ) ) ) )
         {
             desktop->setCurrentLayer(parent);
-            if (SP_IS_GROUP(current_layer) && SPGroup::LAYER != SP_GROUP(current_layer)->layerMode())
+            if (current_group && (SPGroup::LAYER != current_group->layerMode())) {
                 sp_desktop_selection(desktop)->set(current_layer);
+            }
         }
     }
 }
@@ -403,7 +404,8 @@ void SelectTool::sp_select_context_cycle_through_items(Inkscape::Selection *sele
     }
 
     Inkscape::DrawingItem *arenaitem;
-    SPItem *item = SP_ITEM(this->cycling_cur_item->data);
+    SPItem *item = dynamic_cast<SPItem *>(static_cast<SPObject *>(cycling_cur_item->data));
+    g_assert(item != NULL);
 
     // Deactivate current item
     if (!g_list_find(this->cycling_items_selected_before, item) && selection->includes(item)) {
@@ -427,7 +429,8 @@ void SelectTool::sp_select_context_cycle_through_items(Inkscape::Selection *sele
 
     if (next) {
         this->cycling_cur_item = next;
-        item = SP_ITEM(this->cycling_cur_item->data);
+        item = dynamic_cast<SPItem *>(static_cast<SPObject *>(this->cycling_cur_item->data));
+        g_assert(item != NULL);
     }
 
     arenaitem = item->get_arenaitem(desktop->dkey);
@@ -442,8 +445,13 @@ void SelectTool::sp_select_context_cycle_through_items(Inkscape::Selection *sele
 
 void SelectTool::sp_select_context_reset_opacities() {
     for (GList *l = this->cycling_items; l != NULL; l = g_list_next(l)) {
-        Inkscape::DrawingItem *arenaitem = SP_ITEM(l->data)->get_arenaitem(this->desktop->dkey);
-        arenaitem->setOpacity(SP_SCALE24_TO_FLOAT(SP_ITEM(l->data)->style->opacity.value));
+        SPItem *item = dynamic_cast<SPItem *>(static_cast<SPObject *>(l->data));
+        if (item) {
+            Inkscape::DrawingItem *arenaitem = item->get_arenaitem(desktop->dkey);
+            arenaitem->setOpacity(SP_SCALE24_TO_FLOAT(item->style->opacity.value));
+        } else {
+            g_assert_not_reached();
+        }
     }
 
     g_list_free(this->cycling_items);
@@ -475,8 +483,8 @@ bool SelectTool::root_handler(GdkEvent* event) {
                 if (!selection->isEmpty()) {
                     SPItem *clicked_item = static_cast<SPItem *>(selection->itemList()->data);
 
-                    if (SP_IS_GROUP(clicked_item) && !SP_IS_BOX3D(clicked_item)) { // enter group if it's not a 3D box
-                        desktop->setCurrentLayer(reinterpret_cast<SPObject *>(clicked_item));
+                    if (dynamic_cast<SPGroup *>(clicked_item) && !dynamic_cast<SPBox3D *>(clicked_item)) { // enter group if it's not a 3D box
+                        desktop->setCurrentLayer(clicked_item);
                         sp_desktop_selection(desktop)->clear();
                         this->dragging = false;
                         sp_event_context_discard_delayed_snap_event(this);
@@ -591,8 +599,11 @@ bool SelectTool::root_handler(GdkEvent* event) {
                             item_in_group = desktop->getItemAtPoint(Geom::Point(event->button.x, event->button.y), TRUE);
                             group_at_point = desktop->getGroupAtPoint(Geom::Point(event->button.x, event->button.y));
 
-                            if (SP_IS_LAYER(selection->single())) {
-                                group_at_point = SP_GROUP(selection->single());
+                            {
+                                SPGroup *selGroup = dynamic_cast<SPGroup *>(selection->single());
+                                if (selGroup && (selGroup->layerMode() == SPGroup::LAYER)) {
+                                    group_at_point = selGroup;
+                                }
                             }
 
                             // group-at-point is meant to be topmost item if it's a group,
@@ -673,10 +684,11 @@ bool SelectTool::root_handler(GdkEvent* event) {
                                 selection->toggle(this->item);
                             } else {
                                 SPObject* single = selection->single();
+                                SPGroup *singleGroup = dynamic_cast<SPGroup *>(single);
                                 // without shift, increase state (i.e. toggle scale/rotation handles)
                                 if (selection->includes(this->item)) {
                                     _seltrans->increaseState();
-                                } else if (SP_IS_LAYER(single) && single->isAncestorOf(this->item)) {
+                                } else if (singleGroup && (singleGroup->layerMode() == SPGroup::LAYER) && single->isAncestorOf(this->item)) {
                                     _seltrans->increaseState();
                                 } else {
                                     _seltrans->resetState();
@@ -818,7 +830,7 @@ bool SelectTool::root_handler(GdkEvent* event) {
                 SPItem *item = desktop->getItemAtPoint(p, true, NULL);
 
                 // Save pointer to current cycle-item so that we can find it again later, in the freshly built list
-                SPItem *tmp_cur_item = this->cycling_cur_item ? SP_ITEM(this->cycling_cur_item->data) : NULL;
+                SPItem *tmp_cur_item = this->cycling_cur_item ? dynamic_cast<SPItem *>(static_cast<SPObject *>(this->cycling_cur_item->data)) : NULL;
                 g_list_free(this->cycling_items);
                 this->cycling_items = NULL;
                 this->cycling_cur_item = NULL;
@@ -851,11 +863,14 @@ bool SelectTool::root_handler(GdkEvent* event) {
                     Inkscape::DrawingItem *arenaitem;
 
                     for(GList *l = this->cycling_items_cmp; l != NULL; l = l->next) {
-                        arenaitem = SP_ITEM(l->data)->get_arenaitem(desktop->dkey);
-                        arenaitem->setOpacity(1.0);
-                        //if (!shift_pressed && !g_list_find(this->cycling_items_selected_before, SP_ITEM(l->data)) && selection->includes(SP_ITEM(l->data)))
-                        if (!g_list_find(this->cycling_items_selected_before, SP_ITEM(l->data)) && selection->includes(SP_ITEM(l->data))) {
-                            selection->remove(SP_ITEM(l->data));
+                        SPItem *item = dynamic_cast<SPItem *>(static_cast<SPObject *>(l->data));
+                        if (item) {
+                            arenaitem = item->get_arenaitem(desktop->dkey);
+                            arenaitem->setOpacity(1.0);
+                            //if (!shift_pressed && !g_list_find(this->cycling_items_selected_before, item) && selection->includes(item))
+                            if (!g_list_find(this->cycling_items_selected_before, item) && selection->includes(item)) {
+                                selection->remove(item);
+                            }
                         }
                     }
 
@@ -869,16 +884,19 @@ bool SelectTool::root_handler(GdkEvent* event) {
 
                     // ... and rebuild them with the new items.
                     this->cycling_items_cmp = g_list_copy(this->cycling_items);
-                    SPItem *item;
 
                     for(GList *l = this->cycling_items; l != NULL; l = l->next) {
-                        item = SP_ITEM(l->data);
-                        arenaitem = item->get_arenaitem(desktop->dkey);
-                        arenaitem->setOpacity(0.3);
+                        SPItem *item = dynamic_cast<SPItem *>(static_cast<SPObject *>(l->data));
+                        if (item) {
+                            arenaitem = item->get_arenaitem(desktop->dkey);
+                            arenaitem->setOpacity(0.3);
 
-                        if (selection->includes(item)) {
-                            // already selected items are stored separately, too
-                            this->cycling_items_selected_before = g_list_append(this->cycling_items_selected_before, item);
+                            if (selection->includes(item)) {
+                                // already selected items are stored separately, too
+                                this->cycling_items_selected_before = g_list_append(this->cycling_items_selected_before, item);
+                            }
+                        } else {
+                            g_assert_not_reached();
                         }
                     }
 
@@ -1134,9 +1152,9 @@ bool SelectTool::root_handler(GdkEvent* event) {
                     if (MOD__CTRL_ONLY(event)) {
                         if (selection->singleItem()) {
                             SPItem *clicked_item = selection->singleItem();
-                            
-                            if ( SP_IS_GROUP(clicked_item) || SP_IS_BOX3D(clicked_item)) { // enter group or a 3D box
-                                desktop->setCurrentLayer(reinterpret_cast<SPObject *>(clicked_item));
+                            SPGroup *clickedGroup = dynamic_cast<SPGroup *>(clicked_item);
+                            if ( (clickedGroup && (clickedGroup->layerMode() == SPGroup::LAYER)) || dynamic_cast<SPBox3D *>(clicked_item)) { // enter group or a 3D box
+                                desktop->setCurrentLayer(clicked_item);
                                 sp_desktop_selection(desktop)->clear();
                             } else {
                                 this->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Selected object is not a group. Cannot enter."));

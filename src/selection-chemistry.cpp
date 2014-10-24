@@ -284,11 +284,12 @@ void SelectionHelper::fixSelection(SPDesktop *dt)
     GSList const *selList = selection->itemList();
 
     for( GSList const *i = selList; i; i = i->next ) {
-        if( SP_IS_ITEM(i->data) &&
-            !dt->isLayer(SP_ITEM(i->data)) &&
-            (!SP_ITEM(i->data)->isLocked()))
+        SPItem *item = dynamic_cast<SPItem *>(static_cast<SPObject *>(i->data));
+        if( item &&
+            !dt->isLayer(item) &&
+            (!item->isLocked()))
         {
-            items = g_slist_prepend(items, SP_ITEM(i->data));
+            items = g_slist_prepend(items, item);
         }
     }
 
@@ -332,17 +333,26 @@ static void sp_selection_copy_impl(GSList const *items, GSList **clip, Inkscape:
     sorted_items = g_slist_sort(static_cast<GSList *>(sorted_items), (GCompareFunc) sp_object_compare_position);
 
     // Copy item reprs:
-    for (GSList *i = (GSList *) sorted_items; i != NULL; i = i->next) {
-        sp_selection_copy_one(SP_OBJECT(i->data)->getRepr(), SP_ITEM(i->data)->i2doc_affine(), clip, xml_doc);
+    for (GSList *i = sorted_items; i != NULL; i = i->next) {
+        SPItem *item = dynamic_cast<SPItem *>(SP_OBJECT(i->data));
+        if (item) {
+            sp_selection_copy_one(item->getRepr(), item->i2doc_affine(), clip, xml_doc);
+        } else {
+            g_assert_not_reached();
+        }
     }
 
     *clip = g_slist_reverse(*clip);
     g_slist_free(static_cast<GSList *>(sorted_items));
 }
 
+// TODO check if parent parameter should be changed to SPItem, of if the code should handle non-items.
 static GSList *sp_selection_paste_impl(SPDocument *doc, SPObject *parent, GSList **clip)
 {
     Inkscape::XML::Document *xml_doc = doc->getReprDoc();
+
+    SPItem *parentItem = dynamic_cast<SPItem *>(parent);
+    g_assert(parentItem != NULL);
 
     GSList *copied = NULL;
     // add objects to document
@@ -351,7 +361,7 @@ static GSList *sp_selection_paste_impl(SPDocument *doc, SPObject *parent, GSList
         Inkscape::XML::Node *copy = repr->duplicate(xml_doc);
 
         // premultiply the item transform by the accumulated parent transform in the paste layer
-        Geom::Affine local(SP_ITEM(parent)->i2doc_affine());
+        Geom::Affine local(parentItem->i2doc_affine());
         if (!local.isIdentity()) {
             gchar const *t_str = copy->attribute("transform");
             Geom::Affine item_t(Geom::identity());
@@ -428,7 +438,7 @@ static void add_ids_recursive(std::vector<const gchar *> &ids, SPObject *obj)
     if (obj) {
         ids.push_back(obj->getId());
 
-        if (SP_IS_GROUP(obj)) {
+        if (dynamic_cast<SPGroup *>(obj)) {
             for (SPObject *child = obj->firstChild() ; child; child = child->getNext() ) {
                 add_ids_recursive(ids, child);
             }
@@ -484,8 +494,9 @@ void sp_selection_duplicate(SPDesktop *desktop, bool suppressDone)
 
         if (fork_livepatheffects) {
             SPObject *new_obj = doc->getObjectByRepr(copy);
-            if (new_obj && SP_IS_LPE_ITEM(new_obj)) {
-                SP_LPE_ITEM(new_obj)->forkPathEffectsIfNecessary(1);
+            SPLPEItem *newLPEObj = dynamic_cast<SPLPEItem *>(new_obj);
+            if (newLPEObj) {
+                newLPEObj->forkPathEffectsIfNecessary(1);
             }
         }
 
@@ -501,8 +512,9 @@ void sp_selection_duplicate(SPDesktop *desktop, bool suppressDone)
         for (unsigned int i = 0; i < old_ids.size(); i++) {
             const gchar *id = old_ids[i];
             SPObject *old_clone = doc->getObjectById(id);
-            if (SP_IS_USE(old_clone)) {
-                SPItem *orig = SP_USE(old_clone)->get_original();
+            SPUse *use = dynamic_cast<SPUse *>(old_clone);
+            if (use) {
+                SPItem *orig = use->get_original();
                 if (!orig) // orphaned
                     continue;
                 for (unsigned int j = 0; j < old_ids.size(); j++) {
@@ -516,13 +528,16 @@ void sp_selection_duplicate(SPDesktop *desktop, bool suppressDone)
                         g_free(newref);
                     }
                 }
-            } else if (SP_IS_OFFSET(old_clone)) {
-                for (guint j = 0; j < old_ids.size(); j++) {
-                gchar *source_href = SP_OFFSET(old_clone)->sourceHref;
-                    if (source_href && source_href[0]=='#' && !strcmp(source_href+1, old_ids[j])) {
-                        gchar *newref = g_strdup_printf("#%s", new_ids[j]);
-                        doc->getObjectById(new_ids[i])->getRepr()->setAttribute("xlink:href", newref);
-                        g_free(newref);
+            } else {
+                SPOffset *offset = dynamic_cast<SPOffset *>(old_clone);
+                if (offset) {
+                    for (guint j = 0; j < old_ids.size(); j++) {
+                        gchar *source_href = offset->sourceHref;
+                        if (source_href && source_href[0]=='#' && !strcmp(source_href+1, old_ids[j])) {
+                            gchar *newref = g_strdup_printf("#%s", new_ids[j]);
+                            doc->getObjectById(new_ids[i])->getRepr()->setAttribute("xlink:href", newref);
+                            g_free(newref);
+                        }
                     }
                 }
             }
@@ -548,8 +563,9 @@ void sp_edit_clear_all(Inkscape::Selection *selection)
     SPDocument *doc = selection->layers()->getDocument();
     selection->clear();
 
-    g_return_if_fail(SP_IS_GROUP(selection->layers()->currentLayer()));
-    GSList *items = sp_item_group_item_list(SP_GROUP(selection->layers()->currentLayer()));
+    SPGroup *group = dynamic_cast<SPGroup *>(selection->layers()->currentLayer());
+    g_return_if_fail(group != NULL);
+    GSList *items = sp_item_group_item_list(group);
 
     while (items) {
         reinterpret_cast<SPObject*>(items->data)->deleteObject();
@@ -573,17 +589,18 @@ void sp_edit_clear_all(Inkscape::Selection *selection)
 GSList *get_all_items(GSList *list, SPObject *from, SPDesktop *desktop, bool onlyvisible, bool onlysensitive, bool ingroups, GSList const *exclude)
 {
     for ( SPObject *child = from->firstChild() ; child; child = child->getNext() ) {
-        if (SP_IS_ITEM(child) &&
-            !desktop->isLayer(SP_ITEM(child)) &&
-            (!onlysensitive || !SP_ITEM(child)->isLocked()) &&
-            (!onlyvisible || !desktop->itemIsHidden(SP_ITEM(child))) &&
+        SPItem *item = dynamic_cast<SPItem *>(child);
+        if (item &&
+            !desktop->isLayer(item) &&
+            (!onlysensitive || !item->isLocked()) &&
+            (!onlyvisible || !desktop->itemIsHidden(item)) &&
             (!exclude || !g_slist_find(const_cast<GSList *>(exclude), child))
             )
         {
-            list = g_slist_prepend(list, SP_ITEM(child));
+            list = g_slist_prepend(list, item);
         }
 
-        if (ingroups || (SP_IS_ITEM(child) && desktop->isLayer(SP_ITEM(child)))) {
+        if (ingroups || (item && desktop->isLayer(item))) {
             list = get_all_items(list, child, desktop, onlyvisible, onlysensitive, ingroups, exclude);
         }
     }
@@ -598,7 +615,7 @@ static void sp_edit_select_all_full(SPDesktop *dt, bool force_all_layers, bool i
 
     Inkscape::Selection *selection = sp_desktop_selection(dt);
 
-    g_return_if_fail(SP_IS_GROUP(dt->currentLayer()));
+    g_return_if_fail(dynamic_cast<SPGroup *>(dt->currentLayer()));
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     PrefsSelectionContext inlayer = (PrefsSelectionContext) prefs->getInt("/options/kbselection/inlayer", PREFS_SELECTION_LAYER);
@@ -617,14 +634,14 @@ static void sp_edit_select_all_full(SPDesktop *dt, bool force_all_layers, bool i
 
     switch (inlayer) {
         case PREFS_SELECTION_LAYER: {
-        if ( (onlysensitive && SP_ITEM(dt->currentLayer())->isLocked()) ||
-             (onlyvisible && dt->itemIsHidden(SP_ITEM(dt->currentLayer()))) )
+        if ( (onlysensitive && dynamic_cast<SPItem *>(dt->currentLayer())->isLocked()) ||
+             (onlyvisible && dt->itemIsHidden(dynamic_cast<SPItem *>(dt->currentLayer()))) )
         return;
 
-        GSList *all_items = sp_item_group_item_list(SP_GROUP(dt->currentLayer()));
+        GSList *all_items = sp_item_group_item_list(dynamic_cast<SPGroup *>(dt->currentLayer()));
 
         for (GSList *i = all_items; i; i = i->next) {
-            SPItem *item = SP_ITEM(i->data);
+            SPItem *item = dynamic_cast<SPItem *>(static_cast<SPObject *>(i->data));
 
             if (item && (!onlysensitive || !item->isLocked())) {
                 if (!onlyvisible || !dt->itemIsHidden(item)) {
@@ -703,7 +720,7 @@ static void sp_selection_group_impl(GSList *p, Inkscape::XML::Node *group, Inksc
             Geom::Affine item_t(Geom::identity());
             if (t_str)
                 sp_svg_transform_read(t_str, &item_t);
-            item_t *= SP_ITEM(doc->getObjectByRepr(current->parent()))->i2doc_affine();
+            item_t *= dynamic_cast<SPItem *>(doc->getObjectByRepr(current->parent()))->i2doc_affine();
             // FIXME: when moving both clone and original from a transformed group (either by
             // grouping into another parent, or by cut/paste) the transform from the original's
             // parent becomes embedded into original itself, and this affects its clones. Fix
@@ -794,7 +811,7 @@ void sp_selection_ungroup(Inkscape::Selection *selection, SPDesktop *desktop)
     GSList *groups = NULL;
     for (GSList *item = old_select; item; item = item->next) {
         SPItem *obj = static_cast<SPItem*>(item->data);
-        if (SP_IS_GROUP(obj)) {
+        if (dynamic_cast<SPGroup *>(obj)) {
             groups = g_slist_prepend(groups, obj);
         }
     }
@@ -815,8 +832,8 @@ void sp_selection_ungroup(Inkscape::Selection *selection, SPDesktop *desktop)
         SPUse *use = dynamic_cast<SPUse *>(static_cast<SPItem *>(item->data));
 
         SPItem *original = use;
-        while (SP_IS_USE(original)) {
-            original = SP_USE(original)->get_original();
+        while (dynamic_cast<SPUse *>(original)) {
+            original = dynamic_cast<SPUse *>(original)->get_original();
         }
 
         if (g_slist_find(groups, original) != NULL) {
@@ -843,7 +860,7 @@ void sp_selection_ungroup(Inkscape::Selection *selection, SPDesktop *desktop)
         // ungroup only the groups marked earlier
         if (g_slist_find(groups, item->data) != NULL) {
             GSList *children = NULL;
-            sp_item_group_ungroup(SP_GROUP(obj), &children, false);
+            sp_item_group_ungroup(dynamic_cast<SPGroup *>(obj), &children, false);
             // add the items resulting from ungrouping to the selection
             new_select = g_slist_concat(new_select, children);
             item->data = NULL; // zero out the original pointer, which is no longer valid
@@ -868,11 +885,12 @@ sp_degroup_list(GSList *items)
     GSList *out = NULL;
     bool has_groups = false;
     for (GSList *item = items; item; item = item->next) {
-        if (!SP_IS_GROUP(item->data)) {
+        SPGroup *group = dynamic_cast<SPGroup *>(static_cast<SPObject *>(item->data));
+        if (!group) {
             out = g_slist_prepend(out, item->data);
         } else {
             has_groups = true;
-            GSList *members = sp_item_group_item_list(SP_GROUP(item->data));
+            GSList *members = sp_item_group_item_list(group);
             for (GSList *member = members; member; member = member->next) {
                 out = g_slist_prepend(out, member->data);
             }
@@ -899,7 +917,7 @@ sp_item_list_common_parent_group(GSList const *items)
     }
     SPObject *parent = SP_OBJECT(items->data)->parent;
     // Strictly speaking this CAN happen, if user selects <svg> from Inkscape::XML editor
-    if (!SP_IS_GROUP(parent)) {
+    if (!dynamic_cast<SPGroup *>(parent)) {
         return NULL;
     }
     for (items = items->next; items; items = items->next) {
@@ -908,7 +926,7 @@ sp_item_list_common_parent_group(GSList const *items)
         }
     }
 
-    return SP_GROUP(parent);
+    return dynamic_cast<SPGroup *>(parent);
 }
 
 /** Finds out the minimum common bbox of the selected items. */
@@ -928,7 +946,7 @@ enclose_items(GSList const *items)
 static SPObject *prev_sibling(SPObject *child)
 {
     SPObject *prev = 0;
-    if ( child && SP_IS_GROUP(child->parent) ) {
+    if ( child && dynamic_cast<SPGroup *>(child->parent) ) {
         prev = child->getPrev();
     }
     return prev;
@@ -965,8 +983,9 @@ sp_selection_raise(Inkscape::Selection *selection, SPDesktop *desktop)
             // for each selected object, find the next sibling
             for (SPObject *newref = child->next; newref; newref = newref->next) {
                 // if the sibling is an item AND overlaps our selection,
-                if (SP_IS_ITEM(newref)) {
-                    Geom::OptRect newref_bbox = SP_ITEM(newref)->desktopVisualBounds();
+                SPItem *newItem = dynamic_cast<SPItem *>(newref);
+                if (newItem) {
+                    Geom::OptRect newref_bbox = newItem->desktopVisualBounds();
                     if ( newref_bbox && selected->intersects(*newref_bbox) ) {
                         // AND if it's not one of our selected objects,
                         if (!g_slist_find(const_cast<GSList *>(items), newref)) {
@@ -1050,8 +1069,9 @@ void sp_selection_lower(Inkscape::Selection *selection, SPDesktop *desktop)
             // for each selected object, find the prev sibling
             for (SPObject *newref = prev_sibling(child); newref; newref = prev_sibling(newref)) {
                 // if the sibling is an item AND overlaps our selection,
-                if (SP_IS_ITEM(newref)) {
-                    Geom::OptRect ref_bbox = SP_ITEM(newref)->desktopVisualBounds();
+                SPItem *newItem = dynamic_cast<SPItem *>(newref);
+                if (newItem) {
+                    Geom::OptRect ref_bbox = newItem->desktopVisualBounds();
                     if ( ref_bbox && selected->intersects(*ref_bbox) ) {
                         // AND if it's not one of our selected objects,
                         if (!g_slist_find(const_cast<GSList *>(items), newref)) {
@@ -1105,9 +1125,9 @@ void sp_selection_lower_to_bottom(Inkscape::Selection *selection, SPDesktop *des
         Inkscape::XML::Node *repr = static_cast<Inkscape::XML::Node *>(l->data);
         pp = document->getObjectByRepr(repr->parent());
         minpos = 0;
-        g_assert(SP_IS_GROUP(pp));
+        g_assert(dynamic_cast<SPGroup *>(pp));
         pc = pp->firstChild();
-        while (!SP_IS_ITEM(pc)) {
+        while (!dynamic_cast<SPItem *>(pc)) {
             minpos += 1;
             pc = pc->next;
         }
@@ -1162,8 +1182,8 @@ take_style_from_item(SPObject *object)
     if (css == NULL)
         return NULL;
 
-    if ((SP_IS_GROUP(object) && object->children) ||
-        (SP_IS_TEXT(object) && object->children && object->children->next == NULL)) {
+    if ((dynamic_cast<SPGroup *>(object) && object->children) ||
+        (dynamic_cast<SPText *>(object) && object->children && object->children->next == NULL)) {
         // if this is a text with exactly one tspan child, merge the style of that tspan as well
         // If this is a group, merge the style of its topmost (last) child with style
         for (SPObject *last_element = object->lastChild(); last_element != NULL; last_element = last_element->getPrev()) {
@@ -1178,14 +1198,16 @@ take_style_from_item(SPObject *object)
         }
     }
 
-    if (!(SP_IS_TEXT(object) || SP_IS_TSPAN(object) || SP_IS_TREF(object) || SP_IS_STRING(object))) {
+    if (!(dynamic_cast<SPText *>(object) || dynamic_cast<SPTSpan *>(object) || dynamic_cast<SPTRef *>(object) || dynamic_cast<SPString *>(object))) {
         // do not copy text properties from non-text objects, it's confusing
         css = sp_css_attr_unset_text(css);
     }
 
-    if (SP_IS_ITEM(object)) {
+
+    SPItem *item = dynamic_cast<SPItem *>(object);
+    if (item) {
         // FIXME: also transform gradient/pattern fills, by forking? NO, this must be nondestructive
-        double ex = SP_ITEM(object)->i2doc_affine().descrim();
+        double ex = item->i2doc_affine().descrim();
         if (ex != 1.0) {
             css = sp_css_attr_scale(css, ex);
         }
@@ -1425,22 +1447,23 @@ selection_contains_original(SPItem *item, Inkscape::Selection *selection)
 {
     bool contains_original = false;
 
-    bool is_use = SP_IS_USE(item);
     SPItem *item_use = item;
     SPItem *item_use_first = item;
-    while (is_use && item_use && !contains_original)
+    SPUse *use = dynamic_cast<SPUse *>(item_use);
+    while (use && item_use && !contains_original)
     {
-        item_use = SP_USE(item_use)->get_original();
+        item_use = use->get_original();
+        use = dynamic_cast<SPUse *>(item_use);
         contains_original |= selection->includes(item_use);
         if (item_use == item_use_first)
             break;
-        is_use = SP_IS_USE(item_use);
     }
 
     // If it's a tref, check whether the object containing the character
     // data is part of the selection
-    if (!contains_original && SP_IS_TREF(item)) {
-        contains_original = selection->includes(SP_TREF(item)->getObjectReferredTo());
+    SPTRef *tref = dynamic_cast<SPTRef *>(item);
+    if (!contains_original && tref) {
+        contains_original = selection->includes(tref->getObjectReferredTo());
     }
 
     return contains_original;
@@ -1452,10 +1475,12 @@ selection_contains_both_clone_and_original(Inkscape::Selection *selection)
 {
     bool clone_with_original = false;
     for (GSList const *l = selection->itemList(); l != NULL; l = l->next) {
-        SPItem *item = SP_ITEM(l->data);
-        clone_with_original |= selection_contains_original(item, selection);
-        if (clone_with_original)
-            break;
+        SPItem *item = dynamic_cast<SPItem *>(static_cast<SPObject *>(l->data));
+        if (item) {
+            clone_with_original |= selection_contains_original(item, selection);
+            if (clone_with_original)
+                break;
+        }
     }
     return clone_with_original;
 }
@@ -1495,9 +1520,9 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Affine cons
     }
 
     for (GSList const *l = selection->itemList(); l != NULL; l = l->next) {
-        SPItem *item = SP_ITEM(l->data);
+        SPItem *item = dynamic_cast<SPItem *>(static_cast<SPObject *>(l->data));
 
-        if( SP_IS_ROOT(item) ) {
+        if( dynamic_cast<SPRoot *>(item) ) {
             // An SVG element cannot have a transform. We could change 'x' and 'y' in response
             // to a translation... but leave that for another day.
             selection->desktop()->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Cannot transform an embedded SVG."));
@@ -1515,24 +1540,32 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Affine cons
 
         // we're moving both a clone and its original or any ancestor in clone chain?
         bool transform_clone_with_original = selection_contains_original(item, selection);
+
         // ...both a text-on-path and its path?
-        bool transform_textpath_with_path = (SP_IS_TEXT_TEXTPATH(item) && selection->includes( sp_textpath_get_path_item(SP_TEXTPATH(item->firstChild())) ));
+        bool transform_textpath_with_path = ((dynamic_cast<SPText *>(item) && item->firstChild() && dynamic_cast<SPTextPath *>(item->firstChild()))
+                                             && selection->includes( sp_textpath_get_path_item(dynamic_cast<SPTextPath *>(item->firstChild())) ));
+
         // ...both a flowtext and its frame?
-        bool transform_flowtext_with_frame = (SP_IS_FLOWTEXT(item) && selection->includes( SP_FLOWTEXT(item)->get_frame(NULL))); // (only the first frame is checked so far)
+        bool transform_flowtext_with_frame = (dynamic_cast<SPFlowtext *>(item) && selection->includes( dynamic_cast<SPFlowtext *>(item)->get_frame(NULL))); // (only the first frame is checked so far)
+
         // ...both an offset and its source?
-        bool transform_offset_with_source = (SP_IS_OFFSET(item) && SP_OFFSET(item)->sourceHref) && selection->includes( sp_offset_get_source(SP_OFFSET(item)) );
+        bool transform_offset_with_source = (dynamic_cast<SPOffset *>(item) && dynamic_cast<SPOffset *>(item)->sourceHref) && selection->includes( sp_offset_get_source(dynamic_cast<SPOffset *>(item)) );
 
         // If we're moving a connector, we want to detach it
         // from shapes that aren't part of the selection, but
         // leave it attached if they are
         if (Inkscape::UI::Tools::cc_item_is_connector(item)) {
-            SPItem *attItem[2];
-            SP_PATH(item)->connEndPair.getAttachedItems(attItem);
-
-            for (int n = 0; n < 2; ++n) {
-                if (!selection->includes(attItem[n])) {
-                    sp_conn_end_detach(item, n);
+            SPPath *path = dynamic_cast<SPPath *>(item);
+            if (path) {
+                SPItem *attItem[2] = {0, 0};
+                path->connEndPair.getAttachedItems(attItem);
+                for (int n = 0; n < 2; ++n) {
+                    if (!selection->includes(attItem[n])) {
+                        sp_conn_end_detach(item, n);
+                    }
                 }
+            } else {
+                g_assert_not_reached();
             }
         }
 
@@ -1556,10 +1589,11 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Affine cons
             // apply the inverse of the region's transform to the <use> so that the flow remains
             // the same (even though the output itself gets transformed)
             for ( SPObject *region = item->firstChild() ; region ; region = region->getNext() ) {
-                if (SP_IS_FLOWREGION(region) || SP_IS_FLOWREGIONEXCLUDE(region)) {
-                    for ( SPObject *use = region->firstChild() ; use ; use = use->getNext() ) {
-                        if ( SP_IS_USE(use) ) {
-                            SP_USE(use)->doWriteTransform(use->getRepr(), item->transform.inverse(), NULL, compensate);
+                if (dynamic_cast<SPFlowregion *>(region) || dynamic_cast<SPFlowregionExclude *>(region)) {
+                    for ( SPObject *item = region->firstChild() ; item ; item = item->getNext() ) {
+                        SPUse *use = dynamic_cast<SPUse *>(item);
+                        if ( use ) {
+                            use->doWriteTransform(use->getRepr(), use->transform.inverse(), NULL, compensate);
                         }
                     }
                 }
@@ -1573,7 +1607,15 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Affine cons
             item->readAttr( "transform" );
 
             // calculate the matrix we need to apply to the clone to cancel its induced transform from its original
-            Geom::Affine parent2dt = SP_ITEM(item->parent)->i2dt_affine();
+            Geom::Affine parent2dt;
+            {
+                SPItem *parentItem = dynamic_cast<SPItem *>(item->parent);
+                if (parentItem) {
+                    parent2dt = parentItem->i2dt_affine();
+                } else {
+                    g_assert_not_reached();
+                }
+            }
             Geom::Affine t = parent2dt * affine * parent2dt.inverse();
             Geom::Affine t_inv = t.inverse();
             Geom::Affine result = t_inv * item->transform * t;
@@ -1582,7 +1624,15 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Affine cons
                 // we need to cancel out the move compensation, too
 
                 // find out the clone move, same as in sp_use_move_compensate
-                Geom::Affine parent = SP_USE(item)->get_parent_transform();
+                Geom::Affine parent;
+                {
+                    SPUse *use = dynamic_cast<SPUse *>(item);
+                    if (use) {
+                        parent = use->get_parent_transform();
+                    } else {
+                        g_assert_not_reached();
+                    }
+                }
                 Geom::Affine clone_move = parent.inverse() * t * parent;
 
                 if (prefs_parallel) {
@@ -1743,8 +1793,12 @@ void sp_selection_rotate_90(SPDesktop *desktop, bool ccw)
     GSList const *l = selection->itemList();
     Geom::Rotate const rot_90(Geom::Point(0, ccw ? 1 : -1)); // pos. or neg. rotation, depending on the value of ccw
     for (GSList const *l2 = l ; l2 != NULL ; l2 = l2->next) {
-        SPItem *item = SP_ITEM(l2->data);
-        sp_item_rotate_rel(item, rot_90);
+        SPItem *item = dynamic_cast<SPItem *>(static_cast<SPObject *>(l2->data));
+        if (item) {
+            sp_item_rotate_rel(item, rot_90);
+        } else {
+            g_assert_not_reached();
+        }
     }
 
     DocumentUndo::done(sp_desktop_document(desktop),
@@ -1802,7 +1856,7 @@ void sp_select_same_fill_stroke_style(SPDesktop *desktop, gboolean fill, gboolea
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
 
     for (GSList const* sel_iter = selection->itemList(); sel_iter; sel_iter = sel_iter->next) {
-        SPItem *sel = SP_ITEM(sel_iter->data);
+        SPItem *sel = dynamic_cast<SPItem *>(static_cast<SPObject *>(sel_iter->data));
         GSList *matches = all_list;
         if (fill) {
             matches = sp_get_same_fill_or_stroke_color(sel, matches, SP_FILL_COLOR);
@@ -1855,8 +1909,12 @@ void sp_select_same_object_type(SPDesktop *desktop)
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
 
     for (GSList const* sel_iter = selection->itemList(); sel_iter; sel_iter = sel_iter->next) {
-        SPItem *sel = SP_ITEM(sel_iter->data);
-        matches = sp_get_same_object_type(sel, matches);
+        SPItem *sel = dynamic_cast<SPItem *>(static_cast<SPObject *>(sel_iter->data));
+        if (sel) {
+            matches = sp_get_same_object_type(sel, matches);
+        } else {
+            g_assert_not_reached();
+        }
     }
 
     selection->clear();
@@ -1893,10 +1951,14 @@ void sp_select_same_stroke_style(SPDesktop *desktop)
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
 
     for (GSList const* sel_iter = selection->itemList(); sel_iter; sel_iter = sel_iter->next) {
-        SPItem *sel = SP_ITEM(sel_iter->data);
-        matches = sp_get_same_stroke_style(sel, matches, SP_STROKE_STYLE_WIDTH);
-        matches = sp_get_same_stroke_style(sel, matches, SP_STROKE_STYLE_DASHES);
-        matches = sp_get_same_stroke_style(sel, matches, SP_STROKE_STYLE_MARKERS);
+        SPItem *sel = dynamic_cast<SPItem *>(static_cast<SPObject *>(sel_iter->data));
+        if (sel) {
+            matches = sp_get_same_stroke_style(sel, matches, SP_STROKE_STYLE_WIDTH);
+            matches = sp_get_same_stroke_style(sel, matches, SP_STROKE_STYLE_DASHES);
+            matches = sp_get_same_stroke_style(sel, matches, SP_STROKE_STYLE_MARKERS);
+        } else {
+            g_assert_not_reached();
+        }
     }
 
     selection->clear();
@@ -1922,45 +1984,49 @@ GSList *sp_get_same_fill_or_stroke_color(SPItem *sel, GSList *src, SPSelectStrok
     SPIPaint *sel_paint = (type == SP_FILL_COLOR) ? &(sel->style->fill) : &(sel->style->stroke);
 
     for (GSList *i = src; i != NULL; i = i->next) {
-        SPItem *iter = SP_ITEM(i->data);
-        SPIPaint *iter_paint = (type == SP_FILL_COLOR) ? &(iter->style->fill) : &(iter->style->stroke);
-        match = false;
-        if (sel_paint->isColor() && iter_paint->isColor() // color == color comparision doesnt seem to work here.
+        SPItem *iter = dynamic_cast<SPItem *>(static_cast<SPObject *>(i->data));
+        if (iter) {
+            SPIPaint *iter_paint = (type == SP_FILL_COLOR) ? &(iter->style->fill) : &(iter->style->stroke);
+            match = false;
+            if (sel_paint->isColor() && iter_paint->isColor() // color == color comparision doesnt seem to work here.
                 && (sel_paint->value.color.toRGBA32(1.0) == iter_paint->value.color.toRGBA32(1.0))) {
-            match = true;
-        } else if (sel_paint->isPaintserver() && iter_paint->isPaintserver()) {
+                match = true;
+            } else if (sel_paint->isPaintserver() && iter_paint->isPaintserver()) {
 
-            SPPaintServer *sel_server =
+                SPPaintServer *sel_server =
                     (type == SP_FILL_COLOR) ? sel->style->getFillPaintServer() : sel->style->getStrokePaintServer();
-            SPPaintServer *iter_server =
+                SPPaintServer *iter_server =
                     (type == SP_FILL_COLOR) ? iter->style->getFillPaintServer() : iter->style->getStrokePaintServer();
 
-            if ((SP_IS_LINEARGRADIENT(sel_server) || SP_IS_RADIALGRADIENT(sel_server) ||
-                    (SP_IS_GRADIENT(sel_server) && SP_GRADIENT(sel_server)->getVector()->isSwatch()))
+                if ((dynamic_cast<SPLinearGradient *>(sel_server) || dynamic_cast<SPRadialGradient *>(sel_server) ||
+                     (dynamic_cast<SPGradient *>(sel_server) && dynamic_cast<SPGradient *>(sel_server)->getVector()->isSwatch()))
                     &&
-                 (SP_IS_LINEARGRADIENT(iter_server) || SP_IS_RADIALGRADIENT(iter_server) ||
-                    (SP_IS_GRADIENT(iter_server) && SP_GRADIENT(iter_server)->getVector()->isSwatch()))) {
-                SPGradient *sel_vector = SP_GRADIENT(sel_server)->getVector();
-                SPGradient *iter_vector = SP_GRADIENT(iter_server)->getVector();
-                if (sel_vector == iter_vector) {
-                    match = true;
-                }
+                    (dynamic_cast<SPLinearGradient *>(iter_server) || dynamic_cast<SPRadialGradient *>(iter_server) ||
+                     (dynamic_cast<SPGradient *>(iter_server) && dynamic_cast<SPGradient *>(iter_server)->getVector()->isSwatch()))) {
+                    SPGradient *sel_vector = dynamic_cast<SPGradient *>(sel_server)->getVector();
+                    SPGradient *iter_vector = dynamic_cast<SPGradient *>(iter_server)->getVector();
+                    if (sel_vector == iter_vector) {
+                        match = true;
+                    }
 
-            } else if (SP_IS_PATTERN(sel_server) && SP_IS_PATTERN(iter_server)) {
-                SPPattern *sel_pat = pattern_getroot(SP_PATTERN(sel_server));
-                SPPattern *iter_pat = pattern_getroot(SP_PATTERN(iter_server));
-                if (sel_pat == iter_pat) {
-                    match = true;
+                } else if (dynamic_cast<SPPattern *>(sel_server) && dynamic_cast<SPPattern *>(iter_server)) {
+                    SPPattern *sel_pat = pattern_getroot(dynamic_cast<SPPattern *>(sel_server));
+                    SPPattern *iter_pat = pattern_getroot(dynamic_cast<SPPattern *>(iter_server));
+                    if (sel_pat == iter_pat) {
+                        match = true;
+                    }
                 }
+            } else if (sel_paint->isNone() && iter_paint->isNone()) {
+                match = true;
+            } else if (sel_paint->isNoneSet() && iter_paint->isNoneSet()) {
+                match = true;
             }
-        } else if (sel_paint->isNone() && iter_paint->isNone()) {
-            match = true;
-        } else if (sel_paint->isNoneSet() && iter_paint->isNoneSet()) {
-            match = true;
-        }
 
-        if (match) {
-            matches = g_slist_prepend(matches, iter);
+            if (match) {
+                matches = g_slist_prepend(matches, iter);
+            }
+        } else {
+            g_assert_not_reached();
         }
     }
 
@@ -1969,35 +2035,35 @@ GSList *sp_get_same_fill_or_stroke_color(SPItem *sel, GSList *src, SPSelectStrok
 
 static bool item_type_match (SPItem *i, SPItem *j)
 {
-    if ( SP_IS_RECT(i)) {
-        return ( SP_IS_RECT(j) );
+    if ( dynamic_cast<SPRect *>(i)) {
+        return ( dynamic_cast<SPRect *>(j) );
 
-    } else if (SP_IS_GENERICELLIPSE(i)) {
-        return (SP_IS_GENERICELLIPSE(j));
+    } else if (dynamic_cast<SPGenericEllipse *>(i)) {
+        return (dynamic_cast<SPGenericEllipse *>(j));
 
-    } else if (SP_IS_STAR(i) || SP_IS_POLYGON(i)) {
-        return (SP_IS_STAR(j) || SP_IS_POLYGON(j)) ;
+    } else if (dynamic_cast<SPStar *>(i) || dynamic_cast<SPPolygon *>(i)) {
+        return (dynamic_cast<SPStar *>(j) || dynamic_cast<SPPolygon *>(j)) ;
 
-    } else if (SP_IS_SPIRAL(i)) {
-        return (SP_IS_SPIRAL(j));
+    } else if (dynamic_cast<SPSpiral *>(i)) {
+        return (dynamic_cast<SPSpiral *>(j));
 
-    } else if (SP_IS_PATH(i) || SP_IS_LINE(i) || SP_IS_POLYLINE(i)) {
-        return (SP_IS_PATH(j) || SP_IS_LINE(j) || SP_IS_POLYLINE(j));
+    } else if (dynamic_cast<SPPath *>(i) || dynamic_cast<SPLine *>(i) || dynamic_cast<SPPolyLine *>(i)) {
+        return (dynamic_cast<SPPath *>(j) || dynamic_cast<SPLine *>(j) || dynamic_cast<SPPolyLine *>(j));
 
-    } else if (SP_IS_TEXT(i) || SP_IS_FLOWTEXT(i) || SP_IS_TSPAN(i) || SP_IS_TREF(i) || SP_IS_STRING(i)) {
-        return (SP_IS_TEXT(j) || SP_IS_FLOWTEXT(j) || SP_IS_TSPAN(j) || SP_IS_TREF(j) || SP_IS_STRING(j));
+    } else if (dynamic_cast<SPText *>(i) || dynamic_cast<SPFlowtext *>(i) || dynamic_cast<SPTSpan *>(i) || dynamic_cast<SPTRef *>(i) || dynamic_cast<SPString *>(i)) {
+        return (dynamic_cast<SPText *>(j) || dynamic_cast<SPFlowtext *>(j) || dynamic_cast<SPTSpan *>(j) || dynamic_cast<SPTRef *>(j) || dynamic_cast<SPString *>(j));
 
-    }  else if (SP_IS_USE(i)) {
-        return (SP_IS_USE(j)) ;
+    }  else if (dynamic_cast<SPUse *>(i)) {
+        return (dynamic_cast<SPUse *>(j)) ;
 
-    } else if (SP_IS_IMAGE(i)) {
-        return (SP_IS_IMAGE(j));
+    } else if (dynamic_cast<SPImage *>(i)) {
+        return (dynamic_cast<SPImage *>(j));
 
-    } else if (SP_IS_OFFSET(i) && SP_OFFSET(i)->sourceHref) {   // Linked offset
-        return (SP_IS_OFFSET(j) && SP_OFFSET(j)->sourceHref);
+    } else if (dynamic_cast<SPOffset *>(i) && dynamic_cast<SPOffset *>(i)->sourceHref) {   // Linked offset
+        return (dynamic_cast<SPOffset *>(j) && dynamic_cast<SPOffset *>(j)->sourceHref);
 
-    }  else if (SP_IS_OFFSET(i) && !SP_OFFSET(i)->sourceHref) { // Dynamic offset
-        return (SP_IS_OFFSET(j) && !SP_OFFSET(j)->sourceHref);
+    }  else if (dynamic_cast<SPOffset *>(i) && !dynamic_cast<SPOffset *>(i)->sourceHref) { // Dynamic offset
+        return (dynamic_cast<SPOffset *>(j) && !dynamic_cast<SPOffset *>(j)->sourceHref);
 
     }
 
@@ -2013,8 +2079,8 @@ GSList *sp_get_same_object_type(SPItem *sel, GSList *src)
     GSList *matches = NULL;
 
     for (GSList *i = src; i != NULL; i = i->next) {
-        SPItem *item = SP_ITEM(i->data);
-        if (item_type_match (sel, item)) {
+        SPItem *item = dynamic_cast<SPItem *>(static_cast<SPObject *>(i->data));
+        if (item && item_type_match(sel, item)) {
             matches = g_slist_prepend (matches, item);
         }
     }
@@ -2050,31 +2116,32 @@ GSList *sp_get_same_stroke_style(SPItem *sel, GSList *src, SPSelectStrokeStyleTy
     }
 
     for (GSList *i = src; i != NULL; i = i->next) {
-        SPItem *iter = SP_ITEM(i->data);
-        SPStyle *iter_style = iter->style;
-        match = false;
+        SPItem *iter = dynamic_cast<SPItem *>(static_cast<SPObject *>(i->data));
+        if (iter) {
+            SPStyle *iter_style = iter->style;
+            match = false;
 
-        if (type == SP_STROKE_STYLE_WIDTH) {
-            match = (sel_style->stroke_width.set == iter_style->stroke_width.set);
-            if (sel_style->stroke_width.set && iter_style->stroke_width.set) {
-                GSList *objects = NULL;
-                objects = g_slist_prepend(objects, iter);
-                SPStyle *iter_style_for_width = sp_style_new (SP_ACTIVE_DOCUMENT);
-                objects_query_strokewidth (objects, iter_style_for_width);
+            if (type == SP_STROKE_STYLE_WIDTH) {
+                match = (sel_style->stroke_width.set == iter_style->stroke_width.set);
+                if (sel_style->stroke_width.set && iter_style->stroke_width.set) {
+                    GSList *objects = NULL;
+                    objects = g_slist_prepend(objects, iter);
+                    SPStyle *iter_style_for_width = sp_style_new (SP_ACTIVE_DOCUMENT);
+                    objects_query_strokewidth (objects, iter_style_for_width);
 
-                if (sel_style_for_width) {
-                    match = (sel_style_for_width->stroke_width.computed == iter_style_for_width->stroke_width.computed);
+                    if (sel_style_for_width) {
+                        match = (sel_style_for_width->stroke_width.computed == iter_style_for_width->stroke_width.computed);
+                    }
+                    g_slist_free(objects);
                 }
-                g_slist_free(objects);
             }
-        }
-        else if (type == SP_STROKE_STYLE_DASHES ) {
-            match = (sel_style->stroke_dasharray.set == iter_style->stroke_dasharray.set);
-            if (sel_style->stroke_dasharray.set && iter_style->stroke_dasharray.set) {
-                match = (sel_style->stroke_dasharray.values == iter_style->stroke_dasharray.values);
+            else if (type == SP_STROKE_STYLE_DASHES ) {
+                match = (sel_style->stroke_dasharray.set == iter_style->stroke_dasharray.set);
+                if (sel_style->stroke_dasharray.set && iter_style->stroke_dasharray.set) {
+                    match = (sel_style->stroke_dasharray.values == iter_style->stroke_dasharray.values);
+                }
             }
-        }
-        else if (type == SP_STROKE_STYLE_MARKERS) {
+            else if (type == SP_STROKE_STYLE_MARKERS) {
                 match = true;
                 int len = sizeof(sel_style->marker)/sizeof(SPIString);
                 for (int i = 0; i < len; i++) {
@@ -2085,10 +2152,13 @@ GSList *sp_get_same_stroke_style(SPItem *sel, GSList *src, SPSelectStrokeStyleTy
                         break;
                     }
                 }
-        }
+            }
 
-        if (match) {
-            matches = g_slist_prepend(matches, iter);
+            if (match) {
+                matches = g_slist_prepend(matches, iter);
+            }
+        } else {
+            g_assert_not_reached();
         }
     }
 
@@ -2435,7 +2505,7 @@ SPItem *next_item_from_list(SPDesktop *desktop, GSList const *items,
 {
     SPObject *current=root;
     while (items) {
-        SPItem *item=SP_ITEM(items->data);
+        SPItem *item = dynamic_cast<SPItem *>(static_cast<SPObject *>(items->data));
         if ( root->isAncestorOf(item) &&
              ( !only_in_viewport || desktop->isWithinViewport(item) ) )
         {
@@ -2489,13 +2559,16 @@ SPItem *next_item(SPDesktop *desktop, GSList *path, SPObject *root,
             if (PREFS_SELECTION_LAYER != inlayer) { // recurse into sublayers
                 found = next_item<D>(desktop, NULL, object, only_in_viewport, inlayer, onlyvisible, onlysensitive);
             }
-        } else if ( SP_IS_ITEM(object) &&
-                    ( !only_in_viewport || desktop->isWithinViewport(SP_ITEM(object)) ) &&
-                    ( !onlyvisible || !desktop->itemIsHidden(SP_ITEM(object))) &&
-                    ( !onlysensitive || !SP_ITEM(object)->isLocked()) &&
-                    !desktop->isLayer(SP_ITEM(object)) )
-        {
-            found = SP_ITEM(object);
+        } else {
+            SPItem *item = dynamic_cast<SPItem *>(object);
+            if ( item &&
+                 ( !only_in_viewport || desktop->isWithinViewport(item) ) &&
+                 ( !onlyvisible || !desktop->itemIsHidden(item)) &&
+                 ( !onlysensitive || !item->isLocked()) &&
+                 !desktop->isLayer(item) )
+            {
+                found = item;
+            }
         }
         iter = D::next(iter);
     }
@@ -2613,12 +2686,11 @@ sp_selection_relink(SPDesktop *desktop)
     {
         SPItem *item = static_cast<SPItem *>(items->data);
 
-        if (!SP_IS_USE(item))
-            continue;
-
-        item->getRepr()->setAttribute("xlink:href", newref);
-        item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-        relinked = true;
+        if (dynamic_cast<SPUse *>(item)) {
+            item->getRepr()->setAttribute("xlink:href", newref);
+            item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+            relinked = true;
+        }
     }
 
     g_free(newref);
@@ -2654,7 +2726,7 @@ sp_selection_unlink(SPDesktop *desktop)
     {
         SPItem *item = static_cast<SPItem *>(items->data);
 
-        if (SP_IS_TEXT(item)) {
+        if (dynamic_cast<SPText *>(item)) {
             SPObject *tspan = sp_tref_convert_to_tspan(item);
 
             if (tspan) {
@@ -2666,22 +2738,24 @@ sp_selection_unlink(SPDesktop *desktop)
             unlinked = true;
         }
 
-        if (!(SP_IS_USE(item) || SP_IS_TREF(item))) {
+        if (!(dynamic_cast<SPUse *>(item) || dynamic_cast<SPTRef *>(item))) {
             // keep the non-use item in the new selection
             new_select = g_slist_prepend(new_select, item);
             continue;
         }
 
-        SPItem *unlink;
-        if (SP_IS_USE(item)) {
-            unlink = SP_USE(item)->unlink();
+        SPItem *unlink = NULL;
+        SPUse *use = dynamic_cast<SPUse *>(item);
+        if (use) {
+            unlink = use->unlink();
             // Unable to unlink use (external or invalid href?)
             if (!unlink) {
                 new_select = g_slist_prepend(new_select, item);
                 continue;
             }
         } else /*if (SP_IS_TREF(use))*/ {
-            unlink = SP_ITEM(sp_tref_convert_to_tspan(item));
+            unlink = dynamic_cast<SPItem *>(sp_tref_convert_to_tspan(item));
+            g_assert(unlink != NULL);
         }
 
         unlinked = true;
@@ -2721,24 +2795,39 @@ sp_select_clone_original(SPDesktop *desktop)
     }
 
     SPItem *original = NULL;
-    if (SP_IS_USE(item)) {
-        original = SP_USE(item)->get_original();
-    } else if (SP_IS_OFFSET(item) && SP_OFFSET(item)->sourceHref) {
-        original = sp_offset_get_source(SP_OFFSET(item));
-    } else if (SP_IS_TEXT_TEXTPATH(item)) {
-        original = sp_textpath_get_path_item(SP_TEXTPATH(item->firstChild()));
-    } else if (SP_IS_FLOWTEXT(item)) {
-        original = SP_FLOWTEXT(item)->get_frame(NULL); // first frame only
-    } else if (SP_IS_LPE_ITEM(item)) {
-        // check if the applied LPE is Clone original, if so, go to the refered path
-        Inkscape::LivePathEffect::Effect* lpe = SP_LPE_ITEM(item)->getPathEffectOfType(Inkscape::LivePathEffect::CLONE_ORIGINAL);
-        if (lpe) {
-            Inkscape::LivePathEffect::Parameter *lpeparam = lpe->getParameter("linkedpath");
-            if (Inkscape::LivePathEffect::OriginalPathParam *pathparam = dynamic_cast<Inkscape::LivePathEffect::OriginalPathParam *>(lpeparam)) {
-                original = pathparam->getObject();
+    SPUse *use = dynamic_cast<SPUse *>(original);
+    if (use) {
+        original = use->get_original();
+    } else {
+        SPOffset *offset = dynamic_cast<SPOffset *>(item);
+        if (offset && offset->sourceHref) {
+            original = sp_offset_get_source(offset);
+        } else {
+            SPText *text = dynamic_cast<SPText *>(item);
+            SPTextPath *textpath = (text) ? dynamic_cast<SPTextPath *>(text->firstChild()) : NULL;
+            if (text && textpath) {
+                original = sp_textpath_get_path_item(textpath);
+            } else {
+                SPFlowtext *flowtext = dynamic_cast<SPFlowtext *>(item);
+                if (flowtext) {
+                    original = flowtext->get_frame(NULL); // first frame only
+                } else {
+                    SPLPEItem *lpeItem = dynamic_cast<SPLPEItem *>(item);
+                    if (lpeItem) {
+                        // check if the applied LPE is Clone original, if so, go to the refered path
+                        Inkscape::LivePathEffect::Effect* lpe = lpeItem->getPathEffectOfType(Inkscape::LivePathEffect::CLONE_ORIGINAL);
+                        if (lpe) {
+                            Inkscape::LivePathEffect::Parameter *lpeparam = lpe->getParameter("linkedpath");
+                            if (Inkscape::LivePathEffect::OriginalPathParam *pathparam = dynamic_cast<Inkscape::LivePathEffect::OriginalPathParam *>(lpeparam)) {
+                                original = pathparam->getObject();
+                            }
+                        }
+                    }
+                }
             }
         }
     }
+
     if (original == NULL) { // it's an object that we don't know what to do with
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, error);
         return;
@@ -2749,8 +2838,8 @@ sp_select_clone_original(SPDesktop *desktop)
         return;
     }
 
-    for (SPObject *o = original; o && !SP_IS_ROOT(o); o = o->parent) {
-        if (SP_IS_DEFS(o)) {
+    for (SPObject *o = original; o && !dynamic_cast<SPRoot *>(o); o = o->parent) {
+        if (dynamic_cast<SPDefs *>(o)) {
             desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("The object you're trying to select is <b>not visible</b> (it is in &lt;defs&gt;)"));
             return;
         }
@@ -2799,7 +2888,7 @@ void sp_selection_clone_original_path_lpe(SPDesktop *desktop)
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>one</b> path to clone."));
         return;
     }
-    if ( !(SP_IS_SHAPE(item) || SP_IS_TEXT(item)) ) {
+    if ( !(dynamic_cast<SPShape *>(item) || dynamic_cast<SPText *>(item)) ) {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select one <b>path</b> to clone."));
         return;
     }
@@ -2826,9 +2915,10 @@ void sp_selection_clone_original_path_lpe(SPDesktop *desktop)
         // add the new clone to the top of the original's parent
         parent->appendChild(clone);
         SPObject *clone_obj = desktop->doc()->getObjectById(clone->attribute("id"));
-        if (SP_IS_LPE_ITEM(clone_obj)) {
+        SPLPEItem *clone_lpe = dynamic_cast<SPLPEItem *>(clone_obj);
+        if (clone_lpe) {
             gchar *href = g_strdup_printf("#%s", lpe_id);
-            SP_LPE_ITEM(clone_obj)->addPathEffect( href, false );
+            clone_lpe->addPathEffect( href, false );
             g_free(href);
         }
     }
@@ -2886,7 +2976,15 @@ void sp_selection_to_marker(SPDesktop *desktop, bool apply)
     // bottommost object, after sorting
     SPObject *parent = SP_OBJECT(items->data)->parent;
 
-    Geom::Affine parent_transform(SP_ITEM(parent)->i2doc_affine());
+    Geom::Affine parent_transform;
+    {
+        SPItem *parentItem = dynamic_cast<SPItem *>(parent);
+        if (parent) {
+            parent_transform = parentItem->i2doc_affine();
+        } else {
+            g_assert_not_reached();
+        }
+    }
 
     // Create a list of duplicates, to be pasted inside marker element.
     GSList *repr_copies = NULL;
@@ -2927,8 +3025,9 @@ void sp_selection_to_marker(SPDesktop *desktop, bool apply)
 }
 
 static void sp_selection_to_guides_recursive(SPItem *item, bool wholegroups) {
-    if (SP_IS_GROUP(item) && !SP_IS_BOX3D(item) && !wholegroups) {
-        for (GSList *i = sp_item_group_item_list(SP_GROUP(item)); i != NULL; i = i->next) {
+    SPGroup *group = dynamic_cast<SPGroup *>(item);
+    if (group && !dynamic_cast<SPBox3D *>(item) && !wholegroups) {
+        for (GSList *i = sp_item_group_item_list(group); i != NULL; i = i->next) {
             sp_selection_to_guides_recursive(static_cast<SPItem*>(i->data), wholegroups);
         }
     } else {
@@ -3020,13 +3119,13 @@ void sp_selection_symbol(SPDesktop *desktop, bool /*apply*/ )
 
     // Find out if we have a single group
     bool single_group = false;
-    SPObject *the_group = NULL;
+    SPGroup *the_group = NULL;
     Geom::Affine transform;
     if( g_slist_length( items ) == 1 ) {
         SPObject *object = reinterpret_cast<SPObject *>( items->data );
-        if( SP_IS_GROUP( object ) ) {
+        the_group = dynamic_cast<SPGroup *>(object);
+        if ( the_group ) {
             single_group = true;
-            the_group = object;
 
             if( !sp_svg_transform_read( object->getAttribute("transform"), &transform ))
                 transform = Geom::identity();
@@ -3045,7 +3144,7 @@ void sp_selection_symbol(SPDesktop *desktop, bool /*apply*/ )
                 prefs->setInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
 
                 // Remove transform on group, updating clones.
-                SP_ITEM(object)->doWriteTransform(object->getRepr(), Geom::identity());
+                the_group->doWriteTransform(object->getRepr(), Geom::identity());
 
                 // restore compensation setting
                 prefs->setInt("/options/clonecompensation/value", saved_compensation);
@@ -3139,7 +3238,7 @@ void sp_selection_unsymbol(SPDesktop *desktop)
  
     // Make sure we have only one object in selection.
     // Require that we really have a <symbol>.
-    if( symbol == NULL || !SP_IS_SYMBOL( symbol ))  {
+    if( symbol == NULL || !dynamic_cast<SPSymbol *>( symbol ))  {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select only one <b>symbol</b> in Symbol dialog to convert to group."));
         return;
     }
@@ -3158,7 +3257,7 @@ void sp_selection_unsymbol(SPDesktop *desktop)
     // group that only adds a transform to the symbol content).
     if( g_slist_length( children ) == 1 ) {
         SPObject *object = reinterpret_cast<SPObject *>( children->data );
-        if( SP_IS_GROUP( object ) ) {
+        if ( dynamic_cast<SPGroup *>( object ) ) {
             if( object->getAttribute("style") == NULL ||
                 object->getAttribute("class") == NULL ) {
 
@@ -3237,8 +3336,17 @@ sp_selection_tile(SPDesktop *desktop, bool apply)
 
     // bottommost object, after sorting
     SPObject *parent = SP_OBJECT(items->data)->parent;
+    
 
-    Geom::Affine parent_transform(SP_ITEM(parent)->i2doc_affine());
+    Geom::Affine parent_transform;
+    {
+        SPItem *parentItem = dynamic_cast<SPItem *>(parent);
+        if (parentItem) {
+            parent_transform = parentItem->i2doc_affine();
+        } else {
+            g_assert_not_reached();
+        }
+    }
 
     // remember the position of the first item
     gint pos = SP_OBJECT(items->data)->getRepr()->position();
@@ -3343,20 +3451,22 @@ void sp_selection_untile(SPDesktop *desktop)
 
         SPPaintServer *server = item->style->getFillPaintServer();
 
-        if (!SP_IS_PATTERN(server))
+        SPPattern *basePat = dynamic_cast<SPPattern *>(server);
+        if (!basePat) {
             continue;
+        }
 
         did = true;
 
-        SPPattern *pattern = pattern_getroot(SP_PATTERN(server));
+        SPPattern *pattern = pattern_getroot(basePat);
 
-        Geom::Affine pat_transform = pattern_patternTransform(SP_PATTERN(server));
+        Geom::Affine pat_transform = pattern_patternTransform(basePat);
         pat_transform *= item->transform;
 
         for (SPObject *child = pattern->firstChild() ; child != NULL; child = child->next ) {
-            if (SP_IS_ITEM(child)) {
+            if (dynamic_cast<SPItem *>(child)) {
                 Inkscape::XML::Node *copy = child->getRepr()->duplicate(xml_doc);
-                SPItem *i = SP_ITEM(desktop->currentLayer()->appendChildRepr(copy));
+                SPItem *i = dynamic_cast<SPItem *>(desktop->currentLayer()->appendChildRepr(copy));
 
                // FIXME: relink clones to the new canvas objects
                // use SPObject::setid when mental finishes it to steal ids of
@@ -3364,10 +3474,14 @@ void sp_selection_untile(SPDesktop *desktop)
                 // this is needed to make sure the new item has curve (simply requestDisplayUpdate does not work)
                 doc->ensureUpToDate();
 
-                Geom::Affine transform( i->transform * pat_transform );
-                i->doWriteTransform(i->getRepr(), transform);
+                if (i) {
+                    Geom::Affine transform( i->transform * pat_transform );
+                    i->doWriteTransform(i->getRepr(), transform);
 
-                new_select = g_slist_prepend(new_select, i);
+                    new_select = g_slist_prepend(new_select, i);
+                } else {
+                    g_assert_not_reached();
+                }
             }
         }
 
@@ -3585,7 +3699,15 @@ void sp_selection_create_bitmap_copy(SPDesktop *desktop)
     }
 
     // Calculate the matrix that will be applied to the image so that it exactly overlaps the source objects
-    Geom::Affine eek(SP_ITEM(parent_object)->i2dt_affine());
+    Geom::Affine eek;
+    {
+        SPItem *parentItem = dynamic_cast<SPItem *>(parent_object);
+        if (parentItem) {
+            eek = parentItem->i2dt_affine();
+        } else {
+            g_assert_not_reached();
+        }
+    }
     Geom::Affine t;
 
     double shift_x = bbox->min()[Geom::X];
@@ -3931,14 +4053,14 @@ void sp_selection_unset_mask(SPDesktop *desktop, bool apply_clip_path) {
 
         SP_OBJECT(i->data)->getRepr()->setAttribute(attributeName, "none");
 
-        if (ungroup_masked && SP_IS_GROUP(i->data)) {
+        SPGroup *group = dynamic_cast<SPGroup *>(static_cast<SPObject *>(i->data));
+        if (ungroup_masked && group) {
                 // if we had previously enclosed masked object in group,
                 // add it to list so we can ungroup it later
-                SPGroup *item = SP_GROUP(i->data);
 
                 // ungroup only groups we created when setting clip/mask
-                if (item->layerMode() == SPGroup::MASK_HELPER) {
-                    items_to_ungroup = g_slist_prepend(items_to_ungroup, item);
+                if (group->layerMode() == SPGroup::MASK_HELPER) {
+                    items_to_ungroup = g_slist_prepend(items_to_ungroup, group);
                 }
 
         }
@@ -3986,10 +4108,15 @@ void sp_selection_unset_mask(SPDesktop *desktop, bool apply_clip_path) {
 
     // ungroup marked groups added when setting mask
     for (GSList *i = items_to_ungroup ; NULL != i ; i = i->next) {
-        items_to_select = g_slist_remove(items_to_select, SP_GROUP(i->data));
-        GSList *children = NULL;
-        sp_item_group_ungroup(SP_GROUP(i->data), &children, false);
-        items_to_select = g_slist_concat(children, items_to_select);
+        SPGroup *group = dynamic_cast<SPGroup *>(static_cast<SPObject *>(i->data));
+        if (group) {
+            items_to_select = g_slist_remove(items_to_select, group);
+            GSList *children = NULL;
+            sp_item_group_ungroup(group, &children, false);
+            items_to_select = g_slist_concat(children, items_to_select);
+        } else {
+            g_assert_not_reached();
+        }
     }
 
     g_slist_free(items_to_ungroup);
@@ -4097,12 +4224,16 @@ void fit_canvas_to_selection_or_drawing(SPDesktop *desktop) {
 
 static void itemtree_map(void (*f)(SPItem *, SPDesktop *), SPObject *root, SPDesktop *desktop) {
     // don't operate on layers
-    if (SP_IS_ITEM(root) && !desktop->isLayer(SP_ITEM(root))) {
-        f(SP_ITEM(root), desktop);
+    {
+        SPItem *item = dynamic_cast<SPItem *>(root);
+        if (item && !desktop->isLayer(item)) {
+            f(item, desktop);
+        }
     }
     for ( SPObject::SiblingIterator iter = root->firstChild() ; iter ; ++iter ) {
         //don't recurse into locked layers
-        if (!(SP_IS_ITEM(&*iter) && desktop->isLayer(SP_ITEM(&*iter)) && SP_ITEM(&*iter)->isLocked())) {
+        SPItem *item = dynamic_cast<SPItem *>(&*iter);
+        if (!(item && desktop->isLayer(item) && item->isLocked())) {
             itemtree_map(f, iter, desktop);
         }
     }

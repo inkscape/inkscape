@@ -182,9 +182,9 @@ static void box3d_toolbox_selection_changed(Inkscape::Selection *selection, GObj
     purge_repr_listener(tbl, tbl);
 
     SPItem *item = selection->singleItem();
-    if (item && SP_IS_BOX3D(item)) {
+    SPBox3D *box = dynamic_cast<SPBox3D *>(item);
+    if (box) {
         // FIXME: Also deal with multiple selected boxes
-        SPBox3D *box = SP_BOX3D(item);
         Persp3D *persp = box3d_get_perspective(box);
         persp_repr = persp->getRepr();
         if (persp_repr) {

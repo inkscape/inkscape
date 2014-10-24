@@ -8,6 +8,7 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Maximilian Albert <Anhalter42@gmx.de>
  *   Abhishek Sharma
+ *   Jon A. Cruz <jon@joncruz.org.
  *
  * Copyright (C) 2007      Authors
  * Copyright (C) 1999-2002 Lauris Kaplinski
@@ -21,8 +22,6 @@
 #include "axis-manip.h"
 
 #define SP_TYPE_BOX3D            (box3d_get_type ())
-#define SP_BOX3D(obj) (dynamic_cast<SPBox3D*>((SPObject*)obj))
-#define SP_IS_BOX3D(obj) (dynamic_cast<const SPBox3D*>((SPObject*)obj) != NULL)
 
 class Persp3D;
 class Persp3DReference;

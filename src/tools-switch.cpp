@@ -4,6 +4,7 @@
  * Authors:
  *   bulia byak <buliabyak@users.sf.net>
  *   Josh Andler <scislac@users.sf.net>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2003-2007 authors
  *
@@ -59,6 +60,8 @@
 #include "message-context.h"
 
 #include "tools-switch.h"
+
+using Inkscape::UI::Tools::ToolBase;
 
 static char const *const tool_names[] = {
     NULL,
@@ -129,9 +132,11 @@ int
 tools_isactive(SPDesktop *dt, unsigned num)
 {
     g_assert( num < G_N_ELEMENTS(tool_names) );
-    if (SP_IS_EVENT_CONTEXT(dt->event_context))
+    if (dynamic_cast<ToolBase *>(dt->event_context)) {
         return dt->event_context->pref_observer->observed_path == tool_names[num];
-    else return FALSE;
+    } else {
+        return FALSE;
+    }
 }
 
 int
@@ -158,27 +163,27 @@ tools_switch(SPDesktop *dt, int num)
 
 void tools_switch_by_item(SPDesktop *dt, SPItem *item, Geom::Point const p)
 {
-    if (SP_IS_RECT(item)) {
+    if (dynamic_cast<SPRect *>(item)) {
         tools_switch(dt, TOOLS_SHAPES_RECT);
-    } else if (SP_IS_BOX3D(item)) {
+    } else if (dynamic_cast<SPBox3D *>(item)) {
         tools_switch(dt, TOOLS_SHAPES_3DBOX);
-    } else if (SP_IS_GENERICELLIPSE(item)) {
+    } else if (dynamic_cast<SPGenericEllipse *>(item)) {
         tools_switch(dt, TOOLS_SHAPES_ARC);
-    } else if (SP_IS_STAR(item)) {
+    } else if (dynamic_cast<SPStar *>(item)) {
         tools_switch(dt, TOOLS_SHAPES_STAR);
-    } else if (SP_IS_SPIRAL(item)) {
+    } else if (dynamic_cast<SPSpiral *>(item)) {
         tools_switch(dt, TOOLS_SHAPES_SPIRAL);
-    } else if (SP_IS_PATH(item)) {
+    } else if (dynamic_cast<SPPath *>(item)) {
         if (Inkscape::UI::Tools::cc_item_is_connector(item)) {
             tools_switch(dt, TOOLS_CONNECTOR);
         }
         else {
             tools_switch(dt, TOOLS_NODES);
         }
-    } else if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item))  {
+    } else if (dynamic_cast<SPText *>(item) || dynamic_cast<SPFlowtext *>(item))  {
         tools_switch(dt, TOOLS_TEXT);
-        sp_text_context_place_cursor_at (SP_TEXT_CONTEXT(dt->event_context), SP_OBJECT(item), p);
-    } else if (SP_IS_OFFSET(item))  {
+        sp_text_context_place_cursor_at (SP_TEXT_CONTEXT(dt->event_context), item, p);
+    } else if (dynamic_cast<SPOffset *>(item))  {
         tools_switch(dt, TOOLS_NODES);
     }
 }

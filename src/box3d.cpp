@@ -66,27 +66,23 @@ SPBox3D::~SPBox3D() {
 }
 
 void SPBox3D::build(SPDocument *document, Inkscape::XML::Node *repr) {
-	SPBox3D* object = this;
-
     SPGroup::build(document, repr);
 
-    SPBox3D *box = SP_BOX3D (object);
-    box->my_counter = counter++;
+    my_counter = counter++;
 
     /* we initialize the z-orders to zero so that they are updated during dragging */
     for (int i = 0; i < 6; ++i) {
-        box->z_orders[i] = 0;
+        z_orders[i] = 0;
     }
 
     // TODO: Create/link to the correct perspective
 
-    SPDocument *doc = box->document;
-    if ( doc ) {
-        box->persp_ref->changedSignal().connect(sigc::bind(sigc::ptr_fun(box3d_ref_changed), box));
+    if ( document ) {
+        persp_ref->changedSignal().connect(sigc::bind(sigc::ptr_fun(box3d_ref_changed), this));
 
-        object->readAttr( "inkscape:perspectiveID" );
-        object->readAttr( "inkscape:corner0" );
-        object->readAttr( "inkscape:corner7" );
+        readAttr( "inkscape:perspectiveID" );
+        readAttr( "inkscape:corner0" );
+        readAttr( "inkscape:corner7" );
     }
 }
 
@@ -188,11 +184,15 @@ box3d_ref_changed(SPObject *old_ref, SPObject *ref, SPBox3D *box)
 {
     if (old_ref) {
         sp_signal_disconnect_by_data(old_ref, box);
-        persp3d_remove_box (SP_PERSP3D(old_ref), box);
+        Persp3D *oldPersp = dynamic_cast<Persp3D *>(old_ref);
+        if (oldPersp) {
+            persp3d_remove_box(oldPersp, box);
+        }
     }
-    if ( SP_IS_PERSP3D(ref) && ref != box ) // FIXME: Comparisons sane?
+    Persp3D *persp = dynamic_cast<Persp3D *>(ref);
+    if ( persp && (ref != box) ) // FIXME: Comparisons sane?
     {
-        persp3d_add_box (SP_PERSP3D(ref), box);
+        persp3d_add_box(persp, box);
     }
 }
 
@@ -273,9 +273,6 @@ void box3d_position_set(SPBox3D *box)
 }
 
 Geom::Affine SPBox3D::set_transform(Geom::Affine const &xform) {
-	SPBox3D* item = this;
-    SPBox3D *box = item;
-
     // We don't apply the transform to the box directly but instead to its perspective (which is
     // done in sp_selection_apply_affine). Here we only adjust strokes, patterns, etc.
 
@@ -283,10 +280,9 @@ Geom::Affine SPBox3D::set_transform(Geom::Affine const &xform) {
     gdouble const sw = hypot(ret[0], ret[1]);
     gdouble const sh = hypot(ret[2], ret[3]);
 
-    for ( SPObject *child = box->firstChild(); child; child = child->getNext() ) {
-        if (SP_IS_ITEM(child)) {
-            SPItem *childitem = SP_ITEM(child);
-
+    for ( SPObject *child = firstChild(); child; child = child->getNext() ) {
+        SPItem *childitem = dynamic_cast<SPItem *>(child);
+        if (childitem) {
             // Adjust stroke width
             childitem->adjust_stroke(sqrt(fabs(sw * sh)));
 
@@ -1220,9 +1216,10 @@ box3d_check_for_swapped_coords(SPBox3D *box) {
 }
 
 static void box3d_extract_boxes_rec(SPObject *obj, std::list<SPBox3D *> &boxes) {
-    if (SP_IS_BOX3D(obj)) {
-        boxes.push_back(SP_BOX3D(obj));
-    } else if (SP_IS_GROUP(obj)) {
+    SPBox3D *box = dynamic_cast<SPBox3D *>(obj);
+    if (box) {
+        boxes.push_back(box);
+    } else if (dynamic_cast<SPGroup *>(obj)) {
         for ( SPObject *child = obj->firstChild(); child; child = child->getNext() ) {
             box3d_extract_boxes_rec(child, boxes);
         }
@@ -1306,7 +1303,9 @@ SPGroup *box3d_convert_to_group(SPBox3D *box)
 
     grepr->setAttribute("id", id);
 
-    return SP_GROUP(doc->getObjectByRepr(grepr));
+    SPGroup *group = dynamic_cast<SPGroup *>(doc->getObjectByRepr(grepr));
+    g_assert(group != NULL);
+    return group;
 }
 
 const char *SPBox3D::displayName() const {

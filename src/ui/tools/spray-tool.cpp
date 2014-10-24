@@ -384,11 +384,14 @@ static bool sp_spray_recursive(SPDesktop *desktop,
                                gint _distrib)
 {
     bool did = false;
-    
-    if (SP_IS_BOX3D(item) ) {
-        // convert 3D boxes to ordinary groups before spraying their shapes
-        item = box3d_convert_to_group(SP_BOX3D(item));
-        selection->add(item);
+
+    {
+        SPBox3D *box = dynamic_cast<SPBox3D *>(item);
+        if (box) {
+            // convert 3D boxes to ordinary groups before spraying their shapes
+            item = box3d_convert_to_group(box);
+            selection->add(item);
+        }
     }
 
     double _fid = g_random_double_range(0, 1);
@@ -413,7 +416,7 @@ static bool sp_spray_recursive(SPDesktop *desktop,
                 parent->appendChild(copy);
 
                 SPObject *new_obj = doc->getObjectByRepr(copy);
-                item_copied = SP_ITEM(new_obj);   // Convertion object->item
+                item_copied = dynamic_cast<SPItem *>(new_obj);   // Convertion object->item
                 Geom::Point center=item->getCenter();
                 sp_spray_scale_rel(center,desktop, item_copied, Geom::Scale(_scale,_scale));
                 sp_spray_scale_rel(center,desktop, item_copied, Geom::Scale(scale,scale));
@@ -437,7 +440,7 @@ static bool sp_spray_recursive(SPDesktop *desktop,
                 items != NULL;
                 items = items->next) {
 
-            SPItem *item1 = SP_ITEM(items->data);
+            SPItem *item1 = dynamic_cast<SPItem *>(static_cast<SPObject *>(items->data));
             if (i == 1) {
                 parent_item = item1;
             }
@@ -458,7 +461,7 @@ static bool sp_spray_recursive(SPDesktop *desktop,
                 Inkscape::XML::Node *copy = old_repr->duplicate(xml_doc);
                 parent->appendChild(copy);
                 SPObject *new_obj = doc->getObjectByRepr(copy);
-                item_copied = SP_ITEM(new_obj);
+                item_copied = dynamic_cast<SPItem *>(new_obj);
 
                 // Move around the cursor
                 Geom::Point move = (Geom::Point(cos(tilt)*cos(dp)*dr/(1-ratio)+sin(tilt)*sin(dp)*dr/(1+ratio), -sin(tilt)*cos(dp)*dr/(1-ratio)+cos(tilt)*sin(dp)*dr/(1+ratio)))+(p-a->midpoint()); 
@@ -503,7 +506,7 @@ static bool sp_spray_recursive(SPDesktop *desktop,
 
                 SPObject *clone_object = doc->getObjectByRepr(clone);
                 // Conversion object->item
-                item_copied = SP_ITEM(clone_object);
+                item_copied = dynamic_cast<SPItem *>(clone_object);
                 Geom::Point center = item->getCenter();
                 sp_spray_scale_rel(center, desktop, item_copied, Geom::Scale(_scale, _scale));
                 sp_spray_scale_rel(center, desktop, item_copied, Geom::Scale(scale, scale));
@@ -554,13 +557,16 @@ static bool sp_spray_dilate(SprayTool *tc, Geom::Point /*event_p*/, Geom::Point 
         for (GSList *items = original_selection;
                 items != NULL;
                 items = items->next) {
-            sp_object_ref(SP_ITEM(items->data));
+            SPItem *item = dynamic_cast<SPItem *>(static_cast<SPObject *>(items->data));
+            g_assert(item != NULL);
+            sp_object_ref(item);
         }
 
         for (GSList *items = original_selection;
                 items != NULL;
                 items = items->next) {
-            SPItem *item = SP_ITEM(items->data);
+            SPItem *item = dynamic_cast<SPItem *>(static_cast<SPObject *>(items->data));
+            g_assert(item != NULL);
 
             if (is_transform_modes(tc->mode)) {
                 if (sp_spray_recursive(desktop, selection, item, p, vector, tc->mode, radius, move_force, tc->population, tc->scale, tc->scale_variation, reverse, move_mean, move_standard_deviation, tc->ratio, tc->tilt, tc->rotation_variation, tc->distrib)) {
@@ -576,7 +582,9 @@ static bool sp_spray_dilate(SprayTool *tc, Geom::Point /*event_p*/, Geom::Point 
         for (GSList *items = original_selection;
                 items != NULL;
                 items = items->next) {
-            sp_object_unref(SP_ITEM(items->data));
+            SPItem *item = dynamic_cast<SPItem *>(static_cast<SPObject *>(items->data));
+            g_assert(item != NULL);
+            sp_object_unref(item);
         }
     }
 

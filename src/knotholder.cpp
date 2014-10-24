@@ -6,6 +6,7 @@
  *   bulia byak <buliabyak@users.sf.net>
  *   Maximilian Albert <maximilian.albert@gmail.com>
  *   Abhishek Sharma
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2001-2008 authors
  *
@@ -58,8 +59,7 @@ KnotHolder::KnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderReleasedFun
     local_change(FALSE),
     dragging(false)
 {
-
-    if (!desktop || !item || !SP_IS_ITEM(item)) {
+    if (!desktop || !item) {
         g_print ("Error! Throw an exception, please!\n");
     }
 
@@ -128,29 +128,37 @@ KnotHolder::knot_clicked_handler(SPKnot *knot, guint state)
         }
     }
 
-    if (SP_IS_SHAPE(saved_item)) {
-        SP_SHAPE(saved_item)->set_shape();
+    {
+        SPShape *savedShape = dynamic_cast<SPShape *>(saved_item);
+        if (savedShape) {
+            savedShape->set_shape();
+        }
     }
 
     knot_holder->update_knots();
 
     unsigned int object_verb = SP_VERB_NONE;
 
-    if (SP_IS_RECT(saved_item))
+    // TODO extract duplicated blocks;
+    if (dynamic_cast<SPRect *>(saved_item)) {
         object_verb = SP_VERB_CONTEXT_RECT;
-    else if (SP_IS_BOX3D(saved_item))
+    } else if (dynamic_cast<SPBox3D *>(saved_item)) {
         object_verb = SP_VERB_CONTEXT_3DBOX;
-    else if (SP_IS_GENERICELLIPSE(saved_item))
+    } else if (dynamic_cast<SPGenericEllipse *>(saved_item)) {
         object_verb = SP_VERB_CONTEXT_ARC;
-    else if (SP_IS_STAR(saved_item))
+    } else if (dynamic_cast<SPStar *>(saved_item)) {
         object_verb = SP_VERB_CONTEXT_STAR;
-    else if (SP_IS_SPIRAL(saved_item))
+    } else if (dynamic_cast<SPSpiral *>(saved_item)) {
         object_verb = SP_VERB_CONTEXT_SPIRAL;
-    else if (SP_IS_OFFSET(saved_item)) {
-        if (SP_OFFSET(saved_item)->sourceHref)
-            object_verb = SP_VERB_SELECTION_LINKED_OFFSET;
-        else
-            object_verb = SP_VERB_SELECTION_DYNAMIC_OFFSET;
+    } else {
+        SPOffset *offset = dynamic_cast<SPOffset *>(saved_item);
+        if (offset) {
+            if (offset->sourceHref) {
+                object_verb = SP_VERB_SELECTION_LINKED_OFFSET;
+            } else {
+                object_verb = SP_VERB_SELECTION_DYNAMIC_OFFSET;
+            }
+        }
     }
 
     // for drag, this is done by ungrabbed_handler, but for click we must do it here
@@ -177,8 +185,9 @@ KnotHolder::knot_moved_handler(SPKnot *knot, Geom::Point const &p, guint state)
         }
     }
 
-    if (SP_IS_SHAPE (item)) {
-        SP_SHAPE (item)->set_shape();
+    SPShape *shape = dynamic_cast<SPShape *>(item);
+    if (shape) {
+        shape->set_shape();
     }
 
     this->update_knots();
@@ -203,11 +212,12 @@ KnotHolder::knot_ungrabbed_handler(SPKnot */*knot*/, guint)
         /* do cleanup tasks (e.g., for LPE items write the parameter values
          * that were changed by dragging the handle to SVG)
          */
-        if (SP_IS_LPE_ITEM(object)) {
+        SPLPEItem *lpeItem = dynamic_cast<SPLPEItem *>(object);
+        if (lpeItem) {
             // This writes all parameters to SVG. Is this sufficiently efficient or should we only
             // write the ones that were changed?
 
-            Inkscape::LivePathEffect::Effect *lpe = SP_LPE_ITEM(object)->getCurrentLPE();
+            Inkscape::LivePathEffect::Effect *lpe = lpeItem->getCurrentLPE();
             if (lpe) {
                 LivePathEffectObject *lpeobj = lpe->getLPEObj();
                 lpeobj->updateRepr();
@@ -216,21 +226,26 @@ KnotHolder::knot_ungrabbed_handler(SPKnot */*knot*/, guint)
 
         unsigned int object_verb = SP_VERB_NONE;
 
-        if (SP_IS_RECT(object))
+        // TODO extract duplicated blocks:
+        if (dynamic_cast<SPRect *>(object)) {
             object_verb = SP_VERB_CONTEXT_RECT;
-        else if (SP_IS_BOX3D(object))
+        } else if (dynamic_cast<SPBox3D *>(object)) {
             object_verb = SP_VERB_CONTEXT_3DBOX;
-        else if (SP_IS_GENERICELLIPSE(object))
+        } else if (dynamic_cast<SPGenericEllipse *>(object)) {
             object_verb = SP_VERB_CONTEXT_ARC;
-        else if (SP_IS_STAR(object))
+        } else if (dynamic_cast<SPStar *>(object)) {
             object_verb = SP_VERB_CONTEXT_STAR;
-        else if (SP_IS_SPIRAL(object))
+        } else if (dynamic_cast<SPSpiral *>(object)) {
             object_verb = SP_VERB_CONTEXT_SPIRAL;
-        else if (SP_IS_OFFSET(object)) {
-            if (SP_OFFSET(object)->sourceHref)
-                object_verb = SP_VERB_SELECTION_LINKED_OFFSET;
-            else
-                object_verb = SP_VERB_SELECTION_DYNAMIC_OFFSET;
+        } else {
+            SPOffset *offset = dynamic_cast<SPOffset *>(object);
+            if (offset) {
+                if (offset->sourceHref) {
+                    object_verb = SP_VERB_SELECTION_LINKED_OFFSET;
+                } else {
+                    object_verb = SP_VERB_SELECTION_DYNAMIC_OFFSET;
+                }
+            }
         }
 
         DocumentUndo::done(object->document, object_verb,
@@ -247,7 +262,7 @@ void KnotHolder::add(KnotHolderEntity *e)
 
 void KnotHolder::add_pattern_knotholder()
 {
-    if ((item->style->fill.isPaintserver()) && SP_IS_PATTERN(item->style->getFillPaintServer())) {
+    if ((item->style->fill.isPaintserver()) && dynamic_cast<SPPattern *>(item->style->getFillPaintServer())) {
         PatternKnotHolderEntityXY *entity_xy = new PatternKnotHolderEntityXY(true);
         PatternKnotHolderEntityAngle *entity_angle = new PatternKnotHolderEntityAngle(true);
         PatternKnotHolderEntityScale *entity_scale = new PatternKnotHolderEntityScale(true);
@@ -269,7 +284,7 @@ void KnotHolder::add_pattern_knotholder()
         entity.push_back(entity_scale);
     }
 
-    if ((item->style->stroke.isPaintserver()) && SP_IS_PATTERN(item->style->getStrokePaintServer())) {
+    if ((item->style->stroke.isPaintserver()) && dynamic_cast<SPPattern *>(item->style->getStrokePaintServer())) {
         PatternKnotHolderEntityXY *entity_xy = new PatternKnotHolderEntityXY(false);
         PatternKnotHolderEntityAngle *entity_angle = new PatternKnotHolderEntityAngle(false);
         PatternKnotHolderEntityScale *entity_scale = new PatternKnotHolderEntityScale(false);
