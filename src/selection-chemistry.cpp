@@ -2795,7 +2795,7 @@ sp_select_clone_original(SPDesktop *desktop)
     }
 
     SPItem *original = NULL;
-    SPUse *use = dynamic_cast<SPUse *>(original);
+    SPUse *use = dynamic_cast<SPUse *>(item);
     if (use) {
         original = use->get_original();
     } else {
