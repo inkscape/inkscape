@@ -28,6 +28,7 @@
 #define SP_SHAPE_WRITE_PATH (1 << 2)
 
 class SPDesktop;
+class SPMarker;
 namespace Inkscape { class DrawingItem; }
 
 /**
@@ -51,7 +52,7 @@ public: // temporarily public, until SPPath is properly classed, etc.
     SPCurve *_curve;
 
 public:
-    SPObject *_marker[SP_MARKER_LOC_QTY];
+    SPMarker *_marker[SP_MARKER_LOC_QTY];
     sigc::connection _release_connect [SP_MARKER_LOC_QTY];
     sigc::connection _modified_connect [SP_MARKER_LOC_QTY];
 

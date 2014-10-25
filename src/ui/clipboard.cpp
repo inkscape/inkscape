@@ -54,6 +54,7 @@
 #include <2geom/transforms.h>
 #include "box3d.h"
 #include "gradient-drag.h"
+#include "marker.h"
 #include "sp-item.h"
 #include "sp-item-transform.h" // for sp_item_scale_rel, used in _pasteSize
 #include "sp-path.h"
