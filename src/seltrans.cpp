@@ -651,7 +651,7 @@ void Inkscape::SelTrans::_makeHandles()
 {
     for (int i = 0; i < NUMHANDS; i++) {
         SPSelTransTypeInfo info = handtypes[hands[i].type];
-        knots[i] = new SPKnot(_desktop, info.tip);
+        knots[i] = new SPKnot(_desktop, _(info.tip));
 
         knots[i]->setShape(SP_CTRL_SHAPE_BITMAP);
         knots[i]->setSize(13);
