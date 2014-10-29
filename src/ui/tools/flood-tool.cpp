@@ -50,7 +50,7 @@
 #include "preferences.h"
 #include "rubberband.h"
 #include "selection.h"
-#include "shape-editor.h"
+#include "ui/shape-editor.h"
 #include "sp-defs.h"
 #include "sp-item.h"
 #include "splivarot.h"
@@ -74,7 +74,7 @@ using Inkscape::Display::ExtractARGB32;
 using Inkscape::Display::ExtractRGB32;
 using Inkscape::Display::AssembleARGB32;
 
-#include "tool-factory.h"
+#include "ui/tool-factory.h"
 
 namespace Inkscape {
 namespace UI {
@@ -119,8 +119,8 @@ FloodTool::~FloodTool() {
  * destroys old and creates new knotholder.
  */
 void FloodTool::selection_changed(Inkscape::Selection* selection) {
-    this->shape_editor->unset_item(SH_KNOTHOLDER);
-    this->shape_editor->set_item(selection->singleItem(), SH_KNOTHOLDER);
+    this->shape_editor->unset_item();
+    this->shape_editor->set_item(selection->singleItem());
 }
 
 void FloodTool::setup() {
@@ -130,7 +130,7 @@ void FloodTool::setup() {
 
     SPItem *item = sp_desktop_selection(this->desktop)->singleItem();
     if (item) {
-        this->shape_editor->set_item(item, SH_KNOTHOLDER);
+        this->shape_editor->set_item(item);
     }
 
     this->sel_changed_connection.disconnect();

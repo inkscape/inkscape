@@ -1,17 +1,19 @@
 #include <glibmm/ustring.h>
-#include <glib-object.h>
 #include <vector>
 
+// A type which can hold any UTF-32 or UCS-4 character code.
+typedef unsigned int gunichar;
+
 struct Urange{
-	gchar* start;
-	gchar* end;
+	char* start;
+	char* end;
 };
 
 class UnicodeRange{
 public:
-UnicodeRange(const gchar* val);
-int add_range(gchar* val);
-bool contains(gchar unicode);
+UnicodeRange(const char* val);
+int add_range(char* val);
+bool contains(char unicode);
 Glib::ustring attribute_string();
 gunichar sample_glyph();
 

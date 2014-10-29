@@ -16,12 +16,15 @@
 #define INKSCAPE_UI_WIDGET_UNIT_TRACKER_H
 
 #include <map>
-#include <gtk/gtk.h>
-
 #include "util/units.h"
 
 using Inkscape::Util::Unit;
 using Inkscape::Util::UnitType;
+
+typedef struct _GObject       GObject;
+typedef struct _GtkAction     GtkAction;
+typedef struct _GtkAdjustment GtkAdjustment;
+typedef struct _GtkListStore  GtkListStore;
 
 namespace Inkscape {
 namespace UI {

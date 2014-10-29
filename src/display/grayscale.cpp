@@ -36,7 +36,7 @@ guint32 process(guint32 rgba) {
     return process(SP_RGBA32_R_U(rgba), SP_RGBA32_G_U(rgba), SP_RGBA32_B_U(rgba), SP_RGBA32_A_U(rgba));
 }
 
-guint32 process(guchar r, guchar g, guchar b, guchar a) {
+guint32 process(unsigned char r, unsigned char g, unsigned char b, unsigned char a) {
 
     /** To reduce banding in gradients, this calculation is tweaked a bit
      *  by outputing blue+1 or red+1 or both. The luminance is calculated
@@ -62,7 +62,7 @@ guint32 process(guchar r, guchar g, guchar b, guchar a) {
     }
 }
 
-guchar luminance(guchar r, guchar g, guchar b) {
+unsigned char luminance(unsigned char r, unsigned char g, unsigned char b) {
     guint32 luminance = ( red_factor * r
                           + green_factor * g
                           + blue_factor * b );

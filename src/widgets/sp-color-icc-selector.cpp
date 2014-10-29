@@ -10,7 +10,7 @@
 #include <set>
 #include <vector>
 
-#include "../dialogs/dialog-events.h"
+#include "ui/dialog-events.h"
 #include "sp-color-icc-selector.h"
 #include "sp-color-scales.h"
 #include "sp-color-slider.h"
@@ -67,10 +67,7 @@ extern guint update_in_progress;
 
 G_BEGIN_DECLS
 
-static void sp_color_icc_selector_class_init (SPColorICCSelectorClass *klass);
-static void sp_color_icc_selector_init (SPColorICCSelector *cs);
 static void sp_color_icc_selector_dispose(GObject *object);
-
 static void sp_color_icc_selector_show_all (GtkWidget *widget);
 static void sp_color_icc_selector_hide(GtkWidget *widget);
 
@@ -161,9 +158,6 @@ public:
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 };
 
-
-static SPColorSelectorClass *parent_class;
-
 #define XPAD 4
 #define YPAD 1
 
@@ -205,8 +199,14 @@ void attachToGridOrTable(GtkWidget *parent,
                          guint ypadding = YPAD)
 {
 #if GTK_CHECK_VERSION(3,0,0)
+    #if GTK_CHECK_VERSION(3,12,0)
+    gtk_widget_set_margin_start( child, xpadding );
+    gtk_widget_set_margin_end( child, xpadding );
+    #else
     gtk_widget_set_margin_left( child, xpadding );
     gtk_widget_set_margin_right( child, xpadding );
+    #endif
+
     gtk_widget_set_margin_top( child, ypadding );
     gtk_widget_set_margin_bottom( child, ypadding );
     if (hexpand) {
@@ -227,30 +227,7 @@ void attachToGridOrTable(GtkWidget *parent,
 
 } // namespace
 
-GType sp_color_icc_selector_get_type(void)
-{
-    static GType type = 0;
-    if (!type) {
-        static const GTypeInfo info = {
-            sizeof (SPColorICCSelectorClass),
-            NULL, // base_init
-            NULL, // base_finalize
-            (GClassInitFunc) sp_color_icc_selector_class_init,
-            NULL, // class_finalize
-            NULL, // class_data
-            sizeof (SPColorICCSelector),
-            0,    // n_preallocs
-            (GInstanceInitFunc) sp_color_icc_selector_init,
-            0,    // value_table
-        };
-
-        type = g_type_register_static (SP_TYPE_COLOR_SELECTOR,
-                                       "SPColorICCSelector",
-                                       &info,
-                                       static_cast< GTypeFlags > (0) );
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPColorICCSelector, sp_color_icc_selector, SP_TYPE_COLOR_SELECTOR);
 
 static void sp_color_icc_selector_class_init(SPColorICCSelectorClass *klass)
 {
@@ -258,8 +235,6 @@ static void sp_color_icc_selector_class_init(SPColorICCSelectorClass *klass)
     GObjectClass   *object_class = G_OBJECT_CLASS(klass);
     GtkWidgetClass *widget_class = GTK_WIDGET_CLASS(klass);
     SPColorSelectorClass *selector_class = SP_COLOR_SELECTOR_CLASS (klass);
-
-    parent_class = SP_COLOR_SELECTOR_CLASS (g_type_class_peek_parent (klass));
 
     selector_class->name = nameset;
     selector_class->submode_count = 1;
@@ -599,8 +574,8 @@ void ColorICCSelector::init()
 
 static void sp_color_icc_selector_dispose(GObject *object)
 {
-    if ((G_OBJECT_CLASS(parent_class))->dispose) {
-        (* (G_OBJECT_CLASS(parent_class))->dispose)(object);
+    if (G_OBJECT_CLASS(sp_color_icc_selector_parent_class)->dispose) {
+        G_OBJECT_CLASS(sp_color_icc_selector_parent_class)->dispose(object);
     }
 }
 

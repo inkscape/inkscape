@@ -20,41 +20,16 @@
 #include "display/cairo-utils.h"
 #include "display/sp-canvas.h"
 
-
-static void sp_ctrlpoint_class_init (SPCtrlPointClass *klass);
-static void sp_ctrlpoint_init (SPCtrlPoint *ctrlpoint);
 static void sp_ctrlpoint_destroy(SPCanvasItem *object);
 
 static void sp_ctrlpoint_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
 static void sp_ctrlpoint_render (SPCanvasItem *item, SPCanvasBuf *buf);
 
-static SPCanvasItemClass *parent_class;
-
-GType
-sp_ctrlpoint_get_type (void)
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPCtrlPointClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_ctrlpoint_class_init,
-            NULL, NULL,
-            sizeof(SPCtrlPoint),
-            0,
-            (GInstanceInitFunc) sp_ctrlpoint_init,
-            NULL
-        };
-        type = g_type_register_static(SP_TYPE_CANVAS_ITEM, "SPCtrlPoint", &info, (GTypeFlags)0);
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPCtrlPoint, sp_ctrlpoint, SP_TYPE_CANVAS_ITEM);
 
 static void sp_ctrlpoint_class_init(SPCtrlPointClass *klass)
 {
     SPCanvasItemClass *item_class = SP_CANVAS_ITEM_CLASS(klass);
-
-    parent_class = SP_CANVAS_ITEM_CLASS(g_type_class_peek_parent(klass));
 
     item_class->destroy = sp_ctrlpoint_destroy;
     item_class->update = sp_ctrlpoint_update;
@@ -79,8 +54,8 @@ static void sp_ctrlpoint_destroy(SPCanvasItem *object)
 
     ctrlpoint->item=NULL;
 
-    if (SP_CANVAS_ITEM_CLASS(parent_class)->destroy)
-        (* SP_CANVAS_ITEM_CLASS(parent_class)->destroy) (object);
+    if (SP_CANVAS_ITEM_CLASS(sp_ctrlpoint_parent_class)->destroy)
+        SP_CANVAS_ITEM_CLASS(sp_ctrlpoint_parent_class)->destroy(object);
 }
 
 static void
@@ -111,8 +86,8 @@ static void sp_ctrlpoint_update(SPCanvasItem *item, Geom::Affine const &affine, 
 
     item->canvas->requestRedraw((int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
 
-    if (parent_class->update) {
-        (* parent_class->update) (item, affine, flags);
+    if (SP_CANVAS_ITEM_CLASS(sp_ctrlpoint_parent_class)->update) {
+        SP_CANVAS_ITEM_CLASS(sp_ctrlpoint_parent_class)->update(item, affine, flags);
     }
 
     sp_canvas_item_reset_bounds (item);

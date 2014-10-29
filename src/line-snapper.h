@@ -12,10 +12,9 @@
 
 #include "snapper.h"
 
-namespace Inkscape
-{
-class SnapCandidatePoint;
+namespace Inkscape {
 
+class SnapCandidatePoint;
 
 /**
  * Superclass for snappers to horizontal and vertical lines.

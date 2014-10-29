@@ -17,17 +17,20 @@
  *
  */
 
-#include <glib.h>
 #include <2geom/forward.h>
 #include <list>
 #include <sigc++/connection.h>
 
 namespace Inkscape {
+namespace UI {
+class ShapeEditor;
+}
 namespace XML {
 class Node;
 }
 namespace LivePathEffect {
 class PowerStrokePointArrayParamKnotHolderEntity;
+class FilletPointArrayParamKnotHolderEntity;
 }
 }
 
@@ -46,9 +49,9 @@ public:
 
     void update_knots();
 
-    void knot_moved_handler(SPKnot *knot, Geom::Point const &p, guint state);
-    void knot_clicked_handler(SPKnot *knot, guint state);
-    void knot_ungrabbed_handler(SPKnot *knot, guint);
+    void knot_moved_handler(SPKnot *knot, Geom::Point const &p, unsigned int state);
+    void knot_clicked_handler(SPKnot *knot, unsigned int state);
+    void knot_ungrabbed_handler(SPKnot *knot, unsigned int);
 
     void add(KnotHolderEntity *e);
 
@@ -58,8 +61,9 @@ public:
 
     bool knot_mouseover() const;
 
-    friend class ShapeEditor;
-    friend class Inkscape::LivePathEffect::PowerStrokePointArrayParamKnotHolderEntity;
+    friend class Inkscape::UI::ShapeEditor; // FIXME why?
+    friend class Inkscape::LivePathEffect::PowerStrokePointArrayParamKnotHolderEntity; // why?
+    friend class Inkscape::LivePathEffect::FilletPointArrayParamKnotHolderEntity; // why?
 
 protected:
 
@@ -74,7 +78,7 @@ protected:
 
     SPKnotHolderReleasedFunc released;
 
-    gboolean local_change; ///< if true, no need to recreate knotholder if repr was changed.
+    bool local_change; ///< if true, no need to recreate knotholder if repr was changed.
 
     bool dragging;
 

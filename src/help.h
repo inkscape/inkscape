@@ -1,6 +1,4 @@
-#ifndef SEEN_HELP_H
-#define SEEN_HELP_H
-/*
+/**
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *
@@ -10,18 +8,18 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <glib.h>
-#include <gtk/gtk.h>
+#ifndef SEEN_HELP_H
+#define SEEN_HELP_H
+
+typedef struct _GtkMenuItem GtkMenuItem;
 
 /**
  * Help/About window.
  */
-void sp_help_about(void);
+void sp_help_about();
+void sp_help_open_tutorial(GtkMenuItem * /*unused*/, void* data);
 
-void sp_help_open_tutorial(GtkMenuItem *menuitem, gpointer data);
-
-
-#endif /* !SEEN_HELP_H */
+#endif // !SEEN_HELP_H
 
 /*
   Local Variables:
@@ -32,4 +30,4 @@ void sp_help_open_tutorial(GtkMenuItem *menuitem, gpointer data);
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8 :

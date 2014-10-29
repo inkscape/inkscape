@@ -1,5 +1,5 @@
-#ifndef __NR_FILTER_COLOR_MATRIX_H__
-#define __NR_FILTER_COLOR_MATRIX_H__
+#ifndef SEEN_NR_FILTER_COLOR_MATRIX_H
+#define SEEN_NR_FILTER_COLOR_MATRIX_H
 
 /*
  * feColorMatrix filter primitive renderer
@@ -15,6 +15,9 @@
 #include <vector>
 #include <2geom/forward.h>
 #include "display/nr-filter-primitive.h"
+
+typedef unsigned int guint32;
+typedef signed int gint32;
 
 namespace Inkscape {
 namespace Filters {
@@ -40,8 +43,8 @@ public:
     virtual double complexity(Geom::Affine const &ctm);
 
     virtual void set_type(FilterColorMatrixType type);
-    virtual void set_value(gdouble value);
-    virtual void set_values(std::vector<gdouble> const &values);
+    virtual void set_value(double value);
+    virtual void set_values(std::vector<double> const &values);
 
 public:
     struct ColorMatrixMatrix {
@@ -52,8 +55,8 @@ public:
     };
 
 private:
-    std::vector<gdouble> values;
-    gdouble value;
+    std::vector<double> values;
+    double value;
     FilterColorMatrixType type;
 };
 

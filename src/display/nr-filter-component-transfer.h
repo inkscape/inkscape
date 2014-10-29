@@ -1,5 +1,5 @@
-#ifndef __NR_FILTER_COMPONENT_TRANSFER_H__
-#define __NR_FILTER_COMPONENT_TRANSFER_H__
+#ifndef SEEN_NR_FILTER_COMPONENT_TRANSFER_H
+#define SEEN_NR_FILTER_COMPONENT_TRANSFER_H
 
 /*
  * feComponentTransfer filter primitive renderer
@@ -40,7 +40,7 @@ public:
     virtual double complexity(Geom::Affine const &ctm);
 
     FilterComponentTransferType type[4];
-    std::vector<gdouble> tableValues[4];
+    std::vector<double> tableValues[4];
     double slope[4];
     double intercept[4];
     double amplitude[4];

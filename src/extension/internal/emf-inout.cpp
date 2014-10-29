@@ -27,12 +27,12 @@
 # include "config.h"
 #endif
 
-//#include <png.h>   //This must precede text_reassemble.h or it blows up in pngconf.h when compiling
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <libuemf/symbol_convert.h>
 
+#include "document.h"
 #include "sp-root.h" // even though it is included indirectly by wmf-inout.h
 #include "sp-path.h"
 #include "print.h"

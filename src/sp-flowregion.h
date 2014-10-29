@@ -1,5 +1,5 @@
-#ifndef __SP_ITEM_FLOWREGION_H__
-#define __SP_ITEM_FLOWREGION_H__
+#ifndef SEEN_SP_ITEM_FLOWREGION_H
+#define SEEN_SP_ITEM_FLOWREGION_H
 
 /*
  */
@@ -30,7 +30,7 @@ public:
 	virtual void remove_child(Inkscape::XML::Node *child);
 	virtual void update(SPCtx *ctx, unsigned int flags);
 	virtual void modified(guint flags);
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, unsigned int flags);
 	virtual const char* displayName() const;
 };
 
@@ -47,7 +47,7 @@ public:
 	virtual void remove_child(Inkscape::XML::Node *child);
 	virtual void update(SPCtx *ctx, unsigned int flags);
 	virtual void modified(guint flags);
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, unsigned int flags);
 	virtual const char* displayName() const;
 };
 

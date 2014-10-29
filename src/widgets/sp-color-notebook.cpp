@@ -25,7 +25,7 @@
 #include <gtk/gtk.h>
 #include <glibmm/i18n.h>
 
-#include "../dialogs/dialog-events.h"
+#include "ui/dialog-events.h"
 #include "../preferences.h"
 #include "sp-color-notebook.h"
 #include "spw-utilities.h"
@@ -38,7 +38,7 @@
 #include "../profile-manager.h"
 #include "color-profile.h"
 #include "cms-system.h"
-#include "tools-switch.h"
+#include "ui/tools-switch.h"
 #include "ui/tools/tool-base.h"
 
 using Inkscape::CMSSystem;
@@ -53,45 +53,20 @@ struct SPColorNotebookTracker {
     SPColorNotebook *backPointer;
 };
 
-static void sp_color_notebook_class_init (SPColorNotebookClass *klass);
-static void sp_color_notebook_init (SPColorNotebook *colorbook);
 static void sp_color_notebook_dispose(GObject *object);
 
 static void sp_color_notebook_show_all (GtkWidget *widget);
 static void sp_color_notebook_hide(GtkWidget *widget);
 
-static SPColorSelectorClass *parent_class;
-
 #define XPAD 4
 #define YPAD 1
 
-GType sp_color_notebook_get_type(void)
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPColorNotebookClass),
-            0, // base_init
-            0, // base_finalize
-            (GClassInitFunc)sp_color_notebook_class_init,
-            0, // class_finalize
-            0, // class_data
-            sizeof(SPColorNotebook),
-            0, // n_preallocs
-            (GInstanceInitFunc)sp_color_notebook_init,
-            0 // value_table
-        };
-        type = g_type_register_static(SP_TYPE_COLOR_SELECTOR, "SPColorNotebook", &info, static_cast<GTypeFlags>(0));
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPColorNotebook, sp_color_notebook, SP_TYPE_COLOR_SELECTOR);
 
 static void sp_color_notebook_class_init(SPColorNotebookClass *klass)
 {
     GObjectClass *object_class = reinterpret_cast<GObjectClass *>(klass);
     GtkWidgetClass *widget_class = reinterpret_cast<GtkWidgetClass *>(klass);
-
-    parent_class = SP_COLOR_SELECTOR_CLASS(g_type_class_peek_parent(klass));
 
     object_class->dispose = sp_color_notebook_dispose;
 
@@ -289,8 +264,13 @@ void ColorNotebook::init()
     sp_set_font_size_smaller (_buttonbox);
 
 #if GTK_CHECK_VERSION(3,0,0)
+    #if GTK_CHECK_VERSION(3,12,0)
+    gtk_widget_set_margin_start(_buttonbox, XPAD);
+    gtk_widget_set_margin_end(_buttonbox, XPAD);
+    #else
     gtk_widget_set_margin_left(_buttonbox, XPAD);
     gtk_widget_set_margin_right(_buttonbox, XPAD);
+    #endif
     gtk_widget_set_margin_top(_buttonbox, YPAD);
     gtk_widget_set_margin_bottom(_buttonbox, YPAD);
     gtk_widget_set_hexpand(_buttonbox, TRUE);
@@ -306,8 +286,13 @@ void ColorNotebook::init()
     row++;
 
 #if GTK_CHECK_VERSION(3,0,0)
+    #if GTK_CHECK_VERSION(3,12,0)
+    gtk_widget_set_margin_start(_book, XPAD*2);
+    gtk_widget_set_margin_end(_book, XPAD*2);
+    #else
     gtk_widget_set_margin_left(_book, XPAD*2);
     gtk_widget_set_margin_right(_book, XPAD*2);
+    #endif
     gtk_widget_set_margin_top(_book, YPAD);
     gtk_widget_set_margin_bottom(_book, YPAD);
     gtk_widget_set_hexpand(_book, TRUE);
@@ -434,8 +419,13 @@ void ColorNotebook::init()
 #endif //defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
 #if GTK_CHECK_VERSION(3,0,0)
+    #if GTK_CHECK_VERSION(3,12,0)
+    gtk_widget_set_margin_start(rgbabox, XPAD);
+    gtk_widget_set_margin_end(rgbabox, XPAD);
+    #else
     gtk_widget_set_margin_left(rgbabox, XPAD);
     gtk_widget_set_margin_right(rgbabox, XPAD);
+    #endif
     gtk_widget_set_margin_top(rgbabox, YPAD);
     gtk_widget_set_margin_bottom(rgbabox, YPAD);
     gtk_grid_attach(GTK_GRID(table), rgbabox, 0, row, 2, 1);
@@ -457,8 +447,8 @@ void ColorNotebook::init()
 
 static void sp_color_notebook_dispose(GObject *object)
 {
-    if (((GObjectClass *) (parent_class))->dispose)
-        (* ((GObjectClass *) (parent_class))->dispose) (object);
+    if (G_OBJECT_CLASS(sp_color_notebook_parent_class)->dispose)
+        G_OBJECT_CLASS(sp_color_notebook_parent_class)->dispose(object);
 }
 
 ColorNotebook::~ColorNotebook()

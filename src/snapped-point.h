@@ -12,10 +12,11 @@
  *    Released under GNU GPL, read the file 'COPYING' for more information.
  */
 
-#include <vector>
-#include <list>
 #include <2geom/geom.h>
-#include <snap-candidate.h>
+#include <list>
+#include <vector>
+
+#include "snap-candidate.h"
 
 namespace Inkscape
 {

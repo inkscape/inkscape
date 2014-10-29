@@ -13,14 +13,14 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <gtk/gtk.h>
 #include <glibmm/ustring.h>
 
 #include "icon-size.h"
-#include "../ege-adjustment-action.h"
-#include "../preferences.h"
+#include "preferences.h"
 
 #define TOOLBAR_SLIDER_HINT "full"
+
+typedef struct _EgeAdjustmentAction      EgeAdjustmentAction;
 
 class SPDesktop;
 

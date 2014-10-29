@@ -14,6 +14,7 @@
 
 #include <string>
 #include <cstring>
+#include <glibmm.h>
 
 #include "desktop.h"
 #include "color-rgba.h"

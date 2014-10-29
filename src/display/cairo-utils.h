@@ -12,15 +12,16 @@
 #ifndef SEEN_INKSCAPE_DISPLAY_CAIRO_UTILS_H
 #define SEEN_INKSCAPE_DISPLAY_CAIRO_UTILS_H
 
-#include <boost/noncopyable.hpp>
-//#include <glibmm/threads.h> // workaround
-#include <glib.h>
-#include <cairomm/cairomm.h>
-//#include <gdkmm/pixbuf.h>
 #include <2geom/forward.h>
+#include <boost/noncopyable.hpp>
+#include <cairomm/cairomm.h>
 #include "style.h"
 
 struct SPColor;
+typedef struct _GdkPixbuf GdkPixbuf;
+
+void ink_cairo_pixbuf_cleanup(unsigned char *, void *);
+void convert_pixbuf_argb32_to_normal(GdkPixbuf *pb);
 
 namespace Inkscape {
 

@@ -4,10 +4,10 @@
 /*
  */
 
-#include "sp-item.h"
-
 #include <2geom/forward.h>
+
 #include "libnrtype/Layout-TNG.h"
+#include "sp-item.h"
 
 #define SP_FLOWTEXT(obj) (dynamic_cast<SPFlowtext*>((SPObject*)obj))
 #define SP_IS_FLOWTEXT(obj) (dynamic_cast<const SPFlowtext*>((SPObject*)obj) != NULL)
@@ -63,18 +63,18 @@ public:
 	virtual void child_added(Inkscape::XML::Node* child, Inkscape::XML::Node* ref);
 	virtual void remove_child(Inkscape::XML::Node* child);
 
-	virtual void set(unsigned int key, const gchar* value);
+	virtual void set(unsigned int key, const char* value);
 	virtual Geom::Affine set_transform(Geom::Affine const& xform);
 
 	virtual void update(SPCtx* ctx, unsigned int flags);
 	virtual void modified(unsigned int flags);
 
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, unsigned int flags);
 
 	virtual Geom::OptRect bbox(Geom::Affine const &transform, SPItem::BBoxType type) const;
 	virtual void print(SPPrintContext *ctx);
         virtual const char* displayName() const;
-	virtual gchar* description() const;
+	virtual char* description() const;
 	virtual Inkscape::DrawingItem* show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
 	virtual void hide(unsigned int key);
     virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) const;

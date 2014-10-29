@@ -15,9 +15,10 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "sp-object.h"
 #include "uri-references.h"
 
+class SPDocument;
+class SPObject;
 class SPPaintServer;
 
 class SPPaintServerReference : public Inkscape::URIReference {

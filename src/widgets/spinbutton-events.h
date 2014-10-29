@@ -10,7 +10,9 @@
  */
 
 #include <glib.h>
-#include <gtk/gtk.h>      /* GtkWidget */
+
+typedef struct _GdkEventKey GdkEventKey;
+typedef struct _GtkWidget   GtkWidget;
 
 gboolean spinbutton_focus_in (GtkWidget *w, GdkEventKey *event, gpointer data);
 void spinbutton_undo (GtkWidget *w);

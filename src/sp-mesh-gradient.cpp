@@ -1,8 +1,10 @@
-#include "sp-mesh-gradient.h"
+#include <glibmm.h>
 
 #include "attributes.h"
-#include "xml/repr.h"
 #include "display/cairo-utils.h"
+#include "xml/repr.h"
+
+#include "sp-mesh-gradient.h"
 
 #include "sp-factory.h"
 

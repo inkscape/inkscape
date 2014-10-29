@@ -9,6 +9,8 @@ class C(inkex.Effect):
     inkex.Effect.__init__(self)
     self.OptionParser.add_option("-s", "--size", action="store", type="string", dest="page_size", default="a4", help="Page size")
     self.OptionParser.add_option("-o", "--orientation", action="store", type="string", dest="page_orientation", default="vertical", help="Page orientation")
+    self.OptionParser.add_option("-b", "--background", action="store", type="string", dest="page_background", default="normal", help="Page background")
+    self.OptionParser.add_option("-n", "--noborder", action="store", type="inkbool", dest="page_noborder", default=False)
 
   def effect(self):
 
@@ -39,7 +41,6 @@ class C(inkex.Effect):
     if self.options.page_orientation == "horizontal":
       width, height = height, width
 
-
     root = self.document.getroot()
     root.set("id", "SVGRoot")
     root.set("width",  str(width)  + units)
@@ -56,6 +57,29 @@ class C(inkex.Effect):
     namedview.set(inkex.addNS('cx', 'inkscape'), str(self.uutounit( width,  'px' )/2.0 ) )
     namedview.set(inkex.addNS('cy', 'inkscape'), str(self.uutounit( height, 'px' )/2.0 ) )
 
+
+    if self.options.page_background == "white":
+      namedview.set( 'pagecolor', "#ffffff" )
+      namedview.set( 'bordercolor', "#666666" )
+      namedview.set(inkex.addNS('pageopacity', 'inkscape'), "1.0" )
+      namedview.set(inkex.addNS('pageshadow', 'inkscape'), "0" )
+
+    if self.options.page_background == "gray":
+      namedview.set( 'pagecolor', "#808080" )
+      namedview.set( 'bordercolor', "#444444" )
+      namedview.set(inkex.addNS('pageopacity', 'inkscape'), "1.0" )
+      namedview.set(inkex.addNS('pageshadow', 'inkscape'), "0" )
+
+    if self.options.page_background == "black":
+      namedview.set( 'pagecolor', "#000000" )
+      namedview.set( 'bordercolor', "#999999" )
+      namedview.set(inkex.addNS('pageopacity', 'inkscape'), "1.0" )
+      namedview.set(inkex.addNS('pageshadow', 'inkscape'), "0" )
+
+    if self.options.page_noborder:
+      pagecolor = namedview.get( 'pagecolor' )
+      namedview.set( 'bordercolor', pagecolor )
+      namedview.set( 'borderopacity', "0" )
 
 c = C()
 c.affect()

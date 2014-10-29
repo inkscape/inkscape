@@ -42,7 +42,7 @@
 #include "sp-item.h"
 #include "sp-item-group.h"
 #include "style.h"
-#include "marker.h"
+#include "sp-marker.h"
 #include "sp-linear-gradient.h"
 #include "sp-radial-gradient.h"
 #include "sp-root.h"

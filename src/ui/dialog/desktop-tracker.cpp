@@ -94,7 +94,7 @@ sigc::connection DesktopTracker::connectDesktopChanged( const sigc::slot<void, S
     return desktopChangedSig.connect(slot);
 }
 
-gboolean DesktopTracker::activateDesktopCB(Inkscape::Application */*inkscape*/, SPDesktop *desktop, DesktopTracker *self )
+gboolean DesktopTracker::activateDesktopCB(InkscapeApplication */*inkscape*/, SPDesktop *desktop, DesktopTracker *self )
 {
     if (self && self->trackActive) {
         self->setDesktop(desktop);

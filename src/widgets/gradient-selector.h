@@ -19,26 +19,22 @@
 # include <config.h>
 #endif
 
-#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
-#include <glibmm/threads.h>
-#endif
-
-#include <glib.h>
-#include <gtk/gtk.h>
-
-#include <gtkmm/entry.h>
-#include <gtkmm/label.h>
-#include <gtkmm/table.h>
 #include <gtkmm/liststore.h>
-#include <gtkmm/treeview.h>
 #include <gtkmm/scrolledwindow.h>
 
 #include <vector>
-#include "sp-gradient.h"
 #include "sp-gradient-spread.h"
 #include "sp-gradient-units.h"
 
+class SPDocument;
 class SPGradient;
+
+namespace Gtk {
+class CellRendererPixbuf;
+class CellRendererText;
+class ScrolledWindow;
+class TreeView;
+}
 
 #define SP_TYPE_GRADIENT_SELECTOR (sp_gradient_selector_get_type ())
 #define SP_GRADIENT_SELECTOR(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), SP_TYPE_GRADIENT_SELECTOR, SPGradientSelector))
@@ -49,11 +45,18 @@ class SPGradient;
 
 
 struct SPGradientSelector {
+#if GTK_CHECK_VERSION(3,0,0)
+    GtkBox  vbox;
+#else
     GtkVBox vbox;
+#endif
 
     enum SelectorMode {
         MODE_LINEAR,
         MODE_RADIAL,
+#ifdef WITH_MESH
+        MODE_MESH,
+#endif
         MODE_SWATCH
     };
 
@@ -128,7 +131,11 @@ struct SPGradientSelector {
 };
 
 struct SPGradientSelectorClass {
+#if GTK_CHECK_VERSION(3,0,0)
+    GtkBoxClass parent_class;
+#else
     GtkVBoxClass parent_class;
+#endif
 
     void (* grabbed) (SPGradientSelector *sel);
     void (* dragged) (SPGradientSelector *sel);

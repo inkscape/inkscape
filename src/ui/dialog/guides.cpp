@@ -28,7 +28,7 @@
 #include "ui/tools/tool-base.h"
 #include "widgets/desktop-widget.h"
 #include <glibmm/i18n.h>
-#include "dialogs/dialog-events.h"
+#include "ui/dialog-events.h"
 #include "message-context.h"
 #include "xml/repr.h"
 #include "verbs.h"
@@ -100,7 +100,7 @@ void GuidelinePropertiesDialog::_onOK()
         double rad_angle = Geom::deg_to_rad( deg_angle );
         normal = Geom::rot90(Geom::Point::polar(rad_angle, 1.0));
     }
-    sp_guide_set_normal(*_guide, normal, true);
+    _guide->set_normal(normal, true);
 
     double const points_x = _spin_button_x.getValue("px");
     double const points_y = _spin_button_y.getValue("px");
@@ -108,11 +108,11 @@ void GuidelinePropertiesDialog::_onOK()
     if (!_mode)
         newpos += _oldpos;
 
-    sp_guide_moveto(*_guide, newpos, true);
+    _guide->moveto(newpos, true);
 
     const gchar* name = g_strdup( _label_entry.getEntry()->get_text().c_str() );
 
-    sp_guide_set_label(*_guide, name, true);
+    _guide->set_label(name, true);
     g_free((gpointer) name);
 
 #if WITH_GTKMM_3_0
@@ -124,7 +124,7 @@ void GuidelinePropertiesDialog::_onOK()
 #endif
     //TODO: why 257? verify this!
 
-    sp_guide_set_color(*_guide, r, g, b, true);
+    _guide->set_color(r, g, b, true);
 
     DocumentUndo::done(_guide->document, SP_VERB_NONE, 
                        _("Set guide properties"));
@@ -295,16 +295,17 @@ void GuidelinePropertiesDialog::_setup() {
     signal_response().connect(sigc::mem_fun(*this, &GuidelinePropertiesDialog::_response));
 
     // initialize dialog
-    _oldpos = _guide->point_on_line;
+    _oldpos = _guide->getPoint();
     if (_guide->isVertical()) {
         _oldangle = 90;
     } else if (_guide->isHorizontal()) {
         _oldangle = 0;
     } else {
-        _oldangle = Geom::rad_to_deg( std::atan2( - _guide->normal_to_line[Geom::X], _guide->normal_to_line[Geom::Y] ) );
+        _oldangle = Geom::rad_to_deg( std::atan2( - _guide->getNormal()[Geom::X], _guide->getNormal()[Geom::Y] ) );
     }
 
     {
+        // FIXME holy crap!!!
         Inkscape::XML::Node *repr = _guide->getRepr();
         const gchar *guide_id = repr->attribute("id");
         gchar *label = g_strdup_printf(_("Guideline ID: %s"), guide_id);
@@ -312,7 +313,7 @@ void GuidelinePropertiesDialog::_setup() {
         g_free(label);
     }
     {
-        gchar *guide_description = sp_guide_description(_guide, false);
+        gchar *guide_description = _guide->description(false);
         gchar *label = g_strdup_printf(_("Current: %s"), guide_description);
         g_free(guide_description);
         _label_descr.set_markup(label);
@@ -320,15 +321,15 @@ void GuidelinePropertiesDialog::_setup() {
     }
 
     // init name entry
-    _label_entry.getEntry()->set_text(_guide->label ? _guide->label : "");
+    _label_entry.getEntry()->set_text(_guide->getLabel() ? _guide->getLabel() : "");
 
 #if WITH_GTKMM_3_0
     Gdk::RGBA c;
-    c.set_rgba(((_guide->color>>24)&0xff) / 255.0, ((_guide->color>>16)&0xff) / 255.0, ((_guide->color>>8)&0xff) / 255.0);
+    c.set_rgba(((_guide->getColor()>>24)&0xff) / 255.0, ((_guide->getColor()>>16)&0xff) / 255.0, ((_guide->getColor()>>8)&0xff) / 255.0);
     _color.set_rgba(c);
 #else
     Gdk::Color c;
-    c.set_rgb_p(((_guide->color>>24)&0xff) / 255.0, ((_guide->color>>16)&0xff) / 255.0, ((_guide->color>>8)&0xff) / 255.0);
+    c.set_rgb_p(((_guide->getColor()>>24)&0xff) / 255.0, ((_guide->getColor()>>16)&0xff) / 255.0, ((_guide->getColor()>>8)&0xff) / 255.0);
     _color.set_color(c);
 #endif
 

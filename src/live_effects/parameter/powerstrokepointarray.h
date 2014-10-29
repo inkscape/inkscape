@@ -20,8 +20,6 @@ namespace Inkscape {
 
 namespace LivePathEffect {
 
-class PowerStrokePointArrayParamKnotHolderEntity;
-
 class PowerStrokePointArrayParam : public ArrayParam<Geom::Point> {
 public:
     PowerStrokePointArrayParam( const Glib::ustring& label,
@@ -33,9 +31,11 @@ public:
 
     virtual Gtk::Widget * param_newWidget();
 
-    virtual void param_transform_multiply(Geom::Affine const& /*postmul*/, bool /*set*/);
+    virtual void param_transform_multiply(Geom::Affine const& postmul, bool /*set*/);
 
     void set_oncanvas_looks(SPKnotShapeType shape, SPKnotModeType mode, guint32 color);
+
+    float median_width();
 
     virtual bool providesKnotHolderEntities() const { return true; }
     virtual void addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
@@ -60,6 +60,25 @@ private:
     Geom::Piecewise<Geom::D2<Geom::SBasis> > last_pwd2_normal;
 };
 
+class PowerStrokePointArrayParamKnotHolderEntity : public KnotHolderEntity {
+public:
+    PowerStrokePointArrayParamKnotHolderEntity(PowerStrokePointArrayParam *p, unsigned int index);
+    virtual ~PowerStrokePointArrayParamKnotHolderEntity() {}
+
+    virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
+    virtual Geom::Point knot_get() const;
+    virtual void knot_set_offset(Geom::Point offset);
+    virtual void knot_click(guint state);
+
+    /** Checks whether the index falls within the size of the parameter's vector */
+    bool valid_index(unsigned int index) const {
+        return (_pparam->_vector.size() > index);
+    };
+
+private:
+    PowerStrokePointArrayParam *_pparam;
+    unsigned int _index;
+};
 
 } //namespace LivePathEffect
 

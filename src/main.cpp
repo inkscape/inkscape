@@ -64,7 +64,7 @@
 #include "layer-model.h"
 #include "selection.h"
 #include "sp-object.h"
-#include "interface.h"
+#include "ui/interface.h"
 #include "print.h"
 #include "color.h"
 #include "sp-item.h"

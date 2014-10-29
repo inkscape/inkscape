@@ -1,5 +1,5 @@
-#ifndef __SP_CANVAS_UTILS_H__
-#define __SP_CANVAS_UTILS_H__
+#ifndef SEEN_SP_CANVAS_UTILS_H
+#define SEEN_SP_CANVAS_UTILS_H
 
 /*
  * Helper stuff for SPCanvas
@@ -19,7 +19,7 @@ struct SPCanvasItem;
 struct SPCanvasBuf;
 
 namespace Geom {
-	class Affine;
+    class Affine;
 }
 
 /* Miscellaneous utility & convenience functions for general canvas objects */

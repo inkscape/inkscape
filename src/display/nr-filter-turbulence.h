@@ -1,5 +1,5 @@
-#ifndef __NR_FILTER_TURBULENCE_H__
-#define __NR_FILTER_TURBULENCE_H__
+#ifndef SEEN_NR_FILTER_TURBULENCE_H
+#define SEEN_NR_FILTER_TURBULENCE_H
 
 /*
  * feTurbulence filter primitive renderer
@@ -22,6 +22,7 @@
  */
 
 #include <2geom/point.h>
+
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-slot.h"
 #include "display/nr-filter-units.h"

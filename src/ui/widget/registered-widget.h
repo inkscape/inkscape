@@ -163,6 +163,31 @@ protected:
     void on_toggled();
 };
 
+class RegisteredToggleButton : public RegisteredWidget<Gtk::ToggleButton> {
+public:
+    virtual ~RegisteredToggleButton();
+    RegisteredToggleButton (const Glib::ustring& label, const Glib::ustring& tip, const Glib::ustring& key, Registry& wr, bool right=true, Inkscape::XML::Node* repr_in=NULL, SPDocument *doc_in=NULL, char const *active_str = "true", char const *inactive_str = "false");
+
+    void setActive (bool);
+
+    std::list<Gtk::Widget*> _slavewidgets;
+
+    // a slave button is only sensitive when the master button is active
+    // i.e. a slave button is greyed-out when the master button is not checked
+
+    void setSlaveWidgets(std::list<Gtk::Widget*> btns) {
+        _slavewidgets = btns;
+    }
+
+    bool setProgrammatically; // true if the value was set by setActive, not changed by the user;
+                                // if a callback checks it, it must reset it back to false
+
+protected:
+    char const *_active_str, *_inactive_str;
+    sigc::connection  _toggled_connection;
+    void on_toggled();
+};
+
 class RegisteredUnitMenu : public RegisteredWidget<Labelled> {
 public:
     ~RegisteredUnitMenu();
@@ -394,9 +419,9 @@ protected:
   Local Variables:
   mode:c++
   c-file-style:"stroustrup"
-  c-file-offsets:((innamespace . 0)(inline-open . 0))
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
   indent-tabs-mode:nil
   fill-column:99
   End:
 */
-// vim: filetype=c++:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :

@@ -10,8 +10,7 @@
  */
 
 #include <climits>
-#include "display/cairo-utils.h"
-#include "display/cairo-templates.h"
+
 #include "display/drawing.h"
 #include "display/drawing-context.h"
 #include "display/drawing-item.h"
@@ -21,6 +20,9 @@
 #include "nr-filter.h"
 #include "preferences.h"
 #include "style.h"
+
+#include "display/cairo-utils.h"
+#include "display/cairo-templates.h"
 
 namespace Inkscape {
 
@@ -868,9 +870,10 @@ DrawingItem::pick(Geom::Point const &p, double delta, unsigned flags)
 {
     // Sometimes there's no BBOX in state, reason unknown (bug 992817)
     // I made this not an assert to remove the warning
+    // This warning clutters the console output, so commented out
     if (!(_state & STATE_BBOX) || !(_state & STATE_PICK)) {
-        g_warning("Invalid state when picking: STATE_BBOX = %d, STATE_PICK = %d",
-                  _state & STATE_BBOX, _state & STATE_PICK);
+        /*g_warning("Invalid state when picking: STATE_BBOX = %d, STATE_PICK = %d",
+                  _state & STATE_BBOX, _state & STATE_PICK);*/
         return NULL;
     }
     // ignore invisible and insensitive items unless sticky

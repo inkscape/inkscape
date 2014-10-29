@@ -81,7 +81,6 @@ cairo_pattern_t* SPPaintServer::pattern_new(cairo_t * /*ct*/, Geom::OptRect cons
     return NULL;
 }
 
-
 /*
   Local Variables:
   mode:c++

@@ -38,7 +38,7 @@
 #include "util/units.h"
 #include "helper/window.h"
 #include "inkscape.h"
-#include "interface.h"
+#include "ui/interface.h"
 #include "macros.h"
 #include "message-stack.h"
 #include "preferences.h"
@@ -1349,7 +1349,7 @@ void CloneTiler::on_picker_color_changed(guint rgba)
     is_updating = false;
 }
 
-void CloneTiler::clonetiler_change_selection(Inkscape::Application * /*inkscape*/, Inkscape::Selection *selection, GtkWidget *dlg)
+void CloneTiler::clonetiler_change_selection(InkscapeApplication * /*inkscape*/, Inkscape::Selection *selection, GtkWidget *dlg)
 {
     GtkWidget *buttons = GTK_WIDGET(g_object_get_data (G_OBJECT(dlg), "buttons_on_tiles"));
     GtkWidget *status = GTK_WIDGET(g_object_get_data (G_OBJECT(dlg), "status"));
@@ -1378,7 +1378,7 @@ void CloneTiler::clonetiler_change_selection(Inkscape::Application * /*inkscape*
     }
 }
 
-void CloneTiler::clonetiler_external_change(Inkscape::Application * /*inkscape*/, GtkWidget *dlg)
+void CloneTiler::clonetiler_external_change(InkscapeApplication * /*inkscape*/, GtkWidget *dlg)
 {
     clonetiler_change_selection (NULL, sp_desktop_selection(SP_ACTIVE_DESKTOP), dlg);
 }

@@ -1,5 +1,5 @@
-#ifndef __SP_SWITCH_H__
-#define __SP_SWITCH_H__
+#ifndef SEEN_SP_SWITCH_H
+#define SEEN_SP_SWITCH_H
 
 /*
  * SVG <switch> implementation
@@ -12,10 +12,12 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <cstddef>
+#include <sigc++/connection.h>
+
 #include "sp-item-group.h"
 
-#include <stddef.h>
-#include <sigc++/connection.h>
+typedef struct _GSList GSList;
 
 #define SP_SWITCH(obj) (dynamic_cast<SPSwitch*>((SPObject*)obj))
 #define SP_IS_SWITCH(obj) (dynamic_cast<const SPSwitch*>((SPObject*)obj) != NULL)

@@ -36,10 +36,10 @@
 #include "desktop.h"
 #include "document-undo.h"
 #include "document.h"
-#include "ege-adjustment-action.h"
-#include "ege-select-one-action.h"
-#include "ink-action.h"
-#include "ink-comboboxentry-action.h"
+#include "widgets/ege-adjustment-action.h"
+#include "widgets/ege-select-one-action.h"
+#include "widgets/ink-action.h"
+#include "widgets/ink-comboboxentry-action.h"
 #include "inkscape.h"
 #include "preferences.h"
 #include "selection-chemistry.h"
@@ -1663,4 +1663,4 @@ static void text_toolbox_watch_ec(SPDesktop* desktop, Inkscape::UI::Tools::ToolB
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8 :

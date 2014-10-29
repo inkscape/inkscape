@@ -31,13 +31,13 @@
 #include "inkscape.h"
 #include "io/sys.h"
 #include "preferences.h"
-#include "shape-editor.h"
+#include "ui/shape-editor.h"
 #include "sp-namedview.h"
 #include "sp-root.h"
 #include "sp-script.h"
 #include "style.h"
 #include "svg/stringstream.h"
-#include "tools-switch.h"
+#include "ui/tools-switch.h"
 #include "ui/widget/color-picker.h"
 #include "ui/widget/scalar-unit.h"
 #include "ui/dialog/filedialog.h"
@@ -1594,7 +1594,7 @@ void DocumentProperties::_handleDocumentReplaced(SPDesktop* desktop, SPDocument 
     update();
 }
 
-void DocumentProperties::_handleActivateDesktop(Inkscape::Application *, SPDesktop *desktop)
+void DocumentProperties::_handleActivateDesktop(InkscapeApplication *, SPDesktop *desktop)
 {
     Inkscape::XML::Node *repr = sp_desktop_namedview(desktop)->getRepr();
     repr->addListener(&_repr_events, this);
@@ -1603,7 +1603,7 @@ void DocumentProperties::_handleActivateDesktop(Inkscape::Application *, SPDeskt
     update();
 }
 
-void DocumentProperties::_handleDeactivateDesktop(Inkscape::Application *, SPDesktop *desktop)
+void DocumentProperties::_handleDeactivateDesktop(InkscapeApplication *, SPDesktop *desktop)
 {
     Inkscape::XML::Node *repr = sp_desktop_namedview(desktop)->getRepr();
     repr->removeListenerByData(this);

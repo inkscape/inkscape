@@ -91,7 +91,7 @@ struct NodeTraits {
             break;
 
         case Inkscape::XML::ELEMENT_NODE: {
-            gchar const *const sptype = node.attribute("sodipodi:type");
+            char const *const sptype = node.attribute("sodipodi:type");
 
             if (sptype) {
                 name = sptype;

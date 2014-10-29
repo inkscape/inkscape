@@ -1,5 +1,5 @@
-#ifndef __NR_FILTER_SLOT_H__
-#define __NR_FILTER_SLOT_H__
+#ifndef SEEN_NR_FILTER_SLOT_H
+#define SEEN_NR_FILTER_SLOT_H
 
 /*
  * A container class for filter slots. Allows for simple getting and
@@ -15,9 +15,13 @@
  */
 
 #include <map>
-#include <cairo.h>
 #include "display/nr-filter-types.h"
 #include "display/nr-filter-units.h"
+
+extern "C" {
+typedef struct _cairo cairo_t;
+typedef struct _cairo_surface cairo_surface_t;
+}
 
 namespace Inkscape {
 class DrawingContext;

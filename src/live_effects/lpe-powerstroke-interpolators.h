@@ -28,6 +28,7 @@ enum InterpolatorType {
   INTERP_CUBICBEZIER,
   INTERP_CUBICBEZIER_JOHAN,
   INTERP_SPIRO,
+  INTERP_CUBICBEZIER_SMOOTH,
   INTERP_CENTRIPETAL_CATMULLROM
 };
 
@@ -134,6 +135,43 @@ private:
     CubicBezierJohan& operator=(const CubicBezierJohan&);
 };
 
+/// @todo invent name for this class
+class CubicBezierSmooth : public Interpolator {
+public:
+    CubicBezierSmooth(double beta = 0.2) {
+        _beta = beta;
+    };
+    virtual ~CubicBezierSmooth() {};
+
+    virtual Path interpolateToPath(std::vector<Point> const &points) const {
+        Path fit;
+        fit.start(points.at(0));
+        unsigned int num_points = points.size();
+        for (unsigned int i = 1; i < num_points; ++i) {
+            Point p0 = points.at(i-1);
+            Point p1 = points.at(i);
+            Point dx = Point(p1[X] - p0[X], 0);
+            if (i == 1) {
+                fit.appendNew<CubicBezier>(p0, p1-0.75*dx, p1);
+            } else if (i == points.size() - 1) {
+                fit.appendNew<CubicBezier>(p0+0.75*dx, p1, p1);
+            } else {
+                fit.appendNew<CubicBezier>(p0+_beta*dx, p1-_beta*dx, p1);
+            }
+        }
+        return fit;
+    };
+
+    void setBeta(double beta) {
+        _beta = beta;
+    }
+
+    double _beta;
+
+private:
+    CubicBezierSmooth(const CubicBezierSmooth&);
+    CubicBezierSmooth& operator=(const CubicBezierSmooth&);
+};
 
 class SpiroInterpolator : public Interpolator {
 public:
@@ -168,8 +206,8 @@ private:
     SpiroInterpolator& operator=(const SpiroInterpolator&);
 };
 
+// Quick mockup for testing the behavior for powerstroke controlpoint interpolation
 class CentripetalCatmullRomInterpolator : public Interpolator {
-// the code in this class can certainly be optimized and made more terse, feel free    
 public:
     CentripetalCatmullRomInterpolator() {};
     virtual ~CentripetalCatmullRomInterpolator() {};
@@ -179,12 +217,7 @@ public:
 
         Geom::Path fit(points.front());
 
-        if (n_points < 2) return fit;
-        if (n_points < 3) {
-            // if only 2 points, return linear segment
-            fit.appendNew<Geom::LineSegment>(points[1]);
-            return fit;
-        }
+        if (n_points < 3) return fit; // TODO special cases for 0,1 and 2 input points
 
         // return n_points-1 cubic segments
 
@@ -198,7 +231,6 @@ public:
             Point p3 = (i < n_points-3) ? points[i+3] : points[i+2];
 
             fit.append(calc_bezier(p0, p1, p2, p3));
-            // this is quite wasteful: the distances between the same points are repeatedly calculated by calc_bezier
         }
 
         return fit;
@@ -254,7 +286,8 @@ private:
     CentripetalCatmullRomInterpolator& operator=(const CentripetalCatmullRomInterpolator&);
 };
 
-Interpolator*
+
+inline Interpolator*
 Interpolator::create(InterpolatorType type) {
     switch (type) {
       case INTERP_LINEAR:
@@ -265,6 +298,8 @@ Interpolator::create(InterpolatorType type) {
         return new Geom::Interpolate::CubicBezierJohan();
       case INTERP_SPIRO:
         return new Geom::Interpolate::SpiroInterpolator();
+      case INTERP_CUBICBEZIER_SMOOTH:
+        return new Geom::Interpolate::CubicBezierSmooth();
       case INTERP_CENTRIPETAL_CATMULLROM:
         return new Geom::Interpolate::CentripetalCatmullRomInterpolator();
       default:

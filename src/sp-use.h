@@ -1,5 +1,5 @@
-#ifndef __SP_USE_H__
-#define __SP_USE_H__
+#ifndef SEEN_SP_USE_H
+#define SEEN_SP_USE_H
 
 /*
  * SVG <use> implementation
@@ -13,8 +13,9 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <stddef.h>
+#include <cstddef>
 #include <sigc++/sigc++.h>
+
 #include "svg/svg-length.h"
 #include "sp-item.h"
 #include "enums.h"
@@ -38,7 +39,7 @@ public:
     SVGLength y;
     SVGLength width;
     SVGLength height;
-    gchar *href;
+    char *href;
 
     // the reference to the original object
     SPUseReference *ref;
@@ -52,14 +53,14 @@ public:
 
 	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
 	virtual void release();
-	virtual void set(unsigned key, gchar const *value);
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+	virtual void set(unsigned key, char const *value);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, unsigned int flags);
 	virtual void update(SPCtx* ctx, unsigned int flags);
 	virtual void modified(unsigned int flags);
 
 	virtual Geom::OptRect bbox(Geom::Affine const &transform, SPItem::BBoxType bboxtype) const;
     virtual const char* displayName() const;
-	virtual gchar* description() const;
+	virtual char* description() const;
 	virtual void print(SPPrintContext *ctx);
 	virtual Inkscape::DrawingItem* show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
 	virtual void hide(unsigned int key);

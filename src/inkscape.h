@@ -28,9 +28,10 @@ class ToolBase;
 }
 }
 
+struct InkscapeApplication;
+
 namespace Inkscape {
     class ActionContext;
-    struct Application;
     namespace XML {
         class Node;
         struct Document;
@@ -46,11 +47,11 @@ void inkscape_application_init (const gchar *argv0, gboolean use_gui);
 bool inkscape_load_config (const gchar *filename, Inkscape::XML::Document *config, const gchar *skeleton, unsigned int skel_size, const gchar *e_notreg, const gchar *e_notxml, const gchar *e_notsp, const gchar *warn);
 
 /* Menus */
-bool inkscape_load_menus (Inkscape::Application * inkscape);
-bool inkscape_save_menus (Inkscape::Application * inkscape);
-Inkscape::XML::Node *inkscape_get_menus (Inkscape::Application * inkscape);
+bool inkscape_load_menus (InkscapeApplication * inkscape);
+bool inkscape_save_menus (InkscapeApplication * inkscape);
+Inkscape::XML::Node *inkscape_get_menus (InkscapeApplication * inkscape);
 
-Inkscape::Application *inkscape_get_instance();
+InkscapeApplication *inkscape_get_instance();
 gboolean inkscape_use_gui();
 
 bool inkscapeIsCrashing();
@@ -108,13 +109,13 @@ bool inkscape_remove_document (SPDocument *document);
  * fixme: This has to be rethought
  */
 
-void inkscape_refresh_display (Inkscape::Application *inkscape);
+void inkscape_refresh_display (InkscapeApplication *inkscape);
 
 /*
  * fixme: This also
  */
 
-void inkscape_exit (Inkscape::Application *inkscape);
+void inkscape_exit (InkscapeApplication *inkscape);
 
 #endif
 

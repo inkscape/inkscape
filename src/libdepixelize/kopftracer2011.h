@@ -27,6 +27,7 @@
 
 #include <string>
 
+#include <glibmm.h>
 // Contains exception definitions
 #include <glibmm/fileutils.h>
 #include <gdkmm/pixbuf.h>

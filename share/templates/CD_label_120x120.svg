@@ -5,19 +5,13 @@
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="425.19684"
-   height="425.19684"
-   id="svg2816"
-   version="1.1"
-   inkscape:version="0.48+devel r9861"
-   sodipodi:docname="CD-Label_120x120.svg"
-   inkscape:output_extension="org.inkscape.output.svg.inkscape">
-  <defs
-     id="defs2818" />
+   width="120mm"
+   height="120mm"
+   viewBox="-60 -60 120 120"
+   sodipodi:docname="CD-Label_120x120.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -25,11 +19,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="148.69955"
-     inkscape:cy="198.95067"
+     inkscape:cx="226.771653543"
+     inkscape:cy="226.771653543"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
-     id="namedview2820"
      showgrid="false"
      units="mm"
      showguides="true"
@@ -48,11 +41,11 @@
      inkscape:snap-grids="true">
     <sodipodi:guide
        orientation="1,0"
-       position="212.59843,212.59843"
+       position="226.771653543,226.771653543"
        id="guide2827" />
     <sodipodi:guide
        orientation="0,1"
-       position="212.59843,212.59843"
+       position="226.771653543,226.771653543"
        id="guide2829" />
     <inkscape:grid
        type="xygrid"
@@ -79,45 +72,19 @@
     </rdf:RDF>
   </metadata>
   <inkscape:_templateinfo>
-      <inkscape:_name>CD Label 120x120 </inkscape:_name>
-      <inkscape:author>JazzyNico</inkscape:author>
+      <inkscape:_name>CD Label 120mmx120mm </inkscape:_name>
+      <inkscape:author>Tavmjong Bah, based on tempate by JazzyNico</inkscape:author>
       <inkscape:_shortdesc>Simple CD Label template with disc's pattern.</inkscape:_shortdesc>
-      <inkscape:date>2010-11-15</inkscape:date>
+      <inkscape:date>2014-10-06</inkscape:date>
       <inkscape:_keywords>CD label 120x120 disc disk</inkscape:_keywords>
   </inkscape:_templateinfo>
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1">
-    <path
-       sodipodi:type="arc"
-       style="fill:none;stroke:#000000;stroke-width:0.14648895;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="path2831"
-       sodipodi:cx="-132.58252"
-       sodipodi:cy="210.41315"
-       sodipodi:rx="83.968933"
-       sodipodi:ry="90.156113"
-       d="m -48.613586,210.41315 a 83.968933,90.156113 0 1 1 -167.937864,0 83.968933,90.156113 0 1 1 167.937864,0 z"
-       transform="matrix(2.5297404,0,0,2.3561309,547.99778,-283.1625)" />
-    <path
-       transform="matrix(0.31591735,0,-0.01153582,0.29446415,256.91083,150.63929)"
-       d="m -48.613586,210.41315 a 83.968933,90.156113 0 1 1 -167.937864,0 83.968933,90.156113 0 1 1 167.937864,0 z"
-       sodipodi:ry="90.156113"
-       sodipodi:rx="83.968933"
-       sodipodi:cy="210.41315"
-       sodipodi:cx="-132.58252"
-       id="path3605"
-       style="fill:none;stroke:#000000;stroke-width:0.14648895;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       sodipodi:type="arc" />
-    <path
-       sodipodi:type="arc"
-       style="fill:none;stroke:#000000;stroke-width:0.14648895;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="path3607"
-       sodipodi:cx="-132.58252"
-       sodipodi:cy="210.41315"
-       sodipodi:rx="83.968933"
-       sodipodi:ry="90.156113"
-       d="m -48.613586,210.41315 a 83.968933,90.156113 0 1 1 -167.937864,0 83.968933,90.156113 0 1 1 167.937864,0 z"
-       transform="matrix(0.79925011,0,-0.02918487,0.74498189,324.70589,55.844435)" />
+     id="Template"
+     style="fill:none;stroke:black;stroke-width:0.05">
+    <circle cx="0" cy="0" r="60"/>
+    <circle cx="0" cy="0" r="19"/>
+    <circle cx="0" cy="0" r="7.5"/>
   </g>
 </svg>

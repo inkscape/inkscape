@@ -11,10 +11,10 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "sp-shape.h"
-
-#include <stddef.h>
+#include <cstddef>
 #include <sigc++/sigc++.h>
+
+#include "sp-shape.h"
 
 #define SP_OFFSET(obj) (dynamic_cast<SPOffset*>((SPObject*)obj))
 #define SP_IS_OFFSET(obj) (dynamic_cast<const SPOffset*>((SPObject*)obj) != NULL)
@@ -54,7 +54,7 @@ public:
 	SPOffset();
 	virtual ~SPOffset();
 
-    void *originalPath; ///< will be a livarot Path, just don't declare it here to please the gcc linker
+    void *originalPath; ///< will be a livarot Path, just don't declare it here to please the gcc linker FIXME what?
     char *original;     ///< SVG description of the source path
     float rad;          ///< offset radius
 
@@ -65,7 +65,7 @@ public:
     bool sourceDirty;
     bool isUpdating;
 
-    gchar                *sourceHref;
+    char                 *sourceHref;
     SPUseReference       *sourceRef;
     Inkscape::XML::Node  *sourceRepr; ///< the repr associated with that id
     SPObject             *sourceObject;
@@ -76,14 +76,14 @@ public:
     sigc::connection _transformed_connection;
 
 	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
-	virtual void set(unsigned int key, gchar const* value);
-	virtual void update(SPCtx *ctx, guint flags);
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+	virtual void set(unsigned int key, char const* value);
+	virtual void update(SPCtx *ctx, unsigned int flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, unsigned flags);
 	virtual void release();
 
 	virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) const;
         virtual const char* displayName() const;
-	virtual gchar* description() const;
+	virtual char* description() const;
 
 	virtual void set_shape();
 };

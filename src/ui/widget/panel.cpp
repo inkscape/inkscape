@@ -643,13 +643,13 @@ Panel::signalDocumentReplaced()
     return _signal_document_replaced;
 }
 
-sigc::signal<void, Inkscape::Application *, SPDesktop *> &
+sigc::signal<void, InkscapeApplication *, SPDesktop *> &
 Panel::signalActivateDesktop()
 {
     return _signal_activate_desktop;
 }
 
-sigc::signal<void, Inkscape::Application *, SPDesktop *> &
+sigc::signal<void, InkscapeApplication *, SPDesktop *> &
 Panel::signalDeactiveDesktop()
 {
     return _signal_deactive_desktop;

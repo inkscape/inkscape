@@ -11,12 +11,10 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
-#include <glib.h>
 
-#include <stddef.h>
-#include <sigc++/connection.h>
-#include <sigc++/functors/slot.h>
-#include <sigc++/signal.h>
+#include <cstddef>
+#include <sigc++/sigc++.h>
+
 #include "libavoid/connector.h"
 
 
@@ -33,21 +31,21 @@ class Node;
 }
 }
 
-extern void recreateCurve(SPCurve *curve, Avoid::ConnRef *connRef, gdouble curvature);
+extern void recreateCurve(SPCurve *curve, Avoid::ConnRef *connRef, double curvature);
 
 class SPConnEndPair {
 public:
     SPConnEndPair(SPPath *);
     ~SPConnEndPair();
     void release();
-    void setAttr(unsigned const key, gchar const *const value);
+    void setAttr(unsigned const key, char const *const value);
     void writeRepr(Inkscape::XML::Node *const repr) const;
     void getAttachedItems(SPItem *[2]) const;
     void getEndpoints(Geom::Point endPts[]) const;
-    gdouble getCurvature(void) const;
+    double getCurvature(void) const;
     SPConnEnd** getConnEnds(void);
     bool isOrthogonal(void) const;
-    friend void recreateCurve(SPCurve *curve, Avoid::ConnRef *connRef, gdouble curvature);
+    friend void recreateCurve(SPCurve *curve, Avoid::ConnRef *connRef, double curvature);
     void tellLibavoidNewEndpoints(const bool processTransaction = false);
     bool reroutePathFromLibavoid(void);
     void makePathInvalid(void);
@@ -64,7 +62,7 @@ private:
     Avoid::ConnRef *_connRef;
 
     int _connType;
-    gdouble _connCurvature;
+    double _connCurvature;
     
     // A sigc connection for transformed signal.
     sigc::connection _transformed_connection;

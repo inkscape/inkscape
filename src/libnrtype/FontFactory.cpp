@@ -392,6 +392,7 @@ GList* font_factory::GetUIStyles(PangoFontFamily * in)
     return ret;
 }
 
+
 font_instance* font_factory::FaceFromStyle(SPStyle const *style)
 {
     font_instance *font = NULL;

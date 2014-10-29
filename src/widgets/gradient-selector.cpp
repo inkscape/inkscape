@@ -16,13 +16,15 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
+
+#include <gtkmm/treeview.h>
+
 #include "gradient-vector.h"
-#include <gtk/gtk.h>
 
 #include "document.h"
-#include "../document-undo.h"
-#include "../document-private.h"
-#include "../gradient-chemistry.h"
+#include "document-undo.h"
+#include "document-private.h"
+#include "gradient-chemistry.h"
 #include "inkscape.h"
 #include "verbs.h"
 #include "helper/action.h"
@@ -47,8 +49,6 @@ enum {
 };
 
 
-static void sp_gradient_selector_class_init (SPGradientSelectorClass *klass);
-static void sp_gradient_selector_init (SPGradientSelector *selector);
 static void sp_gradient_selector_dispose(GObject *object);
 
 /* Signal handlers */
@@ -57,40 +57,17 @@ static void sp_gradient_selector_edit_vector_clicked (GtkWidget *w, SPGradientSe
 static void sp_gradient_selector_add_vector_clicked (GtkWidget *w, SPGradientSelector *sel);
 static void sp_gradient_selector_delete_vector_clicked (GtkWidget *w, SPGradientSelector *sel);
 
-
-static GtkVBoxClass *parent_class;
 static guint signals[LAST_SIGNAL] = {0};
 
-GType sp_gradient_selector_get_type(void)
-{
-    static GType type = 0;
-    if (!type) {
-        static const GTypeInfo info = {
-            sizeof(SPGradientSelectorClass),
-            NULL, /* base_init */
-            NULL, /* base_finalize */
-            (GClassInitFunc) sp_gradient_selector_class_init,
-            NULL, /* class_finalize */
-            NULL, /* class_data */
-            sizeof(SPGradientSelector),
-            0,    /* n_preallocs */
-            (GInstanceInitFunc) sp_gradient_selector_init,
-            0,    /* value_table */
-        };
-
-        type = g_type_register_static( GTK_TYPE_VBOX,
-                                       "SPGradientSelector",
-                                       &info,
-                                       static_cast< GTypeFlags > (0) );
-    }
-    return type;
-}
+#if GTK_CHECK_VERSION(3,0,0)
+G_DEFINE_TYPE(SPGradientSelector, sp_gradient_selector, GTK_TYPE_BOX);
+#else
+G_DEFINE_TYPE(SPGradientSelector, sp_gradient_selector, GTK_TYPE_VBOX);
+#endif
 
 static void sp_gradient_selector_class_init(SPGradientSelectorClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
-
-    parent_class = GTK_VBOX_CLASS(g_type_class_peek_parent (klass));
 
     signals[GRABBED] =  g_signal_new ("grabbed",
                                         G_TYPE_FROM_CLASS(object_class),
@@ -128,6 +105,11 @@ static void sp_gradient_selector_init(SPGradientSelector *sel)
 {
     sel->safelyInit = true;
     sel->blocked = false;
+
+#if GTK_CHECK_VERSION(3,0,0)
+    gtk_orientable_set_orientation(GTK_ORIENTABLE(sel), GTK_ORIENTATION_VERTICAL);
+#endif
+
     new (&sel->nonsolid) std::vector<GtkWidget*>();
     new (&sel->swatch_widgets) std::vector<GtkWidget*>();
 
@@ -269,8 +251,8 @@ static void sp_gradient_selector_dispose(GObject *object)
         sel->text_renderer = NULL;
     }
 
-    if ((G_OBJECT_CLASS(parent_class))->dispose) {
-        (* (G_OBJECT_CLASS(parent_class))->dispose) (object);
+    if ((G_OBJECT_CLASS(sp_gradient_selector_parent_class))->dispose) {
+        (G_OBJECT_CLASS(sp_gradient_selector_parent_class))->dispose(object);
     }
 }
 

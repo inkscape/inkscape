@@ -16,11 +16,12 @@
 #ifndef SEEN_INKSCAPE_MESSAGE_STACK_H
 #define SEEN_INKSCAPE_MESSAGE_STACK_H
 
-#include <stddef.h>
-#include <sigc++/sigc++.h>
-#include <glib.h>
-#include <stdarg.h>
+#include <cstdarg>
+#include <cstddef>
+#include <glib.h> // G_GNUC_PRINTF is the only thing worth having from here
 #include <glibmm/ustring.h>
+#include <sigc++/sigc++.h>
+
 #include "gc-managed.h"
 #include "gc-finalized.h"
 #include "gc-anchored.h"
@@ -61,14 +62,14 @@ public:
     /** @brief returns the text of the message currently at the top of
       *        the stack
       */
-    gchar const *currentMessage() {
+    char const *currentMessage() {
         return _messages ? _messages->message : NULL;
     }
 
     /** @brief connects to the "changed" signal which is emitted whenever
       *        the topmost message on the stack changes.
       */
-    sigc::connection connectChanged(sigc::slot<void, MessageType, gchar const *> slot)
+    sigc::connection connectChanged(sigc::slot<void, MessageType, char const *> slot)
     {
         return _changed_signal.connect(slot);
     }
@@ -80,7 +81,7 @@ public:
       *
       * @return the id of the pushed message
       */
-    MessageId push(MessageType type, gchar const *message);
+    MessageId push(MessageType type, char const *message);
 
     /** @brief pushes a message onto the stack using printf-like formatting
       *
@@ -89,7 +90,7 @@ public:
       *
       * @return the id of the pushed message
       */
-    MessageId pushF(MessageType type, gchar const *format, ...) G_GNUC_PRINTF(3,4);
+    MessageId pushF(MessageType type, char const *format, ...) G_GNUC_PRINTF(3,4);
 
     /** @brief pushes a message onto the stack using printf-like formatting,
       *        using a stdarg argument list
@@ -100,7 +101,7 @@ public:
       *
       * @return the id of the pushed message
       */
-    MessageId pushVF(MessageType type, gchar const *format, va_list args);
+    MessageId pushVF(MessageType type, char const *format, va_list args);
 
     /** @brief removes a message from the stack, given its id
       *
@@ -119,7 +120,7 @@ public:
      *
      * @return the id of the pushed message
      */
-    MessageId flash(MessageType type, gchar const *message);
+    MessageId flash(MessageType type, char const *message);
 
     /**
      * Temporarily pushes a message onto the stack.
@@ -140,7 +141,7 @@ public:
       *
       * @return the id of the pushed message
       */
-    MessageId flashF(MessageType type, gchar const *format, ...) G_GNUC_PRINTF(3,4);
+    MessageId flashF(MessageType type, char const *format, ...) G_GNUC_PRINTF(3,4);
 
     /** @brief temporarily pushes a message onto the stack using
       *        printf-like formatting, using a stdarg argument list
@@ -151,7 +152,7 @@ public:
       *
       * @return the id of the pushed message
       */
-    MessageId flashVF(MessageType type, gchar const *format, va_list args);
+    MessageId flashVF(MessageType type, char const *format, va_list args);
 
 private:
     struct Message {
@@ -167,13 +168,13 @@ private:
     void operator=(MessageStack const &); // no assign
 
     /// pushes a message onto the stack with an optional timeout
-    MessageId _push(MessageType type, guint lifetime, gchar const *message);
+    MessageId _push(MessageType type, unsigned int lifetime, char const *message);
 
     Message *_discard(Message *m); ///< frees a message struct and returns the next such struct in the list
     void _emitChanged(); ///< emits the "changed" signal
-    static gboolean _timeout(gpointer data); ///< callback to expire flashed messages
+    static int _timeout(void* data); ///< callback to expire flashed messages
 
-    sigc::signal<void, MessageType, gchar const *> _changed_signal;
+    sigc::signal<void, MessageType, char const *> _changed_signal;
     Message *_messages; ///< the stack of messages as a linked list
     MessageId _next_id; ///< the next message id to assign
 };

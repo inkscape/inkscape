@@ -10,15 +10,15 @@
  * define'd directories, and instead should use only the paths defined here.
  *
  */
-#ifndef _PATH_PREFIX_H_
-#define _PATH_PREFIX_H_
+#ifndef SEEN_PATH_PREFIX_H
+#define SEEN_PATH_PREFIX_H
 
 #include "require-config.h"  // INKSCAPE_DATADIR
 #include "prefix.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+//#ifdef __cplusplus
+//extern "C" {
+//#endif /* __cplusplus */
 
 #ifdef ENABLE_BINRELOC
 #  define INKSCAPE_APPICONDIR     BR_DATADIR( "/pixmaps" )
@@ -112,8 +112,8 @@ extern "C" {
 #	 endif
 #endif
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+//#ifdef __cplusplus
+//}
+//#endif /* __cplusplus */
 
 #endif /* _PATH_PREFIX_H_ */

@@ -24,7 +24,6 @@ ink_common_sources +=	\
 	composite-undo-stack-observer.h					\
 	conditions.cpp conditions.h					\
 	conn-avoid-ref.cpp conn-avoid-ref.h				\
-	connection-pool.h						\
 	console-output-undo-observer.h console-output-undo-observer.cpp \
 	context-fns.cpp context-fns.h					\
 	decimal-round.h							\
@@ -38,11 +37,7 @@ ink_common_sources +=	\
 	document-subset.cpp document-subset.h				\
 	document-undo.cpp document-undo.h \
 	doxygen-main.cpp						\
-	draw-anchor.cpp	draw-anchor.h					\
-	ege-adjustment-action.cpp ege-adjustment-action.h		\
 	ege-color-prof-tracker.cpp ege-color-prof-tracker.h		\
-	ege-output-action.cpp ege-output-action.h			\
-	ege-select-one-action.cpp ege-select-one-action.h		\
 	enums.h								\
 	event-log.cpp event-log.h event.h				\
 	extract-uri.cpp extract-uri.h					\
@@ -68,18 +63,13 @@ ink_common_sources +=	\
 	helper/pixbuf-ops.h						\
 	icon-size.h							\
 	id-clash.cpp id-clash.h						\
-	ink-action.cpp							\
-	ink-action.h							\
-	ink-comboboxentry-action.cpp					\
-	ink-comboboxentry-action.h					\
 	inkscape.cpp inkscape.h inkscape-private.h			\
-	interface.cpp interface.h					\
 	isinf.h								\
-	isnormal.h							\
 	knot.cpp knot.h							\
 	knot-enums.h							\
 	knotholder.cpp knotholder.h					\
 	knot-holder-entity.h knot-holder-entity.cpp			\
+	knot-ptr.h knot-ptr.cpp						\
 	layer-fns.cpp layer-fns.h					\
 	layer-manager.cpp layer-manager.h				\
   layer-model.cpp layer-model.h         \
@@ -87,14 +77,12 @@ ink_common_sources +=	\
 	line-snapper.cpp line-snapper.h					\
 	macros.h							\
 	main-cmdlineact.cpp main-cmdlineact.h				\
-	marker.cpp marker.h						\
 	media.cpp media.h						\
 	menus-skeleton.h						\
 	message-context.cpp message-context.h				\
 	message.h							\
 	message-stack.cpp message-stack.h				\
 	mod360.cpp mod360.h						\
-	object-edit.cpp object-edit.h					\
 	object-hierarchy.cpp object-hierarchy.h				\
 	object-snapper.cpp object-snapper.h				\
 	path-chemistry.cpp path-chemistry.h				\
@@ -121,7 +109,6 @@ ink_common_sources +=	\
 	selection-describer.cpp selection-describer.h			\
 	seltrans.cpp seltrans.h						\
 	seltrans-handles.cpp seltrans-handles.h				\
-	shape-editor.cpp shape-editor.h					\
 	shortcuts.cpp shortcuts.h					\
 	snap.cpp snap.h							\
 	snap-enums.h snap-candidate.h					\
@@ -171,6 +158,7 @@ ink_common_sources +=	\
 	sp-line.cpp sp-line.h						\
 	splivarot.cpp splivarot.h					\
 	sp-lpe-item.cpp sp-lpe-item.h					\
+	sp-marker.cpp sp-marker.h					\
 	sp-marker-loc.h							\
 	sp-mask.cpp sp-mask.h						\
 	sp-metadata.cpp sp-metadata.h					\
@@ -202,6 +190,9 @@ ink_common_sources +=	\
 	sp-style-elem.cpp sp-style-elem.h	\
 	sp-switch.cpp sp-switch.h		\
 	sp-symbol.cpp sp-symbol.h		\
+	sp-tag.cpp sp-tag.h			\
+	sp-tag-use.cpp sp-tag-use.h		\
+	sp-tag-use-reference.cpp sp-tag-use-reference.h			\
 	sp-text.cpp sp-text.h			\
 	sp-textpath.h				\
 	sp-title.cpp sp-title.h			\
@@ -222,8 +213,6 @@ ink_common_sources +=	\
 	text-chemistry.cpp text-chemistry.h	\
 	text-editing.cpp text-editing.h		\
 	text-tag-attributes.h			\
-	tool-factory.h				\
-	tools-switch.cpp tools-switch.h		\
 	transf_mat_3x4.cpp transf_mat_3x4.h	\
 	unclump.cpp unclump.h			\
 	undo-stack-observer.h			\

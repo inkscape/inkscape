@@ -12,10 +12,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-
 #include <sstream>
 #include <string.h>
 
@@ -26,41 +22,16 @@
 #include "color.h"
 #include "display/sp-canvas.h"
 
-static void sp_canvastext_class_init (SPCanvasTextClass *klass);
-static void sp_canvastext_init (SPCanvasText *canvastext);
 static void sp_canvastext_destroy(SPCanvasItem *object);
 
 static void sp_canvastext_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
 static void sp_canvastext_render (SPCanvasItem *item, SPCanvasBuf *buf);
 
-static SPCanvasItemClass *parent_class_ct;
-
-GType
-sp_canvastext_get_type (void)
-{
-    static GType type = 0;
-
-    if (!type) {
-        GTypeInfo info = {
-            sizeof (SPCanvasTextClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_canvastext_class_init,
-            NULL, NULL,
-            sizeof (SPCanvasText),
-            0,
-            (GInstanceInitFunc) sp_canvastext_init,
-            NULL
-        };
-        type = g_type_register_static (SP_TYPE_CANVAS_ITEM, "SPCanvasText", &info, (GTypeFlags)0);
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPCanvasText, sp_canvastext, SP_TYPE_CANVAS_ITEM);
 
 static void sp_canvastext_class_init(SPCanvasTextClass *klass)
 {
     SPCanvasItemClass *item_class = SP_CANVAS_ITEM_CLASS(klass);
-
-    parent_class_ct = SP_CANVAS_ITEM_CLASS(g_type_class_peek_parent(klass));
 
     item_class->destroy = sp_canvastext_destroy;
     item_class->update = sp_canvastext_update;
@@ -101,8 +72,8 @@ static void sp_canvastext_destroy(SPCanvasItem *object)
     canvastext->text = NULL;
     canvastext->item = NULL;
 
-    if (SP_CANVAS_ITEM_CLASS(parent_class_ct)->destroy)
-        (* SP_CANVAS_ITEM_CLASS(parent_class_ct)->destroy) (object);
+    if (SP_CANVAS_ITEM_CLASS(sp_canvastext_parent_class)->destroy)
+        SP_CANVAS_ITEM_CLASS(sp_canvastext_parent_class)->destroy(object);
 }
 
 static void
@@ -151,8 +122,8 @@ sp_canvastext_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned i
 
     item->canvas->requestRedraw((int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
 
-    if (parent_class_ct->update)
-        (* parent_class_ct->update) (item, affine, flags);
+    if (SP_CANVAS_ITEM_CLASS(sp_canvastext_parent_class)->update)
+        SP_CANVAS_ITEM_CLASS(sp_canvastext_parent_class)->update(item, affine, flags);
 
     sp_canvas_item_reset_bounds (item);
 

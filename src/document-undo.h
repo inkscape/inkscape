@@ -9,10 +9,9 @@ typedef struct _GObject GObject;
 
 class SPDesktop;
 class SPDocument;
+struct InkscapeApplication;
 
 namespace Inkscape {
-
-struct Application;
 
 class DocumentUndo
 {
@@ -42,7 +41,7 @@ public:
 
     static void maybeDone(SPDocument *document, const gchar *keyconst, unsigned int event_type, Glib::ustring const &event_description);
 
-    static void resetKey(Inkscape::Application *inkscape, SPDesktop *desktop, GObject *base);
+    static void resetKey(InkscapeApplication *inkscape, SPDesktop *desktop, GObject *base);
 
     static void cancel(SPDocument *document);
 

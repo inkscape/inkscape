@@ -1,12 +1,12 @@
-#ifndef __NR_TYPE_PRIMITIVES_H__
-#define __NR_TYPE_PRIMITIVES_H__
+#ifndef SEEN_NR_TYPE_PRIMITIVES_H
+#define SEEN_NR_TYPE_PRIMITIVES_H
 
-/*
+/**
  * Typeface and script library
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
- *   g++ port: Nathan Hurst <njh@mail.csse.monash.edu.au>
+ *   c++ port: Nathan Hurst <njh@mail.csse.monash.edu.au>
  *
  * This code is in public domain
  */
@@ -47,4 +47,15 @@ void nr_type_dict_insert (NRTypeDict *td, const gchar *key, void *val);
 
 void *nr_type_dict_lookup (NRTypeDict *td, const gchar *key);
 
-#endif
+#endif // !SEEN_NR_TYPE_PRIMITIVES_H
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8 :

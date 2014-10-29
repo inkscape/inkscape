@@ -1,9 +1,4 @@
-#define __SP_ATTRIBUTES_C__
-
-/** \file
- * Lookup dictionary for attributes/properties.
- */
-/*
+/**
  * Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *
@@ -25,6 +20,10 @@ typedef struct {
     gchar const *name;
 } SPStyleProp;
 
+/**
+ * Lookup dictionary for attributes/properties.
+ */
+
 static SPStyleProp const props[] = {
     {SP_ATTR_INVALID, NULL},
     /* SPObject */
@@ -41,6 +40,7 @@ static SPStyleProp const props[] = {
     {SP_ATTR_TRANSFORM_CENTER_X, "inkscape:transform-center-x"},
     {SP_ATTR_TRANSFORM_CENTER_Y, "inkscape:transform-center-y"},
     {SP_ATTR_INKSCAPE_PATH_EFFECT, "inkscape:path-effect"},
+    {SP_ATTR_INKSCAPE_HIGHLIGHT_COLOR, "inkscape:highlight-color"},
     /* SPAnchor */
     {SP_ATTR_XLINK_HREF, "xlink:href"},
     {SP_ATTR_XLINK_TYPE, "xlink:type"},
@@ -51,6 +51,7 @@ static SPStyleProp const props[] = {
     {SP_ATTR_XLINK_ACTUATE, "xlink:actuate"},
     {SP_ATTR_TARGET, "target"},
     {SP_ATTR_INKSCAPE_GROUPMODE, "inkscape:groupmode"},
+    {SP_ATTR_INKSCAPE_EXPANDED, "inkscape:expanded"},
     /* SPRoot */
     {SP_ATTR_VERSION, "version"},
     {SP_ATTR_WIDTH, "width"},
@@ -544,4 +545,4 @@ sp_attribute_name(unsigned int id)
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8 :

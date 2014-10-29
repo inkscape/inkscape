@@ -26,7 +26,7 @@ struct SPCanvasBuf;
 
 #define SP_TYPE_CTRLRECT (sp_ctrlrect_get_type ())
 #define SP_CTRLRECT(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_CTRLRECT, CtrlRect))
-#define SP_CTRLRECT_CLASS(c) (G_TYPE_CHECK_CLASS_CAST((c), SP_TYPE_CTRLRECT, SPCtrlRectClass))
+#define SP_CTRLRECT_CLASS(c) (G_TYPE_CHECK_CLASS_CAST((c), SP_TYPE_CTRLRECT, CtrlRectClass))
 #define SP_IS_CTRLRECT(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_CTRLRECT))
 #define SP_IS_CTRLRECT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_CTRLRECT))
 
@@ -57,7 +57,7 @@ private:
     int _shadow;
 };
 
-struct SPCtrlRectClass : public SPCanvasItemClass {};
+struct CtrlRectClass : public SPCanvasItemClass {};
 
 GType sp_ctrlrect_get_type();
 

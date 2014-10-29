@@ -35,7 +35,7 @@ public:
         return Geom::atan2(Geom::Point(vp[0], vp[1])) * 180.0/M_PI;
     }
     void set_infinite_direction (Proj::Axis axis, double angle) { // angle is in degrees
-        g_return_if_fail(tmat[2][axis] == 0); // don't set directions for finite VPs
+        if (tmat[2][axis] != 0) return; // don't set directions for finite VPs
 
         double a = angle * M_PI/180;
         Geom::Point pt(tmat[0][axis], tmat[1][axis]);
@@ -44,7 +44,7 @@ public:
     }
     inline bool has_finite_image (Proj::Axis axis) { return (tmat[2][axis] != 0.0); }
 
-    gchar * pt_to_str (Proj::Axis axis);
+    char * pt_to_str (Proj::Axis axis);
 
     bool operator==(const TransfMat3x4 &rhs) const;
     TransfMat3x4 operator*(Geom::Affine const &A) const;

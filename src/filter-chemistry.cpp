@@ -15,6 +15,8 @@
 
 
 #include <cstring>
+#include <glibmm.h>
+
 #include "style.h"
 #include "document-private.h"
 #include "desktop-style.h"

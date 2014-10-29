@@ -14,11 +14,11 @@
  * Released under GNU GPL
  */
 
-#include <glib.h>
-#include "knot.h"
 #include <2geom/forward.h>
-#include "snapper.h"
+
 #include "display/sp-canvas-item.h"
+#include "knot.h"
+#include "snapper.h"
 
 class SPItem;
 class SPKnot;
@@ -31,7 +31,7 @@ namespace LivePathEffect {
 } // namespace LivePathEffect
 } // namespace Inkscape
 
-typedef void (* SPKnotHolderSetFunc) (SPItem *item, Geom::Point const &p, Geom::Point const &origin, guint state);
+typedef void (* SPKnotHolderSetFunc) (SPItem *item, Geom::Point const &p, Geom::Point const &origin, unsigned int state);
 typedef Geom::Point (* SPKnotHolderGetFunc) (SPItem *item);
 
 /**
@@ -50,22 +50,22 @@ public:
 
     virtual void create(SPDesktop *desktop, SPItem *item, KnotHolder *parent,
                         Inkscape::ControlType type = Inkscape::CTRL_TYPE_UNKNOWN,
-                        const gchar *tip = "",
+                        char const*tip = "",
                         SPKnotShapeType shape = SP_KNOT_SHAPE_DIAMOND,
                         SPKnotModeType mode = SP_KNOT_MODE_XOR,
                         guint32 color = 0xffffff00);
  
     /* the get/set/click handlers are virtual functions; each handler class for a knot
        should be derived from KnotHolderEntity and override these functions */
-    virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state) = 0;
+    virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, unsigned int state) = 0;
     virtual Geom::Point knot_get() const = 0;
-    virtual void knot_click(guint /*state*/) {}
+    virtual void knot_click(unsigned int /*state*/) {}
 
     void update_knot();
 
 //private:
-    Geom::Point snap_knot_position(Geom::Point const &p, guint state);
-    Geom::Point snap_knot_position_constrained(Geom::Point const &p, Inkscape::Snapper::SnapConstraint const &constraint, guint state);
+    Geom::Point snap_knot_position(Geom::Point const &p, unsigned int state);
+    Geom::Point snap_knot_position_constrained(Geom::Point const &p, Inkscape::Snapper::SnapConstraint const &constraint, unsigned int state);
 
     SPKnot *knot;
     SPItem *item;
@@ -77,11 +77,11 @@ public:
     static int counter;
 
     /** Connection to \a knot's "moved" signal. */
-    guint   handler_id;
+    unsigned int   handler_id;
     /** Connection to \a knot's "clicked" signal. */
-    guint   _click_handler_id;
+    unsigned int   _click_handler_id;
     /** Connection to \a knot's "ungrabbed" signal. */
-    guint   _ungrab_handler_id;
+    unsigned int   _ungrab_handler_id;
 
 private:
     sigc::connection _moved_connection;
@@ -103,7 +103,7 @@ class PatternKnotHolderEntityXY : public KnotHolderEntity {
 public:
     PatternKnotHolderEntityXY(bool fill) : KnotHolderEntity(), _fill(fill) {}
     virtual Geom::Point knot_get() const;
-    virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
+    virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, unsigned int state);
 private:
     // true if the entity tracks fill, false for stroke 
     bool _fill;
@@ -113,7 +113,7 @@ class PatternKnotHolderEntityAngle : public KnotHolderEntity {
 public:
     PatternKnotHolderEntityAngle(bool fill) : KnotHolderEntity(), _fill(fill) {}
     virtual Geom::Point knot_get() const;
-    virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
+    virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, unsigned int state);
 private:
     bool _fill;
 };
@@ -122,7 +122,7 @@ class PatternKnotHolderEntityScale : public KnotHolderEntity {
 public:
     PatternKnotHolderEntityScale(bool fill) : KnotHolderEntity(), _fill(fill) {}
     virtual Geom::Point knot_get() const;
-    virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
+    virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, unsigned int state);
 private:
     bool _fill;
 };

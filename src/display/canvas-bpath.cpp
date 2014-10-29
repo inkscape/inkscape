@@ -11,9 +11,6 @@
  *
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
 #include <sstream>
 #include <string.h>
 #include "desktop.h"
@@ -27,41 +24,17 @@
 #include "helper/geom.h"
 #include "display/sp-canvas.h"
 
-static void sp_canvas_bpath_class_init (SPCanvasBPathClass *klass);
-static void sp_canvas_bpath_init (SPCanvasBPath *path);
 static void sp_canvas_bpath_destroy(SPCanvasItem *object);
 
 static void sp_canvas_bpath_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
 static void sp_canvas_bpath_render (SPCanvasItem *item, SPCanvasBuf *buf);
 static double sp_canvas_bpath_point (SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_item);
 
-static SPCanvasItemClass *parent_class;
-
-GType
-sp_canvas_bpath_get_type (void)
-{
-    static GType type = 0;
-    if (!type) {
-	GTypeInfo info = {
-            sizeof (SPCanvasBPathClass),
-	    NULL, NULL,
-            (GClassInitFunc) sp_canvas_bpath_class_init,
-	    NULL, NULL,
-            sizeof (SPCanvasBPath),
-	    0,
-            (GInstanceInitFunc) sp_canvas_bpath_init,
-	    NULL
-	};
-        type = g_type_register_static (SP_TYPE_CANVAS_ITEM, "SPCanvasBPath", &info, (GTypeFlags)0);
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPCanvasBPath, sp_canvas_bpath, SP_TYPE_CANVAS_ITEM);
 
 static void sp_canvas_bpath_class_init(SPCanvasBPathClass *klass)
 {
     SPCanvasItemClass *item_class = (SPCanvasItemClass *) klass;
-
-    parent_class = (SPCanvasItemClass*)g_type_class_peek_parent (klass);
 
     item_class->destroy = sp_canvas_bpath_destroy;
     item_class->update = sp_canvas_bpath_update;
@@ -90,8 +63,8 @@ static void sp_canvas_bpath_destroy(SPCanvasItem *object)
         cbp->curve = cbp->curve->unref();
     }
 
-    if (SP_CANVAS_ITEM_CLASS(parent_class)->destroy)
-        (* SP_CANVAS_ITEM_CLASS(parent_class)->destroy) (object);
+    if (SP_CANVAS_ITEM_CLASS(sp_canvas_bpath_parent_class)->destroy)
+        (* SP_CANVAS_ITEM_CLASS(sp_canvas_bpath_parent_class)->destroy) (object);
 }
 
 static void sp_canvas_bpath_update(SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags)
@@ -100,8 +73,8 @@ static void sp_canvas_bpath_update(SPCanvasItem *item, Geom::Affine const &affin
 
     item->canvas->requestRedraw((int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
 
-    if (reinterpret_cast<SPCanvasItemClass *>(parent_class)->update) {
-        reinterpret_cast<SPCanvasItemClass *>(parent_class)->update(item, affine, flags);
+    if (reinterpret_cast<SPCanvasItemClass *>(sp_canvas_bpath_parent_class)->update) {
+        reinterpret_cast<SPCanvasItemClass *>(sp_canvas_bpath_parent_class)->update(item, affine, flags);
     }
 
     sp_canvas_item_reset_bounds (item);

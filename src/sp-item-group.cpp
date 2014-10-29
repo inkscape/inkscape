@@ -614,6 +614,18 @@ SPGroup::LayerMode SPGroup::layerDisplayMode(unsigned int dkey) const {
     }
 }
 
+void SPGroup::setExpanded(bool isexpanded) {
+    if ( _expanded != isexpanded ){
+        _expanded = isexpanded;
+    }
+}
+
+void SPGroup::setInsertBottom(bool insertbottom) {
+    if ( _insertBottom != insertbottom) {
+        _insertBottom = insertbottom;
+    }
+}
+
 void SPGroup::setLayerDisplayMode(unsigned int dkey, SPGroup::LayerMode mode) {
     if ( layerDisplayMode(dkey) != mode ) {
         _display_modes[dkey] = mode;

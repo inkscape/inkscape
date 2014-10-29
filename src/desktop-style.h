@@ -13,13 +13,12 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <glib.h>
-
 class ColorRGBA;
 class SPCSSAttr;
 class SPDesktop;
 class SPObject;
 class SPStyle;
+typedef struct _GSList GSList;
 namespace Inkscape {
 namespace XML {
 class Node;

@@ -40,7 +40,7 @@
 #include "rubberband.h"
 #include "selection-chemistry.h"
 #include "selection.h"
-#include "shape-editor.h"
+#include "ui/shape-editor.h"
 #include "sp-flowtext.h"
 #include "sp-namedview.h"
 #include "sp-text.h"
@@ -52,7 +52,7 @@
 #include "xml/node-event-vector.h"
 #include "xml/repr.h"
 #include <gtk/gtk.h>
-#include "tool-factory.h"
+#include "ui/tool-factory.h"
 
 using Inkscape::ControlManager;
 using Inkscape::DocumentUndo;
@@ -177,7 +177,7 @@ void TextTool::setup() {
 
     SPItem *item = sp_desktop_selection(this->desktop)->singleItem();
     if (item && SP_IS_FLOWTEXT(item) && SP_FLOWTEXT(item)->has_internal_frame()) {
-        this->shape_editor->set_item(item, SH_KNOTHOLDER);
+        this->shape_editor->set_item(item);
     }
 
     this->sel_changed_connection = sp_desktop_selection(desktop)->connectChangedFirst(
@@ -1411,10 +1411,10 @@ void TextTool::_selectionChanged(Inkscape::Selection *selection)
 
     ToolBase *ec = SP_EVENT_CONTEXT(this);
 
-    ec->shape_editor->unset_item(SH_KNOTHOLDER);
+    ec->shape_editor->unset_item();
     SPItem *item = selection->singleItem();
     if (item && SP_IS_FLOWTEXT(item) && SP_FLOWTEXT(item)->has_internal_frame()) {
-        ec->shape_editor->set_item(item, SH_KNOTHOLDER);
+        ec->shape_editor->set_item(item);
     }
 
     if (this->text && (item != this->text)) {

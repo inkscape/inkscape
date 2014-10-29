@@ -14,7 +14,6 @@
 #ifndef SEEN_INKSCAPE_SP_IMAGE_H
 #define SEEN_INKSCAPE_SP_IMAGE_H
 
-#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <glibmm/ustring.h>
 #include "svg/svg-length.h"
 #include "display/curve.h"
@@ -43,24 +42,24 @@ public:
 
     SPCurve *curve; // This curve is at the image's boundary for snapping
 
-    gchar *href;
+    char *href;
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
-    gchar *color_profile;
+    char *color_profile;
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
     Inkscape::Pixbuf *pixbuf;
 
     virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
     virtual void release();
-    virtual void set(unsigned int key, gchar const* value);
-    virtual void update(SPCtx *ctx, guint flags);
-    virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+    virtual void set(unsigned int key, char const* value);
+    virtual void update(SPCtx *ctx, unsigned int flags);
+    virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, unsigned int flags);
     virtual void modified(unsigned int flags);
 
     virtual Geom::OptRect bbox(Geom::Affine const &transform, SPItem::BBoxType type) const;
     virtual void print(SPPrintContext *ctx);
     virtual const char* displayName() const;
-    virtual gchar* description() const;
+    virtual char* description() const;
     virtual Inkscape::DrawingItem* show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
     virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) const;
     virtual Geom::Affine set_transform(Geom::Affine const &transform);

@@ -1,5 +1,5 @@
-#ifndef __SP_SELCUE_H__
-#define __SP_SELCUE_H__
+#ifndef SEEN_SP_SELCUE_H
+#define SEEN_SP_SELCUE_H
 
 /*
  * Helper object for showing selected items
@@ -13,8 +13,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <cstddef>
 #include <list>
-#include <stddef.h>
 #include <sigc++/sigc++.h>
 
 class  SPDesktop;
@@ -52,7 +52,7 @@ private:
 
     void _updateItemBboxes();
     void _updateItemBboxes(Inkscape::Preferences *prefs);
-    void _updateItemBboxes(gint mode, int prefs_bbox);
+    void _updateItemBboxes(int mode, int prefs_bbox);
     void _newItemBboxes();
     void _newTextBaselines();
     void _boundingBoxPrefsChanged(int prefs_bbox);

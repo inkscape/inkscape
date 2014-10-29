@@ -1,9 +1,5 @@
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
-
-#ifndef __SP_MISSING_GLYPH_H__
-#define __SP_MISSING_GLYPH_H__
+#ifndef SEEN_SP_MISSING_GLYPH_H
+#define SEEN_SP_MISSING_GLYPH_H
 
 /*
  * SVG <missing-glyph> element implementation
@@ -31,8 +27,8 @@ public:
 protected:
     virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
 	virtual void release();
-	virtual void set(unsigned int key, const gchar* value);
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
+	virtual void set(unsigned int key, char const* value);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, unsigned int flags);
 
 private:
     double horiz_adv_x;

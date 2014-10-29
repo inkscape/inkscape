@@ -12,9 +12,7 @@
  * Released under the GNU GPL; see COPYING for details
  */
 
-#include <stdio.h>
 #include <gtk/gtk.h>
-
 
 #define SP_TYPE_XMLVIEW_ATTR_LIST (sp_xmlview_attr_list_get_type ())
 #define SP_XMLVIEW_ATTR_LIST(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), SP_TYPE_XMLVIEW_ATTR_LIST, SPXMLViewAttrList))
@@ -23,7 +21,6 @@
 
 struct SPXMLViewAttrList
 {
-
 	GtkTreeView list;
 	GtkListStore *store;
 

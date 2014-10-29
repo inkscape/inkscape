@@ -12,13 +12,13 @@
 #ifndef SEEN_INKSCAPE_DISPLAY_DRAWING_ITEM_H
 #define SEEN_INKSCAPE_DISPLAY_DRAWING_ITEM_H
 
-#include <list>
-#include <exception>
+#include <2geom/rect.h>
+#include <2geom/affine.h>
 #include <boost/operators.hpp>
 #include <boost/utility.hpp>
 #include <boost/intrusive/list.hpp>
-#include <2geom/rect.h>
-#include <2geom/affine.h>
+#include <exception>
+#include <list>
 
 class SPStyle;
 

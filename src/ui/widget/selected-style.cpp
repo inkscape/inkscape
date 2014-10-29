@@ -25,6 +25,7 @@
 #include "desktop-style.h"
 #include "sp-namedview.h"
 #include "sp-linear-gradient.h"
+#include "sp-mesh-gradient.h"
 #include "sp-radial-gradient.h"
 #include "sp-pattern.h"
 #include "ui/dialog/dialog-manager.h"
@@ -212,6 +213,18 @@ SelectedStyle::SelectedStyle(bool /*layout*/)
         _gradient_box_r[i].pack_start(_rgradient[i]);
         _gradient_box_r[i].pack_start(*(Glib::wrap(_gradient_preview_r[i])));
         _gradient_box_r[i].show_all();
+
+#ifdef WITH_MESH
+        _mgradient[i].set_markup (_("<b>M</b>"));
+        sp_set_font_size_smaller (GTK_WIDGET(_mgradient[i].gobj()));
+        _mgradient[i].show_all();
+        __mgradient[i] = (i == SS_FILL)? (_("Mesh gradient fill")) : (_("Mesh gradient stroke"));
+
+        _gradient_preview_m[i] = GTK_WIDGET(sp_gradient_image_new (NULL));
+        _gradient_box_m[i].pack_start(_mgradient[i]);
+        _gradient_box_m[i].pack_start(*(Glib::wrap(_gradient_preview_m[i])));
+        _gradient_box_m[i].show_all();
+#endif
 
         _many[i].set_markup (_("Different"));
         sp_set_font_size_smaller (GTK_WIDGET(_many[i].gobj()));
@@ -1032,6 +1045,14 @@ SelectedStyle::update()
                         place->add(_gradient_box_r[i]);
                         place->set_tooltip_text(__rgradient[i]);
                         _mode[i] = SS_RGRADIENT;
+#ifdef WITH_MESH
+                    } else if (SP_IS_MESHGRADIENT(server)) {
+                        SPGradient *vector = SP_GRADIENT(server)->getVector();
+                        sp_gradient_image_set_gradient(SP_GRADIENT_IMAGE(_gradient_preview_m[i]), vector);
+                        place->add(_gradient_box_m[i]);
+                        place->set_tooltip_text(__mgradient[i]);
+                        _mode[i] = SS_MGRADIENT;
+#endif
                     } else if (SP_IS_PATTERN (server)) {
                         place->add(_pattern[i]);
                         place->set_tooltip_text(__pattern[i]);
@@ -1556,9 +1577,9 @@ Dialog::FillAndStroke *get_fill_and_stroke_panel(SPDesktop *desktop)
   Local Variables:
   mode:c++
   c-file-style:"stroustrup"
-  c-file-offsets:((innamespace . 0)(inline-open . 0))
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
   indent-tabs-mode:nil
   fill-column:99
   End:
 */
-// vim: filetype=c++:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :

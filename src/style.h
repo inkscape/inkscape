@@ -20,11 +20,9 @@
 #include "style-enums.h"
 #include "style-internal.h"
 
-#include <stddef.h>
 #include <sigc++/connection.h>
 #include <iostream>
 #include <vector>
-// #include <map>
 
 // Define SPIBasePtr, a Pointer to a data member of SPStyle of type SPIBase;
 typedef SPIBase SPStyle::*SPIBasePtr;
@@ -40,9 +38,6 @@ class Node;
 
 #include "libcroco/cr-declaration.h"
 #include "libcroco/cr-prop-list.h"
-//struct CRDeclaration;
-//struct CRPropList;
-
 
 /// An SVG style object.
 class SPStyle {
@@ -55,8 +50,8 @@ public:
     void read(SPObject *object, Inkscape::XML::Node *repr);
     void readFromObject(SPObject *object);
     void readFromPrefs(Glib::ustring const &path);
-    void readIfUnset( gint id, gchar const *val );
-    Glib::ustring write( guint const flags, SPStyle const *const base = NULL ) const;
+    void readIfUnset( int id, char const *val );
+    Glib::ustring write( unsigned int const flags, SPStyle const *const base = NULL ) const;
     void cascade( SPStyle const *const parent );
     void merge(   SPStyle const *const parent );
     bool operator==(const SPStyle& rhs);
@@ -66,7 +61,7 @@ public:
 
 //FIXME: Make private
 public:
-    void _mergeString( gchar const *const p );  // Rename to readFromString?
+    void _mergeString( char const *const p );  // Rename to readFromString?
 private:
     void _mergeDeclList( CRDeclaration const *const decl_list );
     void _mergeDecl(      CRDeclaration const *const decl );
@@ -276,15 +271,15 @@ public:
 
     SPObject       *getFilter()          { return (filter.href) ? filter.href->getObject() : NULL; }
     SPObject const *getFilter()    const { return (filter.href) ? filter.href->getObject() : NULL; }
-    gchar    const *getFilterURI() const { return (filter.href) ? filter.href->getURI()->toString() : NULL; }
+    char    const *getFilterURI() const { return (filter.href) ? filter.href->getURI()->toString() : NULL; }
 
     SPPaintServer       *getFillPaintServer()         { return (fill.value.href) ? fill.value.href->getObject() : NULL; }
     SPPaintServer const *getFillPaintServer()   const { return (fill.value.href) ? fill.value.href->getObject() : NULL; }
-    gchar         const *getFillURI()           const { return (fill.value.href) ? fill.value.href->getURI()->toString() : NULL; }
+    char         const *getFillURI()           const { return (fill.value.href) ? fill.value.href->getURI()->toString() : NULL; }
 
     SPPaintServer       *getStrokePaintServer()       { return (stroke.value.href) ? stroke.value.href->getObject() : NULL; }
     SPPaintServer const *getStrokePaintServer() const { return (stroke.value.href) ? stroke.value.href->getObject() : NULL; }
-    gchar        const  *getStrokeURI()         const { return (stroke.value.href) ? stroke.value.href->getURI()->toString() : NULL; }
+    char        const  *getStrokeURI()         const { return (stroke.value.href) ? stroke.value.href->getURI()->toString() : NULL; }
 };
 
 SPStyle *sp_style_new(SPDocument *document); // SPStyle::SPStyle( SPDocument *document = NULL );
@@ -299,39 +294,39 @@ void sp_style_read_from_object(SPStyle *style, SPObject *object); //SPStyle::rea
 
 void sp_style_read_from_prefs(SPStyle *style, Glib::ustring const &path); // SPStyle::read( ... );
 
-void sp_style_merge_from_style_string(SPStyle *style, gchar const *p); // SPStyle::merge( ... );?
+void sp_style_merge_from_style_string(SPStyle *style, char const *p); // SPStyle::merge( ... );?
 
 void sp_style_merge_from_parent(SPStyle *style, SPStyle const *parent); // SPStyle::cascade( ... );
 
 void sp_style_merge_from_dying_parent(SPStyle *style, SPStyle const *parent); // SPStyle::merge( ... )
 
-gchar *sp_style_write_string(SPStyle const *style, guint flags = SP_STYLE_FLAG_IFSET);//SPStyle::write
+char *sp_style_write_string(SPStyle const *style, unsigned int flags = SP_STYLE_FLAG_IFSET);//SPStyle::write
 
-gchar *sp_style_write_difference(SPStyle const *from, SPStyle const *to); // SPStyle::write
+char *sp_style_write_difference(SPStyle const *from, SPStyle const *to); // SPStyle::write
 
-void sp_style_set_to_uri_string (SPStyle *style, bool isfill, const gchar *uri); // ?
+void sp_style_set_to_uri_string (SPStyle *style, bool isfill, const char *uri); // ?
 
-gchar const *sp_style_get_css_unit_string(int unit);  // No change?
+char const *sp_style_get_css_unit_string(int unit);  // No change?
 double sp_style_css_size_px_to_units(double size, int unit); // No change?
 double sp_style_css_size_units_to_px(double size, int unit); // No change?
 
 
-SPCSSAttr *sp_css_attr_from_style (SPStyle const *const style, guint flags);
-SPCSSAttr *sp_css_attr_from_object(SPObject *object, guint flags = SP_STYLE_FLAG_IFSET);
+SPCSSAttr *sp_css_attr_from_style (SPStyle const *const style, unsigned int flags);
+SPCSSAttr *sp_css_attr_from_object(SPObject *object, unsigned int flags = SP_STYLE_FLAG_IFSET);
 SPCSSAttr *sp_css_attr_unset_text(SPCSSAttr *css);
 SPCSSAttr *sp_css_attr_unset_uris(SPCSSAttr *css);
 SPCSSAttr *sp_css_attr_scale(SPCSSAttr *css, double ex);
 
 void sp_style_unset_property_attrs(SPObject *o);
 
-void sp_style_set_property_url (SPObject *item, gchar const *property, SPObject *linked, bool recursive);
+void sp_style_set_property_url (SPObject *item, char const *property, SPObject *linked, bool recursive);
 
 void css_quote( Glib::ustring &val );   // Add quotes around CSS values
 void css_unquote( Glib::ustring &val ); // Remove quotes from CSS values (style-internal.cpp, xml/repr-css.cpp)
 void css_font_family_quote( Glib::ustring &val ); // style-internal.cpp, text-toolbar.cpp
 void css_font_family_unquote( Glib::ustring &val ); // style-internal.cpp, text-toolbar.cpp
 
-Glib::ustring css2_escape_quote(gchar const *val);
+Glib::ustring css2_escape_quote(char const *val);
 
 #endif // SEEN_SP_STYLE_H
 

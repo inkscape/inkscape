@@ -13,12 +13,14 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <gdk/gdk.h>
-#include <gtk/gtk.h>
-
 class  SPDesktop;
 struct SPDesktopWidget;
 struct SPCanvasItem;
+
+typedef union  _GdkEvent         GdkEvent;
+typedef struct _GdkEventCrossing GdkEventCrossing;
+typedef struct _GdkEventMotion   GdkEventMotion;
+typedef struct _GtkWidget        GtkWidget;
 
 /* Item handlers */
 

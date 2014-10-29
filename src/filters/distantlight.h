@@ -27,21 +27,21 @@ public:
 	virtual ~SPFeDistantLight();
 
     /** azimuth attribute */
-    gfloat azimuth;
-    guint azimuth_set : 1;
+    float azimuth;
+    unsigned int azimuth_set : 1;
     /** elevation attribute */
-    gfloat elevation;
-    guint elevation_set : 1;
+    float elevation;
+    unsigned int elevation_set : 1;
 
 protected:
 	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
 	virtual void release();
 
-	virtual void set(unsigned int key, const gchar* value);
+	virtual void set(unsigned int key, char const* value);
 
 	virtual void update(SPCtx* ctx, unsigned int flags);
 
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, unsigned int flags);
 };
 
 #endif /* !SP_FEDISTANTLIGHT_H_SEEN */

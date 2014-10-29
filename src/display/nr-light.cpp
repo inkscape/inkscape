@@ -51,7 +51,7 @@ PointLight::PointLight(SPFePointLight *light, guint32 lighting_color, const Geom
 
 PointLight::~PointLight() {}
 
-void PointLight::light_vector(NR::Fvector &v, gdouble x, gdouble y, gdouble z) {
+void PointLight::light_vector(NR::Fvector &v, double x, double y, double z) {
     v[X_3D] = l_x - x;
     v[Y_3D] = l_y - y;
     v[Z_3D] = l_z - z;
@@ -65,7 +65,7 @@ void PointLight::light_components(NR::Fvector &lc) {
 }
 
 SpotLight::SpotLight(SPFeSpotLight *light, guint32 lighting_color, const Geom::Affine &trans) {
-    gdouble p_x, p_y, p_z;
+    double p_x, p_y, p_z;
     color = lighting_color;
     l_x = light->x;
     l_y = light->y;
@@ -86,7 +86,7 @@ SpotLight::SpotLight(SPFeSpotLight *light, guint32 lighting_color, const Geom::A
 
 SpotLight::~SpotLight() {}
 
-void SpotLight::light_vector(NR::Fvector &v, gdouble x, gdouble y, gdouble z) {
+void SpotLight::light_vector(NR::Fvector &v, double x, double y, double z) {
     v[X_3D] = l_x - x;
     v[Y_3D] = l_y - y;
     v[Z_3D] = l_z - z;
@@ -94,7 +94,7 @@ void SpotLight::light_vector(NR::Fvector &v, gdouble x, gdouble y, gdouble z) {
 } 
 
 void SpotLight::light_components(NR::Fvector &lc, const NR::Fvector &L) {
-    gdouble spmod = (-1) * NR::scalar_product(L, S);
+    double spmod = (-1) * NR::scalar_product(L, S);
     if (spmod <= cos_lca)
         spmod = 0;
     else

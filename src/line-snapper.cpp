@@ -11,9 +11,10 @@
  */
 
 #include <2geom/line.h>
+#include <cassert>
+
 #include "line-snapper.h"
 #include "snapped-line.h"
-//#include <gtk/gtk.h>
 #include "snap.h"
 
 Inkscape::LineSnapper::LineSnapper(SnapManager *sm, Geom::Coord const d) : Snapper(sm, d)
@@ -37,7 +38,7 @@ void Inkscape::LineSnapper::freeSnap(IntermSnapResults &isr,
         Geom::Point const p1 = i->second; // point at guide/grid line
         Geom::Point const p2 = p1 + Geom::rot90(i->first); // 2nd point at guide/grid line
         // std::cout << "  line through " << i->second << " with normal " << i->first;
-        g_assert(i->first != Geom::Point(0,0)); // we cannot project on an linesegment of zero length
+        assert(i->first != Geom::Point(0,0)); // we cannot project on an linesegment of zero length
 
         Geom::Point const p_proj = Geom::projection(p.getPoint(), Geom::Line(p1, p2));
         Geom::Coord const dist = Geom::L2(p_proj - p.getPoint());

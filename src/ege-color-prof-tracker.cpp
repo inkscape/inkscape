@@ -273,8 +273,13 @@ void ege_color_prof_tracker_get_profile_for( guint screenNum, guint monitor, gpo
     gpointer dataPos = 0;
     guint dataLen = 0;
     GdkDisplay* display = gdk_display_get_default();
+
+#if GTK_CHECK_VERSION(3,10,0)
+    GdkScreen* screen = (screenNum < 1) ? gdk_display_get_screen(display, screenNum) : 0;
+#else
     gint numScreens = gdk_display_get_n_screens(display);
     GdkScreen* screen = (screenNum < (guint)numScreens) ? gdk_display_get_screen(display, screenNum) : 0;
+#endif
 
     if ( screen ) {
         GSList* curr = tracked_screens;
@@ -494,7 +499,11 @@ GdkFilterReturn x11_win_filter(GdkXEvent *xevent,
             if ( stat ) {
                 GdkDisplay* display = gdk_x11_lookup_xdisplay(native->xproperty.display);
                 if ( display ) {
+#if GTK_CHECK_VERSION(3,10,0)
+                    gint screenCount = 1;
+#else
                     gint screenCount = gdk_display_get_n_screens(display);
+#endif
                     GdkScreen* targetScreen = 0;
                     gint i = 0;
                     for ( i = 0; i < screenCount; i++ ) {

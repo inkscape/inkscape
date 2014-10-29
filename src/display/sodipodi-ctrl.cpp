@@ -25,9 +25,6 @@ enum {
     ARG_PIXBUF
 };
 
-
-static void sp_ctrl_class_init (SPCtrlClass *klass);
-static void sp_ctrl_init (SPCtrl *ctrl);
 static void sp_ctrl_destroy(SPCanvasItem *object);
 static void sp_ctrl_set_property (GObject *object, guint prop_id, const GValue *value, GParamSpec *pspec);
 static void sp_ctrl_get_property (GObject *object, guint prop_id, GValue *value, GParamSpec *pspec);
@@ -36,37 +33,13 @@ static void sp_ctrl_render (SPCanvasItem *item, SPCanvasBuf *buf);
 
 static double sp_ctrl_point (SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_item);
 
-static SPCanvasItemClass *parent_class;
-
-GType
-sp_ctrl_get_type (void)
-{
-    static GType ctrl_type = 0;
-    if (!ctrl_type) {
-        static GTypeInfo const ctrl_info = {
-            sizeof (SPCtrlClass),
-            NULL,   /* base_init */
-            NULL,   /* base_finalize */
-            (GClassInitFunc) sp_ctrl_class_init,
-            NULL,   /* class_finalize */
-            NULL,   /* class_data */
-            sizeof (SPCtrl),
-            0,   /* n_preallocs */
-            (GInstanceInitFunc) sp_ctrl_init,
-            NULL
-        };
-        ctrl_type = g_type_register_static (SP_TYPE_CANVAS_ITEM, "SPCtrl", &ctrl_info, (GTypeFlags)0);
-    }
-    return ctrl_type;
-}
+G_DEFINE_TYPE(SPCtrl, sp_ctrl, SP_TYPE_CANVAS_ITEM);
 
 static void
 sp_ctrl_class_init (SPCtrlClass *klass)
 {
     SPCanvasItemClass *item_class = SP_CANVAS_ITEM_CLASS(klass);
     GObjectClass *g_object_class = (GObjectClass *) klass;
-
-    parent_class = SP_CANVAS_ITEM_CLASS(g_type_class_peek_parent (klass));
 
     g_object_class->set_property = sp_ctrl_set_property;
     g_object_class->get_property = sp_ctrl_get_property;
@@ -239,8 +212,8 @@ static void sp_ctrl_destroy(SPCanvasItem *object)
         ctrl->cache = NULL;
     }
 
-    if (SP_CANVAS_ITEM_CLASS(parent_class)->destroy)
-        (* SP_CANVAS_ITEM_CLASS(parent_class)->destroy) (object);
+    if (SP_CANVAS_ITEM_CLASS(sp_ctrl_parent_class)->destroy)
+        SP_CANVAS_ITEM_CLASS(sp_ctrl_parent_class)->destroy(object);
 }
 
 static void
@@ -251,8 +224,8 @@ sp_ctrl_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int fla
 
     ctrl = SP_CTRL (item);
 
-    if ((SP_CANVAS_ITEM_CLASS(parent_class))->update)
-        (* (SP_CANVAS_ITEM_CLASS(parent_class))->update) (item, affine, flags);
+    if (SP_CANVAS_ITEM_CLASS(sp_ctrl_parent_class)->update)
+        SP_CANVAS_ITEM_CLASS(sp_ctrl_parent_class)->update(item, affine, flags);
 
     sp_canvas_item_reset_bounds (item);
 

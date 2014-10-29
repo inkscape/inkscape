@@ -122,7 +122,7 @@ MultiPathManipulator::MultiPathManipulator(PathSharedData &data, sigc::connectio
 {
     _selection.signal_commit.connect(
         sigc::mem_fun(*this, &MultiPathManipulator::_commit));
-    _selection.signal_point_changed.connect(
+    _selection.signal_selection_changed.connect(
         sigc::hide( sigc::hide(
             signal_coords_changed.make_slot())));
 }
@@ -182,7 +182,7 @@ void MultiPathManipulator::setItems(std::set<ShapeRecord> const &s)
         ShapeRecord const &r = *i;
         if (!SP_IS_PATH(r.item) && !IS_LIVEPATHEFFECT(r.item)) continue;
         boost::shared_ptr<PathManipulator> newpm(new PathManipulator(*this, (SPPath*) r.item,
-            r.edit_transform, _getOutlineColor(r.role), r.lpe_key));
+            r.edit_transform, _getOutlineColor(r.role, r.item), r.lpe_key));
         newpm->showHandles(_show_handles);
         // always show outlines for clips and masks
         newpm->showOutline(_show_outline || r.role != SHAPE_ROLE_NORMAL);
@@ -670,7 +670,18 @@ bool MultiPathManipulator::event(Inkscape::UI::Tools::ToolBase *event_context, G
                 // a) del preserves shape, and control is not pressed
                 // b) ctrl+del preserves shape (del_preserves_shape is false), and control is pressed
                 // Hence xor
-                deleteNodes(del_preserves_shape ^ held_control(event->key));
+                guint mode = prefs->getInt("/tools/freehand/pen/freehand-mode", 0);
+
+                //if the trace is bspline ( mode 2)
+                if(mode==2){
+                    //  is this correct ?
+                    if(del_preserves_shape ^ held_control(event->key))
+                        deleteNodes(false);
+                    else
+                        deleteNodes(true);
+                }
+                else
+                    deleteNodes(del_preserves_shape ^ held_control(event->key));
 
                 // Delete any selected gradient nodes as well
                 event_context->deleteSelectedDrag(held_control(event->key));
@@ -833,7 +844,7 @@ void MultiPathManipulator::_doneWithCleanup(gchar const *reason, bool alert_LPE)
 }
 
 /** Get an outline color based on the shape's role (normal, mask, LPE parameter, etc.). */
-guint32 MultiPathManipulator::_getOutlineColor(ShapeRole role)
+guint32 MultiPathManipulator::_getOutlineColor(ShapeRole role, SPItem *item)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     switch(role) {
@@ -845,7 +856,7 @@ guint32 MultiPathManipulator::_getOutlineColor(ShapeRole role)
         return prefs->getColor("/tools/nodes/lpe_param_color", 0x009000ff);
     case SHAPE_ROLE_NORMAL:
     default:
-        return prefs->getColor("/tools/nodes/outline_color", 0xff0000ff);
+        return item->highlight_color();
     }
 }
 

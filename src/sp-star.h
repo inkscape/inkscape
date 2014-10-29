@@ -1,5 +1,5 @@
-#ifndef __SP_STAR_H__
-#define __SP_STAR_H__
+#ifndef SEEN_SP_STAR_H
+#define SEEN_SP_STAR_H
 
 /*
  * <sodipodi:star> implementation
@@ -30,7 +30,7 @@ public:
 	SPStar();
 	virtual ~SPStar();
 
-	gint sides;
+	int sides;
 
 	Geom::Point center;
 	double r[2];
@@ -46,12 +46,12 @@ public:
 // What does polygon have that shape doesn't?
 
 	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
-	virtual void set(unsigned int key, gchar const* value);
-	virtual void update(SPCtx* ctx, guint flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, unsigned int flags);
+	virtual void set(unsigned int key, char const* value);
+	virtual void update(SPCtx* ctx, unsigned int flags);
 
     virtual const char* displayName() const;
-	virtual gchar* description() const;
+	virtual char* description() const;
 	virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) const;
 
 	virtual void update_patheffect(bool write);
@@ -59,9 +59,9 @@ public:
 	virtual Geom::Affine set_transform(Geom::Affine const& xform);
 };
 
-void sp_star_position_set (SPStar *star, gint sides, Geom::Point center, gdouble r1, gdouble r2, gdouble arg1, gdouble arg2, bool isflat, double rounded, double randomized);
+void sp_star_position_set (SPStar *star, int sides, Geom::Point center, double r1, double r2, double arg1, double arg2, bool isflat, double rounded, double randomized);
 
-Geom::Point sp_star_get_xy (SPStar const *star, SPStarPoint point, gint index, bool randomized = false);
+Geom::Point sp_star_get_xy (SPStar const *star, SPStarPoint point, int index, bool randomized = false);
 
 
 

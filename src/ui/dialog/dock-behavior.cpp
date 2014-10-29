@@ -18,13 +18,13 @@
 #include "dock-behavior.h"
 #include "inkscape.h"
 #include "desktop.h"
-#include "interface.h"
+#include "ui/interface.h"
 #include "widgets/icon.h"
 #include "ui/widget/dock.h"
 #include "verbs.h"
 #include "dialog.h"
 #include "preferences.h"
-#include "dialogs/dialog-events.h"
+#include "ui/dialog-events.h"
 
 #include <gtkmm/invisible.h>
 #include <gtkmm/label.h>

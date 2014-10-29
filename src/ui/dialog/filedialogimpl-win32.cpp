@@ -31,7 +31,7 @@
 
 //Inkscape includes
 #include "inkscape.h"
-#include "dialogs/dialog-events.h"
+#include "ui/dialog-events.h"
 #include "extension/input.h"
 #include "extension/output.h"
 #include "extension/db.h"
@@ -1853,7 +1853,6 @@ void FileSaveDialogImplWin32::GetSaveFileName_thread()
     ofn.nFilterIndex = _filter_index;
     ofn.lpfnHook = GetSaveFileName_hookproc;
     ofn.lCustData = (LPARAM)this;
-
     _result = GetSaveFileNameW(&ofn) != 0;
 
     g_assert(ofn.nFilterIndex >= 1 && ofn.nFilterIndex <= _filter_count);

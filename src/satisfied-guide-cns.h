@@ -3,7 +3,7 @@
 
 #include <2geom/forward.h>
 #include <vector>
-#include <sp-item.h>
+#include "sp-item.h"
 
 class SPDesktop;
 class SPGuideConstraint;

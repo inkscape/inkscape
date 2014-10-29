@@ -12,20 +12,11 @@
 #ifndef SP_EXPORT_H
 #define SP_EXPORT_H
 
-#include <gtk/gtk.h>
-#include <glibmm/i18n.h>
-
-#include <gtkmm/comboboxtext.h>
-#include <gtkmm/expander.h>
-#include <gtkmm/frame.h>
 #include <gtkmm/progressbar.h>
-#include <gtkmm/textview.h>
 
-#include "desktop.h"
 #include "ui/dialog/desktop-tracker.h"
 #include "ui/widget/panel.h"
 #include "ui/widget/button.h"
-#include "ui/widget/entry.h"
 
 namespace Gtk {
 class Dialog;

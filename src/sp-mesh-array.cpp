@@ -37,6 +37,15 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <glibmm.h>
+
+// For color picking
+#include "display/drawing.h"
+#include "display/drawing-context.h"
+#include "display/cairo-utils.h"
+#include "document.h"
+#include "sp-root.h"
+
 #include "sp-mesh-array.h"
 #include "sp-mesh-gradient.h"
 #include "sp-mesh-row.h"
@@ -50,13 +59,6 @@
 
 // For writing color/opacity to style
 #include "svg/css-ostringstream.h"
-
-// For color picking
-#include "display/drawing.h"
-#include "display/drawing-context.h"
-#include "display/cairo-utils.h"
-#include "document.h"
-#include "sp-root.h"
 
 // For default color
 #include "style.h"

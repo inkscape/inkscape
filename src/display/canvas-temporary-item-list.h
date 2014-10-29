@@ -11,7 +11,6 @@
  */
 
 #include <list>
-#include <glib.h>
 
 struct SPCanvasItem;
 class SPDesktop;
@@ -22,14 +21,14 @@ namespace Display {
 class TemporaryItem;
 
 /**
- * Provides a class that can contain active TemporaryItem's on a desktop.
+ * Provides a class that can contain active TemporaryItem[s] on a desktop.
  */
 class TemporaryItemList  {
 public:
     TemporaryItemList(SPDesktop *desktop);
     virtual ~TemporaryItemList();
 
-    TemporaryItem* add_item (SPCanvasItem *item, guint lifetime);
+    TemporaryItem* add_item (SPCanvasItem *item, unsigned int lifetime);
     void           delete_item (TemporaryItem * tempitem);
 
 protected:

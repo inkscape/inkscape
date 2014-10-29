@@ -100,6 +100,8 @@ SPItem::SPItem() : SPObject() {
     sensitive = TRUE;
     bbox_valid = FALSE;
 
+    _highlightColor = NULL;
+
     transform_center_x = 0;
     transform_center_y = 0;
 
@@ -181,6 +183,26 @@ bool SPItem::isHidden(unsigned display_key) const {
         }
     }
     return true;
+}
+
+bool SPItem::isHighlightSet() const {
+    return _highlightColor != NULL;
+}
+
+guint32 SPItem::highlight_color() const {
+    if (_highlightColor)
+    {
+        return atoi(_highlightColor) | 0x00000000;
+    }
+    else if (parent && parent != this && SP_IS_ITEM(parent))
+    {
+        return SP_ITEM(parent)->highlight_color();
+    }
+    else
+    {
+        static Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        return prefs->getInt("/tools/nodes/highlight_color", 0xff0000ff) | 0x00000000;
+    }
 }
 
 void SPItem::setEvaluated(bool evaluated) {
@@ -372,7 +394,7 @@ void SPItem::lowerToBottom() {
  * \param  target - the SPItem to move into or after
  * \param  intoafter - move to after the target (false), move inside (sublayer) of the target (true)
  */
-void SPItem::moveTo(SPItem *target, gboolean intoafter) {
+void SPItem::moveTo(SPItem *target, bool intoafter) {
 
     Inkscape::XML::Node *target_ref = ( target ? target->getRepr() : NULL );
     Inkscape::XML::Node *our_ref = getRepr();
@@ -425,6 +447,7 @@ void SPItem::build(SPDocument *document, Inkscape::XML::Node *repr) {
     object->readAttr( "inkscape:transform-center-y" );
     object->readAttr( "inkscape:connector-avoid" );
     object->readAttr( "inkscape:connection-points" );
+    object->readAttr( "inkscape:highlight-color" );
 
     SPObject::build(document, repr);
 }
@@ -507,11 +530,23 @@ void SPItem::set(unsigned int key, gchar const* value) {
             break;
         }
         case SP_ATTR_SODIPODI_INSENSITIVE:
+        {
             item->sensitive = !value;
             for (SPItemView *v = item->display; v != NULL; v = v->next) {
                 v->arenaitem->setSensitive(item->sensitive);
             }
             break;
+        }
+        case SP_ATTR_INKSCAPE_HIGHLIGHT_COLOR:
+        {
+            g_free(item->_highlightColor);
+            if (value) {
+                item->_highlightColor = g_strdup(value);
+            } else {
+                item->_highlightColor = NULL;
+            }
+            break;
+        }
         case SP_ATTR_CONNECTOR_AVOID:
             item->avoidRef->setAvoid(value);
             break;
@@ -774,6 +809,11 @@ Inkscape::XML::Node* SPItem::write(Inkscape::XML::Document *xml_doc, Inkscape::X
             g_free ((void *) value);
             g_free ((void *) uri);
         }
+    }
+    if (item->_highlightColor){
+        repr->setAttribute("inkscape:highlight-color", item->_highlightColor);
+    } else {
+        repr->setAttribute("inkscape:highlight-color", NULL);
     }
 
     SPObject::write(xml_doc, repr, flags);

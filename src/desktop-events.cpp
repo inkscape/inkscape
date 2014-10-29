@@ -25,7 +25,7 @@
 #include "desktop.h"
 #include "desktop-events.h"
 #include "desktop-handles.h"
-#include "dialogs/dialog-events.h"
+#include "ui/dialog-events.h"
 #include "display/canvas-axonomgrid.h"
 #include "display/canvas-grid.h"
 #include "display/guideline.h"
@@ -40,7 +40,7 @@
 #include "display/sp-canvas.h"
 #include "sp-guide.h"
 #include "sp-namedview.h"
-#include "tools-switch.h"
+#include "ui/tools-switch.h"
 #include "verbs.h"
 #include "widgets/desktop-widget.h"
 #include "xml/repr.h"
@@ -295,7 +295,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                 // here must be exactly on the guide line though, otherwise
                 // small errors will occur once we snap, see
                 // https://bugs.launchpad.net/inkscape/+bug/333762
-                drag_origin = Geom::projection(event_dt, Geom::Line(guide->point_on_line, guide->angle()));
+                drag_origin = Geom::projection(event_dt, Geom::Line(guide->getPoint(), guide->angle()));
 
                 if (event->button.state & GDK_SHIFT_MASK) {
                     // with shift we rotate the guide
@@ -336,7 +336,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                     // be forced to be on the guide. If we don't snap however, then
                     // the origin should still be constrained to the guide. So let's do
                     // that explicitly first:
-                    Geom::Line line(guide->point_on_line, guide->angle());
+                    Geom::Line line(guide->getPoint(), guide->angle());
                     Geom::Coord t = line.nearestPoint(motion_dt);
                     motion_dt = line.pointAt(t);
                     if (!(event->motion.state & GDK_SHIFT_MASK)) {
@@ -344,10 +344,15 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                     }
                 } else if (!((drag_type == SP_DRAG_ROTATE) && (event->motion.state & GDK_CONTROL_MASK))) {
                     // cannot use shift here to disable snapping, because we already use it for rotating the guide
+                    Geom::Point temp;
                     if (drag_type == SP_DRAG_ROTATE) {
-                        m.guideFreeSnap(motion_dt, guide->point_on_line, true, false);
+                        temp = guide->getPoint();
+                        m.guideFreeSnap(motion_dt, temp, true, false);
+                        guide->moveto(temp, false);
                     } else {
-                        m.guideFreeSnap(motion_dt, guide->normal_to_line, false, true);
+                        temp = guide->getNormal();
+                        m.guideFreeSnap(motion_dt, temp, false, true);
+                        guide->set_normal(temp, false);
                     }
                 }
                 m.unSetup();
@@ -355,12 +360,12 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                 switch (drag_type) {
                     case SP_DRAG_TRANSLATE:
                     {
-                        sp_guide_moveto(*guide, motion_dt, false);
+                        guide->moveto(motion_dt, false);
                         break;
                     }
                     case SP_DRAG_ROTATE:
                     {
-                        Geom::Point pt = motion_dt - guide->point_on_line;
+                        Geom::Point pt = motion_dt - guide->getPoint();
                         Geom::Angle angle(pt);
                         if (event->motion.state & GDK_CONTROL_MASK) {
                             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -368,7 +373,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                             bool const relative_snaps = prefs->getBool("/options/relativeguiderotationsnap/value", false);
                             if (snaps) {
                                 if (relative_snaps) {
-                                    Geom::Angle orig_angle(guide->normal_to_line);
+                                    Geom::Angle orig_angle(guide->getNormal());
                                     Geom::Angle snap_angle = angle - orig_angle;
                                     double sections = floor(snap_angle.radians0() * snaps / M_PI + .5);
                                     angle = (M_PI / snaps) * sections + orig_angle.radians0();
@@ -378,16 +383,16 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                                 }
                             }
                         }
-                        sp_guide_set_normal(*guide, Geom::Point::polar(angle).cw(), false);
+                        guide->set_normal(Geom::Point::polar(angle).cw(), false);
                         break;
                     }
                     case SP_DRAG_MOVE_ORIGIN:
                     {
-                        sp_guide_moveto(*guide, motion_dt, false);
+                        guide->moveto(motion_dt, false);
                         break;
                     }
                     case SP_DRAG_NONE:
-                        g_assert_not_reached();
+                        assert(false);
                         break;
                 }
                 moved = true;
@@ -412,7 +417,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                         // be forced to be on the guide. If we don't snap however, then
                         // the origin should still be constrained to the guide. So let's
                         // do that explicitly first:
-                        Geom::Line line(guide->point_on_line, guide->angle());
+                        Geom::Line line(guide->getPoint(), guide->angle());
                         Geom::Coord t = line.nearestPoint(event_dt);
                         event_dt = line.pointAt(t);
                         if (!(event->button.state & GDK_SHIFT_MASK)) {
@@ -420,10 +425,15 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                         }
                     } else if (!((drag_type == SP_DRAG_ROTATE) && (event->motion.state & GDK_CONTROL_MASK))) {
                         // cannot use shift here to disable snapping, because we already use it for rotating the guide
+                        Geom::Point temp;
                         if (drag_type == SP_DRAG_ROTATE) {
-                            m.guideFreeSnap(event_dt, guide->point_on_line, true, false);
+                            temp = guide->getPoint();
+                            m.guideFreeSnap(event_dt, temp, true, false);
+                            guide->moveto(temp, false);
                         } else {
-                            m.guideFreeSnap(event_dt, guide->normal_to_line, false, true);
+                            temp = guide->getNormal();
+                            m.guideFreeSnap(event_dt, temp, false, true);
+                            guide->set_normal(temp, false);
                         }
                     }
                     m.unSetup();
@@ -432,12 +442,12 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                         switch (drag_type) {
                             case SP_DRAG_TRANSLATE:
                             {
-                                sp_guide_moveto(*guide, event_dt, true);
+                                guide->moveto(event_dt, true);
                                 break;
                             }
                             case SP_DRAG_ROTATE:
                             {
-                                Geom::Point pt = event_dt - guide->point_on_line;
+                                Geom::Point pt = event_dt - guide->getPoint();
                                 Geom::Angle angle(pt);
                                 if (event->motion.state & GDK_CONTROL_MASK) {
                                     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -445,7 +455,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                                     bool const relative_snaps = prefs->getBool("/options/relativeguiderotationsnap/value", false);
                                     if (snaps) {
                                         if (relative_snaps) {
-                                            Geom::Angle orig_angle(guide->normal_to_line);
+                                            Geom::Angle orig_angle(guide->getNormal());
                                             Geom::Angle snap_angle = angle - orig_angle;
                                             double sections = floor(snap_angle.radians0() * snaps / M_PI + .5);
                                             angle = (M_PI / snaps) * sections + orig_angle.radians0();
@@ -455,24 +465,24 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                                         }
                                     }
                                 }
-                                sp_guide_set_normal(*guide, Geom::Point::polar(angle).cw(), true);
+                                guide->set_normal(Geom::Point::polar(angle).cw(), true);
                                 break;
                             }
                             case SP_DRAG_MOVE_ORIGIN:
                             {
-                                sp_guide_moveto(*guide, event_dt, true);
+                                guide->moveto(event_dt, true);
                                 break;
                             }
                             case SP_DRAG_NONE:
-                                g_assert_not_reached();
+                                assert(false);
                                 break;
                         }
                         DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_NONE,
                                          _("Move guide"));
                     } else {
                         /* Undo movement of any attached shapes. */
-                        sp_guide_moveto(*guide, guide->point_on_line, false);
-                        sp_guide_set_normal(*guide, guide->normal_to_line, false);
+                        guide->moveto(guide->getPoint(), false);
+                        guide->set_normal(guide->getNormal(), false);
                         sp_guide_remove(guide);
                         DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_NONE,
                                      _("Delete guide"));
@@ -487,7 +497,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
             break;
     case GDK_ENTER_NOTIFY:
     {
-            sp_guideline_set_color(SP_GUIDELINE(item), guide->hicolor);
+            sp_guideline_set_color(SP_GUIDELINE(item), guide->getHiColor());
 
             // set move or rotate cursor
             Geom::Point const event_w(event->crossing.x, event->crossing.y);
@@ -512,13 +522,13 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
 #endif
             }
 
-            char *guide_description = sp_guide_description(guide);
+            char *guide_description = guide->description();
             desktop->guidesMessageContext()->setF(Inkscape::NORMAL_MESSAGE, _("<b>Guideline</b>: %s"), guide_description);
             g_free(guide_description);
             break;
     }
     case GDK_LEAVE_NOTIFY:
-            sp_guideline_set_color(SP_GUIDELINE(item), guide->color);
+            sp_guideline_set_color(SP_GUIDELINE(item), guide->getColor());
 
             // restore event context's cursor
             gdk_window_set_cursor(gtk_widget_get_window (GTK_WIDGET(sp_desktop_canvas(desktop))), desktop->event_context->cursor);

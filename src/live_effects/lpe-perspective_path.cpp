@@ -18,6 +18,7 @@
 #include "document.h"
 #include "document-private.h"
 #include "live_effects/lpe-perspective_path.h"
+#include "live_effects/lpeobject.h"
 #include "sp-item-group.h"
 #include "knot-holder-entity.h"
 #include "knotholder.h"
@@ -62,7 +63,7 @@ LPEPerspectivePath::LPEPerspectivePath(LivePathEffectObject *lpeobject) :
     concatenate_before_pwd2 = true; // don't split the path into its subpaths
     _provides_knotholder_entities = true;
     unapply = false;
-    Persp3D *persp = persp3d_document_first_persp(inkscape_active_document());
+    Persp3D *persp = persp3d_document_first_persp(lpeobject->document);
     if(persp == 0 ){
         char *msg = _("You need a BOX 3D object");
         Gtk::MessageDialog dialog(msg, false, Gtk::MESSAGE_INFO,
@@ -72,7 +73,7 @@ LPEPerspectivePath::LPEPerspectivePath(LivePathEffectObject *lpeobject) :
         return;
     }
     Proj::TransfMat3x4 pmat = persp->perspective_impl->tmat;
-    pmat = pmat * inkscape_active_desktop()->doc2dt();
+    pmat = pmat * SP_ACTIVE_DESKTOP->doc2dt();
     pmat.copy_tmat(tmat);
 }
 
@@ -89,13 +90,16 @@ LPEPerspectivePath::doBeforeEffect (SPLPEItem const* lpeitem)
         SP_LPE_ITEM(lpeitem)->removeCurrentPathEffect(false);
         return;
     }
+    SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
+    item->apply_to_clippath(item);
+    item->apply_to_mask(item);
 }
 
 void LPEPerspectivePath::refresh(Gtk::Entry* perspective) {
     perspectiveID = perspective->get_text();
     Persp3D *first = 0;
     Persp3D *persp = 0;
-    for ( SPObject *child = inkscape_active_document()->getDefs()->firstChild(); child && !persp; child = child->getNext() ) {
+    for ( SPObject *child = this->lpeobj->document->getDefs()->firstChild(); child && !persp; child = child->getNext() ) {
         if (SP_IS_PERSP3D(child) && first == 0) {
             first = SP_PERSP3D(child);
         }
@@ -125,7 +129,7 @@ void LPEPerspectivePath::refresh(Gtk::Entry* perspective) {
         dialog.run();
     }
     Proj::TransfMat3x4 pmat = persp->perspective_impl->tmat;
-    pmat = pmat * inkscape_active_desktop()->doc2dt();
+    pmat = pmat * SP_ACTIVE_DESKTOP->doc2dt();
     pmat.copy_tmat(tmat);
 };
 
@@ -144,7 +148,7 @@ LPEPerspectivePath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > cons
     Piecewise<SBasis> preimage[4];
 
     //Geom::Point orig = Geom::Point(bounds_X.min(), bounds_Y.middle());
-    //orig = Geom::Point(orig[X], sp_document_height(inkscape_active_document()) - orig[Y]);
+    //orig = Geom::Point(orig[X], sp_document_height(this->lpeobj->document) - orig[Y]);
 
     //double offset = uses_plane_xy ? boundingbox_X.extent() : 0.0;
 

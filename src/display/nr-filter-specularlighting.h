@@ -1,5 +1,5 @@
-#ifndef __NR_FILTER_SPECULARLIGHTING_H__
-#define __NR_FILTER_SPECULARLIGHTING_H__
+#ifndef SEEN_NR_FILTER_SPECULARLIGHTING_H
+#define SEEN_NR_FILTER_SPECULARLIGHTING_H
 
 /*
  * feSpecularLighting renderer
@@ -13,7 +13,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <gdk/gdk.h>
 #include "display/nr-light-types.h"
 #include "display/nr-filter-primitive.h"
 
@@ -21,6 +20,7 @@ class SPFeDistantLight;
 class SPFePointLight;
 class SPFeSpotLight;
 struct SVGICCColor;
+typedef unsigned int guint32;
 
 namespace Inkscape {
 namespace Filters {
@@ -44,9 +44,9 @@ public:
         SPFeSpotLight *spot;
     } light;
     LightType light_type;
-    gdouble surfaceScale;
-    gdouble specularConstant;
-    gdouble specularExponent;
+    double surfaceScale;
+    double specularConstant;
+    double specularExponent;
     guint32 lighting_color;
 
 private:

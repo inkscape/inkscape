@@ -1,5 +1,5 @@
-#ifndef __NR_FILTER_IMAGE_H__
-#define __NR_FILTER_IMAGE_H__
+#ifndef SEEN_NR_FILTER_IMAGE_H
+#define SEEN_NR_FILTER_IMAGE_H
 
 /*
  * feImage filter primitive renderer
@@ -34,7 +34,7 @@ public:
     virtual double complexity(Geom::Affine const &ctm);
 
     void set_document( SPDocument *document );
-    void set_href(const gchar *href);
+    void set_href(char const *href);
     void set_align( unsigned int align );
     void set_clip( unsigned int clip );
     bool from_element;
@@ -42,7 +42,7 @@ public:
 
 private:
     SPDocument *document;
-    gchar *feImageHref;
+    char *feImageHref;
     Inkscape::Pixbuf *image;
     float feImageX, feImageY, feImageWidth, feImageHeight;
     unsigned int aspect_align, aspect_clip;

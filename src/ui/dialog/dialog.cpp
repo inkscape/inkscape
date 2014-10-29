@@ -28,7 +28,7 @@
 #include "desktop-handles.h"
 #include "shortcuts.h"
 #include "preferences.h"
-#include "interface.h"
+#include "ui/interface.h"
 #include "verbs.h"
 #include "ui/tool/event-utils.h"
 
@@ -41,7 +41,7 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-void sp_retransientize(Inkscape::Application */*inkscape*/, SPDesktop *desktop, gpointer dlgPtr)
+void sp_retransientize(InkscapeApplication */*inkscape*/, SPDesktop *desktop, gpointer dlgPtr)
 {
     Dialog *dlg = static_cast<Dialog *>(dlgPtr);
     dlg->onDesktopActivated (desktop);
@@ -317,20 +317,8 @@ void Dialog::_apply()
 
 void Dialog::_close()
 {
-    GtkWidget *dlg = GTK_WIDGET(_behavior->gobj());
-
-    GdkEventAny event;
-    event.type = GDK_DELETE;
-    event.window = gtk_widget_get_window(dlg);
-    event.send_event = TRUE;
-
-    if (event.window)
-        g_object_ref(G_OBJECT(event.window));
-
-    gtk_main_do_event ((GdkEvent*)&event);
-
-    if (event.window)
-        g_object_unref(G_OBJECT(event.window));
+    _behavior->hide();
+    _onDeleteEvent(NULL);
 }
 
 void Dialog::_defocus()

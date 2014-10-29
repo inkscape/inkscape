@@ -15,16 +15,14 @@
  * Released under GNU GPL
  */
 
-#include <gtk/gtk.h>
-#include <stddef.h>
-#include <sigc++/sigc++.h>
+#include <sigc++/connection.h>
 #include <2geom/point.h>
 #include "ui/tools/tool-base.h"
 
-#include "sp-spiral.h"
-
 #define SP_SPIRAL_CONTEXT(obj) (dynamic_cast<Inkscape::UI::Tools::SpiralTool*>((Inkscape::UI::Tools::ToolBase*)obj))
 #define SP_IS_SPIRAL_CONTEXT(obj) (dynamic_cast<const Inkscape::UI::Tools::SpiralTool*>((const Inkscape::UI::Tools::ToolBase*)obj) != NULL)
+
+class SPSpiral;
 
 namespace Inkscape {
 namespace UI {

@@ -16,6 +16,8 @@
 #include "config.h"
 #endif
 
+#include <glib.h>
+
 #ifdef HAVE_OPENMP
 #include <omp.h>
 #include "preferences.h"
@@ -25,7 +27,6 @@ static const int OPENMP_THRESHOLD = 2048;
 
 #include <algorithm>
 #include <cairo.h>
-#include <glib.h>
 #include <math.h>
 #include "display/nr-3dutils.h"
 #include "display/cairo-utils.h"

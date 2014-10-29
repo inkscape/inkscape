@@ -1,5 +1,5 @@
-#ifndef __NR_FILTER_DISPLACEMENT_MAP_H__
-#define __NR_FILTER_DISPLACEMENT_MAP_H__
+#ifndef SEEN_NR_FILTER_DISPLACEMENT_MAP_H
+#define SEEN_NR_FILTER_DISPLACEMENT_MAP_H
 
 /*
  * feDisplacementMap filter primitive renderer

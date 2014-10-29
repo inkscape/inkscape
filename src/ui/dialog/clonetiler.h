@@ -11,7 +11,6 @@
 #define __SP_CLONE_TILER_H__
 
 #include "ui/widget/panel.h"
-#include <gtk/gtk.h>
 
 #include "ui/dialog/desktop-tracker.h"
 #include "ui/widget/color-picker.h"
@@ -58,8 +57,8 @@ protected:
     static void clonetiler_keep_bbox_toggled(GtkToggleButton *tb, gpointer /*data*/);
     static void clonetiler_apply(GtkWidget */*widget*/, GtkWidget *dlg);
     static void clonetiler_unclump(GtkWidget */*widget*/, void *);
-    static void clonetiler_change_selection(Inkscape::Application * /*inkscape*/, Inkscape::Selection *selection, GtkWidget *dlg);
-    static void clonetiler_external_change(Inkscape::Application * /*inkscape*/, GtkWidget *dlg);
+    static void clonetiler_change_selection(InkscapeApplication * /*inkscape*/, Inkscape::Selection *selection, GtkWidget *dlg);
+    static void clonetiler_external_change(InkscapeApplication * /*inkscape*/, GtkWidget *dlg);
     static void clonetiler_disconnect_gsignal(GObject *widget, gpointer source);
     static void clonetiler_reset(GtkWidget */*widget*/, GtkWidget *dlg);
     static guint clonetiler_number_of_clones(SPObject *obj);

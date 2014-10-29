@@ -14,7 +14,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <stddef.h>
+#include <cstddef>
 #include <sigc++/connection.h>
 #include <sigc++/trackable.h>
 
@@ -62,7 +62,7 @@ public:
      * @param rel_document document for relative URIs
      * @param uri the URI to watch
      */
-    void attach(const URI &uri) throw(BadURIException);
+    void attach(URI const& uri) throw(BadURIException);
 
     /**
      * Detaches from the currently attached URI target, if any;
@@ -105,7 +105,7 @@ public:
      *
      * @returns the currently attached URI, or NULL
      */
-    const URI *getURI() const {
+    URI const* getURI() const {
         return _uri;
     }
 
@@ -140,7 +140,7 @@ private:
     void _setObject(SPObject *object);
     void _release(SPObject *object);
 
-    void operator=(const URIReference &ref);
+    void operator=(URIReference const& ref);
     /* Private and definition-less to prevent accidental use. */
 };
 
@@ -149,9 +149,9 @@ private:
 /**
  * Resolves an item referenced by a URI in CSS form contained in "url(...)"
  */
-SPObject* sp_css_uri_reference_resolve( SPDocument *document, const gchar *uri );
+SPObject* sp_css_uri_reference_resolve( SPDocument *document, const char *uri );
 
-SPObject *sp_uri_reference_resolve (SPDocument *document, const gchar *uri);
+SPObject *sp_uri_reference_resolve (SPDocument *document, const char *uri);
 
 #endif // SEEN_SP_URI_REFERENCES_H
 
@@ -164,4 +164,4 @@ SPObject *sp_uri_reference_resolve (SPDocument *document, const gchar *uri);
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8 :

@@ -11,7 +11,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <gtk/gtk.h>
+#include <gtkmm.h>
 
 #include "display/sp-canvas-util.h"
 #include "helper/sp-marshal.h"
@@ -30,8 +30,6 @@ enum {
     LAST_SIGNAL
 };
 
-static void sp_canvas_arena_class_init(SPCanvasArenaClass *klass);
-static void sp_canvas_arena_init(SPCanvasArena *group);
 static void sp_canvas_arena_destroy(SPCanvasItem *object);
 
 static void sp_canvas_arena_item_deleted(SPCanvasArena *arena, Inkscape::DrawingItem *item);
@@ -46,7 +44,6 @@ static gint sp_canvas_arena_send_event (SPCanvasArena *arena, GdkEvent *event);
 static void sp_canvas_arena_request_update (SPCanvasArena *ca, DrawingItem *item);
 static void sp_canvas_arena_request_render (SPCanvasArena *ca, Geom::IntRect const &area);
 
-static SPCanvasItemClass *parent_class;
 static guint signals[LAST_SIGNAL] = {0};
 
 struct CachePrefObserver : public Inkscape::Preferences::Observer {
@@ -70,32 +67,12 @@ struct CachePrefObserver : public Inkscape::Preferences::Observer {
     SPCanvasArena *_arena;
 };
 
-GType
-sp_canvas_arena_get_type (void)
-{
-    static GType type = 0;
-    if (!type) {
-	GTypeInfo info = {
-            sizeof (SPCanvasArenaClass),
-	    NULL, NULL,
-            (GClassInitFunc) sp_canvas_arena_class_init,
-	    NULL, NULL,
-            sizeof (SPCanvasArena),
-	    0,
-            (GInstanceInitFunc) sp_canvas_arena_init,
-	    NULL
-	};
-        type = g_type_register_static (SP_TYPE_CANVAS_ITEM, "SPCanvasArena", &info, (GTypeFlags)0);
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPCanvasArena, sp_canvas_arena, SP_TYPE_CANVAS_ITEM);
 
 static void
 sp_canvas_arena_class_init (SPCanvasArenaClass *klass)
 {
     SPCanvasItemClass *item_class = (SPCanvasItemClass *) klass;
-
-    parent_class = (SPCanvasItemClass*)g_type_class_peek_parent (klass);
 
     signals[ARENA_EVENT] = g_signal_new ("arena_event",
                                            G_TYPE_FROM_CLASS(item_class),
@@ -149,8 +126,8 @@ static void sp_canvas_arena_destroy(SPCanvasItem *object)
     delete arena->observer;
     arena->drawing.~Drawing();
 
-    if (SP_CANVAS_ITEM_CLASS(parent_class)->destroy)
-        (* SP_CANVAS_ITEM_CLASS(parent_class)->destroy) (object);
+    if (SP_CANVAS_ITEM_CLASS(sp_canvas_arena_parent_class)->destroy)
+        SP_CANVAS_ITEM_CLASS(sp_canvas_arena_parent_class)->destroy(object);
 }
 
 static void
@@ -158,8 +135,8 @@ sp_canvas_arena_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned
 {
     SPCanvasArena *arena = SP_CANVAS_ARENA (item);
 
-    if (((SPCanvasItemClass *) parent_class)->update)
-        (* ((SPCanvasItemClass *) parent_class)->update) (item, affine, flags);
+    if (SP_CANVAS_ITEM_CLASS(sp_canvas_arena_parent_class)->update)
+        SP_CANVAS_ITEM_CLASS(sp_canvas_arena_parent_class)->update(item, affine, flags);
 
     arena->ctx.ctm = affine;
 

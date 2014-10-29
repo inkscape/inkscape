@@ -4,17 +4,16 @@
 #include <math.h>
 #include <gtk/gtk.h>
 #include <glibmm/i18n.h>
-#include "../dialogs/dialog-events.h"
+#include "ui/dialog-events.h"
 #include "sp-color-wheel-selector.h"
 #include "sp-color-scales.h"
+#include "sp-color-slider.h"
 #include "sp-color-icc-selector.h"
 #include "../svg/svg-icc-color.h"
 #include "ui/widget/gimpcolorwheel.h"
 
 G_BEGIN_DECLS
 
-static void sp_color_wheel_selector_class_init (SPColorWheelSelectorClass *klass);
-static void sp_color_wheel_selector_init (SPColorWheelSelector *cs);
 static void sp_color_wheel_selector_dispose(GObject *object);
 
 static void sp_color_wheel_selector_show_all (GtkWidget *widget);
@@ -23,36 +22,10 @@ static void sp_color_wheel_selector_hide(GtkWidget *widget);
 
 G_END_DECLS
 
-static SPColorSelectorClass *parent_class;
-
 #define XPAD 4
 #define YPAD 1
 
-GType
-sp_color_wheel_selector_get_type (void)
-{
-    static GType type = 0;
-    if (!type) {
-        static const GTypeInfo info = {
-            sizeof (SPColorWheelSelectorClass),
-            NULL, /* base_init */
-            NULL, /* base_finalize */
-            (GClassInitFunc) sp_color_wheel_selector_class_init,
-            NULL, /* class_finalize */
-            NULL, /* class_data */
-            sizeof (SPColorWheelSelector),
-            0,    /* n_preallocs */
-            (GInstanceInitFunc) sp_color_wheel_selector_init,
-            0,    /* value_table */
-        };
-
-        type = g_type_register_static (SP_TYPE_COLOR_SELECTOR,
-                                       "SPColorWheelSelector",
-                                       &info,
-                                       static_cast< GTypeFlags > (0) );
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPColorWheelSelector, sp_color_wheel_selector, SP_TYPE_COLOR_SELECTOR);
 
 static void sp_color_wheel_selector_class_init(SPColorWheelSelectorClass *klass)
 {
@@ -60,8 +33,6 @@ static void sp_color_wheel_selector_class_init(SPColorWheelSelectorClass *klass)
     GObjectClass   *object_class = G_OBJECT_CLASS(klass);
     GtkWidgetClass *widget_class = GTK_WIDGET_CLASS(klass);
     SPColorSelectorClass *selector_class = SP_COLOR_SELECTOR_CLASS (klass);
-
-    parent_class = SP_COLOR_SELECTOR_CLASS (g_type_class_peek_parent (klass));
 
     selector_class->name = nameset;
     selector_class->submode_count = 1;
@@ -142,8 +113,13 @@ void ColorWheelSelector::init()
     gtk_widget_show (_label);
 
 #if GTK_CHECK_VERSION(3,0,0)
+  #if GTK_CHECK_VERSION(3,12,0)
+    gtk_widget_set_margin_start(_label, XPAD);
+    gtk_widget_set_margin_end(_label, XPAD);
+  #else
     gtk_widget_set_margin_left(_label, XPAD);
     gtk_widget_set_margin_right(_label, XPAD);
+  #endif
     gtk_widget_set_margin_top(_label, YPAD);
     gtk_widget_set_margin_bottom(_label, YPAD);
     gtk_widget_set_halign(_label, GTK_ALIGN_FILL);
@@ -162,8 +138,13 @@ void ColorWheelSelector::init()
     gtk_widget_show (_slider);
 
 #if GTK_CHECK_VERSION(3,0,0)
+  #if GTK_CHECK_VERSION(3,12,0)
+    gtk_widget_set_margin_start(_slider, XPAD);
+    gtk_widget_set_margin_end(_slider, XPAD);
+  #else
     gtk_widget_set_margin_left(_slider, XPAD);
     gtk_widget_set_margin_right(_slider, XPAD);
+  #endif
     gtk_widget_set_margin_top(_slider, YPAD);
     gtk_widget_set_margin_bottom(_slider, YPAD);
     gtk_widget_set_hexpand(_slider, TRUE);
@@ -188,8 +169,13 @@ void ColorWheelSelector::init()
     gtk_widget_show (_sbtn);
 
 #if GTK_CHECK_VERSION(3,0,0)
+  #if GTK_CHECK_VERSION(3,12,0)
+    gtk_widget_set_margin_start(_sbtn, XPAD);
+    gtk_widget_set_margin_end(_sbtn, XPAD);
+  #else
     gtk_widget_set_margin_left(_sbtn, XPAD);
     gtk_widget_set_margin_right(_sbtn, XPAD);
+  #endif
     gtk_widget_set_margin_top(_sbtn, YPAD);
     gtk_widget_set_margin_bottom(_sbtn, YPAD);
     gtk_widget_set_halign(_sbtn, GTK_ALIGN_CENTER);
@@ -216,8 +202,8 @@ void ColorWheelSelector::init()
 
 static void sp_color_wheel_selector_dispose(GObject *object)
 {
-    if ((G_OBJECT_CLASS(parent_class))->dispose)
-        (* (G_OBJECT_CLASS(parent_class))->dispose) (object);
+    if (G_OBJECT_CLASS(sp_color_wheel_selector_parent_class)->dispose)
+        G_OBJECT_CLASS(sp_color_wheel_selector_parent_class)->dispose(object);
 }
 
 static void

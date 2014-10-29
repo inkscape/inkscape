@@ -892,6 +892,13 @@ if test "x$enable_strict_build" != "xno"; then
 	fi
 fi
 
+# Disable all deprecated symbols if very strict build is requested.
+# TODO: Make this a default option for Gtk+ 2 or 3 builds as soon as
+#       possible.
+if test "x$enable_strict_build" = "xhigh"; then
+        CPPFLAGS="-Werror=deprecated-declarations $CPPFLAGS"
+fi
+
 # Check for Apple Mac OS X Carbon framework
 carbon_ok=no
 AC_MSG_CHECKING([for Mac OS X Carbon support])
@@ -1109,7 +1116,6 @@ Makefile
 src/Makefile
 src/check-header-compile
 src/debug/makefile
-src/dialogs/makefile
 src/display/makefile
 src/extension/implementation/makefile
 src/extension/internal/makefile

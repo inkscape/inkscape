@@ -1,11 +1,4 @@
-#ifndef SEEN_SP_SVG_LENGTH_H
-#define SEEN_SP_SVG_LENGTH_H
-
 /**
- *  \file src/svg/svg-length.h
- *  \brief SVG length type
- */
-/*
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Carl Hetherington <inkscape@carlh.net>
@@ -16,10 +9,13 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <glib.h>
+#ifndef SEEN_SP_SVG_LENGTH_H
+#define SEEN_SP_SVG_LENGTH_H
 
-class SVGLength
-{
+/**
+ *  SVG length type
+ */
+class SVGLength {
 public:
     SVGLength();
 
@@ -57,9 +53,9 @@ public:
         return v;
     }
 
-    bool read(gchar const *str);
-    void readOrUnset(gchar const *str, Unit u = NONE, float v = 0, float c = 0);
-    bool readAbsolute(gchar const *str);
+    bool read(char const *str);
+    void readOrUnset(char const *str, Unit u = NONE, float v = 0, float c = 0);
+    bool readAbsolute(char const *str);
     void set(Unit u, float v, float c);
     void unset(Unit u = NONE, float v = 0, float c = 0);
     void update(double em, double ex, double scale);
@@ -76,4 +72,4 @@ public:
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8 :

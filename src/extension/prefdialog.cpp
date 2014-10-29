@@ -13,7 +13,7 @@
 #include <gtkmm/separator.h>
 #include <glibmm/i18n.h>
 
-#include "../dialogs/dialog-events.h"
+#include "ui/dialog-events.h"
 #include "xml/repr.h"
 
 // Used to get SP_ACTIVE_DESKTOP

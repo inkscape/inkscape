@@ -16,7 +16,7 @@
 
 #include "display/canvas-temporary-item.h"
 
-#include <gtk/gtk.h>
+#include <glib.h>
 #include "display/sp-canvas-item.h"
 
 namespace Inkscape {
@@ -54,9 +54,9 @@ TemporaryItem::~TemporaryItem()
     }
 }
 
-/* static method*/
-gboolean TemporaryItem::_timeout(gpointer data) {
-    TemporaryItem *tempitem = reinterpret_cast<TemporaryItem *>(data);
+/* static method */
+int TemporaryItem::_timeout(void* data) {
+    TemporaryItem *tempitem = static_cast<TemporaryItem *>(data);
     tempitem->timeout_id = 0;
     tempitem->signal_timeout.emit(tempitem);
     delete tempitem;

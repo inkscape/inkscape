@@ -11,7 +11,6 @@
 #ifndef INKSCAPE_URI_H
 #define INKSCAPE_URI_H
 
-#include <glib.h>
 #include <exception>
 #include <libxml/uri.h>
 #include "bad-uri-exception.h"
@@ -38,7 +37,7 @@ public:
      *
      * @param preformed Properly quoted C-style string to be represented.
      */
-    explicit URI(gchar const *preformed) throw(BadURIException);
+    explicit URI(char const *preformed) throw(BadURIException);
 
     /**
      * Destructor.
@@ -89,25 +88,25 @@ public:
      */
     bool isAbsolutePath() const { return _impl->isAbsolutePath(); }
 
-    const gchar *getScheme() const { return _impl->getScheme(); }
+    const char *getScheme() const { return _impl->getScheme(); }
 
-    const gchar *getPath() const { return _impl->getPath(); }
+    const char *getPath() const { return _impl->getPath(); }
 
-    const gchar *getQuery() const { return _impl->getQuery(); }
+    const char *getQuery() const { return _impl->getQuery(); }
 
-    const gchar *getFragment() const { return _impl->getFragment(); }
+    const char *getFragment() const { return _impl->getFragment(); }
 
-    const gchar *getOpaque() const { return _impl->getOpaque(); }
+    const char *getOpaque() const { return _impl->getOpaque(); }
 
-    static URI fromUtf8( gchar const* path ) throw (BadURIException);
+    static URI fromUtf8( char const* path ) throw (BadURIException);
 
-    static URI from_native_filename(gchar const *path) throw(BadURIException);
+    static URI from_native_filename(char const *path) throw(BadURIException);
 
-    static gchar *to_native_filename(gchar const* uri) throw(BadURIException);
+    static char *to_native_filename(char const* uri) throw(BadURIException);
 
     const std::string getFullPath(std::string const base) const;
 
-    gchar *toNativeFilename() const throw(BadURIException);
+    char *toNativeFilename() const throw(BadURIException);
 
     /**
      * Returns a glib string version of this URI.
@@ -116,7 +115,7 @@ public:
      *
      * @return a glib string version of this URI.
      */
-    gchar *toString() const { return _impl->toString(); }
+    char *toString() const { return _impl->toString(); }
 
     /**
      * Assignment operator.
@@ -135,12 +134,12 @@ private:
         bool isNetPath() const;
         bool isRelativePath() const;
         bool isAbsolutePath() const;
-        const gchar *getScheme() const;
-        const gchar *getPath() const;
-        const gchar *getQuery() const;
-        const gchar *getFragment() const;
-        const gchar *getOpaque() const;
-        gchar *toString() const;
+        const char *getScheme() const;
+        const char *getPath() const;
+        const char *getQuery() const;
+        const char *getFragment() const;
+        const char *getOpaque() const;
+        char *toString() const;
     private:
         Impl(xmlURIPtr uri);
         ~Impl();

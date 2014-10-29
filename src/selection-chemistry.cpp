@@ -37,11 +37,11 @@ SPCycleType SP_CYCLING = SP_CYCLE_FOCUS;
 #include "dir-util.h"
 #include "layer-model.h"
 #include "selection.h"
-#include "tools-switch.h"
+#include "ui/tools-switch.h"
 #include "desktop-handles.h"
 #include "message-stack.h"
 #include "sp-item-transform.h"
-#include "marker.h"
+#include "sp-marker.h"
 #include "sp-use.h"
 #include "sp-textpath.h"
 #include "sp-tspan.h"
@@ -112,7 +112,7 @@ SPCycleType SP_CYCLING = SP_CYCLE_FOCUS;
 #include "sp-item-group.h"
 
 // For clippath editing
-#include "tools-switch.h"
+#include "ui/tools-switch.h"
 #include "ui/tools/node-tool.h"
 
 #include "ui/clipboard.h"
@@ -2881,55 +2881,52 @@ void sp_selection_clone_original_path_lpe(SPDesktop *desktop)
     if (desktop == NULL) {
         return;
     }
-
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
-    SPItem *item = selection->singleItem();
-    if (g_slist_length(const_cast<GSList *>(selection->itemList())) != 1 || !item) {
-        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>one</b> path to clone."));
-        return;
-    }
-    if ( !(dynamic_cast<SPShape *>(item) || dynamic_cast<SPText *>(item)) ) {
-        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select one <b>path</b> to clone."));
-        return;
-    }
-
-    Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
-    Inkscape::XML::Node *parent = item->getRepr()->parent();
-
-    // create the LPE
-    Inkscape::XML::Node *lpe_repr = xml_doc->createElement("inkscape:path-effect");
-    {
-        lpe_repr->setAttribute("effect", "clone_original");
-        gchar *href = g_strdup_printf("#%s", item->getRepr()->attribute("id"));
-        lpe_repr->setAttribute("linkedpath", href);
-        g_free(href);
-        desktop->doc()->getDefs()->getRepr()->addChild(lpe_repr, NULL); // adds to <defs> and assigns the 'id' attribute
-    }
-    const gchar * lpe_id = lpe_repr->attribute("id");
-    Inkscape::GC::release(lpe_repr);
-
-    // create the new path
-    Inkscape::XML::Node *clone = xml_doc->createElement("svg:path");
-    {
-        clone->setAttribute("d", "M 0 0", false);
-        // add the new clone to the top of the original's parent
-        parent->appendChild(clone);
-        SPObject *clone_obj = desktop->doc()->getObjectById(clone->attribute("id"));
-        SPLPEItem *clone_lpe = dynamic_cast<SPLPEItem *>(clone_obj);
-        if (clone_lpe) {
-            gchar *href = g_strdup_printf("#%s", lpe_id);
-            clone_lpe->addPathEffect( href, false );
-            g_free(href);
+    
+    Inkscape::SVGOStringStream os;
+    SPObject * firstItem = NULL;
+    for (const GSList * item = desktop->selection->itemList(); item != NULL; item = item->next) {
+        if (SP_IS_SHAPE(item->data) || SP_IS_TEXT(item->data)) {
+            if (firstItem) {
+                os << "|";
+            } else {
+                firstItem = SP_ITEM(item->data);
+            }
+            os << "#" << SP_ITEM(item->data)->getId() << ",0";
         }
     }
+    if (firstItem) {
+        Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
+        SPObject *parent = firstItem->parent;
 
-    DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_EDIT_CLONE_ORIGINAL_PATH_LPE,
-                       _("Clone original path"));
+        // create the LPE
+        Inkscape::XML::Node *lpe_repr = xml_doc->createElement("inkscape:path-effect");
+        {
+            lpe_repr->setAttribute("effect", "fill_between_many");
+            lpe_repr->setAttribute("linkedpaths", os.str().c_str());
+            desktop->doc()->getDefs()->getRepr()->addChild(lpe_repr, NULL); // adds to <defs> and assigns the 'id' attribute
+        }
+        const gchar * lpe_id = lpe_repr->attribute("id");
+        Inkscape::GC::release(lpe_repr);
 
-    // select the new object:
-    selection->set(clone);
+        // create the new path
+        Inkscape::XML::Node *clone = xml_doc->createElement("svg:path");
+        {
+            clone->setAttribute("d", "M 0 0", false);
+            // add the new clone to the top of the original's parent
+            parent->appendChildRepr(clone);
+            SPObject *clone_obj = desktop->doc()->getObjectById(clone->attribute("id"));
+            SPLPEItem *clone_lpeitem = dynamic_cast<SPLPEItem *>(clone_obj);
+            if (clone_lpeitem) {
+                gchar *href = g_strdup_printf("#%s", lpe_id);
+                clone_lpeitem->addPathEffect(href, false);
+                g_free(href);
+            }
+        }
 
-    Inkscape::GC::release(clone);
+        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_EDIT_CLONE_ORIGINAL_PATH_LPE, _("Fill between many"));
+    } else {
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select path(s) to fill."));
+    }
 }
 
 void sp_selection_to_marker(SPDesktop *desktop, bool apply)
@@ -3785,6 +3782,118 @@ void sp_selection_create_bitmap_copy(SPDesktop *desktop)
     g_free(filepath);
 }
 
+/* Creates a mask or clipPath from selection.
+ * What is a clip group?
+ * A clip group is a tangled mess of XML that allows an object inside a group
+ * to clip the entire group using a few <use>s and generally irritating me.
+ */
+
+void sp_selection_set_clipgroup(SPDesktop *desktop)
+{
+    if (desktop == NULL) {
+        return;
+    }
+    SPDocument* doc = sp_desktop_document(desktop);
+    Inkscape::XML::Document *xml_doc = doc->getReprDoc();
+
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    if (selection->isEmpty()) {
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to create clippath or mask from."));
+        return;
+    }
+        
+    GSList const *l = const_cast<GSList *>(selection->reprList());
+
+    GSList *p = g_slist_copy(const_cast<GSList *>(l));
+    
+    p = g_slist_sort(p, (GCompareFunc) sp_repr_compare_position);
+
+    selection->clear();
+
+    gint topmost = (static_cast<Inkscape::XML::Node *>(g_slist_last(p)->data))->position();
+    Inkscape::XML::Node *topmost_parent = (static_cast<Inkscape::XML::Node *>(g_slist_last(p)->data))->parent();
+
+    Inkscape::XML::Node *inner = xml_doc->createElement("svg:g");
+    inner->setAttribute("inkscape:label", "Clip");
+    
+    while (p) {
+        Inkscape::XML::Node *current = static_cast<Inkscape::XML::Node *>(p->data);
+
+        if (current->parent() == topmost_parent) {
+            Inkscape::XML::Node *spnew = current->duplicate(xml_doc);
+            sp_repr_unparent(current);
+            inner->appendChild(spnew);
+            Inkscape::GC::release(spnew);
+            topmost --; // only reduce count for those items deleted from topmost_parent
+        } else { // move it to topmost_parent first
+            GSList *temp_clip = NULL;
+
+            // At this point, current may already have no item, due to its being a clone whose original is already moved away
+            // So we copy it artificially calculating the transform from its repr->attr("transform") and the parent transform
+            gchar const *t_str = current->attribute("transform");
+            Geom::Affine item_t(Geom::identity());
+            if (t_str)
+                sp_svg_transform_read(t_str, &item_t);
+            item_t *= SP_ITEM(doc->getObjectByRepr(current->parent()))->i2doc_affine();
+            // FIXME: when moving both clone and original from a transformed group (either by
+            // grouping into another parent, or by cut/paste) the transform from the original's
+            // parent becomes embedded into original itself, and this affects its clones. Fix
+            // this by remembering the transform diffs we write to each item into an array and
+            // then, if this is clone, looking up its original in that array and pre-multiplying
+            // it by the inverse of that original's transform diff.
+
+            sp_selection_copy_one(current, item_t, &temp_clip, xml_doc);
+            sp_repr_unparent(current);
+
+            // paste into topmost_parent (temporarily)
+            GSList *copied = sp_selection_paste_impl(doc, doc->getObjectByRepr(topmost_parent), &temp_clip);
+            if (temp_clip) g_slist_free(temp_clip);
+            if (copied) { // if success,
+                // take pasted object (now in topmost_parent)
+                Inkscape::XML::Node *in_topmost = static_cast<Inkscape::XML::Node *>(copied->data);
+                // make a copy
+                Inkscape::XML::Node *spnew = in_topmost->duplicate(xml_doc);
+                // remove pasted
+                sp_repr_unparent(in_topmost);
+                // put its copy into group
+                inner->appendChild(spnew);
+                Inkscape::GC::release(spnew);
+                g_slist_free(copied);
+            }
+        }
+        p = g_slist_remove(p, current);
+    }
+    
+    Inkscape::XML::Node *outer = xml_doc->createElement("svg:g");
+    outer->appendChild(inner);
+    topmost_parent->appendChild(outer);
+    outer->setPosition(topmost + 1);
+    
+    Inkscape::XML::Node *clone = xml_doc->createElement("svg:use");
+    clone->setAttribute("x", "0", false);
+    clone->setAttribute("y", "0", false);
+    clone->setAttribute("xlink:href", g_strdup_printf("#%s", inner->attribute("id")), false);
+
+    clone->setAttribute("inkscape:transform-center-x", inner->attribute("inkscape:transform-center-x"), false);
+    clone->setAttribute("inkscape:transform-center-y", inner->attribute("inkscape:transform-center-y"), false);
+
+    const Geom::Affine maskTransform(Geom::Affine::identity());
+    GSList *templist = NULL;
+
+    templist = g_slist_append(templist, clone);
+    // add the new clone to the top of the original's parent
+    gchar const *mask_id = SPClipPath::create(templist, doc, &maskTransform);
+    
+    g_slist_free(templist);
+    
+    outer->setAttribute("clip-path", g_strdup_printf("url(#%s)", mask_id));
+
+    Inkscape::GC::release(clone);
+    
+    selection->set(outer);
+    DocumentUndo::done(doc, SP_VERB_OBJECT_SET_CLIPPATH, _("Create Clip Group"));
+}
+
 /**
  * Creates a mask or clipPath from selection.
  * Two different modes:
@@ -4074,6 +4183,10 @@ void sp_selection_unset_mask(SPDesktop *desktop, bool apply_clip_path) {
         for ( SPObject *child = obj->firstChild() ; child; child = child->getNext() ) {
             // Collect all clipped paths and masks within a single group
             Inkscape::XML::Node *copy = SP_OBJECT(child)->getRepr()->duplicate(xml_doc);
+            if(copy->attribute("inkscape:original-d"))
+            {
+                copy->setAttribute("d", copy->attribute("inkscape:original-d"));
+            }
             items_to_move = g_slist_prepend(items_to_move, copy);
         }
 

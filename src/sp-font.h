@@ -1,7 +1,3 @@
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
-
 #ifndef SP_FONT_H_SEEN
 #define SP_FONT_H_SEEN
 
@@ -40,11 +36,11 @@ protected:
 	virtual void child_added(Inkscape::XML::Node* child, Inkscape::XML::Node* ref);
 	virtual void remove_child(Inkscape::XML::Node* child);
 
-	virtual void set(unsigned int key, const gchar* value);
+	virtual void set(unsigned int key, char const* value);
 
 	virtual void update(SPCtx* ctx, unsigned int flags);
 
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, unsigned int flags);
 };
 
 #endif //#ifndef SP_FONT_H_SEEN

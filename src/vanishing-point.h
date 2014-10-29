@@ -12,8 +12,10 @@
 #ifndef SEEN_VANISHING_POINT_H
 #define SEEN_VANISHING_POINT_H
 
-#include <set>
 #include <2geom/point.h>
+#include <list>
+#include <set>
+
 #include "knot.h"
 #include "selection.h"
 #include "persp3d.h"
@@ -21,6 +23,8 @@
 #include "ui/control-manager.h" // TODO break enums out separately
 
 class SPBox3D;
+typedef struct _GList GList;
+typedef struct _GSList GSList;
 
 namespace Box3D {
 
@@ -101,7 +105,7 @@ public:
         g_return_if_fail (_persp);
         persp3d_get_VP (_persp, _axis).print("");
     }
-    inline gchar const *axisString () { return Proj::string_from_axis(_axis); }
+    inline char const *axisString () { return Proj::string_from_axis(_axis); }
 
     unsigned int my_counter;
     static unsigned int global_counter; // FIXME: Only to implement operator< so that we can merge lists. Do this in a better way!!
@@ -140,7 +144,7 @@ public:
 
     void updateTip();
 
-    guint numberOfBoxes(); // the number of boxes linked to all VPs of the dragger
+    unsigned int numberOfBoxes(); // the number of boxes linked to all VPs of the dragger
     VanishingPoint *findVPWithBox(SPBox3D *box);
     std::set<VanishingPoint*, less_ptr> VPsOfSelectedBoxes();
 
@@ -185,7 +189,7 @@ public:
     void updateBoxDisplays ();
     void drawLinesForFace (const SPBox3D *box, Proj::Axis axis); //, guint corner1, guint corner2, guint corner3, guint corner4);
     bool show_lines; /* whether perspective lines are drawn at all */
-    guint front_or_rear_lines; /* whether we draw perspective lines from all corners or only the
+    unsigned int front_or_rear_lines; /* whether we draw perspective lines from all corners or only the
                                   front/rear corners (indicated by the first/second bit, respectively  */
 
 

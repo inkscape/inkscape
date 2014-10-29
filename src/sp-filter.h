@@ -12,14 +12,13 @@
 #ifndef SP_FILTER_H_SEEN
 #define SP_FILTER_H_SEEN
 
+#include <glibmm/ustring.h>
 #include <map>
 
 #include "number-opt-number.h"
 #include "sp-object.h"
 #include "sp-filter-units.h"
 #include "svg/svg-length.h"
-
-#include <glibmm/ustring.h>
 
 #define SP_FILTER(obj) (dynamic_cast<SPFilter*>((SPObject*)obj))
 #define SP_IS_FILTER(obj) (dynamic_cast<const SPFilter*>((SPObject*)obj) != NULL)
@@ -45,9 +44,9 @@ public:
 	virtual ~SPFilter();
 
     SPFilterUnits filterUnits;
-    guint filterUnits_set : 1;
+    unsigned int filterUnits_set : 1;
     SPFilterUnits primitiveUnits;
-    guint primitiveUnits_set : 1;
+    unsigned int primitiveUnits_set : 1;
     SVGLength x;
     SVGLength y;
     SVGLength width;
@@ -68,11 +67,11 @@ protected:
 	virtual void child_added(Inkscape::XML::Node* child, Inkscape::XML::Node* ref);
 	virtual void remove_child(Inkscape::XML::Node* child);
 
-	virtual void set(unsigned int key, const gchar* value);
+	virtual void set(unsigned int key, const char* value);
 
 	virtual void update(SPCtx* ctx, unsigned int flags);
 
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, unsigned int flags);
 };
 
 void sp_filter_set_filter_units(SPFilter *filter, SPFilterUnits filterUnits);
@@ -88,14 +87,14 @@ void sp_filter_build_renderer(SPFilter *sp_filter, Inkscape::Filters::Filter *nr
 int sp_filter_primitive_count(SPFilter *filter);
 
 /// Returns a slot number for given image name, or -1 for unknown name.
-int sp_filter_get_image_name(SPFilter *filter, gchar const *name);
+int sp_filter_get_image_name(SPFilter *filter, char const *name);
 
 /// Returns slot number for given image name, even if it's unknown.
-int sp_filter_set_image_name(SPFilter *filter, gchar const *name);
+int sp_filter_set_image_name(SPFilter *filter, char const *name);
 
 /** Finds image name based on it's slot number. Returns 0 for unknown slot
  * numbers. */
-gchar const *sp_filter_name_for_image(SPFilter const *filter, int const image);
+char const *sp_filter_name_for_image(SPFilter const *filter, int const image);
 
 /// Returns a result image name that is not in use inside this filter.
 Glib::ustring sp_filter_get_new_result_name(SPFilter *filter);

@@ -83,5 +83,14 @@ ink_common_sources +=	\
 	ui/widget/unit-menu.cpp		\
 	ui/widget/unit-menu.h \
 	ui/widget/unit-tracker.h \
-	ui/widget/unit-tracker.cpp
-
+	ui/widget/unit-tracker.cpp	\
+	ui/widget/clipmaskicon.cpp	\
+	ui/widget/clipmaskicon.h	\
+	ui/widget/highlight-picker.cpp	\
+	ui/widget/highlight-picker.h	\
+	ui/widget/layertypeicon.cpp	\
+	ui/widget/layertypeicon.h	\
+	ui/widget/insertordericon.cpp	\
+	ui/widget/insertordericon.h	\
+	ui/widget/addtoicon.cpp	\
+	ui/widget/addtoicon.h

@@ -14,8 +14,9 @@
 #ifndef SEEN_INKSCAPE_MESSAGE_CONTEXT_H
 #define SEEN_INKSCAPE_MESSAGE_CONTEXT_H
 
-#include <stdarg.h>
+#include <cstdarg>
 #include <glib.h>
+
 #include "message.h"
 
 namespace Inkscape {
@@ -48,7 +49,7 @@ public:
       * @param type the message type
       * @param message the message text
       */
-    void set(MessageType type, gchar const *message);
+    void set(MessageType type, char const *message);
 
     /** @brief pushes a message on the stack using prinf-style formatting,
       *        and replacing our old message
@@ -56,7 +57,7 @@ public:
       * @param type the message type
       * @param format a printf-style formatting string
       */
-    void setF(MessageType type, gchar const *format, ...) G_GNUC_PRINTF(3,4);
+    void setF(MessageType type, char const *format, ...) G_GNUC_PRINTF(3,4);
 
     /** @brief pushes a message on the stack using printf-style formatting,
       *        and a stdarg argument list
@@ -65,7 +66,7 @@ public:
       * @param format a printf-style formatting string
       * @param args printf-style arguments
       */
-    void setVF(MessageType type, gchar const *format, va_list args);
+    void setVF(MessageType type, char const *format, va_list args);
 
     /** @brief pushes a message onto the stack for a brief period of time
       *        without disturbing our "current" message
@@ -73,7 +74,7 @@ public:
       * @param type the message type
       * @param message the message text
       */
-    void flash(MessageType type, gchar const *message);
+    void flash(MessageType type, char const *message);
 
     /** @brief pushes a message onto the stack for a brief period of time
       *        using printf-style formatting, without disturbing our current
@@ -82,7 +83,7 @@ public:
       * @param type the message type
       * @param format a printf-style formatting string
       */
-    void flashF(MessageType type, gchar const *format, ...) G_GNUC_PRINTF(3,4);
+    void flashF(MessageType type, char const *format, ...) G_GNUC_PRINTF(3,4);
 
     /** @brief pushes a message onto the stack for a brief period of time
       *        using printf-style formatting and a stdarg argument list;
@@ -92,7 +93,7 @@ public:
       * @param format a printf-style formatting string
       * @param args printf-style arguments
       */
-    void flashVF(MessageType type, gchar const *format, va_list args);
+    void flashVF(MessageType type, char const *format, va_list args);
 
     /** @brief removes our current message from the stack */
     void clear();

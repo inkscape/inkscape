@@ -309,7 +309,7 @@
     </symbol>
 
     <symbol id="FourWheelDriveRoad">
-      <title>Four Wheel Drive Road</title>
+      <title>Four Wheel Drive Road"</title>
       <path d="m 64.5,37.75 0,-7.25 c 0,-2 -1.5,-2.5 -2.5,-2.5 l -14.25,0 -5.25,-8.75 -3,0 5.25,8.75 -4,6.75 -9.25,0 c -3,-6.25 -9.5,-6 -9.5,-6 l -17,0 0,15.25 2.5,0 a 10.6,10.6 0 0 1 21,0 l 15,0 a 10.6,10.6 0 0 1 21,0 l 1,0 c 1,0 1.75,-0.75 1.75,-1.75 l 0,-4.5 z" style="stroke:none"/>
       <g style="fill:none;stroke-width:4">
 	<circle cx="18" cy="45.375" r="5"/>
@@ -318,7 +318,7 @@
     </symbol>
 
     <symbol id="FourWheelDriveRoad_Inv">
-      <title>Four Wheel Drive Road</title>
+      <title>Four Wheel Drive Road"</title>
       <rect x="0.5" y="0.5" width="71" height="71" ry="6" style="stroke:white"/>
       <path d="m 64.5,37.75 0,-7.25 c 0,-2 -1.5,-2.5 -2.5,-2.5 l -14.25,0 -5.25,-8.75 -3,0 5.25,8.75 -4,6.75 -9.25,0 c -3,-6.25 -9.5,-6 -9.5,-6 l -17,0 0,15.25 2.5,0 a 10.6,10.6 0 0 1 21,0 l 15,0 a 10.6,10.6 0 0 1 21,0 l 1,0 c 1,0 1.75,-0.75 1.75,-1.75 l 0,-4.5 z" style="fill:white;stroke:none"/>
       <g style="fill:none;stroke:white;stroke-width:4">

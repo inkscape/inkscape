@@ -18,6 +18,8 @@
 #include "sp-item.h"
 #include "sp-item-transform.h"
 
+#include <glib.h>
+
 void sp_item_rotate_rel(SPItem *item, Geom::Rotate const &rotation)
 {
     Geom::Point center = item->getCenter();

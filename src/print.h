@@ -41,18 +41,18 @@ unsigned int sp_print_stroke(SPPrintContext *ctx, Geom::PathVector const &pathv,
                              Geom::OptRect const &pbox, Geom::OptRect const &dbox, Geom::OptRect const &bbox);
 
 unsigned int sp_print_image_R8G8B8A8_N(SPPrintContext *ctx,
-                                       guchar *px, unsigned int w, unsigned int h, unsigned int rs,
+                                       unsigned char *px, unsigned int w, unsigned int h, unsigned int rs,
                                        Geom::Affine const &transform, SPStyle const *style);
 
 unsigned int sp_print_text(SPPrintContext *ctx, char const *text, Geom::Point p,
                            SPStyle const *style);
 
-void sp_print_get_param(SPPrintContext *ctx, gchar *name, bool *value);
+void sp_print_get_param(SPPrintContext *ctx, char *name, bool *value);
 
 
 /* UI */
 void sp_print_document(Gtk::Window& parentWindow, SPDocument *doc);
-void sp_print_document_to_file(SPDocument *doc, gchar const *filename);
+void sp_print_document_to_file(SPDocument *doc, char const *filename);
 
 
 #endif /* !PRINT_H_INKSCAPE */

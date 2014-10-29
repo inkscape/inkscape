@@ -31,12 +31,11 @@
 #include "ui/tool/multi-path-manipulator.h"
 #include <glibmm/i18n.h>
 #include "node-toolbar.h"
-#include "connection-pool.h"
 #include "desktop-handles.h"
 #include "desktop.h"
 #include "document-undo.h"
-#include "ege-adjustment-action.h"
-#include "ink-action.h"
+#include "widgets/ege-adjustment-action.h"
+#include "widgets/ink-action.h"
 #include "inkscape.h"
 #include "preferences.h"
 #include "selection-chemistry.h"
@@ -229,6 +228,7 @@ static void sp_node_toolbox_coord_changed(gpointer /*shape_editor*/, GObject *tb
         return;
     }
     Unit const *unit = tracker->getActiveUnit();
+    g_return_if_fail(unit != NULL);
 
     NodeTool *nt = get_node_tool();
     if (!nt || !(nt->_selected_nodes) ||nt->_selected_nodes->empty()) {
@@ -321,7 +321,7 @@ static void sp_node_toolbox_sel_modified(Inkscape::Selection *selection, guint /
     sp_node_toolbox_sel_changed (selection, tbl);
 }
 
-
+static void node_toolbox_watch_ec(SPDesktop* dt, Inkscape::UI::Tools::ToolBase* ec, GObject* holder);
 
 //################################
 //##    Node Editing Toolbox    ##
@@ -614,32 +614,33 @@ void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
         gtk_action_group_add_action( mainActions, act );
     }
 
-
     sp_node_toolbox_sel_changed(sp_desktop_selection(desktop), holder);
+    desktop->connectEventContextChanged(sigc::bind(sigc::ptr_fun(node_toolbox_watch_ec), holder));
 
-    //watch selection
-    Inkscape::ConnectionPool* pool = Inkscape::ConnectionPool::new_connection_pool ("ISNodeToolbox");
-
-    sigc::connection *c_selection_changed =
-        new sigc::connection (sp_desktop_selection (desktop)->connectChanged
-                              (sigc::bind (sigc::ptr_fun (sp_node_toolbox_sel_changed), holder)));
-    pool->add_connection ("selection-changed", c_selection_changed);
-
-    sigc::connection *c_selection_modified =
-        new sigc::connection (sp_desktop_selection (desktop)->connectModified
-                              (sigc::bind (sigc::ptr_fun (sp_node_toolbox_sel_modified), holder)));
-    pool->add_connection ("selection-modified", c_selection_modified);
-
-    sigc::connection *c_subselection_changed =
-        new sigc::connection (desktop->connectToolSubselectionChanged
-                              (sigc::bind (sigc::ptr_fun (sp_node_toolbox_coord_changed), holder)));
-    pool->add_connection ("tool-subselection-changed", c_subselection_changed);
-
-    Inkscape::ConnectionPool::connect_destroy (G_OBJECT (holder), pool);
-
-    g_signal_connect( holder, "destroy", G_CALLBACK(purge_repr_listener), holder );
 } // end of sp_node_toolbox_prep()
 
+static void node_toolbox_watch_ec(SPDesktop* desktop, Inkscape::UI::Tools::ToolBase* ec, GObject* holder)
+{
+    static sigc::connection c_selection_changed;
+    static sigc::connection c_selection_modified;
+    static sigc::connection c_subselection_changed;
+
+    if (INK_IS_NODE_TOOL(ec)) {
+        // watch selection
+        c_selection_changed = sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_node_toolbox_sel_changed), holder));
+        c_selection_modified = sp_desktop_selection(desktop)->connectModified(sigc::bind(sigc::ptr_fun(sp_node_toolbox_sel_modified), holder));
+        c_subselection_changed = desktop->connectToolSubselectionChanged(sigc::bind(sigc::ptr_fun(sp_node_toolbox_coord_changed), holder));
+
+        sp_node_toolbox_sel_changed(sp_desktop_selection(desktop), holder);
+    } else {
+        if (c_selection_changed)
+            c_selection_changed.disconnect();
+        if (c_selection_modified)
+            c_selection_modified.disconnect();
+        if (c_subselection_changed)
+            c_subselection_changed.disconnect();
+    }
+}
 
 
 /*

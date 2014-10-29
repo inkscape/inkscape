@@ -11,7 +11,7 @@
 #ifndef SEEN_DIALOGS_UNCLUMP_H
 #define SEEN_DIALOGS_UNCLUMP_H
 
-#include <glib.h>
+typedef struct _GSList GSList;
 
 void unclump(GSList *items);
 

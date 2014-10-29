@@ -1,5 +1,5 @@
-#ifndef __SP_ITEM_GROUP_H__
-#define __SP_ITEM_GROUP_H__
+#ifndef SEEN_SP_ITEM_GROUP_H
+#define SEEN_SP_ITEM_GROUP_H
 
 /*
  * SVG <g> implementation
@@ -25,6 +25,7 @@ namespace Inkscape {
 
 class Drawing;
 class DrawingItem;
+typedef struct _GSList GSList;
 
 } // namespace Inkscape
 
@@ -35,11 +36,19 @@ public:
 
     enum LayerMode { GROUP, LAYER, MASK_HELPER };
 
+    bool _expanded;
+    bool _insertBottom;
     LayerMode _layer_mode;
     std::map<unsigned int, LayerMode> _display_modes;
 
     LayerMode layerMode() const { return _layer_mode; }
     void setLayerMode(LayerMode mode);
+
+    bool expanded() const { return _expanded; }
+    void setExpanded(bool isexpanded);
+    
+    bool insertBottom() const { return _insertBottom; }
+    void setInsertBottom(bool insertbottom);
 
     LayerMode effectiveLayerMode(unsigned int display_key) const {
         if ( _layer_mode == LAYER ) {
@@ -54,7 +63,7 @@ public:
     void translateChildItems(Geom::Translate const &tr);
     void scaleChildItemsRec(Geom::Scale const &sc, Geom::Point const &p, bool noRecurse);
 
-    gint getItemCount() const;
+    int getItemCount() const;
     virtual void _showChildren (Inkscape::Drawing &drawing, Inkscape::DrawingItem *ai, unsigned int key, unsigned int flags);
 
 private:
@@ -69,15 +78,15 @@ public:
     virtual void order_changed(Inkscape::XML::Node *child, Inkscape::XML::Node *old_ref, Inkscape::XML::Node *new_ref);
 
     virtual void update(SPCtx *ctx, unsigned int flags);
-    virtual void modified(guint flags);
-    virtual void set(unsigned int key, gchar const* value);
+    virtual void modified(unsigned int flags);
+    virtual void set(unsigned int key, char const* value);
 
-    virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+    virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, unsigned int flags);
 
     virtual Geom::OptRect bbox(Geom::Affine const &transform, SPItem::BBoxType bboxtype) const;
     virtual void print(SPPrintContext *ctx);
     virtual const char* displayName() const;
-    virtual gchar *description() const;
+    virtual char *description() const;
     virtual Inkscape::DrawingItem *show (Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
     virtual void hide (unsigned int key);
 
@@ -90,7 +99,7 @@ void sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done = tr
 
 
 GSList *sp_item_group_item_list (SPGroup *group);
-SPObject *sp_item_group_get_child_by_name (SPGroup *group, SPObject *ref, const gchar *name);
+SPObject *sp_item_group_get_child_by_name (SPGroup *group, SPObject *ref, const char *name);
 
 #endif
 

@@ -30,55 +30,31 @@
 
 namespace {
 
-void sp_ctrlline_class_init(SPCtrlLineClass *klass, gpointer data);
-void sp_ctrlline_init(SPCtrlLine *ctrlline, gpointer g_class);
 void sp_ctrlline_destroy(SPCanvasItem *object);
 
 void sp_ctrlline_update(SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
 void sp_ctrlline_render(SPCanvasItem *item, SPCanvasBuf *buf);
 
-SPCanvasItemClass *parent_class = 0;
-
 } // namespace
 
-GType SPCtrlLine::getType()
+G_DEFINE_TYPE(SPCtrlLine, sp_ctrlline, SP_TYPE_CANVAS_ITEM);
+
+static void sp_ctrlline_class_init(SPCtrlLineClass *klass)
 {
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPCtrlLineClass),
-            NULL, NULL,
-            reinterpret_cast<GClassInitFunc>(sp_ctrlline_class_init),
-            NULL, NULL,
-            sizeof(SPCtrlLine),
-            0,
-            reinterpret_cast<GInstanceInitFunc>(sp_ctrlline_init),
-            NULL
-        };
-        type = g_type_register_static(SP_TYPE_CANVAS_ITEM, "SPCtrlLine", &info, static_cast<GTypeFlags>(0));
-    }
-    return type;
-}
-
-namespace {
-
-void sp_ctrlline_class_init(SPCtrlLineClass *klass, gpointer /*data*/)
-{
-    parent_class = reinterpret_cast<SPCanvasItemClass*>(g_type_class_peek_parent(klass));
-
     klass->destroy = sp_ctrlline_destroy;
 
     klass->update = sp_ctrlline_update;
     klass->render = sp_ctrlline_render;
 }
 
-void sp_ctrlline_init(SPCtrlLine *ctrlline, gpointer /*g_class*/)
+static void sp_ctrlline_init(SPCtrlLine *ctrlline)
 {
     ctrlline->rgba = 0x0000ff7f;
     ctrlline->s[Geom::X] = ctrlline->s[Geom::Y] = ctrlline->e[Geom::X] = ctrlline->e[Geom::Y] = 0.0;
     ctrlline->item=NULL;
 }
 
+namespace {
 void sp_ctrlline_destroy(SPCanvasItem *object)
 {
     g_return_if_fail(object != NULL);
@@ -88,8 +64,8 @@ void sp_ctrlline_destroy(SPCanvasItem *object)
 
     ctrlline->item = NULL;
 
-    if(SP_CANVAS_ITEM_CLASS (parent_class)->destroy) {
-        (* SP_CANVAS_ITEM_CLASS (parent_class)->destroy)(object);
+    if(SP_CANVAS_ITEM_CLASS (sp_ctrlline_parent_class)->destroy) {
+       SP_CANVAS_ITEM_CLASS (sp_ctrlline_parent_class)->destroy(object);
     }
 }
 
@@ -134,8 +110,8 @@ void sp_ctrlline_update(SPCanvasItem *item, Geom::Affine const &affine, unsigned
 
     item->canvas->requestRedraw(item->x1, item->y1, item->x2, item->y2);
 
-    if (parent_class->update) {
-        (* parent_class->update)(item, affine, flags);
+    if (SP_CANVAS_ITEM_CLASS(sp_ctrlline_parent_class)->update) {
+        SP_CANVAS_ITEM_CLASS(sp_ctrlline_parent_class)->update(item, affine, flags);
     }
 
     sp_canvas_item_reset_bounds(item);

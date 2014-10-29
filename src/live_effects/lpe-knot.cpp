@@ -22,6 +22,7 @@
 #include "knotholder.h"
 
 #include <glibmm/i18n.h>
+#include <gdk/gdk.h>
 
 #include <2geom/sbasis-to-bezier.h>
 #include <2geom/sbasis.h>
@@ -536,6 +537,10 @@ LPEKnot::doBeforeEffect (SPLPEItem const* lpeitem)
 {
     using namespace Geom;
     original_bbox(lpeitem);
+    
+    if (SP_IS_PATH(lpeitem)) {
+        supplied_path = SP_PATH(lpeitem)->getCurve()->get_pathvector();
+    }
 
     gpaths.clear();
     gstroke_widths.clear();

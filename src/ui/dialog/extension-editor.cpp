@@ -25,7 +25,7 @@
 
 #include "verbs.h"
 #include "preferences.h"
-#include "interface.h"
+#include "ui/interface.h"
 
 #include "extension/extension.h"
 #include "extension/db.h"

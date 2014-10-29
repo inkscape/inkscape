@@ -15,32 +15,9 @@
 //using namespace Inkscape::UI::View;
 
 // SPViewWidget
-
-static void sp_view_widget_class_init(SPViewWidgetClass *vwc);
-static void sp_view_widget_init(SPViewWidget *widget);
 static void sp_view_widget_dispose(GObject *object);
 
-static GtkEventBoxClass *widget_parent_class;
-
-GType sp_view_widget_get_type(void)
-{
-    static GType type = 0;
-    if (!type) {
-	GTypeInfo info = {
-            sizeof(SPViewWidgetClass),
-	    NULL, NULL,
-            (GClassInitFunc) sp_view_widget_class_init,
-	    NULL, NULL,
-            sizeof(SPViewWidget),
-	    0,
-            (GInstanceInitFunc) sp_view_widget_init,
-	    NULL
-	};
-        type = g_type_register_static (GTK_TYPE_EVENT_BOX, "SPViewWidget", &info, (GTypeFlags)0);
-    }
-    
-    return type;
-}
+G_DEFINE_TYPE(SPViewWidget, sp_view_widget, GTK_TYPE_EVENT_BOX);
 
 /**
  * Callback to initialize the SPViewWidget vtable.
@@ -48,8 +25,6 @@ GType sp_view_widget_get_type(void)
 static void sp_view_widget_class_init(SPViewWidgetClass *vwc)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(vwc);
-
-    widget_parent_class = (GtkEventBoxClass*) g_type_class_peek_parent(vwc);
     
     object_class->dispose = sp_view_widget_dispose;
 }
@@ -77,8 +52,8 @@ static void sp_view_widget_dispose(GObject *object)
         vw->view = NULL;
     }
 
-    if (((GObjectClass *) (widget_parent_class))->dispose) {
-        (* ((GObjectClass *) (widget_parent_class))->dispose)(object);
+    if (G_OBJECT_CLASS(sp_view_widget_parent_class)->dispose) {
+        G_OBJECT_CLASS(sp_view_widget_parent_class)->dispose(object);
     }
 
     Inkscape::GC::request_early_collection();

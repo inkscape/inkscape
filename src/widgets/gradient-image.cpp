@@ -1,6 +1,4 @@
-#define __SP_GRADIENT_IMAGE_C__
-
-/*
+/**
  * A simple gradient preview
  *
  * Author:
@@ -12,18 +10,15 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "macros.h"
+#include <sigc++/sigc++.h>
+
 #include "display/cairo-utils.h"
 #include "gradient-image.h"
+#include "macros.h"
 #include "sp-gradient.h"
-
-#include <sigc++/functors/ptr_fun.h>
-#include <sigc++/adaptors/bind.h>
 
 #define VBLOCK 16
 
-static void sp_gradient_image_class_init (SPGradientImageClass *klass);
-static void sp_gradient_image_init (SPGradientImage *image);
 static void sp_gradient_image_size_request (GtkWidget *widget, GtkRequisition *requisition);
 
 #if GTK_CHECK_VERSION(3,0,0)
@@ -45,35 +40,13 @@ static void sp_gradient_image_gradient_release (SPObject *, SPGradientImage *im)
 static void sp_gradient_image_gradient_modified (SPObject *, guint flags, SPGradientImage *im);
 static void sp_gradient_image_update (SPGradientImage *img);
 
-static GtkWidgetClass *parent_class;
-
-GType sp_gradient_image_get_type(void)
-{
-        static GType type = 0;
-        if (!type) {
-                GTypeInfo info = {
-                        sizeof (SPGradientImageClass),
-                        NULL, NULL,
-                        (GClassInitFunc) sp_gradient_image_class_init,
-                        NULL, NULL,
-                        sizeof (SPGradientImage),
-                        0,
-                        (GInstanceInitFunc) sp_gradient_image_init,
-                        NULL
-                };
-                type = g_type_register_static (GTK_TYPE_WIDGET, "SPGradientImage", &info, (GTypeFlags)0);
-        }
-        return type;
-}
+G_DEFINE_TYPE(SPGradientImage, sp_gradient_image, GTK_TYPE_WIDGET);
 
 static void sp_gradient_image_class_init(SPGradientImageClass *klass)
 {
         GtkWidgetClass *widget_class = GTK_WIDGET_CLASS(klass);
-        parent_class = GTK_WIDGET_CLASS(g_type_class_peek_parent (klass));
 
 #if GTK_CHECK_VERSION(3,0,0)
-//      GObjectClass *object_class = G_OBJECT_CLASS(klass); 
-
         widget_class->get_preferred_width = sp_gradient_image_get_preferred_width;
         widget_class->get_preferred_height = sp_gradient_image_get_preferred_height;
         widget_class->draw = sp_gradient_image_draw;
@@ -116,11 +89,11 @@ static void sp_gradient_image_destroy(GtkObject *object)
         image->modified_connection.~connection();
 
 #if GTK_CHECK_VERSION(3,0,0)
-        if (parent_class->destroy)
-                (* (parent_class)->destroy) (object);
+        if (GTK_WIDGET_CLASS(sp_gradient_image_parent_class)->destroy)
+            GTK_WIDGET_CLASS(sp_gradient_image_parent_class)->destroy(object);
 #else
-        if ((GTK_OBJECT_CLASS(parent_class))->destroy)
-                (* (GTK_OBJECT_CLASS(parent_class))->destroy) (object);
+        if (GTK_OBJECT_CLASS(sp_gradient_image_parent_class)->destroy)
+            GTK_OBJECT_CLASS(sp_gradient_image_parent_class)->destroy(object);
 #endif
 }
 
@@ -269,3 +242,14 @@ sp_gradient_image_update (SPGradientImage *image)
                 gtk_widget_queue_draw (GTK_WIDGET (image));
         }
 }
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8 :

@@ -10,6 +10,7 @@
  */
 
 #include <iostream>
+#include <gtk/gtk.h>
 #include <gdk/gdk.h>
 #include "debug/event-tracker.h"
 #include "debug/logger.h"
@@ -58,11 +59,16 @@ public:
     Display() : ConfigurationEvent("display") {}
     void generateChildEvents() const {
         GdkDisplay *display=gdk_display_get_default();
+#if GTK_CHECK_VERSION(3,10,0)
+        GdkScreen *screen = gdk_display_get_screen(display, 0);
+        Logger::write<Screen>(screen);
+#else
         gint n_screens = gdk_display_get_n_screens(display);
         for ( gint i = 0 ; i < n_screens ; i++ ) {
             GdkScreen *screen = gdk_display_get_screen(display, i);
             Logger::write<Screen>(screen);
         }
+#endif
     }
 };
 

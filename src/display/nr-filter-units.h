@@ -1,5 +1,5 @@
-#ifndef __NR_FILTER_UNITS_H__
-#define __NR_FILTER_UNITS_H__
+#ifndef SEEN_NR_FILTER_UNITS_H
+#define SEEN_NR_FILTER_UNITS_H
 
 /*
  * Utilities for handling coordinate system transformations in filters

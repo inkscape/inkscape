@@ -10,12 +10,14 @@
  */
 
 #include <2geom/bezier-curve.h>
-#include "display/cairo-utils.h"
+
 #include "display/drawing.h"
 #include "display/drawing-context.h"
 #include "display/drawing-image.h"
 #include "preferences.h"
 #include "style.h"
+
+#include "display/cairo-utils.h"
 
 namespace Inkscape {
 

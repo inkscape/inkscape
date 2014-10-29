@@ -62,18 +62,19 @@ public:
     const_iterator end() const { return _points.end(); }
 
     // insert
-    std::pair<iterator, bool> insert(const value_type& x);
+    std::pair<iterator, bool> insert(const value_type& x, bool notify = true);
     template <class InputIterator>
     void insert(InputIterator first, InputIterator last) {
         for (; first != last; ++first) {
-            insert(*first);
+            insert(*first, false);
         }
+        signal_selection_changed.emit(std::vector<key_type>(first, last), true);
     }
 
     // erase
     void clear();
     void erase(iterator pos);
-    size_type erase(const key_type& k);
+    size_type erase(const key_type& k, bool notify = true);
     void erase(iterator first, iterator last);
 
     // find
@@ -108,7 +109,9 @@ public:
     void toggleTransformHandlesMode();
 
     sigc::signal<void> signal_update;
-    sigc::signal<void, SelectableControlPoint *, bool> signal_point_changed;
+    // It turns out that emitting a signal after every point is selected or deselected is not too efficient,
+    // so this can be done in a massive group once the selection is finally changed.
+    sigc::signal<void, std::vector<SelectableControlPoint *>, bool> signal_selection_changed;
     sigc::signal<void, CommitEvent> signal_commit;
 
     void getOriginalPoints(std::vector<Inkscape::SnapCandidatePoint> &pts);
@@ -166,4 +169,4 @@ private:
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8 :

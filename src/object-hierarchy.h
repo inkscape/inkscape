@@ -10,12 +10,11 @@
 #ifndef SEEN_INKSCAPE_OBJECT_HIERARCHY_H
 #define SEEN_INKSCAPE_OBJECT_HIERARCHY_H
 
+#include <cstddef>
 #include <exception>
 #include <list>
-#include <stddef.h>
 #include <sigc++/connection.h>
 #include <sigc++/signal.h>
-#include <glib.h>
 
 class SPObject;
 

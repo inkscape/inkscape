@@ -9,9 +9,9 @@
  * Released under GNU GPL, read the file 'COPYING' for more information.
  */
 
-#include <uri-references.h>
-#include <stddef.h>
 #include <sigc++/sigc++.h>
+
+#include "uri-references.h"
 
 namespace Inkscape {
 namespace XML {
@@ -33,7 +33,7 @@ public:
     SPObject       *owner;
 
     // concerning the LPEObject that is refered to:
-    gchar                *lpeobject_href;
+    char                 *lpeobject_href;
     Inkscape::XML::Node  *lpeobject_repr;
     LivePathEffectObject *lpeobject;
 

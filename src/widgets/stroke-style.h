@@ -12,6 +12,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+// WHOA! talk about header bloat!
+
 #ifndef SEEN_DIALOGS_STROKE_STYLE_H
 #define SEEN_DIALOGS_STROKE_STYLE_H
 
@@ -33,7 +35,7 @@
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "desktop-style.h"
-#include "dialogs/dialog-events.h"
+#include "ui/dialog-events.h"
 #include "display/canvas-bpath.h" // for SP_STROKE_LINEJOIN_*
 #include "display/drawing.h"
 #include "document-private.h"
@@ -42,7 +44,7 @@
 #include "helper/stock-items.h"
 #include "inkscape.h"
 #include "io/sys.h"
-#include "marker.h"
+#include "sp-marker.h"
 #include "preferences.h"
 #include "path-prefix.h"
 #include "selection.h"

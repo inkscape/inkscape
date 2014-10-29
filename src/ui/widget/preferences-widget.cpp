@@ -14,10 +14,6 @@
 # include <config.h>
 #endif
 
-#ifdef WIN32
-#include <windows.h>
-#endif
-
 #if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
 #include <glibmm/threads.h>
 #endif
@@ -48,6 +44,10 @@
 
 #include <glibmm/convert.h>
 #include <glibmm/i18n.h>
+
+#ifdef WIN32
+#include <windows.h>
+#endif
 
 using namespace Inkscape::UI::Widget;
 

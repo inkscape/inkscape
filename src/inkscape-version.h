@@ -16,7 +16,7 @@
 
 namespace Inkscape {
 
-extern gchar const *version_string; ///< Full version string
+extern char const *version_string; ///< Full version string
 
 } // namespace Inkscape
 

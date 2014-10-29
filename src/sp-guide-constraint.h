@@ -29,9 +29,7 @@ public:
     }
 };
 
-
 #endif // SEEN_SP_GUIDE_CONSTRAINT_H
-
 
 /*
   Local Variables:

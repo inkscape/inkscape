@@ -2,7 +2,6 @@
 #define SEEN_COLOR_PROFILE_H
 
 #include <vector>
-#include <glib.h>
 #include <sp-object.h>
 #include <glibmm/ustring.h>
 #include "cms-color-types.h"
@@ -31,7 +30,7 @@ public:
 	ColorProfile();
 	virtual ~ColorProfile();
 
-    friend cmsHPROFILE colorprofile_get_handle( SPDocument*, guint*, gchar const* );
+    friend cmsHPROFILE colorprofile_get_handle( SPDocument*, unsigned int*, char const* );
     friend class CMSSystem;
 
     static std::vector<Glib::ustring> getBaseProfileDirs();
@@ -49,21 +48,21 @@ public:
 
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
-    gchar* href;
-    gchar* local;
-    gchar* name;
-    gchar* intentStr;
-    guint rendering_intent;
+    char* href;
+    char* local;
+    char* name;
+    char* intentStr;
+    unsigned int rendering_intent; // FIXME: type the enum and hold that instead
 
 protected:
     ColorProfileImpl *impl;
 
-	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
-	virtual void release();
+    virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
+    virtual void release();
 
-	virtual void set(unsigned int key, const gchar* value);
+    virtual void set(unsigned int key, char const* value);
 
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
+    virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, unsigned int flags);
 };
 
 } // namespace Inkscape

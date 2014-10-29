@@ -19,14 +19,15 @@
 
 #include <string.h>
 
+#include "display/nr-filter-primitive.h"
+#include "display/nr-filter-types.h"
+
 #include "attributes.h"
 #include "style.h"
 #include "sp-filter-primitive.h"
 #include "xml/repr.h"
 #include "sp-filter.h"
 #include "sp-item.h"
-#include "display/nr-filter-primitive.h"
-#include "display/nr-filter-types.h"
 
 
 // CPPIFY: Make pure virtual.

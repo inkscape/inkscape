@@ -13,7 +13,7 @@
  */
 
 #include "unit-tracker.h"
-#include "ege-select-one-action.h"
+#include "widgets/ege-select-one-action.h"
 
 #define COLUMN_STRING 0
 

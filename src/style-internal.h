@@ -516,7 +516,7 @@ public:
     {}
 
     // TODO probably want to avoid gchar* and c-style strings.
-    SPIString( Glib::ustring const &name, gchar* value_default_in = NULL )
+    SPIString( Glib::ustring const &name, gchar const* value_default_in = NULL )
         : SPIBase( name ),
           value(NULL),
           value_default(value_default_in ? g_strdup(value_default_in) : NULL)

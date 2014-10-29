@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <inkscape-extension xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
-    <_name>Empty Page</_name>
+    <_name>Page</_name>
     <id>org.inkscape.render.empty_page</id>
     <dependency type="executable" location="extensions">empty_page.py</dependency>
     <dependency type="executable" location="extensions">inkex.py</dependency>
@@ -16,17 +16,26 @@
         <item value="horizontal">Horizontal</item>
         <item value="vertical">Vertical</item>
     </param>
-        
+
+    <param name="background" _gui-text="Page background:" type="enum">
+        <item value="normal">Normal</item>
+	<item value="black">Black Opaque</item>
+	<item value="gray">Gray Opaque</item>
+	<item value="white">White Opaque</item>
+    </param>
+
+    <param name="noborder" type="boolean" _gui-text="Hide border">false</param>
+
     <effect needs-live-preview="false">
         <object-type>all</object-type>
         <effects-menu hidden="true" />
     </effect>
     <inkscape:_templateinfo>
-      <inkscape:_name>Empty page</inkscape:_name>
-      <inkscape:author>Jan Darowski</inkscape:author>
+      <inkscape:_name>Page...</inkscape:_name>
+      <inkscape:author>Jan Darowski, updated by Tavmjong Bah</inkscape:author>
       <inkscape:_shortdesc>Empty page of chosen size.</inkscape:_shortdesc>
-      <inkscape:date>2013-09-10</inkscape:date>
-      <inkscape:_keywords>empty sheet a4 a3 a5 letter</inkscape:_keywords>
+      <inkscape:date>2014-10-06</inkscape:date>
+      <inkscape:_keywords>empty sheet a4 a3 a5 letter black white opaque</inkscape:_keywords>
     </inkscape:_templateinfo>
     <script>
         <command reldir="extensions" interpreter="python">empty_page.py</command>

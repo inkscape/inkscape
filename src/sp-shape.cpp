@@ -35,7 +35,7 @@
 #include "print.h"
 #include "document.h"
 #include "style.h"
-#include "marker.h"
+#include "sp-marker.h"
 #include "sp-path.h"
 #include "preferences.h"
 #include "attributes.h"

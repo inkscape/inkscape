@@ -14,8 +14,6 @@
 #ifndef SEEN_SP_FILTER_CHEMISTRY_H
 #define SEEN_SP_FILTER_CHEMISTRY_H
 
-#include <glib.h>
-
 #include "display/nr-filter-types.h"
 
 class SPDocument;
@@ -24,12 +22,11 @@ class SPFilterPrimitive;
 class SPItem;
 class SPObject;
 
-
 SPFilterPrimitive *filter_add_primitive(SPFilter *filter, Inkscape::Filters::FilterPrimitiveType);
 SPFilter *new_filter (SPDocument *document);
-SPFilter *new_filter_gaussian_blur (SPDocument *document, gdouble stdDeviation, double expansion, double expansionX, double expansionY, double width, double height);
-SPFilter *new_filter_simple_from_item (SPDocument *document, SPItem *item, const char *mode, gdouble stdDeviation);
-SPFilter *modify_filter_gaussian_blur_from_item (SPDocument *document, SPItem *item, gdouble stdDeviation);
+SPFilter *new_filter_gaussian_blur (SPDocument *document, double stdDeviation, double expansion, double expansionX, double expansionY, double width, double height);
+SPFilter *new_filter_simple_from_item (SPDocument *document, SPItem *item, const char *mode, double stdDeviation);
+SPFilter *modify_filter_gaussian_blur_from_item (SPDocument *document, SPItem *item, double stdDeviation);
 void remove_filter (SPObject *item, bool recursive);
 void remove_filter_gaussian_blur (SPObject *item);
 bool filter_is_single_gaussian_blur(SPFilter *filter);

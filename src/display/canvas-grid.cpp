@@ -71,41 +71,15 @@ static gchar const *const grid_svgname[] = {
 
 // ##########################################################
 // Grid CanvasItem
-static void grid_canvasitem_class_init (GridCanvasItemClass *klass);
-static void grid_canvasitem_init (GridCanvasItem *grid);
 static void grid_canvasitem_destroy(SPCanvasItem *object);
 static void grid_canvasitem_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
 static void grid_canvasitem_render (SPCanvasItem *item, SPCanvasBuf *buf);
 
-static SPCanvasItemClass * parent_class;
-
-GType
-grid_canvasitem_get_type (void)
-{
-    static GType grid_canvasitem_type = 0;
-
-    if (!grid_canvasitem_type) {
-	GTypeInfo grid_canvasitem_info = {
-            sizeof (GridCanvasItemClass),
-	    NULL, NULL,
-            (GClassInitFunc) grid_canvasitem_class_init,
-	    NULL, NULL,
-            sizeof (GridCanvasItem),
-	    0,
-            (GInstanceInitFunc) grid_canvasitem_init,
-	    NULL
-	};
-        
-	grid_canvasitem_type = g_type_register_static(SPCanvasItem::getType(), "GridCanvasItem", &grid_canvasitem_info, GTypeFlags(0));
-    }
-    return grid_canvasitem_type;
-}
+G_DEFINE_TYPE(GridCanvasItem, grid_canvasitem, SP_TYPE_CANVAS_ITEM);
 
 static void grid_canvasitem_class_init(GridCanvasItemClass *klass)
 {
     SPCanvasItemClass *item_class = (SPCanvasItemClass *) klass;
-
-    parent_class = (SPCanvasItemClass*)g_type_class_peek_parent (klass);
 
     item_class->destroy = grid_canvasitem_destroy;
     item_class->update = grid_canvasitem_update;
@@ -123,8 +97,8 @@ static void grid_canvasitem_destroy(SPCanvasItem *object)
     g_return_if_fail (object != NULL);
     g_return_if_fail (INKSCAPE_IS_GRID_CANVASITEM (object));
 
-    if (SP_CANVAS_ITEM_CLASS(parent_class)->destroy)
-        (* SP_CANVAS_ITEM_CLASS(parent_class)->destroy) (object);
+    if (SP_CANVAS_ITEM_CLASS(grid_canvasitem_parent_class)->destroy)
+        (* SP_CANVAS_ITEM_CLASS(grid_canvasitem_parent_class)->destroy) (object);
 }
 
 /**
@@ -145,8 +119,8 @@ grid_canvasitem_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned
 {
     GridCanvasItem *gridcanvasitem = INKSCAPE_GRID_CANVASITEM (item);
 
-    if (parent_class->update)
-        (* parent_class->update) (item, affine, flags);
+    if (SP_CANVAS_ITEM_CLASS(grid_canvasitem_parent_class)->update)
+        SP_CANVAS_ITEM_CLASS(grid_canvasitem_parent_class)->update(item, affine, flags);
 
     if (gridcanvasitem->grid) {
         gridcanvasitem->grid->Update(affine, flags);

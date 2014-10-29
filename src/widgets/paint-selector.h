@@ -12,7 +12,6 @@
  *
  */
 
-#include <glib.h>
 #include <gtk/gtk.h>
 
 #include "color.h"
@@ -35,7 +34,11 @@ class SPStyle;
  * Generic paint selector widget.
  */
 struct SPPaintSelector {
+#if GTK_CHECK_VERSION(3,0,0)
+    GtkBox  vbox;
+#else
     GtkVBox vbox;
+#endif
 
     enum Mode {
         MODE_EMPTY,
@@ -45,6 +48,9 @@ struct SPPaintSelector {
         MODE_COLOR_CMYK,
         MODE_GRADIENT_LINEAR,
         MODE_GRADIENT_RADIAL,
+#ifdef WITH_MESH
+        MODE_GRADIENT_MESH,
+#endif
         MODE_PATTERN,
         MODE_SWATCH,
         MODE_UNSET
@@ -64,6 +70,9 @@ struct SPPaintSelector {
     GtkWidget *solid;
     GtkWidget *gradient;
     GtkWidget *radial;
+#ifdef WITH_MESH
+    GtkWidget *mesh;
+#endif
     GtkWidget *pattern;
     GtkWidget *swatch;
     GtkWidget *unset;
@@ -88,6 +97,9 @@ struct SPPaintSelector {
 
     void setGradientLinear( SPGradient *vector );
     void setGradientRadial( SPGradient *vector );
+#ifdef WITH_MESH
+    void setGradientMesh(SPGradient *vector);
+#endif
     void setSwatch( SPGradient *vector );
 
     void setGradientProperties( SPGradientUnits units, SPGradientSpread spread );
@@ -109,7 +121,11 @@ enum {COMBO_COL_LABEL=0, COMBO_COL_STOCK=1, COMBO_COL_PATTERN=2, COMBO_COL_SEP=3
 
 /// The SPPaintSelector vtable
 struct SPPaintSelectorClass {
+#if GTK_CHECK_VERSION(3,0,0)
+    GtkBoxClass parent_class;
+#else
     GtkVBoxClass parent_class;
+#endif
 
     void (* mode_changed) (SPPaintSelector *psel, SPPaintSelector::Mode mode);
 

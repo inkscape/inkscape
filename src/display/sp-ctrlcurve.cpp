@@ -23,42 +23,18 @@
 
 namespace {
 
-static void sp_ctrlcurve_class_init(SPCtrlCurveClass *klass, gpointer data);
-static void sp_ctrlcurve_init(SPCtrlCurve *ctrlcurve, gpointer g_class);
 static void sp_ctrlcurve_destroy(SPCanvasItem *object);
 
 static void sp_ctrlcurve_update(SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
 static void sp_ctrlcurve_render(SPCanvasItem *item, SPCanvasBuf *buf);
 
-static SPCanvasItemClass *parent_class;
-
 } // namespace
 
-GType SPCtrlCurve::getType()
+G_DEFINE_TYPE(SPCtrlCurve, sp_ctrlcurve, SP_TYPE_CANVAS_ITEM);
+
+static void
+sp_ctrlcurve_class_init(SPCtrlCurveClass *klass)
 {
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPCtrlCurveClass),
-            NULL, NULL,
-            reinterpret_cast<GClassInitFunc>(sp_ctrlcurve_class_init),
-            NULL, NULL,
-            sizeof(SPCtrlCurve),
-            0,
-            reinterpret_cast<GInstanceInitFunc>(sp_ctrlcurve_init),
-            NULL
-        };
-        type = g_type_register_static(SP_TYPE_CANVAS_ITEM, "SPCtrlCurve", &info, static_cast<GTypeFlags>(0));
-    }
-    return type;
-}
-
-namespace {
-
-void sp_ctrlcurve_class_init(SPCtrlCurveClass *klass, gpointer /*g_class*/)
-{
-    parent_class = reinterpret_cast<SPCanvasItemClass*>(g_type_class_peek_parent(klass));
-
     klass->destroy = sp_ctrlcurve_destroy;
 
     klass->update = sp_ctrlcurve_update;
@@ -66,13 +42,14 @@ void sp_ctrlcurve_class_init(SPCtrlCurveClass *klass, gpointer /*g_class*/)
 }
 
 static void
-sp_ctrlcurve_init(SPCtrlCurve *ctrlcurve, gpointer /*g_class*/)
+sp_ctrlcurve_init(SPCtrlCurve *ctrlcurve)
 {
     // Points are initialized to 0,0
     ctrlcurve->rgba = 0x0000ff7f;
     ctrlcurve->item=NULL;
 }
 
+namespace {
 static void
 sp_ctrlcurve_destroy(SPCanvasItem *object)
 {
@@ -83,8 +60,8 @@ sp_ctrlcurve_destroy(SPCanvasItem *object)
 
     ctrlcurve->item=NULL;
 
-    if (SP_CANVAS_ITEM_CLASS (parent_class)->destroy)
-        (* SP_CANVAS_ITEM_CLASS (parent_class)->destroy) (object);
+    if (SP_CANVAS_ITEM_CLASS(sp_ctrlcurve_parent_class)->destroy)
+        SP_CANVAS_ITEM_CLASS(sp_ctrlcurve_parent_class)->destroy(object);
 }
 
 static void
@@ -125,8 +102,8 @@ sp_ctrlcurve_update(SPCanvasItem *item, Geom::Affine const &affine, unsigned int
 
     item->canvas->requestRedraw(item->x1, item->y1, item->x2, item->y2);
 
-    if (parent_class->update)
-        (* parent_class->update) (item, affine, flags);
+    if (SP_CANVAS_ITEM_CLASS(sp_ctrlcurve_parent_class)->update)
+        SP_CANVAS_ITEM_CLASS(sp_ctrlcurve_parent_class)->update(item, affine, flags);
 
     sp_canvas_item_reset_bounds (item);
 

@@ -854,6 +854,8 @@ void Layout::Calculator::BrokenSpan::setZero()
     end_glyph_index = start_glyph_index = 0;
     ends_with_whitespace = false;
     each_whitespace_width = 0.0;
+    letter_spacing = 0.0;
+    word_spacing = 0.0;
 }
 
 template<typename T> void Layout::Calculator::ParagraphInfo::free_sequence(T &seq)

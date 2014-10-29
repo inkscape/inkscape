@@ -23,6 +23,7 @@
 # include "config.h"
 #endif
 
+#include <glibmm.h>
 #include "gradient-vector.h"
 #include "ui/widget/color-preview.h"
 #include "verbs.h"
@@ -30,17 +31,17 @@
 #include "macros.h"
 #include <glibmm/i18n.h>
 #include <set>
-#include "../widgets/gradient-image.h"
-#include "../inkscape.h"
-#include "../document-private.h"
-#include "../gradient-chemistry.h"
-#include "../helper/window.h"
+#include "widgets/gradient-image.h"
+#include "inkscape.h"
+#include "document-private.h"
+#include "gradient-chemistry.h"
+#include "helper/window.h"
 #include "io/resource.h"
 
 #include "xml/repr.h"
 
-#include "../dialogs/dialog-events.h"
-#include "../preferences.h"
+#include "ui/dialog-events.h"
+#include "preferences.h"
 #include "svg/css-ostringstream.h"
 #include "sp-stop.h"
 #include "selection-chemistry.h"
@@ -50,8 +51,7 @@
 #include "desktop.h"
 #include "layer-manager.h"
 
-#include <sigc++/functors/ptr_fun.h>
-#include <sigc++/adaptors/bind.h>
+#include <sigc++/sigc++.h>
 #include "document-undo.h"
 
 using Inkscape::DocumentUndo;
@@ -60,9 +60,6 @@ enum {
     VECTOR_SET,
     LAST_SIGNAL
 };
-
-static void sp_gradient_vector_selector_class_init(SPGradientVectorSelectorClass *klass);
-static void sp_gradient_vector_selector_init(SPGradientVectorSelector *gvs);
 
 #if GTK_CHECK_VERSION(3,0,0)
 static void sp_gradient_vector_selector_destroy(GtkWidget *object);
@@ -79,7 +76,6 @@ static SPStop *get_selected_stop( GtkWidget *vb);
 void gr_get_usage_counts(SPDocument *doc, std::map<SPGradient *, gint> *mapUsageCount );
 unsigned long sp_gradient_to_hhssll(SPGradient *gr);
 
-static GtkVBoxClass *parent_class;
 static guint signals[LAST_SIGNAL] = {0};
 
 // TODO FIXME kill these globals!!!
@@ -88,35 +84,15 @@ static win_data wd;
 static gint x = -1000, y = -1000, w = 0, h = 0; // impossible original values to make sure they are read from prefs
 static Glib::ustring const prefs_path = "/dialogs/gradienteditor/";
 
-GType sp_gradient_vector_selector_get_type(void)
-{
-    static GType type = 0;
-    if (!type) {
-        static const GTypeInfo info = {
-            sizeof(SPGradientVectorSelectorClass),
-            NULL, /* base_init */
-            NULL, /* base_finalize */
-            reinterpret_cast<GClassInitFunc>(sp_gradient_vector_selector_class_init),
-            NULL, /* class_finalize */
-            NULL, /* class_data */
-            sizeof(SPGradientVectorSelector),
-            0,    /* n_preallocs */
-            reinterpret_cast<GInstanceInitFunc>(sp_gradient_vector_selector_init),
-            0,    /* value_table */
-        };
-
-        type = g_type_register_static( GTK_TYPE_VBOX,
-                                       "SPGradientVectorSelector",
-                                       &info,
-                                       static_cast< GTypeFlags >(0) );
-    }
-    return type;
-}
+#if GTK_CHECK_VERSION(3,0,0)
+G_DEFINE_TYPE(SPGradientVectorSelector, sp_gradient_vector_selector, GTK_TYPE_BOX);
+#else
+G_DEFINE_TYPE(SPGradientVectorSelector, sp_gradient_vector_selector, GTK_TYPE_VBOX);
+#endif
 
 static void sp_gradient_vector_selector_class_init(SPGradientVectorSelectorClass *klass)
 {
     GObjectClass *gobject_class = G_OBJECT_CLASS(klass);
-    parent_class = static_cast<GtkVBoxClass*>(g_type_class_peek_parent(klass));
 
     signals[VECTOR_SET] = g_signal_new( "vector_set",
                                         G_TYPE_FROM_CLASS(gobject_class),
@@ -138,6 +114,10 @@ static void sp_gradient_vector_selector_class_init(SPGradientVectorSelectorClass
 
 static void sp_gradient_vector_selector_init(SPGradientVectorSelector *gvs)
 {
+#if GTK_CHECK_VERSION(3,0,0)
+    gtk_orientable_set_orientation(GTK_ORIENTABLE(gvs), GTK_ORIENTATION_VERTICAL);
+#endif
+
     gvs->idlabel = TRUE;
 
     gvs->swatched = false;
@@ -181,12 +161,12 @@ static void sp_gradient_vector_selector_destroy(GtkObject *object)
     gvs->tree_select_connection.~connection();
 
 #if GTK_CHECK_VERSION(3,0,0)
-    if ((reinterpret_cast<GtkWidgetClass *>(parent_class))->destroy) {
-        (* (reinterpret_cast<GtkWidgetClass *>(parent_class))->destroy) (object);
+    if ((GTK_WIDGET_CLASS(sp_gradient_vector_selector_parent_class))->destroy) {
+        (GTK_WIDGET_CLASS(sp_gradient_vector_selector_parent_class))->destroy(object);
     }
 #else
-    if ((reinterpret_cast<GtkObjectClass *>(parent_class))->destroy) {
-        (* (reinterpret_cast<GtkObjectClass *>(parent_class))->destroy) (object);
+    if ((GTK_OBJECT_CLASS(sp_gradient_vector_selector_parent_class))->destroy) {
+        (GTK_OBJECT_CLASS(sp_gradient_vector_selector_parent_class))->destroy(object);
     }
 #endif
 }
@@ -488,10 +468,10 @@ void SPGradientVectorSelector::setSwatched()
   ###                 Vector Editing Widget
   ##################################################################*/
 
-#include "../widgets/sp-color-notebook.h"
-#include "../widgets/widget-sizes.h"
-#include "../xml/node-event-vector.h"
-#include "../svg/svg-color.h"
+#include "widgets/sp-color-notebook.h"
+#include "widgets/widget-sizes.h"
+#include "xml/node-event-vector.h"
+#include "svg/svg-color.h"
 
 
 #define PAD 4

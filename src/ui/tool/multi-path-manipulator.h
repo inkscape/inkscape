@@ -53,6 +53,7 @@ public:
 
     void insertNodesAtExtrema(ExtremumType extremum);
     void insertNodes();
+    void alertLPE();
     void duplicateNodes();
     void joinNodes();
     void breakNodes();
@@ -104,9 +105,9 @@ private:
     }
 
     void _commit(CommitEvent cps);
-    void _done(gchar const *reason, bool alert_LPE = false);
+    void _done(gchar const *reason, bool alert_LPE = true);
     void _doneWithCleanup(gchar const *reason, bool alert_LPE = false);
-    guint32 _getOutlineColor(ShapeRole role);
+    guint32 _getOutlineColor(ShapeRole role, SPItem *item);
 
     MapType _mmap;
 public:

@@ -18,7 +18,7 @@
 #define noSP_SS_VERBOSE
 
 #include "stroke-style.h"
-#include "../gradient-chemistry.h"
+#include "gradient-chemistry.h"
 #include "sp-gradient.h"
 #include "sp-stop.h"
 #include "svg/svg-color.h"

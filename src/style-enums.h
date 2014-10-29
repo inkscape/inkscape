@@ -17,7 +17,7 @@
 
 /* SPFontStyle */
 
-#include "display/canvas-bpath.h"
+#include "display/canvas-bpath.h" // FIXME those enums belong here!
 
 enum SPCSSFontSize {
     SP_CSS_FONT_SIZE_XX_SMALL,
@@ -227,8 +227,8 @@ enum SPTextRendering {
 
 
 struct SPStyleEnum {
-    gchar const *key;
-    gint value;
+    char const *key;
+    int value;
 };
 
 static SPStyleEnum const enum_fill_rule[] = {

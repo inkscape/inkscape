@@ -24,6 +24,7 @@ otherstuff_DATA = \
 	aisvg.xslt \
 	colors.xml \
 	jessyInk_video.svg \
+	seamless_pattern.svg \
 	svg2fxg.xsl \
 	svg2xaml.xsl \
 	xaml2svg.xsl \

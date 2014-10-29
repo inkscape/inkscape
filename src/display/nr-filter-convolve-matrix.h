@@ -1,5 +1,5 @@
-#ifndef __NR_FILTER_CONVOLVE_MATRIX_H__
-#define __NR_FILTER_CONVOLVE_MATRIX_H__
+#ifndef SEEN_NR_FILTER_CONVOLVE_MATRIX_H
+#define SEEN_NR_FILTER_CONVOLVE_MATRIX_H
 
 /*
  * feConvolveMatrix filter primitive renderer
@@ -48,10 +48,10 @@ public:
     void set_preserveAlpha(bool pa);
 
 private:
-    std::vector<gdouble> kernelMatrix;
+    std::vector<double> kernelMatrix;
     int targetX, targetY;
     int orderX, orderY;
-    gdouble divisor, bias;
+    double divisor, bias;
     int dx, dy, kernelUnitLength;
     FilterConvolveMatrixEdgeMode edgeMode;
     bool preserveAlpha;

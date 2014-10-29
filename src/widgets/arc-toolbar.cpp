@@ -34,10 +34,10 @@
 #include "desktop-handles.h"
 #include "desktop.h"
 #include "document-undo.h"
-#include "ege-adjustment-action.h"
-#include "ege-output-action.h"
-#include "ege-select-one-action.h"
-#include "ink-action.h"
+#include "widgets/ege-adjustment-action.h"
+#include "widgets/ege-output-action.h"
+#include "widgets/ege-select-one-action.h"
+#include "widgets/ink-action.h"
 #include "mod360.h"
 #include "preferences.h"
 #include "selection.h"
@@ -45,6 +45,7 @@
 #include "toolbox.h"
 #include "ui/icon-names.h"
 #include "ui/uxmanager.h"
+#include "ui/tools/arc-tool.h"
 #include "verbs.h"
 #include "widgets/spinbutton-events.h"
 #include "xml/node-event-vector.h"
@@ -304,6 +305,7 @@ static void sp_arc_toolbox_selection_changed(Inkscape::Selection *selection, GOb
     }
 }
 
+static void arc_toolbox_check_ec(SPDesktop* dt, Inkscape::UI::Tools::ToolBase* ec, GObject* holder);
 
 void sp_arc_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
@@ -402,14 +404,22 @@ void sp_arc_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObjec
         sp_arctb_sensitivize( holder, gtk_adjustment_get_value(adj1), gtk_adjustment_get_value(adj2) );
     }
 
-
-    sigc::connection *connection = new sigc::connection(
-        sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_arc_toolbox_selection_changed), G_OBJECT(holder)))
-        );
-    g_signal_connect( holder, "destroy", G_CALLBACK(delete_connection), connection );
+    desktop->connectEventContextChanged(sigc::bind(sigc::ptr_fun(arc_toolbox_check_ec), holder));
     g_signal_connect( holder, "destroy", G_CALLBACK(purge_repr_listener), holder );
 }
 
+static void arc_toolbox_check_ec(SPDesktop* desktop, Inkscape::UI::Tools::ToolBase* ec, GObject* holder)
+{
+    static sigc::connection changed;
+
+    if (SP_IS_ARC_CONTEXT(ec)) {
+        changed = sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_arc_toolbox_selection_changed), holder));
+        sp_arc_toolbox_selection_changed(sp_desktop_selection(desktop), holder);
+    } else {
+        if (changed)
+            changed.disconnect();
+    }
+}
 
 /*
   Local Variables:

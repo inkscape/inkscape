@@ -30,7 +30,7 @@
 #include "desktop-handles.h"
 #include "desktop-style.h"
 #include "document.h"
-#include "draw-anchor.h"
+#include "ui/draw-anchor.h"
 #include "macros.h"
 #include "message-stack.h"
 #include "ui/tools/pen-tool.h"
@@ -44,6 +44,8 @@
 #include "live_effects/lpe-powerstroke.h"
 #include "style.h"
 #include "ui/control-manager.h"
+// clipboard support
+#include "ui/clipboard.h"
 #include "ui/tools/freehand-base.h"
 
 #include <gdk/gdkkeysyms.h>
@@ -78,6 +80,7 @@ FreehandBase::FreehandBase(gchar const *const *cursor_shape, gint hot_x, gint ho
     , red_color(0xff00007f)
     , blue_color(0x0000ff7f)
     , green_color(0x00ff007f)
+    , highlight_color(0x0000007f)
     , red_bpath(NULL)
     , red_curve(NULL)
     , blue_bpath(NULL)
@@ -89,6 +92,7 @@ FreehandBase::FreehandBase(gchar const *const *cursor_shape, gint hot_x, gint ho
     , white_item(NULL)
     , white_curves(NULL)
     , white_anchors(NULL)
+    , overwriteCurve(NULL)
     , sa(NULL)
     , ea(NULL)
     , waiting_LPE_type(Inkscape::LivePathEffect::INVALID_LPE)
@@ -143,6 +147,9 @@ void FreehandBase::setup() {
     // No green anchor by default
     this->green_anchor = NULL;
     this->green_closed = FALSE;
+
+    // Create start anchor alternative curve
+    this->overwriteCurve = new SPCurve();
 
     this->attach = TRUE;
     spdc_attach_selection(this, this->selection);
@@ -270,8 +277,18 @@ static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item,
         if (prefs->getInt(tool_name(dc) + "/freehand-mode", 0) == 1) {
             Effect::createAndApply(SPIRO, dc->desktop->doc(), item);
         }
+        //add the bspline node in the waiting effects
+        if (prefs->getInt(tool_name(dc) + "/freehand-mode", 0) == 2) {
+            Effect::createAndApply(BSPLINE, dc->desktop->doc(), item);
+        }
 
-        int shape = prefs->getInt(tool_name(dc) + "/shape", 0);
+        //Store the clipboard path to apply in the future without the use of clipboard
+        static Geom::PathVector previous_shape_pathv;
+        enum shapeType { NONE, TRIANGLE_IN, TRIANGLE_OUT, ELLIPSE, CLIPBOARD, LAST_APPLIED };
+        static shapeType previous_shape_type = NONE;
+
+
+        shapeType shape = (shapeType)prefs->getInt(tool_name(dc) + "/shape", 0);
         bool shape_applied = false;
         SPCSSAttr *css_item = sp_css_attr_from_object(item, SP_STYLE_FLAG_ALWAYS);
         const char *cstroke = sp_repr_css_property(css_item, "stroke", "none");
@@ -279,11 +296,18 @@ static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item,
 #define SHAPE_LENGTH 10
 #define SHAPE_HEIGHT 10
 
+        if(shape == LAST_APPLIED){
+            shape = previous_shape_type;
+            if(shape == CLIPBOARD){
+                shape = LAST_APPLIED;
+            }
+        }
+
         switch (shape) {
-            case 0:
+            case NONE:
                 // don't apply any shape
                 break;
-            case 1:
+            case TRIANGLE_IN:
             {
                 // "triangle in"
                 std::vector<Geom::Point> points(1);
@@ -293,7 +317,7 @@ static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item,
                 shape_applied = true;
                 break;
             }
-            case 2:
+            case TRIANGLE_OUT:
             {
                 // "triangle out"
                 guint curve_length = curve->get_segment_count();
@@ -304,7 +328,7 @@ static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item,
                 shape_applied = true;
                 break;
             }
-            case 3:
+            case ELLIPSE:
             {
                 // "ellipse"
                 SPCurve *c = new SPCurve();
@@ -317,22 +341,40 @@ static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item,
                 c->closepath();
                 spdc_paste_curve_as_freehand_shape(c, dc, item);
                 c->unref();
+
                 shape_applied = true;
                 break;
             }
-            case 4:
+            case CLIPBOARD:
             {
                 // take shape from clipboard; TODO: catch the case where clipboard is empty
                 Effect::createAndApply(PATTERN_ALONG_PATH, dc->desktop->doc(), item);
                 Effect* lpe = SP_LPE_ITEM(item)->getCurrentLPE();
                 static_cast<LPEPatternAlongPath*>(lpe)->pattern.on_paste_button_click();
+                Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
+                Glib::ustring svgd = cm->getPathParameter(SP_ACTIVE_DESKTOP);
+                previous_shape_pathv = sp_svg_read_pathv(svgd.data());
 
                 shape_applied = true;
+                break;
+            }
+            case LAST_APPLIED:
+            {
+                if(previous_shape_pathv.size() != 0){
+                    SPCurve * c = new SPCurve();
+                    c->set_pathvector(previous_shape_pathv);
+                    spdc_paste_curve_as_freehand_shape(c, dc, item);
+                    c->unref();
+
+                    shape_applied = true;
+                }
                 break;
             }
             default:
                 break;
         }
+        previous_shape_type = shape;
+
         if (shape_applied) {
             // apply original stroke color as fill and unset stroke; then return
             SPCSSAttr *css = sp_repr_css_attr_new();
@@ -486,7 +528,7 @@ void spdc_concat_colors_and_flush(FreehandBase *dc, gboolean forceclosed)
 {
     // Concat RBG
     SPCurve *c = dc->green_curve;
-
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     // Green
     dc->green_curve = new SPCurve();
     while (dc->green_bpaths) {
@@ -533,9 +575,20 @@ void spdc_concat_colors_and_flush(FreehandBase *dc, gboolean forceclosed)
         if (dc->sa->start && !(dc->sa->curve->is_closed()) ) {
             c = reverse_then_unref(c);
         }
-        dc->sa->curve->append_continuous(c, 0.0625);
-        c->unref();
-        dc->sa->curve->closepath_current();
+        if(prefs->getInt(tool_name(dc) + "/freehand-mode", 0) == 1 || 
+            prefs->getInt(tool_name(dc) + "/freehand-mode", 0) == 2){
+            dc->overwriteCurve->append_continuous(c, 0.0625);
+            c->unref();
+            dc->overwriteCurve->closepath_current();
+            if(dc->sa){
+                dc->white_curves = g_slist_remove(dc->white_curves, dc->sa->curve);
+                dc->white_curves = g_slist_append(dc->white_curves, dc->overwriteCurve);
+            }
+        }else{
+            dc->sa->curve->append_continuous(c, 0.0625);
+            c->unref();
+            dc->sa->curve->closepath_current();
+        }
         spdc_flush_white(dc, NULL);
         return;
     }
@@ -544,6 +597,10 @@ void spdc_concat_colors_and_flush(FreehandBase *dc, gboolean forceclosed)
     if (dc->sa) {
         SPCurve *s = dc->sa->curve;
         dc->white_curves = g_slist_remove(dc->white_curves, s);
+        if(prefs->getInt(tool_name(dc) + "/freehand-mode", 0) == 1 || 
+            prefs->getInt(tool_name(dc) + "/freehand-mode", 0) == 2){
+                s = dc->overwriteCurve;
+        }
         if (dc->sa->start) {
             s = reverse_then_unref(s);
         }
@@ -555,6 +612,25 @@ void spdc_concat_colors_and_flush(FreehandBase *dc, gboolean forceclosed)
         dc->white_curves = g_slist_remove(dc->white_curves, e);
         if (!dc->ea->start) {
             e = reverse_then_unref(e);
+        }
+        if(prefs->getInt(tool_name(dc) + "/freehand-mode", 0) == 1 || 
+            prefs->getInt(tool_name(dc) + "/freehand-mode", 0) == 2){
+                e = reverse_then_unref(e);
+                Geom::CubicBezier const * cubic = dynamic_cast<Geom::CubicBezier const*>(&*e->last_segment());
+                SPCurve *lastSeg = new SPCurve();
+                if(cubic){
+                    lastSeg->moveto((*cubic)[0]);
+                    lastSeg->curveto((*cubic)[1],(*cubic)[3],(*cubic)[3]);
+                    if( e->get_segment_count() == 1){
+                        e = lastSeg;
+                    }else{
+                        //we eliminate the last segment
+                        e->backspace();
+                        //and we add it again with the recreation
+                        e->append_continuous(lastSeg, 0.0625);
+                    }
+                }
+                e = reverse_then_unref(e);
         }
         c->append_continuous(e, 0.0625);
         e->unref();
@@ -599,6 +675,7 @@ static void spdc_flush_white(FreehandBase *dc, SPCurve *gc)
 
         bool has_lpe = false;
         Inkscape::XML::Node *repr;
+
         if (dc->white_item) {
             repr = dc->white_item->getRepr();
             has_lpe = SP_LPE_ITEM(dc->white_item)->hasPathEffectRecursive();
@@ -662,7 +739,6 @@ SPDrawAnchor *spdc_test_inside(FreehandBase *dc, Geom::Point p)
             active = na;
         }
     }
-
     return active;
 }
 

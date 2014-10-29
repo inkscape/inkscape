@@ -247,7 +247,11 @@ gboolean IconImpl::draw(GtkWidget *widget, cairo_t* cr)
     bool unref_image = false;
 
     /* copied from the expose function of GtkImage */
+#if GTK_CHECK_VERSION(3,0,0)
+    if (gtk_widget_get_state_flags (GTK_WIDGET(icon)) != GTK_STATE_FLAG_NORMAL && image) {
+#else
     if (gtk_widget_get_state (GTK_WIDGET(icon)) != GTK_STATE_NORMAL && image) {
+#endif
         GtkIconSource *source = gtk_icon_source_new();
         gtk_icon_source_set_pixbuf(source, icon->pb);
         gtk_icon_source_set_size(source, GTK_ICON_SIZE_SMALL_TOOLBAR); // note: this is boilerplate and not used
@@ -685,6 +689,7 @@ void IconImpl::setupLegacyNaming() {
     legacyNames["draw-star"] ="star_angled";
     legacyNames["path-mode-bezier"] ="bezier_mode";
     legacyNames["path-mode-spiro"] ="spiro_splines_mode";
+    legacyNames["path-mode-bspline"] ="bspline_mode";
     legacyNames["path-mode-polyline"] ="polylines_mode";
     legacyNames["path-mode-polyline-paraxial"] ="paraxial_lines_mode";
     legacyNames["draw-use-tilt"] ="guse_tilt";

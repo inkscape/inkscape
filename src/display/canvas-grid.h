@@ -82,7 +82,7 @@ public:
     virtual void Render (SPCanvasBuf *buf) = 0;
 
     virtual void readRepr() = 0;
-    virtual void onReprAttrChanged (Inkscape::XML::Node * /*repr*/, const gchar */*key*/, const gchar */*oldval*/, const gchar */*newval*/, bool /*is_interactive*/) = 0;
+    virtual void onReprAttrChanged (Inkscape::XML::Node * /*repr*/, char const */*key*/, char const */*oldval*/, char const */*newval*/, bool /*is_interactive*/) = 0;
 
     Gtk::Widget * newWidget();
 
@@ -129,11 +129,11 @@ public:
     CanvasXYGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument * in_doc);
     virtual ~CanvasXYGrid();
 
-    void Update (Geom::Affine const &affine, unsigned int flags);
-    void Render (SPCanvasBuf *buf);
+    virtual void Update (Geom::Affine const &affine, unsigned int flags);
+    virtual void Render (SPCanvasBuf *buf);
 
-    void readRepr();
-    void onReprAttrChanged (Inkscape::XML::Node * repr, const gchar *key, const gchar *oldval, const gchar *newval, bool is_interactive);
+    virtual void readRepr();
+    virtual void onReprAttrChanged (Inkscape::XML::Node * repr, char const *key, char const *oldval, char const *newval, bool is_interactive);
 
     Geom::Point spacing; /**< Spacing between elements of the grid */
     bool scaled[2];    /**< Whether the grid is in scaled mode, which can

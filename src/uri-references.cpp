@@ -1,6 +1,4 @@
-#define __SP_URI_REFERENCES_C__
-
-/*
+/**
  * Helper methods for resolving URI References
  *
  * Authors:
@@ -206,4 +204,4 @@ sp_uri_reference_resolve (SPDocument *document, const gchar *uri)
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8 :

@@ -1,5 +1,5 @@
-#ifndef __SP_SCRIPT_H__
-#define __SP_SCRIPT_H__
+#ifndef SEEN_SP_SCRIPT_H
+#define SEEN_SP_SCRIPT_H
 
 /*
  * SVG <script> implementation
@@ -24,15 +24,15 @@ public:
 	SPScript();
 	virtual ~SPScript();
 
-	gchar *xlinkhref;
+	char *xlinkhref;
 
 protected:
 	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
 	virtual void release();
-	virtual void set(unsigned int key, const gchar* value);
+	virtual void set(unsigned int key, char const* value);
 	virtual void update(SPCtx* ctx, unsigned int flags);
 	virtual void modified(unsigned int flags);
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, unsigned int flags);
 };
 
 #endif

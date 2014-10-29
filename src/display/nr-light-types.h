@@ -1,5 +1,5 @@
-#ifndef __NR_LIGHT_TYPES_H__
-#define __NR_LIGHT_TYPES_H__
+#ifndef SEEN_NR_LIGHT_TYPES_H
+#define SEEN_NR_LIGHT_TYPES_H
 
 namespace Inkscape {
 namespace Filters {

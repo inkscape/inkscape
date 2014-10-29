@@ -262,6 +262,9 @@ LPEVonKoch::doBeforeEffect (SPLPEItem const* lpeitem)
         tmp_pathv.push_back(tmp_path);
         ref_path.set_new_value(tmp_pathv,true);
     }
+    SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
+    item->apply_to_clippath(item);
+    item->apply_to_mask(item);
 }
 
 

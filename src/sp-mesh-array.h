@@ -39,8 +39,6 @@
    an array which simplifies things like inserting new rows or columns.
 */
 
-#include <gdk/gdk.h>
-#include <glibmm/ustring.h>
 #include <2geom/point.h>
 #include "color.h"
 
@@ -89,13 +87,13 @@ public:
     opacity = 0.0;
   }
   NodeType node_type;
-  guint     node_edge;
+  unsigned int     node_edge;
   bool set;
   Geom::Point p;
-  guint draggable;  // index of on-screen node
-  gchar path_type;
+  unsigned int draggable;  // index of on-screen node
+  char path_type;
   SPColor color;
-  gdouble opacity;
+  double opacity;
 };
 
 
@@ -110,21 +108,21 @@ private:
 
 public:
   SPMeshPatchI( std::vector<std::vector< SPMeshNode* > > *n, int r, int c );
-  Geom::Point getPoint( guint side, guint point );
-  std::vector< Geom::Point > getPointsForSide( guint i );
-  void        setPoint( guint side, guint point, Geom::Point p, bool set = true );
-  gchar getPathType( guint i );
-  void  setPathType( guint, gchar t );
-  Geom::Point getTensorPoint( guint i );
-  void        setTensorPoint( guint i, Geom::Point p );
+  Geom::Point getPoint( unsigned int side, unsigned int point );
+  std::vector< Geom::Point > getPointsForSide( unsigned int i );
+  void        setPoint( unsigned int side, unsigned int point, Geom::Point p, bool set = true );
+  char getPathType( unsigned int i );
+  void  setPathType( unsigned int, char t );
+  Geom::Point getTensorPoint( unsigned int i );
+  void        setTensorPoint( unsigned int i, Geom::Point p );
   bool tensorIsSet();
-  bool tensorIsSet( guint i );
-  Geom::Point coonsTensorPoint( guint i );
+  bool tensorIsSet( unsigned int i );
+  Geom::Point coonsTensorPoint( unsigned int i );
   void    updateNodes();
-  SPColor getColor( guint i );
-  void    setColor( guint i, SPColor c );
-  gdouble getOpacity( guint i );
-  void    setOpacity( guint i, gdouble o );
+  SPColor getColor( unsigned int i );
+  void    setColor( unsigned int i, SPColor c );
+  double  getOpacity( unsigned int i );
+  void    setOpacity( unsigned int i, double o );
 };
 
 class SPMeshGradient;
@@ -160,26 +158,26 @@ public:
   void print();
 
   // Get size of patch
-  guint patch_rows();
-  guint patch_columns();
+  unsigned int patch_rows();
+  unsigned int patch_columns();
 
-  SPMeshNode * node( guint i, guint j ) { return nodes[i][j]; }
+  SPMeshNode * node( unsigned int i, unsigned int j ) { return nodes[i][j]; }
 
   // Operations on corners
-  bool adjacent_corners( guint i, guint j, SPMeshNode* n[4] );
-  guint side_toggle( std::vector< guint > );
-  guint side_arc( std::vector< guint > );
-  guint tensor_toggle( std::vector< guint > );
-  guint color_smooth( std::vector< guint > );
-  guint color_pick( std::vector< guint >, SPItem* );
+  bool adjacent_corners( unsigned int i, unsigned int j, SPMeshNode* n[4] );
+  unsigned int side_toggle( std::vector< unsigned int > );
+  unsigned int side_arc( std::vector< unsigned int > );
+  unsigned int tensor_toggle( std::vector< unsigned int > );
+  unsigned int color_smooth( std::vector< unsigned int > );
+  unsigned int color_pick( std::vector< unsigned int >, SPItem* );
 
   // Update other nodes in response to a node move.
-  void update_handles( guint corner, std::vector< guint > selected_corners, Geom::Point old_p, MeshNodeOperation op );
+  void update_handles( unsigned int corner, std::vector< unsigned int > selected_corners, Geom::Point old_p, MeshNodeOperation op );
 
-  void split_row( guint i, guint n );
-  void split_column( guint j, guint n );
-  void split_row( guint i, double coord );
-  void split_column( guint j, double coord );
+  void split_row( unsigned int i, unsigned int n );
+  void split_column( unsigned int j, unsigned int n );
+  void split_row( unsigned int i, double coord );
+  void split_column( unsigned int j, double coord );
 };
 
 #endif /* !SEEN_SP_MESH_ARRAY_H */

@@ -23,10 +23,9 @@
 # include "config.h"
 #endif
 
-#include <glib-object.h>
-#include <gtk/gtk.h>
-#include <gdk/gdk.h>
 #include <2geom/rect.h>
+#include <glib-object.h>
+
 #include "ui/control-types.h"
 
 G_BEGIN_DECLS
@@ -36,8 +35,10 @@ struct SPCanvasBuf;
 struct SPCanvasGroup;
 
 typedef struct _SPCanvasItemClass SPCanvasItemClass;
+typedef union  _GdkEvent          GdkEvent;
+typedef struct _GdkCursor         GdkCursor;
 
-#define SP_TYPE_CANVAS_ITEM (SPCanvasItem::getType())
+#define SP_TYPE_CANVAS_ITEM (sp_canvas_item_get_type())
 #define SP_CANVAS_ITEM(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_CANVAS_ITEM, SPCanvasItem))
 #define SP_CANVAS_ITEM_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_CANVAS_ITEM, SPCanvasItemClass))
 #define SP_IS_CANVAS_ITEM(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_CANVAS_ITEM))
@@ -50,7 +51,6 @@ typedef struct _SPCanvasItemClass SPCanvasItemClass;
  */
 struct SPCanvasItem {
     GInitiallyUnowned parent_instance;
-    static GType getType();
 
     SPCanvas *canvas;
     SPCanvasItem *parent;
@@ -72,6 +72,8 @@ struct SPCanvasItem {
  
     bool in_destruction;
 };
+
+GType sp_canvas_item_get_type();
 
 /**
  * The vtable of an SPCanvasItem.

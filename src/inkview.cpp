@@ -62,7 +62,7 @@
 
 #include "inkscape-private.h"
 
-Inkscape::Application *inkscape;
+InkscapeApplication *inkscape;
 
 #include <iostream>
 
@@ -232,7 +232,7 @@ main (int argc, const char **argv)
     ss.view = NULL;
     ss.fullscreen = false;
 
-    inkscape = (Inkscape::Application *)g_object_new (SP_TYPE_INKSCAPE, NULL);
+    inkscape = (InkscapeApplication *)g_object_new (SP_TYPE_INKSCAPE, NULL);
 
     // starting at where the commandline options stopped parsing because
     // we want all the files to be in the list
@@ -569,16 +569,6 @@ static void usage()
 	    "\n");
     exit(1);
 }
-
-#ifdef XXX
-/* TODO !!! make this temporary stub unnecessary */
-Inkscape::Application *inkscape_get_instance() { return NULL; }
-void inkscape_ref (void) {}
-void inkscape_unref (void) {}
-void inkscape_add_document (SPDocument *document) {}
-void inkscape_remove_document (SPDocument *document) {}
-#endif
-
 
 /*
   Local Variables:

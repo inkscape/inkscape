@@ -13,27 +13,23 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 #include <glib.h>
 #include <glib/gprintf.h>
-//todo: use glib instead of stdlib
-#include <stdlib.h>
+#include <cstdlib>
+
 #include "svg/stringstream.h"
 
 class NumberOptNumber {
 
 public:
 
-    gfloat number; 
+    float number; 
 
-    gfloat optNumber;
+    float optNumber;
 
-    guint _set : 1;
+    unsigned int _set : 1;
 
-    guint optNumber_set : 1;
+    unsigned int optNumber_set : 1;
 
     NumberOptNumber()
     {
@@ -44,27 +40,27 @@ public:
         optNumber_set = FALSE;
     }
 
-    gfloat getNumber()
+    float getNumber()
     {
         if(_set)
             return number;
         return -1;
     }
 
-    gfloat getOptNumber()
+    float getOptNumber()
     {
         if(optNumber_set)
             return optNumber;
         return -1;
     }
 
-    void setOptNumber(gfloat num)
+    void setOptNumber(float num)
     {
         optNumber_set = true;
         optNumber = num;
     }
 
-    void setNumber(gfloat num)
+    void setNumber(float num)
     {
         _set = true;
         number = num;
@@ -78,7 +74,7 @@ public:
         return _set;
     }
     
-    gchar *getValueString()
+    char *getValueString()
     {
         Inkscape::SVGOStringStream os;
 
@@ -96,12 +92,12 @@ public:
         return g_strdup(os.str().c_str());
     }
 
-    void set(gchar const *str)
+    void set(char const *str)
     {
         if(!str)
             return;
 
-        gchar **values = g_strsplit(str, " ", 2);
+        char **values = g_strsplit(str, " ", 2);
 
         if( values[0] != NULL )
         {

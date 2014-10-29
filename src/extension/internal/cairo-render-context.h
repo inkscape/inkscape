@@ -31,6 +31,9 @@
 class SPClipPath;
 class SPMask;
 
+typedef struct _PangoFont PangoFont;
+typedef struct _PangoLayout PangoLayout;
+
 namespace Inkscape {
 class Pixbuf;
 

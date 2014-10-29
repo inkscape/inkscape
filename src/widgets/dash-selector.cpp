@@ -25,7 +25,7 @@
 #include <2geom/coord.h>
 
 #include "style.h"
-#include "dialogs/dialog-events.h"
+#include "ui/dialog-events.h"
 #include "preferences.h"
 #include "ui/widget/spinbutton.h"
 #include "display/cairo-utils.h"

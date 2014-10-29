@@ -94,8 +94,8 @@ protected:
     void  save_default_metadata();
 
     void _handleDocumentReplaced(SPDesktop* desktop, SPDocument *document);
-    void _handleActivateDesktop(Inkscape::Application *application, SPDesktop *desktop);
-    void _handleDeactivateDesktop(Inkscape::Application *application, SPDesktop *desktop);
+    void _handleActivateDesktop(InkscapeApplication *application, SPDesktop *desktop);
+    void _handleDeactivateDesktop(InkscapeApplication *application, SPDesktop *desktop);
 
     Inkscape::XML::SignalObserver _emb_profiles_observer, _scripts_observer;
     Gtk::Notebook  _notebook;

@@ -9,7 +9,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <glib.h>
+#include <glibmm.h>
 #include <2geom/curves.h>
 #include <2geom/pathvector.h>
 #include <2geom/path-sink.h>

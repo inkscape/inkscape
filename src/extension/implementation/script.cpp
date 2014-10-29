@@ -26,7 +26,7 @@
 
 #include "desktop-handles.h"
 #include "desktop.h"
-#include "dialogs/dialog-events.h"
+#include "ui/dialog-events.h"
 #include "extension/effect.h"
 #include "extension/output.h"
 #include "extension/input.h"

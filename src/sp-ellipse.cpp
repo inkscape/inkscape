@@ -14,26 +14,25 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
+#include <glibmm.h>
+#include <glibmm/i18n.h>
 
+#include <2geom/angle.h>
+#include <2geom/ellipse.h>
+#include <2geom/path-sink.h>
+#include <2geom/pathvector.h>
+#include <2geom/transforms.h>
+
+#include "attributes.h"
+#include "display/curve.h"
+#include "document.h"
+#include "preferences.h"
+#include "snap-candidate.h"
+#include "sp-ellipse.h"
+#include "style.h"
 #include "svg/svg.h"
 #include "svg/path-string.h"
 #include "xml/repr.h"
-#include "attributes.h"
-#include "style.h"
-#include "display/curve.h"
-#include <glibmm/i18n.h>
-#include <2geom/angle.h>
-#include <2geom/ellipse.h>
-#include <2geom/transforms.h>
-#include <2geom/pathvector.h>
-#include <2geom/path-sink.h>
-#include "document.h"
-#include "sp-ellipse.h"
-#include "preferences.h"
-#include "snap-candidate.h"
 
 #include "sp-factory.h"
 
@@ -42,21 +41,21 @@ SPObject *create_ellipse()
 {
     SPGenericEllipse *ellipse = new SPGenericEllipse();
     ellipse->type = SP_GENERIC_ELLIPSE_ELLIPSE;
-    return (SPObject*)ellipse;
+    return ellipse;
 }
 
 SPObject *create_circle()
 {
     SPGenericEllipse *circle = new SPGenericEllipse();
     circle->type = SP_GENERIC_ELLIPSE_CIRCLE;
-    return (SPObject*)circle;
+    return circle;
 }
 
 SPObject *create_arc()
 {
     SPGenericEllipse *arc = new SPGenericEllipse();
     arc->type = SP_GENERIC_ELLIPSE_ARC;
-    return (SPObject*)arc;
+    return arc;
 }
 
 bool ellipse_registered = SPFactory::instance().registerObject("svg:ellipse", create_ellipse);
@@ -695,4 +694,4 @@ bool SPGenericEllipse::_isSlice() const
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8 :

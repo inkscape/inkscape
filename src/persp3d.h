@@ -1,5 +1,5 @@
-#ifndef __PERSP3D_H__
-#define __PERSP3D_H__
+#ifndef SEEN_PERSP3D_H
+#define SEEN_PERSP3D_H
 
 /*
  * Implementation of 3D perspectives as SPObjects
@@ -16,8 +16,9 @@
 #define SP_IS_PERSP3D(obj) (dynamic_cast<const Persp3D*>((SPObject*)obj) != NULL)
 
 #include <list>
-#include <vector>
 #include <map>
+#include <vector>
+
 #include "transf_mat_3x4.h"
 #include "document.h"
 #include "inkscape.h" // for SP_ACTIVE_DOCUMENT
@@ -64,11 +65,11 @@ protected:
 	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
 	virtual void release();
 
-	virtual void set(unsigned int key, const gchar* value);
+	virtual void set(unsigned int key, char const* value);
 
 	virtual void update(SPCtx* ctx, unsigned int flags);
 
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, unsigned int flags);
 };
 
 
@@ -100,7 +101,7 @@ void persp3d_update_z_orders (Persp3D *persp);
 inline unsigned int persp3d_num_boxes (Persp3D *persp) { return persp->perspective_impl->boxes.size(); }
 std::list<SPBox3D *> persp3d_list_of_boxes(Persp3D *persp);
 
-bool persp3d_perspectives_coincide(const Persp3D *lhs, const Persp3D *rhs);
+bool persp3d_perspectives_coincide(Persp3D const *lhs, Persp3D const *rhs);
 void persp3d_absorb(Persp3D *persp1, Persp3D *persp2);
 
 Persp3D * persp3d_create_xml_element (SPDocument *document, Persp3DImpl *dup = NULL);
@@ -112,7 +113,7 @@ void persp3d_print_debugging_info (Persp3D *persp);
 void persp3d_print_debugging_info_all(SPDocument *doc);
 void persp3d_print_all_selected();
 
-void print_current_persp3d(gchar *func_name, Persp3D *persp);
+void print_current_persp3d(char *func_name, Persp3D *persp);
 
 #endif /* __PERSP3D_H__ */
 

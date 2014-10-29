@@ -23,7 +23,7 @@
 #include "ui/tools/tool-base.h"
 #include "xml/repr.h"
 #include "perspective-line.h"
-#include "shape-editor.h"
+#include "ui/shape-editor.h"
 #include "snap.h"
 #include "sp-namedview.h"
 #include "ui/control-manager.h"

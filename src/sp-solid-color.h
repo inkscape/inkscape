@@ -11,9 +11,11 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <glib.h>
 #include "color.h"
 #include "sp-paint-server.h"
+
+typedef struct _cairo cairo_t;
+typedef struct _cairo_pattern cairo_pattern_t;
 
 #define SP_SOLIDCOLOR(obj) (dynamic_cast<SPSolidColor*>((SPObject*)obj))
 #define SP_IS_SOLIDCOLOR(obj) (dynamic_cast<const SPSolidColor*>((SPObject*)obj) != NULL)
@@ -28,8 +30,8 @@ public:
 
 protected:
     virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
-    virtual void set(unsigned int key, const gchar* value);
-    virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
+    virtual void set(unsigned int key, char const* value);
+    virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, unsigned int flags);
 };
 
 #endif /* !SEEN_SP_SOLIDCOLOR_H */

@@ -42,6 +42,13 @@ Parameter::param_write_to_repr(const char * svgd)
     param_effect->getRepr()->setAttribute(param_key.c_str(), svgd);
 }
 
+// In gtk2, this wasn't an issue; we could toss around
+// G_MAXDOUBLE and not worry about size allocations. But
+// in gtk3, it is an issue: it allocates widget size for the maxmium
+// value you pass to it, leading to some insane lengths.
+// If you need this to be more, please be conservative about it.
+const double SCALARPARAM_G_MAXDOUBLE = 10000000000;
+
 void Parameter::write_to_SVG(void)
 {
     gchar * str = param_getSVGValue();
@@ -57,8 +64,8 @@ ScalarParam::ScalarParam( const Glib::ustring& label, const Glib::ustring& tip,
                       Effect* effect, gdouble default_value)
     : Parameter(label, tip, key, wr, effect),
       value(default_value),
-      min(-G_MAXDOUBLE),
-      max(G_MAXDOUBLE),
+      min(-SCALARPARAM_G_MAXDOUBLE),
+      max(SCALARPARAM_G_MAXDOUBLE),
       integer(false),
       defvalue(default_value),
       digits(2),
@@ -114,8 +121,22 @@ ScalarParam::param_set_value(gdouble val)
 void
 ScalarParam::param_set_range(gdouble min, gdouble max)
 {
-    this->min = min;
-    this->max = max;
+    // if you look at client code, you'll see that many effects
+    // has a tendency to set an upper range of Geom::infinity().
+    // Once again, in gtk2, this is not a problem. But in gtk3,
+    // widgets get allocated the amount of size they ask for,
+    // leading to excessively long widgets.
+
+    if (min >= -SCALARPARAM_G_MAXDOUBLE) {
+        this->min = min;
+    } else {
+        this->min = -SCALARPARAM_G_MAXDOUBLE;
+    }
+    if (max <= SCALARPARAM_G_MAXDOUBLE) {
+        this->max = max;
+    } else {
+	this->max = SCALARPARAM_G_MAXDOUBLE;
+    }
 
     param_set_value(value); // reset value to see whether it is in ranges
 }

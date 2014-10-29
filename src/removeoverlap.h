@@ -13,7 +13,7 @@
 #ifndef SEEN_REMOVEOVERLAP_H
 #define SEEN_REMOVEOVERLAP_H
 
-#include <glib.h>
+typedef struct _GSList GSList;
 
 void removeoverlap(GSList const *items, double xGap, double yGap);
 

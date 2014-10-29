@@ -49,19 +49,19 @@ public:
     virtual UI::Widget::Panel &getPanel() { return _panel; }
 
 protected:
-    static void handle_deactivate_desktop(Inkscape::Application *application, SPDesktop *desktop, void *data) {
+    static void handle_deactivate_desktop(InkscapeApplication *application, SPDesktop *desktop, void *data) {
         g_return_if_fail(data != NULL);
         static_cast<PanelDialogBase *>(data)->_propagateDesktopDeactivated(application, desktop);
     }
 
-    static void _handle_activate_desktop(Inkscape::Application *application, SPDesktop *desktop, void *data) {
+    static void _handle_activate_desktop(InkscapeApplication *application, SPDesktop *desktop, void *data) {
         g_return_if_fail(data != NULL);
         static_cast<PanelDialogBase *>(data)->_propagateDesktopActivated(application, desktop);
     }
 
     inline virtual void _propagateDocumentReplaced(SPDesktop* desktop, SPDocument *document);
-    inline virtual void _propagateDesktopActivated(Inkscape::Application *, SPDesktop *);
-    inline virtual void _propagateDesktopDeactivated(Inkscape::Application *, SPDesktop *);
+    inline virtual void _propagateDesktopActivated(InkscapeApplication *, SPDesktop *);
+    inline virtual void _propagateDesktopDeactivated(InkscapeApplication *, SPDesktop *);
 
     UI::Widget::Panel &_panel;
     sigc::connection _document_replaced_connection;
@@ -134,14 +134,14 @@ void PanelDialogBase::_propagateDocumentReplaced(SPDesktop *desktop, SPDocument 
     _panel.signalDocumentReplaced().emit(desktop, document);
 }
 
-void PanelDialogBase::_propagateDesktopActivated(Inkscape::Application *application, SPDesktop *desktop)
+void PanelDialogBase::_propagateDesktopActivated(InkscapeApplication *application, SPDesktop *desktop)
 {
     _document_replaced_connection =
         desktop->connectDocumentReplaced(sigc::mem_fun(*this, &PanelDialogBase::_propagateDocumentReplaced));
     _panel.signalActivateDesktop().emit(application, desktop);
 }
 
-void PanelDialogBase::_propagateDesktopDeactivated(Inkscape::Application *application, SPDesktop *desktop)
+void PanelDialogBase::_propagateDesktopDeactivated(InkscapeApplication *application, SPDesktop *desktop)
 {
     _document_replaced_connection.disconnect();
     _panel.signalDeactiveDesktop().emit(application, desktop);

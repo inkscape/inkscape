@@ -15,6 +15,11 @@
 
 #include "sp-shape.h"
 #include "style.h"
+#include "xml/repr.h"
+#include "sp-paint-server.h"
+#include "svg/svg-color.h"
+#include "desktop-style.h"
+#include "svg/css-ostringstream.h"
 #include "display/curve.h"
 
 #include <2geom/path.h>
@@ -185,11 +190,12 @@ namespace Inkscape {
 namespace LivePathEffect {
 
 static const Util::EnumData<unsigned> InterpolatorTypeData[] = {
+    {Geom::Interpolate::INTERP_CUBICBEZIER_SMOOTH,  N_("CubicBezierSmooth"), "CubicBezierSmooth"},
     {Geom::Interpolate::INTERP_LINEAR          , N_("Linear"), "Linear"},
     {Geom::Interpolate::INTERP_CUBICBEZIER          , N_("CubicBezierFit"), "CubicBezierFit"},
     {Geom::Interpolate::INTERP_CUBICBEZIER_JOHAN     , N_("CubicBezierJohan"), "CubicBezierJohan"},
     {Geom::Interpolate::INTERP_SPIRO  , N_("SpiroInterpolator"), "SpiroInterpolator"},
-    {Geom::Interpolate::INTERP_CENTRIPETAL_CATMULLROM  , N_("Centripetal Catmull-Rom"), "CentripetalCatmullRom"}
+    {Geom::Interpolate::INTERP_CENTRIPETAL_CATMULLROM, N_("Centripetal Catmull-Rom"), "CentripetalCatmullRom"}
 };
 static const Util::EnumDataConverter<unsigned> InterpolatorTypeConverter(InterpolatorTypeData, sizeof(InterpolatorTypeData)/sizeof(*InterpolatorTypeData));
 
@@ -231,12 +237,12 @@ LPEPowerStroke::LPEPowerStroke(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     offset_points(_("Offset points"), _("Offset points"), "offset_points", &wr, this),
     sort_points(_("Sort points"), _("Sort offset points according to their time value along the curve"), "sort_points", &wr, this, true),
-    interpolator_type(_("Interpolator type:"), _("Determines which kind of interpolator will be used to interpolate between stroke width along the path"), "interpolator_type", InterpolatorTypeConverter, &wr, this, Geom::Interpolate::INTERP_CUBICBEZIER_JOHAN),
+    interpolator_type(_("Interpolator type:"), _("Determines which kind of interpolator will be used to interpolate between stroke width along the path"), "interpolator_type", InterpolatorTypeConverter, &wr, this, Geom::Interpolate::INTERP_CUBICBEZIER),
     interpolator_beta(_("Smoothness:"), _("Sets the smoothness for the CubicBezierJohan interpolator; 0 = linear interpolation, 1 = smooth"), "interpolator_beta", &wr, this, 0.2),
-    start_linecap_type(_("Start cap:"), _("Determines the shape of the path's start"), "start_linecap_type", LineCapTypeConverter, &wr, this, LINECAP_ROUND),
-    linejoin_type(_("Join:"), _("Determines the shape of the path's corners"), "linejoin_type", LineJoinTypeConverter, &wr, this, LINEJOIN_ROUND),
+    start_linecap_type(_("Start cap:"), _("Determines the shape of the path's start"), "start_linecap_type", LineCapTypeConverter, &wr, this, LINECAP_BUTT),
+    linejoin_type(_("Join:"), _("Determines the shape of the path's corners"), "linejoin_type", LineJoinTypeConverter, &wr, this, LINEJOIN_EXTRP_MITER_ARC),
     miter_limit(_("Miter limit:"), _("Maximum length of the miter (in units of stroke width)"), "miter_limit", &wr, this, 4.),
-    end_linecap_type(_("End cap:"), _("Determines the shape of the path's end"), "end_linecap_type", LineCapTypeConverter, &wr, this, LINECAP_ROUND)
+    end_linecap_type(_("End cap:"), _("Determines the shape of the path's end"), "end_linecap_type", LineCapTypeConverter, &wr, this, LINECAP_BUTT)
 {
     show_orig_path = true;
 
@@ -265,25 +271,96 @@ void
 LPEPowerStroke::doOnApply(SPLPEItem const* lpeitem)
 {
     if (SP_IS_SHAPE(lpeitem)) {
+        SPLPEItem* item = const_cast<SPLPEItem*>(lpeitem);
         std::vector<Geom::Point> points;
         Geom::PathVector const &pathv = SP_SHAPE(lpeitem)->_curve->get_pathvector();
-        double width = (lpeitem && lpeitem->style) ? lpeitem->style->stroke_width.computed : 1.;
+        double width = (lpeitem && lpeitem->style) ? lpeitem->style->stroke_width.computed / 2 : 1.;
+        
+        SPCSSAttr *css = sp_repr_css_attr_new ();
+        if (true) {
+            if (lpeitem->style->stroke.isPaintserver()) {
+                SPPaintServer * server = lpeitem->style->getStrokePaintServer();
+                if (server) {
+                    Glib::ustring str;
+                    str += "url(#";
+                    str += server->getId();
+                    str += ")";
+                    sp_repr_css_set_property (css, "fill", str.c_str());
+                }
+            } else if (lpeitem->style->stroke.isColor()) {
+                gchar c[64];
+                sp_svg_write_color (c, sizeof(c), lpeitem->style->stroke.value.color.toRGBA32(SP_SCALE24_TO_FLOAT(lpeitem->style->stroke_opacity.value)));
+                sp_repr_css_set_property (css, "fill", c);
+            } else {
+                sp_repr_css_set_property (css, "fill", "none");
+            }
+        } else {
+            sp_repr_css_unset_property (css, "fill");
+        }
+        
+        sp_repr_css_set_property(css, "stroke", "none");
+        
+        sp_desktop_apply_css_recursive(item, css, true);
+        sp_repr_css_attr_unref (css);
+        
+        item->updateRepr();
         if (pathv.empty()) {
-            points.push_back( Geom::Point(0.,width) );
+            points.push_back( Geom::Point(0.2,width) );
             points.push_back( Geom::Point(0.5,width) );
-            points.push_back( Geom::Point(1.,width) );
+            points.push_back( Geom::Point(0.8,width) );
         } else {
             Geom::Path const &path = pathv.front();
             Geom::Path::size_type const size = path.size_default();
-            points.push_back( Geom::Point(0.,width) );
+            if (!path.closed()) {
+            	points.push_back( Geom::Point(0.2,width) );
+            }
             points.push_back( Geom::Point(0.5*size,width) );
             if (!path.closed()) {
-                points.push_back( Geom::Point(size,width) );
+                points.push_back( Geom::Point(size - 0.2,width) );
             }
         }
         offset_points.param_set_and_write_new_value(points);
     } else {
         g_warning("LPE Powerstroke can only be applied to shapes (not groups).");
+    }
+}
+
+void LPEPowerStroke::doOnRemove(SPLPEItem const* lpeitem)
+{
+    if (SP_IS_SHAPE(lpeitem)) {
+        SPLPEItem *item = const_cast<SPLPEItem*>(lpeitem);
+        SPCSSAttr *css = sp_repr_css_attr_new ();
+        if (true) {
+            if (lpeitem->style->fill.isPaintserver()) {
+                SPPaintServer * server = lpeitem->style->getFillPaintServer();
+                if (server) {
+                    Glib::ustring str;
+                    str += "url(#";
+                    str += server->getId();
+                    str += ")";
+                    sp_repr_css_set_property (css, "stroke", str.c_str());
+                }
+            } else if (lpeitem->style->fill.isColor()) {
+                gchar c[64];
+                sp_svg_write_color (c, sizeof(c), lpeitem->style->stroke.value.color.toRGBA32(SP_SCALE24_TO_FLOAT(lpeitem->style->stroke_opacity.value)));
+                sp_repr_css_set_property (css, "stroke", c);
+            } else {
+                sp_repr_css_set_property (css, "stroke", "none");
+            }
+        } else {
+            sp_repr_css_unset_property (css, "stroke");
+        }
+
+        Inkscape::CSSOStringStream os;
+        os << offset_points.median_width() * 2;
+        sp_repr_css_set_property (css, "stroke-width", os.str().c_str());
+
+        sp_repr_css_set_property(css, "fill", "none");
+
+        sp_desktop_apply_css_recursive(item, css, true);
+        sp_repr_css_attr_unref (css);
+
+        item->updateRepr();
     }
 }
 
@@ -595,6 +672,9 @@ LPEPowerStroke::doEffect_path (std::vector<Geom::Path> const & path_in)
     Geom::Interpolate::Interpolator *interpolator = Geom::Interpolate::Interpolator::create(static_cast<Geom::Interpolate::InterpolatorType>(interpolator_type.get_value()));
     if (Geom::Interpolate::CubicBezierJohan *johan = dynamic_cast<Geom::Interpolate::CubicBezierJohan*>(interpolator)) {
         johan->setBeta(interpolator_beta);
+    }
+    if (Geom::Interpolate::CubicBezierSmooth *smooth = dynamic_cast<Geom::Interpolate::CubicBezierSmooth*>(interpolator)) {
+        smooth->setBeta(interpolator_beta);
     }
     Geom::Path strokepath = interpolator->interpolateToPath(ts);
     delete interpolator;

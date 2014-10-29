@@ -5,7 +5,6 @@
  * tspan and textpath, based on the flowtext routines
  */
 
-#include <glib.h>
 #include "sp-item.h"
 #include "text-tag-attributes.h"
 
@@ -23,15 +22,15 @@ public:
 	SPTSpan();
 	virtual ~SPTSpan();
 
-    guint role : 2;
+    unsigned int role : 2;
     TextTagAttributes attributes;
 
 	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
 	virtual void release();
-	virtual void set(unsigned int key, const gchar* value);
+	virtual void set(unsigned int key, const char* value);
 	virtual void update(SPCtx* ctx, unsigned int flags);
 	virtual void modified(unsigned int flags);
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, unsigned int flags);
 
 	virtual Geom::OptRect bbox(Geom::Affine const &transform, SPItem::BBoxType type) const;
         virtual const char* displayName() const;

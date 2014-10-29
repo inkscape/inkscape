@@ -17,21 +17,21 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <2geom/forward.h>
 #include "sp-item.h"
-#include "2geom/forward.h"
-
-namespace Inkscape { class Selection; }
-
-namespace Inkscape {
-namespace LivePathEffect {
-    class PathParam;
-}
-}
 
 class SPCSSAttr;
 class SPDesktop;
+typedef struct _GSList GSList;
 
 namespace Inkscape {
+
+class Selection;
+
+namespace LivePathEffect {
+    class PathParam;
+}
+
     class SelectionHelper {
     public:
         static void selectAll(SPDesktop *desktop);
@@ -108,21 +108,21 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Affine cons
 void sp_selection_remove_transform (SPDesktop *desktop);
 void sp_selection_scale_absolute (Inkscape::Selection *selection, double x0, double x1, double y0, double y1);
 void sp_selection_scale_relative(Inkscape::Selection *selection, Geom::Point const &align, Geom::Scale const &scale);
-void sp_selection_rotate_relative (Inkscape::Selection *selection, Geom::Point const &center, gdouble angle);
+void sp_selection_rotate_relative (Inkscape::Selection *selection, Geom::Point const &center, double angle);
 void sp_selection_skew_relative (Inkscape::Selection *selection, Geom::Point const &align, double dx, double dy);
 void sp_selection_move_relative (Inkscape::Selection *selection, Geom::Point const &move, bool compensate = true);
 void sp_selection_move_relative (Inkscape::Selection *selection, double dx, double dy);
 
 void sp_selection_rotate_90 (SPDesktop *desktop, bool ccw);
-void sp_selection_rotate (Inkscape::Selection *selection, gdouble angle);
-void sp_selection_rotate_screen (Inkscape::Selection *selection, gdouble angle);
+void sp_selection_rotate (Inkscape::Selection *selection, double angle);
+void sp_selection_rotate_screen (Inkscape::Selection *selection, double angle);
 
-void sp_selection_scale (Inkscape::Selection *selection, gdouble grow);
-void sp_selection_scale_screen (Inkscape::Selection *selection, gdouble grow_pixels);
-void sp_selection_scale_times (Inkscape::Selection *selection, gdouble times);
+void sp_selection_scale (Inkscape::Selection *selection, double grow);
+void sp_selection_scale_screen (Inkscape::Selection *selection, double grow_pixels);
+void sp_selection_scale_times (Inkscape::Selection *selection, double times);
 
-void sp_selection_move (Inkscape::Selection *selection, gdouble dx, gdouble dy);
-void sp_selection_move_screen (Inkscape::Selection *selection, gdouble dx, gdouble dy);
+void sp_selection_move (Inkscape::Selection *selection, double dx, double dy);
+void sp_selection_move_screen (Inkscape::Selection *selection, double dx, double dy);
 
 void sp_selection_item_next (SPDesktop *desktop);
 void sp_selection_item_prev (SPDesktop *desktop);
@@ -156,6 +156,7 @@ void sp_document_get_export_hints (SPDocument * doc, Glib::ustring &filename, fl
 
 void sp_selection_create_bitmap_copy (SPDesktop *desktop);
 
+void sp_selection_set_clipgroup(SPDesktop *desktop);
 void sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_to_layer);
 void sp_selection_unset_mask(SPDesktop *desktop, bool apply_clip_path);
 

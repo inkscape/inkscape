@@ -1,7 +1,6 @@
 #ifndef SEEN_SP_GRADIENT_VECTOR_H
 #define SEEN_SP_GRADIENT_VECTOR_H
 
-#include <glib.h>
 #include <vector>
 #include "color.h"
 
@@ -14,9 +13,9 @@
  * copying from SPStop to SPGradientStop.
  */
 struct SPGradientStop {
-    gdouble offset;
+    double offset;
     SPColor color;
-    gfloat opacity;
+    float opacity;
 };
 
 /**

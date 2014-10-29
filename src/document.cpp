@@ -1374,7 +1374,7 @@ GSList *SPDocument::getItemsAtPoints(unsigned const key, std::vector<Geom::Point
 }
 
 SPItem *SPDocument::getItemAtPoint( unsigned const key, Geom::Point const &p,
-                                    gboolean const into_groups, SPItem *upto) const
+                                    bool const into_groups, SPItem *upto) const
 {
     g_return_val_if_fail(this->priv != NULL, NULL);
 

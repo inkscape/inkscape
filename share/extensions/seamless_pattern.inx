@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <_name>Seamless Pattern</_name>
+    <id>org.inkscape.render.seamless_pattern</id>
+    <dependency type="executable" location="extensions">seamless_pattern.py</dependency>
+    <dependency type="executable" location="extensions">inkex.py</dependency>
+    <param name="width"  _gui-text="Custom Width (px.):"  type="int" min="1" max="99999999">100</param>
+    <param name="height" _gui-text="Custom Height (px.):" type="int" min="1" max="99999999">100</param>
+    <_param name="help-info" type="description">This extension overwrite current document</_param>
+
+    <effect needs-live-preview="false">
+        <object-type>All</object-type>
+        <effects-menu>
+            <submenu _name="Render"/>
+        </effects-menu>
+    </effect>
+    <script>
+        <command reldir="extensions" interpreter="python">seamless_pattern.py</command>
+    </script>
+</inkscape-extension>

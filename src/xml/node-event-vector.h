@@ -14,9 +14,35 @@
 #ifndef SEEN_INKSCAPE_XML_SP_REPR_EVENT_VECTOR
 #define SEEN_INKSCAPE_XML_SP_REPR_EVENT_VECTOR
 
-#include <glib.h>
-
 #include "xml/node.h"
+
+namespace Inkscape {
+namespace XML {
+struct NodeEventVector;
+}
+}
+
+/**
+ * @brief Generate events corresponding to the node's state
+ * @deprecated Use Node::synthesizeEvents(NodeObserver &) instead
+ */
+inline void sp_repr_synthesize_events (Inkscape::XML::Node *repr, const Inkscape::XML::NodeEventVector *vector, void* data) {
+	repr->synthesizeEvents(vector, data);
+}
+/**
+ * @brief Add a set of callbacks for node state changes and its associated data
+ * @deprecated Use Node::addObserver() instead
+ */                                                                                
+inline void sp_repr_add_listener (Inkscape::XML::Node *repr, const Inkscape::XML::NodeEventVector *vector, void* data) {
+	repr->addListener(vector, data);
+}
+/**
+ * @brief Remove a set of callbacks based on associated data
+ * @deprecated Use Node::removeObserver() instead
+ */
+inline void sp_repr_remove_listener_by_data (Inkscape::XML::Node *repr, void* data) {
+	repr->removeListenerByData(data);
+}
 
 namespace Inkscape {
 namespace XML {
@@ -27,36 +53,14 @@ namespace XML {
  */
 struct NodeEventVector {
 	/* Immediate signals */
-	void (* child_added) (Node *repr, Node *child, Node *ref, void * data);
-	void (* child_removed) (Node *repr, Node *child, Node *ref, void * data);
-	void (* attr_changed) (Node *repr, const gchar *key, const gchar *oldval, const gchar *newval, bool is_interactive, void * data);
-	void (* content_changed) (Node *repr, const gchar *oldcontent, const gchar *newcontent, void * data);
-	void (* order_changed) (Node *repr, Node *child, Node *oldref, Node *newref, void * data);
+	void (* child_added) (Node *repr, Node *child, Node *ref, void* data);
+	void (* child_removed) (Node *repr, Node *child, Node *ref, void* data);
+	void (* attr_changed) (Node *repr, char const *key, char const *oldval, char const *newval, bool is_interactive, void* data);
+	void (* content_changed) (Node *repr, char const *oldcontent, char const *newcontent, void * data);
+	void (* order_changed) (Node *repr, Node *child, Node *oldref, Node *newref, void* data);
 };
 
 }
-}
-
-/**
- * @brief Generate events corresponding to the node's state
- * @deprecated Use Node::synthesizeEvents(NodeObserver &) instead
- */
-inline void sp_repr_synthesize_events (Inkscape::XML::Node *repr, const Inkscape::XML::NodeEventVector *vector, void * data) {
-	repr->synthesizeEvents(vector, data);
-}
-/**
- * @brief Add a set of callbacks for node state changes and its associated data
- * @deprecated Use Node::addObserver() instead
- */                                                                                
-inline void sp_repr_add_listener (Inkscape::XML::Node *repr, const Inkscape::XML::NodeEventVector *vector, void * data) {
-	repr->addListener(vector, data);
-}
-/**
- * @brief Remove a set of callbacks based on associated data
- * @deprecated Use Node::removeObserver() instead
- */
-inline void sp_repr_remove_listener_by_data (Inkscape::XML::Node *repr, void * data) {
-	repr->removeListenerByData(data);
 }
 
 #endif

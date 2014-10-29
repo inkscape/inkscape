@@ -26,24 +26,24 @@ public:
 	virtual ~SPFePointLight();
 
     /** x coordinate of the light source */
-    gfloat x; 
-    guint x_set : 1;
+    float x; 
+    unsigned int x_set : 1;
     /** y coordinate of the light source */
-    gfloat y; 
-    guint y_set : 1;
+    float y; 
+    unsigned int y_set : 1;
     /** z coordinate of the light source */
-    gfloat z; 
-    guint z_set : 1;
+    float z; 
+    unsigned int z_set : 1;
 
 protected:
 	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
 	virtual void release();
 
-	virtual void set(unsigned int key, const gchar* value);
+	virtual void set(unsigned int key, char const* value);
 
 	virtual void update(SPCtx* ctx, unsigned int flags);
 
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, unsigned int flags);
 };
 
 #endif /* !SP_FEPOINTLIGHT_H_SEEN */

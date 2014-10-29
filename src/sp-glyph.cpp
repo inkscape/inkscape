@@ -2,8 +2,6 @@
 # include <config.h>
 #endif
 
-#define __SP_GLYPH_C__
-
 /*
  * SVG <glyph> element implementation
  *
@@ -25,46 +23,44 @@
 #include "sp-factory.h"
 
 namespace {
-	SPObject* createGlyph() {
-		return new SPGlyph();
-	}
-
-	bool glyphRegistered = SPFactory::instance().registerObject("svg:glyph", createGlyph);
+    SPObject* createGlyph() {
+        return new SPGlyph();
+    }
+    bool glyphRegistered = SPFactory::instance().registerObject("svg:glyph", createGlyph);
 }
 
-SPGlyph::SPGlyph() : SPObject() {
+SPGlyph::SPGlyph()
+    : SPObject() 
 //TODO: correct these values:
-
-    this->d = NULL;
-    this->orientation = GLYPH_ORIENTATION_BOTH;
-    this->arabic_form = GLYPH_ARABIC_FORM_INITIAL;
-    this->lang = NULL;
-    this->horiz_adv_x = 0;
-    this->vert_origin_x = 0;
-    this->vert_origin_y = 0;
-    this->vert_adv_y = 0;
+    , d(NULL)
+    , orientation(GLYPH_ORIENTATION_BOTH)
+    , arabic_form(GLYPH_ARABIC_FORM_INITIAL)
+    , lang(NULL)
+    , horiz_adv_x(0)
+    , vert_origin_x(0)
+    , vert_origin_y(0)
+    , vert_adv_y(0)
+{
 }
 
-SPGlyph::~SPGlyph() {
-}
+void SPGlyph::build(SPDocument *document, Inkscape::XML::Node *repr)
+{
+    SPObject::build(document, repr);
 
-void SPGlyph::build(SPDocument *document, Inkscape::XML::Node *repr) {
-	SPObject::build(document, repr);
-
-	this->readAttr( "unicode" );
-	this->readAttr( "glyph-name" );
-	this->readAttr( "d" );
-	this->readAttr( "orientation" );
-	this->readAttr( "arabic-form" );
-	this->readAttr( "lang" );
-	this->readAttr( "horiz-adv-x" );
-	this->readAttr( "vert-origin-x" );
-	this->readAttr( "vert-origin-y" );
-	this->readAttr( "vert-adv-y" );
+    this->readAttr( "unicode" );
+    this->readAttr( "glyph-name" );
+    this->readAttr( "d" );
+    this->readAttr( "orientation" );
+    this->readAttr( "arabic-form" );
+    this->readAttr( "lang" );
+    this->readAttr( "horiz-adv-x" );
+    this->readAttr( "vert-origin-x" );
+    this->readAttr( "vert-origin-y" );
+    this->readAttr( "vert-adv-y" );
 }
 
 void SPGlyph::release() {
-	SPObject::release();
+    SPObject::release();
 }
 
 static glyphArabicForm sp_glyph_read_arabic_form(gchar const *value){
@@ -97,7 +93,8 @@ static glyphArabicForm sp_glyph_read_arabic_form(gchar const *value){
     return GLYPH_ARABIC_FORM_INITIAL; //TODO: VERIFY DEFAULT!
 }
 
-static glyphOrientation sp_glyph_read_orientation(gchar const *value){
+static glyphOrientation sp_glyph_read_orientation(gchar const *value)
+{
     if (!value) {
     	return GLYPH_ORIENTATION_BOTH;
     }
@@ -115,7 +112,8 @@ static glyphOrientation sp_glyph_read_orientation(gchar const *value){
     return GLYPH_ORIENTATION_BOTH;
 }
 
-void SPGlyph::set(unsigned int key, const gchar *value) {
+void SPGlyph::set(unsigned int key, const gchar *value)
+{
     switch (key) {
         case SP_ATTR_UNICODE:
         {
@@ -228,21 +226,22 @@ void SPGlyph::set(unsigned int key, const gchar *value) {
 }
 
 /**
- *  * Receives update notifications.
- *   */
-void SPGlyph::update(SPCtx *ctx, guint flags) {
+ * Receives update notifications.
+ */
+void SPGlyph::update(SPCtx *ctx, guint flags)
+{
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
         /* do something to trigger redisplay, updates? */
-            this->readAttr( "unicode" );
-            this->readAttr( "glyph-name" );
-            this->readAttr( "d" );
-            this->readAttr( "orientation" );
-            this->readAttr( "arabic-form" );
-            this->readAttr( "lang" );
-            this->readAttr( "horiz-adv-x" );
-            this->readAttr( "vert-origin-x" );
-            this->readAttr( "vert-origin-y" );
-            this->readAttr( "vert-adv-y" );
+        this->readAttr( "unicode" );
+        this->readAttr( "glyph-name" );
+        this->readAttr( "d" );
+        this->readAttr( "orientation" );
+        this->readAttr( "arabic-form" );
+        this->readAttr( "lang" );
+        this->readAttr( "horiz-adv-x" );
+        this->readAttr( "vert-origin-x" );
+        this->readAttr( "vert-origin-y" );
+        this->readAttr( "vert-adv-y" );
     }
 
     SPObject::update(ctx, flags);
@@ -250,42 +249,45 @@ void SPGlyph::update(SPCtx *ctx, guint flags) {
 
 #define COPY_ATTR(rd,rs,key) (rd)->setAttribute((key), rs->attribute(key));
 
-Inkscape::XML::Node* SPGlyph::write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags) {
-	if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-		repr = xml_doc->createElement("svg:glyph");
-	}
+Inkscape::XML::Node* SPGlyph::write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
+{
+    if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
+        repr = xml_doc->createElement("svg:glyph");
+    }
 
-	/* I am commenting out this part because I am not certain how does it work. I will have to study it later. Juca
-	    repr->setAttribute("unicode", glyph->unicode);
-	    repr->setAttribute("glyph-name", glyph->glyph_name);
-	    repr->setAttribute("d", glyph->d);
-	    sp_repr_set_svg_double(repr, "orientation", (double) glyph->orientation);
-	    sp_repr_set_svg_double(repr, "arabic-form", (double) glyph->arabic_form);
-	    repr->setAttribute("lang", glyph->lang);
-	    sp_repr_set_svg_double(repr, "horiz-adv-x", glyph->horiz_adv_x);
-	    sp_repr_set_svg_double(repr, "vert-origin-x", glyph->vert_origin_x);
-	    sp_repr_set_svg_double(repr, "vert-origin-y", glyph->vert_origin_y);
-	    sp_repr_set_svg_double(repr, "vert-adv-y", glyph->vert_adv_y);
-	*/
-	if (repr != this->getRepr()) {
-		// All the COPY_ATTR functions below use
-		//   XML Tree directly while they shouldn't.
-		COPY_ATTR(repr, this->getRepr(), "unicode");
-		COPY_ATTR(repr, this->getRepr(), "glyph-name");
-		COPY_ATTR(repr, this->getRepr(), "d");
-		COPY_ATTR(repr, this->getRepr(), "orientation");
-		COPY_ATTR(repr, this->getRepr(), "arabic-form");
-		COPY_ATTR(repr, this->getRepr(), "lang");
-		COPY_ATTR(repr, this->getRepr(), "horiz-adv-x");
-		COPY_ATTR(repr, this->getRepr(), "vert-origin-x");
-		COPY_ATTR(repr, this->getRepr(), "vert-origin-y");
-		COPY_ATTR(repr, this->getRepr(), "vert-adv-y");
-	}
+    /* I am commenting out this part because I am not certain how does it work. I will have to study it later. Juca
+    repr->setAttribute("unicode", glyph->unicode);
+    repr->setAttribute("glyph-name", glyph->glyph_name);
+    repr->setAttribute("d", glyph->d);
+    sp_repr_set_svg_double(repr, "orientation", (double) glyph->orientation);
+    sp_repr_set_svg_double(repr, "arabic-form", (double) glyph->arabic_form);
+    repr->setAttribute("lang", glyph->lang);
+    sp_repr_set_svg_double(repr, "horiz-adv-x", glyph->horiz_adv_x);
+    sp_repr_set_svg_double(repr, "vert-origin-x", glyph->vert_origin_x);
+    sp_repr_set_svg_double(repr, "vert-origin-y", glyph->vert_origin_y);
+    sp_repr_set_svg_double(repr, "vert-adv-y", glyph->vert_adv_y);
+    */
 
-	SPObject::write(xml_doc, repr, flags);
+    if (repr != this->getRepr()) {
+        // All the COPY_ATTR functions below use
+        // XML Tree directly while they shouldn't.
+        COPY_ATTR(repr, this->getRepr(), "unicode");
+        COPY_ATTR(repr, this->getRepr(), "glyph-name");
+        COPY_ATTR(repr, this->getRepr(), "d");
+        COPY_ATTR(repr, this->getRepr(), "orientation");
+        COPY_ATTR(repr, this->getRepr(), "arabic-form");
+        COPY_ATTR(repr, this->getRepr(), "lang");
+        COPY_ATTR(repr, this->getRepr(), "horiz-adv-x");
+        COPY_ATTR(repr, this->getRepr(), "vert-origin-x");
+        COPY_ATTR(repr, this->getRepr(), "vert-origin-y");
+        COPY_ATTR(repr, this->getRepr(), "vert-adv-y");
+    }
 
-	return repr;
+    SPObject::write(xml_doc, repr, flags);
+
+    return repr;
 }
+
 /*
   Local Variables:
   mode:c++

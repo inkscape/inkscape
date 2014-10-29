@@ -14,10 +14,10 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "svg/svg-length.h"
-#include "sp-shape.h"
 #include <2geom/forward.h>
 
+#include "svg/svg-length.h"
+#include "sp-shape.h"
 
 #define SP_RECT(obj) (dynamic_cast<SPRect*>((SPObject*)obj))
 #define SP_IS_RECT(obj) (dynamic_cast<const SPRect*>((SPObject*)obj) != NULL)
@@ -27,34 +27,34 @@ public:
 	SPRect();
 	virtual ~SPRect();
 
-	void setPosition(gdouble x, gdouble y, gdouble width, gdouble height);
+	void setPosition(double x, double y, double width, double height);
 
 	/* If SET if FALSE, VALUE is just ignored */
-	void setRx(bool set, gdouble value);
-	void setRy(bool set, gdouble value);
+	void setRx(bool set, double value);
+	void setRy(bool set, double value);
 
-	gdouble getVisibleRx() const;
-	void setVisibleRx(gdouble rx);
+	double getVisibleRx() const;
+	void setVisibleRx(double rx);
 
-	gdouble getVisibleRy() const;
-	void setVisibleRy(gdouble ry);
+	double getVisibleRy() const;
+	void setVisibleRy(double ry);
 
 	Geom::Rect getRect() const;
 
-	gdouble getVisibleWidth() const;
-	void setVisibleWidth(gdouble rx);
+	double getVisibleWidth() const;
+	void setVisibleWidth(double rx);
 
-	gdouble getVisibleHeight() const;
-	void setVisibleHeight(gdouble ry);
+	double getVisibleHeight() const;
+	void setVisibleHeight(double ry);
 
 	void compensateRxRy(Geom::Affine xform);
 
 	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
 
-	virtual void set(unsigned key, gchar const *value);
+	virtual void set(unsigned key, char const *value);
 	virtual void update(SPCtx* ctx, unsigned int flags);
 
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, unsigned int flags);
         virtual const char* displayName() const;
 
 	virtual void set_shape();
@@ -71,7 +71,7 @@ public:
 	SVGLength ry;
 
 private:
-	static gdouble vectorStretch(Geom::Point p0, Geom::Point p1, Geom::Affine xform);
+	static double vectorStretch(Geom::Point p0, Geom::Point p1, Geom::Affine xform);
 };
 
 #endif // SEEN_SP_RECT_H

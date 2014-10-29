@@ -22,42 +22,20 @@ enum {
 #define noDUMP_CHANGE_INFO
 #define FOO_NAME(x) g_type_name( G_TYPE_FROM_INSTANCE(x) )
 
-static void sp_color_selector_class_init( SPColorSelectorClass *klass );
-static void sp_color_selector_init( SPColorSelector *csel );
 static void sp_color_selector_dispose(GObject *object);
 
 static void sp_color_selector_show_all( GtkWidget *widget );
 static void sp_color_selector_hide( GtkWidget *widget );
 
-static GtkVBoxClass *parent_class;
 static guint csel_signals[LAST_SIGNAL] = {0};
 
 double ColorSelector::_epsilon = 1e-4;
 
-GType sp_color_selector_get_type( void )
-{
-    static GType type = 0;
-    if (!type) {
-        static const GTypeInfo info = {
-            sizeof(SPColorSelectorClass),
-            NULL, /* base_init */
-            NULL, /* base_finalize */
-            (GClassInitFunc) sp_color_selector_class_init,
-            NULL, /* class_finalize */
-            NULL, /* class_data */
-            sizeof(SPColorSelector),
-            0,    /* n_preallocs */
-            (GInstanceInitFunc) sp_color_selector_init,
-            NULL
-        };
-
-        type = g_type_register_static( GTK_TYPE_VBOX,
-                                       "SPColorSelector",
-                                       &info,
-                                       static_cast<GTypeFlags>(0) );
-    }
-    return type;
-}
+#if GTK_CHECK_VERSION(3,0,0)
+G_DEFINE_TYPE(SPColorSelector, sp_color_selector, GTK_TYPE_BOX);
+#else
+G_DEFINE_TYPE(SPColorSelector, sp_color_selector, GTK_TYPE_VBOX);
+#endif
 
 void sp_color_selector_class_init( SPColorSelectorClass *klass )
 {
@@ -65,8 +43,6 @@ void sp_color_selector_class_init( SPColorSelectorClass *klass )
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
     GtkWidgetClass *widget_class;
     widget_class = GTK_WIDGET_CLASS(klass);
-
-    parent_class = GTK_VBOX_CLASS( g_type_class_peek_parent(klass) );
 
     csel_signals[GRABBED] = g_signal_new( "grabbed",
                                             G_TYPE_FROM_CLASS(object_class),
@@ -109,6 +85,10 @@ void sp_color_selector_class_init( SPColorSelectorClass *klass )
 
 void sp_color_selector_init( SPColorSelector *csel )
 {
+#if GTK_CHECK_VERSION(3,0,0)
+    gtk_orientable_set_orientation(GTK_ORIENTABLE(csel), GTK_ORIENTATION_VERTICAL);
+#endif
+
     if ( csel->base )
     {
         csel->base->init();
@@ -125,8 +105,8 @@ void sp_color_selector_dispose(GObject *object)
             csel->base = 0;
         }
 
-    if ( (G_OBJECT_CLASS(parent_class))->dispose ) {
-        (* (G_OBJECT_CLASS(parent_class))->dispose)(object);
+    if ((G_OBJECT_CLASS(sp_color_selector_parent_class))->dispose ) {
+        (G_OBJECT_CLASS(sp_color_selector_parent_class))->dispose(object);
     }
 }
 

@@ -9,6 +9,7 @@
 #include <sp-item-notify-moveto.h>
 using std::vector;
 
+#define return_if_fail(test) if (!(test)) { printf("WARNING: assertion '%s' failed", #test); return; }
 
 /**
  * Called by sp_guide_moveto to indicate that the guide line corresponding to g has been moved, and
@@ -19,15 +20,15 @@ using std::vector;
 void sp_item_notify_moveto(SPItem &item, SPGuide const &mv_g, int const snappoint_ix,
                            double const position, bool const commit)
 {
-    g_return_if_fail(SP_IS_ITEM(&item));
-    g_return_if_fail( unsigned(snappoint_ix) < 8 );
-    Geom::Point const dir( mv_g.normal_to_line );
+    return_if_fail(SP_IS_ITEM(&item));
+    return_if_fail( unsigned(snappoint_ix) < 8 );
+    Geom::Point const dir( mv_g.getNormal() );
     double const dir_lensq(dot(dir, dir));
-    g_return_if_fail( dir_lensq != 0 );
+    return_if_fail( dir_lensq != 0 );
 
     std::vector<Inkscape::SnapCandidatePoint> snappoints;
     item.getSnappoints(snappoints, NULL);
-    g_return_if_fail( snappoint_ix < int(snappoints.size()) );
+    return_if_fail( snappoint_ix < int(snappoints.size()) );
 
     double const pos0 = dot(dir, snappoints[snappoint_ix].getPoint());
     /// \todo effic: skip if mv_g is already satisfied.

@@ -41,7 +41,7 @@
 #include "desktop-handles.h"
 #include "sp-root.h"
 #include "preferences.h"
-#include "tools-switch.h"
+#include "ui/tools-switch.h"
 #include "message-stack.h"
 #include "selection-describer.h"
 #include "seltrans.h"
@@ -49,7 +49,7 @@
 #include "display/sp-canvas.h"
 #include "display/sp-canvas-item.h"
 #include "display/drawing-item.h"
-#include "tool-factory.h"
+#include "ui/tool-factory.h"
 
 using Inkscape::DocumentUndo;
 

@@ -1,17 +1,14 @@
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 #include <glibmm/i18n.h>
-#include "sp-item.h"
+
+#include "context-fns.h"
 #include "desktop.h"
+#include "display/snap-indicator.h"
 #include "message-context.h"
 #include "message-stack.h"
-#include "context-fns.h"
 #include "snap.h"
-#include "ui/tools/tool-base.h"
+#include "sp-item.h"
 #include "sp-namedview.h"
-#include "display/snap-indicator.h"
+#include "ui/tools/tool-base.h"
 
 static const double midpt_1_goldenratio = (1 + goldenratio) / 2;
 static const double midpt_goldenratio_2 = (goldenratio + 2) / 2;

@@ -11,9 +11,7 @@
  * Released under GNU GPL
  */
 
-#include <stddef.h>
-#include <sigc++/sigc++.h>
-#include <gtk/gtk.h>
+#include <sigc++/connection.h>
 #include "ui/tools/tool-base.h"
 
 #define SP_FLOOD_CONTEXT(obj) (dynamic_cast<Inkscape::UI::Tools::FloodTool*>((Inkscape::UI::Tools::ToolBase*)obj))

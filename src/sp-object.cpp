@@ -1406,12 +1406,12 @@ bool SPObject::setDesc(gchar const *desc, bool verbatim)
     return setTitleOrDesc(desc, "svg:desc", verbatim);
 }
 
-gchar * SPObject::getTitleOrDesc(gchar const *svg_tagname) const
+char * SPObject::getTitleOrDesc(gchar const *svg_tagname) const
 {
-    gchar *result = 0;
+    char *result = NULL;
     SPObject *elem = findFirstChild(svg_tagname);
     if ( elem ) {
-        result = g_string_free(elem->textualContent(), FALSE);
+        result = elem->textualContent();
     }
     return result;
 }
@@ -1493,7 +1493,7 @@ SPObject * SPObject::findFirstChild(gchar const *tagname) const
     return NULL;
 }
 
-GString * SPObject::textualContent() const
+char* SPObject::textualContent() const
 {
     GString* text = g_string_new("");
 
@@ -1502,15 +1502,15 @@ GString * SPObject::textualContent() const
         Inkscape::XML::NodeType child_type = child->repr->type();
 
         if (child_type == Inkscape::XML::ELEMENT_NODE) {
-            GString * new_text = child->textualContent();
-            g_string_append(text, new_text->str);
-            g_string_free(new_text, TRUE);
+            char* new_string = child->textualContent();
+            g_string_append(text, new_string);
+            g_free(new_string);
         }
         else if (child_type == Inkscape::XML::TEXT_NODE) {
             g_string_append(text, child->repr->content());
         }
     }
-    return text;
+    return g_string_free(text, FALSE);
 }
 
 /*

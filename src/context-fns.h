@@ -2,7 +2,6 @@
 #define SEEN_CONTEXT_FNS_H
 
 /*
- * <description>
  *
  * Authors:
  *
@@ -11,11 +10,13 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <gdk/gdk.h>
 #include <2geom/forward.h>
 
-class  SPDesktop;
-class  SPItem;
+class SPDesktop;
+class SPItem;
+typedef union _GdkEvent GdkEvent;
+
+const double goldenratio = 1.61803398874989484820; // golden ratio
 
 namespace Inkscape {
 namespace UI {
@@ -25,12 +26,6 @@ class ToolBase;
 
 }
 }
-}
-
-const double goldenratio = 1.61803398874989484820; // golden ratio
-
-namespace Inkscape
-{
 
 class MessageContext;
 class MessageStack;

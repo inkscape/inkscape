@@ -25,7 +25,7 @@
 #include "sp-path.h"
 #include "sp-shape.h"
 #include "sp-image.h"
-#include "marker.h"
+#include "sp-marker.h"
 #include "enums.h"
 #include "sp-text.h"
 #include "sp-flowtext.h"

@@ -12,13 +12,13 @@
 #ifndef SEEN_INKSCAPE_DISPLAY_DRAWING_CONTEXT_H
 #define SEEN_INKSCAPE_DISPLAY_DRAWING_CONTEXT_H
 
-#include <boost/utility.hpp>
-#include <glib.h>
-#include <cairo.h>
 #include <2geom/affine.h>
 #include <2geom/angle.h>
 #include <2geom/rect.h>
 #include <2geom/transforms.h>
+#include <boost/utility.hpp>
+#include <cairo.h>
+typedef unsigned int guint32;
 
 namespace Inkscape {
 

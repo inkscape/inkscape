@@ -20,7 +20,7 @@
 # include <config.h>
 #endif
 
-#include <interface.h>
+#include "ui/interface.h"
 #include <unistd.h>
 #include <glibmm/miscutils.h>
 

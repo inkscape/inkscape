@@ -20,7 +20,7 @@
 #include "filedialog.h"
 
 #include "gc-core.h"
-#include <dialogs/dialog-events.h>
+#include "ui/dialog-events.h"
 #include "extension/output.h"
 #include "preferences.h"
 

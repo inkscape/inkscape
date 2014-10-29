@@ -32,7 +32,7 @@ LPEEnvelope::LPEEnvelope(LivePathEffectObject *lpeobject) :
     bend_path2(_("Right bend path:"), _("Right path along which to bend the original path"), "bendpath2", &wr, this, "M0,0 L1,0"),
     bend_path3(_("Bottom bend path:"), _("Bottom path along which to bend the original path"), "bendpath3", &wr, this, "M0,0 L1,0"),
     bend_path4(_("Left bend path:"), _("Left path along which to bend the original path"), "bendpath4", &wr, this, "M0,0 L1,0"),
-    xx(_("E_nable left & right paths"), _("Enable the left and right deformation paths"), "xx", &wr, this, true),
+    xx(_("_Enable left & right paths"), _("Enable the left and right deformation paths"), "xx", &wr, this, true),
     yy(_("_Enable top & bottom paths"), _("Enable the top and bottom deformation paths"), "yy", &wr, this, true)
 {
     registerParameter( dynamic_cast<Parameter *>(&yy) );
@@ -54,6 +54,9 @@ LPEEnvelope::doBeforeEffect (SPLPEItem const* lpeitem)
 {
     // get the item bounding box
     original_bbox(lpeitem);
+    SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
+    item->apply_to_clippath(item);
+    item->apply_to_mask(item);
 }
 
 Geom::Piecewise<Geom::D2<Geom::SBasis> >

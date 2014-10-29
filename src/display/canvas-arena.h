@@ -13,14 +13,12 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <cairo.h>
 #include <2geom/rect.h>
+
 #include "display/drawing.h"
 #include "display/drawing-item.h"
 #include "display/sp-canvas.h"
 #include "display/sp-canvas-item.h"
-
-G_BEGIN_DECLS
 
 #define SP_TYPE_CANVAS_ARENA (sp_canvas_arena_get_type ())
 #define SP_CANVAS_ARENA(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_CANVAS_ARENA, SPCanvasArena))
@@ -30,6 +28,7 @@ G_BEGIN_DECLS
 
 typedef struct _SPCanvasArena      SPCanvasArena;
 typedef struct _SPCanvasArenaClass SPCanvasArenaClass;
+typedef struct _cairo_surface      cairo_surface_t;
 struct CachePrefObserver;
 
 namespace Inkscape {
@@ -38,7 +37,6 @@ class Drawing;
 class DrawingItem;
 
 } // namespace Inkscape
-
 
 struct _SPCanvasArena {
     SPCanvasItem item;
@@ -69,7 +67,5 @@ void sp_canvas_arena_set_pick_delta (SPCanvasArena *ca, gdouble delta);
 void sp_canvas_arena_set_sticky (SPCanvasArena *ca, gboolean sticky);
 
 void sp_canvas_arena_render_surface (SPCanvasArena *ca, cairo_surface_t *surface, Geom::IntRect const &area);
-
-G_END_DECLS
 
 #endif // SEEN_SP_CANVAS_ARENA_H

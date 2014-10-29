@@ -14,7 +14,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <gtk/gtk.h>
 #include "display/sp-canvas.h"
 #include "display/sp-canvas-group.h"
 #include "display/canvas-arena.h"
@@ -23,8 +22,6 @@
 #include "svg-view-widget.h"
 #include "util/units.h"
 
-static void sp_svg_view_widget_class_init (SPSVGSPViewWidgetClass *klass);
-static void sp_svg_view_widget_init (SPSVGSPViewWidget *widget);
 static void sp_svg_view_widget_dispose(GObject *object);
 
 static void sp_svg_view_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation);
@@ -42,28 +39,7 @@ static void sp_svg_view_widget_get_preferred_height(GtkWidget *widget,
 
 static void sp_svg_view_widget_view_resized (SPViewWidget *vw, Inkscape::UI::View::View *view, gdouble width, gdouble height);
 
-static SPViewWidgetClass *widget_parent_class;
-
-GType sp_svg_view_widget_get_type(void)
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPSVGSPViewWidgetClass),
-            0, // base_init
-            0, // base_finalize
-            (GClassInitFunc)sp_svg_view_widget_class_init,
-            0, // class_finalize
-            0, // class_data
-            sizeof(SPSVGSPViewWidget),
-            0, // n_preallocs
-            (GInstanceInitFunc)sp_svg_view_widget_init,
-            0 // value_table
-        };
-        type = g_type_register_static(SP_TYPE_VIEW_WIDGET, "SPSVGSPViewWidget", &info, static_cast<GTypeFlags>(0));
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPSVGSPViewWidget, sp_svg_view_widget, SP_TYPE_VIEW_WIDGET);
 
 /**
  * Callback to initialize SPSVGSPViewWidget vtable.
@@ -73,8 +49,6 @@ static void sp_svg_view_widget_class_init(SPSVGSPViewWidgetClass *klass)
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 	SPViewWidgetClass *vw_class = SP_VIEW_WIDGET_CLASS (klass);
-
-	widget_parent_class = static_cast<SPViewWidgetClass *>(g_type_class_peek_parent (klass));
 
 	object_class->dispose = sp_svg_view_widget_dispose;
 
@@ -94,7 +68,6 @@ static void sp_svg_view_widget_class_init(SPSVGSPViewWidgetClass *klass)
  */
 static void sp_svg_view_widget_init(SPSVGSPViewWidget *vw)
 {
-	GtkStyle *style;
 	SPCanvasItem *parent;
 
 	/* Settings */
@@ -117,14 +90,22 @@ static void sp_svg_view_widget_init(SPSVGSPViewWidget *vw)
 
 	vw->canvas = SPCanvas::createAA();
 
-#if !GTK_CHECK_VERSION(3,0,0)
+#if GTK_CHECK_VERSION(3,0,0)
+        GdkRGBA white = {1,1,1,0};
+        gtk_widget_override_background_color(vw->canvas, GTK_STATE_FLAG_NORMAL, &white);
+#else
 	gtk_widget_pop_colormap ();
-#endif
-
-	style = gtk_style_copy (gtk_widget_get_style (vw->canvas));
+	GtkStyle *style = gtk_style_copy (gtk_widget_get_style (vw->canvas));
 	style->bg[GTK_STATE_NORMAL] = style->white;
 	gtk_widget_set_style (vw->canvas, style);
+#endif
+
+#if GTK_CHECK_VERSION(3,8,0)
+	gtk_container_add (GTK_CONTAINER (vw->sw), vw->canvas);
+#else
 	gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (vw->sw), vw->canvas);
+#endif
+
 	gtk_widget_show (vw->canvas);
 
 	/* View */
@@ -142,8 +123,8 @@ static void sp_svg_view_widget_dispose(GObject *object)
 
 	vw->canvas = NULL;
 
-	if (((GObjectClass *) (widget_parent_class))->dispose) {
-		(* ((GObjectClass *) (widget_parent_class))->dispose) (object);
+	if (G_OBJECT_CLASS(sp_svg_view_widget_parent_class)->dispose) {
+            G_OBJECT_CLASS(sp_svg_view_widget_parent_class)->dispose(object);
         }
 }
 
@@ -156,17 +137,18 @@ static void sp_svg_view_widget_size_request(GtkWidget *widget, GtkRequisition *r
 	Inkscape::UI::View::View *v = SP_VIEW_WIDGET_VIEW (widget);
 
 #if GTK_CHECK_VERSION(3,0,0)
-	if (((GtkWidgetClass *) (widget_parent_class))->get_preferred_width && ((GtkWidgetClass *) (widget_parent_class))->get_preferred_width) {
+	if (GTK_WIDGET_CLASS(sp_svg_view_widget_parent_class)->get_preferred_width &&
+            GTK_WIDGET_CLASS(sp_svg_view_widget_parent_class)->get_preferred_height) {
 		gint width_min, height_min, width_nat, height_nat;
 
-		(* ((GtkWidgetClass *) (widget_parent_class))->get_preferred_width) (widget, &width_min, &width_nat);
-		(* ((GtkWidgetClass *) (widget_parent_class))->get_preferred_height) (widget, &height_min, &height_nat);
+		GTK_WIDGET_CLASS(sp_svg_view_widget_parent_class)->get_preferred_width(widget, &width_min, &width_nat);
+		GTK_WIDGET_CLASS(sp_svg_view_widget_parent_class)->get_preferred_height(widget, &height_min, &height_nat);
 		req->width=width_min;
 		req->height=height_min;
         }
 #else
-	if (((GtkWidgetClass *) (widget_parent_class))->size_request) {
-		(* ((GtkWidgetClass *) (widget_parent_class))->size_request) (widget, req);
+	if (GTK_WIDGET_CLASS(sp_svg_view_widget_parent_class)->size_request) {
+            GTK_WIDGET_CLASS(sp_svg_view_widget_parent_class)->size_request(widget, req);
         }
 #endif
 
@@ -220,8 +202,8 @@ static void sp_svg_view_widget_size_allocate(GtkWidget *widget, GtkAllocation *a
 {
 	SPSVGSPViewWidget *svgvw = SP_SVG_VIEW_WIDGET (widget);
 
-	if (((GtkWidgetClass *) (widget_parent_class))->size_allocate) {
-		(* ((GtkWidgetClass *) (widget_parent_class))->size_allocate) (widget, allocation);
+	if (GTK_WIDGET_CLASS(sp_svg_view_widget_parent_class)->size_allocate) {
+            GTK_WIDGET_CLASS(sp_svg_view_widget_parent_class)->size_allocate(widget, allocation);
         }
 
 	if (!svgvw->resize) {

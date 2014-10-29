@@ -176,6 +176,9 @@ void
 LPELattice::doBeforeEffect (SPLPEItem const* lpeitem)
 {
     original_bbox(lpeitem);
+    SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
+    item->apply_to_clippath(item);
+    item->apply_to_mask(item);
 }
 
 void

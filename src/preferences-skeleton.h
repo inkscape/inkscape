@@ -1,8 +1,9 @@
 #ifndef SEEN_PREFERENCES_SKELETON_H
 #define SEEN_PREFERENCES_SKELETON_H
 
-#include <inkscape-version.h>
+#include "inkscape-version.h"
 
+// FIXME why is this here?
 #ifdef N_
 #undef N_
 #endif

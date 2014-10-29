@@ -48,6 +48,7 @@ typedef enum {
     IMPORT_TYPES,
     EXPORT_TYPES,
     EXE_TYPES,
+    SWATCH_TYPES,
     CUSTOM_TYPE
     } FileDialogType;
 

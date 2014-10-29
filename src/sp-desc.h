@@ -1,5 +1,5 @@
-#ifndef __SP_DESC_H__
-#define __SP_DESC_H__
+#ifndef SEEN_SP_DESC_H
+#define SEEN_SP_DESC_H
 
 /*
  * SVG <desc> implementation
@@ -23,7 +23,7 @@ public:
 	virtual ~SPDesc();
 
 protected:
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, unsigned int flags);
 };
 
 #endif

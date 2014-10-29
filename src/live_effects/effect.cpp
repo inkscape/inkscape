@@ -5,6 +5,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+//#define LPE_ENABLE_TEST_EFFECTS //uncomment for toy effects
+
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
@@ -23,8 +25,13 @@
 #include "live_effects/lpe-curvestitch.h"
 #include "live_effects/lpe-circle_with_radius.h"
 #include "live_effects/lpe-perspective_path.h"
+#include "live_effects/lpe-perspective-envelope.h"
 #include "live_effects/lpe-spiro.h"
 #include "live_effects/lpe-lattice.h"
+#include "live_effects/lpe-lattice2.h"
+#include "live_effects/lpe-roughen.h"
+#include "live_effects/lpe-show_handles.h"
+#include "live_effects/lpe-simplify.h"
 #include "live_effects/lpe-envelope.h"
 #include "live_effects/lpe-constructgrid.h"
 #include "live_effects/lpe-perp_bisector.h"
@@ -38,6 +45,7 @@
 #include "live_effects/lpe-ruler.h"
 #include "live_effects/lpe-boolops.h"
 #include "live_effects/lpe-interpolate.h"
+#include "live_effects/lpe-interpolate_points.h"
 #include "live_effects/lpe-text_label.h"
 #include "live_effects/lpe-path_length.h"
 #include "live_effects/lpe-line_segment.h"
@@ -45,6 +53,15 @@
 #include "live_effects/lpe-extrude.h"
 #include "live_effects/lpe-powerstroke.h"
 #include "live_effects/lpe-clone-original.h"
+#include "live_effects/lpe-bspline.h"
+#include "live_effects/lpe-attach-path.h"
+#include "live_effects/lpe-fill-between-strokes.h"
+#include "live_effects/lpe-fill-between-many.h"
+#include "live_effects/lpe-ellipse_5pts.h"
+#include "live_effects/lpe-bounding-box.h"
+#include "live_effects/lpe-jointype.h"
+#include "live_effects/lpe-taperstroke.h"
+#include "live_effects/lpe-fillet-chamfer.h"
 
 #include "xml/node-event-vector.h"
 #include "sp-object.h"
@@ -57,7 +74,7 @@
 #include "xml/document.h"
 #include <glibmm/i18n.h>
 #include "ui/tools/pen-tool.h"
-#include "tools-switch.h"
+#include "ui/tools-switch.h"
 #include "message-stack.h"
 #include "desktop.h"
 #include "knotholder.h"
@@ -103,7 +120,7 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {TEXT_LABEL,            N_("Text label"),              "text_label"},
 #endif
 /* 0.46 */
-    {BEND_PATH,             N_("Bend"),                     "bend_path"},
+    {BEND_PATH,             N_("Bend"),                    "bend_path"},
     {GEARS,                 N_("Gears"),                   "gears"},
     {PATTERN_ALONG_PATH,    N_("Pattern Along Path"),      "skeletal"},   // for historic reasons, this effect is called skeletal(strokes) in Inkscape:SVG
     {CURVE_STITCH,          N_("Stitch Sub-Paths"),        "curvestitching"},
@@ -117,9 +134,27 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {ROUGH_HATCHES,         N_("Hatches (rough)"),         "rough_hatches"},
     {SKETCH,                N_("Sketch"),                  "sketch"},
     {RULER,                 N_("Ruler"),                   "ruler"},
-/* 0.49 */
-    {POWERSTROKE,           N_("Power stroke"), "powerstroke"},
-    {CLONE_ORIGINAL,        N_("Clone original path"), "clone_original"},
+/* 0.91 */
+    {POWERSTROKE,           N_("Power stroke"),            "powerstroke"},
+    {CLONE_ORIGINAL,        N_("Clone original path"),     "clone_original"},
+/* EXPERIMENTAL */    
+    {SHOW_HANDLES,          N_("Show handles"),            "show_handles"},
+    {ROUGHEN,               N_("Roughen"),                 "roughen"},
+    {BSPLINE,               N_("BSpline"),                 "bspline"},
+    {JOIN_TYPE,             N_("Join type"),               "join_type"},
+    {TAPER_STROKE,          N_("Taper stroke"),            "taper_stroke"},
+/* Ponyscape */
+    {ATTACH_PATH,           N_("Attach path"),             "attach_path"},
+    {FILL_BETWEEN_STROKES,  N_("Fill between strokes"),    "fill_between_strokes"},
+    {FILL_BETWEEN_MANY,     N_("Fill between many"),       "fill_between_many"},
+    {ELLIPSE_5PTS,          N_("Ellipse by 5 points"),     "ellipse_5pts"},
+    {BOUNDING_BOX,          N_("Bounding Box"),            "bounding_box"},
+/* 0.91 */
+    {SIMPLIFY,               N_("Simplify"),     "simplify"},
+    {LATTICE2,               N_("Lattice Deformation 2"),     "lattice2"},
+    {PERSPECTIVE_ENVELOPE,  N_("Perspective/Envelope"),        "perspective-envelope"},
+    {FILLET_CHAMFER,        N_("Fillet/Chamfer"),          "fillet-chamfer"},
+    {INTERPOLATE_POINTS,    N_("Interpolate points"),      "interpolate_points"},
 };
 const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, sizeof(LPETypeData)/sizeof(*LPETypeData));
 
@@ -216,6 +251,9 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
         case INTERPOLATE:
             neweffect = static_cast<Effect*> ( new LPEInterpolate(lpeobj) );
             break;
+        case INTERPOLATE_POINTS:
+            neweffect = static_cast<Effect*> ( new LPEInterpolatePoints(lpeobj) );
+            break;
         case TEXT_LABEL:
             neweffect = static_cast<Effect*> ( new LPETextLabel(lpeobj) );
             break;
@@ -227,6 +265,9 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
             break;
         case DOEFFECTSTACK_TEST:
             neweffect = static_cast<Effect*> ( new LPEdoEffectStackTest(lpeobj) );
+            break;
+        case BSPLINE:
+            neweffect = static_cast<Effect*> ( new LPEBSpline(lpeobj) );
             break;
         case DYNASTROKE:
             neweffect = static_cast<Effect*> ( new LPEDynastroke(lpeobj) );
@@ -243,8 +284,47 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
         case CLONE_ORIGINAL:
             neweffect = static_cast<Effect*> ( new LPECloneOriginal(lpeobj) );
             break;
+        case ATTACH_PATH:
+            neweffect = static_cast<Effect*> ( new LPEAttachPath(lpeobj) );
+            break;
+        case FILL_BETWEEN_STROKES:
+            neweffect = static_cast<Effect*> ( new LPEFillBetweenStrokes(lpeobj) );
+            break;
+        case FILL_BETWEEN_MANY:
+            neweffect = static_cast<Effect*> ( new LPEFillBetweenMany(lpeobj) );
+            break;
+        case ELLIPSE_5PTS:
+            neweffect = static_cast<Effect*> ( new LPEEllipse5Pts(lpeobj) );
+            break;
+        case BOUNDING_BOX:
+            neweffect = static_cast<Effect*> ( new LPEBoundingBox(lpeobj) );
+            break;
+        case JOIN_TYPE:
+            neweffect = static_cast<Effect*> ( new LPEJoinType(lpeobj) );
+            break;
+        case TAPER_STROKE:
+            neweffect = static_cast<Effect*> ( new LPETaperStroke(lpeobj) );
+            break;
+        case SIMPLIFY:
+            neweffect = static_cast<Effect*> ( new LPESimplify(lpeobj) );
+            break;
+        case LATTICE2:
+            neweffect = static_cast<Effect*> ( new LPELattice2(lpeobj) );
+            break;
+        case PERSPECTIVE_ENVELOPE:
+            neweffect = static_cast<Effect*> ( new LPEPerspectiveEnvelope(lpeobj) );
+            break;
+        case FILLET_CHAMFER:
+            neweffect = static_cast<Effect*> ( new LPEFilletChamfer(lpeobj) );
+            break;
+        case ROUGHEN:
+            neweffect = static_cast<Effect*> ( new LPERoughen(lpeobj) );
+            break;
+        case SHOW_HANDLES:
+            neweffect = static_cast<Effect*> ( new LPEShowHandles(lpeobj) );
+            break;
         default:
-            g_warning("LivePathEffect::Effect::New   called with invalid patheffect type (%d)", lpenr);
+            g_warning("LivePathEffect::Effect::New called with invalid patheffect type (%d)", lpenr);
             neweffect = NULL;
             break;
     }
@@ -325,6 +405,33 @@ void
 Effect::doBeforeEffect (SPLPEItem const*/*lpeitem*/)
 {
     //Do nothing for simple effects
+}
+
+void Effect::doAfterEffect (SPLPEItem const* /*lpeitem*/)
+{
+}
+
+void Effect::doOnRemove (SPLPEItem const* /*lpeitem*/)
+{
+}
+
+//secret impl methods (shhhh!)
+void Effect::doOnApply_impl(SPLPEItem const* lpeitem)
+{
+    sp_lpe_item = const_cast<SPLPEItem *>(lpeitem);
+    /*sp_curve = SP_SHAPE(sp_lpe_item)->getCurve();
+    pathvector_before_effect = sp_curve->get_pathvector();*/
+    doOnApply(lpeitem);
+}
+
+void Effect::doBeforeEffect_impl(SPLPEItem const* lpeitem)
+{
+    sp_lpe_item = const_cast<SPLPEItem *>(lpeitem);
+    //printf("(SPLPEITEM*) %p\n", sp_lpe_item);
+    sp_curve = SP_SHAPE(sp_lpe_item)->getCurve();
+    pathvector_before_effect = sp_curve->get_pathvector();
+    
+    doBeforeEffect(lpeitem);
 }
 
 /**
@@ -493,11 +600,6 @@ std::vector<Geom::PathVector>
 Effect::getCanvasIndicators(SPLPEItem const* lpeitem)
 {
     std::vector<Geom::PathVector> hp_vec;
-
-    if (!SP_IS_SHAPE(lpeitem)) {
-//        g_print ("How to handle helperpaths for non-shapes?\n"); // non-shapes are for example SPGroups.
-        return hp_vec;
-    }
 
     // add indicators provided by the effect itself
     addCanvasIndicators(lpeitem, hp_vec);

@@ -52,29 +52,29 @@ public:
 	float t0;
 
 	/* Lowlevel interface */
-	void setPosition(gdouble cx, gdouble cy, gdouble exp, gdouble revo, gdouble rad, gdouble arg, gdouble t0);
+	void setPosition(double cx, double cy, double exp, double revo, double rad, double arg, double t0);
 	virtual Geom::Affine set_transform(Geom::Affine const& xform);
 
-	Geom::Point getXY(gdouble t) const;
+	Geom::Point getXY(double t) const;
 
-	void getPolar(gdouble t, gdouble* rad, gdouble* arg) const;
+	void getPolar(double t, double* rad, double* arg) const;
 
 	bool isInvalid() const;
 
 	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
-	virtual void update(SPCtx *ctx, guint flags);
-	virtual void set(unsigned int key, gchar const* value);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, unsigned int flags);
+	virtual void update(SPCtx *ctx, unsigned int flags);
+	virtual void set(unsigned int key, char const* value);
 
 	virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) const;
     virtual const char* displayName() const;
-	virtual gchar* description() const;
+	virtual char* description() const;
 
 	virtual void set_shape();
 	virtual void update_patheffect(bool write);
 
 private:
-	Geom::Point getTangent(gdouble t) const;
+	Geom::Point getTangent(double t) const;
 	void fitAndDraw(SPCurve* c, double dstep, Geom::Point darray[], Geom::Point const& hat1, Geom::Point& hat2, double* t) const;
 };
 

@@ -8,8 +8,9 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:cc="http://web.resource.org/cc/"
    xmlns:dc="http://purl.org/dc/elements/1.1/"
-   width="744.09448819"
-   height="1052.3622047">
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297">
   <defs />
   <sodipodi:namedview
      id="base"
@@ -19,9 +20,9 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.35"
-     inkscape:cx="375"
-     inkscape:cy="520" 
-     inkscape:document-units="px"
+     inkscape:cx="400"
+     inkscape:cy="560" 
+     inkscape:document-units="mm"
      inkscape:current-layer="layer1" />
   <metadata>
     <rdf:RDF>
@@ -33,5 +34,5 @@
       </cc:Work>
     </rdf:RDF>
   </metadata>
-  <g inkscape:label="Capa 1" inkscape:groupmode="layer" id="capa1" />
+  <g inkscape:label="Capa 1" inkscape:groupmode="layer" id="layer1" />
 </svg>

@@ -19,7 +19,7 @@
 #include <boost/scoped_ptr.hpp>
 #include <2geom/transforms.h>
 
-#include "interface.h"
+#include "ui/interface.h"
 #include "helper/png-write.h"
 #include "display/cairo-utils.h"
 #include "display/drawing.h"

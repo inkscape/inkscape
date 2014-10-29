@@ -9,8 +9,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "display/cairo-utils.h"
-#include "display/canvas-bpath.h" // for SPWindRule (WTF!)
+//#include "display/cairo-utils.h"
+//#include "display/canvas-bpath.h" // for SPWindRule (WTF!)
 #include "display/drawing.h"
 #include "display/drawing-context.h"
 #include "display/drawing-surface.h"
@@ -19,6 +19,9 @@
 #include "libnrtype/font-instance.h"
 #include "style.h"
 #include "2geom/pathvector.h"
+
+#include "display/cairo-utils.h"
+#include "display/canvas-bpath.h"
 
 namespace Inkscape {
 

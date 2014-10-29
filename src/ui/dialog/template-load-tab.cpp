@@ -24,7 +24,7 @@
 #include "extension/db.h"
 #include "extension/effect.h"
 #include "inkscape.h"
-#include "interface.h"
+#include "ui/interface.h"
 #include "file.h"
 #include "path-prefix.h"
 #include "preferences.h"

@@ -39,13 +39,13 @@
 #include "xml/node-event-vector.h"
 #include "preferences.h"
 #include "context-fns.h"
-#include "shape-editor.h"
+#include "ui/shape-editor.h"
 #include "verbs.h"
 #include "display/sp-canvas-item.h"
 
 using Inkscape::DocumentUndo;
 
-#include "tool-factory.h"
+#include "ui/tool-factory.h"
 
 namespace Inkscape {
 namespace UI {
@@ -104,8 +104,8 @@ SpiralTool::~SpiralTool() {
  * destroys old and creates new knotholder.
  */
 void SpiralTool::selection_changed(Inkscape::Selection *selection) {
-    this->shape_editor->unset_item(SH_KNOTHOLDER);
-    this->shape_editor->set_item(selection->singleItem(), SH_KNOTHOLDER);
+    this->shape_editor->unset_item();
+    this->shape_editor->set_item(selection->singleItem());
 }
 
 void SpiralTool::setup() {
@@ -119,7 +119,7 @@ void SpiralTool::setup() {
 
     SPItem *item = sp_desktop_selection(this->desktop)->singleItem();
     if (item) {
-        this->shape_editor->set_item(item, SH_KNOTHOLDER);
+        this->shape_editor->set_item(item);
     }
 
     Inkscape::Selection *selection = sp_desktop_selection(this->desktop);

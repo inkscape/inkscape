@@ -23,7 +23,9 @@
 #include "live_effects/lpeobject.h"
 #include "message-context.h"
 #include "selection.h"
-#include "shape-editor.h" // temporary!
+#include "ui/shape-editor.h" // temporary!
+#include "live_effects/effect.h"
+#include "display/curve.h"
 #include "sp-clippath.h"
 #include "sp-item-group.h"
 #include "sp-mask.h"
@@ -105,7 +107,7 @@
 
 using Inkscape::ControlManager;
 
-#include "tool-factory.h"
+#include "ui/tool-factory.h"
 
 namespace Inkscape {
 namespace UI {
@@ -167,6 +169,10 @@ NodeTool::~NodeTool() {
     if (this->flash_tempitem) {
         this->desktop->remove_temporary_canvasitem(this->flash_tempitem);
     }
+    if (this->helperpath_tmpitem) {
+        this->desktop->remove_temporary_canvasitem(this->helperpath_tmpitem);
+    }
+
     if (this->helperpath_tmpitem) {
         this->desktop->remove_temporary_canvasitem(this->helperpath_tmpitem);
     }
@@ -239,7 +245,7 @@ void NodeTool::setup() {
         )
     );
 
-    this->_selected_nodes->signal_point_changed.connect(
+    this->_selected_nodes->signal_selection_changed.connect(
 		// Hide both signal parameters and bind the function parameter to 0
 		// sigc::signal<void, SelectableControlPoint *, bool>
 		// <=>
@@ -257,6 +263,7 @@ void NodeTool::setup() {
     this->flash_tempitem = NULL;
     this->flashed_item = NULL;
     this->_last_over = NULL;
+    this->helperpath_tmpitem = NULL;
 
     // read prefs before adding items to selection to prevent momentarily showing the outline
     sp_event_context_read(this, "show_handles");
@@ -435,7 +442,7 @@ void NodeTool::selection_changed(Inkscape::Selection *sel) {
             this->_shape_editors.find(r.item) == this->_shape_editors.end())
         {
             ShapeEditor *si = new ShapeEditor(this->desktop);
-            si->set_item(r.item, SH_KNOTHOLDER);
+            si->set_item(r.item);
             this->_shape_editors.insert(const_cast<SPItem*&>(r.item), si);
         }
     }
@@ -455,7 +462,7 @@ bool NodeTool::root_handler(GdkEvent* event) {
     
     Inkscape::Selection *selection = desktop->selection;
     static Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    
+
     if (this->_multipath->event(this, event)) {
     	return true;
     }
@@ -473,6 +480,7 @@ bool NodeTool::root_handler(GdkEvent* event) {
     case GDK_MOTION_NOTIFY: {
 	this->update_helperpath();
         combine_motion_events(desktop->canvas, event->motion, 0);
+        this->update_helperpath();
         SPItem *over_item = sp_event_context_find_item (desktop, event_point(event->button),
                 FALSE, TRUE);
 
@@ -481,7 +489,6 @@ bool NodeTool::root_handler(GdkEvent* event) {
             //ink_node_tool_update_tip(nt, event);
             this->update_tip(event);
         }
-
         // create pathflash outline
         if (prefs->getBool("/tools/nodes/pathflash_enabled")) {
             if (over_item == this->flashed_item) {
@@ -513,7 +520,8 @@ bool NodeTool::root_handler(GdkEvent* event) {
             SPCanvasItem *flash = sp_canvas_bpath_new(sp_desktop_tempgroup(desktop), c);
 
             sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(flash),
-                prefs->getInt("/tools/nodes/highlight_color", 0xff0000ff), 1.0,
+                //prefs->getInt("/tools/nodes/highlight_color", 0xff0000ff), 1.0,
+                over_item->highlight_color(), 1.0,
                 SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
 
             sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(flash), 0, SP_WIND_RULE_NONZERO);

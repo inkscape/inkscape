@@ -12,15 +12,17 @@
  * Released under GNU GPL, read the file 'COPYING' for more information.
  */
 
-#include "sp-item.h"
-#include <uri-references.h>
-#include <stddef.h>
+#include <cstddef>
 #include <sigc++/sigc++.h>
+
+#include "sp-item.h"
+#include "uri-references.h"
 
 #include "util/share.h"
 #include "xml/node-observer.h"
 #include "xml/subtree.h"
 
+typedef unsigned int GQuark;
 
 class SPTRefReference : public Inkscape::URIReference,
                         public Inkscape::XML::NodeObserver {

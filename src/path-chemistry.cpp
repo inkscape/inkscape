@@ -22,6 +22,7 @@
 #include "xml/repr.h"
 #include "svg/svg.h"
 #include "display/curve.h"
+#include "color.h"
 #include <glib.h>
 #include <glibmm/i18n.h>
 #include "sp-path.h"
@@ -439,6 +440,10 @@ sp_item_list_to_curves(const GSList *items, GSList **selected, GSList **to_selec
         gchar *title = item->title();
         // remember description
         gchar *desc = item->desc();
+        // remember highlight color
+        guint32 highlight_color = 0;
+        if (item->isHighlightSet())
+            highlight_color = item->highlight_color();
 
         // It's going to resurrect, so we delete without notifying listeners.
         item->deleteObject(false);
@@ -455,6 +460,9 @@ sp_item_list_to_curves(const GSList *items, GSList **selected, GSList **to_selec
         if (desc && newObj) {
             newObj->setDesc(desc);
             g_free(desc);
+        }
+        if (highlight_color && newObj) {
+                SP_ITEM(newObj)->setHighlightColor( highlight_color );
         }
 
         // move to the saved position

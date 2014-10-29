@@ -44,9 +44,9 @@
 #include "desktop-style.h"
 #include "sp-namedview.h"
 #include "selection.h"
-#include "interface.h"
+#include "ui/interface.h"
 #include "macros.h"
-#include "tools-switch.h"
+#include "ui/tools-switch.h"
 #include "preferences.h"
 #include "message-context.h"
 #include "gradient-drag.h"
@@ -55,10 +55,11 @@
 #include "selcue.h"
 #include "ui/tools/lpe-tool.h"
 #include "ui/tool/control-point.h"
-#include "shape-editor.h"
+#include "ui/shape-editor.h"
 #include "sp-guide.h"
 #include "color.h"
 #include "knot.h"
+#include "knot-ptr.h"
 
 // globals for temporary switching to selector by space
 static bool selector_toggled = FALSE;
@@ -1360,6 +1361,7 @@ gboolean sp_event_context_snap_watchdog_callback(gpointer data) {
         break;
     case DelayedSnapEvent::KNOT_HANDLER: {
         gpointer knot = dse->getItem2();
+        check_if_knot_deleted(knot);
         if (knot && SP_IS_KNOT(knot)) {
             sp_knot_handler_request_position(dse->getEvent(), SP_KNOT(knot));
         }

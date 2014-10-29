@@ -34,6 +34,7 @@ class Event;
 }
 }
 
+typedef struct _GHashTable GHashTable;
 
 struct SPDocumentPrivate {
 	typedef std::map<GQuark, SPDocument::IDChangedSignal> IDChangedSignalMap;

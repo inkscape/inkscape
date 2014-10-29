@@ -1,5 +1,5 @@
-#ifndef __NR_FILTER_BLEND_H__
-#define __NR_FILTER_BLEND_H__
+#ifndef SEEN_NR_FILTER_BLEND_H
+#define SEEN_NR_FILTER_BLEND_H
 
 /*
  * SVG feBlend renderer

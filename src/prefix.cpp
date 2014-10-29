@@ -44,12 +44,6 @@ extern "C" {
 #endif /* __cplusplus */
 
 
- // Why is NULL being redefined?! This breaks compilation on Windows, as it disables the safe assignment of NULL to other pointer types.
-#ifndef __WIN32__
-# undef NULL
-# define NULL ((void *) 0)
-#endif
-
 #ifdef __GNUC__
     #define br_return_val_if_fail(expr,val) if (!(expr)) {fprintf (stderr, "** BinReloc (%s): assertion %s failed\n", __PRETTY_FUNCTION__, #expr); return val;}
 #else

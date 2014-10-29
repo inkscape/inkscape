@@ -22,8 +22,9 @@
 using std::map;
 using std::pair;
 
-#include <glibmm/stringutils.h>
+#include <glibmm.h>
 #include "attributes.h"
+#include "display/nr-filter.h"
 #include "document.h"
 #include "sp-filter.h"
 #include "sp-filter-reference.h"
@@ -36,8 +37,6 @@ using std::pair;
 
 #define SP_MACROS_SILENT
 #include "macros.h"
-
-#include "display/nr-filter.h"
 
 static void filter_ref_changed(SPObject *old_ref, SPObject *ref, SPFilter *filter);
 static void filter_ref_modified(SPObject *href, guint flags, SPFilter *filter);

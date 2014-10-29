@@ -14,13 +14,13 @@
  */
 
 #include <2geom/point.h>
-#include <glib.h>
 #include <stddef.h>
 #include <sigc++/connection.h>
 
 class  SPDesktop;
 class SPObject;
 class  SPItem;
+typedef struct _GSList GSList;
 namespace Avoid { class ShapeRef; }
 
 class SPAvoidRef {

@@ -26,40 +26,40 @@ public:
 	virtual ~SPFeSpotLight();
 
     /** x coordinate of the light source */
-    gfloat x; 
-    guint x_set : 1;
+    float x; 
+    unsigned int x_set : 1;
     /** y coordinate of the light source */
-    gfloat y; 
-    guint y_set : 1;
+    float y; 
+    unsigned int y_set : 1;
     /** z coordinate of the light source */
-    gfloat z; 
-    guint z_set : 1;
+    float z; 
+    unsigned int z_set : 1;
     /** x coordinate of the point the source is pointing at */
-    gfloat pointsAtX;
-    guint pointsAtX_set : 1;
+    float pointsAtX;
+    unsigned int pointsAtX_set : 1;
     /** y coordinate of the point the source is pointing at */
-    gfloat pointsAtY;
-    guint pointsAtY_set : 1;
+    float pointsAtY;
+    unsigned int pointsAtY_set : 1;
     /** z coordinate of the point the source is pointing at */
-    gfloat pointsAtZ;
-    guint pointsAtZ_set : 1;
+    float pointsAtZ;
+    unsigned int pointsAtZ_set : 1;
     /** specular exponent (focus of the light) */
-    gfloat specularExponent;
-    guint specularExponent_set : 1;
+    float specularExponent;
+    unsigned int specularExponent_set : 1;
     /** limiting cone angle */
-    gfloat limitingConeAngle;
-    guint limitingConeAngle_set : 1;
+    float limitingConeAngle;
+    unsigned int limitingConeAngle_set : 1;
     //other fields
 
 protected:
 	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
 	virtual void release();
 
-	virtual void set(unsigned int key, const gchar* value);
+	virtual void set(unsigned int key, char const* value);
 
 	virtual void update(SPCtx* ctx, unsigned int flags);
 
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, unsigned int flags);
 };
 
 #endif /* !SP_FESPOTLIGHT_H_SEEN */

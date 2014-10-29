@@ -25,7 +25,7 @@
 #include "selection-chemistry.h"
 
 #include "ui/tools/zoom-tool.h"
-#include "tool-factory.h"
+#include "ui/tool-factory.h"
 
 namespace Inkscape {
 namespace UI {

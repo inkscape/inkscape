@@ -84,7 +84,7 @@ using namespace std;
 // Please enable again when working on 1.0
 #define ENABLE_SPRAY_MODE_SINGLE_PATH
 
-#include "tool-factory.h"
+#include "ui/tool-factory.h"
 
 namespace Inkscape {
 namespace UI {

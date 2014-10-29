@@ -10,17 +10,17 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <boost/optional.hpp>
-#include <vector>
 #include <2geom/point.h>
 #include <2geom/rect.h>
+#include <boost/optional.hpp>
+#include <vector>
 
 /* fixme: do multidocument safe */
 
-class  CtrlRect;
+class CtrlRect;
+class SPCurve;
+class SPDesktop;
 struct SPCanvasItem;
-class  SPCurve;
-class  SPDesktop;
 
 enum {
     RUBBERBAND_MODE_RECT,

@@ -16,11 +16,10 @@
 #include <sigc++/sigc++.h>
 #include "message-context.h"
 
-namespace Inkscape { class Selection; }
-
 namespace Inkscape {
 
 class MessageStack;
+class Selection;
 
 class SelectionDescriber : public sigc::trackable {
 public:
@@ -29,7 +28,7 @@ public:
 
 private:
     void _updateMessageFromSelection(Inkscape::Selection *selection);
-    void _selectionModified(Inkscape::Selection *selection, guint /*flags*/);
+    void _selectionModified(Inkscape::Selection *selection, unsigned int /*flags*/);
 
     sigc::connection *_selection_changed_connection;
     sigc::connection *_selection_modified_connection;
@@ -43,6 +42,7 @@ private:
 }
 
 #endif
+
 /*
   Local Variables:
   mode:c++

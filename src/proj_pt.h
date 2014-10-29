@@ -1,7 +1,4 @@
-#ifndef __PROJ_PT_H__
-#define __PROJ_PT_H__
-
-/*
+/**
  * 3x4 transformation matrix to map points from projective 3-space into the projective plane
  *
  * Authors:
@@ -12,8 +9,11 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#ifndef SEEN_PROJ_PT_H
+#define SEEN_PROJ_PT_H
+
 #include <2geom/point.h>
-#include <gtk/gtk.h>
+#include <cstdio>
 
 namespace Proj {
 
@@ -25,7 +25,7 @@ public:
     Pt2 () { pt[0] = 0; pt[1] = 0; pt[2] = 1.0; } // we default to (0 : 0 : 1)
     Pt2 (double x, double y, double w) { pt[0] = x; pt[1] = y; pt[2] = w; }
     Pt2 (Geom::Point const &point) { pt[0] = point[Geom::X]; pt[1] = point[Geom::Y]; pt[2] = 1; }
-    Pt2 (const gchar *coord_str);
+    Pt2 (const char *coord_str);
 
     inline double operator[] (unsigned int index) const {
         if (index > 2) { return Geom::infinity(); }
@@ -81,8 +81,8 @@ public:
     void normalize();
     Geom::Point affine();
     inline bool is_finite() { return pt[2] != 0; } // FIXME: Should we allow for some tolerance?
-    gchar *coord_string();
-    inline void print(gchar const *s) const { g_print ("%s(%8.2f : %8.2f : %8.2f)\n", s, pt[0], pt[1], pt[2]); }
+    char *coord_string();
+    inline void print(char const *s) const { printf ("%s(%8.2f : %8.2f : %8.2f)\n", s, pt[0], pt[1], pt[2]); }
 
 private:
     double pt[3];
@@ -93,7 +93,7 @@ class Pt3 {
 public:
     Pt3 () { pt[0] = 0; pt[1] = 0; pt[2] = 0; pt[3] = 1.0; } // we default to (0 : 0 : 0 : 1)
     Pt3 (double x, double y, double z, double w) { pt[0] = x; pt[1] = y; pt[2] = z; pt[3] = w; }
-    Pt3 (const gchar *coord_str);
+    Pt3 (const char *coord_str);
 
     inline bool operator== (Pt3 &rhs) {
         normalize();
@@ -146,9 +146,9 @@ public:
     }
     void normalize();
     inline bool is_finite() { return pt[3] != 0; } // FIXME: Should we allow for some tolerance?
-    gchar *coord_string();
-    inline void print(gchar const *s) const {
-        g_print ("%s(%8.2f : %8.2f : %8.2f : %8.2f)\n", s, pt[0], pt[1], pt[2], pt[3]);
+    char *coord_string();
+    inline void print(char const *s) const {
+        printf ("%s(%8.2f : %8.2f : %8.2f : %8.2f)\n", s, pt[0], pt[1], pt[2], pt[3]);
     }
 
 private:
@@ -157,7 +157,7 @@ private:
 
 } // namespace Proj
 
-#endif /* __PROJ_PT_H__ */
+#endif // !SEEN_PROJ_PT_H
 
 /*
   Local Variables:
@@ -168,4 +168,4 @@ private:
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8 :

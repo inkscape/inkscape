@@ -9,6 +9,9 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <cstdio>
+#include <cassert>
+
 #include "sp-object.h"
 #include "object-hierarchy.h"
 
@@ -32,7 +35,7 @@ void ObjectHierarchy::clear() {
 }
 
 void ObjectHierarchy::setTop(SPObject *object) {
-    g_return_if_fail(object != NULL);
+    if (object == NULL) { printf("Assertion object != NULL failed\n"); return; }
 
     if ( top() == object ) {
         return;
@@ -53,8 +56,8 @@ void ObjectHierarchy::setTop(SPObject *object) {
 }
 
 void ObjectHierarchy::_addTop(SPObject *senior, SPObject *junior) {
-    g_assert(junior != NULL);
-    g_assert(senior != NULL);
+    assert(junior != NULL);
+    assert(senior != NULL);
 
     SPObject *object = junior->parent;
     do {
@@ -64,7 +67,7 @@ void ObjectHierarchy::_addTop(SPObject *senior, SPObject *junior) {
 }
 
 void ObjectHierarchy::_addTop(SPObject *object) {
-    g_assert(object != NULL);
+    assert(object != NULL);
     _hierarchy.push_back(_attach(object));
     _added_signal.emit(object);
 }
@@ -82,7 +85,7 @@ void ObjectHierarchy::_trimAbove(SPObject *limit) {
 }
 
 void ObjectHierarchy::setBottom(SPObject *object) {
-    g_return_if_fail(object != NULL);
+    if (object == NULL) { printf("assertion object != NULL failed\n"); return; }
 
     if ( bottom() == object ) {
         return;
@@ -125,8 +128,8 @@ void ObjectHierarchy::_trimBelow(SPObject *limit) {
 }
 
 void ObjectHierarchy::_addBottom(SPObject *senior, SPObject *junior) {
-    g_assert(junior != NULL);
-    g_assert(senior != NULL);
+    assert(junior != NULL);
+    assert(senior != NULL);
 
     if ( junior != senior ) {
         _addBottom(senior, junior->parent);
@@ -135,15 +138,15 @@ void ObjectHierarchy::_addBottom(SPObject *senior, SPObject *junior) {
 }
 
 void ObjectHierarchy::_addBottom(SPObject *object) {
-    g_assert(object != NULL);
+    assert(object != NULL);
     _hierarchy.push_front(_attach(object));
     _added_signal.emit(object);
 }
 
 void ObjectHierarchy::_trim_for_release(SPObject *object) {
     this->_trimBelow(object);
-    g_assert(!this->_hierarchy.empty());
-    g_assert(this->_hierarchy.front().object == object);
+    assert(!this->_hierarchy.empty());
+    assert(this->_hierarchy.front().object == object);
 
     sp_object_ref(object, NULL);
     this->_detach(this->_hierarchy.front());

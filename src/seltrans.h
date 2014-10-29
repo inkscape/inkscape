@@ -15,32 +15,33 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <stddef.h>
-#include <sigc++/sigc++.h>
 #include <2geom/point.h>
 #include <2geom/affine.h>
 #include <2geom/rect.h>
-#include "knot.h"
-#include "selcue.h"
-#include "message-context.h"
+#include <cstddef>
+#include <sigc++/sigc++.h>
 #include <vector>
-#include "sp-item.h"
+
+#include "knot.h"
+#include "message-context.h"
 #include "seltrans-handles.h"
+#include "selcue.h"
+#include "sp-item.h"
+
 
 class  SPKnot;
 class  SPDesktop;
 struct SPCanvasItem;
 struct SPCtrlLine;
 struct SPSelTransHandle;
+typedef struct _GSList GSList;
 
-namespace Inkscape
-{
+namespace Inkscape {
 
 Geom::Scale calcScaleFactors(Geom::Point const &initial_point, Geom::Point const &new_point, Geom::Point const &origin, bool const skew = false);
 
-namespace XML
-{
-  class Node;
+namespace XML {
+    class Node;
 }
 
 class SelTrans
@@ -56,26 +57,26 @@ public:
     void increaseState();
     void resetState();
     void setCenter(Geom::Point const &p);
-    void grab(Geom::Point const &p, gdouble x, gdouble y, bool show_handles, bool translating);
+    void grab(Geom::Point const &p, double x, double y, bool show_handles, bool translating);
     void transform(Geom::Affine const &rel_affine, Geom::Point const &norm);
     void ungrab();
     void stamp();
-    void moveTo(Geom::Point const &xy, guint state);
-    void stretch(SPSelTransHandle const &handle, Geom::Point &pt, guint state);
-    void scale(Geom::Point &pt, guint state);
-    void skew(SPSelTransHandle const &handle, Geom::Point &pt, guint state);
-    void rotate(Geom::Point &pt, guint state);
-    gboolean request(SPSelTransHandle const &handle, Geom::Point &pt, guint state);
-    gboolean scaleRequest(Geom::Point &pt, guint state);
-    gboolean stretchRequest(SPSelTransHandle const &handle, Geom::Point &pt, guint state);
-    gboolean skewRequest(SPSelTransHandle const &handle, Geom::Point &pt, guint state);
-    gboolean rotateRequest(Geom::Point &pt, guint state);
-    gboolean centerRequest(Geom::Point &pt, guint state);
+    void moveTo(Geom::Point const &xy, unsigned int state);
+    void stretch(SPSelTransHandle const &handle, Geom::Point &pt, unsigned int state);
+    void scale(Geom::Point &pt, unsigned int state);
+    void skew(SPSelTransHandle const &handle, Geom::Point &pt, unsigned int state);
+    void rotate(Geom::Point &pt, unsigned int state);
+    int request(SPSelTransHandle const &handle, Geom::Point &pt, unsigned int state);
+    int scaleRequest(Geom::Point &pt, unsigned int state);
+    int stretchRequest(SPSelTransHandle const &handle, Geom::Point &pt, unsigned int state);
+    int skewRequest(SPSelTransHandle const &handle, Geom::Point &pt, unsigned int state);
+    int rotateRequest(Geom::Point &pt, unsigned int state);
+    int centerRequest(Geom::Point &pt, unsigned int state);
 
-    gboolean handleRequest(SPKnot *knot, Geom::Point *position, guint state, SPSelTransHandle const &handle);
-    void handleGrab(SPKnot *knot, guint state, SPSelTransHandle const &handle);
-    void handleClick(SPKnot *knot, guint state, SPSelTransHandle const &handle);
-    void handleNewEvent(SPKnot *knot, Geom::Point *position, guint state, SPSelTransHandle const &handle);
+    int handleRequest(SPKnot *knot, Geom::Point *position, unsigned int state, SPSelTransHandle const &handle);
+    void handleGrab(SPKnot *knot, unsigned int state, SPSelTransHandle const &handle);
+    void handleClick(SPKnot *knot, unsigned int state, SPSelTransHandle const &handle);
+    void handleNewEvent(SPKnot *knot, Geom::Point *position, unsigned int state, SPSelTransHandle const &handle);
 
     enum Show
     {
@@ -115,7 +116,7 @@ private:
     void _updateHandles();
     void _updateVolatileState();
     void _selChanged(Inkscape::Selection *selection);
-    void _selModified(Inkscape::Selection *selection, guint flags);
+    void _selModified(Inkscape::Selection *selection, unsigned int flags);
     void _boundingBoxPrefsChanged(int prefs_bbox);
     void _makeHandles();
     void _showHandles(SPSelTransType type);
@@ -156,7 +157,7 @@ private:
     Geom::OptRect _bbox;
     Geom::OptRect _visual_bbox;
     Geom::OptRect _geometric_bbox;
-    gdouble _strokewidth;
+    double _strokewidth;
 
     Geom::Affine _current_relative_affine;
     Geom::Affine _absolute_affine;
@@ -173,8 +174,8 @@ private:
     Geom::Point _origin_for_specpoints;
     Geom::Point _origin_for_bboxpoints;
 
-    gdouble _handle_x;
-    gdouble _handle_y;
+    double _handle_x;
+    double _handle_y;
 
     boost::optional<Geom::Point> _center;
     bool _center_is_set; ///< we've already set _center, no need to reread it from items
@@ -184,8 +185,8 @@ private:
     SPCanvasItem *_norm;
     SPCanvasItem *_grip;
     SPCtrlLine *_l[4];
-    guint _sel_changed_id;
-    guint _sel_modified_id;
+    unsigned int _sel_changed_id;
+    unsigned int _sel_modified_id;
     GSList *_stamp_cache;
 
     Geom::Point _origin; ///< position of origin for transforms

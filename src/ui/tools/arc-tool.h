@@ -30,7 +30,7 @@ namespace Inkscape {
 }
 
 #define SP_ARC_CONTEXT(obj) (dynamic_cast<Inkscape::UI::Tools::ArcTool*>((Inkscape::UI::Tools::ToolBase*)obj))
-#define SP_IS_ARC_CONTEXT(obj) (dynamic_cast<const Inkscape::UI::Tools::ArcTool*>(const Inkscape::UI::Tools::ToolBase*(obj)) != NULL)
+#define SP_IS_ARC_CONTEXT(obj) (dynamic_cast<const Inkscape::UI::Tools::ArcTool*>(obj) != NULL)
 
 namespace Inkscape {
 namespace UI {

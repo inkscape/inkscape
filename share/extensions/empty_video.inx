@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+    <_name>Video Screen</_name>
+    <id>org.inkscape.render.empty_video</id>
+    <dependency type="executable" location="extensions">empty_video.py</dependency>
+    <dependency type="executable" location="extensions">inkex.py</dependency>
+    
+    <param name="size" _gui-text="Video size:" type="enum">
+        <item value="Custom">Custom</item>
+        <item value="720x486">720x486 (NTSC)</item>
+        <item value="720x576">720x576 (PAL)</item>
+        <item value="1920x1080">1920x1080 (HDTV)</item>
+        <item value="3840x2160">3840x2160 (4K)</item>
+        <item value="7680x4320">7680x4320 (8K)</item>
+    </param>
+
+    <!-- Maximum size is '16k' -->
+    <param name="width"  _gui-text="Custom Width:"  type="int" min="240" max="15360">1920</param>
+    <param name="height" _gui-text="Custom Height:" type="int" min="160" max="8640">1080</param>
+        
+    <effect needs-live-preview="false">
+        <object-type>all</object-type>
+        <effects-menu hidden="true" />
+    </effect>
+    <inkscape:_templateinfo>
+      <inkscape:_name>Video...</inkscape:_name>
+      <inkscape:author>Tavmjong Bah</inkscape:author>
+      <inkscape:_shortdesc>Video screen of chosen size.</inkscape:_shortdesc>
+      <inkscape:date>2014-10-09</inkscape:date>
+      <inkscape:_keywords>empty video</inkscape:_keywords>
+    </inkscape:_templateinfo>
+    <script>
+        <command reldir="extensions" interpreter="python">empty_video.py</command>
+    </script>
+</inkscape-extension>

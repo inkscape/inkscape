@@ -1,9 +1,5 @@
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
-
-#ifndef __SP_FONTFACE_H__
-#define __SP_FONTFACE_H__
+#ifndef SEEN_SP_FONTFACE_H
+#define SEEN_SP_FONTFACE_H
 
 #include <vector>
 
@@ -117,11 +113,11 @@ protected:
 	virtual void child_added(Inkscape::XML::Node* child, Inkscape::XML::Node* ref);
 	virtual void remove_child(Inkscape::XML::Node* child);
 
-	virtual void set(unsigned int key, const gchar* value);
+	virtual void set(unsigned int key, const char* value);
 
 	virtual void update(SPCtx* ctx, unsigned int flags);
 
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, unsigned int flags);
 };
 
 #endif //#ifndef __SP_FONTFACE_H__

@@ -38,7 +38,7 @@
 #include "display/canvas-arena.h"
 #include "document.h"
 #include "ege-color-prof-tracker.h"
-#include "ege-select-one-action.h"
+#include "widgets/ege-select-one-action.h"
 #include <extension/db.h>
 #include "file.h"
 #include "helper/action.h"
@@ -46,7 +46,7 @@
 #include "util/units.h"
 #include "ui/widget/unit-tracker.h"
 #include "inkscape-private.h"
-#include "interface.h"
+#include "ui/interface.h"
 #include "macros.h"
 #include "preferences.h"
 #include "sp-image.h"
@@ -358,7 +358,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     {
         using Inkscape::UI::Dialogs::SwatchesPanel;
 
-        dtw->panels = new SwatchesPanel("/embedded/swatches");
+        dtw->panels = new SwatchesPanel("/embedded/swatches" /*false*/);
         dtw->panels->setOrientation(SP_ANCHOR_SOUTH);
 
 #if GTK_CHECK_VERSION(3,0,0)

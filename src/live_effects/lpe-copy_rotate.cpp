@@ -12,6 +12,7 @@
  */
 
 #include <glibmm/i18n.h>
+#include <gdk/gdk.h>
 
 #include "live_effects/lpe-copy_rotate.h"
 #include "sp-shape.h"

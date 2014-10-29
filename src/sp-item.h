@@ -18,10 +18,11 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
-#include <vector>
+
 #include <2geom/forward.h>
 #include <2geom/affine.h>
 #include <2geom/rect.h>
+#include <vector>
 
 #include "sp-object.h"
 #include "snap-preferences.h"
@@ -35,6 +36,7 @@ class SPMaskReference;
 class SPAvoidRef;
 class SPPattern;
 struct SPPrintContext;
+typedef unsigned int guint32;
 
 namespace Inkscape {
 
@@ -73,7 +75,7 @@ enum PatternTransform {
 class SPEvent {
 public:
     unsigned int type;
-    gpointer data;
+    void* data;
 };
 
 /// SPItemView
@@ -154,6 +156,19 @@ public:
     bool isHidden() const;
     void setHidden(bool hidden);
 
+    /* Objects dialogue */
+    bool isSensitive() const {
+        return sensitive;
+    };
+
+    bool isHighlightSet() const;
+    guint32 highlight_color() const;
+    
+    void setHighlightColor(guint32 color);
+    
+    void unsetHighlightColor();
+    /********************/
+
     bool isEvaluated() const;
     void setEvaluated(bool visible);
     void resetEvaluated();
@@ -180,7 +195,7 @@ public:
     void lowerOne();
     void raiseToTop();
     void lowerToBottom();
-    void moveTo(SPItem *target, gboolean intoafter);
+    void moveTo(SPItem *target, bool intoafter);
 
     sigc::connection connectTransformed(sigc::slot<void, Geom::Affine const *, SPItem *> slot)  {
         return _transformed_signal.connect(slot);
@@ -199,7 +214,7 @@ public:
 
     unsigned int pos_in_parent() const;
 
-    gchar *detailedDescription() const;
+    char *detailedDescription() const;
 
     bool isFiltered() const;
 
@@ -210,14 +225,14 @@ public:
     void getSnappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs=0) const;
     void adjust_pattern(/* Geom::Affine const &premul, */ Geom::Affine const &postmul, bool set = false, PatternTransform = TRANSFORM_BOTH);
     void adjust_gradient(/* Geom::Affine const &premul, */ Geom::Affine const &postmul, bool set = false);
-    void adjust_stroke(gdouble ex);
-    void adjust_stroke_width_recursive(gdouble ex);
+    void adjust_stroke(double ex);
+    void adjust_stroke_width_recursive(double ex);
     void freeze_stroke_width_recursive(bool freeze);
     void adjust_paint_recursive(Geom::Affine advertized_transform, Geom::Affine t_ancestors, bool is_pattern);
     void adjust_livepatheffect(Geom::Affine const &postmul, bool set = false);
     void doWriteTransform(Inkscape::XML::Node *repr, Geom::Affine const &transform, Geom::Affine const *adv = NULL, bool compensate = true);
     void set_item_transform(Geom::Affine const &transform_matrix);
-    gint emitEvent (SPEvent &event);
+    int emitEvent (SPEvent &event);
     Inkscape::DrawingItem *get_arenaitem(unsigned int key);
 
     Geom::Affine i2doc_affine() const;
@@ -225,6 +240,7 @@ public:
     void set_i2d_affine(Geom::Affine const &transform);
     Geom::Affine dt2i_affine() const;
 
+    char *_highlightColor;
 private:
     enum EvaluatedStatus
     {
@@ -243,15 +259,15 @@ private:
 public:
 	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
 	virtual void release();
-	virtual void set(unsigned int key, gchar const* value);
-	virtual void update(SPCtx *ctx, guint flags);
-	virtual void modified(unsigned int flags);
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+	virtual void set(unsigned int key, char const* value);
+	virtual void update(SPCtx *ctx, unsigned int flags);
+        virtual void modified(unsigned int flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, unsigned int flags);
 
 	virtual Geom::OptRect bbox(Geom::Affine const &transform, SPItem::BBoxType type) const;
 	virtual void print(SPPrintContext *ctx);
     virtual const char* displayName() const;
-	virtual gchar* description() const;
+	virtual char* description() const;
 	virtual Inkscape::DrawingItem* show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
 	virtual void hide(unsigned int key);
     virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) const;
@@ -259,7 +275,7 @@ public:
 
     virtual void convert_to_guides() const;
 
-    virtual gint event(SPEvent *event);
+    virtual int event(SPEvent *event);
 };
 
 

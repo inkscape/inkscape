@@ -162,8 +162,15 @@ KnotHolder::knot_clicked_handler(SPKnot *knot, guint state)
     }
 
     // for drag, this is done by ungrabbed_handler, but for click we must do it here
-    DocumentUndo::done(saved_item->document, object_verb,
-                       _("Change handle"));
+    
+    if (saved_item) { //increasingly aggressive sanity checks
+       if (saved_item->document) {
+            if (object_verb <= SP_VERB_LAST && object_verb >= SP_VERB_INVALID) {
+                DocumentUndo::done(saved_item->document, object_verb,
+                                   _("Change handle"));
+            }
+       }
+    } // else { abort(); }
 }
 
 void
@@ -216,7 +223,6 @@ KnotHolder::knot_ungrabbed_handler(SPKnot */*knot*/, guint)
         if (lpeItem) {
             // This writes all parameters to SVG. Is this sufficiently efficient or should we only
             // write the ones that were changed?
-
             Inkscape::LivePathEffect::Effect *lpe = lpeItem->getCurrentLPE();
             if (lpe) {
                 LivePathEffectObject *lpeobj = lpe->getLPEObj();
@@ -248,8 +254,7 @@ KnotHolder::knot_ungrabbed_handler(SPKnot */*knot*/, guint)
             }
         }
 
-        DocumentUndo::done(object->document, object_verb,
-                           _("Move handle"));
+        DocumentUndo::done(object->document, object_verb, _("Move handle"));
     }
 }
 

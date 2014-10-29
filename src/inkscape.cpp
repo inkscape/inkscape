@@ -71,7 +71,7 @@
 #include "helper/action-context.h"
 #include "helper/sp-marshal.h"
 
-static Inkscape::Application *inkscape = NULL;
+static InkscapeApplication *inkscape = NULL;
 
 /* Backbones of configuration xml data */
 #include "menus-skeleton.h"
@@ -99,16 +99,10 @@ enum {
 # FORWARD DECLARATIONS
 ################################*/
 
-namespace Inkscape {
-struct ApplicationClass;
-}
-
-static void inkscape_class_init (Inkscape::ApplicationClass *klass);
-static void inkscape_init (SPObject *object);
 static void inkscape_dispose (GObject *object);
 
-static void inkscape_activate_desktop_private (Inkscape::Application *inkscape, SPDesktop *desktop);
-static void inkscape_deactivate_desktop_private (Inkscape::Application *inkscape, SPDesktop *desktop);
+static void inkscape_activate_desktop_private (InkscapeApplication *inkscape, SPDesktop *desktop);
+static void inkscape_deactivate_desktop_private (InkscapeApplication *inkscape, SPDesktop *desktop);
 
 class AppSelectionModel {
     Inkscape::LayerModel _layer_model;
@@ -126,7 +120,7 @@ public:
     Inkscape::Selection *getSelection() const { return _selection; }
 };
 
-struct Inkscape::Application {
+struct InkscapeApplication {
     GObject object;
     Inkscape::XML::Document *menus;
     std::map<SPDocument *, int> document_set;
@@ -140,26 +134,25 @@ struct Inkscape::Application {
     guint trackalt;
 };
 
-struct Inkscape::ApplicationClass {
+struct InkscapeApplicationClass {
     GObjectClass object_class;
 
     /* Signals */
-    void (* change_selection) (Inkscape::Application * inkscape, Inkscape::Selection * selection);
-    void (* change_subselection) (Inkscape::Application * inkscape, SPDesktop *desktop);
-    void (* modify_selection) (Inkscape::Application * inkscape, Inkscape::Selection * selection, guint flags);
-    void (* set_selection) (Inkscape::Application * inkscape, Inkscape::Selection * selection);
-    void (* set_eventcontext) (Inkscape::Application * inkscape, Inkscape::UI::Tools::ToolBase * eventcontext);
-    void (* activate_desktop) (Inkscape::Application * inkscape, SPDesktop * desktop);
-    void (* deactivate_desktop) (Inkscape::Application * inkscape, SPDesktop * desktop);
-    void (* destroy_document) (Inkscape::Application *inkscape, SPDocument *doc);
-    void (* color_set) (Inkscape::Application *inkscape, SPColor *color, double opacity);
-    void (* shut_down) (Inkscape::Application *inkscape);
-    void (* dialogs_hide) (Inkscape::Application *inkscape);
-    void (* dialogs_unhide) (Inkscape::Application *inkscape);
-    void (* external_change) (Inkscape::Application *inkscape);
+    void (* change_selection) (InkscapeApplication * inkscape, Inkscape::Selection * selection);
+    void (* change_subselection) (InkscapeApplication * inkscape, SPDesktop *desktop);
+    void (* modify_selection) (InkscapeApplication * inkscape, Inkscape::Selection * selection, guint flags);
+    void (* set_selection) (InkscapeApplication * inkscape, Inkscape::Selection * selection);
+    void (* set_eventcontext) (InkscapeApplication * inkscape, Inkscape::UI::Tools::ToolBase * eventcontext);
+    void (* activate_desktop) (InkscapeApplication * inkscape, SPDesktop * desktop);
+    void (* deactivate_desktop) (InkscapeApplication * inkscape, SPDesktop * desktop);
+    void (* destroy_document) (InkscapeApplication *inkscape, SPDocument *doc);
+    void (* color_set) (InkscapeApplication *inkscape, SPColor *color, double opacity);
+    void (* shut_down) (InkscapeApplication *inkscape);
+    void (* dialogs_hide) (InkscapeApplication *inkscape);
+    void (* dialogs_unhide) (InkscapeApplication *inkscape);
+    void (* external_change) (InkscapeApplication *inkscape);
 };
 
-static GObjectClass * parent_class;
 static guint inkscape_signals[LAST_SIGNAL] = {0};
 
 static void (* segv_handler) (int) = SIG_DFL;
@@ -175,48 +168,21 @@ static void (* bus_handler)  (int) = SIG_DFL;
 #define INKSCAPE_LEGACY_PROFILE_DIR ".inkscape"
 #define MENUS_FILE "menus.xml"
 
-
-/**
- *  Retrieves the GType for the Inkscape Application object.
- */
-GType
-inkscape_get_type (void)
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof (Inkscape::ApplicationClass),
-            NULL, NULL,
-            (GClassInitFunc) inkscape_class_init,
-            NULL, NULL,
-            sizeof (Inkscape::Application),
-            4,
-            (GInstanceInitFunc) inkscape_init,
-            NULL
-        };
-        type = g_type_register_static (G_TYPE_OBJECT, "Inkscape_Application", &info, (GTypeFlags)0);
-    }
-    return type;
-}
-
+G_DEFINE_TYPE(InkscapeApplication, inkscape, G_TYPE_OBJECT);
 
 /**
  *  Initializes the inkscape class, registering all of its signal handlers
  *  and virtual functions
  */
 static void
-inkscape_class_init (Inkscape::ApplicationClass * klass)
+inkscape_class_init (InkscapeApplicationClass * klass)
 {
-    GObjectClass * object_class;
-
-    object_class = (GObjectClass *) klass;
-
-    parent_class = (GObjectClass *)g_type_class_peek_parent (klass);
+    GObjectClass * object_class = G_OBJECT_CLASS(klass);
 
     inkscape_signals[MODIFY_SELECTION] = g_signal_new ("modify_selection",
                                G_TYPE_FROM_CLASS (klass),
                                G_SIGNAL_RUN_FIRST,
-                               G_STRUCT_OFFSET (Inkscape::ApplicationClass, modify_selection),
+                               G_STRUCT_OFFSET (InkscapeApplicationClass, modify_selection),
                                NULL, NULL,
                                sp_marshal_VOID__POINTER_UINT,
                                G_TYPE_NONE, 2,
@@ -224,7 +190,7 @@ inkscape_class_init (Inkscape::ApplicationClass * klass)
     inkscape_signals[CHANGE_SELECTION] = g_signal_new ("change_selection",
                                G_TYPE_FROM_CLASS (klass),
                                G_SIGNAL_RUN_FIRST,
-                               G_STRUCT_OFFSET (Inkscape::ApplicationClass, change_selection),
+                               G_STRUCT_OFFSET (InkscapeApplicationClass, change_selection),
                                NULL, NULL,
                                g_cclosure_marshal_VOID__POINTER,
                                G_TYPE_NONE, 1,
@@ -232,7 +198,7 @@ inkscape_class_init (Inkscape::ApplicationClass * klass)
     inkscape_signals[CHANGE_SUBSELECTION] = g_signal_new ("change_subselection",
                                G_TYPE_FROM_CLASS (klass),
                                G_SIGNAL_RUN_FIRST,
-                               G_STRUCT_OFFSET (Inkscape::ApplicationClass, change_subselection),
+                               G_STRUCT_OFFSET (InkscapeApplicationClass, change_subselection),
                                NULL, NULL,
                                g_cclosure_marshal_VOID__POINTER,
                                G_TYPE_NONE, 1,
@@ -240,7 +206,7 @@ inkscape_class_init (Inkscape::ApplicationClass * klass)
     inkscape_signals[SET_SELECTION] =    g_signal_new ("set_selection",
                                G_TYPE_FROM_CLASS (klass),
                                G_SIGNAL_RUN_FIRST,
-                               G_STRUCT_OFFSET (Inkscape::ApplicationClass, set_selection),
+                               G_STRUCT_OFFSET (InkscapeApplicationClass, set_selection),
                                NULL, NULL,
                                g_cclosure_marshal_VOID__POINTER,
                                G_TYPE_NONE, 1,
@@ -248,7 +214,7 @@ inkscape_class_init (Inkscape::ApplicationClass * klass)
     inkscape_signals[SET_EVENTCONTEXT] = g_signal_new ("set_eventcontext",
                                G_TYPE_FROM_CLASS (klass),
                                G_SIGNAL_RUN_FIRST,
-                               G_STRUCT_OFFSET (Inkscape::ApplicationClass, set_eventcontext),
+                               G_STRUCT_OFFSET (InkscapeApplicationClass, set_eventcontext),
                                NULL, NULL,
                                g_cclosure_marshal_VOID__POINTER,
                                G_TYPE_NONE, 1,
@@ -256,7 +222,7 @@ inkscape_class_init (Inkscape::ApplicationClass * klass)
     inkscape_signals[ACTIVATE_DESKTOP] = g_signal_new ("activate_desktop",
                                G_TYPE_FROM_CLASS (klass),
                                G_SIGNAL_RUN_FIRST,
-                               G_STRUCT_OFFSET (Inkscape::ApplicationClass, activate_desktop),
+                               G_STRUCT_OFFSET (InkscapeApplicationClass, activate_desktop),
                                NULL, NULL,
                                g_cclosure_marshal_VOID__POINTER,
                                G_TYPE_NONE, 1,
@@ -264,7 +230,7 @@ inkscape_class_init (Inkscape::ApplicationClass * klass)
     inkscape_signals[DEACTIVATE_DESKTOP] = g_signal_new ("deactivate_desktop",
                                G_TYPE_FROM_CLASS (klass),
                                G_SIGNAL_RUN_FIRST,
-                               G_STRUCT_OFFSET (Inkscape::ApplicationClass, deactivate_desktop),
+                               G_STRUCT_OFFSET (InkscapeApplicationClass, deactivate_desktop),
                                NULL, NULL,
                                g_cclosure_marshal_VOID__POINTER,
                                G_TYPE_NONE, 1,
@@ -272,28 +238,28 @@ inkscape_class_init (Inkscape::ApplicationClass * klass)
     inkscape_signals[SHUTDOWN_SIGNAL] =        g_signal_new ("shut_down",
                                G_TYPE_FROM_CLASS (klass),
                                G_SIGNAL_RUN_FIRST,
-                               G_STRUCT_OFFSET (Inkscape::ApplicationClass, shut_down),
+                               G_STRUCT_OFFSET (InkscapeApplicationClass, shut_down),
                                NULL, NULL,
                                g_cclosure_marshal_VOID__VOID,
                                G_TYPE_NONE, 0);
     inkscape_signals[DIALOGS_HIDE] =        g_signal_new ("dialogs_hide",
                                G_TYPE_FROM_CLASS (klass),
                                G_SIGNAL_RUN_FIRST,
-                               G_STRUCT_OFFSET (Inkscape::ApplicationClass, dialogs_hide),
+                               G_STRUCT_OFFSET (InkscapeApplicationClass, dialogs_hide),
                                NULL, NULL,
                                g_cclosure_marshal_VOID__VOID,
                                G_TYPE_NONE, 0);
     inkscape_signals[DIALOGS_UNHIDE] =        g_signal_new ("dialogs_unhide",
                                G_TYPE_FROM_CLASS (klass),
                                G_SIGNAL_RUN_FIRST,
-                               G_STRUCT_OFFSET (Inkscape::ApplicationClass, dialogs_unhide),
+                               G_STRUCT_OFFSET (InkscapeApplicationClass, dialogs_unhide),
                                NULL, NULL,
                                g_cclosure_marshal_VOID__VOID,
                                G_TYPE_NONE, 0);
     inkscape_signals[EXTERNAL_CHANGE] =   g_signal_new ("external_change",
                                G_TYPE_FROM_CLASS (klass),
                                G_SIGNAL_RUN_FIRST,
-                               G_STRUCT_OFFSET (Inkscape::ApplicationClass, external_change),
+                               G_STRUCT_OFFSET (InkscapeApplicationClass, external_change),
                                NULL, NULL,
                                g_cclosure_marshal_VOID__VOID,
                                G_TYPE_NONE, 0);
@@ -494,10 +460,10 @@ void inkscape_autosave_init()
 
 
 static void
-inkscape_init (SPObject * object)
+inkscape_init (InkscapeApplication * object)
 {
     if (!inkscape) {
-        inkscape = (Inkscape::Application *) object;
+        inkscape = (InkscapeApplication *) object;
     } else {
         g_assert_not_reached ();
     }
@@ -515,7 +481,7 @@ inkscape_init (SPObject * object)
 static void
 inkscape_dispose (GObject *object)
 {
-    Inkscape::Application *inkscape = (Inkscape::Application *) object;
+    InkscapeApplication *inkscape = (InkscapeApplication *) object;
 
     g_assert (!inkscape->desktops);
 
@@ -530,7 +496,7 @@ inkscape_dispose (GObject *object)
     inkscape->selection_models.~map();
     inkscape->document_set.~map();
 
-    G_OBJECT_CLASS (parent_class)->dispose (object);
+    G_OBJECT_CLASS (inkscape_parent_class)->dispose (object);
 
     gtk_main_quit ();
 }
@@ -580,14 +546,14 @@ void inkscape_trackalt(guint trackvalue)
 
 
 static void
-inkscape_activate_desktop_private (Inkscape::Application */*inkscape*/, SPDesktop *desktop)
+inkscape_activate_desktop_private (InkscapeApplication */*inkscape*/, SPDesktop *desktop)
 {
     desktop->set_active (true);
 }
 
 
 static void
-inkscape_deactivate_desktop_private (Inkscape::Application */*inkscape*/, SPDesktop *desktop)
+inkscape_deactivate_desktop_private (InkscapeApplication */*inkscape*/, SPDesktop *desktop)
 {
     desktop->set_active (false);
 }
@@ -835,7 +801,7 @@ private:
 void
 inkscape_application_init (const gchar *argv0, gboolean use_gui)
 {
-    inkscape = (Inkscape::Application *)g_object_new (SP_TYPE_INKSCAPE, NULL);
+    inkscape = (InkscapeApplication *)g_object_new (SP_TYPE_INKSCAPE, NULL);
     /* fixme: load application defaults */
 
     segv_handler = signal (SIGSEGV, inkscape_crash_handler);
@@ -904,9 +870,9 @@ inkscape_application_init (const gchar *argv0, gboolean use_gui)
 }
 
 /**
- *  Returns the current Inkscape::Application global object
+ *  Returns the current InkscapeApplication global object
  */
-Inkscape::Application *
+InkscapeApplication *
 inkscape_get_instance()
 {
         return inkscape;
@@ -921,7 +887,7 @@ gboolean inkscape_use_gui()
  *  Menus management
  *
  */
-bool inkscape_load_menus( Inkscape::Application * inkscape )
+bool inkscape_load_menus( InkscapeApplication * inkscape )
 {
     gchar *fn = profile_path(MENUS_FILE);
     gchar *menus_xml = 0;
@@ -1391,7 +1357,7 @@ inkscape_action_context_for_document(SPDocument *doc)
 #####################*/
 
 void
-inkscape_refresh_display (Inkscape::Application *inkscape)
+inkscape_refresh_display (InkscapeApplication *inkscape)
 {
     for (GSList *l = inkscape->desktops; l != NULL; l = l->next) {
         (static_cast<Inkscape::UI::View::View*>(l->data))->requestRedraw();
@@ -1404,7 +1370,7 @@ inkscape_refresh_display (Inkscape::Application *inkscape)
  *  saves the preferences if appropriate, and quits.
  */
 void
-inkscape_exit (Inkscape::Application */*inkscape*/)
+inkscape_exit (InkscapeApplication */*inkscape*/)
 {
     g_assert (INKSCAPE);
 
@@ -1546,7 +1512,7 @@ profile_path(const char *filename)
 }
 
 Inkscape::XML::Node *
-inkscape_get_menus (Inkscape::Application * inkscape)
+inkscape_get_menus (InkscapeApplication * inkscape)
 {
     Inkscape::XML::Node *repr = inkscape->menus->root();
     g_assert (!(strcmp (repr->name(), "inkscape")));

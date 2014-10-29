@@ -22,12 +22,8 @@
  *
  */
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
-#include <stddef.h>
 #include <sigc++/sigc++.h>
+#include <cstddef>
 
 class SPDocument;
 class SPObject;

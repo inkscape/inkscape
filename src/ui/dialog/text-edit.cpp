@@ -51,7 +51,7 @@ extern "C" {
 #include "ui/icon-names.h"
 #include "preferences.h"
 #include "verbs.h"
-#include "interface.h"
+#include "ui/interface.h"
 #include "svg/css-ostringstream.h"
 #include "widgets/icon.h"
 #include "widgets/font-selector.h"

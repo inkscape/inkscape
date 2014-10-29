@@ -37,7 +37,6 @@
 #ifndef SEEN_EEK_PREVIEW_H
 #define SEEN_EEK_PREVIEW_H
 
-#include <gdk/gdk.h>
 #include <gtk/gtk.h>
 
 /**
