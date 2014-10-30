@@ -2,7 +2,7 @@
 <inkscape-extension xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
     <_name>Business Card</_name>
     <id>org.inkscape.render.empty_business_card</id>
-    <dependency type="executable" location="extensions">business_card.py</dependency>
+    <dependency type="executable" location="extensions">empty_business_card.py</dependency>
     <dependency type="executable" location="extensions">inkex.py</dependency>
     
     <param name="size" _gui-text="Business card size:" type="enum">
@@ -27,6 +27,6 @@
       <inkscape:_keywords>business card</inkscape:_keywords>
     </inkscape:_templateinfo>
     <script>
-        <command reldir="extensions" interpreter="python">business_card.py</command>
+        <command reldir="extensions" interpreter="python">empty_business_card.py</command>
     </script>
 </inkscape-extension>
