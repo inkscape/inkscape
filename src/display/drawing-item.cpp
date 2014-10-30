@@ -870,10 +870,9 @@ DrawingItem::pick(Geom::Point const &p, double delta, unsigned flags)
 {
     // Sometimes there's no BBOX in state, reason unknown (bug 992817)
     // I made this not an assert to remove the warning
-    // This warning clutters the console output, so commented out
     if (!(_state & STATE_BBOX) || !(_state & STATE_PICK)) {
-        /*g_warning("Invalid state when picking: STATE_BBOX = %d, STATE_PICK = %d",
-                  _state & STATE_BBOX, _state & STATE_PICK);*/
+        g_warning("Invalid state when picking: STATE_BBOX = %d, STATE_PICK = %d",
+                  _state & STATE_BBOX, _state & STATE_PICK);
         return NULL;
     }
     // ignore invisible and insensitive items unless sticky
