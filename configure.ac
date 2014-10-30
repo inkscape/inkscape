@@ -7,7 +7,7 @@ AC_PREREQ([2.64])
 # `dpkg --compare-versions'.  (ii) We don't always know what the next
 # version is going to be called until about the time we release it
 # (whereas we always know what the previous version was called).
-AC_INIT([inkscape], [0.92+devel],
+AC_INIT([inkscape], [0.91+devel],
         [http://bugs.launchpad.net/inkscape/+filebug],
         [inkscape],
         [http://inkscape.org/])
