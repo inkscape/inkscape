@@ -175,13 +175,8 @@ void FilletChamferPointArrayParam::recalculate_controlpoints_for_new_pwd2(
                                    last_pathv[counterPaths][counter - offset].initialPoint(),
                                    0.1))) {
                     if ( curve_it2 == curve_endit) {
-                        if (last_pathv[counterPaths].size() < pathv[counterPaths].size()) {
-                            offset = abs(last_pathv[counterPaths].size() -
-                                         pathv[counterPaths].size());
-                        } else if (last_pathv[counterPaths].size() >
-                                   pathv[counterPaths].size()) {
-                            offset = (abs(last_pathv[counterPaths].size() -
-                                          pathv[counterPaths].size())) * -1;
+                        if (last_pathv[counterPaths].size() != pathv[counterPaths].size()) {
+                            offset = (last_pathv[counterPaths].size() - pathv[counterPaths].size()) * -1;
                         } else {
                             offset = 0;
                         }

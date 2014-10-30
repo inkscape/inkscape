@@ -34,6 +34,7 @@
 #include "ui/tool/selectable-control-point.h"
 #include "ui/tool/node.h"
 #include "ui/tools/node-tool.h"
+#include <util/units.h>
 
 // TODO due to internal breakage in glibmm headers, this must be last:
 #include <glibmm/i18n.h>
@@ -172,9 +173,9 @@ void LPEFilletChamfer::toggleHide()
     for (std::vector<Point>::const_iterator point_it = filletChamferData.begin();
             point_it != filletChamferData.end(); ++point_it) {
         if (hide_knots) {
-            result.push_back(Point((*point_it)[X], abs((*point_it)[Y]) * -1));
+            result.push_back(Point((*point_it)[X], std::abs((*point_it)[Y]) * -1));
         } else {
-            result.push_back(Point((*point_it)[X], abs((*point_it)[Y])));
+            result.push_back(Point((*point_it)[X], std::abs((*point_it)[Y])));
         }
     }
     fillet_chamfer_values.param_set_and_write_new_value(result);
@@ -211,7 +212,8 @@ void LPEFilletChamfer::updateFillet()
 {
     double power = 0;
     if (!flexible) {
-        power = Inkscape::Util::Quantity::convert(radius, unit.get_abbreviation(), "px") * -1;
+        Inkscape::Util::Unit const *doc_units = inkscape_active_desktop()->namedview->doc_units;
+        power = Inkscape::Util::Quantity::convert(radius, unit.get_abbreviation(), doc_units->abbr) * -1;
     } else {
         power = radius;
     }
@@ -589,11 +591,11 @@ LPEFilletChamfer::doEffect_path(std::vector<Geom::Path> const &path_in)
                 }
                 int type = 0;
                 if(path_it->closed() && last){
-                    type = abs(filletChamferData[counter - counterCurves][Y]);
+                    type = std::abs(filletChamferData[counter - counterCurves][Y]);
                 } else if (!path_it->closed() && last){
                     //0
                 } else {
-                    type = abs(filletChamferData[counter + 1][Y]);
+                    type = std::abs(filletChamferData[counter + 1][Y]);
                 }
                 if (type == 3 || type == 4) {
                     if (type == 4) {
