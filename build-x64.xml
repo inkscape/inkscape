@@ -42,7 +42,7 @@
     </description>
 
   <!-- set global properties for this build -->
-  <property name="version"       value="0.91pre2_64bit"/>
+  <property name="version"       value="0.92+devel_64bit"/>
   <property name="src"           location="src"/>
   <property name="lib"           location="lib"/>
   <property name="build"         location="build"/>
