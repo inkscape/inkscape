@@ -122,7 +122,6 @@ EXTRA_DIST = \
 	packaging/macosx/Resources/application-vnd.wordperfect-graphic.icns \
 	packaging/macosx/Resources/bin/gimp-wrapper.sh \
 	packaging/macosx/Resources/bin/inkscape \
-	packaging/macosx/Resources/bin/python-wrapper.sh \
 	packaging/macosx/Resources/etc/fonts/fonts.conf \
 	packaging/macosx/Resources/etc/gtk-2.0/gtkrc \
 	packaging/macosx/Resources/image-svg+xml-compressed.icns \
