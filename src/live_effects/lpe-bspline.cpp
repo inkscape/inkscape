@@ -87,7 +87,7 @@ LPEBSpline::LPEBSpline(LivePathEffectObject *lpeobject)
 
 LPEBSpline::~LPEBSpline() {}
 
-void LPEBSpline::doBeforeEffect (SPLPEItem const* lpeitem)
+void LPEBSpline::doBeforeEffect (SPLPEItem const* /*lpeitem*/)
 {
     if(!hp.empty()){
         hp.clear();

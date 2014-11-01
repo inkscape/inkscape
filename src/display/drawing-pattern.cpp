@@ -149,8 +149,8 @@ DrawingPattern::renderPattern(float opacity) {
     return cp;
 }
 
-unsigned
-DrawingPattern::_updateItem(Geom::IntRect const &area, UpdateContext const &ctx, unsigned flags, unsigned reset)
+// TODO investigate if area should be used.
+unsigned DrawingPattern::_updateItem(Geom::IntRect const &area, UpdateContext const &ctx, unsigned flags, unsigned reset)
 {
     UpdateContext pattern_ctx;
 

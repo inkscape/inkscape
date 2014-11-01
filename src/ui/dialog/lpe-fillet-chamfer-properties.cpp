@@ -177,7 +177,7 @@ void FilletChamferPropertiesDialog::_close()
     );
 }
 
-bool FilletChamferPropertiesDialog::_handleKeyEvent(GdkEventKey *event)
+bool FilletChamferPropertiesDialog::_handleKeyEvent(GdkEventKey * /*event*/)
 {
     return false;
 }

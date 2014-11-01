@@ -988,7 +988,7 @@ void ObjectsPanel::_storeHighlightTarget(const Gtk::TreeModel::iterator& iter)
 /*
  * Drap and drop within the tree
  */
-bool ObjectsPanel::_handleDragDrop(const Glib::RefPtr<Gdk::DragContext>& context, int x, int y, guint time)
+bool ObjectsPanel::_handleDragDrop(const Glib::RefPtr<Gdk::DragContext>& /*context*/, int x, int y, guint /*time*/)
 {
     int cell_x = 0, cell_y = 0;
     Gtk::TreeModel::Path target_path;

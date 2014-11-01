@@ -152,7 +152,7 @@ PowerstrokePropertiesDialog::_close()
     );
 }
 
-bool PowerstrokePropertiesDialog::_handleKeyEvent(GdkEventKey *event)
+bool PowerstrokePropertiesDialog::_handleKeyEvent(GdkEventKey * /*event*/)
 {
 
     /*switch (get_group0_keyval(event)) {

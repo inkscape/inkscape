@@ -712,8 +712,8 @@ FilletChamferPointArrayParamKnotHolderEntity(
     : _pparam(p), _index(index) {}
 
 void FilletChamferPointArrayParamKnotHolderEntity::knot_set(Point const &p,
-        Point const &origin,
-        guint state)
+                                                            Point const &/*origin*/,
+                                                            guint /*state*/)
 {
     using namespace Geom;
 
