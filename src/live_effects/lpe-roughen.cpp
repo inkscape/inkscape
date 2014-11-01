@@ -14,12 +14,13 @@
  */
 
 #include <gtkmm.h>
-
+#include "desktop.h"
 #include "live_effects/lpe-roughen.h"
 #include "display/curve.h"
 #include "live_effects/parameter/parameter.h"
 #include "helper/geom.h"
 #include <glibmm/i18n.h>
+#include <util/units.h>
 #include <cmath>
 
 namespace Inkscape {
@@ -145,10 +146,11 @@ double LPERoughen::sign(double randNumber)
 
 Geom::Point LPERoughen::randomize()
 {
+    Inkscape::Util::Unit const *doc_units = inkscape_active_desktop()->namedview->doc_units;
     double displaceXParsed = Inkscape::Util::Quantity::convert(
-                                 displaceX, unit.get_abbreviation(), "px");
+                                 displaceX, unit.get_abbreviation(), doc_units->abbr);
     double displaceYParsed = Inkscape::Util::Quantity::convert(
-                                 displaceY, unit.get_abbreviation(), "px");
+                                 displaceY, unit.get_abbreviation(), doc_units->abbr);
 
     Geom::Point output = Geom::Point(sign(displaceXParsed), sign(displaceYParsed));
     return output;
@@ -159,6 +161,7 @@ void LPERoughen::doEffect(SPCurve *curve)
     Geom::PathVector const original_pathv =
         pathv_to_linear_and_cubic_beziers(curve->get_pathvector());
     curve->reset();
+    Inkscape::Util::Unit const *doc_units = inkscape_active_desktop()->namedview->doc_units;
     for (Geom::PathVector::const_iterator path_it = original_pathv.begin();
             path_it != original_pathv.end(); ++path_it) {
         if (path_it->empty())
@@ -203,7 +206,7 @@ void LPERoughen::doEffect(SPCurve *curve)
                 nCurve->lineto(A3);
             }
             double length = Inkscape::Util::Quantity::convert(
-                                curve_it1->length(0.001), "px", unit.get_abbreviation());
+                                curve_it1->length(0.001), doc_units->abbr, unit.get_abbreviation());
             std::size_t splits = 0;
             if (method == DM_SEGMENTS) {
                 splits = segments;
