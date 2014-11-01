@@ -193,8 +193,8 @@ LPEPerspectiveEnvelope::project_point(Geom::Point p){
     double height = boundingbox_Y.extent();
     double delta_x = boundingbox_X.min() - p[X];
     double delta_y = boundingbox_Y.max() - p[Y];
-    Geom::Coord xratio = (delta_x * sgn(delta_x)) / width;
-    Geom::Coord yratio = (delta_y * sgn(delta_y)) / height;
+    Geom::Coord xratio = (delta_x * -1) / width;
+    Geom::Coord yratio = delta_y / height;
     Geom::Line* horiz = new Geom::Line();
     Geom::Line* vert = new Geom::Line();
     vert->setPoints (pointAtRatio(yratio,Down_Left_Point,Up_Left_Point),pointAtRatio(yratio,Down_Right_Point,Up_Right_Point));
