@@ -8,8 +8,9 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:cc="http://web.resource.org/cc/"
    xmlns:dc="http://purl.org/dc/elements/1.1/"
-   width="793.7007874"
-   height="1122.519688">
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 793.7007874 1122.519685">
   <defs />
   <sodipodi:namedview
      id="base"
