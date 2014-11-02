@@ -63,7 +63,7 @@ class MyEffect(inkex.Effect):
                                      help="Add background color to each layer")
         self.OptionParser.add_option("-i", "--dpi",
                                      action="store", type="string",
-                                     dest="resolution", default="90",
+                                     dest="resolution", default="96",
                                      help="File resolution")
 
     def output(self):

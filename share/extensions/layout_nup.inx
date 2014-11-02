@@ -15,8 +15,8 @@
         <item value="cm">cm</item>
         <item value="mm">mm</item>
       </param>
-      <param name="pgSizeX" type="float" min="0.0" max="9999.0" _gui-text="Size X:">765</param>
-      <param name="pgSizeY" type="float" min="0.0" max="9999.0" _gui-text="Size Y:">990</param>
+      <param name="pgSizeX" type="float" min="0.0" max="9999.0" _gui-text="Size X:">816</param>
+      <param name="pgSizeY" type="float" min="0.0" max="9999.0" _gui-text="Size Y:">1056</param>
       <_param name="pgMargin" type="description" appearance="header">Page margins</_param>
       <param name="pgMarginTop" type="float" indent="1" min="0.0" max="9999.0" _gui-text="Top:">0</param>
       <param name="pgMarginBottom" type="float" indent="1" min="0.0" max="9999.0" _gui-text="Bottom:">0</param>

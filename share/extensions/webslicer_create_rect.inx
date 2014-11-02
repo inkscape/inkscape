@@ -11,7 +11,7 @@
     <item value="jpg">JPG</item>
     <item value="gif">GIF</item>
   </param>
-  <param name="dpi" type="float" min="1" max="9999" _gui-text="DPI:">90</param>
+  <param name="dpi" type="float" min="1" max="9999" _gui-text="DPI:">96</param>
   <param name="dimension" type="string" _gui-text="Force Dimension:"></param>
 <!-- i18n. Description duplicated in a fake value attribute in order to make it translatable -->
   <param name="help-dimension1" type="description" _value="Force Dimension must be set as &lt;width&gt;x&lt;height&gt;">Force Dimension must be set as &lt;width&gt;x&lt;height&gt;</param>

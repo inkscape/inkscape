@@ -23,7 +23,7 @@
 		<page name="help" _gui-text="Help">
 			<_param name="inputhelp" type="description" xml:space="preserve">- AutoCAD Release 13 and newer.
 - assume dxf drawing is in mm.
-- assume svg drawing is in pixels, at 90 dpi.
+- assume svg drawing is in pixels, at 96 dpi.
 - scale factor and origin apply only to manual scaling.
 - layers are preserved only on File->Open, not Import.
 - limited support for BLOCKS, use AutoCAD Explode Blocks instead, if needed.</_param>

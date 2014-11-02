@@ -832,22 +832,22 @@ extension-element-prefixes="math">
       <xsl:value-of select="round(translate($convert_value, 'px', ''))" />
     </xsl:when>
     <xsl:when test="contains($convert_value, 'pt')">
-      <xsl:value-of select="round(translate($convert_value, 'pt', '') * 1.25)" />
+      <xsl:value-of select="round(translate($convert_value, 'pt', '') * 1.333333)" />
     </xsl:when>
     <xsl:when test="contains($convert_value, 'pc')">
-      <xsl:value-of select="round(translate($convert_value, 'pc', '') * 15)" />
+      <xsl:value-of select="round(translate($convert_value, 'pc', '') * 16)" />
     </xsl:when>
     <xsl:when test="contains($convert_value, 'mm')">
-      <xsl:value-of select="round(translate($convert_value, 'mm', '') * 3.543307)" />
+      <xsl:value-of select="round(translate($convert_value, 'mm', '') * 3.779527)" />
     </xsl:when>
     <xsl:when test="contains($convert_value, 'cm')">
-      <xsl:value-of select="round(translate($convert_value, 'cm', '') * 35.43307)" />
+      <xsl:value-of select="round(translate($convert_value, 'cm', '') * 37.79527)" />
     </xsl:when>
     <xsl:when test="contains($convert_value, 'in')">
-      <xsl:value-of select="round(translate($convert_value, 'in', '') * 90)" />
+      <xsl:value-of select="round(translate($convert_value, 'in', '') * 96)" />
     </xsl:when>
     <xsl:when test="contains($convert_value, 'ft')">
-      <xsl:value-of select="round(translate($convert_value, 'ft', '') * 1080)" />
+      <xsl:value-of select="round(translate($convert_value, 'ft', '') * 1152)" />
     </xsl:when>
     <xsl:when test="not(string(number($convert_value))='NaN')">
       <xsl:value-of select="round($convert_value)" />

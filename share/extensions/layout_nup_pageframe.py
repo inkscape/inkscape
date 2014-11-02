@@ -38,7 +38,7 @@ def expandTuple(unit, x, length = 4):
 #@-node:tbrown.20070622103716.1:expandTuple
 #@+node:tbrown.20070622103716.2:GenerateNup
 def GenerateNup(unit="px",
-                pgSize=("8.5*90","11*90"),
+                pgSize=("8.5*96","11*96"),
                 pgMargin=(0,0),
                 pgPadding=(0,0),
                 num=(2,2),
