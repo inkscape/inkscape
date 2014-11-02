@@ -479,7 +479,7 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
     double shift_x = bbox->min()[Geom::X];
     double shift_y = bbox->max()[Geom::Y];
 
-    // For default 90 dpi, snap bitmap to pixel grid
+    // For default 96 dpi, snap bitmap to pixel grid
     if (res == Inkscape::Util::Quantity::convert(1, "in", "px")) { 
         shift_x = round (shift_x);
         shift_y = -round (-shift_y); // Correct rounding despite coordinate inversion.

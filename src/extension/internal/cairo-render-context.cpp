@@ -658,12 +658,12 @@ CairoRenderContext::popLayer(void)
             CairoRenderContext *mask_ctx = _renderer->createContext();
 
             // Fix Me: This is a kludge. PDF and PS output is set to 72 dpi but the
-            // Cairo surface is expecting the mask to be 90 dpi.
+            // Cairo surface is expecting the mask to be 96 dpi.
             float surface_width = _width;
             float surface_height = _height;
             if( _vector_based_target ) {
-                surface_width *= 1.25;
-                surface_height *= 1.25;
+                surface_width *= 4.0/3.0;
+                surface_height *= 4.0/3.0;
             }
             if (!mask_ctx->setupSurface( surface_width, surface_height )) {
                 TRACE(("mask: setupSurface failed\n"));
