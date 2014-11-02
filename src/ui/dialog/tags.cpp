@@ -393,6 +393,7 @@ bool TagsPanel::_checkForSelected(const Gtk::TreePath &/*path*/, const Gtk::Tree
     return false;
 }
 
+// TODO does not look good that we're ignoring the passed in root. Investigate.
 void TagsPanel::_objectsChanged(SPObject* root)
 {
     while (!_objectWatchers.empty())

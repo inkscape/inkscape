@@ -154,13 +154,12 @@ void ClipMaskIcon::render_vfunc( const Glib::RefPtr<Gdk::Drawable>& window,
 #endif
 }
 
-bool
-ClipMaskIcon::activate_vfunc(GdkEvent* event,
-                            Gtk::Widget& /*widget*/,
-                            const Glib::ustring& path,
-                            const Gdk::Rectangle& /*background_area*/,
-                            const Gdk::Rectangle& /*cell_area*/,
-                            Gtk::CellRendererState /*flags*/)
+bool ClipMaskIcon::activate_vfunc(GdkEvent* /*event*/,
+                                  Gtk::Widget& /*widget*/,
+                                  const Glib::ustring& /*path*/,
+                                  const Gdk::Rectangle& /*background_area*/,
+                                  const Gdk::Rectangle& /*cell_area*/,
+                                  Gtk::CellRendererState /*flags*/)
 {
     return false;
 }

@@ -135,13 +135,12 @@ void InsertOrderIcon::render_vfunc( const Glib::RefPtr<Gdk::Drawable>& window,
 #endif
 }
 
-bool
-InsertOrderIcon::activate_vfunc(GdkEvent* event,
-                            Gtk::Widget& /*widget*/,
-                            const Glib::ustring& path,
-                            const Gdk::Rectangle& /*background_area*/,
-                            const Gdk::Rectangle& /*cell_area*/,
-                            Gtk::CellRendererState /*flags*/)
+bool InsertOrderIcon::activate_vfunc(GdkEvent* /*event*/,
+                                     Gtk::Widget& /*widget*/,
+                                     const Glib::ustring& /*path*/,
+                                     const Gdk::Rectangle& /*background_area*/,
+                                     const Gdk::Rectangle& /*cell_area*/,
+                                     Gtk::CellRendererState /*flags*/)
 {
     return false;
 }
