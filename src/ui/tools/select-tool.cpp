@@ -1153,7 +1153,7 @@ bool SelectTool::root_handler(GdkEvent* event) {
                         if (selection->singleItem()) {
                             SPItem *clicked_item = selection->singleItem();
                             SPGroup *clickedGroup = dynamic_cast<SPGroup *>(clicked_item);
-                            if ( (clickedGroup && (clickedGroup->layerMode() == SPGroup::LAYER)) || dynamic_cast<SPBox3D *>(clicked_item)) { // enter group or a 3D box
+                            if ( (clickedGroup && (clickedGroup->layerMode() != SPGroup::LAYER)) || dynamic_cast<SPBox3D *>(clicked_item)) { // enter group or a 3D box
                                 desktop->setCurrentLayer(clicked_item);
                                 sp_desktop_selection(desktop)->clear();
                             } else {
