@@ -322,7 +322,7 @@ struct poptOption options[] = {
 
     {"export-dpi", 'd',
      POPT_ARG_STRING, &sp_export_dpi, SP_ARG_EXPORT_DPI,
-     N_("Resolution for exporting to bitmap and for rasterization of filters in PS/EPS/PDF (default 90)"),
+     N_("Resolution for exporting to bitmap and for rasterization of filters in PS/EPS/PDF (default 96)"),
      N_("DPI")},
 
     {"export-area", 'a',
@@ -1738,12 +1738,12 @@ static int do_export_ps_pdf(SPDocument* doc, gchar const* uri, char const* mime)
     } else {
         (*i)->set_param_bool("blurToBitmap", TRUE);
 
-        gdouble dpi = 90.0;
+        gdouble dpi = 96.0;
         if (sp_export_dpi) {
             dpi = atof(sp_export_dpi);
             if ((dpi < 1) || (dpi > 10000.0)) {
-                g_warning("DPI value %s out of range [1 - 10000]. Using 90 dpi instead.", sp_export_dpi);
-                dpi = 90;
+                g_warning("DPI value %s out of range [1 - 10000]. Using 96 dpi instead.", sp_export_dpi);
+                dpi = 96;
             }
         }
 
