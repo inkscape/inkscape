@@ -212,7 +212,7 @@ void LPEFilletChamfer::updateFillet()
 {
     double power = 0;
     if (!flexible) {
-        Inkscape::Util::Unit const *doc_units = inkscape_active_desktop()->namedview->doc_units;
+        Inkscape::Util::Unit const *doc_units = SP_ACTIVE_DESKTOP->namedview->doc_units;
         power = Inkscape::Util::Quantity::convert(radius, unit.get_abbreviation(), doc_units->abbr) * -1;
     } else {
         power = radius;
@@ -249,7 +249,7 @@ void LPEFilletChamfer::refreshKnots()
 {
     Piecewise<D2<SBasis> > const &pwd2 = fillet_chamfer_values.get_pwd2();
     fillet_chamfer_values.recalculate_knots(pwd2);
-    SPDesktop *desktop = inkscape_active_desktop();
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (tools_isactive(desktop, TOOLS_NODES)) {
         tools_switch(desktop, TOOLS_SELECT);
         tools_switch(desktop, TOOLS_NODES);
@@ -272,7 +272,7 @@ bool LPEFilletChamfer::nodeIsSelected(Geom::Point nodePoint, std::vector<Geom::P
 void LPEFilletChamfer::doUpdateFillet(std::vector<Geom::Path> const& original_pathv, double power)
 {
     std::vector<Geom::Point> point;
-    SPDesktop *desktop = inkscape_active_desktop();
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (INK_IS_NODE_TOOL(desktop->event_context)) {
         Inkscape::UI::Tools::NodeTool *nodeTool = INK_NODE_TOOL(desktop->event_context);
         Inkscape::UI::ControlPointSelection::Set &selection = nodeTool->_selected_nodes->allPoints();
@@ -334,7 +334,7 @@ void LPEFilletChamfer::doUpdateFillet(std::vector<Geom::Path> const& original_pa
 void LPEFilletChamfer::doChangeType(std::vector<Geom::Path> const& original_pathv, int type)
 {
     std::vector<Geom::Point> point;
-    SPDesktop *desktop = inkscape_active_desktop();
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (INK_IS_NODE_TOOL(desktop->event_context)) {
         Inkscape::UI::Tools::NodeTool *nodeTool =
             INK_NODE_TOOL(desktop->event_context);

@@ -157,8 +157,8 @@ LPESimplify::doEffect(SPCurve *curve) {
     Geom::PathVector outres = Geom::parse_svg_path(pathliv->svg_dump_path());
     generateHelperPath(outres);
     curve->set_pathvector(outres);
-    if(SP_ACTIVE_DESKTOP && INK_IS_NODE_TOOL(SP_ACTIVE_DESKTOP->event_context)){
-        SPDesktop* desktop = SP_ACTIVE_DESKTOP;
+    SPDesktop* desktop = SP_ACTIVE_DESKTOP;
+    if(desktop && INK_IS_NODE_TOOL(desktop->event_context)){
         Inkscape::UI::Tools::NodeTool *nt = static_cast<Inkscape::UI::Tools::NodeTool*>(desktop->event_context);
         nt->update_helperpath();
     }

@@ -129,9 +129,8 @@ void LPEBSpline::doEffect(SPCurve *curve)
     double radiusHelperNodes = 6.0;
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop){
-        radiusHelperNodes /= SP_ACTIVE_DESKTOP->current_zoom();
-        SPNamedView *nv = sp_desktop_namedview(desktop);
-        radiusHelperNodes = Inkscape::Util::Quantity::convert(radiusHelperNodes, "px", nv->doc_units->abbr);
+        radiusHelperNodes /= desktop->current_zoom();
+        radiusHelperNodes = Inkscape::Util::Quantity::convert(radiusHelperNodes, "px", desktop->namedview->doc_units->abbr);
     }
     for (Geom::PathVector::const_iterator path_it = original_pathv.begin();
             path_it != original_pathv.end(); ++path_it) {
@@ -408,7 +407,7 @@ void LPEBSpline::toWeight()
 
 void LPEBSpline::changeWeight(double weightValue)
 {
-    SPDesktop *desktop = inkscape_active_desktop();
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     GSList *items = (GSList *)selection->itemList();
     SPItem *item = (SPItem *)g_slist_nth(items, 0)->data;
@@ -450,7 +449,7 @@ void LPEBSpline::doBSplineFromWidget(SPCurve *curve, double weightValue)
 {
     using Geom::X;
     using Geom::Y;
-    SPDesktop *desktop = inkscape_active_desktop();
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (INK_IS_NODE_TOOL(desktop->event_context)) {
         Inkscape::UI::Tools::NodeTool *nt = INK_NODE_TOOL(desktop->event_context);
         Inkscape::UI::ControlPointSelection::Set &selection =

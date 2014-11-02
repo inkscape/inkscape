@@ -146,7 +146,7 @@ double LPERoughen::sign(double randNumber)
 
 Geom::Point LPERoughen::randomize()
 {
-    Inkscape::Util::Unit const *doc_units = inkscape_active_desktop()->namedview->doc_units;
+    Inkscape::Util::Unit const *doc_units = SP_ACTIVE_DESKTOP->namedview->doc_units;
     double displaceXParsed = Inkscape::Util::Quantity::convert(
                                  displaceX, unit.get_abbreviation(), doc_units->abbr);
     double displaceYParsed = Inkscape::Util::Quantity::convert(
@@ -161,7 +161,7 @@ void LPERoughen::doEffect(SPCurve *curve)
     Geom::PathVector const original_pathv =
         pathv_to_linear_and_cubic_beziers(curve->get_pathvector());
     curve->reset();
-    Inkscape::Util::Unit const *doc_units = inkscape_active_desktop()->namedview->doc_units;
+    Inkscape::Util::Unit const *doc_units = SP_ACTIVE_DESKTOP->namedview->doc_units;
     for (Geom::PathVector::const_iterator path_it = original_pathv.begin();
             path_it != original_pathv.end(); ++path_it) {
         if (path_it->empty())

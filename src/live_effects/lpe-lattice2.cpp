@@ -394,7 +394,7 @@ LPELattice2::resetGrid()
     grid_point32x33x34x35.param_set_and_write_default();
     //todo:this hack is only to reposition the knots on reser grid button
     //Better update path effect in LPEITEM
-    SPDesktop * desktop = inkscape_active_desktop();
+    SPDesktop * desktop = SP_ACTIVE_DESKTOP;
     tools_switch(desktop, TOOLS_SELECT);
     tools_switch(desktop, TOOLS_NODES);
 }
