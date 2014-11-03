@@ -126,7 +126,7 @@ Gtk::Widget *LPERoughen::newWidget()
             }
             if (param->param_key == "globalRandomize") {
                 Gtk::Label *displaceXLabel = Gtk::manage(new Gtk::Label(
-                                                 Glib::ustring(_("<b>Extra roughen</b> Retain 1 to no changes")),
+                                                 Glib::ustring(_("<b>Extra roughen</b> Add a extra layer of rough")),
                                                  Gtk::ALIGN_START));
                 displaceXLabel->set_use_markup(true);
                 vbox->pack_start(*displaceXLabel, false, false, 2);
@@ -161,16 +161,10 @@ double LPERoughen::sign(double randNumber)
 Geom::Point LPERoughen::randomize()
 {
     Inkscape::Util::Unit const *doc_units = SP_ACTIVE_DESKTOP->namedview->doc_units;
-    double displaceXRandom = displaceX;
-    double displaceYRandom = displaceY;
-    if(globalRandomize != 1.0){
-        displaceXRandom = displaceX * globalRandomize;
-        displaceYRandom = displaceY * globalRandomize;
-    }
     double displaceXParsed = Inkscape::Util::Quantity::convert(
-                                 displaceXRandom, unit.get_abbreviation(), doc_units->abbr);
+                                 displaceX * globalRandomize, unit.get_abbreviation(), doc_units->abbr);
     double displaceYParsed = Inkscape::Util::Quantity::convert(
-                                 displaceYRandom, unit.get_abbreviation(), doc_units->abbr);
+                                 displaceY * globalRandomize, unit.get_abbreviation(), doc_units->abbr);
 
     Geom::Point output = Geom::Point(sign(displaceXParsed), sign(displaceYParsed));
     return output;
