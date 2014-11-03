@@ -46,7 +46,8 @@ protected:
     Gtk::RadioButton _fillet_chamfer_type_fillet;
     Gtk::RadioButton _fillet_chamfer_type_inverse_fillet;
     Gtk::RadioButton _fillet_chamfer_type_chamfer;
-    Gtk::RadioButton _fillet_chamfer_type_double_chamfer;
+    Gtk::Label _fillet_chamfer_chamfer_subdivisions_label;
+    Gtk::SpinButton _fillet_chamfer_chamfer_subdivisions;
 
     Gtk::Table _layout_table;
     bool _position_visible;

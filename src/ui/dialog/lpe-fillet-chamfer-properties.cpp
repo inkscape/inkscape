@@ -46,7 +46,7 @@ FilletChamferPropertiesDialog::FilletChamferPropertiesDialog()
     Gtk::Box *mainVBox = get_vbox();
     mainVBox->set_homogeneous(false);
     _layout_table.set_spacings(4);
-    _layout_table.resize(2, 2);
+    _layout_table.resize(3, 3);
 
     // Layer name widgets
     _fillet_chamfer_position_numeric.set_digits(4);
@@ -61,20 +61,30 @@ FilletChamferPropertiesDialog::FilletChamferPropertiesDialog()
                          Gtk::FILL);
     _layout_table.attach(_fillet_chamfer_position_numeric, 1, 2, 0, 1,
                          Gtk::FILL | Gtk::EXPAND, Gtk::FILL);
+    _fillet_chamfer_chamfer_subdivisions.set_digits(0);
+    _fillet_chamfer_chamfer_subdivisions.set_increments(1,1);
+    //todo: get tha max aloable infinity freeze the widget
+    _fillet_chamfer_chamfer_subdivisions.set_range(0, 999999999999999999);
+    
+    _fillet_chamfer_chamfer_subdivisions_label.set_label(_("Chamfer subdivisions:"));
+    _fillet_chamfer_chamfer_subdivisions_label.set_alignment(1.0, 0.5);
+
+    _layout_table.attach(_fillet_chamfer_chamfer_subdivisions_label, 0, 1, 1, 2, Gtk::FILL,
+                         Gtk::FILL);
+    _layout_table.attach(_fillet_chamfer_chamfer_subdivisions, 1, 2, 1, 2,
+                         Gtk::FILL | Gtk::EXPAND, Gtk::FILL);
     _fillet_chamfer_type_fillet.set_label(_("Fillet"));
     _fillet_chamfer_type_fillet.set_group(_fillet_chamfer_type_group);
     _fillet_chamfer_type_inverse_fillet.set_label(_("Inverse fillet"));
     _fillet_chamfer_type_inverse_fillet.set_group(_fillet_chamfer_type_group);
     _fillet_chamfer_type_chamfer.set_label(_("Chamfer"));
     _fillet_chamfer_type_chamfer.set_group(_fillet_chamfer_type_group);
-    _fillet_chamfer_type_double_chamfer.set_label(_("Double chamfer"));
-    _fillet_chamfer_type_double_chamfer.set_group(_fillet_chamfer_type_group);
+
 
     mainVBox->pack_start(_layout_table, true, true, 4);
     mainVBox->pack_start(_fillet_chamfer_type_fillet, true, true, 4);
     mainVBox->pack_start(_fillet_chamfer_type_inverse_fillet, true, true, 4);
     mainVBox->pack_start(_fillet_chamfer_type_chamfer, true, true, 4);
-    mainVBox->pack_start(_fillet_chamfer_type_double_chamfer, true, true, 4);
 
     // Buttons
     _close_button.set_use_stock(true);
@@ -146,10 +156,8 @@ void FilletChamferPropertiesDialog::_apply()
             d_width = 1;
         } else if (_fillet_chamfer_type_inverse_fillet.get_active() == true) {
             d_width = 2;
-        } else if (_fillet_chamfer_type_chamfer.get_active() == true) {
-            d_width = 3;
         } else {
-            d_width = 4;
+            d_width = _fillet_chamfer_chamfer_subdivisions.get_value() + 3;
         }
         if (_flexible) {
             if (d_pos > 99.99999 || d_pos < 0) {
@@ -218,10 +226,8 @@ void FilletChamferPropertiesDialog::_setKnotPoint(Geom::Point knotpoint)
         _fillet_chamfer_type_fillet.set_active(true);
     } else if (knotpoint.y() == 2) {
         _fillet_chamfer_type_inverse_fillet.set_active(true);
-    } else if (knotpoint.y() == 3) {
-        _fillet_chamfer_type_chamfer.set_active(true);
-    } else if (knotpoint.y() == 1) {
-        _fillet_chamfer_type_double_chamfer.set_active(true);
+    } else if (knotpoint.y() >= 3) {
+        _fillet_chamfer_chamfer_subdivisions.set_value(knotpoint.y() - 3);
     }
 }
 

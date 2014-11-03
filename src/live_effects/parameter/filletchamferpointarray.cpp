@@ -359,6 +359,11 @@ void FilletChamferPointArrayParam::set_helper_size(int hs)
     helper_size = hs;
 }
 
+void FilletChamferPointArrayParam::set_chamferSteps(int chamferSteps)
+{
+    chamfer_steps = chamferSteps;
+}
+
 void FilletChamferPointArrayParam::set_use_distance(bool use_knot_distance )
 {
     use_distance = use_knot_distance;
@@ -767,14 +772,17 @@ void FilletChamferPointArrayParamKnotHolderEntity::knot_click(guint state)
         }else{
             using namespace Geom;
             double type = _pparam->_vector.at(_index)[Y] + 1;
-            if (type > 4) {
+            if (type > 3) {
                 type = 1;
+            }
+            if (type == 3){
+                type = _pparam->chamfer_steps;
             }
             _pparam->_vector.at(_index) = Point(_pparam->_vector.at(_index)[X], type);
             _pparam->param_set_and_write_new_value(_pparam->_vector);
             sp_lpe_item_update_patheffect(SP_LPE_ITEM(item), false, false);
             const gchar *tip;
-            if (type == 3) {
+            if (type >= 3) {
                 tip = _("<b>Chamfer</b>: <b>Ctrl+Click</b> toogle type, "
                         "<b>Shift+Click</b> open dialog, "
                         "<b>Ctrl+Alt+Click</b> reset");
@@ -784,10 +792,6 @@ void FilletChamferPointArrayParamKnotHolderEntity::knot_click(guint state)
                         "<b>Ctrl+Alt+Click</b> reset");
             } else if (type == 1) {
                 tip = _("<b>Fillet</b>: <b>Ctrl+Click</b> toogle type, "
-                        "<b>Shift+Click</b> open dialog, "
-                        "<b>Ctrl+Alt+Click</b> reset");
-            } else {
-                tip = _("<b>Double Chamfer</b>: <b>Ctrl+Click</b> toogle type, "
                         "<b>Shift+Click</b> open dialog, "
                         "<b>Ctrl+Alt+Click</b> reset");
             }
@@ -835,7 +839,7 @@ void FilletChamferPointArrayParam::addKnotHolderEntities(KnotHolder *knotholder,
             continue;
         }
         const gchar *tip;
-        if (_vector[i][Y] == 3) {
+        if (_vector[i][Y] >= 3) {
             tip = _("<b>Chamfer</b>: <b>Ctrl+Click</b> toogle type, "
                     "<b>Shift+Click</b> open dialog, "
                     "<b>Ctrl+Alt+Click</b> reset");
@@ -845,10 +849,6 @@ void FilletChamferPointArrayParam::addKnotHolderEntities(KnotHolder *knotholder,
                     "<b>Ctrl+Alt+Click</b> reset");
         } else if (_vector[i][Y] == 1) {
             tip = _("<b>Fillet</b>: <b>Ctrl+Click</b> toogle type, "
-                    "<b>Shift+Click</b> open dialog, "
-                    "<b>Ctrl+Alt+Click</b> reset");
-        } else {
-            tip = _("<b>Double Chamfer</b>: <b>Ctrl+Click</b> toogle type, "
                     "<b>Shift+Click</b> open dialog, "
                     "<b>Ctrl+Alt+Click</b> reset");
         }
