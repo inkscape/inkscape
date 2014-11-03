@@ -188,6 +188,7 @@ void LPERoughen::doEffect(SPCurve *curve)
         Geom::Point A1(0, 0);
         Geom::Point A2(0, 0);
         Geom::Point A3(0, 0);
+        bool first = true;
         while (curve_it1 != curve_endit) {
             Geom::CubicBezier const *cubic = NULL;
             A0 = curve_it1->initialPoint();
@@ -197,7 +198,7 @@ void LPERoughen::doEffect(SPCurve *curve)
             cubic = dynamic_cast<Geom::CubicBezier const *>(&*curve_it1);
             if (cubic) {
                 A1 = (*cubic)[1];
-                if (shiftNodes) {
+                if (shiftNodes && first) {
                     A1 = (*cubic)[1] + initialMove;
                 }
                 A2 = (*cubic)[2];
@@ -235,6 +236,7 @@ void LPERoughen::doEffect(SPCurve *curve)
             if(curve_it2 != curve_endit) {
                 ++curve_it2;
             }
+            first = false;
         }
         if (path_it->closed()) {
             nCurve->closepath_current();
