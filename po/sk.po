@@ -11,14 +11,15 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2014-08-14 23:05-0700\n"
-"PO-Revision-Date: 2014-03-20 22:47+0200\n"
+"PO-Revision-Date: 2014-11-03 14:33+0200\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
-"Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
+"Language-Team: x\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Virtaal 0.7.1\n"
 
 #: ../inkscape.desktop.in.h:1
 msgid "Inkscape"
@@ -1170,10 +1171,9 @@ msgstr "Šarlátovočervená 3"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:188
-#, fuzzy
 msgctxt "Palette"
 msgid "Snowy White"
-msgstr "Biela"
+msgstr "Snehovo biela"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:189
@@ -1213,134 +1213,129 @@ msgstr "Hliník 6"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:195
-#, fuzzy
 msgctxt "Palette"
 msgid "Jet Black"
-msgstr "Čierna"
+msgstr "Tryskovo čierna"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:2
 msgctxt "Symbol"
 msgid "AIGA Symbol Signs"
-msgstr ""
+msgstr "Symboly AIGA"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:3 ../share/symbols/symbols.h:4
 msgctxt "Symbol"
 msgid "Telephone"
-msgstr ""
+msgstr "Telefón"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:5 ../share/symbols/symbols.h:6
 msgctxt "Symbol"
 msgid "Mail"
-msgstr ""
+msgstr "Pošta"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:7 ../share/symbols/symbols.h:8
-#, fuzzy
 msgctxt "Symbol"
 msgid "Currency Exchange"
-msgstr "Aktuálna vrstva"
+msgstr "Zmenáreň"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:9 ../share/symbols/symbols.h:10
 msgctxt "Symbol"
 msgid "Currency Exchange - Euro"
-msgstr ""
+msgstr "Zmenáreň - Euro"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:11 ../share/symbols/symbols.h:12
 msgctxt "Symbol"
 msgid "Cashier"
-msgstr ""
+msgstr "Pokladňa"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:13 ../share/symbols/symbols.h:14
-#, fuzzy
 msgctxt "Symbol"
 msgid "First Aid"
-msgstr "Prvá snímka:"
+msgstr "Prvá pomoc"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:15 ../share/symbols/symbols.h:16
-#, fuzzy
 msgctxt "Symbol"
 msgid "Lost and Found"
-msgstr "Nezaoblený"
+msgstr "Straty a nálezy"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:17 ../share/symbols/symbols.h:18
 msgctxt "Symbol"
 msgid "Coat Check"
-msgstr ""
+msgstr "Úschovňa kabátov"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:19 ../share/symbols/symbols.h:20
 msgctxt "Symbol"
 msgid "Baggage Lockers"
-msgstr ""
+msgstr "Úschovňa batožiny"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:21 ../share/symbols/symbols.h:22
 msgctxt "Symbol"
 msgid "Escalator"
-msgstr ""
+msgstr "Eskalátor"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:23 ../share/symbols/symbols.h:24
 msgctxt "Symbol"
 msgid "Escalator Down"
-msgstr ""
+msgstr "Eskalátor - dolu"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:25 ../share/symbols/symbols.h:26
 msgctxt "Symbol"
 msgid "Escalator Up"
-msgstr ""
+msgstr "Eskalátor - hore"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:27 ../share/symbols/symbols.h:28
 msgctxt "Symbol"
 msgid "Stairs"
-msgstr ""
+msgstr "Schody"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:29 ../share/symbols/symbols.h:30
 msgctxt "Symbol"
 msgid "Stairs Down"
-msgstr ""
+msgstr "Schody - dolu"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:31 ../share/symbols/symbols.h:32
 msgctxt "Symbol"
 msgid "Stairs Up"
-msgstr ""
+msgstr "Schody - hore"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:33 ../share/symbols/symbols.h:34
-#, fuzzy
 msgctxt "Symbol"
 msgid "Elevator"
-msgstr "Vyvýšenie"
+msgstr "Výťah"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:35 ../share/symbols/symbols.h:36
 msgctxt "Symbol"
 msgid "Toilets - Men"
-msgstr ""
+msgstr "Toalety - muži"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:37 ../share/symbols/symbols.h:38
 msgctxt "Symbol"
 msgid "Toilets - Women"
-msgstr ""
+msgstr "Toalety - ženy"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:39 ../share/symbols/symbols.h:40
 msgctxt "Symbol"
 msgid "Toilets"
-msgstr ""
+msgstr "Toalety"
 
 #. Symbols: ./AigaSymbols.svg
 #. Symbols: ./MapSymbols.svg
@@ -1348,43 +1343,39 @@ msgstr ""
 #: ../share/symbols/symbols.h:227
 msgctxt "Symbol"
 msgid "Nursery"
-msgstr ""
+msgstr "Škôlka"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:43 ../share/symbols/symbols.h:44
 msgctxt "Symbol"
 msgid "Drinking Fountain"
-msgstr ""
+msgstr "Fontánka s pitnou vodou"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:45 ../share/symbols/symbols.h:46
-#, fuzzy
 msgctxt "Symbol"
 msgid "Waiting Room"
-msgstr "zapisovaní"
+msgstr "Čakáreň"
 
 #. Symbols: ./AigaSymbols.svg
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:47 ../share/symbols/symbols.h:48
 #: ../share/symbols/symbols.h:308
-#, fuzzy
 msgctxt "Symbol"
 msgid "Information"
 msgstr "Informácie"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:49 ../share/symbols/symbols.h:50
-#, fuzzy
 msgctxt "Symbol"
 msgid "Hotel Information"
-msgstr "Informácie o stránke"
+msgstr "Hotelové informácie"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:51 ../share/symbols/symbols.h:52
-#, fuzzy
 msgctxt "Symbol"
 msgid "Air Transportation"
-msgstr "Transformácia"
+msgstr "Letecká doprava"
 
 #. Symbols: ./AigaSymbols.svg
 #. Symbols: ./MapSymbols.svg
@@ -1392,7 +1383,7 @@ msgstr "Transformácia"
 #: ../share/symbols/symbols.h:318
 msgctxt "Symbol"
 msgid "Heliport"
-msgstr ""
+msgstr "Heliport"
 
 #. Symbols: ./AigaSymbols.svg
 #. Symbols: ./MapSymbols.svg
@@ -1400,35 +1391,31 @@ msgstr ""
 #: ../share/symbols/symbols.h:314
 msgctxt "Symbol"
 msgid "Taxi"
-msgstr ""
+msgstr "Taxi"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:57 ../share/symbols/symbols.h:58
-#, fuzzy
 msgctxt "Symbol"
 msgid "Bus"
-msgstr "Rozostrenia"
+msgstr "Autobus"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:59 ../share/symbols/symbols.h:60
-#, fuzzy
 msgctxt "Symbol"
 msgid "Ground Transportation"
-msgstr "Transformácia"
+msgstr "Pozemná doprava"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:61 ../share/symbols/symbols.h:62
-#, fuzzy
 msgctxt "Symbol"
 msgid "Rail Transportation"
-msgstr "Transformácia"
+msgstr "Železničná doprava"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:63 ../share/symbols/symbols.h:64
-#, fuzzy
 msgctxt "Symbol"
 msgid "Water Transportation"
-msgstr "Transformácia"
+msgstr "Lodná doprava"
 
 #. Symbols: ./AigaSymbols.svg
 #. Symbols: ./MapSymbols.svg
@@ -1436,7 +1423,7 @@ msgstr "Transformácia"
 #: ../share/symbols/symbols.h:316
 msgctxt "Symbol"
 msgid "Car Rental"
-msgstr ""
+msgstr "Požičovňa áut"
 
 #. Symbols: ./AigaSymbols.svg
 #. Symbols: ./MapSymbols.svg
@@ -1444,102 +1431,97 @@ msgstr ""
 #: ../share/symbols/symbols.h:228
 msgctxt "Symbol"
 msgid "Restaurant"
-msgstr ""
+msgstr "Reštaurácia"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:69 ../share/symbols/symbols.h:70
 msgctxt "Symbol"
 msgid "Coffeeshop"
-msgstr ""
+msgstr "Kaviareň"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:71 ../share/symbols/symbols.h:72
-#, fuzzy
 msgctxt "Symbol"
 msgid "Bar"
-msgstr "Kôra"
+msgstr "Bar"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:73 ../share/symbols/symbols.h:74
 msgctxt "Symbol"
 msgid "Shops"
-msgstr ""
+msgstr "Obchody"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:75 ../share/symbols/symbols.h:76
 msgctxt "Symbol"
 msgid "Barber Shop - Beauty Salon"
-msgstr ""
+msgstr "Kaderníctvo - kozmetika"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:77 ../share/symbols/symbols.h:78
 msgctxt "Symbol"
 msgid "Barber Shop"
-msgstr ""
+msgstr "Kaderníctvo"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:79 ../share/symbols/symbols.h:80
 msgctxt "Symbol"
 msgid "Beauty Salon"
-msgstr ""
+msgstr "Kozmetický salón"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:81 ../share/symbols/symbols.h:82
 msgctxt "Symbol"
 msgid "Ticket Purchase"
-msgstr ""
+msgstr "Predaj lístkov"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:83 ../share/symbols/symbols.h:84
 msgctxt "Symbol"
 msgid "Baggage Check In"
-msgstr ""
+msgstr "Príjem batožiny"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:85 ../share/symbols/symbols.h:86
 msgctxt "Symbol"
 msgid "Baggage Claim"
-msgstr ""
+msgstr "Výdaj batožiny"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:87 ../share/symbols/symbols.h:88
-#, fuzzy
 msgctxt "Symbol"
 msgid "Customs"
-msgstr "Vlastná"
+msgstr "Clo"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:89 ../share/symbols/symbols.h:90
-#, fuzzy
 msgctxt "Symbol"
 msgid "Immigration"
-msgstr "Nastavenie"
+msgstr "Imigrácia"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:91 ../share/symbols/symbols.h:92
-#, fuzzy
 msgctxt "Symbol"
 msgid "Departing Flights"
-msgstr "Výška cieľa"
+msgstr "Odlety"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:93 ../share/symbols/symbols.h:94
-#, fuzzy
 msgctxt "Symbol"
 msgid "Arriving Flights"
-msgstr "Jas:"
+msgstr "Prílety"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:95 ../share/symbols/symbols.h:96
 msgctxt "Symbol"
 msgid "Smoking"
-msgstr ""
+msgstr "Fajčenie"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:97 ../share/symbols/symbols.h:98
 msgctxt "Symbol"
 msgid "No Smoking"
-msgstr ""
+msgstr "Zákaz fajčenia"
 
 #. Symbols: ./AigaSymbols.svg
 #. Symbols: ./MapSymbols.svg
@@ -1547,25 +1529,25 @@ msgstr ""
 #: ../share/symbols/symbols.h:325
 msgctxt "Symbol"
 msgid "Parking"
-msgstr ""
+msgstr "Parkovanie"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:101 ../share/symbols/symbols.h:102
 msgctxt "Symbol"
 msgid "No Parking"
-msgstr ""
+msgstr "Zákaz parkovania"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:103 ../share/symbols/symbols.h:104
 msgctxt "Symbol"
 msgid "No Dogs"
-msgstr ""
+msgstr "Zákaz vstupu psov"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:105 ../share/symbols/symbols.h:106
 msgctxt "Symbol"
 msgid "No Entry"
-msgstr ""
+msgstr "Zákaz vstupu"
 
 #. Symbols: ./AigaSymbols.svg
 #. Symbols: ./MapSymbols.svg
@@ -1573,598 +1555,568 @@ msgstr ""
 #: ../share/symbols/symbols.h:218
 msgctxt "Symbol"
 msgid "Exit"
-msgstr ""
+msgstr "Východ"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:109 ../share/symbols/symbols.h:110
 msgctxt "Symbol"
 msgid "Fire Extinguisher"
-msgstr ""
+msgstr "Hasiaci prístroj"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:111 ../share/symbols/symbols.h:112
-#, fuzzy
 msgctxt "Symbol"
 msgid "Right Arrow"
-msgstr "Pravá"
+msgstr "Šípka vpravo"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:113 ../share/symbols/symbols.h:114
 msgctxt "Symbol"
 msgid "Forward and Right Arrow"
-msgstr ""
+msgstr "Šípka vpred a vpravo"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:115 ../share/symbols/symbols.h:116
 msgctxt "Symbol"
 msgid "Up Arrow"
-msgstr ""
+msgstr "Šípka nahor"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:117 ../share/symbols/symbols.h:118
 msgctxt "Symbol"
 msgid "Forward and Left Arrow"
-msgstr ""
+msgstr "Šípka vpred a vľavo"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:119 ../share/symbols/symbols.h:120
 msgctxt "Symbol"
 msgid "Left Arrow"
-msgstr ""
+msgstr "Šípka vľavo"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:121 ../share/symbols/symbols.h:122
 msgctxt "Symbol"
 msgid "Left and Down Arrow"
-msgstr ""
+msgstr "Šípka vľavo a nadol"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:123 ../share/symbols/symbols.h:124
-#, fuzzy
 msgctxt "Symbol"
 msgid "Down Arrow"
-msgstr "neznáma chyba"
+msgstr "Šípka nadol"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:125 ../share/symbols/symbols.h:126
 msgctxt "Symbol"
 msgid "Right and Down Arrow"
-msgstr ""
+msgstr "Šípka vpravo a nadol"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:127 ../share/symbols/symbols.h:128
 msgctxt "Symbol"
 msgid "NPS Wheelchair Accessible - 1996"
-msgstr ""
+msgstr "Bezbariérový prístup NPS - 1996"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:129 ../share/symbols/symbols.h:130
 msgctxt "Symbol"
 msgid "NPS Wheelchair Accessible"
-msgstr ""
+msgstr "Bezbariérový prístup NPS"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:131 ../share/symbols/symbols.h:132
 msgctxt "Symbol"
 msgid "New Wheelchair Accessible"
-msgstr ""
+msgstr "Nový bezbariérový prístup"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:133
 msgctxt "Symbol"
 msgid "Word Balloons"
-msgstr ""
+msgstr "Slovné bubliny"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:134
 msgctxt "Symbol"
 msgid "Thought Balloon"
-msgstr ""
+msgstr "Myšlienkové bubliny"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:135
 msgctxt "Symbol"
 msgid "Dream Speaking"
-msgstr ""
+msgstr "Hovorenie zo sna"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:136
-#, fuzzy
 msgctxt "Symbol"
 msgid "Rounded Balloon"
-msgstr "Oblý spoj"
+msgstr "Zaoblená bublina"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:137
-#, fuzzy
 msgctxt "Symbol"
 msgid "Squared Balloon"
-msgstr "Štvorcové zakončenie"
+msgstr "Obdĺžniková bublina"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:138
 msgctxt "Symbol"
 msgid "Over the Phone"
-msgstr ""
+msgstr "Telefonicky"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:139
 msgctxt "Symbol"
 msgid "Hip Balloon"
-msgstr ""
+msgstr "Hip bublina"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:140
-#, fuzzy
 msgctxt "Symbol"
 msgid "Circle Balloon"
-msgstr "Kruh"
+msgstr "Kružnicová bublina"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:141
 msgctxt "Symbol"
 msgid "Exclaim Balloon"
-msgstr ""
+msgstr "Bublina zvolania"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:142
 msgctxt "Symbol"
 msgid "Flow Chart Shapes"
-msgstr ""
+msgstr "Zložky vývojových diagramov"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:143
-#, fuzzy
 msgctxt "Symbol"
 msgid "Process"
-msgstr "Post-procesor:"
+msgstr "Proces"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:144
-#, fuzzy
 msgctxt "Symbol"
 msgid "Input/Output"
-msgstr "Výstup"
+msgstr "Vstup/výstup"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:145
-#, fuzzy
 msgctxt "Symbol"
 msgid "Document"
 msgstr "Dokument"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:146
-#, fuzzy
 msgctxt "Symbol"
 msgid "Manual Operation"
-msgstr "Sýtosť"
+msgstr "Ručná operácia"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:147
-#, fuzzy
 msgctxt "Symbol"
 msgid "Preparation"
-msgstr "Sýtosť:"
+msgstr "Príprava"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:148
-#, fuzzy
 msgctxt "Symbol"
 msgid "Merge"
-msgstr "Zlúčiť"
+msgstr "Zlúčenie"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:149
-#, fuzzy
 msgctxt "Symbol"
 msgid "Decision"
-msgstr "Presnosť:"
+msgstr "Rozhodnutie"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:150
 msgctxt "Symbol"
 msgid "Magnetic Tape"
-msgstr ""
+msgstr "Magnetická páska"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:151
-#, fuzzy
 msgctxt "Symbol"
 msgid "Display"
-msgstr "_Zobrazovací režim"
+msgstr "Zobrazenie"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:152
 msgctxt "Symbol"
 msgid "Auxiliary Operation"
-msgstr ""
+msgstr "Pomocná operácia"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:153
-#, fuzzy
 msgctxt "Symbol"
 msgid "Manual Input"
-msgstr "Vstup EMF"
+msgstr "Ručný vstup"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:154
-#, fuzzy
 msgctxt "Symbol"
 msgid "Extract"
-msgstr "Extrahovať obrázok"
+msgstr "Extrakcia"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:155
 msgctxt "Symbol"
 msgid "Terminal/Interrupt"
-msgstr ""
+msgstr "Terminál/prerušenie"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:156
 msgctxt "Symbol"
 msgid "Punched Card"
-msgstr ""
+msgstr "Dierny štítok"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:157
-#, fuzzy
 msgctxt "Symbol"
 msgid "Punch Tape"
-msgstr "Vyrazená diera"
+msgstr "Dierna páska"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:158
 msgctxt "Symbol"
 msgid "Online Storage"
-msgstr ""
+msgstr "Online úložisko"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:159
 msgctxt "Symbol"
 msgid "Keying"
-msgstr ""
+msgstr "Kľúčovanie"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:160
 msgctxt "Symbol"
 msgid "Sort"
-msgstr ""
+msgstr "Zoradenie"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:161
-#, fuzzy
 msgctxt "Symbol"
 msgid "Connector"
 msgstr "Konektor"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:162
-#, fuzzy
 msgctxt "Symbol"
 msgid "Off-Page Connector"
-msgstr "Konektor"
+msgstr "Spojenie mimo strany"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:163
 msgctxt "Symbol"
 msgid "Transmittal Tape"
-msgstr ""
+msgstr "Prenosová páska"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:164
 msgctxt "Symbol"
 msgid "Communication Link"
-msgstr ""
+msgstr "Komunikačné spojenie"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:165
-#, fuzzy
 msgctxt "Symbol"
 msgid "Collate"
-msgstr "Modulovať"
+msgstr "Usporiadať"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:166
 msgctxt "Symbol"
 msgid "Comment/Annotation"
-msgstr ""
+msgstr "Komentár/anotácia"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:167
 msgctxt "Symbol"
 msgid "Core"
-msgstr ""
+msgstr "Jadro"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:168
 msgctxt "Symbol"
 msgid "Predefined Process"
-msgstr ""
+msgstr "Preddefinovaný proces"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:169
 msgctxt "Symbol"
 msgid "Magnetic Disk (Database)"
-msgstr ""
+msgstr "Magnetický disk (databáza)"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:170
 msgctxt "Symbol"
 msgid "Magnetic Drum (Direct Access)"
-msgstr ""
+msgstr "Magnetický bubon (priamy prístup)"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:171
 msgctxt "Symbol"
 msgid "Offline Storage"
-msgstr ""
+msgstr "Offline úložisko"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:172
 msgctxt "Symbol"
 msgid "Logical Or"
-msgstr ""
+msgstr "Logické alebo"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:173
 msgctxt "Symbol"
 msgid "Logical And"
-msgstr ""
+msgstr "Logické a"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:174
 msgctxt "Symbol"
 msgid "Delay"
-msgstr ""
+msgstr "Oneskorenie"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:175
 msgctxt "Symbol"
 msgid "Loop Limit Begin"
-msgstr ""
+msgstr "Začiatok cyklu"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:176
 msgctxt "Symbol"
 msgid "Loop Limit End"
-msgstr ""
+msgstr "Koniec cyklu"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:177
 msgctxt "Symbol"
 msgid "Logic Symbols"
-msgstr ""
+msgstr "Logické symboly"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:178
 msgctxt "Symbol"
 msgid "Xnor Gate"
-msgstr ""
+msgstr "Hradlo XNOR"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:179
 msgctxt "Symbol"
 msgid "Xor Gate"
-msgstr ""
+msgstr "Hradlo XOR"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:180
 msgctxt "Symbol"
 msgid "Nor Gate"
-msgstr ""
+msgstr "Hradlo NOR"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:181
 msgctxt "Symbol"
 msgid "Or Gate"
-msgstr ""
+msgstr "Hradlo OR"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:182
 msgctxt "Symbol"
 msgid "Nand Gate"
-msgstr ""
+msgstr "Hradlo NAND"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:183
 msgctxt "Symbol"
 msgid "And Gate"
-msgstr ""
+msgstr "Hradlo AND"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:184
 msgctxt "Symbol"
 msgid "Buffer"
-msgstr ""
+msgstr "Buffer"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:185
 msgctxt "Symbol"
 msgid "Not Gate"
-msgstr ""
+msgstr "Hradlo NOT"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:186
 msgctxt "Symbol"
 msgid "Buffer Small"
-msgstr ""
+msgstr "Malý buffer"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:187
 msgctxt "Symbol"
 msgid "Not Gate Small"
-msgstr ""
+msgstr "Malé hradlo NOT"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:188
 msgctxt "Symbol"
 msgid "Map Symbols"
-msgstr ""
+msgstr "Symboly na mape"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:189
-#, fuzzy
 msgctxt "Symbol"
 msgid "Bed and Breakfast"
-msgstr "žeriav pridaná zelená"
+msgstr "Bed and Breakfast"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:190
 msgctxt "Symbol"
 msgid "Youth Hostel"
-msgstr ""
+msgstr "Hostel pre mládež"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:191
-#, fuzzy
 msgctxt "Symbol"
 msgid "Shelter"
-msgstr "filter"
+msgstr "Prístrešie"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:192
 msgctxt "Symbol"
 msgid "Motel"
-msgstr ""
+msgstr "Motel"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:193
 msgctxt "Symbol"
 msgid "Hotel"
-msgstr ""
+msgstr "Hotel"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:194
-#, fuzzy
 msgctxt "Symbol"
 msgid "Hostel"
-msgstr "Hostiteľ"
+msgstr "Hostel"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:195
-#, fuzzy
 msgctxt "Symbol"
 msgid "Chalet"
-msgstr "Paleta"
+msgstr "Chata alpského typu"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:196
 msgctxt "Symbol"
 msgid "Caravan Park"
-msgstr ""
+msgstr "Parkovanie karavanov"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:197
-#, fuzzy
 msgctxt "Symbol"
 msgid "Camping"
-msgstr "Lapovanie"
+msgstr "Kemping"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:198
 msgctxt "Symbol"
 msgid "Alpine Hut"
-msgstr ""
+msgstr "Horská chata"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:199
 msgctxt "Symbol"
 msgid "Bench or Park"
-msgstr ""
+msgstr "Lavička alebo park"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:200
-#, fuzzy
 msgctxt "Symbol"
 msgid "Playground"
-msgstr "Pozadie"
+msgstr "Detské ihrisko"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:201
 msgctxt "Symbol"
 msgid "Fountain"
-msgstr ""
+msgstr "Fontána"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:202
-#, fuzzy
 msgctxt "Symbol"
 msgid "Library"
-msgstr "Knižnica nástrojov"
+msgstr "Knižnica"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:203
 msgctxt "Symbol"
 msgid "Town Hall"
-msgstr ""
+msgstr "Radnica"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:204
 msgctxt "Symbol"
 msgid "Court"
-msgstr ""
+msgstr "Súd"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:205
 msgctxt "Symbol"
 msgid "Fire Station / House"
-msgstr ""
+msgstr "Požiarna stanica"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:206
-#, fuzzy
 msgctxt "Symbol"
 msgid "Police Station"
-msgstr "Viac sýtosti"
+msgstr "Policajná stanica"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:207
 msgctxt "Symbol"
 msgid "Prison"
-msgstr ""
+msgstr "Väznica"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:208
 msgctxt "Symbol"
 msgid "Post Office"
-msgstr ""
+msgstr "Pošta"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:209
-#, fuzzy
 msgctxt "Symbol"
 msgid "Public Building"
-msgstr "Voľné dielo"
+msgstr "Verejná budova"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:210
 msgctxt "Symbol"
 msgid "Recycling"
-msgstr ""
+msgstr "Recyklovanie"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:211
-#, fuzzy
 msgctxt "Symbol"
 msgid "Survey Point"
-msgstr "Gergonov bod"
+msgstr "Výhľad"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:212
 msgctxt "Symbol"
 msgid "Toll Booth"
-msgstr ""
+msgstr "Mýtna búdka"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:213
 msgctxt "Symbol"
 msgid "Lift Gate"
-msgstr ""
+msgstr "Zdvíhacie vráta"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:214
-#, fuzzy
 msgctxt "Symbol"
 msgid "Steps"
 msgstr "Kroky"
@@ -2173,776 +2125,739 @@ msgstr "Kroky"
 #: ../share/symbols/symbols.h:215
 msgctxt "Symbol"
 msgid "Stile"
-msgstr ""
+msgstr "Turniket"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:216
-#, fuzzy
 msgctxt "Symbol"
 msgid "Kissing Gate"
-msgstr "Chýbajúca graféma:"
+msgstr "Bozkávacia brána"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:217
 msgctxt "Symbol"
 msgid "Gate"
-msgstr ""
+msgstr "Brána"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:219
-#, fuzzy
 msgctxt "Symbol"
 msgid "Entrance"
-msgstr "Rozšíriť"
+msgstr "Vchod"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:220
 msgctxt "Symbol"
 msgid "Cycle Barrier"
-msgstr ""
+msgstr "Bariéra proti cyklistom"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:221
-#, fuzzy
 msgctxt "Symbol"
 msgid "Cattle Grid"
-msgstr "Karteziánska mriežka"
+msgstr "Mriežka proti pohybu dobytka"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:222
 msgctxt "Symbol"
 msgid "Bollard"
-msgstr ""
+msgstr "Piloty"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:223
-#, fuzzy
 msgctxt "Symbol"
 msgid "University"
-msgstr "Intenzita:"
+msgstr "Univerzita"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:224
 msgctxt "Symbol"
 msgid "High/Secondary School"
-msgstr ""
+msgstr "Stredná škola"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:225
 msgctxt "Symbol"
 msgid "School"
-msgstr ""
+msgstr "Škola"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:226
 msgctxt "Symbol"
 msgid "Kindergarten"
-msgstr ""
+msgstr "Materská škola"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:229
 msgctxt "Symbol"
 msgid "Pub"
-msgstr ""
+msgstr "Krčma"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:230
 msgctxt "Symbol"
 msgid "Desserts/Cakes Shop"
-msgstr ""
+msgstr "Cukrovinky"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:231
 msgctxt "Symbol"
 msgid "Fast Food"
-msgstr ""
+msgstr "Fast food"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:232
 msgctxt "Symbol"
 msgid "Public Tap/Water"
-msgstr ""
+msgstr "Verejná studňa/kohútik"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:233
 msgctxt "Symbol"
 msgid "Cafe"
-msgstr ""
+msgstr "Kaviareň"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:234
 msgctxt "Symbol"
 msgid "Beer Garden"
-msgstr ""
+msgstr "Pivná záhradka"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:235
 msgctxt "Symbol"
 msgid "Wine Bar"
-msgstr ""
+msgstr "Vináreň"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:236
 msgctxt "Symbol"
 msgid "Opticians/Eye Doctors"
-msgstr ""
+msgstr "Optika/očný lekár"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:237
-#, fuzzy
 msgctxt "Symbol"
 msgid "Dentist"
-msgstr "Identita"
+msgstr "Zubár"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:238
 msgctxt "Symbol"
 msgid "Veterinarian"
-msgstr ""
+msgstr "Veterinárny lekár"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:239
 msgctxt "Symbol"
 msgid "Drugs Dispensary"
-msgstr ""
+msgstr "Výdaj liekov"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:240
 msgctxt "Symbol"
 msgid "Pharmacy"
-msgstr ""
+msgstr "Lekáreň"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:241
-#, fuzzy
 msgctxt "Symbol"
 msgid "Accident & Emergency"
-msgstr "Výrazná zelená"
+msgstr "Úrazy a pohotovosť"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:242
 msgctxt "Symbol"
 msgid "Hospital"
-msgstr ""
+msgstr "Nemocnica"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:243
-#, fuzzy
 msgctxt "Symbol"
 msgid "Doctors"
-msgstr "Konektor"
+msgstr "Lekári"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:244
 msgctxt "Symbol"
 msgid "Scrub Land"
-msgstr ""
+msgstr "Scrub"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:245
 msgctxt "Symbol"
 msgid "Swamp"
-msgstr ""
+msgstr "Močiar"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:246
 msgctxt "Symbol"
 msgid "Hills"
-msgstr ""
+msgstr "Kopce"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:247
 msgctxt "Symbol"
 msgid "Grass Land"
-msgstr ""
+msgstr "Trávnatá krajina"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:248
 msgctxt "Symbol"
 msgid "Deciduous Forest"
-msgstr ""
+msgstr "Listnatý les"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:249
 msgctxt "Symbol"
 msgid "Mixed Forest"
-msgstr ""
+msgstr "Zmiešaný les"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:250
 msgctxt "Symbol"
 msgid "Coniferous Forest"
-msgstr ""
+msgstr "Ihličnatý les"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:251
 msgctxt "Symbol"
 msgid "Church or Place of Worship"
-msgstr ""
+msgstr "Kostol alebo miesto uctievania"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:252
 msgctxt "Symbol"
 msgid "Bank"
-msgstr ""
+msgstr "Banka"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:253
-#, fuzzy
 msgctxt "Symbol"
 msgid "Power Lines"
-msgstr "Čiara s uzlami"
+msgstr "Elektrické vedenie"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:254
 msgctxt "Symbol"
 msgid "Watch Tower"
-msgstr ""
+msgstr "Rozhľadňa"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:255
-#, fuzzy
 msgctxt "Symbol"
 msgid "Transmitter"
-msgstr "Transformácia vzoriek"
+msgstr "Vysielač"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:256
 msgctxt "Symbol"
 msgid "Village"
-msgstr ""
+msgstr "Dedina"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:257
 msgctxt "Symbol"
 msgid "Town"
-msgstr ""
+msgstr "Mesto"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:258
 msgctxt "Symbol"
 msgid "Hamlet"
-msgstr ""
+msgstr "Samota"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:259
 msgctxt "Symbol"
 msgid "City"
-msgstr ""
+msgstr "Mesto"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:260
 msgctxt "Symbol"
 msgid "Peak"
-msgstr ""
+msgstr "Vrchol"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:261
-#, fuzzy
 msgctxt "Symbol"
 msgid "Mountain Pass"
-msgstr "Vitráž"
+msgstr "Horské sedlo"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:262
 msgctxt "Symbol"
 msgid "Mine"
-msgstr ""
+msgstr "Baňa"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:263
 msgctxt "Symbol"
 msgid "Military Complex"
-msgstr ""
+msgstr "Vojenská základňa"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:264
 msgctxt "Symbol"
 msgid "Embassy"
-msgstr ""
+msgstr "Veľvyslanectvo"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:265
 msgctxt "Symbol"
 msgid "Toy Shop"
-msgstr ""
+msgstr "Hračkárstvo"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:266
-#, fuzzy
 msgctxt "Symbol"
 msgid "Supermarket"
-msgstr "Nastaviť zakončenia čiar"
+msgstr "Supermarket"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:267
 msgctxt "Symbol"
 msgid "Jewlers"
-msgstr ""
+msgstr "Klenotníctvo"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:268
 msgctxt "Symbol"
 msgid "Hairdressers"
-msgstr ""
+msgstr "Kaderníctvo"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:269
-#, fuzzy
 msgctxt "Symbol"
 msgid "Greengrocer"
-msgstr "Zelená"
+msgstr "Zelenina"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:270
 msgctxt "Symbol"
 msgid "Gift Shop"
-msgstr ""
+msgstr "Suveníry"
 
 # TODO: check
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:271
-#, fuzzy
 msgctxt "Symbol"
 msgid "Garden Center"
-msgstr "Stred a centrovať"
+msgstr "Záhradkárske potreby"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:272
 msgctxt "Symbol"
 msgid "Florist"
-msgstr ""
+msgstr "Kvetinárstvo"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:273
 msgctxt "Symbol"
 msgid "Fish Monger"
-msgstr ""
+msgstr "Predajňa rýb"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:274
 msgctxt "Symbol"
 msgid "Real Estate"
-msgstr ""
+msgstr "Realitná kancelária"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:275
-#, fuzzy
 msgctxt "Symbol"
 msgid "Hardware / DIY"
-msgstr "Hardvér"
+msgstr "Železiarstvo"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:276
 msgctxt "Symbol"
 msgid "Shop"
-msgstr ""
+msgstr "Obchod"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:277
-#, fuzzy
 msgctxt "Symbol"
 msgid "Confectioner"
-msgstr "Konektory"
+msgstr "Cukráreň"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:278
 msgctxt "Symbol"
 msgid "Computer Shop"
-msgstr ""
+msgstr "Obchod s výpočtovou technikou"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:279
-#, fuzzy
 msgctxt "Symbol"
 msgid "Clothing"
-msgstr "Vyhladzovanie:"
+msgstr "Oblečenie"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:280
 msgctxt "Symbol"
 msgid "Mechanic"
-msgstr ""
+msgstr "Mechanik"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:281
 msgctxt "Symbol"
 msgid "Car Dealer"
-msgstr ""
+msgstr "Predajňa áut"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:282
 msgctxt "Symbol"
 msgid "Butcher"
-msgstr ""
+msgstr "Mäsiar"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:283
 msgctxt "Symbol"
 msgid "Meat Shop"
-msgstr ""
+msgstr "Mäsiarstvo"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:284
 msgctxt "Symbol"
 msgid "Bicycle Shop"
-msgstr ""
+msgstr "Predajňa bicyklov"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:285
 msgctxt "Symbol"
 msgid "Baker"
-msgstr ""
+msgstr "Pekáreň"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:286
 msgctxt "Symbol"
 msgid "Off License / Liquor Store"
-msgstr ""
+msgstr "Obchod s liehovinami"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:287
 msgctxt "Symbol"
 msgid "Wind Surfing"
-msgstr ""
+msgstr "Windsurfing"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:288
 msgctxt "Symbol"
 msgid "Tennis"
-msgstr ""
+msgstr "Tenis"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:289
 msgctxt "Symbol"
 msgid "Outdoor Pool"
-msgstr ""
+msgstr "Vonkajší bazén"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:290
 msgctxt "Symbol"
 msgid "Indoor Pool"
-msgstr ""
+msgstr "Krytý bazén"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:291
 msgctxt "Symbol"
 msgid "Skiing"
-msgstr ""
+msgstr "Lyžovanie"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:292
-#, fuzzy
 msgctxt "Symbol"
 msgid "Sailing"
-msgstr "Posúvanie"
+msgstr "Plachtenie"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:293
-#, fuzzy
 msgctxt "Symbol"
 msgid "Leisure Center"
-msgstr "Znovunastaviť stred"
+msgstr "Centrum voľného času"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:294
 msgctxt "Symbol"
 msgid "Ice Skating"
-msgstr ""
+msgstr "Korčuľovanie"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:295
 msgctxt "Symbol"
 msgid "Equine Sports"
-msgstr ""
+msgstr "Konské športy"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:296
 msgctxt "Symbol"
 msgid "Rock Climbing"
-msgstr ""
+msgstr "Horolezectvo"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:297
 msgctxt "Symbol"
 msgid "Gym"
-msgstr ""
+msgstr "Telocvičňa"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:298
 msgctxt "Symbol"
 msgid "Golf"
-msgstr ""
+msgstr "Golf"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:299
-#, fuzzy
 msgctxt "Symbol"
 msgid "Diving"
-msgstr "Rozdelenie"
+msgstr "Potápanie"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:300
 msgctxt "Symbol"
 msgid "Archery"
-msgstr ""
+msgstr "Lukostreľba"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:301
-#, fuzzy
 msgctxt "Symbol"
 msgid "Zoo"
-msgstr "Lupa"
+msgstr "Zoo"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:302
 msgctxt "Symbol"
 msgid "Wreck"
-msgstr ""
+msgstr "Vrak"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:303
 #, fuzzy
 msgctxt "Symbol"
 msgid "Water Wheel"
-msgstr "Koleso"
+msgstr "Vodné koleso"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:304
-#, fuzzy
 msgctxt "Symbol"
 msgid "Point of Interest"
-msgstr "Vlastnosti tlače"
+msgstr "Bod záujmu"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:305
-#, fuzzy
 msgctxt "Symbol"
 msgid "Theater"
-msgstr "Vytvoriť"
+msgstr "Divadlo"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:306
 msgctxt "Symbol"
 msgid "Park / Picnic Area"
-msgstr ""
+msgstr "Park / Oblasť na piknik"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:307
-#, fuzzy
 msgctxt "Symbol"
 msgid "Monument"
-msgstr "Dokument"
+msgstr "Pamätihodnosť"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:309
 msgctxt "Symbol"
 msgid "Beach"
-msgstr ""
+msgstr "Pláž"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:310
-#, fuzzy
 msgctxt "Symbol"
 msgid "Battle Location"
-msgstr "Umiestnenie"
+msgstr "Miesto konania bitky"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:311
 msgctxt "Symbol"
 msgid "Archaeology / Ruins"
-msgstr ""
+msgstr "Archeológia / zrúcaniny"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:312
 msgctxt "Symbol"
 msgid "Walking"
-msgstr ""
+msgstr "Chôdza"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:313
-#, fuzzy
 msgctxt "Symbol"
 msgid "Train"
-msgstr "Režim zrna"
+msgstr "Vlak"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:315
 msgctxt "Symbol"
 msgid "Underground Rail"
-msgstr ""
+msgstr "Podzemná železnica"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:317
 msgctxt "Symbol"
 msgid "Bike Rental"
-msgstr ""
+msgstr "Požičovňa bicyklov"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:319
 msgctxt "Symbol"
 msgid "Carpool"
-msgstr ""
+msgstr "Spolujazda"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:320
-#, fuzzy
 msgctxt "Symbol"
 msgid "Flood Gate"
-msgstr "Vyplnenie"
+msgstr "Stavidlo"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:321
-#, fuzzy
 msgctxt "Symbol"
 msgid "Shipping"
-msgstr "Kvapkanie"
+msgstr "Preprava"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:322
-#, fuzzy
 msgctxt "Symbol"
 msgid "Disabled Parking"
-msgstr "Vypnuté"
+msgstr "Parkovanie pre hendikepovaných"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:323
 msgctxt "Symbol"
 msgid "Paid Parking"
-msgstr ""
+msgstr "Platené parkovanie"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:324
 msgctxt "Symbol"
 msgid "Bike Parking"
-msgstr ""
+msgstr "Parkovanie bicyklov"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:326
 msgctxt "Symbol"
 msgid "Marina"
-msgstr ""
+msgstr "Prístav"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:327
-#, fuzzy
 msgctxt "Symbol"
 msgid "Fuel Station"
-msgstr "Vzťah"
+msgstr "Čerpacia stanica"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:328
-#, fuzzy
 msgctxt "Symbol"
 msgid "Bus Stop"
-msgstr "Za_staviť"
+msgstr "Autobusová zastávka"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:329
-#, fuzzy
 msgctxt "Symbol"
 msgid "Bus Station"
-msgstr "Menej sýtosti"
+msgstr "Autobusová stanica"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:330
-#, fuzzy
 msgctxt "Symbol"
 msgid "Airport"
-msgstr "Importovať"
+msgstr "Letisko"
 
 #: ../share/templates/templates.h:1
-#, fuzzy
 msgid "A4 Landscape Page"
-msgstr "_Krajinka"
+msgstr "Stránka A4 na šírku"
 
 #: ../share/templates/templates.h:1
 msgid "Empty A4 landscape sheet"
-msgstr ""
+msgstr "Prázdny list A4 na šírku"
 
 #: ../share/templates/templates.h:1
 msgid "A4 paper sheet empty landscape"
-msgstr ""
+msgstr "Prázdny list papiera A4 na šírku"
 
 #: ../share/templates/templates.h:1
-#, fuzzy
 msgid "A4 Page"
-msgstr "Stránka"
+msgstr "Stránka A4"
 
 #: ../share/templates/templates.h:1
-#, fuzzy
 msgid "Empty A4 sheet"
-msgstr "Prázdny výber"
+msgstr "Prázdny list A4"
 
 #: ../share/templates/templates.h:1
 msgid "A4 paper sheet empty"
-msgstr ""
+msgstr "Prázdny list papiera A4"
 
 #: ../share/templates/templates.h:1
-#, fuzzy
 msgid "Black Opaque"
-msgstr "Čierny kanál"
+msgstr "Čierny matný"
 
 #: ../share/templates/templates.h:1
 msgid "Empty black page"
-msgstr ""
+msgstr "Prázdna čierna stránka"
 
 #: ../share/templates/templates.h:1
 msgid "black opaque empty"
-msgstr ""
+msgstr "čierna matná prázdna"
 
 #: ../share/templates/templates.h:1
 msgid "White Opaque"
-msgstr ""
+msgstr "Biela matná"
 
 #: ../share/templates/templates.h:1
-#, fuzzy
 msgid "Empty white page"
-msgstr "Exportovať kresbu, nie stránku"
+msgstr "prázdna biela matná stránka"
 
 #: ../share/templates/templates.h:1
 msgid "white opaque empty"
-msgstr ""
+msgstr "prázdna biela matná"
 
 #: ../share/templates/templates.h:1
 msgid "Business Card 85x54mm"
-msgstr ""
+msgstr "Vizitka 85x54 mm"
 
 #: ../share/templates/templates.h:1
 msgid "Empty business card template."
-msgstr ""
+msgstr "Prázdna šablóna vizitky."
 
 #: ../share/templates/templates.h:1
 msgid "business card empty 85x54"
-msgstr ""
+msgstr "prázdna vizitka 85x54"
 
 #: ../share/templates/templates.h:1
 msgid "Business Card 90x50mm"
-msgstr ""
+msgstr "Vizitka 90x50 mm"
 
 #: ../share/templates/templates.h:1
 msgid "business card empty 90x50"
-msgstr ""
+msgstr "prázdna vizitka 90x50"
 
 #: ../share/templates/templates.h:1
 msgid "CD Cover 300dpi"
-msgstr ""
+msgstr "Obal na CD 300 dpi"
 
 #: ../share/templates/templates.h:1
 msgid "Empty CD box cover."
-msgstr ""
+msgstr "Prázdny obal CD."
 
 #: ../share/templates/templates.h:1
 msgid "CD cover disc disk 300dpi box"
-msgstr ""
+msgstr "obal disku CD 300 dpi"
 
 #: ../share/templates/templates.h:1
 msgid "CD Label 120x120 "
-msgstr ""
+msgstr "Obal CD 120x120"
 
 #: ../share/templates/templates.h:1
 msgid "Simple CD Label template with disc's pattern."
-msgstr ""
+msgstr "Šablóna jednoduchého obalu CD so vzorom disku."
 
 #: ../share/templates/templates.h:1
 msgid "CD label 120x120 disc disk"
