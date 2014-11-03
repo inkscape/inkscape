@@ -59,7 +59,7 @@ enum PathChange {
 const double handleCubicGap = 0.01;
 const double noPower = 0.0;
 const double defaultStartPower = 0.3334;
-const double defaultEndPower = 0.6667;
+
 
 /**
  * Notifies the path manipulator when something changes the path being edited
@@ -1000,7 +1000,6 @@ NodeList::iterator PathManipulator::subdivideSegment(NodeList::iterator first, d
             n->front()->setPosition(seg2[1]);
             n->setType(NODE_SMOOTH, false);
         } else {
-            const double handleCubicGap = 0.01;
             Geom::D2< Geom::SBasis > SBasisInsideNodes;
             SPCurve *lineInsideNodes = new SPCurve();
             if(second->back()->isDegenerate()){
@@ -1251,7 +1250,6 @@ double PathManipulator::BSplineHandlePosition(Handle *h, Handle *h2){
         h = h2;
     }
     double pos = noPower;
-    const double handleCubicGap = 0.01;
     Node *n = h->parent();
     Node * nextNode = NULL;
     nextNode = n->nodeToward(h);
@@ -1279,7 +1277,6 @@ Geom::Point PathManipulator::BSplineHandleReposition(Handle *h, Handle *h2){
 Geom::Point PathManipulator::BSplineHandleReposition(Handle *h,double pos){
     using Geom::X;
     using Geom::Y;
-    const double handleCubicGap = 0.01;
     Geom::Point ret = h->position();
     Node *n = h->parent();
     Geom::D2< Geom::SBasis > SBasisInsideNodes;
