@@ -47,6 +47,8 @@ LPERoughen::LPERoughen(LivePathEffectObject *lpeobject)
                 "displaceX", &wr, this, 10.),
       displaceY(_("Max. displacement in Y"), _("Max. displacement in Y"),
                 "displaceY", &wr, this, 10.),
+      globalRandomize(_("Global randomize"), _("Global randomize"),
+                     "globalRandomize", &wr, this, 1.),
       shiftNodes(_("Shift nodes"), _("Shift nodes"), "shiftNodes", &wr, this,
                  true),
       shiftNodeHandles(_("Shift node handles"), _("Shift node handles"),
@@ -58,10 +60,12 @@ LPERoughen::LPERoughen(LivePathEffectObject *lpeobject)
     registerParameter(&segments);
     registerParameter(&displaceX);
     registerParameter(&displaceY);
+    registerParameter(&globalRandomize);
     registerParameter(&shiftNodes);
     registerParameter(&shiftNodeHandles);
     displaceX.param_set_range(0., Geom::infinity());
     displaceY.param_set_range(0., Geom::infinity());
+    globalRandomize.param_set_range(0., Geom::infinity());
     maxSegmentSize.param_set_range(0., Geom::infinity());
     maxSegmentSize.param_set_increments(1, 1);
     maxSegmentSize.param_set_digits(1);
@@ -76,6 +80,7 @@ void LPERoughen::doBeforeEffect(SPLPEItem const *lpeitem)
 {
     displaceX.resetRandomizer();
     displaceY.resetRandomizer();
+    globalRandomize.resetRandomizer();
     srand(1);
     SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
     item->apply_to_clippath(item);
@@ -119,6 +124,15 @@ Gtk::Widget *LPERoughen::newWidget()
                 vbox->pack_start(*Gtk::manage(new Gtk::HSeparator()),
                                  Gtk::PACK_EXPAND_WIDGET);
             }
+            if (param->param_key == "globalRandomize") {
+                Gtk::Label *displaceXLabel = Gtk::manage(new Gtk::Label(
+                                                 Glib::ustring(_("<b>Extra roughen</b> Retain 1 to no changes")),
+                                                 Gtk::ALIGN_START));
+                displaceXLabel->set_use_markup(true);
+                vbox->pack_start(*displaceXLabel, false, false, 2);
+                vbox->pack_start(*Gtk::manage(new Gtk::HSeparator()),
+                                 Gtk::PACK_EXPAND_WIDGET);
+            }
             Glib::ustring *tip = param->param_getTooltip();
             if (widg) {
                 vbox->pack_start(*widg, true, true, 2);
@@ -147,10 +161,16 @@ double LPERoughen::sign(double randNumber)
 Geom::Point LPERoughen::randomize()
 {
     Inkscape::Util::Unit const *doc_units = SP_ACTIVE_DESKTOP->namedview->doc_units;
+    double displaceXRandom = displaceX;
+    double displaceYRandom = displaceY;
+    if(globalRandomize != 1.0){
+        displaceXRandom = displaceX * globalRandomize;
+        displaceYRandom = displaceY * globalRandomize;
+    }
     double displaceXParsed = Inkscape::Util::Quantity::convert(
-                                 displaceX, unit.get_abbreviation(), doc_units->abbr);
+                                 displaceXRandom, unit.get_abbreviation(), doc_units->abbr);
     double displaceYParsed = Inkscape::Util::Quantity::convert(
-                                 displaceY, unit.get_abbreviation(), doc_units->abbr);
+                                 displaceYRandom, unit.get_abbreviation(), doc_units->abbr);
 
     Geom::Point output = Geom::Point(sign(displaceXParsed), sign(displaceYParsed));
     return output;

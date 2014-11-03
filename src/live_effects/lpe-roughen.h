@@ -51,8 +51,10 @@ private:
     ScalarParam segments;
     RandomParam displaceX;
     RandomParam displaceY;
+    RandomParam globalRandomize;
     BoolParam shiftNodes;
     BoolParam shiftNodeHandles;
+
     LPERoughen(const LPERoughen &);
     LPERoughen &operator=(const LPERoughen &);
 
