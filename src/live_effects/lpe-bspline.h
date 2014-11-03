@@ -28,7 +28,7 @@ public:
     void drawHandle(Geom::Point p, double radiusHelperNodes);
     void addCanvasIndicators(SPLPEItem const */*lpeitem*/, std::vector<Geom::PathVector> &hp_vec);
     virtual void doBSplineFromWidget(SPCurve *curve, double value);
-    virtual bool nodeIsSelected(Geom::Point nodePoint);
+    virtual bool nodeIsSelected(Geom::Point nodePoint, std::vector<Geom::Point> selectedPoints);
     virtual Gtk::Widget *newWidget();
     virtual void changeWeight(double weightValue);
     virtual void toDefaultWeight(Gtk::Widget *widgWeight);
@@ -39,7 +39,6 @@ public:
     ScalarParam steps;
 
 private:
-    std::vector<Geom::Point> points;
     BoolParam ignoreCusp;
     BoolParam onlySelected;
     BoolParam showHelper;

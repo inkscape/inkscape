@@ -427,14 +427,14 @@ void LPEBSpline::changeWeight(double weightValue)
                        _("Modified the weight of the BSpline"));
 }
 
-bool LPEBSpline::nodeIsSelected(Geom::Point nodePoint)
+bool LPEBSpline::nodeIsSelected(Geom::Point nodePoint, std::vector<Geom::Point> selectedPoints)
 {
     using Geom::X;
     using Geom::Y;
 
-    if (points.size() > 0) {
-        for (std::vector<Geom::Point>::iterator i = points.begin();
-                i != points.end(); ++i) {
+    if (selectedPoints.size() > 0) {
+        for (std::vector<Geom::Point>::iterator i = selectedPoints.begin();
+                i != selectedPoints.end(); ++i) {
             Geom::Point p = *i;
             if (Geom::are_near(p, nodePoint, handleCubicGap)) {
                 return true;
@@ -450,19 +450,20 @@ void LPEBSpline::doBSplineFromWidget(SPCurve *curve, double weightValue)
     using Geom::X;
     using Geom::Y;
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    std::vector<Geom::Point> selectedPoints;
     if (INK_IS_NODE_TOOL(desktop->event_context)) {
         Inkscape::UI::Tools::NodeTool *nt = INK_NODE_TOOL(desktop->event_context);
         Inkscape::UI::ControlPointSelection::Set &selection =
             nt->_selected_nodes->allPoints();
-        points.clear();
+        selectedPoints.clear();
         std::vector<Geom::Point>::iterator pbegin;
         for (Inkscape::UI::ControlPointSelection::Set::iterator i =
                     selection.begin();
                 i != selection.end(); ++i) {
             if ((*i)->selected()) {
                 Inkscape::UI::Node *n = dynamic_cast<Inkscape::UI::Node *>(*i);
-                pbegin = points.begin();
-                points.insert(pbegin, desktop->doc2dt(n->position()));
+                pbegin = selectedPoints.begin();
+                selectedPoints.insert(pbegin, desktop->doc2dt(n->position()));
             }
         }
     }
@@ -571,7 +572,7 @@ void LPEBSpline::doBSplineFromWidget(SPCurve *curve, double weightValue)
             } else {
                 if (cubic) {
                     if (!ignoreCusp || !Geom::are_near((*cubic)[1], pointAt0)) {
-                        if (nodeIsSelected(pointAt0)) {
+                        if (nodeIsSelected(pointAt0, selectedPoints)) {
                             pointAt1 = SBasisIn.valueAt(weightValue);
                             if (weightValue != noPower) {
                                 pointAt1 =
@@ -584,7 +585,7 @@ void LPEBSpline::doBSplineFromWidget(SPCurve *curve, double weightValue)
                         pointAt1 = in->first_segment()->initialPoint();
                     }
                     if (!ignoreCusp || !Geom::are_near((*cubic)[2], pointAt3)) {
-                        if (nodeIsSelected(pointAt3)) {
+                        if (nodeIsSelected(pointAt3, selectedPoints)) {
                             pointAt2 = SBasisIn.valueAt(1 - weightValue);
                             if (weightValue != noPower) {
                                 pointAt2 =
@@ -598,14 +599,14 @@ void LPEBSpline::doBSplineFromWidget(SPCurve *curve, double weightValue)
                     }
                 } else {
                     if (!ignoreCusp && weightValue != noPower) {
-                        if (nodeIsSelected(pointAt0)) {
+                        if (nodeIsSelected(pointAt0, selectedPoints)) {
                             pointAt1 = SBasisIn.valueAt(weightValue);
                             pointAt1 =
                                 Geom::Point(pointAt1[X] + handleCubicGap, pointAt1[Y] + handleCubicGap);
                         } else {
                             pointAt1 = in->first_segment()->initialPoint();
                         }
-                        if (nodeIsSelected(pointAt3)) {
+                        if (nodeIsSelected(pointAt3, selectedPoints)) {
                             pointAt2 = SBasisIn.valueAt(weightValue);
                             pointAt2 =
                                 Geom::Point(pointAt2[X] + handleCubicGap, pointAt2[Y] + handleCubicGap);

@@ -261,10 +261,10 @@ void LPEFilletChamfer::refreshKnots()
     }
 }
 
-bool LPEFilletChamfer::nodeIsSelected(Geom::Point nodePoint, std::vector<Geom::Point> point)
+bool LPEFilletChamfer::nodeIsSelected(Geom::Point nodePoint, std::vector<Geom::Point> selectedPoints)
 {
-    if (point.size() > 0) {
-        for (std::vector<Geom::Point>::iterator i = point.begin(); i != point.end();
+    if (selectedPoints.size() > 0) {
+        for (std::vector<Geom::Point>::iterator i = selectedPoints.begin(); i != selectedPoints.end();
                 ++i) {
             Geom::Point p = *i;
             if (Geom::are_near(p, nodePoint, 2)) {
@@ -276,7 +276,7 @@ bool LPEFilletChamfer::nodeIsSelected(Geom::Point nodePoint, std::vector<Geom::P
 }
 void LPEFilletChamfer::doUpdateFillet(std::vector<Geom::Path> const& original_pathv, double power)
 {
-    std::vector<Geom::Point> point;
+    std::vector<Geom::Point> selectedPoints;
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (INK_IS_NODE_TOOL(desktop->event_context)) {
         Inkscape::UI::Tools::NodeTool *nodeTool = INK_NODE_TOOL(desktop->event_context);
@@ -285,8 +285,8 @@ void LPEFilletChamfer::doUpdateFillet(std::vector<Geom::Path> const& original_pa
         for (Inkscape::UI::ControlPointSelection::Set::iterator i = selection.begin(); i != selection.end(); ++i) {
             if ((*i)->selected()) {
                 Inkscape::UI::Node *n = dynamic_cast<Inkscape::UI::Node *>(*i);
-                pBegin = point.begin();
-                point.insert(pBegin, desktop->doc2dt(n->position()));
+                pBegin = selectedPoints.begin();
+                selectedPoints.insert(pBegin, desktop->doc2dt(n->position()));
             }
         }
     }
@@ -324,7 +324,7 @@ void LPEFilletChamfer::doUpdateFillet(std::vector<Geom::Path> const& original_pa
             if (filletChamferData[counter][Y] == 0) {
                 powerend = filletChamferData[counter][X];
             }
-            if (only_selected && !nodeIsSelected(curve_it1->initialPoint(), point)) {
+            if (only_selected && !nodeIsSelected(curve_it1->initialPoint(), selectedPoints)) {
                 powerend = filletChamferData[counter][X];
             }
             result.push_back(Point(powerend, filletChamferData[counter][Y]));
@@ -338,7 +338,7 @@ void LPEFilletChamfer::doUpdateFillet(std::vector<Geom::Path> const& original_pa
 
 void LPEFilletChamfer::doChangeType(std::vector<Geom::Path> const& original_pathv, int type)
 {
-    std::vector<Geom::Point> point;
+    std::vector<Geom::Point> selectedPoints;
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (INK_IS_NODE_TOOL(desktop->event_context)) {
         Inkscape::UI::Tools::NodeTool *nodeTool =
@@ -351,8 +351,8 @@ void LPEFilletChamfer::doChangeType(std::vector<Geom::Path> const& original_path
                 i != selection.end(); ++i) {
             if ((*i)->selected()) {
                 Inkscape::UI::Node *n = dynamic_cast<Inkscape::UI::Node *>(*i);
-                pBegin = point.begin();
-                point.insert(pBegin, desktop->doc2dt(n->position()));
+                pBegin = selectedPoints.begin();
+                selectedPoints.insert(pBegin, desktop->doc2dt(n->position()));
             }
         }
     }
@@ -380,7 +380,7 @@ void LPEFilletChamfer::doChangeType(std::vector<Geom::Path> const& original_path
                     (ignore_radius_0 && (filletChamferData[counter][X] == 0 ||
                                          filletChamferData[counter][X] == counter)) ||
                     (only_selected &&
-                     !nodeIsSelected(curve_it1->initialPoint(), point))) {
+                     !nodeIsSelected(curve_it1->initialPoint(), selectedPoints))) {
                 toggle = false;
             }
             if (toggle) {
