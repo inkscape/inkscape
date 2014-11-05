@@ -64,7 +64,7 @@ LPEBSpline::LPEBSpline(LivePathEffectObject *lpeobject)
       // initialise your parameters here:
       //testpointA(_("Test Point A"), _("Test A"), "ptA", &wr, this,
       //Geom::Point(100,100)),
-      steps(_("Steps whith CTRL:"), _("Change number of steps whith CTRL pressed"), "steps", &wr, this, 2),
+      steps(_("Steps with CTRL:"), _("Change number of steps with CTRL pressed"), "steps", &wr, this, 2),
       ignoreCusp(_("Ignore cusp nodes"), _("Change ignoring cusp nodes"), "ignoreCusp", &wr, this, true),
       onlySelected(_("Change only selected nodes"), _("Change only selected nodes"), "onlySelected", &wr, this, false),
       showHelper(_("Show helper paths"), _("Show helper paths"), "showHelper", &wr, this, false),

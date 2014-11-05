@@ -202,7 +202,7 @@ void FilletChamferPropertiesDialog::_setKnotPoint(Geom::Point knotpoint)
     double position;
     std::string distance_or_radius = std::string(_("Radius "));
     if(aprox){
-        distance_or_radius = std::string(_("Radius aproximated "));
+        distance_or_radius = std::string(_("Radius approximated "));
     }
     if(use_distance){
         distance_or_radius = std::string(_("Knot distance "));
