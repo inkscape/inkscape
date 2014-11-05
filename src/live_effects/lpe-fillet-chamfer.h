@@ -61,7 +61,6 @@ public:
     void updateFillet();
     void doUpdateFillet(std::vector<Geom::Path> const& original_pathv, double power);
     void doChangeType(std::vector<Geom::Path> const& original_pathv, int type);
-    bool nodeIsSelected(Geom::Point nodePoint, std::vector<Geom::Point> selectedPoints);
     void refreshKnots();
 
     FilletChamferPointArrayParam fillet_chamfer_values;
@@ -76,7 +75,7 @@ private:
     UnitParam unit;
     EnumParam<FilletMethod> method;
     ScalarParam radius;
-    ScalarParam chamferSteps;
+    ScalarParam chamfer_steps;
     ScalarParam helper_size;
 
     LPEFilletChamfer(const LPEFilletChamfer &);

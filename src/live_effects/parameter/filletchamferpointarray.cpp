@@ -359,9 +359,9 @@ void FilletChamferPointArrayParam::set_helper_size(int hs)
     helper_size = hs;
 }
 
-void FilletChamferPointArrayParam::set_chamferSteps(int chamferSteps)
+void FilletChamferPointArrayParam::set_chamfer_steps(int value_chamfer_steps)
 {
-    chamfer_steps = chamferSteps;
+    chamfer_steps = value_chamfer_steps;
 }
 
 void FilletChamferPointArrayParam::set_use_distance(bool use_knot_distance )
@@ -771,14 +771,20 @@ void FilletChamferPointArrayParamKnotHolderEntity::knot_click(guint state)
             sp_lpe_item_update_patheffect(SP_LPE_ITEM(item), false, false);
         }else{
             using namespace Geom;
-            double type = _pparam->_vector.at(_index)[Y] + 1;
-            if (type > 3) {
-                type = 1;
+            int type = (int)_pparam->_vector.at(_index)[Y];
+            
+            switch(type){
+                case 1:
+                    type = 2;
+                    break;
+                case 2:
+                    type =  _pparam->chamfer_steps;
+                    break;
+                default:
+                    type = 1;
+                    break;
             }
-            if (type == 3){
-                type = _pparam->chamfer_steps;
-            }
-            _pparam->_vector.at(_index) = Point(_pparam->_vector.at(_index)[X], type);
+            _pparam->_vector.at(_index) = Point(_pparam->_vector.at(_index)[X], (double)type);
             _pparam->param_set_and_write_new_value(_pparam->_vector);
             sp_lpe_item_update_patheffect(SP_LPE_ITEM(item), false, false);
             const gchar *tip;
@@ -790,7 +796,7 @@ void FilletChamferPointArrayParamKnotHolderEntity::knot_click(guint state)
                 tip = _("<b>Inverse Fillet</b>: <b>Ctrl+Click</b> toogle type, "
                         "<b>Shift+Click</b> open dialog, "
                         "<b>Ctrl+Alt+Click</b> reset");
-            } else if (type == 1) {
+            } else {
                 tip = _("<b>Fillet</b>: <b>Ctrl+Click</b> toogle type, "
                         "<b>Shift+Click</b> open dialog, "
                         "<b>Ctrl+Alt+Click</b> reset");
@@ -847,7 +853,7 @@ void FilletChamferPointArrayParam::addKnotHolderEntities(KnotHolder *knotholder,
             tip = _("<b>Inverse Fillet</b>: <b>Ctrl+Click</b> toogle type, "
                     "<b>Shift+Click</b> open dialog, "
                     "<b>Ctrl+Alt+Click</b> reset");
-        } else if (_vector[i][Y] == 1) {
+        } else {
             tip = _("<b>Fillet</b>: <b>Ctrl+Click</b> toogle type, "
                     "<b>Shift+Click</b> open dialog, "
                     "<b>Ctrl+Alt+Click</b> reset");

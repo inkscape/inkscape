@@ -13,6 +13,7 @@
 #include "parameter/bool.h"
 #include "effect-enum.h"
 
+
 #define  LPE_CONVERSION_TOLERANCE 0.01    // FIXME: find good solution for this.
 
 class  SPDocument;
@@ -57,7 +58,9 @@ public:
     //of indirection is needed. We first call these methods, then the below.
     void doOnApply_impl(SPLPEItem const* lpeitem);
     void doBeforeEffect_impl(SPLPEItem const* lpeitem);
-
+    void setCurrentZoom(double cZ);
+    void setSelectedNodePoints(std::vector<Geom::Point> sNP);
+    bool isNodePointSelected(Geom::Point const &nodePoint) const;
     virtual void doOnApply (SPLPEItem const* lpeitem);
     virtual void doBeforeEffect (SPLPEItem const* lpeitem);
     
@@ -156,6 +159,9 @@ protected:
     bool concatenate_before_pwd2;
 
     SPLPEItem * sp_lpe_item; // these get stored in doBeforeEffect_impl, and derived classes may do as they please with them.
+    Glib::ustring const * defaultUnit; // these get stored in doBeforeEffect_impl, and derived classes may do as they please with them.
+    double current_zoom;
+    std::vector<Geom::Point> selectedNodesPoints;
     SPCurve * sp_curve;
     std::vector<Geom::Path> pathvector_before_effect;
 private:
