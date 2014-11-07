@@ -1,6 +1,3 @@
-/** \file
- * Base class for visual SVG elements
- */
 /*
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
@@ -13,12 +10,6 @@
  * Copyright (C) 2001 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
- */
-
-/** \class SPItem
- *
- * SPItem is an abstract base class for all graphic (visible) SVG nodes. It
- * is a subclass of SPObject, with great deal of specific functionality.
  */
 
 #ifdef HAVE_CONFIG_H
@@ -232,20 +223,12 @@ bool SPItem::isEvaluated() const {
     return _is_evaluated;
 }
 
-/**
- * Returns something suitable for the `Hide' checkbox in the Object Properties dialog box.
- *  Corresponds to setExplicitlyHidden.
- */
 bool SPItem::isExplicitlyHidden() const
 {
     return (style->display.set
             && style->display.value == SP_CSS_DISPLAY_NONE);
 }
 
-/**
- * Sets the display CSS property to `hidden' if \a val is true,
- * otherwise makes it unset
- */
 void SPItem::setExplicitlyHidden(bool val) {
     style->display.set = val;
     style->display.value = ( val ? SP_CSS_DISPLAY_NONE : SP_CSS_DISPLAY_INLINE );
@@ -253,9 +236,6 @@ void SPItem::setExplicitlyHidden(bool val) {
     updateRepr();
 }
 
-/**
- * Sets the transform_center_x and transform_center_y properties to retain the rotation center
-*/
 void SPItem::setCenter(Geom::Point const &object_centre) {
     document->ensureUpToDate();
 
@@ -389,11 +369,6 @@ void SPItem::lowerToBottom() {
     }
 }
 
-/*
- * Move this SPItem into or after another SPItem in the doc
- * \param  target - the SPItem to move into or after
- * \param  intoafter - move to after the target (false), move inside (sublayer) of the target (true)
- */
 void SPItem::moveTo(SPItem *target, bool intoafter) {
 
     Inkscape::XML::Node *target_ref = ( target ? target->getRepr() : NULL );
@@ -826,11 +801,7 @@ Geom::OptRect SPItem::bbox(Geom::Affine const & /*transform*/, SPItem::BBoxType 
 	//throw;
 	return Geom::OptRect();
 }
-/**
- * Get item's geometric bounding box in this item's coordinate system.
- *
- * The geometric bounding box includes only the path, disregarding all style attributes.
- */
+
 Geom::OptRect SPItem::geometricBounds(Geom::Affine const &transform) const
 {
     Geom::OptRect bbox;
@@ -843,11 +814,6 @@ Geom::OptRect SPItem::geometricBounds(Geom::Affine const &transform) const
     return bbox;
 }
 
-/**
- * Get item's visual bounding box in this item's coordinate system.
- *
- * The visual bounding box includes the stroke and the filter region.
- */
 Geom::OptRect SPItem::visualBounds(Geom::Affine const &transform) const
 {
     using Geom::X;
@@ -924,14 +890,11 @@ Geom::OptRect SPItem::bounds(BBoxType type, Geom::Affine const &transform) const
     }
 }
 
-/** Get item's geometric bbox in document coordinate system.
- * Document coordinates are the default coordinates of the root element:
- * the origin is at the top left, X grows to the right and Y grows downwards. */
 Geom::OptRect SPItem::documentGeometricBounds() const
 {
     return geometricBounds(i2doc_affine());
 }
-/// Get item's visual bbox in document coordinate system.
+
 Geom::OptRect SPItem::documentVisualBounds() const
 {
     if (!bbox_valid) {
@@ -948,14 +911,12 @@ Geom::OptRect SPItem::documentBounds(BBoxType type) const
         return documentVisualBounds();
     }
 }
-/** Get item's geometric bbox in desktop coordinate system.
- * Desktop coordinates should be user defined. Currently they are hardcoded:
- * origin is at bottom left, X grows to the right and Y grows upwards. */
+
 Geom::OptRect SPItem::desktopGeometricBounds() const
 {
     return geometricBounds(i2dt_affine());
 }
-/// Get item's visual bbox in desktop coordinate system.
+
 Geom::OptRect SPItem::desktopVisualBounds() const
 {
     /// @fixme hardcoded desktop transform
@@ -1079,11 +1040,6 @@ gchar* SPItem::description() const {
     return g_strdup("");
 }
 
-/**
- * Returns a string suitable for status bar, formatted in pango markup language.
- *
- * Must be freed by caller.
- */
 gchar *SPItem::detailedDescription() const {
         gchar* s = g_strdup_printf("<b>%s</b> %s",
                     this->displayName(), this->description());
@@ -1117,20 +1073,10 @@ gchar *SPItem::detailedDescription() const {
 	return s;
 }
 
-/**
- * Returns true if the item is filtered, false otherwise.  Used with groups/lists to determine how many, or if any, are filtered
- *
- */
 bool SPItem::isFiltered() const {
 	return (style && style->filter.href && style->filter.href->getObject());
 }
 
-/**
- * Allocates unique integer keys.
- * \param numkeys Number of keys required.
- * \return First allocated key; hence if the returned key is n
- * you can use n, n + 1, ..., n + (numkeys - 1)
- */
 unsigned SPItem::display_key_new(unsigned numkeys)
 {
     static unsigned dkey = 0;
@@ -1367,9 +1313,6 @@ static Geom::Affine sp_item_transform_repr (SPItem *item)
 }
 
 
-/**
- * Recursively scale stroke width in \a item and its children by \a expansion.
- */
 void SPItem::adjust_stroke_width_recursive(double expansion)
 {
     adjust_stroke (expansion);
@@ -1414,9 +1357,6 @@ sp_item_adjust_rects_recursive(SPItem *item, Geom::Affine advertized_transform)
     }
 }
 
-/**
- * Recursively compensate pattern or gradient transform.
- */
 void SPItem::adjust_paint_recursive (Geom::Affine advertized_transform, Geom::Affine t_ancestors, bool is_pattern)
 {
 // _Before_ full pattern/gradient transform: t_paint * t_item * t_ancestors
@@ -1478,14 +1418,6 @@ Geom::Affine SPItem::set_transform(Geom::Affine const &transform) {
 	return transform;
 }
 
-/**
- * Set a new transform on an object.
- *
- * Compensate for stroke scaling and gradient/pattern fill transform, if
- * necessary. Call the object's set_transform method if transforms are
- * stored optimized. Send _transformed_signal. Invoke _write method so that
- * the repr is updated with the new transform.
- */
 void SPItem::doWriteTransform(Inkscape::XML::Node *repr, Geom::Affine const &transform, Geom::Affine const *adv, bool compensate)
 {
     g_return_if_fail(repr != NULL);
@@ -1597,10 +1529,6 @@ gint SPItem::emitEvent(SPEvent &event)
 	return this->event(&event);
 }
 
-/**
- * Sets item private transform (not propagated to repr), without compensating stroke widths,
- * gradients, patterns as sp_item_write_transform does.
- */
 void SPItem::set_item_transform(Geom::Affine const &transform_matrix)
 {
     if (!Geom::are_near(transform_matrix, transform, 1e-18)) {
@@ -1618,12 +1546,7 @@ void SPItem::set_item_transform(Geom::Affine const &transform_matrix)
 //}
 
 
-/**
- * \pre \a ancestor really is an ancestor (\>=) of \a object, or NULL.
- *   ("Ancestor (\>=)" here includes as far as \a object itself.)
- */
-Geom::Affine
-i2anc_affine(SPObject const *object, SPObject const *const ancestor) {
+Geom::Affine i2anc_affine(SPObject const *object, SPObject const *const ancestor) {
     Geom::Affine ret(Geom::identity());
     g_return_val_if_fail(object != NULL, ret);
 
@@ -1650,18 +1573,11 @@ Geom::Affine SPItem::getRelativeTransform(SPObject const *dest) const {
     return i2i_affine(this, dest);
 }
 
-/**
- * Returns the accumulated transformation of the item and all its ancestors, including root's viewport.
- * \pre (item != NULL) and SP_IS_ITEM(item).
- */
 Geom::Affine SPItem::i2doc_affine() const
 {
     return i2anc_affine(this, NULL);
 }
 
-/**
- * Returns the transformation from item to desktop coords
- */
 Geom::Affine SPItem::i2dt_affine() const
 {
     Geom::Affine ret;
@@ -1692,9 +1608,6 @@ void SPItem::set_i2d_affine(Geom::Affine const &i2dt)
 }
 
 
-/**
- * should rather be named "sp_item_d2i_affine" to match "sp_item_i2d_affine" (or vice versa)
- */
 Geom::Affine SPItem::dt2i_affine() const
 {
     /* fixme: Implement the right way (Lauris) */
@@ -1738,10 +1651,6 @@ sp_item_view_list_remove(SPItemView *list, SPItemView *view)
     return ret;
 }
 
-/**
- * Return the arenaitem corresponding to the given item in the display
- * with the given key
- */
 Inkscape::DrawingItem *SPItem::get_arenaitem(unsigned key)
 {
     for ( SPItemView *iv = display ; iv ; iv = iv->next ) {
