@@ -101,7 +101,7 @@ ink_common_sources +=		\
 	ui/dialog/template-widget.cpp		\
 	ui/dialog/template-widget.h		\
 	ui/dialog/tags.cpp			\
-	ui/dialpg/tags.h			\
+	ui/dialog/tags.h			\
 	ui/dialog/text-edit.cpp			\
 	ui/dialog/text-edit.h			\
 	ui/dialog/tile.cpp			\
