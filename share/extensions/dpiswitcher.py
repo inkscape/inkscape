@@ -38,6 +38,7 @@ class DPISwitcher(inkex.Effect):
             type="string", dest="switcher", default="DPI Switch from 90 to 96", 
             help="Select the DPI switch you want")
         self.factor = 90.0/96.0
+        self.unitExponent = 0.0;
 
     def scaleRoot(self, svg):
         widthNumber = re.sub("[a-zA-Z]", "", svg.get('width'))
@@ -45,8 +46,9 @@ class DPISwitcher(inkex.Effect):
         if svg.get('viewBox'):
             widthNumber = svg.get('viewBox').split(" ")[2]
             heightNumber = svg.get('viewBox').split(" ")[3]
-        widthDoc = str(float(widthNumber) * self.factor)
-        heightDoc = str(float(heightNumber) * self.factor)
+        widthDoc = str(float(widthNumber) * self.factor * self.unitExponent)
+        print self.factor
+        heightDoc = str(float(heightNumber) * self.factor * self.unitExponent)
         if svg.get('height'):
             svg.set('height', heightDoc)
         if svg.get('width'):
@@ -112,13 +114,11 @@ class DPISwitcher(inkex.Effect):
         svg = self.document.getroot()
         namedview = svg.find(inkex.addNS('namedview', 'sodipodi'))
         unit = namedview.get(inkex.addNS('document-units', 'inkscape'))
-        unitExponent = 0.0;
         if unit and unit <> "px":
             if self.options.switcher == "DPI Switch from 90 to 96":
-                unitExponent = 1.0/(self.factor/self.__uuconv[unit])
+                self.unitExponent = 1.0/(self.factor/self.__uuconv[unit])
             else:
-                unitExponent = 1.0/(self.factor/self.__uuconvLegazy[unit])
-            self.factor = self.factor * unitExponent
+                self.unitExponent = 1.0/(self.factor/self.__uuconvLegazy[unit])
             namedview.set(inkex.addNS('document-units', 'inkscape'), "px")
         self.scaleRoot(svg);
         sys.stdout = saveout
