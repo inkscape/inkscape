@@ -6,8 +6,8 @@
       <dependency type="executable" location="extensions">dpiswitcher.py</dependency>
       <dependency type="executable" location="extensions">inkex.py</dependency>
       <param name="switcher" type="enum" _gui-text="Type of convert:">
-                    <_item>DPI Switch from 90 to 96</_item>
-                    <_item>DPI Switch from 96 to 90</_item>
+                    <_item value="0">DPI Switch from 90 to 96</_item>
+                    <_item value="1">DPI Switch from 96 to 90</_item>
       </param>
       <effect needs-live-preview="false" needs-document="no">  
         <object-type>all</object-type>  

@@ -4,13 +4,10 @@ This extension scale or reduce a document to fit diferent SVG DPI -90/96-
 
 Copyright (C) 2012 Jabiertxo Arraiza, jabier.arraiza@marker.es
 
-Version 0.3 - 96 to 90 DPI
+Version 0.4 - DPI Switcher
 
 TODO:
 Comment Better!!!
-
-CHANGE LOG 
-0.1 Start  15/10/2014
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -35,10 +32,10 @@ class DPISwitcher(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
         self.OptionParser.add_option("--switcher", action="store", 
-            type="string", dest="switcher", default="DPI Switch from 90 to 96", 
+            type="string", dest="switcher", default="0", 
             help="Select the DPI switch you want")
         self.factor = 90.0/96.0
-        self.unitExponent = 0.0;
+        self.unit = "px"
 
     def scaleRoot(self, svg):
         widthNumber = re.sub("[a-zA-Z]", "", svg.get('width'))
@@ -46,9 +43,8 @@ class DPISwitcher(inkex.Effect):
         if svg.get('viewBox'):
             widthNumber = svg.get('viewBox').split(" ")[2]
             heightNumber = svg.get('viewBox').split(" ")[3]
-        widthDoc = str(float(widthNumber) * self.factor * self.unitExponent)
-        print self.factor
-        heightDoc = str(float(heightNumber) * self.factor * self.unitExponent)
+        widthDoc = str(float(widthNumber) * self.factor)
+        heightDoc = str(float(heightNumber) * self.factor)
         if svg.get('height'):
             svg.set('height', heightDoc)
         if svg.get('width'):
@@ -57,15 +53,30 @@ class DPISwitcher(inkex.Effect):
         xpathStr = '//svg:rect | //svg:image | //svg:path | //svg:circle | //svg:ellipse | //svg:text'
         elements = svg.xpath(xpathStr, namespaces=inkex.NSS)
         for element in elements:
+            box3DSide = element.get(inkex.addNS('box3dsidetype', 'inkscape'))
+            if box3DSide:
+                continue
             if element.get('transform'):
                 if "matrix" in str(element.get('transform')):
-                    result = re.sub(r".*?((matrix|MATRIX).*?\))", self.scaleMatrixElement, str(element.get('transform')))
+                    result = re.sub(r".*?((matrix).*?\))", self.scaleMatrixElement, str(element.get('transform')))
                     element.set('transform', result)
                 if "scale" in str(element.get('transform')):
-                    result = re.sub(r".*?((scale|SCALE).*?\))", self.scaleElement, str(element.get('transform')))
+                    result = re.sub(r".*?((scale).*?\))", self.scaleElement, str(element.get('transform')))
                     element.set('transform', result)
+                if "scale" not in str(element.get('transform')) and "matrix" not in str(element.get('transform')):
+                    element.set('transform', str(element.get('transform')) + "scale(" + str(self.factor) + ", " + str(self.factor) + ")")
             else:
                 element.set('transform', "scale(" + str(self.factor) + ", " + str(self.factor) + ")")
+        xpathStr = '//svg:g'
+        elements = svg.xpath(xpathStr, namespaces=inkex.NSS)
+        for element in elements:
+            if element.get('transform'):
+                if "matrix" in str(element.get('transform')):
+                    result = re.sub(r".*?((matrix).*?\))", self.translateMatrixElement, str(element.get('transform')))
+                    element.set('transform', result)
+                if "translate" in str(element.get('transform')):
+                    result = re.sub(r".*?((translate).*?\))", self.translateElement, str(element.get('transform')))
+                    element.set('transform', result)
         self.scaleGuides(svg)
         self.scaleGrid(svg)
     
@@ -99,27 +110,37 @@ class DPISwitcher(inkex.Effect):
                       'km':3543307.0866, 'pc':15.0, 'yd':3240 , 'ft':1080}
 
     def scaleElement(self, m):
-      scaleVal = m.group(1).replace("scale","").replace("SCALE","").replace(" ","").replace("(","").replace(")","").split(",")
+      scaleVal = m.group(1).replace("scale","").replace(" ","").replace("(","").replace(")","").split(",")
       return "scale(" + str(float(scaleVal[0]) * self.factor) + "," + str(float(scaleVal[1]) * self.factor) + ")"
 
     def scaleMatrixElement(self, m):
-      scaleMatrixVal = m.group(1).replace("matrix","").replace("MATRIX","").replace(" ","").replace("(","").replace(")","").split(",")
+      scaleMatrixVal = m.group(1).replace("matrix","").replace(" ","").replace("(","").replace(")","").split(",")
       return "matrix(" + str(float(scaleMatrixVal[0]) * self.factor) + "," + scaleMatrixVal[1] + "," + scaleMatrixVal[2] + "," + str(float(scaleMatrixVal[3]) * self.factor) + "," + scaleMatrixVal[4] + "," + scaleMatrixVal[5] + ")"
 
+    def translateElement(self, m):
+      translateVal = m.group(1).replace("translate","").replace(" ","").replace("(","").replace(")","").split(",")
+      return "translate(" + str(float(translateVal[0]) * self.factor)  + "," + str(float(translateVal[1]) * self.factor) + ")"
+
+    def translateMatrixElement(self, m):
+      translateMatrixVal = m.group(1).replace("matrix","").replace(" ","").replace("(","").replace(")","").split(",")
+      return "matrix(" + translateMatrixVal[0] + "," + translateMatrixVal[1] + "," + translateMatrixVal[2] + "," + translateMatrixVal[3] + "," + str(float(translateMatrixVal[4]) * self.factor) + "," + str(float(translateMatrixVal[5]) * self.factor) + ")"
+
     def effect(self):
-        if self.options.switcher == "DPI Switch from 90 to 96":
+        if self.options.switcher == "0":
             self.factor = 96.0/90.0
         saveout = sys.stdout
         sys.stdout = sys.stderr
         svg = self.document.getroot()
         namedview = svg.find(inkex.addNS('namedview', 'sodipodi'))
-        unit = namedview.get(inkex.addNS('document-units', 'inkscape'))
-        if unit and unit <> "px":
-            if self.options.switcher == "DPI Switch from 90 to 96":
-                self.unitExponent = 1.0/(self.factor/self.__uuconv[unit])
+        self.unit = namedview.get(inkex.addNS('document-units', 'inkscape'))
+        if self.unit and self.unit <> "px":
+            unitExponent = 0.0
+            if self.options.switcher == "0":
+                unitExponent = 1.0/(self.factor/self.__uuconv[self.unit])
             else:
-                self.unitExponent = 1.0/(self.factor/self.__uuconvLegazy[unit])
+                unitExponent = 1.0/(self.factor/self.__uuconvLegazy[self.unit])
             namedview.set(inkex.addNS('document-units', 'inkscape'), "px")
+            self.factor = self.factor * unitExponent
         self.scaleRoot(svg);
         sys.stdout = saveout
 
