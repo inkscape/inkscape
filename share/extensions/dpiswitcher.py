@@ -37,7 +37,7 @@ class DPISwitcher(inkex.Effect):
         self.OptionParser.add_option("--switcher", action="store", 
             type="string", dest="switcher", default="DPI Switch from 90 to 96", 
             help="Select the DPI switch you want")
-        self.factor = 0.0;
+        self.factor = 90.0/96.0
 
     def scaleRoot(self, svg):
         widthNumber = re.sub("[a-zA-Z]", "", svg.get('width'))
@@ -105,7 +105,6 @@ class DPISwitcher(inkex.Effect):
       return "matrix(" + str(float(scaleMatrixVal[0]) * self.factor) + "," + scaleMatrixVal[1] + "," + scaleMatrixVal[2] + "," + str(float(scaleMatrixVal[3]) * self.factor) + "," + scaleMatrixVal[4] + "," + scaleMatrixVal[5] + ")"
 
     def effect(self):
-        self.factor = 90.0/96.0
         if self.options.switcher == "DPI Switch from 90 to 96":
             self.factor = 96.0/90.0
         saveout = sys.stdout
