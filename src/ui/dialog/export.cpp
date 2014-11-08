@@ -537,7 +537,7 @@ Gtk::Adjustment * Export::createSpinbutton( gchar const * /*key*/, float val, fl
     sb->set_sensitive (sensitive);
     pos++;
 
-    if (!ll.empty()) {
+    if (l) {
         l->set_mnemonic_widget(*sb);
     }
 
