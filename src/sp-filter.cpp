@@ -465,6 +465,10 @@ int sp_filter_set_image_name(SPFilter *filter, gchar const *name) {
     pair<gchar*,int> new_pair(name_copy, value);
     pair<map<gchar*,int,ltstr>::iterator,bool> ret = filter->_image_name->insert(new_pair);
     if (ret.second == false) {
+        // The element is not inserted (because an element with the same key was already in the map) 
+        // Therefore, free the memory allocated for the new entry:
+        free(name_copy);
+
         return (*ret.first).second;
     }
     return value;
