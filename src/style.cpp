@@ -1720,7 +1720,6 @@ sp_css_attr_unset_text(SPCSSAttr *css)
     sp_repr_css_set_property(css, "font-family", NULL);
     sp_repr_css_set_property(css, "text-indent", NULL);
     sp_repr_css_set_property(css, "text-align", NULL);
-    sp_repr_css_set_property(css, "text-decoration", NULL);
     sp_repr_css_set_property(css, "line-height", NULL);
     sp_repr_css_set_property(css, "letter-spacing", NULL);
     sp_repr_css_set_property(css, "word-spacing", NULL);
@@ -1729,11 +1728,47 @@ sp_css_attr_unset_text(SPCSSAttr *css)
     sp_repr_css_set_property(css, "block-progression", NULL);
     sp_repr_css_set_property(css, "writing-mode", NULL);
     sp_repr_css_set_property(css, "text-anchor", NULL);
-    sp_repr_css_set_property(css, "white_space", NULL);
+    sp_repr_css_set_property(css, "white-space", NULL);
     sp_repr_css_set_property(css, "kerning", NULL); // not implemented yet
     sp_repr_css_set_property(css, "dominant-baseline", NULL); // not implemented yet
     sp_repr_css_set_property(css, "alignment-baseline", NULL); // not implemented yet
     sp_repr_css_set_property(css, "baseline-shift", NULL);
+
+    sp_repr_css_set_property(css, "text-decoration", NULL);
+    sp_repr_css_set_property(css, "text-decoration-line", NULL);
+    sp_repr_css_set_property(css, "text-decoration-color", NULL);
+    sp_repr_css_set_property(css, "text-decoration-style", NULL);
+
+    return css;
+}
+
+// ui/dialog/inkscape-preferences.cpp
+/**
+ * Unset properties that should not be set for default tool style.
+ * This list needs to be reviewed.
+ */
+SPCSSAttr *
+sp_css_attr_unset_blacklist(SPCSSAttr *css)
+{
+    sp_repr_css_set_property(css, "color",               NULL);
+    sp_repr_css_set_property(css, "clip-rule",           NULL);
+    sp_repr_css_set_property(css, "display",             NULL);
+    sp_repr_css_set_property(css, "overflow",            NULL);
+    sp_repr_css_set_property(css, "visibility",          NULL);
+    sp_repr_css_set_property(css, "isolation",           NULL);
+    sp_repr_css_set_property(css, "mix-blend-mode",      NULL);
+    sp_repr_css_set_property(css, "color-interpolation", NULL);
+    sp_repr_css_set_property(css, "color-interpolation-filters", NULL);
+    sp_repr_css_set_property(css, "solid-color",         NULL);
+    sp_repr_css_set_property(css, "solid-opacity",       NULL);
+    sp_repr_css_set_property(css, "fill-rule",           NULL);
+    sp_repr_css_set_property(css, "filter-blend-mode",   NULL);
+    sp_repr_css_set_property(css, "filter-gaussianBlur-deviation", NULL);
+    sp_repr_css_set_property(css, "color-rendering",     NULL);
+    sp_repr_css_set_property(css, "image-rendering",     NULL);
+    sp_repr_css_set_property(css, "shape-rendering",     NULL);
+    sp_repr_css_set_property(css, "text-rendering",      NULL);
+    sp_repr_css_set_property(css, "enable-background",   NULL);
 
     return css;
 }

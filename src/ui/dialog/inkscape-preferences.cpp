@@ -234,6 +234,9 @@ static void StyleFromSelectionToTool(Glib::ustring const &prefs_path, StyleSwatc
 
     if (!css) return;
 
+    // remove black-listed properties
+    css = sp_css_attr_unset_blacklist (css);
+
     // only store text style for the text tool
     if (prefs_path != "/tools/text") {
         css = sp_css_attr_unset_text (css);

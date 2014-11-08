@@ -1198,6 +1198,9 @@ take_style_from_item(SPObject *object)
         }
     }
 
+    // Remove black-listed properties (those that should not be used in a default style)
+    css = sp_css_attr_unset_blacklist(css);
+
     if (!(dynamic_cast<SPText *>(object) || dynamic_cast<SPTSpan *>(object) || dynamic_cast<SPTRef *>(object) || dynamic_cast<SPString *>(object))) {
         // do not copy text properties from non-text objects, it's confusing
         css = sp_css_attr_unset_text(css);
