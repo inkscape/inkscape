@@ -277,7 +277,7 @@ LPEPowerStroke::doOnApply(SPLPEItem const* lpeitem)
         double width = (lpeitem && lpeitem->style) ? lpeitem->style->stroke_width.computed / 2 : 1.;
         
         SPCSSAttr *css = sp_repr_css_attr_new ();
-        if (true) {
+        if (lpeitem->style) {
             if (lpeitem->style->stroke.isPaintserver()) {
                 SPPaintServer * server = lpeitem->style->getStrokePaintServer();
                 if (server) {
