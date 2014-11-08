@@ -104,15 +104,19 @@ static bool sp_svg_angle_read_lff(gchar const *str, SVGAngle::Unit &unit, float 
     } else {
         if (strncmp(e, "deg", 3) == 0) {
             unit = SVGAngle::DEG;
+            val = v;
             computed = v;
         } else if (strncmp(e, "grad", 4) == 0) {
             unit = SVGAngle::GRAD;
+            val = v;
             computed = Inkscape::Util::Quantity::convert(v, "grad", "°");
         } else if (strncmp(e, "rad", 3) == 0) {
             unit = SVGAngle::RAD;
+            val = v;
             computed = Inkscape::Util::Quantity::convert(v, "rad", "°");
         } else if (strncmp(e, "turn", 4) == 0) {
             unit = SVGAngle::TURN;
+            val = v;
             computed = Inkscape::Util::Quantity::convert(v, "turn", "°");
         } else {
             return false;
