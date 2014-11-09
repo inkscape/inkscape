@@ -836,7 +836,8 @@
   -->
   <target name="check" depends="linkcxxtests,distbase"
       description="perform unit tests">
-    <cxxtestrun command="${build}/cxxtests" workingdir="${dist}" />
+    <copy todir="${dist}" file="${build}/cxxtests.exe"/>
+    <cxxtestrun command="${dist}/cxxtests" workingdir="${dist}" />
   </target>
 
   <!--
