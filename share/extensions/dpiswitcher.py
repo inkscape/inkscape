@@ -35,7 +35,8 @@ class DPISwitcher(inkex.Effect):
             type="string", dest="switcher", default="0", 
             help="Select the DPI switch you want")
         self.factor = 90.0/96.0
-        self.unit = "px"
+        self.units = "px"
+        self.unitExponent = 1.0
 
     def scaleRoot(self, svg):
         widthNumber = re.sub("[a-zA-Z]", "", svg.get('width'))
@@ -43,13 +44,17 @@ class DPISwitcher(inkex.Effect):
         if svg.get('viewBox'):
             widthNumber = svg.get('viewBox').split(" ")[2]
             heightNumber = svg.get('viewBox').split(" ")[3]
-        widthDoc = str(float(widthNumber) * self.factor)
-        heightDoc = str(float(heightNumber) * self.factor)
+        widthDoc = str(float(widthNumber) * self.factor * self.unitExponent)
+        heightDoc = str(float(heightNumber) * self.factor * self.unitExponent)
         if svg.get('height'):
             svg.set('height', heightDoc)
         if svg.get('width'):
             svg.set('width', widthDoc)
         svg.set('viewBox',"0 0 " + widthDoc + " " + heightDoc)
+        self.scaleGuides(svg)
+        self.scaleGrid(svg)
+        if self.options.switcher == "1":
+            self.factor = self.factor * self.unitExponent
         xpathStr = '//svg:rect | //svg:image | //svg:path | //svg:circle | //svg:ellipse | //svg:text'
         elements = svg.xpath(xpathStr, namespaces=inkex.NSS)
         for element in elements:
@@ -77,30 +82,34 @@ class DPISwitcher(inkex.Effect):
                 if "translate" in str(element.get('transform')):
                     result = re.sub(r".*?((translate).*?\))", self.translateElement, str(element.get('transform')))
                     element.set('transform', result)
-        self.scaleGuides(svg)
-        self.scaleGrid(svg)
-    
-    def scaleGrid(self, svg):
-        xpathStr = '//inkscape:grid'
-        grids = svg.xpath(xpathStr, namespaces=inkex.NSS)
-        for grid in grids:
-            empspacingNumber = float(grid.get("empspacing")) * self.factor
-            spacingxNumber = float(grid.get("spacingx").replace("px", "")) * self.factor
-            spacingyNumber = float(grid.get("spacingy").replace("px", "")) * self.factor
-            originxNumber = float(grid.get("originx").replace("px", "")) * self.factor
-            originyNumber = float(grid.get("originy").replace("px", "")) * self.factor
-            grid.set("empspacing", str(empspacingNumber))
-            grid.set("spacingx", str(spacingxNumber) + "px")
-            grid.set("spacingy", str(spacingyNumber) + "px")
-            grid.set("originx", str(originxNumber) + "px")
-            grid.set("originy", str(originyNumber) + "px")
-   
+
     def scaleGuides(self, svg):
         xpathStr = '//sodipodi:guide'
         guides = svg.xpath(xpathStr, namespaces=inkex.NSS)
         for guide in guides:
             point = string.split(guide.get("position"), ",")
-            guide.set("position", str(float(point[0].strip()) * self.factor) + "," + str(float(point[1].strip()) * self.factor))
+            guide.set("position", str(float(point[0].strip()) * self.factor ) + "," + str(float(point[1].strip()) * self.factor ))
+    
+    def scaleGrid(self, svg):
+        xpathStr = '//inkscape:grid'
+        grids = svg.xpath(xpathStr, namespaces=inkex.NSS)
+        for grid in grids:
+            if self.options.switcher == "0":
+                self.unitExponent = 1.0/(self.factor/self.__uuconv[grid.get("units")])
+                self.factor = self.factor * self.unitExponent
+            grid.set("units", "px")
+            if grid.get("spacingx"):
+                spacingx = str(float(re.sub("[a-zA-Z]", "",  grid.get("spacingx"))) * self.factor) + "px"
+                grid.set("spacingx", str(spacingx))
+            if grid.get("spacingy"):
+                spacingy = str(float(re.sub("[a-zA-Z]", "",  grid.get("spacingy"))) * self.factor) + "px"
+                grid.set("spacingy", str(spacingy))
+            if grid.get("originx"):
+                originx = str(float(re.sub("[a-zA-Z]", "",  grid.get("originx"))) * self.factor) + "px"
+                grid.set("originx", str(originx))
+            if grid.get("originy"):
+                originy = str(float(re.sub("[a-zA-Z]", "",  grid.get("originy"))) * self.factor) + "px"
+                grid.set("originy", str(originy))
 
     #a dictionary of unit to user unit conversion factors
     __uuconv = {'in':96.0, 'pt':1.33333333333, 'px':1.0, 'mm':3.77952755913, 'cm':37.7952755913,
@@ -132,15 +141,21 @@ class DPISwitcher(inkex.Effect):
         sys.stdout = sys.stderr
         svg = self.document.getroot()
         namedview = svg.find(inkex.addNS('namedview', 'sodipodi'))
-        self.unit = namedview.get(inkex.addNS('document-units', 'inkscape'))
-        if self.unit and self.unit <> "px":
-            unitExponent = 0.0
+        namedview.set(inkex.addNS('document-units', 'inkscape'), "px")
+        self.units = re.sub("[0-9]*\.?[0-9]", "", svg.get('width'))
+        if self.units and self.units <> "px":
             if self.options.switcher == "0":
-                unitExponent = 1.0/(self.factor/self.__uuconv[self.unit])
+                self.unitExponent = 1.0/(self.factor/self.__uuconv[self.units])
             else:
-                unitExponent = 1.0/(self.factor/self.__uuconvLegazy[self.unit])
-            namedview.set(inkex.addNS('document-units', 'inkscape'), "px")
-            self.factor = self.factor * unitExponent
+                self.unitExponent = 1.0/(self.factor/self.__uuconvLegazy[self.units])
+        '''
+        else:
+            self.scaleGuides(svg)
+            self.unitExponent = 1.0
+            self.scaleGrid(svg)
+            sys.stdout = saveout
+            return
+        '''
         self.scaleRoot(svg);
         sys.stdout = saveout
 
