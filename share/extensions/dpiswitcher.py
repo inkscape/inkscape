@@ -63,19 +63,13 @@ class DPISwitcher(inkex.Effect):
                 continue
             if element.get('transform'):
                 if "matrix" in str(element.get('transform')):
-                    result = re.sub(r".*?((matrix).*?\))", self.scaleMatrixElement, str(element.get('transform')))
+                    result = re.sub(r".*?((matrix).*?\))", self.matrixElement, str(element.get('transform')))
                     element.set('transform', result)
                 if "scale" in str(element.get('transform')):
                     result = re.sub(r".*?((scale).*?\))", self.scaleElement, str(element.get('transform')))
                     element.set('transform', result)
-                if "matrix" in str(element.get('transform')):
-                    result = re.sub(r".*?((matrix).*?\))", self.translateMatrixElement, str(element.get('transform')))
-                    element.set('transform', result)
                 if "translate" in str(element.get('transform')):
                     result = re.sub(r".*?((translate).*?\))", self.translateElement, str(element.get('transform')))
-                    element.set('transform', result)
-                if "matrix" in str(element.get('transform')):
-                    result = re.sub(r".*?((matrix).*?\))", self.skewMatrixElement, str(element.get('transform')))
                     element.set('transform', result)
                 if "skew" in str(element.get('transform')):
                     result = re.sub(r".*?((translate).*?\))", self.skewElement, str(element.get('transform')))
@@ -88,11 +82,14 @@ class DPISwitcher(inkex.Effect):
         elements = svg.xpath(xpathStr, namespaces=inkex.NSS)
         for element in elements:
             if element.get('transform'):
-                if "matrix" in str(element.get('transform')):
-                    result = re.sub(r".*?((matrix).*?\))", self.translateMatrixElement, str(element.get('transform')))
-                    element.set('transform', result)
                 if "translate" in str(element.get('transform')):
                     result = re.sub(r".*?((translate).*?\))", self.translateElement, str(element.get('transform')))
+                    element.set('transform', result)
+                if "matrix" in str(element.get('transform')):
+                    result = re.sub(r".*?((matrix).*?\))", self.matrixElementNoScale, str(element.get('transform')))
+                    element.set('transform', result)
+                if "skew" in str(element.get('transform')):
+                    result = re.sub(r".*?((translate).*?\))", self.skewElement, str(element.get('transform')))
                     element.set('transform', result)
 
     def scaleGuides(self, svg):
@@ -131,28 +128,50 @@ class DPISwitcher(inkex.Effect):
                       'km':3543307.0866, 'pc':15.0, 'yd':3240 , 'ft':1080}
 
     def scaleElement(self, m):
-      scaleVal = m.group(1).replace("scale","").replace(" ","").replace("(","").replace(")","").split(",")
-      return "scale(" + str(float(scaleVal[0]) * self.factor) + "," + str(float(scaleVal[1]) * self.factor) + ")"
+        scaleVal = m.group(1).replace("scale","").replace(" ","").replace("(","").replace(")","")
+        total = scaleVal.count(',')
+        if total == 1:
+            scaleVal = scaleVal.split(",")
+            return "scale(" + str(float(scaleVal[0]) * self.factor) + "," + str(float(scaleVal[1]) * self.factor) + ")"
+        else:
+            return "scale(" + str(float(scaleVal) * self.factor) + ")"
 
-    def scaleMatrixElement(self, m):
-      scaleMatrixVal = m.group(1).replace("matrix","").replace(" ","").replace("(","").replace(")","").split(",")
-      return "matrix(" + str(float(scaleMatrixVal[0]) * self.factor) + "," + scaleMatrixVal[1] + "," + scaleMatrixVal[2] + "," + str(float(scaleMatrixVal[3]) * self.factor) + "," + scaleMatrixVal[4] + "," + scaleMatrixVal[5] + ")"
 
     def translateElement(self, m):
-      translateVal = m.group(1).replace("translate","").replace(" ","").replace("(","").replace(")","").split(",")
-      return "translate(" + str(float(translateVal[0]) * self.factor)  + "," + str(float(translateVal[1]) * self.factor) + ")"
-
-    def translateMatrixElement(self, m):
-      translateMatrixVal = m.group(1).replace("matrix","").replace(" ","").replace("(","").replace(")","").split(",")
-      return "matrix(" + translateMatrixVal[0] + "," + translateMatrixVal[1] + "," + translateMatrixVal[2] + "," + translateMatrixVal[3] + "," + str(float(translateMatrixVal[4]) * self.factor) + "," + str(float(translateMatrixVal[5]) * self.factor) + ")"
+        translateVal = m.group(1).replace("translate","").replace(" ","").replace("(","").replace(")","")
+        total = translateVal.count(',')
+        if total == 1:
+            translateVal = translateVal.split(",")
+            return "translate(" + str(float(translateVal[0]) * self.factor)  + "," + str(float(translateVal[1]) * self.factor) + ")"
+        else:
+            return "translate(" + str(float(translateVal) * self.factor)  + ")"
 
     def skewElement(self, m):
-      skeweVal = m.group(1).replace("skew","").replace(" ","").replace("(","").replace(")","").split(",")
-      return "skew(" + str(float(skewVal[0]) * self.factor)  + "," + str(float(skewVal[1]) * self.factor) + ")"
+        skeweVal = m.group(1).replace("skew","").replace(" ","").replace("(","").replace(")","")
+        total = skewVal.count(',')
+        if total == 1:
+            skeweVal = skewVal.split(",")
+            return "skew(" + str(float(skewVal[0]) * self.factor)  + "," + str(float(skewVal[1]) * self.factor) + ")"
+        else:
+            return "skew(" + str(float(skewVal) * self.factor)  + ")"
 
-    def skewMatrixElement(self, m):
-      skewMatrixVal = m.group(1).replace("matrix","").replace(" ","").replace("(","").replace(")","").split(",")
-      return "matrix(" + skewMatrixVal[0] + "," + str(float(skewMatrixVal[1]) * self.factor) + "," + str(float(skewMatrixVal[4]) * self.factor) + "," + skewMatrixVal[3] + "," + skewMatrixVal[4] + "," + skewMatrixVal[5]+ ")"
+    def matrixElement(self, m):
+        matrixVal = m.group(1).replace("matrix","").replace(" ","").replace("(","").replace(")","")
+        total = matrixVal.count(',')
+        matrixVal = matrixVal.split(",")
+        if total > 2:
+            return "matrix(" + str(float(matrixVal[0]) * self.factor) + "," + str(float(matrixVal[1]) * self.factor) + "," + str(float(matrixVal[2]) * self.factor) + "," + str(float(matrixVal[3]) * self.factor) + "," + str(float(matrixVal[4]) * self.factor) + "," + str(float(matrixVal[5]) * self.factor) + ")"
+        else:
+            return "matrix(" + str(float(matrixVal[0]) * self.factor) + "," + str(float(matrixVal[1]) * self.factor) + "," + str(float(matrixVal[2]) * self.factor) + ")"
+
+    def matrixElementNoScale(self, m):
+        matrixVal = m.group(1).replace("matrix","").replace(" ","").replace("(","").replace(")","")
+        total = matrixVal.count(',')
+        matrixVal = matrixVal.split(",")
+        if total > 2:
+            return "matrix(" + matrixVal[0] + "," + str(float(matrixVal[1]) * self.factor) + "," + matrixVal[2] + "," + str(float(matrixVal[3]) * self.factor) + "," + str(float(matrixVal[4]) * self.factor) + "," + str(float(matrixVal[5]) * self.factor) + ")"
+        else:
+            return "matrix(" + matrixVal[0] + "," + str(float(matrixVal[1]) * self.factor) + "," + str(float(matrixVal[2]) * self.factor) + ")"
 
     def effect(self):
         if self.options.switcher == "0":
