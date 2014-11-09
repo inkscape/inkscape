@@ -184,7 +184,7 @@ sp_svg_transform_write(Geom::Affine const &transform)
         strcpy (c + p, "scale(");
         p += 6;
         p += sp_svg_number_write_de( c + p, sizeof(c) - p, transform[0], prec, min_exp );
-        if (Geom::are_near(transform[3], 0.0, e)) {
+        if (Geom::are_near(transform[0], transform[3], e)) {
             c[p++] = ')';
             c[p] = '\000';
         } else {

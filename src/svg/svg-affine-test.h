@@ -34,7 +34,7 @@ private:
     static char const * const read_fail_tests[25];
     static test_t const write_matrix_tests[2];
     static test_t const write_translate_tests[3];
-    static test_t const write_scale_tests[2];
+    static test_t const write_scale_tests[3];
     static test_t const write_rotate_tests[2];
     static test_t const write_skew_tests[3];
 public:
@@ -238,8 +238,9 @@ SvgAffineTest::test_t const SvgAffineTest::write_translate_tests[3] = {
     {"translate(1,1)",Geom::Affine(1,0,0,1,1,1)},
     {"translate(1)",Geom::Affine(1,0,0,1,1,0)},
     {"translate(-1345,0.123)",Geom::Affine(1,0,0,1,-1.345e3,.123)}};
-SvgAffineTest::test_t const SvgAffineTest::write_scale_tests[2] = {
+SvgAffineTest::test_t const SvgAffineTest::write_scale_tests[3] = {
     {"scale(0)",Geom::Affine(0,0,0,0,0,0)},
+    {"scale(7)",Geom::Affine(7,0,0,7,0,0)},
     {"scale(2,3)",Geom::Affine(2,0,0,3,0,0)}};
 SvgAffineTest::test_t const SvgAffineTest::write_rotate_tests[2] = {
     {"rotate(13)",Geom::Affine(cos(13.*DEGREE),sin(13.*DEGREE),-sin(13.*DEGREE),cos(13.*DEGREE),0,0)},
