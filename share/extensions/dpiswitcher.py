@@ -68,6 +68,18 @@ class DPISwitcher(inkex.Effect):
                 if "scale" in str(element.get('transform')):
                     result = re.sub(r".*?((scale).*?\))", self.scaleElement, str(element.get('transform')))
                     element.set('transform', result)
+                if "matrix" in str(element.get('transform')):
+                    result = re.sub(r".*?((matrix).*?\))", self.translateMatrixElement, str(element.get('transform')))
+                    element.set('transform', result)
+                if "translate" in str(element.get('transform')):
+                    result = re.sub(r".*?((translate).*?\))", self.translateElement, str(element.get('transform')))
+                    element.set('transform', result)
+                if "matrix" in str(element.get('transform')):
+                    result = re.sub(r".*?((matrix).*?\))", self.skewMatrixElement, str(element.get('transform')))
+                    element.set('transform', result)
+                if "skew" in str(element.get('transform')):
+                    result = re.sub(r".*?((translate).*?\))", self.skewElement, str(element.get('transform')))
+                    element.set('transform', result)
                 if "scale" not in str(element.get('transform')) and "matrix" not in str(element.get('transform')):
                     element.set('transform', str(element.get('transform')) + "scale(" + str(self.factor) + ", " + str(self.factor) + ")")
             else:
@@ -133,6 +145,14 @@ class DPISwitcher(inkex.Effect):
     def translateMatrixElement(self, m):
       translateMatrixVal = m.group(1).replace("matrix","").replace(" ","").replace("(","").replace(")","").split(",")
       return "matrix(" + translateMatrixVal[0] + "," + translateMatrixVal[1] + "," + translateMatrixVal[2] + "," + translateMatrixVal[3] + "," + str(float(translateMatrixVal[4]) * self.factor) + "," + str(float(translateMatrixVal[5]) * self.factor) + ")"
+
+    def skewElement(self, m):
+      skeweVal = m.group(1).replace("skew","").replace(" ","").replace("(","").replace(")","").split(",")
+      return "skew(" + str(float(skewVal[0]) * self.factor)  + "," + str(float(skewVal[1]) * self.factor) + ")"
+
+    def skewMatrixElement(self, m):
+      skewMatrixVal = m.group(1).replace("matrix","").replace(" ","").replace("(","").replace(")","").split(",")
+      return "matrix(" + skewMatrixVal[0] + "," + str(float(skewMatrixVal[1]) * self.factor) + "," + str(float(skewMatrixVal[4]) * self.factor) + "," + skewMatrixVal[3] + "," + skewMatrixVal[4] + "," + skewMatrixVal[5]+ ")"
 
     def effect(self):
         if self.options.switcher == "0":
