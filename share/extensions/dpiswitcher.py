@@ -63,16 +63,16 @@ class DPISwitcher(inkex.Effect):
                 continue
             if element.get('transform'):
                 if "matrix" in str(element.get('transform')):
-                    result = re.sub(r".*?((matrix).*?\))", self.matrixElement, str(element.get('transform')))
+                    result = re.sub(r".*?matrix( \(|\()(.*?)\)", self.matrixElement, str(element.get('transform')))
                     element.set('transform', result)
                 if "scale" in str(element.get('transform')):
-                    result = re.sub(r".*?((scale).*?\))", self.scaleElement, str(element.get('transform')))
+                    result = re.sub(r".*?scale( \(|\()(.*?)\)", self.scaleElement, str(element.get('transform')))
                     element.set('transform', result)
                 if "translate" in str(element.get('transform')):
-                    result = re.sub(r".*?((translate).*?\))", self.translateElement, str(element.get('transform')))
+                    result = re.sub(r".*?translate( \(|\()(.*?)\)", self.translateElement, str(element.get('transform')))
                     element.set('transform', result)
                 if "skew" in str(element.get('transform')):
-                    result = re.sub(r".*?((translate).*?\))", self.skewElement, str(element.get('transform')))
+                    result = re.sub(r".*?skew( \(|\()(.*?)\)", self.skewElement, str(element.get('transform')))
                     element.set('transform', result)
                 if "scale" not in str(element.get('transform')) and "matrix" not in str(element.get('transform')):
                     element.set('transform', str(element.get('transform')) + "scale(" + str(self.factor) + ", " + str(self.factor) + ")")
@@ -82,14 +82,14 @@ class DPISwitcher(inkex.Effect):
         elements = svg.xpath(xpathStr, namespaces=inkex.NSS)
         for element in elements:
             if element.get('transform'):
-                if "translate" in str(element.get('transform')):
-                    result = re.sub(r".*?((translate).*?\))", self.translateElement, str(element.get('transform')))
-                    element.set('transform', result)
                 if "matrix" in str(element.get('transform')):
-                    result = re.sub(r".*?((matrix).*?\))", self.matrixElementNoScale, str(element.get('transform')))
+                    result = re.sub(r".*?matrix( \(|\()(.*?)\)", self.matrixGroupElement, str(element.get('transform')))
+                    element.set('transform', result)
+                if "translate" in str(element.get('transform')):
+                    result = re.sub(r".*?translate( \(|\()(.*?)\)", self.translateElement, str(element.get('transform')))
                     element.set('transform', result)
                 if "skew" in str(element.get('transform')):
-                    result = re.sub(r".*?((translate).*?\))", self.skewElement, str(element.get('transform')))
+                    result = re.sub(r".*?skew( \(|\()(.*?)\)", self.skewElement, str(element.get('transform')))
                     element.set('transform', result)
 
     def scaleGuides(self, svg):
@@ -128,7 +128,7 @@ class DPISwitcher(inkex.Effect):
                       'km':3543307.0866, 'pc':15.0, 'yd':3240 , 'ft':1080}
 
     def scaleElement(self, m):
-        scaleVal = m.group(1).replace("scale","").replace(" ","").replace("(","").replace(")","")
+        scaleVal = m.group(2).replace(" ","")
         total = scaleVal.count(',')
         if total == 1:
             scaleVal = scaleVal.split(",")
@@ -138,7 +138,7 @@ class DPISwitcher(inkex.Effect):
 
 
     def translateElement(self, m):
-        translateVal = m.group(1).replace("translate","").replace(" ","").replace("(","").replace(")","")
+        translateVal = m.group(2).replace(" ","")
         total = translateVal.count(',')
         if total == 1:
             translateVal = translateVal.split(",")
@@ -147,7 +147,7 @@ class DPISwitcher(inkex.Effect):
             return "translate(" + str(float(translateVal) * self.factor)  + ")"
 
     def skewElement(self, m):
-        skeweVal = m.group(1).replace("skew","").replace(" ","").replace("(","").replace(")","")
+        skeweVal = m.group(2).replace(" ","")
         total = skewVal.count(',')
         if total == 1:
             skeweVal = skewVal.split(",")
@@ -156,7 +156,7 @@ class DPISwitcher(inkex.Effect):
             return "skew(" + str(float(skewVal) * self.factor)  + ")"
 
     def matrixElement(self, m):
-        matrixVal = m.group(1).replace("matrix","").replace(" ","").replace("(","").replace(")","")
+        matrixVal = m.group(2).replace(" ","")
         total = matrixVal.count(',')
         matrixVal = matrixVal.split(",")
         if total > 2:
@@ -164,8 +164,8 @@ class DPISwitcher(inkex.Effect):
         else:
             return "matrix(" + str(float(matrixVal[0]) * self.factor) + "," + str(float(matrixVal[1]) * self.factor) + "," + str(float(matrixVal[2]) * self.factor) + ")"
 
-    def matrixElementNoScale(self, m):
-        matrixVal = m.group(1).replace("matrix","").replace(" ","").replace("(","").replace(")","")
+    def matrixGroupElement(self, m):
+        matrixVal = m.group(2).replace(" ","")
         total = matrixVal.count(',')
         matrixVal = matrixVal.split(",")
         if total > 2:
