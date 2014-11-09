@@ -344,7 +344,7 @@ colors = {  1: '#FF0000',   2: '#FFFF00',   3: '#00FF00',   4: '#00FFFF',   5: '
           250: '#333333', 251: '#505050', 252: '#696969', 253: '#828282', 254: '#BEBEBE', 255: '#FFFFFF'}
 
 parser = inkex.optparse.OptionParser(usage="usage: %prog [options] SVGfile", option_class=inkex.InkOption)
-parser.add_option("--auto", action="store", type="inkbool", dest="auto", default=True)
+parser.add_option("--scalemethod", action="store", type="string", dest="scalemethod", default="manual")
 parser.add_option("--scale", action="store", type="string", dest="scale", default="1.0")
 parser.add_option("--xmin", action="store", type="string", dest="xmin", default="0.0")
 parser.add_option("--ymin", action="store", type="string", dest="ymin", default="0.0")
@@ -366,6 +366,7 @@ inkex.etree.SubElement(pattern, 'path', {'d': 'M4 0 l-4,4', 'stroke': '#000000',
 stream = open(args[0], 'r')
 xmax = xmin = ymin = 0.0
 height = 297.0*96.0/25.4                            # default A4 height in pixels
+measurement = 0                                     # default inches
 line = get_line()
 polylines = 0
 flag = 0                                            # (0, 1, 2, 3) = (none, LAYER, LTYPE, DIMTXT)
@@ -376,7 +377,10 @@ DIMTXT = {}                                         # store DIMENSION text sizes
 
 while line[0] and line[1] != 'BLOCKS':
     line = get_line()
-    if options.auto:
+    if options.scalemethod == 'file':
+        if line[1] == '$MEASUREMENT':
+            measurement = get_group('70')
+    elif options.scalemethod == 'auto':
         if line[1] == '$EXTMIN':
             xmin = get_group('10')
             ymin = get_group('20')
@@ -406,7 +410,11 @@ while line[0] and line[1] != 'BLOCKS':
     if line[0] == '0' and line[1] == 'ENDTAB':
         flag = 0
 
-if options.auto:
+if options.scalemethod == 'file':
+    scale = 25.4                                    # default inches
+    if measurement == 1.0:
+        scale = 1.0                                 # use mm
+elif options.scalemethod == 'auto':
     scale = 1.0
     if xmax > xmin:
         scale = 210.0/(xmax - xmin)                 # scale to A4 width
@@ -414,7 +422,7 @@ else:
     scale = float(options.scale)                    # manual scale factor
     xmin = float(options.xmin)
     ymin = float(options.ymin)
-desc.text = '%s - scale = %f, origin = (%f, %f), auto = %s' % (unicode(args[0], options.input_encode), scale, xmin, ymin, options.auto)
+desc.text = '%s - scale = %f, origin = (%f, %f), method = %s' % (unicode(args[0], options.input_encode), scale, xmin, ymin, options.scalemethod)
 scale *= 96.0/25.4                                  # convert from mm to pixels
 
 if not layer_nodes.has_key('0'):

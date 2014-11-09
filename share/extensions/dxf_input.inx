@@ -6,8 +6,12 @@
 	<dependency type="executable" location="extensions">inkex.py</dependency>
 	<param name="tab" type="notebook">
 		<page name="options" _gui-text="Options">
-			<param name="auto" type="boolean" _gui-text="Use automatic scaling to size A4">true</param>
-			<param name="scale" type="string" _gui-text="Or, use manual scale factor:">1.0</param>
+			<param name="scalemethod" type="optiongroup" _gui-text="Method of Scaling:">
+				<option value="manual">Manual scale</option>
+				<option value="auto">Automatic scaling to size A4</option>
+				<option value="file">Read from file</option>
+			</param>
+			<param name="scale" type="string" _gui-text="Manual scale factor:">1.0</param>
 			<param name="xmin" type="string" _gui-text="Manual x-axis origin (mm):">0.0</param>
 			<param name="ymin" type="string" _gui-text="Manual y-axis origin (mm):">0.0</param>
 			<param name="gcodetoolspoints" type="boolean" _gui-text="Gcodetools compatible point import">false</param>
@@ -22,9 +26,11 @@
 		</page>
 		<page name="help" _gui-text="Help">
 			<_param name="inputhelp" type="description" xml:space="preserve">- AutoCAD Release 13 and newer.
-- assume dxf drawing is in mm.
+- for manual scaling, assume dxf drawing is in mm.
 - assume svg drawing is in pixels, at 96 dpi.
 - scale factor and origin apply only to manual scaling.
+- 'Automatic scaling' will fit the width of an A4 page.
+- 'Read from file' uses the variable $MEASUREMENT.
 - layers are preserved only on File->Open, not Import.
 - limited support for BLOCKS, use AutoCAD Explode Blocks instead, if needed.</_param>
 		</page>
