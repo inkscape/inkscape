@@ -247,7 +247,7 @@ SvgAffineTest::test_t const SvgAffineTest::write_rotate_tests[2] = {
 SvgAffineTest::test_t const SvgAffineTest::write_skew_tests[3] = {
     {"skewX(30)",Geom::Affine(1,0,tan(30.*DEGREE),1,0,0)},
     {"skewX(-30)",Geom::Affine(1,0,tan(-30.*DEGREE),1,0,0)},
-    {"skewY(390)",Geom::Affine(1,tan(30.*DEGREE),0,1,0,0)}};
+    {"skewY(30)",Geom::Affine(1,tan(30.*DEGREE),0,1,0,0)}};
 
 /*
   Local Variables:
