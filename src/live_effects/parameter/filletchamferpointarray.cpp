@@ -354,6 +354,11 @@ void FilletChamferPointArrayParam::set_pwd2(
     last_pwd2_normal = pwd2_normal_in;
 }
 
+void FilletChamferPointArrayParam::set_document_unit(Glib::ustring const * value_document_unit)
+{
+    documentUnit = value_document_unit;
+}
+
 void FilletChamferPointArrayParam::set_helper_size(int hs)
 {
     helper_size = hs;
@@ -819,7 +824,7 @@ void FilletChamferPointArrayParamKnotHolderEntity::knot_click(guint state)
         bool aprox = (A[0].degreesOfFreedom() != 2 || B[0].degreesOfFreedom() != 2) && !_pparam->use_distance?true:false;
         Geom::Point offset = Geom::Point(xModified, _pparam->_vector.at(_index).y());
         Inkscape::UI::Dialogs::FilletChamferPropertiesDialog::showDialog(
-            this->desktop, offset, this, _pparam->unit, _pparam->use_distance, aprox);
+            this->desktop, offset, this, _pparam->unit, _pparam->use_distance, aprox, _pparam->documentUnit);
     }
 
 }

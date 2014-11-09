@@ -416,7 +416,6 @@ Effect::isNodePointSelected(Geom::Point const &nodePoint) const
         for (std::vector<Geom::Point>::const_iterator i = selectedNodesPoints.begin();
                 i != selectedNodesPoints.end(); ++i) {
             Geom::Point p = *i;
-            std::cout << p << "p\n";
             p[Geom::X] = Inkscape::Util::Quantity::convert(p[Geom::X], "px", *defaultUnit);
             p[Geom::Y] = Inkscape::Util::Quantity::convert(p[Geom::Y], "px", *defaultUnit);
             if (Geom::are_near(p, nodePoint, 0.01)) {

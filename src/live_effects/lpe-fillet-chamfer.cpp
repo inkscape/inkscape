@@ -416,6 +416,7 @@ void LPEFilletChamfer::doBeforeEffect(SPLPEItem const *lpeItem)
         } else {
             fillet_chamfer_values.set_helper_size(helper_size);
         }
+        fillet_chamfer_values.set_document_unit(defaultUnit);
         fillet_chamfer_values.set_use_distance(use_knot_distance);
         fillet_chamfer_values.set_unit(unit.get_abbreviation());
         SPCurve *c = SP_IS_PATH(lpeItem) ? static_cast<SPPath const *>(lpeItem)

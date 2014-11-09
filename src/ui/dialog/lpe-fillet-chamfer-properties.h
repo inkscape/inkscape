@@ -32,7 +32,8 @@ public:
                            FilletChamferPointArrayParamKnotHolderEntity *pt,
                            const gchar *unit,
                            bool use_distance,
-                           bool aprox_radius);
+                           bool aprox_radius,
+                           Glib::ustring const * documentUnit);
 
 protected:
 
@@ -63,19 +64,21 @@ protected:
         return instance;
     }
 
-    void _setDesktop(SPDesktop *desktop);
-    void _setPt(const Inkscape::LivePathEffect::
+    void _set_desktop(SPDesktop *desktop);
+    void _set_pt(const Inkscape::LivePathEffect::
                 FilletChamferPointArrayParamKnotHolderEntity *pt);
-    void _setUnit(const gchar *abbr);
+    void _set_unit(const gchar *abbr);
+    void _set_document_unit(Glib::ustring const * abbr);
     void _set_use_distance(bool use_knot_distance);
     void _set_aprox(bool aprox_radius);
     void _apply();
     void _close();
     bool _flexible;
     const gchar *unit;
+    Glib::ustring const * document_unit;
     bool use_distance;
     bool aprox;
-    void _setKnotPoint(Geom::Point knotpoint);
+    void _set_knot_point(Geom::Point knotpoint);
     void _prepareLabelRenderer(Gtk::TreeModel::const_iterator const &row);
 
     bool _handleKeyEvent(GdkEventKey *event);
