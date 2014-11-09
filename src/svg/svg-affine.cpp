@@ -217,29 +217,29 @@ sp_svg_transform_write(Geom::Affine const &transform)
 
         c[p++] = ')';
         c[p] = '\000';
-    /* } else if (transform.withoutTranslation().isRotation()) {
-        // FIXME someone please figure out if this can actually be done
-        // The rotation angle is correct, the points are not
+    } else if (transform.withoutTranslation().isRotation()) {
+        // Solution found by Johan Engelen
         // Refer to the matrix in svg-affine-test.h
 
         // We are a rotation about a special axis
         strcpy(c + p, "rotate(");
         p += 7;
 
-        Geom::Affine const sans_translate = transform.withoutTranslation();
-        double angle = std::atan2(sans_translate[1], sans_translate[0]) * (180 / M_PI);
+        double angle = std::atan2(transform[1], transform[0]) * (180 / M_PI);
         p += sp_svg_number_write_de(c + p, sizeof(c) - p, angle, prec, min_exp);
         c[p++] = ',';
 
-        Geom::Point pt = transform.translation();
-        p += sp_svg_number_write_de(c + p, sizeof(c) - p, pt[Geom::X], prec, min_exp);
+        Geom::Affine const& m = transform;
+        double tx = (m[2]*m[5]+m[4]-m[4]*m[3]) / (1-m[3]-m[0]+m[0]*m[3]-m[2]*m[1]);
+        p += sp_svg_number_write_de(c + p, sizeof(c) - p, tx, prec, min_exp);
 
         c[p++] = ',';
 
-        p += sp_svg_number_write_de(c + p, sizeof(c) - p, pt[Geom::Y], prec, min_exp);
+        double ty = (m[1]*tx + m[5]) / (1 - m[3]);
+        p += sp_svg_number_write_de(c + p, sizeof(c) - p, ty, prec, min_exp);
 
         c[p++] = ')';
-        c[p] = '\000';*/
+        c[p] = '\000';
     } else if (transform.isHShear()) {
         // We are more or less a pure skewX
         strcpy(c + p, "skewX(");

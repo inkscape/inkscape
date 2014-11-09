@@ -35,7 +35,7 @@ private:
     static test_t const write_matrix_tests[2];
     static test_t const write_translate_tests[3];
     static test_t const write_scale_tests[3];
-    static test_t const write_rotate_tests[2];
+    static test_t const write_rotate_tests[3];
     static test_t const write_skew_tests[3];
 public:
     SvgAffineTest() {
@@ -242,9 +242,10 @@ SvgAffineTest::test_t const SvgAffineTest::write_scale_tests[3] = {
     {"scale(0)",Geom::Affine(0,0,0,0,0,0)},
     {"scale(7)",Geom::Affine(7,0,0,7,0,0)},
     {"scale(2,3)",Geom::Affine(2,0,0,3,0,0)}};
-SvgAffineTest::test_t const SvgAffineTest::write_rotate_tests[2] = {
+SvgAffineTest::test_t const SvgAffineTest::write_rotate_tests[3] = {
     {"rotate(13)",Geom::Affine(cos(13.*DEGREE),sin(13.*DEGREE),-sin(13.*DEGREE),cos(13.*DEGREE),0,0)},
-    {"rotate(-13,7,11)",Geom::Affine(cos(-13.*DEGREE),sin(-13.*DEGREE),-sin(-13.*DEGREE),cos(-13.*DEGREE),(1-cos(-13.*DEGREE))*7+sin(-13.*DEGREE)*11,(1-cos(-13.*DEGREE))*11-sin(-13.*DEGREE)*7)}};
+    {"rotate(-13,7,11)",Geom::Affine(cos(-13.*DEGREE),sin(-13.*DEGREE),-sin(-13.*DEGREE),cos(-13.*DEGREE),(1-cos(-13.*DEGREE))*7+sin(-13.*DEGREE)*11,(1-cos(-13.*DEGREE))*11-sin(-13.*DEGREE)*7)},
+    {"rotate(-34.5,6.7,89)",Geom::Affine(cos(-34.5*DEGREE),sin(-34.5*DEGREE),-sin(-34.5*DEGREE),cos(-34.5*DEGREE),(1-cos(-34.5*DEGREE))*6.7+sin(-34.5*DEGREE)*89,(1-cos(-34.5*DEGREE))*89-sin(-34.5*DEGREE)*6.7)}};
 SvgAffineTest::test_t const SvgAffineTest::write_skew_tests[3] = {
     {"skewX(30)",Geom::Affine(1,0,tan(30.*DEGREE),1,0,0)},
     {"skewX(-30)",Geom::Affine(1,0,tan(-30.*DEGREE),1,0,0)},
