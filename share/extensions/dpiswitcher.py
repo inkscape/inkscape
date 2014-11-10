@@ -34,6 +34,9 @@ class DPISwitcher(inkex.Effect):
         self.OptionParser.add_option("--switcher", action="store", 
             type="string", dest="switcher", default="0", 
             help="Select the DPI switch you want")
+        self.OptionParser.add_option("--action", action="store",
+            type="string", dest="action",
+            default=None, help="")
         self.factor = 90.0/96.0
         self.units = "px"
         self.unitExponent = 1.0
@@ -174,28 +177,59 @@ class DPISwitcher(inkex.Effect):
             return "matrix(" + matrixVal[0] + "," + str(float(matrixVal[1]) * self.factor) + "," + str(float(matrixVal[2]) * self.factor) + ")"
 
     def effect(self):
-        if self.options.switcher == "0":
-            self.factor = 96.0/90.0
+        action = self.options.action.strip("\"") # TODO Is this a bug? (Extra " characters)
         saveout = sys.stdout
         sys.stdout = sys.stderr
         svg = self.document.getroot()
-        namedview = svg.find(inkex.addNS('namedview', 'sodipodi'))
-        namedview.set(inkex.addNS('document-units', 'inkscape'), "px")
-        self.units = re.sub("[0-9]*\.?[0-9]", "", svg.get('width'))
-        if self.units and self.units <> "px":
-            if self.options.switcher == "0":
-                self.unitExponent = 1.0/(self.factor/self.__uuconv[self.units])
-            else:
-                self.unitExponent = 1.0/(self.factor/self.__uuconvLegazy[self.units])
-        '''
+        if action == "page_info":
+            print ":::SVG document related info:::"
+            width = svg.get('width')
+            if width:
+                print "width: " + width
+            height = svg.get('height')
+            if height:
+                print "height: " + height
+            viewBox = svg.get('viewBox')
+            if viewBox:
+                print "viewBox: " + viewBox
+            namedview = svg.find(inkex.addNS('namedview', 'sodipodi'))
+            docunits= namedview.get(inkex.addNS('document-units', 'inkscape'))
+            if docunits:
+                print "document-units: " + docunits
+            units = namedview.get('units')
+            if units:
+                print "units: " + units
+            xpathStr = '//sodipodi:guide'
+            guides = svg.xpath(xpathStr, namespaces=inkex.NSS)
+            xpathStr = '//inkscape:grid'
+            if guides:
+                numberGuides = len(guides)
+                print "Document has " + str(numberGuides) + " guides"
+            grids = svg.xpath(xpathStr, namespaces=inkex.NSS)
+            i = 1
+            for grid in grids:
+                print "Grid number " + str(i) + ": Units: " + grid.get("units")
+                i = i+1
         else:
-            self.scaleGuides(svg)
-            self.unitExponent = 1.0
-            self.scaleGrid(svg)
-            sys.stdout = saveout
-            return
-        '''
-        self.scaleRoot(svg);
+            if self.options.switcher == "0":
+                self.factor = 96.0/90.0
+            namedview = svg.find(inkex.addNS('namedview', 'sodipodi'))
+            namedview.set(inkex.addNS('document-units', 'inkscape'), "px")
+            self.units = re.sub("[0-9]*\.?[0-9]", "", svg.get('width'))
+            if self.units and self.units <> "px":
+                if self.options.switcher == "0":
+                    self.unitExponent = 1.0/(self.factor/self.__uuconv[self.units])
+                else:
+                    self.unitExponent = 1.0/(self.factor/self.__uuconvLegazy[self.units])
+            '''
+            else:
+                self.scaleGuides(svg)
+                self.unitExponent = 1.0
+                self.scaleGrid(svg)
+                sys.stdout = saveout
+                return
+            '''
+            self.scaleRoot(svg);
         sys.stdout = saveout
 
 effect = DPISwitcher()

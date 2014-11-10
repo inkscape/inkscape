@@ -5,10 +5,18 @@
       <id>org.inkscape.dpiswitcher</id> 
       <dependency type="executable" location="extensions">dpiswitcher.py</dependency>
       <dependency type="executable" location="extensions">inkex.py</dependency>
-      <param name="switcher" type="enum" _gui-text="Type of convert:">
+      <param name="action" type="notebook">
+        <page name="dpi_swicher" _gui-text="Switch DPI">
+            <param name="switcher" type="enum" _gui-text="Type of convert:">
                     <_item value="0">DPI Switch from 90 to 96</_item>
                     <_item value="1">DPI Switch from 96 to 90</_item>
-      </param>
+            </param>
+        </page>
+        <page name="page_info" _gui-text="Show page info">
+            <_param name="d" type="description">Choose this tab if you would like to see page info previously to apply DPI Switcher.</_param>
+        </page>
+    </param>
+      
       <effect needs-live-preview="false" needs-document="no">  
         <object-type>all</object-type>  
         <effects-menu>  
