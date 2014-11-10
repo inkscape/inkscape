@@ -6,7 +6,9 @@
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
+ * Copyright (C) 1999-2014 Authors
  * Copyright (C) 1999-2002 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
  *
@@ -19,9 +21,6 @@
 #include "svg/svg-length.h"
 #include "sp-item.h"
 #include "enums.h"
-
-#define SP_USE(obj) (dynamic_cast<SPUse*>((SPObject*)obj))
-#define SP_IS_USE(obj) (dynamic_cast<const SPUse*>((SPObject*)obj) != NULL)
 
 class SPUseReference;
 

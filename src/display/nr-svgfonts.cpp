@@ -4,6 +4,7 @@
  *
  * Authors:
  *    Felipe C. da S. Sanches <juca@members.fsf.org>
+ *    Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2008 Felipe C. da S. Sanches
  *
@@ -32,9 +33,9 @@
 #include "sp-font.h"
 #include "sp-glyph-kerning.h"
 
-//*************************//
+// ************************//
 // UserFont Implementation //
-//*************************//
+// ************************//
 
 // I wrote this binding code because Cairomm does not yet support userfonts. I have moved this code to cairomm and sent them a patch.
 // Once Cairomm incorporate the UserFonts binding, this code should be removed from inkscape and Cairomm API should be used.
@@ -111,16 +112,38 @@ unsigned int size_of_substring(const char* substring, gchar* str){
         return 0;
 }
 
-//TODO: in these macros, verify what happens when using unicode strings.
-#define Match_VKerning_Rule ((SP_VKERN(node))->u1->contains(previous_unicode[0])\
-                || (SP_VKERN(node))->g1->contains(previous_glyph_name)) &&\
-                ((SP_VKERN(node))->u2->contains(this->glyphs[i]->unicode[0])\
-                || (SP_VKERN(node))->g2->contains(this->glyphs[i]->glyph_name.c_str()))
 
-#define Match_HKerning_Rule ((SP_HKERN(node))->u1->contains(previous_unicode[0])\
-                || (SP_HKERN(node))->g1->contains(previous_glyph_name)) &&\
-                ((SP_HKERN(node))->u2->contains(this->glyphs[i]->unicode[0])\
-                || (SP_HKERN(node))->g2->contains(this->glyphs[i]->glyph_name.c_str()))
+namespace {
+
+//TODO: in these functions, verify what happens when using unicode strings.
+
+bool MatchVKerningRule(SPVkern const *vkern,
+                       SPGlyph *glyph,
+                       char const *previous_unicode,
+                       gchar const *previous_glyph_name)
+{
+    bool value = (vkern->u1->contains(previous_unicode[0])
+                  || vkern->g1->contains(previous_glyph_name))
+        && (vkern->u2->contains(glyph->unicode[0])
+            || vkern->g2->contains(glyph->glyph_name.c_str()));
+
+    return value;
+}
+
+bool MatchHKerningRule(SPHkern const *hkern,
+                       SPGlyph *glyph,
+                       char const *previous_unicode,
+                       gchar const *previous_glyph_name)
+{
+    bool value = (hkern->u1->contains(previous_unicode[0])
+                  || hkern->g1->contains(previous_glyph_name))
+        && (hkern->u2->contains(glyph->unicode[0])
+            || hkern->g2->contains(glyph->glyph_name.c_str()));
+
+    return value;
+}
+
+} // namespace
 
 cairo_status_t
 SvgFont::scaled_font_text_to_glyphs (cairo_scaled_font_t  */*scaled_font*/,
@@ -182,11 +205,13 @@ SvgFont::scaled_font_text_to_glyphs (cairo_scaled_font_t  */*scaled_font*/,
             if ( (len = size_of_substring(this->glyphs[i]->unicode.c_str(), _utf8)) ){
                 for(SPObject* node = this->font->children;previous_unicode && node;node=node->next){
                     //apply glyph kerning if appropriate
-                    if (SP_IS_HKERN(node) && is_horizontal_text && Match_HKerning_Rule ){
-                        x -= ((SP_HKERN(node))->k / 1000.0);//TODO: use here the height of the font
+                    SPHkern *hkern = dynamic_cast<SPHkern *>(node);
+                    if (hkern && is_horizontal_text && MatchHKerningRule(hkern, this->glyphs[i], previous_unicode, previous_glyph_name) ){
+                        x -= (hkern->k / 1000.0);//TODO: use here the height of the font
                     }
-                    if (SP_IS_VKERN(node) && !is_horizontal_text && Match_VKerning_Rule ){
-                        y -= ((SP_VKERN(node))->k / 1000.0);//TODO: use here the "height" of the font
+                    SPVkern *vkern = dynamic_cast<SPVkern *>(node);
+                    if (vkern && !is_horizontal_text && MatchVKerningRule(vkern, this->glyphs[i], previous_unicode, previous_glyph_name) ){
+                        y -= (vkern->k / 1000.0);//TODO: use here the "height" of the font
                     }
                 }
                 previous_unicode = const_cast<char*>(this->glyphs[i]->unicode.c_str());//used for kerning checking
@@ -246,9 +271,8 @@ SvgFont::glyph_modified(SPObject* /* blah */, unsigned int /* bleh */){
 Geom::PathVector
 SvgFont::flip_coordinate_system(SPFont* spfont, Geom::PathVector pathv){
     double units_per_em = 1000;
-    SPObject* obj;
-    for (obj = (SP_OBJECT(spfont))->children; obj; obj=obj->next){
-        if (SP_IS_FONTFACE(obj)){
+    for (SPObject *obj = spfont->children; obj; obj = obj->next){
+        if (dynamic_cast<SPFontFace *>(obj)) {
             //XML Tree being directly used here while it shouldn't be.
             sp_repr_get_double(obj->getRepr(), "units_per_em", &units_per_em);
         }
@@ -275,19 +299,21 @@ SvgFont::scaled_font_render_glyph (cairo_scaled_font_t  */*scaled_font*/,
 
     if (glyph > this->glyphs.size())     return CAIRO_STATUS_SUCCESS;//TODO: this is an error!
 
-    SPObject* node;
-    if (glyph == this->glyphs.size()){
-        if (!this->missingglyph) return CAIRO_STATUS_SUCCESS;
-        node = SP_OBJECT(this->missingglyph);
+    SPObject *node = NULL;
+    if (glyph == glyphs.size()){
+        if (!missingglyph) {
+            return CAIRO_STATUS_SUCCESS;
+        }
+        node = missingglyph;
     } else {
-        node = SP_OBJECT(this->glyphs[glyph]);
+        node = glyphs[glyph];
     }
 
-    if (!SP_IS_GLYPH(node) && !SP_IS_MISSING_GLYPH(node)) {
+    if (!dynamic_cast<SPGlyph *>(node) && !dynamic_cast<SPMissingGlyph *>(node)) {
         return CAIRO_STATUS_SUCCESS;  // FIXME: is this the right code to return?
     }
 
-    SPFont* spfont = SP_FONT(node->parent);
+    SPFont* spfont = dynamic_cast<SPFont *>(node->parent);
     if (!spfont) {
         return CAIRO_STATUS_SUCCESS;  // FIXME: is this the right code to return?
     }
@@ -296,36 +322,48 @@ SvgFont::scaled_font_render_glyph (cairo_scaled_font_t  */*scaled_font*/,
     // or using the d attribute of a glyph node.
     // pathv stores the path description from the d attribute:
     Geom::PathVector pathv;
-    if (SP_IS_GLYPH(node) && (SP_GLYPH(node))->d) {
-        pathv = sp_svg_read_pathv((SP_GLYPH(node))->d);
+    
+    SPGlyph *glyphNode = dynamic_cast<SPGlyph *>(node);
+    if (glyphNode && glyphNode->d) {
+        pathv = sp_svg_read_pathv(glyphNode->d);
         pathv = flip_coordinate_system(spfont, pathv);
-        this->render_glyph_path(cr, &pathv);
-    } else if (SP_IS_MISSING_GLYPH(node) && (SP_MISSING_GLYPH(node))->d) {
-        pathv = sp_svg_read_pathv((SP_MISSING_GLYPH(node))->d);
-        pathv = flip_coordinate_system(spfont, pathv);
-        this->render_glyph_path(cr, &pathv);
+        render_glyph_path(cr, &pathv);
+    } else {
+        SPMissingGlyph *missing = dynamic_cast<SPMissingGlyph *>(node);
+        if (missing && missing->d) {
+            pathv = sp_svg_read_pathv(missing->d);
+            pathv = flip_coordinate_system(spfont, pathv);
+            render_glyph_path(cr, &pathv);
+        }
     }
 
     if (node->hasChildren()){
         //render the SVG described on this glyph's child nodes.
         for(node = node->children; node; node=node->next){
-            if (SP_IS_PATH(node)){
-                pathv = (SP_SHAPE(node))->_curve->get_pathvector();
-                pathv = flip_coordinate_system(spfont, pathv);
-                this->render_glyph_path(cr, &pathv);
+            {
+                SPPath *path = dynamic_cast<SPPath *>(node);
+                if (path) {
+                    pathv = path->_curve->get_pathvector();
+                    pathv = flip_coordinate_system(spfont, pathv);
+                    render_glyph_path(cr, &pathv);
+                }
             }
-            if (SP_IS_OBJECTGROUP(node)){
+            if (dynamic_cast<SPObjectGroup *>(node)) {
                 g_warning("TODO: svgfonts: render OBJECTGROUP");
             }
-            if (SP_IS_USE(node)){
-                SPItem* item = SP_USE(node)->ref->getObject();
-                if (SP_IS_PATH(item)){
-                    pathv = (SP_SHAPE(item))->_curve->get_pathvector();
+            SPUse *use = dynamic_cast<SPUse *>(node);
+            if (use) {
+                SPItem* item = use->ref->getObject();
+                SPPath *path = dynamic_cast<SPPath *>(item);
+                if (path) {
+                    SPShape *shape = dynamic_cast<SPShape *>(item);
+                    g_assert(shape != NULL);
+                    pathv = shape->_curve->get_pathvector();
                     pathv = flip_coordinate_system(spfont, pathv);
                     this->render_glyph_path(cr, &pathv);
                 }
 
-                glyph_modified_connection = (SP_OBJECT(item))->connectModified(sigc::mem_fun(*this, &SvgFont::glyph_modified));
+                glyph_modified_connection = item->connectModified(sigc::mem_fun(*this, &SvgFont::glyph_modified));
             }
         }
     }
@@ -337,11 +375,13 @@ cairo_font_face_t*
 SvgFont::get_font_face(){
     if (!this->userfont) {
         for(SPObject* node = this->font->children;node;node=node->next){
-            if (SP_IS_GLYPH(node)){
-                this->glyphs.push_back(SP_GLYPH(node));
+            SPGlyph *glyph = dynamic_cast<SPGlyph *>(node);
+            if (glyph) {
+                glyphs.push_back(glyph);
             }
-            if (SP_IS_MISSING_GLYPH(node)){
-                this->missingglyph=SP_MISSING_GLYPH(node);
+            SPMissingGlyph *missing = dynamic_cast<SPMissingGlyph *>(node);
+            if (missing) {
+                missingglyph = missing;
             }
         }
         this->userfont = new UserFont(this);

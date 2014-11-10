@@ -49,6 +49,24 @@
 #include "box3d-side.h"
 #include <2geom/math-utils.h>
 
+namespace {
+
+bool isTextualItem(SPObject const *obj)
+{
+    bool isTextual = dynamic_cast<SPText const *>(obj) //
+        || dynamic_cast<SPFlowtext const *>(obj) //
+        || dynamic_cast<SPTSpan const *>(obj) //
+        || dynamic_cast<SPTRef const *>(obj) //
+        || dynamic_cast<SPTextPath const *>(obj) //
+        || dynamic_cast<SPFlowdiv const *>(obj) //
+        || dynamic_cast<SPFlowpara const *>(obj) //
+        || dynamic_cast<SPFlowtspan const *>(obj);
+
+    return isTextual;
+}
+
+} // namespace
+
 /**
  * Set color on selection on desktop.
  */
@@ -89,8 +107,10 @@ void
 sp_desktop_apply_css_recursive(SPObject *o, SPCSSAttr *css, bool skip_lines)
 {
     // non-items should not have style
-    if (!SP_IS_ITEM(o))
+    SPItem *item = dynamic_cast<SPItem *>(o);
+    if (!item) {
         return;
+    }
 
     // 1. tspans with role=line are not regular objects in that they are not supposed to have style of their own,
     // but must always inherit from the parent text. Same for textPath.
@@ -100,22 +120,24 @@ sp_desktop_apply_css_recursive(SPObject *o, SPCSSAttr *css, bool skip_lines)
     // it, be it clone or not; it's just styleless shape (because that's how Inkscape does
     // flowtext).
 
+    SPTSpan *tspan = dynamic_cast<SPTSpan *>(o);
+
     if (!(skip_lines
-          && ((SP_IS_TSPAN(o) && SP_TSPAN(o)->role == SP_TSPAN_ROLE_LINE)
-              || SP_IS_FLOWDIV(o)
-              || SP_IS_FLOWPARA(o)
-              || SP_IS_TEXTPATH(o))
+          && ((tspan && tspan->role == SP_TSPAN_ROLE_LINE)
+              || dynamic_cast<SPFlowdiv *>(o)
+              || dynamic_cast<SPFlowpara *>(o)
+              || dynamic_cast<SPTextPath *>(o))
           &&  !o->getAttribute("style"))
         &&
-        !(SP_IS_FLOWREGION(o) ||
-          SP_IS_FLOWREGIONEXCLUDE(o) ||
-          (SP_IS_USE(o) &&
+        !(dynamic_cast<SPFlowregionbreak *>(o) ||
+          dynamic_cast<SPFlowregionExclude *>(o) ||
+          (dynamic_cast<SPUse *>(o) &&
            o->parent &&
-           (SP_IS_FLOWREGION(o->parent) ||
-            SP_IS_FLOWREGIONEXCLUDE(o->parent)
-           )
-          )
-         )
+           (dynamic_cast<SPFlowregion *>(o->parent) ||
+            dynamic_cast<SPFlowregionExclude *>(o->parent)
+               )
+              )
+            )
         ) {
 
         SPCSSAttr *css_set = sp_repr_css_attr_new();
@@ -123,7 +145,7 @@ sp_desktop_apply_css_recursive(SPObject *o, SPCSSAttr *css, bool skip_lines)
 
         // Scale the style by the inverse of the accumulated parent transform in the paste context.
         {
-            Geom::Affine const local(SP_ITEM(o)->i2doc_affine());
+            Geom::Affine const local(item->i2doc_affine());
             double const ex(local.descrim());
             if ( ( ex != 0. )
                  && ( ex != 1. ) ) {
@@ -137,8 +159,9 @@ sp_desktop_apply_css_recursive(SPObject *o, SPCSSAttr *css, bool skip_lines)
     }
 
     // setting style on child of clone spills into the clone original (via shared repr), don't do it!
-    if (SP_IS_USE(o))
+    if (dynamic_cast<SPUse *>(o)) {
         return;
+    }
 
     for ( SPObject *child = o->firstChild() ; child ; child = child->getNext() ) {
         if (sp_repr_css_property(css, "opacity", NULL) != NULL) {
@@ -212,11 +235,10 @@ sp_desktop_set_style(SPDesktop *desktop, SPCSSAttr *css, bool change, bool write
         css_no_text = sp_css_attr_unset_text(css_no_text);
 
         for (GSList const *i = desktop->selection->itemList(); i != NULL; i = i->next) {
+            SPItem *item = reinterpret_cast<SPItem *>(i->data);
 
             // If not text, don't apply text attributes (can a group have text attributes? Yes! FIXME)
-            if ( SP_IS_TEXT(i->data) || SP_IS_FLOWTEXT(i->data)
-                || SP_IS_TSPAN(i->data) || SP_IS_TREF(i->data) || SP_IS_TEXTPATH(i->data)
-                || SP_IS_FLOWDIV(i->data) || SP_IS_FLOWPARA(i->data) || SP_IS_FLOWTSPAN(i->data)) {
+            if (isTextualItem(item)) {
 
                 // If any font property has changed, then we have written out the font
                 // properties in longhand and we need to remove the 'font' shorthand.
@@ -224,11 +246,11 @@ sp_desktop_set_style(SPDesktop *desktop, SPCSSAttr *css, bool change, bool write
                     sp_repr_css_unset_property(css, "font");
                 }
 
-                sp_desktop_apply_css_recursive(SP_OBJECT(i->data), css, true);
+                sp_desktop_apply_css_recursive(item, css, true);
 
             } else {
 
-                sp_desktop_apply_css_recursive(SP_OBJECT(i->data), css_no_text, true);
+                sp_desktop_apply_css_recursive(item, css_no_text, true);
 
             }
         }
@@ -427,16 +449,17 @@ stroke_average_width (GSList const *objects)
     int n_notstroked = 0;
 
     for (GSList const *l = objects; l != NULL; l = l->next) {
-        if (!SP_IS_ITEM (l->data))
+        SPObject *obj = reinterpret_cast<SPObject *>(l->data);
+        SPItem *item = dynamic_cast<SPItem *>(obj);
+        if (!item) {
             continue;
+        }
 
-        Geom::Affine i2dt = SP_ITEM(l->data)->i2dt_affine();
+        Geom::Affine i2dt = item->i2dt_affine();
 
-        SPObject *object = SP_OBJECT(l->data);
+        double width = item->style->stroke_width.computed * i2dt.descrim();
 
-        double width = object->style->stroke_width.computed * i2dt.descrim();
-
-        if ( object->style->stroke.isNone() || IS_NAN(width)) {
+        if ( item->style->stroke.isNone() || IS_NAN(width)) {
             ++n_notstroked;   // do not count nonstroked objects
             continue;
         } else {
@@ -493,7 +516,10 @@ objects_query_fillstroke (GSList *objects, SPStyle *style_res, bool const isfill
     bool same_color = true;
 
     for (GSList const *i = objects; i != NULL; i = i->next) {
-        SPObject *obj = SP_OBJECT (i->data);
+        SPObject *obj = reinterpret_cast<SPObject *>(i->data);
+        if (!obj) {
+            continue;
+        }
         SPStyle *style = obj->style;
         if (!style) {
             continue;
@@ -504,9 +530,9 @@ objects_query_fillstroke (GSList *objects, SPStyle *style_res, bool const isfill
         // We consider paint "effectively set" for anything within text hierarchy
         SPObject *parent = obj->parent;
         bool paint_effectively_set =
-            paint->set || (SP_IS_TEXT(parent) || SP_IS_TEXTPATH(parent) || SP_IS_TSPAN(parent)
-            || SP_IS_FLOWTEXT(parent) || SP_IS_FLOWDIV(parent) || SP_IS_FLOWPARA(parent)
-            || SP_IS_FLOWTSPAN(parent) || SP_IS_FLOWLINE(parent));
+            paint->set || (dynamic_cast<SPText *>(parent) || dynamic_cast<SPTextPath *>(parent) || dynamic_cast<SPTSpan *>(parent)
+            || dynamic_cast<SPFlowtext *>(parent) || dynamic_cast<SPFlowdiv *>(parent) || dynamic_cast<SPFlowpara *>(parent)
+            || dynamic_cast<SPFlowtspan *>(parent) || dynamic_cast<SPFlowline*>(parent));
 
         // 1. Bail out with QUERY_STYLE_MULTIPLE_DIFFERENT if necessary
         
@@ -518,38 +544,45 @@ objects_query_fillstroke (GSList *objects, SPStyle *style_res, bool const isfill
         if (paint_res->set && paint->set && paint_res->isPaintserver()) {
             // both previous paint and this paint were a server, see if the servers are compatible
 
-            SPPaintServer *server_res = isfill? SP_STYLE_FILL_SERVER (style_res) : SP_STYLE_STROKE_SERVER (style_res);
-            SPPaintServer *server = isfill? SP_STYLE_FILL_SERVER (style) : SP_STYLE_STROKE_SERVER (style);
+            SPPaintServer *server_res = isfill ? style_res->getFillPaintServer() : style_res->getStrokePaintServer();
+            SPPaintServer *server = isfill ? style->getFillPaintServer() : style->getStrokePaintServer();
 
-            if (SP_IS_LINEARGRADIENT (server_res)) {
-
-                if (!SP_IS_LINEARGRADIENT(server))
+            SPLinearGradient *linear_res = dynamic_cast<SPLinearGradient *>(server_res);
+            SPRadialGradient *radial_res = linear_res ? NULL : dynamic_cast<SPRadialGradient *>(server_res);
+            SPPattern *pattern_res = (linear_res || radial_res) ? NULL : dynamic_cast<SPPattern *>(server_res);
+            if (linear_res) {
+                SPLinearGradient *linear = dynamic_cast<SPLinearGradient *>(server);
+                if (!linear) {
                    return QUERY_STYLE_MULTIPLE_DIFFERENT;  // different kind of server
+                }
 
-                SPGradient *vector = SP_GRADIENT(server)->getVector();
-                SPGradient *vector_res = SP_GRADIENT(server_res)->getVector();
-                if (vector_res != vector)
+                SPGradient *vector = linear->getVector();
+                SPGradient *vector_res = linear_res->getVector();
+                if (vector_res != vector) {
                    return QUERY_STYLE_MULTIPLE_DIFFERENT;  // different gradient vectors
-
-            } else if (SP_IS_RADIALGRADIENT (server_res)) {
-
-                if (!SP_IS_RADIALGRADIENT(server))
+                }
+            } else if (radial_res) {
+                SPRadialGradient *radial = dynamic_cast<SPRadialGradient *>(server);
+                if (!radial) {
                    return QUERY_STYLE_MULTIPLE_DIFFERENT;  // different kind of server
+                }
 
-                SPGradient *vector = SP_GRADIENT(server)->getVector();
-                SPGradient *vector_res = SP_GRADIENT(server_res)->getVector();
-                if (vector_res != vector)
+                SPGradient *vector = radial->getVector();
+                SPGradient *vector_res = radial_res->getVector();
+                if (vector_res != vector) {
                    return QUERY_STYLE_MULTIPLE_DIFFERENT;  // different gradient vectors
-
-            } else if (SP_IS_PATTERN (server_res)) {
-
-                if (!SP_IS_PATTERN(server))
+                }
+            } else if (pattern_res) {
+                SPPattern *pattern = dynamic_cast<SPPattern *>(server);
+                if (!pattern) {
                    return QUERY_STYLE_MULTIPLE_DIFFERENT;  // different kind of server
+                }
 
-                SPPattern *pat = pattern_getroot (SP_PATTERN (server));
-                SPPattern *pat_res = pattern_getroot (SP_PATTERN (server_res));
-                if (pat_res != pat)
+                SPPattern *pat = pattern_getroot (pattern);
+                SPPattern *pat_res = pattern_getroot (pattern_res);
+                if (pat_res != pat) {
                    return QUERY_STYLE_MULTIPLE_DIFFERENT;  // different pattern roots
+                }
             }
         }
 
@@ -667,7 +700,10 @@ objects_query_opacity (GSList *objects, SPStyle *style_res)
 
 
     for (GSList const *i = objects; i != NULL; i = i->next) {
-        SPObject *obj = SP_OBJECT (i->data);
+        SPObject *obj = reinterpret_cast<SPObject *>(i->data);
+        if (!obj) {
+            continue;
+        }
         SPStyle *style = obj->style;
         if (!style) {
             continue;
@@ -720,8 +756,12 @@ objects_query_strokewidth (GSList *objects, SPStyle *style_res)
     int n_stroked = 0;
 
     for (GSList const *i = objects; i != NULL; i = i->next) {
-        SPObject *obj = SP_OBJECT (i->data);
-        if (!SP_IS_ITEM(obj)) {
+        SPObject *obj = reinterpret_cast<SPObject *>(i->data);
+        if (!obj) {
+            continue;
+        }
+        SPItem *item = dynamic_cast<SPItem *>(obj);
+        if (!item) {
             continue;
         }
         SPStyle *style = obj->style;
@@ -740,7 +780,7 @@ objects_query_strokewidth (GSList *objects, SPStyle *style_res)
 
         noneSet &= style->stroke.isNone();
 
-        Geom::Affine i2d = SP_ITEM(obj)->i2dt_affine();
+        Geom::Affine i2d = item->i2dt_affine();
         double sw = style->stroke_width.computed * i2d.descrim();
 
         if (!IS_NAN(sw)) {
@@ -790,8 +830,8 @@ objects_query_miterlimit (GSList *objects, SPStyle *style_res)
     bool same_ml = true;
 
     for (GSList const *i = objects; i != NULL; i = i->next) {
-        SPObject *obj = SP_OBJECT (i->data);
-        if (!SP_IS_ITEM(obj)) {
+        SPObject *obj = reinterpret_cast<SPObject *>(i->data);
+        if (!dynamic_cast<SPItem *>(obj)) {
             continue;
         }
         SPStyle *style = obj->style;
@@ -849,8 +889,8 @@ objects_query_strokecap (GSList *objects, SPStyle *style_res)
     int n_stroked = 0;
 
     for (GSList const *i = objects; i != NULL; i = i->next) {
-        SPObject *obj = SP_OBJECT (i->data);
-        if (!SP_IS_ITEM(obj)) {
+        SPObject *obj = reinterpret_cast<SPObject *>(i->data);
+        if (!dynamic_cast<SPItem *>(obj)) {
             continue;
         }
         SPStyle *style = obj->style;
@@ -903,8 +943,8 @@ objects_query_strokejoin (GSList *objects, SPStyle *style_res)
     int n_stroked = 0;
 
     for (GSList const *i = objects; i != NULL; i = i->next) {
-        SPObject *obj = SP_OBJECT (i->data);
-        if (!SP_IS_ITEM(obj)) {
+        SPObject *obj = reinterpret_cast<SPObject *>(i->data);
+        if (!dynamic_cast<SPItem *>(obj)) {
             continue;
         }
         SPStyle *style = obj->style;
@@ -966,11 +1006,9 @@ objects_query_fontnumbers (GSList *objects, SPStyle *style_res)
     int no_size = 0;
 
     for (GSList const *i = objects; i != NULL; i = i->next) {
-        SPObject *obj = SP_OBJECT (i->data);
+        SPObject *obj = reinterpret_cast<SPObject *>(i->data);
 
-        if (!SP_IS_TEXT(obj) && !SP_IS_FLOWTEXT(obj)
-            && !SP_IS_TSPAN(obj) && !SP_IS_TREF(obj) && !SP_IS_TEXTPATH(obj)
-            && !SP_IS_FLOWDIV(obj) && !SP_IS_FLOWPARA(obj) && !SP_IS_FLOWTSPAN(obj)) {
+        if (!isTextualItem(obj)) {
             continue;
         }
 
@@ -980,7 +1018,9 @@ objects_query_fontnumbers (GSList *objects, SPStyle *style_res)
         }
 
         texts ++;
-        double dummy = style->font_size.computed * Geom::Affine(SP_ITEM(obj)->i2dt_affine()).descrim();
+        SPItem *item = dynamic_cast<SPItem *>(obj);
+        g_assert(item != NULL);
+        double dummy = style->font_size.computed * Geom::Affine(item->i2dt_affine()).descrim();
         if (!IS_NAN(dummy)) {
             size += dummy; /// \todo FIXME: we assume non-% units here
         } else {
@@ -1085,12 +1125,11 @@ objects_query_fontstyle (GSList *objects, SPStyle *style_res)
     int texts = 0;
 
     for (GSList const *i = objects; i != NULL; i = i->next) {
-        SPObject *obj = SP_OBJECT (i->data);
+        SPObject *obj = reinterpret_cast<SPObject *>(i->data);
 
-        if (!SP_IS_TEXT(obj) && !SP_IS_FLOWTEXT(obj)
-            && !SP_IS_TSPAN(obj) && !SP_IS_TREF(obj) && !SP_IS_TEXTPATH(obj)
-            && !SP_IS_FLOWDIV(obj) && !SP_IS_FLOWPARA(obj) && !SP_IS_FLOWTSPAN(obj))
+        if (!isTextualItem(obj)) {
             continue;
+        }
 
         SPStyle *style = obj->style;
         if (!style) {
@@ -1155,11 +1194,9 @@ objects_query_baselines (GSList *objects, SPStyle *style_res)
     int texts = 0;
 
     for (GSList const *i = objects; i != NULL; i = i->next) {
-        SPObject *obj = SP_OBJECT (i->data);
+        SPObject *obj = reinterpret_cast<SPObject *>(i->data);
 
-        if (!SP_IS_TEXT(obj) && !SP_IS_FLOWTEXT(obj)
-            && !SP_IS_TSPAN(obj) && !SP_IS_TREF(obj) && !SP_IS_TEXTPATH(obj)
-            && !SP_IS_FLOWDIV(obj) && !SP_IS_FLOWPARA(obj) && !SP_IS_FLOWTSPAN(obj)) {
+        if (!isTextualItem(obj)) {
             continue;
         }
 
@@ -1245,12 +1282,10 @@ objects_query_fontfamily (GSList *objects, SPStyle *style_res)
     style_res->font_family.set = FALSE;
 
     for (GSList const *i = objects; i != NULL; i = i->next) {
-        SPObject *obj = SP_OBJECT (i->data);
+        SPObject *obj = reinterpret_cast<SPObject *>(i->data);
 
         // std::cout << "  " << reinterpret_cast<SPObject*>(i->data)->getId() << std::endl;
-        if (!SP_IS_TEXT(obj) && !SP_IS_FLOWTEXT(obj)
-            && !SP_IS_TSPAN(obj) && !SP_IS_TREF(obj) && !SP_IS_TEXTPATH(obj)
-            && !SP_IS_FLOWDIV(obj) && !SP_IS_FLOWPARA(obj) && !SP_IS_FLOWTSPAN(obj)) {
+        if (!isTextualItem(obj)) {
             continue;
         }
 
@@ -1303,12 +1338,10 @@ objects_query_fontspecification (GSList *objects, SPStyle *style_res)
     style_res->font_specification.set = FALSE;
 
     for (GSList const *i = objects; i != NULL; i = i->next) {
-        SPObject *obj = SP_OBJECT (i->data);
+        SPObject *obj = reinterpret_cast<SPObject *>(i->data);
 
         // std::cout << "  " << reinterpret_cast<SPObject*>(i->data)->getId() << std::endl;
-        if (!SP_IS_TEXT(obj) && !SP_IS_FLOWTEXT(obj)
-            && !SP_IS_TSPAN(obj) && !SP_IS_TREF(obj) && !SP_IS_TEXTPATH(obj)
-            && !SP_IS_FLOWDIV(obj) && !SP_IS_FLOWPARA(obj) && !SP_IS_FLOWTSPAN(obj)) {
+        if (!isTextualItem(obj)) {
             continue;
         }
 
@@ -1363,9 +1396,12 @@ objects_query_blend (GSList *objects, SPStyle *style_res)
     guint items = 0;
 
     for (GSList const *i = objects; i != NULL; i = i->next) {
-        SPObject *obj = SP_OBJECT (i->data);
+        SPObject *obj = reinterpret_cast<SPObject *>(i->data);
+        if (!obj) {
+            continue;
+        }
         SPStyle *style = obj->style;
-        if (!style || !SP_IS_ITEM(obj)) {
+        if (!style || !dynamic_cast<SPItem *>(obj)) {
             continue;
         }
 
@@ -1378,14 +1414,14 @@ objects_query_blend (GSList *objects, SPStyle *style_res)
 
             // determine whether filter is simple (blend and/or blur) or complex
             for(SPObject *primitive_obj = style->getFilter()->children;
-                primitive_obj && SP_IS_FILTER_PRIMITIVE(primitive_obj);
+                primitive_obj && dynamic_cast<SPFilterPrimitive *>(primitive_obj);
                 primitive_obj = primitive_obj->next) {
-                SPFilterPrimitive *primitive = SP_FILTER_PRIMITIVE(primitive_obj);
-                if(SP_IS_FEBLEND(primitive))
+                SPFilterPrimitive *primitive = dynamic_cast<SPFilterPrimitive *>(primitive_obj);
+                if (dynamic_cast<SPFeBlend *>(primitive)) {
                     ++blendcount;
-                else if(SP_IS_GAUSSIANBLUR(primitive))
+                } else if (dynamic_cast<SPGaussianBlur *>(primitive)) {
                     ++blurcount;
-                else {
+                } else {
                     blurcount = complex_filter;
                     break;
                 }
@@ -1394,10 +1430,10 @@ objects_query_blend (GSList *objects, SPStyle *style_res)
             // simple filter
             if(blurcount == 1 || blendcount == 1) {
                 for(SPObject *primitive_obj = style->getFilter()->children;
-                    primitive_obj && SP_IS_FILTER_PRIMITIVE(primitive_obj);
+                    primitive_obj && dynamic_cast<SPFilterPrimitive *>(primitive_obj);
                     primitive_obj = primitive_obj->next) {
-                    if(SP_IS_FEBLEND(primitive_obj)) {
-                        SPFeBlend *spblend = SP_FEBLEND(primitive_obj);
+                    SPFeBlend *spblend = dynamic_cast<SPFeBlend *>(primitive_obj);
+                    if (spblend) {
                         blend = spblend->blend_mode;
                     }
                 }
@@ -1450,16 +1486,20 @@ objects_query_blur (GSList *objects, SPStyle *style_res)
     guint items = 0;
 
     for (GSList const *i = objects; i != NULL; i = i->next) {
-        SPObject *obj = SP_OBJECT (i->data);
+        SPObject *obj = reinterpret_cast<SPObject *>(i->data);
+        if (!obj) {
+            continue;
+        }
         SPStyle *style = obj->style;
         if (!style) {
             continue;
         }
-        if (!SP_IS_ITEM(obj)) {
+        SPItem *item = dynamic_cast<SPItem *>(obj);
+        if (!item) {
             continue;
         }
 
-        Geom::Affine i2d = SP_ITEM(obj)->i2dt_affine();
+        Geom::Affine i2d = item->i2dt_affine();
 
         items ++;
 
@@ -1468,12 +1508,12 @@ objects_query_blur (GSList *objects, SPStyle *style_res)
             //cycle through filter primitives
             SPObject *primitive_obj = style->getFilter()->children;
             while (primitive_obj) {
-                if (SP_IS_FILTER_PRIMITIVE(primitive_obj)) {
-                    SPFilterPrimitive *primitive = SP_FILTER_PRIMITIVE(primitive_obj);
+                SPFilterPrimitive *primitive = dynamic_cast<SPFilterPrimitive *>(primitive_obj);
+                if (primitive) {
 
                     //if primitive is gaussianblur
-                    if(SP_IS_GAUSSIANBLUR(primitive)) {
-                        SPGaussianBlur * spblur = SP_GAUSSIANBLUR(primitive);
+                    SPGaussianBlur * spblur = dynamic_cast<SPGaussianBlur *>(primitive);
+                    if (spblur) {
                         float num = spblur->stdDeviation.getNumber();
                         float dummy = num * i2d.descrim();
                         if (!IS_NAN(dummy)) {

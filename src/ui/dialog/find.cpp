@@ -241,7 +241,7 @@ Find::Find()
     Inkscape::Selection *selection = sp_desktop_selection (SP_ACTIVE_DESKTOP);
     SPItem *item = selection->singleItem();
     if (item) {
-        if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item)) {
+        if (dynamic_cast<SPText *>(item) || dynamic_cast<SPFlowtext *>(item)) {
             gchar *str;
             str = sp_te_get_string_multiline (item);
             entry_find.getEntry()->set_text(str);
@@ -343,7 +343,7 @@ bool Find::item_text_match (SPItem *item, const gchar *find, bool exact, bool ca
         return false;
     }
 
-    if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item)) {
+    if (dynamic_cast<SPText *>(item) || dynamic_cast<SPFlowtext *>(item)) {
         const gchar *item_text = sp_te_get_string_multiline (item);
         if (item_text == NULL) {
             return false;
@@ -388,7 +388,7 @@ bool Find::item_id_match (SPItem *item, const gchar *id, bool exact, bool casema
         return false;
     }
 
-    if (SP_IS_STRING(item)) { // SPStrings have "on demand" ids which are useless for searching
+    if (dynamic_cast<SPString *>(item)) { // SPStrings have "on demand" ids which are useless for searching
         return false;
     }
 
@@ -561,11 +561,14 @@ GSList *Find::filter_fields (GSList *l, bool exact, bool casematch)
 
     if (check_searchin_text.get_active()) {
         for (GSList *i = in; i != NULL; i = i->next) {
-            if (item_text_match (SP_ITEM(i->data), text, exact, casematch)) {
+            SPObject *obj = reinterpret_cast<SPObject *>(i->data);
+            SPItem *item = dynamic_cast<SPItem *>(obj);
+            g_assert(item != NULL);
+            if (item_text_match(item, text, exact, casematch)) {
                 if (!g_slist_find(out, i->data)) {
                     out = g_slist_prepend (out, i->data);
                     if (_action_replace) {
-                        item_text_match (SP_ITEM(i->data), text, exact, casematch, _action_replace);
+                        item_text_match(item, text, exact, casematch, _action_replace);
                     }
                 }
             }
@@ -581,11 +584,13 @@ GSList *Find::filter_fields (GSList *l, bool exact, bool casematch)
 
         if (ids) {
             for (GSList *i = in; i != NULL; i = i->next) {
-                if (item_id_match (SP_ITEM(i->data), text, exact, casematch)) {
+                SPObject *obj = reinterpret_cast<SPObject *>(i->data);
+                SPItem *item = dynamic_cast<SPItem *>(obj);
+                if (item_id_match(item, text, exact, casematch)) {
                     if (!g_slist_find(out, i->data)) {
                         out = g_slist_prepend (out, i->data);
                         if (_action_replace) {
-                            item_id_match (SP_ITEM(i->data), text, exact, casematch, _action_replace);
+                            item_id_match(item, text, exact, casematch, _action_replace);
                         }
                     }
                 }
@@ -595,12 +600,15 @@ GSList *Find::filter_fields (GSList *l, bool exact, bool casematch)
 
         if (style) {
             for (GSList *i = in; i != NULL; i = i->next) {
-                if (item_style_match (SP_ITEM(i->data), text, exact, casematch)) {
+                SPObject *obj = reinterpret_cast<SPObject *>(i->data);
+                SPItem *item = dynamic_cast<SPItem *>(obj);
+                g_assert(item != NULL);
+                if (item_style_match(item, text, exact, casematch)) {
                     if (!g_slist_find(out, i->data))
                         if (!g_slist_find(out, i->data)) {
                             out = g_slist_prepend (out, i->data);
                             if (_action_replace) {
-                                item_style_match (SP_ITEM(i->data), text, exact, casematch, _action_replace);
+                                item_style_match(item, text, exact, casematch, _action_replace);
                             }
                         }
                 }
@@ -610,11 +618,14 @@ GSList *Find::filter_fields (GSList *l, bool exact, bool casematch)
 
         if (attrname) {
             for (GSList *i = in; i != NULL; i = i->next) {
-                if (item_attr_match (SP_ITEM(i->data), text, exact, casematch)) {
+                SPObject *obj = reinterpret_cast<SPObject *>(i->data);
+                SPItem *item = dynamic_cast<SPItem *>(obj);
+                g_assert(item != NULL);
+                if (item_attr_match(item, text, exact, casematch)) {
                     if (!g_slist_find(out, i->data)) {
                         out = g_slist_prepend (out, i->data);
                         if (_action_replace) {
-                            item_attr_match (SP_ITEM(i->data), text, exact, casematch, _action_replace);
+                            item_attr_match(item, text, exact, casematch, _action_replace);
                         }
                     }
                 }
@@ -624,11 +635,14 @@ GSList *Find::filter_fields (GSList *l, bool exact, bool casematch)
 
         if (attrvalue) {
             for (GSList *i = in; i != NULL; i = i->next) {
-                if (item_attrvalue_match (SP_ITEM(i->data), text, exact, casematch)) {
+                SPObject *obj = reinterpret_cast<SPObject *>(i->data);
+                SPItem *item = dynamic_cast<SPItem *>(obj);
+                g_assert(item != NULL);
+                if (item_attrvalue_match(item, text, exact, casematch)) {
                     if (!g_slist_find(out, i->data)) {
                         out = g_slist_prepend (out, i->data);
                         if (_action_replace) {
-                            item_attrvalue_match (SP_ITEM(i->data), text, exact, casematch, _action_replace);
+                            item_attrvalue_match(item, text, exact, casematch, _action_replace);
                         }
                     }
                 }
@@ -638,11 +652,14 @@ GSList *Find::filter_fields (GSList *l, bool exact, bool casematch)
 
         if (font) {
             for (GSList *i = in; i != NULL; i = i->next) {
-                if (item_font_match (SP_ITEM(i->data), text, exact, casematch)) {
+                SPObject *obj = reinterpret_cast<SPObject *>(i->data);
+                SPItem *item = dynamic_cast<SPItem *>(obj);
+                g_assert(item != NULL);
+                if (item_font_match(item, text, exact, casematch)) {
                     if (!g_slist_find(out, i->data)) {
                         out = g_slist_prepend (out, i->data);
                         if (_action_replace) {
-                            item_font_match (SP_ITEM(i->data), text, exact, casematch, _action_replace);
+                            item_font_match(item, text, exact, casematch, _action_replace);
                         }
                     }
                 }
@@ -661,34 +678,34 @@ bool Find::item_type_match (SPItem *item)
 {
     bool all  =check_alltypes.get_active();
 
-    if ( SP_IS_RECT(item)) {
+    if ( dynamic_cast<SPRect *>(item)) {
         return ( all ||check_rects.get_active());
 
-    } else if (SP_IS_GENERICELLIPSE(item)) {
+    } else if (dynamic_cast<SPGenericEllipse *>(item)) {
         return ( all ||  check_ellipses.get_active());
 
-    } else if (SP_IS_STAR(item) || SP_IS_POLYGON(item)) {
+    } else if (dynamic_cast<SPStar *>(item) || dynamic_cast<SPPolygon *>(item)) {
         return ( all || check_stars.get_active());
 
-    } else if (SP_IS_SPIRAL(item)) {
+    } else if (dynamic_cast<SPSpiral *>(item)) {
         return ( all || check_spirals.get_active());
 
-    } else if (SP_IS_PATH(item) || SP_IS_LINE(item) || SP_IS_POLYLINE(item)) {
+    } else if (dynamic_cast<SPPath *>(item) || dynamic_cast<SPLine *>(item) || dynamic_cast<SPPolyLine *>(item)) {
         return (all || check_paths.get_active());
 
-    } else if (SP_IS_TEXT(item) || SP_IS_TSPAN(item) || SP_IS_TREF(item) || SP_IS_STRING(item)) {
+    } else if (dynamic_cast<SPText *>(item) || dynamic_cast<SPTSpan *>(item) || dynamic_cast<SPTRef *>(item) || dynamic_cast<SPString *>(item)) {
         return (all || check_texts.get_active());
 
-    } else if (SP_IS_GROUP(item) && !desktop->isLayer(item) ) { // never select layers!
+    } else if (dynamic_cast<SPGroup *>(item) && !desktop->isLayer(item) ) { // never select layers!
         return (all || check_groups.get_active());
 
-    } else if (SP_IS_USE(item)) {
+    } else if (dynamic_cast<SPUse *>(item)) {
         return (all || check_clones.get_active());
 
-    } else if (SP_IS_IMAGE(item)) {
+    } else if (dynamic_cast<SPImage *>(item)) {
         return (all || check_images.get_active());
 
-    } else if (SP_IS_OFFSET(item)) {
+    } else if (dynamic_cast<SPOffset *>(item)) {
         return (all || check_offsets.get_active());
     }
 
@@ -699,7 +716,10 @@ GSList *Find::filter_types (GSList *l)
 {
     GSList *n = NULL;
     for (GSList *i = l; i != NULL; i = i->next) {
-        if (item_type_match (SP_ITEM(i->data))) {
+        SPObject *obj = reinterpret_cast<SPObject *>(i->data);
+        SPItem *item = dynamic_cast<SPItem *>(obj);
+        g_assert(item != NULL);
+        if (item_type_match(item)) {
             n = g_slist_prepend (n, i->data);
         }
     }
@@ -716,7 +736,7 @@ GSList *Find::filter_list (GSList *l, bool exact, bool casematch)
 
 GSList *Find::all_items (SPObject *r, GSList *l, bool hidden, bool locked)
 {
-    if (SP_IS_DEFS(r)) {
+    if (dynamic_cast<SPDefs *>(r)) {
         return l; // we're not interested in items in defs
     }
 
@@ -725,8 +745,8 @@ GSList *Find::all_items (SPObject *r, GSList *l, bool hidden, bool locked)
     }
 
     for (SPObject *child = r->firstChild(); child; child = child->getNext()) {
-        if (SP_IS_ITEM(child) && !child->cloned && !desktop->isLayer(SP_ITEM(child))) {
-            SPItem *item = reinterpret_cast<SPItem *>(child);
+        SPItem *item = dynamic_cast<SPItem *>(child);
+        if (item && !child->cloned && !desktop->isLayer(item)) {
             if ((hidden || !desktop->itemIsHidden(item)) && (locked || !item->isLocked())) {
                 l = g_slist_prepend (l, child);
             }
@@ -739,16 +759,18 @@ GSList *Find::all_items (SPObject *r, GSList *l, bool hidden, bool locked)
 GSList *Find::all_selection_items (Inkscape::Selection *s, GSList *l, SPObject *ancestor, bool hidden, bool locked)
 {
     for (GSList *i = (GSList *) s->itemList(); i != NULL; i = i->next) {
-        if (SP_IS_ITEM (i->data) && !reinterpret_cast<SPItem *>(i->data)->cloned && !desktop->isLayer(SP_ITEM(i->data))) {
-            SPItem *item = reinterpret_cast<SPItem *>(i->data);
+        SPObject *obj = reinterpret_cast<SPObject *>(i->data);
+        SPItem *item = dynamic_cast<SPItem *>(obj);
+        g_assert(item != NULL);
+        if (item && !item->cloned && !desktop->isLayer(item)) {
             if (!ancestor || ancestor->isAncestorOf(item)) {
                 if ((hidden || !desktop->itemIsHidden(item)) && (locked || !item->isLocked())) {
                     l = g_slist_prepend (l, i->data);
                 }
             }
         }
-        if (!ancestor || ancestor->isAncestorOf(SP_OBJECT (i->data))) {
-            l = all_items (SP_OBJECT (i->data), l, hidden, locked);
+        if (!ancestor || ancestor->isAncestorOf(item)) {
+            l = all_items(item, l, hidden, locked);
         }
     }
     return l;
@@ -831,7 +853,10 @@ void Find::onAction()
         Inkscape::Selection *selection = sp_desktop_selection (desktop);
         selection->clear();
         selection->setList(n);
-        scroll_to_show_item (desktop, SP_ITEM(n->data));
+        SPObject *obj = reinterpret_cast<SPObject *>(n->data);
+        SPItem *item = dynamic_cast<SPItem *>(obj);
+        g_assert(item != NULL);
+        scroll_to_show_item(desktop, item);
 
         if (_action_replace) {
             DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT, _("Replace text or property"));

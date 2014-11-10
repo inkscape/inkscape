@@ -66,7 +66,8 @@ latex_render_document_text_to_file( SPDocument *doc, gchar const *filename,
     bool pageBoundingBox = true;
     if (exportId && strcmp(exportId, "")) {
         // we want to export the given item only
-        base = SP_ITEM(doc->getObjectById(exportId));
+        base = dynamic_cast<SPItem *>(doc->getObjectById(exportId));
+        g_assert(base != NULL);
         pageBoundingBox = exportCanvas;
     }
     else {
@@ -225,26 +226,22 @@ LaTeXTextRenderer::writePostamble()
     fprintf(_stream, "%s", postamble);
 }
 
-void
-LaTeXTextRenderer::sp_group_render(SPItem *item)
+void LaTeXTextRenderer::sp_group_render(SPGroup *group)
 {
-    SPGroup *group = SP_GROUP(item);
-
     GSList *l = g_slist_reverse(group->childList(false));
     while (l) {
-        SPObject *o = SP_OBJECT (l->data);
-        if (SP_IS_ITEM(o)) {
-            renderItem (SP_ITEM (o));
+        SPObject *o = reinterpret_cast<SPObject *>(l->data);
+        SPItem *item = dynamic_cast<SPItem *>(o);
+        if (item) {
+            renderItem(item);
         }
         l = g_slist_remove (l, o);
     }
 }
 
-void
-LaTeXTextRenderer::sp_use_render(SPItem *item)
+void LaTeXTextRenderer::sp_use_render(SPUse *use)
 {
     bool translated = false;
-    SPUse *use = SP_USE(item);
 
     if ((use->x._set && use->x.computed != 0) || (use->y._set && use->y.computed != 0)) {
         Geom::Affine tp(Geom::Translate(use->x.computed, use->y.computed));
@@ -252,8 +249,9 @@ LaTeXTextRenderer::sp_use_render(SPItem *item)
         translated = true;
     }
 
-    if (use->child && SP_IS_ITEM(use->child)) {
-        renderItem(SP_ITEM(use->child));
+    SPItem *childItem = dynamic_cast<SPItem *>(use->child);
+    if (childItem) {
+        renderItem(childItem);
     }
 
     if (translated) {
@@ -261,16 +259,14 @@ LaTeXTextRenderer::sp_use_render(SPItem *item)
     }
 }
 
-void
-LaTeXTextRenderer::sp_text_render(SPItem *item)
+void LaTeXTextRenderer::sp_text_render(SPText *textobj)
 {
     // Only PDFLaTeX supports importing a single page of a graphics file,
     // so only PDF backend gets interleaved text/graphics
     if (_pdflatex && _omittext_state ==  GRAPHIC_ON_TOP)
         _omittext_state = NEW_PAGE_ON_GRAPHIC;
 
-    SPText *textobj = SP_TEXT (item);
-    SPStyle *style = item->style;
+    SPStyle *style = textobj->style;
 
     // get position and alignment
     // Align vertically on the baseline of the font (retreived from the anchor point)
@@ -312,7 +308,7 @@ LaTeXTextRenderer::sp_text_render(SPItem *item)
     }
 
     // get rotation
-    Geom::Affine i2doc = item->i2doc_affine();
+    Geom::Affine i2doc = textobj->i2doc_affine();
     Geom::Affine wotransl = i2doc.withoutTranslation();
     double degrees = -180/M_PI * Geom::atan2(wotransl.xAxis());
     bool has_rotation = !Geom::are_near(degrees,0.);
@@ -336,11 +332,11 @@ LaTeXTextRenderer::sp_text_render(SPItem *item)
 
         // Walk through all spans in the text object.
         // Write span strings to LaTeX, associated with font weight and style.
-        Inkscape::Text::Layout const &layout = *(te_get_layout (item));
+        Inkscape::Text::Layout const &layout = *(te_get_layout (textobj));
         for (Inkscape::Text::Layout::iterator li = layout.begin(), le = layout.end(); 
              li != le; li.nextStartOfSpan())
         {
-            SPStyle const &spanstyle = *(sp_te_style_at_position (item, li));
+            SPStyle const &spanstyle = *(sp_te_style_at_position (textobj, li));
             bool is_bold = false, is_italic = false, is_oblique = false;
 
             if (spanstyle.font_weight.computed == SP_CSS_FONT_WEIGHT_500 ||
@@ -367,7 +363,7 @@ LaTeXTextRenderer::sp_text_render(SPItem *item)
 
             Inkscape::Text::Layout::iterator ln = li; 
             ln.nextStartOfSpan();
-            Glib::ustring uspanstr = sp_te_get_string_multiline (item, li, ln);
+            Glib::ustring uspanstr = sp_te_get_string_multiline (textobj, li, ln);
             const gchar *spanstr = uspanstr.c_str();
             if (!spanstr) {
                 continue;
@@ -394,8 +390,7 @@ LaTeXTextRenderer::sp_text_render(SPItem *item)
     fprintf(_stream, "%s", os.str().c_str());
 }
 
-void
-LaTeXTextRenderer::sp_flowtext_render(SPItem * item)
+void LaTeXTextRenderer::sp_flowtext_render(SPFlowtext *flowtext)
 {
 /*
 Flowtext is possible by using a minipage! :)
@@ -407,16 +402,15 @@ Flowing in rectangle is possible, not in arb shape.
     if (_pdflatex && _omittext_state ==  GRAPHIC_ON_TOP)
         _omittext_state = NEW_PAGE_ON_GRAPHIC;
 
-    SPFlowtext *flowtext = SP_FLOWTEXT(item);
-    SPStyle *style = item->style;
+    SPStyle *style = flowtext->style;
 
     SPItem *frame_item = flowtext->get_frame(NULL);
-    if (!frame_item || !SP_IS_RECT(frame_item)) {
+    SPRect *frame = dynamic_cast<SPRect *>(frame_item);
+    if (!frame_item || !frame) {
         g_warning("LaTeX export: non-rectangular flowed text shapes are not supported, skipping text.");
         return; // don't know how to handle non-rect frames yet. is quite uncommon for latex users i think
     }
 
-    SPRect *frame = SP_RECT(frame_item);
     Geom::Rect framebox = frame->getRect() * transform();
 
     // get position and alignment
@@ -460,7 +454,7 @@ Flowing in rectangle is possible, not in arb shape.
     }
 
     // get rotation
-    Geom::Affine i2doc = item->i2doc_affine();
+    Geom::Affine i2doc = flowtext->i2doc_affine();
     Geom::Affine wotransl = i2doc.withoutTranslation();
     double degrees = -180/M_PI * Geom::atan2(wotransl.xAxis());
     bool has_rotation = !Geom::are_near(degrees,0.);
@@ -485,11 +479,11 @@ Flowing in rectangle is possible, not in arb shape.
 
         // Walk through all spans in the text object.
         // Write span strings to LaTeX, associated with font weight and style.
-        Inkscape::Text::Layout const &layout = *(te_get_layout (item));
+        Inkscape::Text::Layout const &layout = *(te_get_layout(flowtext));
         for (Inkscape::Text::Layout::iterator li = layout.begin(), le = layout.end(); 
              li != le; li.nextStartOfSpan())
         {
-            SPStyle const &spanstyle = *(sp_te_style_at_position (item, li));
+            SPStyle const &spanstyle = *(sp_te_style_at_position(flowtext, li));
             bool is_bold = false, is_italic = false, is_oblique = false;
 
             if (spanstyle.font_weight.computed == SP_CSS_FONT_WEIGHT_500 ||
@@ -516,7 +510,7 @@ Flowing in rectangle is possible, not in arb shape.
 
             Inkscape::Text::Layout::iterator ln = li; 
             ln.nextStartOfSpan();
-            Glib::ustring uspanstr = sp_te_get_string_multiline (item, li, ln);
+            Glib::ustring uspanstr = sp_te_get_string_multiline(flowtext, li, ln);
             const gchar *spanstr = uspanstr.c_str();
             if (!spanstr) {
                 continue;
@@ -558,22 +552,36 @@ LaTeXTextRenderer::sp_item_invoke_render(SPItem *item)
         return;
     }
 
-    if (SP_IS_ROOT(item)) {
-        return sp_root_render(SP_ROOT(item));
-    } else if (SP_IS_GROUP(item)) {
-        return sp_group_render(item);
-    } else if (SP_IS_USE(item)) {
-        sp_use_render(item);
-    } else if (SP_IS_TEXT(item)) {
-        return sp_text_render(item);
-    } else if (SP_IS_FLOWTEXT(item)) {
-        return sp_flowtext_render(item);
+    SPRoot *root = dynamic_cast<SPRoot *>(item);
+    if (root) {
+        sp_root_render(root);
     } else {
-        // Only PDFLaTeX supports importing a single page of a graphics file,
-        // so only PDF backend gets interleaved text/graphics
-        if (_pdflatex && (_omittext_state == EMPTY || _omittext_state == NEW_PAGE_ON_GRAPHIC))
-            writeGraphicPage();
-        _omittext_state = GRAPHIC_ON_TOP;
+        SPGroup *group = dynamic_cast<SPGroup *>(item);
+        if (group) {
+            sp_group_render(group);
+        } else {
+            SPUse *use = dynamic_cast<SPUse *>(item);
+            if (use) {
+                sp_use_render(use);
+            } else {
+                SPText *text = dynamic_cast<SPText *>(item);
+                if (text) {
+                    sp_text_render(text);
+                } else {
+                    SPFlowtext *flowtext = dynamic_cast<SPFlowtext *>(item);
+                    if (flowtext) {
+                        sp_flowtext_render(flowtext);
+                    } else {
+                        // Only PDFLaTeX supports importing a single page of a graphics file,
+                        // so only PDF backend gets interleaved text/graphics
+                        if (_pdflatex && (_omittext_state == EMPTY || _omittext_state == NEW_PAGE_ON_GRAPHIC)) {
+                            writeGraphicPage();
+                        }
+                        _omittext_state = GRAPHIC_ON_TOP;
+                    }
+                }
+            }
+        }
     }
 }
 

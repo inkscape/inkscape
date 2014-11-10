@@ -31,9 +31,13 @@ public:
     but losing the automatic wrapping ability. */
     Inkscape::XML::Node *getAsText();
 
-    SPItem *get_frame(SPItem *after);
+    // TODO check if these should return SPRect instead of SPItem
 
-    bool has_internal_frame();
+    SPItem *get_frame(SPItem const *after);
+
+    SPItem const *get_frame(SPItem const *after) const;
+
+    bool has_internal_frame() const;
 
 //semiprivate:  (need to be accessed by the C-style functions still)
     Inkscape::Text::Layout layout;

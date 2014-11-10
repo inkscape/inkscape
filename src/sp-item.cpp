@@ -130,7 +130,8 @@ bool SPItem::isVisibleAndUnlocked(unsigned display_key) const {
 
 bool SPItem::isLocked() const {
     for (SPObject const *o = this; o != NULL; o = o->parent) {
-        if (SP_IS_ITEM(o) && !(SP_ITEM(o)->sensitive)) {
+        SPItem const *item = dynamic_cast<SPItem const *>(o);
+        if (item && !(item->sensitive)) {
             return true;
         }
     }
@@ -185,14 +186,17 @@ guint32 SPItem::highlight_color() const {
     {
         return atoi(_highlightColor) | 0x00000000;
     }
-    else if (parent && parent != this && SP_IS_ITEM(parent))
-    {
-        return SP_ITEM(parent)->highlight_color();
-    }
-    else
-    {
-        static Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        return prefs->getInt("/tools/nodes/highlight_color", 0xff0000ff) | 0x00000000;
+    else {
+        SPItem const *item = dynamic_cast<SPItem const *>(parent);
+        if (parent && (parent != this) && item)
+        {
+            return item->highlight_color();
+        }
+        else
+        {
+            static Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+            return prefs->getInt("/tools/nodes/highlight_color", 0xff0000ff) | 0x00000000;
+        }
     }
 }
 
@@ -209,8 +213,9 @@ void SPItem::resetEvaluated() {
             requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
         }
     } if ( StatusSet == _evaluated_status ) {
-        if (SP_IS_SWITCH(parent)) {
-            SP_SWITCH(parent)->resetChildEvaluated();
+        SPSwitch *switchItem = dynamic_cast<SPSwitch *>(parent);
+        if (switchItem) {
+            switchItem->resetChildEvaluated();
         }
     }
 }
@@ -306,7 +311,7 @@ SPItem::scaleCenter(Geom::Scale const &sc) {
 namespace {
 
 bool is_item(SPObject const &object) {
-    return SP_IS_ITEM(&object);
+    return dynamic_cast<SPItem const *>(&object) != NULL;
 }
 
 }
@@ -566,20 +571,23 @@ void SPItem::clip_ref_changed(SPObject *old_clip, SPObject *clip, SPItem *item)
         SPItemView *v;
         /* Hide clippath */
         for (v = item->display; v != NULL; v = v->next) {
-            SP_CLIPPATH(old_clip)->hide(v->arenaitem->key());
+            SPClipPath *oldPath = dynamic_cast<SPClipPath *>(old_clip);
+            g_assert(oldPath != NULL);
+            oldPath->hide(v->arenaitem->key());
         }
     }
-    if (SP_IS_CLIPPATH(clip)) {
+    SPClipPath *clipPath = dynamic_cast<SPClipPath *>(clip);
+    if (clipPath) {
         Geom::OptRect bbox = item->geometricBounds();
         for (SPItemView *v = item->display; v != NULL; v = v->next) {
             if (!v->arenaitem->key()) {
                 v->arenaitem->setKey(SPItem::display_key_new(3));
             }
-            Inkscape::DrawingItem *ai = SP_CLIPPATH(clip)->show(
+            Inkscape::DrawingItem *ai = clipPath->show(
                                                v->arenaitem->drawing(),
                                                v->arenaitem->key());
             v->arenaitem->setClip(ai);
-            SP_CLIPPATH(clip)->setBBox(v->arenaitem->key(), bbox);
+            clipPath->setBBox(v->arenaitem->key(), bbox);
             clip->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         }
     }
@@ -590,34 +598,37 @@ void SPItem::mask_ref_changed(SPObject *old_mask, SPObject *mask, SPItem *item)
     if (old_mask) {
         /* Hide mask */
         for (SPItemView *v = item->display; v != NULL; v = v->next) {
-            SP_MASK(old_mask)->sp_mask_hide(v->arenaitem->key());
+            SPMask *maskItem = dynamic_cast<SPMask *>(old_mask);
+            g_assert(maskItem != NULL);
+            maskItem->sp_mask_hide(v->arenaitem->key());
         }
     }
-    if (SP_IS_MASK(mask)) {
+    SPMask *maskItem = dynamic_cast<SPMask *>(mask);
+    if (maskItem) {
         Geom::OptRect bbox = item->geometricBounds();
         for (SPItemView *v = item->display; v != NULL; v = v->next) {
             if (!v->arenaitem->key()) {
                 v->arenaitem->setKey(SPItem::display_key_new(3));
             }
-            Inkscape::DrawingItem *ai = SP_MASK(mask)->sp_mask_show(
+            Inkscape::DrawingItem *ai = maskItem->sp_mask_show(
                                            v->arenaitem->drawing(),
                                            v->arenaitem->key());
             v->arenaitem->setMask(ai);
-            SP_MASK(mask)->sp_mask_set_bbox(v->arenaitem->key(), bbox);
+            maskItem->sp_mask_set_bbox(v->arenaitem->key(), bbox);
             mask->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         }
     }
 }
 
 void SPItem::fill_ps_ref_changed(SPObject *old_ps, SPObject *ps, SPItem *item) {
-    SPPaintServer *old_fill_ps = SP_PAINT_SERVER(old_ps);
+    SPPaintServer *old_fill_ps = dynamic_cast<SPPaintServer *>(old_ps);
     if (old_fill_ps) {
         for (SPItemView *v =item->display; v != NULL; v = v->next) {
             old_fill_ps->hide(v->arenaitem->key());
         }
     }
 
-    SPPaintServer *new_fill_ps = SP_PAINT_SERVER(ps);
+    SPPaintServer *new_fill_ps = dynamic_cast<SPPaintServer *>(ps);
     if (new_fill_ps) {
         Geom::OptRect bbox = item->geometricBounds();
         for (SPItemView *v = item->display; v != NULL; v = v->next) {
@@ -635,14 +646,14 @@ void SPItem::fill_ps_ref_changed(SPObject *old_ps, SPObject *ps, SPItem *item) {
 }
 
 void SPItem::stroke_ps_ref_changed(SPObject *old_ps, SPObject *ps, SPItem *item) {
-    SPPaintServer *old_stroke_ps = SP_PAINT_SERVER(old_ps);
+    SPPaintServer *old_stroke_ps = dynamic_cast<SPPaintServer *>(old_ps);
     if (old_stroke_ps) {
         for (SPItemView *v =item->display; v != NULL; v = v->next) {
             old_stroke_ps->hide(v->arenaitem->key());
         }
     }
 
-    SPPaintServer *new_stroke_ps = SP_PAINT_SERVER(ps);
+    SPPaintServer *new_stroke_ps = dynamic_cast<SPPaintServer *>(ps);
     if (new_stroke_ps) {
         Geom::OptRect bbox = item->geometricBounds();
         for (SPItemView *v = item->display; v != NULL; v = v->next) {
@@ -731,7 +742,7 @@ Inkscape::XML::Node* SPItem::write(Inkscape::XML::Document *xml_doc, Inkscape::X
     if (flags & SP_OBJECT_WRITE_BUILD) {
         GSList *l = NULL;
         for (SPObject *child = object->firstChild(); child != NULL; child = child->next ) {
-            if (SP_IS_TITLE(child) || SP_IS_DESC(child)) {
+            if (dynamic_cast<SPTitle *>(child) || dynamic_cast<SPDesc *>(child)) {
                 Inkscape::XML::Node *crepr = child->updateRepr(xml_doc, NULL, flags);
                 if (crepr) {
                     l = g_slist_prepend (l, crepr);
@@ -745,7 +756,7 @@ Inkscape::XML::Node* SPItem::write(Inkscape::XML::Document *xml_doc, Inkscape::X
         }
     } else {
         for (SPObject *child = object->firstChild() ; child != NULL; child = child->next ) {
-            if (SP_IS_TITLE(child) || SP_IS_DESC(child)) {
+            if (dynamic_cast<SPTitle *>(child) || dynamic_cast<SPDesc *>(child)) {
                 child->updateRepr(flags);
             }
         }
@@ -821,13 +832,14 @@ Geom::OptRect SPItem::visualBounds(Geom::Affine const &transform) const
 
     Geom::OptRect bbox;
 
-    if ( style && style->filter.href && style->getFilter() && SP_IS_FILTER(style->getFilter())) {
+
+    SPFilter *filter = (style && style->filter.href) ? dynamic_cast<SPFilter *>(style->getFilter()) : NULL;
+    if ( filter ) {
         // call the subclass method
     	// CPPIFY
     	//bbox = this->bbox(Geom::identity(), SPItem::VISUAL_BBOX);
     	bbox = const_cast<SPItem*>(this)->bbox(Geom::identity(), SPItem::GEOMETRIC_BBOX); // see LP Bug 1229971
 
-        SPFilter *filter = SP_FILTER(style->getFilter());
         // default filer area per the SVG spec:
         SVGLength x, y, w, h;
         Geom::Point minp, maxp;
@@ -874,8 +886,10 @@ Geom::OptRect SPItem::visualBounds(Geom::Affine const &transform) const
     	bbox = const_cast<SPItem*>(this)->bbox(transform, SPItem::VISUAL_BBOX);
     }
     if (clip_ref->getObject()) {
-        SP_ITEM(clip_ref->getOwner())->bbox_valid = FALSE;  // LP Bug 1349018
-        bbox.intersectWith(SP_CLIPPATH(clip_ref->getObject())->geometricBounds(transform));
+        SPItem *ownerItem = dynamic_cast<SPItem *>(clip_ref->getOwner());
+        g_assert(ownerItem != NULL);
+        ownerItem->bbox_valid = FALSE;  // LP Bug 1349018
+        bbox.intersectWith(clip_ref->getObject()->geometricBounds(transform));
     }
 
     return bbox;
@@ -955,7 +969,7 @@ unsigned int SPItem::pos_in_parent() const {
             return pos;
         }
 
-        if (SP_IS_ITEM(iter)) {
+        if (dynamic_cast<SPItem *>(iter)) {
             pos++;
         }
     }
@@ -997,10 +1011,11 @@ void SPItem::getSnappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscap
         if (*o) {
             // obj is a group object, the children are the actual clippers
             for (SPObject *child = (*o)->children ; child ; child = child->next) {
-                if (SP_IS_ITEM(child)) {
+                SPItem *item = dynamic_cast<SPItem *>(child);
+                if (item) {
                     std::vector<Inkscape::SnapCandidatePoint> p_clip_or_mask;
                     // Please note the recursive call here!
-                    SP_ITEM(child)->getSnappoints(p_clip_or_mask, snapprefs);
+                    item->getSnappoints(p_clip_or_mask, snapprefs);
                     // Take into account the transformation of the item being clipped or masked
                     for (std::vector<Inkscape::SnapCandidatePoint>::const_iterator p_orig = p_clip_or_mask.begin(); p_orig != p_clip_or_mask.end(); ++p_orig) {
                         // All snappoints are in desktop coordinates, but the item's transformation is
@@ -1122,7 +1137,7 @@ Inkscape::DrawingItem *SPItem::invoke_show(Inkscape::Drawing &drawing, unsigned 
             ai->setClip(ac);
 
             // Update bbox, in case the clip uses bbox units
-            SP_CLIPPATH(cp)->setBBox(clip_key, item_bbox);
+            cp->setBBox(clip_key, item_bbox);
             cp->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         }
         if (mask_ref->getObject()) {
@@ -1138,7 +1153,7 @@ Inkscape::DrawingItem *SPItem::invoke_show(Inkscape::Drawing &drawing, unsigned 
             ai->setMask(ac);
 
             // Update bbox, in case the mask uses bbox units
-            SP_MASK(mask)->sp_mask_set_bbox(mask_key, item_bbox);
+            mask->sp_mask_set_bbox(mask_key, item_bbox);
             mask->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         }
 
@@ -1226,8 +1241,9 @@ void SPItem::adjust_pattern(Geom::Affine const &postmul, bool set, PatternTransf
     bool fill = (pt == TRANSFORM_FILL || pt == TRANSFORM_BOTH);
     if (fill && style && (style->fill.isPaintserver())) {
         SPObject *server = style->getFillPaintServer();
-        if ( SP_IS_PATTERN(server) ) {
-            SPPattern *pattern = sp_pattern_clone_if_necessary(this, SP_PATTERN(server), "fill");
+        SPPattern *serverPatt = dynamic_cast<SPPattern *>(server);
+        if ( serverPatt ) {
+            SPPattern *pattern = sp_pattern_clone_if_necessary(this, serverPatt, "fill");
             sp_pattern_transform_multiply(pattern, postmul, set);
         }
     }
@@ -1235,8 +1251,9 @@ void SPItem::adjust_pattern(Geom::Affine const &postmul, bool set, PatternTransf
     bool stroke = (pt == TRANSFORM_STROKE || pt == TRANSFORM_BOTH);
     if (stroke && style && (style->stroke.isPaintserver())) {
         SPObject *server = style->getStrokePaintServer();
-        if ( SP_IS_PATTERN(server) ) {
-            SPPattern *pattern = sp_pattern_clone_if_necessary(this, SP_PATTERN(server), "stroke");
+        SPPattern *serverPatt = dynamic_cast<SPPattern *>(server);
+        if ( serverPatt ) {
+            SPPattern *pattern = sp_pattern_clone_if_necessary(this, serverPatt, "stroke");
             sp_pattern_transform_multiply(pattern, postmul, set);
         }
     }
@@ -1246,7 +1263,8 @@ void SPItem::adjust_gradient( Geom::Affine const &postmul, bool set )
 {
     if ( style && style->fill.isPaintserver() ) {
         SPPaintServer *server = style->getFillPaintServer();
-        if ( SP_IS_GRADIENT(server) ) {
+        SPGradient *serverGrad = dynamic_cast<SPGradient *>(server);
+        if ( serverGrad ) {
 
             /**
              * \note Bbox units for a gradient are generally a bad idea because
@@ -1257,7 +1275,7 @@ void SPItem::adjust_gradient( Geom::Affine const &postmul, bool set )
              * \todo FIXME: convert back to bbox units after transforming with
              * the item, so as to preserve the original units.
              */
-            SPGradient *gradient = sp_gradient_convert_to_userspace( SP_GRADIENT(server), this, "fill" );
+            SPGradient *gradient = sp_gradient_convert_to_userspace( serverGrad, this, "fill" );
 
             sp_gradient_transform_multiply( gradient, postmul, set );
         }
@@ -1265,8 +1283,9 @@ void SPItem::adjust_gradient( Geom::Affine const &postmul, bool set )
 
     if ( style && style->stroke.isPaintserver() ) {
         SPPaintServer *server = style->getStrokePaintServer();
-        if ( SP_IS_GRADIENT(server) ) {
-            SPGradient *gradient = sp_gradient_convert_to_userspace( SP_GRADIENT(server), this, "stroke");
+        SPGradient *serverGrad = dynamic_cast<SPGradient *>(server);
+        if ( serverGrad ) {
+            SPGradient *gradient = sp_gradient_convert_to_userspace( serverGrad, this, "stroke");
             sp_gradient_transform_multiply( gradient, postmul, set );
         }
     }
@@ -1318,10 +1337,11 @@ void SPItem::adjust_stroke_width_recursive(double expansion)
     adjust_stroke (expansion);
 
 // A clone's child is the ghost of its original - we must not touch it, skip recursion
-    if ( !SP_IS_USE(this) ) {
+    if ( !dynamic_cast<SPUse *>(this) ) {
         for ( SPObject *o = children; o; o = o->getNext() ) {
-            if (SP_IS_ITEM(o)) {
-                SP_ITEM(o)->adjust_stroke_width_recursive(expansion);
+            SPItem *item = dynamic_cast<SPItem *>(o);
+            if (item) {
+                item->adjust_stroke_width_recursive(expansion);
             }
         }
     }
@@ -1332,10 +1352,11 @@ void SPItem::freeze_stroke_width_recursive(bool freeze)
     freeze_stroke_width = freeze;
 
 // A clone's child is the ghost of its original - we must not touch it, skip recursion
-    if ( !SP_IS_USE(this) ) {
+    if ( !dynamic_cast<SPUse *>(this) ) {
         for ( SPObject *o = children; o; o = o->getNext() ) {
-            if (SP_IS_ITEM(o)) {
-                SP_ITEM(o)->freeze_stroke_width_recursive(freeze);
+            SPItem *item = dynamic_cast<SPItem *>(o);
+            if (item) {
+                item->freeze_stroke_width_recursive(freeze);
             }
         }
     }
@@ -1347,13 +1368,16 @@ void SPItem::freeze_stroke_width_recursive(bool freeze)
 static void
 sp_item_adjust_rects_recursive(SPItem *item, Geom::Affine advertized_transform)
 {
-    if (SP_IS_RECT (item)) {
-    	SP_RECT(item)->compensateRxRy(advertized_transform);
+    SPRect *rect = dynamic_cast<SPRect *>(item);
+    if (rect) {
+    	rect->compensateRxRy(advertized_transform);
     }
 
     for (SPObject *o = item->children; o != NULL; o = o->next) {
-        if (SP_IS_ITEM(o))
-            sp_item_adjust_rects_recursive(SP_ITEM(o), advertized_transform);
+        SPItem *item = dynamic_cast<SPItem *>(o);
+        if (item) {
+            sp_item_adjust_rects_recursive(item, advertized_transform);
+        }
     }
 }
 
@@ -1368,12 +1392,13 @@ void SPItem::adjust_paint_recursive (Geom::Affine advertized_transform, Geom::Af
 // Within text, we do not fork gradients, and so must not recurse to avoid double compensation;
 // also we do not recurse into clones, because a clone's child is the ghost of its original -
 // we must not touch it
-    if (!(this && (SP_IS_TEXT(this) || SP_IS_USE(this)))) {
+    if (!(this && (dynamic_cast<SPText *>(this) || dynamic_cast<SPUse *>(this)))) {
         for (SPObject *o = children; o != NULL; o = o->next) {
-            if (SP_IS_ITEM(o)) {
+            SPItem *item = dynamic_cast<SPItem *>(o);
+            if (item) {
 // At the level of the transformed item, t_ancestors is identity;
 // below it, it is the accmmulated chain of transforms from this level to the top level
-                SP_ITEM(o)->adjust_paint_recursive (advertized_transform, t_item * t_ancestors, is_pattern);
+                item->adjust_paint_recursive (advertized_transform, t_item * t_ancestors, is_pattern);
             }
         }
     }
@@ -1392,20 +1417,18 @@ void SPItem::adjust_paint_recursive (Geom::Affine advertized_transform, Geom::Af
 
 void SPItem::adjust_livepatheffect (Geom::Affine const &postmul, bool set)
 {
-    if ( SP_IS_LPE_ITEM(this) ) {
-        SPLPEItem *lpeitem = SP_LPE_ITEM (this);
-        if ( lpeitem->hasPathEffect() ) {
-            lpeitem->forkPathEffectsIfNecessary();
+    SPLPEItem *lpeitem = dynamic_cast<SPLPEItem *>(this);
+    if ( lpeitem && lpeitem->hasPathEffect() ) {
+        lpeitem->forkPathEffectsIfNecessary();
 
-            // now that all LPEs are forked_if_necessary, we can apply the transform
-            PathEffectList effect_list =  lpeitem->getEffectList();
-            for (PathEffectList::iterator it = effect_list.begin(); it != effect_list.end(); ++it)
-            {
-                LivePathEffectObject *lpeobj = (*it)->lpeobject;
-                if (lpeobj && lpeobj->get_lpe()) {
-                    Inkscape::LivePathEffect::Effect * effect = lpeobj->get_lpe();
-                    effect->transform_multiply(postmul, set);
-                }
+        // now that all LPEs are forked_if_necessary, we can apply the transform
+        PathEffectList effect_list =  lpeitem->getEffectList();
+        for (PathEffectList::iterator it = effect_list.begin(); it != effect_list.end(); ++it)
+        {
+            LivePathEffectObject *lpeobj = (*it)->lpeobject;
+            if (lpeobj && lpeobj->get_lpe()) {
+                Inkscape::LivePathEffect::Effect * effect = lpeobj->get_lpe();
+                effect->transform_multiply(postmul, set);
             }
         }
     }
@@ -1480,7 +1503,7 @@ void SPItem::doWriteTransform(Inkscape::XML::Node *repr, Geom::Affine const &tra
     // onSetTransform cannot be pure due to the fact that not all visible Items are transformable.
 
     if ( // run the object's set_transform (i.e. embed transform) only if:
-             SP_IS_TEXT_TEXTPATH(this) ||
+        (dynamic_cast<SPText *>(this) && firstChild() && dynamic_cast<SPTextPath *>(firstChild())) ||
              (!preserve && // user did not chose to preserve all transforms
              (!clip_ref || !clip_ref->getObject()) && // the object does not have a clippath
              (!mask_ref || !mask_ref->getObject()) && // the object does not have a mask
@@ -1551,11 +1574,14 @@ Geom::Affine i2anc_affine(SPObject const *object, SPObject const *const ancestor
     g_return_val_if_fail(object != NULL, ret);
 
     /* stop at first non-renderable ancestor */
-    while ( object != ancestor && SP_IS_ITEM(object) ) {
-        if (SP_IS_ROOT(object)) {
-            ret *= SP_ROOT(object)->c2p;
+    while ( object != ancestor && dynamic_cast<SPItem const *>(object) ) {
+        SPRoot const *root = dynamic_cast<SPRoot const *>(object);
+        if (root) {
+            ret *= root->c2p;
         } else {
-            ret *= SP_ITEM(object)->transform;
+            SPItem const *item = dynamic_cast<SPItem const *>(object);
+            g_assert(item != NULL);
+            ret *= item->transform;
         }
         object = object->parent;
     }
@@ -1619,7 +1645,7 @@ Geom::Affine SPItem::dt2i_affine() const
 SPItemView *SPItem::sp_item_view_new_prepend(SPItemView *list, SPItem *item, unsigned flags, unsigned key, Inkscape::DrawingItem *drawing_item)
 {
     g_assert(item != NULL);
-    g_assert(SP_IS_ITEM(item));
+    g_assert(dynamic_cast<SPItem *>(item) != NULL);
     g_assert(drawing_item != NULL);
 
     SPItemView *new_view = g_new(SPItemView, 1);
@@ -1677,8 +1703,9 @@ SPItem *sp_item_first_item_child(SPObject *obj)
 {
     SPItem *child = 0;
     for ( SPObject *iter = obj->firstChild() ; iter ; iter = iter->next ) {
-        if ( SP_IS_ITEM(iter) ) {
-            child = SP_ITEM(iter);
+        SPItem *tmp = dynamic_cast<SPItem *>(iter);
+        if ( tmp ) {
+            child = tmp;
             break;
         }
     }

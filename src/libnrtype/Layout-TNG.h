@@ -481,6 +481,7 @@ public:
     from a call to appendText() then the optional \a text_iterator
     parameter is set to point to the actual character, otherwise
     \a text_iterator is unaltered. */
+    // TODO FIXME a void* cookie is a very unsafe design, and C++ makes it unnecessary.  
     void getSourceOfCharacter(iterator const &it, void **source_cookie, Glib::ustring::iterator *text_iterator = NULL) const;
 
     /** For latin text, the left side of the character, on the baseline */

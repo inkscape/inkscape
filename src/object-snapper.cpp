@@ -91,7 +91,8 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
 
     for ( SPObject *o = parent->firstChild(); o; o = o->getNext() ) {
         g_assert(dt != NULL);
-        if (SP_IS_ITEM(o) && !(dt->itemIsHidden(SP_ITEM(o)) && !clip_or_mask)) {
+        SPItem *item = dynamic_cast<SPItem *>(o);
+        if (item && !(dt->itemIsHidden(item) && !clip_or_mask)) {
             // Snapping to items in a locked layer is allowed
             // Don't snap to hidden objects, unless they're a clipped path or a mask
             /* See if this item is on the ignore list */
@@ -104,23 +105,22 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
             }
 
             if (it == NULL || i == it->end()) {
-                SPItem *item = SP_ITEM(o);
                 if (item) {
                     if (!clip_or_mask) { // cannot clip or mask more than once
                         // The current item is not a clipping path or a mask, but might
                         // still be the subject of clipping or masking itself ; if so, then
                         // we should also consider that path or mask for snapping to
-                        SPObject *obj = SP_OBJECT(item->clip_ref ? item->clip_ref->getObject() : NULL);
+                        SPObject *obj = item->clip_ref ? item->clip_ref->getObject() : NULL;
                         if (obj && _snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_PATH_CLIP)) {
                             _findCandidates(obj, it, false, bbox_to_snap, true, item->i2doc_affine());
                         }
-                        obj = SP_OBJECT(item->mask_ref ? item->mask_ref->getObject() : NULL);
+                        obj = item->mask_ref ? item->mask_ref->getObject() : NULL;
                         if (obj && _snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_PATH_MASK)) {
                             _findCandidates(obj, it, false, bbox_to_snap, true, item->i2doc_affine());
                         }
                     }
 
-                    if (SP_IS_GROUP(o)) {
+                    if (dynamic_cast<SPGroup *>(item)) {
                         _findCandidates(o, it, false, bbox_to_snap, clip_or_mask, additional_affine);
                     } else {
                         Geom::OptRect bbox_of_item;
@@ -197,8 +197,10 @@ void Inkscape::ObjectSnapper::_collectNodes(SnapSourceType const &t,
         for (std::vector<SnapCandidateItem>::const_iterator i = _candidates->begin(); i != _candidates->end(); ++i) {
             //Geom::Affine i2doc(Geom::identity());
             SPItem *root_item = (*i).item;
-            if (SP_IS_USE((*i).item)) {
-                root_item = SP_USE((*i).item)->root();
+
+            SPUse *use = dynamic_cast<SPUse *>((*i).item);
+            if (use) {
+                root_item = use->root();
             }
             g_return_if_fail(root_item);
 
@@ -382,9 +384,10 @@ void Inkscape::ObjectSnapper::_collectPaths(Geom::Point /*p*/,
             Geom::Affine i2doc(Geom::identity());
             SPItem *root_item = NULL;
             /* We might have a clone at hand, so make sure we get the root item */
-            if (SP_IS_USE((*i).item)) {
-                i2doc = SP_USE((*i).item)->get_root_transform();
-                root_item = SP_USE((*i).item)->root();
+            SPUse *use = dynamic_cast<SPUse *>((*i).item);
+            if (use) {
+                i2doc = use->get_root_transform();
+                root_item = use->root();
                 g_return_if_fail(root_item);
             } else {
                 i2doc = (*i).item->i2doc_affine();
@@ -396,7 +399,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Geom::Point /*p*/,
             //Add the item's path to snap to
             if (_snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_PATH, SNAPTARGET_PATH_INTERSECTION, SNAPTARGET_TEXT_BASELINE)) {
                 if (p_is_other || p_is_a_node || (!_snapmanager->snapprefs.getStrictSnapping() && p_is_a_bbox)) {
-                    if (SP_IS_TEXT(root_item) || SP_IS_FLOWTEXT(root_item)) {
+                    if (dynamic_cast<SPText *>(root_item) || dynamic_cast<SPFlowtext *>(root_item)) {
                         if (_snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_TEXT_BASELINE)) {
                             // Snap to the text baseline
                             Text::Layout const *layout = te_get_layout(static_cast<SPItem *>(root_item));
@@ -411,15 +414,17 @@ void Inkscape::ObjectSnapper::_collectPaths(Geom::Point /*p*/,
                         // the CPU, so we'll only snap to paths having no more than 500 nodes
                         // This also leads to a lag of approx. 500 msec (in my lousy test set-up).
                         bool very_complex_path = false;
-                        if (SP_IS_PATH(root_item)) {
-                            very_complex_path = SP_PATH(root_item)->nodesInPath() > 500;
+                        SPPath *path = dynamic_cast<SPPath *>(root_item);
+                        if (path) {
+                            very_complex_path = path->nodesInPath() > 500;
                         }
 
                         if (!very_complex_path && root_item && _snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_PATH, SNAPTARGET_PATH_INTERSECTION)) {
                             SPCurve *curve = NULL;
-                            if (SP_IS_SHAPE(root_item)) {
-                               curve = SP_SHAPE(root_item)->getCurve();
-                            }/* else if (SP_IS_TEXT(root_item) || SP_IS_FLOWTEXT(root_item)) {
+                            SPShape *shape = dynamic_cast<SPShape *>(root_item);
+                            if (shape) {
+                               curve = shape->getCurve();
+                            }/* else if (dynamic_cast<SPText *>(root_item) || dynamic_cast<SPFlowtext *>(root_item)) {
                                curve = te_get_layout(root_item)->convertToCurves();
                             }*/
                             if (curve) {
@@ -711,10 +716,11 @@ void Inkscape::ObjectSnapper::freeSnap(IntermSnapResults &isr,
              * That path must not be ignored however when snapping to the paths, so we add it here
              * manually when applicable
              */
-            SPPath *path = NULL;
+            SPPath const *path = NULL;
             if (it != NULL) {
-                if (it->size() == 1 && SP_IS_PATH(*it->begin())) {
-                    path = SP_PATH(*it->begin());
+                SPPath const *tmpPath = dynamic_cast<SPPath const *>(*it->begin());
+                if ((it->size() == 1) && tmpPath) {
+                    path = tmpPath;
                 } // else: *it->begin() might be a SPGroup, e.g. when editing a LPE of text that has been converted to a group of paths
                 // as reported in bug #356743. In that case we can just ignore it, i.e. not snap to this item
             }

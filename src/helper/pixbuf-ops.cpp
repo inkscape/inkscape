@@ -34,20 +34,21 @@
 
 #include "helper/pixbuf-ops.h"
 
-// TODO look for copy-n-past duplication of this function:
+// TODO look for copy-n-paste duplication of this function:
 /**
  * Hide all items that are not listed in list, recursively, skipping groups and defs.
  */
 static void hide_other_items_recursively(SPObject *o, GSList *list, unsigned dkey)
 {
-    if ( SP_IS_ITEM(o)
-         && !SP_IS_DEFS(o)
-         && !SP_IS_ROOT(o)
-         && !SP_IS_GROUP(o)
-         && !SP_IS_USE(o)
+    SPItem *item = dynamic_cast<SPItem *>(o);
+    if ( item
+         && !dynamic_cast<SPDefs *>(item)
+         && !dynamic_cast<SPRoot *>(item)
+         && !dynamic_cast<SPGroup *>(item)
+         && !dynamic_cast<SPUse *>(item)
          && !g_slist_find(list, o) )
     {
-        SP_ITEM(o)->invoke_hide(dkey);
+        item->invoke_hide(dkey);
     }
 
     // recurse
