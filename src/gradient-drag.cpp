@@ -782,6 +782,8 @@ static void gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, gui
 
                 // unlink and delete this dragger
                 dragger->parent->draggers = g_list_remove (dragger->parent->draggers, dragger);
+                d_new->parent->draggers = g_list_remove (d_new->parent->draggers, dragger);
+                d_new->parent->selected = g_list_remove (d_new->parent->selected, dragger);
                 delete dragger;
 
                 // throw out delayed snap context 
