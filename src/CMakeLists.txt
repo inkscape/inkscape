@@ -365,6 +365,7 @@ set(inkscape_SRC
 	number-opt-number.h
 	object-hierarchy.h
 	object-snapper.h
+	object-test.h
 	path-chemistry.h
 	path-prefix.h
 	persp3d-reference.h
