@@ -95,6 +95,30 @@ public:
 
         SPGroup *group = dynamic_cast<SPGroup *>(doc->getObjectById("G"));
         testGrouping(group);
+
+        // Test parent behavior
+        SPObject *child = root->firstChild();
+        assert(child != NULL);
+        TS_ASSERT(child->parent == root);
+        TS_ASSERT(child->document == doc);
+        TS_ASSERT(root->isAncestorOf(child));
+
+        // Test list behavior
+        SPObject *next = child->getNext();
+        SPObject *prev = next;
+        TS_ASSERT(next->getPrev() == child);
+        prev = next;
+        next = next->getNext();
+        while (next != NULL) {
+            // Walk the list
+            TS_ASSERT(next->getPrev() == prev);
+            prev = next;
+            next = next->getNext();
+        }
+        TS_ASSERT(child->lastChild() == next);
+
+        // Test hrefcount
+        TS_ASSERT(path->isReferenced());
     }
     
     void testClones(SPPath *path)
