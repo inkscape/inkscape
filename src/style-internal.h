@@ -36,6 +36,12 @@ static const unsigned SP_STYLE_FLAG_ALWAYS (1 << 2);
 static const unsigned SP_STYLE_FLAG_IFSET  (1 << 0);
 static const unsigned SP_STYLE_FLAG_IFDIFF (1 << 1);
 
+enum SPStyleSrc {
+    SP_STYLE_SRC_UNSET,
+    SP_STYLE_SRC_STYLE_PROP,
+    SP_STYLE_SRC_STYLE_SHEET,
+    SP_STYLE_SRC_ATTRIBUTE
+};
 
 /* General comments:
  *
@@ -113,7 +119,7 @@ public:
           inherits(inherits),
           set(false),
           inherit(false),
-          style_att(false),
+          style_src(SP_STYLE_SRC_UNSET),
           style(NULL)
     {}
 
@@ -150,7 +156,7 @@ public:
         inherits    = rhs.inherits;
         set         = rhs.set;
         inherit     = rhs.inherit;
-        style_att   = rhs.style_att;
+        style_src   = rhs.style_src;
         style       = rhs.style;
         return *this;
     }
@@ -170,7 +176,7 @@ public:
     unsigned inherits : 1;    // Property inherits by default from parent.
     unsigned set : 1;         // Property has been explicitly set (vs. inherited).
     unsigned inherit : 1;     // Property value set to 'inherit'.
-    unsigned style_att : 2;   // Source (attribute, style attribute, style-sheet). NOT USED YET FIX ME
+    SPStyleSrc style_src : 2; // Source (attribute, style attribute, style-sheet). NOT USED YET FIX ME
 
   // To do: make private after g_asserts removed
 public:
