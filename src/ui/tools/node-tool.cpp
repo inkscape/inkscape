@@ -310,7 +310,7 @@ void  NodeTool::update_helperpath () {
             for (Inkscape::UI::ControlPointSelection::Set::iterator i = selectionNodes.begin(); i != selectionNodes.end(); ++i) {
                 if ((*i)->selected()) {
                     Inkscape::UI::Node *n = dynamic_cast<Inkscape::UI::Node *>(*i);
-                    selectedNodesPositions.push_back(desktop->doc2dt(n->position()));
+                    selectedNodesPositions.push_back(n->position());
                 }
             }
             lpe->setSelectedNodePoints(selectedNodesPositions);

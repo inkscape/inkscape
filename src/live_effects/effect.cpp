@@ -413,12 +413,15 @@ bool
 Effect::isNodePointSelected(Geom::Point const &nodePoint) const
 {
     if (selectedNodesPoints.size() > 0) {
+        using Geom::X;
+        using Geom::Y; 
         for (std::vector<Geom::Point>::const_iterator i = selectedNodesPoints.begin();
                 i != selectedNodesPoints.end(); ++i) {
             Geom::Point p = *i;
-            p[Geom::X] = Inkscape::Util::Quantity::convert(p[Geom::X], "px", *defaultUnit);
-            p[Geom::Y] = Inkscape::Util::Quantity::convert(p[Geom::Y], "px", *defaultUnit);
-            if (Geom::are_near(p, nodePoint, 0.01)) {
+            Geom::Affine transformCoordinate = sp_lpe_item->i2dt_affine();
+            Geom::Point p2(nodePoint[X],nodePoint[Y]);
+            p2 *= transformCoordinate;
+            if (Geom::are_near(p, p2, 0.01)) {
                 return true;
             }
         }
