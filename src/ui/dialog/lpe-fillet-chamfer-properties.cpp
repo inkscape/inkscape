@@ -79,12 +79,15 @@ FilletChamferPropertiesDialog::FilletChamferPropertiesDialog()
     _fillet_chamfer_type_inverse_fillet.set_group(_fillet_chamfer_type_group);
     _fillet_chamfer_type_chamfer.set_label(_("Chamfer"));
     _fillet_chamfer_type_chamfer.set_group(_fillet_chamfer_type_group);
+    _fillet_chamfer_type_inverse_chamfer.set_label(_("Inverse chamfer"));
+    _fillet_chamfer_type_inverse_chamfer.set_group(_fillet_chamfer_type_group);
 
 
     mainVBox->pack_start(_layout_table, true, true, 4);
     mainVBox->pack_start(_fillet_chamfer_type_fillet, true, true, 4);
     mainVBox->pack_start(_fillet_chamfer_type_inverse_fillet, true, true, 4);
     mainVBox->pack_start(_fillet_chamfer_type_chamfer, true, true, 4);
+    mainVBox->pack_start(_fillet_chamfer_type_inverse_chamfer, true, true, 4);
 
     // Buttons
     _close_button.set_use_stock(true);
@@ -158,8 +161,10 @@ void FilletChamferPropertiesDialog::_apply()
             d_width = 1;
         } else if (_fillet_chamfer_type_inverse_fillet.get_active() == true) {
             d_width = 2;
+        } else if (_fillet_chamfer_type_inverse_chamfer.get_active() == true) {
+            d_width = _fillet_chamfer_chamfer_subdivisions.get_value() + 4000;
         } else {
-            d_width = _fillet_chamfer_chamfer_subdivisions.get_value() + 3;
+            d_width = _fillet_chamfer_chamfer_subdivisions.get_value() + 3000;
         }
         if (_flexible) {
             if (d_pos > 99.99999 || d_pos < 0) {
@@ -229,8 +234,12 @@ void FilletChamferPropertiesDialog::_set_knot_point(Geom::Point knotpoint)
         _fillet_chamfer_type_fillet.set_active(true);
     } else if (knotpoint.y() == 2) {
         _fillet_chamfer_type_inverse_fillet.set_active(true);
-    } else if (knotpoint.y() >= 3) {
-        _fillet_chamfer_chamfer_subdivisions.set_value(knotpoint.y() - 3);
+    } else if (knotpoint.y() >= 3000 && knotpoint.y() < 4000) {
+        _fillet_chamfer_chamfer_subdivisions.set_value(knotpoint.y() - 3000);
+        _fillet_chamfer_type_chamfer.set_active(true);
+    } else if (knotpoint.y() >= 4000 && knotpoint.y() < 5000) {
+        _fillet_chamfer_chamfer_subdivisions.set_value(knotpoint.y() - 4000);
+        _fillet_chamfer_type_inverse_chamfer.set_active(true);
     }
 }
 

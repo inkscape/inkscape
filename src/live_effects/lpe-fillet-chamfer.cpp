@@ -79,7 +79,7 @@ LPEFilletChamfer::LPEFilletChamfer(LivePathEffectObject *lpeobject) :
     radius.param_set_range(0., infinity());
     radius.param_set_increments(1, 1);
     radius.param_set_digits(4);
-    chamfer_steps.param_set_range(0, infinity());
+    chamfer_steps.param_set_range(0, 999);
     chamfer_steps.param_set_increments(1, 1);
     chamfer_steps.param_set_digits(0);
     helper_size.param_set_range(0, infinity());
@@ -116,7 +116,7 @@ Gtk::Widget *LPEFilletChamfer::newWidget()
                 }
             } else if (param->param_key == "chamfer_steps") {
                 Inkscape::UI::Widget::Scalar *widgRegistered = Gtk::manage(dynamic_cast<Inkscape::UI::Widget::Scalar *>(widg));
-                widgRegistered->signal_value_changed().connect(sigc::mem_fun(*this, &LPEFilletChamfer::chamfer));
+                widgRegistered->signal_value_changed().connect(sigc::mem_fun(*this, &LPEFilletChamfer::chamferSubdivisions));
                 widg = widgRegistered;
                 if (widg) {
                     Gtk::HBox *scalarParameter = dynamic_cast<Gtk::HBox *>(widg);
@@ -153,21 +153,26 @@ Gtk::Widget *LPEFilletChamfer::newWidget()
 
         ++it;
     }
-
-    Gtk::VBox *buttonsContainer = Gtk::manage(new Gtk::VBox(true, 0));
+    Gtk::HBox *filletContainer = Gtk::manage(new Gtk::HBox(true, 0));
     Gtk::Button *fillet = Gtk::manage(new Gtk::Button(Glib::ustring(_("Fillet"))));
     fillet->signal_clicked().connect(sigc::mem_fun(*this, &LPEFilletChamfer::fillet));
 
-    buttonsContainer->pack_start(*fillet, true, true, 2);
-    Gtk::Button *inverse = Gtk::manage(new Gtk::Button(Glib::ustring(_("Inverse fillet"))));
-    inverse->signal_clicked().connect(sigc::mem_fun(*this, &LPEFilletChamfer::inverse));
-    buttonsContainer->pack_start(*inverse, true, true, 2);
-
+    filletContainer->pack_start(*fillet, true, true, 2);
+    Gtk::Button *inverseFillet = Gtk::manage(new Gtk::Button(Glib::ustring(_("Inverse fillet"))));
+    inverseFillet->signal_clicked().connect(sigc::mem_fun(*this, &LPEFilletChamfer::inverseFillet));
+    filletContainer->pack_start(*inverseFillet, true, true, 2);
+    
+    Gtk::HBox *chamferContainer = Gtk::manage(new Gtk::HBox(true, 0));
     Gtk::Button *chamfer = Gtk::manage(new Gtk::Button(Glib::ustring(_("Chamfer"))));
     chamfer->signal_clicked().connect(sigc::mem_fun(*this, &LPEFilletChamfer::chamfer));
-    buttonsContainer->pack_start(*chamfer, true, true, 2);
 
-    vbox->pack_start(*buttonsContainer, true, true, 2);
+    chamferContainer->pack_start(*chamfer, true, true, 2);
+    Gtk::Button *inverseChamfer = Gtk::manage(new Gtk::Button(Glib::ustring(_("Inverse chamfer"))));
+    inverseChamfer->signal_clicked().connect(sigc::mem_fun(*this, &LPEFilletChamfer::inverseChamfer));
+    chamferContainer->pack_start(*inverseChamfer, true, true, 2);
+
+    vbox->pack_start(*filletContainer, true, true, 2);
+    vbox->pack_start(*chamferContainer, true, true, 2);
 
     return vbox;
 }
@@ -232,17 +237,31 @@ void LPEFilletChamfer::fillet()
     doChangeType(path_from_piecewise(pwd2, tolerance), 1);
 }
 
-void LPEFilletChamfer::inverse()
+void LPEFilletChamfer::inverseFillet()
 {
     Piecewise<D2<SBasis> > const &pwd2 = fillet_chamfer_values.get_pwd2();
     doChangeType(path_from_piecewise(pwd2, tolerance), 2);
 }
 
+void LPEFilletChamfer::chamferSubdivisions()
+{
+    fillet_chamfer_values.set_chamfer_steps(chamfer_steps);
+    Piecewise<D2<SBasis> > const &pwd2 = fillet_chamfer_values.get_pwd2();
+    doChangeType(path_from_piecewise(pwd2, tolerance), chamfer_steps + 5000);
+}
+
 void LPEFilletChamfer::chamfer()
 {
-    fillet_chamfer_values.set_chamfer_steps(chamfer_steps + 3);
+    fillet_chamfer_values.set_chamfer_steps(chamfer_steps);
     Piecewise<D2<SBasis> > const &pwd2 = fillet_chamfer_values.get_pwd2();
-    doChangeType(path_from_piecewise(pwd2, tolerance), chamfer_steps + 3);
+    doChangeType(path_from_piecewise(pwd2, tolerance), chamfer_steps + 3000);
+}
+
+void LPEFilletChamfer::inverseChamfer()
+{
+    fillet_chamfer_values.set_chamfer_steps(chamfer_steps);
+    Piecewise<D2<SBasis> > const &pwd2 = fillet_chamfer_values.get_pwd2();
+    doChangeType(path_from_piecewise(pwd2, tolerance), chamfer_steps + 4000);
 }
 
 void LPEFilletChamfer::refreshKnots()
@@ -333,6 +352,13 @@ void LPEFilletChamfer::doChangeType(std::vector<Geom::Path> const& original_path
                 toggle = false;
             }
             if (toggle) {
+                if(type >= 5000){
+                    if(filletChamferData[counter][Y] >= 3000 && filletChamferData[counter][Y] < 4000){
+                        type = type - 2000;
+                    } else if (filletChamferData[counter][Y] >= 4000 && filletChamferData[counter][Y] < 5000){
+                        type = type - 1000;
+                    }
+                }
                 result.push_back(Point(filletChamferData[counter][X], type));
             } else {
                 result.push_back(filletChamferData[counter]);
@@ -552,14 +578,30 @@ LPEFilletChamfer::doEffect_path(std::vector<Geom::Path> const &path_in)
                 } else {
                     type = std::abs(filletChamferData[counter + 1][Y]);
                 }
-                if (type >= 3) {
-                    unsigned int chamferSubs = type-2;
+                if (type >= 3000 && type < 4000) {
+                    unsigned int chamferSubs = type-2999;
                     Geom::Path path_chamfer;
                     path_chamfer.start(path_out.finalPoint());
                     if((is_straight_curve(*curve_it1) && is_straight_curve(*curve_it2Fixed) && method != FM_BEZIER )|| method == FM_ARC){ 
                         path_chamfer.appendNew<SVGEllipticalArc>(rx, ry, angleArc, 0, ccwToggle, endArcPoint);
                     } else {
                         path_chamfer.appendNew<Geom::CubicBezier>(handle1, handle2, endArcPoint);
+                    }
+                    double chamfer_stepsTime = 1.0/chamferSubs;
+                    for(unsigned int i = 1; i < chamferSubs; i++){
+                        Geom::Point chamferStep = path_chamfer.pointAt(chamfer_stepsTime * i);
+                        path_out.appendNew<Geom::LineSegment>(chamferStep);
+                    }
+                    path_out.appendNew<Geom::LineSegment>(endArcPoint);
+                } else if (type >= 4000 && type < 5000) {
+                    unsigned int chamferSubs = type-3999;
+                    Geom::Path path_chamfer;
+                    path_chamfer.start(path_out.finalPoint());
+                    if((is_straight_curve(*curve_it1) && is_straight_curve(*curve_it2Fixed) && method != FM_BEZIER )|| method == FM_ARC){ 
+                        ccwToggle = ccwToggle?0:1;
+                        path_chamfer.appendNew<SVGEllipticalArc>(rx, ry, angleArc, 0, ccwToggle, endArcPoint);
+                    }else{
+                        path_chamfer.appendNew<Geom::CubicBezier>(inverseHandle1, inverseHandle2, endArcPoint);
                     }
                     double chamfer_stepsTime = 1.0/chamferSubs;
                     for(unsigned int i = 1; i < chamferSubs; i++){
@@ -574,7 +616,7 @@ LPEFilletChamfer::doEffect_path(std::vector<Geom::Path> const &path_in)
                     }else{
                         path_out.appendNew<Geom::CubicBezier>(inverseHandle1, inverseHandle2, endArcPoint);
                     }
-                } else {
+                } else if (type == 1){
                     if((is_straight_curve(*curve_it1) && is_straight_curve(*curve_it2Fixed) && method != FM_BEZIER )|| method == FM_ARC){ 
                         path_out.appendNew<SVGEllipticalArc>(rx, ry, angleArc, 0, ccwToggle, endArcPoint);
                     } else {

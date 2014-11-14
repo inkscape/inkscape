@@ -723,7 +723,7 @@ FilletChamferPointArrayParamKnotHolderEntity(
 
 void FilletChamferPointArrayParamKnotHolderEntity::knot_set(Point const &p,
                                                             Point const &/*origin*/,
-                                                            guint /*state*/)
+                                                            guint state)
 {
     using namespace Geom;
 
@@ -733,7 +733,7 @@ void FilletChamferPointArrayParamKnotHolderEntity::knot_set(Point const &p,
     /// @todo how about item transforms???
     Piecewise<D2<SBasis> > const &pwd2 = _pparam->get_pwd2();
     //todo: add snapping
-    //Geom::Point const s = snap_knot_position(p, state);
+    Geom::Point const s = snap_knot_position(p, state);
     double t = nearest_point(p, pwd2[_index]);
     if (t == 1) {
         t = 0.9999;
@@ -777,13 +777,21 @@ void FilletChamferPointArrayParamKnotHolderEntity::knot_click(guint state)
         }else{
             using namespace Geom;
             int type = (int)_pparam->_vector.at(_index)[Y];
-            
+            if (type >=3000 && type < 4000){
+                type = 3;
+            }
+            if (type >=4000 && type < 5000){
+                type = 4;
+            }
             switch(type){
                 case 1:
                     type = 2;
                     break;
                 case 2:
-                    type =  _pparam->chamfer_steps;
+                    type =  _pparam->chamfer_steps + 3000;
+                    break;
+                case 3:
+                    type =  _pparam->chamfer_steps + 4000;
                     break;
                 default:
                     type = 1;
@@ -793,8 +801,12 @@ void FilletChamferPointArrayParamKnotHolderEntity::knot_click(guint state)
             _pparam->param_set_and_write_new_value(_pparam->_vector);
             sp_lpe_item_update_patheffect(SP_LPE_ITEM(item), false, false);
             const gchar *tip;
-            if (type >= 3) {
-                tip = _("<b>Chamfer</b>: <b>Ctrl+Click</b> toogle type, "
+            if (type >=3000 && type < 4000){
+                 tip = _("<b>Chamfer</b>: <b>Ctrl+Click</b> toogle type, "
+                        "<b>Shift+Click</b> open dialog, "
+                        "<b>Ctrl+Alt+Click</b> reset");
+            } else if (type >=4000 && type < 5000) {
+                tip = _("<b>Inverse Chamfer</b>: <b>Ctrl+Click</b> toogle type, "
                         "<b>Shift+Click</b> open dialog, "
                         "<b>Ctrl+Alt+Click</b> reset");
             } else if (type == 2) {
@@ -850,8 +862,12 @@ void FilletChamferPointArrayParam::addKnotHolderEntities(KnotHolder *knotholder,
             continue;
         }
         const gchar *tip;
-        if (_vector[i][Y] >= 3) {
-            tip = _("<b>Chamfer</b>: <b>Ctrl+Click</b> toogle type, "
+        if (_vector[i][Y] >=3000 && _vector[i][Y] < 4000){
+             tip = _("<b>Chamfer</b>: <b>Ctrl+Click</b> toogle type, "
+                    "<b>Shift+Click</b> open dialog, "
+                    "<b>Ctrl+Alt+Click</b> reset");
+        } else if (_vector[i][Y] >=4000 && _vector[i][Y] < 5000) {
+            tip = _("<b>Inverse Chamfer</b>: <b>Ctrl+Click</b> toogle type, "
                     "<b>Shift+Click</b> open dialog, "
                     "<b>Ctrl+Alt+Click</b> reset");
         } else if (_vector[i][Y] == 2) {

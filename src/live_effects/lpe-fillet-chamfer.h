@@ -56,8 +56,10 @@ public:
     void toggleHide();
     void toggleFlexFixed();
     void chamfer();
+    void chamferSubdivisions();
+    void inverseChamfer();
     void fillet();
-    void inverse();
+    void inverseFillet();
     void updateFillet();
     void doUpdateFillet(std::vector<Geom::Path> const& original_pathv, double power);
     void doChangeType(std::vector<Geom::Path> const& original_pathv, int type);
