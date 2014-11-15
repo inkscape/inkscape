@@ -1643,7 +1643,7 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Affine cons
                     item->doWriteTransform(item->getRepr(), move, &move, compensate);
 
                 } else if (prefs_unmoved) {
-                    //if (SP_IS_USE(sp_use_get_original(SP_USE(item))))
+                    //if (dynamic_cast<SPUse *>(sp_use_get_original(dynamic_cast<SPUse *>(item))))
                     //    clone_move = Geom::identity();
                     Geom::Affine move = result * clone_move;
                     item->doWriteTransform(item->getRepr(), move, &t, compensate);
