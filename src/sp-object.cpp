@@ -406,7 +406,7 @@ void SPObject::requestOrphanCollection() {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     // do not remove style or script elements (Bug #276244)
-    if (SP_IS_STYLE_ELEM(this)) {
+    if (dynamic_cast<SPStyleElem *>(this)) {
         // leave it
     } else if (SP_IS_SCRIPT(this)) {
         // leave it
