@@ -6,6 +6,7 @@
  *
  * Author:
  *   Felipe C. da S. Sanches <juca@members.fsf.org>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2008 Author
  *
@@ -14,9 +15,6 @@
 
 #include "sp-object.h"
 #include "document.h"
-
-#define SP_SCRIPT(obj) (dynamic_cast<SPScript*>((SPObject*)obj))
-#define SP_IS_SCRIPT(obj) (dynamic_cast<const SPScript*>((SPObject*)obj) != NULL)
 
 /* SPScript */
 class SPScript : public SPObject {

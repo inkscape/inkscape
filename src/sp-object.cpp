@@ -408,7 +408,7 @@ void SPObject::requestOrphanCollection() {
     // do not remove style or script elements (Bug #276244)
     if (dynamic_cast<SPStyleElem *>(this)) {
         // leave it
-    } else if (SP_IS_SCRIPT(this)) {
+    } else if (dynamic_cast<SPScript *>(this)) {
         // leave it
   
     } else if ((! prefs->getBool("/options/cleanupswatches/value", false)) && SP_IS_PAINT_SERVER(this) && static_cast<SPPaintServer*>(this)->isSwatch() ) {

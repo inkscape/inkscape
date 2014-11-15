@@ -1205,10 +1205,10 @@ void DocumentProperties::removeExternalScript(){
 
     const GSList *current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
     while ( current ) {
-        if (current->data && SP_IS_OBJECT(current->data)) {
-            SPObject* obj = SP_OBJECT(current->data);
-            SPScript* script = SP_SCRIPT(obj);
-            if (name == script->xlinkhref){
+        SPObject* obj = reinterpret_cast<SPObject *>(current->data);
+        if (obj) {
+            SPScript* script = dynamic_cast<SPScript *>(obj);
+            if (script && (name == script->xlinkhref)) {
 
                 //XML Tree being used directly here while it shouldn't be.
                 Inkscape::XML::Node *repr = obj->getRepr();
@@ -1354,10 +1354,15 @@ void DocumentProperties::populate_script_lists(){
     _ExternalScriptsListStore->clear();
     _EmbeddedScriptsListStore->clear();
     const GSList *current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
-    if (current) _scripts_observer.set(SP_OBJECT(current->data)->parent);
+    if (current) {
+        SPObject *obj = reinterpret_cast<SPObject *>(current->data);
+        g_assert(obj != NULL);
+        _scripts_observer.set(obj->parent);
+    }
     while ( current ) {
-        SPObject* obj = SP_OBJECT(current->data);
-        SPScript* script = SP_SCRIPT(obj);
+        SPObject* obj = reinterpret_cast<SPObject *>(current->data);
+        SPScript* script = dynamic_cast<SPScript *>(obj);
+        g_assert(script != NULL);
         if (script->xlinkhref)
         {
             Gtk::TreeModel::Row row = *(_ExternalScriptsListStore->append());
