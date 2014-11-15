@@ -404,7 +404,8 @@ static void rect_toolbox_watch_ec(SPDesktop* desktop, Inkscape::UI::Tools::ToolB
 {
     static sigc::connection changed;
 
-    if (SP_IS_RECT_CONTEXT(ec)) {
+    // TODO fixme: use of dynamic_cast<> seems wrong here.
+    if (dynamic_cast<Inkscape::UI::Tools::RectTool *>(ec)) {
         changed = sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_rect_toolbox_selection_changed), holder));
     } else {
         if (changed)
