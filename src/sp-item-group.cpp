@@ -662,8 +662,13 @@ void SPGroup::scaleChildItemsRec(Geom::Scale const &sc, Geom::Point const &p, bo
 {
     if ( hasChildren() ) {
         for (SPObject *o = firstChild() ; o ; o = o->getNext() ) {
-            SPItem *item = dynamic_cast<SPItem *>(o);
-            if ( item ) {
+            if ( SPDefs *defs = dynamic_cast<SPDefs *>(o) ) { // select symbols from defs, ignore clips, masks, patterns
+                for (SPObject *defschild = defs->firstChild() ; defschild ; defschild = defschild->getNext() ) {
+                    SPGroup *defsgroup = dynamic_cast<SPGroup *>(defschild);
+                    if (defsgroup)
+                        defsgroup->scaleChildItemsRec(sc, p, false);
+                }
+            } else if ( SPItem *item = dynamic_cast<SPItem *>(o) ) {
                 SPGroup *group = dynamic_cast<SPGroup *>(item);
                 if (group && !dynamic_cast<SPBox3D *>(item)) {
                     /* Using recursion breaks clipping because transforms are applied 

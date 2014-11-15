@@ -330,6 +330,13 @@ void ClipboardManagerImpl::copySymbol(Inkscape::XML::Node* symbol, gchar const* 
     use->setAttribute("xlink:href", id.c_str() );
     // Set a default style in <use> rather than <symbol> so it can be changed.
     use->setAttribute("style", style );
+
+    Inkscape::XML::Node *nv_repr = sp_desktop_namedview(inkscape_active_desktop())->getRepr();
+    gdouble scale_units = Inkscape::Util::Quantity::convert(1, nv_repr->attribute("inkscape:document-units"), "px");
+    gchar *transform_str = sp_svg_transform_write(Geom::Scale(scale_units, scale_units));
+    use->setAttribute("transform", transform_str);
+    g_free(transform_str);
+
     _root->appendChild(use);
 
     // This min and max sets offsets, we don't have any so set to zero.
