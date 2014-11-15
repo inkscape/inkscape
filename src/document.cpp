@@ -713,11 +713,9 @@ void SPDocument::fitToRect(Geom::Rect const &rect, bool with_margins)
 
     double const old_height = getHeight().value("px");
     Inkscape::Util::Unit const *nv_units = unit_table.getUnit("px");
+    if (root->height.unit)
+        nv_units = unit_table.getUnit(root->height.unit);
     SPNamedView *nv = sp_document_namedview(this, NULL);
-    if (nv != NULL) {
-        if (nv->getAttribute("units"))
-            nv_units = unit_table.getUnit(nv->getAttribute("units"));
-    }
     
     /* in px */
     double margin_top = 0.0;
