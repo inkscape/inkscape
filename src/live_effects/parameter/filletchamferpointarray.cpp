@@ -693,28 +693,6 @@ void FilletChamferPointArrayParam::set_oncanvas_looks(SPKnotShapeType shape,
     knot_mode = mode;
     knot_color = color;
 }
-/*
-class FilletChamferPointArrayParamKnotHolderEntity : public KnotHolderEntity {
-public:
-    FilletChamferPointArrayParamKnotHolderEntity(FilletChamferPointArrayParam
-*p, unsigned int index);
-    virtual ~FilletChamferPointArrayParamKnotHolderEntity() {}
-
-    virtual void knot_set(Point const &p, Point const &origin, guint state);
-    virtual Point knot_get() const;
-    virtual void knot_click(guint state);
-    virtual void knot_doubleclicked(guint state);
-
-    /Checks whether the index falls within the size of the parameter's vector/
-    bool valid_index(unsigned int index) const {
-        return (_pparam->_vector.size() > index);
-    };
-
-private:
-    FilletChamferPointArrayParam *_pparam;
-    unsigned int _index;
-};
-/*/
 
 FilletChamferPointArrayParamKnotHolderEntity::
 FilletChamferPointArrayParamKnotHolderEntity(
@@ -733,8 +711,9 @@ void FilletChamferPointArrayParamKnotHolderEntity::knot_set(Point const &p,
     /// @todo how about item transforms???
     Piecewise<D2<SBasis> > const &pwd2 = _pparam->get_pwd2();
     //todo: add snapping
-    Geom::Point const s = snap_knot_position(p, state);
     double t = nearest_point(p, pwd2[_index]);
+    Geom::Point const s = snap_knot_position(pwd2[_index].valueAt(t), state);
+    t = nearest_point(s, pwd2[_index]);
     if (t == 1) {
         t = 0.9999;
     }

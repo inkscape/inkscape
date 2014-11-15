@@ -578,7 +578,9 @@ LPEFilletChamfer::doEffect_path(std::vector<Geom::Path> const &path_in)
                 } else {
                     type = std::abs(filletChamferData[counter + 1][Y]);
                 }
-                if (type >= 3000 && type < 4000) {
+                if(are_near(middle_point(startArcPoint,endArcPoint),curve_it1->finalPoint(), 0.0001)){
+                    path_out.appendNew<Geom::LineSegment>(endArcPoint);
+                } else if (type >= 3000 && type < 4000) {
                     unsigned int chamferSubs = type-3000;
                     Geom::Path path_chamfer;
                     path_chamfer.start(path_out.finalPoint());
