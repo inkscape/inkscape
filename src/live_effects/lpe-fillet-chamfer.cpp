@@ -79,7 +79,7 @@ LPEFilletChamfer::LPEFilletChamfer(LivePathEffectObject *lpeobject) :
     radius.param_set_range(0., infinity());
     radius.param_set_increments(1, 1);
     radius.param_set_digits(4);
-    chamfer_steps.param_set_range(0, 999);
+    chamfer_steps.param_set_range(1, 999);
     chamfer_steps.param_set_increments(1, 1);
     chamfer_steps.param_set_digits(0);
     helper_size.param_set_range(0, infinity());
@@ -579,7 +579,7 @@ LPEFilletChamfer::doEffect_path(std::vector<Geom::Path> const &path_in)
                     type = std::abs(filletChamferData[counter + 1][Y]);
                 }
                 if (type >= 3000 && type < 4000) {
-                    unsigned int chamferSubs = type-2999;
+                    unsigned int chamferSubs = type-3000;
                     Geom::Path path_chamfer;
                     path_chamfer.start(path_out.finalPoint());
                     if((is_straight_curve(*curve_it1) && is_straight_curve(*curve_it2Fixed) && method != FM_BEZIER )|| method == FM_ARC){ 
@@ -594,7 +594,7 @@ LPEFilletChamfer::doEffect_path(std::vector<Geom::Path> const &path_in)
                     }
                     path_out.appendNew<Geom::LineSegment>(endArcPoint);
                 } else if (type >= 4000 && type < 5000) {
-                    unsigned int chamferSubs = type-3999;
+                    unsigned int chamferSubs = type-4000;
                     Geom::Path path_chamfer;
                     path_chamfer.start(path_out.finalPoint());
                     if((is_straight_curve(*curve_it1) && is_straight_curve(*curve_it2Fixed) && method != FM_BEZIER )|| method == FM_ARC){ 
