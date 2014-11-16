@@ -642,8 +642,8 @@ bool SPGenericEllipse::set_elliptical_path_attribute(Inkscape::XML::Node *repr)
     // Make sure our pathvector is up to date.
     this->set_shape();
 
-    if (this->getCurve() != NULL) {
-        gchar* d = sp_svg_write_path(this->getCurve()->get_pathvector());
+    if (_curve != NULL) {
+        gchar* d = sp_svg_write_path(_curve->get_pathvector());
 
         repr->setAttribute("d", d);
 
