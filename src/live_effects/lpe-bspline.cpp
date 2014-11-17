@@ -88,25 +88,12 @@ void LPEBSpline::doBeforeEffect (SPLPEItem const* /*lpeitem*/)
 }
 
 
-void LPEBSpline::createAndApply(const char *name, SPDocument *doc,
-                                SPItem *item)
+void LPEBSpline::doOnApply(SPLPEItem const* lpeitem)
 {
-    if (!SP_IS_SHAPE(item)) {
+    if (!SP_IS_SHAPE(lpeitem)) {
         g_warning("LPE BSpline can only be applied to shapes (not groups).");
-    } else {
-        // Path effect definition
-        Inkscape::XML::Document *xml_doc = doc->getReprDoc();
-        Inkscape::XML::Node *repr = xml_doc->createElement("inkscape:path-effect");
-        repr->setAttribute("effect", name);
-
-        doc->getDefs()->getRepr()
-        ->addChild(repr, NULL); // adds to <defs> and assigns the 'id' attribute
-        const gchar *repr_id = repr->attribute("id");
-        Inkscape::GC::release(repr);
-
-        gchar *href = g_strdup_printf("#%s", repr_id);
-        SP_LPE_ITEM(item)->addPathEffect(href, true);
-        g_free(href);
+        SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
+        item->removeCurrentPathEffect(false);
     }
 }
 

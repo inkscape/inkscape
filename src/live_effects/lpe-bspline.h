@@ -19,10 +19,10 @@ public:
     LPEBSpline(LivePathEffectObject *lpeobject);
     virtual ~LPEBSpline();
 
-    virtual void createAndApply(const char *name, SPDocument *doc, SPItem *item);
     virtual LPEPathFlashType pathFlashType() const {
         return SUPPRESS_FLASH;
     }
+    virtual void doOnApply(SPLPEItem const* lpeitem);
     virtual void doEffect(SPCurve *curve);
     virtual void doBeforeEffect (SPLPEItem const* lpeitem);
     void drawHandle(Geom::Point p, double radiusHelperNodes);
