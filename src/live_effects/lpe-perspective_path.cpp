@@ -44,6 +44,8 @@ public:
 } // namespace PP
 
 static Glib::ustring perspectiveID = _("First perspective");
+
+
 LPEPerspectivePath::LPEPerspectivePath(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     // initialise your parameters here:
@@ -62,35 +64,41 @@ LPEPerspectivePath::LPEPerspectivePath(LivePathEffectObject *lpeobject) :
 
     concatenate_before_pwd2 = true; // don't split the path into its subpaths
     _provides_knotholder_entities = true;
-    unapply = false;
-    Persp3D *persp = persp3d_document_first_persp(lpeobject->document);
-    if(persp == 0 ){
-        char *msg = _("You need a BOX 3D object");
-        Gtk::MessageDialog dialog(msg, false, Gtk::MESSAGE_INFO,
-                                  Gtk::BUTTONS_OK, true);
-        dialog.run();
-        unapply = true;
-        return;
-    }
-    Proj::TransfMat3x4 pmat = persp->perspective_impl->tmat;
-    pmat = pmat * SP_ACTIVE_DESKTOP->doc2dt();
-    pmat.copy_tmat(tmat);
 }
 
 LPEPerspectivePath::~LPEPerspectivePath()
 {
 
 }
-
+void
+LPEPerspectivePath::doOnApply(SPLPEItem const* lpeitem)
+{
+    Persp3D *persp = persp3d_document_first_persp(lpeitem->document);
+    if(persp == 0 ){
+        char *msg = _("You need a BOX 3D object");
+        Gtk::MessageDialog dialog(msg, false, Gtk::MESSAGE_INFO,
+                                  Gtk::BUTTONS_OK, true);
+        dialog.run();
+        SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
+        item->removeCurrentPathEffect(false);
+    }
+}
 void
 LPEPerspectivePath::doBeforeEffect (SPLPEItem const* lpeitem)
 {
     original_bbox(lpeitem, true);
-    if(unapply){
-        SP_LPE_ITEM(lpeitem)->removeCurrentPathEffect(false);
+    SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
+    Persp3D *persp = persp3d_document_first_persp(lpeitem->document);
+    if(persp == 0 ){
+        char *msg = _("You need a BOX 3D object");
+        Gtk::MessageDialog dialog(msg, false, Gtk::MESSAGE_INFO,
+                                  Gtk::BUTTONS_OK, true);
+        dialog.run();
         return;
     }
-    SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
+    Proj::TransfMat3x4 pmat = persp->perspective_impl->tmat;
+    pmat = pmat * SP_ACTIVE_DESKTOP->doc2dt();
+    pmat.copy_tmat(tmat);
     item->apply_to_clippath(item);
     item->apply_to_mask(item);
 }
