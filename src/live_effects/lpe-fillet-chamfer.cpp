@@ -431,6 +431,8 @@ void LPEFilletChamfer::doOnApply(SPLPEItem const *lpeItem)
         fillet_chamfer_values.param_set_and_write_new_value(point);
     } else {
         g_warning("LPE Fillet can only be applied to shapes (not groups).");
+        SPLPEItem * item = const_cast<SPLPEItem*>(lpeItem);
+        item->removeCurrentPathEffect(false);
     }
 }
 
