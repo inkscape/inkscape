@@ -708,9 +708,7 @@ void FilletChamferPointArrayParamKnotHolderEntity::knot_set(Point const &p,
     if (!valid_index(_index)) {
         return;
     }
-    /// @todo how about item transforms???
     Piecewise<D2<SBasis> > const &pwd2 = _pparam->get_pwd2();
-    //todo: add snapping
     double t = nearest_point(p, pwd2[_index]);
     Geom::Point const s = snap_knot_position(pwd2[_index].valueAt(t), state);
     t = nearest_point(s, pwd2[_index]);
