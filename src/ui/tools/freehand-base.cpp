@@ -703,8 +703,8 @@ static void spdc_flush_white(FreehandBase *dc, SPCurve *gc)
             dc->selection->set(repr);
             Inkscape::GC::release(repr);
             item->transform = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
-            item->doWriteTransform(item->getRepr(), item->transform, NULL, true);
             item->updateRepr();
+            item->doWriteTransform(item->getRepr(), item->transform, NULL, true);
         }
 
         DocumentUndo::done(doc, SP_IS_PEN_CONTEXT(dc)? SP_VERB_CONTEXT_PEN : SP_VERB_CONTEXT_PENCIL,
