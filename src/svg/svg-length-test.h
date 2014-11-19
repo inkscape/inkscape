@@ -168,9 +168,9 @@ SvgLengthTest::test_t const SvgLengthTest::absolute_tests[12] = {
     {"1e2pt",        SVGLength::PT  , 100        ,  400.0/3.0},
     {"3pc",          SVGLength::PC  ,   3        ,  48},
     {"-3.5pc",       SVGLength::PC  ,  -3.5      ,  -3.5*16.0},
-    {"1.2345678mm",  SVGLength::MM  ,   1.2345678,   1.2345678*96.0/25.4}, // TODO: More precise constants? (a 7 digit constant when the default precision is 8 digits?)
-    {"123.45678cm", SVGLength::CM   , 123.45678  , 123.45678*96.0/2.54},
-    {"73.162987in",  SVGLength::INCH,  73.162987 ,  73.162987*96}};
+    {"1.2345678mm",  SVGLength::MM  ,   1.2345678,   1.2345678f*96.0/25.4}, // TODO: More precise constants? (a 7 digit constant when the default precision is 8 digits?)
+    {"123.45678cm", SVGLength::CM   , 123.45678  , 123.45678f*96.0/2.54},   // Note that svg_length_read is casting the result from g_ascii_strtod to float.
+    {"73.162987in",  SVGLength::INCH,  73.162987 ,  73.162987f*96.0/1.00}};
 SvgLengthTest::test_t const SvgLengthTest::relative_tests[3] = {
     {"123em", SVGLength::EM,      123, 123. *  7.},
     {"123ex", SVGLength::EX,      123, 123. * 13.},
