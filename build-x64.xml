@@ -628,6 +628,11 @@
            ${devlibs}/bin/libexslt-0.dll
            ${pcl.cairo} ${pcl.cairomm-1.0}
            ${pcl.libwpg-0.2} ${pcl.libvisio-0.0} ${pcl.libcdr-0.0}
+           ${pcl.glibmm-2.4}
+           ${pcl.gtk+-2.0}
+           ${pcl.gdkmm-2.4}
+           ${pcl.pangomm-1.4}
+           ${pcl.cairomm-1.0}
            -liconv
            ${pcl.Magick++}
            ${pcl.fontconfig} ${pcl.freetype2}
