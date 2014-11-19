@@ -37,9 +37,9 @@ public:
         svg_test_float(-0.0625, "-0.0625");
         svg_test_float(30.0, "30");
         svg_test_float(12345678.0, "12345678");
-        svg_test_float(3e9, "3e+09");
-        svg_test_float(-3.5e9, "-3.5e+09");
-        svg_test_float(32768e9, "3.2768e+13");
+        svg_test_float(3e9, "3e+009");
+        svg_test_float(-3.5e9, "-3.5e+009");
+        svg_test_float(32768e9, "3.2768e+013");
         svg_test_float(-10.5, "-10.5");
     }
 
