@@ -72,7 +72,7 @@ SPNamedView::SPNamedView() : SPObjectGroup(), snap_manager(this) {
 	this->guidehicolor = 0;
 	this->views = NULL;
 	this->borderlayer = 0;
-	this->units = NULL;
+	this->page_size_units = NULL;
 	this->window_x = 0;
 	this->cy = 0;
 	this->window_y = 0;
@@ -581,6 +581,7 @@ void SPNamedView::set(unsigned int key, const gchar* value) {
             break;
     }
     case SP_ATTR_UNITS: {
+        // Only used in "Custom size" section of Document Properties dialog
             Inkscape::Util::Unit const *new_unit = NULL;
 
             if (value) {
@@ -599,7 +600,7 @@ void SPNamedView::set(unsigned int key, const gchar* value) {
                     /* fixme: Don't use g_log (see above). */
                 }
             }
-            this->units = new_unit;
+            this->page_size_units = new_unit;
             this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     }

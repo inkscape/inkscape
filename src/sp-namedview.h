@@ -62,7 +62,7 @@ public:
     bool grids_visible;
 
     Inkscape::Util::Unit const *doc_units;
-    Inkscape::Util::Unit const *units;
+    Inkscape::Util::Unit const *page_size_units; // Only used in "Custom size" part of Document Properties dialog 
     
     GQuark default_layer_id;
 
