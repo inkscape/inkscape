@@ -114,7 +114,7 @@ DocumentProperties::DocumentProperties()
       _rcb_shad(_("_Show border shadow"), _("If set, page border shows a shadow on its right and lower side"), "inkscape:showpageshadow", _wr, false),
       _rcp_bg(_("Back_ground color:"), _("Background color"), _("Color of the page background. Note: transparency setting ignored while editing but used when exporting to bitmap."), "pagecolor", "inkscape:pageopacity", _wr),
       _rcp_bord(_("Border _color:"), _("Page border color"), _("Color of the page border"), "bordercolor", "borderopacity", _wr),
-      _rum_deflt(_("Default _units:"), "inkscape:document-units", _wr),
+      _rum_deflt(_("Document _units:"), "inkscape:document-units", _wr),
       _page_sizer(_wr),
     //---------------------------------------------------------------
       //General snap options
