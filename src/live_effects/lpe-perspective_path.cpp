@@ -23,7 +23,7 @@
 #include "knot-holder-entity.h"
 #include "knotholder.h"
 #include "desktop.h"
-
+#include <util/units.h>
 #include "inkscape.h"
 
 #include <2geom/path.h>
@@ -97,7 +97,8 @@ LPEPerspectivePath::doBeforeEffect (SPLPEItem const* lpeitem)
         return;
     }
     Proj::TransfMat3x4 pmat = persp->perspective_impl->tmat;
-    pmat = pmat * SP_ACTIVE_DESKTOP->doc2dt();
+    Geom::Affine doc2d = Geom::Scale(1, -1) * Geom::Translate(0, item->document->getHeight().value("px"));
+    pmat = pmat * doc2d;
     pmat.copy_tmat(tmat);
     item->apply_to_clippath(item);
     item->apply_to_mask(item);
