@@ -34,8 +34,7 @@
 <project name="Inkscape" default="dist-all" basedir=".">
     <description>
         Build file for the Inkscape SVG editor.  This file
-        was written for GTK-2.10 on Win32, but it should work
-        well for other types of builds with only minor adjustments.
+        was written for GTK-3 on Win64.
         Note that the default target is 'dist-all'.  You can execute other
         targets instead, by "btool {target}",  like  "btool compile", if
         you want to save time, or "dist-inkscape" if you don't want inkview.
