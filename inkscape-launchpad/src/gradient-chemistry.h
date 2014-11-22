@@ -22,6 +22,7 @@
 
 class SPCSSAttr;
 class SPItem;
+typedef unsigned int guint32;
 
 /**
  * Either normalizes given gradient to vector, or returns fresh normalized
@@ -53,7 +54,7 @@ SPGradient *sp_gradient_vector_for_object( SPDocument *doc, SPDesktop *desktop, 
 void sp_object_ensure_fill_gradient_normalized (SPObject *object);
 void sp_object_ensure_stroke_gradient_normalized (SPObject *object);
 
-SPGradient *sp_gradient_convert_to_userspace (SPGradient *gr, SPItem *item, const gchar *property);
+SPGradient *sp_gradient_convert_to_userspace (SPGradient *gr, SPItem *item, const char *property);
 SPGradient *sp_gradient_reset_to_userspace (SPGradient *gr, SPItem *item);
 
 SPGradient *sp_gradient_fork_vector_if_necessary (SPGradient *gr);
@@ -61,11 +62,11 @@ SPGradient *sp_gradient_get_forked_vector_if_necessary(SPGradient *gradient, boo
 
 
 SPStop* sp_last_stop(SPGradient *gradient);
-SPStop* sp_get_stop_i(SPGradient *gradient, guint i);
-guint sp_number_of_stops(SPGradient const *gradient);
-guint sp_number_of_stops_before_stop(SPGradient const *gradient, SPStop *target);
+SPStop* sp_get_stop_i(SPGradient *gradient, unsigned int i);
+unsigned int sp_number_of_stops(SPGradient const *gradient);
+unsigned int sp_number_of_stops_before_stop(SPGradient const *gradient, SPStop *target);
 
-guint32 average_color(guint32 c1, guint32 c2, gdouble p = 0.5);
+guint32 average_color(guint32 c1, guint32 c2, double p = 0.5);
 
 SPStop *sp_vector_add_stop(SPGradient *vector, SPStop* prev_stop, SPStop* next_stop, gfloat offset);
 
@@ -86,20 +87,20 @@ void sp_gradient_unset_swatch(SPDesktop *desktop, std::string id);
 SPGradient *getGradient(SPItem *item, Inkscape::PaintTarget fill_or_stroke);
 
 
-void sp_item_gradient_set_coords(SPItem *item, GrPointType point_type, guint point_i, Geom::Point p_desk, Inkscape::PaintTarget fill_or_stroke, bool write_repr, bool scale);
+void sp_item_gradient_set_coords(SPItem *item, GrPointType point_type, unsigned int point_i, Geom::Point p_desk, Inkscape::PaintTarget fill_or_stroke, bool write_repr, bool scale);
 
 /**
  * Returns the position of point point_type of the gradient applied to item (either fill_or_stroke),
  * in desktop coordinates.
 */
-Geom::Point getGradientCoords(SPItem *item, GrPointType point_type, guint point_i, Inkscape::PaintTarget fill_or_stroke);
+Geom::Point getGradientCoords(SPItem *item, GrPointType point_type, unsigned int point_i, Inkscape::PaintTarget fill_or_stroke);
 
 SPGradient *sp_item_gradient_get_vector(SPItem *item, Inkscape::PaintTarget fill_or_stroke);
 SPGradientSpread sp_item_gradient_get_spread(SPItem *item, Inkscape::PaintTarget fill_or_stroke);
 
-void sp_item_gradient_stop_set_style(SPItem *item, GrPointType point_type, guint point_i, Inkscape::PaintTarget fill_or_stroke, SPCSSAttr *stop);
-guint32 sp_item_gradient_stop_query_style(SPItem *item, GrPointType point_type, guint point_i, Inkscape::PaintTarget fill_or_stroke);
-void sp_item_gradient_edit_stop(SPItem *item, GrPointType point_type, guint point_i, Inkscape::PaintTarget fill_or_stroke);
+void sp_item_gradient_stop_set_style(SPItem *item, GrPointType point_type, unsigned int point_i, Inkscape::PaintTarget fill_or_stroke, SPCSSAttr *stop);
+guint32 sp_item_gradient_stop_query_style(SPItem *item, GrPointType point_type, unsigned int point_i, Inkscape::PaintTarget fill_or_stroke);
+void sp_item_gradient_edit_stop(SPItem *item, GrPointType point_type, unsigned int point_i, Inkscape::PaintTarget fill_or_stroke);
 void sp_item_gradient_reverse_vector(SPItem *item, Inkscape::PaintTarget fill_or_stroke);
 void sp_item_gradient_invert_vector_color(SPItem *item, Inkscape::PaintTarget fill_or_stroke);
 

@@ -6,6 +6,7 @@
  *
  * Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2000 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
@@ -20,9 +21,6 @@
 #include "ui/tools/tool-base.h"
 
 #include "sp-rect.h"
-
-#define SP_RECT_CONTEXT(obj) (dynamic_cast<Inkscape::UI::Tools::RectTool*>((Inkscape::UI::Tools::ToolBase*)obj))
-#define SP_IS_RECT_CONTEXT(obj) (dynamic_cast<const Inkscape::UI::Tools::RectTool*>((const Inkscape::UI::Tools::ToolBase*)obj) != NULL)
 
 namespace Inkscape {
 namespace UI {

@@ -1,7 +1,6 @@
 #ifndef SVG_CSS_OSTRINGSTREAM_H_INKSCAPE
 #define SVG_CSS_OSTRINGSTREAM_H_INKSCAPE
 
-#include <glib.h>
 #include <sstream>
 
 namespace Inkscape {
@@ -42,8 +41,8 @@ public:
 
 #undef INK_CSS_STR_OP
 
-    gchar const *gcharp() const {
-        return reinterpret_cast<gchar const *>(ostr.str().c_str());
+    char const *gcharp() const {
+        return ostr.str().c_str();
     }
 
     std::string str() const {

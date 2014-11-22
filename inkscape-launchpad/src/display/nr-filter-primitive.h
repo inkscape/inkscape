@@ -13,6 +13,7 @@
 
 #include <2geom/forward.h>
 #include <2geom/rect.h>
+
 #include "display/nr-filter-types.h"
 #include "svg/svg-length.h"
 
@@ -30,7 +31,7 @@ public:
     virtual ~FilterPrimitive();
 
     virtual void render_cairo(FilterSlot &slot);
-    virtual int render(FilterSlot & /*slot*/, FilterUnits const & /*units*/) { return 0; }
+    virtual int render(FilterSlot & /*slot*/, FilterUnits const & /*units*/) { return 0; } // pure virtual?
     virtual void area_enlarge(Geom::IntRect &area, Geom::Affine const &m);
 
     /**

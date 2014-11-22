@@ -18,10 +18,10 @@
 #include "floating-behavior.h"
 
 class SPDesktop;
+struct InkscapeApplication;
 
 namespace Inkscape {
 class Selection;
-struct Application;
 }
 
 namespace Inkscape {
@@ -30,7 +30,7 @@ namespace Dialog {
 
 enum BehaviorType { FLOATING, DOCK };
 
-void sp_retransientize(Inkscape::Application *inkscape, SPDesktop *desktop, gpointer dlgPtr);
+void sp_retransientize(InkscapeApplication *inkscape, SPDesktop *desktop, gpointer dlgPtr);
 gboolean sp_retransientize_again(gpointer dlgPtr);
 void sp_dialog_shutdown(GObject *object, gpointer dlgPtr);
 

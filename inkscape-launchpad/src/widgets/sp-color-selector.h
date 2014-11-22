@@ -2,9 +2,7 @@
 #define SEEN_SP_COLOR_SELECTOR_H
 
 #include <gtk/gtk.h>
-#include "../color.h"
-
-#include <glib.h>
+#include "color.h"
 
 struct SPColorSelector;
 
@@ -62,13 +60,21 @@ private:
 #define SP_COLOR_SELECTOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), SP_TYPE_COLOR_SELECTOR, SPColorSelectorClass))
 
 struct SPColorSelector {
+#if GTK_CHECK_VERSION(3,0,0)
+    GtkBox vbox;
+#else
     GtkVBox vbox;
+#endif
 
     ColorSelector* base;
 };
 
 struct SPColorSelectorClass {
+#if GTK_CHECK_VERSION(3,0,0)
+    GtkBoxClass parent_class;
+#else
     GtkVBoxClass parent_class;
+#endif
 
     const gchar **name;
     guint submode_count;

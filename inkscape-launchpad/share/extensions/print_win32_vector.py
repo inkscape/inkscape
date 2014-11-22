@@ -199,7 +199,7 @@ class MyEffect(inkex.Effect):
         if mygdi.StartDocA(self.hDC, byref(docInfo)) < 0:
             exit()                      # user clicked Cancel
 
-        self.scale = (ord(pDevMode[58]) + 256.0*ord(pDevMode[59]))/90    # use PrintQuality from DEVMODE
+        self.scale = (ord(pDevMode[58]) + 256.0*ord(pDevMode[59]))/96    # use PrintQuality from DEVMODE
         self.groupmat = [[[self.scale, 0.0, 0.0], [0.0, self.scale, 0.0]]]
         doc = self.document.getroot()
         self.process_group(doc)

@@ -62,8 +62,20 @@
 #include "widgets/icon.h"
 
 #ifdef WITH_LIBVISIO
-#include <libvisio/libvisio.h>
-#include <libwpd-stream/libwpd-stream.h>
+  #include <libvisio/libvisio.h>
+
+  // TODO: Drop this check when librevenge is widespread.
+  #if WITH_LIBVISIO01
+    #include <librevenge-stream/librevenge-stream.h>
+
+    using librevenge::RVNGFileStream;
+    using librevenge::RVNGStringVector;
+  #else
+    #include <libwpd-stream/libwpd-stream.h>
+
+    typedef WPXFileStream             RVNGFileStream;
+    typedef libvisio::VSDStringVector RVNGStringVector;
+  #endif
 #endif
 
 #include "verbs.h"
@@ -286,8 +298,7 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
 
   // This might need to be a global variable so setTargetDesktop can modify it
   SPDefs *defs = currentDocument->getDefs();
-  sigc::connection defsModifiedConn = (SP_OBJECT(defs))->connectModified(
-          sigc::mem_fun(*this, &SymbolsDialog::defsModified));
+  sigc::connection defsModifiedConn = defs->connectModified(sigc::mem_fun(*this, &SymbolsDialog::defsModified));
   instanceConns.push_back(defsModifiedConn);
 
   sigc::connection selectionChangedConn = currentDesktop->selection->connectChanged(
@@ -495,14 +506,20 @@ void SymbolsDialog::iconChanged() {
 // Read Visio stencil files
 SPDocument* read_vss( gchar* fullname, gchar* filename ) {
 
-  WPXFileStream input(fullname);
+  RVNGFileStream input(fullname);
 
   if (!libvisio::VisioDocument::isSupported(&input)) {
     return NULL;
   }
 
-  libvisio::VSDStringVector output;
+  RVNGStringVector output;
+#if WITH_LIBVISIO01
+  librevenge::RVNGSVGDrawingGenerator generator(output, "svg");
+
+  if (!libvisio::VisioDocument::parseStencils(&input, &generator)) {
+#else
   if (!libvisio::VisioDocument::generateSVGStencils(&input, output)) {
+#endif
     return NULL;
   }
 
@@ -640,11 +657,11 @@ GSList* SymbolsDialog::symbols_in_doc_recursive (SPObject *r, GSList *l)
   g_return_val_if_fail(r != NULL, l);
 
   // Stop multiple counting of same symbol
-  if( SP_IS_USE(r) ) {
+  if ( dynamic_cast<SPUse *>(r) ) {
     return l;
   }
 
-  if( SP_IS_SYMBOL(r) ) {
+  if ( dynamic_cast<SPSymbol *>(r) ) {
     l = g_slist_prepend (l, r);
   }
 
@@ -666,7 +683,7 @@ GSList* SymbolsDialog::symbols_in_doc( SPDocument* symbolDocument ) {
 GSList* SymbolsDialog::use_in_doc_recursive (SPObject *r, GSList *l)
 { 
 
-  if( SP_IS_USE(r) ) {
+  if ( dynamic_cast<SPUse *>(r) ) {
     l = g_slist_prepend (l, r);
   }
 
@@ -691,8 +708,9 @@ gchar const* SymbolsDialog::style_from_use( gchar const* id, SPDocument* documen
   gchar const* style = 0;
   GSList* l = use_in_doc( document );
   for( ; l != NULL; l = l->next ) {
-    SPObject* use = SP_OBJECT(l->data);
-    if( SP_IS_USE( use ) ) {
+    SPObject *obj = reinterpret_cast<SPObject *>(l->data);
+    SPUse *use = dynamic_cast<SPUse *>(obj);
+    if ( use ) {
       gchar const *href = use->getRepr()->attribute("xlink:href");
       if( href ) {
         Glib::ustring href2(href);
@@ -712,8 +730,9 @@ void SymbolsDialog::add_symbols( SPDocument* symbolDocument ) {
 
   GSList* l = symbols_in_doc( symbolDocument );
   for( ; l != NULL; l = l->next ) {
-    SPObject* symbol = SP_OBJECT(l->data);
-    if (SP_IS_SYMBOL(symbol)) {
+    SPObject *obj = reinterpret_cast<SPObject *>(l->data);
+    SPSymbol *symbol = dynamic_cast<SPSymbol *>(obj);
+    if (symbol) {
       add_symbol( symbol );
     }
   }
@@ -802,7 +821,8 @@ SymbolsDialog::draw_symbol(SPObject *symbol)
   previewDocument->getRoot()->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
   previewDocument->ensureUpToDate();
 
-  SPItem *item = SP_ITEM(object_temp);
+  SPItem *item = dynamic_cast<SPItem *>(object_temp);
+  g_assert(item != NULL);
   unsigned psize = SYMBOL_ICON_SIZES[pack_size];
 
   Glib::RefPtr<Gdk::Pixbuf> pixbuf(NULL);

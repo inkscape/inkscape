@@ -54,6 +54,8 @@
 #include "ui/dialog/xml-tree.h"
 #include "ui/dialog/clonetiler.h"
 #include "ui/dialog/svg-fonts-dialog.h"
+#include "ui/dialog/objects.h"
+#include "ui/dialog/tags.h"
 
 namespace Inkscape {
 namespace UI {
@@ -70,13 +72,13 @@ inline Dialog *create() { return PanelDialog<B>::template create<T>(); }
 
 /**
  *  This class is provided as a container for Inkscape's various
- *  dialogs.  This allows Inkscape::Application to treat the various
+ *  dialogs.  This allows InkscapeApplication to treat the various
  *  dialogs it invokes, as abstractions.
  *
  *  DialogManager is essentially a cache of dialogs.  It lets us
  *  initialize dialogs lazily - instead of constructing them during
  *  application startup, they're constructed the first time they're
- *  actually invoked by Inkscape::Application.  The constructed
+ *  actually invoked by InkscapeApplication.  The constructed
  *  dialog is held here after that, so future invokations of the
  *  dialog don't need to get re-constructed each time.  The memory for
  *  the dialogs are then reclaimed when the DialogManager is destroyed.
@@ -110,6 +112,8 @@ DialogManager::DialogManager() {
         registerFactory("Glyphs",              &create<GlyphsPanel,          FloatingBehavior>);
         registerFactory("IconPreviewPanel",    &create<IconPreviewPanel,     FloatingBehavior>);
         registerFactory("LayersPanel",         &create<LayersPanel,          FloatingBehavior>);
+        registerFactory("ObjectsPanel",        &create<ObjectsPanel,         FloatingBehavior>);
+        registerFactory("TagsPanel",           &create<TagsPanel,            FloatingBehavior>);
         registerFactory("LivePathEffect",      &create<LivePathEffectEditor, FloatingBehavior>);
         registerFactory("Memory",              &create<Memory,               FloatingBehavior>);
         registerFactory("Messages",            &create<Messages,             FloatingBehavior>);
@@ -143,6 +147,8 @@ DialogManager::DialogManager() {
         registerFactory("Glyphs",              &create<GlyphsPanel,          DockBehavior>);
         registerFactory("IconPreviewPanel",    &create<IconPreviewPanel,     DockBehavior>);
         registerFactory("LayersPanel",         &create<LayersPanel,          DockBehavior>);
+        registerFactory("ObjectsPanel",        &create<ObjectsPanel,         DockBehavior>);
+        registerFactory("TagsPanel",           &create<TagsPanel,            DockBehavior>);
         registerFactory("LivePathEffect",      &create<LivePathEffectEditor, DockBehavior>);
         registerFactory("Memory",              &create<Memory,               DockBehavior>);
         registerFactory("Messages",            &create<Messages,             DockBehavior>);

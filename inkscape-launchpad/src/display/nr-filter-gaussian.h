@@ -1,5 +1,5 @@
-#ifndef __NR_FILTER_GAUSSIAN_H__
-#define __NR_FILTER_GAUSSIAN_H__
+#ifndef SEEN_NR_FILTER_GAUSSIAN_H
+#define SEEN_NR_FILTER_GAUSSIAN_H
 
 /*
  * Gaussian blur renderer

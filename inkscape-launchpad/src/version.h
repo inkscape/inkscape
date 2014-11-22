@@ -11,8 +11,6 @@
 #ifndef SEEN_INKSCAPE_VERSION_H
 #define SEEN_INKSCAPE_VERSION_H
 
-#include <glib.h>
-
 #define SVG_VERSION "1.1"
 
 namespace Inkscape {
@@ -49,13 +47,13 @@ public:
 
 }
 
-gboolean sp_version_from_string(const gchar *string, Inkscape::Version *version);
+bool sp_version_from_string(const char *string, Inkscape::Version *version);
 
-gchar *sp_version_to_string(Inkscape::Version version);
+char *sp_version_to_string(Inkscape::Version version);
 
-gboolean sp_version_inside_range(Inkscape::Version version,
-                                 unsigned major_min, unsigned minor_min,
-                                 unsigned major_max, unsigned minor_max);
+bool sp_version_inside_range(Inkscape::Version version,
+                             unsigned major_min, unsigned minor_min,
+                             unsigned major_max, unsigned minor_max);
 
 #endif // SEEN_INKSCAPE_VERSION_H
 /*

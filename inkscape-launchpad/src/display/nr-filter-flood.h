@@ -1,5 +1,5 @@
-#ifndef __NR_FILTER_FLOOD_H__
-#define __NR_FILTER_FLOOD_H__
+#ifndef SEEN_NR_FILTER_FLOOD_H
+#define SEEN_NR_FILTER_FLOOD_H
 
 /*
  * feFlood filter primitive renderer
@@ -15,6 +15,7 @@
 #include "display/nr-filter-primitive.h"
 
 struct SVGICCColor;
+typedef unsigned int guint32;
 
 namespace Inkscape {
 namespace Filters {

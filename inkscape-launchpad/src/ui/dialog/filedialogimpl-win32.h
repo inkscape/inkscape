@@ -22,13 +22,14 @@
 #endif
 #endif
 
+#include "filedialogimpl-gtkmm.h"
+ 
 #include "gc-core.h"
  // define WINVER high enough so we get the correct OPENFILENAMEW size
 #ifndef WINVER
 #define WINVER 0x0500 
 #endif
 #include <windows.h>
-#include "filedialogimpl-gtkmm.h"
 
 
 namespace Inkscape

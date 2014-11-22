@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://web.resource.org/cc/"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="744.09448819"
-   height="1052.3622047"
-   id="svg2023"
-   sodipodi:version="0.32"
-   inkscape:version="0.43+devel"
-   sodipodi:docname="default.lt.svg"
-   sodipodi:docbase="D:\leisure\ink\share\templates">
-  <defs
-     id="defs2025" />
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297">
+  <defs />
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -25,16 +20,11 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.35"
-     inkscape:cx="375"
-     inkscape:cy="520"
-     inkscape:document-units="px"
-     inkscape:current-layer="layer1"
-     inkscape:window-width="747"
-     inkscape:window-height="546"
-     inkscape:window-x="132"
-     inkscape:window-y="132" />
-  <metadata
-     id="metadata2028">
+     inkscape:cx="400"
+     inkscape:cy="560" 
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1" />
+  <metadata>
     <rdf:RDF>
       <cc:Work
          rdf:about="">
@@ -44,8 +34,5 @@
       </cc:Work>
     </rdf:RDF>
   </metadata>
-  <g
-     inkscape:label="Sluoksnis 1"
-     inkscape:groupmode="layer"
-     id="layer1" />
+  <g inkscape:label="Sluoksnis 1" inkscape:groupmode="layer" id="layer1" />
 </svg>

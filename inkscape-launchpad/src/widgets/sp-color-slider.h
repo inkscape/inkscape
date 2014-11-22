@@ -14,13 +14,6 @@
 
 #include <gtk/gtk.h>
 
-#include <glib.h>
-
-
-
-struct SPColorSlider;
-struct SPColorSliderClass;
-
 #define SP_TYPE_COLOR_SLIDER (sp_color_slider_get_type ())
 #define SP_COLOR_SLIDER(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), SP_TYPE_COLOR_SLIDER, SPColorSlider))
 #define SP_COLOR_SLIDER_CLASS(k) (G_TYPE_CHECK_CLASS_CAST ((k), SP_TYPE_COLOR_SLIDER, SPColorSliderClass))

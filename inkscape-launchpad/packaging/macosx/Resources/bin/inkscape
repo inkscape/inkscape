@@ -4,71 +4,109 @@
 # Inkscape Modifications:
 #	Michael Wybrow <mjwybrow@users.sourceforge.net>
 #	Jean-Olivier Irisson <jo.irisson@gmail.com>
+#	~suv <suv-sf@users.sourceforge.net>
 #
 
-CWD="`(cd \"\`dirname \\\"$0\\\"\`\"; echo \"$PWD\")`"
+get_env_current ()
+{
+	env | awk -F= '/[a-zA-Z_][a-zA-Z_0-9]*=/ {if (!system("[ -n \"${" $1 "+y}\" ]")) print $1 }' | sort | uniq
+}
+[ -z "$_env_orig" ] && export _env_orig="$(get_env_current)"
+
+[ -n "$INK_DEBUG_LAUNCHER" ] && set -x
+
+CWD="$(cd "$(dirname "$0")" && pwd)"
 # e.g. /Applications/Inkscape.app/Contents/Resources/bin
-TOP="`dirname \"$CWD\"`"
+TOP="$(dirname "$CWD")"
 # e.g. /Applications/Inkscape.app/Contents/Resources
+BASE="$(echo "$TOP" | sed -e 's/\/Contents\/Resources.*$//')"
+# e.g. /Applications/Inkscape.app
 
+# FIXME: Inkscape needs better relocation support for OS X (get rid of the relative 
+# path hack in src/path-prefix.h for osxapp-enabled builds). Until then, below change
+# of working directory is required:
+#
+# Due to changes after 0.48, we have to change working directory in the script named 'inkscape':
+# recursive calls to inkscape from python-based extensions otherwise cause the app to hang or
+# fail (for python-based extensions, inkscape changes the working directory to the 
+# script's directory, and inkscape launched by python script thus can't find resources
+# like the now essential 'units.xml' in INKSCAPE_UIDIR relative to the working directory).
+cd "$BASE" || exit 1
 
-# Brutally add many things to the PATH. If the directories do not exist, they won't be used anyway. 
-# People should really use ~/.macosx/environment.plist to set environment variables as explained by Apple:
-#	http://developer.apple.com/qa/qa2001/qa1067.html
-# but since no one does, we correct this by making the 'classic' PATH additions here:
-#	/usr/local/bin which, though standard, doesn't seem to be in the PATH
-# 	newer python as recommended by MacPython http://www.python.org/download/mac/
-#	Fink
-#	MacPorts (former DarwinPorts)
-#	LaTeX distribution for Mac OS X
-export PATH="/usr/texbin:/opt/local/bin:/sw/bin/:/Library/Frameworks/Python.framework/Versions/Current/bin:/usr/local/bin:$CWD:$PATH"
+# don't prepend to $PATH in recursive calls:
+if [ -z "$INK_PATH_ORIG" ]; then
 
-# Put /usr/bin at beginning of path so we make sure we use Apple's python 
-# over one that may be installed be Macports, Fink or some other means.
-export PATH="/usr/bin:$PATH"
+	# Brutally add many things to the PATH. If the directories do not exist, they won't be used anyway. 
+	# the 'classic' PATH additions:
+	#	/usr/local/bin which, though standard, doesn't seem to be in the PATH
+	#	Fink
+	#	MacPorts (former DarwinPorts)
+	#	LaTeX distribution for Mac OS X
+	PATH_OTHER="/usr/texbin:/opt/local/bin:/sw/bin/:/usr/local/bin"
 
-# On Snow Leopard, use the 32-bit version of python from Universal build.
-# This is because our bundled i386 python libraries are 32-bit only.
-export VERSIONER_PYTHON_VERSION=2.6
-export VERSIONER_PYTHON_PREFER_32_BIT=yes
+	# Put /usr/bin at beginning of path so we make sure we use Apple's python 
+	# over one that may be installed be Macports, Fink or some other means.
+	PATH_PYTHON="/usr/bin"
 
+	# Put $TOP/bin at beginning of path so we make sure that recursive calls
+	# to inkscape don't pull in other inkscape binaries with different setup.
+	# Also allows to override system python with custom wrapper script, and
+	# e.g. to support GIMP.app or gimp for external editing and GIMP XCF export.
+	PATH_pkgbin="$TOP/bin"
+
+	# save orig, new PATH
+	export INK_PATH_ORIG="$PATH"
+	export PATH="$PATH_pkgbin:$PATH_PYTHON:$PATH_OTHER:$INK_PATH_ORIG"
+fi
 
 # Setup PYTHONPATH to use python modules shipped with Inkscape
-ARCH=`arch`
-PYTHON_VERS=`python -V 2>&1 | cut -c 8-10`
-export PYTHONPATH="$TOP/python/site-packages/$ARCH/$PYTHON_VERS"
-# NB: we are only preprending some stuff to the default python path so if the directory does not exist it should not harm the rest
-
-# No longer required if path rewriting has been conducted.
-# export DYLD_LIBRARY_PATH="$TOP/lib"
-
-mkdir -p "${HOME}/.inkscape-etc"
+OSXMINORNO="$(/usr/bin/sw_vers -productVersion | cut -d. -f2)"
+build_arch=__build_arch__
+if [ $OSXMINORNO -gt "5" ]; then
+	if [ $OSXMINORNO -eq "6" ]; then
+		export VERSIONER_PYTHON_VERSION=2.6
+	else # if [ $OSXMINORNO -ge "7" ]; then
+		export VERSIONER_PYTHON_VERSION=2.7
+	fi
+	if [ $build_arch = "i386" ]; then
+		export VERSIONER_PYTHON_PREFER_32_BIT=yes
+	else # build & runtime arch x86_64
+		export VERSIONER_PYTHON_PREFER_32_BIT=no
+	fi
+fi
+PYTHON_VERS="$(python -V 2>&1 | cut -c 8-10)"
+export PYTHONPATH="$TOP/lib/python$PYTHON_VERS/site-packages/"
 
 export FONTCONFIG_PATH="$TOP/etc/fonts"
-export PANGO_RC_FILE="$HOME/.inkscape-etc/pangorc"
-export GTK_IM_MODULE_FILE="$HOME/.inkscape-etc/gtk.immodules"
-export GDK_PIXBUF_MODULE_FILE="$HOME/.inkscape-etc/gdk-pixbuf.loaders"
+export PANGO_RC_FILE="$TOP/etc/pango/pangorc"
+export PANGO_SYSCONFDIR="$TOP/etc"
+export GTK_IM_MODULE_FILE="$TOP/lib/gtk-2.0/__gtk_version__/immodules.cache"
+export GDK_PIXBUF_MODULE_FILE="$TOP/lib/gdk-pixbuf-2.0/__gtk_version__/loaders.cache"
 export GTK_DATA_PREFIX="$TOP"
 export GTK_EXE_PREFIX="$TOP"
+export GTK_PATH="$TOP"
 export GNOME_VFS_MODULE_CONFIG_PATH="$TOP/etc/gnome-vfs-2.0/modules"
 export GNOME_VFS_MODULE_PATH="$TOP/lib/gnome-vfs-2.0/modules"
+export GIO_USE_VFS="local"
+export GVFS_REMOTE_VOLUME_MONITOR_IGNORE=1
+export GVFS_DISABLE_FUSE=1
 export XDG_DATA_DIRS="$TOP/share"
 export ASPELL_CONF="prefix $TOP;"
+export POPPLER_DATADIR="$TOP/share/poppler"
+
+# no DBUS for now
+unset DBUS_LAUNCHD_SESSION_BUS_SOCKET
+unset DBUS_SESSION_BUS_ADDRESS
 
 # Note: This requires the path with the exact ImageMagic version number.
-#        Also, that ImageMagick will only work if it does not find a 
-#        version installed into the same PREFIX as it was originally 
-#        installed.  Luckily, this is very unlikely given the extra long 
-#        and strangely named install prefix we use.
-#        The actual version is inserted by the packaging script.
-export MAGICK_CONFIGURE_PATH="$TOP/lib/ImageMagick-IMAGEMAGICKVER/config:$TOP/share/ImageMagick-IMAGEMAGICKVER/config"
+#       The actual version is inserted by the packaging script.
+export MAGICK_CONFIGURE_PATH="$TOP/lib/ImageMagick-IMAGEMAGICKVER/config:$TOP/share/ImageMagick-IMAGEMAGICKVER_MAJOR/config"
 export MAGICK_CODER_FILTER_PATH="$TOP/lib/ImageMagick-IMAGEMAGICKVER/modules-Q16/filters"
 export MAGICK_CODER_MODULE_PATH="$TOP/lib/ImageMagick-IMAGEMAGICKVER/modules-Q16/coders"
 
-export INKSCAPE_SHAREDIR="$TOP"
-# TODO: move the share directory to a its own folder to make things a bit cleaner in the app bundle
+export INKSCAPE_SHAREDIR="$TOP/share/inkscape"
 export INKSCAPE_PLUGINDIR="$TOP/lib/inkscape"
-export INKSCAPE_LOCALEDIR="$TOP/locale"
+export INKSCAPE_LOCALEDIR="$TOP/share/locale"
 
 # Handle the case where the directory storing Inkscape has special characters
 # ('#', '&', '|') in the name.  These need to be escaped to work properly for 
@@ -77,38 +115,7 @@ ESCAPEDTOP=`echo "$TOP" | sed 's/#/\\\\\\\\#/' | sed 's/&/\\\\\\&/g' | sed 's/|/
 
 # Set GTK theme (only if there is no .gtkrc-2.0 in the user's home)
 if [[ ! -e "$HOME/.gtkrc-2.0" ]]; then
-	# Appearance setting
-	aquaStyle=`defaults read "Apple Global Domain" AppleAquaColorVariant 2>/dev/null`
-	# 1 for aqua, 6 for graphite, inexistant if the default color was never changed
-	if [[ "$aquaStyle" == "" ]]; then
-		aquaStyle=1		# set aqua as default
-	fi
-
-	# Highlight Color setting
-	hiliColor=`defaults read "Apple Global Domain" AppleHighlightColor 2>/dev/null`
-	# a RGB value, with components between 0 and 1, also inexistant if it was not changed
-	if [[ "$hiliColor" == "" ]]; then
-		hiliColor="0.709800 0.835300 1.000000"	# set blue as default
-	fi
-
-	# Menu items color
-	if [[ aquaStyle -eq 1 ]]; then
-		menuColor="#4a76cd"	# blue
-	else
-		menuColor="#7c8da4"	# graphite
-	fi
-	# Format highlight color as a GTK rgb value
-	hiliColorFormated=`echo $hiliColor | awk -F " " '{print "\\\{"$1","$2","$3"\\\}"}'`
-
-	# echo $menuColor
-	# echo $hiliColorFormated
-
-	# Modify the gtkrc
-	#	- with the correct colors
-	#	- to point to the correct scrollbars folder
-	sed 's/OSX_HILI_COLOR_PLACEHOLDER/'$hiliColorFormated'/g' "$INKSCAPE_SHAREDIR/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/pre_gtkrc" | sed 's/OSX_MENU_COLOR_PLACEHOLDER/\"'$menuColor'\"/g' | sed 's/AQUASTYLE_PLACEHOLDER/'$aquaStyle'/g' | sed 's|${THEMEDIR}|'"$ESCAPEDTOP/themes/Clearlooks-Quicksilver-OSX/gtk-2.0|g" > "${HOME}/.inkscape-etc/gtkrc"
-
-	export GTK2_RC_FILES="$HOME/.inkscape-etc/gtkrc"
+	export GTK2_RC_FILES="$ESCAPEDTOP/etc/gtk-2.0/gtkrc"
 fi
 
 # If the AppleCollationOrder preference doesn't exist, we fall back to using
@@ -116,12 +123,11 @@ fi
 LANGSTR=`defaults read .GlobalPreferences AppleCollationOrder 2>/dev/null`
 if [ "x$LANGSTR" == "x" -o "x$LANGSTR" == "xroot" ]
 then
-    echo "Warning: AppleCollationOrder setting not found, using AppleLocale." 1>&2
     LANGSTR=`defaults read .GlobalPreferences AppleLocale 2>/dev/null | \
             sed 's/_.*//'`
-	echo "Setting LANGSTR from AppleLocale: $LANGSTR" 1>&2
+	[ $_DEBUG ] && echo "Setting LANGSTR from AppleLocale: $LANGSTR" 1>&2
 else
-	echo "Setting LANGSTR from AppleCollationOrder: $LANGSTR" 1>&2
+	[ $_DEBUG ] && echo "Setting LANGSTR from AppleCollationOrder: $LANGSTR" 1>&2
 fi
 
 # NOTE: Have to add ".UTF-8" to the LANG since omitting causes Inkscape
@@ -129,7 +135,7 @@ fi
 if [ "x$LANGSTR" == "x" ]
 then 
 	# override broken script
-	echo "Overriding empty LANGSTR" 1>&2
+	[ $_DEBUG ] && echo "Overriding empty LANGSTR" 1>&2
 	export LANG="en_US.UTF-8"
 else
 	tmpLANG="`grep \"\`echo $LANGSTR\`_\" /usr/share/locale/locale.alias | \
@@ -137,22 +143,30 @@ else
 	if [ "x$tmpLANG" == "x" ]
 	then
 		# override broken script
-		echo "Overriding empty LANG from /usr/share/locale/locale.alias" 1>&2
+		[ $_DEBUG ] && echo "Overriding empty LANG from /usr/share/locale/locale.alias" 1>&2
 		export LANG="en_US.UTF-8"
 	else
-		echo "Setting LANG from /usr/share/locale/locale.alias" 1>&2
+		[ $_DEBUG ] && echo "Setting LANG from /usr/share/locale/locale.alias" 1>&2
 		export LANG="$tmpLANG.UTF-8"
 	fi
 fi
-echo "Setting Language: $LANG" 1>&2
+[ $_DEBUG ] && echo "Setting Language: $LANG" 1>&2
+export LC_ALL="$LANG"
 
-sed 's|${HOME}|'"$HOME|g" "$TOP/etc/pango/pangorc" > "${HOME}/.inkscape-etc/pangorc"
-sed 's|${CWD}|'"$ESCAPEDTOP|g" "$TOP/etc/pango/pango.modules" \
-    > "${HOME}/.inkscape-etc/pango.modules"
-cp -f "$TOP/etc/pango/pangox.aliases" "${HOME}/.inkscape-etc/"
-sed 's|${CWD}|'"$ESCAPEDTOP|g" "$TOP/etc/gtk-2.0/gtk.immodules" \
-    > "${HOME}/.inkscape-etc/gtk.immodules"
-sed 's|${CWD}|'"$ESCAPEDTOP|g" "$TOP/etc/gtk-2.0/gdk-pixbuf.loaders" \
-    > "${HOME}/.inkscape-etc/gdk-pixbuf.loaders"
+case "$INK_DEBUG" in
+	gdb)
+		EXEC="gdb --args" ;;
+	lldb)
+		EXEC="lldb -- " ;;
+	dtruss)
+		EXEC="dtruss" ;;
+	*)
+		EXEC="exec" ;;
+esac
+unset INK_DEBUG # ignore for recursive calls
 
-exec "$CWD/inkscape-bin" "$@"
+if [ "x$INK_DEBUG_SHELL" != "x" ]; then
+	exec bash
+else
+	$EXEC "$CWD/inkscape-bin" "$@"
+fi

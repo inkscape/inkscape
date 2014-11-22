@@ -42,7 +42,7 @@
 #include "sp-item.h"
 #include "sp-item-group.h"
 #include "style.h"
-#include "marker.h"
+#include "sp-marker.h"
 #include "sp-linear-gradient.h"
 #include "sp-radial-gradient.h"
 #include "sp-root.h"
@@ -50,6 +50,7 @@
 #include "sp-use.h"
 #include "sp-text.h"
 #include "sp-flowtext.h"
+#include "sp-hatch-path.h"
 #include "sp-image.h"
 #include "sp-symbol.h"
 #include "sp-pattern.h"
@@ -146,13 +147,13 @@ Here comes the rendering part which could be put into the 'render' methods of SP
 
 /* The below functions are copy&pasted plus slightly modified from *_invoke_print functions. */
 static void sp_item_invoke_render(SPItem *item, CairoRenderContext *ctx);
-static void sp_group_render(SPItem *item, CairoRenderContext *ctx);
-static void sp_use_render(SPItem *item, CairoRenderContext *ctx);
-static void sp_shape_render(SPItem *item, CairoRenderContext *ctx);
-static void sp_text_render(SPItem *item, CairoRenderContext *ctx);
-static void sp_flowtext_render(SPItem *item, CairoRenderContext *ctx);
-static void sp_image_render(SPItem *item, CairoRenderContext *ctx);
-static void sp_symbol_render(SPItem *item, CairoRenderContext *ctx);
+static void sp_group_render(SPGroup *group, CairoRenderContext *ctx);
+static void sp_use_render(SPUse *use, CairoRenderContext *ctx);
+static void sp_shape_render(SPShape *shape, CairoRenderContext *ctx);
+static void sp_text_render(SPText *text, CairoRenderContext *ctx);
+static void sp_flowtext_render(SPFlowtext *flowtext, CairoRenderContext *ctx);
+static void sp_image_render(SPImage *image, CairoRenderContext *ctx);
+static void sp_symbol_render(SPSymbol *symbol, CairoRenderContext *ctx);
 static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx);
 
 static void sp_shape_render_invoke_marker_rendering(SPMarker* marker, Geom::Affine tr, SPStyle* style, CairoRenderContext *ctx)
@@ -178,17 +179,15 @@ static void sp_shape_render_invoke_marker_rendering(SPMarker* marker, Geom::Affi
     }
 }
 
-static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
+static void sp_shape_render(SPShape *shape, CairoRenderContext *ctx)
 {
-    SPShape *shape = SP_SHAPE(item);
-
     if (!shape->_curve) {
         return;
     }
 
-    Geom::OptRect pbox = item->geometricBounds();
+    Geom::OptRect pbox = shape->geometricBounds();
 
-    SPStyle* style = item->style;
+    SPStyle* style = shape->style;
 
     Geom::PathVector const & pathv = shape->_curve->get_pathvector();
     if (pathv.empty()) {
@@ -200,10 +199,12 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
     // START marker
     for (int i = 0; i < 2; i++) {  // SP_MARKER_LOC and SP_MARKER_LOC_START
         if ( shape->_marker[i] ) {
-            SPMarker* marker = SP_MARKER (shape->_marker[i]);
+            SPMarker* marker = shape->_marker[i];
             Geom::Affine tr;
-            if (marker->orient_auto) {
+            if (marker->orient_mode == MARKER_ORIENT_AUTO) {
                 tr = sp_shape_marker_get_transform_at_start(pathv.begin()->front());
+            } else if (marker->orient_mode == MARKER_ORIENT_AUTO_START_REVERSE) {
+                tr = Geom::Rotate::from_degrees( 180.0 ) * sp_shape_marker_get_transform_at_start(pathv.begin()->front());
             } else {
                 tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(pathv.begin()->front().pointAt(0));
             }
@@ -213,14 +214,14 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
     // MID marker
     for (int i = 0; i < 3; i += 2) {  // SP_MARKER_LOC and SP_MARKER_LOC_MID
         if ( !shape->_marker[i] ) continue;
-        SPMarker* marker = SP_MARKER (shape->_marker[i]);
+        SPMarker* marker = shape->_marker[i];
         for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
             // START position
             if ( path_it != pathv.begin() 
                  && ! ((path_it == (pathv.end()-1)) && (path_it->size_default() == 0)) ) // if this is the last path and it is a moveto-only, there is no mid marker there
             {
                 Geom::Affine tr;
-                if (marker->orient_auto) {
+                if (marker->orient_mode != MARKER_ORIENT_ANGLE) {
                     tr = sp_shape_marker_get_transform_at_start(path_it->front());
                 } else {
                     tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(path_it->front().pointAt(0));
@@ -237,7 +238,7 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
                      * Loop to end_default (so including closing segment), because when a path is closed,
                      * there should be a midpoint marker between last segment and closing straight line segment */
                     Geom::Affine tr;
-                    if (marker->orient_auto) {
+                    if (marker->orient_mode != MARKER_ORIENT_ANGLE) {
                         tr = sp_shape_marker_get_transform(*curve_it1, *curve_it2);
                     } else {
                         tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(curve_it1->pointAt(1));
@@ -253,7 +254,7 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
             if ( path_it != (pathv.end()-1) && !path_it->empty()) {
                 Geom::Curve const &lastcurve = path_it->back_default();
                 Geom::Affine tr;
-                if (marker->orient_auto) {
+                if (marker->orient_mode != MARKER_ORIENT_ANGLE) {
                     tr = sp_shape_marker_get_transform_at_end(lastcurve);
                 } else {
                     tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(lastcurve.pointAt(1));
@@ -265,7 +266,7 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
     // END marker
     for (int i = 0; i < 4; i += 3) {  // SP_MARKER_LOC and SP_MARKER_LOC_END
         if ( shape->_marker[i] ) {
-            SPMarker* marker = SP_MARKER (shape->_marker[i]);
+            SPMarker* marker = shape->_marker[i];
 
             /* Get reference to last curve in the path.
              * For moveto-only path, this returns the "closing line segment". */
@@ -277,7 +278,7 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
             Geom::Curve const &lastcurve = path_last[index];
 
             Geom::Affine tr;
-            if (marker->orient_auto) {
+            if (marker->orient_mode != MARKER_ORIENT_ANGLE) {
                 tr = sp_shape_marker_get_transform_at_end(lastcurve);
             } else {
                 tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(lastcurve.pointAt(1));
@@ -288,26 +289,25 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
     }
 }
 
-static void sp_group_render(SPItem *item, CairoRenderContext *ctx)
+static void sp_group_render(SPGroup *group, CairoRenderContext *ctx)
 {
-    SPGroup *group = SP_GROUP(item);
     CairoRenderer *renderer = ctx->getRenderer();
     TRACE(("sp_group_render opacity: %f\n", SP_SCALE24_TO_FLOAT(item->style->opacity.value)));
 
     GSList *l = g_slist_reverse(group->childList(false));
     while (l) {
-        SPObject *o = SP_OBJECT (l->data);
-        if (SP_IS_ITEM(o)) {
-            renderer->renderItem (ctx, SP_ITEM (o));
+        SPObject *o = reinterpret_cast<SPObject *>(l->data);
+        SPItem *item = dynamic_cast<SPItem *>(o);
+        if (item) {
+            renderer->renderItem(ctx, item);
         }
         l = g_slist_remove (l, o);
     }
 }
 
-static void sp_use_render(SPItem *item, CairoRenderContext *ctx)
+static void sp_use_render(SPUse *use, CairoRenderContext *ctx)
 {
     bool translated = false;
-    SPUse *use = SP_USE(item);
     CairoRenderer *renderer = ctx->getRenderer();
 
     if ((use->x._set && use->x.computed != 0) || (use->y._set && use->y.computed != 0)) {
@@ -317,8 +317,8 @@ static void sp_use_render(SPItem *item, CairoRenderContext *ctx)
         translated = true;
     }
 
-    if (use->child && SP_IS_ITEM(use->child)) {
-        renderer->renderItem(ctx, SP_ITEM(use->child));
+    if (use->child) {
+        renderer->renderItem(ctx, use->child);
     }
 
     if (translated) {
@@ -326,30 +326,27 @@ static void sp_use_render(SPItem *item, CairoRenderContext *ctx)
     }
 }
 
-static void sp_text_render(SPItem *item, CairoRenderContext *ctx)
+static void sp_text_render(SPText *text, CairoRenderContext *ctx)
 {
-    SPText *group = SP_TEXT (item);
-    group->layout.showGlyphs(ctx);
+    text->layout.showGlyphs(ctx);
 }
 
-static void sp_flowtext_render(SPItem *item, CairoRenderContext *ctx)
+static void sp_flowtext_render(SPFlowtext *flowtext, CairoRenderContext *ctx)
 {
-    SPFlowtext *group = SP_FLOWTEXT(item);
-    group->layout.showGlyphs(ctx);
+    flowtext->layout.showGlyphs(ctx);
 }
 
-static void sp_image_render(SPItem *item, CairoRenderContext *ctx)
+static void sp_image_render(SPImage *image, CairoRenderContext *ctx)
 {
-    SPImage *image;
-    int w, h;
+    if (!image->pixbuf) {
+        return;
+    }
+    if ((image->width.computed <= 0.0) || (image->height.computed <= 0.0)) {
+        return;
+    }
 
-    image = SP_IMAGE (item);
-
-    if (!image->pixbuf) return;
-    if ((image->width.computed <= 0.0) || (image->height.computed <= 0.0)) return;
-
-    w = image->pixbuf->width();
-    h = image->pixbuf->height();
+    int w = image->pixbuf->width();
+    int h = image->pixbuf->height();
 
     double x = image->x.computed;
     double y = image->y.computed;
@@ -369,12 +366,11 @@ static void sp_image_render(SPItem *item, CairoRenderContext *ctx)
     Geom::Scale s(width / (double)w, height / (double)h);
     Geom::Affine t(s * tp);
 
-    ctx->renderImage (image->pixbuf, t, item->style);
+    ctx->renderImage(image->pixbuf, t, image->style);
 }
 
-static void sp_symbol_render(SPItem *item, CairoRenderContext *ctx)
+static void sp_symbol_render(SPSymbol *symbol, CairoRenderContext *ctx)
 {
-    SPSymbol *symbol = SP_SYMBOL(item);
     if (!symbol->cloned) {
         return;
     }
@@ -409,7 +405,7 @@ static void sp_symbol_render(SPItem *item, CairoRenderContext *ctx)
         ctx->transform(vb2user);
     }
 
-    sp_group_render(item, ctx);
+    sp_group_render(symbol, ctx);
     ctx->popState();
 }
 
@@ -476,7 +472,7 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
     double shift_x = bbox->min()[Geom::X];
     double shift_y = bbox->max()[Geom::Y];
 
-    // For default 90 dpi, snap bitmap to pixel grid
+    // For default 96 dpi, snap bitmap to pixel grid
     if (res == Inkscape::Util::Quantity::convert(1, "in", "px")) { 
         shift_x = round (shift_x);
         shift_y = -round (-shift_y); // Correct rounding despite coordinate inversion.
@@ -521,34 +517,56 @@ static void sp_item_invoke_render(SPItem *item, CairoRenderContext *ctx)
 
     SPStyle* style = item->style;
     if((ctx->getFilterToBitmap() == TRUE) && (style->filter.set != 0)) {
-        return sp_asbitmap_render(item, ctx);
+        sp_asbitmap_render(item, ctx);
     }
 
-    if (SP_IS_ROOT(item)) {
+    SPRoot *root = dynamic_cast<SPRoot *>(item);
+    if (root) {
         TRACE(("root\n"));
-        return sp_root_render(SP_ROOT(item), ctx);
-    } else if (SP_IS_SYMBOL(item)) {
-        TRACE(("symbol\n"));
-        return sp_symbol_render(item, ctx);
-    } else if (SP_IS_GROUP(item)) {
-        TRACE(("group\n"));
-        return sp_group_render(item, ctx);
-    } else if (SP_IS_SHAPE(item)) {
-        TRACE(("shape\n"));
-        return sp_shape_render(item, ctx);
-    } else if (SP_IS_USE(item)) {
-        TRACE(("use begin---\n"));
-        sp_use_render(item, ctx);
-        TRACE(("---use end\n"));
-    } else if (SP_IS_TEXT(item)) {
-        TRACE(("text\n"));
-        return sp_text_render(item, ctx);
-    } else if (SP_IS_FLOWTEXT(item)) {
-        TRACE(("flowtext\n"));
-        return sp_flowtext_render(item, ctx);
-    } else if (SP_IS_IMAGE(item)) {
-        TRACE(("image\n"));
-        return sp_image_render(item, ctx);
+        sp_root_render(root, ctx);
+    } else {
+        SPSymbol *symbol = dynamic_cast<SPSymbol *>(item);
+        if (symbol) {
+            TRACE(("symbol\n"));
+            sp_symbol_render(symbol, ctx);
+        } else {
+            SPGroup *group = dynamic_cast<SPGroup *>(item);
+            if (group) {
+                TRACE(("group\n"));
+                sp_group_render(group, ctx);
+            } else {
+                SPShape *shape = dynamic_cast<SPShape *>(item);
+                if (shape) {
+                    TRACE(("shape\n"));
+                    sp_shape_render(shape, ctx);
+                } else {
+                    SPUse *use = dynamic_cast<SPUse *>(item);
+                    if (use) {
+                        TRACE(("use begin---\n"));
+                        sp_use_render(use, ctx);
+                        TRACE(("---use end\n"));
+                    } else {
+                        SPText *text = dynamic_cast<SPText *>(item);
+                        if (text) {
+                            TRACE(("text\n"));
+                            sp_text_render(text, ctx);
+                        } else {
+                            SPFlowtext *flowtext = dynamic_cast<SPFlowtext *>(item);
+                            if (flowtext) {
+                                TRACE(("flowtext\n"));
+                                sp_flowtext_render(flowtext, ctx);
+                            } else {
+                                SPImage *image = dynamic_cast<SPImage *>(item);
+                                if (image) {
+                                    TRACE(("image\n"));
+                                    sp_image_render(image, ctx);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -568,8 +586,9 @@ CairoRenderer::setStateForItem(CairoRenderContext *ctx, SPItem const *item)
     // This is so because we use the image's/(flow)text's transform for positioning
     // instead of explicitly specifying it and letting the renderer do the
     // transformation before rendering the item.
-    if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item) || SP_IS_IMAGE(item))
+    if (dynamic_cast<SPText const *>(item) || dynamic_cast<SPFlowtext const *>(item) || dynamic_cast<SPImage const *>(item)) {
         state->parent_has_userspace = TRUE;
+    }
     TRACE(("setStateForItem opacity: %f\n", state->opacity));
 }
 
@@ -593,6 +612,21 @@ void CairoRenderer::renderItem(CairoRenderContext *ctx, SPItem *item)
     if (state->need_layer)
         ctx->popLayer(); // This applies clipping/masking
 
+    ctx->popState();
+}
+
+void CairoRenderer::renderHatchPath(CairoRenderContext *ctx, SPHatchPath const &hatchPath, unsigned key) {
+    ctx->pushState();
+    ctx->setStateForStyle(hatchPath.style);
+    ctx->transform(Geom::Translate(hatchPath.offset.computed, 0));
+
+    SPCurve *curve = hatchPath.calculateRenderCurve(key);
+    Geom::PathVector const & pathv =curve->get_pathvector();
+    if (!pathv.empty()) {
+        ctx->renderPathVector(pathv, hatchPath.style, Geom::OptRect());
+    }
+
+    curve->unref();
     ctx->popState();
 }
 
@@ -682,8 +716,8 @@ CairoRenderer::applyClipPath(CairoRenderContext *ctx, SPClipPath const *cp)
     TRACE(("BEGIN clip\n"));
     SPObject const *co = cp;
     for ( SPObject const *child = co->firstChild() ; child; child = child->getNext() ) {
-        if (SP_IS_ITEM(child)) {
-            SPItem const *item = SP_ITEM(child);
+        SPItem const *item = dynamic_cast<SPItem const *>(child);
+        if (item) {
 
             // combine transform of the item in clippath and the item using clippath:
             Geom::Affine tempmat = item->transform * ctx->getCurrentState()->item_transform;
@@ -741,8 +775,8 @@ CairoRenderer::applyMask(CairoRenderContext *ctx, SPMask const *mask)
     TRACE(("BEGIN mask\n"));
     SPObject const *co = mask;
     for ( SPObject const *child = co->firstChild() ; child; child = child->getNext() ) {
-        if (SP_IS_ITEM(child)) {
-            SPItem const *item = SP_ITEM(child);
+        SPItem const *item = dynamic_cast<SPItem const *>(child);
+        if (item) {
             // TODO fix const correctness:
             renderItem(ctx, const_cast<SPItem*>(item));
         }

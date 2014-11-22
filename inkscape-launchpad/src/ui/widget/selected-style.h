@@ -60,6 +60,9 @@ enum {
     SS_PATTERN,
     SS_LGRADIENT,
     SS_RGRADIENT,
+#ifdef WITH_MESH
+    SS_MGRADIENT,
+#endif
     SS_MANY,
     SS_COLOR
 };
@@ -186,6 +189,14 @@ protected:
     GtkWidget *_gradient_preview_r[2];
     Gtk::HBox _gradient_box_r[2];
 
+#ifdef WITH_MESH
+    Gtk::Label _mgradient[2];
+    Glib::ustring __mgradient[2];
+
+    GtkWidget *_gradient_preview_m[2];
+    Gtk::HBox _gradient_box_m[2];
+#endif
+
     Gtk::Label _many[2];
     Glib::ustring __many[2];
 
@@ -290,13 +301,13 @@ protected:
 
 #endif // INKSCAPE_UI_WIDGET_BUTTON_H
 
-/* 
+/*
   Local Variables:
   mode:c++
   c-file-style:"stroustrup"
-  c-file-offsets:((innamespace . 0)(inline-open . 0))
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
   indent-tabs-mode:nil
   fill-column:99
   End:
 */
-// vim: filetype=c++:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :

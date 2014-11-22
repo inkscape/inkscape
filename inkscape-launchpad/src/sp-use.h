@@ -1,26 +1,26 @@
-#ifndef __SP_USE_H__
-#define __SP_USE_H__
+#ifndef SEEN_SP_USE_H
+#define SEEN_SP_USE_H
 
 /*
  * SVG <use> implementation
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
+ * Copyright (C) 1999-2014 Authors
  * Copyright (C) 1999-2002 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <stddef.h>
+#include <cstddef>
 #include <sigc++/sigc++.h>
+
 #include "svg/svg-length.h"
 #include "sp-item.h"
 #include "enums.h"
-
-#define SP_USE(obj) (dynamic_cast<SPUse*>((SPObject*)obj))
-#define SP_IS_USE(obj) (dynamic_cast<const SPUse*>((SPObject*)obj) != NULL)
 
 class SPUseReference;
 
@@ -38,7 +38,7 @@ public:
     SVGLength y;
     SVGLength width;
     SVGLength height;
-    gchar *href;
+    char *href;
 
     // the reference to the original object
     SPUseReference *ref;
@@ -52,14 +52,14 @@ public:
 
 	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
 	virtual void release();
-	virtual void set(unsigned key, gchar const *value);
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+	virtual void set(unsigned key, char const *value);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, unsigned int flags);
 	virtual void update(SPCtx* ctx, unsigned int flags);
 	virtual void modified(unsigned int flags);
 
 	virtual Geom::OptRect bbox(Geom::Affine const &transform, SPItem::BBoxType bboxtype) const;
     virtual const char* displayName() const;
-	virtual gchar* description() const;
+	virtual char* description() const;
 	virtual void print(SPPrintContext *ctx);
 	virtual Inkscape::DrawingItem* show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
 	virtual void hide(unsigned int key);

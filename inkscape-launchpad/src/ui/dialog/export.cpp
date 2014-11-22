@@ -62,10 +62,10 @@
 #include "sp-namedview.h"
 #include "selection-chemistry.h"
 
-#include "dialogs/dialog-events.h"
+#include "ui/dialog-events.h"
 #include "preferences.h"
 #include "verbs.h"
-#include "interface.h"
+#include "ui/interface.h"
 #include "sp-root.h"
 
 #include "extension/output.h"
@@ -537,7 +537,7 @@ Gtk::Adjustment * Export::createSpinbutton( gchar const * /*key*/, float val, fl
     sb->set_sensitive (sensitive);
     pos++;
 
-    if (!ll.empty()) {
+    if (l) {
         l->set_mnemonic_widget(*sb);
     }
 

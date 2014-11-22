@@ -9,10 +9,10 @@
  * Released under GNU GPL, read the file 'COPYING' for more information.
  */
 
-#include "sp-item.h"
-#include <uri-references.h>
-#include <stddef.h>
 #include <sigc++/sigc++.h>
+
+#include "sp-item.h"
+#include "uri-references.h"
 
 class Path;
 
@@ -43,7 +43,7 @@ public:
     bool sourceDirty;
 
     SPObject            *owner;
-    gchar               *sourceHref;
+    char                *sourceHref;
     Inkscape::XML::Node *sourceRepr;
     SPObject            *sourceObject;
 

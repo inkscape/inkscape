@@ -44,7 +44,7 @@ public:
 
     /// Whether to resize automatically
     bool resize;
-    gdouble maxwidth, maxheight;
+    double maxwidth, maxheight;
 
     // C++ Wrappers
 

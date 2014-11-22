@@ -12,14 +12,14 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <glib.h>
 #include <sstream>
-
 #include "version.h"
 
-gboolean sp_version_from_string(const gchar *string, Inkscape::Version *version)
+bool sp_version_from_string(const char *string, Inkscape::Version *version)
 {
     if (!string) {
-        return FALSE;
+        return false;
     }
     
     try
@@ -40,27 +40,27 @@ gboolean sp_version_from_string(const gchar *string, Inkscape::Version *version)
     }
 }
 
-gchar *sp_version_to_string(Inkscape::Version version)
+char *sp_version_to_string(Inkscape::Version version)
 {
     return g_strdup_printf("%u.%u", version._major, version._minor);
 }
 
-gboolean sp_version_inside_range(Inkscape::Version version,
-                                 unsigned major_min, unsigned minor_min,
-                                 unsigned major_max, unsigned minor_max)
+bool sp_version_inside_range(Inkscape::Version version,
+                             unsigned major_min, unsigned minor_min,
+                             unsigned major_max, unsigned minor_max)
 {
     if ( version._major < major_min || version._major > major_max ) {
-        return FALSE;
+        return false;
     } else if ( version._major == major_min &&
                 version._minor <= minor_min )
     {
-        return FALSE;
+        return false;
     } else if ( version._major == major_max &&
                 version._minor >= minor_max )
     {
-        return FALSE;
+        return false;
     } else {
-        return TRUE;
+        return true;
     }
 }
 

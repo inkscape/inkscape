@@ -28,8 +28,8 @@
 
 #include "inkscape.h"
 #include "desktop.h"
-#include "dialogs/dialog-events.h"
-#include "interface.h"
+#include "ui/dialog-events.h"
+#include "ui/interface.h"
 #include "preferences.h"
 #include "verbs.h"
 

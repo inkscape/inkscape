@@ -344,7 +344,7 @@ colors = {  1: '#FF0000',   2: '#FFFF00',   3: '#00FF00',   4: '#00FFFF',   5: '
           250: '#333333', 251: '#505050', 252: '#696969', 253: '#828282', 254: '#BEBEBE', 255: '#FFFFFF'}
 
 parser = inkex.optparse.OptionParser(usage="usage: %prog [options] SVGfile", option_class=inkex.InkOption)
-parser.add_option("--auto", action="store", type="inkbool", dest="auto", default=True)
+parser.add_option("--scalemethod", action="store", type="string", dest="scalemethod", default="manual")
 parser.add_option("--scale", action="store", type="string", dest="scale", default="1.0")
 parser.add_option("--xmin", action="store", type="string", dest="xmin", default="0.0")
 parser.add_option("--ymin", action="store", type="string", dest="ymin", default="0.0")
@@ -354,7 +354,7 @@ parser.add_option("--font", action="store", type="string", dest="font", default=
 parser.add_option("--tab", action="store", type="string", dest="tab", default="Options")
 parser.add_option("--inputhelp", action="store", type="string", dest="inputhelp", default="")
 (options, args) = parser.parse_args(inkex.sys.argv[1:])
-doc = inkex.etree.parse(StringIO('<svg xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" width="%s" height="%s"></svg>' % (210*90/25.4, 297*90/25.4)))
+doc = inkex.etree.parse(StringIO('<svg xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" width="%s" height="%s"></svg>' % (210*96/25.4, 297*96/25.4)))
 desc = inkex.etree.SubElement(doc.getroot(), 'desc', {})
 defs = inkex.etree.SubElement(doc.getroot(), 'defs', {})
 marker = inkex.etree.SubElement(defs, 'marker', {'id': 'DistanceX', 'orient': 'auto', 'refX': '0.0', 'refY': '0.0', 'style': 'overflow:visible'})
@@ -365,7 +365,8 @@ inkex.etree.SubElement(pattern, 'path', {'d': 'M6 2 l-4,4', 'stroke': '#000000',
 inkex.etree.SubElement(pattern, 'path', {'d': 'M4 0 l-4,4', 'stroke': '#000000', 'stroke-width': '0.25', 'linecap': 'square'})
 stream = open(args[0], 'r')
 xmax = xmin = ymin = 0.0
-height = 297.0*90.0/25.4                            # default A4 height in pixels
+height = 297.0*96.0/25.4                            # default A4 height in pixels
+measurement = 0                                     # default inches
 line = get_line()
 polylines = 0
 flag = 0                                            # (0, 1, 2, 3) = (none, LAYER, LTYPE, DIMTXT)
@@ -376,7 +377,10 @@ DIMTXT = {}                                         # store DIMENSION text sizes
 
 while line[0] and line[1] != 'BLOCKS':
     line = get_line()
-    if options.auto:
+    if options.scalemethod == 'file':
+        if line[1] == '$MEASUREMENT':
+            measurement = get_group('70')
+    elif options.scalemethod == 'auto':
         if line[1] == '$EXTMIN':
             xmin = get_group('10')
             ymin = get_group('20')
@@ -406,7 +410,11 @@ while line[0] and line[1] != 'BLOCKS':
     if line[0] == '0' and line[1] == 'ENDTAB':
         flag = 0
 
-if options.auto:
+if options.scalemethod == 'file':
+    scale = 25.4                                    # default inches
+    if measurement == 1.0:
+        scale = 1.0                                 # use mm
+elif options.scalemethod == 'auto':
     scale = 1.0
     if xmax > xmin:
         scale = 210.0/(xmax - xmin)                 # scale to A4 width
@@ -414,8 +422,8 @@ else:
     scale = float(options.scale)                    # manual scale factor
     xmin = float(options.xmin)
     ymin = float(options.ymin)
-desc.text = '%s - scale = %f, origin = (%f, %f), auto = %s' % (unicode(args[0], options.input_encode), scale, xmin, ymin, options.auto)
-scale *= 90.0/25.4                                  # convert from mm to pixels
+desc.text = '%s - scale = %f, origin = (%f, %f), method = %s' % (unicode(args[0], options.input_encode), scale, xmin, ymin, options.scalemethod)
+scale *= 96.0/25.4                                  # convert from mm to pixels
 
 if not layer_nodes.has_key('0'):
     attribs = {inkex.addNS('groupmode','inkscape'): 'layer', inkex.addNS('label','inkscape'): '0'}
@@ -487,7 +495,7 @@ while line[0] and (line[1] != 'ENDSEC' or not inENTITIES):
             w = 0.5                                 # default lineweight for POINT
             if vals[groups['370']]:                 # Common Lineweight
                 if vals[groups['370']][0] > 0:
-                    w = 90.0/25.4*vals[groups['370']][0]/100.0
+                    w = 96.0/25.4*vals[groups['370']][0]/100.0
                     if w < 0.5:
                         w = 0.5
                     style = simplestyle.formatStyle({'stroke': '%s' % color, 'fill': 'none', 'stroke-width': '%.1f' % w})

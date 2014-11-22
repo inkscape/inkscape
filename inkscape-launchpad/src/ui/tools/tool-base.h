@@ -30,7 +30,6 @@ namespace Glib {
 class GrDrag;
 class SPDesktop;
 class SPItem;
-class ShapeEditor;
 
 namespace Inkscape {
     class MessageContext;
@@ -42,6 +41,9 @@ namespace Inkscape {
 
 namespace Inkscape {
 namespace UI {
+
+class ShapeEditor;
+
 namespace Tools {
 
 class ToolBase;

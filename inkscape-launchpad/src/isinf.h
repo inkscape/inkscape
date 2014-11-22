@@ -2,7 +2,7 @@
 #define __ISINF_H__
 
 /*
- * Fix for missing std::isnormal with SOLARIS8/GCC3.2
+ * Fix for missing std::isinf with SOLARIS8/GCC3.2
  */
  
 #if defined (SOLARIS)

@@ -46,117 +46,38 @@
 using Inkscape::DocumentUndo;
 using std::vector;
 
-//enum {
-//    PROP_0,
-//    PROP_COLOR,
-//    PROP_HICOLOR
-//};
-//
-//static void sp_guide_set_property(GObject *object, guint prop_id, const GValue *value, GParamSpec *pspec);
-//static void sp_guide_get_property(GObject *object, guint prop_id, GValue *value, GParamSpec *pspec);
-
 #include "sp-factory.h"
 
 namespace {
-	SPObject* createGuide() {
-		return new SPGuide();
-	}
+    SPObject* createGuide() {
+        return new SPGuide();
+    }
 
-	bool guideRegistered = SPFactory::instance().registerObject("sodipodi:guide", createGuide);
+    bool guideRegistered = SPFactory::instance().registerObject("sodipodi:guide", createGuide);
 }
 
-//static void sp_guide_class_init(SPGuideClass *gc)
-//{
-//    GObjectClass *gobject_class = (GObjectClass *) gc;
-//
-//    gobject_class->set_property = sp_guide_set_property;
-//    gobject_class->get_property = sp_guide_get_property;
-//
-//    g_object_class_install_property(gobject_class,
-//                                    PROP_COLOR,
-//                                    g_param_spec_uint("color", "Color", "Color",
-//                                                      0,
-//                                                      0xffffffff,
-//                                                      0xff000000,
-//                                                      (GParamFlags) G_PARAM_READWRITE));
-//
-//    g_object_class_install_property(gobject_class,
-//                                    PROP_HICOLOR,
-//                                    g_param_spec_uint("hicolor", "HiColor", "HiColor",
-//                                                      0,
-//                                                      0xffffffff,
-//                                                      0xff000000,
-//                                                      (GParamFlags) G_PARAM_READWRITE));
-//}
-// CPPIFY: properties!
+SPGuide::SPGuide()
+    : SPObject()
+    , label(NULL)
+    , views(NULL)
+    , normal_to_line(Geom::Point(0.,1.))
+    , point_on_line(Geom::Point(0.,0.))
+    , color(0x0000ff7f)
+    , hicolor(0xff00007f)
+{}
 
-SPGuide::SPGuide() : SPObject() {
-	this->label = NULL;
-	this->views = NULL;
+void SPGuide::setColor(guint32 c)
+{
+    color = c;
 
-    this->normal_to_line = Geom::Point(0.,1.);
-    this->point_on_line = Geom::Point(0.,0.);
-    this->color = 0x0000ff7f;
-    this->hicolor = 0xff00007f;
+    for (GSList *l = this->views; l != NULL; l = l->next) {
+        sp_guideline_set_color(SP_GUIDELINE(l->data), this->color);
+    }
 }
 
-SPGuide::~SPGuide() {
-}
-
-guint32 SPGuide::getColor() const {
-	return color;
-}
-
-guint32 SPGuide::getHiColor() const {
-	return hicolor;
-}
-
-void SPGuide::setColor(guint32 c) {
-	color = c;
-
-	for (GSList *l = this->views; l != NULL; l = l->next) {
-		sp_guideline_set_color(SP_GUIDELINE(l->data), this->color);
-	}
-}
-
-void SPGuide::setHiColor(guint32 h) {
-	this->hicolor = h;
-}
-
-//static void sp_guide_set_property(GObject *object, guint prop_id, const GValue *value, GParamSpec */*pspec*/)
-//{
-//    SPGuide &guide = *SP_GUIDE(object);
-//
-//    switch (prop_id) {
-//        case PROP_COLOR:
-//            guide.color = g_value_get_uint(value);
-//            for (GSList *l = guide.views; l != NULL; l = l->next) {
-//                sp_guideline_set_color(SP_GUIDELINE(l->data), guide.color);
-//            }
-//            break;
-//
-//        case PROP_HICOLOR:
-//            guide.hicolor = g_value_get_uint(value);
-//            break;
-//    }
-//}
-//
-//static void sp_guide_get_property(GObject *object, guint prop_id, GValue *value, GParamSpec */*pspec*/)
-//{
-//    SPGuide const &guide = *SP_GUIDE(object);
-//
-//    switch (prop_id) {
-//        case PROP_COLOR:
-//            g_value_set_uint(value, guide.color);
-//            break;
-//        case PROP_HICOLOR:
-//            g_value_set_uint(value, guide.hicolor);
-//            break;
-//    }
-//}
-
-void SPGuide::build(SPDocument *document, Inkscape::XML::Node *repr) {
-	SPObject::build(document, repr);
+void SPGuide::build(SPDocument *document, Inkscape::XML::Node *repr)
+{
+    SPObject::build(document, repr);
 
     this->readAttr( "inkscape:label" );
     this->readAttr( "orientation" );
@@ -166,7 +87,8 @@ void SPGuide::build(SPDocument *document, Inkscape::XML::Node *repr) {
     document->addResource("guide", this);
 }
 
-void SPGuide::release() {
+void SPGuide::release()
+{
     while (this->views) {
         sp_guideline_delete(SP_GUIDELINE(this->views->data));
         this->views = g_slist_remove(this->views, this->views->data);
@@ -191,67 +113,67 @@ void SPGuide::set(unsigned int key, const gchar *value) {
             this->label = NULL;
         }
 
-        sp_guide_set_label(*this, this->label, false);
+        this->set_label(this->label, false);
         break;
     case SP_ATTR_ORIENTATION:
-        {
-            if (value && !strcmp(value, "horizontal")) {
-                /* Visual representation of a horizontal line, constrain vertically (y coordinate). */
-                this->normal_to_line = Geom::Point(0., 1.);
-            } else if (value && !strcmp(value, "vertical")) {
-                this->normal_to_line = Geom::Point(1., 0.);
-            } else if (value) {
-                gchar ** strarray = g_strsplit(value, ",", 2);
-                double newx, newy;
-                unsigned int success = sp_svg_number_read_d(strarray[0], &newx);
-                success += sp_svg_number_read_d(strarray[1], &newy);
-                g_strfreev (strarray);
-                if (success == 2 && (fabs(newx) > 1e-6 || fabs(newy) > 1e-6)) {
-                    Geom::Point direction(newx, newy);
-                    direction.normalize();
-                    this->normal_to_line = direction;
-                } else {
-                    // default to vertical line for bad arguments
-                    this->normal_to_line = Geom::Point(1., 0.);
-                }
+    {
+        if (value && !strcmp(value, "horizontal")) {
+            /* Visual representation of a horizontal line, constrain vertically (y coordinate). */
+            this->normal_to_line = Geom::Point(0., 1.);
+        } else if (value && !strcmp(value, "vertical")) {
+            this->normal_to_line = Geom::Point(1., 0.);
+        } else if (value) {
+            gchar ** strarray = g_strsplit(value, ",", 2);
+            double newx, newy;
+            unsigned int success = sp_svg_number_read_d(strarray[0], &newx);
+            success += sp_svg_number_read_d(strarray[1], &newy);
+            g_strfreev (strarray);
+            if (success == 2 && (fabs(newx) > 1e-6 || fabs(newy) > 1e-6)) {
+                Geom::Point direction(newx, newy);
+                direction.normalize();
+                this->normal_to_line = direction;
             } else {
                 // default to vertical line for bad arguments
                 this->normal_to_line = Geom::Point(1., 0.);
             }
-            sp_guide_set_normal(*this, this->normal_to_line, false);
+        } else {
+            // default to vertical line for bad arguments
+            this->normal_to_line = Geom::Point(1., 0.);
         }
-        break;
+        this->set_normal(this->normal_to_line, false);
+    }
+    break;
     case SP_ATTR_POSITION:
-        {
-            if (value) {
-                gchar ** strarray = g_strsplit(value, ",", 2);
-                double newx, newy;
-                unsigned int success = sp_svg_number_read_d(strarray[0], &newx);
-                success += sp_svg_number_read_d(strarray[1], &newy);
-                g_strfreev (strarray);
-                if (success == 2) {
-                    this->point_on_line = Geom::Point(newx, newy);
-                } else if (success == 1) {
-                    // before 0.46 style guideline definition.
-                    const gchar *attr = this->getRepr()->attribute("orientation");
-                    if (attr && !strcmp(attr, "horizontal")) {
-                        this->point_on_line = Geom::Point(0, newx);
-                    } else {
-                        this->point_on_line = Geom::Point(newx, 0);
-                    }
+    {
+        if (value) {
+            gchar ** strarray = g_strsplit(value, ",", 2);
+            double newx, newy;
+            unsigned int success = sp_svg_number_read_d(strarray[0], &newx);
+            success += sp_svg_number_read_d(strarray[1], &newy);
+            g_strfreev (strarray);
+            if (success == 2) {
+                this->point_on_line = Geom::Point(newx, newy);
+            } else if (success == 1) {
+                // before 0.46 style guideline definition.
+                const gchar *attr = this->getRepr()->attribute("orientation");
+                if (attr && !strcmp(attr, "horizontal")) {
+                    this->point_on_line = Geom::Point(0, newx);
+                } else {
+                    this->point_on_line = Geom::Point(newx, 0);
                 }
-            } else {
-                // default to (0,0) for bad arguments
-                this->point_on_line = Geom::Point(0,0);
             }
-            // update position in non-committing way
-            // fixme: perhaps we need to add an update method instead, and request_update here
-            sp_guide_moveto(*this, this->point_on_line, false);
+        } else {
+            // default to (0,0) for bad arguments
+            this->point_on_line = Geom::Point(0,0);
         }
-        break;
+        // update position in non-committing way
+        // fixme: perhaps we need to add an update method instead, and request_update here
+        this->moveto(this->point_on_line, false);
+    }
+    break;
     default:
     	SPObject::set(key, value);
-            break;
+        break;
     }
 }
 
@@ -276,15 +198,15 @@ SPGuide *SPGuide::createSPGuide(SPDocument *doc, Geom::Point const &pt1, Geom::P
     return guide;
 }
 
-void
-sp_guide_pt_pairs_to_guides(SPDocument *doc, std::list<std::pair<Geom::Point, Geom::Point> > &pts) {
+void sp_guide_pt_pairs_to_guides(SPDocument *doc, std::list<std::pair<Geom::Point, Geom::Point> > &pts)
+{
     for (std::list<std::pair<Geom::Point, Geom::Point> >::iterator i = pts.begin(); i != pts.end(); ++i) {
         SPGuide::createSPGuide(doc, (*i).first, (*i).second);
     }
 }
 
-void
-sp_guide_create_guides_around_page(SPDesktop *dt) {
+void sp_guide_create_guides_around_page(SPDesktop *dt)
+{
     SPDocument *doc=sp_desktop_document(dt);
     std::list<std::pair<Geom::Point, Geom::Point> > pts;
 
@@ -303,8 +225,8 @@ sp_guide_create_guides_around_page(SPDesktop *dt) {
     DocumentUndo::done(doc, SP_VERB_NONE, _("Create Guides Around the Page"));
 }
 
-void
-sp_guide_delete_all_guides(SPDesktop *dt) {
+void sp_guide_delete_all_guides(SPDesktop *dt)
+{
     SPDocument *doc=sp_desktop_document(dt);
     const GSList *current;
     while ( (current = doc->getResourceList("guide")) ) {
@@ -325,6 +247,14 @@ void SPGuide::showSPGuide(SPCanvasGroup *group, GCallback handler)
     views = g_slist_prepend(views, item);
 }
 
+void SPGuide::showSPGuide()
+{
+    for (GSList *v = views; v != NULL; v = v->next) {
+        sp_canvas_item_show(SP_CANVAS_ITEM(v->data));
+        sp_canvas_item_show(SP_CANVAS_ITEM(SP_GUIDELINE(v->data)->origin));
+    }
+}
+
 void SPGuide::hideSPGuide(SPCanvas *canvas)
 {
     g_assert(canvas != NULL);
@@ -338,10 +268,18 @@ void SPGuide::hideSPGuide(SPCanvas *canvas)
         }
     }
 
-    g_assert_not_reached();
+    assert(false);
 }
 
-void SPGuide::sensitize(SPCanvas *canvas, gboolean sensitive)
+void SPGuide::hideSPGuide()
+{
+    for (GSList *v = views; v != NULL; v = v->next) {
+        sp_canvas_item_hide(SP_CANVAS_ITEM(v->data));
+        sp_canvas_item_hide(SP_CANVAS_ITEM(SP_GUIDELINE(v->data)->origin));
+    }
+}
+
+void SPGuide::sensitize(SPCanvas *canvas, bool sensitive)
 {
     g_assert(canvas != NULL);
     g_assert(SP_IS_CANVAS(canvas));
@@ -353,7 +291,7 @@ void SPGuide::sensitize(SPCanvas *canvas, gboolean sensitive)
         }
     }
 
-    g_assert_not_reached();
+    assert(false);
 }
 
 Geom::Point SPGuide::getPositionFrom(Geom::Point const &pt) const
@@ -371,11 +309,9 @@ double SPGuide::getDistanceFrom(Geom::Point const &pt) const
  *      true indicates a "committing" version: in response to button release event after
  *      dragging a guideline, or clicking OK in guide editing dialog.
  */
-void sp_guide_moveto(SPGuide &guide, Geom::Point const point_on_line, bool const commit)
+void SPGuide::moveto(Geom::Point const point_on_line, bool const commit)
 {
-    g_assert(SP_IS_GUIDE(&guide));
-
-    for (GSList *l = guide.views; l != NULL; l = l->next) {
+    for (GSList *l = views; l != NULL; l = l->next) {
         sp_guideline_set_position(SP_GUIDELINE(l->data), point_on_line);
     }
 
@@ -383,16 +319,16 @@ void sp_guide_moveto(SPGuide &guide, Geom::Point const point_on_line, bool const
        case, so that the guide's new position is available for sp_item_rm_unsatisfied_cns. */
     if (commit) {
         //XML Tree being used here directly while it shouldn't be.
-        sp_repr_set_point(guide.getRepr(), "position", point_on_line);
+        sp_repr_set_point(getRepr(), "position", point_on_line);
     }
 
 /*  DISABLED CODE BECAUSE  SPGuideAttachment  IS NOT USE AT THE MOMENT (johan)
-    for (vector<SPGuideAttachment>::const_iterator i(guide.attached_items.begin()),
-             iEnd(guide.attached_items.end());
+    for (vector<SPGuideAttachment>::const_iterator i(attached_items.begin()),
+             iEnd(attached_items.end());
          i != iEnd; ++i)
     {
         SPGuideAttachment const &att = *i;
-        sp_item_notify_moveto(*att.item, guide, att.snappoint_ix, position, commit);
+        sp_item_notify_moveto(*att.item, this, att.snappoint_ix, position, commit);
     }
 */
 }
@@ -402,11 +338,9 @@ void sp_guide_moveto(SPGuide &guide, Geom::Point const point_on_line, bool const
  *      true indicates a "committing" version: in response to button release event after
  *      dragging a guideline, or clicking OK in guide editing dialog.
  */
-void sp_guide_set_normal(SPGuide &guide, Geom::Point const normal_to_line, bool const commit)
+void SPGuide::set_normal(Geom::Point const normal_to_line, bool const commit)
 {
-    g_assert(SP_IS_GUIDE(&guide));
-
-    for (GSList *l = guide.views; l != NULL; l = l->next) {
+    for (GSList *l = this->views; l != NULL; l = l->next) {
         sp_guideline_set_normal(SP_GUIDELINE(l->data), normal_to_line);
     }
 
@@ -414,47 +348,45 @@ void sp_guide_set_normal(SPGuide &guide, Geom::Point const normal_to_line, bool 
        case, so that the guide's new position is available for sp_item_rm_unsatisfied_cns. */
     if (commit) {
         //XML Tree being used directly while it shouldn't be
-        sp_repr_set_point(guide.getRepr(), "orientation", normal_to_line);
+        sp_repr_set_point(getRepr(), "orientation", normal_to_line);
     }
 
 /*  DISABLED CODE BECAUSE  SPGuideAttachment  IS NOT USE AT THE MOMENT (johan)
-    for (vector<SPGuideAttachment>::const_iterator i(guide.attached_items.begin()),
-             iEnd(guide.attached_items.end());
+    for (vector<SPGuideAttachment>::const_iterator i(attached_items.begin()),
+             iEnd(attached_items.end());
          i != iEnd; ++i)
     {
         SPGuideAttachment const &att = *i;
-        sp_item_notify_moveto(*att.item, guide, att.snappoint_ix, position, commit);
+        sp_item_notify_moveto(*att.item, this, att.snappoint_ix, position, commit);
     }
 */
 }
 
-void sp_guide_set_color(SPGuide &guide, const unsigned r, const unsigned g, const unsigned b, bool const commit)
+void SPGuide::set_color(const unsigned r, const unsigned g, const unsigned b, bool const commit)
 {
-    g_assert(SP_IS_GUIDE(&guide));
-    guide.color = (r << 24) | (g << 16) | (b << 8) | 0x7f;
+    this->color = (r << 24) | (g << 16) | (b << 8) | 0x7f;
 
-    if (guide.views){
-        sp_guideline_set_color(SP_GUIDELINE(guide.views->data), guide.color);
+    if (views) {
+        sp_guideline_set_color(SP_GUIDELINE(views->data), this->color);
     }
 
-    if (commit){
+    if (commit) {
         std::ostringstream os;
         os << "rgb(" << r << "," << g << "," << b << ")";
         //XML Tree being used directly while it shouldn't be
-        guide.getRepr()->setAttribute("inkscape:color", os.str().c_str());
+        getRepr()->setAttribute("inkscape:color", os.str().c_str());
     }
 }
 
-void sp_guide_set_label(SPGuide &guide, const char* label, bool const commit)
+void SPGuide::set_label(const char* label, bool const commit)
 {
-    g_assert(SP_IS_GUIDE(&guide));
-    if (guide.views){
-        sp_guideline_set_label(SP_GUIDELINE(guide.views->data), label);
+    if (views) {
+        sp_guideline_set_label(SP_GUIDELINE(views->data), label);
     }
 
-    if (commit){
+    if (commit) {
         //XML Tree being used directly while it shouldn't be
-        guide.getRepr()->setAttribute("inkscape:label", label);
+        getRepr()->setAttribute("inkscape:label", label);
     }
 }
 
@@ -464,33 +396,33 @@ void sp_guide_set_label(SPGuide &guide, const char* label, bool const commit)
  *
  * The caller is responsible for freeing the string.
  */
-char *sp_guide_description(SPGuide const *guide, const bool verbose)
+char* SPGuide::description(bool const verbose) const
 {
     using Geom::X;
     using Geom::Y;
 
-    char *descr = 0;
-    if ( !guide->document ) {
+    char *descr = NULL;
+    if ( !this->document ) {
         // Guide has probably been deleted and no longer has an attached namedview.
-        descr = g_strdup_printf("%s", _("Deleted"));
+        descr = g_strdup(_("Deleted"));
     } else {
-        SPNamedView *namedview = sp_document_namedview(guide->document, NULL);
+        SPNamedView *namedview = sp_document_namedview(this->document, NULL);
 
-        Inkscape::Util::Quantity x_q = Inkscape::Util::Quantity(guide->point_on_line[X], "px");
-        Inkscape::Util::Quantity y_q = Inkscape::Util::Quantity(guide->point_on_line[Y], "px");
+        Inkscape::Util::Quantity x_q = Inkscape::Util::Quantity(this->point_on_line[X], "px");
+        Inkscape::Util::Quantity y_q = Inkscape::Util::Quantity(this->point_on_line[Y], "px");
         GString *position_string_x = g_string_new(x_q.string(namedview->doc_units).c_str());
         GString *position_string_y = g_string_new(y_q.string(namedview->doc_units).c_str());
 
         gchar *shortcuts = g_strdup_printf("; %s", _("<b>Shift+drag</b> to rotate, <b>Ctrl+drag</b> to move origin, <b>Del</b> to delete"));
 
-        if ( are_near(guide->normal_to_line, Geom::Point(1., 0.)) ||
-             are_near(guide->normal_to_line, -Geom::Point(1., 0.)) ) {
+        if ( are_near(this->normal_to_line, Geom::Point(1., 0.)) ||
+             are_near(this->normal_to_line, -Geom::Point(1., 0.)) ) {
             descr = g_strdup_printf(_("vertical, at %s"), position_string_x->str);
-        } else if ( are_near(guide->normal_to_line, Geom::Point(0., 1.)) ||
-                    are_near(guide->normal_to_line, -Geom::Point(0., 1.)) ) {
+        } else if ( are_near(this->normal_to_line, Geom::Point(0., 1.)) ||
+                    are_near(this->normal_to_line, -Geom::Point(0., 1.)) ) {
             descr = g_strdup_printf(_("horizontal, at %s"), position_string_y->str);
         } else {
-            double const radians = guide->angle();
+            double const radians = this->angle();
             double const degrees = Geom::rad_to_deg(radians);
             int const degrees_int = (int) round(degrees);
             descr = g_strdup_printf(_("at %d degrees, through (%s,%s)"), 
@@ -537,4 +469,4 @@ void sp_guide_remove(SPGuide *guide)
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :

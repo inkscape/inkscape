@@ -124,6 +124,16 @@
 
 "text-decoration" - "altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan"
 
+"text-decoration-color" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan"
+
+"text-decoration-fill" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan"
+
+"text-decoration-line" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan"
+
+"text-decoration-stroke" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan"
+
+"text-decoration-style" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan"
+
 "text-rendering" - "text","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
 
 "title" - "circle","ellipse","image","line","path","polygon","polyline","rect","text","use","g"

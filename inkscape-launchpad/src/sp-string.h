@@ -1,5 +1,5 @@
-#ifndef __SP_STRING_H__
-#define __SP_STRING_H__
+#ifndef SEEN_SP_STRING_H
+#define SEEN_SP_STRING_H
 
 /*
  * string elements

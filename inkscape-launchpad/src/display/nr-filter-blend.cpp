@@ -20,6 +20,7 @@
 #include "config.h"
 #endif
 
+#include <glibmm.h>
 #include "display/cairo-templates.h"
 #include "display/cairo-utils.h"
 #include "display/nr-filter-blend.h"

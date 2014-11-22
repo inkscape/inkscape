@@ -250,7 +250,7 @@ CairoRendererPdfOutput::init (void)
             "<param name=\"textToPath\" gui-text=\"" N_("Convert texts to paths") "\" type=\"boolean\">false</param>\n"
             "<param name=\"textToLaTeX\" gui-text=\"" N_("PDF+LaTeX: Omit text in PDF, and create LaTeX file") "\" type=\"boolean\">false</param>\n"
             "<param name=\"blurToBitmap\" gui-text=\"" N_("Rasterize filter effects") "\" type=\"boolean\">true</param>\n"
-            "<param name=\"resolution\" gui-text=\"" N_("Resolution for rasterization (dpi):") "\" type=\"int\" min=\"1\" max=\"10000\">90</param>\n"
+            "<param name=\"resolution\" gui-text=\"" N_("Resolution for rasterization (dpi):") "\" type=\"int\" min=\"1\" max=\"10000\">96</param>\n"
             "<param name=\"area\" gui-text=\"" N_("Output page size:") "\" type=\"optiongroup\" >\n"
                 "<_option value=\"page\">" N_("Use document's page size") "</_option>"
                 "<_option value=\"drawing\">" N_("Use exported object's size") "</_option>"

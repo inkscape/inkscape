@@ -13,8 +13,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <glib.h>
-
 class SPDesktop;
 class SPItem;
 
@@ -24,6 +22,9 @@ namespace XML {
 class Node;
 } // namespace XML
 } // namespace Inkscape
+
+typedef unsigned int guint32;
+typedef struct _GSList GSList;
 
 void sp_selected_path_combine (SPDesktop *desktop);
 void sp_selected_path_break_apart (SPDesktop *desktop);

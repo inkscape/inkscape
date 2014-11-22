@@ -52,7 +52,7 @@ using Inkscape::DocumentUndo;
 static GdkCursor *cursor_dropper_fill = NULL;
 static GdkCursor *cursor_dropper_stroke = NULL;
 
-#include "tool-factory.h"
+#include "ui/tool-factory.h"
 
 namespace Inkscape {
 namespace UI {

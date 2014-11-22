@@ -1,7 +1,7 @@
-#ifndef __MACROS_H__
-#define __MACROS_H__
+#ifndef SEEN_MACROS_H
+#define SEEN_MACROS_H
 
-/*
+/**
  * Useful macros for inkscape
  *
  * Author:
@@ -11,6 +11,9 @@
  *
  * Released under GNU GPL
  */
+
+// I'm of the opinion that this file should be removed, so I will in the future take the necessary steps to wipe it out.
+// Macros are not in general bad, but these particular ones are rather ugly. Especially that sp_round one. --Liam
 
 #ifdef SP_MACROS_SILENT
 #define SP_PRINT_MATRIX(s,m)
@@ -51,4 +54,4 @@
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8 :

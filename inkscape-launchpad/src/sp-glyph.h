@@ -1,13 +1,4 @@
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
-
-#ifndef __SP_GLYPH_H__
-#define __SP_GLYPH_H__
-
-/*
- * SVG <glyph> element implementation
- *
+/**
  * Authors:
  *    Felipe C. da S. Sanches <juca@members.fsf.org>
  *
@@ -15,6 +6,9 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
+
+#ifndef SEEN_SP_GLYPH_H
+#define SEEN_SP_GLYPH_H
 
 #include "sp-object.h"
 
@@ -34,11 +28,16 @@ enum glyphOrientation {
     GLYPH_ORIENTATION_BOTH
 };
 
+/*
+ * SVG <glyph> element
+ */
+
 class SPGlyph : public SPObject {
 public:
-	SPGlyph();
-	virtual ~SPGlyph();
+    SPGlyph();
+    virtual ~SPGlyph() {}
 
+    // FIXME encapsulation
     Glib::ustring unicode;
     Glib::ustring glyph_name;
     char* d;
@@ -51,14 +50,23 @@ public:
     double vert_adv_y;
 
 protected:
-	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
-	virtual void release();
+    virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
+    virtual void release();
+    virtual void set(unsigned int key, const char* value);
+    virtual void update(SPCtx* ctx, unsigned int flags);
+    virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, unsigned int flags);
 
-	virtual void set(unsigned int key, const gchar* value);
-
-	virtual void update(SPCtx* ctx, unsigned int flags);
-
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
 };
 
-#endif //#ifndef __SP_GLYPH_H__
+#endif // !SEEN_SP_GLYPH_H
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8 :

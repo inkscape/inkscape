@@ -10,15 +10,15 @@
  * define'd directories, and instead should use only the paths defined here.
  *
  */
-#ifndef _PATH_PREFIX_H_
-#define _PATH_PREFIX_H_
+#ifndef SEEN_PATH_PREFIX_H
+#define SEEN_PATH_PREFIX_H
 
 #include "require-config.h"  // INKSCAPE_DATADIR
 #include "prefix.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+//#ifdef __cplusplus
+//extern "C" {
+//#endif /* __cplusplus */
 
 #ifdef ENABLE_BINRELOC
 #  define INKSCAPE_APPICONDIR     BR_DATADIR( "/pixmaps" )
@@ -66,23 +66,23 @@ extern "C" {
 #    define CREATE_PALETTESDIR    WIN32_DATADIR("create\\swatches")
 #    define CREATE_PATTERNSDIR    WIN32_DATADIR("create\\patterns\\vector")
 #  elif defined ENABLE_OSX_APP_LOCATIONS
-#    define INKSCAPE_APPICONDIR   "Contents/Resources/pixmaps"
-#    define INKSCAPE_ATTRRELDIR   "Contents/Resources/attributes"
-#    define INKSCAPE_BINDDIR      "Contents/Resources/bind"
-#    define INKSCAPE_EXAMPLESDIR  "Contents/Resources/examples"
-#    define INKSCAPE_EXTENSIONDIR "Contents/Resources/extensions"
-#    define INKSCAPE_FILTERDIR    "Contents/Resources/filters"
-#    define INKSCAPE_GRADIENTSDIR "Contents/Resources/gradients"
-#    define INKSCAPE_KEYSDIR      "Contents/Resources/keys"
-#    define INKSCAPE_PIXMAPDIR    "Contents/Resources/icons"
-#    define INKSCAPE_MARKERSDIR   "Contents/Resources/markers"
-#    define INKSCAPE_PALETTESDIR  "Contents/Resources/palettes"
-#    define INKSCAPE_PATTERNSDIR  "Contents/Resources/patterns"
-#    define INKSCAPE_SCREENSDIR   "Contents/Resources/screens"
-#    define INKSCAPE_SYMBOLSDIR   "Contents/Resources/symbols"
-#    define INKSCAPE_TUTORIALSDIR "Contents/Resources/tutorials"
-#    define INKSCAPE_TEMPLATESDIR "Contents/Resources/templates"
-#    define INKSCAPE_UIDIR        "Contents/Resources/ui"
+#    define INKSCAPE_APPICONDIR   "Contents/Resources/share/pixmaps"
+#    define INKSCAPE_ATTRRELDIR   "Contents/Resources/share/inkscape/attributes"
+#    define INKSCAPE_BINDDIR      "Contents/Resources/share/inkscape/bind"
+#    define INKSCAPE_EXAMPLESDIR  "Contents/Resources/share/inkscape/examples"
+#    define INKSCAPE_EXTENSIONDIR "Contents/Resources/share/inkscape/extensions"
+#    define INKSCAPE_FILTERDIR    "Contents/Resources/share/inkscape/filters"
+#    define INKSCAPE_GRADIENTSDIR "Contents/Resources/share/inkscape/gradients"
+#    define INKSCAPE_KEYSDIR      "Contents/Resources/share/inkscape/keys"
+#    define INKSCAPE_PIXMAPDIR    "Contents/Resources/share/inkscape/icons"
+#    define INKSCAPE_MARKERSDIR   "Contents/Resources/share/inkscape/markers"
+#    define INKSCAPE_PALETTESDIR  "Contents/Resources/share/inkscape/palettes"
+#    define INKSCAPE_PATTERNSDIR  "Contents/Resources/share/inkscape/patterns"
+#    define INKSCAPE_SCREENSDIR   "Contents/Resources/share/inkscape/screens"
+#    define INKSCAPE_SYMBOLSDIR   "Contents/Resources/share/inkscape/symbols"
+#    define INKSCAPE_TUTORIALSDIR "Contents/Resources/share/inkscape/tutorials"
+#    define INKSCAPE_TEMPLATESDIR "Contents/Resources/share/inkscape/templates"
+#    define INKSCAPE_UIDIR        "Contents/Resources/share/inkscape/ui"
 //CREATE V0.1 support
 #    define CREATE_GRADIENTSDIR  "/Library/Application Support/create/gradients/gimp"
 #    define CREATE_PALETTESDIR   "/Library/Application Support/create/swatches"
@@ -112,8 +112,8 @@ extern "C" {
 #	 endif
 #endif
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+//#ifdef __cplusplus
+//}
+//#endif /* __cplusplus */
 
 #endif /* _PATH_PREFIX_H_ */

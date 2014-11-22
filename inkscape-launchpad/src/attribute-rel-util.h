@@ -8,7 +8,7 @@
  *      Author: tavmjong
  */
 
-#include "glibmm/ustring.h"
+#include <glibmm/ustring.h>
 #include "xml/sp-css-attr.h"
 
 using Inkscape::XML::Node;

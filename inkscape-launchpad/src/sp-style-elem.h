@@ -4,9 +4,6 @@
 #include "sp-object.h"
 #include "media.h"
 
-#define SP_STYLE_ELEM(obj) (dynamic_cast<SPStyleElem*>((SPObject*)obj))
-#define SP_IS_STYLE_ELEM(obj) (dynamic_cast<const SPStyleElem*>((SPObject*)obj) != NULL)
-
 class SPStyleElem : public SPObject {
 public:
 	SPStyleElem();
@@ -16,9 +13,9 @@ public:
     bool is_css;
 
 	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
-	virtual void set(unsigned int key, gchar const* value);
+	virtual void set(unsigned int key, char const* value);
 	virtual void read_content();
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, unsigned int flags);
 };
 
 

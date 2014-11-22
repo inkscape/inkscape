@@ -111,7 +111,7 @@ inline void sincos(double angle, double &sin_, double &cos_) {
 # define IS_NAN(_a) (_isnan(_a)) 	/* Win32 definition */
 #elif defined(isnan) || defined(__FreeBSD__) || defined(__osf__)
 # define IS_NAN(_a) (isnan(_a))		/* GNU definition */
-#elif defined (SOLARIS_2_8) && __GNUC__ == 3 && __GNUC_MINOR__ == 2
+#elif defined (SOLARIS)
 # define IS_NAN(_a) (isnan(_a))		/* GNU definition */
 #else
 # define IS_NAN(_a) (boost::math::isnan(_a))
@@ -129,7 +129,7 @@ inline void sincos(double angle, double &sin_, double &cos_) {
 # define IS_FINITE(_a) (isfinite(_a))
 #elif defined(__osf__)
 # define IS_FINITE(_a) (finite(_a) && !IS_NAN(_a))
-#elif defined (SOLARIS_2_8) && __GNUC__ == 3 && __GNUC_MINOR__ == 2
+#elif defined (SOLARIS)
 #include  <ieeefp.h>
 #define IS_FINITE(_a) (finite(_a) && !IS_NAN(_a))
 #else

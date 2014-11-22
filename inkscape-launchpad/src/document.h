@@ -75,8 +75,8 @@ class SPDocument : public Inkscape::GC::Managed<>,
 public:
     typedef sigc::signal<void, SPObject *> IDChangedSignal;
     typedef sigc::signal<void> ResourcesChangedSignal;
-    typedef sigc::signal<void, guint> ModifiedSignal;
-    typedef sigc::signal<void, gchar const *> URISetSignal;
+    typedef sigc::signal<void, unsigned> ModifiedSignal;
+    typedef sigc::signal<void, char const *> URISetSignal;
     typedef sigc::signal<void, double, double> ResizedSignal;
     typedef sigc::signal<void> ReconstructionStart;
     typedef sigc::signal<void> ReconstructionFinish;
@@ -100,9 +100,9 @@ public:
     CRCascade *style_cascade;
 
 protected:
-    gchar *uri;   ///< A filename (not a URI yet), or NULL
-    gchar *base;  ///< To be used for resolving relative hrefs.
-    gchar *name;  ///< basename(uri) or other human-readable label for the document.
+    char *uri;   ///< A filename (not a URI yet), or NULL
+    char *base;  ///< To be used for resolving relative hrefs.
+    char *name;  ///< basename(uri) or other human-readable label for the document.
 
 public:
 
@@ -112,10 +112,10 @@ public:
     Glib::ustring actionkey;
 
     /// Handler ID
-    guint modified_id;
+    unsigned modified_id;
     
     /// Connector rerouting handler ID
-    guint rerouting_handler_id;
+    unsigned rerouting_handler_id;
 
     Inkscape::ProfileManager* profileManager;
 
@@ -137,15 +137,15 @@ public:
     Inkscape::XML::Document const *getReprDoc() const { return rdoc; }
 
     /** A filename (not a URI yet), or NULL */
-    gchar const *getURI() const { return uri; }
-    void setUri(gchar const *uri);
+    char const *getURI() const { return uri; }
+    void setUri(char const *uri);
 
     /** To be used for resolving relative hrefs. */
-    gchar const *getBase() const { return base; };
-    void setBase( gchar const* base );
+    char const *getBase() const { return base; };
+    void setBase( char const* base );
 
     /** basename(uri) or other human-readable label for the document. */
-    gchar const* getName() const { return name; }
+    char const* getName() const { return name; }
 
     /** Return the main defs object for the document. */
     SPDefs *getDefs();
@@ -173,10 +173,10 @@ public:
     sigc::connection connectResized(ResizedSignal::slot_type slot);
     sigc::connection connectCommit(CommitSignal::slot_type slot);
 
-    void bindObjectToId(gchar const *id, SPObject *object);
+    void bindObjectToId(char const *id, SPObject *object);
     SPObject *getObjectById(Glib::ustring const &id) const;
-    SPObject *getObjectById(gchar const *id) const;
-    sigc::connection connectIdChanged(const gchar *id, IDChangedSignal::slot_type slot);
+    SPObject *getObjectById(char const *id) const;
+    sigc::connection connectIdChanged(const char *id, IDChangedSignal::slot_type slot);
 
     void bindObjectToRepr(Inkscape::XML::Node *repr, SPObject *object);
     SPObject *getObjectByRepr(Inkscape::XML::Node *repr) const;
@@ -222,12 +222,12 @@ public:
     sigc::connection _selection_changed_connection;
     sigc::connection _desktop_activated_connection;
 
-    sigc::connection connectResourcesChanged(const gchar *key, SPDocument::ResourcesChangedSignal::slot_type slot);
+    sigc::connection connectResourcesChanged(char const *key, SPDocument::ResourcesChangedSignal::slot_type slot);
 
     void fitToRect(Geom::Rect const &rect, bool with_margins = false);
-    static SPDocument *createNewDoc(const gchar *uri, unsigned int keepalive,
+    static SPDocument *createNewDoc(char const*uri, unsigned int keepalive,
             bool make_new = false, SPDocument *parent=NULL );
-    static SPDocument *createNewDocFromMem(const gchar *buffer, gint length, unsigned int keepalive);
+    static SPDocument *createNewDocFromMem(char const*buffer, int length, unsigned int keepalive);
            SPDocument *createChildDoc(std::string const &uri);
 
     /**
@@ -235,8 +235,8 @@ public:
      */
     static SPItem *getItemFromListAtPointBottom(unsigned int dkey, SPGroup *group, const GSList *list, Geom::Point const &p, bool take_insensitive = false);
 
-    static SPDocument *createDoc(Inkscape::XML::Document *rdoc, gchar const *uri,
-            gchar const *base, gchar const *name, unsigned int keepalive,
+    static SPDocument *createDoc(Inkscape::XML::Document *rdoc, char const *uri,
+            char const *base, char const *name, unsigned int keepalive,
             SPDocument *parent);
 
     SPDocument *doRef();
@@ -250,25 +250,25 @@ public:
     void setHeight(const Inkscape::Util::Quantity &height);
     void setViewBox(const Geom::Rect &viewBox);
     void requestModified();
-    gint ensureUpToDate();
-    bool addResource(const gchar *key, SPObject *object);
-    bool removeResource(const gchar *key, SPObject *object);
-    const GSList *getResourceList(const gchar *key) const;
+    int ensureUpToDate();
+    bool addResource(char const *key, SPObject *object);
+    bool removeResource(char const *key, SPObject *object);
+    const GSList *getResourceList(char const *key) const;
     GSList *getItemsInBox(unsigned int dkey, Geom::Rect const &box) const;
     GSList *getItemsPartiallyInBox(unsigned int dkey, Geom::Rect const &box) const;
-    SPItem *getItemAtPoint(unsigned int key, Geom::Point const &p, gboolean into_groups, SPItem *upto = NULL) const;
+    SPItem *getItemAtPoint(unsigned int key, Geom::Point const &p, bool into_groups, SPItem *upto = NULL) const;
     GSList *getItemsAtPoints(unsigned const key, std::vector<Geom::Point> points) const;
     SPItem *getGroupAtPoint(unsigned int key,  Geom::Point const &p) const;
 
-    void changeUriAndHrefs(gchar const *uri);
-    void emitResizedSignal(gdouble width, gdouble height);
+    void changeUriAndHrefs(char const *uri);
+    void emitResizedSignal(double width, double height);
 	
     unsigned int vacuumDocument();
 
     void importDefs(SPDocument *source);
 
 private:
-    void do_change_uri(gchar const *const filename, bool const rebase);
+    void do_change_uri(char const *const filename, bool const rebase);
     void setupViewport(SPItemCtx *ctx);
 };
 

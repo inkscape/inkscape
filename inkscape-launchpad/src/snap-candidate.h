@@ -14,7 +14,10 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-//#include "snapped-point.h"
+#include <2geom/point.h>
+#include <2geom/rect.h>
+#include <cstdio>
+
 #include "snap-enums.h"
 
 class SPItem; // forward declaration

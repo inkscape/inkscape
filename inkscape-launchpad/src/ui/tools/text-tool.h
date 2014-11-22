@@ -14,10 +14,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-/*  #include <gdk/gdkic.h> */
-#include <stddef.h>
-#include <sigc++/sigc++.h>
-#include <gtk/gtk.h>
+#include <sigc++/connection.h>
 
 #include "ui/tools/tool-base.h"
 #include <2geom/point.h>
@@ -25,6 +22,8 @@
 
 #define SP_TEXT_CONTEXT(obj) (dynamic_cast<Inkscape::UI::Tools::TextTool*>((Inkscape::UI::Tools::ToolBase*)obj))
 #define SP_IS_TEXT_CONTEXT(obj) (dynamic_cast<const Inkscape::UI::Tools::TextTool*>((const Inkscape::UI::Tools::ToolBase*)obj) != NULL)
+
+typedef struct _GtkIMContext GtkIMContext;
 
 struct SPCtrlLine;
 

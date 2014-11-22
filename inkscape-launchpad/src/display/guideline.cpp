@@ -29,8 +29,6 @@
 
 using Inkscape::ControlManager;
 
-static void sp_guideline_class_init(SPGuideLineClass *c);
-static void sp_guideline_init(SPGuideLine *guideline);
 static void sp_guideline_destroy(SPCanvasItem *object);
 
 static void sp_guideline_update(SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
@@ -40,34 +38,10 @@ static double sp_guideline_point(SPCanvasItem *item, Geom::Point p, SPCanvasItem
 
 static void sp_guideline_drawline (SPCanvasBuf *buf, gint x0, gint y0, gint x1, gint y1, guint32 rgba);
 
-static SPCanvasItemClass *parent_class;
-
-GType sp_guideline_get_type()
-{
-    static GType guideline_type = 0;
-
-    if (!guideline_type) {
-        static GTypeInfo const guideline_info = {
-            sizeof (SPGuideLineClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_guideline_class_init,
-            NULL, NULL,
-            sizeof (SPGuideLine),
-            16,
-            (GInstanceInitFunc) sp_guideline_init,
-            NULL,
-        };
-
-        guideline_type = g_type_register_static(SP_TYPE_CANVAS_ITEM, "SPGuideLine", &guideline_info, (GTypeFlags) 0);
-    }
-
-    return guideline_type;
-}
+G_DEFINE_TYPE(SPGuideLine, sp_guideline, SP_TYPE_CANVAS_ITEM);
 
 static void sp_guideline_class_init(SPGuideLineClass *c)
 {
-    parent_class = SP_CANVAS_ITEM_CLASS(g_type_class_peek_parent(c));
-
     SPCanvasItemClass *item_class = SP_CANVAS_ITEM_CLASS(c);
     item_class->destroy = sp_guideline_destroy;
     item_class->update = sp_guideline_update;
@@ -108,7 +82,7 @@ static void sp_guideline_destroy(SPCanvasItem *object)
         g_free(gl->label);
     }
 
-    SP_CANVAS_ITEM_CLASS(parent_class)->destroy(object);
+    SP_CANVAS_ITEM_CLASS(sp_guideline_parent_class)->destroy(object);
 }
 
 static void sp_guideline_render(SPCanvasItem *item, SPCanvasBuf *buf)
@@ -197,8 +171,8 @@ static void sp_guideline_update(SPCanvasItem *item, Geom::Affine const &affine, 
 {
     SPGuideLine *gl = SP_GUIDELINE(item);
 
-    if ((SP_CANVAS_ITEM_CLASS(parent_class))->update) {
-        (SP_CANVAS_ITEM_CLASS(parent_class))->update(item, affine, flags);
+    if ((SP_CANVAS_ITEM_CLASS(sp_guideline_parent_class))->update) {
+        (SP_CANVAS_ITEM_CLASS(sp_guideline_parent_class))->update(item, affine, flags);
     }
 
     gl->affine = affine;

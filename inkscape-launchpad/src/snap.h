@@ -32,6 +32,7 @@ enum SPGuideDragType { // used both here and in desktop-events.cpp
 
 class SPGuide;
 class SPNamedView;
+typedef struct _GSList GSList;
 
 /**
  * Class to coordinate snapping operations.

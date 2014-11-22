@@ -75,7 +75,7 @@ bool sp_file_open(
  * Displays a file open dialog. Calls sp_file_open on
  * an OK.
  */
-void sp_file_open_dialog (Gtk::Window &parentWindow, gpointer object, gpointer data);
+void sp_file_open_dialog (Gtk::Window &parentWindow, void* object, void* data);
 
 /**
  * Reverts file to disk-copy on "YES"
@@ -96,19 +96,19 @@ bool file_save_remote(SPDocument *doc, const Glib::ustring &uri,
 /**
  *
  */
-bool sp_file_save (Gtk::Window &parentWindow, gpointer object, gpointer data);
+bool sp_file_save (Gtk::Window &parentWindow, void* object, void* data);
 
 /**
  *  Saves the given document.  Displays a file select dialog
  *  to choose the new name.
  */
-bool sp_file_save_as (Gtk::Window &parentWindow, gpointer object, gpointer data);
+bool sp_file_save_as (Gtk::Window &parentWindow, void* object, void* data);
 
 /**
  *  Saves a copy of the given document.  Displays a file select dialog
  *  to choose a name for the copy.
  */
-bool sp_file_save_a_copy (Gtk::Window &parentWindow, gpointer object, gpointer data);
+bool sp_file_save_a_copy (Gtk::Window &parentWindow, void* object, void* data);
 
 
 /**

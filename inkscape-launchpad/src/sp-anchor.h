@@ -1,5 +1,5 @@
-#ifndef __SP_ANCHOR_H__
-#define __SP_ANCHOR_H__
+#ifndef SEEN_SP_ANCHOR_H
+#define SEEN_SP_ANCHOR_H
 
 /*
  * SVG <a> element implementation
@@ -23,16 +23,16 @@ public:
 	SPAnchor();
 	virtual ~SPAnchor();
 
-	gchar *href;
+	char *href;
 
 	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
 	virtual void release();
-	virtual void set(unsigned int key, gchar const* value);
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+	virtual void set(unsigned int key, char const* value);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, unsigned int flags);
 
     virtual const char* displayName() const;
-	virtual gchar* description() const;
-	virtual gint event(SPEvent *event);
+	virtual char* description() const;
+	virtual int event(SPEvent *event);
 };
 
 #endif

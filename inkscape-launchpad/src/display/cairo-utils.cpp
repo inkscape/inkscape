@@ -19,18 +19,19 @@
 #include <glibmm/fileutils.h>
 #include <2geom/pathvector.h>
 #include <2geom/bezier-curve.h>
+#include <2geom/elliptical-arc.h>
 #include <2geom/hvlinesegment.h>
 #include <2geom/affine.h>
 #include <2geom/point.h>
 #include <2geom/path.h>
 #include <2geom/transforms.h>
 #include <2geom/sbasis-to-bezier.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
+
 #include "color.h"
 #include "style.h"
 #include "helper/geom-curves.h"
 #include "display/cairo-templates.h"
-
-static void ink_cairo_pixbuf_cleanup(guchar *, void *);
 
 /**
  * Key for cairo_surface_t to keep track of current color interpolation value
@@ -502,7 +503,17 @@ void Pixbuf::ensurePixelFormat(PixelFormat fmt)
 static void
 feed_curve_to_cairo(cairo_t *cr, Geom::Curve const &c, Geom::Affine const & trans, Geom::Rect view, bool optimize_stroke)
 {
-    if( is_straight_curve(c) )
+    using Geom::X;
+    using Geom::Y;
+
+    unsigned order = 0;
+    if (Geom::BezierCurve const* b = dynamic_cast<Geom::BezierCurve const*>(&c)) {
+        order = b->order();
+    }
+
+    // handle the three typical curve cases
+    switch (order) {
+    case 1:
     {
         Geom::Point end_tr = c.finalPoint() * trans;
         if (!optimize_stroke) {
@@ -516,56 +527,96 @@ feed_curve_to_cairo(cairo_t *cr, Geom::Curve const &c, Geom::Affine const & tran
             }
         }
     }
-    else if(Geom::QuadraticBezier const *quadratic_bezier = dynamic_cast<Geom::QuadraticBezier const*>(&c)) {
+    break;
+    case 2:
+    {
+        Geom::QuadraticBezier const *quadratic_bezier = static_cast<Geom::QuadraticBezier const*>(&c);
         std::vector<Geom::Point> points = quadratic_bezier->points();
         points[0] *= trans;
         points[1] *= trans;
         points[2] *= trans;
+        // degree-elevate to cubic Bezier, since Cairo doesn't do quadratic Beziers
         Geom::Point b1 = points[0] + (2./3) * (points[1] - points[0]);
         Geom::Point b2 = b1 + (1./3) * (points[2] - points[0]);
         if (!optimize_stroke) {
-            cairo_curve_to(cr, b1[0], b1[1], b2[0], b2[1], points[2][0], points[2][1]);
+            cairo_curve_to(cr, b1[X], b1[Y], b2[X], b2[Y], points[2][X], points[2][Y]);
         } else {
             Geom::Rect swept(points[0], points[2]);
             swept.expandTo(points[1]);
             if (swept.intersects(view)) {
-                cairo_curve_to(cr, b1[0], b1[1], b2[0], b2[1], points[2][0], points[2][1]);
+                cairo_curve_to(cr, b1[X], b1[Y], b2[X], b2[Y], points[2][X], points[2][Y]);
             } else {
-                cairo_move_to(cr, points[2][0], points[2][1]);
+                cairo_move_to(cr, points[2][X], points[2][Y]);
             }
         }
     }
-    else if(Geom::CubicBezier const *cubic_bezier = dynamic_cast<Geom::CubicBezier const*>(&c)) {
+    break;
+    case 3:
+    {
+        Geom::CubicBezier const *cubic_bezier = static_cast<Geom::CubicBezier const*>(&c);
         std::vector<Geom::Point> points = cubic_bezier->points();
         //points[0] *= trans; // don't do this one here for fun: it is only needed for optimized strokes
         points[1] *= trans;
         points[2] *= trans;
         points[3] *= trans;
         if (!optimize_stroke) {
-            cairo_curve_to(cr, points[1][0], points[1][1], points[2][0], points[2][1], points[3][0], points[3][1]);
+            cairo_curve_to(cr, points[1][X], points[1][Y], points[2][X], points[2][Y], points[3][X], points[3][Y]);
         } else {
             points[0] *= trans;  // didn't transform this point yet
             Geom::Rect swept(points[0], points[3]);
             swept.expandTo(points[1]);
             swept.expandTo(points[2]);
             if (swept.intersects(view)) {
-                cairo_curve_to(cr, points[1][0], points[1][1], points[2][0], points[2][1], points[3][0], points[3][1]);
+                cairo_curve_to(cr, points[1][X], points[1][Y], points[2][X], points[2][Y], points[3][X], points[3][Y]);
             } else {
-                cairo_move_to(cr, points[3][0], points[3][1]);
+                cairo_move_to(cr, points[3][X], points[3][Y]);
             }
         }
     }
-//    else if(Geom::SVGEllipticalArc const *svg_elliptical_arc = dynamic_cast<Geom::SVGEllipticalArc *>(c)) {
-//        //TODO: get at the innards and spit them out to cairo
-//    }
-    else {
-        //this case handles sbasis as well as all other curve types
-        Geom::Path sbasis_path = Geom::cubicbezierpath_from_sbasis(c.toSBasis(), 0.1);
+    break;
+    default:
+    {
+        if (Geom::EllipticalArc const *a = dynamic_cast<Geom::EllipticalArc const*>(&c)) {
+            //if (!optimize_stroke || a->boundsFast().intersects(view)) {
+                Geom::Affine xform = a->unitCircleTransform() * trans;
+                Geom::Point ang(a->initialAngle().radians(), a->finalAngle().radians());
 
-        //recurse to convert the new path resulting from the sbasis to svgd
-        for(Geom::Path::iterator iter = sbasis_path.begin(); iter != sbasis_path.end(); ++iter) {
-            feed_curve_to_cairo(cr, *iter, trans, view, optimize_stroke);
+                // Apply the transformation to the current context
+                cairo_matrix_t cm;
+                cm.xx = xform[0];
+                cm.xy = xform[2];
+                cm.x0 = xform[4];
+                cm.yx = xform[1];
+                cm.yy = xform[3];
+                cm.y0 = xform[5];
+
+                cairo_save(cr);
+                cairo_transform(cr, &cm);
+
+                // Draw the circle
+                if (a->sweep()) {
+                    cairo_arc(cr, 0, 0, 1, ang[0], ang[1]);
+                } else {
+                    cairo_arc_negative(cr, 0, 0, 1, ang[0], ang[1]);
+                }
+                // Revert the current context
+                cairo_restore(cr);
+            //} else {
+            //    Geom::Point f = a->finalPoint() * trans;
+            //    cairo_move_to(cr, f[X], f[Y]);
+            //}
+        } else {
+            // handles sbasis as well as all other curve types
+            // this is very slow
+            Geom::Path sbasis_path = Geom::cubicbezierpath_from_sbasis(c.toSBasis(), 0.1);
+
+            // recurse to convert the new path resulting from the sbasis to svgd
+            for (Geom::Path::iterator iter = sbasis_path.begin(); iter != sbasis_path.end(); ++iter) {
+                feed_curve_to_cairo(cr, *iter, trans, view, optimize_stroke);
+            }
         }
+    }
+    break;
     }
 }
 
@@ -579,7 +630,7 @@ feed_path_to_cairo (cairo_t *ct, Geom::Path const &path)
 
     cairo_move_to(ct, path.initialPoint()[0], path.initialPoint()[1] );
 
-    for(Geom::Path::const_iterator cit = path.begin(); cit != path.end_open(); ++cit) {
+    for (Geom::Path::const_iterator cit = path.begin(); cit != path.end_open(); ++cit) {
         feed_curve_to_cairo(ct, *cit, Geom::identity(), Geom::Rect(), false); // optimize_stroke is false, so the view rect is not used
     }
 
@@ -1119,7 +1170,7 @@ GdkPixbuf *ink_pixbuf_create_from_cairo_surface(cairo_surface_t *s)
  * to gdk_pixbuf_new_from_data when creating a GdkPixbuf backed by
  * a Cairo surface.
  */
-static void ink_cairo_pixbuf_cleanup(guchar * /*pixels*/, void *data)
+void ink_cairo_pixbuf_cleanup(guchar * /*pixels*/, void *data)
 {
     cairo_surface_t *surface = static_cast<cairo_surface_t*>(data);
     cairo_surface_destroy(surface);

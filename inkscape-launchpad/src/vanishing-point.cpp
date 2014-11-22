@@ -6,6 +6,7 @@
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
  *   Maximilian Albert <Anhalter42@gmx.de>
  *   Abhishek Sharma
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2005-2007 authors
  *
@@ -22,7 +23,7 @@
 #include "ui/tools/tool-base.h"
 #include "xml/repr.h"
 #include "perspective-line.h"
-#include "shape-editor.h"
+#include "ui/shape-editor.h"
 #include "snap.h"
 #include "sp-namedview.h"
 #include "ui/control-manager.h"
@@ -256,11 +257,10 @@ std::list<SPBox3D *>
 VanishingPoint::selectedBoxes(Inkscape::Selection *sel) {
     std::list<SPBox3D *> sel_boxes;
     for (GSList const* i = sel->itemList(); i != NULL; i = i->next) {
-        if (!SP_IS_BOX3D(i->data))
-            continue;
-        SPBox3D *box = SP_BOX3D(i->data);
-        if (this->hasBox(box)) {
-            sel_boxes.push_back (box);
+        SPItem *item = static_cast<SPItem *>(i->data);
+        SPBox3D *box = dynamic_cast<SPBox3D *>(item);
+        if (box && this->hasBox(box)) {
+            sel_boxes.push_back(box);
         }
     }
     return sel_boxes;
@@ -396,12 +396,13 @@ VPDragger::VPsOfSelectedBoxes() {
     // FIXME: Should we take the selection from the parent VPDrag? I guess it shouldn't make a difference.
     Inkscape::Selection *sel = sp_desktop_selection(inkscape_active_desktop());
     for (GSList const* i = sel->itemList(); i != NULL; i = i->next) {
-        if (!SP_IS_BOX3D(i->data))
-            continue;
-        SPBox3D *box = SP_BOX3D(i->data);
-        vp = this->findVPWithBox(box);
-        if (vp) {
-            sel_vps.insert (vp);
+        SPItem *item = static_cast<SPItem *>(i->data);
+        SPBox3D *box = dynamic_cast<SPBox3D *>(item);
+        if (box) {
+            vp = this->findVPWithBox(box);
+            if (vp) {
+                sel_vps.insert (vp);
+            }
         }
     }
     return sel_vps;
@@ -577,14 +578,14 @@ VPDrag::updateDraggers ()
     g_return_if_fail (this->selection != NULL);
 
     for (GSList const* i = this->selection->itemList(); i != NULL; i = i->next) {
-        SPItem *item = SP_ITEM(i->data);
-        if (!SP_IS_BOX3D (item)) continue;
-        SPBox3D *box = SP_BOX3D (item);
-
-        VanishingPoint vp;
-        for (int i = 0; i < 3; ++i) {
-            vp.set(box3d_get_perspective(box), Proj::axes[i]);
-            addDragger (vp);
+        SPItem *item = static_cast<SPItem *>(i->data);
+        SPBox3D *box = dynamic_cast<SPBox3D *>(item);
+        if (box) {
+            VanishingPoint vp;
+            for (int i = 0; i < 3; ++i) {
+                vp.set(box3d_get_perspective(box), Proj::axes[i]);
+                addDragger (vp);
+            }
         }
     }
 }
@@ -609,12 +610,13 @@ VPDrag::updateLines ()
     g_return_if_fail (this->selection != NULL);
 
     for (GSList const* i = this->selection->itemList(); i != NULL; i = i->next) {
-        if (!SP_IS_BOX3D(i->data)) continue;
-        SPBox3D *box = SP_BOX3D (i->data);
-
-        this->drawLinesForFace (box, Proj::X);
-        this->drawLinesForFace (box, Proj::Y);
-        this->drawLinesForFace (box, Proj::Z);
+        SPItem *item = static_cast<SPItem *>(i->data);
+        SPBox3D *box = dynamic_cast<SPBox3D *>(item);
+        if (box) {
+            this->drawLinesForFace (box, Proj::X);
+            this->drawLinesForFace (box, Proj::Y);
+            this->drawLinesForFace (box, Proj::Z);
+        }
     }
 }
 

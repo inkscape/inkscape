@@ -60,6 +60,7 @@ bool SPAttributeRelCSS::findIfValid(Glib::ustring property, Glib::ustring elemen
         || property.substr(0,4) == "rdf:"
         || property.substr(0,3) == "cc:"
         || property.substr(0,4) == "ns1:"  // JessyInk
+        || property.substr(0,4) == "osb:"  // Open Swatch Book
         || (SPAttributeRelCSS::instance->propertiesOfElements[temp].find(property)
             != SPAttributeRelCSS::instance->propertiesOfElements[temp].end()) ) {
         return true;

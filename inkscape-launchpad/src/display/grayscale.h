@@ -10,15 +10,15 @@
  * Released under GNU GPL
  */
 
-#include <gdk/gdk.h>
+typedef unsigned int guint32;
 
 /**
  * Provide methods to calculate grayscale values (e.g. convert rgba value to grayscale rgba value).
  */
 namespace Grayscale {
     guint32 process(guint32 rgba);
-    guint32 process(guchar r, guchar g, guchar b, guchar a);
-    guchar  luminance(guchar r, guchar g, guchar b);
+    guint32 process(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+    unsigned char luminance(unsigned char r, unsigned char g, unsigned char b);
 
     bool activeDesktopIsGrayscale();
 };

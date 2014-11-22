@@ -14,10 +14,15 @@
 
 #include <boost/shared_ptr.hpp>
 #include <cairo.h>
-#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <2geom/affine.h>
 #include <2geom/rect.h>
 #include <2geom/transforms.h>
+
+extern "C" {
+typedef struct _cairo cairo_t;
+typedef struct _cairo_surface cairo_surface_t;
+typedef struct _cairo_region cairo_region_t;
+}
 
 namespace Inkscape {
 class DrawingContext;

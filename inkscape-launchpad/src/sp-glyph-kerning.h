@@ -1,10 +1,3 @@
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
-
-#ifndef __SP_GLYPH_KERNING_H__
-#define __SP_GLYPH_KERNING_H__
-
 /*
  * SVG <hkern> and <vkern> elements implementation
  *
@@ -16,41 +9,35 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#ifndef SEEN_SP_GLYPH_KERNING_H
+#define SEEN_SP_GLYPH_KERNING_H
+
 #include "sp-object.h"
 #include "unicoderange.h"
 
-//#define SP_HKERN(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_HKERN, SPHkern))
-//#define SP_HKERN_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_HKERN, SPGlyphKerningClass))
-//#define SP_IS_HKERN(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_HKERN))
-//#define SP_IS_HKERN_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_HKERN))
+#define SP_HKERN(obj) (dynamic_cast<SPHkern*>(obj))
+#define SP_IS_HKERN(obj) (dynamic_cast<const SPHkern*>(obj) != NULL)
 
-#define SP_HKERN(obj) (dynamic_cast<SPHkern*>((SPObject*)obj))
-#define SP_IS_HKERN(obj) (dynamic_cast<const SPHkern*>((SPObject*)obj) != NULL)
-
-//#define SP_VKERN(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_VKERN, SPVkern))
-//#define SP_VKERN_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_VKERN, SPGlyphKerningClass))
-//#define SP_IS_VKERN(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_VKERN))
-//#define SP_IS_VKERN_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_VKERN))
-
-#define SP_VKERN(obj) (dynamic_cast<SPVkern*>((SPObject*)obj))
-#define SP_IS_VKERN(obj) (dynamic_cast<const SPVkern*>((SPObject*)obj) != NULL)
+#define SP_VKERN(obj) (dynamic_cast<SPVkern*>(obj))
+#define SP_IS_VKERN(obj) (dynamic_cast<const SPVkern*>(obj) != NULL)
 
 // CPPIFY: These casting macros are buggy, as Vkern and Hkern aren't "real" classes.
 
-class GlyphNames{
+class GlyphNames {
 public: 
-GlyphNames(const gchar* value);
-~GlyphNames();
-bool contains(const char* name);
+    GlyphNames(char const* value);
+    ~GlyphNames();
+    bool contains(char const* name);
 private:
-gchar* names;
+    char* names;
 };
 
 class SPGlyphKerning : public SPObject {
 public:
-	SPGlyphKerning();
-	virtual ~SPGlyphKerning();
+    SPGlyphKerning();
+    virtual ~SPGlyphKerning() {}
 
+    // FIXME encapsulation
     UnicodeRange* u1;
     GlyphNames* g1;
     UnicodeRange* u2;
@@ -58,22 +45,30 @@ public:
     double k;
 
 protected:
-	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
-	virtual void release();
-
-	virtual void set(unsigned int key, const gchar* value);
-
-	virtual void update(SPCtx* ctx, unsigned int flags);
-
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
+    virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
+    virtual void release();
+    virtual void set(unsigned int key, char const* value);
+    virtual void update(SPCtx* ctx, unsigned int flags);
+    virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, unsigned int flags);
 };
 
 class SPHkern : public SPGlyphKerning {
-
+    virtual ~SPHkern() {}
 };
 
 class SPVkern : public SPGlyphKerning {
-
+    virtual ~SPVkern() {}
 };
 
-#endif //#ifndef __SP_GLYPH_KERNING_H__
+#endif // !SEEN_SP_GLYPH_KERNING_H
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8 :

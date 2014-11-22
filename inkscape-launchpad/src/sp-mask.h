@@ -55,12 +55,12 @@ protected:
 
 	virtual void child_added(Inkscape::XML::Node* child, Inkscape::XML::Node* ref);
 
-	virtual void set(unsigned int key, const gchar* value);
+	virtual void set(unsigned int key, const char* value);
 
 	virtual void update(SPCtx* ctx, unsigned int flags);
 	virtual void modified(unsigned int flags);
 
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, unsigned int flags);
 };
 
 class SPMaskReference : public Inkscape::URIReference {
@@ -86,10 +86,10 @@ protected:
 	  Inkscape::XML::Node * const owner_repr = owner->getRepr();
 	  //XML Tree being used directly here while it shouldn't be...
 	  Inkscape::XML::Node * const obj_repr = obj->getRepr();
-            gchar const * owner_name = NULL;
-            gchar const * owner_mask = NULL;
-            gchar const * obj_name = NULL;
-            gchar const * obj_id = NULL;
+            char const * owner_name = NULL;
+            char const * owner_mask = NULL;
+            char const * obj_name = NULL;
+            char const * obj_id = NULL;
             if (owner_repr != NULL) {
                 owner_name = owner_repr->name();
                 owner_mask = owner_repr->attribute("mask");
@@ -98,7 +98,7 @@ protected:
                 obj_name = obj_repr->name();
                 obj_id = obj_repr->attribute("id");
             }
-            g_warning("Ignoring recursive mask reference "
+            printf("WARNING: Ignoring recursive mask reference "
                       "<%s mask=\"%s\"> in <%s id=\"%s\">",
                       owner_name, owner_mask,
                       obj_name, obj_id);
@@ -108,6 +108,6 @@ protected:
 	}
 };
 
-const gchar *sp_mask_create (GSList *reprs, SPDocument *document, Geom::Affine const* applyTransform);
+const char *sp_mask_create (GSList *reprs, SPDocument *document, Geom::Affine const* applyTransform);
 
 #endif // SEEN_SP_MASK_H

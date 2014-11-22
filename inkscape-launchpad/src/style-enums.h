@@ -17,7 +17,7 @@
 
 /* SPFontStyle */
 
-#include "display/canvas-bpath.h"
+#include "display/canvas-bpath.h" // FIXME those enums belong here!
 
 enum SPCSSFontSize {
     SP_CSS_FONT_SIZE_XX_SMALL,
@@ -111,6 +111,14 @@ enum SPTextAnchor {
     SP_CSS_TEXT_ANCHOR_START,
     SP_CSS_TEXT_ANCHOR_MIDDLE,
     SP_CSS_TEXT_ANCHOR_END
+};
+
+enum SPWhiteSpace {
+    SP_CSS_WHITE_SPACE_NORMAL,
+    SP_CSS_WHITE_SPACE_PRE,
+    SP_CSS_WHITE_SPACE_NOWRAP,
+    SP_CSS_WHITE_SPACE_PREWRAP,
+    SP_CSS_WHITE_SPACE_PRELINE
 };
 
 enum SPCSSBaselineShift {
@@ -219,8 +227,8 @@ enum SPTextRendering {
 
 
 struct SPStyleEnum {
-    gchar const *key;
-    gint value;
+    char const *key;
+    int value;
 };
 
 static SPStyleEnum const enum_fill_rule[] = {
@@ -323,6 +331,15 @@ static SPStyleEnum const enum_text_anchor[] = {
     {"start", SP_CSS_TEXT_ANCHOR_START},
     {"middle", SP_CSS_TEXT_ANCHOR_MIDDLE},
     {"end", SP_CSS_TEXT_ANCHOR_END},
+    {NULL, -1}
+};
+
+static SPStyleEnum const enum_white_space[] = {
+    {"normal",   SP_CSS_WHITE_SPACE_NORMAL },
+    {"pre",      SP_CSS_WHITE_SPACE_PRE    },
+    {"nowrap",   SP_CSS_WHITE_SPACE_NOWRAP },
+    {"pre-wrap", SP_CSS_WHITE_SPACE_PREWRAP},
+    {"pre-line", SP_CSS_WHITE_SPACE_PRELINE},
     {NULL, -1}
 };
 

@@ -109,7 +109,7 @@
 
 using Inkscape::DocumentUndo;
 
-#include "tool-factory.h"
+#include "ui/tool-factory.h"
 
 namespace Inkscape {
 namespace UI {

@@ -99,6 +99,59 @@ RegisteredCheckButton::on_toggled()
     _wr->setUpdating (false);
 }
 
+/*#########################################
+ * Registered TOGGLEBUTTON
+ */
+
+RegisteredToggleButton::~RegisteredToggleButton()
+{
+    _toggled_connection.disconnect();
+}
+
+RegisteredToggleButton::RegisteredToggleButton (const Glib::ustring& /*label*/, const Glib::ustring& tip, const Glib::ustring& key, Registry& wr, bool right, Inkscape::XML::Node* repr_in, SPDocument *doc_in, char const *active_str, char const *inactive_str)
+    : RegisteredWidget<Gtk::ToggleButton>()
+    , _active_str(active_str)
+    , _inactive_str(inactive_str)
+{
+    init_parent(key, wr, repr_in, doc_in);
+    setProgrammatically = false;
+    set_tooltip_text (tip);
+    set_alignment (right? 1.0 : 0.0, 0.5);
+    _toggled_connection = signal_toggled().connect (sigc::mem_fun (*this, &RegisteredToggleButton::on_toggled));
+}
+
+void
+RegisteredToggleButton::setActive (bool b)
+{
+    setProgrammatically = true;
+    set_active (b);
+    //The slave button is greyed out if the master button is untoggled
+    for (std::list<Gtk::Widget*>::const_iterator i = _slavewidgets.begin(); i != _slavewidgets.end(); ++i) {
+        (*i)->set_sensitive(b);
+    }
+    setProgrammatically = false;
+}
+
+void
+RegisteredToggleButton::on_toggled()
+{
+    if (setProgrammatically) {
+        setProgrammatically = false;
+        return;
+    }
+
+    if (_wr->isUpdating())
+        return;
+    _wr->setUpdating (true);
+
+    write_to_xml(get_active() ? _active_str : _inactive_str);
+    //The slave button is greyed out if the master button is untoggled
+    for (std::list<Gtk::Widget*>::const_iterator i = _slavewidgets.begin(); i != _slavewidgets.end(); ++i) {
+        (*i)->set_sensitive(get_active());
+    }
+
+    _wr->setUpdating (false);
+}
 
 /*#########################################
  * Registered UNITMENU
@@ -735,9 +788,9 @@ RegisteredRandom::on_value_changed()
   Local Variables:
   mode:c++
   c-file-style:"stroustrup"
-  c-file-offsets:((innamespace . 0)(inline-open . 0))
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
   indent-tabs-mode:nil
   fill-column:99
   End:
 */
-// vim: filetype=c++:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :

@@ -11,7 +11,6 @@
 #ifndef SEEN_RDF_H
 #define SEEN_RDF_H
 
-#include <glib.h>
 #include <glibmm/i18n.h>
 #include "document.h"
 
@@ -22,18 +21,18 @@
  * \brief Holds license name/resource doubles for rdf_license_t entries
  */
 struct rdf_double_t {
-    gchar const *name;
-    gchar const *resource;
+    char const *name;
+    char const *resource;
 };
 
 /**
  * \brief Holds license name and RDF information
  */
 struct rdf_license_t {
-    gchar const *name;        /* localized name of this license */
-    gchar const *uri;         /* URL for the RDF/Work/license element */
+    char const *name;        /* localized name of this license */
+    char const *uri;         /* URL for the RDF/Work/license element */
     struct rdf_double_t *details; /* the license details */
-//    gchar const *fragment;    /* XML contents for the RDF/License tag */
+//    char const *fragment;    /* XML contents for the RDF/License tag */
 };
 
 extern rdf_license_t rdf_licenses [];
@@ -69,10 +68,10 @@ enum RDF_Editable {
  */
 struct rdf_work_entity_t {
     char const *name;       /* unique name of this entity for internal reference */
-    gchar const *title;      /* localized title of this entity for data entry */
-    gchar const *tag;        /* namespace tag for the RDF/Work element */
+    char const *title;      /* localized title of this entity for data entry */
+    char const *tag;        /* namespace tag for the RDF/Work element */
     RDFType datatype;   /* how to extract/inject the RDF information */
-    gchar const *tip;        /* tool tip to explain the meaning of the entity */
+    char const *tip;        /* tool tip to explain the meaning of the entity */
     RDF_Format format;  /* in what format is this data edited? */
     RDF_Editable editable;/* in what way is the data editable? */
 };
@@ -83,19 +82,19 @@ extern rdf_work_entity_t rdf_work_entities [];
  * \brief Generic collection of RDF information for the RDF debug function
  */
 struct rdf_t {
-    gchar*                work_title;
-    gchar*                work_date;
-    gchar*                work_creator;
-    gchar*                work_owner;
-    gchar*                work_publisher;
-    gchar*                work_type;
-    gchar*                work_source;
-    gchar*                work_subject;
-    gchar*                work_description;
+    char*                 work_title;
+    char*                 work_date;
+    char*                 work_creator;
+    char*                 work_owner;
+    char*                 work_publisher;
+    char*                 work_type;
+    char*                 work_source;
+    char*                 work_subject;
+    char*                 work_description;
     struct rdf_license_t* license;
 };
 
-struct rdf_work_entity_t * rdf_find_entity(gchar const * name);
+struct rdf_work_entity_t * rdf_find_entity(char const * name);
 
 /**
  *  \brief   Retrieves a known RDF/Work entity's contents from the document XML by name
@@ -114,7 +113,7 @@ const gchar * rdf_get_work_entity(SPDocument const * doc,
  */
 unsigned int  rdf_set_work_entity(SPDocument * doc,
                                   struct rdf_work_entity_t * entity,
-                                  const gchar * text);
+                                  const char * text);
 
 /**
  *  \brief   Attempts to match and retrieve a known RDF/License from the document XML

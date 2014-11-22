@@ -45,7 +45,7 @@ auto_open_opt=
 #----------------------------------------------------------
 help()
 {
-echo "
+echo -e "
 Create a custom dmg file to distribute Inkscape
 
 \033[1mUSAGE\033[0m

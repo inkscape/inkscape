@@ -1,7 +1,7 @@
-/*
+/**
  * GNOME Utils - Migration helper
  *
- * Author:
+ * Authors:
  *   GNOME Developer
  *   Mitsuru Oka <oka326@parkcity.ne.jp>
  *   Lauris Kaplinski <lauris@ximian.com>
@@ -11,17 +11,15 @@
  * Released under GNU GPL
  */
 
-
-#ifndef __GNOME_UTILS_H__
-#define __GNOME_UTILS_H__
+#ifndef SEEN_GNOME_UTILS_H
+#define SEEN_GNOME_UTILS_H
 
 #include <glib.h>
 
 GList *gnome_uri_list_extract_uris(gchar const *uri_list);
-
 GList *gnome_uri_list_extract_filenames(gchar const *uri_list);
 
-#endif /* __GNOME_UTILS_H__ */
+#endif // !SEEN_GNOME_UTILS_H
 
 /*
   Local Variables:
@@ -32,4 +30,4 @@ GList *gnome_uri_list_extract_filenames(gchar const *uri_list);
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8 :

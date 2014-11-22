@@ -9,8 +9,9 @@
 #ifndef SEEN_COLOR_RGBA_H
 #define SEEN_COLOR_RGBA_H
 
-#include <glib.h> // g_assert()
+#include <cassert>
 #include "decimal-round.h"
+typedef unsigned int guint32;
 
 /**
  * A class to contain a floating point RGBA color as one unit.
@@ -96,7 +97,7 @@ public:
      * @return The requested value.
      */
     float operator[](unsigned int const i) const {
-        g_assert( unsigned(i) < 4 );
+        assert( unsigned(i) < 4 );
         return _c[i];
     }
 

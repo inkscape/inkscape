@@ -202,23 +202,28 @@ Inkscape::XML::Node* SPFeDisplacementMap::write(Inkscape::XML::Document *doc, In
         repr = doc->createElement("svg:feDisplacementMap");
     }
 
-    gchar const *out_name = sp_filter_name_for_image(parent, this->in2);
-    if (out_name) {
-        repr->setAttribute("in2", out_name);
-    } else {
+    gchar const *in2_name = sp_filter_name_for_image(parent, this->in2);
+
+    if( !in2_name ) {
+
+        // This code is very similar to sp_filter_primtive_name_previous_out()
         SPObject *i = parent->children;
 
+        // Find previous filter primitive
         while (i && i->next != this) {
         	i = i->next;
         }
 
-        SPFilterPrimitive *i_prim = SP_FILTER_PRIMITIVE(i);
-        out_name = sp_filter_name_for_image(parent, i_prim->image_out);
-        repr->setAttribute("in2", out_name);
-
-        if (!out_name) {
-            g_warning("Unable to set in2 for feDisplacementMap");
+        if( i ) {
+            SPFilterPrimitive *i_prim = SP_FILTER_PRIMITIVE(i);
+            in2_name = sp_filter_name_for_image(parent, i_prim->image_out);
         }
+    }
+
+    if (in2_name) {
+        repr->setAttribute("in2", in2_name);
+    } else {
+        g_warning("Unable to set in2 for feDisplacementMap");
     }
 
     sp_repr_set_svg_double(repr, "scale", this->scale);

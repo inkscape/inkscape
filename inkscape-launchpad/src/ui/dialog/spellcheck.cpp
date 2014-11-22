@@ -23,9 +23,9 @@
 #include "selection.h"
 #include "desktop.h"
 #include "desktop-handles.h"
-#include "tools-switch.h"
+#include "ui/tools-switch.h"
 #include "ui/tools/text-tool.h"
-#include "interface.h"
+#include "ui/interface.h"
 #include "preferences.h"
 #include "sp-text.h"
 #include "sp-flowtext.h"
@@ -347,7 +347,7 @@ SpellCheck::init(SPDesktop *d)
     char *slashPos = strrchr(exeName, '\\');
     if (slashPos)
         *slashPos = '\0';
-    g_print ("%s\n", exeName);
+    //g_print ("Aspell prefix path: %s\n", exeName);
 #endif
 
     _stops = 0;
@@ -356,54 +356,54 @@ SpellCheck::init(SPDesktop *d)
 
 #ifdef HAVE_ASPELL
     {
-    AspellConfig *config = new_aspell_config();
+        AspellConfig *config = new_aspell_config();
 #ifdef WIN32
-    aspell_config_replace(config, "prefix", exeName);
+        aspell_config_replace(config, "prefix", exeName);
 #endif
-    aspell_config_replace(config, "lang", _lang.c_str());
-    aspell_config_replace(config, "encoding", "UTF-8");
-    AspellCanHaveError *ret = new_aspell_speller(config);
-    delete_aspell_config(config);
-    if (aspell_error(ret) != 0) {
-        g_warning("Error: %s\n", aspell_error_message(ret));
-        delete_aspell_can_have_error(ret);
-        return false;
-    }
-    _speller = to_aspell_speller(ret);
+        aspell_config_replace(config, "lang", _lang.c_str());
+        aspell_config_replace(config, "encoding", "UTF-8");
+        AspellCanHaveError *ret = new_aspell_speller(config);
+        delete_aspell_config(config);
+        if (aspell_error(ret) != 0) {
+            g_warning("Error: %s\n", aspell_error_message(ret));
+            delete_aspell_can_have_error(ret);
+            return false;
+        }
+        _speller = to_aspell_speller(ret);
     }
 
     if (_lang2 != "") {
-    AspellConfig *config = new_aspell_config();
+        AspellConfig *config = new_aspell_config();
 #ifdef WIN32
-    aspell_config_replace(config, "prefix", exeName);
+        aspell_config_replace(config, "prefix", exeName);
 #endif
-    aspell_config_replace(config, "lang", _lang2.c_str());
-    aspell_config_replace(config, "encoding", "UTF-8");
-    AspellCanHaveError *ret = new_aspell_speller(config);
-    delete_aspell_config(config);
-    if (aspell_error(ret) != 0) {
-        g_warning("Error: %s\n", aspell_error_message(ret));
-        delete_aspell_can_have_error(ret);
-        return false;
-    }
-    _speller2 = to_aspell_speller(ret);
+        aspell_config_replace(config, "lang", _lang2.c_str());
+        aspell_config_replace(config, "encoding", "UTF-8");
+        AspellCanHaveError *ret = new_aspell_speller(config);
+        delete_aspell_config(config);
+        if (aspell_error(ret) != 0) {
+            g_warning("Error: %s\n", aspell_error_message(ret));
+            delete_aspell_can_have_error(ret);
+            return false;
+        }
+        _speller2 = to_aspell_speller(ret);
     }
 
     if (_lang3 != "") {
-    AspellConfig *config = new_aspell_config();
+        AspellConfig *config = new_aspell_config();
 #ifdef WIN32
-    aspell_config_replace(config, "prefix", exeName);
+        aspell_config_replace(config, "prefix", exeName);
 #endif
-    aspell_config_replace(config, "lang", _lang3.c_str());
-    aspell_config_replace(config, "encoding", "UTF-8");
-    AspellCanHaveError *ret = new_aspell_speller(config);
-    delete_aspell_config(config);
-    if (aspell_error(ret) != 0) {
-        g_warning("Error: %s\n", aspell_error_message(ret));
-        delete_aspell_can_have_error(ret);
-        return false;
-    }
-    _speller3 = to_aspell_speller(ret);
+        aspell_config_replace(config, "lang", _lang3.c_str());
+        aspell_config_replace(config, "encoding", "UTF-8");
+        AspellCanHaveError *ret = new_aspell_speller(config);
+        delete_aspell_config(config);
+        if (aspell_error(ret) != 0) {
+            g_warning("Error: %s\n", aspell_error_message(ret));
+            delete_aspell_can_have_error(ret);
+            return false;
+        }
+        _speller3 = to_aspell_speller(ret);
     }
 #endif  /* HAVE_ASPELL */
 

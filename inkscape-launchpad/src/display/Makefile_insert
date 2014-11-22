@@ -33,6 +33,8 @@ ink_common_sources += \
 	display/drawing-image.h \
 	display/drawing-item.cpp \
 	display/drawing-item.h \
+	display/drawing-pattern.cpp \
+	display/drawing-pattern.h \
 	display/drawing-shape.cpp \
 	display/drawing-shape.h \
 	display/drawing-surface.cpp \

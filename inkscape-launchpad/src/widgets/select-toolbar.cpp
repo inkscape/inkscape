@@ -26,10 +26,10 @@
 #include "display/sp-canvas.h"
 #include "document-undo.h"
 #include "document.h"
-#include "ege-adjustment-action.h"
+#include "widgets/ege-adjustment-action.h"
 #include "helper/action-context.h"
 #include "helper/action.h"
-#include "ink-action.h"
+#include "widgets/ink-action.h"
 #include "inkscape.h"
 #include "message-stack.h"
 #include "preferences.h"
@@ -73,6 +73,7 @@ sp_selection_layout_widget_update(SPWidget *spw, Inkscape::Selection *sel)
         if ( bbox ) {
             UnitTracker *tracker = reinterpret_cast<UnitTracker*>(g_object_get_data(G_OBJECT(spw), "tracker"));
             Unit const *unit = tracker->getActiveUnit();
+            g_return_if_fail(unit != NULL);
 
             struct { char const *key; double val; } const keyval[] = {
                 { "X", bbox->min()[X] },
@@ -178,6 +179,7 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
     gdouble xrel = 0;
     gdouble yrel = 0;
     Unit const *unit = tracker->getActiveUnit();
+    g_return_if_fail(unit != NULL);
 
     GtkAdjustment* a_x = GTK_ADJUSTMENT( g_object_get_data( G_OBJECT(spw), "X" ) );
     GtkAdjustment* a_y = GTK_ADJUSTMENT( g_object_get_data( G_OBJECT(spw), "Y" ) );

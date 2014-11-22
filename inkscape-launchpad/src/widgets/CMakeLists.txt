@@ -24,6 +24,9 @@ set(widgets_SRC
 	desktop-widget.cpp
 	eek-preview.cpp
 	ege-paint-def.cpp
+        ege-adjustment-action.cpp
+        ege-output-action.cpp
+        ege-select-one-action.cpp
 	fill-style.cpp
 	font-selector.cpp
 	gradient-image.cpp
@@ -31,6 +34,8 @@ set(widgets_SRC
 	gradient-toolbar.cpp
 	gradient-vector.cpp
 	icon.cpp
+	ink-action.cpp
+	ink-comboboxentry-action.cpp
 	paint-selector.cpp
 	ruler.cpp
 	select-toolbar.cpp
@@ -80,6 +85,9 @@ set(widgets_SRC
 	desktop-widget.h
 	eek-preview.h
 	ege-paint-def.h
+        ege-adjustment-action.h
+        ege-output-action.h
+        ege-select-one-action.h
 	fill-n-stroke-factory.h
 	fill-style.h
 	font-selector.h
@@ -88,6 +96,8 @@ set(widgets_SRC
 	gradient-toolbar.h
 	gradient-vector.h
 	icon.h
+        ink-action.h
+        ink-comboboxentry-action.h
 	paint-selector.h
 	ruler.h
 	select-toolbar.h

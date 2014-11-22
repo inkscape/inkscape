@@ -1,6 +1,4 @@
-#define __SP_XMLVIEW_TREE_C__
-
-/*
+/**
  * Specialization of GtkTreeView for the XML tree view
  *
  * Authors:
@@ -14,7 +12,7 @@
 #include <cstring>
 #include <string>
 
-#include "../xml/node-event-vector.h"
+#include "xml/node-event-vector.h"
 #include "sp-xmlview-tree.h"
 
 struct NodeData {
@@ -24,9 +22,6 @@ struct NodeData {
 };
 
 enum { STORE_TEXT_COL = 0, STORE_DATA_COL, STORE_REPR_COL, STORE_N_COLS };
-
-static void sp_xmlview_tree_class_init (SPXMLViewTreeClass * klass);
-static void sp_xmlview_tree_init (SPXMLViewTree * tree);
 
 #if GTK_CHECK_VERSION(3,0,0)
 static void sp_xmlview_tree_destroy(GtkWidget * object);
@@ -92,8 +87,6 @@ static const Inkscape::XML::NodeEventVector pi_repr_events = {
         NULL  /* order_changed */
 };
 
-static GtkTreeViewClass * parent_class = NULL;
-
 GtkWidget *sp_xmlview_tree_new(Inkscape::XML::Node * repr, void * /*factory*/, void * /*data*/)
 {
     SPXMLViewTree *tree = SP_XMLVIEW_TREE(g_object_new (SP_TYPE_XMLVIEW_TREE, NULL));
@@ -124,28 +117,7 @@ GtkWidget *sp_xmlview_tree_new(Inkscape::XML::Node * repr, void * /*factory*/, v
     return GTK_WIDGET(tree);
 }
 
-GType
-sp_xmlview_tree_get_type (void)
-{
-	static GType type = 0;
-
-	if (!type) {
-		static const GTypeInfo info = {
-			sizeof (SPXMLViewTreeClass),
-			NULL, NULL,
-			(GClassInitFunc) sp_xmlview_tree_class_init,
-			NULL, NULL,
-			sizeof (SPXMLViewTree),
-			0,
-			(GInstanceInitFunc) sp_xmlview_tree_init,
-			NULL
-		};
-		type = g_type_register_static (GTK_TYPE_TREE_VIEW, "SPXMLViewTree", &info, (GTypeFlags)0);
-	}
-
-
-	return type;
-}
+G_DEFINE_TYPE(SPXMLViewTree, sp_xmlview_tree, GTK_TYPE_TREE_VIEW);
 
 void sp_xmlview_tree_class_init(SPXMLViewTreeClass * klass)
 {
@@ -157,8 +129,6 @@ void sp_xmlview_tree_class_init(SPXMLViewTreeClass * klass)
     object_class->destroy = sp_xmlview_tree_destroy;
 #endif
     
-    parent_class = GTK_TREE_VIEW_CLASS(g_type_class_peek_parent (klass));
-
     // Signal for when a tree drag and drop has completed
     g_signal_new (  "tree_move",
         G_TYPE_FROM_CLASS(klass),
@@ -190,9 +160,9 @@ void sp_xmlview_tree_destroy(GtkObject * object)
 	sp_xmlview_tree_set_repr (tree, NULL);
 
 #if GTK_CHECK_VERSION(3,0,0)
-	GTK_WIDGET_CLASS(parent_class)->destroy (object);
+	GTK_WIDGET_CLASS(sp_xmlview_tree_parent_class)->destroy (object);
 #else
-	GTK_OBJECT_CLASS(parent_class)->destroy (object);
+	GTK_OBJECT_CLASS(sp_xmlview_tree_parent_class)->destroy (object);
 #endif
 }
 
@@ -734,4 +704,4 @@ gboolean search_equal_func(GtkTreeModel *model, gint /*column*/, const gchar *ke
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8 :

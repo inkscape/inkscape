@@ -49,13 +49,13 @@ public:
     void setSnapPerp(bool enabled) {_snap_perp = enabled;}
     void setSnapTang(bool enabled) {_snap_tang = enabled;}
 
-    gdouble getGridTolerance() const {return _grid_tolerance;}
-    gdouble getGuideTolerance() const {return _guide_tolerance;}
-    gdouble getObjectTolerance() const {return _object_tolerance;}
+    double getGridTolerance() const {return _grid_tolerance;}
+    double getGuideTolerance() const {return _guide_tolerance;}
+    double getObjectTolerance() const {return _object_tolerance;}
 
-    void setGridTolerance(gdouble val) {_grid_tolerance = val;}
-    void setGuideTolerance(gdouble val) {_guide_tolerance = val;}
-    void setObjectTolerance(gdouble val) {_object_tolerance = val;}
+    void setGridTolerance(double val) {_grid_tolerance = val;}
+    void setGuideTolerance(double val) {_guide_tolerance = val;}
+    void setObjectTolerance(double val) {_object_tolerance = val;}
 
 private:
 
@@ -91,9 +91,9 @@ private:
     bool _snap_perp;
     bool _snap_tang;
 
-    gdouble _grid_tolerance;
-    gdouble _guide_tolerance;
-    gdouble _object_tolerance;
+    double _grid_tolerance;
+    double _guide_tolerance;
+    double _object_tolerance;
 };
 
 }

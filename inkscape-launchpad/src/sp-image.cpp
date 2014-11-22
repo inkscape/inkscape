@@ -20,6 +20,7 @@
 #include <cstring>
 #include <algorithm>
 #include <string>
+#include <glibmm.h>
 #include <glib/gstdio.h>
 #include <2geom/rect.h>
 #include <2geom/transforms.h>

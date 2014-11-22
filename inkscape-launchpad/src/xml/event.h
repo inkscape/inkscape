@@ -18,7 +18,7 @@
 #ifndef SEEN_INKSCAPE_XML_SP_REPR_ACTION_H
 #define SEEN_INKSCAPE_XML_SP_REPR_ACTION_H
 
-#include <glib.h>
+typedef unsigned int GQuark;
 #include <glibmm/ustring.h>
 
 #include <iterator>

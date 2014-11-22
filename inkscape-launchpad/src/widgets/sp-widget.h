@@ -15,35 +15,27 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <glib.h>
 #include <gtk/gtk.h>
 
-#define SP_TYPE_WIDGET (SPWidget::getType())
+#define SP_TYPE_WIDGET (sp_widget_get_type())
 #define SP_WIDGET(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_WIDGET, SPWidget))
 #define SP_WIDGET_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_WIDGET, SPWidgetClass))
 #define SP_IS_WIDGET(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_WIDGET))
 #define SP_IS_WIDGET_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_WIDGET))
 
+struct InkscapeApplication;
 
 namespace Inkscape {
-
-struct Application;
 class Selection;
 class SPWidgetImpl;
-
 }
 
 struct SPWidget {
     friend class Inkscape::SPWidgetImpl;
 
-    static GType getType();
-
-    //
-
     GtkBin bin;
-    Inkscape::Application *inkscape;
+    InkscapeApplication *inkscape;
 
-private:
     Inkscape::SPWidgetImpl *_impl;
 };
 
@@ -58,10 +50,10 @@ struct SPWidgetClass {
     void (* set_selection) (SPWidget *spw, Inkscape::Selection *selection);
 };
 
-/* fixme: Think (Lauris) */
+GType sp_widget_get_type();
 
 /** Generic constructor for global widget. */
-GtkWidget *sp_widget_new_global(Inkscape::Application *inkscape);
+GtkWidget *sp_widget_new_global(InkscapeApplication *inkscape);
 
 #endif // SEEN_SP_WIDGET_H
 /*

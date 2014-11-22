@@ -3321,7 +3321,7 @@ class Gcodetools(inkex.Effect):
 				self.error(_("No paths are selected! Trying to work on all available paths."),"warning")
 
 			if self.selected_paths == {}:
-				self.error(_("Noting is selected. Please select something."),"warning")
+				self.error(_("Nothing is selected. Please select something."),"warning")
 			a = self.options.plasma_prepare_corners_tolerance
 			corner_tolerance = cross([1.,0.], [math.cos(a),math.sin(a)])
 
@@ -4664,7 +4664,7 @@ class Gcodetools(inkex.Effect):
 ################################################################################
 	def dxfpoints(self):
 		if self.selected_paths == {}:
-			self.error(_("Noting is selected. Please select something to convert to drill point (dxfpoint) or clear point sign."),"warning")
+			self.error(_("Nothing is selected. Please select something to convert to drill point (dxfpoint) or clear point sign."),"warning")
 		for layer in self.layers :
 			if layer in self.selected_paths :
 				for path in self.selected_paths[layer]:

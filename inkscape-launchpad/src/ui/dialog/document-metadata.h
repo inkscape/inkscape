@@ -56,8 +56,8 @@ protected:
     void  init();
 
     void _handleDocumentReplaced(SPDesktop* desktop, SPDocument *document);
-    void _handleActivateDesktop(Inkscape::Application *application, SPDesktop *desktop);
-    void _handleDeactivateDesktop(Inkscape::Application *application, SPDesktop *desktop);
+    void _handleActivateDesktop(InkscapeApplication *application, SPDesktop *desktop);
+    void _handleDeactivateDesktop(InkscapeApplication *application, SPDesktop *desktop);
 
     Gtk::Notebook  _notebook;
 

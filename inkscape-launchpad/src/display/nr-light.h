@@ -1,5 +1,6 @@
-#ifndef __NR_LIGHT_H__
-#define __NR_LIGHT_H__
+#ifndef SEEN_NR_LIGHT_H
+#define SEEN_NR_LIGHT_H
+
 /** \file
  * These classes provide tools to compute interesting objects relative to light
  * sources. Each class provides a constructor converting information contained
@@ -8,14 +9,15 @@
  * light color components (at a given point).
  */
 
-#include <gdk/gdk.h>
+#include <2geom/forward.h>
+
 #include "display/nr-3dutils.h"
 #include "display/nr-light-types.h"
-#include <2geom/forward.h>
 
 class SPFeDistantLight;
 class SPFePointLight;
 class SPFeSpotLight;
+typedef unsigned int guint32;
 
 namespace Inkscape {
 namespace Filters {
@@ -53,8 +55,8 @@ class DistantLight {
 
     private:
         guint32 color;
-        gdouble azimuth; //azimuth in rad
-        gdouble elevation; //elevation in rad
+        double azimuth; //azimuth in rad
+        double elevation; //elevation in rad
 };
 
 class PointLight {
@@ -80,7 +82,7 @@ class PointLight {
          * \param y y coordinate of the current point
          * \param z z coordinate of the current point
          */
-        void light_vector(NR::Fvector &v, gdouble x, gdouble y, gdouble z);
+        void light_vector(NR::Fvector &v, double x, double y, double z);
         
         /**
          * Computes the light components of the distant light
@@ -92,9 +94,9 @@ class PointLight {
     private:
         guint32 color;
         //light position coordinates in render setting
-        gdouble l_x;
-        gdouble l_y;
-        gdouble l_z;
+        double l_x;
+        double l_y;
+        double l_z;
 };
 
 class SpotLight {
@@ -121,7 +123,7 @@ class SpotLight {
          * \param y y coordinate of the current point
          * \param z z coordinate of the current point
          */
-        void light_vector(NR::Fvector &v, gdouble x, gdouble y, gdouble z);
+        void light_vector(NR::Fvector &v, double x, double y, double z);
 
         /**
          * Computes the light components of the distant light at the current
@@ -135,11 +137,11 @@ class SpotLight {
     private:
         guint32 color;
         //light position coordinates in render setting
-        gdouble l_x;
-        gdouble l_y;
-        gdouble l_z;
-        gdouble cos_lca; //cos of the limiting cone angle
-        gdouble speExp; //specular exponent;
+        double l_x;
+        double l_y;
+        double l_z;
+        double cos_lca; //cos of the limiting cone angle
+        double speExp; //specular exponent;
         NR::Fvector S; //unit vector from light position in the direction
                    //the spot point at
 };

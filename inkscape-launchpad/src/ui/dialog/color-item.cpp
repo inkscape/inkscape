@@ -684,6 +684,7 @@ void ColorItem::buttonClicked(bool secondary)
                 descr = secondary? _("Set stroke color to none") : _("Set fill color to none");
                 break;
             }
+//mark
             case ege::PaintDef::RGB: {
                 Glib::ustring colorspec;
                 if ( _grad ){
@@ -696,6 +697,7 @@ void ColorItem::buttonClicked(bool secondary)
                     sp_svg_write_color(c, sizeof(c), rgba);
                     colorspec = c;
                 }
+//end mark
                 sp_repr_css_set_property( css, attrName, colorspec.c_str() );
                 descr = secondary? _("Set stroke color from swatch") : _("Set fill color from swatch");
                 break;

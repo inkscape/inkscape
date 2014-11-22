@@ -44,19 +44,6 @@
  * (Lauris Kaplinski)
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-
-
-
-#if HAVE_STRING_H
-#endif
-
-
-#if HAVE_STDLIB_H
-#endif
-
 #include <string>
 #include <cstring>
 #include "xml/repr.h"
@@ -112,7 +99,7 @@ void Inkscape::DocumentUndo::done(SPDocument *doc, const unsigned int event_type
     maybeDone(doc, NULL, event_type, event_description);
 }
 
-void Inkscape::DocumentUndo::resetKey( Inkscape::Application * /*inkscape*/, SPDesktop * /*desktop*/, GObject *base )
+void Inkscape::DocumentUndo::resetKey( InkscapeApplication * /*inkscape*/, SPDesktop * /*desktop*/, GObject *base )
 {
     SPDocument *doc = reinterpret_cast<SPDocument *>(base);
     doc->actionkey.clear();

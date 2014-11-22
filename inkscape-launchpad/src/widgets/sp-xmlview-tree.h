@@ -1,9 +1,4 @@
-#ifndef __SP_XMLVIEW_TREE_H__
-#define __SP_XMLVIEW_TREE_H__
-
-/*
- * Specialization of GtkTreeView for the XML editor
- *
+/**
  * Authors:
  *   MenTaLguY <mental@rydia.net>
  *
@@ -12,9 +7,15 @@
  * Released under the GNU GPL; see COPYING for details
  */
 
+#ifndef SEEN_SP_XMLVIEW_TREE_H
+#define SEEN_SP_XMLVIEW_TREE_H
+
 #include <gtk/gtk.h>
 #include <glib.h>
 
+/**
+ * Specialization of GtkTreeView for the XML editor
+ */
 
 #define SP_TYPE_XMLVIEW_TREE (sp_xmlview_tree_get_type ())
 #define SP_XMLVIEW_TREE(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), SP_TYPE_XMLVIEW_TREE, SPXMLViewTree))
@@ -49,7 +50,7 @@ Inkscape::XML::Node * sp_xmlview_tree_node_get_repr (GtkTreeModel *model, GtkTre
 gboolean sp_xmlview_tree_get_repr_node (SPXMLViewTree * tree, Inkscape::XML::Node * repr, GtkTreeIter *node);
 
 
-#endif
+#endif // !SEEN_SP_XMLVIEW_TREE_H
 
 /*
   Local Variables:
@@ -60,4 +61,4 @@ gboolean sp_xmlview_tree_get_repr_node (SPXMLViewTree * tree, Inkscape::XML::Nod
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8 :

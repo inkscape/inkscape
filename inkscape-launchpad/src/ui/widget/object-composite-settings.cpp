@@ -40,7 +40,7 @@ namespace UI {
 namespace Widget {
 
 /*void ObjectCompositeSettings::_on_desktop_activate(
-    Inkscape::Application *application,
+    InkscapeApplication *application,
     SPDesktop *desktop,
     ObjectCompositeSettings *w
 ) {
@@ -50,7 +50,7 @@ namespace Widget {
 }
 
 void ObjectCompositeSettings::_on_desktop_deactivate(
-    Inkscape::Application *application,
+    InkscapeApplication *application,
     SPDesktop *desktop,
     ObjectCompositeSettings *w
 ) {

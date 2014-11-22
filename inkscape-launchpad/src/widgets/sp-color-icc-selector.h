@@ -2,8 +2,6 @@
 #define SEEN_SP_COLOR_ICC_SELECTOR_H
 
 #include <glib.h>
-#include <gtk/gtk.h>
-
 #include "sp-color-selector.h"
 
 namespace Inkscape {

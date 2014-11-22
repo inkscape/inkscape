@@ -58,6 +58,29 @@ bool SPPaintServer::isSolid() const
     return solid;
 }
 
+bool SPPaintServer::isValid() const
+{
+    return true;
+}
+
+Inkscape::DrawingPattern *SPPaintServer::show(Inkscape::Drawing &/*drawing*/, unsigned int /*key*/, Geom::OptRect /*bbox*/)
+{
+    return NULL;
+}
+
+void SPPaintServer::hide(unsigned int /*key*/)
+{
+}
+
+void SPPaintServer::setBBox(unsigned int /*key*/, Geom::OptRect const &/*bbox*/)
+{
+}
+
+cairo_pattern_t* SPPaintServer::pattern_new(cairo_t * /*ct*/, Geom::OptRect const &/*bbox*/, double /*opacity*/)
+{
+    return NULL;
+}
+
 /*
   Local Variables:
   mode:c++

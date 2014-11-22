@@ -23,9 +23,6 @@
 
 using Inkscape::DocumentUndo;
 
-static void sp_xmlview_content_class_init (SPXMLViewContentClass * klass);
-static void sp_xmlview_content_init (SPXMLViewContent * text);
-
 #if GTK_CHECK_VERSION(3,0,0)
 static void sp_xmlview_content_destroy(GtkWidget * object);
 #else
@@ -35,8 +32,6 @@ static void sp_xmlview_content_destroy(GtkObject * object);
 void sp_xmlview_content_changed (GtkTextBuffer *tb, SPXMLViewContent *text);
 
 static void event_content_changed (Inkscape::XML::Node * repr, const gchar * old_content, const gchar * new_content, gpointer data);
-
-static GtkTextViewClass * parent_class = NULL;
 
 static Inkscape::XML::NodeEventVector repr_events = {
     NULL, /* child_added */
@@ -81,28 +76,7 @@ sp_xmlview_content_set_repr (SPXMLViewContent * text, Inkscape::XML::Node * repr
     }
 }
 
-GType sp_xmlview_content_get_type(void)
-{
-    static GType type = 0;
-
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPXMLViewContentClass),
-            0, // base_init
-            0, // base_finalize
-            (GClassInitFunc)sp_xmlview_content_class_init,
-            0, // class_finalize
-            0, // class_data
-            sizeof(SPXMLViewContent),
-            0, // n_preallocs
-            (GInstanceInitFunc)sp_xmlview_content_init,
-            0 // value_table
-        };
-        type = g_type_register_static(GTK_TYPE_TEXT_VIEW, "SPXMLViewContent", &info, static_cast<GTypeFlags>(0));
-    }
-
-    return type;
-}
+G_DEFINE_TYPE(SPXMLViewContent, sp_xmlview_content, GTK_TYPE_TEXT_VIEW);
 
 void sp_xmlview_content_class_init(SPXMLViewContentClass * klass)
 {
@@ -113,8 +87,6 @@ void sp_xmlview_content_class_init(SPXMLViewContentClass * klass)
     GtkObjectClass * object_class = GTK_OBJECT_CLASS(klass);
     object_class->destroy = sp_xmlview_content_destroy;
 #endif
-
-    parent_class = GTK_TEXT_VIEW_CLASS(g_type_class_peek_parent (klass));
 }
 
 void
@@ -135,9 +107,9 @@ void sp_xmlview_content_destroy(GtkObject * object)
     sp_xmlview_content_set_repr (text, NULL);
 
 #if GTK_CHECK_VERSION(3,0,0)
-    GTK_WIDGET_CLASS (parent_class)->destroy (object);
+    GTK_WIDGET_CLASS (sp_xmlview_content_parent_class)->destroy (object);
 #else
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+    GTK_OBJECT_CLASS (sp_xmlview_content_parent_class)->destroy (object);
 #endif
 }
 

@@ -2,15 +2,12 @@
 #define SEEN_SP_COLOR_SCALES_H
 
 #include <glib.h>
-#include <gtk/gtk.h>
 
-#include <color.h>
-#include <widgets/sp-color-slider.h>
 #include <widgets/sp-color-selector.h>
-
 
 struct SPColorScales;
 struct SPColorScalesClass;
+struct SPColorSlider;
 
 typedef enum {
     SP_COLOR_SCALES_MODE_NONE = 0,

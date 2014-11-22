@@ -12,10 +12,10 @@ public:
 	virtual ~SPPolyLine();
 
 	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
-	virtual void set(unsigned int key, gchar const* value);
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+	virtual void set(unsigned int key, char const* value);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, unsigned int flags);
 
-	virtual gchar* description() const;
+	virtual char* description() const;
 };
 
 #endif // SEEN_SP_POLYLINE_H

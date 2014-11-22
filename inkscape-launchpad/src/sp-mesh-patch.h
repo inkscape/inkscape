@@ -12,9 +12,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <glib.h>
 #include <glibmm/ustring.h>
-//#include "svg/svg-length.h"
 #include "sp-object.h"
 
 #define SP_MESHPATCH(obj) (dynamic_cast<SPMeshPatch*>((SPObject*)obj))
@@ -34,8 +32,8 @@ public:
 
 protected:
 	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
-	virtual void set(unsigned int key, const gchar* value);
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
+	virtual void set(unsigned int key, const char* value);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, unsigned int flags);
 };
 
 #endif /* !SEEN_SP_MESHPATCH_H */

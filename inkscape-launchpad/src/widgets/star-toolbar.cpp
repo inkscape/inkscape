@@ -34,14 +34,15 @@
 #include "desktop-handles.h"
 #include "desktop.h"
 #include "document-undo.h"
-#include "ege-adjustment-action.h"
-#include "ege-output-action.h"
-#include "ege-select-one-action.h"
-#include "ink-action.h"
+#include "widgets/ege-adjustment-action.h"
+#include "widgets/ege-output-action.h"
+#include "widgets/ege-select-one-action.h"
+#include "widgets/ink-action.h"
 #include "selection.h"
 #include "sp-star.h"
 #include "toolbox.h"
 #include "ui/icon-names.h"
+#include "ui/tools/star-tool.h"
 #include "ui/uxmanager.h"
 #include "verbs.h"
 #include "widgets/../preferences.h"
@@ -435,6 +436,7 @@ static void sp_stb_defaults( GtkWidget * /*widget*/, GObject *dataKludge )
     gtk_adjustment_value_changed(adj);
 }
 
+static void star_toolbox_watch_ec(SPDesktop* dt, Inkscape::UI::Tools::ToolBase* ec, GObject* holder);
 
 void sp_star_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
@@ -571,15 +573,22 @@ void sp_star_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
         }
     }
 
-    sigc::connection *connection = new sigc::connection(
-        sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_star_toolbox_selection_changed), holder))
-        );
-    g_signal_connect( holder, "destroy", G_CALLBACK(delete_connection), connection );
-    g_signal_connect( holder, "destroy", G_CALLBACK(purge_repr_listener), holder );
+    desktop->connectEventContextChanged(sigc::bind(sigc::ptr_fun(star_toolbox_watch_ec), holder));
+    g_signal_connect(holder, "destroy", G_CALLBACK(purge_repr_listener), holder);
 }
 
+static void star_toolbox_watch_ec(SPDesktop* desktop, Inkscape::UI::Tools::ToolBase* ec, GObject* holder)
+{
+    static sigc::connection changed;
 
-
+    if (dynamic_cast<Inkscape::UI::Tools::StarTool const*>(ec) != NULL) {
+        changed = sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_star_toolbox_selection_changed), holder));
+        sp_star_toolbox_selection_changed(sp_desktop_selection(desktop), holder);
+    } else {
+        if (changed)
+            changed.disconnect();
+    }
+}
 
 /*
   Local Variables:
@@ -590,4 +599,4 @@ void sp_star_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8 :

@@ -18,7 +18,7 @@
 #define noSP_SS_VERBOSE
 
 #include "stroke-style.h"
-#include "../gradient-chemistry.h"
+#include "gradient-chemistry.h"
 #include "sp-gradient.h"
 #include "sp-stop.h"
 #include "svg/svg-color.h"
@@ -763,6 +763,9 @@ StrokeStyle::setJoinType (unsigned const jointype)
             tb = joinBevel;
             break;
         default:
+            // Should not happen
+            std::cerr << "StrokeStyle::setJoinType(): Invalid value: " << jointype << std::endl;
+            tb = joinMiter;
             break;
     }
     setJoinButtons(tb);
@@ -786,6 +789,9 @@ StrokeStyle::setCapType (unsigned const captype)
             tb = capSquare;
             break;
         default:
+            // Should not happen
+            std::cerr << "StrokeStyle::setCapType(): Invalid value: " << captype << std::endl;
+            tb = capButt;
             break;
     }
     setCapButtons(tb);
@@ -878,13 +884,15 @@ StrokeStyle::updateLine()
         miterLimitAdj->set_value(query->stroke_miterlimit.value); // TODO: reflect averagedness?
 #endif
 
-    if (result_join != QUERY_STYLE_MULTIPLE_DIFFERENT) {
+    if (result_join != QUERY_STYLE_MULTIPLE_DIFFERENT &&
+        result_join != QUERY_STYLE_NOTHING ) {
         setJoinType(query->stroke_linejoin.value);
     } else {
         setJoinButtons(NULL);
     }
 
-    if (result_cap != QUERY_STYLE_MULTIPLE_DIFFERENT) {
+    if (result_cap != QUERY_STYLE_MULTIPLE_DIFFERENT &&
+        result_cap != QUERY_STYLE_NOTHING ) {
         setCapType (query->stroke_linecap.value);
     } else {
         setCapButtons(NULL);

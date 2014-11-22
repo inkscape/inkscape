@@ -164,16 +164,17 @@ void SPViewBox::set_preserveAspectRatio(const gchar* value) {
 void SPViewBox::apply_viewbox(const Geom::Rect& in) {
 
     /* Determine actual viewbox in viewport coordinates */
-    double x = 0.0;
-    double y = 0.0;
-    double width = in.width();
-    double height = in.height();
+    /* These are floats since SVGLength is a float: See bug 1374614 */
+    float x = 0.0;
+    float y = 0.0;
+    float width = in.width();
+    float height = in.height();
     // std::cout << "  width: " << width << " height: " << height << std::endl;
 
     if (this->aspect_align != SP_ASPECT_NONE) {
       /* Things are getting interesting */
-      double scalex = in.width() / this->viewBox.width();
-      double scaley = in.height() / this->viewBox.height();
+      double scalex = in.width() / ((float) this->viewBox.width());
+      double scaley = in.height() / ((float) this->viewBox.height());
       double scale = (this->aspect_clip == SP_ASPECT_MEET) ? MIN (scalex, scaley) : MAX (scalex, scaley);
       width  = this->viewBox.width()  * scale;
       height = this->viewBox.height() * scale;
@@ -217,12 +218,12 @@ void SPViewBox::apply_viewbox(const Geom::Rect& in) {
 
     /* Viewbox transform from scale and position */
     Geom::Affine q;
-    q[0] = width / this->viewBox.width();
+    q[0] = width / ((float) this->viewBox.width());
     q[1] = 0.0;
     q[2] = 0.0;
-    q[3] = height / this->viewBox.height();
-    q[4] = x - q[0] * this->viewBox.left();
-    q[5] = y - q[3] * this->viewBox.top();
+    q[3] = height / ((float) this->viewBox.height());
+    q[4] = x - q[0] * ((float) this->viewBox.left());
+    q[5] = y - q[3] * ((float) this->viewBox.top());
 
     // std::cout << "  q\n" << q << std::endl;
 

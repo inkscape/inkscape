@@ -1,5 +1,5 @@
-#ifndef __SP_FILTER_PRIMITIVE_H__
-#define __SP_FILTER_PRIMITIVE_H__
+#ifndef SEEN_SP_FILTER_PRIMITIVE_H
+#define SEEN_SP_FILTER_PRIMITIVE_H
 
 /** \file
  * Document level base class for all SVG filter primitives.
@@ -40,11 +40,11 @@ protected:
 	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
 	virtual void release();
 
-	virtual void set(unsigned int key, const gchar* value);
+	virtual void set(unsigned int key, char const* value);
 
 	virtual void update(SPCtx* ctx, unsigned int flags);
 
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, unsigned int flags);
 
 public:
 	virtual void build_renderer(Inkscape::Filters::Filter* filter) = 0;
@@ -54,8 +54,8 @@ public:
 void sp_filter_primitive_renderer_common(SPFilterPrimitive *sp_prim, Inkscape::Filters::FilterPrimitive *nr_prim);
 
 int sp_filter_primitive_name_previous_out(SPFilterPrimitive *prim);
-int sp_filter_primitive_read_in(SPFilterPrimitive *prim, gchar const *name);
-int sp_filter_primitive_read_result(SPFilterPrimitive *prim, gchar const *name);
+int sp_filter_primitive_read_in(SPFilterPrimitive *prim, char const *name);
+int sp_filter_primitive_read_result(SPFilterPrimitive *prim, char const *name);
 
 #endif
 /*

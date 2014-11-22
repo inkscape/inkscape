@@ -1,8 +1,7 @@
 #ifndef SEEN_SP_CONN_END
 #define SEEN_SP_CONN_END
 
-#include <glib.h>
-#include <stddef.h>
+#include <cstddef>
 #include <sigc++/connection.h>
 
 #include "sp-use-reference.h"
@@ -15,7 +14,7 @@ public:
     SPConnEnd(SPObject *owner);
 
     SPUseReference ref;
-    gchar *href;
+    char *href;
 
     /** Change of href string (not a modification of the attributes of the referrent). */
     sigc::connection _changed_connection;
@@ -29,13 +28,13 @@ public:
     /** A sigc connection for owning group transformed, used to do move compensation. */
     sigc::connection _group_connection;
 
-    void setAttacherHref(gchar const *, SPPath *);
-    void setAttacherEndpoint(gchar const *, SPPath *);
+    void setAttacherHref(char const * value, SPPath * unused);
+    //void setAttacherEndpoint(char const *, SPPath *); // not defined
 
 
 private:
-    SPConnEnd(SPConnEnd const &);
-    SPConnEnd &operator=(SPConnEnd const &);
+    SPConnEnd(SPConnEnd const &); // no copy
+    SPConnEnd &operator=(SPConnEnd const &); // no assign
 };
 
 void sp_conn_end_href_changed(SPObject *old_ref, SPObject *ref,

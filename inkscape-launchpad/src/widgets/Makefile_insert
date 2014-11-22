@@ -19,8 +19,14 @@ ink_common_sources +=	\
 	widgets/dropper-toolbar.h		\
 	widgets/eek-preview.cpp		\
 	widgets/eek-preview.h		\
+	widgets/ege-adjustment-action.cpp	\
+	widgets/ege-adjustment-action.h		\
 	widgets/ege-paint-def.cpp	\
 	widgets/ege-paint-def.h		\
+	widgets/ege-output-action.cpp	\
+	widgets/ege-output-action.h	\
+	widgets/ege-select-one-action.cpp	\
+	widgets/ege-select-one-action.h		\
 	widgets/eraser-toolbar.cpp		\
 	widgets/eraser-toolbar.h		\
 	widgets/fill-style.cpp		\
@@ -38,6 +44,10 @@ ink_common_sources +=	\
 	widgets/gradient-vector.h	\
 	widgets/icon.cpp		\
 	widgets/icon.h			\
+	widgets/ink-action.cpp		\
+	widgets/ink-action.h		\
+	widgets/ink-comboboxentry-action.cpp	\
+	widgets/ink-comboboxentry-action.h	\
 	widgets/lpe-toolbar.cpp	\
 	widgets/lpe-toolbar.h	   \
 	widgets/measure-toolbar.cpp	\

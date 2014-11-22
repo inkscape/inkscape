@@ -14,9 +14,8 @@
 #include <exception>
 #include <glib.h>
 #include "extension.h"
-#include "xml/repr.h"
-#include "document.h"
-#include <gtk/gtk.h>
+
+class SPDocument;
 
 namespace Inkscape {
 namespace Extension {

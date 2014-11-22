@@ -1,5 +1,5 @@
-#ifndef __SP_TITLE_H__
-#define __SP_TITLE_H__
+#ifndef SEEN_SP_TITLE_H
+#define SEEN_SP_TITLE_H
 
 /*
  * SVG <title> implementation
@@ -22,7 +22,7 @@ public:
 	SPTitle();
 	virtual ~SPTitle();
 
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, unsigned int flags);
 };
 
 #endif

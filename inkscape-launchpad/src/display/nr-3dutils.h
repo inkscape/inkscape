@@ -1,5 +1,5 @@
-#ifndef __NR_3DUTILS_H__
-#define __NR_3DUTILS_H__
+#ifndef SEEN_NR_3DUTILS_H
+#define SEEN_NR_3DUTILS_H
 
 /*
  * 3D utils. Definition of gdouble vectors of dimension 3 and of some basic
@@ -14,7 +14,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <gdk/gdk.h>
 #include <2geom/forward.h>
 
 namespace NR {
@@ -51,7 +50,7 @@ const static Fvector EYE_VECTOR(0, 0, 1);
  * \param v a reference to a vector with double components
  * \return the euclidian norm of v
  */
-gdouble norm(const Fvector &v);
+double norm(const Fvector &v);
 
 /**
  * Normalizes a vector
@@ -67,7 +66,7 @@ void normalize_vector(Fvector &v);
  * \param b a Fvector reference
  * \return the scalar product of a and b
  */
-gdouble scalar_product(const Fvector &a, const Fvector &b);
+double scalar_product(const Fvector &a, const Fvector &b);
 
 /**
  * Computes the normalized sum of two Fvectors
@@ -88,7 +87,7 @@ void normalized_sum(Fvector &r, const Fvector &a, const Fvector &b);
  * \param z a reference to a z coordinate
  * \param z a reference to a transformation matrix
  */
-void convert_coord(gdouble &x, gdouble &y, gdouble &z, Geom::Affine const &trans);
+void convert_coord(double &x, double &y, double &z, Geom::Affine const &trans);
 
 } /* namespace NR */
 

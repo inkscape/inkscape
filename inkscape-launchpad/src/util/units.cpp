@@ -206,7 +206,6 @@ bool Unit::compatibleWith(Unit const *u) const
 }
 bool Unit::compatibleWith(Glib::ustring const &u) const
 {
-    static UnitTable unit_table;
     return compatibleWith(unit_table.getUnit(u));
 }
 

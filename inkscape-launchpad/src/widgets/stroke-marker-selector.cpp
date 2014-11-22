@@ -25,13 +25,13 @@
 
 
 #include "style.h"
-#include "dialogs/dialog-events.h"
+#include "ui/dialog-events.h"
 #include "desktop-handles.h"
 #include "desktop-style.h"
 #include "preferences.h"
 #include "path-prefix.h"
 #include "io/sys.h"
-#include "marker.h"
+#include "sp-marker.h"
 #include "sp-defs.h"
 #include "sp-root.h"
 #include "ui/cache/svg_preview_cache.h"

@@ -1,7 +1,7 @@
-#ifndef __SP_BUTTON_H__
-#define __SP_BUTTON_H__
+#ifndef SEEN_SP_BUTTON_H
+#define SEEN_SP_BUTTON_H
 
-/*
+/**
  * Generic button widget
  *
  * Author:
@@ -17,10 +17,18 @@
 #define SP_IS_BUTTON(o) (G_TYPE_CHECK_INSTANCE_TYPE ((o), SP_TYPE_BUTTON))
 
 #include <gtk/gtk.h>
-#include <sigc++/sigc++.h>
-#include "helper/action.h"
+#include <sigc++/connection.h>
 #include "icon-size.h"
 
+struct SPAction;
+
+namespace Inkscape {
+namespace UI {
+namespace View {
+class View;
+}
+}
+}
 
 typedef enum {
 	SP_BUTTON_TYPE_NORMAL,
@@ -61,6 +69,15 @@ GtkWidget *sp_button_new_from_data (Inkscape::IconSize size,
 				    const gchar *name,
 				    const gchar *tip);
 
+#endif // !SEEN_SP_BUTTON_H
 
-
-#endif
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8 :

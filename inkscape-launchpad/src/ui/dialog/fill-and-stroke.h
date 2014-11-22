@@ -41,7 +41,7 @@ public:
 
     virtual void setDesktop(SPDesktop *desktop);
 
-    void selectionChanged(Inkscape::Application *inkscape,
+    void selectionChanged(InkscapeApplication *inkscape,
                           Inkscape::Selection *selection);
 
     void showPageFill();

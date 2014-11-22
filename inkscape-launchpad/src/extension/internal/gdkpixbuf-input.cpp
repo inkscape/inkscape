@@ -1,21 +1,20 @@
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include <gdk-pixbuf/gdk-pixbuf.h>
+
 #include <boost/scoped_ptr.hpp>
 #include <glib/gprintf.h>
 #include <glibmm/i18n.h>
+#include "dir-util.h"
+#include "display/cairo-utils.h"
 #include "document-private.h"
-#include <dir-util.h>
+#include "document-undo.h"
 #include "extension/input.h"
 #include "extension/system.h"
+#include "image-resolution.h"
 #include "gdkpixbuf-input.h"
 #include "preferences.h"
 #include "selection-chemistry.h"
 #include "sp-image.h"
-#include "document-undo.h"
 #include "util/units.h"
-#include "image-resolution.h"
-#include "display/cairo-utils.h"
 #include <set>
 
 namespace Inkscape {
@@ -87,11 +86,11 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
             ir = new ImageResolution(uri);
         }
         if (ir && ir->ok()) {
-            xscale = 900.0 / floor(10.*ir->x() + .5);  // round-off to 0.1 dpi
-            yscale = 900.0 / floor(10.*ir->y() + .5);
+            xscale = 960.0 / floor(10.*ir->x() + .5);  // round-off to 0.1 dpi
+            yscale = 960.0 / floor(10.*ir->y() + .5);
         } else {
-            xscale = 90.0 / defaultxdpi;
-            yscale = 90.0 / defaultxdpi;
+            xscale = 96.0 / defaultxdpi;
+            yscale = 96.0 / defaultxdpi;
         }
 
         width *= xscale;

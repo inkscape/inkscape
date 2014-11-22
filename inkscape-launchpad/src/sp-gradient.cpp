@@ -54,9 +54,6 @@
 #include "style.h"
 #include "display/grayscale.h"
 
-#define SP_MACROS_SILENT
-#include "macros.h"
-
 /// Has to be power of 2   Seems to be unused.
 //#define NCOLORS NR_GRADIENT_VECTOR_LENGTH
 
@@ -107,11 +104,11 @@ void SPGradient::setSwatch( bool swatch )
  * Equivalent meaning they have the same stop count, same stop colors and same stop opacity
  * @param that - A gradient to compare this to
  */
-gboolean SPGradient::isEquivalent(SPGradient *that)
+bool SPGradient::isEquivalent(SPGradient *that)
 {
     //TODO Make this work for mesh gradients
 
-    bool status = FALSE;
+    bool status = false;
     
     while(1){ // not really a loop, used to avoid deep nesting or multiple exit points from function
         if (this->getStopCount() != that->getStopCount()) { break; }
@@ -132,11 +129,11 @@ gboolean SPGradient::isEquivalent(SPGradient *that)
         SPStop *as = this->getVector()->getFirstStop();
         SPStop *bs = that->getVector()->getFirstStop();
 
-        bool effective = TRUE;
+        bool effective = true;
         while (effective && (as && bs)) {
             if (!as->getEffectiveColor().isClose(bs->getEffectiveColor(), 0.001) ||
                     as->offset != bs->offset) {
-                effective = FALSE;
+                effective = false;
                 break;
             } 
             else {
@@ -144,9 +141,9 @@ gboolean SPGradient::isEquivalent(SPGradient *that)
                 bs = bs->getNextStop();
             }
         }
-        if(!effective)break;
+        if (!effective) break;
 
-        status = TRUE;
+        status = true;
         break;
     }
     return status;
@@ -157,9 +154,9 @@ gboolean SPGradient::isEquivalent(SPGradient *that)
  * Aligned means that they have exactly the same coordinates and transform.
  * @param that - A gradient to compare this to
  */
-gboolean SPGradient::isAligned(SPGradient *that)
+bool SPGradient::isAligned(SPGradient *that)
 {
-    bool status = FALSE;
+    bool status = false;
     
    /*  Some gradients have coordinates/other values specified, some don't.  
            yes/yes check the coordinates/other values
@@ -223,7 +220,7 @@ gboolean SPGradient::isAligned(SPGradient *that)
          } else {
             break;
         }
-        status = TRUE;
+        status = true;
         break;
     }
     return status;

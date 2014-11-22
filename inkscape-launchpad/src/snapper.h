@@ -12,15 +12,14 @@
  *    Released under GNU GPL, read the file 'COPYING' for more information.
  */
 
-#include <map>
-#include <list>
 #include <boost/optional.hpp>
-#include <glib.h> // for g_assert
+#include <cstdio>
+#include <list>
 
+#include "snap-candidate.h"
 #include "snapped-point.h"
 #include "snapped-line.h"
 #include "snapped-curve.h"
-#include "snap-candidate.h"
 
 struct IntermSnapResults {
     std::list<Inkscape::SnappedPoint> points;
@@ -86,7 +85,7 @@ public:
         bool hasPoint() const {return _type != DIRECTION && _type != UNDEFINED;}
 
         Geom::Point getPoint() const {
-            g_assert(_type != DIRECTION && _type != UNDEFINED);
+            assert(_type != DIRECTION && _type != UNDEFINED);
             return _point;
         }
 
@@ -95,7 +94,7 @@ public:
         }
 
         Geom::Coord getRadius() const {
-            g_assert(_type == CIRCLE);
+            assert(_type == CIRCLE);
             return _radius;
         }
 
@@ -121,7 +120,7 @@ public:
                 Geom::Point const p2_on_cl = p1_on_cl + _direction;
                 return Geom::projection(p, Geom::Line(p1_on_cl, p2_on_cl));
             } else {
-                g_warning("Bug: trying to find the projection onto an undefined constraint");
+                printf("WARNING: Bug: trying to find the projection onto an undefined constraint");
                 return Geom::Point();
             }
         }

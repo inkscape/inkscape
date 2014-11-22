@@ -31,13 +31,13 @@ public:
     SVGLength y2;
 
 	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
-	virtual void set(unsigned int key, gchar const* value);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, unsigned int flags);
+	virtual void set(unsigned int key, char const* value);
 
 	virtual const char* displayName() const;
 	virtual Geom::Affine set_transform(Geom::Affine const &transform);
 	virtual void convert_to_guides() const;
-	virtual void update(SPCtx* ctx, guint flags);
+	virtual void update(SPCtx* ctx, unsigned int flags);
 
 	virtual void set_shape();
 };

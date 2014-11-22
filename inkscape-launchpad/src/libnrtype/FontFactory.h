@@ -21,7 +21,7 @@
 
 #include <pango/pango.h>
 #include "nr-type-primitives.h"
-#include "../style.h"
+#include "style.h"
 
 /* Freetype */
 #ifdef USE_PANGO_WIN32
@@ -112,16 +112,10 @@ public:
     Glib::ustring         GetUIFamilyString(PangoFontDescription const *fontDescr);
     Glib::ustring         GetUIStyleString(PangoFontDescription const *fontDescr);
 
-    /// Modifiers for the font specification (returns new font specification)
-    Glib::ustring         ReplaceFontSpecificationFamily(const Glib::ustring & fontSpec, const Glib::ustring & newFamily);
-    Glib::ustring         FontSpecificationSetItalic(const Glib::ustring & fontSpec, bool turnOn);
-    Glib::ustring         FontSpecificationSetBold(const Glib::ustring & fontSpec, bool turnOn);
-
-    Glib::ustring         FontSpecificationBestMatch(const Glib::ustring& fontSpec );
-
-    // Gathers all strings needed for UI while storing pango information in
-    // fontInstanceMap and fontStringMap
-    void                  GetUIFamiliesAndStyles(FamilyToStylesMap *map);
+    // Helpfully inserts all font families into the provided vector
+    void                  GetUIFamilies(std::vector<PangoFontFamily *>& out);
+    // Retrieves style information about a family in a newly allocated GList.
+    GList*                GetUIStyles(PangoFontFamily * in);
 
     /// Retrieve a font_instance from a style object, first trying to use the font-specification, the CSS information
     font_instance*        FaceFromStyle(SPStyle const *style);
@@ -146,19 +140,37 @@ public:
 private:
     void*                 loadedPtr;
 
+
+    // The following two commented out maps were an attempt to allow Inkscape to use font faces
+    // that could not be distinguished by CSS values alone. In practice, they never were that
+    // useful as PangoFontDescription, which is used throughout our code, cannot distinguish
+    // between faces anymore than raw CSS values (with the exception of two additional weight
+    // values).
+    //
+    // During various works, for example to handle font-family lists and fonts that are not
+    // installed on the system, the code has become less reliant on these maps. And in the work to
+    // catch style information to speed up start up times, the maps were not being filled.
+    // I've removed all code that used these maps as of Oct 2014 in the experimental branch.
+    // The commented out maps are left here as a reminder of the path that was attempted.
+    //
+    // One possible method to keep track of font faces would be to use the 'display name', keeping
+    // pointers to the appropriate PangoFontFace. The font_factory loadedFaces map indexing would
+    // have to be changed to incorporate 'display name' (InkscapeFontDescription?).
+
+
     // These two maps are used for translating between what's in the UI and a pango
     // font description.  This is necessary because Pango cannot always
     // reproduce these structures from the names it gave us in the first place.
 
     // Key: A string produced by font_factory::ConstructFontSpecification
     // Value: The associated PangoFontDescription
-    typedef std::map<Glib::ustring, PangoFontDescription *> PangoStringToDescrMap;
-    PangoStringToDescrMap fontInstanceMap;
+    // typedef std::map<Glib::ustring, PangoFontDescription *> PangoStringToDescrMap;
+    // PangoStringToDescrMap fontInstanceMap;
 
     // Key: Family name in UI + Style name in UI
     // Value: The associated string that should be produced with font_factory::ConstructFontSpecification
-    typedef std::map<Glib::ustring, Glib::ustring> UIStringToPangoStringMap;
-    UIStringToPangoStringMap fontStringMap;
+    // typedef std::map<Glib::ustring, Glib::ustring> UIStringToPangoStringMap;
+    // UIStringToPangoStringMap fontStringMap;
 };
 
 
@@ -174,4 +186,4 @@ private:
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8 :

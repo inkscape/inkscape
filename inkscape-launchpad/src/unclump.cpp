@@ -17,6 +17,7 @@
 #include "sp-item.h"
 #include "unclump.h"
 
+#include <glib.h>
 
 // Taking bbox of an item is an expensive operation, and we need to do it many times, so here we
 // cache the centers, widths, and heights of items

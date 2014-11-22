@@ -25,6 +25,7 @@
 #include "desktop.h"
 #include "sp-ellipse.h"
 #include "sp-item-transform.h"
+#include <gtkmm/messagedialog.h>
 
 namespace Inkscape {
 namespace UI {
@@ -32,7 +33,11 @@ namespace Dialog {
 
 PolarArrangeTab::PolarArrangeTab(ArrangeDialog *parent_)
 	: parent(parent_),
+#if WITH_GTKMM_3_0
+	  parametersTable(),
+#else
 	  parametersTable(3, 3, false),
+#endif
 	  centerY("", "Y coordinate of the center", UNIT_TYPE_LINEAR),
 	  centerX("", "X coordinate of the center", centerY),
 	  radiusY("", "Y coordinate of the radius", UNIT_TYPE_LINEAR),
@@ -76,7 +81,11 @@ PolarArrangeTab::PolarArrangeTab(ArrangeDialog *parent_)
 	pack_start(arrangeOnParametersRadio, false, false);
 
 	centerLabel.set_text(_("Center X/Y:"));
+#if WITH_GTKMM_3_0
+	parametersTable.attach(centerLabel, 0, 0, 1, 1);
+#else
 	parametersTable.attach(centerLabel, 0, 1, 0, 1, Gtk::FILL);
+#endif
 	centerX.setDigits(2);
 	centerX.setIncrements(0.2, 0);
 	centerX.setRange(-10000, 10000);
@@ -85,11 +94,20 @@ PolarArrangeTab::PolarArrangeTab(ArrangeDialog *parent_)
 	centerY.setIncrements(0.2, 0);
 	centerY.setRange(-10000, 10000);
 	centerY.setValue(0, "px");
+#if WITH_GTKMM_3_0
+	parametersTable.attach(centerX, 1, 0, 1, 1);
+	parametersTable.attach(centerY, 2, 0, 1, 1);
+#else
 	parametersTable.attach(centerX, 1, 2, 0, 1, Gtk::FILL);
 	parametersTable.attach(centerY, 2, 3, 0, 1, Gtk::FILL);
+#endif
 
 	radiusLabel.set_text(_("Radius X/Y:"));
+#if WITH_GTKMM_3_0
+	parametersTable.attach(radiusLabel, 0, 1, 1, 1);
+#else
 	parametersTable.attach(radiusLabel, 0, 1, 1, 2, Gtk::FILL);
+#endif
 	radiusX.setDigits(2);
 	radiusX.setIncrements(0.2, 0);
 	radiusX.setRange(0.001, 10000);
@@ -98,11 +116,20 @@ PolarArrangeTab::PolarArrangeTab(ArrangeDialog *parent_)
 	radiusY.setIncrements(0.2, 0);
 	radiusY.setRange(0.001, 10000);
 	radiusY.setValue(100, "px");
+#if WITH_GTKMM_3_0
+	parametersTable.attach(radiusX, 1, 1, 1, 1);
+	parametersTable.attach(radiusY, 2, 1, 1, 1);
+#else
 	parametersTable.attach(radiusX, 1, 2, 1, 2, Gtk::FILL);
 	parametersTable.attach(radiusY, 2, 3, 1, 2, Gtk::FILL);
+#endif
 
 	angleLabel.set_text(_("Angle X/Y:"));
+#if WITH_GTKMM_3_0
+	parametersTable.attach(angleLabel, 0, 2, 1, 1);
+#else
 	parametersTable.attach(angleLabel, 0, 1, 2, 3, Gtk::FILL);
+#endif
 	angleX.setDigits(2);
 	angleX.setIncrements(0.2, 0);
 	angleX.setRange(-10000, 10000);
@@ -111,8 +138,13 @@ PolarArrangeTab::PolarArrangeTab(ArrangeDialog *parent_)
 	angleY.setIncrements(0.2, 0);
 	angleY.setRange(-10000, 10000);
 	angleY.setValue(180, "°");
+#if WITH_GTKMM_3_0
+	parametersTable.attach(angleX, 1, 2, 1, 1);
+	parametersTable.attach(angleY, 2, 2, 1, 1);
+#else
 	parametersTable.attach(angleX, 1, 2, 2, 3, Gtk::FILL);
 	parametersTable.attach(angleY, 2, 3, 2, 3, Gtk::FILL);
+#endif
 	pack_start(parametersTable, false, false);
 
 	rotateObjectsCheckBox.set_label(_("Rotate objects"));

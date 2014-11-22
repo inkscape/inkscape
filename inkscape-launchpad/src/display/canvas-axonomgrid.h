@@ -26,11 +26,11 @@ public:
     CanvasAxonomGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument * in_doc);
     virtual ~CanvasAxonomGrid();
 
-    void Update (Geom::Affine const &affine, unsigned int flags);
-    void Render (SPCanvasBuf *buf);
+    virtual void Update (Geom::Affine const &affine, unsigned int flags);
+    virtual void Render (SPCanvasBuf *buf);
 
-    void readRepr();
-    void onReprAttrChanged (Inkscape::XML::Node * repr, const gchar *key, const gchar *oldval, const gchar *newval, bool is_interactive);
+    virtual void readRepr();
+    virtual void onReprAttrChanged (Inkscape::XML::Node * repr, char const *key, char const *oldval, char const *newval, bool is_interactive);
 
     double lengthy;       /**< The lengths of the primary y-axis */
     double angle_deg[3];  /**< Angle of each axis (note that angle[2] == 0) */

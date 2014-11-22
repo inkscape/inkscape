@@ -84,7 +84,7 @@ using Inkscape::DocumentUndo;
 #define DRAG_DEFAULT 1.0
 #define DRAG_MAX 1.0
 
-#include "tool-factory.h"
+#include "ui/tool-factory.h"
 
 namespace Inkscape {
 namespace UI {

@@ -61,8 +61,6 @@ struct SPCanvasGroupClass {
  * A group of Items.
  */
 struct SPCanvasGroup {
-    static GType getType();
-
     /**
      * Adds an item to a canvas group.
      */
@@ -113,16 +111,7 @@ struct SPCanvasGroup {
 
     GList *items;
     GList *last;
-
-    static SPCanvasItemClass *parentClass;
 };
-
-SPCanvasItemClass *SPCanvasGroup::parentClass;
-
-GType sp_canvas_group_get_type()
-{
-    return SPCanvasGroup::getType();
-}
 
 /**
  * The SPCanvas vtable.
@@ -161,19 +150,6 @@ enum {
   LAST_SIGNAL
 };
 
-void sp_canvas_item_base_class_init(SPCanvasItemClass *klass);
-void sp_canvas_item_base_class_finalize(SPCanvasItemClass *klass);
-
-/**
- * Initializes the SPCanvasItem vtable and the "event" signal.
- */
-void sp_canvas_item_class_init(SPCanvasItemClass *klass);
-
-/**
- * Callback for initialization of SPCanvasItem.
- */
-void sp_canvas_item_init(SPCanvasItem *item, SPCanvasItemClass *klass);
-
 /**
  * Callback that removes item from all referers and destroys it.
  */
@@ -181,7 +157,6 @@ void sp_canvas_item_dispose(GObject           *object);
 void sp_canvas_item_finalize(GObject          *object);
 void sp_canvas_item_real_destroy(SPCanvasItem *object);
 
-static gpointer    parent_class = NULL;
 static guint       object_signals[LAST_SIGNAL] = { 0 };
 
 /**
@@ -358,45 +333,12 @@ public:
     static void requestCanvasUpdate(SPCanvas *canvas);
 };
 
-GType SPCanvasItem::getType()
-{
-    static GType object_type = 0;
+G_DEFINE_TYPE(SPCanvasItem, sp_canvas_item, G_TYPE_INITIALLY_UNOWNED);
 
-    if (!object_type) {
-        static GTypeInfo const object_info = {
-            sizeof(SPCanvasItemClass),
-	    reinterpret_cast<GBaseInitFunc>(sp_canvas_item_base_class_init),
-	    reinterpret_cast<GBaseFinalizeFunc>(sp_canvas_item_base_class_finalize),
-            reinterpret_cast<GClassInitFunc>(sp_canvas_item_class_init),
-            NULL, // class_finalize
-	    NULL, // class_data
-            sizeof(SPCanvasItem),
-            16, // n_preallocs
-            reinterpret_cast<GInstanceInitFunc>(sp_canvas_item_init),
-            NULL // value_table
-        };
-
-        object_type = g_type_register_static(G_TYPE_INITIALLY_UNOWNED, 
-                                             "SPCanvasItem", &object_info, GTypeFlags(0));
-    }
-
-    return object_type;
-}
-
-namespace {
-
-void sp_canvas_item_base_class_init(SPCanvasItemClass * /*klass*/)
-{
-}
-
-void sp_canvas_item_base_class_finalize(SPCanvasItemClass * /*klass*/)
-{
-}
-
-void sp_canvas_item_class_init(SPCanvasItemClass *klass)
+static void
+sp_canvas_item_class_init(SPCanvasItemClass *klass)
 {
     GObjectClass *gobject_class = (GObjectClass *) klass;
-    parent_class = g_type_class_ref (G_TYPE_OBJECT);
 
     item_signals[ITEM_EVENT] = g_signal_new ("event",
                                              G_TYPE_FROM_CLASS (klass),
@@ -421,7 +363,8 @@ void sp_canvas_item_class_init(SPCanvasItemClass *klass)
 		    G_TYPE_NONE, 0);
 }
 
-void sp_canvas_item_init(SPCanvasItem *item, SPCanvasItemClass * /*klass*/)
+static void
+sp_canvas_item_init(SPCanvasItem *item)
 {
     item->xform = Geom::Affine(Geom::identity());
     item->ctrlType = Inkscape::CTRL_TYPE_UNKNOWN;
@@ -434,15 +377,13 @@ void sp_canvas_item_init(SPCanvasItem *item, SPCanvasItemClass * /*klass*/)
     item->in_destruction = false;
 }
 
-} // namespace
-
 SPCanvasItem *sp_canvas_item_new(SPCanvasGroup *parent, GType type, gchar const *first_arg_name, ...)
 {
     va_list args;
 
     g_return_val_if_fail(parent != NULL, NULL);
     g_return_val_if_fail(SP_IS_CANVAS_GROUP(parent), NULL);
-    g_return_val_if_fail(g_type_is_a(type, SPCanvasItem::getType()), NULL);
+    g_return_val_if_fail(g_type_is_a(type, SP_TYPE_CANVAS_ITEM), NULL);
 
     SPCanvasItem *item = SP_CANVAS_ITEM(g_object_new(type, NULL));
 
@@ -554,7 +495,7 @@ void sp_canvas_item_dispose(GObject *object)
       item->in_destruction = false;
     }
 
-    G_OBJECT_CLASS(parent_class)->dispose(object);
+    G_OBJECT_CLASS(sp_canvas_item_parent_class)->dispose(object);
 }
 
 void sp_canvas_item_real_destroy(SPCanvasItem *object)
@@ -574,7 +515,7 @@ void sp_canvas_item_finalize(GObject *gobject)
 		 "and must be removed with g_object_ref_sink().");
     }
   
-  G_OBJECT_CLASS (parent_class)->finalize (gobject);
+  G_OBJECT_CLASS (sp_canvas_item_parent_class)->finalize (gobject);
 }
 } // namespace
 
@@ -982,36 +923,11 @@ gint sp_canvas_item_order (SPCanvasItem * item)
 }
 
 // SPCanvasGroup
+G_DEFINE_TYPE(SPCanvasGroup, sp_canvas_group, SP_TYPE_CANVAS_ITEM);
 
-/**
- * Registers SPCanvasGroup class with Gtk and returns its type number.
- */
-GType SPCanvasGroup::getType(void)
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPCanvasGroupClass),
-            0, // base_init
-            0, // base_finalize
-            reinterpret_cast<GClassInitFunc>(SPCanvasGroup::classInit),
-            0, // class_finalize
-            0, // class_data
-            sizeof(SPCanvasGroup),
-            0, // n_preallocs
-            reinterpret_cast<GInstanceInitFunc>(SPCanvasGroup::init),
-            0 // value_table
-        };
-        type = g_type_register_static(SPCanvasItem::getType(), "SPCanvasGroup", &info, static_cast<GTypeFlags>(0));
-    }
-    return type;
-}
-
-void SPCanvasGroup::classInit(SPCanvasGroupClass *klass)
+static void sp_canvas_group_class_init(SPCanvasGroupClass *klass)
 {
     SPCanvasItemClass *item_class = reinterpret_cast<SPCanvasItemClass *>(klass);
-
-    parentClass = reinterpret_cast<SPCanvasItemClass*>(g_type_class_peek_parent(klass));
 
     item_class->destroy = SPCanvasGroup::destroy;
     item_class->update = SPCanvasGroup::update;
@@ -1020,7 +936,7 @@ void SPCanvasGroup::classInit(SPCanvasGroupClass *klass)
     item_class->viewbox_changed = SPCanvasGroup::viewboxChanged;
 }
 
-void SPCanvasGroup::init(SPCanvasGroup * /*group*/)
+static void sp_canvas_group_init(SPCanvasGroup * /*group*/)
 {
     // Nothing here
 }
@@ -1040,8 +956,8 @@ void SPCanvasGroup::destroy(SPCanvasItem *object)
         sp_canvas_item_destroy(child);
     }
 
-    if (SP_CANVAS_ITEM_CLASS(parentClass)->destroy) {
-        (* SP_CANVAS_ITEM_CLASS(parentClass)->destroy)(object);
+    if (SP_CANVAS_ITEM_CLASS(sp_canvas_group_parent_class)->destroy) {
+        (* SP_CANVAS_ITEM_CLASS(sp_canvas_group_parent_class)->destroy)(object);
     }
 }
 
@@ -1238,7 +1154,7 @@ sp_canvas_init(SPCanvas *canvas)
     canvas->pick_event.crossing.y = 0;
 
     // Create the root item as a special case
-    canvas->root = SP_CANVAS_ITEM(g_object_new(SPCanvasGroup::getType(), NULL));
+    canvas->root = SP_CANVAS_ITEM(g_object_new(SP_TYPE_CANVAS_GROUP, NULL));
     canvas->root->canvas = canvas;
 
     g_object_ref (canvas->root);

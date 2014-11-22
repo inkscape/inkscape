@@ -24,7 +24,22 @@
 #include <cstring>
 
 #include <libvisio/libvisio.h>
-#include <libwpd-stream/libwpd-stream.h>
+
+// TODO: Drop this check when librevenge is widespread.
+#if WITH_LIBVISIO01
+  #include <librevenge-stream/librevenge-stream.h>
+
+  using librevenge::RVNGString;
+  using librevenge::RVNGFileStream;
+  using librevenge::RVNGStringVector;
+#else
+  #include <libwpd-stream/libwpd-stream.h>
+
+  typedef WPXString                 RVNGString;
+  typedef WPXFileStream             RVNGFileStream;
+  typedef libvisio::VSDStringVector RVNGStringVector;
+#endif
+
 
 #include <gtkmm/alignment.h>
 #include <gtkmm/comboboxtext.h>
@@ -41,7 +56,7 @@
 #include "inkscape.h"
 #include "util/units.h"
 
-#include "dialogs/dialog-events.h"
+#include "ui/dialog-events.h"
 #include <gtk/gtk.h>
 #include "ui/widget/spinbutton.h"
 #include "ui/widget/frame.h"
@@ -59,7 +74,7 @@ namespace Internal {
 
 class VsdImportDialog : public Gtk::Dialog {
 public:
-     VsdImportDialog(const std::vector<WPXString> &vec);
+     VsdImportDialog(const std::vector<RVNGString> &vec);
      virtual ~VsdImportDialog();
 
      bool showDialog();
@@ -85,12 +100,12 @@ private:
      class Gtk::VBox * vbox2;
      class Gtk::Widget * _previewArea;
 
-     const std::vector<WPXString> &_vec;   // Document to be imported
+     const std::vector<RVNGString> &_vec;   // Document to be imported
      unsigned _current_page;  // Current selected page
      int _preview_width, _preview_height;    // Size of the preview area
 };
 
-VsdImportDialog::VsdImportDialog(const std::vector<WPXString> &vec)
+VsdImportDialog::VsdImportDialog(const std::vector<RVNGString> &vec)
      : _vec(vec), _current_page(1)
 {
      int num_pages = _vec.size();
@@ -138,9 +153,15 @@ VsdImportDialog::VsdImportDialog(const std::vector<WPXString> &vec)
      _labelTotalPages->set_use_markup(false);
      _labelTotalPages->set_selectable(false);
      vbox2->pack_start(*_previewArea, Gtk::PACK_SHRINK, 0);
+#if WITH_GTKMM_3_0
+     this->get_content_area()->set_homogeneous(false);
+     this->get_content_area()->set_spacing(0);
+     this->get_content_area()->pack_start(*vbox2);
+#else
      this->get_vbox()->set_homogeneous(false);
      this->get_vbox()->set_spacing(0);
      this->get_vbox()->pack_start(*vbox2);
+#endif
      this->set_title(_("Page Selector"));
      this->set_modal(true);
      sp_transientize(GTK_WIDGET(this->gobj()));  //Make transient
@@ -209,14 +230,20 @@ void VsdImportDialog::_setPreviewPage(unsigned page)
 
 SPDocument *VsdInput::open(Inkscape::Extension::Input * /*mod*/, const gchar * uri)
 {
-     WPXFileStream input(uri);
+     RVNGFileStream input(uri);
 
      if (!libvisio::VisioDocument::isSupported(&input)) {
           return NULL;
      }
 
-     libvisio::VSDStringVector output;
+     RVNGStringVector output;
+#if WITH_LIBVISIO01
+     librevenge::RVNGSVGDrawingGenerator generator(output, "svg");
+
+     if (!libvisio::VisioDocument::parse(&input, &generator)) {
+#else
      if (!libvisio::VisioDocument::generateSVG(&input, output)) {
+#endif
           return NULL;
      }
 
@@ -224,9 +251,9 @@ SPDocument *VsdInput::open(Inkscape::Extension::Input * /*mod*/, const gchar * u
           return NULL;
      }
 
-     std::vector<WPXString> tmpSVGOutput;
+     std::vector<RVNGString> tmpSVGOutput;
      for (unsigned i=0; i<output.size(); ++i) {
-          WPXString tmpString("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n");
+          RVNGString tmpString("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n");
           tmpString.append(output[i]);
           tmpSVGOutput.push_back(tmpString);
      }

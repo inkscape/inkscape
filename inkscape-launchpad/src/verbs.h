@@ -13,10 +13,13 @@
  * This code is GPL if done by Ted or David
  */
 
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
+
 #include <cstring>
 #include <string>
-#include "config.h"
-#include "require-config.h"   /* HAVE_GTK_WINDOW_FULLSCREEN */
+//#include "require-config.h"   /* HAVE_GTK_WINDOW_FULLSCREEN */
 #include <glibmm/ustring.h>
 
 struct SPAction;
@@ -175,8 +178,11 @@ enum {
     SP_VERB_OBJECT_EDIT_MASK,
     SP_VERB_OBJECT_UNSET_MASK,
     SP_VERB_OBJECT_SET_CLIPPATH,
+    SP_VERB_OBJECT_CREATE_CLIP_GROUP,
     SP_VERB_OBJECT_EDIT_CLIPPATH,
     SP_VERB_OBJECT_UNSET_CLIPPATH,
+    /* Tag */
+    SP_VERB_TAG_NEW,
     /* Tools */
     SP_VERB_CONTEXT_SELECT,
     SP_VERB_CONTEXT_NODE,
@@ -289,6 +295,8 @@ enum {
     SP_VERB_DIALOG_INPUT,
     SP_VERB_DIALOG_EXTENSIONEDITOR,
     SP_VERB_DIALOG_LAYERS,
+    SP_VERB_DIALOG_OBJECTS,
+    SP_VERB_DIALOG_TAGS,
     SP_VERB_DIALOG_LIVE_PATH_EFFECT,
     SP_VERB_DIALOG_FILTER_EFFECTS,
     SP_VERB_DIALOG_SVG_FONTS,
@@ -347,7 +355,7 @@ enum {
     SP_VERB_LAST
 };
 
-gchar *sp_action_get_title (const SPAction *action);
+char *sp_action_get_title (const SPAction *action);
 
 #include <map>
 #include <vector>
@@ -399,20 +407,20 @@ private:
     ActionTable * _actions;
 
     /** A unique textual ID for the verb. */
-    gchar const * _id;
+    char const * _id;
 
     /** The full name of the verb.  (shown on menu entries) */
-    gchar const * _name;
+    char const * _name;
 
     /** Tooltip for the verb. */
-    gchar const * _tip;
+    char const * _tip;
 
-    gchar * _full_tip; // includes shortcut
+    char * _full_tip; // includes shortcut
 
     unsigned int _shortcut;
 
     /** Name of the image that represents the verb. */
-    gchar const * _image;
+    char const * _image;
 
     /**
      * Unique numerical representation of the verb.  In most cases
@@ -422,7 +430,7 @@ private:
     unsigned int  _code;
 
     /** Name of the group the verb belongs to. */
-    gchar const * _group;
+    char const * _group;
 
     /**
      * Whether this verb is set to default to sensitive or
@@ -452,28 +460,28 @@ public:
     unsigned int get_code (void) { return _code; }
 
     /** Accessor to get the internal variable. */
-    gchar const * get_id (void) { return _id; }
+    char const * get_id (void) { return _id; }
 
     /** Accessor to get the internal variable. */
-    gchar const * get_name (void) { return _name; }
+    char const * get_name (void) { return _name; }
 
     /** Accessor to get the internal variable. */
-    gchar const * get_short_tip (void) { return _tip; };
+    char const * get_short_tip (void) { return _tip; };
 
     /** Accessor to get the internal variable. */
-    gchar const * get_tip (void) ;
+    char const * get_tip (void) ;
 
     /** Accessor to get the internal variable. */
-    gchar const * get_image (void) { return _image; }
+    char const * get_image (void) { return _image; }
 
     /** Get the verbs group */
-    gchar const * get_group (void) { return _group; }
+    char const * get_group (void) { return _group; }
 
     /** Set the name after initialization. */
-    gchar const * set_name (gchar const * name) { _name = name; return _name; }
+    char const * set_name (char const * name) { _name = name; return _name; }
 
     /** Set the tooltip after initialization. */
-    gchar const * set_tip (gchar const * tip) { _tip = tip; return _tip; }
+    char const * set_tip (char const * tip) { _tip = tip; return _tip; }
 
 
 protected:
@@ -504,11 +512,11 @@ public:
      * @param image Goes to \c _image.
      */
     Verb(const unsigned int code,
-         gchar const * id,
-         gchar const * name,
-         gchar const * tip,
-         gchar const * image,
-         gchar const * group) :
+         char const * id,
+         char const * name,
+         char const * tip,
+         char const * image,
+         char const * group) :
         _actions(0),
         _id(id),
         _name(name),
@@ -523,7 +531,7 @@ public:
         _verbs.insert(VerbTable::value_type(_code, this));
         _verb_ids.insert(VerbIDTable::value_type(_id, this));
     }
-    Verb (gchar const * id, gchar const * name, gchar const * tip, gchar const * image, gchar const * group);
+    Verb (char const * id, char const * name, char const * tip, char const * image, char const * group);
     virtual ~Verb (void);
 
     SPAction * get_action(Inkscape::ActionContext const & context);

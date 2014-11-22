@@ -33,12 +33,12 @@
 #include "pencil-toolbar.h"
 #include "desktop.h"
 #include "document-undo.h"
-#include "ege-adjustment-action.h"
-#include "ege-select-one-action.h"
-#include "ink-action.h"
+#include "widgets/ege-adjustment-action.h"
+#include "widgets/ege-select-one-action.h"
+#include "widgets/ink-action.h"
 #include "preferences.h"
 #include "toolbox.h"
-#include "tools-switch.h"
+#include "ui/tools-switch.h"
 #include "ui/icon-names.h"
 #include "ui/tools/pen-tool.h"
 #include "ui/uxmanager.h"
@@ -104,7 +104,12 @@ static void sp_add_freehand_mode_toggle(GtkActionGroup* mainActions, GObject* ho
                                 1, _("Create Spiro path"),
                                 2, INKSCAPE_ICON("path-mode-spiro"),
                                 -1 );
-
+            gtk_list_store_append( model, &iter );
+            gtk_list_store_set( model, &iter,
+                                0, _("BSpline"),
+                                1, _("Create BSpline path"),
+                                2, INKSCAPE_ICON("path-mode-bspline"),
+                                -1 );
             if (!tool_is_pencil) {
                 gtk_list_store_append( model, &iter );
                 gtk_list_store_set( model, &iter,
@@ -157,6 +162,7 @@ static GList * freehand_shape_dropdown_items_list() {
     glist = g_list_append (glist, _("Triangle out"));
     glist = g_list_append (glist, _("Ellipse"));
     glist = g_list_append (glist, _("From clipboard"));
+    glist = g_list_append (glist, _("Last applied"));
 
     return glist;
 }

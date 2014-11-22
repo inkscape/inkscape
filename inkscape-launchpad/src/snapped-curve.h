@@ -11,14 +11,14 @@
  *    Released under GNU GPL, read the file 'COPYING' for more information.
  */
 
+#include <2geom/forward.h>
 #include <vector>
 #include <list>
+
 #include "snapped-point.h"
 #include "snapped-line.h"
-#include <2geom/forward.h>
 
-namespace Inkscape
-{
+namespace Inkscape {
 
 /// Class describing the result of an attempt to snap to a curve.
 class SnappedCurve : public SnappedPoint

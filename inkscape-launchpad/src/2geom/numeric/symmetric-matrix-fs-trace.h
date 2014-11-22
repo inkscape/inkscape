@@ -74,7 +74,7 @@ template <size_t K, size_t N>
 struct trace
 {
     static
-    double evaluate (const ConstBaseSymmetricMatrix<N> & S)
+    double evaluate (const ConstBaseSymmetricMatrix<N> & /*S*/)
     {
         THROW_NOTIMPLEMENTED();
         return K;

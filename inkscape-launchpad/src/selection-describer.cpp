@@ -5,6 +5,7 @@
  *   MenTaLguY <mental@rydia.net>
  *   bulia byak <buliabyak@users.sf.net>
  *   Abhishek Sharma
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2004-2006 Authors
  *
@@ -46,11 +47,14 @@ char* collect_terms (GSList *items)
     bool first = true;
 
     for (GSList *i = (GSList *)items; i != NULL; i = i->next) {
-        const char *term = SP_ITEM(i->data)->displayName();
-        if (term != NULL && g_slist_find (check, term) == NULL) {
-            check = g_slist_prepend (check, (void *) term);
-            ss << (first ? "" : ", ") << "<b>" << term << "</b>";
-            first = false;
+        SPItem *item = dynamic_cast<SPItem *>(reinterpret_cast<SPObject *>(i->data));
+        if (item) {
+            const char *term = item->displayName();
+            if (term != NULL && g_slist_find (check, term) == NULL) {
+                check = g_slist_prepend (check, (void *) term);
+                ss << (first ? "" : ", ") << "<b>" << term << "</b>";
+                first = false;
+            }
         }
     }
     return g_strdup(ss.str().c_str());
@@ -62,10 +66,13 @@ static int count_terms (GSList *items)
     GSList *check = NULL;
     int count=0;
     for (GSList *i = (GSList *)items; i != NULL; i = i->next) {
-        const char *term = SP_ITEM(i->data)->displayName();
-        if (term != NULL && g_slist_find (check, term) == NULL) {
-            check = g_slist_prepend (check, (void *) term);
-            count++;
+        SPItem *item = dynamic_cast<SPItem *>(reinterpret_cast<SPObject *>(i->data));
+        if (item) {
+            const char *term = item->displayName();
+            if (term != NULL && g_slist_find (check, term) == NULL) {
+                check = g_slist_prepend (check, (void *) term);
+                count++;
+            }
         }
     }
     return count;
@@ -76,8 +83,10 @@ static int count_filtered (GSList *items)
 {
     int count=0;
     for (GSList *i = items; i != NULL; i = i->next) {
-        SPItem *item = SP_ITEM(i->data);
-        count += item->isFiltered();
+        SPItem *item = dynamic_cast<SPItem *>(reinterpret_cast<SPObject *>((i->data)));
+        if (item) {
+            count += item->isFiltered();
+        }
     }
     return count;
 }
@@ -118,7 +127,8 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
     if (!items) { // no items
         _context.set(Inkscape::NORMAL_MESSAGE, _when_nothing);
     } else {
-        SPItem *item = SP_ITEM(items->data);
+        SPItem *item = dynamic_cast<SPItem *>(reinterpret_cast<SPObject *>(items->data));
+        g_assert(item != NULL);
         SPObject *layer = selection->layers()->layerForObject(item);
         SPObject *root = selection->layers()->currentRoot();
 
@@ -181,30 +191,41 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
         if (!items->next) { // one item
             char *item_desc = item->detailedDescription();
 
-            if (SP_IS_USE(item) && SP_IS_SYMBOL(item->firstChild())) {
+            bool isUse = dynamic_cast<SPUse *>(item) != NULL;
+            if (isUse && dynamic_cast<SPSymbol *>(item->firstChild())) {
                 _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s. %s.",
                               item_desc, in_phrase,
                               _("Convert symbol to group to edit"), _when_selected);
-            } else if (SP_IS_SYMBOL(item)) {
+            } else if (dynamic_cast<SPSymbol *>(item)) {
                 _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s.",
                               item_desc, in_phrase,
                               _("Remove from symbols tray to edit symbol"));
-            } else if (SP_IS_USE(item) || (SP_IS_OFFSET(item) && SP_OFFSET(item)->sourceHref)) {
-                _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s. %s.",
-                              item_desc, in_phrase,
-                              _("Use <b>Shift+D</b> to look up original"), _when_selected);
-            } else if (SP_IS_TEXT_TEXTPATH(item)) {
-                _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s. %s.",
-                              item_desc, in_phrase,
-                              _("Use <b>Shift+D</b> to look up path"), _when_selected);
-            } else if (SP_IS_FLOWTEXT(item) && !SP_FLOWTEXT(item)->has_internal_frame()) {
-                _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s. %s.",
-                              item_desc, in_phrase,
-                              _("Use <b>Shift+D</b> to look up frame"), _when_selected);
             } else {
-                _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s.",
-                              item_desc, in_phrase, _when_selected);
+                SPOffset *offset = (isUse) ? NULL : dynamic_cast<SPOffset *>(item);
+                if (isUse || (offset && offset->sourceHref)) {
+                    _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s. %s.",
+                                  item_desc, in_phrase,
+                                  _("Use <b>Shift+D</b> to look up original"), _when_selected);
+                } else {
+                    SPText *text = dynamic_cast<SPText *>(item);
+                    if (text && text->firstChild() && dynamic_cast<SPText *>(text->firstChild())) {
+                        _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s. %s.",
+                                      item_desc, in_phrase,
+                                      _("Use <b>Shift+D</b> to look up path"), _when_selected);
+                    } else {
+                        SPFlowtext *flowtext = dynamic_cast<SPFlowtext *>(item);
+                        if (flowtext && !flowtext->has_internal_frame()) {
+                            _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s. %s.",
+                                          item_desc, in_phrase,
+                                          _("Use <b>Shift+D</b> to look up frame"), _when_selected);
+                        } else {
+                            _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s.",
+                                          item_desc, in_phrase, _when_selected);
+                        }
+                    }
+                }
             }
+
             g_free(item_desc);
         } else { // multiple items
             int objcount = g_slist_length((GSList *)items);

@@ -1,10 +1,13 @@
 #ifndef SP_CURSOR_H
 #define SP_CURSOR_H
 
-#include <gdk/gdk.h>
+typedef unsigned int guint32;
+typedef struct _GdkPixbuf GdkPixbuf;
+typedef struct _GdkCursor GdkCursor;
+typedef struct _GdkColor GdkColor;
 
-GdkPixbuf* sp_cursor_pixbuf_from_xpm(gchar const *const *xpm, GdkColor const& black, GdkColor const& white, guint32 fill, guint32 stroke);
-GdkCursor *sp_cursor_new_from_xpm(gchar const *const *xpm, gint hot_x, gint hot_y);
+GdkPixbuf* sp_cursor_pixbuf_from_xpm(char const *const *xpm, GdkColor const& black, GdkColor const& white, guint32 fill, guint32 stroke);
+GdkCursor *sp_cursor_new_from_xpm(char const *const *xpm, int hot_x, int hot_y);
 
 #endif
 

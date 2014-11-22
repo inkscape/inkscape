@@ -1,5 +1,6 @@
 
-/** @file
+/**
+ * @file
  * Clone tiling dialog
  */
 /* Authors:
@@ -38,7 +39,7 @@
 #include "util/units.h"
 #include "helper/window.h"
 #include "inkscape.h"
-#include "interface.h"
+#include "ui/interface.h"
 #include "macros.h"
 #include "message-stack.h"
 #include "preferences.h"
@@ -1349,7 +1350,7 @@ void CloneTiler::on_picker_color_changed(guint rgba)
     is_updating = false;
 }
 
-void CloneTiler::clonetiler_change_selection(Inkscape::Application * /*inkscape*/, Inkscape::Selection *selection, GtkWidget *dlg)
+void CloneTiler::clonetiler_change_selection(InkscapeApplication * /*inkscape*/, Inkscape::Selection *selection, GtkWidget *dlg)
 {
     GtkWidget *buttons = GTK_WIDGET(g_object_get_data (G_OBJECT(dlg), "buttons_on_tiles"));
     GtkWidget *status = GTK_WIDGET(g_object_get_data (G_OBJECT(dlg), "status"));
@@ -1378,7 +1379,7 @@ void CloneTiler::clonetiler_change_selection(Inkscape::Application * /*inkscape*
     }
 }
 
-void CloneTiler::clonetiler_external_change(Inkscape::Application * /*inkscape*/, GtkWidget *dlg)
+void CloneTiler::clonetiler_external_change(InkscapeApplication * /*inkscape*/, GtkWidget *dlg)
 {
     clonetiler_change_selection (NULL, sp_desktop_selection(SP_ACTIVE_DESKTOP), dlg);
 }
@@ -2002,7 +2003,7 @@ bool CloneTiler::clonetiler_is_a_clone_of(SPObject *tile, SPObject *obj)
         id_href = g_strdup_printf("#%s", obj_repr->attribute("id"));
     }
 
-    if (SP_IS_USE(tile) &&
+    if (dynamic_cast<SPUse *>(tile) &&
         tile->getRepr()->attribute("xlink:href") &&
         (!id_href || !strcmp(id_href, tile->getRepr()->attribute("xlink:href"))) &&
         tile->getRepr()->attribute("inkscape:tiled-clone-of") &&
@@ -2025,8 +2026,10 @@ void CloneTiler::clonetiler_trace_hide_tiled_clones_recursively(SPObject *from)
         return;
 
     for (SPObject *o = from->firstChild(); o != NULL; o = o->next) {
-        if (SP_IS_ITEM(o) && clonetiler_is_a_clone_of (o, NULL))
-            SP_ITEM(o)->invoke_hide(trace_visionkey); // FIXME: hide each tiled clone's original too!
+        SPItem *item = dynamic_cast<SPItem *>(o);
+        if (item && clonetiler_is_a_clone_of(o, NULL)) {
+            item->invoke_hide(trace_visionkey); // FIXME: hide each tiled clone's original too!
+        }
         clonetiler_trace_hide_tiled_clones_recursively (o);
     }
 }
@@ -2160,7 +2163,9 @@ void CloneTiler::clonetiler_remove(GtkWidget */*widget*/, GtkWidget *dlg, bool d
         }
     }
     for (GSList *i = to_delete; i; i = i->next) {
-        SP_OBJECT(i->data)->deleteObject();
+        SPObject *obj = reinterpret_cast<SPObject *>(i->data);
+        g_assert(obj != NULL);
+        obj->deleteObject();
     }
     g_slist_free (to_delete);
 
@@ -2235,7 +2240,11 @@ void CloneTiler::clonetiler_apply(GtkWidget */*widget*/, GtkWidget *dlg)
     gdk_window_process_all_updates();
 
     SPObject *obj = selection->singleItem();
-    SPItem *item = SP_IS_ITEM(obj) ? SP_ITEM(obj) : 0;
+    if (!obj) {
+        // Should never happen (empty selection checked above).
+        std::cerr << "CloneTiler::clonetile_apply(): No object in single item selection!!!" << std::endl;
+        return;
+    }
     Inkscape::XML::Node *obj_repr = obj->getRepr();
     const char *id_href = g_strdup_printf("#%s", obj_repr->attribute("id"));
     SPObject *parent = obj->parent;
@@ -2326,6 +2335,7 @@ void CloneTiler::clonetiler_apply(GtkWidget */*widget*/, GtkWidget *dlg)
     bool   invert_picked = prefs->getBool(prefs_path + "invert_picked");
     double gamma_picked = prefs->getDoubleLimited(prefs_path + "gamma_picked", 0, -10, 10);
 
+    SPItem *item = dynamic_cast<SPItem *>(obj);
     if (dotrace) {
         clonetiler_trace_setup (sp_desktop_document(desktop), 1.0, item);
     }
@@ -2616,9 +2626,10 @@ void CloneTiler::clonetiler_apply(GtkWidget */*widget*/, GtkWidget *dlg)
 
             if (center_set) {
                 SPObject *clone_object = sp_desktop_document(desktop)->getObjectByRepr(clone);
-                if (clone_object && SP_IS_ITEM(clone_object)) {
+                SPItem *item = dynamic_cast<SPItem *>(clone_object);
+                if (clone_object && item) {
                     clone_object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-                    SP_ITEM(clone_object)->setCenter(desktop->doc2dt(new_center));
+                    item->setCenter(desktop->doc2dt(new_center));
                     clone_object->updateRepr();
                 }
             }

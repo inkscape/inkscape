@@ -21,12 +21,16 @@
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "knot.h"
+#include "knot-ptr.h"
 #include "document.h"
 #include "document-undo.h"
 #include "preferences.h"
 #include "message-stack.h"
 #include "message-context.h"
+#include "ui/tools-switch.h"
 #include "ui/tools/tool-base.h"
+#include "ui/tools/node-tool.h"
+#include <gtk/gtk.h>
 
 using Inkscape::DocumentUndo;
 
@@ -118,6 +122,7 @@ SPKnot::SPKnot(SPDesktop *desktop, gchar const *tip)
 
     this->_event_handler_id = g_signal_connect(G_OBJECT(this->item), "event",
                                                  G_CALLBACK(sp_knot_handler), this);
+    knot_created_callback(this);
 }
 
 SPKnot::~SPKnot() {
@@ -165,6 +170,7 @@ SPKnot::~SPKnot() {
 
     // FIXME: cannot snap to destroyed knot (lp:1309050)
     //sp_event_context_discard_delayed_snap_event(this->desktop->event_context);
+    knot_deleted_callback(this);
 }
 
 void SPKnot::startDragging(Geom::Point const &p, gint x, gint y, guint32 etime) {
@@ -257,6 +263,10 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
                     consumed = TRUE;
                 }
             }
+            if (tools_isactive(knot->desktop, TOOLS_NODES)) {
+                Inkscape::UI::Tools::NodeTool *nt = static_cast<Inkscape::UI::Tools::NodeTool*>(knot->desktop->event_context);
+                nt->update_helperpath();
+            }
             break;
     case GDK_MOTION_NOTIFY:
             if (grabbed && knot->desktop && knot->desktop->event_context && !knot->desktop->event_context->space_panning) {
@@ -288,6 +298,10 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
                 sp_event_context_snap_delay_handler(knot->desktop->event_context, NULL, knot, (GdkEventMotion *)event, Inkscape::UI::Tools::DelayedSnapEvent::KNOT_HANDLER);
                 sp_knot_handler_request_position(event, knot);
                 moved = TRUE;
+            }
+            if (tools_isactive(knot->desktop, TOOLS_NODES)) {
+                Inkscape::UI::Tools::NodeTool *nt = static_cast<Inkscape::UI::Tools::NodeTool*>(knot->desktop->event_context);
+                nt->update_helperpath();
             }
             break;
     case GDK_ENTER_NOTIFY:

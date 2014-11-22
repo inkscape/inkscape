@@ -704,6 +704,7 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
                         // create the Layout::Character(s)
                         double advance_width = new_glyph.width;
                         if (newcluster){
+                            newcluster = 0;
                             // find where the text ends for this log_cluster
                             end_byte = it_span->start.iter_span->text_bytes;  // Upper limit
                             for(int next_glyph_index = glyph_index+1; next_glyph_index < unbroken_span.glyph_string->num_glyphs; next_glyph_index++){
@@ -751,18 +752,15 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
                             log_cluster_size_chars--;
                         }
 
-                        if (newcluster){
-                            advance_width *= direction_sign;
-                            if (new_span.direction != para.direction) {
-                                counter_directional_width_remaining -= advance_width;
-                                x -= advance_width;
-                                x_in_span_last -= advance_width;
-                            } else {
-                                x += advance_width;
-                                x_in_span_last += advance_width;
-                            }
+                        advance_width *= direction_sign;
+                        if (new_span.direction != para.direction) {
+                            counter_directional_width_remaining -= advance_width;
+                            x -= advance_width;
+                            x_in_span_last -= advance_width;
+                        } else {
+                            x += advance_width;
+                            x_in_span_last += advance_width;
                         }
-                        newcluster = 0;
                     }
                 } else if (_flow._input_stream[unbroken_span.input_index]->Type() == CONTROL_CODE) {
                     x += static_cast<InputStreamControlCode const *>(_flow._input_stream[unbroken_span.input_index])->width;
@@ -854,6 +852,8 @@ void Layout::Calculator::BrokenSpan::setZero()
     end_glyph_index = start_glyph_index = 0;
     ends_with_whitespace = false;
     each_whitespace_width = 0.0;
+    letter_spacing = 0.0;
+    word_spacing = 0.0;
 }
 
 template<typename T> void Layout::Calculator::ParagraphInfo::free_sequence(T &seq)
@@ -1078,7 +1078,9 @@ void Layout::Calculator::_computeFontLineHeight(font_instance *font, double font
 
 bool compareGlyphWidth(const PangoGlyphInfo &a, const PangoGlyphInfo &b)
 {
-    return (a.geometry.width > b.geometry.width);
+    bool retval = false;
+    if ( b.geometry.width == 0 && (a.geometry.width > 0))retval = true;
+    return (retval);
 }
 
 
@@ -1225,13 +1227,27 @@ unsigned Layout::Calculator::_buildSpansForPara(ParagraphInfo *para) const
                             /*      
                             CAREFUL, within a log_cluster the order of glyphs may not map 1:1, or
                             even in the same order, to the original unicode characters!!!  Among
-                            other things, diacritical mark glyphs can end up in front of the base
-                            character.  That makes determining kerning, even approximately, difficult
-                            later on.  To resolve this somewhat sort the glyphs with the same
-                            log_cluster into descending order by width.  In theory there should be 1
-                            that is nonzero, and N that are zero.  The order of the zero width ones
-                            does not matter. Sort the glyphs before copying.  If ligatures other than with
-                            Mark, nonspacing are ever implemented in Pango this will screw up, for instance
+                            other things, diacritical mark glyphs can end up sequentially in front of the base
+                            character glyph.  That makes determining kerning, even approximately, difficult
+                            later on.  
+                            
+                            To resolve this to the extent possible sort the glyphs within the same
+                            log_cluster into descending order by width in a special manner before copying.  Diacritical marks
+                            and similar have zero width and the glyph they modify has nonzero width.  The order 
+                            of the zero width ones does not matter.  A logical cluster is sorted into sequential order
+                               [base] [zw_modifier1] [zw_modifier2] 
+                            where all the modifiers have zero width and the base does not. This works for languages like Hebrew. 
+                            
+                            Pango also creates log clusters for languages like Telugu having many glyphs with nonzero widths. 
+                            Since these are nonzero, their order is not modified.
+                            
+                            If some language mixes these modes, having a log cluster having something like 
+                               [base1] [zw_modifier1] [base2] [zw_modifier2]
+                            the result will be incorrect: 
+                               base1] [base2] [zw_modifier1] [zw_modifier2]
+
+                               
+                            If ligatures other than with Mark, nonspacing are ever implemented in Pango this will screw up, for instance
                             changing "fi" to "if".
                             */
                             if(j - i){
@@ -1256,6 +1272,7 @@ unsigned Layout::Calculator::_buildSpansForPara(ParagraphInfo *para) const
                             while(  (j < nglyphs-1) &&  
                                     (new_span.glyph_string->log_clusters[j+1] == new_span.glyph_string->log_clusters[i])
                             )j++;
+                            /* see note in preceding section */
                             if(j - i){
                                 std::sort(&(new_span.glyph_string->glyphs[i]), &(new_span.glyph_string->glyphs[j+1]), compareGlyphWidth);
                             }

@@ -219,3 +219,8 @@ Inkscape.creator
 Inkscape.creator.user
 Inkscape.files
 Inkscape.includes
+# osxapp (X11)
+build-osxapp
+inst-osxapp
+packaging/macosx/ScriptExec/build
+packaging/macosx/Inkscape.app

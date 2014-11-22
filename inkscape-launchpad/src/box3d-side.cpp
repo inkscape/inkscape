@@ -4,6 +4,7 @@
  * Authors:
  *   Maximilian Albert <Anhalter42@gmx.de>
  *   Abhishek Sharma
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2007  Authors
  *
@@ -166,12 +167,11 @@ void Box3DSide::set_shape() {
 
     SPObject *parent = this->parent;
 
-    if (!SP_IS_BOX3D(parent)) {
+    SPBox3D *box = dynamic_cast<SPBox3D *>(parent);
+    if (!box) {
         g_warning("Parent of 3D box side is not a 3D box.\n");
         return;
     }
-
-    SPBox3D *box = SP_BOX3D(parent);
 
     Persp3D *persp = box3d_side_perspective(this);
 
@@ -259,7 +259,8 @@ box3d_side_compute_corner_ids(Box3DSide *side, unsigned int corners[4]) {
 
 Persp3D *
 box3d_side_perspective(Box3DSide *side) {
-    return SP_BOX3D(side->parent)->persp_ref->getObject();
+    SPBox3D *box = side ? dynamic_cast<SPBox3D *>(side->parent) : NULL;
+    return box ? box->persp_ref->getObject() : NULL;
 }
 
 Inkscape::XML::Node *box3d_side_convert_to_path(Box3DSide *side) {

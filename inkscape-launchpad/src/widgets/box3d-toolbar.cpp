@@ -36,13 +36,14 @@
 #include "desktop.h"
 #include "document-undo.h"
 #include "document.h"
-#include "ege-adjustment-action.h"
-#include "ink-action.h"
+#include "widgets/ege-adjustment-action.h"
+#include "widgets/ink-action.h"
 #include "inkscape.h"
 #include "persp3d.h"
 #include "selection.h"
 #include "toolbox.h"
 #include "ui/icon-names.h"
+#include "ui/tools/box3d-tool.h"
 #include "ui/uxmanager.h"
 #include "verbs.h"
 #include "xml/node-event-vector.h"
@@ -182,9 +183,9 @@ static void box3d_toolbox_selection_changed(Inkscape::Selection *selection, GObj
     purge_repr_listener(tbl, tbl);
 
     SPItem *item = selection->singleItem();
-    if (item && SP_IS_BOX3D(item)) {
+    SPBox3D *box = dynamic_cast<SPBox3D *>(item);
+    if (box) {
         // FIXME: Also deal with multiple selected boxes
-        SPBox3D *box = SP_BOX3D(item);
         Persp3D *persp = box3d_get_perspective(box);
         persp_repr = persp->getRepr();
         if (persp_repr) {
@@ -279,6 +280,8 @@ static void box3d_vp_z_state_changed( GtkToggleAction *act, GtkAction *box3d_ang
 {
     box3d_vp_state_changed(act, box3d_angle, Proj::Z);
 }
+
+static void box3d_toolbox_check_ec(SPDesktop* dt, Inkscape::UI::Tools::ToolBase* ec, GObject* holder);
 
 void box3d_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
@@ -409,11 +412,20 @@ void box3d_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/shapes/3dbox/vp_z_state", true) );
     }
 
-    sigc::connection *connection = new sigc::connection(
-        sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(box3d_toolbox_selection_changed), G_OBJECT(holder)))
-       );
-    g_signal_connect(holder, "destroy", G_CALLBACK(delete_connection), connection);
+    desktop->connectEventContextChanged(sigc::bind(sigc::ptr_fun(box3d_toolbox_check_ec), holder));
     g_signal_connect(holder, "destroy", G_CALLBACK(purge_repr_listener), holder);
+}
+
+static void box3d_toolbox_check_ec(SPDesktop* desktop, Inkscape::UI::Tools::ToolBase* ec, GObject* holder)
+{
+    static sigc::connection changed;
+    if (SP_IS_BOX3D_CONTEXT(ec)) {
+        changed = sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(box3d_toolbox_selection_changed), holder));
+        box3d_toolbox_selection_changed(sp_desktop_selection(desktop), holder);
+    } else {
+        if (changed)
+            changed.disconnect();
+    }
 }
 
 /*

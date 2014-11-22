@@ -7,6 +7,7 @@
  * Authors:
  *   Maximilian Albert <Anhalter42@gmx.de>
  *   Abhishek Sharma
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2007  Authors
  *
@@ -16,9 +17,6 @@
 #include "sp-polygon.h"
 #include "axis-manip.h"
 
-
-#define SP_BOX3D_SIDE(obj) (dynamic_cast<Box3DSide*>((SPObject*)obj))
-#define SP_IS_BOX3D_SIDE(obj) (dynamic_cast<const Box3DSide*>((SPObject*)obj) != NULL)
 
 class SPBox3D;
 class Persp3D;
@@ -36,16 +34,16 @@ public:
     static Box3DSide * createBox3DSide(SPBox3D *box);
 
 	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
-	virtual void set(unsigned int key, gchar const* value);
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
-	virtual void update(SPCtx *ctx, guint flags);
+	virtual void set(unsigned int key, char const* value);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, unsigned int flags);
+	virtual void update(SPCtx *ctx, unsigned int flags);
 
 	virtual void set_shape();
 };
 
 void box3d_side_position_set (Box3DSide *side); // FIXME: Replace this by box3d_side_set_shape??
 
-gchar *box3d_side_axes_string(Box3DSide *side);
+char *box3d_side_axes_string(Box3DSide *side);
 
 Persp3D *box3d_side_perspective(Box3DSide *side);
 

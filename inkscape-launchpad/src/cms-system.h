@@ -5,8 +5,6 @@
  * Macros and fn declarations related to linear gradients.
  */
 
-#include <glib-object.h>
-#include <glib.h>
 #include <vector>
 #include <glibmm/ustring.h>
 #include "cms-color-types.h"
@@ -19,13 +17,13 @@ class ColorProfile;
 
 class CMSSystem {
 public:
-    static cmsHPROFILE getHandle( SPDocument* document, guint* intent, gchar const* name );
+    static cmsHPROFILE getHandle( SPDocument* document, unsigned int* intent, char const* name );
 
     static cmsHTRANSFORM getDisplayTransform();
 
     static Glib::ustring getDisplayId( int screen, int monitor );
 
-    static Glib::ustring setDisplayPer( gpointer buf, guint bufLen, int screen, int monitor );
+    static Glib::ustring setDisplayPer( void* buf, unsigned int bufLen, int screen, int monitor );
 
     static cmsHTRANSFORM getDisplayPer( Glib::ustring const& id );
 
@@ -39,7 +37,7 @@ public:
 
     static bool isPrintColorSpace(ColorProfile const *profile);
 
-    static gint getChannelCount(ColorProfile const *profile);
+    static int getChannelCount(ColorProfile const *profile);
 };
 
 

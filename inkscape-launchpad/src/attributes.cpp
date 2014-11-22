@@ -1,9 +1,4 @@
-#define __SP_ATTRIBUTES_C__
-
-/** \file
- * Lookup dictionary for attributes/properties.
- */
-/*
+/**
  * Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *
@@ -25,6 +20,10 @@ typedef struct {
     gchar const *name;
 } SPStyleProp;
 
+/**
+ * Lookup dictionary for attributes/properties.
+ */
+
 static SPStyleProp const props[] = {
     {SP_ATTR_INVALID, NULL},
     /* SPObject */
@@ -41,6 +40,7 @@ static SPStyleProp const props[] = {
     {SP_ATTR_TRANSFORM_CENTER_X, "inkscape:transform-center-x"},
     {SP_ATTR_TRANSFORM_CENTER_Y, "inkscape:transform-center-y"},
     {SP_ATTR_INKSCAPE_PATH_EFFECT, "inkscape:path-effect"},
+    {SP_ATTR_INKSCAPE_HIGHLIGHT_COLOR, "inkscape:highlight-color"},
     /* SPAnchor */
     {SP_ATTR_XLINK_HREF, "xlink:href"},
     {SP_ATTR_XLINK_TYPE, "xlink:type"},
@@ -51,6 +51,7 @@ static SPStyleProp const props[] = {
     {SP_ATTR_XLINK_ACTUATE, "xlink:actuate"},
     {SP_ATTR_TARGET, "target"},
     {SP_ATTR_INKSCAPE_GROUPMODE, "inkscape:groupmode"},
+    {SP_ATTR_INKSCAPE_EXPANDED, "inkscape:expanded"},
     /* SPRoot */
     {SP_ATTR_VERSION, "version"},
     {SP_ATTR_WIDTH, "width"},
@@ -292,6 +293,11 @@ static SPStyleProp const props[] = {
     {SP_ATTR_PATTERNUNITS, "patternUnits"},
     {SP_ATTR_PATTERNCONTENTUNITS, "patternContentUnits"},
     {SP_ATTR_PATTERNTRANSFORM, "patternTransform"},
+    /* SPHatch */
+    {SP_ATTR_HATCHUNITS, "hatchUnits"},
+    {SP_ATTR_HATCHCONTENTUNITS, "hatchContentUnits"},
+    {SP_ATTR_HATCHTRANSFORM, "hatchTransform"},
+    {SP_ATTR_PITCH, "pitch"},
     /* SPClipPath */
     {SP_ATTR_CLIPPATHUNITS, "clipPathUnits"},
     /* SPMask */
@@ -413,10 +419,6 @@ static SPStyleProp const props[] = {
     /* Text */
     {SP_PROP_TEXT_INDENT, "text-indent"},
     {SP_PROP_TEXT_ALIGN, "text-align"},
-    {SP_PROP_TEXT_DECORATION, "text-decoration"},
-    {SP_PROP_TEXT_DECORATION_LINE, "text-decoration-line"},
-    {SP_PROP_TEXT_DECORATION_STYLE,"text-decoration-style"},
-    {SP_PROP_TEXT_DECORATION_COLOR,"text-decoration-color"},
     {SP_PROP_LINE_HEIGHT, "line-height"},
     {SP_PROP_LETTER_SPACING, "letter-spacing"},
     {SP_PROP_WORD_SPACING, "word-spacing"},
@@ -433,6 +435,12 @@ static SPStyleProp const props[] = {
     {SP_PROP_GLYPH_ORIENTATION_VERTICAL, "glyph-orientation-vertical"},
     {SP_PROP_KERNING, "kerning"},
     {SP_PROP_TEXT_ANCHOR, "text-anchor"},
+    {SP_PROP_WHITE_SPACE, "white-space"},
+    /* Text Decoration */
+    {SP_PROP_TEXT_DECORATION, "text-decoration"},
+    {SP_PROP_TEXT_DECORATION_LINE, "text-decoration-line"},
+    {SP_PROP_TEXT_DECORATION_STYLE,"text-decoration-style"},
+    {SP_PROP_TEXT_DECORATION_COLOR,"text-decoration-color"},
     /* Misc */
     {SP_PROP_CLIP, "clip"},
     {SP_PROP_COLOR, "color"},
@@ -537,4 +545,4 @@ sp_attribute_name(unsigned int id)
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8 :

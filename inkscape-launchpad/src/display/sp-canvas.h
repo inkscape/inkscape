@@ -22,16 +22,6 @@
 # include "config.h"
 #endif
 
-#ifdef HAVE_INTTYPES_H
-# include <inttypes.h>
-#else
-# ifdef HAVE_STDINT_H
-#  include <stdint.h>
-# endif
-#endif
-
-#include <glib.h>
-#include <gdk/gdk.h>
 #include <gtk/gtk.h>
 #include <glibmm/ustring.h>
 #include <2geom/affine.h>

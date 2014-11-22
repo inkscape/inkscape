@@ -48,7 +48,7 @@ Inkscape::GuideSnapper::LineList Inkscape::GuideSnapper::_getSnapLines(Geom::Poi
     for (GSList const *l = _snapmanager->getNamedView()->guides; l != NULL; l = l->next) {
         SPGuide const *g = SP_GUIDE(l->data);
         if (g != guide_to_ignore) {
-            s.push_back(std::make_pair(g->normal_to_line, g->point_on_line));
+            s.push_back(std::pair<Geom::Point, Geom::Point>(g->getNormal(), g->getPoint()));
         }
     }
 

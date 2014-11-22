@@ -311,8 +311,8 @@ PageSizer::PageSizer(Registry & _wr)
     SPDesktop *dt = SP_ACTIVE_DESKTOP;
     SPNamedView *nv = sp_desktop_namedview(dt);
     _wr.setUpdating (true);
-    if (nv->units) {
-        _dimensionUnits.setUnit(nv->units->abbr);
+    if (nv->page_size_units) {
+        _dimensionUnits.setUnit(nv->page_size_units->abbr);
     } else if (nv->doc_units) {
         _dimensionUnits.setUnit(nv->doc_units->abbr);
     }
@@ -728,9 +728,9 @@ PageSizer::on_units_changed()
   Local Variables:
   mode:c++
   c-file-style:"stroustrup"
-  c-file-offsets:((innamespace . 0)(inline-open . 0))
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
   indent-tabs-mode:nil
   fill-column:99
   End:
 */
-// vim: filetype=c++:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :

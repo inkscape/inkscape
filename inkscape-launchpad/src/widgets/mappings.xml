@@ -197,6 +197,7 @@
   <!-- bezier toolbar -->
   <remap id='bezier_mode' newid='path-mode-bezier'/>
   <remap id='spiro_splines_mode' newid='path-mode-spiro'/>
+  <remap id='bspline_mode' newid='path-mode-bspline'/>
   <remap id='polylines_mode' newid='path-mode-polyline'/>
   <remap id='paraxial_lines_mode' newid='path-mode-polyline-paraxial'/>
   

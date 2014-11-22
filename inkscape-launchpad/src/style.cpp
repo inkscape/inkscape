@@ -121,10 +121,6 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     // Text related properties
     text_indent(      "text-indent",                     0.0 ),  // SPILength
     text_align(       "text-align",      enum_text_align,      SP_CSS_TEXT_ALIGN_START    ),
-    text_decoration(),
-    text_decoration_line(),
-    text_decoration_style(),
-    text_decoration_color( "text-decoration-color" ),            // SPIColor
 
     letter_spacing(   "letter-spacing",                  0.0 ),  // SPILengthOrNormal
     word_spacing(     "word-spacing",                    0.0 ),  // SPILengthOrNormal
@@ -135,6 +131,12 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     writing_mode(     "writing-mode",    enum_writing_mode,    SP_CSS_WRITING_MODE_LR_TB  ),
     baseline_shift(),
     text_anchor(      "text-anchor",     enum_text_anchor,     SP_CSS_TEXT_ANCHOR_START   ),
+    white_space(      "white-space",     enum_white_space,     SP_CSS_WHITE_SPACE_NORMAL  ),
+
+    text_decoration(),
+    text_decoration_line(),
+    text_decoration_style(),
+    text_decoration_color( "text-decoration-color" ),            // SPIColor
 
     // General visual properties
     clip_rule(        "clip-rule",       enum_clip_rule,       SP_WIND_RULE_NONZERO       ),
@@ -189,7 +191,6 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     image_rendering(  "image-rendering", enum_image_rendering, SP_CSS_IMAGE_RENDERING_AUTO),
     shape_rendering(  "shape-rendering", enum_shape_rendering, SP_CSS_SHAPE_RENDERING_AUTO),
     text_rendering(    "text-rendering", enum_text_rendering,  SP_CSS_TEXT_RENDERING_AUTO )
-
 {
     // std::cout << "SPStyle::SPStyle( SPDocument ): Entrance: (" << _count << ")" << std::endl;
     // std::cout << "                      Document: " << (document_in?"present":"null") << std::endl;
@@ -297,6 +298,7 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     _properties.push_back( &writing_mode );
     _properties.push_back( &baseline_shift );
     _properties.push_back( &text_anchor );
+    _properties.push_back( &white_space );
 
     _properties.push_back( &clip_rule );
     _properties.push_back( &display );
@@ -379,6 +381,7 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     //     _propmap.insert( std::make_pair( writing_mode.name,          reinterpret_cast<SPIBasePtr>(&SPStyle::writing_mode          ) ) );
     //     _propmap.insert( std::make_pair( baseline_shift.name,        reinterpret_cast<SPIBasePtr>(&SPStyle::baseline_shift        ) ) );
     //     _propmap.insert( std::make_pair( text_anchor.name,           reinterpret_cast<SPIBasePtr>(&SPStyle::text_anchor           ) ) );
+    //     _propmap.insert( std::make_pair( white_space.name,           reinterpret_cast<SPIBasePtr>(&SPStyle::white_space           ) ) );
 
     //     _propmap.insert( std::make_pair( clip_rule.name,             reinterpret_cast<SPIBasePtr>(&SPStyle::clip_rule             ) ) );
     //     _propmap.insert( std::make_pair( display.name,               reinterpret_cast<SPIBasePtr>(&SPStyle::display               ) ) );
@@ -437,6 +440,8 @@ SPStyle::~SPStyle() {
 
     // Remove connections
     release_connection.disconnect();
+    fill_ps_changed_connection.disconnect();
+    stroke_ps_changed_connection.disconnect();
 
     // The following shoud be moved into SPIPaint and SPIFilter
     if (fill.value.href) {
@@ -496,10 +501,10 @@ SPStyle::clear() {
         filter.href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_filter_ref_changed), this));
 
         fill.value.href = new SPPaintServerReference(document);
-        fill.value.href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_fill_paint_server_ref_changed), this));
+        fill_ps_changed_connection = fill.value.href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_fill_paint_server_ref_changed), this));
 
         stroke.value.href = new SPPaintServerReference(document);
-        stroke.value.href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_stroke_paint_server_ref_changed), this));
+        stroke_ps_changed_connection = stroke.value.href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_stroke_paint_server_ref_changed), this));
     }
 
     cloned = false;
@@ -669,6 +674,9 @@ SPStyle::readIfUnset( gint id, gchar const *val ) {
             break;
         case SP_PROP_TEXT_ANCHOR:
             text_anchor.readIfUnset( val );
+            break;
+        case SP_PROP_WHITE_SPACE:
+            white_space.readIfUnset( val );
             break;
         case SP_PROP_BASELINE_SHIFT:
             baseline_shift.readIfUnset( val );
@@ -1112,6 +1120,7 @@ sp_style_fill_paint_server_ref_changed(SPObject *old_ref, SPObject *ref, SPStyle
            ref->connectModified(sigc::bind(sigc::ptr_fun(&sp_style_paint_server_ref_modified), style));
     }
 
+    style->signal_fill_ps_changed.emit(old_ref, ref);
     sp_style_paint_server_ref_modified(ref, 0, style);
 }
 
@@ -1129,6 +1138,7 @@ sp_style_stroke_paint_server_ref_changed(SPObject *old_ref, SPObject *ref, SPSty
           ref->connectModified(sigc::bind(sigc::ptr_fun(&sp_style_paint_server_ref_modified), style));
     }
 
+    style->signal_stroke_ps_changed.emit(old_ref, ref);
     sp_style_paint_server_ref_modified(ref, 0, style);
 }
 
@@ -1357,7 +1367,11 @@ sp_style_set_ipaint_to_uri(SPStyle *style, SPIPaint *paint, const Inkscape::URI 
     // now that we have a document, we can create it here
     if (!paint->value.href && document) {
         paint->value.href = new SPPaintServerReference(document);
-        paint->value.href->changedSignal().connect(sigc::bind(sigc::ptr_fun((paint == &style->fill)? sp_style_fill_paint_server_ref_changed : sp_style_stroke_paint_server_ref_changed), style));
+        if (paint == &style->fill) {
+            style->fill_ps_changed_connection = paint->value.href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_fill_paint_server_ref_changed), style));
+        } else {
+            style->stroke_ps_changed_connection = paint->value.href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_stroke_paint_server_ref_changed), style));
+        }
     }
 
     if (paint->value.href){
@@ -1623,6 +1637,9 @@ sp_style_unset_property_attrs(SPObject *o)
     if (style->text_anchor.set) {
         repr->setAttribute("text-anchor", NULL);
     }
+    if (style->white_space.set) {
+        repr->setAttribute("white_space", NULL);
+    }
     if (style->writing_mode.set) {
         repr->setAttribute("writing_mode", NULL);
     }
@@ -1703,7 +1720,6 @@ sp_css_attr_unset_text(SPCSSAttr *css)
     sp_repr_css_set_property(css, "font-family", NULL);
     sp_repr_css_set_property(css, "text-indent", NULL);
     sp_repr_css_set_property(css, "text-align", NULL);
-    sp_repr_css_set_property(css, "text-decoration", NULL);
     sp_repr_css_set_property(css, "line-height", NULL);
     sp_repr_css_set_property(css, "letter-spacing", NULL);
     sp_repr_css_set_property(css, "word-spacing", NULL);
@@ -1712,10 +1728,47 @@ sp_css_attr_unset_text(SPCSSAttr *css)
     sp_repr_css_set_property(css, "block-progression", NULL);
     sp_repr_css_set_property(css, "writing-mode", NULL);
     sp_repr_css_set_property(css, "text-anchor", NULL);
+    sp_repr_css_set_property(css, "white-space", NULL);
     sp_repr_css_set_property(css, "kerning", NULL); // not implemented yet
     sp_repr_css_set_property(css, "dominant-baseline", NULL); // not implemented yet
     sp_repr_css_set_property(css, "alignment-baseline", NULL); // not implemented yet
     sp_repr_css_set_property(css, "baseline-shift", NULL);
+
+    sp_repr_css_set_property(css, "text-decoration", NULL);
+    sp_repr_css_set_property(css, "text-decoration-line", NULL);
+    sp_repr_css_set_property(css, "text-decoration-color", NULL);
+    sp_repr_css_set_property(css, "text-decoration-style", NULL);
+
+    return css;
+}
+
+// ui/dialog/inkscape-preferences.cpp
+/**
+ * Unset properties that should not be set for default tool style.
+ * This list needs to be reviewed.
+ */
+SPCSSAttr *
+sp_css_attr_unset_blacklist(SPCSSAttr *css)
+{
+    sp_repr_css_set_property(css, "color",               NULL);
+    sp_repr_css_set_property(css, "clip-rule",           NULL);
+    sp_repr_css_set_property(css, "display",             NULL);
+    sp_repr_css_set_property(css, "overflow",            NULL);
+    sp_repr_css_set_property(css, "visibility",          NULL);
+    sp_repr_css_set_property(css, "isolation",           NULL);
+    sp_repr_css_set_property(css, "mix-blend-mode",      NULL);
+    sp_repr_css_set_property(css, "color-interpolation", NULL);
+    sp_repr_css_set_property(css, "color-interpolation-filters", NULL);
+    sp_repr_css_set_property(css, "solid-color",         NULL);
+    sp_repr_css_set_property(css, "solid-opacity",       NULL);
+    sp_repr_css_set_property(css, "fill-rule",           NULL);
+    sp_repr_css_set_property(css, "filter-blend-mode",   NULL);
+    sp_repr_css_set_property(css, "filter-gaussianBlur-deviation", NULL);
+    sp_repr_css_set_property(css, "color-rendering",     NULL);
+    sp_repr_css_set_property(css, "image-rendering",     NULL);
+    sp_repr_css_set_property(css, "shape-rendering",     NULL);
+    sp_repr_css_set_property(css, "text-rendering",      NULL);
+    sp_repr_css_set_property(css, "enable-background",   NULL);
 
     return css;
 }

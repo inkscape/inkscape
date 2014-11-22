@@ -55,6 +55,14 @@ static void append_half_circle(Geom::Piecewise<Geom::D2<Geom::SBasis> > &pwd2,
     pwd2.continuousConcat(cap_pwd2);
 }
 
+void
+LPEOffset::doBeforeEffect (SPLPEItem const* lpeitem)
+{
+    SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
+    item->apply_to_clippath(item);
+    item->apply_to_mask(item);
+}
+
 Geom::Piecewise<Geom::D2<Geom::SBasis> >
 LPEOffset::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in)
 {

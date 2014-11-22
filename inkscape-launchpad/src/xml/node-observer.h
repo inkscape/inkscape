@@ -18,8 +18,8 @@
 #ifndef SEEN_INKSCAPE_XML_NODE_OBSERVER_H
 #define SEEN_INKSCAPE_XML_NODE_OBSERVER_H
 
-#include <glib.h>
 #include "util/share.h"
+typedef unsigned int GQuark;
 
 #ifndef INK_UNUSED
 #define INK_UNUSED(x) ((void)(x))
@@ -56,7 +56,9 @@ protected:
     NodeObserver() {}
 public:
     virtual ~NodeObserver() {}
-    
+
+    // FIXME: somebody needs to learn what "pure virtual" means
+
     /**
      * @brief Child addition callback
      *

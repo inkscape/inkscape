@@ -12,7 +12,7 @@
 #ifndef SEEN_INKSCAPE_DEBUG_GDK_EVENT_LATENCY_TRACKER_H
 #define SEEN_INKSCAPE_DEBUG_GDK_EVENT_LATENCY_TRACKER_H
 
-#include <gdk/gdk.h>
+typedef union _GdkEvent GdkEvent;
 #include <glibmm/timer.h>
 #include <boost/optional.hpp>
 

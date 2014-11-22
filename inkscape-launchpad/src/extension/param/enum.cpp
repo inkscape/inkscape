@@ -41,8 +41,8 @@ namespace Extension {
 class enumentry {
 public:
     enumentry (Glib::ustring &val, Glib::ustring &text) :
-    	value(val),
-    	guitext(text)
+        value(val),
+        guitext(text)
     {}
 
     Glib::ustring value;
@@ -50,16 +50,19 @@ public:
 };
 
 
-ParamComboBox::ParamComboBox (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
-    Parameter(name, guitext, desc, scope, gui_hidden, gui_tip, ext), _indent(0)
+ParamComboBox::ParamComboBox(const gchar *name, const gchar *guitext, const gchar *desc,
+                             const Parameter::_scope_t scope, bool gui_hidden, const gchar *gui_tip,
+                             Inkscape::Extension::Extension *ext, Inkscape::XML::Node *xml)
+    : Parameter(name, guitext, desc, scope, gui_hidden, gui_tip, ext)
+    , _value(NULL)
+    , _indent(0)
+    , choices(NULL)
 {
-    choices = NULL;
-    _value = NULL;
+    const char *xmlval = NULL; // the value stored in XML
 
-    // Read XML tree to add enumeration items:
-    // printf("Extension Constructor: ");
     if (xml != NULL) {
-    	for (Inkscape::XML::Node *node = xml->firstChild(); node; node = node->next()) {
+        // Read XML tree to add enumeration items:
+        for (Inkscape::XML::Node *node = xml->firstChild(); node; node = node->next()) {
             char const * chname = node->name();
             if (!strcmp(chname, INKSCAPE_EXTENSION_NS "item") || !strcmp(chname, INKSCAPE_EXTENSION_NS "_item")) {
                 Glib::ustring newguitext, newvalue;
@@ -69,8 +72,8 @@ ParamComboBox::ParamComboBox (const gchar * name, const gchar * guitext, const g
                 }
                 if (contents != NULL) {
                     // don't translate when 'item' but do translate when '_item'
-                	// NOTE: internal extensions use build_from_mem and don't need _item but
-                	//       still need to include if are to be localized
+                    // NOTE: internal extensions use build_from_mem and don't need _item but
+                    //       still need to include if are to be localized
                     if (!strcmp(chname, INKSCAPE_EXTENSION_NS "_item")) {
                         if (node->attribute("msgctxt") != NULL) {
                             newguitext =  g_dpgettext2(NULL, node->attribute("msgctxt"), contents);
@@ -95,30 +98,28 @@ ParamComboBox::ParamComboBox (const gchar * name, const gchar * guitext, const g
                 }
             }
         }
-    }
+    
+        // Initialize _value with the default value from xml
+        // for simplicity : default to the contents of the first xml-child
+        if (xml->firstChild() && xml->firstChild()->firstChild()) {
+            xmlval = xml->firstChild()->attribute("value");
+        }
 
-    // Initialize _value with the default value from xml
-    // for simplicity : default to the contents of the first xml-child
-    const char * defaultval = NULL;
-    if (xml->firstChild() && xml->firstChild()->firstChild()) {
-        defaultval = xml->firstChild()->attribute("value");
-    }
-
-    const char * indent = xml->attribute("indent");
-    if (indent != NULL) {
-        _indent = atoi(indent) * 12;
+        const char *indent = xml->attribute("indent");
+        if (indent != NULL) {
+            _indent = atoi(indent) * 12;
+        }
     }
 
     gchar * pref_name = this->pref_name();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    Glib::ustring paramval = prefs->getString(extension_pref_root + pref_name);
+    Glib::ustring paramval = prefs ? prefs->getString(extension_pref_root + pref_name) : "";
     g_free(pref_name);
 
     if (!paramval.empty()) {
-        defaultval = paramval.data();
-    }
-    if (defaultval != NULL) {
-        _value = g_strdup(defaultval);
+        _value = g_strdup(paramval.data());
+    } else if (xmlval) {
+        _value = g_strdup(xmlval);
     }
 }
 

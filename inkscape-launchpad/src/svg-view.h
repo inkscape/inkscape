@@ -16,7 +16,6 @@
 struct SPCanvasGroup;
 struct SPCanvasItem;
 
-
 /**
  * Generic SVG view.
  */
@@ -25,12 +24,12 @@ public:
     unsigned int    _dkey;
     SPCanvasGroup  *_parent;
     SPCanvasItem   *_drawing;
-    gdouble         _hscale;     ///< horizontal scale
-    gdouble         _vscale;     ///< vertical scale
+    double          _hscale;     ///< horizontal scale
+    double          _vscale;     ///< vertical scale
     bool            _rescale;    ///< whether to rescale automatically
     bool            _keepaspect;
-    gdouble         _width;
-    gdouble         _height;
+    double          _width;
+    double          _height;
 
 
     /**
@@ -43,12 +42,12 @@ public:
     /**
      * Rescales SPSVGView to given proportions.
      */
-    void setScale(gdouble hscale, gdouble vscale);
+    void setScale(double hscale, double vscale);
     
     /**
      * Rescales SPSVGView and keeps aspect ratio.
      */
-    void setRescale(bool rescale, bool keepaspect, gdouble width, gdouble height);
+    void setRescale(bool rescale, bool keepaspect, double width, double height);
 
     /**
      * Helper function that sets rescale ratio and emits resize event.

@@ -964,7 +964,11 @@ SPIPaint::read( gchar const *str ) {
                 if (!value.href && document) {
                     // std::cout << "  Creating value.href" << std::endl;
                     value.href = new SPPaintServerReference(document);
-                    value.href->changedSignal().connect(sigc::bind(sigc::ptr_fun((this == &style->fill)? sp_style_fill_paint_server_ref_changed : sp_style_stroke_paint_server_ref_changed), style));
+                    if (this == &style->fill) {
+                        style->fill_ps_changed_connection = value.href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_fill_paint_server_ref_changed), style));
+                    } else {
+                        style->stroke_ps_changed_connection = value.href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_stroke_paint_server_ref_changed), style));
+                    }
                 }
 
                 // std::cout << "uri: " << (uri?uri:"null") << std::endl;
@@ -981,7 +985,16 @@ SPIPaint::read( gchar const *str ) {
         if (streq(str, "currentColor")) {
             set = true;
             currentcolor = true;
-            setColor( style->color.value.color );
+            if (style) {
+                setColor( style->color.value.color );
+            } else {
+                // Normally an SPIPaint is part of an SPStyle and the value of 'color' is
+                // available.  SPIPaint can be used 'stand-alone' (e.g. to parse color values) in
+                // which case a value of 'currentColor' is meaningless, thus we shouldn't reach
+                // here.
+                std::cerr << "SPIPaint::read(): value is 'currentColor' but 'color' not available." << std::endl;
+                setColor( 0 );
+            }
         } else if (streq(str, "none")) {
             set = true;
             noneSet = true;
@@ -1396,11 +1409,20 @@ SPIFilter::read( gchar const *str ) {
         set = true;
 
         // Create href if not already done.
-        if (!href && style->object) {
-            href = new SPFilterReference(style->object);
-            href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_filter_ref_changed), style));
+        if (!href) {
+            if (style->object) {
+                href = new SPFilterReference(style->object);
+            }
+            // Do we have href now?
+            if ( href ) {
+                href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_filter_ref_changed), style));
+            } else {
+                std::cerr << "SPIFilter::read(): Could not allocate 'href'" << std::endl;
+                return;
+            }
         }
 
+        // We have href
         try {
             href->attach(Inkscape::URI(uri));
         } catch (Inkscape::BadURIException &e) {

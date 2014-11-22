@@ -9,9 +9,6 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   inkscape:version="0.48+devel r10213"
-   version="1.1"
-   id="svg2"
    height="1000"
    width="1000"
    sodipodi:docname="Typography_Canvas.svg">
@@ -22,12 +19,13 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.537"
+     inkscape:zoom="0.5"
      inkscape:cx="500"
      inkscape:cy="500"
      inkscape:document-units="px"
-     inkscape:current-layer="svg2"
+     inkscape:current-layer="layer1"
      showgrid="false"
+     showguides="true"
      inkscape:window-width="1280"
      inkscape:window-height="737"
      inkscape:window-x="0"
@@ -36,27 +34,27 @@
      showborder="true"
      inkscape:showpageshadow="false">
     <sodipodi:guide
-       id="guide45"
+       id="guide_baseline"
        inkscape:label="baseline"
        position="0,253"
        orientation="0,1" />
     <sodipodi:guide
-       id="guide47"
+       id="guide_ascender"
        inkscape:label="ascender"
        position="0,945"
        orientation="0,1" />
     <sodipodi:guide
-       id="guide49"
+       id="guide_caps"
        inkscape:label="caps"
        position="0,896"
        orientation="0,1" />
     <sodipodi:guide
-       id="guide51"
+       id="guide_xheight"
        inkscape:label="xheight"
        position="0,729"
        orientation="0,1" />
     <sodipodi:guide
-       id="guide53"
+       id="guide_descender"
        inkscape:label="descender"
        position="0,28"
        orientation="0,1" />

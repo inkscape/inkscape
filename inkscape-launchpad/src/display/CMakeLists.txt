@@ -13,6 +13,7 @@ set(display_SRC
 	drawing-group.cpp
 	drawing-image.cpp
 	drawing-item.cpp
+	drawing-pattern.cpp
 	drawing-shape.cpp
 	drawing-surface.cpp
 	drawing-text.cpp
@@ -75,6 +76,7 @@ set(display_SRC
 	drawing-group.h
 	drawing-image.h
 	drawing-item.h
+	drawing-pattern.h
 	drawing-shape.h
 	drawing-surface.h
 	drawing-text.h

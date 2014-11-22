@@ -572,7 +572,7 @@ void GridArrangeTab::updateSelection()
 ## Experimental
 ##########################*/
 
-static void updateSelectionCallback(Inkscape::Application */*inkscape*/, Inkscape::Selection */*selection*/, GridArrangeTab *dlg)
+static void updateSelectionCallback(InkscapeApplication */*inkscape*/, Inkscape::Selection */*selection*/, GridArrangeTab *dlg)
 {
     dlg->updateSelection();
 }

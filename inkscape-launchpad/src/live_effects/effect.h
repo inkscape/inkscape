@@ -13,6 +13,7 @@
 #include "parameter/bool.h"
 #include "effect-enum.h"
 
+
 #define  LPE_CONVERSION_TOLERANCE 0.01    // FIXME: find good solution for this.
 
 class  SPDocument;
@@ -53,8 +54,18 @@ public:
 
     EffectType effectType() const;
 
+    //basically, to get this method called before the derived classes, a bit
+    //of indirection is needed. We first call these methods, then the below.
+    void doOnApply_impl(SPLPEItem const* lpeitem);
+    void doBeforeEffect_impl(SPLPEItem const* lpeitem);
+    void setCurrentZoom(double cZ);
+    void setSelectedNodePoints(std::vector<Geom::Point> sNP);
+    bool isNodePointSelected(Geom::Point const &nodePoint) const;
     virtual void doOnApply (SPLPEItem const* lpeitem);
     virtual void doBeforeEffect (SPLPEItem const* lpeitem);
+    
+    virtual void doAfterEffect (SPLPEItem const* lpeitem);
+    virtual void doOnRemove (SPLPEItem const* lpeitem);
 
     void writeParamsToSVG();
 
@@ -101,6 +112,7 @@ public:
     Inkscape::XML::Node *  getRepr();
     SPDocument *           getSPDoc();
     LivePathEffectObject * getLPEObj() {return lpeobj;};
+    LivePathEffectObject const * getLPEObj() const {return lpeobj;};
     Parameter *            getParameter(const char * key);
 
     void readallParameters(Inkscape::XML::Node const* repr);
@@ -146,6 +158,12 @@ protected:
     // instead of normally 'splitting' the path into continuous pwd2 paths and calling doEffect_pwd2 for each.
     bool concatenate_before_pwd2;
 
+    SPLPEItem * sp_lpe_item; // these get stored in doBeforeEffect_impl, and derived classes may do as they please with them.
+    Glib::ustring const * defaultUnit; // these get stored in doBeforeEffect_impl, and derived classes may do as they please with them.
+    double current_zoom;
+    std::vector<Geom::Point> selectedNodesPoints;
+    SPCurve * sp_curve;
+    std::vector<Geom::Path> pathvector_before_effect;
 private:
     bool provides_own_flash_paths; // if true, the standard flash path is suppressed
 

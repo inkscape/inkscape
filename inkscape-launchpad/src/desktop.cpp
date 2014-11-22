@@ -55,7 +55,7 @@
 #include "document-undo.h"
 #include "event-log.h"
 #include "helper/action-context.h"
-#include "interface.h"
+#include "ui/interface.h"
 #include "inkscape-private.h"
 #include "layer-fns.h"
 #include "layer-manager.h"
@@ -72,7 +72,7 @@
 #include "sp-namedview.h"
 #include "sp-root.h"
 #include "sp-defs.h"
-#include "tool-factory.h"
+#include "ui/tool-factory.h"
 #include "widgets/desktop-widget.h"
 #include "xml/repr.h"
 #include "helper/action.h" //sp_action_perform

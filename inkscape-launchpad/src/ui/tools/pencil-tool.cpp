@@ -23,7 +23,7 @@
 #include "desktop-handles.h"
 #include "selection.h"
 #include "selection-chemistry.h"
-#include "draw-anchor.h"
+#include "ui/draw-anchor.h"
 #include "message-stack.h"
 #include "message-context.h"
 #include "sp-path.h"
@@ -43,7 +43,7 @@
 #include "display/sp-canvas.h"
 #include "display/curve.h"
 #include "livarot/Path.h"
-#include "tool-factory.h"
+#include "ui/tool-factory.h"
 #include "ui/tool/event-utils.h"
 
 namespace Inkscape {
@@ -200,6 +200,7 @@ bool PencilTool::_handleButtonPress(GdkEventButton const &bevent) {
                 }
                 if (anchor) {
                     p = anchor->dp;
+                    this->overwriteCurve = anchor->curve;
                     desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Continuing selected path"));
                 } else {
                     m.setup(desktop);
@@ -301,7 +302,7 @@ bool PencilTool::_handleMotionNotify(GdkEventMotion const &mevent) {
 
                 if ( this->npoints != 0) { // buttonpress may have happened before we entered draw context!
                     if (this->ps.empty()) {
-                        // Only in freehand mode we have to add the first point also to pc->ps (apparently)
+                        // Only in freehand mode we have to add the first point also to this->ps (apparently)
                         // - We cannot add this point in spdc_set_startpoint, because we only need it for freehand
                         // - We cannot do this in the button press handler because at that point we don't know yet
                         //   wheter we're going into freehand mode or not
@@ -640,6 +641,9 @@ void PencilTool::_interpolate() {
         return;
     }
 
+    using Geom::X;
+    using Geom::Y;
+
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     double const tol = prefs->getDoubleLimited("/tools/freehand/pencil/tolerance", 10.0, 1.0, 100.0) * 0.4;
     double const tolerance_sq = 0.02 * square(this->desktop->w2d().descrim() * tol) * exp(0.2 * tol - 2);
@@ -661,10 +665,21 @@ void PencilTool::_interpolate() {
 
     if (n_segs > 0) {
         /* Fit and draw and reset state */
-        this->green_curve->moveto(b[0]);
 
+        this->green_curve->moveto(b[0]);
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        guint mode = prefs->getInt("/tools/freehand/pencil/freehand-mode", 0);
         for (int c = 0; c < n_segs; c++) {
-            this->green_curve->curveto(b[4 * c + 1], b[4 * c + 2], b[4 * c + 3]);
+            // if we are in BSpline we modify the trace to create adhoc nodes 
+            if(mode == 2){
+                Geom::Point BP = b[4*c+0] + (1./3)*(b[4*c+3] - b[4*c+0]);
+                BP = Geom::Point(BP[X] + 0.0001,BP[Y] + 0.0001);
+                Geom::Point CP = b[4*c+3] + (1./3)*(b[4*c+0] - b[4*c+3]);
+                CP = Geom::Point(CP[X] + 0.0001,CP[Y] + 0.0001);
+                this->green_curve->curveto(BP,CP,b[4*c+3]);
+            }else{
+                this->green_curve->curveto(b[4 * c + 1], b[4 * c + 2], b[4 * c + 3]);
+            }
         }
 
         sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->red_bpath), this->green_curve);
@@ -788,6 +803,7 @@ void PencilTool::_fitAndSplit() {
     g_assert(is_zero(this->req_tangent)
              || is_unit_vector(this->req_tangent));
     Geom::Point const tHatEnd(0, 0);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int const n_segs = Geom::bezier_fit_cubic_full(b, NULL, this->p, this->npoints,
                                                 this->req_tangent, tHatEnd,
                                                 tolerance_sq, 1);
@@ -795,9 +811,22 @@ void PencilTool::_fitAndSplit() {
          && unsigned(this->npoints) < G_N_ELEMENTS(this->p) )
     {
         /* Fit and draw and reset state */
+
         this->red_curve->reset();
         this->red_curve->moveto(b[0]);
-        this->red_curve->curveto(b[1], b[2], b[3]);
+        using Geom::X;
+        using Geom::Y;
+            // if we are in BSpline we modify the trace to create adhoc nodes
+        guint mode = prefs->getInt("/tools/freehand/pencil/freehand-mode", 0);
+        if(mode == 2){
+            Geom::Point B = b[0] + (1./3)*(b[3] - b[0]);
+            B = Geom::Point(B[X] + 0.0001,B[Y] + 0.0001);
+            Geom::Point C = b[3] + (1./3)*(b[0] - b[3]);
+            C = Geom::Point(C[X] + 0.0001,C[Y] + 0.0001);
+            this->red_curve->curveto(B,C,b[3]);
+        }else{
+            this->red_curve->curveto(b[1], b[2], b[3]);
+        }
         sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->red_bpath), this->red_curve);
         this->red_curve_is_valid = true;
     } else {
@@ -826,6 +855,13 @@ void PencilTool::_fitAndSplit() {
         /// \todo fixme:
         SPCanvasItem *cshape = sp_canvas_bpath_new(sp_desktop_sketch(this->desktop), curve);
         curve->unref();
+
+        this->highlight_color = SP_ITEM(this->desktop->currentLayer())->highlight_color();
+        if((unsigned int)prefs->getInt("/tools/nodes/highlight_color", 0xff0000ff) == this->highlight_color){
+            this->green_color = 0x00ff007f;
+        } else {
+            this->green_color = this->highlight_color;
+        }
         sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(cshape), this->green_color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
 
         this->green_bpaths = g_slist_prepend(this->green_bpaths, cshape);

@@ -17,13 +17,15 @@
 #ifndef INKSCAPE_UI_DIALOG_GRID_ARRANGE_TAB_H
 #define INKSCAPE_UI_DIALOG_GRID_ARRANGE_TAB_H
 
-#include <gtkmm.h>
-
+#include "ui/widget/scalar-unit.h"
 #include "ui/dialog/arrange-tab.h"
 
 #include "ui/widget/anchor-selector.h"
-#include "ui/widget/scalar-unit.h"
 #include "ui/widget/spinbutton.h"
+
+#include <gtkmm/checkbutton.h>
+#include <gtkmm/radiobutton.h>
+#include <gtkmm/radiobuttongroup.h>
 
 namespace Inkscape {
 namespace UI {

@@ -12,6 +12,7 @@
 
 #include <gtk/gtk.h>
 #include "sp-color-scales.h"
+#include "sp-color-slider.h"
 #include "preferences.h"
 
 #define SLIDER_WIDTH 96
@@ -26,8 +27,6 @@ enum {
 	LAST_SIGNAL
 };
 
-static void sp_color_slider_class_init (SPColorSliderClass *klass);
-static void sp_color_slider_init (SPColorSlider *slider);
 static void sp_color_slider_dispose(GObject *object);
 
 static void sp_color_slider_realize (GtkWidget *widget);
@@ -61,35 +60,14 @@ static const guchar *sp_color_slider_render_gradient (gint x0, gint y0, gint wid
 static const guchar *sp_color_slider_render_map (gint x0, gint y0, gint width, gint height,
 						 guchar *map, gint start, gint step, guint b0, guint b1, guint mask);
 
-static GtkWidgetClass *parent_class;
 static guint slider_signals[LAST_SIGNAL] = {0};
 
-GType
-sp_color_slider_get_type (void)
-{
-	static GType type = 0;
-	if (!type) {
-		GTypeInfo info = {
-			sizeof (SPColorSliderClass),
-			NULL, NULL,
-			(GClassInitFunc) sp_color_slider_class_init,
-			NULL, NULL,
-			sizeof (SPColorSlider),
-			0,
-			(GInstanceInitFunc) sp_color_slider_init,
-			NULL
-		};
-		type = g_type_register_static (GTK_TYPE_WIDGET, "SPColorSlider", &info, (GTypeFlags)0);
-	}
-	return type;
-}
+G_DEFINE_TYPE(SPColorSlider, sp_color_slider, GTK_TYPE_WIDGET);
 
 static void sp_color_slider_class_init(SPColorSliderClass *klass)
 {
 	GObjectClass   *object_class = G_OBJECT_CLASS(klass);
 	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS(klass);
-
-	parent_class = GTK_WIDGET_CLASS(g_type_class_peek_parent(klass));
 
 	slider_signals[GRABBED] = g_signal_new ("grabbed",
 						  G_TYPE_FROM_CLASS(object_class),
@@ -183,8 +161,8 @@ static void sp_color_slider_dispose(GObject *object)
 		slider->adjustment = NULL;
 	}
 
-	if ((G_OBJECT_CLASS(parent_class))->dispose)
-		(* (G_OBJECT_CLASS(parent_class))->dispose) (object);
+	if (G_OBJECT_CLASS(sp_color_slider_parent_class)->dispose)
+            G_OBJECT_CLASS(sp_color_slider_parent_class)->dispose (object);
 }
 
 static void

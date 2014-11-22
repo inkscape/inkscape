@@ -11,9 +11,8 @@
  */
 
 
-#include <stddef.h>
-#include <sigc++/sigc++.h>
-#include <glib.h>
+#include <cstddef>
+#include <sigc++/signal.h>
 
 struct SPCanvasItem;
 
@@ -25,7 +24,7 @@ namespace Display {
  */
 class TemporaryItem  {
 public:
-    TemporaryItem(SPCanvasItem *item, guint lifetime, bool destroy_on_deselect = false);
+    TemporaryItem(SPCanvasItem *item, unsigned int lifetime, bool destroy_on_deselect = false);
     virtual ~TemporaryItem();
 
     sigc::signal<void, TemporaryItem *> signal_timeout;
@@ -34,10 +33,10 @@ protected:
     friend class TemporaryItemList;
 
     SPCanvasItem * canvasitem;   /** The item we are holding on to */
-    guint timeout_id;     /** ID by which glib knows the timeout event */
+    unsigned int timeout_id;     /** ID by which glib knows the timeout event */
     bool destroy_on_deselect; // only destroy when parent item is deselected, not when mouse leaves
 
-    static gboolean _timeout(gpointer data); ///< callback for when lifetime expired
+    static int _timeout(void* data); ///< callback for when lifetime expired
 
 private:
     TemporaryItem(const TemporaryItem&);

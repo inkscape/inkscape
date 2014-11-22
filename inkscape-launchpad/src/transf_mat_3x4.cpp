@@ -62,11 +62,9 @@ TransfMat3x4::image (Pt3 const &point) {
 
 Pt3
 TransfMat3x4::preimage (Geom::Point const &pt, double coord, Proj::Axis axis) {
-    double x[4];
-    double v[3];
-    v[0] = pt[Geom::X];
-    v[1] = pt[Geom::Y];
-    v[2] = 1.0;
+    const double init_val = std::numeric_limits<double>::quiet_NaN();
+    double x[4] = { init_val, init_val, init_val, init_val };
+    double v[3] = { pt[Geom::X], pt[Geom::Y], 1.0 };
     int index = (int) axis;
 
     SysEq::SolutionKind sol = SysEq::gaussjord_solve<3,4>(tmat, x, v, index, coord, true);

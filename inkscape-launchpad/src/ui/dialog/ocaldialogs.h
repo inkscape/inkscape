@@ -38,8 +38,7 @@
 
 //Inkscape includes
 #include "ui/dialog/filedialog.h"
-
-#include <dialogs/dialog-events.h>
+#include "ui/dialog-events.h"
 
 struct _xmlNode;
 typedef _xmlNode xmlNode;

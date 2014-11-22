@@ -8,6 +8,7 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Maximilian Albert <Anhalter42@gmx.de>
  *   Abhishek Sharma
+ *   Jon A. Cruz <jon@joncruz.org.
  *
  * Copyright (C) 2007      Authors
  * Copyright (C) 1999-2002 Lauris Kaplinski
@@ -21,8 +22,6 @@
 #include "axis-manip.h"
 
 #define SP_TYPE_BOX3D            (box3d_get_type ())
-#define SP_BOX3D(obj) (dynamic_cast<SPBox3D*>((SPObject*)obj))
-#define SP_IS_BOX3D(obj) (dynamic_cast<const SPBox3D*>((SPObject*)obj) != NULL)
 
 class Persp3D;
 class Persp3DReference;
@@ -32,9 +31,9 @@ public:
 	SPBox3D();
 	virtual ~SPBox3D();
 
-    gint z_orders[6]; // z_orders[i] holds the ID of the face at position #i in the group (from top to bottom)
+    int z_orders[6]; // z_orders[i] holds the ID of the face at position #i in the group (from top to bottom)
 
-    gchar *persp_href;
+    char *persp_href;
     Persp3DReference *persp_ref;
 
     Proj::Pt3 orig_corner0;
@@ -45,7 +44,7 @@ public:
 
     Box3D::Axis swapped; // to indicate which coordinates are swapped during dragging
 
-    gint my_counter; // for debugging only
+    int my_counter; // for debugging only
 
     /**
      * Create a SPBox3D and append it to the parent.
@@ -54,24 +53,24 @@ public:
 
 	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
 	virtual void release();
-	virtual void set(unsigned int key, gchar const* value);
-	virtual void update(SPCtx *ctx, guint flags);
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+	virtual void set(unsigned int key, char const* value);
+	virtual void update(SPCtx *ctx, unsigned int flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, unsigned int flags);
 
         virtual const char* display_name();
 	virtual Geom::Affine set_transform(Geom::Affine const &transform);
     virtual void convert_to_guides() const;
     virtual const char* displayName() const;
-    virtual gchar *description() const;
+    virtual char *description() const;
 };
 
 void box3d_position_set (SPBox3D *box);
-Proj::Pt3 box3d_get_proj_corner (SPBox3D const *box, guint id);
-Geom::Point box3d_get_corner_screen (SPBox3D const *box, guint id, bool item_coords = true);
+Proj::Pt3 box3d_get_proj_corner (SPBox3D const *box, unsigned int id);
+Geom::Point box3d_get_corner_screen (SPBox3D const *box, unsigned int id, bool item_coords = true);
 Proj::Pt3 box3d_get_proj_center (SPBox3D *box);
 Geom::Point box3d_get_center_screen (SPBox3D *box);
 
-void box3d_set_corner (SPBox3D *box, guint id, Geom::Point const &new_pos, Box3D::Axis movement, bool constrained);
+void box3d_set_corner (SPBox3D *box, unsigned int id, Geom::Point const &new_pos, Box3D::Axis movement, bool constrained);
 void box3d_set_center (SPBox3D *box, Geom::Point const &new_pos, Geom::Point const &old_pos, Box3D::Axis movement, bool constrained);
 void box3d_corners_for_PLs (const SPBox3D * box, Proj::Axis axis, Geom::Point &corner1, Geom::Point &corner2, Geom::Point &corner3, Geom::Point &corner4);
 bool box3d_recompute_z_orders (SPBox3D *box);

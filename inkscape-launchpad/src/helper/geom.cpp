@@ -168,24 +168,25 @@ bounds_exact_transformed(Geom::PathVector const & pv, Geom::Affine const & t)
         for (Geom::Path::const_iterator cit = it->begin(); cit != it->end_open(); ++cit) {
             Geom::Curve const &c = *cit;
 
-            if( is_straight_curve(c) )
-            {
-                bbox.expandTo( c.finalPoint() * t );
+            unsigned order = 0;
+            if (Geom::BezierCurve const* b = dynamic_cast<Geom::BezierCurve const*>(&c)) {
+                order = b->order();
             }
-            else if(Geom::CubicBezier const *cubic_bezier = dynamic_cast<Geom::CubicBezier const  *>(&c))
-            {
-                Geom::Point c0 = (*cubic_bezier)[0] * t;
-                Geom::Point c1 = (*cubic_bezier)[1] * t;
-                Geom::Point c2 = (*cubic_bezier)[2] * t;
-                Geom::Point c3 = (*cubic_bezier)[3] * t;
-                cubic_bbox( c0[0], c0[1],
-                            c1[0], c1[1],
-                            c2[0], c2[1],
-                            c3[0], c3[1],
-                            bbox );
-            }
-            else
-            {
+
+            if (order == 1) { // line segment
+                bbox.expandTo(c.finalPoint() * t);
+
+            // TODO: we can make the case for quadratics faster by degree elevating them to
+            // cubic and then taking the bbox of that.
+
+            } else if (order == 3) { // cubic bezier
+                Geom::CubicBezier const &cubic_bezier = static_cast<Geom::CubicBezier const&>(c);
+                Geom::Point c0 = cubic_bezier[0] * t;
+                Geom::Point c1 = cubic_bezier[1] * t;
+                Geom::Point c2 = cubic_bezier[2] * t;
+                Geom::Point c3 = cubic_bezier[3] * t;
+                cubic_bbox(c0[0], c0[1], c1[0], c1[1], c2[0], c2[1], c3[0], c3[1], bbox);
+            } else {
                 // should handle all not-so-easy curves:
                 Geom::Curve *ctemp = cit->transformed(t);
                 bbox.unionWith( ctemp->boundsExact());
@@ -356,8 +357,11 @@ geom_curve_bbox_wind_distance(Geom::Curve const & c, Geom::Affine const &m,
                  Geom::Coord tolerance, Geom::Rect const *viewbox,
                  Geom::Point &p0) // pass p0 through as it represents the last endpoint added (the finalPoint of last curve)
 {
-    if( is_straight_curve(c) )
-    {
+    unsigned order = 0;
+    if (Geom::BezierCurve const* b = dynamic_cast<Geom::BezierCurve const*>(&c)) {
+        order = b->order();
+    }
+    if (order == 1) {
         Geom::Point pe = c.finalPoint() * m;
         if (bbox) {
             bbox->expandTo(pe);
@@ -373,10 +377,11 @@ geom_curve_bbox_wind_distance(Geom::Curve const & c, Geom::Affine const &m,
         }
         p0 = pe;
     }
-    else if(Geom::CubicBezier const *cubic_bezier = dynamic_cast<Geom::CubicBezier const  *>(&c)) {
-        Geom::Point p1 = (*cubic_bezier)[1] * m;
-        Geom::Point p2 = (*cubic_bezier)[2] * m;
-        Geom::Point p3 = (*cubic_bezier)[3] * m;
+    else if (order == 3) {
+        Geom::CubicBezier const& cubic_bezier = static_cast<Geom::CubicBezier const&>(c);
+        Geom::Point p1 = cubic_bezier[1] * m;
+        Geom::Point p2 = cubic_bezier[2] * m;
+        Geom::Point p3 = cubic_bezier[3] * m;
 
         // get approximate bbox from handles (convex hull property of beziers):
         Geom::Rect swept(p0, p3);
@@ -402,7 +407,7 @@ geom_curve_bbox_wind_distance(Geom::Curve const & c, Geom::Affine const &m,
         Geom::Path sbasis_path = Geom::cubicbezierpath_from_sbasis(c.toSBasis(), 0.1);
 
         //recurse to convert the new path resulting from the sbasis to svgd
-        for(Geom::Path::iterator iter = sbasis_path.begin(); iter != sbasis_path.end(); ++iter) {
+        for (Geom::Path::iterator iter = sbasis_path.begin(); iter != sbasis_path.end(); ++iter) {
             geom_curve_bbox_wind_distance(*iter, m, pt, bbox, wind, dist, tolerance, viewbox, p0);
         }
     }

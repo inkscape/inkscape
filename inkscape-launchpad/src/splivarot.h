@@ -1,5 +1,5 @@
-#ifndef __SP_LIVAROT_H__
-#define __SP_LIVAROT_H__
+#ifndef SEEN_SP_LIVAROT_H
+#define SEEN_SP_LIVAROT_H
 
 /*
  * boolops and outlines
@@ -7,9 +7,10 @@
  * public domain
  */
 
-#include "livarot/Path.h"
 #include <2geom/forward.h>
 #include <2geom/path.h>
+#include "livarot/Path.h"
+
 class SPCurve;
 class SPDesktop;
 class SPItem;

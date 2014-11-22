@@ -58,6 +58,8 @@ class AnnotBorderStyle;
 
 class PdfParser;
 
+class ClipHistoryEntry;
+
 //------------------------------------------------------------------------
 
 #ifndef GFX_H
@@ -98,34 +100,6 @@ struct OpHistoryEntry {
 
     OpHistoryEntry *next;   // next entry on stack
     unsigned depth;         // total number of entries descending from this
-};
-
-//------------------------------------------------------------------------
-// ClipHistoryEntry
-//------------------------------------------------------------------------
-
-class ClipHistoryEntry {
-public:
-
-    ClipHistoryEntry(GfxPath *clipPath=NULL, GfxClipType clipType=clipNormal);
-    virtual ~ClipHistoryEntry();
-
-    // Manipulate clip path stack
-    ClipHistoryEntry *save();
-    ClipHistoryEntry *restore();
-    GBool hasSaves() { return saved != NULL; }
-    void setClip(GfxPath *newClipPath, GfxClipType newClipType=clipNormal);
-    GfxPath *getClipPath() { return clipPath; }
-    GfxClipType getClipType() { return clipType; }
-
-private:
-
-    ClipHistoryEntry *saved;    // next clip path on stack
-        
-    GfxPath *clipPath;        // used as the path to be filled for an 'sh' operator
-    GfxClipType clipType;
-
-    ClipHistoryEntry(ClipHistoryEntry *other);
 };
 
 //------------------------------------------------------------------------

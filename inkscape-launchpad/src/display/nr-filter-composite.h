@@ -1,5 +1,5 @@
-#ifndef __NR_FILTER_COMPOSITE_H__
-#define __NR_FILTER_COMPOSITE_H__
+#ifndef SEEN_NR_FILTER_COMPOSITE_H
+#define SEEN_NR_FILTER_COMPOSITE_H
 
 /*
  * feComposite filter effect renderer

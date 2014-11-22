@@ -13,14 +13,16 @@
 #ifndef INKSCAPE_PREFSTORE_H
 #define INKSCAPE_PREFSTORE_H
 
-#include <map>
-#include <vector>
 #include <climits>
 #include <cfloat>
 #include <glibmm/ustring.h>
+#include <map>
+#include <vector>
+
 #include "xml/repr.h"
 
 class SPCSSAttr;
+typedef unsigned int guint32;
 
 namespace Inkscape {
 

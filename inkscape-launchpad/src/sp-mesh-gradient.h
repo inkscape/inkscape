@@ -24,8 +24,8 @@ public:
 
 protected:
 	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
-	virtual void set(unsigned key, gchar const *value);
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+	virtual void set(unsigned key, char const *value);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, unsigned int flags);
 };
 
 #endif /* !SP_MESH_GRADIENT_H */

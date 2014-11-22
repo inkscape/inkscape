@@ -1,6 +1,4 @@
-#define __SP_SVG_LENGTH_C__
-
-/*
+/**
  * SVG data parser
  *
  * Authors:
@@ -12,19 +10,14 @@
  * This code is in public domain
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-
+#include <cmath>
 #include <cstring>
 #include <string>
-#include <math.h>
 #include <glib.h>
 
 #include "svg.h"
 #include "stringstream.h"
 #include "util/units.h"
-
 
 static unsigned sp_svg_length_read_lff(gchar const *str, SVGLength::Unit *unit, float *val, float *computed, char **next);
 
@@ -570,4 +563,4 @@ void SVGLength::readOrUnset(gchar const *str, Unit u, float v, float c)
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8 :

@@ -22,8 +22,9 @@
 using std::map;
 using std::pair;
 
-#include <glibmm/stringutils.h>
+#include <glibmm.h>
 #include "attributes.h"
+#include "display/nr-filter.h"
 #include "document.h"
 #include "sp-filter.h"
 #include "sp-filter-reference.h"
@@ -36,8 +37,6 @@ using std::pair;
 
 #define SP_MACROS_SILENT
 #include "macros.h"
-
-#include "display/nr-filter.h"
 
 static void filter_ref_changed(SPObject *old_ref, SPObject *ref, SPFilter *filter);
 static void filter_ref_modified(SPObject *href, guint flags, SPFilter *filter);
@@ -466,6 +465,10 @@ int sp_filter_set_image_name(SPFilter *filter, gchar const *name) {
     pair<gchar*,int> new_pair(name_copy, value);
     pair<map<gchar*,int,ltstr>::iterator,bool> ret = filter->_image_name->insert(new_pair);
     if (ret.second == false) {
+        // The element is not inserted (because an element with the same key was already in the map) 
+        // Therefore, free the memory allocated for the new entry:
+        free(name_copy);
+
         return (*ret.first).second;
     }
     return value;

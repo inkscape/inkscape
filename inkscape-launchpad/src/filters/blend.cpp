@@ -183,6 +183,8 @@ void SPFeBlend::update(SPCtx *ctx, guint flags) {
 
     /* Unlike normal in, in2 is required attribute. Make sure, we can call
      * it by some name. */
+    /* This may not be true.... see issue at 
+     * http://www.w3.org/TR/filter-effects/#feBlendElement (but it doesn't hurt). */
     if (this->in2 == Inkscape::Filters::NR_FILTER_SLOT_NOT_SET ||
         this->in2 == Inkscape::Filters::NR_FILTER_UNNAMED_SLOT)
     {
@@ -206,24 +208,28 @@ Inkscape::XML::Node* SPFeBlend::write(Inkscape::XML::Document *doc, Inkscape::XM
         repr = doc->createElement("svg:feBlend");
     }
 
-    gchar const *out_name = sp_filter_name_for_image(parent, this->in2);
+    gchar const *in2_name = sp_filter_name_for_image(parent, this->in2);
 
-    if (out_name) {
-        repr->setAttribute("in2", out_name);
-    } else {
+    if( !in2_name ) {
+
+        // This code is very similar to sp_filter_primtive_name_previous_out()
         SPObject *i = parent->children;
 
+        // Find previous filter primitive
         while (i && i->next != this) {
         	i = i->next;
         }
 
-        SPFilterPrimitive *i_prim = SP_FILTER_PRIMITIVE(i);
-        out_name = sp_filter_name_for_image(parent, i_prim->image_out);
-        repr->setAttribute("in2", out_name);
-
-        if (!out_name) {
-            g_warning("Unable to set in2 for feBlend");
+        if( i ) {
+            SPFilterPrimitive *i_prim = SP_FILTER_PRIMITIVE(i);
+            in2_name = sp_filter_name_for_image(parent, i_prim->image_out);
         }
+    }
+
+    if (in2_name) {
+        repr->setAttribute("in2", in2_name);
+    } else {
+        g_warning("Unable to set in2 for feBlend");
     }
 
     char const *mode;

@@ -43,6 +43,14 @@ LPEMirrorSymmetry::~LPEMirrorSymmetry()
 }
 
 void
+LPEMirrorSymmetry::doBeforeEffect (SPLPEItem const* lpeitem)
+{
+    SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
+    item->apply_to_clippath(item);
+    item->apply_to_mask(item);
+}
+
+void
 LPEMirrorSymmetry::doOnApply (SPLPEItem const* lpeitem)
 {
     using namespace Geom;

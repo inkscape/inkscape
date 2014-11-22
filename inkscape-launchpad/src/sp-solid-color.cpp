@@ -8,6 +8,8 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
+#include <cairo.h>
+
 #include "sp-solid-color.h"
 
 #include "attributes.h"

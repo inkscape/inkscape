@@ -123,12 +123,11 @@ void SvgBuilder::_init() {
     _height = 0;
 
     // Fill _availableFontNames (Bug LP #179589) (code cfr. FontLister)
-    FamilyToStylesMap familyStyleMap;
-    font_factory::Default()->GetUIFamiliesAndStyles(&familyStyleMap);
-    for (FamilyToStylesMap::iterator iter = familyStyleMap.begin();
-         iter != familyStyleMap.end();
-         ++iter) {
-        _availableFontNames.push_back(iter->first.c_str());
+    std::vector<PangoFontFamily *> families;
+    font_factory::Default()->GetUIFamilies(families);
+    for ( std::vector<PangoFontFamily *>::iterator iter = families.begin();
+          iter != families.end(); ++iter ) {
+        _availableFontNames.push_back(pango_font_family_get_name(*iter));
     }
 
     _transp_group_stack = NULL;

@@ -76,7 +76,7 @@ class MyEffect(inkex.Effect):
                                      default=True)
         self.OptionParser.add_option("--units", action="store",
                                      type="string", dest="units",
-                                     default="72./90") # Points
+                                     default="72./96") # Points
         self.OptionParser.add_option("--encoding", action="store",
                                      type="string", dest="char_encode",
                                      default="latin_1")
@@ -324,7 +324,7 @@ class MyEffect(inkex.Effect):
 
         scale = eval(self.options.units)
         if not scale:
-            scale = 25.4/90     # if no scale is specified, assume inch as baseunit
+            scale = 25.4/96     # if no scale is specified, assume inch as baseunit
         h = self.unittouu(self.document.getroot().xpath('@height', namespaces=inkex.NSS)[0])
         self.groupmat = [[[scale, 0.0, 0.0], [0.0, -scale, h*scale]]]
         doc = self.document.getroot()

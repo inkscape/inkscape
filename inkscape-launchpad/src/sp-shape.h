@@ -15,12 +15,12 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <2geom/forward.h>
+#include <cstddef>
+#include <sigc++/connection.h>
+
 #include "sp-lpe-item.h"
 #include "sp-marker-loc.h"
-#include <2geom/forward.h>
-
-#include <stddef.h>
-#include <sigc++/connection.h>
 
 #define SP_SHAPE(obj) (dynamic_cast<SPShape*>((SPObject*)obj))
 #define SP_IS_SHAPE(obj) (dynamic_cast<const SPShape*>((SPObject*)obj) != NULL)
@@ -28,6 +28,7 @@
 #define SP_SHAPE_WRITE_PATH (1 << 2)
 
 class SPDesktop;
+class SPMarker;
 namespace Inkscape { class DrawingItem; }
 
 /**
@@ -51,17 +52,17 @@ public: // temporarily public, until SPPath is properly classed, etc.
     SPCurve *_curve;
 
 public:
-    SPObject *_marker[SP_MARKER_LOC_QTY];
+    SPMarker *_marker[SP_MARKER_LOC_QTY];
     sigc::connection _release_connect [SP_MARKER_LOC_QTY];
     sigc::connection _modified_connect [SP_MARKER_LOC_QTY];
 
 	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
 	virtual void release();
-	virtual void update(SPCtx* ctx, guint flags);
+	virtual void update(SPCtx* ctx, unsigned int flags);
 	virtual void modified(unsigned int flags);
 
-	virtual void set(unsigned int key, gchar const* value);
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+	virtual void set(unsigned int key, char const* value);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, unsigned int flags);
 
 	virtual Geom::OptRect bbox(Geom::Affine const &transform, SPItem::BBoxType bboxtype) const;
 	virtual void print(SPPrintContext* ctx);
@@ -75,7 +76,7 @@ public:
 };
 
 
-void sp_shape_set_marker (SPObject *object, unsigned int key, const gchar *value);
+void sp_shape_set_marker (SPObject *object, unsigned int key, const char *value);
 
 Geom::Affine sp_shape_marker_get_transform(Geom::Curve const & c1, Geom::Curve const & c2);
 Geom::Affine sp_shape_marker_get_transform_at_start(Geom::Curve const & c);

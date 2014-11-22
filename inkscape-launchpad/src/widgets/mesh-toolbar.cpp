@@ -42,6 +42,7 @@
 #include <glibmm/i18n.h>
 
 #include "ui/tools/gradient-tool.h"
+#include "ui/tools/mesh-tool.h"
 #include "gradient-drag.h"
 #include "sp-mesh-gradient.h"
 #include "gradient-chemistry.h"
@@ -49,17 +50,16 @@
 #include "selection.h"
 #include "ui/icon-names.h"
 
-#include "../ege-adjustment-action.h"
-#include "../ege-output-action.h"
-#include "../ege-select-one-action.h"
-#include "../ink-action.h"
-#include "../ink-comboboxentry-action.h"
+#include "widgets/ege-adjustment-action.h"
+#include "widgets/ege-output-action.h"
+#include "widgets/ege-select-one-action.h"
+#include "widgets/ink-action.h"
+#include "widgets/ink-comboboxentry-action.h"
 
 #include "sp-stop.h"
 #include "svg/css-ostringstream.h"
 #include "svg/svg-color.h"
 #include "desktop-style.h"
-#include "ui/tools/gradient-tool.h"
 
 #include "toolbox.h"
 
@@ -67,7 +67,7 @@ using Inkscape::DocumentUndo;
 using Inkscape::UI::ToolboxFactory;
 using Inkscape::UI::PrefPusher;
 
-static gboolean blocked = FALSE;
+static bool blocked = false;
 
 //########################
 //##        Mesh        ##
@@ -116,21 +116,15 @@ static void ms_drag_selection_changed(gpointer /*dragger*/, gpointer data)
 
 }
 
-static void ms_defs_release(SPObject * /*defs*/, GtkWidget *widget)
+static void ms_defs_release(SPObject * /*defs*/, GObject *widget)
 {
     ms_tb_selection_changed(NULL, widget);
 }
 
-static void ms_defs_modified(SPObject * /*defs*/, guint /*flags*/, GtkWidget *widget)
+static void ms_defs_modified(SPObject * /*defs*/, guint /*flags*/, GObject *widget)
 {
-    ms_tb_selection_changed(NULL, (gpointer) widget);
+    ms_tb_selection_changed(NULL, widget);
 }
-
-static void ms_disconnect_sigc(GObject * /*obj*/, sigc::connection *connection) {
-    connection->disconnect();
-    delete connection;
-}
-
 
 /*
  * Callback functions for user actions
@@ -183,6 +177,8 @@ static void ms_col_changed(GtkAdjustment *adj, GObject * /*tbl*/ )
 
     blocked = FALSE;
 }
+
+static void mesh_toolbox_watch_ec(SPDesktop* dt, Inkscape::UI::Tools::ToolBase* ec, GObject* holder);
 
 /**
  * Mesh auxiliary toolbar construction and setup.
@@ -323,35 +319,43 @@ void sp_mesh_toolbox_prep(SPDesktop * desktop, GtkActionGroup* mainActions, GObj
         g_signal_connect( holder, "destroy", G_CALLBACK(delete_prefspusher), pusher);
     }
 
-
-    Inkscape::Selection *selection = sp_desktop_selection (desktop);
-    SPDocument *document = sp_desktop_document (desktop);
-
     g_object_set_data(holder, "desktop", desktop);
 
-    // connect to selection modified and changed signals
-    sigc::connection *conn1 = new sigc::connection(
-            selection->connectChanged(sigc::bind(sigc::ptr_fun(&ms_tb_selection_changed), (gpointer) holder)));
-    sigc::connection *conn2 = new sigc::connection(
-            selection->connectModified(sigc::bind(sigc::ptr_fun(&ms_tb_selection_modified), (gpointer) holder)));
-    sigc::connection *conn3 = new sigc::connection(
-            desktop->connectToolSubselectionChanged( sigc::bind(sigc::ptr_fun(&ms_drag_selection_changed), (gpointer) holder)));
+    desktop->connectEventContextChanged(sigc::bind(sigc::ptr_fun(mesh_toolbox_watch_ec), holder));
+}
 
-    // when holder is destroyed, disconnect
-    g_signal_connect(G_OBJECT(holder), "destroy", G_CALLBACK(ms_disconnect_sigc), conn1);
-    g_signal_connect(G_OBJECT(holder), "destroy", G_CALLBACK(ms_disconnect_sigc), conn2);
-    g_signal_connect(G_OBJECT(holder), "destroy", G_CALLBACK(ms_disconnect_sigc), conn3);
+static void mesh_toolbox_watch_ec(SPDesktop* desktop, Inkscape::UI::Tools::ToolBase* ec, GObject* holder)
+{
+    static sigc::connection c_selection_changed;
+    static sigc::connection c_selection_modified;
+    static sigc::connection c_subselection_changed;
+    static sigc::connection c_defs_release;
+    static sigc::connection c_defs_modified;
 
-     // connect to release and modified signals of the defs (i.e. when someone changes mesh)
-    sigc::connection *release_connection = new sigc::connection();
-            *release_connection = document->getDefs()->connectRelease(sigc::bind<1>(sigc::ptr_fun(&ms_defs_release), GTK_WIDGET(holder)));
-    sigc::connection *modified_connection = new sigc::connection();
-            *modified_connection = document->getDefs()->connectModified(sigc::bind<2>(sigc::ptr_fun(&ms_defs_modified), GTK_WIDGET(holder)));
+    if (SP_IS_MESH_CONTEXT(ec)) {
+        // connect to selection modified and changed signals
+        Inkscape::Selection *selection = sp_desktop_selection (desktop);
+        SPDocument *document = sp_desktop_document (desktop);
 
-    // when holder is destroyed, disconnect
-    g_signal_connect(G_OBJECT(holder), "destroy", G_CALLBACK(ms_disconnect_sigc), release_connection);
-    g_signal_connect(G_OBJECT(holder), "destroy", G_CALLBACK(ms_disconnect_sigc), modified_connection);
+        c_selection_changed = selection->connectChanged(sigc::bind(sigc::ptr_fun(&ms_tb_selection_changed), holder));
+        c_selection_modified = selection->connectModified(sigc::bind(sigc::ptr_fun(&ms_tb_selection_modified), holder));
+        c_subselection_changed = desktop->connectToolSubselectionChanged(sigc::bind(sigc::ptr_fun(&ms_drag_selection_changed), holder));
 
+        c_defs_release = document->getDefs()->connectRelease(sigc::bind<1>(sigc::ptr_fun(&ms_defs_release), holder));
+        c_defs_modified = document->getDefs()->connectModified(sigc::bind<2>(sigc::ptr_fun(&ms_defs_modified), holder));
+        ms_tb_selection_changed(selection, holder);
+    } else {
+        if (c_selection_changed)
+            c_selection_changed.disconnect();
+        if (c_selection_modified)
+            c_selection_modified.disconnect();
+        if (c_subselection_changed)
+            c_subselection_changed.disconnect();
+        if (c_defs_release)
+            c_defs_release.disconnect();
+        if (c_defs_modified)
+            c_defs_modified.disconnect();
+    }
 }
 
 /*

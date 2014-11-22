@@ -54,7 +54,7 @@ Glib::ustring sp_font_selector_get_fontspec (SPFontSelector *fsel);
 
 double  sp_font_selector_get_size (SPFontSelector *fsel);
 
-#endif // SP_FONT_SELECTOR_H
+#endif // !SP_FONT_SELECTOR_H
 
 /*
   Local Variables:
@@ -65,4 +65,4 @@ double  sp_font_selector_get_size (SPFontSelector *fsel);
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8 :

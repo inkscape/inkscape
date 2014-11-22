@@ -1,5 +1,5 @@
-#ifndef __NR_FILTER_OFFSET_H__
-#define __NR_FILTER_OFFSET_H__
+#ifndef SEEN_NR_FILTER_OFFSET_H
+#define SEEN_NR_FILTER_OFFSET_H
 
 /*
  * feOffset filter primitive renderer

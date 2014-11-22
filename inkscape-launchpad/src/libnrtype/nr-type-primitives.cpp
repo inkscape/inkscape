@@ -1,6 +1,4 @@
-#define __NR_TYPE_PRIMITIVES_C__
-
-/*
+/**
  * Typeface and script library
  *
  * Authors:
@@ -12,26 +10,27 @@
 /* This should be enough for approximately 10000 fonts */
 #define NR_DICTSIZE 2777
 
-#include <stdlib.h>
+#include <cstdlib>
 #include <string.h>
 #include <glib.h>
+
 #include "nr-type-primitives.h"
 
 /**
  * An entry in a list of key->value pairs
  */
 struct NRTDEntry {
-	NRTDEntry *next;
-	const gchar *key;
-	void *val;
+    NRTDEntry *next;
+    const gchar *key;
+    void *val;
 };
 
 /**
  * Type Dictionary, consisting of size number of key-value entries
  */
 struct NRTypeDict {
-	unsigned int size;
-	NRTDEntry **entries;
+    unsigned int size;
+    NRTDEntry **entries;
 };
 
 static NRTDEntry *nr_td_entry_new (void);
@@ -42,17 +41,17 @@ static NRTDEntry *nr_td_entry_new (void);
 void
 nr_name_list_release (NRNameList *list)
 {
-	if (list->destructor) {
-		list->destructor (list);
-	}
+    if (list->destructor) {
+        list->destructor (list);
+    }
 }
 
 void
 nr_style_list_release (NRStyleList *list)
 {
-	if (list->destructor) {
-		list->destructor (list);
-	}
+    if (list->destructor) {
+        list->destructor (list);
+    }
 }
 
 /**
@@ -62,18 +61,18 @@ nr_style_list_release (NRStyleList *list)
 NRTypeDict *
 nr_type_dict_new (void)
 {
-	NRTypeDict *td;
-	int i;
+    NRTypeDict *td;
+    int i;
 
-	td = g_new (NRTypeDict, 1);
+    td = g_new (NRTypeDict, 1);
 
-	td->size = NR_DICTSIZE;
-	td->entries = g_new (NRTDEntry *, td->size);
-	for (i = 0; i < NR_DICTSIZE; i++) {
-		td->entries[i] = NULL;
-	}
+    td->size = NR_DICTSIZE;
+    td->entries = g_new (NRTDEntry *, td->size);
+    for (i = 0; i < NR_DICTSIZE; i++) {
+        td->entries[i] = NULL;
+    }
 
-	return td;
+    return td;
 }
 
 /**
@@ -82,15 +81,15 @@ nr_type_dict_new (void)
 static unsigned int
 nr_str_hash (const gchar *p)
 {
-	unsigned int h;
+    unsigned int h;
 
-	h = *p;
+    h = *p;
 
-	if (h != 0) {
-		for (p += 1; *p; p++) h = (h << 5) - h + *p;
-	}
+    if (h != 0) {
+        for (p += 1; *p; p++) h = (h << 5) - h + *p;
+    }
 
-	return h;
+    return h;
 }
 
 /**
@@ -99,25 +98,25 @@ nr_str_hash (const gchar *p)
 void
 nr_type_dict_insert (NRTypeDict *td, const gchar *key, void *val)
 {
-	if (key) {
-		NRTDEntry *tde;
-		unsigned int hval;
+    if (key) {
+        NRTDEntry *tde;
+        unsigned int hval;
 
-		hval = nr_str_hash (key) % td->size;
+        hval = nr_str_hash (key) % td->size;
 
-		for (tde = td->entries[hval]; tde; tde = tde->next) {
-			if (!strcmp (key, tde->key)) {
-				tde->val = val;
-				return;
-			}
-		}
+        for (tde = td->entries[hval]; tde; tde = tde->next) {
+            if (!strcmp (key, tde->key)) {
+                tde->val = val;
+                return;
+            }
+        }
 
-		tde = nr_td_entry_new ();
-		tde->next = td->entries[hval];
-		tde->key = key;
-		tde->val = val;
-		td->entries[hval] = tde;
-	}
+        tde = nr_td_entry_new ();
+        tde->next = td->entries[hval];
+        tde->key = key;
+        tde->val = val;
+        td->entries[hval] = tde;
+    }
 }
 
 /**
@@ -126,16 +125,16 @@ nr_type_dict_insert (NRTypeDict *td, const gchar *key, void *val)
 void *
 nr_type_dict_lookup (NRTypeDict *td, const gchar *key)
 {
-	if (key) {
-		NRTDEntry *tde;
-		unsigned int hval;
-		hval = nr_str_hash (key) % td->size;
-		for (tde = td->entries[hval]; tde; tde = tde->next) {
-			if (!strcmp (key, tde->key)) return tde->val;
-		}
-	}
+    if (key) {
+        NRTDEntry *tde;
+        unsigned int hval;
+        hval = nr_str_hash (key) % td->size;
+        for (tde = td->entries[hval]; tde; tde = tde->next) {
+            if (!strcmp (key, tde->key)) return tde->val;
+        }
+    }
 
-	return NULL;
+    return NULL;
 }
 
 #define NR_TDE_BLOCK_SIZE 32
@@ -148,20 +147,30 @@ static NRTDEntry *nr_tde_free_list;
 static NRTDEntry *
 nr_td_entry_new (void)
 {
-	NRTDEntry *tde;
+    NRTDEntry *tde;
 
-	if (!nr_tde_free_list) {
-		int i;
-		nr_tde_free_list = g_new (NRTDEntry, NR_TDE_BLOCK_SIZE);
-		for (i = 0; i < (NR_TDE_BLOCK_SIZE - 1); i++) {
-			nr_tde_free_list[i].next = nr_tde_free_list + i + 1;
-		}
-		nr_tde_free_list[i].next = NULL;
-	}
+    if (!nr_tde_free_list) {
+        int i;
+        nr_tde_free_list = g_new (NRTDEntry, NR_TDE_BLOCK_SIZE);
+        for (i = 0; i < (NR_TDE_BLOCK_SIZE - 1); i++) {
+            nr_tde_free_list[i].next = nr_tde_free_list + i + 1;
+        }
+        nr_tde_free_list[i].next = NULL;
+    }
 
-	tde = nr_tde_free_list;
-	nr_tde_free_list = tde->next;
+    tde = nr_tde_free_list;
+    nr_tde_free_list = tde->next;
 
-	return tde;
+    return tde;
 }
 
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8 :

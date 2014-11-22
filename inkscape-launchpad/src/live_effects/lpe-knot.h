@@ -64,7 +64,8 @@ public:
   void addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
 
 protected:
-    virtual void addCanvasIndicators(SPLPEItem const *lpeitem, std::vector<Geom::PathVector> &hp_vec);
+  virtual void addCanvasIndicators(SPLPEItem const *lpeitem, std::vector<Geom::PathVector> &hp_vec);
+  std::vector<Geom::Path> supplied_path; //for knotholder business
   
 private:
   void updateSwitcher();

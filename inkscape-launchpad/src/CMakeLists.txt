@@ -32,6 +32,8 @@ set(sp_SRC
 	sp-gradient-reference.cpp
 	sp-gradient.cpp
 	sp-guide.cpp
+	sp-hatch.cpp
+	sp-hatch-path.cpp
 	sp-image.cpp
 	sp-item-group.cpp
 	sp-item-notify-moveto.cpp
@@ -42,6 +44,7 @@ set(sp_SRC
 	sp-line.cpp
 	sp-linear-gradient.cpp
 	sp-lpe-item.cpp
+	sp-marker.cpp
 	sp-mask.cpp
 	sp-mesh-array.cpp
 	sp-mesh-gradient.cpp
@@ -115,6 +118,8 @@ set(sp_SRC
 	sp-guide-attachment.h
 	sp-guide-constraint.h
 	sp-guide.h
+	sp-hatch.h
+	sp-hatch-path.h
 	sp-image.h
 	sp-item-group.h
 	sp-item-notify-moveto.h
@@ -125,6 +130,7 @@ set(sp_SRC
 	sp-line.h
 	sp-linear-gradient.h
 	sp-lpe-item.h
+	sp-marker.h
 	sp-marker-loc.h
 	sp-mask.h
 	sp-mesh-array.h
@@ -190,11 +196,7 @@ set(inkscape_SRC
 	document-undo.cpp
 	document.cpp
 	doxygen-main.cpp
-	draw-anchor.cpp
-	ege-adjustment-action.cpp
 	ege-color-prof-tracker.cpp
-	ege-output-action.cpp
-	ege-select-one-action.cpp
 	event-log.cpp
 	extract-uri.cpp
 	file.cpp
@@ -210,26 +212,23 @@ set(inkscape_SRC
 	help.cpp
 	id-clash.cpp
 	# ige-mac-menu.c
-	ink-action.cpp
-	ink-comboboxentry-action.cpp
 	inkscape.cpp
 	inkscape.rc
 	interface.cpp
 	knot-holder-entity.cpp
 	knot.cpp
 	knotholder.cpp
+	knot-ptr.cpp
 	layer-fns.cpp
 	layer-manager.cpp
 	layer-model.cpp
 	line-geometry.cpp
 	line-snapper.cpp
 	main-cmdlineact.cpp
-	marker.cpp
 	media.cpp
 	message-context.cpp
 	message-stack.cpp
 	mod360.cpp
-	object-edit.cpp
 	object-hierarchy.cpp
 	object-snapper.cpp
 	path-chemistry.cpp
@@ -252,7 +251,6 @@ set(inkscape_SRC
 	selection.cpp
 	seltrans-handles.cpp
 	seltrans.cpp
-	shape-editor.cpp
 	shortcuts.cpp
 	snap-preferences.cpp
 	snap.cpp
@@ -266,7 +264,6 @@ set(inkscape_SRC
 	svg-view.cpp
 	text-chemistry.cpp
 	text-editing.cpp
-	tools-switch.cpp
 	transf_mat_3x4.cpp
 	unclump.cpp
 	unicoderange.cpp
@@ -298,7 +295,6 @@ set(inkscape_SRC
 	composite-undo-stack-observer.h
 	conditions.h
 	conn-avoid-ref.h
-	connection-pool.h
 	console-output-undo-observer.h
 	context-fns.h
 	decimal-round.h
@@ -313,11 +309,7 @@ set(inkscape_SRC
 	document-subset.h
 	document-undo.h
 	document.h
-	draw-anchor.h
-	ege-adjustment-action.h
 	ege-color-prof-tracker.h
-	ege-output-action.h
-	ege-select-one-action.h
 	enums.h
 	event-log.h
 	event.h
@@ -344,18 +336,16 @@ set(inkscape_SRC
 	icon-size.h
 	id-clash.h
 	# ige-mac-menu.h
-	ink-action.h
-	ink-comboboxentry-action.h
 	inkscape-private.h
 	inkscape-version.h
 	inkscape.h
 	interface.h
 	isinf.h
-	isnormal.h
 	knot-enums.h
 	knot-holder-entity.h
 	knot.h
 	knotholder.h
+	knot-ptr.h
 	layer-fns.h
 	layer-manager.h
 	layer-model.h
@@ -373,9 +363,9 @@ set(inkscape_SRC
 	mod360-test.h
 	mod360.h
 	number-opt-number.h
-	object-edit.h
 	object-hierarchy.h
 	object-snapper.h
+	object-test.h
 	path-chemistry.h
 	path-prefix.h
 	persp3d-reference.h
@@ -404,7 +394,6 @@ set(inkscape_SRC
 	selection.h
 	seltrans-handles.h
 	seltrans.h
-	shape-editor.h
 	shortcuts.h
 	snap-candidate.h
 	snap-enums.h
@@ -429,8 +418,6 @@ set(inkscape_SRC
 	text-chemistry.h
 	text-editing.h
 	text-tag-attributes.h
-	tool-factory.h
-	tools-switch.h
 	transf_mat_3x4.h
 	unclump.h
 	undo-stack-observer.h

@@ -12,13 +12,9 @@
  * This code is in public domain
  */
 
-#include <gtk/gtk.h>
-#include "../color.h"
 #include "sp-color-selector.h"
 
 #include <glib.h>
-
-
 
 struct SPColorNotebook;
 

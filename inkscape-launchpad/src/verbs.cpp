@@ -53,7 +53,7 @@
 #include "helper/action-context.h"
 #include "help.h"
 #include "inkscape-private.h"
-#include "interface.h"
+#include "ui/interface.h"
 #include "layer-fns.h"
 #include "layer-manager.h"
 #include "message-stack.h"
@@ -62,14 +62,15 @@
 #include "ui/tools/select-tool.h"
 #include "selection-chemistry.h"
 #include "seltrans.h"
-#include "shape-editor.h"
+#include "ui/shape-editor.h"
 #include "shortcuts.h"
+#include "sp-defs.h"
 #include "sp-flowtext.h"
 #include "sp-guide.h"
 #include "splivarot.h"
 #include "sp-namedview.h"
 #include "text-chemistry.h"
-#include "tools-switch.h"
+#include "ui/tools-switch.h"
 #include "ui/dialog/align-and-distribute.h"
 #include "ui/dialog/clonetiler.h"
 #include "ui/dialog/dialog-manager.h"
@@ -213,6 +214,25 @@ public:
         Verb(code, id, name, tip, image, _("Object"))
     { }
 }; // ObjectVerb class
+
+/**
+ * A class to encompass all of the verbs which deal with operations related to tags.
+ */
+class TagVerb : public Verb {
+private:
+    static void perform(SPAction *action, void *mydata);
+protected:
+    virtual SPAction *make_action(Inkscape::ActionContext const & context);
+public:
+    /** Use the Verb initializer with the same parameters. */
+    TagVerb(unsigned int const code,
+               gchar const *id,
+               gchar const *name,
+               gchar const *tip,
+               gchar const *image) :
+        Verb(code, id, name, tip, image, _("Tag"))
+    { }
+}; // TagVerb class
 
 /**
  * A class to encompass all of the verbs which deal with operations relative to context.
@@ -455,6 +475,19 @@ SPAction *LayerVerb::make_action(Inkscape::ActionContext const & context)
  * @return The built action.
  */
 SPAction *ObjectVerb::make_action(Inkscape::ActionContext const & context)
+{
+    return make_action_helper(context, &perform);
+}
+
+/**
+ * Create an action for a \c TagVerb.
+ *
+ * Calls \c make_action_helper with the \c vector.
+ *
+ * @param  view  Which view the action should be created for.
+ * @return The built action.
+ */
+SPAction *TagVerb::make_action(Inkscape::ActionContext const & context)
 {
     return make_action_helper(context, &perform);
 }
@@ -1535,6 +1568,9 @@ void ObjectVerb::perform( SPAction *action, void *data)
         case SP_VERB_OBJECT_SET_CLIPPATH:
             sp_selection_set_mask(dt, true, false);
             break;
+        case SP_VERB_OBJECT_CREATE_CLIP_GROUP:
+            sp_selection_set_clipgroup(dt);
+            break;
         case SP_VERB_OBJECT_EDIT_CLIPPATH:
             sp_selection_edit_clip_or_mask(dt, true);
             break;
@@ -1546,6 +1582,47 @@ void ObjectVerb::perform( SPAction *action, void *data)
     }
 
 } // end of sp_verb_action_object_perform()
+
+/**
+ * Decode the verb code and take appropriate action.
+ */
+void TagVerb::perform( SPAction *action, void *data)
+{
+    SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
+    if (!dt)
+        return;
+
+    //Inkscape::UI::Tools::ToolBase *ec = dt->event_context;
+
+    Inkscape::Selection *sel = sp_desktop_selection(dt);
+
+    Inkscape::XML::Document * doc;
+    Inkscape::XML::Node * repr;
+    gchar *id;
+
+    switch (reinterpret_cast<std::size_t>(data)) {
+        case SP_VERB_TAG_NEW:
+            static int tag_suffix=1;
+            id=NULL;
+            do {
+                g_free(id);
+                id = g_strdup_printf("Set %d", tag_suffix++);
+            } while (dt->doc()->getObjectById(id));
+            
+            doc = dt->doc()->getReprDoc();
+            repr = doc->createElement("inkscape:tag");
+            repr->setAttribute("id", id);
+            g_free(id);
+            
+            dt->doc()->getDefs()->addChild(repr, NULL);
+            Inkscape::DocumentUndo::done(dt->doc(), SP_VERB_DIALOG_TAGS, _("Create new selection set"));
+            break;
+        default:
+            break;
+    }
+
+} // end of sp_verb_action_tag_perform()
+
 
 /**
  * Decode the verb code and take appropriate action.
@@ -2036,6 +2113,12 @@ void DialogVerb::perform(SPAction *action, void *data)
             break;
         case SP_VERB_DIALOG_LAYERS:
             dt->_dlg_mgr->showDialog("LayersPanel");
+            break;
+        case SP_VERB_DIALOG_OBJECTS:
+            dt->_dlg_mgr->showDialog("ObjectsPanel");
+            break;
+        case SP_VERB_DIALOG_TAGS:
+            dt->_dlg_mgr->showDialog("TagsPanel");
             break;
         case SP_VERB_DIALOG_LIVE_PATH_EFFECT:
             dt->_dlg_mgr->showDialog("LivePathEffect");
@@ -2637,11 +2720,15 @@ Verb *Verb::_base_verbs[] = {
                  N_("Remove mask from selection"), NULL),
     new ObjectVerb(SP_VERB_OBJECT_SET_CLIPPATH, "ObjectSetClipPath", N_("_Set"),
                  N_("Apply clipping path to selection (using the topmost object as clipping path)"), NULL),
+    new ObjectVerb(SP_VERB_OBJECT_CREATE_CLIP_GROUP, "ObjectCreateClipGroup", N_("Create Cl_ip Group"),
+                 N_("Creates a clip group using the selected objects as a base"), NULL),
     new ObjectVerb(SP_VERB_OBJECT_EDIT_CLIPPATH, "ObjectEditClipPath", N_("_Edit"),
                  N_("Edit clipping path"), INKSCAPE_ICON("path-clip-edit")),
     new ObjectVerb(SP_VERB_OBJECT_UNSET_CLIPPATH, "ObjectUnSetClipPath", N_("_Release"),
                  N_("Remove clipping path from selection"), NULL),
-
+    // Tag
+    new TagVerb(SP_VERB_TAG_NEW, "TagNew", N_("_New"),
+                 N_("Create new selection set"), NULL),
     // Tools
     new ContextVerb(SP_VERB_CONTEXT_SELECT, "ToolSelector", NC_("ContextVerb", "Select"),
                     N_("Select and transform objects"), INKSCAPE_ICON("tool-pointer")),
@@ -2854,6 +2941,10 @@ Verb *Verb::_base_verbs[] = {
                    N_("Query information about extensions"), NULL),
     new DialogVerb(SP_VERB_DIALOG_LAYERS, "DialogLayers", N_("Layer_s..."),
                    N_("View Layers"), INKSCAPE_ICON("dialog-layers")),
+    new DialogVerb(SP_VERB_DIALOG_OBJECTS, "DialogObjects", N_("Object_s..."),
+                   N_("View Objects"), INKSCAPE_ICON("dialog-layers")),
+    new DialogVerb(SP_VERB_DIALOG_TAGS, "DialogTags", N_("Selection se_ts..."),
+                   N_("View Tags"), INKSCAPE_ICON("edit-select-all-layers")),
     new DialogVerb(SP_VERB_DIALOG_LIVE_PATH_EFFECT, "DialogLivePathEffect", N_("Path E_ffects ..."),
                    N_("Manage, edit, and apply path effects"), NULL),
     new DialogVerb(SP_VERB_DIALOG_FILTER_EFFECTS, "DialogFilterEffects", N_("Filter _Editor..."),

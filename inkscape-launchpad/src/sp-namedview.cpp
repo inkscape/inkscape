@@ -72,7 +72,7 @@ SPNamedView::SPNamedView() : SPObjectGroup(), snap_manager(this) {
 	this->guidehicolor = 0;
 	this->views = NULL;
 	this->borderlayer = 0;
-	this->units = NULL;
+	this->page_size_units = NULL;
 	this->window_x = 0;
 	this->cy = 0;
 	this->window_y = 0;
@@ -581,6 +581,7 @@ void SPNamedView::set(unsigned int key, const gchar* value) {
             break;
     }
     case SP_ATTR_UNITS: {
+        // Only used in "Custom size" section of Document Properties dialog
             Inkscape::Util::Unit const *new_unit = NULL;
 
             if (value) {
@@ -599,7 +600,7 @@ void SPNamedView::set(unsigned int key, const gchar* value) {
                     /* fixme: Don't use g_log (see above). */
                 }
             }
-            this->units = new_unit;
+            this->page_size_units = new_unit;
             this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     }
@@ -935,7 +936,7 @@ void SPNamedView::hide(SPDesktop const *desktop)
     views = g_slist_remove(views, desktop);
 }
 
-void SPNamedView::activateGuides(gpointer desktop, gboolean active)
+void SPNamedView::activateGuides(void* desktop, bool active)
 {
     g_assert(desktop != NULL);
     g_assert(g_slist_find(views, desktop));
@@ -956,14 +957,10 @@ static void sp_namedview_setup_guides(SPNamedView *nv)
 
 static void sp_namedview_show_single_guide(SPGuide* guide, bool show)
 {
-    for (GSList *v = guide->views; v != NULL; v = v->next) {
-        if (show) {
-            sp_canvas_item_show(SP_CANVAS_ITEM(v->data));
-            sp_canvas_item_show(SP_CANVAS_ITEM(SP_GUIDELINE(v->data)->origin));
-        } else {
-            sp_canvas_item_hide(SP_CANVAS_ITEM(v->data));
-            sp_canvas_item_hide(SP_CANVAS_ITEM(SP_GUIDELINE(v->data)->origin));
-        }
+    if (show) {
+        guide->showSPGuide();
+    } else {
+        guide->hideSPGuide();
     }
 }
 
@@ -1156,9 +1153,9 @@ Inkscape::CanvasGrid * sp_namedview_get_first_enabled_grid(SPNamedView *namedvie
 void SPNamedView::translateGuides(Geom::Translate const &tr) {
     for (GSList *l = guides; l != NULL; l = l->next) {
         SPGuide &guide = *SP_GUIDE(l->data);
-        Geom::Point point_on_line = guide.point_on_line;
+        Geom::Point point_on_line = guide.getPoint();
         point_on_line *= tr;
-        sp_guide_moveto(guide, point_on_line, true);
+        guide.moveto(point_on_line, true);
     }
 }
 

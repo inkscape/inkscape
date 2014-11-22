@@ -19,14 +19,11 @@
 
 class SPItem;
 
-#define SP_TYPE_CTRLCURVE (SPCtrlCurve::getType())
+#define SP_TYPE_CTRLCURVE (sp_ctrlcurve_get_type())
 #define SP_CTRLCURVE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_CTRLCURVE, SPCtrlCurve))
 #define SP_IS_CTRLCURVE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_CTRLCURVE))
 
 struct SPCtrlCurve : public SPCtrlLine {
-
-    static GType getType();
-
     void setCoords( gdouble x0, gdouble y0, gdouble x1, gdouble y1,
                     gdouble x2, gdouble y2, gdouble x3, gdouble y3 );
 
@@ -36,9 +33,9 @@ struct SPCtrlCurve : public SPCtrlLine {
     Geom::Point p0, p1, p2, p3;
 };
 
+GType sp_ctrlcurve_get_type();
+
 struct SPCtrlCurveClass : public SPCtrlLineClass{};
-
-
 
 #endif // SEEN_INKSCAPE_CTRLCURVE_H
 

@@ -59,9 +59,10 @@ guint32 ParamColor::set( guint32 in, SPDocument * /*doc*/, Inkscape::XML::Node *
     return _value;
 }
 
-ParamColor::ParamColor (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
-    Parameter(name, guitext, desc, scope, gui_hidden, gui_tip, ext),
-    _changeSignal(0)
+ParamColor::ParamColor(const gchar *name, const gchar *guitext, const gchar *desc, const Parameter::_scope_t scope,
+                       bool gui_hidden, const gchar *gui_tip, Inkscape::Extension::Extension *ext,
+                       Inkscape::XML::Node *xml)
+    : Parameter(name, guitext, desc, scope, gui_hidden, gui_tip, ext), _value(0), _changeSignal(0)
 {
     const char * defaulthex = NULL;
     if (xml->firstChild() != NULL)
@@ -75,7 +76,8 @@ ParamColor::ParamColor (const gchar * name, const gchar * guitext, const gchar *
     if (!paramval.empty())
         defaulthex = paramval.data();
 
-    _value = atoi(defaulthex);
+    if (defaulthex)
+        _value = atoi(defaulthex);
 }
 
 void ParamColor::string(std::string &string) const
@@ -87,7 +89,7 @@ void ParamColor::string(std::string &string) const
 
 Gtk::Widget *ParamColor::get_widget( SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/, sigc::signal<void> * changeSignal )
 {
-	if (_gui_hidden) return NULL;
+    if (_gui_hidden) return NULL;
 
     _changeSignal = new sigc::signal<void>(*changeSignal);
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));

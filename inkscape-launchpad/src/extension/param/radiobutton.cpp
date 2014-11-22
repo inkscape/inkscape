@@ -122,7 +122,7 @@ ParamRadioButton::ParamRadioButton (const gchar * name,
         defaultval = (static_cast<optionentry*> (choices->data))->value->c_str();
     }
 
-    const char * indent = xml->attribute("indent");
+    const char *indent = xml ? xml->attribute("indent") : NULL;
     if (indent != NULL) {
         _indent = atoi(indent) * 12;
     }

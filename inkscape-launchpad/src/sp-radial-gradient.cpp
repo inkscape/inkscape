@@ -1,3 +1,5 @@
+#include <cairo.h>
+
 #include "sp-radial-gradient.h"
 
 #include "attributes.h"

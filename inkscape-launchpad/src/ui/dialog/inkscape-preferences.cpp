@@ -234,6 +234,9 @@ static void StyleFromSelectionToTool(Glib::ustring const &prefs_path, StyleSwatc
 
     if (!css) return;
 
+    // remove black-listed properties
+    css = sp_css_attr_unset_blacklist (css);
+
     // only store text style for the text tool
     if (prefs_path != "/tools/text") {
         css = sp_css_attr_unset_text (css);
@@ -838,7 +841,7 @@ void InkscapePreferences::initPageIO()
 
     _save_use_current_dir.init( _("Use current directory for \"Save As ...\""), "/dialogs/save_as/use_current_dir", true);
     _page_io.add_line( false, "", _save_use_current_dir, "",
-                         _("When this option is on, the \"Save as...\" and \"Save a Copy\" dialogs will always open in the directory where the currently open document is; when it's off, each will open in the directory where you last saved a file using it"), true);
+                         _("When this option is on, the \"Save as...\" and \"Save a Copy...\" dialogs will always open in the directory where the currently open document is; when it's off, each will open in the directory where you last saved a file using it"), true);
 
     _misc_comment.init( _("Add label comments to printing output"), "/printing/debug/show-label-comments", false);
     _page_io.add_line( false, "", _misc_comment, "",

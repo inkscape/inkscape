@@ -64,8 +64,15 @@ Gtk::Label * spw_label(Gtk::Table *table, const gchar *label_text, int col, int 
   label_widget->set_hexpand();
   label_widget->set_halign(Gtk::ALIGN_FILL);
   label_widget->set_valign(Gtk::ALIGN_CENTER);
+
+  #if GTK_CHECK_VERSION(3,12,0)
+  label_widget->set_margin_start(4);
+  label_widget->set_margin_end(4);
+  #else
   label_widget->set_margin_left(4);
   label_widget->set_margin_right(4);
+  #endif
+
   table->attach(*label_widget, col, row, 1, 1);
 #else
   table->attach(*label_widget, col, col+1, row, row+1, (Gtk::EXPAND | Gtk::FILL), static_cast<Gtk::AttachOptions>(0), 4, 0);
@@ -238,7 +245,11 @@ sp_set_font_size_recursive (GtkWidget *w, gpointer font)
 	PangoFontDescription* pan = pango_font_description_new ();
 	pango_font_description_set_size (pan, size);
 
+#if GTK_CHECK_VERSION(3,0,0)
+	gtk_widget_override_font (w, pan);
+#else
 	gtk_widget_modify_font (w, pan);
+#endif
 
 	if (GTK_IS_CONTAINER(w)) {
 		gtk_container_foreach (GTK_CONTAINER(w), (GtkCallback) sp_set_font_size_recursive, font);

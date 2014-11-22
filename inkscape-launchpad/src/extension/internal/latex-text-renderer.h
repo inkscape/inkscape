@@ -23,6 +23,10 @@
 
 class SPItem;
 class SPRoot;
+class SPGroup;
+class SPUse;
+class SPText;
+class SPFlowtext;
 
 namespace Inkscape {
 namespace Extension {
@@ -73,10 +77,10 @@ protected:
 
     void sp_item_invoke_render(SPItem *item);
     void sp_root_render(SPRoot *item);
-    void sp_group_render(SPItem *item);
-    void sp_use_render(SPItem *item);
-    void sp_text_render(SPItem *item);
-    void sp_flowtext_render(SPItem *item);
+    void sp_group_render(SPGroup *group);
+    void sp_use_render(SPUse *use);
+    void sp_text_render(SPText *text);
+    void sp_flowtext_render(SPFlowtext *flowtext);
 };
 
 }  /* namespace Internal */

@@ -285,8 +285,8 @@ class Effect:
             return 'px'
 
     #a dictionary of unit to user unit conversion factors
-    __uuconv = {'in':90.0, 'pt':1.25, 'px':1.0, 'mm':3.5433070866, 'cm':35.433070866, 'm':3543.3070866,
-              'km':3543307.0866, 'pc':15.0, 'yd':3240.0 , 'ft':1080.0}
+    __uuconv = {'in':96.0, 'pt':1.33333333333, 'px':1.0, 'mm':3.77952755913, 'cm':37.7952755913,
+                'm':3779.52755913, 'km':3779527.55913, 'pc':16.0, 'yd':3456.0 , 'ft':1152.0}
     def unittouu(self, string):
         '''Returns userunits given a string representation of units in another system'''
         unit = re.compile('(%s)$' % '|'.join(self.__uuconv.keys()))

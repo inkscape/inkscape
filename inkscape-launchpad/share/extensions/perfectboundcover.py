@@ -135,7 +135,7 @@ class PerfectBoundCover(inkex.Effect):
             for guide in guides:
                 newguide = inkex.etree.Element(inkex.addNS('guide','sodipodi'))
                 newguide.set("orientation", guide[0])
-                newguide.set("position", "%f" % (guide[1] * 90))
+                newguide.set("position", "%f" % (guide[1] * 96))
                 namedview[0].append(newguide)
         
         '''

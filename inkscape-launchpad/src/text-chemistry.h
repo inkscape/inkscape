@@ -1,6 +1,8 @@
 #ifndef SEEN_TEXT_CHEMISTRY_H
 #define SEEN_TEXT_CHEMISTRY_H
 
+// TODO move to selection-chemistry?
+
 /*
  * Text commands
  *

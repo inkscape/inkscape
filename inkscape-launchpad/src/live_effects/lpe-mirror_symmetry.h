@@ -30,6 +30,8 @@ public:
 
     virtual void doOnApply (SPLPEItem const* lpeitem);
 
+    virtual void doBeforeEffect (SPLPEItem const* lpeitem);
+
     virtual std::vector<Geom::Path> doEffect_path (std::vector<Geom::Path> const & path_in);
 
 private:

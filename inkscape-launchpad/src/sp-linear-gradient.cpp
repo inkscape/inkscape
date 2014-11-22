@@ -1,3 +1,5 @@
+#include <cairo.h>
+
 #include "sp-linear-gradient.h"
 
 #include "attributes.h"

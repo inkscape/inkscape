@@ -15,20 +15,18 @@
  * Released under GNU GPL v2.x, read the file 'COPYING' for more information
  */
 
-#include <glib.h>
-
 namespace Inkscape {
 
 class ActionContext;
 
 class CmdLineAction {
     bool _isVerb;
-    gchar * _arg;
+    char * _arg;
 
     static std::list <CmdLineAction *> _list;
 
 public:
-    CmdLineAction (bool isVerb, gchar const * arg);
+    CmdLineAction (bool isVerb, char const * arg);
     virtual ~CmdLineAction ();
 
     void doIt (ActionContext const & context);

@@ -40,7 +40,7 @@ public:
     SVGLength width;
     SVGLength height;
 
-    gchar *onload;
+    char *onload;
 
     /**
      * Primary \<defs\> element where we put new defs (patterns, gradients etc.).
@@ -52,9 +52,9 @@ public:
 
 	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
 	virtual void release();
-	virtual void set(unsigned int key, gchar const* value);
-	virtual void update(SPCtx *ctx, guint flags);
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
+	virtual void set(unsigned int key, char const* value);
+	virtual void update(SPCtx *ctx, unsigned int flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, unsigned int flags);
 
 	virtual void modified(unsigned int flags);
 	virtual void child_added(Inkscape::XML::Node* child, Inkscape::XML::Node* ref);

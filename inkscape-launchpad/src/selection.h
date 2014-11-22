@@ -30,6 +30,7 @@ class SPDesktop;
 class SPItem;
 class SPBox3D;
 class Persp3D;
+typedef struct _GSList GSList;
 
 namespace Inkscape {
 class LayerModel;
@@ -256,10 +257,10 @@ public:
     std::list<SPBox3D *> const box3DList(Persp3D *persp = NULL);
 
     /** Returns the number of layers in which there are selected objects. */
-    guint numberOfLayers();
+    unsigned int numberOfLayers();
 
     /** Returns the number of parents to which the selected objects belong. */
-    guint numberOfParents();
+    unsigned int numberOfParents();
 
     /** Returns the bounding rectangle of the selection. */
     Geom::OptRect bounds(SPItem::BBoxType type) const;
@@ -317,11 +318,11 @@ public:
      * @return the resulting connection
      *
      */
-    sigc::connection connectModified(sigc::slot<void, Selection *, guint> const &slot)
+    sigc::connection connectModified(sigc::slot<void, Selection *, unsigned int> const &slot)
     {
         return _modified_signal.connect(slot);
     }
-    sigc::connection connectModifiedFirst(sigc::slot<void, Selection *, guint> const &slot)
+    sigc::connection connectModifiedFirst(sigc::slot<void, Selection *, unsigned int> const &slot)
     {
         return _modified_signal.slots().insert(_modified_signal.slots().begin(), slot);
     }
@@ -333,12 +334,12 @@ private:
     void operator=(Selection const &);
 
     /** Issues modification notification signals. */
-    static gboolean _emit_modified(Selection *selection);
+    static int _emit_modified(Selection *selection);
     /** Schedules an item modification signal to be sent. */
-    void _schedule_modified(SPObject *obj, guint flags);
+    void _schedule_modified(SPObject *obj, unsigned int flags);
 
     /** Issues modified selection signal. */
-    void _emitModified(guint flags);
+    void _emitModified(unsigned int flags);
     /** Issues changed selection signal. */
     void _emitChanged(bool persist_selection_context = false);
 
@@ -374,15 +375,15 @@ private:
     LayerModel *_layers;
     GC::soft_ptr<SPDesktop> _desktop;
     SPObject* _selection_context;
-    guint _flags;
-    guint _idle;
+    unsigned int _flags;
+    unsigned int _idle;
 
     std::map<SPObject *, sigc::connection> _modified_connections;
     std::map<SPObject *, sigc::connection> _release_connections;
     sigc::connection _context_release_connection;
 
     sigc::signal<void, Selection *> _changed_signal;
-    sigc::signal<void, Selection *, guint> _modified_signal;
+    sigc::signal<void, Selection *, unsigned int> _modified_signal;
 };
 
 }

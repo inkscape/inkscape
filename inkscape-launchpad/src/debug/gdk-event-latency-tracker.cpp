@@ -9,6 +9,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <gdk/gdk.h>
+
 #include "debug/gdk-event-latency-tracker.h"
 #include "preferences.h"
 

@@ -1,5 +1,5 @@
-#ifndef __NR_FILTER_SKELETON_H__
-#define __NR_FILTER_SKELETON_H__
+#ifndef SEEN_NR_FILTER_SKELETON_H
+#define SEEN_NR_FILTER_SKELETON_H
 
 /*
  * Filter primitive renderer skeleton class

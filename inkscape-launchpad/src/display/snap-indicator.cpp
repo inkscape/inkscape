@@ -22,7 +22,7 @@
 #include "knot.h"
 #include "preferences.h"
 #include <glibmm/i18n.h>
-#include "tools-switch.h"
+#include "ui/tools-switch.h"
 #include "enums.h"
 
 namespace Inkscape {

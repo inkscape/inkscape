@@ -10,9 +10,22 @@
 #ifndef INKSCAPE_UI_DIALOG_POLAR_ARRANGE_TAB_H
 #define INKSCAPE_UI_DIALOG_POLAR_ARRANGE_TAB_H
 
+#if HAVE_CONFIG_H
+ #include "config.h"
+#endif
+
+#include "ui/widget/scalar-unit.h"
 #include "ui/widget/anchor-selector.h"
 #include "ui/dialog/arrange-tab.h"
-#include "ui/widget/scalar-unit.h"
+
+#include <gtkmm/radiobutton.h>
+#include <gtkmm/radiobuttongroup.h>
+
+#if WITH_GTKMM_3_0
+ #include <gtkmm/grid.h>
+#else
+ #include <gtkmm/table.h>
+#endif
 
 namespace Inkscape {
 namespace UI {
@@ -62,7 +75,11 @@ private:
     Gtk::RadioButton       arrangeOnLastCircleRadio;
     Gtk::RadioButton       arrangeOnParametersRadio;
 
+#if WITH_GTKMM_3_0
+    Gtk::Grid              parametersTable;
+#else
     Gtk::Table             parametersTable;
+#endif
 
     Gtk::Label             centerLabel;
     Inkscape::UI::Widget::ScalarUnit centerY;

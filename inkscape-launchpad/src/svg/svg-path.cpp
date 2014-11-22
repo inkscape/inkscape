@@ -1,40 +1,24 @@
-#define __SP_SVG_PARSE_C__
 /*
-   svg-path.c: Parse SVG path element data into bezier path.
-
-   Copyright (C) 2000 Eazel, Inc.
-   Copyright (C) 2000 Lauris Kaplinski
-   Copyright (C) 2001 Ximian, Inc.
-   Copyright (C) 2008 Johan Engelen
-
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public License as
-   published by the Free Software Foundation; either version 2 of the
-   License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public
-   License along with this program; if not, write to the
-   Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-   Boston, MA 02111-1307, USA.
-
-   Authors:
-     Johan Engelen
-     (old nartbpath code that has been deleted: Raph Levien <raph@artofcode.com>)
-     (old nartbpath code that has been deleted: Lauris Kaplinski <lauris@ximian.com>)
-*/
+ * svg-path.cpp: Parse SVG path element data into bezier path.
+ * Authors:
+ *   Johan Engelen
+ *   (old nartbpath code that has been deleted: Raph Levien <raph@artofcode.com>)
+ *   (old nartbpath code that has been deleted: Lauris Kaplinski <lauris@ximian.com>)
+ *
+ * Copyright (C) 2000 Eazel, Inc.
+ * Copyright (C) 2000 Lauris Kaplinski
+ * Copyright (C) 2001 Ximian, Inc.
+ * Copyright (C) 2008 Johan Engelen
+ *
+ * Copyright (C) 2000-2008 authors
+ *
+ * Released under GNU GPL, read the file 'COPYING' for more information
+ */
 
 #include <cstring>
 #include <string>
 #include <cassert>
 #include <glib.h> // g_assert()
-
-#include "svg/svg.h"
-#include "svg/path-string.h"
 
 #include <2geom/pathvector.h>
 #include <2geom/path.h>
@@ -44,6 +28,9 @@
 #include <2geom/svg-path-parser.h>
 #include <2geom/exception.h>
 #include <2geom/angle.h>
+
+#include "svg/svg.h"
+#include "svg/path-string.h"
 
 /*
  * Parses the path in str. When an error is found in the pathstring, this method
@@ -150,4 +137,4 @@ gchar * sp_svg_write_path(Geom::Path const &p) {
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8 :

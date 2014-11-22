@@ -9,12 +9,13 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "display/cairo-utils.h"
 #include "display/drawing.h"
 #include "display/drawing-context.h"
 #include "display/drawing-item.h"
 #include "display/drawing-group.h"
 #include "style.h"
+
+#include "display/cairo-utils.h"
 
 namespace Inkscape {
 

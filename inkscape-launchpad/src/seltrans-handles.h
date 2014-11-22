@@ -14,11 +14,13 @@
 
 #include <2geom/forward.h>
 #include <gdk/gdk.h>
+
 #include "enums.h"
 
-namespace Inkscape
-{
-  class SelTrans;
+typedef unsigned int guint32;
+
+namespace Inkscape {
+    class SelTrans;
 }
 
 guint32 const DEF_COLOR[] = { 0xff, 0xff6600, 0xff6600, 0xff, 0xff, 0xff };
@@ -34,7 +36,7 @@ enum SPSelTransType {
 
 struct SPSelTransTypeInfo {
         guint32 const *color;
-        gchar const *tip;
+        char const *tip;
 };
 // One per handle type in order
 extern SPSelTransTypeInfo const handtypes[5];
@@ -45,7 +47,7 @@ struct SPSelTransHandle {
         SPSelTransType type;
 	SPAnchorType anchor;
 	GdkCursorType cursor;
-	guint control;
+	unsigned int control;
 	gdouble x, y;
 };
 // These are 4 * each handle type + 1 for center
@@ -64,5 +66,3 @@ extern SPSelTransHandle const hands[17];
   End:
 */
 // vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
-
-

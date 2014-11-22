@@ -1,5 +1,5 @@
-#ifndef __SP_TEXT_H__
-#define __SP_TEXT_H__
+#ifndef SEEN_SP_TEXT_H
+#define SEEN_SP_TEXT_H
 
 /*
  * SVG <text> and <tspan> implementation
@@ -13,13 +13,13 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <glib.h>
-#include <stddef.h>
+#include <cstddef>
 #include <sigc++/sigc++.h>
-#include "sp-string.h" // Provides many other headers with SP_IS_STRING
-#include "sp-item.h"
-#include "text-tag-attributes.h"
+
 #include "libnrtype/Layout-TNG.h"
+#include "sp-item.h"
+#include "sp-string.h" // Provides many other headers with SP_IS_STRING
+#include "text-tag-attributes.h"
 
 #define SP_TEXT(obj) (dynamic_cast<SPText*>((SPObject*)obj))
 #define SP_IS_TEXT(obj) (dynamic_cast<const SPText*>((SPObject*)obj) != NULL)
@@ -45,7 +45,11 @@ public:
 //semiprivate:  (need to be accessed by the C-style functions still)
     TextTagAttributes attributes;
     Inkscape::Text::Layout layout;
-	
+
+    // SVG 2 Auto-wrapped text
+    SVGLength width;
+    SVGLength height;
+
     /** when the object is transformed it's nicer to change the font size
     and coordinates when we can, rather than just applying a matrix
     transform. is_root is used to indicate to the function that it should
@@ -77,15 +81,15 @@ public:
 	virtual void release();
 	virtual void child_added(Inkscape::XML::Node* child, Inkscape::XML::Node* ref);
 	virtual void remove_child(Inkscape::XML::Node* child);
-	virtual void set(unsigned int key, const gchar* value);
+	virtual void set(unsigned int key, const char* value);
 	virtual void update(SPCtx* ctx, unsigned int flags);
 	virtual void modified(unsigned int flags);
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, guint flags);
+	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, unsigned int flags);
 
 	virtual Geom::OptRect bbox(Geom::Affine const &transform, SPItem::BBoxType type) const;
 	virtual void print(SPPrintContext *ctx);
         virtual const char* displayName() const;
-	virtual gchar* description() const;
+	virtual char* description() const;
 	virtual Inkscape::DrawingItem* show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
 	virtual void hide(unsigned int key);
 	virtual void snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) const;

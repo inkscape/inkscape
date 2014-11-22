@@ -2,8 +2,10 @@
 set(live_effects_SRC
 	effect.cpp
 	lpe-angle_bisector.cpp
+	lpe-attach-path.cpp
 	lpe-bendpath.cpp
 	lpe-boolops.cpp
+	lpe-bounding-box.cpp
 	lpe-circle_3pts.cpp
 	lpe-circle_with_radius.cpp
 	lpe-clone-original.cpp
@@ -11,8 +13,12 @@ set(live_effects_SRC
 	lpe-copy_rotate.cpp
 	lpe-curvestitch.cpp
 	lpe-dynastroke.cpp
+	lpe-ellipse-5pts.cpp
 	lpe-envelope.cpp
 	lpe-extrude.cpp
+	lpe-fill-between-many.cpp
+	lpe-fill-between-strokes.cpp
+	lpe-fillet-chamfer.cpp
 	lpe-gears.cpp
 	lpe-interpolate.cpp
 	lpe-knot.cpp
@@ -25,15 +31,20 @@ set(live_effects_SRC
 	lpe-patternalongpath.cpp
 	lpe-perp_bisector.cpp
 	lpe-perspective_path.cpp
+	lpe-perspective-envelope.cpp
 	lpe-powerstroke.cpp
 	lpe-recursiveskeleton.cpp
 	lpe-rough-hatches.cpp
 	lpe-ruler.cpp
+	lpe-show_handles.cpp
+	lpe-simplify.cpp
 	# lpe-skeleton.cpp
 	lpe-sketch.cpp
 	lpe-spiro.cpp
+	lpe-roughen.cpp
 	lpe-tangent_to_curve.cpp
 	lpe-test-doEffect-stack.cpp
+	lpe-bspline.cpp
 	lpe-text_label.cpp
 	lpe-vonkoch.cpp
 	lpegroupbbox.cpp
@@ -44,14 +55,18 @@ set(live_effects_SRC
 
 	parameter/array.cpp
 	parameter/bool.cpp
+	parameter/filletchamferpointarray.cpp
 	parameter/parameter.cpp
 	parameter/path.cpp
 	parameter/originalpath.cpp
+	parameter/originalpatharray.cpp
 	parameter/path-reference.cpp
 	parameter/point.cpp
 	parameter/powerstrokepointarray.cpp
 	parameter/random.cpp
 	parameter/text.cpp
+	paramter/transformedpoint.cpp
+	parameter/togglebutton.cpp
 	parameter/unit.cpp
 	parameter/vector.cpp
 
@@ -61,8 +76,10 @@ set(live_effects_SRC
 	effect-enum.h
 	effect.h
 	lpe-angle_bisector.h
+	lpe-attach-path.h
 	lpe-bendpath.h
 	lpe-boolops.h
+	lpe-bounding-box.h
 	lpe-circle_3pts.h
 	lpe-circle_with_radius.h
 	lpe-clone-original.h
@@ -70,8 +87,12 @@ set(live_effects_SRC
 	lpe-copy_rotate.h
 	lpe-curvestitch.h
 	lpe-dynastroke.h
+	lpe-ellipse-5pts.h
 	lpe-envelope.h
 	lpe-extrude.h
+	lpe-fill-between-many.h
+	lpe-fill-between-strokes.h
+	lpe-fillet-chamfer.h
 	lpe-gears.h
 	lpe-interpolate.h
 	lpe-knot.h
@@ -84,16 +105,21 @@ set(live_effects_SRC
 	lpe-patternalongpath.h
 	lpe-perp_bisector.h
 	lpe-perspective_path.h
+	lpe-perspective-envelope.h
 	lpe-powerstroke.h
 	lpe-powerstroke-interpolators.h
 	lpe-recursiveskeleton.h
 	lpe-rough-hatches.h
 	lpe-ruler.h
+	lpe-simplify.h
+	lpe-show_handles.h
 	lpe-skeleton.h
 	lpe-sketch.h
 	lpe-spiro.h
+	lpe-roughen.h
 	lpe-tangent_to_curve.h
 	lpe-test-doEffect-stack.h
+	lpe-bspline.h
 	lpe-text_label.h
 	lpe-vonkoch.h
 	lpegroupbbox.h
@@ -104,15 +130,18 @@ set(live_effects_SRC
 
 	parameter/array.h
 	parameter/bool.h
+	parameter/filletchamferpointarray.h
 	parameter/enum.h
 	parameter/parameter.h
 	parameter/path-reference.h
 	parameter/path.h
 	parameter/originalpath.h
+	parameter/originalpatharray.h
 	parameter/point.h
 	parameter/powerstrokepointarray.h
 	parameter/random.h
 	parameter/text.h
+	parameter/togglebutton.h
 	parameter/unit.h
 	parameter/vector.h
 

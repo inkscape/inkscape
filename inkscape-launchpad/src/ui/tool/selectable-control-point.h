@@ -28,6 +28,7 @@ public:
     virtual Geom::Rect bounds() const {
         return Geom::Rect(position(), position());
     }
+    friend class NodeList;
 
 protected:
 

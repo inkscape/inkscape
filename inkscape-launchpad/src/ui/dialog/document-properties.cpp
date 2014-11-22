@@ -31,13 +31,13 @@
 #include "inkscape.h"
 #include "io/sys.h"
 #include "preferences.h"
-#include "shape-editor.h"
+#include "ui/shape-editor.h"
 #include "sp-namedview.h"
 #include "sp-root.h"
 #include "sp-script.h"
 #include "style.h"
 #include "svg/stringstream.h"
-#include "tools-switch.h"
+#include "ui/tools-switch.h"
 #include "ui/widget/color-picker.h"
 #include "ui/widget/scalar-unit.h"
 #include "ui/dialog/filedialog.h"
@@ -114,7 +114,7 @@ DocumentProperties::DocumentProperties()
       _rcb_shad(_("_Show border shadow"), _("If set, page border shows a shadow on its right and lower side"), "inkscape:showpageshadow", _wr, false),
       _rcp_bg(_("Back_ground color:"), _("Background color"), _("Color of the page background. Note: transparency setting ignored while editing but used when exporting to bitmap."), "pagecolor", "inkscape:pageopacity", _wr),
       _rcp_bord(_("Border _color:"), _("Page border color"), _("Color of the page border"), "bordercolor", "borderopacity", _wr),
-      _rum_deflt(_("Default _units:"), "inkscape:document-units", _wr),
+      _rum_deflt(_("Document _units:"), "inkscape:document-units", _wr),
       _page_sizer(_wr),
     //---------------------------------------------------------------
       //General snap options
@@ -1205,10 +1205,10 @@ void DocumentProperties::removeExternalScript(){
 
     const GSList *current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
     while ( current ) {
-        if (current->data && SP_IS_OBJECT(current->data)) {
-            SPObject* obj = SP_OBJECT(current->data);
-            SPScript* script = SP_SCRIPT(obj);
-            if (name == script->xlinkhref){
+        SPObject* obj = reinterpret_cast<SPObject *>(current->data);
+        if (obj) {
+            SPScript* script = dynamic_cast<SPScript *>(obj);
+            if (script && (name == script->xlinkhref)) {
 
                 //XML Tree being used directly here while it shouldn't be.
                 Inkscape::XML::Node *repr = obj->getRepr();
@@ -1354,10 +1354,15 @@ void DocumentProperties::populate_script_lists(){
     _ExternalScriptsListStore->clear();
     _EmbeddedScriptsListStore->clear();
     const GSList *current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
-    if (current) _scripts_observer.set(SP_OBJECT(current->data)->parent);
+    if (current) {
+        SPObject *obj = reinterpret_cast<SPObject *>(current->data);
+        g_assert(obj != NULL);
+        _scripts_observer.set(obj->parent);
+    }
     while ( current ) {
-        SPObject* obj = SP_OBJECT(current->data);
-        SPScript* script = SP_SCRIPT(obj);
+        SPObject* obj = reinterpret_cast<SPObject *>(current->data);
+        SPScript* script = dynamic_cast<SPScript *>(obj);
+        g_assert(script != NULL);
         if (script->xlinkhref)
         {
             Gtk::TreeModel::Row row = *(_ExternalScriptsListStore->append());
@@ -1594,7 +1599,7 @@ void DocumentProperties::_handleDocumentReplaced(SPDesktop* desktop, SPDocument 
     update();
 }
 
-void DocumentProperties::_handleActivateDesktop(Inkscape::Application *, SPDesktop *desktop)
+void DocumentProperties::_handleActivateDesktop(InkscapeApplication *, SPDesktop *desktop)
 {
     Inkscape::XML::Node *repr = sp_desktop_namedview(desktop)->getRepr();
     repr->addListener(&_repr_events, this);
@@ -1603,7 +1608,7 @@ void DocumentProperties::_handleActivateDesktop(Inkscape::Application *, SPDeskt
     update();
 }
 
-void DocumentProperties::_handleDeactivateDesktop(Inkscape::Application *, SPDesktop *desktop)
+void DocumentProperties::_handleDeactivateDesktop(InkscapeApplication *, SPDesktop *desktop)
 {
     Inkscape::XML::Node *repr = sp_desktop_namedview(desktop)->getRepr();
     repr->removeListenerByData(this);

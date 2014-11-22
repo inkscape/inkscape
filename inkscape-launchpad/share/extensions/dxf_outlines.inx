@@ -10,14 +10,14 @@
 			<param name="ROBO" type="boolean" _gui-text="use ROBO-Master type of spline output">false</param>
 			<param name="POLY" type="boolean" _gui-text="use LWPOLYLINE type of line output">true</param>
 			<param name="units" type="enum" _gui-text="Base unit">
-				<_item value="72./90">pt</_item>
-				<_item value="1./15">pc</_item>
+				<_item value="72./96">pt</_item>
+				<_item value="1./16">pc</_item>
 				<_item value="1.">px</_item>
-				<_item value="25.4/90">mm</_item>
-				<_item value="2.54/90">cm</_item>
-				<_item value=".0254/90">m</_item>
-				<_item value="1./90">in</_item>
-				<_item value="1./1080">ft</_item>
+				<_item value="25.4/96">mm</_item>
+				<_item value="2.54/96">cm</_item>
+				<_item value=".0254/96">m</_item>
+				<_item value="1./96">in</_item>
+				<_item value="1./1152">ft</_item>
 			</param>
 			<param name="encoding" type="enum" _gui-text="Character Encoding">
 				<_item value="latin_1">Latin 1</_item>
@@ -34,7 +34,7 @@
 		</page>
 		<page name="help" _gui-text="Help">
 			<_param name="inputhelp" type="description" xml:space="preserve">- AutoCAD Release 14 DXF format.
-- The base unit parameter specifies in what unit the coordinates are output (90 px = 1 in).
+- The base unit parameter specifies in what unit the coordinates are output (96 px = 1 in).
 - Supported element types
     - paths (lines and splines)
     - rectangles

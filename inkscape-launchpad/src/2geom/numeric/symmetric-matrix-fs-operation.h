@@ -44,7 +44,7 @@ namespace Geom { namespace NL {
 
 template <size_t N>
 inline
-SymmetricMatrix<N> adj(const ConstBaseSymmetricMatrix<N> & S)
+SymmetricMatrix<N> adj(const ConstBaseSymmetricMatrix<N> & /*S*/)
 {
     THROW_NOTIMPLEMENTED();
     return SymmetricMatrix<N>();

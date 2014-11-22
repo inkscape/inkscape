@@ -56,6 +56,7 @@ bool SPAttributeRelSVG::findIfValid(Glib::ustring attribute, Glib::ustring eleme
         || attribute.substr(0,4) == "rdf:"
         || attribute.substr(0,3) == "cc:"
         || attribute.substr(0,4) == "ns1:"  // JessyInk
+        || attribute.substr(0,4) == "osb:"  // Open Swatch Book
         || (SPAttributeRelSVG::instance->attributesOfElements[temp].find(attribute)
             != SPAttributeRelSVG::instance->attributesOfElements[temp].end()) ) {
         return true;

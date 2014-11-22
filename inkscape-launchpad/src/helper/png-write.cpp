@@ -18,7 +18,7 @@
 #endif
 
 #include <png.h>
-#include "interface.h"
+#include "ui/interface.h"
 #include <2geom/rect.h>
 #include <2geom/transforms.h>
 #include <glib.h>

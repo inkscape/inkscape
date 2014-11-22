@@ -30,19 +30,18 @@
 
 #include "live_effects/lpe-line_segment.h"
 #include "lpe-toolbar.h"
-#include "connection-pool.h"
 #include "desktop-handles.h"
 #include "desktop.h"
 #include "document-undo.h"
-#include "ege-select-one-action.h"
+#include "widgets/ege-select-one-action.h"
 #include "helper/action-context.h"
 #include "helper/action.h"
-#include "ink-action.h"
+#include "widgets/ink-action.h"
 #include "live_effects/effect.h"
 #include "preferences.h"
 #include "selection.h"
 #include "sp-namedview.h"
-#include "tools-switch.h"
+#include "ui/tools-switch.h"
 #include "ui/tools/lpe-tool.h"
 #include "ui/widget/unit-tracker.h"
 #include "util/units.h"
@@ -180,6 +179,7 @@ static void lpetool_unit_changed(GtkAction* /*act*/, GObject* tbl)
 {
     UnitTracker* tracker = reinterpret_cast<UnitTracker*>(g_object_get_data(tbl, "tracker"));
     Unit const *unit = tracker->getActiveUnit();
+    g_return_if_fail(unit != NULL);
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setString("/tools/lpetool/unit", unit->abbr);
 
@@ -275,12 +275,15 @@ static void lpetool_open_lpe_dialog(GtkToggleAction *act, gpointer data)
     gtk_toggle_action_set_active(act, false);
 }
 
+static void lpetool_toolbox_watch_ec(SPDesktop* dt, Inkscape::UI::Tools::ToolBase* ec, GObject* holder);
+
 void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
     UnitTracker* tracker = new UnitTracker(Inkscape::Util::UNIT_TYPE_LINEAR);
     tracker->setActiveUnit(sp_desktop_namedview(desktop)->doc_units);
     g_object_set_data(holder, "tracker", tracker);
     Unit const *unit = tracker->getActiveUnit();
+    g_return_if_fail(unit != NULL);
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setString("/tools/lpetool/unit", unit->abbr);
@@ -400,20 +403,26 @@ void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GO
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), FALSE );
     }
 
-    //watch selection
-    Inkscape::ConnectionPool* pool = Inkscape::ConnectionPool::new_connection_pool ("ISNodeToolbox");
-
-    sigc::connection *c_selection_modified =
-        new sigc::connection (sp_desktop_selection (desktop)->connectModified
-                              (sigc::bind (sigc::ptr_fun (sp_lpetool_toolbox_sel_modified), holder)));
-    pool->add_connection ("selection-modified", c_selection_modified);
-
-    sigc::connection *c_selection_changed =
-        new sigc::connection (sp_desktop_selection (desktop)->connectChanged
-                              (sigc::bind (sigc::ptr_fun(sp_lpetool_toolbox_sel_changed), holder)));
-    pool->add_connection ("selection-changed", c_selection_changed);
+    desktop->connectEventContextChanged(sigc::bind(sigc::ptr_fun(lpetool_toolbox_watch_ec), holder));
 }
 
+static void lpetool_toolbox_watch_ec(SPDesktop* desktop, Inkscape::UI::Tools::ToolBase* ec, GObject* holder)
+{
+    static sigc::connection c_selection_modified;
+    static sigc::connection c_selection_changed;
+
+    if (SP_IS_LPETOOL_CONTEXT(ec)) {
+        // Watch selection
+        c_selection_modified = sp_desktop_selection(desktop)->connectModified(sigc::bind(sigc::ptr_fun(sp_lpetool_toolbox_sel_modified), holder));
+        c_selection_changed = sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_lpetool_toolbox_sel_changed), holder));
+        sp_lpetool_toolbox_sel_changed(sp_desktop_selection(desktop), holder);
+    } else {
+        if (c_selection_modified)
+            c_selection_modified.disconnect();
+        if (c_selection_changed)
+            c_selection_changed.disconnect();
+    }
+}
 
 /*
   Local Variables:
@@ -424,4 +433,4 @@ void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GO
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8 :

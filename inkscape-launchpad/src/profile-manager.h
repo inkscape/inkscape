@@ -9,9 +9,10 @@
 #ifndef SEEN_INKSCAPE_PROFILE_MANAGER_H
 #define SEEN_INKSCAPE_PROFILE_MANAGER_H
 
+#include <vector>
+
 #include "document-subset.h"
 #include "gc-finalized.h"
-#include <vector>
 
 class SPDocument;
 
@@ -26,7 +27,7 @@ public:
     ProfileManager(SPDocument *document);
     ~ProfileManager();
 
-    ColorProfile* find(gchar const* name);
+    ColorProfile* find(char const* name);
 
 private:
     ProfileManager(ProfileManager const &); // no copy
