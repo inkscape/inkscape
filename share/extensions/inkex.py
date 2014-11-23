@@ -101,6 +101,13 @@ def errormsg(msg):
     else:
         sys.stderr.write((unicode(msg, "utf-8", errors='replace') + "\n").encode("UTF-8"))
 
+def are_near_relative(a, b, eps):
+    if (a-b <= a*eps) and (a-b >= -a*eps):
+        return True
+    else:
+        return False
+
+
 # third party library
 try:
     from lxml import etree
@@ -277,16 +284,57 @@ class Effect:
             retval = None
         return retval
 
-    def getDocumentUnit(self):
-        docunit = self.document.xpath('//sodipodi:namedview/@inkscape:document-units', namespaces=NSS)
-        if docunit:
-            return docunit[0]
-        else:
-            return 'px'
-
     #a dictionary of unit to user unit conversion factors
     __uuconv = {'in':96.0, 'pt':1.33333333333, 'px':1.0, 'mm':3.77952755913, 'cm':37.7952755913,
                 'm':3779.52755913, 'km':3779527.55913, 'pc':16.0, 'yd':3456.0 , 'ft':1152.0}
+
+    # Function returns the unit used for the values in SVG.
+    # For lack of an attribute in SVG that explicitly defines what units are used for SVG coordinates,
+    # try to calculate the unit from the SVG width and SVG viewbox.
+    # Defaults to 'px' units.
+    def getDocumentUnit(self):
+        svgunit = 'px' #default to pixels
+
+        svgwidth = self.document.getroot().get('width')
+        viewboxstr = self.document.getroot().get('viewBox')
+        if viewboxstr:
+            unitmatch = re.compile('(%s)$' % '|'.join(self.__uuconv.keys()))
+            param = re.compile(r'(([-+]?[0-9]+(\.[0-9]*)?|[-+]?\.[0-9]+)([eE][-+]?[0-9]+)?)')
+
+            p = param.match(svgwidth)
+            u = unitmatch.search(svgwidth)    
+            
+            width = 100 #default
+            viewboxwidth = 100 #default
+            svgwidthunit = 'px' #default assume 'px' unit
+            if p:
+                width = float(p.string[p.start():p.end()])
+            else:
+                errormsg(_("SVG Width not set correctly! Assuming width = 100"))
+            if u:
+                svgwidthunit = u.string[u.start():u.end()]
+
+            viewboxnumbers = []
+            for t in viewboxstr.split():
+                try:
+                    viewboxnumbers.append(float(t))
+                except ValueError:
+                    pass
+            if len(viewboxnumbers) == 4:  #check for correct number of numbers
+                viewboxwidth = viewboxnumbers[2] - viewboxnumbers[0]
+
+            svgunitfactor = self.__uuconv[svgwidthunit] * width / viewboxwidth
+
+            # try to find the svgunitfactor in the list of units known. If we don't find something, ...
+            eps = 0.01 #allow 1% error in factor
+            for key in self.__uuconv:
+                if are_near_relative(self.__uuconv[key], svgunitfactor, eps):
+                    #found match!
+                    svgunit = key;
+
+        return svgunit
+
+
     def unittouu(self, string):
         '''Returns userunits given a string representation of units in another system'''
         unit = re.compile('(%s)$' % '|'.join(self.__uuconv.keys()))
