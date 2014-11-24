@@ -256,7 +256,7 @@ static void spdc_apply_powerstroke_shape(const std::vector<Geom::Point> & points
 
     std::ostringstream s;
     s.imbue(std::locale::classic());
-    s << "0," << stroke_width / 2.;
+    s << points[0][Geom::X] << "," << stroke_width / 2.;
 
     // write powerstroke parameters:
     lpe->getRepr()->setAttribute("start_linecap_type", "zerowidth");
