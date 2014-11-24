@@ -636,6 +636,7 @@ void SPDocument::setWidth(const Inkscape::Util::Quantity &width)
     if (*width.unit == *unit_table.getUnit("m")) {
         root->width.value = width.value("cm");
         root->width.unit = SVGLength::CM;
+        old_converted = Inkscape::Util::Quantity::convert(old_converted, "m", "cm");
     } else {
         root->width.value = width.quantity;
         root->width.unit = (SVGLength::Unit) width.unit->svgUnit();
@@ -677,6 +678,7 @@ void SPDocument::setHeight(const Inkscape::Util::Quantity &height)
     if (*height.unit == *unit_table.getUnit("m")) {
         root->height.value = height.value("cm");
         root->height.unit = SVGLength::CM;
+        old_converted = Inkscape::Util::Quantity::convert(old_converted, "m", "cm");
     } else {
         root->height.value = height.quantity;
         root->height.unit = (SVGLength::Unit) height.unit->svgUnit();
