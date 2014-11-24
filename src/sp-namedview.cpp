@@ -76,7 +76,9 @@ SPNamedView::SPNamedView() : SPObjectGroup(), snap_manager(this) {
 	this->window_x = 0;
 	this->cy = 0;
 	this->window_y = 0;
-	this->doc_units = NULL;
+    this->svg_units = unit_table.getUnit("px"); // legacy behavior: if no viewbox present, default to 'px' units
+    this->display_units = NULL;
+	this->page_size_units = NULL;
 	this->pagecolor = 0;
 	this->cx = 0;
 	this->pageshadow = 0;
@@ -262,6 +264,14 @@ void SPNamedView::build(SPDocument *document, Inkscape::XML::Node *repr) {
 
     // backwards compatibility with grid settings (pre 0.46)
     sp_namedview_generate_old_grid(this, document, repr);
+
+    // If viewbox defined: try to calculate the SVG unit from document width and viewbox
+    if (document->getRoot()->viewBox_set) {
+        Inkscape::Util::Quantity svgwidth = document->getWidth();
+        Geom::Rect viewbox = document->getRoot()->viewBox;
+        double factor = svgwidth.value(unit_table.primary(Inkscape::Util::UNIT_TYPE_LINEAR)) / viewbox.width(); 
+        svg_units = unit_table.findUnit(factor, Inkscape::Util::UNIT_TYPE_LINEAR);
+    }
 }
 
 void SPNamedView::release() {
@@ -540,22 +550,13 @@ void SPNamedView::set(unsigned int key, const gchar* value) {
             this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_DOCUMENT_UNITS: {
-            /* The default unit if the document doesn't override this: e.g. for files saved as
+            /* The default display unit if the document doesn't override this: e.g. for files saved as
              * `plain SVG', or non-inkscape files, or files created by an inkscape 0.40 &
              * earlier.
              *
-             * Here we choose `px': useful for screen-destined SVGs, and fewer bug reports
-             * about "not the same numbers as what's in the SVG file" (at least for documents
-             * without a viewBox attribute on the root <svg> element).  Similarly, it's also
-             * the most reliable unit (i.e. least likely to be wrong in different viewing
-             * conditions) for viewBox-less SVG files given that it's the unit that inkscape
-             * uses for all coordinates.
+             * Note that these units are not the same as the units used for the values in SVG!
              *
-             * For documents that do have a viewBox attribute on the root <svg> element, it
-             * might be better if we used either viewBox coordinates or if we used the unit of
-             * say the width attribute of the root <svg> element.  However, these pose problems
-             * in that they aren't in general absolute units as currently required by
-             * doc_units.
+             * We default to `px'.
              */
             static Inkscape::Util::Unit const *px = unit_table.getUnit("px");
             Inkscape::Util::Unit const *new_unit = px;
@@ -576,7 +577,7 @@ void SPNamedView::set(unsigned int key, const gchar* value) {
                     /* fixme: Don't use g_log (see above). */
                 }
             }
-            this->doc_units = new_unit;
+            this->display_units = new_unit;
             this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     }
@@ -1133,7 +1134,13 @@ double SPNamedView::getMarginLength(gchar const * const key,
  */
 Inkscape::Util::Unit const * SPNamedView::getDefaultUnit() const
 {
-    return doc_units ? doc_units : unit_table.getUnit("pt");
+    return display_units ? display_units : unit_table.getUnit("pt");
+}
+
+Inkscape::Util::Unit const & SPNamedView::getSVGUnit() const
+{
+    assert(svg_units);
+    return *svg_units; 
 }
 
 /**

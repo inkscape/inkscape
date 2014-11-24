@@ -242,6 +242,7 @@ public:
     SPDocument *doRef();
     SPDocument *doUnref();
     Inkscape::Util::Unit const* getDefaultUnit() const;
+    Inkscape::Util::Unit const& getSVGUnit() const;
     Inkscape::Util::Quantity getWidth() const;
     Inkscape::Util::Quantity getHeight() const;
     Geom::Point getDimensions() const;

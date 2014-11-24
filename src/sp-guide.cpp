@@ -410,8 +410,8 @@ char* SPGuide::description(bool const verbose) const
 
         Inkscape::Util::Quantity x_q = Inkscape::Util::Quantity(this->point_on_line[X], "px");
         Inkscape::Util::Quantity y_q = Inkscape::Util::Quantity(this->point_on_line[Y], "px");
-        GString *position_string_x = g_string_new(x_q.string(namedview->doc_units).c_str());
-        GString *position_string_y = g_string_new(y_q.string(namedview->doc_units).c_str());
+        GString *position_string_x = g_string_new(x_q.string(namedview->display_units).c_str());
+        GString *position_string_y = g_string_new(y_q.string(namedview->display_units).c_str());
 
         gchar *shortcuts = g_strdup_printf("; %s", _("<b>Shift+drag</b> to rotate, <b>Ctrl+drag</b> to move origin, <b>Del</b> to delete"));
 

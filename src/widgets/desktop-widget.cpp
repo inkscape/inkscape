@@ -1665,7 +1665,7 @@ SPDesktopWidget* SPDesktopWidget::createInstance(SPNamedView *namedview)
 {
     SPDesktopWidget *dtw = static_cast<SPDesktopWidget*>(g_object_new(SP_TYPE_DESKTOP_WIDGET, NULL));
 
-    dtw->dt2r = 1. / namedview->doc_units->factor;
+    dtw->dt2r = 1. / namedview->display_units->factor;
 
     dtw->ruler_origin = Geom::Point(0,0); //namedview->gridorigin;   Why was the grid origin used here?
 
@@ -1737,7 +1737,7 @@ void SPDesktopWidget::namedviewModified(SPObject *obj, guint flags)
     SPNamedView *nv=SP_NAMEDVIEW(obj);
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
-        this->dt2r = 1. / nv->doc_units->factor;
+        this->dt2r = 1. / nv->display_units->factor;
         this->ruler_origin = Geom::Point(0,0); //nv->gridorigin;   Why was the grid origin used here?
 
         sp_ruler_set_unit(SP_RULER (this->vruler), nv->getDefaultUnit());
@@ -1771,14 +1771,14 @@ void SPDesktopWidget::namedviewModified(SPObject *obj, guint flags)
                         if (tracker == NULL) // it's null when inkscape is first opened
                             continue;
 
-                        tracker->setActiveUnit( nv->doc_units );
+                        tracker->setActiveUnit( nv->display_units );
                     } // grandchildren
                 } // if child is a container
             } // children
         } // if aux_toolbox is a container
 
-        gtk_widget_set_tooltip_text(this->hruler_box, gettext(nv->doc_units->name_plural.c_str()));
-        gtk_widget_set_tooltip_text(this->vruler_box, gettext(nv->doc_units->name_plural.c_str()));
+        gtk_widget_set_tooltip_text(this->hruler_box, gettext(nv->display_units->name_plural.c_str()));
+        gtk_widget_set_tooltip_text(this->vruler_box, gettext(nv->display_units->name_plural.c_str()));
 
         sp_desktop_widget_update_rulers(this);
         ToolboxFactory::updateSnapToolbox(this->desktop, 0, this->snap_toolbox);

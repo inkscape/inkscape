@@ -313,8 +313,8 @@ PageSizer::PageSizer(Registry & _wr)
     _wr.setUpdating (true);
     if (nv->page_size_units) {
         _dimensionUnits.setUnit(nv->page_size_units->abbr);
-    } else if (nv->doc_units) {
-        _dimensionUnits.setUnit(nv->doc_units->abbr);
+    } else if (nv->display_units) {
+        _dimensionUnits.setUnit(nv->display_units->abbr);
     }
     _wr.setUpdating (false);
     

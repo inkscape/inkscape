@@ -599,6 +599,14 @@ Inkscape::Util::Unit const* SPDocument::getDefaultUnit() const
     return nv ? nv->getDefaultUnit() : unit_table.getUnit("pt");
 }
 
+/// guaranteed not to return nullptr
+// returns 'px' units as default, like legacy Inkscape
+Inkscape::Util::Unit const& SPDocument::getSVGUnit() const
+{
+    SPNamedView const* nv = sp_document_namedview(this, NULL);
+    return nv ? nv->getSVGUnit() : *unit_table.getUnit("px");
+}
+
 Inkscape::Util::Quantity SPDocument::getWidth() const
 {
     g_return_val_if_fail(this->priv != NULL, Inkscape::Util::Quantity(0.0, unit_table.getUnit("")));

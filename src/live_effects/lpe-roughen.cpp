@@ -160,11 +160,11 @@ double LPERoughen::sign(double randNumber)
 
 Geom::Point LPERoughen::randomize()
 {
-    Inkscape::Util::Unit const *doc_units = SP_ACTIVE_DESKTOP->namedview->doc_units;
+    Inkscape::Util::Unit const *svg_units = SP_ACTIVE_DESKTOP->namedview->svg_units;
     double displaceXParsed = Inkscape::Util::Quantity::convert(
-                                 displaceX * globalRandomize, unit.get_abbreviation(), doc_units->abbr);
+                                 displaceX * globalRandomize, unit.get_abbreviation(), svg_units->abbr);
     double displaceYParsed = Inkscape::Util::Quantity::convert(
-                                 displaceY * globalRandomize, unit.get_abbreviation(), doc_units->abbr);
+                                 displaceY * globalRandomize, unit.get_abbreviation(), svg_units->abbr);
 
     Geom::Point output = Geom::Point(sign(displaceXParsed), sign(displaceYParsed));
     return output;
@@ -175,7 +175,7 @@ void LPERoughen::doEffect(SPCurve *curve)
     Geom::PathVector const original_pathv =
         pathv_to_linear_and_cubic_beziers(curve->get_pathvector());
     curve->reset();
-    Inkscape::Util::Unit const *doc_units = SP_ACTIVE_DESKTOP->namedview->doc_units;
+    Inkscape::Util::Unit const *svg_units = SP_ACTIVE_DESKTOP->namedview->svg_units;
     for (Geom::PathVector::const_iterator path_it = original_pathv.begin();
             path_it != original_pathv.end(); ++path_it) {
         if (path_it->empty())
@@ -221,7 +221,7 @@ void LPERoughen::doEffect(SPCurve *curve)
                 nCurve->lineto(A3);
             }
             double length = Inkscape::Util::Quantity::convert(
-                                curve_it1->length(0.001), doc_units->abbr, unit.get_abbreviation());
+                                curve_it1->length(0.001), svg_units->abbr, unit.get_abbreviation());
             std::size_t splits = 0;
             if (method == DM_SEGMENTS) {
                 splits = segments;

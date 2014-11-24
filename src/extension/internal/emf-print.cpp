@@ -144,7 +144,7 @@ unsigned int PrintEmf::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
     // width and height in px
     _width  = doc->getWidth().value("px");
     _height = doc->getHeight().value("px");
-    _doc_unit_scale = Inkscape::Util::Quantity::convert(1, (doc->getDefaultUnit()), "px");
+    _doc_unit_scale = Inkscape::Util::Quantity::convert(1, &doc->getSVGUnit(), "px");
 
     // initialize a few global variables
     hbrush = hbrushOld = hpen = 0;

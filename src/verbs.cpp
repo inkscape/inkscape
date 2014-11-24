@@ -1860,7 +1860,7 @@ void ZoomVerb::perform(SPAction *action, void *data)
 
     double zcorr = 1.0;
     Glib::ustring abbr = prefs->getString("/options/zoomcorrection/unit");
-    if (dt->namedview->doc_units && dt->namedview->doc_units->abbr == abbr)
+    if (dt->namedview->display_units && (dt->namedview->display_units->abbr == abbr))
         zcorr = prefs->getDouble("/options/zoomcorrection/value", 1.0);
 
     Geom::Rect const d = dt->get_display_area();

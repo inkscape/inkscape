@@ -141,6 +141,9 @@ public:
     /** Retrieve a given unit based on its string identifier */
     Unit const *getUnit(Glib::ustring const &name) const;
     Unit const *getUnit(char const *name) const;
+
+    /** Try to find a unit based on its conversion factor to the primary */
+    Unit const *findUnit(double factor, UnitType type) const;
     
     /** Retrieve a given unit based on its SVGLength unit */
     Unit const *getUnit(SVGLength::Unit u) const;

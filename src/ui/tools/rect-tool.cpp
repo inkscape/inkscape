@@ -422,8 +422,8 @@ void RectTool::drag(Geom::Point const pt, guint state) {
 
     Inkscape::Util::Quantity rdimx_q = Inkscape::Util::Quantity(rdimx, "px");
     Inkscape::Util::Quantity rdimy_q = Inkscape::Util::Quantity(rdimy, "px");
-    GString *xs = g_string_new(rdimx_q.string(desktop->namedview->doc_units).c_str());
-    GString *ys = g_string_new(rdimy_q.string(desktop->namedview->doc_units).c_str());
+    GString *xs = g_string_new(rdimx_q.string(desktop->namedview->display_units).c_str());
+    GString *ys = g_string_new(rdimy_q.string(desktop->namedview->display_units).c_str());
 
     if (state & GDK_CONTROL_MASK) {
         int ratio_x, ratio_y;

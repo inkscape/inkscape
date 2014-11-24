@@ -1480,8 +1480,8 @@ void DocumentProperties::update()
     _rcb_antialias.set_xml_target(root->getRepr(), dt->getDocument());
     _rcb_antialias.setActive(root->style->shape_rendering.computed != SP_CSS_SHAPE_RENDERING_CRISPEDGES);
 
-    if (nv->doc_units) {
-        _rum_deflt.setUnit (nv->doc_units->abbr);
+    if (nv->display_units) {
+        _rum_deflt.setUnit (nv->display_units->abbr);
     }
 
     double doc_w = sp_desktop_document(dt)->getRoot()->width.value;

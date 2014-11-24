@@ -21,6 +21,8 @@
 #include <glibmm/fileutils.h>
 #include <glibmm/markup.h>
 
+#include <2geom/coord.h>
+
 #include "util/units.h"
 #include "path-prefix.h"
 #include "streq.h"
@@ -277,6 +279,28 @@ Unit const *UnitTable::getUnit(SVGLength::Unit u) const
         return &(*f->second);
     }
     return &_empty_unit;
+}
+
+Unit const *UnitTable::findUnit(double factor, UnitType type) const
+{
+    const double eps = factor * 0.01; // allow for 1% deviation
+
+    UnitCodeMap::const_iterator cit = _unit_map.begin();
+    while (cit != _unit_map.end()) {
+        if (cit->second->type == type) {
+            if (Geom::are_near(cit->second->factor, factor, eps)) {
+                // unit found!
+                break;
+            }
+        }
+        ++cit;
+    }
+
+    if (cit != _unit_map.end()) {
+        return cit->second;
+    } else {
+        return getUnit(_primary_unit[type]);
+    }
 }
 
 Quantity UnitTable::parseQuantity(Glib::ustring const &q) const

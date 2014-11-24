@@ -113,7 +113,7 @@ Grid::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *doc
         bounding_area = temprec;
     }
 
-    gdouble scale = Inkscape::Util::Quantity::convert(1, "px", (document->doc())->getDefaultUnit());
+    gdouble scale = Inkscape::Util::Quantity::convert(1, "px", &document->doc()->getSVGUnit());
     bounding_area *= Geom::Scale(scale);
     Geom::Point spacings( scale * module->get_param_float("xspacing"),
                           scale * module->get_param_float("yspacing") );

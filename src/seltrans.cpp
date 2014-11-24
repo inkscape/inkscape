@@ -1306,8 +1306,8 @@ gboolean Inkscape::SelTrans::centerRequest(Geom::Point &pt, guint state)
     // status text
     Inkscape::Util::Quantity x_q = Inkscape::Util::Quantity(pt[Geom::X], "px");
     Inkscape::Util::Quantity y_q = Inkscape::Util::Quantity(pt[Geom::Y], "px");
-    GString *xs = g_string_new(x_q.string(_desktop->namedview->doc_units).c_str());
-    GString *ys = g_string_new(y_q.string(_desktop->namedview->doc_units).c_str());
+    GString *xs = g_string_new(x_q.string(_desktop->namedview->display_units).c_str());
+    GString *ys = g_string_new(y_q.string(_desktop->namedview->display_units).c_str());
     _message_context.setF(Inkscape::NORMAL_MESSAGE, _("Move <b>center</b> to %s, %s"), xs->str, ys->str);
     g_string_free(xs, FALSE);
     g_string_free(ys, FALSE);
@@ -1460,8 +1460,8 @@ void Inkscape::SelTrans::moveTo(Geom::Point const &xy, guint state)
     // status text
     Inkscape::Util::Quantity x_q = Inkscape::Util::Quantity(dxy[Geom::X], "px");
     Inkscape::Util::Quantity y_q = Inkscape::Util::Quantity(dxy[Geom::Y], "px");
-    GString *xs = g_string_new(x_q.string(_desktop->namedview->doc_units).c_str());
-    GString *ys = g_string_new(y_q.string(_desktop->namedview->doc_units).c_str());
+    GString *xs = g_string_new(x_q.string(_desktop->namedview->display_units).c_str());
+    GString *ys = g_string_new(y_q.string(_desktop->namedview->display_units).c_str());
     _message_context.setF(Inkscape::NORMAL_MESSAGE, _("<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; with <b>Shift</b> to disable snapping"), xs->str, ys->str);
     g_string_free(xs, TRUE);
     g_string_free(ys, TRUE);

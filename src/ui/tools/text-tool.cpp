@@ -590,8 +590,8 @@ bool TextTool::root_handler(GdkEvent* event) {
                 // status text
                 Inkscape::Util::Quantity x_q = Inkscape::Util::Quantity(fabs((p - this->p0)[Geom::X]), "px");
                 Inkscape::Util::Quantity y_q = Inkscape::Util::Quantity(fabs((p - this->p0)[Geom::Y]), "px");
-                GString *xs = g_string_new(x_q.string(desktop->namedview->doc_units).c_str());
-                GString *ys = g_string_new(y_q.string(desktop->namedview->doc_units).c_str());
+                GString *xs = g_string_new(x_q.string(desktop->namedview->display_units).c_str());
+                GString *ys = g_string_new(y_q.string(desktop->namedview->display_units).c_str());
                 this->message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>Flowed text frame</b>: %s &#215; %s"), xs->str, ys->str);
 
                 g_string_free(xs, FALSE);

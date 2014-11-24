@@ -208,8 +208,8 @@ void Transformation::layoutPageMove()
     // Setting default unit to document unit
     SPDesktop *dt = getDesktop();
     SPNamedView *nv = sp_desktop_namedview(dt);
-    if (nv->doc_units) {
-        _units_move.setUnit(nv->doc_units->abbr);
+    if (nv->display_units) {
+        _units_move.setUnit(nv->display_units->abbr);
     }
     
     _scalar_move_horizontal.initScalar(-1e6, 1e6);

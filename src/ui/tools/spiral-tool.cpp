@@ -395,7 +395,7 @@ void SpiralTool::drag(Geom::Point const &p, guint state) {
 
     /* status text */
     Inkscape::Util::Quantity q = Inkscape::Util::Quantity(rad, "px");
-    GString *rads = g_string_new(q.string(desktop->namedview->doc_units).c_str());
+    GString *rads = g_string_new(q.string(desktop->namedview->display_units).c_str());
     this->message_context->setF(Inkscape::IMMEDIATE_MESSAGE,
                                _("<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"),
                                rads->str, sp_round((arg + 2.0*M_PI*this->spiral->revo)*180/M_PI, 0.0001));

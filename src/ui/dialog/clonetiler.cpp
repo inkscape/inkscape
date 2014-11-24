@@ -1096,7 +1096,7 @@ CloneTiler::CloneTiler (void) :
                 // unitmenu
                 unit_menu = new Inkscape::UI::Widget::UnitMenu();
                 unit_menu->setUnitType(Inkscape::Util::UNIT_TYPE_LINEAR);
-                unit_menu->setUnit(sp_desktop_namedview(SP_ACTIVE_DESKTOP)->doc_units->abbr);
+                unit_menu->setUnit(sp_desktop_namedview(SP_ACTIVE_DESKTOP)->display_units->abbr);
                 unitChangedConn = unit_menu->signal_changed().connect(sigc::mem_fun(*this, &CloneTiler::clonetiler_unit_changed));
 
                 {
@@ -2251,7 +2251,7 @@ void CloneTiler::clonetiler_apply(GtkWidget */*widget*/, GtkWidget *dlg)
 
     clonetiler_remove (NULL, dlg, false);
 
-    double scale_units = Inkscape::Util::Quantity::convert(1, "px", sp_desktop_document(desktop)->getDefaultUnit());
+    double scale_units = Inkscape::Util::Quantity::convert(1, "px", &sp_desktop_document(desktop)->getSVGUnit());
 
     double shiftx_per_i = 0.01 * prefs->getDoubleLimited(prefs_path + "shiftx_per_i", 0, -10000, 10000);
     double shifty_per_i = 0.01 * prefs->getDoubleLimited(prefs_path + "shifty_per_i", 0, -10000, 10000);
