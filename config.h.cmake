@@ -15,8 +15,11 @@
 /* Use AutoPackage? */
 #cmakedefine ENABLE_BINRELOC 1
 
-/* Use LittleCms color management */
-#cmakedefine ENABLE_LCMS 1
+/* define to 1 if you have lcms version 1.x */
+#cmakedefine HAVE_LIBLCMS1 1
+
+/* define to 1 if you have lcms version 2.x */
+#cmakedefine HAVE_LIBLCMS2 1
 
 /* always defined to indicate that i18n is enabled */
 #cmakedefine ENABLE_NLS 1
@@ -130,6 +133,12 @@
 
 /* Use color space API from Poppler >= 0.12.2 */
 #cmakedefine POPPLER_NEW_COLOR_SPACE_API 1
+
+/* Use color space API from Poppler >= 0.26.0 */
+#cmakedefine POPPLER_EVEN_NEWER_COLOR_SPACE_API 1
+
+/* Use new error API from Poppler >= 0.20.0 */
+#cmakedefine POPPLER_NEW_ERRORAPI
 
 /* GfxPatch no longer uses GfxColor in >= 0.15.1 */
 #cmakedefine POPPLER_NEW_GFXPATCH 1

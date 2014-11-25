@@ -104,12 +104,6 @@ add_subdirectory(src)
 if(UNIX)
 	# TODO: man, locale, icons
 
-	# message after building.
-	add_custom_command(
-		TARGET blender POST_BUILD MAIN_DEPENDENCY blender
-		COMMAND ${CMAKE_COMMAND} -E echo 'now run: \"make install\" to copy runtime files & scripts to ${CMAKE_INSTALL_PREFIX}'
-	)
-
 	install(
 		PROGRAMS ${EXECUTABLE_OUTPUT_PATH}/inkscape
 		DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
