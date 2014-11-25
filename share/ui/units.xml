@@ -18,7 +18,7 @@
     <name>point</name>
     <plural>points</plural>
     <abbr>pt</abbr>
-    <factor>1.3333333333</factor>
+    <factor>1.333333333333333</factor>
     <description>PostScript points (72/inch)</description>
 </unit>
 <unit type="LINEAR" pri="n">
@@ -39,21 +39,21 @@
     <name>millimeter</name>
     <plural>millimeters</plural>
     <abbr>mm</abbr>
-    <factor>3.77952755913</factor>
+    <factor>3.779527559055119</factor>
     <description>Millimeters (25.4 mm/in)</description>
 </unit>
 <unit type="LINEAR" pri="n">
     <name>centimeter</name>
     <plural>centimeters</plural>
     <abbr>cm</abbr>
-    <factor>37.7952755913</factor>
+    <factor>37.79527559055119</factor>
     <description>Centimeters (10 mm/cm)</description>
 </unit>
 <unit type="LINEAR" pri="n">
     <name>meter</name>
     <plural>meters</plural>
     <abbr>m</abbr>
-    <factor>3779.52755913</factor>
+    <factor>3779.527559055119</factor>
     <description>Meters (100 cm/m)</description>
 </unit>
 <unit type="LINEAR" pri="n">
@@ -74,15 +74,15 @@
     <name>radian</name>
     <plural>radians</plural>
     <abbr>rad</abbr>
-    <factor>57.296</factor>
-    <description>Radians (57.296 deg/rad)</description>
+    <factor>57.29577951308232</factor>
+    <description>Radians (180/pi deg/rad)</description>
 </unit>
 <unit type="RADIAL" pri="n">
     <name>gradian</name>
     <plural>gradians</plural>
     <abbr>grad</abbr>
-    <factor>1.111</factor>
-    <description>Gradians (1.111 deg/grad)</description>
+    <factor>0.9</factor>
+    <description>Gradians (360/400 deg/grad)</description>
 </unit>
 <unit type="RADIAL" pri="n">
     <name>turn</name>
