@@ -321,7 +321,7 @@ class Effect:
                 except ValueError:
                     pass
             if len(viewboxnumbers) == 4:  #check for correct number of numbers
-                viewboxwidth = viewboxnumbers[2] - viewboxnumbers[0]
+                viewboxwidth = viewboxnumbers[2]
 
             svgunitfactor = self.__uuconv[svgwidthunit] * width / viewboxwidth
 
