@@ -2884,10 +2884,12 @@ void sp_selection_clone_original_path_lpe(SPDesktop *desktop)
     if (desktop == NULL) {
         return;
     }
-    
+
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+
     Inkscape::SVGOStringStream os;
     SPObject * firstItem = NULL;
-    for (const GSList * item = desktop->selection->itemList(); item != NULL; item = item->next) {
+    for (const GSList * item = selection->itemList(); item != NULL; item = item->next) {
         if (SP_IS_SHAPE(item->data) || SP_IS_TEXT(item->data)) {
             if (firstItem) {
                 os << "|";
@@ -2927,6 +2929,10 @@ void sp_selection_clone_original_path_lpe(SPDesktop *desktop)
         }
 
         DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_EDIT_CLONE_ORIGINAL_PATH_LPE, _("Fill between many"));
+        // select the new object:
+        selection->set(clone);
+
+        Inkscape::GC::release(clone);
     } else {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select path(s) to fill."));
     }

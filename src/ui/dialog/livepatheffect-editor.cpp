@@ -475,9 +475,13 @@ LivePathEffectEditor::onAdd()
 
                         // run sp_selection_clone_original_path_lpe 
                         sp_selection_clone_original_path_lpe(current_desktop);
+
                         SPItem *new_item = sel->singleItem();
-                        new_item->getRepr()->setAttribute("id", id);
-                        new_item->getRepr()->setAttribute("transform", transform);
+                        // Check that the cloning was successful. We don't want to change the ID of the original referenced path!
+                        if (new_item && (new_item != orig)) {
+                            new_item->getRepr()->setAttribute("id", id);
+                            new_item->getRepr()->setAttribute("transform", transform);
+                        }
                         g_free(id);
                         g_free(transform);
 
