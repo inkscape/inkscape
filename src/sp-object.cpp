@@ -1254,6 +1254,16 @@ void SPObject::setAttribute(gchar const *key, gchar const *value, SPException *e
     //XML Tree being used here.
     getRepr()->setAttribute(key, value, false);
 }
+void SPObject::setAttribute(char const *key, Glib::ustring const &value, SPException *ex)
+{
+    setAttribute(key, value.empty() ? NULL : value.c_str(), ex);
+}
+void SPObject::setAttribute(Glib::ustring const &key, Glib::ustring const &value, SPException *ex)
+{
+    setAttribute( key.empty()   ? NULL : key.c_str(),
+                  value.empty() ? NULL : value.c_str(), ex);
+}
+
 
 void SPObject::removeAttribute(gchar const *key, SPException *ex)
 {
