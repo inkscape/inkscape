@@ -58,8 +58,8 @@ static void sp_lpe_item_create_original_path_recursive(SPLPEItem *lpeitem);
 static void sp_lpe_item_cleanup_original_path_recursive(SPLPEItem *lpeitem);
 
 typedef std::list<std::string> HRefList;
-static std::string patheffectlist_write_svg(PathEffectList const & list);
-static std::string hreflist_write_svg(HRefList const & list);
+static std::string patheffectlist_svg_string(PathEffectList const & list);
+static std::string hreflist_svg_string(HRefList const & list);
 
 SPLPEItem::SPLPEItem()
     : SPItem()
@@ -195,8 +195,7 @@ void SPLPEItem::modified(unsigned int flags) {
 Inkscape::XML::Node* SPLPEItem::write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags) {
     if (flags & SP_OBJECT_WRITE_EXT) {
         if ( hasPathEffect() ) {
-            std::string href = patheffectlist_write_svg(*this->path_effect_list);
-            repr->setAttribute("inkscape:path-effect", href.c_str());
+            repr->setAttribute("inkscape:path-effect", patheffectlist_svg_string(*this->path_effect_list));
         } else {
             repr->setAttribute("inkscape:path-effect", NULL);
         }
@@ -418,9 +417,9 @@ sp_lpe_item_cleanup_original_path_recursive(SPLPEItem *lpeitem)
     }
 }
 
-void SPLPEItem::addPathEffect(gchar *value, bool reset)
+void SPLPEItem::addPathEffect(std::string value, bool reset)
 {
-    if (value) {
+    if (!value.empty()) {
         // Apply the path effects here because in the casse of a group, lpe->resetDefaults
         // needs that all the subitems have their effects applied
         sp_lpe_item_update_patheffect(this, false, true);
@@ -434,10 +433,9 @@ void SPLPEItem::addPathEffect(gchar *value, bool reset)
         {
             hreflist.push_back( std::string((*it)->lpeobject_href) );
         }
-        hreflist.push_back( std::string(value) );
-        std::string hrefs = hreflist_write_svg(hreflist);
+        hreflist.push_back(value); // C++11: should be emplace_back std::move'd  (also the reason why passed by value to addPathEffect)
 
-        this->getRepr()->setAttribute("inkscape:path-effect", hrefs.c_str());
+        this->getRepr()->setAttribute("inkscape:path-effect", hreflist_svg_string(hreflist));
 
         // Make sure that ellipse is stored as <svg:path>
         if( SP_IS_GENERICELLIPSE(this)) {
@@ -501,13 +499,7 @@ void SPLPEItem::removeCurrentPathEffect(bool keep_paths)
     }    
     PathEffectList new_list = *this->path_effect_list;
     new_list.remove(lperef); //current lpe ref is always our 'own' pointer from the path_effect_list
-    std::string r = patheffectlist_write_svg(new_list);
-    
-    if (!r.empty()) {
-        this->getRepr()->setAttribute("inkscape:path-effect", r.c_str());
-    } else {
-        this->getRepr()->setAttribute("inkscape:path-effect", NULL);
-    }
+    this->getRepr()->setAttribute("inkscape:path-effect", patheffectlist_svg_string(new_list));
 
     if (!keep_paths) {
         // Make sure that ellipse is stored as <svg:circle> or <svg:ellipse> if possible.
@@ -551,8 +543,8 @@ void SPLPEItem::downCurrentPathEffect()
             std::iter_swap(cur_it, down_it);
         }
     }
-    std::string r = patheffectlist_write_svg(new_list);
-    this->getRepr()->setAttribute("inkscape:path-effect", r.c_str());
+
+    this->getRepr()->setAttribute("inkscape:path-effect", patheffectlist_svg_string(new_list));
 
     sp_lpe_item_cleanup_original_path_recursive(this);
 }
@@ -570,9 +562,8 @@ void SPLPEItem::upCurrentPathEffect()
         --up_it;
         std::iter_swap(cur_it, up_it);
     }
-    std::string r = patheffectlist_write_svg(new_list);
 
-    this->getRepr()->setAttribute("inkscape:path-effect", r.c_str());
+    this->getRepr()->setAttribute("inkscape:path-effect", patheffectlist_svg_string(new_list));
 
     sp_lpe_item_cleanup_original_path_recursive(this);
 }
@@ -862,16 +853,16 @@ void SPLPEItem::remove_child(Inkscape::XML::Node * child) {
     SPItem::remove_child(child);
 }
 
-static std::string patheffectlist_write_svg(PathEffectList const & list)
+static std::string patheffectlist_svg_string(PathEffectList const & list)
 {
     HRefList hreflist;
 
     for (PathEffectList::const_iterator it = list.begin(); it != list.end(); ++it)
     {
-        hreflist.push_back( std::string((*it)->lpeobject_href) );
+        hreflist.push_back( std::string((*it)->lpeobject_href) ); // C++11: use emplace_back
     }
 
-    return hreflist_write_svg(hreflist);
+    return hreflist_svg_string(hreflist);
 }
 
 /**
@@ -881,7 +872,7 @@ static std::string patheffectlist_write_svg(PathEffectList const & list)
  *  - populate the templist with the effects from the old list that you want to have and their order
  *  - call this function with temp list as param
  */
-static std::string hreflist_write_svg(HRefList const & list)
+static std::string hreflist_svg_string(HRefList const & list)
 {
     std::string r;
     bool semicolon_first = false;
@@ -968,8 +959,7 @@ void SPLPEItem::replacePathEffects( std::vector<LivePathEffectObject const *> co
         }
     }
 
-    std::string r = hreflist_write_svg(hreflist);
-    this->getRepr()->setAttribute("inkscape:path-effect", r.c_str());
+    this->getRepr()->setAttribute("inkscape:path-effect", hreflist_svg_string(hreflist));
 }
 
 /**

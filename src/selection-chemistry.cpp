@@ -2910,7 +2910,7 @@ void sp_selection_clone_original_path_lpe(SPDesktop *desktop)
             lpe_repr->setAttribute("linkedpaths", os.str().c_str());
             desktop->doc()->getDefs()->getRepr()->addChild(lpe_repr, NULL); // adds to <defs> and assigns the 'id' attribute
         }
-        const gchar * lpe_id = lpe_repr->attribute("id");
+        std::string lpe_id_href = '#' + lpe_repr->attribute("id");
         Inkscape::GC::release(lpe_repr);
 
         // create the new path
@@ -2922,9 +2922,7 @@ void sp_selection_clone_original_path_lpe(SPDesktop *desktop)
             SPObject *clone_obj = desktop->doc()->getObjectById(clone->attribute("id"));
             SPLPEItem *clone_lpeitem = dynamic_cast<SPLPEItem *>(clone_obj);
             if (clone_lpeitem) {
-                gchar *href = g_strdup_printf("#%s", lpe_id);
-                clone_lpeitem->addPathEffect(href, false);
-                g_free(href);
+                clone_lpeitem->addPathEffect(lpe_id_href, false);
             }
         }
 

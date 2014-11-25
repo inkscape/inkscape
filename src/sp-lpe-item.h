@@ -15,6 +15,7 @@
  */
 
 #include <list>
+#include <string>
 #include "sp-item.h"
 
 #define SP_LPE_ITEM(obj) (dynamic_cast<SPLPEItem*>((SPObject*)obj))
@@ -88,7 +89,7 @@ public:
     bool setCurrentPathEffect(Inkscape::LivePathEffect::LPEObjectReference* lperef);
     void removeCurrentPathEffect(bool keep_paths);
     void removeAllPathEffects(bool keep_paths);
-    void addPathEffect(char *value, bool reset);
+    void addPathEffect(std::string value, bool reset);
     void addPathEffect(LivePathEffectObject * new_lpeobj);
     void apply_to_mask(SPItem * item);
     void apply_to_clippath(SPItem * item);
