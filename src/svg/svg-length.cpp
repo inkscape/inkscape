@@ -520,7 +520,8 @@ gchar const *sp_svg_length_get_css_units(SVGLength::Unit unit)
         case SVGLength::MM: return "mm";
         case SVGLength::CM: return "cm";
         case SVGLength::INCH: return "in";
-        case SVGLength::FOOT: return ""; // Does not have a "foot" unit string in the SVG spec
+        case SVGLength::FOOT: return "";  // Not in SVG/CSS specification.
+        case SVGLength::MITRE: return ""; // Not in SVG/CSS specification.
         case SVGLength::EM: return "em";
         case SVGLength::EX: return "ex";
         case SVGLength::PERCENT: return "%";
@@ -539,6 +540,8 @@ std::string sp_svg_length_write_with_units(SVGLength const &length)
         os << 100*length.value << sp_svg_length_get_css_units(length.unit);
     } else if (length.unit == SVGLength::FOOT) {
         os << 12*length.value << sp_svg_length_get_css_units(SVGLength::INCH);
+    } else if (length.unit == SVGLength::MITRE) {
+        os << 100*length.value << sp_svg_length_get_css_units(SVGLength::CM);
     } else {
         os << length.value << sp_svg_length_get_css_units(length.unit);
     }
