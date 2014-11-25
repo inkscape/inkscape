@@ -204,8 +204,8 @@ StrokeStyle::StrokeStyle() :
     unitSelector->addUnit(*unit_table.getUnit("%"));
     _old_unit = unitSelector->getUnit();
     if (desktop) {
-        unitSelector->setUnit(sp_desktop_namedview(desktop)->svg_units->abbr);
-        _old_unit = sp_desktop_namedview(desktop)->svg_units;
+        unitSelector->setUnit(sp_desktop_namedview(desktop)->display_units->abbr);
+        _old_unit = sp_desktop_namedview(desktop)->display_units;
     }
     widthSpin->setUnitMenu(unitSelector);
     unitChangedConn = unitSelector->signal_changed().connect(sigc::mem_fun(*this, &StrokeStyle::unitChangedCB));
