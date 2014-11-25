@@ -28,6 +28,7 @@ struct SPMarkerView;
 
 #include "enums.h"
 #include "svg/svg-length.h"
+#include "svg/svg-angle.h"
 #include "sp-item-group.h"
 #include "uri-references.h"
 #include "viewbox.h"
@@ -58,7 +59,7 @@ public:
 	/* orient */
 	unsigned int orient_set : 1;
 	markerOrient orient_mode : 2;
-	float orient;
+	SVGAngle orient;
 
 	/* Private views */
 	SPMarkerView *views;

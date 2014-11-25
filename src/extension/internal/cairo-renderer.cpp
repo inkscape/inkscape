@@ -206,7 +206,7 @@ static void sp_shape_render(SPShape *shape, CairoRenderContext *ctx)
             } else if (marker->orient_mode == MARKER_ORIENT_AUTO_START_REVERSE) {
                 tr = Geom::Rotate::from_degrees( 180.0 ) * sp_shape_marker_get_transform_at_start(pathv.begin()->front());
             } else {
-                tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(pathv.begin()->front().pointAt(0));
+                tr = Geom::Rotate::from_degrees(marker->orient.computed) * Geom::Translate(pathv.begin()->front().pointAt(0));
             }
             sp_shape_render_invoke_marker_rendering(marker, tr, style, ctx);
         }
@@ -224,7 +224,7 @@ static void sp_shape_render(SPShape *shape, CairoRenderContext *ctx)
                 if (marker->orient_mode != MARKER_ORIENT_ANGLE) {
                     tr = sp_shape_marker_get_transform_at_start(path_it->front());
                 } else {
-                    tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(path_it->front().pointAt(0));
+                    tr = Geom::Rotate::from_degrees(marker->orient.computed) * Geom::Translate(path_it->front().pointAt(0));
                 }
                 sp_shape_render_invoke_marker_rendering(marker, tr, style, ctx);
             }
@@ -241,7 +241,7 @@ static void sp_shape_render(SPShape *shape, CairoRenderContext *ctx)
                     if (marker->orient_mode != MARKER_ORIENT_ANGLE) {
                         tr = sp_shape_marker_get_transform(*curve_it1, *curve_it2);
                     } else {
-                        tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(curve_it1->pointAt(1));
+                        tr = Geom::Rotate::from_degrees(marker->orient.computed) * Geom::Translate(curve_it1->pointAt(1));
                     }
 
                     sp_shape_render_invoke_marker_rendering(marker, tr, style, ctx);
@@ -257,7 +257,7 @@ static void sp_shape_render(SPShape *shape, CairoRenderContext *ctx)
                 if (marker->orient_mode != MARKER_ORIENT_ANGLE) {
                     tr = sp_shape_marker_get_transform_at_end(lastcurve);
                 } else {
-                    tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(lastcurve.pointAt(1));
+                    tr = Geom::Rotate::from_degrees(marker->orient.computed) * Geom::Translate(lastcurve.pointAt(1));
                 }
                 sp_shape_render_invoke_marker_rendering(marker, tr, style, ctx);
             }
@@ -281,7 +281,7 @@ static void sp_shape_render(SPShape *shape, CairoRenderContext *ctx)
             if (marker->orient_mode != MARKER_ORIENT_ANGLE) {
                 tr = sp_shape_marker_get_transform_at_end(lastcurve);
             } else {
-                tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(lastcurve.pointAt(1));
+                tr = Geom::Rotate::from_degrees(marker->orient.computed) * Geom::Translate(lastcurve.pointAt(1));
             }
 
             sp_shape_render_invoke_marker_rendering(marker, tr, style, ctx);

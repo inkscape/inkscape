@@ -168,9 +168,12 @@ void SPMarker::set(unsigned int key, const gchar* value) {
                     } else if (!strcmp (value, "auto-start-reverse")) {
                         this->orient_mode = MARKER_ORIENT_AUTO_START_REVERSE;
                         this->orient_set = TRUE;
-                    } else if (sp_svg_number_read_f (value, &this->orient)) {
-                        this->orient_mode = MARKER_ORIENT_ANGLE;
-                        this->orient_set = TRUE;
+                    } else {
+                        orient.readOrUnset(value);
+                        if (orient._set) {
+                            this->orient_mode = MARKER_ORIENT_ANGLE;
+                            this->orient_set = orient._set;
+                        }
                     }
 		}
 
@@ -273,7 +276,7 @@ Inkscape::XML::Node* SPMarker::write(Inkscape::XML::Document *xml_doc, Inkscape:
             } else if (this->orient_mode == MARKER_ORIENT_AUTO_START_REVERSE) {
                 repr->setAttribute("orient", "auto-start-reverse");
             } else {
-                sp_repr_set_css_double(repr, "orient", this->orient);
+                sp_repr_set_css_double(repr, "orient", this->orient.computed);
             }
 	} else {
             repr->setAttribute("orient", NULL);
@@ -394,7 +397,7 @@ sp_marker_show_instance ( SPMarker *marker, Inkscape::DrawingItem *parent,
                     m = base;
                 } else {
                     /* fixme: Orient units (Lauris) */
-                    m = Geom::Rotate::from_degrees(marker->orient);
+                    m = Geom::Rotate::from_degrees(marker->orient.computed);
                     m *= Geom::Translate(base.translation());
                 }
                 if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {

@@ -434,7 +434,7 @@ Geom::OptRect SPShape::bbox(Geom::Affine const &transform, SPItem::BBoxType bbox
                             tr = Geom::Rotate::from_degrees( 180.0 ) * tr;
                         } else if (_marker[i]->orient_mode == MARKER_ORIENT_ANGLE) {
                             Geom::Point transl = tr.translation();
-                            tr = Geom::Rotate::from_degrees(_marker[i]->orient) * Geom::Translate(transl);
+                            tr = Geom::Rotate::from_degrees(_marker[i]->orient.computed) * Geom::Translate(transl);
                         }
 
                         if (_marker[i]->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
@@ -472,7 +472,7 @@ Geom::OptRect SPShape::bbox(Geom::Affine const &transform, SPItem::BBoxType bbox
 
                         if (marker->orient_mode == MARKER_ORIENT_ANGLE) {
                             Geom::Point transl = tr.translation();
-                            tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(transl);
+                            tr = Geom::Rotate::from_degrees(marker->orient.computed) * Geom::Translate(transl);
                         }
 
                         if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
@@ -502,7 +502,7 @@ Geom::OptRect SPShape::bbox(Geom::Affine const &transform, SPItem::BBoxType bbox
 
                                 if (marker->orient_mode == MARKER_ORIENT_ANGLE) {
                                     Geom::Point transl = tr.translation();
-                                    tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(transl);
+                                    tr = Geom::Rotate::from_degrees(marker->orient.computed) * Geom::Translate(transl);
                                 }
 
                                 if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
@@ -525,7 +525,7 @@ Geom::OptRect SPShape::bbox(Geom::Affine const &transform, SPItem::BBoxType bbox
 
                         if (marker->orient_mode == MARKER_ORIENT_ANGLE) {
                             Geom::Point transl = tr.translation();
-                            tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(transl);
+                            tr = Geom::Rotate::from_degrees(marker->orient.computed) * Geom::Translate(transl);
                         }
 
                         if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
@@ -560,7 +560,7 @@ Geom::OptRect SPShape::bbox(Geom::Affine const &transform, SPItem::BBoxType bbox
 
                         if (marker->orient_mode == MARKER_ORIENT_ANGLE) {
                             Geom::Point transl = tr.translation();
-                            tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(transl);
+                            tr = Geom::Rotate::from_degrees(marker->orient.computed) * Geom::Translate(transl);
                         }
 
                         if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
