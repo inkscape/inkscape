@@ -599,7 +599,7 @@ SPDocument *SPDocument::doUnref()
 Inkscape::Util::Unit const* SPDocument::getDefaultUnit() const
 {
     SPNamedView const* nv = sp_document_namedview(this, NULL);
-    return nv ? nv->getDefaultUnit() : unit_table.getUnit("pt");
+    return nv ? nv->getDefaultUnit() : unit_table.getUnit("px");
 }
 
 /// guaranteed not to return nullptr

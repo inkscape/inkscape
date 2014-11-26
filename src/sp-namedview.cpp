@@ -1134,7 +1134,7 @@ double SPNamedView::getMarginLength(gchar const * const key,
  */
 Inkscape::Util::Unit const * SPNamedView::getDefaultUnit() const
 {
-    return display_units ? display_units : unit_table.getUnit("pt");
+    return display_units ? display_units : unit_table.getUnit("px");
 }
 
 Inkscape::Util::Unit const & SPNamedView::getSVGUnit() const
