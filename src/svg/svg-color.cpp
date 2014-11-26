@@ -32,8 +32,8 @@
 #include "svg-color.h"
 #include "svg-icc-color.h"
 
-#if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 #include "color.h"
+#if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 #include "color-profile.h"
 #include "document.h"
 #include "inkscape.h"
