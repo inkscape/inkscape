@@ -37,6 +37,7 @@
 #include <remove-last.h>
 #include "inkscape.h"
 #include "desktop.h"
+#include "sp-root.h"
 #include "sp-namedview.h"
 #include <2geom/angle.h>
 #include "document.h"
@@ -152,6 +153,12 @@ void SPGuide::set(unsigned int key, const gchar *value) {
             success += sp_svg_number_read_d(strarray[1], &newy);
             g_strfreev (strarray);
             if (success == 2) {
+                // If root viewBox set, interpret guides in terms of viewBox (90/96)
+                SPRoot *root = document->getRoot();
+                if( root->viewBox_set ) {
+                    newx = newx * root->width.computed  / root->viewBox.width();
+                    newy = newy * root->height.computed / root->viewBox.height();
+                }
                 this->point_on_line = Geom::Point(newx, newy);
             } else if (success == 1) {
                 // before 0.46 style guideline definition.
@@ -318,8 +325,18 @@ void SPGuide::moveto(Geom::Point const point_on_line, bool const commit)
     /* Calling sp_repr_set_point must precede calling sp_item_notify_moveto in the commit
        case, so that the guide's new position is available for sp_item_rm_unsatisfied_cns. */
     if (commit) {
+        // If root viewBox set, interpret guides in terms of viewBox (90/96)
+        double newx = point_on_line.x();
+        double newy = point_on_line.y();
+
+        SPRoot *root = document->getRoot();
+        if( root->viewBox_set ) {
+            newx = newx * root->viewBox.width()  / root->width.computed;
+            newy = newy * root->viewBox.height() / root->height.computed;
+        }
+
         //XML Tree being used here directly while it shouldn't be.
-        sp_repr_set_point(getRepr(), "position", point_on_line);
+        sp_repr_set_point(getRepr(), "position", Geom::Point(newx, newy) );
     }
 
 /*  DISABLED CODE BECAUSE  SPGuideAttachment  IS NOT USE AT THE MOMENT (johan)
