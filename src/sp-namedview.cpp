@@ -1130,9 +1130,9 @@ double SPNamedView::getMarginLength(gchar const * const key,
 
 /**
  * Returns namedview's default unit.
- * If no default unit is set, "pt" is returned
+ * If no default unit is set, "px" is returned
  */
-Inkscape::Util::Unit const * SPNamedView::getDefaultUnit() const
+Inkscape::Util::Unit const * SPNamedView::getDisplayUnit() const
 {
     return display_units ? display_units : unit_table.getUnit("px");
 }

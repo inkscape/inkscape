@@ -86,7 +86,7 @@ public:
     char const *getName() const;
     unsigned int getViewCount();
     GSList const *getViewList() const;
-    Inkscape::Util::Unit const * getDefaultUnit() const;
+    Inkscape::Util::Unit const * getDisplayUnit() const;
     Inkscape::Util::Unit const & getSVGUnit() const;
 
     void translateGuides(Geom::Translate const &translation);

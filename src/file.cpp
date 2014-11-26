@@ -144,7 +144,7 @@ SPDesktop *sp_file_new(const std::string &templ)
     // Set viewBox if it doesn't exist
     if (!doc->getRoot()->viewBox_set) {
         DocumentUndo::setUndoSensitive(doc, false);
-        doc->setViewBox(Geom::Rect::from_xywh(0, 0, doc->getWidth().value(doc->getDefaultUnit()), doc->getHeight().value(doc->getDefaultUnit())));
+        doc->setViewBox(Geom::Rect::from_xywh(0, 0, doc->getWidth().value(doc->getDisplayUnit()), doc->getHeight().value(doc->getDisplayUnit())));
         DocumentUndo::setUndoSensitive(doc, true);
     }
     

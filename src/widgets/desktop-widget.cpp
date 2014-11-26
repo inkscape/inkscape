@@ -1740,8 +1740,8 @@ void SPDesktopWidget::namedviewModified(SPObject *obj, guint flags)
         this->dt2r = 1. / nv->display_units->factor;
         this->ruler_origin = Geom::Point(0,0); //nv->gridorigin;   Why was the grid origin used here?
 
-        sp_ruler_set_unit(SP_RULER (this->vruler), nv->getDefaultUnit());
-        sp_ruler_set_unit(SP_RULER (this->hruler), nv->getDefaultUnit());
+        sp_ruler_set_unit(SP_RULER (this->vruler), nv->getDisplayUnit());
+        sp_ruler_set_unit(SP_RULER (this->hruler), nv->getDisplayUnit());
 
         /* This loops through all the grandchildren of aux toolbox,
          * and for each that it finds, it performs an sp_search_by_data_recursive(),

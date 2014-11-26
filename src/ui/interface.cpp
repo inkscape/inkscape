@@ -324,7 +324,7 @@ sp_ui_close_view(GtkWidget */*widget*/)
         SPDocument *doc = SPDocument::createNewDoc( templateUri.c_str() , TRUE, true );
         // Set viewBox if it doesn't exist
         if (!doc->getRoot()->viewBox_set) {
-            doc->setViewBox(Geom::Rect::from_xywh(0, 0, doc->getWidth().value(doc->getDefaultUnit()), doc->getHeight().value(doc->getDefaultUnit())));
+            doc->setViewBox(Geom::Rect::from_xywh(0, 0, doc->getWidth().value(doc->getDisplayUnit()), doc->getHeight().value(doc->getDisplayUnit())));
         }
         dt->change_document(doc);
         sp_namedview_window_from_document(dt);

@@ -596,10 +596,10 @@ SPDocument *SPDocument::doUnref()
 }
 
 /// guaranteed not to return nullptr
-Inkscape::Util::Unit const* SPDocument::getDefaultUnit() const
+Inkscape::Util::Unit const* SPDocument::getDisplayUnit() const
 {
     SPNamedView const* nv = sp_document_namedview(this, NULL);
-    return nv ? nv->getDefaultUnit() : unit_table.getUnit("px");
+    return nv ? nv->getDisplayUnit() : unit_table.getUnit("px");
 }
 
 /// guaranteed not to return nullptr
