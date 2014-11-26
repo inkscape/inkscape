@@ -12694,9 +12694,8 @@ msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr "Selecteer de <b>objecten</b> om een afsnijpad/masker van te maken."
 
 #: ../src/selection-chemistry.cpp:3894
-#, fuzzy
 msgid "Create Clip Group"
-msgstr "_Klonen"
+msgstr "Afsnijgroep maken"
 
 #: ../src/selection-chemistry.cpp:3923
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
@@ -22333,9 +22332,8 @@ msgstr "Masker uitschakelen"
 
 #. SSet Clip Group
 #: ../src/ui/interface.cpp:1761
-#, fuzzy
 msgid "Create Clip G_roup"
-msgstr "_Klonen"
+msgstr "A_fsnijgroep maken"
 
 #. Set Clip
 #: ../src/ui/interface.cpp:1768
