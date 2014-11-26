@@ -192,7 +192,17 @@ SPGuide *SPGuide::createSPGuide(SPDocument *doc, Geom::Point const &pt1, Geom::P
 
     Geom::Point n = Geom::rot90(pt2 - pt1);
 
-    sp_repr_set_point(repr, "position", pt1);
+    // If root viewBox set, interpret guides in terms of viewBox (90/96)
+    double newx = pt1.x();
+    double newy = pt1.y();
+
+    SPRoot *root = doc->getRoot();
+    if( root->viewBox_set ) {
+        newx = newx * root->viewBox.width()  / root->width.computed;
+        newy = newy * root->viewBox.height() / root->height.computed;
+    }
+
+    sp_repr_set_point(repr, "position", Geom::Point( newx, newy ));
     sp_repr_set_point(repr, "orientation", n);
 
     SPNamedView *namedview = sp_document_namedview(doc, NULL);

@@ -40,6 +40,7 @@
 #include "display/sp-canvas.h"
 #include "sp-guide.h"
 #include "sp-namedview.h"
+#include "sp-root.h"
 #include "ui/tools-switch.h"
 #include "verbs.h"
 #include "widgets/desktop-widget.h"
@@ -217,8 +218,18 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 if ((horiz ? wy : wx) >= 0) {
                     Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
                     Inkscape::XML::Node *repr = xml_doc->createElement("sodipodi:guide");
+
+                    // If root viewBox set, interpret guides in terms of viewBox (90/96)
+                    double newx = event_dt.x();
+                    double newy = event_dt.y();
+
+                    SPRoot *root = desktop->doc()->getRoot();
+                    if( root->viewBox_set ) {
+                        newx = newx * root->viewBox.width()  / root->width.computed;
+                        newy = newy * root->viewBox.height() / root->height.computed;
+                    }
+                    sp_repr_set_point(repr, "position", Geom::Point( newx, newy ));
                     sp_repr_set_point(repr, "orientation", normal);
-                    sp_repr_set_point(repr, "position", event_dt);
                     desktop->namedview->appendChild(repr);
                     Inkscape::GC::release(repr);
                     DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_NONE,
