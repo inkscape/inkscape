@@ -1006,7 +1006,7 @@ void SPItem::getSnappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscap
     clips_and_masks.push_back(clip_ref->getObject());
     clips_and_masks.push_back(mask_ref->getObject());
 
-    SPDesktop *desktop = INKSCAPE.active_desktop();
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     for (std::list<SPObject const *>::const_iterator o = clips_and_masks.begin(); o != clips_and_masks.end(); ++o) {
         if (*o) {
             // obj is a group object, the children are the actual clippers
@@ -1607,7 +1607,7 @@ Geom::Affine SPItem::i2doc_affine() const
 Geom::Affine SPItem::i2dt_affine() const
 {
     Geom::Affine ret;
-    SPDesktop const *desktop = INKSCAPE.active_desktop();
+    SPDesktop const *desktop = SP_ACTIVE_DESKTOP;
     if ( desktop ) {
         ret = i2doc_affine() * desktop->doc2dt();
     } else {
@@ -1625,7 +1625,7 @@ void SPItem::set_i2d_affine(Geom::Affine const &i2dt)
     if (parent) {
         dt2p = static_cast<SPItem *>(parent)->i2dt_affine().inverse();
     } else {
-        SPDesktop *dt = INKSCAPE.active_desktop();
+        SPDesktop *dt = SP_ACTIVE_DESKTOP;
         dt2p = dt->dt2doc();
     }
 

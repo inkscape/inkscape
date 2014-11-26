@@ -255,7 +255,7 @@ static void box3d_angle_z_value_changed(GtkAdjustment *adj, GObject *dataKludge)
 static void box3d_vp_state_changed( GtkToggleAction *act, GtkAction * /*box3d_angle*/, Proj::Axis axis )
 {
     // TODO: Take all selected perspectives into account
-    std::list<Persp3D *> sel_persps = sp_desktop_selection(INKSCAPE.active_desktop())->perspList();
+    std::list<Persp3D *> sel_persps = sp_desktop_selection(SP_ACTIVE_DESKTOP)->perspList();
     if (sel_persps.empty()) {
         // this can happen when the document is created; we silently ignore it
         return;

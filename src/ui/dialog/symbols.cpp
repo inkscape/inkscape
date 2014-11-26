@@ -287,7 +287,7 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
   ++row;
 
   /**********************************************************/
-  currentDesktop  = INKSCAPE.active_desktop();
+  currentDesktop  = SP_ACTIVE_DESKTOP;
   currentDocument = sp_desktop_document(currentDesktop);
 
   previewDocument = symbols_preview_doc(); /* Template to render symbols in */

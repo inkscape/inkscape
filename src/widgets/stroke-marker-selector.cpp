@@ -64,7 +64,7 @@ MarkerComboBox::MarkerComboBox(gchar const *id, int l) :
         sp_pixbuf_new( Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_ICON("no-marker") ) ) );
 
     sandbox = ink_markers_preview_doc ();
-    desktop = INKSCAPE.active_desktop();
+    desktop = SP_ACTIVE_DESKTOP;
     doc = sp_desktop_document(desktop);
 
     modified_connection = doc->getDefs()->connectModified( sigc::hide(sigc::hide(sigc::bind(sigc::ptr_fun(&MarkerComboBox::handleDefsModified), this))) );

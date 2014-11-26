@@ -1304,7 +1304,7 @@ bool cc_item_is_connector(SPItem *item)
 
 void cc_selection_set_avoid(bool const set_avoid)
 {
-    SPDesktop *desktop = INKSCAPE.active_desktop();
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop == NULL) {
         return;
     }

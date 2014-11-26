@@ -476,7 +476,7 @@ void
 Effect::doAcceptPathPreparations(SPLPEItem *lpeitem)
 {
     // switch to pen context
-    SPDesktop *desktop = INKSCAPE.active_desktop(); // TODO: Is there a better method to find the item's desktop?
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP; // TODO: Is there a better method to find the item's desktop?
     if (!tools_isactive(desktop, TOOLS_FREEHAND_PEN)) {
         tools_switch(desktop, TOOLS_FREEHAND_PEN);
     }
