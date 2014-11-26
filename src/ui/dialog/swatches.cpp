@@ -527,7 +527,7 @@ static void loadEmUp()
         beenHere = true;
 
         std::list<gchar *> sources;
-        sources.push_back( profile_path("palettes") );
+        sources.push_back( Inkscape::Application::profile_path("palettes") );
         sources.push_back( g_strdup(INKSCAPE_PALETTESDIR) );
         sources.push_back( g_strdup(CREATE_PALETTESDIR) );
 

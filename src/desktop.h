@@ -424,7 +424,6 @@ public:
 
 private:
     Inkscape::UI::View::EditWidgetInterface       *_widget;
-    InkscapeApplication     *_inkscape;
     Inkscape::MessageContext  *_guides_message_context;
     bool _active;
     Geom::Affine _w2d;

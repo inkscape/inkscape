@@ -41,42 +41,12 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-void sp_retransientize(InkscapeApplication */*inkscape*/, SPDesktop *desktop, gpointer dlgPtr)
-{
-    Dialog *dlg = static_cast<Dialog *>(dlgPtr);
-    dlg->onDesktopActivated (desktop);
-}
-
 gboolean sp_retransientize_again(gpointer dlgPtr)
 {
     Dialog *dlg = static_cast<Dialog *>(dlgPtr);
     dlg->retransientize_suppress = false;
     return FALSE; // so that it is only called once
 }
-
-void sp_dialog_shutdown(GObject * /*object*/, gpointer dlgPtr)
-{
-    Dialog *dlg = static_cast<Dialog *>(dlgPtr);
-    dlg->onShutdown();
-}
-
-
-static void hideCallback(GObject * /*object*/, gpointer dlgPtr)
-{
-    g_return_if_fail( dlgPtr != NULL );
-
-    Dialog *dlg = static_cast<Dialog *>(dlgPtr);
-    dlg->onHideF12();
-}
-
-static void unhideCallback(GObject * /*object*/, gpointer dlgPtr)
-{
-    g_return_if_fail( dlgPtr != NULL );
-
-    Dialog *dlg = static_cast<Dialog *>(dlgPtr);
-    dlg->onShowF12();
-}
-
 
 //=====================================================================
 
@@ -103,10 +73,10 @@ Dialog::Dialog(Behavior::BehaviorFactory behavior_factory, const char *prefs_pat
     _behavior = behavior_factory(*this);
     _desktop = SP_ACTIVE_DESKTOP;
 
-    g_signal_connect(G_OBJECT(INKSCAPE), "activate_desktop", G_CALLBACK(sp_retransientize), (void *)this);
-    g_signal_connect(G_OBJECT(INKSCAPE), "dialogs_hide", G_CALLBACK(hideCallback), (void *)this);
-    g_signal_connect(G_OBJECT(INKSCAPE), "dialogs_unhide", G_CALLBACK(unhideCallback), (void *)this);
-    g_signal_connect(G_OBJECT(INKSCAPE), "shut_down", G_CALLBACK(sp_dialog_shutdown), (void *)this);
+    INKSCAPE.signal_activate_desktop.connect(sigc::mem_fun(*this, &Dialog::onDesktopActivated));
+    INKSCAPE.signal_dialogs_hide.connect(sigc::mem_fun(*this, &Dialog::onHideF12));
+    INKSCAPE.signal_dialogs_unhide.connect(sigc::mem_fun(*this, &Dialog::onShowF12));
+    INKSCAPE.signal_shut_down.connect(sigc::mem_fun(*this, &Dialog::onShutdown));
 
     Glib::wrap(gobj())->signal_event().connect(sigc::mem_fun(*this, &Dialog::_onEvent));
     Glib::wrap(gobj())->signal_key_press_event().connect(sigc::mem_fun(*this, &Dialog::_onKeyPress));

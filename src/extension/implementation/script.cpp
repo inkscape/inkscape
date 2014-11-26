@@ -1051,7 +1051,7 @@ int Script::execute (const std::list<std::string> &in_command,
 
     Glib::ustring stderr_data = fileerr.string();
     if (stderr_data.length() != 0 &&
-        inkscape_use_gui()
+        INKSCAPE.use_gui()
        ) {
         checkStderr(stderr_data, Gtk::MESSAGE_INFO,
                                  _("Inkscape has received additional data from the script executed.  "

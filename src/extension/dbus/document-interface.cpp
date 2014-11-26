@@ -156,7 +156,7 @@ get_name_from_object (SPObject * obj)
 void
 desktop_ensure_active (SPDesktop* desk) {
     if (desk != SP_ACTIVE_DESKTOP)
-        inkscape_activate_desktop (desk);
+        INKSCAPE.activate_desktop (desk);
     return;
 }
 

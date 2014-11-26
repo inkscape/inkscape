@@ -336,7 +336,6 @@ set(inkscape_SRC
 	icon-size.h
 	id-clash.h
 	# ige-mac-menu.h
-	inkscape-private.h
 	inkscape-version.h
 	inkscape.h
 	interface.h

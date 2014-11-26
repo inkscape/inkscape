@@ -367,6 +367,7 @@ void LPEBSpline::doBSplineFromWidget(SPCurve *curve, double weightValue)
 {
     using Geom::X;
     using Geom::Y;
+    
     if (curve->get_segment_count() < 1)
         return;
     // Make copy of old path as it is changed during processing

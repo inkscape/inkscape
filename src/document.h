@@ -38,7 +38,6 @@ class SPGroup;
 class SPRoot;
 
 namespace Inkscape {
-    struct Application;
     class Selection; 
     class UndoStackObserver;
     class EventLog;

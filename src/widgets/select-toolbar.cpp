@@ -470,7 +470,7 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     contextActions->push_back( act );
 
     // Create the parent widget for x y w h tracker.
-    GtkWidget *spw = sp_widget_new_global(INKSCAPE);
+    GtkWidget *spw = sp_widget_new_global();
 
     // Remember the desktop's canvas widget, to be used for defocusing.
     g_object_set_data(G_OBJECT(spw), "dtw", sp_desktop_canvas(desktop));

@@ -720,7 +720,7 @@ PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
     }
 
     PdfImportDialog *dlg = NULL;
-    if (inkscape_use_gui()) {
+    if (INKSCAPE.use_gui()) {
         dlg = new PdfImportDialog(pdf_doc, uri);
         if (!dlg->showDialog()) {
             _cancelled = true;

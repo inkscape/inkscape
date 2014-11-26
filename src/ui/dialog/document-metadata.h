@@ -28,6 +28,7 @@
 # include <gtkmm/table.h>
 #endif
 
+#include "inkscape.h"
 #include "ui/widget/licensor.h"
 #include "ui/widget/registry.h"
 
@@ -56,8 +57,8 @@ protected:
     void  init();
 
     void _handleDocumentReplaced(SPDesktop* desktop, SPDocument *document);
-    void _handleActivateDesktop(InkscapeApplication *application, SPDesktop *desktop);
-    void _handleDeactivateDesktop(InkscapeApplication *application, SPDesktop *desktop);
+    void _handleActivateDesktop(SPDesktop *desktop);
+    void _handleDeactivateDesktop(SPDesktop *desktop);
 
     Gtk::Notebook  _notebook;
 

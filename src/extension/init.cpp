@@ -243,7 +243,7 @@ init()
     /* Load search path for extensions */
     if (Inkscape::Extension::Extension::search_path.size() == 0)
     {
-        Inkscape::Extension::Extension::search_path.push_back(profile_path("extensions"));
+        Inkscape::Extension::Extension::search_path.push_back(Inkscape::Application::profile_path("extensions"));
 
         Inkscape::Extension::Extension::search_path.push_back(g_strdup(INKSCAPE_EXTENSIONDIR));
 

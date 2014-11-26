@@ -1261,7 +1261,7 @@ std::list<gchar*> &IconImpl::icons_svg_paths()
     static bool initialized = false;
     if (!initialized) {
         // Fall back from user prefs dir into system locations.
-        gchar *userdir = profile_path("icons");
+        gchar *userdir = Inkscape::Application::profile_path("icons");
         sources.push_back(g_build_filename(userdir,"icons.svg", NULL));
         sources.push_back(g_build_filename(INKSCAPE_PIXMAPDIR, "icons.svg", NULL));
         g_free(userdir);
@@ -1572,7 +1572,7 @@ void IconImpl::addPreRender( GtkIconSize lsize, gchar const *name )
 }
 
 gboolean IconImpl::prerenderTask(gpointer /*data*/) {
-    if ( inkscapeIsCrashing() ) {
+    if ( Inkscape::Application::isCrashing() ) {
         // stop
     } else if (!pendingRenders.empty()) {
         bool workDone = false;
@@ -1584,7 +1584,7 @@ gboolean IconImpl::prerenderTask(gpointer /*data*/) {
         } while (!pendingRenders.empty() && !workDone);
     }
 
-    if (!inkscapeIsCrashing() && !pendingRenders.empty()) {
+    if (!Inkscape::Application::isCrashing() && !pendingRenders.empty()) {
         return TRUE;
     } else {
         callbackHooked = false;

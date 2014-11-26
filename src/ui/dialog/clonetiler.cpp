@@ -76,15 +76,12 @@ static gdouble trace_zoom;
 static SPDocument *trace_doc = NULL;
 
 
-CloneTiler::CloneTiler (void) :
+CloneTiler::CloneTiler () :
     UI::Widget::Panel ("", "/dialogs/clonetiler/", SP_VERB_DIALOG_CLONETILER),
     dlg(NULL),
     desktop(NULL),
     deskTrack(),
-    table_row_labels(NULL),
-    selectChangedConn(),
-    subselChangedConn(),
-    selectModifiedConn()
+    table_row_labels(NULL)
 {
     Gtk::Box *contents = _getContents();
     contents->set_spacing(0);
@@ -1273,12 +1270,13 @@ CloneTiler::CloneTiler (void) :
 
                 // connect to global selection changed signal (so we can change desktops) and
                 // external_change (so we're not fooled by undo)
-                g_signal_connect (G_OBJECT (INKSCAPE), "change_selection", G_CALLBACK (clonetiler_change_selection), dlg);
-                g_signal_connect (G_OBJECT (INKSCAPE), "external_change", G_CALLBACK (clonetiler_external_change), dlg);
-                g_signal_connect(G_OBJECT(dlg), "destroy", G_CALLBACK(clonetiler_disconnect_gsignal), G_OBJECT (INKSCAPE));
+                selectChangedConn = INKSCAPE.signal_selection_changed.connect(sigc::bind(sigc::ptr_fun(&CloneTiler::clonetiler_change_selection), dlg));
+                externChangedConn = INKSCAPE.signal_external_change.connect   (sigc::bind(sigc::ptr_fun(&CloneTiler::clonetiler_external_change), dlg));
+
+                g_signal_connect(G_OBJECT(dlg), "destroy", G_CALLBACK(clonetiler_disconnect_gsignal), this);
 
                 // update now
-                clonetiler_change_selection (NULL, sp_desktop_selection(SP_ACTIVE_DESKTOP), dlg);
+                clonetiler_change_selection (sp_desktop_selection(SP_ACTIVE_DESKTOP), dlg);
             }
 
             {
@@ -1350,7 +1348,7 @@ void CloneTiler::on_picker_color_changed(guint rgba)
     is_updating = false;
 }
 
-void CloneTiler::clonetiler_change_selection(InkscapeApplication * /*inkscape*/, Inkscape::Selection *selection, GtkWidget *dlg)
+void CloneTiler::clonetiler_change_selection(Inkscape::Selection *selection, GtkWidget *dlg)
 {
     GtkWidget *buttons = GTK_WIDGET(g_object_get_data (G_OBJECT(dlg), "buttons_on_tiles"));
     GtkWidget *status = GTK_WIDGET(g_object_get_data (G_OBJECT(dlg), "status"));
@@ -1379,16 +1377,18 @@ void CloneTiler::clonetiler_change_selection(InkscapeApplication * /*inkscape*/,
     }
 }
 
-void CloneTiler::clonetiler_external_change(InkscapeApplication * /*inkscape*/, GtkWidget *dlg)
+void CloneTiler::clonetiler_external_change(GtkWidget *dlg)
 {
-    clonetiler_change_selection (NULL, sp_desktop_selection(SP_ACTIVE_DESKTOP), dlg);
+    clonetiler_change_selection (sp_desktop_selection(SP_ACTIVE_DESKTOP), dlg);
 }
 
-void CloneTiler::clonetiler_disconnect_gsignal(GObject *widget, gpointer source)
+void CloneTiler::clonetiler_disconnect_gsignal(GObject *, gpointer source)
 {
-    if (source && G_IS_OBJECT(source)) {
-        sp_signal_disconnect_by_data (source, widget);
-    }
+    g_return_if_fail(source != NULL);
+
+    CloneTiler* dlg = reinterpret_cast<CloneTiler*>(source);
+    dlg->selectChangedConn.disconnect();
+    dlg->externChangedConn.disconnect();
 }
 
 Geom::Affine CloneTiler::clonetiler_get_transform(
@@ -2169,7 +2169,7 @@ void CloneTiler::clonetiler_remove(GtkWidget */*widget*/, GtkWidget *dlg, bool d
     }
     g_slist_free (to_delete);
 
-    clonetiler_change_selection (NULL, selection, dlg);
+    clonetiler_change_selection (selection, dlg);
 
     if (do_undo) {
         DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_DIALOG_CLONETILER,
@@ -2643,7 +2643,7 @@ void CloneTiler::clonetiler_apply(GtkWidget */*widget*/, GtkWidget *dlg)
         clonetiler_trace_finish ();
     }
 
-    clonetiler_change_selection (NULL, selection, dlg);
+    clonetiler_change_selection (selection, dlg);
 
     desktop->clearWaitingCursor();
 

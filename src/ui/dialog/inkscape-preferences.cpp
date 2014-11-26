@@ -1913,7 +1913,7 @@ void InkscapePreferences::initPageSystem()
 
         _page_system.add_group_header( _("System info"));
 
-        _sys_user_config.set_text((char const *)profile_path(""));
+        _sys_user_config.set_text((char const *)Inkscape::Application::profile_path(""));
         _sys_user_config.set_editable(false);
         _page_system.add_line(true, _("User config: "), _sys_user_config, "", _("Location of users configuration"), true);
 

@@ -211,7 +211,7 @@ Inkscape::XML::Document *sp_shortcut_create_template_file(char const *filename) 
 void sp_shortcut_get_file_names(std::vector<Glib::ustring> *names, std::vector<Glib::ustring> *paths) {
 
     std::list<gchar *> sources;
-    sources.push_back( profile_path("keys") );
+    sources.push_back( Inkscape::Application::profile_path("keys") );
     sources.push_back( g_strdup(INKSCAPE_KEYSDIR) );
 
     // loop through possible keyboard shortcut file locations.
@@ -229,7 +229,7 @@ void sp_shortcut_get_file_names(std::vector<Glib::ustring> *names, std::vector<G
                 gchar *filename = 0;
                 while ((filename = (gchar *) g_dir_read_name(directory)) != NULL) {
                     gchar* lower = g_ascii_strdown(filename, -1);
-                    if (!strcmp(dirname, profile_path("keys")) &&
+                    if (!strcmp(dirname, Inkscape::Application::profile_path("keys")) &&
                             !strcmp(lower, "default.xml")) {
                         // Dont add the users custom keys file
                         continue;

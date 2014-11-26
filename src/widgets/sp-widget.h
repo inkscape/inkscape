@@ -16,6 +16,7 @@
  */
 
 #include <gtk/gtk.h>
+#include "inkscape.h"
 
 #define SP_TYPE_WIDGET (sp_widget_get_type())
 #define SP_WIDGET(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_WIDGET, SPWidget))
@@ -23,9 +24,8 @@
 #define SP_IS_WIDGET(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_WIDGET))
 #define SP_IS_WIDGET_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_WIDGET))
 
-struct InkscapeApplication;
-
 namespace Inkscape {
+
 class Selection;
 class SPWidgetImpl;
 }
@@ -33,10 +33,15 @@ class SPWidgetImpl;
 struct SPWidget {
     friend class Inkscape::SPWidgetImpl;
 
+    static GType getType();
+
     GtkBin bin;
-    InkscapeApplication *inkscape;
 
     Inkscape::SPWidgetImpl *_impl;
+private:
+    sigc::connection selModified;
+    sigc::connection selChanged;
+    sigc::connection selSet;
 };
 
 struct SPWidgetClass {
@@ -53,7 +58,7 @@ struct SPWidgetClass {
 GType sp_widget_get_type();
 
 /** Generic constructor for global widget. */
-GtkWidget *sp_widget_new_global(InkscapeApplication *inkscape);
+GtkWidget *sp_widget_new_global();
 
 #endif // SEEN_SP_WIDGET_H
 /*

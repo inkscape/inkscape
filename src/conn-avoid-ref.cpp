@@ -87,7 +87,7 @@ void SPAvoidRef::setAvoid(char const *value)
 
 void SPAvoidRef::handleSettingChange(void)
 {
-    SPDesktop *desktop = inkscape_active_desktop();
+    SPDesktop *desktop = INKSCAPE.active_desktop();
     if (desktop == NULL) {
         return;
     }
@@ -277,7 +277,7 @@ static std::vector<Geom::Point> approxItemWithPoints(SPItem const *item, const G
 }
 static Avoid::Polygon avoid_item_poly(SPItem const *item)
 {
-    SPDesktop *desktop = inkscape_active_desktop();
+    SPDesktop *desktop = INKSCAPE.active_desktop();
     g_assert(desktop != NULL);
     double spacing = desktop->namedview->connector_spacing;
 

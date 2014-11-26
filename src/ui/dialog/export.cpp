@@ -51,7 +51,7 @@
 #include "ui/widget/unit-menu.h"
 #include "util/units.h"
 #include "helper/window.h"
-#include "inkscape-private.h"
+#include "inkscape.h"
 #include "document.h"
 #include "document-undo.h"
 #include "desktop-handles.h"
@@ -588,7 +588,7 @@ Glib::ustring Export::create_filepath_from_id (Glib::ustring id, const Glib::ust
     }
 
     if (directory.empty()) {
-        directory = homedir_path(NULL);
+        directory = INKSCAPE.homedir_path(NULL);
     }
 
     Glib::ustring filename = Glib::build_filename(directory, id+".png");

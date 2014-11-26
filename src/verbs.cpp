@@ -52,7 +52,7 @@
 #include "helper/action.h"
 #include "helper/action-context.h"
 #include "help.h"
-#include "inkscape-private.h"
+#include "inkscape.h"
 #include "ui/interface.h"
 #include "layer-fns.h"
 #include "layer-manager.h"
@@ -906,10 +906,10 @@ void FileVerb::perform(SPAction *action, void *data)
 //            sp_file_export_to_ocal(*parent);
 //            break;
         case SP_VERB_FILE_NEXT_DESKTOP:
-            inkscape_switch_desktops_next();
+            INKSCAPE.switch_desktops_next();
             break;
         case SP_VERB_FILE_PREV_DESKTOP:
-            inkscape_switch_desktops_prev();
+            INKSCAPE.switch_desktops_prev();
             break;
         case SP_VERB_FILE_CLOSE_VIEW:
             sp_ui_close_view(NULL);
@@ -1203,11 +1203,11 @@ void SelectionVerb::perform(SPAction *action, void *data)
             SelectionHelper::reverse(dt);
             break;
         case SP_VERB_SELECTION_TRACE:
-            inkscape_dialogs_unhide();
+            INKSCAPE.dialogs_unhide();
             dt->_dlg_mgr->showDialog("Trace");
             break;
         case SP_VERB_SELECTION_PIXEL_ART:
-            inkscape_dialogs_unhide();
+            INKSCAPE.dialogs_unhide();
             dt->_dlg_mgr->showDialog("PixelArt");
             break;
         case SP_VERB_SELECTION_CREATE_BITMAP:
@@ -1221,7 +1221,7 @@ void SelectionVerb::perform(SPAction *action, void *data)
             sp_selected_path_break_apart(dt);
             break;
         case SP_VERB_SELECTION_ARRANGE:
-            inkscape_dialogs_unhide();
+            INKSCAPE.dialogs_unhide();
             dt->_dlg_mgr->showDialog("TileDialog"); //FIXME: denis: What's this string (to be changed)
             break;
         default:
@@ -2006,7 +2006,7 @@ void ZoomVerb::perform(SPAction *action, void *data)
             dt->toggleColorProfAdjust();
             break;
         case SP_VERB_VIEW_ICON_PREVIEW:
-            inkscape_dialogs_unhide();
+            INKSCAPE.dialogs_unhide();
             dt->_dlg_mgr->showDialog("IconPreviewPanel");
             break;
 
@@ -2025,7 +2025,7 @@ void DialogVerb::perform(SPAction *action, void *data)
 {
     if (reinterpret_cast<std::size_t>(data) != SP_VERB_DIALOG_TOGGLE) {
         // unhide all when opening a new dialog
-        inkscape_dialogs_unhide();
+        INKSCAPE.dialogs_unhide();
     }
     
     g_return_if_fail(ensure_desktop_valid(action));
@@ -2088,7 +2088,7 @@ void DialogVerb::perform(SPAction *action, void *data)
             dt->_dlg_mgr->showDialog("UndoHistory");
             break;
         case SP_VERB_DIALOG_TOGGLE:
-            inkscape_dialogs_toggle();
+            INKSCAPE.dialogs_toggle();
             break;
         case SP_VERB_DIALOG_CLONETILER:
             //clonetiler_dialog();
@@ -2166,7 +2166,7 @@ void HelpVerb::perform(SPAction *action, void *data)
         */
 
         case SP_VERB_HELP_MEMORY:
-            inkscape_dialogs_unhide();
+            INKSCAPE.dialogs_unhide();
             dt->_dlg_mgr->showDialog("Memory");
             break;
         default:

@@ -1599,7 +1599,7 @@ void DocumentProperties::_handleDocumentReplaced(SPDesktop* desktop, SPDocument 
     update();
 }
 
-void DocumentProperties::_handleActivateDesktop(InkscapeApplication *, SPDesktop *desktop)
+void DocumentProperties::_handleActivateDesktop(SPDesktop *desktop)
 {
     Inkscape::XML::Node *repr = sp_desktop_namedview(desktop)->getRepr();
     repr->addListener(&_repr_events, this);
@@ -1608,7 +1608,7 @@ void DocumentProperties::_handleActivateDesktop(InkscapeApplication *, SPDesktop
     update();
 }
 
-void DocumentProperties::_handleDeactivateDesktop(InkscapeApplication *, SPDesktop *desktop)
+void DocumentProperties::_handleDeactivateDesktop(SPDesktop *desktop)
 {
     Inkscape::XML::Node *repr = sp_desktop_namedview(desktop)->getRepr();
     repr->removeListenerByData(this);

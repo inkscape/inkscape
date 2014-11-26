@@ -153,23 +153,23 @@ gchar *
 init_document (void)
 {
     // This is for command-line use only
-    g_assert(!inkscape_use_gui());
+    g_assert(!INKSCAPE.use_gui());
 
     // Create a blank document and get its selection model etc in an ActionContext
     SPDocument *doc = SPDocument::createNewDoc(NULL, 1, TRUE);
-    inkscape_add_document(doc);
-    return dbus_register_document(inkscape_action_context_for_document(doc));
+    INKSCAPE.add_document(doc);
+    return dbus_register_document(INKSCAPE.action_context_for_document(doc));
 }
 
 gchar *
 init_active_document()
 {
-    SPDocument *doc = inkscape_active_document();
+    SPDocument *doc = INKSCAPE.active_document();
     if (!doc) {
         return NULL;
     }
     
-    return dbus_register_document(inkscape_active_action_context());
+    return dbus_register_document(INKSCAPE.active_action_context());
 }
 
 gchar *

@@ -194,7 +194,7 @@ void TemplateLoadTab::_refreshTemplatesList()
 void TemplateLoadTab::_loadTemplates()
 {
     // user's local dir
-    _getTemplatesFromDir(profile_path("templates") + _loading_path);
+    _getTemplatesFromDir(Inkscape::Application::profile_path("templates") + _loading_path);
 
     // system templates dir
     _getTemplatesFromDir(INKSCAPE_TEMPLATESDIR + _loading_path);

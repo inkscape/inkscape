@@ -32,7 +32,7 @@ TextParam::TextParam( const Glib::ustring& label, const Glib::ustring& tip,
       value(default_value),
       defvalue(default_value)
 {
-    SPDesktop *desktop = inkscape_active_desktop(); // FIXME: we shouldn't use this!
+    SPDesktop *desktop = INKSCAPE.active_desktop(); // FIXME: we shouldn't use this!
     canvas_text = (SPCanvasText *) sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, Geom::Point(0,0), "");
     sp_canvastext_set_text (canvas_text, default_value.c_str());
     sp_canvastext_set_coords (canvas_text, 0, 0);

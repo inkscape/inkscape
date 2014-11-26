@@ -20,7 +20,7 @@
 # include <config.h>
 #endif
 #include "macros.h"
-#include "inkscape-private.h"
+#include "inkscape.h"
 #include "document.h"
 #include "layer-model.h"
 #include "selection.h"
@@ -89,7 +89,7 @@ Selection::_emit_modified(Selection *selection)
 }
 
 void Selection::_emitModified(guint flags) {
-    inkscape_selection_modified(this, flags);
+    INKSCAPE.selection_modified(this, flags);
     _modified_signal.emit(this, flags);
 }
 
@@ -104,7 +104,7 @@ void Selection::_emitChanged(bool persist_selection_context/* = false */) {
         _releaseContext(_selection_context);
     }
 
-    inkscape_selection_changed(this);
+    INKSCAPE.selection_changed(this);
     _changed_signal.emit(this);
 }
 

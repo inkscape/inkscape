@@ -56,7 +56,6 @@
 #include "event-log.h"
 #include "helper/action-context.h"
 #include "ui/interface.h"
-#include "inkscape-private.h"
 #include "layer-fns.h"
 #include "layer-manager.h"
 #include "layer-model.h"
@@ -94,28 +93,28 @@ static void _reconstruction_finish(SPDesktop * desktop);
 static void _namedview_modified (SPObject *obj, guint flags, SPDesktop *desktop);
 
 SPDesktop::SPDesktop() :
-    _dlg_mgr( 0 ),
-    namedview( 0 ),
-    canvas( 0 ),
-    layers( 0 ),
-    selection( 0 ),
-    event_context( 0 ),
-    layer_manager( 0 ),
-    event_log( 0 ),
-    temporary_item_list( 0 ),
-    snapindicator( 0 ),
-    acetate( 0 ),
-    main( 0 ),
-    gridgroup( 0 ),
-    guides( 0 ),
-    drawing( 0 ),
-    sketch( 0 ),
-    controls( 0 ),
-    tempgroup ( 0 ),
-    table( 0 ),
-    page( 0 ),
-    page_border( 0 ),
-    current( 0 ),
+    _dlg_mgr( NULL ),
+    namedview( NULL ),
+    canvas( NULL ),
+    layers( NULL ),
+    selection( NULL ),
+    event_context( NULL ),
+    layer_manager( NULL ),
+    event_log( NULL ),
+    temporary_item_list( NULL ),
+    snapindicator( NULL ),
+    acetate( NULL ),
+    main( NULL ),
+    gridgroup( NULL ),
+    guides( NULL ),
+    drawing( NULL ),
+    sketch( NULL ),
+    controls( NULL ),
+    tempgroup ( NULL ),
+    table( NULL ),
+    page( NULL ),
+    page_border( NULL ),
+    current( NULL ),
     _focusMode(false),
     dkey( 0 ),
     number( 0 ),
@@ -124,16 +123,15 @@ SPDesktop::SPDesktop() :
     waiting_cursor( false ),
     showing_dialogs ( false ),
     guides_active( false ),
-    gr_item( 0 ),
+    gr_item( NULL ),
     gr_point_type( POINT_LG_BEGIN ),
     gr_point_i( 0 ),
     gr_fill_or_stroke( Inkscape::FOR_FILL ),
     _reconstruction_old_layer_id(), // an id attribute is not allowed to be the empty string
     _display_mode(Inkscape::RENDERMODE_NORMAL),
     _display_color_mode(Inkscape::COLORMODE_NORMAL),
-    _widget( 0 ),
-    _inkscape( 0 ),
-    _guides_message_context( 0 ),
+    _widget( NULL ),
+    _guides_message_context( NULL ),
     _active( false ),
     _w2d(),
     _d2w(),
@@ -299,7 +297,6 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas, Inkscape::UI::View::EditWid
 
     // ?
     // sp_active_desktop_set (desktop);
-    _inkscape = INKSCAPE;
 
     _activate_connection = _activate_signal.connect(
         sigc::bind(
@@ -383,10 +380,6 @@ void SPDesktop::destroy()
     if (layer_manager) {
         delete layer_manager;
         layer_manager = NULL;
-    }
-
-    if (_inkscape) {
-        _inkscape = NULL;
     }
 
     if (drawing) {
@@ -1431,7 +1424,7 @@ void
 SPDesktop::emitToolSubselectionChanged(gpointer data)
 {
     _tool_subselection_changed.emit(data);
-    inkscape_subselection_changed (this);
+    INKSCAPE.subselection_changed (this);
 }
 
 void SPDesktop::updateNow()

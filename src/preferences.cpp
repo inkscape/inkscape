@@ -91,11 +91,13 @@ Preferences::Preferences() :
     _hasError(false)
 {
     // profile_path essentailly returns the argument prefixed by the profile directory.
-    gchar *path = profile_path(NULL);
+    // \TODO this is kinda hackish, but the alternative (strrchr) is worse
+
+    gchar *path = Inkscape::Application::profile_path(NULL);
     _prefs_dir = path;
     g_free(path);
 
-    path = profile_path(_prefs_basename.c_str());
+    path = Inkscape::Application::profile_path(_prefs_basename.c_str());
     _prefs_filename = path;
     g_free(path);
 
@@ -155,7 +157,7 @@ void Preferences::_load()
             // create some subdirectories for user stuff
             char const *user_dirs[] = {"keys", "templates", "icons", "extensions", "palettes", NULL};
             for (int i=0; user_dirs[i]; ++i) {
-                char *dir = profile_path(user_dirs[i]);
+                char *dir = Inkscape::Application::profile_path(user_dirs[i]);
                 g_mkdir(dir, 0755);
                 g_free(dir);
             }

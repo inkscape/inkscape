@@ -74,7 +74,7 @@
 #include "svg/svg-color.h"
 #include "svg/stringstream.h"
 
-#include "inkscape-private.h"
+#include "inkscape.h"
 #include "inkscape-version.h"
 
 #include "sp-namedview.h"
@@ -933,9 +933,9 @@ guint get_group0_keyval(GdkEventKey const* event);
 
 static void
 snooper(GdkEvent *event, gpointer /*data*/) {
-    if (inkscape_mapalt())  /* returns the map of the keyboard modifier to map to Alt, zero if no mapping */
+    if (INKSCAPE.mapalt())  /* returns the map of the keyboard modifier to map to Alt, zero if no mapping */
     {
-        GdkModifierType mapping=(GdkModifierType)inkscape_mapalt();
+        GdkModifierType mapping=(GdkModifierType)INKSCAPE.mapalt();
         switch (event->type) {
             case GDK_MOTION_NOTIFY:
                 if(event->motion.state & mapping) {
@@ -957,7 +957,7 @@ snooper(GdkEvent *event, gpointer /*data*/) {
         }
     }
 
-    if (inkscape_trackalt()) {
+    if (INKSCAPE.trackalt()) {
         // MacOS X with X11 has some problem with the default
         // xmodmapping.  A ~/.xmodmap solution does not work reliably due
         // to the way we package our executable in a .app that can launch
@@ -1042,7 +1042,7 @@ sp_main_gui(int argc, char const **argv)
     }
 
     // Add our icon directory to the search path for icon theme lookups.
-    gchar *usericondir = profile_path("icons");
+    gchar *usericondir = Inkscape::Application::profile_path("icons");
     gtk_icon_theme_append_search_path(gtk_icon_theme_get_default(), usericondir);
     gtk_icon_theme_append_search_path(gtk_icon_theme_get_default(), INKSCAPE_PIXMAPDIR);
     g_free(usericondir);
@@ -1059,7 +1059,7 @@ sp_main_gui(int argc, char const **argv)
     gboolean create_new = TRUE;
 
     /// \todo FIXME BROKEN - non-UTF-8 sneaks in here.
-    inkscape_application_init(argv[0], true);
+    Inkscape::Application::create(argv[0], true);
 
     while (fl) {
         if (sp_file_open((gchar *)fl->data,NULL)) {
@@ -1125,14 +1125,14 @@ static int sp_process_file_list(GSList *fl)
             retVal++;
         } else {
 
-            inkscape_add_document(doc);
+            INKSCAPE.add_document(doc);
 
             if (sp_vacuum_defs) {
                 doc->vacuumDocument();
             }
             
             // Execute command-line actions (selections and verbs) using our local models
-            bool has_performed_actions = Inkscape::CmdLineAction::doList(inkscape_active_action_context());
+            bool has_performed_actions = Inkscape::CmdLineAction::doList(INKSCAPE.active_action_context());
 
 #ifdef WITH_DBUS
             // If we've been asked to listen for D-Bus messages, enter a main loop here
@@ -1221,7 +1221,7 @@ static int sp_process_file_list(GSList *fl)
                 do_query_dimension (doc, false, sp_query_x? Geom::X : Geom::Y, sp_query_id);
             }
 
-            inkscape_remove_document(doc);
+            INKSCAPE.remove_document(doc);
 
             delete doc;
         }
@@ -1335,7 +1335,7 @@ int sp_main_console(int argc, char const **argv)
         exit(0);
     }
 
-    inkscape_application_init(argv[0], false);
+    Inkscape::Application::create(argv[0], false);
 
     if (sp_shell) {
         int retVal = sp_main_shell(argv[0]); // Run as interactive shell

@@ -63,7 +63,7 @@ ink_common_sources +=	\
 	helper/pixbuf-ops.h						\
 	icon-size.h							\
 	id-clash.cpp id-clash.h						\
-	inkscape.cpp inkscape.h inkscape-private.h			\
+	inkscape.cpp inkscape.h						\
 	isinf.h								\
 	knot.cpp knot.h							\
 	knot-enums.h							\

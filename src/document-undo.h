@@ -41,7 +41,7 @@ public:
 
     static void maybeDone(SPDocument *document, const gchar *keyconst, unsigned int event_type, Glib::ustring const &event_description);
 
-    static void resetKey(InkscapeApplication *inkscape, SPDesktop *desktop, GObject *base);
+    static void resetKey(SPDocument *doc);
 
     static void cancel(SPDocument *document);
 

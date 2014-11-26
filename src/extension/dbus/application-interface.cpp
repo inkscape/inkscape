@@ -49,7 +49,7 @@ application_interface_init (ApplicationInterface *app_interface)
 static bool
 ensure_desktop_valid(GError **error)
 {
-    if (!inkscape_use_gui()) {
+    if (!INKSCAPE.use_gui()) {
         g_set_error(error, INKSCAPE_ERROR, INKSCAPE_ERROR_OTHER, "Application interface action requires a GUI");
         return false;
     }
@@ -59,7 +59,7 @@ ensure_desktop_valid(GError **error)
 static bool
 ensure_desktop_not_present(GError **error)
 {
-    if (inkscape_use_gui()) {
+    if (INKSCAPE.use_gui()) {
         g_set_error(error, INKSCAPE_ERROR, INKSCAPE_ERROR_OTHER, "Application interface action requires non-GUI (command line) mode");
         return false;
     }

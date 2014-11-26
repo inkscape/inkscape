@@ -6,116 +6,220 @@
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Liam P. White <inkscapebrony@gmail.com>
  *
- * Copyright (C) 1999-2003 Authors
+ * Copyright (C) 1999-2014 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <list>
+#include <map>
+#include <vector>
 #include <glib.h>
+#include <glib-object.h>
+#include <sigc++/signal.h>
+#include "layer-model.h"
+#include "selection.h"
 
 class SPDesktop;
 class SPDocument;
+struct SPColor;
 
 namespace Inkscape {
+
+class Application;
 namespace UI {
 namespace Tools {
 
 class ToolBase;
 
-}
-}
-}
+} // namespace Tools
+} // namespace UI
 
-struct InkscapeApplication;
+class ActionContext;
+
+namespace XML {
+class Node;
+struct Document;
+} // namespace XML
+
+} // namespace Inkscape
+
+void inkscape_ref  (Inkscape::Application & in);
+void inkscape_unref(Inkscape::Application & in);
+
+#define INKSCAPE (Inkscape::Application::instance())
+#define SP_ACTIVE_EVENTCONTEXT (INKSCAPE.active_event_context())
+#define SP_ACTIVE_DOCUMENT (INKSCAPE.active_document())
+#define SP_ACTIVE_DESKTOP (INKSCAPE.active_desktop())
+
+class AppSelectionModel {
+    Inkscape::LayerModel _layer_model;
+    Inkscape::Selection *_selection;
+
+public:
+    AppSelectionModel(SPDocument *doc) {
+        _layer_model.setDocument(doc);
+        // TODO: is this really how we should manage the lifetime of the selection?
+        // I just copied this from the initialization of the Selection in SPDesktop.
+        // When and how is it actually released?
+        _selection = Inkscape::GC::release(new Inkscape::Selection(&_layer_model, NULL));
+    }
+
+    Inkscape::Selection *getSelection() const { return _selection; }
+};
 
 namespace Inkscape {
-    class ActionContext;
-    namespace XML {
-        class Node;
-        struct Document;
-        }
-}
 
-#define INKSCAPE inkscape_get_instance()
+class Application {
+public:
+    static Application& instance();
+    static bool exists();
+    static void create(const char* argv0, bool use_gui);
+    
+    // returns the mask of the keyboard modifier to map to Alt, zero if no mapping
+    // Needs to be a guint because gdktypes.h does not define a 'no-modifier' value
+    guint mapalt() const { return _mapalt; }
+    
+    // Sets the keyboard modifer to map to Alt. Zero switches off mapping, as does '1', which is the default 
+    void mapalt(guint maskvalue);
+    
+    guint trackalt() const { return _trackalt; }
+    void trackalt(guint trackvalue) { _trackalt = trackvalue; }
 
-void inkscape_autosave_init();
+    bool use_gui() const { return _use_gui; }
+    void use_gui(gboolean guival) { _use_gui = guival; }
 
-void inkscape_application_init (const gchar *argv0, gboolean use_gui);
+    char const* argv0() const { return _argv0; }
+    void argv0(char const *);
 
-bool inkscape_load_config (const gchar *filename, Inkscape::XML::Document *config, const gchar *skeleton, unsigned int skel_size, const gchar *e_notreg, const gchar *e_notxml, const gchar *e_notsp, const gchar *warn);
+    // no setter for this -- only we can control this variable
+    static bool isCrashing() { return _crashIsHappening; }
 
-/* Menus */
-bool inkscape_load_menus (InkscapeApplication * inkscape);
-bool inkscape_save_menus (InkscapeApplication * inkscape);
-Inkscape::XML::Node *inkscape_get_menus (InkscapeApplication * inkscape);
+    // useful functions
+    void autosave_init();
+    void application_init (const gchar *argv0, gboolean use_gui);
+    void load_config (const gchar *filename, Inkscape::XML::Document *config, const gchar *skeleton, 
+                      unsigned int skel_size, const gchar *e_notreg, const gchar *e_notxml, 
+                      const gchar *e_notsp, const gchar *warn);
 
-InkscapeApplication *inkscape_get_instance();
-gboolean inkscape_use_gui();
+    bool load_menus();
+    bool save_menus();
+    Inkscape::XML::Node * get_menus();
+    
+    Inkscape::UI::Tools::ToolBase * active_event_context();
+    SPDocument * active_document();
+    SPDesktop * active_desktop();
+    
+    // Use this function to get selection model etc for a document
+    Inkscape::ActionContext action_context_for_document(SPDocument *doc);
+    Inkscape::ActionContext active_action_context();
+    
+    bool sole_desktop_for_document(SPDesktop const &desktop);
+    
+    // Inkscape desktop stuff
+    void add_desktop(SPDesktop * desktop);
+    void remove_desktop(SPDesktop* desktop);
+    void activate_desktop (SPDesktop * desktop);
+    void switch_desktops_next ();
+    void switch_desktops_prev ();
+    void get_all_desktops (std::list< SPDesktop* >& listbuf);
+    void reactivate_desktop (SPDesktop * desktop);
+    SPDesktop * find_desktop_by_dkey (unsigned int dkey);
+    unsigned int maximum_dkey();
+    SPDesktop * next_desktop ();
+    SPDesktop * prev_desktop ();
+    
+    void dialogs_hide ();
+    void dialogs_unhide ();
+    void dialogs_toggle ();
+    
+    void external_change ();
+    void selection_modified (Inkscape::Selection *selection, guint flags);
+    void selection_changed (Inkscape::Selection * selection);
+    void subselection_changed (SPDesktop *desktop);
+    void selection_set (Inkscape::Selection * selection);
+    
+    void eventcontext_set (Inkscape::UI::Tools::ToolBase * eventcontext);
+    
+    // Moved document add/remove functions into public inkscape.h as they are used
+    // (rightly or wrongly) by console-mode functions
+    void add_document (SPDocument *document);
+    bool remove_document (SPDocument *document);
+    
+    static char *homedir_path(const char *filename);
+    static char *profile_path(const char *filename);
+    
+    // fixme: This has to be rethought
+    void refresh_display ();
+    
+    // fixme: This also
+    void exit ();
+    
+    static void crash_handler(int signum);
 
-bool inkscapeIsCrashing();
+    int autosave();
 
-SPDesktop * inkscape_find_desktop_by_dkey (unsigned int dkey);
+    // nobody should be accessing our reference count, so it's made private.
+    friend void ::inkscape_ref  (Application & in);
+    friend void ::inkscape_unref(Application & in);
 
-#define SP_ACTIVE_EVENTCONTEXT inkscape_active_event_context ()
-Inkscape::UI::Tools::ToolBase * inkscape_active_event_context (void);
+    // signals
+    
+    // one of selections changed
+    sigc::signal<void, Inkscape::Selection *> signal_selection_changed;
+    // one of subselections (text selection, gradient handle, etc) changed
+    sigc::signal<void, SPDesktop *> signal_subselection_changed;
+    // one of selections modified
+    sigc::signal<void, Inkscape::Selection *, guint /*flags*/> signal_selection_modified;
+    // one of selections set
+    sigc::signal<void, Inkscape::Selection *> signal_selection_set;
+    // tool switched
+    sigc::signal<void, Inkscape::UI::Tools::ToolBase * /*eventcontext*/> signal_eventcontext_set;
+    // some desktop got focus
+    sigc::signal<void, SPDesktop *> signal_activate_desktop;
+    // some desktop lost focus
+    sigc::signal<void, SPDesktop *> signal_deactivate_desktop;
+    
+    // these are orphaned signals (nothing emits them and nothing connects to them)
+    sigc::signal<void, SPDocument *> signal_destroy_document;
+    sigc::signal<void, SPColor *, double /*opacity*/> signal_color_set;
+    
+    // inkscape is quitting
+    sigc::signal<void> signal_shut_down;
+    // user pressed F12
+    sigc::signal<void> signal_dialogs_hide;
+    // user pressed F12
+    sigc::signal<void> signal_dialogs_unhide;
+    // a document was changed by some external means (undo or XML editor); this
+    // may not be reflected by a selection change and thus needs a separate signal
+    sigc::signal<void> signal_external_change;
 
-#define SP_ACTIVE_DOCUMENT inkscape_active_document ()
-SPDocument * inkscape_active_document (void);
+private:
+    static Inkscape::Application * _S_inst;
 
-#define SP_ACTIVE_DESKTOP inkscape_active_desktop ()
-SPDesktop * inkscape_active_desktop (void);
+    Application(const char* argv0, bool use_gui);
+    ~Application();
 
-// Use this function to get selection model etc for a document, if possible!
-// The "active" alternative below has all the horrible static cling of a singleton.
-Inkscape::ActionContext
-inkscape_action_context_for_document(SPDocument *doc);
+    Application(Application const&); // no copy
+    Application& operator=(Application const&); // no assign
+    Application* operator&() const; // no pointer access
 
-// More horrible static cling... sorry about this. Should really replace all of
-// the static stuff with a single instance of some kind of engine class holding
-// all the document / non-GUI stuff, and an optional GUI class that behaves a
-// bit like SPDesktop does currently. Then it will be easier to write good code
-// that doesn't just expect a GUI all the time (like lots of the app currently
-// does).
-// Also, while the "active" document / desktop concepts are convenient, they
-// appear to have been abused somewhat, further increasing static cling.
-Inkscape::ActionContext inkscape_active_action_context();
+    Inkscape::XML::Document * _menus;
+    std::map<SPDocument *, int> _document_set;
+    std::map<SPDocument *, AppSelectionModel *> _selection_models;
+    std::vector<SPDesktop *> * _desktops;
 
-bool inkscape_is_sole_desktop_for_document(SPDesktop const &desktop);
+    unsigned refCount;
+    bool _dialogs_toggle;
+    guint _mapalt;
+    guint _trackalt;
+    char * _argv0;
+    static bool _crashIsHappening;
+    bool _use_gui;
+};
 
-gchar *homedir_path(const char *filename);
-gchar *profile_path(const char *filename);
-
-/* Inkscape desktop stuff */
-void inkscape_activate_desktop (SPDesktop * desktop);
-void inkscape_switch_desktops_next ();
-void inkscape_switch_desktops_prev ();
-void inkscape_get_all_desktops (std::list< SPDesktop* >& listbuf);
-
-void inkscape_dialogs_hide ();
-void inkscape_dialogs_unhide ();
-void inkscape_dialogs_toggle ();
-
-void inkscape_external_change ();
-void inkscape_subselection_changed (SPDesktop *desktop);
-
-/* Moved document add/remove functions into public inkscape.h as they are used
-  (rightly or wrongly) by console-mode functions */
-void inkscape_add_document (SPDocument *document);
-bool inkscape_remove_document (SPDocument *document);
-
-/*
- * fixme: This has to be rethought
- */
-
-void inkscape_refresh_display (InkscapeApplication *inkscape);
-
-/*
- * fixme: This also
- */
-
-void inkscape_exit (InkscapeApplication *inkscape);
+} // namespace Inkscape
 
 #endif
 

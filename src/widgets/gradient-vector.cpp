@@ -1012,13 +1012,28 @@ GtkWidget * sp_gradient_vector_editor_new(SPGradient *gradient, SPStop *stop)
         sp_transientize(dlg);
         wd.win = dlg;
         wd.stop = 0;
-        g_signal_connect(G_OBJECT(INKSCAPE), "activate_desktop", G_CALLBACK(sp_transientize_callback), &wd);
-        g_signal_connect(G_OBJECT(dlg), "event", G_CALLBACK(sp_dialog_event_handler), dlg);
-        g_signal_connect(G_OBJECT(dlg), "destroy", G_CALLBACK(sp_gradient_vector_dialog_destroy), dlg);
-        g_signal_connect(G_OBJECT(dlg), "delete_event", G_CALLBACK(sp_gradient_vector_dialog_delete), dlg);
-        g_signal_connect(G_OBJECT(INKSCAPE), "shut_down", G_CALLBACK(sp_gradient_vector_dialog_delete), dlg);
-        g_signal_connect( G_OBJECT(INKSCAPE), "dialogs_hide", G_CALLBACK(sp_dialog_hide), dlg );
-        g_signal_connect( G_OBJECT(INKSCAPE), "dialogs_unhide", G_CALLBACK(sp_dialog_unhide), dlg );
+
+        GObject *obj = G_OBJECT(dlg);
+        sigc::connection *conn = NULL;
+
+        conn = new sigc::connection(INKSCAPE.signal_activate_desktop.connect(sigc::bind(sigc::ptr_fun(&sp_transientize_callback), &wd)));
+        g_object_set_data(obj, "desktop-activate-connection", conn);
+
+        g_signal_connect(obj, "event", G_CALLBACK(sp_dialog_event_handler), dlg);
+        g_signal_connect(obj, "destroy", G_CALLBACK(sp_gradient_vector_dialog_destroy), dlg);
+        g_signal_connect(obj, "delete_event", G_CALLBACK(sp_gradient_vector_dialog_delete), dlg);
+
+        conn = new sigc::connection(INKSCAPE.signal_shut_down.connect(
+            sigc::hide_return(
+            sigc::bind(sigc::ptr_fun(&sp_gradient_vector_dialog_delete), (GtkWidget *) NULL, (GdkEvent *) NULL, (GtkWidget *) NULL)
+        )));
+        g_object_set_data(obj, "shutdown-connection", conn);
+
+        conn = new sigc::connection(INKSCAPE.signal_dialogs_hide.connect(sigc::bind(sigc::ptr_fun(&gtk_widget_hide), dlg)));
+        g_object_set_data(obj, "dialog-hide-connection", conn);
+
+        conn = new sigc::connection(INKSCAPE.signal_dialogs_unhide.connect(sigc::bind(sigc::ptr_fun(&gtk_widget_show), dlg)));
+        g_object_set_data(obj, "dialog-unhide-connection", conn);
 
         gtk_container_set_border_width(GTK_CONTAINER(dlg), PAD);
 
@@ -1141,7 +1156,29 @@ static void sp_gradient_vector_dialog_destroy(GtkWidget * /*object*/, gpointer /
 static void sp_gradient_vector_dialog_destroy(GtkObject * /*object*/, gpointer /*data*/)
 #endif
 {
-    sp_signal_disconnect_by_data(INKSCAPE, dlg);
+    GObject *obj = G_OBJECT(dlg);
+    assert(obj != NULL);
+
+    sigc::connection *conn = static_cast<sigc::connection *>(g_object_get_data(obj, "desktop-activate-connection"));
+    assert(conn != NULL);
+    conn->disconnect();
+    delete conn;
+
+    conn = static_cast<sigc::connection *>(g_object_get_data(obj, "shutdown-connection"));
+    assert(conn != NULL);
+    conn->disconnect();
+    delete conn;
+
+    conn = static_cast<sigc::connection *>(g_object_get_data(obj, "dialog-hide-connection"));
+    assert(conn != NULL);
+    conn->disconnect();
+    delete conn;
+
+    conn = static_cast<sigc::connection *>(g_object_get_data(obj, "dialog-unhide-connection"));
+    assert(conn != NULL);
+    conn->disconnect();
+    delete conn;
+
     wd.win = dlg = NULL;
     wd.stop = 0;
 }

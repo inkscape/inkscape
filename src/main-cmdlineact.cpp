@@ -82,7 +82,7 @@ CmdLineAction::doList (ActionContext const & context) {
 bool
 CmdLineAction::idle (void) {
 	std::list<SPDesktop *> desktops;
-	inkscape_get_all_desktops(desktops);
+	INKSCAPE.get_all_desktops(desktops);
 
 	// We're going to assume one desktop per document, because no one
 	// should have had time to make more at this point.

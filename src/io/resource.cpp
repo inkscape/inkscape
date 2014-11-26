@@ -73,7 +73,7 @@ Util::ptr_shared<char> get_path(Domain domain, Type type, char const *filename)
                 case TEMPLATES: name = "templates"; break;
                 default: return get_path(SYSTEM, type, filename);
             }
-            path = profile_path(name);
+            path = Inkscape::Application::profile_path(name);
         } break;
     }
 

@@ -117,7 +117,7 @@ void graphlayout(GSList const *const items) {
 
     // add the connector spacing to the size of node bounding boxes
     // so that connectors can always be routed between shapes
-    SPDesktop* desktop = inkscape_active_desktop();
+    SPDesktop* desktop = INKSCAPE.active_desktop();
     double spacing = 0;
     if(desktop) spacing = desktop->namedview->connector_spacing+0.1;
 

@@ -39,26 +39,6 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
-/*void ObjectCompositeSettings::_on_desktop_activate(
-    InkscapeApplication *application,
-    SPDesktop *desktop,
-    ObjectCompositeSettings *w
-) {
-    if (w->_subject) {
-        w->_subject->setDesktop(desktop);
-    }
-}
-
-void ObjectCompositeSettings::_on_desktop_deactivate(
-    InkscapeApplication *application,
-    SPDesktop *desktop,
-    ObjectCompositeSettings *w
-) {
-    if (w->_subject) {
-        w->_subject->setDesktop(NULL);
-    }
-}*/
-
 ObjectCompositeSettings::ObjectCompositeSettings(unsigned int verb_code, char const *history_prefix, int flags)
 : _verb_code(verb_code),
   _blur_tag(Glib::ustring(history_prefix) + ":blur"),
@@ -102,7 +82,6 @@ ObjectCompositeSettings::ObjectCompositeSettings(unsigned int verb_code, char co
 
 ObjectCompositeSettings::~ObjectCompositeSettings() {
     setSubject(NULL);
-    g_signal_handler_disconnect(G_OBJECT(INKSCAPE), _desktop_activated);
 }
 
 void ObjectCompositeSettings::setSubject(StyleSubject *subject) {

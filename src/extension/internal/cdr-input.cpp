@@ -263,7 +263,7 @@ SPDocument *CdrInput::open(Inkscape::Extension::Input * /*mod*/, const gchar * u
      // If only one page is present, import that one without bothering user
      if (tmpSVGOutput.size() > 1) {
           CdrImportDialog *dlg = 0;
-          if (inkscape_use_gui()) {
+          if (INKSCAPE.use_gui()) {
                dlg = new CdrImportDialog(tmpSVGOutput);
                if (!dlg->showDialog()) {
                     delete dlg;

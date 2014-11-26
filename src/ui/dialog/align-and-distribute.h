@@ -127,7 +127,8 @@ protected:
     SPDesktop *_desktop;
     DesktopTracker _deskTrack;
     sigc::connection _desktopChangeConn;
-
+    sigc::connection _toolChangeConn;
+    sigc::connection _selChangeConn;
 private:
     AlignAndDistribute(AlignAndDistribute const &d);
     AlignAndDistribute& operator=(AlignAndDistribute const &d);

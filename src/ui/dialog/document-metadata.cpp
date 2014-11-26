@@ -223,7 +223,7 @@ DocumentMetadata::_handleDocumentReplaced(SPDesktop* desktop, SPDocument *)
 }
 
 void 
-DocumentMetadata::_handleActivateDesktop(InkscapeApplication *, SPDesktop *desktop)
+DocumentMetadata::_handleActivateDesktop(SPDesktop *desktop)
 {
     Inkscape::XML::Node *repr = sp_desktop_namedview(desktop)->getRepr();
     repr->addListener(&_repr_events, this);
@@ -231,7 +231,7 @@ DocumentMetadata::_handleActivateDesktop(InkscapeApplication *, SPDesktop *deskt
 }
 
 void
-DocumentMetadata::_handleDeactivateDesktop(InkscapeApplication *, SPDesktop *desktop)
+DocumentMetadata::_handleDeactivateDesktop(SPDesktop *desktop)
 {
     Inkscape::XML::Node *repr = sp_desktop_namedview(desktop)->getRepr();
     repr->removeListenerByData(this);

@@ -6,7 +6,7 @@
  *   bulia byak <bulia@dr.com>
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
  *
- * Copyright (C) 2003-2007 Authors
+ * Copyright (C) 2003-2014 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -25,7 +25,7 @@
 #include "macros.h"
 #include <gtk/gtk.h>
 #include "desktop.h"
-#include "inkscape-private.h"
+#include "inkscape.h"
 #include "preferences.h"
 #include "ui/tools/tool-base.h"
 
@@ -183,12 +183,11 @@ void sp_transientize(GtkWidget *dialog)
 
 void on_transientize (SPDesktop *desktop, win_data *wd )
 {
-    sp_transientize_callback (0, desktop, wd);
+    sp_transientize_callback (desktop, wd);
 }
 
 void
-sp_transientize_callback ( InkscapeApplication * /*inkscape*/,
-                           SPDesktop *desktop, win_data *wd )
+sp_transientize_callback ( SPDesktop *desktop, win_data *wd )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     gint transient_policy = prefs->getIntLimited( "/options/transientpolicy/value", 1, 0, 2);

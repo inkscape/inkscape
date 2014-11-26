@@ -201,7 +201,7 @@ boost::optional<Geom::Point> Line::intersection_with_viewbox (SPDesktop *desktop
 
 void create_canvas_point(Geom::Point const &pos, double size, guint32 rgba)
 {
-    SPDesktop *desktop = inkscape_active_desktop();
+    SPDesktop *desktop = INKSCAPE.active_desktop();
     SPCanvasItem * canvas_pt = sp_canvas_item_new(sp_desktop_controls(desktop), SP_TYPE_CTRL,
                           "size", size,
                           "filled", 1,
@@ -214,7 +214,7 @@ void create_canvas_point(Geom::Point const &pos, double size, guint32 rgba)
 
 void create_canvas_line(Geom::Point const &p1, Geom::Point const &p2, guint32 rgba)
 {
-    SPDesktop *desktop = inkscape_active_desktop();
+    SPDesktop *desktop = INKSCAPE.active_desktop();
     SPCtrlLine *line = ControlManager::getManager().createControlLine(sp_desktop_controls(desktop), p1, p2);
     line->setRgba32(rgba);
     sp_canvas_item_show(line);

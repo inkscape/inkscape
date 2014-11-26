@@ -177,7 +177,7 @@ SPDesktop *sp_file_new(const std::string &templ)
 Glib::ustring sp_file_default_template_uri()
 {
     std::list<gchar *> sources;
-    sources.push_back( profile_path("templates") ); // first try user's local dir
+    sources.push_back( Inkscape::Application::profile_path("templates") ); // first try user's local dir
     sources.push_back( g_strdup(INKSCAPE_TEMPLATESDIR) ); // then the system templates dir
     std::list<gchar const*> baseNames;
     gchar const* localized = _("default.svg");
@@ -316,7 +316,7 @@ bool sp_file_open(const Glib::ustring &uri,
             sp_file_add_recent( doc->getURI() );
         }
 
-        if ( inkscape_use_gui() ) {
+        if ( INKSCAPE.use_gui() ) {
             // Perform a fixup pass for hrefs.
             if ( Inkscape::ResourceManager::getManager().fixupBrokenLinks(doc) ) {
                 Glib::ustring msg = _("Broken links have been changed to point to existing files.");
