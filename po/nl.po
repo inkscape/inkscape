@@ -1354,11 +1354,11 @@ msgstr "Geeft het effect van een druppende en golvende expressionistische afbeel
 
 #: ../share/filters/filters.svg.h:506
 msgid "Marbled Ink"
-msgstr ""
+msgstr "Gemarmerde inkt"
 
 #: ../share/filters/filters.svg.h:508
 msgid "Marbled transparency effect which conforms to image detected edges"
-msgstr ""
+msgstr "Gemarmerd transparantie-effect dat zich aanpast aan afbeeldingsranden"
 
 #: ../share/filters/filters.svg.h:510
 msgid "Thick Acrylic"
@@ -1369,29 +1369,25 @@ msgid "Thick acrylic paint texture with high texture depth"
 msgstr "Dikke-acrylverftextuur met hoge textuurdiepte"
 
 #: ../share/filters/filters.svg.h:514
-#, fuzzy
 msgid "Alpha Engraving B"
-msgstr "Gravering"
+msgstr "Alfa-gravering B"
 
 #: ../share/filters/filters.svg.h:516
 msgid ""
 "Gives a controllable roughness engraving effect to bitmaps and materials"
-msgstr ""
+msgstr "Geeft een controleerbare gravering aan bitmaps en materialen"
 
 #: ../share/filters/filters.svg.h:518
-#, fuzzy
 msgid "Lapping"
-msgstr "Kleven"
+msgstr "Klotsen"
 
 #: ../share/filters/filters.svg.h:520
-#, fuzzy
 msgid "Something like a water noise"
-msgstr "Dun op zeep gelijkend membraan"
+msgstr "Zoals geschud water"
 
 #: ../share/filters/filters.svg.h:522
-#, fuzzy
 msgid "Monochrome Transparency"
-msgstr "Transparantie kleurkanaal"
+msgstr "Monochrome transparantie"
 
 #: ../share/filters/filters.svg.h:523 ../share/filters/filters.svg.h:527
 #: ../share/filters/filters.svg.h:647 ../share/filters/filters.svg.h:651
@@ -1405,195 +1401,175 @@ msgid "Fill and Transparency"
 msgstr "Vulling en transparantie"
 
 #: ../share/filters/filters.svg.h:524
-#, fuzzy
 msgid "Convert to a colorizable transparent positive or negative"
-msgstr "Afbeelding omzetten naar een transparante puntgravure"
+msgstr "Naar een transparante positief of negatief omzetten met aanpasbare kleur"
 
 #: ../share/filters/filters.svg.h:526
-#, fuzzy
 msgid "Saturation Map"
-msgstr "Verzadiging"
+msgstr "Verzadigingsmap"
 
 #: ../share/filters/filters.svg.h:528
 msgid ""
 "Creates an approximative semi-transparent and colorizable image of the "
 "saturation levels"
-msgstr ""
+msgstr "Maakt een benaderende semitransparante en gekleurde afbeelding van de verzadigingsniveaus"
 
 #: ../share/filters/filters.svg.h:530
-#, fuzzy
 msgid "Riddled"
-msgstr "Midden"
+msgstr "Doorzeefd"
 
 #: ../share/filters/filters.svg.h:532
 msgid "Riddle the surface and add bump to images"
-msgstr ""
+msgstr "Het opeprvlak doorzeven en verhoging aan afbeeldingen toevoegen"
 
 #: ../share/filters/filters.svg.h:534
-#, fuzzy
 msgid "Wrinkled Varnish"
-msgstr "Waarschuwingen tonen"
+msgstr "Gerimpelde vernis"
 
 #: ../share/filters/filters.svg.h:536
 msgid "Thick glossy and translucent paint texture with high depth"
-msgstr ""
+msgstr "Dikke glanzende en doorschijnende verftextuur met hoge diepte"
 
 #: ../share/filters/filters.svg.h:538
-#, fuzzy
 msgid "Canvas Bumps"
-msgstr "Canvas"
+msgstr "Canvasverhogingen"
 
 #: ../share/filters/filters.svg.h:540
 msgid "Canvas texture with an HSL sensitive height map"
-msgstr ""
+msgstr "Canvastextuur met TVL-gevoelige hoogtemap"
 
 #: ../share/filters/filters.svg.h:542
 msgid "Canvas Bumps Matte"
-msgstr ""
+msgstr "Matte canvasverhogingen"
 
 #: ../share/filters/filters.svg.h:544
 msgid "Same as Canvas Bumps but with a diffuse light instead of a specular one"
-msgstr ""
+msgstr "Gelijkaardig aan canvasverhogingen maar met diffuus in plaats van direct licht"
 
 #: ../share/filters/filters.svg.h:546
 msgid "Canvas Bumps Alpha"
-msgstr ""
+msgstr "Alfa canvasverhogingen"
 
 #: ../share/filters/filters.svg.h:548
 msgid "Same as Canvas Bumps but with transparent highlights"
-msgstr ""
+msgstr "Gelijkaardig aan canvasverhogingen maar met transparantie"
 
 #: ../share/filters/filters.svg.h:550
-#, fuzzy
 msgid "Bright Metal"
-msgstr "Helderder"
+msgstr "Helder metaal"
 
 #: ../share/filters/filters.svg.h:552
 msgid "Bright metallic effect for any color"
-msgstr ""
+msgstr "Helder metaaleffect voor alle kleuren"
 
 #: ../share/filters/filters.svg.h:554
 msgid "Deep Colors Plastic"
-msgstr ""
+msgstr "Diep gekleurd plastiek"
 
 #: ../share/filters/filters.svg.h:556
-#, fuzzy
 msgid "Transparent plastic with deep colors"
-msgstr "Verticale schorstextuur; met felle kleuren gebruiken"
+msgstr "Transparante plastiek met diepe kleuren"
 
 #: ../share/filters/filters.svg.h:558
-#, fuzzy
 msgid "Melted Jelly Matte"
-msgstr "Matte gel"
+msgstr "Vloeiende matte gelei"
 
 #: ../share/filters/filters.svg.h:560
 msgid "Matte bevel with blurred edges"
-msgstr ""
+msgstr "Matte verhoging met vage randen"
 
 #: ../share/filters/filters.svg.h:562
-#, fuzzy
 msgid "Melted Jelly"
-msgstr "Matte gel"
+msgstr "Vloeiende gelei"
 
 #: ../share/filters/filters.svg.h:564
-#, fuzzy
 msgid "Glossy bevel with blurred edges"
-msgstr "Geperst metaal met een gewalste rand"
+msgstr "Glanzende verhoging met vage randen"
 
 #: ../share/filters/filters.svg.h:566
-#, fuzzy
 msgid "Combined Lighting"
-msgstr "Diffuse belichting"
+msgstr "Gecombineerde belichting"
 
 #: ../share/filters/filters.svg.h:568
 #: ../src/extension/internal/filter/bevels.h:231
 msgid "Basic specular bevel to use for building textures"
-msgstr "Basis spiegelende belichting voor het maken van texturen"
+msgstr "Basis directe belichting voor het maken van texturen"
 
 #: ../share/filters/filters.svg.h:570
 msgid "Tinfoil"
-msgstr ""
+msgstr "Aluminiumfolie"
 
 #: ../share/filters/filters.svg.h:572
 msgid "Metallic foil effect combining two lighting types and variable crumple"
-msgstr ""
+msgstr "Metaalfolie-effect die twee belichtingstypes en variabele ruwheid combineert"
 
 #: ../share/filters/filters.svg.h:574
-#, fuzzy
 msgid "Soft Colors"
-msgstr "Overgangskleur"
+msgstr "Zachte kleuren"
 
 #: ../share/filters/filters.svg.h:576
-#, fuzzy
 msgid "Adds a colorizable edges glow inside objects and pictures"
-msgstr "Randen van vormen en afbeeldingen vervagen en verplaatsen"
+msgstr "Voegt een gekleurde randgloed aan obecten en afbeeldingen toe"
 
 #: ../share/filters/filters.svg.h:578
-#, fuzzy
 msgid "Relief Print"
-msgstr "LaTeX print"
+msgstr "Reliëfdruk"
 
 #: ../share/filters/filters.svg.h:580
 msgid "Bumps effect with a bevel, color flood and complex lighting"
-msgstr ""
+msgstr "Verhoging met schuine rand, gekleurde stroom en complexe verlichting"
 
 #: ../share/filters/filters.svg.h:582
-#, fuzzy
 msgid "Growing Cells"
-msgstr "Gloeiend metaal"
+msgstr "Groeiende cellen"
 
 #: ../share/filters/filters.svg.h:584
 msgid "Random rounded living cells like fill"
-msgstr ""
+msgstr "Vulling met random afgeronde levende cellen"
 
 #: ../share/filters/filters.svg.h:586
-#, fuzzy
 msgid "Fluorescence"
-msgstr "Fluorescentieniveau"
+msgstr "Fluorescentie"
 
 #: ../share/filters/filters.svg.h:588
 msgid "Oversaturate colors which can be fluorescent in real world"
-msgstr ""
+msgstr "Oververzadigde kleuren die fluorescent in de echte wereld kunnen zijn"
 
 #: ../share/filters/filters.svg.h:590
-#, fuzzy
 msgid "Pixellize"
-msgstr "Pixel"
+msgstr "Pixelliseren"
 
 #: ../share/filters/filters.svg.h:591
-#, fuzzy
 msgid "Pixel tools"
-msgstr "Pixel"
+msgstr "Pixelgereedschappen"
 
 #: ../share/filters/filters.svg.h:592
 msgid "Reduce or remove antialiasing around shapes"
-msgstr ""
+msgstr "Anti-aliasing rond vormen reduceren of verwijderen"
 
 #: ../share/filters/filters.svg.h:594
 msgid "Basic Diffuse Bump"
-msgstr ""
+msgstr "Basis diffuse verhoging"
 
 #: ../share/filters/filters.svg.h:596
-#, fuzzy
 msgid "Matte emboss effect"
-msgstr "Effecten verwijderen"
+msgstr "Mat reliëf"
 
 #: ../share/filters/filters.svg.h:598
 msgid "Basic Specular Bump"
-msgstr ""
+msgstr "Basis spiegelende verhoging"
 
 #: ../share/filters/filters.svg.h:600
-#, fuzzy
 msgid "Specular emboss effect"
-msgstr "Spiegelfactor"
+msgstr "Spiegelend reliëf"
 
 #: ../share/filters/filters.svg.h:602
 msgid "Basic Two Lights Bump"
-msgstr ""
+msgstr "Basisverhoging met twee lichten"
 
 #: ../share/filters/filters.svg.h:604
 msgid "Two types of lighting emboss effect"
-msgstr ""
+msgstr "Reliëf met twee typen verlichting"
 
 #: ../share/filters/filters.svg.h:606
 #, fuzzy
@@ -1606,7 +1582,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:610
 msgid "Plasticine"
-msgstr ""
+msgstr "Plasticine"
 
 #: ../share/filters/filters.svg.h:612
 #, fuzzy
