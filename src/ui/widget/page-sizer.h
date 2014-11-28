@@ -161,7 +161,7 @@ public:
      * Set the page size to the given dimensions.  If 'changeList' is
      * true, then reset the paper size list to the closest match
      */
-    void setDim (Inkscape::Util::Quantity w, Inkscape::Util::Quantity h, bool changeList=true);
+    void setDim (Inkscape::Util::Quantity w, Inkscape::Util::Quantity h, bool changeList=true, bool changeSize=true);
     
     /**
      * Updates the scalar widgets for the fit margins.  (Just changes the value

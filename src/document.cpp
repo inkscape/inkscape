@@ -627,7 +627,7 @@ Inkscape::Util::Quantity SPDocument::getWidth() const
     return Inkscape::Util::Quantity(result, unit_table.getUnit(u));
 }
 
-void SPDocument::setWidth(const Inkscape::Util::Quantity &width)
+void SPDocument::setWidth(const Inkscape::Util::Quantity &width, bool changeSize)
 {
     Inkscape::Util::Unit const *old_units = unit_table.getUnit("px");
     if (root->width.unit)
@@ -638,7 +638,7 @@ void SPDocument::setWidth(const Inkscape::Util::Quantity &width)
     root->width.value = width.quantity;
     root->width.unit = (SVGLength::Unit) width.unit->svgUnit();
 
-    if (root->viewBox_set)
+    if (root->viewBox_set && changeSize)
         root->viewBox.setMax(Geom::Point(root->viewBox.left() + (root->width.value / old_converted) * root->viewBox.width(), root->viewBox.bottom()));
 
     root->updateRepr();
@@ -662,7 +662,7 @@ Inkscape::Util::Quantity SPDocument::getHeight() const
     return Inkscape::Util::Quantity(result, unit_table.getUnit(u));
 }
 
-void SPDocument::setHeight(const Inkscape::Util::Quantity &height)
+void SPDocument::setHeight(const Inkscape::Util::Quantity &height, bool changeSize)
 {
     Inkscape::Util::Unit const *old_units = unit_table.getUnit("px");
     if (root->height.unit)
@@ -673,7 +673,7 @@ void SPDocument::setHeight(const Inkscape::Util::Quantity &height)
     root->height.value = height.quantity;
     root->height.unit = (SVGLength::Unit) height.unit->svgUnit();
 
-    if (root->viewBox_set)
+    if (root->viewBox_set && changeSize)
         root->viewBox.setMax(Geom::Point(root->viewBox.right(), root->viewBox.top() + (root->height.value / old_converted) * root->viewBox.height()));
 
     root->updateRepr();

@@ -246,8 +246,8 @@ public:
     Inkscape::Util::Quantity getHeight() const;
     Geom::Point getDimensions() const;
     Geom::OptRect preferredBounds() const;
-    void setWidth(const Inkscape::Util::Quantity &width);
-    void setHeight(const Inkscape::Util::Quantity &height);
+    void setWidth(const Inkscape::Util::Quantity &width, bool changeSize=true);
+    void setHeight(const Inkscape::Util::Quantity &height, bool changeSize=true);
     void setViewBox(const Geom::Rect &viewBox);
     void requestModified();
     int ensureUpToDate();
