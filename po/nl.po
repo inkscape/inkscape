@@ -59,7 +59,7 @@ msgstr ""
 "Project-Id-Version: inkscape 0.49\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2014-11-05 22:05+0100\n"
-"PO-Revision-Date: 2014-11-23 23:18+0100\n"
+"PO-Revision-Date: 2014-11-30 15:47+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -729,7 +729,9 @@ msgstr "Kubussen"
 
 #: ../share/filters/filters.svg.h:236
 msgid "Scattered cubes; adjust the Morphology primitive to vary size"
-msgstr "Verspreidde kubussen; pas de morfologieprimitieve aan om de grootte aan te passen"
+msgstr ""
+"Verspreidde kubussen; pas de morfologieprimitieve aan om de grootte aan te "
+"passen"
 
 #: ../share/filters/filters.svg.h:238
 msgid "Peel Off"
@@ -827,7 +829,8 @@ msgstr "Elektronenmicroscoop"
 #: ../share/filters/filters.svg.h:284
 msgid ""
 "Bevel, crude light, discoloration and glow like in electronic microscopy"
-msgstr "Verhoging, ruw licht, ontkleuring en gloed zoals bij elektronenmicroscopie"
+msgstr ""
+"Verhoging, ruw licht, ontkleuring en gloed zoals bij elektronenmicroscopie"
 
 #: ../share/filters/filters.svg.h:286
 msgid "Tartan"
@@ -892,7 +895,9 @@ msgstr "Randen omplooien"
 #: ../share/filters/filters.svg.h:316 ../share/filters/filters.svg.h:364
 msgid ""
 "Displace the outside of shapes and pictures without altering their content"
-msgstr "Verplaats buitenzijde van vormen en afbeeldingen zonder de inhoud aan te passen"
+msgstr ""
+"Verplaats buitenzijde van vormen en afbeeldingen zonder de inhoud aan te "
+"passen"
 
 #: ../share/filters/filters.svg.h:318
 msgid "Roughen Inside"
@@ -910,7 +915,9 @@ msgstr "Vergankelijk"
 msgid ""
 "Blur the contents of objects, preserving the outline and adding progressive "
 "transparency at edges"
-msgstr "Inhoud van objecten vervagen, randen behouden met toenemende transparantie aan randen"
+msgstr ""
+"Inhoud van objecten vervagen, randen behouden met toenemende transparantie "
+"aan randen"
 
 #: ../share/filters/filters.svg.h:326
 msgid "Chalk and Sponge"
@@ -943,7 +950,8 @@ msgstr "Tuin der Lusten"
 #: ../share/filters/filters.svg.h:340
 msgid ""
 "Phantasmagorical turbulent wisps, like Hieronymus Bosch's Garden of Delights"
-msgstr "Fantastische turbulende streken, zoals bij Hieronymus Bosch's Tuin der Lusten"
+msgstr ""
+"Fantastische turbulende streken, zoals bij Hieronymus Bosch's Tuin der Lusten"
 
 #: ../share/filters/filters.svg.h:342
 msgid "Cutout Glow"
@@ -967,7 +975,8 @@ msgstr "Verhoging met matte bellen"
 
 #: ../share/filters/filters.svg.h:352
 msgid "Same as Bubbly Bumps but with a diffuse light instead of a specular one"
-msgstr "Gelijkaardig aan verhoging met bellen met diffuus in plaats van direct licht"
+msgstr ""
+"Gelijkaardig aan verhoging met bellen met diffuus in plaats van direct licht"
 
 #: ../share/filters/filters.svg.h:354
 msgid "Blotting Paper"
@@ -1000,7 +1009,8 @@ msgstr "Vilt"
 #: ../share/filters/filters.svg.h:372
 msgid ""
 "Felt like texture with color turbulence and slightly darker at the edges"
-msgstr "Viltachtige textuur met turbulente kleuren en iets donkerder aan de randen"
+msgstr ""
+"Viltachtige textuur met turbulente kleuren en iets donkerder aan de randen"
 
 #: ../share/filters/filters.svg.h:374
 msgid "Ink Paint"
@@ -1016,7 +1026,8 @@ msgstr "Getinte regenboog"
 
 #: ../share/filters/filters.svg.h:380
 msgid "Smooth rainbow colors melted along the edges and colorizable"
-msgstr "Zachte regenboogkleuren in elkaar vloeiend langs de randen en aanpasbaar"
+msgstr ""
+"Zachte regenboogkleuren in elkaar vloeiend langs de randen en aanpasbaar"
 
 #: ../share/filters/filters.svg.h:382
 msgid "Melted Rainbow"
@@ -1257,7 +1268,8 @@ msgstr "Smeertransparantie"
 #: ../share/filters/filters.svg.h:460
 msgid ""
 "Paint objects with a transparent turbulence which turns around color edges"
-msgstr "Objecten met een transparante turbulentie tekenen die rond kleurranden draait"
+msgstr ""
+"Objecten met een transparante turbulentie tekenen die rond kleurranden draait"
 
 #: ../share/filters/filters.svg.h:462
 msgid "Thick Paint"
@@ -1283,7 +1295,8 @@ msgstr "Leerachtige verhoging"
 msgid ""
 "Combine a HSL edges detection bump with a leathery or woody and colorizable "
 "texture"
-msgstr "TVL randherkenning met een gekleurde leerachtige of houten textuur combineren"
+msgstr ""
+"TVL randherkenning met een gekleurde leerachtige of houten textuur combineren"
 
 #: ../share/filters/filters.svg.h:474
 msgid "Carnaval"
@@ -1301,7 +1314,9 @@ msgstr "Plastificeren"
 msgid ""
 "HSL edges detection bump with a wavy reflective surface effect and variable "
 "crumple"
-msgstr "TVL-randherkenning met een golvend reflecterend oppervlak en variabele kreuken"
+msgstr ""
+"TVL-randherkenning met een golvend reflecterend oppervlak en variabele "
+"kreuken"
 
 #: ../share/filters/filters.svg.h:482
 msgid "Plaster"
@@ -1318,7 +1333,8 @@ msgstr "Ruwe transparantie"
 
 #: ../share/filters/filters.svg.h:488
 msgid "Adds a turbulent transparency which displaces pixels at the same time"
-msgstr "Een turbulente transparantie toevoegent die gelijktijdig pixels verplaatst"
+msgstr ""
+"Een turbulente transparantie toevoegent die gelijktijdig pixels verplaatst"
 
 #: ../share/filters/filters.svg.h:490
 msgid "Gouache"
@@ -1342,7 +1358,9 @@ msgstr "Vloeiende transparantie"
 
 #: ../share/filters/filters.svg.h:500
 msgid "Gives a transparent fluid drawing effect with rough line and filling"
-msgstr "Geeft het effect van een vloeiende transparante afbeelding met ruwe lijn en vulling"
+msgstr ""
+"Geeft het effect van een vloeiende transparante afbeelding met ruwe lijn en "
+"vulling"
 
 #: ../share/filters/filters.svg.h:502
 msgid "Liquid Drawing"
@@ -1350,7 +1368,8 @@ msgstr "Vloeiende tekening"
 
 #: ../share/filters/filters.svg.h:504
 msgid "Gives a fluid and wavy expressionist drawing effect to images"
-msgstr "Geeft het effect van een druppende en golvende expressionistische afbeelding"
+msgstr ""
+"Geeft het effect van een druppende en golvende expressionistische afbeelding"
 
 #: ../share/filters/filters.svg.h:506
 msgid "Marbled Ink"
@@ -1402,7 +1421,8 @@ msgstr "Vulling en transparantie"
 
 #: ../share/filters/filters.svg.h:524
 msgid "Convert to a colorizable transparent positive or negative"
-msgstr "Naar een transparante positief of negatief omzetten met aanpasbare kleur"
+msgstr ""
+"Naar een transparante positief of negatief omzetten met aanpasbare kleur"
 
 #: ../share/filters/filters.svg.h:526
 msgid "Saturation Map"
@@ -1412,7 +1432,9 @@ msgstr "Verzadigingsmap"
 msgid ""
 "Creates an approximative semi-transparent and colorizable image of the "
 "saturation levels"
-msgstr "Maakt een benaderende semitransparante en gekleurde afbeelding van de verzadigingsniveaus"
+msgstr ""
+"Maakt een benaderende semitransparante en gekleurde afbeelding van de "
+"verzadigingsniveaus"
 
 #: ../share/filters/filters.svg.h:530
 msgid "Riddled"
@@ -1444,7 +1466,9 @@ msgstr "Matte canvasverhogingen"
 
 #: ../share/filters/filters.svg.h:544
 msgid "Same as Canvas Bumps but with a diffuse light instead of a specular one"
-msgstr "Gelijkaardig aan canvasverhogingen maar met diffuus in plaats van direct licht"
+msgstr ""
+"Gelijkaardig aan canvasverhogingen maar met diffuus in plaats van direct "
+"licht"
 
 #: ../share/filters/filters.svg.h:546
 msgid "Canvas Bumps Alpha"
@@ -1501,7 +1525,8 @@ msgstr "Aluminiumfolie"
 
 #: ../share/filters/filters.svg.h:572
 msgid "Metallic foil effect combining two lighting types and variable crumple"
-msgstr "Metaalfolie-effect die twee belichtingstypes en variabele ruwheid combineert"
+msgstr ""
+"Metaalfolie-effect die twee belichtingstypes en variabele ruwheid combineert"
 
 #: ../share/filters/filters.svg.h:574
 msgid "Soft Colors"
@@ -1572,66 +1597,57 @@ msgid "Two types of lighting emboss effect"
 msgstr "Reliëf met twee typen verlichting"
 
 #: ../share/filters/filters.svg.h:606
-#, fuzzy
 msgid "Linen Canvas"
-msgstr "Canvas"
+msgstr "Linnen canvas"
 
 #: ../share/filters/filters.svg.h:608 ../share/filters/filters.svg.h:616
 msgid "Painting canvas emboss effect"
-msgstr ""
+msgstr "Verfdoekeffect"
 
 #: ../share/filters/filters.svg.h:610
 msgid "Plasticine"
 msgstr "Plasticine"
 
 #: ../share/filters/filters.svg.h:612
-#, fuzzy
 msgid "Matte modeling paste emboss effect"
-msgstr "Padeffect plakken"
+msgstr "Mat plasticine-effect"
 
 #: ../share/filters/filters.svg.h:614
-#, fuzzy
 msgid "Rough Canvas Painting"
-msgstr "Kleur per kanaal"
+msgstr "Schilderij op ruw canvas"
 
 # het blijkt hier ook om embossering te gaan: in Inkscape consistent als reliëf aangeduid
 #: ../share/filters/filters.svg.h:618
-#, fuzzy
 msgid "Paper Bump"
-msgstr "Wasachtig reliëf"
+msgstr "Papierreliëf"
 
 #: ../share/filters/filters.svg.h:620
-#, fuzzy
 msgid "Paper like emboss effect"
-msgstr "Padeffect plakken"
+msgstr "Papierachtig reliëf"
 
 #: ../share/filters/filters.svg.h:622
-#, fuzzy
 msgid "Jelly Bump"
-msgstr "Vervormde bellen"
+msgstr "Gelachtige verhoging"
 
 #: ../share/filters/filters.svg.h:624
-#, fuzzy
 msgid "Convert pictures to thick jelly"
-msgstr "Tekst naar paden omzetten"
+msgstr "Afbeeldingen in dikke gel omzetten"
 
 #: ../share/filters/filters.svg.h:626
-#, fuzzy
 msgid "Blend Opposites"
-msgstr "Mengtype:"
+msgstr "Tegengestelden mengen"
 
 #: ../share/filters/filters.svg.h:628
 msgid "Blend an image with its hue opposite"
-msgstr ""
+msgstr "Een afbeelding met zijn tegengestelde tint mengen"
 
 #: ../share/filters/filters.svg.h:630
-#, fuzzy
 msgid "Hue to White"
-msgstr "Tintrotatie"
+msgstr "Tint naar wit"
 
 #: ../share/filters/filters.svg.h:632
 msgid "Fades hue progressively to white"
-msgstr ""
+msgstr "Tit progressief naar wit vervagen"
 
 #: ../share/filters/filters.svg.h:634
 #: ../src/extension/internal/bitmap/swirl.cpp:37
@@ -1641,143 +1657,129 @@ msgstr "Kolken"
 #: ../share/filters/filters.svg.h:636
 msgid ""
 "Paint objects with a transparent turbulence which wraps around color edges"
-msgstr ""
+msgstr "Objecten met een transparante turbulentie rond de kleurranden tekenen"
 
 #: ../share/filters/filters.svg.h:638
-#, fuzzy
 msgid "Pointillism"
-msgstr "Punten"
+msgstr "Pointillisme"
 
 #: ../share/filters/filters.svg.h:640
 msgid "Gives a turbulent pointillist HSL sensitive transparency"
-msgstr ""
+msgstr "Geeft een turbulente pointillisme TVL-gevoelige transparantie"
 
 #: ../share/filters/filters.svg.h:642
-#, fuzzy
 msgid "Silhouette Marbled"
-msgstr "Contour"
+msgstr "Gemermerd contour"
 
 #: ../share/filters/filters.svg.h:644
-#, fuzzy
 msgid "Basic noise transparency texture"
-msgstr "Basistextuur voor opvulling en transparantie met ruis"
+msgstr "Basistextuur voor turbulente transparantie"
 
 #: ../share/filters/filters.svg.h:646
-#, fuzzy
 msgid "Fill Background"
-msgstr "Achtergrond"
+msgstr "Achtergrond vullen"
 
 #: ../share/filters/filters.svg.h:648
-#, fuzzy
 msgid "Adds a colorizable opaque background"
-msgstr "Een gekleurde contour toevoegen"
+msgstr "Een gekleurde opake achtergrond toevoegen"
 
 #: ../share/filters/filters.svg.h:650
-#, fuzzy
 msgid "Flatten Transparency"
-msgstr "Vulling en transparantie"
+msgstr "Transparantie uitvlakken"
 
 #: ../share/filters/filters.svg.h:652
-#, fuzzy
 msgid "Adds a white opaque background"
-msgstr "Vermengen met achtergrond"
+msgstr "Een witte opake achtergrond toevoegen"
 
 #: ../share/filters/filters.svg.h:654
-#, fuzzy
 msgid "Blur Double"
-msgstr "_Mengmodus:"
+msgstr "Dubbel vervagen"
 
 #: ../share/filters/filters.svg.h:656
 msgid ""
 "Overlays two copies with different blur amounts and modifiable blend and "
 "composite"
 msgstr ""
+"Twee kopies over elkaar leggen met verschillende vervaging en aanpasbare "
+"menging en compositie"
 
 #: ../share/filters/filters.svg.h:658
-#, fuzzy
 msgid "Image Drawing Basic"
-msgstr "Nieuwe tekening"
+msgstr "Tekening, basis"
 
 #: ../share/filters/filters.svg.h:660
 msgid "Enhance and redraw color edges in 1 bit black and white"
-msgstr ""
+msgstr "Kleurranden verbeteren en hertekenen in zwart en wit"
 
 #: ../share/filters/filters.svg.h:662
-#, fuzzy
 msgid "Poster Draw"
 msgstr "Poster"
 
 #: ../share/filters/filters.svg.h:664
 msgid "Enhance and redraw edges around posterized areas"
-msgstr ""
+msgstr "Randen verbeteren en hertekenen rond verzadigde gebieden"
 
 #: ../share/filters/filters.svg.h:666
 msgid "Cross Noise Poster"
-msgstr ""
+msgstr "Poster met kruisruis"
 
 #: ../share/filters/filters.svg.h:668
 msgid "Overlay with a small scale screen like noise"
-msgstr ""
+msgstr "Met kleine schermachtige ruis bedekken"
 
 #: ../share/filters/filters.svg.h:670
 msgid "Cross Noise Poster B"
-msgstr ""
+msgstr "Poster met kruisruis B"
 
 #: ../share/filters/filters.svg.h:672
 msgid "Adds a small scale screen like noise locally"
-msgstr ""
+msgstr "Lokaal een kleine schermachtige ruis toevoegen"
 
 #: ../share/filters/filters.svg.h:674
-#, fuzzy
 msgid "Poster Color Fun"
-msgstr "Kleur plakken"
+msgstr "Poster met kleur, gun"
 
 #: ../share/filters/filters.svg.h:678
-#, fuzzy
 msgid "Poster Rough"
-msgstr "Poster"
+msgstr "Poster, ruw"
 
 #: ../share/filters/filters.svg.h:680
 msgid "Adds roughness to one of the two channels of the Poster paint filter"
-msgstr ""
+msgstr "Ruwheid aan één van de twee kleurkanalen van de posterfilter toevoegen"
 
 #: ../share/filters/filters.svg.h:682
 msgid "Alpha Monochrome Cracked"
-msgstr ""
+msgstr "Gebarsten monochroom alfa"
 
 #: ../share/filters/filters.svg.h:684 ../share/filters/filters.svg.h:688
 #: ../share/filters/filters.svg.h:692 ../share/filters/filters.svg.h:704
 #: ../share/filters/filters.svg.h:708 ../share/filters/filters.svg.h:712
 msgid "Basic noise fill texture; adjust color in Flood"
-msgstr ""
+msgstr "Basis ruisopvulling; kleur aan vulling toevoegen"
 
 #: ../share/filters/filters.svg.h:686
-#, fuzzy
 msgid "Alpha Turbulent"
-msgstr "Turbulentie"
+msgstr "Turbulente alfa"
 
 #: ../share/filters/filters.svg.h:690
-#, fuzzy
 msgid "Colorize Turbulent"
-msgstr "Verkleuren"
+msgstr "Turbulent verkleuren"
 
 #: ../share/filters/filters.svg.h:694
-#, fuzzy
 msgid "Cross Noise B"
-msgstr "Poissonruis"
+msgstr "Kruisruis B"
 
 #: ../share/filters/filters.svg.h:696
 msgid "Adds a small scale crossy graininess"
-msgstr ""
+msgstr "Een kleine korrel toevoegen"
 
 #: ../share/filters/filters.svg.h:698
-#, fuzzy
 msgid "Cross Noise"
-msgstr "Poissonruis"
+msgstr "Kruisruis"
 
 #: ../share/filters/filters.svg.h:700
 msgid "Adds a small scale screen like graininess"
-msgstr ""
+msgstr "Een kleine korrel toevoegen"
 
 #: ../share/filters/filters.svg.h:702
 msgid "Duotone Turbulent"
@@ -7861,7 +7863,9 @@ msgstr "PPI Afbeelding:"
 msgid ""
 "Take information from file or use default bitmap import resolution as "
 "defined in the preferences."
-msgstr "Informatie uit bestand halen of standaard afbeeldingsresolutie uit voorkeuren gebruiken."
+msgstr ""
+"Informatie uit bestand halen of standaard afbeeldingsresolutie uit "
+"voorkeuren gebruiken."
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:196
 msgid "From file"
@@ -20066,7 +20070,9 @@ msgstr "Afbeeldingen in contourmodus"
 msgid ""
 "When active will render images while in outline mode instead of a red box "
 "with an x. This is useful for manual tracing."
-msgstr "Indien aangevinkt worden afbeeldingen gerenderd in contourmodus in plaats van een rode box met een x. Dit is handig bij manueel overtrekken."
+msgstr ""
+"Indien aangevinkt worden afbeeldingen gerenderd in contourmodus in plaats "
+"van een rode box met een x. Dit is handig bij manueel overtrekken."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1475
 msgid "Bitmaps"
@@ -20076,7 +20082,9 @@ msgstr "Bitmaps"
 msgid ""
 "Select a file of predefined shortcuts to use. Any customized shortcuts you "
 "create will be added seperately to "
-msgstr "Selecteer een bestand met voorgedefinieerde snelkoppelingen. Alle aangemaakte eigen snelkoppelingen worden afzonderlijk bewaard in "
+msgstr ""
+"Selecteer een bestand met voorgedefinieerde snelkoppelingen. Alle "
+"aangemaakte eigen snelkoppelingen worden afzonderlijk bewaard in "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1490
 msgid "Shortcut file:"
@@ -38075,4 +38083,3 @@ msgstr "XAML-invoer"
 
 #~ msgid "icon 64x64 empty"
 #~ msgstr "64x64 icoon leeg"
-
