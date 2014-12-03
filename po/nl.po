@@ -771,7 +771,7 @@ msgstr "Glazure juwelen"
 
 #: ../share/filters/filters.svg.h:256
 msgid "Slightly cracked enameled texture"
-msgstr "Light gekrakelleerde glazuurtextuur"
+msgstr "Light gebarsten glazuurtextuur"
 
 #: ../share/filters/filters.svg.h:258
 msgid "Rough Paper"
@@ -1669,7 +1669,7 @@ msgstr "Geeft een turbulente pointillisme TVL-gevoelige transparantie"
 
 #: ../share/filters/filters.svg.h:642
 msgid "Silhouette Marbled"
-msgstr "Gemermerd contour"
+msgstr "Gemarmerd contour"
 
 #: ../share/filters/filters.svg.h:644
 msgid "Basic noise transparency texture"
@@ -1783,106 +1783,95 @@ msgstr "Een kleine korrel toevoegen"
 
 #: ../share/filters/filters.svg.h:702
 msgid "Duotone Turbulent"
-msgstr ""
+msgstr "Duotoon, turbulent"
 
 #: ../share/filters/filters.svg.h:706
-#, fuzzy
 msgid "Light Eraser Cracked"
-msgstr "Lichtgom"
+msgstr "Lichtgom, gebarsten"
 
 #: ../share/filters/filters.svg.h:710
-#, fuzzy
 msgid "Poster Turbulent"
-msgstr "Schilderij en poster"
+msgstr "Poster, turbulent"
 
 #: ../share/filters/filters.svg.h:714
 msgid "Tartan Smart"
-msgstr ""
+msgstr "Tartan, smart"
 
 #: ../share/filters/filters.svg.h:716
 msgid "Highly configurable checkered tartan pattern"
-msgstr ""
+msgstr "Zeer aanpasbaar geruit tartanpatroon"
 
 #: ../share/filters/filters.svg.h:718
-#, fuzzy
 msgid "Light Contour"
-msgstr "Lichtbron"
+msgstr "Lichte contour"
 
 #: ../share/filters/filters.svg.h:720
 msgid "Uses vertical specular light to draw lines"
-msgstr ""
+msgstr "Gebruikt verticaal spiegelend licht om lijnen te tekenen"
 
 #: ../share/filters/filters.svg.h:722
 msgid "Liquid"
-msgstr ""
+msgstr "Vloeistof"
 
 #: ../share/filters/filters.svg.h:724
-#, fuzzy
 msgid "Colorizable filling with liquid transparency"
-msgstr "RGB vervangen door transparantie"
+msgstr "Gekleurde vulling met vloeiende transparantie"
 
 #: ../share/filters/filters.svg.h:726
-#, fuzzy
 msgid "Aluminium"
-msgstr "Aluminium 1"
+msgstr "Aluminium"
 
 #: ../share/filters/filters.svg.h:728
-#, fuzzy
 msgid "Aluminium effect with sharp brushed reflections"
-msgstr "Geleffect met sterke lichtbreking"
+msgstr "Aluminiumeffect met scherpe spiegelende reflecties"
 
 #: ../share/filters/filters.svg.h:730
 msgid "Comics"
-msgstr ""
+msgstr "Comics"
 
 #: ../share/filters/filters.svg.h:732
-#, fuzzy
 msgid "Comics cartoon drawing effect"
-msgstr "Klik op de knop om een effect toe te voegen"
+msgstr "Comics cartoon effect"
 
 #: ../share/filters/filters.svg.h:734
 msgid "Comics Draft"
-msgstr ""
+msgstr "Comics ontwerp"
 
 #: ../share/filters/filters.svg.h:736 ../share/filters/filters.svg.h:768
 msgid "Draft painted cartoon shading with a glassy look"
-msgstr ""
+msgstr "Cartoonontwerp met een glazig uitzicht"
 
 #: ../share/filters/filters.svg.h:738
-#, fuzzy
 msgid "Comics Fading"
-msgstr "Vervagen"
+msgstr "Comics, vervagend"
 
 #: ../share/filters/filters.svg.h:740
 msgid "Cartoon paint style with some fading at the edges"
-msgstr ""
+msgstr "Cartoontekenstijl met vervaging aan de randen"
 
 #: ../share/filters/filters.svg.h:742
-#, fuzzy
 msgid "Brushed Metal"
-msgstr "Geërodeerd metaal"
+msgstr "Gepolijst metaal"
 
 #: ../share/filters/filters.svg.h:744
 msgid "Satiny metal surface effect"
-msgstr ""
+msgstr "Satijnachtig metaaloppervlak"
 
 #: ../share/filters/filters.svg.h:746
-#, fuzzy
 msgid "Opaline"
-msgstr "Contour"
+msgstr "Opaal"
 
 #: ../share/filters/filters.svg.h:748
 msgid "Contouring version of smooth shader"
-msgstr ""
+msgstr "Contourvariant van effen shader"
 
 #: ../share/filters/filters.svg.h:750
 msgid "Chrome"
 msgstr "Chroom"
 
 #: ../share/filters/filters.svg.h:752
-#, fuzzy
 msgid "Bright chrome effect"
-msgstr "Rechts naar links"
+msgstr "Helder chroomeffect"
 
 #: ../share/filters/filters.svg.h:754
 msgid "Deep Chrome"
@@ -1890,154 +1879,135 @@ msgstr "Diep chroom"
 
 #: ../share/filters/filters.svg.h:756
 msgid "Dark chrome effect"
-msgstr ""
+msgstr "Diep chroomeffect"
 
 #: ../share/filters/filters.svg.h:758
-#, fuzzy
 msgid "Emboss Shader"
-msgstr "Reliëf"
+msgstr "Reliëfshader"
 
 #: ../share/filters/filters.svg.h:760
 msgid "Combination of satiny and emboss effect"
-msgstr ""
+msgstr "Combinatie van satijn- en reliëfeffect"
 
 #: ../share/filters/filters.svg.h:762
 msgid "Sharp Metal"
 msgstr "Scherp metaal"
 
 #: ../share/filters/filters.svg.h:764
-#, fuzzy
 msgid "Chrome effect with darkened edges"
-msgstr "Geperst metaal met een gewalste rand"
+msgstr "Chroomeffect met donkere randen"
 
 #: ../share/filters/filters.svg.h:766
-#, fuzzy
 msgid "Brush Draw"
-msgstr "Penseel"
+msgstr "Borstel"
 
 #: ../share/filters/filters.svg.h:770
-#, fuzzy
 msgid "Chrome Emboss"
-msgstr "Reliëf"
+msgstr "Chroomreliëf"
 
 #: ../share/filters/filters.svg.h:772
-#, fuzzy
 msgid "Embossed chrome effect"
-msgstr "Padeffect verwijderen"
+msgstr "Chrroomeffect met reliëf"
 
 #: ../share/filters/filters.svg.h:774
-#, fuzzy
 msgid "Contour Emboss"
-msgstr "Reliëf"
+msgstr "Contourreliëf"
 
 #: ../share/filters/filters.svg.h:776
 msgid "Satiny and embossed contour effect"
-msgstr ""
+msgstr "Satijn- en contourreliëf"
 
 #: ../share/filters/filters.svg.h:778
-#, fuzzy
 msgid "Sharp Deco"
-msgstr "Verscherpen"
+msgstr "Scherp deco"
 
 #: ../share/filters/filters.svg.h:780
 msgid "Unrealistic reflections with sharp edges"
-msgstr ""
+msgstr "Onrealistische reflecties met scherpe randen"
 
 #: ../share/filters/filters.svg.h:782
-#, fuzzy
 msgid "Deep Metal"
-msgstr "Gesmolten metaal"
+msgstr "Diep metaal"
 
 #: ../share/filters/filters.svg.h:784
 msgid "Deep and dark metal shading"
-msgstr ""
+msgstr "Diep en donkere metaalshading"
 
 #: ../share/filters/filters.svg.h:786
-#, fuzzy
 msgid "Aluminium Emboss"
-msgstr "Aluminium 1"
+msgstr "Aluminiumreliëf"
 
 #: ../share/filters/filters.svg.h:788
 msgid "Satiny aluminium effect with embossing"
-msgstr ""
+msgstr "Satijnachtig aluminiumeffect met reliëf"
 
 #: ../share/filters/filters.svg.h:790
-#, fuzzy
 msgid "Refractive Glass"
-msgstr "Lichtbrekende gel A"
+msgstr "Lichtbrekende glas"
 
 #: ../share/filters/filters.svg.h:792
-#, fuzzy
 msgid "Double reflection through glass with some refraction"
-msgstr "Geleffect met sterke lichtbreking"
+msgstr "Dubbele reflectie door glas met enige lichtbreking"
 
 #: ../share/filters/filters.svg.h:794
-#, fuzzy
 msgid "Frosted Glass"
-msgstr "Gebarsten glas"
+msgstr "Bevroren glas"
 
 #: ../share/filters/filters.svg.h:796
-#, fuzzy
 msgid "Satiny glass effect"
-msgstr "Effect bij tonen"
+msgstr "Satijnachtig glaseffect"
 
 #: ../share/filters/filters.svg.h:798
-#, fuzzy
 msgid "Bump Engraving"
-msgstr "Gravering"
+msgstr "Verhoogd reliëf"
 
 #: ../share/filters/filters.svg.h:800
 msgid "Carving emboss effect"
-msgstr ""
+msgstr "Weggesneden reliëf"
 
 #: ../share/filters/filters.svg.h:802
-#, fuzzy
 msgid "Chromolitho Alternate"
-msgstr "Kleurenlithografie"
+msgstr "Kleurenlithografiealternatief"
 
 #: ../share/filters/filters.svg.h:804
 msgid "Old chromolithographic effect"
-msgstr ""
+msgstr "Oude kleurenlithografie"
 
 #: ../share/filters/filters.svg.h:806
 msgid "Convoluted Bump"
-msgstr ""
+msgstr "Ingewikkeld reliëf"
 
 #: ../share/filters/filters.svg.h:808
 msgid "Convoluted emboss effect"
-msgstr ""
+msgstr "Ingewikkeld reliëfeffect"
 
 #: ../share/filters/filters.svg.h:810
-#, fuzzy
 msgid "Emergence"
-msgstr "Uitwaaiering"
+msgstr "Verschijning"
 
 #: ../share/filters/filters.svg.h:812
 msgid "Cut out, add inner shadow and colorize some parts of an image"
-msgstr ""
+msgstr "Uitsnijden, schaduw langs binnen toevoegen en enkele delen verkleuren"
 
 #: ../share/filters/filters.svg.h:814
 msgid "Litho"
-msgstr ""
+msgstr "Lithografie"
 
 #: ../share/filters/filters.svg.h:816
-#, fuzzy
 msgid "Create a two colors lithographic effect"
-msgstr "Maken en toepassen van het padeffect Origineel pad klonen"
+msgstr "Een tweekleurenlithografie-effect maken"
 
 #: ../share/filters/filters.svg.h:818
-#, fuzzy
 msgid "Paint Channels"
-msgstr "Cyaankanaal"
+msgstr "Kanalen kleuren"
 
 #: ../share/filters/filters.svg.h:820
 msgid "Colorize separately the three color channels"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:822
-#, fuzzy
 msgid "Posterized Light Eraser"
-msgstr "Lichtgom"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:824
 msgid "Create a semi transparent posterized image"
@@ -2049,15 +2019,15 @@ msgstr "Trichroom"
 
 #: ../share/filters/filters.svg.h:828
 msgid "Like Duochrome but with three colors"
-msgstr ""
+msgstr "Zoals duochroom maar met drie kleuren"
 
 #: ../share/filters/filters.svg.h:830
 msgid "Simulate CMY"
-msgstr ""
+msgstr "CMY simuleren"
 
 #: ../share/filters/filters.svg.h:832
 msgid "Render Cyan, Magenta and Yellow channels with a colorizable background"
-msgstr ""
+msgstr "Cyaan-, magenta en geelkanaal renderen met een gekleurde achtergrond"
 
 #: ../share/filters/filters.svg.h:834
 #, fuzzy
