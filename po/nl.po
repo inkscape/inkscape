@@ -3826,43 +3826,39 @@ msgstr "Wensballon"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:136
-#, fuzzy
 msgctxt "Symbol"
 msgid "Rounded Balloon"
-msgstr "Tekstballonnen"
+msgstr "Afgeronde ballon"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:137
-#, fuzzy
 msgctxt "Symbol"
 msgid "Squared Balloon"
-msgstr "Tekstballonnen"
+msgstr "Vierkante ballon"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:138
 msgctxt "Symbol"
 msgid "Over the Phone"
-msgstr ""
+msgstr "Over de telefoon"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:139
-#, fuzzy
 msgctxt "Symbol"
 msgid "Hip Balloon"
-msgstr "Tekstballonnen"
+msgstr "Heupballon"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:140
-#, fuzzy
 msgctxt "Symbol"
 msgid "Circle Balloon"
-msgstr "Tekstballonnen"
+msgstr "Cirkelballon"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:141
 msgctxt "Symbol"
 msgid "Exclaim Balloon"
-msgstr ""
+msgstr "Roepballon"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:142
@@ -3878,7 +3874,6 @@ msgstr "Proces"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:144
-#, fuzzy
 msgctxt "Symbol"
 msgid "Input/Output"
 msgstr "Invoer/Uitvoer"
@@ -3917,7 +3912,7 @@ msgstr "Beslissing"
 #: ../share/symbols/symbols.h:150
 msgctxt "Symbol"
 msgid "Magnetic Tape"
-msgstr ""
+msgstr "Magnetische band"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:151
@@ -3927,10 +3922,9 @@ msgstr "Display"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:152
-#, fuzzy
 msgctxt "Symbol"
 msgid "Auxiliary Operation"
-msgstr "Manuele bediening"
+msgstr "Hulpoperatie"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:153
@@ -3946,37 +3940,33 @@ msgstr "Extraheren"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:155
-#, fuzzy
 msgctxt "Symbol"
 msgid "Terminal/Interrupt"
 msgstr "Terminator"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:156
-#, fuzzy
 msgctxt "Symbol"
 msgid "Punched Card"
 msgstr "Ponskaart"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:157
-#, fuzzy
 msgctxt "Symbol"
 msgid "Punch Tape"
-msgstr "Ponskaart"
+msgstr "Ponstape"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:158
-#, fuzzy
 msgctxt "Symbol"
 msgid "Online Storage"
-msgstr "Interne opslag"
+msgstr "Online opslag"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:159
 msgctxt "Symbol"
 msgid "Keying"
-msgstr ""
+msgstr "Keying"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:160
@@ -3998,16 +3988,15 @@ msgstr "Zie andere pagina"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:163
-#, fuzzy
 msgctxt "Symbol"
 msgid "Transmittal Tape"
-msgstr "Zendmast"
+msgstr "Transmissieband"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:164
 msgctxt "Symbol"
 msgid "Communication Link"
-msgstr ""
+msgstr "Communicatielink"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:165
@@ -4019,13 +4008,13 @@ msgstr "Vergelijken"
 #: ../share/symbols/symbols.h:166
 msgctxt "Symbol"
 msgid "Comment/Annotation"
-msgstr ""
+msgstr "Commentaar"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:167
 msgctxt "Symbol"
 msgid "Core"
-msgstr ""
+msgstr "Kern"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:168
@@ -4041,17 +4030,15 @@ msgstr "Magneetschijf (database)"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:170
-#, fuzzy
 msgctxt "Symbol"
 msgid "Magnetic Drum (Direct Access)"
-msgstr "Magneetschijf (database)"
+msgstr "Magneetschijf (directe toegang)"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:171
-#, fuzzy
 msgctxt "Symbol"
 msgid "Offline Storage"
-msgstr "Interne opslag"
+msgstr "Offline opslag"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:172
@@ -4075,13 +4062,13 @@ msgstr "Vertraging"
 #: ../share/symbols/symbols.h:175
 msgctxt "Symbol"
 msgid "Loop Limit Begin"
-msgstr ""
+msgstr "Lusopener begin"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:176
 msgctxt "Symbol"
 msgid "Loop Limit End"
-msgstr ""
+msgstr "Lusopener einde"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:177
@@ -4153,7 +4140,7 @@ msgstr "Not-poort klein"
 #: ../share/symbols/symbols.h:188
 msgctxt "Symbol"
 msgid "United States National Park Service Map Symbols"
-msgstr ""
+msgstr "Kaartsymbolen United States National Park Service"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:189 ../share/symbols/symbols.h:190
@@ -4165,26 +4152,25 @@ msgstr "Luchthaven"
 #: ../share/symbols/symbols.h:191 ../share/symbols/symbols.h:192
 msgctxt "Symbol"
 msgid "Amphitheatre"
-msgstr ""
+msgstr "Amfitheater"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:193 ../share/symbols/symbols.h:194
-#, fuzzy
 msgctxt "Symbol"
 msgid "Bicycle Trail"
-msgstr "Fietswinkel"
+msgstr "Fietstraject"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:195 ../share/symbols/symbols.h:196
 msgctxt "Symbol"
 msgid "Boat Launch"
-msgstr ""
+msgstr "Terwaterlating"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:197 ../share/symbols/symbols.h:198
 msgctxt "Symbol"
 msgid "Boat Tour"
-msgstr ""
+msgstr "Boottocht"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:199 ../share/symbols/symbols.h:200
@@ -4194,72 +4180,66 @@ msgstr "Busstop"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:201 ../share/symbols/symbols.h:202
-#, fuzzy
 msgctxt "Symbol"
 msgid "Campfire"
-msgstr "Camping"
+msgstr "Kampvuur"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:203 ../share/symbols/symbols.h:204
-#, fuzzy
 msgctxt "Symbol"
 msgid "Campground"
-msgstr "Ronding van uiteinde"
+msgstr "Camping"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:205 ../share/symbols/symbols.h:206
 msgctxt "Symbol"
 msgid "CanoeAccess"
-msgstr ""
+msgstr "Kanotoegang"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:207 ../share/symbols/symbols.h:208
 msgctxt "Symbol"
 msgid "Crosscountry Ski Trail"
-msgstr ""
+msgstr "Crosscountry skitraject"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:209 ../share/symbols/symbols.h:210
 msgctxt "Symbol"
 msgid "Downhill Skiing"
-msgstr ""
+msgstr "Downhill skiën"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:211 ../share/symbols/symbols.h:212
-#, fuzzy
 msgctxt "Symbol"
 msgid "Drinking Water"
-msgstr "Drinkwaterfontein"
+msgstr "Drinkwater"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:215 ../share/symbols/symbols.h:216
-#, fuzzy
 msgctxt "Symbol"
 msgid "Fishing"
-msgstr "Vishandel"
+msgstr "Vissen"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:217 ../share/symbols/symbols.h:218
 msgctxt "Symbol"
 msgid "Food Service"
-msgstr ""
+msgstr "Voeding"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:219 ../share/symbols/symbols.h:220
 msgctxt "Symbol"
 msgid "Four Wheel Drive Road"
-msgstr ""
+msgstr "4x4 weg"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:221 ../share/symbols/symbols.h:222
-#, fuzzy
 msgctxt "Symbol"
 msgid "Gas Station"
-msgstr "Busstation"
+msgstr "Benzinestation"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:223 ../share/symbols/symbols.h:224
-#, fuzzy
 msgctxt "Symbol"
 msgid "Golfing"
 msgstr "Golf"
@@ -4268,7 +4248,7 @@ msgstr "Golf"
 #: ../share/symbols/symbols.h:225 ../share/symbols/symbols.h:226
 msgctxt "Symbol"
 msgid "Horseback Riding"
-msgstr ""
+msgstr "Paardrijden"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:227 ../share/symbols/symbols.h:228
@@ -4286,13 +4266,13 @@ msgstr "Ijsschaatsen"
 #: ../share/symbols/symbols.h:233 ../share/symbols/symbols.h:234
 msgctxt "Symbol"
 msgid "Litter Receptacle"
-msgstr ""
+msgstr "Afval"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:235 ../share/symbols/symbols.h:236
 msgctxt "Symbol"
 msgid "Lodging"
-msgstr ""
+msgstr "Logies"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:237 ../share/symbols/symbols.h:238
@@ -4308,17 +4288,15 @@ msgstr "Recyclage"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:243 ../share/symbols/symbols.h:244
-#, fuzzy
 msgctxt "Symbol"
 msgid "Pets On Leash"
-msgstr "Tekst op pad"
+msgstr "Huisdieren aan de leiband"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:245 ../share/symbols/symbols.h:246
-#, fuzzy
 msgctxt "Symbol"
 msgid "Picnic Area"
-msgstr "Park / picknickplaats"
+msgstr "Picknickplaats"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:247 ../share/symbols/symbols.h:248
@@ -4328,23 +4306,21 @@ msgstr "Postkantoor"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:249 ../share/symbols/symbols.h:250
-#, fuzzy
 msgctxt "Symbol"
 msgid "Ranger Station"
-msgstr "Tankstation"
+msgstr "Ranger"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:251 ../share/symbols/symbols.h:252
-#, fuzzy
 msgctxt "Symbol"
 msgid "RV Campground"
-msgstr "Ronding van uiteinde"
+msgstr "Campers"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:253 ../share/symbols/symbols.h:254
 msgctxt "Symbol"
 msgid "Restrooms"
-msgstr ""
+msgstr "Toilet"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:255 ../share/symbols/symbols.h:256
@@ -4356,11 +4332,10 @@ msgstr "Zeilen"
 #: ../share/symbols/symbols.h:257 ../share/symbols/symbols.h:258
 msgctxt "Symbol"
 msgid "Sanitary Disposal Station"
-msgstr ""
+msgstr "Sanitair afval"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:259 ../share/symbols/symbols.h:260
-#, fuzzy
 msgctxt "Symbol"
 msgid "Scuba Diving"
 msgstr "Duiken"
@@ -4369,7 +4344,7 @@ msgstr "Duiken"
 #: ../share/symbols/symbols.h:261 ../share/symbols/symbols.h:262
 msgctxt "Symbol"
 msgid "Self Guided Trail"
-msgstr ""
+msgstr "Niet bewegwijzerd traject"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:263 ../share/symbols/symbols.h:264
@@ -4379,60 +4354,54 @@ msgstr "Onderdak"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:265 ../share/symbols/symbols.h:266
-#, fuzzy
 msgctxt "Symbol"
 msgid "Showers"
-msgstr "Tonen:"
+msgstr "Douches"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:267 ../share/symbols/symbols.h:268
-#, fuzzy
 msgctxt "Symbol"
 msgid "Sledding"
-msgstr "Lezen"
+msgstr "Sleeën"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:269 ../share/symbols/symbols.h:270
 msgctxt "Symbol"
 msgid "SnowmobileTrail"
-msgstr ""
+msgstr "Sneeuwscootertraject"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:271 ../share/symbols/symbols.h:272
-#, fuzzy
 msgctxt "Symbol"
 msgid "Stable"
-msgstr "Tabel"
+msgstr "Stal"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:273 ../share/symbols/symbols.h:274
 msgctxt "Symbol"
 msgid "Store"
-msgstr ""
+msgstr "Winkel"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:275 ../share/symbols/symbols.h:276
 msgctxt "Symbol"
 msgid "Swimming"
-msgstr ""
+msgstr "Zwemmen"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:279 ../share/symbols/symbols.h:280
-#, fuzzy
 msgctxt "Symbol"
 msgid "Emergency Telephone"
-msgstr "Telefoon"
+msgstr "Noodtelefoon"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:281 ../share/symbols/symbols.h:282
-#, fuzzy
 msgctxt "Symbol"
 msgid "Trailhead"
-msgstr "Braille"
+msgstr "Vertrek wandeling"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:283 ../share/symbols/symbols.h:284
-#, fuzzy
 msgctxt "Symbol"
 msgid "Wheelchair Accessible"
 msgstr "Toegankelijk voor rolstoelgebruikers"
