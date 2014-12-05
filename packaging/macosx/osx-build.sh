@@ -53,6 +53,7 @@ Compilation script for Inkscape on Mac OS X.
   \033[1mc,conf,configure\033[0m
     configure the build (run configure). Edit your configuration
     options in $0
+    \033[1m-g,--debug\033[0m	compile with debug symbols and without optimization
     \033[1m-p,--prefix\033[0m	specify install prefix (configure step only)
   \033[1mb,build\033[0m
     build Inkscape (run make)
@@ -98,6 +99,7 @@ fi
 BZRUPDATE="f"
 AUTOGEN="f"
 CONFIGURE="f"
+DEBUG_BUILD="f"
 BUILD="f"
 NJOBS=1
 INSTALL="f"
@@ -130,6 +132,8 @@ do
 		AUTOGEN="t" ;;
 	c|conf|configure)
 		CONFIGURE="t" ;;
+	-g|--debug)
+		DEBUG_BUILD="t" ;;
 	b|build)
 		BUILD="t" ;;
 	-j|--jobs)
@@ -170,7 +174,7 @@ OSXPOINTNO="$(cut -d. -f3 <<< $OSXVERSION)"
 ARCH="$(uname -a | awk '{print $NF;}')"
 
 # MacPorts for dependencies
-[[ -x $LIBPREFIX/bin/port && -d $LIBPREFIX/etc/macports ]] && use_port="t"
+[[ -x $LIBPREFIX/bin/port && -d $LIBPREFIX/etc/macports ]] && export use_port="t"
 
 # guess default build_arch (MacPorts)
 if [ "$OSXMINORNO" -ge "6" ]; then
@@ -201,7 +205,11 @@ export CPATH="$LIBPREFIX/include"
 export CPPFLAGS="$CPPFLAGS -I$LIBPREFIX/include"
 export LDFLAGS="$LDFLAGS -L$LIBPREFIX/lib"
 #  compiler arguments
-export CFLAGS="$CFLAGS -Os"
+if [[ $DEBUG_BUILD == "t" ]]; then
+	export CFLAGS="-g -O0"
+else
+	export CFLAGS="-Os"
+fi
 
 # Use system compiler and compiler flags which are known to work:
 if [ "$OSXMINORNO" -le "4" ]; then
@@ -280,9 +288,14 @@ getinkscapeinfo () {
 	[ $? -ne 0 ] && INKVERSION="devel"
 	REVISION="$(bzr revno 2>/dev/null)"
 	[ $? -ne 0 ] && REVISION="" || REVISION="-r$REVISION"
+	BUILDNO=1
 
 	TARGETARCH="$_build_arch"
-	NEWNAME="Inkscape-$INKVERSION$REVISION-$gtk_target-$TARGETVERSION-$TARGETARCH"
+	NEWNAME="Inkscape-$INKVERSION$REVISION-$BUILDNO-$gtk_target-$TARGETVERSION-$TARGETARCH"
+	while [ -e "Inkscape-$INKVERSION$REVISION-$BUILDNO-$gtk_target-$TARGETVERSION-$TARGETARCH".dmg ]; do
+		let BUILDNO=${BUILDNO}+1
+		NEWNAME="Inkscape-$INKVERSION$REVISION-$BUILDNO-$gtk_target-$TARGETVERSION-$TARGETARCH"
+	done
 	DMGFILE="$NEWNAME.dmg"
 	INFOFILE="$NEWNAME-info.txt"
 
@@ -304,6 +317,9 @@ checkversion () {
 checkversion-port () {
 	if [[ "$use_port" == "t" ]]; then
 		PORTVER="$(port echo $1 and active 2>/dev/null | cut -d@ -f2 | cut -d_ -f1)"
+		if [ -z "$PORTVER" ]; then
+			PORTVER="$(port echo ${1}-devel and active 2>/dev/null | cut -d@ -f2 | cut -d_ -f1)"
+		fi
 	else
 		PORTVER=""
 	fi
@@ -331,7 +347,7 @@ checkversion-py-module () {
 }
 
 buildinfofile () {
-	getinkscapeinfo
+	[ -z "$INFOFILE" ] && getinkscapeinfo
 	# Prepare information file
 	echo "Build information on $(date) for $(whoami):
 	For OS X Ver          $TARGETNAME ($TARGETVERSION)
@@ -513,6 +529,10 @@ then
 		# TODO: fix this: it does not allow for spaces in the PATH under this form and cannot be quoted
 	fi
 
+	if [[ "$DEBUG_BUILD" = "t" ]]; then
+		export with_dSYM="true"
+	fi
+
 	# Create app bundle
 	./osx-app.sh $STRIP $VERBOSE -b $INSTALLPREFIX/bin/inkscape -p $BUILDPREFIX/Info.plist $PYTHON_MODULES
 	status=$?
@@ -520,9 +540,6 @@ then
 		echo -e "\nApplication bundle creation failed"
 		exit $status
 	fi
-
-	# Prepare information file
-	BUILD_INFO="t"
 fi
 
 if [[ "$DISTRIB" == "t" ]]
@@ -537,6 +554,11 @@ then
 	fi
 
 	mv Inkscape.dmg $DMGFILE
+
+	if [[ "$DEBUG_BUILD" = "t" ]]; then
+		mv "$DMGFILE" "${NEWNAME}-debug.dmg"
+		ln -s "${NEWNAME}-debug.dmg" "$DMGFILE"
+	fi
 
 	# Prepare information file
 	BUILD_INFO="t"

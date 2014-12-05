@@ -95,7 +95,8 @@ do
 			python_dir="$2"
 			shift 1 ;;
 		-s)
-			strip_build=true ;;
+			strip_build=true
+			with_dSYM=false ;;
 		-l|--libraries)
 			LIBPREFIX="$2"
 			shift 1 ;;
@@ -715,6 +716,7 @@ fixlib () {
 				echo "Skipping loader_to_res for $1"
 				;;
 		esac
+		[ $verbose_mode ] && echo ""
 		[ $verbose_mode ] && echo "basename:          $1"
 		[ $verbose_mode ] && echo "dirname:           $2"
 		[ $verbose_mode ] && echo "filePath:          $filePath"
@@ -773,6 +775,63 @@ rewritelibpaths () {
 }
 
 rewritelibpaths
+
+
+# Include debug info in app bundle
+#----------------------------------------------------------
+# TODO: needs more testing
+
+if [ "$with_dSYM" = "true" ]; then
+
+    echo -e "\n\033[1mAdding debug info to app bundle ...\033[0m\n"
+
+    # package debug symbols for main binary
+    echo "dsymutil $binpath"
+    dsymutil "$binpath"
+
+    # some of the dependencies have debug symbols in MacPorts ...
+    #for item in libbz2.1.0.dylib libexif.12.dylib libopenraw.1.dylib; do
+    for item in libbz2.1.0.dylib libexif.12.dylib; do
+        echo "dsymutil ${pkglib}/${item}"
+        dsymutil "${pkglib}/${item}"
+    done
+
+    # to debug issues with ImageMagick / libMagick++
+    # Note: install ImageMagick with local portfile which includes the 'debug 1.0' portgroup
+    #       use 'port -n -k upgrade --enforce-variants ImageMagick +debug' to reinstall with debug symbols
+    #       (keep work dir (port -k) to allow recreation of bundled dSYMs with dsymutil)
+    if [[ "$use_port" == "t" ]]; then
+        if [[ "$(port echo ImageMagick and active | grep debug)" ]]; then
+            # if ImageMagick was installed with debug variant
+            for file in $(find $package -name 'libMagick*' -and -name '*.dylib' -and -not -ipath '*.dSYM*'); do
+                echo "dsymutil $file"
+                dsymutil "$file"
+            done
+            for file in $(find $package -ipath '*ImageMagick*' -and -name '*.so' -and -not -ipath '*.dSYM*'); do
+                echo "dsymutil $file"
+                dsymutil "$file"
+            done
+        else
+            echo "Macports' ImageMagick port was not installed with +debug variant."
+        fi
+    else
+        echo "not using MacPorts, skipping recreation of dSYMs included in app bundle."
+    fi
+
+    # for debug bundle, remove translations and tutorials (download size)
+    echo "Removing translation files and tutorials (only for debug builds) ..."
+    rm -rf "$pkglocale"/*
+    rm -f "${pkgshare}/${binary_name}/tutorials"/*
+
+else
+
+    # remove dSYM files if present (local port built with +debug variant from debug port group)
+    for item in $(find "${pkglib}/ImageMagick-${IMAGEMAGICKVER}" -name '*.dSYM'); do
+        rm -r "$item"
+    done
+
+fi    
+
 
 # All done.
 #----------------------------------------------------------
