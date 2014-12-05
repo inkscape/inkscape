@@ -657,7 +657,7 @@ while $endl; do
 		$pkglib/pango/$pango_version/modules/*.so \
 		$pkglib/gnome-vfs-2.0/modules/*.so \
 		$pkglib/gio/modules/*.so \
-		$pkglib/ImageMagick-$IMAGEMAGICK_VER/modules-Q16/{filters,coders}/*.so \
+		$pkglib/ImageMagick-$IMAGEMAGICKVER/modules-Q16/{filters,coders}/*.so \
 		$pkglib/*.{dylib,so} \
 		$pkgbin/*.so \
 		$python_libs \
