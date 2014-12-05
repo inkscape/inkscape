@@ -13,7 +13,11 @@ otherstuffdir = $(datadir)/inkscape/extensions
 
 moduledir = $(datadir)/inkscape/extensions
 
-extension_SCRIPTS = $(wildcard $(srcdir)/*.py)
+extension_SCRIPTS = \
+	$(wildcard $(srcdir)/*.py) \
+	$(wildcard $(srcdir)/*.pl) \
+	$(wildcard $(srcdir)/*.sh) \
+	$(wildcard $(srcdir)/*.rb)
 
 otherstuff_DATA = \
 	fontfix.conf \
