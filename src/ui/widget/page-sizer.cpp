@@ -483,8 +483,10 @@ PageSizer::setDim (Inkscape::Util::Quantity w, Inkscape::Util::Quantity h, bool 
         doc->setHeight (h, changeSize);
         // The origin for the user is in the lower left corner; this point should remain stationary when
         // changing the page size. The SVG's origin however is in the upper left corner, so we must compensate for this
-        Geom::Translate const vert_offset(Geom::Point(0, (old_height.value("px") - h.value("px"))));
-        doc->getRoot()->translateChildItems(vert_offset);
+        if (changeSize) {
+            Geom::Translate const vert_offset(Geom::Point(0, (old_height.value("px") - h.value("px"))));
+            doc->getRoot()->translateChildItems(vert_offset);
+        }
         DocumentUndo::done(doc, SP_VERB_NONE, _("Set page size"));
     }
 
