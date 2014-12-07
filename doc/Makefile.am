@@ -10,6 +10,7 @@ EXTRA_DIST = README.document \
 	HACKING.txt \
 	keys.css \
 	keys.README \
+	keys.be.html\
 	keys.de.html \
 	keys.el.html \
 	keys.en.html \
