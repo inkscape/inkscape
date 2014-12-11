@@ -59,7 +59,7 @@ msgstr ""
 "Project-Id-Version: inkscape 0.49\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2014-11-05 22:05+0100\n"
-"PO-Revision-Date: 2014-11-30 15:47+0100\n"
+"PO-Revision-Date: 2014-12-11 22:36+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -3057,7 +3057,7 @@ msgstr "lichtroze (#FFB6C1)"
 #: ../share/palettes/palettes.h:166
 msgctxt "Palette"
 msgid "rebeccapurple (#663399)"
-msgstr ""
+msgstr "rebeccapurper (#663399)"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:167
@@ -4413,9 +4413,8 @@ msgid "Wind Surfing"
 msgstr "Windsurfen"
 
 #: ../share/templates/templates.h:1
-#, fuzzy
 msgid "CD Label 120mmx120mm "
-msgstr "CD label 120x120 "
+msgstr "CD label 120mmx120mm "
 
 #: ../share/templates/templates.h:1
 msgid "Simple CD Label template with disc's pattern."
@@ -4431,11 +4430,11 @@ msgstr "Geen lagen"
 
 #: ../share/templates/templates.h:1
 msgid "Empty sheet with no layers"
-msgstr ""
+msgstr "Lege pagina zonder lagen"
 
 #: ../share/templates/templates.h:1
 msgid "no layers empty"
-msgstr ""
+msgstr "geen lagen leeg"
 
 #: ../share/templates/templates.h:1
 msgid "LaTeX Beamer"
@@ -4443,11 +4442,11 @@ msgstr "LaTeX Beamer"
 
 #: ../share/templates/templates.h:1
 msgid "LaTeX beamer template with helping grid."
-msgstr ""
+msgstr "LaTeX beamer sjabloon met raster."
 
 #: ../share/templates/templates.h:1
 msgid "LaTex LaTeX latex grid beamer"
-msgstr ""
+msgstr "LaTex LaTeX latex grid beamer"
 
 #: ../share/templates/templates.h:1
 msgid "Typography Canvas"
@@ -4455,11 +4454,11 @@ msgstr "Typografiecanvas"
 
 #: ../share/templates/templates.h:1
 msgid "Empty typography canvas with helping guidelines."
-msgstr ""
+msgstr "Leeg typografiecanvas met hulplijnen."
 
 #: ../share/templates/templates.h:1
 msgid "guidelines typography canvas"
-msgstr ""
+msgstr "typografiecanvas met hulplijnen"
 
 #. 3D box
 #: ../src/box3d.cpp:260 ../src/box3d.cpp:1312
@@ -14848,7 +14847,7 @@ msgstr "<b>Paginagrootte</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:326
 msgid "<b>Display</b>"
-msgstr ""
+msgstr "<b>Weergave</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:361
 msgid "<b>Guides</b>"
@@ -20638,7 +20637,7 @@ msgstr "Van template maken"
 
 #: ../src/ui/dialog/new-from-template.cpp:29
 msgid "New From Template"
-msgstr "Nieuw van template"
+msgstr "Nieuw van sjabloon"
 
 #: ../src/ui/dialog/object-attributes.cpp:47
 msgid "Href:"
@@ -20687,7 +20686,7 @@ msgstr "_Titel:"
 
 #: ../src/ui/dialog/object-properties.cpp:61
 msgid "_Image Rendering:"
-msgstr ""
+msgstr "_Afbeelding renderen:"
 
 #: ../src/ui/dialog/object-properties.cpp:62
 msgid "_Hide"
@@ -20724,6 +20723,13 @@ msgid ""
 "Note that this behaviour is not defined in the SVG 1.1 specification and not "
 "all browsers follow this interpretation."
 msgstr ""
+"De 'image-rendering' eigenschap beïnvloedt hoe een bitmap opgeschaald "
+"wordt:\n"
+"\t'auto' geen voorkeur;\n"
+"\t'optimizeQuality' effen;\n"
+"\t'optimizeSpeed' met blokjes.\n"
+"Noteer dat deze eigenschap niet gedefinieerd is in de SVG 1.1 specificatie "
+"en niet alle browsers ondersteunen deze invulling."
 
 #. Hide
 #: ../src/ui/dialog/object-properties.cpp:293
@@ -21483,7 +21489,7 @@ msgstr "Meer info"
 
 #: ../src/ui/dialog/template-widget.cpp:39
 msgid "no template selected"
-msgstr "geen template geselecteerd"
+msgstr "geen sjabloon geselecteerd"
 
 #: ../src/ui/dialog/template-widget.cpp:123
 msgid "Path: "
@@ -35224,7 +35230,7 @@ msgstr ""
 
 #: ../share/extensions/merge_styles.inx.h:1
 msgid "Merge Styles into CSS"
-msgstr ""
+msgstr "Stijlen met CSS samenvoegen"
 
 #: ../share/extensions/merge_styles.inx.h:2
 msgid ""
@@ -35232,11 +35238,11 @@ msgid ""
 "attributes will create a new class, this class will replace the existing "
 "inline style attributes. Please use a name which best describes the kinds of "
 "objects and their common context for best effect."
-msgstr ""
+msgstr "Alle geselecteerde knopen worden gegroepeerd en met hun gemeenschappelijke kenmerken wordt een nieuwe klasse gemaakt die de bestaande inline stijlkenmerken vervangt. Gebruik aub een naam die het beste deze objecten en hun gemeenschappelijke context beschrijft voor het beste effect."
 
 #: ../share/extensions/merge_styles.inx.h:3
 msgid "New Class Name:"
-msgstr ""
+msgstr "Nieuwe klassenaam:"
 
 #: ../share/extensions/merge_styles.inx.h:4
 msgid "Stylesheet"
@@ -37982,7 +37988,7 @@ msgstr "XAML-invoer"
 #~ msgstr "bureaublad 800x600"
 
 #~ msgid "Fontforge Glyph"
-#~ msgstr "Fontforge teken"
+#~ msgstr "Fontforgeteken"
 
 #~ msgid "font fontforge glyph 1000x1000"
 #~ msgstr "teken lettertype Fontforge 1000x1000"
