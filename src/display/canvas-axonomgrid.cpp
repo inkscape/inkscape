@@ -46,6 +46,7 @@
 #include "preferences.h"
 #include "sp-namedview.h"
 #include "sp-object.h"
+#include "sp-root.h"
 #include "svg/svg-color.h"
 #include "2geom/line.h"
 #include "2geom/angle.h"
@@ -213,22 +214,53 @@ static gboolean sp_nv_read_opacity(gchar const *str, guint32 *color)
 void
 CanvasAxonomGrid::readRepr()
 {
-    gchar const *value;
-    if ( (value = repr->attribute("originx")) ) {
-        Inkscape::Util::Quantity q = unit_table.parseQuantity(value);
-        gridunit = q.unit;
-        origin[Geom::X] = q.value("px");
+    SPRoot *root = doc->getRoot();
+    double scale_x = 1.0;
+    double scale_y = 1.0;
+    if( root->viewBox_set ) {
+        scale_x = root->width.computed  / root->viewBox.width();
+        scale_y = root->height.computed / root->viewBox.height();
     }
-    if ( (value = repr->attribute("originy")) ) {
+
+    gchar const *value;
+
+    if ( (value = repr->attribute("originx")) ) {
+
         Inkscape::Util::Quantity q = unit_table.parseQuantity(value);
-        gridunit = q.unit;
-        origin[Geom::Y] = q.value("px");
+
+        if( q.unit->type == UNIT_TYPE_LINEAR ) {
+            // Legacy grid not in 'user units'
+            origin[Geom::X] = q.value("px");
+        } else {
+            // Grid in 'user units'
+            origin[Geom::X] = q.quantity * scale_x;
+        }
+    }
+
+    if ( (value = repr->attribute("originy")) ) {
+
+        Inkscape::Util::Quantity q = unit_table.parseQuantity(value);
+
+        if( q.unit->type == UNIT_TYPE_LINEAR ) {
+            // Legacy grid not in 'user units'
+            origin[Geom::Y] = q.value("px");
+        } else {
+            // Grid in 'user units'
+            origin[Geom::Y] = q.quantity * scale_y;
+        }
     }
 
     if ( (value = repr->attribute("spacingy")) ) {
+
         Inkscape::Util::Quantity q = unit_table.parseQuantity(value);
-        gridunit = q.unit;
-        lengthy = q.value("px");
+
+        if( q.unit->type == UNIT_TYPE_LINEAR ) {
+            // Legacy grid not in 'user units'
+            lengthy = q.value("px");
+        } else {
+            // Grid in 'user units'
+            lengthy = q.quantity * scale_y; // We do not handle scale_x != scale_y
+        }
         if (lengthy < 0.0500) lengthy = 0.0500;
     }
 
@@ -281,6 +313,10 @@ CanvasAxonomGrid::readRepr()
         snapper->setSnapVisibleOnly(strcmp(value,"false") != 0 && strcmp(value, "0") != 0);
     }
 
+    if ( (value = repr->attribute("units")) ) {
+        gridunit = unit_table.getUnit(value); // Display unit identifier in grid menu
+    }
+
     for (GSList *l = canvasitems; l != NULL; l = l->next) {
         sp_canvas_item_request_update ( SP_CANVAS_ITEM(l->data) );
     }
@@ -316,11 +352,14 @@ _wr.setUpdating (true);
     Inkscape::UI::Widget::RegisteredUnitMenu *_rumg = Gtk::manage( new Inkscape::UI::Widget::RegisteredUnitMenu(
             _("Grid _units:"), "units", _wr, repr, doc) );
     Inkscape::UI::Widget::RegisteredScalarUnit *_rsu_ox = Gtk::manage( new Inkscape::UI::Widget::RegisteredScalarUnit(
-            _("_Origin X:"), _("X coordinate of grid origin"), "originx", *_rumg, _wr, repr, doc) );
+            _("_Origin X:"), _("X coordinate of grid origin"), "originx",
+            *_rumg, _wr, repr, doc, Inkscape::UI::Widget::RSU_x) );
     Inkscape::UI::Widget::RegisteredScalarUnit *_rsu_oy = Gtk::manage( new Inkscape::UI::Widget::RegisteredScalarUnit(
-            _("O_rigin Y:"), _("Y coordinate of grid origin"), "originy", *_rumg, _wr, repr, doc) );
+            _("O_rigin Y:"), _("Y coordinate of grid origin"), "originy",
+            *_rumg, _wr, repr, doc, Inkscape::UI::Widget::RSU_y) );
     Inkscape::UI::Widget::RegisteredScalarUnit *_rsu_sy = Gtk::manage( new Inkscape::UI::Widget::RegisteredScalarUnit(
-            _("Spacing _Y:"), _("Base length of z-axis"), "spacingy", *_rumg, _wr, repr, doc) );
+            _("Spacing _Y:"), _("Base length of z-axis"), "spacingy",
+            *_rumg, _wr, repr, doc, Inkscape::UI::Widget::RSU_y) );
     Inkscape::UI::Widget::RegisteredScalar *_rsu_ax = Gtk::manage( new Inkscape::UI::Widget::RegisteredScalar(
             _("Angle X:"), _("Angle of x-axis"), "gridanglex", _wr, repr, doc ) );
     Inkscape::UI::Widget::RegisteredScalar *_rsu_az = Gtk::manage(  new Inkscape::UI::Widget::RegisteredScalar(

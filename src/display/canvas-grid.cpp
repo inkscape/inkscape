@@ -47,6 +47,7 @@
 #include "preferences.h"
 #include "sp-namedview.h"
 #include "sp-object.h"
+#include "sp-root.h"
 #include "svg/svg-color.h"
 #include "svg/stringstream.h"
 #include "util/mathfns.h"
@@ -367,17 +368,21 @@ bool CanvasGrid::isEnabled() const
     return snapper->getEnabled();
 }
 
+// Used to shift origin when page size changed to fit drawing.
 void CanvasGrid::setOrigin(Geom::Point const &origin_px)
 {
-    Inkscape::SVGOStringStream os_x, os_y;
-    gdouble val;
+    SPRoot *root = doc->getRoot();
+    double scale_x = 1.0;
+    double scale_y = 1.0;
+    if( root->viewBox_set ) {
+        scale_x = root->viewBox.width()  / root->width.computed;
+        scale_y = root->viewBox.height() / root->height.computed;
+    }
 
-    val = origin_px[Geom::X];
-    val = Inkscape::Util::Quantity::convert(val, "px", gridunit);
-    os_x << val << gridunit->abbr;
-    val = origin_px[Geom::Y];
-    val = Inkscape::Util::Quantity::convert(val, "px", gridunit);
-    os_y << val << gridunit->abbr;
+    // Write out in 'user-units'
+    Inkscape::SVGOStringStream os_x, os_y;
+    os_x << origin_px[Geom::X] * scale_x;
+    os_y << origin_px[Geom::Y] * scale_y;
     repr->setAttribute("originx", os_x.str().c_str());
     repr->setAttribute("originy", os_y.str().c_str());
 }
@@ -504,33 +509,6 @@ static gboolean sp_nv_read_opacity(gchar const *str, guint32 *color)
     return TRUE;
 }
 
-/** If the passed scalar is invalid (<=0), then set the widget and the scalar
-    to use the given old value.
-
-    @param oldVal Old value to use if the new one is invalid.
-    @param pTarget The scalar to validate.
-    @param widget Widget associated with the scalar.
-*/
-static void validateScalar(double oldVal,
-                           double* pTarget)
-{
-    // Avoid nullness.
-    if ( pTarget == NULL )
-        return;
-
-    // Invalid new value?
-    if ( *pTarget <= 0 ) {
-        // If the old value is somehow invalid as well, then default to 1.
-        if ( oldVal <= 0 )
-            oldVal = 1;
-
-        // Reset the scalar and associated widget to the old value.
-        *pTarget = oldVal;
-    } //if
-
-} //validateScalar
-
-
 /** If the passed int is invalid (<=0), then set the widget and the int
     to use the given old value.
 
@@ -560,34 +538,78 @@ static void validateInt(gint oldVal,
 void
 CanvasXYGrid::readRepr()
 {
+    SPRoot *root = doc->getRoot();
+    double scale_x = 1.0;
+    double scale_y = 1.0;
+    if( root->viewBox_set ) {
+        scale_x = root->width.computed  / root->viewBox.width();
+        scale_y = root->height.computed / root->viewBox.height();
+    }
+
     gchar const *value;
+
     if ( (value = repr->attribute("originx")) ) {
+
         Inkscape::Util::Quantity q = unit_table.parseQuantity(value);
-        gridunit = q.unit;
-        origin[Geom::X] = q.value("px");
+
+        if( q.unit->type == UNIT_TYPE_LINEAR ) {
+            // Legacy grid not in 'user units'
+            origin[Geom::X] = q.value("px");
+        } else {
+            // Grid in 'user units'
+            origin[Geom::X] = q.quantity * scale_x;
+        }
     }
 
     if ( (value = repr->attribute("originy")) ) {
+
         Inkscape::Util::Quantity q = unit_table.parseQuantity(value);
-        gridunit = q.unit;
-        origin[Geom::Y] = q.value("px");
+
+        if( q.unit->type == UNIT_TYPE_LINEAR ) {
+            // Legacy grid not in 'user units'
+            origin[Geom::Y] = q.value("px");
+        } else {
+            // Grid in 'user units'
+            origin[Geom::Y] = q.quantity * scale_y;
+        }
     }
 
     if ( (value = repr->attribute("spacingx")) ) {
-        double oldVal = spacing[Geom::X];
+
+        // Ensure a valid default value
+        if( spacing[Geom::X] <= 0.0 )
+            spacing[Geom::X] = 1.0;
+
         Inkscape::Util::Quantity q = unit_table.parseQuantity(value);
-        gridunit = q.unit;
-        spacing[Geom::X] = q.quantity;
-        validateScalar(oldVal, &spacing[Geom::X]);
-        spacing[Geom::X] = Inkscape::Util::Quantity::convert(spacing[Geom::X], gridunit, "px");
+        // Ensure a valid new value
+        if( q.quantity > 0 ) {
+            if( q.unit->type == UNIT_TYPE_LINEAR ) {
+                // Legacy grid not in 'user units'
+                spacing[Geom::X] = q.value("px");
+            } else {
+                // Grid in 'user units'
+                spacing[Geom::X] = q.quantity * scale_x;
+            }
+        }
     }
+
     if ( (value = repr->attribute("spacingy")) ) {
-        double oldVal = spacing[Geom::Y];
+
+        // Ensure a valid default value
+        if( spacing[Geom::Y] <= 0.0 )
+            spacing[Geom::Y] = 1.0;
+
         Inkscape::Util::Quantity q = unit_table.parseQuantity(value);
-        gridunit = q.unit;
-        spacing[Geom::Y] = q.quantity;
-        validateScalar(oldVal, &spacing[Geom::Y]);
-        spacing[Geom::Y] = Inkscape::Util::Quantity::convert(spacing[Geom::Y], gridunit, "px");
+        // Ensure a valid new value
+        if( q.quantity > 0 ) {
+            if( q.unit->type == UNIT_TYPE_LINEAR ) {
+                // Legacy grid not in 'user units'
+                spacing[Geom::Y] = q.value("px");
+            } else {
+                // Grid in 'user units'
+                spacing[Geom::Y] = q.quantity * scale_y;
+            }
+        }
     }
 
     if ( (value = repr->attribute("color")) ) {
@@ -629,6 +651,10 @@ CanvasXYGrid::readRepr()
         snapper->setSnapVisibleOnly(strcmp(value,"false") != 0 && strcmp(value, "0") != 0);
     }
 
+    if ( (value = repr->attribute("units")) ) {
+        gridunit = unit_table.getUnit(value); // Display unit identifier in grid menu
+    }
+
     for (GSList *l = canvasitems; l != NULL; l = l->next) {
         sp_canvas_item_request_update ( SP_CANVAS_ITEM(l->data) );
     }
@@ -666,13 +692,17 @@ CanvasXYGrid::newSpecificWidget()
     Inkscape::UI::Widget::RegisteredUnitMenu *_rumg = Gtk::manage( new Inkscape::UI::Widget::RegisteredUnitMenu(
             _("Grid _units:"), "units", _wr, repr, doc) );
     Inkscape::UI::Widget::RegisteredScalarUnit *_rsu_ox = Gtk::manage( new Inkscape::UI::Widget::RegisteredScalarUnit(
-            _("_Origin X:"), _("X coordinate of grid origin"), "originx", *_rumg, _wr, repr, doc) );
+            _("_Origin X:"), _("X coordinate of grid origin"), "originx",
+            *_rumg, _wr, repr, doc, Inkscape::UI::Widget::RSU_x) );
     Inkscape::UI::Widget::RegisteredScalarUnit *_rsu_oy = Gtk::manage( new Inkscape::UI::Widget::RegisteredScalarUnit(
-            _("O_rigin Y:"), _("Y coordinate of grid origin"), "originy", *_rumg, _wr, repr, doc) );
+            _("O_rigin Y:"), _("Y coordinate of grid origin"), "originy",
+            *_rumg, _wr, repr, doc, Inkscape::UI::Widget::RSU_y) );
     Inkscape::UI::Widget::RegisteredScalarUnit *_rsu_sx = Gtk::manage( new Inkscape::UI::Widget::RegisteredScalarUnit(
-            _("Spacing _X:"), _("Distance between vertical grid lines"), "spacingx", *_rumg, _wr, repr, doc) );
+            _("Spacing _X:"), _("Distance between vertical grid lines"), "spacingx",
+            *_rumg, _wr, repr, doc, Inkscape::UI::Widget::RSU_x) );
     Inkscape::UI::Widget::RegisteredScalarUnit *_rsu_sy = Gtk::manage( new Inkscape::UI::Widget::RegisteredScalarUnit(
-            _("Spacing _Y:"), _("Distance between horizontal grid lines"), "spacingy", *_rumg, _wr, repr, doc) );
+            _("Spacing _Y:"), _("Distance between horizontal grid lines"), "spacingy",
+            *_rumg, _wr, repr, doc, Inkscape::UI::Widget::RSU_y) );
 
     Inkscape::UI::Widget::RegisteredColorPicker *_rcp_gcol = Gtk::manage(
         new Inkscape::UI::Widget::RegisteredColorPicker(
