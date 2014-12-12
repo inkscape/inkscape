@@ -279,9 +279,13 @@ void InkscapePreferences::AddNewObjectsStyle(DialogPage &p, Glib::ustring const 
     p.add_line( true, "", *hb, "", "");
 
     // style swatch
-    Gtk::Button* button = Gtk::manage( new Gtk::Button(_("Take from selection"),true));
+    Gtk::Button* button = Gtk::manage( new Gtk::Button(_("Take from selection"), true));
     StyleSwatch *swatch = 0;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+
+    if (prefs->getInt(prefs_path + "/usecurrent")) {
+        button->set_sensitive(false);
+    }
 
     SPCSSAttr *css = prefs->getStyle(prefs_path + "/style");
     swatch = new StyleSwatch(css, _("This tool's style of new objects"));
