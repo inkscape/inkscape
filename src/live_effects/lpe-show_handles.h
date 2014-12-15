@@ -44,6 +44,7 @@ private:
     BoolParam handles;
     BoolParam originalPath;
     ScalarParam scaleNodesAndHandles;
+    ScalarParam rotateNodes;
     double strokeWidth;
     static bool alertsOff;
 

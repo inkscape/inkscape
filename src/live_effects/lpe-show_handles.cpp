@@ -25,15 +25,20 @@ LPEShowHandles::LPEShowHandles(LivePathEffectObject *lpeobject)
       nodes(_("Show nodes"), _("Show nodes"), "nodes", &wr, this, true),
       handles(_("Show handles"), _("Show handles"), "handles", &wr, this, true),
       originalPath(_("Show path"), _("Show path"), "originalPath", &wr, this, true),
-      scaleNodesAndHandles(_("Scale nodes and handles"), _("Scale nodes and handles"), "scaleNodesAndHandles", &wr, this, 10)
+      scaleNodesAndHandles(_("Scale nodes and handles"), _("Scale nodes and handles"), "scaleNodesAndHandles", &wr, this, 10),
+      rotateNodes(_("Rotate nodes"), _("Rotate nodes"), "rotateNodes", &wr, this, 0)
 {
     registerParameter(dynamic_cast<Parameter *>(&nodes));
     registerParameter(dynamic_cast<Parameter *>(&handles));
     registerParameter(dynamic_cast<Parameter *>(&originalPath));
     registerParameter(dynamic_cast<Parameter *>(&scaleNodesAndHandles));
+    registerParameter(dynamic_cast<Parameter *>(&rotateNodes));
     scaleNodesAndHandles.param_set_range(0, 500.);
     scaleNodesAndHandles.param_set_increments(1, 1);
     scaleNodesAndHandles.param_set_digits(2);
+    rotateNodes.param_set_range(0, 365);
+    rotateNodes.param_set_increments(1, 1);
+    rotateNodes.param_set_digits(0);
     strokeWidth = 1.0;
 }
 
@@ -158,10 +163,11 @@ LPEShowHandles::drawNode(Geom::Point p)
     if(strokeWidth * scaleNodesAndHandles > 0.0) {
         double diameter = strokeWidth * scaleNodesAndHandles;
         char const * svgd;
-        svgd = "M 0.55,0.5 A 0.05,0.05 0 0 1 0.5,0.55 0.05,0.05 0 0 1 0.45,0.5 0.05,0.05 0 0 1 0.5,0.45 0.05,0.05 0 0 1 0.55,0.5 Z M 0,0 1,0 1,1 0,1 Z";
+        svgd = "M 0.05,0 A 0.05,0.05 0 0 1 0,0.05 0.05,0.05 0 0 1 -0.05,0 0.05,0.05 0 0 1 0,-0.05 0.05,0.05 0 0 1 0.05,0 Z M -0.5,-0.5 0.5,-0.5 0.5,0.5 -0.5,0.5 Z";
         Geom::PathVector pathv = sp_svg_read_pathv(svgd);
-        pathv *= Geom::Affine(diameter,0,0,diameter,0,0);
-        pathv += p - Geom::Point(diameter/2,diameter/2);
+        pathv *= Geom::Rotate::from_degrees(rotateNodes);
+        pathv *= Geom::Scale (diameter);
+        pathv += p;
         outlinepath.push_back(pathv[0]);
         outlinepath.push_back(pathv[1]);
     }
@@ -175,8 +181,8 @@ LPEShowHandles::drawHandle(Geom::Point p)
         char const * svgd;
         svgd = "M 0.7,0.35 A 0.35,0.35 0 0 1 0.35,0.7 0.35,0.35 0 0 1 0,0.35 0.35,0.35 0 0 1 0.35,0 0.35,0.35 0 0 1 0.7,0.35 Z";
         Geom::PathVector pathv = sp_svg_read_pathv(svgd);
-        pathv *= Geom::Affine(diameter,0,0,diameter,0,0);
-        pathv += p - Geom::Point(diameter * 0.35,diameter * 0.35);
+        pathv *= Geom::Scale (diameter);
+        pathv += p-Geom::Point(diameter * 0.35,diameter * 0.35);
         outlinepath.push_back(pathv[0]);
     }
 }
