@@ -21,7 +21,9 @@
 #define SP_MARKER(obj) (dynamic_cast<SPMarker*>((SPObject*)obj))
 #define SP_IS_MARKER(obj) (dynamic_cast<const SPMarker*>((SPObject*)obj) != NULL)
 
-struct SPMarkerView;
+class SPMarkerView;
+
+#include <map>
 
 #include <2geom/rect.h>
 #include <2geom/affine.h>
@@ -61,8 +63,8 @@ public:
 	markerOrient orient_mode : 2;
 	SVGAngle orient;
 
-	/* Private views */
-	SPMarkerView *views;
+	/* Private views indexed by key */
+	std::map<unsigned int, SPMarkerView> views_map;
 
 	virtual void build(SPDocument *document, Inkscape::XML::Node *repr);
 	virtual void release();

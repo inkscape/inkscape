@@ -29,13 +29,19 @@
 #include "document-private.h"
 #include "preferences.h"
 
-struct SPMarkerView {
-	SPMarkerView *next;
-	unsigned int key;
-  std::vector<Inkscape::DrawingItem *> items;
-};
+class SPMarkerView {
 
-static void sp_marker_view_remove (SPMarker *marker, SPMarkerView *view, unsigned int destroyitems);
+public:
+
+    SPMarkerView() {};
+    ~SPMarkerView() {
+        for (unsigned int i = 0; i < items.size(); ++i) {
+            delete items[i];
+        }
+        items.clear();
+    }
+    std::vector<Inkscape::DrawingItem *> items;
+};
 
 #include "sp-factory.h"
 
@@ -55,8 +61,6 @@ SPMarker::SPMarker() : SPGroup(), SPViewBox() {
     this->orient_mode = MARKER_ORIENT_ANGLE;
     this->orient_set = 0;
     this->orient = 0;
-
-    this->views = NULL;
 }
 
 /**
@@ -90,20 +94,6 @@ void SPMarker::build(SPDocument *document, Inkscape::XML::Node *repr) {
     SPGroup::build(document, repr);
 }
 
-void SPMarker::release() {
-    while (this->views) {
-        // Destroy all DrawingItems etc.
-        // Parent class ::hide method
-        //reinterpret_cast<SPItemClass *>(parent_class)->hide(marker, marker->views->key);
-    	// CPPIFY: correct one?
-    	SPGroup::hide(this->views->key);
-
-
-        sp_marker_view_remove (this, this->views, TRUE);
-    }
-
-    SPGroup::release();
-}
 
 /**
  * Removes, releases and unrefs all children of object
@@ -117,6 +107,17 @@ void SPMarker::release() {
  *
  * \see SPObject::release()
  */
+void SPMarker::release() {
+
+    std::map<unsigned int, SPMarkerView>::iterator it;
+    for (it = views_map.begin(); it != views_map.end(); ++it) {
+        SPGroup::hide( it->first );
+    }
+    views_map.clear();
+
+    SPGroup::release();
+}
+
 
 void SPMarker::set(unsigned int key, const gchar* value) {
 	switch (key) {
@@ -221,10 +222,11 @@ void SPMarker::update(SPCtx *ctx, guint flags) {
     SPGroup::update((SPCtx *) &rctx, flags);
 
     // As last step set additional transform of drawing group
-    for (SPMarkerView *v = this->views; v != NULL; v = v->next) {
-        for (unsigned i = 0 ; i < v->items.size() ; i++) {
-            if (v->items[i]) {
-                Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->items[i]);
+    std::map<unsigned int, SPMarkerView>::iterator it;
+    for (it = views_map.begin(); it != views_map.end(); ++it) {
+        for (unsigned i = 0 ; i < it->second.items.size() ; ++i) {
+            if (it->second.items[i]) {
+                Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(it->second.items[i]);
                 g->setChildTransform(this->c2p);
             }
         }
@@ -328,31 +330,26 @@ void SPMarker::print(SPPrintContext* /*ctx*/) {
  * \param key Key to give each SPMarkerView.
  * \param size Number of DrawingItems to put in the SPMarkerView.
  */
+// If marker views are always created in order, then this function could be eliminated
+// by doing the push_back in sp_marker_show_instance.
 void
 sp_marker_show_dimension (SPMarker *marker, unsigned int key, unsigned int size)
 {
-    SPMarkerView *view;
-
-    for (view = marker->views; view != NULL; view = view->next) {
-        if (view->key == key) break;
-    }
-    if (view && (view->items.size() != size)) {
-        /* Free old view and allocate new */
-        /* Parent class ::hide method */
-    	marker->hide(key);
-
-        sp_marker_view_remove (marker, view, TRUE);
-        view = NULL;
-    }
-    if (!view) {
-        view = new SPMarkerView();
-        view->items.clear();
-        for (unsigned int i = 0; i < size; i++) {
-            view->items.push_back(NULL);
+    std::map<unsigned int, SPMarkerView>::iterator it = marker->views_map.find(key);
+    if (it != marker->views_map.end()) {
+        if (it->second.items.size() != size ) {
+            // Need to change size of vector! (We should not really need to do this.)
+            marker->hide(key);
+            it->second.items.clear();
+            for (unsigned int i = 0; i < size; ++i) {
+                it->second.items.push_back(NULL);
+            }
         }
-        view->next = marker->views;
-        marker->views = view;
-        view->key = key;
+    } else {
+        marker->views_map[key] = SPMarkerView();
+        for (unsigned int i = 0; i < size; ++i) {
+            marker->views_map[key].items.push_back(NULL);
+        }
     }
 }
 
@@ -365,51 +362,58 @@ sp_marker_show_instance ( SPMarker *marker, Inkscape::DrawingItem *parent,
                           unsigned int key, unsigned int pos,
                           Geom::Affine const &base, float linewidth)
 {
-    // do not show marker if linewidth == 0 and markerUnits == strokeWidth
+    // Do not show marker if linewidth == 0 and markerUnits == strokeWidth
     // otherwise Cairo will fail to render anything on the tile
-    // that contains the "degenerate" marker
+    // that contains the "degenerate" marker.
     if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH && linewidth == 0) {
         return NULL;
     }
 
-    for (SPMarkerView *v = marker->views; v != NULL; v = v->next) {
-        if (v->key == key) {
-            if (pos >= v->items.size()) {
-                return NULL;
-            }
-            if (!v->items[pos]) {
-                /* Parent class ::show method */
-            	v->items[pos] = marker->private_show(parent->drawing(), key, SP_ITEM_REFERENCE_FLAGS);
+    std::map<unsigned int, SPMarkerView>::iterator it = marker->views_map.find(key);
+    if (it == marker->views_map.end()) {
+        // Key not found
+        return NULL;
+    }
 
-                if (v->items[pos]) {
-                    /* fixme: Position (Lauris) */
-                    parent->prependChild(v->items[pos]);
-                    Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->items[pos]);
-                    if (g) g->setChildTransform(marker->c2p);
-                }
-            }
-            if (v->items[pos]) {
-                Geom::Affine m;
-                if (marker->orient_mode == MARKER_ORIENT_AUTO) {
-                    m = base;
-                } else if (marker->orient_mode == MARKER_ORIENT_AUTO_START_REVERSE) {
-                    m = Geom::Rotate::from_degrees( 180.0 ) * base;
-                    m = base;
-                } else {
-                    /* fixme: Orient units (Lauris) */
-                    m = Geom::Rotate::from_degrees(marker->orient.computed);
-                    m *= Geom::Translate(base.translation());
-                }
-                if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
-                    m = Geom::Scale(linewidth) * m;
-                }
-                v->items[pos]->setTransform(m);
-            }
-            return v->items[pos];
+    SPMarkerView *view = &(it->second);
+    if (pos >= view->items.size() ) {
+        // Position index too large, doesn't exist.
+        return NULL;
+    }
+
+    // If not already created
+    if (view->items[pos] == NULL) {
+
+        /* Parent class ::show method */
+        view->items[pos] = marker->private_show(parent->drawing(), key, SP_ITEM_REFERENCE_FLAGS);
+
+        if (view->items[pos]) {
+            /* fixme: Position (Lauris) */
+            parent->prependChild(view->items[pos]);
+            Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(view->items[pos]);
+            if (g) g->setChildTransform(marker->c2p);
         }
     }
 
-    return NULL;
+    if (view->items[pos]) {
+        Geom::Affine m;
+        if (marker->orient_mode == MARKER_ORIENT_AUTO) {
+            m = base;
+        } else if (marker->orient_mode == MARKER_ORIENT_AUTO_START_REVERSE) {
+            m = Geom::Rotate::from_degrees( 180.0 ) * base;
+            m = base;
+        } else {
+            /* fixme: Orient units (Lauris) */
+            m = Geom::Rotate::from_degrees(marker->orient.computed);
+            m *= Geom::Translate(base.translation());
+        }
+        if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
+            m = Geom::Scale(linewidth) * m;
+        }
+        view->items[pos]->setTransform(m);
+    }
+
+    return view->items[pos];
 }
 
 /**
@@ -420,46 +424,10 @@ sp_marker_show_instance ( SPMarker *marker, Inkscape::DrawingItem *parent,
 void
 sp_marker_hide (SPMarker *marker, unsigned int key)
 {
-	SPMarkerView *v;
-
-	v = marker->views;
-	while (v != NULL) {
-		SPMarkerView *next;
-		next = v->next;
-		if (v->key == key) {
-			/* Parent class ::hide method */
-			marker->hide(key);
-
-			sp_marker_view_remove (marker, v, TRUE);
-			return;
-		}
-		v = next;
-	}
+    marker->hide(key);
+    marker->views_map.erase(key);
 }
 
-/**
- * Removes a given view.  Also will destroy sub-items in the view if destroyitems
- * is set to a non-zero value.
- */
-static void
-sp_marker_view_remove (SPMarker *marker, SPMarkerView *view, unsigned int destroyitems)
-{
-	if (view == marker->views) {
-		marker->views = view->next;
-	} else {
-		SPMarkerView *v;
-		for (v = marker->views; v->next != view; v = v->next) if (!v->next) return;
-		v->next = view->next;
-	}
-	if (destroyitems) {
-      for (unsigned int i = 0; i < view->items.size(); i++) {
-			/* We have to walk through the whole array because there may be hidden items */
-			delete view->items[i];
-		}
-	}
-    view->items.clear();
-    delete view;
-}
 
 const gchar *generate_marker(GSList *reprs, Geom::Rect bounds, SPDocument *document, Geom::Point center, Geom::Affine move)
 {
