@@ -28,6 +28,7 @@ public:
     ~DrawingGlyphs();
 
     void setGlyph(font_instance *font, int glyph, Geom::Affine const &trans);
+    void setStyle(SPStyle *style); // Not to be used, prints error message.
 
 protected:
     unsigned _updateItem(Geom::IntRect const &area, UpdateContext const &ctx,

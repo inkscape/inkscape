@@ -108,6 +108,7 @@ public:
     bool cached() const { return _cached; }
     void setCached(bool c, bool persistent = false);
 
+    virtual void setStyle(SPStyle *style);
     void setOpacity(float opacity);
     void setAntialiasing(bool a);
     void setIsolation(unsigned isolation); // CSS Compositing and Blending
@@ -151,7 +152,6 @@ protected:
     void _markForUpdate(unsigned state, bool propagate);
     void _markForRendering();
     void _invalidateFilterBackground(Geom::IntRect const &area);
-    void _setStyleCommon(SPStyle *&_style, SPStyle *style);
     double _cacheScore();
     Geom::OptIntRect _cacheRect();
     virtual unsigned _updateItem(Geom::IntRect const &/*area*/, UpdateContext const &/*ctx*/,
@@ -178,6 +178,7 @@ protected:
 
     unsigned _key; ///< Some SPItems can have more than one DrawingItem;
                    ///  this value is a hack used to distinguish between them
+    SPStyle *_style; // Not used by DrawingGlyphs
     float _opacity;
 
     Geom::Affine *_transform; ///< Incremental transform from parent to this item's coords

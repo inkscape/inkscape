@@ -21,14 +21,11 @@ namespace Inkscape {
 
 DrawingGroup::DrawingGroup(Drawing &drawing)
     : DrawingItem(drawing)
-    , _style(NULL)
     , _child_transform(NULL)
 {}
 
 DrawingGroup::~DrawingGroup()
 {
-    if (_style)
-        sp_style_unref(_style);
     delete _child_transform; // delete NULL; is safe
 }
 
@@ -40,12 +37,6 @@ void
 DrawingGroup::setPickChildren(bool p)
 {
     _pick_children = p;
-}
-
-void
-DrawingGroup::setStyle(SPStyle *style)
-{
-    _setStyleCommon(_style, style);
 }
 
 /**

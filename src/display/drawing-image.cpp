@@ -24,15 +24,10 @@ namespace Inkscape {
 DrawingImage::DrawingImage(Drawing &drawing)
     : DrawingItem(drawing)
     , _pixbuf(NULL)
-    , _style(NULL)
 {}
 
 DrawingImage::~DrawingImage()
 {
-    if (_style) {
-        sp_style_unref(_style);
-    }
-
     // _pixbuf is owned by SPImage - do not delete it
 }
 
@@ -42,12 +37,6 @@ DrawingImage::setPixbuf(Inkscape::Pixbuf *pb)
     _pixbuf = pb;
 
     _markForUpdate(STATE_ALL, false);
-}
-
-void
-DrawingImage::setStyle(SPStyle *style)
-{
-    _setStyleCommon(_style, style);
 }
 
 void

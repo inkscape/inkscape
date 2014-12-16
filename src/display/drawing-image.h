@@ -29,7 +29,6 @@ public:
     ~DrawingImage();
 
     void setPixbuf(Inkscape::Pixbuf *pb);
-    void setStyle(SPStyle *style);
     void setScale(double sx, double sy);
     void setOrigin(Geom::Point const &o);
     void setClipbox(Geom::Rect const &box);
@@ -43,7 +42,6 @@ protected:
     virtual DrawingItem *_pickItem(Geom::Point const &p, double delta, unsigned flags);
 
     Inkscape::Pixbuf *_pixbuf;
-    SPStyle *_style;
 
     // TODO: the following three should probably be merged into a new Geom::Viewbox object
     Geom::Rect _clipbox; ///< for preserveAspectRatio

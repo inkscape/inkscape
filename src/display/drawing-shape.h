@@ -28,7 +28,7 @@ public:
     ~DrawingShape();
 
     void setPath(SPCurve *curve);
-    void setStyle(SPStyle *style);
+    virtual void setStyle(SPStyle *style);
 
 protected:
     virtual unsigned _updateItem(Geom::IntRect const &area, UpdateContext const &ctx,
@@ -45,7 +45,6 @@ protected:
                         DrawingItem *stop_at);
 
     SPCurve *_curve;
-    SPStyle *_style;
     NRStyle _nrstyle;
 
     DrawingItem *_last_pick;

@@ -109,6 +109,7 @@ DrawingItem::DrawingItem(Drawing &drawing)
     : _drawing(drawing)
     , _parent(NULL)
     , _key(0)
+    , _style(NULL)
     , _opacity(1.0)
     , _transform(NULL)
     , _clip(NULL)
@@ -188,6 +189,8 @@ DrawingItem::~DrawingItem()
     delete _clip;
     delete _mask;
     delete _filter;
+    if(_style)
+        sp_style_unref(_style);
 }
 
 DrawingItem *
@@ -350,6 +353,52 @@ DrawingItem::setCached(bool cached, bool persistent)
         _cache = NULL;
     }
 }
+
+/**
+ * Process information related to the new style.
+ *
+ * Note: _style is not used by DrawingGlyphs which uses its parent style.
+ */
+void
+DrawingItem::setStyle(SPStyle *style)
+{
+    // std::cout << "DrawingItem::setStyle: ";
+    // SPObject *item = static_cast<SPObject *>(_user_data);
+    // if( item ) {
+    //     std::cout << (item->getId()?item->getId():"null") << std::endl;
+    // } else {
+    //     std::cout << "No item" << std::endl;
+    // }
+
+    if (style) sp_style_ref(style);
+    if (_style) sp_style_unref(_style);
+    _style = style;
+
+    if (style && style->filter.set && style->getFilter()) {
+        if (!_filter) {
+            int primitives = sp_filter_primitive_count(SP_FILTER(style->getFilter()));
+            _filter = new Inkscape::Filters::Filter(primitives);
+        }
+        sp_filter_build_renderer(SP_FILTER(style->getFilter()), _filter);
+    } else {
+        // no filter set for this group
+        delete _filter;
+        _filter = NULL;
+    }
+
+    if (style && style->enable_background.set) {
+        if (style->enable_background.value == SP_CSS_BACKGROUND_NEW && !_background_new) {
+            _background_new = true;
+            _markForUpdate(STATE_BACKGROUND, true);
+        } else if (style->enable_background.value == SP_CSS_BACKGROUND_ACCUMULATE && _background_new) {
+            _background_new = false;
+            _markForUpdate(STATE_BACKGROUND, true);
+        }
+    }
+
+    _markForUpdate(STATE_ALL, false);
+}
+
 
 void
 DrawingItem::setClip(DrawingItem *item)
@@ -1019,48 +1068,6 @@ DrawingItem::_markForUpdate(unsigned flags, bool propagate)
             _drawing.signal_request_update.emit(this);
         }
     }
-}
-
-/**
- * Process information related to the new style.
- *
- * This function is something of a hack to avoid creating an extra class in the hierarchy
- * which would differ from DrawingItem only by having a _style member.
- * This is mainly to the benefit of DrawingGlyphs, which use the style of their parent.
- * This should probably be refactored some day, possibly by creating the relevant class
- * or creating a more complex data model in DrawingText and removing DrawingGlyphs,
- * which would cause every item to have a style.
- */
-void
-DrawingItem::_setStyleCommon(SPStyle *&_style, SPStyle *style)
-{
-    if (style) sp_style_ref(style);
-    if (_style) sp_style_unref(_style);
-    _style = style;
-
-    if (style && style->filter.set && style->getFilter()) {
-        if (!_filter) {
-            int primitives = sp_filter_primitive_count(SP_FILTER(style->getFilter()));
-            _filter = new Inkscape::Filters::Filter(primitives);
-        }
-        sp_filter_build_renderer(SP_FILTER(style->getFilter()), _filter);
-    } else {
-        // no filter set for this group
-        delete _filter;
-        _filter = NULL;
-    }
-
-    if (style && style->enable_background.set) {
-        if (style->enable_background.value == SP_CSS_BACKGROUND_NEW && !_background_new) {
-            _background_new = true;
-            _markForUpdate(STATE_BACKGROUND, true);
-        } else if (style->enable_background.value == SP_CSS_BACKGROUND_ACCUMULATE && _background_new) {
-            _background_new = false;
-            _markForUpdate(STATE_BACKGROUND, true);
-        }
-    }
-
-    _markForUpdate(STATE_ALL, false);
 }
 
 /**

@@ -34,15 +34,12 @@ namespace Inkscape {
 DrawingShape::DrawingShape(Drawing &drawing)
     : DrawingItem(drawing)
     , _curve(NULL)
-    , _style(NULL)
     , _last_pick(NULL)
     , _repick_after(0)
 {}
 
 DrawingShape::~DrawingShape()
 {
-    if (_style)
-        sp_style_unref(_style);
     if (_curve)
         _curve->unref();
 }
@@ -67,8 +64,8 @@ DrawingShape::setPath(SPCurve *curve)
 void
 DrawingShape::setStyle(SPStyle *style)
 {
-    _setStyleCommon(_style, style);
     _nrstyle.set(style);
+    DrawingItem::setStyle(style);
 }
 
 unsigned

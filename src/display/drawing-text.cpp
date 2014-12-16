@@ -55,6 +55,13 @@ DrawingGlyphs::setGlyph(font_instance *font, int glyph, Geom::Affine const &tran
     _markForUpdate(STATE_ALL, false);
 }
 
+void
+DrawingGlyphs::setStyle(SPStyle *style)
+{
+    std::cerr << "DrawingGlyphs: Use parent style" << std::endl;
+}
+
+
 unsigned DrawingGlyphs::_updateItem(Geom::IntRect const &/*area*/, UpdateContext const &ctx, unsigned /*flags*/, unsigned /*reset*/)
 {
     DrawingText *ggroup = dynamic_cast<DrawingText *>(_parent);
