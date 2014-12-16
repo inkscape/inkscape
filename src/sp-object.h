@@ -854,6 +854,8 @@ protected:
 
 public:
 	virtual void read_content();
+
+    void recursivePrintTree(unsigned level = 0);  // For debugging
 };
 
 

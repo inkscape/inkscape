@@ -375,6 +375,15 @@ Inkscape::DrawingItem *SPRoot::show(Inkscape::Drawing &drawing, unsigned int key
         g->setChildTransform(this->c2p);
     }
 
+    // Uncomment to print out XML tree
+    // getRepr()->recursivePrintTree(0);
+    
+    // Uncomment to print out SP Object tree
+    // recursivePrintTree(0);
+    
+    // Uncomment to print out Display Item tree
+    // ai->recursivePrintTree(0);
+
     return ai;
 }
 

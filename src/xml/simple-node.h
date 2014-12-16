@@ -19,6 +19,7 @@
 #define SEEN_INKSCAPE_XML_SIMPLE_NODE_H
 
 #include <cassert>
+#include <iostream>
 
 #include "xml/node.h"
 #include "xml/attribute-record.h"
@@ -119,6 +120,8 @@ public:
     void removeSubtreeObserver(NodeObserver &observer) {
         _subtree_observers.remove(observer);
     }
+
+    void recursivePrintTree(unsigned level = 0);
 
 protected:
     SimpleNode(int code, Document *document);

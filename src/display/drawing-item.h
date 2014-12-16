@@ -131,6 +131,8 @@ public:
     void clip(DrawingContext &dc, Geom::IntRect const &area);
     DrawingItem *pick(Geom::Point const &p, double delta, unsigned flags = 0);
 
+    void recursivePrintTree(unsigned level = 0);  // For debugging
+
 protected:
     enum ChildType {
         CHILD_ORPHAN = 0, // no parent - implies _parent == NULL

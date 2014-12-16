@@ -908,6 +908,30 @@ DrawingItem::pick(Geom::Point const &p, double delta, unsigned flags)
     return NULL;
 }
 
+
+// For debugging: Print drawing tree structure.
+void
+DrawingItem::recursivePrintTree( unsigned level )
+{
+    if (level == 0) {
+        std::cout << "Display Item Tree" << std::endl;
+    }
+    std::cout << "DI: ";
+    for (unsigned i = 0; i < level; ++i) {
+        std::cout << "  ";
+    }
+    SPObject *object = static_cast<SPObject *>(_user_data);
+    if (object) {
+        std::cout << (object->getId()?object->getId():"No object id") << std::endl;
+    } else {
+        std::cout << "No associated object" << std::endl;
+    }
+    for (ChildrenList::iterator i = _children.begin(); i != _children.end(); ++i) {
+        i->recursivePrintTree( level+1 );
+    }
+}
+
+ 
 /**
  * Marks the current visual bounding box of the item for redrawing.
  * This is called whenever the object changes its visible appearance.

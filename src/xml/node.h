@@ -469,6 +469,8 @@ public:
      * @deprecated Use synthesizeEvents(NodeObserver &) instead
      */
     virtual void synthesizeEvents(NodeEventVector const *vector, void *data)=0;
+
+    virtual void recursivePrintTree(unsigned level)=0;
     
     /*@}*/
 

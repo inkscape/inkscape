@@ -1523,6 +1523,22 @@ char* SPObject::textualContent() const
     return g_string_free(text, FALSE);
 }
 
+// For debugging: Print SP tree structure.
+void SPObject::recursivePrintTree( unsigned level )
+{
+    if (level == 0) {
+        std::cout << "SP Object Tree" << std::endl;
+    }
+    std::cout << "SP: ";
+    for (unsigned i = 0; i < level; ++i) {
+        std::cout << "  ";
+    }
+    std::cout << (getId()?getId():"No object id") << std::endl;
+    for (SPObject *child = children; child; child = child->next) {
+        child->recursivePrintTree( level+1 );
+    }
+}
+
 /*
   Local Variables:
   mode:c++

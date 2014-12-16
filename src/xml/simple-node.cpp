@@ -606,6 +606,26 @@ void SimpleNode::synthesizeEvents(NodeObserver &observer) {
     synthesizeEvents(&OBSERVER_EVENT_VECTOR, &observer);
 }
 
+void SimpleNode::recursivePrintTree(unsigned level) {
+
+    if (level == 0) {
+        std::cout << "XML Node Tree" << std::endl;
+    }
+    std::cout << "XML: ";
+    for (unsigned i = 0; i < level; ++i) {
+        std::cout << "  ";
+    }
+    char const *id=attribute("id");
+    if (id) {
+        std::cout << id << std::endl;
+    } else {
+        std::cout << name() << std::endl;
+    }
+    for (SimpleNode *child = _first_child; child != NULL; child = child->_next) {
+        child->recursivePrintTree( level+1 );
+    }
+}
+
 Node *SimpleNode::root() {
     Node *parent=this;
     while (parent->parent()) {
