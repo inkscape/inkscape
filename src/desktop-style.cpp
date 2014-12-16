@@ -626,7 +626,7 @@ objects_query_fillstroke (GSList *objects, SPStyle *style_res, bool const isfill
 
        paintImpossible = false;
        paint_res->colorSet = paint->colorSet;
-       paint_res->currentcolor = paint->currentcolor;
+       paint_res->paintOrigin = paint->paintOrigin;
        if (paint_res->set && paint_effectively_set && paint->isPaintserver()) { // copy the server
            gchar const *string = NULL; // memory leak results if style->get* called inside sp_style_set_to_uri_string.
            if (isfill) {

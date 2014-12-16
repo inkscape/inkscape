@@ -628,6 +628,15 @@ public:
 #define SP_STYLE_FILL_SERVER(s) ((const_cast<SPStyle *> (s))->getFillPaintServer())
 #define SP_STYLE_STROKE_SERVER(s) ((const_cast<SPStyle *> (s))->getStrokePaintServer())
 
+// SVG 2
+enum SPPaintOrigin {
+    SP_CSS_PAINT_ORIGIN_NORMAL,
+    SP_CSS_PAINT_ORIGIN_CURRENT_COLOR,
+    SP_CSS_PAINT_ORIGIN_CONTEXT_FILL,
+    SP_CSS_PAINT_ORIGIN_CONTEXT_STROKE
+};
+
+
 /// Paint type internal to SPStyle.
 class SPIPaint : public SPIBase
 {
@@ -635,7 +644,7 @@ class SPIPaint : public SPIBase
 public:
     SPIPaint()
         : SPIBase( "anonymous_paint" ),
-          currentcolor(false),
+          paintOrigin( SP_CSS_PAINT_ORIGIN_NORMAL ),
           colorSet(false),
           noneSet(false) {
         value.href = NULL;
@@ -644,7 +653,6 @@ public:
 
     SPIPaint( Glib::ustring const &name )
         : SPIBase( name ),
-          currentcolor(false),
           colorSet(false),
           noneSet(false) {
         value.href = NULL;
@@ -663,7 +671,7 @@ public:
 
     SPIPaint& operator=(const SPIPaint& rhs) {
         SPIBase::operator=(rhs);
-        currentcolor    = rhs.currentcolor;
+        paintOrigin     = rhs.paintOrigin;
         colorSet        = rhs.colorSet;
         noneSet         = rhs.noneSet;
         value.color     = rhs.value.color;
@@ -677,7 +685,7 @@ public:
     }
 
     bool isSameType( SPIPaint const & other ) const {
-        return (isPaintserver() == other.isPaintserver()) && (colorSet == other.colorSet) && (currentcolor == other.currentcolor);
+        return (isPaintserver() == other.isPaintserver()) && (colorSet == other.colorSet) && (paintOrigin == other.paintOrigin);
     }
 
     bool isNoneSet() const {
@@ -685,7 +693,7 @@ public:
     }
 
     bool isNone() const {
-        return !currentcolor && !colorSet && !isPaintserver();
+        return (paintOrigin == SP_CSS_PAINT_ORIGIN_NORMAL) && !colorSet && !isPaintserver();
     } // TODO refine
 
     bool isColor() const {
@@ -712,7 +720,7 @@ public:
 
   // To do: make private
 public:
-    bool currentcolor : 1;
+    SPPaintOrigin paintOrigin : 2;
     bool colorSet : 1;
     bool noneSet : 1;
     struct {

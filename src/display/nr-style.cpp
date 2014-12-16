@@ -95,22 +95,37 @@ NRStyle::~NRStyle()
 
 void NRStyle::set(SPStyle *style)
 {
-    if ( style->fill.isPaintserver() ) {
+    // Handle 'context-fill' and 'context-stroke': Work in progress
+    SPIPaint &style_fill = style->fill;
+    if( style_fill.paintOrigin == SP_CSS_PAINT_ORIGIN_CONTEXT_FILL ) {
+        // std::cout << "NRStyle::set: fill: context-fill" << std::endl;
+        // style_fill = context_fill;
+    } else if ( style_fill.paintOrigin == SP_CSS_PAINT_ORIGIN_CONTEXT_STROKE ) {
+        //std::cout << "NRStyle::set: fill: context-stroke" << std::endl;
+        // style_fill = context_stroke;
+    }
+
+    if ( style_fill.isPaintserver() ) {
     	SPPaintServer* server = style->getFillPaintServer();
     	if ( server && server->isValid() ) {
     		fill.set(server);
-    	} else if ( style->fill.colorSet ) {
-    		fill.set(style->fill.value.color);
+    	} else if ( style_fill.colorSet ) {
+    		fill.set(style_fill.value.color);
     	} else {
     		fill.clear();
     	}
-    } else if ( style->fill.isColor() ) {
-        fill.set(style->fill.value.color);
-    } else if ( style->fill.isNone() ) {
+    } else if ( style_fill.isColor() ) {
+        fill.set(style_fill.value.color);
+    } else if ( style_fill.isNone() ) {
         fill.clear();
+    } else if ( style_fill.paintOrigin == SP_CSS_PAINT_ORIGIN_CONTEXT_FILL ) {
+        // std::cout << "NRStyle::set: fill: context-fill DOUBLE" << std::endl;
+    } else if ( style_fill.paintOrigin == SP_CSS_PAINT_ORIGIN_CONTEXT_STROKE ) {
+        // std::cout << "NRStyle::set: fill: context-stroke DOUBLE" << std::endl;
     } else {
         g_assert_not_reached();
     }
+
     fill.opacity = SP_SCALE24_TO_FLOAT(style->fill_opacity.value);
 
     switch (style->fill_rule.computed) {
@@ -137,6 +152,10 @@ void NRStyle::set(SPStyle *style)
         stroke.set(style->stroke.value.color);
     } else if ( style->stroke.isNone() ) {
         stroke.clear();
+    } else if ( style->stroke.paintOrigin == SP_CSS_PAINT_ORIGIN_CONTEXT_FILL ) {
+        // std::cout << "NRStyle::set: stroke: context-fill" << std::endl;
+    } else if ( style->stroke.paintOrigin == SP_CSS_PAINT_ORIGIN_CONTEXT_STROKE ) {
+        // std::cout << "NRStyle::set: stroke: context-stroke" << std::endl;
     } else {
         g_assert_not_reached();
     }
@@ -266,7 +285,7 @@ void NRStyle::set(SPStyle *style)
         } else if ( style_td->fill.isNone() ) {
             text_decoration_fill.clear();
         } else {
-            g_assert_not_reached();
+            //g_assert_not_reached();
         }
 
         if ( style_td->stroke.isPaintserver() ) {
@@ -276,7 +295,7 @@ void NRStyle::set(SPStyle *style)
         } else if ( style_td->stroke.isNone() ) {
             text_decoration_stroke.clear();
         } else {
-            g_assert_not_reached();
+            //g_assert_not_reached();
         }
     }
 
