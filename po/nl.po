@@ -1087,7 +1087,7 @@ msgstr "Tijgervachtpatroon met vouwen en verhoging langs de randen"
 
 #: ../share/filters/filters.svg.h:410
 msgid "Black Light"
-msgstr ""
+msgstr "Zwart licht"
 
 #: ../share/filters/filters.svg.h:411 ../share/filters/filters.svg.h:575
 #: ../share/filters/filters.svg.h:587 ../share/filters/filters.svg.h:627
@@ -1173,7 +1173,7 @@ msgstr "Gekleurd gipsreliëf"
 
 #: ../share/filters/filters.svg.h:422
 msgid "Velvet Bumps"
-msgstr "Fluwelen verhogin"
+msgstr "Fluwelen verhoging"
 
 #: ../share/filters/filters.svg.h:424
 msgid "Gives Smooth Bumps velvet like"
@@ -1737,7 +1737,7 @@ msgstr "Lokaal een kleine schermachtige ruis toevoegen"
 
 #: ../share/filters/filters.svg.h:674
 msgid "Poster Color Fun"
-msgstr "Poster met kleur, gun"
+msgstr "Poster met kleur, fun"
 
 #: ../share/filters/filters.svg.h:678
 msgid "Poster Rough"
@@ -1967,7 +1967,7 @@ msgstr "Weggesneden reliëf"
 
 #: ../share/filters/filters.svg.h:802
 msgid "Chromolitho Alternate"
-msgstr "Kleurenlithografiealternatief"
+msgstr "Kleurenlithografie B"
 
 #: ../share/filters/filters.svg.h:804
 msgid "Old chromolithographic effect"
@@ -2003,15 +2003,15 @@ msgstr "Kanalen kleuren"
 
 #: ../share/filters/filters.svg.h:820
 msgid "Colorize separately the three color channels"
-msgstr ""
+msgstr "De drie kleurkanalen afzonderlijk verkleuren"
 
 #: ../share/filters/filters.svg.h:822
 msgid "Posterized Light Eraser"
-msgstr ""
+msgstr "Verzadigde lichtgom"
 
 #: ../share/filters/filters.svg.h:824
 msgid "Create a semi transparent posterized image"
-msgstr ""
+msgstr "Een semi transparante verzadigde afbeelding maken"
 
 #: ../share/filters/filters.svg.h:826
 msgid "Trichrome"
@@ -2030,32 +2030,28 @@ msgid "Render Cyan, Magenta and Yellow channels with a colorizable background"
 msgstr "Cyaan-, magenta en geelkanaal renderen met een gekleurde achtergrond"
 
 #: ../share/filters/filters.svg.h:834
-#, fuzzy
 msgid "Contouring table"
-msgstr "Contactdriehoek"
+msgstr "Contourtabel"
 
 #: ../share/filters/filters.svg.h:836
 msgid "Blurred multiple contours for objects"
-msgstr ""
+msgstr "Meervoudige vage contouren voor objecten"
 
 #: ../share/filters/filters.svg.h:838
-#, fuzzy
 msgid "Posterized Blur"
-msgstr "Posteriseren, basis"
+msgstr "Verzadigde vervaging"
 
 #: ../share/filters/filters.svg.h:840
 msgid "Converts blurred contour to posterized steps"
-msgstr ""
+msgstr "Vage contouren omzetten in verzadigde banden"
 
 #: ../share/filters/filters.svg.h:842
-#, fuzzy
 msgid "Contouring discrete"
-msgstr "Aansturend paneelitem"
+msgstr "Discrete contouren"
 
 #: ../share/filters/filters.svg.h:844
-#, fuzzy
 msgid "Sharp multiple contour for objects"
-msgstr "Middelpunten van objecten kleven"
+msgstr "Meervoudige scherpe contouren voor objecten"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:2
@@ -4983,7 +4979,7 @@ msgstr ""
 
 #: ../src/extension/extension.cpp:281
 msgid "the extension is designed for Windows only."
-msgstr ""
+msgstr "de uitbreiding is alleen voor Windows ontworpen."
 
 #: ../src/extension/extension.cpp:286
 msgid "an ID was not defined for it."
@@ -6839,7 +6835,7 @@ msgstr "Tint inverteren"
 
 #: ../src/extension/internal/filter/color.h:915
 msgid "Invert lightness"
-msgstr "Helderheid inverteren"
+msgstr "Lichtheid inverteren"
 
 #: ../src/extension/internal/filter/color.h:916
 msgid "Invert transparency"
@@ -6871,11 +6867,11 @@ msgstr "Lichte delen en schaduwen afzonderlijk aanpassen"
 
 #: ../src/extension/internal/filter/color.h:1111
 msgid "Lightness-Contrast"
-msgstr "Helderheid-contrast"
+msgstr "Lichtheid-contrast"
 
 #: ../src/extension/internal/filter/color.h:1122
 msgid "Modify lightness and contrast separately"
-msgstr "Helderheid en contrast afzonderlijk aanpassen"
+msgstr "Lichtheid en contrast afzonderlijk aanpassen"
 
 #: ../src/extension/internal/filter/color.h:1190
 msgid "Nudge RGB"
@@ -7530,7 +7526,7 @@ msgstr "Mengen ruis:"
 
 #: ../src/extension/internal/filter/paint.h:708
 msgid "Grain lightness"
-msgstr "Helderheid korrel"
+msgstr "Lichtheid korrel"
 
 #: ../src/extension/internal/filter/paint.h:716
 msgid "Points color"
@@ -8012,7 +8008,7 @@ msgstr ""
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:128
 msgid "import via Poppler"
-msgstr ""
+msgstr "via Poppler importeren"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:138
 msgid "rough"
@@ -8453,15 +8449,15 @@ msgstr "Lijnkleur"
 #. New in Compositing and Blending Level 1
 #: ../src/filter-enums.cpp:58
 msgid "Overlay"
-msgstr ""
+msgstr "Bedekken"
 
 #: ../src/filter-enums.cpp:59
 msgid "Color Dodge"
-msgstr ""
+msgstr "Kleur ontwijken"
 
 #: ../src/filter-enums.cpp:60
 msgid "Color Burn"
-msgstr ""
+msgstr "Kleur branden"
 
 #: ../src/filter-enums.cpp:61
 msgid "Hard Light"
@@ -8490,7 +8486,7 @@ msgstr "Tint"
 
 #: ../src/filter-enums.cpp:68
 msgid "Luminosity"
-msgstr ""
+msgstr "Helderheid"
 
 #: ../src/filter-enums.cpp:78
 msgid "Matrix"
@@ -8530,19 +8526,19 @@ msgstr "Doel"
 
 #: ../src/filter-enums.cpp:98
 msgid "Destination Over"
-msgstr ""
+msgstr "Doel over"
 
 #: ../src/filter-enums.cpp:99
 msgid "Destination In"
-msgstr ""
+msgstr "Doel in"
 
 #: ../src/filter-enums.cpp:100
 msgid "Destination Out"
-msgstr ""
+msgstr "Doel uit"
 
 #: ../src/filter-enums.cpp:101
 msgid "Destination Atop"
-msgstr "Do"
+msgstr "Doel boven"
 
 #: ../src/filter-enums.cpp:102
 msgid "Lighter"
@@ -14198,19 +14194,19 @@ msgstr "De verzadiging binnen dit percentage willekeurig aanpassen"
 
 #: ../src/ui/dialog/clonetiler.cpp:735
 msgid "<b>L:</b>"
-msgstr "<b>Helderheid:</b>"
+msgstr "<b>Lichtheid:</b>"
 
 #: ../src/ui/dialog/clonetiler.cpp:741
 msgid "Change the color lightness by this percentage for each row"
-msgstr "De helderheid elke volgende rij met dit percentage aanpassen"
+msgstr "De lichtheid elke volgende rij met dit percentage aanpassen"
 
 #: ../src/ui/dialog/clonetiler.cpp:747
 msgid "Change the color lightness by this percentage for each column"
-msgstr "De helderheid elke volgende kolom met dit percentage aanpassen"
+msgstr "De lichtheid elke volgende kolom met dit percentage aanpassen"
 
 #: ../src/ui/dialog/clonetiler.cpp:753
 msgid "Randomize the color lightness by this percentage"
-msgstr "De helderheid binnen dit percentage willekeurig aanpassen"
+msgstr "De lichtheid binnen dit percentage willekeurig aanpassen"
 
 #: ../src/ui/dialog/clonetiler.cpp:767
 msgid "Alternate the sign of color changes for each row"
@@ -14297,7 +14293,7 @@ msgstr "L"
 
 #: ../src/ui/dialog/clonetiler.cpp:889
 msgid "Pick the lightness of the color"
-msgstr "De helderheid van de kleur kiezen"
+msgstr "De lichtheid van de kleur kiezen"
 
 #: ../src/ui/dialog/clonetiler.cpp:899
 msgid "2. Tweak the picked value:"
@@ -31570,6 +31566,14 @@ msgid ""
 "    * Random Hue/Saturation/Lightness: randomize the parameter's value.\n"
 "      "
 msgstr ""
+"Past tint, verzadiging en lichtheid in de TVL-vertegenwoordiging van de kleur van de geselecteerde objecten.\n"
+"Opties:\n"
+"    * Tint: draaien met ... graden (telt door).\n"
+"    * Verzadiging: % toevoegen/aftrekken (min=-100, max=100).\n"
+"    * Lichtheid: % toevoegen/aftrekken (min=-100, max=100).\n"
+"    * Random tint/verzadiging/lichtheid: de parameterwaarde randomiseren.\n"
+"      "
+
 
 #: ../share/extensions/color_blackandwhite.inx.h:1
 msgid "Black and White"
@@ -31577,7 +31581,7 @@ msgstr "Zwart en wit"
 
 #: ../share/extensions/color_blackandwhite.inx.h:2
 msgid "Threshold Color (1-255):"
-msgstr ""
+msgstr "Grenswaarde kleur (1-255):"
 
 #: ../share/extensions/color_brighter.inx.h:1
 msgid "Brighter"
