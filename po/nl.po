@@ -1177,7 +1177,7 @@ msgstr "Fluwelen verhoging"
 
 #: ../share/filters/filters.svg.h:424
 msgid "Gives Smooth Bumps velvet like"
-msgstr "Geeft zachte verhogingen"
+msgstr "Geeft afgeronde verhogingen"
 
 #: ../share/filters/filters.svg.h:426
 msgid "Comics Cream"
@@ -1227,7 +1227,7 @@ msgstr "Gedeformeerde regenboog"
 
 #: ../share/filters/filters.svg.h:440
 msgid "Smooth rainbow colors warped along the edges and colorizable"
-msgstr "Licht gedeformeerde regenboogkleuren langs randen, kleur aanpasbaar"
+msgstr "Afgevlakte regenboogkleuren langs randen met aanpasbare kleur"
 
 #: ../share/filters/filters.svg.h:442
 msgid "Rough and Dilate"
@@ -3338,9 +3338,8 @@ msgid "Checkerboard white"
 msgstr "Dambord wit"
 
 #: ../share/patterns/patterns.svg.h:1
-#, fuzzy
 msgid "Packed circles"
-msgstr "Aangeschreven driehoeken"
+msgstr "Gepakte cirkels"
 
 #: ../share/patterns/patterns.svg.h:1
 msgid "Polka dots, small"
@@ -3371,9 +3370,8 @@ msgid "Wavy"
 msgstr "Golvend"
 
 #: ../share/patterns/patterns.svg.h:1
-#, fuzzy
 msgid "Wavy white"
-msgstr "Wit"
+msgstr "Golvend wit"
 
 #: ../share/patterns/patterns.svg.h:1
 msgid "Camouflage"
@@ -3384,19 +3382,16 @@ msgid "Ermine"
 msgstr "Hermelijn"
 
 #: ../share/patterns/patterns.svg.h:1
-#, fuzzy
 msgid "Sand (bitmap)"
-msgstr "Bitmap overtrekken"
+msgstr "Zand (bitmap)"
 
 #: ../share/patterns/patterns.svg.h:1
-#, fuzzy
 msgid "Cloth (bitmap)"
-msgstr "Bitmap maken"
+msgstr "Textiel (bitmap)"
 
 #: ../share/patterns/patterns.svg.h:1
-#, fuzzy
 msgid "Old paint (bitmap)"
-msgstr "Olieverfschilderij"
+msgstr "Oud schilderij (bitmap)"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:2
@@ -5346,9 +5341,8 @@ msgstr "Rechts (px):"
 
 # hier wel een punt in vertaling in verband met overeenkomst met de andere tips in de toolbar voor andere uitbreidingen
 #: ../src/extension/internal/bitmap/crop.cpp:77
-#, fuzzy
 msgid "Crop selected bitmap(s)"
-msgstr "Geselecteerde bitmap(s) afsnijden."
+msgstr "Geselecteerde bitmap(s) afsnijden"
 
 #: ../src/extension/internal/bitmap/cycleColormap.cpp:37
 msgid "Cycle Colormap"
@@ -5557,9 +5551,8 @@ msgid "Opacity:"
 msgstr "Ondoorzichtigheid:"
 
 #: ../src/extension/internal/bitmap/opacity.cpp:46
-#, fuzzy
 msgid "Modify opacity channel(s) of selected bitmap(s)"
-msgstr "De ondoorzichtigheidskanalen van geselecteerde bitmap(s) aanpassen."
+msgstr "De ondoorzichtigheidskanalen van geselecteerde bitmap(s) aanpassen"
 
 #: ../src/extension/internal/bitmap/raise.cpp:40
 msgid "Raise"
@@ -7204,7 +7197,7 @@ msgstr "Inhoud vervagen"
 
 #: ../src/extension/internal/filter/morphology.h:79
 msgid "Smooth edges and angles of shapes"
-msgstr "Randen en hoeken van vormen vervagen"
+msgstr "Randen en hoeken van vormen afvlakken"
 
 #: ../src/extension/internal/filter/morphology.h:166
 msgid "Outline"
@@ -11416,9 +11409,8 @@ msgid "Paste path"
 msgstr "Pad plakken"
 
 #: ../src/live_effects/parameter/path.cpp:200
-#, fuzzy
 msgid "Link to path on clipboard"
-msgstr "Er staat niets op het klembord."
+msgstr "Aan pad op het klembord linken"
 
 #: ../src/live_effects/parameter/path.cpp:443
 msgid "Paste path parameter"
@@ -12251,10 +12243,9 @@ msgid "Select <b>some objects</b> to group."
 msgstr "Selecteer <b>twee objecten of meer objecten</b> om te groeperen."
 
 #: ../src/selection-chemistry.cpp:782
-#, fuzzy
 msgctxt "Verb"
 msgid "Group"
-msgstr "Groep"
+msgstr "Groeperen"
 
 #: ../src/selection-chemistry.cpp:805
 msgid "Select a <b>group</b> to ungroup."
@@ -12725,11 +12716,11 @@ msgid "Use <b>Shift+D</b> to look up frame"
 msgstr "Gebruik <b>Shift+D</b> om het kaderobject te vinden"
 
 #: ../src/selection-describer.cpp:215
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%i</b> objects selected of type %s"
 msgid_plural "<b>%i</b> objects selected of types %s"
-msgstr[0] "<b>%i</b> object geselecteerd"
-msgstr[1] "<b>%i</b> objecten geselecteerd"
+msgstr[0] "<b>%i</b> objecten geselecteerd van het type %s"
+msgstr[1] "<b>%i</b> objecten geselecteerd van de typen %s"
 
 #: ../src/selection-describer.cpp:225
 #, c-format
@@ -14595,9 +14586,8 @@ msgid "Use antialiasing"
 msgstr "Anti-aliasing gebruiken"
 
 #: ../src/ui/dialog/document-properties.cpp:111
-#, fuzzy
 msgid "If unset, no antialiasing will be done on the drawing"
-msgstr "Indien aangevinkt, wordt de rand altijd boven de tekening getoond"
+msgstr "Indien aangevinkt, wordt geen anti-aliasing op de tekening toegepast"
 
 #: ../src/ui/dialog/document-properties.cpp:112
 msgid "Show page _border"
@@ -17934,9 +17924,8 @@ msgstr ""
 #. LPETool
 #. disabled, because the LPETool is not finished yet.
 #: ../src/ui/dialog/inkscape-preferences.cpp:508
-#, fuzzy
 msgid "LPE Tool"
-msgstr "Padeffecten"
+msgstr "Padeffectengereedschap"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:515
 msgid "Interface"
@@ -18195,9 +18184,8 @@ msgid "Swedish (sv)"
 msgstr "Zweeds (sv)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:529
-#, fuzzy
 msgid "Telugu (te)"
-msgstr "Telugu (te_IN)"
+msgstr "Telugu (te)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:529
 msgid "Thai (th)"
@@ -21006,7 +20994,7 @@ msgstr "Trapvormige artefacten behouden"
 
 #: ../src/ui/dialog/pixelartdialog.cpp:281
 msgid "_Smooth curves"
-msgstr "_Gladde paden"
+msgstr "_Afgevlakte paden"
 
 #: ../src/ui/dialog/pixelartdialog.cpp:282
 msgid "The Kopf-Lischinski algorithm"
@@ -21054,69 +21042,58 @@ msgid "Anchor point:"
 msgstr "Ankerpunt:"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:52
-#, fuzzy
 msgctxt "Polar arrange tab"
 msgid "Object's bounding box:"
-msgstr "Visueel omvattend vak"
+msgstr "Omvattend vak:"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:59
-#, fuzzy
 msgctxt "Polar arrange tab"
 msgid "Object's rotational center"
 msgstr "Rotatiemiddelpunt"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:64
-#, fuzzy
 msgctxt "Polar arrange tab"
 msgid "Arrange on:"
-msgstr "Ordenen"
+msgstr "Ordenen op:"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:68
-#, fuzzy
 msgctxt "Polar arrange tab"
 msgid "First selected circle/ellipse/arc"
-msgstr "Cirkels, ellipsen of bogen maken"
+msgstr "Eerst geselecteerde cirkel/ellips/boog"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:73
-#, fuzzy
 msgctxt "Polar arrange tab"
 msgid "Last selected circle/ellipse/arc"
-msgstr "Laatst geselecteerde kleur"
+msgstr "Laatst geselecteerde cirkel/ellips/boog"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:78
-#, fuzzy
 msgctxt "Polar arrange tab"
 msgid "Parameterized:"
-msgstr "Gcode parametriseren"
+msgstr "Geparametriseerd:"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:83
 msgid "Center X/Y:"
-msgstr ""
+msgstr "X/Y middelpunt:"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:105
-#, fuzzy
 msgid "Radius X/Y:"
-msgstr "Straal:"
+msgstr "X/Y straal:"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:127
-#, fuzzy
 msgid "Angle X/Y:"
-msgstr "X-hoek:"
+msgstr "X/Y-hoek:"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:150
-#, fuzzy
 msgid "Rotate objects"
-msgstr "Knooppunten roteren"
+msgstr "Objecten roteren"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:338
-#, fuzzy
 msgid "Couldn't find an ellipse in selection"
-msgstr "Geen lettertypen gevonden in dit document/selectie."
+msgstr "Kon geen ellips in selectie vinden"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:403
-#, fuzzy
 msgid "Arrange on ellipse"
-msgstr "Ellips maken"
+msgstr "Ordenen op ellips"
 
 #: ../src/ui/dialog/print.cpp:111
 msgid "Could not open temporary PNG for bitmap printing"
@@ -21417,25 +21394,23 @@ msgstr "Huidig document"
 
 #: ../src/ui/dialog/symbols.cpp:216
 msgid "Add Symbol from the current document."
-msgstr "Symbool aan huidige document toevoegen."
+msgstr "Symbool aan huidig document toevoegen."
 
 #: ../src/ui/dialog/symbols.cpp:225
 msgid "Remove Symbol from the current document."
 msgstr "Symbool uit huidig document verwijderen."
 
 #: ../src/ui/dialog/symbols.cpp:239
-#, fuzzy
 msgid "Display more icons in row."
-msgstr "Meetinfo weergeven"
+msgstr "Meer iconen in een rij weergeven."
 
 #: ../src/ui/dialog/symbols.cpp:248
-#, fuzzy
 msgid "Display fewer icons in row."
-msgstr "Meetinfo weergeven"
+msgstr "Minder iconen in een rij weergeven."
 
 #: ../src/ui/dialog/symbols.cpp:258
 msgid "Toggle 'fit' symbols in icon space."
-msgstr ""
+msgstr "Symbolen laten 'passen' in hun ruimte."
 
 #: ../src/ui/dialog/symbols.cpp:270
 msgid "Make symbols smaller by zooming out."
@@ -21739,11 +21714,11 @@ msgstr "G_rootte:"
 
 #: ../src/ui/dialog/tracedialog.cpp:708
 msgid "Smooth _corners"
-msgstr "_Hoeken afronden"
+msgstr "_Hoeken afvlakken"
 
 #: ../src/ui/dialog/tracedialog.cpp:710
 msgid "Smooth out sharp corners of the trace"
-msgstr "Scherpe hoeken uit de overtrokken afbeelding afronden"
+msgstr "Scherpe hoeken uit de overtrokken afbeelding afvlakken"
 
 #: ../src/ui/dialog/tracedialog.cpp:719
 msgid "Increase this to smooth corners more"
@@ -22600,7 +22575,7 @@ msgstr "Handvat hoekig knooppunt"
 
 #: ../src/ui/tool/node.cpp:272
 msgid "Smooth node handle"
-msgstr "Handvat glad knooppunt"
+msgstr "Handvat afgevlakt knooppunt"
 
 #: ../src/ui/tool/node.cpp:273
 msgid "Symmetric node handle"
@@ -22608,7 +22583,7 @@ msgstr "Handvat symmetrisch knooppunt"
 
 #: ../src/ui/tool/node.cpp:274
 msgid "Auto-smooth node handle"
-msgstr "Handvat automatisch glad knooppunt"
+msgstr "Knooppunthandvat automatisch afvlakken"
 
 #: ../src/ui/tool/node.cpp:493
 msgctxt "Path handle tip"
@@ -22692,7 +22667,7 @@ msgstr "Knooppunthandvatten verschuiven"
 msgctxt "Path handle tip"
 msgid "<b>Auto node handle</b>: drag to convert to smooth node (%s)"
 msgstr ""
-"<b>Automatischknooppunthandvat</b>: sleep om om te zetten naar een glad "
+"<b>Automatischknooppunthandvat</b>: sleep om om te zetten naar een afgevlakt "
 "knooppunt (%s)"
 
 #: ../src/ui/tool/node.cpp:553
@@ -22795,7 +22770,7 @@ msgstr "Symmetrisch knooppunt"
 
 #: ../src/ui/tool/node.cpp:1507
 msgid "Auto-smooth node"
-msgstr "Automatisch glad knooppunt"
+msgstr "Automatisch afgevlakt knooppunt"
 
 #: ../src/ui/tool/path-manipulator.cpp:836
 msgid "Scale handle"
@@ -28047,9 +28022,8 @@ msgid "Style"
 msgstr "Stijl"
 
 #: ../src/widgets/font-selector.cpp:211
-#, fuzzy
 msgid "Face"
-msgstr "Zijden"
+msgstr "Zijde"
 
 #: ../src/widgets/font-selector.cpp:240 ../share/extensions/dots.inx.h:3
 msgid "Font size:"
@@ -28452,51 +28426,51 @@ msgstr "Invoegen"
 
 #: ../src/widgets/node-toolbar.cpp:356
 msgid "Insert node at min X"
-msgstr ""
+msgstr "Knooppunt bij min X toevoegen"
 
 #: ../src/widgets/node-toolbar.cpp:357
 msgid "Insert new nodes at min X into selected segments"
-msgstr ""
+msgstr "Nieuwe knooppunten bij min X toevoegen in geselecteerde segmenten"
 
 #: ../src/widgets/node-toolbar.cpp:360
 msgid "Insert min X"
-msgstr ""
+msgstr "Bij min X toevoegen"
 
 #: ../src/widgets/node-toolbar.cpp:366
 msgid "Insert node at max X"
-msgstr ""
+msgstr "Knooppunt bij max X toevoegen"
 
 #: ../src/widgets/node-toolbar.cpp:367
 msgid "Insert new nodes at max X into selected segments"
-msgstr ""
+msgstr "Nieuwe knooppunten bij max X toevoegen in geselecteerde segmenten"
 
 #: ../src/widgets/node-toolbar.cpp:370
 msgid "Insert max X"
-msgstr ""
+msgstr "Bij max X toevoegen"
 
 #: ../src/widgets/node-toolbar.cpp:376
 msgid "Insert node at min Y"
-msgstr ""
+msgstr "Knooppunt bij min Y toevoegen"
 
 #: ../src/widgets/node-toolbar.cpp:377
 msgid "Insert new nodes at min Y into selected segments"
-msgstr ""
+msgstr "Nieuwe knooppunten bij min Y toevoegen in geselecteerde segmenten"
 
 #: ../src/widgets/node-toolbar.cpp:380
 msgid "Insert min Y"
-msgstr ""
+msgstr "Bij min Y toevoegen"
 
 #: ../src/widgets/node-toolbar.cpp:386
 msgid "Insert node at max Y"
-msgstr ""
+msgstr "Knooppunt bij max Y toevoegen"
 
 #: ../src/widgets/node-toolbar.cpp:387
 msgid "Insert new nodes at max Y into selected segments"
-msgstr ""
+msgstr "Nieuwe knooppunten bij max Y toevoegen in geselecteerde segmenten"
 
 #: ../src/widgets/node-toolbar.cpp:390
 msgid "Insert max Y"
-msgstr ""
+msgstr "Bij max Y toevoegen"
 
 #: ../src/widgets/node-toolbar.cpp:398
 msgid "Delete selected nodes"
@@ -30874,9 +30848,9 @@ msgid "Unable to open specified file: %s"
 msgstr "Kan opgegeven bestand niet openen: %s"
 
 #: ../share/extensions/inkex.py:171
-#, fuzzy, python-format
+#, python-format
 msgid "Unable to open object member file: %s"
-msgstr "Kan opgegeven bestand niet openen: %s"
+msgstr "Kan opgegeven deelobjectbestand niet openen: %s"
 
 #: ../share/extensions/inkex.py:276
 #, python-format
@@ -31086,20 +31060,19 @@ msgid "unable to locate marker: %s"
 msgstr "onmogelijk om plaats markering te bepalen: %s"
 
 #: ../share/extensions/measure.py:50
-#, fuzzy
 msgid ""
 "Failed to import the numpy modules. These modules are required by this "
 "extension. Please install them and try again.  On a Debian-like system this "
 "can be done with the command, sudo apt-get install python-numpy."
 msgstr ""
-"Laden van de numpy of numpy.linalg modules mislukt. Deze modules zijn nodig "
+"Laden van de numpy modules mislukt. Deze modules zijn nodig "
 "voor deze uitbreiding. Installeer deze alstublief en probeer opnieuw. Op een "
 "Debian-gebaseerd systeem kan dit gedaan worden met het commando, sudo apt-"
 "get install python-numpy."
 
 #: ../share/extensions/measure.py:112
 msgid "Area is zero, cannot calculate Center of Mass"
-msgstr ""
+msgstr "Oppervlak is gelijk aan nul, kan massacentrum niet berekenen"
 
 #: ../share/extensions/pathalongpath.py:208
 #: ../share/extensions/pathscatter.py:228
@@ -33719,9 +33692,8 @@ msgid "Margins"
 msgstr "Marges"
 
 #: ../share/extensions/guides_creator.inx.h:17
-#, fuzzy
 msgid "Margins preset:"
-msgstr "Marges"
+msgstr "Margevoorkeur:"
 
 #: ../share/extensions/guides_creator.inx.h:18
 msgid "Header margin:"
@@ -35157,7 +35129,7 @@ msgstr "Tekstoriëntatie: "
 
 #: ../share/extensions/measure.inx.h:5
 msgid "Angle [with Fixed Angle option only] (°):"
-msgstr ""
+msgstr "Hoek [bij optie Vaste hoek] (°):"
 
 #: ../share/extensions/measure.inx.h:6
 msgid "Font size (px):"
@@ -35187,7 +35159,7 @@ msgstr "Oppervlakte"
 #: ../share/extensions/measure.inx.h:13
 msgctxt "measure extension"
 msgid "Center of Mass"
-msgstr ""
+msgstr "Massacentrum"
 
 #: ../share/extensions/measure.inx.h:14
 msgctxt "measure extension"
@@ -35200,7 +35172,7 @@ msgid "Fixed Angle"
 msgstr "Vaste hoek"
 
 #: ../share/extensions/measure.inx.h:18
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "This effect measures the length, area, or center-of-mass of the selected "
 "paths. Length and area are added as a text object with the selected units. "
@@ -35218,10 +35190,10 @@ msgid ""
 "Bezier curves. If a circle is used, the area may be too high by as much as "
 "0.03%."
 msgstr ""
-"Dit effect meet de lengte of oppervlak van het geselecteerde pad en voegt "
-"het toe als tekstobject.\n"
-"            \n"
-"  * Weergave kan als tekst-op-pad of alleenstaande tekst in een specifieke "
+"Dit effect meet de lengte, oppervlakte of middelpunt van de geselecteerde paden. "
+"Lengte en oppervlak worden toegevoegd als tekstobject in de geselecteerde eenheid. Middelpunt wordt toegevoegd als een kruis.\n"
+"\n"
+"  * Tekstweergave kan als tekst-op-pad of alleenstaande tekst in een specifieke "
 "hoek.\n"
 "  * Het aantal significante cijfers kan ingesteld worden met het "
 "Precisieveld.\n"
@@ -36030,11 +36002,11 @@ msgstr "Puntgrootte (px):"
 
 #: ../share/extensions/render_gear_rack.inx.h:1
 msgid "Rack Gear"
-msgstr ""
+msgstr "Rupsband"
 
 #: ../share/extensions/render_gear_rack.inx.h:2
 msgid "Rack Length:"
-msgstr ""
+msgstr "Tandlengte:"
 
 #: ../share/extensions/render_gear_rack.inx.h:3
 msgid "Tooth Spacing:"
@@ -36055,7 +36027,7 @@ msgstr "Aantal tanden:"
 
 #: ../share/extensions/render_gears.inx.h:3
 msgid "Circular pitch (tooth size):"
-msgstr ""
+msgstr "Tandhoogte:"
 
 #: ../share/extensions/render_gears.inx.h:4
 msgid "Pressure angle (degrees):"
@@ -36063,11 +36035,11 @@ msgstr "Drukhoek (graden):"
 
 #: ../share/extensions/render_gears.inx.h:5
 msgid "Diameter of center hole (0 for none):"
-msgstr "Diameter van het centraal gat (0 voro geen):"
+msgstr "Diameter van het centraal gat (0 voor geen):"
 
 #: ../share/extensions/render_gears.inx.h:10
 msgid "Unit of measurement for both circular pitch and center diameter."
-msgstr ""
+msgstr "Eenheid voor tandhoogte en diameter midden."
 
 #: ../share/extensions/replace_font.inx.h:1
 msgid "Replace font"
@@ -36588,7 +36560,7 @@ msgstr "XAML-uitvoer"
 
 #: ../share/extensions/svg2xaml.inx.h:2
 msgid "Silverlight compatible XAML"
-msgstr ""
+msgstr "Silverlight compatibele XAML"
 
 #: ../share/extensions/svg2xaml.inx.h:3 ../share/extensions/xaml2svg.inx.h:2
 msgid "Microsoft XAML (*.xaml)"
@@ -36790,7 +36762,7 @@ msgstr "Synfig animatie geschreven met de sif-export extensie"
 
 #: ../share/extensions/tar_layers.inx.h:1
 msgid "Collection of SVG files One per root layer"
-msgstr ""
+msgstr "Collectie van een SVG-bestand per laag"
 
 #: ../share/extensions/tar_layers.inx.h:2
 msgid "Layers as Separate SVG (*.tar)"
