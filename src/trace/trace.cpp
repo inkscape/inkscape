@@ -51,7 +51,7 @@ SPImage *Tracer::getSelectedSPImage()
         return NULL;
         }
 
-    Inkscape::MessageStack *msgStack = sp_desktop_message_stack(desktop);
+    Inkscape::MessageStack *msgStack = desktop->getMessageStack();
 
     Inkscape::Selection *sel = desktop->getSelection();
     if (!sel)
@@ -217,7 +217,7 @@ Glib::RefPtr<Gdk::Pixbuf> Tracer::sioxProcessImage(SPImage *img, Glib::RefPtr<Gd
         return Glib::RefPtr<Gdk::Pixbuf>(NULL);
         }
 
-    Inkscape::MessageStack *msgStack = sp_desktop_message_stack(desktop);
+    Inkscape::MessageStack *msgStack = desktop->getMessageStack();
 
     Inkscape::Selection *sel = desktop->getSelection();
     if (!sel)
@@ -397,7 +397,7 @@ void Tracer::traceThread()
         return;
         }
 
-    Inkscape::MessageStack *msgStack = sp_desktop_message_stack(desktop);
+    Inkscape::MessageStack *msgStack = desktop->getMessageStack();
 
     Inkscape::Selection *selection = desktop->getSelection();
 

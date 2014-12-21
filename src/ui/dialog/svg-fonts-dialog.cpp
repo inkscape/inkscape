@@ -515,7 +515,7 @@ void SvgFontsDialog::set_glyph_description_from_selected_path(){
         return;
     }
 
-    Inkscape::MessageStack *msgStack = sp_desktop_message_stack(desktop);
+    Inkscape::MessageStack *msgStack = desktop->getMessageStack();
     SPDocument* doc = sp_desktop_document(desktop);
     Inkscape::Selection* sel = desktop->getSelection();
     if (sel->isEmpty()){
@@ -557,7 +557,7 @@ void SvgFontsDialog::missing_glyph_description_from_selected_path(){
         return;
     }
 
-    Inkscape::MessageStack *msgStack = sp_desktop_message_stack(desktop);
+    Inkscape::MessageStack *msgStack = desktop->getMessageStack();
     SPDocument* doc = sp_desktop_document(desktop);
     Inkscape::Selection* sel = desktop->getSelection();
     if (sel->isEmpty()){

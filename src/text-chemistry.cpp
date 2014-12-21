@@ -91,18 +91,18 @@ text_put_on_path()
     Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
 
     if (!text || !shape || g_slist_length((GSList *) selection->itemList()) != 2) {
-        sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>a text and a path</b> to put text on path."));
+        desktop->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>a text and a path</b> to put text on path."));
         return;
     }
 
     if (SP_IS_TEXT_TEXTPATH(text)) {
-        sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("This text object is <b>already put on a path</b>. Remove it from the path first. Use <b>Shift+D</b> to look up its path."));
+        desktop->getMessageStack()->flash(Inkscape::ERROR_MESSAGE, _("This text object is <b>already put on a path</b>. Remove it from the path first. Use <b>Shift+D</b> to look up its path."));
         return;
     }
 
     if (SP_IS_RECT(shape)) {
         // rect is the only SPShape which is not <path> yet, and thus SVG forbids us from putting text on it
-        sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("You cannot put text on a rectangle in this version. Convert rectangle to path first."));
+        desktop->getMessageStack()->flash(Inkscape::ERROR_MESSAGE, _("You cannot put text on a rectangle in this version. Convert rectangle to path first."));
         return;
     }
 
@@ -110,7 +110,7 @@ text_put_on_path()
     if (SP_IS_FLOWTEXT(text)) {
 
         if (!SP_FLOWTEXT(text)->layout.outputExists()) {
-            sp_desktop_message_stack(desktop)->
+            desktop->getMessageStack()->
                 flash(Inkscape::WARNING_MESSAGE, 
                       _("The flowed text(s) must be <b>visible</b> in order to be put on a path."));
         }
@@ -194,7 +194,7 @@ text_remove_from_path()
     Inkscape::Selection *selection = desktop->getSelection();
 
     if (selection->isEmpty()) {
-        sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>a text on path</b> to remove it from path."));
+        desktop->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>a text on path</b> to remove it from path."));
         return;
     }
 
@@ -215,7 +215,7 @@ text_remove_from_path()
     }
 
     if (!did) {
-        sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("<b>No texts-on-paths</b> in the selection."));
+        desktop->getMessageStack()->flash(Inkscape::ERROR_MESSAGE, _("<b>No texts-on-paths</b> in the selection."));
     } else {
         DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT, 
                            _("Remove text from path"));
@@ -259,7 +259,7 @@ text_remove_all_kerns()
     Inkscape::Selection *selection = desktop->getSelection();
 
     if (selection->isEmpty()) {
-        sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>text(s)</b> to remove kerns from."));
+        desktop->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>text(s)</b> to remove kerns from."));
         return;
     }
 
@@ -280,7 +280,7 @@ text_remove_all_kerns()
     }
 
     if (!did) {
-        sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("Select <b>text(s)</b> to remove kerns from."));
+        desktop->getMessageStack()->flash(Inkscape::ERROR_MESSAGE, _("Select <b>text(s)</b> to remove kerns from."));
     } else {
         DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT, 
                            _("Remove manual kerns"));
@@ -303,7 +303,7 @@ text_flow_into_shape()
     SPItem *shape = shape_in_selection(selection);
 
     if (!text || !shape || g_slist_length((GSList *) selection->itemList()) < 2) {
-        sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>a text</b> and one or more <b>paths or shapes</b> to flow text into frame."));
+        desktop->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>a text</b> and one or more <b>paths or shapes</b> to flow text into frame."));
         return;
     }
 
@@ -395,7 +395,7 @@ text_unflow ()
 
 
     if (!flowtext_in_selection(selection) || g_slist_length((GSList *) selection->itemList()) < 1) {
-        sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>a flowed text</b> to unflow it."));
+        desktop->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>a flowed text</b> to unflow it."));
         return;
     }
 
@@ -480,7 +480,7 @@ flowtext_to_text()
     Inkscape::Selection *selection = desktop->getSelection();
 
     if (selection->isEmpty()) {
-        sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, 
+        desktop->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, 
                                                  _("Select <b>flowed text(s)</b> to convert."));
         return;
     }
@@ -497,7 +497,7 @@ flowtext_to_text()
             continue;
 
         if (!SP_FLOWTEXT(item)->layout.outputExists()) {
-            sp_desktop_message_stack(desktop)->
+            desktop->getMessageStack()->
                 flash(Inkscape::WARNING_MESSAGE, 
                       _("The flowed text(s) must be <b>visible</b> in order to be converted."));
             return;
@@ -530,7 +530,7 @@ flowtext_to_text()
                            _("Convert flowed text to text"));
         selection->setReprList(reprs);        
     } else {
-        sp_desktop_message_stack(desktop)->
+        desktop->getMessageStack()->
             flash(Inkscape::ERROR_MESSAGE,
                   _("<b>No flowed text(s)</b> to convert in the selection."));
     }

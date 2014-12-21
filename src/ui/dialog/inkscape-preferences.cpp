@@ -216,7 +216,7 @@ static void StyleFromSelectionToTool(Glib::ustring const &prefs_path, StyleSwatc
     Inkscape::Selection *selection = desktop->getSelection();
 
     if (selection->isEmpty()) {
-        sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE,
+        desktop->getMessageStack()->flash(Inkscape::ERROR_MESSAGE,
                                        _("<b>No objects selected</b> to take the style from."));
         return;
     }
@@ -225,7 +225,7 @@ static void StyleFromSelectionToTool(Glib::ustring const &prefs_path, StyleSwatc
         /* TODO: If each item in the selection has the same style then don't consider it an error.
          * Maybe we should try to handle multiple selections anyway, e.g. the intersection of the
          * style attributes for the selected items. */
-        sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE,
+        desktop->getMessageStack()->flash(Inkscape::ERROR_MESSAGE,
                                        _("<b>More than one object selected.</b>  Cannot take style from multiple objects."));
         return;
     }

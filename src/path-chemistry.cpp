@@ -51,7 +51,7 @@ sp_selected_path_combine(SPDesktop *desktop)
     SPDocument *doc = sp_desktop_document(desktop);
     
     if (g_slist_length((GSList *) selection->itemList()) < 1) {
-        sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to combine."));
+        desktop->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to combine."));
         return;
     }
 
@@ -178,7 +178,7 @@ sp_selected_path_combine(SPDesktop *desktop)
         Inkscape::GC::release(repr);
 
     } else {
-        sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("<b>No path(s)</b> to combine in the selection."));
+        desktop->getMessageStack()->flash(Inkscape::ERROR_MESSAGE, _("<b>No path(s)</b> to combine in the selection."));
     }
 
     desktop->clearWaitingCursor();
@@ -190,7 +190,7 @@ sp_selected_path_break_apart(SPDesktop *desktop)
     Inkscape::Selection *selection = desktop->getSelection();
 
     if (selection->isEmpty()) {
-        sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>path(s)</b> to break apart."));
+        desktop->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>path(s)</b> to break apart."));
         return;
     }
 
@@ -286,7 +286,7 @@ sp_selected_path_break_apart(SPDesktop *desktop)
         DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_SELECTION_BREAK_APART, 
                            _("Break apart"));
     } else {
-        sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("<b>No path(s)</b> to break apart in the selection."));
+        desktop->getMessageStack()->flash(Inkscape::ERROR_MESSAGE, _("<b>No path(s)</b> to break apart in the selection."));
     }
 }
 
@@ -296,7 +296,7 @@ sp_selected_path_to_curves(Inkscape::Selection *selection, SPDesktop *desktop, b
 {
     if (selection->isEmpty()) {
         if (interactive && desktop)
-            sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to convert to path."));
+            desktop->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to convert to path."));
         return;
     }
 
@@ -326,7 +326,7 @@ sp_selected_path_to_curves(Inkscape::Selection *selection, SPDesktop *desktop, b
             DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_OBJECT_TO_CURVE, 
                                _("Object to path"));
         } else {
-            sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("<b>No objects</b> to convert to path in the selection."));
+            desktop->getMessageStack()->flash(Inkscape::ERROR_MESSAGE, _("<b>No objects</b> to convert to path in the selection."));
             return;
         }
     }
@@ -617,7 +617,7 @@ sp_selected_path_reverse(SPDesktop *desktop)
     GSList *items = (GSList *) selection->itemList();
 
     if (!items) {
-        sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>path(s)</b> to reverse."));
+        desktop->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>path(s)</b> to reverse."));
         return;
     }
 
@@ -663,7 +663,7 @@ sp_selected_path_reverse(SPDesktop *desktop)
         DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_SELECTION_REVERSE,
                            _("Reverse path"));
     } else {
-        sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("<b>No paths</b> to reverse in the selection."));
+        desktop->getMessageStack()->flash(Inkscape::ERROR_MESSAGE, _("<b>No paths</b> to reverse in the selection."));
     }
 }
 
