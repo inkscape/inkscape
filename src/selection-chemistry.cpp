@@ -2856,7 +2856,7 @@ sp_select_clone_original(SPDesktop *desktop)
                 curve->moveto(a->midpoint());
                 curve->lineto(b->midpoint());
 
-                SPCanvasItem * canvasitem = sp_canvas_bpath_new(sp_desktop_tempgroup(desktop), curve);
+                SPCanvasItem * canvasitem = sp_canvas_bpath_new(desktop->getTempGroup(), curve);
                 sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(canvasitem), 0x0000ddff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT, 5, 3);
                 sp_canvas_item_show(canvasitem);
                 curve->unref();

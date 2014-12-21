@@ -231,7 +231,7 @@ void ConnectorTool::setup() {
     );
 
     /* Create red bpath */
-    this->red_bpath = sp_canvas_bpath_new(sp_desktop_sketch(this->desktop), NULL);
+    this->red_bpath = sp_canvas_bpath_new(this->desktop->getSketch(), NULL);
     sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(this->red_bpath), this->red_color,
             1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
     sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(this->red_bpath), 0x00000000,

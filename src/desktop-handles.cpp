@@ -32,27 +32,11 @@ sp_desktop_guides (SPDesktop const * desktop)
 }
 
 SPCanvasGroup *
-sp_desktop_sketch (SPDesktop const * desktop)
-{
-	g_return_val_if_fail (desktop != NULL, NULL);
-
-	return desktop->sketch;
-}
-
-SPCanvasGroup *
 sp_desktop_controls (SPDesktop const * desktop)
 {
 	g_return_val_if_fail (desktop != NULL, NULL);
 
 	return desktop->controls;
-}
-
-SPCanvasGroup *
-sp_desktop_tempgroup (SPDesktop const * desktop)
-{
-    g_return_val_if_fail (desktop != NULL, NULL);
-
-    return desktop->tempgroup;
 }
 
 Inkscape::MessageStack *

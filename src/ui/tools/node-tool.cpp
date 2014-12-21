@@ -324,7 +324,7 @@ void  NodeTool::update_helperpath () {
                 cc->reset();
             }
             if (!c->is_empty()) {
-                SPCanvasItem *helperpath = sp_canvas_bpath_new(sp_desktop_tempgroup(this->desktop), c);
+                SPCanvasItem *helperpath = sp_canvas_bpath_new(this->desktop->getTempGroup(), c);
                 sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(helperpath), 0x0000ff9A, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
                 sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(helperpath), 0, SP_WIND_RULE_NONZERO);
                 sp_canvas_item_affine_absolute(helperpath, selection->singleItem()->i2dt_affine());
@@ -527,7 +527,7 @@ bool NodeTool::root_handler(GdkEvent* event) {
             }
 
             c->transform(over_item->i2dt_affine());
-            SPCanvasItem *flash = sp_canvas_bpath_new(sp_desktop_tempgroup(desktop), c);
+            SPCanvasItem *flash = sp_canvas_bpath_new(desktop->getTempGroup(), c);
 
             sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(flash),
                 //prefs->getInt("/tools/nodes/highlight_color", 0xff0000ff), 1.0,

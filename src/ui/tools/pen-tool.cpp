@@ -885,7 +885,7 @@ void PenTool::_redrawAll() {
             this->green_bpaths = g_slist_remove(this->green_bpaths, this->green_bpaths->data);
         }
         // one canvas bpath for all of green_curve
-        SPCanvasItem *cshape = sp_canvas_bpath_new(sp_desktop_sketch(this->desktop), this->green_curve);
+        SPCanvasItem *cshape = sp_canvas_bpath_new(this->desktop->getSketch(), this->green_curve);
         sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(cshape), this->green_color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
         sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(cshape), 0, SP_WIND_RULE_NONZERO);
 
@@ -1419,7 +1419,7 @@ void PenTool::_bspline_spiro_color()
             this->green_bpaths = g_slist_remove(this->green_bpaths, this->green_bpaths->data);
         }
         // one canvas bpath for all of green_curve
-        SPCanvasItem *cshape = sp_canvas_bpath_new(sp_desktop_sketch(this->desktop), this->green_curve);
+        SPCanvasItem *cshape = sp_canvas_bpath_new(this->desktop->getSketch(), this->green_curve);
         sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(cshape), this->green_color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
         sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(cshape), 0, SP_WIND_RULE_NONZERO);
         this->green_bpaths = g_slist_prepend(this->green_bpaths, cshape);
@@ -2165,7 +2165,7 @@ void PenTool::_finishSegment(Geom::Point const p, guint const state) {
         SPCurve *curve = this->red_curve->copy();
 
         /// \todo fixme:
-        SPCanvasItem *cshape = sp_canvas_bpath_new(sp_desktop_sketch(this->desktop), curve);
+        SPCanvasItem *cshape = sp_canvas_bpath_new(this->desktop->getSketch(), curve);
         curve->unref();
         sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(cshape), this->green_color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
 

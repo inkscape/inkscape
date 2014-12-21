@@ -121,7 +121,7 @@ void EraserTool::setup() {
     this->cal1 = new SPCurve();
     this->cal2 = new SPCurve();
 
-    this->currentshape = sp_canvas_item_new(sp_desktop_sketch(desktop), SP_TYPE_CANVAS_BPATH, NULL);
+    this->currentshape = sp_canvas_item_new(desktop->getSketch(), SP_TYPE_CANVAS_BPATH, NULL);
 
     sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(this->currentshape), ERC_RED_RGBA, SP_WIND_RULE_EVENODD);
     sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(this->currentshape), 0x00000000, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
@@ -949,7 +949,7 @@ void EraserTool::fit_and_split(bool release) {
             gint eraserMode = prefs->getBool("/tools/eraser/mode") ? 1 : 0;
             g_assert(!this->currentcurve->is_empty());
 
-            SPCanvasItem *cbp = sp_canvas_item_new(sp_desktop_sketch(desktop), SP_TYPE_CANVAS_BPATH, NULL);
+            SPCanvasItem *cbp = sp_canvas_item_new(desktop->getSketch(), SP_TYPE_CANVAS_BPATH, NULL);
             SPCurve *curve = this->currentcurve->copy();
             sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH (cbp), curve);
             curve->unref();

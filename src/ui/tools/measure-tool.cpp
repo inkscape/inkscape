@@ -228,7 +228,7 @@ void createAngleDisplayCurve(SPDesktop *desktop, Geom::Point const &center, Geom
                        yc + ay  + (k2 * ax));
         Geom::Point p3(xc + bx + (k2 * by),
                        yc + by - (k2 * bx));
-        SPCtrlCurve *curve = ControlManager::getManager().createControlCurve(sp_desktop_tempgroup(desktop), p1, p2, p3, p4, CTLINE_SECONDARY);
+        SPCtrlCurve *curve = ControlManager::getManager().createControlCurve(desktop->getTempGroup(), p1, p2, p3, p4, CTLINE_SECONDARY);
 
         measure_tmp_items.push_back(desktop->add_temporary_canvasitem(SP_CANVAS_ITEM(curve), 0, true));
     }
@@ -525,7 +525,7 @@ bool MeasureTool::root_handler(GdkEvent* event) {
 
                     // TODO cleanup memory, Glib::ustring, etc.:
                     gchar *measure_str = g_strdup_printf("%.2f %s", place.lengthVal, unit_name.c_str());
-                    SPCanvasText *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop),
+                    SPCanvasText *canvas_tooltip = sp_canvastext_new(desktop->getTempGroup(),
                                                                      desktop,
                                                                      place.end,
                                                                      measure_str);
@@ -548,7 +548,7 @@ bool MeasureTool::root_handler(GdkEvent* event) {
                     // TODO cleanup memory, Glib::ustring, etc.:
                     gchar *angle_str = g_strdup_printf("%.2f °", angle * 180/M_PI);
 
-                    SPCanvasText *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop),
+                    SPCanvasText *canvas_tooltip = sp_canvastext_new(desktop->getTempGroup(),
                                                                      desktop,
                                                                      angleDisplayPt,
                                                                      angle_str);
@@ -569,7 +569,7 @@ bool MeasureTool::root_handler(GdkEvent* event) {
 
                     // TODO cleanup memory, Glib::ustring, etc.:
                     gchar *totallength_str = g_strdup_printf("%.2f %s", totallengthval, unit_name.c_str());
-                    SPCanvasText *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop),
+                    SPCanvasText *canvas_tooltip = sp_canvastext_new(desktop->getTempGroup(),
                                                                      desktop,
                                                                      end_point + desktop->w2d(Geom::Point(3*fontsize, -fontsize)),
                                                                      totallength_str);
@@ -590,7 +590,7 @@ bool MeasureTool::root_handler(GdkEvent* event) {
 
                     // TODO cleanup memory, Glib::ustring, etc.:
                     gchar *total_str = g_strdup_printf("%.2f %s", totallengthval, unit_name.c_str());
-                    SPCanvasText *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop),
+                    SPCanvasText *canvas_tooltip = sp_canvastext_new(desktop->getTempGroup(),
                                                                      desktop,
                                                                      desktop->doc2dt((intersections[0] + intersections[intersections.size()-1])/2) + normal * 60,
                                                                      total_str);
@@ -609,7 +609,7 @@ bool MeasureTool::root_handler(GdkEvent* event) {
 
                 for (size_t idx = 0; idx < intersections.size(); ++idx) {
                     // Display the intersection indicator (i.e. the cross)
-                    SPCanvasItem * canvasitem = sp_canvas_item_new(sp_desktop_tempgroup(desktop),
+                    SPCanvasItem * canvasitem = sp_canvas_item_new(desktop->getTempGroup(),
                                                                    SP_TYPE_CTRL,
                                                                    "anchor", SP_ANCHOR_CENTER,
                                                                    "size", 8.0,
@@ -627,7 +627,7 @@ bool MeasureTool::root_handler(GdkEvent* event) {
 
                 // draw main control line
                 {
-                    SPCtrlLine *control_line = ControlManager::getManager().createControlLine(sp_desktop_tempgroup(desktop),
+                    SPCtrlLine *control_line = ControlManager::getManager().createControlLine(desktop->getTempGroup(),
                                                                                               start_point,
                                                                                               end_point);
                     measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
@@ -642,7 +642,7 @@ bool MeasureTool::root_handler(GdkEvent* event) {
                                           * Geom::Affine(Geom::Translate(start_point)));
                         }
 
-                        SPCtrlLine *control_line = ControlManager::getManager().createControlLine(sp_desktop_tempgroup(desktop),
+                        SPCtrlLine *control_line = ControlManager::getManager().createControlLine(desktop->getTempGroup(),
                                                                                                   start_point,
                                                                                                   anchorEnd,
                                                                                                   CTLINE_SECONDARY);
@@ -655,17 +655,17 @@ bool MeasureTool::root_handler(GdkEvent* event) {
                 if (intersections.size() > 2) {
                     ControlManager &mgr = ControlManager::getManager();
                     SPCtrlLine *control_line = 0;
-                    control_line = mgr.createControlLine(sp_desktop_tempgroup(desktop),
+                    control_line = mgr.createControlLine(desktop->getTempGroup(),
                                                          desktop->doc2dt(intersections[0]) + normal * 60,
                                                          desktop->doc2dt(intersections[intersections.size() - 1]) + normal * 60);
                     measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
 
-                    control_line = mgr.createControlLine(sp_desktop_tempgroup(desktop),
+                    control_line = mgr.createControlLine(desktop->getTempGroup(),
                                                          desktop->doc2dt(intersections[0]),
                                                          desktop->doc2dt(intersections[0]) + normal * 65);
                     measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
 
-                    control_line = mgr.createControlLine(sp_desktop_tempgroup(desktop),
+                    control_line = mgr.createControlLine(desktop->getTempGroup(),
                                                          desktop->doc2dt(intersections[intersections.size() - 1]),
                                                          desktop->doc2dt(intersections[intersections.size() - 1]) + normal * 65);
                     measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
@@ -677,7 +677,7 @@ bool MeasureTool::root_handler(GdkEvent* event) {
                     LabelPlacement &place = *it;
 
                     ControlManager &mgr = ControlManager::getManager();
-                    SPCtrlLine *control_line = mgr.createControlLine(sp_desktop_tempgroup(desktop),
+                    SPCtrlLine *control_line = mgr.createControlLine(desktop->getTempGroup(),
                                                                      place.start,
                                                                      place.end,
                                                                      CTLINE_SECONDARY);
@@ -689,7 +689,7 @@ bool MeasureTool::root_handler(GdkEvent* event) {
                         Geom::Point measure_text_pos = (intersections[idx - 1] + intersections[idx]) / 2;
 
                         ControlManager &mgr = ControlManager::getManager();
-                        SPCtrlLine *control_line = mgr.createControlLine(sp_desktop_tempgroup(desktop),
+                        SPCtrlLine *control_line = mgr.createControlLine(desktop->getTempGroup(),
                                                                          desktop->doc2dt(measure_text_pos),
                                                                          desktop->doc2dt(measure_text_pos) - (normal * DIMENSION_OFFSET),
                                                                          CTLINE_SECONDARY);
@@ -699,7 +699,7 @@ bool MeasureTool::root_handler(GdkEvent* event) {
 
                 // Initial point
                 {
-                    SPCanvasItem * canvasitem = sp_canvas_item_new(sp_desktop_tempgroup(desktop),
+                    SPCanvasItem * canvasitem = sp_canvas_item_new(desktop->getTempGroup(),
                                                                    SP_TYPE_CTRL,
                                                                    "anchor", SP_ANCHOR_CENTER,
                                                                    "size", 8.0,

@@ -404,7 +404,7 @@ lpetool_create_measuring_items(LpeTool *lc, Inkscape::Selection *selection)
     SPPath *path;
     SPCurve *curve;
     SPCanvasText *canvas_text;
-    SPCanvasGroup *tmpgrp = sp_desktop_tempgroup(lc->desktop);
+    SPCanvasGroup *tmpgrp = lc->desktop->getTempGroup();
     gchar *arc_length;
     double lengthval;
 

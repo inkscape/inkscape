@@ -612,7 +612,7 @@ SpellCheck::nextWord()
             area.expandBy(MAX(0.05 * mindim, 1));
 
             // create canvas path rectangle, red stroke
-            SPCanvasItem *rect = sp_canvas_bpath_new(sp_desktop_sketch(desktop), NULL);
+            SPCanvasItem *rect = sp_canvas_bpath_new(desktop->getSketch(), NULL);
             sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(rect), 0xff0000ff, 3.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
             sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(rect), 0, SP_WIND_RULE_NONZERO);
             SPCurve *curve = new SPCurve();
