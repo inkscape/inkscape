@@ -308,7 +308,7 @@ bool SelectTool::item_handler(SPItem* item, GdkEvent* event) {
                     // if shift or ctrl was pressed, do not move objects;
                     // pass the event to root handler which will perform rubberband, shift-click, ctrl-click, ctrl-drag
                 } else {
-                    GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
+                    GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (desktop->getCanvas()));
                    
                 	this->dragging = TRUE;
                     this->moved = FALSE;
@@ -353,7 +353,7 @@ bool SelectTool::item_handler(SPItem* item, GdkEvent* event) {
 
         case GDK_ENTER_NOTIFY: {
             if (!desktop->isWaitingCursor() && !this->dragging) {
-                GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
+                GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (desktop->getCanvas()));
 
                 gdk_window_set_cursor(window, CursorSelectMouseover);
             }
@@ -361,7 +361,7 @@ bool SelectTool::item_handler(SPItem* item, GdkEvent* event) {
         }
         case GDK_LEAVE_NOTIFY:
         	if (!desktop->isWaitingCursor() && !this->dragging) {
-                GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
+                GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (desktop->getCanvas()));
 
                 gdk_window_set_cursor(window, this->cursor);
         	}
@@ -573,7 +573,7 @@ bool SelectTool::root_handler(GdkEvent* event) {
                     // but not with shift) we want to drag rather than rubberband
                     this->dragging = TRUE;
 
-                    GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
+                    GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (desktop->getCanvas()));
 
                     gdk_window_set_cursor(window, CursorSelectDragging);
 
@@ -702,7 +702,7 @@ bool SelectTool::root_handler(GdkEvent* event) {
                     }
 
                     this->dragging = FALSE;
-                    window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
+                    window = gtk_widget_get_window (GTK_WIDGET (desktop->getCanvas()));
 
                     gdk_window_set_cursor(window, CursorSelectMouseover);
                     sp_event_context_discard_delayed_snap_event(this);
@@ -953,7 +953,7 @@ bool SelectTool::root_handler(GdkEvent* event) {
                     
                     // if Alt and nonempty selection, show moving cursor ("move selected"):
                     if (alt && !selection->isEmpty() && !desktop->isWaitingCursor()) {
-                    	GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
+                    	GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (desktop->getCanvas()));
 
                         gdk_window_set_cursor(window, CursorSelectDragging);
                     }
@@ -1226,7 +1226,7 @@ bool SelectTool::root_handler(GdkEvent* event) {
             // set cursor to default.
             if (!desktop->isWaitingCursor()) {
                 // Do we need to reset the cursor here on key release ?
-                //GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
+                //GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (desktop->getCanvas()));
                 //gdk_window_set_cursor(window, event_context->cursor);
             }
             break;

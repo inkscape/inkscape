@@ -516,7 +516,7 @@ void FillNStroke::updateFromPaint()
         {
             if (kind == FILL) {
                 // FIXME: fix for GTK breakage, see comment in SelectedStyle::on_opacity_changed; here it results in losing release events
-                sp_desktop_canvas(desktop)->forceFullRedrawAfterInterruptions(0);
+                desktop->getCanvas()->forceFullRedrawAfterInterruptions(0);
             }
 
             psel->setFlatColor( desktop,
@@ -527,7 +527,7 @@ void FillNStroke::updateFromPaint()
 
             if (kind == FILL) {
                 // resume interruptibility
-                sp_desktop_canvas(desktop)->endForcedFullRedraws();
+                desktop->getCanvas()->endForcedFullRedraws();
             }
 
             // on release, toggle undo_label so that the next drag will not be lumped with this one

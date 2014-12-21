@@ -241,7 +241,7 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
     if (actionkey != NULL) {
 
         // FIXME: fix for GTK breakage, see comment in SelectedStyle::on_opacity_changed
-        sp_desktop_canvas(desktop)->forceFullRedrawAfterInterruptions(0);
+        desktop->getCanvas()->forceFullRedrawAfterInterruptions(0);
 
         bool transform_stroke = prefs->getBool("/options/transform/stroke", true);
         bool preserve = prefs->getBool("/options/preservetransform/value", false);
@@ -262,7 +262,7 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
                                 _("Transform by toolbar"));
 
         // resume interruptibility
-        sp_desktop_canvas(desktop)->endForcedFullRedraws();
+        desktop->getCanvas()->endForcedFullRedraws();
     }
 
     g_object_set_data(G_OBJECT(spw), "update", GINT_TO_POINTER(FALSE));
@@ -473,7 +473,7 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     GtkWidget *spw = sp_widget_new_global();
 
     // Remember the desktop's canvas widget, to be used for defocusing.
-    g_object_set_data(G_OBJECT(spw), "dtw", sp_desktop_canvas(desktop));
+    g_object_set_data(G_OBJECT(spw), "dtw", desktop->getCanvas());
 
     // The vb frame holds all other widgets and is used to set sensitivity depending on selection state.
 #if GTK_CHECK_VERSION(3,0,0)

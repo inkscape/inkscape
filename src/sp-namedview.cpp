@@ -676,7 +676,7 @@ void SPNamedView::child_added(Inkscape::XML::Node *child, Inkscape::XML::Node *r
                     g->SPGuide::showSPGuide(static_cast<SPDesktop*>(l->data)->guides, (GCallback) sp_dt_guide_event);
 
                     if (static_cast<SPDesktop*>(l->data)->guides_active) {
-                        g->sensitize(sp_desktop_canvas(static_cast<SPDesktop*> (l->data)), TRUE);
+                        g->sensitize((static_cast<SPDesktop*> (l->data))->getCanvas(), TRUE);
                     }
 
                     sp_namedview_show_single_guide(SP_GUIDE(g), this->showguides);
@@ -734,7 +734,7 @@ void SPNamedView::show(SPDesktop *desktop)
     for (GSList *l = guides; l != NULL; l = l->next) {
         SP_GUIDE(l->data)->showSPGuide( desktop->guides, (GCallback) sp_dt_guide_event);
         if (desktop->guides_active) {
-            SP_GUIDE(l->data)->sensitize(sp_desktop_canvas(desktop), TRUE);
+            SP_GUIDE(l->data)->sensitize(desktop->getCanvas(), TRUE);
         }
         sp_namedview_show_single_guide(SP_GUIDE(l->data), showguides);
     }
@@ -931,7 +931,7 @@ void SPNamedView::hide(SPDesktop const *desktop)
     g_assert(g_slist_find(views, desktop));
 
     for (GSList *l = guides; l != NULL; l = l->next) {
-        SP_GUIDE(l->data)->hideSPGuide(sp_desktop_canvas(desktop));
+        SP_GUIDE(l->data)->hideSPGuide(desktop->getCanvas());
     }
 
     views = g_slist_remove(views, desktop);
@@ -945,7 +945,7 @@ void SPNamedView::activateGuides(void* desktop, bool active)
     SPDesktop *dt = static_cast<SPDesktop*>(desktop);
 
     for (GSList *l = guides; l != NULL; l = l->next) {
-        SP_GUIDE(l->data)->sensitize( sp_desktop_canvas(dt), active);
+        SP_GUIDE(l->data)->sensitize(dt->getCanvas(), active);
     }
 }
 

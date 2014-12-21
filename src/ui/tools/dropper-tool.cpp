@@ -200,7 +200,7 @@ bool DropperTool::root_handler(GdkEvent* event) {
                 // If one time pick with stroke set the pixmap
                 if (prefs->getBool("/tools/dropper/onetimepick", false) && prefs->getInt("/dialogs/fillstroke/page", 0) == 1) {
                     //TODO Only set when not set already
-                    GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(sp_desktop_canvas(desktop)));
+                    GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(desktop->getCanvas()));
                     gdk_window_set_cursor(window, cursor_dropper_stroke);
                 }
 
@@ -324,7 +324,7 @@ bool DropperTool::root_handler(GdkEvent* event) {
                 // REJON: set aux. toolbar input to hex color!
 
                 if (event->button.state & GDK_SHIFT_MASK) {
-                    GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(sp_desktop_canvas(desktop)));
+                    GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(desktop->getCanvas()));
                     gdk_window_set_cursor(window, cursor_dropper_stroke);
                 }
 
@@ -363,7 +363,7 @@ bool DropperTool::root_handler(GdkEvent* event) {
         case GDK_KEY_Shift_L:
         case GDK_KEY_Shift_R:
             if (!desktop->isWaitingCursor() && !prefs->getBool("/tools/dropper/onetimepick", false)) {
-                GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(sp_desktop_canvas(desktop)));
+                GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(desktop->getCanvas()));
                 gdk_window_set_cursor(window, cursor_dropper_stroke);
             }
 
@@ -378,7 +378,7 @@ bool DropperTool::root_handler(GdkEvent* event) {
         case GDK_KEY_Shift_L:
         case GDK_KEY_Shift_R:
             if (!desktop->isWaitingCursor() && !prefs->getBool("/tools/dropper/onetimepick", false)) {
-                GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(sp_desktop_canvas(desktop)));
+                GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(desktop->getCanvas()));
                 gdk_window_set_cursor(window, cursor_dropper_fill);
             }
             break;

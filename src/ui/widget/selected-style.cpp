@@ -1241,13 +1241,13 @@ void SelectedStyle::on_opacity_changed ()
     // me. As a result, scrolling the spinbutton once results in runaway change until it hits 1.0
     // or 0.0. (And no, this is not a race with ::update, I checked that.)
     // Sigh. So we disable interruptibility while we're setting the new value.
-    sp_desktop_canvas(_desktop)->forceFullRedrawAfterInterruptions(0);
+    _desktop->getCanvas()->forceFullRedrawAfterInterruptions(0);
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
     DocumentUndo::maybeDone(sp_desktop_document(_desktop), "fillstroke:opacity", SP_VERB_DIALOG_FILL_STROKE,
                             _("Change opacity"));
     // resume interruptibility
-    sp_desktop_canvas(_desktop)->endForcedFullRedraws();
+    _desktop->getCanvas()->endForcedFullRedraws();
     spinbutton_defocus(GTK_WIDGET(_opacity_sb.gobj()));
     _opacity_blocked = false;
 }

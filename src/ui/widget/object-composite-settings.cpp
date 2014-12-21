@@ -111,7 +111,7 @@ ObjectCompositeSettings::_blendBlurValueChanged()
     _blocked = true;
 
     // FIXME: fix for GTK breakage, see comment in SelectedStyle::on_opacity_changed; here it results in crash 1580903
-    //sp_canvas_force_full_redraw_after_interruptions(sp_desktop_canvas(desktop), 0);
+    //sp_canvas_force_full_redraw_after_interruptions(desktop->getCanvas(), 0);
 
     Geom::OptRect bbox = _subject->getBounds(SPItem::GEOMETRIC_BBOX);
     double radius;
@@ -159,7 +159,7 @@ ObjectCompositeSettings::_blendBlurValueChanged()
                             _("Change blur"));
 
     // resume interruptibility
-    //sp_canvas_end_forced_full_redraws(sp_desktop_canvas(desktop));
+    //sp_canvas_end_forced_full_redraws(desktop->getCanvas());
 
     _blocked = false;
 }
@@ -183,7 +183,7 @@ ObjectCompositeSettings::_opacityValueChanged()
     // FIXME: fix for GTK breakage, see comment in SelectedStyle::on_opacity_changed; here it results in crash 1580903
     // UPDATE: crash fixed in GTK+ 2.10.7 (bug 374378), remove this as soon as it's reasonably common
     // (though this only fixes the crash, not the multiple change events)
-    //sp_canvas_force_full_redraw_after_interruptions(sp_desktop_canvas(desktop), 0);
+    //sp_canvas_force_full_redraw_after_interruptions(desktop->getCanvas(), 0);
 
     SPCSSAttr *css = sp_repr_css_attr_new ();
 
@@ -199,7 +199,7 @@ ObjectCompositeSettings::_opacityValueChanged()
                             _("Change opacity"));
 
     // resume interruptibility
-    //sp_canvas_end_forced_full_redraws(sp_desktop_canvas(desktop));
+    //sp_canvas_end_forced_full_redraws(desktop->getCanvas());
 
     _blocked = false;
 }

@@ -149,7 +149,7 @@ ToolBase::~ToolBase() {
  */
 void ToolBase::sp_event_context_set_cursor(GdkCursorType cursor_type) {
 
-    GtkWidget *w = GTK_WIDGET(sp_desktop_canvas(this->desktop));
+    GtkWidget *w = GTK_WIDGET(this->desktop->getCanvas());
     GdkDisplay *display = gdk_display_get_default();
     GdkCursor *cursor = gdk_cursor_new_for_display(display, cursor_type);
 
@@ -169,7 +169,7 @@ void ToolBase::sp_event_context_set_cursor(GdkCursorType cursor_type) {
  * Recreates and draws cursor on desktop related to ToolBase.
  */
 void ToolBase::sp_event_context_update_cursor() {
-    GtkWidget *w = GTK_WIDGET(sp_desktop_canvas(this->desktop));
+    GtkWidget *w = GTK_WIDGET(this->desktop->getCanvas());
     if (gtk_widget_get_window (w)) {
     
         GtkStyle *style = gtk_widget_get_style(w);
@@ -530,7 +530,7 @@ bool ToolBase::root_handler(GdkEvent* event) {
 
         if (panning_cursor == 1) {
             panning_cursor = 0;
-            GtkWidget *w = GTK_WIDGET(sp_desktop_canvas(this->desktop));
+            GtkWidget *w = GTK_WIDGET(this->desktop->getCanvas());
             gdk_window_set_cursor(gtk_widget_get_window (w), this->cursor);
         }
 
@@ -641,7 +641,7 @@ bool ToolBase::root_handler(GdkEvent* event) {
         case GDK_KEY_KP_4:
             if (MOD__CTRL_ONLY(event)) {
                 int i = (int) floor(key_scroll * accelerate_scroll(event,
-                        acceleration, sp_desktop_canvas(desktop)));
+                        acceleration, desktop->getCanvas()));
 
                 gobble_key_events(get_group0_keyval(&event->key), GDK_CONTROL_MASK);
                 this->desktop->scroll_world(i, 0);
@@ -654,7 +654,7 @@ bool ToolBase::root_handler(GdkEvent* event) {
         case GDK_KEY_KP_8:
             if (MOD__CTRL_ONLY(event)) {
                 int i = (int) floor(key_scroll * accelerate_scroll(event,
-                        acceleration, sp_desktop_canvas(desktop)));
+                        acceleration, desktop->getCanvas()));
 
                 gobble_key_events(get_group0_keyval(&event->key), GDK_CONTROL_MASK);
                 this->desktop->scroll_world(0, i);
@@ -667,7 +667,7 @@ bool ToolBase::root_handler(GdkEvent* event) {
         case GDK_KEY_KP_6:
             if (MOD__CTRL_ONLY(event)) {
                 int i = (int) floor(key_scroll * accelerate_scroll(event,
-                        acceleration, sp_desktop_canvas(desktop)));
+                        acceleration, desktop->getCanvas()));
 
                 gobble_key_events(get_group0_keyval(&event->key), GDK_CONTROL_MASK);
                 this->desktop->scroll_world(-i, 0);
@@ -680,7 +680,7 @@ bool ToolBase::root_handler(GdkEvent* event) {
         case GDK_KEY_KP_2:
             if (MOD__CTRL_ONLY(event)) {
                 int i = (int) floor(key_scroll * accelerate_scroll(event,
-                        acceleration, sp_desktop_canvas(desktop)));
+                        acceleration, desktop->getCanvas()));
 
                 gobble_key_events(get_group0_keyval(&event->key), GDK_CONTROL_MASK);
                 this->desktop->scroll_world(0, -i);
@@ -740,7 +740,7 @@ bool ToolBase::root_handler(GdkEvent* event) {
 
         if (panning_cursor == 1) {
             panning_cursor = 0;
-            GtkWidget *w = GTK_WIDGET(sp_desktop_canvas(this->desktop));
+            GtkWidget *w = GTK_WIDGET(this->desktop->getCanvas());
             gdk_window_set_cursor(gtk_widget_get_window (w), this->cursor);
         }
 

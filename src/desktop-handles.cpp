@@ -23,14 +23,6 @@ sp_desktop_document (SPDesktop const * desktop)
 	return desktop->doc();
 }
 
-SPCanvas *
-sp_desktop_canvas (SPDesktop const * desktop)
-{
-	g_return_val_if_fail (desktop != NULL, NULL);
-
-	return (SP_CANVAS_ITEM(desktop->main))->canvas;
-}
-
 SPCanvasItem *
 sp_desktop_acetate (SPDesktop const * desktop)
 {
