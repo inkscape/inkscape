@@ -28,7 +28,8 @@ public:
     ~DrawingShape();
 
     void setPath(SPCurve *curve);
-    virtual void setStyle(SPStyle *style);
+    virtual void setStyle(SPStyle *style, SPStyle *context_style = NULL);
+    virtual void setChildrenStyle(SPStyle *context_style);
 
 protected:
     virtual unsigned _updateItem(Geom::IntRect const &area, UpdateContext const &ctx,

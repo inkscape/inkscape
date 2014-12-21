@@ -28,7 +28,7 @@ public:
     ~DrawingGlyphs();
 
     void setGlyph(font_instance *font, int glyph, Geom::Affine const &trans);
-    void setStyle(SPStyle *style); // Not to be used, prints error message.
+    virtual void setStyle(SPStyle *style, SPStyle *context_style = NULL); // Not to be used
 
 protected:
     unsigned _updateItem(Geom::IntRect const &area, UpdateContext const &ctx,
@@ -57,8 +57,8 @@ public:
     void clear();
     bool addComponent(font_instance *font, int glyph, Geom::Affine const &trans, 
         float width, float ascent, float descent, float phase_length);
-    void setStyle(SPStyle *style);
-
+    virtual void setStyle(SPStyle *style, SPStyle *context_style = NULL);
+    virtual void setChildrenStyle(SPStyle *context_style);
 
 protected:
     virtual unsigned _updateItem(Geom::IntRect const &area, UpdateContext const &ctx,

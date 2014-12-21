@@ -1,6 +1,7 @@
 /**
  * @file
  * Style information for rendering.
+ * Only used by classes DrawingShape and DrawingText
  *//*
  * Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>
@@ -28,7 +29,7 @@ struct NRStyle {
     NRStyle();
     ~NRStyle();
 
-    void set(SPStyle *);
+    void set(SPStyle *style, SPStyle *context_style = NULL);
     bool prepareFill(Inkscape::DrawingContext &dc, Geom::OptRect const &paintbox, Inkscape::DrawingPattern *pattern);
     bool prepareStroke(Inkscape::DrawingContext &dc, Geom::OptRect const &paintbox, Inkscape::DrawingPattern *pattern);
     bool prepareTextDecorationFill(Inkscape::DrawingContext &dc, Geom::OptRect const &paintbox, Inkscape::DrawingPattern *pattern);

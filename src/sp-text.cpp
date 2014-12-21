@@ -195,7 +195,7 @@ void SPText::update(SPCtx *ctx, guint flags) {
         for (SPItemView* v = this->display; v != NULL; v = v->next) {
             Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
             this->_clearFlow(g);
-            g->setStyle(this->style);
+            g->setStyle(this->style, this->parent->style);
             // pass the bbox of the this this as paintbox (used for paintserver fills)
             this->layout.show(g, paintbox);
         }
@@ -221,7 +221,7 @@ void SPText::modified(guint flags) {
         for (SPItemView* v = this->display; v != NULL; v = v->next) {
             Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
             this->_clearFlow(g);
-            g->setStyle(this->style);
+            g->setStyle(this->style, this->parent->style);
             this->layout.show(g, paintbox);
         }
     }
@@ -333,7 +333,7 @@ Geom::OptRect SPText::bbox(Geom::Affine const &transform, SPItem::BBoxType type)
 Inkscape::DrawingItem* SPText::show(Inkscape::Drawing &drawing, unsigned /*key*/, unsigned /*flags*/) {
     Inkscape::DrawingGroup *flowed = new Inkscape::DrawingGroup(drawing);
     flowed->setPickChildren(false);
-    flowed->setStyle(this->style);
+    flowed->setStyle(this->style, this->parent->style);
 
     // pass the bbox of the text object as paintbox (used for paintserver fills)
     this->layout.show(flowed, this->geometricBounds());

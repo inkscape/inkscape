@@ -94,7 +94,7 @@ void SPUse::build(SPDocument *document, Inkscape::XML::Node *repr) {
 
     // We don't need to create child here:
     // reading xlink:href will attach ref, and that will cause the changed signal to be emitted,
-    // which will call sp_use_href_changed, and that will take care of the child
+    // which will call SPUse::href_changed, and that will take care of the child
 }
 
 void SPUse::release() {
@@ -145,7 +145,7 @@ void SPUse::set(unsigned int key, const gchar* value) {
                 this->href = NULL;
 
                 if (value) {
-                    // First, set the href field, because sp_use_href_changed will need it.
+                    // First, set the href field, because SPUse::href_changed will need it.
                     this->href = g_strdup(value);
 
                     // Now do the attaching, which emits the changed signal.
@@ -280,9 +280,10 @@ gchar* SPUse::description() const {
 }
 
 Inkscape::DrawingItem* SPUse::show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags) {
+
     Inkscape::DrawingGroup *ai = new Inkscape::DrawingGroup(drawing);
     ai->setPickChildren(false);
-    ai->setStyle(this->style);
+    ai->setStyle(this->style, this->style);
 
     if (this->child) {
         Inkscape::DrawingItem *ac = this->child->invoke_show(drawing, key, flags);
@@ -579,7 +580,7 @@ void SPUse::update(SPCtx *ctx, unsigned flags) {
     if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
         for (SPItemView *v = this->display; v != NULL; v = v->next) {
             Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
-            g->setStyle(this->style);
+            g->setStyle(this->style, this->style);
         }
     }
 
@@ -601,7 +602,7 @@ void SPUse::modified(unsigned int flags) {
     if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
       for (SPItemView *v = this->display; v != NULL; v = v->next) {
         Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
-        g->setStyle(this->style);
+        g->setStyle(this->style, this->style);
       }
     }
 

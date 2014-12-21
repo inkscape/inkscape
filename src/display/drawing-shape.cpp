@@ -62,10 +62,17 @@ DrawingShape::setPath(SPCurve *curve)
 }
 
 void
-DrawingShape::setStyle(SPStyle *style)
+DrawingShape::setStyle(SPStyle *style, SPStyle *context_style)
 {
-    _nrstyle.set(style);
-    DrawingItem::setStyle(style);
+    DrawingItem::setStyle(style, context_style); // Must be first
+    _nrstyle.set(_style, _context_style);
+}
+
+void
+DrawingShape::setChildrenStyle(SPStyle* context_style)
+{
+    DrawingItem::setChildrenStyle( context_style );
+    _nrstyle.set(_style, _context_style);
 }
 
 unsigned
@@ -142,7 +149,6 @@ DrawingShape::_updateItem(Geom::IntRect const &area, UpdateContext const &ctx, u
             _bbox.unionWith(i->geometricBounds());
         }
     }
-
     return STATE_ALL;
 }
 

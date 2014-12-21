@@ -145,7 +145,12 @@ void SPShape::update(SPCtx* ctx, guint flags) {
 
             for (SPItemView *v = ((SPItem *) (this))->display; v != NULL; v = v->next) {
                 Inkscape::DrawingShape *sh = dynamic_cast<Inkscape::DrawingShape *>(v->arenaitem);
-                sh->setStyle(this->style);
+                if (hasMarkers()) {
+                    sh->setStyle(this->style, this->style);
+                    sh->setChildrenStyle(style); // Resolve 'context-fill' and 'context-stroke' in children.
+                } else {
+                    sh->setStyle(this->style, this->parent->style);
+                }
             }
         }
     }
@@ -163,6 +168,7 @@ void SPShape::update(SPCtx* ctx, guint flags) {
     }
 
     if (this->hasMarkers ()) {
+
         /* Dimension marker views */
         for (SPItemView *v = this->display; v != NULL; v = v->next) {
             if (!v->arenaitem->key()) {
@@ -387,7 +393,12 @@ void SPShape::modified(unsigned int flags) {
     if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
         for (SPItemView *v = this->display; v != NULL; v = v->next) {
             Inkscape::DrawingShape *sh = dynamic_cast<Inkscape::DrawingShape *>(v->arenaitem);
-            sh->setStyle(this->style);
+            if (hasMarkers()) {
+                sh->setStyle(this->style, this->style);
+                sh->setChildrenStyle(style); // Resolve 'context-fill' and 'context-stroke' in children.
+            } else {
+                sh->setStyle(this->style, this->parent->style);
+            }
         }
     }
 }
@@ -719,7 +730,9 @@ void SPShape::print(SPPrintContext* ctx) {
 
 Inkscape::DrawingItem* SPShape::show(Inkscape::Drawing &drawing, unsigned int /*key*/, unsigned int /*flags*/) {
     Inkscape::DrawingShape *s = new Inkscape::DrawingShape(drawing);
-    s->setStyle(this->style);
+
+    bool has_markers = this->hasMarkers();
+
     s->setPath(this->_curve);
 
     /* This stanza checks that an object's marker style agrees with
@@ -731,7 +744,7 @@ Inkscape::DrawingItem* SPShape::show(Inkscape::Drawing &drawing, unsigned int /*
         sp_shape_set_marker (this, i, this->style->marker_ptrs[i]->value);
     }
 
-    if (this->hasMarkers ()) {
+    if (has_markers) {
         /* provide key and dimension the marker views */
         if (!s->key()) {
             s->setKey(SPItem::display_key_new (SP_MARKER_LOC_QTY));
@@ -747,8 +760,12 @@ Inkscape::DrawingItem* SPShape::show(Inkscape::Drawing &drawing, unsigned int /*
 
         /* Update marker views */
         sp_shape_update_marker_view (this, s);
-    }
 
+        s->setStyle(this->style,this->style);
+        s->setChildrenStyle(style); // Resolve 'context-fill' and 'context-stroke' in children.
+    } else {
+        s->setStyle(this->style, this->parent->style);
+    }
     return s;
 }
 

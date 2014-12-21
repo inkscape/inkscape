@@ -110,6 +110,7 @@ DrawingItem::DrawingItem(Drawing &drawing)
     , _parent(NULL)
     , _key(0)
     , _style(NULL)
+    , _context_style(NULL)
     , _opacity(1.0)
     , _transform(NULL)
     , _clip(NULL)
@@ -360,15 +361,10 @@ DrawingItem::setCached(bool cached, bool persistent)
  * Note: _style is not used by DrawingGlyphs which uses its parent style.
  */
 void
-DrawingItem::setStyle(SPStyle *style)
+DrawingItem::setStyle(SPStyle *style, SPStyle *context_style)
 {
-    // std::cout << "DrawingItem::setStyle: ";
-    // SPObject *item = static_cast<SPObject *>(_user_data);
-    // if( item ) {
-    //     std::cout << (item->getId()?item->getId():"null") << std::endl;
-    // } else {
-    //     std::cout << "No item" << std::endl;
-    // }
+    // std::cout << "DrawingItem::setStyle: " << name() << " " << style
+    //           << " " << context_style << std::endl;
 
     if (style) sp_style_ref(style);
     if (_style) sp_style_unref(_style);
@@ -396,7 +392,30 @@ DrawingItem::setStyle(SPStyle *style)
         }
     }
 
+    if (context_style != NULL) {
+        _context_style = context_style;
+    } else if (_parent != NULL) {
+        _context_style = _parent->_context_style;
+    }
+
     _markForUpdate(STATE_ALL, false);
+}
+
+
+/**
+ * Recursively update children style.
+ * The purpose of this call is to update fill and stroke for markers that have elements with
+ * fill/stroke property values of 'context-fill' or 'context-stroke'.  Marker styling is not
+ * updated like other 'clones' as marker instances are not included the SP object tree.
+ * Note: this is a virtual function.
+ */
+void
+DrawingItem::setChildrenStyle(SPStyle* context_style)
+{
+    _context_style = context_style;
+    for (ChildrenList::iterator i = _children.begin(); i != _children.end(); ++i) {
+        i->setChildrenStyle( context_style );
+    }
 }
 
 
@@ -957,6 +976,20 @@ DrawingItem::pick(Geom::Point const &p, double delta, unsigned flags)
     return NULL;
 }
 
+// For debugging
+Glib::ustring
+DrawingItem::name()
+{
+    SPObject *object = static_cast<SPObject *>(_user_data);
+    if (object) {
+        if(object->getId())
+            return object->getId();
+        else
+            return "No object id";
+    } else {
+        return "No associated object";
+    }
+}
 
 // For debugging: Print drawing tree structure.
 void
@@ -969,12 +1002,7 @@ DrawingItem::recursivePrintTree( unsigned level )
     for (unsigned i = 0; i < level; ++i) {
         std::cout << "  ";
     }
-    SPObject *object = static_cast<SPObject *>(_user_data);
-    if (object) {
-        std::cout << (object->getId()?object->getId():"No object id") << std::endl;
-    } else {
-        std::cout << "No associated object" << std::endl;
-    }
+    std::cout << name() << std::endl;
     for (ChildrenList::iterator i = _children.begin(); i != _children.end(); ++i) {
         i->recursivePrintTree( level+1 );
     }

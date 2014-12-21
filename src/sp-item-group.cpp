@@ -199,7 +199,11 @@ void SPGroup::update(SPCtx *ctx, unsigned int flags) {
     if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
         for (SPItemView *v = this->display; v != NULL; v = v->next) {
             Inkscape::DrawingGroup *group = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
-            group->setStyle(this->style);
+            if( this->parent ) {
+                group->setStyle(this->style, this->parent->style);
+            } else {
+                group->setStyle(this->style);
+            }
         }
     }
 }
@@ -356,8 +360,11 @@ Inkscape::DrawingItem *SPGroup::show (Inkscape::Drawing &drawing, unsigned int k
 
     ai = new Inkscape::DrawingGroup(drawing);
     ai->setPickChildren(this->effectiveLayerMode(key) == SPGroup::LAYER);
-    ai->setStyle(this->style);
-
+    if( this->parent ) {
+        ai->setStyle(this->style, this->parent->style);
+    } else {
+        ai->setStyle(this->style);
+    }
     this->_showChildren(drawing, ai, key, flags);
     return ai;
 }

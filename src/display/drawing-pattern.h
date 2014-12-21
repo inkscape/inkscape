@@ -15,7 +15,6 @@
 #include "display/drawing-group.h"
 
 typedef struct _cairo_pattern cairo_pattern_t;
-class SPStyle;
 
 namespace Inkscape {
 
