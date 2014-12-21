@@ -300,5 +300,9 @@ Insert the new markers into the <defs>.
       </g>
     </marker>
 
+    <marker id="ExperimentalArrow" refX="5.0" refY="3.0" orient="auto-start-reverse" inkscape:stockid="ExperimentalArrow">
+      <path style="fill:context-stroke" d="m 10,3 -10,3 0,-6 z"/>
+    </marker>
+
   </defs>
 </svg>
