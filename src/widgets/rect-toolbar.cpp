@@ -404,12 +404,20 @@ static void rect_toolbox_watch_ec(SPDesktop* desktop, Inkscape::UI::Tools::ToolB
 {
     static sigc::connection changed;
 
-    // TODO fixme: use of dynamic_cast<> seems wrong here.
+    // use of dynamic_cast<> seems wrong here -- we just need to check the current tool
+
     if (dynamic_cast<Inkscape::UI::Tools::RectTool *>(ec)) {
-        changed = desktop->getSelection()->connectChanged(sigc::bind(sigc::ptr_fun(sp_rect_toolbox_selection_changed), holder));
+        Inkscape::Selection *sel = desktop->getSelection();
+
+        changed = sel->connectChanged(sigc::bind(sigc::ptr_fun(sp_rect_toolbox_selection_changed), holder));
+
+        // Synthesize an emission to trigger the update
+        sp_rect_toolbox_selection_changed(sel, holder);
     } else {
-        if (changed)
+        if (changed) {
             changed.disconnect();
+            purge_repr_listener(NULL, holder);
+        }
     }
 }
 
