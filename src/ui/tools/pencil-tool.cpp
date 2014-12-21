@@ -20,7 +20,7 @@
 
 #include "ui/tools/pencil-tool.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "selection.h"
 #include "selection-chemistry.h"
 #include "ui/draw-anchor.h"

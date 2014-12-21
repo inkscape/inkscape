@@ -23,7 +23,7 @@
 #include "document.h"
 #include "selection.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "message-context.h"
 #include "message-stack.h"
 #include "pixmaps/cursor-gradient.xpm"
@@ -464,7 +464,7 @@ sp_gradient_context_add_stop_near_point (GradientTool *rc, SPItem *item,  Geom::
 
     SPStop *newstop = ec->get_drag()->addStopNearPoint (item, mouse_p, tolerance/desktop->current_zoom());
 
-    DocumentUndo::done(sp_desktop_document (desktop), SP_VERB_CONTEXT_GRADIENT,
+    DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_GRADIENT,
                        _("Add gradient stop"));
 
     ec->get_drag()->updateDraggers();
@@ -509,13 +509,13 @@ bool GradientTool::root_handler(GdkEvent* event) {
                     SPGradientType new_type = (SPGradientType) prefs->getInt("/tools/gradient/newgradient", SP_GRADIENT_TYPE_LINEAR);
                     Inkscape::PaintTarget fsmode = (prefs->getInt("/tools/gradient/newfillorstroke", 1) != 0) ? Inkscape::FOR_FILL : Inkscape::FOR_STROKE;
 
-                    SPGradient *vector = sp_gradient_vector_for_object(sp_desktop_document(desktop), desktop, item, fsmode);
+                    SPGradient *vector = sp_gradient_vector_for_object(desktop->getDocument(), desktop, item, fsmode);
 
                     SPGradient *priv = sp_item_set_gradient(item, vector, new_type, fsmode);
                     sp_gradient_reset_to_userspace(priv, item);
                 }
 
-                DocumentUndo::done(sp_desktop_document (desktop), SP_VERB_CONTEXT_GRADIENT,
+                DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_GRADIENT,
                                    _("Create default gradient"));
             }
             ret = TRUE;
@@ -893,7 +893,7 @@ static void sp_gradient_drag(GradientTool &rc, Geom::Point const pt, guint /*sta
 {
     SPDesktop *desktop = SP_EVENT_CONTEXT(&rc)->desktop;
     Inkscape::Selection *selection = desktop->getSelection();
-    SPDocument *document = sp_desktop_document(desktop);
+    SPDocument *document = desktop->getDocument();
     ToolBase *ec = SP_EVENT_CONTEXT(&rc);
 
     if (!selection->isEmpty()) {

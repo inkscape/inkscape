@@ -28,7 +28,7 @@
 #include "selection.h"
 
 #include "ui/dialog-events.h"
-#include "desktop-handles.h"
+
 #include "selection-chemistry.h"
 #include "preferences.h"
 

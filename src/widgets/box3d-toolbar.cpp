@@ -32,7 +32,7 @@
 
 #include "box3d-toolbar.h"
 #include "box3d.h"
-#include "desktop-handles.h"
+
 #include "desktop.h"
 #include "document-undo.h"
 #include "document.h"
@@ -208,7 +208,7 @@ static void box3d_toolbox_selection_changed(Inkscape::Selection *selection, GObj
 static void box3d_angle_value_changed(GtkAdjustment *adj, GObject *dataKludge, Proj::Axis axis)
 {
     SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( dataKludge, "desktop" ));
-    SPDocument *document = sp_desktop_document(desktop);
+    SPDocument *document = desktop->getDocument();
 
     // quit if run by the attr_changed or selection changed listener
     if (g_object_get_data( dataKludge, "freeze" )) {
@@ -287,7 +287,7 @@ void box3d_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     EgeAdjustmentAction* eact = 0;
-    SPDocument *document = sp_desktop_document (desktop);
+    SPDocument *document = desktop->getDocument();
     Persp3DImpl *persp_impl = document->getCurrentPersp3DImpl();
 
     EgeAdjustmentAction* box3d_angle_x = 0;

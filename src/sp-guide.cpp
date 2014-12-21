@@ -22,7 +22,7 @@
 #include <algorithm>
 #include <cstring>
 #include <string>
-#include "desktop-handles.h"
+
 #include "display/sp-canvas.h"
 #include "display/guideline.h"
 #include "svg/svg.h"
@@ -224,7 +224,7 @@ void sp_guide_pt_pairs_to_guides(SPDocument *doc, std::list<std::pair<Geom::Poin
 
 void sp_guide_create_guides_around_page(SPDesktop *dt)
 {
-    SPDocument *doc=sp_desktop_document(dt);
+    SPDocument *doc=dt->getDocument();
     std::list<std::pair<Geom::Point, Geom::Point> > pts;
 
     Geom::Point A(0, 0);
@@ -244,7 +244,7 @@ void sp_guide_create_guides_around_page(SPDesktop *dt)
 
 void sp_guide_delete_all_guides(SPDesktop *dt)
 {
-    SPDocument *doc=sp_desktop_document(dt);
+    SPDocument *doc=dt->getDocument();
     const GSList *current;
     while ( (current = doc->getResourceList("guide")) ) {
         SPGuide* guide = SP_GUIDE(current->data);

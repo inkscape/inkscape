@@ -30,7 +30,7 @@
 // needed for on-canvas editting:
 #include "ui/tools-switch.h"
 #include "ui/shape-editor.h"
-#include "desktop-handles.h"
+
 #include "selection.h"
 // clipboard support
 #include "ui/clipboard.h"

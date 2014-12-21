@@ -27,7 +27,7 @@
 #include <glibmm/i18n.h>
 #include "display/curve.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "desktop-style.h"
 #include "document.h"
 #include "ui/draw-anchor.h"
@@ -667,7 +667,7 @@ static void spdc_flush_white(FreehandBase *dc, SPCurve *gc)
                             : dc->desktop->dt2doc() );
 
     SPDesktop *desktop = dc->desktop;
-    SPDocument *doc = sp_desktop_document(desktop);
+    SPDocument *doc = desktop->getDocument();
     Inkscape::XML::Document *xml_doc = doc->getReprDoc();
 
     if ( c && !c->is_empty() ) {
@@ -865,7 +865,7 @@ void spdc_create_single_dot(ToolBase *ec, Geom::Point const &pt, char const *too
     desktop->getSelection()->set(item);
 
     desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Creating single dot"));
-    DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_NONE, _("Create single dot"));
+    DocumentUndo::done(desktop->getDocument(), SP_VERB_NONE, _("Create single dot"));
 }
 
 }

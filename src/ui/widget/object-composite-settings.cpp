@@ -17,7 +17,7 @@
 #include <glibmm/i18n.h>
 
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "desktop-style.h"
 #include "document.h"
 #include "document-undo.h"
@@ -104,7 +104,7 @@ ObjectCompositeSettings::_blendBlurValueChanged()
     if (!desktop) {
         return;
     }
-    SPDocument *document = sp_desktop_document (desktop);
+    SPDocument *document = desktop->getDocument();
 
     if (_blocked)
         return;
@@ -195,7 +195,7 @@ ObjectCompositeSettings::_opacityValueChanged()
 
     sp_repr_css_attr_unref (css);
 
-    DocumentUndo::maybeDone(sp_desktop_document (desktop), _opacity_tag.c_str(), _verb_code,
+    DocumentUndo::maybeDone(desktop->getDocument(), _opacity_tag.c_str(), _verb_code,
                             _("Change opacity"));
 
     // resume interruptibility
@@ -219,7 +219,7 @@ ObjectCompositeSettings::_subjectChanged() {
         return;
     _blocked = true;
 
-    SPStyle *query = sp_style_new (sp_desktop_document(desktop));
+    SPStyle *query = sp_style_new (desktop->getDocument());
     int result = _subject->queryStyle(query, QUERY_STYLE_PROPERTY_MASTEROPACITY);
 
     switch (result) {

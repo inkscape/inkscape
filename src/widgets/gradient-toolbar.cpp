@@ -18,7 +18,7 @@
 
 #include "ui/widget/color-preview.h"
 #include <glibmm/i18n.h>
-#include "desktop-handles.h"
+
 #include "desktop.h"
 #include "document-undo.h"
 #include "document.h"
@@ -128,7 +128,7 @@ gboolean gr_vector_list(GtkWidget *combo_box, SPDesktop *desktop, bool selection
         return sensitive;
     }
 
-    SPDocument *document = sp_desktop_document(desktop);
+    SPDocument *document = desktop->getDocument();
 
     GtkTreeIter iter;
     GtkListStore *store = (GtkListStore *)gtk_combo_box_get_model(GTK_COMBO_BOX(combo_box));
@@ -923,7 +923,7 @@ static void gr_gradient_combo_changed(EgeSelectOneAction *act, gpointer data)
 
         gr_apply_gradient(selection, ev? ev->get_drag() : NULL, gr);
 
-        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_GRADIENT,
+        DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_GRADIENT,
                    _("Assign gradient to object"));
     }
 
@@ -945,7 +945,7 @@ static void gr_spread_change(EgeSelectOneAction *act, GtkWidget *widget)
         gradient->setSpread(spread);
         gradient->updateRepr();
 
-        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_GRADIENT,
+        DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_GRADIENT,
                    _("Set gradient repeat"));
     }
 }
@@ -1247,7 +1247,7 @@ static void gradient_toolbox_check_ec(SPDesktop* desktop, Inkscape::UI::Tools::T
 
     if (SP_IS_GRADIENT_CONTEXT(ec)) {
         Inkscape::Selection *selection = desktop->getSelection();
-        SPDocument *document = sp_desktop_document(desktop);
+        SPDocument *document = desktop->getDocument();
 
         // connect to selection modified and changed signals
         connChanged = selection->connectChanged(sigc::bind(sigc::ptr_fun(&gr_tb_selection_changed), holder));

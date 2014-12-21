@@ -40,7 +40,6 @@
 #include <glibmm/i18n.h>
 
 #include "../desktop.h"
-#include "../desktop-handles.h"
 #include "../desktop-style.h"
 #include "document-undo.h"
 #include "widgets/ege-adjustment-action.h"

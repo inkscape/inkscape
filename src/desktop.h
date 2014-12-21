@@ -103,6 +103,9 @@ namespace Inkscape {
   }
 }
 
+#define SP_DESKTOP_ZOOM_MAX 256.0
+#define SP_DESKTOP_ZOOM_MIN 0.01
+
 /**
  * SPDesktop is a subclass of View, implementing an editable document
  * canvas.  It is extensively used by many UI controls that need certain

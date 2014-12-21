@@ -21,7 +21,7 @@
 #include <glibmm/i18n.h>
 
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "document.h"
 #include "document-undo.h"
 #include "layer-manager.h"
@@ -601,7 +601,7 @@ void LayerSelector::_prepareLabelRenderer(
 void LayerSelector::_lockLayer(bool lock) {
     if ( _layer && SP_IS_ITEM(_layer) ) {
         SP_ITEM(_layer)->setLocked(lock);
-        DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_NONE,
+        DocumentUndo::done(_desktop->getDocument(), SP_VERB_NONE,
                            lock? _("Lock layer") : _("Unlock layer"));
     }
 }
@@ -609,7 +609,7 @@ void LayerSelector::_lockLayer(bool lock) {
 void LayerSelector::_hideLayer(bool hide) {
     if ( _layer && SP_IS_ITEM(_layer) ) {
         SP_ITEM(_layer)->setHidden(hide);
-        DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_NONE,
+        DocumentUndo::done(_desktop->getDocument(), SP_VERB_NONE,
                            hide? _("Hide layer") : _("Unhide layer"));
     }
 }

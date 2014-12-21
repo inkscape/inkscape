@@ -28,7 +28,7 @@
 
 #include "object-properties.h"
 #include "widgets/sp-attribute-widget.h"
-#include "desktop-handles.h"
+
 #include "document.h"
 #include "document-undo.h"
 #include "verbs.h"

@@ -16,7 +16,7 @@
 
 #include "inkscape.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "document.h"
 #include "document-undo.h"
 #include "message-stack.h"

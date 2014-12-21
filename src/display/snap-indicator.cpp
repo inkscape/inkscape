@@ -14,7 +14,7 @@
 #include "display/snap-indicator.h"
 
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "display/sodipodi-ctrl.h"
 #include "display/sodipodi-ctrlrect.h"
 #include "display/canvas-text.h"

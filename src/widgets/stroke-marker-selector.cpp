@@ -26,7 +26,7 @@
 
 #include "style.h"
 #include "ui/dialog-events.h"
-#include "desktop-handles.h"
+
 #include "desktop-style.h"
 #include "preferences.h"
 #include "path-prefix.h"
@@ -65,7 +65,7 @@ MarkerComboBox::MarkerComboBox(gchar const *id, int l) :
 
     sandbox = ink_markers_preview_doc ();
     desktop = SP_ACTIVE_DESKTOP;
-    doc = sp_desktop_document(desktop);
+    doc = desktop->getDocument();
 
     modified_connection = doc->getDefs()->connectModified( sigc::hide(sigc::hide(sigc::bind(sigc::ptr_fun(&MarkerComboBox::handleDefsModified), this))) );
 
@@ -92,7 +92,7 @@ void MarkerComboBox::setDesktop(SPDesktop *desktop)
         }
 
         this->desktop = desktop;
-        doc = sp_desktop_document(desktop);
+        doc = desktop->getDocument();
 
         if (doc) {
             modified_connection = doc->getDefs()->connectModified( sigc::hide(sigc::hide(sigc::bind(sigc::ptr_fun(&MarkerComboBox::handleDefsModified), this))) );

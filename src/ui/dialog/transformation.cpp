@@ -26,7 +26,7 @@
 #include "document.h"
 #include "document-undo.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "transformation.h"
 #include "align-and-distribute.h"
 #include "inkscape.h"
@@ -802,7 +802,7 @@ void Transformation::applyPageMove(Inkscape::Selection *selection)
         }
     }
 
-    DocumentUndo::done( sp_desktop_document(selection->desktop()) , SP_VERB_DIALOG_TRANSFORM,
+    DocumentUndo::done( selection->desktop()->getDocument() , SP_VERB_DIALOG_TRANSFORM,
                         _("Move"));
 }
 
@@ -864,7 +864,7 @@ void Transformation::applyPageScale(Inkscape::Selection *selection)
         }
     }
 
-    DocumentUndo::done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM,
+    DocumentUndo::done(selection->desktop()->getDocument(), SP_VERB_DIALOG_TRANSFORM,
                        _("Scale"));
 }
 
@@ -889,7 +889,7 @@ void Transformation::applyPageRotate(Inkscape::Selection *selection)
         }
     }
 
-    DocumentUndo::done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM,
+    DocumentUndo::done(selection->desktop()->getDocument(), SP_VERB_DIALOG_TRANSFORM,
                        _("Rotate"));
 }
 
@@ -977,7 +977,7 @@ void Transformation::applyPageSkew(Inkscape::Selection *selection)
         }
     }
 
-    DocumentUndo::done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM,
+    DocumentUndo::done(selection->desktop()->getDocument(), SP_VERB_DIALOG_TRANSFORM,
                        _("Skew"));
 }
 
@@ -1007,7 +1007,7 @@ void Transformation::applyPageTransform(Inkscape::Selection *selection)
         sp_selection_apply_affine(selection, displayed); // post-multiply each object's transform
     }
 
-    DocumentUndo::done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM,
+    DocumentUndo::done(selection->desktop()->getDocument(), SP_VERB_DIALOG_TRANSFORM,
                        _("Edit transformation matrix"));
 }
 

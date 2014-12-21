@@ -20,7 +20,7 @@
 
 #include "template-load-tab.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "document.h"
 #include "document-undo.h"
 #include "file.h"
@@ -68,8 +68,8 @@ void TemplateWidget::create()
         SPDesktop *desktop = SP_ACTIVE_DESKTOP;
         SPDesktop *desc = sp_file_new_default();
         _current_template.tpl_effect->effect(desc);
-        DocumentUndo::clearUndo(sp_desktop_document(desc));
-        sp_desktop_document(desc)->setModifiedSinceSave(false);
+        DocumentUndo::clearUndo(desc->getDocument());
+        desc->getDocument()->setModifiedSinceSave(false);
 
 	// Apply cx,cy etc. from document
 	sp_namedview_window_from_document( desc );

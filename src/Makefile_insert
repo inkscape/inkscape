@@ -29,7 +29,6 @@ ink_common_sources +=	\
 	decimal-round.h							\
 	desktop.cpp desktop.h						\
 	desktop-events.cpp desktop-events.h				\
-	desktop-handles.cpp desktop-handles.h				\
 	desktop-style.cpp desktop-style.h				\
 	device-manager.cpp device-manager.h				\
 	dir-util.cpp dir-util.h						\

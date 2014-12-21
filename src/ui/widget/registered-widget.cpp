@@ -37,7 +37,7 @@
 #include "display/sp-canvas.h"
 
 #include "desktop.h"
-#include "desktop-handles.h"
+
 
 #include "sp-root.h"
 
@@ -420,7 +420,7 @@ RegisteredColorPicker::on_changed (guint32 rgba)
         if (!dt)
             return;
         local_repr = dt->getNamedView()->getRepr();
-        local_doc = sp_desktop_document(dt);
+        local_doc = dt->getDocument();
     }
 
     gchar c[32];

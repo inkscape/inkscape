@@ -25,7 +25,7 @@
 #include "uri.h"
 #include "inkscape.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 
 #include "style.h"
 #include <glibmm/i18n.h>

@@ -21,7 +21,7 @@
 #include <string.h>
 #include <dbus/dbus-glib.h>
 #include "desktop.h"
-#include "desktop-handles.h" //sp_desktop_document()
+ //sp_desktop_document()
 #include "desktop-style.h" //sp_desktop_get_style
 #include "display/canvas-text.h" //text
 #include "display/sp-canvas.h" //text

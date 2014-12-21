@@ -29,7 +29,7 @@
 #include "pixmaps/cursor-measure.xpm"
 #include "preferences.h"
 #include "inkscape.h"
-#include "desktop-handles.h"
+
 #include "ui/tools/measure-tool.h"
 #include "ui/tools/freehand-base.h"
 #include "display/canvas-text.h"
@@ -291,7 +291,7 @@ static void calculate_intersections(SPDesktop * /*desktop*/, SPItem* item, Geom:
 //TODO: consider only visible intersections
         Geom::Point intersection = lineseg[0].pointAt((*m).ta);
         double eps = 0.0001;
-        SPDocument* doc = sp_desktop_document(desktop);
+        SPDocument* doc = desktop->getDocument();
         if (((*m).ta > eps &&
              item == doc->getItemAtPoint(desktop->dkey, lineseg[0].pointAt((*m).ta - eps), false, NULL)) ||
             ((*m).ta + eps < 1 &&
@@ -441,7 +441,7 @@ bool MeasureTool::root_handler(GdkEvent* event) {
                 // TODO switch to a different variable name. The single letter 'l' is easy to misread.
 
                 //select elements crossed by line segment:
-                GSList *items = sp_desktop_document(desktop)->getItemsAtPoints(desktop->dkey, points);
+                GSList *items = desktop->getDocument()->getItemsAtPoints(desktop->dkey, points);
                 std::vector<double> intersection_times;
                 for (GSList *l = items; l != NULL; l = l->next) {
                     SPItem *item = static_cast<SPItem*>(l->data);

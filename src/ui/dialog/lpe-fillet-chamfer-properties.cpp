@@ -23,7 +23,7 @@
 #include "document-undo.h"
 #include "layer-manager.h"
 #include "message-stack.h"
-#include "desktop-handles.h"
+
 #include "sp-object.h"
 #include "sp-item.h"
 #include "verbs.h"

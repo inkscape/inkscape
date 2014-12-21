@@ -29,7 +29,7 @@
 #include "document.h"
 #include "document-undo.h"
 #include "selection.h"
-#include "desktop-handles.h"
+
 
 #include "ui/dialog-events.h"
 #include "verbs.h"
@@ -824,7 +824,7 @@ void Find::onAction()
         if (check_scope_layer.get_active()) {
             l = all_items (desktop->currentLayer(), l, hidden, locked);
         } else {
-            l = all_items(sp_desktop_document(desktop)->getRoot(), l, hidden, locked);
+            l = all_items(desktop->getDocument()->getRoot(), l, hidden, locked);
         }
     }
     guint all = g_slist_length (l);
@@ -859,7 +859,7 @@ void Find::onAction()
         scroll_to_show_item(desktop, item);
 
         if (_action_replace) {
-            DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT, _("Replace text or property"));
+            DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_TEXT, _("Replace text or property"));
         }
 
     } else {

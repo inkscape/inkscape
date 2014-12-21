@@ -21,7 +21,7 @@
 
 #include "selection.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "ui/view/view.h"
 #include "util/glib-list-iterators.h"
 

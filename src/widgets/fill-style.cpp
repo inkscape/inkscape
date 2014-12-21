@@ -35,7 +35,7 @@
 
 #include "desktop.h"
 #include "selection.h"
-#include "desktop-handles.h"
+
 #include "desktop-style.h"
 #include "display/sp-canvas.h"
 #include "document-private.h"
@@ -480,7 +480,7 @@ void FillNStroke::updateFromPaint()
     }
     update = true;
 
-    SPDocument *document = sp_desktop_document(desktop);
+    SPDocument *document = desktop->getDocument();
     Inkscape::Selection *selection = desktop->getSelection();
 
     GSList const *items = selection->itemList();
@@ -522,7 +522,7 @@ void FillNStroke::updateFromPaint()
             psel->setFlatColor( desktop,
                                 (kind == FILL) ? "fill" : "stroke",
                                 (kind == FILL) ? "fill-opacity" : "stroke-opacity" );
-            DocumentUndo::maybeDone(sp_desktop_document(desktop), (kind == FILL) ? undo_F_label : undo_S_label, SP_VERB_DIALOG_FILL_STROKE,
+            DocumentUndo::maybeDone(desktop->getDocument(), (kind == FILL) ? undo_F_label : undo_S_label, SP_VERB_DIALOG_FILL_STROKE,
                                     (kind == FILL) ? _("Set fill color") : _("Set stroke color"));
 
             if (kind == FILL) {

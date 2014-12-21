@@ -25,7 +25,7 @@
 #include <glib/gstdio.h>
 
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "selection.h"
 #include "sp-object.h"
 #include "util/glib-list-iterators.h"

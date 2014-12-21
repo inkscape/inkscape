@@ -31,7 +31,7 @@
 #include <glibmm/i18n.h>
 
 #include "rect-toolbar.h"
-#include "desktop-handles.h"
+
 #include "desktop.h"
 #include "document-undo.h"
 #include "widgets/ege-adjustment-action.h"
@@ -90,7 +90,7 @@ static void sp_rtb_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *
     Unit const *unit = tracker->getActiveUnit();
     g_return_if_fail(unit != NULL);
 
-    if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
+    if (DocumentUndo::getUndoSensitive(desktop->getDocument())) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setDouble(Glib::ustring("/tools/shapes/rect/") + value_name,
             Quantity::convert(gtk_adjustment_get_value(adj), unit, "px"));
@@ -120,7 +120,7 @@ static void sp_rtb_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *
     sp_rtb_sensitivize( tbl );
 
     if (modmade) {
-        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_RECT,
+        DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_RECT,
                            _("Change rectangle"));
     }
 

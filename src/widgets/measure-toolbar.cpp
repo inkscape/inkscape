@@ -31,7 +31,7 @@
 #include <glibmm/i18n.h>
 
 #include "measure-toolbar.h"
-#include "desktop-handles.h"
+
 #include "desktop.h"
 #include "document-undo.h"
 #include "widgets/ege-adjustment-action.h"
@@ -55,7 +55,7 @@ sp_measure_fontsize_value_changed(GtkAdjustment *adj, GObject *tbl)
 {
     SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( tbl, "desktop" ));
 
-    if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
+    if (DocumentUndo::getUndoSensitive(desktop->getDocument())) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setInt(Glib::ustring("/tools/measure/fontsize"),
             gtk_adjustment_get_value(adj));

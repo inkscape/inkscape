@@ -32,7 +32,7 @@
 #include "xml/node.h"
 #include "document.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "document-undo.h"
 #include "sp-namedview.h"
 #include "sp-item-group.h"
@@ -91,7 +91,7 @@ void SPAvoidRef::handleSettingChange(void)
     if (desktop == NULL) {
         return;
     }
-    if (sp_desktop_document(desktop) != item->document) {
+    if (desktop->getDocument() != item->document) {
         // We don't want to go any further if the active desktop's document
         // isn't the same as the document that this item is part of.  This
         // case can happen if a new document is loaded from the file chooser
@@ -370,7 +370,7 @@ void init_avoided_shape_geometry(SPDesktop *desktop)
 {
     // Don't count this as changes to the document,
     // it is basically just late initialisation.
-    SPDocument *document = sp_desktop_document(desktop);
+    SPDocument *document = desktop->getDocument();
     bool saved = DocumentUndo::getUndoSensitive(document);
     DocumentUndo::setUndoSensitive(document, false);
 

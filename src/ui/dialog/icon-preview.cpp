@@ -35,7 +35,7 @@
 #include "ui/widget/frame.h"
 
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "display/drawing.h"
 #include "document.h"
 #include "inkscape.h"

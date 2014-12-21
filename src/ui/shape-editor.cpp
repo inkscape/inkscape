@@ -14,7 +14,7 @@
 #include <string.h>
 #include <glibmm/i18n.h>
 
-#include "desktop-handles.h"
+#include "desktop.h"
 #include "document.h"
 #include "gc-anchored.h"
 #include "knotholder.h"
@@ -146,7 +146,7 @@ void ShapeEditor::set_item(SPItem *item, bool keep_knotholder) {
 void ShapeEditor::reset_item(bool keep_knotholder)
 {
     if (knotholder) {
-        SPObject *obj = sp_desktop_document(desktop)->getObjectByRepr(knotholder_listener_attached_for); /// note that it is not certain that this is an SPItem; it could be a LivePathEffectObject.
+        SPObject *obj = desktop->getDocument()->getObjectByRepr(knotholder_listener_attached_for); /// note that it is not certain that this is an SPItem; it could be a LivePathEffectObject.
         set_item(SP_ITEM(obj), keep_knotholder);
     }
 }

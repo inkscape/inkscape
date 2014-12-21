@@ -16,7 +16,7 @@
 #include <glibmm/i18n.h>
 
 #include "vanishing-point.h"
-#include "desktop-handles.h"
+
 #include "desktop.h"
 #include "display/sp-canvas-item.h"
 #include "display/sp-ctrlline.h"
@@ -129,7 +129,7 @@ vp_knot_moved_handler (SPKnot *knot, Geom::Point const &ppointer, guint state, g
             }
             // FIXME: Do we need to create a new dragger as well?
             dragger->updateZOrders ();
-            DocumentUndo::done(sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_3DBOX,
+            DocumentUndo::done(SP_ACTIVE_DESKTOP->getDocument(), SP_VERB_CONTEXT_3DBOX,
 			       _("Split vanishing points"));
             return;
         }
@@ -174,7 +174,7 @@ vp_knot_moved_handler (SPKnot *knot, Geom::Point const &ppointer, guint state, g
                 //       deleted according to changes in the svg representation, not based on any user input
                 //       as is currently the case.
 
-                DocumentUndo::done(sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_3DBOX,
+                DocumentUndo::done(SP_ACTIVE_DESKTOP->getDocument(), SP_VERB_CONTEXT_3DBOX,
 				   _("Merge vanishing points"));
 
                 return;

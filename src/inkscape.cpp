@@ -54,7 +54,7 @@
 #include <string>
 
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "device-manager.h"
 #include "document.h"
 #include "extension/db.h"
@@ -1110,7 +1110,7 @@ SPDocument *
 Application::active_document()
 {
     if (SP_ACTIVE_DESKTOP) {
-        return sp_desktop_document (SP_ACTIVE_DESKTOP);
+        return SP_ACTIVE_DESKTOP->getDocument();
     } else if (!_document_set.empty()) {
         // If called from the command line there will be no desktop
         // So 'fall back' to take the first listed document in the Inkscape instance

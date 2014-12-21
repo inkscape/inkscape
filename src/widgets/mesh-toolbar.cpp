@@ -38,7 +38,7 @@
 #include "document-private.h"
 #include "document-undo.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include <glibmm/i18n.h>
 
 #include "ui/tools/gradient-tool.h"
@@ -335,7 +335,7 @@ static void mesh_toolbox_watch_ec(SPDesktop* desktop, Inkscape::UI::Tools::ToolB
     if (SP_IS_MESH_CONTEXT(ec)) {
         // connect to selection modified and changed signals
         Inkscape::Selection *selection = desktop->getSelection();
-        SPDocument *document = sp_desktop_document (desktop);
+        SPDocument *document = desktop->getDocument();
 
         c_selection_changed = selection->connectChanged(sigc::bind(sigc::ptr_fun(&ms_tb_selection_changed), holder));
         c_selection_modified = selection->connectModified(sigc::bind(sigc::ptr_fun(&ms_tb_selection_modified), holder));

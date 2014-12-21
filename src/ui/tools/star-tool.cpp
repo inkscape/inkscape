@@ -30,7 +30,7 @@
 #include "document-undo.h"
 #include "sp-namedview.h"
 #include "selection.h"
-#include "desktop-handles.h"
+
 #include "snap.h"
 #include "desktop.h"
 #include "desktop-style.h"
@@ -442,7 +442,7 @@ void StarTool::finishItem() {
         desktop->canvas->endForcedFullRedraws();
 
         desktop->getSelection()->set(this->star);
-        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_STAR,
+        DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_STAR,
                            _("Create star"));
 
         this->star = NULL;
@@ -465,7 +465,7 @@ void StarTool::cancel() {
 
     desktop->canvas->endForcedFullRedraws();
 
-    DocumentUndo::cancel(sp_desktop_document(desktop));
+    DocumentUndo::cancel(desktop->getDocument());
 }
 
 }

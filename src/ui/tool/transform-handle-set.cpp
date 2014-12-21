@@ -15,7 +15,7 @@
 #include <glib/gi18n.h>
 #include <2geom/transforms.h>
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "display/sodipodi-ctrlrect.h"
 #include "preferences.h"
 #include "snap.h"

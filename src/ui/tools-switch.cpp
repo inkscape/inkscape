@@ -18,7 +18,7 @@
 
 #include "inkscape.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include <glibmm/i18n.h>
 
 #include <xml/repr.h>

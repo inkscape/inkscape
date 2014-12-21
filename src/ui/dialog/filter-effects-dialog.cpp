@@ -33,7 +33,7 @@
 #include <glibmm/stringutils.h>
 
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "dir-util.h"
 #include "document.h"
 #include "document-undo.h"
@@ -1416,7 +1416,7 @@ void FilterEffectsDialog::FilterModifier::setTargetDesktop(SPDesktop *desktop)
                 _selectModifiedConn = desktop->selection->connectModified(sigc::hide<0>(sigc::mem_fun(*this, &FilterModifier::on_modified_selection)));
             }
             _doc_replaced = desktop->connectDocumentReplaced( sigc::mem_fun(*this, &FilterModifier::on_document_replaced));
-            _resource_changed = sp_desktop_document(desktop)->connectResourcesChanged("filter",sigc::mem_fun(*this, &FilterModifier::update_filters));
+            _resource_changed = desktop->getDocument()->connectResourcesChanged("filter",sigc::mem_fun(*this, &FilterModifier::update_filters));
             _dialog.setDesktop(desktop);
 
             update_filters();
@@ -1537,7 +1537,7 @@ void FilterEffectsDialog::FilterModifier::on_selection_toggled(const Glib::ustri
 
     if(iter) {
         SPDesktop *desktop = _dialog.getDesktop();
-        SPDocument *doc = sp_desktop_document(desktop);
+        SPDocument *doc = desktop->getDocument();
         SPFilter* filter = (*iter)[_columns.filter];
         Inkscape::Selection *sel = desktop->getSelection();
 
@@ -1571,7 +1571,7 @@ void FilterEffectsDialog::FilterModifier::on_selection_toggled(const Glib::ustri
 void FilterEffectsDialog::FilterModifier::update_filters()
 {
     SPDesktop* desktop = _dialog.getDesktop();
-    SPDocument* document = sp_desktop_document(desktop);
+    SPDocument* document = desktop->getDocument();
     const GSList* filters = document->getResourceList("filter");
 
     _model->clear();
@@ -1627,7 +1627,7 @@ void FilterEffectsDialog::FilterModifier::filter_list_button_release(GdkEventBut
 
 void FilterEffectsDialog::FilterModifier::add_filter()
 {
-    SPDocument* doc = sp_desktop_document(_dialog.getDesktop());
+    SPDocument* doc = _dialog.getDesktop()->getDocument();
     SPFilter* filter = new_filter(doc);
 
     const int count = _model->children().size();
@@ -1937,7 +1937,7 @@ void FilterEffectsDialog::PrimitiveList::remove_selected()
         //XML Tree being used directly here while it shouldn't be.
         sp_repr_unparent(prim->getRepr());
 
-        DocumentUndo::done(sp_desktop_document(_dialog.getDesktop()), SP_VERB_DIALOG_FILTER_EFFECTS,
+        DocumentUndo::done(_dialog.getDesktop()->getDocument(), SP_VERB_DIALOG_FILTER_EFFECTS,
                            _("Remove filter primitive"));
 
         update();

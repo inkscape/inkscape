@@ -32,7 +32,7 @@
 
 #include "ui/dialog/ocaldialogs.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "dir-util.h"
 #include "document-private.h"
 #include "document-undo.h"
@@ -289,7 +289,7 @@ bool sp_file_open(const Glib::ustring &uri,
 
     if (doc) {
 
-        SPDocument *existing = desktop ? sp_desktop_document(desktop) : NULL;
+        SPDocument *existing = desktop ? desktop->getDocument() : NULL;
 
         if (existing && existing->virgin && replace_empty) {
             // If the current desktop is empty, open the document there
@@ -348,7 +348,7 @@ void sp_file_revert_dialog()
     SPDesktop  *desktop = SP_ACTIVE_DESKTOP;
     g_assert(desktop != NULL);
 
-    SPDocument *doc = sp_desktop_document(desktop);
+    SPDocument *doc = desktop->getDocument();
     g_assert(doc != NULL);
 
     Inkscape::XML::Node *repr = doc->getReprRoot();
@@ -1055,7 +1055,7 @@ void sp_import_document(SPDesktop *desktop, SPDocument *clipdoc, bool in_place)
 {
     //TODO: merge with file_import()
 
-    SPDocument *target_document = sp_desktop_document(desktop);
+    SPDocument *target_document = desktop->getDocument();
     Inkscape::XML::Node *root = clipdoc->getReprRoot();
     Inkscape::XML::Node *target_parent = desktop->currentLayer()->getRepr();
 
@@ -1232,7 +1232,7 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
 
             // move to mouse pointer
             {
-                sp_desktop_document(desktop)->ensureUpToDate();
+                desktop->getDocument()->ensureUpToDate();
                 Geom::OptRect sel_bbox = selection->visualBounds();
                 if (sel_bbox) {
                     Geom::Point m( desktop->point() - sel_bbox->midpoint() );

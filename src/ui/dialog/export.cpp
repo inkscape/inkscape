@@ -54,7 +54,7 @@
 #include "inkscape.h"
 #include "document.h"
 #include "document-undo.h"
-#include "desktop-handles.h"
+
 #include "sp-item.h"
 #include "selection.h"
 #include "file.h"
@@ -101,7 +101,6 @@
 
 #define EXPORT_COORD_PRECISION 3
 
-#include "../../desktop-handles.h"
 #include "../../document.h"
 #include "../../document-undo.h"
 #include "verbs.h"
@@ -685,7 +684,7 @@ void Export::onSelectionModified ( guint /*flags*/ )
     case SELECTION_DRAWING:
         if ( SP_ACTIVE_DESKTOP ) {
             SPDocument *doc;
-            doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
+            doc = SP_ACTIVE_DESKTOP->getDocument();
             Geom::OptRect bbox = doc->getRoot()->desktopVisualBounds();
             if (bbox) {
                 setArea ( bbox->left(),
@@ -736,7 +735,7 @@ void Export::onAreaToggled ()
         SPDocument *doc;
         Geom::OptRect bbox;
         bbox = Geom::Rect(Geom::Point(0.0, 0.0),Geom::Point(0.0, 0.0));
-        doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
+        doc = SP_ACTIVE_DESKTOP->getDocument();
 
         /* Notice how the switch is used to 'fall through' here to get
            various backups.  If you modify this without noticing you'll
@@ -1003,7 +1002,7 @@ void Export::onExport ()
     if (!desktop) return;
 
     SPNamedView *nv = desktop->getNamedView();
-    SPDocument *doc = sp_desktop_document (desktop);
+    SPDocument *doc = desktop->getDocument();
 
     bool exportSuccessful = false;
 
@@ -1154,7 +1153,7 @@ void Export::onExport ()
         prog_dlg->set_data("total", GINT_TO_POINTER(0));
 
         /* Do export */
-        ExportResult status = sp_export_png_file(sp_desktop_document(desktop), path.c_str(),
+        ExportResult status = sp_export_png_file(desktop->getDocument(), path.c_str(),
                               Geom::Rect(Geom::Point(x0, y0), Geom::Point(x1, y1)), width, height, xdpi, ydpi,
                               nv->pagecolor,
                               onProgressCallback, (void*)prog_dlg,
@@ -1472,7 +1471,7 @@ void Export::detectSize() {
             }
             break;
         case SELECTION_DRAWING: {
-            SPDocument *doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
+            SPDocument *doc = SP_ACTIVE_DESKTOP->getDocument();
 
             Geom::OptRect bbox = doc->getRoot()->desktopVisualBounds();
 
@@ -1485,7 +1484,7 @@ void Export::detectSize() {
         case SELECTION_PAGE: {
             SPDocument *doc;
 
-            doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
+            doc = SP_ACTIVE_DESKTOP->getDocument();
 
             Geom::Point x(0.0, 0.0);
             Geom::Point y(doc->getWidth().value("px"),

@@ -36,7 +36,7 @@
 
 #include "ui/widget/registered-widget.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "display/cairo-utils.h"
 #include "display/canvas-grid.h"
 #include "display/sp-canvas-util.h"

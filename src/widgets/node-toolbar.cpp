@@ -31,7 +31,7 @@
 #include "ui/tool/multi-path-manipulator.h"
 #include <glibmm/i18n.h>
 #include "node-toolbar.h"
-#include "desktop-handles.h"
+
 #include "desktop.h"
 #include "document-undo.h"
 #include "widgets/ege-adjustment-action.h"
@@ -264,7 +264,7 @@ static void sp_node_path_value_changed(GtkAdjustment *adj, GObject *tbl, Geom::D
     }
     Unit const *unit = tracker->getActiveUnit();
 
-    if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
+    if (DocumentUndo::getUndoSensitive(desktop->getDocument())) {
         prefs->setDouble(Glib::ustring("/tools/nodes/") + (d == Geom::X ? "x" : "y"),
             Quantity::convert(gtk_adjustment_get_value(adj), unit, "px"));
     }

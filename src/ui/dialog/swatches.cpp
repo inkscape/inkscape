@@ -28,7 +28,7 @@
 
 #include "color-item.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "desktop-style.h"
 #include "document.h"
 #include "document-private.h"
@@ -1061,7 +1061,7 @@ void SwatchesPanel::_updateFromSelection()
         Glib::ustring fillId;
         Glib::ustring strokeId;
 
-        SPStyle *tmpStyle = sp_style_new( sp_desktop_document(_currentDesktop) );
+        SPStyle *tmpStyle = sp_style_new(_currentDesktop->getDocument());
         int result = sp_desktop_query_style( _currentDesktop, tmpStyle, QUERY_STYLE_PROPERTY_FILL );
         switch (result) {
             case QUERY_STYLE_SINGLE:

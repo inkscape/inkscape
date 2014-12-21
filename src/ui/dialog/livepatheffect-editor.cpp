@@ -23,7 +23,7 @@
 #include <vector>
 
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "document.h"
 #include "document-undo.h"
 #include "gtkmm/widget.h"
@@ -510,7 +510,7 @@ LivePathEffectEditor::onRemove()
         if ( lpeitem ) {
             lpeitem->removeCurrentPathEffect(false);
 
-            DocumentUndo::done( sp_desktop_document(current_desktop), SP_VERB_DIALOG_LIVE_PATH_EFFECT,
+            DocumentUndo::done( current_desktop->getDocument(), SP_VERB_DIALOG_LIVE_PATH_EFFECT,
                                 _("Remove path effect") );
 
             effect_list_reload(lpeitem);
@@ -528,7 +528,7 @@ void LivePathEffectEditor::onUp()
         if ( lpeitem ) {
             lpeitem->upCurrentPathEffect();
 
-            DocumentUndo::done( sp_desktop_document(current_desktop), SP_VERB_DIALOG_LIVE_PATH_EFFECT,
+            DocumentUndo::done( current_desktop->getDocument(), SP_VERB_DIALOG_LIVE_PATH_EFFECT,
                                 _("Move path effect up") );
 
             effect_list_reload(lpeitem);
@@ -545,7 +545,7 @@ void LivePathEffectEditor::onDown()
         if ( lpeitem ) {
             lpeitem->downCurrentPathEffect();
 
-            DocumentUndo::done( sp_desktop_document(current_desktop), SP_VERB_DIALOG_LIVE_PATH_EFFECT,
+            DocumentUndo::done( current_desktop->getDocument(), SP_VERB_DIALOG_LIVE_PATH_EFFECT,
                                 _("Move path effect down") );
 
             effect_list_reload(lpeitem);
@@ -584,7 +584,7 @@ void LivePathEffectEditor::on_visibility_toggled( Glib::ustring const& str )
         /* FIXME: this explicit writing to SVG is wrong. The lpe_item should have a method to disable/enable an effect within its stack.
          * So one can call:  lpe_item->setActive(lpeobjref->lpeobject); */
         lpeobjref->lpeobject->get_lpe()->getRepr()->setAttribute("is_visible", newValue ? "true" : "false");
-        DocumentUndo::done( sp_desktop_document(current_desktop), SP_VERB_DIALOG_LIVE_PATH_EFFECT,
+        DocumentUndo::done( current_desktop->getDocument(), SP_VERB_DIALOG_LIVE_PATH_EFFECT,
                             newValue ? _("Activate path effect") : _("Deactivate path effect"));
     }
 }

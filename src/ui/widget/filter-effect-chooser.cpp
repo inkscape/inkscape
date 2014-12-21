@@ -13,7 +13,7 @@
 #include <glibmm/i18n.h>
 
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "document.h"
 #include "inkscape.h"
 

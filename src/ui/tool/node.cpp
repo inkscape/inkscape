@@ -17,7 +17,7 @@
 #include "display/sp-canvas.h"
 #include "display/sp-canvas-util.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "preferences.h"
 #include "snap.h"
 #include "snap-preferences.h"

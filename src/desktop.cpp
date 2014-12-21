@@ -37,7 +37,7 @@
 #include "color.h"
 #include "desktop-events.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "desktop-style.h"
 #include "device-manager.h"
 #include "display/canvas-arena.h"
@@ -502,7 +502,7 @@ void SPDesktop::_setDisplayMode(Inkscape::RenderMode mode) {
     canvas->rendermode = mode;
     _display_mode = mode;
     redrawDesktop();
-    _widget->setTitle( sp_desktop_document(this)->getName() );
+    _widget->setTitle( this->getDocument()->getName() );
 }
 void SPDesktop::_setDisplayColorMode(Inkscape::ColorMode mode) {
     // reload grayscale matrix from prefs
@@ -523,7 +523,7 @@ void SPDesktop::_setDisplayColorMode(Inkscape::ColorMode mode) {
     canvas->colorrendermode = mode;
     _display_color_mode = mode;
     redrawDesktop();
-    _widget->setTitle( sp_desktop_document(this)->getName() );
+    _widget->setTitle( this->getDocument()->getName() );
 }
 
 void SPDesktop::displayModeToggle() {
@@ -1481,7 +1481,7 @@ void SPDesktop::toggleGrids()
         }
     } else {
         //there is no grid present at the moment. add a rectangular grid and make it visible
-        namedview->writeNewGrid(sp_desktop_document(this), Inkscape::GRID_RECTANGULAR);
+        namedview->writeNewGrid(this->getDocument(), Inkscape::GRID_RECTANGULAR);
         showGrids(true);
     }
 }

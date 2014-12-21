@@ -32,7 +32,7 @@
 
 #include "connector-toolbar.h"
 #include "conn-avoid-ref.h"
-#include "desktop-handles.h"
+
 #include "desktop.h"
 #include "document-undo.h"
 #include "widgets/ege-adjustment-action.h"
@@ -77,7 +77,7 @@ static void sp_connector_orthogonal_toggled( GtkToggleAction* act, GObject *tbl 
 {
     SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( tbl, "desktop" ));
     Inkscape::Selection * selection = desktop->getSelection();
-    SPDocument *doc = sp_desktop_document(desktop);
+    SPDocument *doc = desktop->getDocument();
 
     if (!DocumentUndo::getUndoSensitive(doc)) {
         return;
@@ -127,7 +127,7 @@ static void connector_curvature_changed(GtkAdjustment *adj, GObject* tbl)
 {
     SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( tbl, "desktop" ));
     Inkscape::Selection * selection = desktop->getSelection();
-    SPDocument *doc = sp_desktop_document(desktop);
+    SPDocument *doc = desktop->getDocument();
 
     if (!DocumentUndo::getUndoSensitive(doc)) {
         return;
@@ -176,7 +176,7 @@ static void connector_curvature_changed(GtkAdjustment *adj, GObject* tbl)
 static void connector_spacing_changed(GtkAdjustment *adj, GObject* tbl)
 {
     SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( tbl, "desktop" ));
-    SPDocument *doc = sp_desktop_document(desktop);
+    SPDocument *doc = desktop->getDocument();
 
     if (!DocumentUndo::getUndoSensitive(doc)) {
         return;
@@ -237,7 +237,7 @@ static void sp_connector_graph_layout(void)
 
     prefs->setInt("/options/clonecompensation/value", saved_compensation);
 
-    DocumentUndo::done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, _("Arrange connector network"));
+    DocumentUndo::done(SP_ACTIVE_DESKTOP->getDocument(), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, _("Arrange connector network"));
 }
 
 static void sp_directed_graph_layout_toggled( GtkToggleAction* act, GObject * /*tbl*/ )

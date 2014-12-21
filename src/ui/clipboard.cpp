@@ -37,7 +37,7 @@
 #include "inkscape.h"
 #include "io/stringstream.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "desktop-style.h" // for sp_desktop_set_style, used in _pasteStyle
 #include "document.h"
 #include "document-private.h"

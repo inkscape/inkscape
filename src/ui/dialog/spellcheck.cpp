@@ -22,7 +22,7 @@
 #include "document.h"
 #include "selection.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "ui/tools-switch.h"
 #include "ui/tools/text-tool.h"
 #include "ui/interface.h"
@@ -407,7 +407,7 @@ SpellCheck::init(SPDesktop *d)
     }
 #endif  /* HAVE_ASPELL */
 
-    _root = sp_desktop_document(desktop)->getRoot();
+    _root = desktop->getDocument()->getRoot();
 
     // empty the list of objects we've checked
     g_slist_free (_seen_objects);
@@ -792,7 +792,7 @@ void SpellCheck::onAccept ()
             // find the end of the word anew
             _end_w = _begin_w;
             _end_w.nextEndOfWord();
-            DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT,
+            DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_TEXT,
                                _("Fix spelling"));
         }
     }

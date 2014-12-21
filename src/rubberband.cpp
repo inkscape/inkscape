@@ -12,7 +12,7 @@
 
 #include "display/sodipodi-ctrlrect.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "rubberband.h"
 #include "display/sp-canvas.h"
 #include "display/sp-canvas-item.h"

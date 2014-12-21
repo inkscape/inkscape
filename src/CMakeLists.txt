@@ -187,7 +187,6 @@ set(inkscape_SRC
 	console-output-undo-observer.cpp
 	context-fns.cpp
 	desktop-events.cpp
-	desktop-handles.cpp
 	desktop-style.cpp
 	desktop.cpp
 	device-manager.cpp
@@ -299,7 +298,6 @@ set(inkscape_SRC
 	context-fns.h
 	decimal-round.h
 	desktop-events.h
-	desktop-handles.h
 	desktop-style.h
 	desktop.h
 	device-manager.h

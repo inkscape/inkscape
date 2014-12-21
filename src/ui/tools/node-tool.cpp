@@ -13,7 +13,7 @@
 #include "ui/tool/curve-drag-point.h"
 #include <glib/gi18n.h>
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "display/sp-canvas-group.h"
 #include "display/canvas-bpath.h"
 #include "display/curve.h"
@@ -668,7 +668,7 @@ void NodeTool::select_area(Geom::Rect const &sel, GdkEventButton *event) {
     if (this->_multipath->empty()) {
         // if multipath is empty, select rubberbanded items rather than nodes
         Inkscape::Selection *selection = this->desktop->selection;
-        GSList *items = sp_desktop_document(this->desktop)->getItemsInBox(this->desktop->dkey, sel);
+        GSList *items = this->desktop->getDocument()->getItemsInBox(this->desktop->dkey, sel);
         selection->setList(items);
         g_slist_free(items);
     } else {

@@ -29,7 +29,7 @@
 #include "color-item.h"
 
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "desktop-style.h"
 #include "display/cairo-utils.h"
 #include "document.h"
@@ -476,7 +476,7 @@ void ColorItem::_updatePreviews()
     {
         SPDesktop *desktop = SP_ACTIVE_DESKTOP;
         if ( desktop ) {
-            SPDocument* document = sp_desktop_document( desktop );
+            SPDocument* document = desktop->getDocument();
             Inkscape::XML::Node *rroot =  document->getReprRoot();
             if ( rroot ) {
 
@@ -706,7 +706,7 @@ void ColorItem::buttonClicked(bool secondary)
         sp_desktop_set_style(desktop, css);
         sp_repr_css_attr_unref(css);
 
-        DocumentUndo::done( sp_desktop_document(desktop), SP_VERB_DIALOG_SWATCHES, descr.c_str() );
+        DocumentUndo::done( desktop->getDocument(), SP_VERB_DIALOG_SWATCHES, descr.c_str() );
     }
 }
 

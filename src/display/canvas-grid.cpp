@@ -36,7 +36,7 @@
 #include "desktop.h"
 #include "sp-canvas-util.h"
 #include "util/mathfns.h"
-#include "desktop-handles.h"
+
 #include "display/cairo-utils.h"
 #include "display/canvas-axonomgrid.h"
 #include "display/canvas-grid.h"

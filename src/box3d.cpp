@@ -37,7 +37,7 @@
 #include "preferences.h"
 
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "macros.h"
 
 static void box3d_ref_changed(SPObject *old_ref, SPObject *ref, SPBox3D *box);

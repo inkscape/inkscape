@@ -29,7 +29,7 @@
 #include "document-undo.h"
 #include "sp-namedview.h"
 #include "selection.h"
-#include "desktop-handles.h"
+
 #include "snap.h"
 #include "pixmaps/cursor-ellipse.xpm"
 #include "xml/repr.h"
@@ -444,7 +444,7 @@ void ArcTool::finishItem() {
 
         desktop->getSelection()->set(this->arc);
 
-		DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_ARC, _("Create ellipse"));
+		DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_ARC, _("Create ellipse"));
 
         this->arc = NULL;
     }
@@ -466,7 +466,7 @@ void ArcTool::cancel() {
 
     desktop->canvas->endForcedFullRedraws();
 
-    DocumentUndo::cancel(sp_desktop_document(desktop));
+    DocumentUndo::cancel(desktop->getDocument());
 }
 
 }

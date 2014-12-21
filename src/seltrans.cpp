@@ -26,7 +26,7 @@
 #include "document-undo.h"
 #include "sp-namedview.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "desktop-style.h"
 #include "knot.h"
 #include "message-stack.h"
@@ -473,16 +473,16 @@ void Inkscape::SelTrans::ungrab()
             // when trying to stretch a perfectly vertical line in horizontal direction, which will not be allowed
             // by the handles; this would be identified as a (zero) translation by isTranslation()
             if (_current_relative_affine.isTranslation()) {
-                DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
+                DocumentUndo::done(_desktop->getDocument(), SP_VERB_CONTEXT_SELECT,
                                    _("Move"));
             } else if (_current_relative_affine.withoutTranslation().isScale()) {
-                DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
+                DocumentUndo::done(_desktop->getDocument(), SP_VERB_CONTEXT_SELECT,
                                    _("Scale"));
             } else if (_current_relative_affine.withoutTranslation().isRotation()) {
-                DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
+                DocumentUndo::done(_desktop->getDocument(), SP_VERB_CONTEXT_SELECT,
                                    _("Rotate"));
             } else {
-                DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
+                DocumentUndo::done(_desktop->getDocument(), SP_VERB_CONTEXT_SELECT,
                                    _("Skew"));
             }
         }
@@ -495,7 +495,7 @@ void Inkscape::SelTrans::ungrab()
                 SPItem *it = SP_ITEM(l->data);
                 it->updateRepr();
             }
-            DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
+            DocumentUndo::done(_desktop->getDocument(), SP_VERB_CONTEXT_SELECT,
                                _("Set center"));
         }
 
@@ -549,7 +549,7 @@ void Inkscape::SelTrans::stamp()
             // move to the saved position
             copy_repr->setPosition(pos > 0 ? pos : 0);
 
-            SPItem *copy_item = (SPItem *) sp_desktop_document(_desktop)->getObjectByRepr(copy_repr);
+            SPItem *copy_item = (SPItem *) _desktop->getDocument()->getObjectByRepr(copy_repr);
 
             Geom::Affine const *new_affine;
             if (_show == SHOW_OUTLINE) {
@@ -570,7 +570,7 @@ void Inkscape::SelTrans::stamp()
             Inkscape::GC::release(copy_repr);
             l = l->next;
         }
-        DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
+        DocumentUndo::done(_desktop->getDocument(), SP_VERB_CONTEXT_SELECT,
                            _("Stamp"));
     }
 
@@ -719,7 +719,7 @@ void Inkscape::SelTrans::handleClick(SPKnot */*knot*/, guint state, SPSelTransHa
                     _center_is_set = false;  // center has changed
                     _updateHandles();
                 }
-                DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
+                DocumentUndo::done(_desktop->getDocument(), SP_VERB_CONTEXT_SELECT,
                                    _("Reset center"));
             }
             break;

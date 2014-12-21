@@ -456,7 +456,7 @@ void StrokeStyle::markerSelectCB(MarkerComboBox *marker_combo, StrokeStyle *spw,
 
     spw->update = true;
 
-    SPDocument *document = sp_desktop_document(spw->desktop);
+    SPDocument *document = spw->desktop->getDocument();
     if (!document) {
         return;
     }
@@ -957,7 +957,7 @@ StrokeStyle::scaleLine()
 
     update = true;
     
-    SPDocument *document = sp_desktop_document (desktop);
+    SPDocument *document = desktop->getDocument();
     Inkscape::Selection *selection = desktop->getSelection();
 
     GSList const *items = selection->itemList();
@@ -1113,8 +1113,7 @@ void StrokeStyle::buttonToggledCB(StrokeStyleButton *tb, StrokeStyle *spw)
         sp_repr_css_attr_unref(css);
         css = 0;
 
-        DocumentUndo::done(sp_desktop_document(spw->desktop), SP_VERB_DIALOG_FILL_STROKE,
-                           _("Set stroke style"));
+        DocumentUndo::done(spw->desktop->getDocument(), SP_VERB_DIALOG_FILL_STROKE, _("Set stroke style"));
     }
 }
 
@@ -1200,7 +1199,7 @@ StrokeStyle::updateAllMarkers(GSList const *objects)
             if (update) {
                 setMarkerColor(marker, combo->get_loc(), SP_ITEM(object));
 
-                SPDocument *document = sp_desktop_document(desktop);
+                SPDocument *document = desktop->getDocument();
                 DocumentUndo::done(document, SP_VERB_DIALOG_FILL_STROKE,
                                    _("Set marker color"));
             }

@@ -30,7 +30,7 @@
 
 #include "live_effects/lpe-line_segment.h"
 #include "lpe-toolbar.h"
-#include "desktop-handles.h"
+
 #include "desktop.h"
 #include "document-undo.h"
 #include "widgets/ege-select-one-action.h"
@@ -91,7 +91,7 @@ static void sp_lpetool_mode_changed(EgeSelectOneAction *act, GObject *tbl)
             SP_LPETOOL_CONTEXT(desktop->event_context)->mode = type;
         }
 
-        if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
+        if (DocumentUndo::getUndoSensitive(desktop->getDocument())) {
             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
             prefs->setInt( "/tools/lpetool/mode", mode );
         }

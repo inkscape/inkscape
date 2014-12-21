@@ -19,7 +19,7 @@
 #include <glibmm/i18n.h>
 #include "display/sodipodi-ctrl.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "knot.h"
 #include "knot-ptr.h"
 #include "document.h"
@@ -342,7 +342,7 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
 
                                 knot->ungrabbed_signal.emit(knot, event->button.state);
 
-                                DocumentUndo::undo(sp_desktop_document(knot->desktop));
+                                DocumentUndo::undo(knot->desktop->getDocument());
                                 knot->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Node or handle drag canceled."));
                                 transform_escaped = true;
                                 consumed = TRUE;

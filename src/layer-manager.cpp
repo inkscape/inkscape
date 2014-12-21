@@ -15,7 +15,7 @@
 #include "gc-finalized.h"
 #include "document.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "layer-manager.h"
 #include "preferences.h"
 #include "ui/view/view.h"

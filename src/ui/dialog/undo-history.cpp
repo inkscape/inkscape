@@ -24,7 +24,7 @@
 #include "document-undo.h"
 #include "inkscape.h"
 #include "verbs.h"
-#include "desktop-handles.h"
+
 #include "util/signal-blocker.h"
 
 #include "desktop.h"

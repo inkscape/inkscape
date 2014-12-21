@@ -34,7 +34,7 @@
 #include "desktop.h"
 #include "enums.h"
 #include "inkscape.h"
-#include "desktop-handles.h"
+
 #include "message-stack.h"
 #include "style.h"
 #include "selection.h"

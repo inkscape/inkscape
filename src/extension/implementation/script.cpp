@@ -24,7 +24,7 @@
 #include <errno.h>
 #include <glib/gstdio.h>
 
-#include "desktop-handles.h"
+
 #include "desktop.h"
 #include "ui/dialog-events.h"
 #include "extension/effect.h"

@@ -31,7 +31,7 @@
 #include "libnrtype/font-lister.h"
 #include <glibmm/i18n.h>
 #include "text-toolbar.h"
-#include "desktop-handles.h"
+
 #include "desktop-style.h"
 #include "desktop.h"
 #include "document-undo.h"
@@ -165,7 +165,7 @@ static void sp_text_fontfamily_value_changed( Ink_ComboBoxEntry_Action *act, GOb
         sp_desktop_set_style (desktop, css, true, true); // Results in selection change called twice.
         sp_repr_css_attr_unref (css);
 
-        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT,
+        DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_TEXT,
                        _("Text: Change font family"));
     }
 
@@ -229,7 +229,7 @@ static void sp_text_fontsize_value_changed( Ink_ComboBoxEntry_Action *act, GObje
         prefs->mergeStyle("/tools/text/style", css);
     } else {
         // Save for undo
-        DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "ttb:size", SP_VERB_NONE,
+        DocumentUndo::maybeDone(SP_ACTIVE_DESKTOP->getDocument(), "ttb:size", SP_VERB_NONE,
                              _("Text: Change font size"));
     }
 
@@ -267,7 +267,7 @@ static void sp_text_fontstyle_value_changed( Ink_ComboBoxEntry_Action *act, GObj
         sp_desktop_set_style (desktop, css, true, true);
         sp_repr_css_attr_unref (css);
 
-        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT,
+        DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_TEXT,
                            _("Text: Change font style"));
     }
 
@@ -345,7 +345,7 @@ static void sp_text_script_changed( InkToggleAction* act, GObject *tbl )
 
     // Save for undo
     if(result_baseline != QUERY_STYLE_NOTHING) {
-        DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "ttb:script", SP_VERB_NONE,
+        DocumentUndo::maybeDone(SP_ACTIVE_DESKTOP->getDocument(), "ttb:script", SP_VERB_NONE,
                              _("Text: Change superscript or subscript"));
     }
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
@@ -490,7 +490,7 @@ static void sp_text_align_mode_changed( EgeSelectOneAction *act, GObject *tbl )
     sp_desktop_set_style (desktop, css, true, true);
     if (result_numbers != QUERY_STYLE_NOTHING)
     {
-        DocumentUndo::done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
+        DocumentUndo::done(SP_ACTIVE_DESKTOP->getDocument(), SP_VERB_CONTEXT_TEXT,
                        _("Text: Change alignment"));
     }
     sp_repr_css_attr_unref (css);
@@ -533,7 +533,7 @@ static void sp_text_lineheight_value_changed( GtkAdjustment *adj, GObject *tbl )
 
     // Save for undo
     if(modmade) {
-        DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "ttb:line-height", SP_VERB_NONE,
+        DocumentUndo::maybeDone(SP_ACTIVE_DESKTOP->getDocument(), "ttb:line-height", SP_VERB_NONE,
                              _("Text: Change line-height"));
     }
 
@@ -582,7 +582,7 @@ static void sp_text_wordspacing_value_changed( GtkAdjustment *adj, GObject *tbl 
         prefs->mergeStyle("/tools/text/style", css);
     } else {
         // Save for undo
-        DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "ttb:word-spacing", SP_VERB_NONE,
+        DocumentUndo::maybeDone(SP_ACTIVE_DESKTOP->getDocument(), "ttb:word-spacing", SP_VERB_NONE,
                              _("Text: Change word-spacing"));
     }
     sp_style_unref(query);
@@ -623,7 +623,7 @@ static void sp_text_letterspacing_value_changed( GtkAdjustment *adj, GObject *tb
     else
     {
         // Save for undo
-        DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "ttb:letter-spacing", SP_VERB_NONE,
+        DocumentUndo::maybeDone(SP_ACTIVE_DESKTOP->getDocument(), "ttb:letter-spacing", SP_VERB_NONE,
                              _("Text: Change letter-spacing"));
     }
 
@@ -663,7 +663,7 @@ static void sp_text_dx_value_changed( GtkAdjustment *adj, GObject *tbl )
 
     if(modmade) {
         // Save for undo
-        DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "ttb:dx", SP_VERB_NONE,
+        DocumentUndo::maybeDone(SP_ACTIVE_DESKTOP->getDocument(), "ttb:dx", SP_VERB_NONE,
                              _("Text: Change dx (kern)"));
     }
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
@@ -697,7 +697,7 @@ static void sp_text_dy_value_changed( GtkAdjustment *adj, GObject *tbl )
 
     if(modmade) {
         // Save for undo
-        DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "ttb:dy", SP_VERB_NONE,
+        DocumentUndo::maybeDone(SP_ACTIVE_DESKTOP->getDocument(), "ttb:dy", SP_VERB_NONE,
                             _("Text: Change dy"));
     }
 
@@ -732,7 +732,7 @@ static void sp_text_rotation_value_changed( GtkAdjustment *adj, GObject *tbl )
 
     // Save for undo
     if(modmade) {
-        DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "ttb:rotate", SP_VERB_NONE,
+        DocumentUndo::maybeDone(SP_ACTIVE_DESKTOP->getDocument(), "ttb:rotate", SP_VERB_NONE,
                             _("Text: Change rotate"));
     }
 
@@ -780,7 +780,7 @@ static void sp_text_orientation_mode_changed( EgeSelectOneAction *act, GObject *
     sp_desktop_set_style (SP_ACTIVE_DESKTOP, css, true, true);
     if(result_numbers != QUERY_STYLE_NOTHING)
     {
-        DocumentUndo::done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
+        DocumentUndo::done(SP_ACTIVE_DESKTOP->getDocument(), SP_VERB_CONTEXT_TEXT,
                        _("Text: Change orientation"));
     }
     sp_repr_css_attr_unref (css);
@@ -860,7 +860,7 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
 
     Inkscape::FontLister* fontlister = Inkscape::FontLister::get_instance();
     if (!subselection) {
-        fontlister->update_font_list( sp_desktop_document( SP_ACTIVE_DESKTOP ));
+        fontlister->update_font_list( SP_ACTIVE_DESKTOP->getDocument());
     }
     fontlister->selection_update();
 
@@ -1169,7 +1169,7 @@ static void sp_text_toolbox_select_cb( GtkEntry* entry, GtkEntryIconPosition /*p
   GSList *selectList = NULL;
 
   SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-  SPDocument *document = sp_desktop_document( desktop );
+  SPDocument *document = desktop->getDocument();
   GSList *allList = get_all_items(NULL, document->getRoot(), desktop, false, false, true, NULL);
   for (GSList *i = allList; i != NULL; i = i->next) {
 
@@ -1214,7 +1214,7 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
     {
         // Font list
         Inkscape::FontLister* fontlister = Inkscape::FontLister::get_instance();
-        fontlister->update_font_list( sp_desktop_document( SP_ACTIVE_DESKTOP ));
+        fontlister->update_font_list( SP_ACTIVE_DESKTOP->getDocument());
         Glib::RefPtr<Gtk::ListStore> store = fontlister->get_font_list();
         GtkListStore* model = store->gobj();
 

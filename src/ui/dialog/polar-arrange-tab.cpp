@@ -16,7 +16,7 @@
 #include "verbs.h"
 #include "preferences.h"
 #include "inkscape.h"
-#include "desktop-handles.h"
+
 #include "selection.h"
 #include "document.h"
 #include "document-undo.h"
@@ -399,7 +399,7 @@ void PolarArrangeTab::arrange()
 		tmp = tmp->next;
 	}
 
-    DocumentUndo::done(sp_desktop_document(parent->getDesktop()), SP_VERB_SELECTION_ARRANGE,
+    DocumentUndo::done(parent->getDesktop()->getDocument(), SP_VERB_SELECTION_ARRANGE,
                        _("Arrange on ellipse"));
 }
 

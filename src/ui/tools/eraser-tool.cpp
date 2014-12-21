@@ -44,7 +44,7 @@
 #include "selection.h"
 #include "desktop.h"
 #include "desktop-events.h"
-#include "desktop-handles.h"
+
 #include "desktop-style.h"
 #include "message-context.h"
 #include "preferences.h"
@@ -680,10 +680,10 @@ void EraserTool::set_to_accumulated() {
 
             if (selection->isEmpty()) {
                 if ( eraserMode ) {
-                    toWorkOn = sp_desktop_document(desktop)->getItemsPartiallyInBox(desktop->dkey, bounds);
+                    toWorkOn = desktop->getDocument()->getItemsPartiallyInBox(desktop->dkey, bounds);
                 } else {
                     Inkscape::Rubberband *r = Inkscape::Rubberband::get(desktop);
-                    toWorkOn = sp_desktop_document(desktop)->getItemsAtPoints(desktop->dkey, r->getPoints());
+                    toWorkOn = desktop->getDocument()->getItemsAtPoints(desktop->dkey, r->getPoints());
                 }
 
                 toWorkOn = g_slist_remove( toWorkOn, acid );
@@ -767,9 +767,9 @@ void EraserTool::set_to_accumulated() {
 
 
     if ( workDone ) {
-        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_ERASER, _("Draw eraser stroke"));
+        DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_ERASER, _("Draw eraser stroke"));
     } else {
-        DocumentUndo::cancel(sp_desktop_document(desktop));
+        DocumentUndo::cancel(desktop->getDocument());
     }
 }
 

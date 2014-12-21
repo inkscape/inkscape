@@ -24,7 +24,7 @@
 
 #include "desktop.h"
 #include "desktop-events.h"
-#include "desktop-handles.h"
+
 #include "ui/dialog-events.h"
 #include "display/canvas-axonomgrid.h"
 #include "display/canvas-grid.h"
@@ -232,7 +232,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                     sp_repr_set_point(repr, "orientation", normal);
                     desktop->namedview->appendChild(repr);
                     Inkscape::GC::release(repr);
-                    DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_NONE,
+                    DocumentUndo::done(desktop->getDocument(), SP_VERB_NONE,
                                      _("Create guide"));
                 }
                 desktop->set_coordinate_status(event_dt);
@@ -240,7 +240,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 if (!dragged) {
                     // Ruler click (without drag) toggle the guide visibility on and off
                     Inkscape::XML::Node *repr = desktop->namedview->getRepr();
-                    sp_namedview_toggle_guides(sp_desktop_document(desktop), repr);
+                    sp_namedview_toggle_guides(desktop->getDocument(), repr);
                     
                 }
 
@@ -488,14 +488,14 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                                 assert(false);
                                 break;
                         }
-                        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_NONE,
+                        DocumentUndo::done(desktop->getDocument(), SP_VERB_NONE,
                                          _("Move guide"));
                     } else {
                         /* Undo movement of any attached shapes. */
                         guide->moveto(guide->getPoint(), false);
                         guide->set_normal(guide->getNormal(), false);
                         sp_guide_remove(guide);
-                        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_NONE,
+                        DocumentUndo::done(desktop->getDocument(), SP_VERB_NONE,
                                      _("Delete guide"));
                     }
                     moved = false;

@@ -41,7 +41,7 @@
 #include <gtkmm/stock.h>
 
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "display/curve.h"
 #include "document.h"
 #include "ui/tools/freehand-base.h"
@@ -948,10 +948,10 @@ void EditVerb::perform(SPAction *action, void *data)
 
     switch (reinterpret_cast<std::size_t>(data)) {
         case SP_VERB_EDIT_UNDO:
-            sp_undo(dt, sp_desktop_document(dt));
+            sp_undo(dt, dt->getDocument());
             break;
         case SP_VERB_EDIT_REDO:
-            sp_redo(dt, sp_desktop_document(dt));
+            sp_redo(dt, dt->getDocument());
             break;
         case SP_VERB_EDIT_CUT:
             sp_selection_cut(dt);
@@ -1256,7 +1256,7 @@ void LayerVerb::perform(SPAction *action, void *data)
             SPObject *next=Inkscape::next_layer(dt->currentRoot(), dt->currentLayer());
             if (next) {
                 dt->setCurrentLayer(next);
-                DocumentUndo::done(sp_desktop_document(dt), SP_VERB_LAYER_NEXT,
+                DocumentUndo::done(dt->getDocument(), SP_VERB_LAYER_NEXT,
                                    _("Switch to next layer"));
                 dt->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Switched to next layer."));
             } else {
@@ -1268,7 +1268,7 @@ void LayerVerb::perform(SPAction *action, void *data)
             SPObject *prev=Inkscape::previous_layer(dt->currentRoot(), dt->currentLayer());
             if (prev) {
                 dt->setCurrentLayer(prev);
-                DocumentUndo::done(sp_desktop_document(dt), SP_VERB_LAYER_PREV,
+                DocumentUndo::done(dt->getDocument(), SP_VERB_LAYER_PREV,
                                    _("Switch to previous layer"));
                 dt->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Switched to previous layer."));
             } else {
@@ -1338,7 +1338,7 @@ void LayerVerb::perform(SPAction *action, void *data)
                         description = _("Lower layer");
                         break;
                 };
-                DocumentUndo::done(sp_desktop_document(dt), verb, description);
+                DocumentUndo::done(dt->getDocument(), verb, description);
                 if (message) {
                     dt->messageStack()->flash(Inkscape::NORMAL_MESSAGE, message);
                     g_free((void *) message);
@@ -1384,7 +1384,7 @@ void LayerVerb::perform(SPAction *action, void *data)
                     dt->setCurrentLayer(new_layer);
                 }
 #endif
-                DocumentUndo::done(sp_desktop_document(dt), SP_VERB_LAYER_DUPLICATE,
+                DocumentUndo::done(dt->getDocument(), SP_VERB_LAYER_DUPLICATE,
                                    _("Duplicate layer"));
 
                 // TRANSLATORS: this means "The layer has been duplicated."
@@ -1420,7 +1420,7 @@ void LayerVerb::perform(SPAction *action, void *data)
                     dt->setCurrentLayer(survivor);
                 }
 
-                DocumentUndo::done(sp_desktop_document(dt), SP_VERB_LAYER_DELETE,
+                DocumentUndo::done(dt->getDocument(), SP_VERB_LAYER_DELETE,
                                    _("Delete layer"));
 
                 // TRANSLATORS: this means "The layer has been deleted."
@@ -1435,23 +1435,23 @@ void LayerVerb::perform(SPAction *action, void *data)
                 dt->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("No current layer."));
             } else {
                 dt->toggleLayerSolo( dt->currentLayer() );
-                DocumentUndo::done(sp_desktop_document(dt), SP_VERB_LAYER_SOLO, _("Toggle layer solo"));
+                DocumentUndo::done(dt->getDocument(), SP_VERB_LAYER_SOLO, _("Toggle layer solo"));
             }
             break;
         }
         case SP_VERB_LAYER_SHOW_ALL: {
             dt->toggleHideAllLayers( false );
-            DocumentUndo::maybeDone(sp_desktop_document(dt), "layer:showall", SP_VERB_LAYER_SHOW_ALL, _("Show all layers"));
+            DocumentUndo::maybeDone(dt->getDocument(), "layer:showall", SP_VERB_LAYER_SHOW_ALL, _("Show all layers"));
             break;
         }
         case SP_VERB_LAYER_HIDE_ALL: {
             dt->toggleHideAllLayers( true );
-            DocumentUndo::maybeDone(sp_desktop_document(dt), "layer:hideall", SP_VERB_LAYER_HIDE_ALL, _("Hide all layers"));
+            DocumentUndo::maybeDone(dt->getDocument(), "layer:hideall", SP_VERB_LAYER_HIDE_ALL, _("Hide all layers"));
             break;
         }
         case SP_VERB_LAYER_LOCK_ALL: {
             dt->toggleLockAllLayers( true );
-            DocumentUndo::maybeDone(sp_desktop_document(dt), "layer:lockall", SP_VERB_LAYER_LOCK_ALL, _("Lock all layers"));
+            DocumentUndo::maybeDone(dt->getDocument(), "layer:lockall", SP_VERB_LAYER_LOCK_ALL, _("Lock all layers"));
             break;
         }
         case SP_VERB_LAYER_LOCK_OTHERS: {
@@ -1459,13 +1459,13 @@ void LayerVerb::perform(SPAction *action, void *data)
                 dt->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("No current layer."));
             } else {
                 dt->toggleLockOtherLayers( dt->currentLayer() );
-                DocumentUndo::done(sp_desktop_document(dt), SP_VERB_LAYER_LOCK_OTHERS, _("Lock other layers"));
+                DocumentUndo::done(dt->getDocument(), SP_VERB_LAYER_LOCK_OTHERS, _("Lock other layers"));
             }
             break;
         }
         case SP_VERB_LAYER_UNLOCK_ALL: {
             dt->toggleLockAllLayers( false );
-            DocumentUndo::maybeDone(sp_desktop_document(dt), "layer:unlockall", SP_VERB_LAYER_UNLOCK_ALL, _("Unlock all layers"));
+            DocumentUndo::maybeDone(dt->getDocument(), "layer:unlockall", SP_VERB_LAYER_UNLOCK_ALL, _("Unlock all layers"));
             break;
         }
         case SP_VERB_LAYER_TOGGLE_LOCK:
@@ -1548,12 +1548,12 @@ void ObjectVerb::perform( SPAction *action, void *data)
             break;
         case SP_VERB_OBJECT_FLIP_HORIZONTAL:
             sp_selection_scale_relative(sel, center, Geom::Scale(-1.0, 1.0));
-            DocumentUndo::done(sp_desktop_document(dt), SP_VERB_OBJECT_FLIP_HORIZONTAL,
+            DocumentUndo::done(dt->getDocument(), SP_VERB_OBJECT_FLIP_HORIZONTAL,
                                _("Flip horizontally"));
             break;
         case SP_VERB_OBJECT_FLIP_VERTICAL:
             sp_selection_scale_relative(sel, center, Geom::Scale(1.0, -1.0));
-            DocumentUndo::done(sp_desktop_document(dt), SP_VERB_OBJECT_FLIP_VERTICAL,
+            DocumentUndo::done(dt->getDocument(), SP_VERB_OBJECT_FLIP_VERTICAL,
                                _("Flip vertically"));
             break;
         case SP_VERB_OBJECT_SET_MASK:
@@ -1831,7 +1831,7 @@ void TextVerb::perform(SPAction *action, void */*data*/)
     g_return_if_fail(ensure_desktop_valid(action));
     SPDesktop *dt = sp_action_get_desktop(action);
 
-    SPDocument *doc = sp_desktop_document(dt);
+    SPDocument *doc = dt->getDocument();
     (void)doc;
     Inkscape::XML::Node *repr = dt->namedview->getRepr();
     (void)repr;
@@ -1846,7 +1846,7 @@ void ZoomVerb::perform(SPAction *action, void *data)
     SPDesktop *dt = sp_action_get_desktop(action);
     Inkscape::UI::Tools::ToolBase *ec = dt->event_context;
 
-    SPDocument *doc = sp_desktop_document(dt);
+    SPDocument *doc = dt->getDocument();
 
     Inkscape::XML::Node *repr = dt->namedview->getRepr();
 
@@ -2326,7 +2326,7 @@ void FitCanvasVerb::perform(SPAction *action, void *data)
 {
     g_return_if_fail(ensure_desktop_valid(action));
     SPDesktop *dt = sp_action_get_desktop(action);
-    SPDocument *doc = sp_desktop_document(dt);
+    SPDocument *doc = dt->getDocument();
     if (!doc) return;
 
     switch (reinterpret_cast<std::size_t>(data)) {
@@ -2392,7 +2392,7 @@ void LockAndHideVerb::perform(SPAction *action, void *data)
 {
     g_return_if_fail(ensure_desktop_valid(action));
     SPDesktop *dt = sp_action_get_desktop(action);
-    SPDocument *doc = sp_desktop_document(dt);
+    SPDocument *doc = dt->getDocument();
     if (!doc) return;
 
     switch (reinterpret_cast<std::size_t>(data)) {

@@ -23,7 +23,7 @@
 #include <gtkmm/stock.h>
 
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "ui/dialog-events.h"
 #include "document.h"
 #include "document-undo.h"
@@ -363,7 +363,7 @@ void XmlTree::set_tree_desktop(SPDesktop *desktop)
         sel_changed_connection = desktop->getSelection()->connectChanged(sigc::hide(sigc::mem_fun(this, &XmlTree::on_desktop_selection_changed)));
         document_replaced_connection = desktop->connectDocumentReplaced(sigc::mem_fun(this, &XmlTree::on_document_replaced));
 
-        set_tree_document(sp_desktop_document(desktop));
+        set_tree_document(desktop->getDocument());
     } else {
         set_tree_document(NULL);
     }
@@ -493,7 +493,7 @@ void XmlTree::set_dt_select(Inkscape::XML::Node *repr)
             repr = repr->parent();
         } // end of while loop
 
-        object = sp_desktop_document(current_desktop)->getObjectByRepr(repr);
+        object = current_desktop->getDocument()->getObjectByRepr(repr);
     } else {
         object = NULL;
     }

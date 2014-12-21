@@ -29,7 +29,7 @@
 #include "document.h"
 #include "document-undo.h"
 #include "desktop-events.h"
-#include "desktop-handles.h"
+
 #include "sp-guide.h"
 #include "sp-item-group.h"
 #include "sp-namedview.h"
@@ -840,7 +840,7 @@ void sp_namedview_window_from_document(SPDesktop *desktop)
         && nv->cx != HUGE_VAL && !IS_NAN(nv->cx)
         && nv->cy != HUGE_VAL && !IS_NAN(nv->cy)) {
         desktop->zoom_absolute(nv->cx, nv->cy, nv->zoom);
-    } else if (sp_desktop_document(desktop)) { // document without saved zoom, zoom to its page
+    } else if (desktop->getDocument()) { // document without saved zoom, zoom to its page
         desktop->zoom_page();
     }
 
@@ -900,8 +900,8 @@ void sp_namedview_document_from_window(SPDesktop *desktop)
     Geom::Rect const r = desktop->get_display_area();
 
     // saving window geometry is not undoable
-    bool saved = DocumentUndo::getUndoSensitive(sp_desktop_document(desktop));
-    DocumentUndo::setUndoSensitive(sp_desktop_document(desktop), false);
+    bool saved = DocumentUndo::getUndoSensitive(desktop->getDocument());
+    DocumentUndo::setUndoSensitive(desktop->getDocument(), false);
 
     if (save_viewport_in_file) {
         sp_repr_set_svg_double(view, "inkscape:zoom", desktop->current_zoom());
@@ -922,7 +922,7 @@ void sp_namedview_document_from_window(SPDesktop *desktop)
     view->setAttribute("inkscape:current-layer", desktop->currentLayer()->getId());
 
     // restore undoability
-    DocumentUndo::setUndoSensitive(sp_desktop_document(desktop), saved);
+    DocumentUndo::setUndoSensitive(desktop->getDocument(), saved);
 }
 
 void SPNamedView::hide(SPDesktop const *desktop)

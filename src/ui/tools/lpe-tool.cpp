@@ -30,7 +30,7 @@
 #include "preferences.h"
 #include "ui/shape-editor.h"
 #include "selection.h"
-#include "desktop-handles.h"
+
 #include "document.h"
 #include "display/curve.h"
 #include "display/canvas-bpath.h"
@@ -310,7 +310,7 @@ lpetool_try_construction(LpeTool *lc, Inkscape::LivePathEffect::EffectType const
 
     // TODO: should we check whether type represents a valid geometric construction?
     if (item && SP_IS_LPE_ITEM(item) && Inkscape::LivePathEffect::Effect::acceptsNumClicks(type) == 0) {
-        Inkscape::LivePathEffect::Effect::createAndApply(type, sp_desktop_document(lc->desktop), item);
+        Inkscape::LivePathEffect::Effect::createAndApply(type, lc->desktop->getDocument(), item);
         return true;
     }
     return false;
@@ -360,7 +360,7 @@ lpetool_context_reset_limiting_bbox(LpeTool *lc)
     if (!prefs->getBool("/tools/lpetool/show_bbox", true))
         return;
 
-    SPDocument *document = sp_desktop_document(lc->desktop);
+    SPDocument *document = lc->desktop->getDocument();
 
     Geom::Point A, B;
     lpetool_get_limiting_bbox_corners(document, A, B);

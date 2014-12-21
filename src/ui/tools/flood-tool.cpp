@@ -31,7 +31,7 @@
 #include "color.h"
 #include "context-fns.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "desktop-style.h"
 #include "display/cairo-utils.h"
 #include "display/drawing-context.h"
@@ -360,7 +360,7 @@ inline static bool check_if_pixel_is_paintable(guchar *px, unsigned char *trace_
  * @param union_with_selection If true, merge the final SVG path with the current selection.
  */
 static void do_trace(bitmap_coords_info bci, guchar *trace_px, SPDesktop *desktop, Geom::Affine transform, unsigned int min_x, unsigned int max_x, unsigned int min_y, unsigned int max_y, bool union_with_selection) {
-    SPDocument *document = sp_desktop_document(desktop);
+    SPDocument *document = desktop->getDocument();
 
     unsigned char *trace_t;
 
@@ -740,7 +740,7 @@ static bool sort_fill_queue_horizontal(Geom::Point a, Geom::Point b) {
  */
 static void sp_flood_do_flood_fill(ToolBase *event_context, GdkEvent *event, bool union_with_selection, bool is_point_fill, bool is_touch_fill) {
     SPDesktop *desktop = event_context->desktop;
-    SPDocument *document = sp_desktop_document(desktop);
+    SPDocument *document = desktop->getDocument();
 
     document->ensureUpToDate();
     
@@ -1096,7 +1096,7 @@ bool FloodTool::item_handler(SPItem* item, GdkEvent* event) {
             // Set style
             desktop->applyCurrentOrToolStyle(item, "/tools/paintbucket", false);
 
-            DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_PAINTBUCKET, _("Set style on object"));
+            DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_PAINTBUCKET, _("Set style on object"));
 
             ret = TRUE;
         }
@@ -1231,7 +1231,7 @@ void FloodTool::finishItem() {
 
         desktop->getSelection()->set(this->item);
 
-        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_PAINTBUCKET, _("Fill bounded area"));
+        DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_PAINTBUCKET, _("Fill bounded area"));
 
         this->item = NULL;
     }

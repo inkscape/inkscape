@@ -196,7 +196,7 @@ application_interface_document_close_all (ApplicationInterface *app_interface,
     SPDesktop  *desktop = SP_ACTIVE_DESKTOP;
     g_assert(desktop != NULL);
 
-    SPDocument *doc = sp_desktop_document(desktop);
+    SPDocument *doc = desktop->getDocument();
     g_assert(doc != NULL);
 
     Inkscape::XML::Node     *repr = doc->getReprRoot();

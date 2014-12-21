@@ -21,7 +21,7 @@
 #include "ui/widget/spinbutton.h"
 #include <glibmm/i18n.h>
 #include "select-toolbar.h"
-#include "desktop-handles.h"
+
 #include "desktop.h"
 #include "display/sp-canvas.h"
 #include "document-undo.h"
@@ -154,7 +154,7 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
 
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     Inkscape::Selection *selection = desktop->getSelection();
-    SPDocument *document = sp_desktop_document(desktop);
+    SPDocument *document = desktop->getDocument();
 
     document->ensureUpToDate ();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();

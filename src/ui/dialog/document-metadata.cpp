@@ -20,7 +20,7 @@
 
 #include "document-metadata.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "inkscape.h"
 #include "rdf.h"
 #include "sp-namedview.h"

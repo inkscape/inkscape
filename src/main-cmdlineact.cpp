@@ -9,7 +9,6 @@
 
 #include <ui/view/view.h>
 #include <desktop.h>
-#include <desktop-handles.h>
 #include <helper/action.h>
 #include <helper/action-context.h>
 #include <selection.h>

@@ -28,7 +28,7 @@
 #include "preferences.h"
 #include "style.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "sp-namedview.h"
 #include "live_effects/effect.h"
 #include "sp-pattern.h"

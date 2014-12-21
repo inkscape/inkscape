@@ -15,7 +15,7 @@
 
 #include "xml/node-event-vector.h"
 #include "sp-xmlview-content.h"
-#include "desktop-handles.h"
+#include "desktop.h"
 #include "document-private.h"
 #include "document-undo.h"
 #include "inkscape.h"
@@ -147,7 +147,7 @@ sp_xmlview_content_changed (GtkTextBuffer *tb, SPXMLViewContent *text)
         text->repr->setContent(data);
         g_free (data);
         text->blocked = FALSE;
-        DocumentUndo::done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_DIALOG_XML_EDITOR,
+        DocumentUndo::done(SP_ACTIVE_DESKTOP->getDocument(), SP_VERB_DIALOG_XML_EDITOR,
 			   _("Type text in a text node"));
     }
 }

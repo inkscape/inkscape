@@ -47,7 +47,7 @@
 #include "selection.h"
 #include "desktop.h"
 #include "desktop-events.h"
-#include "desktop-handles.h"
+
 #include "desktop-style.h"
 #include "message-context.h"
 #include "preferences.h"
@@ -973,7 +973,7 @@ void CalligraphicTool::set_to_accumulated(bool unionize, bool subtract) {
         this->repr = NULL;
     }
 
-    DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_CALLIGRAPHIC,
+    DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_CALLIGRAPHIC,
                        _("Draw calligraphic stroke"));
 }
 

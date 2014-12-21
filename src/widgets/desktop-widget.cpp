@@ -32,7 +32,7 @@
 #include "conn-avoid-ref.h"
 #include "desktop.h"
 #include "desktop-events.h"
-#include "desktop-handles.h"
+
 #include "desktop-widget.h"
 #include "display/sp-canvas.h"
 #include "display/canvas-arena.h"

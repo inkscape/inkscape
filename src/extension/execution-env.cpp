@@ -31,7 +31,7 @@
 #include "desktop.h"
 #include "ui/view/view.h"
 #include "sp-namedview.h"
-#include "desktop-handles.h"
+
 #include "display/sp-canvas.h"
 
 #include "util/glib-list-iterators.h"

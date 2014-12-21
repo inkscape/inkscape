@@ -12,7 +12,7 @@
 #include "inkscape.h"
 #include "helper/action.h"
 #include "ui/view/view.h"
-#include "desktop-handles.h"
+
 #include "selection.h"
 #include "sp-namedview.h"
 #include "desktop.h"

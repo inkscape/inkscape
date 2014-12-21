@@ -37,7 +37,7 @@
 #include "layer-model.h"
 #include "message-stack.h"
 #include "selection.h"
-#include "desktop-handles.h"
+
 #include "desktop.h"
 #include "display/canvas-bpath.h"
 #include "display/curve.h"
@@ -1343,7 +1343,7 @@ sp_selected_path_outline(SPDesktop *desktop)
         
         if (res->descr_cmd.size() > 1) { // if there's 0 or 1 node left, drop this path altogether
 
-            SPDocument * doc = sp_desktop_document(desktop);
+            SPDocument * doc = desktop->getDocument();
             Inkscape::XML::Document *xml_doc = doc->getReprDoc();
             Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
 
@@ -1482,7 +1482,7 @@ sp_selected_path_outline(SPDesktop *desktop)
                 // restore title, description, id, transform
                 repr->setAttribute("id", id);
 
-                SPItem *newitem = (SPItem *) sp_desktop_document(desktop)->getObjectByRepr(repr);
+                SPItem *newitem = (SPItem *) desktop->getDocument()->getObjectByRepr(repr);
                 newitem->doWriteTransform(repr, transform);
                 if (title) {
                 	newitem->setTitle(title);
@@ -1512,7 +1512,7 @@ sp_selected_path_outline(SPDesktop *desktop)
     }
 
     if (did) {
-        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_SELECTION_OUTLINE, 
+        DocumentUndo::done(desktop->getDocument(), SP_VERB_SELECTION_OUTLINE, 
                            _("Convert stroke to path"));
     } else {
         // TRANSLATORS: "to outline" means "to convert stroke to path"
@@ -1675,7 +1675,7 @@ void sp_selected_path_create_offset_object(SPDesktop *desktop, int expand, bool 
     {
         // pas vraiment de points sur le resultat
         // donc il ne reste rien
-        DocumentUndo::done(sp_desktop_document(desktop), 
+        DocumentUndo::done(desktop->getDocument(), 
                            (updating ? SP_VERB_SELECTION_LINKED_OFFSET 
                             : SP_VERB_SELECTION_DYNAMIC_OFFSET),
                            (updating ? _("Create linked offset")
@@ -1723,7 +1723,7 @@ void sp_selected_path_create_offset_object(SPDesktop *desktop, int expand, bool 
         // move to the saved position
         repr->setPosition(pos > 0 ? pos : 0);
 
-        SPItem *nitem = reinterpret_cast<SPItem *>(sp_desktop_document(desktop)->getObjectByRepr(repr));
+        SPItem *nitem = reinterpret_cast<SPItem *>(desktop->getDocument()->getObjectByRepr(repr));
 
         if ( !updating ) {
             // delete original, apply the transform to the offset
@@ -1740,7 +1740,7 @@ void sp_selected_path_create_offset_object(SPDesktop *desktop, int expand, bool 
         selection->set(nitem);
     }
 
-    DocumentUndo::done(sp_desktop_document(desktop), 
+    DocumentUndo::done(desktop->getDocument(), 
                        (updating ? SP_VERB_SELECTION_LINKED_OFFSET 
                         : SP_VERB_SELECTION_DYNAMIC_OFFSET),
                        (updating ? _("Create linked offset")
@@ -1946,7 +1946,7 @@ sp_selected_path_do_offset(SPDesktop *desktop, bool expand, double prefOffset)
             // move to the saved position
             repr->setPosition(pos > 0 ? pos : 0);
 
-            SPItem *newitem = (SPItem *) sp_desktop_document(desktop)->getObjectByRepr(repr);
+            SPItem *newitem = (SPItem *) desktop->getDocument()->getObjectByRepr(repr);
 
             // reapply the transform
             newitem->doWriteTransform(repr, transform);
@@ -1963,7 +1963,7 @@ sp_selected_path_do_offset(SPDesktop *desktop, bool expand, double prefOffset)
     }
 
     if (did) {
-        DocumentUndo::done(sp_desktop_document(desktop), 
+        DocumentUndo::done(desktop->getDocument(), 
                            (expand ? SP_VERB_SELECTION_OFFSET : SP_VERB_SELECTION_INSET),
                            (expand ? _("Outset path") : _("Inset path")));
     } else {
@@ -2089,7 +2089,7 @@ sp_selected_path_simplify_item(SPDesktop *desktop,
     // move to the saved position
     repr->setPosition(pos > 0 ? pos : 0);
 
-    SPItem *newitem = (SPItem *) sp_desktop_document(desktop)->getObjectByRepr(repr);
+    SPItem *newitem = (SPItem *) desktop->getDocument()->getObjectByRepr(repr);
 
     // reapply the transform
     newitem->doWriteTransform(repr, transform);
@@ -2208,7 +2208,7 @@ sp_selected_path_simplify_selection(SPDesktop *desktop, float threshold, bool ju
                                                         breakableAngles, true);
 
     if (didSomething)
-        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_SELECTION_SIMPLIFY, 
+        DocumentUndo::done(desktop->getDocument(), SP_VERB_SELECTION_SIMPLIFY, 
                            _("Simplify"));
     else
         desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("<b>No paths</b> to simplify in the selection."));

@@ -29,7 +29,7 @@
 #include "message-stack.h"
 #include "selection.h"
 #include "style.h"
-#include "desktop-handles.h"
+
 #include "text-editing.h"
 #include "text-chemistry.h"
 #include "sp-flowtext.h"
@@ -122,14 +122,14 @@ text_put_on_path()
         Inkscape::XML::Node *parent = text->getRepr()->parent();
         parent->appendChild(repr);
 
-        SPItem *new_item = (SPItem *) sp_desktop_document(desktop)->getObjectByRepr(repr);
+        SPItem *new_item = (SPItem *) desktop->getDocument()->getObjectByRepr(repr);
         new_item->doWriteTransform(repr, text->transform);
         new_item->updateRepr();
 
         Inkscape::GC::release(repr);
         text->deleteObject(); // delete the orignal flowtext
 
-        sp_desktop_document(desktop)->ensureUpToDate();
+        desktop->getDocument()->ensureUpToDate();
 
         selection->clear();
 
@@ -181,7 +181,7 @@ text_put_on_path()
     text->getRepr()->setAttribute("x", NULL);
     text->getRepr()->setAttribute("y", NULL);
 
-    DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT, 
+    DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_TEXT, 
                        _("Put text on path"));
     g_slist_free(text_reprs);
 }
@@ -217,7 +217,7 @@ text_remove_from_path()
     if (!did) {
         desktop->getMessageStack()->flash(Inkscape::ERROR_MESSAGE, _("<b>No texts-on-paths</b> in the selection."));
     } else {
-        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT, 
+        DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_TEXT, 
                            _("Remove text from path"));
         selection->setList(g_slist_copy((GSList *) selection->itemList())); // reselect to update statusbar description
     }
@@ -282,7 +282,7 @@ text_remove_all_kerns()
     if (!did) {
         desktop->getMessageStack()->flash(Inkscape::ERROR_MESSAGE, _("Select <b>text(s)</b> to remove kerns from."));
     } else {
-        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT, 
+        DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_TEXT, 
                            _("Remove manual kerns"));
     }
 }
@@ -294,7 +294,7 @@ text_flow_into_shape()
     if (!desktop)
         return;
 
-    SPDocument *doc = sp_desktop_document (desktop);
+    SPDocument *doc = desktop->getDocument();
     Inkscape::XML::Document *xml_doc = doc->getReprDoc();
 
     Inkscape::Selection *selection = desktop->getSelection();
@@ -388,7 +388,7 @@ text_unflow ()
     if (!desktop)
         return;
 
-    SPDocument *doc = sp_desktop_document (desktop);
+    SPDocument *doc = desktop->getDocument();
     Inkscape::XML::Document *xml_doc = doc->getReprDoc();
 
     Inkscape::Selection *selection = desktop->getSelection();
@@ -512,7 +512,7 @@ flowtext_to_text()
         Inkscape::XML::Node *parent = item->getRepr()->parent();
         parent->addChild(repr, item->getRepr());
 
-        SPItem *new_item = reinterpret_cast<SPItem *>(sp_desktop_document(desktop)->getObjectByRepr(repr));
+        SPItem *new_item = reinterpret_cast<SPItem *>(desktop->getDocument()->getObjectByRepr(repr));
         new_item->doWriteTransform(repr, item->transform);
         new_item->updateRepr();
     
@@ -525,7 +525,7 @@ flowtext_to_text()
     g_slist_free(items);
 
     if (did) {
-        DocumentUndo::done(sp_desktop_document(desktop), 
+        DocumentUndo::done(desktop->getDocument(), 
                            SP_VERB_OBJECT_FLOWTEXT_TO_TEXT,
                            _("Convert flowed text to text"));
         selection->setReprList(reprs);        

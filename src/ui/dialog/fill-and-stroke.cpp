@@ -16,7 +16,7 @@
  */
 
 #include "ui/widget/notebook-page.h"
-#include "desktop-handles.h"
+
 #include "desktop-style.h"
 #include "document.h"
 #include "fill-and-stroke.h"

@@ -52,7 +52,7 @@
 
 #include "selection.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "document.h"
 #include "inkscape.h"
 #include "sp-root.h"
@@ -288,7 +288,7 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
 
   /**********************************************************/
   currentDesktop  = SP_ACTIVE_DESKTOP;
-  currentDocument = sp_desktop_document(currentDesktop);
+  currentDocument = currentDesktop->getDocument();
 
   previewDocument = symbols_preview_doc(); /* Template to render symbols in */
   previewDocument->ensureUpToDate(); /* Necessary? */

@@ -35,7 +35,7 @@
 #include "document-undo.h"
 #include "message-stack.h"
 #include "selection.h"
-#include "desktop-handles.h"
+
 #include "box3d.h"
 #include <2geom/pathvector.h>
 #include "selection-chemistry.h"
@@ -48,7 +48,7 @@ void
 sp_selected_path_combine(SPDesktop *desktop)
 {
     Inkscape::Selection *selection = desktop->getSelection();
-    SPDocument *doc = sp_desktop_document(desktop);
+    SPDocument *doc = desktop->getDocument();
     
     if (g_slist_length((GSList *) selection->itemList()) < 1) {
         desktop->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to combine."));
@@ -170,7 +170,7 @@ sp_selected_path_combine(SPDesktop *desktop)
         // move to the position of the topmost, reduced by the number of deleted items
         repr->setPosition(position > 0 ? position : 0);
 
-        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_SELECTION_COMBINE, 
+        DocumentUndo::done(desktop->getDocument(), SP_VERB_SELECTION_COMBINE, 
                            _("Combine"));
 
         selection->set(repr);
@@ -283,7 +283,7 @@ sp_selected_path_break_apart(SPDesktop *desktop)
     desktop->clearWaitingCursor();
 
     if (did) {
-        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_SELECTION_BREAK_APART, 
+        DocumentUndo::done(desktop->getDocument(), SP_VERB_SELECTION_BREAK_APART, 
                            _("Break apart"));
     } else {
         desktop->getMessageStack()->flash(Inkscape::ERROR_MESSAGE, _("<b>No path(s)</b> to break apart in the selection."));
@@ -323,7 +323,7 @@ sp_selected_path_to_curves(Inkscape::Selection *selection, SPDesktop *desktop, b
     if (interactive && desktop) {
         desktop->clearWaitingCursor();
         if (did) {
-            DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_OBJECT_TO_CURVE, 
+            DocumentUndo::done(desktop->getDocument(), SP_VERB_OBJECT_TO_CURVE, 
                                _("Object to path"));
         } else {
             desktop->getMessageStack()->flash(Inkscape::ERROR_MESSAGE, _("<b>No objects</b> to convert to path in the selection."));
@@ -660,7 +660,7 @@ sp_selected_path_reverse(SPDesktop *desktop)
     desktop->clearWaitingCursor();
 
     if (did) {
-        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_SELECTION_REVERSE,
+        DocumentUndo::done(desktop->getDocument(), SP_VERB_SELECTION_REVERSE,
                            _("Reverse path"));
     } else {
         desktop->getMessageStack()->flash(Inkscape::ERROR_MESSAGE, _("<b>No paths</b> to reverse in the selection."));

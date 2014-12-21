@@ -12,7 +12,7 @@
 
 #include "color-picker.h"
 #include "inkscape.h"
-#include "desktop-handles.h"
+#include "desktop.h"
 #include "document.h"
 #include "document-undo.h"
 #include "ui/dialog-events.h"
@@ -128,7 +128,7 @@ void sp_color_picker_color_mod(SPColorSelector *csel, GObject *cp)
     (ptr->_preview).setRgba32 (rgba);
 
     if (ptr->_undo && SP_ACTIVE_DESKTOP)
-        DocumentUndo::done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_NONE,
+        DocumentUndo::done(SP_ACTIVE_DESKTOP->getDocument(), SP_VERB_NONE,
                            /* TODO: annotate */ "color-picker.cpp:130");
 
     ptr->on_changed (rgba);

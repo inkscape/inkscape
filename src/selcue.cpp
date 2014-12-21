@@ -14,7 +14,7 @@
 #include <string.h>
 
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "selection.h"
 #include "display/sp-canvas-util.h"
 #include "display/sodipodi-ctrl.h"

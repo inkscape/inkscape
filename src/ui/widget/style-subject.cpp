@@ -11,7 +11,7 @@
 #include "sp-object.h"
 #include "xml/sp-css-attr.h"
 #include "desktop-style.h"
-#include "desktop-handles.h"
+
 #include "selection.h"
 #include "style.h"
 

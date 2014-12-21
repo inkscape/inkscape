@@ -33,7 +33,6 @@
 #include <glibmm/i18n.h>
 
 #include "desktop.h"
-#include "desktop-handles.h"
 #include "desktop-style.h"
 #include "ui/dialog-events.h"
 #include "display/canvas-bpath.h" // for SP_STROKE_LINEJOIN_*

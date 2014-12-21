@@ -27,7 +27,7 @@
 
 // General
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "document.h"
 #include "document-undo.h"
 #include "macros.h"
@@ -317,7 +317,7 @@ static void sp_mesh_context_split_near_point(MeshTool *rc, SPItem *item,  Geom::
 
     ec->get_drag()->addStopNearPoint (item, mouse_p, tolerance/desktop->current_zoom());
 
-    DocumentUndo::done(sp_desktop_document (desktop), SP_VERB_CONTEXT_MESH,
+    DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_MESH,
                        _("Split mesh row/column"));
 
     ec->get_drag()->updateDraggers();
@@ -488,13 +488,13 @@ bool MeshTool::root_handler(GdkEvent* event) {
 #ifdef DEBUG_MESH
                     std::cout << "sp_mesh_context_root_handler: creating new mesh on: " << (fsmode == Inkscape::FOR_FILL ? "Fill" : "Stroke") << std::endl;
 #endif
-                    SPGradient *vector = sp_gradient_vector_for_object(sp_desktop_document(desktop), desktop, item, fsmode);
+                    SPGradient *vector = sp_gradient_vector_for_object(desktop->getDocument(), desktop, item, fsmode);
 
                     SPGradient *priv = sp_item_set_gradient(item, vector, new_type, fsmode);
                     sp_gradient_reset_to_userspace(priv, item);
                 }
 
-                DocumentUndo::done(sp_desktop_document (desktop), SP_VERB_CONTEXT_MESH,
+                DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_MESH,
                                    _("Create default mesh"));
             }
 
@@ -934,7 +934,7 @@ bool MeshTool::root_handler(GdkEvent* event) {
 static void sp_mesh_drag(MeshTool &rc, Geom::Point const /*pt*/, guint /*state*/, guint32 /*etime*/) {
     SPDesktop *desktop = SP_EVENT_CONTEXT(&rc)->desktop;
     Inkscape::Selection *selection = desktop->getSelection();
-    SPDocument *document = sp_desktop_document(desktop);
+    SPDocument *document = desktop->getDocument();
     ToolBase *ec = SP_EVENT_CONTEXT(&rc);
 
     if (!selection->isEmpty()) {

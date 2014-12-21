@@ -28,7 +28,7 @@
 #include "sp-namedview.h"
 #include "selection.h"
 #include "selection-chemistry.h"
-#include "desktop-handles.h"
+
 #include "snap.h"
 #include "desktop.h"
 #include "desktop-style.h"
@@ -478,7 +478,7 @@ void RectTool::finishItem() {
 
         this->desktop->getSelection()->set(this->rect);
 
-        DocumentUndo::done(sp_desktop_document(this->desktop), SP_VERB_CONTEXT_RECT, _("Create rectangle"));
+        DocumentUndo::done(this->desktop->getDocument(), SP_VERB_CONTEXT_RECT, _("Create rectangle"));
 
         this->rect = NULL;
     }
@@ -500,7 +500,7 @@ void RectTool::cancel(){
 
     this->desktop->canvas->endForcedFullRedraws();
 
-    DocumentUndo::cancel(sp_desktop_document(this->desktop));
+    DocumentUndo::cancel(this->desktop->getDocument());
 }
 
 }

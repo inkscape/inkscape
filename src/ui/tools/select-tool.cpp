@@ -38,7 +38,7 @@
 #include "extension/dbus/document-interface.h"
 #endif
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "sp-root.h"
 #include "preferences.h"
 #include "ui/tools-switch.h"
@@ -208,7 +208,7 @@ bool SelectTool::sp_select_context_abort() {
             if (this->item) {
                 // only undo if the item is still valid
                 if (this->item->document) {
-                    DocumentUndo::undo(sp_desktop_document(desktop));
+                    DocumentUndo::undo(desktop->getDocument());
                 }
 
                 sp_object_unref( this->item, NULL);
@@ -216,7 +216,7 @@ bool SelectTool::sp_select_context_abort() {
                 // NOTE:  This is a workaround to a bug.
                 // When the ctrl key is held, sc->item is not defined
                 // so in this case (only), we skip the object doc check
-                DocumentUndo::undo(sp_desktop_document(desktop));
+                DocumentUndo::undo(desktop->getDocument());
             }
             this->item = NULL;
 
@@ -722,9 +722,9 @@ bool SelectTool::root_handler(GdkEvent* event) {
 
                         if (r->getMode() == RUBBERBAND_MODE_RECT) {
                             Geom::OptRect const b = r->getRectangle();
-                            items = sp_desktop_document(desktop)->getItemsInBox(desktop->dkey, *b);
+                            items = desktop->getDocument()->getItemsInBox(desktop->dkey, *b);
                         } else if (r->getMode() == RUBBERBAND_MODE_TOUCHPATH) {
-                            items = sp_desktop_document(desktop)->getItemsAtPoints(desktop->dkey, r->getPoints());
+                            items = desktop->getDocument()->getItemsAtPoints(desktop->dkey, r->getPoints());
                         }
 
                         _seltrans->resetState();

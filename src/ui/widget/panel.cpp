@@ -34,7 +34,7 @@
 #include "icon-size.h"
 #include "preferences.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "inkscape.h"
 #include "widgets/eek-preview.h"
 #include "ui/previewfillable.h"

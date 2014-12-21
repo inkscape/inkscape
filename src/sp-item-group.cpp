@@ -40,7 +40,7 @@
 #include "box3d.h"
 #include "persp3d.h"
 #include "inkscape.h"
-#include "desktop-handles.h"
+
 #include "selection.h"
 #include "live_effects/effect.h"
 #include "live_effects/lpeobject.h"

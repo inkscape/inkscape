@@ -11,7 +11,7 @@
 
 #include "control-point.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "display/sodipodi-ctrlrect.h"
 #include "ui/tools/tool-base.h"
 #include "preferences.h"

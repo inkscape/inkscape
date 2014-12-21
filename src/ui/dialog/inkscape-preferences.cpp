@@ -32,7 +32,7 @@
 #include "util/units.h"
 #include <iostream>
 #include "enums.h"
-#include "desktop-handles.h"
+
 #include "extension/internal/gdkpixbuf-input.h"
 #include "message-stack.h"
 #include "style.h"

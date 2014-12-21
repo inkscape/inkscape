@@ -34,7 +34,7 @@
 #include "sp-namedview.h"
 #include "sp-cursor.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "selection.h"
 #include "document.h"
 #include "document-undo.h"
@@ -329,7 +329,7 @@ bool DropperTool::root_handler(GdkEvent* event) {
                 }
 
                 if (!(desktop->getSelection()->isEmpty())) {
-                    DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_DROPPER,
+                    DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_DROPPER,
                                        _("Set picked color"));
                 }
 

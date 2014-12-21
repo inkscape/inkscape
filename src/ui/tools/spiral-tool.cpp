@@ -27,7 +27,7 @@
 #include "document-undo.h"
 #include "sp-namedview.h"
 #include "selection.h"
-#include "desktop-handles.h"
+
 #include "snap.h"
 #include "desktop.h"
 #include "desktop-style.h"
@@ -418,7 +418,7 @@ void SpiralTool::finishItem() {
         this->desktop->canvas->endForcedFullRedraws();
 
         this->desktop->getSelection()->set(this->spiral);
-        DocumentUndo::done(sp_desktop_document(this->desktop), SP_VERB_CONTEXT_SPIRAL, _("Create spiral"));
+        DocumentUndo::done(this->desktop->getDocument(), SP_VERB_CONTEXT_SPIRAL, _("Create spiral"));
 
         this->spiral = NULL;
     }
@@ -440,7 +440,7 @@ void SpiralTool::cancel() {
 
     this->desktop->canvas->endForcedFullRedraws();
 
-    DocumentUndo::cancel(sp_desktop_document(this->desktop));
+    DocumentUndo::cancel(this->desktop->getDocument());
 }
 
 }

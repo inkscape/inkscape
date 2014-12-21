@@ -24,7 +24,7 @@
 #include <gtkmm/spinbutton.h>
 
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "document.h"
 #include "selection.h"
 #include "sp-object.h"

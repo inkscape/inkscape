@@ -32,7 +32,7 @@
 
 #include <2geom/transforms.h>
 
-#include "desktop-handles.h"
+
 #include "document.h"
 #include "desktop.h"
 #include "helper/action.h"
@@ -477,7 +477,7 @@ PageSizer::setDim (Inkscape::Util::Quantity w, Inkscape::Util::Quantity h, bool 
     _unit = w.unit->abbr;
 
     if (SP_ACTIVE_DESKTOP && !_widgetRegistry->isUpdating()) {
-        SPDocument *doc = sp_desktop_document(SP_ACTIVE_DESKTOP);
+        SPDocument *doc = SP_ACTIVE_DESKTOP->getDocument();
         Inkscape::Util::Quantity const old_height = doc->getHeight();
         doc->setWidth (w, changeSize);
         doc->setHeight (h, changeSize);
@@ -608,7 +608,7 @@ PageSizer::fire_fit_canvas_to_selection_or_drawing()
     SPNamedView *nv;
     Inkscape::XML::Node *nv_repr;
   
-    if ((doc = sp_desktop_document(SP_ACTIVE_DESKTOP))
+    if ((doc = SP_ACTIVE_DESKTOP->getDocument())
         && (nv = sp_document_namedview(doc, 0))
         && (nv_repr = nv->getRepr())) {
         _lockMarginUpdate = true;

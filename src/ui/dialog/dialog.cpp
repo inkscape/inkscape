@@ -25,7 +25,7 @@
 #include "inkscape.h"
 #include "ui/tools/tool-base.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "shortcuts.h"
 #include "preferences.h"
 #include "ui/interface.h"

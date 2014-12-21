@@ -39,7 +39,7 @@
 #include "xml/node-event-vector.h"
 #include "sp-cursor.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "desktop-events.h"
 #include "desktop-style.h"
 #include "sp-namedview.h"
