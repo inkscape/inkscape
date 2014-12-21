@@ -46,7 +46,6 @@ namespace Inkscape {
 
 SPDocument * sp_desktop_document (SPDesktop const * desktop);
 SPCanvasGroup * sp_desktop_main (SPDesktop const * desktop);
-SPCanvasGroup * sp_desktop_gridgroup (SPDesktop const * desktop);
 SPCanvasGroup * sp_desktop_guides (SPDesktop const * desktop);
 SPCanvasGroup * sp_desktop_sketch (SPDesktop const * desktop);
 SPCanvasGroup * sp_desktop_controls (SPDesktop const * desktop);

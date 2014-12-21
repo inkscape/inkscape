@@ -285,12 +285,12 @@ CanvasGrid::createCanvasItem(SPDesktop * desktop)
 
     // check if there is already a canvasitem on this desktop linking to this grid
     for (GSList *l = canvasitems; l != NULL; l = l->next) {
-        if ( sp_desktop_gridgroup(desktop) == SP_CANVAS_GROUP(SP_CANVAS_ITEM(l->data)->parent) ) {
+        if ( desktop->getGridGroup() == SP_CANVAS_GROUP(SP_CANVAS_ITEM(l->data)->parent) ) {
             return NULL;
         }
     }
 
-    GridCanvasItem * item = INKSCAPE_GRID_CANVASITEM( sp_canvas_item_new(sp_desktop_gridgroup(desktop), INKSCAPE_TYPE_GRID_CANVASITEM, NULL) );
+    GridCanvasItem * item = INKSCAPE_GRID_CANVASITEM( sp_canvas_item_new(desktop->getGridGroup(), INKSCAPE_TYPE_GRID_CANVASITEM, NULL) );
     item->grid = this;
     sp_canvas_item_show(SP_CANVAS_ITEM(item));
 

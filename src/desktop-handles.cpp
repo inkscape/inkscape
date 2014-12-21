@@ -32,14 +32,6 @@ sp_desktop_main (SPDesktop const * desktop)
 }
 
 SPCanvasGroup *
-sp_desktop_gridgroup (SPDesktop const * desktop)
-{
-	g_return_val_if_fail (desktop != NULL, NULL);
-
-	return desktop->gridgroup;
-}
-
-SPCanvasGroup *
 sp_desktop_guides (SPDesktop const * desktop)
 {
 	g_return_val_if_fail (desktop != NULL, NULL);
