@@ -74,7 +74,7 @@ ControlPoint::ControlPoint(SPDesktop *d, Geom::Point const &initial_pos, SPAncho
     _lurking(false)
 {
     _canvas_item = sp_canvas_item_new(
-        group ? group : sp_desktop_controls(_desktop), SP_TYPE_CTRL,
+        group ? group : _desktop->getControls(), SP_TYPE_CTRL,
         "anchor", (SPAnchorType) anchor, "size", (gdouble) pixbuf->get_width(),
         "shape", SP_CTRL_SHAPE_BITMAP, "pixbuf", pixbuf->gobj(),
         "filled", TRUE, "fill_color", _cset.normal.fill,
@@ -93,7 +93,7 @@ ControlPoint::ControlPoint(SPDesktop *d, Geom::Point const &initial_pos, SPAncho
     _position(initial_pos),
     _lurking(false)
 {
-    _canvas_item = ControlManager::getManager().createControl(group ? group : sp_desktop_controls(_desktop), type);
+    _canvas_item = ControlManager::getManager().createControl(group ? group : _desktop->getControls(), type);
     g_object_set(_canvas_item,
                  "anchor", anchor,
                  "filled", TRUE, "fill_color", _cset.normal.fill,

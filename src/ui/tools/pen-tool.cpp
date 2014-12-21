@@ -192,14 +192,14 @@ void PenTool::setup() {
     ControlManager &mgr = ControlManager::getManager();
 
     // Pen indicators
-    this->c0 = mgr.createControl(sp_desktop_controls(this->desktop), Inkscape::CTRL_TYPE_ADJ_HANDLE);
+    this->c0 = mgr.createControl(this->desktop->getControls(), Inkscape::CTRL_TYPE_ADJ_HANDLE);
     mgr.track(this->c0);
 
-    this->c1 = mgr.createControl(sp_desktop_controls(this->desktop), Inkscape::CTRL_TYPE_ADJ_HANDLE);
+    this->c1 = mgr.createControl(this->desktop->getControls(), Inkscape::CTRL_TYPE_ADJ_HANDLE);
     mgr.track(this->c1);
 
-    this->cl0 = mgr.createControlLine(sp_desktop_controls(this->desktop));
-    this->cl1 = mgr.createControlLine(sp_desktop_controls(this->desktop));
+    this->cl0 = mgr.createControlLine(this->desktop->getControls());
+    this->cl1 = mgr.createControlLine(this->desktop->getControls());
 
     sp_canvas_item_hide(this->c0);
     sp_canvas_item_hide(this->c1);

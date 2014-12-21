@@ -15,7 +15,6 @@
 
 #include "ui/draw-anchor.h"
 #include "desktop.h"
-#include "desktop-handles.h"
 #include "ui/tools/tool-base.h"
 #include "ui/tools/lpe-tool.h"
 #include "display/sodipodi-ctrl.h"
@@ -45,7 +44,7 @@ SPDrawAnchor *sp_draw_anchor_new(Inkscape::UI::Tools::FreehandBase *dc, SPCurve 
     a->start = start;
     a->active = FALSE;
     a->dp = delta;
-    a->ctrl = ControlManager::getManager().createControl(sp_desktop_controls(&dc->getDesktop()), Inkscape::CTRL_TYPE_ANCHOR);
+    a->ctrl = ControlManager::getManager().createControl(dc->getDesktop().getControls(), Inkscape::CTRL_TYPE_ANCHOR);
 
     SP_CTRL(a->ctrl)->moveto(delta);
 

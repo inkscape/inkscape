@@ -222,7 +222,7 @@ void SprayTool::setup() {
 
         SPCurve *c = new SPCurve(path);
 
-        this->dilate_area = sp_canvas_bpath_new(sp_desktop_controls(this->desktop), c);
+        this->dilate_area = sp_canvas_bpath_new(this->desktop->getControls(), c);
         c->unref();
         sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(this->dilate_area), 0x00000000,(SPWindRule)0);
         sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(this->dilate_area), 0xff9900ff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);

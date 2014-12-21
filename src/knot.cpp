@@ -109,7 +109,7 @@ SPKnot::SPKnot(SPDesktop *desktop, gchar const *tip)
         this->tip = g_strdup (tip);
     }
 
-    this->item = sp_canvas_item_new(sp_desktop_controls (desktop),
+    this->item = sp_canvas_item_new(desktop->getControls(),
                                     SP_TYPE_CTRL,
                                     "anchor", SP_ANCHOR_CENTER,
                                     "size", 8.0,

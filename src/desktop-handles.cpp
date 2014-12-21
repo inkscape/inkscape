@@ -22,11 +22,3 @@ sp_desktop_document (SPDesktop const * desktop)
 
 	return desktop->doc();
 }
-
-SPCanvasGroup *
-sp_desktop_controls (SPDesktop const * desktop)
-{
-	g_return_val_if_fail (desktop != NULL, NULL);
-
-	return desktop->controls;
-}

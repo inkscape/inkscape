@@ -1869,7 +1869,7 @@ void GrDrag::setDeselected(GrDragger *dragger)
 void GrDrag::addLine(SPItem *item, Geom::Point p1, Geom::Point p2, Inkscape::PaintTarget fill_or_stroke)
 {
     CtrlLineType type = (fill_or_stroke == Inkscape::FOR_FILL) ? CTLINE_PRIMARY : CTLINE_SECONDARY;
-    SPCtrlLine *line = ControlManager::getManager().createControlLine(sp_desktop_controls(this->desktop), p1, p2, type);
+    SPCtrlLine *line = ControlManager::getManager().createControlLine(this->desktop->getControls(), p1, p2, type);
 
     sp_canvas_item_move_to_z(line, 0);
     line->item = item;
@@ -1885,7 +1885,7 @@ void GrDrag::addLine(SPItem *item, Geom::Point p1, Geom::Point p2, Inkscape::Pai
 void GrDrag::addCurve(SPItem *item, Geom::Point p0, Geom::Point p1, Geom::Point p2, Geom::Point p3, Inkscape::PaintTarget fill_or_stroke)
 {
     CtrlLineType type = (fill_or_stroke == Inkscape::FOR_FILL) ? CTLINE_PRIMARY : CTLINE_SECONDARY;
-    SPCtrlCurve *line = ControlManager::getManager().createControlCurve(sp_desktop_controls(this->desktop), p0, p1, p2, p3, type); 
+    SPCtrlCurve *line = ControlManager::getManager().createControlCurve(this->desktop->getControls(), p0, p1, p2, p3, type); 
 
     sp_canvas_item_move_to_z(line, 0);
     line->item = item;

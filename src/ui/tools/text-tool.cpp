@@ -131,17 +131,17 @@ void TextTool::setup() {
         timeout /= 2;
     }
 
-    this->cursor = ControlManager::getManager().createControlLine(sp_desktop_controls(desktop), Geom::Point(100, 0), Geom::Point(100, 100));
+    this->cursor = ControlManager::getManager().createControlLine(desktop->getControls(), Geom::Point(100, 0), Geom::Point(100, 100));
     this->cursor->setRgba32(0x000000ff);
     sp_canvas_item_hide(this->cursor);
 
-    this->indicator = sp_canvas_item_new(sp_desktop_controls(desktop), SP_TYPE_CTRLRECT, NULL);
+    this->indicator = sp_canvas_item_new(desktop->getControls(), SP_TYPE_CTRLRECT, NULL);
     SP_CTRLRECT(this->indicator)->setRectangle(Geom::Rect(Geom::Point(0, 0), Geom::Point(100, 100)));
     SP_CTRLRECT(this->indicator)->setColor(0x0000ff7f, false, 0);
     SP_CTRLRECT(this->indicator)->setShadow(1, 0xffffff7f);
     sp_canvas_item_hide(this->indicator);
 
-    this->frame = sp_canvas_item_new(sp_desktop_controls(desktop), SP_TYPE_CTRLRECT, NULL);
+    this->frame = sp_canvas_item_new(desktop->getControls(), SP_TYPE_CTRLRECT, NULL);
     SP_CTRLRECT(this->frame)->setRectangle(Geom::Rect(Geom::Point(0, 0), Geom::Point(100, 100)));
     SP_CTRLRECT(this->frame)->setColor(0x0000ff7f, false, 0);
     sp_canvas_item_hide(this->frame);
@@ -1614,7 +1614,7 @@ static void sp_text_context_update_text_selection(TextTool *tc)
         quads = sp_te_create_selection_quads(tc->text, tc->text_sel_start, tc->text_sel_end, (tc->text)->i2dt_affine());
     for (unsigned i = 0 ; i < quads.size() ; i += 4) {
         SPCanvasItem *quad_canvasitem;
-        quad_canvasitem = sp_canvas_item_new(sp_desktop_controls(tc->desktop), SP_TYPE_CTRLQUADR, NULL);
+        quad_canvasitem = sp_canvas_item_new(tc->desktop->getControls(), SP_TYPE_CTRLQUADR, NULL);
         // FIXME: make the color settable in prefs
         // for now, use semitrasparent blue, as cairo cannot do inversion :(
         sp_ctrlquadr_set_rgba32(SP_CTRLQUADR(quad_canvasitem), 0x00777777);

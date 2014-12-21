@@ -155,7 +155,7 @@ void CalligraphicTool::setup() {
 
         SPCurve *c = new SPCurve(path);
 
-        this->hatch_area = sp_canvas_bpath_new(sp_desktop_controls(this->desktop), c);
+        this->hatch_area = sp_canvas_bpath_new(this->desktop->getControls(), c);
 
         c->unref();
 

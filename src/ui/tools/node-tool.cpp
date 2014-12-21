@@ -155,7 +155,7 @@ NodeTool::NodeTool()
 SPCanvasGroup *create_control_group(SPDesktop *d)
 {
     return reinterpret_cast<SPCanvasGroup*>(sp_canvas_item_new(
-        sp_desktop_controls(d), SP_TYPE_CANVAS_GROUP, NULL));
+        d->getControls(), SP_TYPE_CANVAS_GROUP, NULL));
 }
 
 void destroy_group(SPCanvasGroup *g)

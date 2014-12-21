@@ -133,7 +133,7 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
 
     _selection = desktop->getSelection();
 
-    _norm = sp_canvas_item_new(sp_desktop_controls(desktop),
+    _norm = sp_canvas_item_new(desktop->getControls(),
                                SP_TYPE_CTRL,
                                "anchor", SP_ANCHOR_CENTER,
                                "mode", SP_CTRL_MODE_COLOR,
@@ -146,7 +146,7 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
                                "pixbuf", handles[12],
                                NULL);
 
-    _grip = sp_canvas_item_new(sp_desktop_controls(desktop),
+    _grip = sp_canvas_item_new(desktop->getControls(),
                                SP_TYPE_CTRL,
                                "anchor", SP_ANCHOR_CENTER,
                                "mode", SP_CTRL_MODE_XOR,
@@ -163,7 +163,7 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
     sp_canvas_item_hide(_norm);
 
     for (int i = 0; i < 4; i++) {
-        _l[i] = ControlManager::getManager().createControlLine(sp_desktop_controls(desktop));
+        _l[i] = ControlManager::getManager().createControlLine(desktop->getControls());
         sp_canvas_item_hide(_l[i]);
     }
 

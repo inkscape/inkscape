@@ -155,7 +155,7 @@ void Inkscape::SelCue::_newItemBboxes()
 
         if (b) {
             if (mode == MARK) {
-                box = sp_canvas_item_new(sp_desktop_controls(_desktop),
+                box = sp_canvas_item_new(_desktop->getControls(),
                                          SP_TYPE_CTRL,
                                          "mode", SP_CTRL_MODE_XOR,
                                          "shape", SP_CTRL_SHAPE_DIAMOND,
@@ -171,7 +171,7 @@ void Inkscape::SelCue::_newItemBboxes()
                 sp_canvas_item_move_to_z(box, 0); // just low enough to not get in the way of other draggable knots
 
             } else if (mode == BBOX) {
-                box = sp_canvas_item_new(sp_desktop_controls(_desktop),
+                box = sp_canvas_item_new(_desktop->getControls(),
                                          SP_TYPE_CTRLRECT,
                                          NULL);
 
@@ -208,7 +208,7 @@ void Inkscape::SelCue::_newTextBaselines()
             if (layout != NULL && layout->outputExists()) {
                 boost::optional<Geom::Point> pt = layout->baselineAnchorPoint();
                 if (pt) {
-                    baseline_point = sp_canvas_item_new(sp_desktop_controls(_desktop), SP_TYPE_CTRL,
+                    baseline_point = sp_canvas_item_new(_desktop->getControls(), SP_TYPE_CTRL,
                         "mode", SP_CTRL_MODE_XOR,
                         "size", 4.0,
                         "filled", 0,

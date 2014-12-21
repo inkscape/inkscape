@@ -782,7 +782,7 @@ VPDrag::swap_perspectives_of_VPs(Persp3D *persp2, Persp3D *persp1)
 
 void VPDrag::addLine(Geom::Point const &p1, Geom::Point const &p2, Inkscape::CtrlLineType type)
 {
-    SPCtrlLine *line = ControlManager::getManager().createControlLine(sp_desktop_controls(SP_ACTIVE_DESKTOP), p1, p2, type);
+    SPCtrlLine *line = ControlManager::getManager().createControlLine(SP_ACTIVE_DESKTOP->getControls(), p1, p2, type);
     sp_canvas_item_show(line);
     this->lines = g_slist_append(this->lines, line);
 }

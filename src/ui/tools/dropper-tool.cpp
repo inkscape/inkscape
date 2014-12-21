@@ -99,7 +99,7 @@ void DropperTool::setup() {
 
     SPCurve *c = new SPCurve(path);
 
-    this->area = sp_canvas_bpath_new(sp_desktop_controls(this->desktop), c);
+    this->area = sp_canvas_bpath_new(this->desktop->getControls(), c);
 
     c->unref();
     
