@@ -230,7 +230,7 @@ bool DropperTool::root_handler(GdkEvent* event) {
                     if (!r.hasZeroArea()) {
                         Geom::IntRect area = r.roundOutwards();
                         cairo_surface_t *s = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, area.width(), area.height());
-                        sp_canvas_arena_render_surface(SP_CANVAS_ARENA(sp_desktop_drawing(desktop)), s, area);
+                        sp_canvas_arena_render_surface(SP_CANVAS_ARENA(desktop->getDrawing()), s, area);
                         ink_cairo_surface_average_color_premul(s, R, G, B, A);
                         cairo_surface_destroy(s);
                     }
@@ -238,7 +238,7 @@ bool DropperTool::root_handler(GdkEvent* event) {
                     // pick single pixel
                     Geom::IntRect area = Geom::IntRect::from_xywh(floor(event->button.x), floor(event->button.y), 1, 1);
                     cairo_surface_t *s = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
-                    sp_canvas_arena_render_surface(SP_CANVAS_ARENA(sp_desktop_drawing(desktop)), s, area);
+                    sp_canvas_arena_render_surface(SP_CANVAS_ARENA(desktop->getDrawing()), s, area);
                     ink_cairo_surface_average_color_premul(s, R, G, B, A);
                     cairo_surface_destroy(s);
                 }

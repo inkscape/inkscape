@@ -47,14 +47,6 @@ sp_desktop_guides (SPDesktop const * desktop)
 	return desktop->guides;
 }
 
-SPCanvasItem *
-sp_desktop_drawing (SPDesktop const *desktop)
-{
-	g_return_val_if_fail (desktop != NULL, NULL);
-
-	return desktop->drawing;
-}
-
 SPCanvasGroup *
 sp_desktop_sketch (SPDesktop const * desktop)
 {

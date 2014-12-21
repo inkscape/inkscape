@@ -373,7 +373,7 @@ void CalligraphicTool::brush() {
         double R, G, B, A;
         Geom::IntRect area = Geom::IntRect::from_xywh(brush_w.floor(), Geom::IntPoint(1, 1));
         cairo_surface_t *s = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
-        sp_canvas_arena_render_surface(SP_CANVAS_ARENA(sp_desktop_drawing(SP_EVENT_CONTEXT(this)->desktop)), s, area);
+        sp_canvas_arena_render_surface(SP_CANVAS_ARENA(this->desktop->getDrawing()), s, area);
         ink_cairo_surface_average_color_premul(s, R, G, B, A);
         cairo_surface_destroy(s);
         double max = MAX (MAX (R, G), B);
