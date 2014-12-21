@@ -223,7 +223,7 @@ ConnectorTool::~ConnectorTool() {
 void ConnectorTool::setup() {
     ToolBase::setup();
 
-    this->selection = sp_desktop_selection(this->desktop);
+    this->selection = this->desktop->getSelection();
 
     this->sel_changed_connection.disconnect();
     this->sel_changed_connection = this->selection->connectChanged(
@@ -1311,7 +1311,7 @@ void cc_selection_set_avoid(bool const set_avoid)
 
     SPDocument *document = sp_desktop_document(desktop);
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     GSList *l = const_cast<GSList *>(selection->itemList());
 

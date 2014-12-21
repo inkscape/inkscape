@@ -1032,7 +1032,7 @@ sp_tweak_color_recursive (guint mode, SPItem *item, SPItem *item_at_point,
 static bool
 sp_tweak_dilate (TweakTool *tc, Geom::Point event_p, Geom::Point p, Geom::Point vector, bool reverse)
 {
-    Inkscape::Selection *selection = sp_desktop_selection(SP_EVENT_CONTEXT(tc)->desktop);
+    Inkscape::Selection *selection = tc->desktop->getSelection();
     SPDesktop *desktop = SP_EVENT_CONTEXT(tc)->desktop;
 
     if (selection->isEmpty()) {

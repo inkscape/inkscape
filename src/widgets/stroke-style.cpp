@@ -471,10 +471,10 @@ void StrokeStyle::markerSelectCB(MarkerComboBox *marker_combo, StrokeStyle *spw,
 
     // Also update the marker combobox, so the document's markers
     // show up at the top of the combobox
-//    sp_stroke_style_line_update( SP_WIDGET(spw), desktop ? sp_desktop_selection(desktop) : NULL);
+//    sp_stroke_style_line_update( SP_WIDGET(spw), desktop ? desktop->getSelection() : NULL);
     //spw->updateMarkerHist(which);
 
-    Inkscape::Selection *selection = sp_desktop_selection(spw->desktop);
+    Inkscape::Selection *selection = spw->desktop->getSelection();
     GSList const *items = selection->itemList();
     for (; items != NULL; items = items->next) {
         SPItem *item = reinterpret_cast<SPItem *>(items->data);
@@ -810,7 +810,7 @@ StrokeStyle::updateLine()
 
     update = true;
 
-    Inkscape::Selection *sel = desktop ? sp_desktop_selection(desktop) : NULL;
+    Inkscape::Selection *sel = desktop ? desktop->getSelection() : NULL;
 
     FillOrStroke kind = GPOINTER_TO_INT(get_data("kind")) ? FILL : STROKE;
 
@@ -958,7 +958,7 @@ StrokeStyle::scaleLine()
     update = true;
     
     SPDocument *document = sp_desktop_document (desktop);
-    Inkscape::Selection *selection = sp_desktop_selection (desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     GSList const *items = selection->itemList();
 

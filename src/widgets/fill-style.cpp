@@ -481,7 +481,7 @@ void FillNStroke::updateFromPaint()
     update = true;
 
     SPDocument *document = sp_desktop_document(desktop);
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     GSList const *items = selection->itemList();
 

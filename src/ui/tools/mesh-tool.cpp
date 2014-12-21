@@ -107,7 +107,7 @@ const gchar *ms_handle_descr [] = {
 
 void MeshTool::selection_changed(Inkscape::Selection* /*sel*/) {
     GrDrag *drag = this->_grdrag;
-    Inkscape::Selection *selection = sp_desktop_selection(this->desktop);
+    Inkscape::Selection *selection = this->desktop->getSelection();
 
     if (selection == NULL) {
         return;
@@ -234,7 +234,7 @@ void MeshTool::setup() {
     }
 
     this->enableGrDrag();
-    Inkscape::Selection *selection = sp_desktop_selection(this->desktop);
+    Inkscape::Selection *selection = this->desktop->getSelection();
 
     this->selcon = new sigc::connection(selection->connectChanged(
     	sigc::mem_fun(this, &MeshTool::selection_changed)
@@ -440,7 +440,7 @@ Handles all keyboard and mouse input for meshs.
 bool MeshTool::root_handler(GdkEvent* event) {
     static bool dragging;
 
-    Inkscape::Selection *selection = sp_desktop_selection (desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     this->tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
@@ -933,7 +933,7 @@ bool MeshTool::root_handler(GdkEvent* event) {
 
 static void sp_mesh_drag(MeshTool &rc, Geom::Point const /*pt*/, guint /*state*/, guint32 /*etime*/) {
     SPDesktop *desktop = SP_EVENT_CONTEXT(&rc)->desktop;
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     SPDocument *document = sp_desktop_document(desktop);
     ToolBase *ec = SP_EVENT_CONTEXT(&rc);
 

@@ -328,7 +328,7 @@ bool DropperTool::root_handler(GdkEvent* event) {
                     gdk_window_set_cursor(window, cursor_dropper_stroke);
                 }
 
-                if (!(sp_desktop_selection(desktop)->isEmpty())) {
+                if (!(desktop->getSelection()->isEmpty())) {
                     DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_DROPPER,
                                        _("Set picked color"));
                 }
@@ -359,7 +359,7 @@ bool DropperTool::root_handler(GdkEvent* event) {
             break;
 
         case GDK_KEY_Escape:
-            sp_desktop_selection(desktop)->clear();
+            desktop->getSelection()->clear();
         case GDK_KEY_Shift_L:
         case GDK_KEY_Shift_R:
             if (!desktop->isWaitingCursor() && !prefs->getBool("/tools/dropper/onetimepick", false)) {

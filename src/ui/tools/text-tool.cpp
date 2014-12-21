@@ -175,15 +175,15 @@ void TextTool::setup() {
 
     this->shape_editor = new ShapeEditor(this->desktop);
 
-    SPItem *item = sp_desktop_selection(this->desktop)->singleItem();
+    SPItem *item = this->desktop->getSelection()->singleItem();
     if (item && SP_IS_FLOWTEXT(item) && SP_FLOWTEXT(item)->has_internal_frame()) {
         this->shape_editor->set_item(item);
     }
 
-    this->sel_changed_connection = sp_desktop_selection(desktop)->connectChangedFirst(
+    this->sel_changed_connection = desktop->getSelection()->connectChangedFirst(
         sigc::mem_fun(*this, &TextTool::_selectionChanged)
     );
-    this->sel_modified_connection = sp_desktop_selection(desktop)->connectModifiedFirst(
+    this->sel_modified_connection = desktop->getSelection()->connectModifiedFirst(
         sigc::mem_fun(*this, &TextTool::_selectionModified)
     );
     this->style_set_connection = desktop->connectSetStyle(
@@ -193,7 +193,7 @@ void TextTool::setup() {
         sigc::mem_fun(*this, &TextTool::_styleQueried)
     );
 
-    _selectionChanged(sp_desktop_selection(desktop));
+    _selectionChanged(desktop->getSelection());
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (prefs->getBool("/tools/text/selcue")) {
@@ -268,7 +268,7 @@ bool TextTool::item_handler(SPItem* item, GdkEvent* event) {
                 // find out clicked item, disregarding groups
                 item_ungrouped = desktop->getItemAtPoint(Geom::Point(event->button.x, event->button.y), TRUE);
                 if (SP_IS_TEXT(item_ungrouped) || SP_IS_FLOWTEXT(item_ungrouped)) {
-                    sp_desktop_selection(desktop)->set(item_ungrouped);
+                    desktop->getSelection()->set(item_ungrouped);
                     if (this->text) {
                         // find out click point in document coordinates
                         Geom::Point p = desktop->w2d(Geom::Point(event->button.x, event->button.y));
@@ -425,7 +425,7 @@ static void sp_text_context_setup_text(TextTool *tc)
     SPItem *text_item = SP_ITEM(ec->desktop->currentLayer()->appendChildRepr(rtext));
     /* fixme: Is selection::changed really immediate? */
     /* yes, it's immediate .. why does it matter? */
-    sp_desktop_selection(ec->desktop)->set(text_item);
+    ec->desktop->getSelection()->set(text_item);
     Inkscape::GC::release(rtext);
     text_item->transform = SP_ITEM(ec->desktop->currentLayer())->i2doc_affine().inverse();
 
@@ -627,7 +627,7 @@ bool TextTool::root_handler(GdkEvent* event) {
 
                 if (this->creating && this->within_tolerance) {
                     /* Button 1, set X & Y & new item */
-                    sp_desktop_selection(desktop)->clear();
+                    desktop->getSelection()->clear();
                     this->pdoc = desktop->dt2doc(p1);
                     this->show = TRUE;
                     this->phase = 1;
@@ -660,7 +660,7 @@ bool TextTool::root_handler(GdkEvent* event) {
                         SPItem *ft = create_flowtext_with_internal_frame (desktop, this->p0, p1);
                         /* Set style */
                         sp_desktop_apply_style_tool(desktop, ft->getRepr(), "/tools/text", true);
-                        sp_desktop_selection(desktop)->set(ft);
+                        desktop->getSelection()->set(ft);
                         desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Flowed text is created."));
                         DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT, _("Create flowed text"));
                     } else {
@@ -1117,7 +1117,7 @@ bool TextTool::root_handler(GdkEvent* event) {
                                     }
                                     Inkscape::Rubberband::get(desktop)->stop();
                                 } else {
-                                    sp_desktop_selection(desktop)->clear();
+                                    desktop->getSelection()->clear();
                                 }
                                 this->nascent_object = FALSE;
                                 return TRUE;

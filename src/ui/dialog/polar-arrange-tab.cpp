@@ -296,7 +296,7 @@ static void moveToPoint(int anchor, SPItem *item, Geom::Point p)
 
 void PolarArrangeTab::arrange()
 {
-	Inkscape::Selection *selection = sp_desktop_selection(parent->getDesktop());
+	Inkscape::Selection *selection = parent->getDesktop()->getSelection();
 	const GSList *items, *tmp;
 	tmp = items = selection->itemList();
 	SPGenericEllipse *referenceEllipse = NULL; // Last ellipse in selection

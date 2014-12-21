@@ -356,7 +356,7 @@ static void gr_tb_selection_changed(Inkscape::Selection * /*selection*/, gpointe
         return;
     }
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop); // take from desktop, not from args
+    Inkscape::Selection *selection = desktop->getSelection(); // take from desktop, not from args
     if (selection) {
         ToolBase *ev = desktop->getEventContext();
         GrDrag *drag = NULL;
@@ -560,7 +560,7 @@ static void gr_add_stop(GtkWidget * /*button*/, GtkWidget *vb)
         return;
     }
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     if (!selection) {
         return;
     }
@@ -582,7 +582,7 @@ static void gr_remove_stop(GtkWidget * /*button*/, GtkWidget *vb)
         return;
     }
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop); // take from desktop, not from args
+    Inkscape::Selection *selection = desktop->getSelection(); // take from desktop, not from args
     if (!selection) {
         return;
     }
@@ -918,7 +918,7 @@ static void gr_gradient_combo_changed(EgeSelectOneAction *act, gpointer data)
         gr = sp_gradient_ensure_vector_normalized(gr);
 
         SPDesktop *desktop = static_cast<SPDesktop *>(data);
-        Inkscape::Selection *selection = sp_desktop_selection(desktop);
+        Inkscape::Selection *selection = desktop->getSelection();
         ToolBase *ev = desktop->getEventContext();
 
         gr_apply_gradient(selection, ev? ev->get_drag() : NULL, gr);
@@ -936,7 +936,7 @@ static void gr_spread_change(EgeSelectOneAction *act, GtkWidget *widget)
     }
 
     SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data(G_OBJECT(widget), "desktop"));
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     SPGradient *gradient = 0;
     gr_get_dt_selected_gradient(selection, gradient);
 
@@ -1246,7 +1246,7 @@ static void gradient_toolbox_check_ec(SPDesktop* desktop, Inkscape::UI::Tools::T
     static sigc::connection connDefsModified;
 
     if (SP_IS_GRADIENT_CONTEXT(ec)) {
-        Inkscape::Selection *selection = sp_desktop_selection(desktop);
+        Inkscape::Selection *selection = desktop->getSelection();
         SPDocument *document = sp_desktop_document(desktop);
 
         // connect to selection modified and changed signals

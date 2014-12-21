@@ -117,12 +117,12 @@ void SpiralTool::setup() {
 
     this->shape_editor = new ShapeEditor(this->desktop);
 
-    SPItem *item = sp_desktop_selection(this->desktop)->singleItem();
+    SPItem *item = this->desktop->getSelection()->singleItem();
     if (item) {
         this->shape_editor->set_item(item);
     }
 
-    Inkscape::Selection *selection = sp_desktop_selection(this->desktop);
+    Inkscape::Selection *selection = this->desktop->getSelection();
     this->sel_changed_connection.disconnect();
 
     this->sel_changed_connection = selection->connectChanged(sigc::mem_fun(this, &SpiralTool::selection_changed));
@@ -154,7 +154,7 @@ bool SpiralTool::root_handler(GdkEvent* event) {
     static gboolean dragging;
 
     SPDesktop *desktop = this->desktop;
-    Inkscape::Selection *selection = sp_desktop_selection (desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     this->tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
@@ -417,7 +417,7 @@ void SpiralTool::finishItem() {
 
         this->desktop->canvas->endForcedFullRedraws();
 
-        sp_desktop_selection(this->desktop)->set(this->spiral);
+        this->desktop->getSelection()->set(this->spiral);
         DocumentUndo::done(sp_desktop_document(this->desktop), SP_VERB_CONTEXT_SPIRAL, _("Create spiral"));
 
         this->spiral = NULL;
@@ -425,7 +425,7 @@ void SpiralTool::finishItem() {
 }
 
 void SpiralTool::cancel() {
-	sp_desktop_selection(this->desktop)->clear();
+	this->desktop->getSelection()->clear();
 	sp_canvas_item_ungrab(SP_CANVAS_ITEM(this->desktop->acetate), 0);
 
     if (this->spiral != NULL) {

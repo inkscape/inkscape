@@ -419,7 +419,7 @@ SPItem *TextEdit::getSelectedTextItem (void)
     if (!SP_ACTIVE_DESKTOP)
         return NULL;
 
-    for (const GSList *item = sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList();
+    for (const GSList *item = SP_ACTIVE_DESKTOP->getSelection()->itemList();
          item != NULL;
          item = item->next)
     {
@@ -438,7 +438,7 @@ unsigned TextEdit::getSelectedTextCount (void)
 
     unsigned int items = 0;
 
-    for (const GSList *item = sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList();
+    for (const GSList *item = SP_ACTIVE_DESKTOP->getSelection()->itemList();
          item != NULL;
          item = item->next)
     {
@@ -543,7 +543,7 @@ void TextEdit::onApply()
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
     unsigned items = 0;
-    const GSList *item_list = sp_desktop_selection(desktop)->itemList();
+    const GSList *item_list = desktop->getSelection()->itemList();
     SPCSSAttr *css = fillTextStyle ();
     sp_desktop_set_style(desktop, css, true);
 
@@ -569,7 +569,7 @@ void TextEdit::onApply()
 
     } else if (items == 1) {
         // exactly one text object; now set its text, too
-        SPItem *item = sp_desktop_selection(SP_ACTIVE_DESKTOP)->singleItem();
+        SPItem *item = SP_ACTIVE_DESKTOP->getSelection()->singleItem();
         if (SP_IS_TEXT (item) || SP_IS_FLOWTEXT(item)) {
             updateObjectText (item);
         }

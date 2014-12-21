@@ -134,7 +134,7 @@ FontSubstitution::show(Glib::ustring out, GSList *l)
    if (cbSelect->get_active()) {
 
        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-       Inkscape::Selection *selection = sp_desktop_selection (desktop);
+       Inkscape::Selection *selection = desktop->getSelection();
        selection->clear();
        selection->setList(l);
    }

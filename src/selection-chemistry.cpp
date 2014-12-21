@@ -177,8 +177,8 @@ void SelectionHelper::selectNone(SPDesktop *dt)
 
     if (nt && !nt->_selected_nodes->empty()) {
         nt->_selected_nodes->clear();
-    } else if (!sp_desktop_selection(dt)->isEmpty()) {
-        sp_desktop_selection(dt)->clear();
+    } else if (!dt->getSelection()->isEmpty()) {
+        dt->getSelection()->clear();
     } else {
         // If nothing selected switch to selection tool
         tools_switch(dt, TOOLS_SELECT);
@@ -277,7 +277,7 @@ void SelectionHelper::fixSelection(SPDesktop *dt)
     if(!dt)
         return;
 
-    Inkscape::Selection *selection = sp_desktop_selection(dt);
+    Inkscape::Selection *selection = dt->getSelection();
     
     GSList *items = NULL;
 
@@ -407,7 +407,7 @@ void sp_selection_delete(SPDesktop *desktop)
             return;
         }
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     // check if something is selected
     if (selection->isEmpty()) {
@@ -454,7 +454,7 @@ void sp_selection_duplicate(SPDesktop *desktop, bool suppressDone)
 
     SPDocument *doc = desktop->doc();
     Inkscape::XML::Document* xml_doc = doc->getReprDoc();
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     // check if something is selected
     if (selection->isEmpty()) {
@@ -609,7 +609,7 @@ static void sp_edit_select_all_full(SPDesktop *dt, bool force_all_layers, bool i
     if (!dt)
         return;
 
-    Inkscape::Selection *selection = sp_desktop_selection(dt);
+    Inkscape::Selection *selection = dt->getSelection();
 
     g_return_if_fail(dynamic_cast<SPGroup *>(dt->currentLayer()));
 
@@ -1262,7 +1262,7 @@ void sp_selection_remove_livepatheffect(SPDesktop *desktop)
 {
     if (desktop == NULL) return;
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     // check if something is selected
     if (selection->isEmpty()) {
@@ -1285,7 +1285,7 @@ void sp_selection_remove_filter(SPDesktop *desktop)
 {
     if (desktop == NULL) return;
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     // check if something is selected
     if (selection->isEmpty()) {
@@ -1323,7 +1323,7 @@ void sp_selection_paste_size_separately(SPDesktop *desktop, bool apply_x, bool a
 
 void sp_selection_to_next_layer(SPDesktop *dt, bool suppressDone)
 {
-    Inkscape::Selection *selection = sp_desktop_selection(dt);
+    Inkscape::Selection *selection = dt->getSelection();
 
     // check if something is selected
     if (selection->isEmpty()) {
@@ -1368,7 +1368,7 @@ void sp_selection_to_next_layer(SPDesktop *dt, bool suppressDone)
 
 void sp_selection_to_prev_layer(SPDesktop *dt, bool suppressDone)
 {
-    Inkscape::Selection *selection = sp_desktop_selection(dt);
+    Inkscape::Selection *selection = dt->getSelection();
 
     // check if something is selected
     if (selection->isEmpty()) {
@@ -1413,7 +1413,7 @@ void sp_selection_to_prev_layer(SPDesktop *dt, bool suppressDone)
 
 void sp_selection_to_layer(SPDesktop *dt, SPObject *moveto, bool suppressDone)
 {
-    Inkscape::Selection *selection = sp_desktop_selection(dt);
+    Inkscape::Selection *selection = dt->getSelection();
 
     // check if something is selected
     if (selection->isEmpty()) {
@@ -1686,7 +1686,7 @@ void sp_selection_remove_transform(SPDesktop *desktop)
     if (desktop == NULL)
         return;
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     GSList const *l = const_cast<GSList *>(selection->reprList());
     while (l != NULL) {
@@ -1784,7 +1784,7 @@ void sp_selection_move_relative(Inkscape::Selection *selection, double dx, doubl
  */
 void sp_selection_rotate_90(SPDesktop *desktop, bool ccw)
 {
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     if (selection->isEmpty())
         return;
@@ -1852,7 +1852,7 @@ void sp_select_same_fill_stroke_style(SPDesktop *desktop, gboolean fill, gboolea
     GSList *all_list = get_all_items(NULL, desktop->currentRoot(), desktop, onlyvisible, onlysensitive, ingroups, NULL);
     GSList *all_matches = NULL;
 
-    Inkscape::Selection *selection = sp_desktop_selection (desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     for (GSList const* sel_iter = selection->itemList(); sel_iter; sel_iter = sel_iter->next) {
         SPItem *sel = dynamic_cast<SPItem *>(static_cast<SPObject *>(sel_iter->data));
@@ -1905,7 +1905,7 @@ void sp_select_same_object_type(SPDesktop *desktop)
     GSList *all_list = get_all_items(NULL, desktop->currentRoot(), desktop, onlyvisible, onlysensitive, ingroups, NULL);
     GSList *matches = all_list;
 
-    Inkscape::Selection *selection = sp_desktop_selection (desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     for (GSList const* sel_iter = selection->itemList(); sel_iter; sel_iter = sel_iter->next) {
         SPItem *sel = dynamic_cast<SPItem *>(static_cast<SPObject *>(sel_iter->data));
@@ -1947,7 +1947,7 @@ void sp_select_same_stroke_style(SPDesktop *desktop)
     GSList *all_list = get_all_items(NULL, desktop->currentRoot(), desktop, onlyvisible, onlysensitive, ingroups, NULL);
     GSList *matches = all_list;
 
-    Inkscape::Selection *selection = sp_desktop_selection (desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     for (GSList const* sel_iter = selection->itemList(); sel_iter; sel_iter = sel_iter->next) {
         SPItem *sel = dynamic_cast<SPItem *>(static_cast<SPObject *>(sel_iter->data));
@@ -2376,7 +2376,7 @@ void
 sp_selection_item_next(SPDesktop *desktop)
 {
     g_return_if_fail(desktop != NULL);
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     PrefsSelectionContext inlayer = (PrefsSelectionContext)prefs->getInt("/options/kbselection/inlayer", PREFS_SELECTION_LAYER);
@@ -2406,7 +2406,7 @@ sp_selection_item_prev(SPDesktop *desktop)
     SPDocument *document = sp_desktop_document(desktop);
     g_return_if_fail(document != NULL);
     g_return_if_fail(desktop != NULL);
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     PrefsSelectionContext inlayer = (PrefsSelectionContext) prefs->getInt("/options/kbselection/inlayer", PREFS_SELECTION_LAYER);
@@ -2434,7 +2434,7 @@ void sp_selection_next_patheffect_param(SPDesktop * dt)
 {
     if (!dt) return;
 
-    Inkscape::Selection *selection = sp_desktop_selection(dt);
+    Inkscape::Selection *selection = dt->getSelection();
     if ( selection && !selection->isEmpty() ) {
         SPItem *item = selection->singleItem();
         if ( SPLPEItem *lpeitem = dynamic_cast<SPLPEItem*>(item) ) {
@@ -2467,7 +2467,7 @@ void sp_selection_edit_clip_or_mask(SPDesktop * /*dt*/, bool /*clip*/)
     /*if (!dt) return;
     using namespace Inkscape::UI;
 
-    Inkscape::Selection *selection = sp_desktop_selection(dt);
+    Inkscape::Selection *selection = dt->getSelection();
     if (!selection || selection->isEmpty()) return;
 
     GSList const *items = selection->itemList();
@@ -2607,7 +2607,7 @@ void sp_selection_clone(SPDesktop *desktop)
         return;
     }
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
 
@@ -2662,7 +2662,7 @@ sp_selection_relink(SPDesktop *desktop)
     if (!desktop)
         return;
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     if (selection->isEmpty()) {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>clones</b> to relink."));
@@ -2709,7 +2709,7 @@ sp_selection_unlink(SPDesktop *desktop)
     if (!desktop)
         return;
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     if (selection->isEmpty()) {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>clones</b> to unlink."));
@@ -2781,7 +2781,7 @@ sp_select_clone_original(SPDesktop *desktop)
     if (desktop == NULL)
         return;
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     SPItem *item = selection->singleItem();
 
@@ -2881,7 +2881,7 @@ void sp_selection_clone_original_path_lpe(SPDesktop *desktop)
         return;
     }
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     Inkscape::SVGOStringStream os;
     SPObject * firstItem = NULL;
@@ -2942,7 +2942,7 @@ void sp_selection_to_marker(SPDesktop *desktop, bool apply)
     SPDocument *doc = sp_desktop_document(desktop);
     Inkscape::XML::Document *xml_doc = doc->getReprDoc();
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     // check if something is selected
     if (selection->isEmpty()) {
@@ -3041,7 +3041,7 @@ void sp_selection_to_guides(SPDesktop *desktop)
         return;
 
     SPDocument *doc = sp_desktop_document(desktop);
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     // we need to copy the list because it gets reset when objects are deleted
     GSList *items = g_slist_copy(const_cast<GSList *>(selection->itemList()));
 
@@ -3101,7 +3101,7 @@ void sp_selection_symbol(SPDesktop *desktop, bool /*apply*/ )
     SPDocument *doc = sp_desktop_document(desktop);
     Inkscape::XML::Document *xml_doc = doc->getReprDoc();
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     // Check if something is selected.
     if (selection->isEmpty()) {
@@ -3223,7 +3223,7 @@ void sp_selection_unsymbol(SPDesktop *desktop)
     SPDocument *doc = sp_desktop_document(desktop);
     Inkscape::XML::Document *xml_doc = doc->getReprDoc();
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     // Check if something is selected.
     if (selection->isEmpty()) {
@@ -3308,7 +3308,7 @@ sp_selection_tile(SPDesktop *desktop, bool apply)
     SPDocument *doc = sp_desktop_document(desktop);
     Inkscape::XML::Document *xml_doc = doc->getReprDoc();
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     // check if something is selected
     if (selection->isEmpty()) {
@@ -3423,7 +3423,7 @@ void sp_selection_untile(SPDesktop *desktop)
     SPDocument *doc = sp_desktop_document(desktop);
     Inkscape::XML::Document *xml_doc = doc->getReprDoc();
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     // check if something is selected
     if (selection->isEmpty()) {
@@ -3578,7 +3578,7 @@ void sp_selection_create_bitmap_copy(SPDesktop *desktop)
     SPDocument *document = sp_desktop_document(desktop);
     Inkscape::XML::Document *xml_doc = document->getReprDoc();
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     // check if something is selected
     if (selection->isEmpty()) {
@@ -3796,7 +3796,7 @@ void sp_selection_set_clipgroup(SPDesktop *desktop)
     SPDocument* doc = sp_desktop_document(desktop);
     Inkscape::XML::Document *xml_doc = doc->getReprDoc();
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     if (selection->isEmpty()) {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to create clippath or mask from."));
         return;
@@ -3912,7 +3912,7 @@ void sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_
     SPDocument *doc = sp_desktop_document(desktop);
     Inkscape::XML::Document *xml_doc = doc->getReprDoc();
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     // check if something is selected
     bool is_empty = selection->isEmpty();
@@ -4114,7 +4114,7 @@ void sp_selection_unset_mask(SPDesktop *desktop, bool apply_clip_path) {
 
     SPDocument *doc = sp_desktop_document(desktop);
     Inkscape::XML::Document *xml_doc = doc->getReprDoc();
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     // check if something is selected
     if (selection->isEmpty()) {

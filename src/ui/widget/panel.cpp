@@ -33,6 +33,7 @@
 #include "panel.h"
 #include "icon-size.h"
 #include "preferences.h"
+#include "desktop.h"
 #include "desktop-handles.h"
 #include "inkscape.h"
 #include "widgets/eek-preview.h"
@@ -667,7 +668,7 @@ void Panel::_handleResponse(int response_id)
 
 Inkscape::Selection *Panel::_getSelection()
 {
-    return sp_desktop_selection(_desktop);
+    return _desktop->getSelection();
 }
 
 } // namespace Widget

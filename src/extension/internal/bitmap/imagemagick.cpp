@@ -242,7 +242,9 @@ ImageMagick::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::Vie
     SPDocument * current_document = view->doc();
 
     using Inkscape::Util::GSListConstIterator;
-    GSListConstIterator<SPItem *> selected = sp_desktop_selection((SPDesktop *)view)->itemList();
+
+    // FIXME very unsafe cast
+    GSListConstIterator<SPItem *> selected = ((SPDesktop *)view)->getSelection()->itemList();
     Inkscape::XML::Node * first_select = NULL;
     if (selected != NULL) {
         first_select = (*selected)->getRepr();

@@ -666,7 +666,7 @@ void EraserTool::set_to_accumulated() {
 
         if ( this->repr ) {
             bool wasSelection = false;
-            Inkscape::Selection *selection = sp_desktop_selection(desktop);
+            Inkscape::Selection *selection = desktop->getSelection();
             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
             
             gint eraserMode = prefs->getBool("/tools/eraser/mode") ? 1 : 0;

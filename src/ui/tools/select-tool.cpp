@@ -272,7 +272,7 @@ sp_select_context_up_one_layer(SPDesktop *desktop)
         {
             desktop->setCurrentLayer(parent);
             if (current_group && (SPGroup::LAYER != current_group->layerMode())) {
-                sp_desktop_selection(desktop)->set(current_layer);
+                desktop->getSelection()->set(current_layer);
             }
         }
     }
@@ -469,7 +469,7 @@ bool SelectTool::root_handler(GdkEvent* event) {
     SPItem *item_at_point = NULL, *group_at_point = NULL, *item_in_group = NULL;
     gint ret = FALSE;
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     // make sure we still have valid objects to move around
@@ -485,7 +485,7 @@ bool SelectTool::root_handler(GdkEvent* event) {
 
                     if (dynamic_cast<SPGroup *>(clicked_item) && !dynamic_cast<SPBox3D *>(clicked_item)) { // enter group if it's not a 3D box
                         desktop->setCurrentLayer(clicked_item);
-                        sp_desktop_selection(desktop)->clear();
+                        desktop->getSelection()->clear();
                         this->dragging = false;
                         sp_event_context_discard_delayed_snap_event(this);
 
@@ -974,15 +974,15 @@ bool SelectTool::root_handler(GdkEvent* event) {
                         
                         if (MOD__ALT(event)) { // alt
                             if (MOD__SHIFT(event)) {
-                            	sp_selection_move_screen(sp_desktop_selection(desktop), mul*-10, 0); // shift
+                            	sp_selection_move_screen(desktop->getSelection(), mul*-10, 0); // shift
                             } else {
-                            	sp_selection_move_screen(sp_desktop_selection(desktop), mul*-1, 0); // no shift
+                            	sp_selection_move_screen(desktop->getSelection(), mul*-1, 0); // no shift
                             }
                         } else { // no alt
                             if (MOD__SHIFT(event)) {
-                            	sp_selection_move(sp_desktop_selection(desktop), mul*-10*nudge, 0); // shift
+                            	sp_selection_move(desktop->getSelection(), mul*-10*nudge, 0); // shift
                             } else {
-                            	sp_selection_move(sp_desktop_selection(desktop), mul*-nudge, 0); // no shift
+                            	sp_selection_move(desktop->getSelection(), mul*-nudge, 0); // no shift
                             }
                         }
                         
@@ -997,15 +997,15 @@ bool SelectTool::root_handler(GdkEvent* event) {
                         
                         if (MOD__ALT(event)) { // alt
                             if (MOD__SHIFT(event)) {
-                            	sp_selection_move_screen(sp_desktop_selection(desktop), 0, mul*10); // shift
+                            	sp_selection_move_screen(desktop->getSelection(), 0, mul*10); // shift
                             } else {
-                            	sp_selection_move_screen(sp_desktop_selection(desktop), 0, mul*1); // no shift
+                            	sp_selection_move_screen(desktop->getSelection(), 0, mul*1); // no shift
                             }
                         } else { // no alt
                             if (MOD__SHIFT(event)) {
-                            	sp_selection_move(sp_desktop_selection(desktop), 0, mul*10*nudge); // shift
+                            	sp_selection_move(desktop->getSelection(), 0, mul*10*nudge); // shift
                             } else {
-                            	sp_selection_move(sp_desktop_selection(desktop), 0, mul*nudge); // no shift
+                            	sp_selection_move(desktop->getSelection(), 0, mul*nudge); // no shift
                             }
                         }
                         
@@ -1020,15 +1020,15 @@ bool SelectTool::root_handler(GdkEvent* event) {
                         
                         if (MOD__ALT(event)) { // alt
                             if (MOD__SHIFT(event)) {
-                            	sp_selection_move_screen(sp_desktop_selection(desktop), mul*10, 0); // shift
+                            	sp_selection_move_screen(desktop->getSelection(), mul*10, 0); // shift
                             } else {
-                            	sp_selection_move_screen(sp_desktop_selection(desktop), mul*1, 0); // no shift
+                            	sp_selection_move_screen(desktop->getSelection(), mul*1, 0); // no shift
                             }
                         } else { // no alt
                             if (MOD__SHIFT(event)) {
-                            	sp_selection_move(sp_desktop_selection(desktop), mul*10*nudge, 0); // shift
+                            	sp_selection_move(desktop->getSelection(), mul*10*nudge, 0); // shift
                             } else {
-                            	sp_selection_move(sp_desktop_selection(desktop), mul*nudge, 0); // no shift
+                            	sp_selection_move(desktop->getSelection(), mul*nudge, 0); // no shift
                             }
                         }
                         
@@ -1043,15 +1043,15 @@ bool SelectTool::root_handler(GdkEvent* event) {
                         
                         if (MOD__ALT(event)) { // alt
                             if (MOD__SHIFT(event)) {
-                            	sp_selection_move_screen(sp_desktop_selection(desktop), 0, mul*-10); // shift
+                            	sp_selection_move_screen(desktop->getSelection(), 0, mul*-10); // shift
                             } else {
-                            	sp_selection_move_screen(sp_desktop_selection(desktop), 0, mul*-1); // no shift
+                            	sp_selection_move_screen(desktop->getSelection(), 0, mul*-1); // no shift
                             }
                         } else { // no alt
                             if (MOD__SHIFT(event)) {
-                            	sp_selection_move(sp_desktop_selection(desktop), 0, mul*-10*nudge); // shift
+                            	sp_selection_move(desktop->getSelection(), 0, mul*-10*nudge); // shift
                             } else {
-                            	sp_selection_move(sp_desktop_selection(desktop), 0, mul*-nudge); // no shift
+                            	sp_selection_move(desktop->getSelection(), 0, mul*-nudge); // no shift
                             }
                         }
                         
@@ -1155,7 +1155,7 @@ bool SelectTool::root_handler(GdkEvent* event) {
                             SPGroup *clickedGroup = dynamic_cast<SPGroup *>(clicked_item);
                             if ( (clickedGroup && (clickedGroup->layerMode() != SPGroup::LAYER)) || dynamic_cast<SPBox3D *>(clicked_item)) { // enter group or a 3D box
                                 desktop->setCurrentLayer(clicked_item);
-                                sp_desktop_selection(desktop)->clear();
+                                desktop->getSelection()->clear();
                             } else {
                                 this->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Selected object is not a group. Cannot enter."));
                             }

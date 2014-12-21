@@ -480,7 +480,7 @@ SelectedStyle::setDesktop(SPDesktop *desktop)
     _desktop = desktop;
     g_object_set_data (G_OBJECT(_opacity_sb.gobj()), "dtw", _desktop->canvas);
 
-    Inkscape::Selection *selection = sp_desktop_selection (desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     selection_changed_connection = new sigc::connection (selection->connectChanged(
         sigc::bind (

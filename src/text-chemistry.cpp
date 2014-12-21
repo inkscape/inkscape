@@ -83,7 +83,7 @@ text_put_on_path()
     if (!desktop)
         return;
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     SPItem *text = text_or_flowtext_in_selection(selection);
     SPItem *shape = shape_in_selection(selection);
@@ -191,7 +191,7 @@ text_remove_from_path()
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     if (selection->isEmpty()) {
         sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>a text on path</b> to remove it from path."));
@@ -256,7 +256,7 @@ text_remove_all_kerns()
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     if (selection->isEmpty()) {
         sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>text(s)</b> to remove kerns from."));
@@ -297,7 +297,7 @@ text_flow_into_shape()
     SPDocument *doc = sp_desktop_document (desktop);
     Inkscape::XML::Document *xml_doc = doc->getReprDoc();
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     SPItem *text = text_or_flowtext_in_selection(selection);
     SPItem *shape = shape_in_selection(selection);
@@ -375,7 +375,7 @@ text_flow_into_shape()
     DocumentUndo::done(doc, SP_VERB_CONTEXT_TEXT,
                        _("Flow text into shape"));
 
-    sp_desktop_selection(desktop)->set(SP_ITEM(root_object));
+    desktop->getSelection()->set(SP_ITEM(root_object));
 
     Inkscape::GC::release(root_repr);
     Inkscape::GC::release(region_repr);
@@ -391,7 +391,7 @@ text_unflow ()
     SPDocument *doc = sp_desktop_document (desktop);
     Inkscape::XML::Document *xml_doc = doc->getReprDoc();
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
 
     if (!flowtext_in_selection(selection) || g_slist_length((GSList *) selection->itemList()) < 1) {
@@ -477,7 +477,7 @@ flowtext_to_text()
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     if (selection->isEmpty()) {
         sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, 

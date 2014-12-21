@@ -468,7 +468,7 @@ bool PenTool::_handleButtonPress(GdkEventButton const &bevent) {
                                 // This is the first click of a new curve; deselect item so that
                                 // this curve is not combined with it (unless it is drawn from its
                                 // anchor, which is handled by the sibling branch above)
-                                Inkscape::Selection * const selection = sp_desktop_selection(desktop);
+                                Inkscape::Selection * const selection = desktop->getSelection();
                                 if (!(bevent.state & GDK_SHIFT_MASK) || this->hasWaitingLPE()) {
                                     // if we have a waiting LPE, we need a fresh path to be created
                                     // so don't append to an existing one
@@ -850,7 +850,7 @@ bool PenTool::_handleButtonRelease(GdkEventButton const &revent) {
     if (this->expecting_clicks_for_LPE == 0 && this->hasWaitingLPE()) {
         this->setPolylineMode();
 
-        Inkscape::Selection *selection = sp_desktop_selection(this->desktop);
+        Inkscape::Selection *selection = this->desktop->getSelection();
 
         if (this->waiting_LPE) {
             // we have an already created LPE waiting for a path
@@ -2281,7 +2281,7 @@ void PenTool::_setToNearestHorizVert(Geom::Point &pt, guint const state, bool sn
         // Snap along the constraint line; if we didn't snap then still the constraint will be applied
         SnapManager &m = this->desktop->namedview->snap_manager;
 
-        Inkscape::Selection *selection = sp_desktop_selection (this->desktop);
+        Inkscape::Selection *selection = this->desktop->getSelection();
         // selection->singleItem() is the item that is currently being drawn. This item will not be snapped to (to avoid self-snapping)
         // TODO: Allow snapping to the stationary parts of the item, and only ignore the last segment
 

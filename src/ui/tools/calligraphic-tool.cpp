@@ -506,7 +506,7 @@ bool CalligraphicTool::root_handler(GdkEvent* event) {
 
             if (event->motion.state & GDK_CONTROL_MASK) { // hatching - sense the item
 
-                SPItem *selected = sp_desktop_selection(desktop)->singleItem();
+                SPItem *selected = desktop->getSelection()->singleItem();
                 if (selected && (SP_IS_SHAPE(selected) || SP_IS_TEXT(selected))) {
                     // One item selected, and it's a path;
                     // let's try to track it as a guide
@@ -940,14 +940,14 @@ void CalligraphicTool::set_to_accumulated(bool unionize, bool subtract) {
         g_free(str);
 
         if (unionize) {
-            sp_desktop_selection(desktop)->add(this->repr);
-            sp_selected_path_union_skip_undo(sp_desktop_selection(desktop), desktop);
+            desktop->getSelection()->add(this->repr);
+            sp_selected_path_union_skip_undo(desktop->getSelection(), desktop);
         } else if (subtract) {
-            sp_desktop_selection(desktop)->add(this->repr);
-            sp_selected_path_diff_skip_undo(sp_desktop_selection(desktop), desktop);
+            desktop->getSelection()->add(this->repr);
+            sp_selected_path_diff_skip_undo(desktop->getSelection(), desktop);
         } else {
             if (this->keep_selected) {
-                sp_desktop_selection(desktop)->set(this->repr);
+                desktop->getSelection()->set(this->repr);
             }
         }
 

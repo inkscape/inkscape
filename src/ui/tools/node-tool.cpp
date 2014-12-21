@@ -215,7 +215,7 @@ void NodeTool::setup() {
     data.node_data.node_group = create_control_group(this->desktop);
     data.node_data.handle_group = create_control_group(this->desktop);
 
-    Inkscape::Selection *selection = sp_desktop_selection (this->desktop);
+    Inkscape::Selection *selection = this->desktop->getSelection();
 
     this->_selection_changed_connection.disconnect();
     this->_selection_changed_connection =
@@ -295,7 +295,7 @@ void NodeTool::setup() {
 
 // show helper paths of the applied LPE, if any
 void  NodeTool::update_helperpath () {
-    Inkscape::Selection *selection = sp_desktop_selection (this->desktop);
+    Inkscape::Selection *selection = this->desktop->getSelection();
 
     if (this->helperpath_tmpitem) {
         this->desktop->remove_temporary_canvasitem(this->helperpath_tmpitem);

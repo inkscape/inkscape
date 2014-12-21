@@ -367,7 +367,7 @@ static void sp_text_align_mode_changed( EgeSelectOneAction *act, GObject *tbl )
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
     // move the x of all texts to preserve the same bbox
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     for (GSList const *items = selection->itemList(); items != NULL; items = items->next) {
         if (SP_IS_TEXT(SP_ITEM(items->data))) {
             SPItem *item = SP_ITEM(items->data);
@@ -521,7 +521,7 @@ static void sp_text_lineheight_value_changed( GtkAdjustment *adj, GObject *tbl )
 
 
     // Until deprecated sodipodi:linespacing purged:
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     GSList const *items = selection->itemList();
     bool modmade = false;
     for (; items != NULL; items = items->next) {
@@ -829,7 +829,7 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
     std::cout << "sp_text_toolbox_selection_changed: start " << count << std::endl;
 
     std::cout << "  Selected items:" << std::endl;
-    for (GSList const *items = sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList();
+    for (GSList const *items = SP_ACTIVE_DESKTOP->getSelection()->itemList();
          items != NULL;
          items = items->next)
     {
@@ -873,7 +873,7 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
     // Only flowed text can be justified, only normal text can be kerned...
     // Find out if we have flowed text now so we can use it several places
     gboolean isFlow = false;
-    for (GSList const *items = sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList();
+    for (GSList const *items = SP_ACTIVE_DESKTOP->getSelection()->itemList();
          items != NULL;
          items = items->next) {
         // const gchar* id = reinterpret_cast<SPItem *>(items->data)->getId();
@@ -1196,7 +1196,7 @@ static void sp_text_toolbox_select_cb( GtkEntry* entry, GtkEntryIconPosition /*p
   }
 
   // Update selection
-  Inkscape::Selection *selection = sp_desktop_selection (desktop );
+  Inkscape::Selection *selection = desktop->getSelection();
   selection->clear();
   //std::cout << "   list length: " << g_slist_length ( selectList ) << std::endl;
   selection->setList(selectList);
@@ -1623,7 +1623,7 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
     }
 
     // Is this necessary to call? Shouldn't hurt.
-    sp_text_toolbox_selection_changed(sp_desktop_selection(desktop), holder);
+    sp_text_toolbox_selection_changed(desktop->getSelection(), holder);
 
     desktop->connectEventContextChanged(sigc::bind(sigc::ptr_fun(text_toolbox_watch_ec), holder));
 
@@ -1642,8 +1642,8 @@ static void text_toolbox_watch_ec(SPDesktop* desktop, Inkscape::UI::Tools::ToolB
 
     if (SP_IS_TEXT_CONTEXT(ec)) {
         // Watch selection
-        c_selection_changed = sp_desktop_selection(desktop)->connectChanged(bind(ptr_fun(sp_text_toolbox_selection_changed), holder, false));
-        c_selection_modified = sp_desktop_selection (desktop)->connectModified(bind(ptr_fun(sp_text_toolbox_selection_modified), holder));
+        c_selection_changed = desktop->getSelection()->connectChanged(bind(ptr_fun(sp_text_toolbox_selection_changed), holder, false));
+        c_selection_modified = desktop->getSelection()->connectModified(bind(ptr_fun(sp_text_toolbox_selection_modified), holder));
         c_subselection_changed = desktop->connectToolSubselectionChanged(bind(ptr_fun(sp_text_toolbox_subselection_changed), holder));
     } else {
         if (c_selection_changed)

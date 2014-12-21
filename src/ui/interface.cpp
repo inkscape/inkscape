@@ -1232,7 +1232,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
             SPObject *new_obj = NULL;
             new_obj = desktop->currentLayer()->appendChildRepr(newgroup);
 
-            Inkscape::Selection *selection = sp_desktop_selection(desktop);
+            Inkscape::Selection *selection = desktop->getSelection();
             selection->set(SP_ITEM(new_obj));
 
             // move to mouse pointer

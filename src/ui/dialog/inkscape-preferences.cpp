@@ -213,7 +213,7 @@ static void StyleFromSelectionToTool(Glib::ustring const &prefs_path, StyleSwatc
     if (desktop == NULL)
         return;
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     if (selection->isEmpty()) {
         sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE,

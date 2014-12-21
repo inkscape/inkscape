@@ -527,7 +527,7 @@ static bool sp_spray_recursive(SPDesktop *desktop,
 static bool sp_spray_dilate(SprayTool *tc, Geom::Point /*event_p*/, Geom::Point p, Geom::Point vector, bool reverse)
 {
     SPDesktop *desktop = tc->desktop;
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     if (selection->isEmpty()) {
         return false;

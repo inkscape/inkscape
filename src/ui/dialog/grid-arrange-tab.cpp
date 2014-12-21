@@ -167,7 +167,7 @@ void GridArrangeTab::arrange()
     SPDesktop *desktop = Parent->getDesktop();
     sp_desktop_document(desktop)->ensureUpToDate();
 
-    Inkscape::Selection *selection = sp_desktop_selection (desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     const GSList *items = selection ? selection->itemList() : 0;
     cnt=0;
     for (; items != NULL; items = items->next) {

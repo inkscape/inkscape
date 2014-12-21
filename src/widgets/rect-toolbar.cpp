@@ -105,7 +105,7 @@ static void sp_rtb_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE));
 
     bool modmade = false;
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     for (GSList const *items = selection->itemList(); items != NULL; items = items->next) {
         if (SP_IS_RECT(items->data)) {
             if (gtk_adjustment_get_value(adj) != 0) {
@@ -406,7 +406,7 @@ static void rect_toolbox_watch_ec(SPDesktop* desktop, Inkscape::UI::Tools::ToolB
 
     // TODO fixme: use of dynamic_cast<> seems wrong here.
     if (dynamic_cast<Inkscape::UI::Tools::RectTool *>(ec)) {
-        changed = sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_rect_toolbox_selection_changed), holder));
+        changed = desktop->getSelection()->connectChanged(sigc::bind(sigc::ptr_fun(sp_rect_toolbox_selection_changed), holder));
     } else {
         if (changed)
             changed.disconnect();

@@ -1276,7 +1276,7 @@ CloneTiler::CloneTiler () :
                 g_signal_connect(G_OBJECT(dlg), "destroy", G_CALLBACK(clonetiler_disconnect_gsignal), this);
 
                 // update now
-                clonetiler_change_selection (sp_desktop_selection(SP_ACTIVE_DESKTOP), dlg);
+                clonetiler_change_selection (SP_ACTIVE_DESKTOP->getSelection(), dlg);
             }
 
             {
@@ -1379,7 +1379,7 @@ void CloneTiler::clonetiler_change_selection(Inkscape::Selection *selection, Gtk
 
 void CloneTiler::clonetiler_external_change(GtkWidget *dlg)
 {
-    clonetiler_change_selection (sp_desktop_selection(SP_ACTIVE_DESKTOP), dlg);
+    clonetiler_change_selection (SP_ACTIVE_DESKTOP->getSelection(), dlg);
 }
 
 void CloneTiler::clonetiler_disconnect_gsignal(GObject *, gpointer source)
@@ -2093,7 +2093,7 @@ void CloneTiler::clonetiler_unclump(GtkWidget */*widget*/, void *)
         return;
     }
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     // check if something is selected
     if (selection->isEmpty() || g_slist_length((GSList *) selection->itemList()) > 1) {
@@ -2144,7 +2144,7 @@ void CloneTiler::clonetiler_remove(GtkWidget */*widget*/, GtkWidget *dlg, bool d
         return;
     }
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     // check if something is selected
     if (selection->isEmpty() || g_slist_length((GSList *) selection->itemList()) > 1) {
@@ -2216,7 +2216,7 @@ void CloneTiler::clonetiler_apply(GtkWidget */*widget*/, GtkWidget *dlg)
         return;
     }
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     // check if something is selected
     if (selection->isEmpty()) {

@@ -13,6 +13,7 @@
 
 #include <string.h>
 
+#include "desktop.h"
 #include "desktop-handles.h"
 #include "selection.h"
 #include "display/sp-canvas-util.h"
@@ -40,7 +41,7 @@ Inkscape::SelCue::SelCue(SPDesktop *desktop)
     : _desktop(desktop),
       _bounding_box_prefs_observer(*this)
 {
-    _selection = sp_desktop_selection(_desktop);
+    _selection = _desktop->getSelection();
 
     _sel_changed_connection = _selection->connectChanged(
         sigc::hide(sigc::mem_fun(*this, &Inkscape::SelCue::_newItemBboxes))

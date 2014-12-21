@@ -127,12 +127,12 @@ void StarTool::setup() {
 
 	this->shape_editor = new ShapeEditor(this->desktop);
 
-	SPItem *item = sp_desktop_selection(this->desktop)->singleItem();
+	SPItem *item = this->desktop->getSelection()->singleItem();
 	if (item) {
 		this->shape_editor->set_item(item);
 	}
 
-	Inkscape::Selection *selection = sp_desktop_selection(this->desktop);
+	Inkscape::Selection *selection = this->desktop->getSelection();
 	
 	this->sel_changed_connection.disconnect();
 
@@ -168,7 +168,7 @@ bool StarTool::root_handler(GdkEvent* event) {
     static bool dragging;
 
     SPDesktop *desktop = this->desktop;
-    Inkscape::Selection *selection = sp_desktop_selection (desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     this->tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
@@ -441,7 +441,7 @@ void StarTool::finishItem() {
 
         desktop->canvas->endForcedFullRedraws();
 
-        sp_desktop_selection(desktop)->set(this->star);
+        desktop->getSelection()->set(this->star);
         DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_STAR,
                            _("Create star"));
 
@@ -450,7 +450,7 @@ void StarTool::finishItem() {
 }
 
 void StarTool::cancel() {
-    sp_desktop_selection(desktop)->clear();
+    desktop->getSelection()->clear();
     sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), 0);
 
     if (this->star != NULL) {

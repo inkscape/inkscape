@@ -310,7 +310,7 @@ void Dialog::_defocus()
 Inkscape::Selection*
 Dialog::_getSelection()
 {
-    return sp_desktop_selection(SP_ACTIVE_DESKTOP);
+    return SP_ACTIVE_DESKTOP->getSelection();
 }
 
 } // namespace Dialog

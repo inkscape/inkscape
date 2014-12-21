@@ -131,7 +131,7 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
     _makeHandles();
     _updateHandles();
 
-    _selection = sp_desktop_selection(desktop);
+    _selection = desktop->getSelection();
 
     _norm = sp_canvas_item_new(sp_desktop_controls(desktop),
                                SP_TYPE_CTRL,
@@ -252,7 +252,7 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
 {
     // While dragging a handle, we will either scale, skew, or rotate and the "translating" parameter will be false
     // When dragging the selected item itself however, we will translate the selection and that parameter will be true
-    Inkscape::Selection *selection = sp_desktop_selection(_desktop);
+    Inkscape::Selection *selection = _desktop->getSelection();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     g_return_if_fail(!_grabbed);
@@ -418,7 +418,7 @@ void Inkscape::SelTrans::ungrab()
 
     _desktop->snapindicator->remove_snapsource();
 
-    Inkscape::Selection *selection = sp_desktop_selection(_desktop);
+    Inkscape::Selection *selection = _desktop->getSelection();
     _updateVolatileState();
 
     for (unsigned i = 0; i < _items.size(); i++) {
@@ -512,7 +512,7 @@ void Inkscape::SelTrans::ungrab()
 
 void Inkscape::SelTrans::stamp()
 {
-    Inkscape::Selection *selection = sp_desktop_selection(_desktop);
+    Inkscape::Selection *selection = _desktop->getSelection();
 
     bool fixup = !_grabbed;
     if ( fixup && _stamp_cache ) {
@@ -606,7 +606,7 @@ void Inkscape::SelTrans::_updateHandles()
 
 void Inkscape::SelTrans::_updateVolatileState()
 {
-    Inkscape::Selection *selection = sp_desktop_selection(_desktop);
+    Inkscape::Selection *selection = _desktop->getSelection();
     _empty = selection->isEmpty();
 
     if (_empty) {

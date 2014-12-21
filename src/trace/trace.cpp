@@ -53,7 +53,7 @@ SPImage *Tracer::getSelectedSPImage()
 
     Inkscape::MessageStack *msgStack = sp_desktop_message_stack(desktop);
 
-    Inkscape::Selection *sel = sp_desktop_selection(desktop);
+    Inkscape::Selection *sel = desktop->getSelection();
     if (!sel)
         {
         char *msg = _("Select an <b>image</b> to trace");
@@ -219,7 +219,7 @@ Glib::RefPtr<Gdk::Pixbuf> Tracer::sioxProcessImage(SPImage *img, Glib::RefPtr<Gd
 
     Inkscape::MessageStack *msgStack = sp_desktop_message_stack(desktop);
 
-    Inkscape::Selection *sel = sp_desktop_selection(desktop);
+    Inkscape::Selection *sel = desktop->getSelection();
     if (!sel)
         {
         char *msg = _("Select an <b>image</b> to trace");
@@ -399,7 +399,7 @@ void Tracer::traceThread()
 
     Inkscape::MessageStack *msgStack = sp_desktop_message_stack(desktop);
 
-    Inkscape::Selection *selection = sp_desktop_selection (desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     if (!SP_ACTIVE_DOCUMENT)
         {

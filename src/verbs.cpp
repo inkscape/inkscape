@@ -1396,7 +1396,7 @@ void LayerVerb::perform(SPAction *action, void *data)
         }
         case SP_VERB_LAYER_DELETE: {
             if ( dt->currentLayer() != dt->currentRoot() ) {
-                sp_desktop_selection(dt)->clear();
+                dt->getSelection()->clear();
                 SPObject *old_layer=dt->currentLayer();
 
                 sp_object_ref(old_layer, NULL);
@@ -1591,10 +1591,6 @@ void TagVerb::perform( SPAction *action, void *data)
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
     if (!dt)
         return;
-
-    //Inkscape::UI::Tools::ToolBase *ec = dt->event_context;
-
-    Inkscape::Selection *sel = sp_desktop_selection(dt);
 
     Inkscape::XML::Document * doc;
     Inkscape::XML::Node * repr;

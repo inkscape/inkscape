@@ -112,7 +112,7 @@ void GradientTool::selection_changed(Inkscape::Selection*) {
     GradientTool *rc = (GradientTool *) this;
 
     GrDrag *drag = rc->_grdrag;
-    Inkscape::Selection *selection = sp_desktop_selection(SP_EVENT_CONTEXT(rc)->desktop);
+    Inkscape::Selection *selection = this->desktop->getSelection();
     if (selection == NULL) {
         return;
     }
@@ -167,7 +167,7 @@ void GradientTool::setup() {
     }
 
     this->enableGrDrag();
-    Inkscape::Selection *selection = sp_desktop_selection(this->desktop);
+    Inkscape::Selection *selection = this->desktop->getSelection();
 
     this->selcon = new sigc::connection(selection->connectChanged(
     	sigc::mem_fun(this, &GradientTool::selection_changed)
@@ -475,7 +475,7 @@ sp_gradient_context_add_stop_near_point (GradientTool *rc, SPItem *item,  Geom::
 bool GradientTool::root_handler(GdkEvent* event) {
     static bool dragging;
 
-    Inkscape::Selection *selection = sp_desktop_selection (desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     this->tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
@@ -892,7 +892,7 @@ bool GradientTool::root_handler(GdkEvent* event) {
 static void sp_gradient_drag(GradientTool &rc, Geom::Point const pt, guint /*state*/, guint32 etime)
 {
     SPDesktop *desktop = SP_EVENT_CONTEXT(&rc)->desktop;
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     SPDocument *document = sp_desktop_document(desktop);
     ToolBase *ec = SP_EVENT_CONTEXT(&rc);
 

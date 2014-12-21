@@ -25,6 +25,7 @@
 
 #include "document.h"
 #include "document-undo.h"
+#include "desktop.h"
 #include "desktop-handles.h"
 #include "transformation.h"
 #include "align-and-distribute.h"
@@ -578,7 +579,7 @@ void Transformation::onSwitchPage(Gtk::Widget * /*page*/, guint pagenum)
 void Transformation::onSwitchPage(GtkNotebookPage * /*page*/, guint pagenum)
 #endif
 {
-    updateSelection((PageType)pagenum, sp_desktop_selection(getDesktop()));
+    updateSelection((PageType)pagenum, getDesktop()->getSelection());
 }
 
 

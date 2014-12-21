@@ -15,14 +15,6 @@
 #include "desktop.h"
 #include "desktop-handles.h"
 
-Inkscape::Selection *
-sp_desktop_selection (SPDesktop const * desktop)
-{
-	g_assert(desktop != NULL);
-
-	return desktop->selection;
-}
-
 SPDocument *
 sp_desktop_document (SPDesktop const * desktop)
 {

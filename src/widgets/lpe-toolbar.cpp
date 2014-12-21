@@ -413,9 +413,9 @@ static void lpetool_toolbox_watch_ec(SPDesktop* desktop, Inkscape::UI::Tools::To
 
     if (SP_IS_LPETOOL_CONTEXT(ec)) {
         // Watch selection
-        c_selection_modified = sp_desktop_selection(desktop)->connectModified(sigc::bind(sigc::ptr_fun(sp_lpetool_toolbox_sel_modified), holder));
-        c_selection_changed = sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_lpetool_toolbox_sel_changed), holder));
-        sp_lpetool_toolbox_sel_changed(sp_desktop_selection(desktop), holder);
+        c_selection_modified = desktop->getSelection()->connectModified(sigc::bind(sigc::ptr_fun(sp_lpetool_toolbox_sel_modified), holder));
+        c_selection_changed = desktop->getSelection()->connectChanged(sigc::bind(sigc::ptr_fun(sp_lpetool_toolbox_sel_changed), holder));
+        sp_lpetool_toolbox_sel_changed(desktop->getSelection(), holder);
     } else {
         if (c_selection_modified)
             c_selection_modified.disconnect();

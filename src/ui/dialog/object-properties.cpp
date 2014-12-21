@@ -353,7 +353,7 @@ void ObjectProperties::update()
         return;
     }
 
-    Inkscape::Selection *selection = sp_desktop_selection(SP_ACTIVE_DESKTOP);
+    Inkscape::Selection *selection = SP_ACTIVE_DESKTOP->getSelection();
     Gtk::Box *contents = _getContents();
 
     if (!selection->singleItem()) {
@@ -458,7 +458,7 @@ void ObjectProperties::_labelChanged()
         return;
     }
     
-    SPItem *item = sp_desktop_selection(SP_ACTIVE_DESKTOP)->singleItem();
+    SPItem *item = SP_ACTIVE_DESKTOP->getSelection()->singleItem();
     g_return_if_fail (item != NULL);
 
     _blocked = true;
@@ -518,7 +518,7 @@ void ObjectProperties::_imageRenderingChanged()
         return;
     }
     
-    SPItem *item = sp_desktop_selection(SP_ACTIVE_DESKTOP)->singleItem();
+    SPItem *item = SP_ACTIVE_DESKTOP->getSelection()->singleItem();
     g_return_if_fail (item != NULL);
 
     _blocked = true;
@@ -543,7 +543,7 @@ void ObjectProperties::_sensitivityToggled()
         return;
     }
 
-    SPItem *item = sp_desktop_selection(SP_ACTIVE_DESKTOP)->singleItem();
+    SPItem *item = SP_ACTIVE_DESKTOP->getSelection()->singleItem();
     g_return_if_fail(item != NULL);
 
     _blocked = true;
@@ -559,7 +559,7 @@ void ObjectProperties::_hiddenToggled()
         return;
     }
 
-    SPItem *item = sp_desktop_selection(SP_ACTIVE_DESKTOP)->singleItem();
+    SPItem *item = SP_ACTIVE_DESKTOP->getSelection()->singleItem();
     g_return_if_fail(item != NULL);
 
     _blocked = true;

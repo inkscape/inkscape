@@ -106,7 +106,7 @@ static void
 sp_selection_layout_widget_modify_selection(SPWidget *spw, Inkscape::Selection *selection, guint flags, gpointer data)
 {
     SPDesktop *desktop = static_cast<SPDesktop *>(data);
-    if ((sp_desktop_selection(desktop) == selection) // only respond to changes in our desktop
+    if ((desktop->getSelection() == selection) // only respond to changes in our desktop
         && (flags & (SP_OBJECT_MODIFIED_FLAG        |
                      SP_OBJECT_PARENT_MODIFIED_FLAG |
                      SP_OBJECT_CHILD_MODIFIED_FLAG   )))
@@ -119,7 +119,7 @@ static void
 sp_selection_layout_widget_change_selection(SPWidget *spw, Inkscape::Selection *selection, gpointer data)
 {
     SPDesktop *desktop = static_cast<SPDesktop *>(data);
-    if (sp_desktop_selection(desktop) == selection) { // only respond to changes in our desktop
+    if (desktop->getSelection() == selection) { // only respond to changes in our desktop
         gboolean setActive = (selection && !selection->isEmpty());
         std::vector<GtkAction*> *contextActions = reinterpret_cast<std::vector<GtkAction*> *>(g_object_get_data(G_OBJECT(spw), "contextActions"));
         if ( contextActions ) {
@@ -153,7 +153,7 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
     g_object_set_data(G_OBJECT(spw), "update", GINT_TO_POINTER(TRUE));
 
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     SPDocument *document = sp_desktop_document(desktop);
 
     document->ensureUpToDate ();
@@ -546,7 +546,7 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     g_signal_connect(G_OBJECT(spw), "change_selection", G_CALLBACK(sp_selection_layout_widget_change_selection), desktop);
 
     // Update now.
-    sp_selection_layout_widget_update(SP_WIDGET(spw), SP_ACTIVE_DESKTOP ? sp_desktop_selection(SP_ACTIVE_DESKTOP) : NULL);
+    sp_selection_layout_widget_update(SP_WIDGET(spw), SP_ACTIVE_DESKTOP ? SP_ACTIVE_DESKTOP->getSelection() : NULL);
 
     for ( std::vector<GtkAction*>::iterator iter = contextActions->begin();
           iter != contextActions->end(); ++iter) {

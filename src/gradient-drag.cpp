@@ -631,7 +631,7 @@ GrDrag::GrDrag(SPDesktop *desktop) :
     vert_levels(),
     draggers(0),
     lines(0),
-    selection(sp_desktop_selection(desktop)),
+    selection(desktop->getSelection()),
     sel_changed_connection(),
     sel_modified_connection(),
     style_set_connection(),

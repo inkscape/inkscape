@@ -111,13 +111,13 @@ void RectTool::setup() {
 
     this->shape_editor = new ShapeEditor(this->desktop);
 
-    SPItem *item = sp_desktop_selection(this->desktop)->singleItem();
+    SPItem *item = this->desktop->getSelection()->singleItem();
     if (item) {
         this->shape_editor->set_item(item);
     }
 
     this->sel_changed_connection.disconnect();
-    this->sel_changed_connection = sp_desktop_selection(this->desktop)->connectChanged(
+    this->sel_changed_connection = this->desktop->getSelection()->connectChanged(
     	sigc::mem_fun(this, &RectTool::selection_changed)
     );
 
@@ -170,7 +170,7 @@ bool RectTool::root_handler(GdkEvent* event) {
     static bool dragging;
 
     SPDesktop *desktop = this->desktop;
-    Inkscape::Selection *selection = sp_desktop_selection (desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
@@ -476,7 +476,7 @@ void RectTool::finishItem() {
 
         this->desktop->canvas->endForcedFullRedraws();
 
-        sp_desktop_selection(this->desktop)->set(this->rect);
+        this->desktop->getSelection()->set(this->rect);
 
         DocumentUndo::done(sp_desktop_document(this->desktop), SP_VERB_CONTEXT_RECT, _("Create rectangle"));
 
@@ -485,7 +485,7 @@ void RectTool::finishItem() {
 }
 
 void RectTool::cancel(){
-    sp_desktop_selection(this->desktop)->clear();
+    this->desktop->getSelection()->clear();
     sp_canvas_item_ungrab(SP_CANVAS_ITEM(this->desktop->acetate), 0);
 
     if (this->rect != NULL) {

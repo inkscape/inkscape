@@ -614,7 +614,7 @@ void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
         gtk_action_group_add_action( mainActions, act );
     }
 
-    sp_node_toolbox_sel_changed(sp_desktop_selection(desktop), holder);
+    sp_node_toolbox_sel_changed(desktop->getSelection(), holder);
     desktop->connectEventContextChanged(sigc::bind(sigc::ptr_fun(node_toolbox_watch_ec), holder));
 
 } // end of sp_node_toolbox_prep()
@@ -627,11 +627,11 @@ static void node_toolbox_watch_ec(SPDesktop* desktop, Inkscape::UI::Tools::ToolB
 
     if (INK_IS_NODE_TOOL(ec)) {
         // watch selection
-        c_selection_changed = sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_node_toolbox_sel_changed), holder));
-        c_selection_modified = sp_desktop_selection(desktop)->connectModified(sigc::bind(sigc::ptr_fun(sp_node_toolbox_sel_modified), holder));
+        c_selection_changed = desktop->getSelection()->connectChanged(sigc::bind(sigc::ptr_fun(sp_node_toolbox_sel_changed), holder));
+        c_selection_modified = desktop->getSelection()->connectModified(sigc::bind(sigc::ptr_fun(sp_node_toolbox_sel_modified), holder));
         c_subselection_changed = desktop->connectToolSubselectionChanged(sigc::bind(sigc::ptr_fun(sp_node_toolbox_coord_changed), holder));
 
-        sp_node_toolbox_sel_changed(sp_desktop_selection(desktop), holder);
+        sp_node_toolbox_sel_changed(desktop->getSelection(), holder);
     } else {
         if (c_selection_changed)
             c_selection_changed.disconnect();

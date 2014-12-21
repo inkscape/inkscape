@@ -122,7 +122,7 @@ static void editGradientImpl( SPDesktop* desktop, SPGradient* gr )
     if ( gr ) {
         bool shown = false;
         if ( desktop && desktop->doc() ) {
-            Inkscape::Selection *selection = sp_desktop_selection( desktop );
+            Inkscape::Selection *selection = desktop->getSelection();
             GSList const *items = selection->itemList();
             if (items) {
                 SPStyle *query = sp_style_new( desktop->doc() );

@@ -398,7 +398,7 @@ LivePathEffectEditor::setDesktop(SPDesktop *desktop)
     lpe_list_locked = false;
     current_desktop = desktop;
     if (desktop) {
-        Inkscape::Selection *selection = sp_desktop_selection(desktop);
+        Inkscape::Selection *selection = desktop->getSelection();
         selection_changed_connection = selection->connectChanged(
             sigc::bind (sigc::ptr_fun(&lpeeditor_selection_changed), this ) );
         selection_modified_connection = selection->connectModified(

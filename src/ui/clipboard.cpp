@@ -201,7 +201,7 @@ void ClipboardManagerImpl::copy(SPDesktop *desktop)
     if ( desktop == NULL ) {
         return;
     }
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     // Special case for when the gradient dragger is active - copies gradient color
     if (desktop->event_context->get_drag()) {
@@ -435,7 +435,7 @@ bool ClipboardManagerImpl::pasteStyle(SPDesktop *desktop)
     }
 
     // check whether something is selected
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     if (selection->isEmpty()) {
         _userWarn(desktop, _("Select <b>object(s)</b> to paste style to."));
         return false;
@@ -488,7 +488,7 @@ bool ClipboardManagerImpl::pasteSize(SPDesktop *desktop, bool separately, bool a
     if ( desktop == NULL ) {
         return false;
     }
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     if (selection->isEmpty()) {
         _userWarn(desktop, _("Select <b>object(s)</b> to paste size to."));
         return false;
@@ -551,7 +551,7 @@ bool ClipboardManagerImpl::pastePathEffect(SPDesktop *desktop)
         return false;
     }
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     if (selection && selection->isEmpty()) {
         _userWarn(desktop, _("Select <b>object(s)</b> to paste live path effect to."));
         return false;

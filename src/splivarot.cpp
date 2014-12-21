@@ -1151,7 +1151,7 @@ Geom::PathVector* item_outline(SPItem const *item, bool bbox_only)
 void
 sp_selected_path_outline(SPDesktop *desktop)
 {
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     if (selection->isEmpty()) {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>stroked path(s)</b> to convert stroke to path."));
@@ -1583,7 +1583,7 @@ void sp_selected_path_create_updating_inset(SPDesktop *desktop)
 void sp_selected_path_create_offset_object(SPDesktop *desktop, int expand, bool updating)
 {
     SPCurve *curve = NULL;
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     SPItem *item = selection->singleItem();
 
     if (item == NULL || ( !SP_IS_SHAPE(item) && !SP_IS_TEXT(item) ) ) {
@@ -1766,7 +1766,7 @@ void sp_selected_path_create_offset_object(SPDesktop *desktop, int expand, bool 
 void
 sp_selected_path_do_offset(SPDesktop *desktop, bool expand, double prefOffset)
 {
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     if (selection->isEmpty()) {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>path(s)</b> to inset/outset."));
@@ -2191,7 +2191,7 @@ static void
 sp_selected_path_simplify_selection(SPDesktop *desktop, float threshold, bool justCoalesce,
                                     float angleLimit, bool breakableAngles)
 {
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     if (selection->isEmpty()) {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE,

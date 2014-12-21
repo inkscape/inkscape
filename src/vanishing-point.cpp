@@ -110,7 +110,7 @@ vp_knot_moved_handler (SPKnot *knot, Geom::Point const &ppointer, guint state, g
             for (std::set<VanishingPoint*, less_ptr>::iterator vp = sel_vps.begin(); vp != sel_vps.end(); ++vp) {
                 // for each VP that has selected boxes:
                 Persp3D *old_persp = (*vp)->get_perspective();
-                sel_boxes = (*vp)->selectedBoxes(sp_desktop_selection(SP_ACTIVE_DESKTOP));
+                sel_boxes = (*vp)->selectedBoxes(SP_ACTIVE_DESKTOP->getSelection());
 
                 // we create a new perspective ...
                 Persp3D *new_persp = persp3d_create_xml_element (dragger->parent->document, old_persp->perspective_impl);
@@ -394,7 +394,7 @@ VPDragger::VPsOfSelectedBoxes() {
     std::set<VanishingPoint*, less_ptr> sel_vps;
     VanishingPoint *vp;
     // FIXME: Should we take the selection from the parent VPDrag? I guess it shouldn't make a difference.
-    Inkscape::Selection *sel = sp_desktop_selection(SP_ACTIVE_DESKTOP);
+    Inkscape::Selection *sel = SP_ACTIVE_DESKTOP->getSelection();
     for (GSList const* i = sel->itemList(); i != NULL; i = i->next) {
         SPItem *item = static_cast<SPItem *>(i->data);
         SPBox3D *box = dynamic_cast<SPBox3D *>(item);
@@ -488,7 +488,7 @@ VPDragger::printVPs() {
 VPDrag::VPDrag (SPDocument *document)
 {
     this->document = document;
-    this->selection = sp_desktop_selection(SP_ACTIVE_DESKTOP);
+    this->selection = SP_ACTIVE_DESKTOP->getSelection();
 
     this->draggers = NULL;
     this->lines = NULL;

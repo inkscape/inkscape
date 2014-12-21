@@ -690,7 +690,7 @@ void Script::effect(Inkscape::Extension::Effect *module,
     }
 
     Inkscape::Util::GSListConstIterator<SPItem *> selected =
-        sp_desktop_selection(desktop)->itemList(); //desktop should not be NULL since doc was checked and desktop is a casted pointer
+        desktop->getSelection()->itemList(); //desktop should not be NULL since doc was checked and desktop is a casted pointer
     while ( selected != NULL ) {
         Glib::ustring selected_id;
         selected_id += "--id=";

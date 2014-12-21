@@ -688,7 +688,7 @@ public:
 
 private:
     void select_svg_element(){
-        Inkscape::Selection* sel = sp_desktop_selection(_desktop);
+        Inkscape::Selection* sel = _desktop->getSelection();
         if (sel->isEmpty()) return;
         Inkscape::XML::Node* node = (Inkscape::XML::Node*) g_slist_nth_data((GSList *)sel->reprList(), 0);
         if (!node || !node->matchAttributeName("id")) return;
@@ -1441,7 +1441,7 @@ void FilterEffectsDialog::FilterModifier::on_document_replaced(SPDesktop * /*des
 // When the selection changes, show the active filter(s) in the dialog
 void FilterEffectsDialog::FilterModifier::on_change_selection()
 {
-    Inkscape::Selection *selection = sp_desktop_selection (SP_ACTIVE_DESKTOP);
+    Inkscape::Selection *selection = SP_ACTIVE_DESKTOP->getSelection();
     update_selection(selection);
 }
 
@@ -1539,7 +1539,7 @@ void FilterEffectsDialog::FilterModifier::on_selection_toggled(const Glib::ustri
         SPDesktop *desktop = _dialog.getDesktop();
         SPDocument *doc = sp_desktop_document(desktop);
         SPFilter* filter = (*iter)[_columns.filter];
-        Inkscape::Selection *sel = sp_desktop_selection(desktop);
+        Inkscape::Selection *sel = desktop->getSelection();
 
         /* If this filter is the only one used in the selection, unset it */
         if((*iter)[_columns.sel] == 1)

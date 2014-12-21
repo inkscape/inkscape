@@ -76,7 +76,7 @@ static void sp_connector_path_set_ignore(void)
 static void sp_connector_orthogonal_toggled( GtkToggleAction* act, GObject *tbl )
 {
     SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( tbl, "desktop" ));
-    Inkscape::Selection * selection = sp_desktop_selection(desktop);
+    Inkscape::Selection * selection = desktop->getSelection();
     SPDocument *doc = sp_desktop_document(desktop);
 
     if (!DocumentUndo::getUndoSensitive(doc)) {
@@ -126,7 +126,7 @@ static void sp_connector_orthogonal_toggled( GtkToggleAction* act, GObject *tbl 
 static void connector_curvature_changed(GtkAdjustment *adj, GObject* tbl)
 {
     SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( tbl, "desktop" ));
-    Inkscape::Selection * selection = sp_desktop_selection(desktop);
+    Inkscape::Selection * selection = desktop->getSelection();
     SPDocument *doc = sp_desktop_document(desktop);
 
     if (!DocumentUndo::getUndoSensitive(doc)) {
@@ -233,7 +233,7 @@ static void sp_connector_graph_layout(void)
     int saved_compensation = prefs->getInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
     prefs->setInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
 
-    graphlayout(sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList());
+    graphlayout(SP_ACTIVE_DESKTOP->getSelection()->itemList());
 
     prefs->setInt("/options/clonecompensation/value", saved_compensation);
 
@@ -402,7 +402,7 @@ void sp_connector_toolbox_prep( SPDesktop *desktop, GtkActionGroup* mainActions,
         gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act), ( tbuttonstate ? TRUE : FALSE ));
 
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_directed_graph_layout_toggled), holder );
-        sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_connector_toolbox_selection_changed), holder));
+        desktop->getSelection()->connectChanged(sigc::bind(sigc::ptr_fun(sp_connector_toolbox_selection_changed), holder));
     }
 
     // Avoid overlaps toggle button

@@ -47,7 +47,7 @@ using Inkscape::DocumentUndo;
 void
 sp_selected_path_combine(SPDesktop *desktop)
 {
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     SPDocument *doc = sp_desktop_document(desktop);
     
     if (g_slist_length((GSList *) selection->itemList()) < 1) {
@@ -187,7 +187,7 @@ sp_selected_path_combine(SPDesktop *desktop)
 void
 sp_selected_path_break_apart(SPDesktop *desktop)
 {
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     if (selection->isEmpty()) {
         sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>path(s)</b> to break apart."));
@@ -335,7 +335,7 @@ sp_selected_path_to_curves(Inkscape::Selection *selection, SPDesktop *desktop, b
 /** Converts the selected items to LPEItems if they are not already so; e.g. SPRects) */
 void sp_selected_to_lpeitems(SPDesktop *desktop)
 {
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     if (selection->isEmpty()) {
         return;
@@ -613,7 +613,7 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
 void
 sp_selected_path_reverse(SPDesktop *desktop)
 {
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     GSList *items = (GSList *) selection->itemList();
 
     if (!items) {

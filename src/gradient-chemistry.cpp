@@ -1569,7 +1569,7 @@ SPGradient *sp_gradient_vector_for_object( SPDocument *const doc, SPDesktop *con
 
 void sp_gradient_invert_selected_gradients(SPDesktop *desktop, Inkscape::PaintTarget fill_or_stroke)
 {
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     for (GSList const* i = selection->itemList(); i != NULL; i = i->next) {
         sp_item_gradient_invert_vector_color(SP_ITEM(i->data), fill_or_stroke);
@@ -1582,7 +1582,7 @@ void sp_gradient_invert_selected_gradients(SPDesktop *desktop, Inkscape::PaintTa
 
 void sp_gradient_reverse_selected_gradients(SPDesktop *desktop)
 {
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     Inkscape::UI::Tools::ToolBase *ev = desktop->getEventContext();
 
     if (!ev) {

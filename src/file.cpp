@@ -1086,7 +1086,7 @@ void sp_import_document(SPDesktop *desktop, SPDocument *clipdoc, bool in_place)
     }
 
     // Change the selection to the freshly pasted objects
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     selection->setReprList(pasted_objects);
 
     // Apply inverse of parent transform
@@ -1221,7 +1221,7 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
 
         // select and move the imported item
         if (new_obj && SP_IS_ITEM(new_obj)) {
-            Inkscape::Selection *selection = sp_desktop_selection(desktop);
+            Inkscape::Selection *selection = desktop->getSelection();
             selection->set(SP_ITEM(new_obj));
 
             // preserve parent and viewBox transformations

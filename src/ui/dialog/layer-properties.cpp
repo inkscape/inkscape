@@ -399,7 +399,7 @@ void LayerPropertiesDialog::Create::perform(LayerPropertiesDialog &dialog) {
     if (!name.empty()) {
         desktop->layer_manager->renameLayer( new_layer, (gchar *)name.c_str(), TRUE );
     }
-    sp_desktop_selection(desktop)->clear();
+    desktop->getSelection()->clear();
     desktop->setCurrentLayer(new_layer);
     desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("New layer created."));
 }

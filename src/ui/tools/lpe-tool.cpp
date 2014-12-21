@@ -110,7 +110,7 @@ LpeTool::~LpeTool() {
 void LpeTool::setup() {
     PenTool::setup();
 
-    Inkscape::Selection *selection = sp_desktop_selection (this->desktop);
+    Inkscape::Selection *selection = this->desktop->getSelection();
     SPItem *item = selection->singleItem();
 
     this->sel_changed_connection.disconnect();
@@ -164,7 +164,7 @@ bool LpeTool::item_handler(SPItem* item, GdkEvent* event) {
         case GDK_BUTTON_PRESS:
         {
             // select the clicked item but do nothing else
-            Inkscape::Selection * const selection = sp_desktop_selection(this->desktop);
+            Inkscape::Selection * const selection = this->desktop->getSelection();
             selection->clear();
             selection->add(item);
             ret = TRUE;
@@ -186,7 +186,7 @@ bool LpeTool::item_handler(SPItem* item, GdkEvent* event) {
 }
 
 bool LpeTool::root_handler(GdkEvent* event) {
-    Inkscape::Selection *selection = sp_desktop_selection (desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     bool ret = false;
 
@@ -305,7 +305,7 @@ int lpetool_item_has_construction(LpeTool */*lc*/, SPItem *item)
 bool
 lpetool_try_construction(LpeTool *lc, Inkscape::LivePathEffect::EffectType const type)
 {
-    Inkscape::Selection *selection = sp_desktop_selection(lc->desktop);
+    Inkscape::Selection *selection = lc->desktop->getSelection();
     SPItem *item = selection->singleItem();
 
     // TODO: should we check whether type represents a valid geometric construction?
@@ -396,7 +396,7 @@ void
 lpetool_create_measuring_items(LpeTool *lc, Inkscape::Selection *selection)
 {
     if (!selection) {
-        selection = sp_desktop_selection(lc->desktop);
+        selection = lc->desktop->getSelection();
     }
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool show = prefs->getBool("/tools/lpetool/show_measuring_info",  true);

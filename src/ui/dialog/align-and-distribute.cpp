@@ -91,7 +91,7 @@ Action::Action(const Glib::ustring &id,
 
 void ActionAlign::do_action(SPDesktop *desktop, int index)
 {
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     if (!selection) return;
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -247,7 +247,7 @@ private :
         SPDesktop *desktop = _dialog.getDesktop();
         if (!desktop) return;
 
-        Inkscape::Selection *selection = sp_desktop_selection(desktop);
+        Inkscape::Selection *selection = desktop->getSelection();
         if (!selection) return;
 
         using Inkscape::Util::GSListConstIterator;
@@ -458,8 +458,7 @@ private :
         // xGap and yGap are the minimum space required between bounding rectangles.
         double const xGap = removeOverlapXGap.get_value();
         double const yGap = removeOverlapYGap.get_value();
-        removeoverlap(sp_desktop_selection(_dialog.getDesktop())->itemList(),
-                      xGap, yGap);
+        removeoverlap(_dialog.getDesktop()->getSelection()->itemList(), xGap, yGap);
 
         // restore compensation setting
         prefs->setInt("/options/clonecompensation/value", saved_compensation);
@@ -490,7 +489,7 @@ private :
         int saved_compensation = prefs->getInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
         prefs->setInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
 
-        graphlayout(sp_desktop_selection(_dialog.getDesktop())->itemList());
+        graphlayout(_dialog.getDesktop()->getSelection()->itemList());
 
         // restore compensation setting
         prefs->setInt("/options/clonecompensation/value", saved_compensation);
@@ -547,7 +546,7 @@ private :
         SPDesktop *desktop = _dialog.getDesktop();
         if (!desktop) return;
 
-        Inkscape::Selection *selection = sp_desktop_selection(desktop);
+        Inkscape::Selection *selection = desktop->getSelection();
         if (!selection) return;
 
         using Inkscape::Util::GSListConstIterator;
@@ -617,7 +616,7 @@ private :
         int saved_compensation = prefs->getInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
         prefs->setInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
 
-        unclump ((GSList *) sp_desktop_selection(_dialog.getDesktop())->itemList());
+        unclump ((GSList *) _dialog.getDesktop()->getSelection()->itemList());
 
         // restore compensation setting
         prefs->setInt("/options/clonecompensation/value", saved_compensation);
@@ -644,7 +643,7 @@ private :
         SPDesktop *desktop = _dialog.getDesktop();
         if (!desktop) return;
 
-        Inkscape::Selection *selection = sp_desktop_selection(desktop);
+        Inkscape::Selection *selection = desktop->getSelection();
         if (!selection) return;
 
         using Inkscape::Util::GSListConstIterator;
@@ -743,7 +742,7 @@ private :
         SPDesktop *desktop = _dialog.getDesktop();
         if (!desktop) return;
 
-        Inkscape::Selection *selection = sp_desktop_selection(desktop);
+        Inkscape::Selection *selection = desktop->getSelection();
         if (!selection) return;
 
         using Inkscape::Util::GSListConstIterator;

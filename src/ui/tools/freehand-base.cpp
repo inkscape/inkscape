@@ -117,7 +117,7 @@ FreehandBase::~FreehandBase() {
 void FreehandBase::setup() {
     ToolBase::setup();
 
-    this->selection = sp_desktop_selection(desktop);
+    this->selection = desktop->getSelection();
 
     // Connect signals to track selection changes
     this->sel_changed_connection = this->selection->connectChanged(
@@ -500,7 +500,7 @@ void spdc_endpoint_snap_free(ToolBase const * const ec, Geom::Point& p, boost::o
 {
     SPDesktop *dt = ec->desktop;
     SnapManager &m = dt->namedview->snap_manager;
-    Inkscape::Selection *selection = sp_desktop_selection (dt);
+    Inkscape::Selection *selection = dt->getSelection();
 
     // selection->singleItem() is the item that is currently being drawn. This item will not be snapped to (to avoid self-snapping)
     // TODO: Allow snapping to the stationary parts of the item, and only ignore the last segment
@@ -715,7 +715,7 @@ static void spdc_flush_white(FreehandBase *dc, SPCurve *gc)
         // results in the tool losing all of the selected path's curve except that last subpath. To
         // fix this, we force the selection_modified callback now, to make sure the tool's curve is
         // in sync immediately.
-        spdc_selection_modified(sp_desktop_selection(desktop), 0, dc);
+        spdc_selection_modified(desktop->getSelection(), 0, dc);
     }
 
     c->unref();
@@ -862,7 +862,7 @@ void spdc_create_single_dot(ToolBase *ec, Geom::Point const &pt, char const *too
     sp_repr_set_svg_double (repr, "sodipodi:ry", rad * stroke_width);
     item->updateRepr();
 
-    sp_desktop_selection(desktop)->set(item);
+    desktop->getSelection()->set(item);
 
     desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Creating single dot"));
     DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_NONE, _("Create single dot"));

@@ -153,7 +153,7 @@ bool PencilTool::_handleButtonPress(GdkEventButton const &bevent) {
     bool ret = false;
 
     if ( bevent.button == 1  && !this->space_panning) {
-        Inkscape::Selection *selection = sp_desktop_selection(desktop);
+        Inkscape::Selection *selection = desktop->getSelection();
 
         if (Inkscape::have_viable_layer(desktop, this->message_context) == false) {
             return true;

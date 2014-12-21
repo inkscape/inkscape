@@ -29,6 +29,7 @@
 #include "xml/node.h"
 #include "xml/repr.h"
 #include "sp-font-face.h"
+#include "desktop.h"
 #include "desktop-handles.h"
 #include "display/nr-svgfonts.h"
 #include "verbs.h"
@@ -516,7 +517,7 @@ void SvgFontsDialog::set_glyph_description_from_selected_path(){
 
     Inkscape::MessageStack *msgStack = sp_desktop_message_stack(desktop);
     SPDocument* doc = sp_desktop_document(desktop);
-    Inkscape::Selection* sel = sp_desktop_selection(desktop);
+    Inkscape::Selection* sel = desktop->getSelection();
     if (sel->isEmpty()){
         char *msg = _("Select a <b>path</b> to define the curves of a glyph");
         msgStack->flash(Inkscape::ERROR_MESSAGE, msg);
@@ -558,7 +559,7 @@ void SvgFontsDialog::missing_glyph_description_from_selected_path(){
 
     Inkscape::MessageStack *msgStack = sp_desktop_message_stack(desktop);
     SPDocument* doc = sp_desktop_document(desktop);
-    Inkscape::Selection* sel = sp_desktop_selection(desktop);
+    Inkscape::Selection* sel = desktop->getSelection();
     if (sel->isEmpty()){
         char *msg = _("Select a <b>path</b> to define the curves of a glyph");
         msgStack->flash(Inkscape::ERROR_MESSAGE, msg);

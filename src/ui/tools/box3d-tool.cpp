@@ -145,13 +145,13 @@ void Box3dTool::setup() {
 
     this->shape_editor = new ShapeEditor(this->desktop);
 
-    SPItem *item = sp_desktop_selection(this->desktop)->singleItem();
+    SPItem *item = this->desktop->getSelection()->singleItem();
     if (item) {
         this->shape_editor->set_item(item);
     }
 
     this->sel_changed_connection.disconnect();
-    this->sel_changed_connection = sp_desktop_selection(this->desktop)->connectChanged(
+    this->sel_changed_connection = this->desktop->getSelection()->connectChanged(
     	sigc::mem_fun(this, &Box3dTool::selection_changed)
     );
 
@@ -196,7 +196,7 @@ bool Box3dTool::root_handler(GdkEvent* event) {
     static bool dragging;
 
     SPDocument *document = sp_desktop_document (desktop);
-    Inkscape::Selection *selection = sp_desktop_selection (desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int const snaps = prefs->getInt("/options/rotationsnapsperpi/value", 12);
 
@@ -466,7 +466,7 @@ bool Box3dTool::root_handler(GdkEvent* event) {
             break;
 
         case GDK_KEY_Escape:
-            sp_desktop_selection(desktop)->clear();
+            desktop->getSelection()->clear();
             //TODO: make dragging escapable by Esc
             break;
 
@@ -604,7 +604,7 @@ void Box3dTool::finishItem() {
 
         desktop->canvas->endForcedFullRedraws();
 
-        sp_desktop_selection(desktop)->set(this->box3d);
+        desktop->getSelection()->set(this->box3d);
         DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_3DBOX,
                          _("Create 3D box"));
 

@@ -92,7 +92,7 @@ static void ms_tb_selection_changed(Inkscape::Selection * /*selection*/, gpointe
     //     return;
     // }
 
-    // Inkscape::Selection *selection = sp_desktop_selection(desktop); // take from desktop, not from args
+    // Inkscape::Selection *selection = desktop->getSelection(); // take from desktop, not from args
     // if (selection) {
     //     ToolBase *ev = sp_desktop_event_context(desktop);
     //     GrDrag *drag = NULL;
@@ -334,7 +334,7 @@ static void mesh_toolbox_watch_ec(SPDesktop* desktop, Inkscape::UI::Tools::ToolB
 
     if (SP_IS_MESH_CONTEXT(ec)) {
         // connect to selection modified and changed signals
-        Inkscape::Selection *selection = sp_desktop_selection (desktop);
+        Inkscape::Selection *selection = desktop->getSelection();
         SPDocument *document = sp_desktop_document (desktop);
 
         c_selection_changed = selection->connectChanged(sigc::bind(sigc::ptr_fun(&ms_tb_selection_changed), holder));

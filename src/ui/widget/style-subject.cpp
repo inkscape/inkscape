@@ -49,7 +49,7 @@ StyleSubject::Selection::~Selection() {
 Inkscape::Selection *StyleSubject::Selection::_getSelection() const {
     SPDesktop *desktop = getDesktop();
     if (desktop) {
-        return sp_desktop_selection(desktop);
+        return desktop->getSelection();
     } else {
         return NULL;
     }
@@ -88,7 +88,7 @@ void StyleSubject::Selection::_afterDesktopSwitch(SPDesktop *desktop) {
     _sel_modified.disconnect();
     if (desktop) {
         _subsel_changed = desktop->connectToolSubselectionChanged(sigc::hide(sigc::mem_fun(*this, &Selection::_emitChanged)));
-        Inkscape::Selection *selection = sp_desktop_selection(desktop);
+        Inkscape::Selection *selection = desktop->getSelection();
         if (selection) {
             _sel_changed = selection->connectChanged(sigc::hide(sigc::mem_fun(*this, &Selection::_emitChanged)));
             _sel_modified = selection->connectModified(sigc::hide(sigc::hide(sigc::mem_fun(*this, &Selection::_emitChanged))));

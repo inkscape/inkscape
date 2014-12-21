@@ -154,7 +154,7 @@ void LayerManager::setCurrentLayer( SPObject* obj )
 
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         if (prefs->getBool("/options/selection/layerdeselect", true)) {
-            sp_desktop_selection( _desktop )->clear();
+            _desktop->getSelection()->clear();
         }
     }
 }

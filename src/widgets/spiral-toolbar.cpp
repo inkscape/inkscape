@@ -79,7 +79,7 @@ static void sp_spl_tb_value_changed(GtkAdjustment *adj, GObject *tbl, Glib::ustr
     gchar* namespaced_name = g_strconcat("sodipodi:", value_name.data(), NULL);
 
     bool modmade = false;
-    for (GSList const *items = sp_desktop_selection(desktop)->itemList();
+    for (GSList const *items = desktop->getSelection()->itemList();
          items != NULL;
          items = items->next)
     {
@@ -296,7 +296,7 @@ void sp_spiral_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
 
 
     sigc::connection *connection = new sigc::connection(
-        sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_spiral_toolbox_selection_changed), holder))
+        desktop->getSelection()->connectChanged(sigc::bind(sigc::ptr_fun(sp_spiral_toolbox_selection_changed), holder))
         );
     g_signal_connect( holder, "destroy", G_CALLBACK(delete_connection), connection );
     g_signal_connect( holder, "destroy", G_CALLBACK(purge_repr_listener), holder );

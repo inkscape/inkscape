@@ -97,7 +97,7 @@ sp_arctb_startend_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *v
     gchar* namespaced_name = g_strconcat("sodipodi:", value_name, NULL);
 
     bool modmade = false;
-    for (GSList const *items = sp_desktop_selection(desktop)->itemList();
+    for (GSList const *items = desktop->getSelection()->itemList();
          items != NULL;
          items = items->next)
     {
@@ -166,7 +166,7 @@ static void sp_arctb_open_state_changed( EgeSelectOneAction *act, GObject *tbl )
     bool modmade = false;
 
     if ( ege_select_one_action_get_active(act) != 0 ) {
-        for (GSList const *items = sp_desktop_selection(desktop)->itemList();
+        for (GSList const *items = desktop->getSelection()->itemList();
              items != NULL;
              items = items->next)
         {
@@ -179,7 +179,7 @@ static void sp_arctb_open_state_changed( EgeSelectOneAction *act, GObject *tbl )
             }
         }
     } else {
-        for (GSList const *items = sp_desktop_selection(desktop)->itemList();
+        for (GSList const *items = desktop->getSelection()->itemList();
              items != NULL;
              items = items->next)
         {
@@ -413,8 +413,8 @@ static void arc_toolbox_check_ec(SPDesktop* desktop, Inkscape::UI::Tools::ToolBa
     static sigc::connection changed;
 
     if (SP_IS_ARC_CONTEXT(ec)) {
-        changed = sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_arc_toolbox_selection_changed), holder));
-        sp_arc_toolbox_selection_changed(sp_desktop_selection(desktop), holder);
+        changed = desktop->getSelection()->connectChanged(sigc::bind(sigc::ptr_fun(sp_arc_toolbox_selection_changed), holder));
+        sp_arc_toolbox_selection_changed(desktop->getSelection(), holder);
     } else {
         if (changed)
             changed.disconnect();
