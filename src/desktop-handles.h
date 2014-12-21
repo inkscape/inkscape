@@ -45,7 +45,6 @@ namespace Inkscape {
 #define SP_COORDINATES_UNDERLINE_Y (1 << Geom::Y)
 
 SPDocument * sp_desktop_document (SPDesktop const * desktop);
-SPCanvasGroup * sp_desktop_guides (SPDesktop const * desktop);
 SPCanvasGroup * sp_desktop_controls (SPDesktop const * desktop);
 
 #endif // SEEN_SP_DESKTOP_HANDLES_H
