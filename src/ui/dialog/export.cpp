@@ -206,7 +206,7 @@ Export::Export (void) :
 
         SPDesktop *desktop = SP_ACTIVE_DESKTOP;
         if (desktop) {
-            unit_selector.setUnit(sp_desktop_namedview(desktop)->display_units->abbr);
+            unit_selector.setUnit(desktop->getNamedView()->display_units->abbr);
         }
         unitChangedConn = unit_selector.signal_changed().connect(sigc::mem_fun(*this, &Export::onUnitChanged));
         unitbox.pack_end(unit_selector, false, false, 0);
@@ -1002,7 +1002,7 @@ void Export::onExport ()
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (!desktop) return;
 
-    SPNamedView *nv = sp_desktop_namedview(desktop);
+    SPNamedView *nv = desktop->getNamedView();
     SPDocument *doc = sp_desktop_document (desktop);
 
     bool exportSuccessful = false;

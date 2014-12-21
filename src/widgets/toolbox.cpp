@@ -1511,7 +1511,7 @@ static void toggle_snap_callback(GtkToggleAction *act, gpointer data) //data poi
     g_assert(ptr != NULL);
 
     SPDesktop *dt = reinterpret_cast<SPDesktop*>(ptr);
-    SPNamedView *nv = sp_desktop_namedview(dt);
+    SPNamedView *nv = dt->getNamedView();
     SPDocument *doc = nv->document;
 
     if (dt == NULL || nv == NULL) {
@@ -1871,7 +1871,7 @@ void ToolboxFactory::updateSnapToolbox(SPDesktop *desktop, ToolBase * /*eventcon
     g_assert(desktop != NULL);
     g_assert(toolbox != NULL);
 
-    SPNamedView *nv = sp_desktop_namedview(desktop);
+    SPNamedView *nv = desktop->getNamedView();
     if (nv == NULL) {
         g_warning("Namedview cannot be retrieved (in updateSnapToolbox)!");
         return;

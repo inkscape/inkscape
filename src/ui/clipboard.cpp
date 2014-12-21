@@ -331,7 +331,7 @@ void ClipboardManagerImpl::copySymbol(Inkscape::XML::Node* symbol, gchar const* 
     // Set a default style in <use> rather than <symbol> so it can be changed.
     use->setAttribute("style", style );
 /*      disable rev 13709 in rev 13806, following Bug 1365451, comments 13-16
-    Inkscape::XML::Node *nv_repr = sp_desktop_namedview(SP_ACTIVE_DESKTOP)->getRepr();
+    Inkscape::XML::Node *nv_repr = SP_ACTIVE_DESKTOP->getNamedView()->getRepr();
     gdouble scale_units = Inkscape::Util::Quantity::convert(1, nv_repr->attribute("inkscape:document-units"), "px");
     gchar *transform_str = sp_svg_transform_write(Geom::Scale(scale_units, scale_units));
     use->setAttribute("transform", transform_str);

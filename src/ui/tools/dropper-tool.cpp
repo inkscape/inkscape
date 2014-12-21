@@ -245,7 +245,7 @@ bool DropperTool::root_handler(GdkEvent* event) {
 
                 if (pick == SP_DROPPER_PICK_VISIBLE) {
                     // compose with page color
-                    guint32 bg = sp_desktop_namedview(desktop)->pagecolor;
+                    guint32 bg = desktop->getNamedView()->pagecolor;
                     R = R + (SP_RGBA32_R_F(bg)) * (1 - A);
                     G = G + (SP_RGBA32_G_F(bg)) * (1 - A);
                     B = B + (SP_RGBA32_B_F(bg)) * (1 - A);

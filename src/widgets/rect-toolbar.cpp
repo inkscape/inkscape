@@ -109,7 +109,7 @@ static void sp_rtb_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *
     for (GSList const *items = selection->itemList(); items != NULL; items = items->next) {
         if (SP_IS_RECT(items->data)) {
             if (gtk_adjustment_get_value(adj) != 0) {
-                (SP_RECT(items->data)->*setter)(Quantity::convert(gtk_adjustment_get_value(adj), unit, sp_desktop_namedview(desktop)->svg_units));
+                (SP_RECT(items->data)->*setter)(Quantity::convert(gtk_adjustment_get_value(adj), unit, desktop->getNamedView()->svg_units));
             } else {
                 SP_OBJECT(items->data)->getRepr()->setAttribute(value_name, NULL);
             }
@@ -181,7 +181,7 @@ static void rect_tb_event_attr_changed(Inkscape::XML::Node * /*repr*/, gchar con
 
     UnitTracker* tracker = reinterpret_cast<UnitTracker*>( g_object_get_data( tbl, "tracker" ) );
     Unit const *unit = tracker->getActiveUnit();
-    Unit const *svg_unit = sp_desktop_namedview(SP_ACTIVE_DESKTOP)->svg_units;
+    Unit const *svg_unit = SP_ACTIVE_DESKTOP->getNamedView()->svg_units;
     g_return_if_fail(unit != NULL);
 
     gpointer item = g_object_get_data( tbl, "item" );
@@ -307,7 +307,7 @@ void sp_rect_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
     UnitTracker* tracker = new UnitTracker(Inkscape::Util::UNIT_TYPE_LINEAR);
     //tracker->addUnit( SP_UNIT_PERCENT, 0 );
     // fixme: add % meaning per cent of the width/height
-    tracker->setActiveUnit( sp_desktop_namedview(desktop)->display_units );
+    tracker->setActiveUnit( desktop->getNamedView()->display_units );
     g_object_set_data( holder, "tracker", tracker );
 
     /* W */

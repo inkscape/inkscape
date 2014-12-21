@@ -488,7 +488,7 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     // Create the units menu.
     UnitTracker* tracker = new UnitTracker(Inkscape::Util::UNIT_TYPE_LINEAR);
     tracker->addUnit(unit_table.getUnit("%"));
-    tracker->setActiveUnit( sp_desktop_namedview(desktop)->display_units );
+    tracker->setActiveUnit( desktop->getNamedView()->display_units );
 
     g_object_set_data( G_OBJECT(spw), "tracker", tracker );
     g_signal_connect( G_OBJECT(spw), "destroy", G_CALLBACK(destroy_tracker), spw );

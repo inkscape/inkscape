@@ -102,13 +102,3 @@ sp_desktop_message_stack (SPDesktop const * desktop)
 
 	return desktop->messageStack();
 }
-
-SPNamedView *
-sp_desktop_namedview (SPDesktop const * desktop)
-{
-	g_return_val_if_fail (desktop != NULL, NULL);
-
-	return desktop->namedview;
-}
-
-

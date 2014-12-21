@@ -1093,7 +1093,7 @@ CloneTiler::CloneTiler () :
                 // unitmenu
                 unit_menu = new Inkscape::UI::Widget::UnitMenu();
                 unit_menu->setUnitType(Inkscape::Util::UNIT_TYPE_LINEAR);
-                unit_menu->setUnit(sp_desktop_namedview(SP_ACTIVE_DESKTOP)->display_units->abbr);
+                unit_menu->setUnit(SP_ACTIVE_DESKTOP->getNamedView()->display_units->abbr);
                 unitChangedConn = unit_menu->signal_changed().connect(sigc::mem_fun(*this, &CloneTiler::clonetiler_unit_changed));
 
                 {

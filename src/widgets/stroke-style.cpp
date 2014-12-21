@@ -204,8 +204,8 @@ StrokeStyle::StrokeStyle() :
     unitSelector->addUnit(*unit_table.getUnit("%"));
     _old_unit = unitSelector->getUnit();
     if (desktop) {
-        unitSelector->setUnit(sp_desktop_namedview(desktop)->display_units->abbr);
-        _old_unit = sp_desktop_namedview(desktop)->display_units;
+        unitSelector->setUnit(desktop->getNamedView()->display_units->abbr);
+        _old_unit = desktop->getNamedView()->display_units;
     }
     widthSpin->setUnitMenu(unitSelector);
     unitChangedConn = unitSelector->signal_changed().connect(sigc::mem_fun(*this, &StrokeStyle::unitChangedCB));
@@ -839,7 +839,7 @@ StrokeStyle::updateLine()
             // same width, or only one object; no sense to keep percent, switch to absolute
             Inkscape::Util::Unit const *tempunit = unitSelector->getUnit();
             if (tempunit->type != Inkscape::Util::UNIT_TYPE_LINEAR) {
-                unitSelector->setUnit(sp_desktop_namedview(SP_ACTIVE_DESKTOP)->display_units->abbr);
+                unitSelector->setUnit(SP_ACTIVE_DESKTOP->getNamedView()->display_units->abbr);
             }
         }
 

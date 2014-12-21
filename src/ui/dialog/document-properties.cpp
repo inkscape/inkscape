@@ -186,7 +186,7 @@ void DocumentProperties::init()
 {
     update();
 
-    Inkscape::XML::Node *repr = sp_desktop_namedview(getDesktop())->getRepr();
+    Inkscape::XML::Node *repr = getDesktop()->getNamedView()->getRepr();
     repr->addListener (&_repr_events, this);
     Inkscape::XML::Node *root = sp_desktop_document(getDesktop())->getRoot()->getRepr();
     root->addListener (&_repr_events, this);
@@ -197,7 +197,7 @@ void DocumentProperties::init()
 
 DocumentProperties::~DocumentProperties()
 {
-    Inkscape::XML::Node *repr = sp_desktop_namedview(getDesktop())->getRepr();
+    Inkscape::XML::Node *repr = getDesktop()->getNamedView()->getRepr();
     repr->removeListenerByData (this);
     Inkscape::XML::Node *root = sp_desktop_document(getDesktop())->getRoot()->getRepr();
     root->removeListenerByData (this);
@@ -1384,7 +1384,7 @@ void DocumentProperties::populate_script_lists(){
 void DocumentProperties::update_gridspage()
 {
     SPDesktop *dt = getDesktop();
-    SPNamedView *nv = sp_desktop_namedview(dt);
+    SPNamedView *nv = dt->getNamedView();
 
     //remove all tabs
     while (_grids_notebook.get_n_pages() != 0) {
@@ -1428,7 +1428,7 @@ void DocumentProperties::build_gridspage()
     /// Dissenting view: you want snapping without grid.
 
     SPDesktop *dt = getDesktop();
-    SPNamedView *nv = sp_desktop_namedview(dt);
+    SPNamedView *nv = dt->getNamedView();
     (void)nv;
 
     _grids_label_crea.set_markup(_("<b>Creation</b>"));
@@ -1464,7 +1464,7 @@ void DocumentProperties::update()
     if (_wr.isUpdating()) return;
 
     SPDesktop *dt = getDesktop();
-    SPNamedView *nv = sp_desktop_namedview(dt);
+    SPNamedView *nv = dt->getNamedView();
 
     _wr.setUpdating (true);
     set_sensitive (true);
@@ -1592,7 +1592,7 @@ void DocumentProperties::save_default_metadata()
 
 void DocumentProperties::_handleDocumentReplaced(SPDesktop* desktop, SPDocument *document)
 {
-    Inkscape::XML::Node *repr = sp_desktop_namedview(desktop)->getRepr();
+    Inkscape::XML::Node *repr = desktop->getNamedView()->getRepr();
     repr->addListener(&_repr_events, this);
     Inkscape::XML::Node *root = document->getRoot()->getRepr();
     root->addListener(&_repr_events, this);
@@ -1601,7 +1601,7 @@ void DocumentProperties::_handleDocumentReplaced(SPDesktop* desktop, SPDocument 
 
 void DocumentProperties::_handleActivateDesktop(SPDesktop *desktop)
 {
-    Inkscape::XML::Node *repr = sp_desktop_namedview(desktop)->getRepr();
+    Inkscape::XML::Node *repr = desktop->getNamedView()->getRepr();
     repr->addListener(&_repr_events, this);
     Inkscape::XML::Node *root = sp_desktop_document(desktop)->getRoot()->getRepr();
     root->addListener(&_repr_events, this);
@@ -1610,7 +1610,7 @@ void DocumentProperties::_handleActivateDesktop(SPDesktop *desktop)
 
 void DocumentProperties::_handleDeactivateDesktop(SPDesktop *desktop)
 {
-    Inkscape::XML::Node *repr = sp_desktop_namedview(desktop)->getRepr();
+    Inkscape::XML::Node *repr = desktop->getNamedView()->getRepr();
     repr->removeListenerByData(this);
     Inkscape::XML::Node *root = sp_desktop_document(desktop)->getRoot()->getRepr();
     root->removeListenerByData(this);
@@ -1647,7 +1647,7 @@ static void on_repr_attr_changed(Inkscape::XML::Node *, gchar const *, gchar con
 void DocumentProperties::onNewGrid()
 {
     SPDesktop *dt = getDesktop();
-    Inkscape::XML::Node *repr = sp_desktop_namedview(dt)->getRepr();
+    Inkscape::XML::Node *repr = dt->getNamedView()->getRepr();
     SPDocument *doc = sp_desktop_document(dt);
 
     Glib::ustring typestring = _grids_combo_gridtype.get_active_text();
@@ -1665,7 +1665,7 @@ void DocumentProperties::onRemoveGrid()
       return;
 
     SPDesktop *dt = getDesktop();
-    SPNamedView *nv = sp_desktop_namedview(dt);
+    SPNamedView *nv = dt->getNamedView();
     Inkscape::CanvasGrid * found_grid = NULL;
     int i = 0;
     for (GSList const * l = nv->grids; l != NULL; l = l->next, i++) {  // not a very nice fix, but works.
@@ -1697,7 +1697,7 @@ void DocumentProperties::onDocUnitChange()
     }
 
 
-    Inkscape::XML::Node *repr = sp_desktop_namedview(getDesktop())->getRepr();
+    Inkscape::XML::Node *repr = getDesktop()->getNamedView()->getRepr();
     Inkscape::Util::Unit const *old_doc_unit = unit_table.getUnit("px");
     if(repr->attribute("inkscape:document-units")) {
         old_doc_unit = unit_table.getUnit(repr->attribute("inkscape:document-units"));

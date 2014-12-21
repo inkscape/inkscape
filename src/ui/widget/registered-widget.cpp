@@ -36,6 +36,9 @@
 // for interruptability bug:
 #include "display/sp-canvas.h"
 
+#include "desktop.h"
+#include "desktop-handles.h"
+
 #include "sp-root.h"
 
 namespace Inkscape {
@@ -416,7 +419,7 @@ RegisteredColorPicker::on_changed (guint32 rgba)
         SPDesktop *dt = SP_ACTIVE_DESKTOP;
         if (!dt)
             return;
-        local_repr = sp_desktop_namedview(dt)->getRepr();
+        local_repr = dt->getNamedView()->getRepr();
         local_doc = sp_desktop_document(dt);
     }
 

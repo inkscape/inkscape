@@ -330,7 +330,7 @@ static void node_toolbox_watch_ec(SPDesktop* dt, Inkscape::UI::Tools::ToolBase* 
 void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
     UnitTracker* tracker = new UnitTracker(Inkscape::Util::UNIT_TYPE_LINEAR);
-    Unit doc_units = *sp_desktop_namedview(desktop)->display_units;
+    Unit doc_units = *desktop->getNamedView()->display_units;
     tracker->setActiveUnit(&doc_units);
     g_object_set_data( holder, "tracker", tracker );
 

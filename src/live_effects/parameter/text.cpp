@@ -19,6 +19,7 @@
 #include "inkscape.h"
 #include "verbs.h"
 #include "display/canvas-text.h"
+#include "desktop-handles.h"
 #include <2geom/sbasis-geometric.h>
 
 namespace Inkscape {

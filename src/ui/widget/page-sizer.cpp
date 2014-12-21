@@ -309,7 +309,7 @@ PageSizer::PageSizer(Registry & _wr)
 
     // Setting default custom unit to document unit
     SPDesktop *dt = SP_ACTIVE_DESKTOP;
-    SPNamedView *nv = sp_desktop_namedview(dt);
+    SPNamedView *nv = dt->getNamedView();
     _wr.setUpdating (true);
     if (nv->page_size_units) {
         _dimensionUnits.setUnit(nv->page_size_units->abbr);

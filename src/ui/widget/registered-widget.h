@@ -27,7 +27,7 @@
 
 #include "document.h"
 #include "document-undo.h"
-#include "desktop-handles.h"
+#include "desktop.h"
 #include "sp-namedview.h"
 
 #include <gtkmm/checkbutton.h>
@@ -99,8 +99,8 @@ protected:
         if (!local_repr) {
             // no repr specified, use active desktop's namedview's repr
             SPDesktop* dt = SP_ACTIVE_DESKTOP;
-            local_repr = reinterpret_cast<SPObject *>(sp_desktop_namedview(dt))->getRepr();
-            local_doc = sp_desktop_document(dt);
+            local_repr = reinterpret_cast<SPObject *>(dt->getNamedView())->getRepr();
+            local_doc = dt->getDocument();
         }
 
         bool saved = DocumentUndo::getUndoSensitive(local_doc);

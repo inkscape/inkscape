@@ -280,7 +280,7 @@ static void lpetool_toolbox_watch_ec(SPDesktop* dt, Inkscape::UI::Tools::ToolBas
 void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
     UnitTracker* tracker = new UnitTracker(Inkscape::Util::UNIT_TYPE_LINEAR);
-    tracker->setActiveUnit(sp_desktop_namedview(desktop)->display_units);
+    tracker->setActiveUnit(desktop->getNamedView()->display_units);
     g_object_set_data(holder, "tracker", tracker);
     Unit const *unit = tracker->getActiveUnit();
     g_return_if_fail(unit != NULL);
