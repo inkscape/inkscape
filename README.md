@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/github/inkscape/inkscape/badges/gpa.svg)](https://codeclimate.com/github/inkscape/inkscape)
+
 What is Inkscape?
 =================
 
