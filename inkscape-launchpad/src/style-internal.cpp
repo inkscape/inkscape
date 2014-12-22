@@ -984,7 +984,7 @@ SPIPaint::read( gchar const *str ) {
 
         if (streq(str, "currentColor")) {
             set = true;
-            currentcolor = true;
+            paintOrigin = SP_CSS_PAINT_ORIGIN_CURRENT_COLOR;
             if (style) {
                 setColor( style->color.value.color );
             } else {
@@ -995,6 +995,12 @@ SPIPaint::read( gchar const *str ) {
                 std::cerr << "SPIPaint::read(): value is 'currentColor' but 'color' not available." << std::endl;
                 setColor( 0 );
             }
+        } else if (streq(str, "context-fill")) {
+            set = true;
+            paintOrigin = SP_CSS_PAINT_ORIGIN_CONTEXT_FILL;
+        } else if (streq(str, "context-stroke")) {
+            set = true;
+            paintOrigin = SP_CSS_PAINT_ORIGIN_CONTEXT_STROKE;
         } else if (streq(str, "none")) {
             set = true;
             noneSet = true;
@@ -1058,14 +1064,28 @@ SPIPaint::write( guint const flags, SPIBase const *const base) const {
                 css << "none";
             }
 
-            if ( this->currentcolor ) {
+            if ( this->paintOrigin == SP_CSS_PAINT_ORIGIN_CURRENT_COLOR ) {
                 if ( !css.str().empty() ) {
                     css << " ";
                 }
                 css << "currentColor";
             }
 
-            if ( this->colorSet && !this->currentcolor ) {
+            if ( this->paintOrigin == SP_CSS_PAINT_ORIGIN_CONTEXT_FILL ) {
+                if ( !css.str().empty() ) {
+                    css << " ";
+                }
+                css << "context-fill";
+            }
+
+            if ( this->paintOrigin == SP_CSS_PAINT_ORIGIN_CONTEXT_STROKE ) {
+                if ( !css.str().empty() ) {
+                    css << " ";
+                }
+                css << "context-stroke";
+            }
+
+            if ( this->colorSet && this->paintOrigin == SP_CSS_PAINT_ORIGIN_NORMAL ) {
                 if ( !css.str().empty() ) {
                     css << " ";
                 }
@@ -1074,7 +1094,7 @@ SPIPaint::write( guint const flags, SPIBase const *const base) const {
                 css << color_buf;
             }
 
-            if (this->value.color.icc && !this->currentcolor) {
+            if ( this->value.color.icc && this->paintOrigin == SP_CSS_PAINT_ORIGIN_NORMAL ) {
                 if ( !css.str().empty() ) {
                     css << " ";
                 }
@@ -1107,7 +1127,7 @@ SPIPaint::reset( bool init ) {
 
     // std::cout << "SPIPaint::reset(): " << name << " " << init << std::endl;
     SPIBase::clear();
-    currentcolor = false;
+    paintOrigin = SP_CSS_PAINT_ORIGIN_NORMAL;
     colorSet = false;
     noneSet = false;
     value.color.set( false );
@@ -1147,8 +1167,8 @@ SPIPaint::cascade( const SPIBase* const parent ) {
                 setColor( p->value.color );
             } else if( p->isNoneSet() ) {
                 noneSet = true;
-            } else if( p->currentcolor ) {
-                currentcolor = true;
+            } else if( p->paintOrigin == SP_CSS_PAINT_ORIGIN_CURRENT_COLOR ) {
+                paintOrigin = SP_CSS_PAINT_ORIGIN_CURRENT_COLOR;
                 setColor( style->color.value.color );
             } else if( isNone() ) {
                 //
@@ -1156,7 +1176,7 @@ SPIPaint::cascade( const SPIBase* const parent ) {
                 g_assert_not_reached();
             }
         } else {
-            if( currentcolor ) {
+            if( paintOrigin == SP_CSS_PAINT_ORIGIN_CURRENT_COLOR ) {
                 // Update in case color value changed.
                 setColor( style->color.value.color );
             }
@@ -1187,7 +1207,7 @@ SPIPaint::operator==(const SPIBase& rhs) {
 
         if ( (this->isColor()       != r->isColor()       )  ||
              (this->isPaintserver() != r->isPaintserver() )  ||
-             (this->currentcolor    != r->currentcolor    ) ) {
+             (this->paintOrigin     != r->paintOrigin     ) ) {
             return false;
         }
 

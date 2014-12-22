@@ -35,7 +35,7 @@
 
 #include "desktop.h"
 #include "selection.h"
-#include "desktop-handles.h"
+
 #include "desktop-style.h"
 #include "display/sp-canvas.h"
 #include "document-private.h"
@@ -480,8 +480,8 @@ void FillNStroke::updateFromPaint()
     }
     update = true;
 
-    SPDocument *document = sp_desktop_document(desktop);
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    SPDocument *document = desktop->getDocument();
+    Inkscape::Selection *selection = desktop->getSelection();
 
     GSList const *items = selection->itemList();
 
@@ -516,18 +516,18 @@ void FillNStroke::updateFromPaint()
         {
             if (kind == FILL) {
                 // FIXME: fix for GTK breakage, see comment in SelectedStyle::on_opacity_changed; here it results in losing release events
-                sp_desktop_canvas(desktop)->forceFullRedrawAfterInterruptions(0);
+                desktop->getCanvas()->forceFullRedrawAfterInterruptions(0);
             }
 
             psel->setFlatColor( desktop,
                                 (kind == FILL) ? "fill" : "stroke",
                                 (kind == FILL) ? "fill-opacity" : "stroke-opacity" );
-            DocumentUndo::maybeDone(sp_desktop_document(desktop), (kind == FILL) ? undo_F_label : undo_S_label, SP_VERB_DIALOG_FILL_STROKE,
+            DocumentUndo::maybeDone(desktop->getDocument(), (kind == FILL) ? undo_F_label : undo_S_label, SP_VERB_DIALOG_FILL_STROKE,
                                     (kind == FILL) ? _("Set fill color") : _("Set stroke color"));
 
             if (kind == FILL) {
                 // resume interruptibility
-                sp_desktop_canvas(desktop)->endForcedFullRedraws();
+                desktop->getCanvas()->endForcedFullRedraws();
             }
 
             // on release, toggle undo_label so that the next drag will not be lumped with this one

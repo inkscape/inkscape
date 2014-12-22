@@ -33,7 +33,7 @@
 #include "selection.h"
 #include "desktop.h"
 #include "desktop-events.h"
-#include "desktop-handles.h"
+
 #include "message-context.h"
 #include "pixmaps/cursor-spray.xpm"
 #include <boost/optional.hpp>
@@ -222,7 +222,7 @@ void SprayTool::setup() {
 
         SPCurve *c = new SPCurve(path);
 
-        this->dilate_area = sp_canvas_bpath_new(sp_desktop_controls(this->desktop), c);
+        this->dilate_area = sp_canvas_bpath_new(this->desktop->getControls(), c);
         c->unref();
         sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(this->dilate_area), 0x00000000,(SPWindRule)0);
         sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(this->dilate_area), 0xff9900ff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
@@ -527,7 +527,7 @@ static bool sp_spray_recursive(SPDesktop *desktop,
 static bool sp_spray_dilate(SprayTool *tc, Geom::Point /*event_p*/, Geom::Point p, Geom::Point vector, bool reverse)
 {
     SPDesktop *desktop = tc->desktop;
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     if (selection->isEmpty()) {
         return false;
@@ -735,15 +735,15 @@ bool SprayTool::root_handler(GdkEvent* event) {
                 this->has_dilated = false;
                 switch (this->mode) {
                     case SPRAY_MODE_COPY:
-                        DocumentUndo::done(sp_desktop_document(SP_EVENT_CONTEXT(this)->desktop),
+                        DocumentUndo::done(this->desktop->getDocument(),
                                            SP_VERB_CONTEXT_SPRAY, _("Spray with copies"));
                         break;
                     case SPRAY_MODE_CLONE:
-                        DocumentUndo::done(sp_desktop_document(SP_EVENT_CONTEXT(this)->desktop),
+                        DocumentUndo::done(this->desktop->getDocument(),
                                            SP_VERB_CONTEXT_SPRAY, _("Spray with clones"));
                         break;
                     case SPRAY_MODE_SINGLE_PATH:
-                        DocumentUndo::done(sp_desktop_document(SP_EVENT_CONTEXT(this)->desktop),
+                        DocumentUndo::done(this->desktop->getDocument(),
                                            SP_VERB_CONTEXT_SPRAY, _("Spray in single path"));
                         break;
                 }

@@ -21,7 +21,7 @@
 #include <string.h>
 #include <dbus/dbus-glib.h>
 #include "desktop.h"
-#include "desktop-handles.h" //sp_desktop_document()
+ //sp_desktop_document()
 #include "desktop-style.h" //sp_desktop_get_style
 #include "display/canvas-text.h" //text
 #include "display/sp-canvas.h" //text
@@ -156,7 +156,7 @@ get_name_from_object (SPObject * obj)
 void
 desktop_ensure_active (SPDesktop* desk) {
     if (desk != SP_ACTIVE_DESKTOP)
-        inkscape_activate_desktop (desk);
+        INKSCAPE.activate_desktop (desk);
     return;
 }
 

@@ -31,7 +31,7 @@
 #include "document-undo.h"
 #include "desktop.h"
 #include "desktop-style.h"
-#include "desktop-handles.h"
+
 #include "ui/tools/tool-base.h"
 #include "selection.h"
 #include "verbs.h"
@@ -1569,20 +1569,20 @@ SPGradient *sp_gradient_vector_for_object( SPDocument *const doc, SPDesktop *con
 
 void sp_gradient_invert_selected_gradients(SPDesktop *desktop, Inkscape::PaintTarget fill_or_stroke)
 {
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     for (GSList const* i = selection->itemList(); i != NULL; i = i->next) {
         sp_item_gradient_invert_vector_color(SP_ITEM(i->data), fill_or_stroke);
     }
 
     // we did an undoable action
-    DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_GRADIENT,
+    DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_GRADIENT,
                        _("Invert gradient colors"));
 }
 
 void sp_gradient_reverse_selected_gradients(SPDesktop *desktop)
 {
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     Inkscape::UI::Tools::ToolBase *ev = desktop->getEventContext();
 
     if (!ev) {
@@ -1602,7 +1602,7 @@ void sp_gradient_reverse_selected_gradients(SPDesktop *desktop)
     }
 
     // we did an undoable action
-    DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_GRADIENT,
+    DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_GRADIENT,
                        _("Reverse gradient"));
 }
 

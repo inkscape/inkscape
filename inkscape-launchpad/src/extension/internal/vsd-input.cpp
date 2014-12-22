@@ -263,7 +263,7 @@ SPDocument *VsdInput::open(Inkscape::Extension::Input * /*mod*/, const gchar * u
      // If only one page is present, import that one without bothering user
      if (tmpSVGOutput.size() > 1) {
           VsdImportDialog *dlg = 0;
-          if (inkscape_use_gui()) {
+          if (INKSCAPE.use_gui()) {
                dlg = new VsdImportDialog(tmpSVGOutput);
                if (!dlg->showDialog()) {
                     delete dlg;
@@ -285,7 +285,7 @@ SPDocument *VsdInput::open(Inkscape::Extension::Input * /*mod*/, const gchar * u
      
      // Set viewBox if it doesn't exist
      if (!doc->getRoot()->viewBox_set) {
-         doc->setViewBox(Geom::Rect::from_xywh(0, 0, doc->getWidth().value(doc->getDefaultUnit()), doc->getHeight().value(doc->getDefaultUnit())));
+         doc->setViewBox(Geom::Rect::from_xywh(0, 0, doc->getWidth().value(doc->getDisplayUnit()), doc->getHeight().value(doc->getDisplayUnit())));
      }
      
      return doc;

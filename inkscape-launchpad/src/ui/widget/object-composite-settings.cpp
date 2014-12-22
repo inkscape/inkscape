@@ -17,7 +17,7 @@
 #include <glibmm/i18n.h>
 
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "desktop-style.h"
 #include "document.h"
 #include "document-undo.h"
@@ -38,26 +38,6 @@
 namespace Inkscape {
 namespace UI {
 namespace Widget {
-
-/*void ObjectCompositeSettings::_on_desktop_activate(
-    InkscapeApplication *application,
-    SPDesktop *desktop,
-    ObjectCompositeSettings *w
-) {
-    if (w->_subject) {
-        w->_subject->setDesktop(desktop);
-    }
-}
-
-void ObjectCompositeSettings::_on_desktop_deactivate(
-    InkscapeApplication *application,
-    SPDesktop *desktop,
-    ObjectCompositeSettings *w
-) {
-    if (w->_subject) {
-        w->_subject->setDesktop(NULL);
-    }
-}*/
 
 ObjectCompositeSettings::ObjectCompositeSettings(unsigned int verb_code, char const *history_prefix, int flags)
 : _verb_code(verb_code),
@@ -102,7 +82,6 @@ ObjectCompositeSettings::ObjectCompositeSettings(unsigned int verb_code, char co
 
 ObjectCompositeSettings::~ObjectCompositeSettings() {
     setSubject(NULL);
-    g_signal_handler_disconnect(G_OBJECT(INKSCAPE), _desktop_activated);
 }
 
 void ObjectCompositeSettings::setSubject(StyleSubject *subject) {
@@ -125,14 +104,14 @@ ObjectCompositeSettings::_blendBlurValueChanged()
     if (!desktop) {
         return;
     }
-    SPDocument *document = sp_desktop_document (desktop);
+    SPDocument *document = desktop->getDocument();
 
     if (_blocked)
         return;
     _blocked = true;
 
     // FIXME: fix for GTK breakage, see comment in SelectedStyle::on_opacity_changed; here it results in crash 1580903
-    //sp_canvas_force_full_redraw_after_interruptions(sp_desktop_canvas(desktop), 0);
+    //sp_canvas_force_full_redraw_after_interruptions(desktop->getCanvas(), 0);
 
     Geom::OptRect bbox = _subject->getBounds(SPItem::GEOMETRIC_BBOX);
     double radius;
@@ -180,7 +159,7 @@ ObjectCompositeSettings::_blendBlurValueChanged()
                             _("Change blur"));
 
     // resume interruptibility
-    //sp_canvas_end_forced_full_redraws(sp_desktop_canvas(desktop));
+    //sp_canvas_end_forced_full_redraws(desktop->getCanvas());
 
     _blocked = false;
 }
@@ -204,7 +183,7 @@ ObjectCompositeSettings::_opacityValueChanged()
     // FIXME: fix for GTK breakage, see comment in SelectedStyle::on_opacity_changed; here it results in crash 1580903
     // UPDATE: crash fixed in GTK+ 2.10.7 (bug 374378), remove this as soon as it's reasonably common
     // (though this only fixes the crash, not the multiple change events)
-    //sp_canvas_force_full_redraw_after_interruptions(sp_desktop_canvas(desktop), 0);
+    //sp_canvas_force_full_redraw_after_interruptions(desktop->getCanvas(), 0);
 
     SPCSSAttr *css = sp_repr_css_attr_new ();
 
@@ -216,11 +195,11 @@ ObjectCompositeSettings::_opacityValueChanged()
 
     sp_repr_css_attr_unref (css);
 
-    DocumentUndo::maybeDone(sp_desktop_document (desktop), _opacity_tag.c_str(), _verb_code,
+    DocumentUndo::maybeDone(desktop->getDocument(), _opacity_tag.c_str(), _verb_code,
                             _("Change opacity"));
 
     // resume interruptibility
-    //sp_canvas_end_forced_full_redraws(sp_desktop_canvas(desktop));
+    //sp_canvas_end_forced_full_redraws(desktop->getCanvas());
 
     _blocked = false;
 }
@@ -240,7 +219,7 @@ ObjectCompositeSettings::_subjectChanged() {
         return;
     _blocked = true;
 
-    SPStyle *query = sp_style_new (sp_desktop_document(desktop));
+    SPStyle *query = sp_style_new (desktop->getDocument());
     int result = _subject->queryStyle(query, QUERY_STYLE_PROPERTY_MASTEROPACITY);
 
     switch (result) {

@@ -13,7 +13,7 @@
 #include "ui/tool/curve-drag-point.h"
 #include <glib/gi18n.h>
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "display/sp-canvas-group.h"
 #include "display/canvas-bpath.h"
 #include "display/curve.h"
@@ -155,7 +155,7 @@ NodeTool::NodeTool()
 SPCanvasGroup *create_control_group(SPDesktop *d)
 {
     return reinterpret_cast<SPCanvasGroup*>(sp_canvas_item_new(
-        sp_desktop_controls(d), SP_TYPE_CANVAS_GROUP, NULL));
+        d->getControls(), SP_TYPE_CANVAS_GROUP, NULL));
 }
 
 void destroy_group(SPCanvasGroup *g)
@@ -215,7 +215,7 @@ void NodeTool::setup() {
     data.node_data.node_group = create_control_group(this->desktop);
     data.node_data.handle_group = create_control_group(this->desktop);
 
-    Inkscape::Selection *selection = sp_desktop_selection (this->desktop);
+    Inkscape::Selection *selection = this->desktop->getSelection();
 
     this->_selection_changed_connection.disconnect();
     this->_selection_changed_connection =
@@ -295,7 +295,7 @@ void NodeTool::setup() {
 
 // show helper paths of the applied LPE, if any
 void  NodeTool::update_helperpath () {
-    Inkscape::Selection *selection = sp_desktop_selection (this->desktop);
+    Inkscape::Selection *selection = this->desktop->getSelection();
 
     if (this->helperpath_tmpitem) {
         this->desktop->remove_temporary_canvasitem(this->helperpath_tmpitem);
@@ -324,7 +324,7 @@ void  NodeTool::update_helperpath () {
                 cc->reset();
             }
             if (!c->is_empty()) {
-                SPCanvasItem *helperpath = sp_canvas_bpath_new(sp_desktop_tempgroup(this->desktop), c);
+                SPCanvasItem *helperpath = sp_canvas_bpath_new(this->desktop->getTempGroup(), c);
                 sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(helperpath), 0x0000ff9A, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
                 sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(helperpath), 0, SP_WIND_RULE_NONZERO);
                 sp_canvas_item_affine_absolute(helperpath, selection->singleItem()->i2dt_affine());
@@ -527,7 +527,7 @@ bool NodeTool::root_handler(GdkEvent* event) {
             }
 
             c->transform(over_item->i2dt_affine());
-            SPCanvasItem *flash = sp_canvas_bpath_new(sp_desktop_tempgroup(desktop), c);
+            SPCanvasItem *flash = sp_canvas_bpath_new(desktop->getTempGroup(), c);
 
             sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(flash),
                 //prefs->getInt("/tools/nodes/highlight_color", 0xff0000ff), 1.0,
@@ -668,7 +668,7 @@ void NodeTool::select_area(Geom::Rect const &sel, GdkEventButton *event) {
     if (this->_multipath->empty()) {
         // if multipath is empty, select rubberbanded items rather than nodes
         Inkscape::Selection *selection = this->desktop->selection;
-        GSList *items = sp_desktop_document(this->desktop)->getItemsInBox(this->desktop->dkey, sel);
+        GSList *items = this->desktop->getDocument()->getItemsInBox(this->desktop->dkey, sel);
         selection->setList(items);
         g_slist_free(items);
     } else {

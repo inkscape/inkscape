@@ -32,7 +32,7 @@
 
 #include "eraser-toolbar.h"
 #include "calligraphy-toolbar.h" // TODO: needed for update_presets_list
-#include "desktop-handles.h"
+
 #include "desktop.h"
 #include "document-undo.h"
 #include "widgets/ege-adjustment-action.h"
@@ -61,7 +61,7 @@ static void sp_erasertb_mode_changed( EgeSelectOneAction *act, GObject *tbl )
 {
     SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( tbl, "desktop" ));
     bool eraserMode = ege_select_one_action_get_active( act ) != 0;
-    if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
+    if (DocumentUndo::getUndoSensitive(desktop->getDocument())) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setBool( "/tools/eraser/mode", eraserMode );
     }

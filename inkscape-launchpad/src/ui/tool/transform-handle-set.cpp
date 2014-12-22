@@ -15,7 +15,7 @@
 #include <glib/gi18n.h>
 #include <2geom/transforms.h>
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "display/sodipodi-ctrlrect.h"
 #include "preferences.h"
 #include "snap.h"
@@ -686,7 +686,7 @@ TransformHandleSet::TransformHandleSet(SPDesktop *d, SPCanvasGroup *th_group)
     , _in_transform(false)
     , _visible(true)
 {
-    _trans_outline = static_cast<CtrlRect*>(sp_canvas_item_new(sp_desktop_controls(_desktop),
+    _trans_outline = static_cast<CtrlRect*>(sp_canvas_item_new(_desktop->getControls(),
         SP_TYPE_CTRLRECT, NULL));
     sp_canvas_item_hide(_trans_outline);
     _trans_outline->setDashed(true);

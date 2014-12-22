@@ -16,10 +16,13 @@
 #include <cmath>
 #include <cerrno>
 #include <iomanip>
+#include <iostream>
 #include <glib.h>
 #include <glibmm/regex.h>
 #include <glibmm/fileutils.h>
 #include <glibmm/markup.h>
+
+#include <2geom/coord.h>
 
 #include "util/units.h"
 #include "path-prefix.h"
@@ -44,6 +47,7 @@ enum UnitCode {
     UNIT_CODE_CM = MAKE_UNIT_CODE('c','m'),
     UNIT_CODE_IN = MAKE_UNIT_CODE('i','n'),
     UNIT_CODE_FT = MAKE_UNIT_CODE('f','t'),
+    UNIT_CODE_MT = MAKE_UNIT_CODE('m',' '),
     UNIT_CODE_EM = MAKE_UNIT_CODE('e','m'),
     UNIT_CODE_EX = MAKE_UNIT_CODE('e','x'),
     UNIT_CODE_PERCENT = MAKE_UNIT_CODE('%',0)
@@ -71,6 +75,7 @@ unsigned const svg_length_lookup[] = {
     UNIT_CODE_CM,
     UNIT_CODE_IN,
     UNIT_CODE_FT,
+    UNIT_CODE_MT,
     UNIT_CODE_EM,
     UNIT_CODE_EX,
     UNIT_CODE_PERCENT
@@ -277,6 +282,28 @@ Unit const *UnitTable::getUnit(SVGLength::Unit u) const
         return &(*f->second);
     }
     return &_empty_unit;
+}
+
+Unit const *UnitTable::findUnit(double factor, UnitType type) const
+{
+    const double eps = factor * 0.01; // allow for 1% deviation
+
+    UnitCodeMap::const_iterator cit = _unit_map.begin();
+    while (cit != _unit_map.end()) {
+        if (cit->second->type == type) {
+            if (Geom::are_near(cit->second->factor, factor, eps)) {
+                // unit found!
+                break;
+            }
+        }
+        ++cit;
+    }
+
+    if (cit != _unit_map.end()) {
+        return cit->second;
+    } else {
+        return getUnit(_primary_unit[type]);
+    }
 }
 
 Quantity UnitTable::parseQuantity(Glib::ustring const &q) const

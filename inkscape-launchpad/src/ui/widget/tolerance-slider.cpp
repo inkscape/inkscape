@@ -28,7 +28,8 @@
 #include "inkscape.h"
 #include "document.h"
 #include "document-undo.h"
-#include "desktop-handles.h"
+#include "desktop.h"
+
 #include "sp-namedview.h"
 
 #include "registry.h"
@@ -195,10 +196,10 @@ void ToleranceSlider::update (double val)
 
     _wr->setUpdating (true);
 
-    SPDocument *doc = sp_desktop_document(dt);
+    SPDocument *doc = dt->getDocument();
     bool saved = DocumentUndo::getUndoSensitive(doc);
     DocumentUndo::setUndoSensitive(doc, false);
-    Inkscape::XML::Node *repr = sp_desktop_namedview(dt)->getRepr();
+    Inkscape::XML::Node *repr = dt->getNamedView()->getRepr();
     repr->setAttribute(_key.c_str(), os.str().c_str());
     DocumentUndo::setUndoSensitive(doc, saved);
 

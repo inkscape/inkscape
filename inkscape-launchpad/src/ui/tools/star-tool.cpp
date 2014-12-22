@@ -30,7 +30,7 @@
 #include "document-undo.h"
 #include "sp-namedview.h"
 #include "selection.h"
-#include "desktop-handles.h"
+
 #include "snap.h"
 #include "desktop.h"
 #include "desktop-style.h"
@@ -127,12 +127,12 @@ void StarTool::setup() {
 
 	this->shape_editor = new ShapeEditor(this->desktop);
 
-	SPItem *item = sp_desktop_selection(this->desktop)->singleItem();
+	SPItem *item = this->desktop->getSelection()->singleItem();
 	if (item) {
 		this->shape_editor->set_item(item);
 	}
 
-	Inkscape::Selection *selection = sp_desktop_selection(this->desktop);
+	Inkscape::Selection *selection = this->desktop->getSelection();
 	
 	this->sel_changed_connection.disconnect();
 
@@ -168,7 +168,7 @@ bool StarTool::root_handler(GdkEvent* event) {
     static bool dragging;
 
     SPDesktop *desktop = this->desktop;
-    Inkscape::Selection *selection = sp_desktop_selection (desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     this->tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
@@ -411,7 +411,7 @@ void StarTool::drag(Geom::Point p, guint state)
 
     /* status text */
     Inkscape::Util::Quantity q = Inkscape::Util::Quantity(r1, "px");
-    GString *rads = g_string_new(q.string(desktop->namedview->doc_units).c_str());
+    GString *rads = g_string_new(q.string(desktop->namedview->display_units).c_str());
     this->message_context->setF(Inkscape::IMMEDIATE_MESSAGE,
                                ( this->isflatsided?
                                  _("<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle")
@@ -441,8 +441,8 @@ void StarTool::finishItem() {
 
         desktop->canvas->endForcedFullRedraws();
 
-        sp_desktop_selection(desktop)->set(this->star);
-        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_STAR,
+        desktop->getSelection()->set(this->star);
+        DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_STAR,
                            _("Create star"));
 
         this->star = NULL;
@@ -450,7 +450,7 @@ void StarTool::finishItem() {
 }
 
 void StarTool::cancel() {
-    sp_desktop_selection(desktop)->clear();
+    desktop->getSelection()->clear();
     sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), 0);
 
     if (this->star != NULL) {
@@ -465,7 +465,7 @@ void StarTool::cancel() {
 
     desktop->canvas->endForcedFullRedraws();
 
-    DocumentUndo::cancel(sp_desktop_document(desktop));
+    DocumentUndo::cancel(desktop->getDocument());
 }
 
 }

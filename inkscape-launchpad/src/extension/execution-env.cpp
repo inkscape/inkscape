@@ -31,7 +31,7 @@
 #include "desktop.h"
 #include "ui/view/view.h"
 #include "sp-namedview.h"
-#include "desktop-handles.h"
+
 #include "display/sp-canvas.h"
 
 #include "util/glib-list-iterators.h"
@@ -65,7 +65,7 @@ ExecutionEnv::ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Imp
 
     if (desktop != NULL) {
         Inkscape::Util::GSListConstIterator<SPItem *> selected =
-             sp_desktop_selection(desktop)->itemList();
+             desktop->getSelection()->itemList();
         while ( selected != NULL ) {
             Glib::ustring selected_id;
             selected_id = (*selected)->getId();
@@ -200,7 +200,7 @@ ExecutionEnv::reselect (void) {
 
     if (desktop == NULL) { return; }
 
-    Inkscape::Selection * selection = sp_desktop_selection(desktop);
+    Inkscape::Selection * selection = desktop->getSelection();
 
     for (std::list<Glib::ustring>::iterator i = _selected.begin(); i != _selected.end(); ++i) {
         SPObject * obj = doc->getObjectById(i->c_str());

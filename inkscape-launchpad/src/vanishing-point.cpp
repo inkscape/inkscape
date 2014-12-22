@@ -16,7 +16,7 @@
 #include <glibmm/i18n.h>
 
 #include "vanishing-point.h"
-#include "desktop-handles.h"
+
 #include "desktop.h"
 #include "display/sp-canvas-item.h"
 #include "display/sp-ctrlline.h"
@@ -94,7 +94,7 @@ vp_knot_moved_handler (SPKnot *knot, Geom::Point const &ppointer, guint state, g
     Geom::Point p = ppointer;
 
     // FIXME: take from prefs
-    double snap_dist = SNAP_DIST / inkscape_active_desktop()->current_zoom();
+    double snap_dist = SNAP_DIST / SP_ACTIVE_DESKTOP->current_zoom();
 
     /*
      * We use dragging_started to indicate if we have already checked for the need to split Draggers up.
@@ -110,7 +110,7 @@ vp_knot_moved_handler (SPKnot *knot, Geom::Point const &ppointer, guint state, g
             for (std::set<VanishingPoint*, less_ptr>::iterator vp = sel_vps.begin(); vp != sel_vps.end(); ++vp) {
                 // for each VP that has selected boxes:
                 Persp3D *old_persp = (*vp)->get_perspective();
-                sel_boxes = (*vp)->selectedBoxes(sp_desktop_selection(inkscape_active_desktop()));
+                sel_boxes = (*vp)->selectedBoxes(SP_ACTIVE_DESKTOP->getSelection());
 
                 // we create a new perspective ...
                 Persp3D *new_persp = persp3d_create_xml_element (dragger->parent->document, old_persp->perspective_impl);
@@ -129,7 +129,7 @@ vp_knot_moved_handler (SPKnot *knot, Geom::Point const &ppointer, guint state, g
             }
             // FIXME: Do we need to create a new dragger as well?
             dragger->updateZOrders ();
-            DocumentUndo::done(sp_desktop_document (inkscape_active_desktop()), SP_VERB_CONTEXT_3DBOX,
+            DocumentUndo::done(SP_ACTIVE_DESKTOP->getDocument(), SP_VERB_CONTEXT_3DBOX,
 			       _("Split vanishing points"));
             return;
         }
@@ -174,7 +174,7 @@ vp_knot_moved_handler (SPKnot *knot, Geom::Point const &ppointer, guint state, g
                 //       deleted according to changes in the svg representation, not based on any user input
                 //       as is currently the case.
 
-                DocumentUndo::done(sp_desktop_document (inkscape_active_desktop()), SP_VERB_CONTEXT_3DBOX,
+                DocumentUndo::done(SP_ACTIVE_DESKTOP->getDocument(), SP_VERB_CONTEXT_3DBOX,
 				   _("Merge vanishing points"));
 
                 return;
@@ -182,7 +182,7 @@ vp_knot_moved_handler (SPKnot *knot, Geom::Point const &ppointer, guint state, g
         }
 
         // We didn't snap to another dragger, so we'll try a regular snap
-        SPDesktop *desktop = inkscape_active_desktop();
+        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
         SnapManager &m = desktop->namedview->snap_manager;
         m.setup(desktop);
         Inkscape::SnappedPoint s = m.freeSnap(Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_OTHER_HANDLE));
@@ -277,7 +277,7 @@ VPDragger::VPDragger(VPDrag *parent, Geom::Point p, VanishingPoint &vp)
 
     if (vp.is_finite()) {
         // create the knot
-        this->knot = new SPKnot(inkscape_active_desktop(), NULL);
+        this->knot = new SPKnot(SP_ACTIVE_DESKTOP, NULL);
         this->knot->setMode(SP_KNOT_MODE_XOR);
         this->knot->setFill(VP_KNOT_COLOR_NORMAL, VP_KNOT_COLOR_NORMAL, VP_KNOT_COLOR_NORMAL);
         this->knot->setStroke(0x000000ff, 0x000000ff, 0x000000ff);
@@ -394,7 +394,7 @@ VPDragger::VPsOfSelectedBoxes() {
     std::set<VanishingPoint*, less_ptr> sel_vps;
     VanishingPoint *vp;
     // FIXME: Should we take the selection from the parent VPDrag? I guess it shouldn't make a difference.
-    Inkscape::Selection *sel = sp_desktop_selection(inkscape_active_desktop());
+    Inkscape::Selection *sel = SP_ACTIVE_DESKTOP->getSelection();
     for (GSList const* i = sel->itemList(); i != NULL; i = i->next) {
         SPItem *item = static_cast<SPItem *>(i->data);
         SPBox3D *box = dynamic_cast<SPBox3D *>(item);
@@ -488,7 +488,7 @@ VPDragger::printVPs() {
 VPDrag::VPDrag (SPDocument *document)
 {
     this->document = document;
-    this->selection = sp_desktop_selection(inkscape_active_desktop());
+    this->selection = SP_ACTIVE_DESKTOP->getSelection();
 
     this->draggers = NULL;
     this->lines = NULL;
@@ -635,7 +635,7 @@ VPDrag::updateBoxHandles ()
         return;
     }
 
-    Inkscape::UI::Tools::ToolBase *ec = inkscape_active_event_context();
+    Inkscape::UI::Tools::ToolBase *ec = INKSCAPE.active_event_context();
     g_assert (ec != NULL);
     if (ec->shape_editor != NULL) {
         ec->shape_editor->update_knotholder();
@@ -708,7 +708,7 @@ void VPDrag::drawLinesForFace(const SPBox3D *box, Proj::Axis axis) //, guint cor
         // draw perspective lines for infinite VPs
         boost::optional<Geom::Point> pt1, pt2, pt3, pt4;
         Persp3D *persp = box3d_get_perspective(box);
-        SPDesktop *desktop = inkscape_active_desktop (); // FIXME: Store the desktop in VPDrag
+        SPDesktop *desktop = SP_ACTIVE_DESKTOP; // FIXME: Store the desktop in VPDrag
         Box3D::PerspectiveLine pl (corner1, axis, persp);
         pt1 = pl.intersection_with_viewbox(desktop);
 
@@ -782,7 +782,7 @@ VPDrag::swap_perspectives_of_VPs(Persp3D *persp2, Persp3D *persp1)
 
 void VPDrag::addLine(Geom::Point const &p1, Geom::Point const &p2, Inkscape::CtrlLineType type)
 {
-    SPCtrlLine *line = ControlManager::getManager().createControlLine(sp_desktop_controls(inkscape_active_desktop()), p1, p2, type);
+    SPCtrlLine *line = ControlManager::getManager().createControlLine(SP_ACTIVE_DESKTOP->getControls(), p1, p2, type);
     sp_canvas_item_show(line);
     this->lines = g_slist_append(this->lines, line);
 }

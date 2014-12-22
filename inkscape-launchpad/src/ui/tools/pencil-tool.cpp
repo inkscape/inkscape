@@ -20,7 +20,7 @@
 
 #include "ui/tools/pencil-tool.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "selection.h"
 #include "selection-chemistry.h"
 #include "ui/draw-anchor.h"
@@ -153,7 +153,7 @@ bool PencilTool::_handleButtonPress(GdkEventButton const &bevent) {
     bool ret = false;
 
     if ( bevent.button == 1  && !this->space_panning) {
-        Inkscape::Selection *selection = sp_desktop_selection(desktop);
+        Inkscape::Selection *selection = desktop->getSelection();
 
         if (Inkscape::have_viable_layer(desktop, this->message_context) == false) {
             return true;
@@ -853,7 +853,7 @@ void PencilTool::_fitAndSplit() {
         SPCurve *curve = this->red_curve->copy();
 
         /// \todo fixme:
-        SPCanvasItem *cshape = sp_canvas_bpath_new(sp_desktop_sketch(this->desktop), curve);
+        SPCanvasItem *cshape = sp_canvas_bpath_new(this->desktop->getSketch(), curve);
         curve->unref();
 
         this->highlight_color = SP_ITEM(this->desktop->currentLayer())->highlight_color();

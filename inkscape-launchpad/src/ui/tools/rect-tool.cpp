@@ -28,7 +28,7 @@
 #include "sp-namedview.h"
 #include "selection.h"
 #include "selection-chemistry.h"
-#include "desktop-handles.h"
+
 #include "snap.h"
 #include "desktop.h"
 #include "desktop-style.h"
@@ -111,13 +111,13 @@ void RectTool::setup() {
 
     this->shape_editor = new ShapeEditor(this->desktop);
 
-    SPItem *item = sp_desktop_selection(this->desktop)->singleItem();
+    SPItem *item = this->desktop->getSelection()->singleItem();
     if (item) {
         this->shape_editor->set_item(item);
     }
 
     this->sel_changed_connection.disconnect();
-    this->sel_changed_connection = sp_desktop_selection(this->desktop)->connectChanged(
+    this->sel_changed_connection = this->desktop->getSelection()->connectChanged(
     	sigc::mem_fun(this, &RectTool::selection_changed)
     );
 
@@ -170,7 +170,7 @@ bool RectTool::root_handler(GdkEvent* event) {
     static bool dragging;
 
     SPDesktop *desktop = this->desktop;
-    Inkscape::Selection *selection = sp_desktop_selection (desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
@@ -422,8 +422,8 @@ void RectTool::drag(Geom::Point const pt, guint state) {
 
     Inkscape::Util::Quantity rdimx_q = Inkscape::Util::Quantity(rdimx, "px");
     Inkscape::Util::Quantity rdimy_q = Inkscape::Util::Quantity(rdimy, "px");
-    GString *xs = g_string_new(rdimx_q.string(desktop->namedview->doc_units).c_str());
-    GString *ys = g_string_new(rdimy_q.string(desktop->namedview->doc_units).c_str());
+    GString *xs = g_string_new(rdimx_q.string(desktop->namedview->display_units).c_str());
+    GString *ys = g_string_new(rdimy_q.string(desktop->namedview->display_units).c_str());
 
     if (state & GDK_CONTROL_MASK) {
         int ratio_x, ratio_y;
@@ -476,16 +476,16 @@ void RectTool::finishItem() {
 
         this->desktop->canvas->endForcedFullRedraws();
 
-        sp_desktop_selection(this->desktop)->set(this->rect);
+        this->desktop->getSelection()->set(this->rect);
 
-        DocumentUndo::done(sp_desktop_document(this->desktop), SP_VERB_CONTEXT_RECT, _("Create rectangle"));
+        DocumentUndo::done(this->desktop->getDocument(), SP_VERB_CONTEXT_RECT, _("Create rectangle"));
 
         this->rect = NULL;
     }
 }
 
 void RectTool::cancel(){
-    sp_desktop_selection(this->desktop)->clear();
+    this->desktop->getSelection()->clear();
     sp_canvas_item_ungrab(SP_CANVAS_ITEM(this->desktop->acetate), 0);
 
     if (this->rect != NULL) {
@@ -500,7 +500,7 @@ void RectTool::cancel(){
 
     this->desktop->canvas->endForcedFullRedraws();
 
-    DocumentUndo::cancel(sp_desktop_document(this->desktop));
+    DocumentUndo::cancel(this->desktop->getDocument());
 }
 
 }

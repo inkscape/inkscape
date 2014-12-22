@@ -22,7 +22,7 @@
 #include <algorithm>
 #include <cstring>
 #include <string>
-#include "desktop-handles.h"
+
 #include "display/sp-canvas.h"
 #include "display/guideline.h"
 #include "svg/svg.h"
@@ -37,6 +37,7 @@
 #include <remove-last.h>
 #include "inkscape.h"
 #include "desktop.h"
+#include "sp-root.h"
 #include "sp-namedview.h"
 #include <2geom/angle.h>
 #include "document.h"
@@ -152,6 +153,12 @@ void SPGuide::set(unsigned int key, const gchar *value) {
             success += sp_svg_number_read_d(strarray[1], &newy);
             g_strfreev (strarray);
             if (success == 2) {
+                // If root viewBox set, interpret guides in terms of viewBox (90/96)
+                SPRoot *root = document->getRoot();
+                if( root->viewBox_set ) {
+                    newx = newx * root->width.computed  / root->viewBox.width();
+                    newy = newy * root->height.computed / root->viewBox.height();
+                }
                 this->point_on_line = Geom::Point(newx, newy);
             } else if (success == 1) {
                 // before 0.46 style guideline definition.
@@ -185,7 +192,17 @@ SPGuide *SPGuide::createSPGuide(SPDocument *doc, Geom::Point const &pt1, Geom::P
 
     Geom::Point n = Geom::rot90(pt2 - pt1);
 
-    sp_repr_set_point(repr, "position", pt1);
+    // If root viewBox set, interpret guides in terms of viewBox (90/96)
+    double newx = pt1.x();
+    double newy = pt1.y();
+
+    SPRoot *root = doc->getRoot();
+    if( root->viewBox_set ) {
+        newx = newx * root->viewBox.width()  / root->width.computed;
+        newy = newy * root->viewBox.height() / root->height.computed;
+    }
+
+    sp_repr_set_point(repr, "position", Geom::Point( newx, newy ));
     sp_repr_set_point(repr, "orientation", n);
 
     SPNamedView *namedview = sp_document_namedview(doc, NULL);
@@ -207,7 +224,7 @@ void sp_guide_pt_pairs_to_guides(SPDocument *doc, std::list<std::pair<Geom::Poin
 
 void sp_guide_create_guides_around_page(SPDesktop *dt)
 {
-    SPDocument *doc=sp_desktop_document(dt);
+    SPDocument *doc=dt->getDocument();
     std::list<std::pair<Geom::Point, Geom::Point> > pts;
 
     Geom::Point A(0, 0);
@@ -227,7 +244,7 @@ void sp_guide_create_guides_around_page(SPDesktop *dt)
 
 void sp_guide_delete_all_guides(SPDesktop *dt)
 {
-    SPDocument *doc=sp_desktop_document(dt);
+    SPDocument *doc=dt->getDocument();
     const GSList *current;
     while ( (current = doc->getResourceList("guide")) ) {
         SPGuide* guide = SP_GUIDE(current->data);
@@ -318,8 +335,18 @@ void SPGuide::moveto(Geom::Point const point_on_line, bool const commit)
     /* Calling sp_repr_set_point must precede calling sp_item_notify_moveto in the commit
        case, so that the guide's new position is available for sp_item_rm_unsatisfied_cns. */
     if (commit) {
+        // If root viewBox set, interpret guides in terms of viewBox (90/96)
+        double newx = point_on_line.x();
+        double newy = point_on_line.y();
+
+        SPRoot *root = document->getRoot();
+        if( root->viewBox_set ) {
+            newx = newx * root->viewBox.width()  / root->width.computed;
+            newy = newy * root->viewBox.height() / root->height.computed;
+        }
+
         //XML Tree being used here directly while it shouldn't be.
-        sp_repr_set_point(getRepr(), "position", point_on_line);
+        sp_repr_set_point(getRepr(), "position", Geom::Point(newx, newy) );
     }
 
 /*  DISABLED CODE BECAUSE  SPGuideAttachment  IS NOT USE AT THE MOMENT (johan)
@@ -410,8 +437,8 @@ char* SPGuide::description(bool const verbose) const
 
         Inkscape::Util::Quantity x_q = Inkscape::Util::Quantity(this->point_on_line[X], "px");
         Inkscape::Util::Quantity y_q = Inkscape::Util::Quantity(this->point_on_line[Y], "px");
-        GString *position_string_x = g_string_new(x_q.string(namedview->doc_units).c_str());
-        GString *position_string_y = g_string_new(y_q.string(namedview->doc_units).c_str());
+        GString *position_string_x = g_string_new(x_q.string(namedview->display_units).c_str());
+        GString *position_string_y = g_string_new(y_q.string(namedview->display_units).c_str());
 
         gchar *shortcuts = g_strdup_printf("; %s", _("<b>Shift+drag</b> to rotate, <b>Ctrl+drag</b> to move origin, <b>Del</b> to delete"));
 

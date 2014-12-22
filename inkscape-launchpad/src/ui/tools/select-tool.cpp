@@ -38,7 +38,7 @@
 #include "extension/dbus/document-interface.h"
 #endif
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "sp-root.h"
 #include "preferences.h"
 #include "ui/tools-switch.h"
@@ -208,7 +208,7 @@ bool SelectTool::sp_select_context_abort() {
             if (this->item) {
                 // only undo if the item is still valid
                 if (this->item->document) {
-                    DocumentUndo::undo(sp_desktop_document(desktop));
+                    DocumentUndo::undo(desktop->getDocument());
                 }
 
                 sp_object_unref( this->item, NULL);
@@ -216,7 +216,7 @@ bool SelectTool::sp_select_context_abort() {
                 // NOTE:  This is a workaround to a bug.
                 // When the ctrl key is held, sc->item is not defined
                 // so in this case (only), we skip the object doc check
-                DocumentUndo::undo(sp_desktop_document(desktop));
+                DocumentUndo::undo(desktop->getDocument());
             }
             this->item = NULL;
 
@@ -272,7 +272,7 @@ sp_select_context_up_one_layer(SPDesktop *desktop)
         {
             desktop->setCurrentLayer(parent);
             if (current_group && (SPGroup::LAYER != current_group->layerMode())) {
-                sp_desktop_selection(desktop)->set(current_layer);
+                desktop->getSelection()->set(current_layer);
             }
         }
     }
@@ -308,7 +308,7 @@ bool SelectTool::item_handler(SPItem* item, GdkEvent* event) {
                     // if shift or ctrl was pressed, do not move objects;
                     // pass the event to root handler which will perform rubberband, shift-click, ctrl-click, ctrl-drag
                 } else {
-                    GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
+                    GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (desktop->getCanvas()));
                    
                 	this->dragging = TRUE;
                     this->moved = FALSE;
@@ -353,7 +353,7 @@ bool SelectTool::item_handler(SPItem* item, GdkEvent* event) {
 
         case GDK_ENTER_NOTIFY: {
             if (!desktop->isWaitingCursor() && !this->dragging) {
-                GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
+                GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (desktop->getCanvas()));
 
                 gdk_window_set_cursor(window, CursorSelectMouseover);
             }
@@ -361,7 +361,7 @@ bool SelectTool::item_handler(SPItem* item, GdkEvent* event) {
         }
         case GDK_LEAVE_NOTIFY:
         	if (!desktop->isWaitingCursor() && !this->dragging) {
-                GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
+                GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (desktop->getCanvas()));
 
                 gdk_window_set_cursor(window, this->cursor);
         	}
@@ -469,7 +469,7 @@ bool SelectTool::root_handler(GdkEvent* event) {
     SPItem *item_at_point = NULL, *group_at_point = NULL, *item_in_group = NULL;
     gint ret = FALSE;
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     // make sure we still have valid objects to move around
@@ -485,7 +485,7 @@ bool SelectTool::root_handler(GdkEvent* event) {
 
                     if (dynamic_cast<SPGroup *>(clicked_item) && !dynamic_cast<SPBox3D *>(clicked_item)) { // enter group if it's not a 3D box
                         desktop->setCurrentLayer(clicked_item);
-                        sp_desktop_selection(desktop)->clear();
+                        desktop->getSelection()->clear();
                         this->dragging = false;
                         sp_event_context_discard_delayed_snap_event(this);
 
@@ -573,7 +573,7 @@ bool SelectTool::root_handler(GdkEvent* event) {
                     // but not with shift) we want to drag rather than rubberband
                     this->dragging = TRUE;
 
-                    GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
+                    GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (desktop->getCanvas()));
 
                     gdk_window_set_cursor(window, CursorSelectDragging);
 
@@ -702,7 +702,7 @@ bool SelectTool::root_handler(GdkEvent* event) {
                     }
 
                     this->dragging = FALSE;
-                    window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
+                    window = gtk_widget_get_window (GTK_WIDGET (desktop->getCanvas()));
 
                     gdk_window_set_cursor(window, CursorSelectMouseover);
                     sp_event_context_discard_delayed_snap_event(this);
@@ -722,9 +722,9 @@ bool SelectTool::root_handler(GdkEvent* event) {
 
                         if (r->getMode() == RUBBERBAND_MODE_RECT) {
                             Geom::OptRect const b = r->getRectangle();
-                            items = sp_desktop_document(desktop)->getItemsInBox(desktop->dkey, *b);
+                            items = desktop->getDocument()->getItemsInBox(desktop->dkey, *b);
                         } else if (r->getMode() == RUBBERBAND_MODE_TOUCHPATH) {
-                            items = sp_desktop_document(desktop)->getItemsAtPoints(desktop->dkey, r->getPoints());
+                            items = desktop->getDocument()->getItemsAtPoints(desktop->dkey, r->getPoints());
                         }
 
                         _seltrans->resetState();
@@ -953,7 +953,7 @@ bool SelectTool::root_handler(GdkEvent* event) {
                     
                     // if Alt and nonempty selection, show moving cursor ("move selected"):
                     if (alt && !selection->isEmpty() && !desktop->isWaitingCursor()) {
-                    	GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
+                    	GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (desktop->getCanvas()));
 
                         gdk_window_set_cursor(window, CursorSelectDragging);
                     }
@@ -974,15 +974,15 @@ bool SelectTool::root_handler(GdkEvent* event) {
                         
                         if (MOD__ALT(event)) { // alt
                             if (MOD__SHIFT(event)) {
-                            	sp_selection_move_screen(sp_desktop_selection(desktop), mul*-10, 0); // shift
+                            	sp_selection_move_screen(desktop->getSelection(), mul*-10, 0); // shift
                             } else {
-                            	sp_selection_move_screen(sp_desktop_selection(desktop), mul*-1, 0); // no shift
+                            	sp_selection_move_screen(desktop->getSelection(), mul*-1, 0); // no shift
                             }
                         } else { // no alt
                             if (MOD__SHIFT(event)) {
-                            	sp_selection_move(sp_desktop_selection(desktop), mul*-10*nudge, 0); // shift
+                            	sp_selection_move(desktop->getSelection(), mul*-10*nudge, 0); // shift
                             } else {
-                            	sp_selection_move(sp_desktop_selection(desktop), mul*-nudge, 0); // no shift
+                            	sp_selection_move(desktop->getSelection(), mul*-nudge, 0); // no shift
                             }
                         }
                         
@@ -997,15 +997,15 @@ bool SelectTool::root_handler(GdkEvent* event) {
                         
                         if (MOD__ALT(event)) { // alt
                             if (MOD__SHIFT(event)) {
-                            	sp_selection_move_screen(sp_desktop_selection(desktop), 0, mul*10); // shift
+                            	sp_selection_move_screen(desktop->getSelection(), 0, mul*10); // shift
                             } else {
-                            	sp_selection_move_screen(sp_desktop_selection(desktop), 0, mul*1); // no shift
+                            	sp_selection_move_screen(desktop->getSelection(), 0, mul*1); // no shift
                             }
                         } else { // no alt
                             if (MOD__SHIFT(event)) {
-                            	sp_selection_move(sp_desktop_selection(desktop), 0, mul*10*nudge); // shift
+                            	sp_selection_move(desktop->getSelection(), 0, mul*10*nudge); // shift
                             } else {
-                            	sp_selection_move(sp_desktop_selection(desktop), 0, mul*nudge); // no shift
+                            	sp_selection_move(desktop->getSelection(), 0, mul*nudge); // no shift
                             }
                         }
                         
@@ -1020,15 +1020,15 @@ bool SelectTool::root_handler(GdkEvent* event) {
                         
                         if (MOD__ALT(event)) { // alt
                             if (MOD__SHIFT(event)) {
-                            	sp_selection_move_screen(sp_desktop_selection(desktop), mul*10, 0); // shift
+                            	sp_selection_move_screen(desktop->getSelection(), mul*10, 0); // shift
                             } else {
-                            	sp_selection_move_screen(sp_desktop_selection(desktop), mul*1, 0); // no shift
+                            	sp_selection_move_screen(desktop->getSelection(), mul*1, 0); // no shift
                             }
                         } else { // no alt
                             if (MOD__SHIFT(event)) {
-                            	sp_selection_move(sp_desktop_selection(desktop), mul*10*nudge, 0); // shift
+                            	sp_selection_move(desktop->getSelection(), mul*10*nudge, 0); // shift
                             } else {
-                            	sp_selection_move(sp_desktop_selection(desktop), mul*nudge, 0); // no shift
+                            	sp_selection_move(desktop->getSelection(), mul*nudge, 0); // no shift
                             }
                         }
                         
@@ -1043,15 +1043,15 @@ bool SelectTool::root_handler(GdkEvent* event) {
                         
                         if (MOD__ALT(event)) { // alt
                             if (MOD__SHIFT(event)) {
-                            	sp_selection_move_screen(sp_desktop_selection(desktop), 0, mul*-10); // shift
+                            	sp_selection_move_screen(desktop->getSelection(), 0, mul*-10); // shift
                             } else {
-                            	sp_selection_move_screen(sp_desktop_selection(desktop), 0, mul*-1); // no shift
+                            	sp_selection_move_screen(desktop->getSelection(), 0, mul*-1); // no shift
                             }
                         } else { // no alt
                             if (MOD__SHIFT(event)) {
-                            	sp_selection_move(sp_desktop_selection(desktop), 0, mul*-10*nudge); // shift
+                            	sp_selection_move(desktop->getSelection(), 0, mul*-10*nudge); // shift
                             } else {
-                            	sp_selection_move(sp_desktop_selection(desktop), 0, mul*-nudge); // no shift
+                            	sp_selection_move(desktop->getSelection(), 0, mul*-nudge); // no shift
                             }
                         }
                         
@@ -1155,7 +1155,7 @@ bool SelectTool::root_handler(GdkEvent* event) {
                             SPGroup *clickedGroup = dynamic_cast<SPGroup *>(clicked_item);
                             if ( (clickedGroup && (clickedGroup->layerMode() != SPGroup::LAYER)) || dynamic_cast<SPBox3D *>(clicked_item)) { // enter group or a 3D box
                                 desktop->setCurrentLayer(clicked_item);
-                                sp_desktop_selection(desktop)->clear();
+                                desktop->getSelection()->clear();
                             } else {
                                 this->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Selected object is not a group. Cannot enter."));
                             }
@@ -1226,7 +1226,7 @@ bool SelectTool::root_handler(GdkEvent* event) {
             // set cursor to default.
             if (!desktop->isWaitingCursor()) {
                 // Do we need to reset the cursor here on key release ?
-                //GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
+                //GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (desktop->getCanvas()));
                 //gdk_window_set_cursor(window, event_context->cursor);
             }
             break;

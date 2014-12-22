@@ -33,7 +33,8 @@
 #include "panel.h"
 #include "icon-size.h"
 #include "preferences.h"
-#include "desktop-handles.h"
+#include "desktop.h"
+
 #include "inkscape.h"
 #include "widgets/eek-preview.h"
 #include "ui/previewfillable.h"
@@ -293,7 +294,7 @@ void Panel::_init()
 
     signalResponse().connect(sigc::mem_fun(*this, &Panel::_handleResponse));
 
-    signalActivateDesktop().connect(sigc::hide<0>(sigc::mem_fun(*this, &Panel::setDesktop)));
+    signalActivateDesktop().connect(sigc::mem_fun(*this, &Panel::setDesktop));
 
     show_all_children();
 
@@ -643,13 +644,13 @@ Panel::signalDocumentReplaced()
     return _signal_document_replaced;
 }
 
-sigc::signal<void, InkscapeApplication *, SPDesktop *> &
+sigc::signal<void, SPDesktop *> &
 Panel::signalActivateDesktop()
 {
     return _signal_activate_desktop;
 }
 
-sigc::signal<void, InkscapeApplication *, SPDesktop *> &
+sigc::signal<void, SPDesktop *> &
 Panel::signalDeactiveDesktop()
 {
     return _signal_deactive_desktop;
@@ -667,7 +668,7 @@ void Panel::_handleResponse(int response_id)
 
 Inkscape::Selection *Panel::_getSelection()
 {
-    return sp_desktop_selection(_desktop);
+    return _desktop->getSelection();
 }
 
 } // namespace Widget

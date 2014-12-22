@@ -21,7 +21,7 @@
 #include "ui/widget/spinbutton.h"
 #include <glibmm/i18n.h>
 #include "select-toolbar.h"
-#include "desktop-handles.h"
+
 #include "desktop.h"
 #include "display/sp-canvas.h"
 #include "document-undo.h"
@@ -106,7 +106,7 @@ static void
 sp_selection_layout_widget_modify_selection(SPWidget *spw, Inkscape::Selection *selection, guint flags, gpointer data)
 {
     SPDesktop *desktop = static_cast<SPDesktop *>(data);
-    if ((sp_desktop_selection(desktop) == selection) // only respond to changes in our desktop
+    if ((desktop->getSelection() == selection) // only respond to changes in our desktop
         && (flags & (SP_OBJECT_MODIFIED_FLAG        |
                      SP_OBJECT_PARENT_MODIFIED_FLAG |
                      SP_OBJECT_CHILD_MODIFIED_FLAG   )))
@@ -119,7 +119,7 @@ static void
 sp_selection_layout_widget_change_selection(SPWidget *spw, Inkscape::Selection *selection, gpointer data)
 {
     SPDesktop *desktop = static_cast<SPDesktop *>(data);
-    if (sp_desktop_selection(desktop) == selection) { // only respond to changes in our desktop
+    if (desktop->getSelection() == selection) { // only respond to changes in our desktop
         gboolean setActive = (selection && !selection->isEmpty());
         std::vector<GtkAction*> *contextActions = reinterpret_cast<std::vector<GtkAction*> *>(g_object_get_data(G_OBJECT(spw), "contextActions"));
         if ( contextActions ) {
@@ -153,8 +153,8 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
     g_object_set_data(G_OBJECT(spw), "update", GINT_TO_POINTER(TRUE));
 
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
-    SPDocument *document = sp_desktop_document(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
+    SPDocument *document = desktop->getDocument();
 
     document->ensureUpToDate ();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -241,7 +241,7 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
     if (actionkey != NULL) {
 
         // FIXME: fix for GTK breakage, see comment in SelectedStyle::on_opacity_changed
-        sp_desktop_canvas(desktop)->forceFullRedrawAfterInterruptions(0);
+        desktop->getCanvas()->forceFullRedrawAfterInterruptions(0);
 
         bool transform_stroke = prefs->getBool("/options/transform/stroke", true);
         bool preserve = prefs->getBool("/options/preservetransform/value", false);
@@ -262,7 +262,7 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
                                 _("Transform by toolbar"));
 
         // resume interruptibility
-        sp_desktop_canvas(desktop)->endForcedFullRedraws();
+        desktop->getCanvas()->endForcedFullRedraws();
     }
 
     g_object_set_data(G_OBJECT(spw), "update", GINT_TO_POINTER(FALSE));
@@ -470,10 +470,10 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     contextActions->push_back( act );
 
     // Create the parent widget for x y w h tracker.
-    GtkWidget *spw = sp_widget_new_global(INKSCAPE);
+    GtkWidget *spw = sp_widget_new_global();
 
     // Remember the desktop's canvas widget, to be used for defocusing.
-    g_object_set_data(G_OBJECT(spw), "dtw", sp_desktop_canvas(desktop));
+    g_object_set_data(G_OBJECT(spw), "dtw", desktop->getCanvas());
 
     // The vb frame holds all other widgets and is used to set sensitivity depending on selection state.
 #if GTK_CHECK_VERSION(3,0,0)
@@ -488,7 +488,7 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     // Create the units menu.
     UnitTracker* tracker = new UnitTracker(Inkscape::Util::UNIT_TYPE_LINEAR);
     tracker->addUnit(unit_table.getUnit("%"));
-    tracker->setActiveUnit( sp_desktop_namedview(desktop)->doc_units );
+    tracker->setActiveUnit( desktop->getNamedView()->display_units );
 
     g_object_set_data( G_OBJECT(spw), "tracker", tracker );
     g_signal_connect( G_OBJECT(spw), "destroy", G_CALLBACK(destroy_tracker), spw );
@@ -546,7 +546,7 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     g_signal_connect(G_OBJECT(spw), "change_selection", G_CALLBACK(sp_selection_layout_widget_change_selection), desktop);
 
     // Update now.
-    sp_selection_layout_widget_update(SP_WIDGET(spw), SP_ACTIVE_DESKTOP ? sp_desktop_selection(SP_ACTIVE_DESKTOP) : NULL);
+    sp_selection_layout_widget_update(SP_WIDGET(spw), SP_ACTIVE_DESKTOP ? SP_ACTIVE_DESKTOP->getSelection() : NULL);
 
     for ( std::vector<GtkAction*>::iterator iter = contextActions->begin();
           iter != contextActions->end(); ++iter) {

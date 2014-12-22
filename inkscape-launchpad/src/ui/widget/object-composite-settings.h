@@ -66,8 +66,8 @@ private:
     gulong _desktop_activated;
     sigc::connection _subject_changed;
     
-    static void _on_desktop_activate(InkscapeApplication *application, SPDesktop *desktop, ObjectCompositeSettings *w);
-    static void _on_desktop_deactivate(InkscapeApplication *application, SPDesktop *desktop, ObjectCompositeSettings *w);
+    static void _on_desktop_activate(SPDesktop *desktop, ObjectCompositeSettings *w);
+    static void _on_desktop_deactivate(SPDesktop *desktop, ObjectCompositeSettings *w);
     void _subjectChanged();
     void _blendBlurValueChanged();
     void _opacityValueChanged();

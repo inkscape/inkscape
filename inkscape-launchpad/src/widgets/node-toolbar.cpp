@@ -31,7 +31,7 @@
 #include "ui/tool/multi-path-manipulator.h"
 #include <glibmm/i18n.h>
 #include "node-toolbar.h"
-#include "desktop-handles.h"
+
 #include "desktop.h"
 #include "document-undo.h"
 #include "widgets/ege-adjustment-action.h"
@@ -264,7 +264,7 @@ static void sp_node_path_value_changed(GtkAdjustment *adj, GObject *tbl, Geom::D
     }
     Unit const *unit = tracker->getActiveUnit();
 
-    if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
+    if (DocumentUndo::getUndoSensitive(desktop->getDocument())) {
         prefs->setDouble(Glib::ustring("/tools/nodes/") + (d == Geom::X ? "x" : "y"),
             Quantity::convert(gtk_adjustment_get_value(adj), unit, "px"));
     }
@@ -330,7 +330,7 @@ static void node_toolbox_watch_ec(SPDesktop* dt, Inkscape::UI::Tools::ToolBase* 
 void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
     UnitTracker* tracker = new UnitTracker(Inkscape::Util::UNIT_TYPE_LINEAR);
-    Unit doc_units = *sp_desktop_namedview(desktop)->doc_units;
+    Unit doc_units = *desktop->getNamedView()->display_units;
     tracker->setActiveUnit(&doc_units);
     g_object_set_data( holder, "tracker", tracker );
 
@@ -614,7 +614,7 @@ void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
         gtk_action_group_add_action( mainActions, act );
     }
 
-    sp_node_toolbox_sel_changed(sp_desktop_selection(desktop), holder);
+    sp_node_toolbox_sel_changed(desktop->getSelection(), holder);
     desktop->connectEventContextChanged(sigc::bind(sigc::ptr_fun(node_toolbox_watch_ec), holder));
 
 } // end of sp_node_toolbox_prep()
@@ -627,11 +627,11 @@ static void node_toolbox_watch_ec(SPDesktop* desktop, Inkscape::UI::Tools::ToolB
 
     if (INK_IS_NODE_TOOL(ec)) {
         // watch selection
-        c_selection_changed = sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_node_toolbox_sel_changed), holder));
-        c_selection_modified = sp_desktop_selection(desktop)->connectModified(sigc::bind(sigc::ptr_fun(sp_node_toolbox_sel_modified), holder));
+        c_selection_changed = desktop->getSelection()->connectChanged(sigc::bind(sigc::ptr_fun(sp_node_toolbox_sel_changed), holder));
+        c_selection_modified = desktop->getSelection()->connectModified(sigc::bind(sigc::ptr_fun(sp_node_toolbox_sel_modified), holder));
         c_subselection_changed = desktop->connectToolSubselectionChanged(sigc::bind(sigc::ptr_fun(sp_node_toolbox_coord_changed), holder));
 
-        sp_node_toolbox_sel_changed(sp_desktop_selection(desktop), holder);
+        sp_node_toolbox_sel_changed(desktop->getSelection(), holder);
     } else {
         if (c_selection_changed)
             c_selection_changed.disconnect();

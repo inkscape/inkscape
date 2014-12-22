@@ -32,7 +32,7 @@
 
 #include <2geom/transforms.h>
 
-#include "desktop-handles.h"
+
 #include "document.h"
 #include "desktop.h"
 #include "helper/action.h"
@@ -309,12 +309,12 @@ PageSizer::PageSizer(Registry & _wr)
 
     // Setting default custom unit to document unit
     SPDesktop *dt = SP_ACTIVE_DESKTOP;
-    SPNamedView *nv = sp_desktop_namedview(dt);
+    SPNamedView *nv = dt->getNamedView();
     _wr.setUpdating (true);
     if (nv->page_size_units) {
         _dimensionUnits.setUnit(nv->page_size_units->abbr);
-    } else if (nv->doc_units) {
-        _dimensionUnits.setUnit(nv->doc_units->abbr);
+    } else if (nv->display_units) {
+        _dimensionUnits.setUnit(nv->display_units->abbr);
     }
     _wr.setUpdating (false);
     
@@ -459,7 +459,7 @@ PageSizer::init ()
  * \param changeList whether to modify the paper size list
  */
 void
-PageSizer::setDim (Inkscape::Util::Quantity w, Inkscape::Util::Quantity h, bool changeList)
+PageSizer::setDim (Inkscape::Util::Quantity w, Inkscape::Util::Quantity h, bool changeList, bool changeSize)
 {
     static bool _called = false;
     if (_called) {
@@ -477,14 +477,16 @@ PageSizer::setDim (Inkscape::Util::Quantity w, Inkscape::Util::Quantity h, bool 
     _unit = w.unit->abbr;
 
     if (SP_ACTIVE_DESKTOP && !_widgetRegistry->isUpdating()) {
-        SPDocument *doc = sp_desktop_document(SP_ACTIVE_DESKTOP);
+        SPDocument *doc = SP_ACTIVE_DESKTOP->getDocument();
         Inkscape::Util::Quantity const old_height = doc->getHeight();
-        doc->setWidth (w);
-        doc->setHeight (h);
+        doc->setWidth (w, changeSize);
+        doc->setHeight (h, changeSize);
         // The origin for the user is in the lower left corner; this point should remain stationary when
         // changing the page size. The SVG's origin however is in the upper left corner, so we must compensate for this
-        Geom::Translate const vert_offset(Geom::Point(0, (old_height.value("px") - h.value("px"))));
-        doc->getRoot()->translateChildItems(vert_offset);
+        if (changeSize) {
+            Geom::Translate const vert_offset(Geom::Point(0, (old_height.value("px") - h.value("px"))));
+            doc->getRoot()->translateChildItems(vert_offset);
+        }
         DocumentUndo::done(doc, SP_VERB_NONE, _("Set page size"));
     }
 
@@ -606,7 +608,7 @@ PageSizer::fire_fit_canvas_to_selection_or_drawing()
     SPNamedView *nv;
     Inkscape::XML::Node *nv_repr;
   
-    if ((doc = sp_desktop_document(SP_ACTIVE_DESKTOP))
+    if ((doc = SP_ACTIVE_DESKTOP->getDocument())
         && (nv = sp_document_namedview(doc, 0))
         && (nv_repr = nv->getRepr())) {
         _lockMarginUpdate = true;
@@ -717,7 +719,8 @@ PageSizer::on_units_changed()
     if (_widgetRegistry->isUpdating()) return;
     _unit = _dimensionUnits.getUnit()->abbr;
     setDim (Inkscape::Util::Quantity(_dimensionWidth.getValue(""), _dimensionUnits.getUnit()),
-            Inkscape::Util::Quantity(_dimensionHeight.getValue(""), _dimensionUnits.getUnit()));
+            Inkscape::Util::Quantity(_dimensionHeight.getValue(""), _dimensionUnits.getUnit()),
+            true, false);
 }
 
 } // namespace Widget

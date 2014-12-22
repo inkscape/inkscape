@@ -49,7 +49,7 @@ application_interface_init (ApplicationInterface *app_interface)
 static bool
 ensure_desktop_valid(GError **error)
 {
-    if (!inkscape_use_gui()) {
+    if (!INKSCAPE.use_gui()) {
         g_set_error(error, INKSCAPE_ERROR, INKSCAPE_ERROR_OTHER, "Application interface action requires a GUI");
         return false;
     }
@@ -59,7 +59,7 @@ ensure_desktop_valid(GError **error)
 static bool
 ensure_desktop_not_present(GError **error)
 {
-    if (inkscape_use_gui()) {
+    if (INKSCAPE.use_gui()) {
         g_set_error(error, INKSCAPE_ERROR, INKSCAPE_ERROR_OTHER, "Application interface action requires non-GUI (command line) mode");
         return false;
     }
@@ -196,7 +196,7 @@ application_interface_document_close_all (ApplicationInterface *app_interface,
     SPDesktop  *desktop = SP_ACTIVE_DESKTOP;
     g_assert(desktop != NULL);
 
-    SPDocument *doc = sp_desktop_document(desktop);
+    SPDocument *doc = desktop->getDocument();
     g_assert(doc != NULL);
 
     Inkscape::XML::Node     *repr = doc->getReprRoot();

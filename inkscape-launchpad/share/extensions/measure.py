@@ -183,9 +183,10 @@ class Length(inkex.Effect):
         doc = self.document.getroot()
         if doc.get('viewBox'):
             [viewx, viewy, vieww, viewh] = doc.get('viewBox').split(' ')
-            factor = float(doc.get('width'))/float(vieww)
-            if float(doc.get('height'))/float(viewh) < factor:
-                factor = float(doc.get('height'))/float(viewh)
+            factor = self.unittouu(doc.get('width'))/float(vieww)
+            if self.unittouu(doc.get('height'))/float(viewh) < factor:
+                factor = self.unittouu(doc.get('height'))/float(viewh)
+            factor /= self.unittouu('1px')
             self.options.fontsize /= factor
         # loop over all selected paths
         for id, node in self.selected.iteritems():

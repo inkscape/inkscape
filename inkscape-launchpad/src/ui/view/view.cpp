@@ -20,7 +20,7 @@
 #include "message-stack.h"
 #include "message-context.h"
 #include "verbs.h"
-#include "inkscape-private.h"
+#include "inkscape.h"
 
 namespace Inkscape {
 namespace UI {
@@ -85,7 +85,7 @@ void View::_close() {
     if (_doc) {
         _document_uri_set_connection.disconnect();
         _document_resized_connection.disconnect();
-        if (inkscape_remove_document(_doc)) {
+        if (INKSCAPE.remove_document(_doc)) {
             // this was the last view of this document, so delete it
             delete _doc;
         }
@@ -111,13 +111,13 @@ void View::setDocument(SPDocument *doc) {
     if (_doc) {
         _document_uri_set_connection.disconnect();
         _document_resized_connection.disconnect();
-        if (inkscape_remove_document(_doc)) {
+        if (INKSCAPE.remove_document(_doc)) {
             // this was the last view of this document, so delete it
             delete _doc;
         }
     }
 
-    inkscape_add_document(doc);
+    INKSCAPE.add_document(doc);
 
     _doc = doc;
     _document_uri_set_connection = 

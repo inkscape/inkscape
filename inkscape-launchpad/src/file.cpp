@@ -32,7 +32,7 @@
 
 #include "ui/dialog/ocaldialogs.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "dir-util.h"
 #include "document-private.h"
 #include "document-undo.h"
@@ -144,7 +144,7 @@ SPDesktop *sp_file_new(const std::string &templ)
     // Set viewBox if it doesn't exist
     if (!doc->getRoot()->viewBox_set) {
         DocumentUndo::setUndoSensitive(doc, false);
-        doc->setViewBox(Geom::Rect::from_xywh(0, 0, doc->getWidth().value(doc->getDefaultUnit()), doc->getHeight().value(doc->getDefaultUnit())));
+        doc->setViewBox(Geom::Rect::from_xywh(0, 0, doc->getWidth().value(doc->getDisplayUnit()), doc->getHeight().value(doc->getDisplayUnit())));
         DocumentUndo::setUndoSensitive(doc, true);
     }
     
@@ -177,7 +177,7 @@ SPDesktop *sp_file_new(const std::string &templ)
 Glib::ustring sp_file_default_template_uri()
 {
     std::list<gchar *> sources;
-    sources.push_back( profile_path("templates") ); // first try user's local dir
+    sources.push_back( Inkscape::Application::profile_path("templates") ); // first try user's local dir
     sources.push_back( g_strdup(INKSCAPE_TEMPLATESDIR) ); // then the system templates dir
     std::list<gchar const*> baseNames;
     gchar const* localized = _("default.svg");
@@ -289,7 +289,7 @@ bool sp_file_open(const Glib::ustring &uri,
 
     if (doc) {
 
-        SPDocument *existing = desktop ? sp_desktop_document(desktop) : NULL;
+        SPDocument *existing = desktop ? desktop->getDocument() : NULL;
 
         if (existing && existing->virgin && replace_empty) {
             // If the current desktop is empty, open the document there
@@ -316,7 +316,7 @@ bool sp_file_open(const Glib::ustring &uri,
             sp_file_add_recent( doc->getURI() );
         }
 
-        if ( inkscape_use_gui() ) {
+        if ( INKSCAPE.use_gui() ) {
             // Perform a fixup pass for hrefs.
             if ( Inkscape::ResourceManager::getManager().fixupBrokenLinks(doc) ) {
                 Glib::ustring msg = _("Broken links have been changed to point to existing files.");
@@ -348,7 +348,7 @@ void sp_file_revert_dialog()
     SPDesktop  *desktop = SP_ACTIVE_DESKTOP;
     g_assert(desktop != NULL);
 
-    SPDocument *doc = sp_desktop_document(desktop);
+    SPDocument *doc = desktop->getDocument();
     g_assert(doc != NULL);
 
     Inkscape::XML::Node *repr = doc->getReprRoot();
@@ -1055,7 +1055,7 @@ void sp_import_document(SPDesktop *desktop, SPDocument *clipdoc, bool in_place)
 {
     //TODO: merge with file_import()
 
-    SPDocument *target_document = sp_desktop_document(desktop);
+    SPDocument *target_document = desktop->getDocument();
     Inkscape::XML::Node *root = clipdoc->getReprRoot();
     Inkscape::XML::Node *target_parent = desktop->currentLayer()->getRepr();
 
@@ -1086,7 +1086,7 @@ void sp_import_document(SPDesktop *desktop, SPDocument *clipdoc, bool in_place)
     }
 
     // Change the selection to the freshly pasted objects
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     selection->setReprList(pasted_objects);
 
     // Apply inverse of parent transform
@@ -1221,7 +1221,7 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
 
         // select and move the imported item
         if (new_obj && SP_IS_ITEM(new_obj)) {
-            Inkscape::Selection *selection = sp_desktop_selection(desktop);
+            Inkscape::Selection *selection = desktop->getSelection();
             selection->set(SP_ITEM(new_obj));
 
             // preserve parent and viewBox transformations
@@ -1232,7 +1232,7 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
 
             // move to mouse pointer
             {
-                sp_desktop_document(desktop)->ensureUpToDate();
+                desktop->getDocument()->ensureUpToDate();
                 Geom::OptRect sel_bbox = selection->visualBounds();
                 if (sel_bbox) {
                     Geom::Point m( desktop->point() - sel_bbox->midpoint() );

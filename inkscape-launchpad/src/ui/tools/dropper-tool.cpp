@@ -34,7 +34,7 @@
 #include "sp-namedview.h"
 #include "sp-cursor.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "selection.h"
 #include "document.h"
 #include "document-undo.h"
@@ -99,7 +99,7 @@ void DropperTool::setup() {
 
     SPCurve *c = new SPCurve(path);
 
-    this->area = sp_canvas_bpath_new(sp_desktop_controls(this->desktop), c);
+    this->area = sp_canvas_bpath_new(this->desktop->getControls(), c);
 
     c->unref();
     
@@ -200,7 +200,7 @@ bool DropperTool::root_handler(GdkEvent* event) {
                 // If one time pick with stroke set the pixmap
                 if (prefs->getBool("/tools/dropper/onetimepick", false) && prefs->getInt("/dialogs/fillstroke/page", 0) == 1) {
                     //TODO Only set when not set already
-                    GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(sp_desktop_canvas(desktop)));
+                    GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(desktop->getCanvas()));
                     gdk_window_set_cursor(window, cursor_dropper_stroke);
                 }
 
@@ -230,7 +230,7 @@ bool DropperTool::root_handler(GdkEvent* event) {
                     if (!r.hasZeroArea()) {
                         Geom::IntRect area = r.roundOutwards();
                         cairo_surface_t *s = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, area.width(), area.height());
-                        sp_canvas_arena_render_surface(SP_CANVAS_ARENA(sp_desktop_drawing(desktop)), s, area);
+                        sp_canvas_arena_render_surface(SP_CANVAS_ARENA(desktop->getDrawing()), s, area);
                         ink_cairo_surface_average_color_premul(s, R, G, B, A);
                         cairo_surface_destroy(s);
                     }
@@ -238,14 +238,14 @@ bool DropperTool::root_handler(GdkEvent* event) {
                     // pick single pixel
                     Geom::IntRect area = Geom::IntRect::from_xywh(floor(event->button.x), floor(event->button.y), 1, 1);
                     cairo_surface_t *s = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
-                    sp_canvas_arena_render_surface(SP_CANVAS_ARENA(sp_desktop_drawing(desktop)), s, area);
+                    sp_canvas_arena_render_surface(SP_CANVAS_ARENA(desktop->getDrawing()), s, area);
                     ink_cairo_surface_average_color_premul(s, R, G, B, A);
                     cairo_surface_destroy(s);
                 }
 
                 if (pick == SP_DROPPER_PICK_VISIBLE) {
                     // compose with page color
-                    guint32 bg = sp_desktop_namedview(desktop)->pagecolor;
+                    guint32 bg = desktop->getNamedView()->pagecolor;
                     R = R + (SP_RGBA32_R_F(bg)) * (1 - A);
                     G = G + (SP_RGBA32_G_F(bg)) * (1 - A);
                     B = B + (SP_RGBA32_B_F(bg)) * (1 - A);
@@ -324,12 +324,12 @@ bool DropperTool::root_handler(GdkEvent* event) {
                 // REJON: set aux. toolbar input to hex color!
 
                 if (event->button.state & GDK_SHIFT_MASK) {
-                    GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(sp_desktop_canvas(desktop)));
+                    GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(desktop->getCanvas()));
                     gdk_window_set_cursor(window, cursor_dropper_stroke);
                 }
 
-                if (!(sp_desktop_selection(desktop)->isEmpty())) {
-                    DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_DROPPER,
+                if (!(desktop->getSelection()->isEmpty())) {
+                    DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_DROPPER,
                                        _("Set picked color"));
                 }
 
@@ -359,11 +359,11 @@ bool DropperTool::root_handler(GdkEvent* event) {
             break;
 
         case GDK_KEY_Escape:
-            sp_desktop_selection(desktop)->clear();
+            desktop->getSelection()->clear();
         case GDK_KEY_Shift_L:
         case GDK_KEY_Shift_R:
             if (!desktop->isWaitingCursor() && !prefs->getBool("/tools/dropper/onetimepick", false)) {
-                GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(sp_desktop_canvas(desktop)));
+                GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(desktop->getCanvas()));
                 gdk_window_set_cursor(window, cursor_dropper_stroke);
             }
 
@@ -378,7 +378,7 @@ bool DropperTool::root_handler(GdkEvent* event) {
         case GDK_KEY_Shift_L:
         case GDK_KEY_Shift_R:
             if (!desktop->isWaitingCursor() && !prefs->getBool("/tools/dropper/onetimepick", false)) {
-                GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(sp_desktop_canvas(desktop)));
+                GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(desktop->getCanvas()));
                 gdk_window_set_cursor(window, cursor_dropper_fill);
             }
             break;

@@ -29,7 +29,7 @@
 #include "document-private.h"
 #include "sp-pattern.h"
 #include "sp-marker.h"
-#include "desktop-handles.h"
+#include "desktop.h"
 #include "inkscape.h"
 
 #include "io/sys.h"
@@ -195,8 +195,8 @@ SPObject *get_stock_item(gchar const *urn, gboolean stock)
         
         gchar * base = g_strndup(e, a);
 
-        SPDesktop *desktop = inkscape_active_desktop();
-        SPDocument *doc = sp_desktop_document(desktop);
+        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+        SPDocument *doc = desktop->getDocument();
         SPDefs *defs = doc->getDefs();
         if (!defs) {
             g_free(base);
@@ -265,8 +265,8 @@ SPObject *get_stock_item(gchar const *urn, gboolean stock)
     
     else {
         
-        SPDesktop *desktop = inkscape_active_desktop();
-        SPDocument *doc = sp_desktop_document(desktop);
+        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+        SPDocument *doc = desktop->getDocument();
         SPObject *object = doc->getObjectById(urn);
 
         return object;

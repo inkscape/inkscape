@@ -33,6 +33,8 @@ namespace Inkscape {
 	}
 }
 
+struct SPCanvasGroup;
+
 #define INK_NODE_TOOL(obj) (dynamic_cast<Inkscape::UI::Tools::NodeTool*>((Inkscape::UI::Tools::ToolBase*)obj))
 #define INK_IS_NODE_TOOL(obj) (dynamic_cast<const Inkscape::UI::Tools::NodeTool*>((const Inkscape::UI::Tools::ToolBase*)obj))
 

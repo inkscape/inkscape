@@ -29,7 +29,8 @@
 #include "xml/node.h"
 #include "xml/repr.h"
 #include "sp-font-face.h"
-#include "desktop-handles.h"
+#include "desktop.h"
+
 #include "display/nr-svgfonts.h"
 #include "verbs.h"
 #include "sp-glyph.h"
@@ -181,7 +182,7 @@ void SvgFontsDialog::on_kerning_value_changed(){
         return;
     }
 
-    SPDocument* document = sp_desktop_document(this->getDesktop());
+    SPDocument* document = this->getDesktop()->getDocument();
 
     //TODO: I am unsure whether this is the correct way of calling SPDocumentUndo::maybe_done
     Glib::ustring undokey = "svgfonts:hkern:k:";
@@ -264,7 +265,7 @@ void SvgFontsDialog::update_sensitiveness(){
 void SvgFontsDialog::update_fonts()
 {
     SPDesktop* desktop = this->getDesktop();
-    SPDocument* document = sp_desktop_document(desktop);
+    SPDocument* document = desktop->getDocument();
     const GSList* fonts = document->getResourceList("font");
 
     _model->clear();
@@ -481,7 +482,7 @@ void SvgFontsDialog::update_glyphs(){
 
 void SvgFontsDialog::add_glyph(){
     const int count = _GlyphsListStore->children().size();
-    SPDocument* doc = sp_desktop_document(this->getDesktop());
+    SPDocument* doc = this->getDesktop()->getDocument();
     /* SPGlyph* glyph =*/ new_glyph(doc, get_selected_spfont(), count+1);
 
     DocumentUndo::done(doc, SP_VERB_DIALOG_SVG_FONTS, _("Add glyph"));
@@ -514,9 +515,9 @@ void SvgFontsDialog::set_glyph_description_from_selected_path(){
         return;
     }
 
-    Inkscape::MessageStack *msgStack = sp_desktop_message_stack(desktop);
-    SPDocument* doc = sp_desktop_document(desktop);
-    Inkscape::Selection* sel = sp_desktop_selection(desktop);
+    Inkscape::MessageStack *msgStack = desktop->getMessageStack();
+    SPDocument* doc = desktop->getDocument();
+    Inkscape::Selection* sel = desktop->getSelection();
     if (sel->isEmpty()){
         char *msg = _("Select a <b>path</b> to define the curves of a glyph");
         msgStack->flash(Inkscape::ERROR_MESSAGE, msg);
@@ -556,9 +557,9 @@ void SvgFontsDialog::missing_glyph_description_from_selected_path(){
         return;
     }
 
-    Inkscape::MessageStack *msgStack = sp_desktop_message_stack(desktop);
-    SPDocument* doc = sp_desktop_document(desktop);
-    Inkscape::Selection* sel = sp_desktop_selection(desktop);
+    Inkscape::MessageStack *msgStack = desktop->getMessageStack();
+    SPDocument* doc = desktop->getDocument();
+    Inkscape::Selection* sel = desktop->getSelection();
     if (sel->isEmpty()){
         char *msg = _("Select a <b>path</b> to define the curves of a glyph");
         msgStack->flash(Inkscape::ERROR_MESSAGE, msg);
@@ -597,7 +598,7 @@ void SvgFontsDialog::reset_missing_glyph_description(){
         return;
     }
 
-    SPDocument* doc = sp_desktop_document(desktop);
+    SPDocument* doc = desktop->getDocument();
     SPObject* obj;
     for (obj = get_selected_spfont()->children; obj; obj=obj->next){
         if (SP_IS_MISSING_GLYPH(obj)){
@@ -618,7 +619,7 @@ void SvgFontsDialog::glyph_name_edit(const Glib::ustring&, const Glib::ustring& 
     //XML Tree being directly used here while it shouldn't be.
     glyph->getRepr()->setAttribute("glyph-name", str.c_str());
 
-    SPDocument* doc = sp_desktop_document(this->getDesktop());
+    SPDocument* doc = this->getDesktop()->getDocument();
     DocumentUndo::done(doc, SP_VERB_DIALOG_SVG_FONTS, _("Edit glyph name"));
 
     update_glyphs();
@@ -632,7 +633,7 @@ void SvgFontsDialog::glyph_unicode_edit(const Glib::ustring&, const Glib::ustrin
     //XML Tree being directly used here while it shouldn't be.
     glyph->getRepr()->setAttribute("unicode", str.c_str());
 
-    SPDocument* doc = sp_desktop_document(this->getDesktop());
+    SPDocument* doc = this->getDesktop()->getDocument();
     DocumentUndo::done(doc, SP_VERB_DIALOG_SVG_FONTS, _("Set glyph unicode"));
 
     update_glyphs();
@@ -644,7 +645,7 @@ void SvgFontsDialog::remove_selected_font(){
 
     //XML Tree being directly used here while it shouldn't be.
     sp_repr_unparent(font->getRepr());
-    SPDocument* doc = sp_desktop_document(this->getDesktop());
+    SPDocument* doc = this->getDesktop()->getDocument();
     DocumentUndo::done(doc, SP_VERB_DIALOG_SVG_FONTS, _("Remove font"));
 
     update_fonts();
@@ -661,7 +662,7 @@ void SvgFontsDialog::remove_selected_glyph(){
 	//XML Tree being directly used here while it shouldn't be.
     sp_repr_unparent(glyph->getRepr());
 
-    SPDocument* doc = sp_desktop_document(this->getDesktop());
+    SPDocument* doc = this->getDesktop()->getDocument();
     DocumentUndo::done(doc, SP_VERB_DIALOG_SVG_FONTS, _("Remove glyph"));
 
     update_glyphs();
@@ -678,7 +679,7 @@ void SvgFontsDialog::remove_selected_kerning_pair(){
 	//XML Tree being directly used here while it shouldn't be.
     sp_repr_unparent(pair->getRepr());
 
-    SPDocument* doc = sp_desktop_document(this->getDesktop());
+    SPDocument* doc = this->getDesktop()->getDocument();
     DocumentUndo::done(doc, SP_VERB_DIALOG_SVG_FONTS, _("Remove kerning pair"));
 
     update_glyphs();
@@ -749,7 +750,7 @@ void SvgFontsDialog::add_kerning_pair(){
 
     if (this->kerning_pair) return; //We already have this kerning pair
 
-    SPDocument* document = sp_desktop_document(this->getDesktop());
+    SPDocument* document = this->getDesktop()->getDocument();
     Inkscape::XML::Document *xml_doc = document->getReprDoc();
 
     // create a new hkern node
@@ -863,7 +864,7 @@ void set_font_family(SPFont* font, char* str){
 }
 
 void SvgFontsDialog::add_font(){
-    SPDocument* doc = sp_desktop_document(this->getDesktop());
+    SPDocument* doc = this->getDesktop()->getDocument();
     SPFont* font = new_font(doc);
 
     const int count = _model->children().size();
@@ -937,7 +938,7 @@ SvgFontsDialog::SvgFontsDialog()
     _FontsList.signal_button_release_event().connect_notify(sigc::mem_fun(*this, &SvgFontsDialog::fonts_list_button_release));
     create_fonts_popup_menu(_FontsList, sigc::mem_fun(*this, &SvgFontsDialog::remove_selected_font));
 
-    _defs_observer.set(sp_desktop_document(this->getDesktop())->getDefs());
+    _defs_observer.set(this->getDesktop()->getDocument()->getDefs());
     _defs_observer.signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::update_fonts));
 
     _getContents()->show_all();

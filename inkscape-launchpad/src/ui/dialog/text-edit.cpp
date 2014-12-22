@@ -41,7 +41,7 @@ extern "C" {
 #include "document.h"
 #include "desktop.h"
 #include "desktop-style.h"
-#include "desktop-handles.h"
+
 #include "document-undo.h"
 #include "selection.h"
 #include "style.h"
@@ -344,7 +344,7 @@ void TextEdit::onReadSelection ( gboolean dostyle, gboolean /*docontent*/ )
         Inkscape::FontLister* fontlister = Inkscape::FontLister::get_instance();
 
         // This is normally done for us by text-toolbar but only when we are in text editing context
-        fontlister->update_font_list(sp_desktop_document(this->desktop));
+        fontlister->update_font_list(this->desktop->getDocument());
         fontlister->selection_update();
 
         Glib::ustring fontspec = fontlister->get_fontspec();
@@ -419,7 +419,7 @@ SPItem *TextEdit::getSelectedTextItem (void)
     if (!SP_ACTIVE_DESKTOP)
         return NULL;
 
-    for (const GSList *item = sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList();
+    for (const GSList *item = SP_ACTIVE_DESKTOP->getSelection()->itemList();
          item != NULL;
          item = item->next)
     {
@@ -438,7 +438,7 @@ unsigned TextEdit::getSelectedTextCount (void)
 
     unsigned int items = 0;
 
-    for (const GSList *item = sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList();
+    for (const GSList *item = SP_ACTIVE_DESKTOP->getSelection()->itemList();
          item != NULL;
          item = item->next)
     {
@@ -543,7 +543,7 @@ void TextEdit::onApply()
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
     unsigned items = 0;
-    const GSList *item_list = sp_desktop_selection(desktop)->itemList();
+    const GSList *item_list = desktop->getSelection()->itemList();
     SPCSSAttr *css = fillTextStyle ();
     sp_desktop_set_style(desktop, css, true);
 
@@ -569,7 +569,7 @@ void TextEdit::onApply()
 
     } else if (items == 1) {
         // exactly one text object; now set its text, too
-        SPItem *item = sp_desktop_selection(SP_ACTIVE_DESKTOP)->singleItem();
+        SPItem *item = SP_ACTIVE_DESKTOP->getSelection()->singleItem();
         if (SP_IS_TEXT (item) || SP_IS_FLOWTEXT(item)) {
             updateObjectText (item);
         }
@@ -583,7 +583,7 @@ void TextEdit::onApply()
     }
 
     // complete the transaction
-    DocumentUndo::done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
+    DocumentUndo::done(SP_ACTIVE_DESKTOP->getDocument(), SP_VERB_CONTEXT_TEXT,
                        _("Set text style"));
     apply_button.set_sensitive ( false );
 
@@ -658,7 +658,7 @@ void TextEdit::onStartOffsetChange(GtkTextBuffer * /*text_buffer*/, TextEdit *se
         const gchar *sstr = gtk_combo_box_text_get_active_text(reinterpret_cast<GtkComboBoxText *>(self->startOffset));
         tp->setAttribute("startOffset", sstr);
 
-        DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "startOffset", SP_VERB_CONTEXT_TEXT, _("Set text style"));
+        DocumentUndo::maybeDone(SP_ACTIVE_DESKTOP->getDocument(), "startOffset", SP_VERB_CONTEXT_TEXT, _("Set text style"));
     }
 }
 

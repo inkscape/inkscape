@@ -22,7 +22,7 @@
 #include "document.h"
 #include "selection.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "ui/tools-switch.h"
 #include "ui/tools/text-tool.h"
 #include "ui/interface.h"
@@ -407,7 +407,7 @@ SpellCheck::init(SPDesktop *d)
     }
 #endif  /* HAVE_ASPELL */
 
-    _root = sp_desktop_document(desktop)->getRoot();
+    _root = desktop->getDocument()->getRoot();
 
     // empty the list of objects we've checked
     g_slist_free (_seen_objects);
@@ -612,7 +612,7 @@ SpellCheck::nextWord()
             area.expandBy(MAX(0.05 * mindim, 1));
 
             // create canvas path rectangle, red stroke
-            SPCanvasItem *rect = sp_canvas_bpath_new(sp_desktop_sketch(desktop), NULL);
+            SPCanvasItem *rect = sp_canvas_bpath_new(desktop->getSketch(), NULL);
             sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(rect), 0xff0000ff, 3.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
             sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(rect), 0, SP_WIND_RULE_NONZERO);
             SPCurve *curve = new SPCurve();
@@ -792,7 +792,7 @@ void SpellCheck::onAccept ()
             // find the end of the word anew
             _end_w = _begin_w;
             _end_w.nextEndOfWord();
-            DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT,
+            DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_TEXT,
                                _("Fix spelling"));
         }
     }

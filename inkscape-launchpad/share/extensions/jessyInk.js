@@ -1419,18 +1419,7 @@ function slideUpdateExportLayer()
 	}
 
 	// Serialise the new document.
-	var serializer = new XMLSerializer();
-	var strm = 
-	{
-		content : "",
-		close : function() {},  
-		flush : function() {},  
-		write : function(str, count) { this.content += str; }  
-	};
-
-	var xml = serializer.serializeToStream(newDoc, strm, 'UTF-8');
-
-	window.location = 'data:application/svg+xml;base64;charset=utf-8,' + window.btoa(strm.content);
+  window.location = 'data:application/svg+xml;base64;charset=utf-8,' + window.btoa(unescape(encodeURIComponent((new XMLSerializer()).serializeToString(newDoc))));
 
 	// Unsuspend redraw.
 	ROOT_NODE.unsuspendRedraw(suspendHandle);

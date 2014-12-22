@@ -26,7 +26,7 @@
 #include "document-properties.h"
 #include "display/canvas-grid.h"
 #include "document.h"
-#include "desktop-handles.h"
+
 #include "desktop.h"
 #include "inkscape.h"
 #include "io/sys.h"
@@ -114,7 +114,7 @@ DocumentProperties::DocumentProperties()
       _rcb_shad(_("_Show border shadow"), _("If set, page border shows a shadow on its right and lower side"), "inkscape:showpageshadow", _wr, false),
       _rcp_bg(_("Back_ground color:"), _("Background color"), _("Color of the page background. Note: transparency setting ignored while editing but used when exporting to bitmap."), "pagecolor", "inkscape:pageopacity", _wr),
       _rcp_bord(_("Border _color:"), _("Page border color"), _("Color of the page border"), "bordercolor", "borderopacity", _wr),
-      _rum_deflt(_("Document _units:"), "inkscape:document-units", _wr),
+      _rum_deflt(_("Display _units:"), "inkscape:document-units", _wr),
       _page_sizer(_wr),
     //---------------------------------------------------------------
       //General snap options
@@ -186,9 +186,9 @@ void DocumentProperties::init()
 {
     update();
 
-    Inkscape::XML::Node *repr = sp_desktop_namedview(getDesktop())->getRepr();
+    Inkscape::XML::Node *repr = getDesktop()->getNamedView()->getRepr();
     repr->addListener (&_repr_events, this);
-    Inkscape::XML::Node *root = sp_desktop_document(getDesktop())->getRoot()->getRepr();
+    Inkscape::XML::Node *root = getDesktop()->getDocument()->getRoot()->getRepr();
     root->addListener (&_repr_events, this);
 
     show_all_children();
@@ -197,9 +197,9 @@ void DocumentProperties::init()
 
 DocumentProperties::~DocumentProperties()
 {
-    Inkscape::XML::Node *repr = sp_desktop_namedview(getDesktop())->getRepr();
+    Inkscape::XML::Node *repr = getDesktop()->getNamedView()->getRepr();
     repr->removeListenerByData (this);
-    Inkscape::XML::Node *root = sp_desktop_document(getDesktop())->getRoot()->getRepr();
+    Inkscape::XML::Node *root = getDesktop()->getDocument()->getRoot()->getRepr();
     root->removeListenerByData (this);
 
     for (RDElist::iterator it = _rdflist.begin(); it != _rdflist.end(); ++it)
@@ -1384,7 +1384,7 @@ void DocumentProperties::populate_script_lists(){
 void DocumentProperties::update_gridspage()
 {
     SPDesktop *dt = getDesktop();
-    SPNamedView *nv = sp_desktop_namedview(dt);
+    SPNamedView *nv = dt->getNamedView();
 
     //remove all tabs
     while (_grids_notebook.get_n_pages() != 0) {
@@ -1428,7 +1428,7 @@ void DocumentProperties::build_gridspage()
     /// Dissenting view: you want snapping without grid.
 
     SPDesktop *dt = getDesktop();
-    SPNamedView *nv = sp_desktop_namedview(dt);
+    SPNamedView *nv = dt->getNamedView();
     (void)nv;
 
     _grids_label_crea.set_markup(_("<b>Creation</b>"));
@@ -1464,7 +1464,7 @@ void DocumentProperties::update()
     if (_wr.isUpdating()) return;
 
     SPDesktop *dt = getDesktop();
-    SPNamedView *nv = sp_desktop_namedview(dt);
+    SPNamedView *nv = dt->getNamedView();
 
     _wr.setUpdating (true);
     set_sensitive (true);
@@ -1480,25 +1480,25 @@ void DocumentProperties::update()
     _rcb_antialias.set_xml_target(root->getRepr(), dt->getDocument());
     _rcb_antialias.setActive(root->style->shape_rendering.computed != SP_CSS_SHAPE_RENDERING_CRISPEDGES);
 
-    if (nv->doc_units) {
-        _rum_deflt.setUnit (nv->doc_units->abbr);
+    if (nv->display_units) {
+        _rum_deflt.setUnit (nv->display_units->abbr);
     }
 
-    double doc_w = sp_desktop_document(dt)->getRoot()->width.value;
-    Glib::ustring doc_w_unit = unit_table.getUnit(sp_desktop_document(dt)->getRoot()->width.unit)->abbr;
+    double doc_w = dt->getDocument()->getRoot()->width.value;
+    Glib::ustring doc_w_unit = unit_table.getUnit(dt->getDocument()->getRoot()->width.unit)->abbr;
     if (doc_w_unit == "") {
         doc_w_unit = "px";
-    } else if (doc_w_unit == "%" && sp_desktop_document(dt)->getRoot()->viewBox_set) {
+    } else if (doc_w_unit == "%" && dt->getDocument()->getRoot()->viewBox_set) {
         doc_w_unit = "px";
-        doc_w = sp_desktop_document(dt)->getRoot()->viewBox.width();
+        doc_w = dt->getDocument()->getRoot()->viewBox.width();
     }
-    double doc_h = sp_desktop_document(dt)->getRoot()->height.value;
-    Glib::ustring doc_h_unit = unit_table.getUnit(sp_desktop_document(dt)->getRoot()->height.unit)->abbr;
+    double doc_h = dt->getDocument()->getRoot()->height.value;
+    Glib::ustring doc_h_unit = unit_table.getUnit(dt->getDocument()->getRoot()->height.unit)->abbr;
     if (doc_h_unit == "") {
         doc_h_unit = "px";
-    } else if (doc_h_unit == "%" && sp_desktop_document(dt)->getRoot()->viewBox_set) {
+    } else if (doc_h_unit == "%" && dt->getDocument()->getRoot()->viewBox_set) {
         doc_h_unit = "px";
-        doc_h = sp_desktop_document(dt)->getRoot()->viewBox.height();
+        doc_h = dt->getDocument()->getRoot()->viewBox.height();
     }
     _page_sizer.setDim(Inkscape::Util::Quantity(doc_w, doc_w_unit), Inkscape::Util::Quantity(doc_h, doc_h_unit));
     _page_sizer.updateFitMarginsUI(nv->getRepr());
@@ -1592,27 +1592,27 @@ void DocumentProperties::save_default_metadata()
 
 void DocumentProperties::_handleDocumentReplaced(SPDesktop* desktop, SPDocument *document)
 {
-    Inkscape::XML::Node *repr = sp_desktop_namedview(desktop)->getRepr();
+    Inkscape::XML::Node *repr = desktop->getNamedView()->getRepr();
     repr->addListener(&_repr_events, this);
     Inkscape::XML::Node *root = document->getRoot()->getRepr();
     root->addListener(&_repr_events, this);
     update();
 }
 
-void DocumentProperties::_handleActivateDesktop(InkscapeApplication *, SPDesktop *desktop)
+void DocumentProperties::_handleActivateDesktop(SPDesktop *desktop)
 {
-    Inkscape::XML::Node *repr = sp_desktop_namedview(desktop)->getRepr();
+    Inkscape::XML::Node *repr = desktop->getNamedView()->getRepr();
     repr->addListener(&_repr_events, this);
-    Inkscape::XML::Node *root = sp_desktop_document(desktop)->getRoot()->getRepr();
+    Inkscape::XML::Node *root = desktop->getDocument()->getRoot()->getRepr();
     root->addListener(&_repr_events, this);
     update();
 }
 
-void DocumentProperties::_handleDeactivateDesktop(InkscapeApplication *, SPDesktop *desktop)
+void DocumentProperties::_handleDeactivateDesktop(SPDesktop *desktop)
 {
-    Inkscape::XML::Node *repr = sp_desktop_namedview(desktop)->getRepr();
+    Inkscape::XML::Node *repr = desktop->getNamedView()->getRepr();
     repr->removeListenerByData(this);
-    Inkscape::XML::Node *root = sp_desktop_document(desktop)->getRoot()->getRepr();
+    Inkscape::XML::Node *root = desktop->getDocument()->getRoot()->getRepr();
     root->removeListenerByData(this);
 }
 
@@ -1647,8 +1647,8 @@ static void on_repr_attr_changed(Inkscape::XML::Node *, gchar const *, gchar con
 void DocumentProperties::onNewGrid()
 {
     SPDesktop *dt = getDesktop();
-    Inkscape::XML::Node *repr = sp_desktop_namedview(dt)->getRepr();
-    SPDocument *doc = sp_desktop_document(dt);
+    Inkscape::XML::Node *repr = dt->getNamedView()->getRepr();
+    SPDocument *doc = dt->getDocument();
 
     Glib::ustring typestring = _grids_combo_gridtype.get_active_text();
     CanvasGrid::writeNewGridToRepr(repr, doc, CanvasGrid::getGridTypeFromName(typestring.c_str()));
@@ -1665,7 +1665,7 @@ void DocumentProperties::onRemoveGrid()
       return;
 
     SPDesktop *dt = getDesktop();
-    SPNamedView *nv = sp_desktop_namedview(dt);
+    SPNamedView *nv = dt->getNamedView();
     Inkscape::CanvasGrid * found_grid = NULL;
     int i = 0;
     for (GSList const * l = nv->grids; l != NULL; l = l->next, i++) {  // not a very nice fix, but works.
@@ -1679,7 +1679,7 @@ void DocumentProperties::onRemoveGrid()
         // delete the grid that corresponds with the selected tab
         // when the grid is deleted from SVG, the SPNamedview handler automatically deletes the object, so found_grid becomes an invalid pointer!
         found_grid->repr->parent()->removeChild(found_grid->repr);
-        DocumentUndo::done(sp_desktop_document(dt), SP_VERB_DIALOG_NAMEDVIEW, _("Remove grid"));
+        DocumentUndo::done(dt->getDocument(), SP_VERB_DIALOG_NAMEDVIEW, _("Remove grid"));
     }
 }
 
@@ -1697,7 +1697,7 @@ void DocumentProperties::onDocUnitChange()
     }
 
 
-    Inkscape::XML::Node *repr = sp_desktop_namedview(getDesktop())->getRepr();
+    Inkscape::XML::Node *repr = getDesktop()->getNamedView()->getRepr();
     Inkscape::Util::Unit const *old_doc_unit = unit_table.getUnit("px");
     if(repr->attribute("inkscape:document-units")) {
         old_doc_unit = unit_table.getUnit(repr->attribute("inkscape:document-units"));
@@ -1708,7 +1708,10 @@ void DocumentProperties::onDocUnitChange()
     Inkscape::SVGOStringStream os;
     os << doc_unit->abbr;
     repr->setAttribute("inkscape:document-units", os.str().c_str());
-    
+
+    // Disable changing of SVG Units. The intent here is to change the units in the UI, not the units in SVG.
+    // This code should be moved (and fixed) once we have an "SVG Units" setting that sets what units are used in SVG data.
+#if 0    
     // Set viewBox
     if (doc->getRoot()->viewBox_set) {
         gdouble scale = Inkscape::Util::Quantity::convert(1, old_doc_unit, doc_unit);
@@ -1760,10 +1763,11 @@ void DocumentProperties::onDocUnitChange()
     prefs->setBool("/options/transform/rectcorners", transform_rectcorners);
     prefs->setBool("/options/transform/pattern",     transform_pattern);
     prefs->setBool("/options/transform/gradient",    transform_gradient);
+#endif
 
     doc->setModifiedSinceSave();
     
-    DocumentUndo::done(doc, SP_VERB_NONE, _("Changed document unit"));
+    DocumentUndo::done(doc, SP_VERB_NONE, _("Changed default display unit"));
 }
 
 } // namespace Dialog

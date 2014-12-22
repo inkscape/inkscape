@@ -13,7 +13,7 @@
 #include "inkscape.h"
 #include "desktop.h"
 #include "desktop-style.h"
-#include "desktop-handles.h"
+
 #include "display/sp-canvas.h"
 #include "display/sp-ctrlline.h"
 #include "display/sodipodi-ctrl.h"
@@ -201,8 +201,8 @@ boost::optional<Geom::Point> Line::intersection_with_viewbox (SPDesktop *desktop
 
 void create_canvas_point(Geom::Point const &pos, double size, guint32 rgba)
 {
-    SPDesktop *desktop = inkscape_active_desktop();
-    SPCanvasItem * canvas_pt = sp_canvas_item_new(sp_desktop_controls(desktop), SP_TYPE_CTRL,
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    SPCanvasItem * canvas_pt = sp_canvas_item_new(desktop->getControls(), SP_TYPE_CTRL,
                           "size", size,
                           "filled", 1,
                           "fill_color", rgba,
@@ -214,8 +214,8 @@ void create_canvas_point(Geom::Point const &pos, double size, guint32 rgba)
 
 void create_canvas_line(Geom::Point const &p1, Geom::Point const &p2, guint32 rgba)
 {
-    SPDesktop *desktop = inkscape_active_desktop();
-    SPCtrlLine *line = ControlManager::getManager().createControlLine(sp_desktop_controls(desktop), p1, p2);
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    SPCtrlLine *line = ControlManager::getManager().createControlLine(desktop->getControls(), p1, p2);
     line->setRgba32(rgba);
     sp_canvas_item_show(line);
 }

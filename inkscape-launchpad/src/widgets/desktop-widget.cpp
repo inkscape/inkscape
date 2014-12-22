@@ -32,7 +32,7 @@
 #include "conn-avoid-ref.h"
 #include "desktop.h"
 #include "desktop-events.h"
-#include "desktop-handles.h"
+
 #include "desktop-widget.h"
 #include "display/sp-canvas.h"
 #include "display/canvas-arena.h"
@@ -45,7 +45,7 @@
 #include "helper/action-context.h"
 #include "util/units.h"
 #include "ui/widget/unit-tracker.h"
-#include "inkscape-private.h"
+#include "inkscape.h"
 #include "ui/interface.h"
 #include "macros.h"
 #include "preferences.h"
@@ -795,7 +795,7 @@ static void sp_desktop_widget_dispose(GObject *object)
 
         dtw->layer_selector->setDesktop(NULL);
         dtw->layer_selector->unreference();
-        inkscape_remove_desktop (dtw->desktop); // clears selection too
+        INKSCAPE.remove_desktop (dtw->desktop); // clears selection too
         dtw->modified_connection.disconnect();
         dtw->desktop->destroy();
         Inkscape::GC::release (dtw->desktop);
@@ -1091,7 +1091,7 @@ SPDesktopWidget::shutdown()
 {
     g_assert(desktop != NULL);
 
-    if (inkscape_is_sole_desktop_for_document(*desktop)) {
+    if (INKSCAPE.sole_desktop_for_document(*desktop)) {
         SPDocument *doc = desktop->doc();
         if (doc->isModifiedSinceSave()) {
             GtkWidget *dialog;
@@ -1665,14 +1665,14 @@ SPDesktopWidget* SPDesktopWidget::createInstance(SPNamedView *namedview)
 {
     SPDesktopWidget *dtw = static_cast<SPDesktopWidget*>(g_object_new(SP_TYPE_DESKTOP_WIDGET, NULL));
 
-    dtw->dt2r = 1. / namedview->doc_units->factor;
+    dtw->dt2r = 1. / namedview->display_units->factor;
 
     dtw->ruler_origin = Geom::Point(0,0); //namedview->gridorigin;   Why was the grid origin used here?
 
     dtw->desktop = new SPDesktop();
     dtw->stub = new SPDesktopWidget::WidgetStub (dtw);
     dtw->desktop->init (namedview, dtw->canvas, dtw->stub);
-    inkscape_add_desktop (dtw->desktop);
+    INKSCAPE.add_desktop (dtw->desktop);
 
     // Add the shape geometry to libavoid for autorouting connectors.
     // This needs desktop set for its spacing preferences.
@@ -1737,11 +1737,11 @@ void SPDesktopWidget::namedviewModified(SPObject *obj, guint flags)
     SPNamedView *nv=SP_NAMEDVIEW(obj);
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
-        this->dt2r = 1. / nv->doc_units->factor;
+        this->dt2r = 1. / nv->display_units->factor;
         this->ruler_origin = Geom::Point(0,0); //nv->gridorigin;   Why was the grid origin used here?
 
-        sp_ruler_set_unit(SP_RULER (this->vruler), nv->getDefaultUnit());
-        sp_ruler_set_unit(SP_RULER (this->hruler), nv->getDefaultUnit());
+        sp_ruler_set_unit(SP_RULER (this->vruler), nv->getDisplayUnit());
+        sp_ruler_set_unit(SP_RULER (this->hruler), nv->getDisplayUnit());
 
         /* This loops through all the grandchildren of aux toolbox,
          * and for each that it finds, it performs an sp_search_by_data_recursive(),
@@ -1771,14 +1771,14 @@ void SPDesktopWidget::namedviewModified(SPObject *obj, guint flags)
                         if (tracker == NULL) // it's null when inkscape is first opened
                             continue;
 
-                        tracker->setActiveUnit( nv->doc_units );
+                        tracker->setActiveUnit( nv->display_units );
                     } // grandchildren
                 } // if child is a container
             } // children
         } // if aux_toolbox is a container
 
-        gtk_widget_set_tooltip_text(this->hruler_box, gettext(nv->doc_units->name_plural.c_str()));
-        gtk_widget_set_tooltip_text(this->vruler_box, gettext(nv->doc_units->name_plural.c_str()));
+        gtk_widget_set_tooltip_text(this->hruler_box, gettext(nv->display_units->name_plural.c_str()));
+        gtk_widget_set_tooltip_text(this->vruler_box, gettext(nv->display_units->name_plural.c_str()));
 
         sp_desktop_widget_update_rulers(this);
         ToolboxFactory::updateSnapToolbox(this->desktop, 0, this->snap_toolbox);
@@ -1818,7 +1818,7 @@ bool SPDesktopWidget::onFocusInEvent(GdkEventFocus*)
         }
     }
 
-    inkscape_activate_desktop (desktop);
+    INKSCAPE.activate_desktop (desktop);
 
     return false;
 }

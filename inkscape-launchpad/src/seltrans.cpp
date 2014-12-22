@@ -26,7 +26,7 @@
 #include "document-undo.h"
 #include "sp-namedview.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "desktop-style.h"
 #include "knot.h"
 #include "message-stack.h"
@@ -131,9 +131,9 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
     _makeHandles();
     _updateHandles();
 
-    _selection = sp_desktop_selection(desktop);
+    _selection = desktop->getSelection();
 
-    _norm = sp_canvas_item_new(sp_desktop_controls(desktop),
+    _norm = sp_canvas_item_new(desktop->getControls(),
                                SP_TYPE_CTRL,
                                "anchor", SP_ANCHOR_CENTER,
                                "mode", SP_CTRL_MODE_COLOR,
@@ -146,7 +146,7 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
                                "pixbuf", handles[12],
                                NULL);
 
-    _grip = sp_canvas_item_new(sp_desktop_controls(desktop),
+    _grip = sp_canvas_item_new(desktop->getControls(),
                                SP_TYPE_CTRL,
                                "anchor", SP_ANCHOR_CENTER,
                                "mode", SP_CTRL_MODE_XOR,
@@ -163,7 +163,7 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
     sp_canvas_item_hide(_norm);
 
     for (int i = 0; i < 4; i++) {
-        _l[i] = ControlManager::getManager().createControlLine(sp_desktop_controls(desktop));
+        _l[i] = ControlManager::getManager().createControlLine(desktop->getControls());
         sp_canvas_item_hide(_l[i]);
     }
 
@@ -252,7 +252,7 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
 {
     // While dragging a handle, we will either scale, skew, or rotate and the "translating" parameter will be false
     // When dragging the selected item itself however, we will translate the selection and that parameter will be true
-    Inkscape::Selection *selection = sp_desktop_selection(_desktop);
+    Inkscape::Selection *selection = _desktop->getSelection();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     g_return_if_fail(!_grabbed);
@@ -418,7 +418,7 @@ void Inkscape::SelTrans::ungrab()
 
     _desktop->snapindicator->remove_snapsource();
 
-    Inkscape::Selection *selection = sp_desktop_selection(_desktop);
+    Inkscape::Selection *selection = _desktop->getSelection();
     _updateVolatileState();
 
     for (unsigned i = 0; i < _items.size(); i++) {
@@ -473,16 +473,16 @@ void Inkscape::SelTrans::ungrab()
             // when trying to stretch a perfectly vertical line in horizontal direction, which will not be allowed
             // by the handles; this would be identified as a (zero) translation by isTranslation()
             if (_current_relative_affine.isTranslation()) {
-                DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
+                DocumentUndo::done(_desktop->getDocument(), SP_VERB_CONTEXT_SELECT,
                                    _("Move"));
             } else if (_current_relative_affine.withoutTranslation().isScale()) {
-                DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
+                DocumentUndo::done(_desktop->getDocument(), SP_VERB_CONTEXT_SELECT,
                                    _("Scale"));
             } else if (_current_relative_affine.withoutTranslation().isRotation()) {
-                DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
+                DocumentUndo::done(_desktop->getDocument(), SP_VERB_CONTEXT_SELECT,
                                    _("Rotate"));
             } else {
-                DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
+                DocumentUndo::done(_desktop->getDocument(), SP_VERB_CONTEXT_SELECT,
                                    _("Skew"));
             }
         }
@@ -495,7 +495,7 @@ void Inkscape::SelTrans::ungrab()
                 SPItem *it = SP_ITEM(l->data);
                 it->updateRepr();
             }
-            DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
+            DocumentUndo::done(_desktop->getDocument(), SP_VERB_CONTEXT_SELECT,
                                _("Set center"));
         }
 
@@ -512,7 +512,7 @@ void Inkscape::SelTrans::ungrab()
 
 void Inkscape::SelTrans::stamp()
 {
-    Inkscape::Selection *selection = sp_desktop_selection(_desktop);
+    Inkscape::Selection *selection = _desktop->getSelection();
 
     bool fixup = !_grabbed;
     if ( fixup && _stamp_cache ) {
@@ -549,7 +549,7 @@ void Inkscape::SelTrans::stamp()
             // move to the saved position
             copy_repr->setPosition(pos > 0 ? pos : 0);
 
-            SPItem *copy_item = (SPItem *) sp_desktop_document(_desktop)->getObjectByRepr(copy_repr);
+            SPItem *copy_item = (SPItem *) _desktop->getDocument()->getObjectByRepr(copy_repr);
 
             Geom::Affine const *new_affine;
             if (_show == SHOW_OUTLINE) {
@@ -570,7 +570,7 @@ void Inkscape::SelTrans::stamp()
             Inkscape::GC::release(copy_repr);
             l = l->next;
         }
-        DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
+        DocumentUndo::done(_desktop->getDocument(), SP_VERB_CONTEXT_SELECT,
                            _("Stamp"));
     }
 
@@ -606,7 +606,7 @@ void Inkscape::SelTrans::_updateHandles()
 
 void Inkscape::SelTrans::_updateVolatileState()
 {
-    Inkscape::Selection *selection = sp_desktop_selection(_desktop);
+    Inkscape::Selection *selection = _desktop->getSelection();
     _empty = selection->isEmpty();
 
     if (_empty) {
@@ -719,7 +719,7 @@ void Inkscape::SelTrans::handleClick(SPKnot */*knot*/, guint state, SPSelTransHa
                     _center_is_set = false;  // center has changed
                     _updateHandles();
                 }
-                DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
+                DocumentUndo::done(_desktop->getDocument(), SP_VERB_CONTEXT_SELECT,
                                    _("Reset center"));
             }
             break;
@@ -1306,8 +1306,8 @@ gboolean Inkscape::SelTrans::centerRequest(Geom::Point &pt, guint state)
     // status text
     Inkscape::Util::Quantity x_q = Inkscape::Util::Quantity(pt[Geom::X], "px");
     Inkscape::Util::Quantity y_q = Inkscape::Util::Quantity(pt[Geom::Y], "px");
-    GString *xs = g_string_new(x_q.string(_desktop->namedview->doc_units).c_str());
-    GString *ys = g_string_new(y_q.string(_desktop->namedview->doc_units).c_str());
+    GString *xs = g_string_new(x_q.string(_desktop->namedview->display_units).c_str());
+    GString *ys = g_string_new(y_q.string(_desktop->namedview->display_units).c_str());
     _message_context.setF(Inkscape::NORMAL_MESSAGE, _("Move <b>center</b> to %s, %s"), xs->str, ys->str);
     g_string_free(xs, FALSE);
     g_string_free(ys, FALSE);
@@ -1460,8 +1460,8 @@ void Inkscape::SelTrans::moveTo(Geom::Point const &xy, guint state)
     // status text
     Inkscape::Util::Quantity x_q = Inkscape::Util::Quantity(dxy[Geom::X], "px");
     Inkscape::Util::Quantity y_q = Inkscape::Util::Quantity(dxy[Geom::Y], "px");
-    GString *xs = g_string_new(x_q.string(_desktop->namedview->doc_units).c_str());
-    GString *ys = g_string_new(y_q.string(_desktop->namedview->doc_units).c_str());
+    GString *xs = g_string_new(x_q.string(_desktop->namedview->display_units).c_str());
+    GString *ys = g_string_new(y_q.string(_desktop->namedview->display_units).c_str());
     _message_context.setF(Inkscape::NORMAL_MESSAGE, _("<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; with <b>Shift</b> to disable snapping"), xs->str, ys->str);
     g_string_free(xs, TRUE);
     g_string_free(ys, TRUE);

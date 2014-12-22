@@ -25,7 +25,8 @@
 
 #include "document.h"
 #include "document-undo.h"
-#include "desktop-handles.h"
+#include "desktop.h"
+
 #include "transformation.h"
 #include "align-and-distribute.h"
 #include "inkscape.h"
@@ -47,16 +48,13 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-static void on_selection_changed(InkscapeApplication */*inkscape*/, Inkscape::Selection *selection, Transformation *daad)
+static void on_selection_changed(Inkscape::Selection *selection, Transformation *daad)
 {
     int page = daad->getCurrentPage();
     daad->updateSelection((Inkscape::UI::Dialog::Transformation::PageType)page, selection);
 }
 
-static void on_selection_modified( InkscapeApplication */*inkscape*/,
-                                   Inkscape::Selection *selection,
-                                   guint /*flags*/,
-                                   Transformation *daad )
+static void on_selection_modified(Inkscape::Selection *selection, Transformation *daad)
 {
     int page = daad->getCurrentPage();
     daad->updateSelection((Inkscape::UI::Dialog::Transformation::PageType)page, selection);
@@ -159,8 +157,8 @@ Transformation::Transformation()
     }
 
     // Connect to the global selection changed & modified signals
-    g_signal_connect (G_OBJECT (INKSCAPE), "change_selection", G_CALLBACK (on_selection_changed), this);
-    g_signal_connect (G_OBJECT (INKSCAPE), "modify_selection", G_CALLBACK (on_selection_modified), this);
+    _selChangeConn = INKSCAPE.signal_selection_changed.connect(sigc::bind(sigc::ptr_fun(&on_selection_changed), this));
+    _selModifyConn = INKSCAPE.signal_selection_modified.connect(sigc::hide<1>(sigc::bind(sigc::ptr_fun(&on_selection_modified), this)));
 
     _desktopChangeConn = _deskTrack.connectDesktopChanged( sigc::mem_fun(*this, &Transformation::setDesktop) );
     _deskTrack.connect(GTK_WIDGET(gobj()));
@@ -170,7 +168,8 @@ Transformation::Transformation()
 
 Transformation::~Transformation()
 {
-    sp_signal_disconnect_by_data (G_OBJECT (INKSCAPE), this);
+    _selModifyConn.disconnect();
+    _selChangeConn.disconnect();   
     _desktopChangeConn.disconnect();
     _deskTrack.disconnect();
 }
@@ -207,9 +206,9 @@ void Transformation::layoutPageMove()
     
     // Setting default unit to document unit
     SPDesktop *dt = getDesktop();
-    SPNamedView *nv = sp_desktop_namedview(dt);
-    if (nv->doc_units) {
-        _units_move.setUnit(nv->doc_units->abbr);
+    SPNamedView *nv = dt->getNamedView();
+    if (nv->display_units) {
+        _units_move.setUnit(nv->display_units->abbr);
     }
     
     _scalar_move_horizontal.initScalar(-1e6, 1e6);
@@ -580,7 +579,7 @@ void Transformation::onSwitchPage(Gtk::Widget * /*page*/, guint pagenum)
 void Transformation::onSwitchPage(GtkNotebookPage * /*page*/, guint pagenum)
 #endif
 {
-    updateSelection((PageType)pagenum, sp_desktop_selection(getDesktop()));
+    updateSelection((PageType)pagenum, getDesktop()->getSelection());
 }
 
 
@@ -803,7 +802,7 @@ void Transformation::applyPageMove(Inkscape::Selection *selection)
         }
     }
 
-    DocumentUndo::done( sp_desktop_document(selection->desktop()) , SP_VERB_DIALOG_TRANSFORM,
+    DocumentUndo::done( selection->desktop()->getDocument() , SP_VERB_DIALOG_TRANSFORM,
                         _("Move"));
 }
 
@@ -865,7 +864,7 @@ void Transformation::applyPageScale(Inkscape::Selection *selection)
         }
     }
 
-    DocumentUndo::done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM,
+    DocumentUndo::done(selection->desktop()->getDocument(), SP_VERB_DIALOG_TRANSFORM,
                        _("Scale"));
 }
 
@@ -890,7 +889,7 @@ void Transformation::applyPageRotate(Inkscape::Selection *selection)
         }
     }
 
-    DocumentUndo::done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM,
+    DocumentUndo::done(selection->desktop()->getDocument(), SP_VERB_DIALOG_TRANSFORM,
                        _("Rotate"));
 }
 
@@ -905,7 +904,7 @@ void Transformation::applyPageSkew(Inkscape::Selection *selection)
                 double skewX = _scalar_skew_horizontal.getValue("%");
                 double skewY = _scalar_skew_vertical.getValue("%");
                 if (fabs(0.01*skewX*0.01*skewY - 1.0) < Geom::EPSILON) {
-                    sp_desktop_message_stack(getDesktop())->flash(Inkscape::WARNING_MESSAGE, _("Transform matrix is singular, <b>not used</b>."));
+                    getDesktop()->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Transform matrix is singular, <b>not used</b>."));
                     return;
                 }
                 sp_item_skew_rel (item, 0.01*skewX, 0.01*skewY);
@@ -916,7 +915,7 @@ void Transformation::applyPageSkew(Inkscape::Selection *selection)
                 ||  (fabs(angleX - angleY - M_PI/2) < Geom::EPSILON)
                 ||  (fabs((angleX - angleY)/3 + M_PI/2) < Geom::EPSILON)
                 ||  (fabs((angleX - angleY)/3 - M_PI/2) < Geom::EPSILON)) {
-                    sp_desktop_message_stack(getDesktop())->flash(Inkscape::WARNING_MESSAGE, _("Transform matrix is singular, <b>not used</b>."));
+                    getDesktop()->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Transform matrix is singular, <b>not used</b>."));
                     return;
                 }
                 double skewX = tan(-angleX);
@@ -930,7 +929,7 @@ void Transformation::applyPageSkew(Inkscape::Selection *selection)
                     double width = bbox->dimensions()[Geom::X];
                     double height = bbox->dimensions()[Geom::Y];
                     if (fabs(skewX*skewY - width*height) < Geom::EPSILON) {
-                        sp_desktop_message_stack(getDesktop())->flash(Inkscape::WARNING_MESSAGE, _("Transform matrix is singular, <b>not used</b>."));
+                        getDesktop()->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Transform matrix is singular, <b>not used</b>."));
                         return;
                     }
                     sp_item_skew_rel (item, skewX/height, skewY/width);
@@ -949,7 +948,7 @@ void Transformation::applyPageSkew(Inkscape::Selection *selection)
                 double skewX = _scalar_skew_horizontal.getValue("%");
                 double skewY = _scalar_skew_vertical.getValue("%");
                 if (fabs(0.01*skewX*0.01*skewY - 1.0) < Geom::EPSILON) {
-                    sp_desktop_message_stack(getDesktop())->flash(Inkscape::WARNING_MESSAGE, _("Transform matrix is singular, <b>not used</b>."));
+                    getDesktop()->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Transform matrix is singular, <b>not used</b>."));
                     return;
                 }
                 sp_selection_skew_relative(selection, *center, 0.01*skewX, 0.01*skewY);
@@ -960,7 +959,7 @@ void Transformation::applyPageSkew(Inkscape::Selection *selection)
                 ||  (fabs(angleX - angleY - M_PI/2) < Geom::EPSILON)
                 ||  (fabs((angleX - angleY)/3 + M_PI/2) < Geom::EPSILON)
                 ||  (fabs((angleX - angleY)/3 - M_PI/2) < Geom::EPSILON)) {
-                    sp_desktop_message_stack(getDesktop())->flash(Inkscape::WARNING_MESSAGE, _("Transform matrix is singular, <b>not used</b>."));
+                    getDesktop()->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Transform matrix is singular, <b>not used</b>."));
                     return;
                 }
                 double skewX = tan(-angleX);
@@ -970,7 +969,7 @@ void Transformation::applyPageSkew(Inkscape::Selection *selection)
                 double skewX = _scalar_skew_horizontal.getValue("px");
                 double skewY = _scalar_skew_vertical.getValue("px");
                 if (fabs(skewX*skewY - width*height) < Geom::EPSILON) {
-                    sp_desktop_message_stack(getDesktop())->flash(Inkscape::WARNING_MESSAGE, _("Transform matrix is singular, <b>not used</b>."));
+                    getDesktop()->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Transform matrix is singular, <b>not used</b>."));
                     return;
                 }
                 sp_selection_skew_relative(selection, *center, skewX/height, skewY/width);
@@ -978,7 +977,7 @@ void Transformation::applyPageSkew(Inkscape::Selection *selection)
         }
     }
 
-    DocumentUndo::done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM,
+    DocumentUndo::done(selection->desktop()->getDocument(), SP_VERB_DIALOG_TRANSFORM,
                        _("Skew"));
 }
 
@@ -994,7 +993,7 @@ void Transformation::applyPageTransform(Inkscape::Selection *selection)
 
     Geom::Affine displayed(a, b, c, d, e, f);
     if (displayed.isSingular()) {
-        sp_desktop_message_stack(getDesktop())->flash(Inkscape::WARNING_MESSAGE, _("Transform matrix is singular, <b>not used</b>."));
+        getDesktop()->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Transform matrix is singular, <b>not used</b>."));
         return;
     }
 
@@ -1008,7 +1007,7 @@ void Transformation::applyPageTransform(Inkscape::Selection *selection)
         sp_selection_apply_affine(selection, displayed); // post-multiply each object's transform
     }
 
-    DocumentUndo::done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM,
+    DocumentUndo::done(selection->desktop()->getDocument(), SP_VERB_DIALOG_TRANSFORM,
                        _("Edit transformation matrix"));
 }
 

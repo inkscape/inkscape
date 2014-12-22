@@ -14,8 +14,6 @@
 
 #include "display/drawing-item.h"
 
-class SPStyle;
-
 namespace Inkscape {
 
 class DrawingGroup
@@ -28,7 +26,6 @@ public:
     bool pickChildren() { return _pick_children; }
     void setPickChildren(bool p);
 
-    void setStyle(SPStyle *style);
     void setChildTransform(Geom::Affine const &new_trans);
 
 protected:
@@ -40,7 +37,6 @@ protected:
     virtual DrawingItem *_pickItem(Geom::Point const &p, double delta, unsigned flags);
     virtual bool _canClip();
 
-    SPStyle *_style;
     Geom::Affine *_child_transform;
 };
 

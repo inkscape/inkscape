@@ -577,8 +577,9 @@ bool SVGPreview::set(Glib::ustring &fileName, int dialogType)
 
 SVGPreview::SVGPreview()
 {
-    if (!INKSCAPE)
-        inkscape_application_init("", false);
+    // \FIXME Why?!!??
+    if (!Inkscape::Application::exists())
+        Inkscape::Application::create("", false);
     document = NULL;
     viewerGtk = NULL;
     set_size_request(150, 150);
@@ -1083,7 +1084,7 @@ FileSaveDialogImplGtk::FileSaveDialogImplGtk(Gtk::Window &parentWindow, const Gl
     }
 
     // allow easy access to the user's own templates folder
-    gchar *templates = profile_path("templates");
+    gchar *templates = Inkscape::Application::profile_path("templates");
     if (Inkscape::IO::file_test(templates, G_FILE_TEST_EXISTS) &&
         Inkscape::IO::file_test(templates, G_FILE_TEST_IS_DIR) && g_path_is_absolute(templates)) {
         add_shortcut_folder(templates);

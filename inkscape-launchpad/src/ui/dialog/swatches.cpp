@@ -28,7 +28,7 @@
 
 #include "color-item.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "desktop-style.h"
 #include "document.h"
 #include "document-private.h"
@@ -122,7 +122,7 @@ static void editGradientImpl( SPDesktop* desktop, SPGradient* gr )
     if ( gr ) {
         bool shown = false;
         if ( desktop && desktop->doc() ) {
-            Inkscape::Selection *selection = sp_desktop_selection( desktop );
+            Inkscape::Selection *selection = desktop->getSelection();
             GSList const *items = selection->itemList();
             if (items) {
                 SPStyle *query = sp_style_new( desktop->doc() );
@@ -527,7 +527,7 @@ static void loadEmUp()
         beenHere = true;
 
         std::list<gchar *> sources;
-        sources.push_back( profile_path("palettes") );
+        sources.push_back( Inkscape::Application::profile_path("palettes") );
         sources.push_back( g_strdup(INKSCAPE_PALETTESDIR) );
         sources.push_back( g_strdup(CREATE_PALETTESDIR) );
 
@@ -1061,7 +1061,7 @@ void SwatchesPanel::_updateFromSelection()
         Glib::ustring fillId;
         Glib::ustring strokeId;
 
-        SPStyle *tmpStyle = sp_style_new( sp_desktop_document(_currentDesktop) );
+        SPStyle *tmpStyle = sp_style_new(_currentDesktop->getDocument());
         int result = sp_desktop_query_style( _currentDesktop, tmpStyle, QUERY_STYLE_PROPERTY_FILL );
         switch (result) {
             case QUERY_STYLE_SINGLE:

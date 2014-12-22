@@ -14,7 +14,7 @@
 #include "node.h"
 #include <glibmm/i18n.h>
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "document.h"
 #include "document-undo.h"
 #include "live_effects/lpeobject.h"
@@ -820,9 +820,9 @@ void MultiPathManipulator::_commit(CommitEvent cps)
     _selection.signal_update.emit();
     invokeForAll(&PathManipulator::writeXML);
     if (key) {
-        DocumentUndo::maybeDone(sp_desktop_document(_desktop), key, SP_VERB_CONTEXT_NODE, reason);
+        DocumentUndo::maybeDone(_desktop->getDocument(), key, SP_VERB_CONTEXT_NODE, reason);
     } else {
-        DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_NODE, reason);
+        DocumentUndo::done(_desktop->getDocument(), SP_VERB_CONTEXT_NODE, reason);
     }
     signal_coords_changed.emit();
 }
@@ -831,7 +831,7 @@ void MultiPathManipulator::_commit(CommitEvent cps)
 void MultiPathManipulator::_done(gchar const *reason, bool alert_LPE) {
     invokeForAll(&PathManipulator::update, alert_LPE);
     invokeForAll(&PathManipulator::writeXML);
-    DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_NODE, reason);
+    DocumentUndo::done(_desktop->getDocument(), SP_VERB_CONTEXT_NODE, reason);
     signal_coords_changed.emit();
 }
 

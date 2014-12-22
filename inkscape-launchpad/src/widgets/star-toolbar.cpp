@@ -31,7 +31,7 @@
 #include <glibmm/i18n.h>
 
 #include "star-toolbar.h"
-#include "desktop-handles.h"
+
 #include "desktop.h"
 #include "document-undo.h"
 #include "widgets/ege-adjustment-action.h"
@@ -64,7 +64,7 @@ static void sp_stb_magnitude_value_changed( GtkAdjustment *adj, GObject *dataKlu
 {
     SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( dataKludge, "desktop" ));
 
-    if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
+    if (DocumentUndo::getUndoSensitive(desktop->getDocument())) {
         // do not remember prefs if this call is initiated by an undo change, because undoing object
         // creation sets bogus values to its attributes before it is deleted
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -82,7 +82,7 @@ static void sp_stb_magnitude_value_changed( GtkAdjustment *adj, GObject *dataKlu
 
     bool modmade = false;
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     GSList const *items = selection->itemList();
     for (; items != NULL; items = items->next) {
         SPItem *item = reinterpret_cast<SPItem*>(items->data);
@@ -99,7 +99,7 @@ static void sp_stb_magnitude_value_changed( GtkAdjustment *adj, GObject *dataKlu
         }
     }
     if (modmade) {
-        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_STAR,
+        DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_STAR,
                            _("Star: Change number of corners"));
     }
 
@@ -110,7 +110,7 @@ static void sp_stb_proportion_value_changed( GtkAdjustment *adj, GObject *dataKl
 {
     SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( dataKludge, "desktop" ));
 
-    if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
+    if (DocumentUndo::getUndoSensitive(desktop->getDocument())) {
         if (!IS_NAN(gtk_adjustment_get_value(adj))) {
             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
             prefs->setDouble("/tools/shapes/star/proportion",
@@ -127,7 +127,7 @@ static void sp_stb_proportion_value_changed( GtkAdjustment *adj, GObject *dataKl
     g_object_set_data( dataKludge, "freeze", GINT_TO_POINTER(TRUE) );
 
     bool modmade = false;
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     GSList const *items = selection->itemList();
     for (; items != NULL; items = items->next) {
         SPItem *item = reinterpret_cast<SPItem *>(items->data);
@@ -152,7 +152,7 @@ static void sp_stb_proportion_value_changed( GtkAdjustment *adj, GObject *dataKl
     }
 
     if (modmade) {
-        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_STAR,
+        DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_STAR,
                            _("Star: Change spoke ratio"));
     }
 
@@ -164,7 +164,7 @@ static void sp_stb_sides_flat_state_changed( EgeSelectOneAction *act, GObject *d
     SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( dataKludge, "desktop" ));
     bool flat = ege_select_one_action_get_active( act ) == 0;
 
-    if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
+    if (DocumentUndo::getUndoSensitive(desktop->getDocument())) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setBool( "/tools/shapes/star/isflatsided", flat);
     }
@@ -177,7 +177,7 @@ static void sp_stb_sides_flat_state_changed( EgeSelectOneAction *act, GObject *d
     // in turn, prevent listener from responding
     g_object_set_data( dataKludge, "freeze", GINT_TO_POINTER(TRUE) );
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     GSList const *items = selection->itemList();
     GtkAction* prop_action = GTK_ACTION( g_object_get_data( dataKludge, "prop_action" ) );
     bool modmade = false;
@@ -197,7 +197,7 @@ static void sp_stb_sides_flat_state_changed( EgeSelectOneAction *act, GObject *d
     }
 
     if (modmade) {
-        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_STAR,
+        DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_STAR,
                            flat ? _("Make polygon") : _("Make star"));
     }
 
@@ -208,7 +208,7 @@ static void sp_stb_rounded_value_changed( GtkAdjustment *adj, GObject *dataKludg
 {
     SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( dataKludge, "desktop" ));
 
-    if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
+    if (DocumentUndo::getUndoSensitive(desktop->getDocument())) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setDouble("/tools/shapes/star/rounded", (gdouble) gtk_adjustment_get_value(adj));
     }
@@ -223,7 +223,7 @@ static void sp_stb_rounded_value_changed( GtkAdjustment *adj, GObject *dataKludg
 
     bool modmade = false;
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     GSList const *items = selection->itemList();
     for (; items != NULL; items = items->next) {
         SPItem *item = reinterpret_cast<SPItem*>(items->data);
@@ -236,7 +236,7 @@ static void sp_stb_rounded_value_changed( GtkAdjustment *adj, GObject *dataKludg
         }
     }
     if (modmade) {
-        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_STAR,
+        DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_STAR,
                            _("Star: Change rounding"));
     }
 
@@ -247,7 +247,7 @@ static void sp_stb_randomized_value_changed( GtkAdjustment *adj, GObject *dataKl
 {
     SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( dataKludge, "desktop" ));
 
-    if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
+    if (DocumentUndo::getUndoSensitive(desktop->getDocument())) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setDouble("/tools/shapes/star/randomized",
             (gdouble) gtk_adjustment_get_value(adj));
@@ -263,7 +263,7 @@ static void sp_stb_randomized_value_changed( GtkAdjustment *adj, GObject *dataKl
 
     bool modmade = false;
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     GSList const *items = selection->itemList();
     for (; items != NULL; items = items->next) {
         SPItem *item = reinterpret_cast<SPItem *>(items->data);
@@ -276,7 +276,7 @@ static void sp_stb_randomized_value_changed( GtkAdjustment *adj, GObject *dataKl
         }
     }
     if (modmade) {
-        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_STAR,
+        DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_STAR,
                            _("Star: Change randomization"));
     }
 
@@ -582,8 +582,8 @@ static void star_toolbox_watch_ec(SPDesktop* desktop, Inkscape::UI::Tools::ToolB
     static sigc::connection changed;
 
     if (dynamic_cast<Inkscape::UI::Tools::StarTool const*>(ec) != NULL) {
-        changed = sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_star_toolbox_selection_changed), holder));
-        sp_star_toolbox_selection_changed(sp_desktop_selection(desktop), holder);
+        changed = desktop->getSelection()->connectChanged(sigc::bind(sigc::ptr_fun(sp_star_toolbox_selection_changed), holder));
+        sp_star_toolbox_selection_changed(desktop->getSelection(), holder);
     } else {
         if (changed)
             changed.disconnect();

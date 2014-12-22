@@ -21,7 +21,7 @@
 
 #include "selection.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "ui/view/view.h"
 #include "util/glib-list-iterators.h"
 
@@ -48,8 +48,8 @@ Gtk::Widget *Implementation::prefs_effect(Inkscape::Extension::Effect *module, I
     SPDocument * current_document = view->doc();
 
     using Inkscape::Util::GSListConstIterator;
-    GSListConstIterator<SPItem *> selected =
-           sp_desktop_selection((SPDesktop *)view)->itemList();
+    // FIXME very unsafe cast
+    GSListConstIterator<SPItem *> selected = ((SPDesktop *)view)->getSelection()->itemList();
     Inkscape::XML::Node const* first_select = NULL;
     if (selected != NULL) {
         const SPItem * item = *selected;

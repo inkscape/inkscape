@@ -50,7 +50,7 @@
 #include "document-private.h"
 #include "document-undo.h"
 #include "id-clash.h"
-#include "inkscape-private.h"
+#include "inkscape.h"
 #include "inkscape-version.h"
 #include "libavoid/router.h"
 #include "persp3d.h"
@@ -154,6 +154,14 @@ SPDocument::~SPDocument() {
         router = NULL;
     }
 
+    if (oldSignalsConnected) {
+        priv->selChangeConnection.disconnect();
+        priv->desktopActivatedConnection.disconnect();
+    } else {
+        _selection_changed_connection.disconnect();
+        _desktop_activated_connection.disconnect();
+    }
+
     if (priv) {
         if (priv->partial) {
             sp_repr_free_log(priv->partial);
@@ -208,17 +216,8 @@ SPDocument::~SPDocument() {
         rerouting_handler_id = 0;
     }
 
-    if (oldSignalsConnected) {
-        g_signal_handlers_disconnect_by_func(G_OBJECT(INKSCAPE),
-                                             reinterpret_cast<gpointer>(DocumentUndo::resetKey),
-                                             static_cast<gpointer>(this));
-    } else {
-        _selection_changed_connection.disconnect();
-        _desktop_activated_connection.disconnect();
-    }
-
     if (keepalive) {
-        inkscape_unref();
+        inkscape_unref(INKSCAPE);
         keepalive = FALSE;
     }
 
@@ -447,7 +446,7 @@ SPDocument *SPDocument::createDoc(Inkscape::XML::Document *rdoc,
     rdf_set_defaults( document );
 
     if (keepalive) {
-        inkscape_ref();
+        inkscape_ref(INKSCAPE);
     }
 
     // Check if the document already has a perspective (e.g., when opening an existing
@@ -462,10 +461,14 @@ SPDocument *SPDocument::createDoc(Inkscape::XML::Document *rdoc,
     DocumentUndo::setUndoSensitive(document, true);
 
     // reset undo key when selection changes, so that same-key actions on different objects are not coalesced
-    g_signal_connect(G_OBJECT(INKSCAPE), "change_selection",
-                     G_CALLBACK(DocumentUndo::resetKey), document);
-    g_signal_connect(G_OBJECT(INKSCAPE), "activate_desktop",
-                     G_CALLBACK(DocumentUndo::resetKey), document);
+    document->priv->selChangeConnection = INKSCAPE.signal_selection_changed.connect(
+                sigc::hide(sigc::bind(
+                sigc::ptr_fun(&DocumentUndo::resetKey), document)
+    ));
+    document->priv->desktopActivatedConnection = INKSCAPE.signal_activate_desktop.connect(
+                sigc::hide(sigc::bind(
+                sigc::ptr_fun(&DocumentUndo::resetKey), document)
+    ));
     document->oldSignalsConnected = true;
 
     return document;
@@ -593,10 +596,18 @@ SPDocument *SPDocument::doUnref()
 }
 
 /// guaranteed not to return nullptr
-Inkscape::Util::Unit const* SPDocument::getDefaultUnit() const
+Inkscape::Util::Unit const* SPDocument::getDisplayUnit() const
 {
     SPNamedView const* nv = sp_document_namedview(this, NULL);
-    return nv ? nv->getDefaultUnit() : unit_table.getUnit("pt");
+    return nv ? nv->getDisplayUnit() : unit_table.getUnit("px");
+}
+
+/// guaranteed not to return nullptr
+// returns 'px' units as default, like legacy Inkscape
+Inkscape::Util::Unit const& SPDocument::getSVGUnit() const
+{
+    SPNamedView const* nv = sp_document_namedview(this, NULL);
+    return nv ? nv->getSVGUnit() : *unit_table.getUnit("px");
 }
 
 Inkscape::Util::Quantity SPDocument::getWidth() const
@@ -616,24 +627,18 @@ Inkscape::Util::Quantity SPDocument::getWidth() const
     return Inkscape::Util::Quantity(result, unit_table.getUnit(u));
 }
 
-void SPDocument::setWidth(const Inkscape::Util::Quantity &width)
+void SPDocument::setWidth(const Inkscape::Util::Quantity &width, bool changeSize)
 {
     Inkscape::Util::Unit const *old_units = unit_table.getUnit("px");
     if (root->width.unit)
         old_units = unit_table.getUnit(root->width.unit);
     gdouble old_converted = Inkscape::Util::Quantity::convert(root->width.value, old_units, width.unit);
-    root->width.computed = width.value("px");
-    /* SVG does not support meters as a unit, so we must translate meters to
-     * cm when writing */
-    if (*width.unit == *unit_table.getUnit("m")) {
-        root->width.value = width.value("cm");
-        root->width.unit = SVGLength::CM;
-    } else {
-        root->width.value = width.quantity;
-        root->width.unit = (SVGLength::Unit) width.unit->svgUnit();
-    }
 
-    if (root->viewBox_set)
+    root->width.computed = width.value("px");
+    root->width.value = width.quantity;
+    root->width.unit = (SVGLength::Unit) width.unit->svgUnit();
+
+    if (root->viewBox_set && changeSize)
         root->viewBox.setMax(Geom::Point(root->viewBox.left() + (root->width.value / old_converted) * root->viewBox.width(), root->viewBox.bottom()));
 
     root->updateRepr();
@@ -657,24 +662,18 @@ Inkscape::Util::Quantity SPDocument::getHeight() const
     return Inkscape::Util::Quantity(result, unit_table.getUnit(u));
 }
 
-void SPDocument::setHeight(const Inkscape::Util::Quantity &height)
+void SPDocument::setHeight(const Inkscape::Util::Quantity &height, bool changeSize)
 {
     Inkscape::Util::Unit const *old_units = unit_table.getUnit("px");
     if (root->height.unit)
         old_units = unit_table.getUnit(root->height.unit);
     gdouble old_converted = Inkscape::Util::Quantity::convert(root->height.value, old_units, height.unit);
-    root->height.computed = height.value("px");
-    /* SVG does not support meters as a unit, so we must translate meters to
-     * cm when writing */
-    if (*height.unit == *unit_table.getUnit("m")) {
-        root->height.value = height.value("cm");
-        root->height.unit = SVGLength::CM;
-    } else {
-        root->height.value = height.quantity;
-        root->height.unit = (SVGLength::Unit) height.unit->svgUnit();
-    }
 
-    if (root->viewBox_set)
+    root->height.computed = height.value("px");
+    root->height.value = height.quantity;
+    root->height.unit = (SVGLength::Unit) height.unit->svgUnit();
+
+    if (root->viewBox_set && changeSize)
         root->viewBox.setMax(Geom::Point(root->viewBox.right(), root->viewBox.top() + (root->height.value / old_converted) * root->viewBox.height()));
 
     root->updateRepr();

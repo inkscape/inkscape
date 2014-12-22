@@ -60,9 +60,7 @@
 #include "io/inkjar.h"
 #endif
 
-#include "inkscape-private.h"
-
-InkscapeApplication *inkscape;
+#include "inkscape.h"
 
 #include <iostream>
 
@@ -232,7 +230,8 @@ main (int argc, const char **argv)
     ss.view = NULL;
     ss.fullscreen = false;
 
-    inkscape = (InkscapeApplication *)g_object_new (SP_TYPE_INKSCAPE, NULL);
+    Inkscape::Application::create(argv[0], true);
+    //Inkscape::Application &inkscape = Inkscape::Application::instance();
 
     // starting at where the commandline options stopped parsing because
     // we want all the files to be in the list

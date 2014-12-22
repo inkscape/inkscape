@@ -44,7 +44,7 @@
 #include "selection.h"
 #include "desktop.h"
 #include "desktop-events.h"
-#include "desktop-handles.h"
+
 #include "desktop-style.h"
 #include "message-context.h"
 #include "preferences.h"
@@ -121,7 +121,7 @@ void EraserTool::setup() {
     this->cal1 = new SPCurve();
     this->cal2 = new SPCurve();
 
-    this->currentshape = sp_canvas_item_new(sp_desktop_sketch(desktop), SP_TYPE_CANVAS_BPATH, NULL);
+    this->currentshape = sp_canvas_item_new(desktop->getSketch(), SP_TYPE_CANVAS_BPATH, NULL);
 
     sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(this->currentshape), ERC_RED_RGBA, SP_WIND_RULE_EVENODD);
     sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(this->currentshape), 0x00000000, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
@@ -666,7 +666,7 @@ void EraserTool::set_to_accumulated() {
 
         if ( this->repr ) {
             bool wasSelection = false;
-            Inkscape::Selection *selection = sp_desktop_selection(desktop);
+            Inkscape::Selection *selection = desktop->getSelection();
             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
             
             gint eraserMode = prefs->getBool("/tools/eraser/mode") ? 1 : 0;
@@ -680,10 +680,10 @@ void EraserTool::set_to_accumulated() {
 
             if (selection->isEmpty()) {
                 if ( eraserMode ) {
-                    toWorkOn = sp_desktop_document(desktop)->getItemsPartiallyInBox(desktop->dkey, bounds);
+                    toWorkOn = desktop->getDocument()->getItemsPartiallyInBox(desktop->dkey, bounds);
                 } else {
                     Inkscape::Rubberband *r = Inkscape::Rubberband::get(desktop);
-                    toWorkOn = sp_desktop_document(desktop)->getItemsAtPoints(desktop->dkey, r->getPoints());
+                    toWorkOn = desktop->getDocument()->getItemsAtPoints(desktop->dkey, r->getPoints());
                 }
 
                 toWorkOn = g_slist_remove( toWorkOn, acid );
@@ -767,9 +767,9 @@ void EraserTool::set_to_accumulated() {
 
 
     if ( workDone ) {
-        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_ERASER, _("Draw eraser stroke"));
+        DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_ERASER, _("Draw eraser stroke"));
     } else {
-        DocumentUndo::cancel(sp_desktop_document(desktop));
+        DocumentUndo::cancel(desktop->getDocument());
     }
 }
 
@@ -949,7 +949,7 @@ void EraserTool::fit_and_split(bool release) {
             gint eraserMode = prefs->getBool("/tools/eraser/mode") ? 1 : 0;
             g_assert(!this->currentcurve->is_empty());
 
-            SPCanvasItem *cbp = sp_canvas_item_new(sp_desktop_sketch(desktop), SP_TYPE_CANVAS_BPATH, NULL);
+            SPCanvasItem *cbp = sp_canvas_item_new(desktop->getSketch(), SP_TYPE_CANVAS_BPATH, NULL);
             SPCurve *curve = this->currentcurve->copy();
             sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH (cbp), curve);
             curve->unref();

@@ -22,7 +22,7 @@
 
 #include "ui/dialog/dialog-manager.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "macros.h"
 #include "sp-anchor.h"
 #include "sp-image.h"
@@ -113,7 +113,7 @@ void ObjectAttributes::widget_setup (void)
         return;
     }
     
-    Inkscape::Selection *selection = sp_desktop_selection (SP_ACTIVE_DESKTOP);
+    Inkscape::Selection *selection = SP_ACTIVE_DESKTOP->getSelection();
     SPItem *item = selection->singleItem();
     if (!item)
     {

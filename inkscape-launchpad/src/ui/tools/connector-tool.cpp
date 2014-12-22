@@ -79,7 +79,7 @@
 #include "svg/svg.h"
 #include "desktop.h"
 #include "desktop-style.h"
-#include "desktop-handles.h"
+
 #include "document.h"
 #include "document-undo.h"
 #include "message-context.h"
@@ -223,7 +223,7 @@ ConnectorTool::~ConnectorTool() {
 void ConnectorTool::setup() {
     ToolBase::setup();
 
-    this->selection = sp_desktop_selection(this->desktop);
+    this->selection = this->desktop->getSelection();
 
     this->sel_changed_connection.disconnect();
     this->sel_changed_connection = this->selection->connectChanged(
@@ -231,7 +231,7 @@ void ConnectorTool::setup() {
     );
 
     /* Create red bpath */
-    this->red_bpath = sp_canvas_bpath_new(sp_desktop_sketch(this->desktop), NULL);
+    this->red_bpath = sp_canvas_bpath_new(this->desktop->getSketch(), NULL);
     sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(this->red_bpath), this->red_color,
             1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
     sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(this->red_bpath), 0x00000000,
@@ -659,7 +659,7 @@ bool ConnectorTool::_handleButtonRelease(GdkEventButton const &revent) {
     bool ret = false;
 
     if ( revent.button == 1 && !this->space_panning ) {
-        SPDocument *doc = sp_desktop_document(desktop);
+        SPDocument *doc = desktop->getDocument();
         SnapManager &m = desktop->namedview->snap_manager;
 
         Geom::Point const event_w(revent.x, revent.y);
@@ -729,7 +729,7 @@ bool ConnectorTool::_handleKeyPress(guint const keyval) {
                 break;
             case GDK_KEY_Escape:
                 if (this->state == SP_CONNECTOR_CONTEXT_REROUTING) {
-                    SPDocument *doc = sp_desktop_document(desktop);
+                    SPDocument *doc = desktop->getDocument();
 
                     this->_reroutingFinish(NULL);
 
@@ -754,7 +754,7 @@ bool ConnectorTool::_handleKeyPress(guint const keyval) {
 }
 
 void ConnectorTool::_reroutingFinish(Geom::Point *const p) {
-    SPDocument *doc = sp_desktop_document(desktop);
+    SPDocument *doc = desktop->getDocument();
 
     // Clear the temporary path:
     this->red_curve->reset();
@@ -812,7 +812,7 @@ void ConnectorTool::_setSubsequentPoint(Geom::Point const p) {
     Avoid::Point dst(d[Geom::X], d[Geom::Y]);
 
     if (!this->newConnRef) {
-        Avoid::Router *router = sp_desktop_document(desktop)->router;
+        Avoid::Router *router = desktop->getDocument()->router;
         this->newConnRef = new Avoid::ConnRef(router);
         this->newConnRef->setEndpoint(Avoid::VertID::src, src);
         if (this->isOrthogonal)
@@ -876,7 +876,7 @@ void ConnectorTool::_flushWhite(SPCurve *gc) {
     /* Now we have to go back to item coordinates at last */
     c->transform(this->desktop->dt2doc());
 
-    SPDocument *doc = sp_desktop_document(desktop);
+    SPDocument *doc = desktop->getDocument();
     Inkscape::XML::Document *xml_doc = doc->getReprDoc();
 
     if ( c && !c->is_empty() ) {
@@ -1304,14 +1304,14 @@ bool cc_item_is_connector(SPItem *item)
 
 void cc_selection_set_avoid(bool const set_avoid)
 {
-    SPDesktop *desktop = inkscape_active_desktop();
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop == NULL) {
         return;
     }
 
-    SPDocument *document = sp_desktop_document(desktop);
+    SPDocument *document = desktop->getDocument();
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     GSList *l = const_cast<GSList *>(selection->itemList());
 

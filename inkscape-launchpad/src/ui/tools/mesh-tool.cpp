@@ -27,7 +27,7 @@
 
 // General
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "document.h"
 #include "document-undo.h"
 #include "macros.h"
@@ -107,7 +107,7 @@ const gchar *ms_handle_descr [] = {
 
 void MeshTool::selection_changed(Inkscape::Selection* /*sel*/) {
     GrDrag *drag = this->_grdrag;
-    Inkscape::Selection *selection = sp_desktop_selection(this->desktop);
+    Inkscape::Selection *selection = this->desktop->getSelection();
 
     if (selection == NULL) {
         return;
@@ -234,7 +234,7 @@ void MeshTool::setup() {
     }
 
     this->enableGrDrag();
-    Inkscape::Selection *selection = sp_desktop_selection(this->desktop);
+    Inkscape::Selection *selection = this->desktop->getSelection();
 
     this->selcon = new sigc::connection(selection->connectChanged(
     	sigc::mem_fun(this, &MeshTool::selection_changed)
@@ -317,7 +317,7 @@ static void sp_mesh_context_split_near_point(MeshTool *rc, SPItem *item,  Geom::
 
     ec->get_drag()->addStopNearPoint (item, mouse_p, tolerance/desktop->current_zoom());
 
-    DocumentUndo::done(sp_desktop_document (desktop), SP_VERB_CONTEXT_MESH,
+    DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_MESH,
                        _("Split mesh row/column"));
 
     ec->get_drag()->updateDraggers();
@@ -440,7 +440,7 @@ Handles all keyboard and mouse input for meshs.
 bool MeshTool::root_handler(GdkEvent* event) {
     static bool dragging;
 
-    Inkscape::Selection *selection = sp_desktop_selection (desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     this->tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
@@ -488,13 +488,13 @@ bool MeshTool::root_handler(GdkEvent* event) {
 #ifdef DEBUG_MESH
                     std::cout << "sp_mesh_context_root_handler: creating new mesh on: " << (fsmode == Inkscape::FOR_FILL ? "Fill" : "Stroke") << std::endl;
 #endif
-                    SPGradient *vector = sp_gradient_vector_for_object(sp_desktop_document(desktop), desktop, item, fsmode);
+                    SPGradient *vector = sp_gradient_vector_for_object(desktop->getDocument(), desktop, item, fsmode);
 
                     SPGradient *priv = sp_item_set_gradient(item, vector, new_type, fsmode);
                     sp_gradient_reset_to_userspace(priv, item);
                 }
 
-                DocumentUndo::done(sp_desktop_document (desktop), SP_VERB_CONTEXT_MESH,
+                DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_MESH,
                                    _("Create default mesh"));
             }
 
@@ -933,8 +933,8 @@ bool MeshTool::root_handler(GdkEvent* event) {
 
 static void sp_mesh_drag(MeshTool &rc, Geom::Point const /*pt*/, guint /*state*/, guint32 /*etime*/) {
     SPDesktop *desktop = SP_EVENT_CONTEXT(&rc)->desktop;
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
-    SPDocument *document = sp_desktop_document(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
+    SPDocument *document = desktop->getDocument();
     ToolBase *ec = SP_EVENT_CONTEXT(&rc);
 
     if (!selection->isEmpty()) {
@@ -994,7 +994,7 @@ static void sp_mesh_drag(MeshTool &rc, Geom::Point const /*pt*/, guint /*state*/
                                            "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle", n_objects),
                                   n_objects);
     } else {
-        sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>objects</b> on which to create gradient."));
+        desktop->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>objects</b> on which to create gradient."));
     }
 
 }

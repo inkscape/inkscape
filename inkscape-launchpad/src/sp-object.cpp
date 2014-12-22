@@ -1254,6 +1254,16 @@ void SPObject::setAttribute(gchar const *key, gchar const *value, SPException *e
     //XML Tree being used here.
     getRepr()->setAttribute(key, value, false);
 }
+void SPObject::setAttribute(char const *key, Glib::ustring const &value, SPException *ex)
+{
+    setAttribute(key, value.empty() ? NULL : value.c_str(), ex);
+}
+void SPObject::setAttribute(Glib::ustring const &key, Glib::ustring const &value, SPException *ex)
+{
+    setAttribute( key.empty()   ? NULL : key.c_str(),
+                  value.empty() ? NULL : value.c_str(), ex);
+}
+
 
 void SPObject::removeAttribute(gchar const *key, SPException *ex)
 {
@@ -1511,6 +1521,22 @@ char* SPObject::textualContent() const
         }
     }
     return g_string_free(text, FALSE);
+}
+
+// For debugging: Print SP tree structure.
+void SPObject::recursivePrintTree( unsigned level )
+{
+    if (level == 0) {
+        std::cout << "SP Object Tree" << std::endl;
+    }
+    std::cout << "SP: ";
+    for (unsigned i = 0; i < level; ++i) {
+        std::cout << "  ";
+    }
+    std::cout << (getId()?getId():"No object id") << std::endl;
+    for (SPObject *child = children; child; child = child->next) {
+        child->recursivePrintTree( level+1 );
+    }
 }
 
 /*

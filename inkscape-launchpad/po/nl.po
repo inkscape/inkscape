@@ -59,7 +59,7 @@ msgstr ""
 "Project-Id-Version: inkscape 0.49\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2014-11-05 22:05+0100\n"
-"PO-Revision-Date: 2014-11-08 19:59+0100\n"
+"PO-Revision-Date: 2014-12-11 22:36+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -729,7 +729,9 @@ msgstr "Kubussen"
 
 #: ../share/filters/filters.svg.h:236
 msgid "Scattered cubes; adjust the Morphology primitive to vary size"
-msgstr "Verspreidde kubussen; pas de morfologieprimitieve aan om de grootte aan te passen"
+msgstr ""
+"Verspreidde kubussen; pas de morfologieprimitieve aan om de grootte aan te "
+"passen"
 
 #: ../share/filters/filters.svg.h:238
 msgid "Peel Off"
@@ -769,7 +771,7 @@ msgstr "Glazure juwelen"
 
 #: ../share/filters/filters.svg.h:256
 msgid "Slightly cracked enameled texture"
-msgstr "Light gekrakelleerde glazuurtextuur"
+msgstr "Light gebarsten glazuurtextuur"
 
 #: ../share/filters/filters.svg.h:258
 msgid "Rough Paper"
@@ -827,7 +829,8 @@ msgstr "Elektronenmicroscoop"
 #: ../share/filters/filters.svg.h:284
 msgid ""
 "Bevel, crude light, discoloration and glow like in electronic microscopy"
-msgstr "Verhoging, ruw licht, ontkleuring en gloed zoals bij elektronenmicroscopie"
+msgstr ""
+"Verhoging, ruw licht, ontkleuring en gloed zoals bij elektronenmicroscopie"
 
 #: ../share/filters/filters.svg.h:286
 msgid "Tartan"
@@ -892,7 +895,9 @@ msgstr "Randen omplooien"
 #: ../share/filters/filters.svg.h:316 ../share/filters/filters.svg.h:364
 msgid ""
 "Displace the outside of shapes and pictures without altering their content"
-msgstr "Verplaats buitenzijde van vormen en afbeeldingen zonder de inhoud aan te passen"
+msgstr ""
+"Verplaats buitenzijde van vormen en afbeeldingen zonder de inhoud aan te "
+"passen"
 
 #: ../share/filters/filters.svg.h:318
 msgid "Roughen Inside"
@@ -910,7 +915,9 @@ msgstr "Vergankelijk"
 msgid ""
 "Blur the contents of objects, preserving the outline and adding progressive "
 "transparency at edges"
-msgstr "Inhoud van objecten vervagen, randen behouden met toenemende transparantie aan randen"
+msgstr ""
+"Inhoud van objecten vervagen, randen behouden met toenemende transparantie "
+"aan randen"
 
 #: ../share/filters/filters.svg.h:326
 msgid "Chalk and Sponge"
@@ -943,7 +950,8 @@ msgstr "Tuin der Lusten"
 #: ../share/filters/filters.svg.h:340
 msgid ""
 "Phantasmagorical turbulent wisps, like Hieronymus Bosch's Garden of Delights"
-msgstr "Fantastische turbulende streken, zoals bij Hieronymus Bosch's Tuin der Lusten"
+msgstr ""
+"Fantastische turbulende streken, zoals bij Hieronymus Bosch's Tuin der Lusten"
 
 #: ../share/filters/filters.svg.h:342
 msgid "Cutout Glow"
@@ -967,7 +975,8 @@ msgstr "Verhoging met matte bellen"
 
 #: ../share/filters/filters.svg.h:352
 msgid "Same as Bubbly Bumps but with a diffuse light instead of a specular one"
-msgstr "Gelijkaardig aan verhoging met bellen met diffuus in plaats van direct licht"
+msgstr ""
+"Gelijkaardig aan verhoging met bellen met diffuus in plaats van direct licht"
 
 #: ../share/filters/filters.svg.h:354
 msgid "Blotting Paper"
@@ -1000,7 +1009,8 @@ msgstr "Vilt"
 #: ../share/filters/filters.svg.h:372
 msgid ""
 "Felt like texture with color turbulence and slightly darker at the edges"
-msgstr "Viltachtige textuur met turbulente kleuren en iets donkerder aan de randen"
+msgstr ""
+"Viltachtige textuur met turbulente kleuren en iets donkerder aan de randen"
 
 #: ../share/filters/filters.svg.h:374
 msgid "Ink Paint"
@@ -1016,7 +1026,8 @@ msgstr "Getinte regenboog"
 
 #: ../share/filters/filters.svg.h:380
 msgid "Smooth rainbow colors melted along the edges and colorizable"
-msgstr "Zachte regenboogkleuren in elkaar vloeiend langs de randen en aanpasbaar"
+msgstr ""
+"Zachte regenboogkleuren in elkaar vloeiend langs de randen en aanpasbaar"
 
 #: ../share/filters/filters.svg.h:382
 msgid "Melted Rainbow"
@@ -1076,7 +1087,7 @@ msgstr "Tijgervachtpatroon met vouwen en verhoging langs de randen"
 
 #: ../share/filters/filters.svg.h:410
 msgid "Black Light"
-msgstr ""
+msgstr "Zwart licht"
 
 #: ../share/filters/filters.svg.h:411 ../share/filters/filters.svg.h:575
 #: ../share/filters/filters.svg.h:587 ../share/filters/filters.svg.h:627
@@ -1162,15 +1173,15 @@ msgstr "Gekleurd gipsreliëf"
 
 #: ../share/filters/filters.svg.h:422
 msgid "Velvet Bumps"
-msgstr ""
+msgstr "Fluwelen verhoging"
 
 #: ../share/filters/filters.svg.h:424
 msgid "Gives Smooth Bumps velvet like"
-msgstr ""
+msgstr "Geeft afgeronde verhogingen"
 
 #: ../share/filters/filters.svg.h:426
 msgid "Comics Cream"
-msgstr ""
+msgstr "Comics cream"
 
 #: ../share/filters/filters.svg.h:427 ../share/filters/filters.svg.h:727
 #: ../share/filters/filters.svg.h:731 ../share/filters/filters.svg.h:735
@@ -1183,11 +1194,11 @@ msgstr ""
 #: ../share/filters/filters.svg.h:787 ../share/filters/filters.svg.h:791
 #: ../share/filters/filters.svg.h:795
 msgid "Non realistic 3D shaders"
-msgstr ""
+msgstr "Niet realistische 3D shaders"
 
 #: ../share/filters/filters.svg.h:428
 msgid "Comics shader with creamy waves transparency"
-msgstr ""
+msgstr "Comics shader met golvende crèmeachtige transparantie"
 
 #: ../share/filters/filters.svg.h:430
 msgid "Chewing Gum"
@@ -1198,6 +1209,8 @@ msgid ""
 "Creates colorizable blotches which smoothly flow over the edges of the lines "
 "at their crossings"
 msgstr ""
+"Maakt gekleurde vlekken die homogeen over de randen van lijnen op "
+"kruispunten vloeien"
 
 #: ../share/filters/filters.svg.h:434
 msgid "Dark And Glow"
@@ -1206,22 +1219,23 @@ msgstr "Schaduw en gloed"
 #: ../share/filters/filters.svg.h:436
 msgid "Darkens the edge with an inner blur and adds a flexible glow"
 msgstr ""
+"Maakt randen donker met vervaging langs binnen, voegt een flexibele gloed toe"
 
 #: ../share/filters/filters.svg.h:438
 msgid "Warped Rainbow"
-msgstr ""
+msgstr "Gedeformeerde regenboog"
 
 #: ../share/filters/filters.svg.h:440
 msgid "Smooth rainbow colors warped along the edges and colorizable"
-msgstr ""
+msgstr "Afgevlakte regenboogkleuren langs randen met aanpasbare kleur"
 
 #: ../share/filters/filters.svg.h:442
 msgid "Rough and Dilate"
-msgstr ""
+msgstr "Ruw en verwijding"
 
 #: ../share/filters/filters.svg.h:444
 msgid "Create a turbulent contour around"
-msgstr ""
+msgstr "Een turbulente contour maken"
 
 #: ../share/filters/filters.svg.h:446
 msgid "Old Postcard"
@@ -1229,173 +1243,170 @@ msgstr "Oude postkaart"
 
 #: ../share/filters/filters.svg.h:448
 msgid "Slightly posterize and draw edges like on old printed postcards"
-msgstr "Licht verzadigd en getekende randen zoals oude postkaarten"
+msgstr "Licht verzadigen en randen zoals op oude postkaarten tekenen"
 
 #: ../share/filters/filters.svg.h:450
 msgid "Dots Transparency"
-msgstr "Transparant pointillisme"
+msgstr "Pointillismetransparantie"
 
 #: ../share/filters/filters.svg.h:452
 msgid "Gives a pointillist HSL sensitive transparency"
-msgstr ""
+msgstr "Geeft een TVL-gevoelige pointillisme-achtige transparantie"
 
 #: ../share/filters/filters.svg.h:454
 msgid "Canvas Transparency"
-msgstr ""
+msgstr "Canvastransparantie"
 
 #: ../share/filters/filters.svg.h:456
 msgid "Gives a canvas like HSL sensitive transparency."
-msgstr ""
+msgstr "Geeft een TVL-gevoelige canvasachtige transparantie"
 
 #: ../share/filters/filters.svg.h:458
-#, fuzzy
 msgid "Smear Transparency"
-msgstr "Transparantie dialoogvenster"
+msgstr "Smeertransparantie"
 
 #: ../share/filters/filters.svg.h:460
 msgid ""
 "Paint objects with a transparent turbulence which turns around color edges"
 msgstr ""
+"Objecten met een transparante turbulentie tekenen die rond kleurranden draait"
 
 #: ../share/filters/filters.svg.h:462
-#, fuzzy
 msgid "Thick Paint"
-msgstr "Olieverf"
+msgstr "Dikke verf"
 
 #: ../share/filters/filters.svg.h:464
 msgid "Thick painting effect with turbulence"
-msgstr ""
+msgstr "Dikkeverfeffect met turbulentie"
 
 #: ../share/filters/filters.svg.h:466
 msgid "Burst"
-msgstr ""
+msgstr "Ontploffing"
 
 #: ../share/filters/filters.svg.h:468
 msgid "Burst balloon texture crumpled and with holes"
-msgstr ""
+msgstr "Ontploffende-ballon-textuur, verfrommeld en met gaten"
 
 #: ../share/filters/filters.svg.h:470
 msgid "Embossed Leather"
-msgstr ""
+msgstr "Leerachtige verhoging"
 
 #: ../share/filters/filters.svg.h:472
 msgid ""
 "Combine a HSL edges detection bump with a leathery or woody and colorizable "
 "texture"
 msgstr ""
+"TVL randherkenning met een gekleurde leerachtige of houten textuur combineren"
 
 #: ../share/filters/filters.svg.h:474
 msgid "Carnaval"
-msgstr ""
+msgstr "Carnaval"
 
 #: ../share/filters/filters.svg.h:476
 msgid "White splotches evocating carnaval masks"
-msgstr ""
+msgstr "Witte vlekken zoals carnavalmaskers"
 
 #: ../share/filters/filters.svg.h:478
-#, fuzzy
 msgid "Plastify"
-msgstr "Uitgevuld"
+msgstr "Plastificeren"
 
 #: ../share/filters/filters.svg.h:480
 msgid ""
 "HSL edges detection bump with a wavy reflective surface effect and variable "
 "crumple"
 msgstr ""
+"TVL-randherkenning met een golvend reflecterend oppervlak en variabele "
+"kreuken"
 
 #: ../share/filters/filters.svg.h:482
-#, fuzzy
 msgid "Plaster"
-msgstr "Plakken"
+msgstr "Gips"
 
 #: ../share/filters/filters.svg.h:484
 msgid ""
 "Combine a HSL edges detection bump with a matte and crumpled surface effect"
-msgstr ""
+msgstr "TVL-randherkenning met een mat verkreukt oppervlak combineren"
 
 #: ../share/filters/filters.svg.h:486
-#, fuzzy
 msgid "Rough Transparency"
-msgstr "Transparantie dialoogvenster"
+msgstr "Ruwe transparantie"
 
 #: ../share/filters/filters.svg.h:488
 msgid "Adds a turbulent transparency which displaces pixels at the same time"
 msgstr ""
+"Een turbulente transparantie toevoegent die gelijktijdig pixels verplaatst"
 
 #: ../share/filters/filters.svg.h:490
 msgid "Gouache"
-msgstr ""
+msgstr "Gouache"
 
 #: ../share/filters/filters.svg.h:492
 msgid "Partly opaque water color effect with bleed"
-msgstr ""
+msgstr "Gedeeltelijk opaak aquareleffect met vlekken"
 
 #: ../share/filters/filters.svg.h:494
-#, fuzzy
 msgid "Alpha Engraving"
-msgstr "Gravering"
+msgstr "Alfa-gravering"
 
 #: ../share/filters/filters.svg.h:496
 msgid "Gives a transparent engraving effect with rough line and filling"
-msgstr ""
+msgstr "Geeft een transparante gravering met ruwe lijn en vulling"
 
 #: ../share/filters/filters.svg.h:498
 msgid "Alpha Draw Liquid"
-msgstr ""
+msgstr "Vloeiende transparantie"
 
 #: ../share/filters/filters.svg.h:500
 msgid "Gives a transparent fluid drawing effect with rough line and filling"
 msgstr ""
+"Geeft het effect van een vloeiende transparante afbeelding met ruwe lijn en "
+"vulling"
 
 #: ../share/filters/filters.svg.h:502
-#, fuzzy
 msgid "Liquid Drawing"
-msgstr "Tekening"
+msgstr "Vloeiende tekening"
 
 #: ../share/filters/filters.svg.h:504
 msgid "Gives a fluid and wavy expressionist drawing effect to images"
 msgstr ""
+"Geeft het effect van een druppende en golvende expressionistische afbeelding"
 
 #: ../share/filters/filters.svg.h:506
 msgid "Marbled Ink"
-msgstr ""
+msgstr "Gemarmerde inkt"
 
 #: ../share/filters/filters.svg.h:508
 msgid "Marbled transparency effect which conforms to image detected edges"
-msgstr ""
+msgstr "Gemarmerd transparantie-effect dat zich aanpast aan afbeeldingsranden"
 
 #: ../share/filters/filters.svg.h:510
 msgid "Thick Acrylic"
-msgstr ""
+msgstr "Dikke acrylverf"
 
 #: ../share/filters/filters.svg.h:512
 msgid "Thick acrylic paint texture with high texture depth"
-msgstr ""
+msgstr "Dikke-acrylverftextuur met hoge textuurdiepte"
 
 #: ../share/filters/filters.svg.h:514
-#, fuzzy
 msgid "Alpha Engraving B"
-msgstr "Gravering"
+msgstr "Alfa-gravering B"
 
 #: ../share/filters/filters.svg.h:516
 msgid ""
 "Gives a controllable roughness engraving effect to bitmaps and materials"
-msgstr ""
+msgstr "Geeft een controleerbare gravering aan bitmaps en materialen"
 
 #: ../share/filters/filters.svg.h:518
-#, fuzzy
 msgid "Lapping"
-msgstr "Kleven"
+msgstr "Klotsen"
 
 #: ../share/filters/filters.svg.h:520
-#, fuzzy
 msgid "Something like a water noise"
-msgstr "Dun op zeep gelijkend membraan"
+msgstr "Zoals geschud water"
 
 #: ../share/filters/filters.svg.h:522
-#, fuzzy
 msgid "Monochrome Transparency"
-msgstr "Transparantie kleurkanaal"
+msgstr "Monochrome transparantie"
 
 #: ../share/filters/filters.svg.h:523 ../share/filters/filters.svg.h:527
 #: ../share/filters/filters.svg.h:647 ../share/filters/filters.svg.h:651
@@ -1409,257 +1420,234 @@ msgid "Fill and Transparency"
 msgstr "Vulling en transparantie"
 
 #: ../share/filters/filters.svg.h:524
-#, fuzzy
 msgid "Convert to a colorizable transparent positive or negative"
-msgstr "Afbeelding omzetten naar een transparante puntgravure"
+msgstr ""
+"Naar een transparante positief of negatief omzetten met aanpasbare kleur"
 
 #: ../share/filters/filters.svg.h:526
-#, fuzzy
 msgid "Saturation Map"
-msgstr "Verzadiging"
+msgstr "Verzadigingsmap"
 
 #: ../share/filters/filters.svg.h:528
 msgid ""
 "Creates an approximative semi-transparent and colorizable image of the "
 "saturation levels"
 msgstr ""
+"Maakt een benaderende semitransparante en gekleurde afbeelding van de "
+"verzadigingsniveaus"
 
 #: ../share/filters/filters.svg.h:530
-#, fuzzy
 msgid "Riddled"
-msgstr "Midden"
+msgstr "Doorzeefd"
 
 #: ../share/filters/filters.svg.h:532
 msgid "Riddle the surface and add bump to images"
-msgstr ""
+msgstr "Het opeprvlak doorzeven en verhoging aan afbeeldingen toevoegen"
 
 #: ../share/filters/filters.svg.h:534
-#, fuzzy
 msgid "Wrinkled Varnish"
-msgstr "Waarschuwingen tonen"
+msgstr "Gerimpelde vernis"
 
 #: ../share/filters/filters.svg.h:536
 msgid "Thick glossy and translucent paint texture with high depth"
-msgstr ""
+msgstr "Dikke glanzende en doorschijnende verftextuur met hoge diepte"
 
 #: ../share/filters/filters.svg.h:538
-#, fuzzy
 msgid "Canvas Bumps"
-msgstr "Canvas"
+msgstr "Canvasverhogingen"
 
 #: ../share/filters/filters.svg.h:540
 msgid "Canvas texture with an HSL sensitive height map"
-msgstr ""
+msgstr "Canvastextuur met TVL-gevoelige hoogtemap"
 
 #: ../share/filters/filters.svg.h:542
 msgid "Canvas Bumps Matte"
-msgstr ""
+msgstr "Matte canvasverhogingen"
 
 #: ../share/filters/filters.svg.h:544
 msgid "Same as Canvas Bumps but with a diffuse light instead of a specular one"
 msgstr ""
+"Gelijkaardig aan canvasverhogingen maar met diffuus in plaats van direct "
+"licht"
 
 #: ../share/filters/filters.svg.h:546
 msgid "Canvas Bumps Alpha"
-msgstr ""
+msgstr "Alfa canvasverhogingen"
 
 #: ../share/filters/filters.svg.h:548
 msgid "Same as Canvas Bumps but with transparent highlights"
-msgstr ""
+msgstr "Gelijkaardig aan canvasverhogingen maar met transparantie"
 
 #: ../share/filters/filters.svg.h:550
-#, fuzzy
 msgid "Bright Metal"
-msgstr "Helderder"
+msgstr "Helder metaal"
 
 #: ../share/filters/filters.svg.h:552
 msgid "Bright metallic effect for any color"
-msgstr ""
+msgstr "Helder metaaleffect voor alle kleuren"
 
 #: ../share/filters/filters.svg.h:554
 msgid "Deep Colors Plastic"
-msgstr ""
+msgstr "Diep gekleurd plastiek"
 
 #: ../share/filters/filters.svg.h:556
-#, fuzzy
 msgid "Transparent plastic with deep colors"
-msgstr "Verticale schorstextuur; met felle kleuren gebruiken"
+msgstr "Transparante plastiek met diepe kleuren"
 
 #: ../share/filters/filters.svg.h:558
-#, fuzzy
 msgid "Melted Jelly Matte"
-msgstr "Matte gel"
+msgstr "Vloeiende matte gelei"
 
 #: ../share/filters/filters.svg.h:560
 msgid "Matte bevel with blurred edges"
-msgstr ""
+msgstr "Matte verhoging met vage randen"
 
 #: ../share/filters/filters.svg.h:562
-#, fuzzy
 msgid "Melted Jelly"
-msgstr "Matte gel"
+msgstr "Vloeiende gelei"
 
 #: ../share/filters/filters.svg.h:564
-#, fuzzy
 msgid "Glossy bevel with blurred edges"
-msgstr "Geperst metaal met een gewalste rand"
+msgstr "Glanzende verhoging met vage randen"
 
 #: ../share/filters/filters.svg.h:566
-#, fuzzy
 msgid "Combined Lighting"
-msgstr "Diffuse belichting"
+msgstr "Gecombineerde belichting"
 
 #: ../share/filters/filters.svg.h:568
 #: ../src/extension/internal/filter/bevels.h:231
 msgid "Basic specular bevel to use for building textures"
-msgstr "Basis spiegelende belichting voor het maken van texturen"
+msgstr "Basis directe belichting voor het maken van texturen"
 
 #: ../share/filters/filters.svg.h:570
 msgid "Tinfoil"
-msgstr ""
+msgstr "Aluminiumfolie"
 
 #: ../share/filters/filters.svg.h:572
 msgid "Metallic foil effect combining two lighting types and variable crumple"
 msgstr ""
+"Metaalfolie-effect die twee belichtingstypes en variabele ruwheid combineert"
 
 #: ../share/filters/filters.svg.h:574
-#, fuzzy
 msgid "Soft Colors"
-msgstr "Overgangskleur"
+msgstr "Zachte kleuren"
 
 #: ../share/filters/filters.svg.h:576
-#, fuzzy
 msgid "Adds a colorizable edges glow inside objects and pictures"
-msgstr "Randen van vormen en afbeeldingen vervagen en verplaatsen"
+msgstr "Voegt een gekleurde randgloed aan obecten en afbeeldingen toe"
 
 #: ../share/filters/filters.svg.h:578
-#, fuzzy
 msgid "Relief Print"
-msgstr "LaTeX print"
+msgstr "Reliëfdruk"
 
 #: ../share/filters/filters.svg.h:580
 msgid "Bumps effect with a bevel, color flood and complex lighting"
-msgstr ""
+msgstr "Verhoging met schuine rand, gekleurde stroom en complexe verlichting"
 
 #: ../share/filters/filters.svg.h:582
-#, fuzzy
 msgid "Growing Cells"
-msgstr "Gloeiend metaal"
+msgstr "Groeiende cellen"
 
 #: ../share/filters/filters.svg.h:584
 msgid "Random rounded living cells like fill"
-msgstr ""
+msgstr "Vulling met random afgeronde levende cellen"
 
 #: ../share/filters/filters.svg.h:586
-#, fuzzy
 msgid "Fluorescence"
-msgstr "Fluorescentieniveau"
+msgstr "Fluorescentie"
 
 #: ../share/filters/filters.svg.h:588
 msgid "Oversaturate colors which can be fluorescent in real world"
-msgstr ""
+msgstr "Oververzadigde kleuren die fluorescent in de echte wereld kunnen zijn"
 
 #: ../share/filters/filters.svg.h:590
-#, fuzzy
 msgid "Pixellize"
-msgstr "Pixel"
+msgstr "Pixelliseren"
 
 #: ../share/filters/filters.svg.h:591
-#, fuzzy
 msgid "Pixel tools"
-msgstr "Pixel"
+msgstr "Pixelgereedschappen"
 
 #: ../share/filters/filters.svg.h:592
 msgid "Reduce or remove antialiasing around shapes"
-msgstr ""
+msgstr "Anti-aliasing rond vormen reduceren of verwijderen"
 
 #: ../share/filters/filters.svg.h:594
 msgid "Basic Diffuse Bump"
-msgstr ""
+msgstr "Basis diffuse verhoging"
 
 #: ../share/filters/filters.svg.h:596
-#, fuzzy
 msgid "Matte emboss effect"
-msgstr "Effecten verwijderen"
+msgstr "Mat reliëf"
 
 #: ../share/filters/filters.svg.h:598
 msgid "Basic Specular Bump"
-msgstr ""
+msgstr "Basis spiegelende verhoging"
 
 #: ../share/filters/filters.svg.h:600
-#, fuzzy
 msgid "Specular emboss effect"
-msgstr "Spiegelfactor"
+msgstr "Spiegelend reliëf"
 
 #: ../share/filters/filters.svg.h:602
 msgid "Basic Two Lights Bump"
-msgstr ""
+msgstr "Basisverhoging met twee lichten"
 
 #: ../share/filters/filters.svg.h:604
 msgid "Two types of lighting emboss effect"
-msgstr ""
+msgstr "Reliëf met twee typen verlichting"
 
 #: ../share/filters/filters.svg.h:606
-#, fuzzy
 msgid "Linen Canvas"
-msgstr "Canvas"
+msgstr "Linnen canvas"
 
 #: ../share/filters/filters.svg.h:608 ../share/filters/filters.svg.h:616
 msgid "Painting canvas emboss effect"
-msgstr ""
+msgstr "Verfdoekeffect"
 
 #: ../share/filters/filters.svg.h:610
 msgid "Plasticine"
-msgstr ""
+msgstr "Plasticine"
 
 #: ../share/filters/filters.svg.h:612
-#, fuzzy
 msgid "Matte modeling paste emboss effect"
-msgstr "Padeffect plakken"
+msgstr "Mat plasticine-effect"
 
 #: ../share/filters/filters.svg.h:614
-#, fuzzy
 msgid "Rough Canvas Painting"
-msgstr "Kleur per kanaal"
+msgstr "Schilderij op ruw canvas"
 
 # het blijkt hier ook om embossering te gaan: in Inkscape consistent als reliëf aangeduid
 #: ../share/filters/filters.svg.h:618
-#, fuzzy
 msgid "Paper Bump"
-msgstr "Wasachtig reliëf"
+msgstr "Papierreliëf"
 
 #: ../share/filters/filters.svg.h:620
-#, fuzzy
 msgid "Paper like emboss effect"
-msgstr "Padeffect plakken"
+msgstr "Papierachtig reliëf"
 
 #: ../share/filters/filters.svg.h:622
-#, fuzzy
 msgid "Jelly Bump"
-msgstr "Vervormde bellen"
+msgstr "Gelachtige verhoging"
 
 #: ../share/filters/filters.svg.h:624
-#, fuzzy
 msgid "Convert pictures to thick jelly"
-msgstr "Tekst naar paden omzetten"
+msgstr "Afbeeldingen in dikke gel omzetten"
 
 #: ../share/filters/filters.svg.h:626
-#, fuzzy
 msgid "Blend Opposites"
-msgstr "Mengtype:"
+msgstr "Tegengestelden mengen"
 
 #: ../share/filters/filters.svg.h:628
 msgid "Blend an image with its hue opposite"
-msgstr ""
+msgstr "Een afbeelding met zijn tegengestelde tint mengen"
 
 #: ../share/filters/filters.svg.h:630
-#, fuzzy
 msgid "Hue to White"
-msgstr "Tintrotatie"
+msgstr "Tint naar wit"
 
 #: ../share/filters/filters.svg.h:632
 msgid "Fades hue progressively to white"
-msgstr ""
+msgstr "Tit progressief naar wit vervagen"
 
 #: ../share/filters/filters.svg.h:634
 #: ../src/extension/internal/bitmap/swirl.cpp:37
@@ -1669,453 +1657,401 @@ msgstr "Kolken"
 #: ../share/filters/filters.svg.h:636
 msgid ""
 "Paint objects with a transparent turbulence which wraps around color edges"
-msgstr ""
+msgstr "Objecten met een transparante turbulentie rond de kleurranden tekenen"
 
 #: ../share/filters/filters.svg.h:638
-#, fuzzy
 msgid "Pointillism"
-msgstr "Punten"
+msgstr "Pointillisme"
 
 #: ../share/filters/filters.svg.h:640
 msgid "Gives a turbulent pointillist HSL sensitive transparency"
-msgstr ""
+msgstr "Geeft een turbulente pointillisme TVL-gevoelige transparantie"
 
 #: ../share/filters/filters.svg.h:642
-#, fuzzy
 msgid "Silhouette Marbled"
-msgstr "Contour"
+msgstr "Gemarmerd contour"
 
 #: ../share/filters/filters.svg.h:644
-#, fuzzy
 msgid "Basic noise transparency texture"
-msgstr "Basistextuur voor opvulling en transparantie met ruis"
+msgstr "Basistextuur voor turbulente transparantie"
 
 #: ../share/filters/filters.svg.h:646
-#, fuzzy
 msgid "Fill Background"
-msgstr "Achtergrond"
+msgstr "Achtergrond vullen"
 
 #: ../share/filters/filters.svg.h:648
-#, fuzzy
 msgid "Adds a colorizable opaque background"
-msgstr "Een gekleurde contour toevoegen"
+msgstr "Een gekleurde opake achtergrond toevoegen"
 
 #: ../share/filters/filters.svg.h:650
-#, fuzzy
 msgid "Flatten Transparency"
-msgstr "Vulling en transparantie"
+msgstr "Transparantie uitvlakken"
 
 #: ../share/filters/filters.svg.h:652
-#, fuzzy
 msgid "Adds a white opaque background"
-msgstr "Vermengen met achtergrond"
+msgstr "Een witte opake achtergrond toevoegen"
 
 #: ../share/filters/filters.svg.h:654
-#, fuzzy
 msgid "Blur Double"
-msgstr "_Mengmodus:"
+msgstr "Dubbel vervagen"
 
 #: ../share/filters/filters.svg.h:656
 msgid ""
 "Overlays two copies with different blur amounts and modifiable blend and "
 "composite"
 msgstr ""
+"Twee kopies over elkaar leggen met verschillende vervaging en aanpasbare "
+"menging en compositie"
 
 #: ../share/filters/filters.svg.h:658
-#, fuzzy
 msgid "Image Drawing Basic"
-msgstr "Nieuwe tekening"
+msgstr "Tekening, basis"
 
 #: ../share/filters/filters.svg.h:660
 msgid "Enhance and redraw color edges in 1 bit black and white"
-msgstr ""
+msgstr "Kleurranden verbeteren en hertekenen in zwart en wit"
 
 #: ../share/filters/filters.svg.h:662
-#, fuzzy
 msgid "Poster Draw"
 msgstr "Poster"
 
 #: ../share/filters/filters.svg.h:664
 msgid "Enhance and redraw edges around posterized areas"
-msgstr ""
+msgstr "Randen verbeteren en hertekenen rond verzadigde gebieden"
 
 #: ../share/filters/filters.svg.h:666
 msgid "Cross Noise Poster"
-msgstr ""
+msgstr "Poster met kruisruis"
 
 #: ../share/filters/filters.svg.h:668
 msgid "Overlay with a small scale screen like noise"
-msgstr ""
+msgstr "Met kleine schermachtige ruis bedekken"
 
 #: ../share/filters/filters.svg.h:670
 msgid "Cross Noise Poster B"
-msgstr ""
+msgstr "Poster met kruisruis B"
 
 #: ../share/filters/filters.svg.h:672
 msgid "Adds a small scale screen like noise locally"
-msgstr ""
+msgstr "Lokaal een kleine schermachtige ruis toevoegen"
 
 #: ../share/filters/filters.svg.h:674
-#, fuzzy
 msgid "Poster Color Fun"
-msgstr "Kleur plakken"
+msgstr "Poster met kleur, fun"
 
 #: ../share/filters/filters.svg.h:678
-#, fuzzy
 msgid "Poster Rough"
-msgstr "Poster"
+msgstr "Poster, ruw"
 
 #: ../share/filters/filters.svg.h:680
 msgid "Adds roughness to one of the two channels of the Poster paint filter"
-msgstr ""
+msgstr "Ruwheid aan één van de twee kleurkanalen van de posterfilter toevoegen"
 
 #: ../share/filters/filters.svg.h:682
 msgid "Alpha Monochrome Cracked"
-msgstr ""
+msgstr "Gebarsten monochroom alfa"
 
 #: ../share/filters/filters.svg.h:684 ../share/filters/filters.svg.h:688
 #: ../share/filters/filters.svg.h:692 ../share/filters/filters.svg.h:704
 #: ../share/filters/filters.svg.h:708 ../share/filters/filters.svg.h:712
 msgid "Basic noise fill texture; adjust color in Flood"
-msgstr ""
+msgstr "Basis ruisopvulling; kleur aan vulling toevoegen"
 
 #: ../share/filters/filters.svg.h:686
-#, fuzzy
 msgid "Alpha Turbulent"
-msgstr "Turbulentie"
+msgstr "Turbulente alfa"
 
 #: ../share/filters/filters.svg.h:690
-#, fuzzy
 msgid "Colorize Turbulent"
-msgstr "Verkleuren"
+msgstr "Turbulent verkleuren"
 
 #: ../share/filters/filters.svg.h:694
-#, fuzzy
 msgid "Cross Noise B"
-msgstr "Poissonruis"
+msgstr "Kruisruis B"
 
 #: ../share/filters/filters.svg.h:696
 msgid "Adds a small scale crossy graininess"
-msgstr ""
+msgstr "Een kleine korrel toevoegen"
 
 #: ../share/filters/filters.svg.h:698
-#, fuzzy
 msgid "Cross Noise"
-msgstr "Poissonruis"
+msgstr "Kruisruis"
 
 #: ../share/filters/filters.svg.h:700
 msgid "Adds a small scale screen like graininess"
-msgstr ""
+msgstr "Een kleine korrel toevoegen"
 
 #: ../share/filters/filters.svg.h:702
 msgid "Duotone Turbulent"
-msgstr ""
+msgstr "Duotoon, turbulent"
 
 #: ../share/filters/filters.svg.h:706
-#, fuzzy
 msgid "Light Eraser Cracked"
-msgstr "Lichtgom"
+msgstr "Lichtgom, gebarsten"
 
 #: ../share/filters/filters.svg.h:710
-#, fuzzy
 msgid "Poster Turbulent"
-msgstr "Schilderij en poster"
+msgstr "Poster, turbulent"
 
 #: ../share/filters/filters.svg.h:714
 msgid "Tartan Smart"
-msgstr ""
+msgstr "Tartan, smart"
 
 #: ../share/filters/filters.svg.h:716
 msgid "Highly configurable checkered tartan pattern"
-msgstr ""
+msgstr "Zeer aanpasbaar geruit tartanpatroon"
 
 #: ../share/filters/filters.svg.h:718
-#, fuzzy
 msgid "Light Contour"
-msgstr "Lichtbron"
+msgstr "Lichte contour"
 
 #: ../share/filters/filters.svg.h:720
 msgid "Uses vertical specular light to draw lines"
-msgstr ""
+msgstr "Gebruikt verticaal spiegelend licht om lijnen te tekenen"
 
 #: ../share/filters/filters.svg.h:722
 msgid "Liquid"
-msgstr ""
+msgstr "Vloeistof"
 
 #: ../share/filters/filters.svg.h:724
-#, fuzzy
 msgid "Colorizable filling with liquid transparency"
-msgstr "RGB vervangen door transparantie"
+msgstr "Gekleurde vulling met vloeiende transparantie"
 
 #: ../share/filters/filters.svg.h:726
-#, fuzzy
 msgid "Aluminium"
-msgstr "Aluminium 1"
+msgstr "Aluminium"
 
 #: ../share/filters/filters.svg.h:728
-#, fuzzy
 msgid "Aluminium effect with sharp brushed reflections"
-msgstr "Geleffect met sterke lichtbreking"
+msgstr "Aluminiumeffect met scherpe spiegelende reflecties"
 
 #: ../share/filters/filters.svg.h:730
 msgid "Comics"
-msgstr ""
+msgstr "Comics"
 
 #: ../share/filters/filters.svg.h:732
-#, fuzzy
 msgid "Comics cartoon drawing effect"
-msgstr "Klik op de knop om een effect toe te voegen"
+msgstr "Comics cartoon effect"
 
 #: ../share/filters/filters.svg.h:734
 msgid "Comics Draft"
-msgstr ""
+msgstr "Comics ontwerp"
 
 #: ../share/filters/filters.svg.h:736 ../share/filters/filters.svg.h:768
 msgid "Draft painted cartoon shading with a glassy look"
-msgstr ""
+msgstr "Cartoonontwerp met een glazig uitzicht"
 
 #: ../share/filters/filters.svg.h:738
-#, fuzzy
 msgid "Comics Fading"
-msgstr "Vervagen"
+msgstr "Comics, vervagend"
 
 #: ../share/filters/filters.svg.h:740
 msgid "Cartoon paint style with some fading at the edges"
-msgstr ""
+msgstr "Cartoontekenstijl met vervaging aan de randen"
 
 #: ../share/filters/filters.svg.h:742
-#, fuzzy
 msgid "Brushed Metal"
-msgstr "Geërodeerd metaal"
+msgstr "Gepolijst metaal"
 
 #: ../share/filters/filters.svg.h:744
 msgid "Satiny metal surface effect"
-msgstr ""
+msgstr "Satijnachtig metaaloppervlak"
 
 #: ../share/filters/filters.svg.h:746
-#, fuzzy
 msgid "Opaline"
-msgstr "Contour"
+msgstr "Opaal"
 
 #: ../share/filters/filters.svg.h:748
 msgid "Contouring version of smooth shader"
-msgstr ""
+msgstr "Contourvariant van effen shader"
 
 #: ../share/filters/filters.svg.h:750
-#, fuzzy
 msgid "Chrome"
-msgstr "Duochroom"
+msgstr "Chroom"
 
 #: ../share/filters/filters.svg.h:752
-#, fuzzy
 msgid "Bright chrome effect"
-msgstr "Rechts naar links"
+msgstr "Helder chroomeffect"
 
 #: ../share/filters/filters.svg.h:754
-#, fuzzy
 msgid "Deep Chrome"
-msgstr "Duochroom"
+msgstr "Diep chroom"
 
 #: ../share/filters/filters.svg.h:756
 msgid "Dark chrome effect"
-msgstr ""
+msgstr "Diep chroomeffect"
 
 #: ../share/filters/filters.svg.h:758
-#, fuzzy
 msgid "Emboss Shader"
-msgstr "Reliëf"
+msgstr "Reliëfshader"
 
 #: ../share/filters/filters.svg.h:760
 msgid "Combination of satiny and emboss effect"
-msgstr ""
+msgstr "Combinatie van satijn- en reliëfeffect"
 
 #: ../share/filters/filters.svg.h:762
-#, fuzzy
 msgid "Sharp Metal"
-msgstr "Meer verscherpen"
+msgstr "Scherp metaal"
 
 #: ../share/filters/filters.svg.h:764
-#, fuzzy
 msgid "Chrome effect with darkened edges"
-msgstr "Geperst metaal met een gewalste rand"
+msgstr "Chroomeffect met donkere randen"
 
 #: ../share/filters/filters.svg.h:766
-#, fuzzy
 msgid "Brush Draw"
-msgstr "Penseel"
+msgstr "Borstel"
 
 #: ../share/filters/filters.svg.h:770
-#, fuzzy
 msgid "Chrome Emboss"
-msgstr "Reliëf"
+msgstr "Chroomreliëf"
 
 #: ../share/filters/filters.svg.h:772
-#, fuzzy
 msgid "Embossed chrome effect"
-msgstr "Padeffect verwijderen"
+msgstr "Chrroomeffect met reliëf"
 
 #: ../share/filters/filters.svg.h:774
-#, fuzzy
 msgid "Contour Emboss"
-msgstr "Reliëf"
+msgstr "Contourreliëf"
 
 #: ../share/filters/filters.svg.h:776
 msgid "Satiny and embossed contour effect"
-msgstr ""
+msgstr "Satijn- en contourreliëf"
 
 #: ../share/filters/filters.svg.h:778
-#, fuzzy
 msgid "Sharp Deco"
-msgstr "Verscherpen"
+msgstr "Scherp deco"
 
 #: ../share/filters/filters.svg.h:780
 msgid "Unrealistic reflections with sharp edges"
-msgstr ""
+msgstr "Onrealistische reflecties met scherpe randen"
 
 #: ../share/filters/filters.svg.h:782
-#, fuzzy
 msgid "Deep Metal"
-msgstr "Gesmolten metaal"
+msgstr "Diep metaal"
 
 #: ../share/filters/filters.svg.h:784
 msgid "Deep and dark metal shading"
-msgstr ""
+msgstr "Diep en donkere metaalshading"
 
 #: ../share/filters/filters.svg.h:786
-#, fuzzy
 msgid "Aluminium Emboss"
-msgstr "Aluminium 1"
+msgstr "Aluminiumreliëf"
 
 #: ../share/filters/filters.svg.h:788
 msgid "Satiny aluminium effect with embossing"
-msgstr ""
+msgstr "Satijnachtig aluminiumeffect met reliëf"
 
 #: ../share/filters/filters.svg.h:790
-#, fuzzy
 msgid "Refractive Glass"
-msgstr "Lichtbrekende gel A"
+msgstr "Lichtbrekende glas"
 
 #: ../share/filters/filters.svg.h:792
-#, fuzzy
 msgid "Double reflection through glass with some refraction"
-msgstr "Geleffect met sterke lichtbreking"
+msgstr "Dubbele reflectie door glas met enige lichtbreking"
 
 #: ../share/filters/filters.svg.h:794
-#, fuzzy
 msgid "Frosted Glass"
-msgstr "Gebarsten glas"
+msgstr "Bevroren glas"
 
 #: ../share/filters/filters.svg.h:796
-#, fuzzy
 msgid "Satiny glass effect"
-msgstr "Effect bij tonen"
+msgstr "Satijnachtig glaseffect"
 
 #: ../share/filters/filters.svg.h:798
-#, fuzzy
 msgid "Bump Engraving"
-msgstr "Gravering"
+msgstr "Verhoogd reliëf"
 
 #: ../share/filters/filters.svg.h:800
 msgid "Carving emboss effect"
-msgstr ""
+msgstr "Weggesneden reliëf"
 
 #: ../share/filters/filters.svg.h:802
-#, fuzzy
 msgid "Chromolitho Alternate"
-msgstr "Kleurenlithografie"
+msgstr "Kleurenlithografie B"
 
 #: ../share/filters/filters.svg.h:804
 msgid "Old chromolithographic effect"
-msgstr ""
+msgstr "Oude kleurenlithografie"
 
 #: ../share/filters/filters.svg.h:806
 msgid "Convoluted Bump"
-msgstr ""
+msgstr "Ingewikkeld reliëf"
 
 #: ../share/filters/filters.svg.h:808
 msgid "Convoluted emboss effect"
-msgstr ""
+msgstr "Ingewikkeld reliëfeffect"
 
 #: ../share/filters/filters.svg.h:810
-#, fuzzy
 msgid "Emergence"
-msgstr "Uitwaaiering"
+msgstr "Verschijning"
 
 #: ../share/filters/filters.svg.h:812
 msgid "Cut out, add inner shadow and colorize some parts of an image"
-msgstr ""
+msgstr "Uitsnijden, schaduw langs binnen toevoegen en enkele delen verkleuren"
 
 #: ../share/filters/filters.svg.h:814
 msgid "Litho"
-msgstr ""
+msgstr "Lithografie"
 
 #: ../share/filters/filters.svg.h:816
-#, fuzzy
 msgid "Create a two colors lithographic effect"
-msgstr "Maken en toepassen van het padeffect Origineel pad klonen"
+msgstr "Een tweekleurenlithografie-effect maken"
 
 #: ../share/filters/filters.svg.h:818
-#, fuzzy
 msgid "Paint Channels"
-msgstr "Cyaankanaal"
+msgstr "Kanalen kleuren"
 
 #: ../share/filters/filters.svg.h:820
 msgid "Colorize separately the three color channels"
-msgstr ""
+msgstr "De drie kleurkanalen afzonderlijk verkleuren"
 
 #: ../share/filters/filters.svg.h:822
-#, fuzzy
 msgid "Posterized Light Eraser"
-msgstr "Lichtgom"
+msgstr "Verzadigde lichtgom"
 
 #: ../share/filters/filters.svg.h:824
 msgid "Create a semi transparent posterized image"
-msgstr ""
+msgstr "Een semi transparante verzadigde afbeelding maken"
 
 #: ../share/filters/filters.svg.h:826
-#, fuzzy
 msgid "Trichrome"
-msgstr "Duochroom"
+msgstr "Trichroom"
 
 #: ../share/filters/filters.svg.h:828
 msgid "Like Duochrome but with three colors"
-msgstr ""
+msgstr "Zoals duochroom maar met drie kleuren"
 
 #: ../share/filters/filters.svg.h:830
 msgid "Simulate CMY"
-msgstr ""
+msgstr "CMY simuleren"
 
 #: ../share/filters/filters.svg.h:832
 msgid "Render Cyan, Magenta and Yellow channels with a colorizable background"
-msgstr ""
+msgstr "Cyaan-, magenta en geelkanaal renderen met een gekleurde achtergrond"
 
 #: ../share/filters/filters.svg.h:834
-#, fuzzy
 msgid "Contouring table"
-msgstr "Contactdriehoek"
+msgstr "Contourtabel"
 
 #: ../share/filters/filters.svg.h:836
 msgid "Blurred multiple contours for objects"
-msgstr ""
+msgstr "Meervoudige vage contouren voor objecten"
 
 #: ../share/filters/filters.svg.h:838
-#, fuzzy
 msgid "Posterized Blur"
-msgstr "Posteriseren, basis"
+msgstr "Verzadigde vervaging"
 
 #: ../share/filters/filters.svg.h:840
 msgid "Converts blurred contour to posterized steps"
-msgstr ""
+msgstr "Vage contouren omzetten in verzadigde banden"
 
 #: ../share/filters/filters.svg.h:842
-#, fuzzy
 msgid "Contouring discrete"
-msgstr "Aansturend paneelitem"
+msgstr "Discrete contouren"
 
 #: ../share/filters/filters.svg.h:844
-#, fuzzy
 msgid "Sharp multiple contour for objects"
-msgstr "Middelpunten van objecten kleven"
+msgstr "Meervoudige scherpe contouren voor objecten"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:2
@@ -3117,7 +3053,7 @@ msgstr "lichtroze (#FFB6C1)"
 #: ../share/palettes/palettes.h:166
 msgctxt "Palette"
 msgid "rebeccapurple (#663399)"
-msgstr ""
+msgstr "rebeccapurper (#663399)"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:167
@@ -3402,9 +3338,8 @@ msgid "Checkerboard white"
 msgstr "Dambord wit"
 
 #: ../share/patterns/patterns.svg.h:1
-#, fuzzy
 msgid "Packed circles"
-msgstr "Aangeschreven driehoeken"
+msgstr "Gepakte cirkels"
 
 #: ../share/patterns/patterns.svg.h:1
 msgid "Polka dots, small"
@@ -3435,9 +3370,8 @@ msgid "Wavy"
 msgstr "Golvend"
 
 #: ../share/patterns/patterns.svg.h:1
-#, fuzzy
 msgid "Wavy white"
-msgstr "Wit"
+msgstr "Golvend wit"
 
 #: ../share/patterns/patterns.svg.h:1
 msgid "Camouflage"
@@ -3448,19 +3382,16 @@ msgid "Ermine"
 msgstr "Hermelijn"
 
 #: ../share/patterns/patterns.svg.h:1
-#, fuzzy
 msgid "Sand (bitmap)"
-msgstr "Bitmap overtrekken"
+msgstr "Zand (bitmap)"
 
 #: ../share/patterns/patterns.svg.h:1
-#, fuzzy
 msgid "Cloth (bitmap)"
-msgstr "Bitmap maken"
+msgstr "Textiel (bitmap)"
 
 #: ../share/patterns/patterns.svg.h:1
-#, fuzzy
 msgid "Old paint (bitmap)"
-msgstr "Olieverfschilderij"
+msgstr "Oud schilderij (bitmap)"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:2
@@ -3886,43 +3817,39 @@ msgstr "Wensballon"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:136
-#, fuzzy
 msgctxt "Symbol"
 msgid "Rounded Balloon"
-msgstr "Tekstballonnen"
+msgstr "Afgeronde ballon"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:137
-#, fuzzy
 msgctxt "Symbol"
 msgid "Squared Balloon"
-msgstr "Tekstballonnen"
+msgstr "Vierkante ballon"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:138
 msgctxt "Symbol"
 msgid "Over the Phone"
-msgstr ""
+msgstr "Over de telefoon"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:139
-#, fuzzy
 msgctxt "Symbol"
 msgid "Hip Balloon"
-msgstr "Tekstballonnen"
+msgstr "Heupballon"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:140
-#, fuzzy
 msgctxt "Symbol"
 msgid "Circle Balloon"
-msgstr "Tekstballonnen"
+msgstr "Cirkelballon"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:141
 msgctxt "Symbol"
 msgid "Exclaim Balloon"
-msgstr ""
+msgstr "Roepballon"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:142
@@ -3938,7 +3865,6 @@ msgstr "Proces"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:144
-#, fuzzy
 msgctxt "Symbol"
 msgid "Input/Output"
 msgstr "Invoer/Uitvoer"
@@ -3977,7 +3903,7 @@ msgstr "Beslissing"
 #: ../share/symbols/symbols.h:150
 msgctxt "Symbol"
 msgid "Magnetic Tape"
-msgstr ""
+msgstr "Magnetische band"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:151
@@ -3987,10 +3913,9 @@ msgstr "Display"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:152
-#, fuzzy
 msgctxt "Symbol"
 msgid "Auxiliary Operation"
-msgstr "Manuele bediening"
+msgstr "Hulpoperatie"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:153
@@ -4006,37 +3931,33 @@ msgstr "Extraheren"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:155
-#, fuzzy
 msgctxt "Symbol"
 msgid "Terminal/Interrupt"
 msgstr "Terminator"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:156
-#, fuzzy
 msgctxt "Symbol"
 msgid "Punched Card"
 msgstr "Ponskaart"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:157
-#, fuzzy
 msgctxt "Symbol"
 msgid "Punch Tape"
-msgstr "Ponskaart"
+msgstr "Ponstape"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:158
-#, fuzzy
 msgctxt "Symbol"
 msgid "Online Storage"
-msgstr "Interne opslag"
+msgstr "Online opslag"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:159
 msgctxt "Symbol"
 msgid "Keying"
-msgstr ""
+msgstr "Keying"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:160
@@ -4058,16 +3979,15 @@ msgstr "Zie andere pagina"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:163
-#, fuzzy
 msgctxt "Symbol"
 msgid "Transmittal Tape"
-msgstr "Zendmast"
+msgstr "Transmissieband"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:164
 msgctxt "Symbol"
 msgid "Communication Link"
-msgstr ""
+msgstr "Communicatielink"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:165
@@ -4079,13 +3999,13 @@ msgstr "Vergelijken"
 #: ../share/symbols/symbols.h:166
 msgctxt "Symbol"
 msgid "Comment/Annotation"
-msgstr ""
+msgstr "Commentaar"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:167
 msgctxt "Symbol"
 msgid "Core"
-msgstr ""
+msgstr "Kern"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:168
@@ -4101,17 +4021,15 @@ msgstr "Magneetschijf (database)"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:170
-#, fuzzy
 msgctxt "Symbol"
 msgid "Magnetic Drum (Direct Access)"
-msgstr "Magneetschijf (database)"
+msgstr "Magneetschijf (directe toegang)"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:171
-#, fuzzy
 msgctxt "Symbol"
 msgid "Offline Storage"
-msgstr "Interne opslag"
+msgstr "Offline opslag"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:172
@@ -4135,13 +4053,13 @@ msgstr "Vertraging"
 #: ../share/symbols/symbols.h:175
 msgctxt "Symbol"
 msgid "Loop Limit Begin"
-msgstr ""
+msgstr "Lusopener begin"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:176
 msgctxt "Symbol"
 msgid "Loop Limit End"
-msgstr ""
+msgstr "Lusopener einde"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:177
@@ -4213,7 +4131,7 @@ msgstr "Not-poort klein"
 #: ../share/symbols/symbols.h:188
 msgctxt "Symbol"
 msgid "United States National Park Service Map Symbols"
-msgstr ""
+msgstr "Kaartsymbolen United States National Park Service"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:189 ../share/symbols/symbols.h:190
@@ -4225,26 +4143,25 @@ msgstr "Luchthaven"
 #: ../share/symbols/symbols.h:191 ../share/symbols/symbols.h:192
 msgctxt "Symbol"
 msgid "Amphitheatre"
-msgstr ""
+msgstr "Amfitheater"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:193 ../share/symbols/symbols.h:194
-#, fuzzy
 msgctxt "Symbol"
 msgid "Bicycle Trail"
-msgstr "Fietswinkel"
+msgstr "Fietstraject"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:195 ../share/symbols/symbols.h:196
 msgctxt "Symbol"
 msgid "Boat Launch"
-msgstr ""
+msgstr "Terwaterlating"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:197 ../share/symbols/symbols.h:198
 msgctxt "Symbol"
 msgid "Boat Tour"
-msgstr ""
+msgstr "Boottocht"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:199 ../share/symbols/symbols.h:200
@@ -4254,72 +4171,66 @@ msgstr "Busstop"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:201 ../share/symbols/symbols.h:202
-#, fuzzy
 msgctxt "Symbol"
 msgid "Campfire"
-msgstr "Camping"
+msgstr "Kampvuur"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:203 ../share/symbols/symbols.h:204
-#, fuzzy
 msgctxt "Symbol"
 msgid "Campground"
-msgstr "Ronding van uiteinde"
+msgstr "Camping"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:205 ../share/symbols/symbols.h:206
 msgctxt "Symbol"
 msgid "CanoeAccess"
-msgstr ""
+msgstr "Kanotoegang"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:207 ../share/symbols/symbols.h:208
 msgctxt "Symbol"
 msgid "Crosscountry Ski Trail"
-msgstr ""
+msgstr "Crosscountry skitraject"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:209 ../share/symbols/symbols.h:210
 msgctxt "Symbol"
 msgid "Downhill Skiing"
-msgstr ""
+msgstr "Downhill skiën"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:211 ../share/symbols/symbols.h:212
-#, fuzzy
 msgctxt "Symbol"
 msgid "Drinking Water"
-msgstr "Drinkwaterfontein"
+msgstr "Drinkwater"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:215 ../share/symbols/symbols.h:216
-#, fuzzy
 msgctxt "Symbol"
 msgid "Fishing"
-msgstr "Vishandel"
+msgstr "Vissen"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:217 ../share/symbols/symbols.h:218
 msgctxt "Symbol"
 msgid "Food Service"
-msgstr ""
+msgstr "Voeding"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:219 ../share/symbols/symbols.h:220
 msgctxt "Symbol"
 msgid "Four Wheel Drive Road"
-msgstr ""
+msgstr "4x4 weg"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:221 ../share/symbols/symbols.h:222
-#, fuzzy
 msgctxt "Symbol"
 msgid "Gas Station"
-msgstr "Busstation"
+msgstr "Benzinestation"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:223 ../share/symbols/symbols.h:224
-#, fuzzy
 msgctxt "Symbol"
 msgid "Golfing"
 msgstr "Golf"
@@ -4328,7 +4239,7 @@ msgstr "Golf"
 #: ../share/symbols/symbols.h:225 ../share/symbols/symbols.h:226
 msgctxt "Symbol"
 msgid "Horseback Riding"
-msgstr ""
+msgstr "Paardrijden"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:227 ../share/symbols/symbols.h:228
@@ -4346,13 +4257,13 @@ msgstr "Ijsschaatsen"
 #: ../share/symbols/symbols.h:233 ../share/symbols/symbols.h:234
 msgctxt "Symbol"
 msgid "Litter Receptacle"
-msgstr ""
+msgstr "Afval"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:235 ../share/symbols/symbols.h:236
 msgctxt "Symbol"
 msgid "Lodging"
-msgstr ""
+msgstr "Logies"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:237 ../share/symbols/symbols.h:238
@@ -4368,17 +4279,15 @@ msgstr "Recyclage"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:243 ../share/symbols/symbols.h:244
-#, fuzzy
 msgctxt "Symbol"
 msgid "Pets On Leash"
-msgstr "Tekst op pad"
+msgstr "Huisdieren aan de leiband"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:245 ../share/symbols/symbols.h:246
-#, fuzzy
 msgctxt "Symbol"
 msgid "Picnic Area"
-msgstr "Park / picknickplaats"
+msgstr "Picknickplaats"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:247 ../share/symbols/symbols.h:248
@@ -4388,23 +4297,21 @@ msgstr "Postkantoor"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:249 ../share/symbols/symbols.h:250
-#, fuzzy
 msgctxt "Symbol"
 msgid "Ranger Station"
-msgstr "Tankstation"
+msgstr "Ranger"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:251 ../share/symbols/symbols.h:252
-#, fuzzy
 msgctxt "Symbol"
 msgid "RV Campground"
-msgstr "Ronding van uiteinde"
+msgstr "Campers"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:253 ../share/symbols/symbols.h:254
 msgctxt "Symbol"
 msgid "Restrooms"
-msgstr ""
+msgstr "Toilet"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:255 ../share/symbols/symbols.h:256
@@ -4416,11 +4323,10 @@ msgstr "Zeilen"
 #: ../share/symbols/symbols.h:257 ../share/symbols/symbols.h:258
 msgctxt "Symbol"
 msgid "Sanitary Disposal Station"
-msgstr ""
+msgstr "Sanitair afval"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:259 ../share/symbols/symbols.h:260
-#, fuzzy
 msgctxt "Symbol"
 msgid "Scuba Diving"
 msgstr "Duiken"
@@ -4429,7 +4335,7 @@ msgstr "Duiken"
 #: ../share/symbols/symbols.h:261 ../share/symbols/symbols.h:262
 msgctxt "Symbol"
 msgid "Self Guided Trail"
-msgstr ""
+msgstr "Niet bewegwijzerd traject"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:263 ../share/symbols/symbols.h:264
@@ -4439,60 +4345,54 @@ msgstr "Onderdak"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:265 ../share/symbols/symbols.h:266
-#, fuzzy
 msgctxt "Symbol"
 msgid "Showers"
-msgstr "Tonen:"
+msgstr "Douches"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:267 ../share/symbols/symbols.h:268
-#, fuzzy
 msgctxt "Symbol"
 msgid "Sledding"
-msgstr "Lezen"
+msgstr "Sleeën"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:269 ../share/symbols/symbols.h:270
 msgctxt "Symbol"
 msgid "SnowmobileTrail"
-msgstr ""
+msgstr "Sneeuwscootertraject"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:271 ../share/symbols/symbols.h:272
-#, fuzzy
 msgctxt "Symbol"
 msgid "Stable"
-msgstr "Tabel"
+msgstr "Stal"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:273 ../share/symbols/symbols.h:274
 msgctxt "Symbol"
 msgid "Store"
-msgstr ""
+msgstr "Winkel"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:275 ../share/symbols/symbols.h:276
 msgctxt "Symbol"
 msgid "Swimming"
-msgstr ""
+msgstr "Zwemmen"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:279 ../share/symbols/symbols.h:280
-#, fuzzy
 msgctxt "Symbol"
 msgid "Emergency Telephone"
-msgstr "Telefoon"
+msgstr "Noodtelefoon"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:281 ../share/symbols/symbols.h:282
-#, fuzzy
 msgctxt "Symbol"
 msgid "Trailhead"
-msgstr "Braille"
+msgstr "Vertrek wandeling"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:283 ../share/symbols/symbols.h:284
-#, fuzzy
 msgctxt "Symbol"
 msgid "Wheelchair Accessible"
 msgstr "Toegankelijk voor rolstoelgebruikers"
@@ -4504,9 +4404,8 @@ msgid "Wind Surfing"
 msgstr "Windsurfen"
 
 #: ../share/templates/templates.h:1
-#, fuzzy
 msgid "CD Label 120mmx120mm "
-msgstr "CD label 120x120 "
+msgstr "CD label 120mmx120mm "
 
 #: ../share/templates/templates.h:1
 msgid "Simple CD Label template with disc's pattern."
@@ -4522,11 +4421,11 @@ msgstr "Geen lagen"
 
 #: ../share/templates/templates.h:1
 msgid "Empty sheet with no layers"
-msgstr ""
+msgstr "Lege pagina zonder lagen"
 
 #: ../share/templates/templates.h:1
 msgid "no layers empty"
-msgstr ""
+msgstr "geen lagen leeg"
 
 #: ../share/templates/templates.h:1
 msgid "LaTeX Beamer"
@@ -4534,11 +4433,11 @@ msgstr "LaTeX Beamer"
 
 #: ../share/templates/templates.h:1
 msgid "LaTeX beamer template with helping grid."
-msgstr ""
+msgstr "LaTeX beamer sjabloon met raster."
 
 #: ../share/templates/templates.h:1
 msgid "LaTex LaTeX latex grid beamer"
-msgstr ""
+msgstr "LaTex LaTeX latex grid beamer"
 
 #: ../share/templates/templates.h:1
 msgid "Typography Canvas"
@@ -4546,11 +4445,11 @@ msgstr "Typografiecanvas"
 
 #: ../share/templates/templates.h:1
 msgid "Empty typography canvas with helping guidelines."
-msgstr ""
+msgstr "Leeg typografiecanvas met hulplijnen."
 
 #: ../share/templates/templates.h:1
 msgid "guidelines typography canvas"
-msgstr ""
+msgstr "typografiecanvas met hulplijnen"
 
 #. 3D box
 #: ../src/box3d.cpp:260 ../src/box3d.cpp:1312
@@ -4568,7 +4467,6 @@ msgid "(invalid UTF-8 string)"
 msgstr "(ongeldige UTF-8 string)"
 
 #: ../src/color-profile.cpp:914
-#, fuzzy
 msgctxt "Profile name"
 msgid "None"
 msgstr "Geen"
@@ -5076,7 +4974,7 @@ msgstr ""
 
 #: ../src/extension/extension.cpp:281
 msgid "the extension is designed for Windows only."
-msgstr ""
+msgstr "de uitbreiding is alleen voor Windows ontworpen."
 
 #: ../src/extension/extension.cpp:286
 msgid "an ID was not defined for it."
@@ -5443,9 +5341,8 @@ msgstr "Rechts (px):"
 
 # hier wel een punt in vertaling in verband met overeenkomst met de andere tips in de toolbar voor andere uitbreidingen
 #: ../src/extension/internal/bitmap/crop.cpp:77
-#, fuzzy
 msgid "Crop selected bitmap(s)"
-msgstr "Geselecteerde bitmap(s) afsnijden."
+msgstr "Geselecteerde bitmap(s) afsnijden"
 
 #: ../src/extension/internal/bitmap/cycleColormap.cpp:37
 msgid "Cycle Colormap"
@@ -5654,9 +5551,8 @@ msgid "Opacity:"
 msgstr "Ondoorzichtigheid:"
 
 #: ../src/extension/internal/bitmap/opacity.cpp:46
-#, fuzzy
 msgid "Modify opacity channel(s) of selected bitmap(s)"
-msgstr "De ondoorzichtigheidskanalen van geselecteerde bitmap(s) aanpassen."
+msgstr "De ondoorzichtigheidskanalen van geselecteerde bitmap(s) aanpassen"
 
 #: ../src/extension/internal/bitmap/raise.cpp:40
 msgid "Raise"
@@ -6932,7 +6828,7 @@ msgstr "Tint inverteren"
 
 #: ../src/extension/internal/filter/color.h:915
 msgid "Invert lightness"
-msgstr "Helderheid inverteren"
+msgstr "Lichtheid inverteren"
 
 #: ../src/extension/internal/filter/color.h:916
 msgid "Invert transparency"
@@ -6964,11 +6860,11 @@ msgstr "Lichte delen en schaduwen afzonderlijk aanpassen"
 
 #: ../src/extension/internal/filter/color.h:1111
 msgid "Lightness-Contrast"
-msgstr "Helderheid-contrast"
+msgstr "Lichtheid-contrast"
 
 #: ../src/extension/internal/filter/color.h:1122
 msgid "Modify lightness and contrast separately"
-msgstr "Helderheid en contrast afzonderlijk aanpassen"
+msgstr "Lichtheid en contrast afzonderlijk aanpassen"
 
 #: ../src/extension/internal/filter/color.h:1190
 msgid "Nudge RGB"
@@ -7301,7 +7197,7 @@ msgstr "Inhoud vervagen"
 
 #: ../src/extension/internal/filter/morphology.h:79
 msgid "Smooth edges and angles of shapes"
-msgstr "Randen en hoeken van vormen vervagen"
+msgstr "Randen en hoeken van vormen afvlakken"
 
 #: ../src/extension/internal/filter/morphology.h:166
 msgid "Outline"
@@ -7623,7 +7519,7 @@ msgstr "Mengen ruis:"
 
 #: ../src/extension/internal/filter/paint.h:708
 msgid "Grain lightness"
-msgstr "Helderheid korrel"
+msgstr "Lichtheid korrel"
 
 #: ../src/extension/internal/filter/paint.h:716
 msgid "Points color"
@@ -7865,7 +7761,7 @@ msgstr "%s bitmap importeren"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:190
 msgid "Image Import Type:"
-msgstr ""
+msgstr "Wijze van importeren:"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:190
 msgid ""
@@ -7895,20 +7791,20 @@ msgid ""
 "Take information from file or use default bitmap import resolution as "
 "defined in the preferences."
 msgstr ""
+"Informatie uit bestand halen of standaard afbeeldingsresolutie uit "
+"voorkeuren gebruiken."
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:196
 msgid "From file"
 msgstr "Uit bestand"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:197
-#, fuzzy
 msgid "Default import resolution"
-msgstr "Standaardresolutie voor _importeren:"
+msgstr "Standaardresolutie voor importeren"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:200
-#, fuzzy
 msgid "Image Rendering Mode:"
-msgstr "Renderen van afbeelding:"
+msgstr "Rendermodus afbeelding:"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:200
 msgid ""
@@ -8105,7 +8001,7 @@ msgstr ""
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:128
 msgid "import via Poppler"
-msgstr ""
+msgstr "via Poppler importeren"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:138
 msgid "rough"
@@ -8546,15 +8442,15 @@ msgstr "Lijnkleur"
 #. New in Compositing and Blending Level 1
 #: ../src/filter-enums.cpp:58
 msgid "Overlay"
-msgstr ""
+msgstr "Bedekken"
 
 #: ../src/filter-enums.cpp:59
 msgid "Color Dodge"
-msgstr ""
+msgstr "Kleur ontwijken"
 
 #: ../src/filter-enums.cpp:60
 msgid "Color Burn"
-msgstr ""
+msgstr "Kleur branden"
 
 #: ../src/filter-enums.cpp:61
 msgid "Hard Light"
@@ -8583,7 +8479,7 @@ msgstr "Tint"
 
 #: ../src/filter-enums.cpp:68
 msgid "Luminosity"
-msgstr ""
+msgstr "Helderheid"
 
 #: ../src/filter-enums.cpp:78
 msgid "Matrix"
@@ -8623,19 +8519,19 @@ msgstr "Doel"
 
 #: ../src/filter-enums.cpp:98
 msgid "Destination Over"
-msgstr ""
+msgstr "Doel over"
 
 #: ../src/filter-enums.cpp:99
 msgid "Destination In"
-msgstr ""
+msgstr "Doel in"
 
 #: ../src/filter-enums.cpp:100
 msgid "Destination Out"
-msgstr ""
+msgstr "Doel uit"
 
 #: ../src/filter-enums.cpp:101
 msgid "Destination Atop"
-msgstr "Do"
+msgstr "Doel boven"
 
 #: ../src/filter-enums.cpp:102
 msgid "Lighter"
@@ -8654,7 +8550,6 @@ msgid "Wrap"
 msgstr "Meer rijen"
 
 #: ../src/filter-enums.cpp:122
-#, fuzzy
 msgctxt "Convolve matrix, edge mode"
 msgid "None"
 msgstr "Geen"
@@ -10978,7 +10873,6 @@ msgid "Both"
 msgstr "Beide"
 
 #: ../src/live_effects/lpe-ruler.cpp:32
-#, fuzzy
 msgctxt "Border mark"
 msgid "None"
 msgstr "Geen"
@@ -11515,9 +11409,8 @@ msgid "Paste path"
 msgstr "Pad plakken"
 
 #: ../src/live_effects/parameter/path.cpp:200
-#, fuzzy
 msgid "Link to path on clipboard"
-msgstr "Er staat niets op het klembord."
+msgstr "Aan pad op het klembord linken"
 
 #: ../src/live_effects/parameter/path.cpp:443
 msgid "Paste path parameter"
@@ -12350,10 +12243,9 @@ msgid "Select <b>some objects</b> to group."
 msgstr "Selecteer <b>twee objecten of meer objecten</b> om te groeperen."
 
 #: ../src/selection-chemistry.cpp:782
-#, fuzzy
 msgctxt "Verb"
 msgid "Group"
-msgstr "Groep"
+msgstr "Groeperen"
 
 #: ../src/selection-chemistry.cpp:805
 msgid "Select a <b>group</b> to ungroup."
@@ -12699,9 +12591,8 @@ msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr "Selecteer de <b>objecten</b> om een afsnijpad/masker van te maken."
 
 #: ../src/selection-chemistry.cpp:3894
-#, fuzzy
 msgid "Create Clip Group"
-msgstr "_Klonen"
+msgstr "Afsnijgroep maken"
 
 #: ../src/selection-chemistry.cpp:3923
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
@@ -12754,7 +12645,7 @@ msgstr "basis"
 #: ../src/selection-describer.cpp:130 ../src/widgets/ege-paint-def.cpp:66
 #: ../src/widgets/ege-paint-def.cpp:90
 msgid "none"
-msgstr "Niet"
+msgstr "geen"
 
 #: ../src/selection-describer.cpp:142
 #, c-format
@@ -12825,11 +12716,11 @@ msgid "Use <b>Shift+D</b> to look up frame"
 msgstr "Gebruik <b>Shift+D</b> om het kaderobject te vinden"
 
 #: ../src/selection-describer.cpp:215
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%i</b> objects selected of type %s"
 msgid_plural "<b>%i</b> objects selected of types %s"
-msgstr[0] "<b>%i</b> object geselecteerd"
-msgstr[1] "<b>%i</b> objecten geselecteerd"
+msgstr[0] "<b>%i</b> objecten geselecteerd van het type %s"
+msgstr[1] "<b>%i</b> objecten geselecteerd van de typen %s"
 
 #: ../src/selection-describer.cpp:225
 #, c-format
@@ -13252,9 +13143,8 @@ msgid "called %s"
 msgstr "aanwezig (%s)"
 
 #: ../src/sp-use.cpp:239
-#, fuzzy
 msgid "Unnamed Symbol"
-msgstr "Onbenoemde symbolen"
+msgstr "Onbenoemd symbool"
 
 #. TRANSLATORS: Used for statusbar description for long <use> chains:
 #. * "Clone of: Clone of: ... in Layer 1".
@@ -13871,9 +13761,8 @@ msgid "Smallest object"
 msgstr "Kleinste object"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:1005
-#, fuzzy
 msgid "Selection Area"
-msgstr "Selectie"
+msgstr "Selectiegebied"
 
 #: ../src/ui/dialog/calligraphic-profile-rename.cpp:40
 #: ../src/ui/dialog/calligraphic-profile-rename.cpp:138
@@ -14296,19 +14185,19 @@ msgstr "De verzadiging binnen dit percentage willekeurig aanpassen"
 
 #: ../src/ui/dialog/clonetiler.cpp:735
 msgid "<b>L:</b>"
-msgstr "<b>Helderheid:</b>"
+msgstr "<b>Lichtheid:</b>"
 
 #: ../src/ui/dialog/clonetiler.cpp:741
 msgid "Change the color lightness by this percentage for each row"
-msgstr "De helderheid elke volgende rij met dit percentage aanpassen"
+msgstr "De lichtheid elke volgende rij met dit percentage aanpassen"
 
 #: ../src/ui/dialog/clonetiler.cpp:747
 msgid "Change the color lightness by this percentage for each column"
-msgstr "De helderheid elke volgende kolom met dit percentage aanpassen"
+msgstr "De lichtheid elke volgende kolom met dit percentage aanpassen"
 
 #: ../src/ui/dialog/clonetiler.cpp:753
 msgid "Randomize the color lightness by this percentage"
-msgstr "De helderheid binnen dit percentage willekeurig aanpassen"
+msgstr "De lichtheid binnen dit percentage willekeurig aanpassen"
 
 #: ../src/ui/dialog/clonetiler.cpp:767
 msgid "Alternate the sign of color changes for each row"
@@ -14395,7 +14284,7 @@ msgstr "L"
 
 #: ../src/ui/dialog/clonetiler.cpp:889
 msgid "Pick the lightness of the color"
-msgstr "De helderheid van de kleur kiezen"
+msgstr "De lichtheid van de kleur kiezen"
 
 #: ../src/ui/dialog/clonetiler.cpp:899
 msgid "2. Tweak the picked value:"
@@ -14693,14 +14582,12 @@ msgstr "<b>Licentie</b>"
 
 #. ---------------------------------------------------------------
 #: ../src/ui/dialog/document-properties.cpp:111
-#, fuzzy
 msgid "Use antialiasing"
-msgstr "Anti-aliasing"
+msgstr "Anti-aliasing gebruiken"
 
 #: ../src/ui/dialog/document-properties.cpp:111
-#, fuzzy
 msgid "If unset, no antialiasing will be done on the drawing"
-msgstr "Indien aangevinkt, wordt de rand altijd boven de tekening getoond"
+msgstr "Indien aangevinkt, wordt geen anti-aliasing op de tekening toegepast"
 
 #: ../src/ui/dialog/document-properties.cpp:112
 msgid "Show page _border"
@@ -14945,9 +14832,8 @@ msgid "<b>Page Size</b>"
 msgstr "<b>Paginagrootte</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:326
-#, fuzzy
 msgid "<b>Display</b>"
-msgstr "<b>g</b>"
+msgstr "<b>Weergave</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:361
 msgid "<b>Guides</b>"
@@ -15543,7 +15429,6 @@ msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:549
 #: ../share/extensions/grid_polar.inx.h:4
-#, fuzzy
 msgctxt "Label"
 msgid "None"
 msgstr "Geen"
@@ -17375,9 +17260,8 @@ msgstr ""
 
 #. Anchor selection widget
 #: ../src/ui/dialog/grid-arrange-tab.cpp:711
-#, fuzzy
 msgid "Alignment:"
-msgstr "Uitlijning"
+msgstr "Uitlijning:"
 
 #. #### Radio buttons to control spacing manually or to fit selection bbox ####
 #: ../src/ui/dialog/grid-arrange-tab.cpp:720
@@ -17658,7 +17542,6 @@ msgid "Per-object selection cue"
 msgstr "Selectie-aanduiding per object"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:334
-#, fuzzy
 msgctxt "Selection cue"
 msgid "None"
 msgstr "Geen"
@@ -17828,7 +17711,7 @@ msgstr "Meetlat"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:385
 msgid "Ignore first and last points"
-msgstr "De eerste en laatste punten negeren"
+msgstr "Eerste en laatste punten negeren"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:386
 msgid ""
@@ -18041,9 +17924,8 @@ msgstr ""
 #. LPETool
 #. disabled, because the LPETool is not finished yet.
 #: ../src/ui/dialog/inkscape-preferences.cpp:508
-#, fuzzy
 msgid "LPE Tool"
-msgstr "Padeffecten"
+msgstr "Padeffectengereedschap"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:515
 msgid "Interface"
@@ -18302,9 +18184,8 @@ msgid "Swedish (sv)"
 msgstr "Zweeds (sv)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:529
-#, fuzzy
 msgid "Telugu (te)"
-msgstr "Telugu (te_IN)"
+msgstr "Telugu (te)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:529
 msgid "Thai (th)"
@@ -18529,7 +18410,6 @@ msgid "Show close button on dialogs"
 msgstr "Sluitknop weergeven in dialogen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:645
-#, fuzzy
 msgctxt "Dialog on top"
 msgid "None"
 msgstr "Geen"
@@ -19566,7 +19446,7 @@ msgstr ""
 #.
 #: ../src/ui/dialog/inkscape-preferences.cpp:1219
 msgid "Mouse wheel zooms by default"
-msgstr "Standaard zoom muiswiel"
+msgstr "Standaardzoom muiswiel"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1221
 msgid ""
@@ -19608,7 +19488,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1233
 msgid "Only snap the node closest to the pointer"
-msgstr "Enkel het knooppunt dichtst bij de cursor kleeft"
+msgstr "Enkel het meest nabije knooppunt bij de cursor kleeft"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1235
 msgid ""
@@ -19693,7 +19573,6 @@ msgstr ""
 "lopen de hoeken van -180 tot 180 graden, tegen de klok in"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1263
-#, fuzzy
 msgctxt "Rotation angle"
 msgid "None"
 msgstr "Geen"
@@ -20072,11 +19951,11 @@ msgstr "Resolutie gebruikt voor het commando Bitmapkopie Aanmaken:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1444
 msgid "Ask about linking and scaling when importing"
-msgstr ""
+msgstr "Vragen om te linken of schalen bij importeren"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1446
 msgid "Pop-up linking and scaling dialog when importing bitmap image."
-msgstr ""
+msgstr "Dialoogvenser linken of schalen tonen bij importeren bitmapafbeelding."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1452
 msgid "Bitmap link:"
@@ -20106,15 +19985,16 @@ msgstr ""
 
 #. rendering outlines for pixmap image tags
 #: ../src/ui/dialog/inkscape-preferences.cpp:1472
-#, fuzzy
 msgid "Images in Outline Mode"
-msgstr "Renderen van afbeelding:"
+msgstr "Afbeeldingen in contourmodus"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1473
 msgid ""
 "When active will render images while in outline mode instead of a red box "
 "with an x. This is useful for manual tracing."
 msgstr ""
+"Indien aangevinkt worden afbeeldingen gerenderd in contourmodus in plaats "
+"van een rode box met een x. Dit is handig bij manueel overtrekken."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1475
 msgid "Bitmaps"
@@ -20125,6 +20005,8 @@ msgid ""
 "Select a file of predefined shortcuts to use. Any customized shortcuts you "
 "create will be added seperately to "
 msgstr ""
+"Selecteer een bestand met voorgedefinieerde snelkoppelingen. Alle "
+"aangemaakte eigen snelkoppelingen worden afzonderlijk bewaard in "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1490
 msgid "Shortcut file:"
@@ -20158,7 +20040,7 @@ msgid ""
 "in the shortcut file listed above"
 msgstr ""
 "Alle aangepaste sneltoetsen verwijderen en vervangen door de sneltoetsen in "
-"het hierboven geselecteerd sneltoetsbestand"
+"het hierboven geselecteerde sneltoetsbestand"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1565
 msgid "Import ..."
@@ -20166,7 +20048,7 @@ msgstr "Importeren..."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1565
 msgid "Import custom keyboard shortcuts from a file"
-msgstr "Aangepaste sneltoetsen van een bestand importeren"
+msgstr "Aangepaste sneltoetsen uit een bestand importeren"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1568
 msgid "Export ..."
@@ -20186,7 +20068,6 @@ msgid "Misc"
 msgstr "Overig"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1839
-#, fuzzy
 msgctxt "Spellchecker language"
 msgid "None"
 msgstr "Geen"
@@ -20442,7 +20323,6 @@ msgid "Wheel"
 msgstr "Wiel"
 
 #: ../src/ui/dialog/input.cpp:1625
-#, fuzzy
 msgctxt "Input device axe"
 msgid "None"
 msgstr "Geen"
@@ -20741,7 +20621,7 @@ msgstr "Van template maken"
 
 #: ../src/ui/dialog/new-from-template.cpp:29
 msgid "New From Template"
-msgstr "Nieuw van template"
+msgstr "Nieuw van sjabloon"
 
 #: ../src/ui/dialog/object-attributes.cpp:47
 msgid "Href:"
@@ -20790,7 +20670,7 @@ msgstr "_Titel:"
 
 #: ../src/ui/dialog/object-properties.cpp:61
 msgid "_Image Rendering:"
-msgstr ""
+msgstr "_Afbeelding renderen:"
 
 #: ../src/ui/dialog/object-properties.cpp:62
 msgid "_Hide"
@@ -20827,6 +20707,13 @@ msgid ""
 "Note that this behaviour is not defined in the SVG 1.1 specification and not "
 "all browsers follow this interpretation."
 msgstr ""
+"De 'image-rendering' eigenschap beïnvloedt hoe een bitmap opgeschaald "
+"wordt:\n"
+"\t'auto' geen voorkeur;\n"
+"\t'optimizeQuality' effen;\n"
+"\t'optimizeSpeed' met blokjes.\n"
+"Noteer dat deze eigenschap niet gedefinieerd is in de SVG 1.1 specificatie "
+"en niet alle browsers ondersteunen deze invulling."
 
 #. Hide
 #: ../src/ui/dialog/object-properties.cpp:293
@@ -21107,7 +20994,7 @@ msgstr "Trapvormige artefacten behouden"
 
 #: ../src/ui/dialog/pixelartdialog.cpp:281
 msgid "_Smooth curves"
-msgstr "_Gladde paden"
+msgstr "_Afgevlakte paden"
 
 #: ../src/ui/dialog/pixelartdialog.cpp:282
 msgid "The Kopf-Lischinski algorithm"
@@ -21150,75 +21037,63 @@ msgid "Trace pixel art"
 msgstr "Pixel Art overtrekken"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:48
-#, fuzzy
 msgctxt "Polar arrange tab"
 msgid "Anchor point:"
-msgstr "Punten sorteren"
+msgstr "Ankerpunt:"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:52
-#, fuzzy
 msgctxt "Polar arrange tab"
 msgid "Object's bounding box:"
-msgstr "Visueel omvattend vak"
+msgstr "Omvattend vak:"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:59
-#, fuzzy
 msgctxt "Polar arrange tab"
 msgid "Object's rotational center"
 msgstr "Rotatiemiddelpunt"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:64
-#, fuzzy
 msgctxt "Polar arrange tab"
 msgid "Arrange on:"
-msgstr "Ordenen"
+msgstr "Ordenen op:"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:68
-#, fuzzy
 msgctxt "Polar arrange tab"
 msgid "First selected circle/ellipse/arc"
-msgstr "Cirkels, ellipsen of bogen maken"
+msgstr "Eerst geselecteerde cirkel/ellips/boog"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:73
-#, fuzzy
 msgctxt "Polar arrange tab"
 msgid "Last selected circle/ellipse/arc"
-msgstr "Laatst geselecteerde kleur"
+msgstr "Laatst geselecteerde cirkel/ellips/boog"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:78
-#, fuzzy
 msgctxt "Polar arrange tab"
 msgid "Parameterized:"
-msgstr "Gcode parametriseren"
+msgstr "Geparametriseerd:"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:83
 msgid "Center X/Y:"
-msgstr ""
+msgstr "X/Y middelpunt:"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:105
-#, fuzzy
 msgid "Radius X/Y:"
-msgstr "Straal:"
+msgstr "X/Y straal:"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:127
-#, fuzzy
 msgid "Angle X/Y:"
-msgstr "X-hoek:"
+msgstr "X/Y-hoek:"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:150
-#, fuzzy
 msgid "Rotate objects"
-msgstr "Knooppunten roteren"
+msgstr "Objecten roteren"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:338
-#, fuzzy
 msgid "Couldn't find an ellipse in selection"
-msgstr "Geen lettertypen gevonden in dit document/selectie."
+msgstr "Kon geen ellips in selectie vinden"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:403
-#, fuzzy
 msgid "Arrange on ellipse"
-msgstr "Ellips maken"
+msgstr "Ordenen op ellips"
 
 #: ../src/ui/dialog/print.cpp:111
 msgid "Could not open temporary PNG for bitmap printing"
@@ -21519,33 +21394,29 @@ msgstr "Huidig document"
 
 #: ../src/ui/dialog/symbols.cpp:216
 msgid "Add Symbol from the current document."
-msgstr "Symbool aan huidige document toevoegen."
+msgstr "Symbool aan huidig document toevoegen."
 
 #: ../src/ui/dialog/symbols.cpp:225
 msgid "Remove Symbol from the current document."
 msgstr "Symbool uit huidig document verwijderen."
 
 #: ../src/ui/dialog/symbols.cpp:239
-#, fuzzy
 msgid "Display more icons in row."
-msgstr "Meetinfo weergeven"
+msgstr "Meer iconen in een rij weergeven."
 
 #: ../src/ui/dialog/symbols.cpp:248
-#, fuzzy
 msgid "Display fewer icons in row."
-msgstr "Meetinfo weergeven"
+msgstr "Minder iconen in een rij weergeven."
 
 #: ../src/ui/dialog/symbols.cpp:258
 msgid "Toggle 'fit' symbols in icon space."
-msgstr ""
+msgstr "Symbolen laten 'passen' in hun ruimte."
 
 #: ../src/ui/dialog/symbols.cpp:270
-#, fuzzy
 msgid "Make symbols smaller by zooming out."
 msgstr "Iconen kleiner maken door uitzoomen."
 
 #: ../src/ui/dialog/symbols.cpp:280
-#, fuzzy
 msgid "Make symbols bigger by zooming in."
 msgstr "Iconen groter maken door inzoomen."
 
@@ -21589,7 +21460,7 @@ msgstr "Meer info"
 
 #: ../src/ui/dialog/template-widget.cpp:39
 msgid "no template selected"
-msgstr "geen template geselecteerd"
+msgstr "geen sjabloon geselecteerd"
 
 #: ../src/ui/dialog/template-widget.cpp:123
 msgid "Path: "
@@ -21658,19 +21529,16 @@ msgid "Set text style"
 msgstr "Tekststijl instellen"
 
 #: ../src/ui/dialog/tile.cpp:36
-#, fuzzy
 msgctxt "Arrange dialog"
 msgid "Rectangular grid"
 msgstr "Rechthoekig raster"
 
 #: ../src/ui/dialog/tile.cpp:37
-#, fuzzy
 msgctxt "Arrange dialog"
 msgid "Polar Coordinates"
-msgstr "Trilineaire coördinaten"
+msgstr "Poolcoördinaten"
 
 #: ../src/ui/dialog/tile.cpp:40
-#, fuzzy
 msgctxt "Arrange dialog"
 msgid "_Arrange"
 msgstr "_Ordenen"
@@ -21846,11 +21714,11 @@ msgstr "G_rootte:"
 
 #: ../src/ui/dialog/tracedialog.cpp:708
 msgid "Smooth _corners"
-msgstr "_Hoeken afronden"
+msgstr "_Hoeken afvlakken"
 
 #: ../src/ui/dialog/tracedialog.cpp:710
 msgid "Smooth out sharp corners of the trace"
-msgstr "Scherpe hoeken uit de overtrokken afbeelding afronden"
+msgstr "Scherpe hoeken uit de overtrokken afbeelding afvlakken"
 
 #: ../src/ui/dialog/tracedialog.cpp:719
 msgid "Increase this to smooth corners more"
@@ -22213,7 +22081,7 @@ msgstr "Standaard"
 
 #: ../src/ui/interface.cpp:748
 msgid "Default interface setup"
-msgstr "Standaard interface"
+msgstr "Standaardinterface"
 
 #: ../src/ui/interface.cpp:749
 msgctxt "Interface setup"
@@ -22355,9 +22223,8 @@ msgstr "Masker uitschakelen"
 
 #. SSet Clip Group
 #: ../src/ui/interface.cpp:1761
-#, fuzzy
 msgid "Create Clip G_roup"
-msgstr "_Klonen"
+msgstr "A_fsnijgroep maken"
 
 #. Set Clip
 #: ../src/ui/interface.cpp:1768
@@ -22708,7 +22575,7 @@ msgstr "Handvat hoekig knooppunt"
 
 #: ../src/ui/tool/node.cpp:272
 msgid "Smooth node handle"
-msgstr "Handvat glad knooppunt"
+msgstr "Handvat afgevlakt knooppunt"
 
 #: ../src/ui/tool/node.cpp:273
 msgid "Symmetric node handle"
@@ -22716,7 +22583,7 @@ msgstr "Handvat symmetrisch knooppunt"
 
 #: ../src/ui/tool/node.cpp:274
 msgid "Auto-smooth node handle"
-msgstr "Handvat automatisch glad knooppunt"
+msgstr "Knooppunthandvat automatisch afvlakken"
 
 #: ../src/ui/tool/node.cpp:493
 msgctxt "Path handle tip"
@@ -22800,7 +22667,7 @@ msgstr "Knooppunthandvatten verschuiven"
 msgctxt "Path handle tip"
 msgid "<b>Auto node handle</b>: drag to convert to smooth node (%s)"
 msgstr ""
-"<b>Automatischknooppunthandvat</b>: sleep om om te zetten naar een glad "
+"<b>Automatischknooppunthandvat</b>: sleep om om te zetten naar een afgevlakt "
 "knooppunt (%s)"
 
 #: ../src/ui/tool/node.cpp:553
@@ -22903,7 +22770,7 @@ msgstr "Symmetrisch knooppunt"
 
 #: ../src/ui/tool/node.cpp:1507
 msgid "Auto-smooth node"
-msgstr "Automatisch glad knooppunt"
+msgstr "Automatisch afgevlakt knooppunt"
 
 #: ../src/ui/tool/path-manipulator.cpp:836
 msgid "Scale handle"
@@ -24624,13 +24491,11 @@ msgid "Nothing selected"
 msgstr "Niets geselecteerd"
 
 #: ../src/ui/widget/selected-style.cpp:184
-#, fuzzy
 msgctxt "Fill"
 msgid "<i>None</i>"
 msgstr "<i>Geen</i>"
 
 #: ../src/ui/widget/selected-style.cpp:186
-#, fuzzy
 msgctxt "Stroke"
 msgid "<i>None</i>"
 msgstr "<i>Geen</i>"
@@ -25253,7 +25118,6 @@ msgid "Unhide all objects in all layers"
 msgstr "Alle objecten in alle lagen weergeven"
 
 #: ../src/verbs.cpp:2432
-#, fuzzy
 msgctxt "Verb"
 msgid "None"
 msgstr "Geen"
@@ -26011,14 +25875,12 @@ msgid "Break selected paths into subpaths"
 msgstr "Geselecteerde paden in subpaden opdelen"
 
 #: ../src/verbs.cpp:2644
-#, fuzzy
 msgid "_Arrange..."
-msgstr "_Ordenen"
+msgstr "_Ordenen..."
 
 #: ../src/verbs.cpp:2645
-#, fuzzy
 msgid "Arrange selected objects in a table or circle"
-msgstr "Geselecteerde objecten in een tabel rangschikken"
+msgstr "Geselecteerde objecten in een tabel of cirkel rangschikken"
 
 #. Layer
 #: ../src/verbs.cpp:2647
@@ -26720,12 +26582,10 @@ msgid "Show or hide the canvas scrollbars"
 msgstr "Schuifbalken weergeven of verbergen"
 
 #: ../src/verbs.cpp:2829
-#, fuzzy
 msgid "Page _Grid"
-msgstr "Pagina_breedte"
+msgstr "Raster"
 
 #: ../src/verbs.cpp:2829
-#, fuzzy
 msgid "Show or hide the page grid"
 msgstr "Raster weergeven of verbergen"
 
@@ -27012,7 +26872,7 @@ msgstr "_Symbolen..."
 
 #: ../src/verbs.cpp:2909
 msgid "Select symbol from a symbols palette"
-msgstr "Symbool selecteren van symboolpalet"
+msgstr "Symbool uit symboolpalet selecteren"
 
 #: ../src/verbs.cpp:2910
 msgid "Transfor_m..."
@@ -27085,7 +26945,7 @@ msgstr "_Berichten..."
 
 #: ../src/verbs.cpp:2929
 msgid "View debug messages"
-msgstr "Debug-meldingen bekijken"
+msgstr "Debugmeldingen bekijken"
 
 #: ../src/verbs.cpp:2930
 msgid "Show/Hide D_ialogs"
@@ -28162,9 +28022,8 @@ msgid "Style"
 msgstr "Stijl"
 
 #: ../src/widgets/font-selector.cpp:211
-#, fuzzy
 msgid "Face"
-msgstr "Zijden"
+msgstr "Zijde"
 
 #: ../src/widgets/font-selector.cpp:240 ../share/extensions/dots.inx.h:3
 msgid "Font size:"
@@ -28279,7 +28138,6 @@ msgid "Select:"
 msgstr "Selecteren:"
 
 #: ../src/widgets/gradient-toolbar.cpp:1112
-#, fuzzy
 msgctxt "Gradient repeat type"
 msgid "None"
 msgstr "Geen"
@@ -28568,51 +28426,51 @@ msgstr "Invoegen"
 
 #: ../src/widgets/node-toolbar.cpp:356
 msgid "Insert node at min X"
-msgstr ""
+msgstr "Knooppunt bij min X toevoegen"
 
 #: ../src/widgets/node-toolbar.cpp:357
 msgid "Insert new nodes at min X into selected segments"
-msgstr ""
+msgstr "Nieuwe knooppunten bij min X toevoegen in geselecteerde segmenten"
 
 #: ../src/widgets/node-toolbar.cpp:360
 msgid "Insert min X"
-msgstr ""
+msgstr "Bij min X toevoegen"
 
 #: ../src/widgets/node-toolbar.cpp:366
 msgid "Insert node at max X"
-msgstr ""
+msgstr "Knooppunt bij max X toevoegen"
 
 #: ../src/widgets/node-toolbar.cpp:367
 msgid "Insert new nodes at max X into selected segments"
-msgstr ""
+msgstr "Nieuwe knooppunten bij max X toevoegen in geselecteerde segmenten"
 
 #: ../src/widgets/node-toolbar.cpp:370
 msgid "Insert max X"
-msgstr ""
+msgstr "Bij max X toevoegen"
 
 #: ../src/widgets/node-toolbar.cpp:376
 msgid "Insert node at min Y"
-msgstr ""
+msgstr "Knooppunt bij min Y toevoegen"
 
 #: ../src/widgets/node-toolbar.cpp:377
 msgid "Insert new nodes at min Y into selected segments"
-msgstr ""
+msgstr "Nieuwe knooppunten bij min Y toevoegen in geselecteerde segmenten"
 
 #: ../src/widgets/node-toolbar.cpp:380
 msgid "Insert min Y"
-msgstr ""
+msgstr "Bij min Y toevoegen"
 
 #: ../src/widgets/node-toolbar.cpp:386
 msgid "Insert node at max Y"
-msgstr ""
+msgstr "Knooppunt bij max Y toevoegen"
 
 #: ../src/widgets/node-toolbar.cpp:387
 msgid "Insert new nodes at max Y into selected segments"
-msgstr ""
+msgstr "Nieuwe knooppunten bij max Y toevoegen in geselecteerde segmenten"
 
 #: ../src/widgets/node-toolbar.cpp:390
 msgid "Insert max Y"
-msgstr ""
+msgstr "Bij max Y toevoegen"
 
 #: ../src/widgets/node-toolbar.cpp:398
 msgid "Delete selected nodes"
@@ -28934,7 +28792,6 @@ msgid "Mode of new lines drawn by this tool"
 msgstr "Modus van nieuwe lijnen getekend door dit gereedschap"
 
 #: ../src/widgets/pencil-toolbar.cpp:160
-#, fuzzy
 msgctxt "Freehand shape"
 msgid "None"
 msgstr "Geen"
@@ -29783,7 +29640,6 @@ msgid "Scatter randomly the corners and angles"
 msgstr "Punten en hoeken willekeurig uitspreiden"
 
 #: ../src/widgets/stroke-marker-selector.cpp:388
-#, fuzzy
 msgctxt "Marker"
 msgid "None"
 msgstr "Geen"
@@ -30654,7 +30510,6 @@ msgstr ""
 "Er zijn geen paden geselecteerd! Tracht te werken op alle aanwezige paden."
 
 #: ../share/extensions/gcodetools.py:3324
-#, fuzzy
 msgid "Nothing is selected. Please select something."
 msgstr "Er is niets geselecteerd. Selecteer aub. iets."
 
@@ -30790,13 +30645,12 @@ msgstr ""
 "opheffen (Ctrl+Shift+G) en Object naar pad (Ctrl+Shift+C)!"
 
 #: ../share/extensions/gcodetools.py:4667
-#, fuzzy
 msgid ""
 "Nothing is selected. Please select something to convert to drill point "
 "(dxfpoint) or clear point sign."
 msgstr ""
 "Er is niets geselecteerd. Selecteer aub. iets om te converteren naar een "
-"boorpunt (dxf-punt) of open punt."
+"boorpunt (dxf-punt) of vrij puntteken."
 
 #: ../share/extensions/gcodetools.py:4750
 #: ../share/extensions/gcodetools.py:4996
@@ -30994,9 +30848,9 @@ msgid "Unable to open specified file: %s"
 msgstr "Kan opgegeven bestand niet openen: %s"
 
 #: ../share/extensions/inkex.py:171
-#, fuzzy, python-format
+#, python-format
 msgid "Unable to open object member file: %s"
-msgstr "Kan opgegeven bestand niet openen: %s"
+msgstr "Kan opgegeven deelobjectbestand niet openen: %s"
 
 #: ../share/extensions/inkex.py:276
 #, python-format
@@ -31206,20 +31060,19 @@ msgid "unable to locate marker: %s"
 msgstr "onmogelijk om plaats markering te bepalen: %s"
 
 #: ../share/extensions/measure.py:50
-#, fuzzy
 msgid ""
 "Failed to import the numpy modules. These modules are required by this "
 "extension. Please install them and try again.  On a Debian-like system this "
 "can be done with the command, sudo apt-get install python-numpy."
 msgstr ""
-"Laden van de numpy of numpy.linalg modules mislukt. Deze modules zijn nodig "
+"Laden van de numpy modules mislukt. Deze modules zijn nodig "
 "voor deze uitbreiding. Installeer deze alstublief en probeer opnieuw. Op een "
 "Debian-gebaseerd systeem kan dit gedaan worden met het commando, sudo apt-"
 "get install python-numpy."
 
 #: ../share/extensions/measure.py:112
 msgid "Area is zero, cannot calculate Center of Mass"
-msgstr ""
+msgstr "Oppervlak is gelijk aan nul, kan massacentrum niet berekenen"
 
 #: ../share/extensions/pathalongpath.py:208
 #: ../share/extensions/pathscatter.py:228
@@ -31686,6 +31539,14 @@ msgid ""
 "    * Random Hue/Saturation/Lightness: randomize the parameter's value.\n"
 "      "
 msgstr ""
+"Past tint, verzadiging en lichtheid in de TVL-vertegenwoordiging van de kleur van de geselecteerde objecten.\n"
+"Opties:\n"
+"    * Tint: draaien met ... graden (telt door).\n"
+"    * Verzadiging: % toevoegen/aftrekken (min=-100, max=100).\n"
+"    * Lichtheid: % toevoegen/aftrekken (min=-100, max=100).\n"
+"    * Random tint/verzadiging/lichtheid: de parameterwaarde randomiseren.\n"
+"      "
+
 
 #: ../share/extensions/color_blackandwhite.inx.h:1
 msgid "Black and White"
@@ -31693,7 +31554,7 @@ msgstr "Zwart en wit"
 
 #: ../share/extensions/color_blackandwhite.inx.h:2
 msgid "Threshold Color (1-255):"
-msgstr ""
+msgstr "Grenswaarde kleur (1-255):"
 
 #: ../share/extensions/color_brighter.inx.h:1
 msgid "Brighter"
@@ -33107,7 +32968,6 @@ msgstr "Volledig pad naar logbestand:"
 #: ../share/extensions/gcodetools_graffiti.inx.h:37
 #: ../share/extensions/gcodetools_lathe.inx.h:41
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:30
-#, fuzzy
 msgctxt "GCode postprocessor"
 msgid "None"
 msgstr "Geen"
@@ -33784,9 +33644,8 @@ msgid "Regular guides"
 msgstr "Normale hulplijnen"
 
 #: ../share/extensions/guides_creator.inx.h:3
-#, fuzzy
 msgid "Guides preset:"
-msgstr "Hulplijngenerator"
+msgstr "Hulplijninstelling:"
 
 #: ../share/extensions/guides_creator.inx.h:6
 msgid "Start from edges"
@@ -33801,9 +33660,8 @@ msgid "Custom..."
 msgstr "Aangepast..."
 
 #: ../share/extensions/guides_creator.inx.h:9
-#, fuzzy
 msgid "Golden ratio"
-msgstr "Spaakverhouding"
+msgstr "Gouden ratio"
 
 #: ../share/extensions/guides_creator.inx.h:10
 msgid "Rule-of-third"
@@ -33834,9 +33692,8 @@ msgid "Margins"
 msgstr "Marges"
 
 #: ../share/extensions/guides_creator.inx.h:17
-#, fuzzy
 msgid "Margins preset:"
-msgstr "Marges"
+msgstr "Margevoorkeur:"
 
 #: ../share/extensions/guides_creator.inx.h:18
 msgid "Header margin:"
@@ -33863,7 +33720,6 @@ msgid "Right book page"
 msgstr "Rechterpagina"
 
 #: ../share/extensions/guides_creator.inx.h:24
-#, fuzzy
 msgctxt "Margin"
 msgid "None"
 msgstr "Geen"
@@ -34239,13 +34095,11 @@ msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:25
 #: ../share/extensions/plotter.inx.h:44
-#, fuzzy
 msgid "Tool offset (mm):"
-msgstr "X-afstand (mm)"
+msgstr "Gereedschapsafstand (mm):"
 
 #: ../share/extensions/hpgl_output.inx.h:26
 #: ../share/extensions/plotter.inx.h:45
-#, fuzzy
 msgid ""
 "The offset from the tool tip to the tool axis in mm, set to 0.0 to omit "
 "command (Default: 0.25)"
@@ -34267,13 +34121,11 @@ msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:29
 #: ../share/extensions/plotter.inx.h:48
-#, fuzzy
 msgid "Curve flatness:"
-msgstr "Vlakheid pad"
+msgstr "Vlakheid pad:"
 
 #: ../share/extensions/hpgl_output.inx.h:30
 #: ../share/extensions/plotter.inx.h:49
-#, fuzzy
 msgid ""
 "Curves are divided into lines, this number controls how fine the curves will "
 "be reproduced, the smaller the finer (Default: '1.2')"
@@ -34369,9 +34221,8 @@ msgstr "Nieuw in deze versie"
 
 #. i18n. Please don't translate it unless a page exists in your language
 #: ../share/extensions/inkscape_help_relnotes.inx.h:3
-#, fuzzy
 msgid "http://wiki.inkscape.org/wiki/index.php/Release_notes/0.91"
-msgstr "http://wiki.inkscape.org/wiki/index.php/Release_notes/0.49"
+msgstr "http://wiki.inkscape.org/wiki/index.php/Release_notes/0.91"
 
 #: ../share/extensions/inkscape_help_reportabug.inx.h:1
 msgid "Report a Bug"
@@ -35278,7 +35129,7 @@ msgstr "Tekstoriëntatie: "
 
 #: ../share/extensions/measure.inx.h:5
 msgid "Angle [with Fixed Angle option only] (°):"
-msgstr ""
+msgstr "Hoek [bij optie Vaste hoek] (°):"
 
 #: ../share/extensions/measure.inx.h:6
 msgid "Font size (px):"
@@ -35306,10 +35157,9 @@ msgid "Area"
 msgstr "Oppervlakte"
 
 #: ../share/extensions/measure.inx.h:13
-#, fuzzy
 msgctxt "measure extension"
 msgid "Center of Mass"
-msgstr "Penmassa"
+msgstr "Massacentrum"
 
 #: ../share/extensions/measure.inx.h:14
 msgctxt "measure extension"
@@ -35322,7 +35172,7 @@ msgid "Fixed Angle"
 msgstr "Vaste hoek"
 
 #: ../share/extensions/measure.inx.h:18
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "This effect measures the length, area, or center-of-mass of the selected "
 "paths. Length and area are added as a text object with the selected units. "
@@ -35340,10 +35190,10 @@ msgid ""
 "Bezier curves. If a circle is used, the area may be too high by as much as "
 "0.03%."
 msgstr ""
-"Dit effect meet de lengte of oppervlak van het geselecteerde pad en voegt "
-"het toe als tekstobject.\n"
-"            \n"
-"  * Weergave kan als tekst-op-pad of alleenstaande tekst in een specifieke "
+"Dit effect meet de lengte, oppervlakte of middelpunt van de geselecteerde paden. "
+"Lengte en oppervlak worden toegevoegd als tekstobject in de geselecteerde eenheid. Middelpunt wordt toegevoegd als een kruis.\n"
+"\n"
+"  * Tekstweergave kan als tekst-op-pad of alleenstaande tekst in een specifieke "
 "hoek.\n"
 "  * Het aantal significante cijfers kan ingesteld worden met het "
 "Precisieveld.\n"
@@ -35356,7 +35206,7 @@ msgstr ""
 
 #: ../share/extensions/merge_styles.inx.h:1
 msgid "Merge Styles into CSS"
-msgstr ""
+msgstr "Stijlen met CSS samenvoegen"
 
 #: ../share/extensions/merge_styles.inx.h:2
 msgid ""
@@ -35364,11 +35214,11 @@ msgid ""
 "attributes will create a new class, this class will replace the existing "
 "inline style attributes. Please use a name which best describes the kinds of "
 "objects and their common context for best effect."
-msgstr ""
+msgstr "Alle geselecteerde knopen worden gegroepeerd en met hun gemeenschappelijke kenmerken wordt een nieuwe klasse gemaakt die de bestaande inline stijlkenmerken vervangt. Gebruik aub een naam die het beste deze objecten en hun gemeenschappelijke context beschrijft voor het beste effect."
 
 #: ../share/extensions/merge_styles.inx.h:3
 msgid "New Class Name:"
-msgstr ""
+msgstr "Nieuwe klassenaam:"
 
 #: ../share/extensions/merge_styles.inx.h:4
 msgid "Stylesheet"
@@ -35706,7 +35556,6 @@ msgid "Hardware (DSR/DTR + RTS/CTS)"
 msgstr "Hardware (DSR/DTR + RTS/CTS)"
 
 #: ../share/extensions/plotter.inx.h:15
-#, fuzzy
 msgctxt "Flow control"
 msgid "None"
 msgstr "Geen"
@@ -36153,11 +36002,11 @@ msgstr "Puntgrootte (px):"
 
 #: ../share/extensions/render_gear_rack.inx.h:1
 msgid "Rack Gear"
-msgstr ""
+msgstr "Rupsband"
 
 #: ../share/extensions/render_gear_rack.inx.h:2
 msgid "Rack Length:"
-msgstr ""
+msgstr "Tandlengte:"
 
 #: ../share/extensions/render_gear_rack.inx.h:3
 msgid "Tooth Spacing:"
@@ -36178,7 +36027,7 @@ msgstr "Aantal tanden:"
 
 #: ../share/extensions/render_gears.inx.h:3
 msgid "Circular pitch (tooth size):"
-msgstr ""
+msgstr "Tandhoogte:"
 
 #: ../share/extensions/render_gears.inx.h:4
 msgid "Pressure angle (degrees):"
@@ -36186,11 +36035,11 @@ msgstr "Drukhoek (graden):"
 
 #: ../share/extensions/render_gears.inx.h:5
 msgid "Diameter of center hole (0 for none):"
-msgstr "Diameter van het centraal gat (0 voro geen):"
+msgstr "Diameter van het centraal gat (0 voor geen):"
 
 #: ../share/extensions/render_gears.inx.h:10
 msgid "Unit of measurement for both circular pitch and center diameter."
-msgstr ""
+msgstr "Eenheid voor tandhoogte en diameter midden."
 
 #: ../share/extensions/replace_font.inx.h:1
 msgid "Replace font"
@@ -36390,7 +36239,6 @@ msgid "Tab"
 msgstr "Tab"
 
 #: ../share/extensions/scour.inx.h:18
-#, fuzzy
 msgctxt "Indent"
 msgid "None"
 msgstr "Geen"
@@ -36712,7 +36560,7 @@ msgstr "XAML-uitvoer"
 
 #: ../share/extensions/svg2xaml.inx.h:2
 msgid "Silverlight compatible XAML"
-msgstr ""
+msgstr "Silverlight compatibele XAML"
 
 #: ../share/extensions/svg2xaml.inx.h:3 ../share/extensions/xaml2svg.inx.h:2
 msgid "Microsoft XAML (*.xaml)"
@@ -36914,7 +36762,7 @@ msgstr "Synfig animatie geschreven met de sif-export extensie"
 
 #: ../share/extensions/tar_layers.inx.h:1
 msgid "Collection of SVG files One per root layer"
-msgstr ""
+msgstr "Collectie van een SVG-bestand per laag"
 
 #: ../share/extensions/tar_layers.inx.h:2
 msgid "Layers as Separate SVG (*.tar)"
@@ -38116,7 +37964,7 @@ msgstr "XAML-invoer"
 #~ msgstr "bureaublad 800x600"
 
 #~ msgid "Fontforge Glyph"
-#~ msgstr "Fontforge teken"
+#~ msgstr "Fontforgeteken"
 
 #~ msgid "font fontforge glyph 1000x1000"
 #~ msgstr "teken lettertype Fontforge 1000x1000"
@@ -38156,4 +38004,3 @@ msgstr "XAML-invoer"
 
 #~ msgid "icon 64x64 empty"
 #~ msgstr "64x64 icoon leeg"
-

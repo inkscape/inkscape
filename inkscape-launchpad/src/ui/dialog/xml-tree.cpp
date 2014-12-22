@@ -23,7 +23,7 @@
 #include <gtkmm/stock.h>
 
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "ui/dialog-events.h"
 #include "document.h"
 #include "document-undo.h"
@@ -360,10 +360,10 @@ void XmlTree::set_tree_desktop(SPDesktop *desktop)
     }
     current_desktop = desktop;
     if (desktop) {
-        sel_changed_connection = sp_desktop_selection(desktop)->connectChanged(sigc::hide(sigc::mem_fun(this, &XmlTree::on_desktop_selection_changed)));
+        sel_changed_connection = desktop->getSelection()->connectChanged(sigc::hide(sigc::mem_fun(this, &XmlTree::on_desktop_selection_changed)));
         document_replaced_connection = desktop->connectDocumentReplaced(sigc::mem_fun(this, &XmlTree::on_document_replaced));
 
-        set_tree_document(sp_desktop_document(desktop));
+        set_tree_document(desktop->getDocument());
     } else {
         set_tree_document(NULL);
     }
@@ -472,7 +472,7 @@ Inkscape::XML::Node *XmlTree::get_dt_select()
     if (!current_desktop) {
         return NULL;
     }
-    return sp_desktop_selection(current_desktop)->singleRepr();
+    return current_desktop->getSelection()->singleRepr();
 }
 
 
@@ -483,7 +483,7 @@ void XmlTree::set_dt_select(Inkscape::XML::Node *repr)
         return;
     }
 
-    Inkscape::Selection *selection = sp_desktop_selection(current_desktop);
+    Inkscape::Selection *selection = current_desktop->getSelection();
 
     SPObject *object;
     if (repr) {
@@ -493,7 +493,7 @@ void XmlTree::set_dt_select(Inkscape::XML::Node *repr)
             repr = repr->parent();
         } // end of while loop
 
-        object = sp_desktop_document(current_desktop)->getObjectByRepr(repr);
+        object = current_desktop->getDocument()->getObjectByRepr(repr);
     } else {
         object = NULL;
     }
@@ -827,7 +827,7 @@ void XmlTree::on_document_replaced(SPDesktop *dt, SPDocument *doc)
     if (current_desktop)
         sel_changed_connection.disconnect();
 
-    sel_changed_connection = sp_desktop_selection(dt)->connectChanged(sigc::hide(sigc::mem_fun(this, &XmlTree::on_desktop_selection_changed)));
+    sel_changed_connection = dt->getSelection()->connectChanged(sigc::hide(sigc::mem_fun(this, &XmlTree::on_desktop_selection_changed)));
     set_tree_document(doc);
 }
 

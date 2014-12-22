@@ -27,7 +27,7 @@
 
 #include "document.h"
 #include "document-undo.h"
-#include "desktop-handles.h"
+#include "desktop.h"
 #include "sp-namedview.h"
 
 #include <gtkmm/checkbutton.h>
@@ -99,8 +99,8 @@ protected:
         if (!local_repr) {
             // no repr specified, use active desktop's namedview's repr
             SPDesktop* dt = SP_ACTIVE_DESKTOP;
-            local_repr = reinterpret_cast<SPObject *>(sp_desktop_namedview(dt))->getRepr();
-            local_doc = sp_desktop_document(dt);
+            local_repr = reinterpret_cast<SPObject *>(dt->getNamedView())->getRepr();
+            local_doc = dt->getDocument();
         }
 
         bool saved = DocumentUndo::getUndoSensitive(local_doc);
@@ -206,6 +206,14 @@ protected:
     void on_changed();
 };
 
+// Allow RegisteredScalarUnit to output lengths in 'user units' (which may have direction dependent
+// scale factors).
+enum RSU_UserUnits {
+    RSU_none,
+    RSU_x,
+    RSU_y
+};
+
 class RegisteredScalarUnit : public RegisteredWidget<ScalarUnit> {
 public:
     ~RegisteredScalarUnit();
@@ -215,12 +223,14 @@ public:
                            const RegisteredUnitMenu &rum,
                            Registry& wr,
                            Inkscape::XML::Node* repr_in = NULL,
-                           SPDocument *doc_in = NULL );
+                           SPDocument *doc_in = NULL,
+                           RSU_UserUnits _user_units = RSU_none );
 
 protected:
     sigc::connection  _value_changed_connection;
     UnitMenu         *_um;
     void on_value_changed();
+    RSU_UserUnits _user_units;
 };
 
 class RegisteredScalar : public RegisteredWidget<Scalar> {

@@ -24,7 +24,7 @@
 #include "align-and-distribute.h"
 #include <2geom/transforms.h>
 #include "ui/widget/spinbutton.h"
-#include "desktop-handles.h"
+
 #include "unclump.h"
 #include "document.h"
 #include "enums.h"
@@ -91,7 +91,7 @@ Action::Action(const Glib::ustring &id,
 
 void ActionAlign::do_action(SPDesktop *desktop, int index)
 {
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     if (!selection) return;
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -123,10 +123,10 @@ void ActionAlign::do_action(SPDesktop *desktop, int index)
         focus = selection->smallestItem(horiz);
         break;
     case PAGE:
-        b = sp_desktop_document(desktop)->preferredBounds();
+        b = desktop->getDocument()->preferredBounds();
         break;
     case DRAWING:
-        b = sp_desktop_document(desktop)->getRoot()->desktopPreferredBounds();
+        b = desktop->getDocument()->getRoot()->desktopPreferredBounds();
         break;
     case SELECTION:
         b = selection->preferredBounds();
@@ -152,7 +152,7 @@ void ActionAlign::do_action(SPDesktop *desktop, int index)
     for (std::list<SPItem *>::iterator it(selected.begin());
          it != selected.end(); ++it)
     {
-        sp_desktop_document (desktop)->ensureUpToDate();
+        desktop->getDocument()->ensureUpToDate();
         if (!sel_as_group)
             b = (*it)->desktopPreferredBounds();
         if (b && (!focus || (*it) != focus)) {
@@ -167,7 +167,7 @@ void ActionAlign::do_action(SPDesktop *desktop, int index)
     }
 
     if (changed) {
-        DocumentUndo::done( sp_desktop_document(desktop) , SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
+        DocumentUndo::done( desktop->getDocument() , SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
                             _("Align"));
     }
 }
@@ -247,7 +247,7 @@ private :
         SPDesktop *desktop = _dialog.getDesktop();
         if (!desktop) return;
 
-        Inkscape::Selection *selection = sp_desktop_selection(desktop);
+        Inkscape::Selection *selection = desktop->getSelection();
         if (!selection) return;
 
         using Inkscape::Util::GSListConstIterator;
@@ -337,7 +337,7 @@ private :
         prefs->setInt("/options/clonecompensation/value", saved_compensation);
 
         if (changed) {
-            DocumentUndo::done( sp_desktop_document(desktop), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
+            DocumentUndo::done( desktop->getDocument(), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
                                 _("Distribute"));
         }
     }
@@ -458,13 +458,12 @@ private :
         // xGap and yGap are the minimum space required between bounding rectangles.
         double const xGap = removeOverlapXGap.get_value();
         double const yGap = removeOverlapYGap.get_value();
-        removeoverlap(sp_desktop_selection(_dialog.getDesktop())->itemList(),
-                      xGap, yGap);
+        removeoverlap(_dialog.getDesktop()->getSelection()->itemList(), xGap, yGap);
 
         // restore compensation setting
         prefs->setInt("/options/clonecompensation/value", saved_compensation);
 
-        DocumentUndo::done(sp_desktop_document(_dialog.getDesktop()), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
+        DocumentUndo::done(_dialog.getDesktop()->getDocument(), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
                            _("Remove overlaps"));
     }
 };
@@ -490,12 +489,12 @@ private :
         int saved_compensation = prefs->getInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
         prefs->setInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
 
-        graphlayout(sp_desktop_selection(_dialog.getDesktop())->itemList());
+        graphlayout(_dialog.getDesktop()->getSelection()->itemList());
 
         // restore compensation setting
         prefs->setInt("/options/clonecompensation/value", saved_compensation);
 
-        DocumentUndo::done(sp_desktop_document(_dialog.getDesktop()), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
+        DocumentUndo::done(_dialog.getDesktop()->getDocument(), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
                            _("Arrange connector network"));
     }
 };
@@ -547,7 +546,7 @@ private :
         SPDesktop *desktop = _dialog.getDesktop();
         if (!desktop) return;
 
-        Inkscape::Selection *selection = sp_desktop_selection(desktop);
+        Inkscape::Selection *selection = desktop->getSelection();
         if (!selection) return;
 
         using Inkscape::Util::GSListConstIterator;
@@ -588,7 +587,7 @@ private :
         // restore compensation setting
         prefs->setInt("/options/clonecompensation/value", saved_compensation);
 
-        DocumentUndo::done(sp_desktop_document(_dialog.getDesktop()), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
+        DocumentUndo::done(_dialog.getDesktop()->getDocument(), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
                            _("Exchange Positions"));
     }
 };
@@ -617,12 +616,12 @@ private :
         int saved_compensation = prefs->getInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
         prefs->setInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
 
-        unclump ((GSList *) sp_desktop_selection(_dialog.getDesktop())->itemList());
+        unclump ((GSList *) _dialog.getDesktop()->getSelection()->itemList());
 
         // restore compensation setting
         prefs->setInt("/options/clonecompensation/value", saved_compensation);
 
-        DocumentUndo::done(sp_desktop_document(_dialog.getDesktop()), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
+        DocumentUndo::done(_dialog.getDesktop()->getDocument(), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
                            _("Unclump"));
     }
 };
@@ -644,7 +643,7 @@ private :
         SPDesktop *desktop = _dialog.getDesktop();
         if (!desktop) return;
 
-        Inkscape::Selection *selection = sp_desktop_selection(desktop);
+        Inkscape::Selection *selection = desktop->getSelection();
         if (!selection) return;
 
         using Inkscape::Util::GSListConstIterator;
@@ -677,7 +676,7 @@ private :
             it != selected.end();
             ++it)
         {
-            sp_desktop_document (desktop)->ensureUpToDate();
+            desktop->getDocument()->ensureUpToDate();
             Geom::OptRect item_box = !prefs_bbox ? (*it)->desktopVisualBounds() : (*it)->desktopGeometricBounds();
             if (item_box) {
                 // find new center, staying within bbox
@@ -694,7 +693,7 @@ private :
         // restore compensation setting
         prefs->setInt("/options/clonecompensation/value", saved_compensation);
 
-        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
+        DocumentUndo::done(desktop->getDocument(), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
                            _("Randomize positions"));
     }
 };
@@ -743,7 +742,7 @@ private :
         SPDesktop *desktop = _dialog.getDesktop();
         if (!desktop) return;
 
-        Inkscape::Selection *selection = sp_desktop_selection(desktop);
+        Inkscape::Selection *selection = desktop->getSelection();
         if (!selection) return;
 
         using Inkscape::Util::GSListConstIterator;
@@ -797,7 +796,7 @@ private :
             }
 
             if (changed) {
-                DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
+                DocumentUndo::done(desktop->getDocument(), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
                                     _("Distribute text baselines"));
             }
 
@@ -820,7 +819,7 @@ private :
             }
 
             if (changed) {
-                DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
+                DocumentUndo::done(desktop->getDocument(), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
                                    _("Align text baselines"));
             }
         }
@@ -829,14 +828,14 @@ private :
 
 
 
-static void on_tool_changed(InkscapeApplication */*inkscape*/, Inkscape::UI::Tools::ToolBase */*context*/, AlignAndDistribute *daad)
+static void on_tool_changed(AlignAndDistribute *daad)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop && desktop->getEventContext())
         daad->setMode(tools_active(desktop) == TOOLS_NODES);
 }
 
-static void on_selection_changed(InkscapeApplication */*inkscape*/, Inkscape::Selection */*selection*/, AlignAndDistribute *daad)
+static void on_selection_changed(AlignAndDistribute *daad)
 {
     daad->randomize_bbox = Geom::OptRect();
 }
@@ -1044,10 +1043,10 @@ AlignAndDistribute::AlignAndDistribute()
     contents->pack_start(_nodesFrame, true, true);
 
     //Connect to the global tool change signal
-    g_signal_connect (G_OBJECT (INKSCAPE), "set_eventcontext", G_CALLBACK (on_tool_changed), this);
+    _toolChangeConn = INKSCAPE.signal_eventcontext_set.connect(sigc::hide<0>(sigc::bind(sigc::ptr_fun(&on_tool_changed), this)));
 
     // Connect to the global selection change, to invalidate cached randomize_bbox
-    g_signal_connect (G_OBJECT (INKSCAPE), "change_selection", G_CALLBACK (on_selection_changed), this);
+    _selChangeConn = INKSCAPE.signal_selection_changed.connect(sigc::hide<0>(sigc::bind(sigc::ptr_fun(&on_selection_changed), this)));
     randomize_bbox = Geom::OptRect();
 
     _desktopChangeConn = _deskTrack.connectDesktopChanged( sigc::mem_fun(*this, &AlignAndDistribute::setDesktop) );
@@ -1055,18 +1054,18 @@ AlignAndDistribute::AlignAndDistribute()
 
     show_all_children();
 
-    on_tool_changed (NULL, NULL, this); // set current mode
+    on_tool_changed (this); // set current mode
 }
 
 AlignAndDistribute::~AlignAndDistribute()
 {
-    sp_signal_disconnect_by_data (G_OBJECT (INKSCAPE), this);
-
     for (std::list<Action *>::iterator it = _actionList.begin();
          it != _actionList.end();  ++it) {
         delete *it;
     }
 
+    _toolChangeConn.disconnect();
+    _selChangeConn.disconnect();
     _desktopChangeConn.disconnect();
     _deskTrack.disconnect();
 }
@@ -1075,7 +1074,7 @@ void AlignAndDistribute::setTargetDesktop(SPDesktop *desktop)
 {
     if (_desktop != desktop) {
         _desktop = desktop;
-        on_tool_changed (NULL, NULL, this);
+        on_tool_changed (this);
     }
 }
 

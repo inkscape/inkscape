@@ -23,7 +23,7 @@
 #include "document-undo.h"
 #include "layer-manager.h"
 #include "message-stack.h"
-#include "desktop-handles.h"
+
 #include "sp-object.h"
 #include "sp-item.h"
 #include "verbs.h"
@@ -132,7 +132,7 @@ LayerPropertiesDialog::_apply()
     g_assert(_strategy != NULL);
 
     _strategy->perform(*this);
-    DocumentUndo::done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_NONE,
+    DocumentUndo::done(SP_ACTIVE_DESKTOP->getDocument(), SP_VERB_NONE,
                        _("Add layer"));
 
     _close();
@@ -364,7 +364,7 @@ void LayerPropertiesDialog::Rename::perform(LayerPropertiesDialog &dialog) {
                                          (gchar *)name.c_str(),
                                          FALSE
     );
-    DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_NONE, 
+    DocumentUndo::done(desktop->getDocument(), SP_VERB_NONE, 
                        _("Rename layer"));
     // TRANSLATORS: This means "The layer has been renamed"
     desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Renamed layer"));
@@ -399,7 +399,7 @@ void LayerPropertiesDialog::Create::perform(LayerPropertiesDialog &dialog) {
     if (!name.empty()) {
         desktop->layer_manager->renameLayer( new_layer, (gchar *)name.c_str(), TRUE );
     }
-    sp_desktop_selection(desktop)->clear();
+    desktop->getSelection()->clear();
     desktop->setCurrentLayer(new_layer);
     desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("New layer created."));
 }

@@ -93,24 +93,45 @@ NRStyle::~NRStyle()
     text_decoration_stroke.clear();
 }
 
-void NRStyle::set(SPStyle *style)
+void NRStyle::set(SPStyle *style, SPStyle *context_style)
 {
-    if ( style->fill.isPaintserver() ) {
+    // Handle 'context-fill' and 'context-stroke': Work in progress
+    const SPIPaint *style_fill = &(style->fill);
+    if( style_fill->paintOrigin == SP_CSS_PAINT_ORIGIN_CONTEXT_FILL ) {
+        if( context_style != NULL ) {
+            style_fill = &(context_style->fill);
+        } else {
+            std::cerr << "NRStyle::set: 'context-fill': 'context_style' is NULL" << std::endl;
+        }
+    } else if ( style_fill->paintOrigin == SP_CSS_PAINT_ORIGIN_CONTEXT_STROKE ) {
+        if( context_style != NULL ) {
+            style_fill = &(context_style->stroke);
+        } else {
+            std::cerr << "NRStyle::set: 'context-stroke': 'context_style' is NULL" << std::endl;
+        }
+    }
+    
+    if ( style_fill->isPaintserver() ) {
     	SPPaintServer* server = style->getFillPaintServer();
     	if ( server && server->isValid() ) {
     		fill.set(server);
-    	} else if ( style->fill.colorSet ) {
-    		fill.set(style->fill.value.color);
+    	} else if ( style_fill->colorSet ) {
+    		fill.set(style_fill->value.color);
     	} else {
     		fill.clear();
     	}
-    } else if ( style->fill.isColor() ) {
-        fill.set(style->fill.value.color);
-    } else if ( style->fill.isNone() ) {
+    } else if ( style_fill->isColor() ) {
+        fill.set(style_fill->value.color);
+    } else if ( style_fill->isNone() ) {
         fill.clear();
+    } else if ( style_fill->paintOrigin == SP_CSS_PAINT_ORIGIN_CONTEXT_FILL ) {
+        std::cerr << "NRStyle::set: fill: context-fill: Double" << std::endl;
+    } else if ( style_fill->paintOrigin == SP_CSS_PAINT_ORIGIN_CONTEXT_STROKE ) {
+        std::cerr << "NRStyle::set: fill: context-stroke: Double" << std::endl;
     } else {
         g_assert_not_reached();
     }
+
     fill.opacity = SP_SCALE24_TO_FLOAT(style->fill_opacity.value);
 
     switch (style->fill_rule.computed) {
@@ -124,22 +145,42 @@ void NRStyle::set(SPStyle *style)
             g_assert_not_reached();
     }
 
-    if ( style->stroke.isPaintserver() ) {
+    const SPIPaint *style_stroke = &(style->stroke);
+    if( style_stroke->paintOrigin == SP_CSS_PAINT_ORIGIN_CONTEXT_FILL ) {
+        if( context_style != NULL ) {
+            style_stroke = &(context_style->fill);
+        } else {
+            std::cerr << "NRStyle::set: 'context-fill': 'context_style' is NULL" << std::endl;
+        }
+    } else if ( style_stroke->paintOrigin == SP_CSS_PAINT_ORIGIN_CONTEXT_STROKE ) {
+        if( context_style != NULL ) {
+            style_stroke = &(context_style->stroke);
+        } else {
+            std::cerr << "NRStyle::set: 'context-stroke': 'context_style' is NULL" << std::endl;
+        }
+    }
+    
+    if ( style_stroke->isPaintserver() ) {
     	SPPaintServer* server = style->getStrokePaintServer();
 		if ( server && server->isValid() ) {
 			stroke.set(server);
-		} else if ( style->stroke.isColor() ) {
-			stroke.set(style->stroke.colorSet);
+		} else if ( style_stroke->isColor() ) {
+			stroke.set(style_stroke->colorSet);
 		} else {
 			stroke.clear();
 		}
-    } else if ( style->stroke.isColor() ) {
-        stroke.set(style->stroke.value.color);
-    } else if ( style->stroke.isNone() ) {
+    } else if ( style_stroke->isColor() ) {
+        stroke.set(style_stroke->value.color);
+    } else if ( style_stroke->isNone() ) {
         stroke.clear();
+    } else if ( style_stroke->paintOrigin == SP_CSS_PAINT_ORIGIN_CONTEXT_FILL ) {
+        std::cerr << "NRStyle::set: stroke: context-fill: Double" << std::endl;
+    } else if ( style_stroke->paintOrigin == SP_CSS_PAINT_ORIGIN_CONTEXT_STROKE ) {
+        std::cerr << "NRStyle::set: stroke: context-stroke: Double" << std::endl;
     } else {
         g_assert_not_reached();
     }
+
     stroke.opacity = SP_SCALE24_TO_FLOAT(style->stroke_opacity.value);
     stroke_width = style->stroke_width.computed;
     switch (style->stroke_linecap.computed) {
@@ -266,7 +307,7 @@ void NRStyle::set(SPStyle *style)
         } else if ( style_td->fill.isNone() ) {
             text_decoration_fill.clear();
         } else {
-            g_assert_not_reached();
+            //g_assert_not_reached();
         }
 
         if ( style_td->stroke.isPaintserver() ) {
@@ -276,7 +317,7 @@ void NRStyle::set(SPStyle *style)
         } else if ( style_td->stroke.isNone() ) {
             text_decoration_stroke.clear();
         } else {
-            g_assert_not_reached();
+            //g_assert_not_reached();
         }
     }
 
@@ -310,13 +351,16 @@ bool NRStyle::prepareFill(Inkscape::DrawingContext &dc, Geom::OptRect const &pai
                 fill_pattern = pattern->renderPattern(fill.opacity);
             } else {
                 fill_pattern = fill.server->pattern_new(dc.raw(), paintbox, fill.opacity);
-            } break;
+            }
+            break;
         case PAINT_COLOR: {
             SPColor const &c = fill.color;
             fill_pattern = cairo_pattern_create_rgba(
                 c.v.c[0], c.v.c[1], c.v.c[2], fill.opacity);
-            } break;
-        default: break;
+            }
+            break;
+        default:
+            break;
         }
     }
     if (!fill_pattern) return false;

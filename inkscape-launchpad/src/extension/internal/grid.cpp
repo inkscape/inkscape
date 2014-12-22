@@ -24,7 +24,7 @@
 #include <gtkmm/spinbutton.h>
 
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "document.h"
 #include "selection.h"
 #include "sp-object.h"
@@ -113,7 +113,7 @@ Grid::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *doc
         bounding_area = temprec;
     }
 
-    gdouble scale = Inkscape::Util::Quantity::convert(1, "px", (document->doc())->getDefaultUnit());
+    gdouble scale = Inkscape::Util::Quantity::convert(1, "px", &document->doc()->getSVGUnit());
     bounding_area *= Geom::Scale(scale);
     Geom::Point spacings( scale * module->get_param_float("xspacing"),
                           scale * module->get_param_float("yspacing") );
@@ -191,7 +191,9 @@ Grid::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View
     SPDocument * current_document = view->doc();
 
     using Inkscape::Util::GSListConstIterator;
-    GSListConstIterator<SPItem *> selected = sp_desktop_selection((SPDesktop *)view)->itemList();
+
+    // FIXME very unsafe cast
+    GSListConstIterator<SPItem *> selected = ((SPDesktop *)view)->getSelection()->itemList();
     Inkscape::XML::Node * first_select = NULL;
     if (selected != NULL) {
         first_select = (*selected)->getRepr();

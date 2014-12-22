@@ -34,15 +34,12 @@ namespace Inkscape {
 DrawingShape::DrawingShape(Drawing &drawing)
     : DrawingItem(drawing)
     , _curve(NULL)
-    , _style(NULL)
     , _last_pick(NULL)
     , _repick_after(0)
 {}
 
 DrawingShape::~DrawingShape()
 {
-    if (_style)
-        sp_style_unref(_style);
     if (_curve)
         _curve->unref();
 }
@@ -65,10 +62,17 @@ DrawingShape::setPath(SPCurve *curve)
 }
 
 void
-DrawingShape::setStyle(SPStyle *style)
+DrawingShape::setStyle(SPStyle *style, SPStyle *context_style)
 {
-    _setStyleCommon(_style, style);
-    _nrstyle.set(style);
+    DrawingItem::setStyle(style, context_style); // Must be first
+    _nrstyle.set(_style, _context_style);
+}
+
+void
+DrawingShape::setChildrenStyle(SPStyle* context_style)
+{
+    DrawingItem::setChildrenStyle( context_style );
+    _nrstyle.set(_style, _context_style);
 }
 
 unsigned
@@ -145,7 +149,6 @@ DrawingShape::_updateItem(Geom::IntRect const &area, UpdateContext const &ctx, u
             _bbox.unionWith(i->geometricBounds());
         }
     }
-
     return STATE_ALL;
 }
 

@@ -30,7 +30,7 @@
 
 #include "live_effects/lpe-line_segment.h"
 #include "lpe-toolbar.h"
-#include "desktop-handles.h"
+
 #include "desktop.h"
 #include "document-undo.h"
 #include "widgets/ege-select-one-action.h"
@@ -91,7 +91,7 @@ static void sp_lpetool_mode_changed(EgeSelectOneAction *act, GObject *tbl)
             SP_LPETOOL_CONTEXT(desktop->event_context)->mode = type;
         }
 
-        if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
+        if (DocumentUndo::getUndoSensitive(desktop->getDocument())) {
             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
             prefs->setInt( "/tools/lpetool/mode", mode );
         }
@@ -280,7 +280,7 @@ static void lpetool_toolbox_watch_ec(SPDesktop* dt, Inkscape::UI::Tools::ToolBas
 void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
     UnitTracker* tracker = new UnitTracker(Inkscape::Util::UNIT_TYPE_LINEAR);
-    tracker->setActiveUnit(sp_desktop_namedview(desktop)->doc_units);
+    tracker->setActiveUnit(desktop->getNamedView()->display_units);
     g_object_set_data(holder, "tracker", tracker);
     Unit const *unit = tracker->getActiveUnit();
     g_return_if_fail(unit != NULL);
@@ -413,9 +413,9 @@ static void lpetool_toolbox_watch_ec(SPDesktop* desktop, Inkscape::UI::Tools::To
 
     if (SP_IS_LPETOOL_CONTEXT(ec)) {
         // Watch selection
-        c_selection_modified = sp_desktop_selection(desktop)->connectModified(sigc::bind(sigc::ptr_fun(sp_lpetool_toolbox_sel_modified), holder));
-        c_selection_changed = sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_lpetool_toolbox_sel_changed), holder));
-        sp_lpetool_toolbox_sel_changed(sp_desktop_selection(desktop), holder);
+        c_selection_modified = desktop->getSelection()->connectModified(sigc::bind(sigc::ptr_fun(sp_lpetool_toolbox_sel_modified), holder));
+        c_selection_changed = desktop->getSelection()->connectChanged(sigc::bind(sigc::ptr_fun(sp_lpetool_toolbox_sel_changed), holder));
+        sp_lpetool_toolbox_sel_changed(desktop->getSelection(), holder);
     } else {
         if (c_selection_modified)
             c_selection_modified.disconnect();

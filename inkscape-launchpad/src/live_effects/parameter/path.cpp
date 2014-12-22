@@ -30,7 +30,7 @@
 // needed for on-canvas editting:
 #include "ui/tools-switch.h"
 #include "ui/shape-editor.h"
-#include "desktop-handles.h"
+
 #include "selection.h"
 // clipboard support
 #include "ui/clipboard.h"
@@ -414,7 +414,7 @@ PathParam::linked_modified_callback(SPObject *linked_obj, guint /*flags*/)
 void
 PathParam::on_edit_button_click()
 {
-    SPItem * item = sp_desktop_selection(SP_ACTIVE_DESKTOP)->singleItem();
+    SPItem * item = SP_ACTIVE_DESKTOP->getSelection()->singleItem();
     if (item != NULL) {
         param_editOncanvas(item, SP_ACTIVE_DESKTOP);
     }

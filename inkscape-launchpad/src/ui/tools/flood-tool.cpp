@@ -31,7 +31,7 @@
 #include "color.h"
 #include "context-fns.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "desktop-style.h"
 #include "display/cairo-utils.h"
 #include "display/drawing-context.h"
@@ -128,13 +128,13 @@ void FloodTool::setup() {
 
     this->shape_editor = new ShapeEditor(this->desktop);
 
-    SPItem *item = sp_desktop_selection(this->desktop)->singleItem();
+    SPItem *item = this->desktop->getSelection()->singleItem();
     if (item) {
         this->shape_editor->set_item(item);
     }
 
     this->sel_changed_connection.disconnect();
-    this->sel_changed_connection = sp_desktop_selection(this->desktop)->connectChanged(
+    this->sel_changed_connection = this->desktop->getSelection()->connectChanged(
     	sigc::mem_fun(this, &FloodTool::selection_changed)
     );
 
@@ -360,7 +360,7 @@ inline static bool check_if_pixel_is_paintable(guchar *px, unsigned char *trace_
  * @param union_with_selection If true, merge the final SVG path with the current selection.
  */
 static void do_trace(bitmap_coords_info bci, guchar *trace_px, SPDesktop *desktop, Geom::Affine transform, unsigned int min_x, unsigned int max_x, unsigned int min_y, unsigned int max_y, bool union_with_selection) {
-    SPDocument *document = sp_desktop_document(desktop);
+    SPDocument *document = desktop->getDocument();
 
     unsigned char *trace_t;
 
@@ -467,7 +467,7 @@ static void do_trace(bitmap_coords_info bci, guchar *trace_px, SPDesktop *deskto
                 g_free(affinestr);
             }
 
-            Inkscape::Selection *selection = sp_desktop_selection(desktop);
+            Inkscape::Selection *selection = desktop->getSelection();
 
             pathRepr->setPosition(-1);
 
@@ -476,7 +476,7 @@ static void do_trace(bitmap_coords_info bci, guchar *trace_px, SPDesktop *deskto
                     ngettext("Area filled, path with <b>%d</b> node created and unioned with selection.","Area filled, path with <b>%d</b> nodes created and unioned with selection.",
                     SP_PATH(reprobj)->nodesInPath()), SP_PATH(reprobj)->nodesInPath() );
                 selection->add(reprobj);
-                sp_selected_path_union_skip_undo(sp_desktop_selection(desktop), desktop);
+                sp_selected_path_union_skip_undo(desktop->getSelection(), desktop);
             } else {
                 desktop->messageStack()->flashF( Inkscape::WARNING_MESSAGE,
                     ngettext("Area filled, path with <b>%d</b> node created.","Area filled, path with <b>%d</b> nodes created.",
@@ -740,7 +740,7 @@ static bool sort_fill_queue_horizontal(Geom::Point a, Geom::Point b) {
  */
 static void sp_flood_do_flood_fill(ToolBase *event_context, GdkEvent *event, bool union_with_selection, bool is_point_fill, bool is_touch_fill) {
     SPDesktop *desktop = event_context->desktop;
-    SPDocument *document = sp_desktop_document(desktop);
+    SPDocument *document = desktop->getDocument();
 
     document->ensureUpToDate();
     
@@ -792,7 +792,7 @@ static void sp_flood_do_flood_fill(ToolBase *event_context, GdkEvent *event, boo
         Inkscape::DrawingContext dc(s, Geom::Point(0,0));
         // cairo_translate not necessary here - surface origin is at 0,0
 
-        SPNamedView *nv = sp_desktop_namedview(desktop);
+        SPNamedView *nv = desktop->getNamedView();
         bgcolor = nv->pagecolor;
         // bgcolor is 0xrrggbbaa, we need 0xaarrggbb
         dtc = (bgcolor >> 8) | (bgcolor << 24);
@@ -1096,7 +1096,7 @@ bool FloodTool::item_handler(SPItem* item, GdkEvent* event) {
             // Set style
             desktop->applyCurrentOrToolStyle(item, "/tools/paintbucket", false);
 
-            DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_PAINTBUCKET, _("Set style on object"));
+            DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_PAINTBUCKET, _("Set style on object"));
 
             ret = TRUE;
         }
@@ -1229,9 +1229,9 @@ void FloodTool::finishItem() {
 
         desktop->canvas->endForcedFullRedraws();
 
-        sp_desktop_selection(desktop)->set(this->item);
+        desktop->getSelection()->set(this->item);
 
-        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_PAINTBUCKET, _("Fill bounded area"));
+        DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_PAINTBUCKET, _("Fill bounded area"));
 
         this->item = NULL;
     }

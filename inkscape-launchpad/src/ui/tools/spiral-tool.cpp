@@ -27,7 +27,7 @@
 #include "document-undo.h"
 #include "sp-namedview.h"
 #include "selection.h"
-#include "desktop-handles.h"
+
 #include "snap.h"
 #include "desktop.h"
 #include "desktop-style.h"
@@ -117,12 +117,12 @@ void SpiralTool::setup() {
 
     this->shape_editor = new ShapeEditor(this->desktop);
 
-    SPItem *item = sp_desktop_selection(this->desktop)->singleItem();
+    SPItem *item = this->desktop->getSelection()->singleItem();
     if (item) {
         this->shape_editor->set_item(item);
     }
 
-    Inkscape::Selection *selection = sp_desktop_selection(this->desktop);
+    Inkscape::Selection *selection = this->desktop->getSelection();
     this->sel_changed_connection.disconnect();
 
     this->sel_changed_connection = selection->connectChanged(sigc::mem_fun(this, &SpiralTool::selection_changed));
@@ -154,7 +154,7 @@ bool SpiralTool::root_handler(GdkEvent* event) {
     static gboolean dragging;
 
     SPDesktop *desktop = this->desktop;
-    Inkscape::Selection *selection = sp_desktop_selection (desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     this->tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
@@ -395,7 +395,7 @@ void SpiralTool::drag(Geom::Point const &p, guint state) {
 
     /* status text */
     Inkscape::Util::Quantity q = Inkscape::Util::Quantity(rad, "px");
-    GString *rads = g_string_new(q.string(desktop->namedview->doc_units).c_str());
+    GString *rads = g_string_new(q.string(desktop->namedview->display_units).c_str());
     this->message_context->setF(Inkscape::IMMEDIATE_MESSAGE,
                                _("<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"),
                                rads->str, sp_round((arg + 2.0*M_PI*this->spiral->revo)*180/M_PI, 0.0001));
@@ -417,15 +417,15 @@ void SpiralTool::finishItem() {
 
         this->desktop->canvas->endForcedFullRedraws();
 
-        sp_desktop_selection(this->desktop)->set(this->spiral);
-        DocumentUndo::done(sp_desktop_document(this->desktop), SP_VERB_CONTEXT_SPIRAL, _("Create spiral"));
+        this->desktop->getSelection()->set(this->spiral);
+        DocumentUndo::done(this->desktop->getDocument(), SP_VERB_CONTEXT_SPIRAL, _("Create spiral"));
 
         this->spiral = NULL;
     }
 }
 
 void SpiralTool::cancel() {
-	sp_desktop_selection(this->desktop)->clear();
+	this->desktop->getSelection()->clear();
 	sp_canvas_item_ungrab(SP_CANVAS_ITEM(this->desktop->acetate), 0);
 
     if (this->spiral != NULL) {
@@ -440,7 +440,7 @@ void SpiralTool::cancel() {
 
     this->desktop->canvas->endForcedFullRedraws();
 
-    DocumentUndo::cancel(sp_desktop_document(this->desktop));
+    DocumentUndo::cancel(this->desktop->getDocument());
 }
 
 }

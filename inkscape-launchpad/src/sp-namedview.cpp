@@ -29,7 +29,7 @@
 #include "document.h"
 #include "document-undo.h"
 #include "desktop-events.h"
-#include "desktop-handles.h"
+
 #include "sp-guide.h"
 #include "sp-item-group.h"
 #include "sp-namedview.h"
@@ -76,7 +76,9 @@ SPNamedView::SPNamedView() : SPObjectGroup(), snap_manager(this) {
 	this->window_x = 0;
 	this->cy = 0;
 	this->window_y = 0;
-	this->doc_units = NULL;
+    this->svg_units = unit_table.getUnit("px"); // legacy behavior: if no viewbox present, default to 'px' units
+    this->display_units = NULL;
+	this->page_size_units = NULL;
 	this->pagecolor = 0;
 	this->cx = 0;
 	this->pageshadow = 0;
@@ -262,6 +264,14 @@ void SPNamedView::build(SPDocument *document, Inkscape::XML::Node *repr) {
 
     // backwards compatibility with grid settings (pre 0.46)
     sp_namedview_generate_old_grid(this, document, repr);
+
+    // If viewbox defined: try to calculate the SVG unit from document width and viewbox
+    if (document->getRoot()->viewBox_set) {
+        Inkscape::Util::Quantity svgwidth = document->getWidth();
+        Geom::Rect viewbox = document->getRoot()->viewBox;
+        double factor = svgwidth.value(unit_table.primary(Inkscape::Util::UNIT_TYPE_LINEAR)) / viewbox.width(); 
+        svg_units = unit_table.findUnit(factor, Inkscape::Util::UNIT_TYPE_LINEAR);
+    }
 }
 
 void SPNamedView::release() {
@@ -540,22 +550,13 @@ void SPNamedView::set(unsigned int key, const gchar* value) {
             this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_DOCUMENT_UNITS: {
-            /* The default unit if the document doesn't override this: e.g. for files saved as
+            /* The default display unit if the document doesn't override this: e.g. for files saved as
              * `plain SVG', or non-inkscape files, or files created by an inkscape 0.40 &
              * earlier.
              *
-             * Here we choose `px': useful for screen-destined SVGs, and fewer bug reports
-             * about "not the same numbers as what's in the SVG file" (at least for documents
-             * without a viewBox attribute on the root <svg> element).  Similarly, it's also
-             * the most reliable unit (i.e. least likely to be wrong in different viewing
-             * conditions) for viewBox-less SVG files given that it's the unit that inkscape
-             * uses for all coordinates.
+             * Note that these units are not the same as the units used for the values in SVG!
              *
-             * For documents that do have a viewBox attribute on the root <svg> element, it
-             * might be better if we used either viewBox coordinates or if we used the unit of
-             * say the width attribute of the root <svg> element.  However, these pose problems
-             * in that they aren't in general absolute units as currently required by
-             * doc_units.
+             * We default to `px'.
              */
             static Inkscape::Util::Unit const *px = unit_table.getUnit("px");
             Inkscape::Util::Unit const *new_unit = px;
@@ -576,7 +577,7 @@ void SPNamedView::set(unsigned int key, const gchar* value) {
                     /* fixme: Don't use g_log (see above). */
                 }
             }
-            this->doc_units = new_unit;
+            this->display_units = new_unit;
             this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     }
@@ -675,7 +676,7 @@ void SPNamedView::child_added(Inkscape::XML::Node *child, Inkscape::XML::Node *r
                     g->SPGuide::showSPGuide(static_cast<SPDesktop*>(l->data)->guides, (GCallback) sp_dt_guide_event);
 
                     if (static_cast<SPDesktop*>(l->data)->guides_active) {
-                        g->sensitize(sp_desktop_canvas(static_cast<SPDesktop*> (l->data)), TRUE);
+                        g->sensitize((static_cast<SPDesktop*> (l->data))->getCanvas(), TRUE);
                     }
 
                     sp_namedview_show_single_guide(SP_GUIDE(g), this->showguides);
@@ -733,7 +734,7 @@ void SPNamedView::show(SPDesktop *desktop)
     for (GSList *l = guides; l != NULL; l = l->next) {
         SP_GUIDE(l->data)->showSPGuide( desktop->guides, (GCallback) sp_dt_guide_event);
         if (desktop->guides_active) {
-            SP_GUIDE(l->data)->sensitize(sp_desktop_canvas(desktop), TRUE);
+            SP_GUIDE(l->data)->sensitize(desktop->getCanvas(), TRUE);
         }
         sp_namedview_show_single_guide(SP_GUIDE(l->data), showguides);
     }
@@ -839,7 +840,7 @@ void sp_namedview_window_from_document(SPDesktop *desktop)
         && nv->cx != HUGE_VAL && !IS_NAN(nv->cx)
         && nv->cy != HUGE_VAL && !IS_NAN(nv->cy)) {
         desktop->zoom_absolute(nv->cx, nv->cy, nv->zoom);
-    } else if (sp_desktop_document(desktop)) { // document without saved zoom, zoom to its page
+    } else if (desktop->getDocument()) { // document without saved zoom, zoom to its page
         desktop->zoom_page();
     }
 
@@ -899,8 +900,8 @@ void sp_namedview_document_from_window(SPDesktop *desktop)
     Geom::Rect const r = desktop->get_display_area();
 
     // saving window geometry is not undoable
-    bool saved = DocumentUndo::getUndoSensitive(sp_desktop_document(desktop));
-    DocumentUndo::setUndoSensitive(sp_desktop_document(desktop), false);
+    bool saved = DocumentUndo::getUndoSensitive(desktop->getDocument());
+    DocumentUndo::setUndoSensitive(desktop->getDocument(), false);
 
     if (save_viewport_in_file) {
         sp_repr_set_svg_double(view, "inkscape:zoom", desktop->current_zoom());
@@ -921,7 +922,7 @@ void sp_namedview_document_from_window(SPDesktop *desktop)
     view->setAttribute("inkscape:current-layer", desktop->currentLayer()->getId());
 
     // restore undoability
-    DocumentUndo::setUndoSensitive(sp_desktop_document(desktop), saved);
+    DocumentUndo::setUndoSensitive(desktop->getDocument(), saved);
 }
 
 void SPNamedView::hide(SPDesktop const *desktop)
@@ -930,7 +931,7 @@ void SPNamedView::hide(SPDesktop const *desktop)
     g_assert(g_slist_find(views, desktop));
 
     for (GSList *l = guides; l != NULL; l = l->next) {
-        SP_GUIDE(l->data)->hideSPGuide(sp_desktop_canvas(desktop));
+        SP_GUIDE(l->data)->hideSPGuide(desktop->getCanvas());
     }
 
     views = g_slist_remove(views, desktop);
@@ -944,7 +945,7 @@ void SPNamedView::activateGuides(void* desktop, bool active)
     SPDesktop *dt = static_cast<SPDesktop*>(desktop);
 
     for (GSList *l = guides; l != NULL; l = l->next) {
-        SP_GUIDE(l->data)->sensitize( sp_desktop_canvas(dt), active);
+        SP_GUIDE(l->data)->sensitize(dt->getCanvas(), active);
     }
 }
 
@@ -1129,11 +1130,17 @@ double SPNamedView::getMarginLength(gchar const * const key,
 
 /**
  * Returns namedview's default unit.
- * If no default unit is set, "pt" is returned
+ * If no default unit is set, "px" is returned
  */
-Inkscape::Util::Unit const * SPNamedView::getDefaultUnit() const
+Inkscape::Util::Unit const * SPNamedView::getDisplayUnit() const
 {
-    return doc_units ? doc_units : unit_table.getUnit("pt");
+    return display_units ? display_units : unit_table.getUnit("px");
+}
+
+Inkscape::Util::Unit const & SPNamedView::getSVGUnit() const
+{
+    assert(svg_units);
+    return *svg_units; 
 }
 
 /**

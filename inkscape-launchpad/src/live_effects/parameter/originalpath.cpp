@@ -27,7 +27,7 @@
 #include "live_effects/effect.h"
 
 #include "inkscape.h"
-#include "desktop-handles.h"
+#include "desktop.h"
 #include "selection.h"
 #include "ui/icon-names.h"
 
@@ -128,7 +128,7 @@ OriginalPathParam::on_select_original_button_click()
     if (desktop == NULL || original == NULL) {
         return;
     }
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     selection->clear();
     selection->set(original);
 }

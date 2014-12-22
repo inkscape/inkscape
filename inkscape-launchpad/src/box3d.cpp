@@ -37,7 +37,7 @@
 #include "preferences.h"
 
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "macros.h"
 
 static void box3d_ref_changed(SPObject *old_ref, SPObject *ref, SPBox3D *box);
@@ -401,7 +401,7 @@ box3d_snap (SPBox3D *box, int id, Proj::Pt3 const &pt_proj, Proj::Pt3 const &sta
         snap_pts[3] = diag2.closest_to (pt);
     }
 
-    gdouble const zoom = inkscape_active_desktop()->current_zoom();
+    gdouble const zoom = SP_ACTIVE_DESKTOP->current_zoom();
 
     // determine the distances to all potential snapping points
     double snap_dists[MAX_POINT_COUNT];

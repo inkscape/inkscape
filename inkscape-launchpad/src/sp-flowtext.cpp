@@ -14,7 +14,7 @@
 #include "inkscape.h"
 #include "document.h"
 #include "selection.h"
-#include "desktop-handles.h"
+
 #include "desktop.h"
 
 #include "xml/repr.h"
@@ -620,7 +620,7 @@ bool SPFlowtext::has_internal_frame() const
 
 SPItem *create_flowtext_with_internal_frame (SPDesktop *desktop, Geom::Point p0, Geom::Point p1)
 {
-    SPDocument *doc = sp_desktop_document (desktop);
+    SPDocument *doc = desktop->getDocument();
 
     Inkscape::XML::Document *xml_doc = doc->getReprDoc();
     Inkscape::XML::Node *root_repr = xml_doc->createElement("svg:flowRoot");

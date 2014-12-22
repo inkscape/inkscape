@@ -24,7 +24,7 @@
 #include <errno.h>
 #include <glib/gstdio.h>
 
-#include "desktop-handles.h"
+
 #include "desktop.h"
 #include "ui/dialog-events.h"
 #include "extension/effect.h"
@@ -690,7 +690,7 @@ void Script::effect(Inkscape::Extension::Effect *module,
     }
 
     Inkscape::Util::GSListConstIterator<SPItem *> selected =
-        sp_desktop_selection(desktop)->itemList(); //desktop should not be NULL since doc was checked and desktop is a casted pointer
+        desktop->getSelection()->itemList(); //desktop should not be NULL since doc was checked and desktop is a casted pointer
     while ( selected != NULL ) {
         Glib::ustring selected_id;
         selected_id += "--id=";
@@ -1051,7 +1051,7 @@ int Script::execute (const std::list<std::string> &in_command,
 
     Glib::ustring stderr_data = fileerr.string();
     if (stderr_data.length() != 0 &&
-        inkscape_use_gui()
+        INKSCAPE.use_gui()
        ) {
         checkStderr(stderr_data, Gtk::MESSAGE_INFO,
                                  _("Inkscape has received additional data from the script executed.  "

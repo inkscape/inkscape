@@ -99,9 +99,8 @@ void Inkscape::DocumentUndo::done(SPDocument *doc, const unsigned int event_type
     maybeDone(doc, NULL, event_type, event_description);
 }
 
-void Inkscape::DocumentUndo::resetKey( InkscapeApplication * /*inkscape*/, SPDesktop * /*desktop*/, GObject *base )
+void Inkscape::DocumentUndo::resetKey( SPDocument *doc )
 {
-    SPDocument *doc = reinterpret_cast<SPDocument *>(base);
     doc->actionkey.clear();
 }
 
@@ -259,7 +258,7 @@ gboolean Inkscape::DocumentUndo::undo(SPDocument *doc)
         doc->priv->seeking = false;
 
 	if (ret)
-		inkscape_external_change();
+		INKSCAPE.external_change();
 
 	return ret;
 }
@@ -304,7 +303,7 @@ gboolean Inkscape::DocumentUndo::redo(SPDocument *doc)
         doc->priv->seeking = false;
 
 	if (ret)
-		inkscape_external_change();
+		INKSCAPE.external_change();
 
 	return ret;
 }

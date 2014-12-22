@@ -35,7 +35,7 @@
 #include "ui/widget/frame.h"
 
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "display/drawing.h"
 #include "document.h"
 #include "inkscape.h"
@@ -362,7 +362,7 @@ void IconPreviewPanel::refreshPreview()
             target = (hold && !targetId.empty()) ? desktop->doc()->getObjectById( targetId.c_str() ) : 0;
             if ( !target ) {
                 targetId.clear();
-                Inkscape::Selection * sel = sp_desktop_selection(desktop);
+                Inkscape::Selection * sel = desktop->getSelection();
                 if ( sel ) {
                     //g_message("found a selection to play with");
 

@@ -37,7 +37,7 @@
 #include "inkscape.h"
 #include "io/stringstream.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "desktop-style.h" // for sp_desktop_set_style, used in _pasteStyle
 #include "document.h"
 #include "document-private.h"
@@ -201,7 +201,7 @@ void ClipboardManagerImpl::copy(SPDesktop *desktop)
     if ( desktop == NULL ) {
         return;
     }
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     // Special case for when the gradient dragger is active - copies gradient color
     if (desktop->event_context->get_drag()) {
@@ -330,13 +330,13 @@ void ClipboardManagerImpl::copySymbol(Inkscape::XML::Node* symbol, gchar const* 
     use->setAttribute("xlink:href", id.c_str() );
     // Set a default style in <use> rather than <symbol> so it can be changed.
     use->setAttribute("style", style );
-
-    Inkscape::XML::Node *nv_repr = sp_desktop_namedview(inkscape_active_desktop())->getRepr();
+/*      disable rev 13709 in rev 13806, following Bug 1365451, comments 13-16
+    Inkscape::XML::Node *nv_repr = SP_ACTIVE_DESKTOP->getNamedView()->getRepr();
     gdouble scale_units = Inkscape::Util::Quantity::convert(1, nv_repr->attribute("inkscape:document-units"), "px");
     gchar *transform_str = sp_svg_transform_write(Geom::Scale(scale_units, scale_units));
     use->setAttribute("transform", transform_str);
     g_free(transform_str);
-
+*/
     _root->appendChild(use);
 
     // This min and max sets offsets, we don't have any so set to zero.
@@ -435,7 +435,7 @@ bool ClipboardManagerImpl::pasteStyle(SPDesktop *desktop)
     }
 
     // check whether something is selected
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     if (selection->isEmpty()) {
         _userWarn(desktop, _("Select <b>object(s)</b> to paste style to."));
         return false;
@@ -488,7 +488,7 @@ bool ClipboardManagerImpl::pasteSize(SPDesktop *desktop, bool separately, bool a
     if ( desktop == NULL ) {
         return false;
     }
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     if (selection->isEmpty()) {
         _userWarn(desktop, _("Select <b>object(s)</b> to paste size to."));
         return false;
@@ -551,7 +551,7 @@ bool ClipboardManagerImpl::pastePathEffect(SPDesktop *desktop)
         return false;
     }
 
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     if (selection && selection->isEmpty()) {
         _userWarn(desktop, _("Select <b>object(s)</b> to paste live path effect to."));
         return false;

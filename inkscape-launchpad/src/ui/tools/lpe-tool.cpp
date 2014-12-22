@@ -30,7 +30,7 @@
 #include "preferences.h"
 #include "ui/shape-editor.h"
 #include "selection.h"
-#include "desktop-handles.h"
+
 #include "document.h"
 #include "display/curve.h"
 #include "display/canvas-bpath.h"
@@ -110,7 +110,7 @@ LpeTool::~LpeTool() {
 void LpeTool::setup() {
     PenTool::setup();
 
-    Inkscape::Selection *selection = sp_desktop_selection (this->desktop);
+    Inkscape::Selection *selection = this->desktop->getSelection();
     SPItem *item = selection->singleItem();
 
     this->sel_changed_connection.disconnect();
@@ -164,7 +164,7 @@ bool LpeTool::item_handler(SPItem* item, GdkEvent* event) {
         case GDK_BUTTON_PRESS:
         {
             // select the clicked item but do nothing else
-            Inkscape::Selection * const selection = sp_desktop_selection(this->desktop);
+            Inkscape::Selection * const selection = this->desktop->getSelection();
             selection->clear();
             selection->add(item);
             ret = TRUE;
@@ -186,7 +186,7 @@ bool LpeTool::item_handler(SPItem* item, GdkEvent* event) {
 }
 
 bool LpeTool::root_handler(GdkEvent* event) {
-    Inkscape::Selection *selection = sp_desktop_selection (desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
 
     bool ret = false;
 
@@ -305,12 +305,12 @@ int lpetool_item_has_construction(LpeTool */*lc*/, SPItem *item)
 bool
 lpetool_try_construction(LpeTool *lc, Inkscape::LivePathEffect::EffectType const type)
 {
-    Inkscape::Selection *selection = sp_desktop_selection(lc->desktop);
+    Inkscape::Selection *selection = lc->desktop->getSelection();
     SPItem *item = selection->singleItem();
 
     // TODO: should we check whether type represents a valid geometric construction?
     if (item && SP_IS_LPE_ITEM(item) && Inkscape::LivePathEffect::Effect::acceptsNumClicks(type) == 0) {
-        Inkscape::LivePathEffect::Effect::createAndApply(type, sp_desktop_document(lc->desktop), item);
+        Inkscape::LivePathEffect::Effect::createAndApply(type, lc->desktop->getDocument(), item);
         return true;
     }
     return false;
@@ -360,7 +360,7 @@ lpetool_context_reset_limiting_bbox(LpeTool *lc)
     if (!prefs->getBool("/tools/lpetool/show_bbox", true))
         return;
 
-    SPDocument *document = sp_desktop_document(lc->desktop);
+    SPDocument *document = lc->desktop->getDocument();
 
     Geom::Point A, B;
     lpetool_get_limiting_bbox_corners(document, A, B);
@@ -371,7 +371,7 @@ lpetool_context_reset_limiting_bbox(LpeTool *lc)
     Geom::Rect rect(A, B);
     SPCurve *curve = SPCurve::new_from_rect(rect);
 
-    lc->canvas_bbox = sp_canvas_bpath_new (sp_desktop_controls(lc->desktop), curve);
+    lc->canvas_bbox = sp_canvas_bpath_new (lc->desktop->getControls(), curve);
     sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(lc->canvas_bbox), 0x0000ffff, 0.8, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT, 5, 5);
 }
 
@@ -396,7 +396,7 @@ void
 lpetool_create_measuring_items(LpeTool *lc, Inkscape::Selection *selection)
 {
     if (!selection) {
-        selection = sp_desktop_selection(lc->desktop);
+        selection = lc->desktop->getSelection();
     }
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool show = prefs->getBool("/tools/lpetool/show_measuring_info",  true);
@@ -404,7 +404,7 @@ lpetool_create_measuring_items(LpeTool *lc, Inkscape::Selection *selection)
     SPPath *path;
     SPCurve *curve;
     SPCanvasText *canvas_text;
-    SPCanvasGroup *tmpgrp = sp_desktop_tempgroup(lc->desktop);
+    SPCanvasGroup *tmpgrp = lc->desktop->getTempGroup();
     gchar *arc_length;
     double lengthval;
 

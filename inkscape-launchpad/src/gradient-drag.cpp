@@ -22,11 +22,11 @@
 #include <cstring>
 #include <string>
 
-#include "desktop-handles.h"
+
 #include "selection.h"
 #include "desktop.h"
 #include "desktop-style.h"
-#include "desktop-handles.h"
+
 #include "document.h"
 #include "document-undo.h"
 #include "display/sp-ctrlline.h"
@@ -563,7 +563,7 @@ SPStop *GrDrag::addStopNearPoint(SPItem *item, Geom::Point mouse_p, double toler
             mg->array.built = false;
             mg->ensureArray();
             // How do we do this?
-            DocumentUndo::done(sp_desktop_document (desktop), SP_VERB_CONTEXT_MESH,
+            DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_MESH,
                                _("Added patch row or column"));
 
         } // Mesh
@@ -631,7 +631,7 @@ GrDrag::GrDrag(SPDesktop *desktop) :
     vert_levels(),
     draggers(0),
     lines(0),
-    selection(sp_desktop_selection(desktop)),
+    selection(desktop->getSelection()),
     sel_changed_connection(),
     sel_modified_connection(),
     style_set_connection(),
@@ -796,7 +796,7 @@ static void gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, gui
                 d_new->updateKnotShape ();
                 d_new->updateTip ();
                 d_new->updateDependencies(true);
-                DocumentUndo::done(sp_desktop_document (d_new->parent->desktop), SP_VERB_CONTEXT_GRADIENT, _("Merge gradient handles"));
+                DocumentUndo::done(d_new->parent->desktop->getDocument(), SP_VERB_CONTEXT_GRADIENT, _("Merge gradient handles"));
                 return;
             }
         }
@@ -1102,8 +1102,7 @@ static void gr_knot_ungrabbed_handler(SPKnot *knot, unsigned int state, gpointer
     dragger->updateDependencies(true);
 
     // we did an undoable action
-    DocumentUndo::done(sp_desktop_document (dragger->parent->desktop), SP_VERB_CONTEXT_GRADIENT,
-                       _("Move gradient handle"));
+    DocumentUndo::done(dragger->parent->desktop->getDocument(), SP_VERB_CONTEXT_GRADIENT, _("Move gradient handle"));
 }
 
 /**
@@ -1869,7 +1868,7 @@ void GrDrag::setDeselected(GrDragger *dragger)
 void GrDrag::addLine(SPItem *item, Geom::Point p1, Geom::Point p2, Inkscape::PaintTarget fill_or_stroke)
 {
     CtrlLineType type = (fill_or_stroke == Inkscape::FOR_FILL) ? CTLINE_PRIMARY : CTLINE_SECONDARY;
-    SPCtrlLine *line = ControlManager::getManager().createControlLine(sp_desktop_controls(this->desktop), p1, p2, type);
+    SPCtrlLine *line = ControlManager::getManager().createControlLine(this->desktop->getControls(), p1, p2, type);
 
     sp_canvas_item_move_to_z(line, 0);
     line->item = item;
@@ -1885,7 +1884,7 @@ void GrDrag::addLine(SPItem *item, Geom::Point p1, Geom::Point p2, Inkscape::Pai
 void GrDrag::addCurve(SPItem *item, Geom::Point p0, Geom::Point p1, Geom::Point p2, Geom::Point p3, Inkscape::PaintTarget fill_or_stroke)
 {
     CtrlLineType type = (fill_or_stroke == Inkscape::FOR_FILL) ? CTLINE_PRIMARY : CTLINE_SECONDARY;
-    SPCtrlCurve *line = ControlManager::getManager().createControlCurve(sp_desktop_controls(this->desktop), p0, p1, p2, p3, type); 
+    SPCtrlCurve *line = ControlManager::getManager().createControlCurve(this->desktop->getControls(), p0, p1, p2, p3, type); 
 
     sp_canvas_item_move_to_z(line, 0);
     line->item = item;
@@ -2375,7 +2374,7 @@ void GrDrag::selected_move(double x, double y, bool write_repr, bool scale_radia
 
     if (write_repr && did) {
         // we did an undoable action
-        DocumentUndo::maybeDone(sp_desktop_document (desktop), "grmoveh", SP_VERB_CONTEXT_GRADIENT,
+        DocumentUndo::maybeDone(desktop->getDocument(), "grmoveh", SP_VERB_CONTEXT_GRADIENT,
                                 _("Move gradient handle(s)"));
         return;
     }
@@ -2411,7 +2410,7 @@ void GrDrag::selected_move(double x, double y, bool write_repr, bool scale_radia
 
         if (write_repr && did) {
             // we did an undoable action
-            DocumentUndo::maybeDone(sp_desktop_document (desktop), "grmovem", SP_VERB_CONTEXT_GRADIENT,
+            DocumentUndo::maybeDone(desktop->getDocument(), "grmovem", SP_VERB_CONTEXT_GRADIENT,
                                     _("Move gradient mid stop(s)"));
         }
     }

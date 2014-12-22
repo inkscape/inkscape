@@ -31,7 +31,7 @@
 #include <glibmm/i18n.h>
 
 #include "spiral-toolbar.h"
-#include "desktop-handles.h"
+
 #include "desktop.h"
 #include "document-undo.h"
 #include "widgets/ege-adjustment-action.h"
@@ -62,7 +62,7 @@ static void sp_spl_tb_value_changed(GtkAdjustment *adj, GObject *tbl, Glib::ustr
 {
     SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( tbl, "desktop" ));
 
-    if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
+    if (DocumentUndo::getUndoSensitive(desktop->getDocument())) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setDouble("/tools/shapes/spiral/" + value_name,
             gtk_adjustment_get_value(adj));
@@ -79,7 +79,7 @@ static void sp_spl_tb_value_changed(GtkAdjustment *adj, GObject *tbl, Glib::ustr
     gchar* namespaced_name = g_strconcat("sodipodi:", value_name.data(), NULL);
 
     bool modmade = false;
-    for (GSList const *items = sp_desktop_selection(desktop)->itemList();
+    for (GSList const *items = desktop->getSelection()->itemList();
          items != NULL;
          items = items->next)
     {
@@ -96,7 +96,7 @@ static void sp_spl_tb_value_changed(GtkAdjustment *adj, GObject *tbl, Glib::ustr
     g_free(namespaced_name);
 
     if (modmade) {
-        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_SPIRAL,
+        DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_SPIRAL,
                            _("Change spiral"));
     }
 
@@ -296,7 +296,7 @@ void sp_spiral_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
 
 
     sigc::connection *connection = new sigc::connection(
-        sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_spiral_toolbox_selection_changed), holder))
+        desktop->getSelection()->connectChanged(sigc::bind(sigc::ptr_fun(sp_spiral_toolbox_selection_changed), holder))
         );
     g_signal_connect( holder, "destroy", G_CALLBACK(delete_connection), connection );
     g_signal_connect( holder, "destroy", G_CALLBACK(purge_repr_listener), holder );

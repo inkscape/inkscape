@@ -450,7 +450,7 @@ void Effect::doOnRemove (SPLPEItem const* /*lpeitem*/)
 void Effect::doOnApply_impl(SPLPEItem const* lpeitem)
 {
     sp_lpe_item = const_cast<SPLPEItem *>(lpeitem);
-    defaultUnit = &sp_lpe_item->document->getDefaultUnit()->abbr;
+    defaultUnit = &sp_lpe_item->document->getDisplayUnit()->abbr;
     /*sp_curve = SP_SHAPE(sp_lpe_item)->getCurve();
     pathvector_before_effect = sp_curve->get_pathvector();*/
     doOnApply(lpeitem);
@@ -459,7 +459,7 @@ void Effect::doOnApply_impl(SPLPEItem const* lpeitem)
 void Effect::doBeforeEffect_impl(SPLPEItem const* lpeitem)
 {
     sp_lpe_item = const_cast<SPLPEItem *>(lpeitem);
-    defaultUnit = &sp_lpe_item->document->getDefaultUnit()->abbr;
+    defaultUnit = &sp_lpe_item->document->getDisplayUnit()->abbr;
     //printf("(SPLPEITEM*) %p\n", sp_lpe_item);
     sp_curve = SP_SHAPE(sp_lpe_item)->getCurve();
     pathvector_before_effect = sp_curve->get_pathvector();
@@ -476,7 +476,7 @@ void
 Effect::doAcceptPathPreparations(SPLPEItem *lpeitem)
 {
     // switch to pen context
-    SPDesktop *desktop = inkscape_active_desktop(); // TODO: Is there a better method to find the item's desktop?
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP; // TODO: Is there a better method to find the item's desktop?
     if (!tools_isactive(desktop, TOOLS_FREEHAND_PEN)) {
         tools_switch(desktop, TOOLS_FREEHAND_PEN);
     }

@@ -36,6 +36,11 @@
 // for interruptability bug:
 #include "display/sp-canvas.h"
 
+#include "desktop.h"
+
+
+#include "sp-root.h"
+
 namespace Inkscape {
 namespace UI {
 namespace Widget {
@@ -203,7 +208,7 @@ RegisteredScalarUnit::~RegisteredScalarUnit()
     _value_changed_connection.disconnect();
 }
 
-RegisteredScalarUnit::RegisteredScalarUnit (const Glib::ustring& label, const Glib::ustring& tip, const Glib::ustring& key, const RegisteredUnitMenu &rum, Registry& wr, Inkscape::XML::Node* repr_in, SPDocument *doc_in)
+RegisteredScalarUnit::RegisteredScalarUnit (const Glib::ustring& label, const Glib::ustring& tip, const Glib::ustring& key, const RegisteredUnitMenu &rum, Registry& wr, Inkscape::XML::Node* repr_in, SPDocument *doc_in, RSU_UserUnits user_units)
     : RegisteredWidget<ScalarUnit>(label, tip, UNIT_TYPE_LINEAR, "", "", rum.getUnitMenu()),
       _um(0)
 {
@@ -215,6 +220,7 @@ RegisteredScalarUnit::RegisteredScalarUnit (const Glib::ustring& label, const Gl
     setUnit (rum.getUnitMenu()->getUnitAbbr());
     setDigits (2);
     _um = rum.getUnitMenu();
+    _user_units = user_units;
     _value_changed_connection = signal_value_changed().connect (sigc::mem_fun (*this, &RegisteredScalarUnit::on_value_changed));
 }
 
@@ -233,12 +239,28 @@ RegisteredScalarUnit::on_value_changed()
     _wr->setUpdating (true);
 
     Inkscape::SVGOStringStream os;
-    os << getValue("");
-    if (_um)
-        os << _um->getUnitAbbr();
+    if (_user_units != RSU_none) {
+        // Output length in 'user units', taking into account scale in 'x' or 'y'.
+        double scale = 1.0;
+        if (doc) {
+            SPRoot *root = doc->getRoot();
+            if (root->viewBox_set) {
+                if (_user_units == RSU_x) { 
+                    scale = root->viewBox.width() / root->width.computed;
+                } else {
+                    scale = root->viewBox.height() / root->height.computed;
+                }
+            }
+        }
+        os << getValue("px") * scale;
+    } else {
+        // Output using unit identifiers.
+        os << getValue("");
+        if (_um)
+            os << _um->getUnitAbbr();
+    }
 
     write_to_xml(os.str().c_str());
-
     _wr->setUpdating (false);
 }
 
@@ -397,8 +419,8 @@ RegisteredColorPicker::on_changed (guint32 rgba)
         SPDesktop *dt = SP_ACTIVE_DESKTOP;
         if (!dt)
             return;
-        local_repr = sp_desktop_namedview(dt)->getRepr();
-        local_doc = sp_desktop_document(dt);
+        local_repr = dt->getNamedView()->getRepr();
+        local_doc = dt->getDocument();
     }
 
     gchar c[32];

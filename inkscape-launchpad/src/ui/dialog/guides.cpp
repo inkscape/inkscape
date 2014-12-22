@@ -24,7 +24,7 @@
 #include "document-undo.h"
 #include "sp-guide.h"
 #include "sp-namedview.h"
-#include "desktop-handles.h"
+
 #include "ui/tools/tool-base.h"
 #include "widgets/desktop-widget.h"
 #include <glibmm/i18n.h>
@@ -216,8 +216,8 @@ void GuidelinePropertiesDialog::_setup() {
     /* fixme: We should allow percents here too, as percents of the canvas size */
     _unit_menu.setUnitType(UNIT_TYPE_LINEAR);
     _unit_menu.setUnit("px");
-    if (_desktop->namedview->doc_units) {
-        _unit_menu.setUnit( _desktop->namedview->doc_units->abbr );
+    if (_desktop->namedview->display_units) {
+        _unit_menu.setUnit( _desktop->namedview->display_units->abbr );
     }
     _spin_angle.setUnit(_angle_unit_status);
 

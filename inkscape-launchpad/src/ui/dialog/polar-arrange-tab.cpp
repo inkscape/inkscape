@@ -16,7 +16,7 @@
 #include "verbs.h"
 #include "preferences.h"
 #include "inkscape.h"
-#include "desktop-handles.h"
+
 #include "selection.h"
 #include "document.h"
 #include "document-undo.h"
@@ -296,7 +296,7 @@ static void moveToPoint(int anchor, SPItem *item, Geom::Point p)
 
 void PolarArrangeTab::arrange()
 {
-	Inkscape::Selection *selection = sp_desktop_selection(parent->getDesktop());
+	Inkscape::Selection *selection = parent->getDesktop()->getSelection();
 	const GSList *items, *tmp;
 	tmp = items = selection->itemList();
 	SPGenericEllipse *referenceEllipse = NULL; // Last ellipse in selection
@@ -399,7 +399,7 @@ void PolarArrangeTab::arrange()
 		tmp = tmp->next;
 	}
 
-    DocumentUndo::done(sp_desktop_document(parent->getDesktop()), SP_VERB_SELECTION_ARRANGE,
+    DocumentUndo::done(parent->getDesktop()->getDocument(), SP_VERB_SELECTION_ARRANGE,
                        _("Arrange on ellipse"));
 }
 

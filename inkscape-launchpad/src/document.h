@@ -38,7 +38,6 @@ class SPGroup;
 class SPRoot;
 
 namespace Inkscape {
-    struct Application;
     class Selection; 
     class UndoStackObserver;
     class EventLog;
@@ -241,13 +240,14 @@ public:
 
     SPDocument *doRef();
     SPDocument *doUnref();
-    Inkscape::Util::Unit const* getDefaultUnit() const;
+    Inkscape::Util::Unit const* getDisplayUnit() const;
+    Inkscape::Util::Unit const& getSVGUnit() const;
     Inkscape::Util::Quantity getWidth() const;
     Inkscape::Util::Quantity getHeight() const;
     Geom::Point getDimensions() const;
     Geom::OptRect preferredBounds() const;
-    void setWidth(const Inkscape::Util::Quantity &width);
-    void setHeight(const Inkscape::Util::Quantity &height);
+    void setWidth(const Inkscape::Util::Quantity &width, bool changeSize=true);
+    void setHeight(const Inkscape::Util::Quantity &height, bool changeSize=true);
     void setViewBox(const Geom::Rect &viewBox);
     void requestModified();
     int ensureUpToDate();

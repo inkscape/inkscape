@@ -25,7 +25,7 @@
 #include "trace/imagemap-gdk.h"
 
 #include <inkscape.h>
-#include <desktop-handles.h>
+#include "desktop.h"
 #include "message-stack.h"
 #include <sp-path.h>
 #include <svg/path-string.h>
@@ -510,7 +510,7 @@ std::vector<TracingEngineResult> PotraceTracingEngine::traceBrightnessMulti(GdkP
                     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
                     if (desktop) {
                         ustring msg = ustring::compose(_("Trace: %1.  %2 nodes"), traceCount++, nodeCount);
-                        sp_desktop_message_stack(desktop)->flash(Inkscape::NORMAL_MESSAGE, msg);
+                        desktop->getMessageStack()->flash(Inkscape::NORMAL_MESSAGE, msg);
                     }
                 }
             }
@@ -573,7 +573,7 @@ std::vector<TracingEngineResult> PotraceTracingEngine::traceQuant(GdkPixbuf * th
                     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
                     if (desktop) {
                         ustring msg = ustring::compose(_("Trace: %1.  %2 nodes"), colorIndex, nodeCount);
-                        sp_desktop_message_stack(desktop)->flash(Inkscape::NORMAL_MESSAGE, msg);
+                        desktop->getMessageStack()->flash(Inkscape::NORMAL_MESSAGE, msg);
                     }
                 }
             }// for colorIndex

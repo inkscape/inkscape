@@ -23,7 +23,7 @@
 #include "document.h"
 #include "selection.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "message-context.h"
 #include "message-stack.h"
 #include "pixmaps/cursor-gradient.xpm"
@@ -112,7 +112,7 @@ void GradientTool::selection_changed(Inkscape::Selection*) {
     GradientTool *rc = (GradientTool *) this;
 
     GrDrag *drag = rc->_grdrag;
-    Inkscape::Selection *selection = sp_desktop_selection(SP_EVENT_CONTEXT(rc)->desktop);
+    Inkscape::Selection *selection = this->desktop->getSelection();
     if (selection == NULL) {
         return;
     }
@@ -167,7 +167,7 @@ void GradientTool::setup() {
     }
 
     this->enableGrDrag();
-    Inkscape::Selection *selection = sp_desktop_selection(this->desktop);
+    Inkscape::Selection *selection = this->desktop->getSelection();
 
     this->selcon = new sigc::connection(selection->connectChanged(
     	sigc::mem_fun(this, &GradientTool::selection_changed)
@@ -464,7 +464,7 @@ sp_gradient_context_add_stop_near_point (GradientTool *rc, SPItem *item,  Geom::
 
     SPStop *newstop = ec->get_drag()->addStopNearPoint (item, mouse_p, tolerance/desktop->current_zoom());
 
-    DocumentUndo::done(sp_desktop_document (desktop), SP_VERB_CONTEXT_GRADIENT,
+    DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_GRADIENT,
                        _("Add gradient stop"));
 
     ec->get_drag()->updateDraggers();
@@ -475,7 +475,7 @@ sp_gradient_context_add_stop_near_point (GradientTool *rc, SPItem *item,  Geom::
 bool GradientTool::root_handler(GdkEvent* event) {
     static bool dragging;
 
-    Inkscape::Selection *selection = sp_desktop_selection (desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     this->tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
@@ -509,13 +509,13 @@ bool GradientTool::root_handler(GdkEvent* event) {
                     SPGradientType new_type = (SPGradientType) prefs->getInt("/tools/gradient/newgradient", SP_GRADIENT_TYPE_LINEAR);
                     Inkscape::PaintTarget fsmode = (prefs->getInt("/tools/gradient/newfillorstroke", 1) != 0) ? Inkscape::FOR_FILL : Inkscape::FOR_STROKE;
 
-                    SPGradient *vector = sp_gradient_vector_for_object(sp_desktop_document(desktop), desktop, item, fsmode);
+                    SPGradient *vector = sp_gradient_vector_for_object(desktop->getDocument(), desktop, item, fsmode);
 
                     SPGradient *priv = sp_item_set_gradient(item, vector, new_type, fsmode);
                     sp_gradient_reset_to_userspace(priv, item);
                 }
 
-                DocumentUndo::done(sp_desktop_document (desktop), SP_VERB_CONTEXT_GRADIENT,
+                DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_GRADIENT,
                                    _("Create default gradient"));
             }
             ret = TRUE;
@@ -892,8 +892,8 @@ bool GradientTool::root_handler(GdkEvent* event) {
 static void sp_gradient_drag(GradientTool &rc, Geom::Point const pt, guint /*state*/, guint32 etime)
 {
     SPDesktop *desktop = SP_EVENT_CONTEXT(&rc)->desktop;
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
-    SPDocument *document = sp_desktop_document(desktop);
+    Inkscape::Selection *selection = desktop->getSelection();
+    SPDocument *document = desktop->getDocument();
     ToolBase *ec = SP_EVENT_CONTEXT(&rc);
 
     if (!selection->isEmpty()) {
@@ -957,7 +957,7 @@ static void sp_gradient_drag(GradientTool &rc, Geom::Point const pt, guint /*sta
                                            "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle", n_objects),
                                   n_objects);
     } else {
-        sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>objects</b> on which to create gradient."));
+        desktop->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>objects</b> on which to create gradient."));
     }
 }
 

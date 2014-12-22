@@ -22,7 +22,6 @@ DesktopTracker::DesktopTracker() :
     desktop(0),
     widget(0),
     hierID(0),
-    inkID(0),
     trackActive(false),
     desktopChangedSig()
 {
@@ -41,7 +40,10 @@ void DesktopTracker::connect(GtkWidget *widget)
 
     // Use C/gobject callbacks to avoid gtkmm rewrap-during-destruct issues:
     hierID = g_signal_connect( G_OBJECT(widget), "hierarchy-changed", G_CALLBACK(hierarchyChangeCB), this );
-    inkID = g_signal_connect( G_OBJECT(INKSCAPE), "activate_desktop", G_CALLBACK(activateDesktopCB), this );
+    inkID = INKSCAPE.signal_activate_desktop.connect(
+              sigc::bind(
+              sigc::ptr_fun(&DesktopTracker::activateDesktopCB), this)
+    );
 
     GtkWidget *wdgt = gtk_widget_get_ancestor(widget, SP_TYPE_DESKTOP_WIDGET);
     if (wdgt && !base) {
@@ -60,11 +62,8 @@ void DesktopTracker::disconnect()
         }
         hierID = 0;
     }
-    if (inkID) {
-        if (INKSCAPE) {
-            g_signal_handler_disconnect(G_OBJECT(INKSCAPE), inkID);
-        }
-        inkID = 0;
+    if (inkID.connected()) {
+        inkID.disconnect();
     }
 }
 
@@ -94,12 +93,12 @@ sigc::connection DesktopTracker::connectDesktopChanged( const sigc::slot<void, S
     return desktopChangedSig.connect(slot);
 }
 
-gboolean DesktopTracker::activateDesktopCB(InkscapeApplication */*inkscape*/, SPDesktop *desktop, DesktopTracker *self )
+void DesktopTracker::activateDesktopCB(SPDesktop *desktop, DesktopTracker *self )
 {
     if (self && self->trackActive) {
         self->setDesktop(desktop);
     }
-    return FALSE;
+    //return FALSE;
 }
 
 bool DesktopTracker::hierarchyChangeCB(GtkWidget * /*widget*/, GtkWidget* /*prev*/, DesktopTracker *self)

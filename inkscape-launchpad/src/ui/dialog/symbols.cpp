@@ -52,7 +52,7 @@
 
 #include "selection.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "document.h"
 #include "inkscape.h"
 #include "sp-root.h"
@@ -287,8 +287,8 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
   ++row;
 
   /**********************************************************/
-  currentDesktop  = inkscape_active_desktop();
-  currentDocument = sp_desktop_document(currentDesktop);
+  currentDesktop  = SP_ACTIVE_DESKTOP;
+  currentDocument = currentDesktop->getDocument();
 
   previewDocument = symbols_preview_doc(); /* Template to render symbols in */
   previewDocument->ensureUpToDate(); /* Necessary? */
@@ -585,13 +585,15 @@ void SymbolsDialog::get_symbols() {
 
   std::list<Glib::ustring> directories;
 
+// \TODO optimize this
+
   if( Inkscape::IO::file_test( INKSCAPE_SYMBOLSDIR, G_FILE_TEST_EXISTS ) &&
       Inkscape::IO::file_test( INKSCAPE_SYMBOLSDIR, G_FILE_TEST_IS_DIR ) ) {
     directories.push_back( INKSCAPE_SYMBOLSDIR );
   }
-  if( Inkscape::IO::file_test( profile_path("symbols"), G_FILE_TEST_EXISTS ) &&
-      Inkscape::IO::file_test( profile_path("symbols"), G_FILE_TEST_IS_DIR ) ) {
-    directories.push_back( profile_path("symbols") );
+  if( Inkscape::IO::file_test( Inkscape::Application::profile_path("symbols"), G_FILE_TEST_EXISTS ) &&
+      Inkscape::IO::file_test( Inkscape::Application::profile_path("symbols"), G_FILE_TEST_IS_DIR ) ) {
+    directories.push_back( Inkscape::Application::profile_path("symbols") );
   }
 
   std::list<Glib::ustring>::iterator it;

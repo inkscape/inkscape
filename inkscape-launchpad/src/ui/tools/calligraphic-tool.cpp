@@ -47,7 +47,7 @@
 #include "selection.h"
 #include "desktop.h"
 #include "desktop-events.h"
-#include "desktop-handles.h"
+
 #include "desktop-style.h"
 #include "message-context.h"
 #include "preferences.h"
@@ -141,7 +141,7 @@ void CalligraphicTool::setup() {
     this->cal1 = new SPCurve();
     this->cal2 = new SPCurve();
 
-    this->currentshape = sp_canvas_item_new(sp_desktop_sketch(this->desktop), SP_TYPE_CANVAS_BPATH, NULL);
+    this->currentshape = sp_canvas_item_new(this->desktop->getSketch(), SP_TYPE_CANVAS_BPATH, NULL);
     sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(this->currentshape), DDC_RED_RGBA, SP_WIND_RULE_EVENODD);
     sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(this->currentshape), 0x00000000, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
 
@@ -155,7 +155,7 @@ void CalligraphicTool::setup() {
 
         SPCurve *c = new SPCurve(path);
 
-        this->hatch_area = sp_canvas_bpath_new(sp_desktop_controls(this->desktop), c);
+        this->hatch_area = sp_canvas_bpath_new(this->desktop->getControls(), c);
 
         c->unref();
 
@@ -373,7 +373,7 @@ void CalligraphicTool::brush() {
         double R, G, B, A;
         Geom::IntRect area = Geom::IntRect::from_xywh(brush_w.floor(), Geom::IntPoint(1, 1));
         cairo_surface_t *s = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
-        sp_canvas_arena_render_surface(SP_CANVAS_ARENA(sp_desktop_drawing(SP_EVENT_CONTEXT(this)->desktop)), s, area);
+        sp_canvas_arena_render_surface(SP_CANVAS_ARENA(this->desktop->getDrawing()), s, area);
         ink_cairo_surface_average_color_premul(s, R, G, B, A);
         cairo_surface_destroy(s);
         double max = MAX (MAX (R, G), B);
@@ -506,7 +506,7 @@ bool CalligraphicTool::root_handler(GdkEvent* event) {
 
             if (event->motion.state & GDK_CONTROL_MASK) { // hatching - sense the item
 
-                SPItem *selected = sp_desktop_selection(desktop)->singleItem();
+                SPItem *selected = desktop->getSelection()->singleItem();
                 if (selected && (SP_IS_SHAPE(selected) || SP_IS_TEXT(selected))) {
                     // One item selected, and it's a path;
                     // let's try to track it as a guide
@@ -940,14 +940,14 @@ void CalligraphicTool::set_to_accumulated(bool unionize, bool subtract) {
         g_free(str);
 
         if (unionize) {
-            sp_desktop_selection(desktop)->add(this->repr);
-            sp_selected_path_union_skip_undo(sp_desktop_selection(desktop), desktop);
+            desktop->getSelection()->add(this->repr);
+            sp_selected_path_union_skip_undo(desktop->getSelection(), desktop);
         } else if (subtract) {
-            sp_desktop_selection(desktop)->add(this->repr);
-            sp_selected_path_diff_skip_undo(sp_desktop_selection(desktop), desktop);
+            desktop->getSelection()->add(this->repr);
+            sp_selected_path_diff_skip_undo(desktop->getSelection(), desktop);
         } else {
             if (this->keep_selected) {
-                sp_desktop_selection(desktop)->set(this->repr);
+                desktop->getSelection()->set(this->repr);
             }
         }
 
@@ -973,7 +973,7 @@ void CalligraphicTool::set_to_accumulated(bool unionize, bool subtract) {
         this->repr = NULL;
     }
 
-    DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_CALLIGRAPHIC,
+    DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_CALLIGRAPHIC,
                        _("Draw calligraphic stroke"));
 }
 
@@ -1142,7 +1142,7 @@ void CalligraphicTool::fit_and_split(bool release) {
         if (!release) {
             g_assert(!this->currentcurve->is_empty());
 
-            SPCanvasItem *cbp = sp_canvas_item_new(sp_desktop_sketch(desktop),
+            SPCanvasItem *cbp = sp_canvas_item_new(desktop->getSketch(),
                                                    SP_TYPE_CANVAS_BPATH,
                                                    NULL);
             SPCurve *curve = this->currentcurve->copy();

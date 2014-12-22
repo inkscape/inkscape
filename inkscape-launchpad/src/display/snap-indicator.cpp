@@ -14,7 +14,7 @@
 #include "display/snap-indicator.h"
 
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "display/sodipodi-ctrl.h"
 #include "display/sodipodi-ctrlrect.h"
 #include "display/canvas-text.h"
@@ -246,7 +246,7 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
 
         // Display the snap indicator (i.e. the cross)
         SPCanvasItem * canvasitem = NULL;
-        canvasitem = sp_canvas_item_new(sp_desktop_tempgroup (_desktop),
+        canvasitem = sp_canvas_item_new(_desktop->getTempGroup(),
                                         SP_TYPE_CTRL,
                                         "anchor", SP_ANCHOR_CENTER,
                                         "size", 10.0,
@@ -280,7 +280,7 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
                 tooltip_pos += _desktop->w2d(Geom::Point(0, -2*fontsize));
             }
 
-            SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(_desktop), _desktop, tooltip_pos, tooltip_str);
+            SPCanvasItem *canvas_tooltip = sp_canvastext_new(_desktop->getTempGroup(), _desktop, tooltip_pos, tooltip_str);
             sp_canvastext_set_fontsize(SP_CANVASTEXT(canvas_tooltip), fontsize);
             SP_CANVASTEXT(canvas_tooltip)->rgba = 0xffffffff;
             SP_CANVASTEXT(canvas_tooltip)->outline = false;
@@ -299,7 +299,7 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
         // Display the bounding box, if we snapped to one
         Geom::OptRect const bbox = p.getTargetBBox();
         if (bbox) {
-            SPCanvasItem* box = sp_canvas_item_new(sp_desktop_tempgroup (_desktop),
+            SPCanvasItem* box = sp_canvas_item_new(_desktop->getTempGroup(),
                                                      SP_TYPE_CTRLRECT,
                                                      NULL);
 
@@ -348,7 +348,7 @@ SnapIndicator::set_new_snapsource(Inkscape::SnapCandidatePoint const &p)
     bool value = prefs->getBool("/options/snapindicator/value", true);
 
     if (value) {
-        SPCanvasItem * canvasitem = sp_canvas_item_new( sp_desktop_tempgroup (_desktop),
+        SPCanvasItem * canvasitem = sp_canvas_item_new( _desktop->getTempGroup(),
                                                         SP_TYPE_CTRL,
                                                         "anchor", SP_ANCHOR_CENTER,
                                                         "size", 6.0,
@@ -367,7 +367,7 @@ void
 SnapIndicator::set_new_debugging_point(Geom::Point const &p)
 {
     g_assert(_desktop != NULL);
-    SPCanvasItem * canvasitem = sp_canvas_item_new( sp_desktop_tempgroup (_desktop),
+    SPCanvasItem * canvasitem = sp_canvas_item_new( _desktop->getTempGroup(),
                                                     SP_TYPE_CTRL,
                                                     "anchor", SP_ANCHOR_CENTER,
                                                     "size", 10.0,

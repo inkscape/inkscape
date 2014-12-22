@@ -17,7 +17,7 @@
 
 #include "inkscape.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "document.h"
 #include "sp-root.h"
 #include "style.h"

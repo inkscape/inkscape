@@ -187,7 +187,6 @@ set(inkscape_SRC
 	console-output-undo-observer.cpp
 	context-fns.cpp
 	desktop-events.cpp
-	desktop-handles.cpp
 	desktop-style.cpp
 	desktop.cpp
 	device-manager.cpp
@@ -299,7 +298,6 @@ set(inkscape_SRC
 	context-fns.h
 	decimal-round.h
 	desktop-events.h
-	desktop-handles.h
 	desktop-style.h
 	desktop.h
 	device-manager.h
@@ -336,7 +334,6 @@ set(inkscape_SRC
 	icon-size.h
 	id-clash.h
 	# ige-mac-menu.h
-	inkscape-private.h
 	inkscape-version.h
 	inkscape.h
 	interface.h
@@ -518,10 +515,19 @@ set(inkscape_SRC
 # make executable for INKSCAPE
 add_executable(inkscape ${main_SRC} ${inkscape_SRC} ${sp_SRC})
 
+if(UNIX)
+# message after building.
+add_custom_command(
+    TARGET inkscape
+    POST_BUILD MAIN_DEPENDENCY inkscape
+    COMMAND ${CMAKE_COMMAND} -E echo 'now run: \"make install\" to copy runtime files & scripts to ${CMAKE_INSTALL_PREFIX}'
+)
+endif()
+
 add_dependencies(inkscape inkscape_version)
 
 target_link_libraries(inkscape
-	# order from automake 
+	# order from automake
 	#sp_LIB
 	nrtype_LIB
 

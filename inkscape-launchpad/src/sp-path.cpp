@@ -41,7 +41,7 @@
 
 #include "document.h"
 #include "desktop.h"
-#include "desktop-handles.h"
+
 #include "desktop-style.h"
 #include "ui/tools/tool-base.h"
 #include "inkscape.h"
