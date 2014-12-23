@@ -16,7 +16,7 @@
 static char const preferences_skeleton[] =
 "<inkscape version=\"1\"\n"
 "  xmlns:sodipodi=\"http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd\"\n"
-"  xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\">\n"
+"  xmlns:inkscape=\"https://www.inkscape.org/namespaces/inkscape\">\n"
 "  <group id=\"window\">\n"
 "    <group id=\"task\" />\n"
 "    <group id=\"menu\" state=\"1\"/>\n"

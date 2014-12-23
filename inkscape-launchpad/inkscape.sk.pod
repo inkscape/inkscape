@@ -437,7 +437,7 @@ súboru I<fill_none.svg> alebo I<icons.svg>.)
 =head1 ĎALŠIE INFORMÁCIE
 
 Umiestnenie kanonickej dokumentácie k B<Inkscape> je na
-http://www.inkscape.org/. Webová stránka obsahuje novinky,
+https://www.inkscape.org/. Webová stránka obsahuje novinky,
 dokumentáciu, návody, príklady, archívy konferencií, poslednú
 vydanú verziu programu, databázy chýb a žiadostí o nové funkcie,
 fóra a ďalšie.

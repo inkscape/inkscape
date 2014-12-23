@@ -451,7 +451,7 @@ I<fill_none.svg>)、見つからないときに I<icons.svg>
 
 =head1 その他
 
-B<Inkscape> に関する公式の情報は http://www.inkscape.org/
+B<Inkscape> に関する公式の情報は https://www.inkscape.org/
 にあります。このウェブサイトには、ニュース、ドキュメント、チュートリアル、作例、メーリングリスト書庫、最新バージョンのプログラム、バグおよび機能要望のデータベース、フォーラムなどがあります。
 
 =head1 関連項目

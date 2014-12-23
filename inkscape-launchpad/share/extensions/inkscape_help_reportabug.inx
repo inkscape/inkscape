@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+<inkscape-extension xmlns="https://www.inkscape.org/namespace/inkscape/extension">
     <_name>Report a Bug</_name>
     <id>org.inkscape.help.reportabug</id>
 	<dependency type="executable" location="extensions">launch_webbrowser.py</dependency>
-	<param name="url" gui-hidden="true" type="string">http://inkscape.org/contribute/report-bugs/</param>
+	<param name="url" gui-hidden="true" type="string">https://www.inkscape.org/contribute/report-bugs/</param>
     <effect needs-document="false">
 		<object-type>all</object-type>
 		<effects-menu hidden="true"/>

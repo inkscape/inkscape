@@ -259,7 +259,7 @@ void ImageIcon::showBrokenImage(const Glib::ustring &errorMessage)
     //Our template.  Modify to taste
     gchar const *xformat =
         "<?xml version='1.0' encoding='UTF-8' standalone='no'?>"
-        "<!-- Created with Inkscape (http://www.inkscape.org/) -->"
+        "<!-- Created with Inkscape (https://www.inkscape.org/) -->"
         "<svg"
         "   xmlns:xml='http://www.w3.org/XML/1998/namespace'"
         "   xmlns:svg='http://www.w3.org/2000/svg'"

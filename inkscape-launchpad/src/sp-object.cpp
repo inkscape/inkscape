@@ -131,6 +131,7 @@ SPObject::SPObject()
     // polygon, text, tspan, tref, textPath, altGlyph, glyphRef, marker, linearGradient, radialGradient,
     // stop, pattern, clipPath, mask, filter, feImage, a, font, glyph, missing-glyph, foreignObject
     this->style = sp_style_new_from_object(this);
+    this->context_style = NULL;
 }
 
 SPObject::~SPObject() {

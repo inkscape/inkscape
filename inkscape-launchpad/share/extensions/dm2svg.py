@@ -95,7 +95,7 @@ def emit_header(f):
   xmlns="http://www.w3.org/2000/svg"
   xmlns:svg="http://www.w3.org/2000/svg"
   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-  xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+  xmlns:inkscape="https://www.inkscape.org/namespaces/inkscape"
   xmlns:dm="http://github.com/nikitakit/DM2SVG">
     <metadata>
       <dm:page

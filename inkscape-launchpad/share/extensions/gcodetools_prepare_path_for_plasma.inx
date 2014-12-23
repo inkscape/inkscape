@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+<inkscape-extension xmlns="https://www.inkscape.org/namespace/inkscape/extension">
     <_name>Prepare path for plasma</_name>
     <id>ru.cnc-club.filter.gcodetools_plasma-prepare-path_no_options_no_preferences</id>
 	<dependency type="executable" location="extensions">gcodetools.py</dependency>

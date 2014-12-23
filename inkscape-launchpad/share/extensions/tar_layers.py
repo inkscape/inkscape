@@ -34,8 +34,8 @@ import inkex
 import simplestyle
 
 GROUP = "{http://www.w3.org/2000/svg}g"
-LABEL = "{http://www.inkscape.org/namespaces/inkscape}label"
-GROUPMODE = "{http://www.inkscape.org/namespaces/inkscape}groupmode"
+LABEL = "{https://www.inkscape.org/namespaces/inkscape}label"
+GROUPMODE = "{https://www.inkscape.org/namespaces/inkscape}groupmode"
 
 
 def oprint(item):

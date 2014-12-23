@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+<inkscape-extension xmlns="https://www.inkscape.org/namespace/inkscape/extension">
   <_name>Isometric Grid</_name>
   <id>grid.iso_grid</id>
   <dependency type="executable" location="extensions">grid_isometric.py</dependency>

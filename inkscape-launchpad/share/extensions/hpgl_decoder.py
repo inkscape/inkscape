@@ -45,7 +45,7 @@ class hpglDecoder:
 
     def getSvg(self):
         # prepare document
-        self.doc = inkex.etree.parse(StringIO('<svg xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="%smm" height="%smm" viewBox="0 0 %s %s"></svg>' %
+        self.doc = inkex.etree.parse(StringIO('<svg xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="https://www.inkscape.org/namespaces/inkscape" width="%smm" height="%smm" viewBox="0 0 %s %s"></svg>' %
             (self.options.docWidth, self.options.docHeight, self.options.docWidth, self.options.docHeight)))
         inkex.etree.SubElement(self.doc.getroot(), inkex.addNS('namedview', 'sodipodi'), {inkex.addNS('document-units', 'inkscape'): 'mm'})
         actualLayer = 0

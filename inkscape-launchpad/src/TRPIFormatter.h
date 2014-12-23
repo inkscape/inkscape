@@ -40,7 +40,7 @@ public:
         (*_o) << "    <license></license>" << endl;
         (*_o) << "    <vendor></vendor>" << endl;
         (*_o) << "    <release>devel SVN</release>" << endl;
-        (*_o) << "    <url>http://www.inkscape.org/</url>" << endl;
+        (*_o) << "    <url>https://www.inkscape.org/</url>" << endl;
 //         (*_o) << "    <root></root>" << endl;
         (*_o) << "    <platform>\?\?\?</platform>" << endl;
         _o->flush();

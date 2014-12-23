@@ -4,7 +4,12 @@ NOTE: this file is currently (0.48+) edited manually.
 Insert the new markers into the <defs>. 
 -->
 <svg xmlns="http://www.w3.org/2000/svg"
-     xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+<<<<<<< TREE
+     xmlns:inkscape="https://www.inkscape.org/namespaces/inkscape">
+=======
+     xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+     id="InkscapeMarkers">
+>>>>>>> MERGE-SOURCE
   <defs id="defs3">
 
     <!-- Arrows -->

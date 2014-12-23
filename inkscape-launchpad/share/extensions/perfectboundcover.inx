@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+<inkscape-extension xmlns="https://www.inkscape.org/namespace/inkscape/extension">
     <_name>Perfect-Bound Cover Template</_name>
     <id>org.coswellproductions.inkscape.effects.perfectboundcover</id>
     <dependency type="executable" location="extensions">perfectboundcover.py</dependency>

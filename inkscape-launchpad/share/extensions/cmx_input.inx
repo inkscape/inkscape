@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+<inkscape-extension xmlns="https://www.inkscape.org/namespace/inkscape/extension">
     <_name>Corel DRAW Presentation Exchange files input (UC)</_name>
     <id>org.inkscape.input.cmx.uniconvertor</id>
     <dependency type="executable" location="extensions">uniconv-ext.py</dependency>

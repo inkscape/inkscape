@@ -2,7 +2,7 @@
 Inkscape. Dibuixeu amb llibertat
 ================================
 
-http://www.inkscape.org/
+https://www.inkscape.org/
 
 
 L'Inkscape és una eina de dibuix de codi obert amb capacitats semblants

@@ -8630,7 +8630,7 @@ match
 	   seltrans.cpp sp-typeset.cpp splivarot.cpp text-context.cpp,
 	   tools-switch.cpp dialogs/find.cpp:  Converting statusbar
 	   messages from old style to new, as per
-	   http://inkscape.org/cgi-bin/wiki.pl?StatusbarAPI
+	   https://www.inkscape.org/cgi-bin/wiki.pl?StatusbarAPI
 
 2004-06-18  Peter Moulder  <pmoulder@mail.csse.monash.edu.au>
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" inkscape:version="0.91pre2 r13554 custom" sodipodi:docname="icons.svg" height="540" width="1250" sodipodi:version="0.32" id="svg1" inkscape:output_extension="org.inkscape.output.svg.inkscape" version="1.0">
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="https://www.inkscape.org/namespaces/inkscape" inkscape:version="0.91pre2 r13554 custom" sodipodi:docname="icons.svg" height="540" width="1250" sodipodi:version="0.32" id="svg1" inkscape:output_extension="org.inkscape.output.svg.inkscape" version="1.0">
 <defs id="defs3">
 <linearGradient id="linearGradient10331">
 <stop style="stop-color:#000000;stop-opacity:1" offset="0" id="stop10333" />
@@ -871,7 +871,7 @@
 <rdf:RDF>
 <cc:Work rdf:about="">
 <dc:description>Created with Inkscape
-http://www.inkscape.org/</dc:description>
+https://www.inkscape.org/</dc:description>
 <dc:format>image/svg+xml</dc:format>
 <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
 <cc:license rdf:resource="http://creativecommons.org/licenses/GPL/2.0/" />

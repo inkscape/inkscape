@@ -281,10 +281,12 @@ gchar* SPUse::description() const {
 
 Inkscape::DrawingItem* SPUse::show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags) {
 
+    // std::cout << "SPUse::show: " << (getId()?getId():"null") << std::endl;
     Inkscape::DrawingGroup *ai = new Inkscape::DrawingGroup(drawing);
     ai->setPickChildren(false);
-    ai->setStyle(this->style, this->style);
-
+    this->context_style = this->style;
+    ai->setStyle(this->style, this->context_style);
+    
     if (this->child) {
         Inkscape::DrawingItem *ac = this->child->invoke_show(drawing, key, flags);
 
@@ -530,6 +532,7 @@ void SPUse::delete_self() {
 }
 
 void SPUse::update(SPCtx *ctx, unsigned flags) {
+    // std::cout << "SPUse::update: " << (getId()?getId():"null") << std::endl;
     SPItemCtx *ictx = (SPItemCtx *) ctx;
     SPItemCtx cctx = *ictx;
 
@@ -580,7 +583,8 @@ void SPUse::update(SPCtx *ctx, unsigned flags) {
     if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
         for (SPItemView *v = this->display; v != NULL; v = v->next) {
             Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
-            g->setStyle(this->style, this->style);
+            this->context_style = this->style;
+            g->setStyle(this->style, this->context_style);
         }
     }
 
@@ -593,6 +597,7 @@ void SPUse::update(SPCtx *ctx, unsigned flags) {
 }
 
 void SPUse::modified(unsigned int flags) {
+    // std::cout << "SPUse::modified: " << (getId()?getId():"null") << std::endl;
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
         flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
     }
@@ -602,7 +607,8 @@ void SPUse::modified(unsigned int flags) {
     if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
       for (SPItemView *v = this->display; v != NULL; v = v->next) {
         Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
-        g->setStyle(this->style, this->style);
+        this->context_style = this->style;
+        g->setStyle(this->style, this->context_style);
       }
     }
 

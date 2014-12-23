@@ -8,7 +8,7 @@ xmlns:x="http://ns.adobe.com/Extensibility/1.0/"
 xmlns:i="http://ns.adobe.com/AdobeIllustrator/10.0/" 
 xmlns:graph="http://ns.adobe.com/Graphs/1.0/" 
 xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/" 
-xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+xmlns:inkscape="https://www.inkscape.org/namespaces/inkscape"
 >
 <xsl:output indent="yes"/>
 	<xsl:template match="/">

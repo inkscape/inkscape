@@ -867,7 +867,7 @@ SPDocument* SymbolsDialog::symbols_preview_doc()
   gchar const *buffer =
 "<svg xmlns=\"http://www.w3.org/2000/svg\""
 "     xmlns:sodipodi=\"http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd\""
-"     xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\""
+"     xmlns:inkscape=\"https://www.inkscape.org/namespaces/inkscape\""
 "     xmlns:xlink=\"http://www.w3.org/1999/xlink\">"
 "  <defs id=\"defs\">"  
 "    <symbol id=\"the_symbol\"/>"

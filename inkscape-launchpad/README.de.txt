@@ -1,7 +1,7 @@
 Inkscape. Frei zeichnen.
 ========================
 
-http://www.inkscape.org/
+https://www.inkscape.org/
 
 Inkscape ist ein quelloffenes Zeichenwerkzeug mit Fähigkeiten ähnlich
 wie Illustrator, Freehand und CorelDraw. Es verwendet das vom W3C

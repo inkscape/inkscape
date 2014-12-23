@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<!-- Created with Inkscape (https://www.inkscape.org/) -->
 
-<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="96" height="96" id="svg2" sodipodi:version="0.32" inkscape:version="0.48+devel r10484 custom" version="1.0" sodipodi:docname="feTurbulence-icon.svg" inkscape:output_extension="org.inkscape.output.svg.inkscape" inkscape:export-filename="/home/felipe/devel/inkscape/inkscape/share/icons/feTurbulence-icon.png" inkscape:export-xdpi="90" inkscape:export-ydpi="90">
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="https://www.inkscape.org/namespaces/inkscape" width="96" height="96" id="svg2" sodipodi:version="0.32" inkscape:version="0.48+devel r10484 custom" version="1.0" sodipodi:docname="feTurbulence-icon.svg" inkscape:output_extension="org.inkscape.output.svg.inkscape" inkscape:export-filename="/home/felipe/devel/inkscape/inkscape/share/icons/feTurbulence-icon.png" inkscape:export-xdpi="90" inkscape:export-ydpi="90">
 <defs id="defs4">
 <filter id="filter3342" inkscape:label="filter1">
 <feTurbulence id="feTurbulence3344" baseFrequency="0.038999999999999986" type="turbulence" numOctaves="2" />

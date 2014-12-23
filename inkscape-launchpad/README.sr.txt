@@ -2,7 +2,7 @@
 Inkscape. Слободно цртај.
 ======================
 
-http://www.inkscape.org/
+https://www.inkscape.org/
 
 Inkscape је алат за цртање отвореног кода са могућностима сличним програмима
 Illustrator, Freehand и CorelDraw, који користи W3C стандардни формат

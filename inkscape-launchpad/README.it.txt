@@ -2,7 +2,7 @@
 Inkscape. Disegna in Libertà.
 =============================
 
-http://www.inkscape.org/
+https://www.inkscape.org/
 
 Inkscape è un programma open source per il disegno, simile a Illustrator,
 Freehand e CorelDraw, che si basa sul formato standard W3C "scalable vector

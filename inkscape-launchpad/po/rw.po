@@ -14989,7 +14989,7 @@ msgstr ""
 #. TRANSLATORS: if a group of objects are "clumped" together, then they
 #. are unevenly spread in the given amount of space - as shown in the
 #. diagrams on the left in the following screenshot:
-#. http://www.inkscape.org/screenshots/gallery/inkscape-0.42-CVS-tiles-unclump.png
+#. https://www.inkscape.org/screenshots/gallery/inkscape-0.42-CVS-tiles-unclump.png
 #. So unclumping is the process of spreading a number of objects out more evenly.
 #: ../src/ui/dialog/clonetiler.cpp:1260
 msgid " _Unclump "
@@ -36945,7 +36945,7 @@ msgstr "Na"
 
 #. i18n. Please don't translate it unless a page exists in your language
 #: ../share/extensions/inkscape_help_commandline.inx.h:3
-msgid "http://inkscape.org/doc/inkscape-man.html"
+msgid "https://www.inkscape.org/doc/inkscape-man.html"
 msgstr ""
 
 #: ../share/extensions/inkscape_help_faq.inx.h:1
@@ -36963,7 +36963,7 @@ msgstr ""
 
 #. i18n. Please don't translate it unless a page exists in your language
 #: ../share/extensions/inkscape_help_keys.inx.h:3
-msgid "http://inkscape.org/doc/keys048.html"
+msgid "https://www.inkscape.org/doc/keys048.html"
 msgstr ""
 
 #: ../share/extensions/inkscape_help_manual.inx.h:1

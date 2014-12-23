@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<!-- Created with Inkscape (https://www.inkscape.org/) -->
 
-<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="96" height="96" id="svg1901" sodipodi:version="0.32" inkscape:version="0.48+devel r10484 custom" sodipodi:docname="feConvolveMatrix-icon.svg" version="1.0" inkscape:output_extension="org.inkscape.output.svg.inkscape" inkscape:export-filename="/home/felipe/devel/inkscape/inkscape/share/icons/feConvolveMatrix-icon.png" inkscape:export-xdpi="90" inkscape:export-ydpi="90">
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="https://www.inkscape.org/namespaces/inkscape" width="96" height="96" id="svg1901" sodipodi:version="0.32" inkscape:version="0.48+devel r10484 custom" sodipodi:docname="feConvolveMatrix-icon.svg" version="1.0" inkscape:output_extension="org.inkscape.output.svg.inkscape" inkscape:export-filename="/home/felipe/devel/inkscape/inkscape/share/icons/feConvolveMatrix-icon.png" inkscape:export-xdpi="90" inkscape:export-ydpi="90">
 <defs id="defs1903">
 <filter id="filter2688" inkscape:label="filter1">
 <feConvolveMatrix order="3 3" kernelMatrix="6 10 3 10 -4 -15 3 -5 -6 " id="feConvolveMatrix2690" in="SourceGraphic" divisor="1.6333333333333333" bias="0" targetX="1" targetY="1" />

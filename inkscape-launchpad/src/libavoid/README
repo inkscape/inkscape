@@ -15,7 +15,7 @@ system will be cleaned up to use the configure/automake tools, and the first
 libavoid is currently used in the prototype research diagram editor "Dunnart":
   http://www.csse.monash.edu.au/~mwybrow/dunnart/
 As well as the professional open-source vector graphics editor "Inkscape":
-  http://www.inkscape.org/
+  https://www.inkscape.org/
 
 The algorithms used for the connector routing are described in:
 

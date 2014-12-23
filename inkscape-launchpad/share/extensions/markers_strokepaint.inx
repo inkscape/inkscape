@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+<inkscape-extension xmlns="https://www.inkscape.org/namespace/inkscape/extension">
   <_name>Color Markers</_name>
   <id>org.ekips.filter.markers.strokepaint</id>
   <dependency type="executable" location="extensions">markers_strokepaint.py</dependency>

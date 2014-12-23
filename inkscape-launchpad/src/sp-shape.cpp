@@ -126,6 +126,7 @@ Inkscape::XML::Node* SPShape::write(Inkscape::XML::Document *xml_doc, Inkscape::
 }
 
 void SPShape::update(SPCtx* ctx, guint flags) {
+    // std::cout << "SPShape::update(): " << (getId()?getId():"null") << std::endl;
     SPLPEItem::update(ctx, flags);
 
     /* This stanza checks that an object's marker style agrees with
@@ -146,10 +147,13 @@ void SPShape::update(SPCtx* ctx, guint flags) {
             for (SPItemView *v = ((SPItem *) (this))->display; v != NULL; v = v->next) {
                 Inkscape::DrawingShape *sh = dynamic_cast<Inkscape::DrawingShape *>(v->arenaitem);
                 if (hasMarkers()) {
-                    sh->setStyle(this->style, this->style);
-                    sh->setChildrenStyle(style); // Resolve 'context-fill' and 'context-stroke' in children.
-                } else {
-                    sh->setStyle(this->style, this->parent->style);
+                    this->context_style = this->style;
+                    sh->setStyle(this->style, this->context_style);
+                    // Done at end:
+                    // sh->setChildrenStyle(this->context_style); //Resolve 'context-xxx' in children.
+                } else if (this->parent) {
+                    this->context_style = this->parent->context_style;
+                    sh->setStyle(this->style, this->context_style);
                 }
             }
         }
@@ -187,6 +191,13 @@ void SPShape::update(SPCtx* ctx, guint flags) {
         /* Update marker views */
         for (SPItemView *v = this->display; v != NULL; v = v->next) {
             sp_shape_update_marker_view (this, v->arenaitem);
+        }
+    
+        // Marker selector needs this here or marker previews are not rendered.
+        for (SPItemView *v = this->display; v != NULL; v = v->next) {
+            Inkscape::DrawingShape *sh = dynamic_cast<Inkscape::DrawingShape *>(v->arenaitem);
+
+            sh->setChildrenStyle(this->context_style); // Resolve 'context-xxx' in children.
         }
     }
 }
@@ -388,16 +399,22 @@ sp_shape_update_marker_view(SPShape *shape, Inkscape::DrawingItem *ai)
 }
 
 void SPShape::modified(unsigned int flags) {
+    // std::cout << "SPShape::modified(): " << (getId()?getId():"null") << std::endl;
     SPLPEItem::modified(flags);
 
     if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
         for (SPItemView *v = this->display; v != NULL; v = v->next) {
             Inkscape::DrawingShape *sh = dynamic_cast<Inkscape::DrawingShape *>(v->arenaitem);
             if (hasMarkers()) {
-                sh->setStyle(this->style, this->style);
-                sh->setChildrenStyle(style); // Resolve 'context-fill' and 'context-stroke' in children.
-            } else {
-                sh->setStyle(this->style, this->parent->style);
+                this->context_style = this->style;
+                sh->setStyle(this->style, this->context_style);
+                // Note: marker selector preview does not trigger SP_OBJECT_STYLE_MODIFIED_FLAG so
+                // this is not called when marker previews are generated, however there is code in
+                // SPShape::update() that calls this routine so we don't worry about it here.
+                sh->setChildrenStyle(this->context_style); // Resolve 'context-xxx' in children.
+            } else if (this->parent) {
+                this->context_style = this->parent->context_style;
+                sh->setStyle(this->style, this->context_style);
             }
         }
     }
@@ -729,6 +746,7 @@ void SPShape::print(SPPrintContext* ctx) {
 }
 
 Inkscape::DrawingItem* SPShape::show(Inkscape::Drawing &drawing, unsigned int /*key*/, unsigned int /*flags*/) {
+    // std::cout << "SPShape::show(): " << (getId()?getId():"null") << std::endl;
     Inkscape::DrawingShape *s = new Inkscape::DrawingShape(drawing);
 
     bool has_markers = this->hasMarkers();
@@ -761,10 +779,12 @@ Inkscape::DrawingItem* SPShape::show(Inkscape::Drawing &drawing, unsigned int /*
         /* Update marker views */
         sp_shape_update_marker_view (this, s);
 
-        s->setStyle(this->style,this->style);
-        s->setChildrenStyle(style); // Resolve 'context-fill' and 'context-stroke' in children.
-    } else {
-        s->setStyle(this->style, this->parent->style);
+        this->context_style = this->style;
+        s->setStyle(this->style, this->context_style);
+        s->setChildrenStyle(this->context_style); // Resolve 'context-xxx' in children.
+    } else if (this->parent) {
+        this->context_style = this->parent->context_style;
+        s->setStyle(this->style, this->context_style);
     }
     return s;
 }
