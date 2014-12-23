@@ -101,13 +101,14 @@ void NRStyle::set(SPStyle *style, SPStyle *context_style)
         if( context_style != NULL ) {
             style_fill = &(context_style->fill);
         } else {
-            std::cerr << "NRStyle::set: 'context-fill': 'context_style' is NULL" << std::endl;
+            // A marker in the defs section will result in ending up here.
+            //std::cerr << "NRStyle::set: 'context-fill': 'context_style' is NULL" << std::endl;
         }
     } else if ( style_fill->paintOrigin == SP_CSS_PAINT_ORIGIN_CONTEXT_STROKE ) {
         if( context_style != NULL ) {
             style_fill = &(context_style->stroke);
         } else {
-            std::cerr << "NRStyle::set: 'context-stroke': 'context_style' is NULL" << std::endl;
+            //std::cerr << "NRStyle::set: 'context-stroke': 'context_style' is NULL" << std::endl;
         }
     }
     
@@ -125,9 +126,10 @@ void NRStyle::set(SPStyle *style, SPStyle *context_style)
     } else if ( style_fill->isNone() ) {
         fill.clear();
     } else if ( style_fill->paintOrigin == SP_CSS_PAINT_ORIGIN_CONTEXT_FILL ) {
-        std::cerr << "NRStyle::set: fill: context-fill: Double" << std::endl;
+        // A marker in the defs section will result in ending up here.
+        //std::cerr << "NRStyle::set: fill: context-fill: Double" << std::endl;
     } else if ( style_fill->paintOrigin == SP_CSS_PAINT_ORIGIN_CONTEXT_STROKE ) {
-        std::cerr << "NRStyle::set: fill: context-stroke: Double" << std::endl;
+        //std::cerr << "NRStyle::set: fill: context-stroke: Double" << std::endl;
     } else {
         g_assert_not_reached();
     }
@@ -150,13 +152,13 @@ void NRStyle::set(SPStyle *style, SPStyle *context_style)
         if( context_style != NULL ) {
             style_stroke = &(context_style->fill);
         } else {
-            std::cerr << "NRStyle::set: 'context-fill': 'context_style' is NULL" << std::endl;
+            //std::cerr << "NRStyle::set: 'context-fill': 'context_style' is NULL" << std::endl;
         }
     } else if ( style_stroke->paintOrigin == SP_CSS_PAINT_ORIGIN_CONTEXT_STROKE ) {
         if( context_style != NULL ) {
             style_stroke = &(context_style->stroke);
         } else {
-            std::cerr << "NRStyle::set: 'context-stroke': 'context_style' is NULL" << std::endl;
+            //std::cerr << "NRStyle::set: 'context-stroke': 'context_style' is NULL" << std::endl;
         }
     }
     
@@ -174,9 +176,9 @@ void NRStyle::set(SPStyle *style, SPStyle *context_style)
     } else if ( style_stroke->isNone() ) {
         stroke.clear();
     } else if ( style_stroke->paintOrigin == SP_CSS_PAINT_ORIGIN_CONTEXT_FILL ) {
-        std::cerr << "NRStyle::set: stroke: context-fill: Double" << std::endl;
+        //std::cerr << "NRStyle::set: stroke: context-fill: Double" << std::endl;
     } else if ( style_stroke->paintOrigin == SP_CSS_PAINT_ORIGIN_CONTEXT_STROKE ) {
-        std::cerr << "NRStyle::set: stroke: context-stroke: Double" << std::endl;
+        //std::cerr << "NRStyle::set: stroke: context-stroke: Double" << std::endl;
     } else {
         g_assert_not_reached();
     }

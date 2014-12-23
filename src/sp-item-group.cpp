@@ -159,6 +159,7 @@ void SPGroup::order_changed (Inkscape::XML::Node *child, Inkscape::XML::Node *ol
 }
 
 void SPGroup::update(SPCtx *ctx, unsigned int flags) {
+    // std::cout << "SPGroup::update(): " << (getId()?getId():"null") << std::endl;
     SPItemCtx *ictx, cctx;
 
     ictx = (SPItemCtx *) ctx;
@@ -200,15 +201,15 @@ void SPGroup::update(SPCtx *ctx, unsigned int flags) {
         for (SPItemView *v = this->display; v != NULL; v = v->next) {
             Inkscape::DrawingGroup *group = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
             if( this->parent ) {
-                group->setStyle(this->style, this->parent->style);
-            } else {
-                group->setStyle(this->style);
+                this->context_style = this->parent->context_style;
             }
+            group->setStyle(this->style, this->context_style);
         }
     }
 }
 
 void SPGroup::modified(guint flags) {
+    // std::cout << "SPGroup::modified(): " << (getId()?getId():"null") << std::endl;
     SPLPEItem::modified(flags);
 
     SPObject *child;
@@ -356,15 +357,16 @@ void SPGroup::set(unsigned int key, gchar const* value) {
 }
 
 Inkscape::DrawingItem *SPGroup::show (Inkscape::Drawing &drawing, unsigned int key, unsigned int flags) {
+    // std::cout << "SPGroup::show(): " << (getId()?getId():"null") << std::endl;
     Inkscape::DrawingGroup *ai;
 
     ai = new Inkscape::DrawingGroup(drawing);
     ai->setPickChildren(this->effectiveLayerMode(key) == SPGroup::LAYER);
     if( this->parent ) {
-        ai->setStyle(this->style, this->parent->style);
-    } else {
-        ai->setStyle(this->style);
+        this->context_style = this->parent->context_style;
     }
+    ai->setStyle(this->style, this->context_style);
+
     this->_showChildren(drawing, ai, key, flags);
     return ai;
 }
