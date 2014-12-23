@@ -64,3 +64,5 @@ This repository is an unofficial mirror of Inkscape, which is hosted on Launchpa
 This GitHub repository is for users that want easier access to the Inkscape repository. For completeness, this mirror was created with the above steps, hardlinking into a git repository and automated updates with <a href="https://github.com/inkscape/inkscape/blob/master/update.bash">update.bash</a>.
 
 Updates to this mirror are fully automated with <a href="https://github.com/inkscape/inkscape/blob/master/update.bash">update.bash</a>. Any time please contact inkscape@phor.net if you need an immediate refresh.
+
+<em>One Day in Farm</em> image CC-BY-NC-ND 3.0 <a href="http://rebirthart.deviantart.com/art/One-Day-in-Farm-47515219">rebirthart</a>
