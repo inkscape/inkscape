@@ -43,7 +43,7 @@ can help:
 
 BZR Access
 ==========
-See http://inkscape.org/bzr.php for how to access BZR,
+See https://inkscape.org/en/develop/inkscape-bzr/ for how to access BZR,
 including browsing BZR from a web client.
 
 We give BZR write access out to people with proven interest in helping develop
@@ -64,7 +64,7 @@ way to see if an idea fits is to try it on for size.
 Coding Style
 ============
 Please refer to the Coding Style Guidelines
-(http://www.inkscape.org/doc/coding_style.php) if you have specific questions
+(https://inkscape.org/en/develop/coding-style/) if you have specific questions
 on the style to use for code.  If reading style guidelines doesn't interest
 you, just follow the general style of the surrounding code, so that it is at
 least consistent.

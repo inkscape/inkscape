@@ -49,7 +49,7 @@ Mailinglisten zu beantworten.
 
 BZR Zugang
 ==========
-Lesen Sie bitte http://inkscape.org/bzr.php
+Lesen Sie bitte https://inkscape.org/de/develop/inkscape-bzr/
 wie man BZR nutzt oder den Quellenbaum mit einem Browser liest.
 
 Wir vergeben BZR Zugang an Leute, die ihr Interesse daran bewiesen
@@ -70,7 +70,7 @@ angesprochen werden.
 Coding Style
 ============
 Bitte lesen Sie die Coding Style Guidelines
-(http://www.inkscape.org/doc/coding_style.php)
+(https://inkscape.org/de/develop/coding-style/)
 Wenn Sie das Dokument nicht interessiert, halten Sie sich bitte
 zumindest grob an den Stil des bereits vorhandenen Quelltexts.
 

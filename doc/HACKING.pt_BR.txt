@@ -44,7 +44,7 @@ ajudar:
 
 Acesso BZR
 ==========
-Visite http://inkscape.org/bzr.php, para saber como acessar o BZR,
+Visite https://inkscape.org/pt/develop/inkscape-bzr/, para saber como acessar o BZR,
 incluindo navegar no BZR de um navegador Web.
 
 Nós damos permissão de escrita no BZR para pessoas com provado interesse em
@@ -65,7 +65,7 @@ de ver se uma ideia funciona é testando-a.
 Padrão de Codificação
 ====================
 Por favor consulte o Guia de Padrão de Codificação
-(http://www.inkscape.org/doc/coding_style.php) se você tem questões especificas
+(https://inkscape.org/pt/develop/coding-style/) se você tem questões especificas
 no padrão a se usar para codificar.  Se ler o guia de padrão para codificação não é do
 seu interesse, apenas siga o estilo geral do código vizinho, de modo que o código seja
 pelo menos consistente.

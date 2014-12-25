@@ -47,8 +47,8 @@ travailler. Sinon, voivi quelques façons d'apporter votre aide :
 
 Accès BZR
 =========
-Consultez http://inkscape.org/bzr.php pour voir comment accéder au BZR, y
-compris depuis un navigateur web.
+Consultez https://inkscape.org/fr/develop/inkscape-bzr/ pour voir comment 
+accéder au BZR, y compris depuis un navigateur web.
 Nous donnons un accès en écriture au BZR à toute personne ayant démontré une
 motivation pour aider à développer le code. Prouver votre motivation est très
 simple : fournir deux contributions et demander un accès.
@@ -68,7 +68,7 @@ bonne est de la tester en conditions réelles.
 Style de codage
 ===============
 Veuillez consulter les recommandations de style de codage 
-(http://www.inkscape.org/doc/coding_style.php) si vous avez des questions
+(https://inkscape.org/fr/develop/coding-style/) si vous avez des questions
 spécifiques quant au style à utiliser dans le code. Si lire ces recommandations
 ne vous intéresse pas, inspirez-vous du style du code environnant, de façon à
 rester au moins cohérent.

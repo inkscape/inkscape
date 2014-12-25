@@ -42,7 +42,7 @@ In caso contrario, questi sono solo alcuni suggerimenti:
 
 Accesso BZR
 ===========
-Consulta http://inkscape.org/bzr.php per i modi di accesso al BZR,
+Consulta https://inkscape.org/it/develop/inkscape-bzr/ per i modi di accesso al BZR,
 tra la consultazione del BZR client web.
 
 L'acceso in scrittura al BZR viene dato a tutti quelli che dimostrino interesse 
@@ -63,7 +63,7 @@ vederla in azione.
 Stile del codice
 ============
 Consulta le Linee Guida per lo Stile del codice 
-(http://www.inkscape.org/doc/coding_style.php) se hai delle domande specifiche
+(https://inkscape.org/it/develop/coding-style/) se hai delle domande specifiche
 sullo stile. Se non fosse sufficiente, adeguati allo stile del codice già presente,
 in modo da avere un minimo di coerenza.
 
