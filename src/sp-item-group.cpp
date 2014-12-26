@@ -444,7 +444,7 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
             // it here _before_ the new transform is set, so as to use the pre-transform bbox
             citem->adjust_paint_recursive (Geom::identity(), Geom::identity(), false);
 
-            sp_style_merge_from_dying_parent(child->style, group->style);
+            child->style->merge( group->style );
             /*
              * fixme: We currently make no allowance for the case where child is cloned
              * and the group has any style settings.
@@ -453,9 +453,8 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
              * version of inkscape without using the XML editor: we usually apply group
              * style changes to children rather than to the group itself.)
              *
-             * If the group has no style settings, then
-             * sp_style_merge_from_dying_parent should be a no-op.  Otherwise (i.e. if
-             * we change the child's style to compensate for its parent going away)
+             * If the group has no style settings, then style->merge() should be a no-op. Otherwise
+             * (i.e. if we change the child's style to compensate for its parent going away)
              * then those changes will typically be reflected in any clones of child,
              * whereas we'd prefer for Ungroup not to affect the visual appearance.
              *

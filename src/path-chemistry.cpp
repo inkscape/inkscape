@@ -500,11 +500,12 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
         /* Rotation center */
         g_repr->setAttribute("inkscape:transform-center-x", item->getRepr()->attribute("inkscape:transform-center-x"), false);
         g_repr->setAttribute("inkscape:transform-center-y", item->getRepr()->attribute("inkscape:transform-center-y"), false);
+
         /* Whole text's style */
-        gchar *style_str = sp_style_write_difference(item->style,
-                                                     item->parent ? item->parent->style : NULL); // TODO investigate posibility
-        g_repr->setAttribute("style", style_str);
-        g_free(style_str);
+        Glib::ustring style_str =
+            item->style->write( SP_STYLE_FLAG_IFDIFF, item->parent ? item->parent->style : NULL); // TODO investigate posibility
+        g_repr->setAttribute("style", style_str.c_str());
+
         Inkscape::Text::Layout::iterator iter = te_get_layout(item)->begin(); 
         do {
             Inkscape::Text::Layout::iterator iter_next = iter;
@@ -522,19 +523,17 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
             while (dynamic_cast<SPString const *>(pos_obj) && pos_obj->parent) {
                pos_obj = pos_obj->parent;   // SPStrings don't have style
             }
-            gchar *style_str = sp_style_write_difference(pos_obj->style,
-                                                         pos_obj->parent ? pos_obj->parent->style : NULL); // TODO investigate posibility
+            Glib::ustring style_str =
+                pos_obj->style->write( SP_STYLE_FLAG_IFDIFF, pos_obj->parent ? pos_obj->parent->style : NULL); // TODO investigate posibility
 
             // get path from iter to iter_next:
             SPCurve *curve = te_get_layout(item)->convertToCurves(iter, iter_next);
             iter = iter_next; // shift to next glyph
             if (!curve) { // error converting this glyph
-                g_free (style_str);
                 continue;
             }
             if (curve->is_empty()) { // whitespace glyph?
                 curve->unref();
-                g_free (style_str);
                 continue;
             }
 
@@ -545,8 +544,7 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
             g_free(def_str);
             curve->unref();
 
-            p_repr->setAttribute("style", style_str);
-            g_free(style_str);
+            p_repr->setAttribute("style", style_str.c_str());
 
             g_repr->appendChild(p_repr);
             Inkscape::GC::release(p_repr);
@@ -565,7 +563,7 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
         if (shape) {
             curve = shape->getCurve();
         }
-    } 
+    }
 
     if (!curve)
         return NULL;
@@ -581,11 +579,11 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
     Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
     /* Transformation */
     repr->setAttribute("transform", item->getRepr()->attribute("transform"));
+
     /* Style */
-    gchar *style_str = sp_style_write_difference(item->style,
-                                                 item->parent ? item->parent->style : NULL); // TODO investigate posibility
-    repr->setAttribute("style", style_str);
-    g_free(style_str);
+    Glib::ustring style_str =
+        item->style->write( SP_STYLE_FLAG_IFDIFF, item->parent ? item->parent->style : NULL); // TODO investigate posibility
+    repr->setAttribute("style", style_str.c_str());
 
     /* Mask */
     gchar *mask_str = (gchar *) item->getRepr()->attribute("mask");

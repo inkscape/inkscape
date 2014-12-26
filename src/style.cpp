@@ -458,7 +458,14 @@ SPStyle::~SPStyle() {
 
     _properties.clear();
 
-    // std::cout << "SPStyle::~SPstyle(): Exit\n" << std::endl;
+    // Conjecture: all this SPStyle ref counting is not needed. SPObject creates an instance of
+    // SPStyle when it is constructed and deletes it when it is destructed. The refcount is
+    // incremented and decremented only in the files: display/drawing-item.cpp,
+    // display/nr-filter-primitive.cpp, and libnrtype/Layout-TNG-Input.cpp.
+    if( _refcount > 1 ) {
+        std::cerr << "SPStyle::~SPStyle: ref count greater than 1! " << _refcount << std::endl;
+    }
+    // std::cout << "SPStyle::~SPStyle(): Exit\n" << std::endl;
 }
 
 // Used in SPStyle::clear()
@@ -476,7 +483,7 @@ SPStyle::clear() {
     //     (this->*(i->second)).clear();
     // }
 
-    // Release connection to object, created in sp_style_new_from_object()
+    // Release connection to object, created in constructor.
     release_connection.disconnect();
 
     // href->detach() called in fill->clear()...
@@ -576,7 +583,13 @@ SPStyle::read( SPObject *object, Inkscape::XML::Node *repr ) {
     }
 }
 
-// Matches void sp_style_read_from_object(SPStyle *style, SPObject *object);
+/**
+ * Read style properties from object's repr.
+ *
+ * 1. Reset existing object style
+ * 2. Load current effective object style
+ * 3. Load i attributes from immediate parent (which has to be up-to-date)
+ */
 void
 SPStyle::readFromObject( SPObject *object ) {
 
@@ -589,6 +602,34 @@ SPStyle::readFromObject( SPObject *object ) {
     g_return_if_fail(repr != NULL);
 
     read( object, repr );
+}
+
+/**
+ * Read style properties from preferences.
+ * @param path Preferences directory from which the style should be read
+ */
+void
+SPStyle::readFromPrefs(Glib::ustring const &path) {
+
+    g_return_if_fail(!path.empty());
+
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+
+    // not optimal: we reconstruct the node based on the prefs, then pass it to
+    // sp_style_read for actual processing.
+    Inkscape::XML::SimpleDocument *tempdoc = new Inkscape::XML::SimpleDocument;
+    Inkscape::XML::Node *tempnode = tempdoc->createElement("prefs");
+
+    std::vector<Inkscape::Preferences::Entry> attrs = prefs->getAllEntries(path);
+    for (std::vector<Inkscape::Preferences::Entry>::iterator i = attrs.begin(); i != attrs.end(); ++i) {
+        tempnode->setAttribute(i->getEntryName().data(), i->getString().data());
+    }
+
+    read( NULL, tempnode );
+
+    Inkscape::GC::release(tempnode);
+    Inkscape::GC::release(tempdoc);
+    delete tempdoc;
 }
 
 // Matches sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
@@ -868,6 +909,19 @@ SPStyle::readIfUnset( gint id, gchar const *val ) {
     }
 }
 
+/**
+ * Outputs the style to a CSS string.
+ *
+ * Use with SP_STYLE_FLAG_ALWAYS for copying an object's complete cascaded style to
+ * style_clipboard.
+ *
+ * Use with SP_STYLE_FLAG_IFDIFF and a pointer to the parent class when you need a CSS string for
+ * an object in the document tree.
+ *
+ * \pre flags in {IFSET, ALWAYS, IFDIFF}.
+ * \pre base.
+ * \post ret != NULL.
+ */
 Glib::ustring
 SPStyle::write( guint const flags, SPStyle const *const base ) const {
 
@@ -897,9 +951,20 @@ SPStyle::write( guint const flags, SPStyle const *const base ) const {
 }
 
 // Corresponds to sp_style_merge_from_parent()
+/**
+ * Sets computed values in \a style, which may involve inheriting from (or in some other way
+ * calculating from) corresponding computed values of \a parent.
+ *
+ * References: http://www.w3.org/TR/SVG11/propidx.html shows what properties inherit by default.
+ * http://www.w3.org/TR/SVG11/styling.html#Inheritance gives general rules as to what it means to
+ * inherit a value.  http://www.w3.org/TR/REC-CSS2/cascade.html#computed-value is more precise
+ * about what the computed value is (not obvious for lengths).
+ *
+ * \pre \a parent's computed values are already up-to-date.
+ */
 void
 SPStyle::cascade( SPStyle const *const parent ) {
-    // std::cout << "SPStyle::cascade" << std::endl;
+    // std::cout << "SPStyle::cascade: " << (object->getId()?object->getId():"null") << std::endl;
     for(std::vector<SPIBase*>::size_type i = 0; i != _properties.size(); ++i) {
         _properties[i]->cascade( parent->_properties[i] );
     }
@@ -909,6 +974,23 @@ SPStyle::cascade( SPStyle const *const parent ) {
 }
 
 // Corresponds to sp_style_merge_from_dying_parent()
+/**
+ * Combine \a style and \a parent style specifications into a single style specification that
+ * preserves (as much as possible) the effect of the existing \a style being a child of \a parent.
+ *
+ * Called when the parent repr is to be removed (e.g. the parent is a \<use\> element that is being
+ * unlinked), in which case we copy/adapt property values that are explicitly set in \a parent,
+ * trying to retain the same visual appearance once the parent is removed.  Interesting cases are
+ * when there is unusual interaction with the parent's value (opacity, display) or when the value
+ * can be specified as relative to the parent computed value (font-size, font-weight etc.).
+ *
+ * Doesn't update computed values of \a style.  For correctness, you should subsequently call
+ * sp_style_merge_from_parent against the new parent (presumably \a parent's parent) even if \a
+ * style was previously up-to-date wrt \a parent.
+ *
+ * \pre \a parent's computed values are already up-to-date.
+ *   (\a style's computed values needn't be up-to-date.)
+ */
 void
 SPStyle::merge( SPStyle const *const parent ) {
     // std::cout << "SPStyle::merge" << std::endl;
@@ -918,6 +1000,14 @@ SPStyle::merge( SPStyle const *const parent ) {
     // for(SPPropMap::iterator i = _propmap.begin(); i != _propmap.end(); ++i ) {
     //     (this->*(i->second)).cascade( &(parent->*(i->second)) );
     // }
+}
+
+/**
+ * Parses a style="..." string and merges it with an existing SPStyle.
+ */
+void
+SPStyle::mergeString( gchar const *const p ) {
+    _mergeString( p );
 }
 
 // Mostly for unit testing
@@ -1142,35 +1232,6 @@ sp_style_stroke_paint_server_ref_changed(SPObject *old_ref, SPObject *ref, SPSty
     sp_style_paint_server_ref_modified(ref, 0, style);
 }
 
-// Called in: desktop-style.cpp, gradient-chemistry.cpp, sp-object.cpp, sp-stop.cpp, style.cpp
-// text-editing.cpp, libnrtype/font-lister.cpp, widgets/dash-selector.cpp, widgets/fill-style.cpp,
-// widgets/stroke-style.cpp, widgets/text-toolbar.cpp, ui/dialog/glyphs.cpp, ui/dialog/swatches.cpp,
-// ui/dialog/swatches.cpp, ui/dialog/text-edit.cpp. ui/tools/freehand-base.cpp,
-// ui/widget/object-composite-settings.cpp, ui/widget/selected-style.cpp, ui/widget/style-swatch.cpp
-/**
- * Returns a new SPStyle object with default settings.
- */
-SPStyle *
-sp_style_new(SPDocument *document)
-{
-    SPStyle *const style = new SPStyle( document );
-    return style;
-}
-
-// Called in: sp-object.cpp
-/**
- * Creates a new SPStyle object, and attaches it to the specified SPObject.
- */
-SPStyle *
-sp_style_new_from_object(SPObject *object)
-{
-    g_return_val_if_fail(object != NULL, NULL);
-    g_return_val_if_fail(SP_IS_OBJECT(object), NULL);
-
-    SPStyle *const style = new SPStyle( NULL, object );
-    return style;
-}
-
 // Called in display/drawing-item.cpp, display/nr-filter-primitive.cpp, libnrtype/Layout-TNG-Input.cpp
 /**
  * Increase refcount of style.
@@ -1180,13 +1241,12 @@ sp_style_ref(SPStyle *style)
 {
     g_return_val_if_fail(style != NULL, NULL);
 
-    style->ref(); // Increase ref count
+    style->style_ref(); // Increase ref count
 
     return style;
 }
 
-// Called in style.cpp, desktop-style.cpp, sp-object.cpp, sp-stop.cpp, text-editing.cpp
-// display/drawing-group.cpp, ...
+// Called in display/drawing-item.cpp, display/nr-filter-primitive.cpp, libnrtype/Layout-TNG-Input.cpp
 /**
  * Decrease refcount of style with possible destruction.
  */
@@ -1194,70 +1254,12 @@ SPStyle *
 sp_style_unref(SPStyle *style)
 {
     g_return_val_if_fail(style != NULL, NULL);
-    if (style->unref() < 1) {
+    if (style->style_unref() < 1) {
         delete style;
         return NULL;
     }
     return style;
 }
-
-
-
-// Called in: sp-clippath.cpp, sp-item.cpp (suspicious), sp-object.cpp, sp-style-elem.cpp
-/**
- * Read style properties from object's repr.
- *
- * 1. Reset existing object style
- * 2. Load current effective object style
- * 3. Load i attributes from immediate parent (which has to be up-to-date)
- */
-void
-sp_style_read_from_object(SPStyle *style, SPObject *object)
-{
-    // std::cout << "sp_style_read_from_object: " << (object->getId()?object->getId():"null") << std::endl;
-    g_return_if_fail(style != NULL);
-    g_return_if_fail(object != NULL);
-    g_return_if_fail(SP_IS_OBJECT(object));
-
-    Inkscape::XML::Node *repr = object->getRepr();
-    g_return_if_fail(repr != NULL);
-
-    style->read( object, repr );
-}
-
-// Called in: libnrtype/font-lister.cpp, widgets/dash-selector.cpp, widgets/text-toolbar.cpp,
-// ui/dialog/text-edit.cpp
-// Why is this called when draging a gradient handle?
-/**
- * Read style properties from preferences.
- * @param style The style to write to
- * @param path Preferences directory from which the style should be read
- */
-void
-sp_style_read_from_prefs(SPStyle *style, Glib::ustring const &path)
-{
-    g_return_if_fail(style != NULL);
-    g_return_if_fail(path != "");
-
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-
-    // not optimal: we reconstruct the node based on the prefs, then pass it to
-    // sp_style_read for actual processing.
-    Inkscape::XML::SimpleDocument *tempdoc = new Inkscape::XML::SimpleDocument;
-    Inkscape::XML::Node *tempnode = tempdoc->createElement("prefs");
-
-    std::vector<Inkscape::Preferences::Entry> attrs = prefs->getAllEntries(path);
-    for (std::vector<Inkscape::Preferences::Entry>::iterator i = attrs.begin(); i != attrs.end(); ++i) {
-        tempnode->setAttribute(i->getEntryName().data(), i->getString().data());
-    }
-
-    style->read( NULL, tempnode );
-
-    Inkscape::GC::release(tempnode);
-    Inkscape::GC::release(tempdoc);
-    delete tempdoc;
-}
-
 
 static CRSelEng *
 sp_repr_sel_eng()
@@ -1282,80 +1284,8 @@ sp_repr_sel_eng()
     return ret;
 }
 
-
-// Called in text-editting.cpp, ui/tools/frehand-base.cpp, ui/widget/style-swatch.cpp
-/**
- * Parses a style="..." string and merges it with an existing SPStyle.
- */
-void
-sp_style_merge_from_style_string(SPStyle *const style, gchar const *const p)
-{
-    // std::cout << "sp_style_merge_from_style_string: " << (p?p:"null") <<std::endl;
-    /*
-     * Reference: http://www.w3.org/TR/SVG11/styling.html#StyleAttribute:
-     * ``When CSS styling is used, CSS inline style is specified by including
-     * semicolon-separated property declarations of the form "name : value"
-     * within the style attribute''.
-     *
-     * That's fairly ambiguous.  Is a `value' allowed to contain semicolons?
-     * Why does it say "including", what else is allowed in the style
-     * attribute value?
-     */
-    style->_mergeString( p );
-}
-
 /** Indexed by SP_CSS_FONT_SIZE_blah.   These seem a bit small */
 static float const font_size_table[] = {6.0, 8.0, 10.0, 12.0, 14.0, 18.0, 24.0};
-
-// Called in sp-object.cpp, sp-tref.cpp, sp-use.cpp
-/**
- * Sets computed values in \a style, which may involve inheriting from (or in some other way
- * calculating from) corresponding computed values of \a parent.
- *
- * References: http://www.w3.org/TR/SVG11/propidx.html shows what properties inherit by default.
- * http://www.w3.org/TR/SVG11/styling.html#Inheritance gives general rules as to what it means to
- * inherit a value.  http://www.w3.org/TR/REC-CSS2/cascade.html#computed-value is more precise
- * about what the computed value is (not obvious for lengths).
- *
- * \pre \a parent's computed values are already up-to-date.
- */
-void
-sp_style_merge_from_parent(SPStyle *const style, SPStyle const *const parent)
-{
-    // std::cout << "sp_style_merge_from_parent" << std::endl;
-    g_return_if_fail(style != NULL);
-
-    if (!parent)
-        return;
-
-    style->cascade( parent );
-    return;
-}
-
-// Called in: sp-use.cpp, sp-tref.cpp, sp-item.cpp
-/**
- * Combine \a style and \a parent style specifications into a single style specification that
- * preserves (as much as possible) the effect of the existing \a style being a child of \a parent.
- *
- * Called when the parent repr is to be removed (e.g. the parent is a \<use\> element that is being
- * unlinked), in which case we copy/adapt property values that are explicitly set in \a parent,
- * trying to retain the same visual appearance once the parent is removed.  Interesting cases are
- * when there is unusual interaction with the parent's value (opacity, display) or when the value
- * can be specified as relative to the parent computed value (font-size, font-weight etc.).
- *
- * Doesn't update computed values of \a style.  For correctness, you should subsequently call
- * sp_style_merge_from_parent against the new parent (presumably \a parent's parent) even if \a
- * style was previously up-to-date wrt \a parent.
- *
- * \pre \a parent's computed values are already up-to-date.
- *   (\a style's computed values needn't be up-to-date.)
- */
-void
-sp_style_merge_from_dying_parent(SPStyle *const style, SPStyle const *const parent)
-{
-    // std::cout << "sp_style_merge_from_dying_parent" << std::endl;
-    style->merge( parent );
-}
 
 // The following functions should be incorporated into SPIPaint. FIXME
 // Called in: style.cpp, style-internal.cpp
@@ -1471,50 +1401,6 @@ sp_style_css_size_units_to_px(double size, int unit)
     }
     //g_message("sp_style_css_size_units_to_px %f %d = %f px", size, unit, out);
     return size * (size / sp_style_css_size_px_to_units(size, unit));;
-}
-
-// Called in style.cpp, text-editing.cpp
-/**
- * Dumps the style to a CSS string, with either SP_STYLE_FLAG_IFSET or
- * SP_STYLE_FLAG_ALWAYS flags. Used with Always for copying an object's
- * complete cascaded style to style_clipboard. When you need a CSS string
- * for an object in the document tree, you normally call
- * sp_style_write_difference instead to take into account the object's parent.
- *
- * \pre style != NULL.
- * \pre flags in {IFSET, ALWAYS}.
- * \post ret != NULL.
- */
-gchar *
-sp_style_write_string(SPStyle const *const style, guint const flags)
-{
-    /** \todo
-     * Merge with write_difference, much duplicate code!
-     */
-    g_return_val_if_fail(style != NULL, NULL);
-    g_return_val_if_fail(((flags == SP_STYLE_FLAG_IFSET) ||
-                          (flags == SP_STYLE_FLAG_ALWAYS)  ),
-                         NULL);
-
-    return g_strdup( style->write( flags ).c_str() );
-}
-
-
-// Called in style.cpp, path-chemistry, NOT in text-editting.cpp (because of bug)
-/**
- * Dumps style to CSS string, see sp_style_write_string()
- *
- * \pre from != NULL.
- * \pre to != NULL.
- * \post ret != NULL.
- */
-gchar *
-sp_style_write_difference(SPStyle const *const from, SPStyle const *const to)
-{
-    g_return_val_if_fail(from != NULL, NULL);
-    g_return_val_if_fail(to != NULL, NULL);
-
-    return g_strdup( from->write( SP_STYLE_FLAG_IFDIFF, to ).c_str() );
 }
 
 
@@ -1677,10 +1563,9 @@ sp_css_attr_from_style(SPStyle const *const style, guint const flags)
     g_return_val_if_fail(((flags == SP_STYLE_FLAG_IFSET) ||
                           (flags == SP_STYLE_FLAG_ALWAYS)  ),
                          NULL);
-    gchar *style_str = sp_style_write_string(style, flags);
+    Glib::ustring style_str = style->write(flags);
     SPCSSAttr *css = sp_repr_css_attr_new();
-    sp_repr_css_attr_add_from_string(css, style_str);
-    g_free(style_str);
+    sp_repr_css_attr_add_from_string(css, style_str.c_str());
     return css;
 }
 

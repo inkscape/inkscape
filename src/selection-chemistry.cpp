@@ -2110,7 +2110,7 @@ GSList *sp_get_same_stroke_style(SPItem *sel, GSList *src, SPSelectStrokeStyleTy
     SPStyle *sel_style_for_width = NULL;
     if (type == SP_STROKE_STYLE_WIDTH) {
         objects = g_slist_prepend(objects, sel);
-        sel_style_for_width = sp_style_new (SP_ACTIVE_DOCUMENT);
+        sel_style_for_width = new SPStyle(SP_ACTIVE_DOCUMENT);
         objects_query_strokewidth (objects, sel_style_for_width);
     }
 
@@ -2125,11 +2125,11 @@ GSList *sp_get_same_stroke_style(SPItem *sel, GSList *src, SPSelectStrokeStyleTy
                 if (sel_style->stroke_width.set && iter_style->stroke_width.set) {
                     GSList *objects = NULL;
                     objects = g_slist_prepend(objects, iter);
-                    SPStyle *iter_style_for_width = sp_style_new (SP_ACTIVE_DOCUMENT);
-                    objects_query_strokewidth (objects, iter_style_for_width);
+                    SPStyle tmp_style(SP_ACTIVE_DOCUMENT);
+                    objects_query_strokewidth (objects, &tmp_style);
 
                     if (sel_style_for_width) {
-                        match = (sel_style_for_width->stroke_width.computed == iter_style_for_width->stroke_width.computed);
+                        match = (sel_style_for_width->stroke_width.computed == tmp_style.stroke_width.computed);
                     }
                     g_slist_free(objects);
                 }
@@ -2161,6 +2161,7 @@ GSList *sp_get_same_stroke_style(SPItem *sel, GSList *src, SPSelectStrokeStyleTy
         }
     }
 
+    if( sel_style_for_width != NULL ) delete sel_style_for_width;
     g_slist_free(objects);
 
     return matches;

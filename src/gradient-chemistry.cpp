@@ -868,9 +868,8 @@ void sp_item_gradient_stop_set_style(SPItem *item, GrPointType point_type, guint
                 gchar const* color_str = sp_repr_css_property( stop, "stop-color", NULL );
                 if( color_str ) {
                     SPColor color( 0 );
-                    SPStyle* style = sp_style_new(0);
                     SPIPaint paint;
-                    paint.read( color_str, *style );
+                    paint.read( color_str );
                     if( paint.isColor() ) {
                         color = paint.value.color;
                     }

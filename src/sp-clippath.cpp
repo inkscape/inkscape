@@ -103,7 +103,7 @@ void SPClipPath::set(unsigned int key, const gchar* value) {
             break;
         default:
             if (SP_ATTRIBUTE_IS_CSS(key)) {
-                sp_style_read_from_object(this->style, this);
+                this->style->readFromObject( this );
                 this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
             } else {
                 SPObjectGroup::set(key, value);

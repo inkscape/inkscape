@@ -385,27 +385,27 @@ std::pair<Glib::ustring, Glib::ustring> FontLister::selection_update()
 #endif
     // Get fontspec from a selection, preferences, or thin air.
     Glib::ustring fontspec;
-    SPStyle *query = sp_style_new(SP_ACTIVE_DOCUMENT);
+    SPStyle query(SP_ACTIVE_DOCUMENT);
 
     // Directly from stored font specification.
     int result =
-        sp_desktop_query_style(SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
+        sp_desktop_query_style(SP_ACTIVE_DESKTOP, &query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
 
     //std::cout << "  Attempting selected style" << std::endl;
-    if (result != QUERY_STYLE_NOTHING && query->font_specification.set) {
-        fontspec = query->font_specification.value;
+    if (result != QUERY_STYLE_NOTHING && query.font_specification.set) {
+        fontspec = query.font_specification.value;
         //std::cout << "   fontspec from query   :" << fontspec << ":" << std::endl;
     }
 
     // From style
     if (fontspec.empty()) {
         //std::cout << "  Attempting desktop style" << std::endl;
-        int rfamily = sp_desktop_query_style(SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTFAMILY);
-        int rstyle = sp_desktop_query_style(SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTSTYLE);
+        int rfamily = sp_desktop_query_style(SP_ACTIVE_DESKTOP, &query, QUERY_STYLE_PROPERTY_FONTFAMILY);
+        int rstyle = sp_desktop_query_style(SP_ACTIVE_DESKTOP, &query, QUERY_STYLE_PROPERTY_FONTSTYLE);
 
         // Must have text in selection
         if (rfamily != QUERY_STYLE_NOTHING && rstyle != QUERY_STYLE_NOTHING) {
-            fontspec = fontspec_from_style(query);
+            fontspec = fontspec_from_style(&query);
         }
         //std::cout << "   fontspec from style   :" << fontspec << ":" << std::endl;
     }
@@ -413,11 +413,10 @@ std::pair<Glib::ustring, Glib::ustring> FontLister::selection_update()
     // From preferences
     if (fontspec.empty()) {
         //std::cout << "  Attempting preferences" << std::endl;
-        sp_style_read_from_prefs(query, "/tools/text");
-        fontspec = fontspec_from_style(query);
+        query.readFromPrefs("/tools/text");
+        fontspec = fontspec_from_style(&query);
         //std::cout << "   fontspec from prefs   :" << fontspec << ":" << std::endl;
     }
-    sp_style_unref(query);
 
     // From thin air
     if (fontspec.empty()) {

@@ -171,9 +171,11 @@ Geom::Rect FilterPrimitive::filter_primitive_area(FilterUnits const &units)
 
 void FilterPrimitive::setStyle(SPStyle *style)
 {
-    if (style) sp_style_ref(style);
-    if (_style) sp_style_unref(_style);
-    _style = style;
+    if( style != _style ) {
+        if (style) sp_style_ref(style);
+        if (_style) sp_style_unref(_style);
+        _style = style;
+    }
 }
 
 

@@ -125,12 +125,12 @@ static void editGradientImpl( SPDesktop* desktop, SPGradient* gr )
             Inkscape::Selection *selection = desktop->getSelection();
             GSList const *items = selection->itemList();
             if (items) {
-                SPStyle *query = sp_style_new( desktop->doc() );
-                int result = objects_query_fillstroke(const_cast<GSList *>(items), query, true);
+                SPStyle query( desktop->doc() );
+                int result = objects_query_fillstroke(const_cast<GSList *>(items), &query, true);
                 if ( (result == QUERY_STYLE_MULTIPLE_SAME) || (result == QUERY_STYLE_SINGLE) ) {
                     // could be pertinent
-                    if (query->fill.isPaintserver()) {
-                        SPPaintServer* server = query->getFillPaintServer();
+                    if (query.fill.isPaintserver()) {
+                        SPPaintServer* server = query.getFillPaintServer();
                         if ( SP_IS_GRADIENT(server) ) {
                             SPGradient* grad = SP_GRADIENT(server);
                             if ( grad->isSwatch() && grad->getId() == gr->getId()) {
@@ -140,7 +140,6 @@ static void editGradientImpl( SPDesktop* desktop, SPGradient* gr )
                         }
                     }
                 }
-                sp_style_unref(query);
             }
         }
 
@@ -1061,15 +1060,15 @@ void SwatchesPanel::_updateFromSelection()
         Glib::ustring fillId;
         Glib::ustring strokeId;
 
-        SPStyle *tmpStyle = sp_style_new(_currentDesktop->getDocument());
-        int result = sp_desktop_query_style( _currentDesktop, tmpStyle, QUERY_STYLE_PROPERTY_FILL );
+        SPStyle tmpStyle(_currentDesktop->getDocument());
+        int result = sp_desktop_query_style( _currentDesktop, &tmpStyle, QUERY_STYLE_PROPERTY_FILL );
         switch (result) {
             case QUERY_STYLE_SINGLE:
             case QUERY_STYLE_MULTIPLE_AVERAGED:
             case QUERY_STYLE_MULTIPLE_SAME:
             {
-                if (tmpStyle->fill.set && tmpStyle->fill.isPaintserver()) {
-                    SPPaintServer* server = tmpStyle->getFillPaintServer();
+                if (tmpStyle.fill.set && tmpStyle.fill.isPaintserver()) {
+                    SPPaintServer* server = tmpStyle.getFillPaintServer();
                     if ( SP_IS_GRADIENT(server) ) {
                         SPGradient* target = 0;
                         SPGradient* grad = SP_GRADIENT(server);
@@ -1095,14 +1094,14 @@ void SwatchesPanel::_updateFromSelection()
             }
         }
 
-        result = sp_desktop_query_style( _currentDesktop, tmpStyle, QUERY_STYLE_PROPERTY_STROKE );
+        result = sp_desktop_query_style( _currentDesktop, &tmpStyle, QUERY_STYLE_PROPERTY_STROKE );
         switch (result) {
             case QUERY_STYLE_SINGLE:
             case QUERY_STYLE_MULTIPLE_AVERAGED:
             case QUERY_STYLE_MULTIPLE_SAME:
             {
-                if (tmpStyle->stroke.set && tmpStyle->stroke.isPaintserver()) {
-                    SPPaintServer* server = tmpStyle->getStrokePaintServer();
+                if (tmpStyle.stroke.set && tmpStyle.stroke.isPaintserver()) {
+                    SPPaintServer* server = tmpStyle.getStrokePaintServer();
                     if ( SP_IS_GRADIENT(server) ) {
                         SPGradient* target = 0;
                         SPGradient* grad = SP_GRADIENT(server);
@@ -1126,7 +1125,6 @@ void SwatchesPanel::_updateFromSelection()
                 break;
             }
         }
-        sp_style_unref(tmpStyle);
 
         for ( boost::ptr_vector<ColorItem>::iterator it = docPalette->_colors.begin(); it != docPalette->_colors.end(); ++it ) {
             ColorItem* item = &*it;

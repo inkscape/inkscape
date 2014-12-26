@@ -555,7 +555,7 @@ void SPItem::set(unsigned int key, gchar const* value) {
             }
         default:
             if (SP_ATTRIBUTE_IS_CSS(key)) {
-                sp_style_read_from_object(object->style, object);
+                style->readFromObject( this );
                 object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
             } else {
                 SPObject::set(key, value);

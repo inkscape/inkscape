@@ -325,7 +325,7 @@ PangoFontDescription *Layout::InputStreamTextSource::styleGetFontDescription() c
 
 Layout::InputStreamTextSource::~InputStreamTextSource()
 {
-    sp_style_unref(style);
+  sp_style_unref(style);
 }
 
 }//namespace Text

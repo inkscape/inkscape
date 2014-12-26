@@ -664,11 +664,8 @@ SPItem *SPUse::unlink() {
     SPObject *unlinked = document->getObjectByRepr(copy);
 
     // Merge style from the use.
-    SPStyle *unli_sty = unlinked->style;
-    SPStyle const *use_sty = this->style;
-    sp_style_merge_from_dying_parent(unli_sty, use_sty);
-    sp_style_merge_from_parent(unli_sty, unlinked->parent->style);
-
+    unlinked->style->merge( this->style );
+    unlinked->style->cascade( unlinked->parent->style );
     unlinked->updateRepr();
 
     // Hold onto our SPObject and repr for now.

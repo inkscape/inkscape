@@ -525,10 +525,10 @@ Inkscape::XML::Node *SPFlowtext::getAsText()
             Glib::ustring::iterator span_text_start_iter;
             this->layout.getSourceOfCharacter(it, &rawptr, &span_text_start_iter);
             SPObject *source_obj = reinterpret_cast<SPObject *>(rawptr);
-            gchar *style_text = sp_style_write_difference((dynamic_cast<SPString *>(source_obj) ? source_obj->parent : source_obj)->style, this->style);
-            if (style_text && *style_text) {
-                span_tspan->setAttribute("style", style_text);
-                g_free(style_text);
+
+            Glib::ustring style_text = (dynamic_cast<SPString *>(source_obj) ? source_obj->parent : source_obj)->style->write( SP_STYLE_FLAG_IFDIFF, this->style);
+            if (!style_text.empty()) {
+                span_tspan->setAttribute("style", style_text.c_str());
             }
 
             SPString *str = dynamic_cast<SPString *>(source_obj);

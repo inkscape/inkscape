@@ -51,18 +51,19 @@ public:
     void readFromObject(SPObject *object);
     void readFromPrefs(Glib::ustring const &path);
     void readIfUnset( int id, char const *val );
-    Glib::ustring write( unsigned int const flags, SPStyle const *const base = NULL ) const;
+    Glib::ustring write( unsigned int const flags = SP_STYLE_FLAG_IFSET,
+                         SPStyle const *const base = NULL ) const;
     void cascade( SPStyle const *const parent );
     void merge(   SPStyle const *const parent );
+    void mergeString( char const *const p );
     bool operator==(const SPStyle& rhs);
 
-    int ref()   { ++_refcount; return _refcount; }
-    int unref() { --_refcount; return _refcount; }
+    int style_ref()   { ++_refcount; return _refcount; }
+    int style_unref() { --_refcount; return _refcount; }
+    int refCount() { return _refcount; }
 
-//FIXME: Make private
-public:
-    void _mergeString( char const *const p );  // Rename to readFromString?
 private:
+    void _mergeString( char const *const p );
     void _mergeDeclList( CRDeclaration const *const decl_list );
     void _mergeDecl(      CRDeclaration const *const decl );
     void _mergeProps( CRPropList *const props );
@@ -282,27 +283,9 @@ public:
     char        const  *getStrokeURI()         const { return (stroke.value.href) ? stroke.value.href->getURI()->toString() : NULL; }
 };
 
-SPStyle *sp_style_new(SPDocument *document); // SPStyle::SPStyle( SPDocument *document = NULL );
-
-SPStyle *sp_style_new_from_object(SPObject *object); // SPStyle::SPStyle( SPObject *object );
-
 SPStyle *sp_style_ref(SPStyle *style); // SPStyle::ref();
 
 SPStyle *sp_style_unref(SPStyle *style); // SPStyle::unref();
-
-void sp_style_read_from_object(SPStyle *style, SPObject *object); //SPStyle::read( SPObject * object);
-
-void sp_style_read_from_prefs(SPStyle *style, Glib::ustring const &path); // SPStyle::read( ... );
-
-void sp_style_merge_from_style_string(SPStyle *style, char const *p); // SPStyle::merge( ... );?
-
-void sp_style_merge_from_parent(SPStyle *style, SPStyle const *parent); // SPStyle::cascade( ... );
-
-void sp_style_merge_from_dying_parent(SPStyle *style, SPStyle const *parent); // SPStyle::merge( ... )
-
-char *sp_style_write_string(SPStyle const *style, unsigned int flags = SP_STYLE_FLAG_IFSET);//SPStyle::write
-
-char *sp_style_write_difference(SPStyle const *from, SPStyle const *to); // SPStyle::write
 
 void sp_style_set_to_uri_string (SPStyle *style, bool isfill, const char *uri); // ?
 

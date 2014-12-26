@@ -366,10 +366,12 @@ DrawingItem::setStyle(SPStyle *style, SPStyle *context_style)
     // std::cout << "DrawingItem::setStyle: " << name() << " " << style
     //           << " " << context_style << std::endl;
 
-    if (style) sp_style_ref(style);
-    if (_style) sp_style_unref(_style);
-    _style = style;
-
+    if( style != _style ) {
+        if (style) sp_style_ref(style);
+        if (_style) sp_style_unref(_style);
+        _style = style;
+    }
+    
     if (style && style->filter.set && style->getFilter()) {
         if (!_filter) {
             int primitives = sp_filter_primitive_count(SP_FILTER(style->getFilter()));

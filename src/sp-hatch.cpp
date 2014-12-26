@@ -238,7 +238,7 @@ void SPHatch::set(unsigned int key, const gchar* value)
 
     default:
         if (SP_ATTRIBUTE_IS_CSS(key)) {
-            sp_style_read_from_object(style, this);
+            style->readFromObject( this );
             requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
         } else {
             SPPaintServer::set(key, value);

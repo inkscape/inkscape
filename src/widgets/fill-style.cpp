@@ -252,13 +252,13 @@ void FillNStroke::performUpdate()
     update = true;
 
     // create temporary style
-    SPStyle *query = sp_style_new(desktop->doc());
+    SPStyle query(desktop->doc());
 
     // query style from desktop into it. This returns a result flag and fills query with the style of subselection, if any, or selection
-    int result = sp_desktop_query_style(desktop, query, (kind == FILL) ? QUERY_STYLE_PROPERTY_FILL : QUERY_STYLE_PROPERTY_STROKE);
+    int result = sp_desktop_query_style(desktop, &query, (kind == FILL) ? QUERY_STYLE_PROPERTY_FILL : QUERY_STYLE_PROPERTY_STROKE);
 
-    SPIPaint &targPaint = (kind == FILL) ? query->fill : query->stroke;
-    SPIScale24 &targOpacity = (kind == FILL) ? query->fill_opacity : query->stroke_opacity;
+    SPIPaint &targPaint = (kind == FILL) ? query.fill : query.stroke;
+    SPIScale24 &targOpacity = (kind == FILL) ? query.fill_opacity : query.stroke_opacity;
 
     switch (result) {
         case QUERY_STYLE_NOTHING:
@@ -272,11 +272,11 @@ void FillNStroke::performUpdate()
         case QUERY_STYLE_MULTIPLE_AVERAGED: // TODO: treat this slightly differently, e.g. display "averaged" somewhere in paint selector
         case QUERY_STYLE_MULTIPLE_SAME:
         {
-            SPPaintSelector::Mode pselmode = SPPaintSelector::getModeForStyle(*query, kind);
+            SPPaintSelector::Mode pselmode = SPPaintSelector::getModeForStyle(query, kind);
             psel->setMode(pselmode);
 
             if (kind == FILL) {
-                psel->setFillrule(query->fill_rule.computed == ART_WIND_RULE_NONZERO?
+                psel->setFillrule(query.fill_rule.computed == ART_WIND_RULE_NONZERO?
                                   SPPaintSelector::FILLRULE_NONZERO : SPPaintSelector::FILLRULE_EVENODD);
             }
 
@@ -284,7 +284,7 @@ void FillNStroke::performUpdate()
                 psel->setColorAlpha(targPaint.value.color, SP_SCALE24_TO_FLOAT(targOpacity.value));
             } else if (targPaint.set && targPaint.isPaintserver()) {
 
-                SPPaintServer *server = (kind == FILL) ? query->getFillPaintServer() : query->getStrokePaintServer();
+                SPPaintServer *server = (kind == FILL) ? query.getFillPaintServer() : query.getStrokePaintServer();
 
                 if (server && SP_IS_GRADIENT(server) && SP_GRADIENT(server)->getVector()->isSwatch()) {
                     SPGradient *vector = SP_GRADIENT(server)->getVector();
@@ -317,8 +317,6 @@ void FillNStroke::performUpdate()
             break;
         }
     }
-
-    sp_style_unref(query);
 
     update = false;
 }
@@ -562,10 +560,10 @@ void FillNStroke::updateFromPaint()
                 if (!vector) {
                     /* No vector in paint selector should mean that we just changed mode */
 
-                    SPStyle *query = sp_style_new(desktop->doc());
-                    int result = objects_query_fillstroke(const_cast<GSList *>(items), query, kind == FILL);
+                    SPStyle query(desktop->doc());
+                    int result = objects_query_fillstroke(const_cast<GSList *>(items), &query, kind == FILL);
                     if (result == QUERY_STYLE_MULTIPLE_SAME) {
-                        SPIPaint &targPaint = (kind == FILL) ? query->fill : query->stroke;
+                        SPIPaint &targPaint = (kind == FILL) ? query.fill : query.stroke;
                         SPColor common;
                         if (!targPaint.isColor()) {
                             common = sp_desktop_get_color(desktop, kind == FILL);
@@ -577,7 +575,6 @@ void FillNStroke::updateFromPaint()
                             vector->setSwatch();
                         }
                     }
-                    sp_style_unref(query);
 
                     for (GSList const *i = items; i != NULL; i = i->next) {
                         //FIXME: see above
