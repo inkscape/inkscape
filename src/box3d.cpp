@@ -47,16 +47,16 @@ static gint counter = 0;
 #include "sp-factory.h"
 
 namespace {
-	SPObject* createBox3D() {
-		return new SPBox3D();
-	}
+    SPObject* createBox3D() {
+        return new SPBox3D();
+    }
 
-	bool box3DRegistered = SPFactory::instance().registerObject("inkscape:box3d", createBox3D);
+    bool box3DRegistered = SPFactory::instance().registerObject("inkscape:box3d", createBox3D);
 }
 
 SPBox3D::SPBox3D() : SPGroup() {
-	this->my_counter = 0;
-	this->swapped = Box3D::NONE;
+    this->my_counter = 0;
+    this->swapped = Box3D::NONE;
 
     this->persp_href = NULL;
     this->persp_ref = new Persp3DReference(this);
@@ -87,7 +87,7 @@ void SPBox3D::build(SPDocument *document, Inkscape::XML::Node *repr) {
 }
 
 void SPBox3D::release() {
-	SPBox3D* object = this;
+    SPBox3D* object = this;
     SPBox3D *box = object;
 
     if (box->persp_href) {
@@ -125,7 +125,7 @@ void SPBox3D::release() {
 }
 
 void SPBox3D::set(unsigned int key, const gchar* value) {
-	SPBox3D* object = this;
+    SPBox3D* object = this;
     SPBox3D *box = object;
 
     switch (key) {
@@ -210,7 +210,7 @@ void SPBox3D::update(SPCtx *ctx, guint flags) {
 }
 
 Inkscape::XML::Node* SPBox3D::write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags) {
-	SPBox3D* object = this;
+    SPBox3D* object = this;
     SPBox3D *box = object;
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
@@ -912,9 +912,11 @@ box3d_swap_sides(int z_orders[6], Box3D::Axis axis) {
         }
     }
 
-    int tmp = z_orders[pos1];
-    z_orders[pos1] = z_orders[pos2];
-    z_orders[pos2] = tmp;
+    if (pos1 != -1){
+        int tmp = z_orders[pos1];
+        z_orders[pos1] = z_orders[pos2];
+        z_orders[pos2] = tmp;
+    }
 }
 
 
