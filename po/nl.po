@@ -59,7 +59,7 @@ msgstr ""
 "Project-Id-Version: inkscape 0.49\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2014-11-05 22:05+0100\n"
-"PO-Revision-Date: 2014-12-11 22:36+0100\n"
+"PO-Revision-Date: 2014-12-28 19:50+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -7989,7 +7989,7 @@ msgstr "Pagina-instellingen"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:124
 msgid "Precision of approximating gradient meshes:"
-msgstr "Benaderingsprecisie van kleurverlopen:"
+msgstr "Benaderingsprecisie van kleurverlopenmeshes:"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:125
 msgid ""
@@ -9968,7 +9968,7 @@ msgstr "SpiroInterpolator"
 #: ../src/live_effects/lpe-interpolate_points.cpp:29
 #: ../src/live_effects/lpe-powerstroke.cpp:198
 msgid "Centripetal Catmull-Rom"
-msgstr ""
+msgstr "Middelpuntzoekend Catmull-Rom"
 
 #: ../src/live_effects/lpe-interpolate_points.cpp:37
 #: ../src/live_effects/lpe-powerstroke.cpp:240
@@ -10002,7 +10002,7 @@ msgstr "Afgerond"
 #: ../src/live_effects/lpe-powerstroke.cpp:231
 #: ../src/live_effects/lpe-taperstroke.cpp:66
 msgid "Miter"
-msgstr ""
+msgstr "Rechte hoek"
 
 #: ../src/live_effects/lpe-jointype.cpp:34
 #: ../src/live_effects/lpe-taperstroke.cpp:65
@@ -12387,7 +12387,7 @@ msgstr "Selectie naar laag verplaatsen"
 #. to a translation... but leave that for another day.
 #: ../src/selection-chemistry.cpp:1528 ../src/seltrans.cpp:388
 msgid "Cannot transform an embedded SVG."
-msgstr ""
+msgstr "Kan een ingevoegde SVG niet transformeren."
 
 #: ../src/selection-chemistry.cpp:1699
 msgid "Remove transform"
@@ -13086,7 +13086,7 @@ msgstr "met %d hoeken"
 
 #: ../src/sp-switch.cpp:76
 msgid "Conditional Group"
-msgstr ""
+msgstr "Voorwaardelijke groep"
 
 #: ../src/sp-text.cpp:355 ../src/verbs.cpp:348
 #: ../share/extensions/lorem_ipsum.inx.h:8
@@ -21960,7 +21960,7 @@ msgstr "Rotatie met de klok mee"
 #: ../src/ui/dialog/transformation.cpp:973
 #: ../src/ui/dialog/transformation.cpp:997
 msgid "Transform matrix is singular, <b>not used</b>."
-msgstr ""
+msgstr "Transformatiematrix is singulair, <b>niet gebruikt</b>."
 
 #: ../src/ui/dialog/transformation.cpp:1012
 msgid "Edit transformation matrix"
@@ -23483,11 +23483,11 @@ msgstr "Standaardmesh maken"
 
 #: ../src/ui/tools/mesh-tool.cpp:718
 msgid "FIXME<b>Ctrl</b>: snap mesh angle"
-msgstr ""
+msgstr "<b>Ctrl</b>: kleefhoek mesh"
 
 #: ../src/ui/tools/mesh-tool.cpp:719
 msgid "FIXME<b>Shift</b>: draw mesh around the starting point"
-msgstr ""
+msgstr "<b>Shift</b>: mesh rond het beginpunt tekenen"
 
 #: ../src/ui/tools/node-tool.cpp:612
 msgctxt "Node tool tip"
@@ -24932,7 +24932,7 @@ msgstr "Tag"
 
 #: ../src/verbs.cpp:252
 msgid "Context"
-msgstr ""
+msgstr "Context"
 
 #: ../src/verbs.cpp:271 ../src/verbs.cpp:2306
 #: ../share/extensions/jessyInk_view.inx.h:1
@@ -27057,8 +27057,7 @@ msgstr "Afdrukkleuren..."
 msgid ""
 "Select which color separations to render in Print Colors Preview rendermode"
 msgstr ""
-"Selecteer welke kleuren gerenderd worden in de weergavemodus Afdrukvoorbeeld "
-"kleuren"
+"Selecteer welke kleuren gerenderd worden in de weergavemodus Afdrukvoorbeeld"
 
 #: ../src/verbs.cpp:2956
 msgid "_Export PNG Image..."
@@ -27835,11 +27834,11 @@ msgstr ", grijstinten"
 
 #: ../src/widgets/desktop-widget.cpp:830
 msgid "print colors preview"
-msgstr ""
+msgstr "afdrukvoorbeeld"
 
 #: ../src/widgets/desktop-widget.cpp:831
 msgid ", print colors preview"
-msgstr ""
+msgstr ", afdrukvoorbeeld"
 
 #: ../src/widgets/desktop-widget.cpp:832
 msgid "outline"
@@ -29805,7 +29804,7 @@ msgstr "Selecteer lettertypefamilie (Alt+X voor dialoog)"
 #. Enable entry completion
 #: ../src/widgets/text-toolbar.cpp:1234
 msgid "Select all text with this font-family"
-msgstr ""
+msgstr "Alle teskt met deze font-family selecteren"
 
 #: ../src/widgets/text-toolbar.cpp:1238
 msgid "Font not found on system"
@@ -30423,6 +30422,8 @@ msgid ""
 "%d ENTITIES of type POLYLINE encountered and ignored. Please try to convert "
 "to Release 13 format using QCad."
 msgstr ""
+"%d ENTITIES van het type POLYLINE tegengekomen en genegeerd. Tracht aub. te "
+"converteren naar Release 13-formaat met QCad."
 
 #: ../share/extensions/dxf_outlines.py:49
 msgid ""
@@ -30437,6 +30438,8 @@ msgid ""
 "Error: Field 'Layer match name' must be filled when using 'By name match' "
 "option"
 msgstr ""
+"Fout: veld 'Naamovereenkomst laag' moet ingevuld worden bij gebruik van de "
+"optie 'Overeenkosmt naam'"
 
 #: ../share/extensions/dxf_outlines.py:341
 #, python-format
@@ -30491,10 +30494,13 @@ msgstr "Tenminste twee geselecteerde paden nodig"
 #: ../share/extensions/funcplot.py:48
 msgid "x-interval cannot be zero. Please modify 'Start X' or 'End X'"
 msgstr ""
+"x-interval kan niet nul zijn. Pas aub 'x-beginwaarde' of 'x-eindwaarde' aan"
 
 #: ../share/extensions/funcplot.py:60
 msgid "y-interval cannot be zero. Please modify 'Y top' or 'Y bottom'"
 msgstr ""
+"y-interval kan niet nul zijn. Pas aub. 'y-waarde onderzijde rechthoek' of 'y-"
+"waarde bovenzijde rechthoek' aan"
 
 #: ../share/extensions/funcplot.py:315
 msgid "Please select a rectangle"
@@ -30769,6 +30775,8 @@ msgid ""
 "Failed to import the subprocess module. Please report this as a bug at: "
 "https://bugs.launchpad.net/inkscape."
 msgstr ""
+"Importeren van subprocesmodule gefaald. Rapporteer aub. deze bug op: https://"
+"bugs.launchpad.net/inkscape."
 
 #: ../share/extensions/generate_voronoi.py:36
 msgid "Python version is: "
@@ -30796,7 +30804,7 @@ msgstr "De versneden bitmaps werden bewaard als:"
 
 #: ../share/extensions/hpgl_decoder.py:43
 msgid "Movements"
-msgstr ""
+msgstr "Bewegingen"
 
 #: ../share/extensions/hpgl_decoder.py:44
 msgid "Pen #"
@@ -30878,6 +30886,11 @@ msgid ""
 "update the JessyInk script.\n"
 "\n"
 msgstr ""
+"Het JessyInk-script is niet in deze SVG geladen of heeft een andere versie "
+"dan de JessyInk-uitbreidingen. Selecteer aub. \"Installeren/updaten\" van "
+"het \"JessyInk\"-submenu van het menu \"Uitbreidingen\" om het JessyInk-"
+"script te installeren of updaten.\n"
+"\n"
 
 #: ../share/extensions/jessyInk_autoTexts.py:48
 msgid ""
@@ -31065,10 +31078,10 @@ msgid ""
 "extension. Please install them and try again.  On a Debian-like system this "
 "can be done with the command, sudo apt-get install python-numpy."
 msgstr ""
-"Laden van de numpy modules mislukt. Deze modules zijn nodig "
-"voor deze uitbreiding. Installeer deze alstublief en probeer opnieuw. Op een "
-"Debian-gebaseerd systeem kan dit gedaan worden met het commando, sudo apt-"
-"get install python-numpy."
+"Laden van de numpy modules mislukt. Deze modules zijn nodig voor deze "
+"uitbreiding. Installeer deze alstublief en probeer opnieuw. Op een Debian-"
+"gebaseerd systeem kan dit gedaan worden met het commando, sudo apt-get "
+"install python-numpy."
 
 #: ../share/extensions/measure.py:112
 msgid "Area is zero, cannot calculate Center of Mass"
@@ -31375,7 +31388,7 @@ msgstr "Je moet ImageMagick installeren voor JPG en GIF."
 #. lines of longitude are odd : abort
 #: ../share/extensions/wireframe_sphere.py:116
 msgid "Please enter an even number of lines of longitude."
-msgstr ""
+msgstr "Geef aub. een even aantal lijnen in."
 
 #. vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 fileencoding=utf-8 textwidth=99
 #: ../share/extensions/addnodes.inx.h:1
@@ -31539,14 +31552,14 @@ msgid ""
 "    * Random Hue/Saturation/Lightness: randomize the parameter's value.\n"
 "      "
 msgstr ""
-"Past tint, verzadiging en lichtheid in de TVL-vertegenwoordiging van de kleur van de geselecteerde objecten.\n"
+"Past tint, verzadiging en lichtheid in de TVL-vertegenwoordiging van de "
+"kleur van de geselecteerde objecten.\n"
 "Opties:\n"
 "    * Tint: draaien met ... graden (telt door).\n"
 "    * Verzadiging: % toevoegen/aftrekken (min=-100, max=100).\n"
 "    * Lichtheid: % toevoegen/aftrekken (min=-100, max=100).\n"
 "    * Random tint/verzadiging/lichtheid: de parameterwaarde randomiseren.\n"
 "      "
-
 
 #: ../share/extensions/color_blackandwhite.inx.h:1
 msgid "Black and White"
@@ -32084,11 +32097,11 @@ msgstr "Karakterencodering"
 
 #: ../share/extensions/dxf_outlines.inx.h:7
 msgid "Layer export selection"
-msgstr ""
+msgstr "Te exporteren lagen"
 
 #: ../share/extensions/dxf_outlines.inx.h:8
 msgid "Layer match name"
-msgstr ""
+msgstr "Naamovereenkomst laag"
 
 #: ../share/extensions/dxf_outlines.inx.h:9
 msgid "pt"
@@ -32165,7 +32178,7 @@ msgstr "Alleen zichtbaar"
 
 #: ../share/extensions/dxf_outlines.inx.h:23
 msgid "By name match"
-msgstr ""
+msgstr "Overeenkomst naam"
 
 #: ../share/extensions/dxf_outlines.inx.h:25
 #, fuzzy
@@ -32491,11 +32504,11 @@ msgstr "X-interval vermenigvuldigen met 2*pi"
 
 #: ../share/extensions/funcplot.inx.h:6
 msgid "Y value of rectangle's bottom:"
-msgstr "Y-waarde van onderzijde rechthoek:"
+msgstr "Y-waarde onderzijde rechthoek:"
 
 #: ../share/extensions/funcplot.inx.h:7
 msgid "Y value of rectangle's top:"
-msgstr "Y-waarde van bovenzijde rechthoek:"
+msgstr "Y-waarde bovenzijde rechthoek:"
 
 #: ../share/extensions/funcplot.inx.h:8
 msgid "Number of samples:"
@@ -33221,7 +33234,7 @@ msgstr "Rand object"
 
 #: ../share/extensions/gcodetools_lathe.inx.h:10
 msgid "Lathe modify path"
-msgstr ""
+msgstr "Pad aanpassen"
 
 #: ../share/extensions/gcodetools_lathe.inx.h:11
 msgid ""
@@ -33665,7 +33678,7 @@ msgstr "Gouden ratio"
 
 #: ../share/extensions/guides_creator.inx.h:10
 msgid "Rule-of-third"
-msgstr ""
+msgstr "Regel van derden"
 
 #: ../share/extensions/guides_creator.inx.h:11
 msgid "Diagonal guides"
@@ -34077,12 +34090,12 @@ msgstr ""
 #: ../share/extensions/hpgl_output.inx.h:22
 #: ../share/extensions/plotter.inx.h:41
 msgid "Plot Features "
-msgstr "V"
+msgstr "Functionaliteit plotter"
 
 #: ../share/extensions/hpgl_output.inx.h:23
 #: ../share/extensions/plotter.inx.h:42
 msgid "Overcut (mm):"
-msgstr ""
+msgstr "Oversnijden (mm):"
 
 #: ../share/extensions/hpgl_output.inx.h:24
 #: ../share/extensions/plotter.inx.h:43
@@ -34110,7 +34123,7 @@ msgstr ""
 #: ../share/extensions/hpgl_output.inx.h:27
 #: ../share/extensions/plotter.inx.h:46
 msgid "Use precut"
-msgstr ""
+msgstr "Voorsnijden gebruiken"
 
 #: ../share/extensions/hpgl_output.inx.h:28
 #: ../share/extensions/plotter.inx.h:47
@@ -34118,6 +34131,8 @@ msgid ""
 "Check this to cut a small line before the real drawing starts to correctly "
 "align the tool orientation. (Default: Checked)"
 msgstr ""
+"Selecteer deze om een smalle lijn te snijden voor de echte afbeelding begint "
+"om het gereedschap correct te alineëren. (standaard: aangevinkt)"
 
 #: ../share/extensions/hpgl_output.inx.h:29
 #: ../share/extensions/plotter.inx.h:48
@@ -34145,6 +34160,10 @@ msgid ""
 "if used). If unchecked you have to make sure that all parts of your drawing "
 "are within the document border! (Default: Checked)"
 msgstr ""
+"Vink dit aan om de tekening automatisch rond het nulpunt uit te lijnen "
+"(inclusief de offset van het gereedschap). Indien uitgevinkt moet je zeker "
+"zijn dat alle delen van de tekening zich binnen de documentrand bevinden! "
+"(Standaard: aangevinkt)"
 
 #: ../share/extensions/hpgl_output.inx.h:33
 #: ../share/extensions/plotter.inx.h:54
@@ -34844,7 +34863,7 @@ msgstr "Typografie"
 
 #: ../share/extensions/layout_nup.inx.h:1
 msgid "N-up layout"
-msgstr ""
+msgstr "Multikader layout"
 
 #: ../share/extensions/layout_nup.inx.h:2
 msgid "Page dimensions"
@@ -35190,11 +35209,12 @@ msgid ""
 "Bezier curves. If a circle is used, the area may be too high by as much as "
 "0.03%."
 msgstr ""
-"Dit effect meet de lengte, oppervlakte of middelpunt van de geselecteerde paden. "
-"Lengte en oppervlak worden toegevoegd als tekstobject in de geselecteerde eenheid. Middelpunt wordt toegevoegd als een kruis.\n"
+"Dit effect meet de lengte, oppervlakte of middelpunt van de geselecteerde "
+"paden. Lengte en oppervlak worden toegevoegd als tekstobject in de "
+"geselecteerde eenheid. Middelpunt wordt toegevoegd als een kruis.\n"
 "\n"
-"  * Tekstweergave kan als tekst-op-pad of alleenstaande tekst in een specifieke "
-"hoek.\n"
+"  * Tekstweergave kan als tekst-op-pad of alleenstaande tekst in een "
+"specifieke hoek.\n"
 "  * Het aantal significante cijfers kan ingesteld worden met het "
 "Precisieveld.\n"
 "  * Het Afstandsveld bepaalt de afstand van de tekst tot het pad.\n"
@@ -35214,7 +35234,11 @@ msgid ""
 "attributes will create a new class, this class will replace the existing "
 "inline style attributes. Please use a name which best describes the kinds of "
 "objects and their common context for best effect."
-msgstr "Alle geselecteerde knopen worden gegroepeerd en met hun gemeenschappelijke kenmerken wordt een nieuwe klasse gemaakt die de bestaande inline stijlkenmerken vervangt. Gebruik aub een naam die het beste deze objecten en hun gemeenschappelijke context beschrijft voor het beste effect."
+msgstr ""
+"Alle geselecteerde knopen worden gegroepeerd en met hun gemeenschappelijke "
+"kenmerken wordt een nieuwe klasse gemaakt die de bestaande inline "
+"stijlkenmerken vervangt. Gebruik aub een naam die het beste deze objecten en "
+"hun gemeenschappelijke context beschrijft voor het beste effect."
 
 #: ../share/extensions/merge_styles.inx.h:3
 msgid "New Class Name:"
@@ -35494,12 +35518,13 @@ msgstr ""
 
 #: ../share/extensions/plotter.inx.h:1
 msgid "Plot"
-msgstr ""
+msgstr "Plotten"
 
 #: ../share/extensions/plotter.inx.h:2
 msgid ""
 "Please make sure that all objects you want to plot are converted to paths."
 msgstr ""
+"Zorg er aub. voor dat alle objecten die je wil plotten omgezet zijn in paden."
 
 #: ../share/extensions/plotter.inx.h:3
 msgid "Connection Settings "
@@ -35514,6 +35539,8 @@ msgid ""
 "The port of your serial connection, on Windows something like 'COM1', on "
 "Linux something like: '/dev/ttyUSB0' (Default: COM1)"
 msgstr ""
+"De poort van je seriële verbinding, op Windows zoals 'COM1', op Linux zoals "
+"'/dev/ttyUSB0' (Standaard: COM1)"
 
 #: ../share/extensions/plotter.inx.h:6
 msgid "Serial baud rate:"
@@ -35525,15 +35552,15 @@ msgstr "De Baud rate van je seriële verbinding (Standaard: 9600)"
 
 #: ../share/extensions/plotter.inx.h:8
 msgid "Flow control:"
-msgstr ""
+msgstr "Controle gegevensstroom:"
 
 #: ../share/extensions/plotter.inx.h:9
 msgid ""
 "The Software / Hardware flow control of your serial connection (Default: "
 "Software)"
 msgstr ""
-"De software / hardware controle van je seriële verbinding. (Standaard: "
-"software)"
+"De software / hardware controle de gegevensstroom van je seriële verbinding. "
+"(Standaard: software)"
 
 #: ../share/extensions/plotter.inx.h:10
 msgid "Command language:"
@@ -35577,12 +35604,16 @@ msgid ""
 "Using wrong settings can under certain circumstances cause Inkscape to "
 "freeze. Always save your work before plotting!"
 msgstr ""
+"Bij het gebruik van verkeerde instellingen kan Inkscape hangen. Bewaar "
+"altijd je werk vooraleer te plotten!"
 
 #: ../share/extensions/plotter.inx.h:20
 msgid ""
 "This can be a physical serial connection or a USB-to-Serial bridge. Ask your "
 "plotter manufacturer for drivers if needed."
 msgstr ""
+"Dit kan een fysieke seriële connectie of een USB naar seriëel brug zijn. "
+"Vraag de leverancier van de plotter naar drivers indien nodig."
 
 #: ../share/extensions/plotter.inx.h:21
 msgid "Parallel (LPT) connections are not supported."
@@ -35611,6 +35642,8 @@ msgid ""
 "Check this to get verbose information about the plot without actually "
 "sending something to the plotter (A.k.a. data dump) (Default: Unchecked)"
 msgstr ""
+"Vink dit aan voor uitgebreide informatie over het plotten zonder iets naar "
+"de plotter te sturen (aka data dump) (standaard: uitgevinkt)"
 
 #: ../share/extensions/plt_input.inx.h:1
 msgid "AutoCAD Plot Input"
