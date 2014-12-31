@@ -2606,7 +2606,7 @@ void boom(char *string,int lineno){
 
 void init_as_svg(TR_INFO *tri){
    TRPRINT(tri,"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n");
-   TRPRINT(tri,"<!-- Created with Inkscape (https://www.inkscape.org/) -->\n");
+   TRPRINT(tri,"<!-- Created with Inkscape (http://www.inkscape.org/) -->\n");
    TRPRINT(tri,"\n");
    TRPRINT(tri,"<svg\n");
    TRPRINT(tri,"   xmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n");
@@ -2615,7 +2615,7 @@ void init_as_svg(TR_INFO *tri){
    TRPRINT(tri,"   xmlns:svg=\"http://www.w3.org/2000/svg\"\n");
    TRPRINT(tri,"   xmlns=\"http://www.w3.org/2000/svg\"\n");
    TRPRINT(tri,"   xmlns:sodipodi=\"http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd\"\n");
-   TRPRINT(tri,"   xmlns:inkscape=\"https://www.inkscape.org/namespaces/inkscape\"\n");
+   TRPRINT(tri,"   xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\"\n");
    TRPRINT(tri,"   width=\"900\"\n");
    TRPRINT(tri,"   height=\"675\"\n");
    TRPRINT(tri,"   id=\"svg4122\"\n");

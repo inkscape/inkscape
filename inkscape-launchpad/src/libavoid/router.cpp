@@ -1540,7 +1540,7 @@ void Router::outputInstanceToSVG(std::string instanceName)
     maxY += 50;
 
     fprintf(fp, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-    fprintf(fp, "<svg xmlns:inkscape=\"https://www.inkscape.org/namespaces/inkscape\" xmlns=\"http://www.w3.org/2000/svg\" width=\"100%%\" height=\"100%%\" viewBox=\"%g %g %g %g\">\n", minX, minY, maxX - minX, maxY - minY);
+    fprintf(fp, "<svg xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" xmlns=\"http://www.w3.org/2000/svg\" width=\"100%%\" height=\"100%%\" viewBox=\"%g %g %g %g\">\n", minX, minY, maxX - minX, maxY - minY);
 
     // Output source code to generate this instance of the router.
     fprintf(fp, "<!-- Source code to generate this instance:\n");

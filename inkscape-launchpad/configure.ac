@@ -10,7 +10,7 @@ AC_PREREQ([2.64])
 AC_INIT([inkscape], [0.91+devel],
         [http://bugs.launchpad.net/inkscape/+filebug],
         [inkscape],
-        [https://www.inkscape.org/])
+        [http://inkscape.org/])
 
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_SRCDIR([src/main.cpp])

@@ -709,13 +709,12 @@ void GlyphsPanel::readSelection( bool updateStyle, bool /*updateContent*/ )
     calcCanInsert();
 
     if (targetDesktop && updateStyle) {
-        //SPStyle *query = sp_style_new(SP_ACTIVE_DOCUMENT);
+        //SPStyle query(SP_ACTIVE_DOCUMENT);
 
-        //int result_family = sp_desktop_query_style(targetDesktop, query, QUERY_STYLE_PROPERTY_FONTFAMILY);
-        //int result_style = sp_desktop_query_style(targetDesktop, query, QUERY_STYLE_PROPERTY_FONTSTYLE);
-        //int result_numbers = sp_desktop_query_style(targetDesktop, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
+        //int result_family = sp_desktop_query_style(targetDesktop, &query, QUERY_STYLE_PROPERTY_FONTFAMILY);
+        //int result_style = sp_desktop_query_style(targetDesktop, &query, QUERY_STYLE_PROPERTY_FONTSTYLE);
+        //int result_numbers = sp_desktop_query_style(targetDesktop, &query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
 
-        //sp_style_unref(query);
     }
 }
 

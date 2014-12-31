@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<inkscape-extension xmlns="https://www.inkscape.org/namespace/inkscape/extension">
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
     <_name>Set a layout group</_name>
     <id>org.inkscape.web.slicer.create-group</id>
     <dependency type="executable" location="extensions">webslicer_effect.py</dependency>

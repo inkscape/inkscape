@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<inkscape-extension xmlns="https://www.inkscape.org/namespace/inkscape/extension">
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
 	<_name>Remove Blue</_name>
 	<id>org.inkscape.color.removeblue</id>
 	<dependency type="executable" location="extensions">coloreffect.py</dependency>

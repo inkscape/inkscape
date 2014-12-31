@@ -428,10 +428,9 @@ sp_desktop_get_font_size_tool(SPDesktop *desktop)
 
     double ret = 12;
     if (!style_str.empty()) {
-        SPStyle *style = sp_style_new(SP_ACTIVE_DOCUMENT);
-        sp_style_merge_from_style_string(style, style_str.data());
-        ret = style->font_size.computed;
-        sp_style_unref(style);
+        SPStyle style(SP_ACTIVE_DOCUMENT);
+        style.mergeString(style_str.data());
+        ret = style.font_size.computed;
     }
     return ret;
 }

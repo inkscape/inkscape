@@ -552,7 +552,7 @@ fichier I<icons.svg>).
 =head1 AUTRES INFORMATIONS
 
 L'endroit principal pour trouver des informations sur B<Inkscape> est
-https://www.inkscape.org/.  Le site web contient des liens vers d'autres
+http://www.inkscape.org/.  Le site web contient des liens vers d'autres
 éléments S<pertinents :> documentation, didacticiels, manuel de l'utilisateur,
 exemples, archives des listes de diffusion, la dernière version d'Inkscape,
 les bases contenant les défauts et les demandes d'évolution, et bien

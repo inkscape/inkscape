@@ -91,9 +91,6 @@ SvgBuilder::SvgBuilder(SPDocument *document, gchar *docname, XRef *xref)
     _preferences = _xml_doc->createElement("svgbuilder:prefs");
     _preferences->setAttribute("embedImages", "1");
     _preferences->setAttribute("localFonts", "1");
-
-    _ttm[0] = 1; _ttm[1] = 0; _ttm[2] = 0; _ttm[3] = 1; _ttm[4] = 0; _ttm[5] = 0;
-    _ttm_is_set = false;
 }
 
 SvgBuilder::SvgBuilder(SvgBuilder *parent, Inkscape::XML::Node *root) {
@@ -136,6 +133,9 @@ void SvgBuilder::_init() {
     initial_state.group_depth = 0;
     _state_stack.push_back(initial_state);
     _node_stack.push_back(_container);
+
+    _ttm[0] = 1; _ttm[1] = 0; _ttm[2] = 0; _ttm[3] = 1; _ttm[4] = 0; _ttm[5] = 0;
+    _ttm_is_set = false;
 }
 
 void SvgBuilder::setDocumentSize(double width, double height) {

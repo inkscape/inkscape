@@ -130,7 +130,7 @@ SPObject::SPObject()
     // vg, g, defs, desc, title, symbol, use, image, switch, path, rect, circle, ellipse, line, polyline,
     // polygon, text, tspan, tref, textPath, altGlyph, glyphRef, marker, linearGradient, radialGradient,
     // stop, pattern, clipPath, mask, filter, feImage, a, font, glyph, missing-glyph, foreignObject
-    this->style = sp_style_new_from_object(this);
+    this->style = new SPStyle( NULL, this ); // Is it necessary to call with "this"?
     this->context_style = NULL;
 }
 
@@ -144,6 +144,19 @@ SPObject::~SPObject() {
     if (this->_successor) {
         sp_object_unref(this->_successor, NULL);
         this->_successor = NULL;
+    }
+
+    if( style == NULL ) {
+        // style pointer could be NULL if unreffed too many times.
+        // Conjecture: style pointer is never NULL.
+        std::cerr << "SPObject::~SPObject(): style pointer is NULL" << std::endl;
+    } else if( style->refCount() > 1 ) {
+        // Several classes ref style.
+        // Conjecture: style pointer should be unreffed by other classes before reaching here.
+        std::cerr << "SPObject::~SPObject(): someone else still holding ref to style" << std::endl;
+        sp_style_unref( this->style );
+    } else {
+        delete this->style;
     }
 }
 
@@ -796,9 +809,10 @@ void SPObject::releaseReferences() {
         g_assert(!this->id);
     }
 
-    if (this->style) {
-        this->style = sp_style_unref(this->style);
-    }
+    // style belongs to SPObject, we should not need to unref here.
+    // if (this->style) {
+    //     this->style = sp_style_unref(this->style);
+    // }
 
     this->document = NULL;
     this->repr = NULL;
@@ -915,7 +929,7 @@ void SPObject::set(unsigned int key, gchar const* value) {
             object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
             break;
         case SP_ATTR_STYLE:
-            sp_style_read_from_object(object->style, object);
+            object->style->readFromObject( object );
             object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
             break;
         default:
@@ -1007,9 +1021,8 @@ Inkscape::XML::Node* SPObject::write(Inkscape::XML::Document *doc, Inkscape::XML
             repr->setAttribute("inkscape:collect", NULL);
         }
 
-        SPStyle const *const obj_style = this->style;
-        if (obj_style) {
-            gchar *s = sp_style_write_string(obj_style, SP_STYLE_FLAG_IFSET);
+        if (style) {
+            Glib::ustring s = style->write(SP_STYLE_FLAG_IFSET);
 
             // Check for valid attributes. This may be time consuming.
             // It is useful, though, for debugging Inkscape code.
@@ -1017,17 +1030,14 @@ Inkscape::XML::Node* SPObject::write(Inkscape::XML::Document *doc, Inkscape::XML
             if( prefs->getBool("/options/svgoutput/check_on_editing") ) {
 
                 unsigned int flags = sp_attribute_clean_get_prefs();
-                Glib::ustring s_cleaned = sp_attribute_clean_style( repr, s, flags ); 
-                g_free( s );
-                s = (s_cleaned.empty() ? NULL : g_strdup (s_cleaned.c_str()));
+                Glib::ustring s_cleaned = sp_attribute_clean_style( repr, s.c_str(), flags ); 
             }
 
-            if( s == NULL || strcmp(s,"") == 0 ) {
+            if( s.empty() ) {
                 repr->setAttribute("style", NULL);
             } else {
-                repr->setAttribute("style", s);
+                repr->setAttribute("style", s.c_str());
             }
-            g_free(s);
 
         } else {
             /** \todo I'm not sure what to do in this case.  Bug #1165868
@@ -1149,7 +1159,7 @@ void SPObject::updateDisplay(SPCtx *ctx, unsigned int flags)
      */
     if ((flags & SP_OBJECT_STYLE_MODIFIED_FLAG) && (flags & SP_OBJECT_PARENT_MODIFIED_FLAG)) {
         if (this->style && this->parent) {
-            sp_style_merge_from_parent(this->style, this->parent->style);
+            style->cascade( this->parent->style );
         }
     }
 

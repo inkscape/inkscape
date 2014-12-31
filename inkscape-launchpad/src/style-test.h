@@ -214,32 +214,25 @@ public:
 
         for ( gint i = 0; cases[i].src; i++ ) {
             // std::cout << "Test one: " << i << std::endl;
-            SPStyle *style = sp_style_new(_doc);
-            TS_ASSERT(style);
-            if ( style ) {
-                sp_style_merge_from_style_string( style, cases[i].src );
-
-                if ( cases[i].uri ) {
-                    TSM_ASSERT( cases[i].src, style->fill.value.href );
-                    if ( style->fill.value.href ) {
-                        TS_ASSERT_EQUALS( style->fill.value.href->getURI()->toString(), std::string(cases[i].uri) );
-                    }
-                } else {
-                    TS_ASSERT( !style->fill.value.href || !style->fill.value.href->getObject() );
+            SPStyle style(_doc);
+            style.mergeString( cases[i].src );
+            if ( cases[i].uri ) {
+                TSM_ASSERT( cases[i].src, style.fill.value.href );
+                if ( style.fill.value.href ) {
+                    TS_ASSERT_EQUALS( style.fill.value.href->getURI()->toString(), std::string(cases[i].uri) );
                 }
+            } else {
+                TS_ASSERT( !style.fill.value.href || !style.fill.value.href->getObject() );
+            }
 
-                gchar *str0_set = sp_style_write_string( style, SP_STYLE_FLAG_IFSET );
-                //printf("<<%s>>\n", str0_set);
-                if ( cases[i].dst ) {
-                    // std::cout << "  " << std::string(str0_set) << " " << std::string(cases[i].dst) << std::endl;
-                    TS_ASSERT_EQUALS( std::string(str0_set), std::string(cases[i].dst) );
-                } else {
-                    // std::cout << "  " << std::string(str0_set) << " " << std::string(cases[i].src) << std::endl;
-                    TS_ASSERT_EQUALS( std::string(str0_set), std::string(cases[i].src) );
-                }
+            std::string str0_set = style.write(SP_STYLE_FLAG_IFSET );
 
-                g_free(str0_set);
-                sp_style_unref(style);
+            if ( cases[i].dst ) {
+                // std::cout << "  " << str0_set << " " << std::string(cases[i].dst) << std::endl;
+                TS_ASSERT_EQUALS( str0_set, std::string(cases[i].dst) );
+            } else {
+                // std::cout << "  " << str0_set << " " << std::string(cases[i].src) << std::endl;
+                TS_ASSERT_EQUALS( str0_set, std::string(cases[i].src) );
             }
         }
     }
@@ -366,25 +359,21 @@ public:
         };
         for ( gint i = 0; cases[i].src; i++ ) {
             // std::cout << "Test two: " << i << std::endl;
-            SPStyle *style_src = sp_style_new(_doc);
-            TS_ASSERT(style_src);
-            SPStyle *style_dst = sp_style_new(_doc);
-            TS_ASSERT(style_dst);
+            SPStyle style_src(_doc);
+            SPStyle style_dst(_doc);
 
-            if ( style_src && style_dst ) {
-                sp_style_merge_from_style_string( style_src, cases[i].src );
-                sp_style_merge_from_style_string( style_dst, cases[i].dst );
-                // std::cout << "Test:" << std::endl;
-                // std::cout << "  C: |" << cases[i].src << "|   |" << cases[i].dst << "|" << std::endl;
-                // std::cout << "  S: |" << style_src->write( SP_STYLE_FLAG_IFSET, NULL ) << "|   |"
-                //           << style_dst->write( SP_STYLE_FLAG_IFSET, NULL ) << "|" <<std::endl;
-                TS_ASSERT( (*style_src == *style_dst) == cases[i].match );
-                sp_style_unref(style_src);
-                sp_style_unref(style_dst);
-                // std::cout << "End Test\n" << std::endl;
-            }
+            style_src.mergeString( cases[i].src );
+            style_dst.mergeString( cases[i].dst );
+            
+            // std::cout << "Test:" << std::endl;
+            // std::cout << "  C: |" << cases[i].src << "|   |" << cases[i].dst << "|" << std::endl;
+            // std::cout << "  S: |" << style_src.write( SP_STYLE_FLAG_IFSET, NULL ) << "|   |"
+            //           << style_dst.write( SP_STYLE_FLAG_IFSET, NULL ) << "|" <<std::endl;
+            TS_ASSERT( (style_src == style_dst) == cases[i].match );
+            // std::cout << "End Test\n" << std::endl;
         }
     }
+
 
     // Test of cascade
     void testThree()
@@ -477,37 +466,29 @@ public:
         };
         for ( gint i = 0; cases[i].parent; i++ ) {
             // std::cout << "Test three: " << i << std::endl;
-            SPStyle *style_parent = sp_style_new(_doc);
-            TS_ASSERT(style_parent);
-            SPStyle *style_child = sp_style_new(_doc);
-            TS_ASSERT(style_child);
-            SPStyle *style_result = sp_style_new(_doc);
-            TS_ASSERT(style_result);
+            SPStyle style_parent(_doc);
+            SPStyle style_child( _doc);
+            SPStyle style_result(_doc);
 
-            if ( style_parent && style_child && style_result ) {
-                sp_style_merge_from_style_string( style_parent, cases[i].parent );
-                sp_style_merge_from_style_string( style_child,  cases[i].child  );
-                sp_style_merge_from_style_string( style_result, cases[i].result );
-                // std::cout << "Test:" << std::endl;
-                // std::cout << " Input: ";
-                // std::cout << "  Parent: " << cases[i].parent
-                //           << "  Child: "  << cases[i].child
-                //           << "  Result: " << cases[i].result << std::endl;
-                // std::cout << " Write: ";
-                // std::cout << "  Parent: " << style_parent->write( SP_STYLE_FLAG_IFSET ) 
-                //           << "  Child: "  << style_child->write( SP_STYLE_FLAG_IFSET ) 
-                //           << "  Result: " << style_result->write( SP_STYLE_FLAG_IFSET ) << std::endl;
+            style_parent.mergeString( cases[i].parent );
+            style_child.mergeString(  cases[i].child );
+            style_result.mergeString( cases[i].result );
 
-                //sp_style_merge_from_parent( style_child, style_parent );
-                style_child->cascade( style_parent );
+            // std::cout << "Test:" << std::endl;
+            // std::cout << " Input: ";
+            // std::cout << "  Parent: " << cases[i].parent
+            //           << "  Child: "  << cases[i].child
+            //           << "  Result: " << cases[i].result << std::endl;
+            // std::cout << " Write: ";
+            // std::cout << "  Parent: " << style_parent.write( SP_STYLE_FLAG_IFSET ) 
+            //           << "  Child: "  << style_child.write( SP_STYLE_FLAG_IFSET ) 
+            //           << "  Result: " << style_result.write( SP_STYLE_FLAG_IFSET ) << std::endl;
 
-                TS_ASSERT(*style_child == *style_result );
+            style_child.cascade( &style_parent );
 
-                sp_style_unref(style_child);
-                sp_style_unref(style_parent);
-                sp_style_unref(style_result);
-                // std::cout << "End Test: *************\n" << std::endl;
-            }
+            TS_ASSERT(style_child == style_result );
+
+            // std::cout << "End Test: *************\n" << std::endl;
         }
     }
 

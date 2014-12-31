@@ -462,7 +462,7 @@ icon, whether it comes from I<fill_none.svg> or I<icons.svg>.)
 =head1 OTHER INFO
 
 The canonical place to find B<Inkscape> info is at
-https://www.inkscape.org/.  The website has news, documentation,
+http://www.inkscape.org/.  The website has news, documentation,
 tutorials, examples, mailing list archives, the latest released
 version of the program, bugs and feature requests databases, forums,
 and more.

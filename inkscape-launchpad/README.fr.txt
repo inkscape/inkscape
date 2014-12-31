@@ -1,7 +1,7 @@
 ﻿Inkscape. Dessinez librement.
 =============================
 
-https://www.inkscape.org/
+http://www.inkscape.org/
 
 Inkscape est un logiciel de dessin vectoriel libre avec des possibilités
 similaires à celles d'Illustrator, Freehand ou CorelDraw et utilisant le format

@@ -79,7 +79,7 @@ COPYRIGHT = 'Copyright Jeff Schiller, Louis Simard, 2012'
 NS = { 	'SVG': 		'http://www.w3.org/2000/svg', 
 		'XLINK': 	'http://www.w3.org/1999/xlink', 
 		'SODIPODI': 'http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd',
-		'INKSCAPE': 'https://www.inkscape.org/namespaces/inkscape',
+		'INKSCAPE': 'http://www.inkscape.org/namespaces/inkscape',
 		'ADOBE_ILLUSTRATOR': 'http://ns.adobe.com/AdobeIllustrator/10.0/',
 		'ADOBE_GRAPHS': 'http://ns.adobe.com/Graphs/1.0/',
 		'ADOBE_SVG_VIEWER': 'http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/',

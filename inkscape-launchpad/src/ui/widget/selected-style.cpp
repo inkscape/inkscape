@@ -977,7 +977,7 @@ SelectedStyle::update()
         return;
 
     // create temporary style
-    SPStyle *query = sp_style_new (_desktop->getDocument());
+    SPStyle query(_desktop->getDocument());
 
     for (int i = SS_FILL; i <= SS_STROKE; i++) {
         Gtk::EventBox *place = (i == SS_FILL)? &_fill_place : &_stroke_place;
@@ -995,7 +995,7 @@ SelectedStyle::update()
         _popup_copy[i].set_sensitive(false);
 
         // query style from desktop. This returns a result flag and fills query with the style of subselection, if any, or selection
-        int result = sp_desktop_query_style (_desktop, query,
+        int result = sp_desktop_query_style (_desktop, &query,
                                              (i == SS_FILL)? QUERY_STYLE_PROPERTY_FILL : QUERY_STYLE_PROPERTY_STROKE);
         switch (result) {
         case QUERY_STYLE_NOTHING:
@@ -1020,12 +1020,12 @@ SelectedStyle::update()
             }
             SPIPaint *paint;
             if (i == SS_FILL) {
-                paint = &(query->fill);
+                paint = &(query.fill);
             } else {
-                paint = &(query->stroke);
+                paint = &(query.stroke);
             }
             if (paint->set && paint->isPaintserver()) {
-                SPPaintServer *server = (i == SS_FILL)? SP_STYLE_FILL_SERVER (query) : SP_STYLE_STROKE_SERVER (query);
+                SPPaintServer *server = (i == SS_FILL)? SP_STYLE_FILL_SERVER (&query) : SP_STYLE_STROKE_SERVER (&query);
                 if ( server ) {
                     Inkscape::XML::Node *srepr = server->getRepr();
                     _paintserver_id[i] += "url(#";
@@ -1062,7 +1062,7 @@ SelectedStyle::update()
                 }
             } else if (paint->set && paint->isColor()) {
                 guint32 color = paint->value.color.toRGBA32(
-                                     SP_SCALE24_TO_FLOAT ((i == SS_FILL)? query->fill_opacity.value : query->stroke_opacity.value));
+                                     SP_SCALE24_TO_FLOAT ((i == SS_FILL)? query.fill_opacity.value : query.stroke_opacity.value));
                 _lastselected[i] = _thisselected[i];
                 _thisselected[i] = color; // include opacity
                 ((Inkscape::UI::Widget::ColorPreview*)_color_preview[i])->setRgba32 (color);
@@ -1105,7 +1105,7 @@ SelectedStyle::update()
     clearTooltip(_opacity_place);
     clearTooltip(_opacity_sb);
 
-    int result = sp_desktop_query_style (_desktop, query, QUERY_STYLE_PROPERTY_MASTEROPACITY);
+    int result = sp_desktop_query_style (_desktop, &query, QUERY_STYLE_PROPERTY_MASTEROPACITY);
 
     switch (result) {
     case QUERY_STYLE_NOTHING:
@@ -1122,16 +1122,16 @@ SelectedStyle::update()
         _opacity_blocked = true;
         _opacity_sb.set_sensitive(true);
 #if WITH_GTKMM_3_0
-        _opacity_adjustment->set_value(SP_SCALE24_TO_FLOAT(query->opacity.value) * 100);
+        _opacity_adjustment->set_value(SP_SCALE24_TO_FLOAT(query.opacity.value) * 100);
 #else
-        _opacity_adjustment.set_value(SP_SCALE24_TO_FLOAT(query->opacity.value) * 100);
+        _opacity_adjustment.set_value(SP_SCALE24_TO_FLOAT(query.opacity.value) * 100);
 #endif
         _opacity_blocked = false;
         break;
     }
 
 // Now query stroke_width
-    int result_sw = sp_desktop_query_style (_desktop, query, QUERY_STYLE_PROPERTY_STROKEWIDTH);
+    int result_sw = sp_desktop_query_style (_desktop, &query, QUERY_STYLE_PROPERTY_STROKEWIDTH);
     switch (result_sw) {
     case QUERY_STYLE_NOTHING:
         _stroke_width.set_markup("");
@@ -1143,9 +1143,9 @@ SelectedStyle::update()
     {
         double w;
         if (_sw_unit) {
-            w = Inkscape::Util::Quantity::convert(query->stroke_width.computed, "px", _sw_unit);
+            w = Inkscape::Util::Quantity::convert(query.stroke_width.computed, "px", _sw_unit);
         } else {
-            w = query->stroke_width.computed;
+            w = query.stroke_width.computed;
         }
         current_stroke_width = w;
 
@@ -1168,8 +1168,6 @@ SelectedStyle::update()
     default:
         break;
     }
-
-    sp_style_unref(query);
 }
 
 void SelectedStyle::opacity_0(void) {_opacity_sb.set_value(0);}

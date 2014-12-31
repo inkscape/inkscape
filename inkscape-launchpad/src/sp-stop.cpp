@@ -210,15 +210,13 @@ SPStop* SPStop::getPrevStop() {
 
 SPColor SPStop::readStopColor(Glib::ustring const &styleStr, guint32 dfl) {
     SPColor color(dfl);
-    SPStyle* style = sp_style_new(0);
     SPIPaint paint;
-    paint.read( styleStr.c_str(), *style );
+
+    paint.read( styleStr.c_str() );
 
     if ( paint.isColor() ) {
         color = paint.value.color;
     }
-
-    sp_style_unref(style);
 
     return color;
 }

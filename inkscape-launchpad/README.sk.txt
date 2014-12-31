@@ -2,7 +2,7 @@
 Inkscape. Kreslite slobodne.
 ============================
 
-https://www.inkscape.org/
+http://www.inkscape.org/
 
 Inkscape je open source kresliaci nástroj podobný chopnosťami programom
 ako Illustrator, Freehand a CorelDraw, ktorý používa formát SVG

@@ -414,7 +414,7 @@ ID "fill_none" 將其作為圖示，不管是來自 I<fill_none.svg> 或 I<icons
 
 =head1 其他資訊
 
-搜尋 B<Inkscape> 資訊的最佳地點是在 https://www.inkscape.org/。
+搜尋 B<Inkscape> 資訊的最佳地點是在 http://www.inkscape.org/。
 網站上有新聞、說明文件、教學、範例、郵件論壇存檔、最新發佈的程式版本、程式錯誤和功能需求資料庫、論壇...等等。
 
 =head1 參見

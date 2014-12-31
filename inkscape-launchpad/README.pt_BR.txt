@@ -1,7 +1,7 @@
 Inkscape. Desenhando Livremente.
 ======================
 
-https://www.inkscape.org/
+http://www.inkscape.org/
 
 O Inkscape é uma ferramenta de desenho vetorial, open source (código abertor),
 com capacidades similares ao Illustrator, Freehand e CorelDraw. Ele utiliza o formato SVG 

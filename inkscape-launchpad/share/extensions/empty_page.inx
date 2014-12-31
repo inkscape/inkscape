@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<inkscape-extension xmlns:inkscape="https://www.inkscape.org/namespaces/inkscape">
+<inkscape-extension xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
     <_name>Page</_name>
     <id>org.inkscape.render.empty_page</id>
     <dependency type="executable" location="extensions">empty_page.py</dependency>

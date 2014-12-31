@@ -118,18 +118,18 @@ void SPDashSelector::init_dashes() {
         
         int pos = 0;
         if (!dash_prefs.empty()) {
-            SPStyle *style = sp_style_new (NULL);
+            SPStyle style;
             dashes = g_new (double *, dash_prefs.size() + 2); // +1 for custom slot, +1 for terminator slot
             
             for (std::vector<Glib::ustring>::iterator i = dash_prefs.begin(); i != dash_prefs.end(); ++i) {
-                sp_style_read_from_prefs(style, *i);
+                style.readFromPrefs( *i );
                 
-                if (!style->stroke_dasharray.values.empty()) {
-                    dashes[pos] = g_new (double, style->stroke_dasharray.values.size() + 1);
+                if (!style.stroke_dasharray.values.empty()) {
+                    dashes[pos] = g_new (double, style.stroke_dasharray.values.size() + 1);
                     double *d = dashes[pos];
                     unsigned i = 0;
-                    for (; i < style->stroke_dasharray.values.size(); i++) {
-                        d[i] = style->stroke_dasharray.values[i];
+                    for (; i < style.stroke_dasharray.values.size(); i++) {
+                        d[i] = style.stroke_dasharray.values[i];
                     }
                     d[i] = -1;
                 } else {

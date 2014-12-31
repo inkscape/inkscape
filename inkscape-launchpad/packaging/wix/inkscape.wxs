@@ -20,7 +20,7 @@
 						  WorkingDirectory="INSTALLDIR"/>
 				<util:InternetShortcut Id="OnlineDocumentationShortcut"
 								Name="Inkscape Homepage"
-									   Target="https://www.inkscape.org/"/>
+									   Target="http://www.inkscape.org/"/>
 				<RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
 				<RegistryValue Root="HKCU" Key="Software\Microsoft\MyApplicationName" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
 			</Component>

@@ -578,11 +578,7 @@ gboolean MarkerComboBox::separator_cb (GtkTreeModel *model, GtkTreeIter *iter, g
  */
 SPDocument *MarkerComboBox::ink_markers_preview_doc ()
 {
-<<<<<<< TREE
-gchar const *buffer = "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:sodipodi=\"http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd\" xmlns:inkscape=\"https://www.inkscape.org/namespaces/inkscape\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">"
-=======
 gchar const *buffer = "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:sodipodi=\"http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd\" xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" id=\"MarkerSample\">"
->>>>>>> MERGE-SOURCE
 "  <defs id=\"defs\" />"
 
 "  <g id=\"marker-start\">"

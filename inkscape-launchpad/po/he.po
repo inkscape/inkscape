@@ -13019,7 +13019,7 @@ msgstr "יצירה וריצוף הכפילים של הבחירה"
 #. TRANSLATORS: if a group of objects are "clumped" together, then they
 #. are unevenly spread in the given amount of space - as shown in the
 #. diagrams on the left in the following screenshot:
-#. https://www.inkscape.org/screenshots/gallery/inkscape-0.42-CVS-tiles-unclump.png
+#. http://www.inkscape.org/screenshots/gallery/inkscape-0.42-CVS-tiles-unclump.png
 #. So unclumping is the process of spreading a number of objects out more evenly.
 #: ../src/ui/dialog/clonetiler.cpp:1260
 msgid " _Unclump "
@@ -31826,8 +31826,8 @@ msgstr "אפשרויות שורת הפקודה"
 #. i18n. Please don't translate it unless a page exists in your language
 #: ../share/extensions/inkscape_help_commandline.inx.h:3
 #, fuzzy
-msgid "https://www.inkscape.org/doc/inkscape-man.html"
-msgstr "https://www.inkscape.org/doc/keys048.html"
+msgid "http://inkscape.org/doc/inkscape-man.html"
+msgstr "http://inkscape.org/doc/keys048.html"
 
 #: ../share/extensions/inkscape_help_faq.inx.h:1
 msgid "FAQ"
@@ -31837,7 +31837,7 @@ msgstr "שאלות נפוצות"
 #: ../share/extensions/inkscape_help_faq.inx.h:3
 #, fuzzy
 msgid "http://wiki.inkscape.org/wiki/index.php/FAQ"
-msgstr "https://www.inkscape.org/doc/keys048.html"
+msgstr "http://inkscape.org/doc/keys048.html"
 
 #: ../share/extensions/inkscape_help_keys.inx.h:1
 msgid "Keys and Mouse Reference"
@@ -31845,8 +31845,8 @@ msgstr "הפניות עכבר ומקלדת"
 
 #. i18n. Please don't translate it unless a page exists in your language
 #: ../share/extensions/inkscape_help_keys.inx.h:3
-msgid "https://www.inkscape.org/doc/keys048.html"
-msgstr "https://www.inkscape.org/doc/keys048.html"
+msgid "http://inkscape.org/doc/keys048.html"
+msgstr "http://inkscape.org/doc/keys048.html"
 
 #: ../share/extensions/inkscape_help_manual.inx.h:1
 msgid "Inkscape Manual"
@@ -31865,7 +31865,7 @@ msgstr "חדש בגרסה זו"
 #: ../share/extensions/inkscape_help_relnotes.inx.h:3
 #, fuzzy
 msgid "http://wiki.inkscape.org/wiki/index.php/Release_notes/0.91"
-msgstr "https://www.inkscape.org/doc/keys048.html"
+msgstr "http://inkscape.org/doc/keys048.html"
 
 #: ../share/extensions/inkscape_help_reportabug.inx.h:1
 msgid "Report a Bug"

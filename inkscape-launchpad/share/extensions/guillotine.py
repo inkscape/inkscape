@@ -189,7 +189,7 @@ class Guillotine(inkex.Effect):
             without extension.
             '''
             svg = self.document.getroot()
-            att = '{https://www.inkscape.org/namespaces/inkscape}export-filename'
+            att = '{http://www.inkscape.org/namespaces/inkscape}export-filename'
             try:
                 export_file = svg.attrib[att]
             except KeyError:

@@ -247,11 +247,9 @@ static void spdc_apply_powerstroke_shape(const std::vector<Geom::Point> & points
     char const *style_str = NULL;
     style_str = repr->attribute("style");
     if (style_str) {
-        SPStyle *style = sp_style_new(SP_ACTIVE_DOCUMENT);
-        sp_style_merge_from_style_string(style, style_str);
-        stroke_width = style->stroke_width.computed;
-        style->stroke_width.computed = 0;
-        sp_style_unref(style);
+        SPStyle style(SP_ACTIVE_DOCUMENT);
+        style.mergeString(style_str);
+        stroke_width = style.stroke_width.computed;
     }
 
     std::ostringstream s;
@@ -821,14 +819,11 @@ void spdc_create_single_dot(ToolBase *ec, Geom::Point const &pt, char const *too
 
     // find out stroke width (TODO: is there an easier way??)
     double stroke_width = 3.0;
-    gchar const *style_str = NULL;
-    style_str = repr->attribute("style");
+    gchar const *style_str = repr->attribute("style");
     if (style_str) {
-        SPStyle *style = sp_style_new(SP_ACTIVE_DOCUMENT);
-        sp_style_merge_from_style_string(style, style_str);
-        stroke_width = style->stroke_width.computed;
-        style->stroke_width.computed = 0;
-        sp_style_unref(style);
+        SPStyle style(SP_ACTIVE_DOCUMENT);
+        style.mergeString(style_str);
+        stroke_width = style.stroke_width.computed;
     }
 
     // unset stroke and set fill color to former stroke color

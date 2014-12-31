@@ -319,13 +319,14 @@ void SPStyleElem::read_content() {
     //requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 
     // Style references via class= do not, and actually cannot, use autoupdating URIReferences.
-    // Therefore, if an object refers to a stylesheet which has not yet loaded when the object is being loaded
-    // (e.g. if the stylesheet is below or inside the object in XML), its class= has no effect (bug 1491639).
-    // Below is a partial hack that fixes this for a single case: when the <style> is a child of the object
-    // that uses a style from it. It just forces the parent of <style> to reread its style as soon as the stylesheet
-    // is fully loaded. Naturally, this won't work if the user of the stylesheet is its grandparent or precedent.
+    // Therefore, if an object refers to a stylesheet which has not yet loaded when the object is
+    // being loaded (e.g. if the stylesheet is below or inside the object in XML), its class= has
+    // no effect (bug 1491639).  Below is a partial hack that fixes this for a single case: when
+    // the <style> is a child of the object that uses a style from it. It just forces the parent of
+    // <style> to reread its style as soon as the stylesheet is fully loaded. Naturally, this won't
+    // work if the user of the stylesheet is its grandparent or precedent.
     if ( parent ) {
-        sp_style_read_from_object(parent->style, parent);
+        parent->style->readFromObject( parent );
     }
 }
 

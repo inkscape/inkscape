@@ -1253,7 +1253,7 @@ CloneTiler::CloneTiler () :
                     // TRANSLATORS: if a group of objects are "clumped" together, then they
                     //  are unevenly spread in the given amount of space - as shown in the
                     //  diagrams on the left in the following screenshot:
-                    //  https://www.inkscape.org/screenshots/gallery/inkscape-0.42-CVS-tiles-unclump.png
+                    //  http://www.inkscape.org/screenshots/gallery/inkscape-0.42-CVS-tiles-unclump.png
                     //  So unclumping is the process of spreading a number of objects out more evenly.
                     GtkWidget *b = gtk_button_new_with_mnemonic (_(" _Unclump "));
                     gtk_widget_set_tooltip_text (b, _("Spread out clones to reduce clumping; can be applied repeatedly"));

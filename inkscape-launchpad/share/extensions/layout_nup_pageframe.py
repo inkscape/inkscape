@@ -120,7 +120,7 @@ returnTree -- whether to return the ElementTree or the string
             }
 
     doc = ElementTree.ElementTree(ElementTree.Element(container,
-        {'xmlns:inkscape':"https://www.inkscape.org/namespaces/inkscape",
+        {'xmlns:inkscape':"http://www.inkscape.org/namespaces/inkscape",
          'xmlns:xlink':"http://www.w3.org/1999/xlink",
          'width':str(pgSize[width]),
          'height':str(pgSize[height]),

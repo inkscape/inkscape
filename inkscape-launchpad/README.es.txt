@@ -2,7 +2,7 @@
 Inkscape. Dibuja en libertad.
 =============================
 
-https://www.inkscape.org/
+http://www.inkscape.org/
 
 Inkscape es una herramienta de dibujo de código abierto con capacidades
 similares a Illustrator, Freehand y CorelDraw, que utiliza el formato estándar

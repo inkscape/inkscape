@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (https://www.inkscape.org/) -->
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
 
-<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="https://www.inkscape.org/namespaces/inkscape" width="768" height="256" id="svg1901" sodipodi:version="0.32" inkscape:version="0.48+devel r" sodipodi:docname="lighting_filters.svg" version="1.0" inkscape:output_extension="org.inkscape.output.svg.inkscape" inkscape:export-filename="/home/niko/inkscape/complex-lighting.png" inkscape:export-xdpi="90" inkscape:export-ydpi="90">
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="768" height="256" id="svg1901" sodipodi:version="0.32" inkscape:version="0.48+devel r" sodipodi:docname="lighting_filters.svg" version="1.0" inkscape:output_extension="org.inkscape.output.svg.inkscape" inkscape:export-filename="/home/niko/inkscape/complex-lighting.png" inkscape:export-xdpi="90" inkscape:export-ydpi="90">
 <defs id="defs1903">
 <filter id="metallic-lighting" filterRes="256">
 <feGaussianBlur stdDeviation="10.0437" id="feGaussianBlur2792" in="SourceGraphic" result="result0" />

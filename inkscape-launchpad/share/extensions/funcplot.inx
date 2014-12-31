@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<inkscape-extension xmlns="https://www.inkscape.org/namespace/inkscape/extension">
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
 	<_name>Function Plotter</_name>
 	<id>org.inkscape.effect.funcplot</id>
 	<dependency type="executable" location="extensions">funcplot.py</dependency>

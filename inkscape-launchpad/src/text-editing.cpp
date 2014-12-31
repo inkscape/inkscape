@@ -1321,23 +1321,23 @@ static unsigned char_index_of_iterator(Glib::ustring const &string, Glib::ustrin
     return n;
 }
 
+// Move to style.h?
 /** applies the given style string on top of the existing styles for \a item,
 as opposed to sp_style_merge_from_style_string which merges its parameter
 underneath the existing styles (ie ignoring already set properties). */
 static void overwrite_style_with_string(SPObject *item, gchar const *style_string)
 {
-    SPStyle *new_style = sp_style_new(item->document);
-    sp_style_merge_from_style_string(new_style, style_string);
+    SPStyle style(item->document);
+    style.mergeString(style_string);
     gchar const *item_style_string = item->getRepr()->attribute("style");
     if (item_style_string && *item_style_string) {
-        sp_style_merge_from_style_string(new_style, item_style_string);
+        style.mergeString(item_style_string);
     }
-    gchar *new_style_string = sp_style_write_string(new_style);
-    sp_style_unref(new_style);
-    item->getRepr()->setAttribute("style", new_style_string && *new_style_string ? new_style_string : NULL);
-    g_free(new_style_string);
+    Glib::ustring new_style_string = style.write();
+    item->getRepr()->setAttribute("style", new_style_string.empty() ? NULL : new_style_string.c_str());
 }
 
+// Move to style.h?
 /** Returns true if the style of \a parent and the style of \a child are
 equivalent (and hence the children of both will appear the same). It is a
 limitation of the current implementation that \a parent must be a (not
@@ -1349,14 +1349,14 @@ static bool objects_have_equal_style(SPObject const *parent, SPObject const *chi
     // implications too large for me to feel safe fixing, but mainly because the css spec
     // requires that the computed value is inherited, not the specified value.
     g_assert(parent->isAncestorOf(child));
-    gchar *parent_style = sp_style_write_string(parent->style, SP_STYLE_FLAG_ALWAYS);
+
+    Glib::ustring parent_style = parent->style->write( SP_STYLE_FLAG_ALWAYS );
+
     // we have to write parent_style then read it again, because some properties format their values
     // differently depending on whether they're set or not (*cough*dash-offset*cough*)
-    SPStyle *parent_spstyle = sp_style_new(parent->document);
-    sp_style_merge_from_style_string(parent_spstyle, parent_style);
-    g_free(parent_style);
-    parent_style = sp_style_write_string(parent_spstyle, SP_STYLE_FLAG_ALWAYS);
-    sp_style_unref(parent_spstyle);
+    SPStyle parent_spstyle(parent->document);
+    parent_spstyle.mergeString(parent_style.c_str());
+    parent_style = parent_spstyle.write(SP_STYLE_FLAG_ALWAYS);
 
     Glib::ustring child_style_construction;
     while (child != parent) {
@@ -1369,13 +1369,12 @@ static bool objects_have_equal_style(SPObject const *parent, SPObject const *chi
         child = child->parent;
     }
     child_style_construction.insert(0, parent_style);
-    SPStyle *child_spstyle = sp_style_new(parent->document);
-    sp_style_merge_from_style_string(child_spstyle, child_style_construction.c_str());
-    gchar *child_style = sp_style_write_string(child_spstyle, SP_STYLE_FLAG_ALWAYS);
-    sp_style_unref(child_spstyle);
-    bool equal = !strcmp(child_style, parent_style);
-    g_free(child_style);
-    g_free(parent_style);
+
+    SPStyle child_spstyle(parent->document);
+    child_spstyle.mergeString(child_style_construction.c_str());
+    Glib::ustring child_style = child_spstyle.write(SP_STYLE_FLAG_ALWAYS);
+
+    bool equal = (child_style == parent_style);  // Glib::ustring overloads == operator
     return equal;
 }
 

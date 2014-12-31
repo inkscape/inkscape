@@ -492,12 +492,8 @@ sp_tref_convert_to_tspan(SPObject *obj)
             //SPObject * new_string_child = document->getObjectByRepr(new_string_repr);
 
             // Merge style from the tref
-            SPStyle *new_tspan_sty = new_tspan->style;
-            SPStyle const *tref_sty = tref->style;
-            sp_style_merge_from_dying_parent(new_tspan_sty, tref_sty);
-            sp_style_merge_from_parent(new_tspan_sty, new_tspan->parent->style);
-
-
+            new_tspan->style->merge( tref->style );
+            new_tspan->style->cascade( new_tspan->parent->style );
             new_tspan->updateRepr();
 
             // Hold onto our SPObject and repr for now.

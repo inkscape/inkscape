@@ -27,7 +27,7 @@ Shape::Plot (double ix, double iy, double ir, double mx, double my, bool doPoint
   fprintf(outFile,"   inkscape:version=\"0.38cvs\"\n");
   fprintf(outFile,"   xmlns:svg=\"http://www.w3.org/2000/svg\"\n");
   fprintf(outFile,"   xmlns:sodipodi=\"http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd\"\n");
-  fprintf(outFile,"   xmlns:inkscape=\"https://www.inkscape.org/namespaces/inkscape\"\n");
+  fprintf(outFile,"   xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\"\n");
   fprintf(outFile,"   xmlns:xlink=\"http://www.w3.org/1999/xlink\"\n");
   fprintf(outFile,"   width=\"210mm\"\n");
   fprintf(outFile,"   height=\"297mm\"\n");

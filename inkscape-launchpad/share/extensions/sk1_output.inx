@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<inkscape-extension xmlns="https://www.inkscape.org/namespace/inkscape/extension">
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
     <_name>sK1 vector graphics files output</_name>
     <id>org.inkscape.output.sk1</id>
     <dependency type="executable" location="extensions">sk1_output.py</dependency>
