@@ -94,8 +94,18 @@ void CurveDragPoint::dragged(Geom::Point &new_pos, GdkEventMotion *event)
     if(!_pm.isBSpline(false)){
         first->front()->move(first->front()->position() + offset0);
         second->back()->move(second->back()->position() + offset1);
-    }else if(weight>=0.8 && held_shift(*event))second->back()->move(new_pos);
-    else if(weight<=0.2 && held_shift(*event))first->front()->move(new_pos);
+    }else if(weight>=0.8 && held_shift(*event)){
+        second->back()->move(new_pos);
+    }else if(weight<=0.2 && held_shift(*event)){
+        first->front()->move(new_pos);
+    }else if(weight>=0.7){
+        second->move(second->position() + delta);
+    }else if(weight<=0.3){
+        first->move(first->position() + delta);
+    }else{
+        first->move(first->position() + delta);
+        second->move(second->position() + delta);
+    }
     _pm.update();
 }
 
