@@ -71,12 +71,12 @@ static const Util::EnumDataConverter<unsigned> JoinTypeConverter(JoinType, sizeo
 
 LPETaperStroke::LPETaperStroke(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    line_width(_("Stroke width"), _("The (non-tapered) width of the path"), "stroke_width", &wr, this, 1.),
-    attach_start(_("Start offset"), _("Taper distance from path start"), "attach_start", &wr, this, 0.2),
-    attach_end(_("End offset"), _("The ending position of the taper"), "end_offset", &wr, this, 0.2),
-    smoothing(_("Taper smoothing"), _("Amount of smoothing to apply to the tapers"), "smoothing", &wr, this, 0.5),
-    join_type(_("Join type"), _("Join type for non-smooth nodes"), "jointype", JoinTypeConverter, &wr, this, LINEJOIN_EXTRAPOLATED),
-    miter_limit(_("Miter limit"), _("Limit for miter joins"), "miter_limit", &wr, this, 100.)
+    line_width(_("Stroke width:"), _("The (non-tapered) width of the path"), "stroke_width", &wr, this, 1.),
+    attach_start(_("Start offset:"), _("Taper distance from path start"), "attach_start", &wr, this, 0.2),
+    attach_end(_("End offset:"), _("The ending position of the taper"), "end_offset", &wr, this, 0.2),
+    smoothing(_("Taper smoothing:"), _("Amount of smoothing to apply to the tapers"), "smoothing", &wr, this, 0.5),
+    join_type(_("Join type:"), _("Join type for non-smooth nodes"), "jointype", JoinTypeConverter, &wr, this, LINEJOIN_EXTRAPOLATED),
+    miter_limit(_("Miter limit:"), _("Limit for miter joins"), "miter_limit", &wr, this, 100.)
 {
     show_orig_path = true;
     _provides_knotholder_entities = true;
