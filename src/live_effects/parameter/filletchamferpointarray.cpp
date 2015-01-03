@@ -779,19 +779,19 @@ void FilletChamferPointArrayParamKnotHolderEntity::knot_click(guint state)
             sp_lpe_item_update_patheffect(SP_LPE_ITEM(item), false, false);
             const gchar *tip;
             if (type >=3000 && type < 4000){
-                 tip = _("<b>Chamfer</b>: <b>Ctrl+Click</b> toogle type, "
+                 tip = _("<b>Chamfer</b>: <b>Ctrl+Click</b> toggle type, "
                         "<b>Shift+Click</b> open dialog, "
                         "<b>Ctrl+Alt+Click</b> reset");
             } else if (type >=4000 && type < 5000) {
-                tip = _("<b>Inverse Chamfer</b>: <b>Ctrl+Click</b> toogle type, "
+                tip = _("<b>Inverse Chamfer</b>: <b>Ctrl+Click</b> toggle type, "
                         "<b>Shift+Click</b> open dialog, "
                         "<b>Ctrl+Alt+Click</b> reset");
             } else if (type == 2) {
-                tip = _("<b>Inverse Fillet</b>: <b>Ctrl+Click</b> toogle type, "
+                tip = _("<b>Inverse Fillet</b>: <b>Ctrl+Click</b> toggle type, "
                         "<b>Shift+Click</b> open dialog, "
                         "<b>Ctrl+Alt+Click</b> reset");
             } else {
-                tip = _("<b>Fillet</b>: <b>Ctrl+Click</b> toogle type, "
+                tip = _("<b>Fillet</b>: <b>Ctrl+Click</b> toggle type, "
                         "<b>Shift+Click</b> open dialog, "
                         "<b>Ctrl+Alt+Click</b> reset");
             }
@@ -840,19 +840,19 @@ void FilletChamferPointArrayParam::addKnotHolderEntities(KnotHolder *knotholder,
         }
         const gchar *tip;
         if (_vector[i][Y] >=3000 && _vector[i][Y] < 4000){
-             tip = _("<b>Chamfer</b>: <b>Ctrl+Click</b> toogle type, "
+             tip = _("<b>Chamfer</b>: <b>Ctrl+Click</b> toggle type, "
                     "<b>Shift+Click</b> open dialog, "
                     "<b>Ctrl+Alt+Click</b> reset");
         } else if (_vector[i][Y] >=4000 && _vector[i][Y] < 5000) {
-            tip = _("<b>Inverse Chamfer</b>: <b>Ctrl+Click</b> toogle type, "
+            tip = _("<b>Inverse Chamfer</b>: <b>Ctrl+Click</b> toggle type, "
                     "<b>Shift+Click</b> open dialog, "
                     "<b>Ctrl+Alt+Click</b> reset");
         } else if (_vector[i][Y] == 2) {
-            tip = _("<b>Inverse Fillet</b>: <b>Ctrl+Click</b> toogle type, "
+            tip = _("<b>Inverse Fillet</b>: <b>Ctrl+Click</b> toggle type, "
                     "<b>Shift+Click</b> open dialog, "
                     "<b>Ctrl+Alt+Click</b> reset");
         } else {
-            tip = _("<b>Fillet</b>: <b>Ctrl+Click</b> toogle type, "
+            tip = _("<b>Fillet</b>: <b>Ctrl+Click</b> toggle type, "
                     "<b>Shift+Click</b> open dialog, "
                     "<b>Ctrl+Alt+Click</b> reset");
         }
