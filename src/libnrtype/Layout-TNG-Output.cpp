@@ -108,7 +108,7 @@ void Layout::_getGlyphTransformMatrix(int glyph_index, Geom::Affine *matrix) con
     (*matrix)[0] = span.font_size * cos_rotation;
     (*matrix)[1] = span.font_size * sin_rotation;
     (*matrix)[2] = span.font_size * sin_rotation;
-    (*matrix)[3] = -span.font_size * cos_rotation;
+    (*matrix)[3] = -span.font_size * cos_rotation * (_glyphs[glyph_index].vertical_scale); // unscale vertically so the specified text height is preserved if lengthAdjust=spacingAndGlyphs
     if (span.block_progression == LEFT_TO_RIGHT || span.block_progression == RIGHT_TO_LEFT) {
         (*matrix)[4] = _lines[_chunks[span.in_chunk].in_line].baseline_y + _glyphs[glyph_index].y;
         (*matrix)[5] = _chunks[span.in_chunk].left_x + _glyphs[glyph_index].x;
@@ -802,6 +802,36 @@ void Layout::transform(Geom::Affine const &transform)
         _glyphs[glyph_index].x = point[0];
         _glyphs[glyph_index].y = point[1];
     }
+}
+
+double Layout::getTextLengthIncrementDue() const
+{
+    if (textLength._set && textLengthIncrement != 0 && lengthAdjust == Inkscape::Text::Layout::LENGTHADJUST_SPACING) {
+        return textLengthIncrement;
+    }
+    return 0;
+}
+
+
+double Layout::getTextLengthMultiplierDue() const
+{
+    if (textLength._set && textLengthMultiplier != 1 && (lengthAdjust == Inkscape::Text::Layout::LENGTHADJUST_SPACINGANDGLYPHS)) {
+        return textLengthMultiplier;
+    }
+    return 1;
+}
+
+double Layout::getActualLength() const
+{
+    double length = 0;
+    for (std::vector<Span>::const_iterator it_span = _spans.begin() ; it_span != _spans.end() ; it_span++) {
+        // take x_end of the last span of each chunk
+        if (it_span == _spans.end() - 1 || (it_span + 1)->in_chunk != it_span->in_chunk)
+            length += it_span->x_end;
+    }
+    return length;
+
+    
 }
 
 }//namespace Text

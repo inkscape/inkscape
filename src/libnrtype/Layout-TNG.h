@@ -21,6 +21,7 @@
 #include <algorithm>
 #include <vector>
 #include <boost/optional.hpp>
+#include <svg/svg-length.h>
 
 #ifdef HAVE_CAIRO_PDF
 namespace Inkscape {
@@ -37,7 +38,6 @@ using Inkscape::Extension::Internal::CairoRenderContext;
 class SPStyle;
 class Shape;
 struct SPPrintContext;
-class SVGLength;
 class Path;
 class SPCurve;
 class font_instance;
@@ -160,6 +160,9 @@ public:
     /** Display alignment for shapes. See appendWrapShape(). */
     enum DisplayAlign {DISPLAY_ALIGN_BEFORE, DISPLAY_ALIGN_CENTER, DISPLAY_ALIGN_AFTER};
 
+    /** lengthAdjust values */
+    enum LengthAdjust {LENGTHADJUST_SPACING, LENGTHADJUST_SPACINGANDGLYPHS};
+
     /** The optional attributes which can be applied to a SVG text or
     related tag. See appendText(). See SVG1.1 section 10.4 for the
     definitions of all these members. See sp_svg_length_list_read() for
@@ -172,6 +175,8 @@ public:
         std::vector<SVGLength> dx;
         std::vector<SVGLength> dy;
         std::vector<SVGLength> rotate;
+        SVGLength textLength;
+        LengthAdjust lengthAdjust;
     };
 
     /** Control codes which can be embedded in the text to be flowed. See
@@ -289,6 +294,43 @@ public:
     void appendWrapShape(Shape const *shape, DisplayAlign display_align = DISPLAY_ALIGN_BEFORE);
 
     //@}
+
+    // ************************** textLength and friends *************************
+
+    /** Gives the length target of this layout, as given by textLength attribute.
+
+        FIXME: by putting it here we only support @textLength on text and flowRoot, not on any
+        spans inside. For spans, we will need to add markers of start and end of a textLength span
+        into the _input_stream. These spans can nest (SVG 1.1, section 10.5). After a first layout
+        calculation, we would go through the input stream and, for each end of a textLength span,
+        go through its items, choose those where it wasn't yet set by a nested span, calculate
+        their number of characters, divide the length deficit by it, and set set the
+        textLengthMultiplier for those characters only. For now we do this for the entire layout,
+        without dealing with spans.
+    */
+    SVGLength textLength;
+
+    /** How do we meet textLength if specified: by letterspacing or by scaling horizontally */
+    LengthAdjust lengthAdjust;
+
+    /** By how much each character needs to be wider or narrower, using the specified lengthAdjust
+        strategy, for the layout to meet its textLength target. Is set to non-zero after the layout
+        is calculated for the first time, then it is recalculated with each glyph getting its adjustment. */
+    /** This one is used by scaling strategies: each glyph width is multiplied by this */
+    double textLengthMultiplier;
+    /** This one is used by letterspacing strategy: to each glyph width, this is added */
+    double textLengthIncrement;
+
+    /** Get the actual spacing increment if it's due with the current values of above stuff, otherwise 0 */
+    double getTextLengthIncrementDue() const;
+    /** Get the actual scale multiplier if it's due with the current values of above stuff, otherwise 1 */
+    double getTextLengthMultiplierDue() const;
+
+    /** Get actual length of layout, by summing span lengths. For one-line non-flowed text, just
+        the width; for multiline non-flowed, sum of lengths of all lines; for flowed text, sum of
+        scanline widths for all non-last lines plus text width of last line. */
+    double getActualLength() const;
+
 
     // ************************** doing the actual flowing *************************
 
@@ -618,6 +660,8 @@ private:
         std::vector<SVGLength> dx;
         std::vector<SVGLength> dy;
         std::vector<SVGLength> rotate;
+        SVGLength textLength;
+        LengthAdjust lengthAdjust;
         
         // a few functions for some of the more complicated style accesses
         float styleComputeFontSize() const;
@@ -701,6 +745,7 @@ private:
         float y;         /// relative to the current line's baseline
         float rotation;  /// absolute, modulo any object transforms, which we don't know about
         float width;
+        float vertical_scale; /// to implement lengthAdjust="spacingAndGlyphs" that must scale glyphs only horizontally; instead we change font size and then undo that change vertically only
         inline Span const & span(Layout const *l) const {return l->_spans[l->_characters[in_character].in_span];}
         inline Chunk const & chunk(Layout const *l) const {return l->_chunks[l->_spans[l->_characters[in_character].in_span].in_chunk];}
         inline Line const & line(Layout const *l) const {return l->_lines[l->_chunks[l->_spans[l->_characters[in_character].in_span].in_chunk].in_line];}

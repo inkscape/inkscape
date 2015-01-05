@@ -195,6 +195,8 @@ static SPStyleProp const props[] = {
     {SP_ATTR_DX, "dx"},
     {SP_ATTR_DY, "dy"},
     {SP_ATTR_ROTATE, "rotate"},
+    {SP_ATTR_TEXTLENGTH, "textLength"},
+    {SP_ATTR_LENGTHADJUST, "lengthAdjust"},
     {SP_ATTR_SODIPODI_ROLE, "sodipodi:role"},
     /* SPText */
     {SP_ATTR_SODIPODI_LINESPACING, "sodipodi:linespacing"},

@@ -401,15 +401,17 @@ std::vector<Geom::Point> Layout::createSelectionShape(iterator const &it_start, 
                 bottom_right[Geom::X] = span_x + _characters[char_index].x;
 
             double baseline_y = _spans[span_index].line(this).baseline_y + _spans[span_index].baseline_shift;
+            double vertical_scale = _glyphs.back().vertical_scale;
+
             if (_directions_are_orthogonal(_blockProgression(), TOP_TO_BOTTOM)) {
-                double span_height = _spans[span_index].line_height.ascent + _spans[span_index].line_height.descent;
+                double span_height = vertical_scale * (_spans[span_index].line_height.ascent + _spans[span_index].line_height.descent);
                 top_left[Geom::Y] = top_left[Geom::X];
                 top_left[Geom::X] = baseline_y - span_height * 0.5;
                 bottom_right[Geom::Y] = bottom_right[Geom::X];
                 bottom_right[Geom::X] = baseline_y + span_height * 0.5;
             } else {
-                top_left[Geom::Y] = baseline_y - _spans[span_index].line_height.ascent;
-                bottom_right[Geom::Y] = baseline_y + _spans[span_index].line_height.descent;
+                top_left[Geom::Y] =  baseline_y - vertical_scale * _spans[span_index].line_height.ascent;
+                bottom_right[Geom::Y] = baseline_y + vertical_scale * _spans[span_index].line_height.descent;
             }
         }
 
@@ -505,21 +507,23 @@ void Layout::queryCursorShape(iterator const &it, Geom::Point &position, double 
             position[Geom::Y] = span->line(this).baseline_y + span->baseline_shift;
         }
         // up to now *position is the baseline point, not the final point which will be the bottom of the descent
+        double vertical_scale = _glyphs.back().vertical_scale;
+
         if (_directions_are_orthogonal(_blockProgression(), TOP_TO_BOTTOM)) {
-            height = span->line_height.ascent + span->line_height.descent;
+            height = vertical_scale * span->line_height.ascent + span->line_height.descent;
             rotation += M_PI / 2;
             std::swap(position[Geom::X], position[Geom::Y]);
-            position[Geom::X] -= sin(rotation) * height * 0.5;
-            position[Geom::Y] += cos(rotation) * height * 0.5;
+            position[Geom::X] -= vertical_scale * sin(rotation) * height * 0.5;
+            position[Geom::Y] += vertical_scale * cos(rotation) * height * 0.5;
         } else {
             double caret_slope_run = 0.0, caret_slope_rise = 1.0;
             if (span->font)
                 const_cast<font_instance*>(span->font)->FontSlope(caret_slope_run, caret_slope_rise);
             double caret_slope = atan2(caret_slope_run, caret_slope_rise);
-            height = (span->line_height.ascent + span->line_height.descent) / cos(caret_slope);
+            height = vertical_scale * (span->line_height.ascent + span->line_height.descent) / cos(caret_slope);
             rotation += caret_slope;
-            position[Geom::X] -= sin(rotation) * span->line_height.descent;
-            position[Geom::Y] += cos(rotation) * span->line_height.descent;
+            position[Geom::X] -= sin(rotation) * vertical_scale * span->line_height.descent;
+            position[Geom::Y] += cos(rotation) * vertical_scale * span->line_height.descent;
         }
     }
 }
@@ -601,9 +605,10 @@ void Layout::simulateLayoutUsingKerning(iterator const &from, iterator const &to
             if (input_item->Type() == TEXT_SOURCE) {
                 SPStyle const *style = static_cast<InputStreamTextSource*>(input_item)->style;
                 if (_characters[char_index].char_attributes.is_white)
-                    dx -= style->word_spacing.computed;
+                    dx -= style->word_spacing.computed * getTextLengthMultiplierDue();
                 if (_characters[char_index].char_attributes.is_cursor_position)
-                    dx -= style->letter_spacing.computed;
+                    dx -= style->letter_spacing.computed * getTextLengthMultiplierDue();
+                    dx -= getTextLengthIncrementDue();
             }
 
             if (fabs(dx) > 0.0001) {

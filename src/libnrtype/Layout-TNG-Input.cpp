@@ -72,6 +72,11 @@ void Layout::appendText(Glib::ustring const &text, SPStyle *style, void *source_
                     last_rotate = *it;
             new_source->rotate.resize(1, last_rotate);
         }
+        new_source->textLength._set = optional_attributes->textLength._set;
+        new_source->textLength.value = optional_attributes->textLength.value;
+        new_source->textLength.computed = optional_attributes->textLength.computed;
+        new_source->textLength.unit = optional_attributes->textLength.unit;
+        new_source->lengthAdjust = optional_attributes->lengthAdjust;
     }
     
     _input_stream.push_back(new_source);

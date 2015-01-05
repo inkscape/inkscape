@@ -20,6 +20,10 @@ Layout::Layout() :
     _input_truncated(0),
     _path_fitted(NULL)
 {
+      textLength._set = false;
+      textLengthMultiplier = 1;
+      textLengthIncrement = 0;
+      lengthAdjust = LENGTHADJUST_SPACING;
 }
 
 Layout::~Layout()
@@ -31,6 +35,11 @@ void Layout::clear()
 {
     _clearInputObjects();
     _clearOutputObjects();
+
+     textLength._set = false;
+     textLengthMultiplier = 1;
+     textLengthIncrement = 0;
+     lengthAdjust = LENGTHADJUST_SPACING;
 }
 
 bool Layout::_directions_are_orthogonal(Direction d1, Direction d2)
