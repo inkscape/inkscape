@@ -610,6 +610,35 @@ Inkscape::Util::Unit const& SPDocument::getSVGUnit() const
     return nv ? nv->getSVGUnit() : *unit_table.getUnit("px");
 }
 
+// Avoid calling root->updateRepr() twice by combining setting width and height.
+// (As done on every delete as clipboard calls this via fitToRect(). Also called in page-sizer.cpp)
+void SPDocument::setWidthAndHeight(const Inkscape::Util::Quantity &width, const Inkscape::Util::Quantity &height, bool changeSize)
+{
+    Inkscape::Util::Unit const *old_width_units = unit_table.getUnit("px");
+    if (root->width.unit)
+        old_width_units = unit_table.getUnit(root->width.unit);
+    gdouble old_width_converted = Inkscape::Util::Quantity::convert(root->width.value, old_width_units, width.unit);
+
+    root->width.computed = width.value("px");
+    root->width.value = width.quantity;
+    root->width.unit = (SVGLength::Unit) width.unit->svgUnit();
+
+    Inkscape::Util::Unit const *old_height_units = unit_table.getUnit("px");
+    if (root->height.unit)
+        old_height_units = unit_table.getUnit(root->height.unit);
+    gdouble old_height_converted = Inkscape::Util::Quantity::convert(root->height.value, old_height_units, height.unit);
+
+    root->height.computed = height.value("px");
+    root->height.value = height.quantity;
+    root->height.unit = (SVGLength::Unit) height.unit->svgUnit();
+
+    if (root->viewBox_set && changeSize)
+        root->viewBox.setMax(Geom::Point(
+        root->viewBox.left() + (root->width.value /  old_width_converted ) * root->viewBox.width(),
+        root->viewBox.top()  + (root->height.value / old_height_converted) * root->viewBox.height()));
+    root->updateRepr();
+}
+
 Inkscape::Util::Quantity SPDocument::getWidth() const
 {
     g_return_val_if_fail(this->priv != NULL, Inkscape::Util::Quantity(0.0, unit_table.getUnit("")));
@@ -739,9 +768,10 @@ void SPDocument::fitToRect(Geom::Rect const &rect, bool with_margins)
             rect.min() - Geom::Point(margin_left, margin_bottom),
             rect.max() + Geom::Point(margin_right, margin_top));
     
-    
-    setWidth(Inkscape::Util::Quantity(Inkscape::Util::Quantity::convert(rect_with_margins.width(), "px", nv_units), nv_units));
-    setHeight(Inkscape::Util::Quantity(Inkscape::Util::Quantity::convert(rect_with_margins.height(), "px", nv_units), nv_units));
+    setWidthAndHeight(
+        Inkscape::Util::Quantity(Inkscape::Util::Quantity::convert(rect_with_margins.width(),  "px", nv_units), nv_units),
+        Inkscape::Util::Quantity(Inkscape::Util::Quantity::convert(rect_with_margins.height(), "px", nv_units), nv_units)
+        );
 
     Geom::Translate const tr(
             Geom::Point(0, old_height - rect_with_margins.height())

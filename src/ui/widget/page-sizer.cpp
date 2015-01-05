@@ -479,8 +479,7 @@ PageSizer::setDim (Inkscape::Util::Quantity w, Inkscape::Util::Quantity h, bool 
     if (SP_ACTIVE_DESKTOP && !_widgetRegistry->isUpdating()) {
         SPDocument *doc = SP_ACTIVE_DESKTOP->getDocument();
         Inkscape::Util::Quantity const old_height = doc->getHeight();
-        doc->setWidth (w, changeSize);
-        doc->setHeight (h, changeSize);
+        doc->setWidthAndHeight (w, h, changeSize);
         // The origin for the user is in the lower left corner; this point should remain stationary when
         // changing the page size. The SVG's origin however is in the upper left corner, so we must compensate for this
         if (changeSize) {
