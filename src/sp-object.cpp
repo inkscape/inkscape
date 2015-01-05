@@ -151,9 +151,14 @@ SPObject::~SPObject() {
         // Conjecture: style pointer is never NULL.
         std::cerr << "SPObject::~SPObject(): style pointer is NULL" << std::endl;
     } else if( style->refCount() > 1 ) {
-        // Several classes ref style.
         // Conjecture: style pointer should be unreffed by other classes before reaching here.
-        std::cerr << "SPObject::~SPObject(): someone else still holding ref to style" << std::endl;
+        // Conjecture is false for SPTSpan where ref is held by InputStreamTextSource.
+        // As an additional note:
+        //   The outer tspan of a nested tspan will result in a ref count of five: one for the
+        //   TSpan itself, one for the InputStreamTextSource instance before the inner tspan and
+        //   one for the one after, along with one for each corresponding DrawingText instance.
+        // std::cerr << "SPObject::~SPObject(): someone else still holding ref to style" << std::endl;
+        //
         sp_style_unref( this->style );
     } else {
         delete this->style;
