@@ -64,8 +64,10 @@ public:
             for (i = 0; i < BSize; ++i) {
                 _latticeSelector[i] = i;
 
-                _gradient[i][k][0] = static_cast<double>(_random() % (BSize*2) - BSize) / BSize;
-                _gradient[i][k][1] = static_cast<double>(_random() % (BSize*2) - BSize) / BSize;
+                do {
+                  _gradient[i][k][0] = static_cast<double>(_random() % (BSize*2) - BSize) / BSize;
+                  _gradient[i][k][1] = static_cast<double>(_random() % (BSize*2) - BSize) / BSize;
+                } while(_gradient[i][k][0] == 0 && _gradient[i][k][1] == 0);
 
                 // normalize gradient
                 double s = hypot(_gradient[i][k][0], _gradient[i][k][1]);
