@@ -223,7 +223,7 @@ void FilletChamferPropertiesDialog::_set_knot_point(Geom::Point knotpoint)
     } else {
         _flexible = false;
         std::string posConcat = distance_or_radius +
-            std::string(_("(")) + std::string(unit) + std::string(")");
+            std::string(g_strdup_printf(_("(%s):"), unit));
         _fillet_chamfer_position_label.set_label(_(posConcat.c_str()));
         position = knotpoint[Geom::X] * -1;
         

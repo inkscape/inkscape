@@ -57,12 +57,12 @@ LPEFilletChamfer::LPEFilletChamfer(LivePathEffectObject *lpeobject) :
     only_selected(_("Change only selected nodes"), _("Change only selected nodes"), "only_selected", &wr, this, false),
     flexible(_("Flexible radius size (%)"), _("Flexible radius size (%)"), "flexible", &wr, this, false),
     use_knot_distance(_("Use knots distance instead radius"), _("Use knots distance instead radius"), "use_knot_distance", &wr, this, false),
-    unit(_("Unit"), _("Unit"), "unit", &wr, this),
-    method(_("Method"), _("Fillets methods"), "method", FMConverter, &wr, this, FM_AUTO),
-    radius(_("Radius (unit or %)"), _("Radius, in unit or %"), "radius", &wr, this, 0.),
-    chamfer_steps(_("Chamfer steps"), _("Chamfer steps"), "chamfer_steps", &wr, this, 0),
+    unit(_("Unit:"), _("Unit"), "unit", &wr, this),
+    method(_("Method:"), _("Fillets methods"), "method", FMConverter, &wr, this, FM_AUTO),
+    radius(_("Radius (unit or %):"), _("Radius, in unit or %"), "radius", &wr, this, 0.),
+    chamfer_steps(_("Chamfer steps:"), _("Chamfer steps"), "chamfer_steps", &wr, this, 0),
     
-    helper_size(_("Helper size with direction"), _("Helper size with direction"), "helper_size", &wr, this, 0)
+    helper_size(_("Helper size with direction:"), _("Helper size with direction"), "helper_size", &wr, this, 0)
 {
     registerParameter(&fillet_chamfer_values);
     registerParameter(&unit);
