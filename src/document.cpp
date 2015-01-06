@@ -604,10 +604,30 @@ Inkscape::Util::Unit const* SPDocument::getDisplayUnit() const
 
 /// guaranteed not to return nullptr
 // returns 'px' units as default, like legacy Inkscape
+// THIS SHOULD NOT BE USED... INSTEAD USE DOCUMENT SCALE
 Inkscape::Util::Unit const& SPDocument::getSVGUnit() const
 {
     SPNamedView const* nv = sp_document_namedview(this, NULL);
     return nv ? nv->getSVGUnit() : *unit_table.getUnit("px");
+}
+
+/// Returns document scale as defined by width/height and viewBox (real world to user-units).
+Geom::Scale SPDocument::getDocumentScale() const
+{
+    Geom::Scale scale;
+    if( root->viewBox_set ) {
+        double scale_x = 1.0;
+        double scale_y = 1.0;
+        if( root->viewBox.width() > 0.0 ) {
+            scale_x = root->width.computed / root->viewBox.width();
+        }
+        if( root->viewBox.height() > 0.0 ) {
+            scale_y = root->height.computed / root->viewBox.height();
+        }
+        scale = Geom::Scale(scale_x, scale_y);
+    }
+    // std::cout << "SPDocument::getDocumentScale():\n" << scale << std::endl;
+    return scale;
 }
 
 // Avoid calling root->updateRepr() twice by combining setting width and height.
