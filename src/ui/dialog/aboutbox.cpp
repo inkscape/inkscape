@@ -493,7 +493,7 @@ void AboutBox::initStrings() {
 "Elias Norberg <elno0959 at student.su.se>, 2009.\n"
 "Equipe de Tradução Inkscape Brasil <www.inkscapebrasil.org>, 2007.\n"
 "Fatih Demir <kabalak@gtranslator.org>, 2000.\n"
-"Firas Hanife <FirasHanife@gmail.com>, 2014.\n"
+"Firas Hanife <FirasHanife@gmail.com>, 2014-2015.\n"
 "Foppe Benedictus <foppe.benedictus@gmail.com>, 2007-2009.\n"
 "Francesc Dorca <f.dorca@filnet.es>, 2003. Traducció sodipodi.\n"
 "Francisco Javier F. Serrador <serrador@arrakis.es>, 2003.\n"
