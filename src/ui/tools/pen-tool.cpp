@@ -20,14 +20,15 @@
 #include <cstring>
 #include <string>
 
+#include "shortcuts.h"
+#include "verbs.h"
+
 #include "ui/tools/pen-tool.h"
 #include "sp-namedview.h"
 #include "desktop.h"
 
 #include "selection.h"
 #include "selection-chemistry.h"
-#include "shortcuts.h"
-#include "verbs.h"
 #include "ui/draw-anchor.h"
 #include "message-stack.h"
 #include "message-context.h"
