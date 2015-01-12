@@ -26,6 +26,8 @@
 
 #include "selection.h"
 #include "selection-chemistry.h"
+#include "shortcuts.h"
+#include "verbs.h"
 #include "ui/draw-anchor.h"
 #include "message-stack.h"
 #include "message-context.h"
@@ -1068,6 +1070,23 @@ bool PenTool::_handleKeyPress(GdkEvent *event) {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     gdouble const nudge = prefs->getDoubleLimited("/options/nudgedistance/value", 2, 0, 1000, "px"); // in px
 
+    // Check for undo if we have started drawing a path.
+    if (this->npoints > 0) {
+        unsigned int shortcut = Inkscape::UI::Tools::get_group0_keyval (&event->key) |
+                   ( event->key.state & GDK_SHIFT_MASK ?
+                     SP_SHORTCUT_SHIFT_MASK : 0 ) |
+                   ( event->key.state & GDK_CONTROL_MASK ?
+                     SP_SHORTCUT_CONTROL_MASK : 0 ) |
+                   ( event->key.state & GDK_MOD1_MASK ?
+                     SP_SHORTCUT_ALT_MASK : 0 );
+        Inkscape::Verb* verb = sp_shortcut_get_verb(shortcut);
+        if (verb) {
+            unsigned int vcode = verb->get_code();
+            if (vcode == SP_VERB_EDIT_UNDO)
+                return _undoLastPoint();
+        }
+    }
+
     switch (get_group0_keyval (&event->key)) {
         case GDK_KEY_Left: // move last point left
         case GDK_KEY_KP_Left:
@@ -1222,14 +1241,6 @@ bool PenTool::_handleKeyPress(GdkEvent *event) {
                 ret = true;
             }
             break;
-        case GDK_KEY_z:
-        case GDK_KEY_Z:
-            if (MOD__CTRL_ONLY(event) && this->npoints != 0) {
-                // if drawing, cancel, otherwise pass it up for undo
-                this->_cancel ();
-                ret = true;
-            }
-            break;
         case GDK_KEY_g:
         case GDK_KEY_G:
             if (MOD__SHIFT_ONLY(event)) {
@@ -1240,83 +1251,7 @@ bool PenTool::_handleKeyPress(GdkEvent *event) {
         case GDK_KEY_BackSpace:
         case GDK_KEY_Delete:
         case GDK_KEY_KP_Delete:
-            if ( this->green_curve->is_empty() || (this->green_curve->last_segment() == NULL) ) {
-                if (!this->red_curve->is_empty()) {
-                    this->_cancel ();
-                    ret = true;
-                } else {
-                    // do nothing; this event should be handled upstream
-                }
-            } else {
-                // Reset red curve
-                this->red_curve->reset();
-                // Destroy topmost green bpath
-                if (this->green_bpaths) {
-                    if (this->green_bpaths->data) {
-                        sp_canvas_item_destroy(SP_CANVAS_ITEM(this->green_bpaths->data));
-                    }
-                    this->green_bpaths = g_slist_remove(this->green_bpaths, this->green_bpaths->data);
-                }
-                // Get last segment
-                if ( this->green_curve->is_empty() ) {
-                    g_warning("pen_handle_key_press, case GDK_KP_Delete: Green curve is empty");
-                    break;
-                }
-                // The code below assumes that this->green_curve has only ONE path !
-                Geom::Curve const * crv = this->green_curve->last_segment();
-                this->p[0] = crv->initialPoint();
-                if ( Geom::CubicBezier const * cubic = dynamic_cast<Geom::CubicBezier const *>(crv)) {
-                    this->p[1] = (*cubic)[1];
-
-                } else {
-                    this->p[1] = this->p[0];
-                }
-
-                // asign the value in a third of the distance of the last segment.
-                if (this->bspline){
-                    this->p[1] = this->p[0] + (1./3)*(this->p[3] - this->p[0]);
-                }
-
-                Geom::Point const pt( (this->npoints < 4) ? crv->finalPoint() : this->p[3] );
-
-                this->npoints = 2;
-                // delete the last segment of the green curve
-                if (this->green_curve->get_segment_count() == 1) {
-                    this->npoints = 5;
-                    if (this->green_bpaths) {
-                        if (this->green_bpaths->data) {
-                            sp_canvas_item_destroy(SP_CANVAS_ITEM(this->green_bpaths->data));
-                        }
-                        this->green_bpaths = g_slist_remove(this->green_bpaths, this->green_bpaths->data);
-                    }
-                    this->green_curve->reset();
-                } else {
-                    this->green_curve->backspace();
-                }
-
-                // assign the value of this->p[1] to the oposite of the green line last segment 
-                if (this->spiro){
-                    Geom::CubicBezier const *cubic = dynamic_cast<Geom::CubicBezier const *>(this->green_curve->last_segment());
-                    if ( cubic ) {
-                        this->p[1] = (*cubic)[3] + (*cubic)[3] - (*cubic)[2];
-                        SP_CTRL(this->c1)->moveto(this->p[0]);
-                    } else {
-                        this->p[1] = this->p[0];
-                    }
-                }
-
-                sp_canvas_item_hide(this->c0);
-                sp_canvas_item_hide(this->c1);
-                sp_canvas_item_hide(this->cl0);
-                sp_canvas_item_hide(this->cl1);
-                this->state = PenTool::POINT;
-                this->_setSubsequentPoint(pt, true);
-                pen_last_paraxial_dir = !pen_last_paraxial_dir;
-
-                //redraw
-                this->_bspline_spiro_build();
-                ret = true;
-            }
+            ret = _undoLastPoint();
             break;
         default:
             break;
@@ -2177,6 +2112,92 @@ void PenTool::_finishSegment(Geom::Point const p, guint const state) {
 
         this->red_curve->reset();
     }
+}
+
+// Partial fix for https://bugs.launchpad.net/inkscape/+bug/171990
+// TODO: implement the redo feature
+bool PenTool::_undoLastPoint() {
+    bool ret = false;
+
+    if ( this->green_curve->is_empty() || (this->green_curve->last_segment() == NULL) ) {
+        if (!this->red_curve->is_empty()) {
+            this->_cancel ();
+            ret = true;
+        } else {
+            // do nothing; this event should be handled upstream
+        }
+    } else {
+        // Reset red curve
+        this->red_curve->reset();
+        // Destroy topmost green bpath
+        if (this->green_bpaths) {
+            if (this->green_bpaths->data) {
+                sp_canvas_item_destroy(SP_CANVAS_ITEM(this->green_bpaths->data));
+            }
+            this->green_bpaths = g_slist_remove(this->green_bpaths, this->green_bpaths->data);
+        }
+        // Get last segment
+        if ( this->green_curve->is_empty() ) {
+            g_warning("pen_handle_key_press, case GDK_KP_Delete: Green curve is empty");
+            return false;
+        }
+        // The code below assumes that this->green_curve has only ONE path !
+        Geom::Curve const * crv = this->green_curve->last_segment();
+        this->p[0] = crv->initialPoint();
+        if ( Geom::CubicBezier const * cubic = dynamic_cast<Geom::CubicBezier const *>(crv)) {
+            this->p[1] = (*cubic)[1];
+
+        } else {
+            this->p[1] = this->p[0];
+        }
+
+        // asign the value in a third of the distance of the last segment.
+        if (this->bspline){
+            this->p[1] = this->p[0] + (1./3)*(this->p[3] - this->p[0]);
+        }
+
+        Geom::Point const pt( (this->npoints < 4) ? crv->finalPoint() : this->p[3] );
+
+        this->npoints = 2;
+        // delete the last segment of the green curve
+        if (this->green_curve->get_segment_count() == 1) {
+            this->npoints = 5;
+            if (this->green_bpaths) {
+                if (this->green_bpaths->data) {
+                    sp_canvas_item_destroy(SP_CANVAS_ITEM(this->green_bpaths->data));
+                }
+                this->green_bpaths = g_slist_remove(this->green_bpaths, this->green_bpaths->data);
+            }
+            this->green_curve->reset();
+        } else {
+            this->green_curve->backspace();
+        }
+
+        // assign the value of this->p[1] to the oposite of the green line last segment 
+        if (this->spiro){
+            Geom::CubicBezier const *cubic = dynamic_cast<Geom::CubicBezier const *>(this->green_curve->last_segment());
+            if ( cubic ) {
+                this->p[1] = (*cubic)[3] + (*cubic)[3] - (*cubic)[2];
+                SP_CTRL(this->c1)->moveto(this->p[0]);
+            } else {
+                this->p[1] = this->p[0];
+            }
+        }
+
+        sp_canvas_item_hide(this->c0);
+        sp_canvas_item_hide(this->c1);
+        sp_canvas_item_hide(this->cl0);
+        sp_canvas_item_hide(this->cl1);
+        this->state = PenTool::POINT;
+        this->_setSubsequentPoint(pt, true);
+        pen_last_paraxial_dir = !pen_last_paraxial_dir;
+
+        //redraw
+        this->_bspline_spiro_build();
+        ret = true;
+    }
+
+    return ret;
 }
 
 void PenTool::_finish(gboolean const closed) {

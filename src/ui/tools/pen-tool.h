@@ -121,6 +121,7 @@ private:
 	void _setSubsequentPoint(Geom::Point const p, bool statusbar, guint status = 0);
 	void _setCtrl(Geom::Point const p, guint state);
 	void _finishSegment(Geom::Point p, guint state);
+    bool _undoLastPoint();
 
 	void _finish(gboolean closed);
 
