@@ -207,12 +207,12 @@ void FilletChamferPropertiesDialog::_handleButtonEvent(GdkEventButton *event)
 void FilletChamferPropertiesDialog::_set_knot_point(Geom::Point knotpoint)
 {
     double position;
-    std::string distance_or_radius = std::string(_("Radius "));
+    std::string distance_or_radius = std::string(_("Radius"));
     if(aprox){
-        distance_or_radius = std::string(_("Radius approximated "));
+        distance_or_radius = std::string(_("Radius approximated"));
     }
     if(use_distance){
-        distance_or_radius = std::string(_("Knot distance "));
+        distance_or_radius = std::string(_("Knot distance"));
     }
     if (knotpoint.x() > 0) {
         double intpart;
@@ -222,8 +222,7 @@ void FilletChamferPropertiesDialog::_set_knot_point(Geom::Point knotpoint)
         _fillet_chamfer_position_label.set_label(_("Position (%):"));
     } else {
         _flexible = false;
-        std::string posConcat = distance_or_radius +
-            std::string(g_strdup_printf(_("(%s):"), unit));
+        std::string posConcat = Glib::ustring::compose (_("%1 (%2):"), distance_or_radius, unit);
         _fillet_chamfer_position_label.set_label(_(posConcat.c_str()));
         position = knotpoint[Geom::X] * -1;
         

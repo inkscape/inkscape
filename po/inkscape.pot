@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-01-06 10:39+0100\n"
+"POT-Creation-Date: 2015-01-13 09:00+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4810,7 +4810,7 @@ msgstr ""
 msgid "Memory document %1"
 msgstr ""
 
-#: ../src/document.cpp:819
+#: ../src/document.cpp:839
 #, c-format
 msgid "Unnamed document %d"
 msgstr ""
@@ -5936,6 +5936,7 @@ msgstr ""
 #: ../src/extension/internal/filter/transparency.h:214
 #: ../src/extension/internal/filter/transparency.h:287
 #: ../src/extension/internal/filter/transparency.h:349
+#: ../src/ui/dialog/inkscape-preferences.cpp:1751
 msgid "Filters"
 msgstr ""
 
@@ -11721,7 +11722,7 @@ msgstr ""
 msgid "A related resource"
 msgstr ""
 
-#: ../src/rdf.cpp:267 ../src/ui/dialog/inkscape-preferences.cpp:1866
+#: ../src/rdf.cpp:267 ../src/ui/dialog/inkscape-preferences.cpp:1870
 msgid "Language:"
 msgstr ""
 
@@ -12663,7 +12664,7 @@ msgstr ""
 msgid "[orphaned]"
 msgstr ""
 
-#: ../src/sp-tspan.cpp:217
+#: ../src/sp-tspan.cpp:218
 msgid "Text Span"
 msgstr ""
 
@@ -18924,7 +18925,7 @@ msgid "Number of _Threads:"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1373
-#: ../src/ui/dialog/inkscape-preferences.cpp:1905
+#: ../src/ui/dialog/inkscape-preferences.cpp:1909
 msgid "(requires restart)"
 msgstr ""
 
@@ -19170,152 +19171,152 @@ msgstr ""
 msgid "Misc"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1846
+#: ../src/ui/dialog/inkscape-preferences.cpp:1850
 msgctxt "Spellchecker language"
 msgid "None"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1867
+#: ../src/ui/dialog/inkscape-preferences.cpp:1871
 msgid "Set the main spell check language"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1870
+#: ../src/ui/dialog/inkscape-preferences.cpp:1874
 msgid "Second language:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1871
+#: ../src/ui/dialog/inkscape-preferences.cpp:1875
 msgid ""
 "Set the second spell check language; checking will only stop on words "
 "unknown in ALL chosen languages"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1874
+#: ../src/ui/dialog/inkscape-preferences.cpp:1878
 msgid "Third language:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1875
+#: ../src/ui/dialog/inkscape-preferences.cpp:1879
 msgid ""
 "Set the third spell check language; checking will only stop on words unknown "
 "in ALL chosen languages"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1877
+#: ../src/ui/dialog/inkscape-preferences.cpp:1881
 msgid "Ignore words with digits"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1879
+#: ../src/ui/dialog/inkscape-preferences.cpp:1883
 msgid "Ignore words containing digits, such as \"R2D2\""
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1881
+#: ../src/ui/dialog/inkscape-preferences.cpp:1885
 msgid "Ignore words in ALL CAPITALS"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1883
+#: ../src/ui/dialog/inkscape-preferences.cpp:1887
 msgid "Ignore words in all capitals, such as \"IUPAC\""
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1885
+#: ../src/ui/dialog/inkscape-preferences.cpp:1889
 msgid "Spellcheck"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1905
+#: ../src/ui/dialog/inkscape-preferences.cpp:1909
 msgid "Latency _skew:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1906
+#: ../src/ui/dialog/inkscape-preferences.cpp:1910
 msgid ""
 "Factor by which the event clock is skewed from the actual time (0.9766 on "
 "some systems)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1908
+#: ../src/ui/dialog/inkscape-preferences.cpp:1912
 msgid "Pre-render named icons"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1910
+#: ../src/ui/dialog/inkscape-preferences.cpp:1914
 msgid ""
 "When on, named icons will be rendered before displaying the ui. This is for "
 "working around bugs in GTK+ named icon notification"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1918
+#: ../src/ui/dialog/inkscape-preferences.cpp:1922
 msgid "System info"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1922
+#: ../src/ui/dialog/inkscape-preferences.cpp:1926
 msgid "User config: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1922
+#: ../src/ui/dialog/inkscape-preferences.cpp:1926
 msgid "Location of users configuration"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1926
+#: ../src/ui/dialog/inkscape-preferences.cpp:1930
 msgid "User preferences: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1926
+#: ../src/ui/dialog/inkscape-preferences.cpp:1930
 msgid "Location of the users preferences file"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1930
+#: ../src/ui/dialog/inkscape-preferences.cpp:1934
 msgid "User extensions: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1930
+#: ../src/ui/dialog/inkscape-preferences.cpp:1934
 msgid "Location of the users extensions"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1934
+#: ../src/ui/dialog/inkscape-preferences.cpp:1938
 msgid "User cache: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1934
+#: ../src/ui/dialog/inkscape-preferences.cpp:1938
 msgid "Location of users cache"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1942
+#: ../src/ui/dialog/inkscape-preferences.cpp:1946
 msgid "Temporary files: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1942
+#: ../src/ui/dialog/inkscape-preferences.cpp:1946
 msgid "Location of the temporary files used for autosave"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1946
+#: ../src/ui/dialog/inkscape-preferences.cpp:1950
 msgid "Inkscape data: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1946
+#: ../src/ui/dialog/inkscape-preferences.cpp:1950
 msgid "Location of Inkscape data"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1950
+#: ../src/ui/dialog/inkscape-preferences.cpp:1954
 msgid "Inkscape extensions: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1950
+#: ../src/ui/dialog/inkscape-preferences.cpp:1954
 msgid "Location of the Inkscape extensions"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1959
+#: ../src/ui/dialog/inkscape-preferences.cpp:1963
 msgid "System data: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1959
+#: ../src/ui/dialog/inkscape-preferences.cpp:1963
 msgid "Locations of system data"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1983
+#: ../src/ui/dialog/inkscape-preferences.cpp:1987
 msgid "Icon theme: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1983
+#: ../src/ui/dialog/inkscape-preferences.cpp:1987
 msgid "Locations of icon themes"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1985
+#: ../src/ui/dialog/inkscape-preferences.cpp:1989
 msgid "System"
 msgstr ""
 
@@ -19631,24 +19632,23 @@ msgid "_Modify"
 msgstr ""
 
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:210
-msgid "Radius "
+msgid "Radius"
 msgstr ""
 
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:212
-msgid "Radius approximated "
+msgid "Radius approximated"
 msgstr ""
 
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:215
-msgid "Knot distance "
+msgid "Knot distance"
 msgstr ""
 
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:222
 msgid "Position (%):"
 msgstr ""
 
-#: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:226
-#, c-format
-msgid "(%s):"
+#: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:225
+msgid "%1 (%2):"
 msgstr ""
 
 #: ../src/ui/dialog/lpe-powerstroke-properties.cpp:119
@@ -22433,93 +22433,93 @@ msgctxt "Node tool tip"
 msgid "Drag to select objects to edit"
 msgstr ""
 
-#: ../src/ui/tools/pen-tool.cpp:230 ../src/ui/tools/pencil-tool.cpp:466
+#: ../src/ui/tools/pen-tool.cpp:233 ../src/ui/tools/pencil-tool.cpp:466
 msgid "Drawing cancelled"
 msgstr ""
 
-#: ../src/ui/tools/pen-tool.cpp:466 ../src/ui/tools/pencil-tool.cpp:204
+#: ../src/ui/tools/pen-tool.cpp:469 ../src/ui/tools/pencil-tool.cpp:204
 msgid "Continuing selected path"
 msgstr ""
 
-#: ../src/ui/tools/pen-tool.cpp:476 ../src/ui/tools/pencil-tool.cpp:212
+#: ../src/ui/tools/pen-tool.cpp:479 ../src/ui/tools/pencil-tool.cpp:212
 msgid "Creating new path"
 msgstr ""
 
-#: ../src/ui/tools/pen-tool.cpp:478 ../src/ui/tools/pencil-tool.cpp:215
+#: ../src/ui/tools/pen-tool.cpp:481 ../src/ui/tools/pencil-tool.cpp:215
 msgid "Appending to selected path"
 msgstr ""
 
-#: ../src/ui/tools/pen-tool.cpp:643
+#: ../src/ui/tools/pen-tool.cpp:646
 msgid "<b>Click</b> or <b>click and drag</b> to close and finish the path."
 msgstr ""
 
-#: ../src/ui/tools/pen-tool.cpp:645
+#: ../src/ui/tools/pen-tool.cpp:648
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to close and finish the path. Shift"
 "+Click make a cusp node"
 msgstr ""
 
-#: ../src/ui/tools/pen-tool.cpp:657
+#: ../src/ui/tools/pen-tool.cpp:660
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to continue the path from this point."
 msgstr ""
 
-#: ../src/ui/tools/pen-tool.cpp:659
+#: ../src/ui/tools/pen-tool.cpp:662
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to continue the path from this point. "
 "Shift+Click make a cusp node"
 msgstr ""
 
-#: ../src/ui/tools/pen-tool.cpp:2100
+#: ../src/ui/tools/pen-tool.cpp:2036
 #, c-format
 msgid ""
 "<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to "
 "snap angle, <b>Enter</b> to finish the path"
 msgstr ""
 
-#: ../src/ui/tools/pen-tool.cpp:2101
+#: ../src/ui/tools/pen-tool.cpp:2037
 #, c-format
 msgid ""
 "<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to "
 "snap angle, <b>Enter</b> to finish the path"
 msgstr ""
 
-#: ../src/ui/tools/pen-tool.cpp:2104
+#: ../src/ui/tools/pen-tool.cpp:2040
 #, c-format
 msgid ""
 "<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Shift+Click</"
 "b> make a cusp node, <b>Enter</b> to finish the path"
 msgstr ""
 
-#: ../src/ui/tools/pen-tool.cpp:2105
+#: ../src/ui/tools/pen-tool.cpp:2041
 #, c-format
 msgid ""
 "<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Shift+Click</b> "
 "make a cusp node, <b>Enter</b> to finish the path"
 msgstr ""
 
-#: ../src/ui/tools/pen-tool.cpp:2122
+#: ../src/ui/tools/pen-tool.cpp:2058
 #, c-format
 msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
 "angle"
 msgstr ""
 
-#: ../src/ui/tools/pen-tool.cpp:2146
+#: ../src/ui/tools/pen-tool.cpp:2082
 #, c-format
 msgid ""
 "<b>Curve handle, symmetric</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</"
 "b> to snap angle, with <b>Shift</b> to move this handle only"
 msgstr ""
 
-#: ../src/ui/tools/pen-tool.cpp:2147
+#: ../src/ui/tools/pen-tool.cpp:2083
 #, c-format
 msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
 "angle, with <b>Shift</b> to move this handle only"
 msgstr ""
 
-#: ../src/ui/tools/pen-tool.cpp:2195
+#: ../src/ui/tools/pen-tool.cpp:2217
 msgid "Drawing finished"
 msgstr ""
 
