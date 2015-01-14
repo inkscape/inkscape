@@ -344,7 +344,7 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
 
             if (char_attributes.is_mandatory_break && span->end != span->start) {
                 *last_emergency_break_span = *last_break_span = *span;
-                TRACE(("span %d end of para; width = %f chars = %d\n", span->start.iter_span - para.unbroken_spans.begin(), span->width, char_count));
+                TRACE(("span %ld end of para; width = %f chars = %d\n", span->start.iter_span - para.unbroken_spans.begin(), span->width, char_count));
                 return false;
             }
 
@@ -401,13 +401,13 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
             span->word_spacing   = text_source->style->word_spacing.computed;
 
             if (test_width > maximum_width && !char_attributes.is_white) { // whitespaces don't matter, we can put as many as we want at eol
-                TRACE(("span %d exceeded scanrun; width = %f chars = %d\n", span->start.iter_span - para.unbroken_spans.begin(), span->width, char_count));
+                TRACE(("span %ld exceeded scanrun; width = %f chars = %d\n", span->start.iter_span - para.unbroken_spans.begin(), span->width, char_count));
                 return false;
             }
 
         } while (span->end.char_byte != 0);  // while we haven't wrapped to the next span
 
-        TRACE(("fitted span %d width = %f chars = %d\n", span->start.iter_span - para.unbroken_spans.begin(), span->width, char_count));
+        TRACE(("fitted span %ld width = %f chars = %d\n", span->start.iter_span - para.unbroken_spans.begin(), span->width, char_count));
         return true;
     }
 
@@ -1127,7 +1127,7 @@ unsigned Layout::Calculator::_buildSpansForPara(ParagraphInfo *para) const
                 new_span.text_bytes          = 0;
                 new_span.char_index_in_para  = char_index_in_para;
                 para->unbroken_spans.push_back(new_span);
-                TRACE(("add gap span %d\n", para->unbroken_spans.size() - 1));
+                TRACE(("add gap span %lu\n", para->unbroken_spans.size() - 1));
             }
         } else if (_flow._input_stream[input_index]->Type() == TEXT_SOURCE && pango_item_index < para->pango_items.size()) {
             Layout::InputStreamTextSource const *text_source = static_cast<Layout::InputStreamTextSource const *>(_flow._input_stream[input_index]);
@@ -1299,7 +1299,7 @@ unsigned Layout::Calculator::_buildSpansForPara(ParagraphInfo *para) const
                     new_span.baseline_shift = text_source->style->baseline_shift.computed;
 
                     // TODO: metrics for vertical text
-                    TRACE(("add text span %d \"%s\"\n", para->unbroken_spans.size(), text_source->text->raw().substr(span_start_byte_in_source, new_span.text_bytes).c_str()));
+                    TRACE(("add text span %lu \"%s\"\n", para->unbroken_spans.size(), text_source->text->raw().substr(span_start_byte_in_source, new_span.text_bytes).c_str()));
                     TRACE(("  %d glyphs\n", new_span.glyph_string->num_glyphs));
                 } else {
                     // if there's no text we still need to initialise the styles
@@ -1312,7 +1312,7 @@ unsigned Layout::Calculator::_buildSpansForPara(ParagraphInfo *para) const
                         new_span.line_height.setZero();
                         new_span.line_height_multiplier = 1.0;
                     }
-                    TRACE(("add style init span %d\n", para->unbroken_spans.size()));
+                    TRACE(("add style init span %lu\n", para->unbroken_spans.size()));
                 }
                 para->unbroken_spans.push_back(new_span);
 
@@ -1348,7 +1348,7 @@ bool Layout::Calculator::_goToNextWrapShape()
     _current_shape_index++;
     if (_current_shape_index == _flow._input_wrap_shapes.size()) return false;
     _scanline_maker = new ShapeScanlineMaker(_flow._input_wrap_shapes[_current_shape_index].shape, _block_progression);
-    TRACE(("begin wrap shape %d\n", _current_shape_index));
+    TRACE(("begin wrap shape %u\n", _current_shape_index));
     return true;
 }
 
@@ -1406,7 +1406,7 @@ bool Layout::Calculator::_findChunksForLine(ParagraphInfo const &para,
             scan_runs = _scanline_maker->makeScanline(*line_height);
         }
 
-        TRACE(("finding line fit y=%f, %d scan runs\n", scan_runs.front().y, scan_runs.size()));
+        TRACE(("finding line fit y=%f, %lu scan runs\n", scan_runs.front().y, scan_runs.size()));
         chunk_info->clear();
         chunk_info->reserve(scan_runs.size());
         if (para.direction == RIGHT_TO_LEFT) std::reverse(scan_runs.begin(), scan_runs.end());
@@ -1505,7 +1505,7 @@ bool Layout::Calculator::_buildChunksInScanRun(ParagraphInfo const &para,
         }
     }
 
-    TRACE(("chunk complete, used %f width (%d whitespaces, %d brokenspans)\n", new_chunk.text_width, new_chunk.whitespace_count, new_chunk.broken_spans.size()));
+    TRACE(("chunk complete, used %f width (%d whitespaces, %lu brokenspans)\n", new_chunk.text_width, new_chunk.whitespace_count, new_chunk.broken_spans.size()));
     chunk_info->push_back(new_chunk);
 
     if (scan_run.width() >= 4.0 * line_height->total() && last_span_at_break.end == start_span_pos) {
@@ -1543,7 +1543,7 @@ bool Layout::Calculator::_buildChunksInScanRun(ParagraphInfo const &para,
                 chunk_info->back().text_width += last_span_at_break.width;
                 chunk_info->back().whitespace_count += last_span_at_break.whitespace_count;
             }
-            TRACE(("correction: fitted span %d width = %f\n", last_span_at_break.start.iter_span - para.unbroken_spans.begin(), last_span_at_break.width));
+            TRACE(("correction: fitted span %lu width = %f\n", last_span_at_break.start.iter_span - para.unbroken_spans.begin(), last_span_at_break.width));
         }
     }
 
@@ -1616,7 +1616,7 @@ bool Layout::Calculator::calculate()
         else
             para.alignment = para.direction == LEFT_TO_RIGHT ? LEFT : RIGHT;
 
-        TRACE(("para prepared, adding as #%d\n", _flow._paragraphs.size()));
+        TRACE(("para prepared, adding as #%lu\n", _flow._paragraphs.size()));
         Layout::Paragraph new_paragraph;
         new_paragraph.base_direction = para.direction;
         new_paragraph.alignment = para.alignment;
@@ -1638,7 +1638,7 @@ bool Layout::Calculator::calculate()
             _scanline_maker->completeLine(); // Increments y by line height
         } while (span_pos.iter_span != para.unbroken_spans.end());
 
-        TRACE(("para %d end\n\n", _flow._paragraphs.size() - 1));
+        TRACE(("para %lu end\n\n", _flow._paragraphs.size() - 1));
         if (_scanline_maker != NULL) {
             bool is_empty_para = _flow._characters.empty() || _flow._characters.back().line(&_flow).in_paragraph != _flow._paragraphs.size() - 1;
             if ((is_empty_para && para_end_input_index + 1 >= _flow._input_stream.size())
