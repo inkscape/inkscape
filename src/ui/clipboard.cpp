@@ -107,7 +107,7 @@ class ClipboardManagerImpl : public ClipboardManager {
 public:
     virtual void copy(SPDesktop *desktop);
     virtual void copyPathParameter(Inkscape::LivePathEffect::PathParam *);
-    virtual void copySymbol(Inkscape::XML::Node* symbol, gchar const* style);
+    virtual void copySymbol(Inkscape::XML::Node* symbol, gchar const* style, bool user_symbol);
     virtual bool paste(SPDesktop *desktop, bool in_place);
     virtual bool pasteStyle(SPDesktop *desktop);
     virtual bool pasteSize(SPDesktop *desktop, bool separately, bool apply_x, bool apply_y);
@@ -303,7 +303,7 @@ void ClipboardManagerImpl::copyPathParameter(Inkscape::LivePathEffect::PathParam
  * Copy a symbol from the symbol dialog.
  * @param symbol The Inkscape::XML::Node for the symbol.
  */
-void ClipboardManagerImpl::copySymbol(Inkscape::XML::Node* symbol, gchar const* style)
+void ClipboardManagerImpl::copySymbol(Inkscape::XML::Node* symbol, gchar const* style, bool user_symbol)
 {
     //std::cout << "ClipboardManagerImpl::copySymbol" << std::endl;
     if ( symbol == NULL ) {
@@ -326,17 +326,28 @@ void ClipboardManagerImpl::copySymbol(Inkscape::XML::Node* symbol, gchar const* 
     Glib::ustring id("#");
     id += symbol->attribute("id");
 
+    gdouble scale_units = 1; // scale from "px" to "document-units"
+    Inkscape::XML::Node *nv_repr = SP_ACTIVE_DESKTOP->getNamedView()->getRepr();
+    if (nv_repr->attribute("inkscape:document-units"))
+        scale_units = Inkscape::Util::Quantity::convert(1, "px", nv_repr->attribute("inkscape:document-units"));
+    SPObject *cmobj = _clipboardSPDoc->getObjectByRepr(repr);
+    if (cmobj && !user_symbol) { // convert only stock symbols
+        if (!Geom::are_near(scale_units, 1.0, Geom::EPSILON)) {
+            dynamic_cast<SPGroup *>(cmobj)->scaleChildItemsRec(Geom::Scale(scale_units),
+                                            Geom::Point(0, SP_ACTIVE_DESKTOP->getDocument()->getHeight().value("px")), 
+                                            false);
+        }
+    }
+
     Inkscape::XML::Node *use = _doc->createElement("svg:use");
     use->setAttribute("xlink:href", id.c_str() );
     // Set a default style in <use> rather than <symbol> so it can be changed.
     use->setAttribute("style", style );
-/*      disable rev 13709 in rev 13806, following Bug 1365451, comments 13-16
-    Inkscape::XML::Node *nv_repr = SP_ACTIVE_DESKTOP->getNamedView()->getRepr();
-    gdouble scale_units = Inkscape::Util::Quantity::convert(1, nv_repr->attribute("inkscape:document-units"), "px");
-    gchar *transform_str = sp_svg_transform_write(Geom::Scale(scale_units, scale_units));
-    use->setAttribute("transform", transform_str);
-    g_free(transform_str);
-*/
+    if (!Geom::are_near(scale_units, 1.0, Geom::EPSILON)) {
+        gchar *transform_str = sp_svg_transform_write(Geom::Scale(1.0/scale_units));
+        use->setAttribute("transform", transform_str);
+        g_free(transform_str);
+    }
     _root->appendChild(use);
 
     // This min and max sets offsets, we don't have any so set to zero.
