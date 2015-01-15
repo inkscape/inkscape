@@ -438,6 +438,11 @@ static SPStyleProp const props[] = {
     {SP_PROP_KERNING, "kerning"},
     {SP_PROP_TEXT_ANCHOR, "text-anchor"},
     {SP_PROP_WHITE_SPACE, "white-space"},
+    /* SVG 2 Text Wrapping */
+    {SP_PROP_SHAPE_INSIDE,  "shape-inside"},
+    {SP_PROP_SHAPE_OUTSIDE, "shape-outside"},
+    {SP_PROP_SHAPE_PADDING, "shape-padding"},
+    {SP_PROP_SHAPE_MARGIN,  "shape-margin"},
     /* Text Decoration */
     {SP_PROP_TEXT_DECORATION, "text-decoration"},
     {SP_PROP_TEXT_DECORATION_LINE, "text-decoration-line"},

@@ -133,6 +133,12 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     text_anchor(      "text-anchor",     enum_text_anchor,     SP_CSS_TEXT_ANCHOR_START   ),
     white_space(      "white-space",     enum_white_space,     SP_CSS_WHITE_SPACE_NORMAL  ),
 
+    // SVG 2 Text Wrapping
+    shape_inside(     "shape-inside"                         ), // SPIString
+    //shape_outside(    "shape-outside"                        ), // SPIString
+    shape_padding(    "shape-padding",   0.0                 ), // SPILength for now
+    //shape_margin(     "shape-margin",    0.0                 ), // SPILength for now
+
     text_decoration(),
     text_decoration_line(),
     text_decoration_style(),
@@ -300,6 +306,9 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     _properties.push_back( &text_anchor );
     _properties.push_back( &white_space );
 
+    _properties.push_back( &shape_inside );
+    _properties.push_back( &shape_padding );
+
     _properties.push_back( &clip_rule );
     _properties.push_back( &display );
     _properties.push_back( &overflow );
@@ -382,6 +391,10 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     //     _propmap.insert( std::make_pair( baseline_shift.name,        reinterpret_cast<SPIBasePtr>(&SPStyle::baseline_shift        ) ) );
     //     _propmap.insert( std::make_pair( text_anchor.name,           reinterpret_cast<SPIBasePtr>(&SPStyle::text_anchor           ) ) );
     //     _propmap.insert( std::make_pair( white_space.name,           reinterpret_cast<SPIBasePtr>(&SPStyle::white_space           ) ) );
+
+
+    //     _propmap.insert( std::make_pair( shape_inside.name,          reinterpret_cast<SPIBasePtr>(&SPStyle::shape_inside          ) ) );
+    //     _propmap.insert( std::make_pair( shape_padding.name,         reinterpret_cast<SPIBasePtr>(&SPStyle::shape_padding         ) ) );
 
     //     _propmap.insert( std::make_pair( clip_rule.name,             reinterpret_cast<SPIBasePtr>(&SPStyle::clip_rule             ) ) );
     //     _propmap.insert( std::make_pair( display.name,               reinterpret_cast<SPIBasePtr>(&SPStyle::display               ) ) );
@@ -718,6 +731,12 @@ SPStyle::readIfUnset( gint id, gchar const *val ) {
             break;
         case SP_PROP_WHITE_SPACE:
             white_space.readIfUnset( val );
+            break;
+        case SP_PROP_SHAPE_INSIDE:
+            shape_inside.readIfUnset( val );
+            break;
+        case SP_PROP_SHAPE_PADDING:
+            shape_padding.readIfUnset( val );
             break;
         case SP_PROP_BASELINE_SHIFT:
             baseline_shift.readIfUnset( val );
@@ -1526,6 +1545,12 @@ sp_style_unset_property_attrs(SPObject *o)
     if (style->white_space.set) {
         repr->setAttribute("white_space", NULL);
     }
+    if (style->shape_inside.set) {
+        repr->setAttribute("shape_inside", NULL);
+    }
+    if (style->shape_padding.set) {
+        repr->setAttribute("shape_padding", NULL);
+    }
     if (style->writing_mode.set) {
         repr->setAttribute("writing_mode", NULL);
     }
@@ -1614,6 +1639,8 @@ sp_css_attr_unset_text(SPCSSAttr *css)
     sp_repr_css_set_property(css, "writing-mode", NULL);
     sp_repr_css_set_property(css, "text-anchor", NULL);
     sp_repr_css_set_property(css, "white-space", NULL);
+    sp_repr_css_set_property(css, "shape-inside", NULL);
+    sp_repr_css_set_property(css, "shape-padding", NULL);
     sp_repr_css_set_property(css, "kerning", NULL); // not implemented yet
     sp_repr_css_set_property(css, "dominant-baseline", NULL); // not implemented yet
     sp_repr_css_set_property(css, "alignment-baseline", NULL); // not implemented yet
