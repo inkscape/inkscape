@@ -1,0 +1,39 @@
+--- numpy/f2py/setup.py
++++ numpy/f2py/setup.py
+@@ -41,21 +41,21 @@ def configuration(parent_package='',top_
+                           )
+ 
+     config.make_svn_version_py()
+ 
+     def generate_f2py_py(build_dir):
+-        f2py_exe = 'f2py'+os.path.basename(sys.executable)[6:]
++        f2py_exe = 'f2py'
+         if f2py_exe[-4:]=='.exe':
+             f2py_exe = f2py_exe[:-4] + '.py'
+         if 'bdist_wininst' in sys.argv and f2py_exe[-3:] != '.py':
+             f2py_exe = f2py_exe + '.py'
+         target = os.path.join(build_dir, f2py_exe)
+         if newer(__file__, target):
+             log.info('Creating %s', target)
+             f = open(target, 'w')
+             f.write('''\
+-#!%s
++#!@@MPORTS_PYTHON@@
+ # See http://cens.ioc.ee/projects/f2py2e/
+ import os, sys
+ for mode in ["g3-numpy", "2e-numeric", "2e-numarray", "2e-numpy"]:
+     try:
+         i=sys.argv.index("--"+mode)
+@@ -75,11 +75,11 @@ elif mode=="2e-numpy":
+     from numpy.f2py import main
+ else:
+     sys.stderr.write("Unknown mode: " + repr(mode) + "\\n")
+     sys.exit(1)
+ main()
+-'''%(sys.executable))
++''')
+             f.close()
+         return target
+ 
+     config.add_scripts(generate_f2py_py)
+ 

@@ -7,43 +7,47 @@
     <key>CFBundleExecutable</key>
     <string>Inkscape</string>
     <key>CFBundleGetInfoString</key>
-    <string>@VERSION@, Copyright 2003-2009 Inkscape Developers</string>
+    <string>@VERSION@, Copyright 2003-2014 Inkscape Developers</string>
     <key>CFBundleIconFile</key>
     <string>Inkscape.icns</string>
     <key>CFBundleIdentifier</key>
     <string>org.inkscape.Inkscape</string>
     <key>CFBundleDocumentTypes</key>
     <array>
-		    <dict>
-		        <key>CFBundleTypeExtensions</key>
-		        <array>
-		            <string>SVG</string>
-		        </array>
-		        <key>CFBundleTypeIconFile</key>
-		        <string>image-svg+xml.icns</string>
-		        <key>CFBundleTypeMIMETypes</key>
-		        <array>
-		            <string>svg</string>
-		        </array>
-		        <key>CFBundleTypeName</key>
-		        <string>Scalable Vector Graphics Image</string>
-		        <key>CFBundleTypeOSTypes</key>
-		        <array>
-		            <string>SVG </string>
-		        </array>
-		        <key>CFBundleTypeRole</key>
-		        <string>Editor</string>
-		    </dict>
         <dict>
             <key>CFBundleTypeExtensions</key>
             <array>
+                <string>svg</string>
+                <string>SVG</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>image-svg+xml.icns</string>
+            <key>CFBundleTypeMIMETypes</key>
+            <array>
+                <string>image/svg+xml</string>
+            </array>
+            <key>CFBundleTypeName</key>
+            <string>Scalable Vector Graphics Image</string>
+            <key>CFBundleTypeOSTypes</key>
+            <array>
+                <string>SVG </string>
+            </array>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>LSHandlerRank</key>
+            <string>Owner</string>
+        </dict>
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>svgz</string>
                 <string>SVGZ</string>
             </array>
             <key>CFBundleTypeIconFile</key>
             <string>image-svg+xml-compressed.icns</string>
             <key>CFBundleTypeMIMETypes</key>
             <array>
-                <string>svgz</string>
+                <string>image/svg+xml-compressed</string>
             </array>
             <key>CFBundleTypeName</key>
             <string>Compressed Scalable Vector Graphics Image</string>
@@ -53,10 +57,14 @@
             </array>
             <key>CFBundleTypeRole</key>
             <string>Editor</string>
+            <key>LSHandlerRank</key>
+            <string>Owner</string>
         </dict>
         <dict>
             <key>CFBundleTypeExtensions</key>
             <array>
+                <string>eps</string>
+                <string>epsi</string>
                 <string>EPS</string>
                 <string>EPSI</string>
             </array>
@@ -64,8 +72,8 @@
             <string>image-x-eps.icns</string>
             <key>CFBundleTypeMIMETypes</key>
             <array>
-                <string>eps</string>
-                <string>epsi</string>
+                <string>application/postscript</string>
+                <string>image/x-eps</string>
             </array>
             <key>CFBundleTypeName</key>
             <string>PostScript Document</string>
@@ -76,17 +84,25 @@
             </array>
             <key>CFBundleTypeRole</key>
             <string>Editor</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+            <key>LSItemContentTypes</key>
+            <array>
+                <string>com.adobe.encapsulated-postscript</string>
+            </array>
         </dict>
         <dict>
             <key>CFBundleTypeExtensions</key>
             <array>
+                <string>ps</string>
                 <string>PS</string>
             </array>
             <key>CFBundleTypeIconFile</key>
             <string>image-x-ps.icns</string>
             <key>CFBundleTypeMIMETypes</key>
             <array>
-                <string>ps</string>
+                <string>application/postscript</string>
+                <string>image/x-ps</string>
             </array>
             <key>CFBundleTypeName</key>
             <string>PostScript Document</string>
@@ -96,17 +112,25 @@
             </array>
             <key>CFBundleTypeRole</key>
             <string>Editor</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+            <key>LSItemContentTypes</key>
+            <array>
+                <string>com.adobe.postscript</string>
+            </array>
         </dict>
         <dict>
             <key>CFBundleTypeExtensions</key>
             <array>
+                <string>ai</string>
                 <string>AI</string>
             </array>
             <key>CFBundleTypeIconFile</key>
             <string>application-illustrator.icns</string>
             <key>CFBundleTypeMIMETypes</key>
             <array>
-                <string>ai</string>
+                <string>application/illustrator</string>
+                <string>application/pdf</string>
             </array>
             <key>CFBundleTypeName</key>
             <string>Adobe Illustrator Document</string>
@@ -115,18 +139,25 @@
                 <string>AI  </string>
             </array>
             <key>CFBundleTypeRole</key>
-            <string>Editor</string>
+            <string>Viewer</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+            <key>LSItemContentTypes</key>
+            <array>
+                <string>com.adobe.illustrator.ai-image</string>
+            </array>
         </dict>
         <dict>
             <key>CFBundleTypeExtensions</key>
             <array>
+                <string>aisvg</string>
                 <string>AISVG</string>
             </array>
             <key>CFBundleTypeIconFile</key>
             <string>application-illustrator-svg.icns</string>
             <key>CFBundleTypeMIMETypes</key>
             <array>
-                <string>ai.svg</string>
+                <string>application/illustrator-svg</string>
             </array>
             <key>CFBundleTypeName</key>
             <string>Adobe Illustrator SVG Document</string>
@@ -135,18 +166,19 @@
                 <string>AISVG</string>
             </array>
             <key>CFBundleTypeRole</key>
-            <string>Editor</string>
+            <string>Viewer</string>
         </dict>
         <dict>
             <key>CFBundleTypeExtensions</key>
             <array>
+                <string>wmf</string>
                 <string>WMF</string>
             </array>
             <key>CFBundleTypeIconFile</key>
             <string>image-vnd.windows-metafile.icns</string>
             <key>CFBundleTypeMIMETypes</key>
             <array>
-                <string>wmf</string>
+                <string>image/vnd.windows-metafile</string>
             </array>
             <key>CFBundleTypeName</key>
             <string>Windows MetaFile</string>
@@ -156,57 +188,70 @@
             </array>
             <key>CFBundleTypeRole</key>
             <string>Editor</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
         </dict>
         <dict>
             <key>CFBundleTypeExtensions</key>
             <array>
+                <string>pdf</string>
                 <string>PDF</string>
             </array>
             <key>CFBundleTypeIconFile</key>
             <string>application-pdf.icns</string>
             <key>CFBundleTypeMIMETypes</key>
             <array>
-                <string>pdf</string>
+                <string>application/pdf</string>
             </array>
             <key>CFBundleTypeName</key>
-            <string>Portable Document Format (PDF)</string>
+            <string>NSPDFPboardType</string>
             <key>CFBundleTypeOSTypes</key>
             <array>
                 <string>PDF </string>
             </array>
             <key>CFBundleTypeRole</key>
             <string>Editor</string>
-        </dict>    
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+            <key>LSItemContentTypes</key>
+            <array>
+                <string>com.adobe.pdf</string>
+            </array>
+        </dict>
         <dict>
             <key>CFBundleTypeExtensions</key>
             <array>
+                <string>ggr</string>
                 <string>GGR</string>
             </array>
             <key>CFBundleTypeIconFile</key>
             <string>application-gimp-gradient.icns</string>
             <key>CFBundleTypeMIMETypes</key>
             <array>
-                <string>ggr</string>
+                <string>application/x-gimp-gradient</string>
             </array>
             <key>CFBundleTypeName</key>
             <string>Gimp Gradient</string>
-            <key>CFBundleTypeOSTypes</key>
-            <array>
-                <string>GGR </string>
-            </array>
             <key>CFBundleTypeRole</key>
             <string>Viewer</string>
-        </dict>    
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+            <key>LSItemContentTypes</key>
+            <array>
+                <string>org.gimp.ggr</string>
+            </array>
+        </dict>
         <dict>
             <key>CFBundleTypeExtensions</key>
             <array>
+                <string>ccx</string>
                 <string>CCX</string>
             </array>
             <key>CFBundleTypeIconFile</key>
             <string>application-vnd.corel-draw-compressed.icns</string>
             <key>CFBundleTypeMIMETypes</key>
             <array>
-                <string>ccx</string>
+                <string>application/vnd.corel-draw-compressed</string>
             </array>
             <key>CFBundleTypeName</key>
             <string>Corel Draw Compressed Document</string>
@@ -215,18 +260,21 @@
                 <string>CCX </string>
             </array>
             <key>CFBundleTypeRole</key>
-            <string>Editor</string>
-        </dict>    
+            <string>Viewer</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+        </dict>
         <dict>
             <key>CFBundleTypeExtensions</key>
             <array>
+                <string>cdt</string>
                 <string>CDT</string>
             </array>
             <key>CFBundleTypeIconFile</key>
             <string>application-vnd.corel-draw-template.icns</string>
             <key>CFBundleTypeMIMETypes</key>
             <array>
-                <string>cdt</string>
+                <string>application/vnd.corel-draw-template</string>
             </array>
             <key>CFBundleTypeName</key>
             <string>Corel Draw Template</string>
@@ -236,17 +284,20 @@
             </array>
             <key>CFBundleTypeRole</key>
             <string>Viewer</string>
-        </dict>    
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+        </dict>
         <dict>
             <key>CFBundleTypeExtensions</key>
             <array>
+                <string>cdr</string>
                 <string>CDR</string>
             </array>
             <key>CFBundleTypeIconFile</key>
             <string>application-vnd.corel-draw.icns</string>
             <key>CFBundleTypeMIMETypes</key>
             <array>
-                <string>cdr</string>
+                <string>application/vnd.corel-draw</string>
             </array>
             <key>CFBundleTypeName</key>
             <string>Corel Draw Compressed Document</string>
@@ -255,18 +306,21 @@
                 <string>CDR </string>
             </array>
             <key>CFBundleTypeRole</key>
-            <string>Editor</string>
-        </dict>    
+            <string>Viewer</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+        </dict>
         <dict>
             <key>CFBundleTypeExtensions</key>
             <array>
+                <string>xaml</string>
                 <string>XAML</string>
             </array>
             <key>CFBundleTypeIconFile</key>
             <string>application-vnd.ms.xaml.icns</string>
             <key>CFBundleTypeMIMETypes</key>
             <array>
-                <string>xaml</string>
+                <string>appliction/vnd.ms.xaml</string>
             </array>
             <key>CFBundleTypeName</key>
             <string>Extensible Application Markup Language (XAML)</string>
@@ -276,17 +330,20 @@
             </array>
             <key>CFBundleTypeRole</key>
             <string>Editor</string>
-        </dict>    
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+        </dict>
         <dict>
             <key>CFBundleTypeExtensions</key>
             <array>
+                <string>dxf</string>
                 <string>DXF</string>
             </array>
             <key>CFBundleTypeIconFile</key>
             <string>image-vnd.dxf.icns</string>
             <key>CFBundleTypeMIMETypes</key>
             <array>
-                <string>dxf</string>
+                <string>image/vnd.dxf</string>
             </array>
             <key>CFBundleTypeName</key>
             <string>AutoCAD Document</string>
@@ -295,18 +352,21 @@
                 <string>DXF </string>
             </array>
             <key>CFBundleTypeRole</key>
-            <string>Viewer</string>
-        </dict>    
+            <string>Editor</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+        </dict>
         <dict>
             <key>CFBundleTypeExtensions</key>
             <array>
+                <string>sk1</string>
                 <string>SK1</string>
             </array>
             <key>CFBundleTypeIconFile</key>
             <string>image-vnd.sk1.icns</string>
             <key>CFBundleTypeMIMETypes</key>
             <array>
-                <string>sk1</string>
+                <string>image/vnd.sk1</string>
             </array>
             <key>CFBundleTypeName</key>
             <string>Sketch Document</string>
@@ -316,8 +376,163 @@
             </array>
             <key>CFBundleTypeRole</key>
             <string>Viewer</string>
-        </dict>    
-		</array>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+        </dict>
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>wpg</string>
+                <string>WPG</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>application-vnd.wordperfect-graphic.icns</string>
+            <key>CFBundleTypeMIMETypes</key>
+            <array>
+                <string>application/vnd.wordperfect-graphic</string>
+                <string>image/x-wpg</string>
+            </array>
+            <key>CFBundleTypeName</key>
+            <string>WordPerfect Graphics</string>
+            <key>CFBundleTypeOSTypes</key>
+            <array>
+                <string>WPG </string>
+            </array>
+            <key>CFBundleTypeRole</key>
+            <string>Viewer</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+        </dict>
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>emf</string>
+                <string>EMF</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>Inkscape-Generic.icns</string>
+            <key>CFBundleTypeMIMETypes</key>
+            <array>
+                <string>image/emf</string>
+            </array>
+            <key>CFBundleTypeName</key>
+            <string>Windows Enhanced Metafile document</string>
+            <key>CFBundleTypeOSTypes</key>
+            <array>
+                <string>EMF </string>
+            </array>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+        </dict>
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>vsd</string>
+                <string>VSD</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>Inkscape-Generic.icns</string>
+            <key>CFBundleTypeMIMETypes</key>
+            <array>
+                <string>application/vnd.visio</string>
+            </array>
+            <key>CFBundleTypeName</key>
+            <string>Microsoft Visio Diagram</string>
+            <key>CFBundleTypeRole</key>
+            <string>Viewer</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+        </dict>
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>vdx</string>
+                <string>VDX</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>Inkscape-Generic.icns</string>
+            <key>CFBundleTypeMIMETypes</key>
+            <array>
+                <string>application/vnd.visio</string>
+            </array>
+            <key>CFBundleTypeName</key>
+            <string>Microsoft Visio XML Diagram</string>
+            <key>CFBundleTypeRole</key>
+            <string>Viewer</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+        </dict>
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>vsdm</string>
+                <string>VSDM</string>
+                <string>vsdx</string>
+                <string>VSDX</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>Inkscape-Generic.icns</string>
+            <key>CFBundleTypeMIMETypes</key>
+            <array>
+                <string>application/vnd.visio</string>
+            </array>
+            <key>CFBundleTypeName</key>
+            <string>Microsoft Visio 2013 drawing</string>
+            <key>CFBundleTypeRole</key>
+            <string>Viewer</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+        </dict>
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>plt</string>
+                <string>PLT</string>
+                <string>hpgl</string>
+                <string>hpgl</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>Inkscape-Generic.icons</string>
+            <key>CFBundleTypeMIMETypes</key>
+            <array>
+                <string>application/vnd.hp-HPGL</string>
+                <string>image/hpgl</string>
+                <string>image/plt</string>
+                <string>image/x-plt</string>
+            </array>
+            <key>CFBundleTypeName</key>
+            <string>HP Graphics Language file</string>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+        </dict>
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>png</string>
+                <string>PNG</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>Inkscape-Generic.icns</string>
+            <key>CFBundleTypeMIMETypes</key>
+            <array>
+                <string>image/png</string>
+            </array>
+            <key>CFBundleTypeName</key>
+            <string>Portable Network Graphics Image</string>
+            <key>CFBundleTypeOSTypes</key>
+            <array>
+                <string>PNGf</string>
+            </array>
+            <key>CFBundleTypeRole</key>
+            <string>Viewer</string>
+            <key>LSHandlerRank</key>
+            <string>None</string>
+        </dict>
+    </array>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundlePackageType</key>

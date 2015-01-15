@@ -1,0 +1,20 @@
+--- numpy/linalg/setup.py.orig	2013-11-16 08:30:31.000000000 -0500
++++ numpy/linalg/setup.py	2013-11-16 08:39:27.000000000 -0500
+@@ -37,7 +37,8 @@
+     config.add_extension('lapack_lite',
+                          sources = [get_lapack_lite_sources],
+                          depends = ['lapack_litemodule.c'] + lapack_lite_src,
+-                         extra_info = lapack_info
++                         extra_info = lapack_info,
++                         extra_link_args=['-undefined dynamic_lookup -bundle']
+                          )
+ 
+     # umath_linalg module
+@@ -47,6 +48,7 @@
+                          depends =  ['umath_linalg.c.src'] + lapack_lite_src,
+                          extra_info = lapack_info,
+                          libraries = ['npymath'],
++                         extra_link_args=['-undefined dynamic_lookup -bundle']
+                          )
+ 
+     return config

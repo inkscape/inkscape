@@ -1,0 +1,214 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:et:sw=4:ts=4:sts=4
+# $Id: Portfile 127764 2014-11-03 14:01:21Z michaelld@macports.org $
+
+PortSystem              1.0
+PortGroup               python 1.0
+PortGroup               github 1.0
+
+github.setup            numpy numpy 1.9.1 v
+name                    py-numpy
+categories-append       math
+license                 BSD
+platforms               darwin
+maintainers             dh michaelld openmaintainer
+description             The core utilities for the scientific library scipy for Python
+long_description        ${description}
+
+checksums               rmd160  c043ce0045166762e36c513458abc499d36bbcf5 \
+                        sha256  504b7cbc3b47df592d683e0f3b992cfa4d29338f8d23fca07f040164018b607f
+
+python.versions         27 32 33 34
+
+if {${name} ne ${subport}} {
+
+    revision                100
+
+    patchfiles              patch-f2py_setup.py.diff \
+                            patch-fcompiler_g95.diff \
+                            patch-numpy_core_setup.py.diff
+
+    depends_lib-append      port:fftw-3 \
+                            port:py${python.version}-nose \
+                            port:py${python.version}-cython
+
+    # http://trac.macports.org/ticket/34562
+    destroot.env-append \
+        CC="${configure.cc}" \
+        CFLAGS="${configure.cflags} [get_canonical_archflags cc]" \
+        CXX="${configure.cxx}" \
+        CXXFLAGS="${configure.cxxflags} [get_canonical_archflags cxx]" \
+        OBJC="${configure.objc}" \
+        OBJCFLAGS="${configure.objcflags} [get_canonical_archflags objc]" \
+        LDFLAGS="${configure.ldflags} [get_canonical_archflags ld]"
+
+    build.env-append        ARCHFLAGS="[get_canonical_archflags ld]"
+    destroot.env-append     ARCHFLAGS="[get_canonical_archflags ld]"
+
+    variant atlas description {Use the MacPorts' ATLAS libraries \
+                               instead of Apple's Accelerate framework} {
+        depends_lib-append      port:atlas
+
+        if {[variant_isset universal]} {
+            python.set_compiler     no
+        }
+    }
+
+    # when using ATLAS (whether by default or specified by the user via
+    # the +atlas variant) ...
+    set gcc_version ""
+    if {[variant_isset atlas]} {
+
+        # see if the user has set -gcc4X to disable using MacPorts'
+        # compiler; if not, either use what the user set (as +gcc4X) or
+        # default to gcc48.
+
+        variant gcc43 conflicts gcc44 gcc45 gcc46 gcc47 gcc48 \
+        description {Use the gcc43 compiler (enables fortran linking)} {
+            configure.compiler      macports-gcc-4.3
+        }
+
+        variant gcc44 conflicts gcc43 gcc45 gcc46 gcc47 gcc48 \
+        description {Use the gcc44 compiler (enables fortran linking)} {
+            configure.compiler      macports-gcc-4.4
+        }
+
+        variant gcc45 conflicts gcc43 gcc44 gcc46 gcc47 gcc48 \
+        description {Use the gcc45 compiler (enables fortran linking)} {
+            configure.compiler      macports-gcc-4.5
+        }
+
+        variant gcc46 conflicts gcc43 gcc44 gcc45 gcc47 gcc48 \
+        description {Use the gcc46 compiler (enables fortran linking)} {
+            configure.compiler      macports-gcc-4.6
+        }
+
+        variant gcc47 conflicts gcc43 gcc44 gcc45 gcc46 gcc48 \
+        description {Use the gcc47 compiler (enables fortran linking)} {
+            configure.compiler      macports-gcc-4.7
+        }
+
+        variant gcc48 conflicts gcc43 gcc44 gcc45 gcc46 gcc47 \
+        description {Use the gcc48 compiler (enables fortran linking)} {
+            configure.compiler      macports-gcc-4.8
+        }
+
+        if {![variant_isset gcc43] && ![variant_isset gcc44] && ![variant_isset gcc45] && ![variant_isset gcc46] && ![variant_isset gcc47]} {
+            default_variants        +gcc48
+        }
+
+        if {[variant_isset gcc43]} {
+            set gcc_version "4.3"
+        } elseif {[variant_isset gcc44]} {
+            set gcc_version "4.4"
+        } elseif {[variant_isset gcc45]} {
+            set gcc_version "4.5"
+        } elseif {[variant_isset gcc46]} {
+            set gcc_version "4.6"
+        } elseif {[variant_isset gcc47]} {
+            set gcc_version "4.7"
+        } elseif {[variant_isset gcc48]} {
+            set gcc_version "4.8"
+        }
+
+        # when using non-Apple GCC for universal install, it can
+        # create binaries only for the native OS architecture, at
+        # either 32 or 64 bits.  Restrict the supported archs
+        # accordingly.
+        if {${os.arch} eq "i386"} {
+            supported_archs         i386 x86_64
+        } elseif {${os.arch} eq "powerpc"} {
+            supported_archs         ppc ppc64
+        }
+
+        # include all the correct GCC4X port
+        depends_lib-append      port:gcc[join [split ${gcc_version} "."] ""]
+
+        # force LDFLAGS for correct linking of the linalg module
+        # for non-Apple GCC compilers
+        patchfiles-append       patch-numpy_linalg_setup.py.diff
+
+        if {${gcc_version} == ""} {
+            # user specified -gcc4X but +atlas (either as default or
+            # explicitly); do not allow since it might lead to
+            # undetermined runtime execution.
+            return -code error \
+"\n\nWhen using the +atlas variant (either as the default or setting
+explicitly), one of the +gcc4X variants must be selected.\n"
+        }
+    }
+
+    post-patch {
+        reinplace "s|@@MPORTS_PYTHON@@|${python.bin}|" \
+            ${worksrcpath}/numpy/f2py/setup.py
+
+        if {[variant_isset universal] && [variant_isset atlas]} {
+            # Prepare wrappers
+            file copy -force ${filespath}/wrapper-template \
+                ${worksrcpath}/c-wrapper
+            file copy -force ${filespath}/wrapper-template \
+                ${worksrcpath}/f-wrapper
+            file copy -force ${filespath}/wrapper-template \
+                ${worksrcpath}/cxx-wrapper
+
+            reinplace   "s|@@@|${configure.cc}|" ${worksrcpath}/c-wrapper
+            reinplace   "s|---|\\\\.c|" ${worksrcpath}/c-wrapper
+            reinplace   "s|&&&|${prefix}|" ${worksrcpath}/c-wrapper
+
+            reinplace   "s|@@@|${configure.cxx}|" ${worksrcpath}/cxx-wrapper
+            reinplace   "s#---#(\\\\.C|\\\\.cpp|\\\\.cc)#" \
+                ${worksrcpath}/cxx-wrapper
+            reinplace   "s|&&&|${prefix}|" ${worksrcpath}/cxx-wrapper
+
+            reinplace   "s|@@@|${configure.f90}|" ${worksrcpath}/f-wrapper
+            reinplace   "s|---|\\\\.f|" ${worksrcpath}/f-wrapper
+            reinplace   "s|&&&|${prefix}|" ${worksrcpath}/f-wrapper
+
+            build.env-append    CC="${worksrcpath}/c-wrapper" \
+                                CXX="${worksrcpath}/cxx-wrapper" \
+                                F77="${worksrcpath}/f-wrapper" \
+                                F90="${worksrcpath}/f-wrapper"
+
+            destroot.env-append CC="${worksrcpath}/c-wrapper" \
+                                CXX="${worksrcpath}/cxx-wrapper" \
+                                F77="${worksrcpath}/f-wrapper" \
+                                F90="${worksrcpath}/f-wrapper"
+        }
+
+        if {[variant_isset atlas]} {
+            # We must link against libSatlas or libTatlas, not libAtlas
+            if {[file exists ${prefix}/lib/libtatlas.dylib]} {
+                reinplace -E \
+                    "s|_lib_atlas = \\\['atlas'\\\]|_lib_atlas = \\\['tatlas'\\\]|" \
+                    ${worksrcpath}/numpy/distutils/system_info.py
+            } elseif {[file exists ${prefix}/lib/libsatlas.dylib]} {
+                reinplace -E \
+                    "s|_lib_atlas = \\\['atlas'\\\]|_lib_atlas = \\\['satlas'\\\]|" \
+                    ${worksrcpath}/numpy/distutils/system_info.py
+            } else {
+                return -code error "Unable to find Atlas dylibs. Bailing out."
+            }
+        }
+    }
+
+    livecheck.type        none
+
+    if {[variant_isset atlas]} {
+        build.env-append    ATLAS=${prefix}/lib \
+                            LAPACK=${prefix}/lib \
+                            BLAS=${prefix}/lib
+        destroot.env-append ATLAS=${prefix}/lib \
+                            LAPACK=${prefix}/lib \
+                            BLAS=${prefix}/lib
+    } else {
+        build.env-append    ATLAS=None \
+                            LAPACK=/usr/lib \
+                            BLAS=/usr/lib
+        destroot.env-append ATLAS=None \
+                            LAPACK=/usr/lib \
+                            BLAS=/usr/lib
+    }
+
+} else {
+    livecheck               none
+    #livecheck.regex       archive/[join ${github.tag_prefix} ""](\[\\d+(?:\\.\\d+)*"\]+)${extract.suffix}"
+}
