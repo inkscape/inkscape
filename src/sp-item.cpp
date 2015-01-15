@@ -1299,7 +1299,7 @@ void SPItem::adjust_stroke( gdouble ex )
 
     SPStyle *style = this->style;
 
-    if (style && !style->stroke.isNone() && !Geom::are_near(ex, 1.0, Geom::EPSILON)) {
+    if (style && !Geom::are_near(ex, 1.0, Geom::EPSILON)) {
         style->stroke_width.computed *= ex;
         style->stroke_width.set = TRUE;
 
