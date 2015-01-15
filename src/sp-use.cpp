@@ -251,6 +251,8 @@ gchar* SPUse::description() const {
         if ( dynamic_cast<SPSymbol *>(child) ) {
             if (child->title()) {
                 return g_strdup_printf(_("called %s"), Glib::Markup::escape_text(Glib::ustring( g_dpgettext2(NULL, "Symbol", child->title()))).c_str());
+            } else if (child->getAttribute("id")) {
+                return g_strdup_printf(_("called %s"), Glib::Markup::escape_text(Glib::ustring( g_dpgettext2(NULL, "Symbol", child->getAttribute("id")))).c_str());
             } else {
                 return g_strdup_printf(_("called %s"), _("Unnamed Symbol"));
             }
