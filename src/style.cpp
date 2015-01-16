@@ -249,6 +249,7 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     word_spacing.setStylePointer(      this );
     stroke_width.setStylePointer(      this );
     stroke_dashoffset.setStylePointer( this );
+    shape_padding.setStylePointer(     this );
 
     // Properties that depend on 'color'
     text_decoration_color.setStylePointer( this );

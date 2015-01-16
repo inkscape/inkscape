@@ -501,10 +501,18 @@ unsigned SPText::_buildLayoutInput(SPObject *root, Inkscape::Text::Layout::Optio
 
                 if ( curve ) {
                     Path *temp = new Path;
+                    Path *padded = new Path;
                     temp->LoadPathVector( curve->get_pathvector(), shape->transform, true );
-                    temp->Convert( 0.25 );  // Convert to polyline
+                    if( style->shape_padding.set ) {
+                        // std::cout << "  padding: " << style->shape_padding.computed << std::endl;
+                        temp->OutsideOutline ( padded, style->shape_padding.computed, join_round, butt_straight, 20.0 );
+                    } else {
+                        // std::cout << "  no padding" << std::endl;
+                        padded->Copy( temp );
+                    }
+                    padded->Convert( 0.25 );  // Convert to polyline
                     Shape* sh = new Shape;
-                    temp->Fill( sh, 0 );
+                    padded->Fill( sh, 0 );
                     // for( unsigned i = 0; i < temp->pts.size(); ++i ) {
                     //   std::cout << " ........ " << temp->pts[i].p << std::endl;
                     // }
@@ -512,6 +520,11 @@ unsigned SPText::_buildLayoutInput(SPObject *root, Inkscape::Text::Layout::Optio
                     Shape *uncross = new Shape;
                     uncross->ConvertToShape( sh );
                     layout.appendWrapShape( uncross );
+
+                    delete temp;
+                    delete padded;
+                    delete sh;
+                    // delete uncross;
                 } else {
                     std::cerr << "SPText::_buildLayoutInput(): Failed to get curve." << std::endl;
                 }
