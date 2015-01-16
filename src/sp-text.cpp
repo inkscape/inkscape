@@ -57,6 +57,12 @@
 
 #include "sp-factory.h"
 
+// For SVG 2 text flow
+#include "livarot/Path.h"
+#include "livarot/Shape.h"
+#include "sp-shape.h"
+#include "display/curve.h"
+
 namespace {
 	SPObject* createText() {
 		return new SPText();
@@ -472,6 +478,49 @@ unsigned SPText::_buildLayoutInput(SPObject *root, Inkscape::Text::Layout::Optio
     int child_attrs_offset = 0;
     Inkscape::Text::Layout::OptionalTextTagAttrs optional_attrs;
 
+    // Test SVG 2 text in shape implementation
+    // To do: follow SPItem clip_ref/mask_ref code
+    if (style->shape_inside.set ) {
+
+        // Extract out id
+        Glib::ustring shape_url = style->shape_inside.value;
+        if ( shape_url.compare(0,5,"url(#") != 0 || shape_url.compare(shape_url.size()-1,1,")") != 0 ){
+            std::cerr << "SPText::_buildLayoutInput(): Invalid shape-inside value: " << shape_url << std::endl;
+        } else {
+            shape_url.erase(0,5);
+            shape_url.erase(shape_url.size()-1,1);
+            // std::cout << "SPText::_buildLayoutInput(): shape-inside: " << shape_url << std::endl;
+            SPShape *shape = dynamic_cast<SPShape *>(document->getObjectById( shape_url ));
+            if ( shape ) {
+
+                // This code adapted from sp-flowregion.cpp: GetDest()
+                if (!(shape->_curve)) {
+                    shape->set_shape();
+                }
+                SPCurve *curve = shape->getCurve();
+
+                if ( curve ) {
+                    Path *temp = new Path;
+                    temp->LoadPathVector( curve->get_pathvector(), shape->transform, true );
+                    temp->Convert( 0.25 );  // Convert to polyline
+                    Shape* sh = new Shape;
+                    temp->Fill( sh, 0 );
+                    // for( unsigned i = 0; i < temp->pts.size(); ++i ) {
+                    //   std::cout << " ........ " << temp->pts[i].p << std::endl;
+                    // }
+                    // std::cout << " ...... shape: " << sh->numberOfPoints() << std::endl;
+                    Shape *uncross = new Shape;
+                    uncross->ConvertToShape( sh );
+                    layout.appendWrapShape( uncross );
+                } else {
+                    std::cerr << "SPText::_buildLayoutInput(): Failed to get curve." << std::endl;
+                }
+            } else {
+                std::cerr << "SPText::_buildLayoutInput(): Failed to find shape." << std::endl;
+            }
+        }
+    }
+    
     if (SP_IS_TEXT(root)) {
         SP_TEXT(root)->attributes.mergeInto(&optional_attrs, parent_optional_attrs, parent_attrs_offset, true, true);
         if (SP_TEXT(root)->attributes.getTextLength()->_set) { // set textLength on the entire layout, see note in TNG-Layout.h
@@ -503,7 +552,7 @@ unsigned SPText::_buildLayoutInput(SPObject *root, Inkscape::Text::Layout::Optio
         child_attrs_offset = parent_attrs_offset;
     }
 
-    if (SP_IS_TSPAN(root))
+    if (SP_IS_TSPAN(root)) {
         if (SP_TSPAN(root)->role != SP_TSPAN_ROLE_UNSPECIFIED) {
             // we need to allow the first line not to have role=line, but still set the source_cookie to the right value
             SPObject *prev_object = root->getPrev();
@@ -522,13 +571,17 @@ unsigned SPText::_buildLayoutInput(SPObject *root, Inkscape::Text::Layout::Optio
                           // start position. Very confusing.
             child_attrs_offset--;
         }
-
+    }
+    
     for (SPObject *child = root->firstChild() ; child ; child = child->getNext() ) {
-        if (SP_IS_STRING(child)) {
-            Glib::ustring const &string = SP_STRING(child)->string;
+        SPString *str = dynamic_cast<SPString *>(child);
+        if (str) {
+            Glib::ustring const &string = str->string;
+            // std::cout << "  Appending: " << string << std::endl;
             layout.appendText(string, root->style, child, &optional_attrs, child_attrs_offset + length);
             length += string.length();
-        } /*XML Tree being directly used here while it shouldn't be.*/ else if (!sp_repr_is_meta_element(child->getRepr())) {
+        } else if (!sp_repr_is_meta_element(child->getRepr())) {
+            /*      ^^^^ XML Tree being directly used here while it shouldn't be.*/
             length += _buildLayoutInput(child, optional_attrs, child_attrs_offset + length, in_textpath);
         }
     }
