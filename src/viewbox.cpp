@@ -175,7 +175,9 @@ void SPViewBox::apply_viewbox(const Geom::Rect& in) {
       /* Things are getting interesting */
       double scalex = in.width() / ((float) this->viewBox.width());
       double scaley = in.height() / ((float) this->viewBox.height());
-      double scale = (this->aspect_clip == SP_ASPECT_MEET) ? MIN (scalex, scaley) : MAX (scalex, scaley);
+      double scale = (scalex + scaley)/2.0; // default if aspect ratio is not changing
+      if (!Geom::are_near(scalex / scaley, 1.0, Geom::EPSILON))
+        scale = (this->aspect_clip == SP_ASPECT_MEET) ? MIN (scalex, scaley) : MAX (scalex, scaley);
       width  = this->viewBox.width()  * scale;
       height = this->viewBox.height() * scale;
 
