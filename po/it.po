@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.91\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-01-06 10:39+0100\n"
+"POT-Creation-Date: 2015-01-13 09:00+0100\n"
 "PO-Revision-Date: 2014-11-18 18:00+0100\n"
 "Last-Translator: Firas Hanife <FirasHanife@gmail.com>\n"
 "Language-Team: \n"
@@ -4873,7 +4873,7 @@ msgstr "Documento memoria %d"
 msgid "Memory document %1"
 msgstr "Documento memoria %1"
 
-#: ../src/document.cpp:819
+#: ../src/document.cpp:839
 #, c-format
 msgid "Unnamed document %d"
 msgstr "Documento senza nome %d"
@@ -6050,6 +6050,7 @@ msgstr "Colore illuminazione"
 #: ../src/extension/internal/filter/transparency.h:214
 #: ../src/extension/internal/filter/transparency.h:287
 #: ../src/extension/internal/filter/transparency.h:349
+#: ../src/ui/dialog/inkscape-preferences.cpp:1751
 msgid "Filters"
 msgstr "Filtri"
 
@@ -12186,7 +12187,7 @@ msgstr "Relazione:"
 msgid "A related resource"
 msgstr "Riferimento ad una risorsa correlata"
 
-#: ../src/rdf.cpp:267 ../src/ui/dialog/inkscape-preferences.cpp:1866
+#: ../src/rdf.cpp:267 ../src/ui/dialog/inkscape-preferences.cpp:1870
 msgid "Language:"
 msgstr "Lingua:"
 
@@ -13174,7 +13175,7 @@ msgstr " da "
 msgid "[orphaned]"
 msgstr ""
 
-#: ../src/sp-tspan.cpp:217
+#: ../src/sp-tspan.cpp:218
 #, fuzzy
 msgid "Text Span"
 msgstr "Input testo"
@@ -19881,7 +19882,7 @@ msgid "Number of _Threads:"
 msgstr "Numero di _Thread:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1373
-#: ../src/ui/dialog/inkscape-preferences.cpp:1905
+#: ../src/ui/dialog/inkscape-preferences.cpp:1909
 msgid "(requires restart)"
 msgstr "(richiede riapertura)"
 
@@ -20148,20 +20149,20 @@ msgstr "Scorciatoie da tastiera"
 msgid "Misc"
 msgstr "Varie"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1846
+#: ../src/ui/dialog/inkscape-preferences.cpp:1850
 msgctxt "Spellchecker language"
 msgid "None"
 msgstr "Nessuna"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1867
+#: ../src/ui/dialog/inkscape-preferences.cpp:1871
 msgid "Set the main spell check language"
 msgstr "Imposta la lingua principale del controllo ortografico"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1870
+#: ../src/ui/dialog/inkscape-preferences.cpp:1874
 msgid "Second language:"
 msgstr "Seconda lingua:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1871
+#: ../src/ui/dialog/inkscape-preferences.cpp:1875
 msgid ""
 "Set the second spell check language; checking will only stop on words "
 "unknown in ALL chosen languages"
@@ -20169,11 +20170,11 @@ msgstr ""
 "Imposta la lingua secondaria per il controllo ortografico; il controllo "
 "evidenzierà solo parole non presenti in nessuna lingua selezionata"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1874
+#: ../src/ui/dialog/inkscape-preferences.cpp:1878
 msgid "Third language:"
 msgstr "Terza lingua:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1875
+#: ../src/ui/dialog/inkscape-preferences.cpp:1879
 msgid ""
 "Set the third spell check language; checking will only stop on words unknown "
 "in ALL chosen languages"
@@ -20181,31 +20182,31 @@ msgstr ""
 "Imposta la terza lingua per il controllo ortografico; il controllo "
 "evidenzierà solo parole non presenti in nessuna lingua selezionata"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1877
+#: ../src/ui/dialog/inkscape-preferences.cpp:1881
 msgid "Ignore words with digits"
 msgstr "Ignora parole con numeri"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1879
+#: ../src/ui/dialog/inkscape-preferences.cpp:1883
 msgid "Ignore words containing digits, such as \"R2D2\""
 msgstr "Ignora le parole contenenti numeri, come \"R2D2\""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1881
+#: ../src/ui/dialog/inkscape-preferences.cpp:1885
 msgid "Ignore words in ALL CAPITALS"
 msgstr "Ignora parole TUTTE MAIUSCOLE"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1883
+#: ../src/ui/dialog/inkscape-preferences.cpp:1887
 msgid "Ignore words in all capitals, such as \"IUPAC\""
 msgstr "Ignora parole scritte tutte maiuscole, come \"IUPAC\""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1885
+#: ../src/ui/dialog/inkscape-preferences.cpp:1889
 msgid "Spellcheck"
 msgstr "Correttore ortografico"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1905
+#: ../src/ui/dialog/inkscape-preferences.cpp:1909
 msgid "Latency _skew:"
 msgstr "_Ritardo latenza:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1906
+#: ../src/ui/dialog/inkscape-preferences.cpp:1910
 msgid ""
 "Factor by which the event clock is skewed from the actual time (0.9766 on "
 "some systems)"
@@ -20213,11 +20214,11 @@ msgstr ""
 "Il fattore di ritardo del clock degli eventi dal tempo reale (0.9766 su "
 "alcuni sistemi)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1908
+#: ../src/ui/dialog/inkscape-preferences.cpp:1912
 msgid "Pre-render named icons"
 msgstr "Effettua render anticipato delle icone con nome"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1910
+#: ../src/ui/dialog/inkscape-preferences.cpp:1914
 msgid ""
 "When on, named icons will be rendered before displaying the ui. This is for "
 "working around bugs in GTK+ named icon notification"
@@ -20226,83 +20227,83 @@ msgstr ""
 "mostrate nell'interfaccia. Questo può aiutare ad evitare un bug nelle "
 "notifiche delle icone di GTK+"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1918
+#: ../src/ui/dialog/inkscape-preferences.cpp:1922
 msgid "System info"
 msgstr "Informazione sistema"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1922
+#: ../src/ui/dialog/inkscape-preferences.cpp:1926
 msgid "User config: "
 msgstr "Configurazione utente:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1922
+#: ../src/ui/dialog/inkscape-preferences.cpp:1926
 msgid "Location of users configuration"
 msgstr "Locazione della configurazione utente"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1926
+#: ../src/ui/dialog/inkscape-preferences.cpp:1930
 msgid "User preferences: "
 msgstr "Preferenze utente: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1926
+#: ../src/ui/dialog/inkscape-preferences.cpp:1930
 msgid "Location of the users preferences file"
 msgstr "Locazione del file di preferenze dell'utente"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1930
+#: ../src/ui/dialog/inkscape-preferences.cpp:1934
 msgid "User extensions: "
 msgstr "Estensioni utente: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1930
+#: ../src/ui/dialog/inkscape-preferences.cpp:1934
 msgid "Location of the users extensions"
 msgstr "Locazione delle estensioni dell'utente"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1934
+#: ../src/ui/dialog/inkscape-preferences.cpp:1938
 msgid "User cache: "
 msgstr "Cache utente: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1934
+#: ../src/ui/dialog/inkscape-preferences.cpp:1938
 msgid "Location of users cache"
 msgstr "Locazione della cache dell'utente"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1942
+#: ../src/ui/dialog/inkscape-preferences.cpp:1946
 msgid "Temporary files: "
 msgstr "File temporanei: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1942
+#: ../src/ui/dialog/inkscape-preferences.cpp:1946
 msgid "Location of the temporary files used for autosave"
 msgstr "Locazione dei file temporanei usati per l'autosalvataggio"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1946
+#: ../src/ui/dialog/inkscape-preferences.cpp:1950
 msgid "Inkscape data: "
 msgstr "Dati Inkscape: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1946
+#: ../src/ui/dialog/inkscape-preferences.cpp:1950
 msgid "Location of Inkscape data"
 msgstr "Locazione dei dati di Inkscape"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1950
+#: ../src/ui/dialog/inkscape-preferences.cpp:1954
 msgid "Inkscape extensions: "
 msgstr "Estensioni di Inkscape: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1950
+#: ../src/ui/dialog/inkscape-preferences.cpp:1954
 msgid "Location of the Inkscape extensions"
 msgstr "Locazione delle estensioni di Inkscape"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1959
+#: ../src/ui/dialog/inkscape-preferences.cpp:1963
 msgid "System data: "
 msgstr "Dati sistema: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1959
+#: ../src/ui/dialog/inkscape-preferences.cpp:1963
 msgid "Locations of system data"
 msgstr "Locazione dei dati di sistema"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1983
+#: ../src/ui/dialog/inkscape-preferences.cpp:1987
 msgid "Icon theme: "
 msgstr "Tema icone: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1983
+#: ../src/ui/dialog/inkscape-preferences.cpp:1987
 msgid "Locations of icon themes"
 msgstr "Locazione dei temi delle icone"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1985
+#: ../src/ui/dialog/inkscape-preferences.cpp:1989
 msgid "System"
 msgstr "Sistema"
 
@@ -20629,17 +20630,17 @@ msgid "_Modify"
 msgstr "Modifica tracciato"
 
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:210
-#, fuzzy
-msgid "Radius "
+msgid "Radius"
 msgstr "Raggio"
 
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:212
-msgid "Radius approximated "
-msgstr ""
+#, fuzzy
+msgid "Radius approximated"
+msgstr "(arrotondato)"
 
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:215
 #, fuzzy
-msgid "Knot distance "
+msgid "Knot distance"
 msgstr "Distanza di aggancio"
 
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:222
@@ -20647,9 +20648,8 @@ msgstr "Distanza di aggancio"
 msgid "Position (%):"
 msgstr "Posizione:"
 
-#: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:226
-#, c-format
-msgid "(%s):"
+#: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:225
+msgid "%1 (%2):"
 msgstr ""
 
 #: ../src/ui/dialog/lpe-powerstroke-properties.cpp:119
@@ -23671,29 +23671,29 @@ msgctxt "Node tool tip"
 msgid "Drag to select objects to edit"
 msgstr "Trascina per selezionare gli oggetti da modificare"
 
-#: ../src/ui/tools/pen-tool.cpp:230 ../src/ui/tools/pencil-tool.cpp:466
+#: ../src/ui/tools/pen-tool.cpp:233 ../src/ui/tools/pencil-tool.cpp:466
 msgid "Drawing cancelled"
 msgstr "Disegno cancellato"
 
-#: ../src/ui/tools/pen-tool.cpp:466 ../src/ui/tools/pencil-tool.cpp:204
+#: ../src/ui/tools/pen-tool.cpp:469 ../src/ui/tools/pencil-tool.cpp:204
 msgid "Continuing selected path"
 msgstr "Continuazione del tracciato selezionato"
 
-#: ../src/ui/tools/pen-tool.cpp:476 ../src/ui/tools/pencil-tool.cpp:212
+#: ../src/ui/tools/pen-tool.cpp:479 ../src/ui/tools/pencil-tool.cpp:212
 msgid "Creating new path"
 msgstr "Creazione nuovo tracciato"
 
-#: ../src/ui/tools/pen-tool.cpp:478 ../src/ui/tools/pencil-tool.cpp:215
+#: ../src/ui/tools/pen-tool.cpp:481 ../src/ui/tools/pencil-tool.cpp:215
 msgid "Appending to selected path"
 msgstr "Aggiunta al tracciato selezionato"
 
-#: ../src/ui/tools/pen-tool.cpp:643
+#: ../src/ui/tools/pen-tool.cpp:646
 msgid "<b>Click</b> or <b>click and drag</b> to close and finish the path."
 msgstr ""
 "<b>Clicca</b> o <b>clicca e trascina</b> per chiudere e terminare il "
 "tracciato."
 
-#: ../src/ui/tools/pen-tool.cpp:645
+#: ../src/ui/tools/pen-tool.cpp:648
 #, fuzzy
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to close and finish the path. Shift"
@@ -23702,14 +23702,14 @@ msgstr ""
 "<b>Clicca</b> o <b>clicca e trascina</b> per chiudere e terminare il "
 "tracciato."
 
-#: ../src/ui/tools/pen-tool.cpp:657
+#: ../src/ui/tools/pen-tool.cpp:660
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to continue the path from this point."
 msgstr ""
 "<b>Clicca</b> o <b>clicca e trascina</b> per continuare il tracciato da "
 "questo punto."
 
-#: ../src/ui/tools/pen-tool.cpp:659
+#: ../src/ui/tools/pen-tool.cpp:662
 #, fuzzy
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to continue the path from this point. "
@@ -23718,7 +23718,7 @@ msgstr ""
 "<b>Clicca</b> o <b>clicca e trascina</b> per continuare il tracciato da "
 "questo punto."
 
-#: ../src/ui/tools/pen-tool.cpp:2100
+#: ../src/ui/tools/pen-tool.cpp:2036
 #, c-format
 msgid ""
 "<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to "
@@ -23727,7 +23727,7 @@ msgstr ""
 "<b>Segmento di curva</b>: angolo %3.2f&#176;, distanza %s; con <b>Ctrl</b> "
 "angoli a scatti; <b>Invio</b> per terminare il tracciato"
 
-#: ../src/ui/tools/pen-tool.cpp:2101
+#: ../src/ui/tools/pen-tool.cpp:2037
 #, c-format
 msgid ""
 "<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to "
@@ -23736,7 +23736,7 @@ msgstr ""
 "<b>Segmento di linea</b>: angolo %3.2f&#176;, distanza %s; con <b>Ctrl</b> "
 "angoli a scatti; <b>Invio</b> per terminare il tracciato"
 
-#: ../src/ui/tools/pen-tool.cpp:2104
+#: ../src/ui/tools/pen-tool.cpp:2040
 #, fuzzy, c-format
 msgid ""
 "<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Shift+Click</"
@@ -23745,7 +23745,7 @@ msgstr ""
 "<b>Segmento di curva</b>: angolo %3.2f&#176;, distanza %s; con <b>Ctrl</b> "
 "angoli a scatti; <b>Invio</b> per terminare il tracciato"
 
-#: ../src/ui/tools/pen-tool.cpp:2105
+#: ../src/ui/tools/pen-tool.cpp:2041
 #, fuzzy, c-format
 msgid ""
 "<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Shift+Click</b> "
@@ -23754,7 +23754,7 @@ msgstr ""
 "<b>Segmento di linea</b>: angolo %3.2f&#176;, distanza %s; con <b>Ctrl</b> "
 "angoli a scatti; <b>Invio</b> per terminare il tracciato"
 
-#: ../src/ui/tools/pen-tool.cpp:2122
+#: ../src/ui/tools/pen-tool.cpp:2058
 #, c-format
 msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -23763,7 +23763,7 @@ msgstr ""
 "<b>Maniglia curva</b>: angolo %3.2f&#176; lunghezza %s; <b>Ctrl</b> per "
 "angoli a scatti"
 
-#: ../src/ui/tools/pen-tool.cpp:2146
+#: ../src/ui/tools/pen-tool.cpp:2082
 #, c-format
 msgid ""
 "<b>Curve handle, symmetric</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</"
@@ -23773,7 +23773,7 @@ msgstr ""
 "<b>Ctrl</b> per angoli a scatti, <b>Maiusc</b> per muovere solo questa "
 "maniglia"
 
-#: ../src/ui/tools/pen-tool.cpp:2147
+#: ../src/ui/tools/pen-tool.cpp:2083
 #, c-format
 msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -23782,7 +23782,7 @@ msgstr ""
 "<b>Maniglia di curva</b>: angolo %3.2f&#176;, lunghezza %s; con <b>Ctrl</b> "
 "per angoli a scatti, <b>Maiusc</b> per muovere solo questa maniglia"
 
-#: ../src/ui/tools/pen-tool.cpp:2195
+#: ../src/ui/tools/pen-tool.cpp:2217
 msgid "Drawing finished"
 msgstr "Disegno finito"
 
@@ -25952,7 +25952,7 @@ msgstr "Crea una proiezione dinamica del tracciato originale"
 
 #: ../src/verbs.cpp:2621
 msgid "_Stroke to Path"
-msgstr "Da _linea a tracciato"
+msgstr "Da _contorno a tracciato"
 
 #: ../src/verbs.cpp:2622
 msgid "Convert selected object's stroke to paths"
