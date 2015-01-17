@@ -169,14 +169,14 @@ CairoPsOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar con
 
     bool new_areaPage  = true;
     try {
-        new_areaPage = (strcmp(ext->get_param_optiongroup("area"), "page") == 0);
+        new_areaPage = (strcmp(mod->get_param_optiongroup("area"), "page") == 0);
     } catch(...) {}
 
     bool new_areaDrawing  = !new_areaPage;
 
     float bleedmargin_px = 0.;
     try {
-        bleedmargin_px = ext->get_param_float("bleed");
+        bleedmargin_px = mod->get_param_float("bleed");
     } catch(...) {}
 
     const gchar *new_exportId = NULL;
@@ -221,7 +221,7 @@ CairoEpsOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar co
     Inkscape::Extension::Extension * ext;
     unsigned int ret;
 
-    ext = Inkscape::Extension::db.get(SP_MODULE_KEY_PRINT_CAIRO_PS);
+    ext = Inkscape::Extension::db.get(SP_MODULE_KEY_PRINT_CAIRO_EPS);
     if (ext == NULL)
         return;
 
@@ -258,14 +258,14 @@ CairoEpsOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar co
 
     bool new_areaPage  = true;
     try {
-        new_areaPage = (strcmp(ext->get_param_optiongroup("area"), "page") == 0);
+        new_areaPage = (strcmp(mod->get_param_optiongroup("area"), "page") == 0);
     } catch(...) {}
 
     bool new_areaDrawing  = !new_areaPage;
 
     float bleedmargin_px = 0.;
     try {
-        bleedmargin_px = ext->get_param_float("bleed");
+        bleedmargin_px = mod->get_param_float("bleed");
     } catch(...) {}
 
     const gchar *new_exportId = NULL;
