@@ -35,6 +35,7 @@
 #include "preferences.h"
 #include "style.h"
 #include "sp-symbol.h"
+#include "sp-root.h"
 #include "sp-use.h"
 #include "sp-use-reference.h"
 #include "sp-shape.h"
@@ -562,13 +563,17 @@ void SPUse::update(SPCtx *ctx, unsigned flags) {
         this->height.computed = this->height.value * ictx->viewport.height();
     }
 
-    cctx.viewport = Geom::Rect::from_xywh(0, 0, this->width.computed, this->height.computed);
-    cctx.i2vp = Geom::identity();
     childflags &= ~SP_OBJECT_USER_MODIFIED_FLAG_B;
 
     if (this->child) {
         sp_object_ref(this->child);
 
+        // viewport is only changed if referencing a symbol or svg element
+        if( SP_IS_SYMBOL(this->child) || SP_IS_ROOT(this->child) ) {
+            cctx.viewport = Geom::Rect::from_xywh(0, 0, this->width.computed, this->height.computed);
+            cctx.i2vp = Geom::identity();
+        }
+        
         if (childflags || (this->child->uflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
             SPItem const *chi = dynamic_cast<SPItem const *>(child);
             g_assert(chi != NULL);
