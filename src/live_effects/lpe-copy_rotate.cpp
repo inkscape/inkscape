@@ -15,17 +15,10 @@
 #include <gdk/gdk.h>
 
 #include "live_effects/lpe-copy_rotate.h"
-#include "sp-shape.h"
-#include "display/curve.h"
-#include <2geom/path.h>
-#include <2geom/path-intersection.h>
-#include <2geom/sbasis-to-bezier.h>
 #include <2geom/path.h>
 #include <2geom/transforms.h>
 #include <2geom/d2-sbasis.h>
 #include <2geom/angle.h>
-#include <2geom/line.h>
-#include <cmath>
 
 #include "knot-holder-entity.h"
 #include "knotholder.h"
