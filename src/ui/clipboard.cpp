@@ -936,15 +936,18 @@ bool ClipboardManagerImpl::_pasteImage(SPDocument *doc)
     }
     Inkscape::Extension::Extension *png = *i;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    Glib::ustring attr = prefs->getString("/dialogs/import/link");
+    Glib::ustring attr_saved = prefs->getString("/dialogs/import/link");
+    bool ask_saved = prefs->getBool("/dialogs/import/ask");
     prefs->setString("/dialogs/import/link", "embed");
+    prefs->setBool("/dialogs/import/ask", false);
     png->set_gui(false);
 
     gchar *filename = g_build_filename( g_get_tmp_dir(), "inkscape-clipboard-import", NULL );
     img->save(filename, "png");
     file_import(doc, filename, png);
     g_free(filename);
-    prefs->setString("/dialogs/import/link", attr);
+    prefs->setString("/dialogs/import/link", attr_saved);
+    prefs->setBool("/dialogs/import/ask", ask_saved);
     png->set_gui(true);
 
     return true;
