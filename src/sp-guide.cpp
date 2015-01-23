@@ -198,8 +198,15 @@ SPGuide *SPGuide::createSPGuide(SPDocument *doc, Geom::Point const &pt1, Geom::P
 
     SPRoot *root = doc->getRoot();
     if( root->viewBox_set ) {
-        newx = newx * root->viewBox.width()  / root->width.computed;
-        newy = newy * root->viewBox.height() / root->height.computed;
+        // check to see if scaling is uniform
+        if(Geom::are_near((root->viewBox.width() * root->height.computed) / (root->width.computed * root->viewBox.height()), 1.0, Geom::EPSILON)) {
+            double px2vbunit = (root->viewBox.width()/root->width.computed + root->viewBox.height()/root->height.computed)/2.0;
+            newx = newx * px2vbunit;
+            newy = newy * px2vbunit;
+        } else {
+            newx = newx * root->viewBox.width()  / root->width.computed;
+            newy = newy * root->viewBox.height() / root->height.computed;
+        }
     }
 
     sp_repr_set_point(repr, "position", Geom::Point( newx, newy ));
@@ -341,8 +348,15 @@ void SPGuide::moveto(Geom::Point const point_on_line, bool const commit)
 
         SPRoot *root = document->getRoot();
         if( root->viewBox_set ) {
-            newx = newx * root->viewBox.width()  / root->width.computed;
-            newy = newy * root->viewBox.height() / root->height.computed;
+            // check to see if scaling is uniform
+            if(Geom::are_near((root->viewBox.width() * root->height.computed) / (root->width.computed * root->viewBox.height()), 1.0, Geom::EPSILON)) {
+                double px2vbunit = (root->viewBox.width()/root->width.computed + root->viewBox.height()/root->height.computed)/2.0;
+                newx = newx * px2vbunit;
+                newy = newy * px2vbunit;
+            } else {
+                newx = newx * root->viewBox.width()  / root->width.computed;
+                newy = newy * root->viewBox.height() / root->height.computed;
+            }
         }
 
         //XML Tree being used here directly while it shouldn't be.
