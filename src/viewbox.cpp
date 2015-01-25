@@ -164,22 +164,24 @@ void SPViewBox::set_preserveAspectRatio(const gchar* value) {
 void SPViewBox::apply_viewbox(const Geom::Rect& in) {
 
     /* Determine actual viewbox in viewport coordinates */
-    /* These are floats since SVGLength is a float: See bug 1374614 */
-    float x = 0.0;
-    float y = 0.0;
-    float width = in.width();
-    float height = in.height();
-    // std::cout << "  width: " << width << " height: " << height << std::endl;
+    double x = 0.0;
+    double y = 0.0;
+    double scalex = in.width() / this->viewBox.width();
+    double scaley = in.height() / this->viewBox.height();
+    double scale = 1.0; // uniform scale factor
 
-    if (this->aspect_align != SP_ASPECT_NONE) {
-      /* Things are getting interesting */
-      double scalex = in.width() / ((float) this->viewBox.width());
-      double scaley = in.height() / ((float) this->viewBox.height());
-      double scale = (scalex + scaley)/2.0; // default if aspect ratio is not changing
-      if (!Geom::are_near(scalex / scaley, 1.0, Geom::EPSILON))
-        scale = (this->aspect_clip == SP_ASPECT_MEET) ? MIN (scalex, scaley) : MAX (scalex, scaley);
-      width  = this->viewBox.width()  * scale;
-      height = this->viewBox.height() * scale;
+    if (Geom::are_near(scalex / scaley, 1.0, Geom::EPSILON)) {
+      // scaling is already uniform, reduce numerical error
+      scale = (scalex + scaley)/2.0;
+      scalex = scale;
+      scaley = scale;
+    } else if (this->aspect_align != SP_ASPECT_NONE) {
+      // scaling is not uniform, but force it to be
+      scale = (this->aspect_clip == SP_ASPECT_MEET) ? MIN (scalex, scaley) : MAX (scalex, scaley);
+      scalex = scale;
+      scaley = scale;
+      double width  = this->viewBox.width()  * scale;
+      double height = this->viewBox.height() * scale;
 
       /* Now place viewbox to requested position */
       switch (this->aspect_align) {
@@ -220,12 +222,12 @@ void SPViewBox::apply_viewbox(const Geom::Rect& in) {
 
     /* Viewbox transform from scale and position */
     Geom::Affine q;
-    q[0] = width / ((float) this->viewBox.width());
+    q[0] = scalex;
     q[1] = 0.0;
     q[2] = 0.0;
-    q[3] = height / ((float) this->viewBox.height());
-    q[4] = x - q[0] * ((float) this->viewBox.left());
-    q[5] = y - q[3] * ((float) this->viewBox.top());
+    q[3] = scaley;
+    q[4] = x - scalex * this->viewBox.left();
+    q[5] = y - scaley * this->viewBox.top();
 
     // std::cout << "  q\n" << q << std::endl;
 
