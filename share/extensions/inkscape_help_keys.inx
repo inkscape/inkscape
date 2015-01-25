@@ -4,7 +4,7 @@
   <id>org.inkscape.help.keys</id>
   <dependency type="executable" location="extensions">launch_webbrowser.py</dependency>
   <!-- i18n. Please don't translate it unless a page exists in your language -->
-  <_param name="url" gui-hidden="true" type="string">http://inkscape.org/doc/keys048.html</_param>
+  <_param name="url" gui-hidden="true" type="string">http://inkscape.org/doc/keys091.html</_param>
   <effect needs-document="false">
     <object-type>all</object-type>
     <effects-menu hidden="true" />

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-01-13 09:00+0100\n"
+"POT-Creation-Date: 2015-01-25 08:39+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12427,7 +12427,7 @@ msgstr ""
 msgid "Linked Flowed Text"
 msgstr ""
 
-#: ../src/sp-flowtext.cpp:298 ../src/sp-text.cpp:375
+#: ../src/sp-flowtext.cpp:298 ../src/sp-text.cpp:381
 #: ../src/ui/tools/text-tool.cpp:1566
 msgid " [truncated]"
 msgstr ""
@@ -12439,36 +12439,36 @@ msgid_plural "(%d characters%s)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/sp-guide.cpp:242
+#: ../src/sp-guide.cpp:249
 msgid "Create Guides Around the Page"
 msgstr ""
 
-#: ../src/sp-guide.cpp:254 ../src/verbs.cpp:2549
+#: ../src/sp-guide.cpp:261 ../src/verbs.cpp:2549
 msgid "Delete All Guides"
 msgstr ""
 
 #. Guide has probably been deleted and no longer has an attached namedview.
-#: ../src/sp-guide.cpp:434
+#: ../src/sp-guide.cpp:448
 msgid "Deleted"
 msgstr ""
 
-#: ../src/sp-guide.cpp:443
+#: ../src/sp-guide.cpp:457
 msgid ""
 "<b>Shift+drag</b> to rotate, <b>Ctrl+drag</b> to move origin, <b>Del</b> to "
 "delete"
 msgstr ""
 
-#: ../src/sp-guide.cpp:447
+#: ../src/sp-guide.cpp:461
 #, c-format
 msgid "vertical, at %s"
 msgstr ""
 
-#: ../src/sp-guide.cpp:450
+#: ../src/sp-guide.cpp:464
 #, c-format
 msgid "horizontal, at %s"
 msgstr ""
 
-#: ../src/sp-guide.cpp:455
+#: ../src/sp-guide.cpp:469
 #, c-format
 msgid "at %d degrees, through (%s,%s)"
 msgstr ""
@@ -12627,7 +12627,7 @@ msgstr ""
 msgid "Conditional Group"
 msgstr ""
 
-#: ../src/sp-text.cpp:359 ../src/verbs.cpp:348
+#: ../src/sp-text.cpp:365 ../src/verbs.cpp:348
 #: ../share/extensions/lorem_ipsum.inx.h:8
 #: ../share/extensions/replace_font.inx.h:11
 #: ../share/extensions/split.inx.h:10 ../share/extensions/text_braille.inx.h:2
@@ -12642,12 +12642,12 @@ msgstr ""
 msgid "Text"
 msgstr ""
 
-#: ../src/sp-text.cpp:379
+#: ../src/sp-text.cpp:385
 #, c-format
 msgid "on path%s (%s, %s)"
 msgstr ""
 
-#: ../src/sp-text.cpp:380
+#: ../src/sp-text.cpp:386
 #, c-format
 msgid "%s (%s, %s)"
 msgstr ""
@@ -12660,7 +12660,7 @@ msgstr ""
 msgid " from "
 msgstr ""
 
-#: ../src/sp-tref.cpp:252 ../src/sp-use.cpp:278
+#: ../src/sp-tref.cpp:252 ../src/sp-use.cpp:281
 msgid "[orphaned]"
 msgstr ""
 
@@ -12668,30 +12668,30 @@ msgstr ""
 msgid "Text Span"
 msgstr ""
 
-#: ../src/sp-use.cpp:243
+#: ../src/sp-use.cpp:244
 msgid "Symbol"
 msgstr ""
 
-#: ../src/sp-use.cpp:245
+#: ../src/sp-use.cpp:246
 msgid "Clone"
 msgstr ""
 
-#: ../src/sp-use.cpp:253 ../src/sp-use.cpp:255
+#: ../src/sp-use.cpp:254 ../src/sp-use.cpp:256 ../src/sp-use.cpp:258
 #, c-format
 msgid "called %s"
 msgstr ""
 
-#: ../src/sp-use.cpp:255
+#: ../src/sp-use.cpp:258
 msgid "Unnamed Symbol"
 msgstr ""
 
 #. TRANSLATORS: Used for statusbar description for long <use> chains:
 #. * "Clone of: Clone of: ... in Layer 1".
-#: ../src/sp-use.cpp:264
+#: ../src/sp-use.cpp:267
 msgid "..."
 msgstr ""
 
-#: ../src/sp-use.cpp:273
+#: ../src/sp-use.cpp:276
 #, c-format
 msgid "of: %s"
 msgstr ""
@@ -12941,37 +12941,37 @@ msgstr ""
 msgid "Nothing was copied."
 msgstr ""
 
-#: ../src/ui/clipboard.cpp:382 ../src/ui/clipboard.cpp:594
-#: ../src/ui/clipboard.cpp:623
+#: ../src/ui/clipboard.cpp:393 ../src/ui/clipboard.cpp:605
+#: ../src/ui/clipboard.cpp:634
 msgid "Nothing on the clipboard."
 msgstr ""
 
-#: ../src/ui/clipboard.cpp:440
+#: ../src/ui/clipboard.cpp:451
 msgid "Select <b>object(s)</b> to paste style to."
 msgstr ""
 
-#: ../src/ui/clipboard.cpp:451 ../src/ui/clipboard.cpp:468
+#: ../src/ui/clipboard.cpp:462 ../src/ui/clipboard.cpp:479
 msgid "No style on the clipboard."
 msgstr ""
 
-#: ../src/ui/clipboard.cpp:493
+#: ../src/ui/clipboard.cpp:504
 msgid "Select <b>object(s)</b> to paste size to."
 msgstr ""
 
-#: ../src/ui/clipboard.cpp:500
+#: ../src/ui/clipboard.cpp:511
 msgid "No size on the clipboard."
 msgstr ""
 
-#: ../src/ui/clipboard.cpp:556
+#: ../src/ui/clipboard.cpp:567
 msgid "Select <b>object(s)</b> to paste live path effect to."
 msgstr ""
 
 #. no_effect:
-#: ../src/ui/clipboard.cpp:581
+#: ../src/ui/clipboard.cpp:592
 msgid "No effect on the clipboard."
 msgstr ""
 
-#: ../src/ui/clipboard.cpp:600 ../src/ui/clipboard.cpp:637
+#: ../src/ui/clipboard.cpp:611 ../src/ui/clipboard.cpp:648
 msgid "Clipboard does not contain a path."
 msgstr ""
 
@@ -32408,7 +32408,7 @@ msgstr ""
 
 #. i18n. Please don't translate it unless a page exists in your language
 #: ../share/extensions/inkscape_help_keys.inx.h:3
-msgid "http://inkscape.org/doc/keys048.html"
+msgid "http://inkscape.org/doc/keys091.html"
 msgstr ""
 
 #: ../share/extensions/inkscape_help_manual.inx.h:1
