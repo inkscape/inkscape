@@ -621,7 +621,7 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<Geom::Point>
     bool currently_painting_top = false;
     bool currently_painting_bottom = false;
 
-    unsigned int top_ty = bci.y - 1;
+    unsigned int top_ty = (bci.y > 0) ? bci.y - 1 : 0;
     unsigned int bottom_ty = bci.y + 1;
 
     bool can_paint_top = (top_ty > 0);
