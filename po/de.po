@@ -34419,8 +34419,9 @@ msgstr "Referenz der Tasten- und Maus-Befehle"
 
 #. i18n. Please don't translate it unless a page exists in your language
 #: ../share/extensions/inkscape_help_keys.inx.h:3
+#, fuzzy
 msgid "http://inkscape.org/doc/keys091.html"
-msgstr "http://inkscape.org/doc/keys091.de.html"
+msgstr "http://inkscape.org/doc/keys091.html"
 
 #: ../share/extensions/inkscape_help_manual.inx.h:1
 msgid "Inkscape Manual"
