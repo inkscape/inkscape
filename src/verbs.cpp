@@ -2428,7 +2428,7 @@ Verb *Verb::_base_verbs[] = {
     new Verb(SP_VERB_NONE, "None", NC_("Verb", "None"), N_("Does nothing"), NULL, NULL),
 
     // File
-    new FileVerb(SP_VERB_FILE_NEW, "FileNew", N_("Default"), N_("Create new document from the default template"),
+    new FileVerb(SP_VERB_FILE_NEW, "FileNew", N_("_New"), N_("Create new document from the default template"),
                  INKSCAPE_ICON("document-new")),
     new FileVerb(SP_VERB_FILE_OPEN, "FileOpen", N_("_Open..."),
                  N_("Open an existing document"), INKSCAPE_ICON("document-open")),
@@ -2458,7 +2458,7 @@ Verb *Verb::_base_verbs[] = {
     new FileVerb(SP_VERB_FILE_CLOSE_VIEW, "FileClose", N_("_Close"),
                  N_("Close this document window"), INKSCAPE_ICON("window-close")),
     new FileVerb(SP_VERB_FILE_QUIT, "FileQuit", N_("_Quit"), N_("Quit Inkscape"), INKSCAPE_ICON("application-exit")),
-    new FileVerb(SP_VERB_FILE_TEMPLATES, "FileTemplates", N_("_Templates..."),
+    new FileVerb(SP_VERB_FILE_TEMPLATES, "FileTemplates", N_("New from _Template..."),
                 N_("Create new project from template"), INKSCAPE_ICON("dialog-templates")),
 
     // Edit
