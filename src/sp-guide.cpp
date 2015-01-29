@@ -156,8 +156,15 @@ void SPGuide::set(unsigned int key, const gchar *value) {
                 // If root viewBox set, interpret guides in terms of viewBox (90/96)
                 SPRoot *root = document->getRoot();
                 if( root->viewBox_set ) {
-                    newx = newx * root->width.computed  / root->viewBox.width();
-                    newy = newy * root->height.computed / root->viewBox.height();
+                    if(Geom::are_near((root->width.computed * root->viewBox.height()) / (root->viewBox.width() * root->height.computed), 1.0, Geom::EPSILON)) {
+                        // for uniform scaling, try to reduce numerical error
+                        double vbunit2px = (root->width.computed / root->viewBox.width() + root->height.computed / root->viewBox.height())/2.0;
+                        newx = newx * vbunit2px;
+                        newy = newy * vbunit2px;
+                    } else {
+                        newx = newx * root->width.computed  / root->viewBox.width();
+                        newy = newy * root->height.computed / root->viewBox.height();
+                    }
                 }
                 this->point_on_line = Geom::Point(newx, newy);
             } else if (success == 1) {
