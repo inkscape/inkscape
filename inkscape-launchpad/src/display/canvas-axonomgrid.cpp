@@ -220,6 +220,11 @@ CanvasAxonomGrid::readRepr()
     if( root->viewBox_set ) {
         scale_x = root->width.computed  / root->viewBox.width();
         scale_y = root->height.computed / root->viewBox.height();
+        if (Geom::are_near(scale_x / scale_y, 1.0, Geom::EPSILON)) {
+            // scaling is uniform, try to reduce numerical error
+            scale_x = (scale_x + scale_y)/2.0;
+            scale_y = scale_x;
+        }
     }
 
     gchar const *value;

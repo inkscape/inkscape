@@ -727,8 +727,8 @@ void SPGroup::scaleChildItemsRec(Geom::Scale const &sc, Geom::Point const &p, bo
                         group->scaleChildItemsRec(sc, p, false);
                     }
                 } else {
-                    Geom::OptRect bbox = item->desktopVisualBounds();
-                    if (bbox) {
+//                    Geom::OptRect bbox = item->desktopVisualBounds();
+//                    if (bbox) {  // test not needed, this was causing a failure to scale <circle> and <rect> in the clipboard, see LP Bug 1365451
                         // Scale item
                         Geom::Translate const s(p);
                         Geom::Affine final = s.inverse() * sc * s;
@@ -789,7 +789,7 @@ void SPGroup::scaleChildItemsRec(Geom::Scale const &sc, Geom::Point const &p, bo
                             item->scaleCenter(sc); // All coordinates have been scaled, so also the center must be scaled
                             item->updateRepr();
                         }
-                    }
+//                    }
                 }
             }
         }

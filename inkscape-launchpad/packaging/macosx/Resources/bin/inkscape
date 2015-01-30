@@ -15,7 +15,8 @@ get_env_current ()
 
 [ -n "$INK_DEBUG_LAUNCHER" ] && set -x
 
-CWD="$(cd "$(dirname "$0")" && pwd)"
+CMD="$(readlink $0 || echo $0)"
+CWD="$(cd "$(dirname "$CMD")" && pwd -P)"
 # e.g. /Applications/Inkscape.app/Contents/Resources/bin
 TOP="$(dirname "$CWD")"
 # e.g. /Applications/Inkscape.app/Contents/Resources

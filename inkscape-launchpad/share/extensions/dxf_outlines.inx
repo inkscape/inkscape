@@ -9,7 +9,7 @@
 		<page name="options" _gui-text="Options">
 			<param name="ROBO" type="boolean" _gui-text="use ROBO-Master type of spline output">false</param>
 			<param name="POLY" type="boolean" _gui-text="use LWPOLYLINE type of line output">true</param>
-			<param name="units" type="enum" _gui-text="Base unit">
+			<param name="units" type="enum" _gui-text="Base unit:">
 				<_item value="72./96">pt</_item>
 				<_item value="1./16">pc</_item>
 				<_item value="1.">px</_item>
@@ -19,18 +19,18 @@
 				<_item value="1./96">in</_item>
 				<_item value="1./1152">ft</_item>
 			</param>
-			<param name="encoding" type="enum" _gui-text="Character Encoding">
+			<param name="encoding" type="enum" _gui-text="Character Encoding:">
 				<_item value="latin_1">Latin 1</_item>
 				<_item value="cp1250">CP 1250</_item>
 				<_item value="cp1252">CP 1252</_item>
 				<_item value="utf_8">UTF 8</_item>
 			</param>
-			<param name="layer_option" type="enum" _gui-text="Layer export selection">
+			<param name="layer_option" type="enum" _gui-text="Layer export selection:">
 				<_item value="all">All (default)</_item>
 				<_item value="visible">Visible only</_item>
 				<_item value="name">By name match</_item>
 			</param>
-			<param name="layer_name" type="string" _gui-text="Layer match name"></param>
+			<param name="layer_name" type="string" _gui-text="Layer match name:"></param>
 		</page>
 		<page name="help" _gui-text="Help">
 			<_param name="inputhelp" type="description" xml:space="preserve">- AutoCAD Release 14 DXF format.

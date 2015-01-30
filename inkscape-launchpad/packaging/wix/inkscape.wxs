@@ -38,10 +38,10 @@
 		<DirectoryRef Id="INSTALLDIR">
 			<Component Id="RegisterExtension" Guid="d544e040-573e-4ea8-983e-4bcae6b87f3d" Win64='$(var.Win64)'>
 				<ProgId Id="inkscape.svg" Description='scalable vector graphics file' Icon='file_inkscape_exe'>
-					<Extension Id='svg' ContentType='application/svg'>
+					<Extension Id='svg' ContentType='image/svg+xml'>
 						<Verb Id='edit' Command='Edit with Inkscape' TargetFile='file_inkscape_exe' Argument='"%1"' />
 					</Extension>
-					<Extension Id='svgz' ContentType='application/svgz'>
+					<Extension Id='svgz' ContentType='image/svg+xml'>
 						<Verb Id='open' Command='Open with Inkscape' TargetFile='file_inkscape_exe' Argument='"%1"' />
 					</Extension>
 

@@ -142,6 +142,12 @@ public:
     /** white space (svg2) */
     SPIEnum white_space;
 
+    /** SVG2 Text Wrapping */
+    SPIString shape_inside;
+    // SPIString shape_outside;
+    SPILength shape_padding;
+    // SPILength shape_margin;
+
     /* Text Decoration ----------------------- */
 
     /** text decoration (css2 16.3.1) */

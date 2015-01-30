@@ -36,20 +36,24 @@ public:
 
     virtual Geom::Piecewise<Geom::D2<Geom::SBasis> > doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in);
 
+    virtual void doBeforeEffect (SPLPEItem const* lpeitem);
+
+    virtual void resetDefaults(SPItem const* item);
+
     /* the knotholder entity classes must be declared friends */
     friend class CR::KnotHolderEntityStartingAngle;
+    friend class CR::KnotHolderEntityRotationAngle;
     void addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
 
 protected:
     virtual void addCanvasIndicators(SPLPEItem const *lpeitem, std::vector<Geom::PathVector> &hp_vec);
 
 private:
+    PointParam origin;
     ScalarParam starting_angle;
     ScalarParam rotation_angle;
     ScalarParam num_copies;
     BoolParam copiesTo360;
-
-    PointParam origin;
 
     Geom::Point A;
     Geom::Point B;

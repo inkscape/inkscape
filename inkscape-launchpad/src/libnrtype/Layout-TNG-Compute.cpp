@@ -344,7 +344,7 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
 
             if (char_attributes.is_mandatory_break && span->end != span->start) {
                 *last_emergency_break_span = *last_break_span = *span;
-                TRACE(("span %d end of para; width = %f chars = %d\n", span->start.iter_span - para.unbroken_spans.begin(), span->width, char_count));
+                TRACE(("span %ld end of para; width = %f chars = %d\n", span->start.iter_span - para.unbroken_spans.begin(), span->width, char_count));
                 return false;
             }
 
@@ -362,7 +362,7 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
             }
             // todo: break between chars if necessary (ie no word breaks present) when doing rectangular flowing
 
-            // sum the glyph widths, letter spacing and word spacing to get the character width
+            // sum the glyph widths, letter spacing, word spacing, and textLength adjustment to get the character width
             double char_width = 0.0;
             while (span->end_glyph_index < (unsigned)span->end.iter_span->glyph_string->num_glyphs
                    && span->end.iter_span->glyph_string->log_clusters[span->end_glyph_index] <= (int)span->end.char_byte) {
@@ -373,9 +373,10 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
                 span->end_glyph_index++;
             }
             if (char_attributes.is_cursor_position)
-                char_width += text_source->style->letter_spacing.computed;
+                char_width += text_source->style->letter_spacing.computed * _flow.getTextLengthMultiplierDue();
             if (char_attributes.is_white)
-                char_width += text_source->style->word_spacing.computed;
+                char_width += text_source->style->word_spacing.computed * _flow.getTextLengthMultiplierDue();
+            char_width += _flow.getTextLengthIncrementDue();
             span->width += char_width;
             IFTRACE(char_count++);
 
@@ -400,13 +401,13 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
             span->word_spacing   = text_source->style->word_spacing.computed;
 
             if (test_width > maximum_width && !char_attributes.is_white) { // whitespaces don't matter, we can put as many as we want at eol
-                TRACE(("span %d exceeded scanrun; width = %f chars = %d\n", span->start.iter_span - para.unbroken_spans.begin(), span->width, char_count));
+                TRACE(("span %ld exceeded scanrun; width = %f chars = %d\n", span->start.iter_span - para.unbroken_spans.begin(), span->width, char_count));
                 return false;
             }
 
         } while (span->end.char_byte != 0);  // while we haven't wrapped to the next span
 
-        TRACE(("fitted span %d width = %f chars = %d\n", span->start.iter_span - para.unbroken_spans.begin(), span->width, char_count));
+        TRACE(("fitted span %ld width = %f chars = %d\n", span->start.iter_span - para.unbroken_spans.begin(), span->width, char_count));
         return true;
     }
 
@@ -661,6 +662,14 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
                         new_glyph.in_character = _flow._characters.size();
                         new_glyph.rotation = glyph_rotate;
 
+                        // We may have scaled font size to fit textLength; now, if
+                        // @lengthAdjust=spacingAndGlyphs, this scaling must be only horizontal,
+                        // not vertical, so we unscale it back vertically during output
+                        if (_flow.lengthAdjust == Inkscape::Text::Layout::LENGTHADJUST_SPACINGANDGLYPHS)
+                            new_glyph.vertical_scale = 1.0 / _flow.getTextLengthMultiplierDue();
+                        else
+                            new_glyph.vertical_scale = 1.0;
+
                         /* put something like this back in when we do glyph-rotation-horizontal/vertical
                         if (new_span.block_progression == LEFT_TO_RIGHT || new_span.block_progression == RIGHT_TO_LEFT) {
                             new_glyph.x += new_span.line_height.ascent;
@@ -743,9 +752,10 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
                             new_character.in_glyph = _flow._glyphs.size() - 1;
                             _flow._characters.push_back(new_character);
                             if (new_character.char_attributes.is_white)
-                                advance_width += text_source->style->word_spacing.computed + add_to_each_whitespace;    // justification
+                                advance_width += text_source->style->word_spacing.computed * _flow.getTextLengthMultiplierDue() + add_to_each_whitespace;    // justification
                             if (new_character.char_attributes.is_cursor_position)
-                                advance_width += text_source->style->letter_spacing.computed;
+                                advance_width += text_source->style->letter_spacing.computed * _flow.getTextLengthMultiplierDue();
+                            advance_width += _flow.getTextLengthIncrementDue();
                             iter_source_text++;
                             char_index_in_unbroken_span++;
                             char_byte = iter_source_text.base() - unbroken_span.input_stream_first_character.base();
@@ -1111,13 +1121,13 @@ unsigned Layout::Calculator::_buildSpansForPara(ParagraphInfo *para) const
                 UnbrokenSpan new_span;
                 new_span.pango_item_index    = -1;
                 new_span.input_index         = input_index;
-                new_span.line_height.ascent  = control_code->ascent;
-                new_span.line_height.descent = control_code->descent;
+                new_span.line_height.ascent  = control_code->ascent * _flow.getTextLengthMultiplierDue();
+                new_span.line_height.descent = control_code->descent * _flow.getTextLengthMultiplierDue();
                 new_span.line_height.leading = 0.0;
                 new_span.text_bytes          = 0;
                 new_span.char_index_in_para  = char_index_in_para;
                 para->unbroken_spans.push_back(new_span);
-                TRACE(("add gap span %d\n", para->unbroken_spans.size() - 1));
+                TRACE(("add gap span %lu\n", para->unbroken_spans.size() - 1));
             }
         } else if (_flow._input_stream[input_index]->Type() == TEXT_SOURCE && pango_item_index < para->pango_items.size()) {
             Layout::InputStreamTextSource const *text_source = static_cast<Layout::InputStreamTextSource const *>(_flow._input_stream[input_index]);
@@ -1154,13 +1164,13 @@ unsigned Layout::Calculator::_buildSpansForPara(ParagraphInfo *para) const
                 if (_block_progression == TOP_TO_BOTTOM || _block_progression == BOTTOM_TO_TOP) {
                     if (text_source->x.size()  > char_index_in_source) new_span.x  = text_source->x[char_index_in_source];
                     if (text_source->y.size()  > char_index_in_source) new_span.y  = text_source->y[char_index_in_source];
-                    if (text_source->dx.size() > char_index_in_source) new_span.dx = text_source->dx[char_index_in_source];
-                    if (text_source->dy.size() > char_index_in_source) new_span.dy = text_source->dy[char_index_in_source];
+                    if (text_source->dx.size() > char_index_in_source) new_span.dx = text_source->dx[char_index_in_source].computed * _flow.getTextLengthMultiplierDue();
+                    if (text_source->dy.size() > char_index_in_source) new_span.dy = text_source->dy[char_index_in_source].computed * _flow.getTextLengthMultiplierDue();
                 } else {
                     if (text_source->x.size()  > char_index_in_source) new_span.y  = text_source->x[char_index_in_source];
                     if (text_source->y.size()  > char_index_in_source) new_span.x  = text_source->y[char_index_in_source];
-                    if (text_source->dx.size() > char_index_in_source) new_span.dy = text_source->dx[char_index_in_source];
-                    if (text_source->dy.size() > char_index_in_source) new_span.dx = text_source->dy[char_index_in_source];
+                    if (text_source->dx.size() > char_index_in_source) new_span.dy = text_source->dx[char_index_in_source].computed * _flow.getTextLengthMultiplierDue();
+                    if (text_source->dy.size() > char_index_in_source) new_span.dx = text_source->dy[char_index_in_source].computed * _flow.getTextLengthMultiplierDue();
                 }
                 if (text_source->rotate.size() > char_index_in_source) new_span.rotate = text_source->rotate[char_index_in_source];
                 else if (char_index_in_source == 0) new_span.rotate = 0.f;
@@ -1189,7 +1199,7 @@ unsigned Layout::Calculator::_buildSpansForPara(ParagraphInfo *para) const
                 }
 
                 // now we know the length, do some final calculations and add the UnbrokenSpan to the list
-                new_span.font_size = text_source->styleComputeFontSize();
+                new_span.font_size = text_source->styleComputeFontSize() * _flow.getTextLengthMultiplierDue();
                 if (new_span.text_bytes) {
                     new_span.glyph_string = pango_glyph_string_new();
                     /* Some assertions intended to help diagnose bug #1277746. */
@@ -1289,7 +1299,7 @@ unsigned Layout::Calculator::_buildSpansForPara(ParagraphInfo *para) const
                     new_span.baseline_shift = text_source->style->baseline_shift.computed;
 
                     // TODO: metrics for vertical text
-                    TRACE(("add text span %d \"%s\"\n", para->unbroken_spans.size(), text_source->text->raw().substr(span_start_byte_in_source, new_span.text_bytes).c_str()));
+                    TRACE(("add text span %lu \"%s\"\n", para->unbroken_spans.size(), text_source->text->raw().substr(span_start_byte_in_source, new_span.text_bytes).c_str()));
                     TRACE(("  %d glyphs\n", new_span.glyph_string->num_glyphs));
                 } else {
                     // if there's no text we still need to initialise the styles
@@ -1302,7 +1312,7 @@ unsigned Layout::Calculator::_buildSpansForPara(ParagraphInfo *para) const
                         new_span.line_height.setZero();
                         new_span.line_height_multiplier = 1.0;
                     }
-                    TRACE(("add style init span %d\n", para->unbroken_spans.size()));
+                    TRACE(("add style init span %lu\n", para->unbroken_spans.size()));
                 }
                 para->unbroken_spans.push_back(new_span);
 
@@ -1338,7 +1348,7 @@ bool Layout::Calculator::_goToNextWrapShape()
     _current_shape_index++;
     if (_current_shape_index == _flow._input_wrap_shapes.size()) return false;
     _scanline_maker = new ShapeScanlineMaker(_flow._input_wrap_shapes[_current_shape_index].shape, _block_progression);
-    TRACE(("begin wrap shape %d\n", _current_shape_index));
+    TRACE(("begin wrap shape %u\n", _current_shape_index));
     return true;
 }
 
@@ -1396,7 +1406,7 @@ bool Layout::Calculator::_findChunksForLine(ParagraphInfo const &para,
             scan_runs = _scanline_maker->makeScanline(*line_height);
         }
 
-        TRACE(("finding line fit y=%f, %d scan runs\n", scan_runs.front().y, scan_runs.size()));
+        TRACE(("finding line fit y=%f, %lu scan runs\n", scan_runs.front().y, scan_runs.size()));
         chunk_info->clear();
         chunk_info->reserve(scan_runs.size());
         if (para.direction == RIGHT_TO_LEFT) std::reverse(scan_runs.begin(), scan_runs.end());
@@ -1495,7 +1505,7 @@ bool Layout::Calculator::_buildChunksInScanRun(ParagraphInfo const &para,
         }
     }
 
-    TRACE(("chunk complete, used %f width (%d whitespaces, %d brokenspans)\n", new_chunk.text_width, new_chunk.whitespace_count, new_chunk.broken_spans.size()));
+    TRACE(("chunk complete, used %f width (%d whitespaces, %lu brokenspans)\n", new_chunk.text_width, new_chunk.whitespace_count, new_chunk.broken_spans.size()));
     chunk_info->push_back(new_chunk);
 
     if (scan_run.width() >= 4.0 * line_height->total() && last_span_at_break.end == start_span_pos) {
@@ -1533,7 +1543,7 @@ bool Layout::Calculator::_buildChunksInScanRun(ParagraphInfo const &para,
                 chunk_info->back().text_width += last_span_at_break.width;
                 chunk_info->back().whitespace_count += last_span_at_break.whitespace_count;
             }
-            TRACE(("correction: fitted span %d width = %f\n", last_span_at_break.start.iter_span - para.unbroken_spans.begin(), last_span_at_break.width));
+            TRACE(("correction: fitted span %lu width = %f\n", last_span_at_break.start.iter_span - para.unbroken_spans.begin(), last_span_at_break.width));
         }
     }
 
@@ -1555,6 +1565,7 @@ bool Layout::Calculator::_buildChunksInScanRun(ParagraphInfo const &para,
 
     return true;
 }
+
 
 /** The management function to start the whole thing off. */
 bool Layout::Calculator::calculate()
@@ -1605,7 +1616,7 @@ bool Layout::Calculator::calculate()
         else
             para.alignment = para.direction == LEFT_TO_RIGHT ? LEFT : RIGHT;
 
-        TRACE(("para prepared, adding as #%d\n", _flow._paragraphs.size()));
+        TRACE(("para prepared, adding as #%lu\n", _flow._paragraphs.size()));
         Layout::Paragraph new_paragraph;
         new_paragraph.base_direction = para.direction;
         new_paragraph.alignment = para.alignment;
@@ -1627,7 +1638,7 @@ bool Layout::Calculator::calculate()
             _scanline_maker->completeLine(); // Increments y by line height
         } while (span_pos.iter_span != para.unbroken_spans.end());
 
-        TRACE(("para %d end\n\n", _flow._paragraphs.size() - 1));
+        TRACE(("para %lu end\n\n", _flow._paragraphs.size() - 1));
         if (_scanline_maker != NULL) {
             bool is_empty_para = _flow._characters.empty() || _flow._characters.back().line(&_flow).in_paragraph != _flow._paragraphs.size() - 1;
             if ((is_empty_para && para_end_input_index + 1 >= _flow._input_stream.size())
@@ -1690,6 +1701,14 @@ bool Layout::Calculator::calculate()
         _flow._input_truncated = true;
     }
 
+    if (_flow.textLength._set) {
+        // Calculate the adjustment needed to meet the textLength
+        double actual_length = _flow.getActualLength();
+        double difference = _flow.textLength.computed - actual_length;
+        _flow.textLengthMultiplier = (actual_length + difference) / actual_length;
+        _flow.textLengthIncrement = difference / (_flow._characters.size() == 1? 1 : _flow._characters.size() - 1);
+    }
+
     return true;
 }
 
@@ -1739,7 +1758,12 @@ void Layout::_calculateCursorShapeForEmpty()
 
 bool Layout::calculateFlow()
 {
-    bool result = Calculator(this).calculate();
+    Layout::Calculator calc = Calculator(this);
+    bool result = calc.calculate();
+    if (textLengthIncrement != 0) {
+        TRACE(("Recalculating layout the second time to fit textLength!\n"));
+        result = calc.calculate();
+    }
     if (_characters.empty())
         _calculateCursorShapeForEmpty();
     return result;

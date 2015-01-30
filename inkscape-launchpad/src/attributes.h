@@ -196,6 +196,8 @@ enum SPAttributeEnum {
     SP_ATTR_DX,
     SP_ATTR_DY,
     SP_ATTR_ROTATE,
+    SP_ATTR_TEXTLENGTH,
+    SP_ATTR_LENGTHADJUST,
     SP_ATTR_SODIPODI_ROLE,
     /* SPText */
     SP_ATTR_SODIPODI_LINESPACING,
@@ -443,6 +445,11 @@ enum SPAttributeEnum {
     SP_PROP_TEXT_ANCHOR,
     SP_PROP_WHITE_SPACE,
 
+    SP_PROP_SHAPE_INSIDE,
+    SP_PROP_SHAPE_OUTSIDE,
+    SP_PROP_SHAPE_PADDING,
+    SP_PROP_SHAPE_MARGIN,
+    
     /* Text Decoration */
     SP_PROP_TEXT_DECORATION,       /* SVG 1 underline etc.( no color or style) OR SVG2 with _LINE, _STYLE, _COLOR values */
     SP_PROP_TEXT_DECORATION_LINE,  /* SVG 2 underline etc. */

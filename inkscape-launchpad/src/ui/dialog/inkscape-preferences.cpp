@@ -1746,6 +1746,10 @@ void InkscapePreferences::onKBListKeyboardShortcuts()
 
         // Find this group in the tree
         Glib::ustring group = verb->get_group() ? _(verb->get_group()) : _("Misc");
+        Glib::ustring verb_id = verb->get_id();
+        if (verb_id .compare(0,26,"org.inkscape.effect.filter") == 0) {
+            group = _("Filters");
+        }
         Gtk::TreeStore::iterator iter_group;
         bool found = false;
         while (path) {

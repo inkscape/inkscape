@@ -245,7 +245,10 @@ RegisteredScalarUnit::on_value_changed()
         if (doc) {
             SPRoot *root = doc->getRoot();
             if (root->viewBox_set) {
-                if (_user_units == RSU_x) { 
+                // check to see if scaling is uniform
+                if(Geom::are_near((root->viewBox.width() * root->height.computed) / (root->width.computed * root->viewBox.height()), 1.0, Geom::EPSILON)) {
+                    scale = (root->viewBox.width() / root->width.computed + root->viewBox.height() / root->height.computed)/2.0;
+                } else if (_user_units == RSU_x) { 
                     scale = root->viewBox.width() / root->width.computed;
                 } else {
                     scale = root->viewBox.height() / root->height.computed;

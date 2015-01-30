@@ -149,7 +149,7 @@ CairoRendererPdfOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, 
 
     bool new_textToPath  = FALSE;
     try {
-        new_textToPath  = mod->get_param_bool("textToPath");
+        new_textToPath = (strcmp(mod->get_param_optiongroup("textToPath"), "paths") == 0);
     }
     catch(...) {
         g_warning("Parameter <textToPath> might not exist");
@@ -157,7 +157,7 @@ CairoRendererPdfOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, 
 
     bool new_textToLaTeX  = FALSE;
     try {
-        new_textToLaTeX  = mod->get_param_bool("textToLaTeX");
+        new_textToLaTeX = (strcmp(mod->get_param_optiongroup("textToPath"), "LaTeX") == 0);
     }
     catch(...) {
         g_warning("Parameter <textToLaTeX> might not exist");
@@ -247,8 +247,11 @@ CairoRendererPdfOutput::init (void)
 #endif
                 "<_item value='PDF-1.4'>" N_("PDF 1.4") "</_item>\n"
             "</param>\n"
-            "<param name=\"textToPath\" gui-text=\"" N_("Convert texts to paths") "\" type=\"boolean\">false</param>\n"
-            "<param name=\"textToLaTeX\" gui-text=\"" N_("PDF+LaTeX: Omit text in PDF, and create LaTeX file") "\" type=\"boolean\">false</param>\n"
+            "<param name=\"textToPath\" gui-text=\"" N_("Text output options:") "\" type=\"optiongroup\">\n"
+                "<option value=\"embed\">" N_("Embed fonts") "</option>\n"
+                "<option value=\"paths\">" N_("Convert text to paths") "</option>\n"
+                "<option value=\"LaTeX\">" N_("Omit text in PDF and create LaTeX file") "</option>\n"
+            "</param>\n"
             "<param name=\"blurToBitmap\" gui-text=\"" N_("Rasterize filter effects") "\" type=\"boolean\">true</param>\n"
             "<param name=\"resolution\" gui-text=\"" N_("Resolution for rasterization (dpi):") "\" type=\"int\" min=\"1\" max=\"10000\">96</param>\n"
             "<param name=\"area\" gui-text=\"" N_("Output page size:") "\" type=\"optiongroup\" >\n"

@@ -42,6 +42,7 @@
 #include "style.h"
 #include "xml/repr.h"
 #include "document.h"
+#include "2geom/transforms.h"
 
 #include "sp-factory.h"
 
@@ -447,7 +448,8 @@ void sp_textpath_to_text(SPObject *tp)
     }
 
     Geom::Point xy = bbox->min();
-
+    xy *= tp->document->getDocumentScale().inverse(); // Convert to user-units.
+    
     // make a list of textpath children
     GSList *tp_reprs = NULL;
 
@@ -468,7 +470,7 @@ void sp_textpath_to_text(SPObject *tp)
     tp->deleteObject();
     g_slist_free(tp_reprs);
 
-    // set x/y on text
+    // set x/y on text (to be near where it was when on path)
     /* fixme: Yuck, is this really the right test? */
     if (xy[Geom::X] != 1e18 && xy[Geom::Y] != 1e18) {
         sp_repr_set_svg_double(text->getRepr(), "x", xy[Geom::X]);

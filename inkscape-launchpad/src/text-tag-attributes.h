@@ -54,7 +54,7 @@ public:
     that only fields from \a parent_attrs starting at that index will
     be used. Basically, the algorithm is that if a child attribute
     exists that will be used, otherwise the parent attribute will be used,
-    otherwise the vector will end. */
+    otherwise the vector will end. textLength is never merged with parent. */
     void mergeInto(Inkscape::Text::Layout::OptionalTextTagAttrs *output, Inkscape::Text::Layout::OptionalTextTagAttrs const &parent_attrs, unsigned parent_attrs_offset, bool copy_xy, bool copy_dxdyrotate) const;
 
     /** Deletes all the values from all the vectors beginning at
@@ -127,6 +127,9 @@ public:
     /** Sets the first coordinates in the x and y vectors. */
     void setFirstXY(Geom::Point &point);
 
+    SVGLength *getTextLength() { return &(attributes.textLength); }
+    int getLengthAdjust() { return attributes.lengthAdjust; }
+
 private:
     /// This holds the actual values.
     Inkscape::Text::Layout::OptionalTextTagAttrs attributes;
@@ -134,7 +137,11 @@ private:
     /** Does the reverse of readSingleAttribute(), converting a vector<> to
     its SVG string representation and writing it in to \a node. Used by
     writeTo(). */
-    static void writeSingleAttribute(Inkscape::XML::Node *node, gchar const *key, std::vector<SVGLength> const &attr_vector);
+    static void writeSingleAttributeVector(Inkscape::XML::Node *node, gchar const *key, std::vector<SVGLength> const &attr_vector);
+
+    /** Writes a single length value to \a node. Used by
+    writeTo(). */
+    static void writeSingleAttributeLength(Inkscape::XML::Node *node, gchar const *key, const SVGLength &length);
 
     /** Does mergeInto() for one member of #attributes. If \a overlay_list
     is NULL then it does a simple copy of parent elements, starting at
