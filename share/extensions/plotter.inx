@@ -36,8 +36,9 @@
       <param name="commandLanguage" type="enum" _gui-text="Command language:" _gui-description="The command language to use (Default: HPGL)">
         <_item value="HPGL">HPGL</_item>
         <_item value="DMPL">DMPL</_item>
-        <_item value="ZING">KNK Zing (HPGL variant)</_item>
+        <_item value="KNK">KNK Plotter (HPGL variant)</_item>
       </param>
+      <param name="initCommands" type="string" _gui-text="Initialization commands:" _gui-description="Commands that will be sent to the plotter before the main data stream, only use this if you know what you are doing! (Default: Empty)"></param>
       <param name="space" type="description">&#xa0;</param>
       <_param name="freezeHelp" type="description">Using wrong settings can under certain circumstances cause Inkscape to freeze. Always save your work before plotting!</_param>
       <_param name="serialHelp" type="description">This can be a physical serial connection or a USB-to-Serial bridge. Ask your plotter manufacturer for drivers if needed.</_param>

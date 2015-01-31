@@ -39,6 +39,7 @@ class Plot(inkex.Effect):
         self.OptionParser.add_option('--serialBaudRate',  action='store', type='string',  dest='serialBaudRate',  default='9600',  help='Serial Baud rate')
         self.OptionParser.add_option('--flowControl',     action='store', type='string',  dest='flowControl',     default='0',     help='Flow control')
         self.OptionParser.add_option('--commandLanguage', action='store', type='string',  dest='commandLanguage', default='hpgl',  help='Command Language')
+        self.OptionParser.add_option('--initCommands',    action='store', type='string',  dest='initCommands',    default='',      help='Initialization commands')
         self.OptionParser.add_option('--resolutionX',     action='store', type='float',   dest='resolutionX',     default=1016.0,  help='Resolution X (dpi)')
         self.OptionParser.add_option('--resolutionY',     action='store', type='float',   dest='resolutionY',     default=1016.0,  help='Resolution Y (dpi)')
         self.OptionParser.add_option('--pen',             action='store', type='int',     dest='pen',             default=1,       help='Pen number')
@@ -52,7 +53,7 @@ class Plot(inkex.Effect):
         self.OptionParser.add_option('--toolOffset',      action='store', type='float',   dest='toolOffset',      default=0.25,    help='Tool offset (mm)')
         self.OptionParser.add_option('--precut',          action='store', type='inkbool', dest='precut',          default='TRUE',  help='Use precut')
         self.OptionParser.add_option('--flat',            action='store', type='float',   dest='flat',            default=1.2,     help='Curve flatness')
-        self.OptionParser.add_option('--autoAlign',       action='store', type='inkbool', dest='autoAlign',     default='TRUE',  help='Auto align')
+        self.OptionParser.add_option('--autoAlign',       action='store', type='inkbool', dest='autoAlign',       default='TRUE',  help='Auto align')
         self.OptionParser.add_option('--debug',           action='store', type='inkbool', dest='debug',           default='FALSE', help='Show debug information')
 
     def effect(self):
@@ -87,8 +88,8 @@ class Plot(inkex.Effect):
             self.convertToHpgl()
         if self.options.commandLanguage == 'DMPL':
             self.convertToDmpl()
-        if self.options.commandLanguage == 'ZING':
-            self.convertToZing()
+        if self.options.commandLanguage == 'KNK':
+            self.convertToKNK()
         # output
         if self.options.debug:
             self.showDebugInfo(debugObject)
@@ -102,7 +103,7 @@ class Plot(inkex.Effect):
             hpglInit += ';FS%d' % self.options.force
         if self.options.speed > 0:
             hpglInit += ';VS%d' % self.options.speed
-        self.hpgl = hpglInit + self.hpgl + ';PU0,0;SP0;IN;'
+        self.hpgl = hpglInit + self.hpgl + ';PU0,0;SP0;IN; '
 
     def convertToDmpl(self):
         # convert HPGL to DMPL
@@ -124,16 +125,16 @@ class Plot(inkex.Effect):
         if self.options.speed > 0:
             dmplInit += 'V%d' % self.options.speed
         dmplInit += 'EC1'
-        self.hpgl = dmplInit + self.hpgl[1:] + ',U0,0,P0Z'
+        self.hpgl = dmplInit + self.hpgl[1:] + ',U0,0,P0Z '
 
-    def convertToZing(self):
-        # convert HPGL to Zing
+    def convertToKNK(self):
+        # convert HPGL to KNK Plotter Language
         hpglInit = 'ZG;SP%d' % self.options.pen
         if self.options.force > 0:
             hpglInit += ';FS%d' % self.options.force
         if self.options.speed > 0:
             hpglInit += ';VS%d' % self.options.speed
-        self.hpgl = hpglInit + self.hpgl + ';PU0,0;SP0;@'
+        self.hpgl = hpglInit + self.hpgl + ';PU0,0;SP0;@ '
 
     def sendHpglToSerial(self):
         # gracefully exit script when pySerial is missing
@@ -165,6 +166,8 @@ class Plot(inkex.Effect):
             else:
                 type, value, traceback = sys.exc_info()
                 raise ValueError, ('', type, value), traceback
+        if self.options.initCommands != '':
+            mySerial.write(self.options.initCommands.decode('string_escape'))
         mySerial.write(self.hpgl)
         mySerial.read(2)
         mySerial.close()
@@ -172,16 +175,17 @@ class Plot(inkex.Effect):
     def showDebugInfo(self, debugObject):
         # show debug information
         inkex.errormsg("---------------------------------\nDebug information\n---------------------------------\n\nSettings:\n")
-        inkex.errormsg('  Serial Port: ' + str(self.options.serialPort))
-        inkex.errormsg('  Serial baud rate: ' + str(self.options.serialBaudRate))
-        inkex.errormsg('  Flow control: ' + str(self.options.flowControl))
-        inkex.errormsg('  Command language: ' + str(self.options.commandLanguage))
+        inkex.errormsg('  Serial Port: ' + self.options.serialPort)
+        inkex.errormsg('  Serial baud rate: ' + self.options.serialBaudRate)
+        inkex.errormsg('  Flow control: ' + self.options.flowControl)
+        inkex.errormsg('  Command language: ' + self.options.commandLanguage)
+        inkex.errormsg('  Initialization commands: ' + self.options.initCommands)
         inkex.errormsg('  Resolution X (dpi): ' + str(self.options.resolutionX))
         inkex.errormsg('  Resolution Y (dpi): ' + str(self.options.resolutionY))
         inkex.errormsg('  Pen number: ' + str(self.options.pen))
         inkex.errormsg('  Pen force (g): ' + str(self.options.force))
         inkex.errormsg('  Pen speed (cm/s): ' + str(self.options.speed))
-        inkex.errormsg('  Rotation (Clockwise): ' + str(self.options.orientation))
+        inkex.errormsg('  Rotation (Clockwise): ' + self.options.orientation)
         inkex.errormsg('  Mirror X axis: ' + str(self.options.mirrorX))
         inkex.errormsg('  Mirror Y axis: ' + str(self.options.mirrorY))
         inkex.errormsg('  Center zero point: ' + str(self.options.center))
