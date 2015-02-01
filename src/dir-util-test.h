@@ -12,11 +12,19 @@ public:
     void testBase()
     {
         char const* cases[][3] = {
+#if defined(WIN32) || defined(__WIN32__)
+            {"\\foo\\bar", "\\foo", "bar"},
+            {"\\foo\\barney", "\\foo\\bar", "\\foo\\barney"},
+            {"\\foo\\bar\\baz", "\\foo\\", "bar\\baz"},
+            {"\\foo\\bar\\baz", "\\", "foo\\bar\\baz"},
+            {"\\foo\\bar\\baz", "\\foo\\qux", "\\foo\\bar\\baz"},
+#else
             {"/foo/bar", "/foo", "bar"},
             {"/foo/barney", "/foo/bar", "/foo/barney"},
             {"/foo/bar/baz", "/foo/", "bar/baz"},
             {"/foo/bar/baz", "/", "foo/bar/baz"},
             {"/foo/bar/baz", "/foo/qux", "/foo/bar/baz"},
+#endif
         };
 
         for ( size_t i = 0; i < G_N_ELEMENTS(cases); i++ )
