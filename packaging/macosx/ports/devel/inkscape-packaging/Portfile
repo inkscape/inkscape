@@ -5,7 +5,7 @@ PortSystem                  1.0
 
 name                        inkscape-packaging
 version                     0.91
-revision                    100
+revision                    101
  
 categories                  devel graphics
 platforms                   darwin
@@ -118,7 +118,7 @@ variant dbus description {with dbus} {
 # variants
 universal_variant           no
 
-default_variants-append     +gnome_vfs
+default_variants-append     +gnome_vfs +librevenge
 
 # livecheck
 livecheck.type              none
