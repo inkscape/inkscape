@@ -6,7 +6,7 @@ PortGroup           python 1.0
 PortGroup           select 1.0
 
 set my_name         nose
-name                py-${my_name}
+name                py26-${my_name}
 version             1.3.1
 categories-append   www
 license             LGPL-2+

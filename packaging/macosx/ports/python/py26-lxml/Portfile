@@ -4,7 +4,7 @@
 PortSystem          1.0
 PortGroup           python 1.0
 
-name                py-lxml
+name                py26-lxml
 version             3.3.5
 revision            0
 categories-append   devel

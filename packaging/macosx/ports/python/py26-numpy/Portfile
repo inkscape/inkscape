@@ -6,7 +6,7 @@ PortGroup               python 1.0
 PortGroup               github 1.0
 
 github.setup            numpy numpy 1.9.0 v
-name                    py-numpy
+name                    py26-numpy
 categories-append       math
 license                 BSD
 platforms               darwin
