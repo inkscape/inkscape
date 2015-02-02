@@ -291,6 +291,7 @@ static SPStyleProp const props[] = {
     {SP_ATTR_FY, "fy"},
     /* SPMeshPatch */
     {SP_ATTR_TENSOR, "tensor"},
+    {SP_ATTR_SMOOTH, "smooth"},
     /* SPPattern */
     {SP_ATTR_PATTERNUNITS, "patternUnits"},
     {SP_ATTR_PATTERNCONTENTUNITS, "patternContentUnits"},

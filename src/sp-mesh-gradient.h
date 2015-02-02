@@ -19,7 +19,8 @@ public:
 
     SVGLength x;  // Upper left corner of mesh
     SVGLength y;  // Upper right corner of mesh
-
+    SPMeshSmooth smooth;
+    bool smooth_set;
     virtual cairo_pattern_t* pattern_new(cairo_t *ct, Geom::OptRect const &bbox, double opacity);
 
 protected:

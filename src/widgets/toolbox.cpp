@@ -521,6 +521,8 @@ static gchar const * ui_descr =
 //        "    <toolitem action='MeshEditFillAction' />"
 //        "    <toolitem action='MeshEditStrokeAction' />"
 //        "    <toolitem action='MeshShowHandlesAction' />"
+        "    <toolitem action='MeshWarningAction' />"
+        "    <toolitem action='MeshSmoothAction' />"
         "    <separator />"
         "  </toolbar>"
 

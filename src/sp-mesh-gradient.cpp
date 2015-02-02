@@ -21,7 +21,7 @@ namespace {
  * Mesh Gradient
  */
 //#define MESH_DEBUG
-SPMeshGradient::SPMeshGradient() : SPGradient() {
+SPMeshGradient::SPMeshGradient() : SPGradient(), smooth(SP_MESH_SMOOTH_NONE), smooth_set(false) {
     // Start coordinate of mesh
     this->x.unset(SVGLength::NONE, 0.0, 0.0);
     this->y.unset(SVGLength::NONE, 0.0, 0.0);
@@ -36,6 +36,8 @@ void SPMeshGradient::build(SPDocument *document, Inkscape::XML::Node *repr) {
     // Start coordinate of mesh
     this->readAttr( "x" );
     this->readAttr( "y" );
+
+    this->readAttr( "smooth" );
 }
 
 
@@ -53,6 +55,39 @@ void SPMeshGradient::set(unsigned key, gchar const *value) {
             if (!this->y.read(value)) {
                 this->y.unset(SVGLength::NONE, 0.0, 0.0);
             }
+
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+
+        case SP_ATTR_SMOOTH:
+	    if (value) {
+	      if (!strcmp(value, "none")) {
+		this->smooth = SP_MESH_SMOOTH_NONE;
+	      } else if (!strcmp(value, "smooth")) {
+		this->smooth = SP_MESH_SMOOTH_SMOOTH;
+	      } else if (!strcmp(value, "smooth1")) {
+		this->smooth = SP_MESH_SMOOTH_SMOOTH1;
+	      } else if (!strcmp(value, "smooth2")) {
+		this->smooth = SP_MESH_SMOOTH_SMOOTH2;
+	      } else if (!strcmp(value, "smooth3")) {
+		this->smooth = SP_MESH_SMOOTH_SMOOTH3;
+	      } else if (!strcmp(value, "smooth4")) {
+		this->smooth = SP_MESH_SMOOTH_SMOOTH4;
+	      } else if (!strcmp(value, "smooth5")) {
+		this->smooth = SP_MESH_SMOOTH_SMOOTH5;
+	      } else if (!strcmp(value, "smooth6")) {
+		this->smooth = SP_MESH_SMOOTH_SMOOTH6;
+	      } else if (!strcmp(value, "smooth7")) {
+		this->smooth = SP_MESH_SMOOTH_SMOOTH7;
+	      } else {
+		std::cout << "SPMeshGradient::set(): invalid value " << value << std::endl;
+	      }
+	      this->smooth_set = TRUE;
+	    } else {
+	      std::cout << "SPMeshGradient::set() No value " << std::endl;
+	      this->smooth = SP_MESH_SMOOTH_NONE;
+	      this->smooth_set = FALSE;
+	    }
 
             this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
@@ -81,6 +116,41 @@ Inkscape::XML::Node* SPMeshGradient::write(Inkscape::XML::Document *xml_doc, Ink
 
     if ((flags & SP_OBJECT_WRITE_ALL) || this->y._set) {
     	sp_repr_set_svg_double(repr, "y", this->y.computed);
+    }
+
+    if ((flags & SP_OBJECT_WRITE_ALL) || this->smooth_set) {
+        switch (this->smooth) {
+	    case SP_MESH_SMOOTH_SMOOTH:
+	      repr->setAttribute("smooth", "smooth");
+	      break;
+	    case SP_MESH_SMOOTH_SMOOTH1:
+	      repr->setAttribute("smooth", "smooth1");
+	      break;
+	    case SP_MESH_SMOOTH_SMOOTH2:
+	      repr->setAttribute("smooth", "smooth2");
+	      break;
+	    case SP_MESH_SMOOTH_SMOOTH3:
+	      repr->setAttribute("smooth", "smooth3");
+	      break;
+	    case SP_MESH_SMOOTH_SMOOTH4:
+	      repr->setAttribute("smooth", "smooth4");
+	      break;
+	    case SP_MESH_SMOOTH_SMOOTH5:
+	      repr->setAttribute("smooth", "smooth5");
+	      break;
+	    case SP_MESH_SMOOTH_SMOOTH6:
+	      repr->setAttribute("smooth", "smooth6");
+	      break;
+	    case SP_MESH_SMOOTH_SMOOTH7:
+	      repr->setAttribute("smooth", "smooth7");
+	      break;
+	    case SP_MESH_SMOOTH_NONE:
+	      repr->setAttribute("smooth", "none");
+	      break;
+	    default:
+	      // Do nothing
+	      break;
+	}
     }
 
     SPGradient::write(xml_doc, repr, flags);
@@ -117,14 +187,38 @@ cairo_pattern_t* SPMeshGradient::pattern_new(cairo_t * /*ct*/,
     cairo_pattern_t *cp = NULL;
 
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 11, 4)
-    SPMeshNodeArray* array = &(this->array);
+    SPMeshNodeArray* my_array = &array;
+
+    if( smooth_set ) {
+      switch (smooth) {
+        case SP_MESH_SMOOTH_NONE:
+	  // std::cout << "SPMeshGradient::pattern_new: no smoothing" << std::endl;
+	  break;
+	case SP_MESH_SMOOTH_SMOOTH1:
+	case SP_MESH_SMOOTH_SMOOTH2:
+	case SP_MESH_SMOOTH_SMOOTH3:
+	case SP_MESH_SMOOTH_SMOOTH4:
+	case SP_MESH_SMOOTH_SMOOTH5:
+	  // std::cout << "SPMeshGradient::pattern_new: calling array.smooth" << std::endl;
+	  array.smooth( &array_smoothed, smooth );
+	  my_array = &array_smoothed;
+	  break;
+	case SP_MESH_SMOOTH_SMOOTH:
+	case SP_MESH_SMOOTH_SMOOTH6:
+	case SP_MESH_SMOOTH_SMOOTH7:
+	  // std::cout << "SPMeshGradient::pattern_new: calling array.smooth2" << std::endl;
+	  array.smooth2( &array_smoothed, smooth );
+	  my_array = &array_smoothed;
+	  break;
+	}
+    }
 
     cp = cairo_pattern_create_mesh();
 
-    for( unsigned int i = 0; i < array->patch_rows(); ++i ) {
-        for( unsigned int j = 0; j < array->patch_columns(); ++j ) {
+    for( unsigned int i = 0; i < my_array->patch_rows(); ++i ) {
+        for( unsigned int j = 0; j < my_array->patch_columns(); ++j ) {
 
-            SPMeshPatchI patch( &(array->nodes), i, j );
+            SPMeshPatchI patch( &(my_array->nodes), i, j );
 
             cairo_mesh_pattern_begin_patch( cp );
             cairo_mesh_pattern_move_to( cp, patch.getPoint( 0, 0 )[X], patch.getPoint( 0, 0 )[Y] );
