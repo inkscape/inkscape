@@ -97,7 +97,6 @@ void ms_read_selection( Inkscape::Selection *selection,
 
                 SPMeshGradient *gradient = SP_MESHGRADIENT(server); // ->getVector();
                 SPMeshSmooth smooth = gradient->smooth;
-                bool smooth_set = gradient->smooth_set;
 
                 if (gradient != ms_selected) {
                     if (ms_selected) {
@@ -123,7 +122,6 @@ void ms_read_selection( Inkscape::Selection *selection,
 
                 SPMeshGradient *gradient = SP_MESHGRADIENT(server); // ->getVector();
                 SPMeshSmooth smooth = gradient->smooth;
-                bool smooth_set = gradient->smooth_set;
 
                 if (gradient != ms_selected) {
                     if (ms_selected) {
