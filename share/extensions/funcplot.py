@@ -45,7 +45,7 @@ def drawfunction(xstart, xend, ybottom, ytop, samples, width, height, left, bott
       
     # coords and scales based on the source rect
     if xstart == xend:
-        inkex.errormsg(_("x-interval cannot be zero. Please modify 'Start X' or 'End X'"))
+        inkex.errormsg(_("x-interval cannot be zero. Please modify 'Start X value' or 'End X alue'"))
         return []
     scalex = width / (xend - xstart)
     xoff = left
@@ -57,7 +57,7 @@ def drawfunction(xstart, xend, ybottom, ytop, samples, width, height, left, bott
         coordx = lambda x: x * polar_scalex + centerx  #convert x-value to coordinate
 
     if ytop == ybottom:
-        inkex.errormsg(_("y-interval cannot be zero. Please modify 'Y top' or 'Y bottom'"))
+        inkex.errormsg(_("y-interval cannot be zero. Please modify 'Y value of rectangle's top' or 'Y value of rectangle's bottom'"))
         return []
     scaley = height / (ytop - ybottom)
     yoff = bottom
