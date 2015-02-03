@@ -14,6 +14,9 @@
 
 #include <2geom/transforms.h>
 
+#include "inkscape.h"
+#include "document.h"
+#include "util/units.h"
 #include "viewbox.h"
 #include "attributes.h"
 #include "enums.h"
@@ -166,22 +169,27 @@ void SPViewBox::apply_viewbox(const Geom::Rect& in) {
     /* Determine actual viewbox in viewport coordinates */
     double x = 0.0;
     double y = 0.0;
-    double scalex = in.width() / this->viewBox.width();
-    double scaley = in.height() / this->viewBox.height();
-    double scale = 1.0; // uniform scale factor
+    double scale_x = in.width() / this->viewBox.width();
+    double scale_y = in.height() / this->viewBox.height();
+    double scale_uniform = 1.0; // used only if scaling is uniform
+    double scale_none = 1.0;    // used only if viewbox and page size are same size
 
-    if (Geom::are_near(scalex / scaley, 1.0, Geom::EPSILON)) {
+    if (Geom::are_near(scale_x / scale_y, 1.0, Geom::EPSILON)) {
       // scaling is already uniform, reduce numerical error
-      scale = (scalex + scaley)/2.0;
-      scalex = scale;
-      scaley = scale;
+      scale_uniform = (scale_x + scale_y)/2.0;
+      if (SP_ACTIVE_DOCUMENT)
+          scale_none = Inkscape::Util::Quantity::convert(1, SP_ACTIVE_DOCUMENT->getDisplayUnit(), "px");
+      if (Geom::are_near(scale_uniform / scale_none, 1.0, Geom::EPSILON))
+          scale_uniform = scale_none; // objects are same size, reduce numerical error
+      scale_x = scale_uniform;
+      scale_y = scale_uniform;
     } else if (this->aspect_align != SP_ASPECT_NONE) {
       // scaling is not uniform, but force it to be
-      scale = (this->aspect_clip == SP_ASPECT_MEET) ? MIN (scalex, scaley) : MAX (scalex, scaley);
-      scalex = scale;
-      scaley = scale;
-      double width  = this->viewBox.width()  * scale;
-      double height = this->viewBox.height() * scale;
+      scale_uniform = (this->aspect_clip == SP_ASPECT_MEET) ? MIN (scale_x, scale_y) : MAX (scale_x, scale_y);
+      scale_x = scale_uniform;
+      scale_y = scale_uniform;
+      double width  = this->viewBox.width()  * scale_uniform;
+      double height = this->viewBox.height() * scale_uniform;
 
       /* Now place viewbox to requested position */
       switch (this->aspect_align) {
@@ -222,12 +230,12 @@ void SPViewBox::apply_viewbox(const Geom::Rect& in) {
 
     /* Viewbox transform from scale and position */
     Geom::Affine q;
-    q[0] = scalex;
+    q[0] = scale_x;
     q[1] = 0.0;
     q[2] = 0.0;
-    q[3] = scaley;
-    q[4] = x - scalex * this->viewBox.left();
-    q[5] = y - scaley * this->viewBox.top();
+    q[3] = scale_y;
+    q[4] = x - scale_x * this->viewBox.left();
+    q[5] = y - scale_y * this->viewBox.top();
 
     // std::cout << "  q\n" << q << std::endl;
 
