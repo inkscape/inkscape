@@ -7,7 +7,7 @@
 # Foppe Benedictus <foppe.benedictus@gmail.com>, 2007-2009.
 # Myckel Habets <myckel@sdf.lonestar.org>, 2008
 # Benno Schulenberg <benno@vertaalt.nl>, 2008.
-# Kris De Gussem <kris.DeGussem@gmail.com>, 2008-2014.
+# Kris De Gussem <kris.DeGussem@gmail.com>, 2008-2015.
 #
 # *** Stuur een mailtje naar <kris.DeGussem@gmail.com>
 # *** voordat je met dit bestand aan de slag gaat,
@@ -59,7 +59,7 @@ msgstr ""
 "Project-Id-Version: inkscape 0.49\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2014-11-05 22:05+0100\n"
-"PO-Revision-Date: 2014-12-28 19:50+0100\n"
+"PO-Revision-Date: 2014-12-28 20:52+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -9341,69 +9341,58 @@ msgstr "Origineel pad klonen"
 #. EXPERIMENTAL
 #: ../src/live_effects/effect.cpp:139
 #: ../src/live_effects/lpe-show_handles.cpp:26
-#, fuzzy
 msgid "Show handles"
 msgstr "Handvatten tonen"
 
 #: ../src/live_effects/effect.cpp:141 ../src/widgets/pencil-toolbar.cpp:109
-#, fuzzy
 msgid "BSpline"
-msgstr "Contour"
+msgstr "BSpline"
 
 #: ../src/live_effects/effect.cpp:142
 #: ../src/live_effects/lpe-taperstroke.cpp:78
-#, fuzzy
 msgid "Join type"
-msgstr "Lijntype:"
+msgstr "Type samenvoeging"
 
 #: ../src/live_effects/effect.cpp:143
-#, fuzzy
 msgid "Taper stroke"
-msgstr "Patroonlijn"
+msgstr "Spitse lijn"
 
 #. Ponyscape
 #: ../src/live_effects/effect.cpp:145
-#, fuzzy
 msgid "Attach path"
-msgstr "Naaipad:"
+msgstr "Pad aanhechten"
 
 #: ../src/live_effects/effect.cpp:146
-#, fuzzy
 msgid "Fill between strokes"
-msgstr "Vulling en lijn"
+msgstr "Vulling tussen lijnen"
 
 #: ../src/live_effects/effect.cpp:147 ../src/selection-chemistry.cpp:2926
 msgid "Fill between many"
-msgstr ""
+msgstr "Vullen tussen verschillende"
 
 #: ../src/live_effects/effect.cpp:148
-#, fuzzy
 msgid "Ellipse by 5 points"
-msgstr "Cirkel door 3 punten"
+msgstr "Ellips door 5 punten"
 
 #: ../src/live_effects/effect.cpp:149
-#, fuzzy
 msgid "Bounding Box"
 msgstr "Omvattend vak"
 
 #: ../src/live_effects/effect.cpp:152
-#, fuzzy
 msgid "Lattice Deformation 2"
-msgstr "Roostervervorming"
+msgstr "Roostervervorming 2"
 
 #: ../src/live_effects/effect.cpp:153
-#, fuzzy
 msgid "Perspective/Envelope"
-msgstr "Perspectief"
+msgstr "Perspectief/Eveloppe"
 
 #: ../src/live_effects/effect.cpp:154
 msgid "Fillet/Chamfer"
 msgstr ""
 
 #: ../src/live_effects/effect.cpp:155
-#, fuzzy
 msgid "Interpolate points"
-msgstr "Interpoleren"
+msgstr "Punten interpoleren"
 
 #: ../src/live_effects/effect.cpp:362
 msgid "Is visible?"
@@ -9439,77 +9428,67 @@ msgstr ""
 "worden."
 
 #: ../src/live_effects/lpe-attach-path.cpp:29
-#, fuzzy
 msgid "Start path:"
-msgstr "Naaipad:"
+msgstr "Startpad:"
 
 # Het eerste "Path" lijkt me onjuist te zijn; zie vorige string.
 #: ../src/live_effects/lpe-attach-path.cpp:29
-#, fuzzy
 msgid "Path to attach to the start of this path"
-msgstr "Het patroon om langs het skeletpad te leggen"
+msgstr "Pad om aan het begin van dit pad toe te voegen"
 
 #: ../src/live_effects/lpe-attach-path.cpp:30
-#, fuzzy
 msgid "Start path position:"
-msgstr "Startpositie (x;y):"
+msgstr "Positie beginpad:"
 
 #: ../src/live_effects/lpe-attach-path.cpp:30
 msgid "Position to attach path start to"
-msgstr ""
+msgstr "Positie waar het beginpad aangehecht wordt"
 
 #: ../src/live_effects/lpe-attach-path.cpp:31
-#, fuzzy
 msgid "Start path curve start:"
-msgstr "Lijnkleur op rood instellen:"
+msgstr "Begincurve startpad:"
 
 #: ../src/live_effects/lpe-attach-path.cpp:31
 #: ../src/live_effects/lpe-attach-path.cpp:35
-#, fuzzy
 msgid "Starting curve"
-msgstr "Kromme verslepen"
+msgstr "Begincurve"
 
 #. , true
 #: ../src/live_effects/lpe-attach-path.cpp:32
-#, fuzzy
 msgid "Start path curve end:"
-msgstr "Lijnkleur op rood instellen:"
+msgstr "Eindcurve startpad:"
 
 #: ../src/live_effects/lpe-attach-path.cpp:32
 #: ../src/live_effects/lpe-attach-path.cpp:36
-#, fuzzy
 msgid "Ending curve"
-msgstr "min kromming"
+msgstr "Eindcurve"
 
 #. , true
 #: ../src/live_effects/lpe-attach-path.cpp:33
-#, fuzzy
 msgid "End path:"
-msgstr "Buigingspad:"
+msgstr "Eindpad:"
 
 # Het eerste "Path" lijkt me onjuist te zijn; zie vorige string.
 #: ../src/live_effects/lpe-attach-path.cpp:33
-#, fuzzy
 msgid "Path to attach to the end of this path"
-msgstr "Het patroon om langs het skeletpad te leggen"
+msgstr "Pad om aan het einde van dit pad te hangen"
 
 #: ../src/live_effects/lpe-attach-path.cpp:34
-#, fuzzy
 msgid "End path position:"
-msgstr "Layoutplaatsing:"
+msgstr "Positie eindpad:"
 
 #: ../src/live_effects/lpe-attach-path.cpp:34
 msgid "Position to attach path end to"
-msgstr ""
+msgstr "Positie waar het padeinde aangehecht wordt"
 
 #: ../src/live_effects/lpe-attach-path.cpp:35
 msgid "End path curve start:"
-msgstr ""
+msgstr "Startcurve eindpad:"
 
 #. , true
 #: ../src/live_effects/lpe-attach-path.cpp:36
 msgid "End path curve end:"
-msgstr ""
+msgstr "Eindcurve eindpad:"
 
 #: ../src/live_effects/lpe-bendpath.cpp:53
 msgid "Bend path:"
@@ -9561,14 +9540,12 @@ msgid "Path from which to take the original path data"
 msgstr "Pad waar originele paddata van genomen worden"
 
 #: ../src/live_effects/lpe-bounding-box.cpp:25
-#, fuzzy
 msgid "Visual Bounds"
 msgstr "Visueel omvattend vak"
 
 #: ../src/live_effects/lpe-bounding-box.cpp:25
-#, fuzzy
 msgid "Uses the visual bounding box"
-msgstr "Visueel omvattend vak"
+msgstr "Gebruikt het visueel omvattend vak"
 
 #. initialise your parameters here:
 #. testpointA(_("Test Point A"), _("Test A"), "ptA", &wr, this,
@@ -9582,14 +9559,12 @@ msgid "Change number of steps with CTRL pressed"
 msgstr ""
 
 #: ../src/live_effects/lpe-bspline.cpp:61
-#, fuzzy
 msgid "Ignore cusp nodes"
-msgstr "hoekig knooppunt"
+msgstr "Hoekige knooppunten negeren"
 
 #: ../src/live_effects/lpe-bspline.cpp:61
-#, fuzzy
 msgid "Change ignoring cusp nodes"
-msgstr "Overgangspositie aanpassen"
+msgstr "Veranderen van hoekige knooppunten negeren"
 
 #: ../src/live_effects/lpe-bspline.cpp:62
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:57
@@ -9618,9 +9593,8 @@ msgid "Default weight"
 msgstr "Standaardtitel"
 
 #: ../src/live_effects/lpe-bspline.cpp:309
-#, fuzzy
 msgid "Make cusp"
-msgstr "Ster maken"
+msgstr "Hoekig maken"
 
 #: ../src/live_effects/lpe-constructgrid.cpp:27
 msgid "Size _X:"
@@ -9790,9 +9764,8 @@ msgid "Paths from which to take the original path data"
 msgstr "Pad waar originele paddata van genomen worden"
 
 #: ../src/live_effects/lpe-fill-between-strokes.cpp:24
-#, fuzzy
 msgid "Second path:"
-msgstr "Buigingspad:"
+msgstr "Tweede pad:"
 
 #: ../src/live_effects/lpe-fill-between-strokes.cpp:24
 #, fuzzy
@@ -9856,7 +9829,7 @@ msgstr "Eenheid"
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:61
 #: ../src/live_effects/lpe-roughen.cpp:40
 msgid "Method"
-msgstr ""
+msgstr "Methode"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:61
 #, fuzzy
@@ -9864,13 +9837,12 @@ msgid "Fillets methods"
 msgstr "Vulmethode:"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:62
-#, fuzzy
 msgid "Radius (unit or %)"
-msgstr "Straal (px):"
+msgstr "Straal (eenheid of %)"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:62
 msgid "Radius, in unit or %"
-msgstr ""
+msgstr "straal, in eenheid of in %"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:63
 #, fuzzy
@@ -9878,9 +9850,8 @@ msgid "Chamfer steps"
 msgstr "Aantal stappen:"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:65
-#, fuzzy
 msgid "Helper size with direction"
-msgstr "Hoek in X-richting"
+msgstr ""
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:158
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:76
@@ -13502,7 +13473,7 @@ msgstr "about.nl.svg"
 #: ../src/ui/dialog/aboutbox.cpp:426
 msgid "translator-credits"
 msgstr ""
-"Kris De Gussem (Kris.DeGussem@gmail.com), 2008-2014.\n"
+"Kris De Gussem (Kris.DeGussem@gmail.com), 2008-2015.\n"
 "\n"
 "Vorige vertalers:\n"
 "Foppe Benedictus (foppe.benedictus@gmail.com), 2007-2009.\n"
@@ -17237,7 +17208,7 @@ msgstr "Gelijke _hoogte"
 #: ../src/ui/dialog/grid-arrange-tab.cpp:661
 msgid "If not set, each row has the height of the tallest object in it"
 msgstr ""
-"Indien uitgeschakeld, krijgt elke rij de hoogte van het hoogste object erin"
+"Indien uitgevinkt, krijgt elke rij de hoogte van het hoogste object"
 
 #. #### Number of columns ####
 #: ../src/ui/dialog/grid-arrange-tab.cpp:677
@@ -17255,8 +17226,7 @@ msgstr "Gelijke br_eedte"
 #: ../src/ui/dialog/grid-arrange-tab.cpp:700
 msgid "If not set, each column has the width of the widest object in it"
 msgstr ""
-"Indien uitgeschakeld, krijgt elke kolom de breedte van het breedste object "
-"erin"
+"Indien uitgevinkt, krijgt elke kolom de breedte van het breedste object"
 
 #. Anchor selection widget
 #: ../src/ui/dialog/grid-arrange-tab.cpp:711
@@ -19454,7 +19424,7 @@ msgid ""
 "off, it zooms with Ctrl and scrolls without Ctrl"
 msgstr ""
 "Indien aangevinkt, zal de muis zoomen zonder Ctrl en het canvas scrollen met "
-"Ctrl; indien uitgeschakeld, zal de muis zoomen met Ctrl en scrollen zonder "
+"Ctrl; indien uitgevinkt, zal de muis zoomen met Ctrl en scrollen zonder "
 "Ctrl"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1222
@@ -28808,9 +28778,8 @@ msgid "From clipboard"
 msgstr "Van klembord"
 
 #: ../src/widgets/pencil-toolbar.cpp:165
-#, fuzzy
 msgid "Last applied"
-msgstr "Laatste dia:"
+msgstr "Laatst toegepast"
 
 #: ../src/widgets/pencil-toolbar.cpp:190 ../src/widgets/pencil-toolbar.cpp:191
 msgid "Shape:"
@@ -32280,9 +32249,8 @@ msgid "Embed Selected Images"
 msgstr "Geselecteerde afbeeldingen invoegen"
 
 #: ../share/extensions/empty_business_card.inx.h:1
-#, fuzzy
 msgid "Business Card"
-msgstr "Visitekaart 85x54mm"
+msgstr "Visitekaart"
 
 #: ../share/extensions/empty_business_card.inx.h:2
 #, fuzzy
@@ -32290,34 +32258,29 @@ msgid "Business card size:"
 msgstr "Visitekaart 85x54mm"
 
 #: ../share/extensions/empty_desktop.inx.h:1
-#, fuzzy
 msgid "Desktop"
-msgstr "Bureaublad 640x480"
+msgstr "Bureaublad"
 
 #: ../share/extensions/empty_desktop.inx.h:2
-#, fuzzy
 msgid "Desktop size:"
-msgstr "Puntgrootte:"
+msgstr "Grootte bureaublad:"
 
 #. Maximum size is '16k'
 #: ../share/extensions/empty_desktop.inx.h:4
 #: ../share/extensions/empty_generic.inx.h:2
 #: ../share/extensions/empty_video.inx.h:4
-#, fuzzy
 msgid "Custom Width:"
-msgstr "Aangepaste grootte"
+msgstr "Aangepaste Breedte:"
 
 #: ../share/extensions/empty_desktop.inx.h:5
 #: ../share/extensions/empty_generic.inx.h:3
 #: ../share/extensions/empty_video.inx.h:5
-#, fuzzy
 msgid "Custom Height:"
-msgstr "Hoofdlettergrootte:"
+msgstr "Aangepaste hoogte:"
 
 #: ../share/extensions/empty_dvd_cover.inx.h:1
-#, fuzzy
 msgid "DVD Cover"
-msgstr "Voorblad"
+msgstr "DVD voorblad"
 
 #: ../share/extensions/empty_dvd_cover.inx.h:2
 #, fuzzy
@@ -32329,14 +32292,12 @@ msgid "DVD cover bleed (mm):"
 msgstr ""
 
 #: ../share/extensions/empty_generic.inx.h:1
-#, fuzzy
 msgid "Generic Canvas"
-msgstr "Canvas"
+msgstr "Standaardcanvas"
 
 #: ../share/extensions/empty_generic.inx.h:4
-#, fuzzy
 msgid "SVG Unit:"
-msgstr "Eenheid:"
+msgstr "SVG-eenheid:"
 
 #: ../share/extensions/empty_generic.inx.h:5
 #, fuzzy
@@ -32345,18 +32306,16 @@ msgstr "Achtergrond bewaren"
 
 #: ../share/extensions/empty_generic.inx.h:6
 #: ../share/extensions/empty_page.inx.h:5
-#, fuzzy
 msgid "Hide border"
-msgstr "Spitse rand"
+msgstr "Rand verbergen"
 
 #: ../share/extensions/empty_icon.inx.h:1
 msgid "Icon"
 msgstr ""
 
 #: ../share/extensions/empty_icon.inx.h:2
-#, fuzzy
 msgid "Icon size:"
-msgstr "Lettergrootte:"
+msgstr "Grootte icoon:"
 
 #: ../share/extensions/empty_page.inx.h:2
 msgid "Page size:"
@@ -32372,14 +32331,12 @@ msgid "Page background:"
 msgstr "Achtergrond bewaren"
 
 #: ../share/extensions/empty_video.inx.h:1
-#, fuzzy
 msgid "Video Screen"
-msgstr "Scherm"
+msgstr "Video"
 
 #: ../share/extensions/empty_video.inx.h:2
-#, fuzzy
 msgid "Video size:"
-msgstr "Puntgrootte:"
+msgstr "Grootte video:"
 
 #: ../share/extensions/eps_input.inx.h:1
 msgid "EPS Input"
