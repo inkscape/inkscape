@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-01-25 08:39+0100\n"
-"PO-Revision-Date: 2015-01-28 16:31+0200\n"
-"Last-Translator: Jānis Eisaks <jancs@dv.lv>\n"
+"POT-Creation-Date: 2015-01-28 11:25+0100\n"
+"PO-Revision-Date: 2015-01-30 19:06+0200\n"
+"Last-Translator: Jānis Eisaks <je@dv.lv>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "Language: lv\n"
 "MIME-Version: 1.0\n"
@@ -5278,80 +5278,84 @@ msgstr "Veidot no ceļa"
 msgid "PostScript"
 msgstr "PostScript"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:329 ../src/extension/internal/cairo-ps-out.cpp:368
+#: ../src/extension/internal/cairo-ps-out.cpp:329 ../src/extension/internal/cairo-ps-out.cpp:371
 msgid "Restrict to PS level:"
 msgstr "Ierobežot ar PS level:"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:330 ../src/extension/internal/cairo-ps-out.cpp:369
+#: ../src/extension/internal/cairo-ps-out.cpp:330 ../src/extension/internal/cairo-ps-out.cpp:372
 msgid "PostScript level 3"
 msgstr "PostScript level 3"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:331 ../src/extension/internal/cairo-ps-out.cpp:370
+#: ../src/extension/internal/cairo-ps-out.cpp:331 ../src/extension/internal/cairo-ps-out.cpp:373
 msgid "PostScript level 2"
 msgstr "PostScript level 2"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:333 ../src/extension/internal/cairo-ps-out.cpp:372 ../src/extension/internal/cairo-renderer-pdf-out.cpp:250 ../src/extension/internal/emf-inout.cpp:3569
-#: ../src/extension/internal/wmf-inout.cpp:3144
-msgid "Convert texts to paths"
-msgstr "Pārvērst tekstus par ceļiem"
+#: ../src/extension/internal/cairo-ps-out.cpp:333 ../src/extension/internal/cairo-ps-out.cpp:375 ../src/extension/internal/cairo-renderer-pdf-out.cpp:250
+#, fuzzy
+msgid "Text output options:"
+msgstr "Teksta izvades opcijas:"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:334
-msgid "PS+LaTeX: Omit text in PS, and create LaTeX file"
-msgstr "PS+LaTeX: izlaist tekstu PS un izveidot  LaTeX datni"
+#: ../src/extension/internal/cairo-ps-out.cpp:334 ../src/extension/internal/cairo-ps-out.cpp:376 ../src/extension/internal/cairo-renderer-pdf-out.cpp:251
+msgid "Embed fonts"
+msgstr "Iegult fontus"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:335 ../src/extension/internal/cairo-ps-out.cpp:374 ../src/extension/internal/cairo-renderer-pdf-out.cpp:252
+#: ../src/extension/internal/cairo-ps-out.cpp:335 ../src/extension/internal/cairo-ps-out.cpp:377 ../src/extension/internal/cairo-renderer-pdf-out.cpp:252
+msgid "Convert text to paths"
+msgstr "Pārvērst tekstu par ceļiem"
+
+#: ../src/extension/internal/cairo-ps-out.cpp:336 ../src/extension/internal/cairo-ps-out.cpp:378 ../src/extension/internal/cairo-renderer-pdf-out.cpp:253
+msgid "Omit text in PDF and create LaTeX file"
+msgstr "Izlaist PDF esošo tekstu un izveidot  LaTeX failu"
+
+#: ../src/extension/internal/cairo-ps-out.cpp:338 ../src/extension/internal/cairo-ps-out.cpp:380 ../src/extension/internal/cairo-renderer-pdf-out.cpp:255
 msgid "Rasterize filter effects"
 msgstr "Rastrēšanas filtra efekts"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:336 ../src/extension/internal/cairo-ps-out.cpp:375 ../src/extension/internal/cairo-renderer-pdf-out.cpp:253
+#: ../src/extension/internal/cairo-ps-out.cpp:339 ../src/extension/internal/cairo-ps-out.cpp:381 ../src/extension/internal/cairo-renderer-pdf-out.cpp:256
 msgid "Resolution for rasterization (dpi):"
 msgstr "Izšķirtspēja rastrēšanai (dpi):"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:337 ../src/extension/internal/cairo-ps-out.cpp:376
+#: ../src/extension/internal/cairo-ps-out.cpp:340 ../src/extension/internal/cairo-ps-out.cpp:382
 msgid "Output page size"
 msgstr "Izvades lapas izmēri"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:338 ../src/extension/internal/cairo-ps-out.cpp:377 ../src/extension/internal/cairo-renderer-pdf-out.cpp:255
+#: ../src/extension/internal/cairo-ps-out.cpp:341 ../src/extension/internal/cairo-ps-out.cpp:383 ../src/extension/internal/cairo-renderer-pdf-out.cpp:258
 msgid "Use document's page size"
 msgstr "Izmantot dokumenta lapu izmēru"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:339 ../src/extension/internal/cairo-ps-out.cpp:378 ../src/extension/internal/cairo-renderer-pdf-out.cpp:256
+#: ../src/extension/internal/cairo-ps-out.cpp:342 ../src/extension/internal/cairo-ps-out.cpp:384 ../src/extension/internal/cairo-renderer-pdf-out.cpp:259
 msgid "Use exported object's size"
 msgstr "Izmantot eksportētā objekta izmēru"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:341 ../src/extension/internal/cairo-renderer-pdf-out.cpp:258
+#: ../src/extension/internal/cairo-ps-out.cpp:344 ../src/extension/internal/cairo-renderer-pdf-out.cpp:261
 msgid "Bleed/margin (mm):"
 msgstr "Pārlaides mala (mm):"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:342 ../src/extension/internal/cairo-ps-out.cpp:381 ../src/extension/internal/cairo-renderer-pdf-out.cpp:259
+#: ../src/extension/internal/cairo-ps-out.cpp:345 ../src/extension/internal/cairo-ps-out.cpp:387 ../src/extension/internal/cairo-renderer-pdf-out.cpp:262
 msgid "Limit export to the object with ID:"
 msgstr "Ierobežojiet eksportu līdz objektam ar ID:"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:346 ../share/extensions/ps_input.inx.h:2
+#: ../src/extension/internal/cairo-ps-out.cpp:349 ../share/extensions/ps_input.inx.h:2
 msgid "PostScript (*.ps)"
 msgstr "PostScript (*.ps)"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:347
+#: ../src/extension/internal/cairo-ps-out.cpp:350
 msgid "PostScript File"
 msgstr "PostScript datne"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:366 ../share/extensions/eps_input.inx.h:3
+#: ../src/extension/internal/cairo-ps-out.cpp:369 ../share/extensions/eps_input.inx.h:3
 msgid "Encapsulated PostScript"
 msgstr "Encapsulated PostScript"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:373
-msgid "EPS+LaTeX: Omit text in EPS, and create LaTeX file"
-msgstr "EPS+LaTeX: izlaist tekstu EPS un izveidot  LaTeX datni"
-
-#: ../src/extension/internal/cairo-ps-out.cpp:380
+#: ../src/extension/internal/cairo-ps-out.cpp:386
 msgid "Bleed/margin (mm)"
 msgstr "Pārlaide/mala (mm)"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:385 ../share/extensions/eps_input.inx.h:2
+#: ../src/extension/internal/cairo-ps-out.cpp:391 ../share/extensions/eps_input.inx.h:2
 msgid "Encapsulated PostScript (*.eps)"
 msgstr "Encapsulated PostScript (*.eps)"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:386
+#: ../src/extension/internal/cairo-ps-out.cpp:392
 msgid "Encapsulated PostScript File"
 msgstr "Encapsulated PostScript datne"
 
@@ -5367,11 +5371,7 @@ msgstr "PDF 1.5"
 msgid "PDF 1.4"
 msgstr "PDF 1.4"
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:251
-msgid "PDF+LaTeX: Omit text in PDF, and create LaTeX file"
-msgstr "PDF+LaTeX:  izlaist tekstu PDF un izveidot  LaTeX datni"
-
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:254
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:257
 msgid "Output page size:"
 msgstr "Izvades lapas izmēri:"
 
@@ -5452,6 +5452,10 @@ msgstr "Enhanced metafaili"
 #: ../src/extension/internal/emf-inout.cpp:3567
 msgid "EMF Output"
 msgstr "EMF izvade"
+
+#: ../src/extension/internal/emf-inout.cpp:3569 ../src/extension/internal/wmf-inout.cpp:3144
+msgid "Convert texts to paths"
+msgstr "Pārvērst tekstus par ceļiem"
 
 #: ../src/extension/internal/emf-inout.cpp:3570 ../src/extension/internal/wmf-inout.cpp:3145
 msgid "Map Unicode to Symbol font"
@@ -7582,8 +7586,7 @@ msgstr "Griezt nokrāsu"
 msgid "Luminance to Alpha"
 msgstr "Spilgtumu par alfa"
 
-#. File
-#: ../src/filter-enums.cpp:87 ../src/verbs.cpp:2431 ../share/extensions/jessyInk_mouseHandler.inx.h:3 ../share/extensions/jessyInk_transitions.inx.h:7
+#: ../src/filter-enums.cpp:87 ../share/extensions/jessyInk_mouseHandler.inx.h:3 ../share/extensions/jessyInk_transitions.inx.h:7
 msgid "Default"
 msgstr "Noklusētais"
 
@@ -10445,98 +10448,93 @@ msgstr ""
 msgid "_File"
 msgstr "_Datne"
 
-#. Tag
-#: ../src/menus-skeleton.h:17 ../src/verbs.cpp:2726
-msgid "_New"
-msgstr "Jau_ns"
-
 #. "       <verb verb-id=\"FileExportToOCAL\" />\n"
 #. "       <verb verb-id=\"DialogMetadata\" />\n"
-#: ../src/menus-skeleton.h:43 ../src/verbs.cpp:2713 ../src/verbs.cpp:2721
+#: ../src/menus-skeleton.h:41 ../src/verbs.cpp:2713 ../src/verbs.cpp:2721
 msgid "_Edit"
 msgstr "Labot"
 
-#: ../src/menus-skeleton.h:53 ../src/verbs.cpp:2477
+#: ../src/menus-skeleton.h:51 ../src/verbs.cpp:2477
 msgid "Paste Si_ze"
 msgstr "Ielīmēt i_wzmēru"
 
-#: ../src/menus-skeleton.h:65
+#: ../src/menus-skeleton.h:63
 msgid "Clo_ne"
 msgstr "Klo_nēt"
 
-#: ../src/menus-skeleton.h:79
+#: ../src/menus-skeleton.h:77
 msgid "Select Sa_me"
 msgstr "Atlasīt līdzīgo_s"
 
-#: ../src/menus-skeleton.h:97
+#: ../src/menus-skeleton.h:95
 msgid "_View"
 msgstr "Skatīt"
 
-#: ../src/menus-skeleton.h:98
+#: ../src/menus-skeleton.h:96
 msgid "_Zoom"
 msgstr "Tālummaiņa"
 
-#: ../src/menus-skeleton.h:114
+#: ../src/menus-skeleton.h:112
 msgid "_Display mode"
 msgstr "Ekrāna režīms"
 
 #. Better location in menu needs to be found
 #. "         <verb verb-id=\"ViewModePrintColorsPreview\" radio=\"yes\"/>\n"
 #. "         <verb verb-id=\"DialogPrintColorsPreview\" />\n"
-#: ../src/menus-skeleton.h:123
+#: ../src/menus-skeleton.h:121
 msgid "_Color display mode"
 msgstr "_Krāsu ekrāna režīms"
 
 #. Better location in menu needs to be found
 #. "         <verb verb-id=\"ViewColorModePrintColorsPreview\" radio=\"yes\"/>\n"
 #. "         <verb verb-id=\"DialogPrintColorsPreview\" />\n"
-#: ../src/menus-skeleton.h:136
+#: ../src/menus-skeleton.h:134
 msgid "Sh_ow/Hide"
 msgstr "Rādīt/slēpt"
 
 #. Not quite ready to be in the menus.
 #. "       <verb verb-id=\"FocusToggle\" />\n"
-#: ../src/menus-skeleton.h:156
+#: ../src/menus-skeleton.h:154
 msgid "_Layer"
 msgstr "Slānis"
 
-#: ../src/menus-skeleton.h:180
+#: ../src/menus-skeleton.h:178
 msgid "_Object"
 msgstr "Objekts"
 
-#: ../src/menus-skeleton.h:191
+#: ../src/menus-skeleton.h:189
 msgid "Cli_p"
 msgstr "Ap_griezt"
 
-#: ../src/menus-skeleton.h:195
+#: ../src/menus-skeleton.h:193
 msgid "Mas_k"
 msgstr "Mas_ka"
 
-#: ../src/menus-skeleton.h:199
+#: ../src/menus-skeleton.h:197
 msgid "Patter_n"
 msgstr "Faktū_ra"
 
-#: ../src/menus-skeleton.h:223
+#: ../src/menus-skeleton.h:221
 msgid "_Path"
 msgstr "_Ceļš"
 
-#: ../src/menus-skeleton.h:251 ../src/ui/dialog/find.cpp:77 ../src/ui/dialog/text-edit.cpp:71
+#: ../src/menus-skeleton.h:249 ../src/ui/dialog/find.cpp:77 ../src/ui/dialog/text-edit.cpp:71
 msgid "_Text"
 msgstr "_Teksts"
 
-#: ../src/menus-skeleton.h:269
+#: ../src/menus-skeleton.h:267
 msgid "Filter_s"
 msgstr " Filtri"
 
-#: ../src/menus-skeleton.h:275
+#: ../src/menus-skeleton.h:273
 msgid "Exte_nsions"
 msgstr "Paplaši_nājumi"
 
-#: ../src/menus-skeleton.h:281
+#: ../src/menus-skeleton.h:279
 msgid "_Help"
 msgstr "_Palīgs"
 
-#: ../src/menus-skeleton.h:285
+#: ../src/menus-skeleton.h:283
 msgid "Tutorials"
 msgstr "Pamācības"
 
@@ -22201,6 +22199,12 @@ msgstr "Neko"
 msgid "Does nothing"
 msgstr "Nedara neko"
 
+#. File
+#. Tag
+#: ../src/verbs.cpp:2431 ../src/verbs.cpp:2726
+msgid "_New"
+msgstr "Jau_ns"
+
 #: ../src/verbs.cpp:2431
 msgid "Create new document from the default template"
 msgstr "Izveidot jaunu dokumentu no noklusētās veidnes"
@@ -22309,8 +22313,8 @@ msgid "Quit Inkscape"
 msgstr "Iziet no Inkscape"
 
 #: ../src/verbs.cpp:2461
-msgid "_Templates..."
-msgstr "Saga_taves..."
+msgid "New from _Template..."
+msgstr "Jaunu no saga_taves..."
 
 #: ../src/verbs.cpp:2462
 msgid "Create new project from template"
@@ -33194,6 +33198,18 @@ msgstr "Bieži lietots galeriju attēlu grafiskais formāts "
 #: ../share/extensions/xaml2svg.inx.h:1
 msgid "XAML Input"
 msgstr "XAML ievade"
+
+#~ msgid "PS+LaTeX: Omit text in PS, and create LaTeX file"
+#~ msgstr "PS+LaTeX: izlaist tekstu PS un izveidot  LaTeX datni"
+
+#~ msgid "EPS+LaTeX: Omit text in EPS, and create LaTeX file"
+#~ msgstr "EPS+LaTeX: izlaist tekstu EPS un izveidot  LaTeX datni"
+
+#~ msgid "PDF+LaTeX: Omit text in PDF, and create LaTeX file"
+#~ msgstr "PDF+LaTeX:  izlaist tekstu PDF un izveidot  LaTeX datni"
+
+#~ msgid "_Templates..."
+#~ msgstr "Saga_taves..."
 
 #, fuzzy
 #~ msgid "Miter limit"
