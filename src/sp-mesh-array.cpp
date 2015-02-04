@@ -1431,13 +1431,17 @@ void SPMeshNodeArray::print() {
 //  p0: color value start of patch
 //  p1: color value end of patch
 //  pa: color value after patch
+//  lb0: distance between points b and 0
+//  l01: distance between points 0 and 1
+//  l1a: distance between points 1 and a
 //  is_first:  If first patch in row/column
 //  is_last:   If last patch in row/column
-//  type: Type smoothing
+//  type: Type of smoothing
 // Output:
 //  m0: slope of Hermite function at start.
 //  m1: slope of Hermite function at end.
 void find_slopes( const double &pb, const double &p0, const double &p1, const double &pa,
+                  const double &lb0, const double &l01, const double &l1a,
                   const bool &is_first, const bool &is_last, const SPMeshSmooth type,
                   double &m0, double &m1 ) {
 
@@ -1449,6 +1453,12 @@ void find_slopes( const double &pb, const double &p0, const double &p1, const do
     m0 = (p1 - pb)/2.0;
     m1 = (pa - p0)/2.0;
 
+    // Finite differences
+    if( lb0 > 0 && l01 > 0 )
+        m0 = 0.5 * ((p0 - pb )/lb0 + (p1 - p0)/l01) * l01;
+    if( l01 > 0 && l1a > 0 )
+        m1 = 0.5 * ((p1 - p0 )/l01 + (pa - p1)/l1a) * l01;
+    
     bool parabolic = false;  // Require end patches to be parabolic
     switch (type) {
         case SP_MESH_SMOOTH_SMOOTH1:
@@ -1478,7 +1488,6 @@ void find_slopes( const double &pb, const double &p0, const double &p1, const do
             // Catmul-Rom, Parabolic ends
             parabolic = true;
             break;
-        case SP_MESH_SMOOTH_SMOOTH:
         case SP_MESH_SMOOTH_SMOOTH5:
             // Catmul-Rom, Parabolic ends, no color min/max in middle of patch.
             parabolic = true;
@@ -1488,12 +1497,13 @@ void find_slopes( const double &pb, const double &p0, const double &p1, const do
                 // tangents flat at min/max
                 m0 = 0;
             } else {
+                // https://en.wikipedia.org/wiki/Monotone_cubic_interpolation
                 // ensure we don't overshoot
                 if( fabs(m0) > fabs(3*(p1-p0)) ) {
                     m0 = 3*(p1-p0);
                 }
-                if( fabs(m0) > fabs(3*(p0-pb)) ) {
-                    m0 = 3*(p0-pb);
+                if( fabs(m0) > fabs(3*(p0-pb)) * l01 / lb0 ) {
+                    m0 = 3*(p0-pb) * l01 / lb0;
                 }
             }
             if( (p0 > p1 && pa > p1) ||
@@ -1502,8 +1512,8 @@ void find_slopes( const double &pb, const double &p0, const double &p1, const do
                 m1 = 0;
             } else {
                 // ensure we don't overshoot
-                if( fabs(m1) > fabs(3*(pa-p1)) ) {
-                    m1 = 3*(pa-p1);
+                if( fabs(m1) > fabs(3*(pa-p1) * l01 / l1a) ) {
+                    m1 = 3*(pa-p1) * l01 / l1a;
                 }
                 if( fabs(m1) > fabs(3*(p1-p0)) ) {
                     m1 = 3*(p1-p0);
@@ -1588,8 +1598,21 @@ void SPMeshNodeArray::smooth( SPMeshNodeArray* smooth, SPMeshSmooth type ) {
             float result[3][8];
             sp_color_get_rgb_floatv( &this->nodes[  i   *3 ][ j*3 ]->color, p0 ); 
             sp_color_get_rgb_floatv( &this->nodes[ (i+1)*3 ][ j*3 ]->color, p1 );
+
+            // Use linear distance to avoid calculation overhead of calculating true path length
+            Geom::Point *ptb = NULL;
+            Geom::Point *pt0 = &this->nodes[  i   *3 ][ j*3 ]->p;
+            Geom::Point *pt1 = &this->nodes[ (i+1)*3 ][ j*3 ]->p;
+            Geom::Point *pta = NULL;
+
+            double lb0 = 0.0;
+            double l01 = Geom::distance( *pt0, *pt1 );
+            double l1a = 0.0;
+            
             if( !is_first_row ) {
                 sp_color_get_rgb_floatv( &this->nodes[ (i-1)*3 ][ j*3 ]->color, pb );
+                ptb = &this->nodes[ (i-1)*3 ][ j*3 ]->p;
+                lb0 = Geom::distance( *ptb, *pt0 );
             } else {
                 pb[0] = 2.0*p0[0] - p1[0];
                 pb[1] = 2.0*p0[1] - p1[1];
@@ -1597,6 +1620,8 @@ void SPMeshNodeArray::smooth( SPMeshNodeArray* smooth, SPMeshSmooth type ) {
             }
             if( !is_last_row ) {
                 sp_color_get_rgb_floatv( &this->nodes[ (i+2)*3 ][ j*3 ]->color, pa );
+                pta = &this->nodes[ (i+2)*3 ][ j*3 ]->p;
+                l1a = Geom::distance( *pt1, *pta );
             } else {
                 pa[0] = 2.0*p1[0] - p0[0];
                 pa[1] = 2.0*p1[1] - p0[1];
@@ -1608,7 +1633,9 @@ void SPMeshNodeArray::smooth( SPMeshNodeArray* smooth, SPMeshSmooth type ) {
                 // We use Hermite interpolation. We have end points, we need tangents.
                 double m0 = 0;
                 double m1 = 0;
-                find_slopes( pb[n], p0[n], p1[n], pa[n], is_first_row, is_last_row, type, m0, m1 );
+                find_slopes( pb[n], p0[n], p1[n], pa[n],
+                             lb0, l01, l1a,
+                             is_first_row, is_last_row, type, m0, m1 );
         
                 for( unsigned k = 1; k < 8; ++k ) {
                     double t = k/8.0;
@@ -1650,8 +1677,21 @@ void SPMeshNodeArray::smooth( SPMeshNodeArray* smooth, SPMeshSmooth type ) {
             float result[3][8];
             sp_color_get_rgb_floatv( &smooth->nodes[ j*3 ][  i   *3*8 ]->color, p0 ); 
             sp_color_get_rgb_floatv( &smooth->nodes[ j*3 ][ (i+1)*3*8 ]->color, p1   );
+
+            // Use linear distance to avoid calculation overhead of calculating true path length
+            Geom::Point *ptb = NULL;
+            Geom::Point *pt0 = &smooth->nodes[ j*3 ][  i   *3*8 ]->p;
+            Geom::Point *pt1 = &smooth->nodes[ j*3 ][ (i+1)*3*8 ]->p;
+            Geom::Point *pta = NULL;
+
+            double lb0 = 0.0;
+            double l01 = Geom::distance( *pt0, *pt1 );
+            double l1a = 0.0;
+
             if( !is_first_column ) {
                 sp_color_get_rgb_floatv( &smooth->nodes[ j*3 ][ (i-1)*3*8 ]->color, pb );
+                ptb = &smooth->nodes[ j*3 ][ (i-1)*3*8 ]->p;
+                lb0 = Geom::distance( *ptb, *pt0 );
             } else {
                 pb[0] = 2.0*p0[0] - p1[0];
                 pb[1] = 2.0*p0[1] - p1[1];
@@ -1659,6 +1699,8 @@ void SPMeshNodeArray::smooth( SPMeshNodeArray* smooth, SPMeshSmooth type ) {
             }
             if( !is_last_column ) {
                 sp_color_get_rgb_floatv( &smooth->nodes[ j*3 ][ (i+2)*3*8 ]->color, pa );
+                pta = &smooth->nodes[ j*3 ][ (i+2)*3*8 ]->p;
+                l1a = Geom::distance( *pt1, *pta );
             } else {
                 pa[0] = 2.0*p1[0] - p0[0];
                 pa[1] = 2.0*p1[1] - p0[1];
@@ -1670,7 +1712,9 @@ void SPMeshNodeArray::smooth( SPMeshNodeArray* smooth, SPMeshSmooth type ) {
                 // We use Hermite interpolation. We have end points, we need tangents.
                 double m0 = 0;
                 double m1 = 0;
-                find_slopes( pb[n], p0[n], p1[n], pa[n], is_first_column, is_last_column, type, m0, m1 );
+                find_slopes( pb[n], p0[n], p1[n], pa[n],
+                             lb0, l01, l1a,
+                             is_first_column, is_last_column, type, m0, m1 );
         
                 for( unsigned k = 1; k < 8; ++k ) {
                     double t = k/8.0;
@@ -1693,6 +1737,18 @@ void SPMeshNodeArray::smooth( SPMeshNodeArray* smooth, SPMeshSmooth type ) {
 
 class SPMeshSmoothCorner {
 
+    enum {
+        AMP,
+        DX_LEFT,
+        DX_RIGHT,
+        DY_TOP,
+        DY_BOTTOM,
+        DXY_LT,
+        DXY_RT,
+        DXY_LB,
+        DXY_RB
+    };
+        
 public:
     SPMeshSmoothCorner() {
         for( unsigned i = 0; i < 3; ++i ) {
@@ -1702,32 +1758,42 @@ public:
         }
     }
     
-    double g[3][4]; // 3 colors, 4 parameters: f, f_x, f_y, f_xy
-    // double x[4]; // Lengths between neigboring points  x, y, xy, yx
+    double g[3][8]; // 3 colors, 8 parameters: see enum.
+    Geom::Point p;  // Location of point
 };
 
 // Find slope at point 1 given values at previous and next points
-double find_slope1( double p0, double p1, double p2 ) {
+// Return value is slope in user space
+double find_slope1( const double &p0, const double &p1, const double &p2,
+                    const double &d01, const double &d12 ) {
 
-    double slope = (p2 - p0)/2.0;  // Simple Catmul-Rom condition
-    if( ( p0 > p1 && p1 < p2 ) ||
-        ( p0 < p1 && p1 > p2 ) ) {
-        // At minimum or maximum, use slope of zero
-        slope = 0;
+    double slope = 0;
+
+    if( d01 > 0 && d12 > 0 ) {
+        slope = 0.5 * ( (p1 - p0)/d01 + (p2 - p1)/d12 );
+
+        if( ( p0 > p1 && p1 < p2 ) ||
+            ( p0 < p1 && p1 > p2 ) ) {
+            // At minimum or maximum, use slope of zero
+            slope = 0;
+        } else {
+            // Ensure we don't overshoot
+            if( fabs(slope) > fabs(3*(p1-p0)/d01) ) {
+                slope = 3*(p1-p0)/d01;
+            }
+            if( fabs(slope) > fabs(3*(p2-p1)/d12) ) {
+                slope = 3*(p2-p1)/d12;
+            }
+        }
     } else {
-        // Ensure we don't overshoot
-        if( fabs(slope) > fabs(3*(p1-p0)) ) {
-            slope = 3*(p1-p0);
-        }
-        if( fabs(slope) > fabs(3*(p2-p1)) ) {
-            slope = 3*(p2-p1);
-        }
+        // Do something clever
     }
     return slope;
 };
 
 
 // Find slope at point 0 given values at previous and next points
+// TO DO: TAKE DISTANCE BETWEEN POINTS INTO ACCOUNT
 double find_slope2( double pmm, double ppm, double pmp, double ppp, double p0 ) {
 
     // pmm == d[i-1][j-1], ...  'm' is minus, 'p' is plus
@@ -1837,60 +1903,136 @@ void SPMeshNodeArray::smooth2( SPMeshNodeArray* smooth, SPMeshSmooth type ) {
             d[i][j].g[0][0] =  rgb_color[ 0 ];
             d[i][j].g[1][0] =  rgb_color[ 1 ];
             d[i][j].g[2][0] =  rgb_color[ 2 ];
+            d[i][j].p = this->nodes[ i*3 ][ j*3 ]->p;
         }
     }
 
     // Calculate interior derivatives
-    for( unsigned i = 1; i < d.size()-1; ++i ) {
-        for( unsigned j = 1; j < d[i].size()-1; ++j ) {
+    for( unsigned i = 0; i < d.size(); ++i ) {
+        for( unsigned j = 0; j < d[i].size(); ++j ) {
             for( unsigned k = 0; k < 3; ++k ) { // Loop over colors
                 if( type == SP_MESH_SMOOTH_SMOOTH7 || type == SP_MESH_SMOOTH_SMOOTH ) {
-                    d[i][j].g[k][1] = find_slope1( d[i-1][j].g[k][0], d[i][j].g[k][0], d[i+1][j].g[k][0] );
-                    d[i][j].g[k][2] = find_slope1( d[i][j-1].g[k][0], d[i][j].g[k][0], d[i][j+1].g[k][0] );
-                    d[i][j].g[k][3] = find_slope2( d[i-1][j-1].g[k][0], d[i+1][j-1].g[k][0],
-                                                   d[i-1][j+1].g[k][0], d[i-1][j-1].g[k][0],
-                                                   d[i][j].g[k][0] );
+                    // dx
+
+                    if( i != 0 && i != d.size()-1 ) {
+                        double lm = Geom::distance(  d[i-1][j].p, d[i][j].p );
+                        double lp = Geom::distance(  d[i+1][j].p, d[i][j].p );
+                        d[i][j].g[k][1] = find_slope1( d[i-1][j].g[k][0], d[i][j].g[k][0], d[i+1][j].g[k][0], lm, lp );
+                    }
+
+                    // dy
+                    if( j != 0 && j != d[i].size()-1 ) {
+                        double lm = Geom::distance(  d[i][j-1].p, d[i][j].p );
+                        double lp = Geom::distance(  d[i][j+1].p, d[i][j].p );
+                        d[i][j].g[k][2] = find_slope1( d[i][j-1].g[k][0], d[i][j].g[k][0], d[i][j+1].g[k][0], lm, lp );
+                    }
+
+                    // dxdy  if needed, need to take lengths into account
+                    // if( i != 0 && i != d.size()-1 && j != 0 && j != d[i].size()-1 ) {
+                    //     d[i][j].g[k][3] = find_slope2( d[i-1][j-1].g[k][0], d[i+1][j-1].g[k][0],
+                    //                                    d[i-1][j+1].g[k][0], d[i-1][j-1].g[k][0],
+                    //                                    d[i][j].g[k][0] );
+                    // }
+
                 } else {
                     // Catmul-Rom
-                    d[i][j].g[k][1] = (d[i+1][j].g[k][0] - d[i-1][j].g[k][0])/2.0;
-                    d[i][j].g[k][2] = (d[i][j+1].g[k][0] - d[i][j-1].g[k][0])/2.0;
+                    if( i != 0 && i != d.size()-1 ) {
+                        double d2 = Geom::distance( d[i-1][j].p, d[i+1][j].p );
+                        d[i][j].g[k][1] = (d[i+1][j].g[k][0] - d[i-1][j].g[k][0])/d2;
+                    }
+                    if( j != 0 && j != d[i].size()-1 ) {
+                        double d2 = Geom::distance( d[i][j-1].p, d[i][j+1].p );
+                        d[i][j].g[k][2] = (d[i][j+1].g[k][0] - d[i][j-1].g[k][0])/d2;
+                    }
                 }
             }
         }
     }
     
     // Calculate exterior derivatives
-    for( unsigned j = 1; j< d[0].size()-1; ++j ) {
+    // We need to do this after calculating interior derivatives as we need to already
+    // have the non-exterior derivative calculated for finding the parabola.
+    for( unsigned j = 0; j< d[0].size(); ++j ) {
         for( unsigned k = 0; k < 3; ++k ) { // Loop over colors
             unsigned z = d.size()-1;
             if( type == SP_MESH_SMOOTH_SMOOTH7 || type == SP_MESH_SMOOTH_SMOOTH ) {
+
                 // Parabolic
-                d[0][j].g[k][1] = 2.0*(d[1][j].g[k][0] - d[0  ][j].g[k][0]) - d[1][j].g[k][1];
-                d[z][j].g[k][1] = 2.0*(d[z][j].g[k][0] - d[z-1][j].g[k][0]) - d[z][j].g[k][1];
+                double d0 = Geom::distance( d[1][j].p, d[0  ][j].p );
+                if( d0 > 0 ) {
+                    d[0][j].g[k][1] = 2.0*(d[1][j].g[k][0] - d[0  ][j].g[k][0])/d0 - d[1][j].g[k][1];
+                } else {
+                    d[0][j].g[k][1] = 0;
+                }
+
+                double dz = Geom::distance( d[z][j].p, d[z-1][j].p );
+                if( dz > 0 ) {
+                    d[z][j].g[k][1] = 2.0*(d[z][j].g[k][0] - d[z-1][j].g[k][0])/dz - d[z-1][j].g[k][1];
+                } else {
+                    d[z][j].g[k][1] = 0;
+                }
+
             } else {
+
                 // Catmul-Rom
-                d[0][j].g[k][1] = (d[1][j].g[k][0] - d[0  ][j].g[k][0])/2.0;
-                d[z][j].g[k][1] = (d[z][j].g[k][0] - d[z-1][j].g[k][0])/2.0;
+                double d0 = Geom::distance( d[1][j].p, d[0  ][j].p );
+                if( d0 > 0 ) {
+                    d[0][j].g[k][1] = (d[1][j].g[k][0] - d[0  ][j].g[k][0])/d0;
+                } else {
+                    d[0][j].g[k][1] = 0;
+                }
+
+                double dz = Geom::distance( d[z][j].p, d[z-1][j].p );
+                if( dz > 0 ) {
+                    d[z][j].g[k][1] = (d[z][j].g[k][0] - d[z-1][j].g[k][0])/dz;
+                } else {
+                    d[z][j].g[k][1] = 0;
+                }
             }
         }
     }
 
-    for( unsigned i = 1; i< d.size()-1; ++i ) {
+    for( unsigned i = 0; i< d.size(); ++i ) {
         for( unsigned k = 0; k < 3; ++k ) { // Loop over colors
             unsigned z = d[0].size()-1;
             if( type == SP_MESH_SMOOTH_SMOOTH7 || type == SP_MESH_SMOOTH_SMOOTH ) {
+
                 // Parabolic
-                d[i][0].g[k][2] = 2.0*(d[i][1].g[k][0] - d[i][0  ].g[k][0]) - d[i][0].g[k][1];
-                d[i][z].g[k][2] = 2.0*(d[i][z].g[k][0] - d[i][z-1].g[k][0]) - d[i][z].g[k][1];
+                double d0 = Geom::distance( d[i][1].p, d[i][0  ].p );
+                if( d0 > 0 ) {
+                    d[i][0].g[k][2] = 2.0*(d[i][1].g[k][0] - d[i][0  ].g[k][0])/d0 - d[i][1].g[k][2];
+                } else {
+                    d[i][0].g[k][2] = 0;
+                }
+
+                double dz = Geom::distance( d[i][z].p, d[i][z-1].p );
+                if( dz > 0 ) {
+                    d[i][z].g[k][2] = 2.0*(d[i][z].g[k][0] - d[i][z-1].g[k][0])/dz - d[i][z-1].g[k][2];
+                } else {
+                    d[i][z].g[k][2] = 0;
+                }
+                
             } else {
+
                 // Catmul-Rom
-                d[i][0].g[k][2] = (d[i][1].g[k][0] - d[i][0  ].g[k][0])/2.0;
-                d[i][z].g[k][2] = (d[i][z].g[k][0] - d[i][z-1].g[k][0])/2.0;
+                double d0 = Geom::distance( d[i][1].p, d[i][0  ].p );
+                if( d0 > 0 ) {
+                    d[i][0].g[k][2] = (d[i][1].g[k][0] - d[i][0  ].g[k][0])/d0;
+                } else {
+                    d[i][0].g[k][2] = 0;
+                }
+
+                double dz = Geom::distance( d[i][z].p, d[i][z-1].p );
+                if( dz > 0 ) {
+                    d[i][z].g[k][2] = (d[i][z].g[k][0] - d[i][z-1].g[k][0])/dz;
+                } else {
+                    d[i][z].g[k][2] = 0;
+                }
             }
         }
     }
 
-    // Leave outside corner derivatives at zero.
+    // Leave outside corner cross-derivatives at zero.
     
     // Next split each patch into 8x8 smaller patches.
     
@@ -1910,6 +2052,11 @@ void SPMeshNodeArray::smooth2( SPMeshNodeArray* smooth, SPMeshSmooth type ) {
     for( unsigned i = 0; i < this->patch_rows(); ++i ) {
         for( unsigned j = 0; j < this->patch_columns(); ++j ) {
 
+            double dx0 = Geom::distance( d[i  ][j  ].p, d[i+1][j  ].p );
+            double dx1 = Geom::distance( d[i  ][j+1].p, d[i+1][j+1].p );
+            double dy0 = Geom::distance( d[i  ][j  ].p, d[i  ][j+1].p );
+            double dy1 = Geom::distance( d[i+1][j  ].p, d[i+1][j+1].p );
+
             // Temp loop over 0..8 to get last column/row edges
             float r[3][9][9]; // result
             for( unsigned m = 0; m < 3; ++m ) {
@@ -1919,14 +2066,14 @@ void SPMeshNodeArray::smooth2( SPMeshNodeArray* smooth, SPMeshSmooth type ) {
                 v[ 1] = d[i+1][j  ].g[m][0];
                 v[ 2] = d[i  ][j+1].g[m][0];
                 v[ 3] = d[i+1][j+1].g[m][0];
-                v[ 4] = d[i  ][j  ].g[m][1];
-                v[ 5] = d[i+1][j  ].g[m][1];
-                v[ 6] = d[i  ][j+1].g[m][1];
-                v[ 7] = d[i+1][j+1].g[m][1];
-                v[ 8] = d[i  ][j  ].g[m][2];
-                v[ 9] = d[i+1][j  ].g[m][2];
-                v[10] = d[i  ][j+1].g[m][2];
-                v[11] = d[i+1][j+1].g[m][2];
+                v[ 4] = d[i  ][j  ].g[m][1]*dx0;
+                v[ 5] = d[i+1][j  ].g[m][1]*dx0;
+                v[ 6] = d[i  ][j+1].g[m][1]*dx1;
+                v[ 7] = d[i+1][j+1].g[m][1]*dx1;
+                v[ 8] = d[i  ][j  ].g[m][2]*dy0;
+                v[ 9] = d[i+1][j  ].g[m][2]*dy1;
+                v[10] = d[i  ][j+1].g[m][2]*dy0;
+                v[11] = d[i+1][j+1].g[m][2]*dy1;
                 v[12] = d[i  ][j  ].g[m][3];
                 v[13] = d[i+1][j  ].g[m][3];
                 v[14] = d[i  ][j+1].g[m][3];

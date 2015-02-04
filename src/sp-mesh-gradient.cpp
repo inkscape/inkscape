@@ -84,7 +84,7 @@ void SPMeshGradient::set(unsigned key, gchar const *value) {
 	      }
 	      this->smooth_set = TRUE;
 	    } else {
-	      std::cout << "SPMeshGradient::set() No value " << std::endl;
+	      // std::cout << "SPMeshGradient::set() No value " << std::endl;
 	      this->smooth = SP_MESH_SMOOTH_NONE;
 	      this->smooth_set = FALSE;
 	    }
