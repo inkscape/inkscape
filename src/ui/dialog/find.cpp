@@ -37,6 +37,7 @@
 #include "preferences.h"
 #include "sp-text.h"
 #include "sp-flowtext.h"
+#include "sp-flowdiv.h"
 #include "text-editing.h"
 #include "sp-tspan.h"
 #include "sp-tref.h"
@@ -693,7 +694,10 @@ bool Find::item_type_match (SPItem *item)
     } else if (dynamic_cast<SPPath *>(item) || dynamic_cast<SPLine *>(item) || dynamic_cast<SPPolyLine *>(item)) {
         return (all || check_paths.get_active());
 
-    } else if (dynamic_cast<SPText *>(item) || dynamic_cast<SPTSpan *>(item) || dynamic_cast<SPTRef *>(item) || dynamic_cast<SPString *>(item)) {
+    } else if (dynamic_cast<SPText *>(item) || dynamic_cast<SPTSpan *>(item) || 
+	           dynamic_cast<SPTRef *>(item) || dynamic_cast<SPString *>(item) ||
+			   dynamic_cast<SPFlowtext *>(item) || dynamic_cast<SPFlowdiv *>(item) ||
+			   dynamic_cast<SPFlowtspan *>(item) || dynamic_cast<SPFlowpara *>(item)) {
         return (all || check_texts.get_active());
 
     } else if (dynamic_cast<SPGroup *>(item) && !desktop->isLayer(item) ) { // never select layers!
