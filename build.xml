@@ -355,7 +355,7 @@
         <flags>
             -Wall -Wformat -Werror=format-security -Wextra -Wpointer-arith -Wcast-align -Wsign-compare -Wswitch
             -Werror=return-type
-            <!-- - ->  -Werror <!-- -->
+            <!-- -->  -Werror <!-- -->
             <!-- A list of warnings that should not error *yet*, any help is welcome in fixing the code generating these warnings! -->
             <!-- libcroco is using guchar where it should use gchar, so we need: --> -Wno-error=pointer-sign
             -Wno-error=unused-parameter -Wno-error=unused-but-set-variable -Wno-error=strict-overflow -Wno-error=write-strings
