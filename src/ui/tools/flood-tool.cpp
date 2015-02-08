@@ -1097,8 +1097,8 @@ bool FloodTool::item_handler(SPItem* item, GdkEvent* event) {
             desktop->applyCurrentOrToolStyle(item, "/tools/paintbucket", false);
 
             DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_PAINTBUCKET, _("Set style on object"));
-
-            ret = TRUE;
+            // Dead assignment: Value stored to 'ret' is never read
+            //ret = TRUE;
         }
         break;
 

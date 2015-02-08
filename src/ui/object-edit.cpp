@@ -296,13 +296,15 @@ RectKnotHolderEntityWH::set_internal(Geom::Point const &p, Geom::Point const &or
                 // closer to the diagonal and in same-sign quarters, change both using ratio
                 s = snap_knot_position_constrained(p, Inkscape::Snapper::SnapConstraint(p_handle, Geom::Point(-ratio, -1)), state);
                 minx = s[Geom::X] - origin[Geom::X];
-                miny = s[Geom::Y] - origin[Geom::Y];
+                // Dead assignment: Value stored to 'miny' is never read
+                //miny = s[Geom::Y] - origin[Geom::Y];
                 rect->height.computed = MAX(h_orig + minx / ratio, 0);
             } else {
                 // closer to the horizontal, change only width, height is h_orig
                 s = snap_knot_position_constrained(p, Inkscape::Snapper::SnapConstraint(p_handle, Geom::Point(-1, 0)), state);
                 minx = s[Geom::X] - origin[Geom::X];
-                miny = s[Geom::Y] - origin[Geom::Y];
+                // Dead assignment: Value stored to 'miny' is never read
+                //miny = s[Geom::Y] - origin[Geom::Y];
                 rect->height.computed = MAX(h_orig, 0);
             }
             rect->width.computed = MAX(w_orig + minx, 0);
@@ -312,13 +314,15 @@ RectKnotHolderEntityWH::set_internal(Geom::Point const &p, Geom::Point const &or
             if (miny != 0 && fabs(minx/miny) > 0.5 * ratio && (SGN(minx) == SGN(miny))) {
                 // closer to the diagonal and in same-sign quarters, change both using ratio
                 s = snap_knot_position_constrained(p, Inkscape::Snapper::SnapConstraint(p_handle, Geom::Point(-ratio, -1)), state);
-                minx = s[Geom::X] - origin[Geom::X];
+                // Dead assignment: Value stored to 'minx' is never read
+                //minx = s[Geom::X] - origin[Geom::X];
                 miny = s[Geom::Y] - origin[Geom::Y];
                 rect->width.computed = MAX(w_orig + miny * ratio, 0);
             } else {
                 // closer to the vertical, change only height, width is w_orig
                 s = snap_knot_position_constrained(p, Inkscape::Snapper::SnapConstraint(p_handle, Geom::Point(0, -1)), state);
-                minx = s[Geom::X] - origin[Geom::X];
+                // Dead assignment: Value stored to 'minx' is never read
+                //minx = s[Geom::X] - origin[Geom::X];
                 miny = s[Geom::Y] - origin[Geom::Y];
                 rect->width.computed = MAX(w_orig, 0);
             }
@@ -388,14 +392,16 @@ RectKnotHolderEntityXY::knot_set(Geom::Point const &p, Geom::Point const &origin
                 // closer to the diagonal and in same-sign quarters, change both using ratio
                 s = snap_knot_position_constrained(p, Inkscape::Snapper::SnapConstraint(p_handle, Geom::Point(-ratio, -1)), state);
                 minx = s[Geom::X] - origin[Geom::X];
-                miny = s[Geom::Y] - origin[Geom::Y];
+                // Dead assignment: Value stored to 'miny' is never read
+                //miny = s[Geom::Y] - origin[Geom::Y];
                 rect->y.computed = MIN(origin[Geom::Y] + minx / ratio, opposite_y);
                 rect->height.computed = MAX(h_orig - minx / ratio, 0);
             } else {
                 // closer to the horizontal, change only width, height is h_orig
                 s = snap_knot_position_constrained(p, Inkscape::Snapper::SnapConstraint(p_handle, Geom::Point(-1, 0)), state);
                 minx = s[Geom::X] - origin[Geom::X];
-                miny = s[Geom::Y] - origin[Geom::Y];
+                // Dead assignment: Value stored to 'miny' is never read
+                //miny = s[Geom::Y] - origin[Geom::Y];
                 rect->y.computed = MIN(origin[Geom::Y], opposite_y);
                 rect->height.computed = MAX(h_orig, 0);
             }
@@ -406,14 +412,16 @@ RectKnotHolderEntityXY::knot_set(Geom::Point const &p, Geom::Point const &origin
             if (miny != 0 && fabs(minx/miny) > 0.5 *ratio && (SGN(minx) == SGN(miny))) {
                 // closer to the diagonal and in same-sign quarters, change both using ratio
                 s = snap_knot_position_constrained(p, Inkscape::Snapper::SnapConstraint(p_handle, Geom::Point(-ratio, -1)), state);
-                minx = s[Geom::X] - origin[Geom::X];
+                // Dead assignment: Value stored to 'minx' is never read
+                //minx = s[Geom::X] - origin[Geom::X];
                 miny = s[Geom::Y] - origin[Geom::Y];
                 rect->x.computed = MIN(origin[Geom::X] + miny * ratio, opposite_x);
                 rect->width.computed = MAX(w_orig - miny * ratio, 0);
             } else {
                 // closer to the vertical, change only height, width is w_orig
                 s = snap_knot_position_constrained(p, Inkscape::Snapper::SnapConstraint(p_handle, Geom::Point(0, -1)), state);
-                minx = s[Geom::X] - origin[Geom::X];
+                // Dead assignment: Value stored to 'minx' is never read
+                //minx = s[Geom::X] - origin[Geom::X];
                 miny = s[Geom::Y] - origin[Geom::Y];
                 rect->x.computed = MIN(origin[Geom::X], opposite_x);
                 rect->width.computed = MAX(w_orig, 0);
