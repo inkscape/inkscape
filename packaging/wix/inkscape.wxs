@@ -22,7 +22,7 @@
 								Name="Inkscape Homepage"
 									   Target="http://www.inkscape.org/"/>
 				<RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
-				<RegistryValue Root="HKCU" Key="Software\Microsoft\MyApplicationName" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+				<RegistryValue Root="HKCU" Key="Software\inkscape.org\Inkscape" Name="startmenu_installed" Type="integer" Value="1" KeyPath="yes"/>
 			</Component>
 		</DirectoryRef>
 
@@ -31,7 +31,7 @@
 				<!-- Shortcut Id="desktopFoobar10" Directory="DesktopFolder" Target="[INSTALLDIR]inkscape.exe" Name="$(var.FullProductName)" WorkingDirectory='INSTALLDIR' Icon="file_inkscape_exe" IconIndex="0" / -->
 				<Shortcut Id="desktopFoobar10" Directory="DesktopFolder" Target="[INSTALLDIR]inkscape.exe" Name="$(var.FullProductName)" WorkingDirectory='INSTALLDIR' />
 				<RemoveFolder Id="DesktopFolder" On="uninstall"/>
-				<RegistryValue Root="HKCU" Key="Software\Microsoft\MyApplicationName" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+				<RegistryValue Root="HKCU" Key="Software\inkscape.org\Inkscape" Name="desktop_installed" Type="integer" Value="1" KeyPath="yes"/>
 			</Component>
 		</DirectoryRef>
 
