@@ -706,7 +706,7 @@ int PrintEmf::create_pen(SPStyle const *style, const Geom::Affine &transform)
                     n_dash = style->stroke_dasharray.values.size();
                     dash = new uint32_t[n_dash];
                     for (i = 0; i < n_dash; i++) {
-                        dash[i] = (uint32_t)(Inkscape::Util::Quantity::convert(1, "mm", "px") * style->stroke_dasharray.values[i]);
+                        dash[i] = style->stroke_dasharray.values[i];
                     }
                 }
             }
