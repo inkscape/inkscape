@@ -17,13 +17,19 @@
 #endif
 #include <map>
 #include <string>
+
 #include "ui/dialog/guides.h"
+#include "desktop-events.h"
+
+#if WITH_GTKMM_3_0
+# include <gdkmm/devicemanager.h>
+#endif
+
 #include <2geom/line.h>
 #include <2geom/angle.h>
 #include <glibmm/i18n.h>
 
 #include "desktop.h"
-#include "desktop-events.h"
 
 #include "ui/dialog-events.h"
 #include "display/canvas-axonomgrid.h"
@@ -611,36 +617,35 @@ static GdkInputSource lastType = GDK_SOURCE_MOUSE;
 
 static void init_extended()
 {
-    std::string avoidName = "pad";
+    Glib::ustring avoidName("pad");
+    Glib::RefPtr<Gdk::Display> display = Gdk::Display::get_default();
 
 #if GTK_CHECK_VERSION(3,0,0)
-    GdkDisplay *display = gdk_display_get_default();
-    GdkDeviceManager *dm = gdk_display_get_device_manager(display);
-    GList* devices = gdk_device_manager_list_devices(dm, GDK_DEVICE_TYPE_SLAVE);	
+    Glib::RefPtr<const Gdk::DeviceManager> dm = display->get_device_manager();
+    std::vector< Glib::RefPtr<const Gdk::Device> > devices = dm->list_devices(Gdk::DEVICE_TYPE_SLAVE);	
 #else
-    GList* devices = gdk_devices_list();
+    std::vector< Glib::RefPtr<const Gdk::Device> > devices = display->list_devices();
 #endif
     
-    if ( devices ) {
-        for ( GList* curr = devices; curr; curr = g_list_next(curr) ) {
-            GdkDevice* dev = reinterpret_cast<GdkDevice*>(curr->data);
-            gchar const *devName = gdk_device_get_name(dev);
-            GdkInputSource devSrc = gdk_device_get_source(dev);
+    if ( !devices.empty() ) {
+        for ( std::vector< Glib::RefPtr<const Gdk::Device> >::const_iterator dev = devices.begin(); dev != devices.end(); ++dev ) {
+            Glib::ustring const devName = (*dev)->get_name();
+            Gdk::InputSource devSrc = (*dev)->get_source();
             
-            if ( devName
+            if ( !devName.empty()
                  && (avoidName != devName)
-                 && (devSrc != GDK_SOURCE_MOUSE) ) {
+                 && (devSrc != Gdk::SOURCE_MOUSE) ) {
 //                 g_message("Adding '%s' as [%d]", devName, devSrc);
 
                 // Set the initial tool for the device
                 switch ( devSrc ) {
-                    case GDK_SOURCE_PEN:
+                    case Gdk::SOURCE_PEN:
                         toolToUse[devName] = TOOLS_CALLIGRAPHIC;
                         break;
-                    case GDK_SOURCE_ERASER:
+                    case Gdk::SOURCE_ERASER:
                         toolToUse[devName] = TOOLS_ERASER;
                         break;
-                    case GDK_SOURCE_CURSOR:
+                    case Gdk::SOURCE_CURSOR:
                         toolToUse[devName] = TOOLS_SELECT;
                         break;
                     default:
@@ -651,10 +656,6 @@ static void init_extended()
             }
         }
     }
-
-#if GTK_CHECK_VERSION(3,0,0)
-    g_list_free(devices);
-#endif
 }
 
 
