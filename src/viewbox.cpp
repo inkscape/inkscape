@@ -14,9 +14,6 @@
 
 #include <2geom/transforms.h>
 
-#include "inkscape.h"
-#include "document.h"
-#include "util/units.h"
 #include "viewbox.h"
 #include "attributes.h"
 #include "enums.h"
@@ -164,21 +161,20 @@ void SPViewBox::set_preserveAspectRatio(const gchar* value) {
 }
 
 // Apply scaling from viewbox
-void SPViewBox::apply_viewbox(const Geom::Rect& in) {
+void SPViewBox::apply_viewbox(const Geom::Rect& in, double scale_none) {
 
     /* Determine actual viewbox in viewport coordinates */
+    // scale_none is the scale that would apply if the viewbox and page size are same size
+    // it is passed here because it is a double-precision variable, while 'in' is originally float
     double x = 0.0;
     double y = 0.0;
     double scale_x = in.width() / this->viewBox.width();
     double scale_y = in.height() / this->viewBox.height();
     double scale_uniform = 1.0; // used only if scaling is uniform
-    double scale_none = 1.0;    // used only if viewbox and page size are same size
 
     if (Geom::are_near(scale_x / scale_y, 1.0, Geom::EPSILON)) {
       // scaling is already uniform, reduce numerical error
       scale_uniform = (scale_x + scale_y)/2.0;
-      if (SP_ACTIVE_DOCUMENT)
-          scale_none = Inkscape::Util::Quantity::convert(1, SP_ACTIVE_DOCUMENT->getDisplayUnit(), "px");
       if (Geom::are_near(scale_uniform / scale_none, 1.0, Geom::EPSILON))
           scale_uniform = scale_none; // objects are same size, reduce numerical error
       scale_x = scale_uniform;
@@ -243,7 +239,7 @@ void SPViewBox::apply_viewbox(const Geom::Rect& in) {
     this->c2p = q * this->c2p;
 }
 
-SPItemCtx SPViewBox::get_rctx(const SPItemCtx* ictx) {
+SPItemCtx SPViewBox::get_rctx(const SPItemCtx* ictx, double scale_none) {
 
   /* Create copy of item context */
   SPItemCtx rctx = *ictx;
@@ -254,7 +250,7 @@ SPItemCtx SPViewBox::get_rctx(const SPItemCtx* ictx) {
 
   if (this->viewBox_set) {
     // Adjusts c2p for viewbox
-    apply_viewbox( rctx.viewport );
+    apply_viewbox( rctx.viewport, scale_none );
   }
 
   rctx.i2doc = this->c2p * rctx.i2doc;
