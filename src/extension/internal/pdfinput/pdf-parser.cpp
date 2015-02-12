@@ -2586,24 +2586,12 @@ void PdfParser::opShowSpaceText(Object args[], int /*numArgs*/)
   }
 }
 
-
-
-/*
- * The `POPPLER_NEW_GFXFONT' stuff is for the change to GfxFont's getNextChar() call.
- * Thanks to tsdgeos for the fix.
- * Miklos, does this look ok?
- */   
-
 void PdfParser::doShowText(GooString *s) {
   GfxFont *font;
   int wMode;
   double riseX, riseY;
   CharCode code;
-#ifdef POPPLER_NEW_GFXFONT
   Unicode *u = NULL;
-#else
-  Unicode u[8];
-#endif
   double x, y, dx, dy, tdx, tdy;
   double originX, originY, tOriginX, tOriginY;
   double oldCTM[6], newCTM[6];
@@ -2651,11 +2639,7 @@ void PdfParser::doShowText(GooString *s) {
     len = s->getLength();
     while (len > 0) {
       n = font->getNextChar(p, len, &code,
-#ifdef POPPLER_NEW_GFXFONT
 			    &u, &uLen,  /* TODO: This looks like a memory leak for u. */
-#else
-			    u, (int)(sizeof(u) / sizeof(Unicode)), &uLen,
-#endif
 			    &dx, &dy, &originX, &originY);
       dx = dx * state->getFontSize() + state->getCharSpace();
       if (n == 1 && *p == ' ') {
@@ -2708,11 +2692,7 @@ void PdfParser::doShowText(GooString *s) {
     len = s->getLength();
     while (len > 0) {
       n = font->getNextChar(p, len, &code,
-#ifdef POPPLER_NEW_GFXFONT
 			    &u, &uLen,  /* TODO: This looks like a memory leak for u. */
-#else
-			    u, (int)(sizeof(u) / sizeof(Unicode)), &uLen,
-#endif
 			    &dx, &dy, &originX, &originY);
       
       if (wMode) {

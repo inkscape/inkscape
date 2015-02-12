@@ -421,12 +421,12 @@ AC_ARG_ENABLE(poppler-cairo,
 	[enable_poppler_cairo=$enableval], [enable_poppler_cairo=yes])
 
 POPPLER_CFLAGS=""
-PKG_CHECK_MODULES(POPPLER, poppler >= 0.5.9, poppler=yes, poppler=no)
+PKG_CHECK_MODULES(POPPLER, poppler >= 0.8.3, poppler=yes, poppler=no)
 
 if test "x$poppler" = "xyes"; then
 	dnl Working libpoppler
 	dnl Have to test libpoppler-glib presence
-	PKG_CHECK_MODULES(POPPLER_GLIB, poppler-glib >= 0.5.9, poppler_glib=yes, poppler_glib=no)
+	PKG_CHECK_MODULES(POPPLER_GLIB, poppler-glib >= 0.8.3, poppler_glib=yes, poppler_glib=no)
 	if test "x$poppler_glib" = "xyes"; then
 		dnl Working libpoppler-glib found
 		dnl Check whether the Cairo SVG backend is available
@@ -438,7 +438,7 @@ if test "x$poppler" = "xyes"; then
 	if test "x$enable_poppler_cairo" = "xyes"; then
 		dnl Have to test libpoppler-cairo presence for PDF preview
 		dnl AC_CHECK_HEADER(Magick++.h, magick_ok=yes, magick_ok=no)
-		PKG_CHECK_MODULES(POPPLER_CAIRO, poppler-cairo >= 0.5.9, poppler_cairo=yes, poppler_cairo=no)
+		PKG_CHECK_MODULES(POPPLER_CAIRO, poppler-cairo >= 0.8.3, poppler_cairo=yes, poppler_cairo=no)
 		if test "x$poppler_glib" = "xyes" -a "x$poppler_cairo" = "xyes" -a \
 			"x$cairo_svg" = "xno"
 		then
@@ -459,11 +459,6 @@ if test "x$poppler_glib" = "xyes" -a "x$cairo_svg" = "xyes"; then
 fi
 AC_SUBST(POPPLER_CFLAGS)
 AC_SUBST(POPPLER_LIBS)
-
-PKG_CHECK_MODULES(POPPLER_GFXFONT, poppler >= 0.8.3, popplernew=yes, popplernew=no)
-if test "x$popplernew" = "xyes"; then
-	AC_DEFINE(POPPLER_NEW_GFXFONT, 1, [Use GfxFont from Poppler >= 0.8.3])
-fi
 
 PKG_CHECK_MODULES(POPPLER_NEWERRORAPI, poppler >= 0.20.0, popplernewerror=yes, popplernewerror=no)
 if test "x$popplernewerror" = "xyes"; then
