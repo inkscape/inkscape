@@ -13,6 +13,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <glib.h>
+
 class  SPDesktop;
 struct SPDesktopWidget;
 struct SPCanvasItem;

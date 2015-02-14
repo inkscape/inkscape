@@ -31,6 +31,7 @@ man_MANS = \
 
 EXTRA_DIST = \
 	acinclude.m4 \
+	autogen.sh   \
 	fix-roff-punct	\
 	intltool-extract.in	\
 	intltool-merge.in	\

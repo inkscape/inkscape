@@ -30,6 +30,7 @@
 #include "svg/stringstream.h"
 #include "svg/svg.h"
 #include "xml/repr.h"
+#include "util/units.h"
 
 #include "sp-factory.h"
 
@@ -298,7 +299,7 @@ void SPRoot::update(SPCtx *ctx, guint flags)
     SPItemCtx rctx = *ictx;
     rctx.viewport = Geom::Rect::from_xywh( this->x.computed, this->y.computed,
                                            this->width.computed, this->height.computed );
-    rctx = get_rctx( &rctx );
+    rctx = get_rctx( &rctx, Inkscape::Util::Quantity::convert(1, this->document->getDisplayUnit(), "px") );
 
     /* And invoke parent method */
     SPGroup::update((SPCtx *) &rctx, flags);

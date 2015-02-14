@@ -430,7 +430,7 @@ std::vector<TracingEngineResult> PotraceTracingEngine::traceSingle(GdkPixbuf * t
     if (!grayMap)
         return results;
 
-    long nodeCount;
+    long nodeCount = 0L;
     std::string d = grayMapToPath(grayMap, &nodeCount);
 
     grayMap->destroy(grayMap);
@@ -456,7 +456,7 @@ std::vector<TracingEngineResult> PotraceTracingEngine::traceGrayMap(GrayMap *gra
 
     brightnessFloor = 0.0; //important to set this
 
-    long nodeCount;
+    long nodeCount = 0L;
     std::string d = grayMapToPath(grayMap, &nodeCount);
 
     char const *style = "fill:#000000";
@@ -489,7 +489,7 @@ std::vector<TracingEngineResult> PotraceTracingEngine::traceBrightnessMulti(GdkP
               brightnessThreshold += delta) {
             GrayMap *grayMap = filter(*this, thePixbuf);
             if ( grayMap ) {
-                long nodeCount;
+                long nodeCount = 0L;
                 std::string d = grayMapToPath(grayMap, &nodeCount);
 
                 grayMap->destroy(grayMap);
@@ -558,7 +558,7 @@ std::vector<TracingEngineResult> PotraceTracingEngine::traceQuant(GdkPixbuf * th
                 }
 
                 //## Now we have a traceable graymap
-                long nodeCount;
+                long nodeCount = 0L;
                 std::string d = grayMapToPath(gm, &nodeCount);
 
                 if ( !d.empty() ) {

@@ -141,7 +141,8 @@ public:
 
     /** Composed array (for mesh gradients) */
     SPMeshNodeArray array;
-
+    SPMeshNodeArray array_smoothed; // Smoothed version of array
+    
     bool hasPatches() const;
 
 

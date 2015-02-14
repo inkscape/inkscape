@@ -547,6 +547,9 @@ CanvasXYGrid::readRepr()
         if (Geom::are_near(scale_x / scale_y, 1.0, Geom::EPSILON)) {
             // scaling is uniform, try to reduce numerical error
             scale_x = (scale_x + scale_y)/2.0;
+            double scale_none = Inkscape::Util::Quantity::convert(1, doc->getDisplayUnit(), "px");
+            if (Geom::are_near(scale_x / scale_none, 1.0, Geom::EPSILON))
+                scale_x = scale_none; // objects are same size, reduce numerical error
             scale_y = scale_x;
         }
     }

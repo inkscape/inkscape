@@ -1308,6 +1308,9 @@ void Wmf::common_dib_to_image(PWMF_CALLBACK_DATA d, const char *dib,
     int  dibparams = U_BI_UNKNOWN;  // type of image not yet determined
 
     tmp_image << "\n\t <image\n";
+    if (d->dc[d->level].clip_id){
+        tmp_image << "\tclip-path=\"url(#clipWmfPath" << d->dc[d->level].clip_id << ")\"\n";
+    }
     tmp_image << " y=\"" << dy << "\"\n x=\"" << dx <<"\"\n ";
 
     MEMPNG mempng; // PNG in memory comes back in this
@@ -1405,6 +1408,9 @@ void Wmf::common_bm16_to_image(PWMF_CALLBACK_DATA d, U_BITMAP16 Bm16, const char
     SVGOStringStream tmp_image;
 
     tmp_image << "\n\t <image\n";
+    if (d->dc[d->level].clip_id){
+        tmp_image << "\tclip-path=\"url(#clipWmfPath" << d->dc[d->level].clip_id << ")\"\n";
+    }
     tmp_image << " y=\"" << dy << "\"\n x=\"" << dx <<"\"\n ";
 
     MEMPNG mempng; // PNG in memory comes back in this
@@ -1752,13 +1758,15 @@ std::cout << "BEFORE DRAW"
         )
     ){
 //  std::cout << "PATH DRAW at TOP <<+++++++++++++++++++++++++++++++++++++" << std::endl;
-        d->outsvg += "   <path ";    // this is the ONLY place <path should be used!!!!
-        output_style(d);
-        d->outsvg += "\n\t";
-        d->outsvg += "\n\td=\"";      // this is the ONLY place d=" should be used!!!!
-        d->outsvg += d->path;
-        d->outsvg += " \" /> \n";
-        d->path = ""; //reset the path
+        if(!(d->path.empty())){
+            d->outsvg += "   <path ";    // this is the ONLY place <path should be used!!!!
+            output_style(d);
+            d->outsvg += "\n\t";
+            d->outsvg += "\n\td=\"";      // this is the ONLY place d=" should be used!!!!
+            d->outsvg += d->path;
+            d->outsvg += " \" /> \n";
+            d->path = ""; //reset the path
+        }
         // reset the flags
         d->mask = 0;
         d->drawtype = 0;
@@ -2600,9 +2608,9 @@ std::cout << "BEFORE DRAW"
                 if(status==-1){ // change of escapement, emit what we have and reset
                     TR_layout_analyze(d->tri);
                     if (d->dc[d->level].clip_id){
-                       SVGOStringStream tmp_clip;
-                       tmp_clip << "\n<g\n\tclip-path=\"url(#clipWmfPath" << d->dc[d->level].clip_id << ")\"\n>";
-                       d->outsvg += tmp_clip.str().c_str();
+                        SVGOStringStream tmp_clip;
+                        tmp_clip << "\n<g\n\tclip-path=\"url(#clipWmfPath" << d->dc[d->level].clip_id << ")\"\n>";
+                        d->outsvg += tmp_clip.str().c_str();
                     }
                     TR_layout_2_svg(d->tri);
                     ts << d->tri->out;
@@ -2610,7 +2618,7 @@ std::cout << "BEFORE DRAW"
                     d->tri = trinfo_clear(d->tri);
                     (void) trinfo_load_textrec(d->tri, &tsp, tsp.ori,TR_EMFBOT); // ignore return status, it must work
                     if (d->dc[d->level].clip_id){
-                       d->outsvg += "\n</g>\n";
+                        d->outsvg += "\n</g>\n";
                     }        
                 }
 
@@ -3113,7 +3121,7 @@ Wmf::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
 
     d.tri = trinfo_release_except_FC(d.tri);
 
-    setViewBoxIfMissing(doc);
+    // in earlier versions no viewbox was generated and a call to setViewBoxIfMissing() was needed here.
 
     return doc;
 }

@@ -1491,7 +1491,7 @@ void InkscapePreferences::initKeyboardShortcuts(Gtk::TreeModel::iterator iter_ui
 
     _kb_filelist.init( "/options/kbshortcuts/shortcutfile", &fileLabels[0], &fileNames[0], fileLabels.size(), fileNames[0]);
 
-    Glib::ustring tooltip(_("Select a file of predefined shortcuts to use. Any customized shortcuts you create will be added seperately to "));
+    Glib::ustring tooltip(_("Select a file of predefined shortcuts to use. Any customized shortcuts you create will be added separately to "));
     tooltip += Glib::ustring(IO::Resource::get_path(IO::Resource::USER, IO::Resource::KEYS, "default.xml"));
 
     _page_keyshortcuts.add_line( false, _("Shortcut file:"), _kb_filelist, "", tooltip.c_str(), false);

@@ -45,6 +45,18 @@
 // For color picking
 #include "sp-item.h"
 
+enum SPMeshSmooth {
+  SP_MESH_SMOOTH_NONE,
+  SP_MESH_SMOOTH_SMOOTH,
+  SP_MESH_SMOOTH_SMOOTH1,
+  SP_MESH_SMOOTH_SMOOTH2,
+  SP_MESH_SMOOTH_SMOOTH3,
+  SP_MESH_SMOOTH_SMOOTH4,
+  SP_MESH_SMOOTH_SMOOTH5,
+  SP_MESH_SMOOTH_SMOOTH6,
+  SP_MESH_SMOOTH_SMOOTH7
+};
+
 enum NodeType {
   MG_NODE_TYPE_UNKNOWN,
   MG_NODE_TYPE_CORNER,
@@ -148,6 +160,9 @@ public:
 
   SPMeshNodeArray() { built = false; mg = NULL; drag_valid = false; };
   SPMeshNodeArray( SPMeshGradient *mg );
+  SPMeshNodeArray( const SPMeshNodeArray& rhs );
+  SPMeshNodeArray& operator=(const SPMeshNodeArray& rhs);
+
   ~SPMeshNodeArray() { clear(); };
   bool built;
 
@@ -156,6 +171,10 @@ public:
   void create( SPMeshGradient *mg, SPItem *item, Geom::OptRect bbox );
   void clear();
   void print();
+
+  // Fill 'smooth' with a smoothed version by subdividing each patch.
+  void smooth( SPMeshNodeArray* smooth, SPMeshSmooth type);
+  void smooth2( SPMeshNodeArray* smooth, SPMeshSmooth type);
 
   // Get size of patch
   unsigned int patch_rows();

@@ -34,6 +34,10 @@ class GimpXCFError(Exception): pass
 
 class GimpXCFExpectedIOError(GimpXCFError): pass
 
+class GimpXCFInkscapeNotInstalled(GimpXCFError):
+    def __init__(self):
+        inkex.errormsg(_('Inkscape must be installed and set in your path variable.'))
+
 class GimpXCFGimpNotInstalled(GimpXCFError):
     def __init__(self):
         inkex.errormsg(_('Gimp must be installed and set in your path variable.'))
@@ -166,7 +170,11 @@ class MyEffect(inkex.Effect):
                 f.close()
                 err.close()
                 stdin.close()
-                
+
+                if return_code != 0:
+                    self.clear_tmp()
+                    raise GimpXCFInkscapeNotInstalled
+
                 if os.name == 'nt':
                     filename = filename.replace("\\", "/")
                 pngs.append(filename)

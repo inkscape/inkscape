@@ -167,13 +167,15 @@ gboolean gr_vector_list(GtkWidget *combo_box, SPDesktop *desktop, bool selection
         if (gr_selected == NULL) {
             gtk_list_store_append(store, &iter);
             gtk_list_store_set(store, &iter, 0, _("No gradient"), 1, NULL, 2, NULL, -1);
-            sensitive = FALSE;
+            // Dead assignment: Value stored to 'sensitive' is never read
+            //sensitive = FALSE;
         }
 
         if (gr_multi) {
             gtk_list_store_append(store, &iter);
             gtk_list_store_set(store, &iter, 0, _("Multiple gradients"), 1, NULL, 2, NULL, -1);
-            sensitive = FALSE;
+            // Dead assignment: Value stored to 'sensitive' is never read
+            //sensitive = FALSE;
         }
 
         guint idx = 0;
@@ -786,7 +788,8 @@ static gboolean update_stop_list( GtkWidget *stop_combo, SPGradient *gradient, S
 
                 gtk_list_store_append(store, &iter);
                 gtk_list_store_set(store, &iter, 0, label.c_str(), 1, pb, 2, stop, -1);
-                sensitive = FALSE;
+                // Dead assignment: Value stored to 'sensitive' is never read
+                //sensitive = FALSE;
             }
         }
 

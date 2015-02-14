@@ -703,6 +703,8 @@
     <copy todir="${dist}" file="${devlibs}/bin/libxml2-2.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libxslt-1.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libexslt-0.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/librsvg-2-2.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libcroco-0.6-3.dll"/>
     <!-- <copy todir="${dist}" file="${devlibs}/bin/libexpat-1.dll"/> -->
 
     <copy todir="${dist}" file="${devlibs}/bin/libwpg-0.2.dll"/>

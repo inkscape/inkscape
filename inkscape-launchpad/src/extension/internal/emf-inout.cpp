@@ -45,8 +45,8 @@
 #include "display/drawing-item.h"
 #include "clear-n_.h"
 #include "svg/svg.h"
-#include "util/units.h" // even though it is included indirectly by wmf-inout.h
-#include "inkscape.h" // even though it is included indirectly by wmf-inout.h
+#include "util/units.h" // even though it is included indirectly by emf-inout.h
+#include "inkscape.h"   // even though it is included indirectly by emf-inout.h
 
 #include "emf-print.h"
 #include "emf-inout.h"
@@ -1515,6 +1515,9 @@ void Emf::common_image_extraction(PEMF_CALLBACK_DATA d, void *pEmr,
     int  dibparams = U_BI_UNKNOWN;  // type of image not yet determined
 
     tmp_image << "\n\t <image\n";
+    if (d->dc[d->level].clip_id){
+        tmp_image << "\tclip-path=\"url(#clipEmfPath" << d->dc[d->level].clip_id << ")\"\n";
+    }
     tmp_image << " y=\"" << dy << "\"\n x=\"" << dx <<"\"\n ";
 
     MEMPNG mempng; // PNG in memory comes back in this
@@ -1727,21 +1730,23 @@ std::cout << "BEFORE DRAW"
         )
     ){
 // std::cout << "PATH DRAW at TOP path" << *(d->path) << std::endl;
-        d->outsvg += "   <path ";     // this is the ONLY place <path should be used!!!  One exception, gradientfill.
-        if(d->drawtype){                 // explicit draw type EMR record
-            output_style(d, d->drawtype);
+        if(!(d->path.empty())){
+            d->outsvg += "   <path ";     // this is the ONLY place <path should be used!!!  One exception, gradientfill.
+            if(d->drawtype){                 // explicit draw type EMR record
+                output_style(d, d->drawtype);
+            }
+            else if(d->mask & U_DRAW_CLOSED){              // implicit draw type
+                output_style(d, U_EMR_STROKEANDFILLPATH);
+            }
+            else {
+                output_style(d, U_EMR_STROKEPATH);
+            }
+            d->outsvg += "\n\t";
+            d->outsvg += "\n\td=\"";      // this is the ONLY place d=" should be used!!!!  One exception, gradientfill.
+            d->outsvg += d->path;
+            d->outsvg += " \" /> \n";
+            d->path = "";
         }
-        else if(d->mask & U_DRAW_CLOSED){              // implicit draw type
-            output_style(d, U_EMR_STROKEANDFILLPATH);
-        }
-        else {
-            output_style(d, U_EMR_STROKEPATH);
-        }
-        d->outsvg += "\n\t";
-        d->outsvg += "\n\td=\"";      // this is the ONLY place d=" should be used!!!!  One exception, gradientfill.
-        d->outsvg += d->path;
-        d->outsvg += " \" /> \n";
-        d->path = "";
         // reset the flags
         d->mask = 0;
         d->drawtype = 0;
@@ -3418,7 +3423,11 @@ std::cout << "BEFORE DRAW"
                      tmp_rectangle << "\n\tz\"";
                      tmp_rectangle << "\n\tstyle=\"stroke:none;fill:url(#";
                      tmp_rectangle << d->gradients.strings[fill_idx];
-                     tmp_rectangle << ");\"\n/>\n";
+                     tmp_rectangle << ");\"\n";
+                     if (d->dc[d->level].clip_id){
+                        tmp_rectangle << "\tclip-path=\"url(#clipEmfPath" << d->dc[d->level].clip_id << ")\"\n";
+                     }
+                     tmp_rectangle << "/>\n";
                  }
                  d->outsvg += tmp_rectangle.str().c_str();
             }
@@ -3538,7 +3547,7 @@ Emf::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
 
     d.tri = trinfo_release_except_FC(d.tri);
 
-    setViewBoxIfMissing(doc);
+    // in earlier versions no viewbox was generated and a call to setViewBoxIfMissing() was needed here.
 
     return doc;
 }

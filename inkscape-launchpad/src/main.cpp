@@ -1722,15 +1722,11 @@ static int do_export_ps_pdf(SPDocument* doc, gchar const* uri, char const* mime)
     }
 
     if (sp_export_text_to_path) {
-        (*i)->set_param_bool("textToPath", TRUE);
+        (*i)->set_param_optiongroup("textToPath", "paths");
+    } else if (sp_export_latex) {
+        (*i)->set_param_optiongroup("textToPath", "LaTeX");
     } else {
-        (*i)->set_param_bool("textToPath", FALSE);
-    }
-
-    if (sp_export_latex) {
-        (*i)->set_param_bool("textToLaTeX", TRUE);
-    } else {
-        (*i)->set_param_bool("textToLaTeX", FALSE);
+        (*i)->set_param_optiongroup("textToPath", "embed");
     }
 
     if (sp_export_ignore_filters) {
