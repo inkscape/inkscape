@@ -39,21 +39,20 @@ struct GdkDeviceFake {
 
 
 static void createFakeList();
-GdkDeviceFake fakeout[5];
-static GList* fakeList = 0;
+static std::vector<GdkDeviceFake> fakeList;
 
 static bool isValidDevice(Glib::RefPtr<Gdk::Device> device)
 {
     bool valid = true;
-    for (size_t i = 0; (i < G_N_ELEMENTS(fakeout)) && valid; i++) {
-	const bool name_matches     = (device->get_name()   == fakeout[i].name);
-	const bool source_matches   = (device->get_source() == fakeout[i].source);
-	const bool mode_matches     = (device->get_mode()   == fakeout[i].mode);
-	const bool num_axes_matches = (device->get_n_axes() == fakeout[i].num_axes);
+    for (std::vector<GdkDeviceFake>::iterator it = fakeList.begin(); it != fakeList.end() && valid; ++it) {
+	const bool name_matches     = (device->get_name()   == (*it).name);
+	const bool source_matches   = (device->get_source() == (*it).source);
+	const bool mode_matches     = (device->get_mode()   == (*it).mode);
+	const bool num_axes_matches = (device->get_n_axes() == (*it).num_axes);
 #if WITH_GTKMM_3_0
-	const bool num_keys_matches = (device->get_n_keys() == fakeout[i].num_keys);
+	const bool num_keys_matches = (device->get_n_keys() == (*it).num_keys);
 #else
-	const bool num_keys_matches = (gdk_device_get_n_keys(device->gobj()) == fakeout[i].num_keys);
+	const bool num_keys_matches = (gdk_device_get_n_keys(device->gobj()) == (*it).num_keys);
 #endif
 
 	if (name_matches && source_matches && mode_matches 
@@ -336,7 +335,7 @@ DeviceManagerImpl::DeviceManagerImpl() :
     std::vector< Glib::RefPtr<Gdk::Device> > devList = display->list_devices();
 #endif
 
-    if ( !fakeList ) {
+    if (fakeList.empty()) {
         createFakeList();
     }
     //devList = fakeList;
@@ -638,34 +637,35 @@ DeviceManager& DeviceManager::getManager() {
 
 
 static void createFakeList() {
-    if ( !fakeList ) {
-        fakeout[0].name = g_strdup("pad");
-        fakeout[0].source = Gdk::SOURCE_PEN;
-        fakeout[0].mode   = Gdk::MODE_SCREEN;
-        fakeout[0].has_cursor = TRUE;
-        fakeout[0].num_axes = 6;
-        fakeout[0].num_keys = 8;
+    if (fakeList.empty()) {
+        fakeList.resize(5);
+        fakeList[0].name       = "pad";
+        fakeList[0].source     = Gdk::SOURCE_PEN;
+        fakeList[0].mode       = Gdk::MODE_SCREEN;
+        fakeList[0].has_cursor = true;
+        fakeList[0].num_axes   = 6;
+        fakeList[0].num_keys   = 8;
 
-        fakeout[1].name = g_strdup("eraser");
-        fakeout[1].source = Gdk::SOURCE_ERASER;
-        fakeout[1].mode   = Gdk::MODE_SCREEN;
-        fakeout[1].has_cursor = TRUE;
-        fakeout[1].num_axes = 6;
-        fakeout[1].num_keys = 7;
+        fakeList[1].name       = "eraser";
+        fakeList[1].source     = Gdk::SOURCE_ERASER;
+        fakeList[1].mode       = Gdk::MODE_SCREEN;
+        fakeList[1].has_cursor = true;
+        fakeList[1].num_axes   = 6;
+        fakeList[1].num_keys   = 7;
 
-        fakeout[2].name = g_strdup("cursor");
-        fakeout[2].source = Gdk::SOURCE_CURSOR;
-        fakeout[2].mode   = Gdk::MODE_SCREEN;
-        fakeout[2].has_cursor = TRUE;
-        fakeout[2].num_axes = 6;
-        fakeout[2].num_keys = 7;
+        fakeList[2].name       = "cursor";
+        fakeList[2].source     = Gdk::SOURCE_CURSOR;
+        fakeList[2].mode       = Gdk::MODE_SCREEN;
+        fakeList[2].has_cursor = true;
+        fakeList[2].num_axes   = 6;
+        fakeList[2].num_keys   = 7;
 
-        fakeout[3].name = g_strdup("stylus");
-        fakeout[3].source = Gdk::SOURCE_PEN;
-        fakeout[3].mode   = Gdk::MODE_SCREEN;
-        fakeout[3].has_cursor = TRUE;
-        fakeout[3].num_axes = 6;
-        fakeout[3].num_keys = 7;
+        fakeList[3].name       = "stylus";
+        fakeList[3].source     = Gdk::SOURCE_PEN;
+        fakeList[3].mode       = Gdk::MODE_SCREEN;
+        fakeList[3].has_cursor = true;
+        fakeList[3].num_axes   = 6;
+        fakeList[3].num_keys   = 7;
 
         // try to find the first *real* core pointer
         Glib::RefPtr<Gdk::Display> display = Gdk::Display::get_default();
@@ -686,27 +686,23 @@ static void createFakeList() {
 
         if (dev != devList.end()) {
             Glib::RefPtr<Gdk::Device> device = *dev;
-            fakeout[4].name       = device->get_name();
-            fakeout[4].source     = device->get_source();
-            fakeout[4].mode       = device->get_mode();
-            fakeout[4].has_cursor = device->get_has_cursor();
-            fakeout[4].num_axes   = device->get_n_axes();
+            fakeList[4].name       = device->get_name();
+            fakeList[4].source     = device->get_source();
+            fakeList[4].mode       = device->get_mode();
+            fakeList[4].has_cursor = device->get_has_cursor();
+            fakeList[4].num_axes   = device->get_n_axes();
 #if WITH_GTKMM_3_0
-            fakeout[4].num_keys   = device->get_n_keys();
+            fakeList[4].num_keys   = device->get_n_keys();
 #else
-            fakeout[4].num_keys   = gdk_device_get_n_keys(device->gobj());
+            fakeList[4].num_keys   = gdk_device_get_n_keys(device->gobj());
 #endif
         } else {
-            fakeout[4].name       = "Core Pointer";
-            fakeout[4].source     = Gdk::SOURCE_MOUSE;
-            fakeout[4].mode       = Gdk::MODE_SCREEN;
-            fakeout[4].has_cursor = true;
-            fakeout[4].num_axes   = 2;
-            fakeout[4].num_keys   = 0;
-        }
-
-        for ( guint pos = 0; pos < G_N_ELEMENTS(fakeout); pos++) {
-            fakeList = g_list_append(fakeList, &(fakeout[pos]));
+            fakeList[4].name       = "Core Pointer";
+            fakeList[4].source     = Gdk::SOURCE_MOUSE;
+            fakeList[4].mode       = Gdk::MODE_SCREEN;
+            fakeList[4].has_cursor = true;
+            fakeList[4].num_axes   = 2;
+            fakeList[4].num_keys   = 0;
         }
     }
 }
