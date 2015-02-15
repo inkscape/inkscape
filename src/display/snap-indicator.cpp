@@ -256,7 +256,7 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
                                         "shape", SP_KNOT_SHAPE_CROSS,
                                         NULL );
 
-        const int timeout_val = 1200; // TODO add preference for snap indicator timeout?
+        const int timeout_val = 4000;
 
         SP_CTRL(canvasitem)->moveto(p.getPoint());
         _snaptarget = _desktop->add_temporary_canvasitem(canvasitem, timeout_val);
