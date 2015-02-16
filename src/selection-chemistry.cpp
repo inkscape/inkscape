@@ -1321,6 +1321,26 @@ void sp_selection_paste_size_separately(SPDesktop *desktop, bool apply_x, bool a
     }
 }
 
+/**
+ * Ensures that the clones of objects are not modified when moving objects between layers.
+ * Calls the same function as ungroup
+ */
+void sp_selection_change_layer_maintain_clones(GSList const *items,SPObject *where)
+{
+    for (const GSList *i = items; i != NULL; i = i->next) {
+        SPItem *item = dynamic_cast<SPItem *>(SP_OBJECT(i->data));
+        if (item) {
+            SPItem *oldparent = dynamic_cast<SPItem *>(item->parent);
+            SPItem *newparent = dynamic_cast<SPItem *>(where);
+            sp_item_group_ungroup_handle_clones(item->document->getRoot(),
+                    item,
+                    (oldparent->i2doc_affine())
+                    *((newparent->i2doc_affine()).inverse()));
+        }
+    }
+}
+
+
 void sp_selection_to_next_layer(SPDesktop *dt, bool suppressDone)
 {
     Inkscape::Selection *selection = dt->getSelection();
@@ -1336,6 +1356,7 @@ void sp_selection_to_next_layer(SPDesktop *dt, bool suppressDone)
     bool no_more = false; // Set to true, if no more layers above
     SPObject *next=Inkscape::next_layer(dt->currentRoot(), dt->currentLayer());
     if (next) {
+        sp_selection_change_layer_maintain_clones(items,next);
         GSList *temp_clip = NULL;
         sp_selection_copy_impl(items, &temp_clip, dt->doc()->getReprDoc());
         sp_selection_delete_impl(items, false, false);
@@ -1381,6 +1402,7 @@ void sp_selection_to_prev_layer(SPDesktop *dt, bool suppressDone)
     bool no_more = false; // Set to true, if no more layers below
     SPObject *next=Inkscape::previous_layer(dt->currentRoot(), dt->currentLayer());
     if (next) {
+        sp_selection_change_layer_maintain_clones(items,next);
         GSList *temp_clip = NULL;
         sp_selection_copy_impl(items, &temp_clip, dt->doc()->getReprDoc()); // we're in the same doc, so no need to copy defs
         sp_selection_delete_impl(items, false, false);
@@ -1424,6 +1446,7 @@ void sp_selection_to_layer(SPDesktop *dt, SPObject *moveto, bool suppressDone)
     GSList const *items = g_slist_copy(const_cast<GSList *>(selection->itemList()));
 
     if (moveto) {
+        sp_selection_change_layer_maintain_clones(items,moveto);
         GSList *temp_clip = NULL;
         sp_selection_copy_impl(items, &temp_clip, dt->doc()->getReprDoc()); // we're in the same doc, so no need to copy defs
         sp_selection_delete_impl(items, false, false);

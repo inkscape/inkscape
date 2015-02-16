@@ -399,6 +399,26 @@ void SPGroup::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape:
     }
 }
 
+void sp_item_group_ungroup_handle_clones(SPGroup *group,SPItem *parent, Geom::Affine const g)
+{
+    for (SPObject *child = group->firstChild() ; child; child = child->getNext() ) {
+        SPItem *citem = dynamic_cast<SPItem *>(child);
+        if (citem) {
+            SPUse *useitem = dynamic_cast<SPUse *>(citem);
+            if (useitem && useitem->get_original() == parent) {
+                Geom::Affine ctrans;
+                ctrans = g.inverse() * citem->transform;
+                gchar *affinestr = sp_svg_transform_write(ctrans);
+                citem->setAttribute("transform", affinestr);
+                g_free(affinestr);
+            }
+            SPGroup *groupitem = dynamic_cast<SPGroup *>(citem);
+            if (groupitem) {
+                sp_item_group_ungroup_handle_clones(groupitem,parent,g);
+            }
+        }
+    }
+}
 
 void
 sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
@@ -435,8 +455,14 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
     /* Step 1 - generate lists of children objects */
     GSList *items = NULL;
     GSList *objects = NULL;
-    for (SPObject *child = group->firstChild() ; child; child = child->getNext() ) {
+    Geom::Affine const g(group->transform);
 
+    for (SPObject *child = group->firstChild() ; child; child = child->getNext() )
+        if (SPItem *citem = dynamic_cast<SPItem *>(child))
+            sp_item_group_ungroup_handle_clones(root,citem,g);
+
+
+    for (SPObject *child = group->firstChild() ; child; child = child->getNext() ) {
         SPItem *citem = dynamic_cast<SPItem *>(child);
         if (citem) {
             /* Merging of style */
@@ -472,13 +498,6 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
 
             // Merging transform
             Geom::Affine ctrans;
-            Geom::Affine const g(group->transform);
-            SPUse *useitem = dynamic_cast<SPUse *>(citem);
-            if (useitem && useitem->get_original() &&
-                useitem->get_original()->parent == dynamic_cast<SPObject *>(group)) {
-                // make sure a clone's effective transform is the same as was under group
-                ctrans = g.inverse() * citem->transform * g;
-            } else {
                 // We should not apply the group's transformation to both a linked offset AND to its source
                 if (dynamic_cast<SPOffset *>(citem)) { // Do we have an offset at hand (whether it's dynamic or linked)?
                     SPItem *source = sp_offset_get_source(dynamic_cast<SPOffset *>(citem));
@@ -497,7 +516,6 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
                 } else {
                     ctrans = citem->transform * g;
                 }
-            }
 
             // FIXME: constructing a transform that would fully preserve the appearance of a
             // textpath if it is ungrouped with its path seems to be impossible in general

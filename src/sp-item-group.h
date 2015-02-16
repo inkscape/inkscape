@@ -95,6 +95,15 @@ public:
     virtual void update_patheffect(bool write);
 };
 
+/**
+ * finds clones of a child of the group going out of the group; and inverse the group transform on its clones
+ * Also called when moving objects between different layers
+ * @param group current group
+ * @param parent original parent
+ * @param g transform
+ */
+void sp_item_group_ungroup_handle_clones(SPGroup *group,SPItem *parent, Geom::Affine const g);
+
 void sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done = true);
 
 
