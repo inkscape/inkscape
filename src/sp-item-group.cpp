@@ -727,21 +727,16 @@ void SPGroup::scaleChildItemsRec(Geom::Scale const &sc, Geom::Point const &p, bo
                             subItem = dynamic_cast<SPItem *>(item->clip_ref->getObject()->firstChild());
                         }
                         if (subItem != NULL) {
-                            Geom::Affine tdoc2dt = Geom::Scale(1, -1) * Geom::Translate(p); // re-create doc2dt()
-                            Geom::Affine ti2doc = item->i2doc_affine();
-                            subItem->set_i2d_affine(ti2doc * sc * ti2doc.inverse() * tdoc2dt);
-                            subItem->doWriteTransform(subItem->getRepr(), subItem->transform, NULL, true);
+                            subItem->doWriteTransform(subItem->getRepr(), subItem->transform*sc, NULL, true);
                         }
                         subItem = NULL;
                         if (item->mask_ref->getObject()) {
                             subItem = dynamic_cast<SPItem *>(item->mask_ref->getObject()->firstChild());
                         }
                         if (subItem != NULL) {
-                            Geom::Affine tdoc2dt = Geom::Scale(1, -1) * Geom::Translate(p); // re-create doc2dt()
-                            Geom::Affine ti2doc = item->i2doc_affine();
-                            subItem->set_i2d_affine(ti2doc * sc * ti2doc.inverse() * tdoc2dt);
-                            subItem->doWriteTransform(item->getRepr(), item->transform, NULL, true);
+                            subItem->doWriteTransform(subItem->getRepr(), subItem->transform*sc, NULL, true);
                         }
+                        item->doWriteTransform(item->getRepr(), sc.inverse()*item->transform*sc, NULL, true);
                         group->scaleChildItemsRec(sc, p, false);
                     }
                 } else {
@@ -795,8 +790,7 @@ void SPGroup::scaleChildItemsRec(Geom::Scale const &sc, Geom::Point const &p, bo
                             Geom::Affine move = final.inverse() * item->transform * final;
                             item->doWriteTransform(item->getRepr(), move, &move, true);
                         } else {
-                            item->set_i2d_affine(item->i2dt_affine() * final);
-                            item->doWriteTransform(item->getRepr(), item->transform, NULL, true);
+                            item->doWriteTransform(item->getRepr(), item->transform*sc, NULL, true);
                         }
                         
                         if (conn_type != NULL) {
