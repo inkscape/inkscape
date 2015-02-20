@@ -38,6 +38,8 @@ public:
 
    attindex.html lacks attributeName, begin, additive, font, marker;
    I've added these manually.
+
+   SVG 2: white-space, shape-inside, shape-outside, shape-padding, shape-margin
 */
 struct {char const *attr; bool supported;} const all_attrs[] = {
     {"attributeName", true},
@@ -163,7 +165,7 @@ struct {char const *attr; bool supported;} const all_attrs[] = {
     {"keySplines", true},
     {"keyTimes", true},
     {"lang", true},
-    {"lengthAdjust", false},
+    {"lengthAdjust", true},
     {"letter-spacing", true},
     {"lighting-color", true},
     {"limitingConeAngle", true},
@@ -246,6 +248,10 @@ struct {char const *attr; bool supported;} const all_attrs[] = {
     {"ry", true},
     {"scale", true},
     {"seed", true},
+    {"shape-inside", true},
+    {"shape-margin", true},
+    {"shape-outside", true},
+    {"shape-padding", true},
     {"shape-rendering", true},
     {"slope", true},
     {"spacing", false},
@@ -285,7 +291,7 @@ struct {char const *attr; bool supported;} const all_attrs[] = {
     {"text-indent", true},
     {"text-rendering", true},
     {"text-transform", true},
-    {"textLength", false},
+    {"textLength", true},
     {"title", false},
     {"to", true},
     {"transform", true},
@@ -310,6 +316,7 @@ struct {char const *attr; bool supported;} const all_attrs[] = {
     {"viewBox", true},
     {"viewTarget", false},
     {"visibility", true},
+    {"white-space", true},
     {"width", true},
     {"widths", true},
     {"word-spacing", true},
