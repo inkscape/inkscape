@@ -1815,7 +1815,7 @@ void ContextMenu::SelectSameStrokeColor(void)
 
 void ContextMenu::SelectSameStrokeStyle(void)
 {
-    sp_select_same_stroke_style(_desktop);
+    sp_select_same_fill_stroke_style(_desktop, false, false, true);
 }
 
 void ContextMenu::SelectSameObjectType(void)
