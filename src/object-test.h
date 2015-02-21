@@ -178,7 +178,7 @@ public:
         Inkscape::XML::Document *xml_doc = node->document();
 
         TS_TRACE("Benchmarking groups...");
-        const size_t num_elements = 2000;
+        const size_t num_elements = 10000;
         
         Inkscape::XML::Node *new_group = xml_doc->createElement("svg:g");
         Inkscape::GC::release(new_group);

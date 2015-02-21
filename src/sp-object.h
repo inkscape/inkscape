@@ -157,7 +157,7 @@ SPObject *sp_object_unref(SPObject *object, SPObject *owner=NULL);
  * \pre object points to real object
  * @todo need to move this to be a member of SPObject.
  */
-SPObject *sp_object_href(SPObject *object, void* owner);
+SPObject *sp_object_href(SPObject *object, SPObject* owner);
 
 /**
  * Decrease weak refcount.
@@ -169,7 +169,7 @@ SPObject *sp_object_href(SPObject *object, void* owner);
  * \pre object points to real object and hrefcount>0
  * @todo need to move this to be a member of SPObject.
  */
-SPObject *sp_object_hunref(SPObject *object, void* owner);
+SPObject *sp_object_hunref(SPObject *object, SPObject* owner);
 
 /**
  * SPObject is an abstract base class of all of the document nodes at the
@@ -218,6 +218,7 @@ private:
     Inkscape::XML::Node *repr; /* Our xml representation */
 public:
     int refCount;
+    std::list<SPObject*> hrefList;
 
     /**
      * Returns the objects current ID string.

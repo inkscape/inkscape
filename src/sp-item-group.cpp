@@ -399,10 +399,10 @@ void SPGroup::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape:
     }
 }
 
-void sp_item_group_ungroup_handle_clones(SPGroup *group,SPItem *parent, Geom::Affine const g)
+void sp_item_group_ungroup_handle_clones(SPItem *parent, Geom::Affine const g)
 {
-    for (SPObject *child = group->firstChild() ; child; child = child->getNext() ) {
-        SPItem *citem = dynamic_cast<SPItem *>(child);
+    for(std::list<SPObject*>::const_iterator refd=parent->hrefList.begin();refd!=parent->hrefList.end();refd++){
+        SPItem *citem = dynamic_cast<SPItem *>(*refd);
         if (citem) {
             SPUse *useitem = dynamic_cast<SPUse *>(citem);
             if (useitem && useitem->get_original() == parent) {
@@ -411,10 +411,6 @@ void sp_item_group_ungroup_handle_clones(SPGroup *group,SPItem *parent, Geom::Af
                 gchar *affinestr = sp_svg_transform_write(ctrans);
                 citem->setAttribute("transform", affinestr);
                 g_free(affinestr);
-            }
-            SPGroup *groupitem = dynamic_cast<SPGroup *>(citem);
-            if (groupitem) {
-                sp_item_group_ungroup_handle_clones(groupitem,parent,g);
             }
         }
     }
@@ -459,7 +455,7 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
 
     for (SPObject *child = group->firstChild() ; child; child = child->getNext() )
         if (SPItem *citem = dynamic_cast<SPItem *>(child))
-            sp_item_group_ungroup_handle_clones(root,citem,g);
+            sp_item_group_ungroup_handle_clones(citem,g);
 
 
     for (SPObject *child = group->firstChild() ; child; child = child->getNext() ) {

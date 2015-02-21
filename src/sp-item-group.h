@@ -102,7 +102,7 @@ public:
  * @param parent original parent
  * @param g transform
  */
-void sp_item_group_ungroup_handle_clones(SPGroup *group,SPItem *parent, Geom::Affine const g);
+void sp_item_group_ungroup_handle_clones(SPItem *parent, Geom::Affine const g);
 
 void sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done = true);
 

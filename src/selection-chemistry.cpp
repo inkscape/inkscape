@@ -1332,8 +1332,7 @@ void sp_selection_change_layer_maintain_clones(GSList const *items,SPObject *whe
         if (item) {
             SPItem *oldparent = dynamic_cast<SPItem *>(item->parent);
             SPItem *newparent = dynamic_cast<SPItem *>(where);
-            sp_item_group_ungroup_handle_clones(item->document->getRoot(),
-                    item,
+            sp_item_group_ungroup_handle_clones(item,
                     (oldparent->i2doc_affine())
                     *((newparent->i2doc_affine()).inverse()));
         }
