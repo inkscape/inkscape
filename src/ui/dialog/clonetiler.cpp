@@ -2563,7 +2563,9 @@ void CloneTiler::clonetiler_apply(GtkWidget */*widget*/, GtkWidget *dlg)
                     }
                 }
                 if (pick_to_size) {
-                    t = Geom::Translate(-center[Geom::X], -center[Geom::Y]) * Geom::Scale (val, val) * Geom::Translate(center[Geom::X], center[Geom::Y]) * t;
+                    t = parent_transform * Geom::Translate(-center[Geom::X], -center[Geom::Y]) 
+                    * Geom::Scale (val, val) * Geom::Translate(center[Geom::X], center[Geom::Y]) 
+                    * parent_transform.inverse() * t;
                 }
                 if (pick_to_opacity) {
                     opacity *= val;
