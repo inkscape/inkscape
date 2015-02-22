@@ -1031,7 +1031,7 @@ objects_query_fontnumbers (GSList *objects, SPStyle *style_res)
                 letterspacing_normal = true;
             }
         } else {
-            letterspacing += style->letter_spacing.computed; /// \todo FIXME: we assume non-% units here
+            letterspacing += style->letter_spacing.computed * Geom::Affine(item->i2dt_affine()).descrim(); /// \todo FIXME: we assume non-% units here
             letterspacing_normal = false;
         }
 
@@ -1040,7 +1040,7 @@ objects_query_fontnumbers (GSList *objects, SPStyle *style_res)
                 wordspacing_normal = true;
             }
         } else {
-            wordspacing += style->word_spacing.computed; /// \todo FIXME: we assume non-% units here
+            wordspacing += style->word_spacing.computed * Geom::Affine(item->i2dt_affine()).descrim(); /// \todo FIXME: we assume non-% units here
             wordspacing_normal = false;
         }
 
