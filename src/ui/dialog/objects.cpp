@@ -231,15 +231,13 @@ public:
 /**
  * Stylizes a button using the given icon name and tooltip
  */
-void ObjectsPanel::_styleButton( Gtk::Button& btn, char const* iconName, char const* tooltip )
+void ObjectsPanel::_styleButton(Gtk::Button& btn, char const* iconName, char const* tooltip)
 {
     GtkWidget *child = sp_icon_new( Inkscape::ICON_SIZE_SMALL_TOOLBAR, iconName );
     gtk_widget_show( child );
     btn.add( *Gtk::manage(Glib::wrap(child)) );
     btn.set_relief(Gtk::RELIEF_NONE);
-    
     btn.set_tooltip_text (tooltip);
-
 }
 
 /**
@@ -1799,29 +1797,14 @@ ObjectsPanel::ObjectsPanel() :
 
     //Add object/layer
     Gtk::Button* btn = Gtk::manage( new Gtk::Button() );
-    btn->set_tooltip_text(_("Add layer..."));
-#if GTK_CHECK_VERSION(3,10,0)
-    btn->set_image_from_icon_name(INKSCAPE_ICON("list-add"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
-#else
-    Gtk::Image *image_add = Gtk::manage(new Gtk::Image());
-    image_add->set_from_icon_name(INKSCAPE_ICON("list-add"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
-    btn->set_image(*image_add);
-#endif    
+    _styleButton(*btn, INKSCAPE_ICON("list-add"), _("Add layer..."));
     btn->set_relief(Gtk::RELIEF_NONE);
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &ObjectsPanel::_takeAction), (int)BUTTON_NEW) );
     _buttonsSecondary.pack_start(*btn, Gtk::PACK_SHRINK);
-    
 
     //Remove object
     btn = Gtk::manage( new Gtk::Button() );
-    btn->set_tooltip_text(_("Remove object"));
-#if GTK_CHECK_VERSION(3,10,0)
-    btn->set_image_from_icon_name(INKSCAPE_ICON("list-remove"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
-#else
-    Gtk::Image *image_remove = Gtk::manage(new Gtk::Image());
-    image_remove->set_from_icon_name(INKSCAPE_ICON("list-remove"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
-    btn->set_image(*image_remove);
-#endif
+    _styleButton(*btn, INKSCAPE_ICON("list-remove"), _("Remove object"));
     btn->set_relief(Gtk::RELIEF_NONE);
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &ObjectsPanel::_takeAction), (int)BUTTON_DELETE) );
     _watching.push_back( btn );
@@ -1829,14 +1812,7 @@ ObjectsPanel::ObjectsPanel() :
 
     //Move to bottom
     btn = Gtk::manage( new Gtk::Button() );
-    btn->set_tooltip_text(_("Move To Bottom"));
-#if GTK_CHECK_VERSION(3,10,0)
-    btn->set_image_from_icon_name(INKSCAPE_ICON("go-bottom"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
-#else
-    image_remove = Gtk::manage(new Gtk::Image());
-    image_remove->set_from_icon_name(INKSCAPE_ICON("go-bottom"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
-    btn->set_image(*image_remove);
-#endif
+    _styleButton(*btn, INKSCAPE_ICON("go-bottom"), _("Move To Bottom"));
     btn->set_relief(Gtk::RELIEF_NONE);
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &ObjectsPanel::_takeAction), (int)BUTTON_BOTTOM) );
     _watchingNonBottom.push_back( btn );
@@ -1844,14 +1820,7 @@ ObjectsPanel::ObjectsPanel() :
     
     //Move down    
     btn = Gtk::manage( new Gtk::Button() );
-    btn->set_tooltip_text(_("Move Down"));
-#if GTK_CHECK_VERSION(3,10,0)
-    btn->set_image_from_icon_name(INKSCAPE_ICON("go-down"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
-#else
-    image_remove = Gtk::manage(new Gtk::Image());
-    image_remove->set_from_icon_name(INKSCAPE_ICON("go-down"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
-    btn->set_image(*image_remove);
-#endif
+    _styleButton(*btn, INKSCAPE_ICON("go-down"), _("Move Down"));
     btn->set_relief(Gtk::RELIEF_NONE);
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &ObjectsPanel::_takeAction), (int)BUTTON_DOWN) );
     _watchingNonBottom.push_back( btn );
@@ -1859,14 +1828,7 @@ ObjectsPanel::ObjectsPanel() :
     
     //Move up
     btn = Gtk::manage( new Gtk::Button() );
-    btn->set_tooltip_text(_("Move Up"));
-#if GTK_CHECK_VERSION(3,10,0)
-    btn->set_image_from_icon_name(INKSCAPE_ICON("go-up"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
-#else
-    image_remove = Gtk::manage(new Gtk::Image());
-    image_remove->set_from_icon_name(INKSCAPE_ICON("go-up"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
-    btn->set_image(*image_remove);
-#endif
+    _styleButton(*btn, INKSCAPE_ICON("go-up"), _("Move Up"));
     btn->set_relief(Gtk::RELIEF_NONE);
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &ObjectsPanel::_takeAction), (int)BUTTON_UP) );
     _watchingNonTop.push_back( btn );
@@ -1874,14 +1836,7 @@ ObjectsPanel::ObjectsPanel() :
     
     //Move to top
     btn = Gtk::manage( new Gtk::Button() );
-    btn->set_tooltip_text(_("Move To Top"));
-#if GTK_CHECK_VERSION(3,10,0)
-    btn->set_image_from_icon_name(INKSCAPE_ICON("go-top"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
-#else
-    image_remove = Gtk::manage(new Gtk::Image());
-    image_remove->set_from_icon_name(INKSCAPE_ICON("go-top"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
-    btn->set_image(*image_remove);
-#endif
+    _styleButton(*btn, INKSCAPE_ICON("go-top"), _("Move To Top"));
     btn->set_relief(Gtk::RELIEF_NONE);
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &ObjectsPanel::_takeAction), (int)BUTTON_TOP) );
     _watchingNonTop.push_back( btn );
@@ -1889,14 +1844,7 @@ ObjectsPanel::ObjectsPanel() :
     
     //Collapse all
     btn = Gtk::manage( new Gtk::Button() );
-    btn->set_tooltip_text(_("Collapse All"));
-#if GTK_CHECK_VERSION(3,10,0)
-    btn->set_image_from_icon_name(INKSCAPE_ICON("gtk-unindent-ltr"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
-#else
-    image_remove = Gtk::manage(new Gtk::Image());
-    image_remove->set_from_icon_name(INKSCAPE_ICON("gtk-unindent-ltr"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
-    btn->set_image(*image_remove);
-#endif
+    _styleButton(*btn, INKSCAPE_ICON("format-indent-less"), _("Collapse All"));
     btn->set_relief(Gtk::RELIEF_NONE);
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &ObjectsPanel::_takeAction), (int)BUTTON_COLLAPSE_ALL) );
     _watchingNonBottom.push_back( btn );

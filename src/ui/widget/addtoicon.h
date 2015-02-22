@@ -74,7 +74,7 @@ private:
     
     Glib::Property<bool> _property_active;
 //    Glib::Property< Glib::RefPtr<Gdk::Pixbuf> > _property_pixbuf_add;
-    
+    void set_pixbuf();
 };
 
 

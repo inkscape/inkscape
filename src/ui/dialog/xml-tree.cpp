@@ -71,10 +71,10 @@ XmlTree::XmlTree (void) :
     xml_text_new_button ( _("New text node")),
     xml_node_delete_button ( Q_("nodeAsInXMLdialogTooltip|Delete node")),
     xml_node_duplicate_button ( _("Duplicate node")),
-    unindent_node_button (Gtk::Stock::UNINDENT),
-    indent_node_button (Gtk::Stock::INDENT),
-    raise_node_button (Gtk::Stock::GO_UP),
-    lower_node_button (Gtk::Stock::GO_DOWN),
+    unindent_node_button(),
+    indent_node_button(),
+    raise_node_button(),
+    lower_node_button(),
     attr_toolbar(),
     xml_attribute_delete_button (_("Delete attribute")),
     text_container (),
@@ -149,21 +149,29 @@ XmlTree::XmlTree (void) :
 
     tree_toolbar.add(separator2);
 
+    unindent_node_button.set_icon_widget(*Gtk::manage(Glib::wrap(
+            sp_icon_new (Inkscape::ICON_SIZE_LARGE_TOOLBAR, INKSCAPE_ICON("format-indent-less")))));
     unindent_node_button.set_label(_("Unindent node"));
     unindent_node_button.set_tooltip_text(_("Unindent node"));
     unindent_node_button.set_sensitive(false);
     tree_toolbar.add(unindent_node_button);
 
+    indent_node_button.set_icon_widget(*Gtk::manage(Glib::wrap(
+            sp_icon_new (Inkscape::ICON_SIZE_LARGE_TOOLBAR, INKSCAPE_ICON("format-indent-more")))));
     indent_node_button.set_label(_("Indent node"));
     indent_node_button.set_tooltip_text(_("Indent node"));
     indent_node_button.set_sensitive(false);
     tree_toolbar.add(indent_node_button);
 
+    raise_node_button.set_icon_widget(*Gtk::manage(Glib::wrap(
+            sp_icon_new (Inkscape::ICON_SIZE_LARGE_TOOLBAR, INKSCAPE_ICON("go-up")))));
     raise_node_button.set_label(_("Raise node"));
     raise_node_button.set_tooltip_text(_("Raise node"));
     raise_node_button.set_sensitive(false);
     tree_toolbar.add(raise_node_button);
 
+    lower_node_button.set_icon_widget(*Gtk::manage(Glib::wrap(
+            sp_icon_new (Inkscape::ICON_SIZE_LARGE_TOOLBAR, INKSCAPE_ICON("go-down")))));
     lower_node_button.set_label(_("Lower node"));
     lower_node_button.set_tooltip_text(_("Lower node"));
     lower_node_button.set_sensitive(false);

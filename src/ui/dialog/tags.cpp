@@ -145,31 +145,12 @@ public:
     int _actionCode;
 };
 
-void TagsPanel::_styleButton( Gtk::Button& btn, SPDesktop *desktop, unsigned int code, char const* iconName, char const* tooltip )
+void TagsPanel::_styleButton(Gtk::Button& btn, char const* iconName, char const* tooltip)
 {
-    bool set = false;
-
-    if ( iconName ) {
-        GtkWidget *child = sp_icon_new( Inkscape::ICON_SIZE_SMALL_TOOLBAR, iconName );
-        gtk_widget_show( child );
-        btn.add( *manage(Glib::wrap(child)) );
-        btn.set_relief(Gtk::RELIEF_NONE);
-        set = true;
-    }
-
-    if ( desktop ) {
-        Verb *verb = Verb::get( code );
-        if ( verb ) {
-            SPAction *action = verb->get_action(desktop);
-            if ( !set && action && action->image ) {
-                GtkWidget *child = sp_icon_new( Inkscape::ICON_SIZE_SMALL_TOOLBAR, action->image );
-                gtk_widget_show( child );
-                btn.add( *manage(Glib::wrap(child)) );
-                set = true;
-            }
-        }
-    }
-
+    GtkWidget *child = sp_icon_new(Inkscape::ICON_SIZE_SMALL_TOOLBAR, iconName);
+    gtk_widget_show(child);
+    btn.add(*manage(Glib::wrap(child)));
+    btn.set_relief(Gtk::RELIEF_NONE);
     btn.set_tooltip_text (tooltip);
 }
 
@@ -1013,7 +994,7 @@ TagsPanel::TagsPanel() :
     SPDesktop* targetDesktop = getDesktop();
 
     Gtk::Button* btn = manage( new Gtk::Button() );
-    _styleButton( *btn, targetDesktop, SP_VERB_TAG_NEW, GTK_STOCK_ADD, _("Add a new selection set") );
+    _styleButton(*btn, "list-add", _("Add a new selection set") );
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &TagsPanel::_takeAction), (int)BUTTON_NEW) );
     _buttonsSecondary.pack_start(*btn, Gtk::PACK_SHRINK);
 
@@ -1022,7 +1003,7 @@ TagsPanel::TagsPanel() :
 //     _buttonsRow.add( *btn );
 
     btn = manage( new Gtk::Button() );
-    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_DELETE, GTK_STOCK_REMOVE, _("Remove Item/Set") );
+    _styleButton( *btn, "list-remove", _("Remove Item/Set") );
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &TagsPanel::_takeAction), (int)BUTTON_DELETE) );
     _watching.push_back( btn );
     _buttonsSecondary.pack_start(*btn, Gtk::PACK_SHRINK);

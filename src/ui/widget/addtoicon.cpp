@@ -23,6 +23,7 @@
 #include "widgets/icon.h"
 #include "widgets/toolbox.h"
 #include "ui/icon-names.h"
+#include "preferences.h"
 #include "layertypeicon.h"
 #include "addtoicon.h"
 
@@ -39,6 +40,7 @@ AddToIcon::AddToIcon() :
 {
     property_mode() = Gtk::CELL_RENDERER_MODE_ACTIVATABLE;
     phys = sp_icon_get_phys_size((int)Inkscape::ICON_SIZE_BUTTON);
+
 //    Glib::RefPtr<Gtk::IconTheme> icon_theme = Gtk::IconTheme::get_default();
 //
 //    if (!icon_theme->has_icon(_pixAddName)) {
@@ -50,7 +52,8 @@ AddToIcon::AddToIcon() :
 //    
 //    _property_pixbuf_add = Gtk::Widget::
 
-    property_stock_id() = GTK_STOCK_ADD;
+    //property_stock_id() = GTK_STOCK_ADD;
+    set_pixbuf();
 }
 
 
@@ -118,7 +121,7 @@ void AddToIcon::render_vfunc( const Glib::RefPtr<Gdk::Drawable>& window,
                                  Gtk::CellRendererState flags )
 #endif
 {
-    property_stock_id() = property_active().get_value() ? GTK_STOCK_ADD : GTK_STOCK_DELETE;
+    set_pixbuf();
     
 #if WITH_GTKMM_3_0
     Gtk::CellRendererPixbuf::render_vfunc( cr, widget, background_area, cell_area, flags );
@@ -137,6 +140,14 @@ bool AddToIcon::activate_vfunc(GdkEvent* /*event*/,
     return false;
 }
 
+void AddToIcon::set_pixbuf()
+{
+    bool active = property_active().get_value();
+
+    GdkPixbuf *pixbuf = sp_pixbuf_new(Inkscape::ICON_SIZE_BUTTON, active ? INKSCAPE_ICON("list-add") : INKSCAPE_ICON("edit-delete"));
+    property_pixbuf() = Glib::wrap(pixbuf);
+}
+
 
 } // namespace Widget
 } // namespace UI
@@ -152,5 +163,3 @@ bool AddToIcon::activate_vfunc(GdkEvent* /*event*/,
   End:
 */
 // vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :
-
-

@@ -87,6 +87,13 @@ static Inkscape::XML::NodeEventVector const _repr_events = {
     NULL  // order_changed
 };
 
+static void docprops_style_button(Gtk::Button& btn, char const* iconName)
+{
+    GtkWidget *child = sp_icon_new(Inkscape::ICON_SIZE_SMALL_TOOLBAR, iconName);
+    gtk_widget_show( child );
+    btn.add(*Gtk::manage(Glib::wrap(child)));
+    btn.set_relief(Gtk::RELIEF_NONE);
+}
 
 DocumentProperties& DocumentProperties::getInstance()
 {
@@ -615,22 +622,10 @@ void DocumentProperties::build_cms()
     label_avail->set_markup (_("<b>Available Color Profiles:</b>"));
 
     _link_btn.set_tooltip_text(_("Link Profile"));
-#if WITH_GTKMM_3_10
-    _link_btn.set_image_from_icon_name(INKSCAPE_ICON("list-add"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
-#else
-    Gtk::Image *image_link = Gtk::manage(new Gtk::Image());
-    image_link->set_from_icon_name(INKSCAPE_ICON("list-add"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
-    _link_btn.set_image(*image_link);
-#endif
+    docprops_style_button(_link_btn, INKSCAPE_ICON("list-add"));
 
     _unlink_btn.set_tooltip_text(_("Unlink Profile"));
-#if WITH_GTKMM_3_10
-    _unlink_btn.set_image_from_icon_name(INKSCAPE_ICON("list-remove"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
-#else
-    Gtk::Image *image_unlink = Gtk::manage(new Gtk::Image());
-    image_unlink->set_from_icon_name(INKSCAPE_ICON("list-remove"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
-    _unlink_btn.set_image(*image_unlink);
-#endif
+    docprops_style_button(_unlink_btn, INKSCAPE_ICON("list-remove"));
 
     _page_cms->set_spacing(4);
     gint row = 0;
@@ -752,22 +747,10 @@ void DocumentProperties::build_scripting()
     label_external->set_markup (_("<b>External script files:</b>"));
 
     _external_add_btn.set_tooltip_text(_("Add the current file name or browse for a file"));
-#if WITH_GTKMM_3_10
-    _external_add_btn.set_image_from_icon_name(INKSCAPE_ICON("list-add"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
-#else
-    Gtk::Image *image_ext_add = Gtk::manage(new Gtk::Image());
-    image_ext_add->set_from_icon_name(INKSCAPE_ICON("list-add"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
-    _external_add_btn.set_image(*image_ext_add);
-#endif
+    docprops_style_button(_external_add_btn, INKSCAPE_ICON("list-add"));
 
     _external_remove_btn.set_tooltip_text(_("Remove"));
-#if WITH_GTKMM_3_10
-    _external_remove_btn.set_image_from_icon_name(INKSCAPE_ICON("list-remove"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
-#else
-    Gtk::Image *image_ext_rm = Gtk::manage(new Gtk::Image());
-    image_ext_rm->set_from_icon_name(INKSCAPE_ICON("list-remove"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
-    _external_remove_btn.set_image(*image_ext_rm);
-#endif
+    docprops_style_button(_external_remove_btn, INKSCAPE_ICON("list-remove"));
 
     _page_external_scripts->set_spacing(4);
     gint row = 0;
@@ -841,22 +824,10 @@ void DocumentProperties::build_scripting()
     label_embedded->set_markup (_("<b>Embedded script files:</b>"));
 
     _embed_new_btn.set_tooltip_text(_("New"));
-#if WITH_GTKMM_3_10
-    _embed_new_btn.set_image_from_icon_name(INKSCAPE_ICON("list-add"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
-#else
-    Gtk::Image *image_embed_new = Gtk::manage(new Gtk::Image());
-    image_embed_new->set_from_icon_name(INKSCAPE_ICON("list-add"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
-    _embed_new_btn.set_image(*image_embed_new);
-#endif
+    docprops_style_button(_embed_new_btn, INKSCAPE_ICON("list-add"));
 
     _embed_remove_btn.set_tooltip_text(_("Remove"));
-#if WITH_GTKMM_3_10
-    _embed_remove_btn.set_image_from_icon_name(INKSCAPE_ICON("list-remove"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
-#else
-    Gtk::Image *image_embed_rm = Gtk::manage(new Gtk::Image());
-    image_embed_rm->set_from_icon_name(INKSCAPE_ICON("list-remove"), Gtk::ICON_SIZE_SMALL_TOOLBAR);
-    _embed_remove_btn.set_image(*image_embed_rm);
-#endif
+    docprops_style_button(_embed_remove_btn, INKSCAPE_ICON("list-remove"));
 
 #if !WITH_GTKMM_3_0
     // TODO: This has been removed from Gtkmm 3.0. Check that

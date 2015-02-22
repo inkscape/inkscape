@@ -62,7 +62,7 @@ private:
     TagsPanel(TagsPanel const &); // no copy
     TagsPanel &operator=(TagsPanel const &); // no assign
 
-    void _styleButton( Gtk::Button& btn, SPDesktop *desktop, unsigned int code, char const* iconName, char const* tooltip );
+    void _styleButton( Gtk::Button& btn, char const* iconName, char const* tooltip );
     void _fireAction( unsigned int code );
     Gtk::MenuItem& _addPopupItem( SPDesktop *desktop, unsigned int code, char const* iconName, char const* fallback, int id );
     
