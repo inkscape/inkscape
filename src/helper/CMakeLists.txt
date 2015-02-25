@@ -32,6 +32,7 @@ set(helper_SRC
 	geom-nodetype.h
 	geom.h
 	gnome-utils.h
+	mathfns.h
 	pixbuf-ops.h
 	png-write.h
 	stock-items.h
