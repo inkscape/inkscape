@@ -24,7 +24,7 @@
 
 #include "filedialogimpl-gtkmm.h"
  
-#include "gc-core.h"
+#include "libgc/gc-core.h"
  // define WINVER high enough so we get the correct OPENFILENAMEW size
 #ifndef WINVER
 #define WINVER 0x0500 

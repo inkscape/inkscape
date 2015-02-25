@@ -24,7 +24,7 @@ typedef unsigned int GQuark;
 #include <iterator>
 #include "util/share.h"
 #include "util/forward-pointer-iterator.h"
-#include "gc-managed.h"
+#include "libgc/gc-managed.h"
 #include "xml/node.h"
 
 namespace Inkscape {

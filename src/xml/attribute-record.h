@@ -6,7 +6,7 @@
 #define SEEN_XML_SP_REPR_ATTR_H
 
 #include <glib.h>
-#include "gc-managed.h"
+#include "libgc/gc-managed.h"
 #include "util/share.h"
 
 #define SP_REPR_ATTRIBUTE_KEY(a) g_quark_to_string((a)->key)

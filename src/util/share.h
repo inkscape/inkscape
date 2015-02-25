@@ -12,7 +12,7 @@
 #ifndef SEEN_INKSCAPE_UTIL_SHARE_H
 #define SEEN_INKSCAPE_UTIL_SHARE_H
 
-#include "gc-core.h"
+#include "libgc/gc-core.h"
 #include <cstring>
 #include <cstddef>
 

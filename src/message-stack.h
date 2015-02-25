@@ -22,7 +22,7 @@
 #include <glibmm/ustring.h>
 #include <sigc++/sigc++.h>
 
-#include "gc-managed.h"
+#include "libgc/gc-managed.h"
 #include "gc-finalized.h"
 #include "gc-anchored.h"
 #include "message.h"

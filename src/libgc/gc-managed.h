@@ -14,7 +14,7 @@
 #ifndef SEEN_INKSCAPE_GC_MANAGED_H
 #define SEEN_INKSCAPE_GC_MANAGED_H
 
-#include "gc-core.h"
+#include "libgc/gc-core.h"
 
 namespace Inkscape {
 

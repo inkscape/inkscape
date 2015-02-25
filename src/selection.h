@@ -19,10 +19,10 @@
 #include <stddef.h>
 #include <sigc++/sigc++.h>
 
-#include "gc-managed.h"
+#include "libgc/gc-managed.h"
 #include "gc-finalized.h"
 #include "gc-anchored.h"
-#include "gc-soft-ptr.h"
+#include "libgc/gc-soft-ptr.h"
 #include "sp-item.h"
 
 

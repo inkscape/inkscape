@@ -12,7 +12,7 @@
 #ifndef SEEN_INKSCAPE_DEBUG_GC_HEAP_H
 #define SEEN_INKSCAPE_DEBUG_GC_HEAP_H
 
-#include "gc-core.h"
+#include "libgc/gc-core.h"
 #include "debug/heap.h"
 
 namespace Inkscape {

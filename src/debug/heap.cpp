@@ -13,7 +13,7 @@
 # include "config.h"
 #endif
 
-#include "gc-alloc.h"
+#include "libgc/gc-alloc.h"
 #include "debug/gc-heap.h"
 #include "debug/sysv-heap.h"
 #include <vector>
