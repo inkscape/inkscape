@@ -35,7 +35,6 @@ ink_common_sources +=	\
 	document.cpp document.h document-private.h			\
 	document-subset.cpp document-subset.h				\
 	document-undo.cpp document-undo.h \
-	doxygen-main.cpp						\
 	ege-color-prof-tracker.cpp ege-color-prof-tracker.h		\
 	enums.h								\
 	event-log.cpp event-log.h event.h				\

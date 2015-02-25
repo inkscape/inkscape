@@ -195,7 +195,6 @@ set(inkscape_SRC
 	document-subset.cpp
 	document-undo.cpp
 	document.cpp
-	doxygen-main.cpp
 	ege-color-prof-tracker.cpp
 	event-log.cpp
 	extract-uri.cpp
