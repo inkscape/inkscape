@@ -31,7 +31,6 @@ set(util_SRC
 	list.h
 	longest-common-suffix.h
 	map-list.h
-	mathfns.h
 	reference.h
 	reverse-list.h
 	share.h
@@ -43,5 +42,5 @@ set(util_SRC
 	ziptool.h
 )
 
-# add_inkscape_lib(util_LIB "${util_SRC}")
-add_inkscape_source("${util_SRC}")
+add_inkscape_lib(util_LIB "${util_SRC}")
+# add_inkscape_source("${util_SRC}")

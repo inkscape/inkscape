@@ -1,5 +1,5 @@
 /*
- * Inkscape::Util::... some mathmatical functions 
+ * ... some mathmatical functions 
  *
  * Authors:
  *   Johan Engelen <goejendaagh@zonnet.nl>
@@ -64,7 +64,6 @@ inline double round_to_upper_multiple_plus(double x, double const c1, double con
 {
     return ceil((x - c0) / c1) * c1 + c0;
 }
-
 
 }
 

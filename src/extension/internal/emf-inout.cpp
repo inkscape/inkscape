@@ -188,7 +188,7 @@ double Emf::current_scale(PEMF_CALLBACK_DATA d){
     "matrix(a,b,c,d,e,f)"  (WITH the double quotes)
 */
 std::string Emf::current_matrix(PEMF_CALLBACK_DATA d, double x, double y, int useoffset){
-    std::stringstream cxform;
+    SVGOStringStream cxform;
     double scale = current_scale(d);
     cxform << "\"matrix(";
     cxform << d->dc[d->level].worldTransform.eM11/scale;   cxform << ",";
@@ -1058,7 +1058,7 @@ Emf::snap_to_faraway_pair(double *x, double *y)
    Since exclude clip can go through here, it calls snap_to_faraway_pair for numerical stability.
 */
 std::string Emf::pix_to_xy(PEMF_CALLBACK_DATA d, double x, double y){
-    std::stringstream cxform;
+    SVGOStringStream cxform;
     double tx = pix_to_x_point(d,x,y);
     double ty = pix_to_y_point(d,x,y);
     snap_to_faraway_pair(&tx,&ty);

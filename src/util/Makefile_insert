@@ -1,8 +1,13 @@
 ## Makefile.am fragment sourced by src/Makefile.am.
 
-ink_common_sources += \
-    util/ziptool.h \
-    util/ziptool.cpp \
+util/all: util/libutil.a
+
+util/clean:
+	rm -f util/libutil.a $(util_libutil_a_OBJECTS)
+
+util_libutil_a_SOURCES = \
+	util/ziptool.h \
+	util/ziptool.cpp	\
 	util/accumulators.h	\
 	util/compose.hpp	\
 	util/copy.h \
@@ -26,7 +31,6 @@ ink_common_sources += \
 	util/list-copy.h \
 	util/longest-common-suffix.h \
 	util/map-list.h \
-	util/mathfns.h \
 	util/reference.h \
 	util/reverse-list.h \
 	util/share.h \

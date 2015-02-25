@@ -14,6 +14,7 @@ ink_common_sources +=	\
 	helper/geom-nodetype.h	\
 	helper/gnome-utils.cpp	\
 	helper/gnome-utils.h	\
+	helper/mathfns.h \
 	helper/png-write.cpp	\
 	helper/png-write.h	\
 	helper/sp-marshal.cpp	\

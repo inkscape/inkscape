@@ -176,7 +176,7 @@ double Wmf::current_scale(PWMF_CALLBACK_DATA /*d*/){
 
 /* WMF has no worldTransform, so this always returns an Identity rotation matrix, but the offsets may have values.*/
 std::string Wmf::current_matrix(PWMF_CALLBACK_DATA d, double x, double y, int useoffset){
-    std::stringstream cxform;
+    SVGOStringStream cxform;
     double scale = current_scale(d);
     cxform << "\"matrix(";
     cxform << 1.0/scale;   cxform << ",";
@@ -948,7 +948,7 @@ Wmf::pix_to_abs_size(PWMF_CALLBACK_DATA d, double px)
 /* returns "x,y" (without the quotes) in inkscape coordinates for a pair of WMF x,y coordinates
 */
 std::string Wmf::pix_to_xy(PWMF_CALLBACK_DATA d, double x, double y){
-    std::stringstream cxform;
+    SVGOStringStream cxform;
     cxform << pix_to_x_point(d,x,y);
     cxform << ",";
     cxform << pix_to_y_point(d,x,y);

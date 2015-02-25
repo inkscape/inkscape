@@ -34,6 +34,7 @@ noinst_LIBRARIES =	\
 	livarot/libvarot.a		\
 	2geom/lib2geom.a		\
 	libdepixelize/libdepixelize.a	\
+	util/libutil.a			\
 	libinkversion.a
 
 all_libs =			\
