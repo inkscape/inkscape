@@ -23,20 +23,6 @@
 #include "livarot/Path.h"
 #include "livarot/Shape.h"
 
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createFlowregion() {
-		return new SPFlowregion();
-	}
-
-	SPObject* createFlowregionExclude() {
-		return new SPFlowregionExclude();
-	}
-
-	bool flowregionRegistered = SPFactory::instance().registerObject("svg:flowRegion", createFlowregion);
-	bool flowregionExcludeRegistered = SPFactory::instance().registerObject("svg:flowRegionExclude", createFlowregionExclude);
-}
 
 static void         GetDest(SPObject* child,Shape **computed);
 

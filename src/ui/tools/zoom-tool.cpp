@@ -25,19 +25,10 @@
 #include "selection-chemistry.h"
 
 #include "ui/tools/zoom-tool.h"
-#include "ui/tool-factory.h"
 
 namespace Inkscape {
 namespace UI {
 namespace Tools {
-
-namespace {
-	ToolBase* createZoomContext() {
-		return new ZoomTool();
-	}
-
-	bool zoomContextRegistered = ToolFactory::instance().registerObject("/tools/zoom", createZoomContext);
-}
 
 const std::string& ZoomTool::getPrefsPath() {
 	return ZoomTool::prefsPath;

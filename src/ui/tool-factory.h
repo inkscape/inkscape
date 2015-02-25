@@ -1,6 +1,6 @@
-/** @file
+/*
  * Factory for ToolBase tree
- *//*
+ *
  * Authors:
  *   Markus Engel
  *
@@ -11,7 +11,7 @@
 #ifndef TOOL_FACTORY_SEEN
 #define TOOL_FACTORY_SEEN
 
-#include "factory.h"
+#include <string>
 
 namespace Inkscape {
 namespace UI {
@@ -23,7 +23,9 @@ class ToolBase;
 }
 }
 
-typedef Singleton< Factory<Inkscape::UI::Tools::ToolBase> > ToolFactory;
+struct ToolFactory {
+    static Inkscape::UI::Tools::ToolBase *createObject(std::string const& id);
+};
 
 
 #endif

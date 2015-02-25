@@ -43,16 +43,6 @@ public:
     std::vector<Inkscape::DrawingItem *> items;
 };
 
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createMarker() {
-		return new SPMarker();
-	}
-
-	bool markerRegistered = SPFactory::instance().registerObject("svg:marker", createMarker);
-}
-
 SPMarker::SPMarker() : SPGroup(), SPViewBox() {
 
     this->markerUnits = 0;

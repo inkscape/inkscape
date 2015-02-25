@@ -5,17 +5,6 @@
 #include "attributes.h"
 #include "xml/repr.h"
 
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createLinearGradient() {
-		return new SPLinearGradient();
-	}
-
-	bool linearGradientRegistered = SPFactory::instance().registerObject("svg:linearGradient", createLinearGradient);
-}
-
-
 /*
  * Linear Gradient
  */

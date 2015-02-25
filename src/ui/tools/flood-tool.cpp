@@ -74,19 +74,9 @@ using Inkscape::Display::ExtractARGB32;
 using Inkscape::Display::ExtractRGB32;
 using Inkscape::Display::AssembleARGB32;
 
-#include "ui/tool-factory.h"
-
 namespace Inkscape {
 namespace UI {
 namespace Tools {
-
-namespace {
-	ToolBase* createPaintbucketContext() {
-		return new FloodTool();
-	}
-
-	bool paintbucketContextRegistered = ToolFactory::instance().registerObject("/tools/paintbucket", createPaintbucketContext);
-}
 
 const std::string& FloodTool::getPrefsPath() {
 	return FloodTool::prefsPath;

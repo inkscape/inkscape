@@ -48,19 +48,9 @@
 
 using Inkscape::DocumentUndo;
 
-#include "ui/tool-factory.h"
-
 namespace Inkscape {
 namespace UI {
 namespace Tools {
-
-namespace {
-	ToolBase* createArcContext() {
-		return new ArcTool();
-	}
-
-	bool arcContextRegistered = ToolFactory::instance().registerObject("/tools/shapes/arc", createArcContext);
-}
 
 const std::string& ArcTool::getPrefsPath() {
 	return ArcTool::prefsPath;

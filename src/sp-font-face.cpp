@@ -259,16 +259,6 @@ static std::vector<FontFaceStretchType> sp_read_fontFaceStretchType(gchar const 
     return v;
 }
 
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createFontFace() {
-		return new SPFontFace();
-	}
-
-	bool fontFaceRegistered = SPFactory::instance().registerObject("svg:font-face", createFontFace);
-}
-
 SPFontFace::SPFontFace() : SPObject() {
     std::vector<FontFaceStyleType> style;
     style.push_back(SP_FONTFACE_STYLE_ALL);

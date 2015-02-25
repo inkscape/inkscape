@@ -10,10 +10,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
-
 #include <cstring>
 #include <string>
 
@@ -29,13 +25,6 @@
 #include "sp-symbol.h"
 #include "sp-tag-use.h"
 #include "sp-tag-use-reference.h"
-
-namespace {
-    SPObject* createTagUse() {
-        return new SPTagUse();
-    }
-    bool tagUseRegistered = SPFactory::instance().registerObject("inkscape:tagref", createTagUse);
-}
 
 SPTagUse::SPTagUse()
 {
@@ -173,7 +162,7 @@ SPTagUse::href_changed(SPObject */*old_ref*/, SPObject */*ref*/)
             Inkscape::XML::Node *childrepr = refobj->getRepr();
             const std::string typeString = NodeTraits::get_type_string(*childrepr);
             
-            SPObject* child_ = SPFactory::instance().createObject(typeString);
+            SPObject* child_ = SPFactory::createObject(typeString);
             if (child_) {
                 child = child_;
                 attach(child_, lastChild());

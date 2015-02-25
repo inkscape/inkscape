@@ -91,19 +91,9 @@ using Inkscape::DocumentUndo;
 
 #define DYNA_MIN_WIDTH 1.0e-6
 
-#include "ui/tool-factory.h"
-
 namespace Inkscape {
 namespace UI {
 namespace Tools {
-
-namespace {
-	ToolBase* createTweakContext() {
-		return new TweakTool();
-	}
-
-	bool tweakContextRegistered = ToolFactory::instance().registerObject("/tools/tweak", createTweakContext);
-}
 
 const std::string& TweakTool::getPrefsPath() {
 	return TweakTool::prefsPath;

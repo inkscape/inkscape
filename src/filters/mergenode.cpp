@@ -13,25 +13,11 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-
 #include "attributes.h"
 #include "xml/repr.h"
 #include "filters/mergenode.h"
 #include "filters/merge.h"
 #include "display/nr-filter-types.h"
-
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createMergeNode() {
-		return new SPFeMergeNode();
-	}
-
-	bool mergeNodeRegistered = SPFactory::instance().registerObject("svg:feMergeNode", createMergeNode);
-}
 
 SPFeMergeNode::SPFeMergeNode()
     : SPObject(), input(Inkscape::Filters::NR_FILTER_SLOT_NOT_SET) {

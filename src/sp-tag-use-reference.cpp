@@ -20,16 +20,6 @@
 #include "sp-text.h"
 #include "uri.h"
 
-#if 0
-namespace {
-    SPObject* createTagUseReference() {
-        return new SPTag();
-    }
-    bool tagUseReferencesRegistered = SPFactory::instance().registerObject("inkscape:tag", createTag);
-}
-// this SPObject doesn't need to be registered
-#endif
-
 
 bool SPTagUseReference::_acceptObject(SPObject * const obj) const
 {

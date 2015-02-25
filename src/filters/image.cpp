@@ -14,10 +14,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-
 #include <sigc++/bind.h>
 #include "display/nr-filter-image.h"
 #include "uri.h"
@@ -30,16 +26,6 @@
 #include <string.h>
 
 #include "display/nr-filter.h"
-
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createImage() {
-		return new SPFeImage();
-	}
-
-	bool imageRegistered = SPFactory::instance().registerObject("svg:feImage", createImage);
-}
 
 SPFeImage::SPFeImage() : SPFilterPrimitive() {
 	this->href = NULL;

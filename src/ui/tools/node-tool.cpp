@@ -107,19 +107,9 @@
 
 using Inkscape::ControlManager;
 
-#include "ui/tool-factory.h"
-
 namespace Inkscape {
 namespace UI {
 namespace Tools {
-
-namespace {
-	ToolBase* createNodesContext() {
-		return new NodeTool();
-	}
-
-	bool nodesContextRegistered = ToolFactory::instance().registerObject("/tools/nodes", createNodesContext);
-}
 
 const std::string& NodeTool::getPrefsPath() {
 	return NodeTool::prefsPath;

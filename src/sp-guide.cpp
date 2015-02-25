@@ -47,16 +47,6 @@
 using Inkscape::DocumentUndo;
 using std::vector;
 
-#include "sp-factory.h"
-
-namespace {
-    SPObject* createGuide() {
-        return new SPGuide();
-    }
-
-    bool guideRegistered = SPFactory::instance().registerObject("sodipodi:guide", createGuide);
-}
-
 SPGuide::SPGuide()
     : SPObject()
     , label(NULL)

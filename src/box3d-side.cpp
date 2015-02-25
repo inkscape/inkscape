@@ -28,16 +28,6 @@
 
 static void box3d_side_compute_corner_ids(Box3DSide *side, unsigned int corners[4]);
 
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createBox3DSide() {
-		return new Box3DSide();
-	}
-
-	bool box3DSideRegistered = SPFactory::instance().registerObject("inkscape:box3dside", createBox3DSide);
-}
-
 Box3DSide::Box3DSide() : SPPolygon() {
     this->dir1 = Box3D::NONE;
     this->dir2 = Box3D::NONE;

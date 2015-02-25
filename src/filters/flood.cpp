@@ -12,10 +12,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-
 #include "strneq.h"
 
 #include "attributes.h"
@@ -26,16 +22,6 @@
 #include "helper-fns.h"
 #include "display/nr-filter.h"
 #include "display/nr-filter-flood.h"
-
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createFlood() {
-		return new SPFeFlood();
-	}
-
-	bool floodRegistered = SPFactory::instance().registerObject("svg:feFlood", createFlood);
-}
 
 SPFeFlood::SPFeFlood() : SPFilterPrimitive() {
 	this->color = 0;

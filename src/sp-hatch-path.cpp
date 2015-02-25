@@ -12,10 +12,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-
 #include <cstring>
 #include <string>
 #include <2geom/path.h>
@@ -36,19 +32,6 @@
 #include "sp-hatch-path.h"
 #include "svg/css-ostringstream.h"
 #include "xml/repr.h"
-
-#include "sp-factory.h"
-
-namespace {
-
-SPObject* createHatchPath()
-{
-    return new SPHatchPath();
-}
-
-bool hatchRegistered = SPFactory::instance().registerObject("svg:hatchPath", createHatchPath);
-
-} // namespace
 
 SPHatchPath::SPHatchPath()
     : offset(),

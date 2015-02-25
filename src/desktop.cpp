@@ -687,7 +687,7 @@ void SPDesktop::set_event_context2(const std::string& toolName)
         }
     }
     
-    Inkscape::UI::Tools::ToolBase* new_tool = ToolFactory::instance().createObject(toolName);
+    Inkscape::UI::Tools::ToolBase* new_tool = ToolFactory::createObject(toolName);
     new_tool->desktop = this;
     new_tool->message_context = new Inkscape::MessageContext(this->messageStack());
     event_context = new_tool;

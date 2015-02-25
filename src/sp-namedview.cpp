@@ -56,16 +56,6 @@ static void sp_namedview_show_single_guide(SPGuide* guide, bool show);
 static gboolean sp_str_to_bool(const gchar *str);
 static gboolean sp_nv_read_opacity(const gchar *str, guint32 *color);
 
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createNamedView() {
-		return new SPNamedView();
-	}
-
-	bool namedViewRegistered = SPFactory::instance().registerObject("sodipodi:namedview", createNamedView);
-}
-
 SPNamedView::SPNamedView() : SPObjectGroup(), snap_manager(this) {
 	this->zoom = 0;
 	this->guidecolor = 0;

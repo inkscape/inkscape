@@ -84,19 +84,9 @@ using namespace std;
 // Please enable again when working on 1.0
 #define ENABLE_SPRAY_MODE_SINGLE_PATH
 
-#include "ui/tool-factory.h"
-
 namespace Inkscape {
 namespace UI {
 namespace Tools {
-
-namespace {
-    ToolBase* createSprayContext() {
-        return new SprayTool();
-    }
-
-    bool sprayContextRegistered = ToolFactory::instance().registerObject("/tools/spray", createSprayContext);
-}
 
 const std::string& SprayTool::getPrefsPath() {
     return SprayTool::prefsPath;

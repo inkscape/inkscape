@@ -10,22 +10,10 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-
 #include "attributes.h"
-#include "sp-factory.h"
 #include "sp-tag.h"
 #include "xml/repr.h"
 #include <cstring>
-
-namespace {
-    SPObject* createTag() {
-        return new SPTag();
-    }
-    bool tagsRegistered = SPFactory::instance().registerObject("inkscape:tag", createTag);
-}
 
 /*
  * Move this SPItem into or after another SPItem in the doc

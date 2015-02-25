@@ -16,16 +16,6 @@
 #include <cstring>
 #include "document.h"
 
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createScript() {
-		return new SPScript();
-	}
-
-	bool scriptRegistered = SPFactory::instance().registerObject("svg:script", createScript);
-}
-
 SPScript::SPScript() : SPObject() {
 	this->xlinkhref = NULL;
 }

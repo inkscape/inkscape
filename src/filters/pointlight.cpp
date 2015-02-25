@@ -13,10 +13,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-
 #include <glib.h>
 
 #include "attributes.h"
@@ -28,16 +24,6 @@
 
 #define SP_MACROS_SILENT
 #include "macros.h"
-
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createPointLight() {
-		return new SPFePointLight();
-	}
-
-	bool pointLightRegistered = SPFactory::instance().registerObject("svg:fePointLight", createPointLight);
-}
 
 SPFePointLight::SPFePointLight() 
     : SPObject(), x(0), x_set(FALSE), y(0), y_set(FALSE), z(0), z_set(FALSE) {

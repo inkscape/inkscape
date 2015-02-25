@@ -13,10 +13,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-
 #include <string.h>
 
 #include "attributes.h"
@@ -25,16 +21,6 @@
 #include "xml/repr.h"
 #include "display/nr-filter.h"
 #include "display/nr-filter-morphology.h"
-
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createMorphology() {
-		return new SPFeMorphology();
-	}
-
-	bool morphologyRegistered = SPFactory::instance().registerObject("svg:feMorphology", createMorphology);
-}
 
 SPFeMorphology::SPFeMorphology() : SPFilterPrimitive() {
 	this->Operator = Inkscape::Filters::MORPHOLOGY_OPERATOR_ERODE;

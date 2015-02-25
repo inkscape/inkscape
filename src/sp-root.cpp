@@ -13,10 +13,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-
 #include <string>
 #include <2geom/transforms.h>
 
@@ -31,17 +27,6 @@
 #include "svg/svg.h"
 #include "xml/repr.h"
 #include "util/units.h"
-
-#include "sp-factory.h"
-
-namespace {
-SPObject *createRoot()
-{
-    return new SPRoot();
-}
-
-bool rootRegistered = SPFactory::instance().registerObject("svg:svg", createRoot);
-}
 
 SPRoot::SPRoot() : SPGroup(), SPViewBox()
 {

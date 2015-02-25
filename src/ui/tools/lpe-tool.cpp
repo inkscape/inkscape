@@ -58,22 +58,11 @@ SubtoolEntry lpesubtools[] = {
     {Inkscape::LivePathEffect::MIRROR_SYMMETRY, "draw-geometry-mirror"}
 };
 
-
-#include "ui/tool-factory.h"
-
 namespace Inkscape {
 namespace UI {
 namespace Tools {
 
 void sp_lpetool_context_selection_changed(Inkscape::Selection *selection, gpointer data);
-
-namespace {
-	ToolBase* createLPEToolContext() {
-		return new LpeTool();
-	}
-
-	bool lpetoolContextRegistered = ToolFactory::instance().registerObject("/tools/lpetool", createLPEToolContext);
-}
 
 const std::string& LpeTool::getPrefsPath() {
 	return LpeTool::prefsPath;

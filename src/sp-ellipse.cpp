@@ -34,35 +34,6 @@
 #include "svg/path-string.h"
 #include "xml/repr.h"
 
-#include "sp-factory.h"
-
-namespace {
-SPObject *create_ellipse()
-{
-    SPGenericEllipse *ellipse = new SPGenericEllipse();
-    ellipse->type = SP_GENERIC_ELLIPSE_ELLIPSE;
-    return ellipse;
-}
-
-SPObject *create_circle()
-{
-    SPGenericEllipse *circle = new SPGenericEllipse();
-    circle->type = SP_GENERIC_ELLIPSE_CIRCLE;
-    return circle;
-}
-
-SPObject *create_arc()
-{
-    SPGenericEllipse *arc = new SPGenericEllipse();
-    arc->type = SP_GENERIC_ELLIPSE_ARC;
-    return arc;
-}
-
-bool ellipse_registered = SPFactory::instance().registerObject("svg:ellipse", create_ellipse);
-bool circle_registered = SPFactory::instance().registerObject("svg:circle", create_circle);
-bool arc_registered = SPFactory::instance().registerObject("arc", create_arc);
-}
-
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846

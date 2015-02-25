@@ -51,16 +51,6 @@
 
 #define noPATH_VERBOSE
 
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createPath() {
-		return new SPPath();
-	}
-
-	bool pathRegistered = SPFactory::instance().registerObject("svg:path", createPath);
-}
-
 gint SPPath::nodesInPath() const
 {
     return _curve ? _curve->nodes_in_path() : 0;

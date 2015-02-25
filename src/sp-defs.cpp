@@ -20,16 +20,6 @@
 #include "xml/repr.h"
 #include "document.h"
 
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createDefs() {
-		return new SPDefs();
-	}
-
-	bool defsRegistered = SPFactory::instance().registerObject("svg:defs", createDefs);
-}
-
 SPDefs::SPDefs() : SPObject() {
 }
 

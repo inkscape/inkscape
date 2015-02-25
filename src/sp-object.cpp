@@ -61,14 +61,6 @@ using std::strstr;
 # define debug(f, a...) /* */
 #endif
 
-namespace {
-    SPObject* createObject() {
-        return new SPObject();
-    }
-
-    bool gridRegistered = SPFactory::instance().registerObject("inkscape:grid", createObject);
-}
-
 guint update_in_progress = 0; // guard against update-during-update
 
 Inkscape::XML::NodeEventVector object_event_vector = {
@@ -629,7 +621,7 @@ void SPObject::child_added(Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
 
     const std::string type_string = NodeTraits::get_type_string(*child);
 
-    SPObject* ochild = SPFactory::instance().createObject(type_string);
+    SPObject* ochild = SPFactory::createObject(type_string);
     if (ochild == NULL) {
         // Currenty, there are many node types that do not have
         // corresponding classes in the SPObject tree.
@@ -688,7 +680,7 @@ void SPObject::build(SPDocument *document, Inkscape::XML::Node *repr) {
     for (Inkscape::XML::Node *rchild = repr->firstChild() ; rchild != NULL; rchild = rchild->next()) {
         const std::string typeString = NodeTraits::get_type_string(*rchild);
 
-        SPObject* child = SPFactory::instance().createObject(typeString);
+        SPObject* child = SPFactory::createObject(typeString);
         if (child == NULL) {
             // Currenty, there are many node types that do not have
             // corresponding classes in the SPObject tree.

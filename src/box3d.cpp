@@ -44,16 +44,6 @@ static void box3d_ref_changed(SPObject *old_ref, SPObject *ref, SPBox3D *box);
 
 static gint counter = 0;
 
-#include "sp-factory.h"
-
-namespace {
-    SPObject* createBox3D() {
-        return new SPBox3D();
-    }
-
-    bool box3DRegistered = SPFactory::instance().registerObject("inkscape:box3d", createBox3D);
-}
-
 SPBox3D::SPBox3D() : SPGroup() {
     this->my_counter = 0;
     this->swapped = Box3D::NONE;

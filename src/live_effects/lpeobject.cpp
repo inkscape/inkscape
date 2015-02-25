@@ -20,16 +20,6 @@
 
 //#define LIVEPATHEFFECT_VERBOSE
 
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createLivepatheffect() {
-		return new LivePathEffectObject();
-	}
-
-	bool livepatheffectRegistered = SPFactory::instance().registerObject("inkscape:path-effect", createLivepatheffect);
-}
-
 static void livepatheffect_on_repr_attr_changed (Inkscape::XML::Node * repr, const gchar *key, const gchar *oldval, const gchar *newval, bool is_interactive, void * data);
 
 static Inkscape::XML::NodeEventVector const livepatheffect_repr_events = {

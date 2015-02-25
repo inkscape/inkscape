@@ -52,19 +52,9 @@
 
 using Inkscape::DocumentUndo;
 
-#include "ui/tool-factory.h"
-
 namespace Inkscape {
 namespace UI {
 namespace Tools {
-
-namespace {
-	ToolBase* createBox3dTool() {
-		return new Box3dTool();
-	}
-
-	bool Box3dToolRegistered = ToolFactory::instance().registerObject("/tools/shapes/3dbox", createBox3dTool);
-}
 
 const std::string& Box3dTool::getPrefsPath() {
 	return Box3dTool::prefsPath;

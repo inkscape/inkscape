@@ -12,10 +12,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-
 #include <string.h>
 
 #include "document.h"
@@ -26,16 +22,6 @@
 #include "xml/repr.h"
 #include "display/nr-filter.h"
 #include "display/nr-filter-component-transfer.h"
-
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createComponentTransfer() {
-		return new SPFeComponentTransfer();
-	}
-
-	bool componentTransferRegistered = SPFactory::instance().registerObject("svg:feComponentTransfer", createComponentTransfer);
-}
 
 SPFeComponentTransfer::SPFeComponentTransfer()
     : SPFilterPrimitive(), renderer(NULL)

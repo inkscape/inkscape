@@ -22,29 +22,12 @@
  *
  */
 
-
-
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-
-
 #include "sp-string.h"
 #include "style.h"
 
 #include "xml/repr.h"
 
-#include "sp-factory.h"
-
 #include <iostream>
-
-namespace {
-    SPObject* createString() {
-        return new SPString();
-    }
-
-    bool stringRegistered = SPFactory::instance().registerObject("string", createString);
-}
 
 /*#####################################################
 #  SPSTRING

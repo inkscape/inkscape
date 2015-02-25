@@ -19,6 +19,7 @@ set(sp_SRC
 	sp-defs.cpp
 	sp-desc.cpp
 	sp-ellipse.cpp
+	sp-factory.cpp
 	sp-filter-primitive.cpp
 	sp-filter-reference.cpp
 	sp-filter.cpp

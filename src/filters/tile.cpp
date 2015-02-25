@@ -11,26 +11,12 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-
 #include "attributes.h"
 #include "svg/svg.h"
 #include "filters/tile.h"
 #include "xml/repr.h"
 #include "display/nr-filter.h"
 #include "display/nr-filter-tile.h"
-
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createTile() {
-		return new SPFeTile();
-	}
-
-	bool tileRegistered = SPFactory::instance().registerObject("svg:feTile", createTile);
-}
 
 SPFeTile::SPFeTile() : SPFilterPrimitive() {
 }

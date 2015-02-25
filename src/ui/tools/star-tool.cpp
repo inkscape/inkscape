@@ -49,19 +49,9 @@
 
 using Inkscape::DocumentUndo;
 
-#include "ui/tool-factory.h"
-
 namespace Inkscape {
 namespace UI {
 namespace Tools {
-
-namespace {
-	ToolBase* createStarContext() {
-		return new StarTool();
-	}
-
-	bool starContextRegistered = ToolFactory::instance().registerObject("/tools/shapes/star", createStarContext);
-}
 
 const std::string& StarTool::getPrefsPath() {
 	return StarTool::prefsPath;

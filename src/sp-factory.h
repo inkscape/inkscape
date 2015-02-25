@@ -1,6 +1,6 @@
-/** @file
+/*
  * Factory for SPObject tree
- *//*
+ *
  * Authors:
  *   Markus Engel
  *
@@ -11,11 +11,23 @@
 #ifndef SP_FACTORY_SEEN
 #define SP_FACTORY_SEEN
 
-#include "factory.h"
+#include <string>
 
 class SPObject;
-typedef Singleton< Factory<SPObject> > SPFactory;
 
+namespace Inkscape {
+namespace XML {
+class Node;
+}
+}
+
+struct SPFactory {
+    static SPObject *createObject(std::string const& id);
+};
+
+struct NodeTraits {
+    static std::string get_type_string(Inkscape::XML::Node const &node);
+};
 
 #endif
 

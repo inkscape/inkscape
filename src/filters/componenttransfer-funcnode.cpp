@@ -13,10 +13,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-
 #include <glib.h>
 
 #include "attributes.h"
@@ -29,32 +25,6 @@
 
 #define SP_MACROS_SILENT
 #include "macros.h"
-
-
-#include "sp-factory.h"
-
-namespace {
-    SPObject* createFuncR() {
-        return new SPFeFuncNode(SPFeFuncNode::R);
-    }
-
-    SPObject* createFuncG() {
-        return new SPFeFuncNode(SPFeFuncNode::G);
-    }
-
-    SPObject* createFuncB() {
-        return new SPFeFuncNode(SPFeFuncNode::B);
-    }
-
-    SPObject* createFuncA() {
-        return new SPFeFuncNode(SPFeFuncNode::A);
-    }
-
-    bool funcRRegistered = SPFactory::instance().registerObject("svg:feFuncR", createFuncR);
-    bool funcGRegistered = SPFactory::instance().registerObject("svg:feFuncG", createFuncG);
-    bool funcBRegistered = SPFactory::instance().registerObject("svg:feFuncB", createFuncB);
-    bool funcARegistered = SPFactory::instance().registerObject("svg:feFuncA", createFuncA);
-}
 
 
 /* FeFuncNode class */

@@ -13,10 +13,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-
 #include <string.h>
 
 #include "sp-filter.h"
@@ -29,16 +25,6 @@
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-blend.h"
 #include "display/nr-filter-types.h"
-
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createBlend() {
-		return new SPFeBlend();
-	}
-
-	bool blendRegistered = SPFactory::instance().registerObject("svg:feBlend", createBlend);
-}
 
 SPFeBlend::SPFeBlend()
     : SPFilterPrimitive(), blend_mode(Inkscape::Filters::BLEND_NORMAL),

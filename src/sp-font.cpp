@@ -23,15 +23,6 @@
 
 #include "display/nr-svgfonts.h"
 
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createFont() {
-		return new SPFont();
-	}
-
-	bool fontRegistered = SPFactory::instance().registerObject("svg:font", createFont);
-}
 
 //I think we should have extra stuff here and in the set method in order to set default value as specified at http://www.w3.org/TR/SVG/fonts.html
 

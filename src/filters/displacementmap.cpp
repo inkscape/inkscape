@@ -12,10 +12,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-
 #include "attributes.h"
 #include "svg/svg.h"
 #include "filters/displacementmap.h"
@@ -24,16 +20,6 @@
 #include "helper-fns.h"
 #include "display/nr-filter.h"
 #include "display/nr-filter-displacement-map.h"
-
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createDisplacementMap() {
-		return new SPFeDisplacementMap();
-	}
-
-	bool displacementMapRegistered = SPFactory::instance().registerObject("svg:feDisplacementMap", createDisplacementMap);
-}
 
 SPFeDisplacementMap::SPFeDisplacementMap() : SPFilterPrimitive() {
     this->scale=0;

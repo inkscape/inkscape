@@ -19,16 +19,6 @@
 
 #include "xml/repr.h"
 
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createMeshRow() {
-		return new SPMeshRow();
-	}
-
-	bool meshRowRegistered = SPFactory::instance().registerObject("svg:meshRow", createMeshRow);
-}
-
 SPMeshRow* SPMeshRow::getNextMeshRow()
 {
     SPMeshRow *result = 0;

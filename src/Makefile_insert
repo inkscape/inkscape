@@ -124,7 +124,7 @@ ink_common_sources +=	\
 	sp-defs.cpp sp-defs.h						\
 	sp-desc.cpp sp-desc.h						\
 	sp-ellipse.cpp sp-ellipse.h					\
-	sp-factory.h							\
+	sp-factory.h sp-factory.cpp					\
 	sp-filter.cpp sp-filter.h number-opt-number.h			\
 	sp-filter-primitive.cpp	sp-filter-primitive.h			\
 	sp-filter-reference.cpp	sp-filter-reference.h			\

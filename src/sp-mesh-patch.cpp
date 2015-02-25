@@ -20,16 +20,6 @@
 #include "attributes.h"
 #include "xml/repr.h"
 
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createMeshPatch() {
-		return new SPMeshPatch();
-	}
-
-	bool meshPatchRegistered = SPFactory::instance().registerObject("svg:meshPatch", createMeshPatch);
-}
-
 SPMeshPatch* SPMeshPatch::getNextMeshPatch()
 {
     SPMeshPatch *result = 0;

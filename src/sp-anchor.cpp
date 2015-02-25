@@ -13,10 +13,6 @@
 
 #define noSP_ANCHOR_VERBOSE
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-
 #include <glibmm/i18n.h>
 #include "xml/quote.h"
 #include "xml/repr.h"
@@ -24,16 +20,6 @@
 #include "sp-anchor.h"
 #include "ui/view/view.h"
 #include "document.h"
-
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createAnchor() {
-		return new SPAnchor();
-	}
-
-	bool anchorRegistered = SPFactory::instance().registerObject("svg:a", createAnchor);
-}
 
 SPAnchor::SPAnchor() : SPGroup() {
     this->href = NULL;

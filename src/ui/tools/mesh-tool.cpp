@@ -53,21 +53,11 @@
 
 using Inkscape::DocumentUndo;
 
-#include "ui/tool-factory.h"
-
 namespace Inkscape {
 namespace UI {
 namespace Tools {
 
 static void sp_mesh_drag(MeshTool &rc, Geom::Point const pt, guint state, guint32 etime);
-
-namespace {
-	ToolBase* createMeshContext() {
-		return new MeshTool();
-	}
-
-	bool meshContextRegistered = ToolFactory::instance().registerObject("/tools/mesh", createMeshContext);
-}
 
 const std::string& MeshTool::getPrefsPath() {
 	return MeshTool::prefsPath;

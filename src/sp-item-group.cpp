@@ -58,16 +58,6 @@ using Inkscape::DocumentUndo;
 
 static void sp_group_perform_patheffect(SPGroup *group, SPGroup *topgroup, bool write);
 
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createGroup() {
-		return new SPGroup();
-	}
-
-	bool groupRegistered = SPFactory::instance().registerObject("svg:g", createGroup);
-}
-
 SPGroup::SPGroup() : SPLPEItem() {
     this->_layer_mode = SPGroup::GROUP;
 }

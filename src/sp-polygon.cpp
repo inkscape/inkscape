@@ -11,8 +11,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "config.h"
-
 #include "attributes.h"
 #include "sp-polygon.h"
 #include "display/curve.h"
@@ -24,16 +22,6 @@
 #include "svg/stringstream.h"
 #include "xml/repr.h"
 #include "document.h"
-
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createPolygon() {
-		return new SPPolygon();
-	}
-
-	bool polygonRegistered = SPFactory::instance().registerObject("svg:polygon", createPolygon);
-}
 
 SPPolygon::SPPolygon() : SPShape() {
 }

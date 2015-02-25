@@ -6,17 +6,6 @@
 
 #include "sp-mesh-gradient.h"
 
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createMeshGradient() {
-		return new SPMeshGradient();
-	}
-
-	bool meshGradientRegistered = SPFactory::instance().registerObject("svg:meshGradient", createMeshGradient);
-}
-
-
 /*
  * Mesh Gradient
  */
