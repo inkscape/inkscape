@@ -42,7 +42,6 @@ set(display_SRC
 	nr-filter-tile.cpp
 	nr-filter-turbulence.cpp
 	nr-filter-units.cpp
-	nr-filter-utils.cpp
 	nr-filter.cpp
 	nr-light.cpp
 	nr-style.cpp

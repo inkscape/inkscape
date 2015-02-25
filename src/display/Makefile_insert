@@ -90,7 +90,6 @@ ink_common_sources += \
 	display/nr-filter-types.h       \
 	display/nr-filter-units.cpp	\
 	display/nr-filter-units.h	\
-	display/nr-filter-utils.cpp     \
 	display/nr-filter-utils.h       \
 	display/nr-light.cpp			\
 	display/nr-light.h				\
