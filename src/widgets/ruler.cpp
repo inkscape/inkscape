@@ -144,7 +144,8 @@ static gboolean      sp_ruler_expose               (GtkWidget      *widget,
                                                     GdkEventExpose *event);
 #endif
 static void          sp_ruler_draw_ticks           (SPRuler        *ruler);
-static void          sp_ruler_draw_pos             (SPRuler        *ruler);
+static void          sp_ruler_draw_pos             (SPRuler        *ruler,
+                                                    cairo_t        *cr);
 static void          sp_ruler_make_pixmap          (SPRuler        *ruler);
 
 static PangoLayout * sp_ruler_get_layout           (GtkWidget      *widget,
@@ -710,7 +711,7 @@ sp_ruler_draw (GtkWidget *widget,
   cairo_set_source_surface(cr, priv->backing_store, 0, 0);
   cairo_paint(cr);
 
-  sp_ruler_draw_pos (ruler);
+  sp_ruler_draw_pos (ruler, cr);
 
   return FALSE;
 }
@@ -735,7 +736,8 @@ sp_ruler_make_pixmap (SPRuler *ruler)
 }
 
 static void
-sp_ruler_draw_pos (SPRuler *ruler)
+sp_ruler_draw_pos (SPRuler *ruler,
+                   cairo_t *cr)
 {
   GtkWidget       *widget  = GTK_WIDGET (ruler);
 
@@ -797,25 +799,31 @@ sp_ruler_draw_pos (SPRuler *ruler)
 
   if ((bs_width > 0) && (bs_height > 0))
     {
-      cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (widget));
       gdouble lower;
       gdouble upper;
       gdouble position;
       gdouble increment;
 
-      cairo_rectangle (cr,
-                       allocation.x, allocation.y,
-                       allocation.width, allocation.height);
-      cairo_clip (cr);
-
-      cairo_translate (cr, allocation.x, allocation.y);
-
-      /* If a backing store exists, restore the ruler  */
-      if (priv->backing_store)
+      if (! cr)
         {
-          cairo_set_source_surface (cr, priv->backing_store, 0, 0);
-          cairo_rectangle (cr, priv->xsrc, priv->ysrc, bs_width, bs_height);
-          cairo_fill (cr);
+          cr = gdk_cairo_create (gtk_widget_get_window (widget));
+          cairo_translate (cr, allocation.x, allocation.y);
+          cairo_rectangle (cr, allocation.x, allocation.y, allocation.width, allocation.height);
+          cairo_clip (cr);
+
+          cairo_translate (cr, allocation.x, allocation.y);
+           
+          /* If a backing store exists, restore the ruler */
+          if (priv->backing_store)
+            {
+              cairo_set_source_surface (cr, priv->backing_store, 0, 0);
+              cairo_rectangle (cr, priv->xsrc, priv->ysrc, bs_width, bs_height);
+              cairo_fill (cr);
+            }
+        }
+      else
+        {
+          cairo_reference (cr);
         }
 
       position = sp_ruler_get_position (ruler);
@@ -1126,7 +1134,7 @@ sp_ruler_set_position (SPRuler *ruler,
         priv->position = position;
         g_object_notify (G_OBJECT (ruler), "position");
 
-        sp_ruler_draw_pos (ruler);
+        sp_ruler_draw_pos (ruler, NULL);
     }
 }
 
