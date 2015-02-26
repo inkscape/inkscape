@@ -15,7 +15,7 @@
 
 #include "document-subset.h"
 #include "gc-finalized.h"
-#include "libgc/gc-soft-ptr.h"
+#include "inkgc/gc-soft-ptr.h"
 
 class SPDesktop;
 class SPDocument;

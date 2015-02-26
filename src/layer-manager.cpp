@@ -11,7 +11,7 @@
 #include <set>
 #include <sigc++/functors/mem_fun.h>
 #include <sigc++/adaptors/hide.h>
-#include "libgc/gc-managed.h"
+#include "inkgc/gc-managed.h"
 #include "gc-finalized.h"
 #include "document.h"
 #include "desktop.h"

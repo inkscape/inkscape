@@ -15,7 +15,7 @@
 #ifndef SEEN_INKSCAPE_XML_SUBTREE_H
 #define SEEN_INKSCAPE_XML_SUBTREE_H
 
-#include "libgc/gc-managed.h"
+#include "inkgc/gc-managed.h"
 #include "xml/composite-node-observer.h"
 
 namespace Inkscape {

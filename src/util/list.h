@@ -12,7 +12,7 @@
 
 #include <cstddef>
 #include <iterator>
-#include "libgc/gc-managed.h"
+#include "inkgc/gc-managed.h"
 #include "util/reference.h"
 
 namespace Inkscape {

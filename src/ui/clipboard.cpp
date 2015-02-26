@@ -32,7 +32,7 @@
 #include <glibmm/ustring.h>
 #include <glibmm/i18n.h>
 #include <glib/gstdio.h> // for g_file_set_contents etc., used in _onGet and paste
-#include "libgc/gc-core.h"
+#include "inkgc/gc-core.h"
 #include "xml/repr.h"
 #include "inkscape.h"
 #include "io/stringstream.h"

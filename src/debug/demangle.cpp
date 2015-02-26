@@ -14,7 +14,7 @@
 #include <map>
 #include "debug/demangle.h"
 #include "util/format.h"
-#include "libgc/gc-alloc.h"
+#include "inkgc/gc-alloc.h"
 
 namespace Inkscape {
 

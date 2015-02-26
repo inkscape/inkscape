@@ -15,7 +15,7 @@
 #include <stddef.h>
 #include <sigc++/connection.h>
 #include "message.h"
-#include "libgc/gc-managed.h"
+#include "inkgc/gc-managed.h"
 #include "gc-finalized.h"
 #include "gc-anchored.h"
 #include <2geom/forward.h>

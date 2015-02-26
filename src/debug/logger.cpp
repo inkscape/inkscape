@@ -15,7 +15,7 @@
 #include "inkscape-version.h"
 #include "debug/logger.h"
 #include "debug/simple-event.h"
-#include "libgc/gc-alloc.h"
+#include "inkgc/gc-alloc.h"
 
 namespace Inkscape {
 

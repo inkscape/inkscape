@@ -1,0 +1,13 @@
+## Makefile.am fragment sourced by src/Makefile.am.
+
+inkgc/all: inkgc/libinkgc.a
+
+inkgc/clean:
+	rm -f inkgc/libinkgc.a $(inkgc_libinkgc_a_OBJECTS)
+
+inkgc_libinkgc_a_SOURCES =         \
+	inkgc/gc.cpp		\
+	inkgc/gc-alloc.h	\
+	inkgc/gc-core.h		\
+	inkgc/gc-managed.h	\
+	inkgc/gc-soft-ptr.h

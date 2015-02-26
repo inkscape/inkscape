@@ -13,7 +13,7 @@
 #ifndef SEEN_INKSCAPE_GC_SOFT_PTR_H
 #define SEEN_INKSCAPE_GC_SOFT_PTR_H
 
-#include "libgc/gc-core.h"
+#include "inkgc/gc-core.h"
 
 namespace Inkscape {
 

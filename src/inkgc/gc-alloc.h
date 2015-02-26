@@ -17,7 +17,7 @@
 
 #include <limits>
 #include <cstddef>
-#include "libgc/gc-core.h"
+#include "inkgc/gc-core.h"
 
 namespace Inkscape {
 

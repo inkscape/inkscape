@@ -14,7 +14,7 @@
 #include <sigc++/connection.h>
 #include <sigc++/functors/slot.h>
 
-#include "libgc/gc-managed.h"
+#include "inkgc/gc-managed.h"
 #include "gc-anchored.h"
 
 class SPObject;

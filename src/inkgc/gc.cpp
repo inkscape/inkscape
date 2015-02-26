@@ -9,7 +9,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "libgc/gc-core.h"
+#include "inkgc/gc-core.h"
 #include <stdexcept>
 #include <cstring>
 #include <string>

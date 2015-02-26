@@ -29,7 +29,7 @@ noinst_LIBRARIES =	\
 	$(internal_GDL)			\
 	libuemf/libuemf.a   		\
 	libcola/libcola.a		\
-        libgc/libgc.a			\
+        inkgc/libinkgc.a		\
 	libvpsc/libvpsc.a		\
 	livarot/libvarot.a		\
 	2geom/lib2geom.a		\
@@ -117,7 +117,7 @@ include filters/Makefile_insert
 include helper/Makefile_insert
 include io/Makefile_insert
 include libcroco/Makefile_insert
-include libgc/Makefile_insert
+include inkgc/Makefile_insert
 include libgdl/Makefile_insert
 include libnrtype/Makefile_insert
 include libavoid/Makefile_insert

@@ -18,7 +18,7 @@
 #include "display/nr-filter-types.h"
 #include "svg/svg-length.h"
 #include "sp-filter-units.h"
-#include "libgc/gc-managed.h"
+#include "inkgc/gc-managed.h"
 
 namespace Inkscape {
 class DrawingContext;
