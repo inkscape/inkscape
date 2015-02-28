@@ -130,10 +130,29 @@ void SPPath::build(SPDocument *document, Inkscape::XML::Node *repr) {
 
     SPShape::build(document, repr);
 
-    // this->readAttr( "inkscape:original-d" ); // lp1299948
+    // this->readAttr( "inkscape:original-d" ); // bug #1299948
+    // Why we take the long way of doing this probably needs some explaining:
+    //
+    // Normally upon being built, reading the inkscape:original-d attribute
+    // will cause the path to actually _write to its repr_ in response to this.
+    // This is bad, bad news if the attached effect refers to a path which
+    // hasn't been constructed yet.
+    // 
+    // What will happen is the effect parameter will cause the effect to
+    // recalculate with a completely different value due to the parameter being
+    // "empty" -- even worse, an undo event might be created with the bad value,
+    // and undoing the current action could cause it to revert to the "bad"
+    // state. (After that, the referred object will be constructed and the
+    // reference will trigger the path effect to update and commit the right
+    // value to "d".)
+    //
+    // This mild nastiness here (don't recalculate effects on build) prevents a
+    // plethora of issues with effects with linked parameters doing wild and
+    // stupid things on new documents upon a mere undo.
+
     if (gchar const* s = this->getRepr()->attribute("inkscape:original-d"))
     {
-        // write it to XML, and to my curve, but don't update patheffects
+        // Write the value to _curve_before_lpe, do not recalculate effects
         Geom::PathVector pv = sp_svg_read_pathv(s);
         SPCurve *curve = new SPCurve(pv);
         
@@ -148,10 +167,17 @@ void SPPath::build(SPDocument *document, Inkscape::XML::Node *repr) {
     this->readAttr( "d" );
 
     /* d is a required attribute */
-    gchar const *d = this->getAttribute("d", NULL);
+    char const *d = this->getAttribute("d", NULL);
 
     if (d == NULL) {
-        this->setKeyValue( sp_attribute_lookup("d"), "");
+        // First see if calculating the path effect will generate "d":
+        this->update_patheffect(true);
+        d = this->getAttribute("d", NULL);
+
+        // I guess that didn't work, now we have nothing useful to write ("")
+        if (d == NULL) {
+            this->setKeyValue( sp_attribute_lookup("d"), "");
+        }
     }
 }
 
