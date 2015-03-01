@@ -289,7 +289,7 @@ bool SPMeshPatchI::tensorIsSet() {
 /**
    Return if tensor control point for "corner" i is set.
  */
-bool SPMeshPatchI::tensorIsSet( guint i ) {
+bool SPMeshPatchI::tensorIsSet( unsigned int i ) {
 
     assert( i < 4 );
 
@@ -2620,7 +2620,7 @@ guint32 average_color(guint32 c1, guint32 c2, gdouble p);
 /**
    Split a row into n equal parts.
 */
-void SPMeshNodeArray::split_row( guint row, guint n ) {
+void SPMeshNodeArray::split_row( unsigned int row, unsigned int n ) {
 
     double nn = n;
     if( n > 1 ) split_row( row, (nn-1)/nn );
@@ -2630,7 +2630,7 @@ void SPMeshNodeArray::split_row( guint row, guint n ) {
 /**
    Split a column into n equal parts.
 */
-void SPMeshNodeArray::split_column( guint col, guint n ) {
+void SPMeshNodeArray::split_column( unsigned int col, unsigned int n ) {
 
     double nn = n;
     if( n > 1 ) split_column( col, (nn-1)/nn );
@@ -2640,7 +2640,7 @@ void SPMeshNodeArray::split_column( guint col, guint n ) {
 /**
    Split a row into two rows at coord (fraction of row height).
 */
-void SPMeshNodeArray::split_row( guint row, double coord ) {
+void SPMeshNodeArray::split_row( unsigned int row, double coord ) {
 
     // std::cout << "Splitting row: " << row << " at " << coord << std::endl;
     // print();
@@ -2763,7 +2763,7 @@ void SPMeshNodeArray::split_row( guint row, double coord ) {
 /**
    Split a column into two columns at coord (fraction of column width).
 */
-void SPMeshNodeArray::split_column( guint col, double coord ) {
+void SPMeshNodeArray::split_column( unsigned int col, double coord ) {
 
     // std::cout << "Splitting column: " << col << " at " << coord << std::endl;
     // print();
