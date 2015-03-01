@@ -47,8 +47,8 @@ set(sp_SRC
 	sp-lpe-item.cpp
 	sp-marker.cpp
 	sp-mask.cpp
+	sp-mesh.cpp
 	sp-mesh-array.cpp
-	sp-mesh-gradient.cpp
 	sp-mesh-patch.cpp
 	sp-mesh-row.cpp
 	sp-metadata.cpp
@@ -134,8 +134,8 @@ set(sp_SRC
 	sp-marker.h
 	sp-marker-loc.h
 	sp-mask.h
+	sp-mesh.h
 	sp-mesh-array.h
-	sp-mesh-gradient.h
 	sp-mesh-patch.h
 	sp-mesh-row.h
 	sp-metadata.h

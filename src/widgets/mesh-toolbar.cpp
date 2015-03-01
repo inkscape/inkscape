@@ -44,7 +44,7 @@
 #include "ui/tools/gradient-tool.h"
 #include "ui/tools/mesh-tool.h"
 #include "gradient-drag.h"
-#include "sp-mesh-gradient.h"
+#include "sp-mesh.h"
 #include "gradient-chemistry.h"
 #include "gradient-selector.h"
 #include "selection.h"
@@ -77,15 +77,15 @@ static bool blocked = false;
  * Get the current selection and dragger status from the desktop
  */
 void ms_read_selection( Inkscape::Selection *selection,
-                        SPMeshGradient *&ms_selected,
+                        SPMesh *&ms_selected,
                         bool &ms_selected_multi,
-                        SPMeshSmooth &ms_smooth,
-                        bool &ms_smooth_multi )
+                        SPMeshType &ms_type,
+                        bool &ms_type_multi )
 {
 
     // Read desktop selection
     bool first = true;
-    ms_smooth = SP_MESH_SMOOTH_NONE;
+    ms_type = SP_MESH_TYPE_COONS;
     
     for (GSList const* i = selection->itemList(); i; i = i->next) {
         SPItem *item = SP_ITEM(i->data);
@@ -93,10 +93,10 @@ void ms_read_selection( Inkscape::Selection *selection,
 
         if (style && (style->fill.isPaintserver())) {
             SPPaintServer *server = item->style->getFillPaintServer();
-            if ( SP_IS_MESHGRADIENT(server) ) {
+            if ( SP_IS_MESH(server) ) {
 
-                SPMeshGradient *gradient = SP_MESHGRADIENT(server); // ->getVector();
-                SPMeshSmooth smooth = gradient->smooth;
+                SPMesh *gradient = SP_MESH(server); // ->getVector();
+                SPMeshType type = gradient->type;
 
                 if (gradient != ms_selected) {
                     if (ms_selected) {
@@ -105,11 +105,11 @@ void ms_read_selection( Inkscape::Selection *selection,
                         ms_selected = gradient;
                     }
                 }
-                if( smooth != ms_smooth ) {
-                    if (ms_smooth != SP_MESH_SMOOTH_NONE && !first) {
-                        ms_smooth_multi = true;
+                if( type != ms_type ) {
+                    if (ms_type != SP_MESH_TYPE_COONS && !first) {
+                        ms_type_multi = true;
                     } else {
-                        ms_smooth = smooth;
+                        ms_type = type;
                     }
                 }
                 first = false;
@@ -118,10 +118,10 @@ void ms_read_selection( Inkscape::Selection *selection,
 
         if (style && (style->stroke.isPaintserver())) {
             SPPaintServer *server = item->style->getStrokePaintServer();
-            if ( SP_IS_MESHGRADIENT(server) ) {
+            if ( SP_IS_MESH(server) ) {
 
-                SPMeshGradient *gradient = SP_MESHGRADIENT(server); // ->getVector();
-                SPMeshSmooth smooth = gradient->smooth;
+                SPMesh *gradient = SP_MESH(server); // ->getVector();
+                SPMeshType type = gradient->type;
 
                 if (gradient != ms_selected) {
                     if (ms_selected) {
@@ -130,11 +130,11 @@ void ms_read_selection( Inkscape::Selection *selection,
                         ms_selected = gradient;
                     }
                 }
-                if( smooth != ms_smooth ) {
-                    if (ms_smooth != SP_MESH_SMOOTH_NONE && !first) {
-                        ms_smooth_multi = true;
+                if( type != ms_type ) {
+                    if (ms_type != SP_MESH_TYPE_COONS && !first) {
+                        ms_type_multi = true;
                     } else {
-                        ms_smooth = smooth;
+                        ms_type = type;
                     }
                 }
                 first = false;
@@ -170,18 +170,18 @@ static void ms_tb_selection_changed(Inkscape::Selection * /*selection*/, gpointe
         //     // Hide/show handles?
         // }
 
-        SPMeshGradient *ms_selected = 0;
-        SPMeshSmooth ms_smooth = SP_MESH_SMOOTH_NONE;
+        SPMesh *ms_selected = 0;
+        SPMeshType ms_type = SP_MESH_TYPE_COONS;
         bool ms_selected_multi = false;
-        bool ms_smooth_multi = false; 
-        ms_read_selection( selection, ms_selected, ms_selected_multi, ms_smooth, ms_smooth_multi );
-        // std::cout << "   smooth: " << ms_smooth << std::endl;
+        bool ms_type_multi = false; 
+        ms_read_selection( selection, ms_selected, ms_selected_multi, ms_type, ms_type_multi );
+        // std::cout << "   type: " << ms_type << std::endl;
         
-        EgeSelectOneAction* smooth = (EgeSelectOneAction *) g_object_get_data(G_OBJECT(widget), "mesh_select_smooth_action");
-        gtk_action_set_sensitive( GTK_ACTION(smooth), (ms_selected && !ms_selected_multi) );
+        EgeSelectOneAction* type = (EgeSelectOneAction *) g_object_get_data(G_OBJECT(widget), "mesh_select_type_action");
+        gtk_action_set_sensitive( GTK_ACTION(type), (ms_selected && !ms_selected_multi) );
         if (ms_selected) {
             blocked = TRUE;
-            ege_select_one_action_set_active( smooth, ms_smooth );
+            ege_select_one_action_set_active( type, ms_type );
             blocked = FALSE;
         }
     }
@@ -209,9 +209,9 @@ static void ms_defs_modified(SPObject * /*defs*/, guint /*flags*/, GObject *widg
     ms_tb_selection_changed(NULL, widget);
 }
 
-void ms_get_dt_selected_gradient(Inkscape::Selection *selection, SPMeshGradient *&ms_selected)
+void ms_get_dt_selected_gradient(Inkscape::Selection *selection, SPMesh *&ms_selected)
 {
-    SPMeshGradient *gradient = 0;
+    SPMesh *gradient = 0;
 
     for (GSList const* i = selection->itemList(); i; i = i->next) {
          SPItem *item = SP_ITEM(i->data); // get the items gradient, not the getVector() version
@@ -225,8 +225,8 @@ void ms_get_dt_selected_gradient(Inkscape::Selection *selection, SPMeshGradient 
              server = item->style->getStrokePaintServer();
          }
 
-         if ( SP_IS_MESHGRADIENT(server) ) {
-             gradient = SP_MESHGRADIENT(server);
+         if ( SP_IS_MESH(server) ) {
+             gradient = SP_MESH(server);
          }
     }
 
@@ -240,11 +240,11 @@ void ms_get_dt_selected_gradient(Inkscape::Selection *selection, SPMeshGradient 
  * Callback functions for user actions
  */
 
-static void ms_new_type_changed( EgeSelectOneAction *act, GObject * /*tbl*/ )
+static void ms_new_geometry_changed( EgeSelectOneAction *act, GObject * /*tbl*/ )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    gint typemode = ege_select_one_action_get_active( act ) == 0 ? SP_GRADIENT_MESH_TYPE_NORMAL : SP_GRADIENT_MESH_TYPE_CONICAL;
-    prefs->setInt("/tools/mesh/mesh_type", typemode);
+    gint geometrymode = ege_select_one_action_get_active( act ) == 0 ? SP_MESH_GEOMETRY_NORMAL : SP_MESH_GEOMETRY_CONICAL;
+    prefs->setInt("/tools/mesh/mesh_geometry", geometrymode);
 }
 
 static void ms_new_fillstroke_changed( EgeSelectOneAction *act, GObject * /*tbl*/ )
@@ -288,27 +288,27 @@ static void ms_col_changed(GtkAdjustment *adj, GObject * /*tbl*/ )
     blocked = FALSE;
 }
 
-static void ms_smooth_changed(EgeSelectOneAction *act, GtkWidget *widget)
+static void ms_type_changed(EgeSelectOneAction *act, GtkWidget *widget)
 {
-    // std::cout << "ms_smooth_changed" << std::endl;
+    // std::cout << "ms_type_changed" << std::endl;
     if (blocked) {
         return;
     }
 
     SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data(G_OBJECT(widget), "desktop"));
     Inkscape::Selection *selection = desktop->getSelection();
-    SPMeshGradient *gradient = 0;
+    SPMesh *gradient = 0;
     ms_get_dt_selected_gradient(selection, gradient);
 
     if (gradient) {
-        SPMeshSmooth smooth = (SPMeshSmooth) ege_select_one_action_get_active(act);
-        // std::cout << "   smooth: " << smooth << std::endl;
-        gradient->smooth = smooth;
-        gradient->smooth_set = true;
+        SPMeshType type = (SPMeshType) ege_select_one_action_get_active(act);
+        // std::cout << "   type: " << type << std::endl;
+        gradient->type = type;
+        gradient->type_set = true;
         gradient->updateRepr();
 
         DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_GRADIENT,
-                   _("Set mesh smoothing"));
+                   _("Set mesh type"));
     }
 }
 
@@ -349,9 +349,9 @@ void sp_mesh_toolbox_prep(SPDesktop * desktop, GtkActionGroup* mainActions, GObj
         ege_select_one_action_set_tooltip_column( act, 1  );
 
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        gint mode = prefs->getInt("/tools/mesh/mesh_type", SP_GRADIENT_MESH_TYPE_NORMAL) != SP_GRADIENT_MESH_TYPE_NORMAL;
+        gint mode = prefs->getInt("/tools/mesh/mesh_geometry", SP_MESH_GEOMETRY_NORMAL) != SP_MESH_GEOMETRY_NORMAL;
         ege_select_one_action_set_active( act, mode );
-        g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(ms_new_type_changed), holder );
+        g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(ms_new_geometry_changed), holder );
     }
 
     /* New gradient on fill or stroke*/
@@ -460,51 +460,30 @@ void sp_mesh_toolbox_prep(SPDesktop * desktop, GtkActionGroup* mainActions, GObj
     /* Warning */
     {
         GtkAction* act = gtk_action_new( "MeshWarningAction",
-          _("WARNING: Mesh SVG Syntax Subject to Change, Smoothing Experimental"), NULL, NULL );
+          _("WARNING: Mesh SVG Syntax Subject to Change"), NULL, NULL );
         gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
     }
 
-    /* Smoothing method */
+    /* Typeing method */
     {
         GtkListStore* model = gtk_list_store_new( 2, G_TYPE_STRING, G_TYPE_INT );
 
         GtkTreeIter iter;
         gtk_list_store_append( model, &iter );
-        gtk_list_store_set( model, &iter, 0, C_("Smoothing", "None"), 1, SP_MESH_SMOOTH_NONE, -1 );
+        gtk_list_store_set( model, &iter, 0, C_("Type", "Coons"), 1, SP_MESH_TYPE_COONS, -1 );
 
         gtk_list_store_append( model, &iter );
-        gtk_list_store_set( model, &iter, 0, _("Default"), 1, SP_MESH_SMOOTH_SMOOTH, -1 );
+        gtk_list_store_set( model, &iter, 0, _("Bicubic"), 1, SP_MESH_TYPE_BICUBIC, -1 );
 
-        gtk_list_store_append( model, &iter );
-        gtk_list_store_set( model, &iter, 0, _("Smooth1"), 1, SP_MESH_SMOOTH_SMOOTH1, -1 );
-
-        gtk_list_store_append( model, &iter );
-        gtk_list_store_set( model, &iter, 0, _("Smooth2"), 1, SP_MESH_SMOOTH_SMOOTH2, -1 );
-
-        gtk_list_store_append( model, &iter );
-        gtk_list_store_set( model, &iter, 0, _("Smooth3"), 1, SP_MESH_SMOOTH_SMOOTH3, -1 );
-
-        gtk_list_store_append( model, &iter );
-        gtk_list_store_set( model, &iter, 0, _("Smooth4"), 1, SP_MESH_SMOOTH_SMOOTH4, -1 );
-
-        gtk_list_store_append( model, &iter );
-        gtk_list_store_set( model, &iter, 0, _("Smooth5"), 1, SP_MESH_SMOOTH_SMOOTH5, -1 );
-
-        gtk_list_store_append( model, &iter );
-        gtk_list_store_set( model, &iter, 0, _("Smooth6"), 1, SP_MESH_SMOOTH_SMOOTH6, -1 );
-
-        gtk_list_store_append( model, &iter );
-        gtk_list_store_set( model, &iter, 0, _("Smooth7"), 1, SP_MESH_SMOOTH_SMOOTH7, -1 );
-
-        EgeSelectOneAction* act = ege_select_one_action_new( "MeshSmoothAction", _("None"),
-               _("If the mesh should be smoothed across patch boundaries."),
+        EgeSelectOneAction* act = ege_select_one_action_new( "MeshSmoothAction", _("Coons"),
+               _("Coons: no smoothing. Bicubic: smoothing across patch boundaries."),
                 NULL, GTK_TREE_MODEL(model) );
         g_object_set( act, "short_label", _("Smoothing:"), NULL );
         ege_select_one_action_set_appearance( act, "compact" );
         gtk_action_set_sensitive( GTK_ACTION(act), FALSE );
-        g_signal_connect( G_OBJECT(act), "changed", G_CALLBACK(ms_smooth_changed), holder );
+        g_signal_connect( G_OBJECT(act), "changed", G_CALLBACK(ms_type_changed), holder );
         gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
-        g_object_set_data( holder, "mesh_select_smooth_action", act );
+        g_object_set_data( holder, "mesh_select_type_action", act );
     }
 }
 

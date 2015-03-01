@@ -48,7 +48,7 @@
 
 // Mesh specific
 #include "ui/tools/mesh-tool.h"
-#include "sp-mesh-gradient.h"
+#include "sp-mesh.h"
 #include "display/sp-ctrlcurve.h"
 
 using Inkscape::DocumentUndo;
@@ -162,9 +162,9 @@ void MeshTool::selection_changed(Inkscape::Selection* /*sel*/) {
     //     if (style && (style->fill.isPaintserver())) {
 
     //         SPPaintServer *server = item->style->getFillPaintServer();
-    //         if ( SP_IS_MESHGRADIENT(server) ) {
+    //         if ( SP_IS_MESH(server) ) {
 
-    //             SPMeshGradient *mg = SP_MESHGRADIENT(server);
+    //             SPMesh *mg = SP_MESH(server);
 
     //             guint rows    = 0;//mg->array.patches.size();
     //             for ( guint i = 0; i < rows; ++i ) {
@@ -327,8 +327,8 @@ sp_mesh_context_corner_operation (MeshTool *rc, MeshCornerOperation operation )
     SPDocument *doc = NULL;
     GrDrag *drag = rc->_grdrag;
 
-    std::map<SPMeshGradient*, std::vector<guint> > points;
-    std::map<SPMeshGradient*, SPItem*> items;
+    std::map<SPMesh*, std::vector<guint> > points;
+    std::map<SPMesh*, SPItem*> items;
  
     // Get list of selected draggers for each mesh.
     // For all selected draggers
@@ -342,7 +342,7 @@ sp_mesh_context_corner_operation (MeshTool *rc, MeshCornerOperation operation )
             if( d->point_type != POINT_MG_CORNER ) continue;
 
             // Find the gradient
-            SPMeshGradient *gradient = SP_MESHGRADIENT( getGradient (d->item, d->fill_or_stroke) );
+            SPMesh *gradient = SP_MESH( getGradient (d->item, d->fill_or_stroke) );
 
             // Collect points together for same gradient
             points[gradient].push_back( d->point_i );
@@ -351,8 +351,8 @@ sp_mesh_context_corner_operation (MeshTool *rc, MeshCornerOperation operation )
     }
 
     // Loop over meshes.
-    for( std::map<SPMeshGradient*, std::vector<guint> >::const_iterator iter = points.begin(); iter != points.end(); ++iter) {
-        SPMeshGradient *mg = SP_MESHGRADIENT( iter->first );
+    for( std::map<SPMesh*, std::vector<guint> >::const_iterator iter = points.begin(); iter != points.end(); ++iter) {
+        SPMesh *mg = SP_MESH( iter->first );
         if( iter->second.size() > 0 ) {
             guint noperation = 0;
             switch (operation) {

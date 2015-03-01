@@ -1,26 +1,26 @@
-#ifndef SP_MESH_GRADIENT_H
-#define SP_MESH_GRADIENT_H
+#ifndef SP_MESH_H
+#define SP_MESH_H
 
 /** \file
- * SPMeshGradient: SVG <meshgradient> implementation.
+ * SPMesh: SVG <mesh> implementation.
  */
 
 #include "svg/svg-length.h"
 #include "sp-gradient.h"
 
-#define SP_MESHGRADIENT(obj) (dynamic_cast<SPMeshGradient*>((SPObject*)obj))
-#define SP_IS_MESHGRADIENT(obj) (dynamic_cast<const SPMeshGradient*>((SPObject*)obj) != NULL)
+#define SP_MESH(obj) (dynamic_cast<SPMesh*>((SPObject*)obj))
+#define SP_IS_MESH(obj) (dynamic_cast<const SPMesh*>((SPObject*)obj) != NULL)
 
 /** Mesh gradient. */
-class SPMeshGradient : public SPGradient {
+class SPMesh : public SPGradient {
 public:
-	SPMeshGradient();
-	virtual ~SPMeshGradient();
+	SPMesh();
+	virtual ~SPMesh();
 
     SVGLength x;  // Upper left corner of mesh
     SVGLength y;  // Upper right corner of mesh
-    SPMeshSmooth smooth;
-    bool smooth_set;
+    SPMeshType type;
+    bool type_set;
     virtual cairo_pattern_t* pattern_new(cairo_t *ct, Geom::OptRect const &bbox, double opacity);
 
 protected:
@@ -29,7 +29,7 @@ protected:
 	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, unsigned int flags);
 };
 
-#endif /* !SP_MESH_GRADIENT_H */
+#endif /* !SP_MESH_H */
 
 /*
   Local Variables:

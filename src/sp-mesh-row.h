@@ -2,7 +2,7 @@
 #define SEEN_SP_MESHROW_H
 
 /** \file
- * SPMeshRow: SVG <meshRow> implementation.
+ * SPMeshrow: SVG <meshrow> implementation.
  */
 /*
  * Authors: Tavmjong Bah
@@ -13,17 +13,17 @@
 
 #include "sp-object.h"
 
-#define SP_MESHROW(obj) (dynamic_cast<SPMeshRow*>((SPObject*)obj))
-#define SP_IS_MESHROW(obj) (dynamic_cast<const SPMeshRow*>((SPObject*)obj) != NULL)
+#define SP_MESHROW(obj) (dynamic_cast<SPMeshrow*>((SPObject*)obj))
+#define SP_IS_MESHROW(obj) (dynamic_cast<const SPMeshrow*>((SPObject*)obj) != NULL)
 
-/** Gradient MeshRow. */
-class SPMeshRow : public SPObject {
+/** Gradient Meshrow. */
+class SPMeshrow : public SPObject {
 public:
-	SPMeshRow();
-	virtual ~SPMeshRow();
+	SPMeshrow();
+	virtual ~SPMeshrow();
 
-    SPMeshRow* getNextMeshRow();
-    SPMeshRow* getPrevMeshRow();
+    SPMeshrow* getNextMeshrow();
+    SPMeshrow* getPrevMeshrow();
 
 protected:
 	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);

@@ -1,6 +1,6 @@
 /** \file
  * SPGradient, SPStop, SPLinearGradient, SPRadialGradient,
- * SPMeshGradient, SPMeshRow, SPMeshPatch
+ * SPMesh, SPMeshRow, SPMeshPatch
  */
 /*
  * Authors:
@@ -44,7 +44,7 @@
 #include "sp-gradient-reference.h"
 #include "sp-linear-gradient.h"
 #include "sp-radial-gradient.h"
-#include "sp-mesh-gradient.h"
+#include "sp-mesh.h"
 #include "sp-mesh-row.h"
 #include "sp-mesh-patch.h"
 #include "sp-stop.h"
@@ -121,7 +121,7 @@ bool SPGradient::isEquivalent(SPGradient *that)
         else if (
             (SP_IS_LINEARGRADIENT(this) && SP_IS_LINEARGRADIENT(that)) ||
             (SP_IS_RADIALGRADIENT(this) && SP_IS_RADIALGRADIENT(that)) ||
-            (SP_IS_MESHGRADIENT(this) && SP_IS_MESHGRADIENT(that))) {
+            (SP_IS_MESH(this)           && SP_IS_MESH(that))) {
             if(!this->isAligned(that))break;
         }
         else { break; }  // this should never happen, some unhandled type of gradient
@@ -206,9 +206,9 @@ bool SPGradient::isAligned(SPGradient *that)
                     (sg->fy.computed != tg->fy.computed)  ) { break; }
             } else if(  sg->cx._set || sg->cy._set || sg->fx._set || sg->fy._set || sg->r._set ) { break; } // some mix of set and not set
             // none set? assume aligned and fall through
-        } else if (SP_IS_MESHGRADIENT(this) && SP_IS_MESHGRADIENT(that)) {
-            SPMeshGradient *sg=SP_MESHGRADIENT(this);
-            SPMeshGradient *tg=SP_MESHGRADIENT(that);
+        } else if (SP_IS_MESH(this) && SP_IS_MESH(that)) {
+            SPMesh *sg=SP_MESH(this);
+            SPMesh *tg=SP_MESH(that);
  
             if( sg->x._set  !=  !tg->x._set) { break; }
             if( sg->y._set  !=  !tg->y._set) { break; }
@@ -508,9 +508,9 @@ void SPGradient::modified(guint flags)
     if (flags & SP_OBJECT_CHILD_MODIFIED_FLAG) {
         // CPPIFY
         // This comparison has never worked (i. e. always evaluated to false),
-        // the right value would have been SP_TYPE_MESHGRADIENT
+        // the right value would have been SP_TYPE_MESH
         //if( this->get_type() != SP_GRADIENT_TYPE_MESH ) {
-//        if (!SP_IS_MESHGRADIENT(this)) {
+//        if (!SP_IS_MESH(this)) {
 //            this->invalidateVector();
 //        } else {
 //            this->invalidateArray();
@@ -522,7 +522,7 @@ void SPGradient::modified(guint flags)
         // CPPIFY
         // see above
         //if( this->get_type() != SP_GRADIENT_TYPE_MESH ) {
-//        if (!SP_IS_MESHGRADIENT(this)) {
+//        if (!SP_IS_MESH(this)) {
 //            this->ensureVector();
 //        } else {
 //            this->ensureArray();
@@ -1014,12 +1014,12 @@ void SPGradient::rebuildArray()
 {
     // std::cout << "SPGradient::rebuildArray()" << std::endl;
 
-    if( !SP_IS_MESHGRADIENT(this) ) {
+    if( !SP_IS_MESH(this) ) {
         g_warning( "SPGradient::rebuildArray() called for non-mesh gradient" );
         return;
     }
 
-    array.read( SP_MESHGRADIENT( this ) );
+    array.read( SP_MESH( this ) );
 
     has_patches = false;
     for ( SPObject *ro = firstChild() ; ro ; ro = ro->getNext() ) {
@@ -1139,7 +1139,7 @@ sp_gradient_create_preview_pattern(SPGradient *gr, double width)
 
     // CPPIFY
     //if( gr->get_type() != SP_GRADIENT_TYPE_MESH ) {
-    if (!SP_IS_MESHGRADIENT(gr)) {
+    if (!SP_IS_MESH(gr)) {
         gr->ensureVector();
 
         pat = cairo_pattern_create_linear(0, 0, width, 0);

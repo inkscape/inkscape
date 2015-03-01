@@ -36,7 +36,7 @@
 #include "sp-linear-gradient.h"
 #include "sp-marker.h"
 #include "sp-mask.h"
-#include "sp-mesh-gradient.h"
+#include "sp-mesh.h"
 #include "sp-mesh-patch.h"
 #include "sp-mesh-row.h"
 #include "sp-metadata.h"
@@ -168,12 +168,12 @@ SPObject *SPFactory::createObject(std::string const& id)
         ret = new SPMarker;
     else if (id == "svg:mask")
         ret = new SPMask;
-    else if (id == "svg:meshGradient")
-        ret = new SPMeshGradient;
-    else if (id == "svg:meshPatch")
-        ret = new SPMeshPatch;
-    else if (id == "svg:meshRow")
-        ret = new SPMeshRow;
+    else if (id == "svg:mesh")
+        ret = new SPMesh;
+    else if (id == "svg:meshpatch")
+        ret = new SPMeshpatch;
+    else if (id == "svg:meshrow")
+        ret = new SPMeshrow;
     else if (id == "svg:metadata")
         ret = new SPMetadata;
     else if (id == "svg:missing-glyph")

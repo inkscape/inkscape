@@ -39,12 +39,6 @@ enum SPGradientType {
     SP_GRADIENT_TYPE_MESH
 };
 
-enum SPGradientMeshType {
-    SP_GRADIENT_MESH_TYPE_UNKNOWN,
-    SP_GRADIENT_MESH_TYPE_NORMAL,
-    SP_GRADIENT_MESH_TYPE_CONICAL
-};
-
 enum SPGradientState {
     SP_GRADIENT_STATE_UNKNOWN,
     SP_GRADIENT_STATE_VECTOR,
@@ -216,7 +210,7 @@ sp_gradient_pattern_common_setup(cairo_pattern_t *cp,
 void sp_gradient_repr_write_vector(SPGradient *gr);
 void sp_gradient_repr_clear_vector(SPGradient *gr);
 
-void sp_meshgradient_repr_write(SPMeshGradient *mg);
+void sp_mesh_repr_write(SPMesh *mg);
 
 cairo_pattern_t *sp_gradient_create_preview_pattern(SPGradient *gradient, double width);
 

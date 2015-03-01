@@ -154,8 +154,8 @@ ink_common_sources +=	\
 	sp-marker-loc.h							\
 	sp-mask.cpp sp-mask.h						\
 	sp-metadata.cpp sp-metadata.h					\
+	sp-mesh.cpp sp-mesh.h						\
 	sp-mesh-array.cpp sp-mesh-array.h				\
-	sp-mesh-gradient.cpp sp-mesh-gradient.h				\
 	sp-mesh-patch.cpp sp-mesh-patch.h				\
 	sp-mesh-row.cpp sp-mesh-row.h					\
         sp-missing-glyph.cpp sp-missing-glyph.h \

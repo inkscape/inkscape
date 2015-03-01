@@ -2,7 +2,7 @@
 #define SEEN_SP_MESHPATCH_H
 
 /** \file
- * SPMeshPatch: SVG <meshpatch> implementation.
+ * SPMeshpatch: SVG <meshpatch> implementation.
  */
 /*
  * Authors: Tavmjong Bah
@@ -15,17 +15,17 @@
 #include <glibmm/ustring.h>
 #include "sp-object.h"
 
-#define SP_MESHPATCH(obj) (dynamic_cast<SPMeshPatch*>((SPObject*)obj))
-#define SP_IS_MESHPATCH(obj) (dynamic_cast<const SPMeshPatch*>((SPObject*)obj) != NULL)
+#define SP_MESHPATCH(obj) (dynamic_cast<SPMeshpatch*>((SPObject*)obj))
+#define SP_IS_MESHPATCH(obj) (dynamic_cast<const SPMeshpatch*>((SPObject*)obj) != NULL)
 
-/** Gradient MeshPatch. */
-class SPMeshPatch : public SPObject {
+/** Gradient Meshpatch. */
+class SPMeshpatch : public SPObject {
 public:
-	SPMeshPatch();
-	virtual ~SPMeshPatch();
+	SPMeshpatch();
+	virtual ~SPMeshpatch();
 
-    SPMeshPatch* getNextMeshPatch();
-    SPMeshPatch* getPrevMeshPatch();
+    SPMeshpatch* getNextMeshpatch();
+    SPMeshpatch* getPrevMeshpatch();
     Glib::ustring * tensor_string;
     //SVGLength tx[4];  // Tensor points
     //SVGLength ty[4];  // Tensor points

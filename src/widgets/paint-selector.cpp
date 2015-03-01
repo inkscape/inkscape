@@ -37,8 +37,8 @@
 
 #include "sp-color-notebook.h"
 #include "sp-linear-gradient.h"
-#include "sp-mesh-gradient.h"
 #include "sp-radial-gradient.h"
+#include "sp-mesh.h"
 /* fixme: Move it from dialogs to here */
 #include "gradient-selector.h"
 #include <inkscape.h>
@@ -777,7 +777,7 @@ static void sp_paint_selector_set_mode_gradient(SPPaintSelector *psel, SPPaintSe
     }
 #ifdef WITH_MESH
     else {
-        SP_GRADIENT_SELECTOR(gsel)->setMode(SPGradientSelector::MODE_RADIAL);
+        SP_GRADIENT_SELECTOR(gsel)->setMode(SPGradientSelector::MODE_MESH);
         gtk_label_set_markup(GTK_LABEL(psel->label), _("<b>Mesh gradient</b>"));
     }
 #endif
@@ -1244,7 +1244,7 @@ SPPaintSelector::Mode SPPaintSelector::getModeForStyle(SPStyle const & style, Fi
         } else if (SP_IS_RADIALGRADIENT(server)) {
             mode = MODE_GRADIENT_RADIAL;
 #ifdef WITH_MESH
-        } else if (SP_IS_MESHGRADIENT(server)) {
+        } else if (SP_IS_MESH(server)) {
             mode = MODE_GRADIENT_MESH;
 #endif
         } else if (SP_IS_PATTERN(server)) {
