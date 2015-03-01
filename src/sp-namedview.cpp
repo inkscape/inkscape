@@ -261,6 +261,8 @@ void SPNamedView::build(SPDocument *document, Inkscape::XML::Node *repr) {
         Geom::Rect viewbox = document->getRoot()->viewBox;
         double factor = svgwidth.value(unit_table.primary(Inkscape::Util::UNIT_TYPE_LINEAR)) / viewbox.width(); 
         svg_units = unit_table.findUnit(factor, Inkscape::Util::UNIT_TYPE_LINEAR);
+    } else {  // force the document units to be px
+        repr->setAttribute("inkscape:document-units", "px");
     }
 }
 
@@ -551,7 +553,7 @@ void SPNamedView::set(unsigned int key, const gchar* value) {
             static Inkscape::Util::Unit const *px = unit_table.getUnit("px");
             Inkscape::Util::Unit const *new_unit = px;
 
-            if (value) {
+            if (value && document->getRoot()->viewBox_set) {
                 Inkscape::Util::Unit const *const req_unit = unit_table.getUnit(value);
                 if ( !unit_table.hasUnit(value) ) {
                     g_warning("Unrecognized unit `%s'", value);
