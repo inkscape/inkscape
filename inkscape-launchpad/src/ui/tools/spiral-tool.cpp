@@ -45,19 +45,9 @@
 
 using Inkscape::DocumentUndo;
 
-#include "ui/tool-factory.h"
-
 namespace Inkscape {
 namespace UI {
 namespace Tools {
-
-namespace {
-	ToolBase* createSpiralContext() {
-		return new SpiralTool();
-	}
-
-	bool spiralContextRegistered = ToolFactory::instance().registerObject("/tools/shapes/spiral", createSpiralContext);
-}
 
 const std::string& SpiralTool::getPrefsPath() {
 	return SpiralTool::prefsPath;

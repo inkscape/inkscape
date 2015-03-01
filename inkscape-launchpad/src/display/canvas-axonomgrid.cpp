@@ -50,7 +50,7 @@
 #include "svg/svg-color.h"
 #include "2geom/line.h"
 #include "2geom/angle.h"
-#include "util/mathfns.h"
+#include "helper/mathfns.h"
 #include "round.h"
 #include "util/units.h"
 

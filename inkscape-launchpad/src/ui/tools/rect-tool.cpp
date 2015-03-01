@@ -46,19 +46,9 @@
 
 using Inkscape::DocumentUndo;
 
-#include "ui/tool-factory.h"
-
 namespace Inkscape {
 namespace UI {
 namespace Tools {
-
-namespace {
-	ToolBase* createRectContext() {
-		return new RectTool();
-	}
-
-	bool rectContextRegistered = ToolFactory::instance().registerObject("/tools/shapes/rect", createRectContext);
-}
 
 const std::string& RectTool::getPrefsPath() {
 	return RectTool::prefsPath;

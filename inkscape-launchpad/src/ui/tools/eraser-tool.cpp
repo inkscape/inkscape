@@ -84,19 +84,9 @@ using Inkscape::DocumentUndo;
 #define DRAG_DEFAULT 1.0
 #define DRAG_MAX 1.0
 
-#include "ui/tool-factory.h"
-
 namespace Inkscape {
 namespace UI {
 namespace Tools {
-
-namespace {
-	ToolBase* createEraserContext() {
-		return new EraserTool();
-	}
-
-	bool eraserContextRegistered = ToolFactory::instance().registerObject("/tools/eraser", createEraserContext);
-}
 
 const std::string& EraserTool::getPrefsPath() {
 	return EraserTool::prefsPath;

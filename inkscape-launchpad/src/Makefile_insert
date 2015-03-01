@@ -35,23 +35,16 @@ ink_common_sources +=	\
 	document.cpp document.h document-private.h			\
 	document-subset.cpp document-subset.h				\
 	document-undo.cpp document-undo.h \
-	doxygen-main.cpp						\
 	ege-color-prof-tracker.cpp ege-color-prof-tracker.h		\
 	enums.h								\
 	event-log.cpp event-log.h event.h				\
 	extract-uri.cpp extract-uri.h					\
-	factory.h							\
 	file.cpp file.h							\
 	fill-or-stroke.h						\
 	filter-chemistry.cpp filter-chemistry.h				\
 	filter-enums.cpp filter-enums.h					\
-	gc-alloc.h							\
-	gc-anchored.h gc-anchored.cpp					\
-	gc-core.h							\
-	gc.cpp								\
-	gc-finalized.h gc-finalized.cpp					\
-	gc-managed.h							\
-	gc-soft-ptr.h							\
+	gc-anchored.cpp	gc-anchored.h                                   \
+	gc-finalized.cpp gc-finalized.h                                 \
 	gradient-chemistry.cpp gradient-chemistry.h			\
 	gradient-drag.cpp gradient-drag.h				\
 	graphlayout.cpp graphlayout.h					\
@@ -124,7 +117,7 @@ ink_common_sources +=	\
 	sp-defs.cpp sp-defs.h						\
 	sp-desc.cpp sp-desc.h						\
 	sp-ellipse.cpp sp-ellipse.h					\
-	sp-factory.h							\
+	sp-factory.h sp-factory.cpp					\
 	sp-filter.cpp sp-filter.h number-opt-number.h			\
 	sp-filter-primitive.cpp	sp-filter-primitive.h			\
 	sp-filter-reference.cpp	sp-filter-reference.h			\
@@ -161,8 +154,8 @@ ink_common_sources +=	\
 	sp-marker-loc.h							\
 	sp-mask.cpp sp-mask.h						\
 	sp-metadata.cpp sp-metadata.h					\
+	sp-mesh.cpp sp-mesh.h						\
 	sp-mesh-array.cpp sp-mesh-array.h				\
-	sp-mesh-gradient.cpp sp-mesh-gradient.h				\
 	sp-mesh-patch.cpp sp-mesh-patch.h				\
 	sp-mesh-row.cpp sp-mesh-row.h					\
         sp-missing-glyph.cpp sp-missing-glyph.h \

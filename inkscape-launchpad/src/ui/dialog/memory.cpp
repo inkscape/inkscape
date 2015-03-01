@@ -20,7 +20,7 @@
 #include <gtkmm/liststore.h>
 #include <gtkmm/treeview.h>
 
-#include "gc-core.h"
+#include "inkgc/gc-core.h"
 #include "debug/heap.h"
 #include "verbs.h"
 

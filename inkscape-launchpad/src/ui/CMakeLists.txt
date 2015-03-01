@@ -8,6 +8,7 @@ set(ui_SRC
 	object-edit.cpp 
 	previewholder.cpp
 	shape-editor.cpp
+	tool-factory.cpp
 	tools-switch.cpp
 	uxmanager.cpp
 

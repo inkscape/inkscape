@@ -33,7 +33,7 @@
 #include "sp-guide.h"
 #include "preferences.h"
 #include "ui/tools/tool-base.h"
-#include "util/mathfns.h"
+#include "helper/mathfns.h"
 using std::vector;
 using Inkscape::Util::round_to_upper_multiple_plus;
 using Inkscape::Util::round_to_lower_multiple_plus;

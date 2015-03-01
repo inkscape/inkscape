@@ -16,17 +16,8 @@
 #include "style.h"
 #include "xml/repr.h"
 
-#include "sp-factory.h"
 #include "sp-item.h"
 #include "style-internal.h"
-
-namespace {
-     SPObject* createSolidColor() {
-         return new SPSolidColor();
-     }
-
-     bool solidColorRegistered = SPFactory::instance().registerObject("svg:solidColor", createSolidColor);
-}
 
 
 /*

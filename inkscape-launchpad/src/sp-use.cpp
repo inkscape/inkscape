@@ -13,10 +13,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
-
 #include <cstring>
 #include <string>
 
@@ -41,14 +37,6 @@
 #include "sp-shape.h"
 #include "sp-text.h"
 #include "sp-flowtext.h"
-
-namespace {
-    SPObject* createUse() {
-        return new SPUse();
-    }
-
-    bool useRegistered = SPFactory::instance().registerObject("svg:use", createUse);
-}
 
 SPUse::SPUse()
     : SPItem(),
@@ -482,7 +470,7 @@ void SPUse::href_changed() {
         if (refobj) {
             Inkscape::XML::Node *childrepr = refobj->getRepr();
 
-            SPObject* obj = SPFactory::instance().createObject(NodeTraits::get_type_string(*childrepr));
+            SPObject* obj = SPFactory::createObject(NodeTraits::get_type_string(*childrepr));
 
             SPItem *item = dynamic_cast<SPItem *>(obj);
             if (item) {

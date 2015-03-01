@@ -307,7 +307,7 @@ void sp_rect_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
     UnitTracker* tracker = new UnitTracker(Inkscape::Util::UNIT_TYPE_LINEAR);
     //tracker->addUnit( SP_UNIT_PERCENT, 0 );
     // fixme: add % meaning per cent of the width/height
-    tracker->setActiveUnit( desktop->getNamedView()->display_units );
+    tracker->setActiveUnit(unit_table.getUnit("px"));
     g_object_set_data( holder, "tracker", tracker );
 
     /* W */

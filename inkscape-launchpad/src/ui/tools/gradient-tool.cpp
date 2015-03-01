@@ -51,21 +51,11 @@
 
 using Inkscape::DocumentUndo;
 
-#include "ui/tool-factory.h"
-
 namespace Inkscape {
 namespace UI {
 namespace Tools {
 
 static void sp_gradient_drag(GradientTool &rc, Geom::Point const pt, guint state, guint32 etime);
-
-namespace {
-	ToolBase* createGradientContext() {
-		return new GradientTool();
-	}
-
-	bool gradientContextRegistered = ToolFactory::instance().registerObject("/tools/gradient", createGradientContext);
-}
 
 const std::string& GradientTool::getPrefsPath() {
 	return GradientTool::prefsPath;

@@ -28,16 +28,6 @@
 
 #include "sp-spiral.h"
 
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createSpiral() {
-		return new SPSpiral();
-	}
-
-	bool spiralRegistered = SPFactory::instance().registerObject("spiral", createSpiral);
-}
-
 SPSpiral::SPSpiral()
     : SPShape()
     , cx(0)

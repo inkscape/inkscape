@@ -23,15 +23,18 @@ endif
 
 
 noinst_LIBRARIES =	\
+        libinkscape.a		        \
 	libcroco/libcroco.a		\
 	libavoid/libavoid.a		\
 	$(internal_GDL)			\
 	libuemf/libuemf.a   		\
 	libcola/libcola.a		\
+        inkgc/libinkgc.a		\
 	libvpsc/libvpsc.a		\
 	livarot/libvarot.a		\
 	2geom/lib2geom.a		\
 	libdepixelize/libdepixelize.a	\
+	util/libutil.a			\
 	libinkversion.a
 
 all_libs =			\
@@ -114,6 +117,7 @@ include filters/Makefile_insert
 include helper/Makefile_insert
 include io/Makefile_insert
 include libcroco/Makefile_insert
+include inkgc/Makefile_insert
 include libgdl/Makefile_insert
 include libnrtype/Makefile_insert
 include libavoid/Makefile_insert
@@ -194,13 +198,13 @@ DISTCLEANFILES =	\
 # ################################################
 
 # this should speed up the build
-#libinkscape_a_SOURCES = $(ink_common_sources)
+libinkscape_a_SOURCES = $(ink_common_sources)
 
-inkscape_SOURCES += main.cpp $(ink_common_sources) $(win32_sources)
+inkscape_SOURCES += main.cpp $(win32_sources)
 inkscape_LDADD = $(all_libs)
 inkscape_LDFLAGS = $(kdeldflags) $(mwindows)
 
-inkview_SOURCES += inkview.cpp $(ink_common_sources) $(win32_sources)
+inkview_SOURCES += inkview.cpp $(win32_sources)
 inkview_LDADD = $(all_libs)
 inkview_LDFLAGS = $(mwindows) 
 

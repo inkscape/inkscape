@@ -26,16 +26,6 @@
 #include "sp-symbol.h"
 #include "document.h"
 
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createSymbol() {
-		return new SPSymbol();
-	}
-
-	bool symbolRegistered = SPFactory::instance().registerObject("svg:symbol", createSymbol);
-}
-
 SPSymbol::SPSymbol() : SPGroup(), SPViewBox() {
 }
 

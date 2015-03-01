@@ -1949,7 +1949,7 @@ UINT_PTR CALLBACK FileSaveDialogImplWin32::GetSaveFileName_hookproc(
             pImpl = reinterpret_cast<FileSaveDialogImplWin32*>(ofn->lCustData);
 
             // Create the Title label and edit control
-            pImpl->_title_label = CreateWindowEx(0, "STATIC", "Title:",
+            pImpl->_title_label = CreateWindowEx(0, "STATIC", _("Title:"),
                                         WS_VISIBLE|WS_CHILD,
                                         CW_USEDEFAULT, CW_USEDEFAULT, rCB1.left-rST.left, rST.bottom-rST.top,
                                         hParentWnd, NULL, hInstance, NULL);

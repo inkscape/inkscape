@@ -52,7 +52,6 @@
 #include "xml/node-event-vector.h"
 #include "xml/repr.h"
 #include <gtk/gtk.h>
-#include "ui/tool-factory.h"
 
 using Inkscape::ControlManager;
 using Inkscape::DocumentUndo;
@@ -70,14 +69,6 @@ static void sp_text_context_forget_text(TextTool *tc);
 static gint sptc_focus_in(GtkWidget *widget, GdkEventFocus *event, TextTool *tc);
 static gint sptc_focus_out(GtkWidget *widget, GdkEventFocus *event, TextTool *tc);
 static void sptc_commit(GtkIMContext *imc, gchar *string, TextTool *tc);
-
-namespace {
-    ToolBase* createTextContext() {
-        return new TextTool();
-    }
-
-    bool textContextRegistered = ToolFactory::instance().registerObject("/tools/text", createTextContext);
-}
 
 const std::string& TextTool::getPrefsPath() {
     return TextTool::prefsPath;

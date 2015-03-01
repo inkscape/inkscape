@@ -23,10 +23,6 @@
  *
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-
 #include <2geom/affine.h>
 #include <libnrtype/FontFactory.h>
 #include <libnrtype/font-instance.h>
@@ -55,21 +51,11 @@
 
 #include "text-editing.h"
 
-#include "sp-factory.h"
-
 // For SVG 2 text flow
 #include "livarot/Path.h"
 #include "livarot/Shape.h"
 #include "sp-shape.h"
 #include "display/curve.h"
-
-namespace {
-	SPObject* createText() {
-		return new SPText();
-	}
-
-	bool textRegistered = SPFactory::instance().registerObject("svg:text", createText);
-}
 
 /*#####################################################
 #  SPTEXT

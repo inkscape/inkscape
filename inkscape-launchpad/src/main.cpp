@@ -52,7 +52,7 @@
 #include <glib-object.h>
 #include <gtk/gtk.h>
 
-#include "gc-core.h"
+#include "inkgc/gc-core.h"
 
 #ifdef AND
 #undef AND

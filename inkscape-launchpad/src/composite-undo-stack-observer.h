@@ -10,7 +10,7 @@
 #ifndef SEEN_COMPOSITE_UNDO_COMMIT_OBSERVER_H
 #define SEEN_COMPOSITE_UNDO_COMMIT_OBSERVER_H
 
-#include "gc-alloc.h"
+#include "inkgc/gc-alloc.h"
 #include "undo-stack-observer.h"
 
 #include <list>

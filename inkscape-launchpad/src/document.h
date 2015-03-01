@@ -21,7 +21,7 @@
 #include <sigc++/sigc++.h>
 #include "libcroco/cr-cascade.h"
 #include <2geom/forward.h>
-#include "gc-managed.h"
+#include "inkgc/gc-managed.h"
 #include "gc-finalized.h"
 #include "gc-anchored.h"
 #include <glibmm/ustring.h>

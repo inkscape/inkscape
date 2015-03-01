@@ -61,14 +61,6 @@ using std::strstr;
 # define debug(f, a...) /* */
 #endif
 
-namespace {
-    SPObject* createObject() {
-        return new SPObject();
-    }
-
-    bool gridRegistered = SPFactory::instance().registerObject("inkscape:grid", createObject);
-}
-
 guint update_in_progress = 0; // guard against update-during-update
 
 Inkscape::XML::NodeEventVector object_event_vector = {
@@ -115,7 +107,7 @@ static gchar *sp_object_get_unique_id(SPObject    *object,
 SPObject::SPObject()
     : cloned(0), uflags(0), mflags(0), hrefcount(0), _total_hrefcount(0),
       document(NULL), parent(NULL), children(NULL), _last_child(NULL),
-      next(NULL), id(NULL), repr(NULL), refCount(1),
+      next(NULL), id(NULL), repr(NULL), refCount(1),hrefList(std::list<SPObject*>()),
       _successor(NULL), _collection_policy(SPObject::COLLECT_WITH_PARENT),
       _label(NULL), _default_label(NULL)
 {
@@ -254,7 +246,7 @@ SPObject *sp_object_unref(SPObject *object, SPObject *owner)
     return NULL;
 }
 
-SPObject *sp_object_href(SPObject *object, gpointer /*owner*/)
+SPObject *sp_object_href(SPObject *object, SPObject* owner)
 {
     g_return_val_if_fail(object != NULL, NULL);
     g_return_val_if_fail(SP_IS_OBJECT(object), NULL);
@@ -262,10 +254,13 @@ SPObject *sp_object_href(SPObject *object, gpointer /*owner*/)
     object->hrefcount++;
     object->_updateTotalHRefCount(1);
 
+    if(owner)
+        object->hrefList.push_front(owner);
+
     return object;
 }
 
-SPObject *sp_object_hunref(SPObject *object, gpointer /*owner*/)
+SPObject *sp_object_hunref(SPObject *object, SPObject* owner)
 {
     g_return_val_if_fail(object != NULL, NULL);
     g_return_val_if_fail(SP_IS_OBJECT(object), NULL);
@@ -273,6 +268,9 @@ SPObject *sp_object_hunref(SPObject *object, gpointer /*owner*/)
 
     object->hrefcount--;
     object->_updateTotalHRefCount(-1);
+
+    if(owner)
+        object->hrefList.remove(owner);
 
     return NULL;
 }
@@ -623,7 +621,7 @@ void SPObject::child_added(Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
 
     const std::string type_string = NodeTraits::get_type_string(*child);
 
-    SPObject* ochild = SPFactory::instance().createObject(type_string);
+    SPObject* ochild = SPFactory::createObject(type_string);
     if (ochild == NULL) {
         // Currenty, there are many node types that do not have
         // corresponding classes in the SPObject tree.
@@ -682,7 +680,7 @@ void SPObject::build(SPDocument *document, Inkscape::XML::Node *repr) {
     for (Inkscape::XML::Node *rchild = repr->firstChild() ; rchild != NULL; rchild = rchild->next()) {
         const std::string typeString = NodeTraits::get_type_string(*rchild);
 
-        SPObject* child = SPFactory::instance().createObject(typeString);
+        SPObject* child = SPFactory::createObject(typeString);
         if (child == NULL) {
             // Currenty, there are many node types that do not have
             // corresponding classes in the SPObject tree.

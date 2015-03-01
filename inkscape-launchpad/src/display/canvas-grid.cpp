@@ -35,7 +35,7 @@
 #include "ui/widget/registered-widget.h"
 #include "desktop.h"
 #include "sp-canvas-util.h"
-#include "util/mathfns.h"
+#include "helper/mathfns.h"
 
 #include "display/cairo-utils.h"
 #include "display/canvas-axonomgrid.h"
@@ -50,7 +50,7 @@
 #include "sp-root.h"
 #include "svg/svg-color.h"
 #include "svg/stringstream.h"
-#include "util/mathfns.h"
+#include "helper/mathfns.h"
 #include "xml/node-event-vector.h"
 #include "verbs.h"
 #include "display/sp-canvas.h"

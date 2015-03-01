@@ -33,16 +33,6 @@
 
 /* Metadata base class */
 
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createMetadata() {
-		return new SPMetadata();
-	}
-
-	bool metadataRegistered = SPFactory::instance().registerObject("svg:metadata", createMetadata);
-}
-
 SPMetadata::SPMetadata() : SPObject() {
 }
 

@@ -31,16 +31,6 @@
 
 #define noRECT_VERBOSE
 
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createRect() {
-		return new SPRect();
-	}
-
-	bool rectRegistered = SPFactory::instance().registerObject("svg:rect", createRect);
-}
-
 
 SPRect::SPRect() : SPShape() {
 }

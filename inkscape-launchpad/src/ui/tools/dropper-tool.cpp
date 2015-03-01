@@ -52,19 +52,9 @@ using Inkscape::DocumentUndo;
 static GdkCursor *cursor_dropper_fill = NULL;
 static GdkCursor *cursor_dropper_stroke = NULL;
 
-#include "ui/tool-factory.h"
-
 namespace Inkscape {
 namespace UI {
 namespace Tools {
-
-namespace {
-	ToolBase* createDropperContext() {
-		return new DropperTool();
-	}
-
-	bool dropperContextRegistered = ToolFactory::instance().registerObject("/tools/dropper", createDropperContext);
-}
 
 const std::string& DropperTool::getPrefsPath() {
 	return DropperTool::prefsPath;

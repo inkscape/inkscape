@@ -49,21 +49,11 @@ using Inkscape::ControlManager;
 using Inkscape::CTLINE_SECONDARY;
 using Inkscape::Util::unit_table;
 
-#include "ui/tool-factory.h"
-
 namespace Inkscape {
 namespace UI {
 namespace Tools {
 
 std::vector<Inkscape::Display::TemporaryItem*> measure_tmp_items;
-
-namespace {
-	ToolBase* createMeasureContext() {
-		return new MeasureTool();
-	}
-
-	bool measureContextRegistered = ToolFactory::instance().registerObject("/tools/measure", createMeasureContext);
-}
 
 const std::string& MeasureTool::getPrefsPath() {
 	return MeasureTool::prefsPath;

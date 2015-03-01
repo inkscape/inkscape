@@ -14,10 +14,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-
 #include "attributes.h"
 #include "svg/svg.h"
 #include "turbulence.h"
@@ -27,16 +23,6 @@
 
 #include "display/nr-filter.h"
 #include "display/nr-filter-turbulence.h"
-
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createTurbulence() {
-		return new SPFeTurbulence();
-	}
-
-	bool turbulenceRegistered = SPFactory::instance().registerObject("svg:feTurbulence", createTurbulence);
-}
 
 SPFeTurbulence::SPFeTurbulence() : SPFilterPrimitive() {
 	this->stitchTiles = 0;

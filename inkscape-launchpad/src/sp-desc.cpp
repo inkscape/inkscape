@@ -9,22 +9,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-
 #include "sp-desc.h"
 #include "xml/repr.h"
-
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createDesc() {
-		return new SPDesc();
-	}
-
-	bool descRegistered = SPFactory::instance().registerObject("svg:desc", createDesc);
-}
 
 SPDesc::SPDesc() : SPObject() {
 }

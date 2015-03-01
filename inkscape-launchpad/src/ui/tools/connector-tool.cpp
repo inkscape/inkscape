@@ -109,8 +109,6 @@
 
 using Inkscape::DocumentUndo;
 
-#include "ui/tool-factory.h"
-
 namespace Inkscape {
 namespace UI {
 namespace Tools {
@@ -146,14 +144,6 @@ static Inkscape::XML::NodeEventVector layer_repr_events = {
     NULL, /* content_changed */
     NULL  /* order_changed */
 };
-
-namespace {
-	ToolBase* createConnectorContext() {
-		return new ConnectorTool();
-	}
-
-	bool connectorContextRegistered = ToolFactory::instance().registerObject("/tools/connector", createConnectorContext);
-}
 
 const std::string& ConnectorTool::getPrefsPath() {
 	return ConnectorTool::prefsPath;

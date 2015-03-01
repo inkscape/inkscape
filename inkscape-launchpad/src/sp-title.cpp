@@ -9,22 +9,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-
 #include "sp-title.h"
 #include "xml/repr.h"
-
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createTitle() {
-		return new SPTitle();
-	}
-
-	bool titleRegistered = SPFactory::instance().registerObject("svg:title", createTitle);
-}
 
 SPTitle::SPTitle() : SPObject() {
 }

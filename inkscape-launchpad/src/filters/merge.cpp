@@ -11,10 +11,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-
 #include "attributes.h"
 #include "svg/svg.h"
 #include "xml/repr.h"
@@ -23,16 +19,6 @@
 #include "mergenode.h"
 #include "display/nr-filter.h"
 #include "display/nr-filter-merge.h"
-
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createMerge() {
-		return new SPFeMerge();
-	}
-
-	bool mergeRegistered = SPFactory::instance().registerObject("svg:feMerge", createMerge);
-}
 
 SPFeMerge::SPFeMerge() : SPFilterPrimitive() {
 }

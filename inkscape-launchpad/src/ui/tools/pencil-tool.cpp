@@ -43,7 +43,6 @@
 #include "display/sp-canvas.h"
 #include "display/curve.h"
 #include "livarot/Path.h"
-#include "ui/tool-factory.h"
 #include "ui/tool/event-utils.h"
 
 namespace Inkscape {
@@ -54,14 +53,6 @@ static Geom::Point pencil_drag_origin_w(0, 0);
 static bool pencil_within_tolerance = false;
 
 static bool in_svg_plane(Geom::Point const &p) { return Geom::LInfty(p) < 1e18; }
-
-namespace {
-	ToolBase* createPencilContext() {
-		return new PencilTool();
-	}
-
-	bool pencilContextRegistered = ToolFactory::instance().registerObject("/tools/freehand/pencil", createPencilContext);
-}
 
 const std::string& PencilTool::getPrefsPath() {
 	return PencilTool::prefsPath;

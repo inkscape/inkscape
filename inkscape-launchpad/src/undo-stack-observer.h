@@ -10,7 +10,7 @@
 #ifndef SEEN_UNDO_COMMIT_OBSERVER_H
 #define SEEN_UNDO_COMMIT_OBSERVER_H
 
-#include "gc-managed.h"
+#include "inkgc/gc-managed.h"
 
 namespace Inkscape {
 

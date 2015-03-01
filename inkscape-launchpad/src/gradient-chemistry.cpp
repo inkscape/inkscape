@@ -41,7 +41,7 @@
 #include "sp-gradient-vector.h"
 #include "sp-linear-gradient.h"
 #include "sp-radial-gradient.h"
-#include "sp-mesh-gradient.h"
+#include "sp-mesh.h"
 #include "sp-stop.h"
 #include "gradient-drag.h"
 #include "gradient-chemistry.h"
@@ -151,7 +151,7 @@ static SPGradient *sp_gradient_get_private_normalized(SPDocument *document, SPGr
         repr = xml_doc->createElement("svg:radialGradient");
     } else {
         // Rows/patches added in sp_gradient_reset_to_userspace for new meshes.
-        repr = xml_doc->createElement("svg:meshGradient");
+        repr = xml_doc->createElement("svg:mesh");
     }
 
     // privates are garbage-collectable
@@ -413,7 +413,7 @@ SPGradient *sp_gradient_reset_to_userspace(SPGradient *gr, SPItem *item)
         // IN SPMeshNodeArray::create()
         //sp_repr_set_svg_double(repr, "x", bbox->min()[Geom::X]);
         //sp_repr_set_svg_double(repr, "y", bbox->min()[Geom::Y]);
-        SPMeshGradient* mg = SP_MESHGRADIENT( gr );
+        SPMesh* mg = SP_MESH( gr );
         mg->array.create( mg, item, bbox );
     }
 
@@ -758,10 +758,10 @@ guint32 sp_item_gradient_stop_query_style(SPItem *item, GrPointType point_type, 
                 break;
         }
         return 0;
-    } else if (SP_IS_MESHGRADIENT(gradient)) {
+    } else if (SP_IS_MESH(gradient)) {
 
         // Mesh gradient
-        SPMeshGradient *mg = SP_MESHGRADIENT(gradient);
+        SPMesh *mg = SP_MESH(gradient);
 
         switch (point_type) {
             case POINT_MG_CORNER: {
@@ -859,7 +859,7 @@ void sp_item_gradient_stop_set_style(SPItem *item, GrPointType point_type, guint
     } else {
 
         // Mesh gradient
-        SPMeshGradient *mg = SP_MESHGRADIENT(gradient);
+        SPMesh *mg = SP_MESH(gradient);
 
         bool changed = false;
         switch (point_type) {
@@ -1209,8 +1209,8 @@ void sp_item_gradient_set_coords(SPItem *item, GrPointType point_type, guint poi
                 gradient->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
         }
-    } else if (SP_IS_MESHGRADIENT(gradient)) {
-        SPMeshGradient *mg = SP_MESHGRADIENT(gradient);
+    } else if (SP_IS_MESH(gradient)) {
+        SPMesh *mg = SP_MESH(gradient);
         //Geom::Affine new_transform;
         //bool transform_set = false;
 
@@ -1240,7 +1240,7 @@ void sp_item_gradient_set_coords(SPItem *item, GrPointType point_type, guint poi
         }
         if( write_repr ) {
             //std::cout << "Write mesh repr" << std::endl;
-            sp_meshgradient_repr_write( mg );
+            sp_mesh_repr_write( mg );
         }
     }
 
@@ -1346,8 +1346,8 @@ Geom::Point getGradientCoords(SPItem *item, GrPointType point_type, guint point_
                 g_warning( "Bad radial gradient handle type" );
                 break;
         }
-    } else     if (SP_IS_MESHGRADIENT(gradient)) {
-        SPMeshGradient *mg = SP_MESHGRADIENT(gradient);
+    } else     if (SP_IS_MESH(gradient)) {
+        SPMesh *mg = SP_MESH(gradient);
         switch (point_type) {
 
             case POINT_MG_CORNER:

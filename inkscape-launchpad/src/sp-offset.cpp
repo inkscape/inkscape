@@ -43,16 +43,6 @@
 
 class SPDocument;
 
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createOffset() {
-		return new SPOffset();
-	}
-
-	bool offsetRegistered = SPFactory::instance().registerObject("inkscape:offset", createOffset);
-}
-
 #define noOFFSET_VERBOSE
 
 /** \note

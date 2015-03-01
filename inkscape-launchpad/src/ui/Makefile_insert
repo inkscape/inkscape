@@ -21,6 +21,7 @@ ink_common_sources +=		\
 	ui/previewholder.h	\
 	ui/shape-editor.cpp	\
 	ui/shape-editor.h	\
+	ui/tool-factory.cpp	\
 	ui/tool-factory.h	\
 	ui/tools-switch.cpp	\
 	ui/tools-switch.h	\

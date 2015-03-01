@@ -102,7 +102,10 @@ public:
         for ( int i = (static_cast<int>(SVGLength::NONE) + 1); i <= static_cast<int>(SVGLength::LAST_UNIT); i++ ) {
             SVGLength::Unit target = static_cast<SVGLength::Unit>(i);
             // PX is a special case where we don't have a unit string
-            if ( (target != SVGLength::PX) && (target != SVGLength::FOOT) ) {
+            // FOOT and MITRE are not CSS/SVG Units
+            if ( (target != SVGLength::PX) &&
+                 (target != SVGLength::FOOT) &&
+                 (target != SVGLength::MITRE) ) {
                 gchar const* val = sp_svg_length_get_css_units(target);
                 TSM_ASSERT_DIFFERS(i, val, "");
             }

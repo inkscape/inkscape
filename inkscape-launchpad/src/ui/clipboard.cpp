@@ -32,7 +32,7 @@
 #include <glibmm/ustring.h>
 #include <glibmm/i18n.h>
 #include <glib/gstdio.h> // for g_file_set_contents etc., used in _onGet and paste
-#include "gc-core.h"
+#include "inkgc/gc-core.h"
 #include "xml/repr.h"
 #include "inkscape.h"
 #include "io/stringstream.h"
@@ -685,10 +685,18 @@ void ClipboardManagerImpl::_copySelection(Inkscape::Selection *selection)
             sp_repr_css_set(obj_copy, css, "style");
             sp_repr_css_attr_unref(css);
 
+            Geom::Affine transform=item->i2doc_affine();
+
             // write the complete accumulated transform passed to us
             // (we're dealing with unattached representations, so we write to their attributes
             // instead of using sp_item_set_transform)
-            gchar *transform_str = sp_svg_transform_write(item->i2doc_affine());
+            SPUse *use=dynamic_cast<SPUse *>(item);
+            if( use && selection->includes(use->get_original()) ){//we are copying something whose parent is also copied (!)
+                transform = ((SPItem*)(use->get_original()->parent))->i2doc_affine().inverse() * transform;
+            }
+            gchar *transform_str = sp_svg_transform_write(transform );
+
+
             obj_copy->setAttribute("transform", transform_str);
             g_free(transform_str);
         }

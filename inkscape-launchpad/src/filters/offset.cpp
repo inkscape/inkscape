@@ -13,10 +13,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-
 #include "attributes.h"
 #include "svg/svg.h"
 #include "filters/offset.h"
@@ -24,16 +20,6 @@
 #include "xml/repr.h"
 #include "display/nr-filter.h"
 #include "display/nr-filter-offset.h"
-
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createOffset() {
-		return new SPFeOffset();
-	}
-
-	bool offsetRegistered = SPFactory::instance().registerObject("svg:feOffset", createOffset);
-}
 
 SPFeOffset::SPFeOffset() : SPFilterPrimitive() {
     this->dx = 0;

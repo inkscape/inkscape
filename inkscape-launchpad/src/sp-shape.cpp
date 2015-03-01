@@ -47,7 +47,7 @@
 #include "bad-uri-exception.h"
 #include "xml/repr.h"
 
-#include "util/mathfns.h" // for triangle_area()
+#include "helper/mathfns.h" // for triangle_area()
 
 #include "splivarot.h" // for bounding box calculation
 

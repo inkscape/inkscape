@@ -12,10 +12,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-
 #include <glibmm/i18n.h>
 
 #include "sp-switch.h"
@@ -24,16 +20,6 @@
 
 #include <sigc++/functors/ptr_fun.h>
 #include <sigc++/adaptors/bind.h>
-
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createSwitch() {
-		return new SPSwitch();
-	}
-
-	bool switchRegistered = SPFactory::instance().registerObject("svg:switch", createSwitch);
-}
 
 SPSwitch::SPSwitch() : SPGroup() {
     this->_cached_item = 0;

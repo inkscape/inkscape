@@ -30,6 +30,7 @@
 #include "helper/action.h"
 #include "helper/action-context.h"
 #include "preferences.h"
+#include "widgets/icon.h"
 
 #include <glibmm/i18n.h>
 #include <xml/repr.h>
@@ -99,6 +100,15 @@ static void sp_gradient_selector_class_init(SPGradientSelectorClass *klass)
                                         G_TYPE_NONE, 0);
 
     object_class->dispose = sp_gradient_selector_dispose;
+}
+
+static void gradsel_style_button(GtkWidget *gtkbtn, char const *iconName)
+{
+    Gtk::Button *btn = Glib::wrap(GTK_BUTTON(gtkbtn));
+    GtkWidget *child = sp_icon_new(Inkscape::ICON_SIZE_SMALL_TOOLBAR, iconName);
+    gtk_widget_show(child);
+    btn->add(*manage(Glib::wrap(child)));
+    btn->set_relief(Gtk::RELIEF_NONE);
 }
 
 static void sp_gradient_selector_init(SPGradientSelector *sel)
@@ -179,13 +189,8 @@ static void sp_gradient_selector_init(SPGradientSelector *sel)
     //sel->nonsolid.push_back(hb);
     gtk_box_pack_start( GTK_BOX(sel), hb, FALSE, FALSE, 0 );
 
-#if GTK_CHECK_VERSION(3,10,0)
-    sel->add = gtk_button_new_from_icon_name(INKSCAPE_ICON("list-add"), GTK_ICON_SIZE_SMALL_TOOLBAR);
-#else
-    sel->add = gtk_button_new ();
-    GtkWidget *img = gtk_image_new_from_icon_name(INKSCAPE_ICON("list-add"), GTK_ICON_SIZE_SMALL_TOOLBAR);
-    gtk_button_set_image(GTK_BUTTON(sel->add), img);
-#endif
+    sel->add = gtk_button_new();
+    gradsel_style_button(sel->add, INKSCAPE_ICON("list-add"));
 
     sel->nonsolid.push_back(sel->add);
     gtk_box_pack_start (GTK_BOX (hb), sel->add, FALSE, FALSE, 0);
@@ -196,13 +201,8 @@ static void sp_gradient_selector_init(SPGradientSelector *sel)
     gtk_widget_set_tooltip_text( sel->add, _("Create a duplicate gradient"));
 
     // FIXME: Probably better to either use something from the icon naming spec or ship our own "edit-gradient" icon
-#if GTK_CHECK_VERSION(3,10,0)
-    sel->edit = gtk_button_new_from_icon_name(INKSCAPE_ICON("gtk-edit"), GTK_ICON_SIZE_SMALL_TOOLBAR);
-#else
-    sel->edit = gtk_button_new ();
-    img = gtk_image_new_from_icon_name(INKSCAPE_ICON("gtk-edit"), GTK_ICON_SIZE_SMALL_TOOLBAR);
-    gtk_button_set_image(GTK_BUTTON(sel->edit), img);
-#endif
+    sel->edit = gtk_button_new();
+    gradsel_style_button(sel->edit, INKSCAPE_ICON("gtk-edit"));
 
     sel->nonsolid.push_back(sel->edit);
     gtk_box_pack_start (GTK_BOX (hb), sel->edit, FALSE, FALSE, 0);
@@ -211,13 +211,8 @@ static void sp_gradient_selector_init(SPGradientSelector *sel)
     gtk_button_set_relief(GTK_BUTTON(sel->edit), GTK_RELIEF_NONE);
     gtk_widget_set_tooltip_text( sel->edit, _("Edit gradient"));
 
-#if GTK_CHECK_VERSION(3,10,0)
-    sel->del = gtk_button_new_from_icon_name(INKSCAPE_ICON("list-remove"), GTK_ICON_SIZE_SMALL_TOOLBAR);
-#else
     sel->del = gtk_button_new ();
-    img = gtk_image_new_from_icon_name(INKSCAPE_ICON("list-remove"), GTK_ICON_SIZE_SMALL_TOOLBAR);
-    gtk_button_set_image(GTK_BUTTON(sel->del), img);
-#endif
+    gradsel_style_button(sel->del, INKSCAPE_ICON("list-remove"));
 
     sel->swatch_widgets.push_back(sel->del);
     gtk_box_pack_start (GTK_BOX (hb), sel->del, FALSE, FALSE, 0);
@@ -227,8 +222,6 @@ static void sp_gradient_selector_init(SPGradientSelector *sel)
     gtk_widget_set_tooltip_text( sel->del, _("Delete swatch"));
 
     gtk_widget_show_all(hb);
-
-
 }
 
 static void sp_gradient_selector_dispose(GObject *object)

@@ -24,16 +24,6 @@
 #include "svg/css-ostringstream.h"
 #include "xml/repr.h"
 
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createStop() {
-		return new SPStop();
-	}
-
-	bool stopRegistered = SPFactory::instance().registerObject("svg:stop", createStop);
-}
-
 SPStop::SPStop() : SPObject() {
 	this->path_string = NULL;
 

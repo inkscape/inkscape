@@ -82,21 +82,11 @@ using Inkscape::DocumentUndo;
 
 #define DYNA_MIN_WIDTH 1.0e-6
 
-#include "ui/tool-factory.h"
-
 namespace Inkscape {
 namespace UI {
 namespace Tools {
 
 static void add_cap(SPCurve *curve, Geom::Point const &from, Geom::Point const &to, double rounding);
-
-namespace {
-	ToolBase* createCalligraphicContext() {
-		return new CalligraphicTool();
-	}
-
-	bool calligraphicContextRegistered = ToolFactory::instance().registerObject("/tools/calligraphic", createCalligraphicContext);
-}
 
 const std::string& CalligraphicTool::getPrefsPath() {
 	return CalligraphicTool::prefsPath;

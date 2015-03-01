@@ -14,10 +14,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-
 #include <string.h>
 
 #include "attributes.h"
@@ -28,16 +24,6 @@
 
 #include "display/nr-filter.h"
 #include "display/nr-filter-colormatrix.h"
-
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createColorMatrix() {
-		return new SPFeColorMatrix();
-	}
-
-	bool colorMatrixRegistered = SPFactory::instance().registerObject("svg:feColorMatrix", createColorMatrix);
-}
 
 SPFeColorMatrix::SPFeColorMatrix() 
     : SPFilterPrimitive(), type(Inkscape::Filters::COLORMATRIX_MATRIX), value(0)

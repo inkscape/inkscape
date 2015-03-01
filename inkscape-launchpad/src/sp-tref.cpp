@@ -16,10 +16,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-
 #include <glibmm/i18n.h>
 
 #include "attributes.h"
@@ -34,14 +30,6 @@
 
 #include "xml/node.h"
 #include "xml/repr.h"
-
-namespace {
-	SPObject* createTRef() {
-		return new SPTRef();
-	}
-
-	bool trefRegistered = SPFactory::instance().registerObject("svg:tref", createTRef);
-}
 
 //#define DEBUG_TREF
 #ifdef DEBUG_TREF
@@ -413,7 +401,7 @@ void sp_tref_update_text(SPTRef *tref)
         Inkscape::XML::Document *xml_doc = tref->document->getReprDoc();
 
         Inkscape::XML::Node *newStringRepr = xml_doc->createTextNode(charData.c_str());
-        tref->stringChild = SPFactory::instance().createObject(NodeTraits::get_type_string(*newStringRepr));
+        tref->stringChild = SPFactory::createObject(NodeTraits::get_type_string(*newStringRepr));
 
         // Add this SPString as a child of the tref
         tref->attach(tref->stringChild, tref->lastChild());

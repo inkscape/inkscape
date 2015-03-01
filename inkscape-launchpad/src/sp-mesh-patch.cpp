@@ -20,19 +20,9 @@
 #include "attributes.h"
 #include "xml/repr.h"
 
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createMeshPatch() {
-		return new SPMeshPatch();
-	}
-
-	bool meshPatchRegistered = SPFactory::instance().registerObject("svg:meshPatch", createMeshPatch);
-}
-
-SPMeshPatch* SPMeshPatch::getNextMeshPatch()
+SPMeshpatch* SPMeshpatch::getNextMeshpatch()
 {
-    SPMeshPatch *result = 0;
+    SPMeshpatch *result = 0;
 
     for (SPObject* obj = getNext(); obj && !result; obj = obj->getNext()) {
         if (SP_IS_MESHPATCH(obj)) {
@@ -43,19 +33,19 @@ SPMeshPatch* SPMeshPatch::getNextMeshPatch()
     return result;
 }
 
-SPMeshPatch* SPMeshPatch::getPrevMeshPatch()
+SPMeshpatch* SPMeshpatch::getPrevMeshpatch()
 {
-    SPMeshPatch *result = 0;
+    SPMeshpatch *result = 0;
 
     for (SPObject* obj = getPrev(); obj; obj = obj->getPrev()) {
-        // The closest previous SPObject that is an SPMeshPatch *should* be ourself.
+        // The closest previous SPObject that is an SPMeshpatch *should* be ourself.
         if (SP_IS_MESHPATCH(obj)) {
-            SPMeshPatch* meshpatch = SP_MESHPATCH(obj);
+            SPMeshpatch* meshpatch = SP_MESHPATCH(obj);
             // Sanity check to ensure we have a proper sibling structure.
-            if (meshpatch->getNextMeshPatch() == this) {
+            if (meshpatch->getNextMeshpatch() == this) {
                 result = meshpatch;
             } else {
-                g_warning("SPMeshPatch previous/next relationship broken");
+                g_warning("SPMeshpatch previous/next relationship broken");
             }
             break;
         }
@@ -69,14 +59,14 @@ SPMeshPatch* SPMeshPatch::getPrevMeshPatch()
  * Mesh Patch
  */
 
-SPMeshPatch::SPMeshPatch() : SPObject() {
+SPMeshpatch::SPMeshpatch() : SPObject() {
     this->tensor_string = NULL;
 }
 
-SPMeshPatch::~SPMeshPatch() {
+SPMeshpatch::~SPMeshpatch() {
 }
 
-void SPMeshPatch::build(SPDocument* doc, Inkscape::XML::Node* repr) {
+void SPMeshpatch::build(SPDocument* doc, Inkscape::XML::Node* repr) {
 	SPObject::build(doc, repr);
 
 	this->readAttr( "tensor" );
@@ -86,7 +76,7 @@ void SPMeshPatch::build(SPDocument* doc, Inkscape::XML::Node* repr) {
  * Virtual build: set meshpatch attributes from its associated XML node.
  */
 
-void SPMeshPatch::set(unsigned int key, const gchar* value) {
+void SPMeshpatch::set(unsigned int key, const gchar* value) {
     switch (key) {
         case SP_ATTR_TENSOR: {
             if (value) {
@@ -105,9 +95,9 @@ void SPMeshPatch::set(unsigned int key, const gchar* value) {
  * Virtual set: set attribute to value.
  */
 
-Inkscape::XML::Node* SPMeshPatch::write(Inkscape::XML::Document* xml_doc, Inkscape::XML::Node* repr, guint flags) {
+Inkscape::XML::Node* SPMeshpatch::write(Inkscape::XML::Document* xml_doc, Inkscape::XML::Node* repr, guint flags) {
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        repr = xml_doc->createElement("svg:meshPatch");
+        repr = xml_doc->createElement("svg:meshpatch");
     }
 
     SPObject::write(xml_doc, repr, flags);

@@ -27,19 +27,6 @@
 #include "display/nr-filter-gaussian.h"
 #include "display/nr-filter-types.h"
 
-//#define SP_MACROS_SILENT
-//#include "macros.h"
-
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createGaussianBlur() {
-		return new SPGaussianBlur();
-	}
-
-	bool gaussianBlurRegistered = SPFactory::instance().registerObject("svg:feGaussianBlur", createGaussianBlur);
-}
-
 SPGaussianBlur::SPGaussianBlur() : SPFilterPrimitive() {
 }
 

@@ -56,16 +56,6 @@ static void sp_namedview_show_single_guide(SPGuide* guide, bool show);
 static gboolean sp_str_to_bool(const gchar *str);
 static gboolean sp_nv_read_opacity(const gchar *str, guint32 *color);
 
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createNamedView() {
-		return new SPNamedView();
-	}
-
-	bool namedViewRegistered = SPFactory::instance().registerObject("sodipodi:namedview", createNamedView);
-}
-
 SPNamedView::SPNamedView() : SPObjectGroup(), snap_manager(this) {
 	this->zoom = 0;
 	this->guidecolor = 0;
@@ -271,6 +261,8 @@ void SPNamedView::build(SPDocument *document, Inkscape::XML::Node *repr) {
         Geom::Rect viewbox = document->getRoot()->viewBox;
         double factor = svgwidth.value(unit_table.primary(Inkscape::Util::UNIT_TYPE_LINEAR)) / viewbox.width(); 
         svg_units = unit_table.findUnit(factor, Inkscape::Util::UNIT_TYPE_LINEAR);
+    } else {  // force the document units to be px
+        repr->setAttribute("inkscape:document-units", "px");
     }
 }
 
@@ -561,7 +553,7 @@ void SPNamedView::set(unsigned int key, const gchar* value) {
             static Inkscape::Util::Unit const *px = unit_table.getUnit("px");
             Inkscape::Util::Unit const *new_unit = px;
 
-            if (value) {
+            if (value && document->getRoot()->viewBox_set) {
                 Inkscape::Util::Unit const *const req_unit = unit_table.getUnit(value);
                 if ( !unit_table.hasUnit(value) ) {
                     g_warning("Unrecognized unit `%s'", value);

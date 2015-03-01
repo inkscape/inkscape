@@ -1,44 +1,10 @@
 /*
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-
 #include "xml/repr.h"
 #include "sp-flowdiv.h"
 #include "sp-string.h"
 #include "document.h"
-
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createFlowdiv() {
-		return new SPFlowdiv();
-	}
-
-	SPObject* createFlowtspan() {
-		return new SPFlowtspan();
-	}
-
-	SPObject* createFlowpara() {
-		return new SPFlowpara();
-	}
-
-	SPObject* createFlowline() {
-		return new SPFlowline();
-	}
-
-	SPObject* createFlowregionbreak() {
-		return new SPFlowregionbreak();
-	}
-
-	bool flowdivRegistered = SPFactory::instance().registerObject("svg:flowDiv", createFlowdiv);
-	bool flowtspanRegistered = SPFactory::instance().registerObject("svg:flowSpan", createFlowtspan);
-	bool flowparaRegistered = SPFactory::instance().registerObject("svg:flowPara", createFlowpara);
-	bool flowlineRegistered = SPFactory::instance().registerObject("svg:flowLine", createFlowline);
-	bool flowregionbreakRegistered = SPFactory::instance().registerObject("svg:flowRegionBreak", createFlowregionbreak);
-}
 
 SPFlowdiv::SPFlowdiv() : SPItem() {
 }

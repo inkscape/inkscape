@@ -34,16 +34,6 @@
 
 #include "display/drawing-text.h"
 
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createFlowtext() {
-		return new SPFlowtext();
-	}
-
-	bool flowtextRegistered = SPFactory::instance().registerObject("svg:flowRoot", createFlowtext);
-}
-
 SPFlowtext::SPFlowtext() : SPItem() {
     this->par_indent = 0;
 }

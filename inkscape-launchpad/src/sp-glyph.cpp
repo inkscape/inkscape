@@ -20,15 +20,6 @@
 #include "document.h"
 #include <cstring>
 
-#include "sp-factory.h"
-
-namespace {
-    SPObject* createGlyph() {
-        return new SPGlyph();
-    }
-    bool glyphRegistered = SPFactory::instance().registerObject("svg:glyph", createGlyph);
-}
-
 SPGlyph::SPGlyph()
     : SPObject() 
 //TODO: correct these values:

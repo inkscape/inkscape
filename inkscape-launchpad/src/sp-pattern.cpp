@@ -45,16 +45,6 @@
 static void pattern_ref_changed(SPObject *old_ref, SPObject *ref, SPPattern *pat);
 static void pattern_ref_modified (SPObject *ref, guint flags, SPPattern *pattern);
 
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createPattern() {
-		return new SPPattern();
-	}
-
-	bool patternRegistered = SPFactory::instance().registerObject("svg:pattern", createPattern);
-}
-
 SPPattern::SPPattern() : SPPaintServer(), SPViewBox() {
 	this->href = NULL;
 

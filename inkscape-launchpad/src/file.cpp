@@ -288,6 +288,12 @@ bool sp_file_open(const Glib::ustring &uri,
     }
 
     if (doc) {
+        // Set viewBox if it doesn't exist
+        if (!doc->getRoot()->viewBox_set) {
+            DocumentUndo::setUndoSensitive(doc, false);
+            doc->setViewBox(Geom::Rect::from_xywh(0, 0, doc->getWidth().value(doc->getDisplayUnit()), doc->getHeight().value(doc->getDisplayUnit())));
+            DocumentUndo::setUndoSensitive(doc, true);
+        }
 
         SPDocument *existing = desktop ? desktop->getDocument() : NULL;
 

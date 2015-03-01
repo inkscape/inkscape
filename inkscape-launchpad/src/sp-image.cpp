@@ -42,7 +42,6 @@
 #include "snap-candidate.h"
 #include "preferences.h"
 #include "io/sys.h"
-#include "sp-factory.h"
 
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 #include "cms-system.h"
@@ -111,14 +110,6 @@ extern guint update_in_progress;
 #else // DEBUG_LCMS
 #define DEBUG_MESSAGE_SCISLAC(key, ...)
 #endif // DEBUG_LCMS
-
-namespace {
-SPObject* createImage() {
-    return new SPImage();
-}
-
-bool imageRegistered = SPFactory::instance().registerObject("svg:image", createImage);
-}
 
 SPImage::SPImage() : SPItem(), SPViewBox() {
 

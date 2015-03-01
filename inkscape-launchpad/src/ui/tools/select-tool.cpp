@@ -49,7 +49,6 @@
 #include "display/sp-canvas.h"
 #include "display/sp-canvas-item.h"
 #include "display/drawing-item.h"
-#include "ui/tool-factory.h"
 
 using Inkscape::DocumentUndo;
 
@@ -64,14 +63,6 @@ static GdkCursor *CursorSelectDragging = NULL;
 
 static gint rb_escaped = 0; // if non-zero, rubberband was canceled by esc, so the next button release should not deselect
 static gint drag_escaped = 0; // if non-zero, drag was canceled by esc
-
-namespace {
-	ToolBase* createSelectContext() {
-		return new SelectTool();
-	}
-
-	bool selectContextRegistered = ToolFactory::instance().registerObject("/tools/select", createSelectContext);
-}
 
 const std::string& SelectTool::getPrefsPath() {
 	return SelectTool::prefsPath;

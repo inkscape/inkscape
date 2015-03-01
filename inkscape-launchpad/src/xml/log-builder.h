@@ -14,7 +14,7 @@
 #ifndef SEEN_INKSCAPE_XML_LOG_BUILDER_H
 #define SEEN_INKSCAPE_XML_LOG_BUILDER_H
 
-#include "gc-managed.h"
+#include "inkgc/gc-managed.h"
 #include "xml/node-observer.h"
 
 namespace Inkscape {

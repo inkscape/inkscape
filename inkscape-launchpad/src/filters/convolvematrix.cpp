@@ -13,10 +13,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-
 #include <string.h>
 #include <math.h>
 #include <vector>
@@ -27,16 +23,6 @@
 #include "xml/repr.h"
 #include "display/nr-filter.h"
 #include "display/nr-filter-convolve-matrix.h"
-
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createConvolveMatrix() {
-		return new SPFeConvolveMatrix();
-	}
-
-	bool convolveMatrixRegistered = SPFactory::instance().registerObject("svg:feConvolveMatrix", createConvolveMatrix);
-}
 
 SPFeConvolveMatrix::SPFeConvolveMatrix() : SPFilterPrimitive() {
 	this->bias = 0;

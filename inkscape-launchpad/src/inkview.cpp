@@ -47,7 +47,7 @@
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 
-#include "gc-core.h"
+#include "inkgc/gc-core.h"
 #include "preferences.h"
 
 #include <glibmm/i18n.h>

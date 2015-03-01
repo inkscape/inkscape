@@ -32,16 +32,6 @@
 
 #include "sp-star.h"
 
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createStar() {
-		return new SPStar();
-	}
-
-	bool starRegistered = SPFactory::instance().registerObject("star", createStar);
-}
-
 SPStar::SPStar() : SPPolygon() {
 	this->sides = 5;
 	this->center = Geom::Point(0, 0);

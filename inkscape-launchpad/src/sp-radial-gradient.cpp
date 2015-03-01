@@ -5,17 +5,7 @@
 #include "attributes.h"
 #include "xml/repr.h"
 
-#include "2geom/transforms.h"
-
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createRadialGradient() {
-		return new SPRadialGradient();
-	}
-
-	bool radialGradientRegistered = SPFactory::instance().registerObject("svg:radialGradient", createRadialGradient);
-}
+#include <2geom/transforms.h>
 
 /*
  * Radial Gradient

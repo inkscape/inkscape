@@ -11,9 +11,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
 #include "attributes.h"
 #include "style.h"
 #include "sp-line.h"
@@ -23,16 +20,6 @@
 #include "xml/repr.h"
 #include "document.h"
 #include "inkscape.h"
-
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createLine() {
-		return new SPLine();
-	}
-
-	bool lineRegistered = SPFactory::instance().registerObject("svg:line", createLine);
-}
 
 SPLine::SPLine() : SPShape() {
     this->x1.unset();

@@ -334,6 +334,8 @@
 
 "targetY" - "feConvolveMatrix"
 
+"tensor" - "meshpatch"
+
 "textLength" - "text","textPath","tref","tspan"
 
 "title" - "style"
@@ -342,7 +344,7 @@
 
 "transform" - "a","circle","clipPath","defs","ellipse","foreignObject","g","image","line","path","polygon","polyline","rect","switch","text","use","flowRoot","flowPara","flowSpan"
 
-"type" - "animateTransform","feColorMatrix","feTurbulence","script","style","feFuncA","feFuncB","feFuncG","feFuncR"
+"type" - "animateTransform","feColorMatrix","feTurbulence","script","style","feFuncA","feFuncB","feFuncG","feFuncR","mesh"
 
 "u1" - "hkern","vkern"
 

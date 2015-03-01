@@ -7,16 +7,6 @@
 #include "style.h"
 using Inkscape::XML::TEXT_NODE;
 
-#include "sp-factory.h"
-
-namespace {
-	SPObject* createStyle() {
-		return new SPStyleElem();
-	}
-
-	bool styleRegistered = SPFactory::instance().registerObject("svg:style", createStyle);
-}
-
 SPStyleElem::SPStyleElem() : SPObject() {
     media_set_all(this->media);
     this->is_css = false;
