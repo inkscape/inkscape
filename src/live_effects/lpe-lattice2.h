@@ -21,7 +21,7 @@
 
 #include "live_effects/parameter/enum.h"
 #include "live_effects/effect.h"
-#include "live_effects/parameter/pointreseteable.h"
+#include "live_effects/parameter/point.h"
 #include "live_effects/lpegroupbbox.h"
 
 namespace Inkscape {
@@ -56,31 +56,31 @@ protected:
     void addCanvasIndicators(SPLPEItem const */*lpeitem*/, std::vector<Geom::PathVector> &hp_vec);
 private:
 
-    PointReseteableParam grid_point0;
-    PointReseteableParam grid_point1;
-    PointReseteableParam grid_point2;
-    PointReseteableParam grid_point3;
-    PointReseteableParam grid_point4;
-    PointReseteableParam grid_point5;
-    PointReseteableParam grid_point6;
-    PointReseteableParam grid_point7;
-    PointReseteableParam grid_point8x9;
-    PointReseteableParam grid_point10x11;
-    PointReseteableParam grid_point12;
-    PointReseteableParam grid_point13;
-    PointReseteableParam grid_point14;
-    PointReseteableParam grid_point15;
-    PointReseteableParam grid_point16;
-    PointReseteableParam grid_point17;
-    PointReseteableParam grid_point18;
-    PointReseteableParam grid_point19;
-    PointReseteableParam grid_point20x21;
-    PointReseteableParam grid_point22x23;
-    PointReseteableParam grid_point24x26;
-    PointReseteableParam grid_point25x27;
-    PointReseteableParam grid_point28x30;
-    PointReseteableParam grid_point29x31;
-    PointReseteableParam grid_point32x33x34x35; 
+    PointParam grid_point0;
+    PointParam grid_point1;
+    PointParam grid_point2;
+    PointParam grid_point3;
+    PointParam grid_point4;
+    PointParam grid_point5;
+    PointParam grid_point6;
+    PointParam grid_point7;
+    PointParam grid_point8x9;
+    PointParam grid_point10x11;
+    PointParam grid_point12;
+    PointParam grid_point13;
+    PointParam grid_point14;
+    PointParam grid_point15;
+    PointParam grid_point16;
+    PointParam grid_point17;
+    PointParam grid_point18;
+    PointParam grid_point19;
+    PointParam grid_point20x21;
+    PointParam grid_point22x23;
+    PointParam grid_point24x26;
+    PointParam grid_point25x27;
+    PointParam grid_point28x30;
+    PointParam grid_point29x31;
+    PointParam grid_point32x33x34x35; 
 
     LPELattice2(const LPELattice2&);
     LPELattice2& operator=(const LPELattice2&);

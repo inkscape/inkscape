@@ -20,6 +20,7 @@ namespace Inkscape {
 
 namespace LivePathEffect {
 
+class PointParamKnotHolderEntity;
 
 class PointParam : public Geom::Point, public Parameter {
 public:
@@ -40,6 +41,8 @@ public:
 
     void param_setValue(Geom::Point newpoint);
     void param_set_default();
+    void param_set_and_write_default();
+    void param_update_default(Geom::Point newpoint);
 
     void param_set_and_write_new_value(Geom::Point newpoint);
 
@@ -50,6 +53,7 @@ public:
     virtual bool providesKnotHolderEntities() const { return true; }
     virtual void addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
 
+    friend class PointParamKnotHolderEntity;
 private:
     PointParam(const PointParam&);
     PointParam& operator=(const PointParam&);

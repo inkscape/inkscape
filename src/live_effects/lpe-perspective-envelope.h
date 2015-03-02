@@ -19,7 +19,7 @@
 
 #include "live_effects/parameter/enum.h"
 #include "live_effects/effect.h"
-#include "live_effects/parameter/pointreseteable.h"
+#include "live_effects/parameter/point.h"
 #include "live_effects/lpegroupbbox.h"
 
 namespace Inkscape {
@@ -55,10 +55,10 @@ protected:
 private:
 
     EnumParam<unsigned> deform_type;
-    PointReseteableParam Up_Left_Point;
-    PointReseteableParam Up_Right_Point;
-    PointReseteableParam Down_Left_Point;
-    PointReseteableParam Down_Right_Point;
+    PointParam Up_Left_Point;
+    PointParam Up_Right_Point;
+    PointParam Down_Left_Point;
+    PointParam Down_Right_Point;
 
     LPEPerspectiveEnvelope(const LPEPerspectiveEnvelope&);
     LPEPerspectiveEnvelope& operator=(const LPEPerspectiveEnvelope&);

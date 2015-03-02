@@ -11,8 +11,6 @@ ink_common_sources += \
 	live_effects/parameter/random.h	\
 	live_effects/parameter/point.cpp	\
 	live_effects/parameter/point.h	\
-	live_effects/parameter/pointreseteable.cpp	\
-	live_effects/parameter/pointreseteable.h	\
 	live_effects/parameter/enum.h	\
 	live_effects/parameter/path-reference.cpp	\
 	live_effects/parameter/path-reference.h	\

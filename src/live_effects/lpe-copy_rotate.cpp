@@ -69,7 +69,7 @@ LPECopyRotate::LPECopyRotate(LivePathEffectObject *lpeobject) :
     registerParameter(&rotation_angle);
     registerParameter(&num_copies);
     registerParameter(&origin);
-
+    
     num_copies.param_make_integer(true);
     num_copies.param_set_range(0, 1000);
 }
@@ -88,6 +88,7 @@ LPECopyRotate::doOnApply(SPLPEItem const* lpeitem)
     A = Point(boundingbox_X.min(), boundingbox_Y.middle());
     B = Point(boundingbox_X.middle(), boundingbox_Y.middle());
     origin.param_setValue(A);
+    origin.param_update_default(A);
     dist_angle_handle = L2(B - A);
     dir = unit_vector(B - A);
 }
