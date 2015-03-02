@@ -356,11 +356,13 @@ void LPEBSpline::toWeight()
 
 void LPEBSpline::changeWeight(double weightValue)
 {
-    SPPath *path = SP_PATH(sp_lpe_item);
-    SPCurve *curve = path->get_curve_for_edit();
-    LPEBSpline::doBSplineFromWidget(curve, weightValue);
-    gchar *str = sp_svg_write_path(curve->get_pathvector());
-    path->getRepr()->setAttribute("inkscape:original-d", str);
+    SPPath *path = dynamic_cast<SPPath *>(sp_lpe_item);
+    if(path){
+        SPCurve *curve = path->get_curve_for_edit();
+        LPEBSpline::doBSplineFromWidget(curve, weightValue);
+        gchar *str = sp_svg_write_path(curve->get_pathvector());
+        path->getRepr()->setAttribute("inkscape:original-d", str);
+    }
 }
 
 void LPEBSpline::doBSplineFromWidget(SPCurve *curve, double weightValue)
