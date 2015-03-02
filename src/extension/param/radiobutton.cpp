@@ -249,28 +249,35 @@ void ParamRadioButtonWdg::changed(void)
 
 
 class ComboWdg : public Gtk::ComboBoxText {
+private:
+    ParamRadioButton* _base;
+    SPDocument* _doc;
+    Inkscape::XML::Node* _node;
+    sigc::signal<void> * _changeSignal;
+
 public:
-    ComboWdg(ParamRadioButton* base, SPDocument * doc, Inkscape::XML::Node * node) :
-        Gtk::ComboBoxText(),
-        base(base),
-        doc(doc),
-        node(node)
+    ComboWdg(ParamRadioButton* base, SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal) :
+        _base(base),
+        _doc(doc),
+        _node(node),
+        _changeSignal(changeSignal)
     {
+        this->signal_changed().connect(sigc::mem_fun(this, &ComboWdg::changed));
     }
     virtual ~ComboWdg() {}
-
-protected:
-    ParamRadioButton* base;
-    SPDocument* doc;
-    Inkscape::XML::Node* node;
-
-    virtual void on_changed() {
-        if ( base ) {
-            Glib::ustring value = base->value_from_label(get_active_text());
-            base->set(value.c_str(), doc, node);
-        }
-    }
+    void changed (void);
 };
+
+void ComboWdg::changed(void)
+{
+    if ( _base ) {
+            Glib::ustring value = _base->value_from_label(get_active_text());
+            _base->set(value.c_str(), _doc, _node);
+    }
+    if (_changeSignal != NULL) {
+        _changeSignal->emit();
+    }
+}
 
 /**
  * Returns the value for the options label parameter
@@ -317,7 +324,7 @@ Gtk::Widget * ParamRadioButton::get_widget(SPDocument * doc, Inkscape::XML::Node
     Gtk::ComboBoxText* cbt = 0;
     bool comboSet = false;
     if (_mode == MINIMAL) {
-        cbt = Gtk::manage(new ComboWdg(this, doc, node));
+        cbt = Gtk::manage(new ComboWdg(this, doc, node, changeSignal));
         cbt->show();
         vbox->pack_start(*cbt, false, false);
     }
