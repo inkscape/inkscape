@@ -44,10 +44,10 @@ LPEPerspectiveEnvelope::LPEPerspectiveEnvelope(LivePathEffectObject *lpeobject) 
     Effect(lpeobject),
     // initialise your parameters here:
     deform_type(_("Type"), _("Select the type of deformation"), "deform_type", DeformationTypeConverter, &wr, this, DEFORMATION_PERSPECTIVE),
-    Up_Left_Point(_("Top Left"), _("Top Left - Ctrl+Alt+Click to reset"), "Up_Left_Point", &wr, this),
-    Up_Right_Point(_("Top Right"), _("Top Right - Ctrl+Alt+Click to reset"), "Up_Right_Point", &wr, this),
-    Down_Left_Point(_("Down Left"), _("Down Left - Ctrl+Alt+Click to reset"), "Down_Left_Point", &wr, this),
-    Down_Right_Point(_("Down Right"), _("Down Right - Ctrl+Alt+Click to reset"), "Down_Right_Point", &wr, this)
+    Up_Left_Point(_("Top Left"), _("Top Left - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "Up_Left_Point", &wr, this),
+    Up_Right_Point(_("Top Right"), _("Top Right - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "Up_Right_Point", &wr, this),
+    Down_Left_Point(_("Down Left"), _("Down Left - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "Down_Left_Point", &wr, this),
+    Down_Right_Point(_("Down Right"), _("Down Right - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "Down_Right_Point", &wr, this)
 {
     // register all your parameters here, so Inkscape knows which parameters this effect has:
     registerParameter( dynamic_cast<Parameter *>(&deform_type));
@@ -298,7 +298,7 @@ LPEPerspectiveEnvelope::newWidget()
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false,0));
     Gtk::Button* resetButton = Gtk::manage(new Gtk::Button(Gtk::Stock::CLEAR));
     resetButton->signal_clicked().connect(sigc::mem_fun (*this,&LPEPerspectiveEnvelope::resetGrid));
-    resetButton->set_size_request(140,45);
+    resetButton->set_size_request(140,30);
     vbox->pack_start(*hbox, true,true,2);
     hbox->pack_start(*resetButton, false, false,2);
     return dynamic_cast<Gtk::Widget *>(vbox);

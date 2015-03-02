@@ -161,9 +161,20 @@ private:
 };
 
 void
-PointReseteableParamKnotHolderEntity::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint state)
+PointReseteableParamKnotHolderEntity::knot_set(Geom::Point const &p, Geom::Point const &origin, guint state)
 {
-    Geom::Point const s = snap_knot_position(p, state);
+    Geom::Point s = snap_knot_position(p, state);
+    if (state & GDK_CONTROL_MASK) {
+        Geom::Point A(origin[Geom::X],p[Geom::Y]);
+        Geom::Point B(p[Geom::X],origin[Geom::Y]);
+        double distanceA = Geom::distance(A,p);
+        double distanceB = Geom::distance(B,p);
+        if(distanceA > distanceB){
+            s = B;
+        } else {
+            s = A;
+        }
+    }
     pparam->param_setValue(s);
     sp_lpe_item_update_patheffect(SP_LPE_ITEM(item), false, false);
 }

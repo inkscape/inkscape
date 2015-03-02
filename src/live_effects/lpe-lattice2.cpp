@@ -44,31 +44,31 @@ namespace LivePathEffect {
 LPELattice2::LPELattice2(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     // initialise your parameters here:
-    grid_point0(_("Control handle 0:"), _("Control handle 0 - Ctrl+Alt+Click to reset"), "gridpoint0", &wr, this),
-    grid_point1(_("Control handle 1:"), _("Control handle 1 - Ctrl+Alt+Click to reset"), "gridpoint1", &wr, this),
-    grid_point2(_("Control handle 2:"), _("Control handle 2 - Ctrl+Alt+Click to reset"), "gridpoint2", &wr, this),
-    grid_point3(_("Control handle 3:"), _("Control handle 3 - Ctrl+Alt+Click to reset"), "gridpoint3", &wr, this),
-    grid_point4(_("Control handle 4:"), _("Control handle 4 - Ctrl+Alt+Click to reset"), "gridpoint4", &wr, this),
-    grid_point5(_("Control handle 5:"), _("Control handle 5 - Ctrl+Alt+Click to reset"), "gridpoint5", &wr, this),
-    grid_point6(_("Control handle 6:"), _("Control handle 6 - Ctrl+Alt+Click to reset"), "gridpoint6", &wr, this),
-    grid_point7(_("Control handle 7:"), _("Control handle 7 - Ctrl+Alt+Click to reset"), "gridpoint7", &wr, this),
-    grid_point8x9(_("Control handle 8x9:"), _("Control handle 8x9 - Ctrl+Alt+Click to reset"), "gridpoint8x9", &wr, this),
-    grid_point10x11(_("Control handle 10x11:"), _("Control handle 10x11 - Ctrl+Alt+Click to reset"), "gridpoint10x11", &wr, this),
-    grid_point12(_("Control handle 12:"), _("Control handle 12 - Ctrl+Alt+Click to reset"), "gridpoint12", &wr, this),
-    grid_point13(_("Control handle 13:"), _("Control handle 13 - Ctrl+Alt+Click to reset"), "gridpoint13", &wr, this),
-    grid_point14(_("Control handle 14:"), _("Control handle 14 - Ctrl+Alt+Click to reset"), "gridpoint14", &wr, this),
-    grid_point15(_("Control handle 15:"), _("Control handle 15 - Ctrl+Alt+Click to reset"), "gridpoint15", &wr, this),
-    grid_point16(_("Control handle 16:"), _("Control handle 16 - Ctrl+Alt+Click to reset"), "gridpoint16", &wr, this),
-    grid_point17(_("Control handle 17:"), _("Control handle 17 - Ctrl+Alt+Click to reset"), "gridpoint17", &wr, this),
-    grid_point18(_("Control handle 18:"), _("Control handle 18 - Ctrl+Alt+Click to reset"), "gridpoint18", &wr, this),
-    grid_point19(_("Control handle 19:"), _("Control handle 19 - Ctrl+Alt+Click to reset"), "gridpoint19", &wr, this),
-    grid_point20x21(_("Control handle 20x21:"), _("Control handle 20x21 - Ctrl+Alt+Click to reset"), "gridpoint20x21", &wr, this),
-    grid_point22x23(_("Control handle 22x23:"), _("Control handle 22x23 - Ctrl+Alt+Click to reset"), "gridpoint22x23", &wr, this),
-    grid_point24x26(_("Control handle 24x26:"), _("Control handle 24x26 - Ctrl+Alt+Click to reset"), "gridpoint24x26", &wr, this),
-    grid_point25x27(_("Control handle 25x27:"), _("Control handle 25x27 - Ctrl+Alt+Click to reset"), "gridpoint25x27", &wr, this),
-    grid_point28x30(_("Control handle 28x30:"), _("Control handle 28x30 - Ctrl+Alt+Click to reset"), "gridpoint28x30", &wr, this),
-    grid_point29x31(_("Control handle 29x31:"), _("Control handle 29x31 - Ctrl+Alt+Click to reset"), "gridpoint29x31", &wr, this),
-    grid_point32x33x34x35(_("Control handle 32x33x34x35:"), _("Control handle 32x33x34x35 - Ctrl+Alt+Click to reset"), "gridpoint32x33x34x35", &wr, this)
+    grid_point0(_("Control handle 0:"), _("Control handle 0 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint0", &wr, this),
+    grid_point1(_("Control handle 1:"), _("Control handle 1 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint1", &wr, this),
+    grid_point2(_("Control handle 2:"), _("Control handle 2 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint2", &wr, this),
+    grid_point3(_("Control handle 3:"), _("Control handle 3 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint3", &wr, this),
+    grid_point4(_("Control handle 4:"), _("Control handle 4 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint4", &wr, this),
+    grid_point5(_("Control handle 5:"), _("Control handle 5 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint5", &wr, this),
+    grid_point6(_("Control handle 6:"), _("Control handle 6 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint6", &wr, this),
+    grid_point7(_("Control handle 7:"), _("Control handle 7 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint7", &wr, this),
+    grid_point8x9(_("Control handle 8x9:"), _("Control handle 8x9 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint8x9", &wr, this),
+    grid_point10x11(_("Control handle 10x11:"), _("Control handle 10x11 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint10x11", &wr, this),
+    grid_point12(_("Control handle 12:"), _("Control handle 12 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint12", &wr, this),
+    grid_point13(_("Control handle 13:"), _("Control handle 13 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint13", &wr, this),
+    grid_point14(_("Control handle 14:"), _("Control handle 14 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint14", &wr, this),
+    grid_point15(_("Control handle 15:"), _("Control handle 15 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint15", &wr, this),
+    grid_point16(_("Control handle 16:"), _("Control handle 16 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint16", &wr, this),
+    grid_point17(_("Control handle 17:"), _("Control handle 17 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint17", &wr, this),
+    grid_point18(_("Control handle 18:"), _("Control handle 18 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint18", &wr, this),
+    grid_point19(_("Control handle 19:"), _("Control handle 19 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint19", &wr, this),
+    grid_point20x21(_("Control handle 20x21:"), _("Control handle 20x21 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint20x21", &wr, this),
+    grid_point22x23(_("Control handle 22x23:"), _("Control handle 22x23 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint22x23", &wr, this),
+    grid_point24x26(_("Control handle 24x26:"), _("Control handle 24x26 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint24x26", &wr, this),
+    grid_point25x27(_("Control handle 25x27:"), _("Control handle 25x27 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint25x27", &wr, this),
+    grid_point28x30(_("Control handle 28x30:"), _("Control handle 28x30 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint28x30", &wr, this),
+    grid_point29x31(_("Control handle 29x31:"), _("Control handle 29x31 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint29x31", &wr, this),
+    grid_point32x33x34x35(_("Control handle 32x33x34x35:"), _("Control handle 32x33x34x35 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint32x33x34x35", &wr, this)
 
     
 {
@@ -218,12 +218,14 @@ LPELattice2::newWidget()
     Gtk::VBox * vbox = Gtk::manage( new Gtk::VBox(Effect::newWidget()) );
 
     vbox->set_border_width(5);
+    vbox->set_homogeneous(false);
+    vbox->set_spacing(6);
+    Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false,0));
     Gtk::Button* resetButton = Gtk::manage(new Gtk::Button(Glib::ustring(_("Reset grid"))));
-    resetButton->set_alignment(0.0, 0.5);
     resetButton->signal_clicked().connect(sigc::mem_fun (*this,&LPELattice2::resetGrid));
-    Gtk::Widget* resetButtonWidget = dynamic_cast<Gtk::Widget *>(resetButton);
-    resetButtonWidget->set_tooltip_text("Reset grid");
-    vbox->pack_start(*resetButtonWidget, true, true,2);
+    resetButton->set_size_request(140,30);
+    vbox->pack_start(*hbox, true,true,2);
+    hbox->pack_start(*resetButton, false, false,2);
     std::vector<Parameter *>::iterator it = param_vector.begin();
     while (it != param_vector.end()) {
         if ((*it)->widget_is_visible) {
