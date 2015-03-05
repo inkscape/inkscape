@@ -210,9 +210,9 @@ Drawing::_pickItemsForCaching()
     }
 
     std::set<DrawingItem*> to_cache;
-    for (i = _candidate_items.begin(); i != _candidate_items.end(); ++i) {
-        i->item->setCached(true);
-        to_cache.insert(i->item);
+    for (CandidateList::iterator j = _candidate_items.begin(); j != i; ++j) {
+        j->item->setCached(true);
+        to_cache.insert(j->item);
     }
     // Everything which is now in _cached_items but not in to_cache must be uncached
     // Note that calling setCached on an item modifies _cached_items
