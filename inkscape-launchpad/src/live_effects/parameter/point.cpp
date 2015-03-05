@@ -15,6 +15,8 @@
 #include "verbs.h"
 #include "knotholder.h"
 #include <glibmm/i18n.h>
+#include "ui/tools-switch.h"
+#include "ui/tools/node-tool.h"
 
 // needed for on-canvas editting:
 #include "desktop.h"
@@ -44,6 +46,18 @@ void
 PointParam::param_set_default()
 {
     param_setValue(defvalue);
+}
+
+void
+PointParam::param_set_and_write_default()
+{
+    param_set_and_write_new_value(defvalue);
+}
+
+void
+PointParam::param_update_default(Geom::Point newpoint)
+{
+    this->defvalue = newpoint;
 }
 
 bool
@@ -99,6 +113,13 @@ void
 PointParam::param_setValue(Geom::Point newpoint)
 {
     *dynamic_cast<Geom::Point *>( this ) = newpoint;
+    if(SP_ACTIVE_DESKTOP){
+        SPDesktop* desktop = SP_ACTIVE_DESKTOP;
+        if (tools_isactive( desktop, TOOLS_NODES)) {
+            Inkscape::UI::Tools::NodeTool *nt = static_cast<Inkscape::UI::Tools::NodeTool*>( desktop->event_context);
+            nt->update_helperpath();
+        }
+    }
 }
 
 void
@@ -140,9 +161,20 @@ private:
 };
 
 void
-PointParamKnotHolderEntity::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint state)
+PointParamKnotHolderEntity::knot_set(Geom::Point const &p, Geom::Point const &origin, guint state)
 {
-    Geom::Point const s = snap_knot_position(p, state);
+    Geom::Point s = snap_knot_position(p, state);
+    if (state & GDK_CONTROL_MASK) {
+        Geom::Point A(origin[Geom::X],p[Geom::Y]);
+        Geom::Point B(p[Geom::X],origin[Geom::Y]);
+        double distanceA = Geom::distance(A,p);
+        double distanceB = Geom::distance(B,p);
+        if(distanceA > distanceB){
+            s = B;
+        } else {
+            s = A;
+        }
+    }
     pparam->param_setValue(s);
     sp_lpe_item_update_patheffect(SP_LPE_ITEM(item), false, false);
 }
@@ -154,9 +186,14 @@ PointParamKnotHolderEntity::knot_get() const
 }
 
 void
-PointParamKnotHolderEntity::knot_click(guint /*state*/)
+PointParamKnotHolderEntity::knot_click(guint state)
 {
-    g_print ("This is the handle associated to parameter '%s'\n", pparam->param_key.c_str());
+    if (state & GDK_CONTROL_MASK) {
+            if (state & GDK_MOD1_MASK) {
+                this->pparam->param_set_default();
+                sp_lpe_item_update_patheffect(SP_LPE_ITEM(item), false, false);
+            }
+    }
 }
 
 void
@@ -166,7 +203,6 @@ PointParam::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SP
     // TODO: can we ditch handleTip() etc. because we have access to handle_tip etc. itself???
     e->create(desktop, item, knotholder, Inkscape::CTRL_TYPE_UNKNOWN, handleTip(), knot_shape, knot_mode, knot_color);
     knotholder->add(e);
-
 }
 
 } /* namespace LivePathEffect */

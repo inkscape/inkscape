@@ -28,6 +28,7 @@ LPEdoEffectStackTest::LPEdoEffectStackTest(LivePathEffectObject *lpeobject) :
     registerParameter( dynamic_cast<Parameter *>(&path) );
 
     point.set_oncanvas_looks(SP_KNOT_SHAPE_SQUARE, SP_KNOT_MODE_XOR, 0x00ff0000);
+    point.param_set_and_write_new_value(point);
 }
 
 LPEdoEffectStackTest::~LPEdoEffectStackTest()
