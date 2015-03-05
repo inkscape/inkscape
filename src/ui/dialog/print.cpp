@@ -126,30 +126,13 @@ static void draw_page(
         cairo_surface_t *surface = cairo_get_target(cr);
         cairo_matrix_t ctm;
         cairo_get_matrix(cr, &ctm);
-#ifdef WIN32
-        //Gtk+ does not take the non printable area into account
-        //http://bugzilla.gnome.org/show_bug.cgi?id=381371
-        //
-        // This workaround translates the origin from the top left of the
-        // printable area to the top left of the page.
-        GtkPrintSettings *settings = gtk_print_operation_get_print_settings(operation);
-        const gchar *printerName = gtk_print_settings_get_printer(settings);
-        HDC hdc = CreateDC("WINSPOOL", printerName, NULL, NULL);
-        if (hdc) {
-            cairo_matrix_t mat;
-            int x_off = GetDeviceCaps (hdc, PHYSICALOFFSETX);
-            int y_off = GetDeviceCaps (hdc, PHYSICALOFFSETY);
-            cairo_matrix_init_translate(&mat, -x_off, -y_off);
-            cairo_matrix_multiply (&ctm, &ctm, &mat);
-            DeleteDC(hdc);
-        }
-#endif             
+
         bool ret = ctx->setSurfaceTarget (surface, true, &ctm);
         if (ret) {
             ret = renderer.setupDocument (ctx, junk->_doc, TRUE, 0., NULL);
             if (ret) {
                 renderer.renderItem(ctx, junk->_base);
-                ret = ctx->finish();
+                ctx->finish();
             }
             else {
                 g_warning("%s", _("Could not set up Document"));
