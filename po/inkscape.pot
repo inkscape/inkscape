@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-02-27 20:13+0100\n"
+"POT-Creation-Date: 2015-03-06 09:42+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6244,7 +6244,7 @@ msgstr ""
 #: ../src/extension/internal/filter/bumps.h:98
 #: ../src/extension/internal/filter/bumps.h:329
 #: ../src/libgdl/gdl-dock-placeholder.c:175 ../src/libgdl/gdl-dock.c:199
-#: ../src/widgets/rect-toolbar.cpp:335
+#: ../src/widgets/rect-toolbar.cpp:334
 #: ../share/extensions/interp_att_g.inx.h:11
 msgid "Height"
 msgstr ""
@@ -7048,7 +7048,7 @@ msgstr ""
 
 #: ../src/extension/internal/filter/morphology.h:65
 #: ../src/libgdl/gdl-dock-placeholder.c:167 ../src/libgdl/gdl-dock.c:191
-#: ../src/widgets/rect-toolbar.cpp:318 ../src/widgets/spray-toolbar.cpp:116
+#: ../src/widgets/rect-toolbar.cpp:317 ../src/widgets/spray-toolbar.cpp:116
 #: ../src/widgets/tweak-toolbar.cpp:128
 #: ../share/extensions/interp_att_g.inx.h:10
 msgid "Width"
@@ -8345,7 +8345,7 @@ msgstr ""
 msgid "Luminance to Alpha"
 msgstr ""
 
-#: ../src/filter-enums.cpp:87 ../src/widgets/mesh-toolbar.cpp:476
+#: ../src/filter-enums.cpp:87
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:3
 #: ../share/extensions/jessyInk_transitions.inx.h:7
 msgid "Default"
@@ -9893,7 +9893,8 @@ msgid "Control handle 0:"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:47
-msgid "Control handle 0 - Ctrl+Alt+Click to reset"
+msgid ""
+"Control handle 0 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:48
@@ -9901,7 +9902,8 @@ msgid "Control handle 1:"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:48
-msgid "Control handle 1 - Ctrl+Alt+Click to reset"
+msgid ""
+"Control handle 1 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:49
@@ -9909,7 +9911,8 @@ msgid "Control handle 2:"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:49
-msgid "Control handle 2 - Ctrl+Alt+Click to reset"
+msgid ""
+"Control handle 2 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:50
@@ -9917,7 +9920,8 @@ msgid "Control handle 3:"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:50
-msgid "Control handle 3 - Ctrl+Alt+Click to reset"
+msgid ""
+"Control handle 3 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:51
@@ -9925,7 +9929,8 @@ msgid "Control handle 4:"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:51
-msgid "Control handle 4 - Ctrl+Alt+Click to reset"
+msgid ""
+"Control handle 4 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:52
@@ -9933,7 +9938,8 @@ msgid "Control handle 5:"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:52
-msgid "Control handle 5 - Ctrl+Alt+Click to reset"
+msgid ""
+"Control handle 5 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:53
@@ -9941,7 +9947,8 @@ msgid "Control handle 6:"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:53
-msgid "Control handle 6 - Ctrl+Alt+Click to reset"
+msgid ""
+"Control handle 6 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:54
@@ -9949,7 +9956,8 @@ msgid "Control handle 7:"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:54
-msgid "Control handle 7 - Ctrl+Alt+Click to reset"
+msgid ""
+"Control handle 7 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:55
@@ -9957,7 +9965,9 @@ msgid "Control handle 8x9:"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:55
-msgid "Control handle 8x9 - Ctrl+Alt+Click to reset"
+msgid ""
+"Control handle 8x9 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along "
+"axes"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:56
@@ -9965,7 +9975,9 @@ msgid "Control handle 10x11:"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:56
-msgid "Control handle 10x11 - Ctrl+Alt+Click to reset"
+msgid ""
+"Control handle 10x11 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along "
+"axes"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:57
@@ -9973,7 +9985,9 @@ msgid "Control handle 12:"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:57
-msgid "Control handle 12 - Ctrl+Alt+Click to reset"
+msgid ""
+"Control handle 12 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along "
+"axes"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:58
@@ -9981,7 +9995,9 @@ msgid "Control handle 13:"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:58
-msgid "Control handle 13 - Ctrl+Alt+Click to reset"
+msgid ""
+"Control handle 13 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along "
+"axes"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:59
@@ -9989,7 +10005,9 @@ msgid "Control handle 14:"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:59
-msgid "Control handle 14 - Ctrl+Alt+Click to reset"
+msgid ""
+"Control handle 14 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along "
+"axes"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:60
@@ -9997,7 +10015,9 @@ msgid "Control handle 15:"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:60
-msgid "Control handle 15 - Ctrl+Alt+Click to reset"
+msgid ""
+"Control handle 15 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along "
+"axes"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:61
@@ -10005,7 +10025,9 @@ msgid "Control handle 16:"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:61
-msgid "Control handle 16 - Ctrl+Alt+Click to reset"
+msgid ""
+"Control handle 16 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along "
+"axes"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:62
@@ -10013,7 +10035,9 @@ msgid "Control handle 17:"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:62
-msgid "Control handle 17 - Ctrl+Alt+Click to reset"
+msgid ""
+"Control handle 17 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along "
+"axes"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:63
@@ -10021,7 +10045,9 @@ msgid "Control handle 18:"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:63
-msgid "Control handle 18 - Ctrl+Alt+Click to reset"
+msgid ""
+"Control handle 18 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along "
+"axes"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:64
@@ -10029,7 +10055,9 @@ msgid "Control handle 19:"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:64
-msgid "Control handle 19 - Ctrl+Alt+Click to reset"
+msgid ""
+"Control handle 19 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along "
+"axes"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:65
@@ -10037,7 +10065,9 @@ msgid "Control handle 20x21:"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:65
-msgid "Control handle 20x21 - Ctrl+Alt+Click to reset"
+msgid ""
+"Control handle 20x21 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along "
+"axes"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:66
@@ -10045,7 +10075,9 @@ msgid "Control handle 22x23:"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:66
-msgid "Control handle 22x23 - Ctrl+Alt+Click to reset"
+msgid ""
+"Control handle 22x23 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along "
+"axes"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:67
@@ -10053,7 +10085,9 @@ msgid "Control handle 24x26:"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:67
-msgid "Control handle 24x26 - Ctrl+Alt+Click to reset"
+msgid ""
+"Control handle 24x26 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along "
+"axes"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:68
@@ -10061,7 +10095,9 @@ msgid "Control handle 25x27:"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:68
-msgid "Control handle 25x27 - Ctrl+Alt+Click to reset"
+msgid ""
+"Control handle 25x27 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along "
+"axes"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:69
@@ -10069,7 +10105,9 @@ msgid "Control handle 28x30:"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:69
-msgid "Control handle 28x30 - Ctrl+Alt+Click to reset"
+msgid ""
+"Control handle 28x30 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along "
+"axes"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:70
@@ -10077,7 +10115,9 @@ msgid "Control handle 29x31:"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:70
-msgid "Control handle 29x31 - Ctrl+Alt+Click to reset"
+msgid ""
+"Control handle 29x31 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along "
+"axes"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:71
@@ -10085,10 +10125,12 @@ msgid "Control handle 32x33x34x35:"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:71
-msgid "Control handle 32x33x34x35 - Ctrl+Alt+Click to reset"
+msgid ""
+"Control handle 32x33x34x35 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move "
+"along axes"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:221
+#: ../src/live_effects/lpe-lattice2.cpp:224
 msgid "Reset grid"
 msgstr ""
 
@@ -10208,7 +10250,7 @@ msgid "Top Left"
 msgstr ""
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:47
-msgid "Top Left - Ctrl+Alt+Click to reset"
+msgid "Top Left - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:48
@@ -10216,7 +10258,7 @@ msgid "Top Right"
 msgstr ""
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:48
-msgid "Top Right - Ctrl+Alt+Click to reset"
+msgid "Top Right - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:49
@@ -10224,7 +10266,7 @@ msgid "Down Left"
 msgstr ""
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:49
-msgid "Down Left - Ctrl+Alt+Click to reset"
+msgid "Down Left - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:50
@@ -10232,7 +10274,7 @@ msgid "Down Right"
 msgstr ""
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:50
-msgid "Down Right - Ctrl+Alt+Click to reset"
+msgid "Down Right - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:257
@@ -11057,8 +11099,7 @@ msgstr ""
 msgid "Paste path parameter"
 msgstr ""
 
-#: ../src/live_effects/parameter/point.cpp:89
-#: ../src/live_effects/parameter/pointreseteable.cpp:103
+#: ../src/live_effects/parameter/point.cpp:103
 msgid "Change point parameter"
 msgstr ""
 
@@ -12280,8 +12321,8 @@ msgstr ""
 
 #: ../src/selection-describer.cpp:236
 #, c-format
-msgid "<b>%i</b> objects selected of type %s"
-msgid_plural "<b>%i</b> objects selected of types %s"
+msgid "<b>%1$i</b> objects selected of type %2$s"
+msgid_plural "<b>%1$i</b> objects selected of types %2$s"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -19021,7 +19062,7 @@ msgstr ""
 
 #. build custom preferences tab
 #: ../src/ui/dialog/inkscape-preferences.cpp:1428
-#: ../src/ui/dialog/print.cpp:232
+#: ../src/ui/dialog/print.cpp:215
 msgid "Rendering"
 msgstr ""
 
@@ -19364,7 +19405,7 @@ msgid "Link:"
 msgstr ""
 
 #: ../src/ui/dialog/input.cpp:742 ../src/ui/dialog/input.cpp:743
-#: ../src/ui/dialog/input.cpp:1571 ../src/widgets/mesh-toolbar.cpp:499
+#: ../src/ui/dialog/input.cpp:1571
 msgid "None"
 msgstr ""
 
@@ -20191,20 +20232,20 @@ msgstr ""
 msgid "Could not open temporary PNG for bitmap printing"
 msgstr ""
 
-#: ../src/ui/dialog/print.cpp:155
+#: ../src/ui/dialog/print.cpp:138
 msgid "Could not set up Document"
 msgstr ""
 
-#: ../src/ui/dialog/print.cpp:159
+#: ../src/ui/dialog/print.cpp:142
 msgid "Failed to set CairoRenderContext"
 msgstr ""
 
 #. set up dialog title, based on document name
-#: ../src/ui/dialog/print.cpp:197
+#: ../src/ui/dialog/print.cpp:180
 msgid "SVG Document"
 msgstr ""
 
-#: ../src/ui/dialog/print.cpp:198
+#: ../src/ui/dialog/print.cpp:181
 msgid "Print"
 msgstr ""
 
@@ -26016,7 +26057,7 @@ msgid "Arc: Change open/closed"
 msgstr ""
 
 #: ../src/widgets/arc-toolbar.cpp:289 ../src/widgets/arc-toolbar.cpp:319
-#: ../src/widgets/rect-toolbar.cpp:261 ../src/widgets/rect-toolbar.cpp:300
+#: ../src/widgets/rect-toolbar.cpp:260 ../src/widgets/rect-toolbar.cpp:299
 #: ../src/widgets/spiral-toolbar.cpp:214 ../src/widgets/spiral-toolbar.cpp:238
 #: ../src/widgets/star-toolbar.cpp:384 ../src/widgets/star-toolbar.cpp:446
 msgid "<b>New:</b>"
@@ -26025,7 +26066,7 @@ msgstr ""
 #. FIXME: implement averaging of all parameters for multiple selected
 #. gtk_label_set_markup(GTK_LABEL(l), _("<b>Average:</b>"));
 #: ../src/widgets/arc-toolbar.cpp:292 ../src/widgets/arc-toolbar.cpp:303
-#: ../src/widgets/rect-toolbar.cpp:269 ../src/widgets/rect-toolbar.cpp:287
+#: ../src/widgets/rect-toolbar.cpp:268 ../src/widgets/rect-toolbar.cpp:286
 #: ../src/widgets/spiral-toolbar.cpp:216 ../src/widgets/spiral-toolbar.cpp:227
 #: ../src/widgets/star-toolbar.cpp:386
 msgid "<b>Change:</b>"
@@ -26997,7 +27038,7 @@ msgstr ""
 #. Add the units menu.
 #: ../src/widgets/lpe-toolbar.cpp:387 ../src/widgets/node-toolbar.cpp:613
 #: ../src/widgets/paintbucket-toolbar.cpp:168
-#: ../src/widgets/rect-toolbar.cpp:379 ../src/widgets/select-toolbar.cpp:538
+#: ../src/widgets/rect-toolbar.cpp:378 ../src/widgets/select-toolbar.cpp:538
 msgid "Units"
 msgstr ""
 
@@ -27027,7 +27068,7 @@ msgid "The units to be used for the measurements"
 msgstr ""
 
 #: ../src/widgets/mesh-toolbar.cpp:311
-msgid "Set mesh smoothing"
+msgid "Set mesh type"
 msgstr ""
 
 #: ../src/widgets/mesh-toolbar.cpp:334
@@ -27098,47 +27139,27 @@ msgid "Show side and tensor handles"
 msgstr ""
 
 #: ../src/widgets/mesh-toolbar.cpp:463
-msgid "WARNING: Mesh SVG Syntax Subject to Change, Smoothing Experimental"
+msgid "WARNING: Mesh SVG Syntax Subject to Change"
 msgstr ""
 
 #: ../src/widgets/mesh-toolbar.cpp:473
-msgctxt "Smoothing"
-msgid "None"
+msgctxt "Type"
+msgid "Coons"
+msgstr ""
+
+#: ../src/widgets/mesh-toolbar.cpp:476
+msgid "Bicubic"
+msgstr ""
+
+#: ../src/widgets/mesh-toolbar.cpp:478
+msgid "Coons"
 msgstr ""
 
 #: ../src/widgets/mesh-toolbar.cpp:479
-msgid "Smooth1"
+msgid "Coons: no smoothing. Bicubic: smoothing across patch boundaries."
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:482
-msgid "Smooth2"
-msgstr ""
-
-#: ../src/widgets/mesh-toolbar.cpp:485
-msgid "Smooth3"
-msgstr ""
-
-#: ../src/widgets/mesh-toolbar.cpp:488
-msgid "Smooth4"
-msgstr ""
-
-#: ../src/widgets/mesh-toolbar.cpp:491
-msgid "Smooth5"
-msgstr ""
-
-#: ../src/widgets/mesh-toolbar.cpp:494
-msgid "Smooth6"
-msgstr ""
-
-#: ../src/widgets/mesh-toolbar.cpp:497
-msgid "Smooth7"
-msgstr ""
-
-#: ../src/widgets/mesh-toolbar.cpp:500
-msgid "If the mesh should be smoothed across patch boundaries."
-msgstr ""
-
-#: ../src/widgets/mesh-toolbar.cpp:502 ../src/widgets/pencil-toolbar.cpp:278
+#: ../src/widgets/mesh-toolbar.cpp:481 ../src/widgets/pencil-toolbar.cpp:278
 msgid "Smoothing:"
 msgstr ""
 
@@ -27561,55 +27582,55 @@ msgstr ""
 msgid "Change rectangle"
 msgstr ""
 
-#: ../src/widgets/rect-toolbar.cpp:318
+#: ../src/widgets/rect-toolbar.cpp:317
 msgid "W:"
 msgstr ""
 
-#: ../src/widgets/rect-toolbar.cpp:318
+#: ../src/widgets/rect-toolbar.cpp:317
 msgid "Width of rectangle"
 msgstr ""
 
-#: ../src/widgets/rect-toolbar.cpp:335
+#: ../src/widgets/rect-toolbar.cpp:334
 msgid "H:"
 msgstr ""
 
-#: ../src/widgets/rect-toolbar.cpp:335
+#: ../src/widgets/rect-toolbar.cpp:334
 msgid "Height of rectangle"
 msgstr ""
 
-#: ../src/widgets/rect-toolbar.cpp:349 ../src/widgets/rect-toolbar.cpp:364
+#: ../src/widgets/rect-toolbar.cpp:348 ../src/widgets/rect-toolbar.cpp:363
 msgid "not rounded"
 msgstr ""
 
-#: ../src/widgets/rect-toolbar.cpp:352
+#: ../src/widgets/rect-toolbar.cpp:351
 msgid "Horizontal radius"
 msgstr ""
 
-#: ../src/widgets/rect-toolbar.cpp:352
+#: ../src/widgets/rect-toolbar.cpp:351
 msgid "Rx:"
 msgstr ""
 
-#: ../src/widgets/rect-toolbar.cpp:352
+#: ../src/widgets/rect-toolbar.cpp:351
 msgid "Horizontal radius of rounded corners"
 msgstr ""
 
-#: ../src/widgets/rect-toolbar.cpp:367
+#: ../src/widgets/rect-toolbar.cpp:366
 msgid "Vertical radius"
 msgstr ""
 
-#: ../src/widgets/rect-toolbar.cpp:367
+#: ../src/widgets/rect-toolbar.cpp:366
 msgid "Ry:"
 msgstr ""
 
-#: ../src/widgets/rect-toolbar.cpp:367
+#: ../src/widgets/rect-toolbar.cpp:366
 msgid "Vertical radius of rounded corners"
 msgstr ""
 
-#: ../src/widgets/rect-toolbar.cpp:386
+#: ../src/widgets/rect-toolbar.cpp:385
 msgid "Not rounded"
 msgstr ""
 
-#: ../src/widgets/rect-toolbar.cpp:387
+#: ../src/widgets/rect-toolbar.cpp:386
 msgid "Make corners sharp"
 msgstr ""
 
@@ -34518,10 +34539,12 @@ msgid "Seamless Pattern"
 msgstr ""
 
 #: ../share/extensions/seamless_pattern.inx.h:2
+#: ../share/extensions/seamless_pattern_procedural.inx.h:2
 msgid "Custom Width (px):"
 msgstr ""
 
 #: ../share/extensions/seamless_pattern.inx.h:3
+#: ../share/extensions/seamless_pattern_procedural.inx.h:3
 msgid "Custom Height (px):"
 msgstr ""
 
@@ -34531,14 +34554,6 @@ msgstr ""
 
 #: ../share/extensions/seamless_pattern_procedural.inx.h:1
 msgid "Seamless Pattern Procedural"
-msgstr ""
-
-#: ../share/extensions/seamless_pattern_procedural.inx.h:2
-msgid "Custom Width (px.):"
-msgstr ""
-
-#: ../share/extensions/seamless_pattern_procedural.inx.h:3
-msgid "Custom Height (px.):"
 msgstr ""
 
 #: ../share/extensions/setup_typography_canvas.inx.h:1
