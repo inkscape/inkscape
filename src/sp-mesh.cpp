@@ -48,14 +48,14 @@ void SPMesh::set(unsigned key, gchar const *value) {
             this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
 
-        case SP_ATTR_MESH_TYPE:
+        case SP_ATTR_TYPE:
 	    if (value) {
 	      if (!strcmp(value, "coons")) {
 		this->type = SP_MESH_TYPE_COONS;
 	      } else if (!strcmp(value, "bicubic")) {
 		this->type = SP_MESH_TYPE_BICUBIC;
 	      } else {
-		std::cout << "SPMesh::set(): invalid value " << value << std::endl;
+		std::cerr << "SPMesh::set(): invalid value " << value << std::endl;
 	      }
 	      this->type_set = TRUE;
 	    } else {
