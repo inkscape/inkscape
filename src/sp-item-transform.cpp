@@ -181,7 +181,9 @@ Geom::Affine get_scale_transform_for_uniform_stroke(Geom::Rect const &bbox_visua
             if (B*B - 4*A*C < 0) {
                 g_message("stroke scaling error : %d, %f, %f, %f, %f, %f", preserve, r0, w0, h0, w1, h1);
             } else {
-                r1 = fabs((-B - sqrt(B*B - 4*A*C))/(2*A));
+                r1 = -C/B;
+                if (!Geom::are_near(A*C/B/B, 0.0, Geom::EPSILON))
+                    r1 = fabs((-B - sqrt(B*B - 4*A*C))/(2*A));
                 // If w1 < 0 then the scale will be wrong if we just assume that scale_x = (w1 - r1)/(w0 - r0);
                 // Therefore we here need the absolute values of w0, w1, h0, h1, and r0, as taken care of earlier
                 scale_x = (w1 - r1)/(w0 - r0);
@@ -339,7 +341,9 @@ Geom::Affine get_scale_transform_for_variable_stroke(Geom::Rect const &bbox_visu
             if (B*B - 4*A*C < 0) {
                 g_message("variable stroke scaling error : %d, %d, %f, %f, %f, %f, %f, %f", transform_stroke, preserve, r0w, r0h, w0, h0, w1, h1);
             } else {
-                gdouble det = (-B + sqrt(B*B - 4*A*C))/(2*A);
+                gdouble det = -C/B;
+                if (!Geom::are_near(A*C/B/B, 0.0, Geom::EPSILON))
+                    det = (-B + sqrt(B*B - 4*A*C))/(2*A);
                 r1w = r0w*det;
                 r1h = r0h*det;
                 // If w1 < 0 then the scale will be wrong if we just assume that scale_x = (w1 - r1)/(w0 - r0);
