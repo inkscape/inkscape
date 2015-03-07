@@ -29,6 +29,7 @@ LPESimplify::LPESimplify(LivePathEffectObject *lpeobject)
             steps(_("Steps:"),_("Change number of simplify steps "), "steps", &wr, this,1),
             threshold(_("Roughly threshold:"), _("Roughly threshold:"), "threshold", &wr, this, 0.003),
             helper_size(_("Helper size:"), _("Helper size"), "helper_size", &wr, this, 2.),
+            smooth_angles(_("Smooth anglesº:"), _("Smooth anglesº, 0 no smooth"), "smooth_angles", &wr, this, 20.),
             nodes(_("Helper nodes"), _("Show helper nodes"), "nodes", &wr, this, false,
                   "", INKSCAPE_ICON("on"), INKSCAPE_ICON("off")),
             handles(_("Helper handles"), _("Show helper handles"), "handles", &wr, this, false,
@@ -40,6 +41,7 @@ LPESimplify::LPESimplify(LivePathEffectObject *lpeobject)
             {
                 registerParameter(dynamic_cast<Parameter *>(&steps));
                 registerParameter(dynamic_cast<Parameter *>(&threshold));
+                registerParameter(dynamic_cast<Parameter *>(&smooth_angles));
                 registerParameter(dynamic_cast<Parameter *>(&helper_size));
                 registerParameter(dynamic_cast<Parameter *>(&nodes));
                 registerParameter(dynamic_cast<Parameter *>(&handles));
@@ -54,6 +56,9 @@ LPESimplify::LPESimplify(LivePathEffectObject *lpeobject)
                 helper_size.param_set_range(0.1, 100);
                 helper_size.param_set_increments(1, 1);
                 helper_size.param_set_digits(1);
+                smooth_angles.param_set_range(0.0, 365.0);
+                smooth_angles.param_set_increments(10, 10);
+                smooth_angles.param_set_digits(2);
 }
 
 LPESimplify::~LPESimplify() {}
@@ -154,9 +159,9 @@ LPESimplify::doEffect(SPCurve *curve) {
            pathliv->Simplify(threshold * size);
         }
     }
-    Geom::PathVector outres = Geom::parse_svg_path(pathliv->svg_dump_path());
-    generateHelperPath(outres);
-    curve->set_pathvector(outres);
+    Geom::PathVector result = Geom::parse_svg_path(pathliv->svg_dump_path());
+    generateHelperPathAndSmooth(result);
+    curve->set_pathvector(result);
     SPDesktop* desktop = SP_ACTIVE_DESKTOP;
     if(desktop && INK_IS_NODE_TOOL(desktop->event_context)){
         Inkscape::UI::Tools::NodeTool *nt = static_cast<Inkscape::UI::Tools::NodeTool*>(desktop->event_context);
@@ -165,16 +170,16 @@ LPESimplify::doEffect(SPCurve *curve) {
 }
 
 void
-LPESimplify::generateHelperPath(Geom::PathVector result)
+LPESimplify::generateHelperPathAndSmooth(Geom::PathVector &result)
 {
-    if(!handles && !nodes){
+    if(!handles && !nodes && smooth_angles == 0){
         return;
     }
 
     if(steps < 1){
         return;
     }
-
+    Geom::PathVector tmpPath;
     Geom::CubicBezier const *cubic = NULL;
     for (Geom::PathVector::iterator path_it = result.begin(); path_it != result.end(); ++path_it) {
         //Si está vacío...
@@ -183,11 +188,9 @@ LPESimplify::generateHelperPath(Geom::PathVector result)
         }
         //Itreadores
         Geom::Path::const_iterator curve_it1 = path_it->begin(); // incoming curve
-        Geom::Path::const_iterator curve_it2 =
-            ++(path_it->begin());                                // outgoing curve
-        Geom::Path::const_iterator curve_endit =
-            path_it->end_default(); // this determines when the loop has to stop
-        
+        Geom::Path::const_iterator curve_it2 = ++(path_it->begin());// outgoing curve
+        Geom::Path::const_iterator curve_endit = path_it->end_default(); // this determines when the loop has to stop
+        SPCurve *nCurve = new SPCurve();
         if (path_it->closed()) {
           // if the path is closed, maybe we have to stop a bit earlier because the
           // closing line segment has zerolength.
@@ -205,9 +208,46 @@ LPESimplify::generateHelperPath(Geom::PathVector result)
         if(nodes){
             drawNode(curve_it1->initialPoint());
         }
+        nCurve->moveto(curve_it1->initialPoint());
+        Geom::Point start = Geom::Point(0,0);
         while (curve_it1 != curve_endit) {
             cubic = dynamic_cast<Geom::CubicBezier const *>(&*curve_it1);
+            Geom::Point pointAt1 = curve_it1->initialPoint();
+            Geom::Point pointAt2 = curve_it1->finalPoint();
+            Geom::Point pointAt3 = curve_it1->finalPoint();
+            Geom::Point pointAt4 = curve_it1->finalPoint();
             if (cubic) {
+                pointAt1 = (*cubic)[1];
+                pointAt2 = (*cubic)[2];
+            }
+            if(start == Geom::Point(0,0)){
+                start = pointAt1;
+            }
+            
+            if(path_it->closed() && curve_it2 == curve_endit){
+                pointAt4 = start;
+            }
+            if(curve_it2 != curve_endit){
+                cubic = dynamic_cast<Geom::CubicBezier const *>(&*curve_it2);
+                if (cubic) {
+                    pointAt4 = (*cubic)[1];
+                }
+            }
+            Geom::Ray ray1(pointAt2, pointAt3);
+            Geom::Ray ray2(pointAt3, pointAt4);
+            double angle1 = Geom::rad_to_deg(ray1.angle());
+            double angle2 = Geom::rad_to_deg(ray2.angle());
+            if((smooth_angles  >= angle2 - angle1) && !are_near(pointAt4,pointAt3) && !are_near(pointAt2,pointAt3)){
+                double dist = Geom::distance(pointAt2,pointAt3);
+                Geom::Angle angleFixed = ray2.angle();
+                angleFixed -= Geom::Angle::from_degrees(180.0);
+                pointAt2 =  Geom::Point::polar(angleFixed,dist) + pointAt3;
+            }
+            nCurve->curveto(pointAt1, pointAt2, curve_it1->finalPoint());
+            cubic = dynamic_cast<Geom::CubicBezier const *>(nCurve->last_segment());
+            if (cubic) {
+                pointAt1 = (*cubic)[1];
+                pointAt2 = (*cubic)[2];
                 if(handles) {
                     if(!are_near((*cubic)[0],(*cubic)[1])){
                         drawHandle((*cubic)[1]);
@@ -223,11 +263,16 @@ LPESimplify::generateHelperPath(Geom::PathVector result)
                 drawNode(curve_it1->finalPoint());
             }
             ++curve_it1;
-            if(curve_it2 != curve_endit){
-                ++curve_it2;
-            }
+            ++curve_it2;
         }
+        if (path_it->closed()) {
+            nCurve->closepath_current();
+        }
+        tmpPath.push_back(nCurve->get_pathvector()[0]);
+        nCurve->reset();
+        delete nCurve;
     }
+    result = tmpPath;
 }
 
 void 
