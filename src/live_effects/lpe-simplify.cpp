@@ -30,8 +30,6 @@ LPESimplify::LPESimplify(LivePathEffectObject *lpeobject)
             steps(_("Steps:"),_("Change number of simplify steps "), "steps", &wr, this,1),
             threshold(_("Roughly threshold:"), _("Roughly threshold:"), "threshold", &wr, this, 0.003),
             smooth_angles(_("Smooth angles:"), _("Max degree difference on handles to preform a smooth"), "smooth_angles", &wr, this, 20.),
-            helper(_("Helper"), _("Show helper"), "helper", &wr, this, false,
-                  "", INKSCAPE_ICON("on"), INKSCAPE_ICON("off")),
             nodes(_("Helper nodes"), _("Show helper nodes"), "nodes", &wr, this, false,
                   "", INKSCAPE_ICON("on"), INKSCAPE_ICON("off")),
             handles(_("Helper handles"), _("Show helper handles"), "handles", &wr, this, false,
@@ -45,7 +43,6 @@ LPESimplify::LPESimplify(LivePathEffectObject *lpeobject)
                 registerParameter(dynamic_cast<Parameter *>(&steps));
                 registerParameter(dynamic_cast<Parameter *>(&threshold));
                 registerParameter(dynamic_cast<Parameter *>(&smooth_angles));
-                registerParameter(dynamic_cast<Parameter *>(&helper));
                 registerParameter(dynamic_cast<Parameter *>(&nodes));
                 registerParameter(dynamic_cast<Parameter *>(&handles));
                 registerParameter(dynamic_cast<Parameter *>(&simplifyindividualpaths));
@@ -72,7 +69,7 @@ LPESimplify::doBeforeEffect (SPLPEItem const* lpeitem)
     bbox = SP_ITEM(lpeitem)->visualBounds();
     SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
     radiusHelperNodes = 12.0;
-    if(current_zoom != 0){
+    if(current_zoom != 0 && (nodes || handles)){
         if(current_zoom < 0.5){
             radiusHelperNodes *= current_zoom + 0.4;
         } else if(current_zoom > 1) {
@@ -100,26 +97,13 @@ LPESimplify::newWidget()
     vbox->set_homogeneous(false);
     vbox->set_spacing(2);
     std::vector<Parameter *>::iterator it = param_vector.begin();
-    Gtk::HBox * buttonTop = Gtk::manage(new Gtk::HBox(true,0));
     Gtk::HBox * buttons = Gtk::manage(new Gtk::HBox(true,0));
     Gtk::HBox * buttonsBottom = Gtk::manage(new Gtk::HBox(true,0));
     while (it != param_vector.end()) {
         if ((*it)->widget_is_visible) {
             Parameter * param = *it;
             Gtk::Widget * widg = dynamic_cast<Gtk::Widget *>(param->param_newWidget());
-            if (param->param_key == "helper")
-            {
-                Glib::ustring * tip = param->param_getTooltip();
-                if (widg) {
-                    buttonTop->pack_start(*widg, true, true, 2);
-                    if (tip) {
-                        widg->set_tooltip_text(*tip);
-                    } else {
-                        widg->set_tooltip_text("");
-                        widg->set_has_tooltip(false);
-                    }
-                }
-            } else if (param->param_key == "simplifyindividualpaths" || 
+            if (param->param_key == "simplifyindividualpaths" || 
                 param->param_key == "simplifyJustCoalesce")
             {
                 Glib::ustring * tip = param->param_getTooltip();
@@ -165,7 +149,6 @@ LPESimplify::newWidget()
 
         ++it;
     }
-    vbox->pack_start(*buttonTop,true, true, 2);
     vbox->pack_start(*buttons,true, true, 2);
     vbox->pack_start(*buttonsBottom,true, true, 2);
     return dynamic_cast<Gtk::Widget *>(vbox);
@@ -201,10 +184,6 @@ LPESimplify::doEffect(SPCurve *curve) {
 void
 LPESimplify::generateHelperPathAndSmooth(Geom::PathVector &result)
 {
-    if(!handles && !nodes && smooth_angles == 0){
-        return;
-    }
-
     if(steps < 1){
         return;
     }
@@ -336,7 +315,7 @@ LPESimplify::drawHandleLine(Geom::Point p,Geom::Point p2)
     Geom::Path path;
     path.start( p );
     double diameter = radiusHelperNodes;
-    if(helper && Geom::distance(p,p2) > (diameter * 0.35)){
+    if(handles && Geom::distance(p,p2) > (diameter * 0.35)){
         Geom::Ray ray2(p, p2);
         p2 =  p2 - Geom::Point::polar(ray2.angle(),(diameter * 0.35));
     }

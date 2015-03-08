@@ -41,7 +41,6 @@ private:
   ScalarParam steps;
   ScalarParam threshold;
   ScalarParam smooth_angles;
-  ToggleButtonParam helper;
   ToggleButtonParam nodes;
   ToggleButtonParam handles;
   ToggleButtonParam simplifyindividualpaths;
