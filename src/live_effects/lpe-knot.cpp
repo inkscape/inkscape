@@ -404,7 +404,7 @@ LPEKnot::doEffect_path (std::vector<Geom::Path> const &path_in)
     for (unsigned comp=0; comp<path_in.size(); comp++){
 
         //find the relevant path component in gpaths (required to allow groups!)
-        //Q: do we always recieve the group members in the same order? can we rest on that?
+        //Q: do we always receive the group members in the same order? can we rest on that?
         unsigned i0 = 0;
         for (i0=0; i0<gpaths.size(); i0++){
             if (path_in[comp]==gpaths[i0]) break;

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-03-06 09:42+0100\n"
+"POT-Creation-Date: 2015-03-08 17:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -9368,11 +9368,11 @@ msgstr ""
 msgid "Change weight of the effect"
 msgstr ""
 
-#: ../src/live_effects/lpe-bspline.cpp:291
+#: ../src/live_effects/lpe-bspline.cpp:305
 msgid "Default weight"
 msgstr ""
 
-#: ../src/live_effects/lpe-bspline.cpp:296
+#: ../src/live_effects/lpe-bspline.cpp:310
 msgid "Make cusp"
 msgstr ""
 
@@ -10694,55 +10694,63 @@ msgid ""
 "you are applying it to. If this is not what you want, click Cancel."
 msgstr ""
 
-#: ../src/live_effects/lpe-simplify.cpp:29
+#: ../src/live_effects/lpe-simplify.cpp:30
 msgid "Steps:"
 msgstr ""
 
-#: ../src/live_effects/lpe-simplify.cpp:29
+#: ../src/live_effects/lpe-simplify.cpp:30
 msgid "Change number of simplify steps "
 msgstr ""
 
-#: ../src/live_effects/lpe-simplify.cpp:30
+#: ../src/live_effects/lpe-simplify.cpp:31
 msgid "Roughly threshold:"
 msgstr ""
 
-#: ../src/live_effects/lpe-simplify.cpp:31
-msgid "Helper size:"
-msgstr ""
-
-#: ../src/live_effects/lpe-simplify.cpp:31
-msgid "Helper size"
+#: ../src/live_effects/lpe-simplify.cpp:32
+msgid "Smooth angles:"
 msgstr ""
 
 #: ../src/live_effects/lpe-simplify.cpp:32
+msgid "Max degree difference on handles to preform a smooth"
+msgstr ""
+
+#: ../src/live_effects/lpe-simplify.cpp:33
+msgid "Helper"
+msgstr ""
+
+#: ../src/live_effects/lpe-simplify.cpp:33
+msgid "Show helper"
+msgstr ""
+
+#: ../src/live_effects/lpe-simplify.cpp:35
 msgid "Helper nodes"
 msgstr ""
 
-#: ../src/live_effects/lpe-simplify.cpp:32
+#: ../src/live_effects/lpe-simplify.cpp:35
 msgid "Show helper nodes"
 msgstr ""
 
-#: ../src/live_effects/lpe-simplify.cpp:34
+#: ../src/live_effects/lpe-simplify.cpp:37
 msgid "Helper handles"
 msgstr ""
 
-#: ../src/live_effects/lpe-simplify.cpp:34
+#: ../src/live_effects/lpe-simplify.cpp:37
 msgid "Show helper handles"
 msgstr ""
 
-#: ../src/live_effects/lpe-simplify.cpp:36
+#: ../src/live_effects/lpe-simplify.cpp:39
 msgid "Paths separately"
 msgstr ""
 
-#: ../src/live_effects/lpe-simplify.cpp:36
+#: ../src/live_effects/lpe-simplify.cpp:39
 msgid "Simplifying paths (separately)"
 msgstr ""
 
-#: ../src/live_effects/lpe-simplify.cpp:38
+#: ../src/live_effects/lpe-simplify.cpp:41
 msgid "Just coalesce"
 msgstr ""
 
-#: ../src/live_effects/lpe-simplify.cpp:38
+#: ../src/live_effects/lpe-simplify.cpp:41
 msgid "Simplify just coalesce"
 msgstr ""
 
@@ -29055,7 +29063,7 @@ msgstr ""
 msgid "Use the pressure of the input device to alter the force of tweak action"
 msgstr ""
 
-#: ../share/extensions/convert2dashes.py:93
+#: ../share/extensions/convert2dashes.py:100
 msgid ""
 "The selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
@@ -29165,7 +29173,7 @@ msgstr ""
 
 #: ../share/extensions/funcplot.py:48
 msgid ""
-"x-interval cannot be zero. Please modify 'Start X value' or 'End X alue'"
+"x-interval cannot be zero. Please modify 'Start X value' or 'End X value'"
 msgstr ""
 
 #: ../share/extensions/funcplot.py:60

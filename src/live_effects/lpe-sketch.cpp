@@ -240,7 +240,7 @@ LPESketch::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_
 
         for (unsigned i = 0; i<nbiter_approxstrokes; i++){
             //Basic steps:
-            //- Choose a rdm seg [s0,s1], find coresponding [t0,t1],
+            //- Choose a rdm seg [s0,s1], find corresponding [t0,t1],
             //- Pick a rdm perturbation delta(s), collect 'piece(t)+delta(s(t))' over [t0,t1] into output.
 
             // pick a point where to start the stroke (s0 = dist from start).
