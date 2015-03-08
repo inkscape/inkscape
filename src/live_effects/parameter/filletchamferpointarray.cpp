@@ -354,7 +354,7 @@ void FilletChamferPointArrayParam::set_pwd2(
     last_pwd2_normal = pwd2_normal_in;
 }
 
-void FilletChamferPointArrayParam::set_document_unit(Glib::ustring const * value_document_unit)
+void FilletChamferPointArrayParam::set_document_unit(Glib::ustring value_document_unit)
 {
     documentUnit = value_document_unit;
 }

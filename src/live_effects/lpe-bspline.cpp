@@ -106,9 +106,23 @@ void LPEBSpline::doEffect(SPCurve *curve)
     // Make copy of old path as it is changed during processing
     Geom::PathVector const original_pathv = curve->get_pathvector();
     curve->reset();
-    double radiusHelperNodes = 6.0;
-    radiusHelperNodes /= current_zoom;
-    radiusHelperNodes = Inkscape::Util::Quantity::convert(radiusHelperNodes, "px", *defaultUnit);
+    double radiusHelperNodes = 12.0;
+    if(current_zoom != 0){
+        if(current_zoom < 0.5){
+            radiusHelperNodes *= current_zoom + 0.4;
+        } else if(current_zoom > 1) {
+            radiusHelperNodes *=  1/current_zoom;
+        }
+        Geom::Affine i2doc = i2anc_affine(SP_ITEM(sp_lpe_item), SP_OBJECT(SP_ITEM(sp_lpe_item)->document->getRoot()));
+        double expand = (i2doc.expansionX() + i2doc.expansionY())/2;
+        std::cout << expand << "expand\n";
+        if(expand != 0){
+            radiusHelperNodes /= expand;
+        }
+        radiusHelperNodes = Inkscape::Util::Quantity::convert(radiusHelperNodes, "px", defaultUnit);
+    } else {
+        radiusHelperNodes = 0;
+    }
     for (Geom::PathVector::const_iterator path_it = original_pathv.begin();
             path_it != original_pathv.end(); ++path_it) {
         if (path_it->empty())

@@ -129,7 +129,7 @@ void FilletChamferPropertiesDialog::showDialog(
     const gchar *unit,
     bool use_distance,
     bool aprox_radius,
-    Glib::ustring const * documentUnit)
+    Glib::ustring documentUnit)
 {
     FilletChamferPropertiesDialog *dialog = new FilletChamferPropertiesDialog();
 
@@ -172,7 +172,7 @@ void FilletChamferPropertiesDialog::_apply()
             }
             d_pos = _index + (d_pos / 100);
         } else {
-            d_pos = Inkscape::Util::Quantity::convert(d_pos, unit, *document_unit);
+            d_pos = Inkscape::Util::Quantity::convert(d_pos, unit, document_unit);
             d_pos = d_pos * -1;
         }
         _knotpoint->knot_set_offset(Geom::Point(d_pos, d_width));
@@ -226,7 +226,7 @@ void FilletChamferPropertiesDialog::_set_knot_point(Geom::Point knotpoint)
         _fillet_chamfer_position_label.set_label(_(posConcat.c_str()));
         position = knotpoint[Geom::X] * -1;
         
-        position = Inkscape::Util::Quantity::convert(position, *document_unit, unit);
+        position = Inkscape::Util::Quantity::convert(position, document_unit, unit);
     }
     _fillet_chamfer_position_numeric.set_value(position);
     if (knotpoint.y() == 1) {
@@ -256,7 +256,7 @@ void FilletChamferPropertiesDialog::_set_unit(const gchar *abbr)
     unit = abbr;
 }
 
-void FilletChamferPropertiesDialog::_set_document_unit(Glib::ustring const *abbr)
+void FilletChamferPropertiesDialog::_set_document_unit(Glib::ustring abbr)
 {
     document_unit = abbr;
 }

@@ -20,6 +20,7 @@
 #include <2geom/generic-rect.h>
 #include <2geom/interval.h>
 #include "ui/icon-names.h"
+#include "util/units.h"
 
 namespace Inkscape {
 namespace LivePathEffect {
@@ -28,8 +29,9 @@ LPESimplify::LPESimplify(LivePathEffectObject *lpeobject)
     : Effect(lpeobject),
             steps(_("Steps:"),_("Change number of simplify steps "), "steps", &wr, this,1),
             threshold(_("Roughly threshold:"), _("Roughly threshold:"), "threshold", &wr, this, 0.003),
-            helper_size(_("Helper size:"), _("Helper size"), "helper_size", &wr, this, 2.),
             smooth_angles(_("Smooth angles:"), _("Max degree diference on handles to preform a smooth"), "smooth_angles", &wr, this, 20.),
+            helper(_("Helper"), _("Show helper"), "helper", &wr, this, false,
+                  "", INKSCAPE_ICON("on"), INKSCAPE_ICON("off")),
             nodes(_("Helper nodes"), _("Show helper nodes"), "nodes", &wr, this, false,
                   "", INKSCAPE_ICON("on"), INKSCAPE_ICON("off")),
             handles(_("Helper handles"), _("Show helper handles"), "handles", &wr, this, false,
@@ -39,10 +41,11 @@ LPESimplify::LPESimplify(LivePathEffectObject *lpeobject)
             simplifyJustCoalesce(_("Just coalesce"), _("Simplify just coalesce"), "simplifyJustCoalesce", &wr, this, false,
                                  "", INKSCAPE_ICON("on"), INKSCAPE_ICON("off"))
             {
+                radiusHelperNodes = 6.0;
                 registerParameter(dynamic_cast<Parameter *>(&steps));
                 registerParameter(dynamic_cast<Parameter *>(&threshold));
                 registerParameter(dynamic_cast<Parameter *>(&smooth_angles));
-                registerParameter(dynamic_cast<Parameter *>(&helper_size));
+                registerParameter(dynamic_cast<Parameter *>(&helper));
                 registerParameter(dynamic_cast<Parameter *>(&nodes));
                 registerParameter(dynamic_cast<Parameter *>(&handles));
                 registerParameter(dynamic_cast<Parameter *>(&simplifyindividualpaths));
@@ -53,9 +56,6 @@ LPESimplify::LPESimplify(LivePathEffectObject *lpeobject)
                 steps.param_set_range(0, 100);
                 steps.param_set_increments(1, 1);
                 steps.param_set_digits(0);
-                helper_size.param_set_range(0.1, 100);
-                helper_size.param_set_increments(1, 1);
-                helper_size.param_set_digits(1);
                 smooth_angles.param_set_range(0.0, 365.0);
                 smooth_angles.param_set_increments(10, 10);
                 smooth_angles.param_set_digits(2);
@@ -71,9 +71,24 @@ LPESimplify::doBeforeEffect (SPLPEItem const* lpeitem)
     }
     bbox = SP_ITEM(lpeitem)->visualBounds();
     SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
+    radiusHelperNodes = 12.0;
+    if(current_zoom != 0){
+        if(current_zoom < 0.5){
+            radiusHelperNodes *= current_zoom + 0.4;
+        } else if(current_zoom > 1) {
+            radiusHelperNodes *=  1/current_zoom;
+        }
+        Geom::Affine i2doc = i2anc_affine(SP_ITEM(lpeitem), SP_OBJECT(SP_ITEM(lpeitem)->document->getRoot()));
+        double expand = (i2doc.expansionX() + i2doc.expansionY())/2;
+        if(expand != 0){
+            radiusHelperNodes /= expand;
+        }
+        radiusHelperNodes = Inkscape::Util::Quantity::convert(radiusHelperNodes, "px", defaultUnit);
+    } else {
+        radiusHelperNodes = 0;
+    }
     item->apply_to_clippath(item);
     item->apply_to_mask(item);
-
 }
 
 Gtk::Widget *
@@ -85,18 +100,31 @@ LPESimplify::newWidget()
     vbox->set_homogeneous(false);
     vbox->set_spacing(2);
     std::vector<Parameter *>::iterator it = param_vector.begin();
+    Gtk::HBox * buttonTop = Gtk::manage(new Gtk::HBox(true,0));
     Gtk::HBox * buttons = Gtk::manage(new Gtk::HBox(true,0));
-    Gtk::HBox * buttonsTwo = Gtk::manage(new Gtk::HBox(true,0));
+    Gtk::HBox * buttonsBottom = Gtk::manage(new Gtk::HBox(true,0));
     while (it != param_vector.end()) {
         if ((*it)->widget_is_visible) {
             Parameter * param = *it;
             Gtk::Widget * widg = dynamic_cast<Gtk::Widget *>(param->param_newWidget());
-            if (param->param_key == "simplifyindividualpaths" || 
+            if (param->param_key == "helper")
+            {
+                Glib::ustring * tip = param->param_getTooltip();
+                if (widg) {
+                    buttonTop->pack_start(*widg, true, true, 2);
+                    if (tip) {
+                        widg->set_tooltip_text(*tip);
+                    } else {
+                        widg->set_tooltip_text("");
+                        widg->set_has_tooltip(false);
+                    }
+                }
+            } else if (param->param_key == "simplifyindividualpaths" || 
                 param->param_key == "simplifyJustCoalesce")
             {
                 Glib::ustring * tip = param->param_getTooltip();
                 if (widg) {
-                    buttonsTwo->pack_start(*widg, true, true, 2);
+                    buttonsBottom->pack_start(*widg, true, true, 2);
                     if (tip) {
                         widg->set_tooltip_text(*tip);
                     } else {
@@ -137,8 +165,9 @@ LPESimplify::newWidget()
 
         ++it;
     }
+    vbox->pack_start(*buttonTop,true, true, 2);
     vbox->pack_start(*buttons,true, true, 2);
-    vbox->pack_start(*buttonsTwo,true, true, 2);
+    vbox->pack_start(*buttonsBottom,true, true, 2);
     return dynamic_cast<Gtk::Widget *>(vbox);
 }
 
@@ -278,7 +307,7 @@ LPESimplify::generateHelperPathAndSmooth(Geom::PathVector &result)
 void 
 LPESimplify::drawNode(Geom::Point p)
 {
-    double r = helper_size/0.67;
+    double r = radiusHelperNodes;
     char const * svgd;
     svgd = "M 0.55,0.5 A 0.05,0.05 0 0 1 0.5,0.55 0.05,0.05 0 0 1 0.45,0.5 0.05,0.05 0 0 1 0.5,0.45 0.05,0.05 0 0 1 0.55,0.5 Z M 0,0 1,0 1,1 0,1 Z";
     Geom::PathVector pathv = sp_svg_read_pathv(svgd);
@@ -291,7 +320,7 @@ LPESimplify::drawNode(Geom::Point p)
 void
 LPESimplify::drawHandle(Geom::Point p)
 {
-    double r = helper_size/0.67;
+    double r = radiusHelperNodes;
     char const * svgd;
     svgd = "M 0.7,0.35 A 0.35,0.35 0 0 1 0.35,0.7 0.35,0.35 0 0 1 0,0.35 0.35,0.35 0 0 1 0.35,0 0.35,0.35 0 0 1 0.7,0.35 Z";
     Geom::PathVector pathv = sp_svg_read_pathv(svgd);
@@ -306,8 +335,8 @@ LPESimplify::drawHandleLine(Geom::Point p,Geom::Point p2)
 {
     Geom::Path path;
     path.start( p );
-    double diameter = helper_size/0.67;
-    if(helper_size > 0.0 && Geom::distance(p,p2) > (diameter * 0.35)){
+    double diameter = radiusHelperNodes;
+    if(helper && Geom::distance(p,p2) > (diameter * 0.35)){
         Geom::Ray ray2(p, p2);
         p2 =  p2 - Geom::Point::polar(ray2.angle(),(diameter * 0.35));
     }

@@ -223,7 +223,7 @@ void LPEFilletChamfer::updateFillet()
 {
     double power = 0;
     if (!flexible) {
-        power = Inkscape::Util::Quantity::convert(radius, unit.get_abbreviation(), *defaultUnit) * -1;
+        power = Inkscape::Util::Quantity::convert(radius, unit.get_abbreviation(), defaultUnit) * -1;
     } else {
         power = radius;
     }
