@@ -113,14 +113,17 @@ class MyEffect(inkex.Effect):
             self.poly = [csp[0]]                            # initiallize new polyline
             self.color_LWPOLY = self.color
             self.layer_LWPOLY = self.layer
-            self.closed_LWPOLY = self.closed
         self.poly.append(csp[1])
     def LWPOLY_output(self):
         if len(self.poly) == 1:
             return
         self.handle += 1
-        self.dxf_add("  0\nLWPOLYLINE\n  5\n%x\n100\nAcDbEntity\n  8\n%s\n 62\n%d\n100\nAcDbPolyline\n 90\n%d\n 70\n%d\n" % (self.handle, self.layer_LWPOLY, self.color_LWPOLY, len(self.poly), self.closed_LWPOLY))
-        for i in range(len(self.poly)):
+        closed = 1
+        if (abs(self.poly[0][0] - self.poly[-1][0]) > .0001
+            or abs(self.poly[0][1] - self.poly[-1][1]) > .0001):
+            closed = 0
+        self.dxf_add("  0\nLWPOLYLINE\n  5\n%x\n100\nAcDbEntity\n  8\n%s\n 62\n%d\n100\nAcDbPolyline\n 90\n%d\n 70\n%d\n" % (self.handle, self.layer_LWPOLY, self.color_LWPOLY, len(self.poly) - closed, closed))
+        for i in range(len(self.poly) - closed):
             self.dxf_add(" 10\n%f\n 20\n%f\n 30\n0.0\n" % (self.poly[i][0],self.poly[i][1]))
     def dxf_spline(self,csp):
         knots = 8
@@ -195,7 +198,6 @@ class MyEffect(inkex.Effect):
                 if style['stroke'] and style['stroke'] != 'none' and style['stroke'][0:3] != 'url':
                     rgb = simplestyle.parseColor(style['stroke'])
         hsl = coloreffect.ColorEffect.rgb_to_hsl(coloreffect.ColorEffect(),rgb[0]/255.0,rgb[1]/255.0,rgb[2]/255.0)
-        self.closed = 0                                 # only for LWPOLYLINE
         self.color = 7                                  # default is black
         if hsl[2]:
             self.color = 1 + (int(6*hsl[0] + 0.5) % 6)  # use 6 hues
@@ -203,11 +205,8 @@ class MyEffect(inkex.Effect):
             d = node.get('d')
             if not d:
                 return
-            if (d[-1] == 'z' or d[-1] == 'Z'):
-                self.closed = 1
             p = cubicsuperpath.parsePath(d)
         elif node.tag == inkex.addNS('rect','svg'):
-            self.closed = 1
             x = float(node.get('x'))
             y = float(node.get('y'))
             width = float(node.get('width'))
