@@ -38,9 +38,9 @@ public:
     ScalarParam steps;
 
 private:
+    ScalarParam helper_size;
     BoolParam ignoreCusp;
     BoolParam onlySelected;
-    BoolParam showHelper;
     ScalarParam weight;
     Geom::PathVector hp;
 

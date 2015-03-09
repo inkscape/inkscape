@@ -54,20 +54,17 @@ const double defaultEndPower = 0.6667;
 
 LPEBSpline::LPEBSpline(LivePathEffectObject *lpeobject)
     : Effect(lpeobject),
-      // initialise your parameters here:
-      //testpointA(_("Test Point A"), _("Test A"), "ptA", &wr, this,
-      //Geom::Point(100,100)),
       steps(_("Steps with CTRL:"), _("Change number of steps with CTRL pressed"), "steps", &wr, this, 2),
+      helper_size(_("Helper size:"), _("Helper size"), "helper_size", &wr, this, 0),
       ignoreCusp(_("Ignore cusp nodes"), _("Change ignoring cusp nodes"), "ignoreCusp", &wr, this, true),
       onlySelected(_("Change only selected nodes"), _("Change only selected nodes"), "onlySelected", &wr, this, false),
-      showHelper(_("Show helper paths"), _("Show helper paths"), "showHelper", &wr, this, false),
       weight(_("Change weight:"), _("Change weight of the effect"), "weight", &wr, this, defaultStartPower)
 {
-    registerParameter(dynamic_cast<Parameter *>(&weight));
-    registerParameter(dynamic_cast<Parameter *>(&steps));
-    registerParameter(dynamic_cast<Parameter *>(&ignoreCusp));
-    registerParameter(dynamic_cast<Parameter *>(&onlySelected));
-    registerParameter(dynamic_cast<Parameter *>(&showHelper));
+    registerParameter(&weight);
+    registerParameter(&steps);
+    registerParameter(&helper_size);
+    registerParameter(&ignoreCusp);
+    registerParameter(&onlySelected);
 
     weight.param_set_range(noPower, 1);
     weight.param_set_increments(0.1, 0.1);
@@ -76,6 +73,10 @@ LPEBSpline::LPEBSpline(LivePathEffectObject *lpeobject)
     steps.param_set_range(1, 10);
     steps.param_set_increments(1, 1);
     steps.param_set_digits(0);
+
+    helper_size.param_set_range(0.0, 999.0);
+    helper_size.param_set_increments(5, 5);
+    helper_size.param_set_digits(2);
 }
 
 LPEBSpline::~LPEBSpline() {}
@@ -106,23 +107,7 @@ void LPEBSpline::doEffect(SPCurve *curve)
     // Make copy of old path as it is changed during processing
     Geom::PathVector const original_pathv = curve->get_pathvector();
     curve->reset();
-    double radiusHelperNodes = 12.0;
-    if(current_zoom != 0){
-        if(current_zoom < 0.5){
-            radiusHelperNodes *= current_zoom + 0.4;
-        } else if(current_zoom > 1) {
-            radiusHelperNodes *=  1/current_zoom;
-        }
-        Geom::Affine i2doc = i2anc_affine(SP_ITEM(sp_lpe_item), SP_OBJECT(SP_ITEM(sp_lpe_item)->document->getRoot()));
-        double expand = (i2doc.expansionX() + i2doc.expansionY())/2;
-        std::cout << expand << "expand\n";
-        if(expand != 0){
-            radiusHelperNodes /= expand;
-        }
-        radiusHelperNodes = Inkscape::Util::Quantity::convert(radiusHelperNodes, "px", defaultUnit);
-    } else {
-        radiusHelperNodes = 0;
-    }
+
     for (Geom::PathVector::const_iterator path_it = original_pathv.begin();
             path_it != original_pathv.end(); ++path_it) {
         if (path_it->empty())
@@ -250,8 +235,8 @@ void LPEBSpline::doEffect(SPCurve *curve)
                 }
                 nCurve->curveto(pointAt1, pointAt2, node);
             }
-            if(!are_near(node,curve_it1->finalPoint()) && showHelper){
-                drawHandle(node, radiusHelperNodes);
+            if(!are_near(node,curve_it1->finalPoint()) && helper_size > 0.0){
+                drawHandle(node, helper_size);
             }
             ++curve_it1;
             ++curve_it2;
@@ -264,21 +249,21 @@ void LPEBSpline::doEffect(SPCurve *curve)
         nCurve->reset();
         delete nCurve;
     }
-    if(showHelper){
+    if(helper_size > 0.0){
         Geom::PathVector const pathv = curve->get_pathvector();
          hp.push_back(pathv[0]);
     }
 }
 
 void
-LPEBSpline::drawHandle(Geom::Point p, double radiusHelperNodes)
+LPEBSpline::drawHandle(Geom::Point p, double helper_size)
 {
     char const * svgd = "M 1,0.5 A 0.5,0.5 0 0 1 0.5,1 0.5,0.5 0 0 1 0,0.5 0.5,0.5 0 0 1 0.5,0 0.5,0.5 0 0 1 1,0.5 Z";
     Geom::PathVector pathv = sp_svg_read_pathv(svgd);
     Geom::Affine aff = Geom::Affine();
-    aff *= Geom::Scale(radiusHelperNodes);
+    aff *= Geom::Scale(helper_size);
     pathv *= aff;
-    pathv += p - Geom::Point(0.5*radiusHelperNodes, 0.5*radiusHelperNodes);
+    pathv += p - Geom::Point(0.5*helper_size, 0.5*helper_size);
     hp.push_back(pathv[0]);
 }
 

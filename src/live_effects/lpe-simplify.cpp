@@ -30,6 +30,7 @@ LPESimplify::LPESimplify(LivePathEffectObject *lpeobject)
             steps(_("Steps:"),_("Change number of simplify steps "), "steps", &wr, this,1),
             threshold(_("Roughly threshold:"), _("Roughly threshold:"), "threshold", &wr, this, 0.003),
             smooth_angles(_("Smooth angles:"), _("Max degree difference on handles to preform a smooth"), "smooth_angles", &wr, this, 20.),
+            helper_size(_("Helper size with direction:"), _("Helper size with direction"), "helper_size", &wr, this, 5),
             nodes(_("Helper nodes"), _("Show helper nodes"), "nodes", &wr, this, false,
                   "", INKSCAPE_ICON("on"), INKSCAPE_ICON("off")),
             handles(_("Helper handles"), _("Show helper handles"), "handles", &wr, this, false,
@@ -39,23 +40,32 @@ LPESimplify::LPESimplify(LivePathEffectObject *lpeobject)
             simplifyJustCoalesce(_("Just coalesce"), _("Simplify just coalesce"), "simplifyJustCoalesce", &wr, this, false,
                                  "", INKSCAPE_ICON("on"), INKSCAPE_ICON("off"))
             {
-                radiusHelperNodes = 6.0;
-                registerParameter(dynamic_cast<Parameter *>(&steps));
-                registerParameter(dynamic_cast<Parameter *>(&threshold));
-                registerParameter(dynamic_cast<Parameter *>(&smooth_angles));
-                registerParameter(dynamic_cast<Parameter *>(&nodes));
-                registerParameter(dynamic_cast<Parameter *>(&handles));
-                registerParameter(dynamic_cast<Parameter *>(&simplifyindividualpaths));
-                registerParameter(dynamic_cast<Parameter *>(&simplifyJustCoalesce));
+                registerParameter(&steps);
+                registerParameter(&threshold);
+                registerParameter(&smooth_angles);
+                registerParameter(&helper_size);
+                registerParameter(&nodes);
+                registerParameter(&handles);
+                registerParameter(&simplifyindividualpaths);
+                registerParameter(&simplifyJustCoalesce);
+
                 threshold.param_set_range(0.0001, Geom::infinity());
                 threshold.param_set_increments(0.0001, 0.0001);
                 threshold.param_set_digits(6);
+
                 steps.param_set_range(0, 100);
                 steps.param_set_increments(1, 1);
                 steps.param_set_digits(0);
+
                 smooth_angles.param_set_range(0.0, 365.0);
                 smooth_angles.param_set_increments(10, 10);
                 smooth_angles.param_set_digits(2);
+
+                helper_size.param_set_range(0.0, 999.0);
+                helper_size.param_set_increments(5, 5);
+                helper_size.param_set_digits(2);
+
+                radiusHelperNodes = 6.0;
 }
 
 LPESimplify::~LPESimplify() {}
@@ -68,19 +78,8 @@ LPESimplify::doBeforeEffect (SPLPEItem const* lpeitem)
     }
     bbox = SP_ITEM(lpeitem)->visualBounds();
     SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
-    radiusHelperNodes = 12.0;
-    if(current_zoom != 0 && (nodes || handles)){
-        if(current_zoom < 0.5){
-            radiusHelperNodes *= current_zoom + 0.4;
-        } else if(current_zoom > 1) {
-            radiusHelperNodes *=  1/current_zoom;
-        }
-        Geom::Affine i2doc = i2anc_affine(SP_ITEM(lpeitem), SP_OBJECT(SP_ITEM(lpeitem)->document->getRoot()));
-        double expand = (i2doc.expansionX() + i2doc.expansionY())/2;
-        if(expand != 0){
-            radiusHelperNodes /= expand;
-        }
-        radiusHelperNodes = Inkscape::Util::Quantity::convert(radiusHelperNodes, "px", defaultUnit);
+    if(nodes || handles){
+        radiusHelperNodes = helper_size;
     } else {
         radiusHelperNodes = 0;
     }
