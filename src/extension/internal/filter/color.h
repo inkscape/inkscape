@@ -3,13 +3,14 @@
 /* Change the 'COLOR' above to be your file name */
 
 /*
- * Copyright (C) 2013 Authors:
+ * Copyright (C) 2013-2015 Authors:
  *   Ivan Louette (filters)
  *   Nicolas Dufour (UI) <nicoduf@yahoo.fr>
  *
  * Color filters
  *   Brilliance
  *   Channel painting
+ *   Color blindness
  *   Color shift
  *   Colorize
  *   Component transfer
@@ -229,6 +230,80 @@ ChannelPaint::get_filter_text (Inkscape::Extension::Extension * ext)
 
     return _filter;
 }; /* Channel Painting filter */
+
+/**
+    \brief    Custom predefined Color Blindness filter.
+
+    Color Blindness filter.
+    Based on https://openclipart.org/detail/22299/Color%20Blindness%20filters
+    
+    Filter's parameters:
+    * Blindness type (enum, default Achromatomaly) -> colormatrix
+*/
+class ColorBlindness : public Inkscape::Extension::Internal::Filter::Filter {
+protected:
+    virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
+
+public:
+    ColorBlindness ( ) : Filter() { };
+    virtual ~ColorBlindness ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
+    
+    static void init (void) {
+        Inkscape::Extension::build_from_mem(
+            "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
+              "<name>" N_("Color Blindness") "</name>\n"
+              "<id>org.inkscape.effect.filter.ColorBlindness</id>\n"
+              "<param name=\"tab\" type=\"notebook\">\n"
+                "<page name=\"optionstab\" _gui-text=\"Options\">\n"
+                  "<param name=\"type\" gui-text=\"" N_("Blindness type:") "\" type=\"enum\">\n"
+                    "<_item value=\"0.618 0.32 0.062 0 0 0.163 0.775 0.062 0 0 0.163 0.32 0.516 0 0 0 0 0 1 0 \">" N_("Rod monochromacy (atypical achromatopsia)") "</_item>\n"
+                    "<_item value=\"0.299 0.587 0.114 0 0 0.299 0.587 0.114 0 0 0.299 0.587 0.114 0 0 0 0 0 1 0 \">" N_("Cone monochromacy (typical achromatopsia)") "</_item>\n"
+                    "<_item value=\"0.8 0.2 0 0 0 0.2583 0.74167 0 0 0 0 0.14167 0.85833 0 0 0 0 0 1 0 \">" N_("Geen weak (deuteranomaly)") "</_item>\n"
+                    "<_item value=\"0.625 0.375 0 0 0 0.7 0.3 0 0 0 0 0.3 0.7 0 0 0 0 0 1 0 \">" N_("Green blind (deuteranopia)") "</_item>\n"
+                    "<_item value=\"0.8166 0.1833 0 0 0 0.333 0.666 0 0 0 0 0.125 0.875 0 0 0 0 0 1 0 \">" N_("Red weak (protanomaly)") "</_item>\n"
+                    "<_item value=\"0.566 0.43333 0 0 0 0.55833 0.4416 0 0 0 0 0.24167 0.75833 0 0 0 0 0 1 0 \">" N_("Red blind (protanopia)") "</_item>\n"
+                    "<_item value=\"0.966 0.033 0 0 0 0 0.733 0.266 0 0 0 0.1833 0.816 0 0 0 0 0 1 0 \">" N_("Blue weak (tritanomaly)") "</_item>\n"
+                    "<_item value=\"0.95 0.05 0 0 0 0.2583 0.4333 0.5667 0 0 0 0.475 0.525 0 0 0 0 0 1 0 \">" N_("Blue blind (tritanopia)") "</_item>\n"
+                  "</param>\n"
+                "</page>\n"
+                "<page name=\"helptab\" _gui-text=\"Help\">\n"
+                  "<param name=\"help\" xml:space=\"preserve\" type=\"description\">\n"
+"Filters based on https://openclipart.org/detail/22299/Color%20Blindness%20filters\n"
+"\n"
+"These filters don't correctly reflect actual color blindness for two main reasons:\n"
+"  * Everyone is different, and is not affected exactly the same way.\n"
+"  * The filters are in the RGB color space, and ignore confusion lines.\n"
+                  "</param>\n"
+                "</page>\n"
+              "</param>\n"
+              "<effect>\n"
+                "<object-type>all</object-type>\n"
+                "<effects-menu>\n"
+                  "<submenu name=\"" N_("Filters") "\">\n"
+                    "<submenu name=\"" N_("Color") "\"/>\n"
+                  "</submenu>\n"
+                "</effects-menu>\n"
+                "<menu-tip>" N_("Simulate color blindness") "</menu-tip>\n"
+              "</effect>\n"
+            "</inkscape-extension>\n", new ColorBlindness());
+    };
+};
+
+gchar const *
+ColorBlindness::get_filter_text (Inkscape::Extension::Extension * ext)
+{
+    if (_filter != NULL) g_free((void *)_filter);
+
+    std::ostringstream type;
+    type << ext->get_param_enum("type");
+
+    _filter = g_strdup_printf(
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Color Blindness\">\n"
+          "<feColorMatrix values=\"%s\" type=\"matrix\" result=\"colormatrix1\" />\n"
+        "</filter>\n", type.str().c_str());
+
+    return _filter;
+}; /* Color Blindness filter */
 
 /**
     \brief    Custom predefined Color shift filter.

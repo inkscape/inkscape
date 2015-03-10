@@ -54,6 +54,7 @@ Filter::filters_all (void )
     // Color
     Brilliance::init();
     ChannelPaint::init();
+    ColorBlindness::init();
     ColorShift::init();
     Colorize::init();
     ComponentTransfer::init();
