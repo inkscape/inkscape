@@ -40,7 +40,6 @@ namespace LivePathEffect {
 
 LPELattice2::LPELattice2(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    // initialise your parameters here:
     grid_point0(_("Control handle 0:"), _("Control handle 0 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint0", &wr, this),
     grid_point1(_("Control handle 1:"), _("Control handle 1 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint1", &wr, this),
     grid_point2(_("Control handle 2:"), _("Control handle 2 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint2", &wr, this),
@@ -70,31 +69,31 @@ LPELattice2::LPELattice2(LivePathEffectObject *lpeobject) :
     
 {
     // register all your parameters here, so Inkscape knows which parameters this effect has:
-    registerParameter( dynamic_cast<Parameter *>(&grid_point0) );
-    registerParameter( dynamic_cast<Parameter *>(&grid_point1) );
-    registerParameter( dynamic_cast<Parameter *>(&grid_point2) );
-    registerParameter( dynamic_cast<Parameter *>(&grid_point3) );
-    registerParameter( dynamic_cast<Parameter *>(&grid_point4) );
-    registerParameter( dynamic_cast<Parameter *>(&grid_point5) );
-    registerParameter( dynamic_cast<Parameter *>(&grid_point6) );
-    registerParameter( dynamic_cast<Parameter *>(&grid_point7) );
-    registerParameter( dynamic_cast<Parameter *>(&grid_point8x9) );
-    registerParameter( dynamic_cast<Parameter *>(&grid_point10x11) );
-    registerParameter( dynamic_cast<Parameter *>(&grid_point12) );
-    registerParameter( dynamic_cast<Parameter *>(&grid_point13) );
-    registerParameter( dynamic_cast<Parameter *>(&grid_point14) );
-    registerParameter( dynamic_cast<Parameter *>(&grid_point15) );
-    registerParameter( dynamic_cast<Parameter *>(&grid_point16) );
-    registerParameter( dynamic_cast<Parameter *>(&grid_point17) );
-    registerParameter( dynamic_cast<Parameter *>(&grid_point18) );
-    registerParameter( dynamic_cast<Parameter *>(&grid_point19) );
-    registerParameter( dynamic_cast<Parameter *>(&grid_point20x21) );
-    registerParameter( dynamic_cast<Parameter *>(&grid_point22x23) );
-    registerParameter( dynamic_cast<Parameter *>(&grid_point24x26) );
-    registerParameter( dynamic_cast<Parameter *>(&grid_point25x27) );
-    registerParameter( dynamic_cast<Parameter *>(&grid_point28x30) );
-    registerParameter( dynamic_cast<Parameter *>(&grid_point29x31) );
-    registerParameter( dynamic_cast<Parameter *>(&grid_point32x33x34x35) );
+    registerParameter(&grid_point0);
+    registerParameter(&grid_point1);
+    registerParameter(&grid_point2);
+    registerParameter(&grid_point3);
+    registerParameter(&grid_point4);
+    registerParameter(&grid_point5);
+    registerParameter(&grid_point6);
+    registerParameter(&grid_point7);
+    registerParameter(&grid_point8x9);
+    registerParameter(&grid_point10x11);
+    registerParameter(&grid_point12);
+    registerParameter(&grid_point13);
+    registerParameter(&grid_point14);
+    registerParameter(&grid_point15);
+    registerParameter(&grid_point16);
+    registerParameter(&grid_point17);
+    registerParameter(&grid_point18);
+    registerParameter(&grid_point19);
+    registerParameter(&grid_point20x21);
+    registerParameter(&grid_point22x23);
+    registerParameter(&grid_point24x26);
+    registerParameter(&grid_point25x27);
+    registerParameter(&grid_point28x30);
+    registerParameter(&grid_point29x31);
+    registerParameter(&grid_point32x33x34x35);
 }
 
 LPELattice2::~LPELattice2()

@@ -28,7 +28,10 @@ namespace LivePathEffect {
 PointParam::PointParam( const Glib::ustring& label, const Glib::ustring& tip,
                         const Glib::ustring& key, Inkscape::UI::Widget::Registry* wr,
                         Effect* effect, const gchar *htip, Geom::Point default_value)
-    : Geom::Point(default_value), Parameter(label, tip, key, wr, effect), defvalue(default_value)
+    : Geom::Point(default_value), 
+        Parameter(label, tip, key, wr, effect), 
+        defvalue(default_value),
+        lpeitem( NULL)
 {
     knot_shape = SP_KNOT_SHAPE_DIAMOND;
     knot_mode  = SP_KNOT_MODE_XOR;
@@ -123,9 +126,8 @@ PointParam::param_set_and_write_new_value (Geom::Point newpoint)
     gchar * str = g_strdup(os.str().c_str());
     param_write_to_repr(str);
     g_free(str);
-    SPLPEItem* item = reinterpret_cast<SPLPEItem*>(param_effect->getLPEObj());
-    if(item){
-        sp_lpe_item_update_patheffect(item, false, false);
+    if(lpeitem){
+        sp_lpe_item_update_patheffect(lpeitem, false, false);
     }
 }
 
@@ -196,6 +198,7 @@ PointParamKnotHolderEntity::knot_click(guint state)
 void
 PointParam::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item)
 {
+    lpeitem = dynamic_cast<SPLPEItem*>(item);
     PointParamKnotHolderEntity *e = new PointParamKnotHolderEntity(this);
     // TODO: can we ditch handleTip() etc. because we have access to handle_tip etc. itself???
     e->create(desktop, item, knotholder, Inkscape::CTRL_TYPE_UNKNOWN, handleTip(), knot_shape, knot_mode, knot_color);
