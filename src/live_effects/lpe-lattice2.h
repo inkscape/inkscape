@@ -43,6 +43,10 @@ public:
 
     virtual void calculateCurve(Geom::Point a,Geom::Point b, SPCurve *c, bool horizontal, bool move);
 
+    virtual void vertical(PointParam &paramA,PointParam &paramB, Geom::Line vert);
+
+    virtual void horizontal(PointParam &paramA,PointParam &paramB,Geom::Line horiz);
+
     virtual void setDefaults();
 
     virtual void resetGrid();
@@ -56,6 +60,8 @@ protected:
     void addCanvasIndicators(SPLPEItem const */*lpeitem*/, std::vector<Geom::PathVector> &hp_vec);
 private:
 
+    BoolParam horizontalMirror;
+    BoolParam verticalMirror;
     PointParam grid_point0;
     PointParam grid_point1;
     PointParam grid_point2;

@@ -40,6 +40,8 @@ namespace LivePathEffect {
 
 LPELattice2::LPELattice2(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
+    horizontalMirror(_("Mirror movements in horizontal"), _("Mirror movements in horizontal"), "horizontalMirror", &wr, this, false),
+    verticalMirror(_("Mirror movements in vertical"), _("Mirror movements in vertical"), "verticalMirror", &wr, this, false),
     grid_point0(_("Control handle 0:"), _("Control handle 0 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint0", &wr, this),
     grid_point1(_("Control handle 1:"), _("Control handle 1 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint1", &wr, this),
     grid_point2(_("Control handle 2:"), _("Control handle 2 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint2", &wr, this),
@@ -69,6 +71,8 @@ LPELattice2::LPELattice2(LivePathEffectObject *lpeobject) :
     
 {
     // register all your parameters here, so Inkscape knows which parameters this effect has:
+    registerParameter(&horizontalMirror);
+    registerParameter(&verticalMirror);
     registerParameter(&grid_point0);
     registerParameter(&grid_point1);
     registerParameter(&grid_point2);
@@ -248,9 +252,69 @@ LPELattice2::newWidget()
 }
 
 void
+LPELattice2::vertical(PointParam &paramA, PointParam &paramB, Geom::Line vert){
+    Geom::Point A = paramA;
+    Geom::Point B = paramB;
+    double Y = (A[Geom::Y] + B[Geom::Y])/2;
+    A[Geom::Y] = Y;
+    B[Geom::Y] = Y;
+    Geom::Point nearest = vert.pointAt(vert.nearestPoint(A));
+    double distA = Geom::distance(A,nearest);
+    double distB = Geom::distance(B,nearest);
+    double distanceMed = (distA + distB)/2;
+    A[Geom::X] = nearest[Geom::X] - distanceMed;
+    B[Geom::X] = nearest[Geom::X] + distanceMed;
+    paramA.param_set_and_write_new_value(A);
+    paramB.param_set_and_write_new_value(B);
+}
+
+void
+LPELattice2::horizontal(PointParam &paramA, PointParam &paramB, Geom::Line horiz){
+    Geom::Point A = paramA;
+    Geom::Point B = paramB;
+    double X = (A[Geom::X] + B[Geom::X])/2;
+    A[Geom::X] = X;
+    B[Geom::X] = X;
+    Geom::Point nearest = horiz.pointAt(horiz.nearestPoint(A));
+    double distA = Geom::distance(A,nearest);
+    double distB = Geom::distance(B,nearest);
+    double distanceMed = (distA + distB)/2;
+    A[Geom::Y] = nearest[Geom::Y] - distanceMed;
+    B[Geom::Y] = nearest[Geom::Y] + distanceMed;
+    paramA.param_set_and_write_new_value(A);
+    paramB.param_set_and_write_new_value(B);
+}
+
+void
 LPELattice2::doBeforeEffect (SPLPEItem const* lpeitem)
 {
     original_bbox(lpeitem);
+    Geom::Line vert(grid_point8x9,grid_point10x11);
+    Geom::Line horiz(grid_point24x26,grid_point25x27);
+    if(verticalMirror){
+        vertical(grid_point0, grid_point1,vert);
+        vertical(grid_point2, grid_point3,vert);
+        vertical(grid_point4, grid_point5,vert);
+        vertical(grid_point6, grid_point7,vert);
+        vertical(grid_point12, grid_point13,vert);
+        vertical(grid_point14, grid_point15,vert);
+        vertical(grid_point16, grid_point17,vert);
+        vertical(grid_point18, grid_point19,vert);
+        vertical(grid_point24x26, grid_point25x27,vert);
+        vertical(grid_point28x30, grid_point29x31,vert);
+    }
+    if(horizontalMirror){
+        horizontal(grid_point0, grid_point2,horiz);
+        horizontal(grid_point1, grid_point3,horiz);
+        horizontal(grid_point4, grid_point6,horiz);
+        horizontal(grid_point5, grid_point7,horiz);
+        horizontal(grid_point8x9, grid_point10x11,horiz);
+        horizontal(grid_point12, grid_point14,horiz);
+        horizontal(grid_point13, grid_point15,horiz);
+        horizontal(grid_point16, grid_point18,horiz);
+        horizontal(grid_point17, grid_point19,horiz);
+        horizontal(grid_point20x21, grid_point22x23,horiz);
+    }
     setDefaults();
     SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
     item->apply_to_clippath(item);
@@ -392,6 +456,7 @@ LPELattice2::resetGrid()
     grid_point32x33x34x35.param_set_and_write_default();
     //todo:this hack is only to reposition the knots on reser grid button
     //Better update path effect in LPEITEM
+    sp_lpe_item_update_patheffect(sp_lpe_item, false, false);
 }
 
 void
