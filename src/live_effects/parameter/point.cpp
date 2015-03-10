@@ -113,13 +113,6 @@ void
 PointParam::param_setValue(Geom::Point newpoint)
 {
     *dynamic_cast<Geom::Point *>( this ) = newpoint;
-    if(SP_ACTIVE_DESKTOP){
-        SPDesktop* desktop = SP_ACTIVE_DESKTOP;
-        if (tools_isactive( desktop, TOOLS_NODES)) {
-            Inkscape::UI::Tools::NodeTool *nt = static_cast<Inkscape::UI::Tools::NodeTool*>( desktop->event_context);
-            nt->update_helperpath();
-        }
-    }
 }
 
 void
@@ -130,6 +123,10 @@ PointParam::param_set_and_write_new_value (Geom::Point newpoint)
     gchar * str = g_strdup(os.str().c_str());
     param_write_to_repr(str);
     g_free(str);
+    SPLPEItem* item = reinterpret_cast<SPLPEItem*>(param_effect->getLPEObj());
+    if(item){
+        sp_lpe_item_update_patheffect(item, false, false);
+    }
 }
 
 void
