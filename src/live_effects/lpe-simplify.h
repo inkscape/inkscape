@@ -42,8 +42,6 @@ private:
   ScalarParam threshold;
   ScalarParam smooth_angles;
   ScalarParam helper_size;
-  ToggleButtonParam nodes;
-  ToggleButtonParam handles;
   ToggleButtonParam simplifyindividualpaths;
   ToggleButtonParam simplifyJustCoalesce;
 
