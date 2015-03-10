@@ -44,6 +44,7 @@
 #include "filedialog.h"
 
 #include "sp-root.h"
+#include "preferences.h"
 
 #include <zlib.h>
 #include <cairomm/win32_surface.h>
@@ -272,6 +273,9 @@ void FileOpenDialogImplWin32::createFilterMenu()
     }
 
     if (dialogType != EXE_TYPES) {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        _show_preview = prefs->getBool("/dialogs/open/enable_preview", true);
+
         // Compose the filter string
         Inkscape::Extension::DB::InputList extension_list;
         Inkscape::Extension::db.get_input_list(extension_list);
@@ -842,6 +846,10 @@ LRESULT CALLBACK FileOpenDialogImplWin32::preview_wnd_proc(HWND hwnd, UINT uMsg,
 
 void FileOpenDialogImplWin32::enable_preview(bool enable)
 {
+    if (_show_preview != enable) {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        prefs->setBool("/dialogs/open/enable_preview", enable);
+    }
     _show_preview = enable;
 
     // Relayout the dialog
