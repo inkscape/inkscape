@@ -1473,6 +1473,7 @@ void DocumentProperties::update()
     }
     _page_sizer.setDim(Inkscape::Util::Quantity(doc_w, doc_w_unit), Inkscape::Util::Quantity(doc_h, doc_h_unit));
     _page_sizer.updateFitMarginsUI(nv->getRepr());
+    _page_sizer.updateScaleUI();
 
     //-----------------------------------------------------------guide page
 
@@ -1655,6 +1656,8 @@ void DocumentProperties::onRemoveGrid()
 }
 
 /** Callback for document unit change. */
+/* This should not effect anything in the SVG tree (other than "inkscape:document-units").
+   This should only effect values displayed in the GUI. */
 void DocumentProperties::onDocUnitChange()
 {
     SPDocument *doc = SP_ACTIVE_DOCUMENT;
@@ -1679,6 +1682,8 @@ void DocumentProperties::onDocUnitChange()
     Inkscape::SVGOStringStream os;
     os << doc_unit->abbr;
     repr->setAttribute("inkscape:document-units", os.str().c_str());
+
+    _page_sizer.updateScaleUI();
 
     // Disable changing of SVG Units. The intent here is to change the units in the UI, not the units in SVG.
     // This code should be moved (and fixed) once we have an "SVG Units" setting that sets what units are used in SVG data.

@@ -611,7 +611,25 @@ Inkscape::Util::Unit const& SPDocument::getSVGUnit() const
     return nv ? nv->getSVGUnit() : *unit_table.getUnit("px");
 }
 
-/// Returns document scale as defined by width/height and viewBox (real world to user-units).
+/// Sets document scale (by changing viewBox)
+void SPDocument::setDocumentScale( double scaleX, double scaleY ) {
+
+    root->viewBox = Geom::Rect::from_xywh(
+        root->viewBox.left(),
+        root->viewBox.top(),
+        root->width.computed  * scaleX,
+        root->height.computed * scaleY );
+    root->viewBox_set = true;
+    root->updateRepr();
+}
+
+/// Sets document scale (by changing viewBox, x and y scaling equal) 
+void SPDocument::setDocumentScale( double scale ) {
+    setDocumentScale( scale, scale );
+}
+
+/// Returns document scale as defined by width/height (in pixels) and viewBox (real world to
+/// user-units).
 Geom::Scale SPDocument::getDocumentScale() const
 {
     Geom::Scale scale;
@@ -660,10 +678,12 @@ void SPDocument::setWidthAndHeight(const Inkscape::Util::Quantity &width, const 
     root->height.value = height.quantity;
     root->height.unit = (SVGLength::Unit) height.unit->svgUnit();
 
-    if (root->viewBox_set && changeSize)
+    // viewBox scaled by relative change in page size (maintains document scale).
+    if (root->viewBox_set && changeSize) {
         root->viewBox.setMax(Geom::Point(
         root->viewBox.left() + (root->width.value /  old_width_converted ) * root->viewBox.width(),
         root->viewBox.top()  + (root->height.value / old_height_converted) * root->viewBox.height()));
+    }
     root->updateRepr();
 }
 
