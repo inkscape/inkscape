@@ -454,9 +454,9 @@ LPELattice2::resetGrid()
     grid_point28x30.param_set_and_write_default();
     grid_point29x31.param_set_and_write_default();
     grid_point32x33x34x35.param_set_and_write_default();
-    //todo:this hack is only to reposition the knots on reser grid button
-    //Better update path effect in LPEITEM
-    sp_lpe_item_update_patheffect(sp_lpe_item, false, false);
+    if(sp_lpe_item){
+        sp_lpe_item_update_patheffect(sp_lpe_item, false, false);
+    }
 }
 
 void

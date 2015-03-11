@@ -334,7 +334,9 @@ LPEPerspectiveEnvelope::resetGrid()
     Up_Right_Point.param_set_and_write_default();
     Down_Right_Point.param_set_and_write_default();
     Down_Left_Point.param_set_and_write_default();
-    sp_lpe_item_update_patheffect(sp_lpe_item, false, false);
+    if(sp_lpe_item){
+        sp_lpe_item_update_patheffect(sp_lpe_item, false, false);
+    }
 }
 
 void
