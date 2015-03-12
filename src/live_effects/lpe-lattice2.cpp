@@ -23,7 +23,8 @@
 #include "sp-path.h"
 #include "display/curve.h"
 #include "svg/svg.h"
-
+#include "helper/geom.h"
+#include <2geom/path.h>
 #include <2geom/sbasis.h>
 #include <2geom/sbasis-2d.h>
 #include <2geom/sbasis-geometric.h>
@@ -32,6 +33,9 @@
 #include <2geom/d2.h>
 #include <2geom/piecewise.h>
 #include <2geom/transforms.h>
+#include "ui/tools-switch.h"
+
+#include "desktop.h" // TODO: should be factored out (see below)
 
 using namespace Geom;
 
@@ -107,6 +111,19 @@ LPELattice2::~LPELattice2()
 Geom::Piecewise<Geom::D2<Geom::SBasis> >
 LPELattice2::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in)
 {
+    PathVector pathv = path_from_piecewise(pwd2_in,0.001);
+    //this is because strange problem whith sb2 and lines
+    PathVector cubic;
+    for (Geom::PathVector::const_iterator pit = pathv.begin(); pit != pathv.end(); ++pit) {
+     cubic.push_back( Geom::Path() );
+     cubic.back().start( pit->initialPoint() );
+     cubic.back().close( pit->closed() );
+        for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_open(); ++cit) {
+             Geom::Path cubicbezier_path = Geom::cubicbezierpath_from_sbasis(cit->toSBasis(), 0.1);
+             cubic.back().append(cubicbezier_path);
+        }
+    } 
+    Geom::Piecewise<Geom::D2<Geom::SBasis> > const &pwd2_in_linear_and_cubic = paths_to_pw(cubic);
     D2<SBasis2d> sb2;
     
     //Initialisation of the sb2
@@ -118,44 +135,45 @@ LPELattice2::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd
     }
 
     //Grouping the point params in a convenient vector
-    std::vector<Geom::Point *> handles(36);
+
+    std::vector<Geom::Point > handles(36);
     
-    handles[0] = &grid_point0;
-    handles[1] = &grid_point1;
-    handles[2] = &grid_point2;
-    handles[3] = &grid_point3;
-    handles[4] = &grid_point4;
-    handles[5] = &grid_point5;
-    handles[6] = &grid_point6;
-    handles[7] = &grid_point7;
-    handles[8] = &grid_point8x9;
-    handles[9] = &grid_point8x9;
-    handles[10] = &grid_point10x11;
-    handles[11] = &grid_point10x11;
-    handles[12] = &grid_point12;
-    handles[13] = &grid_point13;
-    handles[14] = &grid_point14;
-    handles[15] = &grid_point15;
-    handles[16] = &grid_point16;
-    handles[17] = &grid_point17;
-    handles[18] = &grid_point18;
-    handles[19] = &grid_point19;
-    handles[20] = &grid_point20x21;
-    handles[21] = &grid_point20x21;
-    handles[22] = &grid_point22x23;
-    handles[23] = &grid_point22x23;
-    handles[24] = &grid_point24x26;
-    handles[25] = &grid_point25x27;
-    handles[26] = &grid_point24x26;
-    handles[27] = &grid_point25x27;
-    handles[28] = &grid_point28x30;
-    handles[29] = &grid_point29x31;
-    handles[30] = &grid_point28x30;
-    handles[31] = &grid_point29x31;
-    handles[32] = &grid_point32x33x34x35;
-    handles[33] = &grid_point32x33x34x35;
-    handles[34] = &grid_point32x33x34x35;
-    handles[35] = &grid_point32x33x34x35;
+    handles[0] = grid_point0;
+    handles[1] = grid_point1;
+    handles[2] = grid_point2;
+    handles[3] = grid_point3;
+    handles[4] = grid_point4;
+    handles[5] = grid_point5;
+    handles[6] = grid_point6;
+    handles[7] = grid_point7;
+    handles[8] = grid_point8x9;
+    handles[9] = grid_point8x9;
+    handles[10] = grid_point10x11;
+    handles[11] = grid_point10x11;
+    handles[12] = grid_point12;
+    handles[13] = grid_point13;
+    handles[14] = grid_point14;
+    handles[15] = grid_point15;
+    handles[16] = grid_point16;
+    handles[17] = grid_point17;
+    handles[18] = grid_point18;
+    handles[19] = grid_point19;
+    handles[20] = grid_point20x21;
+    handles[21] = grid_point20x21;
+    handles[22] = grid_point22x23;
+    handles[23] = grid_point22x23;
+    handles[24] = grid_point24x26;
+    handles[25] = grid_point25x27;
+    handles[26] = grid_point24x26;
+    handles[27] = grid_point25x27;
+    handles[28] = grid_point28x30;
+    handles[29] = grid_point29x31;
+    handles[30] = grid_point28x30;
+    handles[31] = grid_point29x31;
+    handles[32] = grid_point32x33x34x35;
+    handles[33] = grid_point32x33x34x35;
+    handles[34] = grid_point32x33x34x35;
+    handles[35] = grid_point32x33x34x35;
 
     Geom::Point origin = Geom::Point(boundingbox_X.min(),boundingbox_Y.min());
       
@@ -185,7 +203,7 @@ LPELattice2::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd
                         // i = Upperleft corner of the considerated rectangle
                         // corner = actual corner of the rectangle
                         // origin = Upperleft point
-                        double dl = dot((*handles[corner+4*i] - (base + origin)), dir)/dot(dir,dir);
+                        double dl = dot((handles[corner+4*i] - (base + origin)), dir)/dot(dir,dir);
                         sb2[dim][i][corner] = dl/( dim ? height : width )*pow(4.0,ui+vi);
                     }
                 }
@@ -195,8 +213,8 @@ LPELattice2::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd
    
     Piecewise<D2<SBasis> >  output;
     output.push_cut(0.);
-    for(unsigned i = 0; i < pwd2_in.size(); i++) {
-        D2<SBasis> B = pwd2_in[i];
+    for(unsigned i = 0; i < pwd2_in_linear_and_cubic.size(); i++) {
+        D2<SBasis> B = pwd2_in_linear_and_cubic[i];
         B[Geom::X] -= origin[Geom::X];
         B[Geom::X]*= 1/width;
         B[Geom::Y] -= origin[Geom::Y];
@@ -264,8 +282,8 @@ LPELattice2::vertical(PointParam &paramA, PointParam &paramB, Geom::Line vert){
     double distanceMed = (distA + distB)/2;
     A[Geom::X] = nearest[Geom::X] - distanceMed;
     B[Geom::X] = nearest[Geom::X] + distanceMed;
-    paramA.param_set_and_write_new_value(A);
-    paramB.param_set_and_write_new_value(B);
+    paramA.param_setValue(A, true);
+    paramB.param_setValue(B, true);
 }
 
 void
@@ -281,14 +299,15 @@ LPELattice2::horizontal(PointParam &paramA, PointParam &paramB, Geom::Line horiz
     double distanceMed = (distA + distB)/2;
     A[Geom::Y] = nearest[Geom::Y] - distanceMed;
     B[Geom::Y] = nearest[Geom::Y] + distanceMed;
-    paramA.param_set_and_write_new_value(A);
-    paramB.param_set_and_write_new_value(B);
+    paramA.param_setValue(A, true);
+    paramB.param_setValue(B, true);
 }
 
 void
 LPELattice2::doBeforeEffect (SPLPEItem const* lpeitem)
 {
     original_bbox(lpeitem);
+    setDefaults();
     Geom::Line vert(grid_point8x9,grid_point10x11);
     Geom::Line horiz(grid_point24x26,grid_point25x27);
     if(verticalMirror){
@@ -315,7 +334,6 @@ LPELattice2::doBeforeEffect (SPLPEItem const* lpeitem)
         horizontal(grid_point17, grid_point19,horiz);
         horizontal(grid_point20x21, grid_point22x23,horiz);
     }
-    setDefaults();
     SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
     item->apply_to_clippath(item);
     item->apply_to_mask(item);
@@ -429,34 +447,44 @@ LPELattice2::setDefaults()
 void
 LPELattice2::resetGrid()
 {
-    grid_point0.param_set_and_write_default();
-    grid_point1.param_set_and_write_default();
-    grid_point2.param_set_and_write_default();
-    grid_point3.param_set_and_write_default();
-    grid_point4.param_set_and_write_default();
-    grid_point5.param_set_and_write_default();
-    grid_point6.param_set_and_write_default();
-    grid_point7.param_set_and_write_default();
-    grid_point8x9.param_set_and_write_default();
-    grid_point10x11.param_set_and_write_default();
-    grid_point12.param_set_and_write_default();
-    grid_point13.param_set_and_write_default();
-    grid_point14.param_set_and_write_default();
-    grid_point15.param_set_and_write_default();
-    grid_point16.param_set_and_write_default();
-    grid_point17.param_set_and_write_default();
-    grid_point18.param_set_and_write_default();
-    grid_point19.param_set_and_write_default();
-    grid_point20x21.param_set_and_write_default();
-    grid_point22x23.param_set_and_write_default();
-    grid_point24x26.param_set_and_write_default();
-    grid_point25x27.param_set_and_write_default();
-    grid_point28x30.param_set_and_write_default();
-    grid_point29x31.param_set_and_write_default();
-    grid_point32x33x34x35.param_set_and_write_default();
+    grid_point0.param_set_default();
+    grid_point1.param_set_default();
+    grid_point2.param_set_default();
+    grid_point3.param_set_default();
+    grid_point4.param_set_default();
+    grid_point5.param_set_default();
+    grid_point6.param_set_default();
+    grid_point7.param_set_default();
+    grid_point8x9.param_set_default();
+    grid_point10x11.param_set_default();
+    grid_point12.param_set_default();
+    grid_point13.param_set_default();
+    grid_point14.param_set_default();
+    grid_point15.param_set_default();
+    grid_point16.param_set_default();
+    grid_point17.param_set_default();
+    grid_point18.param_set_default();
+    grid_point19.param_set_default();
+    grid_point20x21.param_set_default();
+    grid_point22x23.param_set_default();
+    grid_point24x26.param_set_default();
+    grid_point25x27.param_set_default();
+    grid_point28x30.param_set_default();
+    grid_point29x31.param_set_default();
+    grid_point32x33x34x35.param_set_default();
+    /*todo:this hack is only to reposition the knots on reset grid button
+      Better update path effect in LPEITEM
     if(sp_lpe_item){
-        sp_lpe_item_update_patheffect(sp_lpe_item, false, false);
+        sp_lpe_item_update_patheffect(sp_lpe_item, true, true);
+        SPGroup *group = dynamic_cast<SPGroup *>(sp_lpe_item);
+        if(group){
+            group->requestModified(SP_OBJECT_MODIFIED_FLAG);
+        }
     }
+    */
+    SPDesktop * desktop = SP_ACTIVE_DESKTOP;
+    tools_switch(desktop, TOOLS_SELECT);
+    tools_switch(desktop, TOOLS_NODES);
 }
 
 void

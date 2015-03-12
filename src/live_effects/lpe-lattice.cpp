@@ -236,21 +236,21 @@ LPELattice::resetDefaults(SPItem const* item)
     
     grid_point15[Geom::X] = 2.0/3*boundingbox_X.max()+1.0/3*boundingbox_X.min();
     grid_point15[Geom::Y] = 2.0/3*boundingbox_Y.max()+1.0/3*boundingbox_Y.min();
-    grid_point1.param_set_and_write_new_value(grid_point1);
-    grid_point2.param_set_and_write_new_value(grid_point2);
-    grid_point3.param_set_and_write_new_value(grid_point3);
-    grid_point4.param_set_and_write_new_value(grid_point4);
-    grid_point5.param_set_and_write_new_value(grid_point5);
-    grid_point6.param_set_and_write_new_value(grid_point6);
-    grid_point7.param_set_and_write_new_value(grid_point7);
-    grid_point8.param_set_and_write_new_value(grid_point8);
-    grid_point9.param_set_and_write_new_value(grid_point9);
-    grid_point10.param_set_and_write_new_value(grid_point10);
-    grid_point11.param_set_and_write_new_value(grid_point11);
-    grid_point12.param_set_and_write_new_value(grid_point12);
-    grid_point13.param_set_and_write_new_value(grid_point13);
-    grid_point14.param_set_and_write_new_value(grid_point14);
-    grid_point15.param_set_and_write_new_value(grid_point15);
+    grid_point1.param_update_default(grid_point1);
+    grid_point2.param_update_default(grid_point2);
+    grid_point3.param_update_default(grid_point3);
+    grid_point4.param_update_default(grid_point4);
+    grid_point5.param_update_default(grid_point5);
+    grid_point6.param_update_default(grid_point6);
+    grid_point7.param_update_default(grid_point7);
+    grid_point8.param_update_default(grid_point8);
+    grid_point9.param_update_default(grid_point9);
+    grid_point10.param_update_default(grid_point10);
+    grid_point11.param_update_default(grid_point11);
+    grid_point12.param_update_default(grid_point12);
+    grid_point13.param_update_default(grid_point13);
+    grid_point14.param_update_default(grid_point14);
+    grid_point15.param_update_default(grid_point15);
 }
 
 /**

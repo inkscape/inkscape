@@ -843,7 +843,7 @@ void SPGroup::update_patheffect(bool write) {
             LivePathEffectObject *lpeobj = (*it)->lpeobject;
 
             if (lpeobj && lpeobj->get_lpe()) {
-                lpeobj->get_lpe()->doBeforeEffect(this);
+                lpeobj->get_lpe()->doBeforeEffect_impl(this);
             }
         }
 

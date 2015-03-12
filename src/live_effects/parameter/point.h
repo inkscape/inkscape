@@ -39,13 +39,9 @@ public:
     gchar * param_getSVGValue() const;
     inline const gchar *handleTip() const { return handle_tip ? handle_tip : param_tooltip.c_str(); }
 
-    void param_setValue(Geom::Point newpoint);
+    void param_setValue(Geom::Point newpoint, bool write = false);
     void param_set_default();
-    void param_set_and_write_default();
     void param_update_default(Geom::Point newpoint);
-
-    void param_set_and_write_new_value(Geom::Point newpoint);
-
     virtual void param_transform_multiply(Geom::Affine const& /*postmul*/, bool /*set*/);
 
     void set_oncanvas_looks(SPKnotShapeType shape, SPKnotModeType mode, guint32 color);
@@ -57,7 +53,6 @@ public:
 private:
     PointParam(const PointParam&);
     PointParam& operator=(const PointParam&);
-
     Geom::Point defvalue;
     SPKnotShapeType knot_shape;
     SPKnotModeType knot_mode;

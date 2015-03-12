@@ -465,9 +465,11 @@ void Effect::doBeforeEffect_impl(SPLPEItem const* lpeitem)
     sp_lpe_item = const_cast<SPLPEItem *>(lpeitem);
     defaultUnit = sp_lpe_item->document->getDisplayUnit()->abbr;
     //printf("(SPLPEITEM*) %p\n", sp_lpe_item);
-    sp_curve = SP_SHAPE(sp_lpe_item)->getCurve();
-    pathvector_before_effect = sp_curve->get_pathvector();
-    
+    SPShape * shape = dynamic_cast<SPShape *>(sp_lpe_item);
+    if(shape){
+        sp_curve = shape->getCurve();
+        pathvector_before_effect = sp_curve->get_pathvector();
+    }
     doBeforeEffect(lpeitem);
 }
 

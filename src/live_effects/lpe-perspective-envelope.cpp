@@ -20,7 +20,9 @@
 #include "display/curve.h"
 #include "svg/svg.h"
 #include <gsl/gsl_linalg.h>
+#include "ui/tools-switch.h"
 
+#include "desktop.h" // TODO: should be factored out (see below)
 
 using namespace Geom;
 
@@ -330,13 +332,23 @@ LPEPerspectiveEnvelope::setDefaults()
 void
 LPEPerspectiveEnvelope::resetGrid()
 {
-    Up_Left_Point.param_set_and_write_default();
-    Up_Right_Point.param_set_and_write_default();
-    Down_Right_Point.param_set_and_write_default();
-    Down_Left_Point.param_set_and_write_default();
+    Up_Left_Point.param_set_default();
+    Up_Right_Point.param_set_default();
+    Down_Right_Point.param_set_default();
+    Down_Left_Point.param_set_default();
+    /*todo:this hack is only to reposition the knots on reser grid button
+      Better update path effect in LPEITEM
     if(sp_lpe_item){
-        sp_lpe_item_update_patheffect(sp_lpe_item, false, false);
+        sp_lpe_item_update_patheffect(sp_lpe_item, true, true);
+        SPGroup *group = dynamic_cast<SPGroup *>(sp_lpe_item);
+        if(group){
+            group->requestModified(SP_OBJECT_MODIFIED_FLAG);
+        }
     }
+    */
+    SPDesktop * desktop = SP_ACTIVE_DESKTOP;
+    tools_switch(desktop, TOOLS_SELECT);
+    tools_switch(desktop, TOOLS_NODES);
 }
 
 void
@@ -344,8 +356,8 @@ LPEPerspectiveEnvelope::resetDefaults(SPItem const* item)
 {
     Effect::resetDefaults(item);
     original_bbox(SP_LPE_ITEM(item));
-    setDefaults();
     resetGrid();
+    setDefaults();
 }
 
 void
