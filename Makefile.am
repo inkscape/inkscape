@@ -515,6 +515,7 @@ EXTRA_DIST = \
 	packaging/win32/languages/Greek.nsh	\
 	packaging/win32/languages/Hebrew.nsh	\
 	packaging/win32/languages/Indonesian.nsh \
+	packaging/win32/languages/Icelandic.nsh \
 	packaging/win32/languages/Italian.nsh	\
 	packaging/win32/languages/Japanese.nsh	\
 	packaging/win32/languages/Polish.nsh	\
