@@ -27,6 +27,7 @@
 #include <2geom/path.h>
 #include <2geom/sbasis.h>
 #include <2geom/sbasis-2d.h>
+#include "helper/geom-curves.h"
 #include <2geom/sbasis-geometric.h>
 #include <2geom/bezier-to-sbasis.h>
 #include <2geom/sbasis-to-bezier.h>
@@ -46,33 +47,32 @@ LPELattice2::LPELattice2(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     horizontalMirror(_("Mirror movements in horizontal"), _("Mirror movements in horizontal"), "horizontalMirror", &wr, this, false),
     verticalMirror(_("Mirror movements in vertical"), _("Mirror movements in vertical"), "verticalMirror", &wr, this, false),
-    grid_point0(_("Control handle 0:"), _("Control handle 0 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint0", &wr, this),
-    grid_point1(_("Control handle 1:"), _("Control handle 1 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint1", &wr, this),
-    grid_point2(_("Control handle 2:"), _("Control handle 2 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint2", &wr, this),
-    grid_point3(_("Control handle 3:"), _("Control handle 3 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint3", &wr, this),
-    grid_point4(_("Control handle 4:"), _("Control handle 4 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint4", &wr, this),
-    grid_point5(_("Control handle 5:"), _("Control handle 5 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint5", &wr, this),
-    grid_point6(_("Control handle 6:"), _("Control handle 6 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint6", &wr, this),
-    grid_point7(_("Control handle 7:"), _("Control handle 7 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint7", &wr, this),
-    grid_point8x9(_("Control handle 8x9:"), _("Control handle 8x9 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint8x9", &wr, this),
-    grid_point10x11(_("Control handle 10x11:"), _("Control handle 10x11 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint10x11", &wr, this),
-    grid_point12(_("Control handle 12:"), _("Control handle 12 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint12", &wr, this),
-    grid_point13(_("Control handle 13:"), _("Control handle 13 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint13", &wr, this),
-    grid_point14(_("Control handle 14:"), _("Control handle 14 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint14", &wr, this),
-    grid_point15(_("Control handle 15:"), _("Control handle 15 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint15", &wr, this),
-    grid_point16(_("Control handle 16:"), _("Control handle 16 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint16", &wr, this),
-    grid_point17(_("Control handle 17:"), _("Control handle 17 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint17", &wr, this),
-    grid_point18(_("Control handle 18:"), _("Control handle 18 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint18", &wr, this),
-    grid_point19(_("Control handle 19:"), _("Control handle 19 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint19", &wr, this),
-    grid_point20x21(_("Control handle 20x21:"), _("Control handle 20x21 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint20x21", &wr, this),
-    grid_point22x23(_("Control handle 22x23:"), _("Control handle 22x23 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint22x23", &wr, this),
-    grid_point24x26(_("Control handle 24x26:"), _("Control handle 24x26 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint24x26", &wr, this),
-    grid_point25x27(_("Control handle 25x27:"), _("Control handle 25x27 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint25x27", &wr, this),
-    grid_point28x30(_("Control handle 28x30:"), _("Control handle 28x30 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint28x30", &wr, this),
-    grid_point29x31(_("Control handle 29x31:"), _("Control handle 29x31 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint29x31", &wr, this),
-    grid_point32x33x34x35(_("Control handle 32x33x34x35:"), _("Control handle 32x33x34x35 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint32x33x34x35", &wr, this)
-
-    
+    grid_point0(_("Control 0:"), _("Control 0 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint0", &wr, this),
+    grid_point1(_("Control 1:"), _("Control 1 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint1", &wr, this),
+    grid_point2(_("Control 2:"), _("Control 2 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint2", &wr, this),
+    grid_point3(_("Control 3:"), _("Control 3 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint3", &wr, this),
+    grid_point4(_("Control 4:"), _("Control 4 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint4", &wr, this),
+    grid_point5(_("Control 5:"), _("Control 5 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint5", &wr, this),
+    grid_point6(_("Control 6:"), _("Control 6 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint6", &wr, this),
+    grid_point7(_("Control 7:"), _("Control 7 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint7", &wr, this),
+    grid_point8x9(_("Control 8x9:"), _("Control 8x9 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint8x9", &wr, this),
+    grid_point10x11(_("Control 10x11:"), _("Control 10x11 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint10x11", &wr, this),
+    grid_point12(_("Control 12:"), _("Control 12 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint12", &wr, this),
+    grid_point13(_("Control 13:"), _("Control 13 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint13", &wr, this),
+    grid_point14(_("Control 14:"), _("Control 14 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint14", &wr, this),
+    grid_point15(_("Control 15:"), _("Control 15 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint15", &wr, this),
+    grid_point16(_("Control 16:"), _("Control 16 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint16", &wr, this),
+    grid_point17(_("Control 17:"), _("Control 17 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint17", &wr, this),
+    grid_point18(_("Control 18:"), _("Control 18 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint18", &wr, this),
+    grid_point19(_("Control 19:"), _("Control 19 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint19", &wr, this),
+    grid_point20x21(_("Control 20x21:"), _("Control 20x21 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint20x21", &wr, this),
+    grid_point22x23(_("Control 22x23:"), _("Control 22x23 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint22x23", &wr, this),
+    grid_point24x26(_("Control 24x26:"), _("Control 24x26 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint24x26", &wr, this),
+    grid_point25x27(_("Control 25x27:"), _("Control 25x27 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint25x27", &wr, this),
+    grid_point28x30(_("Control 28x30:"), _("Control 28x30 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint28x30", &wr, this),
+    grid_point29x31(_("Control 29x31:"), _("Control 29x31 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint29x31", &wr, this),
+    grid_point32x33x34x35(_("Control 32x33x34x35:"), _("Control 32x33x34x35 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint32x33x34x35", &wr, this),
+    expanded(false)
 {
     // register all your parameters here, so Inkscape knows which parameters this effect has:
     registerParameter(&horizontalMirror);
@@ -112,17 +112,8 @@ Geom::Piecewise<Geom::D2<Geom::SBasis> >
 LPELattice2::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in)
 {
     PathVector pathv = path_from_piecewise(pwd2_in,0.001);
-    //this is because strange problem whith sb2 and lines
-    PathVector cubic;
-    for (Geom::PathVector::const_iterator pit = pathv.begin(); pit != pathv.end(); ++pit) {
-     cubic.push_back( Geom::Path() );
-     cubic.back().start( pit->initialPoint() );
-     cubic.back().close( pit->closed() );
-        for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_open(); ++cit) {
-             Geom::Path cubicbezier_path = Geom::cubicbezierpath_from_sbasis(cit->toSBasis(), 0.1);
-             cubic.back().append(cubicbezier_path);
-        }
-    } 
+    //this is because strange problems whith sb2 and LineSegment
+    PathVector cubic = pathv_to_cubicbezier(pathv);
     Geom::Piecewise<Geom::D2<Geom::SBasis> > const &pwd2_in_linear_and_cubic = paths_to_pw(cubic);
     D2<SBasis2d> sb2;
     
@@ -229,6 +220,7 @@ LPELattice2::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd
     return output;
 }
 
+
 Gtk::Widget *
 LPELattice2::newWidget()
 {
@@ -239,7 +231,10 @@ LPELattice2::newWidget()
     vbox->set_homogeneous(false);
     vbox->set_spacing(6);
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false,0));
-    Gtk::Button* resetButton = Gtk::manage(new Gtk::Button(Glib::ustring(_("Reset grid"))));
+    Gtk::VBox * vboxExpander = Gtk::manage( new Gtk::VBox(Effect::newWidget()) );
+    vboxExpander->set_border_width(0);
+    vboxExpander->set_spacing(2);
+    Gtk::Button * resetButton = Gtk::manage(new Gtk::Button(Glib::ustring(_("Reset grid"))));
     resetButton->signal_clicked().connect(sigc::mem_fun (*this,&LPELattice2::resetGrid));
     resetButton->set_size_request(140,30);
     vbox->pack_start(*hbox, true,true,2);
@@ -254,7 +249,11 @@ LPELattice2::newWidget()
             }
             Glib::ustring * tip = param->param_getTooltip();
             if (widg) {
-                vbox->pack_start(*widg, true, true, 2);
+                if (param->param_key == "horizontalMirror" || param->param_key == "verticalMirror") {
+                    vbox->pack_start(*widg, true, true, 2);
+                } else {
+                    vboxExpander->pack_start(*widg, true, true, 2);
+                }
                 if (tip) {
                     widg->set_tooltip_text(*tip);
                 } else {
@@ -266,9 +265,25 @@ LPELattice2::newWidget()
 
         ++it;
     }
+     
+    expander = Gtk::manage(new Gtk::Expander(Glib::ustring(_("Show Points"))));
+    expander->add(*vboxExpander);
+    expander->set_expanded(expanded);
+    vbox->pack_start(*expander, true, true, 2);
+    expander->property_expanded().signal_changed().connect(sigc::mem_fun(*this, &LPELattice2::on_expander_changed) );
     return dynamic_cast<Gtk::Widget *>(vbox);
 }
 
+void
+LPELattice2::on_expander_changed()
+{
+    expanded = expander->get_expanded();
+    if(expander->get_expanded()){
+        expander->set_label (Glib::ustring(_("Hide Points")));
+    } else {
+        expander->set_label (Glib::ustring(_("Show Points")));
+    }
+}
 void
 LPELattice2::vertical(PointParam &paramA, PointParam &paramB, Geom::Line vert){
     Geom::Point A = paramA;

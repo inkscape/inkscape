@@ -18,7 +18,7 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
-
+#include <gtkmm.h>
 #include "live_effects/parameter/enum.h"
 #include "live_effects/effect.h"
 #include "live_effects/parameter/point.h"
@@ -48,6 +48,8 @@ public:
     virtual void horizontal(PointParam &paramA,PointParam &paramB,Geom::Line horiz);
 
     virtual void setDefaults();
+
+    virtual void on_expander_changed();
 
     virtual void resetGrid();
 
@@ -87,6 +89,9 @@ private:
     PointParam grid_point28x30;
     PointParam grid_point29x31;
     PointParam grid_point32x33x34x35; 
+
+    bool expanded;
+    Gtk::Expander * expander;
 
     LPELattice2(const LPELattice2&);
     LPELattice2& operator=(const LPELattice2&);

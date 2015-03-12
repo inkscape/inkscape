@@ -556,6 +556,52 @@ pathv_to_linear( Geom::PathVector const &pathv, double /*maxdisp*/)
     return output;
 }
 
+/*
+ * Converts all segments in all paths to Geom Cubic bezier.
+ */
+Geom::PathVector
+pathv_to_cubicbezier( Geom::PathVector const &pathv)
+{
+    Geom::PathVector output;
+    double cubicGap = 0.01;
+    for (Geom::PathVector::const_iterator pit = pathv.begin(); pit != pathv.end(); ++pit) {
+        output.push_back( Geom::Path() );
+        output.back().start( pit->initialPoint() );
+        output.back().close( pit->closed() );
+        bool end_open = false;
+        if (pit->closed()) {
+            const Geom::Curve &closingline = pit->back_closed();
+            if (!are_near(closingline.initialPoint(), closingline.finalPoint())) {
+                end_open = true;
+            }
+        }
+        Geom::Path pitCubic = (Geom::Path)(*pit);
+        if(end_open && pit->closed()){
+            pitCubic.close(false);
+            pitCubic.appendNew<Geom::LineSegment>( pitCubic.initialPoint() );
+            pitCubic.close(true);
+        }
+        for (Geom::Path::const_iterator cit = pitCubic.begin(); cit != pitCubic.end_open(); ++cit) {
+            if (is_straight_curve(*cit)) {
+                Geom::CubicBezier b(cit->initialPoint(), cit->pointAt(0.3334) + Geom::Point(cubicGap,cubicGap), cit->finalPoint(), cit->finalPoint());
+                output.back().append(b);
+            } else {
+                Geom::BezierCurve const *curve = dynamic_cast<Geom::BezierCurve const *>(&*cit);
+                if (curve && curve->order() == 3) {
+                    Geom::CubicBezier b((*curve)[0], (*curve)[1], (*curve)[2], (*curve)[3]);
+                    output.back().append(b);
+                } else {
+                    // convert all other curve types to cubicbeziers
+                    Geom::Path cubicbezier_path = Geom::cubicbezierpath_from_sbasis(cit->toSBasis(), 0.1);
+                    output.back().append(cubicbezier_path);
+                }
+            }
+        }
+    }
+
+    return output;
+}
+
 // The next routine is modified from curv4_div::recursive_bezier from file agg_curves.cpp
 //----------------------------------------------------------------------------
 // Anti-Grain Geometry (AGG) - Version 2.5
