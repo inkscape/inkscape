@@ -193,15 +193,15 @@ static void box3d_toolbox_selection_changed(Inkscape::Selection *selection, GObj
             Inkscape::GC::anchor(persp_repr);
             sp_repr_add_listener(persp_repr, &box3d_persp_tb_repr_events, tbl);
             sp_repr_synthesize_events(persp_repr, &box3d_persp_tb_repr_events, tbl);
+
+            SP_ACTIVE_DOCUMENT->setCurrentPersp3D(persp3d_get_from_repr(persp_repr));
+            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+            prefs->setString("/tools/shapes/3dbox/persp", persp_repr->attribute("id"));
+
+            g_object_set_data(tbl, "freeze", GINT_TO_POINTER(TRUE));
+            box3d_resync_toolbar(persp_repr, tbl);
+            g_object_set_data(tbl, "freeze", GINT_TO_POINTER(FALSE));
         }
-
-        SP_ACTIVE_DOCUMENT->setCurrentPersp3D(persp3d_get_from_repr(persp_repr));
-        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->setString("/tools/shapes/3dbox/persp", persp_repr->attribute("id"));
-
-        g_object_set_data(tbl, "freeze", GINT_TO_POINTER(TRUE));
-        box3d_resync_toolbar(persp_repr, tbl);
-        g_object_set_data(tbl, "freeze", GINT_TO_POINTER(FALSE));
     }
 }
 
