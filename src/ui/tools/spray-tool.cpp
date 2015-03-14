@@ -439,39 +439,41 @@ static bool sp_spray_recursive(SPDesktop *desktop,
             }
             i++;
         }
-        SPDocument *doc = parent_item->document;
-        Inkscape::XML::Document* xml_doc = doc->getReprDoc();
-        Inkscape::XML::Node *old_repr = parent_item->getRepr();
-        Inkscape::XML::Node *parent = old_repr->parent();
+        if (parent_item) {
+            SPDocument *doc = parent_item->document;
+            Inkscape::XML::Document* xml_doc = doc->getReprDoc();
+            Inkscape::XML::Node *old_repr = parent_item->getRepr();
+            Inkscape::XML::Node *parent = old_repr->parent();
 
-        Geom::OptRect a = parent_item->documentVisualBounds();
-        if (a) {
-            if (_fid <= population) { // Rules the population of objects sprayed
-                // Duplicates the parent item
-                Inkscape::XML::Node *copy = old_repr->duplicate(xml_doc);
-                parent->appendChild(copy);
-                SPObject *new_obj = doc->getObjectByRepr(copy);
-                item_copied = dynamic_cast<SPItem *>(new_obj);
+            Geom::OptRect a = parent_item->documentVisualBounds();
+            if (a) {
+                if (_fid <= population) { // Rules the population of objects sprayed
+                    // Duplicates the parent item
+                    Inkscape::XML::Node *copy = old_repr->duplicate(xml_doc);
+                    parent->appendChild(copy);
+                    SPObject *new_obj = doc->getObjectByRepr(copy);
+                    item_copied = dynamic_cast<SPItem *>(new_obj);
 
-                // Move around the cursor
-                Geom::Point move = (Geom::Point(cos(tilt)*cos(dp)*dr/(1-ratio)+sin(tilt)*sin(dp)*dr/(1+ratio), -sin(tilt)*cos(dp)*dr/(1-ratio)+cos(tilt)*sin(dp)*dr/(1+ratio)))+(p-a->midpoint()); 
+                    // Move around the cursor
+                    Geom::Point move = (Geom::Point(cos(tilt)*cos(dp)*dr/(1-ratio)+sin(tilt)*sin(dp)*dr/(1+ratio), -sin(tilt)*cos(dp)*dr/(1-ratio)+cos(tilt)*sin(dp)*dr/(1+ratio)))+(p-a->midpoint()); 
 
-                Geom::Point center = parent_item->getCenter();
-                sp_spray_scale_rel(center, desktop, item_copied, Geom::Scale(_scale, _scale));
-                sp_spray_scale_rel(center, desktop, item_copied, Geom::Scale(scale, scale));
-                sp_spray_rotate_rel(center, desktop, item_copied, Geom::Rotate(angle));
-                sp_item_move_rel(item_copied, Geom::Translate(move[Geom::X], -move[Geom::Y]));
+                    Geom::Point center = parent_item->getCenter();
+                    sp_spray_scale_rel(center, desktop, item_copied, Geom::Scale(_scale, _scale));
+                    sp_spray_scale_rel(center, desktop, item_copied, Geom::Scale(scale, scale));
+                    sp_spray_rotate_rel(center, desktop, item_copied, Geom::Rotate(angle));
+                    sp_item_move_rel(item_copied, Geom::Translate(move[Geom::X], -move[Geom::Y]));
 
-                // Union and duplication
-                selection->clear();
-                selection->add(item_copied);
-                if (unionResult) { // No need to add the very first item (initialized with NULL).
-                    selection->add(unionResult);
+                    // Union and duplication
+                    selection->clear();
+                    selection->add(item_copied);
+                    if (unionResult) { // No need to add the very first item (initialized with NULL).
+                        selection->add(unionResult);
+                    }
+                    sp_selected_path_union_skip_undo(selection, selection->desktop());
+                    selection->add(parent_item);
+                    Inkscape::GC::release(copy);
+                    did = true;
                 }
-                sp_selected_path_union_skip_undo(selection, selection->desktop());
-                selection->add(parent_item);
-                Inkscape::GC::release(copy);
-                did = true;
             }
         }
 #endif
