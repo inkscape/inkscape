@@ -47,6 +47,11 @@ PointParam::param_set_default()
     param_setValue(defvalue,true);
 }
 
+Geom::Point 
+PointParam::param_get_default() const{
+    return defvalue;
+}
+
 void
 PointParam::param_update_default(Geom::Point newpoint)
 {

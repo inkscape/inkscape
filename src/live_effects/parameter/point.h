@@ -38,9 +38,9 @@ public:
     bool param_readSVGValue(const gchar * strvalue);
     gchar * param_getSVGValue() const;
     inline const gchar *handleTip() const { return handle_tip ? handle_tip : param_tooltip.c_str(); }
-
     void param_setValue(Geom::Point newpoint, bool write = false);
     void param_set_default();
+    Geom::Point param_get_default() const;
     void param_update_default(Geom::Point newpoint);
     virtual void param_transform_multiply(Geom::Affine const& /*postmul*/, bool /*set*/);
 

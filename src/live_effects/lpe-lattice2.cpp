@@ -295,6 +295,9 @@ LPELattice2::vertical(PointParam &paramA, PointParam &paramB, Geom::Line vert){
     double distA = Geom::distance(A,nearest);
     double distB = Geom::distance(B,nearest);
     double distanceMed = (distA + distB)/2;
+    if(A[Geom::X] > B[Geom::X]){
+        distanceMed *= -1;
+    }
     A[Geom::X] = nearest[Geom::X] - distanceMed;
     B[Geom::X] = nearest[Geom::X] + distanceMed;
     paramA.param_setValue(A, true);
@@ -312,6 +315,9 @@ LPELattice2::horizontal(PointParam &paramA, PointParam &paramB, Geom::Line horiz
     double distA = Geom::distance(A,nearest);
     double distB = Geom::distance(B,nearest);
     double distanceMed = (distA + distB)/2;
+    if(A[Geom::Y] > B[Geom::Y]){
+        distanceMed *= -1;
+    }
     A[Geom::Y] = nearest[Geom::Y] - distanceMed;
     B[Geom::Y] = nearest[Geom::Y] + distanceMed;
     paramA.param_setValue(A, true);
@@ -323,8 +329,8 @@ LPELattice2::doBeforeEffect (SPLPEItem const* lpeitem)
 {
     original_bbox(lpeitem);
     setDefaults();
-    Geom::Line vert(grid_point8x9,grid_point10x11);
-    Geom::Line horiz(grid_point24x26,grid_point25x27);
+    Geom::Line vert(grid_point8x9.param_get_default(),grid_point10x11.param_get_default());
+    Geom::Line horiz(grid_point24x26.param_get_default(),grid_point25x27.param_get_default());
     if(verticalMirror){
         vertical(grid_point0, grid_point1,vert);
         vertical(grid_point2, grid_point3,vert);
