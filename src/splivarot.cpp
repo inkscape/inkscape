@@ -1727,7 +1727,9 @@ void sp_selected_path_create_offset_object(SPDesktop *desktop, int expand, bool 
 
         if ( !updating ) {
             // delete original, apply the transform to the offset
+            const char *n_id = item->getRepr()->attribute("id");
             item->deleteObject(false);
+            repr->setAttribute("id", n_id);
             nitem->doWriteTransform(repr, transform);
         }
 
