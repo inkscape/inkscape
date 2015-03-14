@@ -27,7 +27,8 @@ PointParam::PointParam( const Glib::ustring& label, const Glib::ustring& tip,
                         const Glib::ustring& key, Inkscape::UI::Widget::Registry* wr,
                         Effect* effect, const gchar *htip, Geom::Point default_value)
     :   Parameter(label, tip, key, wr, effect), 
-        defvalue(default_value)
+        defvalue(default_value),
+        knoth(NULL)
 {
     knot_shape = SP_KNOT_SHAPE_DIAMOND;
     knot_mode  = SP_KNOT_MODE_XOR;
@@ -68,6 +69,9 @@ PointParam::param_setValue(Geom::Point newpoint, bool write)
         gchar * str = g_strdup(os.str().c_str());
         param_write_to_repr(str);
         g_free(str);
+    }
+    if(knoth){
+        knoth->update_knots();
     }
 }
 
@@ -192,6 +196,7 @@ PointParamKnotHolderEntity::knot_click(guint state)
 void
 PointParam::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item)
 {
+    knoth = knotholder;
     PointParamKnotHolderEntity *e = new PointParamKnotHolderEntity(this);
     // TODO: can we ditch handleTip() etc. because we have access to handle_tip etc. itself???
     e->create(desktop, item, knotholder, Inkscape::CTRL_TYPE_UNKNOWN, handleTip(), knot_shape, knot_mode, knot_color);

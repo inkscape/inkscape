@@ -34,9 +34,6 @@
 #include <2geom/d2.h>
 #include <2geom/piecewise.h>
 #include <2geom/transforms.h>
-#include "ui/tools-switch.h"
-
-#include "desktop.h" // TODO: should be factored out (see below)
 
 using namespace Geom;
 
@@ -493,19 +490,6 @@ LPELattice2::resetGrid()
     grid_point28x30.param_set_default();
     grid_point29x31.param_set_default();
     grid_point32x33x34x35.param_set_default();
-    /*todo:this hack is only to reposition the knots on reset grid button
-      Better update path effect in LPEITEM
-    if(sp_lpe_item){
-        sp_lpe_item_update_patheffect(sp_lpe_item, true, true);
-        SPGroup *group = dynamic_cast<SPGroup *>(sp_lpe_item);
-        if(group){
-            group->requestModified(SP_OBJECT_MODIFIED_FLAG);
-        }
-    }
-    */
-    SPDesktop * desktop = SP_ACTIVE_DESKTOP;
-    tools_switch(desktop, TOOLS_SELECT);
-    tools_switch(desktop, TOOLS_NODES);
 }
 
 void

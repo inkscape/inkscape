@@ -54,6 +54,7 @@ private:
     PointParam(const PointParam&);
     PointParam& operator=(const PointParam&);
     Geom::Point defvalue;
+    KnotHolder *knoth;
     SPKnotShapeType knot_shape;
     SPKnotModeType knot_mode;
     guint32 knot_color;
