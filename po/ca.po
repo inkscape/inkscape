@@ -2605,7 +2605,7 @@ msgstr "Verd bosc (#228B22)"
 #: ../share/palettes/palettes.h:96
 msgctxt "Palette"
 msgid "limegreen (#32CD32)"
-msgstr "Verd lima (#32CD32)"
+msgstr "Verd llima (#32CD32)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:97
@@ -4199,7 +4199,7 @@ msgstr "Carretera per cotxes 4x4"
 #: ../share/symbols/symbols.h:221 ../share/symbols/symbols.h:222
 msgctxt "Symbol"
 msgid "Gas Station"
-msgstr "Estació de repostatge"
+msgstr "Benzinera"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:223 ../share/symbols/symbols.h:224
@@ -5298,7 +5298,7 @@ msgstr "Ajust:"
 
 #: ../src/extension/internal/bitmap/contrast.cpp:48
 msgid "Increase or decrease contrast in bitmap(s)"
-msgstr "Incrementa o decrementa el contrast al mapa o mapes de bits"
+msgstr "Incrementa o redueix el contrast al mapa o mapes de bits"
 
 #: ../src/extension/internal/bitmap/crop.cpp:66
 #: ../src/extension/internal/filter/bumps.h:86
@@ -5994,7 +5994,7 @@ msgstr "Suavitat"
 #: ../src/extension/internal/filter/bevels.h:137
 #: ../src/extension/internal/filter/bevels.h:221
 msgid "Elevation (°)"
-msgstr "Elevació  (°)"
+msgstr "Elevació (°)"
 
 #: ../src/extension/internal/filter/bevels.h:57
 #: ../src/extension/internal/filter/bevels.h:138
@@ -8182,7 +8182,7 @@ msgstr "Disseny Microsoft Visio 2013 (*.vsdm)"
 #: ../src/extension/internal/vsd-input.cpp:346
 msgid "File format used by Microsoft Visio 2013 and later"
 msgstr ""
-"Format de fitxer utilitzat per Microsoft Visio 2010 i les versions següents"
+"Format de fitxer utilitzat per Microsoft Visio 2013 i les versions següents"
 
 #: ../src/extension/internal/vsd-input.cpp:340
 msgid "VSDX Input"
@@ -8654,7 +8654,7 @@ msgstr ""
 
 #: ../src/gradient-drag.cpp:1431 ../src/gradient-drag.cpp:1438
 msgid " (stroke)"
-msgstr "(contorn)"
+msgstr " (traç)"
 
 #: ../src/gradient-drag.cpp:1435
 #, c-format
@@ -9211,7 +9211,7 @@ msgstr "Cercle fet amb 3 punts"
 
 #: ../src/live_effects/effect.cpp:105
 msgid "Dynamic stroke"
-msgstr "Traça dinàmica"
+msgstr "Traç dinàmic"
 
 #: ../src/live_effects/effect.cpp:106 ../share/extensions/extrude.inx.h:1
 msgid "Extrude"
@@ -11406,7 +11406,7 @@ msgid ""
 "EPS/PDF (default 96)"
 msgstr ""
 "Resolució per exportar a mapa de bits i la rasterització dels filtres en PS/"
-"EPS/PDF (per defecte 90)"
+"EPS/PDF (per defecte 96)"
 
 #: ../src/main.cpp:326 ../src/ui/widget/rendering-options.cpp:37
 msgid "DPI"
@@ -13019,7 +13019,7 @@ msgstr "[orfe]"
 
 #: ../src/sp-tspan.cpp:218
 msgid "Text Span"
-msgstr "<b>Envergadura del text</b>"
+msgstr "Envergadura del text"
 
 #: ../src/sp-use.cpp:244
 msgid "Symbol"
@@ -15245,7 +15245,7 @@ msgstr "Selecció"
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1545
 msgctxt "Export dialog"
 msgid "Custom"
-msgstr "Personalitzat"
+msgstr "Personalitzada"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1565
 msgid "Source"
@@ -15281,7 +15281,7 @@ msgstr "_Pinta el traç"
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:64
 msgid "Stroke st_yle"
-msgstr "Estil del co_ntorn"
+msgstr "Estil del _traç"
 
 #. TRANSLATORS: this dialog is accessible via menu Filters - Filter editor
 #: ../src/ui/dialog/filter-effects-dialog.cpp:546
@@ -16380,7 +16380,7 @@ msgstr "Bopomofo"
 
 #: ../src/ui/dialog/glyphs.cpp:67 ../src/ui/dialog/glyphs.cpp:189
 msgid "Cherokee"
-msgstr "Xeroqui"
+msgstr "Cherokee"
 
 #: ../src/ui/dialog/glyphs.cpp:68 ../src/ui/dialog/glyphs.cpp:242
 msgid "Coptic"
@@ -16909,7 +16909,7 @@ msgstr "Bopomofo ampliat"
 
 #: ../src/ui/dialog/glyphs.cpp:258
 msgid "CJK Strokes"
-msgstr "Pinzellades CJK"
+msgstr "Traços CJK"
 
 #: ../src/ui/dialog/glyphs.cpp:259
 msgid "Katakana Phonetic Extensions"
@@ -17332,7 +17332,7 @@ msgstr "Capsa contenidora visual"
 #: ../src/ui/dialog/inkscape-preferences.cpp:309
 msgid "This bounding box includes stroke width, markers, filter margins, etc."
 msgstr ""
-"Aquesta capsa contenidora inclou amplada del pinzell, marcadors, marges del "
+"Aquesta capsa contenidora inclou amplada del traç, marcadors, marges del "
 "filtre, etc."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:310
@@ -17473,7 +17473,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:360
 msgid "Update outline when dragging nodes"
-msgstr "Actualitza  el contorn quan s'arrosseguin els nodes"
+msgstr "Actualitza el contorn quan s'arrosseguin els nodes"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:361
 msgid ""
@@ -17767,8 +17767,8 @@ msgid ""
 "When on, the Gradient Edit button in the Fill & Stroke dialog will show the "
 "legacy Gradient Editor dialog, when off the Gradient Tool will be used"
 msgstr ""
-"Quan està habilitat, el botó d'edició de degradats en el diàleg Contorn / "
-"Emplenat mostrarà el diàleg d'editor de degradat antic. Deshabilitat s'usarà "
+"Quan està habilitat, el botó d'edició de degradats en el diàleg Emplenat i "
+"traç mostrarà el diàleg d'editor de degradat antic. Deshabilitat s'usarà "
 "l'eina degradat"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:497
@@ -18002,7 +18002,7 @@ msgstr "Nepalès (ne)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:533
 msgid "Norwegian Bokmål (nb)"
-msgstr "Bokmål noruec  (nb)"
+msgstr "Bokmål noruec (nb)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:533
 msgid "Norwegian Nynorsk (nn)"
@@ -18097,7 +18097,7 @@ msgstr "Gran"
 #: ../src/ui/dialog/inkscape-preferences.cpp:572
 #: ../src/ui/dialog/inkscape-preferences.cpp:657
 msgid "Small"
-msgstr "Petit"
+msgstr "Petita"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:572
 msgid "Smaller"
@@ -18298,7 +18298,7 @@ msgstr "Agressiu"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:657
 msgid "Maximized"
-msgstr "Maximitzat"
+msgstr "Maximitzada"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:661
 msgid "Default window size:"
@@ -21659,7 +21659,7 @@ msgid ""
 "\n"
 "http://potrace.sourceforge.net"
 msgstr ""
-"La delineació del mapa de bits\n"
+"El traçat del mapa de bits\n"
 "està basada en el Potrace\n"
 "creat per en Peter Selinger,\n"
 "\n"
@@ -22079,12 +22079,12 @@ msgstr "Selecciona el mateix"
 #. Select same fill and stroke
 #: ../src/ui/interface.cpp:1671
 msgid "Fill and Stroke"
-msgstr "Emplenat i contorn"
+msgstr "Emplenat i traç"
 
 #. Select same fill color
 #: ../src/ui/interface.cpp:1678
 msgid "Fill Color"
-msgstr "Emplena color"
+msgstr "Emplenat de color"
 
 #. Select same stroke color
 #: ../src/ui/interface.cpp:1685
@@ -22205,7 +22205,7 @@ msgstr "Extreu una imatge..."
 #: ../src/ui/interface.cpp:2165 ../src/ui/interface.cpp:2185
 #: ../src/verbs.cpp:2895
 msgid "_Fill and Stroke..."
-msgstr "_Emplenat i contorn..."
+msgstr "_Emplenat i traç..."
 
 #. Edit Text dialog
 #: ../src/ui/interface.cpp:2191 ../src/verbs.cpp:2914
@@ -22960,7 +22960,7 @@ msgid ""
 msgstr ""
 "<b>Cliqueu</b> per pintar una àrea vorejada, <b>Maj+clic</b> per a unir el "
 "nou emplenat amb la selecció actual o <b>Ctrl+clic</b> per canviar "
-"l'emplenat i el contorn de l'objecte clicat amb els valors actuals."
+"l'emplenat i el traç de l'objecte clicat amb els valors actuals."
 
 #: ../src/ui/tools-switch.cpp:115
 msgid "<b>Drag</b> to erase."
@@ -26729,7 +26729,7 @@ msgid ""
 "properties..."
 msgstr ""
 "Edita els colors dels objectes, degradats, puntes de fletxa i altres "
-"propietats de l'emplenat i el contorn..."
+"propietats de l'emplenat i el traç..."
 
 #. FIXME: Probably better to either use something from the icon naming spec or ship our own "select-font" icon
 #: ../src/verbs.cpp:2898
@@ -28853,7 +28853,7 @@ msgid ""
 "Now <b>gradients</b> are <b>transformed</b> along with their objects when "
 "those are transformed (moved, scaled, rotated, or skewed)."
 msgstr ""
-"<b>Es transformarà els degradats</b> juntament amb els seus objectes quan es "
+"Es <b>transformaran</b> els <b>degradats</b> juntament amb els seus objectes quan es "
 "transformin (moguts, escalat, girats o distorsionats)."
 
 #: ../src/widgets/select-toolbar.cpp:369
@@ -28861,23 +28861,23 @@ msgid ""
 "Now <b>gradients</b> remain <b>fixed</b> when objects are transformed "
 "(moved, scaled, rotated, or skewed)."
 msgstr ""
-"<b>No es transformarà els degradats</b> quan els objectes es transformin "
-"(moguts, escalat, girats o distorsionats)."
+"Els <b>degradats</b> romandran <b>fixes</b> quan els objectes es transformin "
+"(moguts, escalats, girats o distorsionats)."
 
 #: ../src/widgets/select-toolbar.cpp:380
 msgid ""
 "Now <b>patterns</b> are <b>transformed</b> along with their objects when "
 "those are transformed (moved, scaled, rotated, or skewed)."
 msgstr ""
-"<b>Es transformarà els patrons</b> juntament amb els seus objectes quan es "
-"transformin (moguts, escalat, girats o distorsionats)."
+"Es <b>transformaran</b> els <b>patrons</b> juntament amb els seus objectes quan es "
+"transformin (moguts, escalats, girats o distorsionats)."
 
 #: ../src/widgets/select-toolbar.cpp:382
 msgid ""
 "Now <b>patterns</b> remain <b>fixed</b> when objects are transformed (moved, "
 "scaled, rotated, or skewed)."
 msgstr ""
-"<b>No es transformarà els patrons</b> quan els objectes es transformin "
+"Els <b>patrons</b> romandran <b>fixes</b> quan els objectes es transformin "
 "(moguts, escalat, girats o distorsionats)."
 
 #. four spinbuttons
@@ -30490,7 +30490,7 @@ msgid ""
 "Warning! There are some paths in the root of the document, but not in any "
 "layer! Using bottom-most layer for them."
 msgstr ""
-"Avís! Hi ha alguns camins a l'arrel del document, però no en qualsevol"
+"Avís! Hi ha alguns camins a l'arrel del document, però no en qualsevol "
 "la capa! S'està usant la capa inferior per a ells."
 
 #: ../share/extensions/gcodetools.py:4371
@@ -30698,7 +30698,7 @@ msgid ""
 "The HPGL data contained unknown (unsupported) commands, there is a "
 "possibility that the drawing is missing some content."
 msgstr ""
-"Les dades HPGL contenen comandaments desconeguts (sense suport), hi ha una"
+"Les dades HPGL contenen comandaments desconeguts (sense suport), hi ha una "
 "possibilitat que el dibuix hagi perdut una part del contingut."
 
 #. issue error if no paths found
@@ -31940,7 +31940,7 @@ msgid ""
 msgstr ""
 "- AutoCAD Versió 13 i posteriors.\n"
 "- per escalat manual, s'assumeix que el dibuix dxf està en mm.\n"
-"- s'assumeix que el dibuix svg està en píxels, a 90 ppp.\n"
+"- s'assumeix que el dibuix svg està en píxels, a 96 ppp.\n"
 "- el factor d'escala i l'origen només s'apliquen a escala manual.\n"
 "- «Escala automàtica» s'ajusta a l'ample d'una pàgina A4.\n"
 "- «Llegeix del fitxer» usa la variable $MEASUREMENT.\n"
@@ -32235,7 +32235,7 @@ msgstr "Fons de pàgina:"
 
 #: ../share/extensions/empty_video.inx.h:1
 msgid "Video Screen"
-msgstr "Video pantalla"
+msgstr "Vídeo pantalla"
 
 #: ../share/extensions/empty_video.inx.h:2
 msgid "Video size:"
@@ -32875,7 +32875,7 @@ msgstr "Capgira l'eix «Y» i parametritza Gcode "
 #: ../share/extensions/gcodetools_lathe.inx.h:44
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:33
 msgid "Round all values to 4 digits"
-msgstr "Arredoneix tots el valors a 4 digits"
+msgstr "Arredoneix tots el valors a 4 dígits"
 
 #: ../share/extensions/gcodetools_area.inx.h:52
 #: ../share/extensions/gcodetools_dxf_points.inx.h:24
@@ -33248,7 +33248,7 @@ msgid ""
 "of the pattern and get an empty border."
 msgstr ""
 "Generar un patró aleatori de cel·les de Voronoi. El patró serà accessible en "
-"el quadre de diàleg «Emplenat i contorn». Heu de seleccionar un objecte o un "
+"el quadre de diàleg «Emplenat i traç». Heu de seleccionar un objecte o un "
 "grup. \n"
 "\n"
 "Si la vora és zero, el patró serà discontinu als cantons. Utilitzeu una vora "
@@ -33294,7 +33294,7 @@ msgstr ""
 "següents opcions: \n"
 "     * Desa guies: converteix totes les guies a guies de Gimp \n."
 "     * Desa graella: converteix la primera graella rectangular a una graella "
-"Gimp (noteu"
+"Gimp (noteu "
 "que la xarxa Inkscape per defecte és molt estreta quan es mostra en Gimp). \n"
 "     * Desa fons: afegeix el fons del document a cada capa convertida \n."
 "     * Resolució de l'arxiu :. Resolució del fitxer XCF, en ppp \n"
@@ -33302,7 +33302,7 @@ msgstr ""
 "Cada capa de primer nivell es converteix a una capa de Gimp. Les subcapes hi "
 "són "
 "concatenades i convertides amb la seva capa principal de primer nivell en una "
-"sola"
+"sola "
 "capa de Gimp."
 
 #: ../share/extensions/gimp_xcf.inx.h:15
@@ -34973,7 +34973,7 @@ msgstr "Tipus de marcador:"
 
 #: ../share/extensions/markers_strokepaint.inx.h:4
 msgid "Invert fill and stroke colors"
-msgstr "Inverteix els colors de l'emplenat i el contorn"
+msgstr "Inverteix els colors de l'emplenat i el traç"
 
 #: ../share/extensions/markers_strokepaint.inx.h:5
 msgid "Assign alpha"
@@ -34993,11 +34993,11 @@ msgstr "Assigna el color d'emplenat"
 
 #: ../share/extensions/markers_strokepaint.inx.h:11
 msgid "Stroke"
-msgstr "Contorn"
+msgstr "Traç"
 
 #: ../share/extensions/markers_strokepaint.inx.h:12
 msgid "Assign stroke color"
-msgstr "Assigna el color del contorn"
+msgstr "Assigna el color del traç"
 
 #: ../share/extensions/measure.inx.h:1
 msgid "Measure Path"
@@ -35684,11 +35684,11 @@ msgstr "Opacitat d'emplenat (%):"
 #: ../share/extensions/polyhedron_3d.inx.h:41
 #, no-c-format
 msgid "Stroke opacity (%):"
-msgstr "Opacitat del contorn (%):"
+msgstr "Opacitat del traç (%):"
 
 #: ../share/extensions/polyhedron_3d.inx.h:42
 msgid "Stroke width (px):"
-msgstr "Gruix del contorn (px):"
+msgstr "Gruix del traç (px):"
 
 #: ../share/extensions/polyhedron_3d.inx.h:43
 msgid "Shading"
@@ -36127,7 +36127,7 @@ msgstr "Suprimeix la declaració xml"
 
 #: ../share/extensions/scour.inx.h:14
 msgid "Number of significant digits for coords:"
-msgstr "Nombre de digits significatius per les coordenades:"
+msgstr "Nombre de dígits significatius per les coordenades:"
 
 #: ../share/extensions/scour.inx.h:15
 msgid "XML indentation (pretty-printing):"
