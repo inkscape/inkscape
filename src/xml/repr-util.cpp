@@ -32,6 +32,7 @@
 #include <2geom/point.h>
 #include "svg/stringstream.h"
 #include "svg/css-ostringstream.h"
+#include "svg/svg-length.h"
 
 #include "xml/repr.h"
 #include "xml/repr-sorting.h"
@@ -499,6 +500,20 @@ unsigned int sp_repr_set_svg_double(Inkscape::XML::Node *repr, gchar const *key,
     os << val;
 
     repr->setAttribute(key, os.str().c_str());
+    return true;
+}
+
+/**
+ * For attributes where an exponent is allowed.
+ *
+ * Not suitable for property attributes.
+ */
+unsigned int sp_repr_set_svg_length(Inkscape::XML::Node *repr, gchar const *key, SVGLength &val)
+{
+    g_return_val_if_fail(repr != NULL, FALSE);
+    g_return_val_if_fail(key != NULL, FALSE);
+
+    repr->setAttribute(key, val.write());
     return true;
 }
 

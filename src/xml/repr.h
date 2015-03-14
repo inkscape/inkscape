@@ -30,6 +30,7 @@
 #define SP_DC_NS_URI "http://purl.org/dc/elements/1.1/"
 
 class SPCSSAttr;
+class SVGLength;
 
 namespace Inkscape {
 namespace IO {
@@ -115,6 +116,7 @@ unsigned sp_repr_set_boolean(Inkscape::XML::Node *repr, char const *key, unsigne
 unsigned sp_repr_set_int(Inkscape::XML::Node *repr, char const *key, int val);
 unsigned sp_repr_set_css_double(Inkscape::XML::Node *repr, char const *key, double val);
 unsigned sp_repr_set_svg_double(Inkscape::XML::Node *repr, char const *key, double val);
+unsigned sp_repr_set_svg_length(Inkscape::XML::Node *repr, char const *key, SVGLength &val);
 unsigned sp_repr_set_point(Inkscape::XML::Node *repr, char const *key, Geom::Point const & val);
 unsigned sp_repr_get_point(Inkscape::XML::Node *repr, char const *key, Geom::Point *val);
 

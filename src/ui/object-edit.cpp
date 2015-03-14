@@ -154,12 +154,9 @@ RectKnotHolderEntityRX::knot_set(Geom::Point const &p, Geom::Point const &/*orig
 
     if (state & GDK_CONTROL_MASK) {
         gdouble temp = MIN(rect->height.computed, rect->width.computed) / 2.0;
-        rect->rx.computed = rect->ry.computed = CLAMP(rect->x.computed + rect->width.computed - s[Geom::X], 0.0, temp);
-        rect->rx._set = rect->ry._set = true;
-
+        rect->rx = rect->ry = CLAMP(rect->x.computed + rect->width.computed - s[Geom::X], 0.0, temp);
     } else {
-        rect->rx.computed = CLAMP(rect->x.computed + rect->width.computed - s[Geom::X], 0.0, rect->width.computed / 2.0);
-        rect->rx._set = true;
+        rect->rx = CLAMP(rect->x.computed + rect->width.computed - s[Geom::X], 0.0, rect->width.computed / 2.0);
     }
 
     update_knot();
@@ -207,20 +204,17 @@ RectKnotHolderEntityRY::knot_set(Geom::Point const &p, Geom::Point const &/*orig
     if (state & GDK_CONTROL_MASK) { // When holding control then rx will be kept equal to ry,
                                     // resulting in a perfect circle (and not an ellipse)
         gdouble temp = MIN(rect->height.computed, rect->width.computed) / 2.0;
-        rect->rx.computed = rect->ry.computed = CLAMP(s[Geom::Y] - rect->y.computed, 0.0, temp);
-        rect->ry._set = rect->rx._set = true;
+        rect->rx = rect->ry = CLAMP(s[Geom::Y] - rect->y.computed, 0.0, temp);
     } else {
         if (!rect->rx._set || rect->rx.computed == 0) {
-            rect->ry.computed = CLAMP(s[Geom::Y] - rect->y.computed,
-                                      0.0,
-                                      MIN(rect->height.computed / 2.0, rect->width.computed / 2.0));
+            rect->ry = CLAMP(s[Geom::Y] - rect->y.computed,
+                             0.0,
+                             MIN(rect->height.computed / 2.0, rect->width.computed / 2.0));
         } else {
-            rect->ry.computed = CLAMP(s[Geom::Y] - rect->y.computed,
-                                      0.0,
-                                      rect->height.computed / 2.0);
+            rect->ry = CLAMP(s[Geom::Y] - rect->y.computed,
+                             0.0,
+                             rect->height.computed / 2.0);
         }
-
-        rect->ry._set = true;
     }
 
     update_knot();
@@ -250,12 +244,10 @@ static void sp_rect_clamp_radii(SPRect *rect)
 {
     // clamp rounding radii so that they do not exceed width/height
     if (2 * rect->rx.computed > rect->width.computed) {
-        rect->rx.computed = 0.5 * rect->width.computed;
-        rect->rx._set = true;
+        rect->rx = 0.5 * rect->width.computed;
     }
     if (2 * rect->ry.computed > rect->height.computed) {
-        rect->ry.computed = 0.5 * rect->height.computed;
-        rect->ry._set = true;
+        rect->ry = 0.5 * rect->height.computed;
     }
 }
 
@@ -298,16 +290,16 @@ RectKnotHolderEntityWH::set_internal(Geom::Point const &p, Geom::Point const &or
                 minx = s[Geom::X] - origin[Geom::X];
                 // Dead assignment: Value stored to 'miny' is never read
                 //miny = s[Geom::Y] - origin[Geom::Y];
-                rect->height.computed = MAX(h_orig + minx / ratio, 0);
+                rect->height = MAX(h_orig + minx / ratio, 0);
             } else {
                 // closer to the horizontal, change only width, height is h_orig
                 s = snap_knot_position_constrained(p, Inkscape::Snapper::SnapConstraint(p_handle, Geom::Point(-1, 0)), state);
                 minx = s[Geom::X] - origin[Geom::X];
                 // Dead assignment: Value stored to 'miny' is never read
                 //miny = s[Geom::Y] - origin[Geom::Y];
-                rect->height.computed = MAX(h_orig, 0);
+                rect->height = MAX(h_orig, 0);
             }
-            rect->width.computed = MAX(w_orig + minx, 0);
+            rect->width = MAX(w_orig + minx, 0);
 
         } else {
             // snap to vertical or diagonal
@@ -317,27 +309,24 @@ RectKnotHolderEntityWH::set_internal(Geom::Point const &p, Geom::Point const &or
                 // Dead assignment: Value stored to 'minx' is never read
                 //minx = s[Geom::X] - origin[Geom::X];
                 miny = s[Geom::Y] - origin[Geom::Y];
-                rect->width.computed = MAX(w_orig + miny * ratio, 0);
+                rect->width = MAX(w_orig + miny * ratio, 0);
             } else {
                 // closer to the vertical, change only height, width is w_orig
                 s = snap_knot_position_constrained(p, Inkscape::Snapper::SnapConstraint(p_handle, Geom::Point(0, -1)), state);
                 // Dead assignment: Value stored to 'minx' is never read
                 //minx = s[Geom::X] - origin[Geom::X];
                 miny = s[Geom::Y] - origin[Geom::Y];
-                rect->width.computed = MAX(w_orig, 0);
+                rect->width = MAX(w_orig, 0);
             }
-            rect->height.computed = MAX(h_orig + miny, 0);
+            rect->height = MAX(h_orig + miny, 0);
 
         }
-
-        rect->width._set = rect->height._set = true;
 
     } else {
         // move freely
         s = snap_knot_position(p, state);
-        rect->width.computed = MAX(s[Geom::X] - rect->x.computed, 0);
-        rect->height.computed = MAX(s[Geom::Y] - rect->y.computed, 0);
-        rect->width._set = rect->height._set = true;
+        rect->width = MAX(s[Geom::X] - rect->x.computed, 0);
+        rect->height = MAX(s[Geom::Y] - rect->y.computed, 0);
     }
 
     sp_rect_clamp_radii(rect);
@@ -394,19 +383,19 @@ RectKnotHolderEntityXY::knot_set(Geom::Point const &p, Geom::Point const &origin
                 minx = s[Geom::X] - origin[Geom::X];
                 // Dead assignment: Value stored to 'miny' is never read
                 //miny = s[Geom::Y] - origin[Geom::Y];
-                rect->y.computed = MIN(origin[Geom::Y] + minx / ratio, opposite_y);
-                rect->height.computed = MAX(h_orig - minx / ratio, 0);
+                rect->y = MIN(origin[Geom::Y] + minx / ratio, opposite_y);
+                rect->height = MAX(h_orig - minx / ratio, 0);
             } else {
                 // closer to the horizontal, change only width, height is h_orig
                 s = snap_knot_position_constrained(p, Inkscape::Snapper::SnapConstraint(p_handle, Geom::Point(-1, 0)), state);
                 minx = s[Geom::X] - origin[Geom::X];
                 // Dead assignment: Value stored to 'miny' is never read
                 //miny = s[Geom::Y] - origin[Geom::Y];
-                rect->y.computed = MIN(origin[Geom::Y], opposite_y);
-                rect->height.computed = MAX(h_orig, 0);
+                rect->y = MIN(origin[Geom::Y], opposite_y);
+                rect->height = MAX(h_orig, 0);
             }
-            rect->x.computed = MIN(s[Geom::X], opposite_x);
-            rect->width.computed = MAX(w_orig - minx, 0);
+            rect->x = MIN(s[Geom::X], opposite_x);
+            rect->width = MAX(w_orig - minx, 0);
         } else {
             // snap to vertical or diagonal
             if (miny != 0 && fabs(minx/miny) > 0.5 *ratio && (SGN(minx) == SGN(miny))) {
@@ -415,22 +404,20 @@ RectKnotHolderEntityXY::knot_set(Geom::Point const &p, Geom::Point const &origin
                 // Dead assignment: Value stored to 'minx' is never read
                 //minx = s[Geom::X] - origin[Geom::X];
                 miny = s[Geom::Y] - origin[Geom::Y];
-                rect->x.computed = MIN(origin[Geom::X] + miny * ratio, opposite_x);
-                rect->width.computed = MAX(w_orig - miny * ratio, 0);
+                rect->x = MIN(origin[Geom::X] + miny * ratio, opposite_x);
+                rect->width = MAX(w_orig - miny * ratio, 0);
             } else {
                 // closer to the vertical, change only height, width is w_orig
                 s = snap_knot_position_constrained(p, Inkscape::Snapper::SnapConstraint(p_handle, Geom::Point(0, -1)), state);
                 // Dead assignment: Value stored to 'minx' is never read
                 //minx = s[Geom::X] - origin[Geom::X];
                 miny = s[Geom::Y] - origin[Geom::Y];
-                rect->x.computed = MIN(origin[Geom::X], opposite_x);
-                rect->width.computed = MAX(w_orig, 0);
+                rect->x = MIN(origin[Geom::X], opposite_x);
+                rect->width = MAX(w_orig, 0);
             }
-            rect->y.computed = MIN(s[Geom::Y], opposite_y);
-            rect->height.computed = MAX(h_orig - miny, 0);
+            rect->y = MIN(s[Geom::Y], opposite_y);
+            rect->height = MAX(h_orig - miny, 0);
         }
-
-        rect->width._set = rect->height._set = rect->x._set = rect->y._set = true;
 
     } else {
         // move freely
@@ -438,11 +425,10 @@ RectKnotHolderEntityXY::knot_set(Geom::Point const &p, Geom::Point const &origin
         minx = s[Geom::X] - origin[Geom::X];
         miny = s[Geom::Y] - origin[Geom::Y];
 
-        rect->x.computed = MIN(s[Geom::X], opposite_x);
-        rect->width.computed = MAX(w_orig - minx, 0);
-        rect->y.computed = MIN(s[Geom::Y], opposite_y);
-        rect->height.computed = MAX(h_orig - miny, 0);
-        rect->width._set = rect->height._set = rect->x._set = rect->y._set = true;
+        rect->x = MIN(s[Geom::X], opposite_x);
+        rect->y = MIN(s[Geom::Y], opposite_y);
+        rect->width = MAX(w_orig - minx, 0);
+        rect->height = MAX(h_orig - miny, 0);
     }
 
     sp_rect_clamp_radii(rect);

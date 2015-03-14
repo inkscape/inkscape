@@ -129,19 +129,19 @@ Inkscape::XML::Node * SPRect::write(Inkscape::XML::Document *xml_doc, Inkscape::
         repr = xml_doc->createElement("svg:rect");
     }
 
-    sp_repr_set_svg_double(repr, "width", this->width.computed);
-    sp_repr_set_svg_double(repr, "height", this->height.computed);
+    sp_repr_set_svg_length(repr, "width",  this->width);
+    sp_repr_set_svg_length(repr, "height", this->height);
 
     if (this->rx._set) {
-    	sp_repr_set_svg_double(repr, "rx", this->rx.computed);
+    	sp_repr_set_svg_length(repr, "rx", this->rx);
     }
 
     if (this->ry._set) {
-    	sp_repr_set_svg_double(repr, "ry", this->ry.computed);
+    	sp_repr_set_svg_length(repr, "ry", this->ry);
     }
 
-    sp_repr_set_svg_double(repr, "x", this->x.computed);
-    sp_repr_set_svg_double(repr, "y", this->y.computed);
+    sp_repr_set_svg_length(repr, "x", this->x);
+    sp_repr_set_svg_length(repr, "y", this->y);
 
     this->set_shape(); // evaluate SPCurve
     SPShape::write(xml_doc, repr, flags);
@@ -235,29 +235,29 @@ void SPRect::set_shape() {
 /* fixme: Think (Lauris) */
 
 void SPRect::setPosition(gdouble x, gdouble y, gdouble width, gdouble height) {
-    this->x.computed = x;
-    this->y.computed = y;
-    this->width.computed = width;
-    this->height.computed = height;
+    this->x = x;
+    this->y = y;
+    this->width = width;
+    this->height = height;
 
     this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
 void SPRect::setRx(bool set, gdouble value) {
-	this->rx._set = set;
+    this->rx._set = set;
 
     if (set) {
-    	this->rx.computed = value;
+    	this->rx = value;
     }
 
     this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
 void SPRect::setRy(bool set, gdouble value) {
-	this->ry._set = set;
+    this->ry._set = set;
 
     if (set) {
-    	this->ry.computed = value;
+    	this->ry = value;
     }
 
     this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
@@ -289,16 +289,16 @@ Geom::Affine SPRect::set_transform(Geom::Affine const& xform) {
         ret[3] = 1.0;
     }
 
-    /* fixme: Would be nice to preserve units here */
-    this->width = this->width.computed * sw;
-    this->height = this->height.computed * sh;
+    /* Preserve units */
+    this->width.scale( sw );
+    this->height.scale( sh );
 
     if (this->rx._set) {
-    	this->rx = this->rx.computed * sw;
+    	this->rx.scale( sw );
     }
 
     if (this->ry._set) {
-    	this->ry = this->ry.computed * sh;
+    	this->ry.scale( sh );
     }
 
     /* Find start in item coords */
@@ -336,15 +336,12 @@ gdouble SPRect::vectorStretch(Geom::Point p0, Geom::Point p1, Geom::Affine xform
 
 void SPRect::setVisibleRx(gdouble rx) {
     if (rx == 0) {
-        this->rx.computed = 0;
-        this->rx._set = false;
+        this->rx.unset();
     } else {
-    	this->rx.computed = rx / SPRect::vectorStretch(
+    	this->rx = rx / SPRect::vectorStretch(
             Geom::Point(this->x.computed + 1, this->y.computed),
             Geom::Point(this->x.computed, this->y.computed),
             this->i2doc_affine());
-
-    	this->rx._set = true;
     }
 
     this->updateRepr();
@@ -352,15 +349,12 @@ void SPRect::setVisibleRx(gdouble rx) {
 
 void SPRect::setVisibleRy(gdouble ry) {
     if (ry == 0) {
-    	this->ry.computed = 0;
-    	this->ry._set = false;
+    	this->ry.unset();
     } else {
-    	this->ry.computed = ry / SPRect::vectorStretch(
+    	this->ry = ry / SPRect::vectorStretch(
             Geom::Point(this->x.computed, this->y.computed + 1),
             Geom::Point(this->x.computed, this->y.computed),
             this->i2doc_affine());
-
-    	this->ry._set = true;
     }
 
     this->updateRepr();
@@ -418,37 +412,33 @@ void SPRect::compensateRxRy(Geom::Affine xform) {
     // This is needed because if we just set them the same length in SVG, they might end up unequal because of transform
     if ((this->rx._set && !this->ry._set) || (this->ry._set && !this->rx._set)) {
         gdouble r = MAX(this->rx.computed, this->ry.computed);
-        this->rx.computed = r / eX;
-        this->ry.computed = r / eY;
+        this->rx = r / eX;
+        this->ry = r / eY;
     } else {
-    	this->rx.computed = this->rx.computed / eX;
-    	this->ry.computed = this->ry.computed / eY;
+    	this->rx = this->rx.computed / eX;
+    	this->ry = this->ry.computed / eY;
     }
 
     // Note that a radius may end up larger than half-side if the rect is scaled down;
     // that's ok because this preserves the intended radii in case the rect is enlarged again,
     // and set_shape will take care of trimming too large radii when generating d=
-
-    this->rx._set = this->ry._set = true;
 }
 
 void SPRect::setVisibleWidth(gdouble width) {
-	this->width.computed = width / SPRect::vectorStretch(
+    this->width = width / SPRect::vectorStretch(
         Geom::Point(this->x.computed + 1, this->y.computed),
         Geom::Point(this->x.computed, this->y.computed),
         this->i2doc_affine());
 
-	this->width._set = true;
-	this->updateRepr();
+    this->updateRepr();
 }
 
 void SPRect::setVisibleHeight(gdouble height) {
-	this->height.computed = height / SPRect::vectorStretch(
+    this->height = height / SPRect::vectorStretch(
         Geom::Point(this->x.computed, this->y.computed + 1),
         Geom::Point(this->x.computed, this->y.computed),
         this->i2doc_affine());
 
-	this->height._set = true;
 	this->updateRepr();
 }
 
