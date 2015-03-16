@@ -145,6 +145,7 @@ public:
 
     Geom::Affine transform;
     mutable Geom::OptRect doc_bbox;
+    Geom::Rect viewport;  // Cache viewport information
 
     SPClipPathReference *clip_ref;
     SPMaskReference *mask_ref;

@@ -903,10 +903,10 @@ ArcKnotHolderEntityRX::knot_set(Geom::Point const &p, Geom::Point const &/*origi
 
     Geom::Point const s = snap_knot_position(p, state);
 
-    ge->rx.computed = fabs( ge->cx.computed - s[Geom::X] );
+    ge->rx = fabs( ge->cx.computed - s[Geom::X] );
 
     if ( state & GDK_CONTROL_MASK ) {
-        ge->ry.computed = ge->rx.computed;
+        ge->ry = ge->rx.computed;
     }
 
     item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
@@ -928,7 +928,7 @@ ArcKnotHolderEntityRX::knot_click(unsigned int state)
     g_assert(ge != NULL);
 
     if (state & GDK_CONTROL_MASK) {
-        ge->ry.computed = ge->rx.computed;
+        ge->ry = ge->rx.computed;
         ge->updateRepr();
     }
 }
@@ -941,10 +941,10 @@ ArcKnotHolderEntityRY::knot_set(Geom::Point const &p, Geom::Point const &/*origi
 
     Geom::Point const s = snap_knot_position(p, state);
 
-    ge->ry.computed = fabs( ge->cy.computed - s[Geom::Y] );
+    ge->ry = fabs( ge->cy.computed - s[Geom::Y] );
 
     if ( state & GDK_CONTROL_MASK ) {
-        ge->rx.computed = ge->ry.computed;
+        ge->rx = ge->ry.computed;
     }
 
     item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
@@ -966,7 +966,7 @@ ArcKnotHolderEntityRY::knot_click(unsigned int state)
     g_assert(ge != NULL);
 
     if (state & GDK_CONTROL_MASK) {
-        ge->rx.computed = ge->ry.computed;
+        ge->rx = ge->ry.computed;
         ge->updateRepr();
     }
 }

@@ -52,22 +52,30 @@ void SPRect::build(SPDocument* doc, Inkscape::XML::Node* repr) {
 void SPRect::set(unsigned key, gchar const *value) {
     /* fixme: We need real error processing some time */
 
+    // We must update the SVGLengths immediately or nodes may be misplaced after they are moved.
+    double const w = viewport.width();
+    double const h = viewport.height();
+    double const em = style->font_size.computed;
+    double const ex = em * 0.5;
+
     switch (key) {
         case SP_ATTR_X:
-        	this->x.readOrUnset(value);
-        	this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+            this->x.readOrUnset(value);
+            this->x.update( ex, em, w );
+            this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
             break;
 
         case SP_ATTR_Y:
-        	this->y.readOrUnset(value);
-        	this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+            this->y.readOrUnset(value);
+            this->y.update( ex, em, h );
+            this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
             break;
 
         case SP_ATTR_WIDTH:
             if (!this->width.read(value) || this->width.value < 0.0) {
             	this->width.unset();
             }
-
+            this->width.update( ex, em, w );
             this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
             break;
 
@@ -75,7 +83,7 @@ void SPRect::set(unsigned key, gchar const *value) {
             if (!this->height.read(value) || this->height.value < 0.0) {
             	this->height.unset();
             }
-
+            this->height.update( ex, em, h );
             this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
             break;
 
@@ -83,7 +91,7 @@ void SPRect::set(unsigned key, gchar const *value) {
             if (!this->rx.read(value) || this->rx.value <= 0.0) {
             	this->rx.unset();
             }
-
+            this->rx.update( ex, em, w );
             this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
             break;
 
@@ -91,7 +99,7 @@ void SPRect::set(unsigned key, gchar const *value) {
             if (!this->ry.read(value) || this->ry.value <= 0.0) {
             	this->ry.unset();
             }
-
+            this->ry.update( ex, em, h );
             this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
             break;
 
