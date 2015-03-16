@@ -141,7 +141,7 @@ PointParam::set_oncanvas_looks(SPKnotShapeType shape, SPKnotModeType mode, guint
 class PointParamKnotHolderEntity : public KnotHolderEntity {
 public:
     PointParamKnotHolderEntity(PointParam *p) { this->pparam = p; }
-    virtual ~PointParamKnotHolderEntity() {}
+    virtual ~PointParamKnotHolderEntity() { this->pparam->knoth = NULL;}
 
     virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
     virtual Geom::Point knot_get() const;
