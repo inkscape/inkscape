@@ -784,7 +784,6 @@ PageSizer::updateScaleUI()
         _scaleLabel.set_text( "Unknown scale" );
     }
 
-    sleep( 0.1 );
     _changeds_connection.unblock();
 
     _called = false;
