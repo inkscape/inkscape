@@ -21,7 +21,7 @@ import tempfile
 from launchpadlib.launchpad import Launchpad
 from launchpadlib.errors import HTTPError
 
-opt_dry_run = True
+opt_dry_run = False
 
 def mark_released (bug):
     if bug.status == 'Fix Committed':
@@ -68,7 +68,9 @@ def main():
                 mark_released(task)
 
     except HTTPError, error:
-        print 'An error happened in the upload:', error.content
+        print 'An error happened in the upload: %s\n%s' %(
+            error.content,
+            error.__dict__)
         sys.exit(1)
 
 if __name__ == '__main__':
