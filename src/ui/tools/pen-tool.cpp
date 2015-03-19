@@ -2143,7 +2143,7 @@ bool PenTool::_undoLastPoint() {
             this->p[1] = this->p[0];
         }
 
-        // asign the value in a third of the distance of the last segment.
+        // assign the value in a third of the distance of the last segment.
         if (this->bspline){
             this->p[1] = this->p[0] + (1./3)*(this->p[3] - this->p[0]);
         }
@@ -2165,7 +2165,7 @@ bool PenTool::_undoLastPoint() {
             this->green_curve->backspace();
         }
 
-        // assign the value of this->p[1] to the oposite of the green line last segment 
+        // assign the value of this->p[1] to the opposite of the green line last segment
         if (this->spiro){
             Geom::CubicBezier const *cubic = dynamic_cast<Geom::CubicBezier const *>(this->green_curve->last_segment());
             if ( cubic ) {

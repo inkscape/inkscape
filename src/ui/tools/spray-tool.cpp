@@ -406,7 +406,7 @@ static bool sp_spray_recursive(SPDesktop *desktop,
                 parent->appendChild(copy);
 
                 SPObject *new_obj = doc->getObjectByRepr(copy);
-                item_copied = dynamic_cast<SPItem *>(new_obj);   // Convertion object->item
+                item_copied = dynamic_cast<SPItem *>(new_obj);   // Conversion object->item
                 Geom::Point center=item->getCenter();
                 sp_spray_scale_rel(center,desktop, item_copied, Geom::Scale(_scale,_scale));
                 sp_spray_scale_rel(center,desktop, item_copied, Geom::Scale(scale,scale));

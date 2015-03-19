@@ -321,7 +321,7 @@ sp_gradient_context_add_stops_between_selected_stops (GradientTool *rc)
             if (d->point_type == POINT_RG_FOCUS) {
                 /*
                  *  There are 2 draggables at the center (start) of a radial gradient
-                 *  To avoid creating 2 seperate stops, ignore this draggable point type
+                 *  To avoid creating 2 separate stops, ignore this draggable point type
                  */
                 continue;
             }

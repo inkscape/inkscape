@@ -80,7 +80,7 @@ private:
     Proj::Pt3 drag_ptC_proj;
 
     bool ctrl_dragged; /* whether we are ctrl-dragging */
-    bool extruded; /* whether shift-dragging already occured (i.e. the box is already extruded) */
+    bool extruded; /* whether shift-dragging already occurred (i.e. the box is already extruded) */
 
     sigc::connection sel_changed_connection;
 

@@ -75,7 +75,7 @@
  * - ControlPointSelection: keeps track of node selection and a set of nodes that can potentially
  *   be selected. There can be more than one selection. Performs actions that require no
  *   knowledge about the path, only about the nodes, like dragging and transforms. It is not
- *   specific to nodes and can accomodate any control point derived from SelectableControlPoint.
+ *   specific to nodes and can accommodate any control point derived from SelectableControlPoint.
  *   Transforms nodes in response to transform handle events.
  * - TransformHandleSet: displays nodeset transform handles and emits transform events. The aim
  *   is to eventually use a common class for object and control point transforms.
