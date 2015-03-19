@@ -33,8 +33,8 @@ private:
     ScalarParam line_width;
     EnumParam<unsigned> linecap_type;
     EnumParam<unsigned> linejoin_type;
-    ScalarParam start_lean;
-    ScalarParam end_lean;
+    //ScalarParam start_lean;
+    //ScalarParam end_lean;
     ScalarParam miter_limit;
     BoolParam attempt_force_join;
     bool was_initialized;
