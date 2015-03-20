@@ -19,7 +19,8 @@
 #include <2geom/circle.h>
 #include <2geom/sbasis-to-bezier.h>
 
-#include "pathoutlineprovider.h"
+#include "helper/geom-nodetype.h"
+#include "helper/geom-pathstroke.h"
 #include "display/curve.h"
 #include "sp-shape.h"
 #include "style.h"
@@ -60,11 +61,10 @@ namespace TpS {
 } // TpS
 
 static const Util::EnumData<unsigned> JoinType[] = {
-    {LINEJOIN_STRAIGHT,         N_("Beveled"),          "bevel"},
-    {LINEJOIN_ROUND,            N_("Rounded"),          "round"},
-    {LINEJOIN_REFLECTED,        N_("Reflected"),        "reflected"},
-    {LINEJOIN_POINTY,           N_("Miter"),            "miter"},
-    {LINEJOIN_EXTRAPOLATED,     N_("Extrapolated"),     "extrapolated"}
+    {JOIN_BEVEL,          N_("Beveled"),         "bevel"},
+    {JOIN_ROUND,          N_("Rounded"),         "round"},
+    {JOIN_MITER,          N_("Miter"),           "miter"},
+    {JOIN_EXTRAPOLATE,    N_("Extrapolated"),    "extrapolated"},
 };
 
 static const Util::EnumDataConverter<unsigned> JoinTypeConverter(JoinType, sizeof (JoinType)/sizeof(*JoinType));
@@ -75,7 +75,7 @@ LPETaperStroke::LPETaperStroke(LivePathEffectObject *lpeobject) :
     attach_start(_("Start offset:"), _("Taper distance from path start"), "attach_start", &wr, this, 0.2),
     attach_end(_("End offset:"), _("The ending position of the taper"), "end_offset", &wr, this, 0.2),
     smoothing(_("Taper smoothing:"), _("Amount of smoothing to apply to the tapers"), "smoothing", &wr, this, 0.5),
-    join_type(_("Join type:"), _("Join type for non-smooth nodes"), "jointype", JoinTypeConverter, &wr, this, LINEJOIN_EXTRAPOLATED),
+    join_type(_("Join type:"), _("Join type for non-smooth nodes"), "jointype", JoinTypeConverter, &wr, this, JOIN_EXTRAPOLATE),
     miter_limit(_("Miter limit:"), _("Limit for miter joins"), "miter_limit", &wr, this, 100.)
 {
     show_orig_path = true;
@@ -127,7 +127,7 @@ void LPETaperStroke::doOnApply(SPLPEItem const* lpeitem)
 
         line_width.param_set_value(width);
     } else {
-        printf("WARNING: It only makes sense to apply Join Type to paths (not groups).\n");
+        printf("WARNING: It only makes sense to apply Taper stroke to paths (not groups).\n");
     }
 }
 
@@ -172,8 +172,25 @@ using Geom::D2;
 using Geom::SBasis;
 // leave Geom::Path
 
-Geom::Path return_at_first_cusp(Geom::Path const & path_in, double /*smooth_tolerance*/ = 0.05) {
-    return Geom::split_at_cusps(path_in)[0];
+static Geom::Path return_at_first_cusp(Geom::Path const & path_in, double /*smooth_tolerance*/ = 0.05)
+{
+    Geom::Path temp;
+
+    for (unsigned i = 0; i < path_in.size(); i++) {
+        temp.append(path_in[i]);
+        if (Geom::get_nodetype(path_in[i], path_in[i + 1]) != Geom::NODE_SMOOTH ) {
+            break;
+        }
+    }
+    
+    return temp;
+}
+
+static Geom::CubicBezier sbasis_to_cubicbezier(Geom::D2<Geom::SBasis> const & sbasis_in)
+{
+    std::vector<Geom::Point> temp;
+    Geom::sbasis_to_bezier(temp, sbasis_in, 4);
+    return Geom::CubicBezier( temp );
 }
 
 Piecewise<D2<SBasis> > stretch_along(Piecewise<D2<SBasis> > pwd2_in, Geom::Path pattern, double width);
@@ -278,7 +295,7 @@ Geom::PathVector LPETaperStroke::doEffect_path(Geom::PathVector const& path_in)
     // although this seems obvious, it can probably lead to bugs.
     if (!metInMiddle) {
         // append the outside outline of the path (goes with the direction of the path)
-        throwaway_path = Outline::PathOutsideOutline(pathv_out[1], -fabs(line_width), static_cast<LineJoinType>(join_type.get_value()), miter_limit);
+        throwaway_path = half_outline(pathv_out[1], -fabs(line_width)/2., miter_limit, static_cast<LineJoinType>(join_type.get_value()));
         if (!zeroStart && real_path.size() >= 1 && throwaway_path.size() >= 1) {
             if (!Geom::are_near(real_path.finalPoint(), throwaway_path.initialPoint())) {
                 real_path.appendNew<Geom::LineSegment>(throwaway_path.initialPoint());
@@ -310,7 +327,7 @@ Geom::PathVector LPETaperStroke::doEffect_path(Geom::PathVector const& path_in)
     
     if (!metInMiddle) {
         // append the inside outline of the path (against direction)
-        throwaway_path = Outline::PathOutsideOutline(pathv_out[1].reverse(), -fabs(line_width), static_cast<LineJoinType>(join_type.get_value()), miter_limit);
+        throwaway_path = half_outline(pathv_out[1].reverse(), -fabs(line_width)/2., miter_limit, static_cast<LineJoinType>(join_type.get_value()));
         
         if (!Geom::are_near(real_path.finalPoint(), throwaway_path.initialPoint()) && real_path.size() >= 1) {
             real_path.appendNew<Geom::LineSegment>(throwaway_path.initialPoint());
@@ -515,7 +532,7 @@ void subdivideCurve(Geom::Curve * curve_in, Geom::Coord t, Geom::Curve *& val_fi
         val_second = seg_pair.second.duplicate();
     } else {
         // all other cases:
-        Geom::CubicBezier cubic = Geom::sbasis_to_cubicbezier(curve_in->toSBasis());
+        Geom::CubicBezier cubic = sbasis_to_cubicbezier(curve_in->toSBasis());
         std::pair<Geom::CubicBezier, Geom::CubicBezier> cubic_pair = cubic.subdivide(t);
         val_first = cubic_pair.first.duplicate();
         val_second = cubic_pair.second.duplicate();

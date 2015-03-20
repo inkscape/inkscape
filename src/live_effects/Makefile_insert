@@ -109,8 +109,6 @@ ink_common_sources += \
 	live_effects/lpe-fill-between-many.h	\
 	live_effects/lpe-ellipse_5pts.cpp	\
 	live_effects/lpe-ellipse_5pts.h	\
-	live_effects/pathoutlineprovider.cpp	\
-	live_effects/pathoutlineprovider.h	\
 	live_effects/lpe-jointype.cpp	\
 	live_effects/lpe-jointype.h	\
 	live_effects/lpe-taperstroke.cpp	\
