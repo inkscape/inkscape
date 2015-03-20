@@ -81,7 +81,6 @@ LPEJoinType::~LPEJoinType()
 
 void LPEJoinType::doOnApply(SPLPEItem const* lpeitem)
 {
-    if (SP_IS_SHAPE(lpeitem)) {
         SPLPEItem* item = const_cast<SPLPEItem*>(lpeitem);
         double width = (lpeitem && lpeitem->style) ? lpeitem->style->stroke_width.computed : 1.;
 
@@ -107,6 +106,7 @@ void LPEJoinType::doOnApply(SPLPEItem const* lpeitem)
             sp_repr_css_unset_property (css, "fill");
         }
 
+        sp_repr_css_set_property(css, "fill-rule", "nonzero");
         sp_repr_css_set_property(css, "stroke", "none");
 
         sp_desktop_apply_css_recursive(item, css, true);
@@ -116,17 +116,13 @@ void LPEJoinType::doOnApply(SPLPEItem const* lpeitem)
             was_initialized = true;
             line_width.param_set_value(width);
         }
-    } else {
-        g_warning("LPE Join Type can only be applied to paths (not groups).");
-    }
 }
 
 //from LPEPowerStroke -- sets stroke color from existing fill color
 
 void LPEJoinType::doOnRemove(SPLPEItem const* lpeitem)
 {
-
-    if (SP_IS_SHAPE(lpeitem)) {
+    if (SP_IS_SHAPE(lpeitem)) { // does this check even make sense?
         SPLPEItem *item = const_cast<SPLPEItem*>(lpeitem);
 
         SPCSSAttr *css = sp_repr_css_attr_new ();
@@ -142,7 +138,7 @@ void LPEJoinType::doOnRemove(SPLPEItem const* lpeitem)
                 }
             } else if (lpeitem->style->fill.isColor()) {
                 gchar c[64];
-                sp_svg_write_color (c, sizeof(c), lpeitem->style->stroke.value.color.toRGBA32(SP_SCALE24_TO_FLOAT(lpeitem->style->stroke_opacity.value)));
+                sp_svg_write_color (c, sizeof(c), lpeitem->style->fill.value.color.toRGBA32(SP_SCALE24_TO_FLOAT(lpeitem->style->fill_opacity.value)));
                 sp_repr_css_set_property (css, "stroke", c);
             } else {
                 sp_repr_css_set_property (css, "stroke", "none");

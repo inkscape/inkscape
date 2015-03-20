@@ -297,7 +297,8 @@ LPEPowerStroke::doOnApply(SPLPEItem const* lpeitem)
         } else {
             sp_repr_css_unset_property (css, "fill");
         }
-        
+
+        sp_repr_css_set_property(css, "fill-rule", "nonzero");        
         sp_repr_css_set_property(css, "stroke", "none");
         
         sp_desktop_apply_css_recursive(item, css, true);
@@ -330,25 +331,21 @@ void LPEPowerStroke::doOnRemove(SPLPEItem const* lpeitem)
     if (SP_IS_SHAPE(lpeitem)) {
         SPLPEItem *item = const_cast<SPLPEItem*>(lpeitem);
         SPCSSAttr *css = sp_repr_css_attr_new ();
-        if (true) {
-            if (lpeitem->style->fill.isPaintserver()) {
-                SPPaintServer * server = lpeitem->style->getFillPaintServer();
-                if (server) {
-                    Glib::ustring str;
-                    str += "url(#";
-                    str += server->getId();
-                    str += ")";
-                    sp_repr_css_set_property (css, "stroke", str.c_str());
-                }
-            } else if (lpeitem->style->fill.isColor()) {
-                gchar c[64];
-                sp_svg_write_color (c, sizeof(c), lpeitem->style->stroke.value.color.toRGBA32(SP_SCALE24_TO_FLOAT(lpeitem->style->stroke_opacity.value)));
-                sp_repr_css_set_property (css, "stroke", c);
-            } else {
-                sp_repr_css_set_property (css, "stroke", "none");
+        if (lpeitem->style->fill.isPaintserver()) {
+            SPPaintServer * server = lpeitem->style->getFillPaintServer();
+            if (server) {
+                Glib::ustring str;
+                str += "url(#";
+                str += server->getId();
+                str += ")";
+                sp_repr_css_set_property (css, "stroke", str.c_str());
             }
+        } else if (lpeitem->style->fill.isColor()) {
+            char c[64] = {0};
+            sp_svg_write_color (c, sizeof(c), lpeitem->style->fill.value.color.toRGBA32(SP_SCALE24_TO_FLOAT(lpeitem->style->fill_opacity.value)));
+            sp_repr_css_set_property (css, "stroke", c);
         } else {
-            sp_repr_css_unset_property (css, "stroke");
+            sp_repr_css_set_property (css, "stroke", "none");
         }
 
         Inkscape::CSSOStringStream os;
