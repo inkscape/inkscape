@@ -81,29 +81,26 @@ LPEJoinType::~LPEJoinType()
 
 void LPEJoinType::doOnApply(SPLPEItem const* lpeitem)
 {
+    if (SP_IS_SHAPE(lpeitem)) {
         SPLPEItem* item = const_cast<SPLPEItem*>(lpeitem);
         double width = (lpeitem && lpeitem->style) ? lpeitem->style->stroke_width.computed : 1.;
 
         SPCSSAttr *css = sp_repr_css_attr_new ();
-        if (true) {
-            if (lpeitem->style->stroke.isPaintserver()) {
-                SPPaintServer * server = lpeitem->style->getStrokePaintServer();
-                if (server) {
-                    Glib::ustring str;
-                    str += "url(#";
-                    str += server->getId();
-                    str += ")";
-                    sp_repr_css_set_property (css, "fill", str.c_str());
-                }
-            } else if (lpeitem->style->stroke.isColor()) {
-                gchar c[64];
-                sp_svg_write_color (c, sizeof(c), lpeitem->style->stroke.value.color.toRGBA32(SP_SCALE24_TO_FLOAT(lpeitem->style->stroke_opacity.value)));
-                sp_repr_css_set_property (css, "fill", c);
-            } else {
-                sp_repr_css_set_property (css, "fill", "none");
+        if (lpeitem->style->stroke.isPaintserver()) {
+            SPPaintServer * server = lpeitem->style->getStrokePaintServer();
+            if (server) {
+                Glib::ustring str;
+                str += "url(#";
+                str += server->getId();
+                str += ")";
+                sp_repr_css_set_property (css, "fill", str.c_str());
             }
+        } else if (lpeitem->style->stroke.isColor()) {
+            gchar c[64];
+            sp_svg_write_color (c, sizeof(c), lpeitem->style->stroke.value.color.toRGBA32(SP_SCALE24_TO_FLOAT(lpeitem->style->stroke_opacity.value)));
+            sp_repr_css_set_property (css, "fill", c);
         } else {
-            sp_repr_css_unset_property (css, "fill");
+            sp_repr_css_set_property (css, "fill", "none");
         }
 
         sp_repr_css_set_property(css, "fill-rule", "nonzero");
@@ -111,40 +108,37 @@ void LPEJoinType::doOnApply(SPLPEItem const* lpeitem)
 
         sp_desktop_apply_css_recursive(item, css, true);
         sp_repr_css_attr_unref (css);
-        if (!was_initialized)
-        {
+
+        if (!was_initialized) {
             was_initialized = true;
             line_width.param_set_value(width);
         }
+    }
 }
 
 //from LPEPowerStroke -- sets stroke color from existing fill color
 
 void LPEJoinType::doOnRemove(SPLPEItem const* lpeitem)
 {
-    if (SP_IS_SHAPE(lpeitem)) { // does this check even make sense?
+    if (SP_IS_SHAPE(lpeitem)) {
         SPLPEItem *item = const_cast<SPLPEItem*>(lpeitem);
 
         SPCSSAttr *css = sp_repr_css_attr_new ();
-        if (true) {
-            if (lpeitem->style->fill.isPaintserver()) {
-                SPPaintServer * server = lpeitem->style->getFillPaintServer();
-                if (server) {
-                    Glib::ustring str;
-                    str += "url(#";
-                    str += server->getId();
-                    str += ")";
-                    sp_repr_css_set_property (css, "stroke", str.c_str());
-                }
-            } else if (lpeitem->style->fill.isColor()) {
-                gchar c[64];
-                sp_svg_write_color (c, sizeof(c), lpeitem->style->fill.value.color.toRGBA32(SP_SCALE24_TO_FLOAT(lpeitem->style->fill_opacity.value)));
-                sp_repr_css_set_property (css, "stroke", c);
-            } else {
-                sp_repr_css_set_property (css, "stroke", "none");
+        if (lpeitem->style->fill.isPaintserver()) {
+            SPPaintServer * server = lpeitem->style->getFillPaintServer();
+            if (server) {
+                Glib::ustring str;
+                str += "url(#";
+                str += server->getId();
+                str += ")";
+                sp_repr_css_set_property (css, "stroke", str.c_str());
             }
+        } else if (lpeitem->style->fill.isColor()) {
+            gchar c[64];
+            sp_svg_write_color (c, sizeof(c), lpeitem->style->fill.value.color.toRGBA32(SP_SCALE24_TO_FLOAT(lpeitem->style->fill_opacity.value)));
+            sp_repr_css_set_property (css, "stroke", c);
         } else {
-            sp_repr_css_unset_property (css, "stroke");
+            sp_repr_css_set_property (css, "stroke", "none");
         }
 
         Inkscape::CSSOStringStream os;
