@@ -66,7 +66,7 @@ void bevel_join(Geom::Path& res, Geom::Curve const& outgoing, double /*miter*/, 
 
 void round_join(Geom::Path& res, Geom::Curve const& outgoing, double /*miter*/, double width)
 {
-    res.appendNew<Geom::SVGEllipticalArc>(width, width, 0, false, width > 0, outgoing.initialPoint());
+    res.appendNew<Geom::SVGEllipticalArc>(width, width, 0, false, width <= 0, outgoing.initialPoint());
 }
 
 void miter_join(Geom::Path& res, Geom::Curve const& outgoing, double miter, double width)
@@ -318,7 +318,7 @@ void offset_quadratic(Geom::Path& p, Geom::QuadraticBezier const& bez, double wi
     std::vector<Geom::Point> points = bez.points();
     Geom::Point b1 = points[0] + (2./3) * (points[1] - points[0]);
     Geom::Point b2 = b1 + (1./3) * (points[2] - points[0]);
-    Geom::CubicBezier cub = Geom::CubicBezier(points[0], b1, b2, points[3]);
+    Geom::CubicBezier cub = Geom::CubicBezier(points[0], b1, b2, points[2]);
     offset_cubic(p, cub, width, tol, levels);
 }
 
@@ -378,7 +378,7 @@ Geom::PathVector outline(Geom::Path const& input, double width, double miter, Li
     if (!input.closed()) {
         switch (butt) {
             case BUTT_ROUND:
-                res.arcTo((-width) / 2., (-width) / 2., 0., true, true, against_dir.initialPoint());
+                res.arcTo(width / 2., width / 2., 0., true, false, against_dir.initialPoint());
                 break;
             case BUTT_SQUARE: {
                 Geom::Point end_deriv = -Geom::unitTangentAt(Geom::reverse(input[input.size()-1].toSBasis()), 0.);
@@ -410,7 +410,7 @@ Geom::PathVector outline(Geom::Path const& input, double width, double miter, Li
     if (!input.closed()) {
         switch(butt) {
             case BUTT_ROUND:
-                res.arcTo((-width) / 2., (-width) / 2., 0., true, true, with_dir.initialPoint());
+                res.arcTo(width / 2., width / 2., 0., true, false, with_dir.initialPoint());
                 break;
             case BUTT_SQUARE: {
                 Geom::Point end_deriv = -input[0].unitTangentAt(0.);
@@ -451,7 +451,7 @@ Geom::Path half_outline(Geom::Path const& input, double width, double miter, Lin
     res.start(start);
 
     // Do two curves at a time for efficiency, since the join function needs to know the outgoing curve as well
-    const size_t k = input.size();
+    const size_t k = input.size_default();
     for (size_t u = 0; u < k; u += 2) {
         temp = Geom::Path();
 
@@ -473,8 +473,13 @@ Geom::Path half_outline(Geom::Path const& input, double width, double miter, Lin
     }
 
     if (input.closed()) {
-        Geom::Curve const &c1 = res[res.size()-1];
-        Geom::Curve const &c2 = res[0];
+        if (input.back_closed().isDegenerate()) {
+            res.erase_last();
+            res.erase_last(); // ?
+        }
+
+        Geom::Curve const &c1 = res.back();
+        Geom::Curve const &c2 = res.front();
         temp = Geom::Path();
         temp.append(c1);
         Geom::Path temp2;
@@ -485,9 +490,9 @@ Geom::Path half_outline(Geom::Path const& input, double width, double miter, Lin
 
         //
         res.append(temp);
+        res.close();
     }
 
-    res.close();
     return res;
 }
 
