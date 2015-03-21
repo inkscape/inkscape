@@ -1,48 +1,16 @@
 /*
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
-
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
-
 #include <gtkmm.h>
-
-#if WITH_GLIBMM_2_32
-# include <glibmm/threads.h>
-#endif
-
-#include <glib.h>
-#include <glibmm/i18n.h>
-
-
-#include "display/curve.h"
-#include <2geom/bezier-curve.h>
-#include <2geom/point.h>
-#include "helper/geom-curves.h"
 #include "live_effects/lpe-bspline.h"
-#include "live_effects/lpeobject.h"
-#include "live_effects/parameter/parameter.h"
 #include "ui/widget/scalar.h"
-#include "xml/repr.h"
-#include "svg/svg.h"
+#include "display/curve.h"
+#include "helper/geom-curves.h"
 #include "sp-path.h"
-#include "style.h"
-#include "document-private.h"
-#include "document.h"
-#include "document-undo.h"
-#include "verbs.h"
-#include "sp-lpe-item.h"
-#include "sp-namedview.h"
-#include "display/sp-canvas.h"
-#include <typeinfo>
-#include <vector>
-#include "util/units.h"
-// For handling un-continuous paths:
-#include "message-stack.h"
-#include "inkscape.h"
-
-using Inkscape::DocumentUndo;
+#include "svg/svg.h"
+#include "xml/repr.h"
+// TODO due to internal breakage in glibmm headers, this must be last:
+#include <glibmm/i18n.h>
 
 namespace Inkscape {
 namespace LivePathEffect {
