@@ -1240,17 +1240,29 @@ int PathManipulator::BSplineGetSteps() const {
 // determines if the trace has bspline effect
 bool PathManipulator::isBSpline(bool recalculate){
     if(recalculate){
-        _is_bspline = this->BSplineGetSteps() > 0;
+        SPLPEItem * path = dynamic_cast<SPLPEItem *>(_path);
+        if (path){
+            if(path->hasPathEffect()){
+                Inkscape::LivePathEffect::Effect const *thisEffect = path->getPathEffectOfType(Inkscape::LivePathEffect::BSPLINE);
+                if(thisEffect){
+                    _is_bspline = true;
+                    return _is_bspline;
+                }
+            }
+        }
+        
     }
+    _is_bspline = false;
     return  _is_bspline;
 }
 
 bool PathManipulator::isBSpline() const {
-    return BSplineGetSteps() > 0;
+    return  _is_bspline;
 }
 
 // returns the corresponding strength to the position of the handlers
-double PathManipulator::BSplineHandlePosition(Handle *h, Handle *h2){
+double PathManipulator::BSplineHandlePosition(Handle *h, Handle *h2)
+{
     using Geom::X;
     using Geom::Y;
     if(h2){
@@ -1275,7 +1287,8 @@ double PathManipulator::BSplineHandlePosition(Handle *h, Handle *h2){
 }
 
 // give the location for the handler in the corresponding position
-Geom::Point PathManipulator::BSplineHandleReposition(Handle *h, Handle *h2){
+Geom::Point PathManipulator::BSplineHandleReposition(Handle *h, Handle *h2)
+{
     double pos = this->BSplineHandlePosition(h, h2);
     return BSplineHandleReposition(h,pos);
 }
