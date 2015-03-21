@@ -764,6 +764,17 @@ void SPDocument::setHeight(const Inkscape::Util::Quantity &height, bool changeSi
     root->updateRepr();
 }
 
+Geom::Rect SPDocument::getViewBox() const
+{
+    Geom::Rect viewBox;
+    if (root->viewBox_set) {
+        viewBox = root->viewBox;
+    } else {
+        viewBox = Geom::Rect::from_xywh( 0, 0, getWidth().value("px"), getHeight().value("px"));
+    }
+    return viewBox;
+}
+
 void SPDocument::setViewBox(const Geom::Rect &viewBox)
 {
     root->viewBox_set = true;

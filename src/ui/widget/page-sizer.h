@@ -264,17 +264,38 @@ protected:
 #endif
 
     Gtk::Label           _scaleLabel;
+    Gtk::Label           _scaleWarning;
     RegisteredScalar     _scaleX;
+    RegisteredScalar     _scaleY;
     bool                 _lockScaleUpdate;
+
+    // Viewbox
+    Gtk::Expander        _viewboxExpander;
+#if WITH_GTKMM_3_0
+    Gtk::Grid            _viewboxTable;
+#else
+    Gtk::Table           _viewboxTable;
+#endif
+
+    RegisteredScalar     _viewboxX;
+    RegisteredScalar     _viewboxY;
+    RegisteredScalar     _viewboxW;
+    RegisteredScalar     _viewboxH;
+    bool                 _lockViewboxUpdate;
 
     //callback
     void on_value_changed();
     void on_units_changed();
     void on_scale_changed();
+    void on_viewbox_changed();
     sigc::connection    _changedw_connection;
     sigc::connection    _changedh_connection;
     sigc::connection    _changedu_connection;
     sigc::connection    _changeds_connection;
+    sigc::connection    _changedvx_connection;
+    sigc::connection    _changedvy_connection;
+    sigc::connection    _changedvw_connection;
+    sigc::connection    _changedvh_connection;
 
     Registry            *_widgetRegistry;
 
