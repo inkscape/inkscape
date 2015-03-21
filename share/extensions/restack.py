@@ -54,9 +54,9 @@ class Restack(inkex.Effect):
             svg = self.document.getroot()
             parentnode = self.current_layer
             file = self.args[ -1 ]
-			
+
             #get all bounding boxes in file by calling inkscape again with the --query-all command line option
-            #it returns a comma seperated list structured id,x,y,w,h
+            #it returns a comma separated list structured id,x,y,w,h
             if bsubprocess:
                 p = Popen('inkscape --query-all "%s"' % (file), shell=True, stdout=PIPE, stderr=PIPE)
                 err = p.stderr
@@ -65,12 +65,12 @@ class Restack(inkex.Effect):
                     reader=csv.CSVParser().parse_string(f)    #there was a module cvs.py in earlier inkscape that behaved differently
                 except:
                     reader=csv.reader(f.split( os.linesep ))
-                err.close() 
+                err.close()
             else:
                 _,f,err = os.popen3('inkscape --query-all "%s"' % ( file ) )
                 reader=csv.reader( f )
                 err.close()
-				
+
             #build a dictionary with id as the key
             dimen = dict()
             for line in reader:

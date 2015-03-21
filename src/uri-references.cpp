@@ -65,7 +65,7 @@ void URIReference::attach(const URI &uri) throw(BadURIException)
         skip = true;
     }
  
-    // The path contains references to seperate document files to load.
+    // The path contains references to separate document files to load.
     if(document && uri.getPath() && !skip ) {
         std::string base = document->getBase() ? document->getBase() : "";
         std::string path = uri.getFullPath(base);

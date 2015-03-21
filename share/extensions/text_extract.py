@@ -42,15 +42,15 @@ class Extract(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
         self.OptionParser.add_option("-d", "--direction",
-                        action="store", type="string", 
+                        action="store", type="string",
                         dest="direction", default="tb",
                         help="direction to extract text")
         self.OptionParser.add_option("-x", "--xanchor",
-                        action="store", type="string", 
+                        action="store", type="string",
                         dest="xanchor", default="m",
                         help="horizontal point to compare")
         self.OptionParser.add_option("-y", "--yanchor",
-                        action="store", type="string", 
+                        action="store", type="string",
                         dest="yanchor", default="m",
                         help="vertical point to compare")
 
@@ -58,15 +58,15 @@ class Extract(inkex.Effect):
         if len(self.selected)==0:
             for node in self.document.xpath('//svg:text | //svg:flowRoot', namespaces=inkex.NSS):
                 self.selected[node.get('id')] = node
-    
+
         if len( self.selected ) > 0:
             objlist = []
             svg = self.document.getroot()
             parentnode = self.current_layer
             file = self.args[ -1 ]
-			
-            #get all bounding boxes in file by calling inkscape again with the --query-all command line option
-            #it returns a comma seperated list structured id,x,y,w,h
+
+            # get all bounding boxes in file by calling inkscape again with the --query-all command line option
+            # it returns a comma separated list structured id,x,y,w,h
             if bsubprocess:
                 p = Popen('inkscape --query-all "%s"' % (file), shell=True, stdout=PIPE, stderr=PIPE)
                 err = p.stderr
@@ -75,12 +75,12 @@ class Extract(inkex.Effect):
                     reader=csv.CSVParser().parse_string(f)    #there was a module cvs.py in earlier inkscape that behaved differently
                 except:
                     reader=csv.reader(f.split( os.linesep ))
-                err.close() 
+                err.close()
             else:
                 _,f,err = os.popen3('inkscape --query-all "%s"' % ( file ) )
                 reader=csv.reader( f )
                 err.close()
-				
+
             #build a dictionary with id as the key
             dimen = dict()
             for line in reader:
@@ -89,7 +89,7 @@ class Extract(inkex.Effect):
 
             if not bsubprocess: #close file if opened using os.popen3
                 f.close
-				
+
             #find the center of all selected objects **Not the average!
             x,y,w,h = dimen[self.selected.keys()[0]]
             minx = x
@@ -131,7 +131,7 @@ class Extract(inkex.Effect):
                     cy = y + h
                 else:  # middle
                     cy = y + h / 2
-				
+
                 #direction chosen
                 if self.options.direction == "tb":
                     objlist.append([cy,id])
@@ -146,7 +146,7 @@ class Extract(inkex.Effect):
             #move them to the top of the object stack in this order.
             for item in objlist:
                 self.recurse(deepcopy(self.selected[item[1]]))
-                
+
     def recurse(self, node):
         istext = (node.tag == '{http://www.w3.org/2000/svg}flowPara' or node.tag == '{http://www.w3.org/2000/svg}flowDiv' or node.tag == '{http://www.w3.org/2000/svg}text')
         if node.text != None or node.tail != None:

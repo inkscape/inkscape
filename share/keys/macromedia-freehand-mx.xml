@@ -35,7 +35,7 @@ File, Edit, View, Modify, Text, Xtras, Window, Help.
 
   <bind key="F1" modifiers="Shift" action="ToolRect" display="true"/>
 
-  <!-- Freehand has seperate tools for Ellipse and Arc unlike Inkscape.  -->
+  <!-- Freehand has separate tools for Ellipse and Arc unlike Inkscape.  -->
   <bind key="F3" modifiers="Shift" action="ToolArc" display="true"/>
 
   <!-- Star (Inkscape).  Polygon (Freehand) inlcudes star options.  -->
@@ -396,7 +396,7 @@ File, Edit, View, Modify, Text, Xtras, Window, Help.
   <bind key="F3" modifiers="Ctrl" action="DialogFillStroke" display="true"/>
   <bind action="DialogObjectProperties" />
 
-  <!-- Freehand has a seperate find and replace for Text and Graphics -->
+  <!-- Freehand has a separate find and replace for Text and Graphics -->
   <!-- Edit, Find And Replace, Graphics    Ctrl+F  -->
   <bind key="f" modifiers="Ctrl" action="DialogFind" display="true"/>
   <bind key="F" modifiers="Ctrl" action="DialogFind" />

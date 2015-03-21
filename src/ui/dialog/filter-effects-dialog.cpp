@@ -211,7 +211,7 @@ private:
     ComboBoxEnum<T>* combo;
 };
 
-// Contains an arbitrary number of spin buttons that use seperate attributes
+// Contains an arbitrary number of spin buttons that use separate attributes
 class MultiSpinButton : public Gtk::HBox
 {
 public:
