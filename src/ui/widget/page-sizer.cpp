@@ -495,7 +495,7 @@ PageSizer::PageSizer(Registry & _wr)
 
     _viewboxW.set_hexpand();
     _viewboxW.set_vexpand();
-    _viewboxTable.attach(_viewbox,       0, 1, 1, 1);
+    _viewboxTable.attach(_viewboxW,      0, 1, 1, 1);
 
     _viewboxH.set_hexpand();
     _viewboxH.set_vexpand();
