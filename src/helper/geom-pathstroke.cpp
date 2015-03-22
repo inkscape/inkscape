@@ -11,6 +11,7 @@
 #include <2geom/bezier-curve.h>
 #include <2geom/svg-elliptical-arc.h>
 #include <2geom/sbasis-to-bezier.h> // cubicbezierpath_from_sbasis
+#include <2geom/path-intersection.h>
 
 #include "helper/geom-pathstroke.h"
 
@@ -57,16 +58,28 @@ static Circle touching_circle( D2<SBasis> const &curve, double t, double tol=0.0
 
 namespace {
 
+// Join functions may:
+// - inspect any curve of the current path
+// - append any type of curve to the current path
+// - inspect the outgoing path
+// 
+// Join functions must:
+// - append the outgoing curve
+// OR
+// - end at outgoing.finalPoint
+
 typedef void join_func(Geom::Path& res, Geom::Curve const& outgoing, double miter, double width);
 
 void bevel_join(Geom::Path& res, Geom::Curve const& outgoing, double /*miter*/, double /*width*/)
 {
     res.appendNew<Geom::LineSegment>(outgoing.initialPoint());
+    res.append(outgoing);
 }
 
 void round_join(Geom::Path& res, Geom::Curve const& outgoing, double /*miter*/, double width)
 {
     res.appendNew<Geom::SVGEllipticalArc>(width, width, 0, false, width <= 0, outgoing.initialPoint());
+    res.append(outgoing);
 }
 
 void miter_join(Geom::Path& res, Geom::Curve const& outgoing, double miter, double width)
@@ -81,18 +94,25 @@ void miter_join(Geom::Path& res, Geom::Curve const& outgoing, double miter, doub
         double len = Geom::distance(p, point_on_path);
         if (len <= miter) {
             // miter OK, check to see if we can do a relocation
-            // TODO FIXME
-            /*if (auto line = cast(const(LineSegment))res.back_open) {
-                Curve copy = line.duplicate;
-                copy.setFinal(p);
-                res.erase_last();
-                res.append(copy);
-            } else {*/
+            bool ls = dynamic_cast<Geom::LineSegment const*>(&res.back_open());
+            if (ls) {
+                res.setFinal(p);
+            } else {
                 res.appendNew<Geom::LineSegment>(p);
-            //}
+            }
         }
     }
+
     res.appendNew<Geom::LineSegment>(outgoing.initialPoint());
+
+    // check if we can do another relocation
+
+    bool ls = dynamic_cast<Geom::LineSegment const*>(&outgoing);
+    if (ls) {
+        res.setFinal(outgoing.finalPoint());
+    } else {
+        res.append(outgoing);
+    }
 }
 
 // might need a little reworking
@@ -152,6 +172,7 @@ void extrapolate_join(Geom::Path& path_builder, Geom::Curve const& outgoing, dou
                 printf("WARNING: Error extrapolating line join: %s\n", ex.what());
                 path_builder.appendNew<Geom::LineSegment>(endPt);
             }
+            path_builder.append(outgoing);
         } else {
             // 1 or no solutions found, default to miter
             miter_join(path_builder, outgoing, miter_limit, line_width);
@@ -164,11 +185,36 @@ void extrapolate_join(Geom::Path& path_builder, Geom::Curve const& outgoing, dou
 
 void join_inside(Geom::Path& res, Geom::Curve const& outgoing)
 {
-    res.appendNew<Geom::LineSegment>(outgoing.initialPoint());
+    Geom::Curve const& incoming = res.back_open();
+    Geom::Crossings cross = Geom::crossings(incoming, outgoing);
+    
+    if (!cross.empty()) {
+        // yeah if we could avoid allocing that'd be great
+        Geom::Curve *d1 = incoming.portion(0., cross[0].ta);
+        res.erase_last();
+        res.append(*d1);
+        delete d1;
+
+        Geom::Curve *d2 = outgoing.portion(cross[0].tb, 1.);
+        res.setFinal(d2->initialPoint());
+        res.append(*d2);
+        delete d2;
+    } else {
+        res.appendNew<Geom::LineSegment>(outgoing.initialPoint());
+        res.append(outgoing);
+    }
 }
 
 void outline_helper(Geom::Path& res, Geom::Path const& to_add, double width, double miter, Inkscape::LineJoinType join)
 {
+    Geom::Curve const& outgoing = to_add[0];
+    if (Geom::are_near(res.finalPoint(), outgoing.initialPoint())) {
+        // if the points are /that/ close, just ignore this one
+        res.setFinal(outgoing.initialPoint());
+        res.append(outgoing);
+        return;
+    }
+
     Geom::Point tang1 = -Geom::unitTangentAt(reverse(res.back().toSBasis()), 0.);
     //Geom::Point tang2 = to_add[0].unitTangentAt(0);
     Geom::Point discontinuity_vec = to_add.initialPoint() - res.finalPoint();
@@ -189,12 +235,10 @@ void outline_helper(Geom::Path& res, Geom::Path const& to_add, double width, dou
             default:
                 jf = &miter_join;
         }
-        jf(res, to_add[0], miter, width);
+        jf(res, outgoing, miter, width);
     } else {
-        join_inside(res, to_add[0]);
+        join_inside(res, outgoing);
     }
-
-    res.append(to_add);
 }
 
 // Offsetting a line segment is mathematically stable and quick to do
@@ -359,7 +403,39 @@ void offset_curve(Geom::Path& res, Geom::Curve const* current, double width)
     }
 }
 
+typedef void cap_func(Geom::PathBuilder& res, Geom::Path const& with_dir, Geom::Path const& against_dir, double width);
+
+void flat_cap(Geom::PathBuilder& res, Geom::Path const&, Geom::Path const& against_dir, double)
+{
+    res.lineTo(against_dir.initialPoint());
 }
+
+void round_cap(Geom::PathBuilder& res, Geom::Path const&, Geom::Path const& against_dir, double width)
+{
+    res.arcTo(width / 2., width / 2., 0., true, false, against_dir.initialPoint());
+}
+
+void square_cap(Geom::PathBuilder& res, Geom::Path const& with_dir, Geom::Path const& against_dir, double width)
+{
+    width /= 2.;
+    Geom::Point normal_1 = -Geom::unitTangentAt(Geom::reverse(with_dir.back().toSBasis()), 0.);
+    Geom::Point normal_2 = -against_dir[0].unitTangentAt(0.);
+    res.lineTo(with_dir.finalPoint() + normal_1*width);
+    res.lineTo(against_dir.initialPoint() + normal_2*width);
+    res.lineTo(against_dir.initialPoint());
+}
+
+void peak_cap(Geom::PathBuilder& res, Geom::Path const& with_dir, Geom::Path const& against_dir, double width)
+{
+    width /= 2.;
+    Geom::Point normal_1 = -Geom::unitTangentAt(Geom::reverse(with_dir.back().toSBasis()), 0.);
+    Geom::Point normal_2 = -against_dir[0].unitTangentAt(0.);
+    Geom::Point midpoint = ((with_dir.finalPoint() + normal_1*width) + (against_dir.initialPoint() + normal_2*width)) * 0.5;
+    res.lineTo(midpoint);
+    res.lineTo(against_dir.initialPoint());
+}
+
+} // namespace
 
 namespace Inkscape {
 
@@ -374,33 +450,24 @@ Geom::PathVector outline(Geom::Path const& input, double width, double miter, Li
     res.moveTo(with_dir[0].initialPoint());
     res.append(with_dir);
 
+    cap_func *cf;
+    switch (butt) {
+        case BUTT_ROUND:
+            cf = &round_cap;
+            break;
+        case BUTT_SQUARE:
+            cf = &square_cap;
+            break;
+        case BUTT_PEAK:
+            cf = &peak_cap;
+            break;
+        default:
+            cf = &flat_cap;
+    }
+
     // glue caps
     if (!input.closed()) {
-        switch (butt) {
-            case BUTT_ROUND:
-                res.arcTo(width / 2., width / 2., 0., true, false, against_dir.initialPoint());
-                break;
-            case BUTT_SQUARE: {
-                Geom::Point end_deriv = -Geom::unitTangentAt(Geom::reverse(input[input.size()-1].toSBasis()), 0.);
-                double radius = 0.5 * Geom::distance(with_dir.finalPoint(), against_dir.initialPoint());
-                res.lineTo(with_dir.finalPoint() + end_deriv*radius);
-                res.lineTo(against_dir.initialPoint() + end_deriv*radius);
-                res.lineTo(against_dir.initialPoint());
-                break;
-            }
-            case BUTT_PEAK: {
-                Geom::Point end_deriv = -Geom::unitTangentAt(Geom::reverse(input[input.size()-1].toSBasis()), 0.);
-                double radius = 0.5 * Geom::distance(with_dir.finalPoint(), against_dir.initialPoint());
-                Geom::Point midpoint = ((with_dir.finalPoint() + against_dir.initialPoint()) * 0.5) + end_deriv*radius;
-                res.lineTo(midpoint);
-                res.lineTo(against_dir.initialPoint());
-                break;
-            }
-            case BUTT_FLAT:
-            default:
-                res.lineTo(against_dir.initialPoint());
-                break;
-        }
+        cf(res, with_dir, against_dir, width);
     } else {
         res.moveTo(against_dir.initialPoint());
     }
@@ -408,30 +475,7 @@ Geom::PathVector outline(Geom::Path const& input, double width, double miter, Li
     res.append(against_dir);
 
     if (!input.closed()) {
-        switch(butt) {
-            case BUTT_ROUND:
-                res.arcTo(width / 2., width / 2., 0., true, false, with_dir.initialPoint());
-                break;
-            case BUTT_SQUARE: {
-                Geom::Point end_deriv = -input[0].unitTangentAt(0.);
-                double radius = 0.5 * Geom::distance(against_dir.finalPoint(), with_dir.initialPoint());
-                res.lineTo(against_dir.finalPoint() + end_deriv*radius);
-                res.lineTo(with_dir.initialPoint() + end_deriv*radius);
-                res.lineTo(with_dir.initialPoint());
-                break;
-            }
-            case BUTT_PEAK: {
-                Geom::Point end_deriv = -input[0].unitTangentAt(0.);
-                double radius = 0.5 * Geom::distance(against_dir.finalPoint(), with_dir.initialPoint());
-                Geom::Point midpoint = ((against_dir.finalPoint() + with_dir.initialPoint()) * 0.5) + end_deriv*radius;
-                res.lineTo(midpoint);
-                res.lineTo(with_dir.initialPoint());
-                break;
-            }
-            case BUTT_FLAT:
-            default:
-                res.lineTo(with_dir.initialPoint());
-        }
+        cf(res, against_dir, with_dir, width);
         res.closePath();
     }
 
@@ -451,7 +495,8 @@ Geom::Path half_outline(Geom::Path const& input, double width, double miter, Lin
     res.start(start);
 
     // Do two curves at a time for efficiency, since the join function needs to know the outgoing curve as well
-    const size_t k = input.size_default();
+    const size_t k = (input.back_closed().isDegenerate() && input.closed())
+            ?input.size_default()-1:input.size_default();
     for (size_t u = 0; u < k; u += 2) {
         temp = Geom::Path();
 
@@ -462,6 +507,7 @@ Geom::Path half_outline(Geom::Path const& input, double width, double miter, Lin
             res.append(temp);
         } else {
             outline_helper(res, temp, width, miter, join);
+            res.insert(res.end(), ++temp.begin(), temp.end());
         }
 
         // odd number of paths
@@ -469,15 +515,11 @@ Geom::Path half_outline(Geom::Path const& input, double width, double miter, Lin
             temp = Geom::Path();
             offset_curve(temp, &input[u+1], width);
             outline_helper(res, temp, width, miter, join);
+            res.insert(res.end(), ++temp.begin(), temp.end());
         }
     }
 
     if (input.closed()) {
-        if (input.back_closed().isDegenerate()) {
-            res.erase_last();
-            res.erase_last(); // ?
-        }
-
         Geom::Curve const &c1 = res.back();
         Geom::Curve const &c2 = res.front();
         temp = Geom::Path();
@@ -485,9 +527,8 @@ Geom::Path half_outline(Geom::Path const& input, double width, double miter, Lin
         Geom::Path temp2;
         temp2.append(c2);
         outline_helper(temp, temp2, width, miter, join);
-        temp.erase_last(); // we already outlined c2
-        temp.erase(temp.begin()); // we already outlined c1
-
+        res.erase(res.begin());
+        res.erase_last();
         //
         res.append(temp);
         res.close();
