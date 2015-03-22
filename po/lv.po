@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-02-27 20:13+0100\n"
-"PO-Revision-Date: 2015-03-01 17:37+0200\n"
+"POT-Creation-Date: 2015-03-10 09:10+0100\n"
+"PO-Revision-Date: 2015-03-22 14:04+0200\n"
 "Last-Translator: Jānis Eisaks <je@dv.lv>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "Language: lv\n"
@@ -936,17 +936,17 @@ msgstr "Melna gaisma"
 
 #: ../share/filters/filters.svg.h:411 ../share/filters/filters.svg.h:575 ../share/filters/filters.svg.h:587 ../share/filters/filters.svg.h:627 ../share/filters/filters.svg.h:631 ../share/filters/filters.svg.h:819
 #: ../share/filters/filters.svg.h:827 ../share/filters/filters.svg.h:831 ../src/extension/internal/bitmap/colorize.cpp:52 ../src/extension/internal/filter/bumps.h:101 ../src/extension/internal/filter/bumps.h:321
-#: ../src/extension/internal/filter/bumps.h:328 ../src/extension/internal/filter/color.h:82 ../src/extension/internal/filter/color.h:164 ../src/extension/internal/filter/color.h:171 ../src/extension/internal/filter/color.h:262
-#: ../src/extension/internal/filter/color.h:340 ../src/extension/internal/filter/color.h:347 ../src/extension/internal/filter/color.h:437 ../src/extension/internal/filter/color.h:532 ../src/extension/internal/filter/color.h:654
-#: ../src/extension/internal/filter/color.h:751 ../src/extension/internal/filter/color.h:830 ../src/extension/internal/filter/color.h:921 ../src/extension/internal/filter/color.h:1049 ../src/extension/internal/filter/color.h:1119
-#: ../src/extension/internal/filter/color.h:1212 ../src/extension/internal/filter/color.h:1324 ../src/extension/internal/filter/color.h:1429 ../src/extension/internal/filter/color.h:1505 ../src/extension/internal/filter/color.h:1609
-#: ../src/extension/internal/filter/color.h:1616 ../src/extension/internal/filter/morphology.h:194 ../src/extension/internal/filter/overlays.h:73 ../src/extension/internal/filter/paint.h:99 ../src/extension/internal/filter/paint.h:713
-#: ../src/extension/internal/filter/paint.h:717 ../src/extension/internal/filter/shadows.h:73 ../src/extension/internal/filter/transparency.h:345 ../src/filter-enums.cpp:67 ../src/ui/dialog/clonetiler.cpp:830
-#: ../src/ui/dialog/clonetiler.cpp:981 ../src/ui/dialog/document-properties.cpp:164 ../share/extensions/color_HSL_adjust.inx.h:20 ../share/extensions/color_blackandwhite.inx.h:3 ../share/extensions/color_brighter.inx.h:2
-#: ../share/extensions/color_custom.inx.h:15 ../share/extensions/color_darker.inx.h:2 ../share/extensions/color_desaturate.inx.h:2 ../share/extensions/color_grayscale.inx.h:2 ../share/extensions/color_lesshue.inx.h:2
-#: ../share/extensions/color_lesslight.inx.h:2 ../share/extensions/color_lesssaturation.inx.h:2 ../share/extensions/color_morehue.inx.h:2 ../share/extensions/color_morelight.inx.h:2 ../share/extensions/color_moresaturation.inx.h:2
-#: ../share/extensions/color_negative.inx.h:2 ../share/extensions/color_randomize.inx.h:8 ../share/extensions/color_removeblue.inx.h:2 ../share/extensions/color_removegreen.inx.h:2 ../share/extensions/color_removered.inx.h:2
-#: ../share/extensions/color_replace.inx.h:6 ../share/extensions/color_rgbbarrel.inx.h:2 ../share/extensions/interp_att_g.inx.h:19
+#: ../src/extension/internal/filter/bumps.h:328 ../src/extension/internal/filter/color.h:83 ../src/extension/internal/filter/color.h:165 ../src/extension/internal/filter/color.h:172 ../src/extension/internal/filter/color.h:283
+#: ../src/extension/internal/filter/color.h:337 ../src/extension/internal/filter/color.h:415 ../src/extension/internal/filter/color.h:422 ../src/extension/internal/filter/color.h:512 ../src/extension/internal/filter/color.h:607
+#: ../src/extension/internal/filter/color.h:729 ../src/extension/internal/filter/color.h:826 ../src/extension/internal/filter/color.h:905 ../src/extension/internal/filter/color.h:996 ../src/extension/internal/filter/color.h:1124
+#: ../src/extension/internal/filter/color.h:1194 ../src/extension/internal/filter/color.h:1287 ../src/extension/internal/filter/color.h:1399 ../src/extension/internal/filter/color.h:1504 ../src/extension/internal/filter/color.h:1580
+#: ../src/extension/internal/filter/color.h:1684 ../src/extension/internal/filter/color.h:1691 ../src/extension/internal/filter/morphology.h:194 ../src/extension/internal/filter/overlays.h:73 ../src/extension/internal/filter/paint.h:99
+#: ../src/extension/internal/filter/paint.h:713 ../src/extension/internal/filter/paint.h:717 ../src/extension/internal/filter/shadows.h:73 ../src/extension/internal/filter/transparency.h:345 ../src/filter-enums.cpp:67
+#: ../src/ui/dialog/clonetiler.cpp:830 ../src/ui/dialog/clonetiler.cpp:981 ../src/ui/dialog/document-properties.cpp:164 ../share/extensions/color_HSL_adjust.inx.h:20 ../share/extensions/color_blackandwhite.inx.h:3
+#: ../share/extensions/color_brighter.inx.h:2 ../share/extensions/color_custom.inx.h:15 ../share/extensions/color_darker.inx.h:2 ../share/extensions/color_desaturate.inx.h:2 ../share/extensions/color_grayscale.inx.h:2
+#: ../share/extensions/color_lesshue.inx.h:2 ../share/extensions/color_lesslight.inx.h:2 ../share/extensions/color_lesssaturation.inx.h:2 ../share/extensions/color_morehue.inx.h:2 ../share/extensions/color_morelight.inx.h:2
+#: ../share/extensions/color_moresaturation.inx.h:2 ../share/extensions/color_negative.inx.h:2 ../share/extensions/color_randomize.inx.h:8 ../share/extensions/color_removeblue.inx.h:2 ../share/extensions/color_removegreen.inx.h:2
+#: ../share/extensions/color_removered.inx.h:2 ../share/extensions/color_replace.inx.h:6 ../share/extensions/color_rgbbarrel.inx.h:2 ../share/extensions/interp_att_g.inx.h:19
 msgid "Color"
 msgstr "Krāsa"
 
@@ -4815,7 +4815,7 @@ msgid "Add Noise"
 msgstr "Pievienot troksni"
 
 #. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
-#: ../src/extension/internal/bitmap/addNoise.cpp:47 ../src/extension/internal/filter/color.h:426 ../src/extension/internal/filter/color.h:1497 ../src/extension/internal/filter/color.h:1585 ../src/extension/internal/filter/distort.h:69
+#: ../src/extension/internal/bitmap/addNoise.cpp:47 ../src/extension/internal/filter/color.h:501 ../src/extension/internal/filter/color.h:1572 ../src/extension/internal/filter/color.h:1660 ../src/extension/internal/filter/distort.h:69
 #: ../src/extension/internal/filter/morphology.h:60 ../src/rdf.cpp:244 ../src/ui/dialog/filter-effects-dialog.cpp:2842 ../src/ui/dialog/filter-effects-dialog.cpp:2916 ../src/ui/dialog/object-attributes.cpp:49
 #: ../share/extensions/jessyInk_effects.inx.h:5 ../share/extensions/jessyInk_export.inx.h:3 ../share/extensions/jessyInk_transitions.inx.h:5 ../share/extensions/webslicer_create_rect.inx.h:14
 msgid "Type:"
@@ -4923,7 +4923,7 @@ msgstr "Kokogle"
 msgid "Apply charcoal stylization to selected bitmap(s)"
 msgstr "Alfa -> iezīmētai"
 
-#: ../src/extension/internal/bitmap/colorize.cpp:50 ../src/extension/internal/filter/color.h:317
+#: ../src/extension/internal/bitmap/colorize.cpp:50 ../src/extension/internal/filter/color.h:392
 msgid "Colorize"
 msgstr "Tonēšana"
 
@@ -4931,7 +4931,7 @@ msgstr "Tonēšana"
 msgid "Colorize selected bitmap(s) with specified color, using given opacity"
 msgstr "Krāsot atlasīto(-ās) bitkarti(-es) ar norādīto krāsu, izmantojot doto necauspīdīgumu"
 
-#: ../src/extension/internal/bitmap/contrast.cpp:40 ../src/extension/internal/filter/color.h:1114
+#: ../src/extension/internal/bitmap/contrast.cpp:40 ../src/extension/internal/filter/color.h:1189
 msgid "Contrast"
 msgstr "Kontrasts"
 
@@ -5039,7 +5039,7 @@ msgstr "Implozija"
 msgid "Implode selected bitmap(s)"
 msgstr "Implodēt atlasīto(-ās) bitkarti(-es)"
 
-#: ../src/extension/internal/bitmap/level.cpp:41 ../src/extension/internal/filter/color.h:742 ../src/extension/internal/filter/image.h:56 ../src/extension/internal/filter/morphology.h:66 ../src/extension/internal/filter/paint.h:345
+#: ../src/extension/internal/bitmap/level.cpp:41 ../src/extension/internal/filter/color.h:817 ../src/extension/internal/filter/image.h:56 ../src/extension/internal/filter/morphology.h:66 ../src/extension/internal/filter/paint.h:345
 msgid "Level"
 msgstr "Līmenis"
 
@@ -5063,7 +5063,7 @@ msgstr "Līmeņojiet atlasīto(-ās) bitkarti(-es) mainot vērtības starp norā
 msgid "Level (with Channel)"
 msgstr "Līmenis (ar kanālu)"
 
-#: ../src/extension/internal/bitmap/levelChannel.cpp:54 ../src/extension/internal/filter/color.h:636
+#: ../src/extension/internal/bitmap/levelChannel.cpp:54 ../src/extension/internal/filter/color.h:711
 msgid "Channel:"
 msgstr "Kanāls:"
 
@@ -5192,7 +5192,7 @@ msgstr "Ēnot atlasīto(-ās) bitkarti(-es) ar šķietamu, attālinātu gaismas 
 msgid "Sharpen selected bitmap(s)"
 msgstr "Palielināt atlasītās(-o) bitkartes(-šu) asumu"
 
-#: ../src/extension/internal/bitmap/solarize.cpp:39 ../src/extension/internal/filter/color.h:1494 ../src/extension/internal/filter/color.h:1498
+#: ../src/extension/internal/bitmap/solarize.cpp:39 ../src/extension/internal/filter/color.h:1569 ../src/extension/internal/filter/color.h:1573
 msgid "Solarize"
 msgstr "Solarizācija"
 
@@ -5527,15 +5527,16 @@ msgstr "Gaismas krāsa"
 
 #: ../src/extension/internal/filter/bevels.h:62 ../src/extension/internal/filter/bevels.h:143 ../src/extension/internal/filter/bevels.h:227 ../src/extension/internal/filter/blurs.h:62 ../src/extension/internal/filter/blurs.h:131
 #: ../src/extension/internal/filter/blurs.h:200 ../src/extension/internal/filter/blurs.h:266 ../src/extension/internal/filter/blurs.h:350 ../src/extension/internal/filter/bumps.h:141 ../src/extension/internal/filter/bumps.h:361
-#: ../src/extension/internal/filter/color.h:81 ../src/extension/internal/filter/color.h:170 ../src/extension/internal/filter/color.h:261 ../src/extension/internal/filter/color.h:346 ../src/extension/internal/filter/color.h:436
-#: ../src/extension/internal/filter/color.h:531 ../src/extension/internal/filter/color.h:653 ../src/extension/internal/filter/color.h:750 ../src/extension/internal/filter/color.h:829 ../src/extension/internal/filter/color.h:920
-#: ../src/extension/internal/filter/color.h:1048 ../src/extension/internal/filter/color.h:1118 ../src/extension/internal/filter/color.h:1211 ../src/extension/internal/filter/color.h:1323 ../src/extension/internal/filter/color.h:1428
-#: ../src/extension/internal/filter/color.h:1504 ../src/extension/internal/filter/color.h:1615 ../src/extension/internal/filter/distort.h:95 ../src/extension/internal/filter/distort.h:204 ../src/extension/internal/filter/filter-file.cpp:151
-#: ../src/extension/internal/filter/filter.cpp:214 ../src/extension/internal/filter/image.h:61 ../src/extension/internal/filter/morphology.h:75 ../src/extension/internal/filter/morphology.h:202 ../src/extension/internal/filter/overlays.h:79
-#: ../src/extension/internal/filter/paint.h:112 ../src/extension/internal/filter/paint.h:243 ../src/extension/internal/filter/paint.h:362 ../src/extension/internal/filter/paint.h:506 ../src/extension/internal/filter/paint.h:601
-#: ../src/extension/internal/filter/paint.h:724 ../src/extension/internal/filter/paint.h:876 ../src/extension/internal/filter/paint.h:980 ../src/extension/internal/filter/protrusions.h:54 ../src/extension/internal/filter/shadows.h:80
-#: ../src/extension/internal/filter/textures.h:90 ../src/extension/internal/filter/transparency.h:69 ../src/extension/internal/filter/transparency.h:140 ../src/extension/internal/filter/transparency.h:214
-#: ../src/extension/internal/filter/transparency.h:287 ../src/extension/internal/filter/transparency.h:349 ../src/ui/dialog/inkscape-preferences.cpp:1751
+#: ../src/extension/internal/filter/color.h:82 ../src/extension/internal/filter/color.h:171 ../src/extension/internal/filter/color.h:282 ../src/extension/internal/filter/color.h:336 ../src/extension/internal/filter/color.h:421
+#: ../src/extension/internal/filter/color.h:511 ../src/extension/internal/filter/color.h:606 ../src/extension/internal/filter/color.h:728 ../src/extension/internal/filter/color.h:825 ../src/extension/internal/filter/color.h:904
+#: ../src/extension/internal/filter/color.h:995 ../src/extension/internal/filter/color.h:1123 ../src/extension/internal/filter/color.h:1193 ../src/extension/internal/filter/color.h:1286 ../src/extension/internal/filter/color.h:1398
+#: ../src/extension/internal/filter/color.h:1503 ../src/extension/internal/filter/color.h:1579 ../src/extension/internal/filter/color.h:1690 ../src/extension/internal/filter/distort.h:95 ../src/extension/internal/filter/distort.h:204
+#: ../src/extension/internal/filter/filter-file.cpp:151 ../src/extension/internal/filter/filter.cpp:214 ../src/extension/internal/filter/image.h:61 ../src/extension/internal/filter/morphology.h:75
+#: ../src/extension/internal/filter/morphology.h:202 ../src/extension/internal/filter/overlays.h:79 ../src/extension/internal/filter/paint.h:112 ../src/extension/internal/filter/paint.h:243 ../src/extension/internal/filter/paint.h:362
+#: ../src/extension/internal/filter/paint.h:506 ../src/extension/internal/filter/paint.h:601 ../src/extension/internal/filter/paint.h:724 ../src/extension/internal/filter/paint.h:876 ../src/extension/internal/filter/paint.h:980
+#: ../src/extension/internal/filter/protrusions.h:54 ../src/extension/internal/filter/shadows.h:80 ../src/extension/internal/filter/textures.h:90 ../src/extension/internal/filter/transparency.h:69
+#: ../src/extension/internal/filter/transparency.h:140 ../src/extension/internal/filter/transparency.h:214 ../src/extension/internal/filter/transparency.h:287 ../src/extension/internal/filter/transparency.h:349
+#: ../src/ui/dialog/inkscape-preferences.cpp:1751
 msgid "Filters"
 msgstr "Filtri"
 
@@ -5547,7 +5548,7 @@ msgstr "Vienkāršs izkliedēts slīpums faktūru veidošanai"
 msgid "Matte Jelly"
 msgstr "Matēta želeja"
 
-#: ../src/extension/internal/filter/bevels.h:136 ../src/extension/internal/filter/bevels.h:220 ../src/extension/internal/filter/blurs.h:187 ../src/extension/internal/filter/color.h:74
+#: ../src/extension/internal/filter/bevels.h:136 ../src/extension/internal/filter/bevels.h:220 ../src/extension/internal/filter/blurs.h:187 ../src/extension/internal/filter/color.h:75
 msgid "Brightness"
 msgstr "Spilgtums"
 
@@ -5600,25 +5601,25 @@ msgid "Blend:"
 msgstr "Sapludināt:"
 
 #: ../src/extension/internal/filter/blurs.h:192 ../src/extension/internal/filter/blurs.h:339 ../src/extension/internal/filter/bumps.h:131 ../src/extension/internal/filter/bumps.h:337 ../src/extension/internal/filter/bumps.h:344
-#: ../src/extension/internal/filter/color.h:329 ../src/extension/internal/filter/color.h:336 ../src/extension/internal/filter/color.h:1423 ../src/extension/internal/filter/color.h:1596 ../src/extension/internal/filter/color.h:1602
+#: ../src/extension/internal/filter/color.h:404 ../src/extension/internal/filter/color.h:411 ../src/extension/internal/filter/color.h:1498 ../src/extension/internal/filter/color.h:1671 ../src/extension/internal/filter/color.h:1677
 #: ../src/extension/internal/filter/paint.h:705 ../src/extension/internal/filter/transparency.h:63 ../src/filter-enums.cpp:55
 msgid "Darken"
 msgstr "Padarīt tumšāku"
 
 #: ../src/extension/internal/filter/blurs.h:193 ../src/extension/internal/filter/blurs.h:340 ../src/extension/internal/filter/bumps.h:132 ../src/extension/internal/filter/bumps.h:335 ../src/extension/internal/filter/bumps.h:342
-#: ../src/extension/internal/filter/color.h:327 ../src/extension/internal/filter/color.h:332 ../src/extension/internal/filter/color.h:647 ../src/extension/internal/filter/color.h:1415 ../src/extension/internal/filter/color.h:1420
-#: ../src/extension/internal/filter/color.h:1594 ../src/extension/internal/filter/paint.h:703 ../src/extension/internal/filter/transparency.h:62 ../src/filter-enums.cpp:54 ../src/ui/dialog/input.cpp:382
+#: ../src/extension/internal/filter/color.h:402 ../src/extension/internal/filter/color.h:407 ../src/extension/internal/filter/color.h:722 ../src/extension/internal/filter/color.h:1490 ../src/extension/internal/filter/color.h:1495
+#: ../src/extension/internal/filter/color.h:1669 ../src/extension/internal/filter/paint.h:703 ../src/extension/internal/filter/transparency.h:62 ../src/filter-enums.cpp:54 ../src/ui/dialog/input.cpp:382
 msgid "Screen"
 msgstr "Ekrāns"
 
 #: ../src/extension/internal/filter/blurs.h:194 ../src/extension/internal/filter/blurs.h:341 ../src/extension/internal/filter/bumps.h:133 ../src/extension/internal/filter/bumps.h:338 ../src/extension/internal/filter/bumps.h:345
-#: ../src/extension/internal/filter/color.h:325 ../src/extension/internal/filter/color.h:333 ../src/extension/internal/filter/color.h:645 ../src/extension/internal/filter/color.h:1414 ../src/extension/internal/filter/color.h:1421
-#: ../src/extension/internal/filter/color.h:1595 ../src/extension/internal/filter/color.h:1601 ../src/extension/internal/filter/paint.h:701 ../src/extension/internal/filter/transparency.h:60 ../src/filter-enums.cpp:53
+#: ../src/extension/internal/filter/color.h:400 ../src/extension/internal/filter/color.h:408 ../src/extension/internal/filter/color.h:720 ../src/extension/internal/filter/color.h:1489 ../src/extension/internal/filter/color.h:1496
+#: ../src/extension/internal/filter/color.h:1670 ../src/extension/internal/filter/color.h:1676 ../src/extension/internal/filter/paint.h:701 ../src/extension/internal/filter/transparency.h:60 ../src/filter-enums.cpp:53
 msgid "Multiply"
 msgstr "Pavairot"
 
 #: ../src/extension/internal/filter/blurs.h:195 ../src/extension/internal/filter/blurs.h:342 ../src/extension/internal/filter/bumps.h:134 ../src/extension/internal/filter/bumps.h:339 ../src/extension/internal/filter/bumps.h:346
-#: ../src/extension/internal/filter/color.h:328 ../src/extension/internal/filter/color.h:335 ../src/extension/internal/filter/color.h:1422 ../src/extension/internal/filter/color.h:1593 ../src/extension/internal/filter/paint.h:704
+#: ../src/extension/internal/filter/color.h:403 ../src/extension/internal/filter/color.h:410 ../src/extension/internal/filter/color.h:1497 ../src/extension/internal/filter/color.h:1668 ../src/extension/internal/filter/paint.h:704
 #: ../src/extension/internal/filter/transparency.h:64 ../src/filter-enums.cpp:56
 msgid "Lighten"
 msgstr "Padarīt gaišāku"
@@ -5649,7 +5650,7 @@ msgstr "Paplašināšana"
 msgid "Erosion"
 msgstr "Erozija"
 
-#: ../src/extension/internal/filter/blurs.h:336 ../src/extension/internal/filter/color.h:1205 ../src/extension/internal/filter/color.h:1317 ../src/ui/dialog/document-properties.cpp:122
+#: ../src/extension/internal/filter/blurs.h:336 ../src/extension/internal/filter/color.h:1280 ../src/extension/internal/filter/color.h:1392 ../src/ui/dialog/document-properties.cpp:122
 msgid "Background color"
 msgstr "Fona krāsa"
 
@@ -5657,9 +5658,9 @@ msgstr "Fona krāsa"
 msgid "Blend type:"
 msgstr "Sajaukšanas tips:"
 
-#: ../src/extension/internal/filter/blurs.h:338 ../src/extension/internal/filter/bumps.h:130 ../src/extension/internal/filter/bumps.h:336 ../src/extension/internal/filter/bumps.h:343 ../src/extension/internal/filter/color.h:326
-#: ../src/extension/internal/filter/color.h:334 ../src/extension/internal/filter/color.h:646 ../src/extension/internal/filter/color.h:1413 ../src/extension/internal/filter/color.h:1419 ../src/extension/internal/filter/color.h:1586
-#: ../src/extension/internal/filter/color.h:1600 ../src/extension/internal/filter/distort.h:78 ../src/extension/internal/filter/paint.h:702 ../src/extension/internal/filter/textures.h:77 ../src/extension/internal/filter/transparency.h:61
+#: ../src/extension/internal/filter/blurs.h:338 ../src/extension/internal/filter/bumps.h:130 ../src/extension/internal/filter/bumps.h:336 ../src/extension/internal/filter/bumps.h:343 ../src/extension/internal/filter/color.h:401
+#: ../src/extension/internal/filter/color.h:409 ../src/extension/internal/filter/color.h:721 ../src/extension/internal/filter/color.h:1488 ../src/extension/internal/filter/color.h:1494 ../src/extension/internal/filter/color.h:1661
+#: ../src/extension/internal/filter/color.h:1675 ../src/extension/internal/filter/distort.h:78 ../src/extension/internal/filter/paint.h:702 ../src/extension/internal/filter/textures.h:77 ../src/extension/internal/filter/transparency.h:61
 #: ../src/filter-enums.cpp:52 ../src/ui/dialog/inkscape-preferences.cpp:653
 msgid "Normal"
 msgstr "Normāls"
@@ -5688,17 +5689,17 @@ msgstr "Reljefa vienkāršošana"
 msgid "Bump source"
 msgstr "Reljefa avots"
 
-#: ../src/extension/internal/filter/bumps.h:88 ../src/extension/internal/filter/bumps.h:317 ../src/extension/internal/filter/color.h:157 ../src/extension/internal/filter/color.h:637 ../src/extension/internal/filter/color.h:821
+#: ../src/extension/internal/filter/bumps.h:88 ../src/extension/internal/filter/bumps.h:317 ../src/extension/internal/filter/color.h:158 ../src/extension/internal/filter/color.h:712 ../src/extension/internal/filter/color.h:896
 #: ../src/extension/internal/filter/transparency.h:132 ../src/filter-enums.cpp:128 ../src/ui/tools/flood-tool.cpp:183 ../src/widgets/sp-color-icc-selector.cpp:330 ../src/widgets/sp-color-scales.cpp:415 ../src/widgets/sp-color-scales.cpp:416
 msgid "Red"
 msgstr "Sarkans"
 
-#: ../src/extension/internal/filter/bumps.h:89 ../src/extension/internal/filter/bumps.h:318 ../src/extension/internal/filter/color.h:158 ../src/extension/internal/filter/color.h:638 ../src/extension/internal/filter/color.h:822
+#: ../src/extension/internal/filter/bumps.h:89 ../src/extension/internal/filter/bumps.h:318 ../src/extension/internal/filter/color.h:159 ../src/extension/internal/filter/color.h:713 ../src/extension/internal/filter/color.h:897
 #: ../src/extension/internal/filter/transparency.h:133 ../src/filter-enums.cpp:129 ../src/ui/tools/flood-tool.cpp:184 ../src/widgets/sp-color-icc-selector.cpp:331 ../src/widgets/sp-color-scales.cpp:418 ../src/widgets/sp-color-scales.cpp:419
 msgid "Green"
 msgstr "Zaļš"
 
-#: ../src/extension/internal/filter/bumps.h:90 ../src/extension/internal/filter/bumps.h:319 ../src/extension/internal/filter/color.h:159 ../src/extension/internal/filter/color.h:639 ../src/extension/internal/filter/color.h:823
+#: ../src/extension/internal/filter/bumps.h:90 ../src/extension/internal/filter/bumps.h:319 ../src/extension/internal/filter/color.h:160 ../src/extension/internal/filter/color.h:714 ../src/extension/internal/filter/color.h:898
 #: ../src/extension/internal/filter/transparency.h:134 ../src/filter-enums.cpp:130 ../src/ui/tools/flood-tool.cpp:185 ../src/widgets/sp-color-icc-selector.cpp:332 ../src/widgets/sp-color-scales.cpp:421 ../src/widgets/sp-color-scales.cpp:422
 msgid "Blue"
 msgstr "Zils"
@@ -5719,11 +5720,11 @@ msgstr "Atspīdums"
 msgid "Diffuse"
 msgstr "Izkliedēt"
 
-#: ../src/extension/internal/filter/bumps.h:98 ../src/extension/internal/filter/bumps.h:329 ../src/libgdl/gdl-dock-placeholder.c:175 ../src/libgdl/gdl-dock.c:199 ../src/widgets/rect-toolbar.cpp:335 ../share/extensions/interp_att_g.inx.h:11
+#: ../src/extension/internal/filter/bumps.h:98 ../src/extension/internal/filter/bumps.h:329 ../src/libgdl/gdl-dock-placeholder.c:175 ../src/libgdl/gdl-dock.c:199 ../src/widgets/rect-toolbar.cpp:334 ../share/extensions/interp_att_g.inx.h:11
 msgid "Height"
 msgstr "Augstums"
 
-#: ../src/extension/internal/filter/bumps.h:99 ../src/extension/internal/filter/bumps.h:330 ../src/extension/internal/filter/color.h:76 ../src/extension/internal/filter/color.h:824 ../src/extension/internal/filter/color.h:1113
+#: ../src/extension/internal/filter/bumps.h:99 ../src/extension/internal/filter/bumps.h:330 ../src/extension/internal/filter/color.h:77 ../src/extension/internal/filter/color.h:899 ../src/extension/internal/filter/color.h:1188
 #: ../src/extension/internal/filter/paint.h:86 ../src/extension/internal/filter/paint.h:592 ../src/extension/internal/filter/paint.h:707 ../src/ui/tools/flood-tool.cpp:188 ../src/widgets/sp-color-icc-selector.cpp:341
 #: ../src/widgets/sp-color-scales.cpp:447 ../src/widgets/sp-color-scales.cpp:448 ../src/widgets/tweak-toolbar.cpp:318 ../share/extensions/color_randomize.inx.h:5
 msgid "Lightness"
@@ -5837,7 +5838,7 @@ msgstr "Aizmiglots attēls"
 msgid "Background opacity"
 msgstr "Fona necaurspīdība"
 
-#: ../src/extension/internal/filter/bumps.h:327 ../src/extension/internal/filter/color.h:1040
+#: ../src/extension/internal/filter/bumps.h:327 ../src/extension/internal/filter/color.h:1115
 msgid "Lighting"
 msgstr "Apgaismojums"
 
@@ -5873,397 +5874,441 @@ msgstr "Pēc"
 msgid "Turns an image to jelly"
 msgstr "Pārvērš attēlu želejā"
 
-#: ../src/extension/internal/filter/color.h:72
+#: ../src/extension/internal/filter/color.h:73
 msgid "Brilliance"
 msgstr "Mirdzums"
 
-#: ../src/extension/internal/filter/color.h:75 ../src/extension/internal/filter/color.h:1417
+#: ../src/extension/internal/filter/color.h:76 ../src/extension/internal/filter/color.h:1492
 msgid "Over-saturation"
 msgstr "Pārsātināšana"
 
-#: ../src/extension/internal/filter/color.h:77 ../src/extension/internal/filter/color.h:161 ../src/extension/internal/filter/overlays.h:70 ../src/extension/internal/filter/paint.h:85 ../src/extension/internal/filter/paint.h:502
+#: ../src/extension/internal/filter/color.h:78 ../src/extension/internal/filter/color.h:162 ../src/extension/internal/filter/overlays.h:70 ../src/extension/internal/filter/paint.h:85 ../src/extension/internal/filter/paint.h:502
 #: ../src/extension/internal/filter/transparency.h:136 ../src/extension/internal/filter/transparency.h:210
 msgid "Inverted"
 msgstr "Apgriezts"
 
-#: ../src/extension/internal/filter/color.h:85
+#: ../src/extension/internal/filter/color.h:86
 msgid "Brightness filter"
 msgstr "Spilgtuma filtrs"
 
-#: ../src/extension/internal/filter/color.h:152
+#: ../src/extension/internal/filter/color.h:153
 msgid "Channel Painting"
 msgstr "Kanālu krāsosana"
 
-#: ../src/extension/internal/filter/color.h:156 ../src/extension/internal/filter/color.h:257 ../src/extension/internal/filter/paint.h:87 ../src/filter-enums.cpp:66 ../src/ui/dialog/inkscape-preferences.cpp:952
+#: ../src/extension/internal/filter/color.h:157 ../src/extension/internal/filter/color.h:332 ../src/extension/internal/filter/paint.h:87 ../src/filter-enums.cpp:66 ../src/ui/dialog/inkscape-preferences.cpp:952
 #: ../src/ui/tools/flood-tool.cpp:187 ../src/widgets/sp-color-icc-selector.cpp:337 ../src/widgets/sp-color-icc-selector.cpp:342 ../src/widgets/sp-color-scales.cpp:444 ../src/widgets/sp-color-scales.cpp:445 ../src/widgets/tweak-toolbar.cpp:302
 #: ../share/extensions/color_randomize.inx.h:4
 msgid "Saturation"
 msgstr "Piesātinājums"
 
-#: ../src/extension/internal/filter/color.h:160 ../src/extension/internal/filter/transparency.h:135 ../src/filter-enums.cpp:131 ../src/ui/tools/flood-tool.cpp:189
+#: ../src/extension/internal/filter/color.h:161 ../src/extension/internal/filter/transparency.h:135 ../src/filter-enums.cpp:131 ../src/ui/tools/flood-tool.cpp:189
 msgid "Alpha"
 msgstr "Alfa"
 
-#: ../src/extension/internal/filter/color.h:174
+#: ../src/extension/internal/filter/color.h:175
 msgid "Replace RGB by any color"
 msgstr "Aizvietot RGB ar jebkuru krāsu"
 
 #: ../src/extension/internal/filter/color.h:254
+msgid "Color Blindness"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:258
+msgid "Blindness type:"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:259
+msgid "Rod monochromacy (atypical achromatopsia)"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:260
+msgid "Cone monochromacy (typical achromatopsia)"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:261
+msgid "Geen weak (deuteranomaly)"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:262
+msgid "Green blind (deuteranopia)"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:263
+msgid "Red weak (protanomaly)"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:264
+msgid "Red blind (protanopia)"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:265
+msgid "Blue weak (tritanomaly)"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:266
+msgid "Blue blind (tritanopia)"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:286
+msgid "Simulate color blindness"
+msgstr "Simulēt krāsu aklumu"
+
+#: ../src/extension/internal/filter/color.h:329
 msgid "Color Shift"
 msgstr "Krāsu pārbīde"
 
-#: ../src/extension/internal/filter/color.h:256
+#: ../src/extension/internal/filter/color.h:331
 msgid "Shift (°)"
 msgstr "Pārbīde (°)"
 
-#: ../src/extension/internal/filter/color.h:265
+#: ../src/extension/internal/filter/color.h:340
 msgid "Rotate and desaturate hue"
 msgstr "Pagriezt un atsātināt nokrāsu"
 
-#: ../src/extension/internal/filter/color.h:321
+#: ../src/extension/internal/filter/color.h:396
 msgid "Harsh light"
 msgstr "Asa gaisma"
 
-#: ../src/extension/internal/filter/color.h:322
+#: ../src/extension/internal/filter/color.h:397
 msgid "Normal light"
 msgstr "Parasta gaisma"
 
-#: ../src/extension/internal/filter/color.h:323
+#: ../src/extension/internal/filter/color.h:398
 msgid "Duotone"
 msgstr "Divtoņu"
 
-#: ../src/extension/internal/filter/color.h:324 ../src/extension/internal/filter/color.h:1412
+#: ../src/extension/internal/filter/color.h:399 ../src/extension/internal/filter/color.h:1487
 msgid "Blend 1:"
 msgstr "Sapludinājums 1:"
 
-#: ../src/extension/internal/filter/color.h:331 ../src/extension/internal/filter/color.h:1418
+#: ../src/extension/internal/filter/color.h:406 ../src/extension/internal/filter/color.h:1493
 msgid "Blend 2:"
 msgstr "Sapludinājums 2:"
 
-#: ../src/extension/internal/filter/color.h:350
+#: ../src/extension/internal/filter/color.h:425
 msgid "Blend image or object with a flood color"
 msgstr "Sapludināt attēlu vai objektu ar pludināšanas krāsu"
 
-#: ../src/extension/internal/filter/color.h:424 ../src/filter-enums.cpp:23
+#: ../src/extension/internal/filter/color.h:499 ../src/filter-enums.cpp:23
 msgid "Component Transfer"
 msgstr "Sastāvdaļu pārnese"
 
-#: ../src/extension/internal/filter/color.h:427 ../src/filter-enums.cpp:110
+#: ../src/extension/internal/filter/color.h:502 ../src/filter-enums.cpp:110
 msgid "Identity"
 msgstr "Identitāte"
 
-#: ../src/extension/internal/filter/color.h:428 ../src/extension/internal/filter/paint.h:498 ../src/filter-enums.cpp:111 ../src/ui/dialog/filter-effects-dialog.cpp:1050
+#: ../src/extension/internal/filter/color.h:503 ../src/extension/internal/filter/paint.h:498 ../src/filter-enums.cpp:111 ../src/ui/dialog/filter-effects-dialog.cpp:1050
 msgid "Table"
 msgstr "Tabula"
 
-#: ../src/extension/internal/filter/color.h:429 ../src/extension/internal/filter/paint.h:499 ../src/filter-enums.cpp:112 ../src/ui/dialog/filter-effects-dialog.cpp:1053
+#: ../src/extension/internal/filter/color.h:504 ../src/extension/internal/filter/paint.h:499 ../src/filter-enums.cpp:112 ../src/ui/dialog/filter-effects-dialog.cpp:1053
 msgid "Discrete"
 msgstr "Atsevišķs"
 
-#: ../src/extension/internal/filter/color.h:430 ../src/filter-enums.cpp:113 ../src/live_effects/lpe-interpolate_points.cpp:25 ../src/live_effects/lpe-powerstroke.cpp:194
+#: ../src/extension/internal/filter/color.h:505 ../src/filter-enums.cpp:113 ../src/live_effects/lpe-interpolate_points.cpp:25 ../src/live_effects/lpe-powerstroke.cpp:194
 msgid "Linear"
 msgstr "Lineārs"
 
-#: ../src/extension/internal/filter/color.h:431 ../src/filter-enums.cpp:114
+#: ../src/extension/internal/filter/color.h:506 ../src/filter-enums.cpp:114
 msgid "Gamma"
 msgstr "Gamma"
 
-#: ../src/extension/internal/filter/color.h:440
+#: ../src/extension/internal/filter/color.h:515
 msgid "Basic component transfer structure"
 msgstr "Pamata komponentu pārneses struktūra"
 
-#: ../src/extension/internal/filter/color.h:509
+#: ../src/extension/internal/filter/color.h:584
 msgid "Duochrome"
 msgstr "Divkrāsu"
 
-#: ../src/extension/internal/filter/color.h:513
+#: ../src/extension/internal/filter/color.h:588
 msgid "Fluorescence level"
 msgstr "Fluorescences līmenis"
 
-#: ../src/extension/internal/filter/color.h:514
+#: ../src/extension/internal/filter/color.h:589
 msgid "Swap:"
 msgstr "Apmainīt:"
 
-#: ../src/extension/internal/filter/color.h:515
+#: ../src/extension/internal/filter/color.h:590
 msgid "No swap"
 msgstr "Nav pieejama maiņvieta (swap)"
 
-#: ../src/extension/internal/filter/color.h:516
+#: ../src/extension/internal/filter/color.h:591
 msgid "Color and alpha"
 msgstr "Krāsu un alfa"
 
-#: ../src/extension/internal/filter/color.h:517
+#: ../src/extension/internal/filter/color.h:592
 msgid "Color only"
 msgstr "Tikai krāsu"
 
-#: ../src/extension/internal/filter/color.h:518
+#: ../src/extension/internal/filter/color.h:593
 msgid "Alpha only"
 msgstr "Tikai alfa"
 
-#: ../src/extension/internal/filter/color.h:522
+#: ../src/extension/internal/filter/color.h:597
 msgid "Color 1"
 msgstr "1. krāsa"
 
-#: ../src/extension/internal/filter/color.h:525
+#: ../src/extension/internal/filter/color.h:600
 msgid "Color 2"
 msgstr "2. krāsa"
 
-#: ../src/extension/internal/filter/color.h:535
+#: ../src/extension/internal/filter/color.h:610
 msgid "Convert luminance values to a duochrome palette"
 msgstr "Pārvērst spilgtuma vērtības par divkrāsu paleti"
 
-#: ../src/extension/internal/filter/color.h:634
+#: ../src/extension/internal/filter/color.h:709
 msgid "Extract Channel"
 msgstr "Ekstraģēt kanālu"
 
-#: ../src/extension/internal/filter/color.h:640 ../src/widgets/sp-color-icc-selector.cpp:344 ../src/widgets/sp-color-icc-selector.cpp:349 ../src/widgets/sp-color-scales.cpp:469 ../src/widgets/sp-color-scales.cpp:470
+#: ../src/extension/internal/filter/color.h:715 ../src/widgets/sp-color-icc-selector.cpp:344 ../src/widgets/sp-color-icc-selector.cpp:349 ../src/widgets/sp-color-scales.cpp:469 ../src/widgets/sp-color-scales.cpp:470
 msgid "Cyan"
 msgstr "Ciāns"
 
-#: ../src/extension/internal/filter/color.h:641 ../src/widgets/sp-color-icc-selector.cpp:345 ../src/widgets/sp-color-icc-selector.cpp:350 ../src/widgets/sp-color-scales.cpp:472 ../src/widgets/sp-color-scales.cpp:473
+#: ../src/extension/internal/filter/color.h:716 ../src/widgets/sp-color-icc-selector.cpp:345 ../src/widgets/sp-color-icc-selector.cpp:350 ../src/widgets/sp-color-scales.cpp:472 ../src/widgets/sp-color-scales.cpp:473
 msgid "Magenta"
 msgstr "Fuksīns (Magenta)"
 
-#: ../src/extension/internal/filter/color.h:642 ../src/widgets/sp-color-icc-selector.cpp:346 ../src/widgets/sp-color-icc-selector.cpp:351 ../src/widgets/sp-color-scales.cpp:475 ../src/widgets/sp-color-scales.cpp:476
+#: ../src/extension/internal/filter/color.h:717 ../src/widgets/sp-color-icc-selector.cpp:346 ../src/widgets/sp-color-icc-selector.cpp:351 ../src/widgets/sp-color-scales.cpp:475 ../src/widgets/sp-color-scales.cpp:476
 msgid "Yellow"
 msgstr "Dzeltens"
 
-#: ../src/extension/internal/filter/color.h:644
+#: ../src/extension/internal/filter/color.h:719
 msgid "Background blend mode:"
 msgstr "Fona sajaukšanas veids:"
 
-#: ../src/extension/internal/filter/color.h:649
+#: ../src/extension/internal/filter/color.h:724
 msgid "Channel to alpha"
 msgstr "Kanālu uz alfa"
 
-#: ../src/extension/internal/filter/color.h:657
+#: ../src/extension/internal/filter/color.h:732
 msgid "Extract color channel as a transparent image"
 msgstr "Ekstraģēt krāsa kanālu kā caurspīdīgu attēlu"
 
-#: ../src/extension/internal/filter/color.h:740
+#: ../src/extension/internal/filter/color.h:815
 msgid "Fade to Black or White"
 msgstr "Izgaisināt melnā vai baltā"
 
-#: ../src/extension/internal/filter/color.h:743
+#: ../src/extension/internal/filter/color.h:818
 msgid "Fade to:"
 msgstr "Izgaisināt:"
 
-#: ../src/extension/internal/filter/color.h:744 ../src/ui/widget/selected-style.cpp:274 ../src/widgets/sp-color-icc-selector.cpp:347 ../src/widgets/sp-color-scales.cpp:478 ../src/widgets/sp-color-scales.cpp:479
+#: ../src/extension/internal/filter/color.h:819 ../src/ui/widget/selected-style.cpp:274 ../src/widgets/sp-color-icc-selector.cpp:347 ../src/widgets/sp-color-scales.cpp:478 ../src/widgets/sp-color-scales.cpp:479
 msgid "Black"
 msgstr "Melns"
 
-#: ../src/extension/internal/filter/color.h:745 ../src/ui/widget/selected-style.cpp:270
+#: ../src/extension/internal/filter/color.h:820 ../src/ui/widget/selected-style.cpp:270
 msgid "White"
 msgstr "Balts"
 
-#: ../src/extension/internal/filter/color.h:754
+#: ../src/extension/internal/filter/color.h:829
 msgid "Fade to black or white"
 msgstr "Izgaisināt melnā vai baltā"
 
-#: ../src/extension/internal/filter/color.h:819
+#: ../src/extension/internal/filter/color.h:894
 msgid "Greyscale"
 msgstr "Pelēktoņu"
 
-#: ../src/extension/internal/filter/color.h:825 ../src/extension/internal/filter/paint.h:83 ../src/extension/internal/filter/paint.h:239
+#: ../src/extension/internal/filter/color.h:900 ../src/extension/internal/filter/paint.h:83 ../src/extension/internal/filter/paint.h:239
 msgid "Transparent"
 msgstr "Caurspīdīgs"
 
-#: ../src/extension/internal/filter/color.h:833
+#: ../src/extension/internal/filter/color.h:908
 msgid "Customize greyscale components"
 msgstr "Pieskaņojiet pelēktoņu sastāvdaļas"
 
-#: ../src/extension/internal/filter/color.h:905 ../src/ui/widget/selected-style.cpp:266
+#: ../src/extension/internal/filter/color.h:980 ../src/ui/widget/selected-style.cpp:266
 msgid "Invert"
 msgstr "Invertēt"
 
-#: ../src/extension/internal/filter/color.h:907
+#: ../src/extension/internal/filter/color.h:982
 msgid "Invert channels:"
 msgstr "Invertēt kanālus:"
 
-#: ../src/extension/internal/filter/color.h:908
+#: ../src/extension/internal/filter/color.h:983
 msgid "No inversion"
 msgstr "Nav inversijas"
 
-#: ../src/extension/internal/filter/color.h:909
+#: ../src/extension/internal/filter/color.h:984
 msgid "Red and blue"
 msgstr "Sarkans un zils"
 
-#: ../src/extension/internal/filter/color.h:910
+#: ../src/extension/internal/filter/color.h:985
 msgid "Red and green"
 msgstr "Sarkans un zaļs"
 
-#: ../src/extension/internal/filter/color.h:911
+#: ../src/extension/internal/filter/color.h:986
 msgid "Green and blue"
 msgstr "Zaļš un zils"
 
-#: ../src/extension/internal/filter/color.h:913
+#: ../src/extension/internal/filter/color.h:988
 msgid "Light transparency"
 msgstr "Viegls caurspīdīgums"
 
-#: ../src/extension/internal/filter/color.h:914
+#: ../src/extension/internal/filter/color.h:989
 msgid "Invert hue"
 msgstr "Invertēt nokrāsu"
 
-#: ../src/extension/internal/filter/color.h:915
+#: ../src/extension/internal/filter/color.h:990
 msgid "Invert lightness"
 msgstr "Invertēt gaišumu"
 
-#: ../src/extension/internal/filter/color.h:916
+#: ../src/extension/internal/filter/color.h:991
 msgid "Invert transparency"
 msgstr "Invertēt caurspīdīgumu"
 
-#: ../src/extension/internal/filter/color.h:924
+#: ../src/extension/internal/filter/color.h:999
 msgid "Manage hue, lightness and transparency inversions"
 msgstr "Vadiet nokrāsas, gaišuma un caurspīdīguma inversijas"
 
-#: ../src/extension/internal/filter/color.h:1042
+#: ../src/extension/internal/filter/color.h:1117
 msgid "Lights"
 msgstr "Gaismas"
 
-#: ../src/extension/internal/filter/color.h:1043
+#: ../src/extension/internal/filter/color.h:1118
 msgid "Shadows"
 msgstr "Ēnas"
 
-#: ../src/extension/internal/filter/color.h:1044 ../src/extension/internal/filter/paint.h:356 ../src/filter-enums.cpp:33 ../src/live_effects/effect.cpp:110 ../src/ui/dialog/filter-effects-dialog.cpp:1047
+#: ../src/extension/internal/filter/color.h:1119 ../src/extension/internal/filter/paint.h:356 ../src/filter-enums.cpp:33 ../src/live_effects/effect.cpp:110 ../src/ui/dialog/filter-effects-dialog.cpp:1047
 #: ../src/widgets/gradient-toolbar.cpp:1159
 msgid "Offset"
 msgstr "Nobīde"
 
-#: ../src/extension/internal/filter/color.h:1052
+#: ../src/extension/internal/filter/color.h:1127
 msgid "Modify lights and shadows separately"
 msgstr "Mainīt gaismas un ēnas atsevišķi"
 
-#: ../src/extension/internal/filter/color.h:1111
+#: ../src/extension/internal/filter/color.h:1186
 msgid "Lightness-Contrast"
 msgstr "Spilgtums-kontrasts"
 
-#: ../src/extension/internal/filter/color.h:1122
+#: ../src/extension/internal/filter/color.h:1197
 msgid "Modify lightness and contrast separately"
 msgstr "Mainīt gaišumu un kontrastu atsevišķi"
 
-#: ../src/extension/internal/filter/color.h:1190
+#: ../src/extension/internal/filter/color.h:1265
 msgid "Nudge RGB"
 msgstr "Nobīdīt RGB"
 
-#: ../src/extension/internal/filter/color.h:1194
+#: ../src/extension/internal/filter/color.h:1269
 msgid "Red offset"
 msgstr "Sarkanā nobīde"
 
-#: ../src/extension/internal/filter/color.h:1195 ../src/extension/internal/filter/color.h:1198 ../src/extension/internal/filter/color.h:1201 ../src/extension/internal/filter/color.h:1307 ../src/extension/internal/filter/color.h:1310
-#: ../src/extension/internal/filter/color.h:1313 ../src/ui/dialog/input.cpp:1616 ../src/ui/dialog/layers.cpp:917
+#: ../src/extension/internal/filter/color.h:1270 ../src/extension/internal/filter/color.h:1273 ../src/extension/internal/filter/color.h:1276 ../src/extension/internal/filter/color.h:1382 ../src/extension/internal/filter/color.h:1385
+#: ../src/extension/internal/filter/color.h:1388 ../src/ui/dialog/input.cpp:1616 ../src/ui/dialog/layers.cpp:917
 msgid "X"
 msgstr "X"
 
-#: ../src/extension/internal/filter/color.h:1196 ../src/extension/internal/filter/color.h:1199 ../src/extension/internal/filter/color.h:1202 ../src/extension/internal/filter/color.h:1308 ../src/extension/internal/filter/color.h:1311
-#: ../src/extension/internal/filter/color.h:1314 ../src/ui/dialog/input.cpp:1616
+#: ../src/extension/internal/filter/color.h:1271 ../src/extension/internal/filter/color.h:1274 ../src/extension/internal/filter/color.h:1277 ../src/extension/internal/filter/color.h:1383 ../src/extension/internal/filter/color.h:1386
+#: ../src/extension/internal/filter/color.h:1389 ../src/ui/dialog/input.cpp:1616
 msgid "Y"
 msgstr "Y"
 
-#: ../src/extension/internal/filter/color.h:1197
+#: ../src/extension/internal/filter/color.h:1272
 msgid "Green offset"
 msgstr "Zaļa nobīde"
 
-#: ../src/extension/internal/filter/color.h:1200
+#: ../src/extension/internal/filter/color.h:1275
 msgid "Blue offset"
 msgstr "Zilā nobīde"
 
-#: ../src/extension/internal/filter/color.h:1215
+#: ../src/extension/internal/filter/color.h:1290
 msgid "Nudge RGB channels separately and blend them to different types of backgrounds"
 msgstr "Nobīdīt RGB kanālus atsevišķi vienu no otra un sajaukt tos dažādu fona krāsu iegūšanai"
 
-#: ../src/extension/internal/filter/color.h:1302
+#: ../src/extension/internal/filter/color.h:1377
 msgid "Nudge CMY"
 msgstr "Nobīdīt CMY"
 
-#: ../src/extension/internal/filter/color.h:1306
+#: ../src/extension/internal/filter/color.h:1381
 msgid "Cyan offset"
 msgstr "Ciāna nobīde"
 
-#: ../src/extension/internal/filter/color.h:1309
+#: ../src/extension/internal/filter/color.h:1384
 msgid "Magenta offset"
 msgstr "Fuksīna nobīde:"
 
-#: ../src/extension/internal/filter/color.h:1312
+#: ../src/extension/internal/filter/color.h:1387
 msgid "Yellow offset"
 msgstr "Dzeltenā nobīde"
 
-#: ../src/extension/internal/filter/color.h:1327
+#: ../src/extension/internal/filter/color.h:1402
 msgid "Nudge CMY channels separately and blend them to different types of backgrounds"
 msgstr "Nobīdīt CMY kanālus atsevišķi vienu no otra un sajaukt tos dažādu fona krāsu iegūšanai"
 
-#: ../src/extension/internal/filter/color.h:1408
+#: ../src/extension/internal/filter/color.h:1483
 msgid "Quadritone fantasy"
 msgstr "Četrtoņu fantāzija"
 
-#: ../src/extension/internal/filter/color.h:1410
+#: ../src/extension/internal/filter/color.h:1485
 msgid "Hue distribution (°)"
 msgstr "Nokrāsas sadale (°)"
 
-#: ../src/extension/internal/filter/color.h:1411 ../share/extensions/svgcalendar.inx.h:19
+#: ../src/extension/internal/filter/color.h:1486 ../share/extensions/svgcalendar.inx.h:19
 msgid "Colors"
 msgstr "Krāsas"
 
-#: ../src/extension/internal/filter/color.h:1432
+#: ../src/extension/internal/filter/color.h:1507
 msgid "Replace hue by two colors"
 msgstr "Aizvietot nokrāsu ar divām krāsām"
 
-#: ../src/extension/internal/filter/color.h:1496
+#: ../src/extension/internal/filter/color.h:1571
 msgid "Hue rotation (°)"
 msgstr "Nokrāsas griešana (°)"
 
-#: ../src/extension/internal/filter/color.h:1499
+#: ../src/extension/internal/filter/color.h:1574
 msgid "Moonarize"
 msgstr "Mēnessgaisma"
 
-#: ../src/extension/internal/filter/color.h:1508
+#: ../src/extension/internal/filter/color.h:1583
 msgid "Classic photographic solarization effect"
 msgstr "Klasiskais foto solarizācijas efekts"
 
-#: ../src/extension/internal/filter/color.h:1581
+#: ../src/extension/internal/filter/color.h:1656
 msgid "Tritone"
 msgstr "Trīstoņu"
 
-#: ../src/extension/internal/filter/color.h:1587
+#: ../src/extension/internal/filter/color.h:1662
 msgid "Enhance hue"
 msgstr "Pastiprināt nokrāsu"
 
-#: ../src/extension/internal/filter/color.h:1588
+#: ../src/extension/internal/filter/color.h:1663
 msgid "Phosphorescence"
 msgstr "Fosforescence"
 
-#: ../src/extension/internal/filter/color.h:1589
+#: ../src/extension/internal/filter/color.h:1664
 msgid "Colored nights"
 msgstr "Krāsainās naktis"
 
-#: ../src/extension/internal/filter/color.h:1590
+#: ../src/extension/internal/filter/color.h:1665
 msgid "Hue to background"
 msgstr "Nokrāsu par fonu"
 
-#: ../src/extension/internal/filter/color.h:1592
+#: ../src/extension/internal/filter/color.h:1667
 msgid "Global blend:"
 msgstr "Vispārējā sapludināšana"
 
-#: ../src/extension/internal/filter/color.h:1598
+#: ../src/extension/internal/filter/color.h:1673
 msgid "Glow"
 msgstr "Spīdums"
 
-#: ../src/extension/internal/filter/color.h:1599
+#: ../src/extension/internal/filter/color.h:1674
 msgid "Glow blend:"
 msgstr "Kvēlojošā sapludināšana:"
 
-#: ../src/extension/internal/filter/color.h:1604
+#: ../src/extension/internal/filter/color.h:1679
 msgid "Local light"
 msgstr "Vietējā gaisma"
 
-#: ../src/extension/internal/filter/color.h:1605
+#: ../src/extension/internal/filter/color.h:1680
 msgid "Global light"
 msgstr "Vispārējā gaisma"
 
-#: ../src/extension/internal/filter/color.h:1608
+#: ../src/extension/internal/filter/color.h:1683
 msgid "Hue distribution (°):"
 msgstr "Nokrāsas sadale (°):"
 
-#: ../src/extension/internal/filter/color.h:1619
+#: ../src/extension/internal/filter/color.h:1694
 msgid "Create a custom tritone palette with additional glow, blend modes and hue moving"
 msgstr "Izveido pielāgotu triju toņu paleti ar papildu spīdumu, sajaukšanas režīmiem un nokrāsas pārvietošanos"
 
@@ -6396,7 +6441,7 @@ msgstr "Ārējs"
 msgid "Open"
 msgstr "Atvērt"
 
-#: ../src/extension/internal/filter/morphology.h:65 ../src/libgdl/gdl-dock-placeholder.c:167 ../src/libgdl/gdl-dock.c:191 ../src/widgets/rect-toolbar.cpp:318 ../src/widgets/spray-toolbar.cpp:116 ../src/widgets/tweak-toolbar.cpp:128
+#: ../src/extension/internal/filter/morphology.h:65 ../src/libgdl/gdl-dock-placeholder.c:167 ../src/libgdl/gdl-dock.c:191 ../src/widgets/rect-toolbar.cpp:317 ../src/widgets/spray-toolbar.cpp:116 ../src/widgets/tweak-toolbar.cpp:128
 #: ../share/extensions/interp_att_g.inx.h:10
 msgid "Width"
 msgstr "Platums"
@@ -7586,7 +7631,7 @@ msgstr "Griezt nokrāsu"
 msgid "Luminance to Alpha"
 msgstr "Spilgtumu par alfa"
 
-#: ../src/filter-enums.cpp:87 ../src/widgets/mesh-toolbar.cpp:476 ../share/extensions/jessyInk_mouseHandler.inx.h:3 ../share/extensions/jessyInk_transitions.inx.h:7
+#: ../src/filter-enums.cpp:87 ../share/extensions/jessyInk_mouseHandler.inx.h:3 ../share/extensions/jessyInk_transitions.inx.h:7
 msgid "Default"
 msgstr "Noklusētais"
 
@@ -8509,50 +8554,52 @@ msgstr "Vizuālās robežas"
 msgid "Uses the visual bounding box"
 msgstr "Izmanto vizuālo robežrāmi"
 
-#. initialise your parameters here:
-#. testpointA(_("Test Point A"), _("Test A"), "ptA", &wr, this,
-#. Geom::Point(100,100)),
-#: ../src/live_effects/lpe-bspline.cpp:60
+#: ../src/live_effects/lpe-bspline.cpp:57
 msgid "Steps with CTRL:"
 msgstr "Soļi ar CTRL:"
 
-#: ../src/live_effects/lpe-bspline.cpp:60
+#: ../src/live_effects/lpe-bspline.cpp:57
 msgid "Change number of steps with CTRL pressed"
 msgstr "Mainiet soļu skaitu, turot nospiestu CTRL"
 
-#: ../src/live_effects/lpe-bspline.cpp:61
+#: ../src/live_effects/lpe-bspline.cpp:58 ../src/live_effects/lpe-simplify.cpp:33
+#, fuzzy
+msgid "Helper size:"
+msgstr "Subversion palīgprogramma"
+
+#: ../src/live_effects/lpe-bspline.cpp:58 ../src/live_effects/lpe-simplify.cpp:33
+#, fuzzy
+msgid "Helper size"
+msgstr "Subversion palīgprogramma"
+
+#: ../src/live_effects/lpe-bspline.cpp:59
 msgid "Ignore cusp nodes"
 msgstr "Neņemt vērā asos mezglus"
 
-#: ../src/live_effects/lpe-bspline.cpp:61
+#: ../src/live_effects/lpe-bspline.cpp:59
 msgid "Change ignoring cusp nodes"
 msgstr "Mainīt, neņemot vērā asos mezglus"
 
-#: ../src/live_effects/lpe-bspline.cpp:62 ../src/live_effects/lpe-fillet-chamfer.cpp:57
+#: ../src/live_effects/lpe-bspline.cpp:60 ../src/live_effects/lpe-fillet-chamfer.cpp:57
 msgid "Change only selected nodes"
 msgstr "Mainīt tikai atlasītos mezglus"
 
-#: ../src/live_effects/lpe-bspline.cpp:63
-#, fuzzy
-msgid "Show helper paths"
-msgstr "Rādīt pārvietojumus starp ceļiem"
-
-#: ../src/live_effects/lpe-bspline.cpp:64
+#: ../src/live_effects/lpe-bspline.cpp:61
 #, fuzzy
 msgid "Change weight:"
 msgstr "Svars"
 
-#: ../src/live_effects/lpe-bspline.cpp:64
+#: ../src/live_effects/lpe-bspline.cpp:61
 #, fuzzy
 msgid "Change weight of the effect"
 msgstr "Filtra efektu apgabala augstums"
 
-#: ../src/live_effects/lpe-bspline.cpp:291
+#: ../src/live_effects/lpe-bspline.cpp:290
 #, fuzzy
 msgid "Default weight"
 msgstr "Noklusētais virsraksts"
 
-#: ../src/live_effects/lpe-bspline.cpp:296
+#: ../src/live_effects/lpe-bspline.cpp:295
 msgid "Make cusp"
 msgstr "Pārvērst par aso"
 
@@ -9037,202 +9084,202 @@ msgid "Control handle 0:"
 msgstr "Vadības turis 0:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:47
-msgid "Control handle 0 - Ctrl+Alt+Click to reset"
-msgstr "Vadības turis 0 - Ctrl+Alt+Click, lai atiestatītu "
+msgid "Control handle 0 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:48
 msgid "Control handle 1:"
 msgstr "Vadības turis 1:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:48
-msgid "Control handle 1 - Ctrl+Alt+Click to reset"
-msgstr "Vadības turis 1 - Ctrl+Alt+Click, lai atiestatītu"
+msgid "Control handle 1 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:49
 msgid "Control handle 2:"
 msgstr "Vadības turis 2:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:49
-msgid "Control handle 2 - Ctrl+Alt+Click to reset"
-msgstr "Vadības turis 2 - Ctrl+Alt+Click, lai atiestatītu"
+msgid "Control handle 2 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:50
 msgid "Control handle 3:"
 msgstr "Vadības turis 3:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:50
-msgid "Control handle 3 - Ctrl+Alt+Click to reset"
-msgstr "Vadības turis 3 - Ctrl+Alt+Click, lai atiestatītu"
+msgid "Control handle 3 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:51
 msgid "Control handle 4:"
 msgstr "Vadības turis 4:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:51
-msgid "Control handle 4 - Ctrl+Alt+Click to reset"
-msgstr "Vadības turis 4 - Ctrl+Alt+Click, lai atiestatītu"
+msgid "Control handle 4 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:52
 msgid "Control handle 5:"
 msgstr "Vadības turis 5:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:52
-msgid "Control handle 5 - Ctrl+Alt+Click to reset"
-msgstr "Vadības turis 5 - Ctrl+Alt+Click, lai atiestatītu"
+msgid "Control handle 5 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:53
 msgid "Control handle 6:"
 msgstr "Vadības turis 6:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:53
-msgid "Control handle 6 - Ctrl+Alt+Click to reset"
-msgstr "Vadības turis 6 - Ctrl+Alt+Click, lai atiestatītu"
+msgid "Control handle 6 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:54
 msgid "Control handle 7:"
 msgstr "Vadības turis 7:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:54
-msgid "Control handle 7 - Ctrl+Alt+Click to reset"
-msgstr "Vadības turis 7 - Ctrl+Alt+Click, lai atiestatītu"
+msgid "Control handle 7 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:55
 msgid "Control handle 8x9:"
 msgstr "Vadības turis 8x9:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:55
-msgid "Control handle 8x9 - Ctrl+Alt+Click to reset"
-msgstr "Vadības turis 8x9 - Ctrl+Alt+Click, lai atiestatītu"
+msgid "Control handle 8x9 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:56
 msgid "Control handle 10x11:"
 msgstr "Vadības turis 10x11:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:56
-msgid "Control handle 10x11 - Ctrl+Alt+Click to reset"
-msgstr "Vadības turis 10x11 - Ctrl+Alt+Click, lai atiestatītu"
+msgid "Control handle 10x11 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:57
 msgid "Control handle 12:"
 msgstr "Vadības turis 12:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:57
-msgid "Control handle 12 - Ctrl+Alt+Click to reset"
-msgstr "Vadības turis 12 - Ctrl+Alt+Click, lai atiestatītu"
+msgid "Control handle 12 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:58
 msgid "Control handle 13:"
 msgstr "Vadības turis 13:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:58
-msgid "Control handle 13 - Ctrl+Alt+Click to reset"
-msgstr "Vadības turis 13 - Ctrl+Alt+Click, lai atiestatītu"
+msgid "Control handle 13 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:59
 msgid "Control handle 14:"
 msgstr "Vadības turis 14:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:59
-msgid "Control handle 14 - Ctrl+Alt+Click to reset"
-msgstr "Vadības turis 14 - Ctrl+Alt+Click, lai atiestatītu"
+msgid "Control handle 14 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:60
 msgid "Control handle 15:"
 msgstr "Vadības turis 15:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:60
-msgid "Control handle 15 - Ctrl+Alt+Click to reset"
-msgstr "Vadības turis 15 - Ctrl+Alt+Click, lai atiestatītu"
+msgid "Control handle 15 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:61
 msgid "Control handle 16:"
 msgstr "Vadības turis 16:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:61
-msgid "Control handle 16 - Ctrl+Alt+Click to reset"
-msgstr "Vadības turis 16 - Ctrl+Alt+Click, lai atiestatītu"
+msgid "Control handle 16 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:62
 msgid "Control handle 17:"
 msgstr "Vadības turis 17:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:62
-msgid "Control handle 17 - Ctrl+Alt+Click to reset"
-msgstr "Vadības turis 17 - Ctrl+Alt+Click, lai atiestatītu"
+msgid "Control handle 17 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:63
 msgid "Control handle 18:"
 msgstr "Vadības turis 18:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:63
-msgid "Control handle 18 - Ctrl+Alt+Click to reset"
-msgstr "Vadības turis 18 - Ctrl+Alt+Click, lai atiestatītu"
+msgid "Control handle 18 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:64
 msgid "Control handle 19:"
 msgstr "Vadības turis 19:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:64
-msgid "Control handle 19 - Ctrl+Alt+Click to reset"
-msgstr "Vadības turis 19 - Ctrl+Alt+Click, lai atiestatītu"
+msgid "Control handle 19 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:65
 msgid "Control handle 20x21:"
 msgstr "Vadības turis 20x21:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:65
-msgid "Control handle 20x21 - Ctrl+Alt+Click to reset"
-msgstr "Vadības turis 20x21 - Ctrl+Alt+Click, lai atiestatītu"
+msgid "Control handle 20x21 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:66
 msgid "Control handle 22x23:"
 msgstr "Vadības turis 22x23:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:66
-msgid "Control handle 22x23 - Ctrl+Alt+Click to reset"
-msgstr "Vadības turis 22x23 - Ctrl+Alt+Click, lai atiestatītu"
+msgid "Control handle 22x23 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:67
 msgid "Control handle 24x26:"
 msgstr "Vadības turis 24x26:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:67
-msgid "Control handle 24x26 - Ctrl+Alt+Click to reset"
-msgstr "Vadības turis 24x26 - Ctrl+Alt+Click, lai atiestatītu"
+msgid "Control handle 24x26 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:68
 msgid "Control handle 25x27:"
 msgstr "Vadības turis 25x27:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:68
-msgid "Control handle 25x27 - Ctrl+Alt+Click to reset"
-msgstr "Vadības turis 25x27 - Ctrl+Alt+Click, lai atiestatītu"
+msgid "Control handle 25x27 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:69
 msgid "Control handle 28x30:"
 msgstr "Vadības turis 28x30:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:69
-msgid "Control handle 28x30 - Ctrl+Alt+Click to reset"
-msgstr "Vadības turis 28x30 - Ctrl+Alt+Click, lai atiestatītu"
+msgid "Control handle 28x30 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:70
 msgid "Control handle 29x31:"
 msgstr "Vadības turis 29x31:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:70
-msgid "Control handle 29x31 - Ctrl+Alt+Click to reset"
-msgstr "Vadības turis 29x31 - Ctrl+Alt+Click, lai atiestatītu"
+msgid "Control handle 29x31 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:71
 msgid "Control handle 32x33x34x35:"
 msgstr "Vadības turis 32x33x34x35:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:71
-msgid "Control handle 32x33x34x35 - Ctrl+Alt+Click to reset"
-msgstr "Vadības turis 32x33x34x35 - Ctrl+Alt+Click, lai atiestatītu"
+msgid "Control handle 32x33x34x35 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:221
+#: ../src/live_effects/lpe-lattice2.cpp:224
 #, fuzzy
 msgid "Reset grid"
 msgstr "Atstatīt"
@@ -9344,32 +9391,32 @@ msgid "Top Left"
 msgstr "Augšējais kreisais"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:47
-msgid "Top Left - Ctrl+Alt+Click to reset"
-msgstr "Augšējais kreisais - Ctrl+Alt+Click, lai atiestatītu"
+msgid "Top Left - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:48
 msgid "Top Right"
 msgstr "Augšējais labais"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:48
-msgid "Top Right - Ctrl+Alt+Click to reset"
-msgstr "Augšējais labais - Ctrl+Alt+Click, lai atiestatītu"
+msgid "Top Right - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:49
 msgid "Down Left"
 msgstr "Apakšējais kreisais"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:49
-msgid "Down Left - Ctrl+Alt+Click to reset"
-msgstr "Apakšējais kreisais - Ctrl+Alt+Click, lai atiestatītu"
+msgid "Down Left - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:50
 msgid "Down Right"
 msgstr "Apakšējais labais"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:50
-msgid "Down Right - Ctrl+Alt+Click to reset"
-msgstr "Apakšējais labais - Ctrl+Alt+Click, lai atiestatītu"
+msgid "Down Right - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:257
 msgid "Handles:"
@@ -9760,64 +9807,62 @@ msgstr "Pagriezt mezglus"
 msgid "The \"show handles\" path effect will remove any custom style on the object you are applying it to. If this is not what you want, click Cancel."
 msgstr "Ceļa efekts \"rādīt turus\" atcels jebkuru pielāgoto stilu objektam, kuram to pielietosiet. Ja tas tas, ko sagaidāt, nospiediet Atcelt."
 
-#: ../src/live_effects/lpe-simplify.cpp:29
+#: ../src/live_effects/lpe-simplify.cpp:30
 msgid "Steps:"
 msgstr "Soļi:"
 
-#: ../src/live_effects/lpe-simplify.cpp:29
+#: ../src/live_effects/lpe-simplify.cpp:30
 msgid "Change number of simplify steps "
 msgstr "Norādiet vienkāršošanas soļu skaitu"
 
-#: ../src/live_effects/lpe-simplify.cpp:30
+#: ../src/live_effects/lpe-simplify.cpp:31
 #, fuzzy
 msgid "Roughly threshold:"
 msgstr "S_lieksnis..."
 
-#: ../src/live_effects/lpe-simplify.cpp:31
-#, fuzzy
-msgid "Helper size:"
-msgstr "Subversion palīgprogramma"
-
-#: ../src/live_effects/lpe-simplify.cpp:31
-#, fuzzy
-msgid "Helper size"
-msgstr "Subversion palīgprogramma"
+#: ../src/live_effects/lpe-simplify.cpp:32
+msgid "Smooth angles:"
+msgstr ""
 
 #: ../src/live_effects/lpe-simplify.cpp:32
+msgid "Max degree difference on handles to preform a smooth"
+msgstr ""
+
+#: ../src/live_effects/lpe-simplify.cpp:34
 #, fuzzy
 msgid "Helper nodes"
 msgstr "Subversion palīgprogramma"
 
-#: ../src/live_effects/lpe-simplify.cpp:32
+#: ../src/live_effects/lpe-simplify.cpp:34
 #, fuzzy
 msgid "Show helper nodes"
 msgstr "Rādīt pārveidošanas turus atsevišķiem mezgliem"
 
-#: ../src/live_effects/lpe-simplify.cpp:34
+#: ../src/live_effects/lpe-simplify.cpp:36
 #, fuzzy
 msgid "Helper handles"
 msgstr "Subversion palīgprogramma"
 
-#: ../src/live_effects/lpe-simplify.cpp:34
+#: ../src/live_effects/lpe-simplify.cpp:36
 #, fuzzy
 msgid "Show helper handles"
 msgstr "Rādīt turus"
 
-#: ../src/live_effects/lpe-simplify.cpp:36
+#: ../src/live_effects/lpe-simplify.cpp:38
 #, fuzzy
 msgid "Paths separately"
 msgstr "Vienkāršo ceļus (atsevišķi):"
 
-#: ../src/live_effects/lpe-simplify.cpp:36
+#: ../src/live_effects/lpe-simplify.cpp:38
 msgid "Simplifying paths (separately)"
 msgstr "Vienkāršo ceļus (atsevišķi)"
 
-#: ../src/live_effects/lpe-simplify.cpp:38
+#: ../src/live_effects/lpe-simplify.cpp:40
 #, fuzzy
 msgid "Just coalesce"
 msgstr "Tikai tagad..."
 
-#: ../src/live_effects/lpe-simplify.cpp:38
+#: ../src/live_effects/lpe-simplify.cpp:40
 #, fuzzy
 msgid "Simplify just coalesce"
 msgstr "Vienkāršot:"
@@ -10158,7 +10203,7 @@ msgstr "Piesaistīt ceļam starpliktuvē"
 msgid "Paste path parameter"
 msgstr "Ielīmēt ceļa parametru"
 
-#: ../src/live_effects/parameter/point.cpp:89 ../src/live_effects/parameter/pointreseteable.cpp:103
+#: ../src/live_effects/parameter/point.cpp:103
 msgid "Change point parameter"
 msgstr "Mainīt punkta parametru"
 
@@ -11325,11 +11370,11 @@ msgstr "Izmantojiet <b>Shift+D</b>, lai sameklētu rāmi"
 
 #: ../src/selection-describer.cpp:236
 #, c-format
-msgid "<b>%i</b> objects selected of type %s"
-msgid_plural "<b>%i</b> objects selected of types %s"
-msgstr[0] "izvēlēts <b>%i</b> objekts ar tipu %s"
-msgstr[1] "izvēlēti <b>%i</b> objekti  ar tipu %s"
-msgstr[2] "izvēlēti <b>%i</b> objekti  ar tipu %s"
+msgid "<b>%1$i</b> objects selected of type %2$s"
+msgid_plural "<b>%1$i</b> objects selected of types %2$s"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #: ../src/selection-describer.cpp:246
 #, c-format
@@ -17611,7 +17656,7 @@ msgid "Filter effects quality for display"
 msgstr "Filtru efektu kvalitāte attēlošanai uz ekrāna"
 
 #. build custom preferences tab
-#: ../src/ui/dialog/inkscape-preferences.cpp:1428 ../src/ui/dialog/print.cpp:232
+#: ../src/ui/dialog/inkscape-preferences.cpp:1428 ../src/ui/dialog/print.cpp:215
 msgid "Rendering"
 msgstr "Renderēšana"
 
@@ -17928,7 +17973,7 @@ msgstr "Aparatūra"
 msgid "Link:"
 msgstr "Saite:"
 
-#: ../src/ui/dialog/input.cpp:742 ../src/ui/dialog/input.cpp:743 ../src/ui/dialog/input.cpp:1571 ../src/widgets/mesh-toolbar.cpp:499
+#: ../src/ui/dialog/input.cpp:742 ../src/ui/dialog/input.cpp:743 ../src/ui/dialog/input.cpp:1571
 msgid "None"
 msgstr "Neviens"
 
@@ -18736,20 +18781,20 @@ msgstr "Izkārtot gar elipsi"
 msgid "Could not open temporary PNG for bitmap printing"
 msgstr "Nav iespējams atvērt pagaidu PNG bitkartes drukāšanai"
 
-#: ../src/ui/dialog/print.cpp:155
+#: ../src/ui/dialog/print.cpp:138
 msgid "Could not set up Document"
 msgstr "Neizdevās izveidot dokumentu"
 
-#: ../src/ui/dialog/print.cpp:159
+#: ../src/ui/dialog/print.cpp:142
 msgid "Failed to set CairoRenderContext"
 msgstr "Neizdevās iestatīt CairoRenderContext"
 
 #. set up dialog title, based on document name
-#: ../src/ui/dialog/print.cpp:197
+#: ../src/ui/dialog/print.cpp:180
 msgid "SVG Document"
 msgstr "SVG dokuments"
 
-#: ../src/ui/dialog/print.cpp:198
+#: ../src/ui/dialog/print.cpp:181
 msgid "Print"
 msgstr "Drukāt"
 
@@ -21399,7 +21444,7 @@ msgstr "MetadataLicence|Citas"
 
 #: ../src/ui/widget/licensor.cpp:72
 msgid "Document license updated"
-msgstr ""
+msgstr "Dokumenta licence atsvaidzināta"
 
 #: ../src/ui/widget/object-composite-settings.cpp:47 ../src/ui/widget/selected-style.cpp:1119 ../src/ui/widget/selected-style.cpp:1120
 msgid "Opacity (%)"
@@ -24293,14 +24338,14 @@ msgstr "Loks: mainīt sākumu/beigas"
 msgid "Arc: Change open/closed"
 msgstr "Loks: mainīt uz atvērtu/slēgtu"
 
-#: ../src/widgets/arc-toolbar.cpp:289 ../src/widgets/arc-toolbar.cpp:319 ../src/widgets/rect-toolbar.cpp:261 ../src/widgets/rect-toolbar.cpp:300 ../src/widgets/spiral-toolbar.cpp:214 ../src/widgets/spiral-toolbar.cpp:238
+#: ../src/widgets/arc-toolbar.cpp:289 ../src/widgets/arc-toolbar.cpp:319 ../src/widgets/rect-toolbar.cpp:260 ../src/widgets/rect-toolbar.cpp:299 ../src/widgets/spiral-toolbar.cpp:214 ../src/widgets/spiral-toolbar.cpp:238
 #: ../src/widgets/star-toolbar.cpp:384 ../src/widgets/star-toolbar.cpp:446
 msgid "<b>New:</b>"
 msgstr "<b>Jauns:</b>"
 
 #. FIXME: implement averaging of all parameters for multiple selected
 #. gtk_label_set_markup(GTK_LABEL(l), _("<b>Average:</b>"));
-#: ../src/widgets/arc-toolbar.cpp:292 ../src/widgets/arc-toolbar.cpp:303 ../src/widgets/rect-toolbar.cpp:269 ../src/widgets/rect-toolbar.cpp:287 ../src/widgets/spiral-toolbar.cpp:216 ../src/widgets/spiral-toolbar.cpp:227
+#: ../src/widgets/arc-toolbar.cpp:292 ../src/widgets/arc-toolbar.cpp:303 ../src/widgets/rect-toolbar.cpp:268 ../src/widgets/rect-toolbar.cpp:286 ../src/widgets/spiral-toolbar.cpp:216 ../src/widgets/spiral-toolbar.cpp:227
 #: ../src/widgets/star-toolbar.cpp:386
 msgid "<b>Change:</b>"
 msgstr "<b>Mainīt:</b>"
@@ -25225,7 +25270,7 @@ msgid "Display measuring info for selected items"
 msgstr "Rādīt atlasīto objektu mērījumu informāciju"
 
 #. Add the units menu.
-#: ../src/widgets/lpe-toolbar.cpp:387 ../src/widgets/node-toolbar.cpp:613 ../src/widgets/paintbucket-toolbar.cpp:168 ../src/widgets/rect-toolbar.cpp:379 ../src/widgets/select-toolbar.cpp:538
+#: ../src/widgets/lpe-toolbar.cpp:387 ../src/widgets/node-toolbar.cpp:613 ../src/widgets/paintbucket-toolbar.cpp:168 ../src/widgets/rect-toolbar.cpp:378 ../src/widgets/select-toolbar.cpp:538
 msgid "Units"
 msgstr "Mērvienības"
 
@@ -25254,7 +25299,7 @@ msgid "The units to be used for the measurements"
 msgstr "Mērīšanai izmantojamās mērvienības"
 
 #: ../src/widgets/mesh-toolbar.cpp:311
-msgid "Set mesh smoothing"
+msgid "Set mesh type"
 msgstr ""
 
 #: ../src/widgets/mesh-toolbar.cpp:334
@@ -25322,47 +25367,27 @@ msgid "Show side and tensor handles"
 msgstr "Rādīt malas un tenzora turus"
 
 #: ../src/widgets/mesh-toolbar.cpp:463
-msgid "WARNING: Mesh SVG Syntax Subject to Change, Smoothing Experimental"
+msgid "WARNING: Mesh SVG Syntax Subject to Change"
 msgstr ""
 
 #: ../src/widgets/mesh-toolbar.cpp:473
-msgctxt "Smoothing"
-msgid "None"
+msgctxt "Type"
+msgid "Coons"
+msgstr ""
+
+#: ../src/widgets/mesh-toolbar.cpp:476
+msgid "Bicubic"
+msgstr ""
+
+#: ../src/widgets/mesh-toolbar.cpp:478
+msgid "Coons"
 msgstr ""
 
 #: ../src/widgets/mesh-toolbar.cpp:479
-msgid "Smooth1"
+msgid "Coons: no smoothing. Bicubic: smoothing across patch boundaries."
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:482
-msgid "Smooth2"
-msgstr ""
-
-#: ../src/widgets/mesh-toolbar.cpp:485
-msgid "Smooth3"
-msgstr ""
-
-#: ../src/widgets/mesh-toolbar.cpp:488
-msgid "Smooth4"
-msgstr ""
-
-#: ../src/widgets/mesh-toolbar.cpp:491
-msgid "Smooth5"
-msgstr ""
-
-#: ../src/widgets/mesh-toolbar.cpp:494
-msgid "Smooth6"
-msgstr ""
-
-#: ../src/widgets/mesh-toolbar.cpp:497
-msgid "Smooth7"
-msgstr ""
-
-#: ../src/widgets/mesh-toolbar.cpp:500
-msgid "If the mesh should be smoothed across patch boundaries."
-msgstr ""
-
-#: ../src/widgets/mesh-toolbar.cpp:502 ../src/widgets/pencil-toolbar.cpp:278
+#: ../src/widgets/mesh-toolbar.cpp:481 ../src/widgets/pencil-toolbar.cpp:278
 msgid "Smoothing:"
 msgstr "Nogludināšana:"
 
@@ -25771,55 +25796,55 @@ msgstr "Atiestatīt zīmuļa parametrus uz noklusētajiem (izmantojiet Inkscape 
 msgid "Change rectangle"
 msgstr "Izveidot taisnstūri"
 
-#: ../src/widgets/rect-toolbar.cpp:318
+#: ../src/widgets/rect-toolbar.cpp:317
 msgid "W:"
 msgstr "P:"
 
-#: ../src/widgets/rect-toolbar.cpp:318
+#: ../src/widgets/rect-toolbar.cpp:317
 msgid "Width of rectangle"
 msgstr "Taisnstūra platums"
 
-#: ../src/widgets/rect-toolbar.cpp:335
+#: ../src/widgets/rect-toolbar.cpp:334
 msgid "H:"
 msgstr "H:"
 
-#: ../src/widgets/rect-toolbar.cpp:335
+#: ../src/widgets/rect-toolbar.cpp:334
 msgid "Height of rectangle"
 msgstr "Taisnstūra augstums"
 
-#: ../src/widgets/rect-toolbar.cpp:349 ../src/widgets/rect-toolbar.cpp:364
+#: ../src/widgets/rect-toolbar.cpp:348 ../src/widgets/rect-toolbar.cpp:363
 msgid "not rounded"
 msgstr "nav noapaļoti"
 
-#: ../src/widgets/rect-toolbar.cpp:352
+#: ../src/widgets/rect-toolbar.cpp:351
 msgid "Horizontal radius"
 msgstr "Horizontālais rādiuss"
 
-#: ../src/widgets/rect-toolbar.cpp:352
+#: ../src/widgets/rect-toolbar.cpp:351
 msgid "Rx:"
 msgstr "Rx:"
 
-#: ../src/widgets/rect-toolbar.cpp:352
+#: ../src/widgets/rect-toolbar.cpp:351
 msgid "Horizontal radius of rounded corners"
 msgstr "Noapaļoto stūru horizontālais rādiuss"
 
-#: ../src/widgets/rect-toolbar.cpp:367
+#: ../src/widgets/rect-toolbar.cpp:366
 msgid "Vertical radius"
 msgstr "Vertikālais rādiuss"
 
-#: ../src/widgets/rect-toolbar.cpp:367
+#: ../src/widgets/rect-toolbar.cpp:366
 msgid "Ry:"
 msgstr "Ry:"
 
-#: ../src/widgets/rect-toolbar.cpp:367
+#: ../src/widgets/rect-toolbar.cpp:366
 msgid "Vertical radius of rounded corners"
 msgstr "Noapaļoto stūru vertikālais rādiuss"
 
-#: ../src/widgets/rect-toolbar.cpp:386
+#: ../src/widgets/rect-toolbar.cpp:385
 msgid "Not rounded"
 msgstr "Nenoapaļoti"
 
-#: ../src/widgets/rect-toolbar.cpp:387
+#: ../src/widgets/rect-toolbar.cpp:386
 msgid "Make corners sharp"
 msgstr "Padarīt stūrus asus"
 
@@ -27194,7 +27219,7 @@ msgstr "Zema precizitāte vienkāršo ceļus, augsta precizitāte saglabā ceļa
 msgid "Use the pressure of the input device to alter the force of tweak action"
 msgstr "Izmantojiet spiedienu uz ievadierīci, lai mainītu pieskaņošanas darbības spēku"
 
-#: ../share/extensions/convert2dashes.py:93
+#: ../share/extensions/convert2dashes.py:100
 msgid ""
 "The selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
@@ -27252,11 +27277,11 @@ msgstr "Atrastas un ignorētas %d POLYLINE tipa ENTITIES. Lūdzu, mēģiniet pā
 msgid "Failed to import the numpy or numpy.linalg modules. These modules are required by this extension. Please install them and try again."
 msgstr "Neizdevās importēt numpy vai numpy.linalg moduļus. Šie moduļi ir nepieciešami šim paplašinājuma. Lūdzu, uzstādiet tos un mēģiniet vēlreiz."
 
-#: ../share/extensions/dxf_outlines.py:300
+#: ../share/extensions/dxf_outlines.py:299
 msgid "Error: Field 'Layer match name' must be filled when using 'By name match' option"
 msgstr "Kļūda: laukam 'Slāņa nosaukuma atbilstība' jābūt aizpildītam, ja izmantojat 'Pēc nosaukuma atbilstības' papildiespēju"
 
-#: ../share/extensions/dxf_outlines.py:341
+#: ../share/extensions/dxf_outlines.py:340
 #, python-format
 msgid "Warning: Layer '%s' not found!"
 msgstr "Uzmanību: slānis '%s' nav atrasts!"
@@ -27293,7 +27318,7 @@ msgid "Need at least 2 paths selected"
 msgstr "Nepieciešami vismaz 2 atlasīti ceļi"
 
 #: ../share/extensions/funcplot.py:48
-msgid "x-interval cannot be zero. Please modify 'Start X value' or 'End X alue'"
+msgid "x-interval cannot be zero. Please modify 'Start X value' or 'End X value'"
 msgstr "x-intervāls nevar būt nulle. Lūdzu, mainiet 'Sākuma X' vai 'Beigu X' vērtības"
 
 #: ../share/extensions/funcplot.py:60
@@ -28619,7 +28644,6 @@ msgid "Text Font:"
 msgstr "Teksta fonts:"
 
 #: ../share/extensions/dxf_input.inx.h:11
-#, fuzzy
 msgid ""
 "- AutoCAD Release 13 and newer.\n"
 "- for manual scaling, assume dxf drawing is in mm.\n"
@@ -28631,10 +28655,12 @@ msgid ""
 "- limited support for BLOCKS, use AutoCAD Explode Blocks instead, if needed."
 msgstr ""
 "- AutoCAD 13 un jaunākām versijām:\n"
-"- pieņemt, ka dxf rasējums ir mm.\n"
+"- mērogošanai ar roku pieņemt, ka dxf rasējums ir mm.\n"
 "- pieņemt, ka svg rasējums ir pikseļos ar izšķirtspēju 96 dpi.\n"
 "- mēroga koeficients un izejas punkts attiecas tikai uz rokas mērogošanu.\n"
-"- slāņi tiek saglabāti tikai Fails->Atvērt gadījumā, Importēt - nē.\n"
+"- 'Automātiskā mērogošana' ietilpinās platumu A4 lapā.\n"
+"- 'Lasīt no datnes' izmanto mainīgo $MEASUREMENT.\n"
+"- slāņi tiek saglabāti tikai Datne->Atvērt gadījumā, Importēt - nē.\n"
 "- ierobežots BLOCKS atbalsts, nepieciešamības gadījumā izmantojiet AutoCAD Explode Blocks."
 
 #: ../share/extensions/dxf_input.inx.h:19
@@ -31598,11 +31624,11 @@ msgstr "Izmantojamā komandu valoda. (Noklusētā: HPGL)"
 
 #: ../share/extensions/plotter.inx.h:12
 msgid "Initialization commands:"
-msgstr ""
+msgstr "Inicializēšanas komandas:"
 
 #: ../share/extensions/plotter.inx.h:13
 msgid "Commands that will be sent to the plotter before the main data stream, only use this if you know what you are doing! (Default: Empty)"
-msgstr ""
+msgstr "Komandas, kas tiks nosūtītas ploterim pirms galvenās datu plūsmas, izmantojiet to tikai gadījumā, ja saprotat, ko darāt (Noklusētais: tukšs)"
 
 #: ../share/extensions/plotter.inx.h:14
 msgid "Software (XON/XOFF)"
@@ -32363,11 +32389,11 @@ msgstr "Mērogojamo vektoru grafika"
 msgid "Seamless Pattern"
 msgstr "Pa_darīt viengabalainu"
 
-#: ../share/extensions/seamless_pattern.inx.h:2
+#: ../share/extensions/seamless_pattern.inx.h:2 ../share/extensions/seamless_pattern_procedural.inx.h:2
 msgid "Custom Width (px):"
 msgstr "Pielāgots platums (piks.):"
 
-#: ../share/extensions/seamless_pattern.inx.h:3
+#: ../share/extensions/seamless_pattern.inx.h:3 ../share/extensions/seamless_pattern_procedural.inx.h:3
 msgid "Custom Height (px):"
 msgstr "Pielāgot augstums (piks.):"
 
@@ -32379,14 +32405,6 @@ msgstr "Šis paplašinājums pārrakstīs atvērto dokumentu"
 #, fuzzy
 msgid "Seamless Pattern Procedural"
 msgstr "Pa_darīt viengabalainu"
-
-#: ../share/extensions/seamless_pattern_procedural.inx.h:2
-msgid "Custom Width (px.):"
-msgstr "Pielāgots platums (piks.):"
-
-#: ../share/extensions/seamless_pattern_procedural.inx.h:3
-msgid "Custom Height (px.):"
-msgstr "Pielāgot augstums (piks.):"
 
 #: ../share/extensions/setup_typography_canvas.inx.h:1
 msgid "1 - Setup Typography Canvas"
@@ -33265,6 +33283,112 @@ msgstr "Bieži lietots galeriju attēlu grafiskais formāts "
 #: ../share/extensions/xaml2svg.inx.h:1
 msgid "XAML Input"
 msgstr "XAML ievade"
+
+#, fuzzy
+#~ msgid "Show helper paths"
+#~ msgstr "Rādīt pārvietojumus starp ceļiem"
+
+#~ msgid "Control handle 0 - Ctrl+Alt+Click to reset"
+#~ msgstr "Vadības turis 0 - Ctrl+Alt+Click, lai atiestatītu "
+
+#~ msgid "Control handle 1 - Ctrl+Alt+Click to reset"
+#~ msgstr "Vadības turis 1 - Ctrl+Alt+Click, lai atiestatītu"
+
+#~ msgid "Control handle 2 - Ctrl+Alt+Click to reset"
+#~ msgstr "Vadības turis 2 - Ctrl+Alt+Click, lai atiestatītu"
+
+#~ msgid "Control handle 3 - Ctrl+Alt+Click to reset"
+#~ msgstr "Vadības turis 3 - Ctrl+Alt+Click, lai atiestatītu"
+
+#~ msgid "Control handle 4 - Ctrl+Alt+Click to reset"
+#~ msgstr "Vadības turis 4 - Ctrl+Alt+Click, lai atiestatītu"
+
+#~ msgid "Control handle 5 - Ctrl+Alt+Click to reset"
+#~ msgstr "Vadības turis 5 - Ctrl+Alt+Click, lai atiestatītu"
+
+#~ msgid "Control handle 6 - Ctrl+Alt+Click to reset"
+#~ msgstr "Vadības turis 6 - Ctrl+Alt+Click, lai atiestatītu"
+
+#~ msgid "Control handle 7 - Ctrl+Alt+Click to reset"
+#~ msgstr "Vadības turis 7 - Ctrl+Alt+Click, lai atiestatītu"
+
+#~ msgid "Control handle 8x9 - Ctrl+Alt+Click to reset"
+#~ msgstr "Vadības turis 8x9 - Ctrl+Alt+Click, lai atiestatītu"
+
+#~ msgid "Control handle 10x11 - Ctrl+Alt+Click to reset"
+#~ msgstr "Vadības turis 10x11 - Ctrl+Alt+Click, lai atiestatītu"
+
+#~ msgid "Control handle 12 - Ctrl+Alt+Click to reset"
+#~ msgstr "Vadības turis 12 - Ctrl+Alt+Click, lai atiestatītu"
+
+#~ msgid "Control handle 13 - Ctrl+Alt+Click to reset"
+#~ msgstr "Vadības turis 13 - Ctrl+Alt+Click, lai atiestatītu"
+
+#~ msgid "Control handle 14 - Ctrl+Alt+Click to reset"
+#~ msgstr "Vadības turis 14 - Ctrl+Alt+Click, lai atiestatītu"
+
+#~ msgid "Control handle 15 - Ctrl+Alt+Click to reset"
+#~ msgstr "Vadības turis 15 - Ctrl+Alt+Click, lai atiestatītu"
+
+#~ msgid "Control handle 16 - Ctrl+Alt+Click to reset"
+#~ msgstr "Vadības turis 16 - Ctrl+Alt+Click, lai atiestatītu"
+
+#~ msgid "Control handle 17 - Ctrl+Alt+Click to reset"
+#~ msgstr "Vadības turis 17 - Ctrl+Alt+Click, lai atiestatītu"
+
+#~ msgid "Control handle 18 - Ctrl+Alt+Click to reset"
+#~ msgstr "Vadības turis 18 - Ctrl+Alt+Click, lai atiestatītu"
+
+#~ msgid "Control handle 19 - Ctrl+Alt+Click to reset"
+#~ msgstr "Vadības turis 19 - Ctrl+Alt+Click, lai atiestatītu"
+
+#~ msgid "Control handle 20x21 - Ctrl+Alt+Click to reset"
+#~ msgstr "Vadības turis 20x21 - Ctrl+Alt+Click, lai atiestatītu"
+
+#~ msgid "Control handle 22x23 - Ctrl+Alt+Click to reset"
+#~ msgstr "Vadības turis 22x23 - Ctrl+Alt+Click, lai atiestatītu"
+
+#~ msgid "Control handle 24x26 - Ctrl+Alt+Click to reset"
+#~ msgstr "Vadības turis 24x26 - Ctrl+Alt+Click, lai atiestatītu"
+
+#~ msgid "Control handle 25x27 - Ctrl+Alt+Click to reset"
+#~ msgstr "Vadības turis 25x27 - Ctrl+Alt+Click, lai atiestatītu"
+
+#~ msgid "Control handle 28x30 - Ctrl+Alt+Click to reset"
+#~ msgstr "Vadības turis 28x30 - Ctrl+Alt+Click, lai atiestatītu"
+
+#~ msgid "Control handle 29x31 - Ctrl+Alt+Click to reset"
+#~ msgstr "Vadības turis 29x31 - Ctrl+Alt+Click, lai atiestatītu"
+
+#~ msgid "Control handle 32x33x34x35 - Ctrl+Alt+Click to reset"
+#~ msgstr "Vadības turis 32x33x34x35 - Ctrl+Alt+Click, lai atiestatītu"
+
+#~ msgid "Top Left - Ctrl+Alt+Click to reset"
+#~ msgstr "Augšējais kreisais - Ctrl+Alt+Click, lai atiestatītu"
+
+#~ msgid "Top Right - Ctrl+Alt+Click to reset"
+#~ msgstr "Augšējais labais - Ctrl+Alt+Click, lai atiestatītu"
+
+#~ msgid "Down Left - Ctrl+Alt+Click to reset"
+#~ msgstr "Apakšējais kreisais - Ctrl+Alt+Click, lai atiestatītu"
+
+#~ msgid "Down Right - Ctrl+Alt+Click to reset"
+#~ msgstr "Apakšējais labais - Ctrl+Alt+Click, lai atiestatītu"
+
+#~ msgid "<b>%i</b> objects selected of type %s"
+#~ msgid_plural "<b>%i</b> objects selected of types %s"
+#~ msgstr[0] "izvēlēts <b>%i</b> objekts ar tipu %s"
+#~ msgstr[1] "izvēlēti <b>%i</b> objekti  ar tipu %s"
+#~ msgstr[2] "izvēlēti <b>%i</b> objekti  ar tipu %s"
+
+#~ msgid "x-interval cannot be zero. Please modify 'Start X value' or 'End X alue'"
+#~ msgstr "x-intervāls nevar būt nulle. Lūdzu, mainiet 'Sākuma X' vai 'Beigu X' vērtības"
+
+#~ msgid "Custom Width (px.):"
+#~ msgstr "Pielāgots platums (piks.):"
+
+#~ msgid "Custom Height (px.):"
+#~ msgstr "Pielāgot augstums (piks.):"
 
 #~ msgid "Select a file of predefined shortcuts to use. Any customized shortcuts you create will be added seperately to "
 #~ msgstr "Izvēlieties datni ar iepriekš definētām saīsnēm. Visas Jūsu izveidotās pielāgotās saīsnes tiks pievienotas pie "
