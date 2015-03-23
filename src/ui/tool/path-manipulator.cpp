@@ -1239,14 +1239,11 @@ int PathManipulator::BSplineGetSteps() const {
 
 // determines if the trace has bspline effect
 void PathManipulator::recalculateIsBSpline(){
-    SPLPEItem * path = dynamic_cast<SPLPEItem *>(_path);
-    if (path){
-        if(path->hasPathEffect()){
-            Inkscape::LivePathEffect::Effect const *thisEffect = path->getPathEffectOfType(Inkscape::LivePathEffect::BSPLINE);
-            if(thisEffect){
-                _is_bspline = true;
-                return;
-            }
+    if (SP_IS_LPE_ITEM(_path) && _path->hasPathEffect()) {
+        Inkscape::LivePathEffect::Effect const *thisEffect = _path->getPathEffectOfType(Inkscape::LivePathEffect::BSPLINE);
+        if(thisEffect){
+            _is_bspline = true;
+            return;
         }
     }
     _is_bspline = false;
@@ -1350,22 +1347,19 @@ void PathManipulator::_createGeometryFromControlPoints(bool alert_LPE)
     _spcurve->set_pathvector(pathv);
     if (alert_LPE) {
         /// \todo note that _path can be an Inkscape::LivePathEffect::Effect* too, kind of confusing, rework member naming?
-        SPLPEItem * path = dynamic_cast<SPLPEItem *>(_path);
-        if (path){
-            if(path->hasPathEffect()){
-                Inkscape::LivePathEffect::Effect* thisEffect = path->getPathEffectOfType(Inkscape::LivePathEffect::POWERSTROKE);
-                if(thisEffect){
-                    LivePathEffect::LPEPowerStroke *lpe_pwr = dynamic_cast<LivePathEffect::LPEPowerStroke*>(thisEffect->getLPEObj()->get_lpe());
-                    if (lpe_pwr) {
-                        lpe_pwr->adjustForNewPath(pathv);
-                    }
+        if (SP_IS_LPE_ITEM(_path) && _path->hasPathEffect()) {
+            Inkscape::LivePathEffect::Effect* thisEffect = _path->getPathEffectOfType(Inkscape::LivePathEffect::POWERSTROKE);
+            if(thisEffect){
+                LivePathEffect::LPEPowerStroke *lpe_pwr = dynamic_cast<LivePathEffect::LPEPowerStroke*>(thisEffect->getLPEObj()->get_lpe());
+                if (lpe_pwr) {
+                    lpe_pwr->adjustForNewPath(pathv);
                 }
-                thisEffect = path->getPathEffectOfType(Inkscape::LivePathEffect::FILLET_CHAMFER);
-                if(thisEffect){
-                    LivePathEffect::LPEFilletChamfer *lpe_fll = dynamic_cast<LivePathEffect::LPEFilletChamfer*>(thisEffect->getLPEObj()->get_lpe());
-                    if (lpe_fll) {
-                        lpe_fll->adjustForNewPath(pathv);
-                    }
+            }
+            thisEffect = _path->getPathEffectOfType(Inkscape::LivePathEffect::FILLET_CHAMFER);
+            if(thisEffect){
+                LivePathEffect::LPEFilletChamfer *lpe_fll = dynamic_cast<LivePathEffect::LPEFilletChamfer*>(thisEffect->getLPEObj()->get_lpe());
+                if (lpe_fll) {
+                    lpe_fll->adjustForNewPath(pathv);
                 }
             }
         }
