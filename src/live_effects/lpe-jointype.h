@@ -37,7 +37,6 @@ private:
     //ScalarParam end_lean;
     ScalarParam miter_limit;
     BoolParam attempt_force_join;
-    bool was_initialized;
 };
 
 } //namespace LivePathEffect

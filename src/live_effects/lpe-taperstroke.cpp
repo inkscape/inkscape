@@ -186,17 +186,7 @@ static Geom::Path return_at_first_cusp(Geom::Path const & path_in, double /*smoo
     return temp;
 }
 
-static Geom::CubicBezier sbasis_to_cubicbezier(Geom::D2<Geom::SBasis> const & sbasis_in)
-{
-    std::vector<Geom::Point> temp;
-    Geom::sbasis_to_bezier(temp, sbasis_in, 4);
-    return Geom::CubicBezier( temp );
-}
-
 Piecewise<D2<SBasis> > stretch_along(Piecewise<D2<SBasis> > pwd2_in, Geom::Path pattern, double width);
-
-// references to pointers
-void subdivideCurve(Geom::Curve * curve_in, Geom::Coord t, Geom::Curve *& val_first, Geom::Curve *& val_second);
 
 // actual effect
 
@@ -357,85 +347,18 @@ Geom::PathVector LPETaperStroke::doEffect_path(Geom::PathVector const& path_in)
  */
 Geom::PathVector LPETaperStroke::doEffect_simplePath(Geom::PathVector const & path_in)
 {
-    size_t size = path_in[0].size();
+    Geom::Coord endTime = path_in[0].size() - attach_end;
 
-    unsigned loc = (unsigned)attach_start;
-    Geom::Curve * curve_start = path_in[0] [loc].duplicate();
-
-    std::vector<Geom::Path> pathv_out;
-    Geom::Path path_out = Geom::Path();
-
-    Geom::Path trimmed_start = Geom::Path();
-    Geom::Path trimmed_end = Geom::Path();
-
-    for (size_t i = 0; i < loc; ++i) {
-        trimmed_start.append(path_in[0] [i]);
-    }
-
-    Geom::Curve * temp;
-    subdivideCurve(curve_start, attach_start - loc, temp, curve_start);
-    trimmed_start.append(*temp);
-    if (temp) delete temp; temp = 0;
-
-    // special case: path is one segment long
-    // special case: what if the two knots occupy the same segment?
-    if ((size == 1) || ( size - unsigned(attach_end) - 1 == loc )) {
-
-        // If you look into it, I don't actually think there is a working way to do this
-        // with only point math. So we use nearest_point instead.
-        Geom::Coord t = Geom::nearest_point(end_attach_point, *curve_start);
-
-        // it is just a dumb segment
-        // we have to do some shifting here because the value changed when we reduced the length
-        // of the previous segment.
-
-        subdivideCurve(curve_start, t, curve_start, temp);
-        trimmed_end.append(*temp);
-        if (temp) delete temp; temp = 0;
-        
-        for (size_t j = (size - attach_end) + 1; j < size; ++j) {
-            trimmed_end.append(path_in[0] [j]);
-        }
-
-        path_out.append(*curve_start);
-        pathv_out.push_back(trimmed_start);
-        pathv_out.push_back(path_out);
-        pathv_out.push_back(trimmed_end);
-        return pathv_out;
-    }
-
-    pathv_out.push_back(trimmed_start);
-
-    // append almost all of the rest of the path, ignore the curves that the knot is past (we'll get to it in a minute)
-    path_out.append(*curve_start);
-
-    for (size_t k = loc + 1; k < (size - unsigned(attach_end)) - 1; ++k) {
-        path_out.append(path_in[0] [k]);
-    }
-
-    // deal with the last segment in a very similar fashion to the first
-    loc = size - attach_end;
-
-    Geom::Curve * curve_end = path_in[0] [loc].duplicate();
-
-    Geom::Coord t = Geom::nearest_point(end_attach_point, *curve_end);
-
-    subdivideCurve(curve_end, t, curve_end, temp);
-    trimmed_end.append(*temp);
-    if (temp) delete temp; temp = 0;
-
-    for (size_t j = (size - attach_end) + 1; j < size; ++j) {
-        trimmed_end.append(path_in[0] [j]);
-    }
-
-    path_out.append(*curve_end);
-    pathv_out.push_back(path_out);
-
-    pathv_out.push_back(trimmed_end);
-
-    if (curve_end) delete curve_end;
-    if (curve_start) delete curve_start;
-    return pathv_out;
+    Geom::Path p1 = path_in[0].portion(0., attach_start);
+    Geom::Path p2 = path_in[0].portion(attach_start, endTime);
+    Geom::Path p3 = path_in[0].portion(endTime, path_in[0].size());
+    
+    Geom::PathVector out;
+    out.push_back(p1);
+    out.push_back(p2);
+    out.push_back(p3);
+    
+    return out;
 }
 
 
@@ -522,23 +445,6 @@ Piecewise<D2<SBasis> > stretch_along(Piecewise<D2<SBasis> > pwd2_in, Geom::Path 
         return pwd2_in;
     }
 }
-
-void subdivideCurve(Geom::Curve * curve_in, Geom::Coord t, Geom::Curve *& val_first, Geom::Curve *& val_second)
-{
-    if (Geom::LineSegment* linear = dynamic_cast<Geom::LineSegment*>(curve_in)) {
-        // special case for line segments
-        std::pair<Geom::LineSegment, Geom::LineSegment> seg_pair = linear->subdivide(t);
-        val_first = seg_pair.first.duplicate();
-        val_second = seg_pair.second.duplicate();
-    } else {
-        // all other cases:
-        Geom::CubicBezier cubic = sbasis_to_cubicbezier(curve_in->toSBasis());
-        std::pair<Geom::CubicBezier, Geom::CubicBezier> cubic_pair = cubic.subdivide(t);
-        val_first = cubic_pair.first.duplicate();
-        val_second = cubic_pair.second.duplicate();
-    }
-}
-
 
 void LPETaperStroke::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item)
 {
