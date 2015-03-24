@@ -37,6 +37,7 @@
 #include <2geom/choose.h>
 #include <2geom/path-sink.h>
 #include <2geom/exception.h>
+#include <2geom/convex-cover.h>
 
 #include <iostream>
 
@@ -203,11 +204,8 @@ void sbasis_to_cubic_bezier (std::vector<Point> & bz, D2<SBasis> const& sb)
         THROW_RANGEERROR("size of sb is too small");
     }
 
-    bz.resize(4, Point(0,0));
-    bz[0][X] = sb[X][0][0];
-    bz[0][Y] = sb[Y][0][0];
-    bz[3][X] = sb[X][0][1];
-    bz[3][Y] = sb[Y][0][1];
+    sbasis_to_bezier(bz, sb, 4);  // zeroth-order estimate
+    Geom::ConvexHull bezhull(bz);
 
 //  calculate first derivatives of x and y wrt t
 
@@ -231,16 +229,22 @@ void sbasis_to_cubic_bezier (std::vector<Point> & bz, D2<SBasis> const& sb)
         midx += (sb[X][i][0] + sb[X][i][1])/div;
         div *= 4;
     }
-    midx = 8*midx - 4*bz[0][X] - 4*bz[3][X];
 
     div = 2;
     for (size_t i = 0; i < sb[Y].size(); ++i) {
         midy += (sb[Y][i][0] + sb[Y][i][1])/div;
         div *= 4;
     }
-    midy = 8*midy - 4*bz[0][Y] - 4*bz[3][Y];
+
+//  is midpoint in hull: if not, the solution will be ill-conditioned, LP Bug 1428683
+
+    if (!bezhull.contains_point(Geom::Point(midx, midy)))
+        return;
 
 //  calculate Bezier control arms
+
+    midx = 8*midx - 4*bz[0][X] - 4*bz[3][X];  // re-define relative to center
+    midy = 8*midy - 4*bz[0][Y] - 4*bz[3][Y];
 
     if ((std::abs(xprime[0]) < EPSILON) && (std::abs(yprime[0]) < EPSILON)
     && ((std::abs(xprime[1]) > EPSILON) || (std::abs(yprime[1]) > EPSILON)))  { // degenerate handle at 0 : use distance of closest approach
@@ -258,7 +262,8 @@ void sbasis_to_cubic_bezier (std::vector<Point> & bz, D2<SBasis> const& sb)
         dely[0] = yprime[0]*numer/denom;
         delx[1] = 0;
         dely[1] = 0;
-    } else if (std::abs(xprime[1]*yprime[0] - yprime[1]*xprime[0]) > EPSILON) { // general case : fit mid fxn value
+    } else if  (std::abs(xprime[1]*yprime[0] - yprime[1]*xprime[0]) >  // general case : fit mid fxn value
+        0.002 * std::abs(xprime[1]*xprime[0] + yprime[1]*yprime[0])) { // approx. 0.1 degree of angle
         denom = xprime[1]*yprime[0] - yprime[1]*xprime[0];
         for (int i = 0; i < 2; ++i) {
             numer = xprime[1 - i]*midy - yprime[1 - i]*midx;

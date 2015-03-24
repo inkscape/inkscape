@@ -16,6 +16,7 @@ templates_DATA = \
 	default.fi.svg \
 	default.fr.svg \
 	default.hu.svg \
+	default.is.svg \
 	default.it.svg \
 	default.ja.svg \
 	default.lt.svg \
@@ -44,6 +45,7 @@ templates_i18n = \
 	default.fi.svg \
 	default.fr.svg \
 	default.hu.svg \
+	default.is.svg \
 	default.it.svg \
 	default.ja.svg \
 	default.lt.svg \

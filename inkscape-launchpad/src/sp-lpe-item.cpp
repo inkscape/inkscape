@@ -263,7 +263,7 @@ bool SPLPEItem::performPathEffect(SPCurve *curve) {
                 }
                 if (!SP_IS_GROUP(this)) {
                     lpe->doAfterEffect(this);
-		}
+                }
             }
         }
     }

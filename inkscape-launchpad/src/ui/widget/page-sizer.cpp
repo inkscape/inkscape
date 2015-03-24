@@ -26,6 +26,7 @@
 #include <cmath>
 #include <string>
 #include <string.h>
+#include <sstream>
 #include <vector>
 
 #include <glibmm/i18n.h>
@@ -240,6 +241,14 @@ PageSizer::PageSizer(Registry & _wr)
       _marginRight( _("Ri_ght:"), _("Right margin"), "fit-margin-right", _wr),
       _marginBottom( _("Botto_m:"), _("Bottom margin"), "fit-margin-bottom", _wr),
       _lockMarginUpdate(false),
+      _scaleX(_("Scale _x:"), _("Scale X"), "scale-x", _wr),
+      _scaleY(_("Scale _y:"), _("Scale Y"), "scale-y", _wr),
+      _lockScaleUpdate(false),
+      _viewboxX(_("X:"),      _("X"),      "viewbox-x", _wr),
+      _viewboxY(_("Y:"),      _("Y"),      "viewbox-y", _wr),
+      _viewboxW(_("Width:"),  _("Width"),  "viewbox-width", _wr),
+      _viewboxH(_("Height:"), _("Height"), "viewbox-height", _wr),
+      _lockViewboxUpdate(false),
       _widgetRegistry(&_wr)
 {
     // set precision of scalar entry boxes
@@ -250,6 +259,22 @@ PageSizer::PageSizer(Registry & _wr)
     _marginLeft.setDigits(5);
     _marginRight.setDigits(5);
     _marginBottom.setDigits(5);
+    _scaleX.setDigits(5);
+    _scaleY.setDigits(5);
+    _viewboxX.setDigits(2);
+    _viewboxY.setDigits(2);
+    _viewboxW.setDigits(2);
+    _viewboxH.setDigits(2);
+
+    _scaleX.setRange( 0.00001, 100000 );
+    _scaleY.setRange( 0.00001, 100000 );
+    _viewboxX.setRange( -100000, 100000 );
+    _viewboxY.setRange( -100000, 100000 );
+    _viewboxW.setRange( 0, 200000 );
+    _viewboxH.setRange( 0, 200000 );
+
+    _scaleY.set_sensitive (false); // We only want to display Y scale.
+
     _wr.setUpdating (false);
 
     //# Set up the Paper Size combo box
@@ -318,6 +343,7 @@ PageSizer::PageSizer(Registry & _wr)
     }
     _wr.setUpdating (false);
     
+
     //## Set up custom size frame
     _customFrame.set_label(_("Custom size"));
     pack_start (_customFrame, false, false, 0);
@@ -419,6 +445,75 @@ PageSizer::PageSizer(Registry & _wr)
     _fitPageButton.set_label(_("_Resize page to drawing or selection"));
     _fitPageButton.set_tooltip_text(_("Resize the page to fit the current selection, or the entire drawing if there is no selection"));
 
+    _scaleFrame.set_label(_("Scale"));
+    pack_start (_scaleFrame, false, false, 0);
+    _scaleFrame.add(_scaleTable);
+
+    _scaleTable.set_border_width(4);
+
+#if WITH_GTKMM_3_0
+    _scaleTable.set_row_spacing(4);
+    _scaleTable.set_column_spacing(4);
+
+    _scaleTable.attach(_scaleX,        0, 0, 1, 1);
+    _scaleTable.attach(_scaleY,        1, 0, 1, 1);
+
+    _scaleTable.attach(_scaleLabel,    2, 0, 1, 1);
+    _scaleTable.attach(_scaleWarning,  0, 1, 2, 1);
+    _viewboxExpander.set_hexpand();
+    _viewboxExpander.set_vexpand();
+    _scaleTable.attach(_viewboxExpander, 0, 2, 2, 1);
+#else
+    _scaleTable.resize(3, 2);
+    _scaleTable.set_row_spacings(4);
+    _scaleTable.set_col_spacings(4);
+    _scaleTable.attach(_scaleX,        0,1, 0,1);
+    _scaleTable.attach(_scaleY,        1,2, 0,1);
+    _scaleTable.attach(_scaleLabel,    2,3, 0,1);
+    _scaleTable.attach(_scaleWarning,  0,3, 1,2, Gtk::FILL);
+    _scaleTable.attach(_viewboxExpander, 0,3, 2,3);
+#endif
+    
+    _scaleWarning.set_label(_("While SVG allows non-uniform scaling it is recommended to use only uniform scaling in Inkscape. To set a non-uniform scaling, set the 'viewBox' directly."));
+    _scaleWarning.set_line_wrap( true );
+
+    _viewboxExpander.set_use_underline();
+    _viewboxExpander.set_label(_("_Viewbox..."));
+    _viewboxExpander.add(_viewboxTable);
+
+#if WITH_GTKMM_3_0
+    _viewboxTable.set_row_spacing(2);
+    _viewboxTable.set_column_spacing(2);
+
+    _viewboxX.set_hexpand();
+    _viewboxX.set_vexpand();
+    _viewboxTable.attach(_viewboxX,      0, 0, 1, 1);
+
+    _viewboxY.set_hexpand();
+    _viewboxY.set_vexpand();
+    _viewboxTable.attach(_viewboxY,      1, 0, 1, 1);
+
+    _viewboxW.set_hexpand();
+    _viewboxW.set_vexpand();
+    _viewboxTable.attach(_viewboxW,      0, 1, 1, 1);
+
+    _viewboxH.set_hexpand();
+    _viewboxH.set_vexpand();
+    _viewboxTable.attach(_viewboxH,      1, 1, 1, 1);
+
+#else
+    _viewboxTable.set_border_width(4);
+    _viewboxTable.set_row_spacings(2);
+    _viewboxTable.set_col_spacings(2);
+    _viewboxTable.attach(_viewboxX,     0,1, 0,1);
+    _viewboxTable.attach(_viewboxY,     1,2, 0,1);
+    _viewboxTable.attach(_viewboxW,     0,1, 1,2);
+    _viewboxTable.attach(_viewboxH,     1,2, 1,2);
+#endif
+
+    _wr.setUpdating (true);
+    updateScaleUI();
+    _wr.setUpdating (false);
 }
 
 
@@ -444,7 +539,11 @@ PageSizer::init ()
     _changedh_connection = _dimensionHeight.signal_value_changed().connect (sigc::mem_fun (*this, &PageSizer::on_value_changed));
     _changedu_connection = _dimensionUnits.getUnitMenu()->signal_changed().connect (sigc::mem_fun (*this, &PageSizer::on_units_changed));
     _fitPageButton.signal_clicked().connect(sigc::mem_fun(*this, &PageSizer::fire_fit_canvas_to_selection_or_drawing));
-
+    _changeds_connection  = _scaleX.signal_value_changed().connect (sigc::mem_fun (*this, &PageSizer::on_scale_changed));
+    _changedvx_connection = _viewboxX.signal_value_changed().connect (sigc::mem_fun (*this, &PageSizer::on_viewbox_changed));
+    _changedvy_connection = _viewboxY.signal_value_changed().connect (sigc::mem_fun (*this, &PageSizer::on_viewbox_changed));
+    _changedvw_connection = _viewboxW.signal_value_changed().connect (sigc::mem_fun (*this, &PageSizer::on_viewbox_changed));
+    _changedvh_connection = _viewboxH.signal_value_changed().connect (sigc::mem_fun (*this, &PageSizer::on_viewbox_changed));
     show_all_children();
 }
 
@@ -511,6 +610,7 @@ PageSizer::setDim (Inkscape::Util::Quantity w, Inkscape::Util::Quantity h, bool 
     _dimensionWidth.setValue (w.quantity);
     _dimensionHeight.setUnit(h.unit->abbr);
     _dimensionHeight.setValue (h.quantity);
+
 
     _paper_size_list_connection.unblock();
     _landscape_connection.unblock();
@@ -701,6 +801,88 @@ PageSizer::on_landscape()
     }
 }
 
+
+/**
+ * Update scale widgets
+ */
+void
+PageSizer::updateScaleUI()
+{
+
+    static bool _called = false;
+    if (_called) {
+        return;
+    }
+
+    _called = true;
+
+    _changeds_connection.block();
+    _changedvx_connection.block();
+    _changedvy_connection.block();
+    _changedvw_connection.block();
+    _changedvh_connection.block();
+
+    SPDesktop *dt = SP_ACTIVE_DESKTOP;
+    if (dt) {
+        SPDocument *doc = dt->getDocument();
+
+        // Update scale
+        Geom::Scale scale = doc->getDocumentScale();
+        SPNamedView *nv = dt->getNamedView();
+
+        std::stringstream ss;
+        ss << _("User units per ") << nv->display_units->abbr << "." ;
+        _scaleLabel.set_text( ss.str() );
+
+        if( !_lockScaleUpdate ) {
+
+            double scaleX_inv =
+                Inkscape::Util::Quantity::convert( scale[Geom::X], "px", nv->display_units );
+            if( scaleX_inv > 0 ) {
+                _scaleX.setValue(1.0/scaleX_inv);
+            } else {
+                // Should never happen
+                std::cerr << "PageSizer::updateScaleUI(): Invalid scale value: " << scaleX_inv << std::endl;
+                _scaleX.setValue(1.0);
+            }
+        }
+
+        {  // Don't need to lock as scaleY widget not linked to callback.
+            double scaleY_inv =
+                Inkscape::Util::Quantity::convert( scale[Geom::Y], "px", nv->display_units );
+            if( scaleY_inv > 0 ) {
+                _scaleY.setValue(1.0/scaleY_inv);
+            } else {
+                // Should never happen
+                std::cerr << "PageSizer::updateScaleUI(): Invalid scale value: " << scaleY_inv << std::endl;
+                _scaleY.setValue(1.0);
+            }
+        }
+
+        if( !_lockViewboxUpdate ) {
+            Geom::Rect viewBox = doc->getViewBox();
+            _viewboxX.setValue( viewBox.min()[Geom::X] );
+            _viewboxY.setValue( viewBox.min()[Geom::Y] );
+            _viewboxW.setValue( viewBox.width() );
+            _viewboxH.setValue( viewBox.height() );
+        }
+        
+    } else {
+        // Should never happen
+        std::cerr << "PageSizer::updateScaleUI(): No active desktop." << std::endl;
+        _scaleLabel.set_text( "Unknown scale" );
+    }
+
+    _changeds_connection.unblock();
+    _changedvx_connection.unblock();
+    _changedvy_connection.unblock();
+    _changedvw_connection.unblock();
+    _changedvh_connection.unblock();
+
+    _called = false;
+}
+
+
 /**
  * Callback for the dimension widgets
  */
@@ -712,6 +894,7 @@ PageSizer::on_value_changed()
     setDim (Inkscape::Util::Quantity(_dimensionWidth.getValue(""), _dimensionUnits.getUnit()),
             Inkscape::Util::Quantity(_dimensionHeight.getValue(""), _dimensionUnits.getUnit()));
 }
+
 void
 PageSizer::on_units_changed()
 {
@@ -720,6 +903,63 @@ PageSizer::on_units_changed()
     setDim (Inkscape::Util::Quantity(_dimensionWidth.getValue(""), _dimensionUnits.getUnit()),
             Inkscape::Util::Quantity(_dimensionHeight.getValue(""), _dimensionUnits.getUnit()),
             true, false);
+}
+
+/**
+ * Callback for scale widgets
+ */
+void
+PageSizer::on_scale_changed()
+{
+    if (_widgetRegistry->isUpdating()) return;
+
+    double value = _scaleX.getValue();
+    if( value > 0 ) {
+
+        SPDesktop *dt = SP_ACTIVE_DESKTOP;
+        if (dt) {
+            SPDocument *doc = dt->getDocument();
+            SPNamedView *nv = dt->getNamedView();
+
+            double scaleX_inv = Inkscape::Util::Quantity(1.0/value, nv->display_units ).value("px");
+
+            _lockScaleUpdate = true;
+            doc->setDocumentScale( 1.0/scaleX_inv );
+            updateScaleUI();
+            _lockScaleUpdate = false;
+            DocumentUndo::done(doc, SP_VERB_NONE, _("Set page scale"));
+        }
+    }
+}
+
+/**
+ * Callback for viewbox widgets
+ */
+void
+PageSizer::on_viewbox_changed()
+{
+    if (_widgetRegistry->isUpdating()) return;
+
+    double viewboxX = _viewboxX.getValue();
+    double viewboxY = _viewboxY.getValue();
+    double viewboxW = _viewboxW.getValue();
+    double viewboxH = _viewboxH.getValue();
+
+    if( viewboxW > 0 && viewboxH > 0) {
+        SPDesktop *dt = SP_ACTIVE_DESKTOP;
+        if (dt) {
+            SPDocument *doc = dt->getDocument();
+            _lockViewboxUpdate = true;
+            doc->setViewBox( Geom::Rect::from_xywh( viewboxX, viewboxY, viewboxW, viewboxH ) );
+            updateScaleUI();
+            _lockViewboxUpdate = false;
+            DocumentUndo::done(doc, SP_VERB_NONE, _("Set 'viewBox'"));
+        }
+    } else {
+        std::cerr
+            << "PageSizer::on_viewbox_changed(): width and height must both be greater than zero."
+            << std::endl;
+    }
 }
 
 } // namespace Widget

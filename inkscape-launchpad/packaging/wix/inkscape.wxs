@@ -2,15 +2,18 @@
 <Wix xmlns='http://schemas.microsoft.com/wix/2006/wi' xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
 	<?include version.wxi?>
 
+    <!-- change Product Id for every new version and subversion, do not change UpgradeCode -->
 	<Product Name="$(var.FullProductName)" Id='81922150-317e-4bb0-a31d-ff1c14f707c5' UpgradeCode='4d5fedaa-84a0-48be-bd2a-08246398361a' Language='1033' Codepage='1252' Version='$(var.ProductVersion)' Manufacturer='inkscape.org'>
 
 		<Package Id='*' Keywords='Installer' Description="Inkscape Installer" Comments='inkscape is registered trademark of inkscape.org' Manufacturer='inkscape.org' InstallerVersion='$(var.InstallerVersion)' Platform='$(var.Platform)' Languages='1033' Compressed='yes' SummaryCodepage='1252' />
-
+        
 		<Media Id='1' Cabinet='Sample.cab' EmbedCab='yes' DiskPrompt="CD-ROM #1" />
 		<Property Id='DiskPrompt' Value="inkscape Installation [1]" />
 
 		<Property Id='ALLUSERS' Value="2" />
-
+        
+        <MajorUpgrade DowngradeErrorMessage="A newer version is already installed." />
+		
 		<DirectoryRef Id="ApplicationProgramsFolder">
 			<Component Id="ApplicationShortcut" Guid="37de8ea4-e83a-4e40-8f9c-c6066b78d935" Win64='$(var.Win64)' >
 				<Shortcut Id="ApplicationStartMenuShortcut" 

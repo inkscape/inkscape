@@ -293,7 +293,7 @@ enum SPAttributeEnum {
     SP_ATTR_FY,
     /* SPMeshPatch */
     SP_ATTR_TENSOR,
-    SP_ATTR_MESH_TYPE,
+    //SP_ATTR_TYPE,
     /* SPPattern */
     SP_ATTR_PATTERNUNITS,
     SP_ATTR_PATTERNCONTENTUNITS,

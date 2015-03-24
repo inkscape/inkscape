@@ -47,7 +47,7 @@ protected:
     /** accumulated shape which ultimately goes in svg:path */
     SPCurve *accumulated;
 
-    /** canvas items for "comitted" segments */
+    /** canvas items for "committed" segments */
     GSList *segments;
 
     /** canvas item for red "leading" segment */

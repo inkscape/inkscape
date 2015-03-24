@@ -54,17 +54,24 @@ class SplitIt(inkex.Effect):
         for id, node in self.selected.iteritems():
             if node.tag == inkex.addNS('path','svg'):
                 dashes = []
+                offset = 0
                 style = simplestyle.parseStyle(node.get('style'))
                 if style.has_key('stroke-dasharray'):
                     if style['stroke-dasharray'].find(',') > 0:
                         dashes = [float (dash) for dash in style['stroke-dasharray'].split(',')]
+                if style.has_key('stroke-dashoffset'):
+                    offset = style['stroke-dashoffset']
                 if dashes:
                     p = cubicsuperpath.parsePath(node.get('d'))
                     new = []
                     for sub in p:
                         idash = 0
                         dash = dashes[0]
-                        length = 0
+                        length = float (offset)
+                        while dash < length:
+                            length = length - dash
+                            idash = (idash + 1) % len(dashes)
+                            dash = dashes[idash]
                         new.append([sub[0][:]])
                         i = 1
                         while i < len(sub):

@@ -233,8 +233,8 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
             int n_terms = count_terms((GSList *)items);
             
             gchar *objects_str = g_strdup_printf(ngettext(
-                "<b>%i</b> objects selected of type %s",
-                "<b>%i</b> objects selected of types %s", n_terms),
+                "<b>%1$i</b> objects selected of type %2$s",
+                "<b>%1$i</b> objects selected of types %2$s", n_terms),
                  objcount, terms);
 
             g_free(terms);

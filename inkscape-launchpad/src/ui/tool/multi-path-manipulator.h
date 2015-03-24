@@ -39,7 +39,7 @@ public:
     virtual bool event(Inkscape::UI::Tools::ToolBase *, GdkEvent *event);
 
     bool empty() { return _mmap.empty(); }
-    unsigned size() { return _mmap.empty(); }
+    unsigned size() { return _mmap.size(); }
     void setItems(std::set<ShapeRecord> const &);
     void clear() { _mmap.clear(); }
     void cleanup();

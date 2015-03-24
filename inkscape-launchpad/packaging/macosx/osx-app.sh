@@ -479,6 +479,8 @@ if [ ${add_python} = "true" ]; then
 			$cp_cmd -RL "$packages_path/_imagingcms.so" "$pkgpython"
 			$cp_cmd -RL "$packages_path/_imagingft.so" "$pkgpython"
 			$cp_cmd -RL "$packages_path/_imagingmath.so" "$pkgpython"
+		else  # we build Pillow with +tkinter
+			$cp_cmd -RL "$packages_path/_tkinter.so" "$pkgpython"
 		fi
 		$cp_cmd -RL "$packages_path/sk1libs" "$pkgpython"
 		$cp_cmd -RL "$packages_path/uniconvertor" "$pkgpython"

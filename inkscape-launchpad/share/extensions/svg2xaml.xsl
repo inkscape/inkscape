@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-Copyright (c) 2005-2007 authors:
+Copyright (c) 2005-2015 authors:
 Original version: Toine de Greef (a.degreef@chello.nl)
-Modified (2010-2014) by Nicolas Dufour (nicoduf@yahoo.fr) (blur support, units
+Modified (2010-2015) by Nicolas Dufour (nicoduf@yahoo.fr) (blur support, units
 convertion, comments, and some other fixes)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -34,7 +34,8 @@ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 xmlns:exsl="http://exslt.org/common"
 xmlns:libxslt="http://xmlsoft.org/XSLT/namespace"
-exclude-result-prefixes="rdf xlink xs exsl libxslt">
+xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+exclude-result-prefixes="rdf xlink xs exsl libxslt inkscape">
 
 <xsl:strip-space elements="*" />
 <xsl:output method="xml" encoding="UTF-8" indent="yes"/>
@@ -80,9 +81,8 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
       <Canvas>
         <xsl:apply-templates mode="id" select="." />
         <xsl:apply-templates mode="filter_effect" select="." />
-        <!--
         <xsl:apply-templates mode="clip" select="." />
-        -->
+
         <xsl:if test="@style and contains(@style, 'display:none')">
           <xsl:attribute name="Visibility">Collapsed</xsl:attribute>
         </xsl:if>
@@ -178,6 +178,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
 
   * Parse transform
   * Apply transform
+  * Rotation center
 -->
 
 <!-- 
@@ -414,6 +415,20 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
       </xsl:otherwise>
     </xsl:choose>
   </xsl:if>  
+</xsl:template>
+
+<!--
+  // Rotation center //
+  In XAML, relative to the object's bounding box (RenderTransformOrigin="0.5,0.5"  is the center)
+  Unfortunately, converting would require that the bounding box of all objects and groups is calculated, which is rather complex...
+-->
+<xsl:template mode="rotation-center" match="*">
+  <xsl:if test="@inkscape:transform-center-x">
+<!--    <xsl:attribute name="RenderTransformOrigin">
+      <xsl:value-of select="concat(@inkscape:transform-center-x, ',', @inkscape:transform-center-y)" />
+    </xsl:attribute>
+-->>
+  </xsl:if>
 </xsl:template>
 
 <!--
@@ -2565,6 +2580,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
     <xsl:apply-templates mode="object_opacity" select="." />
     <xsl:apply-templates mode="desc" select="." />
     <xsl:apply-templates mode="clip" select="." />
+
 
     <xsl:apply-templates mode="transform" select=".">
       <xsl:with-param name="mapped_type" select="'Rectangle'" />

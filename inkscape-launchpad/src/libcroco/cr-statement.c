@@ -2011,7 +2011,7 @@ cr_statement_ruleset_set_sel_list (CRStatement * a_this,
  * cr_statement_ruleset_get_declarations:
  *
  *@a_this: the current instance of #CRStatement.
- *@a_decl_list: out parameter. A pointer to the the returned
+ *@a_decl_list: out parameter. A pointer to the returned
  *list of declaration. Must not be NULL.
  *
  *Gets a pointer to the list of declaration contained

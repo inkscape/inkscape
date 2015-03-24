@@ -11,6 +11,7 @@
  */
 
 #include "live_effects/lpe-powerstroke.h"
+#include "live_effects/lpe-bspline.h"
 #include "live_effects/lpe-fillet-chamfer.h"
 #include <string>
 #include <sstream>
@@ -43,7 +44,6 @@
 #include "ui/tool/multi-path-manipulator.h"
 #include "xml/node.h"
 #include "xml/node-observer.h"
-#include "live_effects/lpe-bspline.h"
 
 namespace Inkscape {
 namespace UI {
@@ -151,7 +151,7 @@ PathManipulator::PathManipulator(MultiPathManipulator &mpm, SPPath *path,
 
     _createControlPointsFromGeometry();
     //Define if the path is BSpline on construction
-    isBSpline(true);
+    recalculateIsBSpline();
 }
 
 PathManipulator::~PathManipulator()
@@ -1221,10 +1221,13 @@ int PathManipulator::BSplineGetSteps() const {
 
     LivePathEffect::LPEBSpline const *lpe_bsp = NULL;
 
-    if (SP_IS_LPE_ITEM(_path) && _path->hasPathEffect()){
-        Inkscape::LivePathEffect::Effect const *thisEffect = SP_LPE_ITEM(_path)->getPathEffectOfType(Inkscape::LivePathEffect::BSPLINE);
-        if(thisEffect){
-            lpe_bsp = dynamic_cast<LivePathEffect::LPEBSpline const*>(thisEffect->getLPEObj()->get_lpe());
+    SPLPEItem * path = dynamic_cast<SPLPEItem *>(_path);
+    if (path){
+        if(path->hasPathEffect()){
+            Inkscape::LivePathEffect::Effect const *thisEffect = path->getPathEffectOfType(Inkscape::LivePathEffect::BSPLINE);
+            if(thisEffect){
+                lpe_bsp = dynamic_cast<LivePathEffect::LPEBSpline const*>(thisEffect->getLPEObj()->get_lpe());
+            }
         }
     }
     int steps = 0;
@@ -1235,19 +1238,24 @@ int PathManipulator::BSplineGetSteps() const {
 }
 
 // determines if the trace has bspline effect
-bool PathManipulator::isBSpline(bool recalculate){
-    if(recalculate){
-        _is_bspline = this->BSplineGetSteps() > 0;
+void PathManipulator::recalculateIsBSpline(){
+    if (SP_IS_LPE_ITEM(_path) && _path->hasPathEffect()) {
+        Inkscape::LivePathEffect::Effect const *thisEffect = _path->getPathEffectOfType(Inkscape::LivePathEffect::BSPLINE);
+        if(thisEffect){
+            _is_bspline = true;
+            return;
+        }
     }
-    return  _is_bspline;
+    _is_bspline = false;
 }
 
 bool PathManipulator::isBSpline() const {
-    return BSplineGetSteps() > 0;
+    return  _is_bspline;
 }
 
 // returns the corresponding strength to the position of the handlers
-double PathManipulator::BSplineHandlePosition(Handle *h, Handle *h2){
+double PathManipulator::BSplineHandlePosition(Handle *h, Handle *h2)
+{
     using Geom::X;
     using Geom::Y;
     if(h2){
@@ -1272,7 +1280,8 @@ double PathManipulator::BSplineHandlePosition(Handle *h, Handle *h2){
 }
 
 // give the location for the handler in the corresponding position
-Geom::Point PathManipulator::BSplineHandleReposition(Handle *h, Handle *h2){
+Geom::Point PathManipulator::BSplineHandleReposition(Handle *h, Handle *h2)
+{
     double pos = this->BSplineHandlePosition(h, h2);
     return BSplineHandleReposition(h,pos);
 }
@@ -1309,7 +1318,7 @@ void PathManipulator::_createGeometryFromControlPoints(bool alert_LPE)
 {
     Geom::PathBuilder builder;
     //Refresh if is bspline some times -think on path change selection, this value get lost
-    isBSpline(true);
+    recalculateIsBSpline();
     for (std::list<SubpathPtr>::iterator spi = _subpaths.begin(); spi != _subpaths.end(); ) {
         SubpathPtr subpath = *spi;
         if (subpath->empty()) {
@@ -1338,15 +1347,15 @@ void PathManipulator::_createGeometryFromControlPoints(bool alert_LPE)
     _spcurve->set_pathvector(pathv);
     if (alert_LPE) {
         /// \todo note that _path can be an Inkscape::LivePathEffect::Effect* too, kind of confusing, rework member naming?
-        if (SP_IS_LPE_ITEM(_path) && _path->hasPathEffect()){
-            Inkscape::LivePathEffect::Effect* thisEffect = SP_LPE_ITEM(_path)->getPathEffectOfType(Inkscape::LivePathEffect::POWERSTROKE);
+        if (SP_IS_LPE_ITEM(_path) && _path->hasPathEffect()) {
+            Inkscape::LivePathEffect::Effect* thisEffect = _path->getPathEffectOfType(Inkscape::LivePathEffect::POWERSTROKE);
             if(thisEffect){
                 LivePathEffect::LPEPowerStroke *lpe_pwr = dynamic_cast<LivePathEffect::LPEPowerStroke*>(thisEffect->getLPEObj()->get_lpe());
                 if (lpe_pwr) {
                     lpe_pwr->adjustForNewPath(pathv);
                 }
             }
-            thisEffect = SP_LPE_ITEM(_path)->getPathEffectOfType(Inkscape::LivePathEffect::FILLET_CHAMFER);
+            thisEffect = _path->getPathEffectOfType(Inkscape::LivePathEffect::FILLET_CHAMFER);
             if(thisEffect){
                 LivePathEffect::LPEFilletChamfer *lpe_fll = dynamic_cast<LivePathEffect::LPEFilletChamfer*>(thisEffect->getLPEObj()->get_lpe());
                 if (lpe_fll) {

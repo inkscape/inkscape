@@ -42,6 +42,7 @@
 #include "sp-hatch.h"
 #include "sp-linear-gradient.h"
 #include "sp-radial-gradient.h"
+#include "sp-mesh.h"
 #include "sp-pattern.h"
 #include "sp-mask.h"
 #include "sp-clippath.h"
@@ -1259,6 +1260,10 @@ CairoRenderContext::_createPatternForPaintServer(SPPaintServer const *const pain
             sp_color_get_rgb_floatv(&rg->vector.stops[i].color, rgb);
             cairo_pattern_add_color_stop_rgba(pattern, rg->vector.stops[i].offset, rgb[0], rgb[1], rgb[2], rg->vector.stops[i].opacity * alpha);
         }
+    } else if (SP_IS_MESH (paintserver)) {
+        SPMesh *mg = SP_MESH(paintserver);
+
+        pattern = mg->pattern_new(_cr, pbox, 1.0);
     } else if (SP_IS_PATTERN (paintserver)) {
         pattern = _createPatternPainter(paintserver, pbox);
     } else if ( dynamic_cast<SPHatch const *>(paintserver) ) {

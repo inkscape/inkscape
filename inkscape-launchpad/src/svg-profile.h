@@ -74,7 +74,7 @@ public:
 
         SVG_PRINT_1_1,        /**< */
 
-        PROFILE_UNIQUE_CNT,   /**< A marker to seperate between the entires
+        PROFILE_UNIQUE_CNT,   /**< A marker to separate between the entires
                                    that are unique, and those which are
                                    aggregates of them. */
 

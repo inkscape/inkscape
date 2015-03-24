@@ -517,7 +517,7 @@ static void sp_item_invoke_render(SPItem *item, CairoRenderContext *ctx)
 
     SPStyle* style = item->style;
     if((ctx->getFilterToBitmap() == TRUE) && (style->filter.set != 0)) {
-        sp_asbitmap_render(item, ctx);
+        return sp_asbitmap_render(item, ctx);
     }
 
     SPRoot *root = dynamic_cast<SPRoot *>(item);

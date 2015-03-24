@@ -43,7 +43,7 @@ modified.  Please look aton the Inkscape webpage also.
  libraries should not be loaded until they are used.
 
 *Script* - A script is a type of extension that is implemented through
- an external program that recieves and sets SVG data through files and
+ an external program that receives and sets SVG data through files and
  pipes.  This allows Inkscape to use programs that handle SVG but are
  targeted differently, seemlessly inside of Inkscape.
 

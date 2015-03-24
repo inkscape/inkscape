@@ -66,7 +66,7 @@ def stretch(pathcomp,xscale,yscale,org):
 
 def linearize(p,tolerance=0.001):
     '''
-    This function recieves a component of a 'cubicsuperpath' and returns two things:
+    This function receives a component of a 'cubicsuperpath' and returns two things:
     The path subdivided in many straight segments, and an array containing the length of each segment.
     
     We could work with bezier path as well, but bezier arc lengths are (re)computed for each point 
@@ -153,7 +153,7 @@ class PathAlongPath(pathmodifier.Diffeo):
     def lengthtotime(self,l):
         '''
         Recieves an arc length l, and returns the index of the segment in self.skelcomp 
-        containing the coresponding point, to gether with the position of the point on this segment.
+        containing the corresponding point, to gether with the position of the point on this segment.
 
         If the deformer is closed, do computations modulo the toal length.
         '''

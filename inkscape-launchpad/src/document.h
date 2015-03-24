@@ -242,9 +242,12 @@ public:
     SPDocument *doUnref();
     Inkscape::Util::Unit const* getDisplayUnit() const;
     Inkscape::Util::Unit const& getSVGUnit() const;
+    void setDocumentScale( const double scaleX, const double scaleY );
+    void setDocumentScale( const double scale );
     Geom::Scale getDocumentScale() const;
     Inkscape::Util::Quantity getWidth() const;
     Inkscape::Util::Quantity getHeight() const;
+    Geom::Rect getViewBox() const;
     Geom::Point getDimensions() const;
     Geom::OptRect preferredBounds() const;
     void setWidthAndHeight(const Inkscape::Util::Quantity &width, const Inkscape::Util::Quantity &height, bool changeSize=true);

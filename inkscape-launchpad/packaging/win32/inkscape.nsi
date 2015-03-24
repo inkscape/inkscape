@@ -125,6 +125,7 @@ ShowUninstDetails hide
 !insertmacro INKLANGFILE German
 !insertmacro INKLANGFILE Greek
 !insertmacro INKLANGFILE Indonesian
+!insertmacro INKLANGFILE Icelandics
 !insertmacro INKLANGFILE Italian
 !insertmacro INKLANGFILE Japanese
 !insertmacro INKLANGFILE Polish
@@ -236,7 +237,7 @@ VIProductVersion ${VERSION_X.X.X.X}
 VIAddVersionKey ProductName Inkscape
 VIAddVersionKey Comments "Licensed under the GNU GPL"
 VIAddVersionKey CompanyName inkscape.org
-VIAddVersionKey LegalCopyright "© 2012 Inkscape"
+VIAddVersionKey LegalCopyright "© 2015 Inkscape"
 VIAddVersionKey FileDescription Inkscape
 VIAddVersionKey FileVersion ${VERSION_X.X.X.X}
 VIAddVersionKey ProductVersion ${VERSION_X.X.X.X}
@@ -543,6 +544,7 @@ SectionGroup "$(Languages)" SecLanguages ; Languages sections {{{
   !insertmacro Language Hungarian         hu
   !insertmacro Language Armenian          hy
   !insertmacro Language Indonesian        id
+  !insertmacro Language Icelandic         is
   !insertmacro Language Italian           it
   !insertmacro Language Japanese          ja
   !insertmacro Language Khmer             km
@@ -672,6 +674,7 @@ Function .onInit ; initialise the installer {{{2
   !insertmacro LanguageAutoSelect German        1031
   !insertmacro LanguageAutoSelect Greek         1032
   !insertmacro LanguageAutoSelect Indonesian    1057
+  !insertmacro LanguageAutoSelect Icelandic     861
   !insertmacro LanguageAutoSelect Italian       1040
   !insertmacro LanguageAutoSelect Japanese      1041
   !insertmacro LanguageAutoSelect Polish        1045
@@ -806,6 +809,7 @@ Function .onInit ; initialise the installer {{{2
   !insertmacro Parameter hu             ${SecHungarian}
   !insertmacro Parameter hy             ${SecArmenian}
   !insertmacro Parameter id             ${SecIndonesian}
+  !insertmacro Parameter is             ${SecIcelandic}
   !insertmacro Parameter it             ${SecItalian}
   !insertmacro Parameter ja             ${SecJapanese}
   !insertmacro Parameter km             ${SecKhmer}

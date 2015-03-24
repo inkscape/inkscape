@@ -439,6 +439,11 @@ EXTRA_DIST = \
 	packaging/macosx/ports/lang/python26/files/version.plist \
 	packaging/macosx/ports/python/py-Pillow/Portfile \
 	packaging/macosx/ports/python/py-Pillow/files/patch-setup.py.diff \
+	packaging/macosx/ports/python/py-gobject/Portfile \
+	packaging/macosx/ports/python/py-gobject/files/00git_class_init.patch \
+	packaging/macosx/ports/python/py-gobject/files/00git_fix_qdata_warning.patch \
+	packaging/macosx/ports/python/py-gobject/files/00git_gio_flag_type.patch \
+	packaging/macosx/ports/python/py-gobject/files/patch-pygi-info.c-p1.diff \
 	packaging/macosx/ports/python/py-numpy/Portfile \
 	packaging/macosx/ports/python/py-numpy/files/patch-f2py_setup.py.diff \
 	packaging/macosx/ports/python/py-numpy/files/patch-fcompiler_g95.diff \
@@ -510,6 +515,7 @@ EXTRA_DIST = \
 	packaging/win32/languages/Greek.nsh	\
 	packaging/win32/languages/Hebrew.nsh	\
 	packaging/win32/languages/Indonesian.nsh \
+	packaging/win32/languages/Icelandic.nsh \
 	packaging/win32/languages/Italian.nsh	\
 	packaging/win32/languages/Japanese.nsh	\
 	packaging/win32/languages/Polish.nsh	\

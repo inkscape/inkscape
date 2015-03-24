@@ -57,9 +57,13 @@ public:
     bool read(char const *str);
     void readOrUnset(char const *str, Unit u = NONE, float v = 0, float c = 0);
     bool readAbsolute(char const *str);
-    void set(Unit u, float v, float c);
+    std::string const write();
+    // To set 'v' use '='
+    void set(Unit u, float v); // Sets computed value based on u and v.
+    void set(Unit u, float v, float c); // Sets all three values.
     void unset(Unit u = NONE, float v = 0, float c = 0);
-    void update(double em, double ex, double scale);
+    void scale(double scale); // Scales length (value, computed), leaving unit alone.
+    void update(double em, double ex, double scale); // Updates computed value
 };
 
 #endif // SEEN_SP_SVG_LENGTH_H

@@ -107,7 +107,7 @@ private:
 
     void _createControlPointsFromGeometry();
 
-    bool isBSpline(bool recalculate = false);
+    void recalculateIsBSpline();
     bool isBSpline() const;
     double BSplineHandlePosition(Handle *h, Handle *h2 = NULL);
     Geom::Point BSplineHandleReposition(Handle *h, Handle *h2 = NULL);

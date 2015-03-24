@@ -13,6 +13,7 @@ set(helper_SRC
   action-context.cpp
 	geom.cpp
 	geom-nodetype.cpp
+	geom-pathstroke.cpp
 	gnome-utils.cpp
 	pixbuf-ops.cpp
 	png-write.cpp
@@ -30,6 +31,7 @@ set(helper_SRC
   action-context.h
 	geom-curves.h
 	geom-nodetype.h
+	geom-pathstroke.h
 	geom.h
 	gnome-utils.h
 	mathfns.h

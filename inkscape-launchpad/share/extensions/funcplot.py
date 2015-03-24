@@ -45,7 +45,7 @@ def drawfunction(xstart, xend, ybottom, ytop, samples, width, height, left, bott
       
     # coords and scales based on the source rect
     if xstart == xend:
-        inkex.errormsg(_("x-interval cannot be zero. Please modify 'Start X value' or 'End X alue'"))
+        inkex.errormsg(_("x-interval cannot be zero. Please modify 'Start X value' or 'End X value'"))
         return []
     scalex = width / (xend - xstart)
     xoff = left
