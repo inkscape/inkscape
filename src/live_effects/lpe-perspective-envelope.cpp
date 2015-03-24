@@ -48,11 +48,11 @@ LPEPerspectiveEnvelope::LPEPerspectiveEnvelope(LivePathEffectObject *lpeobject) 
     Down_Right_Point(_("Down Right"), _("Down Right - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "Down_Right_Point", &wr, this)
 {
     // register all your parameters here, so Inkscape knows which parameters this effect has:
-    registerParameter( dynamic_cast<Parameter *>(&deform_type));
-    registerParameter( dynamic_cast<Parameter *>(&Up_Left_Point) );
-    registerParameter( dynamic_cast<Parameter *>(&Up_Right_Point) );
-    registerParameter( dynamic_cast<Parameter *>(&Down_Left_Point) );
-    registerParameter( dynamic_cast<Parameter *>(&Down_Right_Point) );
+    registerParameter(&deform_type);
+    registerParameter(&Up_Left_Point);
+    registerParameter(&Up_Right_Point);
+    registerParameter(&Down_Left_Point);
+    registerParameter(&Down_Right_Point);
 }
 
 LPEPerspectiveEnvelope::~LPEPerspectiveEnvelope()
@@ -340,8 +340,8 @@ LPEPerspectiveEnvelope::resetDefaults(SPItem const* item)
 {
     Effect::resetDefaults(item);
     original_bbox(SP_LPE_ITEM(item));
-    resetGrid();
     setDefaults();
+    resetGrid();
 }
 
 void
