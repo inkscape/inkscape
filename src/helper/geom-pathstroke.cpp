@@ -19,6 +19,74 @@ namespace Geom {
 // 2geom/circle-circle.cpp, no header
 int circle_circle_intersection(Point X0, double r0, Point X1, double r1, Point &p0, Point &p1);
 
+/**
+ * Determine the intersection points between a circle C0 and a line defined
+ * by two points, X0 and X1.
+ *
+ * Which intersection point is assigned to p0 or p1 is unspecified, and callers
+ * should not depend on any particular intersection always being assigned to p0.
+ *
+ * Returns:
+ *   If the line and circle do not cross, 0 is returned.
+ *   If solution(s) exist, 2 is returned, and the results are written to p0 and p1.
+ */
+static int circle_line_intersection(Circle C0, Point X0, Point X1, Point &p0, Point &p1)
+{
+    /* equation of a circle: (x - h)^2 + (y - k)^2 = r^2 */
+    Coord r = C0.ray();
+    Coord h = C0.center()[X];
+    Coord k = C0.center()[Y];
+
+    Coord x0, y0;
+    Coord x1, y1;
+
+    if (are_near(X1[X], X0[X])) {
+        /* slope is undefined (vertical line) */
+        Coord c = X0[X];
+        Coord det = r*r - (c-h)*(c-h);
+
+        /* no intersection */
+        if (det < 0)
+            return 0;
+
+        /* solve for y */
+        y0 = k + std::sqrt(det);
+        y1 = k - std::sqrt(det);
+
+        // x == c (always)
+        x0 = c;
+        x1 = c;
+    } else {
+        /* equation of a line: y = mx + b */
+        Coord m = (X1[Y] - X0[Y]) / (X1[X] - X0[X]);
+        Coord b = X0[Y] - m*X0[X];
+
+        /* obtain quadratic for x: */
+        Coord A = m*m + 1;
+        Coord B = 2*h - 2*b*m + 2*k*m;
+        Coord C = b*b + h*h + k*k - r*r - 2*b*k;
+
+        Coord det = B*B - 4*A*C;
+        
+        /* no intersection, circle and line do not cross */
+        if (det < 0)
+            return 0;
+
+        /* solve quadratic */
+        x0 = (B + std::sqrt(det)) / (2*A);
+        x1 = (B - std::sqrt(det)) / (2*A);
+
+        /* substitute the calculated x times to determine the y values */
+        y0 = m*x0 + b;
+        y1 = m*x1 + b;
+    }
+
+    p0 = Point(x0, y0);
+    p1 = Point(x1, y1);
+
+    return 2;
+}
+
 static Point intersection_point(Point origin_a, Point vector_a, Point origin_b, Point vector_b)
 {
     Coord denom = cross(vector_b, vector_a);
@@ -88,13 +156,16 @@ void miter_join(Geom::Path& res, Geom::Curve const& outgoing, double miter, doub
     Geom::Point tang1 = Geom::unitTangentAt(reverse(incoming.toSBasis()), 0.);
     Geom::Point tang2 = outgoing.unitTangentAt(0);
     Geom::Point p = Geom::intersection_point(incoming.finalPoint(), tang1, outgoing.initialPoint(), tang2);
+
+    bool satisfied = false;
+
     if (p.isFinite()) {
         // check size of miter
         Geom::Point point_on_path = incoming.finalPoint() - Geom::rot90(tang1)*width;
-        double len = Geom::distance(p, point_on_path);
-        if (len <= miter) {
+        satisfied = Geom::distance(p, point_on_path) <= miter;
+        if (satisfied) {
             // miter OK, check to see if we can do a relocation
-            bool ls = dynamic_cast<Geom::LineSegment const*>(&res.back_open());
+            bool ls = res.back_open().degreesOfFreedom() <= 4;
             if (ls) {
                 res.setFinal(p);
             } else {
@@ -106,81 +177,93 @@ void miter_join(Geom::Path& res, Geom::Curve const& outgoing, double miter, doub
     res.appendNew<Geom::LineSegment>(outgoing.initialPoint());
 
     // check if we can do another relocation
+    bool ls = outgoing.degreesOfFreedom() <= 4;
 
-    bool ls = dynamic_cast<Geom::LineSegment const*>(&outgoing);
-    if (ls) {
+    if (satisfied && ls) {
         res.setFinal(outgoing.finalPoint());
     } else {
         res.append(outgoing);
     }
 }
 
-// might need a little reworking
+Geom::Point pick_solution(Geom::Point points[2], Geom::Point tang2, Geom::Point endPt)
+{
+    Geom::Point sol;
+    if ( dot(tang2,points[0]-endPt) > 0 ) {
+        // points[0] is bad, choose points[1]
+        sol = points[1];
+    } else if ( dot(tang2,points[1]-endPt) > 0 ) { // points[0] could be good, now check points[1]
+        // points[1] is bad, choose points[0]
+        sol = points[0];
+    } else {
+        // both points are good, choose nearest
+        sol = ( distanceSq(endPt, points[0]) < distanceSq(endPt, points[1]) ) ? points[0] : points[1];
+    }
+    return sol;
+}
+
 void extrapolate_join(Geom::Path& path_builder, Geom::Curve const& outgoing, double miter_limit, double line_width)
 {
     using namespace Geom;
     Geom::Curve const& incoming = path_builder.back();
     Geom::Point endPt = outgoing.initialPoint();
+    Geom::Point tang2 = Geom::unitTangentAt(outgoing.toSBasis(), 0);
 
-    // The method used when extrapolating curves fails to work when either side of the join to be extrapolated
-    // is a line segment. When this situation is encountered, fall back to a regular miter join.
-    bool lineProblem = (dynamic_cast<LineSegment const *>(&incoming)) || (dynamic_cast<LineSegment const*>(&outgoing));
-    if (lineProblem == false) {
-        // Geom::Point tang1 = Geom::unitTangentAt(Geom::reverse(incoming.toSBasis()), 0.);
-        Geom::Point tang2 = Geom::unitTangentAt(outgoing.toSBasis(), 0);
+    Geom::Circle circle1 = Geom::touching_circle(Geom::reverse(incoming.toSBasis()), 0.);
+    Geom::Circle circle2 = Geom::touching_circle(outgoing.toSBasis(), 0);
 
-        Geom::Circle circle1 = Geom::touching_circle(Geom::reverse(incoming.toSBasis()), 0.);
-        Geom::Circle circle2 = Geom::touching_circle(outgoing.toSBasis(), 0);
+    bool inc_ls = !circle1.center().isFinite();
+    bool out_ls = !circle2.center().isFinite();
 
-        Geom::Point points[2];
-        int solutions = Geom::circle_circle_intersection(circle1.center(), circle1.ray(),
-                                                         circle2.center(), circle2.ray(),
-                                                         points[0], points[1]);
+    Geom::Point points[2];
+
+    int solutions = 0;
+    Geom::EllipticalArc *arc0 = NULL;
+    Geom::EllipticalArc *arc1 = NULL;
+
+    if (!inc_ls && !out_ls) {
+        solutions = Geom::circle_circle_intersection(circle1.center(), circle1.ray(),
+                                                     circle2.center(), circle2.ray(),
+                                                     points[0], points[1]);
         if (solutions == 2) {
-            Geom::Point sol(0,0);
-            if ( dot(tang2,points[0]-endPt) > 0 ) {
-                // points[0] is bad, choose points[1]
-                sol = points[1];
-            } else if ( dot(tang2,points[1]-endPt) > 0 ) { // points[0] could be good, now check points[1]
-                // points[1] is bad, choose points[0]
-                sol = points[0];
-            } else {
-                // both points are good, choose nearest
-                sol = ( distanceSq(endPt, points[0]) < distanceSq(endPt, points[1]) ) ? points[0] : points[1];
-            }
+            Geom::Point sol = pick_solution(points, tang2, endPt);
 
-            Geom::EllipticalArc *arc0 = circle1.arc(incoming.finalPoint(), 0.5*(incoming.finalPoint()+sol), sol, true);
-            Geom::EllipticalArc *arc1 = circle2.arc(sol, 0.5*(sol+endPt), endPt, true);
-            try {
-                if (arc0) {
-                    path_builder.append(*arc0);
-                    delete arc0;
-                    arc0 = NULL;
-                } else { 
-                    throw std::exception();
-                }
-
-                if (arc1) {
-                    path_builder.append(*arc1);
-                    delete arc1;
-                    arc1 = NULL;
-                } else {
-                    throw std::exception();
-                }
-
-            } catch (std::exception const & ex) {
-                printf("WARNING: Error extrapolating line join: %s\n", ex.what());
-                path_builder.appendNew<Geom::LineSegment>(endPt);
-            }
-            path_builder.append(outgoing);
-        } else {
-            // 1 or no solutions found, default to miter
-            miter_join(path_builder, outgoing, miter_limit, line_width);
+            arc0 = circle1.arc(incoming.finalPoint(), 0.5*(incoming.finalPoint()+sol), sol, true);
+            arc1 = circle2.arc(sol, 0.5*(sol+endPt), endPt, true);
         }
-    } else {
-        // Line segments exist
-        miter_join(path_builder, outgoing, miter_limit, line_width);
+    } else if (inc_ls && !out_ls) {
+        solutions = Geom::circle_line_intersection(circle2, incoming.initialPoint(), incoming.finalPoint(), points[0], points[1]);
+
+        if (solutions == 2) {
+            Geom::Point sol = pick_solution(points, tang2, endPt);
+            path_builder.setFinal(sol);
+            arc1 = circle2.arc(sol, 0.5*(sol+endPt), endPt, true);
+        }
+    } else if (!inc_ls && out_ls) {
+        solutions = Geom::circle_line_intersection(circle1, outgoing.initialPoint(), outgoing.finalPoint(), points[0], points[1]);
+        
+        if (solutions == 2) {
+            Geom::Point sol = pick_solution(points, tang2, endPt);
+            arc0 = circle1.arc(incoming.finalPoint(), 0.5*(sol+incoming.finalPoint()), sol, true);
+        }
     }
+
+    if (solutions != 2)
+        // no solutions available, fall back to miter
+        return miter_join(path_builder, outgoing, miter_limit, line_width);
+
+    if (arc0)
+        path_builder.append(*arc0);
+    if (arc1)
+        path_builder.append(*arc1);
+
+    delete arc0;
+    delete arc1;
+
+    if (!inc_ls && out_ls)
+        path_builder.appendNew<Geom::LineSegment>(outgoing.finalPoint());
+    else
+        path_builder.append(outgoing);
 }
 
 void join_inside(Geom::Path& res, Geom::Curve const& outgoing)
@@ -207,6 +290,9 @@ void join_inside(Geom::Path& res, Geom::Curve const& outgoing)
 
 void outline_helper(Geom::Path& res, Geom::Path const& to_add, double width, double miter, Inkscape::LineJoinType join)
 {
+    if (res.size() == 0 || to_add.size() == 0)
+        return;
+
     Geom::Curve const& outgoing = to_add[0];
     if (Geom::are_near(res.finalPoint(), outgoing.initialPoint())) {
         // if the points are /that/ close, just ignore this one
@@ -216,7 +302,6 @@ void outline_helper(Geom::Path& res, Geom::Path const& to_add, double width, dou
     }
 
     Geom::Point tang1 = -Geom::unitTangentAt(reverse(res.back().toSBasis()), 0.);
-    //Geom::Point tang2 = to_add[0].unitTangentAt(0);
     Geom::Point discontinuity_vec = to_add.initialPoint() - res.finalPoint();
     bool on_outside = (Geom::dot(tang1, discontinuity_vec) >= 0);
 
@@ -368,8 +453,10 @@ void offset_quadratic(Geom::Path& p, Geom::QuadraticBezier const& bez, double wi
 
 void offset_curve(Geom::Path& res, Geom::Curve const* current, double width)
 {
-    double const tolerance = 0.0025;
+    double const tolerance = 0.005;
     size_t levels = 8;
+
+    if (current->isDegenerate()) return; // don't do anything
 
     // TODO: we can handle SVGEllipticalArc here as well, do that!
 
@@ -390,7 +477,7 @@ void offset_curve(Geom::Path& res, Geom::Curve const* current, double width)
                 break;
             }
             default: {
-                Geom::Path sbasis_path = Geom::cubicbezierpath_from_sbasis(current->toSBasis(), 0.1);
+                Geom::Path sbasis_path = Geom::cubicbezierpath_from_sbasis(current->toSBasis(), tolerance);
                 for (size_t i = 0; i < sbasis_path.size(); ++i)
                     offset_curve(res, &sbasis_path[i], width);
                 break;
@@ -469,6 +556,7 @@ Geom::PathVector outline(Geom::Path const& input, double width, double miter, Li
     if (!input.closed()) {
         cf(res, with_dir, against_dir, width);
     } else {
+        res.closePath();
         res.moveTo(against_dir.initialPoint());
     }
 
@@ -476,9 +564,9 @@ Geom::PathVector outline(Geom::Path const& input, double width, double miter, Li
 
     if (!input.closed()) {
         cf(res, against_dir, with_dir, width);
-        res.closePath();
     }
 
+    res.closePath();
     res.flush();
     return res.peek();
 }
@@ -507,7 +595,8 @@ Geom::Path half_outline(Geom::Path const& input, double width, double miter, Lin
             res.append(temp);
         } else {
             outline_helper(res, temp, width, miter, join);
-            res.insert(res.end(), ++temp.begin(), temp.end());
+            if (temp.size() > 0)
+                res.insert(res.end(), ++temp.begin(), temp.end());
         }
 
         // odd number of paths
@@ -515,7 +604,8 @@ Geom::Path half_outline(Geom::Path const& input, double width, double miter, Lin
             temp = Geom::Path();
             offset_curve(temp, &input[u+1], width);
             outline_helper(res, temp, width, miter, join);
-            res.insert(res.end(), ++temp.begin(), temp.end());
+            if (temp.size() > 0)
+                res.insert(res.end(), ++temp.begin(), temp.end());
         }
     }
 
