@@ -18,6 +18,7 @@ enum LineJoinType {
     JOIN_BEVEL,
     JOIN_ROUND,
     JOIN_MITER,
+    JOIN_MITER_CLIP,
     JOIN_EXTRAPOLATE,
 };
 
@@ -34,7 +35,7 @@ enum LineCapType {
  *
  * @param input
  * @param width Amount to offset.
- * @param miter Miter limit. Only used with JOIN_EXTRAPOLATE and JOIN_MITER.
+ * @param miter Miter limit. Only used with JOIN_MITER, JOIN_MITER_CLIP, and JOIN_EXTRAPOLATE.
  * @param join
  */
 Geom::Path half_outline(Geom::Path const& input, double width, double miter, LineJoinType join = JOIN_BEVEL);

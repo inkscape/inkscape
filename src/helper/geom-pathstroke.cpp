@@ -6,6 +6,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <iomanip>
 #include <2geom/path-sink.h>
 #include <2geom/point.h>
 #include <2geom/bezier-curve.h>
@@ -150,7 +151,7 @@ void round_join(Geom::Path& res, Geom::Curve const& outgoing, double /*miter*/, 
     res.append(outgoing);
 }
 
-void miter_join(Geom::Path& res, Geom::Curve const& outgoing, double miter, double width)
+void miter_join_internal(Geom::Path& res, Geom::Curve const& outgoing, double miter, double width, bool clip)
 {
     Geom::Curve const& incoming = res.back();
     Geom::Point tang1 = Geom::unitTangentAt(reverse(incoming.toSBasis()), 0.);
@@ -161,8 +162,8 @@ void miter_join(Geom::Path& res, Geom::Curve const& outgoing, double miter, doub
 
     if (p.isFinite()) {
         // check size of miter
-        Geom::Point point_on_path = incoming.finalPoint() - Geom::rot90(tang1)*width;
-        satisfied = Geom::distance(p, point_on_path) <= miter;
+        Geom::Point point_on_path = incoming.finalPoint() + Geom::rot90(tang1)*width;
+        satisfied = Geom::distance(p, point_on_path) <= miter * 2.0 * width;
         if (satisfied) {
             // miter OK, check to see if we can do a relocation
             bool ls = res.back_open().degreesOfFreedom() <= 4;
@@ -171,6 +172,31 @@ void miter_join(Geom::Path& res, Geom::Curve const& outgoing, double miter, doub
             } else {
                 res.appendNew<Geom::LineSegment>(p);
             }
+        } else if (clip) {
+            // miter needs clipping, find two points
+            Geom::Line bisector(point_on_path, p);
+            Geom::Point point_limit = point_on_path + miter * 2.0 * width * bisector.versor();
+
+            Geom::Line line_limit =
+                Geom::Line::from_origin_and_versor( point_limit, bisector.versor().cw() );
+
+            Geom::Line incoming_line( incoming.finalPoint(), p );
+            Geom::Line outgoing_line( p, outgoing.initialPoint() );
+
+            Geom::OptCrossing i1 = intersection( line_limit, incoming_line );
+            Geom::OptCrossing i2 = intersection( line_limit, outgoing_line );
+
+            // It would be nice to have a simple point returned by intersection!
+            Geom::Point p1 = line_limit.pointAt( (*i1).ta );
+            Geom::Point p2 = line_limit.pointAt( (*i2).ta );
+            
+            bool ls = res.back_open().degreesOfFreedom() <= 4;
+            if (ls) {
+                res.setFinal(p1);
+            } else {
+                res.appendNew<Geom::LineSegment>(p1);
+            }
+            res.appendNew<Geom::LineSegment>(p2);
         }
     }
 
@@ -179,11 +205,19 @@ void miter_join(Geom::Path& res, Geom::Curve const& outgoing, double miter, doub
     // check if we can do another relocation
     bool ls = outgoing.degreesOfFreedom() <= 4;
 
-    if (satisfied && ls) {
+    if ( (satisfied || clip) && ls) {
         res.setFinal(outgoing.finalPoint());
     } else {
         res.append(outgoing);
     }
+}
+
+void miter_join(Geom::Path& res, Geom::Curve const& outgoing, double miter, double width) {
+    miter_join_internal( res, outgoing, miter, width, false );
+}
+
+void miter_clip_join(Geom::Path& res, Geom::Curve const& outgoing, double miter, double width) {
+    miter_join_internal( res, outgoing, miter, width, true );
 }
 
 Geom::Point pick_solution(Geom::Point points[2], Geom::Point tang2, Geom::Point endPt)
@@ -301,9 +335,13 @@ void outline_helper(Geom::Path& res, Geom::Path const& to_add, double width, dou
         return;
     }
 
-    Geom::Point tang1 = -Geom::unitTangentAt(reverse(res.back().toSBasis()), 0.);
-    Geom::Point discontinuity_vec = to_add.initialPoint() - res.finalPoint();
-    bool on_outside = (Geom::dot(tang1, discontinuity_vec) >= 0);
+    Geom::Point tang1 =  Geom::unitTangentAt(reverse(res.back().toSBasis()), 0.);
+    Geom::Point tang2 =  Geom::unitTangentAt(to_add.front().toSBasis(), 0.);
+    // Geom::Point discontinuity_vec = to_add.initialPoint() - res.finalPoint();
+    bool on_outside = (Geom::cross(tang1, tang2) < 0);
+    // std::cout << std::fixed << std::setprecision(3)
+    //           << "  in: " << tang1 << "  out: " << tang2
+    //           << "  side: " << (on_outside?"inside":"outside") << std::endl;
 
     if (on_outside) {
         join_func *jf;
@@ -316,6 +354,9 @@ void outline_helper(Geom::Path& res, Geom::Path const& to_add, double width, dou
                 break;
             case Inkscape::JOIN_EXTRAPOLATE:
                 jf = &extrapolate_join;
+                break;
+            case Inkscape::JOIN_MITER_CLIP:
+                jf = &miter_clip_join;
                 break;
             default:
                 jf = &miter_join;

@@ -28,9 +28,10 @@ namespace Inkscape {
 namespace LivePathEffect {
 
 static const Util::EnumData<unsigned> JoinTypeData[] = {
-    {JOIN_BEVEL, N_("Beveled"), "bevel"},
-    {JOIN_ROUND, N_("Rounded"), "round"},
-    {JOIN_MITER, N_("Miter"), "miter"},
+    {JOIN_BEVEL,       N_("Beveled"),    "bevel"},
+    {JOIN_ROUND,       N_("Rounded"),    "round"},
+    {JOIN_MITER,       N_("Miter"),      "miter"},
+    {JOIN_MITER_CLIP,  N_("Miter Clip"), "miter-clip"},
     {JOIN_EXTRAPOLATE, N_("Extrapolated arc"), "extrp_arc"},
 };
 
