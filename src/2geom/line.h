@@ -35,6 +35,7 @@
 #define LIB2GEOM_SEEN_LINE_H
 
 #include <cmath>
+#include <iostream>
 #include <boost/optional.hpp>
 #include <2geom/bezier-curve.h> // for LineSegment
 #include <2geom/rect.h>
@@ -258,9 +259,19 @@ public:
         dist = -dot(n, m_origin);
         return n;
     }
-    /// @}
+
+    friend inline std::ostream &operator<< (std::ostream &out_file, const Geom::Line &in_line);
+/// @}
 }; // end class Line
 
+/** @brief Output operator for lines.
+ * Prints out representation (point + versor)
+ */
+inline std::ostream &operator<< (std::ostream &out_file, const Geom::Line &in_line) {
+    out_file << "X: "   << in_line.m_origin[X] << " Y: "  << in_line.m_origin[Y]
+             << " dX: " << in_line.m_versor[X] << " dY: " << in_line.m_versor[Y];
+    return out_file;
+}
 
 inline
 double distance(Point const& _point, Line const& _line)
@@ -365,6 +376,10 @@ inline
 Line make_angle_bisector_line(Point const& A, Point const& O, Point const& B)
 {
     Point M = middle_point(A,B);
+    if (are_near(O,M)) {
+        Line l(A,B);
+        M += (make_orthogonal_line(O,l)).versor();
+    }
     return Line(O,M);
 }
 
