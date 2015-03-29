@@ -159,6 +159,7 @@ void miter_join_internal(Geom::Path& res, Geom::Curve const& outgoing, double mi
     Geom::Point p = Geom::intersection_point(incoming.finalPoint(), tang1, outgoing.initialPoint(), tang2);
 
     bool satisfied = false;
+    bool inc_ls = res.back_open().degreesOfFreedom() <= 4;
 
     if (p.isFinite()) {
         // check size of miter
@@ -166,32 +167,20 @@ void miter_join_internal(Geom::Path& res, Geom::Curve const& outgoing, double mi
         satisfied = Geom::distance(p, point_on_path) <= miter * 2.0 * width;
         if (satisfied) {
             // miter OK, check to see if we can do a relocation
-            bool ls = res.back_open().degreesOfFreedom() <= 4;
-            if (ls) {
+            if (inc_ls) {
                 res.setFinal(p);
             } else {
                 res.appendNew<Geom::LineSegment>(p);
             }
         } else if (clip) {
             // miter needs clipping, find two points
-            Geom::Line bisector(point_on_path, p);
-            Geom::Point point_limit = point_on_path + miter * 2.0 * width * bisector.versor();
+            Geom::Point bisector_versor = Geom::Line(point_on_path, p).versor();
+            Geom::Point point_limit = point_on_path + miter * 2.0 * width * bisector_versor;
 
-            Geom::Line line_limit =
-                Geom::Line::from_origin_and_versor( point_limit, bisector.versor().cw() );
+            Geom::Point p1 = Geom::intersection_point(incoming.finalPoint(), tang1, point_limit, bisector_versor.cw());
+            Geom::Point p2 = Geom::intersection_point(outgoing.initialPoint(), tang2, point_limit, bisector_versor.cw());
 
-            Geom::Line incoming_line( incoming.finalPoint(), p );
-            Geom::Line outgoing_line( p, outgoing.initialPoint() );
-
-            Geom::OptCrossing i1 = intersection( line_limit, incoming_line );
-            Geom::OptCrossing i2 = intersection( line_limit, outgoing_line );
-
-            // It would be nice to have a simple point returned by intersection!
-            Geom::Point p1 = line_limit.pointAt( (*i1).ta );
-            Geom::Point p2 = line_limit.pointAt( (*i2).ta );
-            
-            bool ls = res.back_open().degreesOfFreedom() <= 4;
-            if (ls) {
+            if (inc_ls) {
                 res.setFinal(p1);
             } else {
                 res.appendNew<Geom::LineSegment>(p1);
@@ -203,9 +192,9 @@ void miter_join_internal(Geom::Path& res, Geom::Curve const& outgoing, double mi
     res.appendNew<Geom::LineSegment>(outgoing.initialPoint());
 
     // check if we can do another relocation
-    bool ls = outgoing.degreesOfFreedom() <= 4;
+    bool out_ls = outgoing.degreesOfFreedom() <= 4;
 
-    if ( (satisfied || clip) && ls) {
+    if ( (satisfied || clip) && out_ls) {
         res.setFinal(outgoing.finalPoint());
     } else {
         res.append(outgoing);
@@ -337,11 +326,7 @@ void outline_helper(Geom::Path& res, Geom::Path const& to_add, double width, dou
 
     Geom::Point tang1 =  Geom::unitTangentAt(reverse(res.back().toSBasis()), 0.);
     Geom::Point tang2 =  Geom::unitTangentAt(to_add.front().toSBasis(), 0.);
-    // Geom::Point discontinuity_vec = to_add.initialPoint() - res.finalPoint();
     bool on_outside = (Geom::cross(tang1, tang2) < 0);
-    // std::cout << std::fixed << std::setprecision(3)
-    //           << "  in: " << tang1 << "  out: " << tang2
-    //           << "  side: " << (on_outside?"inside":"outside") << std::endl;
 
     if (on_outside) {
         join_func *jf;
