@@ -225,10 +225,11 @@ Geom::Point pick_solution(Geom::Point points[2], Geom::Point tang2, Geom::Point 
     return sol;
 }
 
-void extrapolate_join(Geom::Path& path_builder, Geom::Curve const& outgoing, double miter, double width)
+void extrapolate_join(Geom::Path& res, Geom::Curve const& outgoing, double miter, double width)
 {
     using namespace Geom;
-    Geom::Curve const& incoming = path_builder.back();
+
+    Geom::Curve const& incoming = res.back();
     Geom::Point startPt = incoming.finalPoint();
     Geom::Point endPt = outgoing.initialPoint();
     Geom::Point tang1 = Geom::unitTangentAt(reverse(incoming.toSBasis()), 0.);
@@ -279,7 +280,7 @@ void extrapolate_join(Geom::Path& path_builder, Geom::Curve const& outgoing, dou
 
     if (solutions != 2)
         // no solutions available, fall back to miter
-        return miter_clip_join(path_builder, outgoing, miter, width);
+        return miter_clip_join(res, outgoing, miter, width);
 
     // We have a solution, thus sol is defined.
     p1 = sol;
@@ -291,50 +292,48 @@ void extrapolate_join(Geom::Path& path_builder, Geom::Curve const& outgoing, dou
     // Center of circle is intersection of a line orthogonal to bisector and a line bisecting
     // a chord connecting the path end point (point_on_path) and the join end point (sol).
     Geom::Point point_on_path = startPt + Geom::rot90(tang1)*width;
-    Geom::Line bisector = make_angle_bisector_line( startPt, point_on_path, endPt );
+    Geom::Line bisector = make_angle_bisector_line(startPt, point_on_path, endPt);
     Geom::Line ortho = make_orthogonal_line(point_on_path, bisector); 
 
-    Geom::LineSegment chord( point_on_path, sol );
-    Geom::Line bisector_chord =  make_bisector_line( chord );
+    Geom::LineSegment chord(point_on_path, sol);
+    Geom::Line bisector_chord =  make_bisector_line(chord);
 
     Geom::Line limit_line;
     double miter_limit = 2.0 * width * miter;
     bool clipped = false;
     
-    if( are_parallel( bisector_chord, ortho ) ) {
-
+    if (are_parallel(bisector_chord, ortho)) {
         // No intersection (can happen if curvatures are equal but opposite)
-        if( Geom::distance( point_on_path, sol ) > miter_limit ) {
+        if (Geom::distance(point_on_path, sol) > miter_limit) {
             clipped = true;
             Geom::Point limit_point = point_on_path + miter_limit * bisector.versor(); 
             limit_line = make_parallel_line( limit_point, ortho );
         }
-
     } else {
-
         Geom::Point center =
             Geom::intersection_point( bisector_chord.pointAt(0), bisector_chord.versor(),
                                       ortho.pointAt(0),          ortho.versor() );
-        Geom::Coord radius = distance( center, point_on_path );
-        Geom::Circle circle_center( center, radius );
+        Geom::Coord radius = distance(center, point_on_path);
+        Geom::Circle circle_center(center, radius);
 
         double limit_angle = miter_limit / radius;
-        Geom::Ray start_ray(   center, point_on_path );
-        Geom::Ray end_ray(     center, sol );
-        Geom::Line limit_line( center, 0 ); // Angle set below
 
-        if( Geom::cross( start_ray.versor(), end_ray.versor() ) > 0 ) {
-            limit_line.setAngle( start_ray.angle() - limit_angle );
+        Geom::Ray start_ray(center, point_on_path);
+        Geom::Ray end_ray(center, sol);
+        Geom::Line limit_line(center, 0); // Angle set below
+
+        if (Geom::cross(start_ray.versor(), end_ray.versor()) > 0) {
+            limit_line.setAngle(start_ray.angle() - limit_angle);
         } else {
-            limit_line.setAngle( start_ray.angle() + limit_angle );
+            limit_line.setAngle(start_ray.angle() + limit_angle);
         }
 
-        Geom::EllipticalArc* arc_center = circle_center.arc(point_on_path, 0.5*(point_on_path + sol), sol, true);
-        if( arc_center && arc_center->sweepAngle() > limit_angle ) {
+        Geom::EllipticalArc *arc_center = circle_center.arc(point_on_path, 0.5*(point_on_path + sol), sol, true);
+        if (arc_center && arc_center->sweepAngle() > limit_angle) {
             // We need to clip
             clipped = true;
 
-            if (!inc_ls ) {
+            if (!inc_ls) {
                 // Incoming circular
                 solutions = Geom::circle_line_intersection(circle1, limit_line.pointAt(0), limit_line.pointAt(1), points[0], points[1]);
         
@@ -344,10 +343,10 @@ void extrapolate_join(Geom::Path& path_builder, Geom::Curve const& outgoing, dou
                     arc1 = circle1.arc(startPt, 0.5*(p1+startPt), p1, true);
                 }
             } else {
-                p1 = Geom::intersection_point( startPt, tang1, limit_line.pointAt(0), limit_line.versor() );
+                p1 = Geom::intersection_point(startPt, tang1, limit_line.pointAt(0), limit_line.versor());
             }
 
-            if (!out_ls ) {
+            if (!out_ls) {
                 // Outgoing circular
                 solutions = Geom::circle_line_intersection(circle2, limit_line.pointAt(0), limit_line.pointAt(1), points[0], points[1]);
         
@@ -357,46 +356,34 @@ void extrapolate_join(Geom::Path& path_builder, Geom::Curve const& outgoing, dou
                     arc2 = circle2.arc(p2, 0.5*(p2+endPt), endPt, true);
                 }
             } else {
-                p2 = Geom::intersection_point( endPt, tang2, limit_line.pointAt(0), limit_line.versor() );
+                p2 = Geom::intersection_point(endPt, tang2, limit_line.pointAt(0), limit_line.versor());
             }
         }
-        // std::cout << " IFP: " << startPt
-        //           << " POP: " << point_on_path
-        //          << " OIP: " << endPt << std::endl;
-        // std::cout << " center: " << center << std::endl;
-        // std::cout << " radius: " << radius << std::endl;
-        // std::cout << " miter_limit: " << miter_limit << std::endl;
-        // std::cout << " limit_angle: " << limit_angle << std::endl;
-        // std::cout << " start_ray: " << Geom::Line( start_ray ) << std::endl;
-        // std::cout << " limit_line: " << limit_line << std::endl;
-        // std::cout << " P1 out: " << p1 << std::endl;
-        // std::cout << " P2 out: " << p2 << std::endl;
     }    
 
     // Add initial
     if (arc1) {
-        path_builder.append(*arc1);
+        res.append(*arc1);
     } else {
         // Straight line segment: move last point
-        path_builder.setFinal(p1);
+        res.setFinal(p1);
     }
 
-    if( clipped ) {
-        path_builder.appendNew<Geom::LineSegment>(p2);
+    if (clipped) {
+        res.appendNew<Geom::LineSegment>(p2);
     }
 
     // Add outgoing
     if (arc2) {
-        path_builder.append(*arc2);
-        path_builder.append(outgoing);
+        res.append(*arc2);
+        res.append(outgoing);
     } else {
         // Straight line segment:
-        path_builder.appendNew<Geom::LineSegment>(outgoing.finalPoint());
+        res.appendNew<Geom::LineSegment>(outgoing.finalPoint());
     }
     
     delete arc1;
     delete arc2;
-
 }
 
 void join_inside(Geom::Path& res, Geom::Curve const& outgoing)
