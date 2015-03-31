@@ -421,7 +421,14 @@ void join_inside(Geom::Path& res, Geom::Curve const& outgoing)
     }
 }
 
-void outline_helper(Geom::Path& res, Geom::Path const& to_add, double width, double miter, Inkscape::LineJoinType join)
+bool decide(Geom::Curve const& incoming, Geom::Curve const& outgoing)
+{
+    Geom::Point tang1 = Geom::unitTangentAt(reverse(incoming.toSBasis()), 0.);
+    Geom::Point tang2 =  outgoing.unitTangentAt(0.);
+    return (Geom::cross(tang1, tang2) < 0);
+}
+
+void outline_helper(Geom::Path& res, Geom::Path const& to_add, double width, bool on_outside, double miter, Inkscape::LineJoinType join)
 {
     if (res.size() == 0 || to_add.size() == 0)
         return;
@@ -433,10 +440,6 @@ void outline_helper(Geom::Path& res, Geom::Path const& to_add, double width, dou
         res.append(outgoing);
         return;
     }
-
-    Geom::Point tang1 =  Geom::unitTangentAt(reverse(res.back().toSBasis()), 0.);
-    Geom::Point tang2 =  Geom::unitTangentAt(to_add.front().toSBasis(), 0.);
-    bool on_outside = (Geom::cross(tang1, tang2) < 0);
 
     if (on_outside) {
         join_func *jf;
@@ -730,7 +733,8 @@ Geom::Path half_outline(Geom::Path const& input, double width, double miter, Lin
         if (u == 0) {
             res.append(temp);
         } else {
-            outline_helper(res, temp, width, miter, join);
+            bool on_outside = decide(input[u], input[u-1]);
+            outline_helper(res, temp, width, on_outside, miter, join);
             if (temp.size() > 0)
                 res.insert(res.end(), ++temp.begin(), temp.end());
         }
@@ -739,7 +743,8 @@ Geom::Path half_outline(Geom::Path const& input, double width, double miter, Lin
         if (u < k - 1) {
             temp = Geom::Path();
             offset_curve(temp, &input[u+1], width);
-            outline_helper(res, temp, width, miter, join);
+            bool on_outside = decide(input[u], input[u+1]);
+            outline_helper(res, temp, width, on_outside, miter, join);
             if (temp.size() > 0)
                 res.insert(res.end(), ++temp.begin(), temp.end());
         }
@@ -752,7 +757,8 @@ Geom::Path half_outline(Geom::Path const& input, double width, double miter, Lin
         temp.append(c1);
         Geom::Path temp2;
         temp2.append(c2);
-        outline_helper(temp, temp2, width, miter, join);
+        bool on_outside = decide(input.back(), input.front());
+        outline_helper(temp, temp2, width, on_outside, miter, join);
         res.erase(res.begin());
         res.erase_last();
         //
