@@ -1,4 +1,4 @@
-/* Copyright (C) 2001-2011 Peter Selinger.
+/* Copyright (C) 2001-2015 Peter Selinger.
    This file is part of Potrace. It is free software and it is covered
    by the GNU General Public License. See the file COPYING for details. */
 
@@ -7,6 +7,7 @@
 #define GREYMAP_H
 
 #include <stdio.h>
+#include <stdlib.h>
 
 /* internal format for greymaps. Note: in this format, rows are
    ordered from bottom to top. The pixels in each row are given from
@@ -22,7 +23,7 @@ typedef struct greymap_s greymap_t;
 /* macros for accessing pixel at index (x,y). Note that the origin is
    in the *lower* left corner. U* macros omit the bounds check. */
 
-#define gm_index(gm, x, y) (&(gm)->map[(x)+(y)*(gm)->w])
+#define gm_index(gm, x, y) (&(gm)->map[(x)+(y)*(ssize_t)(gm)->w])
 #define gm_safe(gm, x, y) ((int)(x)>=0 && (int)(x)<(gm)->w && (int)(y)>=0 && (int)(y)<(gm)->h)
 #define gm_bound(x, m) ((x)<0 ? 0 : (x)>=(m) ? (m)-1 : (x))
 #define GM_UGET(gm, x, y) (*gm_index(gm, x, y))

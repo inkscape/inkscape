@@ -1,4 +1,4 @@
-/* Copyright (C) 2001-2011 Peter Selinger.
+/* Copyright (C) 2001-2015 Peter Selinger.
    This file is part of Potrace. It is free software and it is covered
    by the GNU General Public License. See the file COPYING for details. */
 
@@ -21,8 +21,8 @@
 #define COS179 -0.999847695156	 /* the cosine of 179 degrees */
 
 /* ---------------------------------------------------------------------- */
-#define SAFE_MALLOC(var, n, typ) \
-  if ((var = (typ *)malloc((n)*sizeof(typ))) == NULL) goto malloc_error 
+#define SAFE_CALLOC(var, n, typ) \
+  if ((var = (typ *)calloc(n, sizeof(typ))) == NULL) goto calloc_error 
 
 /* ---------------------------------------------------------------------- */
 /* auxiliary functions */
@@ -265,7 +265,7 @@ static int calc_sums(privpath_t *pp) {
   int i, x, y;
   int n = pp->len;
 
-  SAFE_MALLOC(pp->sums, pp->len+1, sums_t);
+  SAFE_CALLOC(pp->sums, pp->len+1, sums_t);
 
   /* origin */
   pp->x0 = pp->pt[0].x;
@@ -284,7 +284,7 @@ static int calc_sums(privpath_t *pp) {
   }
   return 0;  
 
- malloc_error:
+ calloc_error:
   return 1;
 }
 
@@ -331,8 +331,8 @@ static int calc_lon(privpath_t *pp) {
   point_t dk;  /* direction of k-k1 */
   int a, b, c, d;
 
-  SAFE_MALLOC(pivk, n, int);
-  SAFE_MALLOC(nc, n, int);
+  SAFE_CALLOC(pivk, n, int);
+  SAFE_CALLOC(nc, n, int);
 
   /* initialize the nc data structure. Point from each point to the
      furthest future point to which it is connected by a vertical or
@@ -349,7 +349,7 @@ static int calc_lon(privpath_t *pp) {
     nc[i] = k;
   }
 
-  SAFE_MALLOC(pp->lon, n, int);
+  SAFE_CALLOC(pp->lon, n, int);
 
   /* determine pivot points: for each i, let pivk[i] be the furthest k
      such that all j with i<j<k lie on a line connecting i,k. */
@@ -458,7 +458,7 @@ static int calc_lon(privpath_t *pp) {
   free(nc);
   return 0;
 
- malloc_error:
+ calloc_error:
   free(pivk);
   free(nc);
   return 1;
@@ -537,12 +537,12 @@ static int bestpolygon(privpath_t *pp)
   double best;
   int c;
 
-  SAFE_MALLOC(pen, n+1, double);
-  SAFE_MALLOC(prev, n+1, int);
-  SAFE_MALLOC(clip0, n, int);
-  SAFE_MALLOC(clip1, n+1, int);
-  SAFE_MALLOC(seg0, n+1, int);
-  SAFE_MALLOC(seg1, n+1, int);
+  SAFE_CALLOC(pen, n+1, double);
+  SAFE_CALLOC(prev, n+1, int);
+  SAFE_CALLOC(clip0, n, int);
+  SAFE_CALLOC(clip1, n+1, int);
+  SAFE_CALLOC(seg0, n+1, int);
+  SAFE_CALLOC(seg1, n+1, int);
 
   /* calculate clipped paths */
   for (i=0; i<n; i++) {
@@ -604,7 +604,7 @@ static int bestpolygon(privpath_t *pp)
   }
 
   pp->m = m;
-  SAFE_MALLOC(pp->po, m, int);
+  SAFE_CALLOC(pp->po, m, int);
 
   /* read off shortest path */
   for (i=n, j=m-1; i>0; j--) {
@@ -620,7 +620,7 @@ static int bestpolygon(privpath_t *pp)
   free(seg1);
   return 0;
   
- malloc_error:
+ calloc_error:
   free(pen);
   free(prev);
   free(clip0);
@@ -655,13 +655,13 @@ static int adjust_vertices(privpath_t *pp) {
   dpoint_t s;
   int r;
 
-  SAFE_MALLOC(ctr, m, dpoint_t);
-  SAFE_MALLOC(dir, m, dpoint_t);
-  SAFE_MALLOC(q, m, quadform_t);
+  SAFE_CALLOC(ctr, m, dpoint_t);
+  SAFE_CALLOC(dir, m, dpoint_t);
+  SAFE_CALLOC(q, m, quadform_t);
 
   r = privcurve_init(&pp->curve, m);
   if (r) {
-    goto malloc_error;
+    goto calloc_error;
   }
   
   /* calculate "optimal" point-slope representation for each line
@@ -827,7 +827,7 @@ static int adjust_vertices(privpath_t *pp) {
   free(q);
   return 0;
 
- malloc_error:
+ calloc_error:
   free(ctr);
   free(dir);
   free(q);
@@ -875,7 +875,7 @@ static void smooth(privcurve_t *curve, double alphamax) {
     }
     curve->alpha0[j] = alpha;	 /* remember "original" value of alpha */
 
-    if (alpha > alphamax) {  /* pointed corner */
+    if (alpha >= alphamax) {  /* pointed corner */
       curve->tag[j] = POTRACE_CORNER;
       curve->c[j][1] = curve->vertex[j];
       curve->c[j][2] = p4;
@@ -1075,12 +1075,12 @@ static int opticurve(privpath_t *pp, double opttolerance) {
   int *convc = NULL; /* conv[m]: pre-computed convexities */
   double *areac = NULL; /* cumarea[m+1]: cache for fast area computation */
 
-  SAFE_MALLOC(pt, m+1, int);
-  SAFE_MALLOC(pen, m+1, double);
-  SAFE_MALLOC(len, m+1, int);
-  SAFE_MALLOC(opt, m+1, opti_t);
-  SAFE_MALLOC(convc, m, int);
-  SAFE_MALLOC(areac, m+1, double);
+  SAFE_CALLOC(pt, m+1, int);
+  SAFE_CALLOC(pen, m+1, double);
+  SAFE_CALLOC(len, m+1, int);
+  SAFE_CALLOC(opt, m+1, opti_t);
+  SAFE_CALLOC(convc, m, int);
+  SAFE_CALLOC(areac, m+1, double);
 
   /* pre-calculate convexity: +1 = right turn, -1 = left turn, 0 = corner */
   for (i=0; i<m; i++) {
@@ -1134,10 +1134,10 @@ static int opticurve(privpath_t *pp, double opttolerance) {
   om = len[m];
   r = privcurve_init(&pp->ocurve, om);
   if (r) {
-    goto malloc_error;
+    goto calloc_error;
   }
-  SAFE_MALLOC(s, om, double);
-  SAFE_MALLOC(t, om, double);
+  SAFE_CALLOC(s, om, double);
+  SAFE_CALLOC(t, om, double);
 
   j = m;
   for (i=om-1; i>=0; i--) {
@@ -1182,7 +1182,7 @@ static int opticurve(privpath_t *pp, double opttolerance) {
   free(areac);
   return 0;
 
- malloc_error:
+ calloc_error:
   free(pt);
   free(pen);
   free(len);
