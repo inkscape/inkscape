@@ -124,6 +124,7 @@ PathManipulator::PathManipulator(MultiPathManipulator &mpm, SPPath *path,
     , _show_path_direction(false)
     , _live_outline(true)
     , _live_objects(true)
+    , _is_bspline(false)
     , _lpe_key(lpe_key)
 {
     if (_lpe_key.empty()) {
