@@ -720,7 +720,7 @@ Geom::Path half_outline(Geom::Path const& input, double width, double miter, Lin
         if (u == 0) {
             res.append(temp);
         } else {
-            bool on_outside = decide(input[u], input[u-1]);
+            bool on_outside = decide(input[u-1], input[u]);
             outline_helper(res, temp, width, on_outside, miter, join);
             if (temp.size() > 0)
                 res.insert(res.end(), ++temp.begin(), temp.end());
