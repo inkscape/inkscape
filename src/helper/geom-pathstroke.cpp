@@ -411,7 +411,7 @@ void join_inside(Geom::Path& res, Geom::Curve const& outgoing)
 bool decide(Geom::Curve const& incoming, Geom::Curve const& outgoing)
 {
     Geom::Point tang1 = Geom::unitTangentAt(reverse(incoming.toSBasis()), 0.);
-    Geom::Point tang2 =  outgoing.unitTangentAt(0.);
+    Geom::Point tang2 = outgoing.unitTangentAt(0.);
     return (Geom::cross(tang1, tang2) < 0);
 }
 

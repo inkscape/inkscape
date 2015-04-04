@@ -285,7 +285,7 @@ Geom::PathVector LPETaperStroke::doEffect_path(Geom::PathVector const& path_in)
     // although this seems obvious, it can probably lead to bugs.
     if (!metInMiddle) {
         // append the outside outline of the path (goes with the direction of the path)
-        throwaway_path = half_outline(pathv_out[1], -fabs(line_width)/2., miter_limit, static_cast<LineJoinType>(join_type.get_value()));
+        throwaway_path = half_outline(pathv_out[1], fabs(line_width)/2., miter_limit, static_cast<LineJoinType>(join_type.get_value()));
         if (!zeroStart && real_path.size() >= 1 && throwaway_path.size() >= 1) {
             if (!Geom::are_near(real_path.finalPoint(), throwaway_path.initialPoint())) {
                 real_path.appendNew<Geom::LineSegment>(throwaway_path.initialPoint());
@@ -317,7 +317,7 @@ Geom::PathVector LPETaperStroke::doEffect_path(Geom::PathVector const& path_in)
     
     if (!metInMiddle) {
         // append the inside outline of the path (against direction)
-        throwaway_path = half_outline(pathv_out[1].reverse(), -fabs(line_width)/2., miter_limit, static_cast<LineJoinType>(join_type.get_value()));
+        throwaway_path = half_outline(pathv_out[1].reverse(), fabs(line_width)/2., miter_limit, static_cast<LineJoinType>(join_type.get_value()));
         
         if (!Geom::are_near(real_path.finalPoint(), throwaway_path.initialPoint()) && real_path.size() >= 1) {
             real_path.appendNew<Geom::LineSegment>(throwaway_path.initialPoint());
