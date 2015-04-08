@@ -1,4 +1,3 @@
-
 # -----------------------------------------------------------------------------
 # Define the main source
 # -----------------------------------------------------------------------------
@@ -33,8 +32,8 @@ set(sp_SRC
 	sp-gradient-reference.cpp
 	sp-gradient.cpp
 	sp-guide.cpp
-	sp-hatch.cpp
 	sp-hatch-path.cpp
+	sp-hatch.cpp
 	sp-image.cpp
 	sp-item-group.cpp
 	sp-item-notify-moveto.cpp
@@ -47,10 +46,10 @@ set(sp_SRC
 	sp-lpe-item.cpp
 	sp-marker.cpp
 	sp-mask.cpp
-	sp-mesh.cpp
 	sp-mesh-array.cpp
 	sp-mesh-patch.cpp
 	sp-mesh-row.cpp
+	sp-mesh.cpp
 	sp-metadata.cpp
 	sp-missing-glyph.cpp
 	sp-namedview.cpp
@@ -75,6 +74,9 @@ set(sp_SRC
 	sp-style-elem.cpp
 	sp-switch.cpp
 	sp-symbol.cpp
+	sp-tag-use-reference.cpp
+	sp-tag-use.cpp
+	sp-tag.cpp
 	sp-text.cpp
 	sp-title.cpp
 	sp-tref-reference.cpp
@@ -119,8 +121,8 @@ set(sp_SRC
 	sp-guide-attachment.h
 	sp-guide-constraint.h
 	sp-guide.h
-	sp-hatch.h
 	sp-hatch-path.h
+	sp-hatch.h
 	sp-image.h
 	sp-item-group.h
 	sp-item-notify-moveto.h
@@ -131,13 +133,13 @@ set(sp_SRC
 	sp-line.h
 	sp-linear-gradient.h
 	sp-lpe-item.h
-	sp-marker.h
 	sp-marker-loc.h
+	sp-marker.h
 	sp-mask.h
-	sp-mesh.h
 	sp-mesh-array.h
 	sp-mesh-patch.h
 	sp-mesh-row.h
+	sp-mesh.h
 	sp-metadata.h
 	sp-missing-glyph.h
 	sp-namedview.h
@@ -203,21 +205,17 @@ set(inkscape_SRC
 	filter-enums.cpp
 	gc-anchored.cpp
 	gc-finalized.cpp
-	gc.cpp
 	gradient-chemistry.cpp
 	gradient-drag.cpp
 	graphlayout.cpp
 	guide-snapper.cpp
 	help.cpp
 	id-clash.cpp
-	# ige-mac-menu.c
 	inkscape.cpp
-	inkscape.rc
-	interface.cpp
 	knot-holder-entity.cpp
+	knot-ptr.cpp
 	knot.cpp
 	knotholder.cpp
-	knot-ptr.cpp
 	layer-fns.cpp
 	layer-manager.cpp
 	layer-model.cpp
@@ -257,8 +255,8 @@ set(inkscape_SRC
 	snapped-line.cpp
 	snapped-point.cpp
 	snapper.cpp
-	style.cpp
 	style-internal.cpp
+	style.cpp
 	svg-view-widget.cpp
 	svg-view.cpp
 	text-chemistry.cpp
@@ -313,18 +311,12 @@ set(inkscape_SRC
 	event.h
 	extract-uri-test.h
 	extract-uri.h
-	factory.h
 	file.h
 	fill-or-stroke.h
 	filter-chemistry.h
 	filter-enums.h
-	gc-alloc.h
-	gc-allocator.h
 	gc-anchored.h
-	gc-core.h
 	gc-finalized.h
-	gc-managed.h
-	gc-soft-ptr.h
 	gradient-chemistry.h
 	gradient-drag.h
 	graphlayout.h
@@ -333,16 +325,14 @@ set(inkscape_SRC
 	helper-fns.h
 	icon-size.h
 	id-clash.h
-	# ige-mac-menu.h
 	inkscape-version.h
 	inkscape.h
-	interface.h
 	isinf.h
 	knot-enums.h
 	knot-holder-entity.h
+	knot-ptr.h
 	knot.h
 	knotholder.h
-	knot-ptr.h
 	layer-fns.h
 	layer-manager.h
 	layer-model.h
@@ -351,7 +341,6 @@ set(inkscape_SRC
 	macros.h
 	main-cmdlineact.h
 	marker-test.h
-	marker.h
 	media.h
 	menus-skeleton.h
 	message-context.h
@@ -376,7 +365,6 @@ set(inkscape_SRC
 	profile-manager.h
 	proj_pt.h
 	rdf.h
-	registrytool.h
 	remove-last.h
 	removeoverlap.h
 	require-config.h
@@ -403,10 +391,10 @@ set(inkscape_SRC
 	splivarot.h
 	streq.h
 	strneq.h
-	style-test.h
-	style.h
 	style-enums.h
 	style-internal.h
+	style-test.h
+	style.h
 	svg-profile.h
 	svg-view-widget.h
 	svg-view.h
@@ -430,8 +418,10 @@ set(inkscape_SRC
 
 if(WIN32)
 	list(APPEND inkscape_SRC
+		inkscape.rc
 		registrytool.cpp
 		#deptool.cpp
+		winconsole.cpp
 		winmain.cpp
 	)
 endif()
@@ -471,7 +461,6 @@ list(APPEND inkscape_SRC
 # All folders for internal inkscape
 # these call add_inkscape_source
 add_subdirectory(debug)
-add_subdirectory(dialogs)
 add_subdirectory(display)
 add_subdirectory(extension)
 add_subdirectory(filters)
@@ -545,6 +534,8 @@ target_link_libraries(inkscape
 	uemf_LIB
 	2geom_LIB
 	depixelize_LIB
+	util_LIB
+	gc_LIB
 
 	${INKSCAPE_LIBS}
 )
@@ -553,4 +544,3 @@ target_link_libraries(inkscape
 # make executable for INKVIEW
 #add_executable(inkview inkview.cpp)
 # ...
-

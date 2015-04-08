@@ -1,11 +1,10 @@
-
 set(libgc_SRC
 	gc.cpp
-	
+
 	# -------
 	# Headers
 	gc-alloc.h
-	gc-anchored.h
+	../gc-anchored.h
 	gc-core.h
 	gc-managed.h
 	gc-soft-ptr.h
