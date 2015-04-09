@@ -41,19 +41,19 @@ public:
     virtual void doBeforeEffect(SPLPEItem const * lpeitem);
     virtual SPCurve *addNodesAndJitter(const Geom::Curve *A, double t);
     virtual SPCurve *jitter(const Geom::Curve *A);
-    virtual Geom::Point tpoint(Geom::Point A, Geom::Point B, double t = 0.5);
+    virtual Geom::Point tPoint(Geom::Point A, Geom::Point B, double t = 0.5);
     virtual Gtk::Widget *newWidget();
 
 private:
     UnitParam unit;
     EnumParam<DivisionMethod> method;
-    ScalarParam maxSegmentSize;
+    ScalarParam max_segment_size;
     ScalarParam segments;
-    RandomParam displaceX;
-    RandomParam displaceY;
-    RandomParam globalRandomize;
-    BoolParam shiftNodes;
-    BoolParam shiftNodeHandles;
+    RandomParam displace_x;
+    RandomParam displace_y;
+    RandomParam global_randomize;
+    BoolParam shift_nodes;
+    BoolParam shift_node_handles;
 
     LPERoughen(const LPERoughen &);
     LPERoughen &operator=(const LPERoughen &);
