@@ -1,4 +1,4 @@
-/* Copyright (C) 2001-2011 Peter Selinger.
+/* Copyright (C) 2001-2015 Peter Selinger.
    This file is part of Potrace. It is free software and it is covered
    by the GNU General Public License. See the file COPYING for details. */
 
@@ -9,8 +9,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <errno.h>
 
 #include "greymap.h"
+#include "bitops.h"
 
 #define INTBITS (8*sizeof(int))
 
@@ -22,10 +24,17 @@ static int gm_readbody_bmp(FILE *f, greymap_t **gmp);
 /* ---------------------------------------------------------------------- */
 /* basic greymap routines */
 
-/* return new un-initialized greymap. NULL with errno on error */
-
+/* return new un-initialized greymap. NULL with errno on error.
+   Assumes w, h >= 0. */
 greymap_t *gm_new(int w, int h) {
   greymap_t *gm;
+  ssize_t size = (ssize_t)w * (ssize_t)h * (ssize_t)sizeof(signed short int);
+  
+  /* check for overflow error */
+  if (size < 0 || size / w / h != sizeof(signed short int)) {
+    errno = ENOMEM;
+    return NULL;
+  }
 
   gm = (greymap_t *) malloc(sizeof(greymap_t));
   if (!gm) {
@@ -33,7 +42,7 @@ greymap_t *gm_new(int w, int h) {
   }
   gm->w = w;
   gm->h = h;
-  gm->map = (signed short int *) malloc(w*h*sizeof(signed short int));
+  gm->map = (signed short int *) malloc(size);
   if (!gm->map) {
     free(gm);
     return NULL;
@@ -405,6 +414,10 @@ struct bmp_info_s {
   unsigned int YpixelsPerM;
   unsigned int ncolors;        /* number of colors in palette */
   unsigned int ColorsImportant;
+  unsigned int RedMask;
+  unsigned int GreenMask;
+  unsigned int BlueMask;
+  unsigned int AlphaMask;
   unsigned int ctbits;         /* sample size for color table */
   int topdown;                 /* top-down mode? */
 };
@@ -495,6 +508,7 @@ static int gm_readbody_bmp(FILE *f, greymap_t **gmp) {
   int col[2];
   unsigned int bitbuf;
   unsigned int n;
+  unsigned int redshift, greenshift, blueshift;
 
   gm_read_error = NULL;
   gm = NULL;
@@ -523,11 +537,23 @@ static int gm_readbody_bmp(FILE *f, greymap_t **gmp) {
     TRY(bmp_readint(f, 4, &bmpinfo.YpixelsPerM));
     TRY(bmp_readint(f, 4, &bmpinfo.ncolors));
     TRY(bmp_readint(f, 4, &bmpinfo.ColorsImportant));
-    if ((signed int)bmpinfo.h < 0) {
-      bmpinfo.h = -bmpinfo.h;
+    if (bmpinfo.InfoSize >= 108) { /* V4 and V5 bitmaps */
+      TRY(bmp_readint(f, 4, &bmpinfo.RedMask));
+      TRY(bmp_readint(f, 4, &bmpinfo.GreenMask));
+      TRY(bmp_readint(f, 4, &bmpinfo.BlueMask));
+      TRY(bmp_readint(f, 4, &bmpinfo.AlphaMask));
+    }
+    if (bmpinfo.w > 0x7fffffff) {
+      goto format_error;
+    }
+    if (bmpinfo.h > 0x7fffffff) {
+      bmpinfo.h = (-bmpinfo.h) & 0xffffffff;
       bmpinfo.topdown = 1;
     } else {
       bmpinfo.topdown = 0;
+    }
+    if (bmpinfo.h > 0x7fffffff) {
+      goto format_error;
     }
   } else if (bmpinfo.InfoSize == 12) {
     /* old OS/2 format */
@@ -540,6 +566,11 @@ static int gm_readbody_bmp(FILE *f, greymap_t **gmp) {
     bmpinfo.ncolors = 0;
     bmpinfo.topdown = 0;
   } else {
+    goto format_error;
+  }
+
+  if (bmpinfo.comp == 3 && bmpinfo.InfoSize < 108) {
+    /* bitfield feature is only understood with V4 and V5 format */
     goto format_error;
   }
 
@@ -557,7 +588,7 @@ static int gm_readbody_bmp(FILE *f, greymap_t **gmp) {
 
   /* color table, present only if bmpinfo.bits <= 8. */
   if (bmpinfo.bits <= 8) {
-    coltable = (int *) malloc(bmpinfo.ncolors * sizeof(int));
+    coltable = (int *) calloc(bmpinfo.ncolors, sizeof(int));
     if (!coltable) {
       goto std_error;
     }
@@ -645,6 +676,22 @@ static int gm_readbody_bmp(FILE *f, greymap_t **gmp) {
       for (x=0; x<bmpinfo.w; x++) {
         TRY_EOF(bmp_readint(f, bmpinfo.bits/8, &c));
 	c = ((c>>16) & 0xff) + ((c>>8) & 0xff) + (c & 0xff);
+        GM_UPUT(gm, x, ycorr(y), c/3);
+      }
+      TRY(bmp_pad(f));
+    }
+    break;
+
+  case 0x320:  /* 32-bit encoding with bitfields */
+    redshift = lobit(bmpinfo.RedMask);
+    greenshift = lobit(bmpinfo.GreenMask);
+    blueshift = lobit(bmpinfo.BlueMask);
+
+    for (y=0; y<bmpinfo.h; y++) {
+      bmp_pad_reset();
+      for (x=0; x<bmpinfo.w; x++) {
+        TRY_EOF(bmp_readint(f, bmpinfo.bits/8, &c));
+	c = ((c & bmpinfo.RedMask) >> redshift) + ((c & bmpinfo.GreenMask) >> greenshift) + ((c & bmpinfo.BlueMask) >> blueshift);
         GM_UPUT(gm, x, ycorr(y), c/3);
       }
       TRY(bmp_pad(f));

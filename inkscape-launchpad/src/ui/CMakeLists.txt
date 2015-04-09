@@ -1,11 +1,10 @@
-
 set(ui_SRC
 	clipboard.cpp
 	control-manager.cpp
 	dialog-events.cpp
 	draw-anchor.cpp
-	interface.cpp 
-	object-edit.cpp 
+	interface.cpp
+	object-edit.cpp
 	previewholder.cpp
 	shape-editor.cpp
 	tool-factory.cpp
@@ -56,8 +55,8 @@ set(ui_SRC
 	dialog/aboutbox.cpp
 	dialog/align-and-distribute.cpp
 	dialog/calligraphic-profile-rename.cpp
-	dialog/color-item.cpp
 	dialog/clonetiler.cpp
+	dialog/color-item.cpp
 	dialog/debug.cpp
 	dialog/desktop-tracker.cpp
 	dialog/dialog-manager.cpp
@@ -86,31 +85,36 @@ set(ui_SRC
 	dialog/livepatheffect-add.cpp
 	dialog/livepatheffect-editor.cpp
 	dialog/lpe-fillet-chamfer-properties.cpp
+	dialog/lpe-powerstroke-properties.cpp
 	dialog/memory.cpp
 	dialog/messages.cpp
 	dialog/new-from-template.cpp
 	dialog/object-attributes.cpp
 	dialog/object-properties.cpp
+	dialog/objects.cpp
 	dialog/ocaldialogs.cpp
+	dialog/pixelartdialog.cpp
 	dialog/polar-arrange-tab.cpp
 	dialog/print-colors-preview-dialog.cpp
 	dialog/print.cpp
-	dialog/symbols.cpp
-	dialog/xml-tree.cpp
 	dialog/spellcheck.cpp
 	dialog/svg-fonts-dialog.cpp
 	dialog/swatches.cpp
+	dialog/symbols.cpp
+	dialog/tags.cpp
 	dialog/template-load-tab.cpp
 	dialog/template-widget.cpp
 	dialog/text-edit.cpp
 	dialog/tile.cpp
 	dialog/tracedialog.cpp
-	dialog/pixelartdialog.cpp
 	dialog/transformation.cpp
 	dialog/undo-history.cpp
+	dialog/xml-tree.cpp
 
+	widget/addtoicon.cpp
 	widget/anchor-selector.cpp
 	widget/button.cpp
+	widget/clipmaskicon.cpp
 	widget/color-picker.cpp
 	widget/color-preview.cpp
 	widget/dock-item.cpp
@@ -121,10 +125,13 @@ set(ui_SRC
 	widget/frame.cpp
 	widget/gimpcolorwheel.c
 	widget/gimpspinscale.c
+	widget/highlight-picker.cpp
 	widget/imageicon.cpp
 	widget/imagetoggler.cpp
+	widget/insertordericon.cpp
 	widget/labelled.cpp
 	widget/layer-selector.cpp
+	widget/layertypeicon.cpp
 	widget/licensor.cpp
 	widget/notebook-page.cpp
 	widget/object-composite-settings.cpp
@@ -179,8 +186,8 @@ set(ui_SRC
 	dialog/arrange-tab.h
 	dialog/behavior.h
 	dialog/calligraphic-profile-rename.h
-	dialog/color-item.h
 	dialog/clonetiler.h
+	dialog/color-item.h
 	dialog/debug.h
 	dialog/desktop-tracker.h
 	dialog/dialog-manager.h
@@ -200,8 +207,8 @@ set(ui_SRC
 	dialog/floating-behavior.h
 	dialog/font-substitution.h
 	dialog/glyphs.h
-	dialog/guides.h
 	dialog/grid-arrange-tab.h
+	dialog/guides.h
 	dialog/icon-preview.h
 	dialog/inkscape-preferences.h
 	dialog/input.h
@@ -215,13 +222,13 @@ set(ui_SRC
 	dialog/new-from-template.h
 	dialog/object-attributes.h
 	dialog/object-properties.h
+	dialog/objects.h
 	dialog/ocaldialogs.h
 	dialog/panel-dialog.h
-	dialog/polar-arrange-tab.h
 	dialog/pixelartdialog.h
+	dialog/polar-arrange-tab.h
 	dialog/print-colors-preview-dialog.h
 	dialog/print.h
-	
 	dialog/spellcheck.h
 	dialog/svg-fonts-dialog.h
 	dialog/swatches.h
