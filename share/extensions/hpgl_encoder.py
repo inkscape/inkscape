@@ -177,7 +177,8 @@ class hpglEncoder:
         # start conversion
         self.processGroups(self.doc, groupmat)
         # shift an empty node in in order to process last node in cache
-        self.processOffset('PU', 0, 0, 0)
+        if self.toolOffset > 0.0 and not self.dryRun:
+            self.processOffset('PU', 0, 0, 0)
         if self.options.debug:
             return self.hpgl, self
         else:
