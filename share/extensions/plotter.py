@@ -34,27 +34,30 @@ class Plot(inkex.Effect):
 
     def __init__(self):
         inkex.Effect.__init__(self)
-        self.OptionParser.add_option('--tab',             action='store', type='string',  dest='tab')
-        self.OptionParser.add_option('--serialPort',      action='store', type='string',  dest='serialPort',      default='COM1',  help='Serial port')
-        self.OptionParser.add_option('--serialBaudRate',  action='store', type='string',  dest='serialBaudRate',  default='9600',  help='Serial Baud rate')
-        self.OptionParser.add_option('--flowControl',     action='store', type='string',  dest='flowControl',     default='0',     help='Flow control')
-        self.OptionParser.add_option('--commandLanguage', action='store', type='string',  dest='commandLanguage', default='hpgl',  help='Command Language')
-        self.OptionParser.add_option('--initCommands',    action='store', type='string',  dest='initCommands',    default='',      help='Initialization commands')
-        self.OptionParser.add_option('--resolutionX',     action='store', type='float',   dest='resolutionX',     default=1016.0,  help='Resolution X (dpi)')
-        self.OptionParser.add_option('--resolutionY',     action='store', type='float',   dest='resolutionY',     default=1016.0,  help='Resolution Y (dpi)')
-        self.OptionParser.add_option('--pen',             action='store', type='int',     dest='pen',             default=1,       help='Pen number')
-        self.OptionParser.add_option('--force',           action='store', type='int',     dest='force',           default=24,      help='Pen force (g)')
-        self.OptionParser.add_option('--speed',           action='store', type='int',     dest='speed',           default=20,      help='Pen speed (cm/s)')
-        self.OptionParser.add_option('--orientation',     action='store', type='string',  dest='orientation',     default='90',    help='Rotation (Clockwise)')
-        self.OptionParser.add_option('--mirrorX',         action='store', type='inkbool', dest='mirrorX',         default='FALSE', help='Mirror X axis')
-        self.OptionParser.add_option('--mirrorY',         action='store', type='inkbool', dest='mirrorY',         default='FALSE', help='Mirror Y axis')
-        self.OptionParser.add_option('--center',          action='store', type='inkbool', dest='center',          default='FALSE', help='Center zero point')
-        self.OptionParser.add_option('--overcut',         action='store', type='float',   dest='overcut',         default=1.0,     help='Overcut (mm)')
-        self.OptionParser.add_option('--toolOffset',      action='store', type='float',   dest='toolOffset',      default=0.25,    help='Tool offset (mm)')
-        self.OptionParser.add_option('--precut',          action='store', type='inkbool', dest='precut',          default='TRUE',  help='Use precut')
-        self.OptionParser.add_option('--flat',            action='store', type='float',   dest='flat',            default=1.2,     help='Curve flatness')
-        self.OptionParser.add_option('--autoAlign',       action='store', type='inkbool', dest='autoAlign',       default='TRUE',  help='Auto align')
-        self.OptionParser.add_option('--debug',           action='store', type='inkbool', dest='debug',           default='FALSE', help='Show debug information')
+        self.OptionParser.add_option('--tab',               action='store', type='string',  dest='tab')
+        self.OptionParser.add_option('--serialPort',        action='store', type='string',  dest='serialPort',        default='COM1',  help='Serial port')
+        self.OptionParser.add_option('--serialBaudRate',    action='store', type='string',  dest='serialBaudRate',    default='9600',  help='Serial Baud rate')
+        self.OptionParser.add_option('--serialByteSize',    action='store', type='string',  dest='serialByteSize',    default='eight', help='Serial byte size')
+        self.OptionParser.add_option('--serialStopBits',    action='store', type='string',  dest='serialStopBits',    default='one',   help='Serial stop bits')
+        self.OptionParser.add_option('--serialParity',      action='store', type='string',  dest='serialParity',      default='none',  help='Serial parity')
+        self.OptionParser.add_option('--serialFlowControl', action='store', type='string',  dest='serialFlowControl', default='0',     help='Flow control')
+        self.OptionParser.add_option('--commandLanguage',   action='store', type='string',  dest='commandLanguage',   default='hpgl',  help='Command Language')
+        self.OptionParser.add_option('--initCommands',      action='store', type='string',  dest='initCommands',      default='',      help='Initialization commands')
+        self.OptionParser.add_option('--resolutionX',       action='store', type='float',   dest='resolutionX',       default=1016.0,  help='Resolution X (dpi)')
+        self.OptionParser.add_option('--resolutionY',       action='store', type='float',   dest='resolutionY',       default=1016.0,  help='Resolution Y (dpi)')
+        self.OptionParser.add_option('--pen',               action='store', type='int',     dest='pen',               default=1,       help='Pen number')
+        self.OptionParser.add_option('--force',             action='store', type='int',     dest='force',             default=24,      help='Pen force (g)')
+        self.OptionParser.add_option('--speed',             action='store', type='int',     dest='speed',             default=20,      help='Pen speed (cm/s)')
+        self.OptionParser.add_option('--orientation',       action='store', type='string',  dest='orientation',       default='90',    help='Rotation (Clockwise)')
+        self.OptionParser.add_option('--mirrorX',           action='store', type='inkbool', dest='mirrorX',           default='FALSE', help='Mirror X axis')
+        self.OptionParser.add_option('--mirrorY',           action='store', type='inkbool', dest='mirrorY',           default='FALSE', help='Mirror Y axis')
+        self.OptionParser.add_option('--center',            action='store', type='inkbool', dest='center',            default='FALSE', help='Center zero point')
+        self.OptionParser.add_option('--overcut',           action='store', type='float',   dest='overcut',           default=1.0,     help='Overcut (mm)')
+        self.OptionParser.add_option('--toolOffset',        action='store', type='float',   dest='toolOffset',        default=0.25,    help='Tool offset (mm)')
+        self.OptionParser.add_option('--precut',            action='store', type='inkbool', dest='precut',            default='TRUE',  help='Use precut')
+        self.OptionParser.add_option('--flat',              action='store', type='float',   dest='flat',              default=1.2,     help='Curve flatness')
+        self.OptionParser.add_option('--autoAlign',         action='store', type='inkbool', dest='autoAlign',         default='TRUE',  help='Auto align')
+        self.OptionParser.add_option('--debug',             action='store', type='inkbool', dest='debug',             default='FALSE', help='Show debug information')
 
     def effect(self):
         # get hpgl data
@@ -147,17 +150,49 @@ class Plot(inkex.Effect):
                 + "\n2. Extract the \"serial\" subfolder from the zip to the following folder: C:\\[Program files]\\inkscape\\python\\Lib\\"
                 + "\n3. Restart Inkscape."))
             return
-        # send data to plotter
+        # init serial framework
         mySerial = serial.Serial()
+        # set serial port
         mySerial.port = self.options.serialPort
+        # set baudrate
         mySerial.baudrate = self.options.serialBaudRate
+        # set bytesize
+        if self.options.serialByteSize == 'five':
+            mySerial.bytesize = serial.FIVEBITS
+        if self.options.serialByteSize == 'six':
+            mySerial.bytesize = serial.SIXBITS
+        if self.options.serialByteSize == 'seven':
+            mySerial.bytesize = serial.SEVENBITS
+        if self.options.serialByteSize == 'eight':
+            mySerial.bytesize = serial.EIGHTBITS
+        # set stopbits
+        if self.options.serialStopBits == 'one':
+            mySerial.stopbits = serial.STOPBITS_ONE
+        if self.options.serialStopBits == 'onePointFive':
+            mySerial.stopbits = serial.STOPBITS_ONE_POINT_FIVE
+        if self.options.serialStopBits == 'two':
+            mySerial.stopbits = serial.STOPBITS_TWO
+        # set parity
+        if self.options.serialParity == 'none':
+            mySerial.parity = serial.PARITY_NONE
+        if self.options.serialParity == 'even':
+            mySerial.parity = serial.PARITY_EVEN
+        if self.options.serialParity == 'odd':
+            mySerial.parity = serial.PARITY_ODD
+        if self.options.serialParity == 'mark':
+            mySerial.parity = serial.PARITY_MARK
+        if self.options.serialParity == 'space':
+            mySerial.parity = serial.PARITY_SPACE
+        # set short timeout to avoid locked up interface
         mySerial.timeout = 0.1
-        if self.options.flowControl == 'xonxoff':
+        # set flow control
+        if self.options.serialFlowControl == 'xonxoff':
             mySerial.xonxoff = True
-        if self.options.flowControl == 'rtscts' or self.options.flowControl == 'dsrdtrrtscts':
+        if self.options.serialFlowControl == 'rtscts' or self.options.serialFlowControl == 'dsrdtrrtscts':
             mySerial.rtscts = True
-        if self.options.flowControl == 'dsrdtrrtscts':
+        if self.options.serialFlowControl == 'dsrdtrrtscts':
             mySerial.dsrdtr = True
+        # try to establish connection
         try:
             mySerial.open()
         except Exception as inst:
@@ -167,6 +202,7 @@ class Plot(inkex.Effect):
             else:
                 type, value, traceback = sys.exc_info()
                 raise ValueError, ('', type, value), traceback
+        # send data to plotter
         if self.options.initCommands != '':
             mySerial.write(self.options.initCommands.decode('string_escape'))
         mySerial.write(self.hpgl)
@@ -178,7 +214,10 @@ class Plot(inkex.Effect):
         inkex.errormsg("---------------------------------\nDebug information\n---------------------------------\n\nSettings:\n")
         inkex.errormsg('  Serial Port: ' + self.options.serialPort)
         inkex.errormsg('  Serial baud rate: ' + self.options.serialBaudRate)
-        inkex.errormsg('  Flow control: ' + self.options.flowControl)
+        inkex.errormsg('  Serial byte size: ' + self.options.serialByteSize + ' Bits')
+        inkex.errormsg('  Serial stop bits: ' + self.options.serialStopBits + ' Bits')
+        inkex.errormsg('  Serial parity: ' + self.options.serialParity)
+        inkex.errormsg('  Serial Flow control: ' + self.options.serialFlowControl)
         inkex.errormsg('  Command language: ' + self.options.commandLanguage)
         inkex.errormsg('  Initialization commands: ' + self.options.initCommands)
         inkex.errormsg('  Resolution X (dpi): ' + str(self.options.resolutionX))

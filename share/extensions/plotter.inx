@@ -27,7 +27,25 @@
         <item value="57600">57600</item>
         <item value="115200">115200</item>
       </param>
-      <param name="flowControl" type="enum" _gui-text="Flow control:" _gui-description="The Software / Hardware flow control of your serial connection (Default: Software)">
+      <param name="serialByteSize" type="enum" _gui-text="Serial byte size:" _gui-description="The Byte size of your serial connection, 99% of all plotters use the default setting (Default: 8 Bits)">
+        <item value="eight">8 Bits</item>
+        <item value="seven">7 Bits</item>
+        <item value="six">6 Bits</item>
+        <item value="five">5 Bits</item>
+      </param>
+      <param name="serialStopBits" type="enum" _gui-text="Serial stop bits:" _gui-description="The Stop bits of your serial connection, 99% of all plotters use the default setting (Default: 1 Bit)">
+        <item value="one">1 Bit</item>
+        <item value="onePointFive">1.5 Bits</item>
+        <item value="two">2 Bits</item>
+      </param>
+      <param name="serialParity" type="enum" _gui-text="Serial parity:" _gui-description="The Parity of your serial connection, 99% of all plotters use the default setting (Default: None)">
+        <item value="none">None</item>
+        <item value="even">Even</item>
+        <item value="odd">Odd</item>
+        <item value="mark">Mark</item>
+        <item value="space">Space</item>
+      </param>
+      <param name="serialFlowControl" type="enum" _gui-text="Serial flow control:" _gui-description="The Software / Hardware flow control of your serial connection (Default: Software)">
         <_item value="xonxoff">Software (XON/XOFF)</_item>
         <_item value="rtscts">Hardware (RTS/CTS)</_item>
         <_item value="dsrdtrrtscts">Hardware (DSR/DTR + RTS/CTS)</_item>
