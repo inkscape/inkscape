@@ -3,7 +3,7 @@
 
 /** \file
  * LPE <perspective-envelope> implementation , see lpe-perspective-envelope.cpp.
- 
+
  */
 /*
  * Authors:
@@ -11,8 +11,8 @@
  *   Aaron Spike, aaron@ekips.org from envelope and perspective phyton code
  *   Dmitry Platonov, shadowjack@mail.ru, 2006 perspective approach & math
  *   Jose Hevia (freon) Transform algorithm from envelope
- *   
- * Copyright (C) 2007-2014 Authors 
+ *
+ * Copyright (C) 2007-2014 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -34,9 +34,9 @@ public:
 
     virtual void doEffect(SPCurve *curve);
 
-    virtual Geom::Point project_point(Geom::Point p);
+    virtual Geom::Point projectPoint(Geom::Point p);
 
-    virtual Geom::Point project_point(Geom::Point p,  double m[][3]);
+    virtual Geom::Point projectPoint(Geom::Point p,  double m[][3]);
 
     virtual Geom::Point pointAtRatio(Geom::Coord ratio,Geom::Point A, Geom::Point B);
 
@@ -55,10 +55,10 @@ protected:
 private:
 
     EnumParam<unsigned> deform_type;
-    PointParam Up_Left_Point;
-    PointParam Up_Right_Point;
-    PointParam Down_Left_Point;
-    PointParam Down_Right_Point;
+    PointParam up_left_point;
+    PointParam up_right_point;
+    PointParam down_left_point;
+    PointParam down_right_point;
 
     LPEPerspectiveEnvelope(const LPEPerspectiveEnvelope&);
     LPEPerspectiveEnvelope& operator=(const LPEPerspectiveEnvelope&);
