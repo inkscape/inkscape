@@ -18,7 +18,8 @@ public:
     LPEBSpline(LivePathEffectObject *lpeobject);
     virtual ~LPEBSpline();
 
-    virtual LPEPathFlashType pathFlashType() const {
+    virtual LPEPathFlashType pathFlashType() const
+    {
         return SUPPRESS_FLASH;
     }
     virtual void doOnApply(SPLPEItem const* lpeitem);
@@ -38,8 +39,8 @@ public:
 
 private:
     ScalarParam helper_size;
-    BoolParam ignoreCusp;
-    BoolParam onlySelected;
+    BoolParam ignore_cusp;
+    BoolParam only_selected;
     ScalarParam weight;
     Geom::PathVector hp;
 

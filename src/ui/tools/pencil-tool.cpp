@@ -191,7 +191,7 @@ bool PencilTool::_handleButtonPress(GdkEventButton const &bevent) {
                 }
                 if (anchor) {
                     p = anchor->dp;
-                    this->overwriteCurve = anchor->curve;
+                    this->overwrite_curve = anchor->curve;
                     desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Continuing selected path"));
                 } else {
                     m.setup(desktop);
@@ -663,11 +663,11 @@ void PencilTool::_interpolate() {
         for (int c = 0; c < n_segs; c++) {
             // if we are in BSpline we modify the trace to create adhoc nodes 
             if(mode == 2){
-                Geom::Point BP = b[4*c+0] + (1./3)*(b[4*c+3] - b[4*c+0]);
-                BP = Geom::Point(BP[X] + 0.0001,BP[Y] + 0.0001);
-                Geom::Point CP = b[4*c+3] + (1./3)*(b[4*c+0] - b[4*c+3]);
-                CP = Geom::Point(CP[X] + 0.0001,CP[Y] + 0.0001);
-                this->green_curve->curveto(BP,CP,b[4*c+3]);
+                Geom::Point point_at1 = b[4*c+0] + (1./3)*(b[4*c+3] - b[4*c+0]);
+                point_at1 = Geom::Point(point_at1[X] + 0.0001,point_at1[Y] + 0.0001);
+                Geom::Point point_at2 = b[4*c+3] + (1./3)*(b[4*c+0] - b[4*c+3]);
+                point_at2 = Geom::Point(point_at2[X] + 0.0001,point_at2[Y] + 0.0001);
+                this->green_curve->curveto(point_at1,point_at2,b[4*c+3]);
             }else{
                 this->green_curve->curveto(b[4 * c + 1], b[4 * c + 2], b[4 * c + 3]);
             }
@@ -810,11 +810,11 @@ void PencilTool::_fitAndSplit() {
             // if we are in BSpline we modify the trace to create adhoc nodes
         guint mode = prefs->getInt("/tools/freehand/pencil/freehand-mode", 0);
         if(mode == 2){
-            Geom::Point B = b[0] + (1./3)*(b[3] - b[0]);
-            B = Geom::Point(B[X] + 0.0001,B[Y] + 0.0001);
-            Geom::Point C = b[3] + (1./3)*(b[0] - b[3]);
-            C = Geom::Point(C[X] + 0.0001,C[Y] + 0.0001);
-            this->red_curve->curveto(B,C,b[3]);
+            Geom::Point point_at1 = b[0] + (1./3)*(b[3] - b[0]);
+            point_at1 = Geom::Point(point_at1[X] + 0.0001,point_at1[Y] + 0.0001);
+            Geom::Point point_at2 = b[3] + (1./3)*(b[0] - b[3]);
+            point_at2 = Geom::Point(point_at2[X] + 0.0001,point_at2[Y] + 0.0001);
+            this->red_curve->curveto(point_at1,point_at2,b[3]);
         }else{
             this->red_curve->curveto(b[1], b[2], b[3]);
         }

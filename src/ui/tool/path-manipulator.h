@@ -96,7 +96,7 @@ public:
     NodeList::iterator extremeNode(NodeList::iterator origin, bool search_selected,
         bool search_unselected, bool closest);
 
-    int BSplineGetSteps() const;
+    int _bsplineGetSteps() const;
     // this is necessary for Tab-selection in MultiPathManipulator
     SubpathList &subpathList() { return _subpaths; }
 
@@ -107,11 +107,11 @@ private:
 
     void _createControlPointsFromGeometry();
 
-    void recalculateIsBSpline();
-    bool isBSpline() const;
-    double BSplineHandlePosition(Handle *h, Handle *h2 = NULL);
-    Geom::Point BSplineHandleReposition(Handle *h, Handle *h2 = NULL);
-    Geom::Point BSplineHandleReposition(Handle *h, double pos);
+    void _recalculateIsBSpline();
+    bool _isBSpline() const;
+    double _bsplineHandlePosition(Handle *h, Handle *h2 = NULL);
+    Geom::Point _bsplineHandleReposition(Handle *h, Handle *h2 = NULL);
+    Geom::Point _bsplineHandleReposition(Handle *h, double pos);
     void _createGeometryFromControlPoints(bool alert_LPE = false);
     unsigned _deleteStretch(NodeList::iterator first, NodeList::iterator last, bool keep_shape);
     std::string _createTypeString();

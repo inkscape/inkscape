@@ -89,33 +89,33 @@ private:
 	bool _handle2ButtonPress(GdkEventButton const &bevent);
 	bool _handleKeyPress(GdkEvent *event);
     //adds spiro & bspline modes
-    void _pen_context_set_mode(guint mode);
+    void _penContextSetMode(guint mode);
     //this function changes the colors red, green and blue making them transparent or not depending on if the function uses spiro
-    void _bspline_spiro_color();
+    void _bsplineSpiroColor();
     //creates a node in bspline or spiro modes
-    void _bspline_spiro(bool shift);
+    void _bsplineSpiro(bool shift);
     //creates a node in bspline or spiro modes
-    void _bspline_spiro_on();
+    void _bsplineSpiroOn();
     //creates a CUSP node
-    void _bspline_spiro_off();
+    void _bsplineSpiroOff();
     //continues the existing curve in bspline or spiro mode
-    void _bspline_spiro_start_anchor(bool shift);
+    void _bsplineSpiroStartAnchor(bool shift);
     //continues the existing curve with the union node in bspline or spiro modes
-    void _bspline_spiro_start_anchor_on();
+    void _bsplineSpiroStartAnchorOn();
     //continues an existing curve with the union node in CUSP mode
-    void _bspline_spiro_start_anchor_off();
+    void _bsplineSpiroStartAnchorOff();
     //modifies the "red_curve" when it detects movement
-    void _bspline_spiro_motion(bool shift);
+    void _bsplineSpiroMotion(bool shift);
     //closes the curve with the last node in bspline or spiro mode
-    void _bspline_spiro_end_anchor_on();
+    void _bsplineSpiroEndAnchorOn();
     //closes the curve with the last node in CUSP mode
-    void _bspline_spiro_end_anchor_off();
+    void _bsplineSpiroEndAnchorOff();
     //CHECK: join all the curves "in game" and we call doEffect function
-    void _bspline_spiro_build();
+    void _bsplineSpiroBuild();
     //function bspline cloned from lpe-bspline.cpp
-    void _bspline_doEffect(SPCurve * curve);
+    void _bsplineDoEffect(SPCurve * curve);
     //function spiro cloned from lpe-spiro.cpp
-    void _spiro_doEffect(SPCurve * curve);
+    void _spiroDoEffect(SPCurve * curve);
 
 	void _setInitialPoint(Geom::Point const p);
 	void _setSubsequentPoint(Geom::Point const p, bool statusbar, guint status = 0);
