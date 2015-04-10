@@ -98,12 +98,12 @@ class Plot(inkex.Effect):
 
     def convertToHpgl(self):
         # convert raw HPGL to HPGL
-        hpglInit = 'IN;SP%d' % self.options.pen
+        hpglInit = 'IN'
         if self.options.force > 0:
             hpglInit += ';FS%d' % self.options.force
         if self.options.speed > 0:
             hpglInit += ';VS%d' % self.options.speed
-        self.hpgl = hpglInit + self.hpgl + ';PU0,0;SP0;IN; '
+        self.hpgl = hpglInit + self.hpgl + ';SP0;PU0,0;IN; '
 
     def convertToDmpl(self):
         # convert HPGL to DMPL
@@ -119,22 +119,23 @@ class Plot(inkex.Effect):
         # Z = Reset plotter
         # n,n, = Coordinate pair
         self.hpgl = self.hpgl.replace(';', ',')
+        self.hpgl = self.hpgl.replace('SP', 'P')
         self.hpgl = self.hpgl.replace('PU', 'U')
         self.hpgl = self.hpgl.replace('PD', 'D')
-        dmplInit = ';:HAL0P%d' % self.options.pen
+        dmplInit = ';:HAL0'
         if self.options.speed > 0:
             dmplInit += 'V%d' % self.options.speed
         dmplInit += 'EC1'
-        self.hpgl = dmplInit + self.hpgl[1:] + ',U0,0,P0Z '
+        self.hpgl = dmplInit + self.hpgl[1:] + ',P0,U0,0,Z '
 
     def convertToKNK(self):
         # convert HPGL to KNK Plotter Language
-        hpglInit = 'ZG;SP%d' % self.options.pen
+        hpglInit = 'ZG'
         if self.options.force > 0:
             hpglInit += ';FS%d' % self.options.force
         if self.options.speed > 0:
             hpglInit += ';VS%d' % self.options.speed
-        self.hpgl = hpglInit + self.hpgl + ';PU0,0;SP0;@ '
+        self.hpgl = hpglInit + self.hpgl + ';SP0;PU0,0;@ '
 
     def sendHpglToSerial(self):
         # gracefully exit script when pySerial is missing
@@ -223,7 +224,7 @@ class Plot(inkex.Effect):
         inkex.errormsg('  Flatness: ' + str(debugObject.flat) + ' plotter steps')
         inkex.errormsg('  Tool offset flatness: ' + str(debugObject.toolOffsetFlat) + ' plotter steps')
         inkex.errormsg("\n" + self.options.commandLanguage + " data:\n")
-        inkex.errormsg(self.hpgl)
+        inkex.errormsg(self.options.initCommands + self.hpgl)
 
 if __name__ == '__main__':
     # start extension
