@@ -24,25 +24,25 @@ LPEShowHandles::LPEShowHandles(LivePathEffectObject *lpeobject)
     : Effect(lpeobject),
       nodes(_("Show nodes"), _("Show nodes"), "nodes", &wr, this, true),
       handles(_("Show handles"), _("Show handles"), "handles", &wr, this, true),
-      originalPath(_("Show path"), _("Show path"), "originalPath", &wr, this, true),
-      scaleNodesAndHandles(_("Scale nodes and handles"), _("Scale nodes and handles"), "scaleNodesAndHandles", &wr, this, 10),
-      rotateNodes(_("Rotate nodes"), _("Rotate nodes"), "rotateNodes", &wr, this, 0)
+      original_path(_("Show path"), _("Show path"), "original_path", &wr, this, true),
+      scale_nodes_and_handles(_("Scale nodes and handles"), _("Scale nodes and handles"), "scale_nodes_and_handles", &wr, this, 10),
+      rotate_nodes(_("Rotate nodes"), _("Rotate nodes"), "rotate_nodes", &wr, this, 0)
 {
-    registerParameter(dynamic_cast<Parameter *>(&nodes));
-    registerParameter(dynamic_cast<Parameter *>(&handles));
-    registerParameter(dynamic_cast<Parameter *>(&originalPath));
-    registerParameter(dynamic_cast<Parameter *>(&scaleNodesAndHandles));
-    registerParameter(dynamic_cast<Parameter *>(&rotateNodes));
-    scaleNodesAndHandles.param_set_range(0, 500.);
-    scaleNodesAndHandles.param_set_increments(1, 1);
-    scaleNodesAndHandles.param_set_digits(2);
-    rotateNodes.param_set_range(0, 365);
-    rotateNodes.param_set_increments(1, 1);
-    rotateNodes.param_set_digits(0);
-    strokeWidth = 1.0;
+    registerParameter(&nodes);
+    registerParameter(&handles);
+    registerParameter(&original_path);
+    registerParameter(&scale_nodes_and_handles);
+    registerParameter(&rotate_nodes);
+    scale_nodes_and_handles.param_set_range(0, 500.);
+    scale_nodes_and_handles.param_set_increments(1, 1);
+    scale_nodes_and_handles.param_set_digits(2);
+    rotate_nodes.param_set_range(0, 365);
+    rotate_nodes.param_set_increments(1, 1);
+    rotate_nodes.param_set_digits(0);
+    stroke_width = 1.0;
 }
 
-bool LPEShowHandles::alertsOff = false;
+bool LPEShowHandles::alerts_off = false;
 
 /**
  * Sets default styles to element
@@ -51,11 +51,11 @@ bool LPEShowHandles::alertsOff = false;
 
 void LPEShowHandles::doOnApply(SPLPEItem const* lpeitem)
 {
-    if(!alertsOff) {
+    if(!alerts_off) {
         char *msg = _("The \"show handles\" path effect will remove any custom style on the object you are applying it to. If this is not what you want, click Cancel.");
         Gtk::MessageDialog dialog(msg, false, Gtk::MESSAGE_QUESTION, Gtk::BUTTONS_OK_CANCEL, true);
         gint response = dialog.run();
-        alertsOff = true;
+        alerts_off = true;
         if(response == GTK_RESPONSE_CANCEL) {
             SPLPEItem* item = const_cast<SPLPEItem*>(lpeitem);
             item->removeCurrentPathEffect(false);
@@ -76,24 +76,24 @@ void LPEShowHandles::doOnApply(SPLPEItem const* lpeitem)
 void LPEShowHandles::doBeforeEffect (SPLPEItem const* lpeitem)
 {
     SPItem const* item = SP_ITEM(lpeitem);
-    strokeWidth = item->style->stroke_width.computed;
+    stroke_width = item->style->stroke_width.computed;
 }
 
 std::vector<Geom::Path> LPEShowHandles::doEffect_path (std::vector<Geom::Path> const & path_in)
 {
     std::vector<Geom::Path> path_out;
     Geom::PathVector const original_pathv = pathv_to_linear_and_cubic_beziers(path_in);
-    if(originalPath) {
+    if(original_path) {
         for (unsigned int i=0; i < path_in.size(); i++) {
             path_out.push_back(path_in[i]);
         }
     }
-    if(!outlinepath.empty()) {
-        outlinepath.clear();
+    if(!outline_path.empty()) {
+        outline_path.clear();
     }
     generateHelperPath(original_pathv);
-    for (unsigned int i=0; i < outlinepath.size(); i++) {
-        path_out.push_back(outlinepath[i]);
+    for (unsigned int i=0; i < outline_path.size(); i++) {
+        path_out.push_back(outline_path[i]);
     }
     return path_out;
 }
@@ -136,11 +136,11 @@ LPEShowHandles::generateHelperPath(Geom::PathVector result)
             cubic = dynamic_cast<Geom::CubicBezier const *>(&*curve_it1);
             if (cubic) {
                 if(handles) {
-                    if(!are_near((*cubic)[0],(*cubic)[1])){
+                    if(!are_near((*cubic)[0],(*cubic)[1])) {
                         drawHandle((*cubic)[1]);
                         drawHandleLine((*cubic)[0],(*cubic)[1]);
                     }
-                    if(!are_near((*cubic)[3],(*cubic)[2])){
+                    if(!are_near((*cubic)[3],(*cubic)[2])) {
                         drawHandle((*cubic)[2]);
                         drawHandleLine((*cubic)[3],(*cubic)[2]);
                     }
@@ -150,7 +150,7 @@ LPEShowHandles::generateHelperPath(Geom::PathVector result)
                 drawNode(curve_it1->finalPoint());
             }
             ++curve_it1;
-            if(curve_it2 != curve_endit){
+            if(curve_it2 != curve_endit) {
                 ++curve_it2;
             }
         }
@@ -160,30 +160,30 @@ LPEShowHandles::generateHelperPath(Geom::PathVector result)
 void
 LPEShowHandles::drawNode(Geom::Point p)
 {
-    if(strokeWidth * scaleNodesAndHandles > 0.0) {
-        double diameter = strokeWidth * scaleNodesAndHandles;
+    if(stroke_width * scale_nodes_and_handles > 0.0) {
+        double diameter = stroke_width * scale_nodes_and_handles;
         char const * svgd;
         svgd = "M 0.05,0 A 0.05,0.05 0 0 1 0,0.05 0.05,0.05 0 0 1 -0.05,0 0.05,0.05 0 0 1 0,-0.05 0.05,0.05 0 0 1 0.05,0 Z M -0.5,-0.5 0.5,-0.5 0.5,0.5 -0.5,0.5 Z";
         Geom::PathVector pathv = sp_svg_read_pathv(svgd);
-        pathv *= Geom::Rotate::from_degrees(rotateNodes);
+        pathv *= Geom::Rotate::from_degrees(rotate_nodes);
         pathv *= Geom::Scale (diameter);
         pathv += p;
-        outlinepath.push_back(pathv[0]);
-        outlinepath.push_back(pathv[1]);
+        outline_path.push_back(pathv[0]);
+        outline_path.push_back(pathv[1]);
     }
 }
 
 void
 LPEShowHandles::drawHandle(Geom::Point p)
 {
-    if(strokeWidth * scaleNodesAndHandles > 0.0) {
-        double diameter = strokeWidth * scaleNodesAndHandles;
+    if(stroke_width * scale_nodes_and_handles > 0.0) {
+        double diameter = stroke_width * scale_nodes_and_handles;
         char const * svgd;
         svgd = "M 0.7,0.35 A 0.35,0.35 0 0 1 0.35,0.7 0.35,0.35 0 0 1 0,0.35 0.35,0.35 0 0 1 0.35,0 0.35,0.35 0 0 1 0.7,0.35 Z";
         Geom::PathVector pathv = sp_svg_read_pathv(svgd);
         pathv *= Geom::Scale (diameter);
         pathv += p-Geom::Point(diameter * 0.35,diameter * 0.35);
-        outlinepath.push_back(pathv[0]);
+        outline_path.push_back(pathv[0]);
     }
 }
 
@@ -192,14 +192,14 @@ void
 LPEShowHandles::drawHandleLine(Geom::Point p,Geom::Point p2)
 {
     Geom::Path path;
-    double diameter = strokeWidth * scaleNodesAndHandles;
-    if(diameter > 0.0 && Geom::distance(p,p2) > (diameter * 0.35)){
+    double diameter = stroke_width * scale_nodes_and_handles;
+    if(diameter > 0.0 && Geom::distance(p,p2) > (diameter * 0.35)) {
         Geom::Ray ray2(p, p2);
         p2 =  p2 - Geom::Point::polar(ray2.angle(),(diameter * 0.35));
     }
     path.start( p );
     path.appendNew<Geom::LineSegment>( p2 );
-    outlinepath.push_back(path);
+    outline_path.push_back(path);
 }
 
 }; //namespace LivePathEffect

@@ -20,7 +20,7 @@ class LPEShowHandles : public Effect , GroupBBoxEffect {
 
 public:
     LPEShowHandles(LivePathEffectObject *lpeobject);
-    virtual ~LPEShowHandles(){}
+    virtual ~LPEShowHandles() {}
 
     virtual void doOnApply(SPLPEItem const* lpeitem);
 
@@ -42,13 +42,13 @@ private:
 
     BoolParam nodes;
     BoolParam handles;
-    BoolParam originalPath;
-    ScalarParam scaleNodesAndHandles;
-    ScalarParam rotateNodes;
-    double strokeWidth;
-    static bool alertsOff;
+    BoolParam original_path;
+    ScalarParam scale_nodes_and_handles;
+    ScalarParam rotate_nodes;
+    double stroke_width;
+    static bool alerts_off;
 
-    Geom::PathVector outlinepath;
+    Geom::PathVector outline_path;
 
     LPEShowHandles(const LPEShowHandles &);
     LPEShowHandles &operator=(const LPEShowHandles &);
