@@ -63,6 +63,13 @@ void LPEPerspectiveEnvelope::doEffect(SPCurve *curve)
 {
     using Geom::X;
     using Geom::Y;
+    if(are_near(up_left_point, up_right_point) &&
+            are_near(up_right_point, down_left_point) &&
+            are_near(down_left_point, down_right_point)) {
+        g_warning("Perspective/Envelope LPE::doBeforeEffect - lpeobj with invalid parameter, the same value in 4 handles!");
+        resetGrid();
+        return;
+    }
     double projmatrix[3][3];
     if(deform_type == DEFORMATION_PERSPECTIVE) {
         std::vector<Geom::Point> handles(4);
