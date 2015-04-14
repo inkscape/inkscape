@@ -84,6 +84,28 @@ const std::string& FloodTool::getPrefsPath() {
 
 const std::string FloodTool::prefsPath = "/tools/paintbucket";
 
+// TODO: Replace by C++11 initialization
+// Must match PaintBucketChannels enum
+Glib::ustring ch_init[8] = {
+    _("Visible Colors"),
+    _("Red"),
+    _("Green"),
+    _("Blue"),
+    _("Hue"),
+    _("Saturation"),
+    _("Lightness"),
+    _("Alpha"),
+};
+const std::vector<Glib::ustring> FloodTool::channel_list( ch_init, ch_init+8 );
+
+Glib::ustring gap_init[4] = {
+    C_("Flood autogap", "None"),
+    C_("Flood autogap", "Small"),
+    C_("Flood autogap", "Medium"),
+    C_("Flood autogap", "Large")
+};
+const std::vector<Glib::ustring> FloodTool::gap_list( gap_init, gap_init+4 );
+
 FloodTool::FloodTool()
     : ToolBase(cursor_paintbucket_xpm, 11, 30)
     , item(NULL)
@@ -171,38 +193,6 @@ inline guint32 get_pixel(guchar *px, int x, int y, int stride) {
 
 inline unsigned char * get_trace_pixel(guchar *trace_px, int x, int y, int width) {
     return trace_px + (x + y * width);
-}
-
-/**
- * Generate the list of trace channel selection entries.
- */
-GList * flood_channels_dropdown_items_list() {
-    GList *glist = NULL;
-
-    glist = g_list_append (glist, _("Visible Colors"));
-    glist = g_list_append (glist, _("Red"));
-    glist = g_list_append (glist, _("Green"));
-    glist = g_list_append (glist, _("Blue"));
-    glist = g_list_append (glist, _("Hue"));
-    glist = g_list_append (glist, _("Saturation"));
-    glist = g_list_append (glist, _("Lightness"));
-    glist = g_list_append (glist, _("Alpha"));
-
-    return glist;
-}
-
-/**
- * Generate the list of autogap selection entries.
- */
-GList * flood_autogap_dropdown_items_list() {
-    GList *glist = NULL;
-
-    glist = g_list_append (glist, (void*) C_("Flood autogap", "None"));
-    glist = g_list_append (glist, (void*) C_("Flood autogap", "Small"));
-    glist = g_list_append (glist, (void*) C_("Flood autogap", "Medium"));
-    glist = g_list_append (glist, (void*) C_("Flood autogap", "Large"));
-
-    return glist;
 }
 
 /**

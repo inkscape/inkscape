@@ -13,6 +13,7 @@
 
 #include <sigc++/connection.h>
 #include "ui/tools/tool-base.h"
+#include <vector>
 
 #define SP_FLOOD_CONTEXT(obj) (dynamic_cast<Inkscape::UI::Tools::FloodTool*>((Inkscape::UI::Tools::ToolBase*)obj))
 #define SP_IS_FLOOD_CONTEXT(obj) (dynamic_cast<const Inkscape::UI::Tools::FloodTool*>((const Inkscape::UI::Tools::ToolBase*)obj) != NULL)
@@ -39,14 +40,13 @@ public:
 	virtual const std::string& getPrefsPath();
 
 	static void set_channels(gint channels);
+	static const std::vector<Glib::ustring> channel_list;
+	static const std::vector<Glib::ustring> gap_list;
 
 private:
 	void selection_changed(Inkscape::Selection* selection);
 	void finishItem();
 };
-
-GList* flood_channels_dropdown_items_list (void);
-GList* flood_autogap_dropdown_items_list (void);
 
 enum PaintBucketChannels {
     FLOOD_CHANNELS_RGB,

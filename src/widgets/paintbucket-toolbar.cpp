@@ -121,17 +121,16 @@ void sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
     {
         GtkListStore* model = gtk_list_store_new( 2, G_TYPE_STRING, G_TYPE_INT );
 
-        GList* items = 0;
         gint count = 0;
-        for ( items = Inkscape::UI::Tools::flood_channels_dropdown_items_list(); items ; items = g_list_next(items) )
-        {
+        const std::vector<Glib::ustring>& channel_list = Inkscape::UI::Tools::FloodTool::channel_list;
+        for (std::vector<Glib::ustring>::const_iterator iterator = channel_list.begin();
+             iterator != channel_list.end(); ++iterator ) {
             GtkTreeIter iter;
             gtk_list_store_append( model, &iter );
-            gtk_list_store_set( model, &iter, 0, reinterpret_cast<gchar*>(items->data), 1, count, -1 );
+            gtk_list_store_set( model, &iter, 0, (*iterator).c_str(), 1, count, -1 );
             count++;
         }
-        g_list_free( items );
-        items = 0;
+
         EgeSelectOneAction* act1 = ege_select_one_action_new( "ChannelsAction", _("Fill by"), (""), NULL, GTK_TREE_MODEL(model) );
         g_object_set( act1, "short_label", _("Fill by:"), NULL );
         ege_select_one_action_set_appearance( act1, "compact" );
@@ -188,17 +187,15 @@ void sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
     {
         GtkListStore* model = gtk_list_store_new( 2, G_TYPE_STRING, G_TYPE_INT );
 
-        GList* items = 0;
         gint count = 0;
-        for ( items = Inkscape::UI::Tools::flood_autogap_dropdown_items_list(); items ; items = g_list_next(items) )
-        {
+        const std::vector<Glib::ustring>& gap_list = Inkscape::UI::Tools::FloodTool::gap_list;
+        for (std::vector<Glib::ustring>::const_iterator iterator = gap_list.begin();
+             iterator != gap_list.end(); ++iterator ) {
             GtkTreeIter iter;
             gtk_list_store_append( model, &iter );
-            gtk_list_store_set( model, &iter, 0, reinterpret_cast<gchar*>(items->data), 1, count, -1 );
+            gtk_list_store_set( model, &iter, 0, (*iterator).c_str(), 1, count, -1 );
             count++;
         }
-        g_list_free( items );
-        items = 0;
         EgeSelectOneAction* act2 = ege_select_one_action_new( "AutoGapAction", _("Close gaps"), (""), NULL, GTK_TREE_MODEL(model) );
         g_object_set( act2, "short_label", _("Close gaps:"), NULL );
         ege_select_one_action_set_appearance( act2, "compact" );
