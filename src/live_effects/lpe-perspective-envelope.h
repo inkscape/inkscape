@@ -42,6 +42,10 @@ public:
 
     virtual void resetDefaults(SPItem const* item);
 
+    virtual void vertical(PointParam &paramA,PointParam &paramB, Geom::Line vert);
+
+    virtual void horizontal(PointParam &paramA,PointParam &paramB,Geom::Line horiz);
+
     virtual void doBeforeEffect(SPLPEItem const* lpeitem);
 
     virtual Gtk::Widget * newWidget();
@@ -54,6 +58,8 @@ protected:
     void addCanvasIndicators(SPLPEItem const */*lpeitem*/, std::vector<Geom::PathVector> &hp_vec);
 private:
 
+    BoolParam horizontal_mirror;
+    BoolParam vertical_mirror;
     EnumParam<unsigned> deform_type;
     PointParam up_left_point;
     PointParam up_right_point;

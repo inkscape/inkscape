@@ -40,7 +40,8 @@ static const Util::EnumDataConverter<unsigned> DeformationTypeConverter(Deformat
 
 LPEPerspectiveEnvelope::LPEPerspectiveEnvelope(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    // initialise your parameters here:
+    horizontal_mirror(_("Mirror movements in horizontal"), _("Mirror movements in horizontal"), "horizontal_mirror", &wr, this, false),
+    vertical_mirror(_("Mirror movements in vertical"), _("Mirror movements in vertical"), "vertical_mirror", &wr, this, false),
     deform_type(_("Type"), _("Select the type of deformation"), "deform_type", DeformationTypeConverter, &wr, this, DEFORMATION_PERSPECTIVE),
     up_left_point(_("Top Left"), _("Top Left - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "up_left_point", &wr, this),
     up_right_point(_("Top Right"), _("Top Right - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "up_right_point", &wr, this),
@@ -49,6 +50,8 @@ LPEPerspectiveEnvelope::LPEPerspectiveEnvelope(LivePathEffectObject *lpeobject) 
 {
     // register all your parameters here, so Inkscape knows which parameters this effect has:
     registerParameter(&deform_type);
+    registerParameter(&horizontal_mirror);
+    registerParameter(&vertical_mirror);
     registerParameter(&up_left_point);
     registerParameter(&up_right_point);
     registerParameter(&down_left_point);
@@ -313,9 +316,61 @@ LPEPerspectiveEnvelope::newWidget()
 }
 
 void
+LPEPerspectiveEnvelope::vertical(PointParam &param_one, PointParam &param_two, Geom::Line vert)
+{
+    Geom::Point A = param_one;
+    Geom::Point B = param_two;
+    double Y = (A[Geom::Y] + B[Geom::Y])/2;
+    A[Geom::Y] = Y;
+    B[Geom::Y] = Y;
+    Geom::Point nearest = vert.pointAt(vert.nearestPoint(A));
+    double distance_one = Geom::distance(A,nearest);
+    double distance_two = Geom::distance(B,nearest);
+    double distance_middle = (distance_one + distance_two)/2;
+    if(A[Geom::X] > B[Geom::X]) {
+        distance_middle *= -1;
+    }
+    A[Geom::X] = nearest[Geom::X] - distance_middle;
+    B[Geom::X] = nearest[Geom::X] + distance_middle;
+    param_one.param_setValue(A, true);
+    param_two.param_setValue(B, true);
+}
+
+void
+LPEPerspectiveEnvelope::horizontal(PointParam &param_one, PointParam &param_two, Geom::Line horiz)
+{
+    Geom::Point A = param_one;
+    Geom::Point B = param_two;
+    double X = (A[Geom::X] + B[Geom::X])/2;
+    A[Geom::X] = X;
+    B[Geom::X] = X;
+    Geom::Point nearest = horiz.pointAt(horiz.nearestPoint(A));
+    double distance_one = Geom::distance(A,nearest);
+    double distance_two = Geom::distance(B,nearest);
+    double distance_middle = (distance_one + distance_two)/2;
+    if(A[Geom::Y] > B[Geom::Y]) {
+        distance_middle *= -1;
+    }
+    A[Geom::Y] = nearest[Geom::Y] - distance_middle;
+    B[Geom::Y] = nearest[Geom::Y] + distance_middle;
+    param_one.param_setValue(A, true);
+    param_two.param_setValue(B, true);
+}
+
+void
 LPEPerspectiveEnvelope::doBeforeEffect (SPLPEItem const* lpeitem)
 {
     original_bbox(lpeitem);
+    Geom::Line vert(Geom::Point(boundingbox_X.middle(),boundingbox_Y.max()), Geom::Point(boundingbox_X.middle(), boundingbox_Y.min()));
+    Geom::Line horiz(Geom::Point(boundingbox_X.min(),boundingbox_Y.middle()), Geom::Point(boundingbox_X.max(), boundingbox_Y.middle()));
+    if(vertical_mirror) {
+        vertical(up_left_point, up_right_point,vert);
+        vertical(down_left_point, down_right_point,vert);
+    }
+    if(horizontal_mirror) {
+        horizontal(up_left_point, down_left_point,horiz);
+        horizontal(up_right_point, down_right_point,horiz);
+    }
     SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
     item->apply_to_clippath(item);
     item->apply_to_mask(item);
