@@ -59,6 +59,8 @@ class Ink2Canvas(inkex.Effect):
 
     def walk_tree(self, root):
         for node in root:
+            if node.tag is inkex.etree.Comment:
+                continue
             tag = self.get_tag_name(node)
             class_name = tag.capitalize()
             if not hasattr(svg, class_name):
