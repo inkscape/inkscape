@@ -16,11 +16,11 @@
 
 /*
 File:      uemf.c
-Version:   0.0.28
-Date:      04-APR-2014
+Version:   0.0.30
+Date:      20-MAR-2015
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
-Copyright: 2014 David Mathog and California Institute of Technology (Caltech)
+Copyright: 2015 David Mathog and California Institute of Technology (Caltech)
 */
 
 #ifdef __cplusplus
@@ -199,7 +199,7 @@ definitions are not needed in end user code, so they are here rather than in uem
 // this one may also be used A=Msk,B=MskBmi and F=cbMsk 
 #define SET_CB_FROM_PXBMI(A,B,C,D,E,F)    /* A=Px, B=Bmi, C=cbImage, D=cbImage4, E=cbBmi, F=cbPx */ \
    if(A){\
-     if(!B)return(NULL);  /* size is derived from U_BIMAPINFO, but NOT from its size field, go figure*/ \
+     if(!B)return(NULL);  /* size is derived from U_BITMAPINFO, but NOT from its size field, go figure*/ \
      C = F;\
      D = UP4(C);          /*  pixel array might not be a multiples of 4 bytes*/ \
      E    = sizeof(U_BITMAPINFOHEADER) +  4 * get_real_color_count((const char *) &(B->bmiHeader));  /*  bmiheader + colortable*/ \
@@ -851,7 +851,7 @@ int get_real_color_icount(
     \brief Get the DIB parameters from the BMI of the record for use by DBI_to_RGBA()
     
     \return BI_Compression Enumeration.  For anything other than U_BI_RGB values other than px may not be valid.
-    \param pEmr        pointer to EMR record that has a U_BITMAPINFO and bitmap
+    \param record      pointer to EMR record that has a U_BITMAPINFO and bitmap
     \param offBitsSrc  Offset to the bitmap
     \param offBmiSrc   Offset to the U_BITMAPINFO
     \param px          pointer to DIB pixel array in pEmr
@@ -863,7 +863,7 @@ int get_real_color_icount(
     \param invert      If DIB rows are in opposite order from RGBA rows
 */
 int get_DIB_params(
-       void             *pEmr,
+       const char       *record,
        uint32_t          offBitsSrc,
        uint32_t          offBmiSrc,
        const char      **px,
@@ -875,7 +875,7 @@ int get_DIB_params(
        uint32_t         *invert
    ){
    uint32_t bic;
-   PU_BITMAPINFO Bmi = (PU_BITMAPINFO)((char *)pEmr + offBmiSrc);
+   PU_BITMAPINFO Bmi = (PU_BITMAPINFO)(record + offBmiSrc);
    PU_BITMAPINFOHEADER Bmih = &(Bmi->bmiHeader);
    /* if biCompression is not U_BI_RGB some or all of the following might not hold real values */
    bic        = Bmih->biCompression;
@@ -903,7 +903,7 @@ int get_DIB_params(
       *numCt     = Bmih->biSizeImage;
       *ct        = NULL;
    }
-   *px = (char *)((char *)pEmr + offBitsSrc);
+   *px = record + offBitsSrc;
    return(bic);
 }
 
@@ -1611,6 +1611,26 @@ U_RECTL rectl_set(
 }
 
 /**
+    \brief Set rect and rectl objects from Upper Left and Lower Right corner points.
+    \param array array of rectangles
+    \param index  array entry to fill, numbered from 0
+    \param ul upper left corner of rectangle
+    \param lr lower right corner of rectangle
+*/
+void rectli_set(
+      PU_RECTL array,
+      int index,
+      U_POINTL ul,
+      U_POINTL lr
+    ){
+    PU_RECTL rct = &(array[index]);
+    rct->left     =   ul.x;
+    rct->top      =   ul.y;
+    rct->right    =   lr.x;
+    rct->bottom   =   lr.y;
+}
+
+/**
     \brief Set sizel objects with X,Y values.
     \param x X coordinate 
     \param y Y coordinate
@@ -2192,7 +2212,7 @@ U_RGNDATAHEADER rgndataheader_set(
    rdh.dwSize    = U_RDH_OBJSIZE;  
    rdh.iType     = U_RDH_RECTANGLES;   
    rdh.nCount    = nCount;  
-   rdh.nRgnSize  = nCount * sizeof(U_RECTL); // Size in bytes of retangle array
+   rdh.nRgnSize  = nCount * sizeof(U_RECTL); // Size in bytes of rectangle array
    rdh.rclBounds = rclBounds; 
    return(rdh);
 }
@@ -2857,7 +2877,7 @@ by end user code and to further that end prototypes are NOT provided and they ar
 
 
 // Functions with the same form starting with U_EMRPOLYBEZIER_set
-char *U_EMR_CORE1(uint32_t iType, U_RECTL rclBounds, const uint32_t cptl, const U_POINTL *points){
+char *U_EMR_CORE1_set(uint32_t iType, U_RECTL rclBounds, const uint32_t cptl, const U_POINTL *points){
    char *record;
    int   cbPoints;
    int   irecsize;
@@ -2876,7 +2896,7 @@ char *U_EMR_CORE1(uint32_t iType, U_RECTL rclBounds, const uint32_t cptl, const 
 } 
 
 // Functions with the same form starting with U_EMR_POLYPOLYLINE
-char *U_EMR_CORE2(uint32_t iType, U_RECTL rclBounds, const uint32_t nPolys, const uint32_t *aPolyCounts,const uint32_t cptl, const U_POINTL *points){
+char *U_EMR_CORE2_set(uint32_t iType, U_RECTL rclBounds, const uint32_t nPolys, const uint32_t *aPolyCounts,const uint32_t cptl, const U_POINTL *points){
    char *record;
    int   cbPolys,cbPoints,off;
    int   irecsize;
@@ -2899,7 +2919,7 @@ char *U_EMR_CORE2(uint32_t iType, U_RECTL rclBounds, const uint32_t nPolys, cons
 } 
 
 // Functions with the same form starting with U_EMR_SETMAPMODE_set
-char *U_EMR_CORE3(uint32_t iType, uint32_t iMode){
+char *U_EMR_CORE3_set(uint32_t iType, uint32_t iMode){
    char *record;
    int   irecsize;
 
@@ -2914,7 +2934,7 @@ char *U_EMR_CORE3(uint32_t iType, uint32_t iMode){
 } 
 
 // Functions taking a single U_RECT or U_RECTL, starting with U_EMRELLIPSE_set, also U_EMRFILLPATH, 
-char *U_EMR_CORE4(uint32_t iType, U_RECTL rclBox){
+char *U_EMR_CORE4_set(uint32_t iType, U_RECTL rclBox){
    char *record;
    int   irecsize;
 
@@ -2930,7 +2950,7 @@ char *U_EMR_CORE4(uint32_t iType, U_RECTL rclBox){
 } 
 
 // Functions with the same form starting with U_EMRSETMETARGN_set
-char *U_EMR_CORE5(uint32_t iType){
+char *U_EMR_CORE5_set(uint32_t iType){
    char *record;
    int   irecsize = 8;
 
@@ -2943,7 +2963,7 @@ char *U_EMR_CORE5(uint32_t iType){
 }
 
 // Functions with the same form starting with U_EMRPOLYBEZIER16_set
-char *U_EMR_CORE6(uint32_t iType, U_RECTL rclBounds, const uint32_t cpts, const U_POINT16 *points){
+char *U_EMR_CORE6_set(uint32_t iType, U_RECTL rclBounds, const uint32_t cpts, const U_POINT16 *points){
    char *record;
    int   cbPoints,cbPoints4,off;
    int   irecsize;
@@ -2970,7 +2990,7 @@ char *U_EMR_CORE6(uint32_t iType, U_RECTL rclBounds, const uint32_t cpts, const 
 
 // Functions that take a single struct argument which contains two uint32_t, starting with U_EMRSETWINDOWEXTEX_set
 // these all pass two 32 bit ints and are cast by the caller to U_PAIR
-char *U_EMR_CORE7(uint32_t iType, U_PAIR pair){
+char *U_EMR_CORE7_set(uint32_t iType, U_PAIR pair){
    char *record;
    int   irecsize = sizeof(U_EMRGENERICPAIR);
 
@@ -2984,7 +3004,7 @@ char *U_EMR_CORE7(uint32_t iType, U_PAIR pair){
 }
 
 // For U_EMREXTTEXTOUTA and U_EMREXTTEXTOUTW
-char *U_EMR_CORE8(
+char *U_EMR_CORE8_set(
        uint32_t            iType,
        U_RECTL             rclBounds,          // Bounding rectangle in device units
        uint32_t            iGraphicsMode,      // Graphics mode Enumeration
@@ -3033,7 +3053,7 @@ char *U_EMR_CORE8(
 } 
 
 // Functions that take a rect and a pair of points, starting with U_EMRARC_set
-char *U_EMR_CORE9(uint32_t iType, U_RECTL rclBox, U_POINTL ptlStart, U_POINTL ptlEnd){
+char *U_EMR_CORE9_set(uint32_t iType, U_RECTL rclBox, U_POINTL ptlStart, U_POINTL ptlEnd){
    char *record;
    int   irecsize = sizeof(U_EMRARC);
 
@@ -3049,7 +3069,7 @@ char *U_EMR_CORE9(uint32_t iType, U_RECTL rclBox, U_POINTL ptlStart, U_POINTL pt
 }
 
 // Functions with the same form starting with U_EMR_POLYPOLYLINE16
-char *U_EMR_CORE10(uint32_t iType, U_RECTL rclBounds, const uint32_t nPolys, const uint32_t *aPolyCounts,const uint32_t cpts, const U_POINT16 *points){
+char *U_EMR_CORE10_set(uint32_t iType, U_RECTL rclBounds, const uint32_t nPolys, const uint32_t *aPolyCounts,const uint32_t cpts, const U_POINT16 *points){
    char *record;
    int   cbPoints,cbPolys,off;
    int   irecsize;
@@ -3072,25 +3092,27 @@ char *U_EMR_CORE10(uint32_t iType, U_RECTL rclBounds, const uint32_t nPolys, con
 } 
 
 // common code for U_EMRINVERTRGN and U_EMRPAINTRGN,
-char *U_EMR_CORE11(uint32_t iType, PU_RGNDATA RgnData){
+char *U_EMR_CORE11_set(uint32_t iType, PU_RGNDATA RgnData){
    char *record;
    int   irecsize;
-   int   cbRgns,cbRgns4,off;
+   int   cbRgns,cbRgns4,rds,rds4,off;
 
    if(!RgnData)return(NULL);
    cbRgns   = ((PU_RGNDATAHEADER) RgnData)->nRgnSize;
    cbRgns4  = UP4(cbRgns);
-   irecsize = sizeof(U_EMRINVERTRGN) + cbRgns4 - sizeof(U_RGNDATAHEADER);  // core + array - overlap
-   record   = malloc(irecsize);
+   rds      = sizeof(U_RGNDATAHEADER) + cbRgns;
+   rds4     = UP4(rds);
+   irecsize = sizeof(U_EMRINVERTRGN) - sizeof(U_RECTL) + cbRgns4;  // core + array - overlap of one rectL
+   record    = malloc(irecsize);
    if(record){
       ((PU_EMR)           record)->iType     = iType;
       ((PU_EMR)           record)->nSize     = irecsize;
       ((PU_EMRINVERTRGN)  record)->rclBounds = ((PU_RGNDATAHEADER) RgnData)->rclBounds;
-      ((PU_EMRINVERTRGN)  record)->cbRgnData = cbRgns;
-      off = irecsize - cbRgns4;
-      memcpy(record + off, RgnData, cbRgns);
-      off += cbRgns;
-      if(cbRgns < cbRgns4){ memset(record + off,0, cbRgns4 - cbRgns); } // clear any unused bytes
+      ((PU_EMRINVERTRGN)  record)->cbRgnData = rds;
+      off = sizeof(U_EMRINVERTRGN) - sizeof(U_RGNDATA);
+      memcpy(record + off, RgnData, rds);
+      off += rds;
+      if(rds < rds4){ memset(record + off,0, rds4 - rds); } // clear any unused bytes
    }
    return(record);
 } 
@@ -3274,7 +3296,7 @@ char *U_EMRPOLYBEZIER_set(
       const uint32_t  cptl,
       const U_POINTL *points
    ){
-   return(U_EMR_CORE1(U_EMR_POLYBEZIER, rclBounds, cptl, points));
+   return(U_EMR_CORE1_set(U_EMR_POLYBEZIER, rclBounds, cptl, points));
 } 
 
 // U_EMRPOLYGON_set                    3
@@ -3290,7 +3312,7 @@ char *U_EMRPOLYGON_set(
       const uint32_t  cptl,
       const U_POINTL *points
    ){
-   return(U_EMR_CORE1(U_EMR_POLYGON, rclBounds, cptl, points));
+   return(U_EMR_CORE1_set(U_EMR_POLYGON, rclBounds, cptl, points));
 } 
 
 // U_EMRPOLYLINE_set                   4
@@ -3306,7 +3328,7 @@ char *U_EMRPOLYLINE_set(
       const uint32_t  cptl,
       const U_POINTL *points
    ){
-   return(U_EMR_CORE1(U_EMR_POLYLINE, rclBounds, cptl, points));
+   return(U_EMR_CORE1_set(U_EMR_POLYLINE, rclBounds, cptl, points));
 } 
 
 // U_EMRPOLYBEZIERTO_set               5
@@ -3322,7 +3344,7 @@ char *U_EMRPOLYBEZIERTO_set(
       const uint32_t  cptl,
       const U_POINTL *points
    ){
-   return(U_EMR_CORE1(U_EMR_POLYBEZIERTO, rclBounds, cptl, points));
+   return(U_EMR_CORE1_set(U_EMR_POLYBEZIERTO, rclBounds, cptl, points));
 } 
 
 // U_EMRPOLYLINETO_set                 6
@@ -3338,7 +3360,7 @@ char *U_EMRPOLYLINETO_set(
       const uint32_t  cptl,
       const U_POINTL *points
    ){
-   return(U_EMR_CORE1(U_EMR_POLYLINETO, rclBounds, cptl, points));
+   return(U_EMR_CORE1_set(U_EMR_POLYLINETO, rclBounds, cptl, points));
 } 
 
 // U_EMRPOLYPOLYLINE_set               7
@@ -3358,7 +3380,7 @@ char *U_EMRPOLYPOLYLINE_set(
       const uint32_t  cptl,
       const U_POINTL *points
    ){
-   return(U_EMR_CORE2(U_EMR_POLYPOLYLINE, rclBounds, nPolys, aPolyCounts,cptl, points));
+   return(U_EMR_CORE2_set(U_EMR_POLYPOLYLINE, rclBounds, nPolys, aPolyCounts,cptl, points));
 }
 
 // U_EMRPOLYPOLYGON_set                8
@@ -3378,7 +3400,7 @@ char *U_EMRPOLYPOLYGON_set(
       const uint32_t  cptl,
       const U_POINTL *points
    ){
-   return(U_EMR_CORE2(U_EMR_POLYPOLYGON, rclBounds, nPolys, aPolyCounts,cptl, points));
+   return(U_EMR_CORE2_set(U_EMR_POLYPOLYGON, rclBounds, nPolys, aPolyCounts,cptl, points));
 }
 
 // U_EMRSETWINDOWEXTEX_set             9
@@ -3393,7 +3415,7 @@ char *U_EMRSETWINDOWEXTEX_set(
    U_PAIR temp;
    temp.x = szlExtent.cx;
    temp.y = szlExtent.cy;
-   return(U_EMR_CORE7(U_EMR_SETWINDOWEXTEX, temp)); 
+   return(U_EMR_CORE7_set(U_EMR_SETWINDOWEXTEX, temp)); 
 }
 
 // U_EMRSETWINDOWORGEX_set            10
@@ -3405,7 +3427,7 @@ char *U_EMRSETWINDOWEXTEX_set(
 char *U_EMRSETWINDOWORGEX_set(
       const U_POINTL ptlOrigin
    ){
-   return(U_EMR_CORE7(U_EMR_SETWINDOWORGEX, ptlOrigin)); // U_PAIR and U_POINTL are the same thing
+   return(U_EMR_CORE7_set(U_EMR_SETWINDOWORGEX, ptlOrigin)); // U_PAIR and U_POINTL are the same thing
 }
 
 // U_EMRSETVIEWPORTEXTEX_set          11
@@ -3420,7 +3442,7 @@ char *U_EMRSETVIEWPORTEXTEX_set(
    U_PAIR temp;
    temp.x = szlExtent.cx;
    temp.y = szlExtent.cy;
-   return(U_EMR_CORE7(U_EMR_SETVIEWPORTEXTEX, temp)); 
+   return(U_EMR_CORE7_set(U_EMR_SETVIEWPORTEXTEX, temp)); 
 }
 
 // U_EMRSETVIEWPORTORGEX_set          12
@@ -3432,7 +3454,7 @@ char *U_EMRSETVIEWPORTEXTEX_set(
 char *U_EMRSETVIEWPORTORGEX_set(
       const U_POINTL ptlOrigin
    ){
-   return(U_EMR_CORE7(U_EMR_SETVIEWPORTORGEX, ptlOrigin));  // U_PAIR and U_POINTL are the same thing
+   return(U_EMR_CORE7_set(U_EMR_SETVIEWPORTORGEX, ptlOrigin));  // U_PAIR and U_POINTL are the same thing
 }
 
 // U_EMRSETBRUSHORGEX_set             13
@@ -3444,7 +3466,7 @@ char *U_EMRSETVIEWPORTORGEX_set(
 char *U_EMRSETBRUSHORGEX_set(
       const U_POINTL ptlOrigin
    ){
-   return(U_EMR_CORE7(U_EMR_SETBRUSHORGEX, *((PU_PAIR) & ptlOrigin))); 
+   return(U_EMR_CORE7_set(U_EMR_SETBRUSHORGEX, *((PU_PAIR) & ptlOrigin))); 
 }
 
 // U_EMREOF_set                       14
@@ -3544,7 +3566,7 @@ char *U_EMRSETMAPPERFLAGS_set(void){
 char *U_EMRSETMAPMODE_set(
       const uint32_t iMode
    ){
-   return(U_EMR_CORE3(U_EMR_SETMAPMODE, iMode));
+   return(U_EMR_CORE3_set(U_EMR_SETMAPMODE, iMode));
 }
 
 // U_EMRSETBKMODE_set                 18
@@ -3556,7 +3578,7 @@ char *U_EMRSETMAPMODE_set(
 char *U_EMRSETBKMODE_set( 
       const uint32_t iMode
    ){
-  return(U_EMR_CORE3(U_EMR_SETBKMODE, iMode));
+  return(U_EMR_CORE3_set(U_EMR_SETBKMODE, iMode));
 }
 
 // U_EMRSETPOLYFILLMODE_set           19
@@ -3568,7 +3590,7 @@ char *U_EMRSETBKMODE_set(
 char *U_EMRSETPOLYFILLMODE_set(
       const uint32_t iMode
    ){
-   return(U_EMR_CORE3(U_EMR_SETPOLYFILLMODE, iMode));
+   return(U_EMR_CORE3_set(U_EMR_SETPOLYFILLMODE, iMode));
 }
 
 // U_EMRSETROP2_set                   20
@@ -3580,7 +3602,7 @@ char *U_EMRSETPOLYFILLMODE_set(
 char *U_EMRSETROP2_set(
       const uint32_t iMode 
    ){
-   return(U_EMR_CORE3(U_EMR_SETROP2, iMode));
+   return(U_EMR_CORE3_set(U_EMR_SETROP2, iMode));
 }
 
 // U_EMRSETSTRETCHBLTMODE_set         21
@@ -3592,7 +3614,7 @@ char *U_EMRSETROP2_set(
 char *U_EMRSETSTRETCHBLTMODE_set(
       const uint32_t iMode
    ){
-   return(U_EMR_CORE3(U_EMR_SETSTRETCHBLTMODE, iMode));
+   return(U_EMR_CORE3_set(U_EMR_SETSTRETCHBLTMODE, iMode));
 }
 
 // U_EMRSETTEXTALIGN_set              22
@@ -3604,7 +3626,7 @@ char *U_EMRSETSTRETCHBLTMODE_set(
 char *U_EMRSETTEXTALIGN_set(
       const uint32_t iMode 
    ){
-   return(U_EMR_CORE3(U_EMR_SETTEXTALIGN, iMode));
+   return(U_EMR_CORE3_set(U_EMR_SETTEXTALIGN, iMode));
 }
 
 // U_EMRSETCOLORADJUSTMENT_set        23
@@ -3638,7 +3660,7 @@ char *U_EMRSETCOLORADJUSTMENT_set(
 char *U_EMRSETTEXTCOLOR_set(
       const U_COLORREF crColor
   ){
-  return(U_EMR_CORE3(U_EMR_SETTEXTCOLOR, *(uint32_t *) &crColor));
+  return(U_EMR_CORE3_set(U_EMR_SETTEXTCOLOR, *(uint32_t *) &crColor));
 }
 
 // U_EMRSETBKCOLOR_set                25
@@ -3650,7 +3672,7 @@ char *U_EMRSETTEXTCOLOR_set(
 char *U_EMRSETBKCOLOR_set(
       const U_COLORREF crColor
   ){
-  return(U_EMR_CORE3(U_EMR_SETBKCOLOR, *(uint32_t *) &crColor));
+  return(U_EMR_CORE3_set(U_EMR_SETBKCOLOR, *(uint32_t *) &crColor));
 }
 
 // U_EMROFFSETCLIPRGN_set             26
@@ -3662,7 +3684,7 @@ char *U_EMRSETBKCOLOR_set(
 char *U_EMROFFSETCLIPRGN_set(
       const U_POINTL ptl
    ){
-  return(U_EMR_CORE7(U_EMR_OFFSETCLIPRGN, ptl));
+  return(U_EMR_CORE7_set(U_EMR_OFFSETCLIPRGN, ptl));
 }
 
 // U_EMRMOVETOEX_set                  27
@@ -3674,7 +3696,7 @@ char *U_EMROFFSETCLIPRGN_set(
 char *U_EMRMOVETOEX_set(
       const U_POINTL ptl
    ){
-   return(U_EMR_CORE7(U_EMR_MOVETOEX, ptl));
+   return(U_EMR_CORE7_set(U_EMR_MOVETOEX, ptl));
 }
 
 // U_EMRSETMETARGN_set                28
@@ -3683,7 +3705,7 @@ char *U_EMRMOVETOEX_set(
     \return pointer to U_EMR_SETMETARGN record, or NULL on error.
 */
 char *U_EMRSETMETARGN_set(void){
-  return(U_EMR_CORE5(U_EMR_SETMETARGN));
+  return(U_EMR_CORE5_set(U_EMR_SETMETARGN));
 }
 
 // U_EMREXCLUDECLIPRECT_set           29
@@ -3695,7 +3717,7 @@ char *U_EMRSETMETARGN_set(void){
 char *U_EMREXCLUDECLIPRECT_set(
       const U_RECTL rclClip
     ){
-    return(U_EMR_CORE4(U_EMR_EXCLUDECLIPRECT,rclClip));
+    return(U_EMR_CORE4_set(U_EMR_EXCLUDECLIPRECT,rclClip));
 } 
 
 // U_EMRINTERSECTCLIPRECT_set         30
@@ -3707,7 +3729,7 @@ char *U_EMREXCLUDECLIPRECT_set(
 char *U_EMRINTERSECTCLIPRECT_set(
       const U_RECTL rclClip
     ){
-    return(U_EMR_CORE4(U_EMR_INTERSECTCLIPRECT,rclClip));
+    return(U_EMR_CORE4_set(U_EMR_INTERSECTCLIPRECT,rclClip));
 } 
 
 // U_EMRSCALEVIEWPORTEXTEX_set        31
@@ -3725,7 +3747,7 @@ char *U_EMRSCALEVIEWPORTEXTEX_set(
     const int32_t  yNum,
     const int32_t  yDenom
   ){
-  return(U_EMR_CORE4(U_EMR_SCALEVIEWPORTEXTEX,(U_RECTL){xNum,xDenom,yNum,yDenom}));
+  return(U_EMR_CORE4_set(U_EMR_SCALEVIEWPORTEXTEX,(U_RECTL){xNum,xDenom,yNum,yDenom}));
 }
 
 
@@ -3744,7 +3766,7 @@ char *U_EMRSCALEWINDOWEXTEX_set(
     const int32_t  yNum,
     const int32_t  yDenom
   ){
-  return(U_EMR_CORE4(U_EMR_SCALEWINDOWEXTEX,(U_RECTL){xNum,xDenom,yNum,yDenom}));
+  return(U_EMR_CORE4_set(U_EMR_SCALEWINDOWEXTEX,(U_RECTL){xNum,xDenom,yNum,yDenom}));
 }
 
 // U_EMRSAVEDC_set                    33
@@ -3753,7 +3775,7 @@ char *U_EMRSCALEWINDOWEXTEX_set(
     \return pointer to U_EMR_SAVEDC record, or NULL on error.
 */
 char *U_EMRSAVEDC_set(void){
-  return(U_EMR_CORE5(U_EMR_SAVEDC));
+  return(U_EMR_CORE5_set(U_EMR_SAVEDC));
 }
 
 // U_EMRRESTOREDC_set                 34
@@ -3765,7 +3787,7 @@ char *U_EMRSAVEDC_set(void){
 char *U_EMRRESTOREDC_set(
     const int32_t iRelative
   ){
-  return(U_EMR_CORE3(U_EMR_RESTOREDC, (uint32_t) iRelative));
+  return(U_EMR_CORE3_set(U_EMR_RESTOREDC, (uint32_t) iRelative));
 }
 
 // U_EMRSETWORLDTRANSFORM_set         35
@@ -3952,7 +3974,7 @@ char *U_EMRANGLEARC_set(
 char *U_EMRELLIPSE_set(
       const U_RECTL rclBox
    ){
-   return(U_EMR_CORE4(U_EMR_ELLIPSE,rclBox));
+   return(U_EMR_CORE4_set(U_EMR_ELLIPSE,rclBox));
 } 
 
 // U_EMRRECTANGLE_set                 43
@@ -3964,7 +3986,7 @@ char *U_EMRELLIPSE_set(
 char *U_EMRRECTANGLE_set(
       const U_RECTL rclBox
    ){
-   return(U_EMR_CORE4(U_EMR_RECTANGLE,rclBox));
+   return(U_EMR_CORE4_set(U_EMR_RECTANGLE,rclBox));
 } 
 
 // U_EMRROUNDRECT_set                 44
@@ -4005,7 +4027,7 @@ char *U_EMRARC_set(
       const U_POINTL ptlStart,
       const U_POINTL ptlEnd
    ){
-   return(U_EMR_CORE9(U_EMR_ARC,rclBox, ptlStart, ptlEnd));
+   return(U_EMR_CORE9_set(U_EMR_ARC,rclBox, ptlStart, ptlEnd));
 }
 
 // U_EMRCHORD_set                     46
@@ -4021,7 +4043,7 @@ char *U_EMRCHORD_set(
       const U_POINTL ptlStart,
       const U_POINTL ptlEnd
    ){
-   return(U_EMR_CORE9(U_EMR_CHORD,rclBox, ptlStart, ptlEnd));
+   return(U_EMR_CORE9_set(U_EMR_CHORD,rclBox, ptlStart, ptlEnd));
 }
 
 // U_EMRPIE_set                       47
@@ -4037,7 +4059,7 @@ char *U_EMRPIE_set(
       const U_POINTL ptlStart,
       const U_POINTL ptlEnd
    ){
-   return(U_EMR_CORE9(U_EMR_PIE,rclBox, ptlStart, ptlEnd));
+   return(U_EMR_CORE9_set(U_EMR_PIE,rclBox, ptlStart, ptlEnd));
 }
 
 // U_EMRSELECTPALETTE_set             48
@@ -4049,7 +4071,7 @@ char *U_EMRPIE_set(
 char *U_EMRSELECTPALETTE_set(
       const uint32_t ihPal
    ){
-   return(U_EMR_CORE3(U_EMR_SELECTPALETTE, ihPal));
+   return(U_EMR_CORE3_set(U_EMR_SELECTPALETTE, ihPal));
 }
 
 // U_EMRCREATEPALETTE_set             49
@@ -4124,7 +4146,7 @@ char *U_EMRRESIZEPALETTE_set(
       const uint32_t ihPal,
       const uint32_t cEntries
    ){
-   return(U_EMR_CORE7(U_EMR_RESIZEPALETTE, (U_PAIR){ihPal,cEntries}));
+   return(U_EMR_CORE7_set(U_EMR_RESIZEPALETTE, (U_PAIR){ihPal,cEntries}));
 }
 
 // U_EMRREALIZEPALETTE_set            52
@@ -4133,7 +4155,7 @@ char *U_EMRRESIZEPALETTE_set(
     \return pointer to U_EMR_REALIZEPALETTE record, or NULL on error.
 */
 char *U_EMRREALIZEPALETTE_set(void){
-  return(U_EMR_CORE5(U_EMR_REALIZEPALETTE));
+  return(U_EMR_CORE5_set(U_EMR_REALIZEPALETTE));
 }
 
 // U_EMREXTFLOODFILL_set              53
@@ -4173,7 +4195,7 @@ char *U_EMREXTFLOODFILL_set(
 char *U_EMRLINETO_set(
       const U_POINTL ptl
    ){
-   return(U_EMR_CORE7(U_EMR_LINETO, ptl));
+   return(U_EMR_CORE7_set(U_EMR_LINETO, ptl));
 }
 
 // U_EMRARCTO_set                     55
@@ -4192,7 +4214,7 @@ char *U_EMRARCTO_set(
       U_POINTL            ptlStart,
       U_POINTL            ptlEnd
    ){
-   return(U_EMR_CORE9(U_EMR_ARCTO,rclBox, ptlStart, ptlEnd));
+   return(U_EMR_CORE9_set(U_EMR_ARCTO,rclBox, ptlStart, ptlEnd));
 }
 
 // U_EMRPOLYDRAW_set                  56
@@ -4216,7 +4238,7 @@ char *U_EMRPOLYDRAW_set(
 
    if(!cptl || !aptl || !abTypes)return(NULL);
    cbPoints    = cptl * sizeof(U_POINTL);    // space for aptl
-   cbAbTypes    = cptl;                       // number of abTypes (also size, 1 byte each)
+   cbAbTypes    = cptl;                       // number of abTypes (same array size, 1 byte each)
    cbAbTypes4    = UP4(cbAbTypes);                // space for abTypes
    irecsize = sizeof(U_EMRPOLYDRAW) + cbPoints + cbAbTypes4 - sizeof(U_POINTL) - 1;
    record   = malloc(irecsize);
@@ -4244,7 +4266,7 @@ char *U_EMRPOLYDRAW_set(
 char *U_EMRSETARCDIRECTION_set(
       const uint32_t iArcDirection
    ){
-   return(U_EMR_CORE3(U_EMR_SETARCDIRECTION, iArcDirection));
+   return(U_EMR_CORE3_set(U_EMR_SETARCDIRECTION, iArcDirection));
 }
 
 // U_EMRSETMITERLIMIT_set             58
@@ -4256,7 +4278,7 @@ char *U_EMRSETARCDIRECTION_set(
 char *U_EMRSETMITERLIMIT_set(
       const uint32_t eMiterLimit
    ){
-   return(U_EMR_CORE3(U_EMR_SETMITERLIMIT, eMiterLimit));
+   return(U_EMR_CORE3_set(U_EMR_SETMITERLIMIT, eMiterLimit));
 }
 
 
@@ -4266,7 +4288,7 @@ char *U_EMRSETMITERLIMIT_set(
     \return pointer to U_EMR_BEGINPATH record, or NULL on error.
 */
 char *U_EMRBEGINPATH_set(void){
-   return(U_EMR_CORE5(U_EMR_BEGINPATH));
+   return(U_EMR_CORE5_set(U_EMR_BEGINPATH));
 }
 
 // U_EMRENDPATH_set                   60
@@ -4275,7 +4297,7 @@ char *U_EMRBEGINPATH_set(void){
     \return pointer to U_EMR_ENDPATH record, or NULL on error.
 */
 char *U_EMRENDPATH_set(void){
-   return(U_EMR_CORE5(U_EMR_ENDPATH));
+   return(U_EMR_CORE5_set(U_EMR_ENDPATH));
 }
 
 // U_EMRCLOSEFIGURE_set               61
@@ -4284,7 +4306,7 @@ char *U_EMRENDPATH_set(void){
     \return pointer to U_EMR_CLOSEFIGURE record, or NULL on error.
 */
 char *U_EMRCLOSEFIGURE_set(void){
-   return(U_EMR_CORE5(U_EMR_CLOSEFIGURE));
+   return(U_EMR_CORE5_set(U_EMR_CLOSEFIGURE));
 }
 
 // U_EMRFILLPATH_set                  62
@@ -4298,7 +4320,7 @@ char *U_EMRCLOSEFIGURE_set(void){
 char *U_EMRFILLPATH_set(
       const U_RECTL rclBox
    ){
-   return(U_EMR_CORE4(U_EMR_FILLPATH,rclBox));
+   return(U_EMR_CORE4_set(U_EMR_FILLPATH,rclBox));
 } 
 
 // U_EMRSTROKEANDFILLPATH_set         63
@@ -4314,7 +4336,7 @@ char *U_EMRFILLPATH_set(
 char *U_EMRSTROKEANDFILLPATH_set(
       const U_RECTL rclBox
    ){
-   return(U_EMR_CORE4(U_EMR_STROKEANDFILLPATH,rclBox));
+   return(U_EMR_CORE4_set(U_EMR_STROKEANDFILLPATH,rclBox));
 } 
 
 // U_EMRSTROKEPATH_set                64
@@ -4328,7 +4350,7 @@ char *U_EMRSTROKEANDFILLPATH_set(
 char *U_EMRSTROKEPATH_set(
       const U_RECTL rclBox
    ){
-   return(U_EMR_CORE4(U_EMR_STROKEPATH,rclBox));
+   return(U_EMR_CORE4_set(U_EMR_STROKEPATH,rclBox));
 } 
 
 // U_EMRFLATTENPATH_set               65
@@ -4337,7 +4359,7 @@ char *U_EMRSTROKEPATH_set(
     \return pointer to U_EMR_FLATTENPATH record, or NULL on error.
 */
 char *U_EMRFLATTENPATH_set(void){
-   return(U_EMR_CORE5(U_EMR_FLATTENPATH));
+   return(U_EMR_CORE5_set(U_EMR_FLATTENPATH));
 }
 
 // U_EMRWIDENPATH_set                 66
@@ -4346,7 +4368,7 @@ char *U_EMRFLATTENPATH_set(void){
     \return pointer to U_EMR_WIDENPATH record, or NULL on error.
 */
 char *U_EMRWIDENPATH_set(void){
-   return(U_EMR_CORE5(U_EMR_WIDENPATH));
+   return(U_EMR_CORE5_set(U_EMR_WIDENPATH));
 }
 
 // U_EMRSELECTCLIPPATH_set            67
@@ -4358,7 +4380,7 @@ char *U_EMRWIDENPATH_set(void){
 char *U_EMRSELECTCLIPPATH_set(
       const uint32_t iMode
    ){ 
-   return(U_EMR_CORE3(U_EMR_SELECTCLIPPATH, iMode));
+   return(U_EMR_CORE3_set(U_EMR_SELECTCLIPPATH, iMode));
 }
 
 // U_EMRABORTPATH_set                 68
@@ -4367,7 +4389,7 @@ char *U_EMRSELECTCLIPPATH_set(
     \return pointer to U_EMR_ABORTPATH record, or NULL on error.
 */
 char *U_EMRABORTPATH_set(void){
-   return(U_EMR_CORE5(U_EMR_ABORTPATH));
+   return(U_EMR_CORE5_set(U_EMR_ABORTPATH));
 }
 
 // U_EMRUNDEF69                       69
@@ -4416,23 +4438,25 @@ char *U_EMRFILLRGN_set(
    ){
    char *record;
    int   irecsize;
-   int   cbRgns,cbRgns4,off;
+   int   cbRgns,cbRgns4,rds,rds4,off;
 
    if(!RgnData)return(NULL);
    cbRgns   = ((PU_RGNDATAHEADER) RgnData)->nRgnSize;
-   cbRgns4    = UP4(cbRgns);
-   irecsize = sizeof(U_EMRFILLRGN) + cbRgns4 - sizeof(U_RGNDATAHEADER);  // core + array - overlap
+   cbRgns4  = UP4(cbRgns);
+   rds      = sizeof(U_RGNDATAHEADER) + cbRgns;
+   rds4     = UP4(rds);
+   irecsize = sizeof(U_EMRFILLRGN) - sizeof(U_RECTL) + cbRgns4;  // core + array - overlap of one rectL
    record    = malloc(irecsize);
    if(record){
       ((PU_EMR)           record)->iType     = U_EMR_FILLRGN;
       ((PU_EMR)           record)->nSize     = irecsize;
-      ((PU_EMRFILLRGN)    record)->rclBounds = rclBounds; // or ??? ((PU_RGNDATAHEADER) RgnData)->rclBounds;
-      ((PU_EMRFILLRGN)    record)->cbRgnData = cbRgns;
+      ((PU_EMRFILLRGN)    record)->rclBounds = rclBounds;
+      ((PU_EMRFILLRGN)    record)->cbRgnData = rds;
       ((PU_EMRFILLRGN)    record)->ihBrush   = ihBrush;
-      off = irecsize - cbRgns4;
-      memcpy(record + off, RgnData, cbRgns);
-      off += cbRgns;
-      if(cbRgns4 > cbRgns){ memset(record + off,0,cbRgns4-cbRgns); } // clear any unused bytes
+      off = sizeof(U_EMRFILLRGN) - sizeof(U_RGNDATA);
+      memcpy(record + off, RgnData, rds);
+      off += rds;
+      if(rds < rds4){ memset(record + off,0, rds4 - rds); } // clear any unused bytes
    }
    return(record);
 } 
@@ -4455,24 +4479,26 @@ char *U_EMRFRAMERGN_set(
    ){
    char *record;
    int   irecsize;
-   int   cbRgns,cbRgns4,off;
+   int   cbRgns,cbRgns4,rds,rds4,off;
 
    if(!RgnData)return(NULL);
    cbRgns   = ((PU_RGNDATAHEADER) RgnData)->nRgnSize;
-   cbRgns4    = UP4(cbRgns);
-   irecsize = sizeof(U_EMRFRAMERGN) + cbRgns4 - sizeof(U_RGNDATAHEADER);  // core + array - overlap
+   cbRgns4  = UP4(cbRgns);
+   rds      = sizeof(U_RGNDATAHEADER) + cbRgns;
+   rds4     = UP4(rds);
+   irecsize = sizeof(U_EMRFRAMERGN) - sizeof(U_RECTL) + cbRgns4;  // core + array - overlap of one rectL
    record    = malloc(irecsize);
    if(record){
       ((PU_EMR)           record)->iType     = U_EMR_FRAMERGN;
       ((PU_EMR)           record)->nSize     = irecsize;
-      ((PU_EMRFRAMERGN)   record)->rclBounds = rclBounds; // or ??? ((PU_RGNDATAHEADER) RgnData)->rclBounds;
-      ((PU_EMRFRAMERGN)   record)->cbRgnData = cbRgns;
+      ((PU_EMRFRAMERGN)   record)->rclBounds = rclBounds;
+      ((PU_EMRFRAMERGN)   record)->cbRgnData = rds;
       ((PU_EMRFRAMERGN)   record)->ihBrush   = ihBrush;
       ((PU_EMRFRAMERGN)   record)->szlStroke = szlStroke;
-      off = irecsize - cbRgns4;
-      memcpy(record + off, RgnData, cbRgns);
-      off += cbRgns;
-      if(cbRgns4 > cbRgns){ memset(record + off,0,cbRgns4-cbRgns); } // clear any unused bytes
+      off = sizeof(U_EMRFRAMERGN) - sizeof(U_RGNDATA);
+      memcpy(record + off, RgnData, rds);
+      off += rds;
+      if(rds < rds4){ memset(record + off,0, rds4 - rds); } // clear any unused bytes
    }
    return(record);
 } 
@@ -4486,7 +4512,7 @@ char *U_EMRFRAMERGN_set(
 char *U_EMRINVERTRGN_set(
       const PU_RGNDATA RgnData
    ){
-   return(U_EMR_CORE11(U_EMR_INVERTRGN, RgnData));
+   return(U_EMR_CORE11_set(U_EMR_INVERTRGN, RgnData));
 } 
 
 // U_EMRPAINTRGN_set                  74
@@ -4498,7 +4524,7 @@ char *U_EMRINVERTRGN_set(
 char *U_EMRPAINTRGN_set(
       const PU_RGNDATA RgnData
    ){
-   return(U_EMR_CORE11(U_EMR_PAINTRGN, RgnData));
+   return(U_EMR_CORE11_set(U_EMR_PAINTRGN, RgnData));
 } 
 
 // U_EMREXTSELECTCLIPRGN_set          75
@@ -4514,22 +4540,24 @@ char *U_EMREXTSELECTCLIPRGN_set(
    ){
    char *record;
    int   irecsize;
-   int   cbRgns,cbRgns4,off;
+   int   cbRgns,cbRgns4,rds,rds4,off;
 
    if(!RgnData)return(NULL);
    cbRgns   = ((PU_RGNDATAHEADER) RgnData)->nRgnSize;
-   cbRgns4    = UP4(cbRgns);
-   irecsize = sizeof(U_EMREXTSELECTCLIPRGN) + cbRgns4 - sizeof(U_RGNDATAHEADER);  // core + array - overlap
+   cbRgns4  = UP4(cbRgns);
+   rds      = sizeof(U_RGNDATAHEADER) + cbRgns;
+   rds4     = UP4(rds);
+   irecsize = sizeof(U_EMREXTSELECTCLIPRGN) - sizeof(U_RECTL) + cbRgns4;  // core + array - overlap of one rectL
    record    = malloc(irecsize);
    if(record){
       ((PU_EMR)                  record)->iType     = U_EMR_EXTSELECTCLIPRGN;
       ((PU_EMR)                  record)->nSize     = irecsize;
-      ((PU_EMREXTSELECTCLIPRGN)  record)->cbRgnData = cbRgns;
+      ((PU_EMREXTSELECTCLIPRGN)  record)->cbRgnData = rds;
       ((PU_EMREXTSELECTCLIPRGN)  record)->iMode     = iMode;
-      off = irecsize - cbRgns4;
-      memcpy(record + off, RgnData, cbRgns);
-      off += cbRgns;
-      if(cbRgns4 > cbRgns){ memset(record + off,0,cbRgns4-cbRgns); } // clear any unused bytes
+      off = sizeof(U_EMREXTSELECTCLIPRGN) - sizeof(U_RGNDATA);
+      memcpy(record + off, RgnData, rds);
+      off += rds;
+      if(rds < rds4){ memset(record + off,0, rds4 - rds); } // clear any unused bytes
    }
    return(record);
 } 
@@ -4568,7 +4596,6 @@ char *U_EMRBITBLT_set(
    int   cbImage,cbImage4,cbBmi,off;
 
    SET_CB_FROM_PXBMI(Px,Bmi,cbImage,cbImage4,cbBmi,cbPx);
-   
    irecsize = sizeof(U_EMRBITBLT) + cbBmi + cbImage4;
    record   = malloc(irecsize);
    if(record){
@@ -4933,7 +4960,7 @@ char *U_EMREXTTEXTOUTA_set(
       const U_FLOAT     eyScale,
       const PU_EMRTEXT  emrtext
    ){
-   return(U_EMR_CORE8(U_EMR_EXTTEXTOUTA,rclBounds, iGraphicsMode, exScale, eyScale,emrtext));
+   return(U_EMR_CORE8_set(U_EMR_EXTTEXTOUTA,rclBounds, iGraphicsMode, exScale, eyScale,emrtext));
 }
 
 // U_EMREXTTEXTOUTW_set               84
@@ -4953,7 +4980,7 @@ char *U_EMREXTTEXTOUTW_set(
       const U_FLOAT    eyScale,
       const PU_EMRTEXT emrtext
    ){
-   return(U_EMR_CORE8(U_EMR_EXTTEXTOUTW,rclBounds, iGraphicsMode, exScale, eyScale,emrtext));
+   return(U_EMR_CORE8_set(U_EMR_EXTTEXTOUTW,rclBounds, iGraphicsMode, exScale, eyScale,emrtext));
 }
 
 // U_EMRPOLYBEZIER16_set              85
@@ -4969,7 +4996,7 @@ char *U_EMRPOLYBEZIER16_set(
       const uint32_t   cpts,
       const U_POINT16 *points
    ){
-   return(U_EMR_CORE6(U_EMR_POLYBEZIER16, rclBounds, cpts, points));
+   return(U_EMR_CORE6_set(U_EMR_POLYBEZIER16, rclBounds, cpts, points));
 } 
 
 // U_EMRPOLYGON16_set                 86
@@ -4985,7 +5012,7 @@ char *U_EMRPOLYGON16_set(
       const uint32_t   cpts,
       const U_POINT16 *points
    ){
-   return(U_EMR_CORE6(U_EMR_POLYGON16, rclBounds, cpts, points));
+   return(U_EMR_CORE6_set(U_EMR_POLYGON16, rclBounds, cpts, points));
 } 
 
 // U_EMRPOLYLINE16_set                87
@@ -5001,7 +5028,7 @@ char *U_EMRPOLYLINE16_set(
       const uint32_t   cpts,
       const U_POINT16 *points
    ){
-   return(U_EMR_CORE6(U_EMR_POLYLINE16, rclBounds, cpts, points));
+   return(U_EMR_CORE6_set(U_EMR_POLYLINE16, rclBounds, cpts, points));
 } 
 
 // U_EMRPOLYBEZIERTO16_set            88
@@ -5017,7 +5044,7 @@ char *U_EMRPOLYBEZIERTO16_set(
       const uint32_t   cpts,
       const U_POINT16 *points
    ){
-   return(U_EMR_CORE6(U_EMR_POLYBEZIERTO16, rclBounds, cpts, points));
+   return(U_EMR_CORE6_set(U_EMR_POLYBEZIERTO16, rclBounds, cpts, points));
 } 
 
 // U_EMRPOLYLINETO16_set              89
@@ -5033,7 +5060,7 @@ char *U_EMRPOLYLINETO16_set(
       const uint32_t   cpts,
       const U_POINT16 *points
    ){
-   return(U_EMR_CORE6(U_EMR_POLYLINETO16, rclBounds, cpts, points));
+   return(U_EMR_CORE6_set(U_EMR_POLYLINETO16, rclBounds, cpts, points));
 } 
 
 // U_EMRPOLYPOLYLINE16_set            90
@@ -5053,7 +5080,7 @@ char *U_EMRPOLYPOLYLINE16_set(
       const uint32_t   cpts,
       const U_POINT16 *points
    ){
-   return(U_EMR_CORE10(U_EMR_POLYPOLYLINE16, rclBounds, nPolys, aPolyCounts,cpts, points));
+   return(U_EMR_CORE10_set(U_EMR_POLYPOLYLINE16, rclBounds, nPolys, aPolyCounts,cpts, points));
 }
 
 // U_EMRPOLYPOLYGON16_set             91
@@ -5073,7 +5100,7 @@ char *U_EMRPOLYPOLYGON16_set(
       const uint32_t   cpts,
       const U_POINT16 *points
    ){
-   return(U_EMR_CORE10(U_EMR_POLYPOLYGON16, rclBounds, nPolys, aPolyCounts,cpts, points));
+   return(U_EMR_CORE10_set(U_EMR_POLYPOLYGON16, rclBounds, nPolys, aPolyCounts,cpts, points));
 }
 
 
@@ -5098,7 +5125,7 @@ char *U_EMRPOLYDRAW16_set(
 
    if(!cpts || !aptl || !abTypes)return(NULL);
    cbPoints    = cpts * sizeof(U_POINT16);  // space for aptl
-   cbAbTypes    = cpts;                     // number of abTypes (also size, 1 byte each)
+   cbAbTypes    = cpts;                     // number of abTypes (same array size, 1 byte each)
    cbAbTypes4    = UP4(cbAbTypes);          // space for abTypes
    irecsize = sizeof(U_EMRPOLYDRAW16) + cbPoints + cbAbTypes4 - sizeof(U_POINT16) - 1;
    record   = malloc(irecsize);
@@ -5242,7 +5269,7 @@ char *U_EMREXTCREATEPEN_set(
 char *U_EMRSETICMMODE_set(
       const uint32_t iMode
    ){ 
-   return(U_EMR_CORE3(U_EMR_SETICMMODE, iMode));
+   return(U_EMR_CORE3_set(U_EMR_SETICMMODE, iMode));
 }
 
 // U_EMRCREATECOLORSPACE_set          99
@@ -5280,7 +5307,7 @@ char *U_EMRCREATECOLORSPACE_set(
 char *U_EMRSETCOLORSPACE_set(
       const uint32_t             ihCS
    ){
-   return(U_EMR_CORE3(U_EMR_SETCOLORSPACE, ihCS));
+   return(U_EMR_CORE3_set(U_EMR_SETCOLORSPACE, ihCS));
 }
 
 // U_EMRDELETECOLORSPACE_set         101
@@ -5292,7 +5319,7 @@ char *U_EMRSETCOLORSPACE_set(
 char *U_EMRDELETECOLORSPACE_set(
       const uint32_t             ihCS
    ){
-   return(U_EMR_CORE3(U_EMR_DELETECOLORSPACE, ihCS));
+   return(U_EMR_CORE3_set(U_EMR_DELETECOLORSPACE, ihCS));
 }
 
 // U_EMRGLSRECORD_set                102  Not implemented
@@ -5428,7 +5455,7 @@ char *U_EMRALPHABLEND_set(
     \param iMode Mirroring Enumeration
 */
 char *U_EMRSETLAYOUT_set(uint32_t iMode){
-  return(U_EMR_CORE3(U_EMR_SETLAYOUT, iMode));
+  return(U_EMR_CORE3_set(U_EMR_SETLAYOUT, iMode));
 }
 
 // U_EMRTRANSPARENTBLT_set           116

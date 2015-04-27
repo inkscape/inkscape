@@ -32,10 +32,9 @@
 #include <cstring>
 #include <string>
 
-#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
-#include <glibmm/threads.h>
-#endif
-
+// Note that gtkmm headers must be included before gtk+ C headers
+// in all files.  The same applies for glibmm/glib etc.
+// If this is not done, then errors will be generate relating to Glib::Threads being undefined
 #include <gtkmm/filechooserdialog.h>
 #include <gtkmm/messagedialog.h>
 #include <gtkmm/stock.h>

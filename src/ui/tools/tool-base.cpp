@@ -20,10 +20,6 @@
 
 #include "widgets/desktop-widget.h"
 
-#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
-#include <glibmm/threads.h>
-#endif
-
 #include "shortcuts.h"
 #include "file.h"
 #include "ui/tools/tool-base.h"

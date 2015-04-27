@@ -6,11 +6,11 @@
 
 /*
 File:      uemf_endian.h
-Version:   0.0.3
-Date:      24-JUL-2012
+Version:   0.0.4
+Date:      24-MAR-2015
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
-Copyright: 2012 David Mathog and California Institute of Technology (Caltech)
+Copyright: 2015 David Mathog and California Institute of Technology (Caltech)
 */
 
 #ifndef _UEMF_ENDIAN_
@@ -49,6 +49,7 @@ extern "C" {
 //! \cond
 // prototypes
 int U_emf_endian(char *contents, size_t length, int torev);
+int U_emf_record_sizeok(const char *record, const char *blimit, uint32_t  *nSize, uint32_t  *iType, int torev);
 //! \endcond
 
 #ifdef __cplusplus

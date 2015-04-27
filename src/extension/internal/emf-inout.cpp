@@ -480,7 +480,7 @@ uint32_t Emf::add_image(PEMF_CALLBACK_DATA d,  void *pEmr, uint32_t cbBits, uint
     uint32_t width, height, colortype, numCt, invert; // if needed these values will be set in get_DIB_params
     if(cbBits && cbBmi  && (iUsage == U_DIB_RGB_COLORS)){
         // next call returns pointers and values, but allocates no memory
-        dibparams = get_DIB_params(pEmr, offBits, offBmi, &px, (const U_RGBQUAD **) &ct,
+        dibparams = get_DIB_params((const char *)pEmr, offBits, offBmi, &px, (const U_RGBQUAD **) &ct,
             &numCt, &width, &height, &colortype, &invert);
         if(dibparams ==U_BI_RGB){
             // U_EMRCREATEMONOBRUSH uses text/bk colors instead of what is in the color map.
@@ -1307,7 +1307,7 @@ Emf::select_extpen(PEMF_CALLBACK_DATA d, int index)
             d->dc[d->level].stroke_set    = true;
         }
         else if(pEmr->elp.elpBrushStyle == U_BS_DIBPATTERN || pEmr->elp.elpBrushStyle == U_BS_DIBPATTERNPT){
-            d->dc[d->level].stroke_idx  = add_image(d, pEmr, pEmr->cbBits, pEmr->cbBmi, *(uint32_t *) &(pEmr->elp.elpColor), pEmr->offBits, pEmr->offBmi);
+            d->dc[d->level].stroke_idx  = add_image(d, (void *)pEmr, pEmr->cbBits, pEmr->cbBmi, *(uint32_t *) &(pEmr->elp.elpColor), pEmr->offBits, pEmr->offBmi);
             d->dc[d->level].stroke_mode = DRAW_IMAGE;
             d->dc[d->level].stroke_set  = true;
         }
@@ -1530,7 +1530,7 @@ void Emf::common_image_extraction(PEMF_CALLBACK_DATA d, void *pEmr,
     uint32_t width, height, colortype, numCt, invert; // if needed these values will be set in get_DIB_params
     if(cbBits && cbBmi && (iUsage == U_DIB_RGB_COLORS)){
         // next call returns pointers and values, but allocates no memory
-        dibparams = get_DIB_params(pEmr, offBits, offBmi, &px, (const U_RGBQUAD **) &ct,
+        dibparams = get_DIB_params((const char *)pEmr, offBits, offBmi, &px, (const U_RGBQUAD **) &ct,
             &numCt, &width, &height, &colortype, &invert);
         if(dibparams ==U_BI_RGB){
             if(sw == 0 || sh == 0){
@@ -1611,6 +1611,10 @@ int Emf::myEnhMetaFileProc(char *contents, unsigned int length, PEMF_CALLBACK_DA
     uint32_t         off=0;
     uint32_t         emr_mask;
     int              OK =1;
+    int              file_status=1;
+    uint32_t         nSize;
+    uint32_t         iType;
+    const char      *blimit = contents + length;
     PU_ENHMETARECORD lpEMFR;
     TCHUNK_SPECS     tsp;
     uint32_t         tbkMode  = U_TRANSPARENT;          // holds proposed change to bkMode, if text is involved saving these to the DC must wait until the text is written
@@ -1641,18 +1645,31 @@ int Emf::myEnhMetaFileProc(char *contents, unsigned int length, PEMF_CALLBACK_DA
     while(OK){
     if(off>=length)return(0);  //normally should exit from while after EMREOF sets OK to false.
 
+    // check record sizes and types thoroughly 
+    int badrec = 0;
+    if (!U_emf_record_sizeok(contents + off, blimit, &nSize, &iType, 1) || 
+        !U_emf_record_safe(contents + off)){
+        badrec = 1;
+    }
+    else {
+        emr_mask = emr_properties(iType);
+        if (emr_mask == U_EMR_INVALID) { badrec = 1; }
+    }
+    if (badrec) {
+        file_status = 0;
+        break;
+    }
+
     lpEMFR = (PU_ENHMETARECORD)(contents + off);
+
 //  Uncomment the following to track down toxic records
-// std::cout << "record type: " << lpEMFR->iType  << " name " << U_emr_names(lpEMFR->iType) << " length: " << lpEMFR->nSize << " offset: " << off <<std::endl;
-    off += lpEMFR->nSize;
+// std::cout << "record type: " << iType  << " name " << U_emr_names(iType) << " length: " << nSize << " offset: " << off <<std::endl;
+    off += nSize;
 
     SVGOStringStream tmp_outsvg;
     SVGOStringStream tmp_path;
     SVGOStringStream tmp_str;
     SVGOStringStream dbg_str;
-
-    emr_mask = emr_properties(lpEMFR->iType);
-    if(emr_mask == U_EMR_INVALID){ throw "Inkscape fatal memory allocation error - cannot continue"; }
 
 /* Uncomment the following to track down text problems */
 //std::cout << "tri->dirty:"<< d->tri->dirty << " emr_mask: " << std::hex << emr_mask << std::dec << std::endl;
@@ -1753,7 +1770,7 @@ std::cout << "BEFORE DRAW"
     }
 // std::cout << "AFTER DRAW logic d->mask: " << std::hex << d->mask << " emr_mask: " << emr_mask << std::dec << std::endl;
 
-    switch (lpEMFR->iType)
+    switch (iType)
     {
         case U_EMR_HEADER:
         {
@@ -3471,7 +3488,7 @@ std::cout << "BEFORE DRAW"
 // std::cout << d->outsvg << std::endl;
     (void) emr_properties(U_EMR_INVALID);  // force the release of the lookup table memory, returned value is irrelevant
 
-    return 1;
+    return(file_status);
 }
 
 void Emf::free_emf_strings(EMF_STRINGS name){
@@ -3486,12 +3503,14 @@ void Emf::free_emf_strings(EMF_STRINGS name){
 SPDocument *
 Emf::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
 {
-    EMF_CALLBACK_DATA d;
-
     if (uri == NULL) {
         return NULL;
     }
 
+    EMF_CALLBACK_DATA d;
+
+    d.n_obj   = 0;     //these might not be set otherwise if the input file is corrupt
+    d.emf_obj = NULL; 
     d.dc[0].font_name = strdup("Arial"); // Default font, set only on lowest level, it copies up from there EMF spec says device can pick whatever it wants
 
     // set up the size default for patterns in defs.  This might not be referenced if there are no patterns defined in the drawing.
@@ -3518,14 +3537,17 @@ Emf::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
       FT_LOAD_NO_SCALE | FT_LOAD_NO_HINTING  | FT_LOAD_NO_BITMAP,
       FT_KERNING_UNSCALED);
 
-    (void) myEnhMetaFileProc(contents,length, &d);
+    int good = myEnhMetaFileProc(contents,length, &d);
     free(contents);
 
     if (d.pDesc){ free( d.pDesc ); }
 
 //    std::cout << "SVG Output: " << std::endl << d.outsvg << std::endl;
 
-    SPDocument *doc = SPDocument::createNewDocFromMem(d.outsvg.c_str(), strlen(d.outsvg.c_str()), TRUE);
+    SPDocument *doc = NULL;
+    if (good) {
+        doc = SPDocument::createNewDocFromMem(d.outsvg.c_str(), strlen(d.outsvg.c_str()), TRUE);
+    }
 
     free_emf_strings(d.hatches);
     free_emf_strings(d.images);

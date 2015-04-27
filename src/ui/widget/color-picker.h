@@ -13,15 +13,7 @@
 #ifndef __COLOR_PICKER_H__
 #define __COLOR_PICKER_H__
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
-
 #include <stddef.h>
-
-#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
-#include <glibmm/threads.h>
-#endif
 
 #include <gtkmm/dialog.h>
 #include <gtkmm/button.h>

@@ -6,11 +6,11 @@
 
 /*
 File:      uemf_print.c
-Version:   0.0.15
-Date:      17-OCT-2013
+Version:   0.0.18
+Date:      25-MAR-2015
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
-Copyright: 2013 David Mathog and California Institute of Technology (Caltech)
+Copyright: 2015 David Mathog and California Institute of Technology (Caltech)
 */
 
 #ifdef __cplusplus
@@ -23,9 +23,12 @@ extern "C" {
 #include <string.h>
 #include "uemf.h"
 #include "upmf_print.h"
+#include "uemf_safe.h"
 
 //! \cond
 #define UNUSED(x) (void)(x)
+/* This bit of code is used all over the place, so reduce it to a DEFINITION */
+#define IF_MEM_UNSAFE_PRINT_AND_RETURN(A,B,C) if(IS_MEM_UNSAFE(A,B,C)){printf("   record corruption HERE\n"); return; }
 
 /* one needed prototype */
 void U_swap4(void *ul, unsigned int count);
@@ -364,24 +367,28 @@ int bitmapinfoheader_print(
 /**
     \brief Print a Pointer to a U_BITMAPINFO object.
     \param Bmi Pointer to a U_BITMAPINFO object
+    \param blimit   Pointer to the first byte after after this record
     This may be called from WMF _print routines, where problems could occur
     if the data was passed as the struct or a pointer to the struct, as the struct may not
     be aligned in memory.
 */
 void bitmapinfo_print(
-      const char *Bmi
+      const char *Bmi,
+      const char *blimit
    ){
    int       i,k;
    int       ClrUsed;
    U_RGBQUAD BmiColor;
    printf("BmiHeader: ");
+   IF_MEM_UNSAFE_PRINT_AND_RETURN(Bmi, offsetof(U_BITMAPINFO,bmiHeader) + sizeof(U_BITMAPINFOHEADER), blimit);
    ClrUsed = bitmapinfoheader_print(Bmi + offsetof(U_BITMAPINFO,bmiHeader));
    if(ClrUsed){
-     k= offsetof(U_BITMAPINFO,bmiColors);
-     for(i=0; i<ClrUsed; i++, k+= sizeof(U_RGBQUAD)){
-        memcpy(&BmiColor, Bmi+k, sizeof(U_RGBQUAD));
-        printf("%d:",i); rgbquad_print(BmiColor);
-     }
+      k= offsetof(U_BITMAPINFO,bmiColors);
+      IF_MEM_UNSAFE_PRINT_AND_RETURN(Bmi, offsetof(U_BITMAPINFO,bmiColors) + ClrUsed*sizeof(U_RGBQUAD), blimit);
+      for(i=0; i<ClrUsed; i++, k+= sizeof(U_RGBQUAD)){
+         memcpy(&BmiColor, Bmi+k, sizeof(U_RGBQUAD));
+         printf("%d:",i); rgbquad_print(BmiColor);
+      }
    }
 }
 
@@ -484,15 +491,19 @@ void rgndataheader_print(
 /**
     \brief Print a pointer to a U_RGNDATA object.
     \param rd  pointer to a U_RGNDATA object.
+    \param limit  pointer that sets upper limit for data examination
 */
 void rgndata_print(
-      PU_RGNDATA rd
+      PU_RGNDATA rd,
+      const char *blimit
    ){
    unsigned int i;
    PU_RECTL rects;
-   printf("rdh:");     rgndataheader_print(rd->rdh );
+   IF_MEM_UNSAFE_PRINT_AND_RETURN(rd, sizeof(U_RGNDATAHEADER), blimit);
+   printf("rdh: ");     rgndataheader_print(rd->rdh ); printf(" rects: ");
    if(rd->rdh.nCount){
      rects = (PU_RECTL) &(rd->Buffer);
+     IF_MEM_UNSAFE_PRINT_AND_RETURN(rects, rd->rdh.nCount * sizeof(U_RECTL), blimit);
      for(i=0;i<rd->rdh.nCount;i++){
         printf("%d:",i); rectl_print(rects[i]);
      }
@@ -559,11 +570,13 @@ void pixelformatdescriptor_print(
     \brief Print a Pointer to a U_EMRTEXT record
     \param emt      Pointer to a U_EMRTEXT record 
     \param record   Pointer to the start of the record which contains this U_ERMTEXT
+    \param blimit   Pointer to the first byte after after this record
     \param type     0 for 8 bit character, anything else for 16 
 */
 void emrtext_print(
       const char *emt,
       const char *record,
+      const char *blimit,
       int         type
    ){
    unsigned int i,off;
@@ -575,9 +588,11 @@ void emrtext_print(
    printf("offString:%u "    ,pemt->offString   );
    if(pemt->offString){
       if(!type){
+         IF_MEM_UNSAFE_PRINT_AND_RETURN(record, pemt->offString + pemt->nChars*sizeof(char), blimit);
          printf("string8:<%s> ",record + pemt->offString);
       }
       else {
+         IF_MEM_UNSAFE_PRINT_AND_RETURN(record, pemt->offString + pemt->nChars*2*sizeof(char), blimit);
          string = U_Utf16leToUtf8((uint16_t *)(record + pemt->offString), pemt->nChars, NULL);
          printf("string16:<%s> ",string);
          free(string);
@@ -622,9 +637,15 @@ void core1_print(const char *name, const char *contents){
    unsigned int i;
    UNUSED(name);
    PU_EMRPOLYLINETO pEmr = (PU_EMRPOLYLINETO) (contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRPOLYBEZIER)){
+      printf("   record corruption HERE\n");
+      return;
+   }
+   const char *blimit = contents + pEmr->emr.nSize;
    printf("   rclBounds:      ");    rectl_print(pEmr->rclBounds);    printf("\n");
    printf("   cptl:           %d\n",pEmr->cptl        );
    printf("   Points:         ");
+   IF_MEM_UNSAFE_PRINT_AND_RETURN(pEmr->aptl, pEmr->cptl*sizeof(U_POINTL), blimit);
    for(i=0;i<pEmr->cptl; i++){
       printf("[%d]:",i); pointl_print(pEmr->aptl[i]);
    }
@@ -636,16 +657,23 @@ void core2_print(const char *name, const char *contents){
    unsigned int i;
    UNUSED(name);
    PU_EMRPOLYPOLYGON pEmr = (PU_EMRPOLYPOLYGON) (contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRPOLYPOLYGON)){
+      printf("   record corruption HERE\n");
+      return;
+   }
+   const char *blimit = contents + pEmr->emr.nSize;
    printf("   rclBounds:      ");    rectl_print(pEmr->rclBounds);    printf("\n");
    printf("   nPolys:         %d\n",pEmr->nPolys        );
    printf("   cptl:           %d\n",pEmr->cptl          );
    printf("   Counts:         ");
+   IF_MEM_UNSAFE_PRINT_AND_RETURN(pEmr->aPolyCounts, pEmr->nPolys*sizeof(U_POLYCOUNTS), blimit);
    for(i=0;i<pEmr->nPolys; i++){
       printf(" [%d]:%d ",i,pEmr->aPolyCounts[i] );
    }
    printf("\n");
    PU_POINTL paptl = (PU_POINTL)((char *)pEmr->aPolyCounts + sizeof(uint32_t)* pEmr->nPolys);
    printf("   Points:         ");
+   IF_MEM_UNSAFE_PRINT_AND_RETURN(paptl, pEmr->cptl*sizeof(U_POINTL), blimit);
    for(i=0;i<pEmr->cptl; i++){
       printf(" [%d]:",i); pointl_print(paptl[i]);
    }
@@ -656,7 +684,12 @@ void core2_print(const char *name, const char *contents){
 // Functions with the same form starting with U_EMRSETMAPMODE_print
 void core3_print(const char *name, const char *label, const char *contents){
    UNUSED(name);
+   /* access violation is impossible for these because there are no counts or offsets */
    PU_EMRSETMAPMODE pEmr   = (PU_EMRSETMAPMODE)(contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRSETMAPMODE)){
+      printf("   record corruption HERE\n");
+      return;
+   }
    if(!strcmp(label,"crColor:")){
       printf("   %-15s ",label); colorref_print(*(U_COLORREF *)&(pEmr->iMode)); printf("\n");
    }
@@ -672,6 +705,10 @@ void core3_print(const char *name, const char *label, const char *contents){
 void core4_print(const char *name, const char *contents){
    UNUSED(name);
    PU_EMRELLIPSE pEmr      = (PU_EMRELLIPSE)(   contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRELLIPSE)){
+      printf("   record corruption HERE\n");
+      return;
+   }
    printf("   rclBox:         ");  rectl_print(pEmr->rclBox);  printf("\n");
 } 
 
@@ -680,10 +717,16 @@ void core6_print(const char *name, const char *contents){
    UNUSED(name);
    unsigned int i;
    PU_EMRPOLYBEZIER16 pEmr = (PU_EMRPOLYBEZIER16) (contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRPOLYBEZIER16)){
+      printf("   record corruption HERE\n");
+      return;
+   }
+   const char *blimit = contents + pEmr->emr.nSize;
    printf("   rclBounds:      ");    rectl_print(pEmr->rclBounds);    printf("\n");
    printf("   cpts:           %d\n",pEmr->cpts        );
    printf("   Points:         ");
    PU_POINT16 papts = (PU_POINT16)(&(pEmr->apts));
+   IF_MEM_UNSAFE_PRINT_AND_RETURN(papts, pEmr->cpts*sizeof(U_POINT16), blimit);
    for(i=0; i<pEmr->cpts; i++){
       printf(" [%d]:",i);  point16_print(papts[i]);
    }
@@ -698,6 +741,10 @@ void core6_print(const char *name, const char *contents){
 void core7_print(const char *name, const char *field1, const char *field2, const char *contents){
    UNUSED(name);
    PU_EMRGENERICPAIR pEmr = (PU_EMRGENERICPAIR) (contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRGENERICPAIR)){
+      printf("   record corruption HERE\n");
+      return;
+   }
    if(*field2){
       printf("   %-15s %d\n",field1,pEmr->pair.x);
       printf("   %-15s %d\n",field2,pEmr->pair.y);
@@ -711,12 +758,13 @@ void core7_print(const char *name, const char *field1, const char *field2, const
 void core8_print(const char *name, const char *contents, int type){
    UNUSED(name);
    PU_EMREXTTEXTOUTA pEmr = (PU_EMREXTTEXTOUTA) (contents);
+   const char *blimit = contents + pEmr->emr.nSize;
    printf("   iGraphicsMode:  %u\n",pEmr->iGraphicsMode );
    printf("   rclBounds:      ");    rectl_print(pEmr->rclBounds);                              printf("\n");
    printf("   exScale:        %f\n",pEmr->exScale        );
    printf("   eyScale:        %f\n",pEmr->eyScale        );
    printf("   emrtext:        ");
-      emrtext_print(contents + sizeof(U_EMREXTTEXTOUTA) - sizeof(U_EMRTEXT),contents,type);
+      emrtext_print(contents + sizeof(U_EMREXTTEXTOUTA) - sizeof(U_EMRTEXT),contents,blimit,type);
       printf("\n");
 } 
 
@@ -724,6 +772,10 @@ void core8_print(const char *name, const char *contents, int type){
 void core9_print(const char *name, const char *contents){
    UNUSED(name);
    PU_EMRARC pEmr = (PU_EMRARC) (contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRARC)){
+      printf("   record corruption HERE\n");
+      return;
+   }
    printf("   rclBox:         ");    rectl_print(pEmr->rclBox);    printf("\n");
    printf("   ptlStart:       ");  pointl_print(pEmr->ptlStart);   printf("\n");
    printf("   ptlEnd:         ");    pointl_print(pEmr->ptlEnd);   printf("\n");
@@ -734,16 +786,23 @@ void core10_print(const char *name, const char *contents){
    UNUSED(name);
    unsigned int i;
    PU_EMRPOLYPOLYLINE16 pEmr = (PU_EMRPOLYPOLYLINE16) (contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRPOLYPOLYLINE16)){
+      printf("   record corruption HERE\n");
+      return;
+   }
+   const char *blimit = contents + pEmr->emr.nSize;
    printf("   rclBounds:      ");    rectl_print(pEmr->rclBounds);    printf("\n");
    printf("   nPolys:         %d\n",pEmr->nPolys        );
    printf("   cpts:           %d\n",pEmr->cpts          );
    printf("   Counts:         ");
+   IF_MEM_UNSAFE_PRINT_AND_RETURN(&(pEmr->aPolyCounts), pEmr->nPolys*sizeof(U_POLYCOUNTS), blimit);
    for(i=0;i<pEmr->nPolys; i++){
       printf(" [%d]:%d ",i,pEmr->aPolyCounts[i] );
    }
    printf("\n");
    printf("   Points:         ");
-   PU_POINT16 papts = (PU_POINT16)((char *)pEmr->aPolyCounts + sizeof(uint32_t)* pEmr->nPolys);
+   PU_POINT16 papts = (PU_POINT16)((char *)pEmr->aPolyCounts + pEmr->nPolys*sizeof(U_POLYCOUNTS) );
+   IF_MEM_UNSAFE_PRINT_AND_RETURN(papts, pEmr->cpts*sizeof(U_POINT16), blimit);
    for(i=0; i<pEmr->cpts; i++){
       printf(" [%d]:",i);  point16_print(papts[i]);
    }
@@ -754,20 +813,18 @@ void core10_print(const char *name, const char *contents){
 // Functions with the same form starting with  U_EMRINVERTRGN_print and U_EMRPAINTRGN_print,
 void core11_print(const char *name, const char *contents){
    UNUSED(name);
-   unsigned int i,roff;
    PU_EMRINVERTRGN pEmr = (PU_EMRINVERTRGN) (contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRINVERTRGN)){
+      printf("   record corruption HERE\n");
+      return;
+   }
+   const char *blimit = contents + pEmr->emr.nSize;
    printf("   rclBounds:      ");    rectl_print(pEmr->rclBounds);    printf("\n");
    printf("   cbRgnData:      %d\n",pEmr->cbRgnData);
-   // This one is a pain since each RGNDATA may be a different size, so it isn't possible to index through them.
-   roff=0;
-   i=1; 
-   char *prd = (char *) &(pEmr->RgnData);
-   while(roff + sizeof(U_RGNDATAHEADER) < pEmr->cbRgnData){ // stop at end of the record 4*4 = header + 4*4=rect
-      printf("   RegionData:%d",i);
-      rgndata_print((PU_RGNDATA) (prd + roff));
-      roff += (((PU_RGNDATA)prd)->rdh.dwSize + ((PU_RGNDATA)prd)->rdh.nRgnSize - 16);
-      printf("\n");
-   }
+   printf("   RegionData:");
+   const char *minptr = MAKE_MIN_PTR(((const char *) &pEmr->RgnData + pEmr->cbRgnData),blimit);
+   rgndata_print(pEmr->RgnData, minptr);
+   printf("\n");
 } 
 
 
@@ -775,13 +832,18 @@ void core11_print(const char *name, const char *contents){
 void core12_print(const char *name, const char *contents){
    UNUSED(name);
    PU_EMRCREATEMONOBRUSH pEmr = (PU_EMRCREATEMONOBRUSH) (contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRCREATEMONOBRUSH)){
+      printf("   record corruption HERE\n");
+      return;
+   }
+   const char *blimit = contents + pEmr->emr.nSize;
    printf("   ihBrush:      %u\n",pEmr->ihBrush );
    printf("   iUsage :      %u\n",pEmr->iUsage  );
    printf("   offBmi :      %u\n",pEmr->offBmi  );
    printf("   cbBmi  :      %u\n",pEmr->cbBmi   );
    if(pEmr->cbBmi){
       printf("      bitmap:");
-      bitmapinfo_print(contents + pEmr->offBmi);
+      bitmapinfo_print(contents + pEmr->offBmi, blimit);
       printf("\n");
    }
    printf("   offBits:      %u\n",pEmr->offBits );
@@ -792,6 +854,11 @@ void core12_print(const char *name, const char *contents){
 void core13_print(const char *name, const char *contents){
    UNUSED(name);
    PU_EMRALPHABLEND pEmr = (PU_EMRALPHABLEND) (contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRALPHABLEND)){
+      printf("   record corruption HERE\n");
+      return;
+   }
+   const char *blimit = contents + pEmr->emr.nSize;
    printf("   rclBounds:      ");    rectl_print( pEmr->rclBounds);       printf("\n");
    printf("   Dest:           ");    pointl_print(pEmr->Dest);            printf("\n");
    printf("   cDest:          ");    pointl_print(pEmr->cDest);           printf("\n");
@@ -804,7 +871,7 @@ void core13_print(const char *name, const char *contents){
    printf("   cbBmiSrc:       %u\n",pEmr->cbBmiSrc    );
    if(pEmr->cbBmiSrc){
       printf("      bitmap:");
-      bitmapinfo_print(contents + pEmr->offBmiSrc);
+      bitmapinfo_print(contents + pEmr->offBmiSrc, blimit);
       printf("\n");
    }
    printf("   offBitsSrc:     %u\n",pEmr->offBitsSrc  );
@@ -839,6 +906,11 @@ void U_EMRHEADER_print(const char *contents){
    int  p1len;
 
    PU_EMRHEADER pEmr = (PU_EMRHEADER)(contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRHEADER)){
+      printf("   record corruption HERE\n");
+      return;
+   }
+   const char *blimit = contents + pEmr->emr.nSize;
    printf("   rclBounds:      ");          rectl_print( pEmr->rclBounds);   printf("\n");
    printf("   rclFrame:       ");          rectl_print( pEmr->rclFrame);    printf("\n");
    printf("   dSignature:     0x%8.8X\n",  pEmr->dSignature    );
@@ -850,6 +922,7 @@ void U_EMRHEADER_print(const char *contents){
    printf("   nDescription:   %d\n",       pEmr->nDescription  );
    printf("   offDescription: %d\n",       pEmr->offDescription);
    if(pEmr->offDescription){
+      IF_MEM_UNSAFE_PRINT_AND_RETURN(contents, pEmr->offDescription + pEmr->nDescription*2*sizeof(char), blimit);
       string = U_Utf16leToUtf8((uint16_t *)((char *) pEmr + pEmr->offDescription), pEmr->nDescription, NULL);
       printf("      Desc. A:  %s\n",string);
       free(string);
@@ -868,6 +941,7 @@ void U_EMRHEADER_print(const char *contents){
       printf("   offPixelFormat: %d\n",       pEmr->offPixelFormat);
       if(pEmr->cbPixelFormat){
          printf("      PFD:");
+         IF_MEM_UNSAFE_PRINT_AND_RETURN(contents, pEmr->offPixelFormat + sizeof(U_PIXELFORMATDESCRIPTOR), blimit);
          pixelformatdescriptor_print( *(PU_PIXELFORMATDESCRIPTOR) (contents + pEmr->offPixelFormat));
          printf("\n");
       }
@@ -997,6 +1071,10 @@ void U_EMRSETBRUSHORGEX_print(const char *contents){
 */
 void U_EMREOF_print(const char *contents){
    PU_EMREOF pEmr = (PU_EMREOF)(contents);
+   if(pEmr->emr.nSize < sizeof(U_EMREOF)){
+      printf("   record corruption HERE\n");
+      return;
+   }
    printf("   cbPalEntries:   %u\n",      pEmr->cbPalEntries );
    printf("   offPalEntries:  %u\n",      pEmr->offPalEntries);
    if(pEmr->cbPalEntries){
@@ -1014,6 +1092,10 @@ void U_EMREOF_print(const char *contents){
 */
 void U_EMRSETPIXELV_print(const char *contents){
    PU_EMRSETPIXELV pEmr = (PU_EMRSETPIXELV)(contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRSETPIXELV)){
+      printf("   record corruption HERE\n");
+      return;
+   }
    printf("   ptlPixel:       ");  pointl_print(  pEmr->ptlPixel);  printf("\n");
    printf("   crColor:        ");  colorref_print(pEmr->crColor);   printf("\n");
 } 
@@ -1026,6 +1108,10 @@ void U_EMRSETPIXELV_print(const char *contents){
 */
 void U_EMRSETMAPPERFLAGS_print(const char *contents){
    PU_EMRSETMAPPERFLAGS pEmr = (PU_EMRSETMAPPERFLAGS)(contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRSETMAPPERFLAGS)){
+      printf("   record corruption HERE\n");
+      return;
+   }
    printf("   dwFlags:        0x%8.8X\n",pEmr->dwFlags);
 } 
 
@@ -1091,6 +1177,10 @@ void U_EMRSETTEXTALIGN_print(const char *contents){
 */
 void U_EMRSETCOLORADJUSTMENT_print(const char *contents){
    PU_EMRSETCOLORADJUSTMENT pEmr = (PU_EMRSETCOLORADJUSTMENT)(contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRSETCOLORADJUSTMENT)){
+      printf("   record corruption HERE\n");
+      return;
+   }
    printf("   ColorAdjustment:");
    coloradjustment_print(pEmr->ColorAdjustment);
    printf("\n");
@@ -1203,6 +1293,10 @@ void U_EMRRESTOREDC_print(const char *contents){
 */
 void U_EMRSETWORLDTRANSFORM_print(const char *contents){
    PU_EMRSETWORLDTRANSFORM pEmr = (PU_EMRSETWORLDTRANSFORM)(contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRSETWORLDTRANSFORM)){
+      printf("   record corruption HERE\n");
+      return;
+   }
    printf("   xform:");
    xform_print(pEmr->xform);
    printf("\n");
@@ -1215,6 +1309,10 @@ void U_EMRSETWORLDTRANSFORM_print(const char *contents){
 */
 void U_EMRMODIFYWORLDTRANSFORM_print(const char *contents){
    PU_EMRMODIFYWORLDTRANSFORM pEmr = (PU_EMRMODIFYWORLDTRANSFORM)(contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRMODIFYWORLDTRANSFORM)){
+      printf("   record corruption HERE\n");
+      return;
+   }
    printf("   xform:");
    xform_print(pEmr->xform);
    printf("\n");
@@ -1228,6 +1326,10 @@ void U_EMRMODIFYWORLDTRANSFORM_print(const char *contents){
 */
 void U_EMRSELECTOBJECT_print(const char *contents){
    PU_EMRSELECTOBJECT pEmr = (PU_EMRSELECTOBJECT)(contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRSELECTOBJECT)){
+      printf("   record corruption HERE\n");
+      return;
+   }
    if(pEmr->ihObject & U_STOCK_OBJECT){
      printf("   StockObject:    0x%8.8X\n",  pEmr->ihObject );
    }
@@ -1243,6 +1345,10 @@ void U_EMRSELECTOBJECT_print(const char *contents){
 */
 void U_EMRCREATEPEN_print(const char *contents){
    PU_EMRCREATEPEN pEmr = (PU_EMRCREATEPEN)(contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRCREATEPEN)){
+      printf("   record corruption HERE\n");
+      return;
+   }
    printf("   ihPen:          %u\n",      pEmr->ihPen );
    printf("   lopn:           ");    logpen_print(pEmr->lopn);  printf("\n");
 } 
@@ -1254,6 +1360,10 @@ void U_EMRCREATEPEN_print(const char *contents){
 */
 void U_EMRCREATEBRUSHINDIRECT_print(const char *contents){
    PU_EMRCREATEBRUSHINDIRECT pEmr = (PU_EMRCREATEBRUSHINDIRECT)(contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRCREATEBRUSHINDIRECT)){
+      printf("   record corruption HERE\n");
+      return;
+   }
    printf("   ihBrush:        %u\n",      pEmr->ihBrush );
    printf("   lb:             ");         logbrush_print(pEmr->lb);  printf("\n");
 } 
@@ -1265,6 +1375,10 @@ void U_EMRCREATEBRUSHINDIRECT_print(const char *contents){
 */
 void U_EMRDELETEOBJECT_print(const char *contents){
    PU_EMRDELETEOBJECT pEmr = (PU_EMRDELETEOBJECT)(contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRDELETEOBJECT)){
+      printf("   record corruption HERE\n");
+      return;
+   }
    printf("   ihObject:       %u\n",      pEmr->ihObject );
 } 
 
@@ -1275,6 +1389,10 @@ void U_EMRDELETEOBJECT_print(const char *contents){
 */
 void U_EMRANGLEARC_print(const char *contents){
    PU_EMRANGLEARC pEmr = (PU_EMRANGLEARC)(contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRANGLEARC)){
+      printf("   record corruption HERE\n");
+      return;
+   }
    printf("   ptlCenter:      "), pointl_print(pEmr->ptlCenter ); printf("\n");
    printf("   nRadius:        %u\n",      pEmr->nRadius );
    printf("   eStartAngle:    %f\n",       pEmr->eStartAngle );
@@ -1306,6 +1424,10 @@ void U_EMRRECTANGLE_print(const char *contents){
 */
 void U_EMRROUNDRECT_print(const char *contents){
    PU_EMRROUNDRECT pEmr = (PU_EMRROUNDRECT)(contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRROUNDRECT)){
+      printf("   record corruption HERE\n");
+      return;
+   }
    printf("   rclBox:         "), rectl_print(pEmr->rclBox );     printf("\n");
    printf("   szlCorner:      "), sizel_print(pEmr->szlCorner );  printf("\n");
 }
@@ -1353,6 +1475,10 @@ void U_EMRSELECTPALETTE_print(const char *contents){
 */
 void U_EMRCREATEPALETTE_print(const char *contents){
    PU_EMRCREATEPALETTE pEmr = (PU_EMRCREATEPALETTE)(contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRCREATEPALETTE)){
+      printf("   record corruption HERE\n");
+      return;
+   }
    printf("   ihPal:          %u\n",pEmr->ihPal);
    printf("   lgpl:           "), logpalette_print( (PU_LOGPALETTE)&(pEmr->lgpl) );  printf("\n");
 }
@@ -1365,12 +1491,18 @@ void U_EMRCREATEPALETTE_print(const char *contents){
 void U_EMRSETPALETTEENTRIES_print(const char *contents){
    unsigned int i;
    PU_EMRSETPALETTEENTRIES pEmr = (PU_EMRSETPALETTEENTRIES)(contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRSETPALETTEENTRIES)){
+      printf("   record corruption HERE\n");
+      return;
+   }
+   const char *blimit = contents + pEmr->emr.nSize;
    printf("   ihPal:          %u\n",pEmr->ihPal);
    printf("   iStart:         %u\n",pEmr->iStart);
    printf("   cEntries:       %u\n",pEmr->cEntries);
    if(pEmr->cEntries){
       printf("      PLTEntries:");
       PU_LOGPLTNTRY aPalEntries = (PU_LOGPLTNTRY) &(pEmr->aPalEntries);
+      IF_MEM_UNSAFE_PRINT_AND_RETURN(aPalEntries, pEmr->cEntries*sizeof(U_LOGPLTNTRY), blimit);
       for(i=0; i<pEmr->cEntries; i++){
          printf("%d:",i); logpltntry_print(aPalEntries[i]);
       }
@@ -1403,6 +1535,10 @@ void U_EMRREALIZEPALETTE_print(const char *contents){
 */
 void U_EMREXTFLOODFILL_print(const char *contents){
    PU_EMREXTFLOODFILL pEmr = (PU_EMREXTFLOODFILL)(contents);
+   if(pEmr->emr.nSize < sizeof(U_EMREXTFLOODFILL)){
+      printf("   record corruption HERE\n");
+      return;
+   }
    printf("   ptlStart:       ");   pointl_print(pEmr->ptlStart);    printf("\n");
    printf("   crColor:        ");   colorref_print(pEmr->crColor);   printf("\n");
    printf("   iMode:          %u\n",pEmr->iMode);
@@ -1434,17 +1570,25 @@ void U_EMRARCTO_print(const char *contents){
 void U_EMRPOLYDRAW_print(const char *contents){
    unsigned int i;
    PU_EMRPOLYDRAW pEmr = (PU_EMRPOLYDRAW)(contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRPOLYDRAW)){
+      printf("   record corruption HERE\n");
+      return;
+   }
+   const char *blimit = contents + pEmr->emr.nSize;
    printf("   rclBounds:      ");          rectl_print( pEmr->rclBounds);   printf("\n");
    printf("   cptl:           %d\n",pEmr->cptl        );
    printf("   Points:         ");
+   IF_MEM_UNSAFE_PRINT_AND_RETURN(pEmr->aptl, pEmr->cptl*sizeof(U_POINTL), blimit);
    for(i=0;i<pEmr->cptl; i++){
       printf(" [%d]:",i);
       pointl_print(pEmr->aptl[i]);
    }
    printf("\n");
    printf("   Types:          ");
+   const char *abTypes = (const char *) pEmr->aptl + pEmr->cptl*sizeof(U_POINTL);
+   IF_MEM_UNSAFE_PRINT_AND_RETURN(abTypes, pEmr->cptl, blimit);
    for(i=0;i<pEmr->cptl; i++){
-      printf(" [%d]:%u ",i,pEmr->abTypes[i]);
+      printf(" [%d]:%u ",i,((uint8_t *)abTypes)[i]);
    }
    printf("\n");
 }
@@ -1565,12 +1709,11 @@ void U_EMRABORTPATH_print(const char *contents){
 /**
     \brief Print a pointer to a U_EMR_COMMENT record.
     \param contents   pointer to a location in memory holding the comment record
-    \param blimit     size in bytes of the comment record
-    \param off        offset in bytes to the first byte in this record
+    \param off        offset in bytes to the first byte in this record (needed for EMF+ record printing)
 
     EMF+ records, if any, are stored in EMF comment records.
 */
-void U_EMRCOMMENT_print(const char *contents, const char *blimit, size_t off){
+void U_EMRCOMMENT_print(const char *contents, size_t off){
    char *string;
    char *src;
    uint32_t cIdent,cIdent2,cbData;
@@ -1579,21 +1722,30 @@ void U_EMRCOMMENT_print(const char *contents, const char *blimit, size_t off){
    static int recnum=0;
 
    PU_EMRCOMMENT pEmr = (PU_EMRCOMMENT)(contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRCOMMENT)){
+      printf("   record corruption HERE\n");
+      return;
+   }
+   const char *blimit = contents + pEmr->emr.nSize;
 
    /* There are several different types of comments */
 
+   IF_MEM_UNSAFE_PRINT_AND_RETURN(contents, sizeof(U_EMRCOMMENT), blimit);
    cbData = pEmr->cbData;
    printf("   cbData:         %d\n",cbData        );
+   IF_MEM_UNSAFE_PRINT_AND_RETURN(contents, sizeof(U_EMR) + sizeof(U_CBDATA) + cbData, blimit);
    src = (char *)&(pEmr->Data);  // default
    if(cbData >= 4){
       /* Since the comment is just a big bag of bytes the emf endian code cannot safely touch
-         any of its payload.  This is the only record type with that limitation.  Try to determine
+         any of its payload.  This is the only record type with that limitation.  So the record
+         may appear at this stage with the wrong endianness.  Try to determine
 	 what the contents are even if more byte swapping is required. */
       cIdent = *(uint32_t *)(src);
       if(U_BYTE_SWAP){ U_swap4(&(cIdent),1); }
       if(     cIdent == U_EMR_COMMENT_PUBLIC       ){
          printf("   cIdent:  Public\n");
          PU_EMRCOMMENT_PUBLIC pEmrp = (PU_EMRCOMMENT_PUBLIC) pEmr;
+         IF_MEM_UNSAFE_PRINT_AND_RETURN(contents, sizeof(U_EMRCOMMENT_PUBLIC), blimit);
 	 cIdent2 = pEmrp->pcIdent;
          if(U_BYTE_SWAP){ U_swap4(&(cIdent2),1); }
          printf("   pcIdent:        0x%8.8x\n",cIdent2);
@@ -1603,6 +1755,7 @@ void U_EMRCOMMENT_print(const char *contents, const char *blimit, size_t off){
       else if(cIdent == U_EMR_COMMENT_SPOOL        ){
          printf("   cIdent:  Spool\n");
          PU_EMRCOMMENT_SPOOL pEmrs = (PU_EMRCOMMENT_SPOOL) pEmr;
+         IF_MEM_UNSAFE_PRINT_AND_RETURN(contents, sizeof(U_EMRCOMMENT_SPOOL), blimit);
 	 cIdent2 = pEmrs->esrIdent;
          if(U_BYTE_SWAP){ U_swap4(&(cIdent2),1); }
          printf("   esrIdent:       0x%8.8x\n",cIdent2);
@@ -1612,11 +1765,16 @@ void U_EMRCOMMENT_print(const char *contents, const char *blimit, size_t off){
       else if(cIdent == U_EMR_COMMENT_EMFPLUSRECORD){
          printf("   cIdent:  EMF+\n");
          PU_EMRCOMMENT_EMFPLUS pEmrpl = (PU_EMRCOMMENT_EMFPLUS) pEmr;
+         IF_MEM_UNSAFE_PRINT_AND_RETURN(contents, sizeof(U_EMRCOMMENT_EMFPLUS), blimit);
          src = (char *)&(pEmrpl->Data);
          loff = 16;  /* Header size of the header part of an EMF+ comment record */
          while(loff < cbData + 12){  // EMF+ records may not fill the entire comment, cbData value includes cIdent, but not U_EMR or cbData
             recsize =  U_pmf_onerec_print(src, blimit, recnum, loff + off);
-            if(recsize<=0)break;
+            if(recsize==0){ break; }
+            else if(recsize<0){
+               printf("   record corruption HERE\n");
+               return;
+            }
             loff += recsize;
             src  += recsize;
             recnum++;
@@ -1642,19 +1800,17 @@ void U_EMRCOMMENT_print(const char *contents, const char *blimit, size_t off){
     \param contents   pointer to a buffer holding all EMR records
 */
 void U_EMRFILLRGN_print(const char *contents){
-   int i,roff;
    PU_EMRFILLRGN pEmr = (PU_EMRFILLRGN)(contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRFILLRGN)){
+      printf("   record corruption HERE\n");
+      return;
+   }
+   const char *blimit = contents + pEmr->emr.nSize;
    printf("   rclBounds:      ");    rectl_print(pEmr->rclBounds);    printf("\n");
    printf("   cbRgnData:      %u\n",pEmr->cbRgnData);
    printf("   ihBrush:        %u\n",pEmr->ihBrush);
-   // This one is a pain since each RGNDATA may be a different size, so it isn't possible to index through them.
-   roff=0;
-   i=1; 
-   char *prd = (char *) &(pEmr->RgnData);
-   while(roff  + sizeof(U_RGNDATAHEADER) < pEmr->emr.nSize){ // up to the end of the record
-      printf("   RegionData[%d]: ",i);   rgndata_print((PU_RGNDATA) (prd + roff));  printf("\n");
-      roff += (((PU_RGNDATA)prd)->rdh.dwSize + ((PU_RGNDATA)prd)->rdh.nRgnSize - 16);
-   }
+   const char *minptr = MAKE_MIN_PTR(((const char *) &pEmr->RgnData + pEmr->cbRgnData + sizeof(U_RGNDATAHEADER)),blimit);
+   printf("   RegionData: "); rgndata_print(pEmr->RgnData, minptr); printf("\n");
 } 
 
 // U_EMRFRAMERGN             72
@@ -1663,20 +1819,18 @@ void U_EMRFILLRGN_print(const char *contents){
     \param contents   pointer to a buffer holding all EMR records
 */
 void U_EMRFRAMERGN_print(const char *contents){
-   int i,roff;
    PU_EMRFRAMERGN pEmr = (PU_EMRFRAMERGN)(contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRFRAMERGN)){
+      printf("   record corruption HERE\n");
+      return;
+   }
+   const char *blimit = contents + pEmr->emr.nSize;
    printf("   rclBounds:      ");    rectl_print(pEmr->rclBounds);    printf("\n");
    printf("   cbRgnData:      %u\n",pEmr->cbRgnData);
    printf("   ihBrush:        %u\n",pEmr->ihBrush);
    printf("   szlStroke:      "), sizel_print(pEmr->szlStroke );      printf("\n");
-   // This one is a pain since each RGNDATA may be a different size, so it isn't possible to index through them.
-   roff=0;
-   i=1; 
-   char *prd = (char *) &(pEmr->RgnData);
-   while(roff  + sizeof(U_RGNDATAHEADER) < pEmr->emr.nSize){ // up to the end of the record
-      printf("   RegionData[%d]: ",i);   rgndata_print((PU_RGNDATA) (prd + roff));  printf("\n");
-      roff += (((PU_RGNDATA)prd)->rdh.dwSize + ((PU_RGNDATA)prd)->rdh.nRgnSize - 16);
-   }
+   const char *minptr = MAKE_MIN_PTR(((const char *) &pEmr->RgnData + pEmr->cbRgnData),blimit);
+   printf("   RegionData: "); rgndata_print(pEmr->RgnData, minptr); printf("\n");
 } 
 
 // U_EMRINVERTRGN            73
@@ -1703,17 +1857,16 @@ void U_EMRPAINTRGN_print(const char *contents){
     \param contents   pointer to a buffer holding all EMR records
 */
 void U_EMREXTSELECTCLIPRGN_print(const char *contents){
-   int i,roff;
    PU_EMREXTSELECTCLIPRGN pEmr = (PU_EMREXTSELECTCLIPRGN) (contents);
+   if(pEmr->emr.nSize < sizeof(U_EMREXTSELECTCLIPRGN)){
+      printf("   record corruption HERE\n");
+      return;
+   }
+   const char *blimit = contents + pEmr->emr.nSize;
    printf("   cbRgnData:      %u\n",pEmr->cbRgnData);
    printf("   iMode:          %u\n",pEmr->iMode);
-   // This one is a pain since each RGNDATA may be a different size, so it isn't possible to index through them.
-   char *prd = (char *) &(pEmr->RgnData);
-   i=roff=0;
-   while(roff + sizeof(U_RGNDATAHEADER) < pEmr->cbRgnData){ // stop at end of the record 4*4 = header + 4*4=rect
-      printf("   RegionData[%d]: ",i++); rgndata_print((PU_RGNDATA) (prd + roff)); printf("\n");
-      roff += (((PU_RGNDATA)prd)->rdh.dwSize + ((PU_RGNDATA)prd)->rdh.nRgnSize - 16);
-   }
+   const char *minptr = MAKE_MIN_PTR(((const char *) &pEmr->RgnData + pEmr->cbRgnData),blimit);
+   printf("   RegionData: "); rgndata_print(pEmr->RgnData, minptr); printf("\n");
 } 
 
 // U_EMRBITBLT               76
@@ -1723,6 +1876,11 @@ void U_EMREXTSELECTCLIPRGN_print(const char *contents){
 */
 void U_EMRBITBLT_print(const char *contents){
    PU_EMRBITBLT pEmr = (PU_EMRBITBLT) (contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRBITBLT)){
+      printf("   record corruption HERE\n");
+      return;
+   }
+   const char *blimit = contents + pEmr->emr.nSize;
    printf("   rclBounds:      ");     rectl_print( pEmr->rclBounds);       printf("\n");
    printf("   Dest:           ");     pointl_print(pEmr->Dest);            printf("\n");
    printf("   cDest:          ");     pointl_print(pEmr->cDest);           printf("\n");
@@ -1735,7 +1893,7 @@ void U_EMRBITBLT_print(const char *contents){
    printf("   cbBmiSrc:       %u\n", pEmr->cbBmiSrc    );
    if(pEmr->cbBmiSrc){
       printf("      bitmap:      ");
-      bitmapinfo_print(contents + pEmr->offBmiSrc);
+      bitmapinfo_print(contents + pEmr->offBmiSrc, blimit);
       printf("\n");
    }
    printf("   offBitsSrc:     %u\n", pEmr->offBitsSrc   );
@@ -1749,6 +1907,11 @@ void U_EMRBITBLT_print(const char *contents){
 */
 void U_EMRSTRETCHBLT_print(const char *contents){
    PU_EMRSTRETCHBLT pEmr = (PU_EMRSTRETCHBLT) (contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRSTRETCHBLT)){
+      printf("   record corruption HERE\n");
+      return;
+   }
+   const char *blimit = contents + pEmr->emr.nSize;
    printf("   rclBounds:      ");     rectl_print( pEmr->rclBounds);       printf("\n");
    printf("   Dest:           ");     pointl_print(pEmr->Dest);            printf("\n");
    printf("   cDest:          ");     pointl_print(pEmr->cDest);           printf("\n");
@@ -1761,7 +1924,7 @@ void U_EMRSTRETCHBLT_print(const char *contents){
    printf("   cbBmiSrc:       %u\n", pEmr->cbBmiSrc    );
    if(pEmr->cbBmiSrc){
       printf("      bitmap:      ");
-      bitmapinfo_print(contents + pEmr->offBmiSrc);
+      bitmapinfo_print(contents + pEmr->offBmiSrc, blimit);
       printf("\n");
    }
    printf("   offBitsSrc:     %u\n", pEmr->offBitsSrc   );
@@ -1776,6 +1939,11 @@ void U_EMRSTRETCHBLT_print(const char *contents){
 */
 void U_EMRMASKBLT_print(const char *contents){
    PU_EMRMASKBLT pEmr = (PU_EMRMASKBLT) (contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRMASKBLT)){
+      printf("   record corruption HERE\n");
+      return;
+   }
+   const char *blimit = contents + pEmr->emr.nSize;
    printf("   rclBounds:      ");     rectl_print( pEmr->rclBounds);       printf("\n");
    printf("   Dest:           ");     pointl_print(pEmr->Dest);            printf("\n");
    printf("   cDest:          ");     pointl_print(pEmr->cDest);           printf("\n");
@@ -1788,7 +1956,7 @@ void U_EMRMASKBLT_print(const char *contents){
    printf("   cbBmiSrc:       %u\n",  pEmr->cbBmiSrc    );
    if(pEmr->cbBmiSrc){
       printf("      Src bitmap:  ");
-      bitmapinfo_print(contents + pEmr->offBmiSrc);
+      bitmapinfo_print(contents + pEmr->offBmiSrc, blimit);
       printf("\n");
    }
    printf("   offBitsSrc:     %u\n",  pEmr->offBitsSrc   );
@@ -1799,7 +1967,7 @@ void U_EMRMASKBLT_print(const char *contents){
    printf("   cbBmiMask:      %u\n",  pEmr->cbBmiMask    );
    if(pEmr->cbBmiMask){
       printf("      Mask bitmap: ");
-      bitmapinfo_print(contents + pEmr->offBmiMask);
+      bitmapinfo_print(contents + pEmr->offBmiMask, blimit);
       printf("\n");
    }
    printf("   offBitsMask:    %u\n",  pEmr->offBitsMask   );
@@ -1813,6 +1981,11 @@ void U_EMRMASKBLT_print(const char *contents){
 */
 void U_EMRPLGBLT_print(const char *contents){
    PU_EMRPLGBLT pEmr = (PU_EMRPLGBLT) (contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRPLGBLT)){
+      printf("   record corruption HERE\n");
+      return;
+   }
+   const char *blimit = contents + pEmr->emr.nSize;
    printf("   rclBounds:      ");     rectl_print( pEmr->rclBounds);       printf("\n");
    printf("   aptlDst(UL):    ");     pointl_print(pEmr->aptlDst[0]);      printf("\n");
    printf("   aptlDst(UR):    ");     pointl_print(pEmr->aptlDst[1]);      printf("\n");
@@ -1826,7 +1999,7 @@ void U_EMRPLGBLT_print(const char *contents){
    printf("   cbBmiSrc:       %u\n", pEmr->cbBmiSrc    );
    if(pEmr->cbBmiSrc){
       printf("      Src bitmap:  ");
-      bitmapinfo_print(contents + pEmr->offBmiSrc);
+      bitmapinfo_print(contents + pEmr->offBmiSrc, blimit);
       printf("\n");
    }
    printf("   offBitsSrc:     %u\n", pEmr->offBitsSrc   );
@@ -1837,7 +2010,7 @@ void U_EMRPLGBLT_print(const char *contents){
    printf("   cbBmiMask:      %u\n", pEmr->cbBmiMask    );
    if(pEmr->cbBmiMask){
       printf("      Mask bitmap: ");
-      bitmapinfo_print(contents + pEmr->offBmiMask);
+      bitmapinfo_print(contents + pEmr->offBmiMask, blimit);
       printf("\n");
    }
    printf("   offBitsMask:    %u\n", pEmr->offBitsMask   );
@@ -1851,6 +2024,11 @@ void U_EMRPLGBLT_print(const char *contents){
 */
 void U_EMRSETDIBITSTODEVICE_print(const char *contents){
    PU_EMRSETDIBITSTODEVICE pEmr = (PU_EMRSETDIBITSTODEVICE) (contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRSETDIBITSTODEVICE)){
+      printf("   record corruption HERE\n");
+      return;
+   }
+   const char *blimit = contents + pEmr->emr.nSize;
    printf("   rclBounds:      ");     rectl_print( pEmr->rclBounds);       printf("\n");
    printf("   Dest:           ");     pointl_print(pEmr->Dest);            printf("\n");
    printf("   Src:            ");     pointl_print(pEmr->Src);             printf("\n");
@@ -1859,7 +2037,7 @@ void U_EMRSETDIBITSTODEVICE_print(const char *contents){
    printf("   cbBmiSrc:       %u\n", pEmr->cbBmiSrc    );
    if(pEmr->cbBmiSrc){
       printf("      Src bitmap:  ");
-      bitmapinfo_print(contents + pEmr->offBmiSrc);
+      bitmapinfo_print(contents + pEmr->offBmiSrc, blimit);
       printf("\n");
    }
    printf("   offBitsSrc:     %u\n", pEmr->offBitsSrc   );
@@ -1876,6 +2054,11 @@ void U_EMRSETDIBITSTODEVICE_print(const char *contents){
 */
 void U_EMRSTRETCHDIBITS_print(const char *contents){
    PU_EMRSTRETCHDIBITS pEmr = (PU_EMRSTRETCHDIBITS) (contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRSTRETCHDIBITS)){
+      printf("   record corruption HERE\n");
+      return;
+   }
+   const char *blimit = contents + pEmr->emr.nSize;
    printf("   rclBounds:      ");     rectl_print( pEmr->rclBounds);       printf("\n");
    printf("   Dest:           ");     pointl_print(pEmr->Dest);            printf("\n");
    printf("   Src:            ");     pointl_print(pEmr->Src);             printf("\n");
@@ -1884,7 +2067,7 @@ void U_EMRSTRETCHDIBITS_print(const char *contents){
    printf("   cbBmiSrc:       %u\n", pEmr->cbBmiSrc    );
    if(pEmr->cbBmiSrc){
       printf("      Src bitmap:  ");
-      bitmapinfo_print(contents + pEmr->offBmiSrc);
+      bitmapinfo_print(contents + pEmr->offBmiSrc, blimit);
       printf("\n");
    }
    printf("   offBitsSrc:     %u\n", pEmr->offBitsSrc   );
@@ -1901,12 +2084,19 @@ void U_EMRSTRETCHDIBITS_print(const char *contents){
 */
 void U_EMREXTCREATEFONTINDIRECTW_print(const char *contents){
    PU_EMREXTCREATEFONTINDIRECTW pEmr = (PU_EMREXTCREATEFONTINDIRECTW) (contents);
+   if(pEmr->emr.nSize < U_SIZE_EMREXTCREATEFONTINDIRECTW_LOGFONT){ // smallest variant
+      printf("   record corruption HERE\n");
+      return;
+   }
+   const char *blimit = contents + pEmr->emr.nSize;
    printf("   ihFont:         %u\n",pEmr->ihFont );
    printf("   Font:           ");
-   if(pEmr->emr.nSize == sizeof(U_EMREXTCREATEFONTINDIRECTW)){ // holds logfont_panose
+   if(pEmr->emr.nSize == U_SIZE_EMREXTCREATEFONTINDIRECTW_LOGFONT_PANOSE){ // holds logfont_panose
+      IF_MEM_UNSAFE_PRINT_AND_RETURN(&(pEmr->elfw), sizeof(U_PANOSE), blimit);
       logfont_panose_print(pEmr->elfw);
    }
-   else { // holds logfont
+   else { // holds logfont or logfontExDv.  The latter isn't supported but it starts with logfont, so use that
+      IF_MEM_UNSAFE_PRINT_AND_RETURN(&(pEmr->elfw), sizeof(U_LOGFONT), blimit);
       logfont_print( *(PU_LOGFONT) &(pEmr->elfw));
    }
    printf("\n");
@@ -2002,17 +2192,25 @@ void U_EMRPOLYPOLYGON16_print(const char *contents){
 void U_EMRPOLYDRAW16_print(const char *contents){
    unsigned int i;
    PU_EMRPOLYDRAW16 pEmr = (PU_EMRPOLYDRAW16)(contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRPOLYDRAW16)){
+      printf("   record corruption HERE\n");
+      return;
+   }
+   const char *blimit = contents + pEmr->emr.nSize;
    printf("   rclBounds:      ");          rectl_print( pEmr->rclBounds);   printf("\n");
    printf("   cpts:           %d\n",pEmr->cpts        );
    printf("   Points:         ");
+   IF_MEM_UNSAFE_PRINT_AND_RETURN(pEmr->apts, pEmr->cpts*sizeof(U_POINT16), blimit);
    for(i=0;i<pEmr->cpts; i++){
       printf(" [%d]:",i);
       point16_print(pEmr->apts[i]);
    }
    printf("\n");
    printf("   Types:          ");
+   const char *abTypes = (const char *) pEmr->apts + pEmr->cpts*sizeof(U_POINT16);
+   IF_MEM_UNSAFE_PRINT_AND_RETURN(abTypes, pEmr->cpts, blimit);
    for(i=0;i<pEmr->cpts; i++){
-      printf(" [%d]:%u ",i,pEmr->abTypes[i]);
+      printf(" [%d]:%u ",i,((uint8_t *)abTypes)[i]);
    }
    printf("\n");
 }
@@ -2043,12 +2241,17 @@ void U_EMRCREATEDIBPATTERNBRUSHPT_print(const char *contents){
 */
 void U_EMREXTCREATEPEN_print(const char *contents){
    PU_EMREXTCREATEPEN pEmr = (PU_EMREXTCREATEPEN)(contents);
+   if(pEmr->emr.nSize < sizeof(U_EMREXTCREATEPEN)){
+      printf("   record corruption HERE\n");
+      return;
+   }
+   const char *blimit = contents + pEmr->emr.nSize;
    printf("   ihPen:          %u\n", pEmr->ihPen );
    printf("   offBmi:         %u\n", pEmr->offBmi   );
    printf("   cbBmi:          %u\n", pEmr->cbBmi    );
    if(pEmr->cbBmi){
       printf("      bitmap:      ");
-      bitmapinfo_print(contents + pEmr->offBmi);
+      bitmapinfo_print(contents + pEmr->offBmi, blimit);
       printf("\n");
    }
    printf("   offBits:        %u\n", pEmr->offBits   );
@@ -2077,6 +2280,10 @@ void U_EMRSETICMMODE_print(const char *contents){
 */
 void U_EMRCREATECOLORSPACE_print(const char *contents){
    PU_EMRCREATECOLORSPACE pEmr = (PU_EMRCREATECOLORSPACE)(contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRCREATECOLORSPACE)){
+      printf("   record corruption HERE\n");
+      return;
+   }
    printf("   ihCS:           %u\n", pEmr->ihCS    );
    printf("   ColorSpace:     "); logcolorspacea_print(pEmr->lcs);  printf("\n");
 }
@@ -2111,6 +2318,12 @@ void U_EMRDELETECOLORSPACE_print(const char *contents){
 */
 void U_EMRPIXELFORMAT_print(const char *contents){
    PU_EMRPIXELFORMAT pEmr = (PU_EMRPIXELFORMAT)(contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRPIXELFORMAT)){
+      printf("   record corruption HERE\n");
+      return;
+   }
+   const char *blimit = contents + pEmr->emr.nSize;
+   IF_MEM_UNSAFE_PRINT_AND_RETURN(&(pEmr->pfd), sizeof(U_PIXELFORMATDESCRIPTOR), blimit);
    printf("   Pfd:            ");  pixelformatdescriptor_print(pEmr->pfd);  printf("\n");
 }
 
@@ -2130,6 +2343,11 @@ void U_EMRSMALLTEXTOUT_print(const char *contents){
    int roff;
    char *string;
    PU_EMRSMALLTEXTOUT pEmr = (PU_EMRSMALLTEXTOUT)(contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRSMALLTEXTOUT)){
+      printf("   record corruption HERE\n");
+      return;
+   }
+   const char *blimit = contents + pEmr->emr.nSize;
    printf("   Dest:           ");         pointl_print(pEmr->Dest);            printf("\n");
    printf("   cChars:         %u\n",      pEmr->cChars          );
    printf("   fuOptions:      0x%8.8X\n", pEmr->fuOptions       );
@@ -2138,14 +2356,17 @@ void U_EMRSMALLTEXTOUT_print(const char *contents){
    printf("   eyScale:        %f\n",      pEmr->eyScale         );
    roff = sizeof(U_EMRSMALLTEXTOUT);  //offset to the start of the variable fields
    if(!(pEmr->fuOptions & U_ETO_NO_RECT)){
+      IF_MEM_UNSAFE_PRINT_AND_RETURN(contents, roff, blimit);
       printf("   rclBounds:      ");      rectl_print( *(PU_RECTL) (contents + roff));       printf("\n");
       roff += sizeof(U_RECTL);
    }
    if(pEmr->fuOptions & U_ETO_SMALL_CHARS){
+      IF_MEM_UNSAFE_PRINT_AND_RETURN(contents, roff + pEmr->cChars*sizeof(char), blimit);
       printf("   Text8:          <%.*s>\n",pEmr->cChars,contents+roff);  /* May not be null terminated */
    }
    else {
       string = U_Utf16leToUtf8((uint16_t *)(contents+roff), pEmr->cChars, NULL);
+      IF_MEM_UNSAFE_PRINT_AND_RETURN(contents, roff + pEmr->cChars*2*sizeof(char), blimit);
       printf("   Text16:         <%s>\n",contents+roff);
       free(string);
   }
@@ -2199,12 +2420,18 @@ void U_EMRTRANSPARENTBLT_print(const char *contents){
 void U_EMRGRADIENTFILL_print(const char *contents){
    unsigned int i;
    PU_EMRGRADIENTFILL pEmr = (PU_EMRGRADIENTFILL)(contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRGRADIENTFILL)){
+      printf("   record corruption HERE\n");
+      return;
+   }
+   const char *blimit = contents + pEmr->emr.nSize;
    printf("   rclBounds:      ");      rectl_print( pEmr->rclBounds);   printf("\n");
    printf("   nTriVert:       %u\n",   pEmr->nTriVert   );
    printf("   nGradObj:       %u\n",   pEmr->nGradObj   );
    printf("   ulMode:         %u\n",   pEmr->ulMode     );
    contents += sizeof(U_EMRGRADIENTFILL);
    if(pEmr->nTriVert){
+      IF_MEM_UNSAFE_PRINT_AND_RETURN(contents, pEmr->nTriVert*sizeof(U_TRIVERTEX), blimit);
       printf("   TriVert:        ");
       for(i=0; i<pEmr->nTriVert; i++, contents+=sizeof(U_TRIVERTEX)){
          trivertex_print(*(PU_TRIVERTEX)(contents));
@@ -2214,12 +2441,14 @@ void U_EMRGRADIENTFILL_print(const char *contents){
    if(pEmr->nGradObj){
       printf("   GradObj:        ");
       if(     pEmr->ulMode == U_GRADIENT_FILL_TRIANGLE){
+         IF_MEM_UNSAFE_PRINT_AND_RETURN(contents, pEmr->nGradObj*sizeof(U_GRADIENT3), blimit);
          for(i=0; i<pEmr->nGradObj; i++, contents+=sizeof(U_GRADIENT3)){
             gradient3_print(*(PU_GRADIENT3)(contents));
          }
       }
       else if(pEmr->ulMode == U_GRADIENT_FILL_RECT_H || 
               pEmr->ulMode == U_GRADIENT_FILL_RECT_V){
+         IF_MEM_UNSAFE_PRINT_AND_RETURN(contents, pEmr->nGradObj*sizeof(U_GRADIENT4), blimit);
          for(i=0; i<pEmr->nGradObj; i++, contents+=sizeof(U_GRADIENT4)){
             gradient4_print(*(PU_GRADIENT4)(contents));
          }
@@ -2244,12 +2473,18 @@ void U_EMRGRADIENTFILL_print(const char *contents){
 void U_EMRCREATECOLORSPACEW_print(const char *contents){
    unsigned int i;
    PU_EMRCREATECOLORSPACEW pEmr = (PU_EMRCREATECOLORSPACEW)(contents);
+   if(pEmr->emr.nSize < sizeof(U_EMRCREATECOLORSPACEW)){
+      printf("   record corruption HERE\n");
+      return;
+   }
+   const char *blimit = contents + pEmr->emr.nSize;
    printf("   ihCS:           %u\n", pEmr->ihCS     );
    printf("   ColorSpace:     "); logcolorspacew_print(pEmr->lcs);  printf("\n");
    printf("   dwFlags:        0x%8.8X\n", pEmr->dwFlags  );
    printf("   cbData:         %u\n", pEmr->cbData   );
    printf("   Data(hexvalues):");
    if(pEmr->dwFlags & 1){
+     IF_MEM_UNSAFE_PRINT_AND_RETURN(contents, pEmr->cbData, blimit);
      for(i=0; i<pEmr->cbData; i++){
         printf("[%d]:%2.2X ",i,pEmr->Data[i]);
      }
@@ -2267,145 +2502,154 @@ void U_EMRCREATECOLORSPACEW_print(const char *contents){
 */
 int U_emf_onerec_print(const char *contents, const char *blimit, int recnum, size_t off){
     PU_ENHMETARECORD  lpEMFR  = (PU_ENHMETARECORD)(contents + off);
-    unsigned int size;
-
-    printf("%-30srecord:%5d type:%-4d offset:%8d rsize:%8d\n",U_emr_names(lpEMFR->iType),recnum,lpEMFR->iType,(int) off,lpEMFR->nSize);
-    size      = lpEMFR->nSize;
-    contents += off;
+    uint32_t nSize;
+    uint32_t iType;
+    const char *record = contents + off;
     
-    /* Check that the record size is OK, abort if not.
-       Pointer math might wrap, so check both sides of the range */
-    if(size < sizeof(U_EMR)           ||
-       contents + size - 1 >= blimit  || 
-       contents + size - 1 < contents)return(-1);
+    if(record < contents)return(-1); // offset wrapped
 
+    /* Check that COMMON data in record can be touched without an access violation.  If it cannot be
+        this is either a corrupt EMF or one engineered to cause a buffer overflow.  Pointer math
+        could wrap so check both sides of the range.
+    */
+    if(!U_emf_record_sizeok(record, blimit, &nSize, &iType, 1))return(-1); 
+    
+    printf("%-30srecord:%5d type:%-4d offset:%8d rsize:%8d\n",U_emr_names(iType),recnum,iType,(int) off,nSize);
+    fflush(stdout);
+
+    /* print the record header before checking further.
+       Note if this is a corrupt record, but continue anyway.
+       The _print routines will stop at the actual problem and print another corrupt message.
+    */
+    if(!U_emf_record_safe(record)){printf("WARNING: Corrupt record.  Emitting fields above the problem.\n");}
+    
     switch (lpEMFR->iType)
     {
-        case U_EMR_HEADER:                  U_EMRHEADER_print(contents);                  break;
-        case U_EMR_POLYBEZIER:              U_EMRPOLYBEZIER_print(contents);              break;
-        case U_EMR_POLYGON:                 U_EMRPOLYGON_print(contents);                 break;
-        case U_EMR_POLYLINE:                U_EMRPOLYLINE_print(contents);                break;
-        case U_EMR_POLYBEZIERTO:            U_EMRPOLYBEZIERTO_print(contents);            break;
-        case U_EMR_POLYLINETO:              U_EMRPOLYLINETO_print(contents);              break;
-        case U_EMR_POLYPOLYLINE:            U_EMRPOLYPOLYLINE_print(contents);            break;
-        case U_EMR_POLYPOLYGON:             U_EMRPOLYPOLYGON_print(contents);             break;
-        case U_EMR_SETWINDOWEXTEX:          U_EMRSETWINDOWEXTEX_print(contents);          break;
-        case U_EMR_SETWINDOWORGEX:          U_EMRSETWINDOWORGEX_print(contents);          break;
-        case U_EMR_SETVIEWPORTEXTEX:        U_EMRSETVIEWPORTEXTEX_print(contents);        break;
-        case U_EMR_SETVIEWPORTORGEX:        U_EMRSETVIEWPORTORGEX_print(contents);        break;
-        case U_EMR_SETBRUSHORGEX:           U_EMRSETBRUSHORGEX_print(contents);           break;
-        case U_EMR_EOF:                     U_EMREOF_print(contents);          size=0;    break;
-        case U_EMR_SETPIXELV:               U_EMRSETPIXELV_print(contents);               break;
-        case U_EMR_SETMAPPERFLAGS:          U_EMRSETMAPPERFLAGS_print(contents);          break;
-        case U_EMR_SETMAPMODE:              U_EMRSETMAPMODE_print(contents);              break;
-        case U_EMR_SETBKMODE:               U_EMRSETBKMODE_print(contents);               break;
-        case U_EMR_SETPOLYFILLMODE:         U_EMRSETPOLYFILLMODE_print(contents);         break;
-        case U_EMR_SETROP2:                 U_EMRSETROP2_print(contents);                 break;
-        case U_EMR_SETSTRETCHBLTMODE:       U_EMRSETSTRETCHBLTMODE_print(contents);       break;
-        case U_EMR_SETTEXTALIGN:            U_EMRSETTEXTALIGN_print(contents);            break;
-        case U_EMR_SETCOLORADJUSTMENT:      U_EMRSETCOLORADJUSTMENT_print(contents);      break;
-        case U_EMR_SETTEXTCOLOR:            U_EMRSETTEXTCOLOR_print(contents);            break;
-        case U_EMR_SETBKCOLOR:              U_EMRSETBKCOLOR_print(contents);              break;
-        case U_EMR_OFFSETCLIPRGN:           U_EMROFFSETCLIPRGN_print(contents);           break;
-        case U_EMR_MOVETOEX:                U_EMRMOVETOEX_print(contents);                break;
-        case U_EMR_SETMETARGN:              U_EMRSETMETARGN_print(contents);              break;
-        case U_EMR_EXCLUDECLIPRECT:         U_EMREXCLUDECLIPRECT_print(contents);         break;
-        case U_EMR_INTERSECTCLIPRECT:       U_EMRINTERSECTCLIPRECT_print(contents);       break;
-        case U_EMR_SCALEVIEWPORTEXTEX:      U_EMRSCALEVIEWPORTEXTEX_print(contents);      break;
-        case U_EMR_SCALEWINDOWEXTEX:        U_EMRSCALEWINDOWEXTEX_print(contents);        break;
-        case U_EMR_SAVEDC:                  U_EMRSAVEDC_print(contents);                  break;
-        case U_EMR_RESTOREDC:               U_EMRRESTOREDC_print(contents);               break;
-        case U_EMR_SETWORLDTRANSFORM:       U_EMRSETWORLDTRANSFORM_print(contents);       break;
-        case U_EMR_MODIFYWORLDTRANSFORM:    U_EMRMODIFYWORLDTRANSFORM_print(contents);    break;
-        case U_EMR_SELECTOBJECT:            U_EMRSELECTOBJECT_print(contents);            break;
-        case U_EMR_CREATEPEN:               U_EMRCREATEPEN_print(contents);               break;
-        case U_EMR_CREATEBRUSHINDIRECT:     U_EMRCREATEBRUSHINDIRECT_print(contents);     break;
-        case U_EMR_DELETEOBJECT:            U_EMRDELETEOBJECT_print(contents);            break;
-        case U_EMR_ANGLEARC:                U_EMRANGLEARC_print(contents);                break;
-        case U_EMR_ELLIPSE:                 U_EMRELLIPSE_print(contents);                 break;
-        case U_EMR_RECTANGLE:               U_EMRRECTANGLE_print(contents);               break;
-        case U_EMR_ROUNDRECT:               U_EMRROUNDRECT_print(contents);               break;
-        case U_EMR_ARC:                     U_EMRARC_print(contents);                     break;
-        case U_EMR_CHORD:                   U_EMRCHORD_print(contents);                   break;
-        case U_EMR_PIE:                     U_EMRPIE_print(contents);                     break;
-        case U_EMR_SELECTPALETTE:           U_EMRSELECTPALETTE_print(contents);           break;
-        case U_EMR_CREATEPALETTE:           U_EMRCREATEPALETTE_print(contents);           break;
-        case U_EMR_SETPALETTEENTRIES:       U_EMRSETPALETTEENTRIES_print(contents);       break;
-        case U_EMR_RESIZEPALETTE:           U_EMRRESIZEPALETTE_print(contents);           break;
-        case U_EMR_REALIZEPALETTE:          U_EMRREALIZEPALETTE_print(contents);          break;
-        case U_EMR_EXTFLOODFILL:            U_EMREXTFLOODFILL_print(contents);            break;
-        case U_EMR_LINETO:                  U_EMRLINETO_print(contents);                  break;
-        case U_EMR_ARCTO:                   U_EMRARCTO_print(contents);                   break;
-        case U_EMR_POLYDRAW:                U_EMRPOLYDRAW_print(contents);                break;
-        case U_EMR_SETARCDIRECTION:         U_EMRSETARCDIRECTION_print(contents);         break;
-        case U_EMR_SETMITERLIMIT:           U_EMRSETMITERLIMIT_print(contents);           break;
-        case U_EMR_BEGINPATH:               U_EMRBEGINPATH_print(contents);               break;
-        case U_EMR_ENDPATH:                 U_EMRENDPATH_print(contents);                 break;
-        case U_EMR_CLOSEFIGURE:             U_EMRCLOSEFIGURE_print(contents);             break;
-        case U_EMR_FILLPATH:                U_EMRFILLPATH_print(contents);                break;
-        case U_EMR_STROKEANDFILLPATH:       U_EMRSTROKEANDFILLPATH_print(contents);       break;
-        case U_EMR_STROKEPATH:              U_EMRSTROKEPATH_print(contents);              break;
-        case U_EMR_FLATTENPATH:             U_EMRFLATTENPATH_print(contents);             break;
-        case U_EMR_WIDENPATH:               U_EMRWIDENPATH_print(contents);               break;
-        case U_EMR_SELECTCLIPPATH:          U_EMRSELECTCLIPPATH_print(contents);          break;
-        case U_EMR_ABORTPATH:               U_EMRABORTPATH_print(contents);               break;
-        case U_EMR_UNDEF69:                 U_EMRUNDEF69_print(contents);                 break;
-        case U_EMR_COMMENT:                 U_EMRCOMMENT_print(contents, blimit, off);    break;
-        case U_EMR_FILLRGN:                 U_EMRFILLRGN_print(contents);                 break;
-        case U_EMR_FRAMERGN:                U_EMRFRAMERGN_print(contents);                break;
-        case U_EMR_INVERTRGN:               U_EMRINVERTRGN_print(contents);               break;
-        case U_EMR_PAINTRGN:                U_EMRPAINTRGN_print(contents);                break;
-        case U_EMR_EXTSELECTCLIPRGN:        U_EMREXTSELECTCLIPRGN_print(contents);        break;
-        case U_EMR_BITBLT:                  U_EMRBITBLT_print(contents);                  break;
-        case U_EMR_STRETCHBLT:              U_EMRSTRETCHBLT_print(contents);              break;
-        case U_EMR_MASKBLT:                 U_EMRMASKBLT_print(contents);                 break;
-        case U_EMR_PLGBLT:                  U_EMRPLGBLT_print(contents);                  break;
-        case U_EMR_SETDIBITSTODEVICE:       U_EMRSETDIBITSTODEVICE_print(contents);       break;
-        case U_EMR_STRETCHDIBITS:           U_EMRSTRETCHDIBITS_print(contents);           break;
-        case U_EMR_EXTCREATEFONTINDIRECTW:  U_EMREXTCREATEFONTINDIRECTW_print(contents);  break;
-        case U_EMR_EXTTEXTOUTA:             U_EMREXTTEXTOUTA_print(contents);             break;
-        case U_EMR_EXTTEXTOUTW:             U_EMREXTTEXTOUTW_print(contents);             break;
-        case U_EMR_POLYBEZIER16:            U_EMRPOLYBEZIER16_print(contents);            break;
-        case U_EMR_POLYGON16:               U_EMRPOLYGON16_print(contents);               break;
-        case U_EMR_POLYLINE16:              U_EMRPOLYLINE16_print(contents);              break;
-        case U_EMR_POLYBEZIERTO16:          U_EMRPOLYBEZIERTO16_print(contents);          break;
-        case U_EMR_POLYLINETO16:            U_EMRPOLYLINETO16_print(contents);            break;
-        case U_EMR_POLYPOLYLINE16:          U_EMRPOLYPOLYLINE16_print(contents);          break;
-        case U_EMR_POLYPOLYGON16:           U_EMRPOLYPOLYGON16_print(contents);           break;
-        case U_EMR_POLYDRAW16:              U_EMRPOLYDRAW16_print(contents);              break;
-        case U_EMR_CREATEMONOBRUSH:         U_EMRCREATEMONOBRUSH_print(contents);         break;
-        case U_EMR_CREATEDIBPATTERNBRUSHPT: U_EMRCREATEDIBPATTERNBRUSHPT_print(contents); break;
-        case U_EMR_EXTCREATEPEN:            U_EMREXTCREATEPEN_print(contents);            break;
-        case U_EMR_POLYTEXTOUTA:            U_EMRPOLYTEXTOUTA_print(contents);            break;
-        case U_EMR_POLYTEXTOUTW:            U_EMRPOLYTEXTOUTW_print(contents);            break;
-        case U_EMR_SETICMMODE:              U_EMRSETICMMODE_print(contents);              break;
-        case U_EMR_CREATECOLORSPACE:        U_EMRCREATECOLORSPACE_print(contents);        break;
-        case U_EMR_SETCOLORSPACE:           U_EMRSETCOLORSPACE_print(contents);           break;
-        case U_EMR_DELETECOLORSPACE:        U_EMRDELETECOLORSPACE_print(contents);        break;
-        case U_EMR_GLSRECORD:               U_EMRGLSRECORD_print(contents);               break;
-        case U_EMR_GLSBOUNDEDRECORD:        U_EMRGLSBOUNDEDRECORD_print(contents);        break;
-        case U_EMR_PIXELFORMAT:             U_EMRPIXELFORMAT_print(contents);             break;
-        case U_EMR_DRAWESCAPE:              U_EMRDRAWESCAPE_print(contents);              break;
-        case U_EMR_EXTESCAPE:               U_EMREXTESCAPE_print(contents);               break;
-        case U_EMR_UNDEF107:                U_EMRUNDEF107_print(contents);                break;
-        case U_EMR_SMALLTEXTOUT:            U_EMRSMALLTEXTOUT_print(contents);            break;
-        case U_EMR_FORCEUFIMAPPING:         U_EMRFORCEUFIMAPPING_print(contents);         break;
-        case U_EMR_NAMEDESCAPE:             U_EMRNAMEDESCAPE_print(contents);             break;
-        case U_EMR_COLORCORRECTPALETTE:     U_EMRCOLORCORRECTPALETTE_print(contents);     break;
-        case U_EMR_SETICMPROFILEA:          U_EMRSETICMPROFILEA_print(contents);          break;
-        case U_EMR_SETICMPROFILEW:          U_EMRSETICMPROFILEW_print(contents);          break;
-        case U_EMR_ALPHABLEND:              U_EMRALPHABLEND_print(contents);              break;
-        case U_EMR_SETLAYOUT:               U_EMRSETLAYOUT_print(contents);               break;
-        case U_EMR_TRANSPARENTBLT:          U_EMRTRANSPARENTBLT_print(contents);          break;
-        case U_EMR_UNDEF117:                U_EMRUNDEF117_print(contents);                break;
-        case U_EMR_GRADIENTFILL:            U_EMRGRADIENTFILL_print(contents);            break;
-        case U_EMR_SETLINKEDUFIS:           U_EMRSETLINKEDUFIS_print(contents);           break;
-        case U_EMR_SETTEXTJUSTIFICATION:    U_EMRSETTEXTJUSTIFICATION_print(contents);    break;
-        case U_EMR_COLORMATCHTOTARGETW:     U_EMRCOLORMATCHTOTARGETW_print(contents);     break;
-        case U_EMR_CREATECOLORSPACEW:       U_EMRCREATECOLORSPACEW_print(contents);       break;
-        default:                            U_EMRNOTIMPLEMENTED_print("?",contents);      break;
+        case U_EMR_HEADER:                  U_EMRHEADER_print(record);                  break;
+        case U_EMR_POLYBEZIER:              U_EMRPOLYBEZIER_print(record);              break;
+        case U_EMR_POLYGON:                 U_EMRPOLYGON_print(record);                 break;
+        case U_EMR_POLYLINE:                U_EMRPOLYLINE_print(record);                break;
+        case U_EMR_POLYBEZIERTO:            U_EMRPOLYBEZIERTO_print(record);            break;
+        case U_EMR_POLYLINETO:              U_EMRPOLYLINETO_print(record);              break;
+        case U_EMR_POLYPOLYLINE:            U_EMRPOLYPOLYLINE_print(record);            break;
+        case U_EMR_POLYPOLYGON:             U_EMRPOLYPOLYGON_print(record);             break;
+        case U_EMR_SETWINDOWEXTEX:          U_EMRSETWINDOWEXTEX_print(record);          break;
+        case U_EMR_SETWINDOWORGEX:          U_EMRSETWINDOWORGEX_print(record);          break;
+        case U_EMR_SETVIEWPORTEXTEX:        U_EMRSETVIEWPORTEXTEX_print(record);        break;
+        case U_EMR_SETVIEWPORTORGEX:        U_EMRSETVIEWPORTORGEX_print(record);        break;
+        case U_EMR_SETBRUSHORGEX:           U_EMRSETBRUSHORGEX_print(record);           break;
+        case U_EMR_EOF:                     U_EMREOF_print(record);         nSize=0;    break;
+        case U_EMR_SETPIXELV:               U_EMRSETPIXELV_print(record);               break;
+        case U_EMR_SETMAPPERFLAGS:          U_EMRSETMAPPERFLAGS_print(record);          break;
+        case U_EMR_SETMAPMODE:              U_EMRSETMAPMODE_print(record);              break;
+        case U_EMR_SETBKMODE:               U_EMRSETBKMODE_print(record);               break;
+        case U_EMR_SETPOLYFILLMODE:         U_EMRSETPOLYFILLMODE_print(record);         break;
+        case U_EMR_SETROP2:                 U_EMRSETROP2_print(record);                 break;
+        case U_EMR_SETSTRETCHBLTMODE:       U_EMRSETSTRETCHBLTMODE_print(record);       break;
+        case U_EMR_SETTEXTALIGN:            U_EMRSETTEXTALIGN_print(record);            break;
+        case U_EMR_SETCOLORADJUSTMENT:      U_EMRSETCOLORADJUSTMENT_print(record);      break;
+        case U_EMR_SETTEXTCOLOR:            U_EMRSETTEXTCOLOR_print(record);            break;
+        case U_EMR_SETBKCOLOR:              U_EMRSETBKCOLOR_print(record);              break;
+        case U_EMR_OFFSETCLIPRGN:           U_EMROFFSETCLIPRGN_print(record);           break;
+        case U_EMR_MOVETOEX:                U_EMRMOVETOEX_print(record);                break;
+        case U_EMR_SETMETARGN:              U_EMRSETMETARGN_print(record);              break;
+        case U_EMR_EXCLUDECLIPRECT:         U_EMREXCLUDECLIPRECT_print(record);         break;
+        case U_EMR_INTERSECTCLIPRECT:       U_EMRINTERSECTCLIPRECT_print(record);       break;
+        case U_EMR_SCALEVIEWPORTEXTEX:      U_EMRSCALEVIEWPORTEXTEX_print(record);      break;
+        case U_EMR_SCALEWINDOWEXTEX:        U_EMRSCALEWINDOWEXTEX_print(record);        break;
+        case U_EMR_SAVEDC:                  U_EMRSAVEDC_print(record);                  break;
+        case U_EMR_RESTOREDC:               U_EMRRESTOREDC_print(record);               break;
+        case U_EMR_SETWORLDTRANSFORM:       U_EMRSETWORLDTRANSFORM_print(record);       break;
+        case U_EMR_MODIFYWORLDTRANSFORM:    U_EMRMODIFYWORLDTRANSFORM_print(record);    break;
+        case U_EMR_SELECTOBJECT:            U_EMRSELECTOBJECT_print(record);            break;
+        case U_EMR_CREATEPEN:               U_EMRCREATEPEN_print(record);               break;
+        case U_EMR_CREATEBRUSHINDIRECT:     U_EMRCREATEBRUSHINDIRECT_print(record);     break;
+        case U_EMR_DELETEOBJECT:            U_EMRDELETEOBJECT_print(record);            break;
+        case U_EMR_ANGLEARC:                U_EMRANGLEARC_print(record);                break;
+        case U_EMR_ELLIPSE:                 U_EMRELLIPSE_print(record);                 break;
+        case U_EMR_RECTANGLE:               U_EMRRECTANGLE_print(record);               break;
+        case U_EMR_ROUNDRECT:               U_EMRROUNDRECT_print(record);               break;
+        case U_EMR_ARC:                     U_EMRARC_print(record);                     break;
+        case U_EMR_CHORD:                   U_EMRCHORD_print(record);                   break;
+        case U_EMR_PIE:                     U_EMRPIE_print(record);                     break;
+        case U_EMR_SELECTPALETTE:           U_EMRSELECTPALETTE_print(record);           break;
+        case U_EMR_CREATEPALETTE:           U_EMRCREATEPALETTE_print(record);           break;
+        case U_EMR_SETPALETTEENTRIES:       U_EMRSETPALETTEENTRIES_print(record);       break;
+        case U_EMR_RESIZEPALETTE:           U_EMRRESIZEPALETTE_print(record);           break;
+        case U_EMR_REALIZEPALETTE:          U_EMRREALIZEPALETTE_print(record);          break;
+        case U_EMR_EXTFLOODFILL:            U_EMREXTFLOODFILL_print(record);            break;
+        case U_EMR_LINETO:                  U_EMRLINETO_print(record);                  break;
+        case U_EMR_ARCTO:                   U_EMRARCTO_print(record);                   break;
+        case U_EMR_POLYDRAW:                U_EMRPOLYDRAW_print(record);                break;
+        case U_EMR_SETARCDIRECTION:         U_EMRSETARCDIRECTION_print(record);         break;
+        case U_EMR_SETMITERLIMIT:           U_EMRSETMITERLIMIT_print(record);           break;
+        case U_EMR_BEGINPATH:               U_EMRBEGINPATH_print(record);               break;
+        case U_EMR_ENDPATH:                 U_EMRENDPATH_print(record);                 break;
+        case U_EMR_CLOSEFIGURE:             U_EMRCLOSEFIGURE_print(record);             break;
+        case U_EMR_FILLPATH:                U_EMRFILLPATH_print(record);                break;
+        case U_EMR_STROKEANDFILLPATH:       U_EMRSTROKEANDFILLPATH_print(record);       break;
+        case U_EMR_STROKEPATH:              U_EMRSTROKEPATH_print(record);              break;
+        case U_EMR_FLATTENPATH:             U_EMRFLATTENPATH_print(record);             break;
+        case U_EMR_WIDENPATH:               U_EMRWIDENPATH_print(record);               break;
+        case U_EMR_SELECTCLIPPATH:          U_EMRSELECTCLIPPATH_print(record);          break;
+        case U_EMR_ABORTPATH:               U_EMRABORTPATH_print(record);               break;
+        case U_EMR_UNDEF69:                 U_EMRUNDEF69_print(record);                 break;
+        case U_EMR_COMMENT:                 U_EMRCOMMENT_print(record, off);            break;
+        case U_EMR_FILLRGN:                 U_EMRFILLRGN_print(record);                 break;
+        case U_EMR_FRAMERGN:                U_EMRFRAMERGN_print(record);                break;
+        case U_EMR_INVERTRGN:               U_EMRINVERTRGN_print(record);               break;
+        case U_EMR_PAINTRGN:                U_EMRPAINTRGN_print(record);                break;
+        case U_EMR_EXTSELECTCLIPRGN:        U_EMREXTSELECTCLIPRGN_print(record);        break;
+        case U_EMR_BITBLT:                  U_EMRBITBLT_print(record);                  break;
+        case U_EMR_STRETCHBLT:              U_EMRSTRETCHBLT_print(record);              break;
+        case U_EMR_MASKBLT:                 U_EMRMASKBLT_print(record);                 break;
+        case U_EMR_PLGBLT:                  U_EMRPLGBLT_print(record);                  break;
+        case U_EMR_SETDIBITSTODEVICE:       U_EMRSETDIBITSTODEVICE_print(record);       break;
+        case U_EMR_STRETCHDIBITS:           U_EMRSTRETCHDIBITS_print(record);           break;
+        case U_EMR_EXTCREATEFONTINDIRECTW:  U_EMREXTCREATEFONTINDIRECTW_print(record);  break;
+        case U_EMR_EXTTEXTOUTA:             U_EMREXTTEXTOUTA_print(record);             break;
+        case U_EMR_EXTTEXTOUTW:             U_EMREXTTEXTOUTW_print(record);             break;
+        case U_EMR_POLYBEZIER16:            U_EMRPOLYBEZIER16_print(record);            break;
+        case U_EMR_POLYGON16:               U_EMRPOLYGON16_print(record);               break;
+        case U_EMR_POLYLINE16:              U_EMRPOLYLINE16_print(record);              break;
+        case U_EMR_POLYBEZIERTO16:          U_EMRPOLYBEZIERTO16_print(record);          break;
+        case U_EMR_POLYLINETO16:            U_EMRPOLYLINETO16_print(record);            break;
+        case U_EMR_POLYPOLYLINE16:          U_EMRPOLYPOLYLINE16_print(record);          break;
+        case U_EMR_POLYPOLYGON16:           U_EMRPOLYPOLYGON16_print(record);           break;
+        case U_EMR_POLYDRAW16:              U_EMRPOLYDRAW16_print(record);              break;
+        case U_EMR_CREATEMONOBRUSH:         U_EMRCREATEMONOBRUSH_print(record);         break;
+        case U_EMR_CREATEDIBPATTERNBRUSHPT: U_EMRCREATEDIBPATTERNBRUSHPT_print(record); break;
+        case U_EMR_EXTCREATEPEN:            U_EMREXTCREATEPEN_print(record);            break;
+        case U_EMR_POLYTEXTOUTA:            U_EMRPOLYTEXTOUTA_print(record);            break;
+        case U_EMR_POLYTEXTOUTW:            U_EMRPOLYTEXTOUTW_print(record);            break;
+        case U_EMR_SETICMMODE:              U_EMRSETICMMODE_print(record);              break;
+        case U_EMR_CREATECOLORSPACE:        U_EMRCREATECOLORSPACE_print(record);        break;
+        case U_EMR_SETCOLORSPACE:           U_EMRSETCOLORSPACE_print(record);           break;
+        case U_EMR_DELETECOLORSPACE:        U_EMRDELETECOLORSPACE_print(record);        break;
+        case U_EMR_GLSRECORD:               U_EMRGLSRECORD_print(record);               break;
+        case U_EMR_GLSBOUNDEDRECORD:        U_EMRGLSBOUNDEDRECORD_print(record);        break;
+        case U_EMR_PIXELFORMAT:             U_EMRPIXELFORMAT_print(record);             break;
+        case U_EMR_DRAWESCAPE:              U_EMRDRAWESCAPE_print(record);              break;
+        case U_EMR_EXTESCAPE:               U_EMREXTESCAPE_print(record);               break;
+        case U_EMR_UNDEF107:                U_EMRUNDEF107_print(record);                break;
+        case U_EMR_SMALLTEXTOUT:            U_EMRSMALLTEXTOUT_print(record);            break;
+        case U_EMR_FORCEUFIMAPPING:         U_EMRFORCEUFIMAPPING_print(record);         break;
+        case U_EMR_NAMEDESCAPE:             U_EMRNAMEDESCAPE_print(record);             break;
+        case U_EMR_COLORCORRECTPALETTE:     U_EMRCOLORCORRECTPALETTE_print(record);     break;
+        case U_EMR_SETICMPROFILEA:          U_EMRSETICMPROFILEA_print(record);          break;
+        case U_EMR_SETICMPROFILEW:          U_EMRSETICMPROFILEW_print(record);          break;
+        case U_EMR_ALPHABLEND:              U_EMRALPHABLEND_print(record);              break;
+        case U_EMR_SETLAYOUT:               U_EMRSETLAYOUT_print(record);               break;
+        case U_EMR_TRANSPARENTBLT:          U_EMRTRANSPARENTBLT_print(record);          break;
+        case U_EMR_UNDEF117:                U_EMRUNDEF117_print(record);                break;
+        case U_EMR_GRADIENTFILL:            U_EMRGRADIENTFILL_print(record);            break;
+        case U_EMR_SETLINKEDUFIS:           U_EMRSETLINKEDUFIS_print(record);           break;
+        case U_EMR_SETTEXTJUSTIFICATION:    U_EMRSETTEXTJUSTIFICATION_print(record);    break;
+        case U_EMR_COLORMATCHTOTARGETW:     U_EMRCOLORMATCHTOTARGETW_print(record);     break;
+        case U_EMR_CREATECOLORSPACEW:       U_EMRCREATECOLORSPACEW_print(record);       break;
+        default:                            U_EMRNOTIMPLEMENTED_print("?",record);      break;
     }  //end of switch
-    return(size);
+    return(nSize);
 }
 
 

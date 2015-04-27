@@ -37,7 +37,7 @@ void bitmapcoreheader_print(U_BITMAPCOREHEADER ch);
 void logbrushw_print(U_WLOGBRUSH lb);
 void polypolygon_print(uint16_t  nPolys, const uint16_t *aPolyCounts, const char *Points);
 void scan_print(U_SCAN sc);
-void dibheader_print(const void *dh);
+void dibheader_print(const char *dh, const char *blimit);
 
 /* prototypes for WMF records */
 int  wmfheader_print(const char *contents, const char *blimit);

@@ -8,10 +8,6 @@
 #include <config.h>
 #endif
 
-#if GLIBMM_DISABLE_DEPRECATED &&HAVE_GLIBMM_THREADS_H
-#include <glibmm/threads.h>
-#endif
-
 #include <gtkmm.h>
 #include "lpe-fillet-chamfer-properties.h"
 #include <boost/lexical_cast.hpp>

@@ -60,6 +60,7 @@
 #include "splivarot.h"             // pieces for union on shapes
 #include "2geom/svg-path-parser.h" // to get from SVG text to Geom::Path
 #include "display/canvas-bpath.h"  // for SPWindRule
+#include "display/cairo-utils.h"  // for Inkscape::Pixbuf::PF_CAIRO
 
 #include "emf-print.h"
 
@@ -69,7 +70,6 @@ namespace Extension {
 namespace Internal {
 
 #define PXPERMETER 2835
-
 
 /* globals */
 static double       PX2WORLD;
@@ -481,9 +481,8 @@ int PrintEmf::create_brush(SPStyle const *style, PU_COLORREF fcolor)
         rgba_px = (char *) pixbuf->pixels(); // Do NOT free this!!!
         colortype = U_BCBM_COLOR32;
         (void) RGBA_to_DIB(&px, &cbPx, &ct, &numCt,  rgba_px,  width, height, width * 4, colortype, 0, 1);
-        // Not sure why the next swap is needed because the preceding does it, and the code is identical
-        // to that in stretchdibits_set, which does not need this.
-        swapRBinRGBA(px, width * height);
+        // pixbuf can be either PF_CAIRO or PF_GDK, and these have R and B bytes swapped
+        if (pixbuf->pixelFormat() == Inkscape::Pixbuf::PF_CAIRO) { swapRBinRGBA(px, width * height); }
         Bmih = bitmapinfoheader_set(width, height, 1, colortype, U_BI_RGB, 0, PXPERMETER, PXPERMETER, numCt, 0);
         Bmi = bitmapinfo_set(Bmih, ct);
         rec = createdibpatternbrushpt_set(&brush, eht, U_DIB_RGB_COLORS, Bmi, cbPx, px);
@@ -584,9 +583,8 @@ int PrintEmf::create_pen(SPStyle const *style, const Geom::Affine &transform)
                 rgba_px = (char *) pixbuf->pixels(); // Do NOT free this!!!
                 colortype = U_BCBM_COLOR32;
                 (void) RGBA_to_DIB(&px, &cbPx, &ct, &numCt,  rgba_px,  width, height, width * 4, colortype, 0, 1);
-                // Not sure why the next swap is needed because the preceding does it, and the code is identical
-                // to that in stretchdibits_set, which does not need this.
-                swapRBinRGBA(px, width * height);
+                // pixbuf can be either PF_CAIRO or PF_GDK, and these have R and B bytes swapped
+                if (pixbuf->pixelFormat() == Inkscape::Pixbuf::PF_CAIRO) { swapRBinRGBA(px, width * height); }
                 Bmih = bitmapinfoheader_set(width, height, 1, colortype, U_BI_RGB, 0, PXPERMETER, PXPERMETER, numCt, 0);
                 Bmi = bitmapinfo_set(Bmih, ct);
             } else { // pattern

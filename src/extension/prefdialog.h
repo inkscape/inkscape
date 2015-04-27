@@ -10,18 +10,9 @@
 #ifndef INKSCAPE_EXTENSION_DIALOG_H__
 #define INKSCAPE_EXTENSION_DIALOG_H__
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
-
-#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
-#include <glibmm/threads.h>
-#endif
-
 #include <gtkmm/dialog.h>
 #include <glibmm/value.h>
 #include <glibmm/ustring.h>
-
 
 namespace Gtk {
 class CheckButton;

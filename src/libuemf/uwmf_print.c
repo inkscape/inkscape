@@ -319,7 +319,7 @@ void scan_print(
     \param dh void pointer to DIB header
     A DIB header in an WMF may be either a BitmapCoreHeader or BitmapInfoHeader.
 */
-void dibheader_print(const void *dh){
+void dibheader_print(const char *dh, const char *blimit){
    uint32_t Size;
    memcpy(&Size, dh, 4); /* may not be aligned */
    if(Size == 0xC ){
@@ -330,7 +330,7 @@ void dibheader_print(const void *dh){
    }
    else {
        printf(" (BitmapInfoHeader) ");
-       bitmapinfo_print(dh); /* may not be aligned, called routine must handle it */
+       bitmapinfo_print(dh, blimit); /* may not be aligned, called routine must handle it */
    }
 }
 
@@ -922,7 +922,7 @@ void U_WMRSETDIBTODEV_print(const char *contents){
       printf("    Src X,Y:{%d,%d}\n", Src.x,  Src.y );
       printf("    W,H:%d,%d\n",       cwh.x,  cwh.y );
       printf("    Dst X,Y:{%d,%d}\n", Dst.x,  Dst.y );
-      printf("    DIB:");   dibheader_print(dib);   printf("\n");
+      printf("    DIB:");   dibheader_print(dib, dib+size);   printf("\n");
    }
 }
 
@@ -993,7 +993,7 @@ void U_WMRDIBBITBLT_print(const char *contents){
       printf("    Src X,Y:{%d,%d}\n", Src.x, Src.x );
       printf("    W,H:%d,%d\n",       cwh.x, cwh.y );
       printf("    Dst X,Y:{%d,%d}\n", Dst.x, Dst.y );
-      if(dib){  printf("    DIB:");   dibheader_print(dib);  printf("\n"); }
+      if(dib){  printf("    DIB:");   dibheader_print(dib, dib+size);  printf("\n"); }
       else {    printf("    DIB: none\n");                                 }
    }
 }
@@ -1009,7 +1009,7 @@ void U_WMRDIBSTRETCHBLT_print(const char *contents){
       printf("    Src X,Y:{%d,%d}\n", Src.x,  Src.x );
       printf("    Dst W,H:%d,%d\n",   cDst.x, cDst.y );
       printf("    Dst X,Y:{%d,%d}\n", Dst.x,  Dst.y );
-      if(dib){  printf("    DIB:");   dibheader_print(dib);  printf("\n"); }
+      if(dib){  printf("    DIB:");   dibheader_print(dib, dib+size);  printf("\n"); }
       else {    printf("    DIB: none\n");                                 }
    }
 }
@@ -1028,7 +1028,7 @@ void U_WMRDIBCREATEPATTERNBRUSH_print(const char *contents){
          printf("   Src:Bitmap16:");  bitmap16_print(Bm16); printf("\n");
       }
       else { /* from DIB */
-         printf("   Src:DIB:");       dibheader_print(dib); printf("\n");
+         printf("   Src:DIB:");       dibheader_print(dib, dib+size); printf("\n");
       }
    }
 }
@@ -1046,7 +1046,7 @@ void U_WMRSTRETCHDIB_print(const char *contents){
       printf("    Src X,Y:{%d,%d}\n", Src.x,  Src.x );
       printf("    Dst W,H:%d,%d\n",   cDst.x, cDst.y );
       printf("    Dst X,Y:{%d,%d}\n", Dst.x,  Dst.y );
-      if(dib){  printf("    DIB:");   dibheader_print(dib);  printf("\n"); }
+      if(dib){  printf("    DIB:");   dibheader_print(dib, dib+size);  printf("\n"); }
       else {    printf("    DIB: none\n");                                 }
    }
 }

@@ -13,6 +13,8 @@
 #define SEEN_EXTENSION_INTERNAL_EMF_H
 
 #include <libuemf/uemf.h>
+#include <libuemf/uemf_safe.h>
+#include <libuemf/uemf_endian.h> // for U_emf_record_sizeok()
 #include "extension/internal/metafile-inout.h" // picks up PNG
 #include "extension/implementation/implementation.h"
 #include "style.h"

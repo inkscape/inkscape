@@ -27,11 +27,11 @@
 
 /*
 File:      upmf.h
-Version:   0.0.2
-Date:      04-NOV-2013
+Version:   0.0.4
+Date:      17-MAR-2015
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
-Copyright: 2013 David Mathog and California Institute of Technology (Caltech)
+Copyright: 2015 David Mathog and California Institute of Technology (Caltech)
 */
 
 #ifndef _UPMF_
@@ -1805,9 +1805,8 @@ typedef struct {
 /** @brief EMF+ manual 2.2.2.25, Microsoft name: EmfPlusLinearGradientBrushOptionalData Object 
   For U_PMF_LINEARGRADIENTBRUSHDATA data field 
 */
-typedef struct {
-    U_PMF_ROTMATRIX         Matrix;     //!< Rotation matrix, Manuals says that this should be Transformation matrix, but last two values are missing
-/* variable part of object, not part of structure.
+/* Entire object is variable and not part of a structure! U_PMF_LINEARGRADIENTBRUSHOPTIONALDATA
+    U_PMF_ROTMATRIX             Matrix;     //!< Rotation matrix, Manuals says that this should be Transformation matrix, but last two values are missing
     (various)                   pattern;    //!< Presence and meaning depend on Flags field, see below
     
     Flag values
@@ -1818,7 +1817,6 @@ typedef struct {
     0                 0                  1                     U_PMF_BLENDFACTORS
     0                 1                  1                     U_PMF_BLENDFACTORS, U_PMF_BLENDFACTORS
 */
-} U_PMF_LINEARGRADIENTBRUSHOPTIONALDATA;
 
 /** @brief EMF+ manual 2.2.2.26, Microsoft name: EmfPlusLinePath Object */
 typedef struct {
@@ -1888,7 +1886,10 @@ typedef struct {
 Bitfields in the FILE (LITTLE endian here, manual uses BIG endian) are:
         bits 4-7  PathPointType flags
         bits 0-3  PathPointType enumeration
+  @{
 */
+typedef uint8_t   U_PMF_PATHPOINTTYPE; //!< EMF+ manual 2.2.2.31, Microsoft name: EmfPlusPathPointType Object
+/** @} */
 
 /** \defgroup U_PMF_PPTYPERLE PMF Run Length Encoded Path Point Types
     @brief EMF+ manual 2.2.2.32, Microsoft name: EmfPlusPathPointTypeRLE Object 
@@ -2838,6 +2839,7 @@ void U_PMF_MEMCPY_DSTSHIFT(char **Dst, const void *Src, size_t Size);
 void U_PMF_REPCPY_DSTSHIFT(char **Dst, const void *Src, size_t Size, size_t Reps);
 void U_PMF_PTRSAV_SHIFT(const char **Dst, const char **Src, size_t Size);
 uint16_t U_PMF_HEADERFLAGS_get(const char *contents);
+int U_PMF_RECORD_SIZE_get(const char *contents);
 int U_PMF_CMN_HDR_get(const char **contents, U_PMF_CMN_HDR *Header);
 int U_OID_To_OT(uint32_t OID);
 int U_OID_To_BT(uint32_t OID);
@@ -3035,77 +3037,77 @@ U_PSEUDO_OBJ *U_PMR_STROKEFILLPATH_set(void);
 
 /* EMF+ prototypes (objects_get) */
 
-int U_PMF_BRUSH_get(const char *contents, uint32_t *Version, uint32_t *Type, const char **Data);
-int U_PMF_CUSTOMLINECAP_get(const char *contents, uint32_t *Version, uint32_t *Type, const char **Data);
-int U_PMF_FONT_get(const char *contents, uint32_t *Version, U_FLOAT *EmSize, uint32_t *SizeUnit, int32_t *FSFlags, uint32_t *Length, const char **Data);
-int U_PMF_IMAGE_get(const char *contents, uint32_t *Version, uint32_t *Type, const char **Data);
-int U_PMF_IMAGEATTRIBUTES_get(const char *contents, uint32_t *Version, uint32_t *WrapMode, uint32_t *ClampColor, uint32_t *ObjectClamp);
-int U_PMF_PATH_get(const char *contents, uint32_t *Version, uint32_t *Count, uint16_t *Flags, const char **Points, const char **Types);
-int U_PMF_PEN_get(const char *contents, uint32_t *Version, uint32_t *Type, const char **PenData, const char **Brush);
-int U_PMF_REGION_get(const char *contents, uint32_t *Version, uint32_t *Count, const char **Nodes);
-int U_PMF_STRINGFORMAT_get(const char *contents, U_PMF_STRINGFORMAT *Sfs, const char **Data);
-int U_PMF_ARGB_get(const char *contents, uint8_t *Blue, uint8_t *Green, uint8_t *Red, uint8_t *Alpha);
-int U_PMF_BITMAP_get(const char *contents, U_PMF_BITMAP *Bs, const char **Data);
-int U_PMF_BITMAPDATA_get(const char *contents, U_PMF_PALETTE *Ps, const char **Colors, const char **Data);
-int U_PMF_BLENDCOLORS_get(const char *contents, uint32_t *Elements, U_FLOAT **Positions, const char **Colors);
-int U_PMF_BLENDFACTORS_get(const char *contents, uint32_t *Elements, U_FLOAT **Positions, U_FLOAT **Factors);
-int U_PMF_BOUNDARYPATHDATA_get(const char *contents, int32_t *Size, const char **Data);
-int U_PMF_BOUNDARYPOINTDATA_get(const char *contents, int32_t *Elements, U_PMF_POINTF **Points);
-int U_PMF_CHARACTERRANGE_get(const char *contents, int32_t *First, int32_t *Length);
-int U_PMF_COMPOUNDLINEDATA_get(const char *contents, int32_t *Elements, U_FLOAT **Widths);
-int U_PMF_COMPRESSEDIMAGE_get(const char *contents, const char **Data);
-int U_PMF_CUSTOMENDCAPDATA_get(const char *contents, int32_t *Size, const char **Data);
-int U_PMF_CUSTOMLINECAPARROWDATA_get(const char *contents, U_PMF_CUSTOMLINECAPARROWDATA *Ccad);
-int U_PMF_CUSTOMLINECAPDATA_get(const char *contents, U_PMF_CUSTOMLINECAPDATA *Clcd, const char **Data);
-int U_PMF_CUSTOMLINECAPOPTIONALDATA_get(const char *contents, uint32_t Flags, const char **FillData, const char **LineData);
-int U_PMF_CUSTOMSTARTCAPDATA_get(const char *contents, int32_t *Size, const char **Data);
-int U_PMF_DASHEDLINEDATA_get(const char *contents, int32_t *Elements, U_FLOAT **Lengths);
-int U_PMF_FILLPATHOBJ_get(const char *contents, int32_t *Size, const char **Data);
-int U_PMF_FOCUSSCALEDATA_get(const char *contents, uint32_t *Count, U_FLOAT *ScaleX, U_FLOAT *ScaleY);
-int U_PMF_GRAPHICSVERSION_get(const char *contents, int *Signature, int *GrfVersion);
-int U_PMF_HATCHBRUSHDATA_get(const char *contents, uint32_t *Style, U_PMF_ARGB *Foreground, U_PMF_ARGB *Background);
-int U_PMF_INTEGER7_get(const char **contents, U_FLOAT *Value);
-int U_PMF_INTEGER15_get(const char **contents, U_FLOAT *Value);
+int U_PMF_BRUSH_get(const char *contents, uint32_t *Version, uint32_t *Type, const char **Data, const char *blimit);
+int U_PMF_CUSTOMLINECAP_get(const char *contents, uint32_t *Version, uint32_t *Type, const char **Data, const char *blimit);
+int U_PMF_FONT_get(const char *contents, uint32_t *Version, U_FLOAT *EmSize, uint32_t *SizeUnit, int32_t *FSFlags, uint32_t *Length, const char **Data, const char *blimit);
+int U_PMF_IMAGE_get(const char *contents, uint32_t *Version, uint32_t *Type, const char **Data, const char *blimit);
+int U_PMF_IMAGEATTRIBUTES_get(const char *contents, uint32_t *Version, uint32_t *WrapMode, uint32_t *ClampColor, uint32_t *ObjectClamp, const char *blimit);
+int U_PMF_PATH_get(const char *contents, uint32_t *Version, uint32_t *Count, uint16_t *Flags, const char **Points, const char **Types, const char *blimit);
+int U_PMF_PEN_get(const char *contents, uint32_t *Version, uint32_t *Type, const char **PenData, const char **Brush, const char *blimit);
+int U_PMF_REGION_get(const char *contents, uint32_t *Version, uint32_t *Count, const char **Nodes, const char *blimit);
+int U_PMF_STRINGFORMAT_get(const char *contents, U_PMF_STRINGFORMAT *Sfs, const char **Data, const char *blimit);
+int U_PMF_ARGB_get(const char *contents, uint8_t *Blue, uint8_t *Green, uint8_t *Red, uint8_t *Alpha, const char *blimit);
+int U_PMF_BITMAP_get(const char *contents, U_PMF_BITMAP *Bs, const char **Data, const char *blimit);
+int U_PMF_BITMAPDATA_get(const char *contents, U_PMF_PALETTE *Ps, const char **Colors, const char **Data, const char *blimit);
+int U_PMF_BLENDCOLORS_get(const char *contents, uint32_t *Elements, U_FLOAT **Positions, const char **Colors, const char *blimit);
+int U_PMF_BLENDFACTORS_get(const char *contents, uint32_t *Elements, U_FLOAT **Positions, U_FLOAT **Factors, const char *blimit);
+int U_PMF_BOUNDARYPATHDATA_get(const char *contents, int32_t *Size, const char **Data, const char *blimit);
+int U_PMF_BOUNDARYPOINTDATA_get(const char *contents, int32_t *Elements, U_PMF_POINTF **Points, const char *blimit);
+int U_PMF_CHARACTERRANGE_get(const char *contents, int32_t *First, int32_t *Length, const char *blimit);
+int U_PMF_COMPOUNDLINEDATA_get(const char *contents, int32_t *Elements, U_FLOAT **Widths, const char *blimit);
+int U_PMF_COMPRESSEDIMAGE_get(const char *contents, const char **Data, const char *blimit);
+int U_PMF_CUSTOMENDCAPDATA_get(const char *contents, int32_t *Size, const char **Data, const char *blimit);
+int U_PMF_CUSTOMLINECAPARROWDATA_get(const char *contents, U_PMF_CUSTOMLINECAPARROWDATA *Ccad, const char *blimit);
+int U_PMF_CUSTOMLINECAPDATA_get(const char *contents, U_PMF_CUSTOMLINECAPDATA *Clcd, const char **Data, const char *blimit);
+int U_PMF_CUSTOMLINECAPOPTIONALDATA_get(const char *contents, uint32_t Flags, const char **FillData, const char **LineData, const char *blimit);
+int U_PMF_CUSTOMSTARTCAPDATA_get(const char *contents, int32_t *Size, const char **Data, const char *blimit);
+int U_PMF_DASHEDLINEDATA_get(const char *contents, int32_t *Elements, U_FLOAT **Lengths, const char *blimit);
+int U_PMF_FILLPATHOBJ_get(const char *contents, int32_t *Size, const char **Data, const char *blimit);
+int U_PMF_FOCUSSCALEDATA_get(const char *contents, uint32_t *Count, U_FLOAT *ScaleX, U_FLOAT *ScaleY, const char *blimit);
+int U_PMF_GRAPHICSVERSION_get(const char *contents, int *Signature, int *GrfVersion, const char *blimit);
+int U_PMF_HATCHBRUSHDATA_get(const char *contents, uint32_t *Style, U_PMF_ARGB *Foreground, U_PMF_ARGB *Background, const char *blimit);
+int U_PMF_INTEGER7_get(const char **contents, U_FLOAT *Value, const char *blimit);
+int U_PMF_INTEGER15_get(const char **contents, U_FLOAT *Value, const char *blimit);
 int U_PMF_LANGUAGEIDENTIFIER_get(U_PMF_LANGUAGEIDENTIFIER LId, int *SubLId, int *PriLId);
-int U_PMF_LINEARGRADIENTBRUSHDATA_get(const char *contents, U_PMF_LINEARGRADIENTBRUSHDATA *Lgbd, const char **Data);
-int U_PMF_LINEARGRADIENTBRUSHOPTIONALDATA_get(const char *contents, uint32_t Flags, U_PMF_TRANSFORMMATRIX *Tm, const char **Bc, const char **BfH, const char **BfV);
-int U_PMF_LINEPATH_get(const char *contents, int32_t *Size, const char **Data);
-int U_PMF_METAFILE_get(const char *contents, uint32_t *Type, uint32_t *Size, const char **Data);
-int U_PMF_PALETTE_get(const char *contents, uint32_t *Flags, uint32_t *Elements, const char **Data);
-int U_PMF_PATHGRADIENTBRUSHDATA_get(const char *contents, U_PMF_PATHGRADIENTBRUSHDATA *Pgbd, const char **Gradient, const char **Boundary, const char **Data);
-int U_PMF_PATHGRADIENTBRUSHOPTIONALDATA_get(const char *contents, uint32_t Flags, U_PMF_TRANSFORMMATRIX *Matrix, const char **Pattern, const char **Data);
-int U_PMF_PATHPOINTTYPE_get(const char *contents, int *Flags, int *Type);
-int U_PMF_PATHPOINTTYPERLE_get(const char *contents, int *Bezier, int *RL, int *Ppt);
-int U_PMF_PENDATA_get(const char *contents, uint32_t *Flags, uint32_t *Unit, U_FLOAT *Width, const char **Data);
+int U_PMF_LINEARGRADIENTBRUSHDATA_get(const char *contents, U_PMF_LINEARGRADIENTBRUSHDATA *Lgbd, const char **Data, const char *blimit);
+int U_PMF_LINEARGRADIENTBRUSHOPTIONALDATA_get(const char *contents, uint32_t Flags, U_PMF_TRANSFORMMATRIX *Tm, const char **Bc, const char **BfH, const char **BfV, const char *blimit);
+int U_PMF_LINEPATH_get(const char *contents, int32_t *Size, const char **Data, const char *blimit);
+int U_PMF_METAFILE_get(const char *contents, uint32_t *Type, uint32_t *Size, const char **Data, const char *blimit);
+int U_PMF_PALETTE_get(const char *contents, uint32_t *Flags, uint32_t *Elements, const char **Data, const char *blimit);
+int U_PMF_PATHGRADIENTBRUSHDATA_get(const char *contents, U_PMF_PATHGRADIENTBRUSHDATA *Pgbd, const char **Gradient, const char **Boundary, const char **Data, const char *blimit);
+int U_PMF_PATHGRADIENTBRUSHOPTIONALDATA_get(const char *contents, uint32_t Flags, U_PMF_TRANSFORMMATRIX *Matrix, const char **Pattern, const char **Data, const char *blimit);
+int U_PMF_PATHPOINTTYPE_get(const char *contents, int *Flags, int *Type, const char *blimit);
+int U_PMF_PATHPOINTTYPERLE_get(const char *contents, int *Bezier, int *RL, int *Ppt, const char *blimit);
+int U_PMF_PENDATA_get(const char *contents, uint32_t *Flags, uint32_t *Unit, U_FLOAT *Width, const char **Data, const char *blimit);
 int U_PMF_PENOPTIONALDATA_get(const char *contents, uint32_t Flags, U_PMF_TRANSFORMMATRIX *Matrix, 
   int32_t *StartCap, int32_t *EndCap, uint32_t *Join, U_FLOAT *MiterLimit, int32_t *Style, int32_t *DLCap, U_FLOAT *DLOffset, 
-  const char **DLData, int32_t *Alignment, const char **CmpndLineData, const char **CSCapData, const char **CECapData);
-int U_PMF_POINT_get(const char **contents, U_FLOAT *X, U_FLOAT *Y);
-int U_PMF_POINTF_get(const char **contents, U_FLOAT *X, U_FLOAT *Y);
-int U_PMF_POINTR_get(const char **contents, U_FLOAT *X, U_FLOAT *Y);
-int U_PMF_RECT_get(const char **contents, int16_t *X, int16_t *Y, int16_t *Width, int16_t *Height);
-int U_PMF_RECTF_get(const char **contents, U_FLOAT *X, U_FLOAT *Y, U_FLOAT *Width, U_FLOAT *Height);
-int U_PMF_REGIONNODE_get(const char *contents, uint32_t *Type, const char **Data);
+  const char **DLData, int32_t *Alignment, const char **CmpndLineData, const char **CSCapData, const char **CECapData, const char *blimit);
+int U_PMF_POINT_get(const char **contents, U_FLOAT *X, U_FLOAT *Y, const char *blimit);
+int U_PMF_POINTF_get(const char **contents, U_FLOAT *X, U_FLOAT *Y, const char *blimit);
+int U_PMF_POINTR_get(const char **contents, U_FLOAT *X, U_FLOAT *Y, const char *blimit);
+int U_PMF_RECT_get(const char **contents, int16_t *X, int16_t *Y, int16_t *Width, int16_t *Height, const char *blimit);
+int U_PMF_RECTF_get(const char **contents, U_FLOAT *X, U_FLOAT *Y, U_FLOAT *Width, U_FLOAT *Height, const char *blimit);
+int U_PMF_REGIONNODE_get(const char *contents, uint32_t *Type, const char **Data, const char *blimit);
 /* There is no U_PMF_REGIONNODECHILDNODES_get, see the note in upmf.c */
-int U_PMF_REGIONNODEPATH_get(const char *contents, int32_t *Size, const char **Data);
-int U_PMF_SOLIDBRUSHDATA_get(const char *contents, U_PMF_ARGB *Color);
+int U_PMF_REGIONNODEPATH_get(const char *contents, int32_t *Size, const char **Data, const char *blimit);
+int U_PMF_SOLIDBRUSHDATA_get(const char *contents, U_PMF_ARGB *Color, const char *blimit);
 int U_PMF_STRINGFORMATDATA_get(const char *contents, uint32_t TabStopCount, uint32_t RangeCount, 
-      const U_FLOAT **TabStops, const U_PMF_CHARACTERRANGE **CharRange);
-int U_PMF_TEXTUREBRUSHDATA_get(const char *contents, uint32_t *Flags, int32_t *WrapMode, const char **Data);
-int U_PMF_TEXTUREBRUSHOPTIONALDATA_get(const char *contents, int HasImage, U_PMF_TRANSFORMMATRIX *Matrix, const char **Image);
-int U_PMF_TRANSFORMMATRIX_get(const char *contents, U_PMF_TRANSFORMMATRIX *Matrix);
-int U_PMF_IE_BLUR_get(const char *contents, U_FLOAT *Radius, uint32_t *ExpandEdge);
-int U_PMF_IE_BRIGHTNESSCONTRAST_get(const char *contents, int32_t *Brightness, int32_t *Contrast);
-int U_PMF_IE_COLORBALANCE_get(const char *contents, int32_t *CyanRed, int32_t *MagentaGreen, int32_t *YellowBlue);
-int U_PMF_IE_COLORCURVE_get(const char *contents, uint32_t *Adjust, uint32_t *Channel, int32_t *Intensity);
+      const U_FLOAT **TabStops, const U_PMF_CHARACTERRANGE **CharRange, const char *blimit);
+int U_PMF_TEXTUREBRUSHDATA_get(const char *contents, uint32_t *Flags, int32_t *WrapMode, const char **Data, const char *blimit);
+int U_PMF_TEXTUREBRUSHOPTIONALDATA_get(const char *contents, int HasImage, U_PMF_TRANSFORMMATRIX *Matrix, const char **Image, const char *blimit);
+int U_PMF_TRANSFORMMATRIX_get(const char *contents, U_PMF_TRANSFORMMATRIX *Matrix, const char *blimit);
+int U_PMF_IE_BLUR_get(const char *contents, U_FLOAT *Radius, uint32_t *ExpandEdge, const char *blimit);
+int U_PMF_IE_BRIGHTNESSCONTRAST_get(const char *contents, int32_t *Brightness, int32_t *Contrast, const char *blimit);
+int U_PMF_IE_COLORBALANCE_get(const char *contents, int32_t *CyanRed, int32_t *MagentaGreen, int32_t *YellowBlue, const char *blimit);
+int U_PMF_IE_COLORCURVE_get(const char *contents, uint32_t *Adjust, uint32_t *Channel, int32_t *Intensity, const char *blimit);
 int U_PMF_IE_COLORLOOKUPTABLE_get(const char *contents, 
-      const uint8_t **BLUT, const uint8_t **GLUT, const uint8_t **RLUT, const uint8_t **ALUT);
-int U_PMF_IE_COLORMATRIX_get(const char *contents, U_PMF_IE_COLORMATRIX *Matrix);
-int U_PMF_IE_HUESATURATIONLIGHTNESS_get(const char *contents, int32_t *Hue, int32_t *Saturation, int32_t *Lightness);
-int U_PMF_IE_LEVELS_get(const char *contents, int32_t *Highlight, int32_t *Midtone, int32_t *Shadow);
-int U_PMF_IE_REDEYECORRECTION_get(const char *contents, int32_t *Elements, U_RECTL **Rects);
-int U_PMF_IE_SHARPEN_get(const char *contents, U_FLOAT *Radius, int32_t *Sharpen);
-int U_PMF_IE_TINT_get(const char *contents, int32_t *Hue, int32_t *Amount);
+      const uint8_t **BLUT, const uint8_t **GLUT, const uint8_t **RLUT, const uint8_t **ALUT, const char *blimit);
+int U_PMF_IE_COLORMATRIX_get(const char *contents, U_PMF_IE_COLORMATRIX *Matrix, const char *blimit);
+int U_PMF_IE_HUESATURATIONLIGHTNESS_get(const char *contents, int32_t *Hue, int32_t *Saturation, int32_t *Lightness, const char *blimit);
+int U_PMF_IE_LEVELS_get(const char *contents, int32_t *Highlight, int32_t *Midtone, int32_t *Shadow, const char *blimit);
+int U_PMF_IE_REDEYECORRECTION_get(const char *contents, int32_t *Elements, U_RECTL **Rects, const char *blimit);
+int U_PMF_IE_SHARPEN_get(const char *contents, U_FLOAT *Radius, int32_t *Sharpen, const char *blimit);
+int U_PMF_IE_TINT_get(const char *contents, int32_t *Hue, int32_t *Amount, const char *blimit);
 
 /* EMF+ prototypes (records_get) */
 

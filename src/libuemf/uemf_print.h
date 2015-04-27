@@ -6,11 +6,11 @@
 
 /*
 File:      uemf_print.h
-Version:   0.0.5
-Date:      14-FEB-2013
+Version:   0.0.7
+Date:      24-MAR-2015
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
-Copyright: 2013 David Mathog and California Institute of Technology (Caltech)
+Copyright: 2015 David Mathog and California Institute of Technology (Caltech)
 */
 
 #ifndef _UEMF_PRINT_
@@ -44,17 +44,17 @@ void panose_print(U_PANOSE panose);
 void logfont_print(U_LOGFONT lf);
 void logfont_panose_print(U_LOGFONT_PANOSE lfp); 
 void bitmapinfoheader_print(const char *Bmih);
-void bitmapinfo_print(const char *Bmi);
+void bitmapinfo_print(const char *Bmi, const char *blimit);
 void blend_print(U_BLEND blend);
 void extlogpen_print(const PU_EXTLOGPEN elp);
 void logpen_print(U_LOGPEN lp);
 void logpltntry_print(U_LOGPLTNTRY lpny);
 void logpalette_print(const PU_LOGPALETTE lp);
 void rgndataheader_print(U_RGNDATAHEADER rdh);
-void rgndata_print(const PU_RGNDATA rd);
+void rgndata_print(const PU_RGNDATA rd, const char *blimit);
 void coloradjustment_print(U_COLORADJUSTMENT ca);
 void pixelformatdescriptor_print(U_PIXELFORMATDESCRIPTOR pfd);
-void emrtext_print(const char *emt, const char *record, int type);
+void emrtext_print(const char *emt, const char *record, const char *blimit, int type);
 
 /* prototypes for EMR records */
 void U_EMRNOTIMPLEMENTED_print(const char *name, const char *contents, int recnum, int off);
@@ -126,7 +126,7 @@ void U_EMRFLATTENPATH_print(const char *contents);
 void U_EMRWIDENPATH_print(const char *contents);
 void U_EMRSELECTCLIPPATH_print(const char *contents);
 void U_EMRABORTPATH_print(const char *contents);
-void U_EMRCOMMENT_print(const char *contents, const char *blimit, size_t off);
+void U_EMRCOMMENT_print(const char *contents, size_t off);
 void U_EMRFILLRGN_print(const char *contents);
 void U_EMRFRAMERGN_print(const char *contents);
 void U_EMRINVERTRGN_print(const char *contents);

@@ -36,8 +36,8 @@
 
 /*
 File:      uwmf.h
-Version:   0.0.10
-Date:      24-MAR-2014
+Version:   0.0.11
+Date:      23-APR-2014
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
 Copyright: 2014 David Mathog and California Institute of Technology (Caltech)
@@ -728,6 +728,7 @@ enum U_WMR_TYPES{
 #define U_SIZE_WMRCREATEFONTINDIRECT                 26         /**< X   28 */
 #define U_SIZE_WMRCREATEBRUSHINDIRECT                14         /**< X   16 */
 #define U_SIZE_WMRCREATEREGION                       26         /**< X   28 */
+#define U_SIZE_WMRCREATEREGION_CORE                  24         /**< X   28 Like U_SIZE_WMRCREATEREGION minus the variable part */
 /** @} */
 
 

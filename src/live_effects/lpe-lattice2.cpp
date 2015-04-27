@@ -18,6 +18,8 @@
 
 #include "live_effects/lpe-lattice2.h"
 
+#include <gtkmm/expander.h>
+
 #include "sp-shape.h"
 #include "sp-item.h"
 #include "sp-path.h"

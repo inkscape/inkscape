@@ -12,10 +12,6 @@
 # include <config.h>
 #endif
 
-#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
-# include <glibmm/threads.h>
-#endif
-
 #include "ui/widget/addtoicon.h"
 
 #include <gtkmm/icontheme.h>

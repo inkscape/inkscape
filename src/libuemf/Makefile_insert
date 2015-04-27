@@ -12,6 +12,8 @@ libuemf_libuemf_a_SOURCES = \
 	libuemf/uemf_endian.h \
 	libuemf/uemf_print.c \
 	libuemf/uemf_print.h \
+	libuemf/uemf_safe.c \
+	libuemf/uemf_safe.h \
 	libuemf/uemf_utf.c \
 	libuemf/uemf_utf.h \
 	libuemf/uwmf.c \

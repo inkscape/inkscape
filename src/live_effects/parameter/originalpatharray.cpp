@@ -8,10 +8,6 @@
 # include "config.h"
 #endif
 
-#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
-#include <glibmm/threads.h>
-#endif
-
 #include "live_effects/parameter/originalpatharray.h"
 
 #include <gtkmm/widget.h>

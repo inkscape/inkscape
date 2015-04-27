@@ -17,14 +17,6 @@
 #ifndef __FILE_DIALOGIMPL_H__
 #define __FILE_DIALOGIMPL_H__
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
-
-#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
-#include <glibmm/threads.h>
-#endif
-
 //Gtk includes
 #include <gtkmm/filechooserdialog.h>
 #include <glib/gstdio.h>
