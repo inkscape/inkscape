@@ -517,7 +517,7 @@ void SPNamedView::set(unsigned int key, const gchar* value) {
             this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_NODE_CUSP:
-            this->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_NODE_CUSP, value ? sp_str_to_bool(value) : FALSE);
+            this->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_NODE_CUSP, value ? sp_str_to_bool(value) : TRUE);
             this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_BBOX_EDGE:
