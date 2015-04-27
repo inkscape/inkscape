@@ -90,7 +90,7 @@ private:
         void init (int fd, Glib::RefPtr<Glib::MainLoop> main) {
             _channel = Glib::IOChannel::create_from_fd(fd);
             _channel->set_encoding();
-            _conn = Glib::signal_io().connect(sigc::mem_fun(*this, &file_listener::read), _channel, Glib::IO_IN | Glib::IO_HUP | Glib::IO_ERR);
+            _conn = main->get_context()->signal_io().connect(sigc::mem_fun(*this, &file_listener::read), _channel, Glib::IO_IN | Glib::IO_HUP | Glib::IO_ERR);
             _main_loop = main;
 
             return;

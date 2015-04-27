@@ -1027,7 +1027,10 @@ int Script::execute (const std::list<std::string> &in_command,
         return 0;
     }
 
-    _main_loop = Glib::MainLoop::create(false);
+    // Create a new MainContext for the loop so that the original context sources are not run here,
+    // this enforces that only the file_listeners should be read in this new MainLoop
+    Glib::RefPtr<Glib::MainContext> _main_context = Glib::MainContext::create();
+    _main_loop = Glib::MainLoop::create(_main_context, false);
 
     file_listener fileerr;
     fileout.init(stdout_pipe, _main_loop);
