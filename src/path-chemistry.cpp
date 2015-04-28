@@ -362,7 +362,7 @@ bool
 sp_item_list_to_curves(const GSList *items, GSList **selected, GSList **to_select, bool skip_all_lpeitems)
 {
     bool did = false;
-    
+
     for (;
          items != NULL;
          items = items->next) {
@@ -488,6 +488,9 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
     if (dynamic_cast<SPText *>(item) || dynamic_cast<SPFlowtext *>(item)) {
         // Special treatment for text: convert each glyph to separate path, then group the paths
         Inkscape::XML::Node *g_repr = xml_doc->createElement("svg:g");
+
+        Glib::ustring original_text; // To save original text of accessibility.
+
         g_repr->setAttribute("transform", item->getRepr()->attribute("transform"));
         /* Mask */
         gchar *mask_str = (gchar *) item->getRepr()->attribute("mask");
@@ -508,6 +511,8 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
 
         Inkscape::Text::Layout::iterator iter = te_get_layout(item)->begin(); 
         do {
+            original_text += (gunichar)te_get_layout(item)->characterAt( iter );
+
             Inkscape::Text::Layout::iterator iter_next = iter;
             iter_next.nextGlyph(); // iter_next is one glyph ahead from iter
             if (iter == iter_next)
@@ -547,6 +552,11 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
             p_repr->setAttribute("style", style_str.c_str());
 
             g_repr->appendChild(p_repr);
+
+            // For accessibility, store original string
+            if( original_text.size() > 0 ) {
+                g_repr->setAttribute("aria-label", original_text.c_str() );
+            }
             Inkscape::GC::release(p_repr);
 
             if (iter == te_get_layout(item)->end())
