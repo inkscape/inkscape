@@ -36990,7 +36990,7 @@ msgstr "Поведение:"
 
 #: ../share/extensions/summersnight.inx.h:1
 msgid "Envelope"
-msgstr "Перспектива"
+msgstr "По огибающей"
 
 #: ../share/extensions/svg2fxg.inx.h:1
 #, fuzzy
