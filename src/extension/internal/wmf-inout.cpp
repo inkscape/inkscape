@@ -3085,8 +3085,12 @@ Wmf::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
     d.dc[0].style.stroke_dasharray.set         = 0;
     d.dc[0].style.stroke_linecap.computed      = 2; // U_PS_ENDCAP_SQUARE;
     d.dc[0].style.stroke_linejoin.computed     = 0; // U_PS_JOIN_MITER;
-    d.dc[0].style.stroke_width.value           = 1.0; // will be reset to something reasonable once WMF draying size is known
+    d.dc[0].style.stroke_width.value           = 1.0; // will be reset to something reasonable once WMF drawing size is known
     d.dc[0].style.stroke.value.color.set( 0, 0, 0 );
+    d.dc[0].stroke_set                         = true;
+
+    // Default brush is none - no fill. WMF files that do not specify a brush are unlikely to look very good!
+    d.dc[0].fill_set                           = false;
 
     d.dc[0].font_name = strdup("Arial"); // Default font, set only on lowest level, it copies up from there WMF spec says device can pick whatever it wants
 
