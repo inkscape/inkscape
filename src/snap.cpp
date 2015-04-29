@@ -43,7 +43,7 @@ SnapManager::SnapManager(SPNamedView const *v) :
     object(this, 0),
     snapprefs(),
     _named_view(v),
-    _rotation_center_source_items(NULL),
+    _rotation_center_source_items(std::vector<SPItem*>()),
     _guide_to_ignore(NULL),
     _desktop(NULL),
     _snapindicator(true),
@@ -1013,7 +1013,7 @@ void SnapManager::setup(SPDesktop const *desktop,
     _snapindicator = snapindicator;
     _unselected_nodes = unselected_nodes;
     _guide_to_ignore = guide_to_ignore;
-    _rotation_center_source_items = NULL;
+    _rotation_center_source_items.clear();
 }
 
 void SnapManager::setup(SPDesktop const *desktop,
@@ -1031,7 +1031,7 @@ void SnapManager::setup(SPDesktop const *desktop,
     _snapindicator = snapindicator;
     _unselected_nodes = unselected_nodes;
     _guide_to_ignore = guide_to_ignore;
-    _rotation_center_source_items = NULL;
+    _rotation_center_source_items.clear();
 }
 
 /// Setup, taking the list of items to ignore from the desktop's selection.
@@ -1049,13 +1049,13 @@ void SnapManager::setupIgnoreSelection(SPDesktop const *desktop,
     _snapindicator = snapindicator;
     _unselected_nodes = unselected_nodes;
     _guide_to_ignore = guide_to_ignore;
-    _rotation_center_source_items = NULL;
+    _rotation_center_source_items.clear();
     _items_to_ignore.clear();
 
     Inkscape::Selection *sel = _desktop->selection;
-    GSList const *items = sel->itemList();
-    for (GSList *i = const_cast<GSList*>(items); i; i = i->next) {
-        _items_to_ignore.push_back(static_cast<SPItem const *>(i->data));
+    std::vector<SPItem*> const items = sel->itemList();
+    for (std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();i++) {
+        _items_to_ignore.push_back(*i);
     }
 }
 

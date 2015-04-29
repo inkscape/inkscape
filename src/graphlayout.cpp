@@ -88,9 +88,9 @@ struct CheckProgress : TestConvergence {
  * Scans the items list and places those items that are
  * not connectors in filtered
  */
-void filterConnectors(GSList const *const items, list<SPItem *> &filtered) {
-    for(GSList *i=(GSList *)items; i!=NULL; i=i->next) {
-        SPItem *item=SP_ITEM(i->data);
+void filterConnectors(std::vector<SPItem*> const &items, list<SPItem *> &filtered) {
+    for(std::vector<SPItem*>::const_iterator i = items.begin();i !=items.end(); i++){
+        SPItem *item = *i;
         if(!isConnector(item)) {
             filtered.push_back(item);
         }
@@ -101,8 +101,8 @@ void filterConnectors(GSList const *const items, list<SPItem *> &filtered) {
 * connectors between them, and uses graph layout techniques to find
 * a nice layout
 */
-void graphlayout(GSList const *const items) {
-    if(!items) {
+void graphlayout(std::vector<SPItem*> const &items) {
+    if(items.empty()) {
         return;
     }
 

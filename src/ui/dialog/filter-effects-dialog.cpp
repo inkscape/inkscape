@@ -690,7 +690,7 @@ private:
     void select_svg_element(){
         Inkscape::Selection* sel = _desktop->getSelection();
         if (sel->isEmpty()) return;
-        Inkscape::XML::Node* node = (Inkscape::XML::Node*) g_slist_nth_data((GSList *)sel->reprList(), 0);
+        Inkscape::XML::Node* node = sel->reprList()[0];
         if (!node || !node->matchAttributeName("id")) return;
 
         std::ostringstream xlikhref;
@@ -1465,9 +1465,9 @@ void FilterEffectsDialog::FilterModifier::update_selection(Selection *sel)
     }
 
     std::set<SPObject*> used;
-
-    for (GSList const *i = sel->itemList(); i != NULL; i = i->next) {
-        SPObject *obj = SP_OBJECT (i->data);
+    std::vector<SPItem*> itemlist=sel->itemList();
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin(); itemlist.end() != i; i++) {
+        SPObject *obj = *i;
         SPStyle *style = obj->style;
         if (!style || !SP_IS_ITEM(obj)) {
             continue;
@@ -1545,10 +1545,9 @@ void FilterEffectsDialog::FilterModifier::on_selection_toggled(const Glib::ustri
         if((*iter)[_columns.sel] == 1)
             filter = 0;
 
-        GSList const *items = sel->itemList();
-
-        for (GSList const *i = items; i != NULL; i = i->next) {
-            SPItem * item = SP_ITEM(i->data);
+        std::vector<SPItem*> itemlist=sel->itemList();
+        for(std::vector<SPItem*>::const_iterator i=itemlist.begin(); itemlist.end() != i; i++) {
+            SPItem * item = *i;
             SPStyle *style = item->style;
             g_assert(style != NULL);
 
@@ -1650,12 +1649,13 @@ void FilterEffectsDialog::FilterModifier::remove_filter()
         SPDocument* doc = filter->document;
 
         // Delete all references to this filter
-        GSList *all = get_all_items(NULL, _desktop->currentRoot(), _desktop, false, false, true, NULL);
-        for (GSList *i = all; i != NULL; i = i->next) {
-            if (!SP_IS_ITEM(i->data)) {
+        std::vector<SPItem*> x,y;
+        std::vector<SPItem*> all = get_all_items(x, _desktop->currentRoot(), _desktop, false, false, true, y);
+        for(std::vector<SPItem*>::const_iterator i=all.begin(); all.end() != i; i++) {
+            if (!SP_IS_ITEM(*i)) {
                 continue;
             }
-            SPItem *item = SP_ITEM(i->data);
+            SPItem *item = *i;
             if (!item->style) {
                 continue;
             }
@@ -1667,9 +1667,6 @@ void FilterEffectsDialog::FilterModifier::remove_filter()
                     ::remove_filter(item, false);
                 }
             }
-        }
-        if (all) {
-            g_slist_free(all);
         }
 
         //XML Tree being used directly here while it shouldn't be.

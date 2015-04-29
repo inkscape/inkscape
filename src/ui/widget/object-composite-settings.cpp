@@ -125,7 +125,8 @@ ObjectCompositeSettings::_blendBlurValueChanged()
     const Glib::ustring blendmode = _fe_cb.get_blend_mode();
 
     //apply created filter to every selected item
-    for (StyleSubject::iterator i = _subject->begin() ; i != _subject->end() ; ++i ) {
+    std::vector<SPItem*> sel=_subject->getDesktop()->getSelection()->itemList();
+    for (std::vector<SPItem*>::const_iterator i = sel.begin() ; i != sel.end() ; ++i ) {
         if (!SP_IS_ITEM(*i)) {
             continue;
         }

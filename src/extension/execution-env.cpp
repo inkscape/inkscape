@@ -60,14 +60,12 @@ ExecutionEnv::ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Imp
     sp_namedview_document_from_window(desktop);
 
     if (desktop != NULL) {
-        Inkscape::Util::GSListConstIterator<SPItem *> selected =
-             desktop->getSelection()->itemList();
-        while ( selected != NULL ) {
+    	std::vector<SPItem*> selected = desktop->getSelection()->itemList();
+        for(std::vector<SPItem*>::const_iterator x = selected.begin(); x != selected.end(); x++){
             Glib::ustring selected_id;
-            selected_id = (*selected)->getId();
+            selected_id = (*x)->getId();
             _selected.insert(_selected.end(), selected_id);
             //std::cout << "Selected: " << selected_id << std::endl;
-            ++selected;
         }
     }
 

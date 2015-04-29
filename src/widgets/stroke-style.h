@@ -153,7 +153,7 @@ private:
     };
 
     void updateLine();
-    void updateAllMarkers(GSList const *objects);
+    void updateAllMarkers(std::vector<SPItem*> const &objects);
     void updateMarkerHist(SPMarkerLoc const which);
     void setDashSelectorFromStyle(SPDashSelector *dsel, SPStyle *style);
     void setJoinType (unsigned const jointype);

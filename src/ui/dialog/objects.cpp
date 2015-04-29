@@ -477,15 +477,15 @@ void ObjectsPanel::_objectsSelected( Selection *sel ) {
     _selectedConnection.block();
     _tree.get_selection()->unselect_all();
     SPItem *item = NULL;
-    for (const GSList * iter = sel->itemList(); iter != NULL; iter = iter->next)
-    {
-        item = reinterpret_cast<SPItem *>(iter->data);
+    std::vector<SPItem*> const items = sel->itemList();
+    for(std::vector<SPItem*>::const_iterator i=items.begin(); i!=items.end();i++){
+        item = *i;
         if (setOpacity)
         {
             _setCompositingValues(item);
             setOpacity = false;
         }
-        _store->foreach(sigc::bind<SPItem *, bool>( sigc::mem_fun(*this, &ObjectsPanel::_checkForSelected), item, iter->next == NULL));
+        _store->foreach(sigc::bind<SPItem *, bool>( sigc::mem_fun(*this, &ObjectsPanel::_checkForSelected), item, (*i)==items.back()));
     }
     if (!item) {
         if (_desktop->currentLayer() && SP_IS_ITEM(_desktop->currentLayer())) {

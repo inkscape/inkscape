@@ -29,7 +29,7 @@ public:
 
     void resetChildEvaluated() { _reevaluate(); }
 
-    GSList *_childList(bool add_ref, SPObject::Action action);
+    std::vector<SPObject*> _childList(bool add_ref, SPObject::Action action);
     virtual void _showChildren (Inkscape::Drawing &drawing, Inkscape::DrawingItem *ai, unsigned int key, unsigned int flags);
 
     SPObject *_evaluateFirst();

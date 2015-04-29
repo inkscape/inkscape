@@ -50,8 +50,9 @@ static bool try_get_intersect_point_with_item_recursive(Geom::PathVector& conn_p
 
         // consider all first-order children
         double child_pos = 0.0;
-        for (GSList const* i = sp_item_group_item_list(group); i != NULL; i = i->next) {
-            SPItem* child_item = SP_ITEM(i->data);
+        std::vector<SPItem*> g = sp_item_group_item_list(group);
+        for (std::vector<SPItem*>::const_iterator i = g.begin();i!=g.end();i++) {
+            SPItem* child_item = *i;
             try_get_intersect_point_with_item_recursive(conn_pv, child_item,
                     item_transform * child_item->transform, child_pos);
             if (intersect_pos < child_pos)

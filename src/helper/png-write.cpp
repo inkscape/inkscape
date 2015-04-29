@@ -361,19 +361,19 @@ sp_export_get_rows(guchar const **rows, void **to_free, int row, int num_rows, v
 /**
  * Hide all items that are not listed in list, recursively, skipping groups and defs.
  */
-static void hide_other_items_recursively(SPObject *o, GSList *list, unsigned dkey)
+static void hide_other_items_recursively(SPObject *o, const std::vector<SPItem*> &list, unsigned dkey)
 {
     if ( SP_IS_ITEM(o)
          && !SP_IS_DEFS(o)
          && !SP_IS_ROOT(o)
          && !SP_IS_GROUP(o)
-         && !g_slist_find(list, o) )
+         && list.end()==find(list.begin(),list.end(),o))
     {
         SP_ITEM(o)->invoke_hide(dkey);
     }
 
     // recurse
-    if (!g_slist_find(list, o)) {
+    if (list.end()==find(list.begin(),list.end(),o)) {
         for ( SPObject *child = o->firstChild() ; child; child = child->getNext() ) {
             hide_other_items_recursively(child, list, dkey);
         }
@@ -387,7 +387,7 @@ ExportResult sp_export_png_file(SPDocument *doc, gchar const *filename,
                                 unsigned long bgcolor,
                                 unsigned int (*status) (float, void *),
                                 void *data, bool force_overwrite,
-                                GSList *items_only)
+                                const std::vector<SPItem*> &items_only)
 {
     return sp_export_png_file(doc, filename, Geom::Rect(Geom::Point(x0,y0),Geom::Point(x1,y1)),
                               width, height, xdpi, ydpi, bgcolor, status, data, force_overwrite, items_only);
@@ -399,7 +399,7 @@ ExportResult sp_export_png_file(SPDocument *doc, gchar const *filename,
                                 unsigned long bgcolor,
                                 unsigned (*status)(float, void *),
                                 void *data, bool force_overwrite,
-                                GSList *items_only)
+                                const std::vector<SPItem*> &items_only)
 {
     g_return_val_if_fail(doc != NULL, EXPORT_ERROR);
     g_return_val_if_fail(filename != NULL, EXPORT_ERROR);
@@ -457,7 +457,7 @@ ExportResult sp_export_png_file(SPDocument *doc, gchar const *filename,
 
     // We show all and then hide all items we don't want, instead of showing only requested items,
     // because that would not work if the shown item references something in defs
-    if (items_only) {
+    if (!items_only.empty()) {
         hide_other_items_recursively(doc->getRoot(), items_only, dkey);
     }
 

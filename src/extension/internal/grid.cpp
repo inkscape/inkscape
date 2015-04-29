@@ -186,13 +186,10 @@ Grid::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View
 {
     SPDocument * current_document = view->doc();
 
-    using Inkscape::Util::GSListConstIterator;
-
-    // FIXME very unsafe cast
-    GSListConstIterator<SPItem *> selected = ((SPDesktop *)view)->getSelection()->itemList();
+    std::vector<SPItem*> selected = ((SPDesktop *)view)->getSelection()->itemList();
     Inkscape::XML::Node * first_select = NULL;
-    if (selected != NULL) {
-        first_select = (*selected)->getRepr();
+    if (!selected.empty()) {
+        first_select = selected[0]->getRepr();
     }
 
     return module->autogui(current_document, first_select, changeSignal);

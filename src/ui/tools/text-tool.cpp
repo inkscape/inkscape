@@ -1461,7 +1461,7 @@ int TextTool::_styleQueried(SPStyle *style, int property)
     }
     sp_text_context_validate_cursor_iterators(this);
 
-    GSList *styles_list = NULL;
+    std::vector<SPItem*> styles_list;
 
     Inkscape::Text::Layout::iterator begin_it, end_it;
     if (this->text_sel_start < this->text_sel_end) {
@@ -1477,7 +1477,7 @@ int TextTool::_styleQueried(SPStyle *style, int property)
         }
     }
     for (Inkscape::Text::Layout::iterator it = begin_it ; it < end_it ; it.nextStartOfSpan()) {
-        SPObject const *pos_obj = 0;
+        SPObject *pos_obj = 0;
         void *rawptr = 0;
         layout->getSourceOfCharacter(it, &rawptr);
         if (!rawptr || !SP_IS_OBJECT(rawptr)) {
@@ -1487,12 +1487,11 @@ int TextTool::_styleQueried(SPStyle *style, int property)
         while (SP_IS_STRING(pos_obj) && pos_obj->parent) {
            pos_obj = pos_obj->parent;   // SPStrings don't have style
         }
-        styles_list = g_slist_prepend(styles_list, (gpointer)pos_obj);
+        styles_list.insert(styles_list.begin(),(SPItem*)pos_obj);
     }
 
     int result = sp_desktop_query_style_from_list (styles_list, style, property);
 
-    g_slist_free(styles_list);
     return result;
 }
 

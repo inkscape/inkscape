@@ -76,7 +76,6 @@ static void sp_connector_path_set_ignore(void)
 static void sp_connector_orthogonal_toggled( GtkToggleAction* act, GObject *tbl )
 {
     SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( tbl, "desktop" ));
-    Inkscape::Selection * selection = desktop->getSelection();
     SPDocument *doc = desktop->getDocument();
 
     if (!DocumentUndo::getUndoSensitive(doc)) {
@@ -98,9 +97,9 @@ static void sp_connector_orthogonal_toggled( GtkToggleAction* act, GObject *tbl 
     gchar *value = is_orthog ? orthog_str : polyline_str ;
 
     bool modmade = false;
-    GSList *l = (GSList *) selection->itemList();
-    while (l) {
-        SPItem *item = SP_ITEM(l->data);
+    std::vector<SPItem*> itemlist=desktop->getSelection()->itemList();
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
+        SPItem *item = *i;
 
         if (Inkscape::UI::Tools::cc_item_is_connector(item)) {
             item->setAttribute( "inkscape:connector-type",
@@ -108,7 +107,6 @@ static void sp_connector_orthogonal_toggled( GtkToggleAction* act, GObject *tbl 
             item->avoidRef->handleSettingChange();
             modmade = true;
         }
-        l = l->next;
     }
 
     if (!modmade) {
@@ -126,7 +124,6 @@ static void sp_connector_orthogonal_toggled( GtkToggleAction* act, GObject *tbl 
 static void connector_curvature_changed(GtkAdjustment *adj, GObject* tbl)
 {
     SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( tbl, "desktop" ));
-    Inkscape::Selection * selection = desktop->getSelection();
     SPDocument *doc = desktop->getDocument();
 
     if (!DocumentUndo::getUndoSensitive(doc)) {
@@ -147,9 +144,9 @@ static void connector_curvature_changed(GtkAdjustment *adj, GObject* tbl)
     g_ascii_dtostr(value, G_ASCII_DTOSTR_BUF_SIZE, newValue);
 
     bool modmade = false;
-    GSList *l = (GSList *) selection->itemList();
-    while (l) {
-        SPItem *item = SP_ITEM(l->data);
+    std::vector<SPItem*> itemlist=desktop->getSelection()->itemList();
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
+        SPItem *item = *i;
 
         if (Inkscape::UI::Tools::cc_item_is_connector(item)) {
             item->setAttribute( "inkscape:connector-curvature",
@@ -157,7 +154,6 @@ static void connector_curvature_changed(GtkAdjustment *adj, GObject* tbl)
             item->avoidRef->handleSettingChange();
             modmade = true;
         }
-        l = l->next;
     }
 
     if (!modmade) {

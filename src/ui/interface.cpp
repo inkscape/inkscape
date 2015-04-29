@@ -1906,11 +1906,10 @@ void ContextMenu::ActivateGroup(void)
 
 void ContextMenu::ActivateUngroup(void)
 {
-    GSList *children = NULL;
+	std::vector<SPItem*> children;
 
-    sp_item_group_ungroup(static_cast<SPGroup*>(_item), &children);
+    sp_item_group_ungroup(static_cast<SPGroup*>(_item), children);
     _desktop->selection->setList(children);
-    g_slist_free(children);
 }
 
 void ContextMenu::MakeAnchorMenu(void)
@@ -1959,10 +1958,9 @@ void ContextMenu::AnchorLinkFollow(void)
 
 void ContextMenu::AnchorLinkRemove(void)
 {
-    GSList *children = NULL;
-    sp_item_group_ungroup(static_cast<SPAnchor*>(_item), &children, false);
+	std::vector<SPItem*> children;
+    sp_item_group_ungroup(static_cast<SPAnchor*>(_item), children, false);
     DocumentUndo::done(_desktop->doc(), SP_VERB_NONE, _("Remove link"));
-    g_slist_free(children);
 }
 
 void ContextMenu::MakeImageMenu (void)
@@ -2051,8 +2049,6 @@ void ContextMenu::ImageEdit(void)
         _desktop->selection->set(_item);
     }
 
-    GSList const *selected = _desktop->selection->itemList();
-
     GError* errThing = 0;
     Glib::ustring cmdline = getImageEditorName();
     Glib::ustring name;
@@ -2079,8 +2075,9 @@ void ContextMenu::ImageEdit(void)
     }
 #endif
 
-    for (GSList const *iter = selected; iter != NULL; iter = iter->next) {
-        Inkscape::XML::Node *ir = SP_ITEM(iter->data)->getRepr();
+    std::vector<SPItem*> itemlist=_desktop->selection->itemList();
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
+        Inkscape::XML::Node *ir = (*i)->getRepr();
         const gchar *href = ir->attribute("xlink:href");
         
         if (strncmp (href,"file:",5) == 0) {

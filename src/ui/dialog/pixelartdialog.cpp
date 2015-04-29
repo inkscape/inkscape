@@ -372,12 +372,12 @@ void PixelArtDialogImpl::vectorize()
         return;
     }
 
-    for ( GSList const *list = desktop->selection->itemList() ; list
-              ; list = list->next ) {
-        if ( !SP_IS_IMAGE(list->data) )
+    std::vector<SPItem*> const items = desktop->selection->itemList();
+    for(std::vector<SPItem*>::const_iterator i=items.begin(); i!=items.end();i++){
+        if ( !SP_IS_IMAGE(*i) )
             continue;
 
-        SPImage *img = SP_IMAGE(list->data);
+        SPImage *img = SP_IMAGE(*i);
         Input input;
         input.pixbuf = Glib::wrap(img->pixbuf->getPixbufRaw(), true);
         input.x = img->x;

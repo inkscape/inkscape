@@ -396,10 +396,10 @@ lpetool_create_measuring_items(LpeTool *lc, Inkscape::Selection *selection)
     SPCanvasGroup *tmpgrp = lc->desktop->getTempGroup();
     gchar *arc_length;
     double lengthval;
-
-    for (GSList const *i = selection->itemList(); i != NULL; i = i->next) {
-        if (SP_IS_PATH(i->data)) {
-            path = SP_PATH(i->data);
+    std::vector<SPItem*> items=selection->itemList();
+    for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();i++){
+        if (SP_IS_PATH(*i)) {
+            path = SP_PATH(*i);
             curve = path->getCurve();
             Geom::Piecewise<Geom::D2<Geom::SBasis> > pwd2 = paths_to_pw(curve->get_pathvector());
             canvas_text = (SPCanvasText *) sp_canvastext_new(tmpgrp, lc->desktop, Geom::Point(0,0), "");

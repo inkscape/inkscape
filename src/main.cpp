@@ -1156,7 +1156,7 @@ static int sp_process_file_list(GSList *fl)
             }
             if (sp_export_svg) {
                 if (sp_export_text_to_path) {
-                    GSList *items = NULL;
+                	std::vector<SPItem*> items;
                     SPRoot *root = doc->getRoot();
                     doc->ensureUpToDate();
                     for ( SPObject *iter = root->firstChild(); iter ; iter = iter->getNext()) {
@@ -1166,17 +1166,14 @@ static int sp_process_file_list(GSList *fl)
                         }
 
                         te_update_layout_now_recursive(item);
-                        items = g_slist_append(items, item);
+                        items.push_back(item);
                     }
 
-                    GSList *selected = NULL;
-                    GSList *to_select = NULL;
+                    std::vector<SPItem*> selected;
+                    std::vector<Inkscape::XML::Node*> to_select;
 
-                    sp_item_list_to_curves(items, &selected, &to_select);
+                    sp_item_list_to_curves(items, selected, to_select);
 
-                    g_slist_free (items);
-                    g_slist_free (selected);
-                    g_slist_free (to_select);
                 }
                 if(sp_export_id) {
                     doc->ensureUpToDate();
@@ -1435,7 +1432,7 @@ static int sp_do_export_png(SPDocument *doc)
         g_warning ("--export-use-hints can only be used with --export-id or --export-area-drawing; ignored.");
     }
 
-    GSList *items = NULL;
+    std::vector<SPItem*> items;
 
     Geom::Rect area;
     if (sp_export_id || sp_export_area_drawing) {
@@ -1459,7 +1456,7 @@ static int sp_do_export_png(SPDocument *doc)
                 return 1;
             }
 
-            items = g_slist_prepend (items, SP_ITEM(o));
+            items.push_back(SP_ITEM(o));
 
             if (sp_export_id_only) {
                 g_print("Exporting only object with id=\"%s\"; all other objects hidden\n", sp_export_id);
@@ -1644,10 +1641,12 @@ static int sp_do_export_png(SPDocument *doc)
         g_print("Background RRGGBBAA: %08x\n", bgcolor);
 
         g_print("Area %g:%g:%g:%g exported to %lu x %lu pixels (%g dpi)\n", area[Geom::X][0], area[Geom::Y][0], area[Geom::X][1], area[Geom::Y][1], width, height, dpi);
-
+        
+        reverse(items.begin(),items.end());
+        
         if ((width >= 1) && (height >= 1) && (width <= PNG_UINT_31_MAX) && (height <= PNG_UINT_31_MAX)) {
             if( sp_export_png_file(doc, path.c_str(), area, width, height, dpi,
-              dpi, bgcolor, NULL, NULL, true, sp_export_id_only ? items : NULL) == 1 ) {
+              dpi, bgcolor, NULL, NULL, true, sp_export_id_only ? items : std::vector<SPItem*>()) == 1 ) {
                 g_print("Bitmap saved as: %s\n", filename.c_str());
             } else {
                 g_warning("Bitmap failed to save to: %s", filename.c_str());
@@ -1657,7 +1656,6 @@ static int sp_do_export_png(SPDocument *doc)
         }
     }
 
-    g_slist_free (items);
     return retcode;
 }
 

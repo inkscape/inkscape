@@ -14,6 +14,7 @@
 
 #include <glibmm/ustring.h>
 
+class SPItem;
 class SPDocument;
 
 namespace Inkscape {
@@ -25,13 +26,13 @@ public:
     FontSubstitution();
     virtual ~FontSubstitution();
     void checkFontSubstitutions(SPDocument* doc);
-    void show(Glib::ustring out, GSList *l);
+    void show(Glib::ustring out, std::vector<SPItem*> &l);
 
     static FontSubstitution &getInstance() { return *new FontSubstitution(); }
     Glib::ustring getSubstituteFontName (Glib::ustring font);
 
 protected:
-    GSList *getFontReplacedItems(SPDocument* doc, Glib::ustring *out);
+    std::vector<SPItem*> getFontReplacedItems(SPDocument* doc, Glib::ustring *out);
 
 private:
     FontSubstitution(FontSubstitution const &d);

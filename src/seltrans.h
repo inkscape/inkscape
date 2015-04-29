@@ -187,7 +187,7 @@ private:
     SPCtrlLine *_l[4];
     unsigned int _sel_changed_id;
     unsigned int _sel_modified_id;
-    GSList *_stamp_cache;
+    std::vector<SPItem*> _stamp_cache;
 
     Geom::Point _origin; ///< position of origin for transforms
     Geom::Point _point; ///< original position of the knot being used for the current transform

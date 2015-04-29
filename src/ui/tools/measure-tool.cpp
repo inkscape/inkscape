@@ -431,10 +431,10 @@ bool MeasureTool::root_handler(GdkEvent* event) {
                 // TODO switch to a different variable name. The single letter 'l' is easy to misread.
 
                 //select elements crossed by line segment:
-                GSList *items = desktop->getDocument()->getItemsAtPoints(desktop->dkey, points);
+                std::vector<SPItem*> items = desktop->getDocument()->getItemsAtPoints(desktop->dkey, points);
                 std::vector<double> intersection_times;
-                for (GSList *l = items; l != NULL; l = l->next) {
-                    SPItem *item = static_cast<SPItem*>(l->data);
+                for (std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();i++) {
+                    SPItem *item = *i;
 
                     if (SP_IS_SHAPE(item)) {
                        calculate_intersections(desktop, item, lineseg, SP_SHAPE(item)->getCurve(), intersection_times);

@@ -418,12 +418,11 @@ SPItem *TextEdit::getSelectedTextItem (void)
     if (!SP_ACTIVE_DESKTOP)
         return NULL;
 
-    for (const GSList *item = SP_ACTIVE_DESKTOP->getSelection()->itemList();
-         item != NULL;
-         item = item->next)
+    std::vector<SPItem*> tmp=SP_ACTIVE_DESKTOP->getSelection()->itemList();
+	for(std::vector<SPItem*>::const_iterator i=tmp.begin();i!=tmp.end();i++)
     {
-        if (SP_IS_TEXT(item->data) || SP_IS_FLOWTEXT(item->data))
-            return SP_ITEM (item->data);
+        if (SP_IS_TEXT(*i) || SP_IS_FLOWTEXT(*i))
+            return *i;
     }
 
     return NULL;
@@ -437,11 +436,10 @@ unsigned TextEdit::getSelectedTextCount (void)
 
     unsigned int items = 0;
 
-    for (const GSList *item = SP_ACTIVE_DESKTOP->getSelection()->itemList();
-         item != NULL;
-         item = item->next)
+    std::vector<SPItem*> tmp=SP_ACTIVE_DESKTOP->getSelection()->itemList();
+	for(std::vector<SPItem*>::const_iterator i=tmp.begin();i!=tmp.end();i++)
     {
-        if (SP_IS_TEXT(item->data) || SP_IS_FLOWTEXT(item->data))
+        if (SP_IS_TEXT(*i) || SP_IS_FLOWTEXT(*i))
             ++items;
     }
 
@@ -542,20 +540,20 @@ void TextEdit::onApply()
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
     unsigned items = 0;
-    const GSList *item_list = desktop->getSelection()->itemList();
+    const std::vector<SPItem*> item_list = desktop->getSelection()->itemList();
     SPCSSAttr *css = fillTextStyle ();
     sp_desktop_set_style(desktop, css, true);
 
-    for (; item_list != NULL; item_list = item_list->next) {
+	for(std::vector<SPItem*>::const_iterator i=item_list.begin();i!=item_list.end();i++){
         // apply style to the reprs of all text objects in the selection
-        if (SP_IS_TEXT (item_list->data)) {
+        if (SP_IS_TEXT (*i)) {
 
             // backwards compatibility:
-            reinterpret_cast<SPObject*>(item_list->data)->getRepr()->setAttribute("sodipodi:linespacing", sp_repr_css_property (css, "line-height", NULL));
+            (*i)->getRepr()->setAttribute("sodipodi:linespacing", sp_repr_css_property (css, "line-height", NULL));
 
             ++items;
         }
-        else if (SP_IS_FLOWTEXT (item_list->data))
+        else if (SP_IS_FLOWTEXT (*i))
             // no need to set sodipodi:linespacing, because Inkscape never supported it on flowtext
             ++items;
     }

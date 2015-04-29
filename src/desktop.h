@@ -319,7 +319,7 @@ public:
     //void push_event_context (GType type, const gchar *config, unsigned int key);
 
     void set_coordinate_status (Geom::Point p);
-    SPItem *getItemFromListAtPointBottom(const GSList *list, Geom::Point const &p) const;
+    SPItem *getItemFromListAtPointBottom(const std::vector<SPItem*> &list, Geom::Point const &p) const;
     SPItem *getItemAtPoint(Geom::Point const &p, bool into_groups, SPItem *upto = NULL) const;
     SPItem *getGroupAtPoint(Geom::Point const &p) const;
     Geom::Point point() const;

@@ -1069,7 +1069,7 @@ void sp_import_document(SPDesktop *desktop, SPDocument *clipdoc, bool in_place)
     desktop->doc()->importDefs(clipdoc);
 
     // copy objects
-    GSList *pasted_objects = NULL;
+    std::vector<Inkscape::XML::Node*> pasted_objects;
     for (Inkscape::XML::Node *obj = root->firstChild() ; obj ; obj = obj->next()) {
         // Don't copy metadata, defs, named views and internal clipboard contents to the document
         if (!strcmp(obj->name(), "svg:defs")) {
@@ -1088,9 +1088,8 @@ void sp_import_document(SPDesktop *desktop, SPDocument *clipdoc, bool in_place)
         target_parent->appendChild(obj_copy);
         Inkscape::GC::release(obj_copy);
 
-        pasted_objects = g_slist_prepend(pasted_objects, (gpointer) obj_copy);
+        pasted_objects.push_back(obj_copy);
     }
-
     // Change the selection to the freshly pasted objects
     Inkscape::Selection *selection = desktop->getSelection();
     selection->setReprList(pasted_objects);
@@ -1129,8 +1128,6 @@ void sp_import_document(SPDesktop *desktop, SPDocument *clipdoc, bool in_place)
 
         sp_selection_move_relative(selection, offset);
     }
-
-    g_slist_free(pasted_objects);
 }
 
 

@@ -35,7 +35,8 @@ public:
     class Selection;
     class CurrentLayer;
 
-    typedef Util::GSListConstIterator<SPObject *> iterator;
+    //typedef Util::GSListConstIterator<SPObject *> iterator;
+    typedef std::list<SPObject*>::iterator iterator;
 
     StyleSubject();
     virtual ~StyleSubject();
@@ -43,8 +44,8 @@ public:
     void setDesktop(SPDesktop *desktop);
     SPDesktop *getDesktop() const { return _desktop; }
 
-    virtual iterator begin() = 0;
-    virtual iterator end() { return iterator(NULL); }
+//    virtual iterator begin() = 0;
+//    virtual iterator end() { return iterator(NULL); }
     virtual Geom::OptRect getBounds(SPItem::BBoxType type) = 0;
     virtual int queryStyle(SPStyle *query, int property) = 0;
     virtual void setCSS(SPCSSAttr *css) = 0;
@@ -67,7 +68,7 @@ public:
     Selection();
     ~Selection();
 
-    virtual iterator begin();
+//    virtual iterator begin();
     virtual Geom::OptRect getBounds(SPItem::BBoxType type);
     virtual int queryStyle(SPStyle *query, int property);
     virtual void setCSS(SPCSSAttr *css);
@@ -88,7 +89,7 @@ public:
     CurrentLayer();
     ~CurrentLayer();
 
-    virtual iterator begin();
+//    virtual iterator begin();
     virtual Geom::OptRect getBounds(SPItem::BBoxType type);
     virtual int queryStyle(SPStyle *query, int property);
     virtual void setCSS(SPCSSAttr *css);
@@ -99,12 +100,12 @@ protected:
 private:
     SPObject *_getLayer() const;
     void _setLayer(SPObject *layer);
-    GSList *_getLayerSList() const;
+    SPObject *_getLayerSList() const;
 
     sigc::connection _layer_switched;
     sigc::connection _layer_release;
     sigc::connection _layer_modified;
-    mutable GSList _element;
+    mutable SPObject* _element;
 };
 
 }

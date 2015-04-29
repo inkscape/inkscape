@@ -19,10 +19,10 @@
 typedef struct _GSList GSList;
 class SPItem;
 
-void graphlayout(GSList const *const items);
+void graphlayout(std::vector<SPItem*> const &items);
 
 bool isConnector(SPItem const *const item);
 
-void filterConnectors(GSList const *const items, std::list<SPItem *> &filtered);
+void filterConnectors(std::vector<SPItem*> const &items, std::list<SPItem *> &filtered);
 
 #endif // SEEN_GRAPHLAYOUT_H

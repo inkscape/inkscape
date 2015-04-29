@@ -89,7 +89,7 @@ SPPattern *pattern_chain (SPPattern *pattern);
 SPPattern *sp_pattern_clone_if_necessary (SPItem *item, SPPattern *pattern, const char *property);
 void sp_pattern_transform_multiply (SPPattern *pattern, Geom::Affine postmul, bool set);
 
-const char *pattern_tile (GSList *reprs, Geom::Rect bounds, SPDocument *document, Geom::Affine transform, Geom::Affine move);
+const char *pattern_tile (const std::vector<Inkscape::XML::Node*> &reprs, Geom::Rect bounds, SPDocument *document, Geom::Affine transform, Geom::Affine move);
 
 SPPattern *pattern_getroot (SPPattern *pat);
 

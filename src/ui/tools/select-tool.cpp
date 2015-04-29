@@ -472,7 +472,7 @@ bool SelectTool::root_handler(GdkEvent* event) {
         case GDK_2BUTTON_PRESS:
             if (event->button.button == 1) {
                 if (!selection->isEmpty()) {
-                    SPItem *clicked_item = static_cast<SPItem *>(selection->itemList()->data);
+                    SPItem *clicked_item = selection->itemList()[0];
 
                     if (dynamic_cast<SPGroup *>(clicked_item) && !dynamic_cast<SPBox3D *>(clicked_item)) { // enter group if it's not a 3D box
                         desktop->setCurrentLayer(clicked_item);
@@ -709,7 +709,7 @@ bool SelectTool::root_handler(GdkEvent* event) {
 
                     if (r->is_started() && !within_tolerance) {
                         // this was a rubberband drag
-                        GSList *items = NULL;
+                    	std::vector<SPItem*> items;
 
                         if (r->getMode() == RUBBERBAND_MODE_RECT) {
                             Geom::OptRect const b = r->getRectangle();
@@ -730,7 +730,6 @@ bool SelectTool::root_handler(GdkEvent* event) {
                             selection->setList (items);
                         }
 
-                        g_slist_free (items);
                     } else { // it was just a click, or a too small rubberband
                         r->stop();
 

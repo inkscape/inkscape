@@ -380,14 +380,14 @@ void SPObject::changeCSS(SPCSSAttr *css, gchar const *attr)
     sp_repr_css_change(this->getRepr(), css, attr);
 }
 
-GSList *SPObject::childList(bool add_ref, Action) {
-    GSList *l = NULL;
+std::vector<SPObject*> SPObject::childList(bool add_ref, Action) {
+	 std::vector<SPObject*> l;
     for ( SPObject *child = firstChild() ; child; child = child->getNext() ) {
         if (add_ref) {
             sp_object_ref (child);
         }
 
-        l = g_slist_prepend (l, child);
+        l.push_back(child);
     }
     return l;
 

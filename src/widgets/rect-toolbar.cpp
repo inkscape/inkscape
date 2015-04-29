@@ -106,12 +106,13 @@ static void sp_rtb_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *
 
     bool modmade = false;
     Inkscape::Selection *selection = desktop->getSelection();
-    for (GSList const *items = selection->itemList(); items != NULL; items = items->next) {
-        if (SP_IS_RECT(items->data)) {
+    std::vector<SPItem*> itemlist=selection->itemList();
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
+        if (SP_IS_RECT(*i)) {
             if (gtk_adjustment_get_value(adj) != 0) {
-                (SP_RECT(items->data)->*setter)(Quantity::convert(gtk_adjustment_get_value(adj), unit, "px"));
+                (SP_RECT(*i)->*setter)(Quantity::convert(gtk_adjustment_get_value(adj), unit, "px"));
             } else {
-                SP_OBJECT(items->data)->getRepr()->setAttribute(value_name, NULL);
+                (*i)->getRepr()->setAttribute(value_name, NULL);
             }
             modmade = true;
         }
@@ -242,12 +243,11 @@ static void sp_rect_toolbox_selection_changed(Inkscape::Selection *selection, GO
     }
     purge_repr_listener( tbl, tbl );
 
-    for (GSList const *items = selection->itemList();
-         items != NULL;
-         items = items->next) {
-        if (SP_IS_RECT(reinterpret_cast<SPItem *>(items->data))) {
+    std::vector<SPItem*> itemlist=selection->itemList();
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
+        if (SP_IS_RECT(*i)) {
             n_selected++;
-            item = reinterpret_cast<SPItem *>(items->data);
+            item = *i;
             repr = item->getRepr();
         }
     }

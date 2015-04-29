@@ -204,7 +204,8 @@ public:
         assert(n_group != NULL);
 
         begin = clock();
-        sp_item_group_ungroup(n_group, NULL, false);
+        std::vector<SPItem*> ch;
+        sp_item_group_ungroup(n_group, ch, false);
         end = clock();
 
         std::cout << "Took " << double(end - begin) / double(CLOCKS_PER_SEC) << " seconds to ungroup a <g> with " << num_elements << " elements\n";
