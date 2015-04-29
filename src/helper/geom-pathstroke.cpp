@@ -427,8 +427,6 @@ void join_inside(join_data jd)
     } else {
         res.appendNew<Geom::LineSegment>(temp.initialPoint());
         res.append(temp);
-        // add the rest of the path
-        res.insert(res.end(), ++jd.outgoing.begin(), jd.outgoing.end());
     }
 }
 
@@ -607,7 +605,7 @@ void offset_quadratic(Geom::Path& p, Geom::QuadraticBezier const& bez, double wi
 
 void offset_curve(Geom::Path& res, Geom::Curve const* current, double width)
 {
-    double const tolerance = 0.005;
+    double const tolerance = 0.0025;
     size_t levels = 8;
 
     if (current->isDegenerate()) return; // don't do anything
