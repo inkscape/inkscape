@@ -162,11 +162,17 @@ static void sp_text_fontfamily_value_changed( Ink_ComboBoxEntry_Action *act, GOb
         fontlister->fill_css( css );
 
         SPDesktop   *desktop    = SP_ACTIVE_DESKTOP;
-        sp_desktop_set_style (desktop, css, true, true); // Results in selection change called twice.
+        if( desktop->getSelection()->isEmpty() ) {
+            // Update default
+            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+            prefs->mergeStyle("/tools/text/style", css);
+        } else {
+            // If there is a selection, update
+            sp_desktop_set_style (desktop, css, true, true); // Results in selection change called twice.
+            DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_TEXT,
+                               _("Text: Change font family"));
+        }
         sp_repr_css_attr_unref (css);
-
-        DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_TEXT,
-                       _("Text: Change font family"));
     }
 
     // unfreeze
