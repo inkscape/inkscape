@@ -259,10 +259,10 @@ public:
     std::list<SPBox3D *> const box3DList(Persp3D *persp = NULL);
 
     /** Returns the number of layers in which there are selected objects. */
-    unsigned int numberOfLayers();
+    size_t numberOfLayers();
 
     /** Returns the number of parents to which the selected objects belong. */
-    unsigned int numberOfParents();
+    size_t numberOfParents();
 
     /** Returns the bounding rectangle of the selection. */
     Geom::OptRect bounds(SPItem::BBoxType type) const;

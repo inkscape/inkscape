@@ -513,7 +513,7 @@ SPObject *Selection::_objectForXMLNode(Inkscape::XML::Node *repr) const {
     return object;
 }
 
-unsigned int Selection::numberOfLayers() {
+size_t Selection::numberOfLayers() {
     std::vector<SPItem*> const items = const_cast<Selection *>(this)->itemList();
     std::set<SPObject*> layers;
     for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end();iter++ ) {
@@ -523,7 +523,7 @@ unsigned int Selection::numberOfLayers() {
     return layers.size();
 }
 
-guint Selection::numberOfParents() {
+size_t Selection::numberOfParents() {
     std::vector<SPItem*> const items = const_cast<Selection *>(this)->itemList();
     std::set<SPObject*> parents;
     for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end();iter++ ) {
