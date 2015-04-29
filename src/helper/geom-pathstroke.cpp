@@ -415,9 +415,28 @@ void join_inside(join_data jd)
     Geom::Path const& temp = jd.outgoing;
     Geom::Crossings cross = Geom::crossings(res, temp);
 
-    if (cross.size() == 1) {
-        Geom::Path d1 = res.portion(0., cross[0].ta);
-        Geom::Path d2 = temp.portion(cross[0].tb, temp.size());
+    int solution = -1; // lol, really hope there aren't more than INT_MAX crossings
+    if (cross.size() == 1) solution = 0;
+    else if (cross.size() > 1) {
+        // I am not sure how well this will work -- we pick the join node closest
+        // to the cross point of the paths
+        Geom::Point original = res.finalPoint()+Geom::rot90(jd.in_tang)*jd.width;
+        Geom::Coord trial = Geom::L2(res.pointAt(cross[0].ta)-original);
+        solution = 0;
+        for (size_t i = 1; i < cross.size(); ++i) {
+            //printf("Trying %d\n", i);
+            Geom::Coord test = Geom::L2(res.pointAt(cross[i].ta)-original);
+            if (test < trial) {
+                trial = test;
+                solution = i;
+                //printf("Found improved solution: %f\n", trial);
+            }
+        }
+    }
+
+    if (solution != -1) {
+        Geom::Path d1 = res.portion(0., cross[solution].ta);
+        Geom::Path d2 = temp.portion(cross[solution].tb, temp.size());
 
         // Watch for bugs in 2geom crossing regarding severe inflection points
         res.clear();
