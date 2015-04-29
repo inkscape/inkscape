@@ -412,31 +412,27 @@ void extrapolate_join(join_data jd)
 void join_inside(join_data jd)
 {
     Geom::Path &res = jd.res;
-    Geom::Curve const& incoming = res.back_open();
-    Geom::Curve const& outgoing = jd.outgoing.front();
-    Geom::Crossings cross = Geom::crossings(incoming, outgoing);
-    
-    if (!cross.empty()) {
-        // yeah if we could avoid allocing that'd be great
-        Geom::Curve *d1 = incoming.portion(0., cross[0].ta);
-        res.erase_last();
-        res.append(*d1);
-        delete d1;
+    Geom::Path const& temp = jd.outgoing;
+    Geom::Crossings cross = Geom::crossings(res, temp);
 
-        Geom::Curve *d2 = outgoing.portion(cross[0].tb, 1.);
-        res.setFinal(d2->initialPoint());
-        res.append(*d2);
-        delete d2;
+    if (cross.size() == 1) {
+        Geom::Path d1 = res.portion(0., cross[0].ta);
+        Geom::Path d2 = temp.portion(cross[0].tb, temp.size());
+
+        // Watch for bugs in 2geom crossing regarding severe inflection points
+        res.clear();
+        res.append(d1);
+        res.setFinal(d2.initialPoint());
+        res.append(d2);
     } else {
-        res.appendNew<Geom::LineSegment>(outgoing.initialPoint());
-        res.append(outgoing);
+        res.appendNew<Geom::LineSegment>(temp.initialPoint());
+        res.append(temp);
+        // add the rest of the path
+        res.insert(res.end(), ++jd.outgoing.begin(), jd.outgoing.end());
     }
-
-    // add the rest of the path
-    res.insert(res.end(), ++jd.outgoing.begin(), jd.outgoing.end());
 }
 
-void tangents(Geom::Point* tang, Geom::Curve const& incoming, Geom::Curve const& outgoing)
+void tangents(Geom::Point tang[2], Geom::Curve const& incoming, Geom::Curve const& outgoing)
 {
     Geom::Point tang1 = Geom::unitTangentAt(reverse(incoming.toSBasis()), 0.);
     Geom::Point tang2 = outgoing.unitTangentAt(0.);
