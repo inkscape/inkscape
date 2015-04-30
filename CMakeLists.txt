@@ -39,8 +39,8 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib CACHE INTERNAL "" FORCE )
 # Options
 # -----------------------------------------------------------------------------
 option(WITH_DBUS "Compile with support for DBus interface" OFF)
-option(ENABLE_LCMS "Compile with LCMS support" OFF)
-option(WITH_GNOME_VFS "Compile with support for Gnome VFS" OFF)
+option(ENABLE_LCMS "Compile with LCMS support" ON)
+option(WITH_GNOME_VFS "Compile with support for Gnome VFS" ON)
 #option(WITH_INKJAR "Enable support for openoffice files (SVG jars)" ON)
 
 option(WITH_PROFILING "Turn on profiling" OFF) # Set to true if compiler/linker should enable profiling
