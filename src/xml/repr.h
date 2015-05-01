@@ -121,7 +121,8 @@ unsigned sp_repr_set_point(Inkscape::XML::Node *repr, char const *key, Geom::Poi
 unsigned sp_repr_get_point(Inkscape::XML::Node *repr, char const *key, Geom::Point *val);
 
 //c++-style comparison : returns (bool)(a<b)
-bool sp_repr_compare_position(Inkscape::XML::Node const *first, Inkscape::XML::Node const *second);
+int sp_repr_compare_position(Inkscape::XML::Node const *first, Inkscape::XML::Node const *second);
+bool sp_repr_compare_position_bool(Inkscape::XML::Node const *first, Inkscape::XML::Node const *second);
 
 // Searching
 /**

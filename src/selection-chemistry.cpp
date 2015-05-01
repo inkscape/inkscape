@@ -459,7 +459,7 @@ void sp_selection_duplicate(SPDesktop *desktop, bool suppressDone)
 
     // sorting items from different parents sorts each parent's subset without possibly mixing
     // them, just what we need
-    sort(reprs.begin(),reprs.end(),sp_repr_compare_position);
+    sort(reprs.begin(),reprs.end(),sp_repr_compare_position_bool);
 
     std::vector<Inkscape::XML::Node*> newsel;
 
@@ -677,7 +677,7 @@ void sp_edit_invert_in_all_layers(SPDesktop *desktop)
 
 static void sp_selection_group_impl(std::vector<Inkscape::XML::Node*> p, Inkscape::XML::Node *group, Inkscape::XML::Document *xml_doc, SPDocument *doc) {
 
-    sort(p.begin(),p.end(),sp_repr_compare_position);
+    sort(p.begin(),p.end(),sp_repr_compare_position_bool);
 
     // Remember the position and parent of the topmost object.
     gint topmost = p.back()->position();
@@ -1002,7 +1002,7 @@ void sp_selection_raise_to_top(Inkscape::Selection *selection, SPDesktop *deskto
     }
 
     std::vector<Inkscape::XML::Node*> rl(selection->reprList());
-    sort(rl.begin(),rl.end(),sp_repr_compare_position);
+    sort(rl.begin(),rl.end(),sp_repr_compare_position_bool);
 
     for (std::vector<Inkscape::XML::Node*>::const_iterator l=rl.begin(); l!=rl.end();l++) {
         Inkscape::XML::Node *repr =(*l);
@@ -1086,7 +1086,7 @@ void sp_selection_lower_to_bottom(Inkscape::Selection *selection, SPDesktop *des
     }
 
     std::vector<Inkscape::XML::Node*> rl(selection->reprList());
-    sort(rl.begin(),rl.end(),sp_repr_compare_position);
+    sort(rl.begin(),rl.end(),sp_repr_compare_position_bool);
 
     for (std::vector<Inkscape::XML::Node*>::const_reverse_iterator l=rl.rbegin();l!=rl.rend();l++) {
         gint minpos;
@@ -2549,7 +2549,7 @@ void sp_selection_clone(SPDesktop *desktop)
     selection->clear();
 
     // sorting items from different parents sorts each parent's subset without possibly mixing them, just what we need
-    sort(reprs.begin(),reprs.end(),sp_repr_compare_position);
+    sort(reprs.begin(),reprs.end(),sp_repr_compare_position_bool);
 
     std::vector<Inkscape::XML::Node*> newsel;
 
@@ -3709,7 +3709,7 @@ void sp_selection_set_clipgroup(SPDesktop *desktop)
         
     std::vector<Inkscape::XML::Node*> p(selection->reprList());
     
-    sort(p.begin(),p.end(),sp_repr_compare_position);
+    sort(p.begin(),p.end(),sp_repr_compare_position_bool);
 
     selection->clear();
 

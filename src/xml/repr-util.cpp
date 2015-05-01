@@ -260,7 +260,7 @@ gchar const *sp_xml_ns_prefix_uri(gchar const *prefix)
  *   -1    first object's position is less than the second
  * @todo Rewrite this function's description to be understandable
  */
-bool sp_repr_compare_position(Inkscape::XML::Node const *first, Inkscape::XML::Node const *second)
+int sp_repr_compare_position(Inkscape::XML::Node const *first, Inkscape::XML::Node const *second)
 {
     int p1, p2;
     if (first->parent() == second->parent()) {
@@ -277,9 +277,9 @@ bool sp_repr_compare_position(Inkscape::XML::Node const *first, Inkscape::XML::N
         g_assert(ancestor != NULL);
 
         if (ancestor == first) {
-            return false;
+            return 1;
         } else if (ancestor == second) {
-            return true;
+            return -1;
         } else {
             Inkscape::XML::Node const *to_first = AncetreFils(first, ancestor);
             Inkscape::XML::Node const *to_second = AncetreFils(second, ancestor);
@@ -289,9 +289,9 @@ bool sp_repr_compare_position(Inkscape::XML::Node const *first, Inkscape::XML::N
         }
     }
 
-    if (p1 > p2) return false;
-    if (p1 < p2) return true;
-    return false;
+    if (p1 > p2) return 1;
+    if (p1 < p2) return -1;
+    return 0;
 
     /* effic: Assuming that the parent--child relationship is consistent
        (i.e. that the parent really does contain first and second among
@@ -309,6 +309,11 @@ bool sp_repr_compare_position(Inkscape::XML::Node const *first, Inkscape::XML::N
        Continue until no more than one remains unencountered.  --
        pjrm */
 }
+
+bool sp_repr_compare_position_bool(Inkscape::XML::Node const *first, Inkscape::XML::Node const *second){
+    return sp_repr_compare_position_bool(first, second)<0;
+}
+
 
 /**
  * Find an element node using an unique attribute.
