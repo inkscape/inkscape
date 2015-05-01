@@ -29,6 +29,30 @@ if(CMAKE_COMPILER_IS_GNUCC)
 	endif()
 endif()
 
+#
+# Set platform defaults (originally copied from darktable)
+#
+if(APPLE)
+	message("-- Mac OS X build detected, setting default features")
+	# prefer macports and/or user-installed libraries over system ones
+	#LIST(APPEND CMAKE_PREFIX_PATH /opt/local /usr/local)
+	set(CMAKE_FIND_FRAMEWORK "LAST")
+
+	# test and display relevant env variables
+	if(DEFINED ENV{CMAKE_PREFIX_PATH})
+		message("CMAKE_PREFIX_PATH: $ENV{CMAKE_PREFIX_PATH}")
+	endif()
+	if(DEFINED ENV{GTKMM_BASEPATH})
+		message("GTKMM_BASEPATH: $ENV{GTKMM_BASEPATH}")
+	endif()
+
+	# detect current GTK+ backend
+	include(${CMAKE_SOURCE_DIR}/CMakeScripts/HelperFunctions.cmake)
+	pkg_check_variable(gtk+-2.0 target)
+	message("GTK2 backend: ${GTK+_2.0_TARGET}")
+
+endif(APPLE)
+
 #-----------------------------------------------------------------------------
 # Redirect output files
 

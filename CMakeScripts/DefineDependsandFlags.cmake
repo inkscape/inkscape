@@ -24,6 +24,31 @@ if (WIN32)
 	list(APPEND INKSCAPE_LIBS "-lpangoft2-1.0.dll")  # FIXME
 	list(APPEND INKSCAPE_LIBS "-lpangowin32-1.0.dll")  # FIXME
 	list(APPEND INKSCAPE_LIBS "-lgthread-2.0.dll")  # FIXME
+elseif(APPLE)
+	if(DEFINED ENV{CMAKE_PREFIX_PATH})
+		# Adding the library search path explicitly seems not required
+		# if MacPorts is installed in default prefix ('/opt/local') - 
+		# Cmake then can rely on the hard-coded paths in its modules.
+		# Only prepend search path if $CMAKE_PREFIX_PATH is defined:
+		list(APPEND INKSCAPE_LIBS "-L$ENV{CMAKE_PREFIX_PATH}/lib")  # FIXME
+		# TODO: verify whether linking the next two libs explicitly is always
+	  	# required, or only if MacPorts is installed in custom prefix:
+		list(APPEND INKSCAPE_LIBS "-liconv")  # FIXME
+		list(APPEND INKSCAPE_LIBS "-lintl")  # FIXME
+	endif()
+	list(APPEND INKSCAPE_LIBS "-lpangocairo-1.0")  # FIXME
+	list(APPEND INKSCAPE_LIBS "-lpangoft2-1.0")  # FIXME
+	list(APPEND INKSCAPE_LIBS "-lfontconfig")  # FIXME
+	# GTK+ backend
+	if(${GTK+_2.0_TARGET} MATCHES "x11")
+		# only link X11 if using X11 backend of GTK2
+		list(APPEND INKSCAPE_LIBS "-lX11")  # FIXME
+	elseif(${GTK+_2.0_TARGET} MATCHES "quartz")
+		# TODO: gtk-mac-integration (currently only useful for osxmenu branch)
+		# 1) add configure option (ON/OFF) for gtk-mac-integration
+		# 2) add checks (GTK+ backend must be "quartz")
+		# 3) link relevant lib(s)
+	endif()
 else()
 	list(APPEND INKSCAPE_LIBS "-ldl")  # FIXME
 	list(APPEND INKSCAPE_LIBS "-lpangocairo-1.0")  # FIXME
@@ -32,7 +57,10 @@ else()
 	list(APPEND INKSCAPE_LIBS "-lX11")  # FIXME
 endif()
 
-list(APPEND INKSCAPE_LIBS "-lgomp")  # FIXME
+if(NOT APPLE)
+	# FIXME: should depend on availability of OpenMP support (see below) (?)
+	list(APPEND INKSCAPE_LIBS "-lgomp")  # FIXME
+endif()
 list(APPEND INKSCAPE_LIBS "-lgslcblas")  # FIXME
 
 if(WITH_GNOME_VFS)
