@@ -1,6 +1,7 @@
 # CMake TODO
-# - Remove hard coded defines (see bwelow)
-# - Test on MinGW and OSX
+# - Remove hard coded defines (see below)
+# - Test on MinGW
+# √ Test on OSX
 # - Add configurable options for Python/Perl, see configure --help
 #
 # ideasman42
@@ -70,7 +71,7 @@ option(WITH_GNOME_VFS "Compile with support for Gnome VFS" ON)
 option(WITH_PROFILING "Turn on profiling" OFF) # Set to true if compiler/linker should enable profiling
 
 option(WITH_GTKSPELL "Compile with support for GTK spelling widget" ON)
-option(WITH_LIBWPG "Compile with support of libpoppler-cairo for WordPrefect Graphics" ON)
+option(WITH_LIBWPG "Compile with support of libpoppler-cairo for WordPerfect Graphics" ON)
 option(ENABLE_POPPLER "Compile with support of libpoppler" ON)
 option(ENABLE_POPPLER_CAIRO "Compile with support of libpoppler-cairo for rendering PDF preview (depends on ENABLE_POPPLER)" ON)
 
