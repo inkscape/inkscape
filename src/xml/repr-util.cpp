@@ -311,7 +311,7 @@ int sp_repr_compare_position(Inkscape::XML::Node const *first, Inkscape::XML::No
 }
 
 bool sp_repr_compare_position_bool(Inkscape::XML::Node const *first, Inkscape::XML::Node const *second){
-    return sp_repr_compare_position_bool(first, second)<0;
+    return sp_repr_compare_position(first, second)<0;
 }
 
 
