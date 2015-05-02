@@ -295,6 +295,24 @@
 /* enable openoffice files (SVG jars) */
 #cmakedefine WITH_INKJAR 1
 
+/* Build in libcdr */
+#cmakedefine WITH_LIBCDR 1
+
+/* Build using libcdr 0.0.x */
+#cmakedefine WITH_LIBCDR00 1
+
+/* Build using libcdr 0.1.x */
+#cmakedefine WITH_LIBCDR01 1
+
+/* Build in libvisio */
+#cmakedefine WITH_LIBVISIO 1
+
+/* Build using libvisio 0.0.x */
+#cmakedefine WITH_LIBVISIO00 1
+
+/* Build using libvisio 0.1.x */
+#cmakedefine WITH_LIBVISIO01 1
+
 /* Build in libwpg */
 #cmakedefine WITH_LIBWPG 1
 
@@ -303,6 +321,9 @@
 
 /* Build in libwpg-0.2 */
 #cmakedefine WITH_LIBWPG02 1
+
+/* Build in libwpg-0.3 */
+#cmakedefine WITH_LIBWPG03 1
 
 /* Use MMX optimizations, if CPU supports it */
 #cmakedefine WITH_MMX 1
