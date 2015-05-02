@@ -149,7 +149,7 @@ void SPText::remove_child(Inkscape::XML::Node *rch) {
 void SPText::update(SPCtx *ctx, guint flags) {
     unsigned childflags = (flags & SP_OBJECT_MODIFIED_CASCADE);
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
-    	childflags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
+        childflags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
     }
 
     // Create temporary list of children
@@ -519,7 +519,7 @@ unsigned SPText::_buildLayoutInput(SPObject *root, Inkscape::Text::Layout::Optio
             }
         }
     }
-    
+
     if (SP_IS_TEXT(root)) {
         SP_TEXT(root)->attributes.mergeInto(&optional_attrs, parent_optional_attrs, parent_attrs_offset, true, true);
         if (SP_TEXT(root)->attributes.getTextLength()->_set) { // set textLength on the entire layout, see note in TNG-Layout.h
@@ -571,7 +571,7 @@ unsigned SPText::_buildLayoutInput(SPObject *root, Inkscape::Text::Layout::Optio
             child_attrs_offset--;
         }
     }
-    
+
     for (SPObject *child = root->firstChild() ; child ; child = child->getNext() ) {
         SPString *str = dynamic_cast<SPString *>(child);
         if (str) {
@@ -691,15 +691,15 @@ bool TextTagAttributes::readSingleAttribute(unsigned key, gchar const *value)
         case SP_ATTR_DX:     attr_vector = &attributes.dx; break;
         case SP_ATTR_DY:     attr_vector = &attributes.dy; break;
         case SP_ATTR_ROTATE: attr_vector = &attributes.rotate; break;
-        case SP_ATTR_TEXTLENGTH: 
-            attributes.textLength.readOrUnset(value); 
-            return true; 
+        case SP_ATTR_TEXTLENGTH:
+            attributes.textLength.readOrUnset(value);
+            return true;
             break;
-        case SP_ATTR_LENGTHADJUST: 
-            attributes.lengthAdjust = (value && !strcmp(value, "spacingAndGlyphs")? 
-                                        Inkscape::Text::Layout::LENGTHADJUST_SPACINGANDGLYPHS : 
+        case SP_ATTR_LENGTHADJUST:
+            attributes.lengthAdjust = (value && !strcmp(value, "spacingAndGlyphs")?
+                                        Inkscape::Text::Layout::LENGTHADJUST_SPACINGANDGLYPHS :
                                         Inkscape::Text::Layout::LENGTHADJUST_SPACING); // default is "spacing"
-            return true; 
+            return true;
             break;
         default: return false;
     }
@@ -724,7 +724,7 @@ void TextTagAttributes::writeTo(Inkscape::XML::Node *node) const
             node->setAttribute("lengthAdjust", "spacing");
         } else if (attributes.lengthAdjust == Inkscape::Text::Layout::LENGTHADJUST_SPACINGANDGLYPHS) {
             node->setAttribute("lengthAdjust", "spacingAndGlyphs");
-        } 
+        }
     }
 }
 
@@ -734,7 +734,7 @@ void TextTagAttributes::writeSingleAttributeLength(Inkscape::XML::Node *node, gc
         gchar single_value_string[32];
         g_ascii_formatd(single_value_string, sizeof (single_value_string), "%.8g", length.computed);
         node->setAttribute(key, single_value_string);
-    } else 
+    } else
         node->setAttribute(key, NULL);
 }
 
@@ -802,7 +802,7 @@ void TextTagAttributes::mergeInto(Inkscape::Text::Layout::OptionalTextTagAttrs *
         output->textLength.unit = attributes.textLength.unit;
         output->textLength._set = attributes.textLength._set;
         output->lengthAdjust = attributes.lengthAdjust;
-    } 
+    }
 }
 
 void TextTagAttributes::mergeSingleAttribute(std::vector<SVGLength> *output_list, std::vector<SVGLength> const &parent_list, unsigned parent_offset, std::vector<SVGLength> const *overlay_list)
