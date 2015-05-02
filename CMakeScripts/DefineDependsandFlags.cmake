@@ -300,6 +300,7 @@ find_package(ImageMagick COMPONENTS MagickCore Magick++)
 if(ImageMagick_FOUND)
 	list(APPEND INKSCAPE_INCS_SYS ${ImageMagick_MagickCore_INCLUDE_DIR})
 	list(APPEND INKSCAPE_LIBS ${ImageMagick_Magick++_LIBRARY})
+	set(WITH_IMAGE_MAGICK ON)  # enable 'Extensions > Raster'
 endif()
 
 include(${CMAKE_CURRENT_LIST_DIR}/IncludeJava.cmake)
