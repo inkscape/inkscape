@@ -311,7 +311,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/IncludeJava.cmake)
 include_directories(${INKSCAPE_INCS})
 include_directories(SYSTEM ${INKSCAPE_INCS_SYS})
 
+include(${CMAKE_CURRENT_LIST_DIR}/ConfigChecks.cmake)
+
 unset(INKSCAPE_INCS)
 unset(INKSCAPE_INCS_SYS)
-
-include(${CMAKE_CURRENT_LIST_DIR}/ConfigChecks.cmake)
