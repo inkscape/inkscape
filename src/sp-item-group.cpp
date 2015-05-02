@@ -375,7 +375,7 @@ void sp_item_group_ungroup_handle_clones(SPItem *parent, Geom::Affine const g)
 {
     for(std::list<SPObject*>::const_iterator refd=parent->hrefList.begin();refd!=parent->hrefList.end();refd++){
         SPItem *citem = dynamic_cast<SPItem *>(*refd);
-        if (citem) {
+        if (citem && !citem->cloned) {
             SPUse *useitem = dynamic_cast<SPUse *>(citem);
             if (useitem && useitem->get_original() == parent) {
                 Geom::Affine ctrans;
@@ -541,15 +541,12 @@ sp_item_group_ungroup (SPGroup *group, std::vector<SPItem*> &children, bool do_d
 
         if (item) {
             item->doWriteTransform(repr, item->transform, NULL, false);
+            children.insert(children.begin(),item);
         } else {
             g_assert_not_reached();
         }
 
         Inkscape::GC::release(repr);
-        if (!children.empty() && item) {
-            children.insert(children.begin(),item);
-        }
-
         items = g_slist_remove (items, items->data);
     }
 
