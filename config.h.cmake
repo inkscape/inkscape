@@ -137,6 +137,9 @@
 /* Use color space API from Poppler >= 0.26.0 */
 #cmakedefine POPPLER_EVEN_NEWER_COLOR_SPACE_API 1
 
+/* Use color space API from Poppler >= 0.29.0 */
+#cmakedefine POPPLER_EVEN_NEWER_NEW_COLOR_SPACE_API 1
+
 /* Use new error API from Poppler >= 0.20.0 */
 #cmakedefine POPPLER_NEW_ERRORAPI
 
