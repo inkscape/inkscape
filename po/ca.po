@@ -506,7 +506,7 @@ msgstr "Membrana fina"
 
 #: ../share/filters/filters.svg.h:156
 msgid "Thin like a soap membrane"
-msgstr "Prim com una pel·lícula a la superfície de la sopa"
+msgstr "Prim com una pel·lícula a la superfície del sabó"
 
 #: ../share/filters/filters.svg.h:158
 msgid "Matte Ridge"
@@ -577,7 +577,7 @@ msgstr "Escorça"
 
 #: ../share/filters/filters.svg.h:188
 msgid "Bark texture, vertical; use with deep colors"
-msgstr "Textura d'escorça de forma vertical: useu-la amb color intensos"
+msgstr "Textura d'escorça de forma vertical: useu-la amb colors intensos"
 
 #: ../share/filters/filters.svg.h:190
 msgid "Lizard Skin"
@@ -893,7 +893,7 @@ msgstr "Gent"
 
 #: ../share/filters/filters.svg.h:332
 msgid "Colorized blotches, like a crowd of people"
-msgstr "Taques de diversos color, com en una gentada"
+msgstr "Taques de diversos colors, com en una gentada"
 
 #: ../share/filters/filters.svg.h:334
 msgid "Scotland"
@@ -916,7 +916,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:342
 msgid "Cutout Glow"
-msgstr "Resplendor retallat"
+msgstr "Resplendor retallada"
 
 #: ../share/filters/filters.svg.h:344
 msgid "In and out glow with a possible offset and colorizable flood"
@@ -1301,7 +1301,7 @@ msgstr "Transparència rugosa"
 
 #: ../share/filters/filters.svg.h:488
 msgid "Adds a turbulent transparency which displaces pixels at the same time"
-msgstr "Afegeix una transparència turbulent amb píxels desplaçats alhora"
+msgstr "Afegeix una transparència turbulenta amb píxels desplaçats alhora"
 
 #: ../share/filters/filters.svg.h:490
 msgid "Gouache"
@@ -1607,7 +1607,7 @@ msgstr "Barreja oposada"
 
 #: ../share/filters/filters.svg.h:628
 msgid "Blend an image with its hue opposite"
-msgstr "Barreja una imatge amb la seua oposada"
+msgstr "Barreja una imatge amb la seva oposada"
 
 #: ../share/filters/filters.svg.h:630
 msgid "Hue to White"
@@ -1670,7 +1670,7 @@ msgid ""
 "Overlays two copies with different blur amounts and modifiable blend and "
 "composite"
 msgstr ""
-"Superposa dues copies amb diferent grau de difuminat, mescla i composició"
+"Superposa dues còpies amb diferent grau de difuminat, mescla i composició"
 
 #: ../share/filters/filters.svg.h:658
 msgid "Image Drawing Basic"
@@ -3203,7 +3203,7 @@ msgstr "Negre atzabeja"
 
 #: ../share/patterns/patterns.svg.h:1
 msgid "Stripes 1:1"
-msgstr "Rallat 1:1"
+msgstr "Ratllat 1:1"
 
 #: ../share/patterns/patterns.svg.h:1
 msgid "Stripes 1:1 white"
@@ -3683,7 +3683,7 @@ msgstr "Prohibit aparcar"
 #: ../share/symbols/symbols.h:103 ../share/symbols/symbols.h:104
 msgctxt "Symbol"
 msgid "No Dogs"
-msgstr "Prohibit gossos"
+msgstr "Prohibits gossos"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:105 ../share/symbols/symbols.h:106
@@ -4025,13 +4025,13 @@ msgstr "Retard"
 #: ../share/symbols/symbols.h:175
 msgctxt "Symbol"
 msgid "Loop Limit Begin"
-msgstr "Inici del limit del bucle"
+msgstr "Inici del límit del bucle"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:176
 msgctxt "Symbol"
 msgid "Loop Limit End"
-msgstr "Final del limit del bucle"
+msgstr "Final del límit del bucle"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:177
@@ -4450,7 +4450,7 @@ msgstr "Capsa 3D"
 #: ../src/color-profile.cpp:853
 #, c-format
 msgid "Color profiles directory (%s) is unavailable."
-msgstr "El directori de les perfils de color (%s) no es troba disponible."
+msgstr "El directori dels perfils de color (%s) no es troba disponible."
 
 #: ../src/color-profile.cpp:912 ../src/color-profile.cpp:929
 msgid "(invalid UTF-8 string)"
@@ -4774,7 +4774,7 @@ msgstr "cantonada"
 
 #: ../src/display/snap-indicator.cpp:164
 msgid "text anchor"
-msgstr "ancora del text"
+msgstr "àncora del text"
 
 #: ../src/display/snap-indicator.cpp:167
 msgid "text baseline"
@@ -4850,7 +4850,7 @@ msgstr "Cantonada"
 
 #: ../src/display/snap-indicator.cpp:234
 msgid "Text anchor"
-msgstr "Ancora del text"
+msgstr "Àncora del text"
 
 #: ../src/display/snap-indicator.cpp:237
 msgid "Multiple of grid spacing"
@@ -5452,7 +5452,7 @@ msgid ""
 "between the given ranges to the full color range"
 msgstr ""
 "Canvia el nivell del canal especificat de la imatge seleccionada escalant a "
-"tota la gamma possible els valors compresos dins uns límits ."
+"tota la gamma possible els valors compresos dins uns límits."
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:37
 msgid "Median"
@@ -5736,7 +5736,7 @@ msgstr "Orientació del text:"
 #: ../src/extension/internal/cairo-ps-out.cpp:376
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:251
 msgid "Embed fonts"
-msgstr "Fonts incrustades"
+msgstr "Tipus de lletra incrustats"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:335
 #: ../src/extension/internal/cairo-ps-out.cpp:377
@@ -5954,11 +5954,11 @@ msgstr "Converteix línies de traços/punts a línies individuals"
 #: ../src/extension/internal/emf-inout.cpp:3576
 #: ../src/extension/internal/wmf-inout.cpp:3151
 msgid "Convert gradients to colored polygon series"
-msgstr "Converteix el gradient a series de polígons pintats"
+msgstr "Converteix els degradats a sèries de polígons pintats"
 
 #: ../src/extension/internal/emf-inout.cpp:3577
 msgid "Use native rectangular linear gradients"
-msgstr "Usa un gradient lineal rectangular nadiu"
+msgstr "Usa un degradat lineal rectangular nadiu"
 
 #: ../src/extension/internal/emf-inout.cpp:3578
 msgid "Map all fill patterns to standard EMF hatches"
@@ -9815,7 +9815,7 @@ msgstr "Radi (unitat o %):"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:62
 msgid "Radius, in unit or %"
-msgstr "Radi, en l'unitat o %"
+msgstr "Radi, en la unitat o %"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:63
 msgid "Chamfer steps:"
@@ -10535,7 +10535,7 @@ msgstr "Creixement:"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
 msgid "Growth of distance between hatches."
-msgstr "Creixement de la distància entre les línies de al trama."
+msgstr "Creixement de la distància entre les línies de la trama."
 
 #. FIXME: top/bottom names are inverted in the UI/svg and in the code!!
 #: ../src/live_effects/lpe-rough-hatches.cpp:228
@@ -11006,7 +11006,7 @@ msgstr ""
 
 #: ../src/live_effects/lpe-sketch.cpp:49
 msgid "Average offset:"
-msgstr "Desviació mitja:"
+msgstr "Desviació mitjana:"
 
 #: ../src/live_effects/lpe-sketch.cpp:50
 msgid "Average distance each stroke is away from the original path"
@@ -11623,7 +11623,7 @@ msgstr "Mostra l'id,x,y,w,h de tots els objectes"
 
 #: ../src/main.cpp:478
 msgid "The ID of the object whose dimensions are queried"
-msgstr "L' ID de l'objecte les dimensions del qual es volen consultar"
+msgstr "L'ID de l'objecte les dimensions del qual es volen consultar"
 
 #. TRANSLATORS: this option makes Inkscape print the name (path) of the extension directory
 #: ../src/main.cpp:484
@@ -14354,7 +14354,7 @@ msgstr "Suprimeix els clons del mosaic"
 msgid ""
 "If you want to clone several objects, <b>group</b> them and <b>clone the "
 "group</b>."
-msgstr "Per clonar varis objectes, <b>agrupeu-los</b> i <b>cloneu el grup</b>."
+msgstr "Per clonar diversos objectes, <b>agrupeu-los</b> i <b>cloneu el grup</b>."
 
 #: ../src/ui/dialog/clonetiler.cpp:2238
 msgid "<small>Creating tiled clones...</small>"
@@ -14917,7 +14917,7 @@ msgstr "Tanca en acabar"
 
 #: ../src/ui/dialog/export.cpp:177
 msgid "Once the export completes, close this dialog"
-msgstr "Un cop acabada la exportació, tanca aquest diàleg"
+msgstr "Un cop acabada l'exportació, tanca aquest diàleg"
 
 #: ../src/ui/dialog/export.cpp:179
 msgid "_Export"
@@ -16344,7 +16344,7 @@ msgstr "Selecciona tots els elements afectats"
 
 #: ../src/ui/dialog/font-substitution.cpp:114
 msgid "Don't show this warning again"
-msgstr "No mostris més aquest avis"
+msgstr "No mostris més aquest avís"
 
 #: ../src/ui/dialog/font-substitution.cpp:255
 msgid "Font '%1' substituted with '%2'"
@@ -16993,7 +16993,7 @@ msgstr "Meetei mayek"
 
 #: ../src/ui/dialog/glyphs.cpp:286
 msgid "Hangul Syllables"
-msgstr "Síl·libes Hangul"
+msgstr "Síl·labes Hangul"
 
 #: ../src/ui/dialog/glyphs.cpp:287
 msgid "Hangul Jamo Extended-B"
@@ -17210,7 +17210,7 @@ msgstr "Ampliat:"
 
 #: ../src/ui/dialog/icon-preview.cpp:240
 msgid "Actual Size:"
-msgstr "Mida actual:"
+msgstr "Mida real:"
 
 #: ../src/ui/dialog/icon-preview.cpp:245
 msgctxt "Icon preview window"
@@ -17265,7 +17265,7 @@ msgstr "cops per l'amplada de traç actual"
 #: ../src/ui/dialog/inkscape-preferences.cpp:205
 msgid "Size of dots created with Ctrl+click (relative to current stroke width)"
 msgstr ""
-"Mida del punts creats amb Ctrl+clic (relativa a l'amplada de traç actual)"
+"Mida dels punts creats amb Ctrl+clic (relativa a l'amplada de traç actual)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:220
 msgid "<b>No objects selected</b> to take the style from."
@@ -18868,7 +18868,7 @@ msgid ""
 "The ICC profile to use to calibrate display output.\n"
 "Searched directories:%s"
 msgstr ""
-"El perfil ICC que s'ha de usar per calibrar la sortida de la pantalla.\n"
+"El perfil ICC que s'ha d'usar per calibrar la sortida de la pantalla.\n"
 "Directoris on s'ha buscat:%s"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:971
@@ -19100,7 +19100,7 @@ msgstr "Acoloreix els marcadors personalitzats del mateix color que l'objecte"
 #: ../src/ui/dialog/inkscape-preferences.cpp:1146
 #: ../src/ui/dialog/inkscape-preferences.cpp:1356
 msgid "Update marker color when object color changes"
-msgstr "Actualitza el color del marcador quan canvii el color de l'objecte"
+msgstr "Actualitza el color del marcador quan canviï el color de l'objecte"
 
 #. Selecting options
 #: ../src/ui/dialog/inkscape-preferences.cpp:1149
@@ -19580,7 +19580,7 @@ msgid ""
 "(possibly in groups), relink the duplicated clone to the duplicated original "
 "instead of the old original"
 msgstr ""
-"En duplicar una selecció que conté tan el clon com l'original (cosa possible "
+"En duplicar una selecció que conté tant el clon com l'original (cosa possible "
 "amb grups), torna a enllaçar el clon duplicat amb l'original duplicat en "
 "comptes de fer-ho amb l'original antic"
 
@@ -19672,7 +19672,7 @@ msgid ""
 "Stroke color same as object, fill color either object fill color or marker "
 "fill color"
 msgstr ""
-"Color de contorn igual que el objecte; color d'emplenat, color d'emplenat de "
+"Color de contorn igual que l'objecte; color d'emplenat, color d'emplenat de "
 "l'objecte o bé color d'emplenat del marcador"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1358
@@ -22525,7 +22525,7 @@ msgid ""
 "<b>Shift+Ctrl</b>: snap rotation angle to %g° increments and rotate both "
 "handles"
 msgstr ""
-"<b>Maj+Ctrl</b>: ajusta l'angle de rotació amb increments de %gº i gira les "
+"<b>Maj+Ctrl</b>: ajusta l'angle de rotació amb increments de %g° i gira les "
 "dues nanses"
 
 #: ../src/ui/tool/node.cpp:528
@@ -22538,7 +22538,7 @@ msgstr "<b>Ctrl</b>: Mou la nansa per les seves passes reals en l'efecte viu BSp
 msgctxt "Path handle tip"
 msgid "<b>Ctrl</b>: snap rotation angle to %g° increments, click to retract"
 msgstr ""
-"<b>Ctrl</b>: ajusta l'angle de rotació amb increments de %gº, clica per "
+"<b>Ctrl</b>: ajusta l'angle de rotació amb increments de %g°, clica per "
 "rectificar"
 
 #: ../src/ui/tool/node.cpp:536
@@ -22793,13 +22793,13 @@ msgstr ""
 #, c-format
 msgctxt "Transform handle tip"
 msgid "Skew horizontally by %.2f°"
-msgstr "Inclina horitzontalment %.2fº"
+msgstr "Inclina horitzontalment %.2f°"
 
 #: ../src/ui/tool/transform-handle-set.cpp:597
 #, c-format
 msgctxt "Transform handle tip"
 msgid "Skew vertically by %.2f°"
-msgstr "Inclina verticalment %.2fº"
+msgstr "Inclina verticalment %.2f°"
 
 #: ../src/ui/tool/transform-handle-set.cpp:656
 msgctxt "Transform handle tip"
@@ -24499,11 +24499,11 @@ msgstr "<b>mit.</b>"
 
 #: ../src/ui/widget/selected-style.cpp:246
 msgid "Fill is averaged over selected objects"
-msgstr "L'emplenat és una mitja dels objectes seleccionats"
+msgstr "L'emplenat és una mitjana dels objectes seleccionats"
 
 #: ../src/ui/widget/selected-style.cpp:246
 msgid "Stroke is averaged over selected objects"
-msgstr "El traç és una mitja dels objectes seleccionats"
+msgstr "El traç és una mitjana dels objectes seleccionats"
 
 #. TRANSLATOR COMMENT: M means "Multiple"
 #: ../src/ui/widget/selected-style.cpp:249
@@ -24630,7 +24630,7 @@ msgstr "Amplada del traç: %.5g%s%s"
 
 #: ../src/ui/widget/selected-style.cpp:1162
 msgid " (averaged)"
-msgstr " (mitja)"
+msgstr " (mitjana)"
 
 #: ../src/ui/widget/selected-style.cpp:1188
 msgid "0 (transparent)"
@@ -25925,7 +25925,7 @@ msgstr "B_loca o desbloca la capa actual"
 
 #: ../src/verbs.cpp:2682
 msgid "Toggle lock on current layer"
-msgstr "Commuta boqueig a la capa actual"
+msgstr "Commuta el boqueig a la capa actual"
 
 #: ../src/verbs.cpp:2683
 msgid "_Show/hide Current Layer"
@@ -25938,7 +25938,7 @@ msgstr "Commuta la visibilitat de la capa actual"
 #. Object
 #: ../src/verbs.cpp:2687
 msgid "Rotate _90° CW"
-msgstr "Gira _90º en sentit horari"
+msgstr "Gira _90° en sentit horari"
 
 #. This is shared between tooltips and statusbar, so they
 #. must use UTF-8, not HTML entities for special characters.
@@ -25948,7 +25948,7 @@ msgstr "Gira la selecció 90° en sentit horari"
 
 #: ../src/verbs.cpp:2691
 msgid "Rotate 9_0° CCW"
-msgstr "Gira 9_0º en sentit antihorari"
+msgstr "Gira 9_0° en sentit antihorari"
 
 #. This is shared between tooltips and statusbar, so they
 #. must use UTF-8, not HTML entities for special characters.
@@ -26928,7 +26928,7 @@ msgstr "Editor de tipografia SVG..."
 
 #: ../src/verbs.cpp:2949
 msgid "Edit SVG fonts"
-msgstr "Edita els tipografia SVG"
+msgstr "Edita les tipografies SVG"
 
 #: ../src/verbs.cpp:2950
 msgid "Print Colors..."
@@ -28523,7 +28523,7 @@ msgstr ""
 msgid ""
 "Fill is solid unless a subpath is counterdirectional (fill-rule: nonzero)"
 msgstr ""
-"L'emplenat és solid excepte si el subcamí va en sentit oposat (regla: "
+"L'emplenat és sòlid excepte si el subcamí va en sentit oposat (regla: "
 "nonzero)"
 
 #: ../src/widgets/paint-selector.cpp:600
@@ -28797,7 +28797,7 @@ msgstr "Menor"
 
 #: ../src/widgets/ruler.cpp:210
 msgid "Lower limit of ruler"
-msgstr "Limit menor del regle"
+msgstr "Límit menor del regle"
 
 #: ../src/widgets/ruler.cpp:219
 msgid "Upper"
@@ -28805,7 +28805,7 @@ msgstr "Superior"
 
 #: ../src/widgets/ruler.cpp:220
 msgid "Upper limit of ruler"
-msgstr "Limit superior del regle"
+msgstr "Límit superior del regle"
 
 #: ../src/widgets/ruler.cpp:230
 msgid "Position of mark on the ruler"
@@ -30012,7 +30012,7 @@ msgstr "Línia base del text"
 
 #: ../src/widgets/toolbox.cpp:1806
 msgid "Snap text anchors and baselines"
-msgstr "Ajusta les ancores del text i les línies base"
+msgstr "Ajusta les àncores del text i les línies base"
 
 #: ../src/widgets/toolbox.cpp:1816
 msgid "Page border"
@@ -30141,7 +30141,7 @@ msgstr "Mode atrau/repel"
 
 #: ../src/widgets/tweak-toolbar.cpp:220
 msgid "Attract parts of paths towards cursor; with Shift from cursor"
-msgstr "Atrau els camins cap al cursor o bé els repel amb la tecla Majúscules"
+msgstr "Atrau els camins cap al cursor o bé els repel·leix amb la tecla Majúscules"
 
 #: ../src/widgets/tweak-toolbar.cpp:226
 msgid "Roughen mode"
@@ -30618,7 +30618,7 @@ msgstr ""
 #: ../share/extensions/gcodetools.py:6110
 msgid "Lathe X and Z axis remap should be the same. Exiting..."
 msgstr ""
-"Els eixos de gir X i Z reassignats haurien de ser el mateixos. S'està "
+"Els eixos de gir X i Z reassignats haurien de ser els mateixos. S'està "
 "sortint..."
 
 #: ../share/extensions/gcodetools.py:6662
@@ -30698,7 +30698,7 @@ msgid ""
 "The HPGL data contained unknown (unsupported) commands, there is a "
 "possibility that the drawing is missing some content."
 msgstr ""
-"Les dades HPGL contenen comandaments desconeguts (sense suport), hi ha una "
+"Les dades HPGL contenen ordres desconegudes (sense suport), hi ha una "
 "possibilitat que el dibuix hagi perdut una part del contingut."
 
 #. issue error if no paths found
@@ -30719,7 +30719,7 @@ msgid ""
 "Technical details:\n"
 "%s"
 msgstr ""
-"El fantàstic emulador lxml per libxml2 es necessari per a inkex.py. "
+"El fantàstic emulador lxml per libxml2 és necessari per a inkex.py. "
 "Baixeu-vos i instal·leu-vos l'última versió de lxml de "
 "http://cheeseshop.python.org/pypi/lxml/, o bé feu-ho a través del gestor de "
 "paquets des de la línia d'ordres: sudo apt-get install python-lxml\n"
@@ -30870,7 +30870,7 @@ msgstr ""
 
 #: ../share/extensions/jessyInk_summary.py:123
 msgid "{0}\t\"{1}\" (object id \"{2}\") will be replaced by \"{3}\"."
-msgstr "{0}\t\"{1}\" (l'object amb id \"{2}\") serà reemplaçat per \"{3}\"."
+msgstr "{0}\t\"{1}\" (l'objecte amb id \"{2}\") serà reemplaçat per \"{3}\"."
 
 #: ../share/extensions/jessyInk_summary.py:168
 msgid ""
@@ -30979,7 +30979,7 @@ msgid ""
 "Please choose a larger object or set 'Space between copies' > 0"
 msgstr ""
 "La longitud total del patró és massa petita: \n"
-"Trieu un objecte major o configureu «Espai entre copies» > 0"
+"Trieu un objecte major o configureu «Espai entre còpies» > 0"
 
 #: ../share/extensions/pathalongpath.py:277
 msgid ""
@@ -31181,7 +31181,7 @@ msgstr "Introduïu una tipografia substituta a la caixa."
 
 #: ../share/extensions/replace_font.py:253
 msgid "Please enter a replacement font in the replace all box."
-msgstr "Introduïu un tipografia substituta a totes les caixes."
+msgstr "Introduïu una tipografia substituta a totes les caixes."
 
 #: ../share/extensions/summersnight.py:44
 msgid ""
@@ -31235,7 +31235,7 @@ msgstr "Oops... L'element \"%s\" no és a la capa web lliscadora"
 
 #: ../share/extensions/webslicer_export.py:57
 msgid "You must give a directory to export the slices."
-msgstr "Cal que doneu un directori per exportar el fragments."
+msgstr "Cal que doneu un directori per exportar els fragments."
 
 #: ../share/extensions/webslicer_export.py:69
 #, python-format
@@ -31433,9 +31433,9 @@ msgstr ""
 "Ajusta el to, la saturació, i la brillantor de la representació HSL dels "
 "objectes en color.\n"
 "Opcions:\n"
-"    * To: gir en graus  (dona voltes).\n"
-"    * Saturació: afegeix/treu % (min=-100, màx=100).\n"
-"    * Brillantor: afegeix/treu % (min=-100, màx=100).\n"
+"    * To: gir en graus  (dóna voltes).\n"
+"    * Saturació: afegeix/treu % (mín=-100, màx=100).\n"
+"    * Brillantor: afegeix/treu % (mín=-100, màx=100).\n"
 "    * To/Saturació/Brillantor aleatòries: Fes aleatoris el valor dels "
 "paràmetres.\n"
 "      "
@@ -32081,7 +32081,7 @@ msgstr ""
 "- El paràmetre unitat base especifica en quina unitat de les coordenades està "
 "la sortida (96 px = 1 in).\n"
 "- Tipus d'elements suportats\n"
-"    - Camins ( línies i splines)\n"
+"    - Camins (línies i splines)\n"
 "    - Rectangles\n"
 "    - Clons (la referència creuada amb l'original s'ha perdut)\n"
 "- L'opció de sortida spline ROBO-Master només es pot llegir correctament amb "
@@ -32284,7 +32284,7 @@ msgid ""
 "home directory."
 msgstr ""
 "* No escriviu l'extensió del fitxer, ja s'afegirà automàticament.\n"
-"* El camí relatius (o noms de fitxers sense camí) són relatius a la "
+"* El camí relatiu (o noms de fitxers sense camí) són relatius a la "
 "carpeta de l'usuari."
 
 #: ../share/extensions/extrude.inx.h:3
@@ -32389,7 +32389,7 @@ msgstr "Empra coordenades polars"
 msgid ""
 "When set, Isotropic scaling uses smallest of width/xrange or height/yrange"
 msgstr ""
-"Quan està configurat , l'escalat isotròpic empra el mínim entre amplada/rangX "
+"Quan està configurat, l'escalat isotròpic empra el mínim entre amplada/rangX "
 "o alçada/rangY"
 
 #: ../share/extensions/funcplot.inx.h:12
@@ -32524,10 +32524,10 @@ msgstr ""
 "El connector Gcodetools: converteix els camins a Gcode (usant interpolació "
 "circular), fa desplaçament de camins i grava cantons afilats usant talladors "
 "de con. Aquest connector calcula Gcode per als camins mitjançant la "
-"interpolació circular o moviment lineal quan sigui necessari. El tutorials, "
-"manuals i suport es poden trobar al fòrum de suport de anglès: "
-"http://www.cnc-club.ru/gcodetools i al fòrum de suport de Rússia: "
-"http://www.cnc-club.ru/gcodetoolsru Credits: Nick Drobchenko, Vladimir "
+"interpolació circular o moviment lineal quan sigui necessari. Els tutorials, "
+"manuals i suport es poden trobar al fòrum de suport en anglès: "
+"http://www.cnc-club.ru/gcodetools i al fòrum de suport en rus: "
+"http://www.cnc-club.ru/gcodetoolsru Crèdits: Nick Drobchenko, Vladimir "
 "Kalyaev, John Brooker, Henry Nicolas, Chris Lusby Taylor. Gcodetools ver. 1.7"
 
 #: ../share/extensions/gcodetools_about.inx.h:5
@@ -32625,7 +32625,7 @@ msgid ""
 "+Ctrl+G) 3. Press Apply Suspected small objects will be marked out by "
 "colored arrows."
 msgstr ""
-"Ús: 1. Seleccioneu totes les desplaçaments d'àrea (traços grisos) 2. Objecte "
+"Ús: 1. Seleccioneu totes els desplaçaments d'àrea (traços grisos) 2. Objecte "
 "/ Desagrupa (Maj+ Ctrl + G) 3. Feu clic a Aplica, els objectes petits es "
 "marcaran amb fletxes de colors."
 
@@ -32875,7 +32875,7 @@ msgstr "Capgira l'eix «Y» i parametritza Gcode "
 #: ../share/extensions/gcodetools_lathe.inx.h:44
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:33
 msgid "Round all values to 4 digits"
-msgstr "Arredoneix tots el valors a 4 dígits"
+msgstr "Arredoneix tots els valors a 4 dígits"
 
 #: ../share/extensions/gcodetools_area.inx.h:52
 #: ../share/extensions/gcodetools_dxf_points.inx.h:24
@@ -33054,7 +33054,7 @@ msgstr ""
 "(desplaçament, escala, mirall, rotació en el pla XY) del camí. Mode 3 punts "
 "només: no poseu els tres punts en una sola línia (utilitzeu el mode 2 punts "
 "en el seu lloc). Podeu modificar després els valors de la superfície Z, la "
-"profunditat Z utilitzant l'eina de text (3ra coordenada). Si no hi ha punts "
+"profunditat Z utilitzant l'eina de text (3a coordenada). Si no hi ha punts "
 "dins de la capa actual es prenen de la capa superior. No desagrupeu els punts "
 "d'orientació! Podeu seleccionar usant doble clic per entrar el grup o amb "
 "Ctrl + Clic. Ara premeu s'aplicarà per crear punts de control (conjunt "
@@ -33118,7 +33118,7 @@ msgstr "Prepara el camí per al plasma"
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:2
 msgid "Prepare path for plasma or laser cuters"
-msgstr "Prepara el camí per al plasma el cúter laser"
+msgstr "Prepara el camí per al plasma el làser cúter"
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:3
 msgid "Create in-out paths"
@@ -33253,7 +33253,7 @@ msgstr ""
 "\n"
 "Si la vora és zero, el patró serà discontinu als cantons. Utilitzeu una vora "
 "positiva, preferiblement més gran que la mida de cel·la, per produir una unió "
-"suau del patró als cantons. Utilitzeu una vora negatiu per reduir la mida del "
+"suau del patró als cantons. Utilitzeu una vora negativa per reduir la mida del "
 "patró i obtenir una vora buida."
 
 #: ../share/extensions/gimp_xcf.inx.h:1
@@ -33779,7 +33779,7 @@ msgstr ""
 "Aquesta extensió renderitza una línia de text usant\n"
 "tipus de lletra\"Hershey\" per a impressores, derivats de \n"
 "NBS SP-424 1976-04, \"Una contribució a \n"
-"les tècniques d'escritura per ordinador: Taules de \n"
+"les tècniques d'escriptura per ordinador: Taules de \n"
 "coordenades pel repertori Hershey's Repertory dels\n"
 "tipus de lletra occidentals i dels símbols gràfics.\"\n"
 "\n"
@@ -33919,7 +33919,7 @@ msgstr "Gira en sentit horari:"
 #: ../share/extensions/hpgl_output.inx.h:15
 #: ../share/extensions/plotter.inx.h:34
 msgid "Rotation of the drawing (Default: 0°)"
-msgstr "Gir del dibuix (Per defecte: 0º)"
+msgstr "Gir del dibuix (Per defecte: 0°)"
 
 #: ../share/extensions/hpgl_output.inx.h:16
 #: ../share/extensions/plotter.inx.h:35
@@ -35017,7 +35017,7 @@ msgstr "Orientació del text: "
 
 #: ../share/extensions/measure.inx.h:5
 msgid "Angle [with Fixed Angle option only] (°):"
-msgstr "Angle [només amb l'opció d'angle fixat] (º):"
+msgstr "Angle [només amb l'opció d'angle fixat] (°):"
 
 #: ../share/extensions/measure.inx.h:6
 msgid "Font size (px):"
@@ -35485,7 +35485,7 @@ msgstr ""
 
 #: ../share/extensions/plotter.inx.h:21
 msgid "Parallel (LPT) connections are not supported."
-msgstr "No es suporten les connexions paral·lel (LPT)."
+msgstr "No se suporten les connexions paral·lel (LPT)."
 
 #: ../share/extensions/plotter.inx.h:32
 msgid ""
@@ -35499,7 +35499,7 @@ msgstr ""
 
 #: ../share/extensions/plotter.inx.h:33
 msgid "Rotation (°, clockwise):"
-msgstr "Gira en sentit horari(º):"
+msgstr "Gira en sentit horari(°):"
 
 #: ../share/extensions/plotter.inx.h:52
 msgid "Show debug information"
@@ -35532,7 +35532,7 @@ msgstr "Sortida d'AutoCAD Plot"
 
 #: ../share/extensions/plt_output.inx.h:3
 msgid "Save a file for plotters"
-msgstr "Desa un fitxer per a plóters"
+msgstr "Desa un fitxer per a plòters"
 
 #: ../share/extensions/polyhedron_3d.inx.h:1
 msgid "3D Polyhedron"
@@ -35932,7 +35932,7 @@ msgstr "Pas (mida entre dents):"
 
 #: ../share/extensions/render_gears.inx.h:4
 msgid "Pressure angle (degrees):"
-msgstr "Angle de pressió (º):"
+msgstr "Angle de pressió (°):"
 
 #: ../share/extensions/render_gears.inx.h:5
 msgid "Diameter of center hole (0 for none):"
@@ -36206,7 +36206,7 @@ msgid ""
 "level."
 msgstr ""
 "Aquesta extensió optimitza el fitxer SVG d'acord a les següents opcions:\n"
-"    * Escurça els nom de color: Converteix tots els colors a format #RRGGBB "
+"    * Escurça els noms de colors: Converteix tots els colors a format #RRGGBB "
 "o #RGB.\n"
 "    * Converteix els atributs CSS a XML: converteix els estils des de les "
 "etiquetes d'estils i declaracions d'estil interior=\"\" a atributs XML.\n"
@@ -36247,7 +36247,7 @@ msgstr ""
 "més curt a l'element més referenciat. Per exemple, #linearGradient5621, "
 "referenciat 100 cops, es pot convertir en #a.\n"
 "    * Preserva els noms ID creats manualment que no s'acabin amb dígits: en "
-"general, la sortida SVG optimitzada el suprimeix, però si es necessari per "
+"general, la sortida SVG optimitzada el suprimeix, però si és necessari per "
 "referències (p.e. #middledot), podeu usar aquesta opció.\n"
 "    * Preserva aquests noms ID, separats amb coma: podeu usar-ho junt amb "
 "les altres opcions de preservació si voleu preservar més noms ID "
@@ -36659,7 +36659,7 @@ msgid ""
 "Each layer split into it's own svg file and collected as a tape archive (tar "
 "file)"
 msgstr ""
-"Cada capa divideix el seu propi fitxer svg i el colecta com un sol fitxer "
+"Cada capa divideix el seu propi fitxer svg i el recull com un sol fitxer "
 "(fitxer tar)"
 
 #: ../share/extensions/text_braille.inx.h:1
