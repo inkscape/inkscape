@@ -3884,17 +3884,18 @@ void sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_
             items_to_select.push_back(*i);
         }
     } else {
-        GSList *i = NULL;
-        for (std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();i++) {
-            apply_to_items = g_slist_prepend(apply_to_items, *i);
-            items_to_select.push_back(*i);
+        SPItem *i = NULL;
+        for (std::vector<SPItem*>::const_iterator j=items.begin();j!=items.end();j++) {
+            i=*j;
+            apply_to_items = g_slist_prepend(apply_to_items, i);
+            items_to_select.push_back(i);
         }
 
-        Inkscape::XML::Node *dup = SP_OBJECT(i->data)->getRepr()->duplicate(xml_doc);
+        Inkscape::XML::Node *dup = SP_OBJECT(i)->getRepr()->duplicate(xml_doc);
         mask_items = g_slist_prepend(mask_items, dup);
 
         if (remove_original) {
-            SPObject *item = reinterpret_cast<SPObject*>(i->data);
+            SPObject *item = reinterpret_cast<SPObject*>(i);
             items_to_delete = g_slist_prepend(items_to_delete, item);
         }
     }
