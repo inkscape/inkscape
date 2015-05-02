@@ -57,6 +57,7 @@ set(extension_SRC
 	internal/vsd-input.cpp
 	internal/wmf-inout.cpp
 	internal/wmf-print.cpp
+	internal/wpg-input.cpp
 
 	internal/filter/filter-all.cpp
 	internal/filter/filter-file.cpp
@@ -142,6 +143,7 @@ set(extension_SRC
 	internal/vsd-input.h
 	internal/wmf-inout.h
 	internal/wmf-print.h
+	internal/wpg-input.h
 )
 
 if(WIN32)

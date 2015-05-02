@@ -226,7 +226,8 @@ packaging/macosx/ScriptExec/build
 packaging/macosx/Inkscape.app
 
 # cmake bits
-*.cmake
+cmake_install.cmake
+cmake_uninstall.cmake
 CMakeCache.txt
 CMakeFiles
 Makefile
