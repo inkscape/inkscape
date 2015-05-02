@@ -326,7 +326,7 @@ static void sp_selection_copy_impl(std::vector<SPItem*> const &items, std::vecto
 {
     // Sort items:
     std::vector<SPItem*> sorted_items(items);
-    sort(sorted_items.begin(),sorted_items.end(),sp_object_compare_position);
+    sort(sorted_items.begin(),sorted_items.end(),sp_object_compare_position_bool);
 
     // Copy item reprs:
     for (std::vector<SPItem*>::const_iterator i = sorted_items.begin(); i != sorted_items.end(); i++) {
@@ -3245,7 +3245,7 @@ sp_selection_tile(SPDesktop *desktop, bool apply)
 
     std::vector<SPItem*> items (selection->itemList());
 
-    sort(items.begin(),items.end(),sp_object_compare_position);
+    sort(items.begin(),items.end(),sp_object_compare_position_bool);
 
     // bottommost object, after sorting
     SPObject *parent = items[0]->parent;
@@ -3836,7 +3836,7 @@ void sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_
 
     std::vector<SPItem*> items(selection->itemList());
 
-    sort(items.begin(),items.end(),sp_object_compare_position);
+    sort(items.begin(),items.end(),sp_object_compare_position_bool);
 
     // See lp bug #542004
     selection->clear();

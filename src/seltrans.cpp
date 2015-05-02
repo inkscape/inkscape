@@ -529,7 +529,7 @@ void Inkscape::SelTrans::stamp()
         } else {
             /* Build cache */
             l = selection->itemList();
-            sort(l.begin(),l.end(),sp_object_compare_position);
+            sort(l.begin(),l.end(),sp_object_compare_position_bool);
             _stamp_cache = l;
         }
 

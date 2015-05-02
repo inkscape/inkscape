@@ -876,6 +876,7 @@ public:
  *   -1    first object's position is less than the second   \endverbatim
  */
 int sp_object_compare_position(SPObject const *first, SPObject const *second);
+bool sp_object_compare_position_bool(SPObject const *first, SPObject const *second);
 
 
 #endif // SP_OBJECT_H_SEEN

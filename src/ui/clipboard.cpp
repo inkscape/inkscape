@@ -674,7 +674,7 @@ void ClipboardManagerImpl::_copySelection(Inkscape::Selection *selection)
 
     // copy the representation of the items
     std::vector<SPItem*> sorted_items(itemlist);
-    sort(sorted_items.begin(),sorted_items.end(),sp_object_compare_position);
+    sort(sorted_items.begin(),sorted_items.end(),sp_object_compare_position_bool);
 
     for(std::vector<SPItem*>::const_iterator i=sorted_items.begin();i!=sorted_items.end();i++){
         SPItem *item = *i;

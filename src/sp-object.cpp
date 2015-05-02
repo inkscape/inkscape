@@ -357,6 +357,10 @@ int sp_object_compare_position(SPObject const *first, SPObject const *second)
     return result;
 }
 
+bool sp_object_compare_position_bool(SPObject const *first, SPObject const *second){
+    return sp_object_compare_position(first,second)<0;
+}
+
 
 SPObject *SPObject::appendChildRepr(Inkscape::XML::Node *repr) {
     if ( !cloned ) {
