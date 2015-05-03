@@ -61,12 +61,23 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin CACHE INTERNAL "" FORCE )
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib CACHE INTERNAL "" FORCE )
 
 # -----------------------------------------------------------------------------
+#
+# -----------------------------------------------------------------------------
+set(GMOCK_DIR "${CMAKE_SOURCE_DIR}/gtest/gmock-1.7.0"
+  CACHE PATH "The path to the GoogleMock test framework.")
+
+if(EXISTS "${GMOCK_DIR}" AND IS_DIRECTORY "${GMOCK_DIR}")
+	set(GMOCK_PRESENT ON)
+endif()
+
+# -----------------------------------------------------------------------------
 # Options
 # -----------------------------------------------------------------------------
 option(WITH_DBUS "Compile with support for DBus interface" OFF)
 option(ENABLE_LCMS "Compile with LCMS support" ON)
 option(WITH_GNOME_VFS "Compile with support for Gnome VFS" ON)
 #option(WITH_INKJAR "Enable support for openoffice files (SVG jars)" ON)
+option(WITH_GTEST "Compile with Google Test support" ${GMOCK_PRESENT})
 
 option(WITH_PROFILING "Turn on profiling" OFF) # Set to true if compiler/linker should enable profiling
 
@@ -165,4 +176,13 @@ if(UNIX)
 
 else()
 	# TODO, WIN32/APPLE
+endif()
+
+#-----------------------------------------------------------------------------
+
+add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND})
+
+if (WITH_GTEST)
+	enable_testing()
+	add_subdirectory(test EXCLUDE_FROM_ALL)
 endif()

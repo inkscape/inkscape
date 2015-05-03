@@ -213,6 +213,14 @@ if(WITH_DBUS)
 	endif()
 endif()
 
+if(WITH_GTEST)
+	if(EXISTS "${GMOCK_DIR}" AND IS_DIRECTORY "${GMOCK_DIR}")
+	
+	else()
+		set(WITH_GTEST off)
+	endif()
+endif()
+
 # ----------------------------------------------------------------------------
 # CMake's builtin
 # ----------------------------------------------------------------------------
