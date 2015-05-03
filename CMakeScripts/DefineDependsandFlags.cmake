@@ -19,7 +19,6 @@ list(APPEND INKSCAPE_INCS_SYS ${GSL_INCLUDE_DIRS})
 list(APPEND INKSCAPE_LIBS ${GSL_LIBRARIES})
 if (WIN32)
 	list(APPEND INKSCAPE_LIBS "-L$ENV{DEVLIBS_PATH}/lib")  # FIXME
-	list(APPEND INKSCAPE_LIBS "-lintl.dll")  # FIXME
 	list(APPEND INKSCAPE_LIBS "-lpangocairo-1.0.dll")  # FIXME
 	list(APPEND INKSCAPE_LIBS "-lpangoft2-1.0.dll")  # FIXME
 	list(APPEND INKSCAPE_LIBS "-lpangowin32-1.0.dll")  # FIXME
@@ -31,23 +30,13 @@ elseif(APPLE)
 		# Cmake then can rely on the hard-coded paths in its modules.
 		# Only prepend search path if $CMAKE_PREFIX_PATH is defined:
 		list(APPEND INKSCAPE_LIBS "-L$ENV{CMAKE_PREFIX_PATH}/lib")  # FIXME
-		# TODO: verify whether linking the next two libs explicitly is always
-	  	# required, or only if MacPorts is installed in custom prefix:
-		list(APPEND INKSCAPE_LIBS "-liconv")  # FIXME
-		list(APPEND INKSCAPE_LIBS "-lintl")  # FIXME
 	endif()
 	list(APPEND INKSCAPE_LIBS "-lpangocairo-1.0")  # FIXME
 	list(APPEND INKSCAPE_LIBS "-lpangoft2-1.0")  # FIXME
 	list(APPEND INKSCAPE_LIBS "-lfontconfig")  # FIXME
-	# GTK+ backend
 	if(${GTK+_2.0_TARGET} MATCHES "x11")
 		# only link X11 if using X11 backend of GTK2
 		list(APPEND INKSCAPE_LIBS "-lX11")  # FIXME
-	elseif(${GTK+_2.0_TARGET} MATCHES "quartz")
-		# TODO: gtk-mac-integration (currently only useful for osxmenu branch)
-		# 1) add configure option (ON/OFF) for gtk-mac-integration
-		# 2) add checks (GTK+ backend must be "quartz")
-		# 3) link relevant lib(s)
 	endif()
 else()
 	list(APPEND INKSCAPE_LIBS "-ldl")  # FIXME
@@ -92,6 +81,11 @@ if(ENABLE_LCMS)
         endif()
     endif()
 endif()
+
+find_package(Iconv REQUIRED)
+list(APPEND INKSCAPE_INCS_SYS ${ICONV_INCLUDE_DIRS})
+list(APPEND INKSCAPE_LIBS ${ICONV_LIBRARIES})
+add_definitions(${ICONV_DEFINITIONS})
 
 find_package(BoehmGC REQUIRED)
 list(APPEND INKSCAPE_INCS_SYS ${BOEHMGC_INCLUDE_DIRS})
@@ -267,6 +261,11 @@ list(APPEND INKSCAPE_LIBS
 	${GTK2_GOBJECT_LIBRARY}
 )
 
+
+find_package(Intl REQUIRED)
+list(APPEND INKSCAPE_INCS_SYS ${Intl_INCLUDE_DIRS})
+list(APPEND INKSCAPE_LIBS ${Intl_LIBRARIES})
+add_definitions(${Intl_DEFINITIONS})
 
 find_package(Freetype REQUIRED)
 list(APPEND INKSCAPE_INCS_SYS ${FREETYPE_INCLUDE_DIRS})
