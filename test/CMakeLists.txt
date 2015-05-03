@@ -433,6 +433,7 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR}/__/src)
 
 add_executable(unittest
 	unittest.cpp
+	src/attributes-test.cpp
 	${inkscape_SRC}
 	${sp_SRC}
 	${inkscape_global_SRC}
