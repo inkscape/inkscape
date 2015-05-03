@@ -916,14 +916,12 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
         _empcolor = empcolor;
     }
 
-    std::cout << "CanvasXYGrid::Render: " << no_emp_when_zoomed_out << " " << empspacing << " " << _empcolor << " " << scaled << std::endl;
     cairo_save(buf->ct);
     cairo_translate(buf->ct, -buf->rect.left(), -buf->rect.top());
     cairo_set_line_width(buf->ct, 1.0);
     cairo_set_line_cap(buf->ct, CAIRO_LINE_CAP_SQUARE);
 
     if (!render_dotted) {
-        // Render lines
         gint ylinenum;
         gdouble y;
         for (y = syg, ylinenum = ylinestart; y < buf->rect.bottom(); y += sw[Geom::Y], ylinenum++) {
@@ -946,7 +944,6 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
             }
         }
     } else {
-        // Render dots
         gint ylinenum;
         gdouble y;
         for (y = syg, ylinenum = ylinestart; y < buf->rect.bottom(); y += sw[Geom::Y], ylinenum++) {

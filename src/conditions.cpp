@@ -77,7 +77,7 @@ static gchar *preprocessLanguageCode(gchar *lngcode) {
 static bool evaluateSystemLanguage(SPItem const *item, gchar const *value) {
     if ( NULL == value )
         return true;
-    std::cout << "evaluateSystemLanguage: " << value << std::endl;
+
     std::set<Glib::ustring> language_codes;
     gchar *str = NULL;
     gchar **strlist = g_strsplit( value, ",", 0);
@@ -105,7 +105,7 @@ static bool evaluateSystemLanguage(SPItem const *item, gchar const *value) {
 
     SPDocument *document = item->document;
     Glib::ustring document_language = document->getLanguage();
-    std::cout << "language: |" << document_language << "|" << std::endl;
+
     if (document_language.size() == 0)
         return false;
 

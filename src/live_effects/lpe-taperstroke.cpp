@@ -275,7 +275,7 @@ Geom::PathVector LPETaperStroke::doEffect_path(Geom::PathVector const& path_in)
         pat_str << "M 1,0 C " << 1 - (double)smoothing << ",0 0,0.5 0,0.5 0,0.5 " << 1 - (double)smoothing << ",1 1,1";
 
         pat_vec = sp_svg_read_pathv(pat_str.str().c_str());
-        pwd2.concat(stretch_along(pathv_out[0].toPwSb(), pat_vec[0], fabs(line_width)));
+        pwd2.concat(stretch_along(pathv_out[0].toPwSb(), pat_vec[0], -fabs(line_width)));
         throwaway_path = Geom::path_from_piecewise(pwd2, LPE_CONVERSION_TOLERANCE)[0];
 
         real_path.append(throwaway_path);
@@ -304,7 +304,7 @@ Geom::PathVector LPETaperStroke::doEffect_path(Geom::PathVector const& path_in)
         pat_vec = sp_svg_read_pathv(pat_str_1.str().c_str());
 
         pwd2 = Piecewise<D2<SBasis> >();
-        pwd2.concat(stretch_along(pathv_out[2].toPwSb(), pat_vec[0], fabs(line_width)));
+        pwd2.concat(stretch_along(pathv_out[2].toPwSb(), pat_vec[0], -fabs(line_width)));
 
         throwaway_path = Geom::path_from_piecewise(pwd2, LPE_CONVERSION_TOLERANCE)[0];
         if (!Geom::are_near(real_path.finalPoint(), throwaway_path.initialPoint()) && real_path.size() >= 1) {

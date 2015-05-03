@@ -1678,7 +1678,6 @@ CRStatement *
 cr_statement_new_at_font_face_rule (CRStyleSheet * a_sheet,
                                     CRDeclaration * a_font_decls)
 {
-        printf("cr_statement_new_at_font_face_rule\n");
         CRStatement *result = (CRStatement *)g_try_malloc (sizeof (CRStatement));
 
         if (!result) {
