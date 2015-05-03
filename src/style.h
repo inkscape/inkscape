@@ -111,6 +111,24 @@ public:
     /** Full font name, as font_factory::ConstructFontSpecification would give, for internal use. */
     SPIString font_specification;
 
+    /* Font variants -------------------- */
+    /** Font variant ligatures */
+    SPIEnum font_variant_ligatures;
+    /** Font variant position (subscript/superscript) */
+    SPIEnum font_variant_position;
+    /** Font variant caps (small caps) */
+    SPIEnum font_variant_caps;
+    /** Font variant numeric (numerical formatting) */
+    SPIEnum font_variant_numeric;
+    /** Font variant alternates (alternates/swatches) */
+    SPIEnum font_variant_alternates;
+    /** Font variant East Asian */
+    SPIEnum font_variant_east_asian;
+    /** Font variant shorthand (Redefines CSS 2.1 value) */
+    // ? font_variant;
+    /** Font feature settings */
+    // ? font_feature_settings;
+
     /* Text ----------------------------- */
 
     /** First line indent of paragraphs (css2 16.1) */

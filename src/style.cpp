@@ -118,6 +118,14 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     font(),                                                      // SPIFont
     font_specification( "-inkscape-font-specification"       ),  // SPIString
 
+    // Font variants
+    font_variant_ligatures( "font-variant-ligatures",  enum_font_variant_ligatures,  SP_CSS_FONT_VARIANT_LIGATURES_NORMAL  ),
+    font_variant_position(  "font-variant-position",   enum_font_variant_position,   SP_CSS_FONT_VARIANT_POSITION_NORMAL   ),
+    font_variant_caps(      "font-variant-caps",       enum_font_variant_caps,       SP_CSS_FONT_VARIANT_CAPS_NORMAL       ),
+    font_variant_numeric(   "font-variant-numeric",    enum_font_variant_numeric,    SP_CSS_FONT_VARIANT_NUMERIC_NORMAL    ),
+    font_variant_alternates("font-variant-alternates", enum_font_variant_alternates, SP_CSS_FONT_VARIANT_ALTERNATES_NORMAL ),
+    font_variant_east_asian("font-variant-east_asian", enum_font_variant_east_asian, SP_CSS_FONT_VARIANT_EAST_ASIAN_NORMAL ),
+
     // Text related properties
     text_indent(      "text-indent",                     0.0 ),  // SPILength
     text_align(       "text-align",      enum_text_align,      SP_CSS_TEXT_ALIGN_START    ),
