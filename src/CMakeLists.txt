@@ -519,7 +519,7 @@ add_dependencies(inkscape inkscape_version)
 target_link_libraries(inkscape
 	# order from automake
 	#sp_LIB
-	nrtype_LIB
+	#nrtype_LIB
 
 	#inkscape_LIB
 	#sp_LIB # annoying, we need both!

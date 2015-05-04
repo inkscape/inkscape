@@ -352,6 +352,8 @@ endif()
 include(${CMAKE_CURRENT_LIST_DIR}/IncludeJava.cmake)
 # end Dependencies
 
+list(REMOVE_DUPLICATES INKSCAPE_LIBS)
+list(REMOVE_DUPLICATES INKSCAPE_INCS_SYS)
 
 # C/C++ Flags
 include_directories(${INKSCAPE_INCS})
