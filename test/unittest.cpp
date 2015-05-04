@@ -11,6 +11,11 @@
 
 #include "gtest/gtest.h"
 
+#include <gtkmm.h>
+
+#include "inkgc/gc-core.h"
+#include "inkscape.h"
+
 namespace {
 
 // Ensure that a known positive test works
@@ -25,6 +30,18 @@ TEST(PreTest, WorldIsSane)
 } // namespace
 
 int main(int argc, char **argv) {
+
+    // setup general environment
+#if !GLIB_CHECK_VERSION(2,36,0)
+    g_type_init();
+#endif
+    int tmpArgc = 1;
+    char const *tmp[] = {"foo", ""};
+    char **tmpArgv = const_cast<char **>(tmp);
+    Gtk::Main(tmpArgc, tmpArgv);
+
+    Inkscape::GC::init();
+
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
