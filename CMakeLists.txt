@@ -84,6 +84,7 @@ option(WITH_PROFILING "Turn on profiling" OFF) # Set to true if compiler/linker 
 option(WITH_GTKSPELL "Compile with support for GTK spelling widget" ON)
 option(ENABLE_POPPLER "Compile with support of libpoppler" ON)
 option(ENABLE_POPPLER_CAIRO "Compile with support of libpoppler-cairo for rendering PDF preview (depends on ENABLE_POPPLER)" ON)
+option(WITH_IMAGE_MAGICK "Compile with support of ImageMagick for raster extensions and image import resolution" ON)
 option(WITH_LIBCDR "Compile with support of libcdr for CorelDRAW Diagrams" ON)
 option(WITH_LIBVISIO "Compile with support of libvisio for Microsoft Visio Diagrams" ON)
 option(WITH_LIBWPG "Compile with support of libwpg for WordPerfect Graphics" ON)

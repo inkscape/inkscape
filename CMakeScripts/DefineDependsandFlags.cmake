@@ -330,16 +330,22 @@ find_package(ZLIB REQUIRED)
 list(APPEND INKSCAPE_INCS_SYS ${ZLIB_INCLUDE_DIRS})
 list(APPEND INKSCAPE_LIBS ${ZLIB_LIBRARIES})
 
-find_package(ImageMagick COMPONENTS MagickCore Magick++)
-if(ImageMagick_FOUND)
-	list(APPEND INKSCAPE_INCS_SYS ${ImageMagick_MagickCore_INCLUDE_DIR})
-	list(APPEND INKSCAPE_LIBS ${ImageMagick_Magick++_LIBRARY})
-	set(WITH_IMAGE_MAGICK ON)  # enable 'Extensions > Raster'
-	# TODO: Cmake's ImageMagick module misses required defines for newer
-	# versions of ImageMagick. See also:
-	# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=776832
-	#add_definitions(-DMAGICKCORE_HDRI_ENABLE=0)  # FIXME (version check?)
-	#add_definitions(-DMAGICKCORE_QUANTUM_DEPTH=16)  # FIXME (version check?)
+if(WITH_IMAGE_MAGICK)
+	find_package(ImageMagick COMPONENTS MagickCore Magick++)
+	if(ImageMagick_FOUND)
+		# the component-specific paths apparently fail to get detected correctly
+		# on some linux distros (or with older Cmake versions).
+		# Use variables which list all include dirs and libraries instead:
+		list(APPEND INKSCAPE_INCS_SYS ${ImageMagick_INCLUDE_DIRS})
+		list(APPEND INKSCAPE_LIBS ${ImageMagick_LIBRARIES})
+		# TODO: Cmake's ImageMagick module misses required defines for newer
+		# versions of ImageMagick. See also:
+		# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=776832
+		#add_definitions(-DMAGICKCORE_HDRI_ENABLE=0)  # FIXME (version check?)
+		#add_definitions(-DMAGICKCORE_QUANTUM_DEPTH=16)  # FIXME (version check?)
+	else()
+		set(WITH_IMAGE_MAGICK OFF)  # enable 'Extensions > Raster'
+	endif()
 endif()
 
 include(${CMAKE_CURRENT_LIST_DIR}/IncludeJava.cmake)
