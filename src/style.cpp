@@ -573,7 +573,15 @@ SPStyle::read( SPObject *object, Inkscape::XML::Node *repr ) {
     /* 3 Presentation attributes */
     // std::cout << " MERGING PRESENTATION ATTRIBUTES" << std::endl;
     for(std::vector<SPIBase*>::size_type i = 0; i != _properties.size(); ++i) {
-        _properties[i]->readAttribute( repr );
+
+        // Shorthands are not allowed as presentation properites.
+        // Note: text-decoration is converted to a shorthand in CSS 3 but can still be
+        // read as a non-shorthand so it should not be in this list.
+        // We could add a flag to SPIBase to avoid string comparison.
+        if( _properties[i]->name.compare( "font" ) != 0 &&
+            _properties[i]->name.compare( "marker" ) != 0 ) {
+            _properties[i]->readAttribute( repr );
+        }
     }
     // for(SPPropMap::iterator i = _propmap.begin(); i != _propmap.end(); ++i ) {
     //     (this->*(i->second)).readAttribute( repr );
