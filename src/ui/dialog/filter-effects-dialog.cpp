@@ -8,6 +8,7 @@
  *   Felipe C. da S. Sanches <juca@members.fsf.org>
  *   Jon A. Cruz <jon@joncruz.org>
  *   Abhishek Sharma
+ *   insaner
  *
  * Copyright (C) 2007 Authors
  *
@@ -1360,8 +1361,15 @@ FilterEffectsDialog::FilterModifier::FilterModifier(FilterEffectsDialog& d)
     ((Gtk::CellRendererText*)_list.get_column(1)->get_first_cell())->
         signal_edited().connect(sigc::mem_fun(*this, &FilterEffectsDialog::FilterModifier::on_name_edited));
 
+    _list.append_column("#", _columns.count);
+    _list.get_column(2)->set_sizing(Gtk::TREE_VIEW_COLUMN_AUTOSIZE);
+    _list.get_column(2)->set_expand(false);
+
     sw->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
     _list.get_column(1)->set_resizable(true);
+    _list.get_column(1)->set_sizing(Gtk::TREE_VIEW_COLUMN_AUTOSIZE);
+    _list.get_column(1)->set_expand(true);
+    
     _list.set_reorderable(true);
     _list.enable_model_drag_dest (Gdk::ACTION_MOVE);
 
@@ -1494,6 +1502,7 @@ void FilterEffectsDialog::FilterModifier::update_selection(Selection *sel)
             (*iter)[_columns.sel] = 0;
         }
     }
+    update_counts();
 }
 
 void FilterEffectsDialog::FilterModifier::on_filter_selection_changed()
@@ -1563,6 +1572,15 @@ void FilterEffectsDialog::FilterModifier::on_selection_toggled(const Glib::ustri
         update_selection(sel);
         DocumentUndo::done(doc, SP_VERB_DIALOG_FILTER_EFFECTS,  _("Apply filter"));
     }
+}
+
+
+void FilterEffectsDialog::FilterModifier::update_counts()
+{    
+    for(Gtk::TreeModel::iterator i = _model->children().begin(); i != _model->children().end(); ++i) {
+        SPFilter* f = SP_FILTER((*i)[_columns.filter]);
+        (*i)[_columns.count] = f->getRefCount();
+        }
 }
 
 /* Add all filters in the document to the combobox.
@@ -2419,7 +2437,7 @@ bool FilterEffectsDialog::PrimitiveList::on_motion_notify_event(GdkEventMotion* 
     get_visible_rect(vis);
     int vis_x, vis_y;
     
-    int vis_x2, vis_y2;  // NOTE:  insaner added -- necessary to get the scrolling while dragging to work
+    int vis_x2, vis_y2;
     convert_widget_to_tree_coords(vis.get_x(), vis.get_y(), vis_x2, vis_y2);
     
     convert_tree_to_widget_coords(vis.get_x(), vis.get_y(), vis_x, vis_y);
@@ -2439,7 +2457,6 @@ bool FilterEffectsDialog::PrimitiveList::on_motion_notify_event(GdkEventMotion* 
     else
         _autoscroll_y = 0;
 
-	    // NOTE:  insaner added -- necessary to get the scrolling while dragging to work
     double e2 = ( e->x - vis_x2/2);
     // horizontal scrolling 
     if(e2 < vis_x)
@@ -2752,20 +2769,22 @@ FilterEffectsDialog::FilterEffectsDialog()
     Gtk::ScrolledWindow* sw_infobox = Gtk::manage(new Gtk::ScrolledWindow);
     Gtk::HBox* infobox = Gtk::manage(new Gtk::HBox(/*homogeneous:*/false, /*spacing:*/4));
     Gtk::HBox* hb_prims = Gtk::manage(new Gtk::HBox);
+    Gtk::VBox* vb_prims = Gtk::manage(new Gtk::VBox);
 
     _getContents()->add(*hpaned);
     hpaned->pack1(_filter_modifier);
     hpaned->pack2(_primitive_box);
     _primitive_box.pack_start(*sw_prims);
-    _primitive_box.pack_start(*hb_prims, false, false);
     _primitive_box.pack_start(*sw_infobox, false, false);
     sw_prims->add(_primitive_list);
-    sw_infobox->add(*infobox);
+    sw_infobox->add(*vb_prims);
     infobox->pack_start(_infobox_icon, false, false);
     infobox->pack_start(_infobox_desc, false, false);
     _infobox_desc.set_line_wrap(true);
-    _infobox_desc.set_size_request(200, -1);
+    _infobox_desc.set_size_request(250, -1);
 
+    vb_prims->pack_start(*hb_prims);
+    vb_prims->pack_start(*infobox);
 
     hb_prims->pack_start(_add_primitive, false, false);
     hb_prims->pack_start(_add_primitive_type, false, false);
@@ -2781,7 +2800,7 @@ FilterEffectsDialog::FilterEffectsDialog()
     _add_primitive_type.signal_changed().connect(
         sigc::mem_fun(*this, &FilterEffectsDialog::update_primitive_infobox));
 
-    sw_prims->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);  /* NOTE: insaner -- SCROLL the connections panel thing!!! */
+    sw_prims->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
     sw_prims->set_shadow_type(Gtk::SHADOW_IN);
     sw_infobox->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_NEVER);
     

@@ -79,6 +79,7 @@ void SPFilter::build(SPDocument *document, Inkscape::XML::Node *repr) {
     this->readAttr( "height" );
     this->readAttr( "filterRes" );
     this->readAttr( "xlink:href" );
+    this->_refcount = 0;
 
 	SPObject::build(document, repr);
 
@@ -188,6 +189,15 @@ void SPFilter::set(unsigned int key, gchar const *value) {
         	SPObject::set(key, value);
             break;
     }
+}
+
+
+/**
+ * Returns the number of references to the filter.
+ */
+guint SPFilter::getRefCount() {
+	// NOTE: this is currently updated by sp_style_filter_ref_changed() in style.cpp
+	return _refcount;
 }
 
 /**

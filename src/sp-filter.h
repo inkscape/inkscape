@@ -54,6 +54,9 @@ public:
     NumberOptNumber filterRes;
     SPFilterReference *href;
     sigc::connection modified_connection;
+    
+    guint getRefCount();
+    guint _refcount;
 
     Inkscape::Filters::Filter *_renderer;
 

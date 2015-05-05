@@ -1177,10 +1177,12 @@ void
 sp_style_filter_ref_changed(SPObject *old_ref, SPObject *ref, SPStyle *style)
 {
     if (old_ref) {
+        (dynamic_cast<SPFilter *>( old_ref ))->_refcount--;
         style->filter_modified_connection.disconnect();
     }
     if ( SP_IS_FILTER(ref))
     {
+       (dynamic_cast<SPFilter *>( ref ))->_refcount++;
         style->filter_modified_connection =
            ref->connectModified(sigc::bind(sigc::ptr_fun(&sp_style_filter_ref_modified), style));
     }

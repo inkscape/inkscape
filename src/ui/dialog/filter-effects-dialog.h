@@ -4,6 +4,7 @@
 /* Authors:
  *   Nicholas Bishop <nicholasbishop@gmail.com>
  *   Rodrigo Kumpera <kumpera@gmail.com>
+ *   insaner
  *
  * Copyright (C) 2007 Authors
  *
@@ -69,11 +70,13 @@ private:
                 add(filter);
                 add(label);
                 add(sel);
+                add(count);
             }
 
             Gtk::TreeModelColumn<SPFilter*> filter;
             Gtk::TreeModelColumn<Glib::ustring> label;
             Gtk::TreeModelColumn<int> sel;
+            Gtk::TreeModelColumn<int> count;
         };
 
         void setTargetDesktop(SPDesktop *desktop);
@@ -89,6 +92,7 @@ private:
         bool on_filter_move(const Glib::RefPtr<Gdk::DragContext>& /*context*/, int x, int y, guint /*time*/);
         void on_selection_toggled(const Glib::ustring&);
 
+        void update_counts();
         void update_filters();
         void filter_list_button_release(GdkEventButton*);
         void add_filter();
