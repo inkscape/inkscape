@@ -467,14 +467,14 @@ void ObjectProperties::_labelChanged()
     gchar *id = g_strdup(_entry_id.get_text().c_str());
     g_strcanon(id, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.:", '_');
     if (strcmp(id, item->getId()) == 0) {
-        _label_id.set_markup_with_mnemonic(_("_ID:"));
+        _label_id.set_markup_with_mnemonic(_("_ID:") + Glib::ustring(" "));
     } else if (!*id || !isalnum (*id)) {
         _label_id.set_text(_("Id invalid! "));
     } else if (SP_ACTIVE_DOCUMENT->getObjectById(id) != NULL) {
         _label_id.set_text(_("Id exists! "));
     } else {
         SPException ex;
-        _label_id.set_markup_with_mnemonic(_("_ID:"));
+        _label_id.set_markup_with_mnemonic(_("_ID:") + Glib::ustring(" "));
         SP_EXCEPTION_INIT(&ex);
         item->setAttribute("id", id, &ex);
         DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM, _("Set object ID"));
