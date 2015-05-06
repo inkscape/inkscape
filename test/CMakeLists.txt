@@ -436,6 +436,7 @@ add_executable(unittest
 	doc-per-case-test.cpp
 	src/attributes-test.cpp
 	src/color-profile-test.cpp
+	src/dir-util-test.cpp
 	${inkscape_SRC}
 	${sp_SRC}
 	${inkscape_global_SRC}
