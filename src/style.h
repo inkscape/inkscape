@@ -94,7 +94,7 @@ public:
 
     /** Font style */
     SPIEnum font_style;
-    /** Which substyle of the font */
+    /** Which substyle of the font (CSS 2. CSS 3 redefines as shorthand) */
     SPIEnum font_variant;
     /** Weight of the font */
     SPIEnum font_weight;
@@ -110,6 +110,22 @@ public:
     SPIFont font;
     /** Full font name, as font_factory::ConstructFontSpecification would give, for internal use. */
     SPIString font_specification;
+
+    /* Font variants -------------------- */
+    /** Font variant ligatures */
+    SPIEnum font_variant_ligatures;
+    /** Font variant position (subscript/superscript) */
+    SPIEnum font_variant_position;
+    /** Font variant caps (small caps) */
+    SPIEnum font_variant_caps;
+    /** Font variant numeric (numerical formatting) */
+    SPIEnum font_variant_numeric;
+    /** Font variant alternates (alternates/swatches) */
+    SPIEnum font_variant_alternates;
+    /** Font variant East Asian */
+    SPIEnum font_variant_east_asian;
+    /** Font feature settings (Low level access to TrueType tables) */
+    SPIString font_feature_settings;
 
     /* Text ----------------------------- */
 

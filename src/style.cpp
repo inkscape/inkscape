@@ -14,7 +14,7 @@
  * Copyright (C) 2001 Ximian, Inc.
  * Copyright (C) 2005 Monash University
  * Copyright (C) 2012 Kris De Gussem
- * Copyright (C) 2014 Tavmjong Bah
+ * Copyright (C) 2014-2015 Tavmjong Bah
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -117,6 +117,15 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     font_family(      "font-family",     "sans-serif"        ),  // SPIString w/default
     font(),                                                      // SPIFont
     font_specification( "-inkscape-font-specification"       ),  // SPIString
+
+    // Font variants
+    font_variant_ligatures( "font-variant-ligatures",  enum_font_variant_ligatures,  SP_CSS_FONT_VARIANT_LIGATURES_NORMAL  ),
+    font_variant_position(  "font-variant-position",   enum_font_variant_position,   SP_CSS_FONT_VARIANT_POSITION_NORMAL   ),
+    font_variant_caps(      "font-variant-caps",       enum_font_variant_caps,       SP_CSS_FONT_VARIANT_CAPS_NORMAL       ),
+    font_variant_numeric(   "font-variant-numeric",    enum_font_variant_numeric,    SP_CSS_FONT_VARIANT_NUMERIC_NORMAL    ),
+    font_variant_alternates("font-variant-alternates", enum_font_variant_alternates, SP_CSS_FONT_VARIANT_ALTERNATES_NORMAL ),
+    font_variant_east_asian("font-variant-east_asian", enum_font_variant_east_asian, SP_CSS_FONT_VARIANT_EAST_ASIAN_NORMAL ),
+    font_feature_settings(  "font-feature-settings",   "normal" ),
 
     // Text related properties
     text_indent(      "text-indent",                     0.0 ),  // SPILength
@@ -288,6 +297,15 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     _properties.push_back( &font );
     _properties.push_back( &font_specification );
 
+    // Font variants
+    _properties.push_back( &font_variant_ligatures );
+    _properties.push_back( &font_variant_position );
+    _properties.push_back( &font_variant_caps );
+    _properties.push_back( &font_variant_numeric );
+    _properties.push_back( &font_variant_alternates );
+    _properties.push_back( &font_variant_east_asian );
+    _properties.push_back( &font_feature_settings );
+
     _properties.push_back( &text_indent );
     _properties.push_back( &text_align );
 
@@ -373,6 +391,14 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     //     _propmap.insert( std::make_pair( font_family.name,           reinterpret_cast<SPIBasePtr>(&SPStyle::font_family           ) ) ); 
     //     _propmap.insert( std::make_pair( font.name,                  reinterpret_cast<SPIBasePtr>(&SPStyle::font                  ) ) ); 
     //     _propmap.insert( std::make_pair( font_specification.name,    reinterpret_cast<SPIBasePtr>(&SPStyle::font_specification    ) ) ); 
+
+    // font_variant_ligatures );
+    // font_variant_position );
+    // font_variant_caps );
+    // font_variant_numeric );
+    // font_variant_alternates );
+    // font_variant_east_asian );
+    // font_feature_settings );
 
     //     _propmap.insert( std::make_pair( text_indent.name,           reinterpret_cast<SPIBasePtr>(&SPStyle::text_indent           ) ) );
     //     _propmap.insert( std::make_pair( text_align.name,            reinterpret_cast<SPIBasePtr>(&SPStyle::text_align            ) ) );
@@ -574,9 +600,9 @@ SPStyle::read( SPObject *object, Inkscape::XML::Node *repr ) {
     // std::cout << " MERGING PRESENTATION ATTRIBUTES" << std::endl;
     for(std::vector<SPIBase*>::size_type i = 0; i != _properties.size(); ++i) {
 
-        // Shorthands are not allowed as presentation properites.
-        // Note: text-decoration is converted to a shorthand in CSS 3 but can still be
-        // read as a non-shorthand so it should not be in this list.
+        // Shorthands are not allowed as presentation properites. Note: text-decoration and
+        // font-variant are converted to shorthands in CSS 3 but can still be read as a
+        // non-shorthand for compatability with older renders, so they should not be in this list.
         // We could add a flag to SPIBase to avoid string comparison.
         if( _properties[i]->name.compare( "font" ) != 0 &&
             _properties[i]->name.compare( "marker" ) != 0 ) {
@@ -692,6 +718,29 @@ SPStyle::readIfUnset( gint id, gchar const *val ) {
             break;
         case SP_PROP_FONT:
             font.readIfUnset( val );
+            break;
+
+            /* Font Variants CSS 3 */
+        case SP_PROP_FONT_VARIANT_LIGATURES:
+            font_variant_ligatures.readIfUnset( val );
+            break;
+        case SP_PROP_FONT_VARIANT_POSITION:
+            font_variant_position.readIfUnset( val );
+            break;
+        case SP_PROP_FONT_VARIANT_CAPS:
+            font_variant_caps.readIfUnset( val );
+            break;
+        case SP_PROP_FONT_VARIANT_NUMERIC:
+            font_variant_numeric.readIfUnset( val );
+            break;
+        case SP_PROP_FONT_VARIANT_ALTERNATES:
+            font_variant_alternates.readIfUnset( val );
+            break;
+        case SP_PROP_FONT_VARIANT_EAST_ASIAN:
+            font_variant_east_asian.readIfUnset( val );
+            break;
+        case SP_PROP_FONT_FEATURE_SETTINGS:
+            font_feature_settings.readIfUnset( val );
             break;
 
             /* Text */

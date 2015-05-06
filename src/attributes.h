@@ -424,6 +424,15 @@ enum SPAttributeEnum {
     SP_PROP_FONT_VARIANT,
     SP_PROP_FONT_WEIGHT,
 
+    /* Font Variants CSS 3 */
+    SP_PROP_FONT_VARIANT_LIGATURES,
+    SP_PROP_FONT_VARIANT_POSITION,
+    SP_PROP_FONT_VARIANT_CAPS,
+    SP_PROP_FONT_VARIANT_NUMERIC,
+    SP_PROP_FONT_VARIANT_ALTERNATES,
+    SP_PROP_FONT_VARIANT_EAST_ASIAN,
+    SP_PROP_FONT_FEATURE_SETTINGS,
+
     /* Text Layout */
     SP_PROP_TEXT_INDENT,
     SP_PROP_TEXT_ALIGN,
@@ -446,16 +455,20 @@ enum SPAttributeEnum {
     SP_PROP_TEXT_ANCHOR,
     SP_PROP_WHITE_SPACE,
 
+    /* SVG 2 Text Wrapping */
     SP_PROP_SHAPE_INSIDE,
     SP_PROP_SHAPE_OUTSIDE,
     SP_PROP_SHAPE_PADDING,
     SP_PROP_SHAPE_MARGIN,
     
-    /* Text Decoration */
-    SP_PROP_TEXT_DECORATION,       /* SVG 1 underline etc.( no color or style) OR SVG2 with _LINE, _STYLE, _COLOR values */
-    SP_PROP_TEXT_DECORATION_LINE,  /* SVG 2 underline etc. */
-    SP_PROP_TEXT_DECORATION_STYLE, /* SVG 2 proposed solid [SVG 1], dotted, etc.)*/
-    SP_PROP_TEXT_DECORATION_COLOR, /* SVG 2 proposed same as text [SVG 1], specified*/
+    /* Text Decoration CSS 2/CSS 3 Shorthand */
+    SP_PROP_TEXT_DECORATION,
+    /* Text Decoration CSS 3/SVG 2 */
+    SP_PROP_TEXT_DECORATION_LINE,
+    SP_PROP_TEXT_DECORATION_STYLE,
+    SP_PROP_TEXT_DECORATION_COLOR,
+    SP_PROP_TEXT_DECORATION_FILL,
+    SP_PROP_TEXT_DECORATION_STROKE,
 
     /* Misc */
     SP_PROP_CLIP,
