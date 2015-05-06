@@ -927,7 +927,7 @@ static SPObject *prev_sibling(SPObject *child)
     return prev;
 }
 
-int sp_item_repr_compare_position_obj(SPObject const *first, SPObject const *second)
+bool sp_item_repr_compare_position_bool(SPObject const *first, SPObject const *second)
 {
     return sp_repr_compare_position(((SPItem*)first)->getRepr(),
     		((SPItem*)second)->getRepr())<0;
@@ -952,7 +952,7 @@ sp_selection_raise(Inkscape::Selection *selection, SPDesktop *desktop)
 
     /* Construct reverse-ordered list of selected children. */
     std::vector<SPItem*> rev(items);
-    sort(rev.begin(),rev.end(),sp_item_repr_compare_position);
+    sort(rev.begin(),rev.end(),sp_item_repr_compare_position_bool);
 
     // Determine the common bbox of the selected items.
     Geom::OptRect selected = enclose_items(items);
@@ -1034,7 +1034,7 @@ void sp_selection_lower(Inkscape::Selection *selection, SPDesktop *desktop)
 
     /* Construct direct-ordered list of selected children. */
     std::vector<SPItem*> rev(items);
-    sort(rev.begin(),rev.end(),sp_item_repr_compare_position);
+    sort(rev.begin(),rev.end(),sp_item_repr_compare_position_bool);
 
     // Iterate over all objects in the selection (starting from top).
     if (selected) {
@@ -3518,7 +3518,7 @@ void sp_selection_create_bitmap_copy(SPDesktop *desktop)
     std::vector<SPItem*> items(selection->itemList());
 
     // Sort items so that the topmost comes last
-    sort(items.begin(),items.end(),sp_item_repr_compare_position);
+    sort(items.begin(),items.end(),sp_item_repr_compare_position_bool);
 
     // Generate a random value from the current time (you may create bitmap from the same object(s)
     // multiple times, and this is done so that they don't clash)
