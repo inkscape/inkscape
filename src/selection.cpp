@@ -481,16 +481,20 @@ std::vector<Inkscape::SnapCandidatePoint> Selection::getSnapPoints(SnapPreferenc
 }
 
 void Selection::_removeObjectDescendants(SPObject *obj) {
+    std::vector<SPObject*> toremove;
     for ( std::list<SPObject*>::const_iterator iter=_objs.begin();iter!=_objs.end();iter++ ) {
         SPObject *sel_obj= *iter;
         SPObject *parent = sel_obj->parent;
         while (parent) {
             if ( parent == obj ) {
-                _remove(sel_obj);
+                toremove.push_back(sel_obj);
                 break;
             }
             parent = parent->parent;
         }
+    }
+    for ( std::vector<SPObject*>::const_iterator iter=toremove.begin();iter!=toremove.end();iter++ ) {
+        _remove(*iter);
     }
 }
 
