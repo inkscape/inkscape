@@ -1837,6 +1837,15 @@ void sp_select_same_fill_stroke_style(SPDesktop *desktop, gboolean fill, gboolea
 
     Inkscape::Selection *selection = desktop->getSelection();
     std::vector<SPItem*> items = selection->itemList();
+
+    std::vector<SPItem*> tmp;
+    for (std::vector<SPItem*>::const_iterator iter=all_list.begin();iter!=all_list.end();iter++) {
+        if(!SP_IS_GROUP(*iter)){
+            tmp.push_back(*iter);
+        }
+    }
+    all_list=tmp;
+
     for (std::vector<SPItem*>::const_iterator sel_iter=items.begin();sel_iter!=items.end();sel_iter++) {
         SPItem *sel = *sel_iter;
         std::vector<SPItem*> matches = all_list;
