@@ -12,7 +12,7 @@
 #include <cstdlib>
 #include <string>
 
-/** 
+/**
  * Returns a form of \a path relative to \a base if that is easy to construct (eg if \a path
  * appears to be in the directory specified by \a base), otherwise returns \a path.
  *
@@ -49,7 +49,7 @@ char *inkscape_rel2abs(char const *path, char const *base, char *result, size_t 
 
 char *inkscape_abs2rel(char const *path, char const *base, char *result, size_t const size);
 
-gchar *prepend_current_dir_if_relative(char const *filename);
+char *prepend_current_dir_if_relative(char const *filename);
 
 
 #endif // !SEEN_DIR_UTIL_H

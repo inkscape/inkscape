@@ -217,7 +217,7 @@ erange:
     return (NULL);
 }
 
-gchar *prepend_current_dir_if_relative(gchar const *uri)
+char *prepend_current_dir_if_relative(gchar const *uri)
 {
 	if (!uri) {
 		return NULL;
