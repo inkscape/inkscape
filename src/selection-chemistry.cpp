@@ -3922,7 +3922,9 @@ void sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_
 
         for (GSList *i = apply_to_items ; NULL != i ; i = i->next) {
             reprs_to_group.push_back(static_cast<SPObject*>(i->data)->getRepr());
-            items_to_select.erase(find(items_to_select.begin(),items_to_select.end(),static_cast<SPObject*>(i->data)));
+            std::vector<SPItem*>::iterator element = find(items_to_select.begin(),items_to_select.end(),static_cast<SPObject*>(i->data));
+            if(element != items_to_select.end())
+                items_to_select.erase(element);
         }
 
         sp_selection_group_impl(reprs_to_group, group, xml_doc, doc);
@@ -3972,7 +3974,9 @@ void sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_
 
             Inkscape::XML::Node *spnew = current->duplicate(xml_doc);
             gint position = current->position();
-            items_to_select.erase(find(items_to_select.begin(),items_to_select.end(),item));
+            std::vector<SPItem*>::iterator element = find(items_to_select.begin(),items_to_select.end(),item);
+            if(element != items_to_select.end())
+                items_to_select.erase(element);
             current->parent()->appendChild(group);
             sp_repr_unparent(current);
             group->appendChild(spnew);
@@ -3996,7 +4000,9 @@ void sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_
     for (GSList *i = items_to_delete; NULL != i; i = i->next) {
         SPObject *item = reinterpret_cast<SPObject*>(i->data);
         item->deleteObject(false);
-        items_to_select.erase(find(items_to_select.begin(),items_to_select.end(),item));
+        std::vector<SPItem*>::iterator element = find(items_to_select.begin(),items_to_select.end(),item);
+        if(element != items_to_select.end())
+            items_to_select.erase(element);
     }
     g_slist_free(items_to_delete);
 
@@ -4121,7 +4127,9 @@ void sp_selection_unset_mask(SPDesktop *desktop, bool apply_clip_path) {
     for (GSList *i = items_to_ungroup ; NULL != i ; i = i->next) {
         SPGroup *group = dynamic_cast<SPGroup *>(static_cast<SPObject *>(i->data));
         if (group) {
-            items_to_select.erase(find(items_to_select.begin(),items_to_select.end(),group));
+            std::vector<SPItem*>::iterator element = find(items_to_select.begin(),items_to_select.end(),group);
+            if(element != items_to_select.end())
+                items_to_select.erase(element);
             std::vector<SPItem*> children;
             sp_item_group_ungroup(group, children, false);
             items_to_select.insert(items_to_select.end(),children.rbegin(),children.rend());

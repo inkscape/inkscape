@@ -388,7 +388,9 @@ sp_item_list_to_curves(const std::vector<SPItem*> &items, std::vector<SPItem*>& 
             if (repr) {
                 to_select.insert(to_select.begin(),repr);
                 did = true;
-                selected.erase(find(selected.begin(),selected.end(),item));
+                std::vector<SPItem*>::iterator element=find(selected.begin(),selected.end(),item);
+                if(element != selected.end())
+                    selected.erase(find(selected.begin(),selected.end(),item));
             }
 
             continue;
@@ -413,7 +415,9 @@ sp_item_list_to_curves(const std::vector<SPItem*> &items, std::vector<SPItem*>& 
             continue;
 
         did = true;
-        selected.erase(find(selected.begin(),selected.end(),item));
+        std::vector<SPItem*>::iterator element=find(selected.begin(),selected.end(),item);
+        if(element != selected.end())
+            selected.erase(element);
 
         // remember the position of the item
         gint pos = item->getRepr()->position();
