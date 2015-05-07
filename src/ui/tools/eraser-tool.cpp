@@ -674,9 +674,7 @@ void EraserTool::set_to_accumulated() {
                     Inkscape::Rubberband *r = Inkscape::Rubberband::get(desktop);
                     toWorkOn = desktop->getDocument()->getItemsAtPoints(desktop->dkey, r->getPoints());
                 }
-                std::vector<SPItem*>::iterator element = find(toWorkOn.begin(),toWorkOn.end(),acid);
-                if(element != toWorkOn.end())
-                toWorkOn.erase(element);
+                std::remove(toWorkOn.begin(),toWorkOn.end(),acid);
             } else {
                 toWorkOn= selection->itemList();
                 wasSelection = true;
