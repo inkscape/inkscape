@@ -86,7 +86,7 @@ class InkscapeActionGroup(object):
 
     def select_id(self, object_id):
         """Select object with given id"""
-        self.command += "--select='%s' " % (object_id)
+        self.command += "--select=%s " % (object_id)
         if not self.has_selection:
             self.has_selection = True
 
