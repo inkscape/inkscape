@@ -3922,7 +3922,7 @@ void sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_
 
         for (GSList *i = apply_to_items ; NULL != i ; i = i->next) {
             reprs_to_group.push_back(static_cast<SPObject*>(i->data)->getRepr());
-            remove(items_to_select.begin(),items_to_select.end(),static_cast<SPObject*>(i->data));
+            items_to_select.erase(remove(items_to_select.begin(), items_to_select.end(), static_cast<SPObject*>(i->data)), items_to_select.end());
         }
 
         sp_selection_group_impl(reprs_to_group, group, xml_doc, doc);
@@ -3972,7 +3972,7 @@ void sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_
 
             Inkscape::XML::Node *spnew = current->duplicate(xml_doc);
             gint position = current->position();
-            remove(items_to_select.begin(),items_to_select.end(),item);
+            items_to_select.erase(remove(items_to_select.begin(), items_to_select.end(), item), items_to_select.end());
             current->parent()->appendChild(group);
             sp_repr_unparent(current);
             group->appendChild(spnew);
@@ -3996,7 +3996,7 @@ void sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_
     for (GSList *i = items_to_delete; NULL != i; i = i->next) {
         SPObject *item = reinterpret_cast<SPObject*>(i->data);
         item->deleteObject(false);
-        remove(items_to_select.begin(),items_to_select.end(),item);
+        items_to_select.erase(remove(items_to_select.begin(), items_to_select.end(), item), items_to_select.end());
     }
     g_slist_free(items_to_delete);
 
@@ -4121,7 +4121,7 @@ void sp_selection_unset_mask(SPDesktop *desktop, bool apply_clip_path) {
     for (GSList *i = items_to_ungroup ; NULL != i ; i = i->next) {
         SPGroup *group = dynamic_cast<SPGroup *>(static_cast<SPObject *>(i->data));
         if (group) {
-            remove(items_to_select.begin(),items_to_select.end(),group);
+            items_to_select.erase(remove(items_to_select.begin(), items_to_select.end(), group), items_to_select.end());
             std::vector<SPItem*> children;
             sp_item_group_ungroup(group, children, false);
             items_to_select.insert(items_to_select.end(),children.rbegin(),children.rend());
