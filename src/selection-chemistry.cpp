@@ -3924,15 +3924,6 @@ void sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_
         SPItem *item = reinterpret_cast<SPItem *>(*i);
         // inverted object transform should be applied to a mask object,
         // as mask is calculated in user space (after applying transform)
-        Geom::Affine maskTransform(item->i2doc_affine().inverse());
-
-        gchar const *mask_id = NULL;
-        if (apply_clip_path) {
-            mask_id = SPClipPath::create(mask_items, doc, &maskTransform);
-        } else {
-            mask_id = sp_mask_create(mask_items, doc, &maskTransform);
-        }
-
         Inkscape::XML::Node *current = SP_OBJECT(*i)->getRepr();
         // Node to apply mask to
         Inkscape::XML::Node *apply_mask_to = current;
@@ -3953,9 +3944,20 @@ void sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_
             // Apply clip/mask to group instead
             apply_mask_to = group;
 
-            items_to_select.push_back((SPItem*)(doc->getObjectByRepr(group)));
+            items_to_select.push_back(item = (SPItem*)(doc->getObjectByRepr(group)));
             Inkscape::GC::release(spnew);
             Inkscape::GC::release(group);
+        }
+
+
+
+        Geom::Affine maskTransform(item->i2doc_affine().inverse());
+
+        gchar const *mask_id = NULL;
+        if (apply_clip_path) {
+            mask_id = SPClipPath::create(mask_items, doc, &maskTransform);
+        } else {
+            mask_id = sp_mask_create(mask_items, doc, &maskTransform);
         }
 
         apply_mask_to->setAttribute(attributeName, Glib::ustring("url(#") + mask_id + ')');
