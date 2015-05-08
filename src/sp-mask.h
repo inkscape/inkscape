@@ -108,6 +108,6 @@ protected:
 	}
 };
 
-const char *sp_mask_create (GSList *reprs, SPDocument *document, Geom::Affine const* applyTransform);
+const char *sp_mask_create (std::vector<Inkscape::XML::Node*> &reprs, SPDocument *document, Geom::Affine const* applyTransform);
 
 #endif // SEEN_SP_MASK_H

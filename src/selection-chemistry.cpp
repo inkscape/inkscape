@@ -3787,13 +3787,11 @@ void sp_selection_set_clipgroup(SPDesktop *desktop)
     clone->setAttribute("inkscape:transform-center-y", inner->attribute("inkscape:transform-center-y"), false);
 
     const Geom::Affine maskTransform(Geom::Affine::identity());
-    GSList *templist = NULL;
-
-    templist = g_slist_append(templist, clone);
+    std::vector<Inkscape::XML::Node*> templist;
+    templist.push_back(clone);
     // add the new clone to the top of the original's parent
     gchar const *mask_id = SPClipPath::create(templist, doc, &maskTransform);
     
-    g_slist_free(templist);
     
     outer->setAttribute("clip-path", g_strdup_printf("url(#%s)", mask_id));
 
@@ -3851,9 +3849,9 @@ void sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_
     selection->clear();
 
     // create a list of duplicates
-    GSList *mask_items = NULL;
-    GSList *apply_to_items = NULL;
-    GSList *items_to_delete = NULL;
+    std::vector<Inkscape::XML::Node*> mask_items;
+    std::vector<SPItem*> apply_to_items;
+    std::vector<SPItem*> items_to_delete;
     std::vector<SPItem*> items_to_select;
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -3863,57 +3861,36 @@ void sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_
 
     if (apply_to_layer) {
         // all selected items are used for mask, which is applied to a layer
-        apply_to_items = g_slist_prepend(apply_to_items, desktop->currentLayer());
+        apply_to_items.push_back(SP_ITEM(desktop->currentLayer()));
+    }
 
-        for (std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();i++) {
+    for (std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();i++) {
+        if((!topmost && !apply_to_layer && *i == items.front())
+                || (topmost && !apply_to_layer && *i == items.back())
+		        || apply_to_layer){
+
+        	Geom::Affine oldtr=(*i)->transform;
+            (*i)->doWriteTransform((*i)->getRepr(), (*i)->i2doc_affine());
             Inkscape::XML::Node *dup = (*i)->getRepr()->duplicate(xml_doc);
-            mask_items = g_slist_prepend(mask_items, dup);
+            (*i)->doWriteTransform((*i)->getRepr(), oldtr);
+            mask_items.push_back(dup);
 
-            SPObject *item = *i;
             if (remove_original) {
-                items_to_delete = g_slist_prepend(items_to_delete, item);
+                items_to_delete.push_back(*i);
             }
             else {
-                items_to_select.push_back((SPItem*)item);
+                items_to_select.push_back(*i);
             }
-        }
-    } else if (!topmost) {
-        // topmost item is used as a mask, which is applied to other items in a selection
-        Inkscape::XML::Node *dup = items[0]->getRepr()->duplicate(xml_doc);
-        mask_items = g_slist_prepend(mask_items, dup);
-
-        if (remove_original) {
-            SPObject *item = items.front();
-            items_to_delete = g_slist_prepend(items_to_delete, item);
-        }
-
-        for (std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();i++) {
-        	if(i==items.begin())continue;
-            apply_to_items = g_slist_prepend(apply_to_items, *i);
+        	continue;
+        }else{
+            apply_to_items.push_back(*i);
             items_to_select.push_back(*i);
         }
-    } else {
-        SPItem *i = items.front();
-        for (std::vector<SPItem*>::const_iterator j=items.begin();(j+1)!=items.end();j++) {
-            apply_to_items = g_slist_prepend(apply_to_items, i);
-            items_to_select.push_back(i);
-            i=*(j+1);
-        }
-        Geom::Affine oldtr=i->transform;
-        i->doWriteTransform(i->getRepr(), i->i2doc_affine());
-        Inkscape::XML::Node *dup = SP_OBJECT(i)->getRepr()->duplicate(xml_doc);
-        i->doWriteTransform(i->getRepr(), oldtr);
-
-        mask_items = g_slist_prepend(mask_items, dup);
-
-        if (remove_original) {
-            SPObject *item = reinterpret_cast<SPObject*>(i);
-            items_to_delete = g_slist_prepend(items_to_delete, item);
-        }
     }
+
     items.clear();
 
-    if (apply_to_items && grouping == PREFS_MASKOBJECT_GROUPING_ALL) {
+    if (grouping == PREFS_MASKOBJECT_GROUPING_ALL) {
         // group all those objects into one group
         // and apply mask to that
         Inkscape::XML::Node *group = xml_doc->createElement("svg:g");
@@ -3922,19 +3899,16 @@ void sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_
         group->setAttribute("inkscape:groupmode", "maskhelper");
 
         std::vector<Inkscape::XML::Node*> reprs_to_group;
-
-        for (GSList *i = apply_to_items ; NULL != i ; i = i->next) {
-            reprs_to_group.push_back(static_cast<SPObject*>(i->data)->getRepr());
-            //items_to_select.erase(remove(items_to_select.begin(), items_to_select.end(), static_cast<SPObject*>(i->data)), items_to_select.end());
+        for (std::vector<SPItem*>::const_iterator i = apply_to_items.begin(); i != apply_to_items.end(); i++) {
+            reprs_to_group.push_back(static_cast<SPObject*>(*i)->getRepr());
         }
         items_to_select.clear();
 
         sp_selection_group_impl(reprs_to_group, group, xml_doc, doc);
 
         // apply clip/mask only to newly created group
-        g_slist_free(apply_to_items);
-        apply_to_items = NULL;
-        apply_to_items = g_slist_prepend(apply_to_items, doc->getObjectByRepr(group));
+        apply_to_items.clear();
+        apply_to_items.push_back(dynamic_cast<SPItem*>(doc->getObjectByRepr(group)));
 
         items_to_select.push_back((SPItem*)(doc->getObjectByRepr(group)));
 
@@ -3946,8 +3920,8 @@ void sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_
 
 
     gchar const *attributeName = apply_clip_path ? "clip-path" : "mask";
-    for (GSList *i = apply_to_items; NULL != i; i = i->next) {
-        SPItem *item = reinterpret_cast<SPItem *>(i->data);
+    for (std::vector<SPItem*>::const_reverse_iterator i = apply_to_items.rbegin(); i != apply_to_items.rend(); i++) {
+        SPItem *item = reinterpret_cast<SPItem *>(*i);
         // inverted object transform should be applied to a mask object,
         // as mask is calculated in user space (after applying transform)
         Geom::Affine maskTransform(item->i2doc_affine().inverse());
@@ -3959,7 +3933,7 @@ void sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_
             mask_id = sp_mask_create(mask_items, doc, &maskTransform);
         }
 
-        Inkscape::XML::Node *current = SP_OBJECT(i->data)->getRepr();
+        Inkscape::XML::Node *current = SP_OBJECT(*i)->getRepr();
         // Node to apply mask to
         Inkscape::XML::Node *apply_mask_to = current;
 
@@ -3988,15 +3962,11 @@ void sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_
 
     }
 
-    g_slist_free(mask_items);
-    g_slist_free(apply_to_items);
-
-    for (GSList *i = items_to_delete; NULL != i; i = i->next) {
-        SPObject *item = reinterpret_cast<SPObject*>(i->data);
+    for (std::vector<SPItem*>::const_iterator i = items_to_delete.begin(); i != items_to_delete.end(); i++) {
+        SPObject *item = reinterpret_cast<SPObject*>(*i);
         item->deleteObject(false);
         items_to_select.erase(remove(items_to_select.begin(), items_to_select.end(), item), items_to_select.end());
     }
-    g_slist_free(items_to_delete);
 
     selection->addList(items_to_select);
 

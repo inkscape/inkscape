@@ -45,7 +45,7 @@ public:
     unsigned int clipPathUnits : 1;
 
     SPClipPathView *display;
-    static char const *create(GSList *reprs, SPDocument *document, Geom::Affine const* applyTransform);
+    static char const *create(std::vector<Inkscape::XML::Node*> &reprs, SPDocument *document, Geom::Affine const* applyTransform);
     //static GType sp_clippath_get_type(void);
 
     Inkscape::DrawingItem *show(Inkscape::Drawing &drawing, unsigned int key);
