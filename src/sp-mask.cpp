@@ -226,8 +226,7 @@ sp_mask_create (GSList *reprs, SPDocument *document, Geom::Affine const* applyTr
         SPItem *item = SP_ITEM(mask_object->appendChildRepr(node));
         
         if (NULL != applyTransform) {
-            Geom::Affine transform (item->transform);
-            transform *= (*applyTransform);
+            Geom::Affine transform (item->transform * (*applyTransform));
             item->doWriteTransform(item->getRepr(), transform);
         }
     }

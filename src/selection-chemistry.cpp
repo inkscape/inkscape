@@ -3893,14 +3893,17 @@ void sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_
             items_to_select.push_back(*i);
         }
     } else {
-        SPItem *i = NULL;
-        for (std::vector<SPItem*>::const_iterator j=items.begin();j!=items.end();j++) {
-            i=*j;
+        SPItem *i = items.front();
+        for (std::vector<SPItem*>::const_iterator j=items.begin();(j+1)!=items.end();j++) {
             apply_to_items = g_slist_prepend(apply_to_items, i);
             items_to_select.push_back(i);
+            i=*(j+1);
         }
-
+        Geom::Affine oldtr=i->transform;
+        i->doWriteTransform(i->getRepr(), i->i2doc_affine());
         Inkscape::XML::Node *dup = SP_OBJECT(i)->getRepr()->duplicate(xml_doc);
+        i->doWriteTransform(i->getRepr(), oldtr);
+
         mask_items = g_slist_prepend(mask_items, dup);
 
         if (remove_original) {
@@ -3922,8 +3925,9 @@ void sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_
 
         for (GSList *i = apply_to_items ; NULL != i ; i = i->next) {
             reprs_to_group.push_back(static_cast<SPObject*>(i->data)->getRepr());
-            items_to_select.erase(remove(items_to_select.begin(), items_to_select.end(), static_cast<SPObject*>(i->data)), items_to_select.end());
+            //items_to_select.erase(remove(items_to_select.begin(), items_to_select.end(), static_cast<SPObject*>(i->data)), items_to_select.end());
         }
+        items_to_select.clear();
 
         sp_selection_group_impl(reprs_to_group, group, xml_doc, doc);
 
@@ -3936,29 +3940,24 @@ void sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_
 
         Inkscape::GC::release(group);
     }
+    if (grouping == PREFS_MASKOBJECT_GROUPING_SEPARATE) {
+        items_to_select.clear();
+    }
+
 
     gchar const *attributeName = apply_clip_path ? "clip-path" : "mask";
     for (GSList *i = apply_to_items; NULL != i; i = i->next) {
         SPItem *item = reinterpret_cast<SPItem *>(i->data);
         // inverted object transform should be applied to a mask object,
         // as mask is calculated in user space (after applying transform)
-        Geom::Affine maskTransform(item->transform.inverse());
-
-        GSList *mask_items_dup = NULL;
-        for (GSList *mask_item = mask_items; NULL != mask_item; mask_item = mask_item->next) {
-            Inkscape::XML::Node *dup = reinterpret_cast<Inkscape::XML::Node *>(mask_item->data)->duplicate(xml_doc);
-            mask_items_dup = g_slist_prepend(mask_items_dup, dup);
-        }
+        Geom::Affine maskTransform(item->i2doc_affine().inverse());
 
         gchar const *mask_id = NULL;
         if (apply_clip_path) {
-            mask_id = SPClipPath::create(mask_items_dup, doc, &maskTransform);
+            mask_id = SPClipPath::create(mask_items, doc, &maskTransform);
         } else {
-            mask_id = sp_mask_create(mask_items_dup, doc, &maskTransform);
+            mask_id = sp_mask_create(mask_items, doc, &maskTransform);
         }
-
-        g_slist_free(mask_items_dup);
-        mask_items_dup = NULL;
 
         Inkscape::XML::Node *current = SP_OBJECT(i->data)->getRepr();
         // Node to apply mask to
@@ -3972,7 +3971,6 @@ void sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_
 
             Inkscape::XML::Node *spnew = current->duplicate(xml_doc);
             gint position = current->position();
-            items_to_select.erase(remove(items_to_select.begin(), items_to_select.end(), item), items_to_select.end());
             current->parent()->appendChild(group);
             sp_repr_unparent(current);
             group->appendChild(spnew);
