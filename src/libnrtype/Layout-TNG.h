@@ -701,7 +701,11 @@ private:
 
     /** The overall block-progression of the whole flow. */
     inline Direction _blockProgression() const
-        {return static_cast<InputStreamTextSource*>(_input_stream.front())->styleGetBlockProgression();}
+        {
+            if(!_input_stream.empty())
+                return static_cast<InputStreamTextSource*>(_input_stream.front())->styleGetBlockProgression();
+            return TOP_TO_BOTTOM;
+        }
 
     /** so that LEFT_TO_RIGHT == RIGHT_TO_LEFT but != TOP_TO_BOTTOM */
     static bool _directions_are_orthogonal(Direction d1, Direction d2);

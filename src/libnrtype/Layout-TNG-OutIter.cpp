@@ -788,12 +788,12 @@ bool Layout::iterator::prevLineCursor(int n)
 {
     if (!_cursor_moving_vertically)
         beginCursorUpDown();
-    unsigned line_index;
+    int line_index;
     if (_char_index == _parent_layout->_characters.size())
         line_index = _parent_layout->_lines.size() - 1;
     else
         line_index = _parent_layout->_characters[_char_index].chunk(_parent_layout).in_line;
-    if (line_index == 0) 
+    if (line_index <= 0)
         return false; // nowhere to go
     else
         n = MIN (n, static_cast<int>(line_index));
