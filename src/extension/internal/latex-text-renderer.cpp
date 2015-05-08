@@ -230,7 +230,7 @@ void LaTeXTextRenderer::sp_group_render(SPGroup *group)
 {
 	std::vector<SPObject*> l = (group->childList(false));
     for(std::vector<SPObject*>::const_iterator x = l.begin(); x != l.end(); x++){
-        SPItem *item = static_cast<SPItem*>(*x);
+        SPItem *item = dynamic_cast<SPItem*>(*x);
         if (item) {
             renderItem(item);
         }
