@@ -150,30 +150,11 @@ if(UNIX)
 
 	install(
 		FILES ${CMAKE_BINARY_DIR}/inkscape.desktop
-		DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications
+		DESTINATION ${SHARE_INSTALL}/applications
 	)
 
-	install(
-		DIRECTORY
-			${CMAKE_SOURCE_DIR}/share/attributes
-			${CMAKE_SOURCE_DIR}/share/branding
-			${CMAKE_SOURCE_DIR}/share/examples
-			${CMAKE_SOURCE_DIR}/share/extensions
-			${CMAKE_SOURCE_DIR}/share/filters
-			${CMAKE_SOURCE_DIR}/share/fonts
-			${CMAKE_SOURCE_DIR}/share/gradients
-			${CMAKE_SOURCE_DIR}/share/icons
-			${CMAKE_SOURCE_DIR}/share/keys
-			${CMAKE_SOURCE_DIR}/share/markers
-			${CMAKE_SOURCE_DIR}/share/palettes
-			${CMAKE_SOURCE_DIR}/share/patterns
-			${CMAKE_SOURCE_DIR}/share/screens
-			${CMAKE_SOURCE_DIR}/share/symbols
-			${CMAKE_SOURCE_DIR}/share/templates
-			${CMAKE_SOURCE_DIR}/share/tutorials
-			${CMAKE_SOURCE_DIR}/share/ui
-		DESTINATION ${CMAKE_INSTALL_PREFIX}/share/inkscape
-	)
+  # this should probably be done no matter what the platform is, just set SHARE_INSTALL first
+  add_subdirectory(share) 
 
 else()
 	# TODO, WIN32/APPLE
