@@ -22,6 +22,8 @@
 #include "display/drawing-group.h"
 #include "attributes.h"
 #include "document.h"
+#include "sp-clippath.h"
+#include "sp-mask.h"
 #include "sp-factory.h"
 #include "sp-flowregion.h"
 #include "uri.h"
@@ -426,16 +428,43 @@ void SPUse::move_compensate(Geom::Affine const *mp) {
         return;
 
     Geom::Affine m(*mp);
+    Geom::Affine t = this->get_parent_transform();
+    Geom::Affine clone_move = t.inverse() * m * t;
 
     // this is not a simple move, do not try to compensate
-    if (!(m.isTranslation()))
+    if (!(m.isTranslation())){
+    	//BUT move clippaths accordingly.
+        //if clone has a clippath, move it accordingly
+        if(clip_ref->getObject()){
+            SPObject *clip = clip_ref->getObject()->firstChild() ;
+            while(clip){
+            	SPItem *item = (SPItem*) clip;
+            	if(item){
+                    item->transform *= m;
+                    Geom::Affine identity;
+                    item->doWriteTransform(clip->getRepr(),item->transform, &identity);
+            	}
+                clip = clip->getNext();
+            }
+        }
+        if(mask_ref->getObject()){
+            SPObject *mask = mask_ref->getObject()->firstChild() ;
+            while(mask){
+            	SPItem *item = (SPItem*) mask;
+            	if(item){
+                    item->transform *= m;
+                    Geom::Affine identity;
+                    item->doWriteTransform(mask->getRepr(),item->transform, &identity);
+            	}
+                mask = mask->getNext();
+            }
+        }
         return;
+    }
 
     // restore item->transform field from the repr, in case it was changed by seltrans
     this->readAttr ("transform");
 
-    Geom::Affine t = this->get_parent_transform();
-    Geom::Affine clone_move = t.inverse() * m * t;
 
     // calculate the compensation matrix and the advertized movement matrix
     Geom::Affine advertized_move;
@@ -448,6 +477,33 @@ void SPUse::move_compensate(Geom::Affine const *mp) {
     } else {
         g_assert_not_reached();
     }
+
+    //if clone has a clippath, move it accordingly
+    if(clip_ref->getObject()){
+        SPObject *clip = clip_ref->getObject()->firstChild() ;
+        while(clip){
+        	SPItem *item = (SPItem*) clip;
+        	if(item){
+                item->transform *= clone_move.inverse();
+                Geom::Affine identity;
+                item->doWriteTransform(clip->getRepr(),item->transform, &identity);
+        	}
+            clip = clip->getNext();
+        }
+    }
+    if(mask_ref->getObject()){
+        SPObject *mask = mask_ref->getObject()->firstChild() ;
+        while(mask){
+        	SPItem *item = (SPItem*) mask;
+        	if(item){
+                item->transform *= clone_move.inverse();
+                Geom::Affine identity;
+                item->doWriteTransform(mask->getRepr(),item->transform, &identity);
+        	}
+            mask = mask->getNext();
+        }
+    }
+
 
     // commit the compensation
     this->transform *= clone_move;
