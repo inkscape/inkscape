@@ -54,15 +54,13 @@ Inkscape::Selection *StyleSubject::Selection::_getSelection() const {
         return NULL;
     }
 }
-/*
-StyleSubject::iterator StyleSubject::Selection::begin() {
+
+std::vector<SPObject*> StyleSubject::Selection::list(){
     Inkscape::Selection *selection = _getSelection();
-    if (selection) {
-        return iterator(selection->list());
-    } else {
-        return iterator(NULL);
-    }
-}*/
+    if(selection)
+        return selection->list();
+    else return std::vector<SPObject*>();
+}
 
 Geom::OptRect StyleSubject::Selection::getBounds(SPItem::BBoxType type) {
     Inkscape::Selection *selection = _getSelection();
@@ -133,10 +131,12 @@ SPObject *StyleSubject::CurrentLayer::_getLayerSList() const {
         return _element;
 
 }
-/*
-StyleSubject::iterator StyleSubject::CurrentLayer::begin() {
-    return iterator(_getLayerSList());
-}*/
+
+std::vector<SPObject*> StyleSubject::CurrentLayer::list(){
+    std::vector<SPObject*> list;
+    list.push_back(_element);
+    return list;
+}
 
 Geom::OptRect StyleSubject::CurrentLayer::getBounds(SPItem::BBoxType type) {
     SPObject *layer = _getLayer();
