@@ -742,7 +742,7 @@ static GtkWidget* create_popup_number_menu( EgeAdjustmentAction* act )
 
     if ( act->private_data->descriptions ) {
         gdouble value = ((EgeAdjustmentDescr*)act->private_data->descriptions->data)->value;
-        addOns = flush_explicit_items( addOns, G_CALLBACK(process_menu_action), BUMP_CUSTOM, menu, act, &single, &group, value );
+        flush_explicit_items( addOns, G_CALLBACK(process_menu_action), BUMP_CUSTOM, menu, act, &single, &group, value );
     }
 
     return menu;

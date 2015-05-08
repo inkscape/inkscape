@@ -682,7 +682,7 @@ GdkPixbuf *SioxImage::getGdkPixbuf()
             }
         row += rowstride;
         }
-
+    free(pixdata);
     return buf;
 }
 

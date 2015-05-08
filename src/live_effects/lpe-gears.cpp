@@ -168,7 +168,7 @@ Geom::Path Gear::path() {
         D2<SBasis> root = _arc(cursor, cursor+root_advance, root_radius());
         makeContinuous(root, prev);
         pb.append(SBasisCurve(root));
-        cursor += root_advance;
+        //cursor += root_advance;
         prev = root.at1();
 
         if (base_radius() > root_radius()) {

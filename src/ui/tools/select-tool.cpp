@@ -777,7 +777,6 @@ bool SelectTool::root_handler(GdkEvent* event) {
                                 }
 
                                 rb_escaped = 0;
-                                ret = TRUE;
                             }
                         }
                     }

@@ -439,7 +439,7 @@ sp_ui_dialog_title_string(Inkscape::Verb *verb, gchar *c)
         gchar* key = sp_shortcut_get_label(shortcut);
         s = g_stpcpy(s, " (");
         s = g_stpcpy(s, key);
-        s = g_stpcpy(s, ")");
+        g_stpcpy(s, ")");
         g_free(key);
     }
 }

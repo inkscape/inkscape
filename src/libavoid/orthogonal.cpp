@@ -1548,7 +1548,6 @@ extern void generateStaticOrthogonalVisGraph(Router *router)
     // Process the horizontal sweep
     thisPos = (totalEvents > 0) ? events[0]->pos : 0;
     posStartIndex = 0;
-    posFinishIndex = 0;
     for (unsigned i = 0; i <= totalEvents; ++i)
     {
         // If we have finished the current scanline or all events, then we

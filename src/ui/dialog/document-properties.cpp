@@ -1672,10 +1672,10 @@ void DocumentProperties::onDocUnitChange()
 
 
     Inkscape::XML::Node *repr = getDesktop()->getNamedView()->getRepr();
-    Inkscape::Util::Unit const *old_doc_unit = unit_table.getUnit("px");
+    /*Inkscape::Util::Unit const *old_doc_unit = unit_table.getUnit("px");
     if(repr->attribute("inkscape:document-units")) {
         old_doc_unit = unit_table.getUnit(repr->attribute("inkscape:document-units"));
-    }
+    }*/
     Inkscape::Util::Unit const *doc_unit = _rum_deflt.getUnit();
 
     // Set document unit

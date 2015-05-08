@@ -932,7 +932,7 @@ static void sp_flood_do_flood_fill(ToolBase *event_context, GdkEvent *event, boo
                         std::deque<Geom::Point>::iterator start_sort = fill_queue.begin();
                         std::deque<Geom::Point>::iterator end_sort = fill_queue.begin();
                         unsigned int sort_y = (unsigned int)cp[Geom::Y];
-                        unsigned int current_y = sort_y;
+                        unsigned int current_y;
                         
                         for (std::deque<Geom::Point>::iterator i = fill_queue.begin(); i != fill_queue.end(); ++i) {
                             Geom::Point current = *i;

@@ -947,7 +947,6 @@ void SPDesktop::zoom_quick(bool enable)
 
         if (!zoomed) {
             zoom_relative(_quick_zoom_stored_area.midpoint()[Geom::X], _quick_zoom_stored_area.midpoint()[Geom::Y], 2.0);
-            zoomed = true;
         }
     } else {
         set_display_area(_quick_zoom_stored_area, false);

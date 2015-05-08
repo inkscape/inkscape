@@ -1476,7 +1476,6 @@ CrossingsInfoPair countRealCrossings(Avoid::Polygon& poly,
                 int prevTurnDir = -1;
                 int startCornerSide = 1;
                 int endCornerSide = 1;
-                bool reversed = false;
                 if (!front_same)
                 {
                     // If there is a divergence at the beginning, 
@@ -1485,7 +1484,6 @@ CrossingsInfoPair countRealCrossings(Avoid::Polygon& poly,
                     startCornerSide = Avoid::cornerSide(*c_path[0], *c_path[1], 
                             *c_path[2], *p_path[0]) 
                         * segDir(*c_path[1], *c_path[2]);
-                    reversed = (startCornerSide != -prevTurnDir);
                 }
                 if (!back_same)
                 {
@@ -1497,7 +1495,6 @@ CrossingsInfoPair countRealCrossings(Avoid::Polygon& poly,
                             *c_path[size - 2], *c_path[size - 1], 
                             *p_path[size - 1])
                         * segDir(*c_path[size - 3], *c_path[size - 2]);
-                    reversed = (endCornerSide != -prevTurnDir);
                 }
                 else
                 {
@@ -1578,10 +1575,9 @@ CrossingsInfoPair countRealCrossings(Avoid::Polygon& poly,
                     }
                 }
 #endif
-                prevTurnDir = 0;
                 if (pointOrders)
                 {
-                    reversed = false;
+                    bool reversed = false;
                     size_t startPt = (front_same) ? 0 : 1;
                     
                     // Orthogonal should always have at least one segment.

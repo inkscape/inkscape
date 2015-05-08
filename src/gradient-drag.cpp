@@ -1155,7 +1155,7 @@ static void gr_knot_clicked_handler(SPKnot */*knot*/, guint state, gpointer data
                     break;
 
                 default:
-                    break;
+                    return;
 
             }
 

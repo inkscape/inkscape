@@ -266,14 +266,13 @@ geom_cubic_bbox_wind_distance (Geom::Coord x000, Geom::Coord y000,
                  Geom::Coord tolerance)
 {
     Geom::Coord x0, y0, x1, y1, len2;
-    int needdist, needwind, needline;
+    int needdist, needwind;
 
     const Geom::Coord Px = pt[X];
     const Geom::Coord Py = pt[Y];
 
     needdist = 0;
     needwind = 0;
-    needline = 0;
 
     if (bbox) cubic_bbox (x000, y000, x001, y001, x011, y011, x111, y111, *bbox);
 
@@ -303,8 +302,6 @@ geom_cubic_bbox_wind_distance (Geom::Coord x000, Geom::Coord y000,
             /* fixme: (Lauris) */
             if (((y1 - y0) > 5.0) || ((x1 - x0) > 5.0)) {
                 needdist = 1;
-            } else {
-                needline = 1;
             }
         }
     }
@@ -315,8 +312,6 @@ geom_cubic_bbox_wind_distance (Geom::Coord x000, Geom::Coord y000,
             /* fixme: (Lauris) */
             if (((y1 - y0) > 5.0) || ((x1 - x0) > 5.0)) {
                 needwind = 1;
-            } else {
-                needline = 1;
             }
         }
     }
@@ -345,7 +340,7 @@ geom_cubic_bbox_wind_distance (Geom::Coord x000, Geom::Coord y000,
 
         geom_cubic_bbox_wind_distance (x000, y000, x00t, y00t, x0tt, y0tt, xttt, yttt, pt, NULL, wind, best, tolerance);
         geom_cubic_bbox_wind_distance (xttt, yttt, x1tt, y1tt, x11t, y11t, x111, y111, pt, NULL, wind, best, tolerance);
-    } else if (1 || needline) {
+    } else {
         geom_line_wind_distance (x000, y000, x111, y111, pt, wind, best);
     }
 }

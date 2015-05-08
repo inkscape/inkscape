@@ -143,7 +143,6 @@ bool RectTool::item_handler(SPItem* item, GdkEvent* event) {
     case GDK_BUTTON_PRESS:
         if ( event->button.button == 1 && !this->space_panning) {
             Inkscape::setup_for_drag_start(desktop, this, event);
-            ret = TRUE;
         }
         break;
         // motion and release are always on root (why?)

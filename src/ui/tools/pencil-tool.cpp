@@ -357,7 +357,6 @@ bool PencilTool::_handleButtonRelease(GdkEventButton const &revent) {
                     // Ctrl+click creates a single point so only set context in ADDLINE mode when Ctrl isn't pressed
                     this->state = SP_PENCIL_CONTEXT_ADDLINE;
                 }
-                ret = true;
                 break;
             case SP_PENCIL_CONTEXT_ADDLINE:
                 /* Finish segment now */
@@ -371,7 +370,6 @@ bool PencilTool::_handleButtonRelease(GdkEventButton const &revent) {
                 this->_finishEndpoint();
                 this->state = SP_PENCIL_CONTEXT_IDLE;
                 sp_event_context_discard_delayed_snap_event(this);
-                ret = true;
                 break;
             case SP_PENCIL_CONTEXT_FREEHAND:
                 if (revent.state & GDK_MOD1_MASK) {
@@ -413,7 +411,6 @@ bool PencilTool::_handleButtonRelease(GdkEventButton const &revent) {
                     // reset sketch mode too
                     this->sketch_n = 0;
                 }
-                ret = true;
                 break;
             case SP_PENCIL_CONTEXT_SKETCH:
             default:

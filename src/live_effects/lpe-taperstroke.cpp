@@ -389,13 +389,9 @@ Piecewise<D2<SBasis> > stretch_along(Piecewise<D2<SBasis> > pwd2_in, Geom::Path 
         x0 -= pattBndsX->min();
         y0 -= pattBndsY->middle();
 
-        double xspace  = 0;
         double noffset = 0;
         double toffset = 0;
         // Prevent more than 90% overlap...
-        if (xspace < -pattBndsX->extent()*.9) {
-            xspace = -pattBndsX->extent()*.9;
-        }
 
         y0+=noffset;
 

@@ -769,7 +769,7 @@ file_save_remote(SPDocument */*doc*/,
         return false;
     }
 
-    result = gnome_vfs_create (&to_handle, uri_local, GNOME_VFS_OPEN_WRITE, FALSE, GNOME_VFS_PERM_USER_ALL);
+    gnome_vfs_create (&to_handle, uri_local, GNOME_VFS_OPEN_WRITE, FALSE, GNOME_VFS_PERM_USER_ALL);
     result = gnome_vfs_open (&to_handle, uri_local, GNOME_VFS_OPEN_WRITE);
 
     if (result != GNOME_VFS_OK) {
@@ -782,8 +782,8 @@ file_save_remote(SPDocument */*doc*/,
         result = gnome_vfs_read (from_handle, buffer, 8192, &bytes_read);
 
         if ((result == GNOME_VFS_ERROR_EOF) &&(!bytes_read)){
-            result = gnome_vfs_close (from_handle);
-            result = gnome_vfs_close (to_handle);
+            gnome_vfs_close (from_handle);
+            gnome_vfs_close (to_handle);
             return true;
         }
 

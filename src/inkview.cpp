@@ -274,7 +274,7 @@ main (int argc, const char **argv)
 			gchar *last_filename = jar_file_reader.get_last_filename();
 			if (ss.doc) {
 			    ss.slides[ss.length++] = strdup (last_filename);
-			    (ss.doc)->setUri (strdup(last_filename));
+			    (ss.doc)->setUri (last_filename);
 			}
 			g_byte_array_free(gba, TRUE);
 			g_free(last_filename);

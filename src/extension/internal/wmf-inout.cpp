@@ -95,7 +95,6 @@ Wmf::print_document_to_file(SPDocument *doc, const gchar *filename)
     SPPrintContext context;
     const gchar *oldconst;
     gchar *oldoutput;
-    unsigned int ret;
 
     doc->ensureUpToDate();
 
@@ -114,13 +113,12 @@ Wmf::print_document_to_file(SPDocument *doc, const gchar *filename)
     mod->root = mod->base->invoke_show(drawing, mod->dkey, SP_ITEM_SHOW_DISPLAY);
     drawing.setRoot(mod->root);
     /* Print document */
-    ret = mod->begin(doc);
-    if (ret) {
+    if (mod->begin(doc)) {
         g_free(oldoutput);
         throw Inkscape::Extension::Output::save_failed();
     }
     mod->base->invoke_print(&context);
-    ret = mod->finish();
+    mod->finish();
     /* Release arena */
     mod->base->invoke_hide(mod->dkey);
     mod->base = NULL;

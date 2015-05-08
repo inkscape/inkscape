@@ -290,7 +290,7 @@ sp_canvas_arena_event (SPCanvasItem *item, GdkEvent *event)
                     ret = sp_canvas_arena_send_event (arena, (GdkEvent *) &ec);
                 }
             }
-            ret = sp_canvas_arena_send_event (arena, event);
+            ret = ret || sp_canvas_arena_send_event (arena, event);
             break;
 
         case GDK_SCROLL: {

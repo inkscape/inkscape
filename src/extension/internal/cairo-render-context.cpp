@@ -1393,6 +1393,7 @@ CairoRenderContext::_setStrokeStyle(SPStyle const *style, Geom::OptRect const &p
             dashes[i] = style->stroke_dasharray.values[i];
         }
         cairo_set_dash(_cr, dashes, ndashes, style->stroke_dashoffset.value);
+        free(dashes);
     } else {
         cairo_set_dash(_cr, NULL, 0, 0.0);  // disable dashing
     }

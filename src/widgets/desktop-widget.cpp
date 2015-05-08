@@ -1433,8 +1433,10 @@ sp_desktop_widget_maximize(SPDesktopWidget *dtw)
             if (!dtw->desktop->is_iconified() && !dtw->desktop->is_fullscreen())
             {
                 Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-                gint w, h, x, y;
+                gint w = -1;
+                gint h, x, y;
                 dtw->getWindowGeometry(x, y, w, h);
+                g_assert(w != -1);
                 prefs->setInt("/desktop/geometry/width", w);
                 prefs->setInt("/desktop/geometry/height", h);
                 prefs->setInt("/desktop/geometry/x", x);

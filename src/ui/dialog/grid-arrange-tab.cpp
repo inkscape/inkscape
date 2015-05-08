@@ -170,7 +170,6 @@ void GridArrangeTab::arrange()
 
     Inkscape::Selection *selection = desktop->getSelection();
     const std::vector<SPItem*> items = selection ? selection->itemList() : std::vector<SPItem*>();
-    cnt=0;
     for(std::vector<SPItem*>::const_iterator i = items.begin();i!=items.end();i++){
         SPItem *item = *i;
         Geom::OptRect b = item->documentVisualBounds();

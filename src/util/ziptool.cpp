@@ -2605,7 +2605,7 @@ bool ZipFile::readFileData()
         if (gpBitFlag & 0x8)//bit 3 was set.  means we dont know compressed size
             {
             unsigned char c1, c2, c3, c4;
-            c1 = c2 = c3 = c4 = 0;
+            c2 = c3 = c4 = 0;
             while (true)
                 {
                 unsigned char ch;

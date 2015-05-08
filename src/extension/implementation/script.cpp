@@ -812,6 +812,12 @@ void Script::copy_doc (Inkscape::XML::Node * oldroot, Inkscape::XML::Node * newr
         }
     }
 
+    if(!oldroot_namedview)
+    {
+        g_warning("Error on copy_doc: No namedview on destination document.");
+        return;
+    }
+
     // Unparent (delete)
     for (unsigned int i = 0; i < delete_list.size(); i++) {
         sp_repr_unparent(delete_list[i]);
@@ -823,12 +829,10 @@ void Script::copy_doc (Inkscape::XML::Node * oldroot, Inkscape::XML::Node * newr
             child = child->next()) {
         if (!strcmp("sodipodi:namedview", child->name())) {
             newroot_namedview = child;
-            if (oldroot_namedview != NULL) {
-                for (Inkscape::XML::Node * newroot_namedview_child = child->firstChild();
-                        newroot_namedview_child != NULL;
-                        newroot_namedview_child = newroot_namedview_child->next()) {
-                    oldroot_namedview->appendChild(newroot_namedview_child->duplicate(oldroot->document()));
-                }
+            for (Inkscape::XML::Node * newroot_namedview_child = child->firstChild();
+                    newroot_namedview_child != NULL;
+                    newroot_namedview_child = newroot_namedview_child->next()) {
+                oldroot_namedview->appendChild(newroot_namedview_child->duplicate(oldroot->document()));
             }
         } else {
             oldroot->appendChild(child->duplicate(oldroot->document()));

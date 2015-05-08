@@ -506,7 +506,6 @@ std::vector<double> FilletChamferPointArrayParam::get_times(int index, std::vect
         time_it1 = 0;
     }
     double resultLenght = 0;
-    time_it1_B = 1;
     if (subpaths[positions.first].closed() && last) {
         time_it2 = modf(to_time(index - positions.second , _vector[index - positions.second ][X]), &intpart);
         resultLenght = it1_length + to_len(index - positions.second, _vector[index - positions.second ][X]);

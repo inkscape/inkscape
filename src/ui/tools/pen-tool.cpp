@@ -762,14 +762,12 @@ bool PenTool::_handleButtonRelease(GdkEventButton const &revent) {
                             }
                         }
                         this->state = PenTool::CONTROL;
-                        ret = true;
                         break;
                     case PenTool::CONTROL:
                         // End current segment
                         this->_endpointSnap(p, revent.state);
                         this->_finishSegment(p, revent.state);
                         this->state = PenTool::POINT;
-                        ret = true;
                         break;
                     case PenTool::CLOSE:
                         // End current segment
@@ -783,12 +781,10 @@ bool PenTool::_handleButtonRelease(GdkEventButton const &revent) {
                         }
                         this->_finish(true);
                         this->state = PenTool::POINT;
-                        ret = true;
                         break;
                     case PenTool::STOP:
                         // This is allowed, if we just canceled curve
                         this->state = PenTool::POINT;
-                        ret = true;
                         break;
                     default:
                         break;
@@ -823,7 +819,6 @@ bool PenTool::_handleButtonRelease(GdkEventButton const &revent) {
                         break;
                 }
                 this->state = PenTool::POINT;
-                ret = true;
                 break;
             default:
                 break;
@@ -1432,8 +1427,7 @@ void PenTool::_bsplineSpiroStartAnchorOn()
 {
     using Geom::X;
     using Geom::Y;
-    SPCurve *tmp_curve  = new SPCurve();
-    tmp_curve  = this->sa->curve->copy();
+    SPCurve *tmp_curve = this->sa->curve->copy();
     if(this->sa->start)
         tmp_curve  = tmp_curve ->create_reverse();
     Geom::CubicBezier const * cubic = dynamic_cast<Geom::CubicBezier const*>(&*tmp_curve ->last_segment());
@@ -1465,8 +1459,7 @@ void PenTool::_bsplineSpiroStartAnchorOn()
 
 void PenTool::_bsplineSpiroStartAnchorOff()
 {
-    SPCurve *tmp_curve  = new SPCurve();
-    tmp_curve  = this->sa->curve->copy();
+    SPCurve *tmp_curve  = this->sa->curve->copy();
     if(this->sa->start)
         tmp_curve  = tmp_curve ->create_reverse();
     Geom::CubicBezier const * cubic = dynamic_cast<Geom::CubicBezier const*>(&*tmp_curve ->last_segment());
@@ -1564,7 +1557,7 @@ void PenTool::_bsplineSpiroEndAnchorOn()
     using Geom::Y;
     this->p[2] = this->p[3] + (1./3)*(this->p[0] - this->p[3]);
     this->p[2] = Geom::Point(this->p[2][X] + HANDLE_CUBIC_GAP,this->p[2][Y] + HANDLE_CUBIC_GAP);
-    SPCurve *tmp_curve  = new SPCurve();
+    SPCurve *tmp_curve;
     SPCurve *last_segment = new SPCurve();
     Geom::Point point_c(0,0);
     bool reverse = false;
@@ -1621,7 +1614,7 @@ void PenTool::_bsplineSpiroEndAnchorOn()
 void PenTool::_bsplineSpiroEndAnchorOff()
 {
 
-    SPCurve *tmp_curve  = new SPCurve();
+    SPCurve *tmp_curve;
     SPCurve *last_segment = new SPCurve();
     bool reverse = false;
     this->p[2] = this->p[3];

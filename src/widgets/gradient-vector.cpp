@@ -548,6 +548,7 @@ static void verify_grad(SPGradient *gradient)
         child->setAttribute("style", os.str().c_str());
         gradient->getRepr()->addChild(child, NULL);
         Inkscape::GC::release(child);
+        return;
     }
     if (i < 2) {
         sp_repr_set_css_double(stop->getRepr(), "offset", 0.0);

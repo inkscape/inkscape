@@ -1591,7 +1591,7 @@ static void vacuum_document_recursive(SPObject *obj)
 unsigned int SPDocument::vacuumDocument()
 {
     unsigned int start = objects_in_document(this);
-    unsigned int end = start;
+    unsigned int end;
     unsigned int newend = start;
 
     unsigned int iterations = 0;
