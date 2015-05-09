@@ -3924,6 +3924,9 @@ void sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_
         SPItem *item = reinterpret_cast<SPItem *>(*i);
         // inverted object transform should be applied to a mask object,
         // as mask is calculated in user space (after applying transform)
+        std::vector<Inkscape::XML::Node*> mask_items_dup;
+        for(std::vector<Inkscape::XML::Node*>::const_iterator it=mask_items.begin();it!=mask_items.end();it++)
+        	mask_items_dup.push_back((*it)->duplicate(xml_doc));
         Inkscape::XML::Node *current = SP_OBJECT(*i)->getRepr();
         // Node to apply mask to
         Inkscape::XML::Node *apply_mask_to = current;
@@ -3949,15 +3952,13 @@ void sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_
             Inkscape::GC::release(group);
         }
 
-
-
         Geom::Affine maskTransform(item->i2doc_affine().inverse());
 
         gchar const *mask_id = NULL;
         if (apply_clip_path) {
-            mask_id = SPClipPath::create(mask_items, doc, &maskTransform);
+            mask_id = SPClipPath::create(mask_items_dup, doc, &maskTransform);
         } else {
-            mask_id = sp_mask_create(mask_items, doc, &maskTransform);
+            mask_id = sp_mask_create(mask_items_dup, doc, &maskTransform);
         }
 
         apply_mask_to->setAttribute(attributeName, Glib::ustring("url(#") + mask_id + ')');
