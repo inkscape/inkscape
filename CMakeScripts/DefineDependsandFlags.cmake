@@ -46,10 +46,6 @@ else()
 	list(APPEND INKSCAPE_LIBS "-lX11")  # FIXME
 endif()
 
-if(NOT APPLE)
-	# FIXME: should depend on availability of OpenMP support (see below) (?)
-	list(APPEND INKSCAPE_LIBS "-lgomp")  # FIXME
-endif()
 list(APPEND INKSCAPE_LIBS "-lgslcblas")  # FIXME
 
 if(WITH_GNOME_VFS)
@@ -316,15 +312,22 @@ list(APPEND INKSCAPE_INCS_SYS ${LIBXML2_INCLUDE_DIR})
 list(APPEND INKSCAPE_LIBS ${LIBXML2_LIBRARIES})
 add_definitions(${LIBXML2_DEFINITIONS})
 
-find_package(OpenMP)
-if(OpenMP_FOUND)
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
-	if(APPLE AND ${CMAKE_GENERATOR} MATCHES "Xcode")
-		set(CMAKE_XCODE_ATTRIBUTE_ENABLE_OPENMP_SUPPORT "YES")
+if(WITH_OPENMP)
+	find_package(OpenMP)
+	if(OpenMP_FOUND)
+		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+		if(APPLE AND ${CMAKE_GENERATOR} MATCHES "Xcode")
+			set(CMAKE_XCODE_ATTRIBUTE_ENABLE_OPENMP_SUPPORT "YES")
+		endif()
+		mark_as_advanced(OpenMP_C_FLAGS)
+		mark_as_advanced(OpenMP_CXX_FLAGS)
+		# '-fopenmp' is in OpenMP_C_FLAGS, OpenMP_CXX_FLAGS and implies '-lgomp'
+		# uncomment explicit linking below if still needed:
+		#list(APPEND INKSCAPE_LIBS "-lgomp")  # FIXME
+	else()
+		set(WITH_OPENMP OFF)
 	endif()
-	mark_as_advanced(OpenMP_C_FLAGS)
-	mark_as_advanced(OpenMP_CXX_FLAGS)
 endif()
 
 find_package(ZLIB REQUIRED)
