@@ -1350,39 +1350,9 @@ void LayerVerb::perform(SPAction *action, void *data)
         }
         case SP_VERB_LAYER_DUPLICATE: {
             if ( dt->currentLayer() != dt->currentRoot() ) {
-                // Note with either approach:
-                // Any clone masters are duplicated, their clones use the *original*,
-                // but the duplicated master is not linked up as master nor clone of the original.
-#if 0
-                // Only copies selectable things, honoring locks, visibility, avoids sublayers.
-                SPObject *new_layer = Inkscape::create_layer(dt->currentRoot(), dt->currentLayer(), LPOS_BELOW);
-                if ( dt->currentLayer()->label() ) {
-                    gchar* name = g_strdup_printf(_("%s copy"), dt->currentLayer()->label());
-                    dt->layer_manager->renameLayer( new_layer, name, TRUE );
-                    g_free(name);
-                }
-                sp_edit_select_all(dt);
-                sp_selection_duplicate(dt, true);
-                sp_selection_to_prev_layer(dt, true);
-                dt->setCurrentLayer(new_layer);
-                sp_edit_select_all(dt);
-#else
-                // Copies everything, regardless of locks, visibility, sublayers.
-                //XML Tree being directly used here while it shouldn't be.
-                Inkscape::XML::Node *selected = dt->currentLayer()->getRepr();
-                Inkscape::XML::Node *parent = selected->parent();
-                Inkscape::XML::Node *dup = selected->duplicate(parent->document());
-                parent->addChild(dup, selected);
-                SPObject *new_layer = dt->currentLayer()->next;
-                if (new_layer) {
-                    if (new_layer->label()) {
-                        gchar* name = g_strdup_printf(_("%s copy"), new_layer->label());
-                        dt->layer_manager->renameLayer( new_layer, name, TRUE );
-                        g_free(name);
-                    }
-                    dt->setCurrentLayer(new_layer);
-                }
-#endif
+
+            	sp_selection_duplicate(dt, true, true);
+
                 DocumentUndo::done(dt->getDocument(), SP_VERB_LAYER_DUPLICATE,
                                    _("Duplicate layer"));
 

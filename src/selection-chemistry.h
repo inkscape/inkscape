@@ -52,7 +52,7 @@ namespace LivePathEffect {
 } // namespace Inkscape
 
 void sp_selection_delete(SPDesktop *desktop);
-void sp_selection_duplicate(SPDesktop *desktop, bool suppressDone = false);
+void sp_selection_duplicate(SPDesktop *desktop, bool suppressDone = false, bool duplicateLayer = false);
 void sp_edit_clear_all(Inkscape::Selection *selection);
 
 void sp_edit_select_all(SPDesktop *desktop);

@@ -107,6 +107,7 @@ SPCycleType SP_CYCLING = SP_CYCLE_FOCUS;
 #include "live_effects/effect.h"
 #include "live_effects/effect-enum.h"
 #include "live_effects/parameter/originalpath.h"
+#include "layer-manager.h"
 
 #include "enums.h"
 #include "sp-item-group.h"
@@ -438,7 +439,7 @@ static void add_ids_recursive(std::vector<const gchar *> &ids, SPObject *obj)
     }
 }
 
-void sp_selection_duplicate(SPDesktop *desktop, bool suppressDone)
+void sp_selection_duplicate(SPDesktop *desktop, bool suppressDone, bool duplicateLayer)
 {
     if (desktop == NULL) {
         return;
@@ -449,11 +450,16 @@ void sp_selection_duplicate(SPDesktop *desktop, bool suppressDone)
     Inkscape::Selection *selection = desktop->getSelection();
 
     // check if something is selected
-    if (selection->isEmpty()) {
+    if (selection->isEmpty() && !duplicateLayer) {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to duplicate."));
         return;
     }
     std::vector<Inkscape::XML::Node*> reprs(selection->reprList());
+
+    if(duplicateLayer){
+        reprs.clear();
+        reprs.push_back(desktop->currentLayer()->getRepr());
+    }
 
     selection->clear();
 
@@ -474,7 +480,10 @@ void sp_selection_duplicate(SPDesktop *desktop, bool suppressDone)
         Inkscape::XML::Node *parent = old_repr->parent();
         Inkscape::XML::Node *copy = old_repr->duplicate(xml_doc);
 
-        parent->appendChild(copy);
+        if(! duplicateLayer)
+            parent->appendChild(copy);
+        else
+        	parent->addChild(copy, old_repr);
 
         if (relink_clones) {
             SPObject *old_obj = doc->getObjectByRepr(old_repr);
@@ -535,8 +544,14 @@ void sp_selection_duplicate(SPDesktop *desktop, bool suppressDone)
         DocumentUndo::done(desktop->getDocument(), SP_VERB_EDIT_DUPLICATE,
                            _("Duplicate"));
     }
-
-    selection->setReprList(newsel);
+    if(!duplicateLayer)
+        selection->setReprList(newsel);
+    else{
+    	SPObject* new_layer = doc->getObjectByRepr(newsel[0]);
+        gchar* name = g_strdup_printf(_("%s copy"), new_layer->label());
+        desktop->layer_manager->renameLayer( new_layer, name, TRUE );
+        g_free(name);
+    }
 }
 
 void sp_edit_clear_all(Inkscape::Selection *selection)
