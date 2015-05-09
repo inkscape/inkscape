@@ -20,7 +20,6 @@
 #include "live_effects/parameter/parameter.h"
 #include "helper/geom.h"
 #include <glibmm/i18n.h>
-#include <util/units.h>
 #include <cmath>
 
 namespace Inkscape {
@@ -36,7 +35,6 @@ DMConverter(DivisionMethodData, DM_END);
 LPERoughen::LPERoughen(LivePathEffectObject *lpeobject)
     : Effect(lpeobject),
       // initialise your parameters here:
-      unit(_("Unit"), _("Unit"), "unit", &wr, this),
       method(_("Method"), _("Division method"), "method", DMConverter, &wr,
              this, DM_SEGMENTS),
       max_segment_size(_("Max. segment size"), _("Max. segment size"),
@@ -54,7 +52,6 @@ LPERoughen::LPERoughen(LivePathEffectObject *lpeobject)
       shift_node_handles(_("Shift node handles"), _("Shift node handles"),
                        "shift_node_handles", &wr, this, true)
 {
-    registerParameter(&unit);
     registerParameter(&method);
     registerParameter(&max_segment_size);
     registerParameter(&segments);
@@ -98,14 +95,6 @@ Gtk::Widget *LPERoughen::newWidget()
         if ((*it)->widget_is_visible) {
             Parameter *param = *it;
             Gtk::Widget *widg = dynamic_cast<Gtk::Widget *>(param->param_newWidget());
-            if (param->param_key == "unit") {
-                Gtk::Label *unit_label = Gtk::manage(new Gtk::Label(
-                                                        Glib::ustring(_("<b>Roughen unit</b>")), Gtk::ALIGN_START));
-                unit_label->set_use_markup(true);
-                vbox->pack_start(*unit_label, false, false, 2);
-                vbox->pack_start(*Gtk::manage(new Gtk::HSeparator()),
-                                 Gtk::PACK_EXPAND_WIDGET);
-            }
             if (param->param_key == "method") {
                 Gtk::Label *method_label = Gtk::manage(new Gtk::Label(
                         Glib::ustring(_("<b>Add nodes</b> Subdivide each segment")),
@@ -160,11 +149,8 @@ double LPERoughen::sign(double random_number)
 
 Geom::Point LPERoughen::randomize()
 {
-    Inkscape::Util::Unit const *svg_units = SP_ACTIVE_DESKTOP->namedview->svg_units;
-    double displace_x_parsed = Inkscape::Util::Quantity::convert(
-                                 displace_x * global_randomize, unit.get_abbreviation(), svg_units->abbr);
-    double displace_y_parsed = Inkscape::Util::Quantity::convert(
-                                 displace_y * global_randomize, unit.get_abbreviation(), svg_units->abbr);
+    double displace_x_parsed = displace_x * global_randomize;
+    double displace_y_parsed = displace_y * global_randomize;
 
     Geom::Point output = Geom::Point(sign(displace_x_parsed), sign(displace_y_parsed));
     return output;
@@ -175,7 +161,6 @@ void LPERoughen::doEffect(SPCurve *curve)
     Geom::PathVector const original_pathv =
         pathv_to_linear_and_cubic_beziers(curve->get_pathvector());
     curve->reset();
-    Inkscape::Util::Unit const *svg_units = SP_ACTIVE_DESKTOP->namedview->svg_units;
     for (Geom::PathVector::const_iterator path_it = original_pathv.begin();
             path_it != original_pathv.end(); ++path_it) {
         if (path_it->empty())
@@ -220,8 +205,7 @@ void LPERoughen::doEffect(SPCurve *curve)
             } else {
                 nCurve->lineto(point3);
             }
-            double length = Inkscape::Util::Quantity::convert(
-                                curve_it1->length(0.001), svg_units->abbr, unit.get_abbreviation());
+            double length = curve_it1->length(0.001);
             std::size_t splits = 0;
             if (method == DM_SEGMENTS) {
                 splits = segments;

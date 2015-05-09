@@ -30,10 +30,8 @@ public:
     static void showDialog(SPDesktop *desktop, Geom::Point knotpoint,
                            const Inkscape::LivePathEffect::
                            FilletChamferPointArrayParamKnotHolderEntity *pt,
-                           const gchar *unit,
                            bool use_distance,
-                           bool aprox_radius,
-                           Glib::ustring documentUnit);
+                           bool aprox_radius);
 
 protected:
 
@@ -68,15 +66,11 @@ protected:
     void _set_desktop(SPDesktop *desktop);
     void _set_pt(const Inkscape::LivePathEffect::
                 FilletChamferPointArrayParamKnotHolderEntity *pt);
-    void _set_unit(const gchar *abbr);
-    void _set_document_unit(Glib::ustring abbr);
     void _set_use_distance(bool use_knot_distance);
     void _set_aprox(bool aprox_radius);
     void _apply();
     void _close();
     bool _flexible;
-    const gchar *unit;
-    Glib::ustring document_unit;
     bool use_distance;
     bool aprox;
     void _set_knot_point(Geom::Point knotpoint);

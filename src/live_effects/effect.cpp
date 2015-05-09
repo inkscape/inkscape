@@ -364,7 +364,6 @@ Effect::Effect(LivePathEffectObject *lpeobject)
       lpeobj(lpeobject),
       concatenate_before_pwd2(false),
       sp_lpe_item(NULL),
-      defaultUnit("px"),
       current_zoom(1),
       sp_curve(NULL),
       provides_own_flash_paths(true), // is automatically set to false if providesOwnFlashPaths() is not overridden
@@ -454,7 +453,6 @@ void Effect::doOnRemove (SPLPEItem const* /*lpeitem*/)
 void Effect::doOnApply_impl(SPLPEItem const* lpeitem)
 {
     sp_lpe_item = const_cast<SPLPEItem *>(lpeitem);
-    defaultUnit = sp_lpe_item->document->getDisplayUnit()->abbr;
     /*sp_curve = SP_SHAPE(sp_lpe_item)->getCurve();
     pathvector_before_effect = sp_curve->get_pathvector();*/
     doOnApply(lpeitem);
@@ -463,7 +461,6 @@ void Effect::doOnApply_impl(SPLPEItem const* lpeitem)
 void Effect::doBeforeEffect_impl(SPLPEItem const* lpeitem)
 {
     sp_lpe_item = const_cast<SPLPEItem *>(lpeitem);
-    defaultUnit = sp_lpe_item->document->getDisplayUnit()->abbr;
     //printf("(SPLPEITEM*) %p\n", sp_lpe_item);
     SPShape * shape = dynamic_cast<SPShape *>(sp_lpe_item);
     if(shape){

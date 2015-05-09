@@ -17,7 +17,6 @@
 #include "live_effects/parameter/parameter.h"
 #include "live_effects/parameter/path.h"
 #include "live_effects/parameter/bool.h"
-#include "live_effects/parameter/unit.h"
 #include "live_effects/parameter/random.h"
 
 namespace Inkscape {
@@ -45,7 +44,6 @@ public:
     virtual Gtk::Widget *newWidget();
 
 private:
-    UnitParam unit;
     EnumParam<DivisionMethod> method;
     ScalarParam max_segment_size;
     ScalarParam segments;

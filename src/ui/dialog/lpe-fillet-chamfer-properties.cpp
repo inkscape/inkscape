@@ -27,7 +27,6 @@
 #include "selection-chemistry.h"
 #include "ui/icon-names.h"
 #include "ui/widget/imagetoggler.h"
-#include "util/units.h"
 #include <cmath>
 
 //#include "event-context.h"
@@ -122,18 +121,14 @@ void FilletChamferPropertiesDialog::showDialog(
     SPDesktop *desktop, Geom::Point knotpoint,
     const Inkscape::LivePathEffect::
     FilletChamferPointArrayParamKnotHolderEntity *pt,
-    const gchar *unit,
     bool use_distance,
-    bool aprox_radius,
-    Glib::ustring documentUnit)
+    bool aprox_radius)
 {
     FilletChamferPropertiesDialog *dialog = new FilletChamferPropertiesDialog();
 
     dialog->_set_desktop(desktop);
-    dialog->_set_unit(unit);
     dialog->_set_use_distance(use_distance);
     dialog->_set_aprox(aprox_radius);
-    dialog->_set_document_unit(documentUnit);
     dialog->_set_knot_point(knotpoint);
     dialog->_set_pt(pt);
 
@@ -168,7 +163,6 @@ void FilletChamferPropertiesDialog::_apply()
             }
             d_pos = _index + (d_pos / 100);
         } else {
-            d_pos = Inkscape::Util::Quantity::convert(d_pos, unit, document_unit);
             d_pos = d_pos * -1;
         }
         _knotpoint->knot_set_offset(Geom::Point(d_pos, d_width));
@@ -218,11 +212,9 @@ void FilletChamferPropertiesDialog::_set_knot_point(Geom::Point knotpoint)
         _fillet_chamfer_position_label.set_label(_("Position (%):"));
     } else {
         _flexible = false;
-        std::string posConcat = Glib::ustring::compose (_("%1 (%2):"), distance_or_radius, unit);
+        std::string posConcat = Glib::ustring::compose (_("%1:"), distance_or_radius);
         _fillet_chamfer_position_label.set_label(_(posConcat.c_str()));
         position = knotpoint[Geom::X] * -1;
-        
-        position = Inkscape::Util::Quantity::convert(position, document_unit, unit);
     }
     _fillet_chamfer_position_numeric.set_value(position);
     if (knotpoint.y() == 1) {
@@ -245,16 +237,6 @@ void FilletChamferPropertiesDialog::_set_pt(
     _knotpoint = const_cast<
                  Inkscape::LivePathEffect::FilletChamferPointArrayParamKnotHolderEntity *>(
                      pt);
-}
-
-void FilletChamferPropertiesDialog::_set_unit(const gchar *abbr)
-{
-    unit = abbr;
-}
-
-void FilletChamferPropertiesDialog::_set_document_unit(Glib::ustring abbr)
-{
-    document_unit = abbr;
 }
 
 void FilletChamferPropertiesDialog::_set_use_distance(bool use_knot_distance)

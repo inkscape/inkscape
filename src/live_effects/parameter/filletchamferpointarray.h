@@ -53,8 +53,6 @@ public:
     virtual void set_helper_size(int hs);
     virtual void set_use_distance(bool use_knot_distance);
     virtual void set_chamfer_steps(int value_chamfer_steps);
-    virtual void set_document_unit(Glib::ustring value_document_unit);
-    virtual void set_unit(const gchar *abbr);
     virtual void addCanvasIndicators(SPLPEItem const *lpeitem,
                                      std::vector<Geom::PathVector> &hp_vec);
     virtual bool providesKnotHolderEntities() const {
@@ -89,8 +87,6 @@ private:
     int helper_size;
     int chamfer_steps;
     bool use_distance;
-    const gchar *unit;
-    Glib::ustring documentUnit;
     Geom::PathVector hp;
 
     Geom::Piecewise<Geom::D2<Geom::SBasis> > last_pwd2;

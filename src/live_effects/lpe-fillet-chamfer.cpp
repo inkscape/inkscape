@@ -29,7 +29,6 @@
 
 // for programmatically updating knots
 #include "ui/tools-switch.h"
-#include <util/units.h>
 
 // TODO due to internal breakage in glibmm headers, this must be last:
 #include <glibmm/i18n.h>
@@ -57,7 +56,6 @@ LPEFilletChamfer::LPEFilletChamfer(LivePathEffectObject *lpeobject) :
     only_selected(_("Change only selected nodes"), _("Change only selected nodes"), "only_selected", &wr, this, false),
     flexible(_("Flexible radius size (%)"), _("Flexible radius size (%)"), "flexible", &wr, this, false),
     use_knot_distance(_("Use knots distance instead radius"), _("Use knots distance instead radius"), "use_knot_distance", &wr, this, false),
-    unit(_("Unit:"), _("Unit"), "unit", &wr, this),
     method(_("Method:"), _("Fillets methods"), "method", FMConverter, &wr, this, FM_AUTO),
     radius(_("Radius (unit or %):"), _("Radius, in unit or %"), "radius", &wr, this, 0.),
     chamfer_steps(_("Chamfer steps:"), _("Chamfer steps"), "chamfer_steps", &wr, this, 0),
@@ -65,7 +63,6 @@ LPEFilletChamfer::LPEFilletChamfer(LivePathEffectObject *lpeobject) :
     helper_size(_("Helper size with direction:"), _("Helper size with direction"), "helper_size", &wr, this, 0)
 {
     registerParameter(&fillet_chamfer_values);
-    registerParameter(&unit);
     registerParameter(&method);
     registerParameter(&radius);
     registerParameter(&chamfer_steps);
@@ -223,7 +220,7 @@ void LPEFilletChamfer::updateFillet()
 {
     double power = 0;
     if (!flexible) {
-        power = Inkscape::Util::Quantity::convert(radius, unit.get_abbreviation(), defaultUnit) * -1;
+        power = radius * -1;
     } else {
         power = radius;
     }
@@ -444,9 +441,7 @@ void LPEFilletChamfer::doBeforeEffect(SPLPEItem const *lpeItem)
         } else {
             fillet_chamfer_values.set_helper_size(helper_size);
         }
-        fillet_chamfer_values.set_document_unit(defaultUnit);
         fillet_chamfer_values.set_use_distance(use_knot_distance);
-        fillet_chamfer_values.set_unit(unit.get_abbreviation());
         SPCurve *c = SP_IS_PATH(lpeItem) ? static_cast<SPPath const *>(lpeItem)
                      ->get_original_curve()
                      : SP_SHAPE(lpeItem)->getCurve();

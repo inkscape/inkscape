@@ -66,7 +66,6 @@ private:
     BoolParam only_selected;
     BoolParam flexible;
     BoolParam use_knot_distance;
-    UnitParam unit;
     EnumParam<FilletMethod> method;
     ScalarParam radius;
     ScalarParam chamfer_steps;
