@@ -116,6 +116,9 @@
 /* Define to 1 if you have the `mkdir' function. */
 #cmakedefine HAVE_MKDIR 1
 
+/* Use OpenMP (via cmake) */
+#cmakedefine HAVE_OPENMP 1
+
 /* Use aspell for built-in spellchecker */
 #cmakedefine HAVE_ASPELL 1
 

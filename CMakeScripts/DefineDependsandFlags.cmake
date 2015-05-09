@@ -314,7 +314,7 @@ add_definitions(${LIBXML2_DEFINITIONS})
 
 if(WITH_OPENMP)
 	find_package(OpenMP)
-	if(OpenMP_FOUND)
+	if(OPENMP_FOUND)
 		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
 		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
 		if(APPLE AND ${CMAKE_GENERATOR} MATCHES "Xcode")
@@ -324,8 +324,10 @@ if(WITH_OPENMP)
 		mark_as_advanced(OpenMP_CXX_FLAGS)
 		# '-fopenmp' is in OpenMP_C_FLAGS, OpenMP_CXX_FLAGS and implies '-lgomp'
 		# uncomment explicit linking below if still needed:
+		set(HAVE_OPENMP ON)
 		#list(APPEND INKSCAPE_LIBS "-lgomp")  # FIXME
 	else()
+		set(HAVE_OPENMP OFF)
 		set(WITH_OPENMP OFF)
 	endif()
 endif()
