@@ -36,7 +36,6 @@ set(extension_SRC
 	internal/cairo-render-context.cpp
 	internal/cairo-renderer.cpp
 	internal/cairo-renderer-pdf-out.cpp
-	internal/cdr-input.cpp
 	internal/emf-inout.cpp
 	internal/emf-print.cpp
 	internal/gdkpixbuf-input.cpp
@@ -54,10 +53,8 @@ set(extension_SRC
 	internal/svg.cpp
 	internal/svgz.cpp
 	internal/text_reassemble.c
-	internal/vsd-input.cpp
 	internal/wmf-inout.cpp
 	internal/wmf-print.cpp
-	internal/wpg-input.cpp
 
 	internal/filter/filter-all.cpp
 	internal/filter/filter-file.cpp
@@ -104,7 +101,6 @@ set(extension_SRC
 	internal/cairo-render-context.h
 	internal/cairo-renderer-pdf-out.h
 	internal/cairo-renderer.h
-	internal/cdr-input.h
 	internal/clear-n_.h
 	internal/emf-inout.h
 	internal/emf-print.h
@@ -140,14 +136,26 @@ set(extension_SRC
 	internal/svg.h
 	internal/svgz.h
 	internal/text_reassemble.h
-	internal/vsd-input.h
 	internal/wmf-inout.h
 	internal/wmf-print.h
-	internal/wpg-input.h
 )
 
 if(WIN32)
 	list(APPEND extension_SRC
+	)
+endif()
+
+if(WITH_LIBCDR)
+	list(APPEND extension_SRC
+		internal/cdr-input.cpp
+		internal/cdr-input.h
+	)
+endif()
+
+if(WITH_LIBVISIO)
+	list(APPEND extension_SRC
+		internal/vsd-input.cpp
+		internal/vsd-input.h
 	)
 endif()
 
@@ -158,7 +166,7 @@ if(WITH_LIBWPG)
 	)
 endif()
 
-if(ImageMagick_FOUND)
+if(WITH_IMAGE_MAGICK)
 	list(APPEND extension_SRC
 		internal/bitmap/adaptiveThreshold.cpp
 		internal/bitmap/adaptiveThreshold.h
