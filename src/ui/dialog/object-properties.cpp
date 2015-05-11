@@ -529,10 +529,12 @@ void ObjectProperties::_imageRenderingChanged()
     SPCSSAttr *css = sp_repr_css_attr_new();
     sp_repr_css_set_property(css, "image-rendering", scale.c_str());
     Inkscape::XML::Node *image_node = item->getRepr();
-    if( image_node ) {
+    if (image_node) {
         sp_repr_css_change(image_node, css, "style");
+        DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
+                _("Set image rendering option"));
     }
-    sp_repr_css_attr_unref( css );
+    sp_repr_css_attr_unref(css);
         
     _blocked = false;
 }
