@@ -258,7 +258,7 @@ public:
                   "<param name=\"type\" gui-text=\"" N_("Blindness type:") "\" type=\"enum\">\n"
                     "<_item value=\"0.618 0.32 0.062 0 0 0.163 0.775 0.062 0 0 0.163 0.32 0.516 0 0 0 0 0 1 0 \">" N_("Rod monochromacy (atypical achromatopsia)") "</_item>\n"
                     "<_item value=\"0.299 0.587 0.114 0 0 0.299 0.587 0.114 0 0 0.299 0.587 0.114 0 0 0 0 0 1 0 \">" N_("Cone monochromacy (typical achromatopsia)") "</_item>\n"
-                    "<_item value=\"0.8 0.2 0 0 0 0.2583 0.74167 0 0 0 0 0.14167 0.85833 0 0 0 0 0 1 0 \">" N_("Geen weak (deuteranomaly)") "</_item>\n"
+                    "<_item value=\"0.8 0.2 0 0 0 0.2583 0.74167 0 0 0 0 0.14167 0.85833 0 0 0 0 0 1 0 \">" N_("Green weak (deuteranomaly)") "</_item>\n"
                     "<_item value=\"0.625 0.375 0 0 0 0.7 0.3 0 0 0 0 0.3 0.7 0 0 0 0 0 1 0 \">" N_("Green blind (deuteranopia)") "</_item>\n"
                     "<_item value=\"0.8166 0.1833 0 0 0 0.333 0.666 0 0 0 0 0.125 0.875 0 0 0 0 0 1 0 \">" N_("Red weak (protanomaly)") "</_item>\n"
                     "<_item value=\"0.566 0.43333 0 0 0 0.55833 0.4416 0 0 0 0 0.24167 0.75833 0 0 0 0 0 1 0 \">" N_("Red blind (protanopia)") "</_item>\n"
