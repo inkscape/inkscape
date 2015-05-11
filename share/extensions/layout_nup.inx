@@ -3,7 +3,6 @@
   <_name>N-up layout</_name>
   <id>org.greygreen.inkscape.effects.nup</id>
   <dependency type="executable" location="extensions">layout_nup.py</dependency>
-  <dependency type="executable" location="extensions">layout_nup_pageframe.py</dependency>
   <dependency type="executable" location="extensions">inkex.py</dependency>
   
   <param name="tab" type="notebook">  
