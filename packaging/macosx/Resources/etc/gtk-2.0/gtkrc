@@ -13,6 +13,9 @@ gtk-menu-images = 1
 gtk-toolbar-style = 0
 #gtk-toolbar-icon-size = 2
 
+# use OS X default PDF viewer for print preview
+gtk-print-preview-command="open -a /Applications/Preview.app %f"
+
 # fix Adwaita theme for Inkscape's GimpSpinScale widgets
 style "spinbutton" {}
 widget_class "*GimpSpinScale*" style "spinbutton"
