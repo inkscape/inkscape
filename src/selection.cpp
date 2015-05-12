@@ -125,6 +125,7 @@ Selection::_releaseContext(SPObject *obj)
 void Selection::_invalidateCachedLists() {
     _items.clear();
     _reprs.clear();
+    _objs_vector.clear();
 }
 
 void Selection::_clear() {
