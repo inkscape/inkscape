@@ -47,6 +47,7 @@ enum { // which property was queried (add when you need more)
     QUERY_STYLE_PROPERTY_FONT_SPECIFICATION, //-inkscape-font-specification
     QUERY_STYLE_PROPERTY_FONTFAMILY, // font-family
     QUERY_STYLE_PROPERTY_FONTSTYLE, // font style 
+    QUERY_STYLE_PROPERTY_FONTVARIANTS, // font variants (OpenType features)
     QUERY_STYLE_PROPERTY_FONTNUMBERS, // size, spacings
     QUERY_STYLE_PROPERTY_BASELINES, // baseline-shift
     QUERY_STYLE_PROPERTY_MASTEROPACITY, // opacity
@@ -71,6 +72,7 @@ int objects_query_fillstroke (const std::vector<SPItem*> &objects, SPStyle *styl
 int objects_query_fontnumbers (const std::vector<SPItem*> &objects, SPStyle *style_res);
 int objects_query_fontstyle (const std::vector<SPItem*> &objects, SPStyle *style_res);
 int objects_query_fontfamily (const std::vector<SPItem*> &objects, SPStyle *style_res);
+int objects_query_fontvariants (const std::vector<SPItem*> &objects, SPStyle *style_res);
 int objects_query_opacity (const std::vector<SPItem*> &objects, SPStyle *style_res);
 int objects_query_strokewidth (const std::vector<SPItem*> &objects, SPStyle *style_res);
 int objects_query_miterlimit (const std::vector<SPItem*> &objects, SPStyle *style_res);

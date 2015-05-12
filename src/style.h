@@ -113,7 +113,7 @@ public:
 
     /* Font variants -------------------- */
     /** Font variant ligatures */
-    SPIEnum font_variant_ligatures;
+    SPILigatures font_variant_ligatures;
     /** Font variant position (subscript/superscript) */
     SPIEnum font_variant_position;
     /** Font variant caps (small caps) */

@@ -45,6 +45,8 @@
 #include <sigc++/functors/ptr_fun.h>
 #include <sigc++/adaptors/bind.h>
 
+#include <glibmm/regex.h>
+
 // TODO REMOVE OR MAKE MEMBER FUNCTIONS
 void sp_style_fill_paint_server_ref_changed(  SPObject *old_ref, SPObject *ref, SPStyle *style);
 void sp_style_stroke_paint_server_ref_changed(SPObject *old_ref, SPObject *ref, SPStyle *style);
@@ -664,6 +666,135 @@ SPIEnum::operator==(const SPIBase& rhs) {
 }
 
 
+// SPIEnumBits ----------------------------------------------------------
+// Used for 'font-variant-xxx'
+void
+SPIEnumBits::read( gchar const *str ) {
+
+    if( !str ) return;
+    std::cout << "SPIEnumBits: " << name << ": " << str << std::endl;
+    if( !strcmp(str, "inherit") ) {
+        set = true;
+        inherit = true;
+    } else {
+        for (unsigned i = 0; enums[i].key; i++) {
+            if (!strcmp(str, enums[i].key)) {
+                std::cout << "  found: " << enums[i].key << std::endl;
+                set = true;
+                inherit = false;
+                value += enums[i].value;
+                /* Save copying for values not needing it */
+                computed = value;
+            }
+        }
+    }
+}
+
+const Glib::ustring
+SPIEnumBits::write( guint const flags, SPIBase const *const base) const {
+
+    SPIEnum const *const my_base = dynamic_cast<const SPIEnum*>(base);
+    if ( (flags & SP_STYLE_FLAG_ALWAYS) ||
+         ((flags & SP_STYLE_FLAG_IFSET) && this->set) ||
+         ((flags & SP_STYLE_FLAG_IFDIFF) && this->set
+          && (!my_base->set || this != my_base )))
+    {
+        if (this->inherit) {
+            return (name + ":inherit;");
+        }
+        if (this->value == 0 ) {
+            return (name + ":normal");
+        }
+        Glib::ustring return_string = name + ":";
+        unsigned j = 1;
+        for (unsigned i = 0; enums[i].key; ++i) {
+            if (j & this->value ) {
+                return_string += enums[i].value + " ";
+            }
+            j *= 2;
+        }
+        return return_string;
+    }
+    return Glib::ustring("");
+}
+
+
+// SPILigatures -----------------------------------------------------
+// Used for 'font-variant-ligatures'
+void
+SPILigatures::read( gchar const *str ) {
+
+    if( !str ) return;
+
+    value = SP_CSS_FONT_VARIANT_LIGATURES_COMMON | SP_CSS_FONT_VARIANT_LIGATURES_CONTEXTUAL;
+    if( !strcmp(str, "inherit") ) {
+        set = true;
+        inherit = true;
+    } else if (!strcmp(str, "normal" )) {
+        // Defaults for TrueType
+        inherit = false;
+        set = true;
+    } else if (!strcmp(str, "none" )) {
+        value = SP_CSS_FONT_VARIANT_LIGATURES_NONE;
+        inherit = false;
+        set = true;
+    } else {
+        // We need to parse in order
+        std::vector<Glib::ustring> tokens = Glib::Regex::split_simple("\\s+", str );
+        for( unsigned i = 0; i < tokens.size(); ++i ) {
+            for (unsigned j = 0; enums[j].key; ++j ) {
+                if (tokens[i].compare( enums[j].key ) == 0 ) {
+                    set = true;
+                    inherit = false;
+                    if( enums[j].value < SP_CSS_FONT_VARIANT_LIGATURES_NOCOMMON ) {
+                        // Turn on
+                        value |= enums[j].value;
+                    } else {
+                        // Turn off
+                        value &= ~(enums[j].value >> 4);
+                    }
+                }
+            }
+        }
+    }
+    computed = value;
+}
+
+const Glib::ustring
+SPILigatures::write( guint const flags, SPIBase const *const base) const {
+
+    SPIEnum const *const my_base = dynamic_cast<const SPIEnum*>(base);
+    if ( (flags & SP_STYLE_FLAG_ALWAYS) ||
+         ((flags & SP_STYLE_FLAG_IFSET) && this->set) ||
+         ((flags & SP_STYLE_FLAG_IFDIFF) && this->set
+          && (!my_base->set || this != my_base )))
+    {
+        if (this->inherit) {
+            return (name + ":inherit;");
+        }
+        if (value == SP_CSS_FONT_VARIANT_LIGATURES_NONE ) {
+                return (name + ":none;");
+        }
+        if (value == (SP_CSS_FONT_VARIANT_LIGATURES_COMMON +
+                      SP_CSS_FONT_VARIANT_LIGATURES_CONTEXTUAL) ) {
+                return (name + ":normal;");
+        }
+
+        Glib::ustring return_string = name + ":";
+        if ( !(value & SP_CSS_FONT_VARIANT_LIGATURES_COMMON) )
+            return_string += "no-common-ligatures ";
+        if (   value & SP_CSS_FONT_VARIANT_LIGATURES_DISCRETIONARY )
+            return_string += "discretionary-ligatures ";
+        if (   value & SP_CSS_FONT_VARIANT_LIGATURES_HISTORICAL )
+            return_string += "historical-ligatures ";
+        if ( !(value & SP_CSS_FONT_VARIANT_LIGATURES_CONTEXTUAL) )
+            return_string += "no-contextual ";
+        return_string.erase( return_string.size() - 1 );
+        return_string += ";";
+        return return_string;
+    }
+    return Glib::ustring("");
+}
 
 // SPIString ------------------------------------------------------------
 

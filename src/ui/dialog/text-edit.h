@@ -32,6 +32,7 @@
 #include "ui/widget/panel.h"
 #include "ui/widget/frame.h"
 #include "ui/dialog/desktop-tracker.h"
+#include "ui/widget/font-variants.h"
 
 class SPItem;
 struct SPFontSelector;
@@ -213,6 +214,9 @@ private:
     GtkWidget *text_view; // TODO - Convert this to a Gtk::TextView, but GtkSpell doesn't seem to work with it
     GtkTextBuffer *text_buffer;
 
+    Inkscape::UI::Widget::FontVariants vari_vbox;
+    Gtk::Label vari_label;
+    
     Gtk::HBox button_row;
     Gtk::Button setasdefault_button;
     Gtk::Button close_button;

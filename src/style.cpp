@@ -119,7 +119,7 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     font_specification( "-inkscape-font-specification"       ),  // SPIString
 
     // Font variants
-    font_variant_ligatures( "font-variant-ligatures",  enum_font_variant_ligatures,  SP_CSS_FONT_VARIANT_LIGATURES_NORMAL  ),
+    font_variant_ligatures( "font-variant-ligatures",  enum_font_variant_ligatures ),
     font_variant_position(  "font-variant-position",   enum_font_variant_position,   SP_CSS_FONT_VARIANT_POSITION_NORMAL   ),
     font_variant_caps(      "font-variant-caps",       enum_font_variant_caps,       SP_CSS_FONT_VARIANT_CAPS_NORMAL       ),
     font_variant_numeric(   "font-variant-numeric",    enum_font_variant_numeric,    SP_CSS_FONT_VARIANT_NUMERIC_NORMAL    ),

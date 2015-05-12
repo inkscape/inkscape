@@ -69,6 +69,7 @@ TextEdit::TextEdit()
       font_label(_("_Font"), true),
       layout_frame(),
       text_label(_("_Text"), true),
+      vari_label(_("_Variants"), true),
       setasdefault_button(_("Set as _default")),
       close_button(Gtk::Stock::CLOSE),
       apply_button(Gtk::Stock::APPLY),
@@ -195,7 +196,8 @@ TextEdit::TextEdit()
 
     notebook.append_page(font_vbox, font_label);
     notebook.append_page(text_vbox, text_label);
-
+    notebook.append_page(vari_vbox, vari_label);
+    
     /* Buttons */
     setasdefault_button.set_use_underline(true);
     apply_button.set_can_default();
@@ -383,6 +385,11 @@ void TextEdit::onReadSelection ( gboolean dostyle, gboolean /*docontent*/ )
 
         gtk_entry_set_text ((GtkEntry *) gtk_bin_get_child ((GtkBin *) spacing_combo), sstr);
         g_free(sstr);
+
+        // Update font variant widget
+        //int result_variants =
+        sp_desktop_query_style (SP_ACTIVE_DESKTOP, &query, QUERY_STYLE_PROPERTY_FONTVARIANTS);
+        vari_vbox.update( query.font_variant_ligatures.computed, query.font_variant_ligatures.value );
 
     }
     blocked = false;
