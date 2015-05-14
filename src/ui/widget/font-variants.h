@@ -18,6 +18,7 @@
 
 class SPDesktop;
 class SPObject;
+class SPCSSAttr;
 
 namespace Inkscape {
 namespace UI {
@@ -95,9 +96,9 @@ private:
     void numeric_callback();
 
 public:
-    void update_recursive( SPObject *object );
     void update( unsigned all, unsigned mix );
 
+    void fill_css( SPCSSAttr* css );
 };
 
  

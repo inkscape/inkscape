@@ -27,6 +27,7 @@
 #include "sp-tref.h"
 #include "sp-textpath.h"
 #include "sp-item-group.h"
+#include "xml/repr.h"
 
 namespace Inkscape {
 namespace UI {
@@ -230,6 +231,33 @@ namespace Widget {
       _ligatures_contextual.set_inconsistent(    mix & SP_CSS_FONT_VARIANT_LIGATURES_CONTEXTUAL );
   }
 
+  void
+  FontVariants::fill_css( SPCSSAttr *css ) {
+
+      // Ligatures
+      bool common        = _ligatures_common.get_active();
+      bool discretionary = _ligatures_discretionary.get_active();
+      bool historical    = _ligatures_historical.get_active();
+      bool contextual    = _ligatures_contextual.get_active();
+
+      if( !common && !discretionary && !historical && !contextual ) {
+          sp_repr_css_set_property(css, "font-variant-ligatures", "none" );
+      } else if ( common && !discretionary && !historical && contextual ) {
+          sp_repr_css_set_property(css, "font-variant-ligatures", "normal" );
+      } else {
+          Glib::ustring css_string;
+          if ( !common )
+              css_string += "no-common-ligatures ";
+          if ( discretionary )
+              css_string += "discretionary-ligatures ";
+          if ( historical )
+              css_string += "historical-ligatures ";
+          if ( !contextual )
+              css_string += "no-contextual ";
+          sp_repr_css_set_property(css, "font-variant-ligatures", css_string.c_str() );
+      }
+  }
+   
 } // namespace Widget
 } // namespace UI
 } // namespace Inkscape

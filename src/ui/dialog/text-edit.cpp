@@ -517,11 +517,14 @@ SPCSSAttr *TextEdit::fillTextStyle ()
             sp_repr_css_set_property (css, "writing-mode", "tb");
         }
 
-        // Note that CSS 1.1 does not support line-height; we set it for consistency, but also set
+        // Note that SVG 1.1 does not support line-height; we set it for consistency, but also set
         // sodipodi:linespacing for backwards compatibility; in 1.2 we use line-height for flowtext
 
         const gchar *sstr = gtk_combo_box_text_get_active_text ((GtkComboBoxText *) spacing_combo);
         sp_repr_css_set_property (css, "line-height", sstr);
+
+        // Font variants
+        vari_vbox.fill_css( css );
 
         return css;
 }
