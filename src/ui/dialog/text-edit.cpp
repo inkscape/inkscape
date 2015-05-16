@@ -389,7 +389,7 @@ void TextEdit::onReadSelection ( gboolean dostyle, gboolean /*docontent*/ )
         // Update font variant widget
         //int result_variants =
         sp_desktop_query_style (SP_ACTIVE_DESKTOP, &query, QUERY_STYLE_PROPERTY_FONTVARIANTS);
-        vari_vbox.update( query.font_variant_ligatures.computed, query.font_variant_ligatures.value );
+        vari_vbox.update( &query );
 
     }
     blocked = false;

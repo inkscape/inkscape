@@ -66,8 +66,12 @@ namespace Widget {
     _numeric_stacked          ( Glib::ustring(_("Stacked"      )) ),
     _numeric_default_fractions( Glib::ustring(_("Default Fractions")) ),
     _numeric_ordinal          ( Glib::ustring(_("Ordinal"      )) ),
-    _numeric_slashed_zero     ( Glib::ustring(_("Slashed Zero" )) )
+    _numeric_slashed_zero     ( Glib::ustring(_("Slashed Zero" )) ),
 
+    _ligatures_changed( false ),
+    _position_changed( false ),
+    _caps_changed( false ),
+    _numeric_changed( false )
 
   {
 
@@ -183,6 +187,7 @@ namespace Widget {
   void
   FontVariants::ligatures_callback() {
       // std::cout << "FontVariants::ligatures_callback()" << std::endl;
+      _ligatures_changed = true;
   }
 
   void
@@ -193,6 +198,7 @@ namespace Widget {
   void
   FontVariants::position_callback() {
       // std::cout << "FontVariants::position_callback()" << std::endl;
+      _position_changed = true;
   }
 
   void
@@ -203,6 +209,7 @@ namespace Widget {
   void
   FontVariants::caps_callback() {
       // std::cout << "FontVariants::caps_callback()" << std::endl;
+      _caps_changed = true;
   }
 
   void
@@ -214,21 +221,61 @@ namespace Widget {
   void
   FontVariants::numeric_callback() {
       // std::cout << "FontVariants::numeric_callback()" << std::endl;
+      _numeric_changed = true;
   }
 
+  // Update GUI based on query.
   void
-  FontVariants::update( unsigned all, unsigned mix ) {
+  FontVariants::update( SPStyle const *query ) {
       // std::cout << "FontVariants::update" << std::endl;
 
-      _ligatures_common.set_active(        all & SP_CSS_FONT_VARIANT_LIGATURES_COMMON );
-      _ligatures_discretionary.set_active( all & SP_CSS_FONT_VARIANT_LIGATURES_DISCRETIONARY );
-      _ligatures_historical.set_active(    all & SP_CSS_FONT_VARIANT_LIGATURES_HISTORICAL );
-      _ligatures_contextual.set_active(    all & SP_CSS_FONT_VARIANT_LIGATURES_CONTEXTUAL );
+      _ligatures_all = query->font_variant_ligatures.computed;
+      _ligatures_mix = query->font_variant_ligatures.value;
+
+      _ligatures_common.set_active(       _ligatures_all & SP_CSS_FONT_VARIANT_LIGATURES_COMMON );
+      _ligatures_discretionary.set_active(_ligatures_all & SP_CSS_FONT_VARIANT_LIGATURES_DISCRETIONARY );
+      _ligatures_historical.set_active(   _ligatures_all & SP_CSS_FONT_VARIANT_LIGATURES_HISTORICAL );
+      _ligatures_contextual.set_active(   _ligatures_all & SP_CSS_FONT_VARIANT_LIGATURES_CONTEXTUAL );
       
-      _ligatures_common.set_inconsistent(        mix & SP_CSS_FONT_VARIANT_LIGATURES_COMMON );
-      _ligatures_discretionary.set_inconsistent( mix & SP_CSS_FONT_VARIANT_LIGATURES_DISCRETIONARY );
-      _ligatures_historical.set_inconsistent(    mix & SP_CSS_FONT_VARIANT_LIGATURES_HISTORICAL );
-      _ligatures_contextual.set_inconsistent(    mix & SP_CSS_FONT_VARIANT_LIGATURES_CONTEXTUAL );
+      _ligatures_common.set_inconsistent(        _ligatures_mix & SP_CSS_FONT_VARIANT_LIGATURES_COMMON );
+      _ligatures_discretionary.set_inconsistent( _ligatures_mix & SP_CSS_FONT_VARIANT_LIGATURES_DISCRETIONARY );
+      _ligatures_historical.set_inconsistent(    _ligatures_mix & SP_CSS_FONT_VARIANT_LIGATURES_HISTORICAL );
+      _ligatures_contextual.set_inconsistent(    _ligatures_mix & SP_CSS_FONT_VARIANT_LIGATURES_CONTEXTUAL );
+
+      _position_all = query->font_variant_position.computed;
+      _position_mix = query->font_variant_position.value;
+      
+      _position_normal.set_active( _position_all & SP_CSS_FONT_VARIANT_POSITION_NORMAL );
+      _position_sub.set_active(    _position_all & SP_CSS_FONT_VARIANT_POSITION_SUB );
+      _position_super.set_active(  _position_all & SP_CSS_FONT_VARIANT_POSITION_SUPER );
+
+      _position_normal.set_inconsistent( _position_mix & SP_CSS_FONT_VARIANT_POSITION_NORMAL );
+      _position_sub.set_inconsistent(    _position_mix & SP_CSS_FONT_VARIANT_POSITION_SUB );
+      _position_super.set_inconsistent(  _position_mix & SP_CSS_FONT_VARIANT_POSITION_SUPER );
+
+      unsigned _caps_all = query->font_variant_caps.computed;
+      unsigned _caps_mix = query->font_variant_caps.value;
+
+      _caps_normal.set_active(     _caps_all & SP_CSS_FONT_VARIANT_CAPS_NORMAL );
+      _caps_small.set_active(      _caps_all & SP_CSS_FONT_VARIANT_CAPS_SMALL );
+      _caps_all_small.set_active(  _caps_all & SP_CSS_FONT_VARIANT_CAPS_ALL_SMALL );
+      _caps_petite.set_active(     _caps_all & SP_CSS_FONT_VARIANT_CAPS_PETITE );
+      _caps_all_petite.set_active( _caps_all & SP_CSS_FONT_VARIANT_CAPS_ALL_PETITE );
+      _caps_unicase.set_active(    _caps_all & SP_CSS_FONT_VARIANT_CAPS_UNICASE );
+      _caps_titling.set_active(    _caps_all & SP_CSS_FONT_VARIANT_CAPS_TITLING );
+
+      _caps_normal.set_inconsistent(     _caps_mix & SP_CSS_FONT_VARIANT_CAPS_NORMAL );
+      _caps_small.set_inconsistent(      _caps_mix & SP_CSS_FONT_VARIANT_CAPS_SMALL );
+      _caps_all_small.set_inconsistent(  _caps_mix & SP_CSS_FONT_VARIANT_CAPS_ALL_SMALL );
+      _caps_petite.set_inconsistent(     _caps_mix & SP_CSS_FONT_VARIANT_CAPS_PETITE );
+      _caps_all_petite.set_inconsistent( _caps_mix & SP_CSS_FONT_VARIANT_CAPS_ALL_PETITE );
+      _caps_unicase.set_inconsistent(    _caps_mix & SP_CSS_FONT_VARIANT_CAPS_UNICASE );
+      _caps_titling.set_inconsistent(    _caps_mix & SP_CSS_FONT_VARIANT_CAPS_TITLING );
+
+      _ligatures_changed = false;
+      _position_changed  = false;
+      _caps_changed      = false;
+      _numeric_changed   = false;
   }
 
   void
@@ -256,6 +303,60 @@ namespace Widget {
               css_string += "no-contextual ";
           sp_repr_css_set_property(css, "font-variant-ligatures", css_string.c_str() );
       }
+
+      // Position
+      {
+          unsigned position_new = SP_CSS_FONT_VARIANT_POSITION_NORMAL;
+          Glib::ustring css_string;
+          if( _position_normal.get_active() ) {
+              css_string = "normal";
+          } else if( _position_sub.get_active() ) {
+              css_string = "sub";
+              position_new = SP_CSS_FONT_VARIANT_POSITION_SUB;
+          } else if( _position_super.get_active() ) {
+              css_string = "super";
+              position_new = SP_CSS_FONT_VARIANT_POSITION_SUPER;
+          }
+
+          // 'if' may not be necessary... need to test.
+          if( (_position_all != position_new) || ((_position_mix != 0) && _position_changed) ) {
+              sp_repr_css_set_property(css, "font-variant-position", css_string.c_str() );
+          }
+      }
+      
+      // Caps
+      {
+          unsigned caps_new = SP_CSS_FONT_VARIANT_CAPS_NORMAL;
+          Glib::ustring css_string;
+          if( _caps_normal.get_active() ) {
+              css_string = "normal";
+              caps_new = SP_CSS_FONT_VARIANT_CAPS_NORMAL;
+          } else if( _caps_small.get_active() ) {
+              css_string = "small-caps";
+              caps_new = SP_CSS_FONT_VARIANT_CAPS_SMALL;
+          } else if( _caps_all_small.get_active() ) {
+              css_string = "all-small-caps";
+              caps_new = SP_CSS_FONT_VARIANT_CAPS_ALL_SMALL;
+          } else if( _caps_all_petite.get_active() ) {
+              css_string = "petite";
+              caps_new = SP_CSS_FONT_VARIANT_CAPS_PETITE;
+          } else if( _caps_all_petite.get_active() ) {
+              css_string = "all-petite";
+              caps_new = SP_CSS_FONT_VARIANT_CAPS_ALL_PETITE;
+          } else if( _caps_unicase.get_active() ) {
+              css_string = "unicase";
+              caps_new = SP_CSS_FONT_VARIANT_CAPS_UNICASE;
+          } else if( _caps_titling.get_active() ) {
+              css_string = "titling";
+              caps_new = SP_CSS_FONT_VARIANT_CAPS_TITLING;
+          }
+
+          // May not be necessary... need to test.
+          //if( (_caps_all != caps_new) || ((_caps_mix != 0) && _caps_changed) ) {
+          sp_repr_css_set_property(css, "font-variant-caps", css_string.c_str() );
+          //}
+      }
+
   }
    
 } // namespace Widget

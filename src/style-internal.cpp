@@ -726,7 +726,7 @@ SPILigatures::read( gchar const *str ) {
 
     if( !str ) return;
 
-    value = SP_CSS_FONT_VARIANT_LIGATURES_COMMON | SP_CSS_FONT_VARIANT_LIGATURES_CONTEXTUAL;
+    value = SP_CSS_FONT_VARIANT_LIGATURES_NORMAL;
     if( !strcmp(str, "inherit") ) {
         set = true;
         inherit = true;
@@ -775,8 +775,7 @@ SPILigatures::write( guint const flags, SPIBase const *const base) const {
         if (value == SP_CSS_FONT_VARIANT_LIGATURES_NONE ) {
                 return (name + ":none;");
         }
-        if (value == (SP_CSS_FONT_VARIANT_LIGATURES_COMMON +
-                      SP_CSS_FONT_VARIANT_LIGATURES_CONTEXTUAL) ) {
+        if (value == SP_CSS_FONT_VARIANT_LIGATURES_NORMAL ) {
                 return (name + ":normal;");
         }
 

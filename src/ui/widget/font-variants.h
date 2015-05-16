@@ -18,6 +18,7 @@
 
 class SPDesktop;
 class SPObject;
+class SPStyle;
 class SPCSSAttr;
 
 namespace Inkscape {
@@ -95,8 +96,24 @@ private:
     void numeric_init();
     void numeric_callback();
 
+    // To determine if we need to write out property (may not be necessary)
+    unsigned _ligatures_all;
+    unsigned _position_all;
+    unsigned _caps_all;
+    unsigned _numeric_all;
+    
+    unsigned _ligatures_mix;
+    unsigned _position_mix;
+    unsigned _caps_mix;
+    unsigned _numeric_mix;
+
+    bool _ligatures_changed;
+    bool _position_changed;
+    bool _caps_changed;
+    bool _numeric_changed;
+
 public:
-    void update( unsigned all, unsigned mix );
+    void update( SPStyle const *query );
 
     void fill_css( SPCSSAttr* css );
 };
