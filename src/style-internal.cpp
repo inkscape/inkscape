@@ -795,6 +795,113 @@ SPILigatures::write( guint const flags, SPIBase const *const base) const {
     return Glib::ustring("");
 }
 
+
+// SPINumeric -----------------------------------------------------
+// Used for 'font-variant-numeric'
+void
+SPINumeric::read( gchar const *str ) {
+
+    if( !str ) return;
+
+    value = SP_CSS_FONT_VARIANT_NUMERIC_NORMAL;
+    if( !strcmp(str, "inherit") ) {
+        set = true;
+        inherit = true;
+    } else if (!strcmp(str, "normal" )) {
+        // Defaults for TrueType
+        inherit = false;
+        set = true;
+    } else {
+        // We need to parse in order
+        std::vector<Glib::ustring> tokens = Glib::Regex::split_simple("\\s+", str );
+        for( unsigned i = 0; i < tokens.size(); ++i ) {
+            for (unsigned j = 0; enums[j].key; ++j ) {
+                if (tokens[i].compare( enums[j].key ) == 0 ) {
+                    set = true;
+                    inherit = false;
+                    value |=  enums[j].value;
+
+                    // Must switch off incompatible value
+                    switch (enums[j].value ) {
+                        case SP_CSS_FONT_VARIANT_NUMERIC_LINING_NUMS:
+                            value &= ~SP_CSS_FONT_VARIANT_NUMERIC_OLDSTYLE_NUMS;
+                            break;
+                        case SP_CSS_FONT_VARIANT_NUMERIC_OLDSTYLE_NUMS:
+                            value &= ~SP_CSS_FONT_VARIANT_NUMERIC_LINING_NUMS;
+                            break;
+
+                        case SP_CSS_FONT_VARIANT_NUMERIC_PROPORTIONAL_NUMS:
+                            value &= ~SP_CSS_FONT_VARIANT_NUMERIC_TABULAR_NUMS;
+                            break;
+                        case SP_CSS_FONT_VARIANT_NUMERIC_TABULAR_NUMS:
+                            value &= ~SP_CSS_FONT_VARIANT_NUMERIC_PROPORTIONAL_NUMS;
+                            break;
+
+                        case SP_CSS_FONT_VARIANT_NUMERIC_DIAGONAL_FRACTIONS:
+                            value &= ~SP_CSS_FONT_VARIANT_NUMERIC_STACKED_FRACTIONS;
+                            break;
+                        case SP_CSS_FONT_VARIANT_NUMERIC_STACKED_FRACTIONS:
+                            value &= ~SP_CSS_FONT_VARIANT_NUMERIC_DIAGONAL_FRACTIONS;
+                            break;
+
+                        case SP_CSS_FONT_VARIANT_NUMERIC_NORMAL:
+                        case SP_CSS_FONT_VARIANT_NUMERIC_ORDINAL:
+                        case SP_CSS_FONT_VARIANT_NUMERIC_SLASHED_ZERO:
+                            // Do nothing
+                            break;
+
+                        default:
+                            std::cerr << "SPINumeric::read(): Invalid value." << std::endl;
+                            break;
+                    }
+                }
+            }
+        }
+    }
+    computed = value;
+}
+
+const Glib::ustring
+SPINumeric::write( guint const flags, SPIBase const *const base) const {
+
+    SPIEnum const *const my_base = dynamic_cast<const SPIEnum*>(base);
+    if ( (flags & SP_STYLE_FLAG_ALWAYS) ||
+         ((flags & SP_STYLE_FLAG_IFSET) && this->set) ||
+         ((flags & SP_STYLE_FLAG_IFDIFF) && this->set
+          && (!my_base->set || this != my_base )))
+    {
+        if (this->inherit) {
+            return (name + ":inherit;");
+        }
+        if (value == SP_CSS_FONT_VARIANT_NUMERIC_NORMAL ) {
+                return (name + ":normal;");
+        }
+
+        Glib::ustring return_string = name + ":";
+        if ( value & SP_CSS_FONT_VARIANT_NUMERIC_LINING_NUMS )
+            return_string += "lining-nums ";
+        if ( value & SP_CSS_FONT_VARIANT_NUMERIC_OLDSTYLE_NUMS )
+            return_string += "oldstyle-nums ";
+        if ( value & SP_CSS_FONT_VARIANT_NUMERIC_PROPORTIONAL_NUMS )
+            return_string += "proportional-nums ";
+        if ( value & SP_CSS_FONT_VARIANT_NUMERIC_TABULAR_NUMS )
+            return_string += "tabular-nums ";
+        if ( value & SP_CSS_FONT_VARIANT_NUMERIC_DIAGONAL_FRACTIONS )
+            return_string += "diagonal-fractions ";
+        if ( value & SP_CSS_FONT_VARIANT_NUMERIC_STACKED_FRACTIONS )
+            return_string += "stacked-fractions ";
+        if ( value & SP_CSS_FONT_VARIANT_NUMERIC_ORDINAL )
+            return_string += "ordinal ";
+        if ( value & SP_CSS_FONT_VARIANT_NUMERIC_SLASHED_ZERO )
+            return_string += "slashed-zero ";
+        return_string.erase( return_string.size() - 1 );
+        return_string += ";";
+        return return_string;
+    }
+    return Glib::ustring("");
+}
+
+
 // SPIString ------------------------------------------------------------
 
 void

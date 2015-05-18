@@ -214,8 +214,7 @@ namespace Widget {
 
   void
   FontVariants::numeric_init() {
-      std::cout << "FontVariants::numeric_init()" << std::endl;
-      // _numeric_tabular.set_inconsistent();
+      // std::cout << "FontVariants::numeric_init()" << std::endl;
   }
   
   void
@@ -227,7 +226,6 @@ namespace Widget {
   // Update GUI based on query.
   void
   FontVariants::update( SPStyle const *query ) {
-      // std::cout << "FontVariants::update" << std::endl;
 
       _ligatures_all = query->font_variant_ligatures.computed;
       _ligatures_mix = query->font_variant_ligatures.value;
@@ -253,8 +251,8 @@ namespace Widget {
       _position_sub.set_inconsistent(    _position_mix & SP_CSS_FONT_VARIANT_POSITION_SUB );
       _position_super.set_inconsistent(  _position_mix & SP_CSS_FONT_VARIANT_POSITION_SUPER );
 
-      unsigned _caps_all = query->font_variant_caps.computed;
-      unsigned _caps_mix = query->font_variant_caps.value;
+      _caps_all = query->font_variant_caps.computed;
+      _caps_mix = query->font_variant_caps.value;
 
       _caps_normal.set_active(     _caps_all & SP_CSS_FONT_VARIANT_CAPS_NORMAL );
       _caps_small.set_active(      _caps_all & SP_CSS_FONT_VARIANT_CAPS_SMALL );
@@ -271,6 +269,46 @@ namespace Widget {
       _caps_all_petite.set_inconsistent( _caps_mix & SP_CSS_FONT_VARIANT_CAPS_ALL_PETITE );
       _caps_unicase.set_inconsistent(    _caps_mix & SP_CSS_FONT_VARIANT_CAPS_UNICASE );
       _caps_titling.set_inconsistent(    _caps_mix & SP_CSS_FONT_VARIANT_CAPS_TITLING );
+
+      _numeric_all = query->font_variant_numeric.computed;
+      _numeric_mix = query->font_variant_numeric.value;
+
+      if (_numeric_all & SP_CSS_FONT_VARIANT_NUMERIC_LINING_NUMS) {
+          _numeric_lining.set_active();
+      } else if (_numeric_all & SP_CSS_FONT_VARIANT_NUMERIC_OLDSTYLE_NUMS) {
+          _numeric_old_style.set_active();
+      } else {
+          _numeric_default_style.set_active();
+      }
+
+      if (_numeric_all & SP_CSS_FONT_VARIANT_NUMERIC_PROPORTIONAL_NUMS) {
+          _numeric_proportional.set_active();
+      } else if (_numeric_all & SP_CSS_FONT_VARIANT_NUMERIC_TABULAR_NUMS) {
+          _numeric_tabular.set_active();
+      } else {
+          _numeric_default_width.set_active();
+      }
+
+      if (_numeric_all & SP_CSS_FONT_VARIANT_NUMERIC_DIAGONAL_FRACTIONS) {
+          _numeric_diagonal.set_active();
+      } else if (_numeric_all & SP_CSS_FONT_VARIANT_NUMERIC_STACKED_FRACTIONS) {
+          _numeric_stacked.set_active();
+      } else {
+          _numeric_default_fractions.set_active();
+      }
+
+      _numeric_ordinal.set_active(      _numeric_all & SP_CSS_FONT_VARIANT_NUMERIC_ORDINAL );
+      _numeric_slashed_zero.set_active( _numeric_all & SP_CSS_FONT_VARIANT_NUMERIC_SLASHED_ZERO );
+
+
+      _numeric_lining.set_inconsistent(       _numeric_mix & SP_CSS_FONT_VARIANT_NUMERIC_LINING_NUMS );
+      _numeric_old_style.set_inconsistent(    _numeric_mix & SP_CSS_FONT_VARIANT_NUMERIC_OLDSTYLE_NUMS );
+      _numeric_proportional.set_inconsistent( _numeric_mix & SP_CSS_FONT_VARIANT_NUMERIC_PROPORTIONAL_NUMS );
+      _numeric_tabular.set_inconsistent(      _numeric_mix & SP_CSS_FONT_VARIANT_NUMERIC_TABULAR_NUMS );
+      _numeric_diagonal.set_inconsistent(     _numeric_mix & SP_CSS_FONT_VARIANT_NUMERIC_DIAGONAL_FRACTIONS );
+      _numeric_stacked.set_inconsistent(      _numeric_mix & SP_CSS_FONT_VARIANT_NUMERIC_STACKED_FRACTIONS );
+      _numeric_ordinal.set_inconsistent(      _numeric_mix & SP_CSS_FONT_VARIANT_NUMERIC_ORDINAL );
+      _numeric_slashed_zero.set_inconsistent( _numeric_mix & SP_CSS_FONT_VARIANT_NUMERIC_SLASHED_ZERO );
 
       _ligatures_changed = false;
       _position_changed  = false;
@@ -355,6 +393,45 @@ namespace Widget {
           //if( (_caps_all != caps_new) || ((_caps_mix != 0) && _caps_changed) ) {
           sp_repr_css_set_property(css, "font-variant-caps", css_string.c_str() );
           //}
+      }
+
+      // Numeric
+      bool default_style = _numeric_default_style.get_active();
+      bool lining        = _numeric_lining.get_active();
+      bool old_style     = _numeric_old_style.get_active();
+
+      bool default_width = _numeric_default_width.get_active();
+      bool proportional  = _numeric_proportional.get_active();
+      bool tabular       = _numeric_tabular.get_active();
+
+      bool default_fractions = _numeric_default_fractions.get_active();
+      bool diagonal          = _numeric_diagonal.get_active();
+      bool stacked           = _numeric_stacked.get_active();
+
+      bool ordinal           = _numeric_ordinal.get_active();
+      bool slashed_zero      = _numeric_slashed_zero.get_active();
+
+      if (default_style & default_width & default_fractions & !ordinal & !slashed_zero) {
+          sp_repr_css_set_property(css, "font-variant-numeric", "normal");
+      } else {
+          Glib::ustring css_string;
+          if ( lining )
+              css_string += "lining-nums ";
+          if ( old_style )
+              css_string += "oldstyle-nums ";
+          if ( proportional )
+              css_string += "proportional-nums ";
+          if ( tabular )
+              css_string += "tabular-nums ";
+          if ( diagonal )
+              css_string += "diagonal-fractions ";
+          if ( stacked )
+              css_string += "stacked-fractions ";
+          if ( ordinal )
+              css_string += "ordinal ";
+          if ( slashed_zero )
+              css_string += "slashed-zero ";
+          sp_repr_css_set_property(css, "font-variant-numeric", css_string.c_str() );
       }
 
   }

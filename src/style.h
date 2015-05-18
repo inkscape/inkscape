@@ -119,7 +119,7 @@ public:
     /** Font variant caps (small caps) */
     SPIEnum font_variant_caps;
     /** Font variant numeric (numerical formatting) */
-    SPIEnum font_variant_numeric;
+    SPINumeric font_variant_numeric;
     /** Font variant alternates (alternates/swatches) */
     SPIEnum font_variant_alternates;
     /** Font variant East Asian */

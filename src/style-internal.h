@@ -546,11 +546,33 @@ public:
     {}
 
     SPILigatures( Glib::ustring const &name, SPStyleEnum const *enums) :
-        SPIEnum( name, enums,
-                 SP_CSS_FONT_VARIANT_LIGATURES_COMMON | SP_CSS_FONT_VARIANT_LIGATURES_CONTEXTUAL)
+        SPIEnum( name, enums, SP_CSS_FONT_VARIANT_NORMAL )
     {}
 
     virtual ~SPILigatures()
+    {}
+
+    virtual void read( gchar const *str );
+    virtual const Glib::ustring write( guint const flags = SP_STYLE_FLAG_IFSET,
+                                       SPIBase const *const base = NULL ) const;
+};
+
+
+/// SPIEnum w/ extra bits. The 'font-variants-numeric' property is a complete mess that needs
+/// special handling. Multiple key words can be specified, some exclusive of others.
+class SPINumeric : public SPIEnum
+{
+
+public:
+    SPINumeric() :
+        SPIEnum( "anonymous_enumnumeric", NULL )
+    {}
+
+    SPINumeric( Glib::ustring const &name, SPStyleEnum const *enums) :
+        SPIEnum( name, enums, SP_CSS_FONT_VARIANT_NUMERIC_NORMAL )
+    {}
+
+    virtual ~SPINumeric()
     {}
 
     virtual void read( gchar const *str );
