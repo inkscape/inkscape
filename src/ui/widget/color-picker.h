@@ -18,6 +18,7 @@
 #include <gtkmm/dialog.h>
 #include <gtkmm/button.h>
 #include <sigc++/sigc++.h>
+#include "ui/selected-color.h"
 #include "ui/widget/color-preview.h"
 
 struct SPColorSelector;
@@ -49,7 +50,7 @@ public:
 
 protected:
 
-    friend void sp_color_picker_color_mod(SPColorSelector *csel, GObject *cp);
+    void _onSelectedColorChanged();
     virtual void on_clicked();
     virtual void on_changed (guint32);
 
@@ -59,13 +60,14 @@ protected:
     sigc::signal<void,guint32> _changed_signal;
     guint32             _rgba;
     bool                _undo;
-
+    bool                _updating;
 
     //Dialog
     void setupDialog(const Glib::ustring &title);
     //Inkscape::UI::Dialog::Dialog _colorSelectorDialog;
     Gtk::Dialog _colorSelectorDialog;
-    SPColorSelector *_colorSelector;
+    SelectedColor _selected_color;
+    Gtk::Widget *_color_selector;
 };
 
 }//namespace Widget

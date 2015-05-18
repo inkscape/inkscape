@@ -24,41 +24,37 @@
 #include "color.h"
 
 #include <color.h>
-#include "widgets/sp-color-selector.h"
-#include "widgets/sp-color-notebook.h"
+#include "ui/widget/color-notebook.h"
 #include "preferences.h"
-
 
 namespace Inkscape {
 namespace Extension {
 
-void sp_color_param_changed(SPColorSelector *csel, GObject *cp);
-
-
 ParamColor::~ParamColor(void)
 {
-
+    _color_changed.disconnect();
 }
 
 guint32 ParamColor::set( guint32 in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/ )
 {
-    _value = in;
+    _color_changed.block(true);
+    _color.setValue(in);
+    _color_changed.block(false);
 
     gchar * prefname = this->pref_name();
     std::string value;
     string(value);
-    
+
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setString(extension_pref_root + prefname, value);
     g_free(prefname);
 
-    return _value;
+    return in;
 }
 
-ParamColor::ParamColor(const gchar *name, const gchar *guitext, const gchar *desc, const Parameter::_scope_t scope,
-                       bool gui_hidden, const gchar *gui_tip, Inkscape::Extension::Extension *ext,
-                       Inkscape::XML::Node *xml)
-    : Parameter(name, guitext, desc, scope, gui_hidden, gui_tip, ext), _value(0), _changeSignal(0)
+ParamColor::ParamColor (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
+    Parameter(name, guitext, desc, scope, gui_hidden, gui_tip, ext),
+    _changeSignal(0)
 {
     const char * defaulthex = NULL;
     if (xml->firstChild() != NULL)
@@ -72,51 +68,46 @@ ParamColor::ParamColor(const gchar *name, const gchar *guitext, const gchar *des
     if (!paramval.empty())
         defaulthex = paramval.data();
 
-    if (defaulthex)
-        _value = atoi(defaulthex);
+    if (defaulthex) {
+        _color.setValue(atoi(defaulthex));
+    }
+    _color_changed = _color.signal_changed.connect(sigc::mem_fun(this, &ParamColor::_onColorChanged));
+
 }
 
 void ParamColor::string(std::string &string) const
 {
     char str[16];
-    sprintf(str, "%i", _value);
+    snprintf(str, 16, "%i", _color.value());
     string += str;
 }
 
 Gtk::Widget *ParamColor::get_widget( SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/, sigc::signal<void> * changeSignal )
 {
-    if (_gui_hidden) return NULL;
+    using Inkscape::UI::Widget::ColorNotebook;
+
+	if (_gui_hidden) return NULL;
 
     _changeSignal = new sigc::signal<void>(*changeSignal);
-    Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
-    SPColorSelector* spColorSelector = (SPColorSelector*)sp_color_selector_new(SP_TYPE_COLOR_NOTEBOOK);
 
-    ColorSelector* colorSelector = spColorSelector->base;
-    if (_value < 1) {
-        _value = 0xFF000000;
+    if (_color.value() < 1) {
+        _color_changed.block(true);
+        _color.setValue(0xFF000000);
+        _color_changed.block(false);
     }
-    SPColor *color = new SPColor( _value );
-    float alpha = (_value & 0xff) / 255.0F;
-    colorSelector->setColorAlpha(*color, alpha);
 
-    hbox->pack_start (*Glib::wrap(&spColorSelector->vbox), true, true, 0);
-    g_signal_connect(G_OBJECT(spColorSelector), "changed",  G_CALLBACK(sp_color_param_changed), (void*)this);
-
-    gtk_widget_show(GTK_WIDGET(spColorSelector));
+    Gtk::HBox *hbox = Gtk::manage(new Gtk::HBox(false, 4));
+    Gtk::Widget *selector = Gtk::manage(new ColorNotebook(_color));
+    hbox->pack_start (*selector, true, true, 0);
+    selector->show();
     hbox->show();
-
-    return dynamic_cast<Gtk::Widget *>(hbox);
+    return hbox;
 }
 
-void sp_color_param_changed(SPColorSelector *csel, GObject *obj)
+void ParamColor::_onColorChanged()
 {
-    const SPColor color = csel->base->getColor();
-    float alpha = csel->base->getAlpha();
-
-    ParamColor* ptr = reinterpret_cast<ParamColor*>(obj);
-    ptr->set(color.toRGBA32( alpha ), NULL, NULL);
-
-    ptr->_changeSignal->emit();
+    if (_changeSignal)
+        _changeSignal->emit();
 }
 
 };  /* namespace Extension */

@@ -300,7 +300,7 @@ void FillNStroke::performUpdate()
                     psel->setGradientProperties( rg->getUnits(),
                                                  rg->getSpread() );
                 } else if (SP_IS_PATTERN(server)) {
-                    SPPattern *pat = pattern_getroot(SP_PATTERN(server));
+                    SPPattern *pat = SP_PATTERN(server)->rootPattern();
                     psel->updatePatternList( pat );
                 }
             }
@@ -431,8 +431,7 @@ void FillNStroke::dragFromPaint()
     update = true;
 
     switch (psel->mode) {
-        case SPPaintSelector::MODE_COLOR_RGB:
-        case SPPaintSelector::MODE_COLOR_CMYK:
+        case SPPaintSelector::MODE_SOLID_COLOR:
         {
             // local change, do not update from selection
             dragId = g_timeout_add_full(G_PRIORITY_DEFAULT, 100, dragDelayCB, this, 0);
@@ -505,8 +504,7 @@ void FillNStroke::updateFromPaint()
             break;
         }
 
-        case SPPaintSelector::MODE_COLOR_RGB:
-        case SPPaintSelector::MODE_COLOR_CMYK:
+        case SPPaintSelector::MODE_SOLID_COLOR:
         {
             if (kind == FILL) {
                 // FIXME: fix for GTK breakage, see comment in SelectedStyle::on_opacity_changed; here it results in losing release events
@@ -656,7 +654,7 @@ void FillNStroke::updateFromPaint()
                             SPPaintServer *server = (kind == FILL) ?
                                 selobj->style->getFillPaintServer() :
                                 selobj->style->getStrokePaintServer();
-                            if (SP_IS_PATTERN(server) && pattern_getroot(SP_PATTERN(server)) == pattern)
+                            if (SP_IS_PATTERN(server) && SP_PATTERN(server)->rootPattern() == pattern)
                                 // only if this object's pattern is not rooted in our selected pattern, apply
                                 continue;
                         }

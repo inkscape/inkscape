@@ -388,8 +388,8 @@ int PrintEmf::create_brush(SPStyle const *style, PU_COLORREF fcolor)
         } else if (SP_IS_PATTERN(SP_STYLE_FILL_SERVER(style))) { // must be paint-server
             SPPaintServer *paintserver = style->fill.value.href->getObject();
             SPPattern *pat = SP_PATTERN(paintserver);
-            double dwidth  = pattern_width(pat);
-            double dheight = pattern_height(pat);
+            double dwidth  = pat->width();
+            double dheight = pat->height();
             width  = dwidth;
             height = dheight;
             brush_classify(pat, 0, &pixbuf, &hatchType, &hatchColor, &bkColor);
@@ -573,8 +573,8 @@ int PrintEmf::create_pen(SPStyle const *style, const Geom::Affine &transform)
         if (SP_IS_PATTERN(SP_STYLE_STROKE_SERVER(style))) { // must be paint-server
             SPPaintServer *paintserver = style->stroke.value.href->getObject();
             SPPattern *pat = SP_PATTERN(paintserver);
-            double dwidth  = pattern_width(pat);
-            double dheight = pattern_height(pat);
+            double dwidth  = pat->width();
+            double dheight = pat->height();
             width  = dwidth;
             height = dheight;
             brush_classify(pat, 0, &pixbuf, &hatchType, &hatchColor, &bkColor);

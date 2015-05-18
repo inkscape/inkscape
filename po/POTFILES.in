@@ -297,6 +297,11 @@ src/ui/tools/star-tool.cpp
 src/ui/tools/text-tool.cpp
 src/ui/tools/tool-base.cpp
 src/ui/tools/tweak-tool.cpp
+src/ui/widget/color-entry.cpp
+src/ui/widget/color-icc-selector.cpp
+src/ui/widget/color-notebook.cpp
+src/ui/widget/color-scales.cpp
+src/ui/widget/color-wheel-selector.cpp
 src/ui/widget/combo-enums.h
 src/ui/widget/entity-entry.cpp
 src/ui/widget/filter-effect-chooser.cpp
@@ -342,11 +347,7 @@ src/widgets/rect-toolbar.cpp
 src/widgets/ruler.cpp
 src/widgets/select-toolbar.cpp
 src/widgets/sp-attribute-widget.cpp
-src/widgets/sp-color-icc-selector.cpp
-src/widgets/sp-color-notebook.cpp
-src/widgets/sp-color-scales.cpp
 src/widgets/sp-color-selector.cpp
-src/widgets/sp-color-wheel-selector.cpp
 src/widgets/sp-xmlview-attr-list.cpp
 src/widgets/sp-xmlview-content.cpp
 src/widgets/spiral-toolbar.cpp

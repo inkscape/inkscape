@@ -45,6 +45,7 @@
 #include "style.h"
 #include "ui/tools-switch.h"
 #include "ui/icon-names.h"
+#include "ui/selected-color.h"
 #include "ui/widget/imagetoggler.h"
 #include "ui/widget/layertypeicon.h"
 #include "ui/widget/insertordericon.h"
@@ -53,7 +54,7 @@
 #include "ui/tools/node-tool.h"
 #include "ui/tools/tool-base.h"
 #include "verbs.h"
-#include "widgets/sp-color-notebook.h"
+#include "ui/widget/color-notebook.h"
 #include "widgets/icon.h"
 #include "xml/node.h"
 #include "xml/node-observer.h"
@@ -928,12 +929,12 @@ bool ObjectsPanel::_handleButtonEvent(GdkEventButton* event)
                             //If the current item is not selected, store only it in the highlight source
                             _storeHighlightTarget(iter);
                         }
-                        if (_colorSelector)
+                        if (_selectedColor)
                         {
                             //Set up the color selector
                             SPColor color;
                             color.set( row[_model->_colHighlight] );
-                            _colorSelector->base->setColorAlpha(color, SP_RGBA32_A_F(row[_model->_colHighlight]));
+                            _selectedColor->setColorAlpha(color, SP_RGBA32_A_F(row[_model->_colHighlight]));
                         }
                         //Show the color selector dialog
                         _colorSelectorDialog.show();
@@ -1440,17 +1441,16 @@ void ObjectsPanel::_setExpanded(const Gtk::TreeModel::iterator& iter, const Gtk:
  * @param csel Color selector
  * @param cp Objects panel
  */
-void sp_highlight_picker_color_mod(SPColorSelector *csel, GObject * cp)
+void ObjectsPanel::_highlightPickerColorMod()
 {
     SPColor color;
     float alpha = 0;
-    csel->base->getColorAlpha(color, alpha);
+    _selectedColor->colorAlpha(color, alpha);
+
     guint32 rgba = color.toRGBA32( alpha );
-    
-    ObjectsPanel *ptr = reinterpret_cast<ObjectsPanel *>(cp);
 
     //Set the highlight color for all items in the _highlight_target (all selected items)
-    for (std::vector<SPItem *>::iterator iter = ptr->_highlight_target.begin(); iter != ptr->_highlight_target.end(); ++iter)
+    for (std::vector<SPItem *>::iterator iter = _highlight_target.begin(); iter != _highlight_target.end(); ++iter)
     {
         SPItem * target = *iter;
         target->setHighlightColor(rgba);
@@ -1922,18 +1922,16 @@ ObjectsPanel::ObjectsPanel() :
     _colorSelectorDialog.set_title (_("Select Highlight Color"));
     _colorSelectorDialog.set_border_width (4);
     _colorSelectorDialog.property_modal() = true;
-    _colorSelector = SP_COLOR_SELECTOR(sp_color_selector_new(SP_TYPE_COLOR_NOTEBOOK));
+    _selectedColor.reset(new Inkscape::UI::SelectedColor);
+    Gtk::Widget *color_selector = Gtk::manage(new Inkscape::UI::Widget::ColorNotebook(*_selectedColor));
     _colorSelectorDialog.get_vbox()->pack_start (
-              *Glib::wrap(&_colorSelector->vbox), true, true, 0);
+              *color_selector, true, true, 0);
 
-    g_signal_connect(G_OBJECT(_colorSelector), "dragged",
-                         G_CALLBACK(sp_highlight_picker_color_mod), (void *)this);
-    g_signal_connect(G_OBJECT(_colorSelector), "released",
-                         G_CALLBACK(sp_highlight_picker_color_mod), (void *)this);
-    g_signal_connect(G_OBJECT(_colorSelector), "changed",
-                         G_CALLBACK(sp_highlight_picker_color_mod), (void *)this);
+    _selectedColor->signal_dragged.connect(sigc::mem_fun(*this, &ObjectsPanel::_highlightPickerColorMod));
+    _selectedColor->signal_released.connect(sigc::mem_fun(*this, &ObjectsPanel::_highlightPickerColorMod));
+    _selectedColor->signal_changed.connect(sigc::mem_fun(*this, &ObjectsPanel::_highlightPickerColorMod));
 
-    gtk_widget_show(GTK_WIDGET(_colorSelector));
+    color_selector->show();
     
     setDesktop( targetDesktop );
 
@@ -1951,7 +1949,6 @@ ObjectsPanel::~ObjectsPanel()
 {
     //Close the highlight selection dialog
     _colorSelectorDialog.hide();
-    _colorSelector = NULL;
     
     //Set the desktop to null, which will disconnect all object watchers
     setDesktop(NULL);

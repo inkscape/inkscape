@@ -51,7 +51,7 @@
 #include "ui/tools/tool-base.h" //"event-context.h"
 #include "selection.h"
 //#include "dialogs/dialog-events.h"
-#include "widgets/sp-color-notebook.h"
+#include "ui/widget/color-notebook.h"
 #include "style.h"
 #include "filter-chemistry.h"
 #include "filters/blend.h"

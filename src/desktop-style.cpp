@@ -576,8 +576,8 @@ objects_query_fillstroke (const std::vector<SPItem*> &objects, SPStyle *style_re
                    return QUERY_STYLE_MULTIPLE_DIFFERENT;  // different kind of server
                 }
 
-                SPPattern *pat = pattern_getroot (pattern);
-                SPPattern *pat_res = pattern_getroot (pattern_res);
+                SPPattern *pat = SP_PATTERN (server)->rootPattern();
+                SPPattern *pat_res = SP_PATTERN (server_res)->rootPattern();
                 if (pat_res != pat) {
                    return QUERY_STYLE_MULTIPLE_DIFFERENT;  // different pattern roots
                 }

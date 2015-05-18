@@ -17,7 +17,7 @@
 #include "document-undo.h"
 #include "ui/dialog-events.h"
 
-#include "widgets/sp-color-notebook.h"
+#include "ui/widget/color-notebook.h"
 #include "verbs.h"
 
 
@@ -26,8 +26,6 @@ static bool _in_use = false;
 namespace Inkscape {
 namespace UI {
 namespace Widget {
-
-void sp_color_picker_color_mod(SPColorSelector *csel, GObject *cp);
 
 ColorPicker::ColorPicker (const Glib::ustring& title, const Glib::ustring& tip,
                           guint32 rgba, bool undo)
@@ -39,12 +37,15 @@ ColorPicker::ColorPicker (const Glib::ustring& title, const Glib::ustring& tip,
     _preview.show();
     add (_preview);
     set_tooltip_text (tip);
+
+    _selected_color.signal_changed.connect(sigc::mem_fun(this, &ColorPicker::_onSelectedColorChanged));
+    _selected_color.signal_dragged.connect(sigc::mem_fun(this, &ColorPicker::_onSelectedColorChanged));
+    _selected_color.signal_released.connect(sigc::mem_fun(this, &ColorPicker::_onSelectedColorChanged));
 }
 
 ColorPicker::~ColorPicker()
 {
     closeWindow();
-    _colorSelector = NULL;
 }
 
 void ColorPicker::setupDialog(const Glib::ustring &title)
@@ -55,25 +56,17 @@ void ColorPicker::setupDialog(const Glib::ustring &title)
     _colorSelectorDialog.hide();
     _colorSelectorDialog.set_title (title);
     _colorSelectorDialog.set_border_width (4);
-    _colorSelector = SP_COLOR_SELECTOR(sp_color_selector_new(SP_TYPE_COLOR_NOTEBOOK));
+
+    _color_selector = Gtk::manage(new ColorNotebook(_selected_color));
 
 #if WITH_GTKMM_3_0
     _colorSelectorDialog.get_content_area()->pack_start (
-              *Glib::wrap(&_colorSelector->vbox), true, true, 0);
+              *_color_selector, true, true, 0);
 #else
     _colorSelectorDialog.get_vbox()->pack_start (
-              *Glib::wrap(&_colorSelector->vbox), true, true, 0);
+              *_color_selector, true, true, 0);
 #endif
-
-    g_signal_connect(G_OBJECT(_colorSelector), "dragged",
-                         G_CALLBACK(sp_color_picker_color_mod), (void *)this);
-    g_signal_connect(G_OBJECT(_colorSelector), "released",
-                         G_CALLBACK(sp_color_picker_color_mod), (void *)this);
-    g_signal_connect(G_OBJECT(_colorSelector), "changed",
-                         G_CALLBACK(sp_color_picker_color_mod), (void *)this);
-
-    gtk_widget_show(GTK_WIDGET(_colorSelector));
-
+    _color_selector->show();
 }
 
 void ColorPicker::setRgba32 (guint32 rgba)
@@ -82,11 +75,11 @@ void ColorPicker::setRgba32 (guint32 rgba)
 
     _preview.setRgba32 (rgba);
     _rgba = rgba;
-    if (_colorSelector)
+    if (_color_selector)
     {
-        SPColor color;
-        color.set( rgba );
-        _colorSelector->base->setColorAlpha(color, SP_RGBA32_A_F(rgba));
+        _updating = true;
+        _selected_color.setValue(rgba);
+        _updating = false;
     }
 }
 
@@ -97,11 +90,11 @@ void ColorPicker::closeWindow()
 
 void ColorPicker::on_clicked()
 {
-    if (_colorSelector)
+    if (_color_selector)
     {
-        SPColor color;
-        color.set( _rgba );
-        _colorSelector->base->setColorAlpha(color, SP_RGBA32_A_F(_rgba));
+        _updating = true;
+        _selected_color.setValue(_rgba);
+        _updating = false;
     }
     _colorSelectorDialog.show();
 }
@@ -110,33 +103,30 @@ void ColorPicker::on_changed (guint32)
 {
 }
 
-void sp_color_picker_color_mod(SPColorSelector *csel, GObject *cp)
-{
+void ColorPicker::_onSelectedColorChanged() {
+    if (_updating) {
+        return;
+    }
+
     if (_in_use) {
         return;
     } else {
         _in_use = true;
     }
 
-    SPColor color;
-    float alpha = 0;
-    csel->base->getColorAlpha(color, alpha);
-    guint32 rgba = color.toRGBA32( alpha );
+    guint32 rgba = _selected_color.value();
+    _preview.setRgba32(rgba);
 
-    ColorPicker *ptr = reinterpret_cast<ColorPicker *>(cp);
-
-    (ptr->_preview).setRgba32 (rgba);
-
-    if (ptr->_undo && SP_ACTIVE_DESKTOP)
+    if (_undo && SP_ACTIVE_DESKTOP) {
         DocumentUndo::done(SP_ACTIVE_DESKTOP->getDocument(), SP_VERB_NONE,
                            /* TODO: annotate */ "color-picker.cpp:130");
+    }
 
-    ptr->on_changed (rgba);
+    on_changed(rgba);
     _in_use = false;
-    ptr->_changed_signal.emit (rgba);
-    ptr->_rgba = rgba;
+    _changed_signal.emit(rgba);
+    _rgba = rgba;
 }
-
 
 }//namespace Widget
 }//namespace UI

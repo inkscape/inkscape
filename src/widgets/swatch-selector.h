@@ -2,6 +2,7 @@
 #define SEEN_SP_SWATCH_SELECTOR_H
 
 #include <gtkmm/box.h>
+#include "ui/selected-color.h"
 
 class SPDocument;
 class SPGradient;
@@ -29,13 +30,14 @@ public:
     SPGradientSelector *getGradientSelector();
 
 private:
-    static void _grabbedCb(SPColorSelector *csel, void *data);
-    static void _draggedCb(SPColorSelector *csel, void *data);
-    static void _releasedCb(SPColorSelector *csel, void *data);
-    static void _changedCb(SPColorSelector *csel, void *data);
+    void _grabbedCb();
+    void _draggedCb();
+    void _releasedCb();
+    void _changedCb();
 
     SPGradientSelector *_gsel;
-    SPColorSelector *_csel;
+    Inkscape::UI::SelectedColor _selected_color;
+    bool _updating_color;
 };
 
 

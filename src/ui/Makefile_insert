@@ -19,6 +19,8 @@ ink_common_sources +=		\
 	ui/previewfillable.h	\
 	ui/previewholder.cpp	\
 	ui/previewholder.h	\
+	ui/selected-color.h     \
+	ui/selected-color.cpp   \
 	ui/shape-editor.cpp	\
 	ui/shape-editor.h	\
 	ui/tool-factory.cpp	\

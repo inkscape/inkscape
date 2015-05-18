@@ -1222,8 +1222,8 @@ void SPItem::adjust_pattern(Geom::Affine const &postmul, bool set, PatternTransf
         SPObject *server = style->getFillPaintServer();
         SPPattern *serverPatt = dynamic_cast<SPPattern *>(server);
         if ( serverPatt ) {
-            SPPattern *pattern = sp_pattern_clone_if_necessary(this, serverPatt, "fill");
-            sp_pattern_transform_multiply(pattern, postmul, set);
+            SPPattern *pattern = serverPatt->clone_if_necessary(this, "fill");
+            pattern->transform_multiply(postmul, set);
         }
     }
 
@@ -1232,8 +1232,8 @@ void SPItem::adjust_pattern(Geom::Affine const &postmul, bool set, PatternTransf
         SPObject *server = style->getStrokePaintServer();
         SPPattern *serverPatt = dynamic_cast<SPPattern *>(server);
         if ( serverPatt ) {
-            SPPattern *pattern = sp_pattern_clone_if_necessary(this, serverPatt, "stroke");
-            sp_pattern_transform_multiply(pattern, postmul, set);
+            SPPattern *pattern = serverPatt->clone_if_necessary(this, "stroke");
+            pattern->transform_multiply(postmul, set);
         }
     }
 }

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-05-11 18:05+0200\n"
+"POT-Creation-Date: 2015-05-18 12:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3308,1032 +3308,1032 @@ msgstr ""
 msgid "Old paint (bitmap)"
 msgstr ""
 
-#. Symbols: ./AigaSymbols.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:2
-msgctxt "Symbol"
-msgid "AIGA Symbol Signs"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:3 ../share/symbols/symbols.h:4
-#: ../share/symbols/symbols.h:281 ../share/symbols/symbols.h:282
-msgctxt "Symbol"
-msgid "Telephone"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:5 ../share/symbols/symbols.h:6
-msgctxt "Symbol"
-msgid "Mail"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:7 ../share/symbols/symbols.h:8
-msgctxt "Symbol"
-msgid "Currency Exchange"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:9 ../share/symbols/symbols.h:10
-msgctxt "Symbol"
-msgid "Currency Exchange - Euro"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:11 ../share/symbols/symbols.h:12
-msgctxt "Symbol"
-msgid "Cashier"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:13 ../share/symbols/symbols.h:14
-#: ../share/symbols/symbols.h:213 ../share/symbols/symbols.h:214
-msgctxt "Symbol"
-msgid "First Aid"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:15 ../share/symbols/symbols.h:16
-msgctxt "Symbol"
-msgid "Lost and Found"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:17 ../share/symbols/symbols.h:18
-msgctxt "Symbol"
-msgid "Coat Check"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:19 ../share/symbols/symbols.h:20
-msgctxt "Symbol"
-msgid "Baggage Lockers"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:21 ../share/symbols/symbols.h:22
-msgctxt "Symbol"
-msgid "Escalator"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:23 ../share/symbols/symbols.h:24
-msgctxt "Symbol"
-msgid "Escalator Down"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:25 ../share/symbols/symbols.h:26
-msgctxt "Symbol"
-msgid "Escalator Up"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:27 ../share/symbols/symbols.h:28
-msgctxt "Symbol"
-msgid "Stairs"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:29 ../share/symbols/symbols.h:30
-msgctxt "Symbol"
-msgid "Stairs Down"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:31 ../share/symbols/symbols.h:32
-msgctxt "Symbol"
-msgid "Stairs Up"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:33 ../share/symbols/symbols.h:34
-msgctxt "Symbol"
-msgid "Elevator"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:35 ../share/symbols/symbols.h:36
-msgctxt "Symbol"
-msgid "Toilets - Men"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:37 ../share/symbols/symbols.h:38
-msgctxt "Symbol"
-msgid "Toilets - Women"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:39 ../share/symbols/symbols.h:40
-msgctxt "Symbol"
-msgid "Toilets"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:41 ../share/symbols/symbols.h:42
-msgctxt "Symbol"
-msgid "Nursery"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:43 ../share/symbols/symbols.h:44
-msgctxt "Symbol"
-msgid "Drinking Fountain"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:45 ../share/symbols/symbols.h:46
-msgctxt "Symbol"
-msgid "Waiting Room"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:47 ../share/symbols/symbols.h:48
-#: ../share/symbols/symbols.h:231 ../share/symbols/symbols.h:232
-msgctxt "Symbol"
-msgid "Information"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:49 ../share/symbols/symbols.h:50
-msgctxt "Symbol"
-msgid "Hotel Information"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:51 ../share/symbols/symbols.h:52
-msgctxt "Symbol"
-msgid "Air Transportation"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:53 ../share/symbols/symbols.h:54
-msgctxt "Symbol"
-msgid "Heliport"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:55 ../share/symbols/symbols.h:56
-msgctxt "Symbol"
-msgid "Taxi"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:57 ../share/symbols/symbols.h:58
-msgctxt "Symbol"
-msgid "Bus"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:59 ../share/symbols/symbols.h:60
-msgctxt "Symbol"
-msgid "Ground Transportation"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:61 ../share/symbols/symbols.h:62
-msgctxt "Symbol"
-msgid "Rail Transportation"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:63 ../share/symbols/symbols.h:64
-msgctxt "Symbol"
-msgid "Water Transportation"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:65 ../share/symbols/symbols.h:66
-msgctxt "Symbol"
-msgid "Car Rental"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:67 ../share/symbols/symbols.h:68
-msgctxt "Symbol"
-msgid "Restaurant"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:69 ../share/symbols/symbols.h:70
-msgctxt "Symbol"
-msgid "Coffeeshop"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:71 ../share/symbols/symbols.h:72
-msgctxt "Symbol"
-msgid "Bar"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:73 ../share/symbols/symbols.h:74
-msgctxt "Symbol"
-msgid "Shops"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:75 ../share/symbols/symbols.h:76
-msgctxt "Symbol"
-msgid "Barber Shop - Beauty Salon"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:77 ../share/symbols/symbols.h:78
-msgctxt "Symbol"
-msgid "Barber Shop"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:79 ../share/symbols/symbols.h:80
-msgctxt "Symbol"
-msgid "Beauty Salon"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:81 ../share/symbols/symbols.h:82
-msgctxt "Symbol"
-msgid "Ticket Purchase"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:83 ../share/symbols/symbols.h:84
-msgctxt "Symbol"
-msgid "Baggage Check In"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:85 ../share/symbols/symbols.h:86
-msgctxt "Symbol"
-msgid "Baggage Claim"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:87 ../share/symbols/symbols.h:88
-msgctxt "Symbol"
-msgid "Customs"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:89 ../share/symbols/symbols.h:90
-msgctxt "Symbol"
-msgid "Immigration"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:91 ../share/symbols/symbols.h:92
-msgctxt "Symbol"
-msgid "Departing Flights"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:93 ../share/symbols/symbols.h:94
-msgctxt "Symbol"
-msgid "Arriving Flights"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:95 ../share/symbols/symbols.h:96
-msgctxt "Symbol"
-msgid "Smoking"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:97 ../share/symbols/symbols.h:98
-msgctxt "Symbol"
-msgid "No Smoking"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:99 ../share/symbols/symbols.h:100
-#: ../share/symbols/symbols.h:245 ../share/symbols/symbols.h:246
-msgctxt "Symbol"
-msgid "Parking"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:101 ../share/symbols/symbols.h:102
-msgctxt "Symbol"
-msgid "No Parking"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:103 ../share/symbols/symbols.h:104
-msgctxt "Symbol"
-msgid "No Dogs"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:105 ../share/symbols/symbols.h:106
-msgctxt "Symbol"
-msgid "No Entry"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:107 ../share/symbols/symbols.h:108
-msgctxt "Symbol"
-msgid "Exit"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:109 ../share/symbols/symbols.h:110
-msgctxt "Symbol"
-msgid "Fire Extinguisher"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:111 ../share/symbols/symbols.h:112
-msgctxt "Symbol"
-msgid "Right Arrow"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:113 ../share/symbols/symbols.h:114
-msgctxt "Symbol"
-msgid "Forward and Right Arrow"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:115 ../share/symbols/symbols.h:116
-msgctxt "Symbol"
-msgid "Up Arrow"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:117 ../share/symbols/symbols.h:118
-msgctxt "Symbol"
-msgid "Forward and Left Arrow"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:119 ../share/symbols/symbols.h:120
-msgctxt "Symbol"
-msgid "Left Arrow"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:121 ../share/symbols/symbols.h:122
-msgctxt "Symbol"
-msgid "Left and Down Arrow"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:123 ../share/symbols/symbols.h:124
-msgctxt "Symbol"
-msgid "Down Arrow"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:125 ../share/symbols/symbols.h:126
-msgctxt "Symbol"
-msgid "Right and Down Arrow"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:127 ../share/symbols/symbols.h:128
-msgctxt "Symbol"
-msgid "NPS Wheelchair Accessible - 1996"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:129 ../share/symbols/symbols.h:130
-msgctxt "Symbol"
-msgid "NPS Wheelchair Accessible"
-msgstr ""
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:131 ../share/symbols/symbols.h:132
-msgctxt "Symbol"
-msgid "New Wheelchair Accessible"
-msgstr ""
-
-#. Symbols: ./BalloonSymbols.svg
-#: ../share/symbols/symbols.h:133
-msgctxt "Symbol"
-msgid "Word Balloons"
-msgstr ""
-
-#. Symbols: ./BalloonSymbols.svg
-#: ../share/symbols/symbols.h:134
-msgctxt "Symbol"
-msgid "Thought Balloon"
-msgstr ""
-
-#. Symbols: ./BalloonSymbols.svg
-#: ../share/symbols/symbols.h:135
-msgctxt "Symbol"
-msgid "Dream Speaking"
-msgstr ""
-
-#. Symbols: ./BalloonSymbols.svg
-#: ../share/symbols/symbols.h:136
-msgctxt "Symbol"
-msgid "Rounded Balloon"
-msgstr ""
-
-#. Symbols: ./BalloonSymbols.svg
-#: ../share/symbols/symbols.h:137
-msgctxt "Symbol"
-msgid "Squared Balloon"
-msgstr ""
-
-#. Symbols: ./BalloonSymbols.svg
-#: ../share/symbols/symbols.h:138
-msgctxt "Symbol"
-msgid "Over the Phone"
-msgstr ""
-
-#. Symbols: ./BalloonSymbols.svg
-#: ../share/symbols/symbols.h:139
-msgctxt "Symbol"
-msgid "Hip Balloon"
-msgstr ""
-
-#. Symbols: ./BalloonSymbols.svg
-#: ../share/symbols/symbols.h:140
-msgctxt "Symbol"
-msgid "Circle Balloon"
-msgstr ""
-
-#. Symbols: ./BalloonSymbols.svg
-#: ../share/symbols/symbols.h:141
-msgctxt "Symbol"
-msgid "Exclaim Balloon"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:142
-msgctxt "Symbol"
-msgid "Flow Chart Shapes"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:143
-msgctxt "Symbol"
-msgid "Process"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:144
-msgctxt "Symbol"
-msgid "Input/Output"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:145
-msgctxt "Symbol"
-msgid "Document"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:146
-msgctxt "Symbol"
-msgid "Manual Operation"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:147
-msgctxt "Symbol"
-msgid "Preparation"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:148
-msgctxt "Symbol"
-msgid "Merge"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:149
-msgctxt "Symbol"
-msgid "Decision"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:150
-msgctxt "Symbol"
-msgid "Magnetic Tape"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:151
-msgctxt "Symbol"
-msgid "Display"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:152
-msgctxt "Symbol"
-msgid "Auxiliary Operation"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:153
-msgctxt "Symbol"
-msgid "Manual Input"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:154
-msgctxt "Symbol"
-msgid "Extract"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:155
-msgctxt "Symbol"
-msgid "Terminal/Interrupt"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:156
-msgctxt "Symbol"
-msgid "Punched Card"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:157
-msgctxt "Symbol"
-msgid "Punch Tape"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:158
-msgctxt "Symbol"
-msgid "Online Storage"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:159
-msgctxt "Symbol"
-msgid "Keying"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:160
-msgctxt "Symbol"
-msgid "Sort"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:161
-msgctxt "Symbol"
-msgid "Connector"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:162
-msgctxt "Symbol"
-msgid "Off-Page Connector"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:163
-msgctxt "Symbol"
-msgid "Transmittal Tape"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:164
-msgctxt "Symbol"
-msgid "Communication Link"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:165
-msgctxt "Symbol"
-msgid "Collate"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:166
-msgctxt "Symbol"
-msgid "Comment/Annotation"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:167
-msgctxt "Symbol"
-msgid "Core"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:168
-msgctxt "Symbol"
-msgid "Predefined Process"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:169
-msgctxt "Symbol"
-msgid "Magnetic Disk (Database)"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:170
-msgctxt "Symbol"
-msgid "Magnetic Drum (Direct Access)"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:171
-msgctxt "Symbol"
-msgid "Offline Storage"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:172
-msgctxt "Symbol"
-msgid "Logical Or"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:173
-msgctxt "Symbol"
-msgid "Logical And"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:174
-msgctxt "Symbol"
-msgid "Delay"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:175
-msgctxt "Symbol"
-msgid "Loop Limit Begin"
-msgstr ""
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:176
-msgctxt "Symbol"
-msgid "Loop Limit End"
-msgstr ""
-
-#. Symbols: ./LogicSymbols.svg
-#: ../share/symbols/symbols.h:177
-msgctxt "Symbol"
-msgid "Logic Symbols"
-msgstr ""
-
-#. Symbols: ./LogicSymbols.svg
-#: ../share/symbols/symbols.h:178
-msgctxt "Symbol"
-msgid "Xnor Gate"
-msgstr ""
-
-#. Symbols: ./LogicSymbols.svg
-#: ../share/symbols/symbols.h:179
-msgctxt "Symbol"
-msgid "Xor Gate"
-msgstr ""
-
-#. Symbols: ./LogicSymbols.svg
-#: ../share/symbols/symbols.h:180
-msgctxt "Symbol"
-msgid "Nor Gate"
-msgstr ""
-
-#. Symbols: ./LogicSymbols.svg
-#: ../share/symbols/symbols.h:181
-msgctxt "Symbol"
-msgid "Or Gate"
-msgstr ""
-
-#. Symbols: ./LogicSymbols.svg
-#: ../share/symbols/symbols.h:182
-msgctxt "Symbol"
-msgid "Nand Gate"
-msgstr ""
-
-#. Symbols: ./LogicSymbols.svg
-#: ../share/symbols/symbols.h:183
-msgctxt "Symbol"
-msgid "And Gate"
-msgstr ""
-
-#. Symbols: ./LogicSymbols.svg
-#: ../share/symbols/symbols.h:184
-msgctxt "Symbol"
-msgid "Buffer"
-msgstr ""
-
-#. Symbols: ./LogicSymbols.svg
-#: ../share/symbols/symbols.h:185
-msgctxt "Symbol"
-msgid "Not Gate"
-msgstr ""
-
-#. Symbols: ./LogicSymbols.svg
-#: ../share/symbols/symbols.h:186
-msgctxt "Symbol"
-msgid "Buffer Small"
-msgstr ""
-
-#. Symbols: ./LogicSymbols.svg
-#: ../share/symbols/symbols.h:187
-msgctxt "Symbol"
-msgid "Not Gate Small"
-msgstr ""
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:188
 msgctxt "Symbol"
 msgid "United States National Park Service Map Symbols"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:189 ../share/symbols/symbols.h:190
+#: ../share/symbols/symbols.h:3 ../share/symbols/symbols.h:4
 msgctxt "Symbol"
 msgid "Airport"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:191 ../share/symbols/symbols.h:192
+#: ../share/symbols/symbols.h:5 ../share/symbols/symbols.h:6
 msgctxt "Symbol"
 msgid "Amphitheatre"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:193 ../share/symbols/symbols.h:194
+#: ../share/symbols/symbols.h:7 ../share/symbols/symbols.h:8
 msgctxt "Symbol"
 msgid "Bicycle Trail"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:195 ../share/symbols/symbols.h:196
+#: ../share/symbols/symbols.h:9 ../share/symbols/symbols.h:10
 msgctxt "Symbol"
 msgid "Boat Launch"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:197 ../share/symbols/symbols.h:198
+#: ../share/symbols/symbols.h:11 ../share/symbols/symbols.h:12
 msgctxt "Symbol"
 msgid "Boat Tour"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:199 ../share/symbols/symbols.h:200
+#: ../share/symbols/symbols.h:13 ../share/symbols/symbols.h:14
 msgctxt "Symbol"
 msgid "Bus Stop"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:201 ../share/symbols/symbols.h:202
+#: ../share/symbols/symbols.h:15 ../share/symbols/symbols.h:16
 msgctxt "Symbol"
 msgid "Campfire"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:203 ../share/symbols/symbols.h:204
+#: ../share/symbols/symbols.h:17 ../share/symbols/symbols.h:18
 msgctxt "Symbol"
 msgid "Campground"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:205 ../share/symbols/symbols.h:206
+#: ../share/symbols/symbols.h:19 ../share/symbols/symbols.h:20
 msgctxt "Symbol"
 msgid "CanoeAccess"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:207 ../share/symbols/symbols.h:208
+#: ../share/symbols/symbols.h:21 ../share/symbols/symbols.h:22
 msgctxt "Symbol"
 msgid "Crosscountry Ski Trail"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:209 ../share/symbols/symbols.h:210
+#: ../share/symbols/symbols.h:23 ../share/symbols/symbols.h:24
 msgctxt "Symbol"
 msgid "Downhill Skiing"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:211 ../share/symbols/symbols.h:212
+#: ../share/symbols/symbols.h:25 ../share/symbols/symbols.h:26
 msgctxt "Symbol"
 msgid "Drinking Water"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:215 ../share/symbols/symbols.h:216
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:27 ../share/symbols/symbols.h:28
+#: ../share/symbols/symbols.h:172 ../share/symbols/symbols.h:173
+msgctxt "Symbol"
+msgid "First Aid"
+msgstr ""
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:29 ../share/symbols/symbols.h:30
 msgctxt "Symbol"
 msgid "Fishing"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:217 ../share/symbols/symbols.h:218
+#: ../share/symbols/symbols.h:31 ../share/symbols/symbols.h:32
 msgctxt "Symbol"
 msgid "Food Service"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:219 ../share/symbols/symbols.h:220
+#: ../share/symbols/symbols.h:33 ../share/symbols/symbols.h:34
 msgctxt "Symbol"
 msgid "Four Wheel Drive Road"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:221 ../share/symbols/symbols.h:222
+#: ../share/symbols/symbols.h:35 ../share/symbols/symbols.h:36
 msgctxt "Symbol"
 msgid "Gas Station"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:223 ../share/symbols/symbols.h:224
+#: ../share/symbols/symbols.h:37 ../share/symbols/symbols.h:38
 msgctxt "Symbol"
 msgid "Golfing"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:225 ../share/symbols/symbols.h:226
+#: ../share/symbols/symbols.h:39 ../share/symbols/symbols.h:40
 msgctxt "Symbol"
 msgid "Horseback Riding"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:227 ../share/symbols/symbols.h:228
+#: ../share/symbols/symbols.h:41 ../share/symbols/symbols.h:42
 msgctxt "Symbol"
 msgid "Hospital"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:229 ../share/symbols/symbols.h:230
+#: ../share/symbols/symbols.h:43 ../share/symbols/symbols.h:44
 msgctxt "Symbol"
 msgid "Ice Skating"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:233 ../share/symbols/symbols.h:234
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:45 ../share/symbols/symbols.h:46
+#: ../share/symbols/symbols.h:206 ../share/symbols/symbols.h:207
+msgctxt "Symbol"
+msgid "Information"
+msgstr ""
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:47 ../share/symbols/symbols.h:48
 msgctxt "Symbol"
 msgid "Litter Receptacle"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:235 ../share/symbols/symbols.h:236
+#: ../share/symbols/symbols.h:49 ../share/symbols/symbols.h:50
 msgctxt "Symbol"
 msgid "Lodging"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:237 ../share/symbols/symbols.h:238
+#: ../share/symbols/symbols.h:51 ../share/symbols/symbols.h:52
 msgctxt "Symbol"
 msgid "Marina"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:239 ../share/symbols/symbols.h:240
+#: ../share/symbols/symbols.h:53 ../share/symbols/symbols.h:54
 msgctxt "Symbol"
 msgid "Motorbike Trail"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:241 ../share/symbols/symbols.h:242
+#: ../share/symbols/symbols.h:55 ../share/symbols/symbols.h:56
 msgctxt "Symbol"
 msgid "Radiator Water"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:243 ../share/symbols/symbols.h:244
+#: ../share/symbols/symbols.h:57 ../share/symbols/symbols.h:58
 msgctxt "Symbol"
 msgid "Recycling"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:247 ../share/symbols/symbols.h:248
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:59 ../share/symbols/symbols.h:60
+#: ../share/symbols/symbols.h:258 ../share/symbols/symbols.h:259
+msgctxt "Symbol"
+msgid "Parking"
+msgstr ""
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:61 ../share/symbols/symbols.h:62
 msgctxt "Symbol"
 msgid "Pets On Leash"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:249 ../share/symbols/symbols.h:250
+#: ../share/symbols/symbols.h:63 ../share/symbols/symbols.h:64
 msgctxt "Symbol"
 msgid "Picnic Area"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:251 ../share/symbols/symbols.h:252
+#: ../share/symbols/symbols.h:65 ../share/symbols/symbols.h:66
 msgctxt "Symbol"
 msgid "Post Office"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:253 ../share/symbols/symbols.h:254
+#: ../share/symbols/symbols.h:67 ../share/symbols/symbols.h:68
 msgctxt "Symbol"
 msgid "Ranger Station"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:255 ../share/symbols/symbols.h:256
+#: ../share/symbols/symbols.h:69 ../share/symbols/symbols.h:70
 msgctxt "Symbol"
 msgid "RV Campground"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:257 ../share/symbols/symbols.h:258
+#: ../share/symbols/symbols.h:71 ../share/symbols/symbols.h:72
 msgctxt "Symbol"
 msgid "Restrooms"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:259 ../share/symbols/symbols.h:260
+#: ../share/symbols/symbols.h:73 ../share/symbols/symbols.h:74
 msgctxt "Symbol"
 msgid "Sailing"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:261 ../share/symbols/symbols.h:262
+#: ../share/symbols/symbols.h:75 ../share/symbols/symbols.h:76
 msgctxt "Symbol"
 msgid "Sanitary Disposal Station"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:263 ../share/symbols/symbols.h:264
+#: ../share/symbols/symbols.h:77 ../share/symbols/symbols.h:78
 msgctxt "Symbol"
 msgid "Scuba Diving"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:265 ../share/symbols/symbols.h:266
+#: ../share/symbols/symbols.h:79 ../share/symbols/symbols.h:80
 msgctxt "Symbol"
 msgid "Self Guided Trail"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:267 ../share/symbols/symbols.h:268
+#: ../share/symbols/symbols.h:81 ../share/symbols/symbols.h:82
 msgctxt "Symbol"
 msgid "Shelter"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:269 ../share/symbols/symbols.h:270
+#: ../share/symbols/symbols.h:83 ../share/symbols/symbols.h:84
 msgctxt "Symbol"
 msgid "Showers"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:271 ../share/symbols/symbols.h:272
+#: ../share/symbols/symbols.h:85 ../share/symbols/symbols.h:86
 msgctxt "Symbol"
 msgid "Sledding"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:273 ../share/symbols/symbols.h:274
+#: ../share/symbols/symbols.h:87 ../share/symbols/symbols.h:88
 msgctxt "Symbol"
 msgid "SnowmobileTrail"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:275 ../share/symbols/symbols.h:276
+#: ../share/symbols/symbols.h:89 ../share/symbols/symbols.h:90
 msgctxt "Symbol"
 msgid "Stable"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:277 ../share/symbols/symbols.h:278
+#: ../share/symbols/symbols.h:91 ../share/symbols/symbols.h:92
 msgctxt "Symbol"
 msgid "Store"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:279 ../share/symbols/symbols.h:280
+#: ../share/symbols/symbols.h:93 ../share/symbols/symbols.h:94
 msgctxt "Symbol"
 msgid "Swimming"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:283 ../share/symbols/symbols.h:284
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:95 ../share/symbols/symbols.h:96
+#: ../share/symbols/symbols.h:162 ../share/symbols/symbols.h:163
+msgctxt "Symbol"
+msgid "Telephone"
+msgstr ""
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:97 ../share/symbols/symbols.h:98
 msgctxt "Symbol"
 msgid "Emergency Telephone"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:285 ../share/symbols/symbols.h:286
+#: ../share/symbols/symbols.h:99 ../share/symbols/symbols.h:100
 msgctxt "Symbol"
 msgid "Trailhead"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:287 ../share/symbols/symbols.h:288
+#: ../share/symbols/symbols.h:101 ../share/symbols/symbols.h:102
 msgctxt "Symbol"
 msgid "Wheelchair Accessible"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:289 ../share/symbols/symbols.h:290
+#: ../share/symbols/symbols.h:103 ../share/symbols/symbols.h:104
 msgctxt "Symbol"
 msgid "Wind Surfing"
 msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:291
+#: ../share/symbols/symbols.h:105
 msgctxt "Symbol"
 msgid "Blank"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:106
+msgctxt "Symbol"
+msgid "Flow Chart Shapes"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:107
+msgctxt "Symbol"
+msgid "Process"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:108
+msgctxt "Symbol"
+msgid "Input/Output"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:109
+msgctxt "Symbol"
+msgid "Document"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:110
+msgctxt "Symbol"
+msgid "Manual Operation"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:111
+msgctxt "Symbol"
+msgid "Preparation"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:112
+msgctxt "Symbol"
+msgid "Merge"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:113
+msgctxt "Symbol"
+msgid "Decision"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:114
+msgctxt "Symbol"
+msgid "Magnetic Tape"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:115
+msgctxt "Symbol"
+msgid "Display"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:116
+msgctxt "Symbol"
+msgid "Auxiliary Operation"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:117
+msgctxt "Symbol"
+msgid "Manual Input"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:118
+msgctxt "Symbol"
+msgid "Extract"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:119
+msgctxt "Symbol"
+msgid "Terminal/Interrupt"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:120
+msgctxt "Symbol"
+msgid "Punched Card"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:121
+msgctxt "Symbol"
+msgid "Punch Tape"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:122
+msgctxt "Symbol"
+msgid "Online Storage"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:123
+msgctxt "Symbol"
+msgid "Keying"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:124
+msgctxt "Symbol"
+msgid "Sort"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:125
+msgctxt "Symbol"
+msgid "Connector"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:126
+msgctxt "Symbol"
+msgid "Off-Page Connector"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:127
+msgctxt "Symbol"
+msgid "Transmittal Tape"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:128
+msgctxt "Symbol"
+msgid "Communication Link"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:129
+msgctxt "Symbol"
+msgid "Collate"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:130
+msgctxt "Symbol"
+msgid "Comment/Annotation"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:131
+msgctxt "Symbol"
+msgid "Core"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:132
+msgctxt "Symbol"
+msgid "Predefined Process"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:133
+msgctxt "Symbol"
+msgid "Magnetic Disk (Database)"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:134
+msgctxt "Symbol"
+msgid "Magnetic Drum (Direct Access)"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:135
+msgctxt "Symbol"
+msgid "Offline Storage"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:136
+msgctxt "Symbol"
+msgid "Logical Or"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:137
+msgctxt "Symbol"
+msgid "Logical And"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:138
+msgctxt "Symbol"
+msgid "Delay"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:139
+msgctxt "Symbol"
+msgid "Loop Limit Begin"
+msgstr ""
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:140
+msgctxt "Symbol"
+msgid "Loop Limit End"
+msgstr ""
+
+#. Symbols: ./BalloonSymbols.svg
+#: ../share/symbols/symbols.h:141
+msgctxt "Symbol"
+msgid "Word Balloons"
+msgstr ""
+
+#. Symbols: ./BalloonSymbols.svg
+#: ../share/symbols/symbols.h:142
+msgctxt "Symbol"
+msgid "Thought Balloon"
+msgstr ""
+
+#. Symbols: ./BalloonSymbols.svg
+#: ../share/symbols/symbols.h:143
+msgctxt "Symbol"
+msgid "Dream Speaking"
+msgstr ""
+
+#. Symbols: ./BalloonSymbols.svg
+#: ../share/symbols/symbols.h:144
+msgctxt "Symbol"
+msgid "Rounded Balloon"
+msgstr ""
+
+#. Symbols: ./BalloonSymbols.svg
+#: ../share/symbols/symbols.h:145
+msgctxt "Symbol"
+msgid "Squared Balloon"
+msgstr ""
+
+#. Symbols: ./BalloonSymbols.svg
+#: ../share/symbols/symbols.h:146
+msgctxt "Symbol"
+msgid "Over the Phone"
+msgstr ""
+
+#. Symbols: ./BalloonSymbols.svg
+#: ../share/symbols/symbols.h:147
+msgctxt "Symbol"
+msgid "Hip Balloon"
+msgstr ""
+
+#. Symbols: ./BalloonSymbols.svg
+#: ../share/symbols/symbols.h:148
+msgctxt "Symbol"
+msgid "Circle Balloon"
+msgstr ""
+
+#. Symbols: ./BalloonSymbols.svg
+#: ../share/symbols/symbols.h:149
+msgctxt "Symbol"
+msgid "Exclaim Balloon"
+msgstr ""
+
+#. Symbols: ./LogicSymbols.svg
+#: ../share/symbols/symbols.h:150
+msgctxt "Symbol"
+msgid "Logic Symbols"
+msgstr ""
+
+#. Symbols: ./LogicSymbols.svg
+#: ../share/symbols/symbols.h:151
+msgctxt "Symbol"
+msgid "Xnor Gate"
+msgstr ""
+
+#. Symbols: ./LogicSymbols.svg
+#: ../share/symbols/symbols.h:152
+msgctxt "Symbol"
+msgid "Xor Gate"
+msgstr ""
+
+#. Symbols: ./LogicSymbols.svg
+#: ../share/symbols/symbols.h:153
+msgctxt "Symbol"
+msgid "Nor Gate"
+msgstr ""
+
+#. Symbols: ./LogicSymbols.svg
+#: ../share/symbols/symbols.h:154
+msgctxt "Symbol"
+msgid "Or Gate"
+msgstr ""
+
+#. Symbols: ./LogicSymbols.svg
+#: ../share/symbols/symbols.h:155
+msgctxt "Symbol"
+msgid "Nand Gate"
+msgstr ""
+
+#. Symbols: ./LogicSymbols.svg
+#: ../share/symbols/symbols.h:156
+msgctxt "Symbol"
+msgid "And Gate"
+msgstr ""
+
+#. Symbols: ./LogicSymbols.svg
+#: ../share/symbols/symbols.h:157
+msgctxt "Symbol"
+msgid "Buffer"
+msgstr ""
+
+#. Symbols: ./LogicSymbols.svg
+#: ../share/symbols/symbols.h:158
+msgctxt "Symbol"
+msgid "Not Gate"
+msgstr ""
+
+#. Symbols: ./LogicSymbols.svg
+#: ../share/symbols/symbols.h:159
+msgctxt "Symbol"
+msgid "Buffer Small"
+msgstr ""
+
+#. Symbols: ./LogicSymbols.svg
+#: ../share/symbols/symbols.h:160
+msgctxt "Symbol"
+msgid "Not Gate Small"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:161
+msgctxt "Symbol"
+msgid "AIGA Symbol Signs"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:164 ../share/symbols/symbols.h:165
+msgctxt "Symbol"
+msgid "Mail"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:166 ../share/symbols/symbols.h:167
+msgctxt "Symbol"
+msgid "Currency Exchange"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:168 ../share/symbols/symbols.h:169
+msgctxt "Symbol"
+msgid "Currency Exchange - Euro"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:170 ../share/symbols/symbols.h:171
+msgctxt "Symbol"
+msgid "Cashier"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:174 ../share/symbols/symbols.h:175
+msgctxt "Symbol"
+msgid "Lost and Found"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:176 ../share/symbols/symbols.h:177
+msgctxt "Symbol"
+msgid "Coat Check"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:178 ../share/symbols/symbols.h:179
+msgctxt "Symbol"
+msgid "Baggage Lockers"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:180 ../share/symbols/symbols.h:181
+msgctxt "Symbol"
+msgid "Escalator"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:182 ../share/symbols/symbols.h:183
+msgctxt "Symbol"
+msgid "Escalator Down"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:184 ../share/symbols/symbols.h:185
+msgctxt "Symbol"
+msgid "Escalator Up"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:186 ../share/symbols/symbols.h:187
+msgctxt "Symbol"
+msgid "Stairs"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:188 ../share/symbols/symbols.h:189
+msgctxt "Symbol"
+msgid "Stairs Down"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:190 ../share/symbols/symbols.h:191
+msgctxt "Symbol"
+msgid "Stairs Up"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:192 ../share/symbols/symbols.h:193
+msgctxt "Symbol"
+msgid "Elevator"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:194 ../share/symbols/symbols.h:195
+msgctxt "Symbol"
+msgid "Toilets - Men"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:196 ../share/symbols/symbols.h:197
+msgctxt "Symbol"
+msgid "Toilets - Women"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:198 ../share/symbols/symbols.h:199
+msgctxt "Symbol"
+msgid "Toilets"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:200 ../share/symbols/symbols.h:201
+msgctxt "Symbol"
+msgid "Nursery"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:202 ../share/symbols/symbols.h:203
+msgctxt "Symbol"
+msgid "Drinking Fountain"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:204 ../share/symbols/symbols.h:205
+msgctxt "Symbol"
+msgid "Waiting Room"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:208 ../share/symbols/symbols.h:209
+msgctxt "Symbol"
+msgid "Hotel Information"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:210 ../share/symbols/symbols.h:211
+msgctxt "Symbol"
+msgid "Air Transportation"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:212 ../share/symbols/symbols.h:213
+msgctxt "Symbol"
+msgid "Heliport"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:214 ../share/symbols/symbols.h:215
+msgctxt "Symbol"
+msgid "Taxi"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:216 ../share/symbols/symbols.h:217
+msgctxt "Symbol"
+msgid "Bus"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:218 ../share/symbols/symbols.h:219
+msgctxt "Symbol"
+msgid "Ground Transportation"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:220 ../share/symbols/symbols.h:221
+msgctxt "Symbol"
+msgid "Rail Transportation"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:222 ../share/symbols/symbols.h:223
+msgctxt "Symbol"
+msgid "Water Transportation"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:224 ../share/symbols/symbols.h:225
+msgctxt "Symbol"
+msgid "Car Rental"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:226 ../share/symbols/symbols.h:227
+msgctxt "Symbol"
+msgid "Restaurant"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:228 ../share/symbols/symbols.h:229
+msgctxt "Symbol"
+msgid "Coffeeshop"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:230 ../share/symbols/symbols.h:231
+msgctxt "Symbol"
+msgid "Bar"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:232 ../share/symbols/symbols.h:233
+msgctxt "Symbol"
+msgid "Shops"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:234 ../share/symbols/symbols.h:235
+msgctxt "Symbol"
+msgid "Barber Shop - Beauty Salon"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:236 ../share/symbols/symbols.h:237
+msgctxt "Symbol"
+msgid "Barber Shop"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:238 ../share/symbols/symbols.h:239
+msgctxt "Symbol"
+msgid "Beauty Salon"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:240 ../share/symbols/symbols.h:241
+msgctxt "Symbol"
+msgid "Ticket Purchase"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:242 ../share/symbols/symbols.h:243
+msgctxt "Symbol"
+msgid "Baggage Check In"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:244 ../share/symbols/symbols.h:245
+msgctxt "Symbol"
+msgid "Baggage Claim"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:246 ../share/symbols/symbols.h:247
+msgctxt "Symbol"
+msgid "Customs"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:248 ../share/symbols/symbols.h:249
+msgctxt "Symbol"
+msgid "Immigration"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:250 ../share/symbols/symbols.h:251
+msgctxt "Symbol"
+msgid "Departing Flights"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:252 ../share/symbols/symbols.h:253
+msgctxt "Symbol"
+msgid "Arriving Flights"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:254 ../share/symbols/symbols.h:255
+msgctxt "Symbol"
+msgid "Smoking"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:256 ../share/symbols/symbols.h:257
+msgctxt "Symbol"
+msgid "No Smoking"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:260 ../share/symbols/symbols.h:261
+msgctxt "Symbol"
+msgid "No Parking"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:262 ../share/symbols/symbols.h:263
+msgctxt "Symbol"
+msgid "No Dogs"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:264 ../share/symbols/symbols.h:265
+msgctxt "Symbol"
+msgid "No Entry"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:266 ../share/symbols/symbols.h:267
+msgctxt "Symbol"
+msgid "Exit"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:268 ../share/symbols/symbols.h:269
+msgctxt "Symbol"
+msgid "Fire Extinguisher"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:270 ../share/symbols/symbols.h:271
+msgctxt "Symbol"
+msgid "Right Arrow"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:272 ../share/symbols/symbols.h:273
+msgctxt "Symbol"
+msgid "Forward and Right Arrow"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:274 ../share/symbols/symbols.h:275
+msgctxt "Symbol"
+msgid "Up Arrow"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:276 ../share/symbols/symbols.h:277
+msgctxt "Symbol"
+msgid "Forward and Left Arrow"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:278 ../share/symbols/symbols.h:279
+msgctxt "Symbol"
+msgid "Left Arrow"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:280 ../share/symbols/symbols.h:281
+msgctxt "Symbol"
+msgid "Left and Down Arrow"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:282 ../share/symbols/symbols.h:283
+msgctxt "Symbol"
+msgid "Down Arrow"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:284 ../share/symbols/symbols.h:285
+msgctxt "Symbol"
+msgid "Right and Down Arrow"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:286 ../share/symbols/symbols.h:287
+msgctxt "Symbol"
+msgid "NPS Wheelchair Accessible - 1996"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:288 ../share/symbols/symbols.h:289
+msgctxt "Symbol"
+msgid "NPS Wheelchair Accessible"
+msgstr ""
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:290 ../share/symbols/symbols.h:291
+msgctxt "Symbol"
+msgid "New Wheelchair Accessible"
 msgstr ""
 
 #: ../share/templates/templates.h:1
@@ -5949,6 +5949,7 @@ msgstr ""
 #: ../src/extension/internal/filter/transparency.h:287
 #: ../src/extension/internal/filter/transparency.h:349
 #: ../src/ui/dialog/inkscape-preferences.cpp:1751
+#, c-format
 msgid "Filters"
 msgstr ""
 
@@ -6159,6 +6160,7 @@ msgstr ""
 #: ../src/extension/internal/filter/textures.h:77
 #: ../src/extension/internal/filter/transparency.h:61
 #: ../src/filter-enums.cpp:52 ../src/ui/dialog/inkscape-preferences.cpp:653
+#: ../src/ui/widget/font-variants.cpp:45 ../src/ui/widget/font-variants.cpp:50
 msgid "Normal"
 msgstr ""
 
@@ -6196,9 +6198,8 @@ msgstr ""
 #: ../src/extension/internal/filter/color.h:896
 #: ../src/extension/internal/filter/transparency.h:132
 #: ../src/filter-enums.cpp:128 ../src/ui/tools/flood-tool.cpp:91
-#: ../src/widgets/sp-color-icc-selector.cpp:330
-#: ../src/widgets/sp-color-scales.cpp:415
-#: ../src/widgets/sp-color-scales.cpp:416
+#: ../src/ui/widget/color-icc-selector.cpp:176
+#: ../src/ui/widget/color-scales.cpp:379 ../src/ui/widget/color-scales.cpp:380
 msgid "Red"
 msgstr ""
 
@@ -6209,9 +6210,8 @@ msgstr ""
 #: ../src/extension/internal/filter/color.h:897
 #: ../src/extension/internal/filter/transparency.h:133
 #: ../src/filter-enums.cpp:129 ../src/ui/tools/flood-tool.cpp:92
-#: ../src/widgets/sp-color-icc-selector.cpp:331
-#: ../src/widgets/sp-color-scales.cpp:418
-#: ../src/widgets/sp-color-scales.cpp:419
+#: ../src/ui/widget/color-icc-selector.cpp:177
+#: ../src/ui/widget/color-scales.cpp:382 ../src/ui/widget/color-scales.cpp:383
 msgid "Green"
 msgstr ""
 
@@ -6222,9 +6222,8 @@ msgstr ""
 #: ../src/extension/internal/filter/color.h:898
 #: ../src/extension/internal/filter/transparency.h:134
 #: ../src/filter-enums.cpp:130 ../src/ui/tools/flood-tool.cpp:93
-#: ../src/widgets/sp-color-icc-selector.cpp:332
-#: ../src/widgets/sp-color-scales.cpp:421
-#: ../src/widgets/sp-color-scales.cpp:422
+#: ../src/ui/widget/color-icc-selector.cpp:178
+#: ../src/ui/widget/color-scales.cpp:385 ../src/ui/widget/color-scales.cpp:386
 msgid "Blue"
 msgstr ""
 
@@ -6261,9 +6260,9 @@ msgstr ""
 #: ../src/extension/internal/filter/paint.h:592
 #: ../src/extension/internal/filter/paint.h:707
 #: ../src/ui/tools/flood-tool.cpp:96
-#: ../src/widgets/sp-color-icc-selector.cpp:341
-#: ../src/widgets/sp-color-scales.cpp:447
-#: ../src/widgets/sp-color-scales.cpp:448 ../src/widgets/tweak-toolbar.cpp:318
+#: ../src/ui/widget/color-icc-selector.cpp:187
+#: ../src/ui/widget/color-scales.cpp:411 ../src/ui/widget/color-scales.cpp:412
+#: ../src/widgets/tweak-toolbar.cpp:318
 #: ../share/extensions/color_randomize.inx.h:5
 msgid "Lightness"
 msgstr ""
@@ -6461,10 +6460,10 @@ msgstr ""
 #: ../src/extension/internal/filter/paint.h:87 ../src/filter-enums.cpp:66
 #: ../src/ui/dialog/inkscape-preferences.cpp:952
 #: ../src/ui/tools/flood-tool.cpp:95
-#: ../src/widgets/sp-color-icc-selector.cpp:337
-#: ../src/widgets/sp-color-icc-selector.cpp:342
-#: ../src/widgets/sp-color-scales.cpp:444
-#: ../src/widgets/sp-color-scales.cpp:445 ../src/widgets/tweak-toolbar.cpp:302
+#: ../src/ui/widget/color-icc-selector.cpp:183
+#: ../src/ui/widget/color-icc-selector.cpp:188
+#: ../src/ui/widget/color-scales.cpp:408 ../src/ui/widget/color-scales.cpp:409
+#: ../src/widgets/tweak-toolbar.cpp:302
 #: ../share/extensions/color_randomize.inx.h:4
 msgid "Saturation"
 msgstr ""
@@ -6640,26 +6639,23 @@ msgid "Extract Channel"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:715
-#: ../src/widgets/sp-color-icc-selector.cpp:344
-#: ../src/widgets/sp-color-icc-selector.cpp:349
-#: ../src/widgets/sp-color-scales.cpp:469
-#: ../src/widgets/sp-color-scales.cpp:470
+#: ../src/ui/widget/color-icc-selector.cpp:190
+#: ../src/ui/widget/color-icc-selector.cpp:195
+#: ../src/ui/widget/color-scales.cpp:433 ../src/ui/widget/color-scales.cpp:434
 msgid "Cyan"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:716
-#: ../src/widgets/sp-color-icc-selector.cpp:345
-#: ../src/widgets/sp-color-icc-selector.cpp:350
-#: ../src/widgets/sp-color-scales.cpp:472
-#: ../src/widgets/sp-color-scales.cpp:473
+#: ../src/ui/widget/color-icc-selector.cpp:191
+#: ../src/ui/widget/color-icc-selector.cpp:196
+#: ../src/ui/widget/color-scales.cpp:436 ../src/ui/widget/color-scales.cpp:437
 msgid "Magenta"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:717
-#: ../src/widgets/sp-color-icc-selector.cpp:346
-#: ../src/widgets/sp-color-icc-selector.cpp:351
-#: ../src/widgets/sp-color-scales.cpp:475
-#: ../src/widgets/sp-color-scales.cpp:476
+#: ../src/ui/widget/color-icc-selector.cpp:192
+#: ../src/ui/widget/color-icc-selector.cpp:197
+#: ../src/ui/widget/color-scales.cpp:439 ../src/ui/widget/color-scales.cpp:440
 msgid "Yellow"
 msgstr ""
 
@@ -6684,10 +6680,9 @@ msgid "Fade to:"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:819
+#: ../src/ui/widget/color-icc-selector.cpp:193
+#: ../src/ui/widget/color-scales.cpp:442 ../src/ui/widget/color-scales.cpp:443
 #: ../src/ui/widget/selected-style.cpp:274
-#: ../src/widgets/sp-color-icc-selector.cpp:347
-#: ../src/widgets/sp-color-scales.cpp:478
-#: ../src/widgets/sp-color-scales.cpp:479
 msgid "Black"
 msgstr ""
 
@@ -7676,10 +7671,12 @@ msgid "%s bitmap image import"
 msgstr ""
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:190
+#, c-format
 msgid "Image Import Type:"
 msgstr ""
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:190
+#, c-format
 msgid ""
 "Embed results in stand-alone, larger SVG files. Link references a file "
 "outside this SVG document and all files must be moved together."
@@ -7687,37 +7684,45 @@ msgstr ""
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:191
 #: ../src/ui/dialog/inkscape-preferences.cpp:1456
+#, c-format
 msgid "Embed"
 msgstr ""
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:192 ../src/sp-anchor.cpp:105
 #: ../src/ui/dialog/inkscape-preferences.cpp:1456
+#, c-format
 msgid "Link"
 msgstr ""
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:195
+#, c-format
 msgid "Image DPI:"
 msgstr ""
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:195
+#, c-format
 msgid ""
 "Take information from file or use default bitmap import resolution as "
 "defined in the preferences."
 msgstr ""
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:196
+#, c-format
 msgid "From file"
 msgstr ""
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:197
+#, c-format
 msgid "Default import resolution"
 msgstr ""
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:200
+#, c-format
 msgid "Image Rendering Mode:"
 msgstr ""
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:200
+#, c-format
 msgid ""
 "When an image is upscaled, apply smoothing or keep blocky (pixelated). (Will "
 "not work in all browsers.)"
@@ -7725,24 +7730,29 @@ msgstr ""
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:201
 #: ../src/ui/dialog/inkscape-preferences.cpp:1463
+#, c-format
 msgid "None (auto)"
 msgstr ""
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:202
 #: ../src/ui/dialog/inkscape-preferences.cpp:1463
+#, c-format
 msgid "Smooth (optimizeQuality)"
 msgstr ""
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:203
 #: ../src/ui/dialog/inkscape-preferences.cpp:1463
+#, c-format
 msgid "Blocky (optimizeSpeed)"
 msgstr ""
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:206
+#, c-format
 msgid "Hide the dialog next time and always apply the same actions."
 msgstr ""
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:206
+#, c-format
 msgid "Don't ask again"
 msgstr ""
 
@@ -8365,10 +8375,10 @@ msgid "Exclusion"
 msgstr ""
 
 #: ../src/filter-enums.cpp:65 ../src/ui/tools/flood-tool.cpp:94
-#: ../src/widgets/sp-color-icc-selector.cpp:336
-#: ../src/widgets/sp-color-icc-selector.cpp:340
-#: ../src/widgets/sp-color-scales.cpp:441
-#: ../src/widgets/sp-color-scales.cpp:442 ../src/widgets/tweak-toolbar.cpp:286
+#: ../src/ui/widget/color-icc-selector.cpp:182
+#: ../src/ui/widget/color-icc-selector.cpp:186
+#: ../src/ui/widget/color-scales.cpp:405 ../src/ui/widget/color-scales.cpp:406
+#: ../src/widgets/tweak-toolbar.cpp:286
 #: ../share/extensions/color_randomize.inx.h:3
 msgid "Hue"
 msgstr ""
@@ -8481,7 +8491,7 @@ msgstr ""
 msgid "Reverse gradient"
 msgstr ""
 
-#: ../src/gradient-chemistry.cpp:1621 ../src/widgets/gradient-selector.cpp:222
+#: ../src/gradient-chemistry.cpp:1621 ../src/widgets/gradient-selector.cpp:226
 msgid "Delete swatch"
 msgstr ""
 
@@ -8542,7 +8552,7 @@ msgstr ""
 msgid "Move gradient handle"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:1164 ../src/widgets/gradient-vector.cpp:828
+#: ../src/gradient-drag.cpp:1164 ../src/widgets/gradient-vector.cpp:834
 msgid "Delete gradient stop"
 msgstr ""
 
@@ -8843,7 +8853,7 @@ msgstr ""
 #: ../src/live_effects/parameter/originalpatharray.cpp:82
 #: ../src/ui/dialog/inkscape-preferences.cpp:1511
 #: ../src/ui/widget/page-sizer.cpp:283
-#: ../src/widgets/gradient-selector.cpp:150
+#: ../src/widgets/gradient-selector.cpp:154
 #: ../src/widgets/sp-xmlview-attr-list.cpp:49
 msgid "Name"
 msgstr ""
@@ -8909,7 +8919,8 @@ msgid ""
 "Attempt to bind to %p an already bound dock object %p (current master: %p)"
 msgstr ""
 
-#: ../src/libgdl/gdl-dock-paned.c:130 ../src/widgets/ruler.cpp:230
+#: ../src/libgdl/gdl-dock-paned.c:130 ../src/ui/widget/font-variants.cpp:44
+#: ../src/widgets/ruler.cpp:230
 msgid "Position"
 msgstr ""
 
@@ -15149,7 +15160,7 @@ msgid "R:"
 msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2864
-#: ../src/widgets/sp-color-icc-selector.cpp:334
+#: ../src/ui/widget/color-icc-selector.cpp:180
 msgid "G:"
 msgstr ""
 
@@ -17199,8 +17210,8 @@ msgstr ""
 
 #. Gradient
 #: ../src/ui/dialog/inkscape-preferences.cpp:487
-#: ../src/widgets/gradient-selector.cpp:144
-#: ../src/widgets/gradient-selector.cpp:295
+#: ../src/widgets/gradient-selector.cpp:148
+#: ../src/widgets/gradient-selector.cpp:299
 msgid "Gradient"
 msgstr ""
 
@@ -17549,6 +17560,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:572
 #: ../src/ui/dialog/inkscape-preferences.cpp:657
+#: ../src/ui/widget/font-variants.cpp:51
 msgid "Small"
 msgstr ""
 
@@ -18336,8 +18348,8 @@ msgid "Preserve K channel in CMYK -> CMYK transforms"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1046
-#: ../src/widgets/sp-color-icc-selector.cpp:449
-#: ../src/widgets/sp-color-icc-selector.cpp:741
+#: ../src/ui/widget/color-icc-selector.cpp:395
+#: ../src/ui/widget/color-icc-selector.cpp:674
 msgid "<none>"
 msgstr ""
 
@@ -19413,7 +19425,7 @@ msgid "Link:"
 msgstr ""
 
 #: ../src/ui/dialog/input.cpp:742 ../src/ui/dialog/input.cpp:743
-#: ../src/ui/dialog/input.cpp:1571
+#: ../src/ui/dialog/input.cpp:1571 ../src/ui/widget/color-scales.cpp:46
 msgid "None"
 msgstr ""
 
@@ -19469,7 +19481,7 @@ msgid "Y tilt"
 msgstr ""
 
 #: ../src/ui/dialog/input.cpp:1616
-#: ../src/widgets/sp-color-wheel-selector.cpp:32
+#: ../src/ui/widget/color-wheel-selector.cpp:29
 msgid "Wheel"
 msgstr ""
 
@@ -19560,12 +19572,12 @@ msgstr ""
 msgid "Unlock layer"
 msgstr ""
 
-#: ../src/ui/dialog/layers.cpp:624 ../src/ui/dialog/objects.cpp:843
+#: ../src/ui/dialog/layers.cpp:624 ../src/ui/dialog/objects.cpp:844
 #: ../src/verbs.cpp:1407
 msgid "Toggle layer solo"
 msgstr ""
 
-#: ../src/ui/dialog/layers.cpp:627 ../src/ui/dialog/objects.cpp:846
+#: ../src/ui/dialog/layers.cpp:627 ../src/ui/dialog/objects.cpp:847
 #: ../src/verbs.cpp:1431
 msgid "Lock other layers"
 msgstr ""
@@ -19922,35 +19934,35 @@ msgstr ""
 msgid "Unhide object"
 msgstr ""
 
-#: ../src/ui/dialog/objects.cpp:873
+#: ../src/ui/dialog/objects.cpp:874
 msgid "Unhide objects"
 msgstr ""
 
-#: ../src/ui/dialog/objects.cpp:873
+#: ../src/ui/dialog/objects.cpp:874
 msgid "Hide objects"
 msgstr ""
 
-#: ../src/ui/dialog/objects.cpp:893
+#: ../src/ui/dialog/objects.cpp:894
 msgid "Lock objects"
 msgstr ""
 
-#: ../src/ui/dialog/objects.cpp:893
+#: ../src/ui/dialog/objects.cpp:894
 msgid "Unlock objects"
 msgstr ""
 
-#: ../src/ui/dialog/objects.cpp:905
+#: ../src/ui/dialog/objects.cpp:906
 msgid "Layer to group"
 msgstr ""
 
-#: ../src/ui/dialog/objects.cpp:905
+#: ../src/ui/dialog/objects.cpp:906
 msgid "Group to layer"
 msgstr ""
 
-#: ../src/ui/dialog/objects.cpp:1103
+#: ../src/ui/dialog/objects.cpp:1104
 msgid "Moved objects"
 msgstr ""
 
-#: ../src/ui/dialog/objects.cpp:1352 ../src/ui/dialog/tags.cpp:857
+#: ../src/ui/dialog/objects.cpp:1353 ../src/ui/dialog/tags.cpp:857
 #: ../src/ui/dialog/tags.cpp:864
 msgid "Rename object"
 msgstr ""
@@ -20500,7 +20512,7 @@ msgstr ""
 
 #: ../src/ui/dialog/swatches.cpp:202 ../src/ui/tools/gradient-tool.cpp:360
 #: ../src/ui/tools/gradient-tool.cpp:458
-#: ../src/widgets/gradient-vector.cpp:795
+#: ../src/widgets/gradient-vector.cpp:801
 msgid "Add gradient stop"
 msgstr ""
 
@@ -20619,51 +20631,55 @@ msgid "By: "
 msgstr ""
 
 #: ../src/ui/dialog/text-edit.cpp:72
+msgid "_Variants"
+msgstr ""
+
+#: ../src/ui/dialog/text-edit.cpp:73
 msgid "Set as _default"
 msgstr ""
 
-#: ../src/ui/dialog/text-edit.cpp:86
+#: ../src/ui/dialog/text-edit.cpp:87
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr ""
 
 #. Align buttons
-#: ../src/ui/dialog/text-edit.cpp:96 ../src/widgets/text-toolbar.cpp:1339
+#: ../src/ui/dialog/text-edit.cpp:97 ../src/widgets/text-toolbar.cpp:1339
 #: ../src/widgets/text-toolbar.cpp:1340
 msgid "Align left"
 msgstr ""
 
-#: ../src/ui/dialog/text-edit.cpp:97 ../src/widgets/text-toolbar.cpp:1347
+#: ../src/ui/dialog/text-edit.cpp:98 ../src/widgets/text-toolbar.cpp:1347
 #: ../src/widgets/text-toolbar.cpp:1348
 msgid "Align center"
 msgstr ""
 
-#: ../src/ui/dialog/text-edit.cpp:98 ../src/widgets/text-toolbar.cpp:1355
+#: ../src/ui/dialog/text-edit.cpp:99 ../src/widgets/text-toolbar.cpp:1355
 #: ../src/widgets/text-toolbar.cpp:1356
 msgid "Align right"
 msgstr ""
 
-#: ../src/ui/dialog/text-edit.cpp:99 ../src/widgets/text-toolbar.cpp:1364
+#: ../src/ui/dialog/text-edit.cpp:100 ../src/widgets/text-toolbar.cpp:1364
 msgid "Justify (only flowed text)"
 msgstr ""
 
 #. Direction buttons
-#: ../src/ui/dialog/text-edit.cpp:108 ../src/widgets/text-toolbar.cpp:1399
+#: ../src/ui/dialog/text-edit.cpp:109 ../src/widgets/text-toolbar.cpp:1399
 msgid "Horizontal text"
 msgstr ""
 
-#: ../src/ui/dialog/text-edit.cpp:109 ../src/widgets/text-toolbar.cpp:1406
+#: ../src/ui/dialog/text-edit.cpp:110 ../src/widgets/text-toolbar.cpp:1406
 msgid "Vertical text"
 msgstr ""
 
-#: ../src/ui/dialog/text-edit.cpp:129 ../src/ui/dialog/text-edit.cpp:130
+#: ../src/ui/dialog/text-edit.cpp:130 ../src/ui/dialog/text-edit.cpp:131
 msgid "Spacing between lines (percent of font size)"
 msgstr ""
 
-#: ../src/ui/dialog/text-edit.cpp:146
+#: ../src/ui/dialog/text-edit.cpp:147
 msgid "Text path offset"
 msgstr ""
 
-#: ../src/ui/dialog/text-edit.cpp:584 ../src/ui/dialog/text-edit.cpp:658
+#: ../src/ui/dialog/text-edit.cpp:594 ../src/ui/dialog/text-edit.cpp:668
 #: ../src/ui/tools/text-tool.cpp:1446
 msgid "Set text style"
 msgstr ""
@@ -23058,12 +23074,256 @@ msgstr ""
 msgid "Blur tweak"
 msgstr ""
 
+#: ../src/ui/widget/color-icc-selector.cpp:176
+#: ../src/ui/widget/color-scales.cpp:378
+msgid "_R:"
+msgstr ""
+
+#. TYPE_RGB_16
+#: ../src/ui/widget/color-icc-selector.cpp:177
+#: ../src/ui/widget/color-scales.cpp:381
+msgid "_G:"
+msgstr ""
+
+#: ../src/ui/widget/color-icc-selector.cpp:178
+#: ../src/ui/widget/color-scales.cpp:384
+msgid "_B:"
+msgstr ""
+
+#: ../src/ui/widget/color-icc-selector.cpp:180
+msgid "Gray"
+msgstr ""
+
+#. TYPE_GRAY_16
+#: ../src/ui/widget/color-icc-selector.cpp:182
+#: ../src/ui/widget/color-icc-selector.cpp:186
+#: ../src/ui/widget/color-scales.cpp:404
+msgid "_H:"
+msgstr ""
+
+#. TYPE_HSV_16
+#: ../src/ui/widget/color-icc-selector.cpp:183
+#: ../src/ui/widget/color-icc-selector.cpp:188
+#: ../src/ui/widget/color-scales.cpp:407
+msgid "_S:"
+msgstr ""
+
+#. TYPE_HLS_16
+#: ../src/ui/widget/color-icc-selector.cpp:187
+#: ../src/ui/widget/color-scales.cpp:410
+msgid "_L:"
+msgstr ""
+
+#: ../src/ui/widget/color-icc-selector.cpp:190
+#: ../src/ui/widget/color-icc-selector.cpp:195
+#: ../src/ui/widget/color-scales.cpp:432
+msgid "_C:"
+msgstr ""
+
+#. TYPE_CMYK_16
+#. TYPE_CMY_16
+#: ../src/ui/widget/color-icc-selector.cpp:191
+#: ../src/ui/widget/color-icc-selector.cpp:196
+#: ../src/ui/widget/color-scales.cpp:435
+msgid "_M:"
+msgstr ""
+
+#: ../src/ui/widget/color-icc-selector.cpp:192
+#: ../src/ui/widget/color-icc-selector.cpp:197
+#: ../src/ui/widget/color-scales.cpp:438
+msgid "_Y:"
+msgstr ""
+
+#: ../src/ui/widget/color-icc-selector.cpp:193
+#: ../src/ui/widget/color-scales.cpp:441
+msgid "_K:"
+msgstr ""
+
+#: ../src/ui/widget/color-icc-selector.cpp:310
+msgid "CMS"
+msgstr ""
+
+#: ../src/ui/widget/color-icc-selector.cpp:375
+msgid "Fix"
+msgstr ""
+
+#: ../src/ui/widget/color-icc-selector.cpp:379
+msgid "Fix RGB fallback to match icc-color() value."
+msgstr ""
+
+#. Label
+#: ../src/ui/widget/color-icc-selector.cpp:491
+#: ../src/ui/widget/color-scales.cpp:387 ../src/ui/widget/color-scales.cpp:413
+#: ../src/ui/widget/color-scales.cpp:444
+#: ../src/ui/widget/color-wheel-selector.cpp:83
+msgid "_A:"
+msgstr ""
+
+#: ../src/ui/widget/color-icc-selector.cpp:502
+#: ../src/ui/widget/color-icc-selector.cpp:513
+#: ../src/ui/widget/color-scales.cpp:388 ../src/ui/widget/color-scales.cpp:389
+#: ../src/ui/widget/color-scales.cpp:414 ../src/ui/widget/color-scales.cpp:415
+#: ../src/ui/widget/color-scales.cpp:445 ../src/ui/widget/color-scales.cpp:446
+#: ../src/ui/widget/color-wheel-selector.cpp:112
+#: ../src/ui/widget/color-wheel-selector.cpp:142
+msgid "Alpha (opacity)"
+msgstr ""
+
+#: ../src/ui/widget/color-notebook.cpp:182
+msgid "Color Managed"
+msgstr ""
+
+#: ../src/ui/widget/color-notebook.cpp:189
+msgid "Out of gamut!"
+msgstr ""
+
+#: ../src/ui/widget/color-notebook.cpp:196
+msgid "Too much ink!"
+msgstr ""
+
+#: ../src/ui/widget/color-notebook.cpp:207 ../src/verbs.cpp:2733
+msgid "Pick colors from image"
+msgstr ""
+
+#. Create RGBA entry and color preview
+#: ../src/ui/widget/color-notebook.cpp:212
+msgid "RGBA_:"
+msgstr ""
+
+#: ../src/ui/widget/color-scales.cpp:46
+msgid "RGB"
+msgstr ""
+
+#: ../src/ui/widget/color-scales.cpp:46
+msgid "HSL"
+msgstr ""
+
+#: ../src/ui/widget/color-scales.cpp:46
+msgid "CMYK"
+msgstr ""
+
 #: ../src/ui/widget/filter-effect-chooser.cpp:26
 msgid "_Blur:"
 msgstr ""
 
 #: ../src/ui/widget/filter-effect-chooser.cpp:29
 msgid "Blur (%)"
+msgstr ""
+
+#: ../src/ui/widget/font-variants.cpp:38
+msgid "Ligatures"
+msgstr ""
+
+#: ../src/ui/widget/font-variants.cpp:39
+msgid "Common"
+msgstr ""
+
+#: ../src/ui/widget/font-variants.cpp:40
+msgid "Discretionary"
+msgstr ""
+
+#: ../src/ui/widget/font-variants.cpp:41
+msgid "Historical"
+msgstr ""
+
+#: ../src/ui/widget/font-variants.cpp:42
+msgid "Contextual"
+msgstr ""
+
+#: ../src/ui/widget/font-variants.cpp:46
+msgid "Subscript"
+msgstr ""
+
+#: ../src/ui/widget/font-variants.cpp:47
+msgid "Superscript"
+msgstr ""
+
+#: ../src/ui/widget/font-variants.cpp:49
+msgid "Capitals"
+msgstr ""
+
+#: ../src/ui/widget/font-variants.cpp:52
+msgid "All small"
+msgstr ""
+
+#: ../src/ui/widget/font-variants.cpp:53
+msgid "Petite"
+msgstr ""
+
+#: ../src/ui/widget/font-variants.cpp:54
+msgid "All petite"
+msgstr ""
+
+#: ../src/ui/widget/font-variants.cpp:55
+msgid "Unicase"
+msgstr ""
+
+#: ../src/ui/widget/font-variants.cpp:56
+msgid "Titling"
+msgstr ""
+
+#: ../src/ui/widget/font-variants.cpp:58
+msgid "Numeric"
+msgstr ""
+
+#: ../src/ui/widget/font-variants.cpp:59
+msgid "Lining"
+msgstr ""
+
+#: ../src/ui/widget/font-variants.cpp:60
+msgid "Old Style"
+msgstr ""
+
+#: ../src/ui/widget/font-variants.cpp:61
+msgid "Default Style"
+msgstr ""
+
+#: ../src/ui/widget/font-variants.cpp:62
+msgid "Proportional"
+msgstr ""
+
+#: ../src/ui/widget/font-variants.cpp:63
+msgid "Tabular"
+msgstr ""
+
+#: ../src/ui/widget/font-variants.cpp:64
+msgid "Default Width"
+msgstr ""
+
+#: ../src/ui/widget/font-variants.cpp:65
+msgid "Diagonal"
+msgstr ""
+
+#: ../src/ui/widget/font-variants.cpp:66
+msgid "Stacked"
+msgstr ""
+
+#: ../src/ui/widget/font-variants.cpp:67
+msgid "Default Fractions"
+msgstr ""
+
+#: ../src/ui/widget/font-variants.cpp:68
+msgid "Ordinal"
+msgstr ""
+
+#: ../src/ui/widget/font-variants.cpp:69
+msgid "Slashed Zero"
+msgstr ""
+
+#: ../src/ui/widget/font-variants.cpp:80
+msgid "Common ligatures. On by default. OpenType tables: 'liga', 'clig'"
+msgstr ""
+
+#: ../src/ui/widget/font-variants.cpp:82
+msgid "Discretionary ligatures. Off by default. OpenType table: 'dlig'"
+msgstr ""
+
+#: ../src/ui/widget/font-variants.cpp:84
+msgid "Historical ligatures. Off by default. OpenType table: 'hlig'"
+msgstr ""
+
+#: ../src/ui/widget/font-variants.cpp:86
+msgid "Contextual forms. On by default. OpenType table: 'calt'"
 msgstr ""
 
 #: ../src/ui/widget/layer-selector.cpp:118
@@ -23484,14 +23744,14 @@ msgstr ""
 #: ../src/ui/widget/selected-style.cpp:237
 #: ../src/ui/widget/selected-style.cpp:295
 #: ../src/ui/widget/selected-style.cpp:575
-#: ../src/ui/widget/style-swatch.cpp:326 ../src/widgets/fill-style.cpp:705
+#: ../src/ui/widget/style-swatch.cpp:326 ../src/widgets/fill-style.cpp:703
 msgid "Unset fill"
 msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:237
 #: ../src/ui/widget/selected-style.cpp:295
 #: ../src/ui/widget/selected-style.cpp:591
-#: ../src/ui/widget/style-swatch.cpp:326 ../src/widgets/fill-style.cpp:705
+#: ../src/ui/widget/style-swatch.cpp:326 ../src/widgets/fill-style.cpp:703
 msgid "Unset stroke"
 msgstr ""
 
@@ -23569,12 +23829,12 @@ msgid "Make stroke opaque"
 msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:299
-#: ../src/ui/widget/selected-style.cpp:557 ../src/widgets/fill-style.cpp:504
+#: ../src/ui/widget/selected-style.cpp:557 ../src/widgets/fill-style.cpp:503
 msgid "Remove fill"
 msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:299
-#: ../src/ui/widget/selected-style.cpp:566 ../src/widgets/fill-style.cpp:504
+#: ../src/ui/widget/selected-style.cpp:566 ../src/widgets/fill-style.cpp:503
 msgid "Remove stroke"
 msgstr ""
 
@@ -23790,8 +24050,8 @@ msgstr[1] ""
 msgid ""
 "shared by <b>%d</b> box; drag with <b>Shift</b> to separate selected box(es)"
 msgid_plural ""
-"shared by <b>%d</b> boxes; drag with <b>Shift</b> to separate selected box"
-"(es)"
+"shared by <b>%d</b> boxes; drag with <b>Shift</b> to separate selected "
+"box(es)"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -25154,10 +25414,6 @@ msgstr ""
 #: ../src/verbs.cpp:2732
 msgctxt "ContextVerb"
 msgid "Dropper"
-msgstr ""
-
-#: ../src/verbs.cpp:2733 ../src/widgets/sp-color-notebook.cpp:396
-msgid "Pick colors from image"
 msgstr ""
 
 #: ../src/verbs.cpp:2734
@@ -26758,27 +27014,27 @@ msgstr ""
 msgid "Change fill rule"
 msgstr ""
 
-#: ../src/widgets/fill-style.cpp:441 ../src/widgets/fill-style.cpp:520
+#: ../src/widgets/fill-style.cpp:440 ../src/widgets/fill-style.cpp:518
 msgid "Set fill color"
 msgstr ""
 
-#: ../src/widgets/fill-style.cpp:441 ../src/widgets/fill-style.cpp:520
+#: ../src/widgets/fill-style.cpp:440 ../src/widgets/fill-style.cpp:518
 msgid "Set stroke color"
 msgstr ""
 
-#: ../src/widgets/fill-style.cpp:618
+#: ../src/widgets/fill-style.cpp:616
 msgid "Set gradient on fill"
 msgstr ""
 
-#: ../src/widgets/fill-style.cpp:618
+#: ../src/widgets/fill-style.cpp:616
 msgid "Set gradient on stroke"
 msgstr ""
 
-#: ../src/widgets/fill-style.cpp:678
+#: ../src/widgets/fill-style.cpp:676
 msgid "Set pattern on fill"
 msgstr ""
 
-#: ../src/widgets/fill-style.cpp:679
+#: ../src/widgets/fill-style.cpp:677
 msgid "Set pattern on stroke"
 msgstr ""
 
@@ -26806,20 +27062,20 @@ msgstr ""
 msgid "Font size:"
 msgstr ""
 
-#: ../src/widgets/gradient-selector.cpp:201
+#: ../src/widgets/gradient-selector.cpp:205
 msgid "Create a duplicate gradient"
 msgstr ""
 
-#: ../src/widgets/gradient-selector.cpp:212
+#: ../src/widgets/gradient-selector.cpp:216
 msgid "Edit gradient"
 msgstr ""
 
-#: ../src/widgets/gradient-selector.cpp:281
+#: ../src/widgets/gradient-selector.cpp:285
 #: ../src/widgets/paint-selector.cpp:233
 msgid "Swatch"
 msgstr ""
 
-#: ../src/widgets/gradient-selector.cpp:331
+#: ../src/widgets/gradient-selector.cpp:335
 msgid "Rename gradient"
 msgstr ""
 
@@ -26839,7 +27095,7 @@ msgid "Multiple stops"
 msgstr ""
 
 #: ../src/widgets/gradient-toolbar.cpp:779
-#: ../src/widgets/gradient-vector.cpp:610
+#: ../src/widgets/gradient-vector.cpp:614
 msgid "No stops in gradient"
 msgstr ""
 
@@ -26852,7 +27108,7 @@ msgid "Set gradient repeat"
 msgstr ""
 
 #: ../src/widgets/gradient-toolbar.cpp:993
-#: ../src/widgets/gradient-vector.cpp:721
+#: ../src/widgets/gradient-vector.cpp:727
 msgid "Change gradient stop offset"
 msgstr ""
 
@@ -26962,7 +27218,7 @@ msgstr ""
 
 #. Label
 #: ../src/widgets/gradient-toolbar.cpp:1162
-#: ../src/widgets/gradient-vector.cpp:907
+#: ../src/widgets/gradient-vector.cpp:915
 msgctxt "Gradient"
 msgid "Offset:"
 msgstr ""
@@ -26978,7 +27234,7 @@ msgstr ""
 
 #: ../src/widgets/gradient-toolbar.cpp:1194
 #: ../src/widgets/gradient-toolbar.cpp:1195
-#: ../src/widgets/gradient-vector.cpp:889
+#: ../src/widgets/gradient-vector.cpp:897
 msgid "Delete stop"
 msgstr ""
 
@@ -26994,43 +27250,43 @@ msgstr ""
 msgid "Link gradients to change all related gradients"
 msgstr ""
 
-#: ../src/widgets/gradient-vector.cpp:312
-#: ../src/widgets/paint-selector.cpp:957
+#: ../src/widgets/gradient-vector.cpp:317
+#: ../src/widgets/paint-selector.cpp:965
 #: ../src/widgets/stroke-marker-selector.cpp:154
 msgid "No document selected"
 msgstr ""
 
-#: ../src/widgets/gradient-vector.cpp:316
+#: ../src/widgets/gradient-vector.cpp:321
 msgid "No gradients in document"
 msgstr ""
 
-#: ../src/widgets/gradient-vector.cpp:320
+#: ../src/widgets/gradient-vector.cpp:325
 msgid "No gradient selected"
 msgstr ""
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:884
+#: ../src/widgets/gradient-vector.cpp:892
 msgid "Add stop"
 msgstr ""
 
-#: ../src/widgets/gradient-vector.cpp:887
+#: ../src/widgets/gradient-vector.cpp:895
 msgid "Add another control stop to gradient"
 msgstr ""
 
-#: ../src/widgets/gradient-vector.cpp:892
+#: ../src/widgets/gradient-vector.cpp:900
 msgid "Delete current control stop from gradient"
 msgstr ""
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:960
+#: ../src/widgets/gradient-vector.cpp:968
 msgid "Stop Color"
 msgstr ""
 
-#: ../src/widgets/gradient-vector.cpp:988
+#: ../src/widgets/gradient-vector.cpp:1007
 msgid "Gradient editor"
 msgstr ""
 
-#: ../src/widgets/gradient-vector.cpp:1325
+#: ../src/widgets/gradient-vector.cpp:1359
 msgid "Change gradient stop color"
 msgstr ""
 
@@ -27445,51 +27701,51 @@ msgid ""
 "Fill is solid unless a subpath is counterdirectional (fill-rule: nonzero)"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:597
+#: ../src/widgets/paint-selector.cpp:605
 msgid "<b>No objects</b>"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:608
+#: ../src/widgets/paint-selector.cpp:616
 msgid "<b>Multiple styles</b>"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:619
+#: ../src/widgets/paint-selector.cpp:627
 msgid "<b>Paint is undefined</b>"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:630
+#: ../src/widgets/paint-selector.cpp:638
 msgid "<b>No paint</b>"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:714
+#: ../src/widgets/paint-selector.cpp:722
 msgid "<b>Flat color</b>"
 msgstr ""
 
 #. sp_gradient_selector_set_mode(SP_GRADIENT_SELECTOR(gsel), SP_GRADIENT_SELECTOR_MODE_LINEAR);
-#: ../src/widgets/paint-selector.cpp:783
+#: ../src/widgets/paint-selector.cpp:791
 msgid "<b>Linear gradient</b>"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:786
+#: ../src/widgets/paint-selector.cpp:794
 msgid "<b>Radial gradient</b>"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:791
+#: ../src/widgets/paint-selector.cpp:799
 msgid "<b>Mesh gradient</b>"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:1090
+#: ../src/widgets/paint-selector.cpp:1098
 msgid ""
 "Use the <b>Node tool</b> to adjust position, scale, and rotation of the "
 "pattern on canvas. Use <b>Object &gt; Pattern &gt; Objects to Pattern</b> to "
 "create a new pattern from selection."
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:1103
+#: ../src/widgets/paint-selector.cpp:1111
 msgid "<b>Pattern fill</b>"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:1197
+#: ../src/widgets/paint-selector.cpp:1205
 msgid "<b>Swatch fill</b>"
 msgstr ""
 
@@ -27852,139 +28108,7 @@ msgstr ""
 msgid "Set attribute"
 msgstr ""
 
-#: ../src/widgets/sp-color-icc-selector.cpp:234
-msgid "CMS"
-msgstr ""
-
-#: ../src/widgets/sp-color-icc-selector.cpp:330
-#: ../src/widgets/sp-color-scales.cpp:414
-msgid "_R:"
-msgstr ""
-
-#. TYPE_RGB_16
-#: ../src/widgets/sp-color-icc-selector.cpp:331
-#: ../src/widgets/sp-color-scales.cpp:417
-msgid "_G:"
-msgstr ""
-
-#: ../src/widgets/sp-color-icc-selector.cpp:332
-#: ../src/widgets/sp-color-scales.cpp:420
-msgid "_B:"
-msgstr ""
-
-#: ../src/widgets/sp-color-icc-selector.cpp:334
-msgid "Gray"
-msgstr ""
-
-#. TYPE_GRAY_16
-#: ../src/widgets/sp-color-icc-selector.cpp:336
-#: ../src/widgets/sp-color-icc-selector.cpp:340
-#: ../src/widgets/sp-color-scales.cpp:440
-msgid "_H:"
-msgstr ""
-
-#. TYPE_HSV_16
-#: ../src/widgets/sp-color-icc-selector.cpp:337
-#: ../src/widgets/sp-color-icc-selector.cpp:342
-#: ../src/widgets/sp-color-scales.cpp:443
-msgid "_S:"
-msgstr ""
-
-#. TYPE_HLS_16
-#: ../src/widgets/sp-color-icc-selector.cpp:341
-#: ../src/widgets/sp-color-scales.cpp:446
-msgid "_L:"
-msgstr ""
-
-#: ../src/widgets/sp-color-icc-selector.cpp:344
-#: ../src/widgets/sp-color-icc-selector.cpp:349
-#: ../src/widgets/sp-color-scales.cpp:468
-msgid "_C:"
-msgstr ""
-
-#. TYPE_CMYK_16
-#. TYPE_CMY_16
-#: ../src/widgets/sp-color-icc-selector.cpp:345
-#: ../src/widgets/sp-color-icc-selector.cpp:350
-#: ../src/widgets/sp-color-scales.cpp:471
-msgid "_M:"
-msgstr ""
-
-#: ../src/widgets/sp-color-icc-selector.cpp:346
-#: ../src/widgets/sp-color-icc-selector.cpp:351
-#: ../src/widgets/sp-color-scales.cpp:474
-msgid "_Y:"
-msgstr ""
-
-#: ../src/widgets/sp-color-icc-selector.cpp:347
-#: ../src/widgets/sp-color-scales.cpp:477
-msgid "_K:"
-msgstr ""
-
-#: ../src/widgets/sp-color-icc-selector.cpp:430
-msgid "Fix"
-msgstr ""
-
-#: ../src/widgets/sp-color-icc-selector.cpp:433
-msgid "Fix RGB fallback to match icc-color() value."
-msgstr ""
-
-#. Label
-#: ../src/widgets/sp-color-icc-selector.cpp:536
-#: ../src/widgets/sp-color-scales.cpp:423
-#: ../src/widgets/sp-color-scales.cpp:449
-#: ../src/widgets/sp-color-scales.cpp:480
-#: ../src/widgets/sp-color-wheel-selector.cpp:111
-msgid "_A:"
-msgstr ""
-
-#: ../src/widgets/sp-color-icc-selector.cpp:547
-#: ../src/widgets/sp-color-icc-selector.cpp:560
-#: ../src/widgets/sp-color-scales.cpp:424
-#: ../src/widgets/sp-color-scales.cpp:425
-#: ../src/widgets/sp-color-scales.cpp:450
-#: ../src/widgets/sp-color-scales.cpp:451
-#: ../src/widgets/sp-color-scales.cpp:481
-#: ../src/widgets/sp-color-scales.cpp:482
-#: ../src/widgets/sp-color-wheel-selector.cpp:137
-#: ../src/widgets/sp-color-wheel-selector.cpp:166
-msgid "Alpha (opacity)"
-msgstr ""
-
-#: ../src/widgets/sp-color-notebook.cpp:370
-msgid "Color Managed"
-msgstr ""
-
-#: ../src/widgets/sp-color-notebook.cpp:377
-msgid "Out of gamut!"
-msgstr ""
-
-#: ../src/widgets/sp-color-notebook.cpp:384
-msgid "Too much ink!"
-msgstr ""
-
-#. Create RGBA entry and color preview
-#: ../src/widgets/sp-color-notebook.cpp:401
-msgid "RGBA_:"
-msgstr ""
-
-#: ../src/widgets/sp-color-notebook.cpp:409
-msgid "Hexadecimal RGBA value of the color"
-msgstr ""
-
-#: ../src/widgets/sp-color-scales.cpp:53
-msgid "RGB"
-msgstr ""
-
-#: ../src/widgets/sp-color-scales.cpp:53
-msgid "HSL"
-msgstr ""
-
-#: ../src/widgets/sp-color-scales.cpp:53
-msgid "CMYK"
-msgstr ""
-
-#: ../src/widgets/sp-color-selector.cpp:42
+#: ../src/widgets/sp-color-selector.cpp:47
 msgid "Unnamed"
 msgstr ""
 
@@ -28492,7 +28616,7 @@ msgstr ""
 msgid "Set marker color"
 msgstr ""
 
-#: ../src/widgets/swatch-selector.cpp:137
+#: ../src/widgets/swatch-selector.cpp:127
 msgid "Change swatch color"
 msgstr ""
 
@@ -29558,6 +29682,7 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/jessyInk_autoTexts.py:54
+#, python-brace-format
 msgid ""
 "Node with id '{0}' is not a suitable text node and was therefore ignored.\n"
 "\n"
@@ -29584,6 +29709,7 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/jessyInk_summary.py:69
+#, python-brace-format
 msgid "JessyInk script version {0} installed."
 msgstr ""
 
@@ -29604,6 +29730,7 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/jessyInk_summary.py:94
+#, python-brace-format
 msgid "{0}Layer name: {1}"
 msgstr ""
 
@@ -29612,6 +29739,7 @@ msgid "{0}Transition in: {1} ({2!s} s)"
 msgstr ""
 
 #: ../share/extensions/jessyInk_summary.py:104
+#, python-brace-format
 msgid "{0}Transition in: {1}"
 msgstr ""
 
@@ -29620,20 +29748,24 @@ msgid "{0}Transition out: {1} ({2!s} s)"
 msgstr ""
 
 #: ../share/extensions/jessyInk_summary.py:113
+#, python-brace-format
 msgid "{0}Transition out: {1}"
 msgstr ""
 
 #: ../share/extensions/jessyInk_summary.py:120
+#, python-brace-format
 msgid ""
 "\n"
 "{0}Auto-texts:"
 msgstr ""
 
 #: ../share/extensions/jessyInk_summary.py:123
+#, python-brace-format
 msgid "{0}\t\"{1}\" (object id \"{2}\") will be replaced by \"{3}\"."
 msgstr ""
 
 #: ../share/extensions/jessyInk_summary.py:168
+#, python-brace-format
 msgid ""
 "\n"
 "{0}Initial effect (order number {1}):"
@@ -29646,10 +29778,12 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/jessyInk_summary.py:174
+#, python-brace-format
 msgid "{0}\tView will be set according to object \"{1}\""
 msgstr ""
 
 #: ../share/extensions/jessyInk_summary.py:176
+#, python-brace-format
 msgid "{0}\tObject \"{1}\""
 msgstr ""
 
@@ -29662,6 +29796,7 @@ msgid " will disappear"
 msgstr ""
 
 #: ../share/extensions/jessyInk_summary.py:184
+#, python-brace-format
 msgid " using effect \"{0}\""
 msgstr ""
 
@@ -29792,7 +29927,14 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/plotter.py:148
-msgid "pySerial is not installed."
+msgid ""
+"pySerial is not installed.\n"
+"\n"
+"1. Download pySerial here (not the \".exe\"!): http://pypi.python.org/pypi/"
+"pyserial\n"
+"2. Extract the \"serial\" subfolder from the zip to the following folder: C:"
+"\\[Program files]\\inkscape\\python\\Lib\\\n"
+"3. Restart Inkscape."
 msgstr ""
 
 #: ../share/extensions/plotter.py:200
@@ -29921,7 +30063,12 @@ msgstr ""
 
 #: ../share/extensions/uniconv-ext.py:56
 #: ../share/extensions/uniconv_output.py:122
-msgid "You need to install the UniConvertor software.\n"
+msgid ""
+"You need to install the UniConvertor software.\n"
+"For GNU/Linux: install the package python-uniconvertor.\n"
+"For Windows: download it from\n"
+"http://sk1project.org/modules.php?name=Products&product=uniconvertor\n"
+"and install into your Inkscape's Python location\n"
 msgstr ""
 
 #: ../share/extensions/voronoi2svg.py:215

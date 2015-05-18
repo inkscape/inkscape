@@ -6,6 +6,7 @@ set(ui_SRC
 	interface.cpp
 	object-edit.cpp
 	previewholder.cpp
+	selected-color.cpp
 	shape-editor.cpp
 	tool-factory.cpp
 	tools-switch.cpp
@@ -115,8 +116,14 @@ set(ui_SRC
 	widget/anchor-selector.cpp
 	widget/button.cpp
 	widget/clipmaskicon.cpp
+	widget/color-entry.cpp
+	widget/color-icc-selector.cpp
+	widget/color-notebook.cpp
 	widget/color-picker.cpp
 	widget/color-preview.cpp
+	widget/color-scales.cpp
+	widget/color-slider.cpp
+	widget/color-wheel-selector.cpp
 	widget/dock-item.cpp
 	widget/dock.cpp
 	widget/entity-entry.cpp
@@ -175,6 +182,7 @@ set(ui_SRC
 	previewable.h
 	previewfillable.h
 	previewholder.h
+	selected-color.h
 	shape-editor.h
 	tool-factory.h
 	tools-switch.h
@@ -288,8 +296,14 @@ set(ui_SRC
 	widget/anchor-selector.h
 	widget/attr-widget.h
 	widget/button.h
+	widget/color-entry.h
+	widget/color-icc-selector.h
+	widget/color-notebook.h
 	widget/color-picker.h
 	widget/color-preview.h
+	widget/color-scales.h
+	widget/color-slider.h
+	widget/color-wheel-selector.h
 	widget/combo-enums.h
 	widget/dock-item.h
 	widget/dock.h

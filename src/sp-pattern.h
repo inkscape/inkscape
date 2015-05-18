@@ -1,9 +1,6 @@
-#ifndef SEEN_SP_PATTERN_H
-#define SEEN_SP_PATTERN_H
-
-/*
+/** @file
  * SVG <pattern> implementation
- *
+ *//*
  * Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Abhishek Sharma
@@ -13,94 +10,130 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#define SP_PATTERN(obj) (dynamic_cast<SPPattern*>((SPObject*)obj))
-#define SP_IS_PATTERN(obj) (dynamic_cast<const SPPattern*>((SPObject*)obj) != NULL)
+#ifndef SEEN_SP_PATTERN_H
+#define SEEN_SP_PATTERN_H
 
-class SPPatternReference;
-class SPItem;
-typedef struct _GSList GSList;
+#include <list>
+#include <stddef.h>
+#include <glibmm/ustring.h>
+#include <sigc++/connection.h>
 
 #include "svg/svg-length.h"
 #include "sp-paint-server.h"
 #include "uri-references.h"
 #include "viewbox.h"
 
-#include <sigc++/connection.h>
+class SPPatternReference;
+class SPItem;
 
+namespace Inkscape {
+namespace XML {
+
+class Node;
+}
+}
+
+#define SP_PATTERN(obj) (dynamic_cast<SPPattern *>((SPObject *)obj))
+#define SP_IS_PATTERN(obj) (dynamic_cast<const SPPattern *>((SPObject *)obj) != NULL)
 
 class SPPattern : public SPPaintServer, public SPViewBox {
 public:
-	SPPattern();
-	virtual ~SPPattern();
+    enum PatternUnits { UNITS_USERSPACEONUSE, UNITS_OBJECTBOUNDINGBOX };
+
+    SPPattern();
+    virtual ~SPPattern();
 
     /* Reference (href) */
-    char *href;
+    Glib::ustring href;
     SPPatternReference *ref;
 
-    /* patternUnits and patternContentUnits attribute */
-    unsigned int patternUnits : 1;
-    unsigned int patternUnits_set : 1;
-    unsigned int patternContentUnits : 1;
-    unsigned int patternContentUnits_set : 1;
-    /* patternTransform attribute */
-    Geom::Affine patternTransform;
-    unsigned int patternTransform_set : 1;
-    /* Tile rectangle */
-    SVGLength x;
-    SVGLength y;
-    SVGLength width;
-    SVGLength height;
+    gdouble x() const;
+    gdouble y() const;
+    gdouble width() const;
+    gdouble height() const;
+    Geom::OptRect viewbox() const;
+    SPPattern::PatternUnits patternUnits() const;
+    SPPattern::PatternUnits patternContentUnits() const;
+    Geom::Affine const &getTransform() const;
+    SPPattern *rootPattern(); // TODO: const
 
-    sigc::connection modified_connection;
+    SPPattern *clone_if_necessary(SPItem *item, const gchar *property);
+    void transform_multiply(Geom::Affine postmul, bool set);
+
+    /**
+     * @brief create a new pattern in XML tree
+     * @return created pattern id
+     */
+    static const gchar *produce(const std::vector<Inkscape::XML::Node *> &reprs, Geom::Rect bounds,
+                                SPDocument *document, Geom::Affine transform, Geom::Affine move);
 
     bool isValid() const;
 
-	virtual cairo_pattern_t* pattern_new(cairo_t *ct, Geom::OptRect const &bbox, double opacity);
+    virtual cairo_pattern_t *pattern_new(cairo_t *ct, Geom::OptRect const &bbox, double opacity);
 
 protected:
-	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
-	virtual void release();
-	virtual void set(unsigned int key, const gchar* value);
-	virtual void update(SPCtx* ctx, unsigned int flags);
-	virtual void modified(unsigned int flags);
+    virtual void build(SPDocument *doc, Inkscape::XML::Node *repr);
+    virtual void release();
+    virtual void set(unsigned int key, const gchar *value);
+    virtual void update(SPCtx *ctx, unsigned int flags);
+    virtual void modified(unsigned int flags);
+
+private:
+    bool _hasItemChildren() const;
+    void _getChildren(std::list<SPObject *> &l);
+    SPPattern *_chain() const;
+
+    /**
+    Count how many times pattern is used by the styles of o and its descendants
+    */
+    guint _countHrefs(SPObject *o) const;
+
+    /**
+    Gets called when the pattern is reattached to another <pattern>
+    */
+    void _onRefChanged(SPObject *old_ref, SPObject *ref);
+
+    /**
+    Gets called when the referenced <pattern> is changed
+    */
+    void _onRefModified(SPObject *ref, guint flags);
+
+    /* patternUnits and patternContentUnits attribute */
+    PatternUnits _pattern_units : 1;
+    bool _pattern_units_set : 1;
+    PatternUnits _pattern_content_units : 1;
+    bool _pattern_content_units_set : 1;
+    /* patternTransform attribute */
+    Geom::Affine _pattern_transform;
+    bool _pattern_transform_set : 1;
+    /* Tile rectangle */
+    SVGLength _x;
+    SVGLength _y;
+    SVGLength _width;
+    SVGLength _height;
+
+    sigc::connection _modified_connection;
 };
 
 
 class SPPatternReference : public Inkscape::URIReference {
 public:
-    SPPatternReference (SPObject *obj) : URIReference(obj) {}
-    SPPattern *getObject() const {
+    SPPatternReference(SPObject *obj)
+        : URIReference(obj)
+    {
+    }
+
+    SPPattern *getObject() const
+    {
         return reinterpret_cast<SPPattern *>(URIReference::getObject());
     }
 
 protected:
-    virtual bool _acceptObject(SPObject *obj) const {
-        return SP_IS_PATTERN (obj);
+    virtual bool _acceptObject(SPObject *obj) const
+    {
+        return SP_IS_PATTERN(obj);
     }
 };
-
-enum {
-    SP_PATTERN_UNITS_USERSPACEONUSE,
-    SP_PATTERN_UNITS_OBJECTBOUNDINGBOX
-};
-
-unsigned int pattern_users (SPPattern *pattern);
-SPPattern *pattern_chain (SPPattern *pattern);
-SPPattern *sp_pattern_clone_if_necessary (SPItem *item, SPPattern *pattern, const char *property);
-void sp_pattern_transform_multiply (SPPattern *pattern, Geom::Affine postmul, bool set);
-
-const char *pattern_tile (const std::vector<Inkscape::XML::Node*> &reprs, Geom::Rect bounds, SPDocument *document, Geom::Affine transform, Geom::Affine move);
-
-SPPattern *pattern_getroot (SPPattern *pat);
-
-unsigned int pattern_patternUnits (SPPattern const *pat);
-unsigned int pattern_patternContentUnits (SPPattern const *pat);
-Geom::Affine const &pattern_patternTransform(SPPattern const *pat);
-double pattern_x (SPPattern const *pat);
-double pattern_y (SPPattern const *pat);
-double pattern_width (SPPattern const *pat);
-double pattern_height (SPPattern const *pat);
-Geom::OptRect pattern_viewBox (SPPattern const *pat);
 
 #endif // SEEN_SP_PATTERN_H
 

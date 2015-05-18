@@ -1963,8 +1963,8 @@ std::vector<SPItem*> sp_get_same_fill_or_stroke_color(SPItem *sel, std::vector<S
                     }
 
                 } else if (dynamic_cast<SPPattern *>(sel_server) && dynamic_cast<SPPattern *>(iter_server)) {
-                    SPPattern *sel_pat = pattern_getroot(dynamic_cast<SPPattern *>(sel_server));
-                    SPPattern *iter_pat = pattern_getroot(dynamic_cast<SPPattern *>(iter_server));
+                    SPPattern *sel_pat = dynamic_cast<SPPattern *>(sel_server)->rootPattern();
+                    SPPattern *iter_pat = dynamic_cast<SPPattern *>(iter_server)->rootPattern();
                     if (sel_pat == iter_pat) {
                         match = true;
                     }
@@ -3312,7 +3312,7 @@ sp_selection_tile(SPDesktop *desktop, bool apply)
     int saved_compensation = prefs->getInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
     prefs->setInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
 
-    gchar const *pat_id = pattern_tile(repr_copies, bbox, doc,
+    gchar const *pat_id = SPPattern::produce(repr_copies, bbox, doc,
                                        ( Geom::Affine(Geom::Translate(desktop->dt2doc(Geom::Point(r->min()[Geom::X],
                                                                                             r->max()[Geom::Y]))))
                                          * parent_transform.inverse() ),
@@ -3390,9 +3390,9 @@ void sp_selection_untile(SPDesktop *desktop)
 
         did = true;
 
-        SPPattern *pattern = pattern_getroot(basePat);
+        SPPattern *pattern = basePat->rootPattern();
 
-        Geom::Affine pat_transform = pattern_patternTransform(basePat);
+        Geom::Affine pat_transform = basePat->getTransform();
         pat_transform *= item->transform;
 
         for (SPObject *child = pattern->firstChild() ; child != NULL; child = child->next ) {
