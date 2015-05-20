@@ -218,6 +218,7 @@ TextEdit::TextEdit()
     setasdefault_button.signal_clicked().connect(sigc::mem_fun(*this, &TextEdit::onSetDefault));
     apply_button.signal_clicked().connect(sigc::mem_fun(*this, &TextEdit::onApply));
     close_button.signal_clicked().connect(sigc::bind(_signal_response.make_slot(), GTK_RESPONSE_CLOSE));
+    fontVariantChangedConn = vari_vbox.connectChanged(sigc::bind(sigc::ptr_fun(&onFontVariantChange),  this));
 
     desktopChangeConn = deskTrack.connectDesktopChanged( sigc::mem_fun(*this, &TextEdit::setTargetDesktop) );
     deskTrack.connect(GTK_WIDGET(gobj()));
@@ -232,6 +233,7 @@ TextEdit::~TextEdit()
     selectChangedConn.disconnect();
     desktopChangeConn.disconnect();
     deskTrack.disconnect();
+    fontVariantChangedConn.disconnect();
 }
 
 void TextEdit::styleButton(Gtk::RadioButton *button, gchar const *tooltip, gchar const *icon_name, Gtk::RadioButton *group_button )
@@ -654,6 +656,19 @@ void TextEdit::onFontChange(SPFontSelector * /*fontsel*/, gchar* fontspec, TextE
     }
     self->setasdefault_button.set_sensitive ( true );
 
+}
+
+void TextEdit::onFontVariantChange(TextEdit *self)
+{
+    if( self->blocked )
+        return;
+
+    SPItem *text = self->getSelectedTextItem ();
+
+    if (text) {
+        self->apply_button.set_sensitive ( true );
+    }
+    self->setasdefault_button.set_sensitive ( true );
 }
 
 void TextEdit::onStartOffsetChange(GtkTextBuffer * /*text_buffer*/, TextEdit *self)

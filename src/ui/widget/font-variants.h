@@ -10,8 +10,6 @@
 #ifndef INKSCAPE_UI_WIDGET_FONT_VARIANT_H
 #define INKSCAPE_UI_WIDGET_FONT_VARIANT_H
 
-// Temp: both frame and expander
-#include <gtkmm/frame.h>
 #include <gtkmm/expander.h>
 #include <gtkmm/checkbutton.h>
 #include <gtkmm/radiobutton.h>
@@ -112,10 +110,27 @@ private:
     bool _caps_changed;
     bool _numeric_changed;
 
+    sigc::signal<void> _changed_signal;
+
 public:
+
+    /**
+     * Update GUI based on query results.
+     */
     void update( SPStyle const *query );
 
+    /**
+     * Fill SPCSSAttr based on settings of buttons.
+     */
     void fill_css( SPCSSAttr* css );
+
+    /**
+     * Let others know that user has changed GUI settings.
+     * (Used to enable 'Apply' and 'Default' buttons.)
+     */
+    sigc::connection connectChanged(sigc::slot<void> slot) {
+        return _changed_signal.connect(slot);
+    }
 };
 
  

@@ -36,6 +36,7 @@
 
 class SPItem;
 struct SPFontSelector;
+class FontVariants;
 class font_instance;
 class SPCSSAttr;
 
@@ -110,6 +111,17 @@ protected:
      * @param self pointer to the current instance of the dialog.
      */
     static void onFontChange (SPFontSelector *fontsel, gchar* fontspec, TextEdit *self);
+
+    /**
+     * Callback invoked when the user modifies the font variant through the dialog.
+     *
+     * onFontChange updates the dialog UI. The subfunction setPreviewText updates the preview label.
+     *
+     * @param fontsel pointer to FontVariant (currently not used).
+     * @param fontspec for the text to be previewed.
+     * @param self pointer to the current instance of the dialog.
+     */
+    static void onFontVariantChange (TextEdit *self);
 
     /**
      * Callback invoked when the user modifies the startOffset of text on a path.
@@ -228,6 +240,7 @@ private:
     sigc::connection selectChangedConn;
     sigc::connection subselChangedConn;
     sigc::connection selectModifiedConn;
+    sigc::connection fontVariantChangedConn;
 
     bool blocked;
     const Glib::ustring samplephrase;

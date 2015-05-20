@@ -76,6 +76,8 @@ namespace Widget {
   {
 
     // Ligatures --------------------------
+
+    // Add tooltips
     _ligatures_common.set_tooltip_text(
       _("Common ligatures. On by default. OpenType tables: 'liga', 'clig'"));
     _ligatures_discretionary.set_tooltip_text(
@@ -85,11 +87,13 @@ namespace Widget {
     _ligatures_contextual.set_tooltip_text(
       _("Contextual forms. On by default. OpenType table: 'calt'"));
 
-
+    // Add signals
     _ligatures_common.signal_clicked().connect ( sigc::mem_fun(*this, &FontVariants::ligatures_callback) );
     _ligatures_discretionary.signal_clicked().connect ( sigc::mem_fun(*this, &FontVariants::ligatures_callback) );
     _ligatures_historical.signal_clicked().connect ( sigc::mem_fun(*this, &FontVariants::ligatures_callback) );
     _ligatures_contextual.signal_clicked().connect ( sigc::mem_fun(*this, &FontVariants::ligatures_callback) );
+
+    // Add to frame
     _ligatures_vbox.add( _ligatures_common );
     _ligatures_vbox.add( _ligatures_discretionary );
     _ligatures_vbox.add( _ligatures_historical );
@@ -100,23 +104,61 @@ namespace Widget {
     ligatures_init();
     
     // Position ----------------------------------
+
+    // Add tooltips
+    _position_normal.set_tooltip_text( _("Normal position."));
+    _position_sub.set_tooltip_text( _("Subscript. OpenType table: 'subs'") );
+    _position_super.set_tooltip_text( _("Superscript. OpenType table: 'sups'") );
+
+    // Group buttons
+    Gtk::RadioButton::Group position_group = _position_normal.get_group();
+    _position_sub.set_group(position_group);
+    _position_super.set_group(position_group);
+
+    // Add signals
+    _position_normal.signal_pressed().connect ( sigc::mem_fun(*this, &FontVariants::position_callback) );
+    _position_sub.signal_pressed().connect ( sigc::mem_fun(*this, &FontVariants::position_callback) );
+    _position_super.signal_pressed().connect ( sigc::mem_fun(*this, &FontVariants::position_callback) );
+
+    // Add to frame
     _position_vbox.add( _position_normal );
     _position_vbox.add( _position_sub );
     _position_vbox.add( _position_super );
     _position_frame.add( _position_vbox );
     add( _position_frame );
 
-    // Group buttons
-    Gtk::RadioButton::Group position_group = _position_normal.get_group();
-    _position_sub.set_group(position_group);
-    _position_super.set_group(position_group);
-    _position_normal.signal_pressed().connect ( sigc::mem_fun(*this, &FontVariants::position_callback) );
-    _position_sub.signal_pressed().connect ( sigc::mem_fun(*this, &FontVariants::position_callback) );
-    _position_super.signal_pressed().connect ( sigc::mem_fun(*this, &FontVariants::position_callback) );
-
     position_init();
 
     // Caps ----------------------------------
+
+    // Add tooltips
+    _caps_normal.set_tooltip_text( _("Normal capitalization."));
+    _caps_small.set_tooltip_text( _("Small-caps (lowercase). OpenType table: 'smcp'"));
+    _caps_all_small.set_tooltip_text( _("All small-caps (uppercase and lowercase). OpenType tables: 'c2sc' and 'smcp'"));
+    _caps_petite.set_tooltip_text( _("Petite-caps (lowercase). OpenType table: 'pcap'"));
+    _caps_all_petite.set_tooltip_text( _("All petite-caps (uppercase and lowercase). OpenType tables: 'c2sc' and 'pcap'"));
+    _caps_unicase.set_tooltip_text( _("Unicase (small caps for uppercase, normal for lowercase). OpenType table: 'unic'"));
+    _caps_titling.set_tooltip_text( _("Titling caps (lighter-weight uppercase for use in titles). OpenType table: 'titl'"));
+
+    // Group buttons
+    Gtk::RadioButton::Group caps_group = _caps_normal.get_group();
+    _caps_small.set_group(caps_group);
+    _caps_all_small.set_group(caps_group);
+    _caps_petite.set_group(caps_group);
+    _caps_all_petite.set_group(caps_group);
+    _caps_unicase.set_group(caps_group);
+    _caps_titling.set_group(caps_group);
+
+    // Add signals
+    _caps_normal.signal_clicked().connect ( sigc::mem_fun(*this, &FontVariants::caps_callback) );
+    _caps_small.signal_clicked().connect ( sigc::mem_fun(*this, &FontVariants::caps_callback) );
+    _caps_all_small.signal_clicked().connect ( sigc::mem_fun(*this, &FontVariants::caps_callback) );
+    _caps_petite.signal_clicked().connect ( sigc::mem_fun(*this, &FontVariants::caps_callback) );
+    _caps_all_petite.signal_clicked().connect ( sigc::mem_fun(*this, &FontVariants::caps_callback) );
+    _caps_unicase.signal_clicked().connect ( sigc::mem_fun(*this, &FontVariants::caps_callback) );
+    _caps_titling.signal_clicked().connect ( sigc::mem_fun(*this, &FontVariants::caps_callback) );
+
+    // Add to frame
     _caps_vbox.add( _caps_normal );
     _caps_vbox.add( _caps_small );
     _caps_vbox.add( _caps_all_small );
@@ -127,25 +169,50 @@ namespace Widget {
     _caps_frame.add( _caps_vbox );
     add( _caps_frame );
 
-    // Group buttons
-    Gtk::RadioButton::Group caps_group = _caps_normal.get_group();
-    _caps_small.set_group(caps_group);
-    _caps_all_small.set_group(caps_group);
-    _caps_petite.set_group(caps_group);
-    _caps_all_petite.set_group(caps_group);
-    _caps_unicase.set_group(caps_group);
-    _caps_titling.set_group(caps_group);
-    _caps_normal.signal_clicked().connect ( sigc::mem_fun(*this, &FontVariants::caps_callback) );
-    _caps_small.signal_clicked().connect ( sigc::mem_fun(*this, &FontVariants::caps_callback) );
-    _caps_all_small.signal_clicked().connect ( sigc::mem_fun(*this, &FontVariants::caps_callback) );
-    _caps_petite.signal_clicked().connect ( sigc::mem_fun(*this, &FontVariants::caps_callback) );
-    _caps_all_petite.signal_clicked().connect ( sigc::mem_fun(*this, &FontVariants::caps_callback) );
-    _caps_unicase.signal_clicked().connect ( sigc::mem_fun(*this, &FontVariants::caps_callback) );
-    _caps_titling.signal_clicked().connect ( sigc::mem_fun(*this, &FontVariants::caps_callback) );
-
     caps_init();
 
     // Numeric ------------------------------
+
+    // Add tooltips
+    _numeric_default_style.set_tooltip_text( _("Normal style."));
+    _numeric_lining.set_tooltip_text( _("Lining numerals. OpenType table: 'lnum'"));
+    _numeric_old_style.set_tooltip_text( _("Old style numerals. OpenType table: 'onum'"));
+    _numeric_default_width.set_tooltip_text( _("Normal widths."));
+    _numeric_proportional.set_tooltip_text( _("Proportional width numerals. OpenType table: 'pnum'"));
+    _numeric_tabular.set_tooltip_text( _("Same width numerals. OpenType table: 'tnum'"));
+    _numeric_default_fractions.set_tooltip_text( _("Normal fractions."));
+    _numeric_diagonal.set_tooltip_text( _("Diagonal fractions. OpenType table: 'frac'"));
+    _numeric_stacked.set_tooltip_text( _("Stacked fractions. OpenType table: 'afrc'"));
+    _numeric_ordinal.set_tooltip_text( _("Ordinals (raised 'th', etc.). OpenType table: 'ordn'"));
+    _numeric_slashed_zero.set_tooltip_text( _("Slashed zeros. OpenType table: 'zero'"));
+
+    // Group buttons
+    Gtk::RadioButton::Group style_group = _numeric_default_style.get_group();
+    _numeric_lining.set_group(style_group);
+    _numeric_old_style.set_group(style_group);
+
+    Gtk::RadioButton::Group width_group = _numeric_default_width.get_group();
+    _numeric_proportional.set_group(width_group);
+    _numeric_tabular.set_group(width_group);
+
+    Gtk::RadioButton::Group fraction_group = _numeric_default_fractions.get_group();
+    _numeric_diagonal.set_group(fraction_group);
+    _numeric_stacked.set_group(fraction_group);
+
+    // Add signals
+    _numeric_default_style.signal_clicked().connect ( sigc::mem_fun(*this, &FontVariants::numeric_callback) );
+    _numeric_lining.signal_clicked().connect (        sigc::mem_fun(*this, &FontVariants::numeric_callback) );
+    _numeric_old_style.signal_clicked().connect (     sigc::mem_fun(*this, &FontVariants::numeric_callback) );
+    _numeric_default_width.signal_clicked().connect ( sigc::mem_fun(*this, &FontVariants::numeric_callback) );
+    _numeric_proportional.signal_clicked().connect (  sigc::mem_fun(*this, &FontVariants::numeric_callback) );
+    _numeric_tabular.signal_clicked().connect (       sigc::mem_fun(*this, &FontVariants::numeric_callback) );
+    _numeric_default_fractions.signal_clicked().connect ( sigc::mem_fun(*this, &FontVariants::numeric_callback) );
+    _numeric_diagonal.signal_clicked().connect (      sigc::mem_fun(*this, &FontVariants::numeric_callback) );
+    _numeric_stacked.signal_clicked().connect (       sigc::mem_fun(*this, &FontVariants::numeric_callback) );
+    _numeric_ordinal.signal_clicked().connect (       sigc::mem_fun(*this, &FontVariants::numeric_callback) );
+    _numeric_slashed_zero.signal_clicked().connect (  sigc::mem_fun(*this, &FontVariants::numeric_callback) );
+
+    // Add to frame
     _numeric_stylebox.add( _numeric_default_style );
     _numeric_stylebox.add( _numeric_lining );
     _numeric_stylebox.add( _numeric_old_style );
@@ -163,20 +230,9 @@ namespace Widget {
     _numeric_frame.add( _numeric_vbox );
     add( _numeric_frame );
     
-    // Group buttons
-    Gtk::RadioButton::Group style_group = _numeric_default_style.get_group();
-    _numeric_lining.set_group(style_group);
-    _numeric_old_style.set_group(style_group);
-
-    Gtk::RadioButton::Group width_group = _numeric_default_width.get_group();
-    _numeric_proportional.set_group(width_group);
-    _numeric_tabular.set_group(width_group);
-
-    Gtk::RadioButton::Group fraction_group = _numeric_default_fractions.get_group();
-    _numeric_diagonal.set_group(fraction_group);
-    _numeric_stacked.set_group(fraction_group);
 
     show_all_children();
+
   }
 
   void
@@ -188,6 +244,7 @@ namespace Widget {
   FontVariants::ligatures_callback() {
       // std::cout << "FontVariants::ligatures_callback()" << std::endl;
       _ligatures_changed = true;
+      _changed_signal.emit();
   }
 
   void
@@ -199,6 +256,7 @@ namespace Widget {
   FontVariants::position_callback() {
       // std::cout << "FontVariants::position_callback()" << std::endl;
       _position_changed = true;
+      _changed_signal.emit();
   }
 
   void
@@ -210,6 +268,7 @@ namespace Widget {
   FontVariants::caps_callback() {
       // std::cout << "FontVariants::caps_callback()" << std::endl;
       _caps_changed = true;
+      _changed_signal.emit();
   }
 
   void
@@ -221,6 +280,7 @@ namespace Widget {
   FontVariants::numeric_callback() {
       // std::cout << "FontVariants::numeric_callback()" << std::endl;
       _numeric_changed = true;
+      _changed_signal.emit();
   }
 
   // Update GUI based on query.
