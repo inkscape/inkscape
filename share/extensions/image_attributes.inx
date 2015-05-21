@@ -11,9 +11,9 @@
 
         <!-- render images like in 0.48 -->
         <page name="tab_basic" _gui-text="Basic">
-            <param name="basic_desc1" type="description">Render all bitmap images like in older Inskcape versions.
+            <_param name="basic_desc1" type="description">Render all bitmap images like in older Inskcape versions.
 
-Available options:</param>
+Available options:</_param>
             <param name="fix_scaling" type="boolean" _gui-text="Support non-unifom scaling">true</param>
             <param name="fix_rendering" type="boolean" _gui-text="Render images blocky">false</param>
         </page>
@@ -22,7 +22,7 @@ Available options:</param>
         <page name="tab_aspectRatio" _gui-text="Image Aspect Ratio">
             <param name="aspect_ratio" type="enum" _gui-text="preserveAspectRatio attribute:">
                 <item value="none">none</item>
-                <item value="unset">Unset</item>
+                <_item value="unset">Unset</_item>
                 <item value="xMinYMin">xMinYMin</item>
                 <item value="xMidYMin">xMidYMin</item>
                 <item value="xMaxYMin">xMaxYMin</item>
@@ -39,27 +39,27 @@ Available options:</param>
                 <item value="slice">slice</item>
             </param>
             <param name="aspect_ratio_scope" type="enum" _gui-text="Scope:">
-                <item value="selected_only">Change only selected image(s)</item>
-                <item value="in_selection">Change all images in selection</item>
-                <item value="in_document">Change all images in document</item>
+                <_item value="selected_only">Change only selected image(s)</_item>
+                <_item value="in_selection">Change all images in selection</_item>
+                <_item value="in_document">Change all images in document</_item>
             </param>
         </page>
 
         <!-- image-rendering -->
         <page name="tab_image_rendering" _gui-text="Image Rendering Quality">
             <param name="image_rendering" type="enum" _gui-text="Image rendering attribute:">
-                <item value="unset">Unset</item>
+                <_item value="unset">Unset</_item>
                 <item value="auto">auto</item>
                 <item value="optimizeQuality">optimizeQuality</item>
                 <item value="optimizeSpeed">optimizeSpeed</item>
                 <item value="inherit">inherit</item>
             </param>
             <param name="image_rendering_scope" type="enum" _gui-text="Scope:">
-                <item value="selected_only">Change only selected image(s)</item>
-                <item value="in_selection">Change all images in selection</item>
-                <item value="in_document">Change all images in document</item>
-                <item value="on_parent_group">Apply attribute to parent group of selection</item>
-                <item value="on_root_only" >Apply attribute to SVG root</item>
+                <_item value="selected_only">Change only selected image(s)</_item>
+                <_item value="in_selection">Change all images in selection</_item>
+                <_item value="in_document">Change all images in document</_item>
+                <_item value="on_parent_group">Apply attribute to parent group of selection</_item>
+                <_item value="on_root_only" >Apply attribute to SVG root</_item>
             </param>
         </page>
 
