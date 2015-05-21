@@ -20,6 +20,7 @@ namespace Widget {
 ColorEntry::ColorEntry(SelectedColor &color)
     : _color(color)
     , _updating(false)
+    , _updatingrgba(false)
 {
     _color_changed_connection = color.signal_changed.connect(sigc::mem_fun(this, &ColorEntry::_onColorChanged));
     _color_dragged_connection = color.signal_dragged.connect(sigc::mem_fun(this, &ColorEntry::_onColorChanged));
@@ -40,6 +41,9 @@ void ColorEntry::on_changed()
 {
     if (_updating) {
         return;
+    }
+    if (_updatingrgba) {
+        return;  // Typing text into entry box
     }
 
     Glib::ustring text = get_text();
@@ -64,11 +68,13 @@ void ColorEntry::on_changed()
         if (len < 8) {
             rgba = rgba << (4 * (8 - len));
         }
+        _updatingrgba = true;
         if (changed) {
             set_text(str);
         }
         SPColor color(rgba);
         _color.setColorAlpha(color, SP_RGBA32_A_F(rgba));
+        _updatingrgba = false;
     }
     g_free(str);
 }
@@ -76,6 +82,10 @@ void ColorEntry::on_changed()
 
 void ColorEntry::_onColorChanged()
 {
+    if (_updatingrgba) {
+        return;
+    }
+
     SPColor color = _color.color();
     gdouble alpha = _color.alpha();
 

@@ -34,6 +34,7 @@ private:
     sigc::connection _color_changed_connection;
     sigc::connection _color_dragged_connection;
     bool _updating;
+    bool _updatingrgba;
 };
 
 }
