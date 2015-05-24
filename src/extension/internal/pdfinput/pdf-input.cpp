@@ -81,7 +81,6 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     _poppler_doc = NULL;
 #endif // HAVE_POPPLER_CAIRO
     _pdf_doc = doc;
-
     cancelbutton = Gtk::manage(new class Gtk::Button(Gtk::StockID("gtk-cancel")));
     okbutton = Gtk::manage(new class Gtk::Button(Gtk::StockID("gtk-ok")));
     _labelSelect = Gtk::manage(new class Gtk::Label(_("Select page:")));
@@ -311,11 +310,16 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
 #ifdef HAVE_POPPLER_CAIRO
     _cairo_surface = NULL;
     _render_thumb = true;
+
     // Create PopplerDocument
-    gchar *doc_uri = g_filename_to_uri(_pdf_doc->getFileName()->getCString(),NULL,NULL);
-    if (doc_uri) {
-        _poppler_doc = poppler_document_new_from_file(doc_uri, NULL, NULL);
-        g_free(doc_uri);
+    Glib::ustring filename = _pdf_doc->getFileName()->getCString();
+    if (!Glib::path_is_absolute(filename)) {
+        filename = Glib::build_filename(Glib::get_current_dir(),filename);
+    }
+    Glib::ustring full_uri = Glib::filename_to_uri(filename);
+    
+    if (!full_uri.empty()) {
+        _poppler_doc = poppler_document_new_from_file(full_uri.c_str(), NULL, NULL);
     }
 
     // Set sensitivity of some widgets based on selected import type.
@@ -688,7 +692,8 @@ PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
     }
 
 
-    // PDFDoc is from poppler.
+    // PDFDoc is from poppler. PDFDoc is used for preview and for native import.
+
 #ifndef WIN32
     // poppler does not use glib g_open. So on win32 we must use unicode call. code was copied from
     // glib gstdio.c
@@ -747,18 +752,11 @@ PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
         }
     }
 
-    // Get needed page
-    int page_num;
-    if (dlg)
-        page_num = dlg->getSelectedPage();
-    else 
-        page_num = 1;
-    Catalog *catalog = pdf_doc->getCatalog();
-    Page *page = catalog->getPage(page_num);
-    
+    // Get options
+    int page_num = 1;
     bool is_importvia_poppler = false;
-    if(dlg)
-    {
+    if (dlg) {
+        page_num = dlg->getSelectedPage();
 #ifdef HAVE_POPPLER_CAIRO
         is_importvia_poppler = dlg->getImportMethod();
         // printf("PDF import via %s.\n", is_importvia_poppler ? "poppler" : "native");
@@ -791,6 +789,10 @@ PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
         PDFRectangle *clipToBox = NULL;
         double crop_setting;
         sp_repr_get_double(prefs, "cropTo", &crop_setting);
+
+        Catalog *catalog = pdf_doc->getCatalog();
+        Page *page = catalog->getPage(page_num);
+
         if ( crop_setting >= 0.0 ) {    // Do page clipping
             int crop_choice = (int)crop_setting;
             switch (crop_choice) {
@@ -847,13 +849,20 @@ PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
     {
 #ifdef HAVE_POPPLER_CAIRO
         // the poppler import
-        gchar* filename_uri = g_filename_to_uri(uri, NULL, NULL);
+
+        Glib::ustring full_path = uri;
+        if (!Glib::path_is_absolute(uri)) {
+            full_path = Glib::build_filename(Glib::get_current_dir(),uri);
+        }
+        Glib::ustring full_uri = Glib::filename_to_uri(full_path);
+
         GError *error = NULL;
         /// @todo handle password
         /// @todo check if win32 unicode needs special attention
-        PopplerDocument* document = poppler_document_new_from_file(filename_uri, NULL, &error);
+        PopplerDocument* document = poppler_document_new_from_file(full_uri.c_str(), NULL, &error);
 
         if(error != NULL) {
+            std::cerr << "PDFInput::open: error opening document: " << full_uri << std::endl;
             g_error_free (error);
         }
 
@@ -887,9 +896,6 @@ PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
         }
         saved = DocumentUndo::getUndoSensitive(doc);
         DocumentUndo::setUndoSensitive(doc, false); // No need to undo in this temporary document
-
-        // Cleanup
-        g_free(filename_uri);
 #endif
     }
 
