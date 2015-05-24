@@ -6,8 +6,8 @@
 
 /*
 File:      upmf_print.h
-Version:   0.0.4
-Date:      24-MAR-2015
+Version:   0.0.5
+Date:      28-APR-2015
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
 Copyright: 2015 David Mathog and California Institute of Technology (Caltech)
@@ -23,7 +23,7 @@ extern "C" {
 #include "upmf.h" /* includes uemf.h */
 
 /* prototypes for simple types and enums used in PMR records */
-int U_PMF_CMN_HDR_print(U_PMF_CMN_HDR Header, int precnum, int off);
+int U_PMF_CMN_HDR_print(const char *contents, U_PMF_CMN_HDR Header, int precnum, int off);
 int U_PMF_UINT8_ARRAY_print(const char *Start, const uint8_t *Array, int Elements, char *End);
 int U_PMF_BRUSHTYPEENUMERATION_print(int otype);
 int U_PMF_HATCHSTYLEENUMERATION_print(int hstype);

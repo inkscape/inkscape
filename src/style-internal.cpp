@@ -1931,6 +1931,11 @@ SPIFontSize::read( gchar const *str ) {
             unit     = length.unit;
             value    = length.value;
             computed = length.computed;
+            /*  Set a minimum font size to something much smaller than should ever (ever!) be encountered in a real file.
+                If a bad SVG file is encountered and this is zero odd things
+                might happen because the inverse is used in some scaling actions.
+            */
+            if ( computed <= 1.0e-32 ) { computed = 1.0e-32; }
             if( unit == SP_CSS_UNIT_PERCENT ) {
                 type = SP_FONT_SIZE_PERCENTAGE;
             } else {
@@ -2011,6 +2016,11 @@ SPIFontSize::cascade( const SPIBase* const parent ) {
                     break;
             }
         }
+        /*  Set a minimum font size to something much smaller than should ever (ever!) be encountered in a real file.
+            If a bad SVG file is encountered and this is zero odd things
+            might happen because the inverse is used in some scaling actions.
+        */
+        if ( computed <= 1.0e-32 ) { computed = 1.0e-32; }
     } else {
         std::cerr << "SPIFontSize::cascade(): Incorrect parent type" << std::endl;
     }
@@ -2099,6 +2109,11 @@ SPIFontSize::merge( const SPIBase* const parent ) {
                     }
                 }
             } // Relative size
+            /*  Set a minimum font size to something much smaller than should ever (ever!) be encountered in a real file.
+                If a bad SVG file is encountered and this is zero odd things
+                might happen because the inverse is used in some scaling actions.
+            */
+            if ( computed <= 1.0e-32 ) { computed = 1.0e-32; }
         } // Parent set and not inherit
     } else {
         std::cerr << "SPIFontSize::merge(): Incorrect parent type" << std::endl;

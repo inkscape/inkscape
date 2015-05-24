@@ -6,11 +6,11 @@
 
 /*
 File:      uwmf_endian.h
-Version:   0.0.2
-Date:      26-NOV-2013
+Version:   0.0.3
+Date:      28-APR-2015
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
-Copyright: 2013 David Mathog and California Institute of Technology (Caltech)
+Copyright: 2015 David Mathog and California Institute of Technology (Caltech)
 */
 
 #ifndef _UWMF_ENDIAN_
@@ -24,7 +24,7 @@ extern "C" {
 
 //! \cond
 // prototypes
-int U_wmf_endian(char *contents, size_t length, int torev);
+int U_wmf_endian(char *contents, size_t length, int torev, int onerec);
 //! \endcond
 
 #ifdef __cplusplus

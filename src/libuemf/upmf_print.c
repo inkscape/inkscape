@@ -6,8 +6,8 @@
 
 /*
 File:      upmf_print.c
-Version:   0.0.5
-Date:      24-MAR-2015
+Version:   0.0.7
+Date:      21-MAY-2015
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
 Copyright: 2015 David Mathog and California Institute of Technology (Caltech)
@@ -142,7 +142,7 @@ int U_pmf_onerec_print(const char *contents, const char *blimit, int recnum, int
 
    int type = Header.Type & U_PMR_TYPE_MASK; /* strip the U_PMR_RECFLAG bit, leaving the indexable part */
    if(type < U_PMR_MIN || type > U_PMR_MAX)return(-1);   /* unknown EMF+ record type */
-   status = U_PMF_CMN_HDR_print(Header, recnum, off);  /* EMF+ part */
+   status = U_PMF_CMN_HDR_print(contents, Header, recnum, off);  /* EMF+ part */
 
    /* Buggy EMF+ can set the continue bit and then do something else. In that case, force out the pending
       Object.  Side effect - clears the pending object. */
@@ -222,14 +222,16 @@ int U_pmf_onerec_print(const char *contents, const char *blimit, int recnum, int
 /**
     \brief Print data from a  U_PMF_CMN_HDR object
     \return number of bytes in record, 0 on error
+    \param contents   pointer to a buffer holding this EMF+ record
     \param  Header     Header of the record
     \param  precnum    EMF+ record number in file.
     \param  off        Offset in file to the start of this EMF+ record.
     common structure present at the beginning of all(*) EMF+ records
 */
-int U_PMF_CMN_HDR_print(U_PMF_CMN_HDR Header, int precnum, int off){
-   printf("   %-29srec+:%5d type:%X offset:%8d rsize:%8u dsize:%8u flags:%4.4X\n",
-      U_pmr_names(Header.Type &U_PMR_TYPE_MASK),precnum, Header.Type,off,Header.Size,Header.DataSize,Header.Flags);
+int U_PMF_CMN_HDR_print(const char *contents, U_PMF_CMN_HDR Header, int precnum, int off){
+   printf("   %-29srec+:%5d type:%X offset:%8d rsize:%8u dsize:%8u flags:%4.4X crc32:%8.8X\n",
+      U_pmr_names(Header.Type &U_PMR_TYPE_MASK),precnum, Header.Type,off,Header.Size,Header.DataSize,Header.Flags,
+      lu_crc32(contents,Header.Size));
    return((int) Header.Size);
 }
 
@@ -1852,7 +1854,12 @@ int U_PMF_TRANSFORMMATRIX_print(const char *contents, const char *blimit){
     EMF+ manual 2.2.2.47, Microsoft name: EmfPlusTransformMatrix Object
 */
 int U_PMF_TRANSFORMMATRIX2_print(U_PMF_TRANSFORMMATRIX *Tm){
-   printf(" Matrix:{%f,%f,%f,%f,%f,%f}", Tm->m11, Tm->m12, Tm->m21, Tm->m22, Tm->dX, Tm->dY);
+   if(Tm){
+      printf(" Matrix:{%f,%f,%f,%f,%f,%f}", Tm->m11, Tm->m12, Tm->m21, Tm->m22, Tm->dX, Tm->dY);
+   }
+   else {
+      printf(" Matrix:(None)");
+   }
    return(1);
 }
 

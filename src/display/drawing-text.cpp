@@ -367,7 +367,7 @@ void DrawingText::decorateStyle(DrawingContext &dc, double vextent, double xphas
 /* returns scaled line thickness */
 void DrawingText::decorateItem(DrawingContext &dc, double phase_length, bool under)
 {
-    if (_nrstyle.font_size < 1.0e-32)return;  // would cause a divide by zero and nothing would be visible anyway
+    if ( _nrstyle.font_size <= 1.0e-32 )return;  // might cause a divide by zero or overflow and nothing would be visible anyway
     double tsp_width_adj                = _nrstyle.tspan_width                     / _nrstyle.font_size;
     double tsp_asc_adj                  = _nrstyle.ascender                        / _nrstyle.font_size;
     double tsp_size_adj                 = (_nrstyle.ascender + _nrstyle.descender) / _nrstyle.font_size;
@@ -381,6 +381,7 @@ void DrawingText::decorateItem(DrawingContext &dc, double phase_length, bool und
     Geom::Point p2;
     // All lines must be the same thickness, in combinations, line_through trumps underline
     double thickness = final_underline_thickness;
+    if ( thickness <= 1.0e-32 )return;  // might cause a divide by zero or overflow and nothing would be visible anyway
     dc.setTolerance(0.5); // Is this really necessary... could effect dots.
 
     if( under ) {

@@ -449,7 +449,8 @@ uint32_t Wmf::add_dib_image(PWMF_CALLBACK_DATA d, const char *dib, uint32_t iUsa
     char            *rgba_px = NULL;     // RGBA pixels
     const char      *px      = NULL;     // DIB pixels
     const U_RGBQUAD *ct      = NULL;     // DIB color table
-    int32_t  width, height, colortype, numCt, invert; // if needed these values will be set by wget_DIB_params
+    uint32_t numCt;
+    int32_t  width, height, colortype, invert; // if needed these values will be set by wget_DIB_params
     if(iUsage == U_DIB_RGB_COLORS){
         // next call returns pointers and values, but allocates no memory
         dibparams = wget_DIB_params(dib, &px, &ct, &numCt, &width, &height, &colortype, &invert);
@@ -1318,7 +1319,8 @@ void Wmf::common_dib_to_image(PWMF_CALLBACK_DATA d, const char *dib,
     char            *sub_px  = NULL;        // RGBA pixels, subarray
     const char      *px      = NULL;        // DIB pixels
     const U_RGBQUAD *ct      = NULL;        // color table
-    int32_t width, height, colortype, numCt, invert;  // if needed these values will be set in wget_DIB_params
+    uint32_t numCt;
+    int32_t width, height, colortype, invert;  // if needed these values will be set in wget_DIB_params
     if(iUsage == U_DIB_RGB_COLORS){
         // next call returns pointers and values, but allocates no memory
         dibparams = wget_DIB_params(dib, &px, &ct, &numCt, &width, &height, &colortype, &invert);

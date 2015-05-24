@@ -95,8 +95,8 @@ these WMF enumerations is by referencing the following table:
 
 /*
 File:      uemf.h
-Version:   0.0.31
-Date:      23-APR-2015
+Version:   0.0.32
+Date:      28-APR-2015
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
 Copyright: 2015 David Mathog and California Institute of Technology (Caltech)
@@ -168,7 +168,12 @@ extern "C" {
 #define U_ROUND(A)  ( (A) > 0 ? floor((A)+0.5) : ( (A) < 0 ? -floor(-(A)+0.5) : (A) ) )
 
 #define MAKE_MIN_PTR(A,B) ( A < B ? A : B)
-#define IS_MEM_UNSAFE(A,B,C) ( (int8_t *)(A) > (int8_t *)(C) ? 1 : ((int8_t *)(C) - (int8_t *)(A) >= (int)(B) ? 0 : 1 )) //!< Return 1 when a region of memory starting at A of B bytes extends beyond pointer C
+/* This is tricky.  The next one can be called with a size which is either an int or an unsigned int.
+   The former can be negative, which is obviously wrong, but testing for that means that the size cannot
+   be more than INT_MAX/2.  Accept that limitation since no reasonable EMF record or file should ever be that large.
+   B must be an INT or size_t.  
+   If a uint16_t is used gcc complains about the first test.  Force B to be at least as big as int (at run time)  */
+#define IS_MEM_UNSAFE(A,B,C) ( (sizeof(B) < sizeof(int) || (int)(B)) < 0 ? 1 : ((int8_t *)(A) > (int8_t *)(C) ? 1 : ((int8_t *)(C) - (int8_t *)(A) >= (int)(B) ? 0 : 1 ))) //!< Return 1 when a region of memory starting at A of B bytes extends beyond pointer C
 
 /** @} */
 

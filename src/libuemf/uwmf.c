@@ -19,8 +19,8 @@
 
 /*
 File:      uwmf.c
-Version:   0.0.16
-Date:      25-MAR-2015
+Version:   0.0.17
+Date:      28-MAR-2015
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
 Copyright: 2014 David Mathog and California Institute of Technology (Caltech)
@@ -696,7 +696,8 @@ int packed_DIB_safe(
    int              usedbytes;
 
    if(!bitmapinfo_safe(record, blimit))return(0);  // this DIB has issues with colors fitting into the record
-   uint32_t width, height, colortype, numCt, invert; // these values will be set in get_DIB_params
+   uint32_t numCt;                                 // these values will be set in get_DIB_params
+   int32_t width, height, colortype, invert;       // these values will be set in get_DIB_params
    // next call returns pointers and values, but allocates no memory
    dibparams = wget_DIB_params(record, &px, (const U_RGBQUAD **) &ct, &numCt, &width, &height, &colortype, &invert);
    // sanity checking
@@ -1564,7 +1565,7 @@ int  wmf_finish(
   
 #if U_BYTE_SWAP
     //This is a Big Endian machine, WMF data must be  Little Endian
-    U_wmf_endian(wt->buf,wt->used,1); 
+    U_wmf_endian(wt->buf,wt->used,1,0);  // BE to LE, entire file
 #endif
 
    (void) U_wmr_properties(U_WMR_INVALID);     /* force the release of the lookup table memory, returned value is irrelevant */
@@ -1610,7 +1611,7 @@ int wmf_readdata(
          else {
 #if U_BYTE_SWAP
             //This is a Big Endian machine, WMF data is Little Endian
-            U_wmf_endian(*contents,*length,0);  // LE to BE
+            U_wmf_endian(*contents,*length,0,0);  // LE to BE, entire file
 #endif
           }
       }
@@ -4720,10 +4721,10 @@ int U_WMRCORE_PALETTE_get(
 */
 void U_BITMAPCOREHEADER_get(
        const char *BmiCh,
-       int32_t    *Size,
-       int32_t    *Width,
-       int32_t    *Height,
-       int32_t    *BitCount
+       uint32_t    *Size,
+       int32_t     *Width,
+       int32_t     *Height,
+       int32_t     *BitCount
     ){
     uint32_t utmp4;
     uint16_t utmp2;
@@ -4800,14 +4801,14 @@ int wget_DIB_params(
        const char   *dib,
        const char  **px,
        const U_RGBQUAD **ct,
-       int32_t      *numCt,
-       int32_t      *width,
-       int32_t      *height,
-       int32_t      *colortype,
-       int32_t      *invert
+       uint32_t      *numCt,
+       int32_t       *width,
+       int32_t       *height,
+       int32_t       *colortype,
+       int32_t       *invert
    ){
    uint32_t bic;
-   int32_t Size;
+   uint32_t Size;
    bic = U_BI_RGB;  // this information is not in the coreheader;
    U_BITMAPCOREHEADER_get(dib, &Size, width, height, colortype);
    if(Size != 0xC ){ //BitmapCoreHeader
@@ -4816,7 +4817,7 @@ int wget_DIB_params(
        */
        uint32_t uig4;
        int32_t  ig4;
-       U_BITMAPINFOHEADER_get(dib, &uig4, width, height,&uig4, (uint32_t *) colortype, &bic, &uig4, &ig4, &ig4,&uig4, &uig4);
+       U_BITMAPINFOHEADER_get(dib, &uig4, width, height,&uig4, (uint32_t *) colortype, &bic, &uig4, &ig4, &ig4, &uig4, &uig4);
    }
    if(*height < 0){
       *height = -*height;
@@ -5559,7 +5560,8 @@ int U_WMRPOLYGON_get(
     ){
     int size = U_WMRCORE_2U16_N16_get(contents, (U_SIZE_WMRPOLYGON), NULL, Length, Data);
     if(size){
-        if(IS_MEM_UNSAFE(*Data, (*Length)*sizeof(U_POINT16), contents+size))return(0);
+        int iLength = (*Length)*sizeof(U_POINT16);
+        if(IS_MEM_UNSAFE(*Data, iLength, contents+size))return(0);
     }
     return size;
 }
@@ -5578,7 +5580,8 @@ int U_WMRPOLYLINE_get(
     ){
     int size = U_WMRCORE_2U16_N16_get(contents, (U_SIZE_WMRPOLYGON), NULL, Length, Data);
     if(size){
-        if(IS_MEM_UNSAFE(*Data, (*Length)*sizeof(U_POINT16), contents+size))return(0);
+        int iLength = (*Length)*sizeof(U_POINT16);
+        if(IS_MEM_UNSAFE(*Data, iLength, contents+size))return(0);
     }
     return size;
 }
@@ -5605,7 +5608,8 @@ int U_WMRESCAPE_get(
    ){
    int size = U_WMRCORE_2U16_N16_get(contents, (U_SIZE_WMRESCAPE), Escape, Length, Data);
    if(size){
-       if(IS_MEM_UNSAFE(*Data, *Length, contents+size))return(0);
+       int iLength=*Length;
+       if(IS_MEM_UNSAFE(*Data, iLength, contents+size))return(0);
    }
    return size;
 }

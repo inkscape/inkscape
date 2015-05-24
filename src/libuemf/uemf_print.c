@@ -6,8 +6,8 @@
 
 /*
 File:      uemf_print.c
-Version:   0.0.18
-Date:      25-MAR-2015
+Version:   0.0.20
+Date:      21-MAY-2015
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
 Copyright: 2015 David Mathog and California Institute of Technology (Caltech)
@@ -35,6 +35,31 @@ void U_swap4(void *ul, unsigned int count);
 //! \endcond
 
 /** 
+    \brief calculate a CRC32 value for record
+    \returns CRC32 value calculated for record
+    \param record pointer to the first byte
+    \param Size   number of bytes in the record
+
+Code based on example crc32b  here:
+   http://www.hackersdelight.org/hdcodetxt/crc.c.txt
+*/
+uint32_t lu_crc32(const char *record, uint32_t Size){
+   const unsigned char *message = record;
+   uint32_t i, j;
+   uint32_t crc, mask;
+
+   crc = 0xFFFFFFFF;
+   for(i=0;i<Size;i++){     // over all bytes
+      crc = crc ^ *message++;
+      for (j = 0; j < 8; j++) { // over all bits
+         mask = -(crc & 1);
+         crc = (crc >> 1) ^ (0xEDB88320 & mask);
+      }
+   }
+   return ~crc;
+}
+
+/** 
     \brief Print some number of hex bytes
     \param buf pointer to the first byte
     \param num number of bytes
@@ -44,6 +69,7 @@ void hexbytes_print(uint8_t *buf,unsigned int num){
       printf("%2.2X",*buf);
    }
 }
+
 
 /* **********************************************************************************************
    These functions print standard objects used in the EMR records.
@@ -2505,7 +2531,7 @@ int U_emf_onerec_print(const char *contents, const char *blimit, int recnum, siz
     uint32_t nSize;
     uint32_t iType;
     const char *record = contents + off;
-    
+
     if(record < contents)return(-1); // offset wrapped
 
     /* Check that COMMON data in record can be touched without an access violation.  If it cannot be
@@ -2514,7 +2540,21 @@ int U_emf_onerec_print(const char *contents, const char *blimit, int recnum, siz
     */
     if(!U_emf_record_sizeok(record, blimit, &nSize, &iType, 1))return(-1); 
     
-    printf("%-30srecord:%5d type:%-4d offset:%8d rsize:%8d\n",U_emr_names(iType),recnum,iType,(int) off,nSize);
+    uint32_t crc;   
+#if U_BYTE_SWAP
+    //This is a Big Endian machine, EMF crc values must be calculated on Little Endian form
+    char *swapbuf=malloc(nSize);
+    if(!swapbuf)return(-1);
+    memcpy(swapbuf,record,nSize);
+    U_emf_endian(swapbuf,nSize,1);  // BE to LE
+    crc=lu_crc32(swapbuf,nSize);
+    free(swapbuf);
+#else 
+    crc=lu_crc32(record,nSize);
+#endif
+    printf("%-30srecord:%5d type:%-4d offset:%8d rsize:%8d crc32:%8.8X\n",
+       U_emr_names(iType),recnum,iType,(int) off,nSize,crc);
+    
     fflush(stdout);
 
     /* print the record header before checking further.

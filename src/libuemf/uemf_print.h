@@ -6,8 +6,8 @@
 
 /*
 File:      uemf_print.h
-Version:   0.0.7
-Date:      24-MAR-2015
+Version:   0.0.9
+Date:      21-MAY-2015
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
 Copyright: 2015 David Mathog and California Institute of Technology (Caltech)
@@ -21,6 +21,9 @@ extern "C" {
 #endif
 
 //! \cond
+/* prototypes for miscellaneous  */
+uint32_t lu_crc32(const char *record, uint32_t Size);
+
 /* prototypes for objects used in EMR records */
 void hexbytes_print(uint8_t *buf,unsigned int num);
 void colorref_print(U_COLORREF color);

@@ -6,11 +6,11 @@
 
 /*
 File:      uwmf_print.c
-Version:   0.0.4
-Date:      05-FEB-2014
+Version:   0.0.6
+Date:      21-MAY-2015
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
-Copyright: 2014 David Mathog and California Institute of Technology (Caltech)
+Copyright: 2015 David Mathog and California Institute of Technology (Caltech)
 */
 
 #ifdef __cplusplus
@@ -1351,13 +1351,20 @@ int U_wmf_onerec_print(const char *contents, const char *blimit, int recnum, siz
 
     iType     = *(uint8_t *)(contents + offsetof(U_METARECORD, iType )  );
 
-#if 1
-   printf("%-30srecord:%5d type:%-4u offset:%8d rsize:%8u\n",
-      U_wmr_names(iType), recnum, iType, (int) off, (int) size);
-#else /* show record checksums, this is NOT portable, result changes with endian type, useful for debugging */
-   printf("%-30srecord:%5d type:%-4u offset:%8d size:%8u recchecksum:%u\n",
-      U_wmr_names(iType), recnum, iType, (int) off, (int) size, U_16_checksum((int16_t *)contents, size));
+    uint32_t crc;   
+#if U_BYTE_SWAP
+    //This is a Big Endian machine, WMF crc values must be calculated on Little Endian form
+    char *swapbuf=malloc(size);
+    if(!swapbuf)return(-1);
+    memcpy(swapbuf,contents,size);
+    U_wmf_endian(swapbuf,size,1,1);  // BE to LE
+    crc=lu_crc32(swapbuf,size);
+    free(swapbuf);
+#else 
+    crc=lu_crc32(contents,size);
 #endif
+    printf("%-30srecord:%5d type:%-4u offset:%8d rsize:%8u crc32:%8.8X\n",
+      U_wmr_names(iType), recnum, iType, (int) off, (int) size, crc);
 
     switch (iType)
     {

@@ -125,8 +125,13 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     _labelPrecisionWarning = Gtk::manage(new class Gtk::Label(_("<b>Note</b>: setting the precision too high may result in a large SVG file and slow performance.")));
 
 #ifdef HAVE_POPPLER_CAIRO
-    _importviaPopplerCheck = Gtk::manage(new class Gtk::CheckButton(_("import via Poppler")));
+    Gtk::RadioButton::Group group;
+    _importViaPoppler  = Gtk::manage(new class Gtk::RadioButton(group,_("Poppler/Cairo import")));
+    _labelViaPoppler = Gtk::manage(new class Gtk::Label(_("Import via external library. Text consists of groups containing cloned glyphs where each glyph is a path. Images are stored internally. Meshes cause entire document to be rendered as a raster image.")));
+    _importViaInternal = Gtk::manage(new class Gtk::RadioButton(group,_("Internal import")));
+    _labelViaInternal = Gtk::manage(new class Gtk::Label(_("Import via internal (Poppler derived) library. Text is stored as text but white space is missing. Meshes are converted to tiles, the number depends on the precision set below.")));
 #endif
+
 #if WITH_GTKMM_3_0
     _fallbackPrecisionSlider_adj = Gtk::Adjustment::create(2, 1, 256, 1, 10, 10);
     _fallbackPrecisionSlider = Gtk::manage(new class Gtk::Scale(_fallbackPrecisionSlider_adj));
@@ -139,13 +144,15 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     hbox6 = Gtk::manage(new class Gtk::HBox(false, 4));
 
     // Text options
-    _labelText = Gtk::manage(new class Gtk::Label(_("Text handling:")));
-    _textHandlingCombo = Gtk::manage(new class Gtk::ComboBoxText());
-    _textHandlingCombo->append(_("Import text as text"));
-    _textHandlingCombo->set_active_text(_("Import text as text"));
+    // _labelText = Gtk::manage(new class Gtk::Label(_("Text handling:")));
+    // _textHandlingCombo = Gtk::manage(new class Gtk::ComboBoxText());
+    // _textHandlingCombo->append(_("Import text as text"));
+    // _textHandlingCombo->set_active_text(_("Import text as text"));
+    // hbox5 = Gtk::manage(new class Gtk::HBox(false, 4));
+
+    // Font option
     _localFontsCheck = Gtk::manage(new class Gtk::CheckButton(_("Replace PDF fonts by closest-named installed fonts")));
 
-    hbox5 = Gtk::manage(new class Gtk::HBox(false, 4));
     _embedImagesCheck = Gtk::manage(new class Gtk::CheckButton(_("Embed images")));
     vbox3 = Gtk::manage(new class Gtk::VBox(false, 4));
     _importSettingsFrame = Gtk::manage(new class Inkscape::UI::Widget::Frame(_("Import settings")));
@@ -202,12 +209,19 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     _labelPrecisionWarning->set_line_wrap(true);
     _labelPrecisionWarning->set_use_markup(true);
     _labelPrecisionWarning->set_selectable(false);
+
 #ifdef HAVE_POPPLER_CAIRO
-    _importviaPopplerCheck->set_can_focus();
-    _importviaPopplerCheck->set_relief(Gtk::RELIEF_NORMAL);
-    _importviaPopplerCheck->set_mode(true);
-    _importviaPopplerCheck->set_active(false);
+    _importViaPoppler->set_can_focus();
+    _importViaPoppler->set_relief(Gtk::RELIEF_NORMAL);
+    _importViaPoppler->set_mode(true);
+    _importViaPoppler->set_active(false);
+    _importViaInternal->set_can_focus();
+    _importViaInternal->set_relief(Gtk::RELIEF_NORMAL);
+    _importViaInternal->set_mode(true);
+    _labelViaPoppler->set_line_wrap(true);
+    _labelViaInternal->set_line_wrap(true);
 #endif
+
     _fallbackPrecisionSlider->set_size_request(180,-1);
     _fallbackPrecisionSlider->set_can_focus();
     _fallbackPrecisionSlider->set_inverted(false);
@@ -223,14 +237,14 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     _labelPrecisionComment->set_selectable(false);
     hbox6->pack_start(*_fallbackPrecisionSlider, Gtk::PACK_SHRINK, 4);
     hbox6->pack_start(*_labelPrecisionComment, Gtk::PACK_SHRINK, 0);
-    _labelText->set_alignment(0.5,0.5);
-    _labelText->set_padding(4,0);
-    _labelText->set_justify(Gtk::JUSTIFY_LEFT);
-    _labelText->set_line_wrap(false);
-    _labelText->set_use_markup(false);
-    _labelText->set_selectable(false);
-    hbox5->pack_start(*_labelText, Gtk::PACK_SHRINK, 0);
-    hbox5->pack_start(*_textHandlingCombo, Gtk::PACK_SHRINK, 0);
+    // _labelText->set_alignment(0.5,0.5);
+    // _labelText->set_padding(4,0);
+    // _labelText->set_justify(Gtk::JUSTIFY_LEFT);
+    // _labelText->set_line_wrap(false);
+    // _labelText->set_use_markup(false);
+    // _labelText->set_selectable(false);
+    // hbox5->pack_start(*_labelText, Gtk::PACK_SHRINK, 0);
+    // hbox5->pack_start(*_textHandlingCombo, Gtk::PACK_SHRINK, 0);
     _localFontsCheck->set_can_focus();
     _localFontsCheck->set_relief(Gtk::RELIEF_NORMAL);
     _localFontsCheck->set_mode(true);
@@ -240,14 +254,17 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     _embedImagesCheck->set_mode(true);
     _embedImagesCheck->set_active(true);
 #ifdef HAVE_POPPLER_CAIRO
-    vbox3->pack_start(*_importviaPopplerCheck, Gtk::PACK_SHRINK, 0);
+    vbox3->pack_start(*_importViaPoppler,  Gtk::PACK_SHRINK, 0);
+    vbox3->pack_start(*_labelViaPoppler,  Gtk::PACK_SHRINK, 0);
+    vbox3->pack_start(*_importViaInternal, Gtk::PACK_SHRINK, 0);
+    vbox3->pack_start(*_labelViaInternal, Gtk::PACK_SHRINK, 0);
 #endif    
+    vbox3->pack_start(*_localFontsCheck, Gtk::PACK_SHRINK, 0);
+    vbox3->pack_start(*_embedImagesCheck, Gtk::PACK_SHRINK, 0);
     vbox3->pack_start(*_labelPrecision, Gtk::PACK_SHRINK, 0);
     vbox3->pack_start(*hbox6, Gtk::PACK_SHRINK, 0);
     vbox3->pack_start(*_labelPrecisionWarning, Gtk::PACK_SHRINK, 0);
-    vbox3->pack_start(*hbox5, Gtk::PACK_SHRINK, 4);
-    vbox3->pack_start(*_localFontsCheck, Gtk::PACK_SHRINK, 0);
-    vbox3->pack_start(*_embedImagesCheck, Gtk::PACK_SHRINK, 0);
+    // vbox3->pack_start(*hbox5, Gtk::PACK_SHRINK, 4);
     _importSettingsFrame->add(*vbox3);
     _importSettingsFrame->set_border_width(4);
     vbox1->pack_start(*_pageSettingsFrame, Gtk::PACK_EXPAND_PADDING, 0);
@@ -273,36 +290,9 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     this->property_destroy_with_parent().set_value(false);
     this->add_action_widget(*cancelbutton, -6);
     this->add_action_widget(*okbutton, -5);
-    cancelbutton->show();
-    okbutton->show();
-    _labelSelect->show();
-    _pageNumberSpin->show();
-    _labelTotalPages->show();
-    hbox2->show();
-    _cropCheck->show();
-    _cropTypeCombo->show();
-    hbox3->show();
-    vbox2->show();
-    _pageSettingsFrame->show();
-    _labelPrecision->show();
-    _labelPrecisionWarning->show();
-#ifdef HAVE_POPPLER_CAIRO
-    _importviaPopplerCheck->show();
-#endif
-    _fallbackPrecisionSlider->show();
-    _labelPrecisionComment->show();
-    hbox6->show();
-    _labelText->show();
-    _textHandlingCombo->show();
-    hbox5->show();
-    _localFontsCheck->show();
-    _embedImagesCheck->show();
-    vbox3->show();
-    _importSettingsFrame->show();
-    vbox1->show();
-    _previewArea->show();
-    hbox1->show();
 
+    this->show_all();
+    
     // Connect signals
 #if WITH_GTKMM_3_0
     _previewArea->signal_draw().connect(sigc::mem_fun(*this, &PdfImportDialog::_onDraw));
@@ -313,6 +303,9 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     _pageNumberSpin_adj->signal_value_changed().connect(sigc::mem_fun(*this, &PdfImportDialog::_onPageNumberChanged));
     _cropCheck->signal_toggled().connect(sigc::mem_fun(*this, &PdfImportDialog::_onToggleCropping));
     _fallbackPrecisionSlider_adj->signal_value_changed().connect(sigc::mem_fun(*this, &PdfImportDialog::_onPrecisionChanged));
+#ifdef HAVE_POPPLER_CAIRO
+    _importViaPoppler->signal_toggled().connect(sigc::mem_fun(*this, &PdfImportDialog::_onToggleImport));
+#endif
 
     _render_thumb = false;
 #ifdef HAVE_POPPLER_CAIRO
@@ -324,6 +317,9 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
         _poppler_doc = poppler_document_new_from_file(doc_uri, NULL, NULL);
         g_free(doc_uri);
     }
+
+    // Set sensitivity of some widgets based on selected import type.
+    _onToggleImport();
 #endif
 
     // Set default preview size
@@ -373,11 +369,11 @@ int PdfImportDialog::getSelectedPage() {
     return _current_page;
 }
 
-int PdfImportDialog::getImportMethod() {
+bool PdfImportDialog::getImportMethod() {
 #ifdef HAVE_POPPLER_CAIRO
-    return (_importviaPopplerCheck->get_active()) ? 1 : 0;
+    return _importViaPoppler->get_active();
 #else
-    return 0;
+    return false;
 #endif
 }
 
@@ -413,7 +409,7 @@ void PdfImportDialog::getImportSettings(Inkscape::XML::Node *prefs) {
         prefs->setAttribute("embedImages", "0");
     }
 #ifdef HAVE_POPPLER_CAIRO
-    if (_importviaPopplerCheck->get_active()) {
+    if (_importViaPoppler->get_active()) {
         prefs->setAttribute("importviapoppler", "1");
     } else {
         prefs->setAttribute("importviapoppler", "0");
@@ -452,6 +448,23 @@ void PdfImportDialog::_onPageNumberChanged() {
     _current_page = CLAMP(page, 1, _pdf_doc->getCatalog()->getNumPages());
     _setPreviewPage(_current_page);
 }
+
+#ifdef HAVE_POPPLER_CAIRO
+void PdfImportDialog::_onToggleImport() {
+    if( _importViaPoppler->get_active() ) {
+        hbox3->set_sensitive(false);
+        _localFontsCheck->set_sensitive(false);
+        _embedImagesCheck->set_sensitive(false);
+        hbox6->set_sensitive(false);
+    } else {
+        hbox3->set_sensitive();
+        _localFontsCheck->set_sensitive();
+        _embedImagesCheck->set_sensitive();
+        hbox6->set_sensitive();
+    }
+}
+#endif
+
 
 #ifdef HAVE_POPPLER_CAIRO
 /**
@@ -673,8 +686,12 @@ PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
         globalParams = new GlobalParams();
 #endif // ENABLE_OSX_APP_LOCATIONS
     }
-    // poppler does not use glib g_open. So on win32 we must use unicode call. code was copied from glib gstdio.c
+
+
+    // PDFDoc is from poppler.
 #ifndef WIN32
+    // poppler does not use glib g_open. So on win32 we must use unicode call. code was copied from
+    // glib gstdio.c
     GooString *filename_goo = new GooString(uri);
     PDFDoc *pdf_doc = new PDFDoc(filename_goo, NULL, NULL, NULL);   // TODO: Could ask for password
     //delete filename_goo;
@@ -739,17 +756,18 @@ PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
     Catalog *catalog = pdf_doc->getCatalog();
     Page *page = catalog->getPage(page_num);
     
-    int is_importvia_poppler = 0;
+    bool is_importvia_poppler = false;
     if(dlg)
     {
 #ifdef HAVE_POPPLER_CAIRO
         is_importvia_poppler = dlg->getImportMethod();
+        // printf("PDF import via %s.\n", is_importvia_poppler ? "poppler" : "native");
 #endif
     }
 
     SPDocument *doc = NULL;
     bool saved = false;
-    if(is_importvia_poppler == 0)
+    if(!is_importvia_poppler)
     {
         // native importer
         doc = SPDocument::createNewDoc(NULL, TRUE, TRUE);
@@ -768,8 +786,6 @@ PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
         Inkscape::XML::Node *prefs = builder->getPreferences();
         if (dlg)
             dlg->getImportSettings(prefs);
-
-        printf("pdf import via %s.", (is_importvia_poppler != 0) ? "poppler" : "native");
 
         // Apply crop settings
         PDFRectangle *clipToBox = NULL;
@@ -798,11 +814,11 @@ PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
             }
         }
 
-        // Create parser
+        // Create parser  (extension/internal/pdfinput/pdf-parser.h)
         PdfParser *pdf_parser = new PdfParser(pdf_doc->getXRef(), builder, page_num-1, page->getRotate(),
                                               page->getResourceDict(), page->getCropBox(), clipToBox);
 
-        // Set up approximation precision for parser
+        // Set up approximation precision for parser. Used for convering Mesh Gradients into tiles.
         double color_delta;
         sp_repr_get_double(prefs, "approximationPrecision", &color_delta);
         if ( color_delta <= 0.0 ) {
@@ -833,7 +849,7 @@ PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
         // the poppler import
         gchar* filename_uri = g_filename_to_uri(uri, NULL, NULL);
         GError *error = NULL;
-        /// @todo handle passwort
+        /// @todo handle password
         /// @todo check if win32 unicode needs special attention
         PopplerDocument* document = poppler_document_new_from_file(filename_uri, NULL, &error);
 
@@ -867,7 +883,7 @@ PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
         }
         else
         {
-            doc = SPDocument::createNewDoc(NULL, TRUE, TRUE);   // fallback create empthy document
+            doc = SPDocument::createNewDoc(NULL, TRUE, TRUE);   // fallback create empty document
         }
         saved = DocumentUndo::getUndoSensitive(doc);
         DocumentUndo::setUndoSensitive(doc, false); // No need to undo in this temporary document

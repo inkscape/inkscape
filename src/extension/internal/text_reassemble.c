@@ -67,8 +67,8 @@ Optional compiler switches for development:
 
 
 File:      text_reassemble.c
-Version:   0.0.16
-Date:      25-FEB-2015
+Version:   0.0.17
+Date:      21-MAY-2015
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
 Copyright: 2015 David Mathog and California Institute of Technology (Caltech)
@@ -2204,10 +2204,10 @@ void TR_layout_2_svg(TR_INFO *tri){
                 sprintf(obuf,"text-decoration:");
                 /* multiple text decoration styles may be set */
                 utmp = tsp->decoration & TXTDECOR_TMASK;
-                if(utmp & TXTDECOR_UNDER ){ strcat(obuf,"underline");   }
-                if(utmp & TXTDECOR_OVER  ){ strcat(obuf,"overline");    }
-                if(utmp & TXTDECOR_BLINK ){ strcat(obuf,"blink");       }
-                if(utmp & TXTDECOR_STRIKE){ strcat(obuf,"line-through");}
+                if(utmp & TXTDECOR_UNDER ){ strcat(obuf," underline");   }
+                if(utmp & TXTDECOR_OVER  ){ strcat(obuf," overline");    }
+                if(utmp & TXTDECOR_BLINK ){ strcat(obuf," blink");       }
+                if(utmp & TXTDECOR_STRIKE){ strcat(obuf," line-through");}
                 if(*obuf){
                    /* only a single text decoration line type may be set */
                    switch(tsp->decoration & TXTDECOR_LMASK){
