@@ -112,17 +112,17 @@ public:
 
     // Image handling
     void addImage(GfxState *state, Stream *str, int width, int height,
-                  GfxImageColorMap *color_map, int *mask_colors);
+                  GfxImageColorMap *color_map, bool interpolate, int *mask_colors);
     void addImageMask(GfxState *state, Stream *str, int width, int height,
-                      bool invert);
+                      bool invert, bool interpolate);
     void addMaskedImage(GfxState *state, Stream *str, int width, int height,
-                        GfxImageColorMap *color_map,
+                        GfxImageColorMap *color_map, bool interpolate,
                         Stream *mask_str, int mask_width, int mask_height,
-                        bool invert_mask);
+                        bool invert_mask, bool mask_interpolate);
     void addSoftMaskedImage(GfxState *state, Stream *str, int width, int height,
-                            GfxImageColorMap *color_map,
+                            GfxImageColorMap *color_map, bool interpolate,
                             Stream *mask_str, int mask_width, int mask_height,
-                            GfxImageColorMap *mask_color_map);
+                            GfxImageColorMap *mask_color_map, bool mask_interpolate);
 
     // Transparency group and soft mask handling
     void pushTransparencyGroup(GfxState *state, double *bbox,
@@ -180,8 +180,9 @@ private:
                                 bool is_stroke=false);
     // Image/mask creation
     Inkscape::XML::Node *_createImage(Stream *str, int width, int height,
-                                      GfxImageColorMap *color_map, int *mask_colors,
-                                      bool alpha_only=false, bool invert_alpha=false);
+                                      GfxImageColorMap *color_map, bool interpolate,
+                                      int *mask_colors, bool alpha_only=false,
+                                      bool invert_alpha=false);
     Inkscape::XML::Node *_createMask(double width, double height);
     // Style setting
     SPCSSAttr *_setStyle(GfxState *state, bool fill, bool stroke, bool even_odd=false);

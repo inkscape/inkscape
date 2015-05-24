@@ -2780,12 +2780,14 @@ void PdfParser::doImage(Object * /*ref*/, Stream *str, GBool inlineImg)
     Dict *dict;
     int width, height;
     int bits;
+    GBool interpolate;
     StreamColorSpaceMode csMode;
     GBool mask;
     GBool invert;
     Object maskObj, smaskObj;
     GBool haveColorKeyMask, haveExplicitMask, haveSoftMask;
     GBool maskInvert;
+    GBool maskInterpolate;
     Object obj1, obj2;
     
     // get info from the stream
@@ -2828,6 +2830,19 @@ void PdfParser::doImage(Object * /*ref*/, Stream *str, GBool inlineImg)
     }
     obj1.free();
     
+    // image interpolation
+    dict->lookup("Interpolate", &obj1);
+    if (obj1.isNull()) {
+      obj1.free();
+      dict->lookup("I", &obj1);
+    }
+    if (obj1.isBool())
+      interpolate = obj1.getBool();
+    else
+      interpolate = gFalse;
+    obj1.free();
+    maskInterpolate = gFalse;
+
     // image or mask?
     dict->lookup(const_cast<char*>("ImageMask"), &obj1);
     if (obj1.isNull()) {
@@ -2884,7 +2899,7 @@ void PdfParser::doImage(Object * /*ref*/, Stream *str, GBool inlineImg)
         obj1.free();
         
         // draw it
-        builder->addImageMask(state, str, width, height, invert);
+        builder->addImageMask(state, str, width, height, invert, interpolate);
         
     } else {
         // get color space and color map
@@ -2986,6 +3001,16 @@ void PdfParser::doImage(Object * /*ref*/, Stream *str, GBool inlineImg)
             }
             int maskBits = obj1.getInt();
             obj1.free();
+	    maskDict->lookup("Interpolate", &obj1);
+	    if (obj1.isNull()) {
+	      obj1.free();
+	      maskDict->lookup("I", &obj1);
+	    }
+	    if (obj1.isBool())
+	      maskInterpolate = obj1.getBool();
+	    else
+	      maskInterpolate = gFalse;
+	    obj1.free();
             maskDict->lookup(const_cast<char*>("ColorSpace"), &obj1);
             if (obj1.isNull()) {
 	            obj1.free();
@@ -3071,6 +3096,16 @@ void PdfParser::doImage(Object * /*ref*/, Stream *str, GBool inlineImg)
                 goto err2;
             }
             obj1.free();
+	    maskDict->lookup("Interpolate", &obj1);
+	    if (obj1.isNull()) {
+	      obj1.free();
+	      maskDict->lookup("I", &obj1);
+	    }
+	    if (obj1.isBool())
+	      maskInterpolate = obj1.getBool();
+	    else
+	      maskInterpolate = gFalse;
+	    obj1.free();
             maskInvert = gFalse;
             maskDict->lookup(const_cast<char*>("Decode"), &obj1);
             if (obj1.isNull()) {
@@ -3092,14 +3127,14 @@ void PdfParser::doImage(Object * /*ref*/, Stream *str, GBool inlineImg)
         
         // draw it
         if (haveSoftMask) {
-            builder->addSoftMaskedImage(state, str, width, height, colorMap,
-                                    maskStr, maskWidth, maskHeight, maskColorMap);
+	    builder->addSoftMaskedImage(state, str, width, height, colorMap, interpolate,
+				maskStr, maskWidth, maskHeight, maskColorMap, maskInterpolate);
             delete maskColorMap;
         } else if (haveExplicitMask) {
-            builder->addMaskedImage(state, str, width, height, colorMap,
-                                maskStr, maskWidth, maskHeight, maskInvert);
+ 	    builder->addMaskedImage(state, str, width, height, colorMap, interpolate,
+				maskStr, maskWidth, maskHeight, maskInvert, maskInterpolate);
         } else {
-            builder->addImage(state, str, width, height, colorMap,
+	    builder->addImage(state, str, width, height, colorMap, interpolate,
 		        haveColorKeyMask ? maskColors : static_cast<int *>(NULL));
         }
         delete colorMap;
