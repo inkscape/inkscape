@@ -27,6 +27,7 @@
 #include "selection-chemistry.h"
 #include "ui/icon-names.h"
 #include "ui/widget/imagetoggler.h"
+#include "live_effects/parameter/parameter.h"
 #include <cmath>
 
 //#include "event-context.h"
@@ -47,7 +48,7 @@ FilletChamferPropertiesDialog::FilletChamferPropertiesDialog()
     _fillet_chamfer_position_numeric.set_digits(4);
     _fillet_chamfer_position_numeric.set_increments(1,1);
     //todo: get tha max aloable infinity freeze the widget
-    _fillet_chamfer_position_numeric.set_range(0., 999999999999999999.);
+    _fillet_chamfer_position_numeric.set_range(0., SCALARPARAM_G_MAXDOUBLE);
     
     _fillet_chamfer_position_label.set_label(_("Radius (pixels):"));
     _fillet_chamfer_position_label.set_alignment(1.0, 0.5);
@@ -59,7 +60,7 @@ FilletChamferPropertiesDialog::FilletChamferPropertiesDialog()
     _fillet_chamfer_chamfer_subdivisions.set_digits(0);
     _fillet_chamfer_chamfer_subdivisions.set_increments(1,1);
     //todo: get tha max aloable infinity freeze the widget
-    _fillet_chamfer_chamfer_subdivisions.set_range(0, 999999999999999999.0);
+    _fillet_chamfer_chamfer_subdivisions.set_range(0, SCALARPARAM_G_MAXDOUBLE);
     
     _fillet_chamfer_chamfer_subdivisions_label.set_label(_("Chamfer subdivisions:"));
     _fillet_chamfer_chamfer_subdivisions_label.set_alignment(1.0, 0.5);

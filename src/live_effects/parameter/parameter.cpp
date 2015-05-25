@@ -42,13 +42,6 @@ Parameter::param_write_to_repr(const char * svgd)
     param_effect->getRepr()->setAttribute(param_key.c_str(), svgd);
 }
 
-// In gtk2, this wasn't an issue; we could toss around
-// G_MAXDOUBLE and not worry about size allocations. But
-// in gtk3, it is an issue: it allocates widget size for the maxmium
-// value you pass to it, leading to some insane lengths.
-// If you need this to be more, please be conservative about it.
-const double SCALARPARAM_G_MAXDOUBLE = 10000000000.0; // TODO fixme: using an arbitrary large number as a magic value seems fragile.
-
 void Parameter::write_to_SVG(void)
 {
     gchar * str = param_getSVGValue();

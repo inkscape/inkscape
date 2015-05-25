@@ -36,6 +36,7 @@
 #include "selection-chemistry.h"
 #include "ui/icon-names.h"
 #include "ui/widget/imagetoggler.h"
+#include "live_effects/parameter/parameter.h"
 //#include "event-context.h"
 
 namespace Inkscape {
@@ -52,10 +53,16 @@ PowerstrokePropertiesDialog::PowerstrokePropertiesDialog()
 
     // Layer name widgets
     _powerstroke_position_entry.set_activates_default(true);
+    _powerstroke_position_entry.set_digits(4);
+    _powerstroke_position_entry.set_increments(1,1);
+    _powerstroke_position_entry.set_range(-SCALARPARAM_G_MAXDOUBLE, SCALARPARAM_G_MAXDOUBLE);
     _powerstroke_position_label.set_label(_("Position:"));
     _powerstroke_position_label.set_alignment(1.0, 0.5);
 
     _powerstroke_width_entry.set_activates_default(true);
+    _powerstroke_width_entry.set_digits(4);
+    _powerstroke_width_entry.set_increments(1,1);
+    _powerstroke_width_entry.set_range(-SCALARPARAM_G_MAXDOUBLE, SCALARPARAM_G_MAXDOUBLE);
     _powerstroke_width_label.set_label(_("Width:"));
     _powerstroke_width_label.set_alignment(1.0, 0.5);
 
@@ -126,12 +133,9 @@ void PowerstrokePropertiesDialog::showDialog(SPDesktop *desktop, Geom::Point kno
 void
 PowerstrokePropertiesDialog::_apply()
 {
-    std::istringstream i_pos(_powerstroke_position_entry.get_text());
-    std::istringstream i_width(_powerstroke_width_entry.get_text());
-    double d_pos, d_width;
-    if ((i_pos >> d_pos) && i_width >> d_width) {
-        _knotpoint->knot_set_offset(Geom::Point(d_pos, d_width));
-    }
+    double d_pos   = _powerstroke_position_entry.get_value();
+    double d_width = _powerstroke_width_entry.get_value();
+    _knotpoint->knot_set_offset(Geom::Point(d_pos, d_width));
     _close();
 }
 
@@ -171,8 +175,8 @@ void PowerstrokePropertiesDialog::_handleButtonEvent(GdkEventButton* event)
 
 void PowerstrokePropertiesDialog::_setKnotPoint(Geom::Point knotpoint)
 {
-	_powerstroke_position_entry.set_text(boost::lexical_cast<std::string>(knotpoint.x()));
-	_powerstroke_width_entry.set_text(boost::lexical_cast<std::string>(knotpoint.y()));
+	_powerstroke_position_entry.set_value(knotpoint.x());
+	_powerstroke_width_entry.set_value(knotpoint.y());
 }
 
 void PowerstrokePropertiesDialog::_setPt(const Inkscape::LivePathEffect::PowerStrokePointArrayParamKnotHolderEntity *pt)

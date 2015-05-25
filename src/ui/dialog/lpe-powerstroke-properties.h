@@ -13,15 +13,7 @@
 #define INKSCAPE_DIALOG_POWERSTROKE_PROPERTIES_H
 
 #include <2geom/point.h>
-#include <gtkmm/dialog.h>
-#include <gtkmm/entry.h>
-#include <gtkmm/label.h>
-#include <gtkmm/table.h>
-#include <gtkmm/combobox.h>
-#include <gtkmm/liststore.h>
-#include <gtkmm/treeview.h>
-#include <gtkmm/treestore.h>
-#include <gtkmm/scrolledwindow.h>
+#include <gtkmm.h>
 #include "live_effects/parameter/powerstrokepointarray.h"
 
 class SPDesktop;
@@ -45,9 +37,9 @@ protected:
     Inkscape::LivePathEffect::PowerStrokePointArrayParamKnotHolderEntity *_knotpoint;
 
     Gtk::Label        _powerstroke_position_label;
-    Gtk::Entry        _powerstroke_position_entry;
+    Gtk::SpinButton   _powerstroke_position_entry;
     Gtk::Label        _powerstroke_width_label;
-    Gtk::Entry        _powerstroke_width_entry;
+    Gtk::SpinButton   _powerstroke_width_entry;
     Gtk::Table        _layout_table;
     bool              _position_visible;
 
