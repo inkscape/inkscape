@@ -420,7 +420,7 @@ void join_inside(join_data jd)
     else if (cross.size() > 1) {
         // I am not sure how well this will work -- we pick the join node closest
         // to the cross point of the paths
-        Geom::Point original = res.finalPoint()+Geom::rot90(jd.in_tang)*jd.width;
+        /*Geom::Point original = res.finalPoint()+Geom::rot90(jd.in_tang)*jd.width;
         Geom::Coord trial = Geom::L2(res.pointAt(cross[0].ta)-original);
         solution = 0;
         for (size_t i = 1; i < cross.size(); ++i) {
@@ -431,7 +431,7 @@ void join_inside(join_data jd)
                 solution = i;
                 //printf("Found improved solution: %f\n", trial);
             }
-        }
+        }*/
     }
 
     if (solution != -1) {
