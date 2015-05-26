@@ -475,7 +475,7 @@ void sp_selection_duplicate(SPDesktop *desktop, bool suppressDone, bool duplicat
     bool relink_clones = prefs->getBool("/options/relinkclonesonduplicate/value");
     const bool fork_livepatheffects = prefs->getBool("/options/forklpeonduplicate/value", true);
 
-    for(std::vector<Inkscape::XML::Node*>::const_reverse_iterator i=reprs.rbegin();i!=reprs.rend();i++){
+    for(std::vector<Inkscape::XML::Node*>::const_iterator i=reprs.begin();i!=reprs.end();i++){
         Inkscape::XML::Node *old_repr = *i;
         Inkscape::XML::Node *parent = old_repr->parent();
         Inkscape::XML::Node *copy = old_repr->duplicate(xml_doc);
@@ -2577,7 +2577,7 @@ void sp_selection_clone(SPDesktop *desktop)
 
     std::vector<Inkscape::XML::Node*> newsel;
 
-    for(std::vector<Inkscape::XML::Node*>::const_reverse_iterator i=reprs.rbegin();i!=reprs.rend();i++){
+    for(std::vector<Inkscape::XML::Node*>::const_iterator i=reprs.begin();i!=reprs.end();i++){
     	Inkscape::XML::Node *sel_repr = *i;
         Inkscape::XML::Node *parent = sel_repr->parent();
 
