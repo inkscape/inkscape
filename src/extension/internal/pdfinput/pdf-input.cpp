@@ -36,7 +36,13 @@
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/drawingarea.h>
 #include <gtkmm/frame.h>
+#include <gtkmm/radiobutton.h>
 #include <gtkmm/scale.h>
+
+#if WITH_GTKMM_3_0
+#include <glibmm/convert.h>
+#include <glibmm/miscutils.h>
+#endif
 
 #include "extension/system.h"
 #include "extension/input.h"
