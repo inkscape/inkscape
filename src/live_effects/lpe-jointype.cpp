@@ -110,6 +110,7 @@ void LPEJoinType::doOnApply(SPLPEItem const* lpeitem)
         sp_repr_css_attr_unref (css);
 
         line_width.param_set_value(width);
+        line_width.write_to_SVG();
     }
 }
 
