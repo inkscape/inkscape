@@ -461,17 +461,9 @@ void SvgBuilder::addPath(GfxState *state, bool fill, bool stroke, bool even_odd)
 void SvgBuilder::addShadedFill(GfxShading *shading, double *matrix, GfxPath *path,
                                bool even_odd) {
 
-    std::cout << "SvgBuilder::addShadedFill: " << shading->getType() << std::endl;
     Inkscape::XML::Node *path_node = _xml_doc->createElement("svg:path");
     gchar *pathtext = svgInterpretPath(path);
     path_node->setAttribute("d", pathtext);
-    if ( shading->getType() == 6 || shading->getType() == 7) {
-        path_node->setAttribute("id", "MyMesh");
-        std::cout << "  pathtext: " << (pathtext?pathtext:"null") << std::endl;
-        std::cout << "  " << path_node->name() << std::endl;
-        //g_free(pathtext);
-        //return;
-    }
     g_free(pathtext);
 
     // Set style
@@ -609,9 +601,7 @@ bool SvgBuilder::isPatternTypeSupported(GfxPattern *pattern) {
             GfxShading *shading = (static_cast<GfxShadingPattern *>(pattern))->getShading();
             int shadingType = shading->getType();
             if ( shadingType == 2 || // axial shading
-                 shadingType == 3 || // radial shading
-                 shadingType == 6 || // Coons patch
-                 shadingType == 7) { // Tensor patch
+                 shadingType == 3 ) {   // radial shading
                 return true;
             }
             return false;
@@ -792,110 +782,6 @@ gchar *SvgBuilder::_createGradient(GfxShading *shading, double *matrix, bool for
         extend1 = radial_shading->getExtend1();
         num_funcs = radial_shading->getNFuncs();
         func = radial_shading->getFunc(0);
-    } else if (shading->getType() == 6 || shading->getType() == 7) {  // Mesh shading
-        GfxPatchMeshShading *mesh_shading = static_cast<GfxPatchMeshShading*>(shading);
-        std::cout << "SVGBuilder::_createGradient: Number of patches: "
-                  << mesh_shading->getNPatches() << std::endl;
-        for( unsigned i=0; i < mesh_shading->getNPatches(); ++i ) {
-            GfxPatch *patch = mesh_shading->getPatch(i);
-
-            std::cout << " Patch: " << i << " "
-                      << "(" << patch->x[0][0] << "," << patch->y[0][0] << ") "
-                      << "(" << patch->x[3][0] << "," << patch->y[3][0] << ") "
-                      << "(" << patch->x[3][3] << "," << patch->y[3][3] << ") "
-                      << "(" << patch->x[0][3] << "," << patch->y[0][3] << ") "
-                      << std::endl;
-            if (i > 0 ) continue; // We can't handle multiple meshes
-            std::cout << " Creating mesh" << std::endl;
-            // Mesh
-            gradient = _xml_doc->createElement("svg:mesh");
-            sp_repr_set_svg_double(gradient, "x", patch->x[0][0]);
-            sp_repr_set_svg_double(gradient, "y", patch->y[0][0]);
-
-            std::cout << " Creating mesh row" << std::endl;
-            // Mesh Row
-            Inkscape::XML::Node *meshrow = _xml_doc->createElement("svg:meshrow");
-
-            std::cout << " Creating mesh patch" << std::endl;
-            // Mesh Patch
-            Inkscape::XML::Node *meshpatch = _xml_doc->createElement("svg:meshpatch");
-
-            std::cout << " Creating stops" << std::endl;
-            // Mesh Stops
-            Inkscape::XML::Node *stop0 = _xml_doc->createElement("svg:stop");
-            Inkscape::XML::Node *stop1 = _xml_doc->createElement("svg:stop");
-            Inkscape::XML::Node *stop2 = _xml_doc->createElement("svg:stop");
-            Inkscape::XML::Node *stop3 = _xml_doc->createElement("svg:stop");
-            Inkscape::SVG::PathString pathString0;
-            Inkscape::SVG::PathString pathString1;
-            Inkscape::SVG::PathString pathString2;
-            Inkscape::SVG::PathString pathString3;
-            pathString0.curveTo(patch->x[1][0]-patch->x[0][0], patch->y[1][0]-patch->y[0][0],
-                                patch->x[2][0]-patch->x[0][0], patch->y[2][0]-patch->y[0][0],
-                                patch->x[3][0]-patch->x[0][0], patch->y[3][0]-patch->y[0][0]);
-            pathString1.curveTo(patch->x[3][1]-patch->x[3][0], patch->y[3][1]-patch->y[3][0],
-                                patch->x[3][2]-patch->x[3][0], patch->y[3][2]-patch->y[3][0],
-                                patch->x[3][3]-patch->x[3][0], patch->y[3][3]-patch->y[3][0]);
-            pathString2.curveTo(patch->x[2][3]-patch->x[3][3], patch->y[2][3]-patch->y[3][3],
-                                patch->x[1][3]-patch->x[3][3], patch->y[1][3]-patch->y[3][3],
-                                patch->x[0][3]-patch->x[3][3], patch->y[0][3]-patch->y[3][3]);
-            pathString3.curveTo(patch->x[0][2]-patch->x[0][3], patch->y[0][2]-patch->y[0][3],
-                                patch->x[0][1]-patch->x[0][3], patch->y[0][1]-patch->y[0][3],
-                                patch->x[0][0]-patch->x[0][3], patch->y[0][0]-patch->y[0][3]);
-            std::cout << " path0: " << pathString0.c_str() << std::endl;
-            std::cout << " path1: " << pathString1.c_str() << std::endl;
-            std::cout << " path2: " << pathString2.c_str() << std::endl;
-            std::cout << " path3: " << pathString3.c_str() << std::endl;
-            stop0->setAttribute("path", pathString0.c_str());
-            stop1->setAttribute("path", pathString1.c_str());
-            stop2->setAttribute("path", pathString2.c_str());
-            stop3->setAttribute("path", pathString3.c_str());
-            SPCSSAttr *css0 = sp_repr_css_attr_new();
-            SPCSSAttr *css1 = sp_repr_css_attr_new();
-            SPCSSAttr *css2 = sp_repr_css_attr_new();
-            SPCSSAttr *css3 = sp_repr_css_attr_new();
-            // See comment in GfxState.h if there is more than one patch.
-            //gchar *color_text0 = svgConvertGfxRGB(patch->color[0][0]);
-            //gchar *color_text1 = svgConvertGfxRGB(patch->color[1][0]);
-            //gchar *color_text2 = svgConvertGfxRGB(patch->color[1][1]);
-            //gchar *color_text3 = svgConvertGfxRGB(patch->color[0][1]);
-            //sp_repr_css_set_property(css0, "stop-color", color_text0);
-            //sp_repr_css_set_property(css1, "stop-color", color_text1);
-            //sp_repr_css_set_property(css2, "stop-color", color_text2);
-            //sp_repr_css_set_property(css3, "stop-color", color_text3);
-            sp_repr_css_set_property(css0, "stop-color", "#ff0000");
-            sp_repr_css_set_property(css1, "stop-color", "#0000ff");
-            sp_repr_css_set_property(css2, "stop-color", "#00ff00");
-            sp_repr_css_set_property(css3, "stop-color", "#ff00ff");
-            sp_repr_css_set_property(css0, "stop-opacity", "1");
-            sp_repr_css_set_property(css1, "stop-opacity", "1");
-            sp_repr_css_set_property(css2, "stop-opacity", "1");
-            sp_repr_css_set_property(css3, "stop-opacity", "1");
-            sp_repr_css_change(stop0, css0, "style");
-            sp_repr_css_change(stop1, css1, "style");
-            sp_repr_css_change(stop2, css2, "style");
-            sp_repr_css_change(stop3, css3, "style");
-            sp_repr_css_attr_unref(css0);
-            sp_repr_css_attr_unref(css1);
-            sp_repr_css_attr_unref(css2);
-            sp_repr_css_attr_unref(css3);
-            
-            // Put them into document.
-            meshpatch->appendChild(stop0);
-            meshpatch->appendChild(stop1);
-            meshpatch->appendChild(stop2);
-            meshpatch->appendChild(stop3);
-            meshrow->appendChild(meshpatch);
-            gradient->appendChild(meshrow);
-
-            Inkscape::GC::release(meshpatch);
-            Inkscape::GC::release(meshrow);
-            Inkscape::GC::release(stop0);
-            Inkscape::GC::release(stop1);
-            Inkscape::GC::release(stop2);
-            Inkscape::GC::release(stop3);
-            std::cout << " exit" << std::endl;
-        }
     } else {    // Unsupported shading type
         return NULL;
     }
@@ -913,21 +799,20 @@ gchar *SvgBuilder::_createGradient(GfxShading *shading, double *matrix, bool for
         g_free(transform_text);
     }
 
-    // if ( extend0 && extend1 ) {
-    //     gradient->setAttribute("spreadMethod", "pad");
-    // }
+    if ( extend0 && extend1 ) {
+        gradient->setAttribute("spreadMethod", "pad");
+    }
 
-    // if ( num_funcs > 1 || !_addGradientStops(gradient, shading, func) ) {
-    //     Inkscape::GC::release(gradient);
-    //     return NULL;
-    // }
+    if ( num_funcs > 1 || !_addGradientStops(gradient, shading, func) ) {
+        Inkscape::GC::release(gradient);
+        return NULL;
+    }
 
     Inkscape::XML::Node *defs = _doc->getDefs()->getRepr();
     defs->appendChild(gradient);
     gchar *id = g_strdup(gradient->attribute("id"));
     Inkscape::GC::release(gradient);
 
-    std::cout << "  Exit: " << id << std::endl;
     return id;
 }
 
@@ -1529,7 +1414,6 @@ void SvgBuilder::addChar(GfxState *state, double x, double y,
         }
 
         gchar *tmp = g_utf16_to_utf8(uu, uLen, NULL, NULL, NULL);
-        // std::cout << "tmp: " << (tmp?tmp:"null") << std::endl;
         if ( tmp && *tmp ) {
             new_glyph.code = tmp;
         } else {

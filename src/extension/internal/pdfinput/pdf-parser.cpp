@@ -409,7 +409,6 @@ PdfParser::~PdfParser() {
   }
 }
 
-// Equivalent to Gfx::display()
 void PdfParser::parse(Object *obj, GBool topLevel) {
   Object obj2;
 
@@ -1579,13 +1578,11 @@ void PdfParser::opCloseStroke(Object * /*args[]*/, int /*numArgs*/) {
 
 void PdfParser::opFill(Object /*args*/[], int /*numArgs*/)
 {
-  std::cout << "PdfParser::opFill" << std::endl;
   if (!state->isCurPt()) {
     //error(getPos(), const_cast<char*>("No path in fill"));
     return;
   }
   if (state->isPath()) {
-    std::cout << "  isPath" << std::endl;
     if (state->getFillColorSpace()->getMode() == csPattern &&
         !builder->isPatternTypeSupported(state->getFillPattern())) {
       doPatternFillFallback(gFalse);
@@ -1598,7 +1595,6 @@ void PdfParser::opFill(Object /*args*/[], int /*numArgs*/)
 
 void PdfParser::opEOFill(Object /*args*/[], int /*numArgs*/)
 {
-  std::cout << "PdfParser::opEOFill" << std::endl;
   if (!state->isCurPt()) {
     //error(getPos(), const_cast<char*>("No path in eofill"));
     return;
@@ -1667,7 +1663,6 @@ void PdfParser::opCloseEOFillStroke(Object /*args*/[], int /*numArgs*/)
 }
 
 void PdfParser::doFillAndStroke(GBool eoFill) {
-  std::cout << "PdfParser::doFillandStroke()" << std::endl;
     GBool fillOk = gTrue, strokeOk = gTrue;
     if (state->getFillColorSpace()->getMode() == csPattern &&
         !builder->isPatternTypeSupported(state->getFillPattern())) {
@@ -1678,17 +1673,14 @@ void PdfParser::doFillAndStroke(GBool eoFill) {
         strokeOk = gFalse;
     }
     if (fillOk && strokeOk) {
-      std::cout << "  ... fillOk and StrokeOk" << std::endl;
         builder->addPath(state, true, true, eoFill);
     } else {
-      std::cout << "  ... fillOk or StrokeOk not OK" << std::endl;
         doPatternFillFallback(eoFill);
         doPatternStrokeFallback();
     }
 }
 
 void PdfParser::doPatternFillFallback(GBool eoFill) {
-  std::cout << "PdfParser::doPatternFillFallback: " << eoFill << std::endl;
   GfxPattern *pattern;
 
   if (!(pattern = state->getFillPattern())) {
@@ -1712,7 +1704,6 @@ void PdfParser::doPatternFillFallback(GBool eoFill) {
 }
 
 void PdfParser::doPatternStrokeFallback() {
-  std::cout << "PdfParser::doPatternStrokeFallback" << std::endl;
   GfxPattern *pattern;
 
   if (!(pattern = state->getStrokePattern())) {
@@ -1745,8 +1736,6 @@ void PdfParser::doShadingPatternFillFallback(GfxShadingPattern *sPat,
   double det;
 
   shading = sPat->getShading();
-
-  std::cout << "PdfParser::doShadingPatternFillFallback: " << shading->getType() << std::endl;
 
   // save current graphics state
   savedPath = state->getPath()->copy();
@@ -1834,12 +1823,6 @@ void PdfParser::doShadingPatternFillFallback(GfxShadingPattern *sPat,
     break;
   case 6:
   case 7:
-    std::cout << " Type 6/7: calling doPatchMeshShFill()"
-	      << "  Clip path? " << (clipHistory->getClipPath()?"true":"false") << std::endl;
-    if (clipHistory->getClipPath()) {
-      builder->addShadedFill(shading, NULL, clipHistory->getClipPath(),
-                             clipHistory->getClipType() == clipEO ? true : false);
-    }
     doPatchMeshShFill(static_cast<GfxPatchMeshShading *>(shading));
     break;
   }
@@ -1873,7 +1856,6 @@ void PdfParser::opShFill(Object args[], int /*numArgs*/)
     return;
   }
 #endif
-  std::cout << "PdfParser::opShFill: type: " << shading->getType() << std::endl;
 
   // save current graphics state
   if (shading->getType() != 2 && shading->getType() != 3) {
@@ -1961,12 +1943,6 @@ void PdfParser::opShFill(Object args[], int /*numArgs*/)
     break;
   case 6:
   case 7:
-    std::cout << " Type 6/7: calling doPatchMeshShFill()"
-	      << "  Clip path? " << (clipHistory->getClipPath()?"true":"false") << std::endl;
-    if (clipHistory->getClipPath()) {
-      builder->addShadedFill(shading, matrix, clipHistory->getClipPath(),
-                             clipHistory->getClipType() == clipEO ? true : false);
-    }
     doPatchMeshShFill(static_cast<GfxPatchMeshShading *>(shading));
     break;
   }
@@ -2165,10 +2141,6 @@ void PdfParser::gouraudFillTriangle(double x0, double y0, GfxColor *color0,
 void PdfParser::doPatchMeshShFill(GfxPatchMeshShading *shading) {
   int start, i;
 
-  // if( true ) {
-  //   builder->patchMeshShadedFill( state, shading );
-  // }
-  std::cout << "PdfParser::doPatchMeshShFill: Number of patches: " << shading->getNPatches() << std::endl;
   if (shading->getNPatches() > 128) {
     start = 3;
   } else if (shading->getNPatches() > 64) {
@@ -2718,7 +2690,6 @@ void PdfParser::doShowText(GooString *s) {
     state->textTransformDelta(0, state->getRise(), &riseX, &riseY);
     p = s->getCString();
     len = s->getLength();
-    // std::cout << "PDFParser::doShowText: p: " << (p?p:"null") << "  " << len << std::endl;
     while (len > 0) {
       n = font->getNextChar(p, len, &code,
 			    &u, &uLen,  /* TODO: This looks like a memory leak for u. */
@@ -2742,12 +2713,6 @@ void PdfParser::doShowText(GooString *s) {
       originX *= state->getFontSize();
       originY *= state->getFontSize();
       state->textTransformDelta(originX, originY, &tOriginX, &tOriginY);
-      // std::cout << " dx: " << dx << " dy: " << dy
-      // 		<< " originX: " << originX << " originY: " << originY
-      // 		<< " tOriginX: " << tOriginX << " tOriginY: " << tOriginY
-      // 		<< " riseX: " << riseX << " riseY: " << riseY
-      // 		<< " curX: " << state->getCurX() + riseX
-      // 		<< " curY: " << state->getCurY() + riseY << std::endl;
       builder->addChar(state, state->getCurX() + riseX, state->getCurY() + riseY,
                        dx, dy, tOriginX, tOriginY, code, n, u, uLen);
       state->shift(tdx, tdy);
