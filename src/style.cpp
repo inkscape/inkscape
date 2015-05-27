@@ -1711,6 +1711,14 @@ sp_css_attr_unset_text(SPCSSAttr *css)
     sp_repr_css_set_property(css, "text-decoration-color", NULL);
     sp_repr_css_set_property(css, "text-decoration-style", NULL);
 
+    sp_repr_css_set_property(css, "font-variant-ligatures", NULL);
+    sp_repr_css_set_property(css, "font-variant-position", NULL);
+    sp_repr_css_set_property(css, "font-variant-caps", NULL);
+    sp_repr_css_set_property(css, "font-variant-numeric", NULL);
+    sp_repr_css_set_property(css, "font-variant-alternates", NULL);
+    sp_repr_css_set_property(css, "font-variant-east-asian", NULL);
+    sp_repr_css_set_property(css, "font-feature-settings", NULL);
+
     return css;
 }
 
