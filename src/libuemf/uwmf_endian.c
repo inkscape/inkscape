@@ -6,8 +6,8 @@
 
 /*
 File:      uwmf_endian.c
-Version:   0.1.4
-Date:      28-APR-2015
+Version:   0.1.5
+Date:      28-MAY-2015
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
 Copyright: 2015 David Mathog and California Institute of Technology (Caltech)
@@ -1480,7 +1480,8 @@ int U_wmf_endian(char *contents, size_t length, int torev, int onerec){
     uint32_t  OK, Size16;
     uint8_t   iType;
     char     *record;
-    int       recnum, offset;
+    int       recnum;
+    int       offset=0;
 
     record  = contents;
     if(!onerec){
@@ -1759,10 +1760,10 @@ int U_wmf_endian(char *contents, size_t length, int torev, int onerec){
 	  case  U_WMR_CREATEREGION:           U_WMRCREATEREGION_swap(record, torev);             break;
 	  default:                            U_WMRNOTIMPLEMENTED_swap(record, torev);           break;
        }  //end of switch
+       if(onerec)break;
        record += 2*Size16;
        offset += 2*Size16;
        recnum++;
-       if(onerec)break;
     }  //end of while
     return(1);
 }

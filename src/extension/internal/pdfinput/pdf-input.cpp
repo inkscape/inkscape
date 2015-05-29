@@ -881,6 +881,13 @@ PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
             Glib::ustring output;
             cairo_surface_t* surface = cairo_svg_surface_create_for_stream(Inkscape::Extension::Internal::_write_ustring_cb,
                                                                            &output, width, height);
+
+            // This magical function results in more fine-grain fallbacks. In particular, a mesh
+            // gradient won't necessarily result in the whole PDF being rasterized. Of course, SVG
+            // 1.2 never made it as a standard, but hey, we'll take what we can get. This trick was
+            // found by examining the 'pdftocairo' code.
+            cairo_svg_surface_restrict_to_version( surface, CAIRO_SVG_VERSION_1_2 );
+
             cairo_t* cr = cairo_create(surface);
 
             poppler_page_render_for_printing(page, cr);
