@@ -23,6 +23,7 @@
 #endif
 
 #include <gtk/gtk.h>
+#include <stdint.h>
 #include <glibmm/ustring.h>
 #include <2geom/affine.h>
 #include <2geom/rect.h>
