@@ -1634,11 +1634,18 @@ void SPDocument::setModifiedSinceSave(bool modified) {
 void SPDocument::importDefs(SPDocument *source)
 {
     Inkscape::XML::Node *root = source->getReprRoot();
-    Inkscape::XML::Node *defs = sp_repr_lookup_name(root, "svg:defs", 1);
     Inkscape::XML::Node *target_defs = this->getDefs()->getRepr();
+    std::vector<Inkscape::XML::Node const *> defsNodes = sp_repr_lookup_name_many(root, "svg:defs");
 
     prevent_id_clashes(source, this);
     
+    for (std::vector<Inkscape::XML::Node const *>::iterator defs = defsNodes.begin(); defs != defsNodes.end(); ++defs) {
+        importDefsNode(source, const_cast<Inkscape::XML::Node *>(*defs), target_defs);
+    }
+}
+
+void SPDocument::importDefsNode(SPDocument *source, Inkscape::XML::Node *defs, Inkscape::XML::Node *target_defs)
+{    
     int stagger=0;
 
     /*  Note, "clipboard" throughout the comments means "the document that is either the clipboard

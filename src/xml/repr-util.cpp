@@ -371,6 +371,34 @@ Inkscape::XML::Node *sp_repr_lookup_name( Inkscape::XML::Node *repr, gchar const
     return const_cast<Inkscape::XML::Node *>(found);
 }
 
+std::vector<Inkscape::XML::Node const *> sp_repr_lookup_name_many( Inkscape::XML::Node const *repr, gchar const *name, gint maxdepth )
+{
+    std::vector<Inkscape::XML::Node const *> nodes;
+    std::vector<Inkscape::XML::Node const *> found;
+    g_return_val_if_fail(repr != NULL, nodes);
+    g_return_val_if_fail(name != NULL, nodes);
+
+    GQuark const quark = g_quark_from_string(name);
+
+    if ( (GQuark)repr->code() == quark ) {
+        nodes.push_back(repr);
+    }
+
+    if ( maxdepth != 0 ) {
+        // maxdepth == -1 means unlimited
+        if ( maxdepth == -1 ) {
+            maxdepth = 0;
+        }
+
+        for (Inkscape::XML::Node const *child = repr->firstChild() ; child; child = child->next() ) {
+            found = sp_repr_lookup_name_many( child, name, maxdepth - 1);
+            nodes.insert(nodes.end(), found.begin(), found.end());
+        }
+    }
+
+    return nodes;
+}
+
 /**
  * Determine if the node is a 'title', 'desc' or 'metadata' element.
  */
