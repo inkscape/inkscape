@@ -85,6 +85,9 @@ private:
     bool show_transform_handles;
     bool single_node_transform_handles;
 
+    std::vector<SPItem*> _current_selection;
+    std::vector<SPItem*> _previous_selection;
+
 	void selection_changed(Inkscape::Selection *sel);
 
 	void select_area(Geom::Rect const &sel, GdkEventButton *event);

@@ -34,7 +34,9 @@ public:
     CurveDragPoint(PathManipulator &pm);
     void setSize(double sz) { _setSize(sz); }
     void setTimeValue(double t) { _t = t; }
+    double getTimeValue() { return _t; }
     void setIterator(NodeList::iterator i) { first = i; }
+    NodeList::iterator getIterator() { return first; }
     virtual bool _eventHandler(Inkscape::UI::Tools::ToolBase *event_context, GdkEvent *event);
 
 protected:
@@ -47,9 +49,6 @@ protected:
     virtual bool doubleclicked(GdkEventButton *);
 
 private:
-
-    void _insertNode(bool take_selection);
-
     double _t;
     PathManipulator &_pm;
     NodeList::iterator first;
@@ -57,6 +56,7 @@ private:
     static bool _drags_stroke;
     static bool _segment_was_degenerate;
     static Geom::Point _stroke_drag_origin;
+    void _insertNode(bool take_selection);
 };
 
 } // namespace UI

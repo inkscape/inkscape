@@ -192,12 +192,15 @@ public:
      *
      * @param p Source point to be snapped.
      * @param bbox_to_snap Bounding box hulling the set of points, all from the same selection and having the same transformation.
+     * @param to_path_only Only snap to points on a path, such as path intersections with itself or with grids/guides. This is used for
+     *        example when adding nodes to a path. We will not snap for example to grid intersections
      * @return An instance of the SnappedPoint class, which holds data on the snap source, snap target, and various metrics.
      */
     Inkscape::SnappedPoint freeSnap(Inkscape::SnapCandidatePoint const &p,
-                                    Geom::OptRect const &bbox_to_snap = Geom::OptRect() ) const;
+                                    Geom::OptRect const &bbox_to_snap = Geom::OptRect(),
+                                    bool to_path_only = false) const;
 
-    void preSnap(Inkscape::SnapCandidatePoint const &p);
+    void preSnap(Inkscape::SnapCandidatePoint const &p, bool to_path_only = false);
 
     /**
      * Snap to the closest multiple of a grid pitch.
@@ -473,9 +476,11 @@ public:
      * @param isr A structure holding all snap targets that have been found so far.
      * @param constrained True if the snap is constrained, e.g. for stretching or for purely horizontal translation.
      * @param allowOffScreen If true, then snapping to points which are off the screen is allowed (needed for example when pasting to the grid).
+     * @param to_path_only Only snap to points on a path, such as path intersections with itself or with grids/guides. This is used for
+     *        example when adding nodes to a path. We will not snap for example to grid intersections
      * @return An instance of the SnappedPoint class, which holds data on the snap source, snap target, and various metrics.
      */
-    Inkscape::SnappedPoint findBestSnap(Inkscape::SnapCandidatePoint const &p, IntermSnapResults const &isr, bool constrained, bool allowOffScreen = false) const;
+    Inkscape::SnappedPoint findBestSnap(Inkscape::SnapCandidatePoint const &p, IntermSnapResults const &isr, bool constrained, bool allowOffScreen = false, bool to_paths_only = false) const;
 
     /**
      * Mark the location of the snap source (not the snap target!) on the canvas by drawing a symbol.

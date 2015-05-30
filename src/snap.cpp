@@ -121,7 +121,8 @@ void SnapManager::freeSnapReturnByRef(Geom::Point &p,
 }
 
 Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::SnapCandidatePoint const &p,
-                                             Geom::OptRect const &bbox_to_snap) const
+                                             Geom::OptRect const &bbox_to_snap,
+                                             bool to_paths_only) const
 {
     if (!someSnapperMightSnap()) {
         return Inkscape::SnappedPoint(p, Inkscape::SNAPTARGET_UNDEFINED, Geom::infinity(), 0, false, false, false);
@@ -134,16 +135,16 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::SnapCandidatePoint const 
         (*i)->freeSnap(isr, p, bbox_to_snap, &_items_to_ignore, _unselected_nodes);
     }
 
-    return findBestSnap(p, isr, false);
+    return findBestSnap(p, isr, false, false, to_paths_only);
 }
 
-void SnapManager::preSnap(Inkscape::SnapCandidatePoint const &p)
+void SnapManager::preSnap(Inkscape::SnapCandidatePoint const &p, bool to_paths_only)
 {
     // setup() must have been called before calling this method!
 
     if (_snapindicator) {
         _snapindicator = false; // prevent other methods from drawing a snap indicator; we want to control this here
-        Inkscape::SnappedPoint s = freeSnap(p);
+        Inkscape::SnappedPoint s = freeSnap(p, Geom::OptRect(), to_paths_only);
         g_assert(_desktop != NULL);
         if (s.getSnapped()) {
             _desktop->snapindicator->set_new_snaptarget(s, true);
@@ -855,7 +856,8 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapRotate(std::vector<Inkscape::
 Inkscape::SnappedPoint SnapManager::findBestSnap(Inkscape::SnapCandidatePoint const &p,
                                                  IntermSnapResults const &isr,
                                                  bool constrained,
-                                                 bool allowOffScreen) const
+                                                 bool allowOffScreen,
+                                                 bool to_path_only) const
 {
     g_assert(_desktop != NULL);
 
@@ -962,6 +964,30 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Inkscape::SnapCandidatePoint co
                 closestGridGuidePoint.setSource(p.getSourceType());
                 closestGridGuidePoint.setTarget(Inkscape::SNAPTARGET_GRID_GUIDE_INTERSECTION);
                 sp_list.push_back(closestGridGuidePoint);
+            }
+        }
+    }
+
+    // Filter out all snap targets that do NOT include a path; this is useful when we try to insert
+    // a node in a path (on doubleclick in the node tool). We don't want to change the shape of the
+    // path, so the snapped point must be on a path, and not e.g. on a grid intersection
+    if (to_path_only) {
+        std::list<Inkscape::SnappedPoint>::iterator i = sp_list.begin();
+
+        while (i != sp_list.end()) {
+            Inkscape::SnapTargetType t = (*i).getTarget();
+            if (t == Inkscape::SNAPTARGET_LINE_MIDPOINT ||
+                t == Inkscape::SNAPTARGET_PATH ||
+                t == Inkscape::SNAPTARGET_PATH_PERPENDICULAR ||
+                t == Inkscape::SNAPTARGET_PATH_TANGENTIAL ||
+                t == Inkscape::SNAPTARGET_PATH_INTERSECTION ||
+                t == Inkscape::SNAPTARGET_PATH_GUIDE_INTERSECTION ||
+                t == Inkscape::SNAPTARGET_PATH_CLIP ||
+                t == Inkscape::SNAPTARGET_PATH_MASK ||
+                t == Inkscape::SNAPTARGET_ELLIPSE_QUADRANT_POINT) {
+                ++i;
+            } else {
+                i = sp_list.erase(i);
             }
         }
     }

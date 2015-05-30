@@ -174,7 +174,8 @@ bool PathManipulator::event(Inkscape::UI::Tools::ToolBase * /*event_context*/, G
     case GDK_MOTION_NOTIFY:
         _updateDragPoint(event_point(event->motion));
         break;
-    default: break;
+    default:
+        break;
     }
     return false;
 }
@@ -274,6 +275,27 @@ void PathManipulator::insertNodes()
         }
     }
 }
+
+void PathManipulator::insertNode(Geom::Point pt)
+{
+    Geom::Coord dist = _updateDragPoint(pt);
+    if (dist < 1e-5) { // 1e-6 is too small, as observed occasionally when inserting a node at a snapped intersection of paths
+        insertNode(_dragpoint->getIterator(), _dragpoint->getTimeValue(), true);
+    }
+}
+
+void PathManipulator::insertNode(NodeList::iterator first, double t, bool take_selection)
+{
+    NodeList::iterator inserted = subdivideSegment(first, t);
+    if (take_selection) {
+        _selection.clear();
+    }
+    _selection.insert(inserted.ptr());
+
+    update(true);
+    _commit(_("Add node"));
+}
+
 
 static void
 add_or_replace_if_extremum(std::vector< std::pair<NodeList::iterator, double> > &vec,
@@ -1643,13 +1665,15 @@ void PathManipulator::_commit(Glib::ustring const &annotation, gchar const *key)
 
 /** Update the position of the curve drag point such that it is over the nearest
  * point of the path. */
-void PathManipulator::_updateDragPoint(Geom::Point const &evp)
+Geom::Coord PathManipulator::_updateDragPoint(Geom::Point const &evp)
 {
+    Geom::Coord dist = 1e23;
+
     Geom::Affine to_desktop = _edit_transform * _i2d_transform;
     Geom::PathVector pv = _spcurve->get_pathvector();
     boost::optional<Geom::PathVectorPosition> pvp
         = Geom::nearestPoint(pv, _desktop->w2d(evp) * to_desktop.inverse());
-    if (!pvp) return;
+    if (!pvp) return dist;
     Geom::Point nearest_point = _desktop->d2w(pv.at(pvp->path_nr).pointAt(pvp->t) * to_desktop);
     
     double fracpart;
@@ -1657,10 +1681,12 @@ void PathManipulator::_updateDragPoint(Geom::Point const &evp)
     for (unsigned i = 0; i < pvp->path_nr; ++i, ++spi) {}
     NodeList::iterator first = (*spi)->before(pvp->t, &fracpart);
     
+    dist = Geom::distance(evp, nearest_point);
+
     double stroke_tolerance = _getStrokeTolerance();
     if (first && first.next() &&
         fracpart != 0.0 &&
-        Geom::distance(evp, nearest_point) < stroke_tolerance)
+        dist < stroke_tolerance)
     {
         _dragpoint->setVisible(true);
         _dragpoint->setPosition(_desktop->w2d(nearest_point));
@@ -1670,6 +1696,8 @@ void PathManipulator::_updateDragPoint(Geom::Point const &evp)
     } else {
         _dragpoint->setVisible(false);
     }
+
+    return dist;
 }
 
 /// This is called on zoom change to update the direction arrows

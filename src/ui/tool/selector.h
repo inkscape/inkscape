@@ -29,6 +29,7 @@ public:
     Selector(SPDesktop *d);
     virtual ~Selector();
     virtual bool event(Inkscape::UI::Tools::ToolBase *, GdkEvent *);
+    virtual bool doubleClicked();
     
     sigc::signal<void, Geom::Rect const &, GdkEventButton*> signal_area;
     sigc::signal<void, Geom::Point const &, GdkEventButton*> signal_point;

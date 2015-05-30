@@ -339,6 +339,14 @@ void MultiPathManipulator::insertNodesAtExtrema(ExtremumType extremum)
     _done(_("Add extremum nodes"));
 }
 
+void MultiPathManipulator::insertNode(Geom::Point pt)
+{
+    // When double clicking to insert nodes, we might not have a selection of nodes (and we don't need one)
+    // so don't check for "_selection.empty()" here, contrary to the other methods above and below this one
+    invokeForAll(&PathManipulator::insertNode, pt);
+    _done(_("Add nodes"));
+}
+
 void MultiPathManipulator::duplicateNodes()
 {
     if (_selection.empty()) return;
