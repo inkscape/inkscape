@@ -727,7 +727,7 @@ void LayersPanel::_doTreeMove( )
         _selectLayer(_dnd_source);
         _dnd_source = NULL;
         DocumentUndo::done( _desktop->doc() , SP_VERB_NONE,
-                                            _("Moved layer"));
+                                            _("Move layer"));
     }
 }
 
