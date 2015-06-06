@@ -61,7 +61,7 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin CACHE INTERNAL "" FORCE )
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib CACHE INTERNAL "" FORCE )
 
 # -----------------------------------------------------------------------------
-#
+# Test Harness
 # -----------------------------------------------------------------------------
 set(GMOCK_DIR "${CMAKE_SOURCE_DIR}/gtest/gmock-1.7.0"
   CACHE PATH "The path to the GoogleMock test framework.")
@@ -142,7 +142,7 @@ add_subdirectory(src)
 # -----------------------------------------------------------------------------
 
 if(UNIX)
-	# TODO: man, locale, icons
+	# TODO: man, locale
 
 	install(
 		PROGRAMS ${EXECUTABLE_OUTPUT_PATH}/inkscape
