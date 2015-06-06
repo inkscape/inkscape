@@ -87,7 +87,7 @@ def cmake_get_src(f):
     sources_h = []
     sources_c = []
 
-    filen = open(f, "r", encoding="utf8")
+    filen = open(f, "r")
     it = iter(filen)
     found = False
     i = 0
