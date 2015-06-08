@@ -226,6 +226,7 @@ set(ui_SRC
 	dialog/livepatheffect-add.h
 	dialog/livepatheffect-editor.h
 	dialog/lpe-fillet-chamfer-properties.h
+	dialog/lpe-powerstroke-properties.h
 	dialog/memory.h
 	dialog/messages.h
 	dialog/new-from-template.h
@@ -242,6 +243,7 @@ set(ui_SRC
 	dialog/svg-fonts-dialog.h
 	dialog/swatches.h
 	dialog/symbols.h
+	dialog/tags.h
 	dialog/template-load-tab.h
 	dialog/template-widget.h
 	dialog/text-edit.h
@@ -293,9 +295,11 @@ set(ui_SRC
 	tools/tweak-tool.h
 	tools/zoom-tool.h
 
+	widget/addtoicon.h
 	widget/anchor-selector.h
 	widget/attr-widget.h
 	widget/button.h
+	widget/clipmaskicon.h
 	widget/color-entry.h
 	widget/color-icc-selector.h
 	widget/color-notebook.h
@@ -314,10 +318,13 @@ set(ui_SRC
 	widget/frame.h
 	widget/gimpspinscale.h
 	widget/gimpcolorwheel.h
+	widget/highlight-picker.h
+	widget/insertordericon.h
 	widget/imageicon.h
 	widget/imagetoggler.h
 	widget/labelled.h
 	widget/layer-selector.h
+	widget/layertypeicon.h
 	widget/licensor.h
 	widget/notebook-page.h
 	widget/object-composite-settings.h
