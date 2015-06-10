@@ -23,7 +23,6 @@ endif
 
 
 noinst_LIBRARIES =	\
-        libinkscape.a		        \
 	libcroco/libcroco.a		\
 	libavoid/libavoid.a		\
 	$(internal_GDL)			\
@@ -36,6 +35,7 @@ noinst_LIBRARIES =	\
 	libdepixelize/libdepixelize.a	\
 	util/libutil.a			\
 	libinkversion.a
+#       libinkscape.a
 
 all_libs =			\
 	$(noinst_LIBRARIES)	\
@@ -198,15 +198,15 @@ DISTCLEANFILES =	\
 # ################################################
 
 # this should speed up the build
-libinkscape_a_SOURCES = $(ink_common_sources)
+#libinkscape_a_SOURCES = $(ink_common_sources)
 
-inkscape_SOURCES += main.cpp $(win32_sources)
+inkscape_SOURCES += main.cpp $(ink_common_sources) $(win32_sources)
 inkscape_LDADD = $(all_libs)
 inkscape_LDFLAGS = $(kdeldflags) $(mwindows)
 
-inkview_SOURCES += inkview.cpp $(win32_sources)
+inkview_SOURCES += inkview.cpp $(ink_common_sources) $(win32_sources)
 inkview_LDADD = $(all_libs)
-inkview_LDFLAGS = $(mwindows) 
+inkview_LDFLAGS = $(mwindows)
 
 # ################################################
 #  VERSION REPORTING
