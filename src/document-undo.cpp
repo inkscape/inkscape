@@ -217,6 +217,25 @@ static void finish_incomplete_transaction(SPDocument &doc) {
 	}
 }
 
+static void perform_document_update(SPDocument &doc) {
+    sp_repr_begin_transaction(doc.rdoc);
+    doc.ensureUpToDate();
+
+    Inkscape::XML::Event *update_log=sp_repr_commit_undoable(doc.rdoc);
+    if (update_log != NULL) {
+        g_warning("Document was modified while being updated after undo operation");
+        sp_repr_debug_print_log(update_log);
+
+        //Coalesce the update changes with the last action performed by user
+        Inkscape::Event* undo_stack_top = (Inkscape::Event *)doc.priv->undo->data;
+        if (undo_stack_top) {
+            undo_stack_top->event = sp_repr_coalesce_log(undo_stack_top->event, update_log);
+        } else {
+            sp_repr_free_log(update_log);
+        }
+    }
+}
+
 gboolean Inkscape::DocumentUndo::undo(SPDocument *doc)
 {
 	using Inkscape::Debug::EventTracker;
@@ -241,7 +260,8 @@ gboolean Inkscape::DocumentUndo::undo(SPDocument *doc)
 		Inkscape::Event *log=(Inkscape::Event *)doc->priv->undo->data;
 		doc->priv->undo = g_slist_remove (doc->priv->undo, log);
 		sp_repr_undo_log (log->event);
-                //doc->_updateDocument();
+		perform_document_update(*doc);
+
 		doc->priv->redo = g_slist_prepend (doc->priv->redo, log);
 
                 doc->setModifiedSinceSave();

@@ -450,7 +450,11 @@ StrokeStyle::makeRadioButton(Gtk::RadioButtonGroup &grp,
  */
 void StrokeStyle::markerSelectCB(MarkerComboBox *marker_combo, StrokeStyle *spw, SPMarkerLoc const /*which*/)
 {
-    if (spw->update) {
+    bool markers_update = spw->startMarkerCombo->update() ||
+                          spw->midMarkerCombo->update() ||
+                          spw->endMarkerCombo->update();
+
+    if (spw->update || markers_update) {
         return;
     }
 
