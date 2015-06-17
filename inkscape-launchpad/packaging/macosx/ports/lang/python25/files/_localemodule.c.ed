@@ -1,0 +1,2 @@
+g/defined(__APPLE__)/s//0/g
+w

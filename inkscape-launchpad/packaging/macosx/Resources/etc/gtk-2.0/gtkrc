@@ -1,0 +1,23 @@
+#
+# gtkrc file for Inkscape.app (X11)
+#
+
+gtk-theme-name = "Adwaita"
+gtk-font-name = "Lucida Grande 9"
+
+gtk-icon-theme-name = "GtkStock"
+gtk-icon-sizes = "gtk-dialog=32,32:gtk-button=16,16:gtk-large-toolbar=24,24:gtk-small-toolbar=16,16:gtk-menu=16,16:inkscape-decoration=12,12"
+
+gtk-button-images = 0
+gtk-menu-images = 1
+gtk-toolbar-style = 0
+#gtk-toolbar-icon-size = 2
+
+# use OS X default PDF viewer for print preview
+gtk-print-preview-command="open -a /Applications/Preview.app %f"
+
+# fix Adwaita theme for Inkscape's GimpSpinScale widgets
+style "spinbutton" {}
+widget_class "*GimpSpinScale*" style "spinbutton"
+
+# eof

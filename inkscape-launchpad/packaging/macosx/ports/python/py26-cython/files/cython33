@@ -1,0 +1,2 @@
+${frameworks_dir}/Python.framework/Versions/3.3/bin/cython
+${frameworks_dir}/Python.framework/Versions/3.3/bin/cygdb

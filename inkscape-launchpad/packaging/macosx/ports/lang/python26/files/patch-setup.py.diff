@@ -1,0 +1,16 @@
+--- setup.py.orig	2008-09-29 18:15:45.000000000 -0600
++++ setup.py	2008-11-30 23:13:09.000000000 -0700
+@@ -1506,13 +1506,7 @@
+     def detect_tkinter(self, inc_dirs, lib_dirs):
+         # The _tkinter module.
+ 
+-        # Rather than complicate the code below, detecting and building
+-        # AquaTk is a separate method. Only one Tkinter will be built on
+-        # Darwin - either AquaTk, if it is found, or X11 based Tk.
+         platform = self.get_platform()
+-        if (platform == 'darwin' and
+-            self.detect_tkinter_darwin(inc_dirs, lib_dirs)):
+-            return
+ 
+         # Assume we haven't found any of the libraries or include files
+         # The versions with dots are used on Unix, and the versions without

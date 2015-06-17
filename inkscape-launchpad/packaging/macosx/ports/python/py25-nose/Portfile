@@ -1,0 +1,86 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id: Portfile 121661 2014-07-03 17:50:11Z mf2k@macports.org $
+
+PortSystem          1.0
+PortGroup           python 1.0
+PortGroup           select 1.0
+
+set my_name         nose
+name                py25-${my_name}
+version             1.3.1
+categories-append   www
+license             LGPL-2+
+maintainers         mcalhoun openmaintainer
+description         A Python unittest extension.
+long_description \
+    A unittest extension offering automatic test \
+    suite discovery, simplified test authoring, \
+    and output capture. Nose provides an alternate \
+    test discovery and running process for \
+    unittest, one that is intended to mimic the \
+    behavior of py.test as much as is reasonably \
+    possible without resorting to magic.
+
+platforms           darwin
+supported_archs     noarch
+
+homepage            http://somethingaboutorange.com/mrl/projects/${my_name}
+master_sites        http://pypi.python.org/packages/source/n/${my_name}/
+distname            ${my_name}-${version}
+
+checksums           md5     672398801ddf5ba745c55c6eed79c5aa \
+                    rmd160  7bf311d3d54f2ccb372dea331708c475b992ccec \
+                    sha256  85273b87ab3db9307e3b1452b071e25c1db1cc812bc337d2a97ea0b0cf2ab6ba
+
+python.versions     25
+
+# already installs version-suffixed executables
+python.link_binaries no
+python.move_binaries no
+
+depends_run-append  port:nosetests_select
+if {${name} eq ${subport}} {
+
+    revision            100
+
+    select.group        nosetests
+    select.file         ${filespath}/nosetests${python.version}
+
+    depends_lib     port:py${python.version}-setuptools
+
+    post-patch {
+        reinplace "s|man/man|share/man/man|" ${worksrcpath}/setup.py
+
+        # One of the tests fails if this directory does not exist
+        file mkdir ${worksrcpath}/functional_tests/support/empty
+    }
+
+    post-destroot {
+        if {${python.version} == "24" || ${python.version} == "25"} {
+            move ${destroot}${prefix}/share/man/man1/nosetests.1 ${destroot}${prefix}/share/man/man1/nosetests${python.branch}.1
+            delete ${destroot}${prefix}/bin/nosetests
+        } else {
+            ln -s ${python.prefix}/bin/nosetests-${python.branch} ${destroot}${prefix}/bin/
+            ln -s ${python.prefix}/share/man/man1/nosetests.1 ${destroot}${prefix}/share/man/man1/nosetests${python.branch}.1
+        }
+
+        xinstall -m 644 -W ${worksrcpath} \
+            AUTHORS CHANGELOG NEWS README.txt \
+            ${destroot}${prefix}/share/doc/${subport}
+
+        file copy ${worksrcpath}/doc ${destroot}${prefix}/share/doc/${subport}/html
+
+        file delete ${destroot}${prefix}/share/doc/${subport}/examples
+        file copy ${worksrcpath}/examples ${destroot}${prefix}/share/doc/${subport}
+    }
+
+    test.run  yes
+    test.cmd  ${python.bin} setup.py test
+
+    livecheck.type  none
+
+#} else {
+#    livecheck.type  regex
+#    livecheck.url   ${master_sites}
+#    livecheck.regex "${my_name}-(\\d+(?:\\.\\d+)*)${extract.suffix}"
+}

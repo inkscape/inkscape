@@ -1,0 +1,45 @@
+--- configure.orig	2008-12-14 01:13:52.000000000 +1100
++++ configure	2011-05-10 16:25:02.000000000 +1000
+@@ -4534,9 +4534,11 @@
+ 	    ;;
+ 	# is there any other compiler on Darwin besides gcc?
+ 	Darwin*)
+-	    BASECFLAGS="$BASECFLAGS -Wno-long-double -no-cpp-precomp -mno-fused-madd"
++	    BASECFLAGS="$BASECFLAGS -mno-fused-madd"
+ 	    if test "${enable_universalsdk}"; then
+-		BASECFLAGS="-arch ppc -arch i386 -isysroot ${UNIVERSALSDK} ${BASECFLAGS}"
++		BASECFLAGS="__UNIVERSAL_CFLAGS__ -isysroot ${UNIVERSALSDK} ${BASECFLAGS}"
++	    else
++		BASECFLAGS="-arch __BUILD_ARCH__ ${BASECFLAGS}"
+ 	    fi
+ 
+ 	    ;;
+@@ -11362,7 +11364,7 @@
+     if test "${enable_universalsdk}"; then
+ 	    :
+     else
+-	LIBTOOL_CRUFT="${LIBTOOL_CRUFT} -arch_only `arch`"
++	LIBTOOL_CRUFT="${LIBTOOL_CRUFT} -arch_only __BUILD_ARCH__"
+     fi
+     LIBTOOL_CRUFT=$LIBTOOL_CRUFT' -install_name $(PYTHONFRAMEWORKINSTALLDIR)/Versions/$(VERSION)/$(PYTHONFRAMEWORK)'
+     LIBTOOL_CRUFT=$LIBTOOL_CRUFT' -compatibility_version $(VERSION) -current_version $(VERSION)';;
+@@ -11374,7 +11376,7 @@
+         else
+             LIBTOOL_CRUFT=""
+     fi
+-    LIBTOOL_CRUFT=$LIBTOOL_CRUFT" -lSystem -lSystemStubs -arch_only `arch`"
++    LIBTOOL_CRUFT=$LIBTOOL_CRUFT" -lSystem -lSystemStubs -arch_only __BUILD_ARCH__"
+     LIBTOOL_CRUFT=$LIBTOOL_CRUFT' -install_name $(PYTHONFRAMEWORKINSTALLDIR)/Versions/$(VERSION)/$(PYTHONFRAMEWORK)'
+     LIBTOOL_CRUFT=$LIBTOOL_CRUFT' -compatibility_version $(VERSION) -current_version $(VERSION)';;
+ esac
+@@ -11524,7 +11526,9 @@
+ 		if test ${MACOSX_DEPLOYMENT_TARGET-${cur_target}} '>' 10.2
+ 		then
+ 			if test "${enable_universalsdk}"; then
+-				LDFLAGS="-arch i386 -arch ppc -isysroot ${UNIVERSALSDK} ${LDFLAGS}"
++				LDFLAGS="__UNIVERSAL_LDFLAGS__ -isysroot ${UNIVERSALSDK} ${LDFLAGS}"
++			else
++				LDFLAGS="-arch __BUILD_ARCH__ ${LDFLAGS}"
+ 			fi
+ 			LDSHARED='$(CC) $(LDFLAGS) -bundle -undefined dynamic_lookup'
+ 			BLDSHARED="$LDSHARED"

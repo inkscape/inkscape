@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+    <_name>Seamless Pattern Procedural</_name>
+    <id>org.inkscape.render.seamless_pattern_procedural</id>
+    <dependency type="executable" location="extensions">seamless_pattern.py</dependency>
+    <dependency type="executable" location="extensions">inkex.py</dependency>
+
+    <param name="width"  _gui-text="Custom Width (px):"  type="int" min="1" max="99999999">100</param>
+    <param name="height" _gui-text="Custom Height (px):" type="int" min="1" max="99999999">100</param>
+        
+    <effect needs-live-preview="false">
+        <object-type>all</object-type>
+        <effects-menu hidden="true" />
+    </effect>
+    <inkscape:_templateinfo>
+      <inkscape:_name>Seamless Pattern...</inkscape:_name>
+      <inkscape:author>Jabiertxof</inkscape:author>
+      <inkscape:_shortdesc>Create seamless patterns.</inkscape:_shortdesc>
+      <inkscape:date>2014-10-16</inkscape:date>
+      <inkscape:_keywords>live seamless patterns</inkscape:_keywords>
+    </inkscape:_templateinfo>
+    <script>
+        <command reldir="extensions" interpreter="python">seamless_pattern.py</command>
+    </script>
+</inkscape-extension>

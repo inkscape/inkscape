@@ -1,0 +1,11 @@
+--- Mac/PythonLauncher/Makefile.in.orig	2008-05-02 13:58:56.000000000 -0600
++++ Mac/PythonLauncher/Makefile.in	2008-10-04 19:52:27.000000000 -0600
+@@ -21,7 +21,7 @@
+ 
+ BUNDLEBULDER=$(srcdir)/../../Lib/plat-mac/bundlebuilder.py
+ 
+-PYTHONAPPSDIR=/Applications/$(PYTHONFRAMEWORK) $(VERSION)
++PYTHONAPPSDIR=@@APPLICATIONS_DIR@@/$(PYTHONFRAMEWORK) $(VERSION)
+ OBJECTS=FileSettings.o MyAppDelegate.o MyDocument.o PreferencesWindowController.o doscript.o main.o
+ 
+ all: Python\ Launcher.app

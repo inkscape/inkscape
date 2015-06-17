@@ -1,0 +1,2 @@
+g,.*\(HAVE_POLL[_A-Z]*\).*,s,,/* #undef \1 */,
+w

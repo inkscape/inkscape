@@ -1,0 +1,143 @@
+#!/bin/sh
+COMPILER='@@@'
+SUFFIX='---'
+PREFIX='&&&'
+OUTPUT_O='NO'
+OUTPUT=''
+NAMED_OUTPUT=''
+LASTFILE=''
+INTEL='NO'
+SIZE32='NO'
+SIZE64='NO'
+NEWARGS=''
+
+SKIP='NO'
+
+for arg in $@
+do
+	if [ $SKIP = 'ARCH' ]; then
+		# intercept -arch option and set SIZEXX
+		SKIP='NO'
+		if [ $arg = 'x86_64' ] || [ $arg = 'ppc64' ]; then
+			SIZE64='YES'
+		else
+			SIZE32='YES'
+		fi
+		
+		# which architecture are we compiling for?
+		if [ $arg = 'x86_64' ] || [ $arg = 'i386' ]; then
+			INTEL='YES'
+		fi
+		
+	elif [ $arg = '-arch' ]; then
+		SKIP='ARCH'
+		
+	elif [ $arg = '--version' ]; then
+		${COMPILER} --version
+		exit 0
+		
+	else
+		NEWARGS+="$arg "
+		
+		# if the -c option is given, the output is .o
+		if [ $arg = '-c' ]; then
+			OUTPUT_O='YES'
+		fi
+
+		# if the output file is given by a -o option, record it
+		if [ $SKIP = 'O' ]; then
+			SKIP='NO'
+			NAMED_OUTPUT=$arg
+		fi
+		
+		if [ $arg = '-o' ]; then
+			SKIP='O'
+		fi
+		
+		# Note each file ending by ${SUFFIX} and remember the last one
+		# Transform them in .o 
+		if `echo $arg | grep -q "${SUFFIX}$"`; then
+			LASTFILE=$arg
+			OUTPUT+=`echo $arg | sed "s/${SUFFIX}/\.o/"`
+			OUTPUT+=' '
+		fi
+	fi
+done
+
+# What is the output?
+
+if [ ${NAMED_OUTPUT}"X" != "X" ]; then
+	OUTPUT=$NAMED_OUTPUT
+
+elif [ $OUTPUT_O = 'NO' ]; then
+	# It is an executable whose is name is the LASTFILE without suffix
+	OUTPUT=`echo ${LASTFILE} | sed "s/${SUFFIX}//"`
+fi
+
+# Othewise, the output is just the ${OUTPUT} variable as computed before
+
+# For some reason, -dynamiclib and -lpython2.6 are missing when linking
+# .so files. Add them, except if -bundle is set (incompatible switches)
+if [ `echo $OUTPUT | sed -E 's|.*\.||'` = "so" ] && \
+	! `echo $NEWARGS | grep -q bundle`; then
+	NEWARGS="${NEWARGS} ${PREFIX}/lib/libpython2.6.dylib -dynamiclib"
+fi
+
+# Now, compile
+
+if [ $SIZE32 = 'NO' ] && [ $SIZE64 = 'NO' ]; then
+	# No size indication given, just proceed with default
+	if `${COMPILER} $NEWARGS`; then
+		exit 0
+	else
+		exit 1
+	fi
+
+elif [ $SIZE32 = 'YES' ] && [ $SIZE64 = 'NO' ]; then
+	# 32-bit
+	if `${COMPILER} -m32 $NEWARGS`; then
+		exit 0
+	else
+		exit 1
+	fi
+	
+elif [ $SIZE32 = 'NO' ] && [ $SIZE64 = 'YES' ]; then
+	# 64-bit
+	if `${COMPILER} -m64 $NEWARGS`; then
+		exit 0
+	else
+		exit 1
+	fi
+
+else
+	# Universal case
+	if `${COMPILER} -m32 $NEWARGS`; then
+		for filename in ${OUTPUT}
+		do
+			mv ${filename} ${filename}.32
+		done
+	
+		if `${COMPILER} -m64 $NEWARGS`; then
+			for filename in ${OUTPUT}
+			do
+				mv ${filename} ${filename}.64
+				if [ $INTEL = 'YES' ]; then
+					lipo -create -arch x86_64 ${filename}.64 \
+						 -arch i386 ${filename}.32 \
+			 			 -output ${filename}
+				else
+					lipo -create -arch ppc64 ${filename}.64 \
+						 -arch ppc ${filename}.32 \
+			 			 -output ${filename}
+				fi
+			
+				rm -f ${filename}.32 ${filename}.64
+			done
+		else
+			exit 1
+		fi
+	else
+		exit 1
+	fi
+fi
+exit 0

@@ -1,0 +1,10 @@
+--- numpy/linalg/setup.py.orig	2010-09-14 11:44:21.000000000 -0400
++++ numpy/linalg/setup.py	2010-09-14 11:45:01.000000000 -0400
+@@ -27,6 +27,7 @@
+                                     'zlapack_lite.c', 'dlapack_lite.c',
+                                     'blas_lite.c', 'dlamch.c',
+                                     'f2c_lite.c','f2c.h'],
++                         extra_link_args=['-undefined dynamic_lookup -bundle'],
+                          extra_info = lapack_info
+                          )
+ 

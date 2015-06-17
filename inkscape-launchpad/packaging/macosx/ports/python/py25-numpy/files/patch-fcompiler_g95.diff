@@ -1,0 +1,11 @@
+--- numpy/distutils/fcompiler/__init__.py.orig	2013-03-19 13:35:03.000000000 +0400
++++ numpy/distutils/fcompiler/__init__.py	2013-03-19 13:35:27.000000000 +0400
+@@ -708,7 +708,7 @@
+     ('cygwin.*', ('gnu','intelv','absoft','compaqv','intelev','gnu95','g95')),
+     ('linux.*', ('gnu95','intel','lahey','pg','absoft','nag','vast','compaq',
+                 'intele','intelem','gnu','g95','pathf95')),
+-    ('darwin.*', ('gnu95', 'nag', 'absoft', 'ibm', 'intel', 'gnu', 'g95', 'pg')),
++    ('darwin.*', ('gnu95', 'nag', 'absoft', 'ibm', 'intel', 'gnu', 'pg')),
+     ('sunos.*', ('sun','gnu','gnu95','g95')),
+     ('irix.*', ('mips','gnu','gnu95',)),
+     ('aix.*', ('ibm','gnu','gnu95',)),

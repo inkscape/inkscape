@@ -1,0 +1,77 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id: Portfile 104088 2013-03-15 14:39:56Z stromnov@macports.org $
+
+PortSystem          1.0
+PortGroup           python 1.0
+
+name                py25-Pillow
+set real_name       py-Pillow
+version             1.7.8
+revision            100
+categories-append   devel
+platforms           darwin
+license             BSD
+
+python.versions     25
+python.version      25
+
+maintainers         stromnov openmaintainer
+
+description         Python Imaging Library (fork)
+
+long_description    ${description}
+
+homepage            http://github.com/python-imaging/Pillow
+master_sites        http://pypi.python.org/packages/source/P/Pillow/
+
+distname            Pillow-${version}
+use_zip             yes
+
+checksums           rmd160  e52cec02d943951a80d30b32b1764cb3ae87b283 \
+                    sha256  907f5342b1df1d277dcc10df2aeabc61099e5a07e0676b9fcd1bb7379890c0ee
+
+if {$subport == $name} {
+    conflicts       py${python.version}-pil
+
+    depends_build       port:py${python.version}-setuptools
+    depends_lib-append \
+                        port:zlib \
+                        port:jpeg \
+                        port:tiff \
+                        port:lcms \
+                        port:webp \
+                        port:freetype
+
+    patchfiles          patch-setup.py-v1.7.8.diff \
+                        patch-_imagingft.c.diff
+
+    post-patch {
+        reinplace "s|@prefix@|${prefix}|g" ${worksrcpath}/setup.py
+    }
+
+    livecheck.type      none
+#} else {
+#    livecheck.type      regex
+#    livecheck.url       ${master_sites}
+#    livecheck.regex     "Pillow-(\\d+(?:\\.\\d+)*)${extract.suffix}"
+}
+
+variant quartz conflicts x11 tkinter {
+    # tkinter doesn't build
+}
+
+variant x11 conflicts quartz {
+    # tkinter does build
+}
+
+variant tkinter description {with tkinter support} {
+    if {$subport == $name} {
+        depends_lib-append  port:py${python.version}-tkinter
+    }
+}
+
+#if { ![variant_isset quartz] } {
+#    default_variants-append +tkinter
+#}
+
+default_variants    -tkinter

@@ -1,0 +1,85 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id: Portfile 125247 2014-09-11 17:01:30Z stromnov@macports.org $
+
+PortSystem          1.0
+PortGroup           python 1.0
+PortGroup           select 1.0
+
+name                py26-cython
+version             0.21
+revision            0
+categories-append   devel
+platforms           darwin
+license             Apache-2
+
+python.versions     26
+python.version      26
+
+maintainers         stromnov openmaintainer
+
+description         A language for writing C extension modules for Python.
+
+long_description    Cython is a language that makes writing C extensions for \
+                    the Python language as easy as Python itself. Cython is  \
+                    based on the well-known Pyrex, but supports more cutting \
+                    edge functionality and optimizations
+
+homepage            http://www.cython.org/
+master_sites        ${homepage}release/ \
+                    http://pypi.python.org/packages/source/C/Cython/
+
+distname            Cython-${version}
+
+checksums           rmd160  f5944014c1e4dccb8ec23af96efc05c137917371 \
+                    sha256  0cd5787fb3f1eaf8326b21bdfcb90aabd3eca7c214c5b7b503fbb82da97bbaa0
+
+if {${name} eq ${subport}} {
+
+    revision        100
+
+    # Cython 0.21 requires Python 2.6+ or 3.3+
+    if {[lsearch {24 25 31 32} ${python.version}] != -1} {
+        version             0.20.2
+        revision            0
+        distname            Cython-${version}
+        checksums           rmd160  e78f1779077d6c8e266c9b42b85c8e9031a342d2 \
+                            sha256  ed13b606a2aeb5bd6c235f8ed6c9988c99d01a033d0d21d56137c13d5c7be63f
+    }
+
+    post-destroot {
+        if {${subport} eq "py24-cython" || ${subport} eq "py25-cython"} {
+            xinstall -m 644 -W ${worksrcpath}/Doc About.html FAQ.html \
+                extension_types.html index.html overview.html primes.c sharing.html \
+                special_methods.html ${destroot}${prefix}/share/doc/${subport}
+            xinstall -m 644 -W ${worksrcpath} INSTALL.txt README.txt \
+                ToDo.txt USAGE.txt ${destroot}${prefix}/share/doc/${subport}
+        } else {
+            xinstall -m 755 -d ${destroot}${python.prefix}/share/doc/cython
+            xinstall -m 644 -W ${worksrcpath}/Doc About.html FAQ.html \
+                extension_types.html index.html overview.html primes.c sharing.html \
+                special_methods.html ${destroot}${python.prefix}/share/doc/cython
+            xinstall -m 644 -W ${worksrcpath} INSTALL.txt README.txt\
+                ToDo.txt USAGE.txt ${destroot}${python.prefix}/share/doc/cython
+        }
+    }
+
+    depends_run         port:cython_select
+    test.run            no
+
+    select.group        cython
+    select.file         ${filespath}/cython${python.version}
+
+    notes "
+To make the Python ${python.branch} version of Cython the one that is run\
+when you execute the commands without a version suffix, e.g. 'cython', run:
+
+port select --set ${select.group} [file tail ${select.file}]
+"
+
+    livecheck.type      none
+} else {
+    #livecheck.type      regex
+    #livecheck.url       [lindex ${master_sites} 0]
+    #livecheck.regex     {Cython-(\d+(?:\.\d+)*)\.[tz]}
+    livecheck.type      none
+}

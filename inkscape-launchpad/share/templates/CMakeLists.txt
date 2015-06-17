@@ -1,0 +1,11 @@
+file(GLOB _FILES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.svg")
+
+add_custom_command(
+  OUTPUT templates.h
+  COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/i18n.py ${_FILES} > ${CMAKE_CURRENT_BINARY_DIR}/templates.h
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+  DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/i18n.py ${_FILES}
+)
+add_custom_target(templates.h ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/templates.h)
+
+install(FILES ${_FILES} "README" ${CMAKE_CURRENT_BINARY_DIR}/templates.h DESTINATION ${SHARE_INSTALL}/inkscape/templates)
